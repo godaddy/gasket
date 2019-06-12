@@ -1,2 +1,5 @@
 # gasket
-Robust, pluggable, &amp; render agnostic framework for rapid deliver modern web applications. 
+
+Robust, pluggable, & render agnostic framework for rapid deliver modern web applications. 
+
+##### LICENSE: MIT
