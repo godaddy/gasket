@@ -1,3 +1,3 @@
 # Contributing to Gasket
 
-See: http://uxp.dev/gasket
+See: https://x.co/ossgasket
