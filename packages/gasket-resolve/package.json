@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "eslint index.js test",
     "lint:fix": "npm run lint -- --fix",
-    "pretest": "npm run lint",
+    "posttest": "npm run lint",
     "test": "jest",
     "test:coverage": "jest --coverage"
   },
