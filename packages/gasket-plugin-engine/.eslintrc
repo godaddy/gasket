@@ -1,0 +1,8 @@
+{
+  "root": true,
+  "extends": ["godaddy", "plugin:jest/recommended"],
+  "rules": {
+    "no-undefined": 0,
+    "no-sync": 0
+  }
+}
