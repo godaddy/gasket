@@ -19,7 +19,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@gasket/resolve": "^1.1.0",
+    "@gasket/resolve": "^1.1.0"
   },
   "devDependencies": {
     "eslint": "^4.3.0",
