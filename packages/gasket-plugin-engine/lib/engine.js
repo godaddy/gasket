@@ -23,6 +23,7 @@ class PluginEngine {
   /**
    * Resolves plugins
    * @private
+   * @returns {*} result
    */
   _resolvePlugins() {
     const { plugins: pluginConfig } = this.config;
@@ -56,6 +57,8 @@ class PluginEngine {
    * gasket ecosystem has updated to `@gasket/default-preset@2.0.0`
    *
    * @private
+   * @param {*} name name
+   * @returns {*} result
    */
   _resolvePresetSafe(name) {
     return this.resolver.presetFor(name)
@@ -105,6 +108,8 @@ class PluginEngine {
   /**
    * Extracts name
    * @private
+   * @param {*} item item
+   * @returns {*} result
    */
   _extractName(item) {
     if (typeof item === 'string') return item;
@@ -290,6 +295,7 @@ class PluginEngine {
    * hook execute sequentially, with each result being passed as the first argument
    * to the next hook. It's like an asynchronous version of `Array.prototype.reduce`.
    * @param {string} event The event to execute
+   * @param {value} value Value to pass to initial hook
    * @param {...*} args Args for hooks
    * @returns {Promise} The result of the final executed hook.
    */
@@ -324,6 +330,7 @@ class PluginEngine {
    * Using synchronous methods limits flexibility, so it's encouraged to use async
    * methods whenever possible.
    * @param {string} event The event to execute
+   * @param {value} value Value to pass to initial hook
    * @param {...*} args Args for hooks
    * @returns {Promise} The result of the final executed hook.
    */
@@ -355,6 +362,7 @@ class PluginEngine {
    * yourself with explicit arguments. These arguments can be dynamic based on
    * the plugin itself.
    * @param {string} event The event to execute
+   * @param {function} applyFn Function to apply
    * @param {...*} args Args for hooks
    * @returns {Promise<Array>} An array of the data returned by the hooks, in
    *    the order executed
@@ -389,6 +397,7 @@ class PluginEngine {
   /**
    * Like `execApply`, only all hooks must execute synchronously.
    * @param {string} event The event to execute
+   * @param {function} applyFn Function to apply
    * @param {...*} args Args for hooks
    * @returns {Promise<Array>} An array of the data returned by the hooks, in
    *    the order executed
@@ -415,6 +424,8 @@ class PluginEngine {
   /**
    * Exec, but with a cache for plans by type
    * @private
+   * @param {Object} options options
+   * @returns {*} result
    */
   _execWithCachedPlan({ event, type, prepare, exec }) {
     const hookConfig = this._getHookConfig(event);
@@ -430,6 +441,8 @@ class PluginEngine {
   /**
    * Gets hook config
    * @private
+   * @param {*} event event
+   * @returns {*} result
    */
   _getHookConfig(event) {
     if (!(event in this._hooks)) {
@@ -443,6 +456,8 @@ class PluginEngine {
   /**
    * Executes hooks for plugins in order
    * @private
+   * @param {*} hookConfig hook config
+   * @param {*} fn fn
    */
   _executeInOrder(hookConfig, fn) {
     this._normalizeOrdering(hookConfig);
@@ -472,6 +487,7 @@ class PluginEngine {
   /**
    * Normalizes ordering
    * @private
+   * @param {*} hookConfig hook config
    */
   _normalizeOrdering(hookConfig) {
     const subscribers = hookConfig.subscribers;
