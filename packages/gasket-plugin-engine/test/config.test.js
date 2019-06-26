@@ -27,9 +27,9 @@ describe('Plugin configuration', () => {
   let pluginStub;
 
   beforeEach(() => {
-    pluginA = { name: 'a', hooks: { mockEvent: jest.fn() }};
-    pluginB = { name: 'b', hooks: { mockEvent: jest.fn() }};
-    pluginC = { name: 'c', hooks: { mockEvent: jest.fn() }};
+    pluginA = { name: 'a', hooks: { mockEvent: jest.fn() } };
+    pluginB = { name: 'b', hooks: { mockEvent: jest.fn() } };
+    pluginC = { name: 'c', hooks: { mockEvent: jest.fn() } };
 
     defaultPreset = createPreset({
       name: '@gasket/default-preset',
@@ -117,16 +117,16 @@ describe('Plugin configuration', () => {
   });
 
   it('throws an exception if a specified plugin is not found', () => {
-    expect(() => new PluginEngine({ plugins: { add: ['d'] }})).toThrow(Error);
+    expect(() => new PluginEngine({ plugins: { add: ['d'] } })).toThrow(Error);
   });
 
   it('handles plugin stubs with no hooks gracefully', () => {
-    expect(() => new PluginEngine({ plugins: { add: ['stub'] }}))
+    expect(() => new PluginEngine({ plugins: { add: ['stub'] } }))
       .not.toThrowError(Error);
   });
 
   it('does not import modules matching shorthand plugin names', () => {
-    expect(() => new PluginEngine({ plugins: { add: ['eslint'] }}))
+    expect(() => new PluginEngine({ plugins: { add: ['eslint'] } }))
       .not.toThrowError(Error);
   });
 

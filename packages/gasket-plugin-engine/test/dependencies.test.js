@@ -19,6 +19,6 @@ describe('The PluginEngine constructor', () => {
       .doMock('@gasket/c-plugin', () => pluginC, { virtual: true });
     const PluginEngine = require('..');
 
-    expect(() => new PluginEngine({ plugins: { add: ['a', 'b'] }})).toThrowError(Error);
+    expect(() => new PluginEngine({ plugins: { add: ['a', 'b'] } })).toThrowError(Error);
   });
 });
