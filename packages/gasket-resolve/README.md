@@ -1,6 +1,6 @@
 # @gasket/resolve
 
-Essential module resolution & configuration management for gasket plugins & presets. 
+Essential module resolution & configuration management for gasket plugins & presets.
 
 ## Usage
 
@@ -21,8 +21,8 @@ module.exports = require('@gasket/resolve/plugins')({
 const { resolvePlugins } = require('@gasket/resolve');
 const resolvePlugins = require('@gasket/resolve/plugins');
 
-console.log(resolvePlugins({ 
-  dirname: __dirname, 
+console.log(resolvePlugins({
+  dirname: __dirname,
   resolve: name => require(name)
 }))
 ```
@@ -64,7 +64,7 @@ This would get transformed into the following by `@gasket/resolve/plugins`:
   shortName: 'some',              // Convenient short name.
   name: '@gasket/some-plugin',    // Full npm package name.
   config: {                       // Config read from preset.json.
-    'arbitrary': 'default config values', 
+    'arbitrary': 'default config values',
     'consumed': 'by the plugin',
     'these': 'can be overriden',
     'in your': 'gasket.config.js'
@@ -92,4 +92,4 @@ resolver.pluginFor('short-name');
 resolver.presetFor('short-name');
 ```
 
-##### LICENSE: [MIT](../../LICENSE)
+##### LICENSE: [MIT](./LICENSE)
