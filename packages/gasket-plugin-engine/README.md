@@ -243,6 +243,19 @@ values ahead of time by creating a `gasket.create` object:
 }
 ```
 
+You can also _extend_ other presets by explicitly including them in your
+`package.json` as a `dependency`
+
+```json
+{
+  "name": "snl-preset",
+  "dependencies": {
+    "comedy-preset": "1.0.0",
+    "television-preset": "1.0.0"
+  }
+}
+```
+
 ## Direct Usage
 
 This package is used internally by `@gasket/cli`, so you probably do not need to
