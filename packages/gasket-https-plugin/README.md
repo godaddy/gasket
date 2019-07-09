@@ -1,0 +1,75 @@
+# `@gasket/https-plugin`
+
+A plugin that creates `http` and `https` servers based on the given `gasket`
+configuration. This plugin is part of the [`@gasket/default-preset`].
+
+## Table of Contents
+
+- [`@gasket/https-plugin`](#gaskethttps-plugin)
+  - [Table of Contents](#table-of-contents)
+  - [Installation](#installation)
+  - [Configuration](#configuration)
+  - [Lifecycles](#lifecycles)
+
+## Installation
+
+```
+npm install @gasket/https-plugin
+```
+
+## Configuration
+
+Add it to the `plugins` section of your `gasket.config.js`:
+
+```js
+{
+  "plugins": [
+    "add": ["https"]
+  ]
+}
+```
+
+## Lifecycles
+
+Your application can use this plugin to hook the `servers` hook. These servers
+are consumed directly from [`create-servers`].
+
+```js
+// lifecyles/servers.js
+
+/**
+ *
+ * @param  {Gasket} gasket The Gasket API
+ * @param {Servers} manifest Waterfall manifest to adjust
+ * @return {Promise<Object>} updated manifest
+ */
+module.exports = async function serversHook(gasket, servers) {
+  const cert = servers.https.cert;
+
+  console.log('Started https server with cert:');
+  console.log(cert);
+}
+```
+
+## Configuration
+
+You can specify what port to open up on, or what certificates to use via
+`gasket.config.js`.
+
+```js
+// gasket.config.js
+{
+  http: 80,
+  https: {
+    port: 443,
+    root: '/path/to/ssl/files',
+    key: 'your-key.pem',
+    cert: 'your-cert.pem',
+    ca: 'your-ca.pem', // Can be an Array of CAs
+  }
+};
+```
+##### LICENSE: [MIT](./LICENSE)
+
+[`@gasket/default-preset`]: TODO: Add this when it exists
+[`create-servers`]: https://github.com/indexzero/create-servers#http--https
