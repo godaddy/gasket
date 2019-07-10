@@ -30,9 +30,6 @@
     "url": "https://github.com/godaddy/gasket/issues"
   },
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-assets#readme",
-  "peerDependencies": {
-    "react": "^16.6.0"
-  },
   "devDependencies": {
     "@babel/core": "^7.5.4",
     "@babel/node": "^7.5.0",
@@ -48,6 +45,9 @@
     "react": "^16.6.0",
     "recursive-readdir": "^2.2.2",
     "rimraf": "^2.6.3"
+  },
+  "peerDependencies": {
+    "react": "^16.6.0"
   },
   "eslintConfig": {
     "extends": ["godaddy"]
