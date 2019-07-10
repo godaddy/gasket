@@ -13,6 +13,20 @@ module.exports = require('@gasket/resolve/plugins')({
 });
 ```
 
+```
+BRAIN DUMP
+module.exports = require('@gasket/resolve/plugins')({
+  dirname: __dirname,
+  resolve: name => require(name)
+  // extends: [
+  //   '@gasket/pwa-preset',
+  //   '/omg/i/need/to/npm/link/from/over/here/@gasket/whatever-preset',
+  //   require('@gasket/pwa-preset')
+  // ]
+});
+
+```
+
 ## API Documentation
 
 ### `resolvePlugins({ dirname, resolve }`
