@@ -42,13 +42,15 @@ function resolveViaSemver(plugins) {
  * packages in `dirname/package.json` taking into account any
  * `dirname/preset.json`.
  * @param  {Object} dirname Target
+ * @param  {Function} resolve how to resolve modules relative to the right directory
+ * @param  {Object[]} [extends] what presets are being extended.
  * @return {Object[]} Details for plugins in the `packageJson`.
  */
-module.exports = function resolvePlugins({ dirname, resolve, extending }) {
+module.exports = function resolvePlugins({ dirname, resolve, extends: extendedPresets }) {
   const Resolver = require('./resolver');
   const resolver = new Resolver({ resolve });
 
-  let extendsFrom = extending ? extending.map(ext => {
+  let extendsFrom = extendedPresets ? extendedPresets.map(ext => {
     if (Array.isArray(ext)) return ext;
     if (typeof ext === 'string') return resolve(ext);
 

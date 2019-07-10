@@ -243,7 +243,7 @@ values ahead of time by creating a `gasket.create` object:
 }
 ```
 
-You can also _extend_ other presets by adding an `extending` property to your
+You can also _extend_ other presets by adding an `extends` property to your
 main file:
 
 ```js
@@ -251,7 +251,7 @@ main file:
 module.exports = require('@gasket/resolve/plugins')({
   dirname: __dirname,
   resolve: name => require(name),
-  extending: [
+  extends: [
     'television-preset', // you can just do a string if it's a module
     require('comedy-preset') // or you can require it manually
   ]
