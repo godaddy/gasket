@@ -1,7 +1,41 @@
 const path = require('path');
 const debug = require('diagnostics')('gasket:resolvePlugins');
+const semver = require('semver');
 
 const pluginName = /@gasket\/([\w-]+)-plugin/;
+
+/**
+ * Format plugin information for uniform error messages
+ * @param {Plugin} plugin gasket plugin
+ */
+function pluginString(plugin) {
+  return `${plugin.name}@${plugin.range}`;
+}
+
+/**
+ * Given a list of plugins, return a subset of plugins that has been deduped
+ * via semver. If ranges mismatch, an error will be thrown.
+ *
+ * @param {Array<Plugin>} plugins Details for plugins
+ */
+function resolveViaSemver(plugins) {
+  const pkgs = {};
+
+  plugins.forEach(function thingy(plugin) {
+    if (!pkgs[plugin.name]) {
+      pkgs[plugin.name] = plugin;
+      return;
+    }
+
+    const currentRange = pkgs[plugin.name];
+
+    if (!semver.satisfies(semver.minVersion(plugin.range), currentRange.range)) {
+      throw new Error(`${plugin.from} uses ${pluginString(plugin)}, which is incompatible with ${pluginString(currentRange)}`);
+    }
+  });
+
+  return Object.values(pkgs);
+}
 
 /**
  * Returns a list of pluginInfo for all `@gasket/*-plugin`
@@ -10,36 +44,22 @@ const pluginName = /@gasket\/([\w-]+)-plugin/;
  * @param  {Object} dirname Target
  * @return {Object[]} Details for plugins in the `packageJson`.
  */
-module.exports = function resolvePlugins({ dirname, resolve, extends }) {
+module.exports = function resolvePlugins({ dirname, resolve, extending }) {
   const Resolver = require('./resolver');
   const resolver = new Resolver({ resolve });
 
-  const extendsFrom = extends.map(ext => {
+  const extendsFrom = extending ? extending.map(ext => {
     if (Array.isArray(ext)) return ext;
     if (typeof ext === 'string') return resolve(ext);
 
-    throw new Error('Unexpected extends value: ', ext);
-  });
-
-  // 1. Flatten array
-  // 2. Set merge with Object.entries resolution below
-  // 3. **IMPORTANT** ensure that for the data structure
-  //    below the following remain true:
-  //    - range does not conflict
-  //    - from is additive (i.e. ['@gasket/a-preset'])
-  //
-  //    { required: { name: 'lint', hooks: [Object] },
-  //      kind: 'plugin',
-  //      from: '@gasket/default-preset',
-  //      shortName: 'lint',
-  //      name: '@gasket/lint-plugin',
-  //      range: '^1.2.0',
-  //      config: {} },
+    throw new Error('Unexpected extending preset: ', ext);
+  }): [];
+  const flattened = [].concat.apply([], extendsFrom);
 
   const { name: preset, dependencies } = require(path.join(dirname, 'package.json'));
   debug('lookup', preset, dependencies);
 
-  return Object.entries(dependencies)
+  const topLevel =  Object.entries(dependencies)
     .map(([name, range]) => {
       const match = pluginName.exec(name);
       if (!match) return;
@@ -47,4 +67,6 @@ module.exports = function resolvePlugins({ dirname, resolve, extends }) {
       const [, shortName] = match;
       return resolver.pluginInfoFor({ shortName, range, preset })
     }).filter(Boolean);
+
+  return resolveViaSemver(topLevel.concat(flattened));
 }

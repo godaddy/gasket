@@ -27,7 +27,8 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "diagnostics": "^2.0.2"
+    "diagnostics": "^2.0.2",
+    "semver": "^6.2.0"
   },
   "devDependencies": {
     "eslint": "^5.16.0",

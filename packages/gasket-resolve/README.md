@@ -13,16 +13,15 @@ module.exports = require('@gasket/resolve/plugins')({
 });
 ```
 
-```
-BRAIN DUMP
+```js
 module.exports = require('@gasket/resolve/plugins')({
   dirname: __dirname,
   resolve: name => require(name)
-  // extends: [
-  //   '@gasket/pwa-preset',
-  //   '/omg/i/need/to/npm/link/from/over/here/@gasket/whatever-preset',
-  //   require('@gasket/pwa-preset')
-  // ]
+  extends: [
+    '@gasket/pwa-preset',
+    '/omg/i/need/to/npm/link/from/over/here/@gasket/whatever-preset',
+    require('@gasket/pwa-preset')
+  ]
 });
 
 ```
@@ -51,7 +50,7 @@ consider `@gasket/some-plugin` that is  required by `@gasket/any-preset` as:
 
 ``` js
 "dependencies": {
-  "@gasket/some-plugin": "^1.1.0"  
+  "@gasket/some-plugin": "^1.1.0"
 }
 ```
 
