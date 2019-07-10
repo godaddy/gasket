@@ -243,17 +243,20 @@ values ahead of time by creating a `gasket.create` object:
 }
 ```
 
-You can also _extend_ other presets by explicitly including them in your
-`package.json` as a `dependency`
+You can also _extend_ other presets by adding an `extending` property to your
+main file:
 
-```json
-{
-  "name": "snl-preset",
-  "dependencies": {
-    "comedy-preset": "1.0.0",
-    "television-preset": "1.0.0"
-  }
-}
+```js
+// index.js
+module.exports = require('@gasket/resolve/plugins')({
+  dirname: __dirname,
+  resolve: name => require(name),
+  extending: [
+    'television-preset', // you can just do a string if it's a module
+    require('comedy-preset') // or you can require it manually
+  ]
+});
+
 ```
 
 ## Direct Usage

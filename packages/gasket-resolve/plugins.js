@@ -48,18 +48,18 @@ module.exports = function resolvePlugins({ dirname, resolve, extending }) {
   const Resolver = require('./resolver');
   const resolver = new Resolver({ resolve });
 
-  const extendsFrom = extending ? extending.map(ext => {
+  let extendsFrom = extending ? extending.map(ext => {
     if (Array.isArray(ext)) return ext;
     if (typeof ext === 'string') return resolve(ext);
 
     throw new Error('Unexpected extending preset: ', ext);
   }): [];
-  const flattened = [].concat.apply([], extendsFrom);
+  extendsFrom = [].concat.apply([], extendsFrom);
 
   const { name: preset, dependencies } = require(path.join(dirname, 'package.json'));
   debug('lookup', preset, dependencies);
 
-  const topLevel =  Object.entries(dependencies)
+  const topLevel = Object.entries(dependencies)
     .map(([name, range]) => {
       const match = pluginName.exec(name);
       if (!match) return;
@@ -68,5 +68,5 @@ module.exports = function resolvePlugins({ dirname, resolve, extending }) {
       return resolver.pluginInfoFor({ shortName, range, preset })
     }).filter(Boolean);
 
-  return resolveViaSemver(topLevel.concat(flattened));
+  return resolveViaSemver(topLevel.concat(extendsFrom));
 }
