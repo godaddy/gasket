@@ -60,3 +60,6 @@ typings/
 # Editor files
 .idea
 *.iml
+
+# Generated
+react

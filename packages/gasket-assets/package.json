@@ -5,7 +5,12 @@
   "main": "react",
   "scripts": {
     "svg-to-react": "babel-node --presets @babel/env ./scripts/svg-to-react.js",
-    "generate": "npm run svg-to-react"
+    "build": "yarn clean && npm run svg-to-react",
+    "clean": "rimraf ./react",
+    "prepublish": "yarn build",
+    "lint": "eslint .",
+    "lint:fix": "npm run lint -- --fix",
+    "test": "npm run lint"
   },
   "repository": {
     "type": "git",
@@ -35,8 +40,17 @@
     "@babel/preset-react": "^7.0.0",
     "@svgr/core": "^4.3.1",
     "babel-plugin-add-module-exports": "^1.0.2",
+    "eslint": "^6.0.1",
+    "eslint-config-godaddy": "^3.1.0",
+    "eslint-plugin-json": "^1.4.0",
+    "eslint-plugin-mocha": "^5.3.0",
     "mkdirp": "^0.5.1",
     "react": "^16.6.0",
-    "recursive-readdir": "^2.2.2"
-  }
+    "recursive-readdir": "^2.2.2",
+    "rimraf": "^2.6.3"
+  },
+  "eslintIgnore": [
+    "coverage",
+    "react"
+  ]
 }
