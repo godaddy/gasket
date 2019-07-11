@@ -60,11 +60,11 @@ describe('resolvePlugins', () => {
     };
 
     jest
-      .doMock(`${__dirname}/package.json`, () => preset, { virtual: true })
+      .doMock('😹🤪🗽/package.json', () => preset, { virtual: true })
       .doMock('@gasket/snl-preset', () => mockPreset, { virtual: true });
 
     const plugins = resolvePlugins({
-      dirname: __dirname,
+      dirname: '😹🤪🗽',
       resolve: require,
       extends: [
         '@gasket/snl-preset'
@@ -109,11 +109,11 @@ describe('resolvePlugins', () => {
     };
 
     jest
-      .doMock(`${__dirname}/package.json`, () => preset, { virtual: true })
+      .doMock('snl/package.json', () => preset, { virtual: true })
       .doMock('@gasket/episode-preset', () => mockPreset, { virtual: true });
 
     const plugins = resolvePlugins({
-      dirname: __dirname,
+      dirname: 'snl',
       resolve: require,
       extends: [
         '@gasket/episode-preset'
@@ -148,21 +148,21 @@ describe('resolvePlugins', () => {
     const preset = {
       name: '@gasket/avatar-preset',
       dependencies: {
-        '@gasket/episode-preset': '^1.0.0'
+        '@gasket/📺-preset': '^1.0.0'
       }
     };
 
     jest
-      .doMock(`${__dirname}/package.json`, () => preset, { virtual: true })
-      .doMock('@gasket/episode-preset', () => mockPreset, { virtual: true });
+      .doMock('🌊🌎🔥🌪/package.json', () => preset, { virtual: true })
+      .doMock('@gasket/📺-preset', () => mockPreset, { virtual: true });
 
     let error = false;
     try {
       resolvePlugins({
-        dirname: __dirname,
+        dirname: '🌊🌎🔥🌪',
         resolve: require,
         extends: [
-          '@gasket/episode-preset'
+          '@gasket/📺-preset'
         ]
       });
     } catch (err) {
