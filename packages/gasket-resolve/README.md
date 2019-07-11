@@ -37,7 +37,7 @@ consider `@gasket/some-plugin` that is  required by `@gasket/any-preset` as:
 
 ``` js
 "dependencies": {
-  "@gasket/some-plugin": "^1.1.0"  
+  "@gasket/some-plugin": "^1.1.0"
 }
 ```
 

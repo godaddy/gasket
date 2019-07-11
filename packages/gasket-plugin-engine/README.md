@@ -243,6 +243,22 @@ values ahead of time by creating a `gasket.create` object:
 }
 ```
 
+You can also _extend_ other presets by adding an `extends` property to your
+main file:
+
+```js
+// index.js
+module.exports = require('@gasket/resolve/plugins')({
+  dirname: __dirname,
+  resolve: name => require(name),
+  extends: [
+    'television-preset', // you can just do a string if it's a module
+    require('comedy-preset') // or you can require it manually
+  ]
+});
+
+```
+
 ## Direct Usage
 
 This package is used internally by `@gasket/cli`, so you probably do not need to
