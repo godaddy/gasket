@@ -21,7 +21,7 @@ function pluginString(plugin) {
 function resolveViaSemver(plugins) {
   const merged = {};
 
-  plugins.forEach(function thingy(plugin) {
+  plugins.forEach(function each(plugin) {
     if (!merged[plugin.name]) {
       merged[plugin.name] = plugin;
       return;
