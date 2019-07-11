@@ -4,7 +4,7 @@
   "description": "Essential module resolution & configuration management for gasket plugins & presets.",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint index.js test",
+    "lint": "eslint *.js test",
     "lint:fix": "npm run lint -- --fix",
     "posttest": "npm run lint",
     "test": "jest",
@@ -27,7 +27,8 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "diagnostics": "^2.0.2"
+    "diagnostics": "^2.0.2",
+    "semver": "^6.2.0"
   },
   "devDependencies": {
     "eslint": "^5.16.0",
