@@ -69,7 +69,7 @@ module.exports = function resolvePlugins({ dirname, resolve, extends: extendedPr
       if (!match) return;
 
       const [, shortName] = match;
-      return resolver.pluginInfoFor({ shortName, range, preset })
+      return resolver.pluginInfoFor({ shortName, range, preset });
     }).filter(Boolean);
 
   return resolveViaSemver(topLevel.concat(extendsFrom));
