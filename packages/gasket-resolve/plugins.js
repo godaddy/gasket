@@ -57,6 +57,7 @@ module.exports = function resolvePlugins({ dirname, resolve, extends: extendedPr
     throw new Error('Unexpected extending preset: ', ext);
   });
 
+  // flatten the `extendsFrom` into a single array
   extendsFrom = [].concat.apply([], extendsFrom);
 
   const { name: preset, dependencies } = require(path.join(dirname, 'package.json'));
