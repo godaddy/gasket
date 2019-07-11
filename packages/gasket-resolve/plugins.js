@@ -19,22 +19,22 @@ function pluginString(plugin) {
  * @param {Array<Plugin>} plugins Details for plugins
  */
 function resolveViaSemver(plugins) {
-  const pkgs = {};
+  const merged = {};
 
   plugins.forEach(function thingy(plugin) {
-    if (!pkgs[plugin.name]) {
-      pkgs[plugin.name] = plugin;
+    if (!merged[plugin.name]) {
+      merged[plugin.name] = plugin;
       return;
     }
 
-    const currentRange = pkgs[plugin.name];
+    const duplicatePlugin = merged[plugin.name];
 
-    if (!semver.satisfies(semver.minVersion(plugin.range), currentRange.range)) {
-      throw new Error(`${plugin.from} uses ${pluginString(plugin)}, which is incompatible with ${pluginString(currentRange)}`);
+    if (!semver.satisfies(semver.minVersion(plugin.range), duplicatePlugin.range)) {
+      throw new Error(`${plugin.from} uses ${pluginString(plugin)}, which is currently depended upon by ${pluginString(duplicatePlugin)}`);
     }
   });
 
-  return Object.values(pkgs);
+  return Object.values(merged);
 }
 
 /**
@@ -46,16 +46,17 @@ function resolveViaSemver(plugins) {
  * @param  {Object[]} [extends] what presets are being extended.
  * @return {Object[]} Details for plugins in the `packageJson`.
  */
-module.exports = function resolvePlugins({ dirname, resolve, extends: extendedPresets }) {
+module.exports = function resolvePlugins({ dirname, resolve, extends: extendedPresets = [] }) {
   const Resolver = require('./resolver');
   const resolver = new Resolver({ resolve });
 
-  let extendsFrom = extendedPresets ? extendedPresets.map(ext => {
+  let extendsFrom = extendedPresets.map(ext => {
     if (Array.isArray(ext)) return ext;
     if (typeof ext === 'string') return resolve(ext);
 
     throw new Error('Unexpected extending preset: ', ext);
-  }): [];
+  });
+
   extendsFrom = [].concat.apply([], extendsFrom);
 
   const { name: preset, dependencies } = require(path.join(dirname, 'package.json'));
