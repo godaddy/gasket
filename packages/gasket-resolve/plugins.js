@@ -7,6 +7,7 @@ const pluginName = /@gasket\/([\w-]+)-plugin/;
 /**
  * Format plugin information for uniform error messages
  * @param {Plugin} plugin gasket plugin
+ * @returns {String} formatted string like @gasket/resolve@1.2.3
  */
 function pluginString(plugin) {
   return `${plugin.name}@${plugin.range}`;
@@ -17,6 +18,8 @@ function pluginString(plugin) {
  * via semver. If ranges mismatch, an error will be thrown.
  *
  * @param {Array<Plugin>} plugins Details for plugins
+ * @returns {Array<Plugins>} resolved plugins
+ * @throws {Error} if aby of the plugins conflict having conflicting semver ranges
  */
 function resolveViaSemver(plugins) {
   const merged = {};
@@ -30,6 +33,7 @@ function resolveViaSemver(plugins) {
     const duplicatePlugin = merged[plugin.name];
 
     if (!semver.satisfies(semver.minVersion(plugin.range), duplicatePlugin.range)) {
+      // eslint-disable-next-line max-len
       throw new Error(`${plugin.from} uses ${pluginString(plugin)}, which is currently depended upon by ${pluginString(duplicatePlugin)}`);
     }
   });
@@ -44,7 +48,7 @@ function resolveViaSemver(plugins) {
  * @param  {Object} dirname Target
  * @param  {Function} resolve how to resolve modules relative to the right directory
  * @param  {Object[]} [extends] what presets are being extended.
- * @return {Object[]} Details for plugins in the `packageJson`.
+ * @returns {Object[]} Details for plugins in the `packageJson`.
  */
 module.exports = function resolvePlugins({ dirname, resolve, extends: extendedPresets = [] }) {
   const Resolver = require('./resolver');
@@ -73,4 +77,4 @@ module.exports = function resolvePlugins({ dirname, resolve, extends: extendedPr
     }).filter(Boolean);
 
   return resolveViaSemver(topLevel.concat(extendsFrom));
-}
+};
