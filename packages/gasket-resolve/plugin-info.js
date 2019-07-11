@@ -5,7 +5,7 @@
  * @param  {String} options.range     Semver range required
  * @param  {String} options.preset    Preset that resolved this PluginInfo
  * @param  {Object} options.required  Result of plugin resolution (`module.exports`).
- * @return {PluginInfo} Standard plugin format for all gasket purposes.
+ * @returns {PluginInfo} Standard plugin format for all gasket purposes.
  */
 module.exports = function pluginInfoFor({ shortName, range, preset, required, config }) {
   return {
