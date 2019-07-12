@@ -1,6 +1,6 @@
 {
   "name": "@gasket/https-plugin",
-  "version": "0.0.0",
+  "version": "1.0.1",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/godaddy/gasket"
@@ -38,9 +38,9 @@
     "mocha": "^6.1.4",
     "proxyquire": "^2.1.0",
     "sinon": "^7.3.2"
-	},
-	"homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-https-plugin#readme",
-	"bugs": {
+  },
+  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-https-plugin#readme",
+  "bugs": {
     "url": "https://github.com/godaddy/gasket/issues"
   }
 }
