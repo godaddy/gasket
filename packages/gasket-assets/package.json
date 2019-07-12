@@ -1,0 +1,59 @@
+{
+  "name": "@gasket/assets",
+  "version": "1.0.0",
+  "description": "Gasket assets",
+  "main": "react",
+  "scripts": {
+    "svg-to-react": "babel-node --presets @babel/env ./scripts/svg-to-react.js",
+    "build": "yarn clean && npm run svg-to-react",
+    "clean": "rimraf ./react",
+    "prepublish": "yarn build",
+    "lint": "eslint .",
+    "lint:fix": "npm run lint -- --fix",
+    "test": "npm run lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/godaddy/gasket.git"
+  },
+  "keywords": [
+    "gasket",
+    "assets",
+    "logo"
+  ],
+  "author": "GoDaddy.com, LLC",
+  "maintainers": [
+    "Andrew Gerard <agerard@godaddy.com>"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/godaddy/gasket/issues"
+  },
+  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-assets#readme",
+  "devDependencies": {
+    "@babel/core": "^7.5.4",
+    "@babel/node": "^7.5.0",
+    "@babel/preset-env": "^7.5.4",
+    "@babel/preset-react": "^7.0.0",
+    "@svgr/core": "^4.3.1",
+    "babel-plugin-add-module-exports": "^1.0.2",
+    "eslint": "^6.0.1",
+    "eslint-config-godaddy": "^3.1.0",
+    "eslint-plugin-json": "^1.4.0",
+    "eslint-plugin-mocha": "^5.3.0",
+    "mkdirp": "^0.5.1",
+    "react": "^16.6.0",
+    "recursive-readdir": "^2.2.2",
+    "rimraf": "^2.6.3"
+  },
+  "peerDependencies": {
+    "react": "^16.6.0"
+  },
+  "eslintConfig": {
+    "extends": ["godaddy"]
+  },
+  "eslintIgnore": [
+    "coverage",
+    "react"
+  ]
+}
