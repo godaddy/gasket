@@ -50,7 +50,9 @@
     "react": "^16.6.0"
   },
   "eslintConfig": {
-    "extends": ["godaddy"]
+    "extends": [
+      "godaddy"
+    ]
   },
   "eslintIgnore": [
     "coverage",
