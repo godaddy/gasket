@@ -1,5 +1,3 @@
-const Log = require('@gasket/log');
-
 /**
  * Expose the plugin hooks, listen to the `init` and `destroy` events.
  *
@@ -24,6 +22,7 @@ module.exports = {
         options.transports = options.transports.concat(transports);
       }
 
+      const Log = require('@gasket/log');
       gasket.logger = new Log(options);
     },
 
