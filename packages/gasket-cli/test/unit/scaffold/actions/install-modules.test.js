@@ -41,10 +41,4 @@ describe('installModules', () => {
     await installModules(mockContext);
     assume(packageManagerSpy).is.calledWith(mockContext);
   });
-
-  it('executes install with registry argument', async () => {
-    await installModules(mockContext);
-    assume(installStub).is.called();
-    assume(installStub.args[0][0][0]).equals('--registry');
-  });
 });
