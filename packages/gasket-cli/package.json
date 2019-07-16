@@ -39,7 +39,6 @@
     "dx"
   ],
   "dependencies": {
-    "@gasket/fetch": "^1.0.0",
     "@gasket/plugin-engine": "^1.2.0",
     "@gasket/utils": "^1.0.0",
     "@oclif/command": "^1.5.14",

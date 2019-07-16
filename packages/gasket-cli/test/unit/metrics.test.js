@@ -1,13 +1,7 @@
 const assume = require('assume');
 const path = require('path');
 const os = require('os');
-const fetchMock = require('fetch-mock');
-const proxyquire = require('proxyquire');
-
-const fetchSandbox = fetchMock.sandbox();
-const Metrics = proxyquire('../../src/metrics', {
-  '@gasket/fetch': fetchSandbox
-});
+const Metrics = require('../../src/metrics');
 
 describe('Metrics', function () {
   const gasket = {
@@ -31,7 +25,7 @@ describe('Metrics', function () {
       // Major assumption ahead. We assume that the parent directory that
       // holds this repo has no package.json or git repo.
       //
-      config.root = path.join(config.root, '..');
+      config.root = path.join(config.root, '..', '..', '..');
 
       const parent = new Metrics(config);
       const data = await parent.collect();
@@ -96,25 +90,12 @@ describe('Metrics', function () {
 
     it('include the gasket dependencies in a list', async function () {
       const { deps } = await metrics.collect();
-      assume(deps).has.length(3);
+      assume(deps).has.length(2);
       assume(deps).contains('@gasket/plugin-engine');
     });
   });
 
   describe('report', function () {
-    beforeEach(() => {
-      fetchSandbox.mock('*', {}, { sendAsJson: true });
-    });
-
-    afterEach(() => {
-      fetchSandbox.restore();
-    });
-
-    it('does not record any information if the flag is not set', async function () {
-      metrics.record = false;
-      await metrics.report();
-      assume(fetchSandbox.called()).is.false();
-    });
 
     it('Returns exactly what is collected', async function () {
       const data = { command: 'let\'s make this matzo' };
