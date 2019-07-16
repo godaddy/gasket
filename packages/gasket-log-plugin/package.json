@@ -1,0 +1,52 @@
+{
+  "name": "@gasket/log-plugin",
+  "version": "3.0.1",
+  "description": "Gasket log plugin",
+  "main": "./",
+  "scripts": {
+    "lint": "eslint index.js test.js",
+    "test": "nyc --reporter=text --reporter=json-summary npm run test:runner",
+    "test:runner": "mocha --require setup-env \"test.js\"",
+    "test:watch": "npm run test:runner -- --watch",
+    "posttest": "npm run lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/godaddy/gasket.git"
+  },
+  "keywords": [
+    "gasket",
+    "plugin",
+    "log",
+    "winston",
+    "server",
+    "client"
+  ],
+  "author": "GoDaddy Operating Company, LLC",
+  "maintainers": [
+    "Martijn Swaagman <mswaagman@godaddy.com>"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/godaddy/gasket/issues"
+  },
+  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-log-plugin#readme",
+  "dependencies": {
+    "@gasket/log": "^3.0.0"
+  },
+  "devDependencies": {
+    "assume": "^2.0.1",
+    "assume-sinon": "^1.0.0",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.13.0",
+    "eslint-config-godaddy": "^3.0.0",
+    "eslint-plugin-babel": "^5.3.0",
+    "eslint-plugin-json": "^1.2.0",
+    "eslint-plugin-mocha": "^5.2.1",
+    "mocha": "^5.2.0",
+    "nyc": "^13.1.0",
+    "proxyquire": "^2.1.0",
+    "setup-env": "^1.2.2",
+    "sinon": "^7.2.3"
+  }
+}
