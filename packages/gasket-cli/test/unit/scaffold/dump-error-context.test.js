@@ -12,7 +12,6 @@ describe('dumpErrorContext', () => {
 
     mockContext = {
       cwd: '/some/path',
-      dest: '/some/path/my-app',
       warnings: ['one', 'two'],
       errors: ['one']
     };
@@ -35,7 +34,7 @@ describe('dumpErrorContext', () => {
   it('writes log file to destination', async () => {
     writeStub.resolves();
     await dumpErrorContext(mockContext, mockError);
-    assume(writeStub).calledWith(path.join(mockContext.dest, 'gasket-create-error.log'));
+    assume(writeStub).calledWith(path.join(mockContext.cwd, 'gasket-create-error.log'));
   });
 
   it('writes context as JSON to log', async () => {
@@ -60,7 +59,7 @@ describe('dumpErrorContext', () => {
     writeStub.resolves();
     await dumpErrorContext(mockContext, mockError);
 
-    assume(logStub).calledWithMatch(path.join(mockContext.dest, 'gasket-create-error.log'));
+    assume(logStub).calledWithMatch(path.join(mockContext.cwd, 'gasket-create-error.log'));
   });
 
   it('outputs write errors to console', async () => {

@@ -12,13 +12,13 @@ const writeFile = promisify(fs.writeFile);
  * @returns {Promise<void>} promise
  */
 module.exports = async function dumpErrorContext(context, error) {
-  const { dest } = context;
+  const { cwd } = context;
 
   try {
     const report = { exitError: error.stack, ...context };
     const fileName = 'gasket-create-error.log';
 
-    const filePath = path.join(dest, fileName);
+    const filePath = path.join(cwd, fileName);
     await writeFile(filePath, JSON.stringify(report, null, 2), 'utf8');
     console.log(`Error log dumped to: ${filePath}`);
   } catch (err) {
