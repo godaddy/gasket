@@ -1,5 +1,5 @@
 import { describe, it } from 'mocha';
-const { config } = require('winston');
+import { config } from 'winston';
 import Log from '../client';
 import assume from 'assume';
 import sinon from 'sinon';
