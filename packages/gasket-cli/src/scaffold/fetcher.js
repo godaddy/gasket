@@ -68,7 +68,7 @@ const Fetcher = class Fetcher {
 
 /**
  * Package fetcher that represents the core file system logic
- * for getting npm packages without having to perform a 
+ * for getting npm packages without having to perform a
  * configuration.
  *
  * @type {PackageFetcher}
