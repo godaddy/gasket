@@ -1,18 +1,5 @@
 const { resolve } = require('path');
-const nextApp = require('next');
 const { createConfig } = require('./config');
-
-//
-// Different versions of Nextjs, have different ways of exporting the builder.
-// In order to support canary, and other versions of next we need to detect
-// the different locations.
-//
-let builder;
-try {
-  builder = require('next/dist/server/build').default;
-} catch (e) {
-  builder = require('next/dist/build').default;
-}
 
 module.exports = {
   dependencies: ['webpack'],
@@ -20,6 +7,7 @@ module.exports = {
   hooks: {
     nextCreate: async function createNext(gasket, devServer) {
       const { exec } = gasket;
+      const nextApp = require('next');
 
       const app = nextApp({
         dev: devServer,
@@ -38,6 +26,18 @@ module.exports = {
       return app;
     },
     nextBuild: async function createBuild(gasket) {
+      //
+      // Different versions of Nextjs, have different ways of exporting the builder.
+      // In order to support canary, and other versions of next we need to detect
+      // the different locations.
+      //
+      let builder;
+      try {
+        builder = require('next/dist/server/build').default;
+      } catch (e) {
+        builder = require('next/dist/build').default;
+      }
+
       return await builder(resolve('.'), await createConfig(gasket, true));
     }
   }
