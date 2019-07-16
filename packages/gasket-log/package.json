@@ -33,8 +33,8 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-log#readme",
   "dependencies": {
-    "diagnostics": "^1.1.0",
-    "kuler": "^1.0.1",
+    "diagnostics": "^2.0.2",
+    "kuler": "^2.0.0",
     "triple-beam": "^1.3.0",
     "winston": "^3.2.1"
   },
