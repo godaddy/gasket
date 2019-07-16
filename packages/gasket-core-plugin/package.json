@@ -1,0 +1,66 @@
+{
+  "name": "@gasket/core-plugin",
+  "version": "3.0.0",
+  "description": "Server creation and asset serving",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint generator/**/*.js *.js test/*.js test/**/*.js",
+    "pretest": "npm run lint -- --fix & mkdir -p pages",
+    "test": "nyc --reporter=text --reporter=json-summary -x .next -x test npm run test:mocha",
+    "posttest": "rm -rf pages",
+    "report": "nyc report --reporter=lcov",
+    "test:mocha": "mocha --require test/setup.js 'test/**/*.test.js'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/godaddy/gasket.git"
+  },
+  "keywords": [
+    "gasket",
+    "plugin",
+    "core"
+  ],
+  "author": "GoDaddy Operating Company, LLC",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/godaddy/gasket/issues"
+  },
+  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-core-plugin#readme",
+  "dependencies": {
+    "@gasket/express-plugin": "^1.0.0",
+    "@gasket/nextjs-plugin": "^1.1.0",
+    "create-servers": "^2.6.0",
+    "diagnostics": "^2.0.0"
+  },
+  "devDependencies": {
+    "@gasket/log-plugin": "^3.0.1",
+    "@gasket/plugin-engine": "^1.0.0",
+    "assume": "^2.0.1",
+    "assume-sinon": "^1.0.0",
+    "babel-eslint": "^10.0.1",
+    "errs": "^0.3.2",
+    "eslint": "^5.14.1",
+    "eslint-config-godaddy-react": "^4.1.0",
+    "eslint-plugin-json": "^1.2.0",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-mocha": "^5.3.0",
+    "eslint-plugin-react": "^7.12.4",
+    "express": "^4.17.1",
+    "mocha": "^6.1.4",
+    "mock-require": "^3.0.3",
+    "next": "^8.0.3",
+    "next-routes": "^1.4.2",
+    "node-fetch": "^2.1.2",
+    "nyc": "^13.3.0",
+    "proxyquire": "^2.1.0",
+    "react": "^16.6.0",
+    "react-dom": "^16.6.0",
+    "sinon": "^7.2.5"
+  },
+  "peerDependencies": {
+    "@gasket/cli": "^1.2.0",
+    "@gasket/log-plugin": "^2.0.0 || ^3.0.0",
+    "react": "^16.6.0",
+    "react-dom": "^16.6.0"
+  }
+}
