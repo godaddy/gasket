@@ -1,7 +1,17 @@
+const semver = require('semver');
 const action = require('../action-wrapper');
 const ConfigBuilder = require('../config-builder');
 const { addPluginsToPkg } = require('../plugin-utils');
 const { presetIdentifier } = require('../package-identifier');
+const pkgVersion = `^${require('../../../package.json').version}`;
+
+/**
+ * Helper to check if a module version is a file path
+ *
+ * @param {string} v - Version to check
+ * @returns {Boolean} result
+ */
+const isFile = v => v && v.includes('file:');
 
 /**
  * Initializes the ConfigBuilder builder and adds to context.
@@ -10,7 +20,37 @@ const { presetIdentifier } = require('../package-identifier');
  * @returns {Promise} promise
  */
 async function setupPkg(context) {
-  const { appName, appDescription, rawPresets, presetPkgs, rawPlugins = [] } = context;
+  const { appName, appDescription, rawPresets, presetPkgs, rawPlugins = [], warnings } = context;
+
+  //
+  // Gather presets with cli dependencies
+  //
+  const cliPresets = presetPkgs.filter(p => p.dependencies && p.dependencies['@gasket/cli']);
+
+  //
+  // Find the minimum cli version required. File paths are always preferred.
+  //
+  const cliVersion = cliPresets.reduce((acc, cur) => {
+    const v = cur.dependencies['@gasket/cli'];
+    if (isFile(v)) return v;
+    if (isFile(acc)) return acc;
+    return !acc || semver.gt(semver.coerce(acc), semver.coerce(v)) ? v : acc;
+  }, null);
+
+  //
+  // Issue warnings if determined cli version does not meet a preset's requirements
+  //
+  if (!isFile(cliVersion)) {
+    cliPresets.forEach(p => {
+      const v = p.dependencies['@gasket/cli'];
+      if (!semver.satisfies(semver.coerce(v).version, cliVersion)) {
+        warnings.push(
+          `Installed @gasket/cli@${cliVersion} which does not satisfy ` +
+          `version (${v}) required by ${p.name}@${p.version}`
+        );
+      }
+    });
+  }
 
   const pkg = ConfigBuilder.createPackageJson({
     name: appName,
@@ -27,8 +67,7 @@ async function setupPkg(context) {
     acc[fullName] = version;
     return acc;
   }, {
-    // TODO: read this remotely or include it in the preset itself.
-    '@gasket/cli': 'latest'
+    '@gasket/cli': cliVersion || pkgVersion
   }));
   addPluginsToPkg(rawPlugins, pkg);
 
