@@ -90,7 +90,12 @@ the created `next` instance.
 ```js
 module.exports = {
   hooks: {
-    next: function (gasket, next) {
+    /**
+    * Modify the Next app instance
+    * @param  {Gasket} gasket The Gasket API
+    * @param  {Next} next Next app instance
+    */
+    next: function next(gasket, next) {
       next.setAssetPrefix('https://my.cdn.com/dir/');
     }
   }
@@ -105,6 +110,12 @@ This will allow you to modify the `next` config before the `next` server is crea
 ```js
 module.exports = {
   hooks: {
+    /**
+    * Modify the Next config
+    * @param  {Gasket} gasket The Gasket API
+    * @param  {Object} config Next config
+    * @returns {Object} config
+    */
     nextConfig(gasket, config) {
       return {
         ...config,
