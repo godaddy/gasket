@@ -5,9 +5,9 @@
   "main": "react",
   "scripts": {
     "svg-to-react": "babel-node --presets @babel/env ./scripts/svg-to-react.js",
-    "build": "yarn clean && npm run svg-to-react",
+    "build": "npm run clean && npm run svg-to-react",
     "clean": "rimraf ./react",
-    "prepublish": "yarn build",
+    "prepublish": "npm run build",
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "test": "npm run lint"
