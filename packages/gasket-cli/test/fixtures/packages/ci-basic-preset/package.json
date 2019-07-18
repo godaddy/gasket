@@ -1,0 +1,9 @@
+{
+  "name": "@gasket/ci-basic-preset",
+  "version": "1.2.3",
+  "main": "index.js",
+  "dependencies": {
+    "@gasket/resolve": "file:../../../../../gasket-resolve",
+    "@gasket/ci-basic-plugin": "file:../ci-basic-plugin"
+  }
+}

@@ -1,0 +1,3 @@
+module.exports = {
+  localsOnly: true
+};
