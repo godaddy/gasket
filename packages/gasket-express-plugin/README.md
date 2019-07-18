@@ -73,7 +73,14 @@ functions as middleware.
 ```js
 module.exports = {
   hooks: {
-    middleware: function (gasket) {
+    /**
+    * Add Express middleware
+    * 
+    * @param {Gasket} gasket The Gasket API
+    * @param {Express} app - Express app instance
+    * @returns {function|function[]} middleware(s)
+    */
+    middleware: function (gasket, app) {
       return require('x-xss-protection')();
     }
   }
@@ -90,6 +97,13 @@ the `express` instance.
 ```js
 module.exports = {
   hooks: {
+    /**
+    * Update Express app instance
+    * 
+    * @param {Gasket} gasket The Gasket API
+    * @param {Express} express - Express app instance
+    * @returns {function|function[]} middleware(s)
+    */
     express: async function (gasket, express) {
     }
   }
