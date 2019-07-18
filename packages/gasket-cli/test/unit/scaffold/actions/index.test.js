@@ -20,7 +20,8 @@ describe('index', () => {
       'postCreateHooks',
       'generateFiles',
       'applyPresetConfig',
-      'printReport'
+      'printReport',
+      'addDefaultPlugins'
     ];
 
     assume(expected.every(k => k in actions)).is.true();
