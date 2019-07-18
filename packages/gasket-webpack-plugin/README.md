@@ -35,13 +35,17 @@ module.exports = {
 }
 ```
 
-## Hooks
+## API
 
 `webpack` exposes an init function called `initWebpack`.
 
 #### initWebpack
 
+Use this to initialize the webpack lifecycles in a consuming plugin.
+
 ```js
+const { initWebpack } = require('@gasket/webpack-plugin');
+
 /**
 * Creates the webpack config
 * @param  {Gasket} gasket The Gasket API
@@ -49,9 +53,7 @@ module.exports = {
 * @param {Object} data Additional info
 * @returns {Object} Final webpack config
 */
-function initWebpack(gasket, webpackConfig, data) {
-  return finalConfig;
-}
+const config = initWebpack(gasket, webpackConfig, data);
 ```
 
 ## Lifecycles
