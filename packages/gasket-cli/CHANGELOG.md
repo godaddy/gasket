@@ -1,5 +1,7 @@
 # `@gasket/cli`
 
+- Added ability to define default plugins
+
 ### 2.1.0
 
 - Output improvements for `create` command.
