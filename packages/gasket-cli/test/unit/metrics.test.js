@@ -75,7 +75,7 @@ describe('Metrics', function () {
       // To confirm that we are not accidently including user paths to a
       // node.js binary.
       //
-      assume(data.argv[1]).equals('--require');
+      assume(data.argv).contains('--require');
     });
 
     it('includes a timestamp', async function () {
