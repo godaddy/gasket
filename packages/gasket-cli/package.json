@@ -19,7 +19,7 @@
     "posttest": "npm run lint",
     "manifest": "cross-env FAUX_ROOT='/path/to/your/app' oclif-dev manifest",
     "readme": "cross-env FAUX_ROOT='/path/to/your/app' oclif-dev readme",
-    "test": "nyc --reporter=text --reporter=json-summary run-s test:unit test:integration",
+    "test": "nyc --reporter=text --reporter=json-summary run-s test:unit",
     "test:mocha": "mocha --require test/setup.js --recursive 'test/**/*.test.js'",
     "test:integration": "mocha --require test/setup.js --recursive 'test/integration/**/*.test.js'",
     "test:integration:coverage": "nyc --reporter=text --reporter=json-summary --all run-s test:integration",
