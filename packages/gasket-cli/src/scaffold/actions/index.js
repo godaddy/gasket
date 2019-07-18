@@ -15,6 +15,7 @@ const generateFiles = require('./generate-files');
 const postCreateHooks = require('./post-create-hooks');
 const applyPresetConfig = require('./apply-preset-config');
 const printReport = require('./print-report');
+const addDefaultPlugins = require('./add-default-plugins');
 
 module.exports = {
   mkDir,
@@ -32,5 +33,6 @@ module.exports = {
   postCreateHooks,
   generateFiles,
   applyPresetConfig,
-  printReport
+  printReport,
+  addDefaultPlugins
 };

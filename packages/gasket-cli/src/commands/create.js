@@ -23,7 +23,8 @@ const {
   generateFiles,
   writeGasketConfig,
   applyPresetConfig,
-  printReport
+  printReport,
+  addDefaultPlugins
 } = require('../scaffold/actions');
 
 const dumpErrorContext = require('../scaffold/dump-error-context');
@@ -56,6 +57,7 @@ class CreateCommand extends Command {
         await globalPrompts(context);
         await mkDir(context);
         await setupPkg(context);
+        await addDefaultPlugins(context);
         await writePkg(context);
         await installModules(context);
         await linkModules(context);

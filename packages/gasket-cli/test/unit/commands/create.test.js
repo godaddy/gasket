@@ -31,7 +31,8 @@ describe('create', function () {
       generateFiles: sandbox.stub(),
       postCreateHooks: sandbox.stub(),
       applyPresetConfig: sandbox.stub(),
-      printReport: sandbox.stub()
+      printReport: sandbox.stub(),
+      addDefaultPlugins: sandbox.stub()
     };
 
     actionStubs.writePkg.update = sandbox.stub();
