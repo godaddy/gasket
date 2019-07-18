@@ -3,10 +3,5 @@
   "parser": "babel-eslint",
   "plugins": [
     "babel"
-  ],
-  "rules": {
-    "no-return-assign": 0,
-    "no-cond-assign": 0,
-    "strict": 0
-  }
+  ]
 }
