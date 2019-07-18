@@ -177,7 +177,7 @@ function lifecycle(config = {}, ...plugins) {
 
   return new Engine({
     plugins: {
-      add: [require('../index'), 'webpack', ...plugins].filter(Boolean)
+      add: [require('../index'), require('@gasket/webpack-plugin'), ...plugins].filter(Boolean)
     },
     next: {},
     http: {
