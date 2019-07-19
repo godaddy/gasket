@@ -18,7 +18,7 @@ $ npm install -g @gasket/cli
 $ gasket COMMAND
 running command...
 $ gasket (-v|--version|version)
-@gasket/cli/2.1.0 darwin-x64 node-v10.15.3
+@gasket/cli/2.1.1 darwin-x64 node-v10.15.3
 $ gasket --help [COMMAND]
 USAGE
   $ gasket COMMAND
@@ -48,8 +48,10 @@ OPTIONS
   -r, --root=root        [default: /path/to/your/app] Top-level app directory
   --env=env              Target runtime environment
   --npmconfig=npmconfig  [default: ~/.npmrc] .npmrc to be used for npm actions in @gasket/cli
-  --[no-]record          Whether or not to record this command as part of Gasket's metrics
+  --[no-]record          Whether or not to emit this command as part of Gasket's metrics lifecycle
 ```
+
+_See code: [src/commands/analyze.js](https://github.com/godaddy/gasket/blob/v2.1.1/src/commands/analyze.js)_
 
 ## `gasket build`
 
@@ -65,8 +67,10 @@ OPTIONS
   --analyze              Top-level app directory
   --env=env              Target runtime environment
   --npmconfig=npmconfig  [default: ~/.npmrc] .npmrc to be used for npm actions in @gasket/cli
-  --[no-]record          Whether or not to record this command as part of Gasket's metrics
+  --[no-]record          Whether or not to emit this command as part of Gasket's metrics lifecycle
 ```
+
+_See code: [src/commands/build.js](https://github.com/godaddy/gasket/blob/v2.1.1/src/commands/build.js)_
 
 ## `gasket create APPNAME`
 
@@ -95,6 +99,8 @@ OPTIONS
                                      multiple flags (e.g. --plugins jest --plugins zkconfig@^1.0.0)
                                      comma-separated values: --plugins=jest,zkconfig^1.0.0
 ```
+
+_See code: [src/commands/create.js](https://github.com/godaddy/gasket/blob/v2.1.1/src/commands/create.js)_
 
 ## `gasket help [COMMAND]`
 
@@ -126,8 +132,10 @@ OPTIONS
   -r, --root=root        [default: /path/to/your/app] Top-level app directory
   --env=env              Target runtime environment
   --npmconfig=npmconfig  [default: ~/.npmrc] .npmrc to be used for npm actions in @gasket/cli
-  --[no-]record          Whether or not to record this command as part of Gasket's metrics
+  --[no-]record          Whether or not to emit this command as part of Gasket's metrics lifecycle
 ```
+
+_See code: [src/commands/local.js](https://github.com/godaddy/gasket/blob/v2.1.1/src/commands/local.js)_
 
 ## `gasket start`
 
@@ -142,8 +150,10 @@ OPTIONS
   -r, --root=root        [default: /path/to/your/app] Top-level app directory
   --env=env              Target runtime environment
   --npmconfig=npmconfig  [default: ~/.npmrc] .npmrc to be used for npm actions in @gasket/cli
-  --[no-]record          Whether or not to record this command as part of Gasket's metrics
+  --[no-]record          Whether or not to emit this command as part of Gasket's metrics lifecycle
 ```
+
+_See code: [src/commands/start.js](https://github.com/godaddy/gasket/blob/v2.1.1/src/commands/start.js)_
 <!-- commandsstop -->
 
 

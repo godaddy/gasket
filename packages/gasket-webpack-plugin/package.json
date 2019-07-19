@@ -1,6 +1,6 @@
 {
   "name": "@gasket/webpack-plugin",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Adds webpack support to your application",
   "author": "GoDaddy Operating Company, LLC",
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-webpack-plugin",
@@ -27,7 +27,6 @@
     "webpack-chain": "^6.0.0",
     "webpack-merge": "^4.2.1"
   },
-  "peerDependencies": {},
   "devDependencies": {
     "assume": "^2.1.0",
     "assume-sinon": "^1.0.0",
