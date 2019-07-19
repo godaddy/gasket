@@ -5,11 +5,11 @@ module.exports = {
   dependencies: ['webpack'],
   name: 'nextjs',
   hooks: {
-    nextCreate: async function createNext(gasket, devServer) {
+    express: async function express(gasket, expressApp) {
       const { exec } = gasket;
-      const nextApp = require('next');
+      const createNextApp = require('next');
 
-      const app = nextApp({
+      const app = createNextApp({
         dev: devServer,
         conf: await createConfig(gasket, devServer)
       });
@@ -23,9 +23,44 @@ module.exports = {
       await exec('next', app);
       await app.prepare();
 
+      expressApp.set(['buildId', app.name].filter(Boolean).join('/'), app.buildId);
+
+
+      // Note: Not sure if this needs an await, maybe?
+      gasket.exec('nextExpress', { express, app });
+
+      const { root, routes } = gasket.config || {};
+      const routesModulePath = path.join(root, routes || './routes');
+      let ssr;
+
+      try {
+        let router = require(routesModulePath);
+    
+        // Handle ES6-style modules
+        if (router.default) {
+          router = router.default;
+        }
+    
+        ssr = router.getRequestHandler(app);
+      } catch (err) {
+        if (err.code !== 'MODULE_NOT_FOUND') {
+          throw err;
+        }
+    
+        ssr = app.getRequestHandler();
+      }
+      /** */
+
+      //
+      // Now that express has been setup, and users have been able to
+      // interact with the express router we want to add a last, catch all
+      // route that will activate the `next`.
+      //
+      expressApp.all('*', ssr);
+
       return app;
     },
-    nextBuild: async function createBuild(gasket) {
+    build: async function build(gasket) {
       //
       // Different versions of Nextjs, have different ways of exporting the builder.
       // In order to support canary, and other versions of next we need to detect

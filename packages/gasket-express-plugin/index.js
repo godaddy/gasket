@@ -10,11 +10,10 @@ module.exports = {
     * Create the Express instance and setup the lifecycle hooks.
     *
     * @param {Gasket} gasket Gasket API.
-    * @param {Object} config application config.
     * @returns {Express} The web server.
     * @public
     */
-    expressCreate: async function createExpress(gasket) {
+   createServers: async function createServers(gasket) {
       const { config } = gasket;
       const excludedRoutesRegex = config.express && config.express.excludedRoutesRegex;
       const app = express();
@@ -42,6 +41,10 @@ module.exports = {
       });
 
       await gasket.exec('express', app);
+
+      const postRenderingStacks = await gasket.exec('errorMiddleware');
+      postRenderingStacks.forEach(stack => gasket.expressApp.use(stack));
+      
       return app;
     }
   }
