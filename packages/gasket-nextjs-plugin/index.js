@@ -74,6 +74,29 @@ module.exports = {
       }
 
       return await builder(resolve('.'), await createConfig(gasket, true));
+    },
+    /**
+    * Workbox config partial to add next.js static assets to precache
+    *
+    * @param {Gasket} gasket The gasket API.
+    * @returns {Object} config
+    */
+    workbox: function (gasket) {
+      const { next = {} } = gasket.config;
+      const { assetPrefix = '' } = next;
+
+      const parsed = assetPrefix ? url.parse(assetPrefix) : '';
+      const joined = parsed ? url.format({ ...parsed, pathname: path.join(parsed.pathname, '_next/') }) : '_next/';
+
+      return {
+        globDirectory: '.',
+        globPatterns: [
+          '.next/static/**'
+        ],
+        modifyURLPrefix: {
+          '.next/': joined
+        }
+      };
     }
   }
 };
