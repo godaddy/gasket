@@ -1,6 +1,6 @@
 {
   "name": "@gasket/express-plugin",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Adds express support to your application",
   "author": "GoDaddy Operating Company, LLC",
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-express-plugin",

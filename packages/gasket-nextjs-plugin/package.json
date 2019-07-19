@@ -1,6 +1,6 @@
 {
   "name": "@gasket/nextjs-plugin",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Adds Next support to your application",
   "author": "GoDaddy Operating Company, LLC",
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-nextjs-plugin",
@@ -25,7 +25,7 @@
     "plugin"
   ],
   "dependencies": {
-    "@gasket/webpack-plugin": "^1.0.1"
+    "@gasket/webpack-plugin": "^1.0.2"
   },
   "peerDependencies": {
     "next": "^7.0.0 || ^8.0.0",

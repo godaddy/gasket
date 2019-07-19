@@ -1,6 +1,6 @@
 {
   "name": "@gasket/cli",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "CLI for rapid web development with gasket",
   "main": "src/index.js",
   "bin": {
@@ -40,7 +40,7 @@
   ],
   "dependencies": {
     "@gasket/plugin-engine": "^1.2.0",
-    "@gasket/utils": "^1.0.0",
+    "@gasket/utils": "^1.0.1",
     "@oclif/command": "^1.5.14",
     "@oclif/config": "^1.13.0",
     "@oclif/parser": "^3.8.1",
