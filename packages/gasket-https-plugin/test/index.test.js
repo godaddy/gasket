@@ -1,15 +1,18 @@
+const assumeSinonPlugin = require('assume-sinon');
 const assume = require('assume');
+assume.use(assumeSinonPlugin);
+
 const proxyquire = require('proxyquire').noCallThru();
 const { spy, stub } = require('sinon');
 const errs = require('errs');
 
 describe('servers hook', () => {
-  let createServers, createServersModule;
+  let start, createServersModule, debugStub;
   let gasketAPI, handler;
 
   beforeEach(() => {
     gasketAPI = {
-      exec: spy(),
+      exec: stub(),
       config: {},
       logger: {
         info: spy()
@@ -18,10 +21,14 @@ describe('servers hook', () => {
     handler = stub().yields();
 
     createServersModule = stub().yields(null);
+    debugStub = spy();
 
-    createServers = proxyquire('../', {
-      'create-servers': createServersModule
-    }).hooks.http;
+    start = proxyquire('../', {
+      'create-servers': createServersModule,
+      'diagnostics': stub().returns(debugStub)
+    }).hooks.start;
+
+    gasketAPI.exec.withArgs('createServers').resolves([handler]);
   });
 
   it('does not create an HTTP server if `http` is `null`', async () => {
@@ -91,16 +98,10 @@ describe('servers hook', () => {
   it('rejects with an Error on failure', async () => {
     createServersModule.yields(errs.create({ https: { message: 'HTTP server failed to start', errno: 'something' }}));
 
-    let threw = false;
-    try {
-      await executeModule();
-    } catch (err) {
-      threw = true;
-      assume(err).to.be.instanceOf(Error);
-      assume(err.message).to.match(/failed to start the http\/https servers/);
-    } finally {
-      assume(threw).equals(true);
-    }
+    await executeModule();
+
+    assume(debugStub.args[0][0].message).equals('failed to start the http/https servers');
+    assume(debugStub.args[0][1].https.message).equals('HTTP server failed to start');
   });
 
   it('rejects with an Error about ports on failure (with http)', async () => {
@@ -111,17 +112,10 @@ describe('servers hook', () => {
       }
     }));
 
-    let threw = false;
-    try {
-      await executeModule();
-    } catch (err) {
-      threw = true;
-      assume(err).to.be.instanceOf(Error);
-      assume(err.message).to.match(/Port is already in use/);
+    await executeModule();
 
-    } finally {
-      assume(threw).equals(true);
-    }
+    assume(debugStub.args[0][0].message).to.match('Port is already in use');
+    assume(debugStub.args[0][1].http.errno).equals('EADDRINUSE');
   });
 
   it('rejects with an Error about ports on failure (with https)', async () => {
@@ -132,20 +126,13 @@ describe('servers hook', () => {
       }
     }));
 
-    let threw = false;
-    try {
-      await executeModule();
-    } catch (err) {
-      threw = true;
-      assume(err).to.be.instanceOf(Error);
-      assume(err.message).to.match(/Port is already in use/);
+    await executeModule();
 
-    } finally {
-      assume(threw).equals(true);
-    }
+    assume(debugStub.args[0][0].message).to.match('Port is already in use');
+    assume(debugStub.args[0][1].https.errno).equals('EADDRINUSE');
   });
 
   async function executeModule() {
-    return createServers(gasketAPI, handler);
+    return start(gasketAPI);
   }
 });

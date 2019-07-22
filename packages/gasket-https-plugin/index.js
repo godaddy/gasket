@@ -13,8 +13,10 @@ module.exports = {
   name: 'https',
   hooks: {
     start: function start(gasket) {
-      // This will return the express instance or fastify
-      const handler = gasket.exec('createServers')[0];
+      const devServer = gasket.command === 'local';
+
+      // Retrieving the server handler
+      const handler = gasket.exec('createServers', devServer)[0];
 
       const { hostname, https, http } = gasket.config;
       const serverOpts = { hostname, handler };
@@ -42,7 +44,7 @@ module.exports = {
             });
           }
           debug(errorMessage, errors);
-          return reject(Object.assign(errorMessage, { errors }));
+          return;
         }
 
         await gasket.exec('servers', servers);

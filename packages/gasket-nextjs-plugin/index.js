@@ -5,7 +5,7 @@ module.exports = {
   dependencies: ['webpack'],
   name: 'nextjs',
   hooks: {
-    express: async function express(gasket, expressApp) {
+    express: async function express(gasket, expressApp, devServer) {
       const { exec } = gasket;
       const createNextApp = require('next');
 

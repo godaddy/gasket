@@ -10,6 +10,10 @@ configuration. This plugin is part of the [`@gasket/default-preset`].
   - [Installation](#installation)
   - [Configuration](#configuration)
   - [Lifecycles](#lifecycles)
+      - [createServers](#createservers)
+      - [servers](#servers)
+  - [Configuration](#configuration-1)
+        - [LICENSE: MIT](#license-mit)
 
 ## Installation
 
@@ -31,12 +35,30 @@ Add it to the `plugins` section of your `gasket.config.js`:
 
 ## Lifecycles
 
+#### createServers
+
+Executed in order to retrieve the server handler
+
+```js
+/**
+* In this example returns the express app
+*
+* @param {Gasket} gasket Gasket API.
+* @param {Boolean} devServer True if in dev
+* @returns {Express} The web server.
+* @public
+*/
+createServers: async function createServers(gasket, devServer) {
+  return express();
+}
+```
+
+#### servers
+
 Your application can use this plugin to hook the `servers` hook. These servers
 are consumed directly from [`create-servers`].
 
 ```js
-// lifecyles/servers.js
-
 /**
  *
  * @param  {Gasket} gasket The Gasket API
