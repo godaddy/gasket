@@ -135,8 +135,6 @@ class PluginEngine {
    *    avoid conflicts.
    */
   hook({ event, pluginName, timing, handler }) {
-    console.log('timing');
-    console.log(timing);
     const hookConfig = this._getHookConfig(event);
     const { first, before, after, last } = timing || {};
 
