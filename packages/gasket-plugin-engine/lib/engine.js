@@ -135,6 +135,8 @@ class PluginEngine {
    *    avoid conflicts.
    */
   hook({ event, pluginName, timing, handler }) {
+    console.log('timing');
+    console.log(timing);
     const hookConfig = this._getHookConfig(event);
     const { first, before, after, last } = timing || {};
 
@@ -503,9 +505,16 @@ class PluginEngine {
         accum.middles.push(plugin);
       }
 
+      const hook = subscribers[Object.keys(subscribers)[0]].callback;
+      const { name:hookName } = hook;
+
       // Normalize all "before" in terms of "after"
       ordering.before.forEach(follower => {
-        subscribers[follower].ordering.after.push(plugin);
+        try{
+          subscribers[follower].ordering.after.push(plugin);
+        }catch(e){
+          throw new Error(`Plugin '${follower}' does not have hook: '${hookName.replace('bound','').trim()}'`)
+        }        
       });
 
       return accum;
