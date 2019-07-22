@@ -1,5 +1,7 @@
 # CHANGELOG
 
+- Throw proper error about bad plugin timings
+
 ### 1.2.0
 
 - Add `execApply`, and `execApplySync` methods.
