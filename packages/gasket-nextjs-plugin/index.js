@@ -1,10 +1,35 @@
-const { resolve } = require('path');
+const path = require('path');
+const url = require('url');
 const { createConfig } = require('./config');
 
 module.exports = {
   dependencies: ['webpack'],
   name: 'nextjs',
   hooks: {
+    /**
+    * Add files & extend package.json for new apps.
+    *
+    * @param {Gasket} gasket - The gasket API.
+    * @param {CreateContext} context - Create context
+    * @param {Files} context.files - The Gasket Files API.
+    * @param {PackageJson} context.pkg - The Gasket PackageJson API.
+    * @public
+    */
+    create: function create(gasket, context) {
+      const { files, pkg } = context;
+
+      files.add(
+        `${__dirname}/generator/.*`,
+        `${__dirname}/generator/*`,
+        `${__dirname}/generator/**/*`
+      );
+
+      pkg.add('dependencies', {
+        'next': '^8.0.3',
+        'react': '^16.4.1',
+        'react-dom': '^16.4.1'
+      });
+    },
     express: async function express(gasket, expressApp, devServer) {
       const { exec } = gasket;
       const createNextApp = require('next');
@@ -27,7 +52,7 @@ module.exports = {
 
 
       // Note: Not sure if this needs an await, maybe?
-      gasket.exec('nextExpress', { express, app });
+      exec('nextExpress', { expressApp, app });
 
       const { root, routes } = gasket.config || {};
       const routesModulePath = path.join(root, routes || './routes');
@@ -35,18 +60,18 @@ module.exports = {
 
       try {
         let router = require(routesModulePath);
-    
+
         // Handle ES6-style modules
         if (router.default) {
           router = router.default;
         }
-    
+
         ssr = router.getRequestHandler(app);
       } catch (err) {
         if (err.code !== 'MODULE_NOT_FOUND') {
           throw err;
         }
-    
+
         ssr = app.getRequestHandler();
       }
       /** */
@@ -73,7 +98,7 @@ module.exports = {
         builder = require('next/dist/build').default;
       }
 
-      return await builder(resolve('.'), await createConfig(gasket, true));
+      return await builder(path.resolve('.'), await createConfig(gasket, true));
     },
     /**
     * Workbox config partial to add next.js static assets to precache

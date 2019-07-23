@@ -137,3 +137,30 @@ describe('createServers', () => {
     return callIdx === -1 ? null : aSpy.getCall(callIdx);
   }
 });
+
+describe('create', () => {
+
+  let plugin, mockContext;
+
+  function assumeCreatedWith(assertFn) {
+    return async function assumeCreated() {
+      await plugin.hooks.create({}, mockContext);
+      assertFn(mockContext);
+    };
+  }
+
+  beforeEach(() => {
+    plugin = require('./');
+
+    mockContext = {
+      pkg: { add: spy() },
+      files: { add: spy() }
+    };
+  });
+
+  it('adds appropriate dependencies', assumeCreatedWith(({ pkg }) => {
+    assume(pkg.add).calledWith('dependencies', {
+      express: '^4.16.3'
+    });
+  }));
+});
