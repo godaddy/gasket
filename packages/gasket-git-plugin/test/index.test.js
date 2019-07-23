@@ -14,7 +14,9 @@ describe('plugin', () => {
 
   it('has expected hooks', () => {
     const expected = [
-      // TODO
+      'prompt',
+      'create',
+      'postCreate'
     ];
 
     assume(plugin).to.have.property('hooks');

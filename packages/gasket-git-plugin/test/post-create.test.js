@@ -30,6 +30,10 @@ describe('postCreate', () => {
     sandbox.restore();
   });
 
+  it('is async function', function () {
+    assume(postCreate).to.be.an('asyncfunction');
+  });
+
   it('ignores if gitInit is false', async () => {
     mockContext.gitInit = false;
     await postCreate({}, mockContext);

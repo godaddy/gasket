@@ -17,7 +17,7 @@ describe('prompt', function () {
     };
   });
 
-  it('is async', function () {
+  it('is async function', function () {
     assume(prompt).to.be.an('asyncfunction');
   });
 
