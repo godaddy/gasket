@@ -1,7 +1,7 @@
 const path = require('path');
 const action = require('../action-wrapper');
 const PluginEngine = require('@gasket/plugin-engine');
-const run = require('../../run-shell-command');
+const { runShellCommand } = require('@gasket/utils');
 
 /**
  * Executes the `postCreate` hook for all registered plugins.
@@ -26,7 +26,7 @@ async function postCreateHooks(context) {
    * @returns {Promise} A promise represents if npm succeeds or fails.
    */
   async function runScript(script) {
-    return await run('npm', ['run', script], { cwd: dest });
+    return await runShellCommand('npm', ['run', script], { cwd: dest });
   }
 
   /**

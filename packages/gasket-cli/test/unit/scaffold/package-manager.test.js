@@ -9,7 +9,9 @@ describe('packageManager', function () {
 
   function manager(run) {
     return proxyquire('../../../src/scaffold/package-manager', {
-      '../run-shell-command': run
+      '@gasket/utils': {
+        runShellCommand: run
+      }
     });
   }
 

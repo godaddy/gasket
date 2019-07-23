@@ -1,4 +1,4 @@
-const run = require('../run-shell-command');
+const { runShellCommand } = require('@gasket/utils');
 
 /**
  * Wrapping class for running git commands
@@ -16,7 +16,7 @@ module.exports = class Git {
    * @returns {Promise} promise
    */
   async init() {
-    await run('git', ['init'], { cwd: this.cwd });
+    await runShellCommand('git', ['init'], { cwd: this.cwd });
   }
 
   /**
@@ -25,7 +25,7 @@ module.exports = class Git {
    * @returns {Promise} promise
    */
   async add() {
-    await run('git', ['add', '.'], { cwd: this.cwd });
+    await runShellCommand('git', ['add', '.'], { cwd: this.cwd });
   }
 
   /**
@@ -35,6 +35,6 @@ module.exports = class Git {
    * @returns {Promise} promise
    */
   async commit(message) {
-    await run('git', ['commit', '-m', message], { cwd: this.cwd });
+    await runShellCommand('git', ['commit', '-m', message], { cwd: this.cwd });
   }
 };

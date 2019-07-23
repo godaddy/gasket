@@ -1,4 +1,4 @@
-const run = require('../run-shell-command');
+const { runShellCommand } = require('@gasket/utils');
 
 /**
  * Wrapper class for executing commands for a given package manager
@@ -31,7 +31,7 @@ module.exports = class PackageManager {
       ? 'npm.cmd'
       : 'npm';
 
-    return run(npmBin, argv, spawnWith, !!process.env.GASKET_DEBUG_NPM);
+    return runShellCommand(npmBin, argv, spawnWith, !!process.env.GASKET_DEBUG_NPM);
   }
 
   /**
@@ -55,7 +55,7 @@ module.exports = class PackageManager {
       ? 'yarn.cmd'
       : 'yarn';
 
-    return run(yarnBin, argv, spawnWith, !!process.env.GASKET_DEBUG_YARN);
+    return runShellCommand(yarnBin, argv, spawnWith, !!process.env.GASKET_DEBUG_YARN);
   }
 
   /**

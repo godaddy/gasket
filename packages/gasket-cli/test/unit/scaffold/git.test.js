@@ -14,7 +14,9 @@ describe('Git', () => {
     runStub = sandbox.stub();
 
     mockImports = {
-      '../run-shell-command': runStub
+      '@gasket/utils': {
+        runShellCommand: runStub
+      }
     };
 
     const Git = proxyquire('../../../src/scaffold/git', mockImports);
