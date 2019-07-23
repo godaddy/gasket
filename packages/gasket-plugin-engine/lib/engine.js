@@ -507,11 +507,23 @@ class PluginEngine {
       const { name: hookName } = hook;
 
       // Normalize all "before" in terms of "after"
+      // ordering.before.forEach(follower => {
+      //   try {
+      //     subscribers[follower].ordering.after.push(plugin);
+      //   } catch (e) {
+      //     if (!subscribers.follower) {
+      //       console.warn(`Plugin '${follower}' does not have hook: '${hookName.replace('bound', '').trim()}'`)
+      //     } else {
+      //       throw e
+      //     }
+      //   }
+      // });
+
       ordering.before.forEach(follower => {
-        try {
+        if (follower in subscribers) {
           subscribers[follower].ordering.after.push(plugin);
-        } catch (e) {
-          throw new Error(`Plugin '${follower}' does not have hook: '${hookName.replace('bound', '').trim()}'`)
+        } else {
+          console.warn(`Plugin '${follower}' does not have hook: '${hookName.replace('bound', '').trim()}'`)
         }
       });
 
