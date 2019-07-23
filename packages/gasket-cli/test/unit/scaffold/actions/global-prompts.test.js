@@ -5,7 +5,7 @@ const proxyquire = require('proxyquire');
 describe('globalPrompts', () => {
   let sandbox, mockContext, mockImports, globalPrompts;
   let promptStub;
-  let chooseAppDescription, choosePackageManager, chooseInitGitRepo, chooseTestPlugin, allowExtantOverwriting;
+  let chooseAppDescription, choosePackageManager, chooseTestPlugin, allowExtantOverwriting;
 
   beforeEach(() => {
     sandbox = sinon.createSandbox();
@@ -35,7 +35,6 @@ describe('globalPrompts', () => {
     [
       chooseAppDescription,
       choosePackageManager,
-      chooseInitGitRepo,
       chooseTestPlugin,
       allowExtantOverwriting
     ] = globalPrompts.questions;
@@ -53,7 +52,7 @@ describe('globalPrompts', () => {
     promptStub.returns({});
     await globalPrompts(mockContext);
 
-    assume(promptStub).is.called(4);
+    assume(promptStub).is.called(3);
   });
 
   describe('packageManager', () => {
@@ -86,31 +85,6 @@ describe('globalPrompts', () => {
 
         assume(mockContext).property('installCmd', `${manager} install`);
       });
-    });
-  });
-
-  describe('gitInit', () => {
-
-    it('does not prompt if gitInit set in context', async () => {
-      mockContext.gitInit = false;
-      await chooseInitGitRepo(mockContext);
-
-      assume(promptStub).not.called();
-    });
-
-    it('prompts if gitInit not set in context', async () => {
-      promptStub.returns({ gitInit: true });
-      await chooseInitGitRepo(mockContext);
-
-      assume(promptStub).is.called();
-      assume(promptStub.args[0][0][0]).property('name', 'gitInit');
-    });
-
-    it('sets gitInit in context', async () => {
-      promptStub.returns({ gitInit: true });
-      await chooseInitGitRepo(mockContext);
-
-      assume(mockContext).property('gitInit', true);
     });
   });
 
