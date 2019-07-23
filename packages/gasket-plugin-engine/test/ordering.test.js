@@ -91,6 +91,28 @@ describe('Plugin hook ordering', () => {
     });
   });
 
+  describe('Hook event timing', () => {
+    beforeEach(() => {
+      let PluginA, PluginB;
+
+      PluginA = { name: 'a', hooks: { mockEventA: jest.fn() } };
+      PluginB = { name: 'a', hooks: { mockEventB: jest.fn() } };
+      jest
+        .doMock('@gasket/a-plugin', () => PluginA, { virtual: true })
+        .doMock('@gasket/b-plugin', () => PluginB, { virtual: true });
+    });
+
+    it('throws an error if plugin has bad hook timming config', async () => {
+      return verify({
+        withOrderingSpecs: {
+          mockEventB: { before: ['a'], after: ['b'] }
+        },
+        expectOrder: ['mockEventB'],
+        expectError: true
+      });
+    });
+  });
+
   async function verify({ withOrderingSpecs, expectOrder, expectError }) {
     jest.resetModules();
 

@@ -504,15 +504,15 @@ class PluginEngine {
       }
 
       const hook = subscribers[Object.keys(subscribers)[0]].callback;
-      const { name:hookName } = hook;
+      const { name: hookName } = hook;
 
       // Normalize all "before" in terms of "after"
       ordering.before.forEach(follower => {
-        try{
+        try {
           subscribers[follower].ordering.after.push(plugin);
-        }catch(e){
-          throw new Error(`Plugin '${follower}' does not have hook: '${hookName.replace('bound','').trim()}'`)
-        }        
+        } catch (e) {
+          throw new Error(`Plugin '${follower}' does not have hook: '${hookName.replace('bound', '').trim()}'`)
+        }
       });
 
       return accum;
