@@ -17,7 +17,6 @@ module.exports = {
 
       // Retrieving server opts
       let serverOpts = { hostname };
-      serverOpts = await gasket.execWaterfall('createServers', serverOpts);
 
       // create-servers does not support http or https being `null`
       if (http) {
@@ -26,6 +25,8 @@ module.exports = {
       if (https) {
         serverOpts.https = https;
       }
+
+      serverOpts = await gasket.execWaterfall('createServers', serverOpts);
 
       create(serverOpts, async function created(errors, servers) {
         if (errors) {
