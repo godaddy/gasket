@@ -7,17 +7,23 @@ const { runShellCommand } = require('@gasket/utils');
  * @param {CreateContext} context - Create context
  * @returns {Promise} promise
  */
-module.exports = async function postCreateHook(gasket, context) {
-  const { gitInit, dest: cwd } = context;
+module.exports = {
+  timing: {
+    last: true
+  },
+  handler: async function postCreateHook(gasket, context) {
+    const { gitInit, dest: cwd } = context;
 
-  if (gitInit) {
+    if (gitInit) {
     // Init a git repo
-    await runShellCommand('git', ['init'], { cwd });
+      await runShellCommand('git', ['init'], { cwd });
 
-    // Add all files
-    await runShellCommand('git', ['add', '.'], { cwd });
+      // Add all files
+      await runShellCommand('git', ['add', '.'], { cwd });
 
-    // Create a commit
-    await runShellCommand('git', ['commit', '-m', ':tada: Created new repository with gasket create'], { cwd });
+      // Create a commit
+      await runShellCommand('git', ['commit', '-m', ':tada: Created new repository with gasket create'], { cwd });
+    }
   }
 };
+
