@@ -52,10 +52,9 @@ module.exports = {
     /**
     * Creates the next app
     * @param  {Gasket} gasket The Gasket API
-    * @param {Servers} devServer true or false
     * @return {Promise<Object>} next app
     */
-    'nextCreate': async function createNext(gasket, devServer) {
+    'nextCreate': async function createNext(gasket) {
       return nextApp;
     }
   }

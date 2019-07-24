@@ -12,6 +12,7 @@ describe('servers hook', () => {
 
   beforeEach(() => {
     gasketAPI = {
+      execWaterfall: stub().callsFake(arg1 => Promise.resolve(arg1)),
       exec: stub(),
       config: {},
       logger: {

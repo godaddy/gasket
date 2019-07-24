@@ -54,11 +54,11 @@ module.exports = {
     /**
     * Creates the express app
     * @param  {Gasket} gasket The Gasket API
-    * @param  {Boolean} devServer True if dev server
+    * @param  {Object} serverOpts Server options.
     * @return {Promise<Object>} express app
     */
-    'createServers': async function createServers(gasket, devServer) {
-      return express();
+    'createServers': async function createServers(gasket, serverOpts) {
+      return { ...serverOpts, handler: express() };
     }
   }
 };
@@ -103,10 +103,9 @@ module.exports = {
     *
     * @param {Gasket} gasket The Gasket API
     * @param {Express} express Express app instance
-    * @param {Boolean} devServer True if dev server
     * @returns {function|function[]} middleware(s)
     */
-    express: async function (gasket, express, devServer) {
+    express: async function (gasket, express) {
     }
   }
 }
@@ -114,8 +113,8 @@ module.exports = {
 
 #### errorMiddleware
 
-Executed after the `express` event. All middleware or middleware arrays returned from
-these hooks will be applied to express.
+Executed after the `express` event. All middleware functions returned from
+this hook will be applied to express.
 
 ```js
 module.exports = {

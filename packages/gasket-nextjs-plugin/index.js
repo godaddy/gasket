@@ -30,9 +30,10 @@ module.exports = {
         'react-dom': '^16.4.1'
       });
     },
-    express: async function express(gasket, expressApp, devServer) {
+    express: async function express(gasket, expressApp) {
       const { exec } = gasket;
       const createNextApp = require('next');
+      const devServer = gasket.command === 'local';
 
       const app = createNextApp({
         dev: devServer,
@@ -50,9 +51,7 @@ module.exports = {
 
       expressApp.set(['buildId', app.name].filter(Boolean).join('/'), app.buildId);
 
-
-      // Note: Not sure if this needs an await, maybe?
-      exec('nextExpress', { expressApp, app });
+      await exec('nextExpress', { next: app, express: expressApp });
 
       const { root, routes } = gasket.config || {};
       const routesModulePath = path.join(root, routes || './routes');

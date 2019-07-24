@@ -32,34 +32,34 @@ describe('createServers', () => {
     });
   });
 
+  it('returns the handler app', async function () {
+    const result = await plugin.hooks.createServers(gasket, {});
+    assume(result).deep.equals({ handler: app });
+  });
+
   it('executes the `middleware` lifecycle', async function () {
-    await plugin.hooks.createServers(gasket);
+    await plugin.hooks.createServers(gasket, {});
     assume(gasket.exec).has.been.calledWith('middleware', app);
   });
 
-  it('executes the `express` lifecycle in dev', async function () {
-    await plugin.hooks.createServers(gasket, true);
-    assume(gasket.exec).has.been.calledWith('express', app, true);
-  });
-
-  it('executes the `express` lifecycle not in dev', async function () {
-    await plugin.hooks.createServers(gasket, false);
-    assume(gasket.exec).has.been.calledWith('express', app, false);
+  it('executes the `express` lifecycle', async function () {
+    await plugin.hooks.createServers(gasket, {});
+    assume(gasket.exec).has.been.calledWith('express', app);
   });
 
   it('executes the `errorMiddleware` lifecycle', async function () {
-    await plugin.hooks.createServers(gasket);
+    await plugin.hooks.createServers(gasket, {});
     assume(gasket.exec).has.been.calledWith('errorMiddleware');
   });
 
   it('executes the `middleware` lifecycle before the `express` lifecycle', async function () {
-    await plugin.hooks.createServers(gasket);
+    await plugin.hooks.createServers(gasket, {});
     assume(gasket.exec.firstCall).has.been.calledWith('middleware', app);
     assume(gasket.exec.secondCall).has.been.calledWith('express', app);
   });
 
   it('executes the `errorMiddleware` lifecycle after the `express` lifecycle', async function () {
-    await plugin.hooks.createServers(gasket);
+    await plugin.hooks.createServers(gasket, {});
     assume(gasket.exec.secondCall).has.been.calledWith('express', app);
     assume(gasket.exec.thirdCall).has.been.calledWith('errorMiddleware');
   });
@@ -68,7 +68,7 @@ describe('createServers', () => {
     const errorMiddlewares = [spy()];
     gasket.exec.withArgs('errorMiddleware').resolves(errorMiddlewares);
 
-    await plugin.hooks.createServers(gasket);
+    await plugin.hooks.createServers(gasket, {});
 
     const errorMiddleware = findCall(
       app.use,
@@ -77,7 +77,7 @@ describe('createServers', () => {
   });
 
   it('adds the cookie-parser middleware before plugin middleware', async () => {
-    await plugin.hooks.createServers(gasket);
+    await plugin.hooks.createServers(gasket, {});
 
     const cookieParserUsage = findCall(
       app.use,
@@ -95,7 +95,7 @@ describe('createServers', () => {
 
   it('adds the cookie-parser middleware with a excluded path', async () => {
     gasket.config.express = { excludedRoutesRegex: /^(?!\/_next\/)/ };
-    await plugin.hooks.createServers(gasket);
+    await plugin.hooks.createServers(gasket, {});
 
     const cookieParserUsage = findCall(
       app.use,
@@ -104,7 +104,7 @@ describe('createServers', () => {
   });
 
   it('adds the compression middleware by default', async () => {
-    await plugin.hooks.createServers(gasket);
+    await plugin.hooks.createServers(gasket, {});
 
     const compressionUsage = findCall(
       app.use,
@@ -114,7 +114,7 @@ describe('createServers', () => {
 
   it('adds the compression middleware when enabled from gasket config', async () => {
     gasket.config.express = { compression: true };
-    await plugin.hooks.createServers(gasket);
+    await plugin.hooks.createServers(gasket, {});
 
     const compressionUsage = findCall(
       app.use,
@@ -124,7 +124,7 @@ describe('createServers', () => {
 
   it('does not add the compression middleware when disabled from gasket config', async () => {
     gasket.config.express = { compression: false };
-    await plugin.hooks.createServers(gasket);
+    await plugin.hooks.createServers(gasket, {});
 
     const compressionUsage = findCall(
       app.use,

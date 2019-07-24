@@ -12,14 +12,12 @@ function portInUseError(errors) {
 module.exports = {
   name: 'https',
   hooks: {
-    start: function start(gasket) {
-      const devServer = gasket.command === 'local';
-
-      // Retrieving the server handler
-      const handler = gasket.exec('createServers', devServer)[0];
-
+    start: async function start(gasket) {
       const { hostname, https, http } = gasket.config;
-      const serverOpts = { hostname, handler };
+
+      // Retrieving server opts
+      let serverOpts = { hostname };
+      serverOpts = await gasket.execWaterfall('createServers', serverOpts);
 
       // create-servers does not support http or https being `null`
       if (http) {

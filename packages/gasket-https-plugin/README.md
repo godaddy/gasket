@@ -37,19 +37,20 @@ Add it to the `plugins` section of your `gasket.config.js`:
 
 #### createServers
 
-Executed in order to retrieve the server handler
+Executed in order to retrieve the server options and the handler
 
 ```js
 /**
 * In this example returns the express app
 *
 * @param {Gasket} gasket Gasket API.
-* @param {Boolean} devServer True if in dev
+* @param {Object} serverOpts Server options.
 * @returns {Express} The web server.
 * @public
 */
-createServers: async function createServers(gasket, devServer) {
-  return express();
+createServers: async function createServers(gasket, serverOpts) {
+  const newServerOpts;
+  return { ...serverOpts, ...newServerOpts, handler: express() };
 }
 ```
 

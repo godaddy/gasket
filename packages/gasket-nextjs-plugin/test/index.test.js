@@ -33,7 +33,7 @@ describe('next', () => {
     const gasket = mockGasketApi();
     await plugin.hooks.express(gasket, expressApp, false);
 
-    assume(gasket.exec).has.been.calledWith('nextExpress', { expressApp: expressApp, app: nextHandler });
+    assume(gasket.exec).has.been.calledWith('nextExpress', { next: nextHandler, express: expressApp });
   });
 
   it('does not derive a webpack config if not running a dev server', async () => {

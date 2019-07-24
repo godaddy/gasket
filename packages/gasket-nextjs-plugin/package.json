@@ -36,6 +36,7 @@
     "@gasket/plugin-engine": "^1.0.0",
     "assume": "^2.1.0",
     "assume-sinon": "^1.0.0",
+    "babel-eslint": "^10.0.2",
     "eslint": "^5.13.0",
     "eslint-config-godaddy": "^3.0.0",
     "eslint-plugin-json": "^1.3.2",

@@ -23,12 +23,12 @@ module.exports = {
     * Create the Express instance and setup the lifecycle hooks.
     *
     * @param {Gasket} gasket Gasket API.
-    * @param {Boolean} devServer True if in dev
+    * @param {Object} serverOpts Server options.
     * @returns {Express} The web server.
     * @public
     */
     // eslint-disable-next-line max-statements
-    createServers: async function createServers(gasket, devServer) {
+    createServers: async function createServers(gasket, serverOpts) {
       const { config } = gasket;
       const excludedRoutesRegex = config.express && config.express.excludedRoutesRegex;
       const app = express();
@@ -55,12 +55,15 @@ module.exports = {
         }
       });
 
-      await gasket.exec('express', app, devServer);
+      await gasket.exec('express', app);
 
       const postRenderingStacks = await gasket.exec('errorMiddleware');
       postRenderingStacks.forEach(stack => app.use(stack));
 
-      return app;
+      return {
+        ...serverOpts,
+        handler: app
+      };
     }
   }
 };
