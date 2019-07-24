@@ -1,6 +1,6 @@
 # CHANGELOG
 
-- Throw proper error about bad plugin timings
+- Warns user about bad plugin timings
 
 ### 1.2.0
 
