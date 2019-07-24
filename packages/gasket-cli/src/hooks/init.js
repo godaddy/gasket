@@ -13,6 +13,8 @@ async function initHook({ id, config: oclifConfig, argv }) {
   const PluginEngine = require('@gasket/plugin-engine');
   const GasketCommand = require('../command');
   const getGasketConfig = require('../config/loader');
+  const { pluginIdentifier } = require('../scaffold/package-identifier')
+  const defaultPlugins = require('./default-plugins');
 
   const { flags } = parse(argv, {
     context: this,
@@ -27,6 +29,14 @@ async function initHook({ id, config: oclifConfig, argv }) {
     oclifConfig.gasket = new PluginEngine(gasketConfig);
 
     const metrics = new Metrics(gasketConfig, flags.record, id);
+
+    let { add: plugins } = oclifConfig.gasket.config.plugins // eslint-disable-line no-unused-vars
+
+    plugins = defaultPlugins.reduce((acc, cur) => {
+      const next = pluginIdentifier(cur).shortName;
+      if (!acc.includes(next)) acc.push(next);
+      return acc;
+    }, plugins);
 
     // we don't await this call so we don't block anything
     metrics.report()

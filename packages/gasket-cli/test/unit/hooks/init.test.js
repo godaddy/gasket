@@ -16,14 +16,15 @@ describe('The init hook', () => {
       warn: stub()
     };
 
-    gasket = { exec: stub().resolves() };
+    gasket = { exec: stub().resolves(), config: { plugins: { add: [] } } };
     GasketPluginEngine = stub().returns(gasket);
     metrics = { report: stub().resolves() };
     Metrics = stub().returns(metrics);
 
     init = proxyquire('../../../src/hooks/init', {
       '@gasket/plugin-engine': GasketPluginEngine,
-      '../metrics': Metrics
+      '../metrics': Metrics,
+      './default-plugins': ['@gasket/foo-plugin', '@gasket/bar-plugin']
     });
   });
 
@@ -94,6 +95,14 @@ describe('The init hook', () => {
       }
     });
   });
+
+  it('adds default plugins to oclifConfig object', async () => {
+    await runInit();
+
+    const { add: plugins } = oclifConfig.gasket.config.plugins
+
+    assume(plugins).contains('foo', 'bar');
+  })
 
   it('executes an initOclif event', async () => {
     await runInit();
