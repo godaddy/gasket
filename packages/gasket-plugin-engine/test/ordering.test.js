@@ -91,6 +91,49 @@ describe('Plugin hook ordering', () => {
     });
   });
 
+  describe('Hook event timing', () => {
+    let PluginF, PluginG, PluginE;
+
+    beforeEach(() => {
+      PluginF = { hooks: { mockEvent: () => {} } };
+      PluginG = { hooks: { mockEvent2: () => {} } };
+      PluginE = { hooks: { mockEvent2: { timing: { before: ['f'], after: ['g'] }, handler: () => {} } } };
+
+      jest
+        .doMock('@gasket/f-plugin', () => PluginF, { virtual: true })
+        .doMock('@gasket/g-plugin', () => PluginG, { virtual: true })
+        .doMock('@gasket/e-plugin', () => PluginE, { virtual: true })
+    });
+
+    afterEach(() => {
+      jest.resetModules();
+    });
+
+    it('warns if plugin has bad before timing', async () => {
+      const spy = jest.spyOn(console, 'warn').mockImplementation();
+      const PluginEngine = require('..');
+      const engine = new PluginEngine({
+        plugins: {
+          add: ['f', 'g', 'e']
+        }
+      });
+
+      await engine.exec('mockEvent2');
+      expect(spy).toHaveBeenCalledTimes(1)
+    });
+
+    it('if timing correct, no errors', async () => {
+      const PluginEngine = require('..');
+      const engine = new PluginEngine({
+        plugins: {
+          add: ['f', 'g']
+        }
+      });
+
+      await engine.exec('mockEvent2');
+    });
+  });
+
   async function verify({ withOrderingSpecs, expectOrder, expectError }) {
     jest.resetModules();
 
