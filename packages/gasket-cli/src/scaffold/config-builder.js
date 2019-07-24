@@ -1,3 +1,4 @@
+/* eslint-disable complexity, max-statements */
 const deepmerge = require('deepmerge');
 const semver = require('semver');
 const debug = require('diagnostics')('gasket:cli:package');
