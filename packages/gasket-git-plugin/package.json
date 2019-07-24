@@ -1,6 +1,6 @@
 {
   "name": "@gasket/git-plugin",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "Adds git support to your application",
   "author": "GoDaddy Operating Company, LLC",
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-git-plugin",

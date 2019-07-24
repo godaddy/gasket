@@ -17,6 +17,8 @@ module.exports = async function promptHook(gasket, context, { prompt }) {
         type: 'confirm'
       }]);
 
-    Object.assign(context, { gitInit: !!gitInit });
+    return { ...context, gitInit };
   }
+
+  return context;
 };

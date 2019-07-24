@@ -25,6 +25,9 @@ describe('prompt', function () {
     mockContext.gitInit = false;
     await prompt({}, mockContext, mockUtils);
 
+    mockContext.gitInit = true;
+    await prompt({}, mockContext, mockUtils);
+
     assume(promptStub).not.called();
   });
 
@@ -36,10 +39,18 @@ describe('prompt', function () {
     assume(promptStub.args[0][0][0]).property('name', 'gitInit');
   });
 
-  it('sets gitInit in context', async () => {
+  it('sets gitInit in updated context', async () => {
     promptStub.returns({ gitInit: true });
-    await prompt({}, mockContext, mockUtils);
+    const result = await prompt({}, mockContext, mockUtils);
 
-    assume(mockContext).property('gitInit', true);
+    assume(result).not.equals(mockContext);
+    assume(result).property('gitInit', true);
+  });
+
+  it('returns original context if no prompt', async () => {
+    mockContext.gitInit = true;
+    const result = await prompt({}, mockContext, mockUtils);
+
+    assume(result).equals(mockContext);
   });
 });

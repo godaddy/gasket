@@ -1,6 +1,5 @@
-const path = require('path');
 const action = require('../action-wrapper');
-const PluginEngine = require('@gasket/plugin-engine');
+const createEngine = require('../create-engine');
 const { runShellCommand } = require('@gasket/utils');
 
 /**
@@ -11,14 +10,6 @@ const { runShellCommand } = require('@gasket/utils');
  */
 async function postCreateHooks(context) {
   const { dest, presets = [], plugins = [] } = context;
-  const resolveFrom = path.join(dest, 'node_modules');
-
-  const engineConfig = {
-    plugins: {
-      presets,
-      add: plugins
-    }
-  };
 
   /**
    * Run an npm script in the context of the created application
@@ -35,7 +26,7 @@ async function postCreateHooks(context) {
    */
   const utils = { runScript };
 
-  const gasket = new PluginEngine(engineConfig, { resolveFrom });
+  const gasket = createEngine({ dest, presets, plugins });
   await gasket.exec('postCreate', context, utils);
 }
 

@@ -90,7 +90,7 @@ describe('Metrics', function () {
 
     it('include the gasket dependencies in a list', async function () {
       const { deps } = await metrics.collect();
-      assume(deps).has.length(2);
+      assume(deps).greaterThan(2);
       assume(deps).contains('@gasket/plugin-engine');
     });
   });
