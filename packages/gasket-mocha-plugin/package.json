@@ -1,0 +1,70 @@
+{
+  "name": "@gasket/mocha-plugin",
+  "version": "1.3.0",
+  "description": "Integrates mocha based testing in to your Gasket application",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint index.js test/*.js generator/**/**/*.js",
+    "test": "nyc --reporter=text --reporter=json-summary npm run test:runner",
+    "test:runner": "mocha --require setup-env --recursive \"test/**/*.*(test|spec).js\"",
+    "test:watch": "npm run test:runner -- --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/godaddy/gasket.git"
+  },
+  "keywords": [
+    "gasket",
+    "plugin",
+    "mocha",
+    "test"
+  ],
+  "author": "GoDaddy Operating Company, LLC",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/godaddy/gasket/issues"
+  },
+  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-mocha-plugin#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/core": "^7.0.0",
+    "@babel/register": "^7.0.0",
+    "babel-eslint": "^10.0.1",
+    "chai": "^4.2.0",
+    "chai-spies": "^1.0.0",
+    "enzyme": "^3.8.0",
+    "enzyme-adapter-react-16": "^1.8.0",
+    "eslint": "^6.0.0",
+    "eslint-config-godaddy-react": "^5.1.0",
+    "eslint-plugin-json": "^1.3.2",
+    "eslint-plugin-mocha": "^5.2.1",
+    "eslint-plugin-react": "^7.12.4",
+    "jsdom": "^15.0.0",
+    "mocha": "^6.0.0",
+    "next": "^8.0.0",
+    "nyc": "^14.0.0",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
+    "setup-env": "^1.2.2",
+    "sinon": "^7.2.3"
+  },
+  "babel": {
+    "presets": [
+      "next/babel"
+    ],
+    "env": {
+      "test": {
+        "presets": [
+          [
+            "next/babel",
+            {
+              "preset-env": {
+                "modules": "commonjs"
+              }
+            }
+          ]
+        ]
+      }
+    }
+  }
+}
