@@ -7,14 +7,28 @@ module.exports = {
   name: 'express',
   hooks: {
     /**
+    * Add files & extend package.json for new apps.
+    *
+    * @param {Gasket} gasket - The gasket API.
+    * @param {CreateContext} context - Create context
+    * @param {PackageJson} context.pkg - The Gasket PackageJson API.
+    * @public
+    */
+    create: async function create(gasket, context) {
+      context.pkg.add('dependencies', {
+        express: '^4.16.3'
+      });
+    },
+    /**
     * Create the Express instance and setup the lifecycle hooks.
     *
     * @param {Gasket} gasket Gasket API.
-    * @param {Object} config application config.
+    * @param {Object} serverOpts Server options.
     * @returns {Express} The web server.
     * @public
     */
-    expressCreate: async function createExpress(gasket) {
+    // eslint-disable-next-line max-statements
+    createServers: async function createServers(gasket, serverOpts) {
       const { config } = gasket;
       const excludedRoutesRegex = config.express && config.express.excludedRoutesRegex;
       const app = express();
@@ -42,7 +56,14 @@ module.exports = {
       });
 
       await gasket.exec('express', app);
-      return app;
+
+      const postRenderingStacks = await gasket.exec('errorMiddleware');
+      postRenderingStacks.forEach(stack => app.use(stack));
+
+      return {
+        ...serverOpts,
+        handler: app
+      };
     }
   }
 };
