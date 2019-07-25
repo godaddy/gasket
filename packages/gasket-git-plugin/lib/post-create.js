@@ -15,7 +15,7 @@ module.exports = {
     const { gitInit, dest: cwd } = context;
 
     if (gitInit) {
-    // Init a git repo
+      // Init a git repo
       await runShellCommand('git', ['init'], { cwd });
 
       // Add all files
