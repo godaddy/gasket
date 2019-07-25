@@ -3,17 +3,17 @@ const proxyquire = require('proxyquire').noCallThru();
 const { match, stub } = require('sinon');
 const assume = require('assume');
 
-const defaultConfig = require('../../../src/config/defaults');
 const BaseCommand = require('../../../src/command');
 const gasketConfigFile = require('../../fixtures/gasket.config');
+const defaultConfig = require('../../../src/config/defaults');
 
-describe.only('The init hook', () => {
+describe('The init hook', () => {
   let init, GasketPluginEngine, gasket, metrics, Metrics;
   let oclifConfig;
 
   beforeEach(() => {
     oclifConfig = {
-      warn: stub(),
+      warn: stub()
     };
 
     gasket = { exec: stub().resolves(), config: { plugins: { add: [] } } };
@@ -24,7 +24,25 @@ describe.only('The init hook', () => {
     init = proxyquire('../../../src/hooks/init', {
       '@gasket/plugin-engine': GasketPluginEngine,
       '../metrics': Metrics,
-      './default-plugins': [],
+      './default-plugins': ['foo']
+    });
+  });
+
+  afterEach(function () {
+    defaultConfig.plugins = {
+      presets: ['default']
+    };
+  });
+
+  it('adds default plugins to oclifConfig object', async () => {
+    await runInit();
+
+    assume(GasketPluginEngine).is.calledWith({
+      plugins: {
+        presets: ['default'],
+        add: ['foo']
+      },
+      root: process.cwd()
     });
   });
 
@@ -91,22 +109,14 @@ describe.only('The init hook', () => {
       root,
       plugins: {
         presets: ['default'],
-        add: [path.join(root, './plugins/custom-plugin')]
+        add: [path.join(root, './plugins/custom-plugin'), 'foo']
       }
     });
   });
 
-  it('adds default plugins to oclifConfig object', async () => {
-    await runInit();
-
-    const { add: plugins } = oclifConfig.gasket.config.plugins
-
-    assume(plugins).contains('foo', 'bar');
-  })
-
   it('executes an initOclif event', async () => {
     await runInit();
-    
+
     assume(gasket.exec).is.calledWith('initOclif', {
       oclifConfig,
       BaseCommand

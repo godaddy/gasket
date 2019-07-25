@@ -25,9 +25,9 @@ async function initHook({ id, config: oclifConfig, argv }) {
 
   try {
     gasketConfig = await getGasketConfig(flags);
-    
-    let { add: plugins } = gasketConfig.plugins; // eslint-disable-line no-unused-vars
-    plugins.push(...defaultPlugins);
+
+    gasketConfig.plugins.add = gasketConfig.plugins.add || [];
+    gasketConfig.plugins.add.push(...defaultPlugins);
 
     oclifConfig.gasket = new PluginEngine(gasketConfig);
 
@@ -39,7 +39,6 @@ async function initHook({ id, config: oclifConfig, argv }) {
       .catch(this.error);
 
   } catch (err) {
-    console.log(err)
     this.error(err, { exit: 1 });
   }
 
