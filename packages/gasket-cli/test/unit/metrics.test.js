@@ -46,7 +46,7 @@ describe('Metrics', function () {
       // new branches locally, which would cause this test to fail.
       //
       assume(data.branch).is.a('string');
-      assume(data.repository).includes('github.com/godaddy/gasket');
+      assume(data.repository).includes('gasket.git');
     });
 
     it('includes package.json data', async function () {
