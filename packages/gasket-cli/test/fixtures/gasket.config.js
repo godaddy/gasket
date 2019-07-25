@@ -1,3 +1,4 @@
 module.exports = {
-  some: 'config'
+  some: 'config',
+  plugins: { add: [] }
 };

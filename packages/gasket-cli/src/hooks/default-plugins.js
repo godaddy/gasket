@@ -1,4 +1,4 @@
 module.exports = [
-  '@gasket/command-plugin',
-  '@gasket/lifecycle-plugin'
+  require('@gasket/command-plugin'),
+  require('@gasket/lifecycle-plugin')
 ];

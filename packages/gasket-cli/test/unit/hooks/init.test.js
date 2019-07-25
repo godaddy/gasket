@@ -7,13 +7,13 @@ const defaultConfig = require('../../../src/config/defaults');
 const BaseCommand = require('../../../src/command');
 const gasketConfigFile = require('../../fixtures/gasket.config');
 
-describe('The init hook', () => {
+describe.only('The init hook', () => {
   let init, GasketPluginEngine, gasket, metrics, Metrics;
   let oclifConfig;
 
   beforeEach(() => {
     oclifConfig = {
-      warn: stub()
+      warn: stub(),
     };
 
     gasket = { exec: stub().resolves(), config: { plugins: { add: [] } } };
@@ -24,7 +24,7 @@ describe('The init hook', () => {
     init = proxyquire('../../../src/hooks/init', {
       '@gasket/plugin-engine': GasketPluginEngine,
       '../metrics': Metrics,
-      './default-plugins': ['@gasket/foo-plugin', '@gasket/bar-plugin']
+      './default-plugins': [],
     });
   });
 
@@ -106,7 +106,7 @@ describe('The init hook', () => {
 
   it('executes an initOclif event', async () => {
     await runInit();
-
+    
     assume(gasket.exec).is.calledWith('initOclif', {
       oclifConfig,
       BaseCommand
