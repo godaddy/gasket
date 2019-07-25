@@ -2,7 +2,8 @@ const proxyquire = require('proxyquire');
 const { spy, stub } = require('sinon');
 const assume = require('assume');
 
-describe('createExpress', () => {
+// eslint-disable-next-line max-statements
+describe('createServers', () => {
   let plugin;
   let express, app;
   let cookieParser, cookieParserMiddleware;
@@ -31,24 +32,52 @@ describe('createExpress', () => {
     });
   });
 
+  it('returns the handler app', async function () {
+    const result = await plugin.hooks.createServers(gasket, {});
+    assume(result).deep.equals({ handler: app });
+  });
+
   it('executes the `middleware` lifecycle', async function () {
-    await plugin.hooks.expressCreate(gasket);
+    await plugin.hooks.createServers(gasket, {});
     assume(gasket.exec).has.been.calledWith('middleware', app);
   });
 
   it('executes the `express` lifecycle', async function () {
-    await plugin.hooks.expressCreate(gasket);
+    await plugin.hooks.createServers(gasket, {});
     assume(gasket.exec).has.been.calledWith('express', app);
   });
 
+  it('executes the `errorMiddleware` lifecycle', async function () {
+    await plugin.hooks.createServers(gasket, {});
+    assume(gasket.exec).has.been.calledWith('errorMiddleware');
+  });
+
   it('executes the `middleware` lifecycle before the `express` lifecycle', async function () {
-    await plugin.hooks.expressCreate(gasket);
+    await plugin.hooks.createServers(gasket, {});
     assume(gasket.exec.firstCall).has.been.calledWith('middleware', app);
     assume(gasket.exec.secondCall).has.been.calledWith('express', app);
   });
 
+  it('executes the `errorMiddleware` lifecycle after the `express` lifecycle', async function () {
+    await plugin.hooks.createServers(gasket, {});
+    assume(gasket.exec.secondCall).has.been.calledWith('express', app);
+    assume(gasket.exec.thirdCall).has.been.calledWith('errorMiddleware');
+  });
+
+  it('adds the errorMiddleware', async () => {
+    const errorMiddlewares = [spy()];
+    gasket.exec.withArgs('errorMiddleware').resolves(errorMiddlewares);
+
+    await plugin.hooks.createServers(gasket, {});
+
+    const errorMiddleware = findCall(
+      app.use,
+      (mw) => mw === errorMiddlewares[0]);
+    assume(errorMiddleware).to.not.be.null();
+  });
+
   it('adds the cookie-parser middleware before plugin middleware', async () => {
-    await plugin.hooks.expressCreate(gasket);
+    await plugin.hooks.createServers(gasket, {});
 
     const cookieParserUsage = findCall(
       app.use,
@@ -66,7 +95,7 @@ describe('createExpress', () => {
 
   it('adds the cookie-parser middleware with a excluded path', async () => {
     gasket.config.express = { excludedRoutesRegex: /^(?!\/_next\/)/ };
-    await plugin.hooks.expressCreate(gasket);
+    await plugin.hooks.createServers(gasket, {});
 
     const cookieParserUsage = findCall(
       app.use,
@@ -75,7 +104,7 @@ describe('createExpress', () => {
   });
 
   it('adds the compression middleware by default', async () => {
-    await plugin.hooks.expressCreate(gasket);
+    await plugin.hooks.createServers(gasket, {});
 
     const compressionUsage = findCall(
       app.use,
@@ -85,7 +114,7 @@ describe('createExpress', () => {
 
   it('adds the compression middleware when enabled from gasket config', async () => {
     gasket.config.express = { compression: true };
-    await plugin.hooks.expressCreate(gasket);
+    await plugin.hooks.createServers(gasket, {});
 
     const compressionUsage = findCall(
       app.use,
@@ -95,7 +124,7 @@ describe('createExpress', () => {
 
   it('does not add the compression middleware when disabled from gasket config', async () => {
     gasket.config.express = { compression: false };
-    await plugin.hooks.expressCreate(gasket);
+    await plugin.hooks.createServers(gasket, {});
 
     const compressionUsage = findCall(
       app.use,
@@ -107,4 +136,31 @@ describe('createExpress', () => {
     const callIdx = aSpy.args.findIndex(args => aPredicate(...args));
     return callIdx === -1 ? null : aSpy.getCall(callIdx);
   }
+});
+
+describe('create', () => {
+
+  let plugin, mockContext;
+
+  function assumeCreatedWith(assertFn) {
+    return async function assumeCreated() {
+      await plugin.hooks.create({}, mockContext);
+      assertFn(mockContext);
+    };
+  }
+
+  beforeEach(() => {
+    plugin = require('./');
+
+    mockContext = {
+      pkg: { add: spy() },
+      files: { add: spy() }
+    };
+  });
+
+  it('adds appropriate dependencies', assumeCreatedWith(({ pkg }) => {
+    assume(pkg.add).calledWith('dependencies', {
+      express: '^4.16.3'
+    });
+  }));
 });
