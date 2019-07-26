@@ -1,6 +1,6 @@
 # CHANGELOG
 
-###
+### 2.0.0
 
 - [#23] Dismantling core-plugin
 
