@@ -24,7 +24,6 @@ describe('create', function () {
       installModules: sandbox.stub(),
       linkModules: sandbox.stub(),
       writeGasketConfig: sandbox.stub(),
-      gitInit: sandbox.stub(),
       loadPkgForDebug: sandbox.stub(),
       promptHooks: sandbox.stub(),
       createHooks: sandbox.stub(),
@@ -76,7 +75,6 @@ describe('create', function () {
     assume(actionStubs.writePkg).is.called();
     assume(actionStubs.installModules).is.called();
     assume(actionStubs.linkModules).is.called();
-    assume(actionStubs.gitInit).is.called();
     assume(actionStubs.postCreateHooks).is.called();
   });
 

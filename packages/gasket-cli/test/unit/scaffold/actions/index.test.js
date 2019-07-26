@@ -13,7 +13,6 @@ describe('index', () => {
       'installModules',
       'linkModules',
       'writeGasketConfig',
-      'gitInit',
       'loadPkgForDebug',
       'promptHooks',
       'createHooks',
