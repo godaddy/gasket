@@ -7,7 +7,6 @@ const writePkg = require('./write-pkg');
 const installModules = require('./install-modules');
 const linkModules = require('./link-modules');
 const writeGasketConfig = require('./write-gasket-config');
-const gitInit = require('./git-init');
 const loadPkgForDebug = require('./load-pkg-for-debug');
 const promptHooks = require('./prompt-hooks');
 const createHooks = require('./create-hooks');
@@ -25,7 +24,6 @@ module.exports = {
   installModules,
   linkModules,
   writeGasketConfig,
-  gitInit,
   loadPkgForDebug,
   promptHooks,
   createHooks,

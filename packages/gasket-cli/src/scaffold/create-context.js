@@ -1,3 +1,4 @@
+/* eslint-disable max-len, max-statements */
 const fs = require('fs');
 const path = require('path');
 const { addPluginsToContext } = require('../scaffold/plugin-utils');

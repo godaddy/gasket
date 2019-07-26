@@ -15,7 +15,6 @@ const {
   writePkg,
   installModules,
   linkModules,
-  gitInit,
   loadPkgForDebug,
   promptHooks,
   createHooks,
@@ -75,7 +74,6 @@ class CreateCommand extends Command {
         await installModules.update(context);
         await linkModules.update(context); // relink any that were messed up by re-install
         await postCreateHooks(context);
-        await gitInit(context);
       } else {
         ora('Generate phase skipped.').warn();
       }

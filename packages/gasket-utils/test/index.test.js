@@ -4,7 +4,8 @@ describe('index', () => {
 
     const expected = [
       'tryRequire',
-      'applyEnvironmentOverrides'
+      'applyEnvironmentOverrides',
+      'runShellCommand'
     ];
 
     expect(expected.every(k => k in utils)).toBe(true);
