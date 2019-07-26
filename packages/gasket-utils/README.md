@@ -28,3 +28,17 @@ if(!someConfig) {
 ### applyEnvironmentOverrides
 
 Normalize the config by applying any environment or local overrides.
+
+### runShellCommand
+
+Promise friendly wrapper to running a shell command (eg: git, npm, ls).
+
+- `runShellCommand(command[, args][, options])`
+
+```js
+const { runShellCommand } = require('@gasket/utils');
+
+async function helloWorld() {
+  await runShellCommand('echo', ['hello world']);
+}
+```

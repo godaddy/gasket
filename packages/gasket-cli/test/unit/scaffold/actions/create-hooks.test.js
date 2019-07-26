@@ -6,7 +6,7 @@ const ConfigBuilder = require('../../../../src/scaffold/config-builder');
 
 describe('createHooks', () => {
   let sandbox, mockImports, mockContext, mockPlugin, createHooks;
-  let pluginEngineSpy, execApplyStub, handlerStub;
+  let engineStub, execApplyStub, handlerStub;
 
   beforeEach(() => {
     sandbox = sinon.createSandbox();
@@ -27,18 +27,15 @@ describe('createHooks', () => {
       }
     };
 
+    engineStub = sandbox.stub().returns({ execApply: execApplyStub });
+
     mockImports = {
-      '@gasket/plugin-engine': class PluginEngine {
-        execApply(hook, applyFn) {
-          execApplyStub(hook, applyFn);
-        }
-      },
+      '../create-engine': engineStub,
       '../files': class Files {
       },
       '../action-wrapper': require('../../../helpers').mockActionWrapper
     };
 
-    pluginEngineSpy = sandbox.spy(mockImports, '@gasket/plugin-engine');
 
     createHooks = proxyquire('../../../../src/scaffold/actions/create-hooks', mockImports);
   });
@@ -59,42 +56,6 @@ describe('createHooks', () => {
   it('adds gasketConfig to context', async () => {
     await createHooks(mockContext);
     assume(mockContext.gasketConfig).is.instanceOf(ConfigBuilder);
-  });
-
-  it('instantiates PluginEngine with preset from context in array', async () => {
-    await createHooks(mockContext);
-    assume(pluginEngineSpy.args[0][0].plugins.presets).eqls(['bogus-preset']);
-  });
-
-  it('instantiates PluginEngine if no preset in context', async () => {
-    mockContext = {
-      dest: '/some/path/my-app',
-      runWith(source) {
-        this.source = source;
-        return this;
-      }
-    };
-
-    await createHooks(mockContext);
-    assume(pluginEngineSpy.args[0][0].plugins.presets).eqls([]);
-  });
-
-  it('instantiates PluginEngine with plugins from context', async () => {
-    await createHooks(mockContext);
-    assume(pluginEngineSpy.args[0][0].plugins.add).eqls(['bogus-A-plugin', 'bogus-B-plugin']);
-  });
-
-  it('instantiates PluginEngine if no plugins in context', async () => {
-    mockContext = {
-      dest: '/some/path/my-app',
-      runWith(source) {
-        this.source = source;
-        return this;
-      }
-    };
-
-    await createHooks(mockContext);
-    assume(pluginEngineSpy.args[0][0].plugins.add).eqls([]);
   });
 
   it('executes the create hook for plugins with context', async () => {

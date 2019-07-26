@@ -1,10 +1,9 @@
 const inquirer = require('inquirer');
-const path = require('path');
-const PluginEngine = require('@gasket/plugin-engine');
 const action = require('../action-wrapper');
 const PackageManager = require('../package-manager');
 const { addPluginsToContext, addPluginsToPkg } = require('../plugin-utils');
 const { pluginIdentifier } = require('../package-identifier');
+const createEngine = require('../create-engine');
 
 /**
  * Create the `addPlugins` function with context
@@ -52,23 +51,15 @@ const createAddPlugins = context => {
  * to execute their prompt lifecycle hooks.
  *
  * @param {CreateContext} context - Create context
- * @param {String[]} targetPlugins - plugins to load
- * @param {String} [targetPresets] - presets to load
+ * @param {String[]} plugins - plugins to load
+ * @param {String} [presets] - presets to load
  * @returns {Promise} promise
  * @private
  */
-async function execPluginPrompts(context, targetPlugins = [], targetPresets = []) {
+async function execPluginPrompts(context, plugins = [], presets = []) {
   const { dest } = context;
 
-  const resolveFrom = path.join(dest, 'node_modules');
-  const engineConfig = {
-    plugins: {
-      presets: targetPresets,
-      add: targetPlugins
-    }
-  };
-
-  const gasket = new PluginEngine(engineConfig, { resolveFrom });
+  const gasket = createEngine({ dest, presets, plugins });
 
   //
   // @see: https://github.com/SBoudrias/Inquirer.js/#inquirercreatepromptmodule---prompt-function
@@ -95,8 +86,8 @@ async function promptHooks(context) {
   // Because `execPluginPrompts` is recursively, we need to start it
   // with the processPlugins and presets from our initial context
   //
-  const { presets: targetPresets, plugins: targetPlugins } = context;
-  await execPluginPrompts(context, targetPlugins, targetPresets);
+  const { presets, plugins } = context;
+  await execPluginPrompts(context, plugins, presets);
 }
 
 module.exports = action('Plugin prompts', promptHooks, { startSpinner: false });
