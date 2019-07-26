@@ -24,7 +24,7 @@
     "plugin"
   ],
   "dependencies": {
-    "@gasket/utils": "^1.0.1"
+    "@gasket/utils": "^1.1.0"
   },
   "devDependencies": {
     "assume": "^2.1.0",
