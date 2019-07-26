@@ -1,6 +1,6 @@
 # `@gasket/https-plugin`
 
-###
+### 2.0.0
 
 - [#23] Dismantling core-plugin
 - [#7]: Initialize the `https-plugin`
