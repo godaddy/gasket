@@ -34,7 +34,7 @@ describe('The init hook', () => {
     };
   });
 
-  it('adds default plugins to oclifConfig object', async () => {
+  it('instantiates plugin engine with default plugins', async () => {
     await runInit();
 
     assume(GasketPluginEngine).is.calledWith({
