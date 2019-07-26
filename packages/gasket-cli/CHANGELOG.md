@@ -1,5 +1,9 @@
 # `@gasket/cli`
 
+### 2.2.0
+
+- Split out git repo steps from create command to plugin
+
 ### 2.1.0
 
 - Output improvements for `create` command.
