@@ -6,24 +6,30 @@
 module.exports = {
   name: 'log',
   hooks: {
-    async init(gasket) {
-      const { config } = gasket;
+    init: {
+      timing: {
+        after: ['lifecycle']
+      },
+      handler: async function init(gasket) {
+        const { config } = gasket;
 
-      const options = {
-        transports: [],
-        ...config.winston,
-        ...config.log,
-        local: config.env === 'local' || gasket.command !== 'start',
-        exitOnError: true
-      };
+        const options = {
+          transports: [],
+          ...config.winston,
+          ...config.log,
+          local: config.env === 'local' || gasket.command !== 'start',
+          exitOnError: true
+        };
 
-      const transports = await gasket.exec('logTransports');
-      if (Array.isArray(transports) && transports.length) {
-        options.transports = options.transports.concat(transports);
+        const transports = await gasket.exec('logTransports');
+        if (Array.isArray(transports) && transports.length) {
+          // flatten and include transports gathered from the lifecycle
+          options.transports = transports.reduce((acc, val) => acc.concat(val).filter(Boolean), options.transports);
+        }
+
+        const Log = require('@gasket/log');
+        gasket.logger = new Log(options);
       }
-
-      const Log = require('@gasket/log');
-      gasket.logger = new Log(options);
     },
 
     async create(gasket, { pkg }) {

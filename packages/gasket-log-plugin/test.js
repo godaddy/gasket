@@ -26,13 +26,19 @@ describe('log plugin', function () {
 
   describe('.init', function () {
     it('runs on the init lifecycle event', function () {
-      assume(Plugin.hooks.init).to.be.an('asyncfunction');
-      assume(Plugin.hooks.init).to.have.length(1);
+      assume(Plugin.hooks.init.handler).to.be.an('asyncfunction');
+      assume(Plugin.hooks.init.handler).to.have.length(1);
+    });
+
+    it('runs after the lifecycle plugin', function () {
+      assume(Plugin.hooks.init.timing).property('after');
+      assume(Plugin.hooks.init.timing.after).contains('lifecycle');
     });
 
     it('adds a logger instance to the Gasket object', async function () {
       const gasket = {
-        exec: async function exec() {},
+        exec: async function exec() {
+        },
         config: {
           env: 'test',
           winston: {}
@@ -40,12 +46,12 @@ describe('log plugin', function () {
       };
 
       assume(gasket).not.to.have.property('logger');
-      await Plugin.hooks.init(gasket);
+      await Plugin.hooks.init.handler(gasket);
       assume(gasket).to.have.property('logger');
     });
 
     it('execs the logTransports hook', async () => {
-      const exec = sinon.stub().resolves();
+      const exec = sinon.stub().resolves();
       const gasket = {
         exec,
         command: 'start',
@@ -58,11 +64,12 @@ describe('log plugin', function () {
         assume(exec).to.have.been.calledWith('logTransports');
       });
 
-      await plugin.hooks.init(gasket);
+      await plugin.hooks.init.handler(gasket);
     });
 
     it('merges in any transports returned by the logTransports hook', async () => {
-      const exec = sinon.stub().resolves(['bar', 'bazz']);
+      // eslint-disable-next-line no-undefined
+      const exec = sinon.stub().resolves(['bar', 'bazz', undefined, ['apple', 'banana'], [undefined]]);
       const gasket = {
         exec,
         command: 'start',
@@ -75,11 +82,11 @@ describe('log plugin', function () {
       };
 
       const plugin = assumeLogInit(actual => {
-        assume(actual.transports).deep.equals(['foo', 'bar', 'bazz']);
+        assume(actual.transports).deep.equals(['foo', 'bar', 'bazz', 'apple', 'banana']);
         assume(exec).to.have.been.calledWith('logTransports');
       });
 
-      await plugin.hooks.init(gasket);
+      await plugin.hooks.init.handler(gasket);
     });
 
     it('sets defaults appropriately', async () => {
@@ -98,12 +105,13 @@ describe('log plugin', function () {
         assume(actual.transports).is.an('array');
       });
 
-      await plugin.hooks.init(gasket);
+      await plugin.hooks.init.handler(gasket);
     });
 
     it('forces { exitOnError: true }', async () => {
       const gasket = {
-        exec: async function exec() {},
+        exec: async function exec() {
+        },
         config: {
           winston: { exitOnError: false }
         }
@@ -113,12 +121,13 @@ describe('log plugin', function () {
         assume(actual.exitOnError).true();
       });
 
-      await plugin.hooks.init(gasket);
+      await plugin.hooks.init.handler(gasket);
     });
 
     it('merges the correct configuration', async () => {
       const gasket = {
-        exec: async function exec() {},
+        exec: async function exec() {
+        },
         config: {
           env: 'local',
           winston: {
@@ -135,7 +144,7 @@ describe('log plugin', function () {
         assume(actual.silent).true();
       });
 
-      await plugin.hooks.init(gasket);
+      await plugin.hooks.init.handler(gasket);
     });
   });
 
