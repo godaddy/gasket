@@ -85,6 +85,9 @@ module.exports = {
       return app;
     },
     build: async function build(gasket) {
+      // Don't do a build, use dev server for local
+      if (gasket.command === 'local') return;
+
       //
       // Different versions of Nextjs, have different ways of exporting the builder.
       // In order to support canary, and other versions of next we need to detect
