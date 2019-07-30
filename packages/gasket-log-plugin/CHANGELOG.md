@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 3.0.2
+
+- [#31] Fix logTransports lifecycle timing and allow no or multiple results
+
 ### 3.0.1
 
 - Install v3 of `@gasket/log` during create
@@ -34,3 +38,6 @@
 ### 1.0.0
 
 - Initial release.
+
+
+[#31]:https://github.com/godaddy/gasket/pull/31
