@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### 2.0.1
+### 2.0.2
 
 - [#33] Add required dependencies during `gasket create`
 
