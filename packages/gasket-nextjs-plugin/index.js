@@ -100,8 +100,7 @@ module.exports = {
         builder = require('next/dist/build').default;
       }
 
-      const b = await builder(path.resolve('.'), await createConfig(gasket, true));
-      return b;
+      return await builder(path.resolve('.'), await createConfig(gasket, true));
     },
     /**
     * Workbox config partial to add next.js static assets to precache
