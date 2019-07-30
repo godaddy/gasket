@@ -146,7 +146,7 @@ describe('setupPkg', () => {
       name: '@gasket/bogus-a-preset',
       version: '1.2.3',
       dependencies: { '@gasket/cli': 'file:../../../gasket-cli' }
-    },{
+    }, {
       name: '@gasket/bogus-b-preset',
       version: '1.2.3',
       dependencies: { '@gasket/cli': '^2.9.9' }
