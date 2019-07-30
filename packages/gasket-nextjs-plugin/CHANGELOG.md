@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 2.0.2
+
+- [#33] Add required dependencies during `gasket create`
+
 ### 2.0.1
 
 - [#32] Do not build with `gasket local` command
@@ -20,3 +24,4 @@
 
 [#23]: https://github.com/godaddy/gasket/pull/23
 [#32]: https://github.com/godaddy/gasket/pull/32
+[#33]: https://github.com/godaddy/gasket/pull/33
