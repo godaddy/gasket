@@ -1,6 +1,6 @@
 {
   "name": "@gasket/nextjs-plugin",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Adds Next support to your application",
   "author": "GoDaddy Operating Company, LLC",
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-nextjs-plugin",
