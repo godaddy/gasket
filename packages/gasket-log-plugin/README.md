@@ -140,17 +140,15 @@ To handle the `logTransports` hook to create the transport(s) appropriately:
 
 ```js
 const fluent = require('fluent-logger');
-const FluentTransport = fluent.support.winston;
+const FluentTransport = fluent.support.winstonTransport();
 
 /**
  * Define additional log transports for your application
  * @param {Gasket} gasket The gasket API
- * @return {Transport[]} winston Transports to consume
+ * @return {Transport|Transport[]} winston Transports to consume
  */
 function logTransportsHook(gasket) {
-  const { config } = gasket;
-
-  return new FluentTransport(config.fluentd);
+  return new FluentTransport('mytag', fluentConfig);
 };
 ```
 
