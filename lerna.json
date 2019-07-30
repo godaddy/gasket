@@ -3,5 +3,8 @@
     "packages/*",
     "plugins/*"
   ],
-  "version": "independent"
+  "version": "independent",
+  "ignoreChanges": [
+    "**/CHANGELOG.md"
+  ]
 }
