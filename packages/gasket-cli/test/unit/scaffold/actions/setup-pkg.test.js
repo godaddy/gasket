@@ -88,6 +88,17 @@ describe('setupPkg', () => {
     assume(mockContext.pkg.fields.dependencies).property('@gasket/cli', `^${pkgVersion}`);
   });
 
+  it('uses own cli version if not specified in preset', async () => {
+    mockContext.presetPkgs = [{
+      name: '@gasket/bogus-preset',
+      version: '3.2.1',
+      dependencies: {}
+    }];
+    assume(mockContext.pkg).is.undefined();
+    await setupPkg(mockContext);
+    assume(mockContext.pkg.fields.dependencies).property('@gasket/cli', `^${pkgVersion}`);
+  });
+
   it('derives cli version from preset', async () => {
     mockContext.presetPkgs = [{
       name: '@gasket/bogus-preset',
@@ -141,7 +152,7 @@ describe('setupPkg', () => {
     );
   });
 
-  it('supports file path for preset cli version ', async () => {
+  it('supports file path for preset cli version', async () => {
     mockContext.presetPkgs = [{
       name: '@gasket/bogus-a-preset',
       version: '1.2.3',

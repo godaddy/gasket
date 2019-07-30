@@ -28,7 +28,8 @@ async function setupPkg(context) {
   const cliPresets = presetPkgs.filter(p => p.dependencies && p.dependencies['@gasket/cli']);
 
   //
-  // Find the minimum cli version required. File paths are always preferred.
+  // Find the minimum cli version required.
+  // File paths are always preferred; for integration tests and local development
   //
   const cliVersion = cliPresets.reduce((acc, cur) => {
     const v = cur.dependencies['@gasket/cli'];
