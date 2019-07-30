@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### 3.0.2
+### 3.0.3
 
 - [#31] Fix logTransports lifecycle timing and allow no or multiple results
 
