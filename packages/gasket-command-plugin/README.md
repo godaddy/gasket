@@ -10,7 +10,7 @@ npm i --save @gasket/command-plugin
 
 ...and add to your `gasket.config.js`:
 
-```js harmony
+```js
 module.exports = {
   plugins: {
     // ...
