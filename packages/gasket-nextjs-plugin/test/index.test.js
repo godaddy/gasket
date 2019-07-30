@@ -3,7 +3,7 @@
 const { spy, stub } = require('sinon');
 const assume = require('assume');
 const path = require('path');
-const proxyquire = require('proxyquire');
+const proxyquire = require('proxyquire').noCallThru();
 
 describe('next', () => {
   let next, nextHandler, plugin, expressApp;
@@ -80,6 +80,51 @@ describe('create', () => {
       'react-dom': '^16.4.1'
     });
   }));
+});
+
+describe('build hook', () => {
+
+  let createConfigStub, builderStub;
+
+  const getMockedBuildHook = (imports = {}) => {
+    createConfigStub = stub();
+    builderStub = stub();
+
+    return proxyquire('../', {
+      './config': {
+        createConfig: createConfigStub
+      },
+      'next/dist/build': {
+        default: builderStub
+      },
+      ...imports
+    }).hooks.build;
+  };
+
+  it('does not build for local command', async () => {
+    const buildHook = getMockedBuildHook();
+    await buildHook({ command: 'local' });
+    assume(builderStub).not.called();
+  });
+
+  it('uses current next build', async () => {
+    const buildHook = getMockedBuildHook();
+    await buildHook({ command: 'build' });
+    assume(builderStub).called();
+  });
+
+  it('supports older next build', async () => {
+    const oldBuilderStub = stub();
+    const buildHook = getMockedBuildHook({
+      'next/dist/server/build': {
+        default: oldBuilderStub
+      }
+    });
+    await buildHook({ command: 'build' });
+
+    assume(oldBuilderStub).called();
+    assume(builderStub).not.called();
+  });
 });
 
 describe('workbox hook', () => {
