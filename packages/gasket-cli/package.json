@@ -13,7 +13,7 @@
   ],
   "scripts": {
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
+    "lint:fix": "npm run lint -- --fix",
     "prepack": "npm run manifest && npm run readme",
     "postpack": "rm -f oclif.manifest.json",
     "pretest": "npm run test:clean",
