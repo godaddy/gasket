@@ -7,6 +7,7 @@ describe('index', () => {
     const expected = [
       'mkDir',
       'loadPreset',
+      'cliVersion',
       'globalPrompts',
       'setupPkg',
       'writePkg',
