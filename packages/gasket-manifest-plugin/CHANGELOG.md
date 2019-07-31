@@ -1,5 +1,7 @@
 # CHANGELOG
 
+- Migrated to monorepo
+
 ### 1.2.0
 
  Add `manifest.path` config option to allow serving `manifest.json` from a custom path
