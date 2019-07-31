@@ -1,5 +1,7 @@
 # CHANGELOG
 
+- Migrated to monorepo
+
 ### 1.1.0
 
 - Minify composed code in production
