@@ -3,8 +3,9 @@ const action = require('../action-wrapper');
 const ConfigBuilder = require('../config-builder');
 const { addPluginsToPkg } = require('../plugin-utils');
 const { presetIdentifier } = require('../package-identifier');
-const pkgVersion = `^${require('../../../package.json').version}`;
-
+const pkgVersion = require('../../../package.json').version;
+const pkgVersionCompatible = `^${pkgVersion}`;
+const actionLabel = 'Set up package.json';
 /**
  * Helper to check if a module version is a file path
  *
@@ -17,9 +18,10 @@ const isFile = v => v && v.includes('file:');
  * Initializes the ConfigBuilder builder and adds to context.
  *
  * @param {CreateContext} context - Create context
+ * @param {Spinner} spinner - Spinner
  * @returns {Promise} promise
  */
-async function setupPkg(context) {
+async function setupPkg(context, spinner) {
   const { appName, appDescription, rawPresets, presetPkgs, rawPlugins = [], warnings } = context;
 
   //
@@ -45,16 +47,34 @@ async function setupPkg(context) {
   // Issue warnings if determined cli version does not meet a preset's requirements
   //
   if (!isFile(cliVersion)) {
+    let hasWarning = false;
     cliPresets.forEach(p => {
       const v = p.dependencies['@gasket/cli'];
+      // installed version mismatch
       if (!semver.satisfies(semver.coerce(v).version, cliVersion)) {
         warnings.push(
           `Installed @gasket/cli@${cliVersion} for ${minPreset.name}@${minPreset.version} ` +
           `which does not satisfy version (${v}) ` +
           `required by ${p.name}@${p.version}`
         );
+        hasWarning = true;
       }
     });
+
+    //
+    // Issue warnings if globally installed version mismatch with app installed
+    //
+    console.log(pkgVersion, cliVersion, semver.satisfies(pkgVersion, cliVersion));
+    if (!semver.satisfies(pkgVersion, cliVersion)) {
+      warnings.push(
+        `Installed @gasket/cli@${cliVersion} ` +
+        `which is not compatible with global version (${pkgVersion}) ` +
+        `used to execute \`gasket create\``
+      );
+      hasWarning = true;
+    }
+
+    if (hasWarning) spinner.warn(actionLabel + ' (cli version mismatch)');
   }
 
   const pkg = ConfigBuilder.createPackageJson({
@@ -72,11 +92,11 @@ async function setupPkg(context) {
     acc[fullName] = version;
     return acc;
   }, {
-    '@gasket/cli': cliVersion || pkgVersion
+    '@gasket/cli': cliVersion || pkgVersionCompatible
   }));
   addPluginsToPkg(rawPlugins, pkg);
 
   Object.assign(context, { pkg });
 }
 
-module.exports = action('Set up package.json', setupPkg, { startSpinner: false });
+module.exports = action(actionLabel, setupPkg, { startSpinner: false });
