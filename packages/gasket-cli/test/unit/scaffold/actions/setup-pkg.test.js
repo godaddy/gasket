@@ -147,7 +147,8 @@ describe('setupPkg', () => {
     await setupPkg(mockContext);
     assume(mockContext.warnings).length(1);
     assume(mockContext.warnings).includes(
-      'Installed @gasket/cli@^1.2.3 which does not satisfy version (^2.9.9) ' +
+      'Installed @gasket/cli@^1.2.3 for @gasket/bogus-c-preset@30.20.10 ' +
+      'which does not satisfy version (^2.9.9) ' +
       'required by @gasket/bogus-b-preset@10.20.30'
     );
   });
