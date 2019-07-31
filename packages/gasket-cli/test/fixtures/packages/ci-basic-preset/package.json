@@ -4,6 +4,7 @@
   "main": "index.js",
   "dependencies": {
     "@gasket/resolve": "file:../../../../../gasket-resolve",
+    "@gasket/cli": "file:../../../../../gasket-cli",
     "@gasket/ci-basic-plugin": "file:../ci-basic-plugin"
   }
 }
