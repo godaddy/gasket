@@ -27,7 +27,7 @@ To be set in under `serviceWorker` in the `gasket.config.js`.
 
 ### Example
 
-The defaults options for this plugin should be sufficient, however, they can be
+The defaults options for this plugin should be sufficient. However, they can be
 tuned as needed. A real-world use case may be for a micro-app served under a
 sub-path.
 
@@ -160,7 +160,7 @@ page), this plugin provides a lifecycle hook for apps and plugins to append
 their service worker code. This also allows content to be generated based on
 the request, such as language or cookie settings.
 
-When a when a service worker request comes in, the Request object is passed
+When a service worker request comes in, the Request object is passed
 through the registered cacheKey functions and a key string assembled. If the
 cache _does not_ contain the assembled key, a new service worker is composed
 and placed in cache. If the cache _does_ contain the key, the cached service
