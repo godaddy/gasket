@@ -1,17 +1,23 @@
 const flatten = require('./flatten');
 const Resolver = require('./resolver');
+const path = require('path');
 
 let dynamicNamingId = 0;
 
 class PluginEngine {
   constructor(config, { resolveFrom } = {}) {
     this.config = config || {};
+    this.config.metadata = this.config.metadata || {};
+    this.config.metadata = { ...this.config.metadata, plugins: {}, presets: {}};
     this.resolver = new Resolver({ resolveFrom });
 
     this._hooks = {};
     this._plans = {};
 
     this._registerHooks();
+
+    console.log(this.config.metadata.presets);
+    console.log(this.config.metadata.plugins);
 
     // Allow methods to be called without context (to support destructuring)
     [
@@ -30,9 +36,13 @@ class PluginEngine {
     const { presets = [], add = [], remove } = pluginConfig || { presets: ['default'] };
     const pluginsToRemove = new Set(remove || []);
 
-
     // TODO: check to see if presets include duplicate plugins
-    const presetEntries = flatten(presets)
+    const presetsFlatenned = flatten(presets);
+
+    // Adding presets module paths into config.metadata
+    this._registerPresetsModulePath(presetsFlatenned);
+
+    const presetEntries = presetsFlatenned
       .map(name => this._resolvePresetSafe(name))
       .reduce((acc, plugins) => [...acc, ...plugins], [])
       .map(plugin => [plugin.shortName, plugin.required]);
@@ -40,13 +50,71 @@ class PluginEngine {
     // TODO: check to see if addPlugins have duplicates from presetPlugins
     const addEntries = add.map(name => [name, this.resolver.pluginFor(name)]);
 
-    return presetEntries
-      .concat(addEntries)
+    const pluginsResolved = presetEntries.concat(addEntries)
+
+    // Adding plugins module paths into config.metadata
+    this._registerPluginsModulePath(pluginsResolved);
+
+    const pluginsToReturn = pluginsResolved
       .filter(([pluginName]) => !pluginsToRemove.has(pluginName))
       .reduce((acc, [pluginName, plugin]) => {
         acc[this._extractName(pluginName)] = plugin;
         return acc;
       }, {});
+
+      return pluginsToReturn;
+  }
+
+  /**
+   * Saves into the gasket config the module path of the presets
+   *
+   * @private
+   * @param {Array} plugins Array of presets
+   */
+  _registerPresetsModulePath(presets) {
+    const rootPath = this._rootPath();
+
+    presets.forEach(presetName => {
+      const presetFullName = this.resolver.presetFullName(presetName);
+      let relativePath = path.relative(rootPath, path.dirname(require.resolve(`${presetFullName}/package.json`)));
+      relativePath = `./${relativePath}`;
+      this.config.metadata.presets[presetName] = { modulePath: relativePath };
+    })
+  }
+
+  /**
+   * Saves into the gasket config the module path of the plugins
+   *
+   * @private
+   * @param {Array} plugins Array of plugins
+   */
+  _registerPluginsModulePath(plugins) {
+    const rootPath = this._rootPath();
+
+    plugins.forEach(([pluginName, plugin]) => {
+      var pluginKey, relativePath;
+
+      if (pluginName.indexOf('/') !== -1) {
+        relativePath = path.relative(rootPath, pluginName);
+        pluginKey = path.basename(pluginName).replace('-plugin', '');
+      } else {
+        const pluginFullName = this.resolver.pluginFullName(pluginName);
+        relativePath = path.relative(rootPath, path.dirname(require.resolve(`${pluginFullName}/package.json`)));
+        pluginKey = pluginName;
+      }
+
+      this.config.metadata.plugins[pluginKey] = { modulePath: `./${relativePath}` };
+    });
+  }
+
+  /**
+   * Returns the root path of the app
+   *
+   * @private
+   * @return {Path} root path of the app
+   */
+  _rootPath() {
+    return path.resolve(__dirname).split('/node_modules')[0];
   }
 
   /**
@@ -61,7 +129,8 @@ class PluginEngine {
    * @returns {*} result
    */
   _resolvePresetSafe(name) {
-    return this.resolver.presetFor(name)
+    const something = this.resolver.presetFor(name);
+    return something
       .map(plugin => {
         return typeof plugin === 'string'
           ? this.resolver.pluginInfoFor({ shortName: plugin })
@@ -503,16 +572,9 @@ class PluginEngine {
         accum.middles.push(plugin);
       }
 
-      const hook = subscribers[Object.keys(subscribers)[0]].callback;
-      const { name: hookName } = hook;
-
       // Normalize all "before" in terms of "after"
       ordering.before.forEach(follower => {
-        if (follower in subscribers) {
-          subscribers[follower].ordering.after.push(plugin);
-        } else {
-          console.warn(`Plugin '${follower}' does not have hook: '${hookName.replace('bound', '').trim()}'`)
-        }
+        subscribers[follower].ordering.after.push(plugin);
       });
 
       return accum;

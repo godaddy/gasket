@@ -13,8 +13,12 @@ module.exports = class Resolver {
 
     return this.resolveShorthandModule(
       name,
-      shortName => `@gasket/${shortName}-plugin`,
+      this.pluginFullName,
       fullName => `Plugin ${fullName} could not be resolved. Make sure it is installed.`);
+  }
+
+  pluginFullName(name) {
+    return `@gasket/${name}-plugin`;
   }
 
   pluginInfoFor({ shortName, range, preset, required, config }) {
@@ -32,7 +36,7 @@ module.exports = class Resolver {
 
     return this.resolveShorthandModule(
       name,
-      shortName => `@gasket/${shortName}-preset`,
+      this.presetFullName,
       fullName => `Preset ${fullName} could not be resolved. Make sure it is installed.`);
   }
 
@@ -47,6 +51,10 @@ module.exports = class Resolver {
       throw new Error(errorMessageGenerator(fullName));
     }
     return module;
+  }
+
+  presetFullName(name) {
+    return `@gasket/${name}-preset`;
   }
 
   tryRequire(moduleName) {
