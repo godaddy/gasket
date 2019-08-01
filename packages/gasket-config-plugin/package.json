@@ -1,0 +1,42 @@
+{
+  "name": "@gasket/config-plugin",
+  "version": "1.1.1",
+  "description": "Supports application-specific (non-Gasket) configuration",
+  "main": "lib/plugin.js",
+  "scripts": {
+    "test": "jest --coverage",
+    "posttest": "eslint --fix ./lib ./test",
+    "test:watch": "jest --watch",
+    "prepublish": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/godaddy/gasket"
+  },
+  "keywords": [
+    "gasket",
+    "plugin",
+    "config"
+  ],
+  "author": "GoDaddy Operating Company, LLC",
+  "maintainers": [
+    "Jacob Page <jpage@godaddy.com>"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/godaddy/gasket/issues"
+  },
+  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-config-plugin",
+  "dependencies": {
+    "@gasket/utils": "^1.0.0",
+    "lodash": ">=0.5.0 <5.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-godaddy": "^2.1.0",
+    "eslint-plugin-jest": "^21.18.0",
+    "eslint-plugin-json": "^1.2.0",
+    "eslint-plugin-mocha": "^4.12.1",
+    "jest": "^23.4.1"
+  }
+}
