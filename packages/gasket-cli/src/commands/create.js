@@ -10,6 +10,7 @@ const makeCreateContext = require('../scaffold/create-context');
 const {
   mkDir,
   loadPreset,
+  cliVersion,
   globalPrompts,
   setupPkg,
   writePkg,
@@ -51,6 +52,7 @@ class CreateCommand extends Command {
     try {
       if (bootstrap !== false) {
         await loadPreset(context);
+        cliVersion(context);
         applyPresetConfig(context);
         await globalPrompts(context);
         await mkDir(context);
