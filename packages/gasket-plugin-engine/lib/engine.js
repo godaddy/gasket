@@ -8,7 +8,7 @@ class PluginEngine {
   constructor(config, { resolveFrom } = {}) {
     this.config = config || {};
     this.config.metadata = this.config.metadata || {};
-    this.config.metadata = { ...this.config.metadata, plugins: {}, presets: {}};
+    this.config.metadata = { ...this.config.metadata, plugins: {}, presets: {} };
     this.resolver = new Resolver({ resolveFrom });
 
     this._hooks = {};
@@ -65,7 +65,7 @@ class PluginEngine {
    * Saves into the gasket config the module path of the presets
    *
    * @private
-   * @param {Array} plugins Array of presets
+   * @param {Array} presets Array of presets
    */
   _registerPresetsModulePath(presets) {
     const rootPath = this._rootPath();
@@ -75,7 +75,7 @@ class PluginEngine {
       let relativePath = path.relative(rootPath, path.dirname(require.resolve(`${presetFullName}/package.json`)));
       relativePath = `./${relativePath}`;
       this.config.metadata.presets[presetName] = { modulePath: relativePath };
-    })
+    });
   }
 
   /**
@@ -87,7 +87,7 @@ class PluginEngine {
   _registerPluginsModulePath(plugins) {
     const rootPath = this._rootPath();
 
-    plugins.forEach(([pluginName, plugin]) => {
+    plugins.forEach(([pluginName]) => {
       var pluginKey, relativePath;
 
       if (pluginName.indexOf('/') !== -1) {
@@ -107,7 +107,7 @@ class PluginEngine {
    * Returns the root path of the app
    *
    * @private
-   * @return {Path} root path of the app
+   * @returns {Path} root path of the app
    */
   _rootPath() {
     return path.resolve(__dirname).split('/node_modules')[0];
@@ -573,9 +573,9 @@ class PluginEngine {
       // Normalize all "before" in terms of "after"
       ordering.before.forEach(follower => {
         if (follower in subscribers) {
-          subscribers[follower].ordering.after.push(plugin);	
-        } else {	
-          console.warn(`Plugin '${follower}' does not have hook: '${hookName.replace('bound', '').trim()}'`)	
+          subscribers[follower].ordering.after.push(plugin);
+        } else {
+          console.warn(`Plugin '${follower}' does not have hook: '${hookName.replace('bound', '').trim()}'`);
         }
       });
 

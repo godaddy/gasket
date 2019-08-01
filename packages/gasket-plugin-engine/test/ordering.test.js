@@ -102,7 +102,7 @@ describe('Plugin hook ordering', () => {
       jest
         .doMock('@gasket/f-plugin', () => PluginF, { virtual: true })
         .doMock('@gasket/g-plugin', () => PluginG, { virtual: true })
-        .doMock('@gasket/e-plugin', () => PluginE, { virtual: true })
+        .doMock('@gasket/e-plugin', () => PluginE, { virtual: true });
     });
 
     afterEach(() => {
@@ -119,7 +119,7 @@ describe('Plugin hook ordering', () => {
       });
 
       await engine.exec('mockEvent2');
-      expect(spy).toHaveBeenCalledTimes(1)
+      expect(spy).toHaveBeenCalledTimes(1);
     });
 
     it('if timing correct, no errors', async () => {
