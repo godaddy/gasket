@@ -16,9 +16,6 @@ class PluginEngine {
 
     this._registerHooks();
 
-    console.log(this.config.metadata.presets);
-    console.log(this.config.metadata.plugins);
-
     // Allow methods to be called without context (to support destructuring)
     [
       'exec', 'execWaterfall', 'execMap', 'execApply',
@@ -50,19 +47,18 @@ class PluginEngine {
     // TODO: check to see if addPlugins have duplicates from presetPlugins
     const addEntries = add.map(name => [name, this.resolver.pluginFor(name)]);
 
-    const pluginsResolved = presetEntries.concat(addEntries)
+    const pluginsResolved = presetEntries
+      .concat(addEntries)
+      .filter(([pluginName]) => !pluginsToRemove.has(pluginName));
 
     // Adding plugins module paths into config.metadata
     this._registerPluginsModulePath(pluginsResolved);
 
-    const pluginsToReturn = pluginsResolved
-      .filter(([pluginName]) => !pluginsToRemove.has(pluginName))
+    return pluginsResolved
       .reduce((acc, [pluginName, plugin]) => {
         acc[this._extractName(pluginName)] = plugin;
         return acc;
       }, {});
-
-      return pluginsToReturn;
   }
 
   /**
@@ -129,8 +125,7 @@ class PluginEngine {
    * @returns {*} result
    */
   _resolvePresetSafe(name) {
-    const something = this.resolver.presetFor(name);
-    return something
+    return this.resolver.presetFor(name)
       .map(plugin => {
         return typeof plugin === 'string'
           ? this.resolver.pluginInfoFor({ shortName: plugin })
