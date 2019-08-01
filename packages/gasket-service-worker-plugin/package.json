@@ -1,6 +1,6 @@
 {
   "name": "@gasket/service-worker-plugin",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Gasket Service Worker Plugin",
   "main": "lib",
   "scripts": {
