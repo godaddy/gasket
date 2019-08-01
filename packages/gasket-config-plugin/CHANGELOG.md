@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 1.1.2
+
+- Migrated to monorepo
+
 ### 1.1.1
 
 - Fix timing bug in relation to `@gasket/redux-plugin`.

@@ -1,8 +1,11 @@
 # `@gasket/cli`
 
- - [#34] Support for setting cli version in apps
-   - Created apps have cli dependency matching global version used.
-   - Presets can specify the cli version required.
+### 2.3.0
+
+- [#34] Support for setting cli version in apps
+  - Created apps have cli dependency matching global version used.
+  - Presets can specify the cli version required.
+- [#38] Warn if CLI is not compatible with version required by preset.
 
 ### 2.2.0
 
@@ -188,3 +191,4 @@ upon `gasket create`
 
 
 [#34]: https://github.com/godaddy/gasket/pull/34
+[#38]: https://github.com/godaddy/gasket/pull/38

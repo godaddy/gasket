@@ -1,5 +1,7 @@
 # CHANGELOG
 
+### 1.2.1
+
 - Migrated to monorepo
 
 ### 1.2.0
