@@ -93,6 +93,11 @@ function flatten(acc, values) {
  * @property {Object[]} presetPkgs - Contents of the preset's package.json
  * @property {PluginName[]} presetPlugins - All the plugins which are dependencies of the preset
  *
+ * -- Added by `cli-version`
+ *
+ * @property {string} cliVersion - Version of current CLI used to issue `create` command
+ * @property {string} cliVersionRequired - Version of CLI to install, either current or min compatible version required by preset(s)
+ *
  * -- Added by `setup-pkg`
  *
  * @property {ConfigBuilder} pkg - package.json builder
