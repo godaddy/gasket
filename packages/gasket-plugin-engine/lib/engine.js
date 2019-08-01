@@ -567,9 +567,16 @@ class PluginEngine {
         accum.middles.push(plugin);
       }
 
+      const hook = subscribers[Object.keys(subscribers)[0]].callback;
+      const { name: hookName } = hook;
+
       // Normalize all "before" in terms of "after"
       ordering.before.forEach(follower => {
-        subscribers[follower].ordering.after.push(plugin);
+        if (follower in subscribers) {
+          subscribers[follower].ordering.after.push(plugin);	
+        } else {	
+          console.warn(`Plugin '${follower}' does not have hook: '${hookName.replace('bound', '').trim()}'`)	
+        }
       });
 
       return accum;
