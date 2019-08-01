@@ -1,0 +1,43 @@
+{
+  "name": "@gasket/analyze-plugin",
+  "version": "1.1.0",
+  "description": "Gasket Analyzer Plugin",
+  "main": "lib",
+  "scripts": {
+    "lint": "eslint lib",
+    "test": "jest",
+    "posttest": "npm run lint",
+    "test:watch": "jest --watchAll",
+    "test:coverage": "jest --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/godaddy/gasket"
+  },
+  "keywords": [
+    "gasket",
+    "plugin",
+    "analyze"
+  ],
+  "author": "GoDaddy Operating Company, LLC",
+  "maintainers": [
+    "Andrew Gerard <agerard@godaddy.com>"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/godaddy/gasket/issues"
+  },
+  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-analyze-plugin",
+  "dependencies": {
+    "deepmerge": "^2.1.1",
+    "webpack-bundle-analyzer": "^3.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.15.1",
+    "eslint-config-godaddy": "^3.0.0",
+    "eslint-plugin-jest": "^22.3.0",
+    "eslint-plugin-json": "^1.4.0",
+    "eslint-plugin-mocha": "^5.3.0",
+    "jest": "^24.8.0"
+  }
+}
