@@ -18,6 +18,7 @@ describe('create', function () {
     actionStubs = {
       mkDir: sandbox.stub(),
       loadPreset: sandbox.stub(),
+      cliVersion: sandbox.stub(),
       globalPrompts: sandbox.stub(),
       setupPkg: sandbox.stub(),
       writePkg: sandbox.stub(),

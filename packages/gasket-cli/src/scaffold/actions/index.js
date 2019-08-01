@@ -1,6 +1,7 @@
 
 const mkDir = require('./mkdir');
 const loadPreset = require('./load-preset');
+const cliVersion = require('./cli-version');
 const globalPrompts = require('./global-prompts');
 const setupPkg = require('./setup-pkg');
 const writePkg = require('./write-pkg');
@@ -18,6 +19,7 @@ const printReport = require('./print-report');
 module.exports = {
   mkDir,
   loadPreset,
+  cliVersion,
   globalPrompts,
   setupPkg,
   writePkg,
