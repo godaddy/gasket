@@ -31,8 +31,8 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-engine",
   "scripts": {
-    "pretest": "npm run lint",
     "test": "npm run unit",
+    "posttest": "npm run lint",
     "lint": "eslint lib test",
     "lint:fix": "npm run lint -- --fix",
     "unit": "jest --coverage"

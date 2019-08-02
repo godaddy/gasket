@@ -72,9 +72,11 @@ class PluginEngine {
 
     presets.forEach(presetName => {
       const presetFullName = this.resolver.presetFullName(presetName);
-      let relativePath = path.relative(rootPath, path.dirname(require.resolve(`${presetFullName}/package.json`)));
-      relativePath = `./${relativePath}`;
-      this.config.metadata.presets[presetName] = { modulePath: relativePath };
+      try {
+        let relativePath = path.relative(rootPath, path.dirname(require.resolve(`${presetFullName}/package.json`)));
+        relativePath = `./${relativePath}`;
+        this.config.metadata.presets[presetName] = { modulePath: relativePath };
+      } catch {}
     });
   }
 
@@ -88,18 +90,19 @@ class PluginEngine {
     const rootPath = this._rootPath();
 
     plugins.forEach(([pluginName]) => {
-      var pluginKey, relativePath;
+      var relativePath;
 
       if (pluginName.indexOf('/') !== -1) {
         relativePath = path.relative(rootPath, pluginName);
-        pluginKey = path.basename(pluginName).replace('-plugin', '');
+        let pluginKey = path.basename(pluginName).replace('-plugin', '');
+        this.config.metadata.plugins[pluginKey] = { modulePath: `./${relativePath}` };
       } else {
         const pluginFullName = this.resolver.pluginFullName(pluginName);
-        relativePath = path.relative(rootPath, path.dirname(require.resolve(`${pluginFullName}/package.json`)));
-        pluginKey = pluginName;
+        try {
+          relativePath = path.relative(rootPath, path.dirname(require.resolve(`${pluginFullName}/package.json`)));
+          this.config.metadata.plugins[pluginName] = { modulePath: `./${relativePath}` };
+        } catch {}
       }
-
-      this.config.metadata.plugins[pluginKey] = { modulePath: `./${relativePath}` };
     });
   }
 
