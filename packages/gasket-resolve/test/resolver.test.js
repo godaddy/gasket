@@ -67,4 +67,18 @@ describe('Resolver', () => {
       }).toThrow(/something-else-no-exist/);
     });
   });
+
+  it('pluginFullName returns expected full name', () => {
+    const resolver = new Resolver();
+    const result = resolver.pluginFullName('pluginName');
+
+    expect(result).toBe('@gasket/pluginName-plugin');
+  });
+
+  it('presetFullName returns expected full name', () => {
+    const resolver = new Resolver();
+    const result = resolver.presetFullName('presetName');
+
+    expect(result).toBe('@gasket/presetName-preset');
+  });
 });
