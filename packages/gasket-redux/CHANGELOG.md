@@ -4,7 +4,7 @@
 
 - Move to monorepo
 - Removed default reducers to be specified by apps
-- Removed `@redux-dyonstore` dependency
+- Removed `@redux-dynostore` dependency
 - Removed React dependencies and `withReducers` component.
 
 ### 2.1.3
