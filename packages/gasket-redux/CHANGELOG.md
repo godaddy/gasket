@@ -3,12 +3,9 @@
 ### 3.0.0
 
 - Move to monorepo
-- Remove default reducers to be specified by apps
-- Move React utils to separate import path:
-```diff
-- import { withReducers } from '@gasket/redux';
-+ import { withReducers } from '@gasket/redux/react';
-```
+- Removed default reducers to be specified by apps
+- Removed `@redux-dyonstore` dependency
+- Removed React dependencies and `withReducers` component.
 
 ### 2.1.3
 
