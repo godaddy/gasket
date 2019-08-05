@@ -10,7 +10,7 @@
  * @param {Object} preloadedState - State to preload store with
  * @returns {Object} placeholder reducers
  */
-export default function placeholderReducers(reducers, preloadedState) {
+export default function placeholderReducers(reducers = {}, preloadedState = {}) {
   return Object.keys(preloadedState).reduce((acc, cur) => {
     if (!(cur in reducers)) acc[cur] = f => f || preloadedState[cur];
     return acc;
