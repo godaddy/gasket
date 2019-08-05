@@ -1,4 +1,4 @@
-import { configureMakeStore } from './index';
+import { configureMakeStore } from '../src/index';
 
 describe('index', () => {
   it('exposes components', () => {

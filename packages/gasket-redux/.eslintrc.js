@@ -1,3 +1,3 @@
 module.exports = {
-  extends: ['godaddy-react', 'plugin:jest/recommended']
+  extends: ['godaddy', 'plugin:jest/recommended']
 };
