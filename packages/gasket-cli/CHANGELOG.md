@@ -1,5 +1,7 @@
 # `@gasket/cli`
 
+- Able to define default plugins
+
 ### 2.3.0
 
 - [#34] Support for setting cli version in apps
