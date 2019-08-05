@@ -64,7 +64,7 @@ describe('Resolver', () => {
       const resolver = new Resolver();
       expect(() => {
         resolver.tryRequire('@gasket/whatever');
-      }).toThrowError(/something-else-no-exist/);
+      }).toThrow(/something-else-no-exist/);
     });
   });
 });

@@ -58,10 +58,15 @@ describe('Plugin configuration', () => {
       }), { virtual: true });
 
     PluginEngine = require('..');
+
+    jest.spyOn(PluginEngine.prototype, '_resolveModulePath').mockImplementation(arg => {
+      return `/root/node_modules/${arg}`;
+    });
   });
 
   afterEach(() => {
     jest.resetModules();
+    jest.restoreAllMocks();
   });
 
   it('uses a default preset with an empty gasket config', async () => {
@@ -122,12 +127,12 @@ describe('Plugin configuration', () => {
 
   it('handles plugin stubs with no hooks gracefully', () => {
     expect(() => new PluginEngine({ plugins: { add: ['stub'] } }))
-      .not.toThrowError(Error);
+      .not.toThrow(Error);
   });
 
   it('does not import modules matching shorthand plugin names', () => {
     expect(() => new PluginEngine({ plugins: { add: ['eslint'] } }))
-      .not.toThrowError(Error);
+      .not.toThrow(Error);
   });
 
   it('allows plugins to be passed in directly', async () => {

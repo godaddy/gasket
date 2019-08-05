@@ -1,6 +1,20 @@
 const mapObject = require('./map-object');
 
 describe('Plugin hook ordering', () => {
+
+  let PluginEngine;
+
+  beforeEach(() => {
+    PluginEngine = require('..');
+    jest.spyOn(PluginEngine.prototype, '_resolveModulePath').mockImplementation(arg => {
+      return `/root/node_modules/${arg}`;
+    });
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
   it('enables a plugin to specify it runs before another', () => {
     return verify({
       withOrderingSpecs: {
@@ -103,15 +117,20 @@ describe('Plugin hook ordering', () => {
         .doMock('@gasket/f-plugin', () => PluginF, { virtual: true })
         .doMock('@gasket/g-plugin', () => PluginG, { virtual: true })
         .doMock('@gasket/e-plugin', () => PluginE, { virtual: true });
+
+      PluginEngine = require('..');
+      jest.spyOn(PluginEngine.prototype, '_resolveModulePath').mockImplementation(arg => {
+        return `/root/node_modules/${arg}`;
+      });
     });
 
     afterEach(() => {
       jest.resetModules();
+      jest.restoreAllMocks();
     });
 
     it('warns if plugin has bad before timing', async () => {
       const spy = jest.spyOn(console, 'warn').mockImplementation();
-      const PluginEngine = require('..');
       const engine = new PluginEngine({
         plugins: {
           add: ['f', 'g', 'e']
@@ -123,7 +142,6 @@ describe('Plugin hook ordering', () => {
     });
 
     it('if timing correct, no errors', async () => {
-      const PluginEngine = require('..');
       const engine = new PluginEngine({
         plugins: {
           add: ['f', 'g']
@@ -152,7 +170,6 @@ describe('Plugin hook ordering', () => {
         jest.doMock(`@gasket/${name}-plugin`, () => module, { virtual: true });
       });
 
-    const PluginEngine = require('..');
     const engine = new PluginEngine({
       plugins: {
         add: Object.keys(withOrderingSpecs)

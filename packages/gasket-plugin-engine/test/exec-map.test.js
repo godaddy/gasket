@@ -44,8 +44,16 @@ describe('The execMap method', () => {
       .doMock('@gasket/c-plugin', () => pluginC, { virtual: true });
 
     const PluginEngine = require('..');
+    jest.spyOn(PluginEngine.prototype, '_resolveModulePath').mockImplementation(arg => {
+      return `/root/node_modules/${arg}`;
+    });
 
     engine = new PluginEngine(mockConfig);
+  });
+
+  afterEach(() => {
+    jest.resetModules();
+    jest.restoreAllMocks();
   });
 
   it('passes the gasket config to each hook', async () => {

@@ -73,10 +73,12 @@ class PluginEngine {
     presets.forEach(presetName => {
       const presetFullName = this.resolver.presetFullName(presetName);
       try {
-        let relativePath = path.relative(rootPath, path.dirname(require.resolve(`${presetFullName}/package.json`)));
+        let relativePath = path.relative(rootPath, this._resolveModulePath(presetFullName));
         relativePath = `./${relativePath}`;
         this.config.metadata.presets[presetName] = { modulePath: relativePath };
-      } catch {}
+      } catch (err) {
+        console.error(`Preset '${presetFullName}' couldn't be resolved`);
+      }
     });
   }
 
@@ -89,21 +91,34 @@ class PluginEngine {
   _registerPluginsModulePath(plugins) {
     const rootPath = this._rootPath();
 
-    plugins.forEach(([pluginName]) => {
-      var relativePath;
+    plugins.forEach(([plugin]) => {
+      const pluginName = plugin.name || plugin;
 
       if (pluginName.indexOf('/') !== -1) {
-        relativePath = path.relative(rootPath, pluginName);
-        let pluginKey = path.basename(pluginName).replace('-plugin', '');
+        const relativePath = path.relative(rootPath, pluginName);
+        const pluginKey = path.basename(pluginName).replace('-plugin', '');
         this.config.metadata.plugins[pluginKey] = { modulePath: `./${relativePath}` };
       } else {
         const pluginFullName = this.resolver.pluginFullName(pluginName);
         try {
-          relativePath = path.relative(rootPath, path.dirname(require.resolve(`${pluginFullName}/package.json`)));
+          const relativePath = path.relative(rootPath, this._resolveModulePath(pluginFullName));
           this.config.metadata.plugins[pluginName] = { modulePath: `./${relativePath}` };
-        } catch {}
+        } catch (err) {
+          console.error(`Plugin '${pluginFullName}' couldn't be resolved`);
+        }
       }
     });
+  }
+
+  /**
+   * Returns the path of the module
+   *
+   * @private
+   * @param {String} module module
+   * @returns {Path} path of the module
+   */
+  _resolveModulePath(module) {
+    return path.dirname(require.resolve(`${module}/package.json`));
   }
 
   /**

@@ -23,12 +23,20 @@ describe('The execSync method', () => {
       .doMock('@gasket/b-plugin', () => pluginB, { virtual: true });
 
     const PluginEngine = require('..');
+    jest.spyOn(PluginEngine.prototype, '_resolveModulePath').mockImplementation(arg => {
+      return `/root/node_modules/${arg}`;
+    });
 
     engine = new PluginEngine({
       plugins: {
         add: ['a', 'b']
       }
     });
+  });
+
+  afterEach(() => {
+    jest.resetModules();
+    jest.restoreAllMocks();
   });
 
   it('returns an Array of results', () => {

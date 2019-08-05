@@ -1,6 +1,12 @@
 const pluginInfo = require('@gasket/resolve/plugin-info');
 
 describe('When resolving preset data structures', () => {
+
+  afterEach(() => {
+    jest.resetModules();
+    jest.restoreAllMocks();
+  });
+
   const pluginA = {
     hooks: {
       eventA() {
@@ -57,6 +63,9 @@ describe('When resolving preset data structures', () => {
     });
 
     const PluginEngine = require('../');
+    jest.spyOn(PluginEngine.prototype, '_resolveModulePath').mockImplementation(arg => {
+      return `/root/node_modules/${arg}`;
+    });
     return new PluginEngine({
       some: 'config',
       plugins: {
