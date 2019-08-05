@@ -204,7 +204,8 @@ describe('GasketCommand', function () {
         withGasketConfig: require('../fixtures/gasket.config'),
         expectedConfig: {
           env: 'development',
-          some: 'config'
+          some: 'config',
+          plugins: {}
         }
       });
     });
