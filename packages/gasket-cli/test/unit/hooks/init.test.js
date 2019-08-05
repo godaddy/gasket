@@ -6,6 +6,7 @@ const assume = require('assume');
 const BaseCommand = require('../../../src/command');
 const gasketConfigFile = require('../../fixtures/gasket.config');
 const defaultConfig = require('../../../src/config/defaults');
+const packageJSON = require('../../../package.json');
 
 describe('The init hook', () => {
   let init, GasketPluginEngine, gasket, metrics, Metrics;
@@ -44,6 +45,11 @@ describe('The init hook', () => {
       },
       root: process.cwd()
     });
+  });
+
+  it('has default plugins added to package json', async () => {
+    assume(packageJSON.dependencies).haveOwnProperty('@gasket/command-plugin');
+    assume(packageJSON.dependencies).haveOwnProperty('@gasket/lifecycle-plugin');
   });
 
   it('attaches the Gasket plugin engine to the Oclif context', async () => {
