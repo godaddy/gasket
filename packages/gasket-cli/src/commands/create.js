@@ -10,12 +10,12 @@ const makeCreateContext = require('../scaffold/create-context');
 const {
   mkDir,
   loadPreset,
+  cliVersion,
   globalPrompts,
   setupPkg,
   writePkg,
   installModules,
   linkModules,
-  gitInit,
   loadPkgForDebug,
   promptHooks,
   createHooks,
@@ -52,6 +52,7 @@ class CreateCommand extends Command {
     try {
       if (bootstrap !== false) {
         await loadPreset(context);
+        cliVersion(context);
         applyPresetConfig(context);
         await globalPrompts(context);
         await mkDir(context);
@@ -75,7 +76,6 @@ class CreateCommand extends Command {
         await installModules.update(context);
         await linkModules.update(context); // relink any that were messed up by re-install
         await postCreateHooks(context);
-        await gitInit(context);
       } else {
         ora('Generate phase skipped.').warn();
       }

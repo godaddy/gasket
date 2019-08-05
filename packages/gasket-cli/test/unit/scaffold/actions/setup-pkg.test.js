@@ -21,7 +21,8 @@ describe('setupPkg', () => {
       presetPkgs: [{
         name: '@gasket/bogus-preset',
         version: '3.2.1'
-      }]
+      }],
+      cliVersionRequired: '^1.2.3'
     };
   });
 

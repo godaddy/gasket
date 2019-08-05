@@ -1,3 +1,4 @@
+/* eslint-disable max-len, max-statements */
 const fs = require('fs');
 const path = require('path');
 const { addPluginsToContext } = require('../scaffold/plugin-utils');
@@ -91,6 +92,11 @@ function flatten(acc, values) {
  * @property {PresetDesc[]} fullPresets - resolved full name with version or local file path
  * @property {Object[]} presetPkgs - Contents of the preset's package.json
  * @property {PluginName[]} presetPlugins - All the plugins which are dependencies of the preset
+ *
+ * -- Added by `cli-version`
+ *
+ * @property {string} cliVersion - Version of current CLI used to issue `create` command
+ * @property {string} cliVersionRequired - Version of CLI to install, either current or min compatible version required by preset(s)
  *
  * -- Added by `setup-pkg`
  *

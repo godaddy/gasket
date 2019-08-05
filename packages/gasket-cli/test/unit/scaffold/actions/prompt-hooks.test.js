@@ -3,9 +3,9 @@ const assume = require('assume');
 const proxyquire = require('proxyquire');
 const ConfigBuilder = require('../../../../src/scaffold/config-builder');
 
-describe('createHooks', () => {
+describe('promptHooks', () => {
   let sandbox, mockImports, mockContext, promptHooks;
-  let pluginEngineSpy, pkgAddSpy, execWaterfallStub, installStub, linkStub, promptStub, createPromptModuleStub;
+  let engineStub, pkgAddSpy, execWaterfallStub, installStub, linkStub, promptStub, createPromptModuleStub;
 
   beforeEach(() => {
     sandbox = sinon.createSandbox();
@@ -27,12 +27,10 @@ describe('createHooks', () => {
       })
     };
 
+    engineStub = sandbox.stub().returns({ execWaterfall: execWaterfallStub });
+
     mockImports = {
-      '@gasket/plugin-engine': class PluginEngine {
-        execWaterfall() {
-          return execWaterfallStub(...arguments);
-        }
-      },
+      '../create-engine': engineStub,
       '../package-manager': class PackageManager {
         constructor() {
           this.install = installStub;
@@ -45,7 +43,6 @@ describe('createHooks', () => {
       '../action-wrapper': require('../../../helpers').mockActionWrapper
     };
 
-    pluginEngineSpy = sandbox.spy(mockImports, '@gasket/plugin-engine');
     pkgAddSpy = sandbox.spy(mockContext.pkg, 'add');
 
     promptHooks = proxyquire('../../../../src/scaffold/actions/prompt-hooks', mockImports);
@@ -57,32 +54,6 @@ describe('createHooks', () => {
 
   it('is decorated action', async () => {
     assume(promptHooks).property('wrapped');
-  });
-
-  it('instantiates PluginEngine with preset from context in array', async () => {
-    await promptHooks(mockContext);
-    assume(pluginEngineSpy.args[0][0].plugins.presets).eqls(['bogus-preset']);
-  });
-
-  it('instantiates PluginEngine if no preset in context', async () => {
-    mockContext = {
-      dest: '/some/path/my-app'
-    };
-    await promptHooks(mockContext);
-    assume(pluginEngineSpy.args[0][0].plugins.presets).eqls([]);
-  });
-
-  it('instantiates PluginEngine with plugins from context', async () => {
-    await promptHooks(mockContext);
-    assume(pluginEngineSpy.args[0][0].plugins.add).eqls(['bogus-A-plugin', 'bogus-B-plugin']);
-  });
-
-  it('instantiates PluginEngine if no plugins in context', async () => {
-    mockContext = {
-      dest: '/some/path/my-app'
-    };
-    await promptHooks(mockContext);
-    assume(pluginEngineSpy.args[0][0].plugins.add).eqls([]);
   });
 
   it('executes the plugin prompt hook with context', async () => {
@@ -149,7 +120,7 @@ describe('createHooks', () => {
 
     it('re-instantiates PluginEngine with only newly added plugins', async () => {
       await mockAddPlugins('@gasket/jest-plugin@^1.2.3');
-      assume(pluginEngineSpy.args[1][0].plugins.add).eqls(['jest']);
+      assume(engineStub).calledWithMatch({ plugins: ['jest'] });
     });
 
     it('re-executes the plugin prompt hook', async () => {

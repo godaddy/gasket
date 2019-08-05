@@ -1,6 +1,6 @@
 {
   "name": "@gasket/cli",
-  "version": "2.1.2",
+  "version": "2.3.0",
   "description": "CLI for rapid web development with gasket",
   "main": "src/index.js",
   "bin": {
@@ -13,6 +13,7 @@
   ],
   "scripts": {
     "lint": "eslint .",
+    "lint:fix": "npm run lint -- --fix",
     "prepack": "npm run manifest && npm run readme",
     "postpack": "rm -f oclif.manifest.json",
     "pretest": "npm run test:clean",
@@ -39,8 +40,9 @@
     "dx"
   ],
   "dependencies": {
+    "@gasket/git-plugin": "^1.0.0",
     "@gasket/plugin-engine": "^1.3.1",
-    "@gasket/utils": "^1.0.1",
+    "@gasket/utils": "^1.1.0",
     "@oclif/command": "^1.5.14",
     "@oclif/config": "^1.13.0",
     "@oclif/parser": "^3.8.1",
@@ -58,7 +60,7 @@
     "mkdirp": "^0.5.1",
     "ora": "^3.4.0",
     "pump": "^3.0.0",
-    "semver": "^6.1.1",
+    "semver": "^6.2.0",
     "tar-fs": "^2.0.0",
     "untildify": "^4.0.0",
     "vinyl-fs": "^3.0.3"

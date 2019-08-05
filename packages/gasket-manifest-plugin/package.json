@@ -1,0 +1,45 @@
+{
+  "name": "@gasket/manifest-plugin",
+  "version": "1.2.1",
+  "description": "The web app manifest for progressive Gasket applications",
+  "main": "lib/index.js",
+  "scripts": {
+    "lint": "eslint .",
+    "pretest": "npm run lint",
+    "test": "nyc --reporter=text --reporter=html npm run test:unit",
+    "test:unit": "mocha \"test/**/*.test.js\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/godaddy/gasket.git"
+  },
+  "keywords": [
+    "gasket",
+    "plugin",
+    "progressive web app",
+    "manifest"
+  ],
+  "author": "GoDaddy Operating Company, LLC",
+  "maintainers": [
+    "Sivan Mehta <smehta@godaddy.com>",
+    "Andrew Gerard <agerard@godaddy.com>"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/godaddy/gasket/issues"
+  },
+  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-manifest-plugin#readme",
+  "dependencies": {
+    "escape-string-regexp": "^1.0.5"
+  },
+  "devDependencies": {
+    "assume": "^2.2.0",
+    "eslint": "^5.16.0",
+    "eslint-config-godaddy": "^3.0.0",
+    "eslint-plugin-json": "^1.4.0",
+    "eslint-plugin-mocha": "^5.3.0",
+    "mocha": "^6.1.1",
+    "nyc": "^13.3.0",
+    "sinon": "^7.3.1"
+  }
+}

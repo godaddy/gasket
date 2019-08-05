@@ -2,6 +2,17 @@
 
 - Able to define default plugins
 
+### 2.3.0
+
+- [#34] Support for setting cli version in apps
+  - Created apps have cli dependency matching global version used.
+  - Presets can specify the cli version required.
+- [#38] Warn if CLI is not compatible with version required by preset.
+
+### 2.2.0
+
+- Split out git repo steps from create command to plugin
+
 ### 2.1.0
 
 - Output improvements for `create` command.
@@ -179,3 +190,7 @@ upon `gasket create`
 ### 0.3.0
 
 - `gasket create APPNAME` MVP.
+
+
+[#34]: https://github.com/godaddy/gasket/pull/34
+[#38]: https://github.com/godaddy/gasket/pull/38

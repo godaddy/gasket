@@ -10,7 +10,7 @@ const { presetIdentifier } = require('../package-identifier');
  * @returns {Promise} promise
  */
 async function setupPkg(context) {
-  const { appName, appDescription, rawPresets, presetPkgs, rawPlugins = [] } = context;
+  const { appName, appDescription, rawPresets, presetPkgs, rawPlugins = [], cliVersionRequired } = context;
 
   const pkg = ConfigBuilder.createPackageJson({
     name: appName,
@@ -27,8 +27,7 @@ async function setupPkg(context) {
     acc[fullName] = version;
     return acc;
   }, {
-    // TODO: read this remotely or include it in the preset itself.
-    '@gasket/cli': 'latest'
+    '@gasket/cli': cliVersionRequired
   }));
   addPluginsToPkg(rawPlugins, pkg);
 

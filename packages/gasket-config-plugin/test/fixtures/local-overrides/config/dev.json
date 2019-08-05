@@ -1,0 +1,7 @@
+{
+  "port": 443,
+  "urls": {
+    "fos": "https://www.test-domain.com/",
+    "gcAPI": "https://api.test-domain.com/"
+  }
+}

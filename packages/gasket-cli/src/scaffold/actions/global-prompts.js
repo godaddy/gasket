@@ -56,26 +56,6 @@ async function choosePackageManager(context) {
 }
 
 /**
- * Do you want a git repo to be initialized?
- *
- * @param {CreateContext} context - Create context
- * @returns {Promise} promise
- */
-async function chooseInitGitRepo(context) {
-
-  if (!('gitInit' in context)) {
-    const { gitInit } = await inquirer.prompt([
-      {
-        name: 'gitInit',
-        message: 'Do you want a git repo to be initialized?',
-        type: 'confirm'
-      }]);
-
-    Object.assign(context, { gitInit: !!gitInit });
-  }
-}
-
-/**
  * Choose your unit test suite
  *
  * @param {CreateContext} context - Create context
@@ -131,7 +111,6 @@ async function allowExtantOverwriting(context) {
 const questions = [
   chooseAppDescription,
   choosePackageManager,
-  chooseInitGitRepo,
   chooseTestPlugin,
   allowExtantOverwriting
 ];
