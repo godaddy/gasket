@@ -1,5 +1,9 @@
 # `@gasket/resolve`
 
+###
+
+- Exposing `pluginFullName` and `presetFullName`
+
 ### 1.3.0
 
 - [#8] Allow presets to extend other presets
