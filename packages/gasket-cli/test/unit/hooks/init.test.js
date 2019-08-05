@@ -3,9 +3,10 @@ const proxyquire = require('proxyquire').noCallThru();
 const { match, stub } = require('sinon');
 const assume = require('assume');
 
-const defaultConfig = require('../../../src/config/defaults');
 const BaseCommand = require('../../../src/command');
 const gasketConfigFile = require('../../fixtures/gasket.config');
+const defaultConfig = require('../../../src/config/defaults');
+const packageJSON = require('../../../package.json');
 
 describe('The init hook', () => {
   let init, GasketPluginEngine, gasket, metrics, Metrics;
@@ -16,15 +17,39 @@ describe('The init hook', () => {
       warn: stub()
     };
 
-    gasket = { exec: stub().resolves() };
+    gasket = { exec: stub().resolves(), config: { plugins: { add: [] } } };
     GasketPluginEngine = stub().returns(gasket);
     metrics = { report: stub().resolves() };
     Metrics = stub().returns(metrics);
 
     init = proxyquire('../../../src/hooks/init', {
       '@gasket/plugin-engine': GasketPluginEngine,
-      '../metrics': Metrics
+      '../metrics': Metrics,
+      './default-plugins': ['foo']
     });
+  });
+
+  afterEach(function () {
+    defaultConfig.plugins = {
+      presets: ['default']
+    };
+  });
+
+  it('instantiates plugin engine with default plugins', async () => {
+    await runInit();
+
+    assume(GasketPluginEngine).is.calledWith({
+      plugins: {
+        presets: ['default'],
+        add: ['foo']
+      },
+      root: process.cwd()
+    });
+  });
+
+  it('has default plugins added to package json', async () => {
+    assume(packageJSON.dependencies).haveOwnProperty('@gasket/command-plugin');
+    assume(packageJSON.dependencies).haveOwnProperty('@gasket/lifecycle-plugin');
   });
 
   it('attaches the Gasket plugin engine to the Oclif context', async () => {
@@ -90,7 +115,7 @@ describe('The init hook', () => {
       root,
       plugins: {
         presets: ['default'],
-        add: [path.join(root, './plugins/custom-plugin')]
+        add: [path.join(root, './plugins/custom-plugin'), 'foo']
       }
     });
   });
