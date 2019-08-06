@@ -13,9 +13,9 @@ module.exports = {
   hooks: {
     async create(gasket, { pkg }) {
       pkg.add('dependencies', {
-        '@gasket/redux': '^2.0.0',
-        'react-redux': '^5.0.7',
-        'redux': '^3.7.2'
+        '@gasket/redux': '^3.0.0',
+        'react-redux': '^7.1.0',
+        'redux': '^4.0.4'
       });
     },
     webpack(gasket) {

@@ -43,6 +43,6 @@
   },
   "peerDependencies": {
     "@gasket/log-plugin": "^2.0.0 || ^3.0.0",
-    "@gasket/redux": "^2.0.0"
+    "@gasket/redux": "^2.0.0 || ^3.0.0"
   }
 }
