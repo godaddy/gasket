@@ -1,5 +1,10 @@
 # CHANGELOG
 
+### 2.1.0
+
+- Migrated to monorepo
+- Upgrade dependencies for create
+
 ### 2.0.2
 
 - Allow `@gasket/log-plugin@3`
@@ -16,7 +21,7 @@
 ### 1.1.0
 
 - Ensure `@gasket/redux`, `redux`, and `react-redux` are
-  added to depedendencies of new apps.
+  added to dependencies of new apps.
 
 ### 1.0.0
 
