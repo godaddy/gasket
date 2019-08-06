@@ -1,4 +1,4 @@
-import configureMakeStore from './configureMakeStore';
+import configureMakeStore from './configure-make-store';
 
 export {
   configureMakeStore

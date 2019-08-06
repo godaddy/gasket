@@ -35,9 +35,6 @@
   "dependencies": {
     "@babel/runtime": "^7.1.2",
     "@gasket/log": "^3.0.0",
-    "@redux-dynostore/core": "^2.0.0",
-    "hoist-non-react-statics": "^2.5.0",
-    "prop-types": "^15.6.1",
     "redux": "^3.7.2 || ^4.0.1",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0"
@@ -48,22 +45,14 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
     "@babel/plugin-transform-runtime": "^7.1.0",
     "@babel/preset-env": "^7.4.5",
-    "@babel/preset-react": "^7.0.0",
-    "acorn": "^6.1.1",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^23.2.0",
-    "enzyme": "^3.9.0",
-    "enzyme-adapter-react-16": "^1.13.1",
     "eslint": "^5.16.0",
-    "eslint-config-godaddy-react": "^5.0.0",
     "eslint-plugin-jest": "^21.15.1",
     "eslint-plugin-json": "^1.4.0",
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-mocha": "^5.3.0",
-    "eslint-plugin-react": "^7.13.0",
-    "jest": "^24.8.0",
-    "react": "^16.3.2",
-    "react-dom": "^16.3.2"
+    "jest": "^24.8.0"
   }
 }

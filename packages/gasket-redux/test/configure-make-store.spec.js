@@ -1,5 +1,5 @@
 import * as redux from 'redux';
-import configureMakeStore from './configureMakeStore';
+import configureMakeStore from '../src/configure-make-store';
 import thunk from 'redux-thunk';
 import { mockLoggerMiddleware } from 'redux-logger';
 
@@ -88,6 +88,11 @@ describe('configureMakeStore', () => {
     expect(createStoreSpy).toHaveBeenCalledWith(expect.any(Function), expect.any(Object), expect.any(Function));
   });
 
+  it('adds placeholder reducers', () => {
+    configureMakeStore({ initialState: { bogus: true } })();
+    expect(combineReducersSpy).toHaveBeenCalledWith({ bogus: expect.any(Function) });
+  });
+
   it('uses devtools composer if set', () => {
     const mockDevToolsCompose = jest.fn();
     // eslint-disable-next-line id-length
@@ -127,45 +132,6 @@ describe('configureMakeStore', () => {
       expect(result).toBeInstanceOf(Object);
       expect(result).toHaveProperty('dispatch');
       expect(result).toHaveProperty('getState');
-    });
-
-    it('makes a redux store allowing dynamic attachReducers', () => {
-      store = makeStore();
-      expect(store).toHaveProperty('attachReducers');
-
-      const testReducer = (state, action) => {
-        switch (action.type) {
-          case 'ADD_THING':
-            return {
-              ...state,
-              [action.payload.id]: action.payload
-            };
-          case 'UPDATE_THING':
-            return Object.entries(state).reduce((map, [key, value]) => {
-              if (key === action.payload.oldItem.id) {
-                value = action.payload.newItem;
-              }
-              return Object.assign(map, { [value.id]: value });
-            }, {});
-          default:
-            return state;
-        }
-      };
-
-      store.attachReducers({ test: testReducer });
-
-      store.dispatch({ type: 'ADD_THING', payload: { id: 'foo', value: 6 } });
-      store.dispatch({
-        type: 'UPDATE_THING',
-        payload: {
-          oldItem: { id: 'foo', value: 6 },
-          newItem: { id: 'bar', value: 7 }
-        }
-      });
-
-      expect(store.getState().test).toEqual({
-        bar: { id: 'bar', value: 7 }
-      });
     });
 
     it('app initial state overrides configured initial state', () => {
