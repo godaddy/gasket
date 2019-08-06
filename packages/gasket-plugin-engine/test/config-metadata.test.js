@@ -52,7 +52,7 @@ describe('PluginEngine', () => {
       }
     });
 
-    expect(engine.config.metadata.plugins).toStrictEqual({ a: { modulePath: './node_modules/@gasket/a-plugin' } });
+    expect(engine.config.metadata.plugins).toStrictEqual({ a: { modulePath: '/node_modules/@gasket/a-plugin' } });
     expect(engine.config.metadata.presets).toStrictEqual({});
   });
 
@@ -73,7 +73,7 @@ describe('PluginEngine', () => {
       }
     });
 
-    expect(engine.config.metadata.plugins).toStrictEqual({ a: { modulePath: './node_modules/@gasket/a-plugin' } });
+    expect(engine.config.metadata.plugins).toStrictEqual({ a: { modulePath: '/node_modules/@gasket/a-plugin' } });
     expect(engine.config.metadata.presets).toStrictEqual({});
   });
 
@@ -98,10 +98,10 @@ describe('PluginEngine', () => {
 
     expect(engine.config.metadata.presets).toStrictEqual({
       somePreset: {
-        modulePath: './node_modules/@gasket/somePreset-preset'
+        modulePath: '/node_modules/@gasket/somePreset-preset'
       }
     });
-    expect(engine.config.metadata.plugins).toStrictEqual({ a: { modulePath: './node_modules/@gasket/a-plugin' } });
+    expect(engine.config.metadata.plugins).toStrictEqual({ a: { modulePath: '/node_modules/@gasket/a-plugin' } });
   });
 
   it('includes the preset path but not the plugins paths into gasket.config.metadata when using a preset', async () => {
@@ -114,7 +114,7 @@ describe('PluginEngine', () => {
 
     expect(engine.config.metadata.presets).toStrictEqual({
       somePreset: {
-        modulePath: './node_modules/@gasket/somePreset-preset'
+        modulePath: '/node_modules/@gasket/somePreset-preset'
       }
     });
     expect(engine.config.metadata.plugins).toStrictEqual({});

@@ -34,12 +34,12 @@ class PluginEngine {
     const pluginsToRemove = new Set(remove || []);
 
     // TODO: check to see if presets include duplicate plugins
-    const presetsFlatenned = flatten(presets);
+    const presetsFlattened = flatten(presets);
 
     // Adding presets module paths into config.metadata
-    this._registerPresetsModulePath(presetsFlatenned);
+    this._registerPresetsModulePath(presetsFlattened);
 
-    const presetEntries = presetsFlatenned
+    const presetEntries = presetsFlattened
       .map(name => this._resolvePresetSafe(name))
       .reduce((acc, plugins) => [...acc, ...plugins], [])
       .map(plugin => [plugin.shortName, plugin.required]);
@@ -74,7 +74,7 @@ class PluginEngine {
       const presetFullName = this.resolver.presetFullName(presetName);
       try {
         let relativePath = path.relative(rootPath, this._resolveModulePath(presetFullName));
-        relativePath = `./${relativePath}`;
+        relativePath = path.join('//', relativePath);
         this.config.metadata.presets[presetName] = { modulePath: relativePath };
       } catch (err) {
         console.error(`Preset '${presetFullName}' couldn't be resolved`);
@@ -97,12 +97,12 @@ class PluginEngine {
       if (pluginName.indexOf('/') !== -1) {
         const relativePath = path.relative(rootPath, pluginName);
         const pluginKey = path.basename(pluginName).replace('-plugin', '');
-        this.config.metadata.plugins[pluginKey] = { modulePath: `./${relativePath}` };
+        this.config.metadata.plugins[pluginKey] = { modulePath: path.join('//', relativePath) };
       } else {
         const pluginFullName = this.resolver.pluginFullName(pluginName);
         try {
           const relativePath = path.relative(rootPath, this._resolveModulePath(pluginFullName));
-          this.config.metadata.plugins[pluginName] = { modulePath: `./${relativePath}` };
+          this.config.metadata.plugins[pluginName] = { modulePath: path.join('//', relativePath) };
         } catch (err) {
           console.error(`Plugin '${pluginFullName}' couldn't be resolved`);
         }

@@ -1,7 +1,7 @@
 const action = require('../action-wrapper');
 const ConfigBuilder = require('../config-builder');
 const { addPluginsToPkg } = require('../plugin-utils');
-const { presetIdentifier } = require('../package-identifier');
+const { presetIdentifier } = require('@gasket/resolve');
 
 /**
  * Initializes the ConfigBuilder builder and adds to context.
