@@ -1,9 +1,13 @@
 # CHANGELOG
 
-### 2.1.0
+### 2.2.0
 
 - Migrated to monorepo
 - Upgrade dependencies for create
+
+### 2.1.0
+
+- Remove dependency on deprecated core plugin
 
 ### 2.0.2
 
