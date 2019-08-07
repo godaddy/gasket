@@ -9,7 +9,7 @@ const { getReduxConfig } = require('./utils');
  */
 module.exports = {
   name: 'redux',
-  dependencies: ['log', 'core'],
+  dependencies: ['log'],
   hooks: {
     async create(gasket, { pkg }) {
       pkg.add('dependencies', {
