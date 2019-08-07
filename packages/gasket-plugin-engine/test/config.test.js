@@ -27,9 +27,9 @@ describe('Plugin configuration', () => {
   let pluginStub;
 
   beforeEach(() => {
-    pluginA = { name: 'a', hooks: { mockEvent: jest.fn() } };
-    pluginB = { name: 'b', hooks: { mockEvent: jest.fn() } };
-    pluginC = { name: 'c', hooks: { mockEvent: jest.fn() } };
+    pluginA = { name: 'testa', hooks: { mockEvent: jest.fn() } };
+    pluginB = { name: 'testb', hooks: { mockEvent: jest.fn() } };
+    pluginC = { name: 'testc', hooks: { mockEvent: jest.fn() } };
 
     defaultPreset = createPreset({
       name: '@gasket/default-preset',
@@ -46,9 +46,9 @@ describe('Plugin configuration', () => {
     jest
       .doMock('@gasket/default-preset', () => defaultPreset, { virtual: true })
       .doMock('@gasket/custom-preset', () => customPreset, { virtual: true })
-      .doMock('@gasket/a-plugin', () => pluginA, { virtual: true })
-      .doMock('@gasket/b-plugin', () => pluginB, { virtual: true })
-      .doMock('@gasket/c-plugin', () => pluginC, { virtual: true })
+      .doMock('@gasket/testa-plugin', () => pluginA, { virtual: true })
+      .doMock('@gasket/testb-plugin', () => pluginB, { virtual: true })
+      .doMock('@gasket/testc-plugin', () => pluginC, { virtual: true })
       .doMock('@gasket/stub-plugin', () => pluginStub, { virtual: true })
       .doMock('@gasket/eslint-plugin', () => pluginStub, { virtual: true })
       .doMock('eslint', () => ({
@@ -97,7 +97,7 @@ describe('Plugin configuration', () => {
   it('allows adding plugins', async () => {
     await verify({
       withConfig: {
-        add: ['b']
+        add: ['testb']
       },
       expectPlugins: [pluginB],
       andNotPlugins: [pluginA, pluginC]
@@ -108,7 +108,7 @@ describe('Plugin configuration', () => {
     await verify({
       withConfig: {
         presets: ['default'],
-        remove: ['a']
+        remove: ['testa']
       },
       expectPlugins: [pluginB, pluginC],
       andNotPlugins: [pluginA]
@@ -122,7 +122,7 @@ describe('Plugin configuration', () => {
   });
 
   it('throws an exception if a specified plugin is not found', () => {
-    expect(() => new PluginEngine({ plugins: { add: ['d'] } })).toThrow(Error);
+    expect(() => new PluginEngine({ plugins: { add: ['testd'] } })).toThrow(Error);
   });
 
   it('handles plugin stubs with no hooks gracefully', () => {

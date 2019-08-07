@@ -19,8 +19,8 @@ describe('The execWaterfall method', () => {
     };
 
     jest
-      .doMock('@gasket/a-plugin', () => pluginA, { virtual: true })
-      .doMock('@gasket/b-plugin', () => pluginB, { virtual: true });
+      .doMock('@gasket/testa-plugin', () => pluginA, { virtual: true })
+      .doMock('@gasket/testb-plugin', () => pluginB, { virtual: true });
 
     const PluginEngine = require('..');
 
@@ -30,7 +30,7 @@ describe('The execWaterfall method', () => {
 
     engine = new PluginEngine({
       plugins: {
-        add: ['a', 'b']
+        add: ['testa', 'testb']
       }
     });
   });

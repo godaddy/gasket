@@ -1,6 +1,7 @@
 const path = require('path');
 const debug = require('diagnostics')('gasket:resolver');
 const pluginInfo = require('./plugin-info');
+const { pluginIdentifier, presetIdentifier } = require('./package-identifier');
 
 module.exports = class Resolver {
   constructor({ resolveFrom, resolve } = {}) {
@@ -18,7 +19,7 @@ module.exports = class Resolver {
   }
 
   pluginFullName(name) {
-    return `@gasket/${name}-plugin`;
+    return pluginIdentifier(name).fullName;
   }
 
   pluginInfoFor({ shortName, range, preset, required, config }) {
@@ -54,7 +55,7 @@ module.exports = class Resolver {
   }
 
   presetFullName(name) {
-    return `@gasket/${name}-preset`;
+    return presetIdentifier(name).fullName;
   }
 
   tryRequire(moduleName) {

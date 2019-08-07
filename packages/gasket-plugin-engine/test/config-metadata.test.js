@@ -21,14 +21,14 @@ function createPreset({ name: preset, plugins }) {
 describe('PluginEngine', () => {
 
   beforeEach(() => {
-    const aPlugin = { name: 'a', hooks: { mockEvent: jest.fn() } };
+    const testAPlugin = { name: 'testa', hooks: { mockEvent: jest.fn() } };
     const somePreset = createPreset({
       name: '@gasket/somePreset-preset',
-      plugins: [aPlugin]
+      plugins: [testAPlugin]
     });
 
     jest
-      .doMock('@gasket/a-plugin', () => aPlugin, { virtual: true })
+      .doMock('@gasket/testa-plugin', () => testAPlugin, { virtual: true })
       .doMock('@gasket/somePreset-preset', () => somePreset, { virtual: true });
 
     jest.spyOn(PluginEngine.prototype, '_rootPath').mockImplementation(() => {
@@ -48,11 +48,11 @@ describe('PluginEngine', () => {
   it('includes the plugin path into gasket.config.metadata.plugins when using a plugin name', async () => {
     const engine = new PluginEngine({
       plugins: {
-        add: ['a']
+        add: ['testa']
       }
     });
 
-    expect(engine.config.metadata.plugins).toStrictEqual({ a: { modulePath: '/node_modules/@gasket/a-plugin' } });
+    expect(engine.config.metadata.plugins).toStrictEqual({ testa: { modulePath: '/node_modules/@gasket/testa-plugin' } });
     expect(engine.config.metadata.presets).toStrictEqual({});
   });
 
@@ -62,7 +62,7 @@ describe('PluginEngine', () => {
       plugins: {
         add: [
           {
-            name: 'a',
+            name: 'testa',
             hooks: {
               init(gasket) {
                 gasket.hook({ event: 'foo', handler: dynamicHook });
@@ -73,15 +73,15 @@ describe('PluginEngine', () => {
       }
     });
 
-    expect(engine.config.metadata.plugins).toStrictEqual({ a: { modulePath: '/node_modules/@gasket/a-plugin' } });
+    expect(engine.config.metadata.plugins).toStrictEqual({ testa: { modulePath: '/node_modules/@gasket/testa-plugin' } });
     expect(engine.config.metadata.presets).toStrictEqual({});
   });
 
   it('does not include the plugin path if it is removed', async () => {
     const engine = new PluginEngine({
       plugins: {
-        add: ['a'],
-        remove: ['a']
+        add: ['testa'],
+        remove: ['testa']
       }
     });
 
@@ -101,14 +101,14 @@ describe('PluginEngine', () => {
         modulePath: '/node_modules/@gasket/somePreset-preset'
       }
     });
-    expect(engine.config.metadata.plugins).toStrictEqual({ a: { modulePath: '/node_modules/@gasket/a-plugin' } });
+    expect(engine.config.metadata.plugins).toStrictEqual({ testa: { modulePath: '/node_modules/@gasket/testa-plugin' } });
   });
 
   it('includes the preset path but not the plugins paths into gasket.config.metadata when using a preset', async () => {
     const engine = new PluginEngine({
       plugins: {
         presets: ['somePreset'],
-        remove: ['a']
+        remove: ['testa']
       }
     });
 

@@ -4,7 +4,7 @@ describe('The exec method', () => {
   const mockConfig = {
     some: 'config',
     plugins: {
-      add: ['a', 'b']
+      add: ['testa', 'testb']
     }
   };
 
@@ -29,8 +29,8 @@ describe('The exec method', () => {
     hookBSpy = jest.spyOn(pluginB.hooks, 'eventA');
 
     jest
-      .doMock('@gasket/a-plugin', () => pluginA, { virtual: true })
-      .doMock('@gasket/b-plugin', () => pluginB, { virtual: true });
+      .doMock('@gasket/testa-plugin', () => pluginA, { virtual: true })
+      .doMock('@gasket/testb-plugin', () => pluginB, { virtual: true });
 
     const PluginEngine = require('..');
     jest.spyOn(PluginEngine.prototype, '_resolveModulePath').mockImplementation(arg => {
