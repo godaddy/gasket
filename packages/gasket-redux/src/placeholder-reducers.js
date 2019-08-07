@@ -12,7 +12,7 @@
  */
 export default function placeholderReducers(reducers = {}, preloadedState = {}) {
   return Object.keys(preloadedState).reduce((acc, cur) => {
-    if (!(cur in reducers)) acc[cur] = f => f || preloadedState[cur];
+    if (!(cur in reducers)) acc[cur] = f => f || preloadedState[cur] || null;
     return acc;
   }, {});
 }
