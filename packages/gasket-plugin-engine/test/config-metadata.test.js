@@ -22,6 +22,7 @@ describe('PluginEngine', () => {
 
   beforeEach(() => {
     const testAPlugin = { name: 'testa', hooks: { mockEvent: jest.fn() } };
+    const customPlugin = { name: 'custom-plugin' };
     const somePreset = createPreset({
       name: '@gasket/somePreset-preset',
       plugins: [testAPlugin]
@@ -29,7 +30,8 @@ describe('PluginEngine', () => {
 
     jest
       .doMock('@gasket/testa-plugin', () => testAPlugin, { virtual: true })
-      .doMock('@gasket/somePreset-preset', () => somePreset, { virtual: true });
+      .doMock('@gasket/somePreset-preset', () => somePreset, { virtual: true })
+      .doMock('@something/custom-plugin', () => customPlugin, { virtual: true });
 
     jest.spyOn(PluginEngine.prototype, '_rootPath').mockImplementation(() => {
       return '/root/';
@@ -53,6 +55,17 @@ describe('PluginEngine', () => {
     });
 
     expect(engine.config.metadata.plugins).toStrictEqual({ testa: { modulePath: '/node_modules/@gasket/testa-plugin' } });
+    expect(engine.config.metadata.presets).toStrictEqual({});
+  });
+
+  it('includes the plugin path into gasket.config.metadata.plugins when using a custom plugin name', async () => {
+    const engine = new PluginEngine({
+      plugins: {
+        add: ['@something/custom-plugin']
+      }
+    });
+
+    expect(engine.config.metadata.plugins).toStrictEqual({ '@something/custom-plugin': { modulePath: '/node_modules/@something/custom-plugin' } });
     expect(engine.config.metadata.presets).toStrictEqual({});
   });
 

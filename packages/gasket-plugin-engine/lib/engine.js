@@ -94,10 +94,12 @@ class PluginEngine {
     plugins.forEach(([plugin]) => {
       const pluginName = plugin.name || plugin;
 
-      if (pluginName.indexOf('/') !== -1) {
+      // Plugins that are defined locally to the app
+      if (pluginName.indexOf(rootPath) !== -1) {
         const relativePath = path.relative(rootPath, pluginName);
         const pluginKey = path.basename(pluginName).replace('-plugin', '');
         this.config.metadata.plugins[pluginKey] = { modulePath: path.join('//', relativePath) };
+      // External plugins
       } else {
         const pluginFullName = this.resolver.pluginFullName(pluginName);
         try {
@@ -118,6 +120,10 @@ class PluginEngine {
    * @returns {Path} path of the module
    */
   _resolveModulePath(module) {
+    console.log(module);
+    console.log(module);
+    console.log(module);
+    console.log(module);
     return path.dirname(require.resolve(`${module}/package.json`));
   }
 
