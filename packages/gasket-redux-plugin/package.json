@@ -1,6 +1,6 @@
 {
   "name": "@gasket/redux-plugin",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "Gasket Redux Setup",
   "main": "lib",
   "scripts": {
@@ -30,7 +30,7 @@
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-redux-plugin",
   "devDependencies": {
     "@gasket/log-plugin": "^3.0.1",
-    "@gasket/redux": "^3.0.0",
+    "@gasket/redux": "^3.0.1",
     "acorn": "^6.1.1",
     "eslint": "^5.16.0",
     "eslint-config-godaddy": "^3.0.0",
