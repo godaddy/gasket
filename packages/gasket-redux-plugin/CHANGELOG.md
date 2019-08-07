@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 2.2.1
+
+- Fix core requirement regression
+
 ### 2.2.0
 
 - Migrated to monorepo
