@@ -46,4 +46,11 @@ describe('placeholdReducers', () => {
     expect(results).not.toEqual('bogus');
     expect(results).toEqual('BOGUS123');
   });
+
+  it('placeholder reducer returns null if initialState is undefined', () => {
+    // eslint-disable-next-line no-undefined
+    mockState.group3 = undefined;
+    results = placeholderReducers(mockReducers, mockState).group3();
+    expect(results).toEqual(null);
+  });
 });

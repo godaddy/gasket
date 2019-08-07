@@ -1,5 +1,10 @@
 # CHANGELOG
 
+### 3.0.1
+
+- Fix placeholder reducers should never return undefined
+- Fixed make-store export
+
 ### 3.0.0
 
 - Move to monorepo
