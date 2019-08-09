@@ -1,5 +1,6 @@
 
 const PluginEngine = require('../lib/engine');
+const Resolver = require('../lib/resolver');
 
 /*
  * Simple helper to create the data structure @gasket/resolve
@@ -33,12 +34,8 @@ describe('PluginEngine', () => {
       .doMock('@gasket/somePreset-preset', () => somePreset, { virtual: true })
       .doMock('@something/custom-plugin', () => customPlugin, { virtual: true });
 
-    jest.spyOn(PluginEngine.prototype, '_rootPath').mockImplementation(() => {
-      return '/root/';
-    });
-
-    jest.spyOn(PluginEngine.prototype, '_resolveModulePath').mockImplementation(arg => {
-      return `/root/node_modules/${arg}`;
+    jest.spyOn(Resolver.prototype, 'tryResolve').mockImplementation(arg => {
+      return `${process.cwd()}/node_modules/${arg}`;
     });
   });
 
@@ -54,7 +51,7 @@ describe('PluginEngine', () => {
       }
     });
 
-    expect(engine.config.metadata.plugins).toStrictEqual({ testa: { modulePath: '/node_modules/@gasket/testa-plugin' } });
+    expect(engine.config.metadata.plugins).toStrictEqual({ testa: { modulePath: 'node_modules/@gasket/testa-plugin' } });
     expect(engine.config.metadata.presets).toStrictEqual({});
   });
 
@@ -65,7 +62,7 @@ describe('PluginEngine', () => {
       }
     });
 
-    expect(engine.config.metadata.plugins).toStrictEqual({ '@something/custom-plugin': { modulePath: '/node_modules/@something/custom-plugin' } });
+    expect(engine.config.metadata.plugins).toStrictEqual({ '@something/custom-plugin': { modulePath: 'node_modules/@something/custom-plugin' } });
     expect(engine.config.metadata.presets).toStrictEqual({});
   });
 
@@ -86,7 +83,7 @@ describe('PluginEngine', () => {
       }
     });
 
-    expect(engine.config.metadata.plugins).toStrictEqual({ testa: { modulePath: '/node_modules/@gasket/testa-plugin' } });
+    expect(engine.config.metadata.plugins).toStrictEqual({ testa: { modulePath: 'node_modules/@gasket/testa-plugin' } });
     expect(engine.config.metadata.presets).toStrictEqual({});
   });
 
@@ -111,10 +108,10 @@ describe('PluginEngine', () => {
 
     expect(engine.config.metadata.presets).toStrictEqual({
       somePreset: {
-        modulePath: '/node_modules/@gasket/somePreset-preset'
+        modulePath: 'node_modules/@gasket/somePreset-preset'
       }
     });
-    expect(engine.config.metadata.plugins).toStrictEqual({ testa: { modulePath: '/node_modules/@gasket/testa-plugin' } });
+    expect(engine.config.metadata.plugins).toStrictEqual({ testa: { modulePath: 'node_modules/@gasket/testa-plugin' } });
   });
 
   it('includes the preset path but not the plugins paths into gasket.config.metadata when using a preset', async () => {
@@ -127,7 +124,7 @@ describe('PluginEngine', () => {
 
     expect(engine.config.metadata.presets).toStrictEqual({
       somePreset: {
-        modulePath: '/node_modules/@gasket/somePreset-preset'
+        modulePath: 'node_modules/@gasket/somePreset-preset'
       }
     });
     expect(engine.config.metadata.plugins).toStrictEqual({});

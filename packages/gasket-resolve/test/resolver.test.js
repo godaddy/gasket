@@ -68,17 +68,133 @@ describe('Resolver', () => {
     });
   });
 
-  it('pluginFullName returns expected full name', () => {
-    const resolver = new Resolver();
-    const result = resolver.pluginFullName('pluginName');
+  describe('tryResolvePresetRelativePath', () => {
+    it('resolves the relative path of a gasket preset name', () => {
+      const resolver = new Resolver();
+      jest.spyOn(resolver, 'tryResolve').mockImplementation(arg => {
+        return `/root/node_modules/${arg}`;
+      });
 
-    expect(result).toBe('@gasket/pluginName-plugin');
+      const result = resolver.tryResolvePresetRelativePath('presetA', '/root/');
+      expect(result).toBe('node_modules/@gasket/presetA-preset');
+    });
+
+    it('resolves the relative path of a full gasket preset name', () => {
+      const resolver = new Resolver();
+      jest.spyOn(resolver, 'tryResolve').mockImplementation(arg => {
+        return `/root/node_modules/${arg}`;
+      });
+
+      const result = resolver.tryResolvePresetRelativePath('@gasket/presetA-preset', '/root/');
+      expect(result).toBe('node_modules/@gasket/presetA-preset');
+    });
+
+    it('resolves the relative path of a custom preset name', () => {
+      const resolver = new Resolver();
+      jest.spyOn(resolver, 'tryResolve').mockImplementation(arg => {
+        return `/root/node_modules/${arg}`;
+      });
+
+      const result = resolver.tryResolvePresetRelativePath('some-custom-preset', '/root/');
+      expect(result).toBe('node_modules/some-custom-preset');
+    });
+
+    it('resolves the relative path of a gasket preset name using `resolveFrom`', () => {
+      const resolver = new Resolver({ resolveFrom: '/some/resolveFrom/path/' });
+      jest.spyOn(resolver, 'tryResolve').mockImplementation(arg => {
+        return `/some/resolveFrom/path/node_modules/${arg}`;
+      });
+
+      const result = resolver.tryResolvePresetRelativePath('presetA', '/root/');
+      expect(result).toBe('node_modules/@gasket/presetA-preset');
+    });
+
+    it('resolves the relative path of a full gasket preset name using `resolveFrom`', () => {
+      const resolver = new Resolver({ resolveFrom: '/some/resolveFrom/path/' });
+      jest.spyOn(resolver, 'tryResolve').mockImplementation(arg => {
+        return `/some/resolveFrom/path/node_modules/${arg}`;
+      });
+
+      const result = resolver.tryResolvePresetRelativePath('@gasket/presetA-preset', '/root/');
+      expect(result).toBe('node_modules/@gasket/presetA-preset');
+    });
+
+    it('resolves the relative path of a custom preset name using `resolveFrom`', () => {
+      const resolver = new Resolver({ resolveFrom: '/some/resolveFrom/path/' });
+      jest.spyOn(resolver, 'tryResolve').mockImplementation(arg => {
+        return `/some/resolveFrom/path/node_modules/${arg}`;
+      });
+
+      const result = resolver.tryResolvePresetRelativePath('some-custom-preset', '/root/');
+      expect(result).toBe('node_modules/some-custom-preset');
+    });
   });
 
-  it('presetFullName returns expected full name', () => {
-    const resolver = new Resolver();
-    const result = resolver.presetFullName('presetName');
+  describe('.tryResolvePluginRelativePath', () => {
+    it('resolves the relative path of a local plugin', () => {
+      const resolver = new Resolver();
+      const result = resolver.tryResolvePluginRelativePath('/root/plugin/some-plugin', '/root/');
+      expect(result).toBe('plugin/some-plugin');
+    });
 
-    expect(result).toBe('@gasket/presetName-preset');
+    it('resolves the relative path of a gasket plugin name', () => {
+      const resolver = new Resolver();
+      jest.spyOn(resolver, 'tryResolve').mockImplementation(arg => {
+        return `/root/node_modules/${arg}`;
+      });
+
+      const result = resolver.tryResolvePluginRelativePath('pluginA', '/root/');
+      expect(result).toBe('node_modules/@gasket/pluginA-plugin');
+    });
+
+    it('resolves the relative path of a full gasket plugin name', () => {
+      const resolver = new Resolver();
+      jest.spyOn(resolver, 'tryResolve').mockImplementation(arg => {
+        return `/root/node_modules/${arg}`;
+      });
+
+      const result = resolver.tryResolvePluginRelativePath('@gasket/pluginA-plugin', '/root/');
+      expect(result).toBe('node_modules/@gasket/pluginA-plugin');
+    });
+
+    it('resolves the relative path of a custom plugin name', () => {
+      const resolver = new Resolver();
+      jest.spyOn(resolver, 'tryResolve').mockImplementation(arg => {
+        return `/root/node_modules/${arg}`;
+      });
+
+      const result = resolver.tryResolvePluginRelativePath('some-custom-plugin', '/root/');
+      expect(result).toBe('node_modules/some-custom-plugin');
+    });
+
+    it('resolves the relative path of a gasket plugin name using `resolveFrom`', () => {
+      const resolver = new Resolver({ resolveFrom: '/some/resolveFrom/path/' });
+      jest.spyOn(resolver, 'tryResolve').mockImplementation(arg => {
+        return `/some/resolveFrom/path/node_modules/${arg}`;
+      });
+
+      const result = resolver.tryResolvePluginRelativePath('pluginA', '/root/');
+      expect(result).toBe('node_modules/@gasket/pluginA-plugin');
+    });
+
+    it('resolves the relative path of a full gasket plugin name using `resolveFrom`', () => {
+      const resolver = new Resolver({ resolveFrom: '/some/resolveFrom/path/' });
+      jest.spyOn(resolver, 'tryResolve').mockImplementation(arg => {
+        return `/some/resolveFrom/path/node_modules/${arg}`;
+      });
+
+      const result = resolver.tryResolvePluginRelativePath('@gasket/pluginA-plugin', '/root/');
+      expect(result).toBe('node_modules/@gasket/pluginA-plugin');
+    });
+
+    it('resolves the relative path of a custom plugin name using `resolveFrom`', () => {
+      const resolver = new Resolver({ resolveFrom: '/some/resolveFrom/path/' });
+      jest.spyOn(resolver, 'tryResolve').mockImplementation(arg => {
+        return `/some/resolveFrom/path/node_modules/${arg}`;
+      });
+
+      const result = resolver.tryResolvePluginRelativePath('some-custom-plugin', '/root/');
+      expect(result).toBe('node_modules/some-custom-plugin');
+    });
   });
 });

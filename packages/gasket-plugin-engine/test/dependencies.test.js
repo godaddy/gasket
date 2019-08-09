@@ -19,8 +19,9 @@ describe('The PluginEngine constructor', () => {
       .doMock('@gasket/testc-plugin', () => pluginC, { virtual: true });
 
     const PluginEngine = require('..');
-    jest.spyOn(PluginEngine.prototype, '_resolveModulePath').mockImplementation(arg => {
-      return `/root/node_modules/${arg}`;
+    const Resolver = require('../lib/resolver');
+    jest.spyOn(Resolver.prototype, 'tryResolve').mockImplementation(arg => {
+      return `${process.cwd()}/node_modules/${arg}`;
     });
 
     expect(() => new PluginEngine({ plugins: { add: ['testa', 'testb'] } })).toThrow(Error);

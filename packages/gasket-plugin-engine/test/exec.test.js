@@ -33,8 +33,9 @@ describe('The exec method', () => {
       .doMock('@gasket/testb-plugin', () => pluginB, { virtual: true });
 
     const PluginEngine = require('..');
-    jest.spyOn(PluginEngine.prototype, '_resolveModulePath').mockImplementation(arg => {
-      return `/root/node_modules/${arg}`;
+    const Resolver = require('../lib/resolver');
+    jest.spyOn(Resolver.prototype, 'tryResolve').mockImplementation(arg => {
+      return `${process.cwd()}/node_modules/${arg}`;
     });
 
     engine = new PluginEngine(mockConfig);

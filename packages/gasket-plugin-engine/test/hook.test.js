@@ -1,10 +1,11 @@
 const PluginEngine = require('../lib/engine');
+const Resolver = require('../lib/resolver');
 
 describe('The hook method', () => {
 
   beforeEach(() => {
-    jest.spyOn(PluginEngine.prototype, '_resolveModulePath').mockImplementation(arg => {
-      return `/root/node_modules/${arg}`;
+    jest.spyOn(Resolver.prototype, 'tryResolve').mockImplementation(arg => {
+      return `${process.cwd()}/node_modules/${arg}`;
     });
   });
 

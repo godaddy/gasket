@@ -63,8 +63,9 @@ describe('When resolving preset data structures', () => {
     });
 
     const PluginEngine = require('../');
-    jest.spyOn(PluginEngine.prototype, '_resolveModulePath').mockImplementation(arg => {
-      return `/root/node_modules/${arg}`;
+    const Resolver = require('../lib/resolver');
+    jest.spyOn(Resolver.prototype, 'tryResolve').mockImplementation(arg => {
+      return `${process.cwd()}/node_modules/${arg}`;
     });
     return new PluginEngine({
       some: 'config',

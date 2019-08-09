@@ -7,6 +7,7 @@ let dynamicNamingId = 0;
 class PluginEngine {
   constructor(config, { resolveFrom } = {}) {
     this.config = config || {};
+    this.config.root = this.config.root || process.cwd();
     this.config.metadata = this.config.metadata || {};
     this.config.metadata = { ...this.config.metadata, plugins: {}, presets: {} };
     this.resolver = new Resolver({ resolveFrom });
@@ -64,20 +65,16 @@ class PluginEngine {
   /**
    * Saves into the gasket config the module path of the presets
    *
-   * @private
    * @param {Array} presets Array of presets
+   * @private
    */
   _registerPresetsModulePath(presets) {
-    const rootPath = this._rootPath();
-
     presets.forEach(presetName => {
-      const presetFullName = this.resolver.presetFullName(presetName);
       try {
-        let relativePath = path.relative(rootPath, this._resolveModulePath(presetFullName));
-        relativePath = path.join('//', relativePath);
+        const relativePath = this.resolver.tryResolvePresetRelativePath(presetName, this.config.root);
         this.config.metadata.presets[presetName] = { modulePath: relativePath };
       } catch (err) {
-        console.error(`Preset '${presetFullName}' couldn't be resolved`);
+        console.error(`Preset '${presetName}' couldn't be resolved`);
       }
     });
   }
@@ -85,56 +82,29 @@ class PluginEngine {
   /**
    * Saves into the gasket config the module path of the plugins
    *
-   * @private
    * @param {Array} plugins Array of plugins
+   * @private
    */
   _registerPluginsModulePath(plugins) {
-    const rootPath = this._rootPath();
-
     plugins.forEach(([plugin]) => {
       const pluginName = plugin.name || plugin;
+      try {
+        const relativePath = this.resolver.tryResolvePluginRelativePath(pluginName, this.config.root);
 
-      // Plugins that are defined locally to the app
-      if (pluginName.indexOf(rootPath) !== -1) {
-        const relativePath = path.relative(rootPath, pluginName);
-        const pluginKey = path.basename(pluginName).replace('-plugin', '');
-        this.config.metadata.plugins[pluginKey] = { modulePath: path.join('//', relativePath) };
-      // External plugins
-      } else {
-        const pluginFullName = this.resolver.pluginFullName(pluginName);
-        try {
-          const relativePath = path.relative(rootPath, this._resolveModulePath(pluginFullName));
-          this.config.metadata.plugins[pluginName] = { modulePath: path.join('//', relativePath) };
-        } catch (err) {
-          console.error(`Plugin '${pluginFullName}' couldn't be resolved`);
+        var pluginNameKey;
+        // Plugins that are defined locally to the app
+        if (pluginName.indexOf(this.config.root) !== -1) {
+          pluginNameKey = path.basename(pluginName).replace('-plugin', '');
+        // External plugins
+        } else {
+          pluginNameKey = pluginName;
         }
+
+        this.config.metadata.plugins[pluginNameKey] = { modulePath: relativePath };
+      } catch (err) {
+        console.error(`Plugin '${pluginName}' couldn't be resolved`);
       }
     });
-  }
-
-  /**
-   * Returns the path of the module
-   *
-   * @private
-   * @param {String} module module
-   * @returns {Path} path of the module
-   */
-  _resolveModulePath(module) {
-    console.log(module);
-    console.log(module);
-    console.log(module);
-    console.log(module);
-    return path.dirname(require.resolve(`${module}/package.json`));
-  }
-
-  /**
-   * Returns the root path of the app
-   *
-   * @private
-   * @returns {Path} root path of the app
-   */
-  _rootPath() {
-    return path.resolve(__dirname).split('/node_modules')[0];
   }
 
   /**
