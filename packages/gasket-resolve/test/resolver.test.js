@@ -70,7 +70,7 @@ describe('Resolver', () => {
 
   describe('tryResolvePresetRelativePath', () => {
     it('resolves the relative path of a gasket preset name', () => {
-      const resolver = new Resolver();
+      const resolver = new Resolver({ root: '/root/' });
       jest.spyOn(resolver, 'tryResolve').mockImplementation(arg => {
         return `/root/node_modules/${arg}`;
       });
@@ -80,120 +80,120 @@ describe('Resolver', () => {
     });
 
     it('resolves the relative path of a full gasket preset name', () => {
-      const resolver = new Resolver();
+      const resolver = new Resolver({ root: '/root/' });
       jest.spyOn(resolver, 'tryResolve').mockImplementation(arg => {
         return `/root/node_modules/${arg}`;
       });
 
-      const result = resolver.tryResolvePresetRelativePath('@gasket/presetA-preset', '/root/');
+      const result = resolver.tryResolvePresetRelativePath('@gasket/presetA-preset');
       expect(result).toBe('node_modules/@gasket/presetA-preset');
     });
 
     it('resolves the relative path of a custom preset name', () => {
-      const resolver = new Resolver();
+      const resolver = new Resolver({ root: '/root/' });
       jest.spyOn(resolver, 'tryResolve').mockImplementation(arg => {
         return `/root/node_modules/${arg}`;
       });
 
-      const result = resolver.tryResolvePresetRelativePath('some-custom-preset', '/root/');
+      const result = resolver.tryResolvePresetRelativePath('some-custom-preset');
       expect(result).toBe('node_modules/some-custom-preset');
     });
 
     it('resolves the relative path of a gasket preset name using `resolveFrom`', () => {
-      const resolver = new Resolver({ resolveFrom: '/some/resolveFrom/path/' });
+      const resolver = new Resolver({ resolveFrom: '/some/resolveFrom/path/', root: '/root/' });
       jest.spyOn(resolver, 'tryResolve').mockImplementation(arg => {
         return `/some/resolveFrom/path/node_modules/${arg}`;
       });
 
-      const result = resolver.tryResolvePresetRelativePath('presetA', '/root/');
+      const result = resolver.tryResolvePresetRelativePath('presetA');
       expect(result).toBe('node_modules/@gasket/presetA-preset');
     });
 
     it('resolves the relative path of a full gasket preset name using `resolveFrom`', () => {
-      const resolver = new Resolver({ resolveFrom: '/some/resolveFrom/path/' });
+      const resolver = new Resolver({ resolveFrom: '/some/resolveFrom/path/', root: '/root/' });
       jest.spyOn(resolver, 'tryResolve').mockImplementation(arg => {
         return `/some/resolveFrom/path/node_modules/${arg}`;
       });
 
-      const result = resolver.tryResolvePresetRelativePath('@gasket/presetA-preset', '/root/');
+      const result = resolver.tryResolvePresetRelativePath('@gasket/presetA-preset');
       expect(result).toBe('node_modules/@gasket/presetA-preset');
     });
 
     it('resolves the relative path of a custom preset name using `resolveFrom`', () => {
-      const resolver = new Resolver({ resolveFrom: '/some/resolveFrom/path/' });
+      const resolver = new Resolver({ resolveFrom: '/some/resolveFrom/path/', root: '/root/' });
       jest.spyOn(resolver, 'tryResolve').mockImplementation(arg => {
         return `/some/resolveFrom/path/node_modules/${arg}`;
       });
 
-      const result = resolver.tryResolvePresetRelativePath('some-custom-preset', '/root/');
+      const result = resolver.tryResolvePresetRelativePath('some-custom-preset');
       expect(result).toBe('node_modules/some-custom-preset');
     });
   });
 
   describe('.tryResolvePluginRelativePath', () => {
     it('resolves the relative path of a local plugin', () => {
-      const resolver = new Resolver();
-      const result = resolver.tryResolvePluginRelativePath('/root/plugin/some-plugin', '/root/');
+      const resolver = new Resolver({ root: '/root/' });
+      const result = resolver.tryResolvePluginRelativePath('/root/plugin/some-plugin');
       expect(result).toBe('plugin/some-plugin');
     });
 
     it('resolves the relative path of a gasket plugin name', () => {
-      const resolver = new Resolver();
+      const resolver = new Resolver({ root: '/root/' });
       jest.spyOn(resolver, 'tryResolve').mockImplementation(arg => {
         return `/root/node_modules/${arg}`;
       });
 
-      const result = resolver.tryResolvePluginRelativePath('pluginA', '/root/');
+      const result = resolver.tryResolvePluginRelativePath('pluginA');
       expect(result).toBe('node_modules/@gasket/pluginA-plugin');
     });
 
     it('resolves the relative path of a full gasket plugin name', () => {
-      const resolver = new Resolver();
+      const resolver = new Resolver({ root: '/root/' });
       jest.spyOn(resolver, 'tryResolve').mockImplementation(arg => {
         return `/root/node_modules/${arg}`;
       });
 
-      const result = resolver.tryResolvePluginRelativePath('@gasket/pluginA-plugin', '/root/');
+      const result = resolver.tryResolvePluginRelativePath('@gasket/pluginA-plugin');
       expect(result).toBe('node_modules/@gasket/pluginA-plugin');
     });
 
     it('resolves the relative path of a custom plugin name', () => {
-      const resolver = new Resolver();
+      const resolver = new Resolver({ root: '/root/' });
       jest.spyOn(resolver, 'tryResolve').mockImplementation(arg => {
         return `/root/node_modules/${arg}`;
       });
 
-      const result = resolver.tryResolvePluginRelativePath('some-custom-plugin', '/root/');
+      const result = resolver.tryResolvePluginRelativePath('some-custom-plugin');
       expect(result).toBe('node_modules/some-custom-plugin');
     });
 
     it('resolves the relative path of a gasket plugin name using `resolveFrom`', () => {
-      const resolver = new Resolver({ resolveFrom: '/some/resolveFrom/path/' });
+      const resolver = new Resolver({ resolveFrom: '/some/resolveFrom/path/', root: '/root/' });
       jest.spyOn(resolver, 'tryResolve').mockImplementation(arg => {
         return `/some/resolveFrom/path/node_modules/${arg}`;
       });
 
-      const result = resolver.tryResolvePluginRelativePath('pluginA', '/root/');
+      const result = resolver.tryResolvePluginRelativePath('pluginA');
       expect(result).toBe('node_modules/@gasket/pluginA-plugin');
     });
 
     it('resolves the relative path of a full gasket plugin name using `resolveFrom`', () => {
-      const resolver = new Resolver({ resolveFrom: '/some/resolveFrom/path/' });
+      const resolver = new Resolver({ resolveFrom: '/some/resolveFrom/path/', root: '/root/' });
       jest.spyOn(resolver, 'tryResolve').mockImplementation(arg => {
         return `/some/resolveFrom/path/node_modules/${arg}`;
       });
 
-      const result = resolver.tryResolvePluginRelativePath('@gasket/pluginA-plugin', '/root/');
+      const result = resolver.tryResolvePluginRelativePath('@gasket/pluginA-plugin');
       expect(result).toBe('node_modules/@gasket/pluginA-plugin');
     });
 
     it('resolves the relative path of a custom plugin name using `resolveFrom`', () => {
-      const resolver = new Resolver({ resolveFrom: '/some/resolveFrom/path/' });
+      const resolver = new Resolver({ resolveFrom: '/some/resolveFrom/path/', root: '/root/' });
       jest.spyOn(resolver, 'tryResolve').mockImplementation(arg => {
         return `/some/resolveFrom/path/node_modules/${arg}`;
       });
 
-      const result = resolver.tryResolvePluginRelativePath('some-custom-plugin', '/root/');
+      const result = resolver.tryResolvePluginRelativePath('some-custom-plugin');
       expect(result).toBe('node_modules/some-custom-plugin');
     });
   });

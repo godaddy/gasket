@@ -10,7 +10,7 @@ class PluginEngine {
     this.config.root = this.config.root || process.cwd();
     this.config.metadata = this.config.metadata || {};
     this.config.metadata = { ...this.config.metadata, plugins: {}, presets: {} };
-    this.resolver = new Resolver({ resolveFrom });
+    this.resolver = new Resolver({ resolveFrom, root: this.config.root });
 
     this._hooks = {};
     this._plans = {};
@@ -71,7 +71,7 @@ class PluginEngine {
   _registerPresetsModulePath(presets) {
     presets.forEach(presetName => {
       try {
-        const relativePath = this.resolver.tryResolvePresetRelativePath(presetName, this.config.root);
+        const relativePath = this.resolver.tryResolvePresetRelativePath(presetName);
         this.config.metadata.presets[presetName] = { modulePath: relativePath };
       } catch (err) {
         console.error(`Preset '${presetName}' couldn't be resolved`);
@@ -89,7 +89,7 @@ class PluginEngine {
     plugins.forEach(([plugin]) => {
       const pluginName = plugin.name || plugin;
       try {
-        const relativePath = this.resolver.tryResolvePluginRelativePath(pluginName, this.config.root);
+        const relativePath = this.resolver.tryResolvePluginRelativePath(pluginName);
 
         var pluginNameKey;
         // Plugins that are defined locally to the app

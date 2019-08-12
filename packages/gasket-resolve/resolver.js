@@ -4,9 +4,10 @@ const pluginInfo = require('./plugin-info');
 const { pluginIdentifier, presetIdentifier } = require('./package-identifier');
 
 module.exports = class Resolver {
-  constructor({ resolveFrom, resolve } = {}) {
+  constructor({ resolveFrom, resolve, root = process.cwd() } = {}) {
     if (resolveFrom) this.resolveFrom = resolveFrom;
     this.resolve = resolve || require;
+    this.root = root;
   }
 
   pluginFor(name) {
@@ -83,15 +84,14 @@ module.exports = class Resolver {
    * Returns the relative path of the preset
    *
    * @param {String} presetName name of the preset
-   * @param {String} appRootPath root path of the app
    * @returns {Path} relative path of the preset
    * @public
    */
-  tryResolvePresetRelativePath(presetName, appRootPath) {
+  tryResolvePresetRelativePath(presetName) {
     const presetFullName = presetIdentifier(presetName).fullName;
 
     // If resolveFrom was used, then we need to remove the last path path from it that includes `node_modules`
-    const rootPath = this.resolveFrom ? this.resolveFrom.substring(0, this.resolveFrom.lastIndexOf('/')) : appRootPath;
+    const rootPath = this.resolveFrom ? this.resolveFrom.substring(0, this.resolveFrom.lastIndexOf('/')) : this.root;
     return path.relative(rootPath, path.dirname(this.tryResolve(`${presetFullName}/package.json`)));
   }
 
@@ -99,19 +99,18 @@ module.exports = class Resolver {
    * Returns the relative path of the plugin
    *
    * @param {String} pluginName name of the plugin
-   * @param {String} appRootPath root path of the app
    * @returns {Path} relative path of the plugin
    * @public
    */
-  tryResolvePluginRelativePath(pluginName, appRootPath) {
+  tryResolvePluginRelativePath(pluginName) {
     // If the plugin is defined locally
-    if (pluginName.indexOf(appRootPath) !== -1) {
-      return path.relative(appRootPath, pluginName);
+    if (pluginName.indexOf(this.root) !== -1) {
+      return path.relative(this.root, pluginName);
     }
 
     const pluginFullName = pluginIdentifier(pluginName).fullName;
     // If resolveFrom was used, then we need to remove the last path path from it that includes `node_modules`
-    const rootPath = this.resolveFrom ? this.resolveFrom.substring(0, this.resolveFrom.lastIndexOf('/')) : appRootPath;
+    const rootPath = this.resolveFrom ? this.resolveFrom.substring(0, this.resolveFrom.lastIndexOf('/')) : this.root;
     return path.relative(rootPath, path.dirname(this.tryResolve(`${pluginFullName}/package.json`)));
   }
 };
