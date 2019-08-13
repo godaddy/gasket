@@ -42,6 +42,10 @@ async function initHook({ id, config: oclifConfig, argv }) {
     this.error(err, { exit: 1 });
   }
 
+  await oclifConfig.gasket.execApply('metadata', async ({ name }, handler) => {
+    oclifConfig.gasket.config.metadata.plugins[name] = await handler(oclifConfig.gasket.config.metadata.plugins[name]);
+  });
+
   await oclifConfig.gasket.exec('initOclif', {
     oclifConfig,
     BaseCommand: GasketCommand
