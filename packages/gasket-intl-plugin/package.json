@@ -1,0 +1,54 @@
+{
+  "name": "@gasket/intl-plugin",
+  "version": "3.1.2",
+  "description": "NodeJS script to build localization files.",
+  "main": "lib",
+  "scripts": {
+    "lint": "eslint lib/*.js *.js",
+    "lint:fix": "npm run lint -- --fix",
+    "posttest": "npm run lint",
+    "test": "jest",
+    "test:watch": "jest --watchAll",
+    "test:coverage": "jest --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/godaddy/gasket.git"
+  },
+  "keywords": [
+    "gasket",
+    "plugin",
+    "intl"
+  ],
+  "author": "GoDaddy Operating Company, LLC",
+  "maintainers": [
+    "Salil Agrawal <sagrawal@godaddy.com>"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/godaddy/gasket/issues"
+  },
+  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-intl-plugin",
+  "dependencies": {
+    "fs-extra": "^5.0.0",
+    "loader-utils": "^1.1.0",
+    "lodash": "^4.17.11",
+    "serve-static": "^1.13.2",
+    "url-join": "^4.0.0"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.4.5",
+    "@gasket/log-plugin": "^3.0.1",
+    "acorn": "^6.1.1",
+    "eslint": "^5.16.0",
+    "eslint-config-godaddy": "^3.0.0",
+    "eslint-plugin-jest": "^21.15.1",
+    "eslint-plugin-json": "^1.2.0",
+    "eslint-plugin-mocha": "^5.3.0",
+    "jest": "^24.8.0"
+  },
+  "peerDependencies": {
+    "@gasket/log-plugin": "^2.0.0 || ^3.0.0",
+    "@gasket/redux-plugin": "^2.0.0"
+  }
+}
