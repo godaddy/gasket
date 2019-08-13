@@ -1,6 +1,6 @@
 {
   "name": "@gasket/lifecycle-plugin",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Allows a gasket/ directory to be used for lifecycle hooks in applications.",
   "main": "lib/index.js",
   "scripts": {
@@ -29,7 +29,7 @@
     "lodash": ">=3.0.0 < 5.0.0"
   },
   "devDependencies": {
-    "@gasket/plugin-engine": "^1.0.0",
+    "@gasket/plugin-engine": "^1.4.0",
     "assume": "^2.0.1",
     "eslint": "^4.19.1",
     "eslint-config-godaddy": "^2.1.0",
