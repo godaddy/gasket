@@ -1,80 +1,95 @@
 const mapObject = require('./map-object');
 
 describe('Plugin hook ordering', () => {
+
+  let PluginEngine;
+
+  beforeEach(() => {
+    PluginEngine = require('..');
+    const Resolver = require('../lib/resolver');
+    jest.spyOn(Resolver.prototype, 'tryResolve').mockImplementation(arg => {
+      return `${process.cwd()}/node_modules/${arg}`;
+    });
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
   it('enables a plugin to specify it runs before another', () => {
     return verify({
       withOrderingSpecs: {
-        a: { before: ['c'] },
-        b: { before: ['a'] },
-        c: null
+        testa: { before: ['testc'] },
+        testb: { before: ['testa'] },
+        testc: null
       },
-      expectOrder: ['b', 'a', 'c']
+      expectOrder: ['testb', 'testa', 'testc']
     });
   });
 
   it('enables a plugin to specify it runs after another', () => {
     return verify({
       withOrderingSpecs: {
-        a: { after: ['c'] },
-        b: null,
-        c: { after: ['b'] }
+        testa: { after: ['testc'] },
+        testb: null,
+        testc: { after: ['testb'] }
       },
-      expectOrder: ['b', 'c', 'a']
+      expectOrder: ['testb', 'testc', 'testa']
     });
   });
 
   it('enables a plugin to specify it runs between others another', () => {
     return verify({
       withOrderingSpecs: {
-        a: null,
-        b: null,
-        c: { after: ['b'], before: ['a'] }
+        testa: null,
+        testb: null,
+        testc: { after: ['testb'], before: ['testa'] }
       },
-      expectOrder: ['b', 'c', 'a']
+      expectOrder: ['testb', 'testc', 'testa']
     });
   });
 
   it('can specify multiple plugins in before/after spec', () => {
     return verify({
       withOrderingSpecs: {
-        a: null,
-        b: null,
-        c: null,
-        d: { after: ['e', 'a'], before: ['b', 'c'] },
-        e: null
+        testa: null,
+        testb: null,
+        testc: null,
+        testd: { after: ['teste', 'testa'], before: ['testb', 'testc'] },
+        teste: null
       },
-      expectOrder: ['a', 'e', 'd', 'b', 'c']
+      expectOrder: ['testa', 'teste', 'testd', 'testb', 'testc']
     });
   });
 
   it('enables a plugin declaring it should be first', () => {
     return verify({
       withOrderingSpecs: {
-        a: null,
-        b: null,
-        c: { first: true }
+        testa: null,
+        testb: null,
+        testc: { first: true }
       },
-      expectOrder: ['c', 'a', 'b']
+      expectOrder: ['testc', 'testa', 'testb']
     });
   });
 
   it('enables a plugin declaring it should be last', () => {
     return verify({
       withOrderingSpecs: {
-        a: { last: true },
-        b: null,
-        c: null
+        testa: { last: true },
+        testb: null,
+        testc: null
       },
-      expectOrder: ['b', 'c', 'a']
+      expectOrder: ['testb', 'testc', 'testa']
     });
   });
 
   it('throws an error if ordering is impossible (direct cycle)', () => {
     return verify({
       withOrderingSpecs: {
-        a: { before: ['b'] },
-        b: { before: ['a'] },
-        c: null
+        testa: { before: ['testb'] },
+        testb: { before: ['testa'] },
+        testc: null
       },
       expectError: true
     });
@@ -83,9 +98,9 @@ describe('Plugin hook ordering', () => {
   it('throws an error if ordering is impossible (indirect cycle)', () => {
     return verify({
       withOrderingSpecs: {
-        a: { after: ['c'] },
-        b: { after: ['a'] },
-        c: { after: ['b'] }
+        testa: { after: ['testc'] },
+        testb: { after: ['testa'] },
+        testc: { after: ['testb'] }
       },
       expectError: true
     });
@@ -97,36 +112,41 @@ describe('Plugin hook ordering', () => {
     beforeEach(() => {
       PluginF = { hooks: { mockEvent: () => {} } };
       PluginG = { hooks: { mockEvent2: () => {} } };
-      PluginE = { hooks: { mockEvent2: { timing: { before: ['f'], after: ['g'] }, handler: () => {} } } };
+      PluginE = { hooks: { mockEvent2: { timing: { before: ['testf'], after: ['testg'] }, handler: () => {} } } };
 
       jest
-        .doMock('@gasket/f-plugin', () => PluginF, { virtual: true })
-        .doMock('@gasket/g-plugin', () => PluginG, { virtual: true })
-        .doMock('@gasket/e-plugin', () => PluginE, { virtual: true })
+        .doMock('@gasket/testf-plugin', () => PluginF, { virtual: true })
+        .doMock('@gasket/testg-plugin', () => PluginG, { virtual: true })
+        .doMock('@gasket/teste-plugin', () => PluginE, { virtual: true });
+
+      PluginEngine = require('..');
+      const Resolver = require('../lib/resolver');
+      jest.spyOn(Resolver.prototype, 'tryResolve').mockImplementation(arg => {
+        return `${process.cwd()}/node_modules/${arg}`;
+      });
     });
 
     afterEach(() => {
       jest.resetModules();
+      jest.restoreAllMocks();
     });
 
     it('warns if plugin has bad before timing', async () => {
       const spy = jest.spyOn(console, 'warn').mockImplementation();
-      const PluginEngine = require('..');
       const engine = new PluginEngine({
         plugins: {
-          add: ['f', 'g', 'e']
+          add: ['testf', 'testg', 'teste']
         }
       });
 
       await engine.exec('mockEvent2');
-      expect(spy).toHaveBeenCalledTimes(1)
+      expect(spy).toHaveBeenCalledTimes(1);
     });
 
     it('if timing correct, no errors', async () => {
-      const PluginEngine = require('..');
       const engine = new PluginEngine({
         plugins: {
-          add: ['f', 'g']
+          add: ['testf', 'testg']
         }
       });
 
@@ -152,7 +172,6 @@ describe('Plugin hook ordering', () => {
         jest.doMock(`@gasket/${name}-plugin`, () => module, { virtual: true });
       });
 
-    const PluginEngine = require('..');
     const engine = new PluginEngine({
       plugins: {
         add: Object.keys(withOrderingSpecs)

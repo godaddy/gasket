@@ -1,7 +1,7 @@
 describe('The PluginEngine constructor', () => {
   it('throws an Error if a required dependency of a plugin is missing', () => {
     const pluginA = {
-      dependencies: ['b', 'c'],
+      dependencies: ['testb', 'testc'],
       hooks: {}
     };
 
@@ -14,11 +14,16 @@ describe('The PluginEngine constructor', () => {
     };
 
     jest
-      .doMock('@gasket/a-plugin', () => pluginA, { virtual: true })
-      .doMock('@gasket/b-plugin', () => pluginB, { virtual: true })
-      .doMock('@gasket/c-plugin', () => pluginC, { virtual: true });
-    const PluginEngine = require('..');
+      .doMock('@gasket/testa-plugin', () => pluginA, { virtual: true })
+      .doMock('@gasket/testb-plugin', () => pluginB, { virtual: true })
+      .doMock('@gasket/testc-plugin', () => pluginC, { virtual: true });
 
-    expect(() => new PluginEngine({ plugins: { add: ['a', 'b'] } })).toThrowError(Error);
+    const PluginEngine = require('..');
+    const Resolver = require('../lib/resolver');
+    jest.spyOn(Resolver.prototype, 'tryResolve').mockImplementation(arg => {
+      return `${process.cwd()}/node_modules/${arg}`;
+    });
+
+    expect(() => new PluginEngine({ plugins: { add: ['testa', 'testb'] } })).toThrow(Error);
   });
 });

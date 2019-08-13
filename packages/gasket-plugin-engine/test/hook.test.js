@@ -1,6 +1,18 @@
 const PluginEngine = require('../lib/engine');
+const Resolver = require('../lib/resolver');
 
 describe('The hook method', () => {
+
+  beforeEach(() => {
+    jest.spyOn(Resolver.prototype, 'tryResolve').mockImplementation(arg => {
+      return `${process.cwd()}/node_modules/${arg}`;
+    });
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
   it('injects lifecycle event hooks into a Gasket instance', async () => {
     const dynamicHook = jest.fn();
     const engine = new PluginEngine({
@@ -21,7 +33,7 @@ describe('The hook method', () => {
 
     await engine.exec('foo');
 
-    expect(dynamicHook).toBeCalled();
+    expect(dynamicHook).toHaveBeenCalled();
   });
 
   it('clears cached execution plans', async () => {
@@ -46,6 +58,6 @@ describe('The hook method', () => {
 
     // Cached execution plan from first invoke shouldn't be used any longer.
     await engine.exec('foo');
-    expect(dynamicHook).toBeCalled();
+    expect(dynamicHook).toHaveBeenCalled();
   });
 });

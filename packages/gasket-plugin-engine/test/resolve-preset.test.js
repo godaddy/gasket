@@ -1,6 +1,12 @@
 const pluginInfo = require('@gasket/resolve/plugin-info');
 
 describe('When resolving preset data structures', () => {
+
+  afterEach(() => {
+    jest.resetModules();
+    jest.restoreAllMocks();
+  });
+
   const pluginA = {
     hooks: {
       eventA() {
@@ -18,25 +24,25 @@ describe('When resolving preset data structures', () => {
   };
 
   const presets = {
-    strings: ['a', 'b'],
+    strings: ['testa', 'testb'],
     mixed: [
-      'a',
+      'testa',
       pluginInfo({
         required: pluginB,
         preset: '@gasket/test-preset',
-        shortName: 'b'
+        shortName: 'testb'
       })
     ],
     infos: [
       pluginInfo({
         required: pluginA,
         preset: '@gasket/test-preset',
-        shortName: 'a'
+        shortName: 'testa'
       }),
       pluginInfo({
         required: pluginB,
         preset: '@gasket/test-preset',
-        shortName: 'b'
+        shortName: 'testb'
       })
     ]
   };
@@ -49,14 +55,18 @@ describe('When resolving preset data structures', () => {
    */
   function engineForPreset(shortName) {
     jest
-      .doMock('@gasket/a-plugin', () => pluginA, { virtual: true })
-      .doMock('@gasket/b-plugin', () => pluginB, { virtual: true });
+      .doMock('@gasket/testa-plugin', () => pluginA, { virtual: true })
+      .doMock('@gasket/testb-plugin', () => pluginB, { virtual: true });
 
     Object.keys(presets).forEach(name => {
       jest.doMock(`@gasket/${name}-preset`, () => presets[name], { virtual: true });
     });
 
     const PluginEngine = require('../');
+    const Resolver = require('../lib/resolver');
+    jest.spyOn(Resolver.prototype, 'tryResolve').mockImplementation(arg => {
+      return `${process.cwd()}/node_modules/${arg}`;
+    });
     return new PluginEngine({
       some: 'config',
       plugins: {

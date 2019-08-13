@@ -1,5 +1,8 @@
 # CHANGELOG
 
+###
+
+- Including presets and plugins paths into `config.metadata`
 - Warns user about bad plugin timings
 
 ### 1.2.0

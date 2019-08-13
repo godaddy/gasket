@@ -1,5 +1,8 @@
 # `@gasket/cli`
 
+###
+
+- Moving `package-identifier.js` to `@gasket/resolve`.
 - Able to define default plugins
 
 ### 2.3.0

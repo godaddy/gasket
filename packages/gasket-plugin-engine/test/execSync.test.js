@@ -19,16 +19,25 @@ describe('The execSync method', () => {
     };
 
     jest
-      .doMock('@gasket/a-plugin', () => pluginA, { virtual: true })
-      .doMock('@gasket/b-plugin', () => pluginB, { virtual: true });
+      .doMock('@gasket/testa-plugin', () => pluginA, { virtual: true })
+      .doMock('@gasket/testb-plugin', () => pluginB, { virtual: true });
 
     const PluginEngine = require('..');
+    const Resolver = require('../lib/resolver');
+    jest.spyOn(Resolver.prototype, 'tryResolve').mockImplementation(arg => {
+      return `${process.cwd()}/node_modules/${arg}`;
+    });
 
     engine = new PluginEngine({
       plugins: {
-        add: ['a', 'b']
+        add: ['testa', 'testb']
       }
     });
+  });
+
+  afterEach(() => {
+    jest.resetModules();
+    jest.restoreAllMocks();
   });
 
   it('returns an Array of results', () => {
