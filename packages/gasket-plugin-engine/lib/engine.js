@@ -101,6 +101,16 @@ class PluginEngine {
         }
 
         this.config.metadata.plugins[pluginNameKey] = { modulePath: relativePath };
+
+        // if we have an installed plugin, gather some metadata about it
+        if(relativePath.match(/node_modules/)) {
+          const pluginPath = path.resolve(relativePath);
+          const pkg = require(path.join(pluginPath, 'package.json'));
+          const { hooks } = require(pluginPath);
+          this.config.metadata.plugins[pluginNameKey].pkg = pkg;
+          this.config.metadata.plugins[pluginNameKey].hooks = hooks;
+        }
+
       } catch (err) {
         console.error(`Plugin '${pluginName}' couldn't be resolved`);
       }
