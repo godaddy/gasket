@@ -1,12 +1,16 @@
 const flatten = require('./flatten');
 const Resolver = require('./resolver');
+const path = require('path');
 
 let dynamicNamingId = 0;
 
 class PluginEngine {
   constructor(config, { resolveFrom } = {}) {
     this.config = config || {};
-    this.resolver = new Resolver({ resolveFrom });
+    this.config.root = this.config.root || process.cwd();
+    this.config.metadata = this.config.metadata || {};
+    this.config.metadata = { ...this.config.metadata, plugins: {}, presets: {} };
+    this.resolver = new Resolver({ resolveFrom, root: this.config.root });
 
     this._hooks = {};
     this._plans = {};
@@ -30,9 +34,13 @@ class PluginEngine {
     const { presets = [], add = [], remove } = pluginConfig || { presets: ['default'] };
     const pluginsToRemove = new Set(remove || []);
 
-
     // TODO: check to see if presets include duplicate plugins
-    const presetEntries = flatten(presets)
+    const presetsFlattened = flatten(presets);
+
+    // Adding presets module paths into config.metadata
+    this._registerPresetsModulePath(presetsFlattened);
+
+    const presetEntries = presetsFlattened
       .map(name => this._resolvePresetSafe(name))
       .reduce((acc, plugins) => [...acc, ...plugins], [])
       .map(plugin => [plugin.shortName, plugin.required]);
@@ -40,13 +48,63 @@ class PluginEngine {
     // TODO: check to see if addPlugins have duplicates from presetPlugins
     const addEntries = add.map(name => [name, this.resolver.pluginFor(name)]);
 
-    return presetEntries
+    const pluginsResolved = presetEntries
       .concat(addEntries)
-      .filter(([pluginName]) => !pluginsToRemove.has(pluginName))
+      .filter(([pluginName]) => !pluginsToRemove.has(pluginName));
+
+    // Adding plugins module paths into config.metadata
+    this._registerPluginsModulePath(pluginsResolved);
+
+    return pluginsResolved
       .reduce((acc, [pluginName, plugin]) => {
         acc[this._extractName(pluginName)] = plugin;
         return acc;
       }, {});
+  }
+
+  /**
+   * Saves into the gasket config the module path of the presets
+   *
+   * @param {Array} presets Array of presets
+   * @private
+   */
+  _registerPresetsModulePath(presets) {
+    presets.forEach(presetName => {
+      try {
+        const relativePath = this.resolver.tryResolvePresetRelativePath(presetName);
+        this.config.metadata.presets[presetName] = { modulePath: relativePath };
+      } catch (err) {
+        console.error(`Preset '${presetName}' couldn't be resolved`);
+      }
+    });
+  }
+
+  /**
+   * Saves into the gasket config the module path of the plugins
+   *
+   * @param {Array} plugins Array of plugins
+   * @private
+   */
+  _registerPluginsModulePath(plugins) {
+    plugins.forEach(([plugin]) => {
+      const pluginName = plugin.name || plugin;
+      try {
+        const relativePath = this.resolver.tryResolvePluginRelativePath(pluginName);
+
+        var pluginNameKey;
+        // Plugins that are defined locally to the app
+        if (pluginName.indexOf(this.config.root) !== -1) {
+          pluginNameKey = path.basename(pluginName).replace('-plugin', '');
+        // External plugins
+        } else {
+          pluginNameKey = pluginName;
+        }
+
+        this.config.metadata.plugins[pluginNameKey] = { modulePath: relativePath };
+      } catch (err) {
+        console.error(`Plugin '${pluginName}' couldn't be resolved`);
+      }
+    });
   }
 
   /**
@@ -511,7 +569,7 @@ class PluginEngine {
         if (follower in subscribers) {
           subscribers[follower].ordering.after.push(plugin);
         } else {
-          console.warn(`Plugin '${follower}' does not have hook: '${hookName.replace('bound', '').trim()}'`)
+          console.warn(`Plugin '${follower}' does not have hook: '${hookName.replace('bound', '').trim()}'`);
         }
       });
 

@@ -21,16 +21,25 @@ describe('The execWaterfallSync method', () => {
     jest.resetModules();
 
     jest
-      .doMock('@gasket/a-plugin', () => pluginA, { virtual: true })
-      .doMock('@gasket/b-plugin', () => pluginB, { virtual: true });
+      .doMock('@gasket/testa-plugin', () => pluginA, { virtual: true })
+      .doMock('@gasket/testb-plugin', () => pluginB, { virtual: true });
 
     const PluginEngine = require('..');
+    const Resolver = require('../lib/resolver');
+    jest.spyOn(Resolver.prototype, 'tryResolve').mockImplementation(arg => {
+      return `${process.cwd()}/node_modules/${arg}`;
+    });
 
     engine = new PluginEngine({
       plugins: {
-        add: ['a', 'b']
+        add: ['testa', 'testb']
       }
     });
+  });
+
+  afterEach(() => {
+    jest.resetModules();
+    jest.restoreAllMocks();
   });
 
   it('sequentially transforms a value', () => {
@@ -43,8 +52,8 @@ describe('The execWaterfallSync method', () => {
 
     const result = engine.execWaterfallSync('eventA', 5, otherArg);
 
-    expect(pluginA.hooks.eventA).toBeCalledWith(engine, 5, otherArg);
-    expect(pluginB.hooks.eventA).toBeCalledWith(engine, 35, otherArg);
+    expect(pluginA.hooks.eventA).toHaveBeenCalledWith(engine, 5, otherArg);
+    expect(pluginB.hooks.eventA).toHaveBeenCalledWith(engine, 35, otherArg);
     expect(result).toEqual(39);
   });
 

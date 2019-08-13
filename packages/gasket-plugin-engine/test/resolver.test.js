@@ -15,15 +15,15 @@ describe('Resolver', () => {
       const mockB = {};
 
       jest
-        .doMock('/whatever/node_modules/@gasket/a-plugin', () => mockA, { virtual: true })
-        .doMock('/whatever/node_modules/@gasket/b-plugin', () => mockB, { virtual: true });
+        .doMock('/whatever/node_modules/@gasket/testa-plugin', () => mockA, { virtual: true })
+        .doMock('/whatever/node_modules/@gasket/testb-plugin', () => mockB, { virtual: true });
 
       const resolver = new Resolver({
         resolveFrom: '/whatever/node_modules'
       });
 
-      const actualA = resolver.pluginFor('a');
-      const actualB = resolver.pluginFor('b');
+      const actualA = resolver.pluginFor('testa');
+      const actualB = resolver.pluginFor('testb');
 
       expect(actualA).toBe(mockA);
       expect(actualB).toBe(mockB);
@@ -34,15 +34,15 @@ describe('Resolver', () => {
       const mockB = {};
 
       jest
-        .doMock('/whatever/node_modules/@gasket/a-preset', () => mockA, { virtual: true })
-        .doMock('/whatever/node_modules/@gasket/b-preset', () => mockB, { virtual: true });
+        .doMock('/whatever/node_modules/@gasket/testa-preset', () => mockA, { virtual: true })
+        .doMock('/whatever/node_modules/@gasket/testb-preset', () => mockB, { virtual: true });
 
       const resolver = new Resolver({
         resolveFrom: '/whatever/node_modules'
       });
 
-      const actualA = resolver.presetFor('a');
-      const actualB = resolver.presetFor('b');
+      const actualA = resolver.presetFor('testa');
+      const actualB = resolver.presetFor('testb');
 
       expect(actualA).toBe(mockA);
       expect(actualB).toBe(mockB);
@@ -64,7 +64,7 @@ describe('Resolver', () => {
       const resolver = new Resolver();
       expect(() => {
         resolver.tryRequire('@gasket/whatever');
-      }).toThrowError(/something-else-no-exist/);
+      }).toThrow(/something-else-no-exist/);
     });
   });
 });

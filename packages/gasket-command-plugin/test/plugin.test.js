@@ -27,7 +27,7 @@ describe('The plugin', () => {
         BaseCommand: MockBaseCommand
       });
 
-      expect(gasket.exec).toBeCalledWith('getCommands', {
+      expect(gasket.exec).toHaveBeenCalledWith('getCommands', {
         oclifConfig,
         BaseCommand: MockBaseCommand
       });

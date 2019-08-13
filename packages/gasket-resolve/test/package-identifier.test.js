@@ -1,56 +1,54 @@
-const assume = require('assume');
-
 const {
   pluginIdentifier,
   presetIdentifier,
   PackageIdentifier
-} = require('../../../src/scaffold/package-identifier');
+} = require('../package-identifier');
 
 describe('pluginIdentifier', () => {
   let result;
 
   it('is instance of PackageIdentifier', () => {
     result = pluginIdentifier('jest@^1.0.0');
-    assume(result instanceof PackageIdentifier).equals(true);
+    expect(result instanceof PackageIdentifier).toBe(true);
   });
 
   describe('fullName', () => {
 
     it('expands short plugin names to full', () => {
       result = pluginIdentifier('jest').fullName;
-      assume(result).equals('@gasket/jest-plugin');
+      expect(result).toBe('@gasket/jest-plugin');
     });
 
     it('ignores full @gasket plugin names', () => {
       result = pluginIdentifier('@gasket/jest-plugin').fullName;
-      assume(result).equals('@gasket/jest-plugin');
+      expect(result).toBe('@gasket/jest-plugin');
     });
 
     it('ignores full user plugin names', () => {
       result = pluginIdentifier('my-custom-gasket-plugin').fullName;
-      assume(result).equals('my-custom-gasket-plugin');
+      expect(result).toBe('my-custom-gasket-plugin');
     });
 
     it('drops version if set with short name', () => {
       result = pluginIdentifier('jest@^1.0.0').fullName;
-      assume(result).equals('@gasket/jest-plugin');
+      expect(result).toBe('@gasket/jest-plugin');
     });
 
     it('drops version if set with full name', () => {
       result = pluginIdentifier('@gasket/jest-plugin@^1.0.0').fullName;
-      assume(result).equals('@gasket/jest-plugin');
+      expect(result).toBe('@gasket/jest-plugin');
     });
 
     it('drops version if set with user name', () => {
       result = pluginIdentifier('my-custom-gasket-plugin@^1.0.0').fullName;
-      assume(result).equals('my-custom-gasket-plugin');
+      expect(result).toBe('my-custom-gasket-plugin');
     });
 
     it('@gasket scoped desc requires -plugin suffix', () => {
       try {
         pluginIdentifier('@gasket/jest');
       } catch (e) {
-        assume(e.message).includes("Package descriptions with @gasket scope require suffix '-plugin'");
+        expect(e.message).toEqual(expect.stringContaining("Package descriptions with @gasket scope require suffix '-plugin'"));
       }
     });
   });
@@ -59,32 +57,32 @@ describe('pluginIdentifier', () => {
 
     it('gets short name if already short name', () => {
       result = pluginIdentifier('jest').shortName;
-      assume(result).equals('jest');
+      expect(result).toBe('jest');
     });
 
     it('gets short name if set with full name', () => {
       result = pluginIdentifier('@gasket/jest-plugin').shortName;
-      assume(result).equals('jest');
+      expect(result).toBe('jest');
     });
 
     it('gets user name if set with user name', () => {
       result = pluginIdentifier('my-custom-gasket-plugin').shortName;
-      assume(result).equals('my-custom-gasket-plugin');
+      expect(result).toBe('my-custom-gasket-plugin');
     });
 
     it('drops version if set with short name', () => {
       result = pluginIdentifier('jest@^1.0.0').shortName;
-      assume(result).equals('jest');
+      expect(result).toBe('jest');
     });
 
     it('drops version if set with full name', () => {
       result = pluginIdentifier('@gasket/jest-plugin@^1.0.0').shortName;
-      assume(result).equals('jest');
+      expect(result).toBe('jest');
     });
 
     it('drops version if set with user name', () => {
       result = pluginIdentifier('my-custom-gasket-plugin@^1.0.0').shortName;
-      assume(result).equals('my-custom-gasket-plugin');
+      expect(result).toBe('my-custom-gasket-plugin');
     });
   });
 
@@ -92,32 +90,32 @@ describe('pluginIdentifier', () => {
 
     it('returns short plugin name', () => {
       result = pluginIdentifier('jest').name;
-      assume(result).equals('jest');
+      expect(result).toBe('jest');
     });
 
     it('returns full plugin name', () => {
       result = pluginIdentifier('@gasket/jest-plugin').name;
-      assume(result).equals('@gasket/jest-plugin');
+      expect(result).toBe('@gasket/jest-plugin');
     });
 
     it('ignores user plugin names', () => {
       result = pluginIdentifier('my-custom-gasket-plugin').name;
-      assume(result).equals('my-custom-gasket-plugin');
+      expect(result).toBe('my-custom-gasket-plugin');
     });
 
     it('drops version if set with short name', () => {
       result = pluginIdentifier('jest@^1.0.0').name;
-      assume(result).equals('jest');
+      expect(result).toBe('jest');
     });
 
     it('drops version if set with full name', () => {
       result = pluginIdentifier('@gasket/jest-plugin@^1.0.0').name;
-      assume(result).equals('@gasket/jest-plugin');
+      expect(result).toBe('@gasket/jest-plugin');
     });
 
     it('drops version if set with user name', () => {
       result = pluginIdentifier('my-custom-gasket-plugin@^1.0.0').name;
-      assume(result).equals('my-custom-gasket-plugin');
+      expect(result).toBe('my-custom-gasket-plugin');
     });
   });
 
@@ -125,22 +123,22 @@ describe('pluginIdentifier', () => {
 
     it('gets version if set with short name', () => {
       result = pluginIdentifier('jest@^1.0.0').version;
-      assume(result).equals('^1.0.0');
+      expect(result).toBe('^1.0.0');
     });
 
     it('gets version if set with full name', () => {
       result = pluginIdentifier('@gasket/jest-plugin@^1.0.0').version;
-      assume(result).equals('^1.0.0');
+      expect(result).toBe('^1.0.0');
     });
 
     it('gets version if set with user name', () => {
       result = pluginIdentifier('my-custom-gasket-plugin@^1.0.0').version;
-      assume(result).equals('^1.0.0');
+      expect(result).toBe('^1.0.0');
     });
 
     it('returns null if no version set', () => {
       result = pluginIdentifier('@gasket/jest-plugin').version;
-      assume(result).equals(null);
+      expect(result).toBe(null);
     });
   });
 
@@ -148,32 +146,32 @@ describe('pluginIdentifier', () => {
 
     it('expands short plugin names to full', () => {
       result = pluginIdentifier('jest').full;
-      assume(result).equals('@gasket/jest-plugin');
+      expect(result).toBe('@gasket/jest-plugin');
     });
 
     it('ignores full @gasket plugin names', () => {
       result = pluginIdentifier('@gasket/jest-plugin').full;
-      assume(result).equals('@gasket/jest-plugin');
+      expect(result).toBe('@gasket/jest-plugin');
     });
 
     it('ignores full user plugin names', () => {
       result = pluginIdentifier('my-custom-gasket-plugin').full;
-      assume(result).equals('my-custom-gasket-plugin');
+      expect(result).toBe('my-custom-gasket-plugin');
     });
 
     it('includes version with full name if set with short name', () => {
       result = pluginIdentifier('jest@^1.0.0').full;
-      assume(result).equals('@gasket/jest-plugin@^1.0.0');
+      expect(result).toBe('@gasket/jest-plugin@^1.0.0');
     });
 
     it('includes version if set with full name', () => {
       result = pluginIdentifier('@gasket/jest-plugin@^1.0.0').full;
-      assume(result).equals('@gasket/jest-plugin@^1.0.0');
+      expect(result).toBe('@gasket/jest-plugin@^1.0.0');
     });
 
     it('includes version if set with user name', () => {
       result = pluginIdentifier('my-custom-gasket-plugin@^1.0.0').full;
-      assume(result).equals('my-custom-gasket-plugin@^1.0.0');
+      expect(result).toBe('my-custom-gasket-plugin@^1.0.0');
     });
   });
 
@@ -181,32 +179,32 @@ describe('pluginIdentifier', () => {
 
     it('returns instance of PackageIdentifier', () => {
       result = pluginIdentifier('jest@^1.0.0').withVersion();
-      assume(result instanceof PackageIdentifier).equals(true);
+      expect(result instanceof PackageIdentifier).toBe(true);
     });
 
     it('retains version if set with short name', () => {
       result = pluginIdentifier('jest@^1.0.0').withVersion();
-      assume(result.toString()).equals('jest@^1.0.0');
+      expect(result.toString()).toBe('jest@^1.0.0');
     });
 
     it('retains version if set with full name', () => {
       result = pluginIdentifier('@gasket/jest-plugin@^1.0.0').withVersion();
-      assume(result.toString()).equals('@gasket/jest-plugin@^1.0.0');
+      expect(result.toString()).toBe('@gasket/jest-plugin@^1.0.0');
     });
 
     it('retains version if set with user name', () => {
       result = pluginIdentifier('my-custom-gasket-plugin@^1.0.0').withVersion();
-      assume(result.toString()).equals('my-custom-gasket-plugin@^1.0.0');
+      expect(result.toString()).toBe('my-custom-gasket-plugin@^1.0.0');
     });
 
     it('adds default version if no version set', () => {
       result = pluginIdentifier('@gasket/jest-plugin').withVersion();
-      assume(result.toString()).equals('@gasket/jest-plugin@latest');
+      expect(result.toString()).toBe('@gasket/jest-plugin@latest');
     });
 
     it('adds custom default version if no version set', () => {
       result = pluginIdentifier('@gasket/jest-plugin').withVersion('2.0.0.beta-1');
-      assume(result.toString()).equals('@gasket/jest-plugin@2.0.0.beta-1');
+      expect(result.toString()).toBe('@gasket/jest-plugin@2.0.0.beta-1');
     });
   });
 
@@ -214,14 +212,14 @@ describe('pluginIdentifier', () => {
 
     it('returns the plugin name', () => {
       result = pluginIdentifier('jest@^1.0.0').toString();
-      assume(result).equals('jest@^1.0.0');
+      expect(result).toBe('jest@^1.0.0');
     });
 
     it('uses plugin name with string concat', () => {
       result = pluginIdentifier('jest@^1.0.0') + ' bogus';
-      assume(result).equals('jest@^1.0.0 bogus');
+      expect(result).toBe('jest@^1.0.0 bogus');
       result = 'bogus: '.concat(pluginIdentifier('jest@^1.0.0'));
-      assume(result).equals('bogus: jest@^1.0.0');
+      expect(result).toBe('bogus: jest@^1.0.0');
     });
   });
 });
@@ -231,29 +229,29 @@ describe('presetIdentifier', () => {
 
   it('is instance of PackageIdentifier', () => {
     result = presetIdentifier('default@^1.0.0');
-    assume(result instanceof PackageIdentifier).equals(true);
+    expect(result instanceof PackageIdentifier).toBe(true);
   });
 
   it('gets short preset name', () => {
     result = presetIdentifier('@gasket/default-preset').shortName;
-    assume(result).equals('default');
+    expect(result).toBe('default');
   });
 
   it('expands short preset names to full', () => {
     result = presetIdentifier('default').full;
-    assume(result).equals('@gasket/default-preset');
+    expect(result).toBe('@gasket/default-preset');
   });
 
   it('plugin is not a valid suffix for presets (becomes expanded)', () => {
     result = presetIdentifier('some-plugin').full;
-    assume(result).equals('@gasket/some-plugin-preset');
+    expect(result).toBe('@gasket/some-plugin-preset');
   });
 
   it('@gasket scoped desc requires -preset suffix', () => {
     try {
       presetIdentifier('@gasket/default');
     } catch (e) {
-      assume(e.message).includes("Package descriptions with @gasket scope require suffix '-preset'");
+      expect(e.message).toEqual(expect.stringContaining("Package descriptions with @gasket scope require suffix '-preset'"));
     }
   });
 });
