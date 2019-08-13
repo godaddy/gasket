@@ -15,7 +15,7 @@ class PackageIdentifier {
     this.suffix = suffix;
 
     this.reShortName = new RegExp(`@gasket\\/([\\w-]+)${suffix}`);
-    this.reName = /^(.[\w/-]+)@?(.*)/;
+    this.reName = /^(.?[\w/-]+)@?(.*)/;
     this.reSuffix = new RegExp(`${suffix}$`);
 
     //
