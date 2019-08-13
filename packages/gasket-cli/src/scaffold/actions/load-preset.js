@@ -1,7 +1,7 @@
 const path = require('path');
 const action = require('../action-wrapper');
 const PackageFetcher = require('../fetcher');
-const { pluginIdentifier, presetIdentifier } = require('../package-identifier');
+const { pluginIdentifier, presetIdentifier } = require('@gasket/resolve');
 
 /**
  * Fetches the preset package and reads package.json contents

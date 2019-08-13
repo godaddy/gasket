@@ -4,7 +4,7 @@ describe('The execMap method', () => {
   const mockConfig = {
     some: 'config',
     plugins: {
-      add: ['a', 'b', 'c']
+      add: ['testa', 'testb', 'testc']
     }
   };
 
@@ -27,7 +27,7 @@ describe('The execMap method', () => {
   const pluginC = {
     hooks: {
       eventA: {
-        timing: { after: ['a'] },
+        timing: { after: ['testa'] },
         handler: () => 3
       }
     }
@@ -39,13 +39,22 @@ describe('The execMap method', () => {
     hookCSpy = jest.spyOn(pluginC.hooks.eventA, 'handler');
 
     jest
-      .doMock('@gasket/a-plugin', () => pluginA, { virtual: true })
-      .doMock('@gasket/b-plugin', () => pluginB, { virtual: true })
-      .doMock('@gasket/c-plugin', () => pluginC, { virtual: true });
+      .doMock('@gasket/testa-plugin', () => pluginA, { virtual: true })
+      .doMock('@gasket/testb-plugin', () => pluginB, { virtual: true })
+      .doMock('@gasket/testc-plugin', () => pluginC, { virtual: true });
 
     const PluginEngine = require('..');
+    const Resolver = require('../lib/resolver');
+    jest.spyOn(Resolver.prototype, 'tryResolve').mockImplementation(arg => {
+      return `${process.cwd()}/node_modules/${arg}`;
+    });
 
     engine = new PluginEngine(mockConfig);
+  });
+
+  afterEach(() => {
+    jest.resetModules();
+    jest.restoreAllMocks();
   });
 
   it('passes the gasket config to each hook', async () => {
@@ -58,7 +67,7 @@ describe('The execMap method', () => {
 
   it('awaits sync or async hooks and resolves a map object', async () => {
     const result = await engine.execMap('eventA');
-    expect(result).toEqual({ a: 1, b: 2, c: 3 });
+    expect(result).toEqual({ testa: 1, testb: 2, testc: 3 });
   });
 
   it('resolves to an empty object if nothing hooked the event', async () => {
@@ -71,6 +80,6 @@ describe('The execMap method', () => {
 
     const result = await execMap('eventA');
 
-    expect(result).toEqual({ a: 1, b: 2, c: 3 });
+    expect(result).toEqual({ testa: 1, testb: 2, testc: 3 });
   });
 });

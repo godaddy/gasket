@@ -1,4 +1,4 @@
-const { pluginIdentifier } = require('./package-identifier');
+const { pluginIdentifier } = require('@gasket/resolve');
 
 /**
  * Pushes plugins short names for use in gasket.config.js

@@ -19,21 +19,30 @@ describe('The execSync method', () => {
     };
 
     jest
-      .doMock('@gasket/a-plugin', () => pluginA, { virtual: true })
-      .doMock('@gasket/b-plugin', () => pluginB, { virtual: true });
+      .doMock('@gasket/testa-plugin', () => pluginA, { virtual: true })
+      .doMock('@gasket/testb-plugin', () => pluginB, { virtual: true });
 
     const PluginEngine = require('..');
+    const Resolver = require('../lib/resolver');
+    jest.spyOn(Resolver.prototype, 'tryResolve').mockImplementation(arg => {
+      return `${process.cwd()}/node_modules/${arg}`;
+    });
 
     engine = new PluginEngine({
       plugins: {
-        add: ['a', 'b']
+        add: ['testa', 'testb']
       }
     });
   });
 
+  afterEach(() => {
+    jest.resetModules();
+    jest.restoreAllMocks();
+  });
+
   it('returns an map of results', () => {
     const result = engine.execMapSync('eventA');
-    expect(result).toEqual({ a: 1, b: 2 });
+    expect(result).toEqual({ testa: 1, testb: 2 });
   });
 
   it('resolves to an empty array if nothing hooked the event', () => {
@@ -46,6 +55,6 @@ describe('The execSync method', () => {
 
     const result = execMapSync('eventA');
 
-    expect(result).toEqual({ a: 1, b: 2 });
+    expect(result).toEqual({ testa: 1, testb: 2 });
   });
 });

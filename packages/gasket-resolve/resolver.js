@@ -1,11 +1,13 @@
 const path = require('path');
 const debug = require('diagnostics')('gasket:resolver');
 const pluginInfo = require('./plugin-info');
+const { pluginIdentifier, presetIdentifier } = require('./package-identifier');
 
 module.exports = class Resolver {
-  constructor({ resolveFrom, resolve } = {}) {
+  constructor({ resolveFrom, resolve, root = process.cwd() } = {}) {
     if (resolveFrom) this.resolveFrom = resolveFrom;
     this.resolve = resolve || require;
+    this.root = root;
   }
 
   pluginFor(name) {
@@ -13,7 +15,7 @@ module.exports = class Resolver {
 
     return this.resolveShorthandModule(
       name,
-      shortName => `@gasket/${shortName}-plugin`,
+      shortName => pluginIdentifier(shortName).fullName,
       fullName => `Plugin ${fullName} could not be resolved. Make sure it is installed.`);
   }
 
@@ -32,7 +34,7 @@ module.exports = class Resolver {
 
     return this.resolveShorthandModule(
       name,
-      shortName => `@gasket/${shortName}-preset`,
+      shortName => presetIdentifier(shortName).fullName,
       fullName => `Preset ${fullName} could not be resolved. Make sure it is installed.`);
   }
 
@@ -65,4 +67,51 @@ module.exports = class Resolver {
       throw err;
     }
   }
+
+  /**
+   * Returns the resolved filename of the module
+   *
+   * @param {String} moduleName name of the module
+   * @returns {String} filename of the module
+   * @public
+   */
+  tryResolve(moduleName) {
+    const options = this.resolveFrom ? { paths: [this.resolveFrom] } : {};
+    return require.resolve(moduleName, options);
+  }
+
+  /**
+   * Returns the relative path of the preset
+   *
+   * @param {String} presetName name of the preset
+   * @returns {Path} relative path of the preset
+   * @public
+   */
+  tryResolvePresetRelativePath(presetName) {
+    const presetFullName = presetIdentifier(presetName).fullName;
+
+    // If resolveFrom was used, then we need to remove the last path path from it that includes `node_modules`
+    const rootPath = this.resolveFrom ? this.resolveFrom.substring(0, this.resolveFrom.lastIndexOf('/')) : this.root;
+    return path.relative(rootPath, path.dirname(this.tryResolve(`${presetFullName}/package.json`)));
+  }
+
+  /**
+   * Returns the relative path of the plugin
+   *
+   * @param {String} pluginName name of the plugin
+   * @returns {Path} relative path of the plugin
+   * @public
+   */
+  tryResolvePluginRelativePath(pluginName) {
+    // If the plugin is defined locally
+    if (pluginName.indexOf(this.root) !== -1) {
+      return path.relative(this.root, pluginName);
+    }
+
+    const pluginFullName = pluginIdentifier(pluginName).fullName;
+    // If resolveFrom was used, then we need to remove the last path path from it that includes `node_modules`
+    const rootPath = this.resolveFrom ? this.resolveFrom.substring(0, this.resolveFrom.lastIndexOf('/')) : this.root;
+    return path.relative(rootPath, path.dirname(this.tryResolve(`${pluginFullName}/package.json`)));
+  }
 };
+
