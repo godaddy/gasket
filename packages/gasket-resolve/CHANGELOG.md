@@ -2,7 +2,7 @@
 
 ###
 
-- Exposing `pluginFullName` and `presetFullName`
+- Including `package-identifier.js` and exposing new relative path resolve functions.
 
 ### 1.3.0
 
