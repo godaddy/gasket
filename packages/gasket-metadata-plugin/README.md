@@ -9,7 +9,6 @@ This plugin implements the `metadata` lifecyle, which plugins can use to
 modify a plugin's metadata. Whatever is returned will replace the existing metadata
 
 ```js
-
 /**
  * @param {Gasket} gasket The Gasket API
  * @param {Object} data default metadata provided to the hook
@@ -29,3 +28,4 @@ async function metadataHook(gasket, data) {
     extra: 'information'
   }
 }
+```
