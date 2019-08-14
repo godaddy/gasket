@@ -1,5 +1,7 @@
 # CHANGELOG
 
+### 1.0.1
+
 - [#52] Add missing name
 
 ### 1.0.2
