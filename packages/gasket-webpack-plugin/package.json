@@ -2,27 +2,30 @@
   "name": "@gasket/webpack-plugin",
   "version": "1.0.2",
   "description": "Adds webpack support to your application",
-  "author": "GoDaddy Operating Company, LLC",
-  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-webpack-plugin",
-  "license": "MIT",
   "main": "index.js",
   "scripts": {
     "lint": "eslint *.js `test/**/*.js`",
     "lint:fix": "npm run lint -- --fix",
-    "report": "nyc report --reporter=lcov",
     "pretest": "npm run lint",
     "test": "nyc --reporter=text --reporter=json-summary npm run test:runner",
-    "test:runner": "mocha --require ./setup.js `test/**/*.test.js`"
+    "test:runner": "mocha --require ./setup.js `test/**/*.test.js`",
+    "report": "nyc report --reporter=lcov"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/godaddy/gasket"
+    "url": "git+ssh://git@github.com/godaddy/gasket.git"
   },
   "keywords": [
     "webpack",
     "gasket",
     "plugin"
   ],
+  "author": "GoDaddy Operating Company, LLC",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/godaddy/gasket/issues"
+  },
+  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-webpack-plugin",
   "dependencies": {
     "webpack-chain": "^6.0.0",
     "webpack-merge": "^4.2.1"

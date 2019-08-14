@@ -1,28 +1,32 @@
 {
   "name": "@gasket/https-plugin",
   "version": "2.0.0",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint *.js test/*.js",
+    "test": "npm run test:unit",
+    "posttest": "npm run lint",
+    "test:unit": "mocha test/*.test.js"
+  },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/godaddy/gasket"
+    "url": "git+ssh://git@github.com/godaddy/gasket.git"
   },
-  "author": "GoDaddy.com, LLC",
-  "maintainers": [
-    "Sivan Mehta <smehta@godaddy.com>"
-  ],
   "keywords": [
     "gasket",
     "server",
     "plugin",
     "https"
   ],
-  "main": "index.js",
+  "author": "GoDaddy Operating Company, LLC",
+  "maintainers": [
+    "Sivan Mehta <smehta@godaddy.com>"
+  ],
   "license": "MIT",
-  "scripts": {
-    "test:unit": "mocha test/*.test.js",
-    "test": "npm run test:unit",
-    "posttest": "npm run lint",
-    "lint": "eslint *.js test/*.js"
+  "bugs": {
+    "url": "https://github.com/godaddy/gasket/issues"
   },
+  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-https-plugin#readme",
   "dependencies": {
     "create-servers": "^2.6.1",
     "diagnostics": "^2.0.2",
@@ -39,9 +43,5 @@
     "mocha": "^6.1.4",
     "proxyquire": "^2.1.0",
     "sinon": "^7.3.2"
-  },
-  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-https-plugin#readme",
-  "bugs": {
-    "url": "https://github.com/godaddy/gasket/issues"
   }
 }

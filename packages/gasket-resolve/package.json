@@ -6,13 +6,13 @@
   "scripts": {
     "lint": "eslint *.js test",
     "lint:fix": "npm run lint -- --fix",
-    "posttest": "npm run lint",
     "test": "jest",
+    "posttest": "npm run lint",
     "test:coverage": "jest --coverage"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/godaddy/gasket"
+    "url": "git+ssh://git@github.com/godaddy/gasket.git"
   },
   "keywords": [
     "gasket",
@@ -20,12 +20,16 @@
     "preset",
     "plugin"
   ],
-  "author": "GoDaddy.com, LLC",
+  "author": "GoDaddy Operating Company, LLC",
   "maintainers": [
     "Charlie Robbins <charlie.robbins@gmail.com>",
     "Jacob Page <jpage@godaddy.com>"
   ],
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/godaddy/gasket/issues"
+  },
+  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-resolve#readme",
   "dependencies": {
     "diagnostics": "^2.0.2",
     "semver": "^6.2.0"
@@ -40,9 +44,5 @@
   },
   "jest": {
     "testEnvironment": "node"
-  },
-  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-resolve#readme",
-  "bugs": {
-    "url": "https://github.com/godaddy/gasket/issues"
   }
 }

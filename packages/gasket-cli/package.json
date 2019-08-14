@@ -14,24 +14,24 @@
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
+    "pretest": "npm run test:clean",
+    "test": "nyc --reporter=text --reporter=json-summary run-s test:unit",
+    "posttest": "npm run lint",
     "prepack": "npm run manifest && npm run readme",
     "postpack": "rm -f oclif.manifest.json",
-    "pretest": "npm run test:clean",
-    "posttest": "npm run lint",
-    "manifest": "cross-env FAUX_ROOT='/path/to/your/app' oclif-dev manifest",
     "readme": "cross-env FAUX_ROOT='/path/to/your/app' oclif-dev readme",
-    "test": "nyc --reporter=text --reporter=json-summary run-s test:unit",
+    "version": "npm run readme && git add README.md",
     "test:mocha": "mocha --require test/setup.js --recursive 'test/**/*.test.js'",
-    "test:integration": "mocha --require test/setup.js --recursive 'test/integration/**/*.test.js'",
+    "manifest": "cross-env FAUX_ROOT='/path/to/your/app' oclif-dev manifest",
     "test:integration:coverage": "nyc --reporter=text --reporter=json-summary --all run-s test:integration",
     "test:unit": "mocha --require test/setup.js --recursive 'test/unit/**/*.test.js'",
     "test:unit:coverage": "nyc --reporter=text --reporter=lcov --all run-s test:unit",
     "test:clean": "rimraf ./test/fixtures/create/myapp",
-    "version": "npm run readme && git add README.md"
+    "test:integration": "mocha --require test/setup.js --recursive 'test/integration/**/*.test.js'"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/godaddy/gasket"
+    "url": "git+ssh://git@github.com/godaddy/gasket.git"
   },
   "keywords": [
     "gasket",
@@ -39,6 +39,12 @@
     "oclif",
     "dx"
   ],
+  "author": "GoDaddy Operating Company, LLC",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/godaddy/gasket/issues"
+  },
+  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-cli",
   "dependencies": {
     "@gasket/command-plugin": "^1.0.3",
     "@gasket/git-plugin": "^1.0.0",
@@ -91,6 +97,13 @@
     "sinon": "^7.3.2",
     "std-mocks": "^1.0.1"
   },
+  "eslintIgnore": [
+    "coverage",
+    "**/node_modules"
+  ],
+  "engines": {
+    "node": ">= 8.0.0"
+  },
   "oclif": {
     "commands": "./src/commands",
     "bin": "gasket",
@@ -105,15 +118,5 @@
     "warn-if-update-available": {
       "timeoutInDays": 7
     }
-  },
-  "engines": {
-    "node": ">= 8.0.0"
-  },
-  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-cli",
-  "author": "GoDaddy Operating Company, LLC",
-  "license": "MIT",
-  "eslintIgnore": [
-    "coverage",
-    "**/node_modules"
-  ]
+  }
 }

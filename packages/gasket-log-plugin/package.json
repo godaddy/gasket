@@ -6,9 +6,9 @@
   "scripts": {
     "lint": "eslint index.js test.js",
     "test": "nyc --reporter=text --reporter=json-summary npm run test:runner",
+    "posttest": "npm run lint",
     "test:runner": "mocha --require setup-env \"test.js\"",
-    "test:watch": "npm run test:runner -- --watch",
-    "posttest": "npm run lint"
+    "test:watch": "npm run test:runner -- --watch"
   },
   "repository": {
     "type": "git",

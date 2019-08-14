@@ -2,27 +2,30 @@
   "name": "@gasket/git-plugin",
   "version": "1.0.0",
   "description": "Adds git support to your application",
-  "author": "GoDaddy Operating Company, LLC",
-  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-git-plugin",
-  "license": "MIT",
   "main": "lib",
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
-    "report": "nyc report --reporter=lcov",
     "pretest": "npm run lint",
     "test": "nyc --reporter=text --reporter=json-summary npm run test:runner",
-    "test:runner": "mocha --require ./test/setup.js \"test/**/*.*(test|spec).js\""
+    "test:runner": "mocha --require ./test/setup.js \"test/**/*.*(test|spec).js\"",
+    "report": "nyc report --reporter=lcov"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/godaddy/gasket"
+    "url": "git+ssh://git@github.com/godaddy/gasket.git"
   },
   "keywords": [
     "git",
     "gasket",
     "plugin"
   ],
+  "author": "GoDaddy Operating Company, LLC",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/godaddy/gasket/issues"
+  },
+  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-git-plugin",
   "dependencies": {
     "@gasket/utils": "^1.1.0"
   },

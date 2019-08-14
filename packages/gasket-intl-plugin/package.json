@@ -6,8 +6,8 @@
   "scripts": {
     "lint": "eslint lib/*.js *.js",
     "lint:fix": "npm run lint -- --fix",
-    "posttest": "npm run lint",
     "test": "jest",
+    "posttest": "npm run lint",
     "test:watch": "jest --watchAll",
     "test:coverage": "jest --coverage"
   },

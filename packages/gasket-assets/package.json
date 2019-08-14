@@ -4,13 +4,13 @@
   "description": "Gasket assets",
   "main": "react",
   "scripts": {
-    "svg-to-react": "babel-node --presets @babel/env ./scripts/svg-to-react.js",
-    "build": "npm run clean && npm run svg-to-react",
-    "clean": "rimraf ./react",
-    "prepublish": "npm run build",
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
-    "test": "npm run lint"
+    "test": "npm run lint",
+    "build": "npm run clean && npm run svg-to-react",
+    "prepublish": "npm run build",
+    "svg-to-react": "babel-node --presets @babel/env ./scripts/svg-to-react.js",
+    "clean": "rimraf ./react"
   },
   "repository": {
     "type": "git",
@@ -21,7 +21,7 @@
     "assets",
     "logo"
   ],
-  "author": "GoDaddy.com, LLC",
+  "author": "GoDaddy Operating Company, LLC",
   "maintainers": [
     "Andrew Gerard <agerard@godaddy.com>"
   ],

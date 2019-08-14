@@ -13,20 +13,23 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/godaddy/gasket"
+    "url": "git+ssh://git@github.com/godaddy/gasket.git"
   },
-  "maintainers": [
-    "Salil Agrawal <sagrawal@godaddy.com>",
-    "Andrew Gerard <agerard@godaddy.com>"
-  ],
-  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-jest-plugin",
-  "author": "GoDaddy Operating Company, LLC",
   "keywords": [
     "jest",
     "gasket",
     "plugin"
   ],
+  "author": "GoDaddy Operating Company, LLC",
+  "maintainers": [
+    "Salil Agrawal <sagrawal@godaddy.com>",
+    "Andrew Gerard <agerard@godaddy.com>"
+  ],
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/godaddy/gasket/issues"
+  },
+  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-jest-plugin",
   "devDependencies": {
     "babel-eslint": "^10.0.1",
     "babel-preset-env": "^1.7.0",

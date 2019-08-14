@@ -2,34 +2,34 @@
   "name": "@gasket/express-plugin",
   "version": "2.0.0",
   "description": "Adds express support to your application",
-  "author": "GoDaddy Operating Company, LLC",
-  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-express-plugin",
-  "license": "MIT",
   "main": "index.js",
   "scripts": {
     "lint": "eslint index.js test.js",
     "lint:fix": "npm run lint -- --fix",
-    "report": "nyc report --reporter=lcov",
     "pretest": "npm run lint",
     "test": "nyc --reporter=text --reporter=json-summary npm run test:runner",
-    "test:runner": "mocha --require ./setup.js test.js"
+    "test:runner": "mocha --require ./setup.js test.js",
+    "report": "nyc report --reporter=lcov"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/godaddy/gasket"
+    "url": "git+ssh://git@github.com/godaddy/gasket.git"
   },
   "keywords": [
     "express",
     "gasket",
     "plugin"
   ],
+  "author": "GoDaddy Operating Company, LLC",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/godaddy/gasket/issues"
+  },
+  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-express-plugin",
   "dependencies": {
     "compression": "^1.7.2",
     "cookie-parser": "^1.4.3",
     "diagnostics": "^2.0.0"
-  },
-  "peerDependencies": {
-    "express": "^4.16.3"
   },
   "devDependencies": {
     "assume": "^2.1.0",
@@ -43,5 +43,8 @@
     "nyc": "^13.1.0",
     "proxyquire": "^2.1.0",
     "sinon": "^7.2.3"
+  },
+  "peerDependencies": {
+    "express": "^4.16.3"
   }
 }
