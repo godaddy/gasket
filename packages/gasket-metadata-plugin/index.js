@@ -21,7 +21,7 @@ module.exports = {
           const pluginPath = path.resolve(relativePath);
           const pkg = require(path.join(pluginPath, 'package.json'));
           const { hooks } = require(pluginPath);
-          gasket.config.metadata.plugins[pluginNameKey].pkg = pkg;
+          gasket.config.metadata.plugins[pluginNameKey] = pkg;
           gasket.config.metadata.plugins[pluginNameKey].hooks = hooks;
 
         } catch (err) { /* we don't care about the metadata for in-app plugins */ }
