@@ -1,12 +1,13 @@
 const plugin = require('../');
 const assume = require('assume');
-const sinon = require('sinon');
+const { stub } = require('sinon');
 const path = require('path');
 
 describe('Metadata plugin', function () {
-  let gasket, applyStub;
+  let gasket, applyStub, handlerStub;
   beforeEach(function () {
-    applyStub = sinon.stub();
+    applyStub = stub();
+    handlerStub = stub();
 
     gasket = {
       resolver: {
@@ -20,7 +21,10 @@ describe('Metadata plugin', function () {
       },
       execApply: async (event, fn) => {
         await applyStub(event);
-        await fn({}, () => {});
+        await fn({ name: 'thingy' }, () => {
+          handlerStub();
+          return 'a book please';
+        });
       }
     };
   });
@@ -35,13 +39,34 @@ describe('Metadata plugin', function () {
 
   it('gathers the package.json for each given plugin', async function () {
     gasket._plugins = {
-      'foo': 'bar'
+      'bird': 'larry'
     };
-
     await plugin.hooks.init(gasket);
-    assume(gasket.config.metadata.plugins.foo.name).equals('@gasket/foo-plugin');
+
+    assume(gasket.config.metadata.plugins.bird.name).equals('@gasket/bird-plugin');
   });
-  it('gathers the hooks for each given plugin');
-  it('executes the metadata lifecycle');
-  it('augments the metadata with data from the lifecycle hooks');
+
+  it('gathers the hooks for each given plugin', async function () {
+    gasket._plugins = {
+      'bird': 'larry'
+    };
+    await plugin.hooks.init(gasket);
+
+    assume(Object.keys(gasket.config.metadata.plugins.bird.hooks)).has.length(4);
+    assume(gasket.config.metadata.plugins.bird.hooks.exists()).equals(false);
+  });
+
+  it('executes the metadata lifecycle', async function () {
+    await plugin.hooks.init(gasket);
+    assume(applyStub.calledOnce).is.true();
+  });
+
+  it('augments the metadata with data from the lifecycle hooks', async function () {
+    gasket._plugins = {
+      'bird': 'bar'
+    };
+    await plugin.hooks.init(gasket);
+    assume(handlerStub.calledOnce).is.true();
+    assume(gasket.config.metadata.plugins.thingy).equals("a book please");
+  });
 });
