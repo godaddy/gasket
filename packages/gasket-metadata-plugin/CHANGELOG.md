@@ -1,5 +1,7 @@
 # CHANGELOG
 
+# 1.0.0
+
 - [#51] Initial implementation
   - Adds `package.json` and hooks to each `gasket.config.metadata`
   - Implements the `metadata` lifecycle

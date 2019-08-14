@@ -42,8 +42,8 @@ describe('Metadata plugin', function () {
     gasket._plugins = {
       bird: 'larry'
     };
-    await plugin.hooks.init(gasket);
 
+    await plugin.hooks.init(gasket);
     assume(gasket.config.metadata.plugins.bird.name).equals('@gasket/bird-plugin');
   });
 
@@ -51,8 +51,8 @@ describe('Metadata plugin', function () {
     gasket._plugins = {
       bird: 'larry'
     };
-    await plugin.hooks.init(gasket);
 
+    await plugin.hooks.init(gasket);
     assume(Object.keys(gasket.config.metadata.plugins.bird.hooks)).has.length(4);
     assume(gasket.config.metadata.plugins.bird.hooks.exists()).equals(false);
   });
@@ -66,6 +66,7 @@ describe('Metadata plugin', function () {
     gasket._plugins = {
       bird: 'law'
     };
+
     await plugin.hooks.init(gasket);
     assume(handlerStub.calledOnce).is.true();
     assume(gasket.config.metadata.plugins.thingy).equals('a book please');
@@ -78,6 +79,7 @@ describe('Metadata plugin', function () {
       Question: 'Like at all',
       bird: 'plz kill, regardless of the cost in stones'
     };
+
     await plugin.hooks.init(gasket);
     assume(gasket.config.metadata.plugins.Questionnaire).does.not.exist();
     assume(gasket.config.metadata.plugins.Questlove).does.not.exist();

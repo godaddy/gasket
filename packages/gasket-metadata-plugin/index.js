@@ -14,7 +14,6 @@ module.exports = {
         }
 
         const relativePath = gasket.resolver.tryResolvePluginRelativePath(plugin);
-
         const pluginPath = path.resolve(relativePath);
         const pkg = require(path.join(pluginPath, 'package.json'));
         const { hooks } = require(pluginPath);
