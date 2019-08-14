@@ -8,22 +8,20 @@ module.exports = {
       const metadata = gasket.config.metadata.plugins;
 
       Object.keys(plugins).forEach(plugin => {
-        try {
-          const relativePath = gasket.resolver.tryResolvePluginRelativePath(plugin);
-          // Plugins that are defined locally to the app don't count
-          if (plugin.indexOf(gasket.config.root) !== -1) {
-            return;
-          }
+        // Plugins that are defined locally to the app don't count
+        if (plugin.indexOf(gasket.config.root) !== -1) {
+          return;
+        }
 
-          const pluginPath = path.resolve(relativePath);
-          const pkg = require(path.join(pluginPath, 'package.json'));
-          const { hooks } = require(pluginPath);
+        const relativePath = gasket.resolver.tryResolvePluginRelativePath(plugin);
 
-          metadata[plugin] = metadata[plugin] || {};
-          Object.assign(metadata[plugin], pkg);
-          metadata[plugin].hooks = hooks;
+        const pluginPath = path.resolve(relativePath);
+        const pkg = require(path.join(pluginPath, 'package.json'));
+        const { hooks } = require(pluginPath);
 
-        } catch (err) { /* we don't care about the metadata for in-app plugins */ }
+        metadata[plugin] = metadata[plugin] || {};
+        Object.assign(metadata[plugin], pkg);
+        metadata[plugin].hooks = hooks;
       });
 
       await gasket.execApply('metadata', async ({ name }, handler) => {
