@@ -5,30 +5,29 @@ module.exports = {
   hooks: {
     async init(gasket) {
       const plugins = gasket._plugins;
+      const metadata = gasket.config.metadata.plugins;
 
       Object.keys(plugins).forEach(plugin => {
-        const pluginName = plugin.name || plugin;
         try {
-          const relativePath = gasket.resolver.tryResolvePluginRelativePath(pluginName);
+          const relativePath = gasket.resolver.tryResolvePluginRelativePath(plugin);
           // Plugins that are defined locally to the app don't count
-          if (pluginName.indexOf(gasket.config.root) !== -1) {
+          if (plugin.indexOf(gasket.config.root) !== -1) {
             return;
           }
-
-          const pluginNameKey = pluginName;
-          gasket.config.metadata.plugins[pluginNameKey] = { modulePath: relativePath };
 
           const pluginPath = path.resolve(relativePath);
           const pkg = require(path.join(pluginPath, 'package.json'));
           const { hooks } = require(pluginPath);
-          gasket.config.metadata.plugins[pluginNameKey] = pkg;
-          gasket.config.metadata.plugins[pluginNameKey].hooks = hooks;
+
+          metadata[plugin] = metadata[plugin] || {};
+          Object.assign(metadata[plugin], pkg);
+          metadata[plugin].hooks = hooks;
 
         } catch (err) { /* we don't care about the metadata for in-app plugins */ }
       });
 
       await gasket.execApply('metadata', async ({ name }, handler) => {
-        gasket.config.metadata.plugins[name] = await handler(gasket.config.metadata.plugins[name]);
+        metadata[name] = await handler(metadata[name]);
       });
     }
   }
