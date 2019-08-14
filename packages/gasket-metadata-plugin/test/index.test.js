@@ -11,10 +11,11 @@ describe('Metadata plugin', function () {
 
     gasket = {
       resolver: {
-        tryResolvePluginRelativePath: plugin => path.join(__dirname, 'fixtures', plugin)
+        tryResolvePluginRelativePath: name => path.join(__dirname, 'fixtures', name)
       },
       _plugins: {},
       config: {
+        root: 'Quest',
         metadata: {
           plugins: {}
         }
@@ -35,11 +36,11 @@ describe('Metadata plugin', function () {
 
   it('has an init hook', function () {
     assume(plugin.hooks.init).exists();
-  })
+  });
 
   it('gathers the package.json for each given plugin', async function () {
     gasket._plugins = {
-      'bird': 'larry'
+      bird: 'larry'
     };
     await plugin.hooks.init(gasket);
 
@@ -48,7 +49,7 @@ describe('Metadata plugin', function () {
 
   it('gathers the hooks for each given plugin', async function () {
     gasket._plugins = {
-      'bird': 'larry'
+      bird: 'larry'
     };
     await plugin.hooks.init(gasket);
 
@@ -63,10 +64,23 @@ describe('Metadata plugin', function () {
 
   it('augments the metadata with data from the lifecycle hooks', async function () {
     gasket._plugins = {
-      'bird': 'bar'
+      bird: 'law'
     };
     await plugin.hooks.init(gasket);
     assume(handlerStub.calledOnce).is.true();
-    assume(gasket.config.metadata.plugins.thingy).equals("a book please");
+    assume(gasket.config.metadata.plugins.thingy).equals('a book please');
+  });
+
+  it('does not add metadata for a built-in plugin', async function () {
+    gasket._plugins = {
+      Questionnaire: 'Does this work?',
+      Questlove: 'Because it shouldn\'t',
+      Question: 'Like at all',
+      bird: 'plz kill, regardless of the cost in stones'
+    };
+    await plugin.hooks.init(gasket);
+    assume(gasket.config.metadata.plugins.Questionnaire).does.not.exist();
+    assume(gasket.config.metadata.plugins.Questlove).does.not.exist();
+    assume(gasket.config.metadata.plugins.Question).does.not.exist();
   });
 });

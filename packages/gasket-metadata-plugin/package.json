@@ -7,7 +7,7 @@
   "license": "MIT",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint index.js test.js",
+    "lint": "eslint index.js test/*.js",
     "lint:fix": "npm run lint -- --fix",
     "report": "nyc report --reporter=lcov",
     "pretest": "npm run lint",
