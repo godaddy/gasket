@@ -1,6 +1,7 @@
 const { Command } = require('@oclif/config');
 
 module.exports = {
+  name: 'command',
   hooks: {
     async initOclif(gasket, { oclifConfig, BaseCommand }) {
       const commandArrays = await gasket.exec('getCommands', {
