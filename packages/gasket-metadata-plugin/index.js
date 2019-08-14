@@ -14,8 +14,8 @@ module.exports = {
           if (pluginName.indexOf(gasket.config.root) !== -1) {
             return;
           }
-          const pluginNameKey = pluginName;
 
+          const pluginNameKey = pluginName;
           gasket.config.metadata.plugins[pluginNameKey] = { modulePath: relativePath };
 
           const pluginPath = path.resolve(relativePath);
@@ -30,9 +30,6 @@ module.exports = {
       await gasket.execApply('metadata', async ({ name }, handler) => {
         gasket.config.metadata.plugins[name] = await handler(gasket.config.metadata.plugins[name]);
       });
-
-      console.log(gasket.config.metadata.plugins)
     }
-
   }
-}
+};

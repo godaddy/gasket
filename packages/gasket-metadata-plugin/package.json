@@ -1,6 +1,6 @@
 {
   "name": "@gasket/metadata-plugin",
-  "version": "2.0.0",
+  "version": "0.0.0",
   "description": "Adds metadata to gasket lifecycles",
   "author": "GoDaddy Operating Company, LLC",
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-metadata-plugin",
@@ -12,7 +12,7 @@
     "report": "nyc report --reporter=lcov",
     "pretest": "npm run lint",
     "test": "nyc --reporter=text --reporter=json-summary npm run test:unit",
-    "test:unit": "mocha test/*.js"
+    "test:unit": "mocha test.js"
   },
   "repository": {
     "type": "git",
