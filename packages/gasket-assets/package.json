@@ -42,12 +42,12 @@
     "eslint-plugin-json": "^1.4.0",
     "eslint-plugin-mocha": "^5.3.0",
     "mkdirp": "^0.5.1",
-    "react": "^16.6.0",
+    "react": "^16.8.4",
     "recursive-readdir": "^2.2.2",
     "rimraf": "^2.6.3"
   },
   "peerDependencies": {
-    "react": "^16.6.0"
+    "react": "^16.8.4"
   },
   "eslintConfig": {
     "extends": [
