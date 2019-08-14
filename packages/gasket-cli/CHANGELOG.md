@@ -2,6 +2,7 @@
 
 ###
 
+- Use `metadata` plugin by default
 - Moving `package-identifier.js` to `@gasket/resolve`.
 - Able to define default plugins
 
