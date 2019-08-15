@@ -32,7 +32,8 @@
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-config-plugin",
   "dependencies": {
     "@gasket/utils": "^1.0.0",
-    "lodash": ">=0.5.0 <5.0.0"
+    "lodash.defaultsdeep": "^4.6.0",
+    "lodash.merge": "^4.6.0"
   },
   "devDependencies": {
     "eslint": "^6.1.0",

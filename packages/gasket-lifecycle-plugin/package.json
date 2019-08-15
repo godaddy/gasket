@@ -28,7 +28,7 @@
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-lifecycle-plugin",
   "dependencies": {
     "diagnostics": "^1.1.0",
-    "lodash": ">=3.0.0 < 5.0.0"
+    "lodash.camelcase": "^4.3.0"
   },
   "devDependencies": {
     "@gasket/plugin-engine": "^1.4.0",
