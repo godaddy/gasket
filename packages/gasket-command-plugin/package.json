@@ -31,7 +31,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-command-plugin",
   "devDependencies": {
-    "@oclif/config": "^1.6.33",
+    "@oclif/config": "^1.13.0",
     "@oclif/errors": "^1.1.2",
     "eslint": "^6.1.0",
     "eslint-config-godaddy": "^4.0.0",
@@ -41,7 +41,7 @@
     "jest": "^24.8.0"
   },
   "peerDependencies": {
-    "@oclif/config": "^1.6.33",
+    "@oclif/config": "^1.13.0",
     "@oclif/errors": "^1.1.2"
   }
 }

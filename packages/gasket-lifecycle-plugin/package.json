@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-lifecycle-plugin",
   "dependencies": {
-    "diagnostics": "^1.1.0",
+    "diagnostics": "^2.0.2",
     "lodash.camelcase": "^4.3.0"
   },
   "devDependencies": {

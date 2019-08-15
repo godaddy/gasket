@@ -30,7 +30,7 @@
   "dependencies": {
     "compression": "^1.7.2",
     "cookie-parser": "^1.4.3",
-    "diagnostics": "^2.0.0"
+    "diagnostics": "^2.0.2"
   },
   "devDependencies": {
     "assume": "^2.2.0",
@@ -42,7 +42,7 @@
     "express": "^4.16.3",
     "mocha": "^6.2.0",
     "nyc": "^14.1.1",
-    "proxyquire": "^2.1.0",
+    "proxyquire": "^2.1.3",
     "sinon": "^7.4.1"
   },
   "peerDependencies": {

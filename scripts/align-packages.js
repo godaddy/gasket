@@ -32,11 +32,13 @@ const depVersions = {
   'mocha': '^6.2.0',
   'chai': '^4.2.0',
   'nyc': '^14.1.1',
+  'proxyquire': '^2.1.3',
 
   'react': '^16.8.6',
   'react-dom': '^16.8.6',
   'redux': '^4.0.4',
   'deepmerge': '^4.0.0',
+  'diagnostics': '^2.0.2',
 
   'babel-eslint': '^10.0.2',
   'eslint': '^6.1.0',
