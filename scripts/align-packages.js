@@ -36,7 +36,10 @@ const depVersions = {
   'eslint-plugin-json': '^1.4.0',
   'eslint-plugin-jest': '^22.15.1',
   'eslint-plugin-mocha': '^6.0.0',
-  'eslint-plugin-react': '^7.14.0'
+  'eslint-plugin-react': '^7.14.0',
+
+  'enzyme': '^3.10.0',
+  'enzyme-adapter-react-16': '^1.14.0'
 };
 
 
