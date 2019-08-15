@@ -2,6 +2,7 @@
 
 ###
 
+- Supporting plugins named with a single letter.
 - Including `package-identifier.js` and exposing new relative path resolve functions.
 
 ### 1.3.0
