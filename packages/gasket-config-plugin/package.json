@@ -4,9 +4,9 @@
   "description": "Supports application-specific (non-Gasket) configuration",
   "main": "lib/plugin.js",
   "scripts": {
-    "test": "jest --coverage",
     "lint": "eslint ./lib ./test",
     "lint:fix": "npm run lint -- --fix",
+    "test": "jest --coverage",
     "posttest": "npm run lint",
     "test:watch": "jest --watch",
     "prepublishOnly": "npm test"
