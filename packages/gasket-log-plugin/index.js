@@ -28,6 +28,7 @@ module.exports = {
         }
 
         const Log = require('@gasket/log');
+        // eslint-disable-next-line require-atomic-updates
         gasket.logger = new Log(options);
       }
     },

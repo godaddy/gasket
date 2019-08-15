@@ -16,17 +16,17 @@ module.exports = {
       const { hostname, https, http } = gasket.config;
 
       // Retrieving server opts
-      let serverOpts = { hostname };
+      const configOpts = { hostname };
 
       // create-servers does not support http or https being `null`
       if (http) {
-        serverOpts.http = http;
+        configOpts.http = http;
       }
       if (https) {
-        serverOpts.https = https;
+        configOpts.https = https;
       }
 
-      serverOpts = await gasket.execWaterfall('createServers', serverOpts);
+      const serverOpts = await gasket.execWaterfall('createServers', configOpts);
 
       create(serverOpts, async function created(errors, servers) {
         if (errors) {

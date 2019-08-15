@@ -51,6 +51,7 @@ module.exports = {
 
         return async function manifestMiddleware(req, res, next) {
           if (endpoints.some(p => req.path.match(p))) {
+            // eslint-disable-next-line require-atomic-updates
             req.manifest = await gatherManifestData(gasket, req);
           }
 

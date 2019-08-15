@@ -34,6 +34,7 @@ module.exports = function configureMiddleware(gasket) {
 
     await gasket.exec('initReduxStore', store, req, res);
 
+    // eslint-disable-next-line require-atomic-updates
     req.store = store;
 
     next();

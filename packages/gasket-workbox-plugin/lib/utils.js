@@ -47,7 +47,7 @@ function getOutputDir(gasket) {
 function getAssetPrefix(gasket) {
   const { next = {}, workbox = {} } = gasket.config;
   let { assetPrefix = '' } = next;
-  if (workbox.hasOwnProperty('assetPrefix')) {
+  if ('assetPrefix' in workbox) {
     assetPrefix = workbox.assetPrefix;
   }
   return assetPrefix;

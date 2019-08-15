@@ -4,7 +4,7 @@ module.exports = {
   name: 'mocha',
   hooks: {
     async create(gasket, { files, pkg, packageManager = 'npm' }) {
-      let runCmd = packageManager === 'npm' ? `npm run` : packageManager;
+      const runCmd = packageManager === 'npm' ? `npm run` : packageManager;
       const path = require('path');
 
       files.add(
