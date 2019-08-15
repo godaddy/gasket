@@ -32,8 +32,8 @@
   },
   "devDependencies": {
     "@gasket/plugin-engine": "^1.4.0",
-    "assume": "^2.1.0",
-    "assume-sinon": "^1.0.0",
+    "assume": "^2.2.0",
+    "assume-sinon": "^1.0.1",
     "babel-eslint": "^10.0.2",
     "eslint": "^6.1.0",
     "eslint-config-godaddy": "^4.0.0",
@@ -45,7 +45,7 @@
     "proxyquire": "^2.1.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "sinon": "^7.2.3"
+    "sinon": "^7.4.1"
   },
   "peerDependencies": {
     "next": "^7.0.0 || ^8.0.0",

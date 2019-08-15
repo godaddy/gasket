@@ -36,8 +36,8 @@
     "@gasket/log": "^3.0.1"
   },
   "devDependencies": {
-    "assume": "^2.0.1",
-    "assume-sinon": "^1.0.0",
+    "assume": "^2.2.0",
+    "assume-sinon": "^1.0.1",
     "babel-eslint": "^10.0.2",
     "eslint": "^6.1.0",
     "eslint-config-godaddy": "^4.0.0",
@@ -48,6 +48,6 @@
     "nyc": "^13.1.0",
     "proxyquire": "^2.1.0",
     "setup-env": "^1.2.2",
-    "sinon": "^7.2.3"
+    "sinon": "^7.4.1"
   }
 }

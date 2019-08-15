@@ -26,6 +26,9 @@ const depVersions = {
   '@babel/preset-react': '^7.0.0',
 
   'jest': '^24.8.0',
+  'assume': '^2.2.0',
+  'sinon': '^7.4.1',
+  'assume-sinon': '^1.0.1',
 
   'react': '^16.8.6',
   'react-dom': '^16.8.6',
