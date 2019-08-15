@@ -17,12 +17,16 @@ const projectRoot = path.resolve(__dirname, '..');
 // package dependencies
 
 const depVersions = {
-  // "@babel/cli": "^7.5.0",
-  // "@babel/core": "^7.5.0",
-  // "@babel/node": "^7.5.0",
-  // "@babel/preset-env": "^7.5.0",
-  // "@babel/preset-react": "^7.0.0",
+  '@babel/cli': '^7.5.5',
+  '@babel/core': '^7.5.5',
+  '@babel/node': '^7.5.5',
+  '@babel/runtime': '^7.5.5',
+  '@babel/plugin-transform-runtime': '^7.5.5',
+  '@babel/preset-env': '^7.5.5',
+  '@babel/preset-react': '^7.0.0',
   // jest@^24.8.0
+  // 'react': '^16.8.4',
+  // 'react-dom': '^16.8.4',
 
   'babel-eslint': '^10.0.2',
   'eslint': '^6.1.0',

@@ -37,7 +37,7 @@
     "url-join": "^4.0.0"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.4.5",
+    "@babel/preset-env": "^7.5.5",
     "@gasket/log-plugin": "^3.0.1",
     "acorn": "^6.1.1",
     "eslint": "^6.1.0",
