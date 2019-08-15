@@ -25,8 +25,9 @@ const depVersions = {
   '@babel/preset-env': '^7.5.5',
   '@babel/preset-react': '^7.0.0',
   // jest@^24.8.0
-  // 'react': '^16.8.4',
-  // 'react-dom': '^16.8.4',
+  'react': '^16.8.6',
+  'react-dom': '^16.8.6',
+  'redux': '^4.0.4',
 
   'babel-eslint': '^10.0.2',
   'eslint': '^6.1.0',
