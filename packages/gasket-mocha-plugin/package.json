@@ -6,9 +6,11 @@
   "scripts": {
     "lint": "eslint index.js test/*.js generator/**/**/*.js",
     "lint:fix": "npm run lint -- --fix",
-    "test": "nyc --reporter=text --reporter=json-summary npm run test:runner",
+    "test": "npm run test:runner",
     "test:runner": "mocha --require setup-env --recursive \"test/**/*.*(test|spec).js\"",
-    "test:watch": "npm run test:runner -- --watch"
+    "test:watch": "npm run test:runner -- --watch",
+    "test:coverage": "nyc --reporter=text --reporter=json-summary npm run test:runner",
+    "posttest": "npm run lint"
   },
   "repository": {
     "type": "git",
@@ -42,7 +44,7 @@
     "jsdom": "^15.0.0",
     "mocha": "^6.2.0",
     "next": "^8.0.0",
-    "nyc": "^14.0.0",
+    "nyc": "^14.1.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "setup-env": "^1.2.2",

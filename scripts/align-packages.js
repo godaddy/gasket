@@ -31,6 +31,7 @@ const depVersions = {
   'assume-sinon': '^1.0.1',
   'mocha': '^6.2.0',
   'chai': '^4.2.0',
+  'nyc': '^14.1.1',
 
   'react': '^16.8.6',
   'react-dom': '^16.8.6',
@@ -88,10 +89,10 @@ const scriptsOrder = [
   'jest',
   'pretest',
   'test',
-  'posttest',
   'test:runner',
   'test:watch',
   'test:coverage',
+  'posttest',
   'build',
   'build:watch',
   'prepack',
@@ -165,6 +166,22 @@ function fixedProperties(pkgJson) {
   };
 }
 
+function checkScripts(pkgJson) {
+  const { name, scripts } = pkgJson;
+
+  const expected = [
+    'test',
+    'test:coverage',
+    'posttest'
+  ];
+
+  expected.forEach(s => {
+    if (scripts && !(s in scripts)) {
+      console.log(`${name} does not have script: ${s}`);
+    }
+  });
+}
+
 
 async function fixupPackage(pkgPath) {
   let pkgJson;
@@ -176,6 +193,8 @@ async function fixupPackage(pkgPath) {
   }
 
   fixedProperties(pkgJson);
+
+  checkScripts(pkgJson);
 
   pkgJson = sortKeys(pkgJson, null, orderedSort(pkgOrder));
   pkgJson = sortKeys(pkgJson, 'scripts', orderedSort(scriptsOrder));
@@ -191,7 +210,7 @@ async function fixupPackage(pkgPath) {
 }
 
 
-async function loadPackages() {
+async function main() {
   const packagesDir = path.join(projectRoot, 'packages');
 
   const paths = fs.readdirSync(packagesDir, { withFileTypes: true })
@@ -204,4 +223,4 @@ async function loadPackages() {
   console.log('Finished.');
 }
 
-loadPackages();
+main();

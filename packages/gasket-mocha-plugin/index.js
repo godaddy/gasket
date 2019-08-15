@@ -38,8 +38,9 @@ module.exports = {
       });
 
       pkg.add('scripts', {
-        'test': `nyc --reporter=text --reporter=json-summary ${runCmd} test:runner`,
+        'test': 'npm run test:runner',
         'test:runner': 'mocha --require setup-env --recursive "test/**/*.*(test|spec).js"',
+        'test:coverage': `nyc --reporter=text --reporter=json-summary ${runCmd} test:runner`,
         'test:watch': `${runCmd} test:runner -- --watch`
       });
     }

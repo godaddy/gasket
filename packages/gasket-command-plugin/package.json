@@ -6,10 +6,10 @@
   "scripts": {
     "lint": "eslint ./lib ./test",
     "lint:fix": "npm run lint -- --fix",
-    "test": "npm run unit-coverage",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
     "posttest": "npm run lint",
-    "prepublishOnly": "npm test",
-    "unit-coverage": "jest --coverage"
+    "prepublishOnly": "npm test"
   },
   "repository": {
     "type": "git",

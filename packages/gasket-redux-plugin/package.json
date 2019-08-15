@@ -7,9 +7,9 @@
     "lint": "eslint lib",
     "lint:fix": "npm run lint -- --fix",
     "test": "jest",
-    "posttest": "npm run lint",
     "test:watch": "jest --watchAll",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "posttest": "npm run lint"
   },
   "repository": {
     "type": "git",

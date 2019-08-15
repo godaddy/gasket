@@ -6,9 +6,9 @@
   "scripts": {
     "lint": "eslint lib test",
     "lint:fix": "npm run lint -- --fix",
-    "test": "npm run unit",
-    "posttest": "npm run lint",
-    "unit": "jest --coverage"
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "posttest": "npm run lint"
   },
   "repository": {
     "type": "git",

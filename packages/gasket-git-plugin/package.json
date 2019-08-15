@@ -6,9 +6,10 @@
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
-    "pretest": "npm run lint",
-    "test": "nyc --reporter=text --reporter=json-summary npm run test:runner",
+    "test": "npm run test:runner",
     "test:runner": "mocha --require ./test/setup.js \"test/**/*.*(test|spec).js\"",
+    "test:coverage": "nyc --reporter=text --reporter=json-summary npm run test:runner",
+    "posttest": "npm run lint",
     "report": "nyc report --reporter=lcov"
   },
   "repository": {
@@ -37,7 +38,7 @@
     "eslint-plugin-json": "^1.4.0",
     "eslint-plugin-mocha": "^6.0.0",
     "mocha": "^6.2.0",
-    "nyc": "^13.1.0",
+    "nyc": "^14.1.1",
     "proxyquire": "^2.1.0",
     "sinon": "^7.4.1"
   },

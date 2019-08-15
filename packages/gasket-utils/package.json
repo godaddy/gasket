@@ -6,10 +6,10 @@
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
-    "pretest": "npm run lint",
     "test": "jest",
     "test:watch": "jest --watchAll",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "posttest": "npm run lint"
   },
   "repository": {
     "type": "git",
