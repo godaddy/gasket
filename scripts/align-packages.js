@@ -29,6 +29,8 @@ const depVersions = {
   'assume': '^2.2.0',
   'sinon': '^7.4.1',
   'assume-sinon': '^1.0.1',
+  'mocha': '^6.2.0',
+  'chai': '^4.2.0',
 
   'react': '^16.8.6',
   'react-dom': '^16.8.6',
