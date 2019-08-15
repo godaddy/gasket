@@ -10,7 +10,7 @@ module.exports = {
       );
 
       pkg.add('devDependencies', {
-        'jest': '^23.4.2',
+        'jest': '^24.8.0',
         'enzyme': '^3.10.0',
         'enzyme-adapter-react-16': '^1.14.0',
         'eslint-plugin-jest': '^22.15.1'

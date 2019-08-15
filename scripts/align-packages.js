@@ -24,7 +24,9 @@ const depVersions = {
   '@babel/plugin-transform-runtime': '^7.5.5',
   '@babel/preset-env': '^7.5.5',
   '@babel/preset-react': '^7.0.0',
-  // jest@^24.8.0
+
+  'jest': '^24.8.0',
+
   'react': '^16.8.6',
   'react-dom': '^16.8.6',
   'redux': '^4.0.4',
