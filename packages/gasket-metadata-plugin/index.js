@@ -1,3 +1,4 @@
+/* eslint require-atomic-updates: warn */
 const path = require('path');
 
 module.exports = {
