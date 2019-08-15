@@ -1,3 +1,4 @@
+/* eslint require-atomic-updates: warn */
 /**
  * Expose the plugin hooks, listen to the `init` and `destroy` events.
  *
@@ -28,7 +29,6 @@ module.exports = {
         }
 
         const Log = require('@gasket/log');
-        // eslint-disable-next-line require-atomic-updates
         gasket.logger = new Log(options);
       }
     },

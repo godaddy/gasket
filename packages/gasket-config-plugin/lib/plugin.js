@@ -1,4 +1,4 @@
-/* eslint-disable require-atomic-updates */
+/* eslint require-atomic-updates: warn */
 
 const mergeConfigFiles = require('./merge-config-files');
 const mergeRootConfig = require('./merge-root-config');

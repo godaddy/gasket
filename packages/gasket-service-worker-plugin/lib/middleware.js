@@ -1,4 +1,4 @@
-/* eslint-disable require-atomic-updates */
+/* eslint require-atomic-updates: warn */
 
 const util = require('util');
 const fs = require('fs');
