@@ -5,7 +5,7 @@
   ],
   "version": "independent",
   "ignoreChanges": [
-    "**/*.test.js",
+    "**/*.+(test|spec).js",
     "**/CHANGELOG.md"
   ]
 }
