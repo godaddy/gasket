@@ -2,7 +2,8 @@ const path = require('path');
 const PluginEngine = require('@gasket/plugin-engine');
 
 const defaultPlugins = [
-  require('@gasket/git-plugin')
+  require('@gasket/git-plugin'),
+  require('@gasket/metadata-plugin')
 ];
 
 module.exports  = function createEngine({ dest, presets = [], plugins = [] }) {
