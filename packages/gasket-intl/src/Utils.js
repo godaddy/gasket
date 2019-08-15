@@ -69,7 +69,7 @@ export function getDefaultLanguage(state) {
  */
 export function getMappedLanguage(state, language) {
   const map = getLanguageMap(state);
-  if (map.hasOwnProperty(language) && map[language]) {
+  if (language in map && map[language]) {
     return map[language];
   }
   return language;

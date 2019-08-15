@@ -60,7 +60,7 @@ function getFallbackLanguage(language = '') {
  */
 function getMappedLanguage(gasket, language) {
   const map = getIntlLanguageMap(gasket);
-  if (language in map) {
+  if (language in map && map[language]) {
     return map[language];
   }
   return language;
