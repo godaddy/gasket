@@ -1,4 +1,4 @@
-/* eslint-disable no-console, no-sync */
+/* eslint-disable no-console, no-sync, max-statements */
 
 const fs = require('fs');
 const path = require('path');
@@ -8,14 +8,14 @@ const {
 
 const readFile = promisify(fs.readFile);
 const writeFile = promisify(fs.writeFile);
-
-const prettyPrint = json => JSON.stringify(json, null, '  ') + '\n';
-
 const projectRoot = path.resolve(__dirname, '..');
 
 
-// package dependencies
-
+/**
+ * Dependency name and expected version range
+ *
+ * @type {object.<string,string>}
+ */
 const depVersions = {
   '@babel/cli': '^7.5.5',
   '@babel/core': '^7.5.5',
@@ -54,8 +54,11 @@ const depVersions = {
 };
 
 
-// order properties
-
+/**
+ * Expected order of the overall package
+ *
+ * @type {string[]}
+ */
 const pkgOrder = [
   'name',
   'version',
@@ -81,8 +84,11 @@ const pkgOrder = [
   'gasket'
 ];
 
-//
-
+/**
+ * Expected order of scripts
+ *
+ * @type {string[]}
+ */
 const scriptsOrder = [
   'lint',
   'lint:fix',
@@ -105,6 +111,22 @@ const scriptsOrder = [
 ];
 
 
+/**
+ * Shortcut to stringfy and object in a readable way
+ *
+ * @param {object} json - Object to stringify very prettily
+ * @returns {string} pretty
+ */
+const prettyPrint = json => JSON.stringify(json, null, '  ') + '\n';
+
+/**
+ * Builds a sort function from an array.
+ * Items found in the array will be arranged as listed.
+ * Otherwise, they will be sorted alphanumeric at the end.
+ *
+ * @param {Array} arr - Array of sorted keys
+ * @returns {function} compare
+ */
 const orderedSort = arr => (a, b) => {
   let comparison = 0;
   let aIdx = arr.indexOf(a);
@@ -124,7 +146,14 @@ const orderedSort = arr => (a, b) => {
   return comparison;
 };
 
-
+/**
+ * Takes and object and sorts its keys
+ *
+ * @param {object} obj - Object with keys to be ordered
+ * @param {string} [attr] - name of object property to sort
+ * @param {function} [compare] - optional sort function
+ * @returns {object} sorted
+ */
 function sortKeys(obj, attr, compare) {
   const target = attr ? obj[attr] : obj;
 
@@ -141,21 +170,31 @@ function sortKeys(obj, attr, compare) {
   return attr ? obj : ordered;
 }
 
+/**
+ * Adjust versions of dependencies in package match the version expected
+ *
+ * @param {object} pkgJson - package.json contents
+ * @param {string} attr - Either devDependencies or dependencies
+ * @returns {object} pkgJson
+ */
+function alignDeps(pkgJson, attr) {
+  if (!pkgJson[attr]) return pkgJson;
 
-function alignDeps(obj, attr) {
-  if (!obj[attr]) return obj;
-
-  const deps = Object.keys(obj[attr]);
+  const deps = Object.keys(pkgJson[attr]);
   const updated = {};
 
   deps.forEach(dep => {
-    updated[dep] = depVersions[dep] || obj[attr][dep];
+    updated[dep] = depVersions[dep] || pkgJson[attr][dep];
   });
-  obj[attr] = updated;
-  return obj;
+  pkgJson[attr] = updated;
+  return pkgJson;
 }
 
-
+/**
+ * Set standard properties in packages
+ *
+ * @param {object} pkgJson - package.json contents
+ */
 function fixedProperties(pkgJson) {
 
   pkgJson.author = 'GoDaddy Operating Company, LLC';
@@ -169,6 +208,11 @@ function fixedProperties(pkgJson) {
   };
 }
 
+/**
+ * Checks for expected scripts and warns if missing
+ *
+ * @param {object} pkgJson - package.json contents
+ */
 function checkScripts(pkgJson) {
   const { name, scripts } = pkgJson;
 
@@ -180,12 +224,17 @@ function checkScripts(pkgJson) {
 
   expected.forEach(s => {
     if (scripts && !(s in scripts)) {
-      console.log(`${name} does not have script: ${s}`);
+      console.warn(`${name} does not have script: ${s}`);
     }
   });
 }
 
-
+/**
+ * Read, fix up, and write out updated package.json file
+ *
+ * @param {string} pkgPath path to a package.json file
+ * @returns {Promise} promise
+ */
 async function fixupPackage(pkgPath) {
   let pkgJson;
   try {
@@ -212,7 +261,11 @@ async function fixupPackage(pkgPath) {
   console.log('aligned', path.relative(projectRoot, pkgPath));
 }
 
-
+/**
+ * Finds all the packages and fixes them up
+ *
+ * @returns {Promise} promise
+ */
 async function main() {
   const packagesDir = path.join(projectRoot, 'packages');
 
