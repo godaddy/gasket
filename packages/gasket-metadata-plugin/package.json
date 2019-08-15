@@ -1,6 +1,6 @@
 {
   "name": "@gasket/metadata-plugin",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Adds metadata to gasket lifecycles",
   "author": "GoDaddy Operating Company, LLC",
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-metadata-plugin",

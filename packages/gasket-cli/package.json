@@ -43,6 +43,7 @@
     "@gasket/command-plugin": "^1.0.3",
     "@gasket/git-plugin": "^1.0.0",
     "@gasket/lifecycle-plugin": "^1.0.2",
+    "@gasket/metadata-plugin": "^1.0.0",
     "@gasket/plugin-engine": "^1.4.0",
     "@gasket/resolve": "^1.4.0",
     "@gasket/utils": "^1.1.0",
