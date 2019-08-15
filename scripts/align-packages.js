@@ -36,6 +36,7 @@ const depVersions = {
   'react': '^16.8.6',
   'react-dom': '^16.8.6',
   'redux': '^4.0.4',
+  'deepmerge': '^4.0.0',
 
   'babel-eslint': '^10.0.2',
   'eslint': '^6.1.0',

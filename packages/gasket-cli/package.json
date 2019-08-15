@@ -61,7 +61,7 @@
     "@oclif/plugin-not-found": "^1.0.9",
     "@oclif/plugin-warn-if-update-available": "^1.5.1",
     "concat-stream": "^2.0.0",
-    "deepmerge": "^3.2.0",
+    "deepmerge": "^4.0.0",
     "git-shizzle": "^0.1.0",
     "git-url-parse": "^11.1.2",
     "handlebars": "^4.0.11",
