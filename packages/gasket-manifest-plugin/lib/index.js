@@ -1,3 +1,4 @@
+/* eslint require-atomic-updates: warn */
 const baseConfig = require('./base-config');
 const escapeRegex = require('escape-string-regexp');
 

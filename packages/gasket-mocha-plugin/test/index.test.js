@@ -98,20 +98,22 @@ describe('mocha plugin', () => {
     it('uses nyc for test coverage in the test script', async function () {
       const { pkg } = await create();
 
-      expect(pkg.scripts.test).includes('nyc');
+      expect(pkg.scripts['test:coverage']).includes('nyc');
     });
 
     it('adds appropriate scripts for npm', function () {
       const expected = 'npm run';
 
       spyFunc('scripts', {
-        'test': `nyc --reporter=text --reporter=json-summary ${expected} test:runner`,
+        'test': `npm run test:runner`,
+        'test:coverage': `nyc --reporter=text --reporter=json-summary ${expected} test:runner`,
         'test:runner': 'mocha --require setup-env --recursive "test/**/*.*(test|spec).js"',
         'test:watch': `${expected} test:runner -- --watch`
       });
 
       expect(spyFunc).to.have.been.called.with('scripts', {
-        'test': `nyc --reporter=text --reporter=json-summary npm run test:runner`,
+        'test': `npm run test:runner`,
+        'test:coverage': `nyc --reporter=text --reporter=json-summary npm run test:runner`,
         'test:runner': 'mocha --require setup-env --recursive "test/**/*.*(test|spec).js"',
         'test:watch': `npm run test:runner -- --watch`
       });

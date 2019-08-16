@@ -1,4 +1,4 @@
-const { defaultsDeep } = require('lodash');
+const defaultsDeep = require('lodash.defaultsdeep');
 const path = require('path');
 const { tryRequire, applyEnvironmentOverrides } = require('@gasket/utils');
 

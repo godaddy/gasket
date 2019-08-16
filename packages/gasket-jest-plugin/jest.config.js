@@ -1,5 +1,5 @@
 module.exports = {
-  collectCoverageFrom: ['**/*.js'],
+  collectCoverageFrom: ['index.js'],
   testURL: 'http://localhost/',
   testMatch: ['**/test/*.test.js']
 };

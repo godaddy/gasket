@@ -1,6 +1,6 @@
-import self from '../package.json';
-import plugin from '../index.js';
-import path from 'path';
+const self = require('../package.json');
+const plugin = require('../index.js');
+const path = require('path');
 
 describe('jest plugin', () => {
   async function create() {

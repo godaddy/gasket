@@ -1,3 +1,5 @@
+/* eslint require-atomic-updates: warn */
+
 const { getReduxConfig } = require('./utils');
 
 /**
