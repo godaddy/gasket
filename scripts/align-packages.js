@@ -117,7 +117,7 @@ const scriptsOrder = [
  * @param {object} json - Object to stringify very prettily
  * @returns {string} pretty
  */
-const prettyPrint = json => JSON.stringify(json, null, '  ') + '\n';
+const prettyPrint = json => JSON.stringify(json, null, 2) + '\n';
 
 /**
  * Builds a sort function from an array.
