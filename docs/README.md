@@ -46,7 +46,6 @@ For an overview of what is available for Gasket apps continue reading below.
 - [Deployment Guide]
 - [Custom Express Routes/Middleware Guide]
 - [Extensibility Guide]
-- [White Labeling Guide]
 - [Common "Gotchas"]
 - [State Management Guide]
 
@@ -329,9 +328,7 @@ Development modules to help with code quality.
 [Deployment Guide]: guides/deployment.md
 [Custom Express Routes/Middleware Guide]: guides/express.md
 [Extensibility Guide]: guides/extensibility.md
-[White Labeling Guide]: guides/white-labeling.md
 [Common "Gotchas"]: guides/gotchas.md
-[Migrating from HUI]: guides/from-hui.md
 [Gasket Tech Stack]: guides/tech-stack.md
 [State Management Guide]: guides/state-management.md
 
@@ -340,25 +337,25 @@ Development modules to help with code quality.
 [Gasket Docs]: README.md
 
 <!-- Gasket Repo Links -->
-[@gasket/cli]:https://github.com/godaddy/gasket/tree/master/packages/gasket-cli  
-[@gasket/nextjs-plugin]:https://github.com/godaddy/gasket/tree/master/packages/gasket-nextjs-plugin#gasketnextjs-plugin
-[@gasket/webpack-plugin]:https://github.com/godaddy/gasket/tree/master/packages/gasket-webpack-plugin#gasketwebpack-plugin
-[@gasket/express-plugin]:https://github.com/godaddy/gasket/tree/master/packages/gasket-express-plugin#gasketexpress-plugin
-[@gasket/intl]:https://github.com/godaddy/gasket/tree/master/packages/gasket-intl
-[@gasket/redux]:https://github.com/godaddy/gasket/tree/master/packages/gasket-redux#gasketredux
-[@gasket/log]:https://github.com/godaddy/gasket/tree/master/packages/gasket-log#gasketlog
-[@gasket/analyze-plugin]:https://github.com/godaddy/gasket/tree/master/packages/gasket-analyze-plugin#gasketanalyze-plugin
-[@gasket/assets-plugin]:https://github.com/godaddy/gasket/tree/master/packages/gasket-assets-plugin
-[@gasket/config-plugin]:https://github.com/godaddy/gasket/tree/master/packages/gasket-config-plugin#gasketconfig-plugin
-[@gasket/intl-plugin]:https://github.com/godaddy/gasket/tree/master/packages/gasket-intl-plugin
-[@gasket/lifecycle-plugin]:https://github.com/godaddy/gasket/tree/master/packages/gasket-lifecycle-plugin#gasketlifecycle-plugin
-[@gasket/log-plugin]:https://github.com/godaddy/gasket/tree/master/packages/gasket-log-plugin#gasket-log-plugin
-[@gasket/proxy-plugin]:https://github.com/godaddy/gasket/tree/master/packages/proxy-plugin
-[@gasket/redux-plugin]:https://github.com/godaddy/gasket/tree/master/packages/gasket-redux-plugin
-[@gasket/plugin-engine]:https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-engine#gasketplugin-engine
-[@gasket/fetch]:https://github.com/godaddy/gasket/tree/master/packages/gasket-fetch#gasketfetch
+[@gasket/cli]: ../packages/gasket-cli  
+[@gasket/nextjs-plugin]:../packages/gasket-nextjs-plugin#gasketnextjs-plugin
+[@gasket/webpack-plugin]:../packages/gasket-webpack-plugin#gasketwebpack-plugin
+[@gasket/express-plugin]:../packages/gasket-express-plugin#gasketexpress-plugin
+[@gasket/intl]:../packages/gasket-intl
+[@gasket/redux]:../packages/gasket-redux#gasketredux
+[@gasket/log]:/packages/gasket-log#gasketlog
+[@gasket/analyze-plugin]:../packages/gasket-analyze-plugin#gasketanalyze-plugin
+[@gasket/assets-plugin]:../packages/gasket-assets-plugin
+[@gasket/config-plugin]:../packages/gasket-config-plugin#gasketconfig-plugin
+[@gasket/intl-plugin]:../packages/gasket-intl-plugin
+[@gasket/lifecycle-plugin]:../packages/gasket-lifecycle-plugin#gasketlifecycle-plugin
+[@gasket/log-plugin]:../packages/gasket-log-plugin#gasket-log-plugin
+[@gasket/proxy-plugin]:../packages/proxy-plugin
+[@gasket/redux-plugin]:../packages/gasket-redux-plugin
+[@gasket/plugin-engine]:../packages/gasket-plugin-engine#gasketplugin-engine
+[@gasket/fetch]:../packages/gasket-fetch#gasketfetch
 [stylelint-config-godaddy]:https://github.com/godaddy/stylelint-config-godaddy
-[@gasket/https-plugin]: https://github.com/godaddy/gasket/tree/master/packages/gasket-https-plugin#gaskethttps-plugin
+[@gasket/https-plugin]: ../packages/gasket-https-plugin#gaskethttps-plugin
 
 <!-- Other Repo Links -->
 [reduxful]:https://github.com/godaddy/reduxful
@@ -366,8 +363,8 @@ Development modules to help with code quality.
 [@godaddy/eslint-plugin-react-intl]: https://github.com/eslint-plugin-react-intl-link-to-be-arranged
 
 <!-- Gasket Repo Docs Links -->
-[CLI Commands]:https://github.com/godaddy/gasket/tree/master/packages/gasket-cli#commands
-[Configuring Plugins]:https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-engine#configuring-plugins
+[CLI Commands]:../packages/gasket-cli#commands
+[Configuring Plugins]:../packages/gasket-plugin-engine#configuring-plugins
 
 <!-- Next.js Links -->
 [Next.js]:https://github.com/zeit/next.js
