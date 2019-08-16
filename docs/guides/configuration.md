@@ -49,12 +49,12 @@ module.exports = {
         enableSomeFeature: true
       }
     },
-    'prod.p3': {
+    'prod.datacenter1': {
       someService: {
         url: 'https://your-p3-prod-service-endpoint.com'
       }
     },
-    'prod.a2': {
+    'prod.datacenter2': {
       someService: {
         url: 'https://your-a2-prod-service-endpoint.com'
       }

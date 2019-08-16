@@ -32,6 +32,8 @@
 - `@gasket/express-plugin`
   - [`express`](#express)
   - [`middleware`](#middleware)
+- `@gasket/metadata-plugin`
+  - [`metadata`](#metadata)
 
 For reference in JSDOC the `Gasket` type can be defined as follows:
 
@@ -480,6 +482,37 @@ async function middlewareHook(gasket, app) {
       next();
     }
   ]
+}
+```
+### metadata
+
+- **Executed during:** : `init` lifecycle
+- **Documentation**: [here](/packages/gasket-metadata-plugin#gasketmetadata-plugin)
+
+Adds additional metadata to gasket.config.metadata
+
+```js
+/**
+ * Logs some of the metadata present in gasket.config and then
+ * adds a little extra to be appended to the metadata of this plugin
+ *
+ * @param {Gasket} gasket The Gasket API
+ * @param {Object} data default metadata provided to the hook
+ */
+async function metadataHook(gasket, data) {
+  // a list of hooks that this plugin implements
+  console.log(data.hooks);
+
+  // flattened data from package.json of this plugin
+  console.log(data.name);
+  console.log(data.version);
+  console.log(data.author);
+
+  // adding extra data to this plugin's metadata
+  return {
+    ...data,
+    extra: 'information'
+  }
 }
 ```
 
