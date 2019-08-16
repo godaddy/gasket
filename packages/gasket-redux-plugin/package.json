@@ -4,15 +4,16 @@
   "description": "Gasket Redux Setup",
   "main": "lib",
   "scripts": {
-    "lint": "eslint --fix lib",
+    "lint": "eslint lib",
+    "lint:fix": "npm run lint -- --fix",
     "test": "jest",
-    "posttest": "npm run lint",
     "test:watch": "jest --watchAll",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "posttest": "npm run lint"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/godaddy/gasket"
+    "url": "git+ssh://git@github.com/godaddy/gasket.git"
   },
   "keywords": [
     "gasket",
@@ -32,14 +33,14 @@
     "@gasket/log-plugin": "^3.0.1",
     "@gasket/redux": "^3.0.1",
     "acorn": "^6.1.1",
-    "eslint": "^5.16.0",
-    "eslint-config-godaddy": "^3.0.0",
-    "eslint-plugin-jest": "^21.15.1",
-    "eslint-plugin-json": "^1.2.0",
-    "eslint-plugin-mocha": "^5.3.0",
+    "eslint": "^6.1.0",
+    "eslint-config-godaddy": "^4.0.0",
+    "eslint-plugin-jest": "^22.15.1",
+    "eslint-plugin-json": "^1.4.0",
+    "eslint-plugin-mocha": "^6.0.0",
     "jest": "^24.8.0",
-    "react": "^16.8.4",
-    "react-dom": "^16.8.4"
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
   },
   "peerDependencies": {
     "@gasket/log-plugin": "^2.0.0 || ^3.0.0",

@@ -1,3 +1,5 @@
+/* eslint require-atomic-updates: warn */
+
 const mergeConfigFiles = require('./merge-config-files');
 const mergeRootConfig = require('./merge-root-config');
 const { ENV_CONFIG } = require('./constants');

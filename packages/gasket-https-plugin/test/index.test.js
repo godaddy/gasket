@@ -97,7 +97,7 @@ describe('servers hook', () => {
   });
 
   it('rejects with an Error on failure', async () => {
-    createServersModule.yields(errs.create({ https: { message: 'HTTP server failed to start', errno: 'something' }}));
+    createServersModule.yields(errs.create({ https: { message: 'HTTP server failed to start', errno: 'something' } }));
 
     await executeModule();
 
