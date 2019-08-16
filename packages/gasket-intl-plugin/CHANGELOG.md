@@ -1,4 +1,11 @@
-# CHANGELOG
+# `@gasket/intl-plugin`
+
+### 4.0.0
+
+- Execute `intlLanguage` lifecycle to determine language
+- Set `intl.language` on redux state instead of market cookie
+- Migrated to monorepo
+- Align package structure and dependencies
 
 ### 3.1.2
 

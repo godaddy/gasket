@@ -1,4 +1,8 @@
-# CHANGELOG
+# `@gasket/redux`
+
+### 3.1.0
+
+- Align package structure and dependencies
 
 ### 3.0.1
 

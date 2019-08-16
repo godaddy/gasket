@@ -1,4 +1,4 @@
-# CHANGELOG
+# `@gasket/metadata-plugin`
 
 # 1.0.0
 
