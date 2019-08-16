@@ -1,3 +1,4 @@
+/* eslint require-atomic-updates: warn */
 /**
  * Expose the plugin hooks, listen to the `init` and `destroy` events.
  *

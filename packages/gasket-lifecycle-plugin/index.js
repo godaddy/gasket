@@ -2,7 +2,7 @@ const debug = require('diagnostics')('gasket:lifecycle');
 const path = require('path');
 const fs = require('fs');
 const { promisify } = require('util');
-const { camelCase } = require('lodash');
+const camelCase = require('lodash.camelcase');
 
 const readDir = promisify(fs.readdir);
 
