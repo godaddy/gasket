@@ -12,7 +12,7 @@
 <!-- initReduxState -->
 <g id="node1" class="node">
 <title>initReduxState</title>
-<g id="a_node1"><a xlink:href="/packages/gasket-redux-plugin#initreduxstate" xlink:title="initReduxState">
+<g id="a_node1"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-redux-plugin#initreduxstate" xlink:title="initReduxState">
 <ellipse fill="#7fff7f" stroke="#000000" cx="71.397" cy="-90" rx="62.8425" ry="18"/>
 <text text-anchor="middle" x="71.397" y="-85.8" font-family="Times,serif" font-size="14.00" fill="#000000">initReduxState</text>
 </a>
@@ -21,7 +21,7 @@
 <!-- config_initReduxState_hook -->
 <g id="node2" class="node">
 <title>config_initReduxState_hook</title>
-<g id="a_node2"><a xlink:href="/packages/config-plugin" xlink:title="config&#45;plugin">
+<g id="a_node2"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-config-plugin" xlink:title="config&#45;plugin">
 <polygon fill="#ffa500" stroke="#000000" points="142.691,-23.5623 71.397,-36 .1029,-23.5623 .1694,-3.4377 142.6245,-3.4377 142.691,-23.5623"/>
 <text text-anchor="middle" x="71.397" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">config&#45;plugin</text>
 </a>

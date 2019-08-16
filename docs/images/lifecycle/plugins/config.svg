@@ -12,7 +12,7 @@
 <!-- appEnvConfig -->
 <g id="node1" class="node">
 <title>appEnvConfig</title>
-<g id="a_node1"><a xlink:href="/packages/gasket-config-plugin#appenvconfig" xlink:title="appEnvConfig">
+<g id="a_node1"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-config-plugin#appenvconfig" xlink:title="appEnvConfig">
 <ellipse fill="#7fff7f" stroke="#000000" cx="79.9227" cy="-18" rx="61.4064" ry="18"/>
 <text text-anchor="middle" x="79.9227" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">appEnvConfig</text>
 </a>
@@ -21,7 +21,7 @@
 <!-- appRequestConfig -->
 <g id="node2" class="node">
 <title>appRequestConfig</title>
-<g id="a_node2"><a xlink:href="/packages/gasket-config-plugin#apprequestconfig" xlink:title="appRequestConfig">
+<g id="a_node2"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-config-plugin#apprequestconfig" xlink:title="appRequestConfig">
 <ellipse fill="#7fff7f" stroke="#000000" cx="276.9227" cy="-18" rx="75.3966" ry="18"/>
 <text text-anchor="middle" x="276.9227" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">appRequestConfig</text>
 </a>
@@ -30,7 +30,7 @@
 <!-- config_preboot_hook -->
 <g id="node3" class="node">
 <title>config_preboot_hook</title>
-<g id="a_node3"><a xlink:href="/packages/config-plugin" xlink:title="config&#45;plugin\npreboot hook">
+<g id="a_node3"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-config-plugin" xlink:title="config&#45;plugin\npreboot hook">
 <polygon fill="#ffa500" stroke="#000000" points="159.7682,-185.1777 79.9227,-206.8955 .0772,-185.1777 .1517,-150.0375 159.6937,-150.0375 159.7682,-185.1777"/>
 <text text-anchor="middle" x="79.9227" y="-178.2652" font-family="Times,serif" font-size="14.00" fill="#000000">config&#45;plugin</text>
 <text text-anchor="middle" x="79.9227" y="-164.2652" font-family="Times,serif" font-size="14.00" fill="#000000">preboot hook</text>
@@ -52,7 +52,7 @@
 <!-- config_middleware_hook -->
 <g id="node4" class="node">
 <title>config_middleware_hook</title>
-<g id="a_node4"><a xlink:href="/packages/config-plugin" xlink:title="config&#45;plugin\nmiddleware hook">
+<g id="a_node4"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-config-plugin" xlink:title="config&#45;plugin\nmiddleware hook">
 <polygon fill="#ffa500" stroke="#000000" points="375.9736,-185.1777 276.9227,-206.8955 177.8718,-185.1777 177.9643,-150.0375 375.8812,-150.0375 375.9736,-185.1777"/>
 <text text-anchor="middle" x="276.9227" y="-178.2652" font-family="Times,serif" font-size="14.00" fill="#000000">config&#45;plugin</text>
 <text text-anchor="middle" x="276.9227" y="-164.2652" font-family="Times,serif" font-size="14.00" fill="#000000">middleware hook</text>
@@ -74,7 +74,7 @@
 <!-- config_initReduxState_hook -->
 <g id="node5" class="node">
 <title>config_initReduxState_hook</title>
-<g id="a_node5"><a xlink:href="/packages/config-plugin" xlink:title="config&#45;plugin\ninitReduxState hook">
+<g id="a_node5"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-config-plugin" xlink:title="config&#45;plugin\ninitReduxState hook">
 <polygon fill="#ffa500" stroke="#000000" points="623.4195,-185.1777 508.9227,-206.8955 394.426,-185.1777 394.5328,-150.0375 623.3126,-150.0375 623.4195,-185.1777"/>
 <text text-anchor="middle" x="508.9227" y="-178.2652" font-family="Times,serif" font-size="14.00" fill="#000000">config&#45;plugin</text>
 <text text-anchor="middle" x="508.9227" y="-164.2652" font-family="Times,serif" font-size="14.00" fill="#000000">initReduxState hook</text>

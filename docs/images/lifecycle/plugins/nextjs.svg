@@ -12,7 +12,7 @@
 <!-- middleware -->
 <g id="node1" class="node">
 <title>middleware</title>
-<g id="a_node1"><a xlink:href="/packages/gasket-express-plugin#middleware" xlink:title="middleware">
+<g id="a_node1"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-express-plugin#middleware" xlink:title="middleware">
 <ellipse fill="#7fff7f" stroke="#000000" cx="330.4483" cy="-522" rx="51.7002" ry="18"/>
 <text text-anchor="middle" x="330.4483" y="-517.8" font-family="Times,serif" font-size="14.00" fill="#000000">middleware</text>
 </a>
@@ -21,7 +21,7 @@
 <!-- config_middleware_hook -->
 <g id="node10" class="node">
 <title>config_middleware_hook</title>
-<g id="a_node10"><a xlink:href="/packages/config-plugin" xlink:title="config&#45;plugin">
+<g id="a_node10"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-config-plugin" xlink:title="config&#45;plugin">
 <polygon fill="#ffa500" stroke="#000000" points="146.7424,-455.5623 75.4483,-468 4.1542,-455.5623 4.2208,-435.4377 146.6758,-435.4377 146.7424,-455.5623"/>
 <text text-anchor="middle" x="75.4483" y="-445.8" font-family="Times,serif" font-size="14.00" fill="#000000">config&#45;plugin</text>
 </a>
@@ -36,7 +36,7 @@
 <!-- redux_middleware_hook -->
 <g id="node11" class="node">
 <title>redux_middleware_hook</title>
-<g id="a_node11"><a xlink:href="/packages/redux-plugin" xlink:title="redux&#45;plugin">
+<g id="a_node11"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-redux-plugin" xlink:title="redux&#45;plugin">
 <polygon fill="#ffa500" stroke="#000000" points="302.3638,-455.5623 233.4483,-468 164.5328,-455.5623 164.5971,-435.4377 302.2995,-435.4377 302.3638,-455.5623"/>
 <text text-anchor="middle" x="233.4483" y="-445.8" font-family="Times,serif" font-size="14.00" fill="#000000">redux&#45;plugin</text>
 </a>
@@ -51,7 +51,7 @@
 <!-- serviceWorker_middleware_hook -->
 <g id="node12" class="node">
 <title>serviceWorker_middleware_hook</title>
-<g id="a_node12"><a xlink:href="/packages/serviceWorker-plugin" xlink:title="serviceWorker&#45;plugin">
+<g id="a_node12"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-serviceWorker-plugin" xlink:title="serviceWorker&#45;plugin">
 <polygon fill="#ffa500" stroke="#000000" points="534.5848,-455.5623 427.4483,-468 320.3118,-455.5623 320.4118,-435.4377 534.4848,-435.4377 534.5848,-455.5623"/>
 <text text-anchor="middle" x="427.4483" y="-445.8" font-family="Times,serif" font-size="14.00" fill="#000000">serviceWorker&#45;plugin</text>
 </a>
@@ -66,7 +66,7 @@
 <!-- express -->
 <g id="node2" class="node">
 <title>express</title>
-<g id="a_node2"><a xlink:href="/packages/gasket-express-plugin" xlink:title="express">
+<g id="a_node2"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-express-plugin" xlink:title="express">
 <ellipse fill="#7fff7f" stroke="#000000" cx="589.4483" cy="-450" rx="36.7576" ry="18"/>
 <text text-anchor="middle" x="589.4483" y="-445.8" font-family="Times,serif" font-size="14.00" fill="#000000">express</text>
 </a>
@@ -75,7 +75,7 @@
 <!-- intl_express_hook -->
 <g id="node13" class="node">
 <title>intl_express_hook</title>
-<g id="a_node13"><a xlink:href="/packages/intl-plugin" xlink:title="intl&#45;plugin">
+<g id="a_node13"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-intl-plugin" xlink:title="intl&#45;plugin">
 <polygon fill="#ffa500" stroke="#000000" points="445.2402,-383.5623 386.4483,-396 327.6564,-383.5623 327.7113,-363.4377 445.1853,-363.4377 445.2402,-383.5623"/>
 <text text-anchor="middle" x="386.4483" y="-373.8" font-family="Times,serif" font-size="14.00" fill="#000000">intl&#45;plugin</text>
 </a>
@@ -90,7 +90,7 @@
 <!-- serviceWorker_express_hook -->
 <g id="node14" class="node">
 <title>serviceWorker_express_hook</title>
-<g id="a_node14"><a xlink:href="/packages/serviceWorker-plugin" xlink:title="serviceWorker&#45;plugin">
+<g id="a_node14"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-serviceWorker-plugin" xlink:title="serviceWorker&#45;plugin">
 <polygon fill="#ffa500" stroke="#000000" points="677.5848,-383.5623 570.4483,-396 463.3118,-383.5623 463.4118,-363.4377 677.4848,-363.4377 677.5848,-383.5623"/>
 <text text-anchor="middle" x="570.4483" y="-373.8" font-family="Times,serif" font-size="14.00" fill="#000000">serviceWorker&#45;plugin</text>
 </a>
@@ -105,7 +105,7 @@
 <!-- workbox_express_hook -->
 <g id="node15" class="node">
 <title>workbox_express_hook</title>
-<g id="a_node15"><a xlink:href="/packages/workbox-plugin" xlink:title="workbox&#45;plugin">
+<g id="a_node15"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-workbox-plugin" xlink:title="workbox&#45;plugin">
 <polygon fill="#ffa500" stroke="#000000" points="861.3108,-383.5623 778.4483,-396 695.5858,-383.5623 695.6631,-363.4377 861.2334,-363.4377 861.3108,-383.5623"/>
 <text text-anchor="middle" x="778.4483" y="-373.8" font-family="Times,serif" font-size="14.00" fill="#000000">workbox&#45;plugin</text>
 </a>
@@ -120,7 +120,7 @@
 <!-- next -->
 <g id="node3" class="node">
 <title>next</title>
-<g id="a_node3"><a xlink:href="/packages/gasket-nextjs-plugin#next" xlink:title="next">
+<g id="a_node3"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-nextjs-plugin#next" xlink:title="next">
 <ellipse fill="#7fff7f" stroke="#000000" cx="906.4483" cy="-378" rx="27" ry="18"/>
 <text text-anchor="middle" x="906.4483" y="-373.8" font-family="Times,serif" font-size="14.00" fill="#000000">next</text>
 </a>
@@ -129,7 +129,7 @@
 <!-- appRequestConfig -->
 <g id="node4" class="node">
 <title>appRequestConfig</title>
-<g id="a_node4"><a xlink:href="/packages/gasket-config-plugin#apprequestconfig" xlink:title="appRequestConfig">
+<g id="a_node4"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-config-plugin#apprequestconfig" xlink:title="appRequestConfig">
 <ellipse fill="#7fff7f" stroke="#000000" cx="75.4483" cy="-306" rx="75.3966" ry="18"/>
 <text text-anchor="middle" x="75.4483" y="-301.8" font-family="Times,serif" font-size="14.00" fill="#000000">appRequestConfig</text>
 </a>
@@ -138,7 +138,7 @@
 <!-- initReduxState -->
 <g id="node5" class="node">
 <title>initReduxState</title>
-<g id="a_node5"><a xlink:href="/packages/gasket-redux-plugin#initreduxstate" xlink:title="initReduxState">
+<g id="a_node5"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-redux-plugin#initreduxstate" xlink:title="initReduxState">
 <ellipse fill="#7fff7f" stroke="#000000" cx="232.4483" cy="-306" rx="62.8425" ry="18"/>
 <text text-anchor="middle" x="232.4483" y="-301.8" font-family="Times,serif" font-size="14.00" fill="#000000">initReduxState</text>
 </a>
@@ -147,7 +147,7 @@
 <!-- config_initReduxState_hook -->
 <g id="node16" class="node">
 <title>config_initReduxState_hook</title>
-<g id="a_node16"><a xlink:href="/packages/config-plugin" xlink:title="config&#45;plugin">
+<g id="a_node16"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-config-plugin" xlink:title="config&#45;plugin">
 <polygon fill="#ffa500" stroke="#000000" points="298.7424,-239.5623 227.4483,-252 156.1542,-239.5623 156.2208,-219.4377 298.6758,-219.4377 298.7424,-239.5623"/>
 <text text-anchor="middle" x="227.4483" y="-229.8" font-family="Times,serif" font-size="14.00" fill="#000000">config&#45;plugin</text>
 </a>
@@ -162,7 +162,7 @@
 <!-- initReduxStore -->
 <g id="node6" class="node">
 <title>initReduxStore</title>
-<g id="a_node6"><a xlink:href="/packages/gasket-redux-plugin#initreduxstore" xlink:title="initReduxStore">
+<g id="a_node6"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-redux-plugin#initreduxstore" xlink:title="initReduxStore">
 <ellipse fill="#7fff7f" stroke="#000000" cx="380.4483" cy="-234" rx="63.8115" ry="18"/>
 <text text-anchor="middle" x="380.4483" y="-229.8" font-family="Times,serif" font-size="14.00" fill="#000000">initReduxStore</text>
 </a>
@@ -171,7 +171,7 @@
 <!-- composeServiceWorker -->
 <g id="node7" class="node">
 <title>composeServiceWorker</title>
-<g id="a_node7"><a xlink:href="/packages/gasket-service-worker-plugin#composeserviceworker" xlink:title="composeServiceWorker">
+<g id="a_node7"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-service-worker-plugin#composeserviceworker" xlink:title="composeServiceWorker">
 <ellipse fill="#7fff7f" stroke="#000000" cx="570.4483" cy="-234" rx="94.2233" ry="18"/>
 <text text-anchor="middle" x="570.4483" y="-229.8" font-family="Times,serif" font-size="14.00" fill="#000000">composeServiceWorker</text>
 </a>
@@ -180,7 +180,7 @@
 <!-- workbox_composeServiceWorker_hook -->
 <g id="node17" class="node">
 <title>workbox_composeServiceWorker_hook</title>
-<g id="a_node17"><a xlink:href="/packages/workbox-plugin" xlink:title="workbox&#45;plugin">
+<g id="a_node17"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-workbox-plugin" xlink:title="workbox&#45;plugin">
 <polygon fill="#ffa500" stroke="#000000" points="653.3108,-167.5623 570.4483,-180 487.5858,-167.5623 487.6631,-147.4377 653.2334,-147.4377 653.3108,-167.5623"/>
 <text text-anchor="middle" x="570.4483" y="-157.8" font-family="Times,serif" font-size="14.00" fill="#000000">workbox&#45;plugin</text>
 </a>
@@ -195,7 +195,7 @@
 <!-- workbox -->
 <g id="node8" class="node">
 <title>workbox</title>
-<g id="a_node8"><a xlink:href="/packages/gasket-workbox-plugin#workbox" xlink:title="workbox">
+<g id="a_node8"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-workbox-plugin#workbox" xlink:title="workbox">
 <ellipse fill="#7fff7f" stroke="#000000" cx="570.4483" cy="-18" rx="41.5938" ry="18"/>
 <text text-anchor="middle" x="570.4483" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">workbox</text>
 </a>
@@ -204,7 +204,7 @@
 <!-- nextjs_start_hook -->
 <g id="node9" class="node">
 <title>nextjs_start_hook</title>
-<g id="a_node9"><a xlink:href="/packages/nextjs-plugin" xlink:title="nextjs&#45;plugin\nstart hook">
+<g id="a_node9"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-nextjs-plugin" xlink:title="nextjs&#45;plugin\nstart hook">
 <polygon fill="#ffa500" stroke="#000000" points="490.0693,-689.1777 411.4483,-710.8955 332.8273,-689.1777 332.9007,-654.0375 489.9959,-654.0375 490.0693,-689.1777"/>
 <text text-anchor="middle" x="411.4483" y="-682.2652" font-family="Times,serif" font-size="14.00" fill="#000000">nextjs&#45;plugin</text>
 <text text-anchor="middle" x="411.4483" y="-668.2652" font-family="Times,serif" font-size="14.00" fill="#000000">start hook</text>

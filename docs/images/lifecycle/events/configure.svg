@@ -18,7 +18,7 @@
 <!-- serviceWorker_configure_hook -->
 <g id="node3" class="node">
 <title>serviceWorker_configure_hook</title>
-<g id="a_node3"><a xlink:href="/packages/serviceWorker-plugin" xlink:title="serviceWorker&#45;plugin">
+<g id="a_node3"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-serviceWorker-plugin" xlink:title="serviceWorker&#45;plugin">
 <polygon fill="#ffa500" stroke="#000000" points="214.4546,-167.5623 107.3181,-180 .1816,-167.5623 .2816,-147.4377 214.3546,-147.4377 214.4546,-167.5623"/>
 <text text-anchor="middle" x="107.3181" y="-157.8" font-family="Times,serif" font-size="14.00" fill="#000000">serviceWorker&#45;plugin</text>
 </a>
@@ -33,7 +33,7 @@
 <!-- workbox_configure_hook -->
 <g id="node4" class="node">
 <title>workbox_configure_hook</title>
-<g id="a_node4"><a xlink:href="/packages/workbox-plugin" xlink:title="workbox&#45;plugin">
+<g id="a_node4"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-workbox-plugin" xlink:title="workbox&#45;plugin">
 <polygon fill="#ffa500" stroke="#000000" points="398.1806,-167.5623 315.3181,-180 232.4556,-167.5623 232.5329,-147.4377 398.1033,-147.4377 398.1806,-167.5623"/>
 <text text-anchor="middle" x="315.3181" y="-157.8" font-family="Times,serif" font-size="14.00" fill="#000000">workbox&#45;plugin</text>
 </a>
@@ -48,7 +48,7 @@
 <!-- serviceWorkerCacheKey -->
 <g id="node2" class="node">
 <title>serviceWorkerCacheKey</title>
-<g id="a_node2"><a xlink:href="/packages/gasket-service-worker-plugin#serviceworkercachekey" xlink:title="serviceWorkerCacheKey">
+<g id="a_node2"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-service-worker-plugin#serviceworkercachekey" xlink:title="serviceWorkerCacheKey">
 <ellipse fill="#7fff7f" stroke="#000000" cx="107.3181" cy="-18" rx="98.0567" ry="18"/>
 <text text-anchor="middle" x="107.3181" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">serviceWorkerCacheKey</text>
 </a>

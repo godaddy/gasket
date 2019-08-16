@@ -18,7 +18,7 @@
 <!-- log_init_hook -->
 <g id="node2" class="node">
 <title>log_init_hook</title>
-<g id="a_node2"><a xlink:href="/packages/log-plugin" xlink:title="log&#45;plugin\ninit hook">
+<g id="a_node2"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-log-plugin" xlink:title="log&#45;plugin\ninit hook">
 <polygon fill="#ffa500" stroke="#000000" points="129.9032,-185.1777 64.9677,-206.8955 .0323,-185.1777 .0929,-150.0375 129.8426,-150.0375 129.9032,-185.1777"/>
 <text text-anchor="middle" x="64.9677" y="-178.2652" font-family="Times,serif" font-size="14.00" fill="#000000">log&#45;plugin</text>
 <text text-anchor="middle" x="64.9677" y="-164.2652" font-family="Times,serif" font-size="14.00" fill="#000000">init hook</text>
@@ -40,7 +40,7 @@
 <!-- log_webpack_hook -->
 <g id="node3" class="node">
 <title>log_webpack_hook</title>
-<g id="a_node3"><a xlink:href="/packages/log-plugin" xlink:title="log&#45;plugin\nwebpack hook">
+<g id="a_node3"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-log-plugin" xlink:title="log&#45;plugin\nwebpack hook">
 <polygon fill="#ffa500" stroke="#000000" points="317.9704,-185.1777 232.9677,-206.8955 147.9651,-185.1777 148.0444,-150.0375 317.891,-150.0375 317.9704,-185.1777"/>
 <text text-anchor="middle" x="232.9677" y="-178.2652" font-family="Times,serif" font-size="14.00" fill="#000000">log&#45;plugin</text>
 <text text-anchor="middle" x="232.9677" y="-164.2652" font-family="Times,serif" font-size="14.00" fill="#000000">webpack hook</text>

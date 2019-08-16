@@ -12,7 +12,7 @@
 <!-- lint_create_hook -->
 <g id="node1" class="node">
 <title>lint_create_hook</title>
-<g id="a_node1"><a xlink:href="/packages/lint-plugin" xlink:title="lint&#45;plugin\ncreate hook">
+<g id="a_node1"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-lint-plugin" xlink:title="lint&#45;plugin\ncreate hook">
 <polygon fill="#ffa500" stroke="#000000" points="141.6472,-41.1777 70.7155,-62.8955 -.2162,-41.1777 -.15,-6.0375 141.581,-6.0375 141.6472,-41.1777"/>
 <text text-anchor="middle" x="70.7155" y="-34.2652" font-family="Times,serif" font-size="14.00" fill="#000000">lint&#45;plugin</text>
 <text text-anchor="middle" x="70.7155" y="-20.2652" font-family="Times,serif" font-size="14.00" fill="#000000">create hook</text>

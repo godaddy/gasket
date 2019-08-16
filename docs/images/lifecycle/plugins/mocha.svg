@@ -12,7 +12,7 @@
 <!-- mocha_create_hook -->
 <g id="node1" class="node">
 <title>mocha_create_hook</title>
-<g id="a_node1"><a xlink:href="/packages/mocha-plugin" xlink:title="mocha&#45;plugin\ncreate hook">
+<g id="a_node1"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-mocha-plugin" xlink:title="mocha&#45;plugin\ncreate hook">
 <polygon fill="#ffa500" stroke="#000000" points="163.8446,-41.1777 81.9482,-62.8955 .0518,-41.1777 .1282,-6.0375 163.7682,-6.0375 163.8446,-41.1777"/>
 <text text-anchor="middle" x="81.9482" y="-34.2652" font-family="Times,serif" font-size="14.00" fill="#000000">mocha&#45;plugin</text>
 <text text-anchor="middle" x="81.9482" y="-20.2652" font-family="Times,serif" font-size="14.00" fill="#000000">create hook</text>
