@@ -1,4 +1,10 @@
-# CHANGELOG
+# `@gasket/intl`
+
+### 4.0.0
+
+- Uses intl.language from redux state instead of market cookie
+- Migrated to monorepo
+- Align package structure and dependencies 
 
 ### 3.2.0
 

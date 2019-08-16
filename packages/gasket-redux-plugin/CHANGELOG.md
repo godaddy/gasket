@@ -1,4 +1,8 @@
-# CHANGELOG
+# `@gasket/redux-plugin`
+
+### 2.3.0
+
+- Align package structure and dependencies
 
 ### 2.2.1
 

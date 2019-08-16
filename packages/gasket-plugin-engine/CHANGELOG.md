@@ -1,8 +1,16 @@
-# CHANGELOG
+# `@gasket/plugin-engine`
 
-###
+### 1.5.0
+
+- Align package structure and dependencies
+
+### 1.4.0
 
 - Including presets and plugins paths into `config.metadata`
+
+### 1.3.0
+
+- Migrated to monorepo
 - Warns user about bad plugin timings
 
 ### 1.2.0

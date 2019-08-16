@@ -1,4 +1,8 @@
-# CHANGELOG
+# `@gasket/config-plugin`
+
+### 1.2.0
+
+- Align package structure and dependencies
 
 ### 1.1.2
 

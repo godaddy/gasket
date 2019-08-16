@@ -1,4 +1,8 @@
-# CHANGELOG
+# `@gasket/mocha-plugin`
+
+### 1.4.0
+
+- Align package structure and dependencies
 
 ### 1.3.0
 
