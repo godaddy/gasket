@@ -1,6 +1,6 @@
 {
   "name": "@gasket/log-plugin",
-  "version": "3.0.3",
+  "version": "3.1.0",
   "description": "Gasket log plugin",
   "main": "./",
   "scripts": {
@@ -34,7 +34,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-log-plugin#readme",
   "dependencies": {
-    "@gasket/log": "^3.0.1"
+    "@gasket/log": "^3.1.0"
   },
   "devDependencies": {
     "assume": "^2.2.0",

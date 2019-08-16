@@ -1,6 +1,6 @@
 {
   "name": "@gasket/config-plugin",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "Supports application-specific (non-Gasket) configuration",
   "main": "lib/plugin.js",
   "scripts": {
@@ -31,7 +31,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-config-plugin",
   "dependencies": {
-    "@gasket/utils": "^1.0.0",
+    "@gasket/utils": "^1.2.0",
     "lodash.defaultsdeep": "^4.6.0",
     "lodash.merge": "^4.6.0"
   },
