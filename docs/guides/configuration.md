@@ -51,27 +51,27 @@ module.exports = {
     },
     'prod.datacenter1': {
       someService: {
-        url: 'https://your-p3-prod-service-endpoint.com'
+        url: 'https://your-datacenter1-prod-service-endpoint.com'
       }
     },
     'prod.datacenter2': {
       someService: {
-        url: 'https://your-a2-prod-service-endpoint.com'
+        url: 'https://your-datacenter2-prod-service-endpoint.com'
       }
     }
   }
 };
 ```
 
-When accessing configuration in the `prod.p3` environment, the base
+When accessing configuration in the `prod.datacenter1` environment, the base
 configuration is augmented with the `prod` environment settings, then the
-`prod.p3` settings, resulting in:
+`prod.datacenter1` settings, resulting in:
 
 ```json
 {
   "someService": {
     "enableSomeFeature": true,
-    "url": "https://your-p3-prod-service-endpoint.com"
+    "url": "https://your-datacenter1-prod-service-endpoint.com"
   }
 }
 ```
