@@ -1,41 +1,44 @@
 {
   "name": "@gasket/plugin-engine",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "Plugin engine for gasket",
   "main": "lib/engine.js",
+  "scripts": {
+    "lint": "eslint lib test",
+    "lint:fix": "npm run lint -- --fix",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "posttest": "npm run lint"
+  },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/godaddy/gasket"
+    "url": "git+ssh://git@github.com/godaddy/gasket.git"
   },
-  "author": "GoDaddy.com, LLC",
-  "maintainers": [
-    "Jacob Page <jpage@godaddy.com>"
-  ],
   "keywords": [
     "gasket",
     "preset",
     "plugin",
     "plugin-engine"
   ],
+  "author": "GoDaddy Operating Company, LLC",
+  "maintainers": [
+    "Jacob Page <jpage@godaddy.com>"
+  ],
   "license": "MIT",
-  "dependencies": {
-    "@gasket/resolve": "^1.4.0"
-  },
-  "devDependencies": {
-    "eslint": "^5.16.0",
-    "eslint-config-godaddy": "^3.0.0",
-    "eslint-plugin-jest": "^22.6.4",
-    "eslint-plugin-json": "^1.4.0",
-    "eslint-plugin-mocha": "^5.3.0",
-    "jest": "^24.8.0"
+  "bugs": {
+    "url": "https://github.com/godaddy/gasket/issues"
   },
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-engine",
-  "scripts": {
-    "test": "npm run unit",
-    "posttest": "npm run lint",
-    "lint": "eslint lib test",
-    "lint:fix": "npm run lint -- --fix",
-    "unit": "jest --coverage"
+  "dependencies": {
+    "@gasket/resolve": "^1.5.0"
+  },
+  "devDependencies": {
+    "eslint": "^6.1.0",
+    "eslint-config-godaddy": "^4.0.0",
+    "eslint-plugin-jest": "^22.15.1",
+    "eslint-plugin-json": "^1.4.0",
+    "eslint-plugin-mocha": "^6.0.0",
+    "jest": "^24.8.0"
   },
   "jest": {
     "testEnvironment": "node"

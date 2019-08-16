@@ -1,4 +1,8 @@
-# CHANGELOG
+# `@gasket/manifest-plugin`
+
+### 1.3.0
+
+- Align package structure and dependencies
 
 ### 1.2.1
 

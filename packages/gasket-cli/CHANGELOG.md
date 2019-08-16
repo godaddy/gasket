@@ -1,8 +1,16 @@
 # `@gasket/cli`
 
-###
+### 2.6.0
+
+- Align package structure and dependencies
+- Use `metadata` plugin by default
+
+### 2.5.0
 
 - Moving `package-identifier.js` to `@gasket/resolve`.
+
+### 2.4.0
+
 - Able to define default plugins
 
 ### 2.3.0

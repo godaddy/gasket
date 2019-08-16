@@ -1,6 +1,11 @@
 # `@gasket/resolve`
 
-###
+### 1.5.0
+
+- Align package structure and dependencies
+- Supporting plugins named with a single letter.
+
+### 1.4.0
 
 - Including `package-identifier.js` and exposing new relative path resolve functions.
 

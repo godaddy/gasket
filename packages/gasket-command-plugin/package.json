@@ -1,18 +1,19 @@
 {
   "name": "@gasket/command-plugin",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "description": "Plugin to enable other plugins to inject new gasket commands",
   "main": "lib/plugin.js",
   "scripts": {
-    "lint": "eslint --fix ./lib ./test",
-    "test": "npm run unit-coverage",
+    "lint": "eslint ./lib ./test",
+    "lint:fix": "npm run lint -- --fix",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
     "posttest": "npm run lint",
-    "prepublish": "npm test",
-    "unit-coverage": "jest --coverage"
+    "prepublishOnly": "npm test"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/godaddy/gasket"
+    "url": "git+ssh://git@github.com/godaddy/gasket.git"
   },
   "keywords": [
     "gasket",
@@ -30,17 +31,17 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-command-plugin",
   "devDependencies": {
-    "@oclif/config": "^1.6.33",
+    "@oclif/config": "^1.13.0",
     "@oclif/errors": "^1.1.2",
-    "eslint": "^4.19.1",
-    "eslint-config-godaddy": "^2.1.0",
-    "eslint-plugin-jest": "^21.18.0",
-    "eslint-plugin-json": "^1.2.1",
-    "eslint-plugin-mocha": "^4.12.1",
-    "jest": "^23.4.2"
+    "eslint": "^6.1.0",
+    "eslint-config-godaddy": "^4.0.0",
+    "eslint-plugin-jest": "^22.15.1",
+    "eslint-plugin-json": "^1.4.0",
+    "eslint-plugin-mocha": "^6.0.0",
+    "jest": "^24.8.0"
   },
   "peerDependencies": {
-    "@oclif/config": "^1.6.33",
+    "@oclif/config": "^1.13.0",
     "@oclif/errors": "^1.1.2"
   }
 }

@@ -1,17 +1,19 @@
 {
   "name": "@gasket/lifecycle-plugin",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Allows a gasket/ directory to be used for lifecycle hooks in applications.",
   "main": "lib/index.js",
   "scripts": {
     "lint": "eslint --fix *.js test/*.js",
-    "mocha": "mocha test/lifecycle.js",
-    "test": "nyc --reporter=text --reporter=json-summary npm run mocha",
+    "lint:fix": "npm run lint -- --fix",
+    "test": "npm run test:runner",
+    "test:runner": "mocha test/lifecycle.js",
+    "test:coverage": "nyc --reporter=text --reporter=json-summary npm run test:runner",
     "posttest": "npm run lint"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/godaddy/gasket"
+    "url": "git+ssh://git@github.com/godaddy/gasket.git"
   },
   "keywords": [
     "gasket",
@@ -25,17 +27,17 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-lifecycle-plugin",
   "dependencies": {
-    "diagnostics": "^1.1.0",
-    "lodash": ">=3.0.0 < 5.0.0"
+    "diagnostics": "^2.0.2",
+    "lodash.camelcase": "^4.3.0"
   },
   "devDependencies": {
-    "@gasket/plugin-engine": "^1.4.0",
-    "assume": "^2.0.1",
-    "eslint": "^4.19.1",
-    "eslint-config-godaddy": "^2.1.0",
-    "eslint-plugin-json": "^1.2.0",
-    "eslint-plugin-mocha": "^4.12.1",
-    "mocha": "^5.2.0",
-    "nyc": "^12.0.2"
+    "@gasket/plugin-engine": "^1.5.0",
+    "assume": "^2.2.0",
+    "eslint": "^6.1.0",
+    "eslint-config-godaddy": "^4.0.0",
+    "eslint-plugin-json": "^1.4.0",
+    "eslint-plugin-mocha": "^6.0.0",
+    "mocha": "^6.2.0",
+    "nyc": "^14.1.1"
   }
 }

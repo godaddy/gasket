@@ -169,7 +169,7 @@ describe('The @gasket/config-plugin', () => {
     let mockReq, mockRes;
 
     beforeEach(() => {
-      mockReq = { mock: 'request', cookies: { market: 'de-DE' }};
+      mockReq = { mock: 'request', cookies: { market: 'de-DE' } };
       mockRes = { mock: 'response' };
     });
 
@@ -236,7 +236,7 @@ describe('The @gasket/config-plugin', () => {
     });
 
     it('adds the `redux` config section to the redux state', async () => {
-      req.config = { something: 'private', redux: { something: 'public' }};
+      req.config = { something: 'private', redux: { something: 'public' } };
       const startingState = {
         auth: { some: 'details' }
       };

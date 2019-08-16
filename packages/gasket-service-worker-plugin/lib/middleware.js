@@ -1,3 +1,5 @@
+/* eslint require-atomic-updates: warn */
+
 const util = require('util');
 const fs = require('fs');
 const readFile = util.promisify(fs.readFile);
@@ -16,9 +18,9 @@ async function loadTemplate(config) {
     const { url, scope } = config;
     const template = require.resolve('./sw-register.template.js');
 
-    __script = await readFile(template, 'utf8');
-    __script = __script.replace('{URL}', url);
-    __script = __script.replace('{SCOPE}', scope);
+    __script = (await readFile(template, 'utf8'))
+      .replace('{URL}', url)
+      .replace('{SCOPE}', scope);
   }
   return __script;
 }

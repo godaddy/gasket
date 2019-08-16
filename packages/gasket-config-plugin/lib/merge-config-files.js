@@ -1,5 +1,5 @@
 const path = require('path');
-const { merge } = require('lodash');
+const merge = require('lodash.merge');
 const { tryRequire } = require('@gasket/utils');
 
 module.exports = function loadConfig(gasket) {

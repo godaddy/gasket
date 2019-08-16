@@ -1,51 +1,48 @@
 {
   "name": "@gasket/jest-plugin",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "Integrated jest into your application.",
   "main": "index.js",
   "scripts": {
     "lint": "eslint *.js generator/*.js generator/**/*.js",
     "lint:fix": "npm run lint -- --fix",
-    "pretest": "npm run lint",
     "test": "jest",
     "test:watch": "jest --watchAll",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "posttest": "npm run lint"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/godaddy/gasket"
+    "url": "git+ssh://git@github.com/godaddy/gasket.git"
   },
-  "maintainers": [
-    "Salil Agrawal <sagrawal@godaddy.com>",
-    "Andrew Gerard <agerard@godaddy.com>"
-  ],
-  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-jest-plugin",
-  "author": "GoDaddy Operating Company, LLC",
   "keywords": [
     "jest",
     "gasket",
     "plugin"
   ],
+  "author": "GoDaddy Operating Company, LLC",
+  "maintainers": [
+    "Salil Agrawal <sagrawal@godaddy.com>",
+    "Andrew Gerard <agerard@godaddy.com>"
+  ],
   "license": "MIT",
-  "devDependencies": {
-    "babel-eslint": "^10.0.1",
-    "babel-preset-env": "^1.7.0",
-    "enzyme": "^3.8.0",
-    "enzyme-adapter-react-16": "^1.8.0",
-    "eslint": "^5.16.0",
-    "eslint-config-godaddy-react": "^4.1.0",
-    "eslint-plugin-jest": "^22.2.2",
-    "eslint-plugin-json": "^1.2.0",
-    "eslint-plugin-jsx-a11y": "^6.2.1",
-    "eslint-plugin-mocha": "^5.3.0",
-    "eslint-plugin-react": "^7.12.4",
-    "jest": "^23.4.2",
-    "react": "^16.8.4",
-    "react-dom": "^16.8.4"
+  "bugs": {
+    "url": "https://github.com/godaddy/gasket/issues"
   },
-  "babel": {
-    "presets": [
-      "babel-preset-env"
-    ]
+  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-jest-plugin",
+  "devDependencies": {
+    "babel-eslint": "^10.0.2",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.14.0",
+    "eslint": "^6.1.0",
+    "eslint-config-godaddy-react": "^6.0.0",
+    "eslint-plugin-jest": "^22.15.1",
+    "eslint-plugin-json": "^1.4.0",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-mocha": "^6.0.0",
+    "eslint-plugin-react": "^7.14.0",
+    "jest": "^24.8.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
   }
 }

@@ -1,13 +1,15 @@
 {
   "name": "@gasket/manifest-plugin",
-  "version": "1.2.1",
+  "version": "1.3.0",
   "description": "The web app manifest for progressive Gasket applications",
   "main": "lib/index.js",
   "scripts": {
     "lint": "eslint .",
-    "pretest": "npm run lint",
-    "test": "nyc --reporter=text --reporter=html npm run test:unit",
-    "test:unit": "mocha \"test/**/*.test.js\""
+    "lint:fix": "npm run lint -- --fix",
+    "test": "npm run test:runner",
+    "test:runner": "mocha \"test/**/*.test.js\"",
+    "test:coverage": "nyc --reporter=text --reporter=html npm run test:runner",
+    "posttest": "npm run lint"
   },
   "repository": {
     "type": "git",
@@ -34,12 +36,12 @@
   },
   "devDependencies": {
     "assume": "^2.2.0",
-    "eslint": "^5.16.0",
-    "eslint-config-godaddy": "^3.0.0",
+    "eslint": "^6.1.0",
+    "eslint-config-godaddy": "^4.0.0",
     "eslint-plugin-json": "^1.4.0",
-    "eslint-plugin-mocha": "^5.3.0",
-    "mocha": "^6.1.1",
-    "nyc": "^13.3.0",
-    "sinon": "^7.3.1"
+    "eslint-plugin-mocha": "^6.0.0",
+    "mocha": "^6.2.0",
+    "nyc": "^14.1.1",
+    "sinon": "^7.4.1"
   }
 }

@@ -42,7 +42,8 @@ class LocaleRequiredBase extends React.Component {
     }
     const msgs = LocaleRequiredBase.checkedMessages;
     return !this.props._params.some(p => {
-      return !msgs.hasOwnProperty(getResourceKey('getMessages', p));
+      const key = getResourceKey('getMessages', p);
+      return !(key in msgs);
     });
   }
 
@@ -68,7 +69,7 @@ class LocaleRequiredBase extends React.Component {
    */
   isProvided(msgResource) {
     const { intl: { messages: intlMessages } } = this.props;
-    return Object.keys(msgResource.value).every(k => intlMessages.hasOwnProperty(k));
+    return Object.keys(msgResource.value).every(k => k in intlMessages);
   }
 
   /**
