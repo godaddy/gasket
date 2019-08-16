@@ -31,7 +31,7 @@ your components.
 - If a state value is needed across pages.
 
 - If a state value is initialized with server side rendering and later used from client.
-Before we go any further, please take a moment to review [How to use @gasket/redux](https://github.com/godaddy/gasket/tree/master/packages/gasket-redux#gasketredux)
+Before we go any further, please take a moment to review [How to use @gasket/redux](/packages/gasket-redux#gasketredux)
 
 ### Example 1: Keep data in redux state
 

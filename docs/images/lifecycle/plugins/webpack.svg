@@ -12,7 +12,7 @@
 <!-- webpackChain -->
 <g id="node1" class="node">
 <title>webpackChain</title>
-<g id="a_node1"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-webpack-plugin#webpackchain" xlink:title="webpackChain">
+<g id="a_node1"><a xlink:href="/packages/gasket-webpack-plugin#webpackchain" xlink:title="webpackChain">
 <ellipse fill="#7fff7f" stroke="#000000" cx="201.4443" cy="-162" rx="62.8166" ry="18"/>
 <text text-anchor="middle" x="201.4443" y="-157.8" font-family="Times,serif" font-size="14.00" fill="#000000">webpackChain</text>
 </a>
@@ -21,7 +21,7 @@
 <!-- webpack -->
 <g id="node2" class="node">
 <title>webpack</title>
-<g id="a_node2"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-webpack-plugin#webpack" xlink:title="webpack">
+<g id="a_node2"><a xlink:href="/packages/gasket-webpack-plugin#webpack" xlink:title="webpack">
 <ellipse fill="#7fff7f" stroke="#000000" cx="315.4443" cy="-90" rx="41.5679" ry="18"/>
 <text text-anchor="middle" x="315.4443" y="-85.8" font-family="Times,serif" font-size="14.00" fill="#000000">webpack</text>
 </a>
@@ -30,7 +30,7 @@
 <!-- analyze_webpack_hook -->
 <g id="node4" class="node">
 <title>analyze_webpack_hook</title>
-<g id="a_node4"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/analyze-plugin" xlink:title="analyze&#45;plugin">
+<g id="a_node4"><a xlink:href="/packages/analyze-plugin" xlink:title="analyze&#45;plugin">
 <polygon fill="#ffa500" stroke="#000000" points="154.833,-23.5623 77.4443,-36 .0557,-23.5623 .1279,-3.4377 154.7607,-3.4377 154.833,-23.5623"/>
 <text text-anchor="middle" x="77.4443" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">analyze&#45;plugin</text>
 </a>
@@ -45,7 +45,7 @@
 <!-- assets_webpack_hook -->
 <g id="node5" class="node">
 <title>assets_webpack_hook</title>
-<g id="a_node5"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/assets-plugin" xlink:title="assets&#45;plugin">
+<g id="a_node5"><a xlink:href="/packages/assets-plugin" xlink:title="assets&#45;plugin">
 <polygon fill="#ffa500" stroke="#000000" points="312.0875,-23.5623 242.4443,-36 172.8011,-23.5623 172.8661,-3.4377 312.0225,-3.4377 312.0875,-23.5623"/>
 <text text-anchor="middle" x="242.4443" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">assets&#45;plugin</text>
 </a>
@@ -60,7 +60,7 @@
 <!-- log_webpack_hook -->
 <g id="node6" class="node">
 <title>log_webpack_hook</title>
-<g id="a_node6"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/log-plugin" xlink:title="log&#45;plugin">
+<g id="a_node6"><a xlink:href="/packages/log-plugin" xlink:title="log&#45;plugin">
 <polygon fill="#ffa500" stroke="#000000" points="446.5189,-23.5623 388.4443,-36 330.3697,-23.5623 330.4239,-3.4377 446.4647,-3.4377 446.5189,-23.5623"/>
 <text text-anchor="middle" x="388.4443" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">log&#45;plugin</text>
 </a>
@@ -75,7 +75,7 @@
 <!-- redux_webpack_hook -->
 <g id="node7" class="node">
 <title>redux_webpack_hook</title>
-<g id="a_node7"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/redux-plugin" xlink:title="redux&#45;plugin">
+<g id="a_node7"><a xlink:href="/packages/redux-plugin" xlink:title="redux&#45;plugin">
 <polygon fill="#ffa500" stroke="#000000" points="602.3598,-23.5623 533.4443,-36 464.5288,-23.5623 464.5931,-3.4377 602.2955,-3.4377 602.3598,-23.5623"/>
 <text text-anchor="middle" x="533.4443" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">redux&#45;plugin</text>
 </a>
@@ -90,7 +90,7 @@
 <!-- webpack_build_hook -->
 <g id="node3" class="node">
 <title>webpack_build_hook</title>
-<g id="a_node3"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/webpack-plugin" xlink:title="webpack&#45;plugin\nbuild hook">
+<g id="a_node3"><a xlink:href="/packages/webpack-plugin" xlink:title="webpack&#45;plugin\nbuild hook">
 <polygon fill="#ffa500" stroke="#000000" points="351.0775,-329.1777 258.4443,-350.8955 165.8111,-329.1777 165.8976,-294.0375 350.991,-294.0375 351.0775,-329.1777"/>
 <text text-anchor="middle" x="258.4443" y="-322.2652" font-family="Times,serif" font-size="14.00" fill="#000000">webpack&#45;plugin</text>
 <text text-anchor="middle" x="258.4443" y="-308.2652" font-family="Times,serif" font-size="14.00" fill="#000000">build hook</text>

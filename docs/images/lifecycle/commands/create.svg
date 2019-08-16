@@ -12,7 +12,7 @@
 <!-- createCmd -->
 <g id="node1" class="node">
 <title>createCmd</title>
-<g id="a_node1"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-cli#gasket-create" xlink:title="create">
+<g id="a_node1"><a xlink:href="/packages/gasket-cli#gasket-create" xlink:title="create">
 <ellipse fill="#ffff00" stroke="#000000" cx="289.6458" cy="-306" rx="31.4201" ry="18"/>
 <text text-anchor="middle" x="289.6458" y="-301.8" font-family="Times,serif" font-size="14.00" fill="#000000">create</text>
 </a>
@@ -39,7 +39,7 @@
 <!-- create -->
 <g id="node3" class="node">
 <title>create</title>
-<g id="a_node3"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-cli#create" xlink:title="create">
+<g id="a_node3"><a xlink:href="/packages/gasket-cli#create" xlink:title="create">
 <ellipse fill="#7fff7f" stroke="#000000" cx="330.6458" cy="-90" rx="31.4201" ry="18"/>
 <text text-anchor="middle" x="330.6458" y="-85.8" font-family="Times,serif" font-size="14.00" fill="#000000">create</text>
 </a>
@@ -48,7 +48,7 @@
 <!-- intl_create_hook -->
 <g id="node4" class="node">
 <title>intl_create_hook</title>
-<g id="a_node4"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/intl-plugin" xlink:title="intl&#45;plugin">
+<g id="a_node4"><a xlink:href="/packages/intl-plugin" xlink:title="intl&#45;plugin">
 <polygon fill="#ffa500" stroke="#000000" points="117.4377,-23.5623 58.6458,-36 -.1461,-23.5623 -.0913,-3.4377 117.3828,-3.4377 117.4377,-23.5623"/>
 <text text-anchor="middle" x="58.6458" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">intl&#45;plugin</text>
 </a>
@@ -63,7 +63,7 @@
 <!-- jest_create_hook -->
 <g id="node5" class="node">
 <title>jest_create_hook</title>
-<g id="a_node5"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/jest-plugin" xlink:title="jest&#45;plugin">
+<g id="a_node5"><a xlink:href="/packages/jest-plugin" xlink:title="jest&#45;plugin">
 <polygon fill="#ffa500" stroke="#000000" points="254.1446,-23.5623 194.6458,-36 135.1469,-23.5623 135.2025,-3.4377 254.0891,-3.4377 254.1446,-23.5623"/>
 <text text-anchor="middle" x="194.6458" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">jest&#45;plugin</text>
 </a>
@@ -78,7 +78,7 @@
 <!-- lint_create_hook -->
 <g id="node6" class="node">
 <title>lint_create_hook</title>
-<g id="a_node6"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/lint-plugin" xlink:title="lint&#45;plugin">
+<g id="a_node6"><a xlink:href="/packages/lint-plugin" xlink:title="lint&#45;plugin">
 <polygon fill="#ffa500" stroke="#000000" points="389.4377,-23.5623 330.6458,-36 271.8539,-23.5623 271.9087,-3.4377 389.3828,-3.4377 389.4377,-23.5623"/>
 <text text-anchor="middle" x="330.6458" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">lint&#45;plugin</text>
 </a>
@@ -93,7 +93,7 @@
 <!-- mocha_create_hook -->
 <g id="node7" class="node">
 <title>mocha_create_hook</title>
-<g id="a_node7"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/mocha-plugin" xlink:title="mocha&#45;plugin">
+<g id="a_node7"><a xlink:href="/packages/mocha-plugin" xlink:title="mocha&#45;plugin">
 <polygon fill="#ffa500" stroke="#000000" points="554.0591,-23.5623 480.6458,-36 407.2325,-23.5623 407.301,-3.4377 553.9906,-3.4377 554.0591,-23.5623"/>
 <text text-anchor="middle" x="480.6458" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">mocha&#45;plugin</text>
 </a>
@@ -108,7 +108,7 @@
 <!-- redux_create_hook -->
 <g id="node8" class="node">
 <title>redux_create_hook</title>
-<g id="a_node8"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/redux-plugin" xlink:title="redux&#45;plugin">
+<g id="a_node8"><a xlink:href="/packages/redux-plugin" xlink:title="redux&#45;plugin">
 <polygon fill="#ffa500" stroke="#000000" points="709.5613,-23.5623 640.6458,-36 571.7303,-23.5623 571.7946,-3.4377 709.4969,-3.4377 709.5613,-23.5623"/>
 <text text-anchor="middle" x="640.6458" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">redux&#45;plugin</text>
 </a>

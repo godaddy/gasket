@@ -140,5 +140,5 @@ module.exports = {
 
 The [config plugin] has similar lifecycle hooks available for application-level configuration.
 
-[config plugin]: https://github.com/godaddy/gasket/tree/master/packages/gasket-config-plugin#gasketconfig-plugin
-[lifecycle plugin]: https://github.com/godaddy/gasket/tree/master/packages/gasket-lifecycle-plugin#gasketlifecycle-plugin
+[config plugin]: /packages/gasket-config-plugin#gasketconfig-plugin
+[lifecycle plugin]: /packages/gasket-lifecycle-plugin#gasketlifecycle-plugin

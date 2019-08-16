@@ -279,7 +279,7 @@ Additional modules for use within your application code.
 Development modules to help with code quality.
 
 - [godaddy-style] - GoDaddy Javascript style eslint rules
-- [@godaddy/eslint-plugin-react-intl] - eslint checks for react-intl (Coming soon)
+- [@godaddy/eslint-plugin-react-intl] - eslint checks for react-intl
 - [stylelint-config-godaddy] - CSS and SASS style linting rules
 
 ## Further Reading
@@ -337,34 +337,34 @@ Development modules to help with code quality.
 [Gasket Docs]: README.md
 
 <!-- Gasket Repo Links -->
-[@gasket/cli]: ../packages/gasket-cli  
-[@gasket/nextjs-plugin]:../packages/gasket-nextjs-plugin#gasketnextjs-plugin
-[@gasket/webpack-plugin]:../packages/gasket-webpack-plugin#gasketwebpack-plugin
-[@gasket/express-plugin]:../packages/gasket-express-plugin#gasketexpress-plugin
-[@gasket/intl]:../packages/gasket-intl
-[@gasket/redux]:../packages/gasket-redux#gasketredux
+[@gasket/cli]:/packages/gasket-cli  
+[@gasket/nextjs-plugin]:/packages/gasket-nextjs-plugin#gasketnextjs-plugin
+[@gasket/webpack-plugin]:/packages/gasket-webpack-plugin#gasketwebpack-plugin
+[@gasket/express-plugin]:/packages/gasket-express-plugin#gasketexpress-plugin
+[@gasket/intl]:/packages/gasket-intl
+[@gasket/redux]:/packages/gasket-redux#gasketredux
 [@gasket/log]:/packages/gasket-log#gasketlog
-[@gasket/analyze-plugin]:../packages/gasket-analyze-plugin#gasketanalyze-plugin
-[@gasket/assets-plugin]:../packages/gasket-assets-plugin
-[@gasket/config-plugin]:../packages/gasket-config-plugin#gasketconfig-plugin
-[@gasket/intl-plugin]:../packages/gasket-intl-plugin
-[@gasket/lifecycle-plugin]:../packages/gasket-lifecycle-plugin#gasketlifecycle-plugin
-[@gasket/log-plugin]:../packages/gasket-log-plugin#gasket-log-plugin
-[@gasket/proxy-plugin]:../packages/proxy-plugin
-[@gasket/redux-plugin]:../packages/gasket-redux-plugin
-[@gasket/plugin-engine]:../packages/gasket-plugin-engine#gasketplugin-engine
-[@gasket/fetch]:../packages/gasket-fetch#gasketfetch
+[@gasket/analyze-plugin]:/packages/gasket-analyze-plugin#gasketanalyze-plugin
+[@gasket/assets-plugin]:/packages/gasket-assets-plugin
+[@gasket/config-plugin]:/packages/gasket-config-plugin#gasketconfig-plugin
+[@gasket/intl-plugin]:/packages/gasket-intl-plugin
+[@gasket/lifecycle-plugin]:/packages/gasket-lifecycle-plugin#gasketlifecycle-plugin
+[@gasket/log-plugin]:/packages/gasket-log-plugin#gasket-log-plugin
+[@gasket/proxy-plugin]:/packages/proxy-plugin
+[@gasket/redux-plugin]:/packages/gasket-redux-plugin
+[@gasket/plugin-engine]:/packages/gasket-plugin-engine#gasketplugin-engine
+[@gasket/fetch]:/packages/gasket-fetch#gasketfetch
 [stylelint-config-godaddy]:https://github.com/godaddy/stylelint-config-godaddy
-[@gasket/https-plugin]: ../packages/gasket-https-plugin#gaskethttps-plugin
+[@gasket/https-plugin]: /packages/gasket-https-plugin#gaskethttps-plugin
 
 <!-- Other Repo Links -->
 [reduxful]:https://github.com/godaddy/reduxful
 <!-- TODO: fill in correct link when opensourced -->
-[@godaddy/eslint-plugin-react-intl]: https://github.com/eslint-plugin-react-intl-link-to-be-arranged
+[@godaddy/eslint-plugin-react-intl]: https://github.com/godaddy/eslint-plugin-react-intl
 
 <!-- Gasket Repo Docs Links -->
-[CLI Commands]:../packages/gasket-cli#commands
-[Configuring Plugins]:../packages/gasket-plugin-engine#configuring-plugins
+[CLI Commands]:/packages/gasket-cli#commands
+[Configuring Plugins]:/packages/gasket-plugin-engine#configuring-plugins
 
 <!-- Next.js Links -->
 [Next.js]:https://github.com/zeit/next.js

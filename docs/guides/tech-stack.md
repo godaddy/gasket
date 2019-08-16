@@ -164,26 +164,26 @@ started, and it also includes [Enzyme]. Specify this plugin when running
 
 [Babel]: https://babeljs.io/
 [Chai]: http://www.chaijs.com/
-[Express Plugin]: https://github.com/godaddy/gasket/tree/master/packages/gasket-express-plugin
+[Express Plugin]: /packages/gasket-express-plugin
 [Enzyme]: http://airbnb.io/enzyme/
 [ESLint]: https://eslint.org/
 [Express]: http://expressjs.com/
 [Flux]: https://facebook.github.io/flux/docs/overview.html
 [godaddy-style]: https://github.com/godaddy/javascript
-[Intl Components]: https://github.com/godaddy/gasket/tree/master/packages/intl
-[Intl Plugin]: https://github.com/godaddy/gasket/tree/master/packages/gasket-intl-plugin
+[Intl Components]: /packages/intl
+[Intl Plugin]: /packages/gasket-intl-plugin
 [Istanbul]: https://github.com/istanbuljs/nyc
 [Jest]: https://jestjs.io/
-[Jest Plugin]: https://github.com/godaddy/gasket/tree/master/packages/gasket-jest-plugin
+[Jest Plugin]: /packages/gasket-jest-plugin
 [jsdom]: https://github.com/jsdom/jsdom
 [Mocha]: https://mochajs.org/
-[Mocha Plugin]: https://github.com/godaddy/gasket/tree/master/packages/gasket-mocha-plugin
+[Mocha Plugin]: /packages/gasket-mocha-plugin
 [Next.js]: https://nextjs.org/
 [Node.js]: https://nodejs.org/en/
 [React]: https://reactjs.org/
 [React Intl]: https://github.com/yahoo/react-intl
 [Redux]: https://redux.js.org/
-[Redux Components]: https://github.com/godaddy/gasket/tree/master/packages/gasket-redux
+[Redux Components]: /packages/gasket-redux
 [Redux DevTools Extension]: https://github.com/zalmoxisus/redux-devtools-extension
 [redux-dynamic-reducer]: https://github.com/ioof-holdings/redux-dynamic-reducer
 [redux-logger]: https://github.com/evgenyrodionov/redux-logger

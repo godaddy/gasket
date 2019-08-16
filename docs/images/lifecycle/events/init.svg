@@ -18,7 +18,7 @@
 <!-- lifecycle_init_hook -->
 <g id="node3" class="node">
 <title>lifecycle_init_hook</title>
-<g id="a_node3"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/lifecycle-plugin" xlink:title="lifecycle&#45;plugin">
+<g id="a_node3"><a xlink:href="/packages/lifecycle-plugin" xlink:title="lifecycle&#45;plugin">
 <polygon fill="#ffa500" stroke="#000000" points="163.5792,-167.5623 81.6929,-180 -.1934,-167.5623 -.117,-147.4377 163.5028,-147.4377 163.5792,-167.5623"/>
 <text text-anchor="middle" x="81.6929" y="-157.8" font-family="Times,serif" font-size="14.00" fill="#000000">lifecycle&#45;plugin</text>
 </a>
@@ -33,7 +33,7 @@
 <!-- log_init_hook -->
 <g id="node4" class="node">
 <title>log_init_hook</title>
-<g id="a_node4"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/log-plugin" xlink:title="log&#45;plugin">
+<g id="a_node4"><a xlink:href="/packages/log-plugin" xlink:title="log&#45;plugin">
 <polygon fill="#ffa500" stroke="#000000" points="297.7675,-167.5623 239.6929,-180 181.6183,-167.5623 181.6725,-147.4377 297.7133,-147.4377 297.7675,-167.5623"/>
 <text text-anchor="middle" x="239.6929" y="-157.8" font-family="Times,serif" font-size="14.00" fill="#000000">log&#45;plugin</text>
 </a>

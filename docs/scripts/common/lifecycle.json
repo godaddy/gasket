@@ -74,32 +74,32 @@
   },
   "documentation": {
     "commands": {
-      "_default": "https://github.com/godaddy/gasket/tree/master/packages/gasket-cli#gasket-{command}"
+      "_default": "/packages/gasket-cli#gasket-{command}"
     },
     "plugins": {
-      "_default": "https://github.com/godaddy/gasket/tree/master/packages/{plugin}-plugin"
+      "_default": "/packages/{plugin}-plugin"
     },
     "events": {
-      "appEnvConfig": "https://github.com/godaddy/gasket/tree/master/packages/gasket-config-plugin#appenvconfig",
-      "appRequestConfig": "https://github.com/godaddy/gasket/tree/master/packages/gasket-config-plugin#apprequestconfig",
-      "build": "https://github.com/godaddy/gasket/tree/master/packages/gasket-cli#gasket-build",
-      "create": "https://github.com/godaddy/gasket/tree/master/packages/gasket-cli#create",
-      "errorMiddleware": "https://github.com/godaddy/gasket/tree/master/packages/gasket-express-plugin#errormiddleware",
-      "express": "https://github.com/godaddy/gasket/tree/master/packages/gasket-express-plugin",
-      "getCommands": "https://github.com/godaddy/gasket/tree/master/packages/gasket-command-plugin#getcommands",
+      "appEnvConfig": "/packages/gasket-config-plugin#appenvconfig",
+      "appRequestConfig": "/packages/gasket-config-plugin#apprequestconfig",
+      "build": "/packages/gasket-cli#gasket-build",
+      "create": "/packages/gasket-cli#create",
+      "errorMiddleware": "/packages/gasket-express-plugin#errormiddleware",
+      "express": "/packages/gasket-express-plugin",
+      "getCommands": "/packages/gasket-command-plugin#getcommands",
       "init": null,
       "initOclif": null,
-      "initReduxState": "https://github.com/godaddy/gasket/tree/master/packages/gasket-redux-plugin#initreduxstate",
-      "initReduxStore": "https://github.com/godaddy/gasket/tree/master/packages/gasket-redux-plugin#initreduxstore",
-      "middleware": "https://github.com/godaddy/gasket/tree/master/packages/gasket-express-plugin#middleware",
-      "next": "https://github.com/godaddy/gasket/tree/master/packages/gasket-nextjs-plugin#next",
+      "initReduxState": "/packages/gasket-redux-plugin#initreduxstate",
+      "initReduxStore": "/packages/gasket-redux-plugin#initreduxstore",
+      "middleware": "/packages/gasket-express-plugin#middleware",
+      "next": "/packages/gasket-nextjs-plugin#next",
       "preboot": null,
-      "start": "https://github.com/godaddy/gasket/tree/master/packages/gasket-cli#gasket-start",
-      "webpack": "https://github.com/godaddy/gasket/tree/master/packages/gasket-webpack-plugin#webpack",
-      "webpackChain": "https://github.com/godaddy/gasket/tree/master/packages/gasket-webpack-plugin#webpackchain",
-      "composeServiceWorker": "https://github.com/godaddy/gasket/tree/master/packages/gasket-service-worker-plugin#composeserviceworker",
-      "serviceWorkerCacheKey": "https://github.com/godaddy/gasket/tree/master/packages/gasket-service-worker-plugin#serviceworkercachekey",
-      "workbox": "https://github.com/godaddy/gasket/tree/master/packages/gasket-workbox-plugin#workbox"
+      "start": "/packages/gasket-cli#gasket-start",
+      "webpack": "/packages/gasket-webpack-plugin#webpack",
+      "webpackChain": "/packages/gasket-webpack-plugin#webpackchain",
+      "composeServiceWorker": "/packages/gasket-service-worker-plugin#composeserviceworker",
+      "serviceWorkerCacheKey": "/packages/gasket-service-worker-plugin#serviceworkercachekey",
+      "workbox": "/packages/gasket-workbox-plugin#workbox"
     }
   }
 }

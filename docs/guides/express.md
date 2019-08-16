@@ -13,14 +13,14 @@ customize your gasket server with additional routes and middleware, this guide
 is for you!
 
 Before you go on, make sure you understand
-[how to author plugins](https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-engine#authoring-plugins).
+[how to author plugins](/packages/gasket-plugin-engine#authoring-plugins).
 Whether your custom express middleware is for a plugin to be shared across
 multiple apps, or for a standalone plugin used solely by your app, the plugin
 system is necessary to do any express app customization.
 
 A typical gasket-based application relies on 
-[`@gasket/nextjs-plugin`](https://github.com/godaddy/gasket/tree/master/packages/gasket-nextjs-plugin#gasketnextjs-plugin) and
-[`@gasket/express-plugin`](https://github.com/godaddy/gasket/tree/master/packages/gasket-express-plugin#gasketexpress-plugin)
+[`@gasket/nextjs-plugin`](/packages/gasket-nextjs-plugin#gasketnextjs-plugin) and
+[`@gasket/express-plugin`](/packages/gasket-express-plugin#gasketexpress-plugin)
 for creating the web servers and Express application.
 
 After some standard middleware is injected, a plugin can hook the `middleware`
@@ -86,10 +86,10 @@ module.exports = {
 
 Remember, if you need any of your injected middleware to come before or after
 middleware injected by another plugin, use the
-[timing mechanism](https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-engine#hooks)
+[timing mechanism](/packages/gasket-plugin-engine#hooks)
 of the plugin engine. For example, if you need your middleware to access
 the server-side redux store created by
-[`@gasket/redux-plugin`](https://github.com/godaddy/gasket/tree/master/packages/gasket-redux-plugin#gasketredux-plugin),
+[`@gasket/redux-plugin`](/packages/gasket-redux-plugin#gasketredux-plugin),
 you can do something like this:
 
 ```js

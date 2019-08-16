@@ -1,6 +1,6 @@
 # Data Fetching with SSO JWT
 
-Gasket based apps should use [@gasket/fetch](https://github.com/godaddy/gasket/tree/master/packages/gasket-fetch) module for making
+Gasket based apps should use [@gasket/fetch](/packages/gasket-fetch) module for making
 any XHR calls. @gasket/fetch internally uses [cross-fetch](https://github.com/lquixada/cross-fetch),
 which is based on the [Fetch Api](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API).
 
