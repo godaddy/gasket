@@ -76,7 +76,7 @@ describe('create', () => {
   it('adds appropriate dependencies', assumeCreatedWith(({ pkg }) => {
     assume(pkg.add).calledWith('dependencies', {
       '@gasket/assets': '^1.0.0',
-      'next': '^8.1.0',
+      'next': '^9.0.4',
       'prop-types': '^15.6.2',
       'react': '^16.8.4',
       'react-dom': '^16.8.4'
