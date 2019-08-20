@@ -86,6 +86,7 @@ module.exports = class PackageFetcher {
   /**
    * Simple wrapper around clone that also reads the package.json
    * from disk once it has been downloaded.
+   *
    * @returns {Promise<Object>} Parsed package.json for the fetched package.
    */
   async readPackage() {
@@ -113,23 +114,32 @@ module.exports = class PackageFetcher {
    */
   async clone() {
     const unlink = promisify(fs.unlink);
+
     await mkdirp(this.tmp.dir);
-    const tarballFile = await this.fetch();
-    const tarball = path.join(this.cwd, tarballFile);
+
+    const tarballFile = await this.fetch(this.packageName, this.tmp.dir);
+    const tarball = path.join(this.tmp.dir, tarballFile);
+
     await this.unpack(tarball, this.tmp.dir);
-    await unlink(tarball);
-    const dest = path.join(this.tmp.dir, 'package');
-    return dest;
+
+    try {
+      await unlink(tarball);
+    } catch (e) {
+      // eslint ignore no-empty
+    }
+
+    return path.join(this.tmp.dir, 'package');
   }
 
   /**
    * Fetch the tarball for the scaffold
    *
    * @param {string} packageName An npm package name (e.g. @gasket/app-template).
+   * @param {string} [dir] Directory the package needs to be downloaded.
    * @returns {Promise} A promise represents if fetch succeeds or fails
    * @public
    */
-  async fetch(packageName = this.packageName) {
+  async fetch(packageName = this.packageName, dir = this.cwd) {
     const argv = [
       'pack', packageName,
       '--loglevel', 'error',
@@ -138,7 +148,9 @@ module.exports = class PackageFetcher {
 
     if (this.npmconfig) argv.push('--userconfig', this.npmconfig);
 
-    const { stdout } = await PackageManager.spawnNpm(argv).catch(err => {
+    const { stdout } = await PackageManager.spawnNpm(argv, {
+      cwd: dir
+    }).catch(err => {
       // TODO: dump npm stdout and stderr to a more useful location.
       throw new Error(`Failed to fetch ${packageName}: npm exited with non-zero code\n${err.stdout}\n\n${err.stderr}`);
     });
