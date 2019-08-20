@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "generate": "npm run generate:lifecycle:diagrams && npm run generate:lifecycle:docs",
+    "generate:lifecycle:diagrams": "node ./generate-diagrams",
+    "generate:lifecycle:docs": "node ./generate-lifecycle-docs"
+  },
+  "devDependencies": {
+    "diagnostics": "^2.0.1"
+  }
+}
