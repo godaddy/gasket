@@ -135,7 +135,7 @@ describe('plugin (index.js)', () => {
 
     it('adds the appropriate dependencies', expectCreatedWith(({ pkg }) => {
       expect(pkg.add).toHaveBeenCalledWith('dependencies', {
-        '@gasket/intl': '^3.0.0'
+        '@gasket/intl': '^4.0.0'
       });
     }));
   });
