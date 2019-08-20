@@ -39,8 +39,10 @@ describe('plugin (index.js)', () => {
   });
 
   describe('initReduxState', () => {
-    it('adds intl settings to redux initState if specified', async () => {
-      const gasketConfig = {
+    let mockGasket, mockState, mockReq;
+
+    beforeEach(() => {
+      mockGasket = {
         config: {
           intl: {
             outputDir: 'some/output/dir',
@@ -54,12 +56,18 @@ describe('plugin (index.js)', () => {
         },
         execWaterfall: jest.fn().mockResolvedValue('fr-FR')
       };
-      const req = {
+
+      mockState = {};
+
+      mockReq = {
         headers: {
           'accept-language': 'fr-FR,es-AR'
         }
       };
-      const reduxState = await plugin.hooks.initReduxState(gasketConfig, {}, req);
+    });
+
+    it('adds intl settings to redux initState if specified', async () => {
+      const reduxState = await plugin.hooks.initReduxState(mockGasket, mockState, mockReq);
       expect(reduxState).toEqual({
         intl: {
           assetPrefix: 'https://some-cdn.com',
@@ -71,19 +79,12 @@ describe('plugin (index.js)', () => {
           defaultLanguage: 'es-MX'
         }
       });
-      expect(gasketConfig.execWaterfall).toHaveBeenCalledWith('intlLanguage', 'fr-FR', req);
+      expect(mockGasket.execWaterfall).toHaveBeenCalledWith('intlLanguage', 'fr-FR', mockReq);
     });
+
     it('adds default intl settings if not specified', async () => {
-      const gasketConfig = {
-        config: {},
-        execWaterfall: jest.fn().mockResolvedValue('fr-FR')
-      };
-      const req = {
-        headers: {
-          'accept-language': 'fr-FR,es-AR'
-        }
-      };
-      const reduxState = await plugin.hooks.initReduxState(gasketConfig, {}, req);
+      mockGasket.config = {};
+      const reduxState = await plugin.hooks.initReduxState(mockGasket, mockState, mockReq);
       expect(reduxState).toEqual({
         intl: {
           assetPrefix: '',
@@ -92,7 +93,18 @@ describe('plugin (index.js)', () => {
           defaultLanguage: 'en-US'
         }
       });
-      expect(gasketConfig.execWaterfall).toHaveBeenCalledWith('intlLanguage', 'fr-FR', req);
+      expect(mockGasket.execWaterfall).toHaveBeenCalledWith('intlLanguage', 'fr-FR', mockReq);
+    });
+
+    it('does not override existing state', async () => {
+      mockState = {
+        bogus: true
+      };
+      const reduxState = await plugin.hooks.initReduxState(mockGasket, mockState, mockReq);
+      expect(reduxState).toEqual(expect.objectContaining({
+        bogus: true,
+        intl: expect.any(Object)
+      }));
     });
   });
 
