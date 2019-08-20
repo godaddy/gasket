@@ -47,7 +47,7 @@ module.exports = {
       );
 
       pkg.add('dependencies', {
-        '@gasket/intl': '^3.0.0'
+        '@gasket/intl': '^4.0.0'
       });
     },
     build,
