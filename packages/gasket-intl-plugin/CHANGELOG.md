@@ -1,5 +1,13 @@
 # `@gasket/intl-plugin`
 
+### 4.0.2
+
+- Create new apps with `@gasket/intl@4`
+
+### 4.0.1
+
+- Fix `initReduxState` from stomping over existing state
+
 ### 4.0.0
 
 - Execute `intlLanguage` lifecycle to determine language

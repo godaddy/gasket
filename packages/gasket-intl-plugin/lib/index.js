@@ -30,6 +30,7 @@ module.exports = {
       const acceptLanguage = (req.headers['accept-language'] || '').split(',')[0];
       const language = await gasket.execWaterfall('intlLanguage', acceptLanguage, req);
       return {
+        ...state,
         intl: {
           language,
           assetPrefix: getAssetPrefix(gasket),
@@ -46,7 +47,7 @@ module.exports = {
       );
 
       pkg.add('dependencies', {
-        '@gasket/intl': '^3.0.0'
+        '@gasket/intl': '^4.0.0'
       });
     },
     build,
