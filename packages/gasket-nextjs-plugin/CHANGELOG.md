@@ -1,5 +1,7 @@
 # `@gasket/nextjs-plugin`
 
+### 2.2.0
+
 - Use `next@9` for new apps
 
 ### 2.1.0
