@@ -165,8 +165,8 @@ async function prebootHook(gasket) {
 - [**Flow chart**](../images/lifecycle/events/create.svg)
 
 Allows your plugins to introduce content that needs to be created during the
-initial scaffolding of a new project. The full documentation for `CreateContext`
-is defined [here](/packages/gasket-cli/src/scaffold/create-context.js#L6-L50).
+initial scaffolding of a new project during `gasket create`. The full documentation 
+for `CreateContext` is defined [here](/packages/gasket-cli/src/scaffold/create-context.js#L6-L50).
 
 ```js
 /**
@@ -264,9 +264,8 @@ processed.
  */
 async appRequestConfigHook(gasket, baseConfig, req, res) {
   const featureFlags = await getFeatureFlagsInSomeExternalFile({
-    shopperId: req.user.shopperId,
-    locale: req.cookies.market,
-    plid: req.user.resellerId
+    userId: req.userId,
+    locale: req.cookies.market
   });
 
   return {
@@ -422,7 +421,9 @@ interact with the `next` application instance. An instance of either
  * @param {Object} app gasket's express application
  * @return {Promise} completion handler
  */
-async function nextHook(gasket, app) {/* hook code */}
+async function nextHook(gasket, app) {
+  gasket.log.info('Render opts: %O', app.renderOpts);
+}
 ```
 
 ### nextConfig
@@ -601,7 +602,7 @@ module.exports = async function logTransportsHook(gasket) {
 
 ### composeServiceWorker
 
-- **Executed during:** Icnoming requests for the service worker script
+- **Executed during:** Incoming requests for the service worker script
 - **Documentation**: [here](/packages/gasket-service-worker-plugin#composeserviceworker)
 
 Allows plugins to add to the service worker script, by concatenating inline

@@ -5,7 +5,7 @@ environment. Here is a sample definition for a container that runs a gasket
 application:
 
 ```Dockerfile
-FROM jcrugzz/alpine-node-kubernetes:8.11.3-native
+FROM jcrugzz/alpine-node-kubernetes:10.15.0-native
 # create a user that can run the application
 # and define the maximum open files at 16k
 RUN ulimit -n 65536 && \

@@ -93,7 +93,8 @@ accidentally committing the changes to your repository, like pointing to
 locally-running dependencies.
 
 To support easy local development, `gasket` can read a special
-`gasket.config.local.js` or `gasket.config.local.json` file and merge it in with 
+`gasket.config.local.js`, use the `local` environment in gasket.config.js, or 
+`gasket.config.local.json` file and merge it in with 
 your `dev` configuration environment. This file should be in your `.gitignore` 
 file so that each developer can have distinct overrides.
 
@@ -106,7 +107,7 @@ configuration. If you do need access to the gasket configuration, you can add a
 configuration via gasket's `config` property:
 
 ```js
-// /lifecycles/express.js
+// lifecycles/express.js
 
 module.exports = (gasket, app) => {
   const gasketConfig = gasket.config;

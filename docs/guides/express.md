@@ -3,7 +3,7 @@
 Normally, the express server that is set up by gasket should have everything you
 need for your application built-in. The main use case for a gasket application
 is for it to be purely responsible for serving up an application front-end. If
-you are wanting to build a web API, we recommend that it lives as a service that
+you want to build a web API, we recommend that it lives as a service that
 is separate from your application. See the
 [Slay](https://github.com/godaddy/slay) project for help in creating a
 well-structured API.
@@ -106,7 +106,7 @@ module.exports = {
         return async (req, res, next) => {
           try {
             const flags = await getFeatureFlags({
-              shopperId: req.jwt.idp.shopperId,
+              userId: req.userId,
               locale: req.cookies.market
             });
             req.store.dispatch({

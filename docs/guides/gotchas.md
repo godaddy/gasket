@@ -18,7 +18,7 @@ CommonJS-style modules because they're imported directly by node:
 
 * The Gasket config file (`gasket.config.js`)
 * Your store creator (including files it imports, like reducers, action
-  constants, etc).
+  constants, etc.) - typically `store.js`.
 * Your routes creator (if using `next-routes`).
 * Lifecycle hooks (`/lifecycles/*.js`)
 * Plugins (`/plugins/*.js`)

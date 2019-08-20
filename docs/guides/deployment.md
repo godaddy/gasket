@@ -131,12 +131,12 @@ Ensure that the following files are included when you deploy your application:
 - `config` (folder) *Environment specific configuration*
 - `static` (folder) *Static files that need to be hosted*
 - `node_modules` (folder)
-- `package.json`
-- `package-lock.json`
-- `.babelrc`
-- `gasket.config.js`
-- `routes.js`
-- `store.js`
+- `package.json` *Scripts and dependencies for your project*
+- `package-lock.json` *Automatically generated file about the installed dependencies*
+- `.babelrc` *Config file for babel*
+- `gasket.config.js` *Config file for Gasket*
+- `routes.js` *Routes for your application*
+- `store.js` *Scripts for creating a redux store and/or attaching a reducer*
 
 ## Deployment checklist
 
