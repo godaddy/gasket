@@ -1,5 +1,7 @@
 # `@gasket/nextjs-plugin`
 
+- Use `next@9` for new apps
+
 ### 2.1.0
 
 - Align package structure and dependencies
