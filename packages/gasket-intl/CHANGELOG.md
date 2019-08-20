@@ -1,5 +1,9 @@
 # `@gasket/intl`
 
+### 4.0.1
+
+- Adjust peer dependencies for v4
+
 ### 4.0.0
 
 - Uses intl.language from redux state instead of market cookie
