@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { mount } from 'enzyme';
 import withIntlProvider from './WithIntlProvider';
 import { IntlProvider } from 'react-intl';
 import * as serverUtils from './ServerUtils';
