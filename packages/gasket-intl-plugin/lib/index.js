@@ -3,6 +3,7 @@ const serveStatic = require('serve-static');
 const Builder = require('./builder');
 const workbox = require('./workbox');
 const serviceWorkerCacheKey = require('./service-worker-cache-key');
+const init = require('./init');
 const {
   getAssetPrefix,
   getDefaultLanguage,
@@ -26,6 +27,7 @@ module.exports = {
   dependencies: ['log'],
   name: 'intl',
   hooks: {
+    init,
     async initReduxState(gasket, state, req) {
       const acceptLanguage = (req.headers['accept-language'] || '').split(',')[0];
       const language = await gasket.execWaterfall('intlLanguage', acceptLanguage, req);
