@@ -1,5 +1,10 @@
 # `@gasket/intl`
 
+### 4.1.0
+
+- Move `react-intl` to `peerDependencies` to allow app version choice
+- Drop use `intlShape` to facilitate upgrades to `react-intl@3`
+
 ### 4.0.1
 
 - Adjust peer dependencies for v4

@@ -1,7 +1,6 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { LocaleRequiredBase, LocaleRequiredConnectedBase } from './LocaleRequired';
-import { intl } from '../test/testHelper';
 import configureMockStore from 'redux-mock-store';
 
 const mockResource = {
@@ -28,7 +27,6 @@ describe('<LocaleRequired />', () => {
   describe('<LocaleRequiredBase />', () => {
     const testProps = {
       intl: {
-        ...intl,
         messages: {
           'getMessages__localeFile:bbe10d0.es-MX.json__module:@myscope/some-module': true,
           ...mockMessages
@@ -111,7 +109,6 @@ describe('<LocaleRequired />', () => {
 
     it('mapStateToProps will pass the correct props for single module', () => {
       testProps = {
-        intl,
         store,
         module: 'test-app-name.name.space.name'
       };
@@ -126,7 +123,7 @@ describe('<LocaleRequired />', () => {
     });
 
     it('mapStateToProps will pass the correct props for multiple modules', () => {
-      testProps = { intl, store, module: ['test-app-name.name.space.name', '@myscope/some-module'] };
+      testProps = { store, module: ['test-app-name.name.space.name', '@myscope/some-module'] };
       wrapper = shallow(
         <LocaleRequiredConnectedBase { ...testProps }>
           <MockComponent />
