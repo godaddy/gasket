@@ -1,5 +1,9 @@
 # `@gasket/intl-plugin`
 
+### 4.2.0
+
+- Polyfill Intl in node for SSR
+
 ### 4.1.0
 
 - Create new apps with `react-intl` as direct dependency

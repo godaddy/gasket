@@ -23,6 +23,9 @@ describe('<withIntlProvider />', () => {
   beforeEach(() => {
     Component = withIntlProvider()(MockComponent);
     initialState = {
+      intl: {
+        language: 'fr-FR'
+      },
       LocaleApi: {
         'getLocaleManifest': {
           ...mockResource,
@@ -46,9 +49,16 @@ describe('<withIntlProvider />', () => {
 
   describe('#render', () => {
     it('wraps target component with IntlProvider and renders children', () => {
-      wrapper = shallow(<Component { ...testProps } />);
-      expect(wrapper.find(IntlProvider)).toBeDefined();
-      expect(wrapper.find(MockComponent)).toBeDefined();
+      wrapper = mount(<Component { ...testProps } />);
+      expect(wrapper.find(IntlProvider)).toHaveLength(1);
+      expect(wrapper.find(MockComponent)).toHaveLength(1);
+    });
+
+    it('IntlProvider is passed expected props from state', () => {
+      wrapper = mount(<Component { ...testProps } />);
+      const result = wrapper.find(IntlProvider);
+      expect(result.prop('locale')).toEqual('fr-FR');
+      expect(result.prop('messages')).toEqual({ 'key-1': 'value-1', 'key-2': 'value-2' });
     });
   });
 

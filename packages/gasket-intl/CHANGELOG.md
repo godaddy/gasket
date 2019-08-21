@@ -1,5 +1,9 @@
 # `@gasket/intl`
 
+### 4.2.0
+
+- Select language from state for IntlProvider
+
 ### 4.1.0
 
 - Move `react-intl` to `peerDependencies` to allow app version choice
