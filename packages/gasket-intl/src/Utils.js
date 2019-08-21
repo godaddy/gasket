@@ -158,6 +158,16 @@ export function getIdentifierParts(identifier) {
 }
 
 /**
+ * Select the language from redux state
+ *
+ * @param {object} state - redux state
+ * @returns {string} language
+ */
+export function selectLanguage(state) {
+  return (state.intl && state.intl.language) || getDefaultLanguage(state);
+}
+
+/**
  * Build and return an array of params objects for each module to be included.
  *
  * @param {Object} state - redux state
@@ -169,7 +179,7 @@ export function getParamsForIdentifiers(state, identifiers) {
     identifiers = '';
   }
   identifiers = Array.isArray(identifiers) ? identifiers : [identifiers];
-  const language = state.intl.language;
+  const language = selectLanguage(state);
   const manifest = selectLocaleManifestValue(state);
 
   return identifiers.map(identifier => {

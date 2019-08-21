@@ -7,6 +7,7 @@ import { loadLocaleMapIntoStore } from './ServerUtils';
 import { connect } from 'react-redux';
 import { isLoaded } from 'reduxful';
 import { resourceShape } from 'reduxful/react-addons';
+import { selectLanguage } from './Utils';
 
 const withIntlProvider = () => {
   return Component => {
@@ -21,14 +22,13 @@ const withIntlProvider = () => {
 
       render() {
         /* eslint-disable-next-line no-unused-vars */
-        const { _messages, _manifest, _getLocaleManifest, ...ownProps } = this.props;
+        const { _language, _messages, _manifest, _getLocaleManifest, ...ownProps } = this.props;
         if (!isLoaded(_manifest)) {
           return null;
         }
-        const language = 'en';
 
         return (
-          <IntlProvider locale={ language } messages={ _messages } initialNow={ Date.now() }>
+          <IntlProvider locale={ _language } messages={ _messages } initialNow={ Date.now() }>
             <Component { ...ownProps } />
           </IntlProvider>
         );
@@ -36,6 +36,7 @@ const withIntlProvider = () => {
     };
 
     Wrapper.propTypes = {
+      _language: PropTypes.string,
       _manifest: resourceShape,
       _getLocaleManifest: PropTypes.func,
       _messages: PropTypes.object
@@ -43,6 +44,7 @@ const withIntlProvider = () => {
 
     function mapStateToProps(state) {
       return {
+        _language: selectLanguage(state),
         _manifest: localeApi.selectors.getLocaleManifest(state, {}),
         _messages: selectAllMessages(state)
       };

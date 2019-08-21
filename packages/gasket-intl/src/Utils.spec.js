@@ -245,4 +245,24 @@ describe('Utils', function () {
       expect(utils.getMappedLanguage(mockState2, 'c1-C1')).toEqual('c1-C1');
     });
   });
+
+  describe('#selectLanguage', function () {
+
+    it('selects language from redux state', function () {
+      expect(utils.selectLanguage(mockState)).toEqual('en-US');
+
+      mockState.intl.language = 'fr-FR';
+      expect(utils.selectLanguage(mockState)).toEqual('fr-FR');
+    });
+
+    it('falls back to default if language not on state', function () {
+      delete mockState.intl.language;
+      expect(utils.selectLanguage(mockState)).toEqual('aa-ZZ');
+    });
+
+    it('falls back to default if intl not on state', function () {
+      delete mockState.intl;
+      expect(utils.selectLanguage(mockState)).toEqual('en-US');
+    });
+  });
 });
