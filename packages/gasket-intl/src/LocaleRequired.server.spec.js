@@ -5,7 +5,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { LocaleRequiredBase } from './LocaleRequired';
-import { intl } from '../test/testHelper';
 
 const mockResource = {
   isLoaded: false,
@@ -31,7 +30,6 @@ describe('<LocaleRequired />', () => {
   describe('<LocaleRequiredBase />', () => {
     const testProps = {
       intl: {
-        ...intl,
         messages: {
           'getMessages__localeFile:bbe10d0.es-MX.json__module:@myscope/some-module': true,
           ...mockMessages

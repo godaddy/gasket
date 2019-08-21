@@ -37,7 +37,6 @@
     "@gasket/fetch": "^1.0.0",
     "hoist-non-react-statics": "^2.5.0",
     "prop-types": "^15.6.1",
-    "react-intl": "^2.4.0",
     "reduxful": "^1.0.1"
   },
   "devDependencies": {
@@ -63,12 +62,14 @@
     "jest": "^24.8.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-intl": "^3.1.10",
     "react-redux": "^7.1.0",
     "redux": "^4.0.4",
     "redux-mock-store": "^1.5.1"
   },
   "peerDependencies": {
     "@gasket/intl-plugin": "^4.0.0",
+    "react-intl": ">=2.0.0 <4.0.0",
     "react-redux": ">=5.0.0 <8.0.0"
   }
 }

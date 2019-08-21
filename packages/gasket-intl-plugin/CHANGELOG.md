@@ -1,5 +1,9 @@
 # `@gasket/intl-plugin`
 
+### 4.1.0
+
+- Create new apps with `react-intl` as direct dependency
+
 ### 4.0.2
 
 - Create new apps with `@gasket/intl@4`
