@@ -47,7 +47,8 @@ module.exports = {
       );
 
       pkg.add('dependencies', {
-        '@gasket/intl': '^4.0.0'
+        '@gasket/intl': '^4.0.0',
+        'react-intl': '^2.9.0'
       });
     },
     build,

@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { injectIntl, intlShape } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { isLoaded, getResourceKey } from 'reduxful';
 import { resourceShape } from 'reduxful/react-addons';
 import localeApi from './LocaleApi';
@@ -107,7 +107,9 @@ class LocaleRequiredBase extends React.Component {
 LocaleRequiredBase.checkedMessages = {};
 
 LocaleRequiredBase.propTypes = {
-  intl: intlShape,
+  intl: PropTypes.shape({
+    messages: PropTypes.object
+  }),
   module: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.arrayOf(PropTypes.string)
