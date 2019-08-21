@@ -1,5 +1,9 @@
 # `@gasket/cli`
 
+### 2.6.1
+
+- Prevent multiple gasket instances from accessing the same data ([#58])
+
 ### 2.6.0
 
 - Align package structure and dependencies
@@ -205,3 +209,4 @@ upon `gasket create`
 
 [#34]: https://github.com/godaddy/gasket/pull/34
 [#38]: https://github.com/godaddy/gasket/pull/38
+[#58]: https://github.com/godaddy/gasket/pull/58
