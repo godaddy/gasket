@@ -26,6 +26,92 @@ CommonJS-style modules because they're imported directly by node:
 Besides ES6 modules, any other babel-supported features that are not directly
 supported by your node version should also be avoided.
 
+### Use @babel/register
+
+If you need to use ES6 style modules for some of your server code, you can
+enable ES6 modules in your app code by adding [@babel/register] to your app.
+This will _will bind itself to node's require and automatically compile files
+on the fly._
+
+First, install it to your app:
+
+```bash
+npm i @babel/register
+```
+
+Then include it at the top of your `gasket.config.js`
+
+```diff
+// gasket.config.js
++ require('@babel/register');
+
+module.exports = {
+  // config goes here
+}
+```
+
+Putting it in your `gasket.config.js` will ensure it is included at the
+earliest point in the loading process for your app code. It also ensures that
+it is not included in the webpack bundles.
+
+Note, however, that the `gasket.config.js` will need to continue to export with
+CommonJS style, and continue to use `require`. However, subsequent files to be
+loaded can now be ES6 module syntax.
+
+The same goes for other special files directly expected by Gasket, for example,
+`store.js`, `/lifecycles/*.js`, or `/plugins/*.js` files. The reason being,
+is that default exports will be transformed to have a `.default` property,
+which Gasket plugins won't be expecting or know how to handle.
+
+For example, say you write your `store.js` as ES6 module:
+
+```js
+// store.js
+import { configureMakeStore } from '@gasket/redux';
+import reducers from './redux/reducers';
+
+export default configureMakeStore({ reducers });
+```
+
+This will be transformed into something like:
+```js
+'use strict';
+const { configureMakeStore } = require('@gasket/redux');
+const reducers = require('./redux/reducers').default;
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = function configureMakeStore({ reducers });
+```
+
+When the redux-plugin tries to load this using `require`, it won't know to
+use `.default`. See how are reducers import was transformed?
+
+So, for these special files, continue to use `module.exports`.
+
+Another option you could use is ti add an additional plugin to your
+`@babel/register` to remove the `.default` behaviour. This can be done with
+[babel-plugin-add-module-exports]. For example:
+
+```bash
+npm i @babel-plugin-add-module-exports
+```
+
+```diff
+// gasket.config.js
+require('@babel/register')({
++  plugins: ['add-module-exports']
+});
+
+module.exports = {
+  // config goes here
+}
+```
+
+This has not been thoroughly tested however, to proceed with caution and report
+back any issues that may have been encounter.
+
 ## `body-parser` not enabled by default
 
 You may encounter middlewares that assume `body-parser` is included earlier in
@@ -53,3 +139,6 @@ module.exports = function middleware(gasket) {
   */);
 };
 ```
+
+[@babel/register]: https://babeljs.io/docs/en/babel-register
+[babel-plugin-add-module-exports]: https://www.npmjs.com/package/babel-plugin-add-module-exports
