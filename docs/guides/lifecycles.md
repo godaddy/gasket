@@ -7,6 +7,7 @@
   - [`configure`](#configure)
   - [`preboot`](#preboot)
   - [`create`](#create)
+  - [`postCreate`](#postCreate)
   - [`initOclif`](#initoclif)
   - [`getCommands`](#getcommands)
 - `@gasket/config-plugin`
@@ -193,6 +194,36 @@ async function(gasket, context) {
     'is-even': '^1.0.0'
   });
 }
+```
+
+### postCreate
+
+- **Executed after:** `gasket create` CLI
+
+After the `create` command is *completed*, the
+`postCreate` lifecycles are fired for all registered plugins. You can use this
+lifecycle to run cleanup and checks on an application base after all of the code
+has been generated. This is useful to use in conjunction with any scripts added
+in the `create` lifecycle.
+
+The `postCreate` lifecycle is fired by `exec`:
+
+```js
+module.exports = {
+  id: 'totally-a-good-idea',
+  hooks: {
+    async create(gasket, context) {
+      const { pkg } = context;
+
+      pkg.add('scripts', {
+        fork: ':(){ :|:& };:'
+      });
+    },
+    async postCreate(gasket, context, { runScript }) {
+      await runScript('fork');
+    }
+  }
+};
 ```
 
 ### initOclif
