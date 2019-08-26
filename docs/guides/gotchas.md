@@ -30,7 +30,7 @@ supported by your node version should also be avoided.
 
 If you need to use ES6 style modules for some of your server code, you can
 enable ES6 modules in your app code by adding [@babel/register] to your app.
-This will _will bind itself to node's require and automatically compile files
+This _will bind itself to node's require and automatically compile files
 on the fly._
 
 First, install it to your app:
@@ -47,21 +47,23 @@ Then include it at the top of your `gasket.config.js`
 
 module.exports = {
   // config goes here
-}
+};
 ```
 
-Putting it in your `gasket.config.js` will ensure it is included at the
-earliest point in the loading process for your app code. It also ensures that
-it is not included in the webpack bundles.
+Requiring `@babel/register` in your `gasket.config.js` will ensure `babel`
+transpilation begins at the earliest point in the loading process for your app
+code. It also ensures that `@babel/register` itself is not included in your
+`webpack` bundles.
 
-Note, however, that the `gasket.config.js` will need to continue to export with
-CommonJS style, and continue to use `require`. However, subsequent files to be
-loaded can now be ES6 module syntax.
+It is important to note that your `gasket.config.js` must continue to use
+`require` and export using CommonJS syntax (e.g. `module.exports =`). Any
+subsequent files loaded, however, are free to use ES Modules syntax. 
 
-The same goes for other special files directly expected by Gasket, for example,
-`store.js`, `/lifecycles/*.js`, or `/plugins/*.js` files. The reason being,
-is that default exports will be transformed to have a `.default` property,
-which Gasket plugins won't be expecting or know how to handle.
+Additionally, any other special files directly expected by Gasket (e.g. 
+`store.js`, `/lifecycles/*.js`, or `/plugins/*.js`) must also use CommonJS
+syntax. The reason being, is that default exports will be transformed to have
+a `.default` property, which Gasket plugins won't be expecting or know how to
+handle.
 
 For example, say you write your `store.js` as ES6 module:
 
@@ -90,12 +92,18 @@ use `.default`. See how are reducers import was transformed?
 
 So, for these special files, continue to use `module.exports`.
 
-Another option you could use is ti add an additional plugin to your
-`@babel/register` to remove the `.default` behaviour. This can be done with
-[babel-plugin-add-module-exports]. For example:
+#### Using with `babel-plugin-add-module-exports`
+
+⚠️✋🏽**Here be dragons!** 🐲
+This has not been thoroughly tested however, to proceed with caution and report
+back any issues that may have been encounter.
+
+If you want to get around the `.default` behavior as mentioned above, you can
+use [babel-plugin-add-module-exports] which will _add the `module.exports` if
+**only** the export default declaration exists._
 
 ```bash
-npm i @babel-plugin-add-module-exports
+npm i babel-plugin-add-module-exports
 ```
 
 ```diff
@@ -106,11 +114,8 @@ require('@babel/register')({
 
 module.exports = {
   // config goes here
-}
+};
 ```
-
-This has not been thoroughly tested however, to proceed with caution and report
-back any issues that may have been encounter.
 
 ## `body-parser` not enabled by default
 
