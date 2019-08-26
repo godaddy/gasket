@@ -23,7 +23,7 @@ CommonJS-style modules because they're imported directly by node:
 * Lifecycle hooks (`/lifecycles/*.js`)
 * Plugins (`/plugins/*.js`)
 
-Besides ES6 modules, any other babel-supported features that are not directly
+Besides ES6 modules, any other Babel-supported features that are not directly
 supported by your node version should also be avoided.
 
 ### Use @babel/register
@@ -50,7 +50,7 @@ module.exports = {
 };
 ```
 
-Requiring `@babel/register` in your `gasket.config.js` will ensure `babel`
+Requiring `@babel/register` in your `gasket.config.js` will ensure Babel
 transpilation begins at the earliest point in the loading process for your app
 code. It also ensures that `@babel/register` itself is not included in your
 `webpack` bundles.
@@ -61,7 +61,7 @@ subsequent files loaded, however, are free to use ES Modules syntax.
 
 Additionally, any other special files directly expected by Gasket (e.g. 
 `store.js`, `/lifecycles/*.js`, or `/plugins/*.js`) must also use CommonJS
-syntax. The reason being, is that default exports will be transformed to have
+syntax. The reason being is that default exports will be transformed to have
 a `.default` property, which Gasket plugins won't be expecting or know how to
 handle.
 
@@ -94,13 +94,12 @@ So, for these special files, continue to use `module.exports`.
 
 #### Using with `babel-plugin-add-module-exports`
 
-⚠️✋🏽**Here be dragons!** 🐲
-This has not been thoroughly tested however, to proceed with caution and report
-back any issues that may have been encounter.
-
 If you want to get around the `.default` behavior as mentioned above, you can
 use [babel-plugin-add-module-exports] which will _add the `module.exports` if
 **only** the export default declaration exists._
+
+⚠️This has not been thoroughly tested, however, so proceed with caution and report
+back any issues that may have been encounter.
 
 ```bash
 npm i babel-plugin-add-module-exports
