@@ -198,6 +198,31 @@ function presetIdentifier(name) {
   return new PackageIdentifier(name, '-preset');
 }
 
+/**
+ * Add .isValidFullName static method to identifiers
+ */
+[pluginIdentifier, presetIdentifier].forEach(identifier => {
+  /**
+   * Util method to check if a full name is valid
+   *
+   * Examples:
+   * - @gasket/https-plugin -> true
+   * - @gasket/https-plugin@1.2.3 -> false
+   * - https -> false
+   *
+   * @param {string} maybeFullName - Name to check
+   * @returns {boolean} fullName
+   */
+  identifier.isValidFullName = function isValidFullName(maybeFullName) {
+    try {
+      return identifier(maybeFullName).fullName === maybeFullName;
+    } catch (e) {
+      return false;
+    }
+  };
+});
+
+
 module.exports = {
   pluginIdentifier,
   presetIdentifier,
