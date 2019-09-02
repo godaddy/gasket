@@ -4,12 +4,48 @@ const Resolver  = require('./resolver');
 const { pluginIdentifier, presetIdentifier } = require('./package-identifier');
 
 /**
- * Check if module appears to be a path name.
+ * Module with meta data
+ *
+ * @typedef {Object} ModuleInfo
+ *
+ *
+ * @property {String} name - Name of preset
+ * @property {String} shortName - Short Name of preset
+ * @property {String} module - Actual module content
+ * @property {String} [version] - Resolved version
+ * @property {String} [package] - Package.json contents
+ * @property {String} [path] - path to the root of package
+ * @property {String} [from] - Name of module requires this module
+ * @property {String} [range] - Range by which this module was required
+ */
+
+/**
+ * Plugin module with meta data
+ *
+ * @typedef {ModuleInfo} PluginInfo
+ */
+
+/**
+ * Preset module with meta data
+ *
+ * @typedef {ModuleInfo} PresetInfo
+ * @property {PresetInfo[]} presets - Presets that this preset extends
+ * @property {PluginInfo[]} plugins - Plugins this preset uses
+ */
+
+
+/**
+ * Test if module appears to be a path name.
  *
  * @type {RegExp}
  */
 const isModulePath = /^[/.]|node_modules/;
 
+/**
+ * Utility to load plugins, presets, and other modules with metadata
+ *
+ * @type {Resolver}
+ */
 module.exports = class Loader extends Resolver {
 
   constructor() {
@@ -36,6 +72,7 @@ module.exports = class Loader extends Resolver {
       info.path = path.dirname(pkgPath);
       info.package = this.require(pkgPath);
       info.version = info.package.version;
+      info.name = info.package.name;
     }
 
     return info;
@@ -56,21 +93,20 @@ module.exports = class Loader extends Resolver {
   /**
    * Loads a preset with additional metadata
    *
-   * @param {String} moduleName - Name of module to load
+   * @param {String} module - Name of module to load
    * @param {Object} [meta] - Additional meta data
    * @param {Boolean} [options] - Loading options
    * @param {Boolean} [options.shallow] - Do not recursively load dependencies
    * @returns {PresetInfo} module
    */
-  loadPreset(moduleName, meta, { shallow = false } = {}) {
-    const fullName = presetIdentifier(moduleName).fullName;
-    const presetInfo = this.loadModule(fullName, meta);
+  loadPreset(module, meta, { shallow = false } = {}) {
+    const moduleName = isModulePath.test(module) ? module : presetIdentifier(module).fullName;
+    const presetInfo = this.loadModule(moduleName, meta);
 
-    const { dependencies } = presetInfo.package;
-    const { resolve: presetResolve } = presetInfo.module;
+    const { name: from, dependencies } = presetInfo.package;
 
-    // If this preset provided a resolve function, use it for its plugins
-    const presetResolver = presetResolve ? new Loader({ resolve: presetResolve }) : this;
+    // If this preset provided a require instance, use it for its plugins
+    const presetResolver = presetInfo.module.require ? new Loader({ require: presetInfo.module.require }) : this;
 
     // filter out a list of presets and plugins from dependencies
     const presetNames = Object.keys(dependencies).filter(k => presetIdentifier.isValidFullName(k));
@@ -78,7 +114,6 @@ module.exports = class Loader extends Resolver {
 
     let presets;
     let plugins;
-    const from = fullName;
     if (shallow) {
       presets = presetNames.map(name => presetResolver.getModuleInfo(null, name, { from, range: dependencies[name] }));
       plugins = pluginNames.map(name => presetResolver.getModuleInfo(null, name, { from, range: dependencies[name] }));
@@ -112,28 +147,29 @@ module.exports = class Loader extends Resolver {
     return this.loadModule(moduleName, meta);
   }
 
-
   /**
-   * Loads presets and plugins as configured
+   * Loads presets and plugins as configured.
+   * .plugins will be filtered and ordered as configuration with priority of:
+   *  - added plugins > preset plugins > nested preset plugins
    *
-   * @param {Object} pluginConfig - Presets and plugins to load
+   * @param {Object}            config         - Presets and plugins to load
+   * @param {string[]}          config.presets - Presets to load and add plugins from
+   * @param {string[]|module[]} config.add     - Names of plugins to load
+   * @param {string[]}          config.remove  - Names of plugins to remove (from presets)
    * @returns {{presets: PresetInfo[], plugins: PluginInfo[]}} results
    */
-  loadConfigured(pluginConfig) {
-    const { presets = [], add = [], remove = [] } = pluginConfig || {};
+  loadConfigured(config) {
+    const { presets = [], add = [], remove = [] } = config || {};
     const pluginsToRemove = new Set(remove.map(name => pluginIdentifier(name).fullName) || []);
 
-    const from = 'gasket.config';
+    const loadedPresets = flatten(presets).map(name => this.loadPreset(name, { from: 'config' }));
+    const loadedPlugins = add.map(module => this.loadPlugin(module, { from: 'config' }));
 
-    const loadedPresets = flatten(presets).map(name => this.loadPreset(name, { from }));
-    const loadedPlugins = add.map(module => this.loadPlugin(module, { from }));
+    let plugins = [];
 
-
-    // flatten plugins from presets
-    let resolvedPlugins = [];
-
+    // recursively get plugins from presets
     function pullPlugins(preset) {
-      resolvedPlugins.push(...preset.plugins);
+      plugins.push(...preset.plugins);
       if (Array.isArray(preset.presets)) {
         preset.presets.forEach(p => pullPlugins(p));
       }
@@ -141,18 +177,18 @@ module.exports = class Loader extends Resolver {
 
     loadedPresets.forEach(p => pullPlugins(p));
 
-    resolvedPlugins.unshift(...loadedPlugins);
+    plugins.unshift(...loadedPlugins);
 
+    plugins = plugins.filter((info, idx, self) => self.findIndex(t => t.name === info.name) === idx);
     // filter out duplicate plugins based on order
     // - priority is added plugins > preset plugins > nested preset plugins
-    resolvedPlugins = resolvedPlugins.filter((info, idx, self) => self.findIndex(t => t.name === info.name) === idx);
 
-    // lastly, filter explicitly plugin
-    resolvedPlugins = resolvedPlugins.filter((info => !pluginsToRemove.has(pluginIdentifier(info.name).fullName)));
+    // lastly, filter explicitly removed plugin
+    plugins = plugins.filter((info => !pluginsToRemove.has(pluginIdentifier(info.name).fullName)));
 
     return {
       presets: loadedPresets,
-      plugins: resolvedPlugins
+      plugins
     };
   }
 };

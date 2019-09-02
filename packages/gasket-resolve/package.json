@@ -7,6 +7,7 @@
     "lint": "eslint *.js test",
     "lint:fix": "npm run lint -- --fix",
     "test": "jest",
+    "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "posttest": "npm run lint"
   },

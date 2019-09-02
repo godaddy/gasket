@@ -1,20 +1,26 @@
 const debug = require('diagnostics')('gasket:resolver');
 
+/**
+ * Utility to help resolve and require modules
+ *
+ * @type {Resolver}
+ */
 module.exports = class Resolver {
-  constructor(opts) {
+  /**
+   * @param {Object} options - Options
+   * @param {String|String[]} [options.resolveFrom] - Path(s) to resolve modules from
+   * @param {require} [options.require] - Require instance to use
+   */
+  constructor(options) {
     const {
       resolveFrom,
-      resolve: _resolve = require.resolve,
-      require: _require = require,
-      root = process.cwd()
-    } = opts || {};
+      require: _require
+    } = options || {};
 
-    this.opts = {
-      resolveFrom,
-      resolve: _resolve,
-      require: _require,
-      root
-    };
+    if (resolveFrom) {
+      this._resolveFrom = Array.isArray(resolveFrom) ? resolveFrom : [resolveFrom];
+    }
+    this._require = _require || require;
   }
 
   /**
@@ -25,8 +31,8 @@ module.exports = class Resolver {
    * @public
    */
   resolve(moduleName) {
-    const options = this.opts.resolveFrom ? { paths: [this.opts.resolveFrom] } : {};
-    return this.opts.resolve(moduleName, options);
+    const options = this._resolveFrom ? { paths: this._resolveFrom } : {};
+    return this._require.resolve(moduleName, options);
   }
 
   /**
@@ -37,7 +43,7 @@ module.exports = class Resolver {
    */
   require(moduleName) {
     const modulePath = this.resolve(moduleName);
-    return this.opts.require(modulePath);
+    return this._require(modulePath);
   }
 
 
