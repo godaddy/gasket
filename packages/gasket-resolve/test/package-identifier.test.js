@@ -2,7 +2,7 @@ const {
   pluginIdentifier,
   presetIdentifier,
   PackageIdentifier
-} = require('../package-identifier');
+} = require('../lib/package-identifier');
 
 describe('pluginIdentifier', () => {
   let result;

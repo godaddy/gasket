@@ -3,7 +3,6 @@ const { pluginIdentifier, presetIdentifier, PackageIdentifier } = require('./pac
 module.exports = {
   Resolver: require('./resolver'),
   Loader: require('./loader'),
-  plugins: require('./plugins'),
   pluginIdentifier,
   presetIdentifier,
   PackageIdentifier
