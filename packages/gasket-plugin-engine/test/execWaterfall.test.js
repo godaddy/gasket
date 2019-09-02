@@ -1,8 +1,13 @@
 describe('The execWaterfall method', () => {
   let engine, pluginA, pluginB;
 
+  const mockConfig = {
+    some: 'config'
+  };
+
   beforeEach(() => {
     pluginA = {
+      name: 'pluginA',
       hooks: {
         eventA: jest.fn((gasket, value) => {
           return value * 7;
@@ -11,6 +16,7 @@ describe('The execWaterfall method', () => {
     };
 
     pluginB = {
+      name: 'pluginB',
       hooks: {
         eventA: jest.fn((gasket, value) => {
           return value + 4;
@@ -18,21 +24,18 @@ describe('The execWaterfall method', () => {
       }
     };
 
-    jest
-      .doMock('@gasket/testa-plugin', () => pluginA, { virtual: true })
-      .doMock('@gasket/testb-plugin', () => pluginB, { virtual: true });
+    const { Loader } = require('@gasket/resolve');
+    jest.spyOn(Loader.prototype, 'loadConfigured').mockImplementation(() => {
+      return {
+        plugins: [
+          { module: pluginA },
+          { module: pluginB }
+        ]
+      };
+    });
 
     const PluginEngine = require('..');
-    const Resolver = require('../lib/resolver');
-    jest.spyOn(Resolver.prototype, 'tryResolve').mockImplementation(arg => {
-      return `${process.cwd()}/node_modules/${arg}`;
-    });
-
-    engine = new PluginEngine({
-      plugins: {
-        add: ['testa', 'testb']
-      }
-    });
+    engine = new PluginEngine(mockConfig);
   });
 
   afterEach(() => {

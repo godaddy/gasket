@@ -59,7 +59,7 @@ describe('Plugin configuration', () => {
 
     PluginEngine = require('..');
 
-    const Resolver = require('../lib/resolver');
+    const { Resolver } = require('@gasket/resolve');
     jest.spyOn(Resolver.prototype, 'tryResolve').mockImplementation(arg => {
       return `${process.cwd()}/node_modules/${arg}`;
     });

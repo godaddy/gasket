@@ -8,14 +8,11 @@ describe('The execApplySync method', () => {
   };
 
   const mockConfig = {
-    some: 'config',
-    plugins: {
-      add: ['testa', 'testb', 'testc']
-    }
+    some: 'config'
   };
 
   const pluginA = {
-    name: 'testa',
+    name: 'pluginA',
     hooks: {
       eventA(eng, arg, lit) {
         return { arg, lit };
@@ -24,7 +21,7 @@ describe('The execApplySync method', () => {
   };
 
   const pluginB = {
-    name: 'testb',
+    name: 'pluginB',
     hooks: {
       eventA(eng, arg) {
         return arg;
@@ -33,10 +30,10 @@ describe('The execApplySync method', () => {
   };
 
   const pluginC = {
-    name: 'testc',
+    name: 'pluginC',
     hooks: {
       eventA: {
-        timing: { after: ['testa'] },
+        timing: { after: ['pluginA'] },
         handler: (eng, arg) => arg
       }
     }
@@ -47,17 +44,18 @@ describe('The execApplySync method', () => {
     hookBSpy = jest.spyOn(pluginB.hooks, 'eventA');
     hookCSpy = jest.spyOn(pluginC.hooks.eventA, 'handler');
 
-    jest
-      .doMock('@gasket/testa-plugin', () => pluginA, { virtual: true })
-      .doMock('@gasket/testb-plugin', () => pluginB, { virtual: true })
-      .doMock('@gasket/testc-plugin', () => pluginC, { virtual: true });
-
-    const PluginEngine = require('..');
-    const Resolver = require('../lib/resolver');
-    jest.spyOn(Resolver.prototype, 'tryResolve').mockImplementation(arg => {
-      return `${process.cwd()}/node_modules/${arg}`;
+    const { Loader } = require('@gasket/resolve');
+    jest.spyOn(Loader.prototype, 'loadConfigured').mockImplementation(() => {
+      return {
+        plugins: [
+          { module: pluginA },
+          { module: pluginB },
+          { module: pluginC }
+        ]
+      };
     });
 
+    const PluginEngine = require('..');
     engine = new PluginEngine(mockConfig);
   });
 
