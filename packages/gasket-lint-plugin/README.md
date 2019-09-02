@@ -10,7 +10,7 @@ npm install --save @gasket/lint-plugin
 
 ## Usage
 
-The plugin will add a few lint commands your app's `package.json`. These
+The plugin will add a few lint commands into your app's `package.json`. These
 commands will be configured against the CLI of your choice (e.g. `npm` or `yarn`).
 For example, in the example commands below `npm run lint` will run eslint on your
 `.js{x}` files.
