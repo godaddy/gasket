@@ -1,35 +1,15 @@
 const Resolver = require('../lib/resolver');
+const { makeRequire } = require('./helpers');
 
 const mockModules = {
-  '/some/path/to/bogus': { name: 'Bogus' },
-  get '/some/path/to/broken'() { throw new Error('Bad things'); } // eslint-disable-line no-eval
-};
-
-const mockPaths = {
-  bogus: '/some/path/to/bogus',
-  broken: '/some/path/to/broken'
+  bogus: { name: 'Bogus' }
 };
 
 describe('Resolver', () => {
   let mockRequire;
 
   beforeEach(() => {
-    mockRequire = jest.fn(mod => {
-      if (mockModules[mod]) {
-        return mockModules[mod];
-      }
-      const err = new Error(`Cannot find module '${mod}' from 'mocked'`);
-      err.code = 'MODULE_NOT_FOUND';
-      throw err;
-    });
-    mockRequire.resolve = jest.fn(mod => {
-      if (mockPaths[mod]) {
-        return mockPaths[mod];
-      }
-      const err = new Error(`Cannot find module '${mod}' from 'mocked'`);
-      err.code = 'MODULE_NOT_FOUND';
-      throw err;
-    });
+    mockRequire = makeRequire(mockModules);
   });
 
   it('exposes expected methods', () => {
@@ -86,7 +66,7 @@ describe('Resolver', () => {
     it('returns resolved path', () => {
       const resolver = new Resolver({ require: mockRequire });
       const result = resolver.resolve('bogus');
-      expect(result).toEqual('/some/path/to/bogus');
+      expect(result).toEqual('/path/to/node_modules/bogus');
     });
 
     it('throws if module not found', () => {
@@ -151,7 +131,7 @@ describe('Resolver', () => {
     it('returns resolved path', () => {
       const resolver = new Resolver({ require: mockRequire });
       const result = resolver.tryResolve('bogus');
-      expect(result).toEqual('/some/path/to/bogus');
+      expect(result).toEqual('/path/to/node_modules/bogus');
     });
 
     it('returns null if module not found', () => {
