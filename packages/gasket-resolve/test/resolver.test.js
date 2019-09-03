@@ -1,200 +1,193 @@
-const Resolver = require('../resolver');
+const Resolver = require('../lib/resolver');
+
+const mockModules = {
+  '/some/path/to/bogus': { name: 'Bogus' },
+  get '/some/path/to/broken'() { throw new Error('Bad things'); } // eslint-disable-line no-eval
+};
+
+const mockPaths = {
+  bogus: '/some/path/to/bogus',
+  broken: '/some/path/to/broken'
+};
 
 describe('Resolver', () => {
-  it('exposes expected methods', () => {
-    const resolver = new Resolver();
-    expect(resolver.pluginFor).toBeDefined();
-    expect(resolver.presetFor).toBeDefined();
-    expect(resolver.tryRequire).toBeDefined();
-    expect(resolver.resolveShorthandModule).toBeDefined();
+  let mockRequire;
+
+  beforeEach(() => {
+    mockRequire = jest.fn(mod => {
+      if (mockModules[mod]) {
+        return mockModules[mod];
+      }
+      const err = new Error(`Cannot find module '${mod}' from 'mocked'`);
+      err.code = 'MODULE_NOT_FOUND';
+      throw err;
+    });
+    mockRequire.resolve = jest.fn(mod => {
+      if (mockPaths[mod]) {
+        return mockPaths[mod];
+      }
+      const err = new Error(`Cannot find module '${mod}' from 'mocked'`);
+      err.code = 'MODULE_NOT_FOUND';
+      throw err;
+    });
   });
 
-  describe('Resolver({ resolveFrom })', () => {
-    it('should resolve all plugins correctly', () => {
-      const mockA = {};
-      const mockB = {};
+  it('exposes expected methods', () => {
+    const resolver = new Resolver();
+    expect(resolver.require).toBeDefined();
+    expect(resolver.resolve).toBeDefined();
+    expect(resolver.tryRequire).toBeDefined();
+    expect(resolver.tryResolve).toBeDefined();
+  });
 
-      jest
-        .doMock('/whatever/node_modules/@gasket/testa-plugin', () => mockA, { virtual: true })
-        .doMock('/whatever/node_modules/@gasket/testb-plugin', () => mockB, { virtual: true });
+  it('accepts resolveFrom param', () => {
+    let resolver = new Resolver();
+    expect(resolver._resolveFrom).not.toBeDefined();
 
-      const resolver = new Resolver({
-        resolveFrom: '/whatever/node_modules'
-      });
+    resolver = new Resolver({ resolveFrom: '/some/path' });
+    expect(resolver._resolveFrom).toBeDefined();
+  });
 
-      const actualA = resolver.pluginFor('testa');
-      const actualB = resolver.pluginFor('testb');
+  it('resolveFrom can be a string', () => {
+    const resolver = new Resolver({ resolveFrom: '/some/path' });
+    expect(resolver._resolveFrom).toBeInstanceOf(Array);
+    expect(resolver._resolveFrom).toHaveLength(1);
+  });
 
-      expect(actualA).toBe(mockA);
-      expect(actualB).toBe(mockB);
+  it('resolveFrom can be a string array', () => {
+    const resolver = new Resolver({ resolveFrom: ['/some/path', 'some/other/path'] });
+    expect(resolver._resolveFrom).toBeInstanceOf(Array);
+    expect(resolver._resolveFrom).toHaveLength(2);
+  });
+
+  it('accepts a require param', () => {
+    const resolver = new Resolver({ require: mockRequire });
+    expect(resolver._require).toBe(mockRequire);
+  });
+
+  describe('.resolve', () => {
+
+    it('calls require.resolve', () => {
+      const resolver = new Resolver({ require: mockRequire });
+      resolver.resolve('bogus');
+      expect(mockRequire.resolve).toHaveBeenCalled();
     });
 
-    it('should resolve all presets correctly', () => {
-      const mockA = {};
-      const mockB = {};
+    it('passes paths if resolveFrom set', () => {
+      const resolveFrom = ['/some/path'];
+      const resolver = new Resolver({ require: mockRequire, resolveFrom });
+      resolver.resolve('bogus');
 
-      jest
-        .doMock('/whatever/node_modules/@gasket/testa-preset', () => mockA, { virtual: true })
-        .doMock('/whatever/node_modules/@gasket/testb-preset', () => mockB, { virtual: true });
+      expect(mockRequire.resolve).toHaveBeenCalledWith(
+        'bogus',
+        expect.objectContaining({ paths: resolveFrom }));
+    });
 
-      const resolver = new Resolver({
-        resolveFrom: '/whatever/node_modules'
-      });
+    it('returns resolved path', () => {
+      const resolver = new Resolver({ require: mockRequire });
+      const result = resolver.resolve('bogus');
+      expect(result).toEqual('/some/path/to/bogus');
+    });
 
-      const actualA = resolver.presetFor('testa');
-      const actualB = resolver.presetFor('testb');
+    it('throws if module not found', () => {
+      const resolver = new Resolver();
+      expect(() => resolver.resolve('missing')).toThrow(/Cannot find module/);
+    });
 
-      expect(actualA).toBe(mockA);
-      expect(actualB).toBe(mockB);
+    it('uses resolver file require by default', () => {
+      const resolver = new Resolver();
+      expect(() => resolver.resolve('missing')).toThrow(/from 'resolver.js'/);
+    });
+
+    it('uses passed require', () => {
+      const resolver = new Resolver({ require });
+      expect(() => resolver.resolve('missing')).toThrow(/from 'resolver.test.js'/);
+    });
+  });
+
+  describe('.require', () => {
+
+    it('calls require', () => {
+      const resolver = new Resolver({ require: mockRequire });
+      resolver.require('bogus');
+      expect(mockRequire).toHaveBeenCalled();
+    });
+
+    it('calls require.resolve first to allow paths', () => {
+      const resolver = new Resolver({ require: mockRequire });
+      resolver.require('bogus');
+      expect(mockRequire.resolve).toHaveBeenCalled();
+    });
+
+    it('uses paths if resolveFrom set', () => {
+      const resolveFrom = ['/some/path'];
+      const resolver = new Resolver({ require: mockRequire, resolveFrom });
+      resolver.require('bogus');
+
+      expect(mockRequire.resolve).toHaveBeenCalledWith(
+        'bogus',
+        expect.objectContaining({ paths: resolveFrom }));
+    });
+
+    it('returns resolved module', () => {
+      const resolver = new Resolver({ require: mockRequire });
+      const result = resolver.require('bogus');
+      expect(result).toEqual(expect.objectContaining({ name: 'Bogus' }));
+    });
+
+    it('throws if module not found', () => {
+      const resolver = new Resolver();
+      expect(() => resolver.require('missing')).toThrow(/Cannot find module/);
+    });
+
+    it('throws if module malformed', () => {
+      const resolver = new Resolver({ require: mockRequire });
+      expect(() => resolver.require('broken')).toThrow();
+    });
+  });
+
+  describe('.tryResolve', () => {
+
+    it('returns resolved path', () => {
+      const resolver = new Resolver({ require: mockRequire });
+      const result = resolver.tryResolve('bogus');
+      expect(result).toEqual('/some/path/to/bogus');
+    });
+
+    it('returns null if module not found', () => {
+      const resolver = new Resolver();
+      const result = resolver.tryResolve('missing');
+      expect(result).toBe(null);
+    });
+
+    it('does not throw if module not found', () => {
+      const resolver = new Resolver();
+      expect(() => resolver.tryResolve('missing')).not.toThrow();
     });
   });
 
   describe('.tryRequire', () => {
-    it('suppresses errors for MODULE_NOT_FOUND for that module', () => {
+
+    it('returns resolved module', () => {
+      const resolver = new Resolver({ require: mockRequire });
+      const result = resolver.tryRequire('bogus');
+      expect(result).toEqual(expect.objectContaining({ name: 'Bogus' }));
+    });
+
+    it('returns null if module not found', () => {
       const resolver = new Resolver();
-      const required = resolver.tryRequire('whatever-no-exists');
-      expect(required).toBeNull();
+      const result = resolver.tryRequire('missing');
+      expect(result).toBe(null);
     });
 
-    it('throws errors for MODULE_NOT_FOUND of other modules', () => {
-      jest.doMock('@gasket/whatever', () => {
-        return require('something-else-no-exist');
-      }, { virtual: true });
-
+    it('does not throw if module not found', () => {
       const resolver = new Resolver();
-      expect(() => {
-        resolver.tryRequire('@gasket/whatever');
-      }).toThrow(/something-else-no-exist/);
-    });
-  });
-
-  describe('tryResolvePresetRelativePath', () => {
-    it('resolves the relative path of a gasket preset name', () => {
-      const resolver = new Resolver({ root: '/root/' });
-      jest.spyOn(resolver, 'tryResolve').mockImplementation(arg => {
-        return `/root/node_modules/${arg}`;
-      });
-
-      const result = resolver.tryResolvePresetRelativePath('presetA', '/root/');
-      expect(result).toBe('node_modules/@gasket/presetA-preset');
+      expect(() => resolver.tryRequire('missing')).not.toThrow();
     });
 
-    it('resolves the relative path of a full gasket preset name', () => {
-      const resolver = new Resolver({ root: '/root/' });
-      jest.spyOn(resolver, 'tryResolve').mockImplementation(arg => {
-        return `/root/node_modules/${arg}`;
-      });
-
-      const result = resolver.tryResolvePresetRelativePath('@gasket/presetA-preset');
-      expect(result).toBe('node_modules/@gasket/presetA-preset');
-    });
-
-    it('resolves the relative path of a custom preset name', () => {
-      const resolver = new Resolver({ root: '/root/' });
-      jest.spyOn(resolver, 'tryResolve').mockImplementation(arg => {
-        return `/root/node_modules/${arg}`;
-      });
-
-      const result = resolver.tryResolvePresetRelativePath('some-custom-preset');
-      expect(result).toBe('node_modules/some-custom-preset');
-    });
-
-    it('resolves the relative path of a gasket preset name using `resolveFrom`', () => {
-      const resolver = new Resolver({ resolveFrom: '/some/resolveFrom/path/', root: '/root/' });
-      jest.spyOn(resolver, 'tryResolve').mockImplementation(arg => {
-        return `/some/resolveFrom/path/node_modules/${arg}`;
-      });
-
-      const result = resolver.tryResolvePresetRelativePath('presetA');
-      expect(result).toBe('node_modules/@gasket/presetA-preset');
-    });
-
-    it('resolves the relative path of a full gasket preset name using `resolveFrom`', () => {
-      const resolver = new Resolver({ resolveFrom: '/some/resolveFrom/path/', root: '/root/' });
-      jest.spyOn(resolver, 'tryResolve').mockImplementation(arg => {
-        return `/some/resolveFrom/path/node_modules/${arg}`;
-      });
-
-      const result = resolver.tryResolvePresetRelativePath('@gasket/presetA-preset');
-      expect(result).toBe('node_modules/@gasket/presetA-preset');
-    });
-
-    it('resolves the relative path of a custom preset name using `resolveFrom`', () => {
-      const resolver = new Resolver({ resolveFrom: '/some/resolveFrom/path/', root: '/root/' });
-      jest.spyOn(resolver, 'tryResolve').mockImplementation(arg => {
-        return `/some/resolveFrom/path/node_modules/${arg}`;
-      });
-
-      const result = resolver.tryResolvePresetRelativePath('some-custom-preset');
-      expect(result).toBe('node_modules/some-custom-preset');
-    });
-  });
-
-  describe('.tryResolvePluginRelativePath', () => {
-    it('resolves the relative path of a local plugin', () => {
-      const resolver = new Resolver({ root: '/root/' });
-      const result = resolver.tryResolvePluginRelativePath('/root/plugin/some-plugin');
-      expect(result).toBe('plugin/some-plugin');
-    });
-
-    it('resolves the relative path of a gasket plugin name', () => {
-      const resolver = new Resolver({ root: '/root/' });
-      jest.spyOn(resolver, 'tryResolve').mockImplementation(arg => {
-        return `/root/node_modules/${arg}`;
-      });
-
-      const result = resolver.tryResolvePluginRelativePath('pluginA');
-      expect(result).toBe('node_modules/@gasket/pluginA-plugin');
-    });
-
-    it('resolves the relative path of a full gasket plugin name', () => {
-      const resolver = new Resolver({ root: '/root/' });
-      jest.spyOn(resolver, 'tryResolve').mockImplementation(arg => {
-        return `/root/node_modules/${arg}`;
-      });
-
-      const result = resolver.tryResolvePluginRelativePath('@gasket/pluginA-plugin');
-      expect(result).toBe('node_modules/@gasket/pluginA-plugin');
-    });
-
-    it('resolves the relative path of a custom plugin name', () => {
-      const resolver = new Resolver({ root: '/root/' });
-      jest.spyOn(resolver, 'tryResolve').mockImplementation(arg => {
-        return `/root/node_modules/${arg}`;
-      });
-
-      const result = resolver.tryResolvePluginRelativePath('some-custom-plugin');
-      expect(result).toBe('node_modules/some-custom-plugin');
-    });
-
-    it('resolves the relative path of a gasket plugin name using `resolveFrom`', () => {
-      const resolver = new Resolver({ resolveFrom: '/some/resolveFrom/path/', root: '/root/' });
-      jest.spyOn(resolver, 'tryResolve').mockImplementation(arg => {
-        return `/some/resolveFrom/path/node_modules/${arg}`;
-      });
-
-      const result = resolver.tryResolvePluginRelativePath('pluginA');
-      expect(result).toBe('node_modules/@gasket/pluginA-plugin');
-    });
-
-    it('resolves the relative path of a full gasket plugin name using `resolveFrom`', () => {
-      const resolver = new Resolver({ resolveFrom: '/some/resolveFrom/path/', root: '/root/' });
-      jest.spyOn(resolver, 'tryResolve').mockImplementation(arg => {
-        return `/some/resolveFrom/path/node_modules/${arg}`;
-      });
-
-      const result = resolver.tryResolvePluginRelativePath('@gasket/pluginA-plugin');
-      expect(result).toBe('node_modules/@gasket/pluginA-plugin');
-    });
-
-    it('resolves the relative path of a custom plugin name using `resolveFrom`', () => {
-      const resolver = new Resolver({ resolveFrom: '/some/resolveFrom/path/', root: '/root/' });
-      jest.spyOn(resolver, 'tryResolve').mockImplementation(arg => {
-        return `/some/resolveFrom/path/node_modules/${arg}`;
-      });
-
-      const result = resolver.tryResolvePluginRelativePath('some-custom-plugin');
-      expect(result).toBe('node_modules/some-custom-plugin');
+    it('does throw if module has problems', () => {
+      const resolver = new Resolver({ require: mockRequire });
+      expect(() => resolver.tryRequire('broken')).toThrow();
     });
   });
 });

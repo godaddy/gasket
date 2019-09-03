@@ -46,20 +46,6 @@ module.exports = class Resolver {
     return this._require(modulePath);
   }
 
-
-  tryRequire(moduleName) {
-    try {
-      debug('try-require require', moduleName);
-      return this.require(moduleName);
-    } catch (err) {
-      if (err.code === 'MODULE_NOT_FOUND'
-        && err.message.includes(moduleName)) return null;
-
-      debug('try-require', err.message);
-      throw err;
-    }
-  }
-
   /**
    * Returns the resolved filename of the module
    *
@@ -69,12 +55,26 @@ module.exports = class Resolver {
    */
   tryResolve(moduleName) {
     try {
+      debug('try-resolve', moduleName);
       return this.resolve(moduleName);
     } catch (err) {
       if (err.code === 'MODULE_NOT_FOUND'
         && err.message.includes(moduleName)) return null;
 
-      debug('try-resolve', err.message);
+      debug('try-resolve error', err.message);
+      throw err;
+    }
+  }
+
+  tryRequire(moduleName) {
+    try {
+      debug('try-require', moduleName);
+      return this.require(moduleName);
+    } catch (err) {
+      if (err.code === 'MODULE_NOT_FOUND'
+        && err.message.includes(moduleName)) return null;
+
+      debug('try-require error', err.message);
       throw err;
     }
   }
