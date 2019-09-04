@@ -16,15 +16,40 @@ Plugin engine for gasket. This is used internally by `@gasket/cli`.
 
 A plugin a a module in the `gasket` ecosystem that provides a unit of
 functionality. Some plugins are core to the overall application, others
-optional. All plugins should follow the naming convention
-`@gasket/{name}-plugin`.
+optional.
+
+`@gasket` plugins should follow the naming convention `@gasket/{name}-plugin`,
+which will allow them to be referenced using [short names](#short-names).
+Otherwise, plugins need to end with the `-plugin` suffix. This is how gasket
+determines what packages are plugins or not.
+
+#### Good names
+
+```
+@gasket/example-plugin
+example-plugin
+@myscope/example-plugin
+```
+
+#### Bad names
+
+This will not be resolved as valid plugins.
+
+```
+@gasket/example
+example
+@myscope/example
+```
 
 ## What is a Preset?
 
-A preset is simply an array of plugins information to add to gasket.
-The special preset `@gasket/default-preset` is used by default if you
-have no plugin customization. Presets should follow the naming convention
-`@gasket/{name}-preset`.
+A preset is simply a package with gasket plugins dependencies. This allows
+common plugins to be grouped together, and loaded by way of a preset.
+
+`@gasket` presets should follow the naming convention `@gasket/{name}-preset`,
+which will allow them to be referenced using [short names](#short-names).
+Otherwise, presets need to end with the `-preset` suffix. This is how gasket
+determines what packages are presets or not.
 
 ## Configuring Plugins
 
@@ -42,6 +67,7 @@ module.exports = {
 }
 ```
 
+### Short names
 Items in these arrays are module names. Gasket supports shorthand naming;
 `'mocha'` expands to `@gasket/mocha-plugin` in the `add` and `remove` arrays,
 `default` expands to `@gasket/default-preset` in the `presets` array.
@@ -207,23 +233,34 @@ with the following properties:
 
 ## Authoring Presets
 
-For a working example, see [@gasket/default-preset]. In addition, you can also
-augment the context used in `gasket create` from within your preset. In this
-example, `gasket create` is used with the `@gasket/default-preset`. There are 6
-prompts that are presented to the user during the creation of the application.
+The anatomy of a preset is very simple. In it's most basic form, it should have
+an index JavaScript file, which can just export an empty object, and a
+package.json file with dependencies of gasket plugins.
 
+For example, a `package.json` file may look like:
+
+```json
+{
+  "name": "example-preset",
+  "main": "index.js", 
+  "dependencies": {
+    "example-plugin": "^1.0.0", 
+    "@my/other-plugin": "^2.0.0" 
+  }
+}
 ```
-$ gasket create whats-that-name
-create __debug__
-📦  Download preset: @gasket/default-preset
-📓  Using @gasket/default-preset@2.3.0
-? What is your app description? In a word? .......chaos
-? Which packager would you like to use? npm
-? Do you want a git repo to be initialized? No
-? Choose your unit test suite none (not recommended)
-📚  Write package.json contents into __debug__
-⏰  Installing node modules ./__debug__. This might be some time………
+
+With the `index.js` as:
+
+```js
+module.exports = {
+  require
+}
 ```
+
+It is recommended, though not required, for presets to export their `require`
+instance. This will help the loader properly resolve plugin dependencies,
+especially during development when module linking may be used.
 
 You can set these values ahead of time in your preset so that the associated
 prompts are never asked. In a preset's `package.json`, you can set the above
@@ -243,21 +280,29 @@ values ahead of time by creating a `gasket.create` object:
 }
 ```
 
-You can also _extend_ other presets by adding an `extends` property to your
-main file:
+You can also _extend_ other presets by adding them as dependencies to a parent
+preset. For example, by adding:
 
-```js
-// index.js
-module.exports = require('@gasket/resolve/plugins')({
-  dirname: __dirname,
-  resolve: name => require(name),
-  extends: [
-    'television-preset', // you can just do a string if it's a module
-    require('comedy-preset') // or you can require it manually
-  ]
-});
-
+```diff
+{
+  "name": "example-preset",
+  "main": "index.js", 
+  "dependencies": {
+    "example-plugin": "^1.0.0", 
+    "@my/other-plugin": "^2.0.0",
++    "@some/base-preset": "^3.0.0"
+  }
+}
 ```
+
+This base preset's plugins will also be registered when the app loads.
+
+### Plugin priority
+
+When a preset extends another preset, the version of the plugin registered can
+be overridden if the parent preset sets a different dependency version.
+Additionally, if an app specifies a plugin directly in the gasket.config using
+`add`, the version determined by the app will instead be registered. 
 
 ## Direct Usage
 
