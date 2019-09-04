@@ -36,5 +36,10 @@
     "mocha": "^6.2.0",
     "nyc": "^14.1.1",
     "sinon": "^7.4.1"
+  },
+  "dependencies": {
+    "lodash.clonedeep": "^4.5.0",
+    "lodash.isfunction": "^3.0.9",
+    "lodash.isobject": "^3.0.2"
   }
 }
