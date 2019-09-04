@@ -5,11 +5,12 @@ let dynamicNamingId = 0;
 class PluginEngine {
   constructor(config, { resolveFrom } = {}) {
     this.config = config || {};
+    this.loader = new Loader({ resolveFrom });
 
     this._hooks = {};
     this._plans = {};
 
-    this._registerPlugins(resolveFrom);
+    this._registerPlugins();
     this._registerHooks();
 
     // Allow methods to be called without context (to support destructuring)
@@ -21,12 +22,10 @@ class PluginEngine {
 
   /**
    * Resolves plugins
-   * @param {string} resolveFrom - Where loader should resolve modules from
    * @private
    */
-  _registerPlugins(resolveFrom) {
-    const loader = new Loader({ resolveFrom });
-    const { plugins } = loader.loadConfigured(this.config.plugins);
+  _registerPlugins() {
+    const { plugins } = this.loader.loadConfigured(this.config.plugins);
 
     // map the plugin name to content
     this._plugins = plugins
