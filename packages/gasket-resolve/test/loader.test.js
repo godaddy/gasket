@@ -209,8 +209,11 @@ describe('Loader', () => {
     });
 
     it('add preloaded tag to info object', () => {
-      const results = loader.loadPlugin(pluginUser);
-      expect(results).toHaveProperty('preloaded');
+      const results = loader.loadPlugin(pluginUser, { extra: true });
+      expect(results).toEqual(expect.objectContaining({
+        extra: true,
+        preloaded: true
+      }));
     });
   });
 
@@ -494,7 +497,5 @@ describe('Loader', () => {
         ])
       );
     });
-
   });
-
 });

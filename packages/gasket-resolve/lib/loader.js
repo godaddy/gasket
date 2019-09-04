@@ -100,7 +100,7 @@ module.exports = class Loader extends Resolver {
     // If the provide plugin is an already required module, just gather info.
     if (typeof module !== 'string') {
       const moduleName = pluginIdentifier(module.name).fullName;
-      return this.getModuleInfo(module, moduleName, { meta, preloaded: true });
+      return this.getModuleInfo(module, moduleName, { ...meta, preloaded: true });
     }
 
     const moduleName = isModulePath.test(module) ? module : pluginIdentifier(module).fullName;
