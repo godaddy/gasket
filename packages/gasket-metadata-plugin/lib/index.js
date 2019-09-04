@@ -1,30 +1,6 @@
 /* eslint require-atomic-updates: warn */
 const cloneDeep = require('lodash.clonedeep');
-const isFunction = require('lodash.isfunction');
-const isObject = require('lodash.isobject');
-
-/**
- * Recurse through an object or array, and transform any functions to be empty
- *
- * @param {Object|Array} value - Item to consider
- * @returns {Object|Array} transformed result
- */
-function sanitize(value) {
-  if (isObject(value)) {
-    Object.entries(value).forEach(([k, v]) => {
-      if (isFunction(v)) {
-        value[k] = function redacted() {
-        };
-      } else {
-        sanitize(v);
-      }
-    });
-  } else if (Array.isArray(value)) {
-    value.forEach(v => sanitize(v));
-  }
-
-  return value;
-}
+const { sanitize } = require('./utils');
 
 /**
  * Preset module with meta data
@@ -50,10 +26,27 @@ module.exports = {
         plugins
       };
 
+      //
+      // Allow plugins to tune their own metadata via lifecycle
+      //
       await gasket.execApply('metadata', async ({ name }, handler) => {
         const idx = plugins.findIndex(p => p.module.name === name || p.name === name);
         const pluginInfo = plugins[idx];
         plugins[idx] = await handler(pluginInfo);
+      });
+
+      //
+      // assign plugin instances back to preset hierarchy to avoid faulty data
+      //
+      plugins.forEach(pluginInfo => {
+        function checkPreset(presetInfo) {
+          if (presetInfo.name === pluginInfo.from) {
+            const idx = presetInfo.plugins.findIndex(p => p.name === pluginInfo.name);
+            presetInfo.plugins[idx] = pluginInfo;
+          }
+          presetInfo.presets && presetInfo.presets.forEach(checkPreset);
+        }
+        presets.forEach(checkPreset);
       });
     }
   }
