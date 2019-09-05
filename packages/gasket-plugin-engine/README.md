@@ -235,7 +235,7 @@ with the following properties:
 
 ## Authoring Presets
 
-The anatomy of a preset is very simple. In it's most basic form, it should have
+The anatomy of a preset is very simple. In its most basic form, it should have
 an index JavaScript file, which can just export an empty object, and a
 package.json file with dependencies of gasket plugins.
 
