@@ -9,7 +9,8 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "posttest": "npm run lint"
+    "posttest": "npm run lint",
+    "docs": "jsdoc2md -t jsdoc2md/README.hbs lib/*.js > README.md; echo"
   },
   "repository": {
     "type": "git",
@@ -41,7 +42,8 @@
     "eslint-plugin-jest": "^22.15.1",
     "eslint-plugin-json": "^1.4.0",
     "eslint-plugin-mocha": "^6.0.0",
-    "jest": "^24.8.0"
+    "jest": "^24.8.0",
+    "jsdoc-to-markdown": "^5.0.1"
   },
   "jest": {
     "testEnvironment": "node"

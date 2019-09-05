@@ -5,7 +5,7 @@ const debug = require('diagnostics')('gasket:resolver');
  *
  * @type {Resolver}
  */
-module.exports = class Resolver {
+class Resolver {
   /**
    * @param {Object} options - Options
    * @param {String|String[]} [options.resolveFrom] - Path(s) to resolve modules from
@@ -28,7 +28,6 @@ module.exports = class Resolver {
    *
    * @param {String} moduleName name of the module
    * @returns {String} filename of the module
-   * @public
    */
   resolve(moduleName) {
     const options = this._resolveFrom ? { paths: this._resolveFrom } : {};
@@ -51,7 +50,6 @@ module.exports = class Resolver {
    *
    * @param {String} moduleName name of the module
    * @returns {String} filename of the module
-   * @public
    */
   tryResolve(moduleName) {
     try {
@@ -78,5 +76,6 @@ module.exports = class Resolver {
       throw err;
     }
   }
-};
+}
 
+module.exports = Resolver;

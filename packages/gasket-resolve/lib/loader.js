@@ -9,12 +9,11 @@ const { pluginIdentifier, presetIdentifier } = require('./package-identifier');
  *
  *
  * @property {String} name - Name of preset
- * @property {String} shortName - Short Name of preset
  * @property {String} module - Actual module content
- * @property {String} [version] - Resolved version
  * @property {String} [package] - Package.json contents
- * @property {String} [path] - path to the root of package
- * @property {String} [from] - Name of module requires this module
+ * @property {String} [version] - Resolved version
+ * @property {String} [path] - Path to the root of package
+ * @property {String} [from] - Name of module which requires this module
  * @property {String} [range] - Range by which this module was required
  */
 
@@ -37,15 +36,17 @@ const { pluginIdentifier, presetIdentifier } = require('./package-identifier');
  * Test if module appears to be a path name.
  *
  * @type {RegExp}
+ * @private
  */
 const isModulePath = /^[/.]|node_modules/;
 
 /**
- * Utility to load plugins, presets, and other modules with metadata
+ * Utility to load plugins, presets, and other modules with associated metadata
  *
- * @type {Resolver}
+ * @type {Loader}
+ * @extends Resolver
  */
-module.exports = class Loader extends Resolver {
+class Loader extends Resolver {
 
   constructor() {
     super(...arguments);
@@ -92,7 +93,7 @@ module.exports = class Loader extends Resolver {
   /**
    * Loads a plugin with additional metadata.
    *
-   * @param {String|Object} module - Name of module to load (or module content)
+   * @param {PluginName|Object} module - Name of module to load (or module content)
    * @param {Object} [meta] - Additional meta data
    * @returns {PluginInfo} module
    */
@@ -110,7 +111,7 @@ module.exports = class Loader extends Resolver {
   /**
    * Loads a preset with additional metadata
    *
-   * @param {String} module - Name of module to load
+   * @param {PresetName} module - Name of module to load
    * @param {Object} [meta] - Additional meta data
    * @param {Boolean} [options] - Loading options
    * @param {Boolean} [options.shallow] - Do not recursively load dependencies
@@ -151,10 +152,10 @@ module.exports = class Loader extends Resolver {
    * Plugins will be filtered and ordered as configuration with priority of:
    *  - added plugins > preset plugins > nested preset plugins
    *
-   * @param {Object}            config         - Presets and plugins to load
-   * @param {string[]}          config.presets - Presets to load and add plugins from
-   * @param {string[]|module[]} config.add     - Names of plugins to load
-   * @param {string[]}          config.remove  - Names of plugins to remove (from presets)
+   * @param {Object}                config         - Presets and plugins to load
+   * @param {PresetName[]}          config.presets - Presets to load and add plugins from
+   * @param {PluginName[]|module[]} config.add     - Names of plugins to load
+   * @param {string[]}              config.remove  - Names of plugins to remove (from presets)
    * @returns {{presets: PresetInfo[], plugins: PluginInfo[]}} results
    */
   loadConfigured(config) {
@@ -178,11 +179,11 @@ module.exports = class Loader extends Resolver {
 
     plugins.unshift(...loadedPlugins);
 
-    plugins = plugins.filter((info, idx, self) => self.findIndex(t => t.name === info.name) === idx);
     // filter out duplicate plugins based on order
     // - priority is added plugins > preset plugins > nested preset plugins
+    plugins = plugins.filter((info, idx, self) => self.findIndex(t => t.name === info.name) === idx);
 
-    // lastly, filter explicitly removed plugin
+    // lastly, filter plugins explicitly configured to removed
     plugins = plugins.filter((info => !pluginsToRemove.has(pluginIdentifier(info.name).fullName)));
 
     return {
@@ -190,5 +191,6 @@ module.exports = class Loader extends Resolver {
       plugins
     };
   }
-};
+}
 
+module.exports = Loader;
