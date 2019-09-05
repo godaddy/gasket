@@ -189,7 +189,9 @@ synchronously.
 
 #### execApply(event, async applyFn)
 
-The `execApply` method execution is ordered like `exec`, but you must invoke the handler yourself with explicit arguments. These arguments can be dynamic based on the plugin itself. e.g.:
+The `execApply` method execution is ordered like `exec`, but you must invoke the
+handler yourself with explicit arguments. These arguments can be dynamic based
+on the plugin itself. e.g.:
 
 ```js
 await gasket.execApply('someEvent', async (plugin, handler) => {
@@ -262,9 +264,10 @@ It is recommended, though not required, for presets to export their `require`
 instance. This will help the loader properly resolve plugin dependencies,
 especially during development when module linking may be used.
 
-You can set these values ahead of time in your preset so that the associated
-prompts are never asked. In a preset's `package.json`, you can set the above
-values ahead of time by creating a `gasket.create` object:
+<!-- TODO: [GX-17932] We want this to be defined in the preset index.js -->
+You can set create values ahead of time in your preset so that the associated
+prompts are never asked. To do so, in a preset's `package.json`, set the
+`gasket.create` property. For example:
 
 ```json
 {
