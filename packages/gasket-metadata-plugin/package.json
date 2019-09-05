@@ -4,7 +4,7 @@
   "description": "Adds metadata to gasket lifecycles",
   "main": "lib",
   "scripts": {
-    "lint": "eslint index.js test/*.js",
+    "lint": "eslint lib test",
     "lint:fix": "npm run lint -- --fix",
     "test": "npm run test:runner",
     "test:runner": "mocha test/*.test.js --require test/setup.js",

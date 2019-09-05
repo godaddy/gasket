@@ -1,4 +1,3 @@
-/* eslint require-atomic-updates: warn */
 const cloneDeep = require('lodash.clonedeep');
 const { sanitize } = require('./utils');
 
@@ -32,6 +31,7 @@ module.exports = {
       await gasket.execApply('metadata', async ({ name }, handler) => {
         const idx = plugins.findIndex(p => p.module.name === name || p.name === name);
         const pluginInfo = plugins[idx];
+        // eslint-disable-next-line require-atomic-updates
         plugins[idx] = await handler(pluginInfo);
       });
 
