@@ -6,14 +6,14 @@ const ConfigBuilder = require('../../../../src/scaffold/config-builder');
 
 describe('createHooks', () => {
   let sandbox, mockImports, mockContext, mockPlugin, createHooks;
-  let engineStub, execApplyStub, handlerStub;
+  let createEngineStub, execApplyStub, handlerStub;
 
   beforeEach(() => {
     sandbox = sinon.createSandbox();
 
     mockPlugin = { name: 'mockPlugin' };
     handlerStub = sandbox.stub().resolves();
-    execApplyStub = sandbox.stub().callsArgWithAsync(1, mockPlugin, handlerStub);
+    execApplyStub = sandbox.stub();
 
     mockContext = {
       appName: 'my-app',
@@ -21,16 +21,13 @@ describe('createHooks', () => {
       presets: ['bogus-preset'],
       plugins: ['bogus-A-plugin', 'bogus-B-plugin'],
       pkg: {},
-      runWith(source) {
-        this.source = source;
-        return this;
-      }
+      runWith: sinon.stub().callsFake(plugin => ({ ...plugin, proxied: true }))
     };
 
-    engineStub = sandbox.stub().returns({ execApply: execApplyStub });
+    createEngineStub = sandbox.stub().returns({ execApply: execApplyStub });
 
     mockImports = {
-      '../create-engine': engineStub,
+      '../create-engine': createEngineStub,
       '../files': class Files {
       },
       '../action-wrapper': require('../../../helpers').mockActionWrapper
@@ -58,14 +55,18 @@ describe('createHooks', () => {
     assume(mockContext.gasketConfig).is.instanceOf(ConfigBuilder);
   });
 
-  it('executes the create hook for plugins with context', async () => {
+  it('executes the create hook with applyCreate callback', async () => {
     await createHooks(mockContext);
-    assume(execApplyStub).is.calledWithMatch('create', handlerStub);
-    assume(handlerStub).is.calledWithMatch(mockContext);
+    assume(execApplyStub).is.calledWithMatch('create', sinon.match(value => {
+      return typeof value === 'function' && value.name === 'applyCreate';
+    }));
   });
 
-  it('sets plugin as `context.source`', async () => {
+  it('applyCreate callback executes handler with proxied plugin source', async () => {
     await createHooks(mockContext);
-    assume(mockContext.source).eqls(mockPlugin);
+    const callbackFn = execApplyStub.getCall(0).args[1];
+    await callbackFn(mockPlugin, handlerStub);
+    assume(mockContext.runWith).calledWith(mockPlugin);
+    assume(handlerStub).calledWithMatch({ ...mockPlugin, proxied: true });
   });
 });
