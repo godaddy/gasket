@@ -33,7 +33,7 @@ example-plugin
 
 #### Bad names
 
-This will not be resolved as valid plugins.
+These will **not** be resolved as valid plugins.
 
 ```
 @gasket/example
@@ -50,6 +50,24 @@ common plugins to be grouped together, and loaded by way of a preset.
 which will allow them to be referenced using [short names](#short-names).
 Otherwise, presets need to end with the `-preset` suffix. This is how gasket
 determines what packages are presets or not.
+
+#### Good names
+
+```
+@gasket/example-preset
+example-preset
+@myscope/example-preset
+```
+
+#### Bad names
+
+These will **not** be resolved as valid presets.
+
+```
+@gasket/example
+example
+@myscope/example
+```
 
 ## Configuring Plugins
 
