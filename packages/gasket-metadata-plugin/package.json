@@ -2,12 +2,13 @@
   "name": "@gasket/metadata-plugin",
   "version": "1.0.0",
   "description": "Adds metadata to gasket lifecycles",
-  "main": "index.js",
+  "main": "lib",
   "scripts": {
-    "lint": "eslint index.js test/*.js",
+    "lint": "eslint lib test",
     "lint:fix": "npm run lint -- --fix",
     "test": "npm run test:runner",
-    "test:runner": "mocha test/*.test.js",
+    "test:runner": "mocha test/*.test.js --require test/setup.js",
+    "test:watch": "npm run test:runner -- --watch",
     "test:coverage": "nyc --reporter=text --reporter=json-summary npm run test:runner",
     "posttest": "npm run lint",
     "report": "nyc report --reporter=lcov"
@@ -27,6 +28,11 @@
     "url": "https://github.com/godaddy/gasket/issues"
   },
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-metadata-plugin",
+  "dependencies": {
+    "lodash.clonedeep": "^4.5.0",
+    "lodash.isfunction": "^3.0.9",
+    "lodash.isobject": "^3.0.2"
+  },
   "devDependencies": {
     "assume": "^2.2.0",
     "eslint": "^6.1.0",

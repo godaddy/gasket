@@ -1,5 +1,8 @@
 # `@gasket/resolve`
 
+- Introduces [Loader] used to load configured presets and plugins ([#64]).
+  - Presets no longer depend on this package nor resolve their own plugins.
+
 ### 1.5.0
 
 - Align package structure and dependencies
@@ -26,3 +29,6 @@
 - Initial release.
 
 [#8]: https://github.com/godaddy/gasket/pull/8
+[#64]: https://github.com/godaddy/gasket/pull/64
+
+[Loader]:/packages/gasket-resolve/README.md#Loader

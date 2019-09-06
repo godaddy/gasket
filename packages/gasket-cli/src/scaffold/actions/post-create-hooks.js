@@ -26,7 +26,7 @@ async function postCreateHooks(context) {
    */
   const utils = { runScript };
 
-  const gasket = createEngine({ dest, presets, plugins });
+  const gasket = await createEngine({ dest, presets, plugins });
   await gasket.exec('postCreate', context, utils);
 }
 

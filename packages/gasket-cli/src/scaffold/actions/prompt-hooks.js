@@ -59,7 +59,7 @@ const createAddPlugins = context => {
 async function execPluginPrompts(context, plugins = [], presets = []) {
   const { dest } = context;
 
-  const gasket = createEngine({ dest, presets, plugins });
+  const gasket = await createEngine({ dest, presets, plugins });
 
   //
   // @see: https://github.com/SBoudrias/Inquirer.js/#inquirercreatepromptmodule---prompt-function

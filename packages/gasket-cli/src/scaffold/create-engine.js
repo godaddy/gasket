@@ -6,7 +6,7 @@ const defaultPlugins = [
   require('@gasket/metadata-plugin')
 ];
 
-module.exports  = function createEngine({ dest, presets = [], plugins = [] }) {
+module.exports  = async function createEngine({ dest, presets = [], plugins = [] }) {
   const resolveFrom = path.join(dest, 'node_modules');
 
   const engineConfig = {
@@ -16,5 +16,8 @@ module.exports  = function createEngine({ dest, presets = [], plugins = [] }) {
     }
   };
 
-  return new PluginEngine(engineConfig, { resolveFrom });
+  const engine = new PluginEngine(engineConfig, { resolveFrom });
+  await engine.exec('init');
+
+  return engine;
 };

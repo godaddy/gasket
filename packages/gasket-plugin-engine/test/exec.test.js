@@ -2,13 +2,11 @@ describe('The exec method', () => {
   let engine, hookASpy, hookBSpy;
 
   const mockConfig = {
-    some: 'config',
-    plugins: {
-      add: ['testa', 'testb']
-    }
+    some: 'config'
   };
 
   const pluginA = {
+    name: 'pluginA',
     hooks: {
       eventA() {
         return Promise.resolve(1);
@@ -17,6 +15,7 @@ describe('The exec method', () => {
   };
 
   const pluginB = {
+    name: 'pluginB',
     hooks: {
       eventA() {
         return 2;
@@ -28,16 +27,17 @@ describe('The exec method', () => {
     hookASpy = jest.spyOn(pluginA.hooks, 'eventA');
     hookBSpy = jest.spyOn(pluginB.hooks, 'eventA');
 
-    jest
-      .doMock('@gasket/testa-plugin', () => pluginA, { virtual: true })
-      .doMock('@gasket/testb-plugin', () => pluginB, { virtual: true });
-
-    const PluginEngine = require('..');
-    const Resolver = require('../lib/resolver');
-    jest.spyOn(Resolver.prototype, 'tryResolve').mockImplementation(arg => {
-      return `${process.cwd()}/node_modules/${arg}`;
+    const { Loader } = require('@gasket/resolve');
+    jest.spyOn(Loader.prototype, 'loadConfigured').mockImplementation(() => {
+      return {
+        plugins: [
+          { module: pluginA },
+          { module: pluginB }
+        ]
+      };
     });
 
+    const PluginEngine = require('..');
     engine = new PluginEngine(mockConfig);
   });
 

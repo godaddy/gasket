@@ -1,20 +1,16 @@
-const flatten = require('./flatten');
-const Resolver = require('./resolver');
-const path = require('path');
+const { Loader } = require('@gasket/resolve');
 
 let dynamicNamingId = 0;
 
 class PluginEngine {
   constructor(config, { resolveFrom } = {}) {
     this.config = config || {};
-    this.config.root = this.config.root || process.cwd();
-    this.config.metadata = this.config.metadata || {};
-    this.config.metadata = { ...this.config.metadata, plugins: {}, presets: {} };
-    this.resolver = new Resolver({ resolveFrom, root: this.config.root });
+    this.loader = new Loader({ resolveFrom });
 
     this._hooks = {};
     this._plans = {};
 
+    this._registerPlugins();
     this._registerHooks();
 
     // Allow methods to be called without context (to support destructuring)
@@ -27,121 +23,30 @@ class PluginEngine {
   /**
    * Resolves plugins
    * @private
-   * @returns {*} result
    */
-  _resolvePlugins() {
-    const { plugins: pluginConfig } = this.config;
-    const { presets = [], add = [], remove } = pluginConfig || { presets: ['default'] };
-    const pluginsToRemove = new Set(remove || []);
+  _registerPlugins() {
+    const { plugins } = this.loader.loadConfigured(this.config.plugins);
 
-    // TODO: check to see if presets include duplicate plugins
-    const presetsFlattened = flatten(presets);
-
-    // Adding presets module paths into config.metadata
-    this._registerPresetsModulePath(presetsFlattened);
-
-    const presetEntries = presetsFlattened
-      .map(name => this._resolvePresetSafe(name))
-      .reduce((acc, plugins) => [...acc, ...plugins], [])
-      .map(plugin => [plugin.shortName, plugin.required]);
-
-    // TODO: check to see if addPlugins have duplicates from presetPlugins
-    const addEntries = add.map(name => [name, this.resolver.pluginFor(name)]);
-
-    const pluginsResolved = presetEntries
-      .concat(addEntries)
-      .filter(([pluginName]) => !pluginsToRemove.has(pluginName));
-
-    // Adding plugins module paths into config.metadata
-    this._registerPluginsModulePath(pluginsResolved);
-
-    return pluginsResolved
-      .reduce((acc, [pluginName, plugin]) => {
-        acc[this._extractName(pluginName)] = plugin;
+    // map the plugin name to content
+    this._plugins = plugins
+      .reduce((acc, pluginInfo) => {
+        acc[pluginInfo.module.name || pluginInfo.name] = pluginInfo.module;
         return acc;
       }, {});
   }
-
-  /**
-   * Saves into the gasket config the module path of the presets
-   *
-   * @param {Array} presets Array of presets
-   * @private
-   */
-  _registerPresetsModulePath(presets) {
-    presets.forEach(presetName => {
-      try {
-        const relativePath = this.resolver.tryResolvePresetRelativePath(presetName);
-        this.config.metadata.presets[presetName] = { modulePath: relativePath };
-      } catch (err) {
-        console.error(`Preset '${presetName}' couldn't be resolved`);
-      }
-    });
-  }
-
-  /**
-   * Saves into the gasket config the module path of the plugins
-   *
-   * @param {Array} plugins Array of plugins
-   * @private
-   */
-  _registerPluginsModulePath(plugins) {
-    plugins.forEach(([plugin]) => {
-      const pluginName = plugin.name || plugin;
-      try {
-        const relativePath = this.resolver.tryResolvePluginRelativePath(pluginName);
-
-        var pluginNameKey;
-        // Plugins that are defined locally to the app
-        if (pluginName.indexOf(this.config.root) !== -1) {
-          pluginNameKey = path.basename(pluginName).replace('-plugin', '');
-        // External plugins
-        } else {
-          pluginNameKey = pluginName;
-        }
-
-        this.config.metadata.plugins[pluginNameKey] = { modulePath: relativePath };
-      } catch (err) {
-        console.error(`Plugin '${pluginName}' couldn't be resolved`);
-      }
-    });
-  }
-
-  /**
-   * Early versions of @gasket/*-preset could export shortName strings.
-   * This method allows for backwards compatibility with that API.
-   *
-   * TODO: Remove this backward compatibility once the entire
-   * gasket ecosystem has updated to `@gasket/default-preset@2.0.0`
-   *
-   * @private
-   * @param {*} name name
-   * @returns {*} result
-   */
-  _resolvePresetSafe(name) {
-    return this.resolver.presetFor(name)
-      .map(plugin => {
-        return typeof plugin === 'string'
-          ? this.resolver.pluginInfoFor({ shortName: plugin })
-          : plugin;
-      });
-  }
-
 
   /**
    * Registers hooks
    * @private
    */
   _registerHooks() {
-    const plugins = this._plugins = this._resolvePlugins();
-
     Object
-      .entries(plugins)
+      .entries(this._plugins)
       .forEach(([pluginName, plugin]) => {
         const { dependencies = [], hooks } = plugin;
 
         dependencies.forEach(dep => {
-          if (!(dep in plugins)) {
+          if (!(dep in this._plugins)) {
             throw new Error(`Missing dependency ${dep} of plugin ${pluginName}`);
           }
         });
@@ -161,18 +66,6 @@ class PluginEngine {
             });
           });
       });
-  }
-
-  /**
-   * Extracts name
-   * @private
-   * @param {*} item item
-   * @returns {*} result
-   */
-  _extractName(item) {
-    if (typeof item === 'string') return item;
-
-    return item.name;
   }
 
   /**

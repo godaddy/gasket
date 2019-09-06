@@ -1,20 +1,44 @@
-const mapObject = require('./map-object');
+function setupLoadedPlugins(withOrderingSpecs) {
+  return Object.entries(withOrderingSpecs).map(([name, timing]) => ({
+    module: {
+      name,
+      hooks: {
+        event: {
+          timing,
+          handler: () => name
+        }
+      }
+    }
+  }));
+}
+
+function setupEngine(plugins) {
+  const { Loader } = require('@gasket/resolve');
+  jest.spyOn(Loader.prototype, 'loadConfigured').mockImplementation(() => {
+    return {
+      plugins
+    };
+  });
+
+  const PluginEngine = require('..');
+  return new PluginEngine({});
+}
+
+async function verify({ withOrderingSpecs, expectOrder, expectError }) {
+  const plugins = setupLoadedPlugins(withOrderingSpecs);
+  const engine = setupEngine(plugins);
+
+  try {
+    const results = await engine.exec('event');
+    expect(results).toEqual(expectOrder);
+  } catch (err) {
+    if (!expectError) {
+      throw err;
+    }
+  }
+}
 
 describe('Plugin hook ordering', () => {
-
-  let PluginEngine;
-
-  beforeEach(() => {
-    PluginEngine = require('..');
-    const Resolver = require('../lib/resolver');
-    jest.spyOn(Resolver.prototype, 'tryResolve').mockImplementation(arg => {
-      return `${process.cwd()}/node_modules/${arg}`;
-    });
-  });
-
-  afterEach(() => {
-    jest.restoreAllMocks();
-  });
 
   it('enables a plugin to specify it runs before another', () => {
     return verify({
@@ -106,85 +130,27 @@ describe('Plugin hook ordering', () => {
     });
   });
 
-  describe('Hook event timing', () => {
-    let PluginF, PluginG, PluginE;
+  it('warns if plugin has bad before timing', async () => {
+    const spy = jest.spyOn(console, 'warn').mockImplementation();
 
-    beforeEach(() => {
-      PluginF = { hooks: { mockEvent: () => {} } };
-      PluginG = { hooks: { mockEvent2: () => {} } };
-      PluginE = { hooks: { mockEvent2: { timing: { before: ['testf'], after: ['testg'] }, handler: () => {} } } };
-
-      jest
-        .doMock('@gasket/testf-plugin', () => PluginF, { virtual: true })
-        .doMock('@gasket/testg-plugin', () => PluginG, { virtual: true })
-        .doMock('@gasket/teste-plugin', () => PluginE, { virtual: true });
-
-      PluginEngine = require('..');
-      const Resolver = require('../lib/resolver');
-      jest.spyOn(Resolver.prototype, 'tryResolve').mockImplementation(arg => {
-        return `${process.cwd()}/node_modules/${arg}`;
-      });
+    const plugins = setupLoadedPlugins({
+      testa: null,
+      testb: null,
+      testc: { before: ['testa'], after: ['testb'] }
     });
 
-    afterEach(() => {
-      jest.resetModules();
-      jest.restoreAllMocks();
-    });
+    await setupEngine(plugins).exec('event');
 
-    it('warns if plugin has bad before timing', async () => {
-      const spy = jest.spyOn(console, 'warn').mockImplementation();
-      const engine = new PluginEngine({
-        plugins: {
-          add: ['testf', 'testg', 'teste']
-        }
-      });
+    expect(spy).toHaveBeenCalledTimes(0);
 
-      await engine.exec('mockEvent2');
-      expect(spy).toHaveBeenCalledTimes(1);
-    });
+    // change the name of the hook for first module and try again
 
-    it('if timing correct, no errors', async () => {
-      const engine = new PluginEngine({
-        plugins: {
-          add: ['testf', 'testg']
-        }
-      });
+    const mod = plugins[0].module;
+    mod.hooks.event2 = mod.hooks.event;
+    delete mod.hooks.event;
 
-      await engine.exec('mockEvent2');
-    });
+    await setupEngine(plugins).exec('event');
+
+    expect(spy).toHaveBeenCalledTimes(1);
   });
-
-  async function verify({ withOrderingSpecs, expectOrder, expectError }) {
-    jest.resetModules();
-
-    const modules = mapObject(withOrderingSpecs, (timing, key) => ({
-      hooks: {
-        event: {
-          timing,
-          handler: () => key
-        }
-      }
-    }));
-
-    Object
-      .entries(modules)
-      .forEach(([name, module]) => {
-        jest.doMock(`@gasket/${name}-plugin`, () => module, { virtual: true });
-      });
-
-    const engine = new PluginEngine({
-      plugins: {
-        add: Object.keys(withOrderingSpecs)
-      }
-    });
-
-    try {
-      const results = await engine.exec('event');
-      expect(results).toEqual(expectOrder);
-    } catch (err) {
-      if (!expectError) {
-        throw err;
-      }
-    }
-  }
 });
