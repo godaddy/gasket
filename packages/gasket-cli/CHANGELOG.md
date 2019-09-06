@@ -1,5 +1,7 @@
 # `@gasket/cli`
 
+- Enable metadata for create hooks ([#64])
+
 ### 2.6.1
 
 - Prevent multiple gasket instances from accessing the same data ([#58])
@@ -210,3 +212,4 @@ upon `gasket create`
 [#34]: https://github.com/godaddy/gasket/pull/34
 [#38]: https://github.com/godaddy/gasket/pull/38
 [#58]: https://github.com/godaddy/gasket/pull/58
+[#64]: https://github.com/godaddy/gasket/pull/64
