@@ -1,12 +1,34 @@
-const PluginEngine = require('../lib/engine');
-const Resolver = require('../lib/resolver');
-
 describe('The hook method', () => {
+  let engine, dynamicHook;
+
+  const mockConfig = {
+    some: 'config'
+  };
 
   beforeEach(() => {
-    jest.spyOn(Resolver.prototype, 'tryResolve').mockImplementation(arg => {
-      return `${process.cwd()}/node_modules/${arg}`;
+    dynamicHook = jest.fn();
+
+    const pluginA =
+      {
+        name: 'pluginA',
+        hooks: {
+          init(gasket) {
+            gasket.hook({ event: 'foo', handler: dynamicHook });
+          }
+        }
+      };
+
+    const { Loader } = require('@gasket/resolve');
+    jest.spyOn(Loader.prototype, 'loadConfigured').mockImplementation(() => {
+      return {
+        plugins: [
+          { module: pluginA }
+        ]
+      };
     });
+
+    const PluginEngine = require('..');
+    engine = new PluginEngine(mockConfig);
   });
 
   afterEach(() => {
@@ -14,21 +36,6 @@ describe('The hook method', () => {
   });
 
   it('injects lifecycle event hooks into a Gasket instance', async () => {
-    const dynamicHook = jest.fn();
-    const engine = new PluginEngine({
-      plugins: {
-        add: [
-          {
-            name: 'injector',
-            hooks: {
-              init(gasket) {
-                gasket.hook({ event: 'foo', handler: dynamicHook });
-              }
-            }
-          }
-        ]
-      }
-    });
     await engine.exec('init');
 
     await engine.exec('foo');
@@ -37,24 +44,10 @@ describe('The hook method', () => {
   });
 
   it('clears cached execution plans', async () => {
-    const dynamicHook = jest.fn();
-    const engine = new PluginEngine({
-      plugins: {
-        add: [
-          {
-            name: 'injector',
-            hooks: {
-              bar(gasket) {
-                gasket.hook({ event: 'foo', handler: dynamicHook });
-              }
-            }
-          }
-        ]
-      }
-    });
-
     await engine.exec('foo'); // Execution plan will be cached
-    await engine.exec('bar'); // This injects a new `foo` handler
+    expect(dynamicHook).not.toHaveBeenCalled();
+
+    await engine.exec('init'); // This injects a new `foo` handler
 
     // Cached execution plan from first invoke shouldn't be used any longer.
     await engine.exec('foo');

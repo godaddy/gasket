@@ -17,7 +17,7 @@ async function createHooks(context) {
   const gasketConfig = ConfigBuilder.create({}, { orderBy: ['plugins'] });
   Object.assign(context, { files, gasketConfig });
 
-  const gasket = createEngine({ dest, presets, plugins });
+  const gasket = await createEngine({ dest, presets, plugins });
   await gasket.execApply('create', async function applyCreate(plugin, handler) {
     await handler(context.runWith(plugin));
   });

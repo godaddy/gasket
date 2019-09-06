@@ -1,5 +1,9 @@
 # `@gasket/plugin-engine`
 
+- Engine uses [Loader] from `@gasket/resolve` to load configured plugins ([#64])
+  - Loader instance exposed by engine instance
+  - Engine does not initiate metadata
+
 ### 1.5.0
 
 - Align package structure and dependencies
@@ -29,3 +33,7 @@
 ### 1.0.0
 
 - Consolidate resolution methods into `Resolver`.
+
+[#64]: https://github.com/godaddy/gasket/pull/64
+
+[Loader]:/packages/gasket-resolve/README.md#Loader

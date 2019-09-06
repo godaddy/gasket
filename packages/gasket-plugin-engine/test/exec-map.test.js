@@ -2,13 +2,11 @@ describe('The execMap method', () => {
   let engine, hookASpy, hookBSpy, hookCSpy;
 
   const mockConfig = {
-    some: 'config',
-    plugins: {
-      add: ['testa', 'testb', 'testc']
-    }
+    some: 'config'
   };
 
   const pluginA = {
+    name: 'pluginA',
     hooks: {
       eventA() {
         return Promise.resolve(1);
@@ -17,6 +15,7 @@ describe('The execMap method', () => {
   };
 
   const pluginB = {
+    name: 'pluginB',
     hooks: {
       eventA() {
         return 2;
@@ -25,9 +24,10 @@ describe('The execMap method', () => {
   };
 
   const pluginC = {
+    name: 'pluginC',
     hooks: {
       eventA: {
-        timing: { after: ['testa'] },
+        timing: { after: ['pluginA'] },
         handler: () => 3
       }
     }
@@ -38,17 +38,18 @@ describe('The execMap method', () => {
     hookBSpy = jest.spyOn(pluginB.hooks, 'eventA');
     hookCSpy = jest.spyOn(pluginC.hooks.eventA, 'handler');
 
-    jest
-      .doMock('@gasket/testa-plugin', () => pluginA, { virtual: true })
-      .doMock('@gasket/testb-plugin', () => pluginB, { virtual: true })
-      .doMock('@gasket/testc-plugin', () => pluginC, { virtual: true });
-
-    const PluginEngine = require('..');
-    const Resolver = require('../lib/resolver');
-    jest.spyOn(Resolver.prototype, 'tryResolve').mockImplementation(arg => {
-      return `${process.cwd()}/node_modules/${arg}`;
+    const { Loader } = require('@gasket/resolve');
+    jest.spyOn(Loader.prototype, 'loadConfigured').mockImplementation(() => {
+      return {
+        plugins: [
+          { module: pluginA },
+          { module: pluginB },
+          { module: pluginC }
+        ]
+      };
     });
 
+    const PluginEngine = require('..');
     engine = new PluginEngine(mockConfig);
   });
 
@@ -67,7 +68,7 @@ describe('The execMap method', () => {
 
   it('awaits sync or async hooks and resolves a map object', async () => {
     const result = await engine.execMap('eventA');
-    expect(result).toEqual({ testa: 1, testb: 2, testc: 3 });
+    expect(result).toEqual({ pluginA: 1, pluginB: 2, pluginC: 3 });
   });
 
   it('resolves to an empty object if nothing hooked the event', async () => {
@@ -80,6 +81,6 @@ describe('The execMap method', () => {
 
     const result = await execMap('eventA');
 
-    expect(result).toEqual({ testa: 1, testb: 2, testc: 3 });
+    expect(result).toEqual({ pluginA: 1, pluginB: 2, pluginC: 3 });
   });
 });

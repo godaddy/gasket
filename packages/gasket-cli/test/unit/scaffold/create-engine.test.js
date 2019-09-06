@@ -6,7 +6,7 @@ const gitPlugin = require('@gasket/git-plugin');
 const metadataPlugin = require('@gasket/metadata-plugin');
 
 describe('createEngine', () => {
-  let sandbox, mockImports, mockOpts, createHooks;
+  let sandbox, mockImports, mockOpts, createEngine;
   let pluginEngineSpy;
 
   beforeEach(() => {
@@ -19,13 +19,17 @@ describe('createEngine', () => {
     };
 
     mockImports = {
-      '@gasket/plugin-engine': class PluginEngine {}
+      '@gasket/plugin-engine': class PluginEngine {
+        async exec() {
+
+        }
+      }
     };
 
     pluginEngineSpy = sandbox.spy(mockImports, '@gasket/plugin-engine');
 
 
-    createHooks = proxyquire('../../../src/scaffold/create-engine', mockImports);
+    createEngine = proxyquire('../../../src/scaffold/create-engine', mockImports);
   });
 
   afterEach(() => {
@@ -33,8 +37,10 @@ describe('createEngine', () => {
   });
 
   it('instantiates PluginEngine with preset from context in array', async () => {
-    await createHooks(mockOpts);
-    assume(pluginEngineSpy).calledWithMatch({ plugins: { presets: ['bogus-preset'] } });
+    await createEngine(mockOpts);
+    assume(pluginEngineSpy).calledWithMatch({
+      plugins: { presets: ['bogus-preset'] }
+    });
   });
 
   it('instantiates PluginEngine if no preset in context', async () => {
@@ -42,18 +48,24 @@ describe('createEngine', () => {
       dest: '/some/path/my-app'
     };
 
-    await createHooks(mockOpts);
-    assume(pluginEngineSpy).calledWithMatch({ plugins: { presets: [] } });
+    await createEngine(mockOpts);
+    assume(pluginEngineSpy).calledWithMatch({
+      plugins: { presets: [] }
+    });
   });
 
   it('instantiates PluginEngine with built-in git-plugin', async () => {
-    await createHooks(mockOpts);
-    assume(pluginEngineSpy).calledWithMatch({ plugins: { add: [gitPlugin, metadataPlugin, 'bogus-A-plugin', 'bogus-B-plugin'] } });
+    await createEngine(mockOpts);
+    assume(pluginEngineSpy).calledWithMatch({
+      plugins: { add: [gitPlugin, metadataPlugin, 'bogus-A-plugin', 'bogus-B-plugin'] }
+    });
   });
 
   it('instantiates PluginEngine with plugins from context', async () => {
-    await createHooks(mockOpts);
-    assume(pluginEngineSpy).calledWithMatch({ plugins: { add: [sinon.match.any, sinon.match.any, 'bogus-A-plugin', 'bogus-B-plugin'] } });
+    await createEngine(mockOpts);
+    assume(pluginEngineSpy).calledWithMatch({
+      plugins: { add: [sinon.match.any, sinon.match.any, 'bogus-A-plugin', 'bogus-B-plugin'] }
+    });
   });
 
   it('instantiates PluginEngine if no plugins in context', async () => {
@@ -61,8 +73,10 @@ describe('createEngine', () => {
       dest: '/some/path/my-app'
     };
 
-    await createHooks(mockOpts);
-    assume(pluginEngineSpy).calledWithMatch({ plugins: { add: [sinon.match.any, sinon.match.any] } });
+    await createEngine(mockOpts);
+    assume(pluginEngineSpy).calledWithMatch({
+      plugins: { add: [sinon.match.any, sinon.match.any] }
+    });
   });
 
   it('instantiates PluginEngine with resolveFrom options', async () => {
@@ -70,7 +84,7 @@ describe('createEngine', () => {
       dest: '/some/path/my-app'
     };
 
-    await createHooks(mockOpts);
+    await createEngine(mockOpts);
     assume(pluginEngineSpy).calledWithMatch(sinon.match.any, { resolveFrom: path.join(mockOpts.dest, 'node_modules') });
   });
 });
