@@ -1,0 +1,22 @@
+{
+  "name": "@gasket/nextjs-preset",
+  "version": "0.0.0",
+  "description": "Basic NextJS Framework",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/godaddy/gasket.git"
+  },
+  "author": "GoDaddy Operating Company, LLC",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/godaddy/gasket/issues"
+  },
+  "dependencies": {
+    "@gasket/express-plugin": "^2.1.0",
+    "@gasket/https-plugin": "^2.1.0",
+    "@gasket/log-plugin": "^3.1.0",
+    "@gasket/nextjs-plugin": "^2.2.0",
+    "@gasket/redux-plugin": "^2.3.0",
+    "@gasket/webpack-plugin": "^1.1.0"
+  }
+}
