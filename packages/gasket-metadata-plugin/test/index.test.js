@@ -1,30 +1,57 @@
 const plugin = require('../');
 const assume = require('assume');
-const { stub } = require('sinon');
-const path = require('path');
+const sinon = require('sinon');
+
+const mockPlugin = {
+  name: 'mock',
+  hooks: {
+    metadata: (gasket, metadata) => {
+      return {
+        ...metadata,
+        modified: true
+      };
+    }
+  }
+};
+
+const mockPluginInfo = {
+  name: '@gasket/mock-plugin',
+  module: mockPlugin,
+  from: '@gasket/mock-preset'
+};
+
+const mockPresetInfo = {
+  name: '@gasket/mock-preset',
+  module: {},
+  plugins: [mockPluginInfo]
+};
+
+const mockLoadedData = {
+  presets: [mockPresetInfo],
+  plugins: [mockPluginInfo]
+};
 
 describe('Metadata plugin', function () {
   let gasket, applyStub, handlerStub;
+
   beforeEach(function () {
-    applyStub = stub();
-    handlerStub = stub();
+    applyStub = sinon.stub();
+    handlerStub = sinon.stub();
 
     gasket = {
-      resolver: {
-        tryResolvePluginRelativePath: name => path.join(__dirname, 'fixtures', name)
+      loader: {
+        loadConfigured: sinon.stub().returns(mockLoadedData)
       },
-      _plugins: {},
       config: {
-        root: 'Quest',
-        metadata: {
-          plugins: {}
+        plugins: {
+          presets: ['mock']
         }
       },
       execApply: async (event, fn) => {
         await applyStub(event);
-        await fn({ name: 'thingy' }, () => {
-          handlerStub();
-          return 'a book please';
+        await fn({ name: 'mock' }, (meta) => {
+          handlerStub(meta);
+          return mockPlugin.hooks.metadata(gasket, meta);
         });
       }
     };
@@ -38,51 +65,55 @@ describe('Metadata plugin', function () {
     assume(plugin.hooks.init).exists();
   });
 
-  it('gathers the package.json for each given plugin', async function () {
-    gasket._plugins = {
-      bird: 'larry'
-    };
+  describe('init', () => {
 
-    await plugin.hooks.init(gasket);
-    assume(gasket.config.metadata.plugins.bird.name).equals('@gasket/bird-plugin');
-  });
+    beforeEach(async () => {
+      await plugin.hooks.init(gasket);
+    });
 
-  it('gathers the hooks for each given plugin', async function () {
-    gasket._plugins = {
-      bird: 'larry'
-    };
+    it('loads config from gasket.loader instance', async () => {
+      assume(gasket.loader.loadConfigured).called();
+    });
 
-    await plugin.hooks.init(gasket);
-    assume(Object.keys(gasket.config.metadata.plugins.bird.hooks)).has.length(4);
-    assume(gasket.config.metadata.plugins.bird.hooks.exists()).equals(false);
-  });
+    it('assigns gasket.metadata', async () => {
+      assume(gasket).property('metadata');
+    });
 
-  it('executes the metadata lifecycle', async function () {
-    await plugin.hooks.init(gasket);
-    assume(applyStub.calledOnce).is.true();
-  });
+    it('adds presetInfo from loaded config', async () => {
+      assume(gasket.metadata).property('presets');
+    });
 
-  it('augments the metadata with data from the lifecycle hooks', async function () {
-    gasket._plugins = {
-      bird: 'law'
-    };
+    it('adds pluginInfo from loaded config', async () => {
+      assume(gasket.metadata).property('plugins');
+    });
 
-    await plugin.hooks.init(gasket);
-    assume(handlerStub.calledOnce).is.true();
-    assume(gasket.config.metadata.plugins.thingy).equals('a book please');
-  });
+    it('clones loaded data', async () => {
+      assume(gasket.metadata).not.equals(mockLoadedData);
+      assume(gasket.metadata.presets[0].module).not.equals(mockPresetInfo.module);
+    });
 
-  it('does not add metadata for a built-in plugin', async function () {
-    gasket._plugins = {
-      Questionnaire: 'Does this work?',
-      Questlove: 'Because it shouldn\'t',
-      Question: 'Like at all',
-      bird: 'plz kill, regardless of the cost in stones'
-    };
+    it('sanitizes loaded data', async () => {
+      assume(gasket.metadata.plugins[0].module.hooks.metadata.name).equals('redacted');
+    });
 
-    await plugin.hooks.init(gasket);
-    assume(gasket.config.metadata.plugins.Questionnaire).does.not.exist();
-    assume(gasket.config.metadata.plugins.Questlove).does.not.exist();
-    assume(gasket.config.metadata.plugins.Question).does.not.exist();
+    it('relinks plugin instances to preset children (broken by clone)', async () => {
+      assume(gasket.metadata.presets[0].plugins[0]).equals(gasket.metadata.plugins[0]);
+      gasket.metadata.plugins[0].something = 'changed';
+      assume(gasket.metadata.presets[0].plugins[0]).property('something', 'changed');
+    });
+
+    it('executes the metadata lifecycle', async function () {
+      assume(applyStub.calledOnce).is.true();
+    });
+
+    it('metadata hook is passed only metadata for hooking plugin', async function () {
+      assume(handlerStub).called();
+      assume(handlerStub.getCall(0).args[0]).property('name', '@gasket/mock-plugin');
+    });
+
+    it('augments the metadata with data from the lifecycle hooks', async function () {
+      assume(gasket.metadata.plugins[0]).property('modified', true);
+    });
+
   });
 });

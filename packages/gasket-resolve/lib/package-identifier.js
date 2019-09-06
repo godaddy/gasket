@@ -133,8 +133,6 @@ PackageIdentifier.prototype.toString = function () {
 /**
  * The package name with or without version of a plugin.
  *
- * @typedef {String} PluginDesc
- *
  * For example:
  *   - @gasket/jest-plugin        - fullName
  *   - jest                       - shortName
@@ -144,38 +142,40 @@ PackageIdentifier.prototype.toString = function () {
  * Not intended for use with non-plugin package descriptions.
  * For example, the following patterns will not work:
  *   - @gasket/jest
+ *
+ * @typedef {String} PluginDesc
  */
 
 /**
  * The package name with or without version of a preset.
- *
- * @typedef {String} PresetDesc
  *
  * For example:
  *   - @gasket/default-preset        - fullName
  *   - default                       - shortName
  *   - @gasket/default-preset@^1.2.3 - full with version
  *   - default@^1.2.3                - short with version
+ *
+ * @typedef {String} PresetDesc
  */
 
 /**
  * The package name only of a plugin.
  *
- * @typedef {String} PluginName
- *
  * For example:
  *   - @gasket/jest-plugin        - fullName
  *   - jest                       - shortName
+ *
+ * @typedef {String} PluginName
  */
 
 /**
  * The package name only of a preset.
  *
- * @typedef {String} PresetName
- *
  * For example:
  *   - @gasket/default-preset        - fullName
  *   - default                       - shortName
+ *
+ * @typedef {String} PresetName
  */
 
 /**
@@ -189,6 +189,25 @@ function pluginIdentifier(name) {
 }
 
 /**
+ * Util method to check if a full name is valid
+ *
+ * Examples:
+ * - @gasket/https-plugin -> true
+ * - @gasket/https-plugin@1.2.3 -> false
+ * - https -> false
+ *
+ * @param {string} maybeFullName - Name to check
+ * @returns {boolean} fullName
+ */
+pluginIdentifier.isValidFullName = function isValidFullName(maybeFullName) {
+  try {
+    return pluginIdentifier(maybeFullName).fullName === maybeFullName;
+  } catch (e) {
+    return false;
+  }
+};
+
+/**
  * Package identifier for work with preset name
  *
  * @param {PresetDesc} name - Name of the preset package
@@ -197,6 +216,27 @@ function pluginIdentifier(name) {
 function presetIdentifier(name) {
   return new PackageIdentifier(name, '-preset');
 }
+
+/**
+ * Util method to check if a full name is valid
+ *
+ * Examples:
+ * - @gasket/nextjs-preset -> true
+ * - @gasket/nextjs-preset@1.2.3 -> false
+ * - nextjs -> false
+ *
+ * @param {string} maybeFullName - Name to check
+ * @returns {boolean} fullName
+ */
+presetIdentifier.isValidFullName = function isValidFullName(maybeFullName) {
+  try {
+    return presetIdentifier(maybeFullName).fullName === maybeFullName;
+  } catch (e) {
+    return false;
+  }
+};
+
+
 
 module.exports = {
   pluginIdentifier,

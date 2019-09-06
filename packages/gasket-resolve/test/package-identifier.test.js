@@ -2,7 +2,7 @@ const {
   pluginIdentifier,
   presetIdentifier,
   PackageIdentifier
-} = require('../package-identifier');
+} = require('../lib/package-identifier');
 
 describe('pluginIdentifier', () => {
   let result;
@@ -397,6 +397,28 @@ describe('pluginIdentifier', () => {
       expect(result).toBe('bogus: jest@^1.0.0');
     });
   });
+
+  describe('isValidFullName', () => {
+
+    it('exposes static method', () => {
+      expect(pluginIdentifier.isValidFullName).toBeInstanceOf(Function);
+    });
+
+    it('true for valid @gasket names', () => {
+      result = pluginIdentifier.isValidFullName('@gasket/bogus-plugin');
+      expect(result).toBe(true);
+    });
+
+    it('true for valid non-@gasket names', () => {
+      result = pluginIdentifier.isValidFullName('some-bogus-plugin');
+      expect(result).toBe(true);
+    });
+
+    it('false for malformed names', () => {
+      result = pluginIdentifier.isValidFullName('some-bogus');
+      expect(result).toBe(false);
+    });
+  });
 });
 
 describe('presetIdentifier', () => {
@@ -456,5 +478,27 @@ describe('presetIdentifier', () => {
     } catch (e) {
       expect(e.message).toEqual(expect.stringContaining("Package descriptions with @gasket scope require suffix '-preset'"));
     }
+  });
+
+  describe('isValidFullName', () => {
+
+    it('exposes static method', () => {
+      expect(presetIdentifier.isValidFullName).toBeInstanceOf(Function);
+    });
+
+    it('true for valid @gasket names', () => {
+      result = presetIdentifier.isValidFullName('@gasket/bogus-preset');
+      expect(result).toBe(true);
+    });
+
+    it('true for valid non-@gasket names', () => {
+      result = presetIdentifier.isValidFullName('some-bogus-preset');
+      expect(result).toBe(true);
+    });
+
+    it('false for malformed names', () => {
+      result = presetIdentifier.isValidFullName('some-bogus');
+      expect(result).toBe(false);
+    });
   });
 });
