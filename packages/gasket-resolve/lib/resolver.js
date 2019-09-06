@@ -24,7 +24,7 @@ class Resolver {
   }
 
   /**
-   * Returns the resolved filename of the module
+   * Returns the resolved module filename
    *
    * @param {String} moduleName name of the module
    * @returns {String} filename of the module
@@ -35,7 +35,7 @@ class Resolver {
   }
 
   /**
-   * Returns the require module
+   * Returns the required module
    *
    * @param {String} moduleName name of the module
    * @returns {Object} module contents
@@ -46,10 +46,10 @@ class Resolver {
   }
 
   /**
-   * Returns the resolved filename of the module
+   * Returns the resolved module filename, or null if not found
    *
    * @param {String} moduleName name of the module
-   * @returns {String} filename of the module
+   * @returns {String|null} filename of the module
    */
   tryResolve(moduleName) {
     try {
@@ -64,6 +64,12 @@ class Resolver {
     }
   }
 
+  /**
+   * Returns the required module, or null if not found
+   *
+   * @param {String} moduleName name of the module
+   * @returns {Object|null} module contents
+   */
   tryRequire(moduleName) {
     try {
       debug('try-require', moduleName);

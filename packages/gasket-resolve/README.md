@@ -101,7 +101,8 @@ Utility to load plugins, presets, and other modules with associated metadata
     * [.loadConfigured(config)](#Loader+loadConfigured) ⇒ <code>Object</code>
     * [.resolve(moduleName)](#Resolver+resolve) ⇒ <code>String</code>
     * [.require(moduleName)](#Resolver+require) ⇒ <code>Object</code>
-    * [.tryResolve(moduleName)](#Resolver+tryResolve) ⇒ <code>String</code>
+    * [.tryResolve(moduleName)](#Resolver+tryResolve) ⇒ <code>String</code> \| <code>null</code>
+    * [.tryRequire(moduleName)](#Resolver+tryRequire) ⇒ <code>Object</code> \| <code>null</code>
 
 <a name="Loader+getModuleInfo"></a>
 
@@ -178,7 +179,7 @@ Plugins will be filtered and ordered as configuration with priority of:
 <a name="Resolver+resolve"></a>
 
 ### loader.resolve(moduleName) ⇒ <code>String</code>
-Returns the resolved filename of the module
+Returns the resolved module filename
 
 **Kind**: instance method of [<code>Loader</code>](#Loader)  
 **Overrides**: [<code>resolve</code>](#Resolver+resolve)  
@@ -191,7 +192,7 @@ Returns the resolved filename of the module
 <a name="Resolver+require"></a>
 
 ### loader.require(moduleName) ⇒ <code>Object</code>
-Returns the require module
+Returns the required module
 
 **Kind**: instance method of [<code>Loader</code>](#Loader)  
 **Overrides**: [<code>require</code>](#Resolver+require)  
@@ -203,12 +204,25 @@ Returns the require module
 
 <a name="Resolver+tryResolve"></a>
 
-### loader.tryResolve(moduleName) ⇒ <code>String</code>
-Returns the resolved filename of the module
+### loader.tryResolve(moduleName) ⇒ <code>String</code> \| <code>null</code>
+Returns the resolved module filename, or null if not found
 
 **Kind**: instance method of [<code>Loader</code>](#Loader)  
 **Overrides**: [<code>tryResolve</code>](#Resolver+tryResolve)  
-**Returns**: <code>String</code> - filename of the module  
+**Returns**: <code>String</code> \| <code>null</code> - filename of the module  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| moduleName | <code>String</code> | name of the module |
+
+<a name="Resolver+tryRequire"></a>
+
+### loader.tryRequire(moduleName) ⇒ <code>Object</code> \| <code>null</code>
+Returns the required module, or null if not found
+
+**Kind**: instance method of [<code>Loader</code>](#Loader)  
+**Overrides**: [<code>tryRequire</code>](#Resolver+tryRequire)  
+**Returns**: <code>Object</code> \| <code>null</code> - module contents  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -331,7 +345,8 @@ Utility to help resolve and require modules
     * [new Resolver(options)](#new_Resolver_new)
     * [.resolve(moduleName)](#Resolver+resolve) ⇒ <code>String</code>
     * [.require(moduleName)](#Resolver+require) ⇒ <code>Object</code>
-    * [.tryResolve(moduleName)](#Resolver+tryResolve) ⇒ <code>String</code>
+    * [.tryResolve(moduleName)](#Resolver+tryResolve) ⇒ <code>String</code> \| <code>null</code>
+    * [.tryRequire(moduleName)](#Resolver+tryRequire) ⇒ <code>Object</code> \| <code>null</code>
 
 <a name="new_Resolver_new"></a>
 
@@ -346,7 +361,7 @@ Utility to help resolve and require modules
 <a name="Resolver+resolve"></a>
 
 ### resolver.resolve(moduleName) ⇒ <code>String</code>
-Returns the resolved filename of the module
+Returns the resolved module filename
 
 **Kind**: instance method of [<code>Resolver</code>](#Resolver)  
 **Returns**: <code>String</code> - filename of the module  
@@ -358,7 +373,7 @@ Returns the resolved filename of the module
 <a name="Resolver+require"></a>
 
 ### resolver.require(moduleName) ⇒ <code>Object</code>
-Returns the require module
+Returns the required module
 
 **Kind**: instance method of [<code>Resolver</code>](#Resolver)  
 **Returns**: <code>Object</code> - module contents  
@@ -369,11 +384,23 @@ Returns the require module
 
 <a name="Resolver+tryResolve"></a>
 
-### resolver.tryResolve(moduleName) ⇒ <code>String</code>
-Returns the resolved filename of the module
+### resolver.tryResolve(moduleName) ⇒ <code>String</code> \| <code>null</code>
+Returns the resolved module filename, or null if not found
 
 **Kind**: instance method of [<code>Resolver</code>](#Resolver)  
-**Returns**: <code>String</code> - filename of the module  
+**Returns**: <code>String</code> \| <code>null</code> - filename of the module  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| moduleName | <code>String</code> | name of the module |
+
+<a name="Resolver+tryRequire"></a>
+
+### resolver.tryRequire(moduleName) ⇒ <code>Object</code> \| <code>null</code>
+Returns the required module, or null if not found
+
+**Kind**: instance method of [<code>Resolver</code>](#Resolver)  
+**Returns**: <code>Object</code> \| <code>null</code> - module contents  
 
 | Param | Type | Description |
 | --- | --- | --- |
