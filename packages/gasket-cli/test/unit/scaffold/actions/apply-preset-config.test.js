@@ -12,44 +12,96 @@ describe('applyPresetConfig', function () {
     assume(apply).property('wrapped');
   });
 
-  it('should not override any existing context with the preset package\'s create config', function () {
-    const pizza = {
-      presetPkgs: [{
-        gasket: {
-          create: {
-            pineapple: 'excommunicate-able'
-          }
-        }
-      }],
-
+  it('handles if no presets', function () {
+    const mockContext = {
       pineapple: 'delicious'
     };
 
-    apply(pizza);
-    assume(pizza.pineapple).equals('delicious');
+    const expected = { ...mockContext };
+
+    apply.wrapped(mockContext);
+    assume(mockContext).eqls(expected);
   });
 
-  it('merges the existing context with that of the preset, without overriding', function () {
-    const context = {
-      presetPkgs: [{
-        gasket: {
-          create: {
-            athos: 'The responsible one',
-            porthos: 'The big one',
-            aramis: 'The romantic one'
-          }
-        }
-      }],
-
-      dartagnan: 'The little one',
-      athos: 'The noble one',
-      porthos: 'The strong one'
+  it('no changes if no preset createContext', function () {
+    const mockContext = {
+      presetInfos: [
+        { name: 'one', module: null },
+        { name: 'two', module: null }
+      ],
+      pineapple: 'yellow'
     };
 
-    apply(context);
-    // should not have overridden athos
-    assume(context.athos).equals('The noble one');
-    // should have added dartagnan
-    assume(context.dartagnan).equals('The little one');
+    const expected = { ...mockContext };
+
+    apply.wrapped(mockContext);
+    assume(mockContext).eqls(expected);
+  });
+
+  it('preset createContext added to context', function () {
+    const mockContext = {
+      presetInfos: [
+        { name: 'one', module: { createContext: { apple: 'red' } } },
+        { name: 'two', module: { createContext: { orange: 'orange' } } }
+      ],
+      pineapple: 'yellow'
+    };
+
+    apply.wrapped(mockContext);
+    assume(mockContext).property('apple', 'red');
+    assume(mockContext).property('orange', 'orange');
+    assume(mockContext).property('pineapple', 'yellow');
+  });
+
+  it('preset createContext does not override existing context', function () {
+    const mockContext = {
+      presetInfos: [
+        { name: 'one', module: { createContext: { apple: 'red' } } },
+        { name: 'two', module: { createContext: { orange: 'orange' } } }
+      ],
+      pineapple: 'yellow',
+      apple: 'pink'
+    };
+
+    apply.wrapped(mockContext);
+    assume(mockContext).property('apple', 'pink');
+    assume(mockContext).property('orange', 'orange');
+    assume(mockContext).property('pineapple', 'yellow');
+  });
+
+  it('gathers createContext from extended presets', function () {
+    const mockContext = {
+      presetInfos: [
+        { name: 'one', module: {}, presets: [
+          { name: 'one-a', module: { createContext: { apple: 'blue', grape: 'purple' } } }
+        ] },
+        { name: 'two', module: { createContext: { orange: 'orange' } } }
+      ],
+      pineapple: 'yellow'
+    };
+
+    apply.wrapped(mockContext);
+    assume(mockContext).property('apple', 'blue');
+    assume(mockContext).property('orange', 'orange');
+    assume(mockContext).property('grape', 'purple');
+    assume(mockContext).property('pineapple', 'yellow');
+  });
+
+  it('extended presets do not override parent preset createContext', function () {
+    const mockContext = {
+      presetInfos: [
+        { name: 'one', module: { createContext: { apple: 'red' } }, presets: [
+          { name: 'one-a', module: { createContext: { apple: 'blue', grape: 'purple' } } }
+        ] },
+        { name: 'two', module: { createContext: { orange: 'orange' } } }
+      ],
+      pineapple: 'yellow'
+    };
+
+    apply.wrapped(mockContext);
+    assume(mockContext).property('apple', 'red');
+    assume(mockContext).property('orange', 'orange');
+    assume(mockContext).property('grape', 'purple');
+    assume(mockContext).property('pineapple', 'yellow');
   });
 });

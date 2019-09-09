@@ -1,41 +1,41 @@
 const path = require('path');
 const action = require('../action-wrapper');
 const PackageFetcher = require('../fetcher');
-const { pluginIdentifier, presetIdentifier } = require('@gasket/resolve');
+const { presetIdentifier, Loader } = require('@gasket/resolve');
+
+const loader = new Loader();
 
 /**
- * Fetches the preset package and reads package.json contents
+ * Fetches the preset packages and loads PresetInfos
  *
  * @param {CreateContext} context - Create context
- * @returns {Promise<[Array]>} results
+ * @returns {PresetInfo[]} loaded presetInfos
  * @private
  */
 async function remotePresets(context) {
   const { cwd, npmconfig, rawPresets = [] } = context;
-  const presetPkgs = await Promise.all(rawPresets.map(rawPreset => {
-    const packageName = presetIdentifier(rawPreset).full;
+  return await Promise.all(rawPresets.map(async rawName => {
+    const packageName = presetIdentifier(rawName).full;
     const fetcher = new PackageFetcher({ cwd, npmconfig, packageName });
-
-    return fetcher.readPackage();
+    const pkgPath = await fetcher.clone();
+    return loader.loadPreset(pkgPath, { from: 'cli', rawName }, { shallow: true });
   }));
-
-  return [rawPresets, presetPkgs];
 }
 
 /**
- * Reads package.json contents from local preset package
+ * Loads PresetInfo from local preset package
  *
  * @param {CreateContext} context - Create context
- * @returns {Array} results
+ * @returns {PresetInfo[]} loaded presetInfos
  * @private
  */
 function localPreset(context) {
   const { cwd, presetPath } = context;
   const pkgPath = path.resolve(cwd, presetPath);
-  const presetPkg = require(path.join(pkgPath, 'package.json'));
-  const rawPreset = `${presetPkg.name}@file:${pkgPath}`;
+  const presetInfo = loader.loadPreset(pkgPath, { from: 'cli' }, { shallow: true });
+  presetInfo.rawName = `${presetInfo.package.name}@file:${pkgPath}`;
 
-  return [[rawPreset], [presetPkg]];
+  return [presetInfo];
 }
 
 /**
@@ -48,32 +48,10 @@ function localPreset(context) {
 async function loadPreset(context) {
   const { presetPath } = context;
 
-  const [rawPresets, presetPkgs] = presetPath
-    ? localPreset(context)
-    : await remotePresets(context);
+  const presetInfos = presetPath ? localPreset(context) : await remotePresets(context);
+  const presets = presetInfos.map(p => presetIdentifier(p.rawName).shortName);
 
-  const { presets, presetPlugins, fullPresets } = rawPresets.reduce((acc, rawPreset, i) => {
-    const presetPkg = presetPkgs[i];
-    const preset = presetIdentifier(rawPreset).withVersion(`${presetPkg.version}`);
-
-    acc.presets.push(preset.shortName);
-    acc.fullPresets.push(`${preset.full}`);
-
-    //
-    // Gather all plugins dependencies of preset, using short name
-    //
-    Object.keys(presetPkg.dependencies)
-      .filter(pkg => pkg.endsWith('-plugin'))
-      .forEach(pkg => acc.presetPlugins.push(pluginIdentifier(pkg).shortName));
-
-    return acc;
-  }, {
-    presetPlugins: [],
-    presets: [],
-    fullPresets: []
-  });
-
-  Object.assign(context, { presets, presetPlugins, rawPresets, presetPkgs, fullPresets });
+  Object.assign(context, { presets, presetInfos });
 }
 
 module.exports = action('Load presets', loadPreset);
