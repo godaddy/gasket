@@ -103,14 +103,6 @@ describe('Utils', () => {
   });
 
   describe('flattenPresets', () => {
-    let pkgStub;
-
-    beforeEach(() => {
-      pkgStub = {
-        add: sandbox.stub()
-      };
-    });
-
     it('returns empty array if no presets', () => {
       const results = flattenPresets();
       assume(results).eqls([]);
