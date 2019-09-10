@@ -18,7 +18,7 @@ $ npm install -g @gasket/cli
 $ gasket COMMAND
 running command...
 $ gasket (-v|--version|version)
-@gasket/cli/2.6.1 darwin-x64 node-v10.15.3
+@gasket/cli/2.6.2-canary.0 darwin-x64 node-v10.15.3
 $ gasket --help [COMMAND]
 USAGE
   $ gasket COMMAND
@@ -51,7 +51,7 @@ OPTIONS
   --[no-]record          Whether or not to emit this command as part of Gasket's metrics lifecycle
 ```
 
-_See code: [src/commands/analyze.js](https://github.com/godaddy/gasket/blob/v2.6.1/src/commands/analyze.js)_
+_See code: [src/commands/analyze.js](https://github.com/godaddy/gasket/blob/v2.6.2-canary.0/src/commands/analyze.js)_
 
 ## `gasket build`
 
@@ -70,7 +70,7 @@ OPTIONS
   --[no-]record          Whether or not to emit this command as part of Gasket's metrics lifecycle
 ```
 
-_See code: [src/commands/build.js](https://github.com/godaddy/gasket/blob/v2.6.1/src/commands/build.js)_
+_See code: [src/commands/build.js](https://github.com/godaddy/gasket/blob/v2.6.2-canary.0/src/commands/build.js)_
 
 ## `gasket create APPNAME`
 
@@ -100,7 +100,7 @@ OPTIONS
                                      comma-separated values: --plugins=jest,zkconfig^1.0.0
 ```
 
-_See code: [src/commands/create.js](https://github.com/godaddy/gasket/blob/v2.6.1/src/commands/create.js)_
+_See code: [src/commands/create.js](https://github.com/godaddy/gasket/blob/v2.6.2-canary.0/src/commands/create.js)_
 
 ## `gasket help [COMMAND]`
 
@@ -135,7 +135,7 @@ OPTIONS
   --[no-]record          Whether or not to emit this command as part of Gasket's metrics lifecycle
 ```
 
-_See code: [src/commands/local.js](https://github.com/godaddy/gasket/blob/v2.6.1/src/commands/local.js)_
+_See code: [src/commands/local.js](https://github.com/godaddy/gasket/blob/v2.6.2-canary.0/src/commands/local.js)_
 
 ## `gasket start`
 
@@ -153,7 +153,7 @@ OPTIONS
   --[no-]record          Whether or not to emit this command as part of Gasket's metrics lifecycle
 ```
 
-_See code: [src/commands/start.js](https://github.com/godaddy/gasket/blob/v2.6.1/src/commands/start.js)_
+_See code: [src/commands/start.js](https://github.com/godaddy/gasket/blob/v2.6.2-canary.0/src/commands/start.js)_
 <!-- commandsstop -->
 
 
