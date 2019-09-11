@@ -17,10 +17,13 @@ describe('cliVersion', () => {
     mockContext = {
       appName: 'my-app',
       appDescription: 'my cool app',
-      rawPresets: ['@gasket/bogus-preset'],
-      presetPkgs: [{
+      presetInfos: [{
         name: '@gasket/bogus-preset',
-        version: '3.2.1'
+        version: '3.2.1',
+        package: {
+          name: '@gasket/bogus-preset',
+          version: '3.2.1'
+        }
       }],
       warnings: []
     };
@@ -55,48 +58,60 @@ describe('cliVersion', () => {
   });
 
   it('uses own cli version if not specified in preset', async () => {
-    mockContext.presetPkgs = [{
-      name: '@gasket/bogus-preset',
-      version: '30.20.10',
-      dependencies: {}
+    mockContext.presetInfos = [{
+      package: {
+        name: '@gasket/bogus-preset',
+        version: '30.20.10',
+        dependencies: {}
+      }
     }];
     await cliVersion(mockContext);
     assume(mockContext).property('cliVersionRequired', `^${pkgVersion}`);
   });
 
   it('derives cli version from preset', async () => {
-    mockContext.presetPkgs = [{
-      name: '@gasket/bogus-preset',
-      version: '30.20.10',
-      dependencies: { '@gasket/cli': '^1.2.3' }
+    mockContext.presetInfos = [{
+      package: {
+        name: '@gasket/bogus-preset',
+        version: '30.20.10',
+        dependencies: { '@gasket/cli': '^1.2.3' }
+      }
     }];
     await cliVersion(mockContext);
     assume(mockContext).property('cliVersionRequired', `^1.2.3`);
   });
 
   it('derives minimum cli version from multiple presets', async () => {
-    mockContext.presetPkgs = [{
-      name: '@gasket/bogus-a-preset',
-      version: '10.20.30',
-      dependencies: { '@gasket/cli': '^1.3.4' }
+    mockContext.presetInfos = [{
+      package: {
+        name: '@gasket/bogus-a-preset',
+        version: '10.20.30',
+        dependencies: { '@gasket/cli': '^1.3.4' }
+      }
     }, {
-      name: '@gasket/bogus-b-preset',
-      version: '10.20.30',
-      dependencies: { '@gasket/cli': '^2.9.9' }
+      package: {
+        name: '@gasket/bogus-b-preset',
+        version: '10.20.30',
+        dependencies: { '@gasket/cli': '^2.9.9' }
+      }
     }, {
-      name: '@gasket/bogus-c-preset',
-      version: '30.20.10',
-      dependencies: { '@gasket/cli': '^1.2.3' }
+      package: {
+        name: '@gasket/bogus-c-preset',
+        version: '30.20.10',
+        dependencies: { '@gasket/cli': '^1.2.3' }
+      }
     }];
     await cliVersion(mockContext);
     assume(mockContext).property('cliVersionRequired', `^1.2.3`);
   });
 
   it('issues warning if global cli is not compatible with installed version', async () => {
-    mockContext.presetPkgs = [{
-      name: '@gasket/bogus-a-preset',
-      version: '10.20.30',
-      dependencies: { '@gasket/cli': '^1.2.3' }
+    mockContext.presetInfos = [{
+      package: {
+        name: '@gasket/bogus-a-preset',
+        version: '10.20.30',
+        dependencies: { '@gasket/cli': '^1.2.3' }
+      }
     }];
     await cliVersion(mockContext);
     assume(mockContext.warnings).atleast(1);
@@ -108,28 +123,36 @@ describe('cliVersion', () => {
   });
 
   it('does not issue warning if global cli is compatible with installed version', async () => {
-    mockContext.presetPkgs = [{
-      name: '@gasket/bogus-a-preset',
-      version: '10.20.30',
-      dependencies: { '@gasket/cli': '^2.2.0' }
+    mockContext.presetInfos = [{
+      package: {
+        name: '@gasket/bogus-a-preset',
+        version: '10.20.30',
+        dependencies: { '@gasket/cli': '^2.2.0' }
+      }
     }];
     await cliVersion(mockContext);
     assume(mockContext.warnings).length(0);
   });
 
   it('issues warning if cli version does not satisfy a preset', async () => {
-    mockContext.presetPkgs = [{
-      name: '@gasket/bogus-a-preset',
-      version: '10.20.30',
-      dependencies: { '@gasket/cli': '^2.3.4' }
+    mockContext.presetInfos = [{
+      package: {
+        name: '@gasket/bogus-a-preset',
+        version: '10.20.30',
+        dependencies: { '@gasket/cli': '^2.3.4' }
+      }
     }, {
-      name: '@gasket/bogus-b-preset',
-      version: '10.20.30',
-      dependencies: { '@gasket/cli': '^8.9.9' }
+      package: {
+        name: '@gasket/bogus-b-preset',
+        version: '10.20.30',
+        dependencies: { '@gasket/cli': '^8.9.9' }
+      }
     }, {
-      name: '@gasket/bogus-c-preset',
-      version: '30.20.10',
-      dependencies: { '@gasket/cli': '^2.1.2' }
+      package: {
+        name: '@gasket/bogus-c-preset',
+        version: '30.20.10',
+        dependencies: { '@gasket/cli': '^2.1.2' }
+      }
     }];
     await cliVersion(mockContext);
     assume(mockContext.warnings).atleast(1);
@@ -141,32 +164,42 @@ describe('cliVersion', () => {
   });
 
   it('does not issue warning if cli version does satisfy a preset', async () => {
-    mockContext.presetPkgs = [{
-      name: '@gasket/bogus-a-preset',
-      version: '10.20.30',
-      dependencies: { '@gasket/cli': '^2.3.4' }
+    mockContext.presetInfos = [{
+      package: {
+        name: '@gasket/bogus-a-preset',
+        version: '10.20.30',
+        dependencies: { '@gasket/cli': '^2.3.4' }
+      }
     }, {
-      name: '@gasket/bogus-b-preset',
-      version: '10.20.30',
-      dependencies: { '@gasket/cli': '^2.9.9' }
+      package: {
+        name: '@gasket/bogus-b-preset',
+        version: '10.20.30',
+        dependencies: { '@gasket/cli': '^2.9.9' }
+      }
     }, {
-      name: '@gasket/bogus-c-preset',
-      version: '30.20.10',
-      dependencies: { '@gasket/cli': '^2.1.2' }
+      package: {
+        name: '@gasket/bogus-c-preset',
+        version: '30.20.10',
+        dependencies: { '@gasket/cli': '^2.1.2' }
+      }
     }];
     await cliVersion(mockContext);
     assume(mockContext.warnings).length(0);
   });
 
   it('supports file path for preset cli version', async () => {
-    mockContext.presetPkgs = [{
-      name: '@gasket/bogus-a-preset',
-      version: '10.20.30',
-      dependencies: { '@gasket/cli': 'file:../../../gasket-cli' }
+    mockContext.presetInfos = [{
+      package: {
+        name: '@gasket/bogus-a-preset',
+        version: '10.20.30',
+        dependencies: { '@gasket/cli': 'file:../../../gasket-cli' }
+      }
     }, {
-      name: '@gasket/bogus-b-preset',
-      version: '10.20.30',
-      dependencies: { '@gasket/cli': '^2.9.9' }
+      package: {
+        name: '@gasket/bogus-b-preset',
+        version: '10.20.30',
+        dependencies: { '@gasket/cli': '^2.9.9' }
+      }
     }];
     await cliVersion(mockContext);
     assume(mockContext).property('cliVersionRequired', `file:../../../gasket-cli`);
@@ -174,18 +207,24 @@ describe('cliVersion', () => {
 
   it('shows warning spinner for any warnings', async () => {
     const warnStub = sinon.stub();
-    mockContext.presetPkgs = [{
-      name: '@gasket/bogus-a-preset',
-      version: '10.20.30',
-      dependencies: { '@gasket/cli': '^2.3.4' }
+    mockContext.presetInfos = [{
+      package: {
+        name: '@gasket/bogus-a-preset',
+        version: '10.20.30',
+        dependencies: { '@gasket/cli': '^2.3.4' }
+      }
     }, {
-      name: '@gasket/bogus-b-preset',
-      version: '10.20.30',
-      dependencies: { '@gasket/cli': '^8.9.9' }
+      package: {
+        name: '@gasket/bogus-b-preset',
+        version: '10.20.30',
+        dependencies: { '@gasket/cli': '^8.9.9' }
+      }
     }, {
-      name: '@gasket/bogus-c-preset',
-      version: '30.20.10',
-      dependencies: { '@gasket/cli': '^2.1.2' }
+      package: {
+        name: '@gasket/bogus-c-preset',
+        version: '30.20.10',
+        dependencies: { '@gasket/cli': '^2.1.2' }
+      }
     }];
     await cliVersion.wrapped(mockContext, { warn: warnStub });
     assume(mockContext.warnings).atleast(1);

@@ -1,6 +1,7 @@
 const inquirer = require('inquirer');
+const { pluginIdentifier } = require('@gasket/resolve');
 const action = require('../action-wrapper');
-const { addPluginsToContext } = require('../plugin-utils');
+const { addPluginsToContext, flattenPresets } = require('../utils');
 
 /**
  * What is your app description?
@@ -63,7 +64,14 @@ async function choosePackageManager(context) {
  */
 async function chooseTestPlugin(context) {
   // Combine user-provided plugins with preset-provided plugins.
-  const allPlugins = context.plugins.concat(context.presetPlugins);
+  const { presetInfos = [], plugins = [] } = context;
+
+  // Flatten all plugins from presets and concat short names with cli plugins
+  const allPlugins = flattenPresets(presetInfos)
+    .map(presetInfo => presetInfo.plugins || [])
+    .reduce((acc, arr) => acc.concat(arr), [])
+    .map(pluginInfo => pluginIdentifier(pluginInfo.name).shortName)
+    .concat(plugins);
 
   if (!('testPlugin' in context)) {
     if (!['mocha', 'jest'].some(p => allPlugins.includes(p))) {
