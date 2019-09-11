@@ -132,7 +132,7 @@ module.exports = function makeCreateContext(argv = [], flags = {}) {
   const {
     npmconfig,
     plugins = [],
-    presets = ['default'],
+    presets = [],
     'npm-link': npmLink = [],
     'preset-path': presetPath,
     'package-manager': packageManager
@@ -143,6 +143,10 @@ module.exports = function makeCreateContext(argv = [], flags = {}) {
   const rawPresets = presets.reduce(flatten, []);
   const rawPlugins = plugins.reduce(flatten, []);
   const pkgLinks = npmLink.reduce(flatten, []);
+
+  if (!presetPath && rawPresets.length === 0) {
+    throw new Error('Preset or preset path not found');
+  }
 
   const cwd = process.cwd();
   const dest = path.join(cwd, appName);

@@ -150,10 +150,10 @@ PackageIdentifier.prototype.toString = function () {
  * The package name with or without version of a preset.
  *
  * For example:
- *   - @gasket/default-preset        - fullName
- *   - default                       - shortName
- *   - @gasket/default-preset@^1.2.3 - full with version
- *   - default@^1.2.3                - short with version
+ *   - @gasket/godaddy-preset        - fullName
+ *   - godaddy                       - shortName
+ *   - @gasket/godaddy-preset@^1.2.3 - full with version
+ *   - godaddy@^1.2.3                - short with version
  *
  * @typedef {String} PresetDesc
  */
@@ -172,8 +172,8 @@ PackageIdentifier.prototype.toString = function () {
  * The package name only of a preset.
  *
  * For example:
- *   - @gasket/default-preset        - fullName
- *   - default                       - shortName
+ *   - @gasket/godaddy-preset        - fullName
+ *   - godaddy                       - shortName
  *
  * @typedef {String} PresetName
  */

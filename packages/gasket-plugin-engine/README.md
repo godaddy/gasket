@@ -88,7 +88,7 @@ module.exports = {
 ### Short names
 Items in these arrays are module names. Gasket supports shorthand naming;
 `'mocha'` expands to `@gasket/mocha-plugin` in the `add` and `remove` arrays,
-`default` expands to `@gasket/default-preset` in the `presets` array.
+`godaddy` expands to `@gasket/godaddy-preset` in the `presets` array.
 
 If no config file or plugin configuration is present in `gasket.config.js`, the
 equivalent configuration is:
@@ -96,7 +96,7 @@ equivalent configuration is:
 ```js
 module.exports = {
   plugins: {
-    presets: ['default']
+    presets: ['godaddy']
   },
 }
 ```
@@ -367,4 +367,5 @@ of resolving relative to the current directory.
 
 ##### LICENSE: [MIT](./LICENSE)
 
+What to do with this
 [@gasket/default-preset]: TODO: Add this when it exists

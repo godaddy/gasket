@@ -425,7 +425,7 @@ describe('presetIdentifier', () => {
   let result;
 
   it('is instance of PackageIdentifier', () => {
-    result = presetIdentifier('default@^1.0.0');
+    result = presetIdentifier('godaddy@^1.0.0');
     expect(result instanceof PackageIdentifier).toBe(true);
   });
 
@@ -435,8 +435,8 @@ describe('presetIdentifier', () => {
   });
 
   it('gets short preset name', () => {
-    result = presetIdentifier('@gasket/default-preset').shortName;
-    expect(result).toBe('default');
+    result = presetIdentifier('@gasket/v-preset').shortName;
+    expect(result).toBe('godaddy');
   });
 
   it('gets short preset name for single letter preset', () => {
@@ -445,8 +445,8 @@ describe('presetIdentifier', () => {
   });
 
   it('expands short preset names to full', () => {
-    result = presetIdentifier('default').full;
-    expect(result).toBe('@gasket/default-preset');
+    result = presetIdentifier('godaddy').full;
+    expect(result).toBe('@gasket/godaddy-preset');
   });
 
   it('expands short preset names to full for single letter preset', () => {
@@ -466,7 +466,7 @@ describe('presetIdentifier', () => {
 
   it('@gasket scoped desc requires -preset suffix', () => {
     try {
-      presetIdentifier('@gasket/default');
+      presetIdentifier('@gasket/godaddy');
     } catch (e) {
       expect(e.message).toEqual(expect.stringContaining("Package descriptions with @gasket scope require suffix '-preset'"));
     }

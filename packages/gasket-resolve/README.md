@@ -61,10 +61,10 @@ For example, the following patterns will not work:</p>
 <dd><p>The package name with or without version of a preset.</p>
 <p>For example:</p>
 <ul>
-<li>@gasket/default-preset        - fullName</li>
-<li>default                       - shortName</li>
-<li>@gasket/default-preset@^1.2.3 - full with version</li>
-<li>default@^1.2.3                - short with version</li>
+<li>@gasket/godaddy-preset        - fullName</li>
+<li>godaddy                       - shortName</li>
+<li>@gasket/godaddy-preset@^1.2.3 - full with version</li>
+<li>godaddy@^1.2.3                - short with version</li>
 </ul>
 </dd>
 <dt><a href="#PluginName">PluginName</a> : <code>String</code></dt>
@@ -79,8 +79,8 @@ For example, the following patterns will not work:</p>
 <dd><p>The package name only of a preset.</p>
 <p>For example:</p>
 <ul>
-<li>@gasket/default-preset        - fullName</li>
-<li>default                       - shortName</li>
+<li>@gasket/godaddy-preset        - fullName</li>
+<li>godaddy                       - shortName</li>
 </ul>
 </dd>
 </dl>
@@ -523,10 +523,10 @@ For example, the following patterns will not work:
 The package name with or without version of a preset.
 
 For example:
-  - @gasket/default-preset        - fullName
-  - default                       - shortName
-  - @gasket/default-preset@^1.2.3 - full with version
-  - default@^1.2.3                - short with version
+  - @gasket/godaddy-preset        - fullName
+  - godaddy                       - shortName
+  - @gasket/godaddy-preset@^1.2.3 - full with version
+  - godaddy@^1.2.3                - short with version
 
 **Kind**: global typedef  
 <a name="PluginName"></a>
@@ -545,7 +545,7 @@ For example:
 The package name only of a preset.
 
 For example:
-  - @gasket/default-preset        - fullName
-  - default                       - shortName
+  - @gasket/godaddy-preset        - fullName
+  - godaddy                       - shortName
 
 **Kind**: global typedef  
