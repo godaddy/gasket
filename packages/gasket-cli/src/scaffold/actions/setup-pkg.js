@@ -1,6 +1,6 @@
 const action = require('../action-wrapper');
 const ConfigBuilder = require('../config-builder');
-const { addPluginsToPkg } = require('../plugin-utils');
+const { addPluginsToPkg } = require('../utils');
 const { presetIdentifier } = require('@gasket/resolve');
 
 /**
@@ -10,7 +10,7 @@ const { presetIdentifier } = require('@gasket/resolve');
  * @returns {Promise} promise
  */
 async function setupPkg(context) {
-  const { appName, appDescription, rawPresets, presetPkgs, rawPlugins = [], cliVersionRequired } = context;
+  const { appName, appDescription, presetInfos = [], rawPlugins = [], cliVersionRequired } = context;
 
   const pkg = ConfigBuilder.createPackageJson({
     name: appName,
@@ -20,9 +20,10 @@ async function setupPkg(context) {
 
   // The preset package itself must be included in the dependencies
   // of the `pkg` to be bootstrapped.
-  pkg.add('dependencies', rawPresets.reduce((acc, rawPreset, i) => {
-    const presetPkg = presetPkgs[i];
-    const { fullName, version } = presetIdentifier(rawPreset).withVersion(`^${presetPkg.version}`);
+  pkg.add('dependencies', presetInfos.reduce((acc, presetInfo) => {
+    // Use rawName in case version or file path was set in cli args
+    // Otherwise fallback to resolved version
+    const { fullName, version } = presetIdentifier(presetInfo.rawName).withVersion(`^${presetInfo.version}`);
 
     acc[fullName] = version;
     return acc;
