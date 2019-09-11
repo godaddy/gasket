@@ -14,7 +14,6 @@ describe('globalPrompts', () => {
       appName: 'my-app',
       dest: '/some/path/my-app',
       plugins: [],
-      presetPlugins: [],
       extant: false
     };
 
@@ -124,6 +123,17 @@ describe('globalPrompts', () => {
 
     it('does not prompt if a known test plugin included in context plugins', async () => {
       mockContext.plugins = ['mocha'];
+      await chooseTestPlugin(mockContext);
+
+      assume(promptStub).not.called();
+    });
+
+    it('does not prompt if a known test plugin included by preset', async () => {
+      mockContext.presetInfos = [{
+        plugins: [
+          { name: '@gasket/jest-plugin' }
+        ]
+      }];
       await chooseTestPlugin(mockContext);
 
       assume(promptStub).not.called();
