@@ -94,6 +94,4 @@ You can specify what port to open up on, or what certificates to use via
 ```
 ##### LICENSE: [MIT](./LICENSE)
 
-Remove?
-[`@gasket/default-preset`]: TODO: Add this when it exists
 [`create-servers`]: https://github.com/indexzero/create-servers#http--https

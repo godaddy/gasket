@@ -435,7 +435,7 @@ describe('presetIdentifier', () => {
   });
 
   it('gets short preset name', () => {
-    result = presetIdentifier('@gasket/v-preset').shortName;
+    result = presetIdentifier('@gasket/godaddy-preset').shortName;
     expect(result).toBe('godaddy');
   });
 

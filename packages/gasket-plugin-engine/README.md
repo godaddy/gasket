@@ -366,6 +366,3 @@ The above will resolve all Plugins and Presets from within `./someapp` instead
 of resolving relative to the current directory.
 
 ##### LICENSE: [MIT](./LICENSE)
-
-What to do with this
-[@gasket/default-preset]: TODO: Add this when it exists
