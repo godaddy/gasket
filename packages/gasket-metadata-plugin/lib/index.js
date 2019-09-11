@@ -5,6 +5,7 @@ const { sanitize } = require('./utils');
  * Preset module with meta data
  *
  * @typedef {Object} Metadata
+ * @property {ModuleInfo[]} app - App and main package info
  * @property {PresetInfo[]} presets - Preset infos with dependency hierarchy
  * @property {PluginInfo[]} plugins - Flat list of registered plugin infos
  */
@@ -14,13 +15,16 @@ module.exports = {
   hooks: {
     async init(gasket) {
       const { loader, config } = gasket;
+      const { root = process.cwd() } = config;
       const loaded = loader.loadConfigured(config.plugins);
       const { presets, plugins } = sanitize(cloneDeep(loaded));
+      const app = loader.getModuleInfo(null, root);
 
       /**
        * @type {Metadata}
        */
       gasket.metadata = {
+        app,
         presets,
         plugins
       };
