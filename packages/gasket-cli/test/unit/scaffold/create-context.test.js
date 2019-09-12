@@ -122,7 +122,7 @@ describe('makeCreateContext', () => {
 
   beforeEach(() => {
     argv = ['my-app'];
-    flags = { presets: ['godaddy'] };
+    flags = { presets: ['nextjs'] };
   });
 
   it('returns a create context object', () => {
@@ -156,7 +156,7 @@ describe('makeCreateContext', () => {
   });
 
   it('uses npmconfig from flags', () => {
-    results = makeCreateContext(argv, { npmconfig: '/some/path/to/npmconfig', presets: ['godaddy'] });
+    results = makeCreateContext(argv, { npmconfig: '/some/path/to/npmconfig', presets: ['nextjs'] });
     assume(results.npmconfig).equals('/some/path/to/npmconfig');
   });
 
@@ -182,13 +182,13 @@ describe('makeCreateContext', () => {
 
   it('sets plugins short names from flags', () => {
     results =
-      makeCreateContext(argv, { plugins: ['jest@^1.2.3', 'some-user-plugin', '@gasket/intl-plugin'], presets: ['godaddy'] });
+      makeCreateContext(argv, { plugins: ['jest@^1.2.3', 'some-user-plugin', '@gasket/intl-plugin'], presets: ['nextjs'] });
     assume(results.plugins).eqls(['jest', 'some-user-plugin', 'intl']);
   });
 
   it('sets rawPlugins from flags', () => {
     results =
-      makeCreateContext(argv, { plugins: ['jest@^1.2.3', 'some-user-plugin', '@gasket/intl-plugin'], presets: ['godaddy'] });
+      makeCreateContext(argv, { plugins: ['jest@^1.2.3', 'some-user-plugin', '@gasket/intl-plugin'], presets: ['nextjs'] });
     assume(results.rawPlugins).eqls(['jest@^1.2.3', 'some-user-plugin', '@gasket/intl-plugin']);
   });
 

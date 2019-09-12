@@ -85,9 +85,9 @@ ARGUMENTS
 
 OPTIONS
   -p, --presets=presets              Initial gasket preset(s) to use.
-                                     Can be set as short name with version (e.g. --presets godaddy@^1.0.0)
+                                     Can be set as short name with version (e.g. --presets nextjs@^1.0.0)
                                      Or other (multiple) custom presets (e.g. --presets
-                                     my-gasket-preset@1.0.0.beta-1,godaddy@^1.0.0)
+                                     my-gasket-preset@1.0.0.beta-1,nextjs@^1.0.0)
 
   --npmconfig=npmconfig              [default: ~/.npmrc] .npmrc to be used for npm actions in @gasket/cli
 
@@ -333,7 +333,7 @@ Be sure to `npm install --no-save` so you don't mutate the built in the
 
 ```bash
 # install extra dependencies
-npm install --no-save @gasket/godaddy-preset @gasket/redux next react-dom
+npm install --no-save @gasket/nextjs-preset @gasket/redux next react-dom
 
 # run `gasket local`, for example
 ./bin/run local --config /path/to/gasket.config.js

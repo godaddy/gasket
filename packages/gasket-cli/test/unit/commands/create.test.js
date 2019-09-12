@@ -66,7 +66,7 @@ describe('create', function () {
   });
 
   it('executes expected bootstrap actions', async () => {
-    const cmd = new CreateCommand(['myapp', '--presets=godaddy']);
+    const cmd = new CreateCommand(['myapp', '--presets=nextjs']);
     await cmd.run();
 
     assume(actionStubs.mkDir).is.called();
@@ -80,14 +80,14 @@ describe('create', function () {
   });
 
   it('skips bootstrap actions with --no-bootstrap', async () => {
-    const cmd = new CreateCommand(['myapp', '--no-bootstrap', '--presets=godaddy']);
+    const cmd = new CreateCommand(['myapp', '--no-bootstrap', '--presets=nextjs']);
     await cmd.run();
 
     assume(actionStubs.mkDir).not.called();
   });
 
   it('executes loadPkgForDebug with --no-bootstrap', async () => {
-    const cmd = new CreateCommand(['myapp', '--no-bootstrap', '--presets=godaddy']);
+    const cmd = new CreateCommand(['myapp', '--no-bootstrap', '--presets=nextjs']);
     await cmd.run();
 
     assume(actionStubs.loadPkgForDebug).is.called();
@@ -110,21 +110,21 @@ describe('create', function () {
   });
 
   it('skips generate actions with --no-generate', async () => {
-    const cmd = new CreateCommand(['myapp', '--no-generate', '--presets=godaddy']);
+    const cmd = new CreateCommand(['myapp', '--no-generate', '--presets=nextjs']);
     await cmd.run();
 
     assume(actionStubs.promptHooks).not.called();
   });
 
   it('does not execute loadPkgForDebug with --no-bootstrap --no-generate', async () => {
-    const cmd = new CreateCommand(['myapp', '--no-bootstrap', '--no-generate', '--presets=godaddy']);
+    const cmd = new CreateCommand(['myapp', '--no-bootstrap', '--no-generate', '--presets=nextjs']);
     await cmd.run();
 
     assume(actionStubs.loadPkgForDebug).not.called();
   });
 
   it('executes printReport', async () => {
-    const cmd = new CreateCommand(['myapp', '--presets=godaddy']);
+    const cmd = new CreateCommand(['myapp', '--presets=nextjs']);
     await cmd.run();
 
     assume(actionStubs.printReport).is.called();
@@ -142,7 +142,7 @@ describe('create', function () {
 
   it('dumps log on errors', async () => {
     actionStubs.mkDir.rejects(new Error('YOUR DRIVE EXPLODED!'));
-    const cmd = new CreateCommand(['myapp', '--presets=godaddy']);
+    const cmd = new CreateCommand(['myapp', '--presets=nextjs']);
     try {
       await cmd.run();
     } catch (e) {
@@ -152,7 +152,7 @@ describe('create', function () {
 
   it('prints exit message', async () => {
     actionStubs.mkDir.rejects(new Error('YOUR DRIVE EXPLODED!'));
-    const cmd = new CreateCommand(['myapp', '--presets=godaddy']);
+    const cmd = new CreateCommand(['myapp', '--presets=nextjs']);
     try {
       await cmd.run();
     } catch (e) {

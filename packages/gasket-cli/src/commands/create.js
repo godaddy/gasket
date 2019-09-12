@@ -113,8 +113,8 @@ CreateCommand.flags = {
     multiple: true,
     parse: commasToArray,
     description: `Initial gasket preset(s) to use.
-Can be set as short name with version (e.g. --presets godaddy@^1.0.0)
-Or other (multiple) custom presets (e.g. --presets my-gasket-preset@1.0.0.beta-1,godaddy@^1.0.0)`
+Can be set as short name with version (e.g. --presets nextjs@^1.0.0)
+Or other (multiple) custom presets (e.g. --presets my-gasket-preset@1.0.0.beta-1,nextjs@^1.0.0)`
   }),
   'plugins': flags.string({
     env: 'GASKET_PLUGINS',
