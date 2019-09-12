@@ -223,7 +223,7 @@ describe('makeCreateContext', () => {
       error = err;
     }
 
-    assume(error.message).to.eqls('Preset or preset path not found');
+    assume(error.message).to.eqls('Preset not found, at least one needs to be added');
   });
 
   it('doesnt throw if preset found', () => {
