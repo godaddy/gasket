@@ -94,7 +94,7 @@ describe('create', function () {
   });
 
   it('executes expected generate actions', async () => {
-    const cmd = new CreateCommand(['myapp', '--preset-path=somePath']);
+    const cmd = new CreateCommand(['myapp', '--presets=nextjs']);
     await cmd.run();
 
     assume(actionStubs.promptHooks).is.called();
@@ -132,7 +132,7 @@ describe('create', function () {
 
   it('exits on action errors', async () => {
     actionStubs.mkDir.rejects(new Error('YOUR DRIVE EXPLODED!'));
-    const cmd = new CreateCommand(['myapp', '--preset-path=somePath']);
+    const cmd = new CreateCommand(['myapp', '--presets=nextjs']);
     try {
       await cmd.run();
     } catch (e) {

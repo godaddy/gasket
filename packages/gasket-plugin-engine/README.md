@@ -88,7 +88,7 @@ module.exports = {
 ### Short names
 Items in these arrays are module names. Gasket supports shorthand naming;
 `'mocha'` expands to `@gasket/mocha-plugin` in the `add` and `remove` arrays,
-`godaddy` expands to `@gasket/nextjs-preset` in the `presets` array.
+`nextjs` expands to `@gasket/nextjs-preset` in the `presets` array.
 
 ## Authoring Plugins
 

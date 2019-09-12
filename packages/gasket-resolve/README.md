@@ -546,6 +546,6 @@ The package name only of a preset.
 
 For example:
   - @gasket/nextjs-preset        - fullName
-  - godaddy                       - shortName
+  - nextjs                       - shortName
 
 **Kind**: global typedef  
