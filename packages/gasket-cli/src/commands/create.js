@@ -52,7 +52,8 @@ class CreateCommand extends Command {
     try {
       context = makeCreateContext(argv, parsedFlags);
     } catch (error) {
-      console.error(chalk.red(error));
+      console.error(chalk.red(error) + '\n');
+      console.log(this._help());
       this.exit();
     }
 
