@@ -6,6 +6,6 @@
  */
 module.exports = {
   plugins: {
-    presets: ['default']
+    presets: []
   }
 };

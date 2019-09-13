@@ -116,7 +116,7 @@ configure your app to be a Progressive Web App!
 // gasket.config.js
 module.exports = {
   plugins: {
-    presets: ['default'],
+    presets: ['nextjs'],
     add: ['service-worker', 'workbox', 'manifest']
   },
   manifest: {
