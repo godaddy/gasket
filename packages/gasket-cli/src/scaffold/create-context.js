@@ -145,7 +145,7 @@ module.exports = function makeCreateContext(argv = [], flags = {}) {
   const pkgLinks = npmLink.reduce(flatten, []);
 
   if (!presetPath && rawPresets.length === 0) {
-    throw new Error('Preset not found, at least one needs to be added');
+    throw new Error('No preset specified.');
   }
 
   const cwd = process.cwd();
