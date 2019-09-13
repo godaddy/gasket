@@ -1,6 +1,6 @@
 {
   "name": "@gasket/nextjs-preset",
-  "version": "1.0.0-canary.0",
+  "version": "1.0.0-canary.1",
   "description": "Basic NextJS Framework",
   "repository": {
     "type": "git",
@@ -13,9 +13,9 @@
   },
   "dependencies": {
     "@gasket/express-plugin": "^2.1.0",
-    "@gasket/https-plugin": "^2.1.0",
+    "@gasket/https-plugin": "^2.1.1-canary.0",
     "@gasket/log-plugin": "^3.1.0",
-    "@gasket/nextjs-plugin": "^2.2.1-canary.0",
+    "@gasket/nextjs-plugin": "^2.2.1-canary.1",
     "@gasket/redux-plugin": "^2.3.0",
     "@gasket/webpack-plugin": "^1.1.0"
   }
