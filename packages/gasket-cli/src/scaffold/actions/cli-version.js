@@ -1,5 +1,6 @@
 const semver = require('semver');
 const action = require('../action-wrapper');
+const { flattenPresets } = require('../utils');
 const pkgVersion = require('../../../package.json').version;
 const pkgVersionCompatible = `^${pkgVersion}`;
 
@@ -18,12 +19,14 @@ const isFile = v => v && v.includes('file:');
  * @param {Spinner} spinner - Spinner
  */
 function resolveCliVersion(context, spinner) {
-  const { presetPkgs, warnings } = context;
+  const { presetInfos, warnings } = context;
 
   //
   // Gather presets with cli dependencies
   //
-  const cliPresets = presetPkgs.filter(p => p.dependencies && p.dependencies['@gasket/cli']);
+  const cliPresets = flattenPresets(presetInfos)
+    .map(p => p.package)
+    .filter(p => p.dependencies && p.dependencies['@gasket/cli']);
 
   //
   // Find the preset with minimum cli version required.

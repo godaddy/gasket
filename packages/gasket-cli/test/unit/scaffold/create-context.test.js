@@ -118,30 +118,26 @@ describe('CreateRuntime', () => {
 });
 
 describe('makeCreateContext', () => {
-  let results, argv;
+  let results, argv, flags;
 
   beforeEach(() => {
     argv = ['my-app'];
+    flags = { presets: ['nextjs'] };
   });
 
   it('returns a create context object', () => {
-    results = makeCreateContext();
+    results = makeCreateContext([], flags);
     assume(results).instanceOf(CreateContext);
   });
 
   it('gets appName from arg values', () => {
-    results = makeCreateContext(argv);
+    results = makeCreateContext(argv, flags);
     assume(results.appName).equals('my-app');
   });
 
   it('defaults the appName if no arg value', () => {
-    results = makeCreateContext();
+    results = makeCreateContext([], flags);
     assume(results.appName).equals('templated-app');
-  });
-
-  it('defaults preset', () => {
-    results = makeCreateContext(argv);
-    assume(results.rawPresets).deep.equals(['default']);
   });
 
   it('sets rawPresets from flags', () => {
@@ -160,52 +156,54 @@ describe('makeCreateContext', () => {
   });
 
   it('uses npmconfig from flags', () => {
-    results = makeCreateContext(argv, { npmconfig: '/some/path/to/npmconfig' });
+    results = makeCreateContext(argv, { npmconfig: '/some/path/to/npmconfig', presets: ['nextjs'] });
     assume(results.npmconfig).equals('/some/path/to/npmconfig');
   });
 
   it('sets cwd from process', () => {
-    results = makeCreateContext(argv);
+    results = makeCreateContext(argv, flags);
     assume(results.cwd).equals(process.cwd());
   });
 
   it('sets dest from cwd and appName', () => {
-    results = makeCreateContext(argv);
+    results = makeCreateContext(argv, flags);
     assume(results.dest).equals(path.join(process.cwd(), 'my-app'));
   });
 
   it('sets relDest as relative to cwd', () => {
-    results = makeCreateContext(argv);
+    results = makeCreateContext(argv, flags);
     assume(results.relDest).equals('./my-app');
   });
 
   it('sets pkgLinks from flags', () => {
-    results = makeCreateContext(argv, { 'npm-link': ['jest', 'some-user-plugin'] });
+    results = makeCreateContext(argv, { 'npm-link': ['jest', 'some-user-plugin'], 'presets': ['godady'] });
     assume(results.pkgLinks).eqls(['jest', 'some-user-plugin']);
   });
 
   it('sets plugins short names from flags', () => {
-    results = makeCreateContext(argv, { plugins: ['jest@^1.2.3', 'some-user-plugin', '@gasket/intl-plugin'] });
+    results =
+      makeCreateContext(argv, { plugins: ['jest@^1.2.3', 'some-user-plugin', '@gasket/intl-plugin'], presets: ['nextjs'] });
     assume(results.plugins).eqls(['jest', 'some-user-plugin', 'intl']);
   });
 
   it('sets rawPlugins from flags', () => {
-    results = makeCreateContext(argv, { plugins: ['jest@^1.2.3', 'some-user-plugin', '@gasket/intl-plugin'] });
+    results =
+      makeCreateContext(argv, { plugins: ['jest@^1.2.3', 'some-user-plugin', '@gasket/intl-plugin'], presets: ['nextjs'] });
     assume(results.rawPlugins).eqls(['jest@^1.2.3', 'some-user-plugin', '@gasket/intl-plugin']);
   });
 
   it('detects whether the target directory exists', () => {
-    results = makeCreateContext(argv);
+    results = makeCreateContext(argv, flags);
     assume(results.extant).eqls(false);
   });
 
   it('notes if creating in an extant directory', () => {
-    results = makeCreateContext(['test']);
+    results = makeCreateContext(['test'], flags);
     assume(results.extant).eqls(true);
   });
 
   it('adds arrays for report messaging', () => {
-    results = makeCreateContext(argv);
+    results = makeCreateContext(argv, flags);
     assume(results.messages).an('array');
     assume(results.warnings).an('array');
     assume(results.errors).an('array');
@@ -213,7 +211,40 @@ describe('makeCreateContext', () => {
   });
 
   it('adds set for reporting generated files', () => {
-    results = makeCreateContext(argv);
+    results = makeCreateContext(argv, flags);
     assume(results.generatedFiles).a('set');
+  });
+
+  it('throws if not preset or preset path found', () => {
+    let error;
+    try {
+      results = makeCreateContext(argv);
+    } catch (err) {
+      error = err;
+    }
+
+    assume(error.message).to.eqls('No preset specified.');
+  });
+
+  it('doesnt throw if preset found', () => {
+    let error;
+    try {
+      results = makeCreateContext(argv, flags);
+    } catch (err) {
+      error = err;
+    }
+
+    assume(error).to.be.falsey();
+  });
+
+  it('doesnt throw if preset path found', () => {
+    let error;
+    try {
+      results = makeCreateContext(argv, { 'preset-path': 'somePath' });
+    } catch (err) {
+      error = err;
+    }
+
+    assume(error).to.be.falsey();
   });
 });

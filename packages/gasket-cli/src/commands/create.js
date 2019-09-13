@@ -47,7 +47,15 @@ class CreateCommand extends Command {
   async run() {
     const { argv, flags: parsedFlags } = this.parse(CreateCommand);
     const { bootstrap, generate } = parsedFlags;
-    const context = makeCreateContext(argv, parsedFlags);
+
+    let context;
+    try {
+      context = makeCreateContext(argv, parsedFlags);
+    } catch (error) {
+      console.error(chalk.red(error) + '\n');
+      console.log(this._help());
+      this.exit();
+    }
 
     try {
       if (bootstrap !== false) {
@@ -102,13 +110,12 @@ CreateCommand.description = `Create a new gasket application`;
 CreateCommand.flags = {
   'presets': flags.string({
     env: 'GASKET_PRESETS',
-    default: ['default'],
     char: 'p',
     multiple: true,
     parse: commasToArray,
-    description: `Initial gasket preset(s) to use (Defaults to @gasket/default-preset).
-Can be set as short name with version (e.g. --presets default@^1.0.0)
-Or other (multiple) custom presets (e.g. --presets my-gasket-preset@1.0.0.beta-1,default@^1.0.0)`
+    description: `Initial gasket preset(s) to use.
+Can be set as short name with version (e.g. --presets nextjs@^1.0.0)
+Or other (multiple) custom presets (e.g. --presets my-gasket-preset@1.0.0.beta-1,nextjs@^1.0.0)`
   }),
   'plugins': flags.string({
     env: 'GASKET_PLUGINS',

@@ -1,7 +1,7 @@
 /* eslint-disable max-len, max-statements */
 const fs = require('fs');
 const path = require('path');
-const { addPluginsToContext } = require('../scaffold/plugin-utils');
+const { addPluginsToContext } = require('../scaffold/utils');
 
 /**
  * The CreateRuntime represents a shallow proxy to a CreateContext
@@ -89,9 +89,7 @@ function flatten(acc, values) {
  * -- Added by `load-preset`
  *
  * @property {PresetName[]} presets - Short name of presets
- * @property {PresetDesc[]} fullPresets - resolved full name with version or local file path
- * @property {Object[]} presetPkgs - Contents of the preset's package.json
- * @property {PluginName[]} presetPlugins - All the plugins which are dependencies of the preset
+ * @property {PresetInfo[]} presetInfos - Shallow load of presets with meta data
  *
  * -- Added by `cli-version`
  *
@@ -132,7 +130,7 @@ module.exports = function makeCreateContext(argv = [], flags = {}) {
   const {
     npmconfig,
     plugins = [],
-    presets = ['default'],
+    presets = [],
     'npm-link': npmLink = [],
     'preset-path': presetPath,
     'package-manager': packageManager
@@ -143,6 +141,10 @@ module.exports = function makeCreateContext(argv = [], flags = {}) {
   const rawPresets = presets.reduce(flatten, []);
   const rawPlugins = plugins.reduce(flatten, []);
   const pkgLinks = npmLink.reduce(flatten, []);
+
+  if (!presetPath && rawPresets.length === 0) {
+    throw new Error('No preset specified.');
+  }
 
   const cwd = process.cwd();
   const dest = path.join(cwd, appName);

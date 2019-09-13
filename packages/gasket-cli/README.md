@@ -84,11 +84,10 @@ ARGUMENTS
   APPNAME  Name of the gasket application to create
 
 OPTIONS
-  -p, --presets=presets              [default: default] Initial gasket preset(s) to use (Defaults to
-                                     @gasket/default-preset).
-                                     Can be set as short name with version (e.g. --presets default@^1.0.0)
+  -p, --presets=presets              Initial gasket preset(s) to use.
+                                     Can be set as short name with version (e.g. --presets nextjs@^1.0.0)
                                      Or other (multiple) custom presets (e.g. --presets
-                                     my-gasket-preset@1.0.0.beta-1,default@^1.0.0)
+                                     my-gasket-preset@1.0.0.beta-1,nextjs@^1.0.0)
 
   --npmconfig=npmconfig              [default: ~/.npmrc] .npmrc to be used for npm actions in @gasket/cli
 
@@ -334,7 +333,7 @@ Be sure to `npm install --no-save` so you don't mutate the built in the
 
 ```bash
 # install extra dependencies
-npm install --no-save @gasket/default-preset @gasket/redux next react-dom
+npm install --no-save @gasket/nextjs-preset @gasket/redux next react-dom
 
 # run `gasket local`, for example
 ./bin/run local --config /path/to/gasket.config.js

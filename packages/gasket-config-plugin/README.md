@@ -14,10 +14,6 @@ This plugin:
 
 ## Installing
 
-`@gasket/config-plugin` is bundled with `@gasket/default-preset`, so chances
-are this is already installed. If you have a custom set of plugins and this
-isn't already installed, install with npm or yarn:
-
 ```shell
 npm install --save @gasket/config-plugin
 ```
