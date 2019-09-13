@@ -1,7 +1,7 @@
 # `@gasket/https-plugin`
 
 A plugin that creates `http` and `https` servers based on the given `gasket`
-configuration. This plugin is part of the [`@gasket/default-preset`].
+configuration.
 
 ## Table of Contents
 
@@ -94,5 +94,4 @@ You can specify what port to open up on, or what certificates to use via
 ```
 ##### LICENSE: [MIT](./LICENSE)
 
-[`@gasket/default-preset`]: TODO: Add this when it exists
 [`create-servers`]: https://github.com/indexzero/create-servers#http--https

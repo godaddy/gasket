@@ -66,7 +66,7 @@ describe('create', function () {
   });
 
   it('executes expected bootstrap actions', async () => {
-    const cmd = new CreateCommand(['myapp']);
+    const cmd = new CreateCommand(['myapp', '--presets=nextjs']);
     await cmd.run();
 
     assume(actionStubs.mkDir).is.called();
@@ -80,21 +80,21 @@ describe('create', function () {
   });
 
   it('skips bootstrap actions with --no-bootstrap', async () => {
-    const cmd = new CreateCommand(['myapp', '--no-bootstrap']);
+    const cmd = new CreateCommand(['myapp', '--no-bootstrap', '--presets=nextjs']);
     await cmd.run();
 
     assume(actionStubs.mkDir).not.called();
   });
 
   it('executes loadPkgForDebug with --no-bootstrap', async () => {
-    const cmd = new CreateCommand(['myapp', '--no-bootstrap']);
+    const cmd = new CreateCommand(['myapp', '--no-bootstrap', '--presets=nextjs']);
     await cmd.run();
 
     assume(actionStubs.loadPkgForDebug).is.called();
   });
 
   it('executes expected generate actions', async () => {
-    const cmd = new CreateCommand(['myapp']);
+    const cmd = new CreateCommand(['myapp', '--presets=nextjs']);
     await cmd.run();
 
     assume(actionStubs.promptHooks).is.called();
@@ -110,21 +110,21 @@ describe('create', function () {
   });
 
   it('skips generate actions with --no-generate', async () => {
-    const cmd = new CreateCommand(['myapp', '--no-generate']);
+    const cmd = new CreateCommand(['myapp', '--no-generate', '--presets=nextjs']);
     await cmd.run();
 
     assume(actionStubs.promptHooks).not.called();
   });
 
   it('does not execute loadPkgForDebug with --no-bootstrap --no-generate', async () => {
-    const cmd = new CreateCommand(['myapp', '--no-bootstrap', '--no-generate']);
+    const cmd = new CreateCommand(['myapp', '--no-bootstrap', '--no-generate', '--presets=nextjs']);
     await cmd.run();
 
     assume(actionStubs.loadPkgForDebug).not.called();
   });
 
   it('executes printReport', async () => {
-    const cmd = new CreateCommand(['myapp']);
+    const cmd = new CreateCommand(['myapp', '--presets=nextjs']);
     await cmd.run();
 
     assume(actionStubs.printReport).is.called();
@@ -132,7 +132,7 @@ describe('create', function () {
 
   it('exits on action errors', async () => {
     actionStubs.mkDir.rejects(new Error('YOUR DRIVE EXPLODED!'));
-    const cmd = new CreateCommand(['myapp']);
+    const cmd = new CreateCommand(['myapp', '--presets=nextjs']);
     try {
       await cmd.run();
     } catch (e) {
@@ -142,7 +142,7 @@ describe('create', function () {
 
   it('dumps log on errors', async () => {
     actionStubs.mkDir.rejects(new Error('YOUR DRIVE EXPLODED!'));
-    const cmd = new CreateCommand(['myapp']);
+    const cmd = new CreateCommand(['myapp', '--presets=nextjs']);
     try {
       await cmd.run();
     } catch (e) {
@@ -152,6 +152,15 @@ describe('create', function () {
 
   it('prints exit message', async () => {
     actionStubs.mkDir.rejects(new Error('YOUR DRIVE EXPLODED!'));
+    const cmd = new CreateCommand(['myapp', '--presets=nextjs']);
+    try {
+      await cmd.run();
+    } catch (e) {
+      assume(consoleErrorStub).is.called();
+    }
+  });
+
+  it('prints exit message when no preset found', async () => {
     const cmd = new CreateCommand(['myapp']);
     try {
       await cmd.run();

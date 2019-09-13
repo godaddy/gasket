@@ -40,7 +40,7 @@ describe('The init hook', () => {
 
     assume(GasketPluginEngine).is.calledWith({
       plugins: {
-        presets: ['default'],
+        presets: [],
         add: ['foo']
       },
       root: process.cwd()

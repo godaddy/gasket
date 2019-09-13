@@ -88,18 +88,7 @@ module.exports = {
 ### Short names
 Items in these arrays are module names. Gasket supports shorthand naming;
 `'mocha'` expands to `@gasket/mocha-plugin` in the `add` and `remove` arrays,
-`default` expands to `@gasket/default-preset` in the `presets` array.
-
-If no config file or plugin configuration is present in `gasket.config.js`, the
-equivalent configuration is:
-
-```js
-module.exports = {
-  plugins: {
-    presets: ['default']
-  },
-}
-```
+`nextjs` expands to `@gasket/nextjs-preset` in the `presets` array.
 
 ## Authoring Plugins
 
