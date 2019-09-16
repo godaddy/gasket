@@ -11,6 +11,7 @@ const defaultConfig = {
     theme: 'vue',
     port: 3000,
     config: {
+      auto2top: true
     }
   }
 };

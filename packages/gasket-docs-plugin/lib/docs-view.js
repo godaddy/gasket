@@ -8,9 +8,7 @@ const writeFile = promisify(fs.writeFile);
 const isCssFile = /.css$/;
 
 module.exports = async function docsView(gasket, docsConfig) {
-
-  const { config: gasketConfig } = gasket;
-  const { docs: { docsify = {} } } = gasketConfig;
+  const { docs: { docsify = {} } } = gasket.config;
   const { docsRoot } = docsConfig;
 
   // docsify, and thus this viewer, can be disable by setting it to false in config
@@ -37,7 +35,6 @@ module.exports = async function docsView(gasket, docsConfig) {
     '//unpkg.com/docsify/lib/docsify.min.js',
     ...(docsify.scripts || [])
   ];
-
 
   const srcFile = path.join(__dirname, '..', 'generator', 'index.html');
   const tgtFile = path.join(docsRoot, 'index.html');
