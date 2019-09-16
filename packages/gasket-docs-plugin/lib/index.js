@@ -37,11 +37,6 @@ function findPluginInfo(plugin, pluginsInfos) {
   }
 }
 
-
-// const transforms = [(content) => {
-//   return content.replace('https://github.com/godaddy/gasket/tree/master/', '/');
-// }];
-
 const META_TYPES = [
   'commands',
   'structures',
@@ -161,11 +156,13 @@ class DocsConfigBuilder {
   _flattenMetaType(metaType) {
     const arr = [];
     this.plugins.forEach(pluginDoc => {
+      const { sourceRoot, targetRoot, name: from } = pluginDoc;
       arr.push(
         ...(pluginDoc.metadata[metaType] || []).map(doc => ({
           ...doc,
-          from: pluginDoc.name,
-          targetRoot: pluginDoc.targetRoot
+          from,
+          sourceRoot,
+          targetRoot
         }))
       );
     });
@@ -280,8 +277,8 @@ async function buildDocsConfig(gasket) {
   return builder.getConfig();
 }
 
-async function generateFiles(moduleDoc, docConfig) {
-  const { transforms: gTransforms = [] } = docConfig;
+async function generateFiles(moduleDoc, docsConfig) {
+  const { transforms: gTransforms = [] } = docsConfig;
   const { sourceRoot, targetRoot, files, transforms = [] } = moduleDoc;
 
   const allTransforms = gTransforms.concat(transforms);
@@ -296,7 +293,7 @@ async function generateFiles(moduleDoc, docConfig) {
       let content = await readFile(source, 'utf8');
       content = allTransforms.reduce((acc, tx) => {
         if (tx.test.test(source)) {
-          return tx.handler(acc, { source, target, moduleDoc, docConfig });
+          return tx.handler(acc, { source, target, moduleDoc, docsConfig });
         }
         return content;
       }, content);
@@ -433,33 +430,32 @@ module.exports = {
           'docs/**/*',
           'more-docs/**/*'
         ],
-        // transforms: [{
-        //   global: true,
-        //   test: '/(node_modules\\/@gasket|packages\\/gasket-.+)\\/.+\\.md$/',
-        //   handler: (content, { source, docsConfig }) => {
-        //     // console.log('global transform', source);
-        //     // // normalize all relative /packages links back to repo urls
-        //     // content = content.replace(/(]\s?:\s?|]\()(\/packages)\/gasket-.+\/.+/, (match, p1) => {
-        //     //   return [p1, 'https://github.com/godaddy/gasket/tree/master/packages/'].join();
-        //     // });
-        //     // // for any packages that have been collocated, make relative links
-        //     // content = content.replace(/(]\s?:\s?|]\()(https:\/\/github.com\/godaddy\/gasket\/tree\/.+\/packages\/)gasket-.+\/.+/, (match, p1, p2) => {
-        //     //   const modName = p2.replace('gasket-', '@gasket/');
-        //     //   const tgtDoc = docsConfig.plugins.concat(docsConfig.modules).find(m => m.name === modName);
-        //     //   if (tgtDoc) {
-        //     //     return [p1, tgtDoc.targetRoot].join();
-        //     //   }
-        //     //   return [p1, p2].join();
-        //     // });
-        //     return content;
-        //   }
-        // }, {
-        //   test: /*.md$/,
-        //   handler: (content, { source, moduleDoc }) => {
-        //     console.log('local transform', source);
-        //     return content;
-        //   }
-        // }]
+        transforms: [{
+          global: true,
+          test: /(node_modules\/@gasket|packages\/gasket-.+)\/.+\.md$/,
+          handler: (content, { docsConfig }) => {
+            //
+            // normalize all relative /packages links back to repo urls
+            //
+            content = content.replace(/(]\s?:\s?|]\()(\/packages\/)(gasket-.+)(\/.+)/g, (match, p1, p2, p3, p4) => {
+              return [p1, 'https://github.com/godaddy/gasket/tree/master/packages/', p3, p4].join('');
+            });
+
+            //
+            // for any packages that have been collocated, make relative links, otherwise leave as github urls
+            //
+            content = content.replace(/(]\s?:\s?|]\()(https:\/\/github.com\/godaddy\/gasket\/tree\/.+\/packages\/)(gasket-.+)(\/.+)/g, (match, p1, p2, p3, p4) => {
+              const modName = p3.replace('gasket-', '@gasket/');
+              const tgtDoc = docsConfig.plugins.concat(docsConfig.modules).find(m => m.name === modName);
+              if (tgtDoc) {
+                const relRoot = path.relative(docsConfig.docsRoot, tgtDoc.targetRoot);
+                return [p1, relRoot, p4].join('');
+              }
+              return match;
+            });
+            return content;
+          }
+        }]
       };
     },
     docsView: require('./docs-view')
