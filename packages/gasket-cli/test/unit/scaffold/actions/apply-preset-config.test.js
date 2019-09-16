@@ -104,4 +104,6 @@ describe('applyPresetConfig', function () {
     assume(mockContext).property('grape', 'purple');
     assume(mockContext).property('pineapple', 'yellow');
   });
+
+  it('should use the presets\' config to populate the application\'s config');
 });

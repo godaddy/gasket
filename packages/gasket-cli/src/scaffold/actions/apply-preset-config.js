@@ -30,9 +30,10 @@ function applyPresetConfig(context) {
 
   // Use config object to instantiate any application-level configuration
   // necessitated by the preset.
-  Object.keys(flattened).forEach(preset => {
-    context.gasketConfig.add(preset.config);
-  });
+  console.log(context, flattened);
+  // Object.keys(flattened).forEach(preset => {
+  //   context.gasketConfig.add(preset.config);
+  // });
 }
 
 module.exports = action('Apply preset context', applyPresetConfig, { startSpinner: false });
