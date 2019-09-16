@@ -2,7 +2,7 @@ const action = require('../action-wrapper');
 const { flattenPresets } = require('../utils');
 
 /**
- * Extracts predefined createContext from presets and applies to context.
+ * Extracts predefined createContext and config from presets and applies to context.
  * This allows presets to preemptively define fill in the create context.
  * This will prevent prompts from appearing for the associated prompts.
  *
@@ -19,11 +19,20 @@ const { flattenPresets } = require('../utils');
 function applyPresetConfig(context) {
   const { presetInfos = [] } = context;
 
-  const presetContext = flattenPresets(presetInfos).reduce((acc, presetInfo) => {
+  const flattened = flattenPresets(presetInfos);
+
+  // Use the createContext object to override any create hooks
+  const presetContext = flattened.reduce((acc, presetInfo) => {
     return { ...(presetInfo.module && presetInfo.module.createContext || {}), ...acc };
   }, context);
 
   Object.assign(context, presetContext);
+
+  // Use config object to instantiate any application-level configuration
+  // necessitated by the preset.
+  Object.keys(flattened).forEach(preset => {
+    context.gasketConfig.add(preset.config);
+  });
 }
 
 module.exports = action('Apply preset context', applyPresetConfig, { startSpinner: false });
