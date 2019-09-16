@@ -26,7 +26,8 @@ module.exports = {
       gasket.metadata = {
         app,
         presets,
-        plugins
+        plugins,
+        modules: []
       };
 
       //
@@ -38,6 +39,8 @@ module.exports = {
         // eslint-disable-next-line require-atomic-updates
         plugins[idx] = await handler(pluginInfo);
       });
+
+      // TODO (agerard): load moduleInfo for plugin modules
 
       //
       // assign plugin instances back to preset hierarchy to avoid faulty data
