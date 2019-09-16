@@ -1,5 +1,6 @@
 # `@gasket/cli`
 
+- Presets can now define application-level `config`
 - Use Loader for presets during create ([#66])
   - Presets can export createContext from module
   - `PresetInfo`s for loaded modules available on createContext
