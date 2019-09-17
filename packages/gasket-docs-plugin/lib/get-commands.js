@@ -1,0 +1,23 @@
+const buildDocsConfigSet = require('./build-config-set');
+const collateFiles = require('./collate-files');
+const generateIndex = require('./generate-index');
+
+module.exports = function getCommands(gasket, { BaseCommand }) {
+  class DocsCommand extends BaseCommand {
+    async runHooks() {
+      const docsConfigSet = await buildDocsConfigSet(gasket);
+      await collateFiles(docsConfigSet);
+      await generateIndex(docsConfigSet);
+
+      // console.log('--- docsConfig ---');
+      // console.log(docsConfig);
+
+      await gasket.exec('docsView', docsConfigSet);
+    }
+  }
+
+  DocsCommand.id = 'docs';
+  DocsCommand.description = 'Generate docs for the app';
+
+  return DocsCommand;
+};

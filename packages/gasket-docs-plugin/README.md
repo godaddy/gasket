@@ -14,10 +14,6 @@ Does the stuff
 
 Add doc configuration per plugin.
 
-### `docsConfig`
-
-Allows adjustments of the overall docs config objects.
-
 ### `docsView`
 
 Allows plugins to render the docs for the user.
@@ -54,3 +50,13 @@ module.exports = {
 graph LR
     cmd(gasket docs) --> configure --> docs --> docsConfig --> docsView
 ```
+
+[Test](./docs/TESTING.md)
+
+[Test](docs/TESTING.md)
+
+[Test](/docs/TESTING.md)
+
+[Changelog](CHANGELOG.md)
+
+[Changelog](./CHANGELOG.md)
