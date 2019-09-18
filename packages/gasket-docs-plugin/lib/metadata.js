@@ -1,5 +1,5 @@
 module.exports = function metadata(gasket, meta) {
-  const { dir } = gasket.config.docs;
+  const { outputDir } = gasket.config.docs;
   return {
     ...meta,
     commands: [{
@@ -17,7 +17,7 @@ module.exports = function metadata(gasket, meta) {
       link: 'README.md#docsView'
     }],
     structures: [{
-      name: dir,
+      name: outputDir,
       description: 'Output of gasket docs command'
     }]
   };

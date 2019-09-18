@@ -41,9 +41,9 @@ class DocsConfigBuilder {
     this.modules = [];
     this.transforms = [];
 
-    const { root = process.cwd(), docs: { dir } } = gasket.config;
+    const { root = process.cwd(), docs: { outputDir } } = gasket.config;
     this.root = root;
-    this.docsRoot = path.join(root, dir);
+    this.docsRoot = path.join(root, outputDir);
   }
 
   async _findAllFiles(moduleInfo, docsSetup) {

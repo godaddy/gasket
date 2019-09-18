@@ -1,10 +1,14 @@
+const configure = require('./configure');
+const getCommands = require('./get-commands');
+const metadata = require('./metadata');
+const docs = require('./docs');
+
 module.exports = {
   name: 'docs',
   hooks: {
-    configure: require('./configure'),
-    getCommands: require('./get-commands'),
-    metadata: require('./metadata'),
-    docs: require('./docs'),
-    docsView: require('./docs-view')
+    configure,
+    getCommands,
+    metadata,
+    docs
   }
 };

@@ -1,19 +1,10 @@
-const merge = require('deepmerge');
+const defaultsDeep = require('lodash.defaultsdeep');
 
 /**
  * Docs defaults
  */
 const defaultConfig = {
-  generate: true,
-  clean: true,
-  dir: '.docs',
-  docsify: {
-    theme: 'vue',
-    port: 3000,
-    config: {
-      auto2top: true
-    }
-  }
+  outputDir: '.docs'
 };
 
 /**
@@ -26,6 +17,6 @@ const defaultConfig = {
 module.exports = async function configureHook(gasket, baseConfig = {}) {
   const userConfig = baseConfig.docs || {};
 
-  const docs = merge.all([defaultConfig, userConfig]);
+  const docs = defaultsDeep({}, userConfig, defaultConfig);
   return ({ ...baseConfig, docs });
 };
