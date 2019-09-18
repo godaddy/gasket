@@ -170,7 +170,8 @@ class DocsConfigBuilder {
     const docConfig = await this._buildConfig(pluginInfo, { ...docsSetup, targetRoot, name, sourceRoot });
     this.plugins.push(docConfig);
 
-    // TODO (agerard): handle modules in docOptions
+    // TODO (agerard): handle modules from metadata
+    // TODO (agerard): handle modules from docsSetup
   }
 
   async addPlugins(pluginInfos) {

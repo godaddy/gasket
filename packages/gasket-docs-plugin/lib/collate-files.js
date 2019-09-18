@@ -31,14 +31,14 @@ async function processModule(moduleDocsConfig, docsConfigSet) {
       let content = await readFile(source, 'utf8');
       content = allTransforms.reduce((acc, tx) => {
         if (tx.test.test(source)) {
-          return tx.handler(acc, { filename, source, docsConfig: moduleDocsConfig, docsConfigSet });
+          return tx.handler(acc, { filename, docsConfig: moduleDocsConfig, docsConfigSet });
         }
         return content;
       }, content);
       return await writeFile(target, content);
-    } else {
-      await copyFile(source, target);
     }
+    await copyFile(source, target);
+
   }));
 }
 
