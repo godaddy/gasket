@@ -2,7 +2,7 @@ const {
   txGasketPackageLinks,
   txGasketUrlLinks,
   txAbsoluteLinks
-} = require('./transforms');
+} = require('./utils/transforms');
 
 /**
  * Specify what files to copy and transform

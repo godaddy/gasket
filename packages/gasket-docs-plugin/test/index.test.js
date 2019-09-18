@@ -31,7 +31,7 @@ const mockLoadedData = {
   plugins: [mockPluginInfo]
 };
 
-describe('Docs plugin', function () {
+describe('Plugin', function () {
   let gasket, applyStub, handlerStub;
 
   beforeEach(function () {

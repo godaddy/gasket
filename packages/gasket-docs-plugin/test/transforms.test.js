@@ -7,7 +7,7 @@ const {
   txGasketPackageLinks,
   txGasketUrlLinks,
   txAbsoluteLinks
-} = require('../lib/transforms');
+} = require('../lib/utils/transforms');
 
 
 const mockInlineStyle = `
@@ -28,7 +28,7 @@ const mockReferenceStyle = `
 [7]:https://doc.gasket.dev
 `;
 
-describe('Docs Transforms', () => {
+describe('Utils Transforms', () => {
 
   describe('makeLinkTransform', () => {
     it('returns a function', () => {
@@ -100,6 +100,11 @@ describe('Docs Transforms', () => {
 [6]: https://github.com/godaddy/gasket/tree/canary/packages/gasket-fake/path/to/bogus.md#with-hash
 [7]:https://bogus.gasket.dev
 `);
+    });
+
+    it('falls back to original if callback does not return', () => {
+      const results = makeLinkTransform(() => { /* does nothing */ })(mockReferenceStyle);
+      assume(results).equals(mockReferenceStyle);
     });
   });
 

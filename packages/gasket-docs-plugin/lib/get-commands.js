@@ -1,6 +1,6 @@
-const buildDocsConfigSet = require('./build-config-set');
-const collateFiles = require('./collate-files');
-const generateIndex = require('./generate-index');
+const buildDocsConfigSet = require('./utils/build-config-set');
+const collateFiles = require('./utils/collate-files');
+const generateIndex = require('./utils/generate-index');
 
 module.exports = function getCommands(gasket, { BaseCommand }) {
   class DocsCommand extends BaseCommand {
