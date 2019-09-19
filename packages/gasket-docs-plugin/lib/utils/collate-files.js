@@ -9,24 +9,29 @@ const mkdirp = promisify(require('mkdirp'));
 const rimraf = promisify(require('rimraf'));
 
 /**
+ * Copies configured files for a module to the target output dir and applies
+ * any transforms.
  *
- * @param {ModuleDocsConfig} moduleDocsConfig
- * @param {DocsConfigSet} docsConfigSet
+ * @param {ModuleDocsConfig} moduleDocsConfig -
+ * @param {DocsConfigSet} docsConfigSet - Configurations for collating docs
  * @returns {Promise} promise
  * @private
  */
-async function processModule(moduleDocsConfig, docsConfigSet) {
+async function processDocConfig(moduleDocsConfig, docsConfigSet) {
   const { transforms: gTransforms = [] } = docsConfigSet;
   const { sourceRoot, targetRoot, files, transforms = [] } = moduleDocsConfig;
 
-  const allTransforms = gTransforms.concat(transforms);
+  const allTransforms = transforms.concat(gTransforms);
 
   await Promise.all(files.map(async filename => {
     const source = path.join(sourceRoot, filename);
     const target = path.join(targetRoot, filename);
     await mkdirp(path.dirname(target));
 
-    // Process all files which meet transform tests
+    //
+    // Process all files which meet transform any tests
+    // Currently on supports/expects utf8 text files
+    //
     if (allTransforms.some(tx => tx.test.test(source))) {
       let content = await readFile(source, 'utf8');
       content = allTransforms.reduce((acc, tx) => {
@@ -37,14 +42,17 @@ async function processModule(moduleDocsConfig, docsConfigSet) {
       }, content);
       return await writeFile(target, content);
     }
+    //
+    // If file does not need transformed we just copy it
+    //
     await copyFile(source, target);
-
   }));
 }
 
 /**
+ * Collect and combine doc files in proper order.
  *
- * @param {DocsConfigSet} docsConfigSet
+ * @param {DocsConfigSet} docsConfigSet - Configurations for collating docs
  * @returns {Promise} promise
  */
 async function collateFiles(docsConfigSet) {
@@ -57,8 +65,8 @@ async function collateFiles(docsConfigSet) {
     return acc.concat(docsConfigSet[type]);
   }, [docsConfigSet.app]);
 
-  await Promise.all(flattened.map(moduleDocsConfig => processModule(moduleDocsConfig, docsConfigSet)));
+  await Promise.all(flattened.map(docsConfig => processDocConfig(docsConfig, docsConfigSet)));
 }
 
 module.exports = collateFiles;
-module.exports.processModule = processModule;
+module.exports.processModule = processDocConfig;

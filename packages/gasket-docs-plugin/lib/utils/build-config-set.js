@@ -6,7 +6,26 @@ const glob = promisify(require('glob'));
 const isAppPlugin = /^\/.+\/plugins\//;
 const isUrl = /^(https?:)?\/\//;
 
+/**
+ * Expected SubDocsConfig types
+ *
+ * @type {string[]}
+ */
+const subDocTypes = [
+  'commands',
+  'structures',
+  'lifecycles'
+];
 
+/**
+ * Searches for the pluginInfo from metadata for a given plugin.
+ * If the plugin does not have a name, a unique match by hooks is attempted,
+ * otherwise a console warning is issued.
+ *
+ * @param {Plugin} plugin - Plugin instance to look up info for
+ * @param {PluginInfo[]} pluginsInfos - Metadata for plugins
+ * @returns {PluginInfo|undefined} pluginsInfo
+ */
 function findPluginInfo(plugin, pluginsInfos) {
   const { name } = plugin;
   // If the plugin does not have a name, try to find a unique hooks match
@@ -27,13 +46,15 @@ function findPluginInfo(plugin, pluginsInfos) {
   }
 }
 
-const META_TYPES = [
-  'commands',
-  'structures',
-  'lifecycles'
-];
-
-class DocsConfigBuilder {
+/**
+ * Util class for constructing the DocsConfigSet
+ *
+ * type {Class}
+ */
+class DocsConfigSetBuilder {
+  /**
+   * @param {Gasket} gasket - Gasket API
+   */
   constructor(gasket) {
     this.gasket = gasket;
     this.plugins = [];
@@ -46,6 +67,14 @@ class DocsConfigBuilder {
     this.docsRoot = path.join(root, outputDir);
   }
 
+  /**
+   * Look up all doc files for a module
+   *
+   * @param {ModuleInfo} moduleInfo - Metadata for a module
+   * @param {DocsSetup} docsSetup - Docs setup
+   * @returns {Promise<string[]>} files
+   * @private
+   */
   async _findAllFiles(moduleInfo, docsSetup) {
     const { link, sourceRoot } = docsSetup;
 
@@ -62,7 +91,7 @@ class DocsConfigBuilder {
     tryAdd(link);
 
     // Add files for sub meta types docs
-    META_TYPES.forEach(metaType => {
+    subDocTypes.forEach(metaType => {
       if (metaType in moduleInfo) {
         moduleInfo[metaType].forEach(o => {
           tryAdd(o.link);
@@ -80,7 +109,16 @@ class DocsConfigBuilder {
     return Array.from(fileSet);
   }
 
-  _separateTransforms(transforms) {
+  /**
+   * Divides global and local transforms from a docsSetup.
+   * Global transforms are added to the top-level set.
+   * Local transforms will be added to the module's docConfig.
+   *
+   * @param {DocsTransform[]} transforms - Transforms to segregate
+   * @returns {DocsTransform[]} remaining local transforms
+   * @private
+   */
+  _segregateTransforms(transforms) {
     return transforms.reduce((acc, tx) => {
       if (tx.global) {
         this.transforms.push(tx);
@@ -92,12 +130,14 @@ class DocsConfigBuilder {
   }
 
   /**
+   * Constructs the DocsConfig for a moduled based on it's info and docsSetup
    *
-   * @param {ModuleInfo} moduleInfo -
+   * @param {ModuleInfo} moduleInfo - Metadata for a module
    * @param {DocsSetup} docsSetup - Includes and doc defaults
    * @returns {DocsConfig} docsConfigs
+   * @private
    */
-  async _buildConfig(moduleInfo, docsSetup = {}) {
+  async _buildDocsConfig(moduleInfo, docsSetup = {}) {
     // If doc not specified in metadata, use from options, otherwise fallback
     // homepage from package.json if it exists
     const {
@@ -105,13 +145,14 @@ class DocsConfigBuilder {
       version
     } = moduleInfo;
 
-    // In some cases, the these may have already been pre configured.
+    // In some cases, the these may have already been pre configured in setup.
     const {
       name = moduleInfo.name,
       sourceRoot = moduleInfo.path
     } = docsSetup;
 
-    const transforms = this._separateTransforms(docsSetup.transforms || []);
+    // Get only the local transforms
+    const transforms = this._segregateTransforms(docsSetup.transforms || []);
 
     const description = docsSetup.description || moduleInfo.description ||
       moduleInfo.package && moduleInfo.package.description;
@@ -139,16 +180,16 @@ class DocsConfigBuilder {
    * Flattens all sub types from plugins' metadata.
    * Add a from property with name of parent plugin.
    *
-   * @param {String} metaType - Sub type in metadata
-   * @returns {DocsConfig[]} flattened
+   * @param {string} type - Sub type in metadata
+   * @returns {SubDocsConfig[]} flattened
    * @private
    */
-  _flattenMetaType(metaType) {
+  _flattenSubType(type) {
     const arr = [];
     this.plugins.forEach(pluginDoc => {
       const { sourceRoot, targetRoot, name: from } = pluginDoc;
       arr.push(
-        ...(pluginDoc.metadata[metaType] || []).map(docsSetup => ({
+        ...(pluginDoc.metadata[type] || []).map(docsSetup => ({
           ...docsSetup,
           from,
           sourceRoot,
@@ -159,6 +200,13 @@ class DocsConfigBuilder {
     return arr;
   }
 
+  /**
+   * Add DocsConfig to the set for a plugin
+   *
+   * @param {PluginInfo} pluginInfo - Metadata for plugin
+   * @param {DocsSetup} docsSetup - Initial docs setup
+   * @async
+   */
   async addPlugin(pluginInfo, docsSetup = { link: 'README.md', includes: ['docs/**/*'] }) {
     let { name, path: sourceRoot } = pluginInfo;
     let targetRoot = path.join(this.docsRoot, 'plugins', ...name.split('/'));
@@ -167,37 +215,69 @@ class DocsConfigBuilder {
       sourceRoot = path.join(this.root);
       targetRoot = path.join(this.docsRoot, 'app');
     }
-    const docConfig = await this._buildConfig(pluginInfo, { ...docsSetup, targetRoot, name, sourceRoot });
+    const docConfig = await this._buildDocsConfig(pluginInfo, { ...docsSetup, targetRoot, name, sourceRoot });
     this.plugins.push(docConfig);
 
-    // TODO (agerard): handle modules from metadata
-    // TODO (agerard): handle modules from docsSetup
+    // TODO (agerard): handle modules from metadata and/or docsSetup
   }
 
+  /**
+   * Add DocsConfig to the set for multiple plugins
+   *
+   * @param {PluginInfo[]} pluginInfos - Metadata for multiple plugins
+   * @async
+   */
   async addPlugins(pluginInfos) {
     await Promise.all(pluginInfos.map(p => this.addPlugin(p)));
   }
 
+  /**
+   * Add DocsConfig to the set for a preset
+   *
+   * @param {PresetInfo} presetInfo - Metadata for preset
+   * @param {DocsSetup} docsSetup - Initial docs setup
+   * @async
+   */
   async addPreset(presetInfo, docsSetup = { link: 'README.md', includes: ['docs/**/*'] }) {
     const { name } = presetInfo;
     const targetRoot = path.join(this.docsRoot, 'presets', ...name.split('/'));
-    const docConfig = await this._buildConfig(presetInfo, { ...docsSetup, targetRoot });
+    const docConfig = await this._buildDocsConfig(presetInfo, { ...docsSetup, targetRoot });
     this.presets.push(docConfig);
   }
 
+  /**
+   * Add DocsConfig to the set for multiple presets
+   *
+   * @param {PresetInfo[]} presetInfos - Metadata for multiple presets
+   * @async
+   */
   async addPresets(presetInfos) {
     await Promise.all(presetInfos.map(p => this.addPreset(p)));
   }
 
+  /**
+   * Add DocsConfig to the set for the App
+   *
+   * @param {ModuleInfo} moduleInfo - Metadata for app module
+   * @param {DocsSetup} docsSetup - Initial docs setup
+   * @async
+   */
   async addApp(moduleInfo, docsSetup = { link: 'README.md', includes: ['docs/**/*'] }) {
     const targetRoot = path.join(this.docsRoot, 'app');
-    this.app = await this._buildConfig(moduleInfo, { ...docsSetup, targetRoot });
+    this.app = await this._buildDocsConfig(moduleInfo, { ...docsSetup, targetRoot });
   }
 
+  /**
+   * Add DocsConfig to the set for a module
+   *
+   * @param {ModuleInfo} moduleInfo - Metadata for a module
+   * @param {DocsSetup} docsSetup - Initial docs setup
+   * @async
+   */
   async addModule(moduleInfo, docsSetup = {}) {
     const { name } = moduleInfo;
     const targetRoot = path.join(this.docsRoot, 'modules', ...name.split('/'));
-    const docConfig = await this._buildConfig(moduleInfo, { ...docsSetup, targetRoot });
+    const docConfig = await this._buildDocsConfig(moduleInfo, { ...docsSetup, targetRoot });
     this.modules.push(docConfig);
   }
 
@@ -206,40 +286,42 @@ class DocsConfigBuilder {
   }
 
   /**
-   * Picks out properties to return as the config
+   * Picks out properties to return as the config set
    *
-   * @returns {DocsConfig} docsConfig - Configuration for docs generation
+   * @returns {DocsConfigSet} docsConfigSet - Configuration for docs generation
    */
-  getConfig() {
+  getConfigSet() {
     const { app, plugins, presets, modules, root, docsRoot, transforms } = this;
-    const metaTypes = META_TYPES.reduce((acc, metaType) => ({ ...acc, [metaType]: this._flattenMetaType(metaType) }), {});
-    return { app, plugins, presets, modules, root, docsRoot, ...metaTypes, transforms };
+    const subDocsConfigs = subDocTypes.reduce((acc, metaType) => ({
+      ...acc,
+      [metaType]: this._flattenSubType(metaType)
+    }), {});
+    return { app, plugins, presets, modules, ...subDocsConfigs, root, docsRoot, transforms };
   }
 }
 
 /**
- * Build the docs configuration
+ * Processes metadata and docsSetup hooks to assemble the set of docs configs
  *
- * Order of operations:
- *   execute docs hook
- *   construct config for hooked plugins
- *   construct config for remaining non-hooked plugins in metadata
- *   construct config for presets
- *   construct config for modules
+ * Order of operations for building docsConfig:
+ *   - docsSetup hooked plugins
+ *   - metadata or docsSetup lifecycle file for app
+ *   - metadata for plugins without docsSetup hook
+ *   - metadata for modules not processed with plugins
+ *   - metadata for presets
  *
  * @param {Gasket} gasket - Gasket API
- * @returns {DocsConfig} docsConfig
+ * @returns {DocsConfigSet} docsConfigSet
  */
-module.exports = async function buildDocsConfigSet(gasket) {
+async function buildDocsConfigSet(gasket) {
   const { metadata } = gasket;
-  const builder = new DocsConfigBuilder(gasket);
-
   const { app: appInfo } = metadata;
-  /**
-   * specify what files to include to generate, and what transforms.
-   */
-  await gasket.execApply('docs', async (plugin, handler) => {
+  const builder = new DocsConfigSetBuilder(gasket);
+
+  await gasket.execApply('docsSetup', async (plugin, handler) => {
+    //
     // If this is a lifecycle file, use it to modify the app-level docConfig
+    //
     if (!plugin) {
       const docsSetup = await handler();
       return await builder.addApp(appInfo, docsSetup);
@@ -252,7 +334,9 @@ module.exports = async function buildDocsConfigSet(gasket) {
     }
   });
 
-  // If app's docsConfig were not built during lifecycle
+  //
+  // If app's docsConfig was not built during lifecycle hook, do it now
+  //
   if (!builder.app) {
     await builder.addApp(appInfo);
   }
@@ -265,5 +349,9 @@ module.exports = async function buildDocsConfigSet(gasket) {
 
   await builder.addPresets(metadata.presets);
 
-  return builder.getConfig();
-};
+  return builder.getConfigSet();
+}
+
+module.exports = buildDocsConfigSet;
+module.exports.findPluginInfo = findPluginInfo;
+module.exports.DocsConfigSetBuilder = DocsConfigSetBuilder;

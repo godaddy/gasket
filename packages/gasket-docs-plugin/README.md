@@ -41,22 +41,131 @@ module.exports = {
 }
 ```
 
-## Hooks
+## API Reference
 
-### `docsView`
+## Typedefs
 
+<dl>
+<dt><a href="#DocsSetup">DocsSetup</a> : <code>Object</code></dt>
+<dd></dd>
+<dt><a href="#DocsConfig">DocsConfig</a> : <code>Object</code></dt>
+<dd></dd>
+<dt><a href="#ModuleDocsConfig">ModuleDocsConfig</a> : <code><a href="#DocsConfig">DocsConfig</a></code></dt>
+<dd></dd>
+<dt><a href="#SubDocsConfig">SubDocsConfig</a> : <code><a href="#DocsConfig">DocsConfig</a></code></dt>
+<dd></dd>
+<dt><a href="#LifecycleDocsConfig">LifecycleDocsConfig</a> : <code><a href="#SubDocsConfig">SubDocsConfig</a></code></dt>
+<dd></dd>
+<dt><a href="#DocsConfigSet">DocsConfigSet</a> : <code>Object</code></dt>
+<dd></dd>
+<dt><a href="#DocsTransformHandler">DocsTransformHandler</a> ⇒ <code>string</code></dt>
+<dd></dd>
+<dt><a href="#DocsTransform">DocsTransform</a> : <code>Object</code></dt>
+<dd></dd>
+</dl>
 
-```mermaid
-graph LR
-    cmd(gasket docs) --> configure --> docs --> docsConfig --> docsView
-```
+<a name="DocsSetup"></a>
 
-[Test](./docs/TESTING.md)
+## DocsSetup : <code>Object</code>
+**Kind**: global typedef  
+**Properties**
 
-[Test](docs/TESTING.md)
+| Name | Type | Description |
+| --- | --- | --- |
+| link | <code>string</code> | Markdown link relative to package root |
+| [files] | <code>Array.&lt;glob&gt;</code> |  |
+| [transforms] | [<code>Array.&lt;DocsTransform&gt;</code>](#DocsTransform) |  |
 
-[Test](/docs/TESTING.md)
+<a name="DocsConfig"></a>
 
-[Changelog](CHANGELOG.md)
+## DocsConfig : <code>Object</code>
+**Kind**: global typedef  
+**Properties**
 
-[Changelog](./CHANGELOG.md)
+| Name | Type |
+| --- | --- |
+| name | <code>string</code> | 
+| [description] | <code>string</code> | 
+| [link] | <code>string</code> | 
+| sourceRoot | <code>string</code> | 
+| targetRoot | <code>string</code> | 
+
+<a name="ModuleDocsConfig"></a>
+
+## ModuleDocsConfig : [<code>DocsConfig</code>](#DocsConfig)
+**Kind**: global typedef  
+**Properties**
+
+| Name | Type |
+| --- | --- |
+| files | <code>Array.&lt;String&gt;</code> | 
+| transforms | [<code>Array.&lt;DocsTransform&gt;</code>](#DocsTransform) | 
+| metadata | <code>Metadata</code> | 
+
+<a name="SubDocsConfig"></a>
+
+## SubDocsConfig : [<code>DocsConfig</code>](#DocsConfig)
+**Kind**: global typedef  
+**Properties**
+
+| Name | Type |
+| --- | --- |
+| from | <code>string</code> | 
+
+<a name="LifecycleDocsConfig"></a>
+
+## LifecycleDocsConfig : [<code>SubDocsConfig</code>](#SubDocsConfig)
+**Kind**: global typedef  
+**Properties**
+
+| Name | Type |
+| --- | --- |
+| method | <code>string</code> | 
+| [parent] | <code>string</code> | 
+| [command] | <code>string</code> | 
+
+<a name="DocsConfigSet"></a>
+
+## DocsConfigSet : <code>Object</code>
+**Kind**: global typedef  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| app | [<code>ModuleDocsConfig</code>](#ModuleDocsConfig) |  |
+| plugins | [<code>Array.&lt;ModuleDocsConfig&gt;</code>](#ModuleDocsConfig) |  |
+| presets | [<code>Array.&lt;ModuleDocsConfig&gt;</code>](#ModuleDocsConfig) |  |
+| modules | [<code>Array.&lt;ModuleDocsConfig&gt;</code>](#ModuleDocsConfig) |  |
+| structures | [<code>Array.&lt;SubDocsConfig&gt;</code>](#SubDocsConfig) |  |
+| commands | [<code>Array.&lt;SubDocsConfig&gt;</code>](#SubDocsConfig) |  |
+| lifecycles | [<code>Array.&lt;LifecycleDocsConfig&gt;</code>](#LifecycleDocsConfig) |  |
+| transforms | [<code>Array.&lt;DocsTransform&gt;</code>](#DocsTransform) | Global docs transforms |
+| root | <code>string</code> |  |
+| docsRoot | <code>string</code> |  |
+
+<a name="DocsTransformHandler"></a>
+
+## DocsTransformHandler ⇒ <code>string</code>
+**Kind**: global typedef  
+**Returns**: <code>string</code> - transformed content  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| content | <code>String</code> | Content |
+| data | <code>Object</code> |  |
+| data.filename | <code>String</code> | Relative package filename |
+| data.docsConfig | [<code>ModuleDocsConfig</code>](#ModuleDocsConfig) | Docs config for this file's module |
+| data.docsConfigSet | [<code>DocsConfigSet</code>](#DocsConfigSet) | - |
+
+<a name="DocsTransform"></a>
+
+## DocsTransform : <code>Object</code>
+**Kind**: global typedef  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| [global] | <code>Boolean</code> | If true, will be applied to all doc files |
+| test | <code>RegExp</code> | Expression to test against the full source file path |
+| handler | [<code>DocsTransformHandler</code>](#DocsTransformHandler) | Expression to test against the full source file path |
+

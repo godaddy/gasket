@@ -1,3 +1,5 @@
+/* eslint-disable max-statements */
+
 const fs = require('fs');
 const path = require('path');
 const { promisify } = require('util');
@@ -7,7 +9,12 @@ const writeFile = promisify(fs.writeFile);
 
 const isUrl = /^(https?:)?\/\//;
 
-
+/**
+ * Generates the index README.md
+ *
+ * @param {DocsConfigSet} docsConfigSet - Docs generation configs
+ * @returns {Promise<string>} filename
+ */
 async function generateIndex(docsConfigSet) {
   const { app: appDocs, docsRoot } = docsConfigSet;
 
@@ -42,6 +49,7 @@ async function generateIndex(docsConfigSet) {
     ]);
   };
 
+  // TODO (agerard): add Guides section
   addSection('Commands', 'Available commands', docsConfigSet.commands, { includeVersion: false });
   addSection('Lifecycles', 'Available lifecycles', docsConfigSet.lifecycles, { includeVersion: false });
   addSection('Structure', 'Available structure', docsConfigSet.structures, { includeVersion: false });
@@ -54,7 +62,9 @@ async function generateIndex(docsConfigSet) {
     addLine(`[${name}]:${link}`);
   });
 
-  return await writeFile(path.join(docsRoot, 'README.md'), content);
+  const target = path.join(docsRoot, 'README.md');
+  await writeFile(target, content);
+  return target;
 }
 
 module.exports = generateIndex;

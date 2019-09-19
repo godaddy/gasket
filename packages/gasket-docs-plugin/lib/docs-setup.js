@@ -9,8 +9,7 @@ const {
  *
  * @returns {DocsSetup} docsSetup
  */
-
-module.exports = function docs() {
+module.exports = function docsSetup() {
   return {
     link: 'README.md',
     files: [

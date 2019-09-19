@@ -1,73 +1,89 @@
 /**
+ * Setup object to describe docs configuration for a module
+ *
  * @typedef {Object} DocsSetup
  *
  * @property {string} link - Markdown link relative to package root
- * @property {glob[]} [files]
- * @property {DocsTransform[]} [transforms]
+ * @property {glob[]} [files] - Names and/or patterns of files to collect
+ * @property {DocsTransform[]} [transforms] - Transforms to apply to collected files
  */
 
 /**
+ * Base docs configuration
+ *
  * @typedef {Object} DocsConfig
  *
- * @property {string} name
- * @property {string} [description]
- * @property {string} [link]
- * @property {string} sourceRoot
- * @property {string} targetRoot
+ * @property {string} name - Name of the the module or element
+ * @property {string} [description] - Description of the module or element
+ * @property {string} [link] - Relative path to a doc from the module's package
+ * @property {string} sourceRoot - Absolute path to the module's package
+ * @property {string} targetRoot - Absolute path to output dir for the module
  */
 
 /**
+ * Docs configuration for a module
+ *
  * @typedef {DocsConfig} ModuleDocsConfig
  *
- * @property {String[]} files
- * @property {DocsTransform[]} transforms
- * @property {Metadata} metadata
+ * @property {String[]} files - Resolved files from docsSetup
+ * @property {DocsTransform[]} transforms - Local doc transforms
+ * @property {ModuleInfo} metadata - Originating metadata for this module
  */
 
 /**
+ * Docs configuration for elements of a plugin
+ *
  * @typedef {DocsConfig} SubDocsConfig
  *
- * @property {string} from
+ * @property {string} from - Name from the parent ModuleDocsConfig
  */
 
 /**
+ * Docs configuration with specifics for plugin lifecycles
+ *
  * @typedef {SubDocsConfig} LifecycleDocsConfig
  *
- * @property {string} method
- * @property {string} [parent]
- * @property {string} [command]
+ * @property {string} method - Executing method from the plugin-engine
+ * @property {string} [parent] - Lifecycle from which this one is invoked
+ * @property {string} [command] - Command from which this lifecycle is invoked
  */
 
 /**
+ * Set of docs configurations for the app
+ *
  * @typedef {Object} DocsConfigSet
  *
- * @property {ModuleDocsConfig} app
- * @property {ModuleDocsConfig[]} plugins
- * @property {ModuleDocsConfig[]} presets
- * @property {ModuleDocsConfig[]} modules
- * @property {SubDocsConfig[]} structures
- * @property {SubDocsConfig[]} commands
- * @property {LifecycleDocsConfig[]} lifecycles
- * @property {DocsTransform[]} transforms - Global docs transforms
- * @property {string} root
- * @property {string} docsRoot
+ * @property {ModuleDocsConfig} app - Docs from the main package
+ * @property {ModuleDocsConfig[]} plugins - Docs for all configured plugins
+ * @property {ModuleDocsConfig[]} presets - Docs for all configured presets
+ * @property {ModuleDocsConfig[]} modules - Docs pertinent modules
+ * @property {SubDocsConfig[]} structures - Docs describing structure elements
+ * @property {SubDocsConfig[]} commands - Docs for available commands
+ * @property {LifecycleDocsConfig[]} lifecycles - Docs for available lifecycles
+ * @property {DocsTransform[]} transforms - Global doc transforms
+ * @property {string} root - Absolute path to main package
+ * @property {string} docsRoot - Absolute path to output directory
  */
 
 /**
- * @typedef {Function} DocsTransformHandler
+ * Transform content of doc files matching test pattern
  *
- * @param {String} content - Content
- * @param {Object} data
- * @param {String} data.filename - Relative package filename
- * @param {String} data.source - Absolute source filename
- * @param {ModuleDocsConfig} data.docsConfig -
- * @param {DocsConfigSet} data.docsConfigSet -
- */
-
-/**
  * @typedef {Object} DocsTransform
  *
- * @property {Boolean} [global] - If true, will be applied to all doc files
- * @property {RegExp} test - Expression to test against the full source file path
- * @property {DocsTransformHandler} handler - Expression to test against the full source file path
+ * @property {Boolean} [global] - If true, will be applied to all files, otherwise to only files in module.
+ * @property {RegExp} test - Expression to test against the full source filename
+ * @property {DocsTransformHandler} handler - Function to modify matching files' contents
+ */
+
+/**
+ * Handler to modify file contents for a DocsTransform
+ *
+ * @typedef {Function} DocsTransformHandler
+ *
+ * @param {String} content - Doc file content to transform
+ * @param {Object} data - Additional details relating to the doc file being handled
+ * @param {String} data.filename - Relative path of this filename
+ * @param {ModuleDocsConfig} data.docsConfig - Docs config for this file's module
+ * @param {DocsConfigSet} data.docsConfigSet - Set of configs for the app
+ * @returns {string} transformed content
  */

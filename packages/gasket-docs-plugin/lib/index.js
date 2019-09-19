@@ -1,7 +1,7 @@
 const configure = require('./configure');
 const getCommands = require('./get-commands');
 const metadata = require('./metadata');
-const docs = require('./docs');
+const docsSetup = require('./docs-setup');
 
 module.exports = {
   name: 'docs',
@@ -9,6 +9,6 @@ module.exports = {
     configure,
     getCommands,
     metadata,
-    docs
+    docsSetup
   }
 };

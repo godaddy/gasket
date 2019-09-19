@@ -1,8 +1,5 @@
 const defaultsDeep = require('lodash.defaultsdeep');
 
-/**
- * Docs defaults
- */
 const defaultConfig = {
   outputDir: '.docs'
 };

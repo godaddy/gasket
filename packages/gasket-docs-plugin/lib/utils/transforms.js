@@ -7,12 +7,16 @@ const isMarkdown = /\.md$/;
 const matchLink = /(]\s?:\s?|]\()([^)\s]+)(\)|\s?)/g;
 const matchUrlLink = /^https:\/\/github.com\/godaddy\/gasket\/tree\/[^/]+\/packages\/(gasket-[^/]+)(\/.+)/;
 
-const makeLinkTransform = callback => {
-  return content => {
-    return content.replace(matchLink, (match, p1, p2, p3) => {
-      return [p1, callback(p2) || p2, p3].join('');
-    });
-  };
+/**
+ * Creates transform to modify links in markdown files
+ *
+ * @param {function(string): string} callback - Takes a link and returns modified link
+ * @returns {function(string): string} thunk that transforms content
+ */
+const makeLinkTransform = callback => content => {
+  return content.replace(matchLink, (match, p1, p2, p3) => {
+    return [p1, callback(p2) || p2, p3].join('');
+  });
 };
 
 /**
@@ -24,6 +28,7 @@ const txGasketPackageLinks = {
   global: true,
   test: /(node_modules\/@gasket|packages\/gasket-.+)\/.+\.md$/,
   /**
+   * @type {DocsTransformHandler}
    * @param {string} content - Markdown content
    * @param {DocsConfigSet} docsConfigSet - Full config set for reference
    * @returns {string} transformed content
@@ -41,8 +46,9 @@ const txGasketPackageLinks = {
     return tx(content);
   }
 };
+
 /**
- * Updates all gasket URL links to be to be relative to the collocated docs
+ * Updates all gasket URL links to be to be relative to the collated docs
  * if the target package has a docsConfig.
  *
  * @type {DocsTransform}
@@ -51,6 +57,7 @@ const txGasketUrlLinks = {
   global: true,
   test: isMarkdown,
   /**
+   * @type {DocsTransformHandler}
    * @param {string} content - Markdown content
    * @param {ModuleDocsConfig} docsConfig - Module's docConfig
    * @param {DocsConfigSet} docsConfigSet - Full config set for reference
@@ -77,7 +84,7 @@ const txGasketUrlLinks = {
 };
 
 /**
- * Updates any absolute links in collocated packages to be relative to the
+ * Updates any absolute links in collated packages to be relative to the
  * markdown file itself.
  *
  * @type {DocsTransform}
@@ -85,6 +92,13 @@ const txGasketUrlLinks = {
 const txAbsoluteLinks = {
   global: true,
   test: isMarkdown,
+  /**
+   * @type {DocsTransformHandler}
+   * @param {string} content - Markdown content
+   * @param {String} filename - Relative package filename
+   * @param {ModuleDocsConfig} docsConfig - Docs config for this file's module
+   * @returns {string} transformed content
+   */
   handler: function txAbsoluteLinks(content, { filename, docsConfig }) {
     const { targetRoot } = docsConfig;
     const dirname = path.dirname(path.join(targetRoot, filename));
