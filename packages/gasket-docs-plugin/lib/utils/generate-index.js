@@ -15,7 +15,7 @@ const isUrl = /^(https?:)?\/\//;
  * @param {DocsConfigSet} docsConfigSet - Docs generation configs
  * @returns {Promise<string>} filename
  */
-async function generateIndex(docsConfigSet) {
+function generateContent(docsConfigSet) {
   const { app: appDocs, docsRoot } = docsConfigSet;
 
   const links = [];
@@ -52,7 +52,7 @@ async function generateIndex(docsConfigSet) {
   // TODO (agerard): add Guides section
   addSection('Commands', 'Available commands', docsConfigSet.commands, { includeVersion: false });
   addSection('Lifecycles', 'Available lifecycles', docsConfigSet.lifecycles, { includeVersion: false });
-  addSection('Structure', 'Available structure', docsConfigSet.structures, { includeVersion: false });
+  addSection('Structures', 'Available structure', docsConfigSet.structures, { includeVersion: false });
   addSection('Plugins', 'All configured plugins', docsConfigSet.plugins);
   addSection('Presets', 'All configured presets', docsConfigSet.presets);
   addSection('Modules', 'Some available modules', docsConfigSet.modules);
@@ -62,9 +62,23 @@ async function generateIndex(docsConfigSet) {
     addLine(`[${name}]:${link}`);
   });
 
+  return content;
+}
+
+/**
+ * Generates the index README.md
+ *
+ * @param {DocsConfigSet} docsConfigSet - Docs generation configs
+ * @returns {Promise<string>} filename
+ */
+async function generateIndex(docsConfigSet) {
+  const { docsRoot } = docsConfigSet;
+
   const target = path.join(docsRoot, 'README.md');
+  const content = await generateContent(docsConfigSet);
   await writeFile(target, content);
   return target;
 }
 
 module.exports = generateIndex;
+module.exports.generateContent = generateContent;

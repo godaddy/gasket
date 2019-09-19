@@ -1,5 +1,4 @@
 /* eslint-disable max-nested-callbacks, max-len */
-
 const assume = require('assume');
 const sinon = require('sinon');
 const {
@@ -7,7 +6,7 @@ const {
   txGasketPackageLinks,
   txGasketUrlLinks,
   txAbsoluteLinks
-} = require('../lib/utils/transforms');
+} = require('../../lib/utils/transforms');
 
 
 const mockInlineStyle = `
