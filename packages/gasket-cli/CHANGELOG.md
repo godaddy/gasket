@@ -1,5 +1,6 @@
 # `@gasket/cli`
 
+- Support multiple --preset-path with --presets
 - Always execute `configure` lifecycle for GasketCommands ([#71])
 - Use Loader for presets during create ([#66])
   - Presets can export createContext from module
