@@ -17,7 +17,7 @@ const rimraf = promisify(require('rimraf'));
  * @returns {Promise} promise
  * @private
  */
-async function processDocConfig(moduleDocsConfig, docsConfigSet) {
+async function processModule(moduleDocsConfig, docsConfigSet) {
   const { transforms: gTransforms = [] } = docsConfigSet;
   const { sourceRoot, targetRoot, files, transforms = [] } = moduleDocsConfig;
 
@@ -65,8 +65,9 @@ async function collateFiles(docsConfigSet) {
     return acc.concat(docsConfigSet[type]);
   }, [docsConfigSet.app]);
 
-  await Promise.all(flattened.map(docsConfig => processDocConfig(docsConfig, docsConfigSet)));
+  await Promise.all(flattened.map(docsConfig => collateFiles.processModule(docsConfig, docsConfigSet)));
 }
 
+collateFiles.processModule = processModule;
+
 module.exports = collateFiles;
-module.exports.processModule = processDocConfig;

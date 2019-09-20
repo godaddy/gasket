@@ -33,35 +33,35 @@ const fullDocsConfigSet = {
   plugins: [{
     name: 'example-plugin',
     link: 'README.md',
-    targetRoot: '/path/to/app/.docs/test-app/plugins/example-command'
+    targetRoot: '/path/to/app/.docs/test-app/plugins/example-plugin'
   }],
   presets: [{
     name: 'example-preset',
     link: 'README.md',
-    targetRoot: '/path/to/app/.docs/test-app/presets/example-command'
+    targetRoot: '/path/to/app/.docs/test-app/presets/example-preset'
   }],
   modules: [{
     name: 'example-module',
     link: 'README.md',
-    targetRoot: '/path/to/app/.docs/test-app/modules/example-command'
+    targetRoot: '/path/to/app/.docs/test-app/modules/example-module'
   }],
   structures: [{
     name: 'example-structure',
     link: 'README.md#structures',
-    targetRoot: '/path/to/app/.docs/test-app/plugins/example-command'
+    targetRoot: '/path/to/app/.docs/test-app/plugins/example-plugin'
   }, {
     name: 'example-structure-no-link',
-    targetRoot: '/path/to/app/.docs/test-app/plugins/example-command'
+    targetRoot: '/path/to/app/.docs/test-app/plugins/example-plugin'
   }],
   commands: [{
     name: 'example-command',
     link: 'README.md#commands',
-    targetRoot: '/path/to/app/.docs/test-app/plugins/example-command'
+    targetRoot: '/path/to/app/.docs/test-app/plugins/example-plugin'
   }],
   lifecycles: [{
     name: 'example-lifecycle',
     link: 'README.md#lifecycles',
-    targetRoot: '/path/to/app/.docs/test-app/plugins/example-command'
+    targetRoot: '/path/to/app/.docs/test-app/plugins/example-plugin'
   }],
   transforms: [],
   root: '/path/to/app',
