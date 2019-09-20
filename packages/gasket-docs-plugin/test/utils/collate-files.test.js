@@ -2,7 +2,6 @@
 const assume = require('assume');
 const sinon = require('sinon');
 const proxyquire = require('proxyquire');
-const fs = require('fs');
 const path = require('path');
 
 const readFileStub = sinon.stub().resolves('mock-content');

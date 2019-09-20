@@ -75,10 +75,12 @@ async function generateIndex(docsConfigSet) {
   const { docsRoot } = docsConfigSet;
 
   const target = path.join(docsRoot, 'README.md');
-  const content = await generateContent(docsConfigSet);
+  const content = await generateIndex.generateContent(docsConfigSet);
   await writeFile(target, content);
   return target;
 }
 
+generateIndex.generateContent = generateContent;
+
 module.exports = generateIndex;
-module.exports.generateContent = generateContent;
+
