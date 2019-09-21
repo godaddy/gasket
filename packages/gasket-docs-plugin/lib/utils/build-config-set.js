@@ -19,14 +19,20 @@ function findPluginInfo(plugin, pluginsInfos, logger) {
       const actual = Object.keys(pluginInfo.module.hooks);
       return expectedHooks.length === actual.length && actual.every(k => expectedHooks.includes(k));
     });
-    if (!results.length || results.length > 1) {
-      logger.error(`Plugin missing name. Unable to find plugin with unique hooks: ${JSON.stringify(expectedHooks)}`);
+    if (!results.length) {
+      logger.error(`Plugin missing name. Unable to find pluginInfo with hooks: ${JSON.stringify(expectedHooks)}`);
+    } else if (results.length > 1) {
+      logger.error(`Plugin missing name. More than one pluginInfo with hooks: ${JSON.stringify(expectedHooks)}`);
     } else {
       logger.info(`Determined plugin with missing name to be: ${results[0].name}`);
       return results[0];
     }
   } else {
-    return pluginsInfos.find(p => p.module.name === name || p.name === name);
+    const results = pluginsInfos.find(p => p.module.name === name || p.name === name);
+    if (!results) {
+      logger.error(`Unable to find pluginInfo for: ${name}`);
+    }
+    return results;
   }
 }
 

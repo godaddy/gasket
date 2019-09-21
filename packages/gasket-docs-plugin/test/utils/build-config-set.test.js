@@ -13,6 +13,10 @@ const addPresetsStub = sinon.stub();
 const addModuleStub = sinon.stub();
 const addModulesStub = sinon.stub();
 const getConfigSetStub = sinon.stub();
+const mockLogger = {
+  info: sinon.stub(),
+  error: sinon.stub()
+};
 
 class MockBuilder {
   constructor() {
@@ -49,12 +53,11 @@ const buildConfigSet = proxyquire('../../lib/utils/build-config-set', {
   './config-set-builder': MockBuilder
 });
 
+const { findPluginInfo } = buildConfigSet;
+
 const makeGasket = () => ({
   execApply: sinon.stub().callsFake(),
-  logger: {
-    info: sinon.stub(),
-    error: sinon.stub()
-  },
+  logger: mockLogger,
   config: {
     root: '/path/to/app',
     docs: {
@@ -75,6 +78,15 @@ const makeGasket = () => ({
       }
     }, {
       name: '@some/unnamed-plugin',
+      module: {
+        // nameless plugin
+        hooks: {
+          one: f => f,
+          two: f => f
+        }
+      }
+    }, {
+      name: '@another/unnamed-plugin',
       module: {
         // nameless plugin
         hooks: {
@@ -174,9 +186,8 @@ describe('utils - buildConfigSet', () => {
     });
 
     it('adds plugin with associated metadata (by hooks)', async () => {
-      const [one, two] = [f => f, f => f];
-      await docsSetupCallback({ hooks: { one, two } }, mockHandler);
-      assume(addPluginStub).calledWith(mockGasket.metadata.plugins[1], mockDocsSetup);
+      await docsSetupCallback({ hooks: { one: f => f } }, mockHandler);
+      assume(addPluginStub).calledWith(mockGasket.metadata.plugins[0], mockDocsSetup);
     });
 
     it('does not add plugin if null', async () => {
@@ -190,7 +201,55 @@ describe('utils - buildConfigSet', () => {
     });
   });
 
-  describe('findModuleInfo', () => {
-    // TODO
+  describe('findPluginInfo', () => {
+    let mockPluginInfos;
+
+    beforeEach(() => {
+      mockPluginInfos = mockGasket.metadata.plugins;
+    });
+
+    it('returns found pluginInfo from plugin name', () => {
+      const result = findPluginInfo({ name: 'example-plugin' }, mockPluginInfos, mockLogger);
+      assume(result).equals(mockPluginInfos[0]);
+      assume(mockLogger.error).not.called();
+    });
+
+    it('logs error if no pluginInfo found', () => {
+      const result = findPluginInfo({ name: 'missing-plugin' }, mockPluginInfos, mockLogger);
+      assume(result).not.exists();
+      assume(mockLogger.error).calledWithMatch('Unable to find pluginInfo');
+    });
+
+    describe('when plugin missing name', () => {
+
+      it('returns found pluginInfo from plugin hooks', () => {
+        const result = findPluginInfo({ hooks: { one: f => f } }, mockPluginInfos, mockLogger);
+        assume(result).equals(mockPluginInfos[0]);
+        assume(mockLogger.error).not.called();
+      });
+
+      it('no return value if no pluginInfo found', () => {
+        const result = findPluginInfo({ hooks: { missing: f => f } }, mockPluginInfos, mockLogger);
+        assume(result).not.exists();
+      });
+
+      it('logs info for found plugin', () => {
+        const result = findPluginInfo({ hooks: { one: f => f } }, mockPluginInfos, mockLogger);
+        assume(result).equals(mockPluginInfos[0]);
+        assume(mockLogger.info).calledWithMatch('Determined plugin with missing name');
+      });
+
+      it('logs error if multiple plugins with matching hooks', () => {
+        const result = findPluginInfo({ hooks: { one: f => f, two: f => f } }, mockPluginInfos, mockLogger);
+        assume(result).not.exists();
+        assume(mockLogger.error).calledWithMatch('More than one pluginInfo');
+      });
+
+      it('logs error if no match found', () => {
+        const result = findPluginInfo({ hooks: { missing: f => f } }, mockPluginInfos, mockLogger);
+        assume(result).not.exists();
+        assume(mockLogger.error).calledWithMatch('Unable to find pluginInfo');
+      });
+    });
   });
 });
