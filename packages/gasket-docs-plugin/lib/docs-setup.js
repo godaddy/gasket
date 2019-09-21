@@ -14,9 +14,7 @@ module.exports = function docsSetup() {
     link: 'README.md',
     files: [
       'README.md',
-      'CHANGELOG.md',
-      'docs/**/*',
-      'more-docs/**/*'
+      'docs/**/*'
     ],
     transforms: [
       txGasketPackageLinks,
