@@ -46,7 +46,7 @@ describe('getCommands', () => {
     const instance = new DocsCommand();
 
     beforeEach(() => {
-      sinon.resetHistory()
+      sinon.resetHistory();
     });
 
     it('builds docsConfigSet', async () => {
