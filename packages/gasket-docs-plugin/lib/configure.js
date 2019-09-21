@@ -11,7 +11,7 @@ const defaultConfig = {
  * @param {Object} baseConfig - Base gasket config
  * @returns {Object} config
  */
-module.exports = async function configureHook(gasket, baseConfig = {}) {
+module.exports = function configureHook(gasket, baseConfig = {}) {
   const userConfig = baseConfig.docs || {};
 
   const docs = defaultsDeep({}, userConfig, defaultConfig);
