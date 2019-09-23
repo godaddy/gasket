@@ -1,5 +1,6 @@
 # `@gasket/cli`
 
+- Always execute `configure` lifecycle for GasketCommands ([#71])
 - Enable metadata for create hooks ([#64])
 
 ### 2.6.1
@@ -213,3 +214,4 @@ upon `gasket create`
 [#38]: https://github.com/godaddy/gasket/pull/38
 [#58]: https://github.com/godaddy/gasket/pull/58
 [#64]: https://github.com/godaddy/gasket/pull/64
+[#71]: https://github.com/godaddy/gasket/pull/71
