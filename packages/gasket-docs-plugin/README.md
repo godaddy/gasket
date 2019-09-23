@@ -1,171 +1,124 @@
 # `@gasket/docs-plugin`
 
-The docs command is awesomeness
+The plugin enables the **docs** command, which centralizes doc files for the
+app's plugins, presets, and supporting modules. 
+
+## Options
+
+To be set in under `docs` in the `gasket.config.js`.
+
+- `outputDir` - (string) Name of the directory, relative to the app's package,
+  where doc files will be collected to. Default is `.docs`.
 
 ## Commands
 
-### `docs`
+### docs
 
-Does the stuff
+The **docs** command, inspired by [cargo doc][rustdoc] from the Rust language, 
+allows app developers to generate documentation for their Gasket projects.
+Only those presets and plugins that are configured for a project, will be used
+to determine what documentation is available.
+
+When running this command, markdown and other files will gathered from installed
+node modules and collated to the output directory when they can be viewed
+together.
+
+#### How it works 
+
+This command will gather info about plugins and modules from their [metadata]
+and [docsSetup], and will assemble a [docsConfig] for each. These configs are
+are organized by type in a [docsConfigSet], which is then used to copy files
+to the outputDir, and perform any [transforms] as needed. An index is generated
+in markdown from docsConfigSet which serves as the entry in the doc files.
+If a plugin is installed that hooks the [docsView] lifecycle, it can serve the
+content in a more viewable fashion for the user.
 
 ## Lifecycles
 
-### `docs`
+### docsSetup
 
-Add doc configuration per plugin.
+The **docs** command will assemble configuration for plugins and modules, based
+on available `metadata`, enabled by the [@gasket/metadata-plugin].
 
-### `docsView`
+By default, the files that are collated include a package's `README.md` and any
+files that exist under a docs directory. Additionally, if any metadata defines
+`link`, these files will be collected, too.
 
-Allows plugins to render the docs for the user.
+The `docsSetup` lifecycle allows plugin developers to tune the docsConfig that
+is compile for their plugin. Files or file globs can be set, and links changed
+as needed. 
 
-By default this plugin with render docs using docsify.
-If you are implementing a different plugin with a docsView hook, you can
-disable docsify in your plugins `configure` hook.
+**Example**
 
 ```js
 module.exports = {
+  name: 'example',
   hooks: {
-    configure( gasket, config ) {
+    async docsSetup() {
       return {
-        ...config,
-        docs: {
-          ...docs,
-          docsify: false
-        }
+        link: 'OTHER.md',
+        files: [
+          'API.md',
+          'docs/**/*'
+        ],
+        transforms: [{
+          test: /\.md$/,
+          handler: content => content.replace('something', 'nothing')
+        }]
       }
-    },
-    async docsView( gasket, docsConfig ) {
-      // do something
     }
   }
 }
 ```
 
-## API Reference
+#### Transforms
 
-## Typedefs
+Transforms can also be added in the docsSetup lifecycle. These are plugins to
+adjust content for files that match the transform's test [RegExp]. By default,
+these will only affect docs collected the plugin's package. If the transform
+should be able affect all collected docs, the global property should be set
+to true.
 
-<dl>
-<dt><a href="#DocsSetup">DocsSetup</a> : <code>Object</code></dt>
-<dd></dd>
-<dt><a href="#DocsConfig">DocsConfig</a> : <code>Object</code></dt>
-<dd></dd>
-<dt><a href="#ModuleDocsConfig">ModuleDocsConfig</a> : <code><a href="#DocsConfig">DocsConfig</a></code></dt>
-<dd></dd>
-<dt><a href="#SubDocsConfig">SubDocsConfig</a> : <code><a href="#DocsConfig">DocsConfig</a></code></dt>
-<dd></dd>
-<dt><a href="#LifecycleDocsConfig">LifecycleDocsConfig</a> : <code><a href="#SubDocsConfig">SubDocsConfig</a></code></dt>
-<dd></dd>
-<dt><a href="#DocsConfigSet">DocsConfigSet</a> : <code>Object</code></dt>
-<dd></dd>
-<dt><a href="#DocsTransformHandler">DocsTransformHandler</a> ⇒ <code>string</code></dt>
-<dd></dd>
-<dt><a href="#DocsTransform">DocsTransform</a> : <code>Object</code></dt>
-<dd></dd>
-</dl>
+Additional data is available to handlers to help with transformations which
+can be read about in the [DocsTransformHandler] API.
 
-<a name="DocsSetup"></a>
+### docsView
 
-## DocsSetup : <code>Object</code>
-**Kind**: global typedef  
-**Properties**
+Allows a plugin to provide a view of the docs for the user.
 
-| Name | Type | Description |
-| --- | --- | --- |
-| link | <code>string</code> | Markdown link relative to package root |
-| [files] | <code>Array.&lt;glob&gt;</code> |  |
-| [transforms] | [<code>Array.&lt;DocsTransform&gt;</code>](#DocsTransform) |  |
+**Example**
 
-<a name="DocsConfig"></a>
+```js
+const view = require('example-markdown-viewer');
 
-## DocsConfig : <code>Object</code>
-**Kind**: global typedef  
-**Properties**
+module.exports = {
+  name: 'example',
+  hooks: {
+    async docsView(gasket, docsConfigSet) {
+      const { docsRoot } = docsConfigSet;
+    
+      await view(docsRoot);
+    }
+  }
+}
+```
 
-| Name | Type |
-| --- | --- |
-| name | <code>string</code> | 
-| [description] | <code>string</code> | 
-| [link] | <code>string</code> | 
-| sourceRoot | <code>string</code> | 
-| targetRoot | <code>string</code> | 
+The [@gasket/docsify-plugin] hooks this lifecycle, to render the docs using
+Docsify.
 
-<a name="ModuleDocsConfig"></a>
+<!-- LINKS -->
 
-## ModuleDocsConfig : [<code>DocsConfig</code>](#DocsConfig)
-**Kind**: global typedef  
-**Properties**
+[transforms]: #transforms
+[docsView]: #docsview
 
-| Name | Type |
-| --- | --- |
-| files | <code>Array.&lt;String&gt;</code> | 
-| transforms | [<code>Array.&lt;DocsTransform&gt;</code>](#DocsTransform) | 
-| metadata | <code>Metadata</code> | 
+[DocsSetup]: docs/api.md#DocsSetup
+[DocsConfig]: docs/api.md#DocsConfig
+[DocsConfigSet]: docs/api.md#DocsConfigSet
+[DocsTransform]: docs/api.md#DocsTransform
+[DocsTransformHandler]: docs/api.md#DocsTransformHandler
 
-<a name="SubDocsConfig"></a>
+[@gasket/docsify-plugin]: /packages/gasket-docsify-plugin/README.md
+[metadata]: /packages/gasket-metadata-plugin/README.md
 
-## SubDocsConfig : [<code>DocsConfig</code>](#DocsConfig)
-**Kind**: global typedef  
-**Properties**
-
-| Name | Type |
-| --- | --- |
-| from | <code>string</code> | 
-
-<a name="LifecycleDocsConfig"></a>
-
-## LifecycleDocsConfig : [<code>SubDocsConfig</code>](#SubDocsConfig)
-**Kind**: global typedef  
-**Properties**
-
-| Name | Type |
-| --- | --- |
-| method | <code>string</code> | 
-| [parent] | <code>string</code> | 
-| [command] | <code>string</code> | 
-
-<a name="DocsConfigSet"></a>
-
-## DocsConfigSet : <code>Object</code>
-**Kind**: global typedef  
-**Properties**
-
-| Name | Type | Description |
-| --- | --- | --- |
-| app | [<code>ModuleDocsConfig</code>](#ModuleDocsConfig) |  |
-| plugins | [<code>Array.&lt;ModuleDocsConfig&gt;</code>](#ModuleDocsConfig) |  |
-| presets | [<code>Array.&lt;ModuleDocsConfig&gt;</code>](#ModuleDocsConfig) |  |
-| modules | [<code>Array.&lt;ModuleDocsConfig&gt;</code>](#ModuleDocsConfig) |  |
-| structures | [<code>Array.&lt;SubDocsConfig&gt;</code>](#SubDocsConfig) |  |
-| commands | [<code>Array.&lt;SubDocsConfig&gt;</code>](#SubDocsConfig) |  |
-| lifecycles | [<code>Array.&lt;LifecycleDocsConfig&gt;</code>](#LifecycleDocsConfig) |  |
-| transforms | [<code>Array.&lt;DocsTransform&gt;</code>](#DocsTransform) | Global docs transforms |
-| root | <code>string</code> |  |
-| docsRoot | <code>string</code> |  |
-
-<a name="DocsTransformHandler"></a>
-
-## DocsTransformHandler ⇒ <code>string</code>
-**Kind**: global typedef  
-**Returns**: <code>string</code> - transformed content  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| content | <code>String</code> | Content |
-| data | <code>Object</code> |  |
-| data.filename | <code>String</code> | Relative package filename |
-| data.docsConfig | [<code>ModuleDocsConfig</code>](#ModuleDocsConfig) | Docs config for this file's module |
-| data.docsConfigSet | [<code>DocsConfigSet</code>](#DocsConfigSet) | - |
-
-<a name="DocsTransform"></a>
-
-## DocsTransform : <code>Object</code>
-**Kind**: global typedef  
-**Properties**
-
-| Name | Type | Description |
-| --- | --- | --- |
-| [global] | <code>Boolean</code> | If true, will be applied to all doc files |
-| test | <code>RegExp</code> | Expression to test against the full source file path |
-| handler | [<code>DocsTransformHandler</code>](#DocsTransformHandler) | Expression to test against the full source file path |
-
+[rustdoc]:https://doc.rust-lang.org/rustdoc/
+[RegExp]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions

@@ -1,5 +1,5 @@
 /**
- * Attach additional metadata to pluginInfo
+ * Attach additional metadata to pluginData
  *
  * @param {Gasket} gasket - Gasket
  * @param {Object} meta - Initial meta data
@@ -11,7 +11,7 @@ module.exports = function metadata(gasket, meta) {
     ...meta,
     commands: [{
       name: 'docs',
-      description: 'Collates documentation from configured presets and plugins',
+      description: 'Generate docs for the app',
       link: 'README.md#commands'
     }],
     lifecycles: [{

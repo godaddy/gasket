@@ -1,15 +1,6 @@
 const cloneDeep = require('lodash.clonedeep');
 const { sanitize } = require('./utils');
 
-/**
- * Preset module with meta data
- *
- * @typedef {Object} Metadata
- * @property {ModuleInfo[]} app - App and main package info
- * @property {PresetInfo[]} presets - Preset infos with dependency hierarchy
- * @property {PluginInfo[]} plugins - Flat list of registered plugin infos
- */
-
 module.exports = {
   name: 'metadata',
   hooks: {
@@ -35,26 +26,37 @@ module.exports = {
       //
       await gasket.execApply('metadata', async ({ name }, handler) => {
         const idx = plugins.findIndex(p => p.module.name === name || p.name === name);
-        const pluginInfo = plugins[idx];
+        const pluginData = plugins[idx];
         // eslint-disable-next-line require-atomic-updates
-        plugins[idx] = await handler(pluginInfo);
+        plugins[idx] = await handler(pluginData);
       });
 
-      // TODO (agerard): load moduleInfo for plugin modules
+      // TODO (agerard): load moduleData for plugin modules
 
       //
       // assign plugin instances back to preset hierarchy to avoid faulty data
       //
-      plugins.forEach(pluginInfo => {
-        function checkPreset(presetInfo) {
-          if (presetInfo.name === pluginInfo.from) {
-            const idx = presetInfo.plugins.findIndex(p => p.name === pluginInfo.name);
-            presetInfo.plugins[idx] = pluginInfo;
+      plugins.forEach(pluginData => {
+        function checkPreset(presetData) {
+          if (presetData.name === pluginData.from) {
+            const idx = presetData.plugins.findIndex(p => p.name === pluginData.name);
+            presetData.plugins[idx] = pluginData;
           }
-          presetInfo.presets && presetInfo.presets.forEach(checkPreset);
+          presetData.presets && presetData.presets.forEach(checkPreset);
         }
         presets.forEach(checkPreset);
       });
+    },
+    metadata(gasket, pluginData) {
+      return {
+        ...pluginData,
+        lifecycles: [{
+          name: 'metadata',
+          method: 'execApply',
+          description: 'Allows plugins to adjust their metadata',
+          link: 'README.md#metadata'
+        }]
+      };
     }
   }
 };

@@ -1,36 +1,36 @@
 const DocsConfigSetBuilder = require('./config-set-builder');
 
 /**
- * Searches for the pluginInfo from metadata for a given plugin.
+ * Searches for the pluginData from metadata for a given plugin.
  * If the plugin does not have a name, a unique match by hooks is attempted,
  * otherwise a console warning is issued.
  *
  * @param {Plugin} plugin - Plugin instance to look up info for
- * @param {PluginInfo[]} pluginsInfos - Metadata for plugins
+ * @param {PluginData[]} pluginsDatas - Metadata for plugins
  * @param {Log} logger - log instance
- * @returns {PluginInfo|undefined} pluginsInfo
+ * @returns {PluginData|undefined} pluginsData
  */
-function findPluginInfo(plugin, pluginsInfos, logger) {
+function findPluginData(plugin, pluginsDatas, logger) {
   const { name } = plugin;
   // If the plugin does not have a name, try to find a unique hooks match
   if (!name) {
     const expectedHooks = Object.keys(plugin.hooks);
-    const results = pluginsInfos.filter(pluginInfo => {
-      const actual = Object.keys(pluginInfo.module.hooks);
+    const results = pluginsDatas.filter(pluginData => {
+      const actual = Object.keys(pluginData.module.hooks);
       return expectedHooks.length === actual.length && actual.every(k => expectedHooks.includes(k));
     });
     if (!results.length) {
-      logger.error(`Plugin missing name. Unable to find pluginInfo with hooks: ${JSON.stringify(expectedHooks)}`);
+      logger.error(`Plugin missing name. Unable to find pluginData with hooks: ${JSON.stringify(expectedHooks)}`);
     } else if (results.length > 1) {
-      logger.error(`Plugin missing name. More than one pluginInfo with hooks: ${JSON.stringify(expectedHooks)}`);
+      logger.error(`Plugin missing name. More than one pluginData with hooks: ${JSON.stringify(expectedHooks)}`);
     } else {
       logger.info(`Determined plugin with missing name to be: ${results[0].name}`);
       return results[0];
     }
   } else {
-    const results = pluginsInfos.find(p => p.module.name === name || p.name === name);
+    const results = pluginsDatas.find(p => p.module.name === name || p.name === name);
     if (!results) {
-      logger.error(`Unable to find pluginInfo for: ${name}`);
+      logger.error(`Unable to find pluginData for: ${name}`);
     }
     return results;
   }
@@ -51,7 +51,7 @@ function findPluginInfo(plugin, pluginsInfos, logger) {
  */
 async function buildDocsConfigSet(gasket) {
   const { metadata, logger } = gasket;
-  const { app: appInfo } = metadata;
+  const { app: appData } = metadata;
   const builder = new DocsConfigSetBuilder(gasket);
 
   await gasket.execApply('docsSetup', async (plugin, handler) => {
@@ -60,17 +60,17 @@ async function buildDocsConfigSet(gasket) {
     //
     if (!plugin) {
       const docsSetup = await handler();
-      return await builder.addApp(appInfo, docsSetup);
+      return await builder.addApp(appData, docsSetup);
     }
 
-    const pluginInfo = buildDocsConfigSet.findPluginInfo(plugin, metadata.plugins, logger);
-    if (pluginInfo) {
+    const pluginData = buildDocsConfigSet.findPluginData(plugin, metadata.plugins, logger);
+    if (pluginData) {
       const docsSetup = await handler();
-      await builder.addPlugin(pluginInfo, docsSetup);
+      await builder.addPlugin(pluginData, docsSetup);
     }
   });
 
-  await builder.addApp(appInfo);
+  await builder.addApp(appData);
   await builder.addPlugins(metadata.plugins);
   await builder.addModules(metadata.modules);
   await builder.addPresets(metadata.presets);
@@ -78,6 +78,6 @@ async function buildDocsConfigSet(gasket) {
   return builder.getConfigSet();
 }
 
-buildDocsConfigSet.findPluginInfo = findPluginInfo;
+buildDocsConfigSet.findPluginData = findPluginData;
 
 module.exports = buildDocsConfigSet;

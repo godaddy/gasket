@@ -256,7 +256,7 @@ describe('utils - DocsConfigSetBuilder', () => {
     });
   });
 
-  describe('._flattenSubType', () => {
+  describe('._flattenDetails', () => {
     beforeEach(async () => {
       await instance.addPlugins([{
         name: 'example-plugin',

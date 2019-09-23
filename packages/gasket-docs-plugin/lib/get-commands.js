@@ -3,7 +3,7 @@ const collateFiles = require('./utils/collate-files');
 const generateIndex = require('./utils/generate-index');
 
 /**
- * Attach additional metadata to pluginInfo
+ * Get the docs command
  *
  * @param {Gasket} gasket - Gasket
  * @param {Object} BaseCommand - Base Gasket command to extend

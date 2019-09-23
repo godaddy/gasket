@@ -27,13 +27,13 @@
  *
  * @property {String[]} files - Resolved files from docsSetup
  * @property {DocsTransform[]} transforms - Local doc transforms
- * @property {ModuleInfo} metadata - Originating metadata for this module
+ * @property {ModuleData} metadata - Originating metadata for this module
  */
 
 /**
- * Docs configuration for elements of a plugin
+ * Docs configuration for members of a plugin
  *
- * @typedef {DocsConfig} SubDocsConfig
+ * @typedef {DocsConfig} DetailDocsConfig
  *
  * @property {string} from - Name from the parent ModuleDocsConfig
  */
@@ -41,7 +41,7 @@
 /**
  * Docs configuration with specifics for plugin lifecycles
  *
- * @typedef {SubDocsConfig} LifecycleDocsConfig
+ * @typedef {DetailDocsConfig} LifecycleDocsConfig
  *
  * @property {string} method - Executing method from the plugin-engine
  * @property {string} [parent] - Lifecycle from which this one is invoked
@@ -56,9 +56,9 @@
  * @property {ModuleDocsConfig} app - Docs from the main package
  * @property {ModuleDocsConfig[]} plugins - Docs for all configured plugins
  * @property {ModuleDocsConfig[]} presets - Docs for all configured presets
- * @property {ModuleDocsConfig[]} modules - Docs pertinent modules
- * @property {SubDocsConfig[]} structures - Docs describing structure elements
- * @property {SubDocsConfig[]} commands - Docs for available commands
+ * @property {ModuleDocsConfig[]} modules - Docs of supporting modules
+ * @property {DetailDocsConfig[]} structures - Docs describing structure elements
+ * @property {DetailDocsConfig[]} commands - Docs for available commands
  * @property {LifecycleDocsConfig[]} lifecycles - Docs for available lifecycles
  * @property {DocsTransform[]} transforms - Global doc transforms
  * @property {string} root - Absolute path to main package

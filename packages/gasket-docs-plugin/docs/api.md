@@ -10,17 +10,17 @@
 <dt><a href="#ModuleDocsConfig">ModuleDocsConfig</a> : <code><a href="#DocsConfig">DocsConfig</a></code></dt>
 <dd><p>Docs configuration for a module</p>
 </dd>
-<dt><a href="#SubDocsConfig">SubDocsConfig</a> : <code><a href="#DocsConfig">DocsConfig</a></code></dt>
-<dd><p>Docs configuration for elements of a plugin</p>
+<dt><a href="#DetailDocsConfig">DetailDocsConfig</a> : <code><a href="#DocsConfig">DocsConfig</a></code></dt>
+<dd><p>Docs configuration for members of a plugin</p>
 </dd>
-<dt><a href="#LifecycleDocsConfig">LifecycleDocsConfig</a> : <code><a href="#SubDocsConfig">SubDocsConfig</a></code></dt>
+<dt><a href="#LifecycleDocsConfig">LifecycleDocsConfig</a> : <code><a href="#DetailDocsConfig">DetailDocsConfig</a></code></dt>
 <dd><p>Docs configuration with specifics for plugin lifecycles</p>
 </dd>
 <dt><a href="#DocsConfigSet">DocsConfigSet</a> : <code>Object</code></dt>
 <dd><p>Set of docs configurations for the app</p>
 </dd>
 <dt><a href="#DocsTransform">DocsTransform</a> : <code>Object</code></dt>
-<dd><p>Transform content of doc files matching test pattern.</p>
+<dd><p>Transform content of doc files matching test pattern</p>
 </dd>
 <dt><a href="#DocsTransformHandler">DocsTransformHandler</a> ⇒ <code>string</code></dt>
 <dd><p>Handler to modify file contents for a DocsTransform</p>
@@ -69,12 +69,12 @@ Docs configuration for a module
 | --- | --- | --- |
 | files | <code>Array.&lt;String&gt;</code> | Resolved files from docsSetup |
 | transforms | [<code>Array.&lt;DocsTransform&gt;</code>](#DocsTransform) | Local doc transforms |
-| metadata | <code>ModuleInfo</code> | Originating metadata for this module |
+| metadata | <code>ModuleData</code> | Originating metadata for this module |
 
-<a name="SubDocsConfig"></a>
+<a name="DetailDocsConfig"></a>
 
-## SubDocsConfig : [<code>DocsConfig</code>](#DocsConfig)
-Docs configuration for elements of a plugin
+## DetailDocsConfig : [<code>DocsConfig</code>](#DocsConfig)
+Docs configuration for members of a plugin
 
 **Kind**: global typedef  
 **Properties**
@@ -85,7 +85,7 @@ Docs configuration for elements of a plugin
 
 <a name="LifecycleDocsConfig"></a>
 
-## LifecycleDocsConfig : [<code>SubDocsConfig</code>](#SubDocsConfig)
+## LifecycleDocsConfig : [<code>DetailDocsConfig</code>](#DetailDocsConfig)
 Docs configuration with specifics for plugin lifecycles
 
 **Kind**: global typedef  
@@ -110,9 +110,9 @@ Set of docs configurations for the app
 | app | [<code>ModuleDocsConfig</code>](#ModuleDocsConfig) | Docs from the main package |
 | plugins | [<code>Array.&lt;ModuleDocsConfig&gt;</code>](#ModuleDocsConfig) | Docs for all configured plugins |
 | presets | [<code>Array.&lt;ModuleDocsConfig&gt;</code>](#ModuleDocsConfig) | Docs for all configured presets |
-| modules | [<code>Array.&lt;ModuleDocsConfig&gt;</code>](#ModuleDocsConfig) | Docs pertinent modules |
-| structures | [<code>Array.&lt;SubDocsConfig&gt;</code>](#SubDocsConfig) | Docs describing structure elements |
-| commands | [<code>Array.&lt;SubDocsConfig&gt;</code>](#SubDocsConfig) | Docs for available commands |
+| modules | [<code>Array.&lt;ModuleDocsConfig&gt;</code>](#ModuleDocsConfig) | Docs of supporting modules |
+| structures | [<code>Array.&lt;DetailDocsConfig&gt;</code>](#DetailDocsConfig) | Docs describing structure elements |
+| commands | [<code>Array.&lt;DetailDocsConfig&gt;</code>](#DetailDocsConfig) | Docs for available commands |
 | lifecycles | [<code>Array.&lt;LifecycleDocsConfig&gt;</code>](#LifecycleDocsConfig) | Docs for available lifecycles |
 | transforms | [<code>Array.&lt;DocsTransform&gt;</code>](#DocsTransform) | Global doc transforms |
 | root | <code>string</code> | Absolute path to main package |
@@ -121,7 +121,7 @@ Set of docs configurations for the app
 <a name="DocsTransform"></a>
 
 ## DocsTransform : <code>Object</code>
-Transform content of doc files matching test pattern.
+Transform content of doc files matching test pattern
 
 **Kind**: global typedef  
 **Properties**

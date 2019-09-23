@@ -7,11 +7,11 @@ const isAppPlugin = /^\/.+\/plugins\//;
 const isUrl = /^(https?:)?\/\//;
 
 /**
- * Expected SubDocsConfig types
+ * Expected DetailDocsConfig types
  *
  * @type {string[]}
  */
-const subDocTypes = [
+const detailDocsTypes = [
   'commands',
   'structures',
   'lifecycles'
@@ -42,14 +42,14 @@ class DocsConfigSetBuilder {
   /**
    * Look up all doc files for a module
    *
-   * @param {ModuleInfo} moduleInfo - Metadata for a module
+   * @param {ModuleData} moduleData - Metadata for a module
    * @param {DocsSetup} docsSetup - Docs setup
    * @param {string} link - main file
    * @param {string} sourceRoot - Absolute path to the module's package
    * @returns {Promise<string[]>} files
    * @private
    */
-  async _findAllFiles(moduleInfo, docsSetup, link, sourceRoot) {
+  async _findAllFiles(moduleData, docsSetup, link, sourceRoot) {
 
     const noHash = filename => filename.split('#')[0];
     const fileSet = new Set([]);
@@ -63,10 +63,10 @@ class DocsConfigSetBuilder {
     // Add file for main doc link if not a url
     tryAdd(link);
 
-    // Add files for sub meta types docs
-    subDocTypes.forEach(metaType => {
-      if (metaType in moduleInfo) {
-        moduleInfo[metaType].forEach(o => {
+    // Add files for detail meta types docs
+    detailDocsTypes.forEach(metaType => {
+      if (metaType in moduleData) {
+        moduleData[metaType].forEach(o => {
           tryAdd(o.link);
         });
       }
@@ -105,27 +105,27 @@ class DocsConfigSetBuilder {
   /**
    * Constructs the DocsConfig for a moduled based on it's info and docsSetup
    *
-   * @param {ModuleInfo} moduleInfo - Metadata for a module
+   * @param {ModuleData} moduleData - Metadata for a module
    * @param {DocsSetup} docsSetup - Includes and doc defaults
    * @param {Object} overrides - Pre-configured properties
    * @returns {DocsConfig} docsConfigs
    * @private
    */
-  async _buildDocsConfig(moduleInfo, docsSetup = {}, overrides = {}) {
+  async _buildDocsConfig(moduleData, docsSetup = {}, overrides = {}) {
     const {
       name,
       version,
       // fallback to docsSetup or package.json content
-      link = docsSetup.link || moduleInfo.package && moduleInfo.package.homepage,
-      description = docsSetup.description || moduleInfo.package && moduleInfo.package.description
-    } = moduleInfo;
+      link = docsSetup.link || moduleData.package && moduleData.package.homepage,
+      description = docsSetup.description || moduleData.package && moduleData.package.description
+    } = moduleData;
 
-    const { sourceRoot = moduleInfo.path } = overrides;
+    const { sourceRoot = moduleData.path } = overrides;
 
     // Get only the local transforms
     const transforms = this._segregateTransforms(docsSetup.transforms || []);
 
-    const files = await this._findAllFiles(moduleInfo, docsSetup, link, sourceRoot);
+    const files = await this._findAllFiles(moduleData, docsSetup, link, sourceRoot);
 
     return {
       ...docsSetup,
@@ -137,19 +137,19 @@ class DocsConfigSetBuilder {
       ...overrides,
       transforms,
       files,
-      metadata: moduleInfo
+      metadata: moduleData
     };
   }
 
   /**
-   * Flattens all sub types from plugins' metadata.
+   * Flattens all detail types from plugins' metadata.
    * Add a from property with name of parent plugin.
    *
-   * @param {string} type - Sub type in metadata
-   * @returns {SubDocsConfig[]} flattened
+   * @param {string} type - Detail type in metadata
+   * @returns {DetailDocsConfig[]} flattened
    * @private
    */
-  _flattenSubType(type) {
+  _flattenDetails(type) {
     const arr = [];
     this._plugins.forEach(pluginDoc => {
       const { sourceRoot, targetRoot, name: from } = pluginDoc;
@@ -168,35 +168,35 @@ class DocsConfigSetBuilder {
   /**
    * Add DocsConfig to the set for the App
    *
-   * @param {ModuleInfo} moduleInfo - Metadata for app module
+   * @param {ModuleData} moduleData - Metadata for app module
    * @param {DocsSetup} docsSetup - Initial docs setup
    * @async
    */
-  async addApp(moduleInfo, docsSetup = docsSetupDefault) {
+  async addApp(moduleData, docsSetup = docsSetupDefault) {
     if (!this._app) {
       const targetRoot = path.join(this._docsRoot, 'app');
-      this._app = await this._buildDocsConfig(moduleInfo, docsSetup, { targetRoot });
+      this._app = await this._buildDocsConfig(moduleData, docsSetup, { targetRoot });
     }
   }
 
   /**
    * Add DocsConfig to the set for a plugin
    *
-   * @param {PluginInfo} pluginInfo - Metadata for plugin
+   * @param {PluginData} pluginData - Metadata for plugin
    * @param {DocsSetup} docsSetup - Initial docs setup
    * @async
    */
-  async addPlugin(pluginInfo, docsSetup = docsSetupDefault) {
-    if (this._plugins.find(p => p.metadata === pluginInfo)) return;
+  async addPlugin(pluginData, docsSetup = docsSetupDefault) {
+    if (this._plugins.find(p => p.metadata === pluginData)) return;
 
-    let { name, path: sourceRoot } = pluginInfo;
+    let { name, path: sourceRoot } = pluginData;
     let targetRoot = path.join(this._docsRoot, 'plugins', ...name.split('/'));
-    if (isAppPlugin.test(pluginInfo.name)) {
+    if (isAppPlugin.test(pluginData.name)) {
       name = path.relative(this._root, name);
       sourceRoot = path.join(this._root);
       targetRoot = path.join(this._docsRoot, 'app');
     }
-    const docConfig = await this._buildDocsConfig(pluginInfo, docsSetup, { targetRoot, name, sourceRoot });
+    const docConfig = await this._buildDocsConfig(pluginData, docsSetup, { targetRoot, name, sourceRoot });
     this._plugins.push(docConfig);
 
     // TODO (agerard): handle modules from metadata and/or docsSetup
@@ -205,63 +205,63 @@ class DocsConfigSetBuilder {
   /**
    * Add DocsConfig to the set for multiple plugins if not already added
    *
-   * @param {PluginInfo[]} pluginInfos - Metadata for multiple plugins
+   * @param {PluginData[]} pluginDatas - Metadata for multiple plugins
    * @async
    */
-  async addPlugins(pluginInfos) {
-    await Promise.all(pluginInfos.map(p => this.addPlugin(p)));
+  async addPlugins(pluginDatas) {
+    await Promise.all(pluginDatas.map(p => this.addPlugin(p)));
   }
 
   /**
    * Add DocsConfig to the set for a preset
    *
-   * @param {PresetInfo} presetInfo - Metadata for preset
+   * @param {PresetData} presetData - Metadata for preset
    * @param {DocsSetup} docsSetup - Initial docs setup
    * @async
    */
-  async addPreset(presetInfo, docsSetup = docsSetupDefault) {
-    if (this._presets.find(p => p.metadata === presetInfo)) return;
+  async addPreset(presetData, docsSetup = docsSetupDefault) {
+    if (this._presets.find(p => p.metadata === presetData)) return;
 
-    const { name } = presetInfo;
+    const { name } = presetData;
     const targetRoot = path.join(this._docsRoot, 'presets', ...name.split('/'));
-    const docConfig = await this._buildDocsConfig(presetInfo, docsSetup, { targetRoot });
+    const docConfig = await this._buildDocsConfig(presetData, docsSetup, { targetRoot });
     this._presets.push(docConfig);
   }
 
   /**
    * Add DocsConfig to the set for multiple presets if not already added
    *
-   * @param {PresetInfo[]} presetInfos - Metadata for multiple presets
+   * @param {PresetData[]} presetDatas - Metadata for multiple presets
    * @async
    */
-  async addPresets(presetInfos) {
-    await Promise.all(presetInfos.map(p => this.addPreset(p)));
+  async addPresets(presetDatas) {
+    await Promise.all(presetDatas.map(p => this.addPreset(p)));
   }
 
   /**
    * Add DocsConfig to the set for a module
    *
-   * @param {ModuleInfo} moduleInfo - Metadata for a module
+   * @param {ModuleData} moduleData - Metadata for a module
    * @param {DocsSetup} docsSetup - Initial docs setup
    * @async
    */
-  async addModule(moduleInfo, docsSetup = {}) {
-    if (this._modules.find(p => p.metadata === moduleInfo)) return;
+  async addModule(moduleData, docsSetup = {}) {
+    if (this._modules.find(p => p.metadata === moduleData)) return;
 
-    const { name } = moduleInfo;
+    const { name } = moduleData;
     const targetRoot = path.join(this._docsRoot, 'modules', ...name.split('/'));
-    const docConfig = await this._buildDocsConfig(moduleInfo, docsSetup, { targetRoot });
+    const docConfig = await this._buildDocsConfig(moduleData, docsSetup, { targetRoot });
     this._modules.push(docConfig);
   }
 
   /**
    * Add DocsConfig to the set for multiple modules if not already added
    *
-   * @param {ModuleInfo[]} moduleInfos - Metadata for multiple modules
+   * @param {ModuleData[]} moduleDatas - Metadata for multiple modules
    * @async
    */
-  async addModules(moduleInfos) {
-    await Promise.all(moduleInfos.map(p => this.addModule(p)));
+  async addModules(moduleDatas) {
+    await Promise.all(moduleDatas.map(p => this.addModule(p)));
   }
 
   /**
@@ -270,8 +270,8 @@ class DocsConfigSetBuilder {
    * @returns {DocsConfigSet} docsConfigSet - Configuration for docs generation
    */
   getConfigSet() {
-    const subDocsConfigs = subDocTypes
-      .reduce((acc, metaType) => ({ ...acc, [metaType]: this._flattenSubType(metaType) }), {});
+    const detailDocsConfigs = detailDocsTypes
+      .reduce((acc, metaType) => ({ ...acc, [metaType]: this._flattenDetails(metaType) }), {});
 
     return {
       app: this._app,
@@ -281,7 +281,7 @@ class DocsConfigSetBuilder {
       root: this._root,
       docsRoot: this._docsRoot,
       transforms: this._transforms,
-      ...subDocsConfigs
+      ...detailDocsConfigs
     };
   }
 }
