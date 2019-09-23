@@ -1,7 +1,7 @@
 const inquirer = require('inquirer');
 const action = require('../action-wrapper');
 const PackageManager = require('../package-manager');
-const { addPluginsToContext, addPluginsToPkg } = require('../plugin-utils');
+const { addPluginsToContext, addPluginsToPkg } = require('../utils');
 const { pluginIdentifier } = require('@gasket/resolve');
 const createEngine = require('../create-engine');
 
