@@ -32,7 +32,7 @@ module.exports = {
     /**
      * @param {Gasket} gasket - The Gasket API
      * @param {PluginData} data - This plugin's initial metadata
-     * @returns {Object} 
+     * @returns {Object}
      */
     async metadata(gasket, data) {
       return {
@@ -50,13 +50,13 @@ module.exports = {
     },
     /**
      * An example lifecycle hook which utilizes metadata
-     * 
+     *
      * @param {Gasket} gasket - The Gasket API
      */
     async example(gasket) {
       const { metadata } = gasket;
-     
-      if( metadata.plugins.find(pluginData => pluginData.name === 'some-plugin') ){
+
+      if (metadata.plugins.find(pluginData => pluginData.name === 'some-plugin')) {
         // only perform some action if a certain plugin is also registered
       }
     }
