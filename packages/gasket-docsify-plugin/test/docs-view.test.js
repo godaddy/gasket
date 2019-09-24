@@ -38,6 +38,7 @@ describe('docsView', () => {
       port: 3000,
       config: {
         auto2top: true,
+        relativePath: true,
         maxLevel: 4
       }
     });
