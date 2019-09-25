@@ -14,11 +14,20 @@ const jsExtension = /\.js$/i;
  * @returns {Promise<Object>} gasketConfig
  */
 module.exports = async function getGasketConfig(flags) {
-  let gasketConfig = loadConfigFile(flags);
+  let gasketConfig;
+  try {
+    gasketConfig = loadConfigFile(flags);
+    gasketConfig = addDefaultPlugins(gasketConfig);
+    gasketConfig = await addUserPlugins(gasketConfig);
+  } catch (err) {
+    if (err.code !== 'MODULE_NOT_FOUND') {
+      throw err;
+    }
+    console.warn('No gasket.config file was found. Using default configuration.');
+    gasketConfig = Object.assign({}, defaultConfig);
+  }
   gasketConfig.root = flags.root;
-  gasketConfig = addDefaultPlugins(gasketConfig);
-  gasketConfig = await addUserPlugins(gasketConfig);
-
+  gasketConfig.flags = flags;
   return gasketConfig;
 };
 
@@ -29,15 +38,7 @@ function loadConfigFile(flags) {
     ? path.join(flags.root, flags.config)
     : flags.config;
 
-  try {
-    return Object.assign({}, require(configFile));
-  } catch (err) {
-    if (err.code !== 'MODULE_NOT_FOUND') {
-      throw err;
-    }
-    console.warn('No gasket.config file was found. Using default configuration.');
-    return Object.assign({}, defaultConfig);
-  }
+  return Object.assign({}, require(configFile));
 }
 
 function addDefaultPlugins(gasketConfig) {
