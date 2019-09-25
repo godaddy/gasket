@@ -11,8 +11,8 @@ async function initHook({ id, config: oclifConfig, argv }) {
   debug('id', id);
   debug('argv', argv);
 
-  // gasket create does not have a config file present.
-  if (id === 'create' || id === '--help' || id === 'readme') return;
+  // end early for create cmd which does not use gasket.config
+  if (id === 'create') return;
 
   const { parse } = require('@oclif/parser');
   const { GasketCommand } = require('@gasket/command-plugin');
@@ -27,7 +27,8 @@ async function initHook({ id, config: oclifConfig, argv }) {
 
   try {
     const gasketConfig = await getGasketConfig(flags);
-    oclifConfig.gasket = new PluginEngine(gasketConfig);
+    const resolveFrom = flags.root;
+    oclifConfig.gasket = new PluginEngine(gasketConfig, { resolveFrom });
     await oclifConfig.gasket.exec('initOclif', { oclifConfig });
 
   } catch (err) {
