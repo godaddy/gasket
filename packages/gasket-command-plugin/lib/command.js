@@ -1,5 +1,3 @@
-const path = require('path');
-const untildify = require('untildify');
 const { Command, flags } = require('@oclif/command');
 const { applyEnvironmentOverrides } = require('@gasket/utils');
 
@@ -13,10 +11,22 @@ const GasketCommand = module.exports = class GasketCommand extends Command {
     throw new Error('The `runHooks` method must be overridden');
   }
 
+  /**
+   * Configures the environment, allowing commands that extend this class to
+   * adjust configs and flags before apply env overrides.
+   *
+   * @param {Object} gasketConfig - Gasket configurations
+   * @returns {Promise<{Object}>} gasketConfig
+   */
   async configure(gasketConfig) {
-    // Allow any user provided flags to overwrite any user provided config.
-    const userFlags = this.flags || {};
-    gasketConfig.env = userFlags.env || gasketConfig.env;
+    //
+    // make flags available in config for plugin reference
+    //
+    gasketConfig.flags = this.flags || {};
+    //
+    // Set the env to user/commmand defined flag value if set
+    //
+    gasketConfig.env = gasketConfig.flags.env || gasketConfig.env;
     if (!gasketConfig.env) {
       gasketConfig.env = 'development';
       this.warn('No env specified, falling back to "development".');
@@ -35,7 +45,10 @@ const GasketCommand = module.exports = class GasketCommand extends Command {
     this.gasket = this.config.gasket;
     // provide the name of the command used to invoke lifecycles
     this.gasket.command = this.id;
-    this.gasket.config = await this.configure(this.gasket.config);
+    this.gasket.config = await this.gasket.execWaterfall(
+      'configure',
+      await this.configure(this.gasket.config)
+    );
   }
 };
 
@@ -51,16 +64,6 @@ GasketCommand.flags = {
     default: process.env.FAUX_ROOT || process.cwd(),
     char: 'r',
     description: 'Top-level app directory'
-  }),
-  npmconfig: flags.string({
-    env: 'GASKET_NPM_USERCONFIG',
-    default: '~/.npmrc',
-    description: '.npmrc to be used for npm actions in @gasket/cli',
-    parse: (filepath) => {
-      filepath = untildify(filepath);
-      if (path.isAbsolute(filepath)) return filepath;
-      return path.resolve(process.cwd(), filepath);
-    }
   }),
   env: flags.string({
     env: 'NODE_ENV',

@@ -30,6 +30,9 @@
     "url": "https://github.com/godaddy/gasket/issues"
   },
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-command-plugin",
+  "dependencies": {
+    "@gasket/utils": "^1.2.0"
+  },
   "devDependencies": {
     "@oclif/config": "^1.13.0",
     "@oclif/errors": "^1.1.2",

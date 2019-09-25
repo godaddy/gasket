@@ -1,6 +1,6 @@
 const plugin = require('..');
 
-class MockBaseCommand {}
+class MockGasketCommand {}
 
 describe('The plugin', () => {
   let gasket;
@@ -16,20 +16,18 @@ describe('The plugin', () => {
       const oclifConfig = { plugins: [] };
       gasket.exec.mockImplementation(async (event, args) => {
         if (event === 'getCommands') {
-          class SomeCommand extends args.BaseCommand {}
+          class SomeCommand extends args.GasketCommand {}
           SomeCommand.id = 'new';
           return [SomeCommand];
         }
       });
 
       await plugin.hooks.initOclif(gasket, {
-        oclifConfig,
-        BaseCommand: MockBaseCommand
+        oclifConfig
       });
 
       expect(gasket.exec).toHaveBeenCalledWith('getCommands', {
-        oclifConfig,
-        BaseCommand: MockBaseCommand
+        GasketCommand: MockGasketCommand
       });
 
       const injectedPlugin = oclifConfig.plugins[0];
@@ -43,7 +41,7 @@ describe('The plugin', () => {
       expect(typeof Command).toEqual('function');
 
       const command = new Command();
-      expect(command).toBeInstanceOf(MockBaseCommand);
+      expect(command).toBeInstanceOf(MockGasketCommand);
     });
   });
 });

@@ -11,7 +11,6 @@ Webpack is run to bundle for both browser and server-side rendering.
 The **client** report will be the most critical for analysis in order to make
 sure an app is bundled in a way that is most optimal for users to download.
 
-
 ## Options
 
 - **`bundleAnalyzerConfig`** - (object) The base gasket.config object.
@@ -40,6 +39,11 @@ module.exports = {
   }
 }
 ```
+
+## Commands
+
+### analyze
+
 
 [webpack-bundle-analyzer]:https://github.com/webpack-contrib/webpack-bundle-analyzer
 [plugin options]:https://github.com/webpack-contrib/webpack-bundle-analyzer#options-for-plugin

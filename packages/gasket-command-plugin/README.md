@@ -19,9 +19,9 @@ module.exports = {
 };
 ```
 
-## Hooks
+## Lifecycles
 
-The following hooks are introduced by this plugin:
+The following lifecycles are introduced by this plugin:
 
 ### getCommands
 
@@ -30,7 +30,6 @@ These must have static `id` properties for the name of the commands as well.
 The hook is passed the following args:
 
 * gasket - The gasket API
-* opts.oclifConfig - The config object from OCLIF
-* opts.BaseCommand - The base Gasket command, which your commands may extend
+* opts.GasketCommand - The base Gasket command, which your commands may extend
 
 [OCLIF command]: https://oclif.io/docs/commands.html

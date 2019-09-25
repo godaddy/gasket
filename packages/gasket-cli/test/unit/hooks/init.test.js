@@ -3,7 +3,7 @@ const proxyquire = require('proxyquire').noCallThru();
 const { match, stub } = require('sinon');
 const assume = require('assume');
 
-const BaseCommand = require('../../../src/command');
+const GasketCommand = require('../../../src/command');
 const gasketConfigFile = require('../../fixtures/gasket.config');
 const defaultConfig = require('../../../src/config/defaults');
 const packageJSON = require('../../../package.json');
@@ -125,7 +125,7 @@ describe('The init hook', () => {
 
     assume(gasket.exec).is.calledWith('initOclif', {
       oclifConfig,
-      BaseCommand
+      GasketCommand
     });
   });
 

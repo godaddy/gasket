@@ -2,14 +2,24 @@ const { promisify } = require('util');
 const path = require('path');
 const fs = require('fs');
 const defaultConfig = require('./defaults');
+const defaultPlugins = require('./default-plugins');
 
 const readDir = promisify(fs.readdir);
 const jsExtension = /\.js$/i;
 
+/**
+ * Loads the initial gasket config required for instantiating the PluginEngine.
+ *
+ * @param {Object} flags - CLI Flag
+ * @returns {Promise<Object>} gasketConfig
+ */
 module.exports = async function getGasketConfig(flags) {
-  const gasketConfig = loadConfigFile(flags);
+  let gasketConfig = loadConfigFile(flags);
   gasketConfig.root = flags.root;
-  return await addUserPlugins(gasketConfig);
+  gasketConfig = addDefaultPlugins(gasketConfig);
+  gasketConfig = await addUserPlugins(gasketConfig);
+
+  return gasketConfig;
 };
 
 function loadConfigFile(flags) {
@@ -28,6 +38,17 @@ function loadConfigFile(flags) {
     console.warn('No gasket.config file was found. Using default configuration.');
     return Object.assign({}, defaultConfig);
   }
+}
+
+function addDefaultPlugins(gasketConfig) {
+  const pluginsConfig = gasketConfig.plugins || defaultConfig.plugins;
+  return {
+    ...gasketConfig,
+    plugins: {
+      ...pluginsConfig,
+      add: (pluginsConfig.add || []).concat(defaultPlugins)
+    }
+  };
 }
 
 async function addUserPlugins(gasketConfig) {
