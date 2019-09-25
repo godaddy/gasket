@@ -24,21 +24,18 @@ module.exports = async function getGasketConfig(flags) {
       throw err;
     }
     console.warn('No gasket.config file was found. Using default configuration.');
-    gasketConfig = Object.assign({}, defaultConfig);
+    const { root } = flags;
+    gasketConfig = Object.assign({ root }, defaultConfig);
   }
-  gasketConfig.root = flags.root;
-  gasketConfig.flags = flags;
   return gasketConfig;
 };
 
 function loadConfigFile(flags) {
-  // Config file is any --config provided or the join
-  // of `--root/--config`.
-  const configFile = !path.isAbsolute(flags.config)
-    ? path.join(flags.root, flags.config)
-    : flags.config;
+  const { root, config } = flags;
+  // Config file is any --config provided or the join of `--root/--config`.
+  const configFile = !path.isAbsolute(config) ? path.join(root, config) : config;
 
-  return Object.assign({}, require(configFile));
+  return Object.assign({}, require(configFile), { root });
 }
 
 function addDefaultPlugins(gasketConfig) {
