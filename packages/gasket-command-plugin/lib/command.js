@@ -20,7 +20,7 @@ const GasketCommand = module.exports = class GasketCommand extends Command {
    */
   async configure(gasketConfig) {
     //
-    // make flags available in config for plugin reference
+    // make all flags parsed for this command available from config
     //
     gasketConfig.flags = this.flags || {};
     //
@@ -37,18 +37,18 @@ const GasketCommand = module.exports = class GasketCommand extends Command {
 
   async init() {
     await super.init();
-
-    const { flags: userFlags } = this.parse(this.constructor);
-    this.flags = userFlags;
+    this.flags = this.parse(this.constructor);
 
     // "this.config" is the context that the init hook injected "gasket" into
     this.gasket = this.config.gasket;
     // provide the name of the command used to invoke lifecycles
     this.gasket.command = this.id;
-    this.gasket.config = await this.gasket.execWaterfall(
-      'configure',
-      await this.configure(this.gasket.config)
-    );
+
+    // Allow commands to modify config
+    let gasketConfig = await this.configure(this.gasket.config);
+    // Allow plugins to modify config
+    gasketConfig = await this.gasket.execWaterfall('configure', gasketConfig);
+    this.gasket.config = gasketConfig;
   }
 };
 
