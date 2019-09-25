@@ -13,7 +13,7 @@
     "test:coverage": "jest --coverage",
     "posttest": "npm run lint",
     "build": "babel src -d lib --ignore '**/*.spec.js'",
-    "prepublish": "npm run build"
+    "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",
