@@ -1,5 +1,5 @@
 /**
- * Get the analyze command
+ * Get the build, start, and local commands
  *
  * @param {Gasket} gasket - Gasket
  * @param {Object} GasketCommand - Base Gasket command to extend
@@ -49,11 +49,11 @@ module.exports = function getCommands(gasket, { GasketCommand }) {
     }
   }
   LocalCommand.id = 'local';
-  LocalCommand.description = 'Start your app in local development mode';
+  LocalCommand.description = 'Build then start your app in dev mode (env=local)';
 
   return [
     BuildCommand,
     StartCommand,
     LocalCommand
-  ]
+  ];
 };
