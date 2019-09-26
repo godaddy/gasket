@@ -13,7 +13,7 @@ module.exports = function getCommands(gasket, { GasketCommand }) {
     }
   }
 
-  DocsCommand.id = 'analyze';
+  AnalyzeCommand.id = 'analyze';
   AnalyzeCommand.description = 'Analyze application code bundles';
 
   return AnalyzeCommand;

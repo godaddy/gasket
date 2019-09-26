@@ -23,9 +23,8 @@ module.exports = function webpack(gasket, webpackConfig, data) {
     const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
     const { isServer } = data;
-    const bundleAnalyzerConfig = merge(require('./default-config'),
-      userConfig);
-    const { browser = {}, server = {} } = bundleAnalyzerConfig;
+    const bundleAnalyzerConfig = merge(require('./default-config'), userConfig);
+    const { browser, server } = bundleAnalyzerConfig;
 
     //
     // return webpack config partial
