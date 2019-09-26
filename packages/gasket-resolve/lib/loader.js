@@ -109,6 +109,21 @@ class Loader extends Resolver {
   }
 
   /**
+   * Returns the preset dependencies of a module
+   *
+   * @param {PresetName} module - Name of module to load
+   * @param {Object} [meta] - Additional meta data
+   * @returns {[String]} Preset dependencies
+   */
+  presetDependencies(module, meta) {
+    const moduleName = isModulePath.test(module) ? module : presetIdentifier(module).fullName;
+    const presetInfo = this.loadModule(moduleName, meta);
+    const { dependencies } = presetInfo.package;
+
+    return Object.keys(dependencies).filter(k => presetIdentifier.isValidFullName(k));
+  }
+
+  /**
    * Loads a preset with additional metadata
    *
    * @param {PresetName} module - Name of module to load
