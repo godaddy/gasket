@@ -5,7 +5,7 @@ const proxyquire = require('proxyquire');
 
 describe('loadPreset', () => {
   let sandbox, mockContext, mockPkgs, mockImports, loadPreset;
-  let cloneStub, mockFetcherSpy, loadPresetStub; // eslint-disable-line no-unused-vars
+  let cloneStub, mockFetcherSpy, loadPresetStub, presetDependenciesStub; // eslint-disable-line no-unused-vars
 
   beforeEach(() => {
     sandbox = sinon.createSandbox();
@@ -43,6 +43,8 @@ describe('loadPreset', () => {
 
     cloneStub = sandbox.stub();
     loadPresetStub = sandbox.stub();
+    presetDependenciesStub = sandbox.stub();
+    presetDependenciesStub.returns([]);
 
     mockImports = {
       '../fetcher': class MockFetcher {
@@ -61,6 +63,9 @@ describe('loadPreset', () => {
             loadPresetStub(...arguments);
             const info = module.includes('local-preset') ? mockPkgs['local-preset'] : mockPkgs[module];
             return { ...info, ...meta } ;
+          }
+          presetDependencies(module) {
+            return presetDependenciesStub(module);
           }
         }
       },
@@ -106,7 +111,6 @@ describe('loadPreset', () => {
       mockContext.localPresets = ['../../../fixtures/local-preset', '../../../fixtures/local-preset'];
 
       await loadPreset(mockContext);
-      console.log(mockContext);
       assume(mockContext).to.have
         .deep.property('rawPresets', ['@gasket/bogus-preset@^1.0.0', '@gasket/all-i-ever-wanted-preset@^2.0.0']);
       assume(mockContext).to.have
@@ -115,6 +119,21 @@ describe('loadPreset', () => {
       assume(mockContext.presetInfos).to.lengthOf(4);
     });
 
+    it('supports preset extensions', async () => {
+      presetDependenciesStub.withArgs('@gasket/bogus-preset@^1.0.0').returns(['@gasket/some-preset']);
+      presetDependenciesStub.returns([]);
+
+      mockContext.rawPresets = ['@gasket/bogus-preset@^1.0.0', '@gasket/all-i-ever-wanted-preset@^2.0.0'];
+      mockContext.localPresets = ['../../../fixtures/local-preset', '../../../fixtures/local-preset'];
+
+      await loadPreset(mockContext);
+      assume(mockContext).to.have
+        .deep.property('rawPresets', ['@gasket/bogus-preset@^1.0.0', '@gasket/all-i-ever-wanted-preset@^2.0.0']);
+      assume(mockContext).to.have
+        .deep.property('localPresets', ['../../../fixtures/local-preset', '../../../fixtures/local-preset']);
+      assume(mockContext).to.have.deep.property('presets', ['bogus', 'some', 'all-i-ever-wanted', 'local-preset', 'local-preset']);
+      assume(mockContext.presetInfos).to.lengthOf(5);
+    });
   });
 
   describe('local package', () => {

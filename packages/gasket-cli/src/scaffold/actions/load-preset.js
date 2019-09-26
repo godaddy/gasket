@@ -16,12 +16,35 @@ async function remotePresets(context) {
   const { cwd, npmconfig, rawPresets = [] } = context;
   if (!rawPresets) { return []; }
 
-  return await Promise.all(rawPresets.map(async rawName => {
-    const packageName = presetIdentifier(rawName).full;
-    const fetcher = new PackageFetcher({ cwd, npmconfig, packageName });
-    const pkgPath = await fetcher.clone();
-    return loader.loadPreset(pkgPath, { from: 'cli', rawName }, { shallow: true });
+  const allRemotePresets = await Promise.all(rawPresets.map(rawName => {
+    return remoteInnerPresets(rawName, cwd, npmconfig);
   }));
+  return allRemotePresets.reduce((acc, values) => acc.concat(values), []);
+}
+
+/**
+ * Fetches the preset packages and loads PresetInfos recursively
+ *
+ * @param {String} rawName - Preset name
+ * @param {String} cwd - Root path
+ * @param {Object} npmconfig - Config
+ * @returns {PresetInfo[]} loaded presetInfos
+ * @private
+ */
+async function remoteInnerPresets(rawName, cwd, npmconfig) {
+  const packageName = presetIdentifier(rawName).full;
+  const fetcher = new PackageFetcher({ cwd, npmconfig, packageName });
+  const pkgPath = await fetcher.clone();
+
+  const presetInfos = [loader.loadPreset(pkgPath, { from: 'cli', rawName }, { shallow: true })];
+
+  const presets = loader.presetDependencies(pkgPath, { from: 'cli', rawName });
+  const presetDepInfos = await Promise.all(presets.map(async presetName => {
+    return await remoteInnerPresets(presetName, cwd, npmconfig);
+  }));
+
+  const presetDepInfosFlat = presetDepInfos.reduce((acc, values) => acc.concat(values), []);
+  return presetInfos.concat(presetDepInfosFlat);
 }
 
 /**
@@ -38,7 +61,7 @@ function localPreset(context) {
   const presetInfos = [];
   localPresets.forEach(localPresetPath => {
     const pkgPath = path.resolve(cwd, localPresetPath);
-    const presetInfo = loader.loadPreset(pkgPath, { from: 'cli' }, { shallow: true });
+    const presetInfo = loader.loadPreset(pkgPath, { from: 'cli' }, { shallow: false });
     presetInfo.rawName = `${presetInfo.package.name}@file:${pkgPath}`;
     presetInfos.push(presetInfo);
   });
