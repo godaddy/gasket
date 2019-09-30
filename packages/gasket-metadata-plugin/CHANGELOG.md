@@ -3,6 +3,7 @@
 - Metadata is assigned to gasket instance, and only by this plugin ([#64])
   - Uses [Loader] from gasket instance to get [PluginInfo] and [PresetInfo] data
   - `gasket.metadata` structure matches loaded infos with functions redacted
+- Load [ModuleInfo] for main app
 
 # 1.0.0
 
@@ -16,3 +17,4 @@
 [Loader]:/packages/gasket-resolve/README.md#Loader
 [PluginInfo]:/packages/gasket-resolve/README.md#PluginInfo
 [PresetInfo]:/packages/gasket-resolve/README.md#PresetInfo
+[ModuleInfo]:/packages/gasket-resolve/README.md#ModuleInfo

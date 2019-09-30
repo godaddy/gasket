@@ -13,7 +13,7 @@ const GasketCommand = module.exports = class GasketCommand extends Command {
     throw new Error('The `runHooks` method must be overridden');
   }
 
-  async configure(gasketConfig) {
+  configure(gasketConfig) {
     // Allow any user provided flags to overwrite any user provided config.
     const userFlags = this.flags || {};
     gasketConfig.env = userFlags.env || gasketConfig.env;
@@ -35,7 +35,7 @@ const GasketCommand = module.exports = class GasketCommand extends Command {
     this.gasket = this.config.gasket;
     // provide the name of the command used to invoke lifecycles
     this.gasket.command = this.id;
-    this.gasket.config = await this.configure(this.gasket.config);
+    this.gasket.config = await this.gasket.execWaterfall('configure', this.configure(this.gasket.config));
   }
 };
 
