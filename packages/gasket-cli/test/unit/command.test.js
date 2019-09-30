@@ -30,7 +30,8 @@ describe('GasketCommand', function () {
   function createMockGasketApi(gasketConfig = {}) {
     gasket = {
       config: gasketConfig,
-      exec: stub().resolves()
+      exec: stub().resolves(),
+      execWaterfall: stub().callsFake((event, config) => config)
     };
 
     return gasket;
@@ -88,7 +89,7 @@ describe('GasketCommand', function () {
   it('has the expected API', () => {
     const command = new GasketCommand();
     assume(command);
-    assume(command.configure).is.a('asyncfunction');
+    assume(command.configure).is.a('function');
     assume(command.init).is.a('asyncfunction');
     assume(command.run).is.a('asyncfunction');
   });
@@ -225,6 +226,19 @@ describe('GasketCommand', function () {
           other: 'setting'
         }
       });
+    });
+
+    it('executes configure lifecycle', async () => {
+      await assumeInitializedWith({
+        withGasketConfig: require('../fixtures/gasket.config'),
+        expectedConfig: {
+          env: 'development',
+          some: 'config',
+          plugins: {}
+        }
+      });
+
+      assume(gasket.execWaterfall).calledWith('configure');
     });
   });
 

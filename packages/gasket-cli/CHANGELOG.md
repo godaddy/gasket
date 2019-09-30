@@ -1,5 +1,6 @@
 # `@gasket/cli`
 
+- Always execute `configure` lifecycle for GasketCommands ([#71])
 - Use Loader for presets during create ([#66])
   - Presets can export createContext from module
   - `PresetInfo`s for loaded modules available on createContext
@@ -216,4 +217,3 @@ upon `gasket create`
 [#38]: https://github.com/godaddy/gasket/pull/38
 [#58]: https://github.com/godaddy/gasket/pull/58
 [#64]: https://github.com/godaddy/gasket/pull/64
-[#66]: https://github.com/godaddy/gasket/pull/66
