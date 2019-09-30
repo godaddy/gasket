@@ -85,10 +85,42 @@ describe('loadPreset', () => {
     assume(loadPreset).property('wrapped');
   });
 
+  describe('remote and local packages', () => {
+    beforeEach(() => {
+      mockContext.localPresets = ['../../../fixtures/local-preset'];
+    });
+
+    it('includes one of each other', async () => {
+      await loadPreset(mockContext);
+      assume(mockContext.presetInfos).to.lengthOf(2);
+      assume(mockContext).to.have.deep.property('rawPresets', ['@gasket/bogus-preset@^1.0.0']);
+      assume(mockContext).to.have.deep.property('localPresets', ['../../../fixtures/local-preset']);
+      assume(mockContext.presetInfos[0]).property('rawName');
+      assume(mockContext.presetInfos[0].rawName).equals('@gasket/bogus-preset@^1.0.0');
+      assume(mockContext.presetInfos[1]).property('rawName');
+      assume(mockContext.presetInfos[1].rawName).includes('@file:');
+    });
+
+    it('includes multiple of remote and local packages', async () => {
+      mockContext.rawPresets = ['@gasket/bogus-preset@^1.0.0', '@gasket/all-i-ever-wanted-preset@^2.0.0'];
+      mockContext.localPresets = ['../../../fixtures/local-preset', '../../../fixtures/local-preset'];
+
+      await loadPreset(mockContext);
+      console.log(mockContext);
+      assume(mockContext).to.have
+        .deep.property('rawPresets', ['@gasket/bogus-preset@^1.0.0', '@gasket/all-i-ever-wanted-preset@^2.0.0']);
+      assume(mockContext).to.have
+        .deep.property('localPresets', ['../../../fixtures/local-preset', '../../../fixtures/local-preset']);
+      assume(mockContext).to.have.deep.property('presets', ['bogus', 'all-i-ever-wanted', 'local-preset', 'local-preset']);
+      assume(mockContext.presetInfos).to.lengthOf(4);
+    });
+
+  });
+
   describe('local package', () => {
     beforeEach(() => {
       mockContext.rawPresets = null;
-      mockContext.presetPath = '../../../fixtures/local-preset';
+      mockContext.localPresets = ['../../../fixtures/local-preset'];
     });
 
     it('does not instantiates Fetcher ', async () => {
@@ -100,6 +132,17 @@ describe('loadPreset', () => {
       await loadPreset(mockContext);
       assume(mockContext.presetInfos[0]).property('rawName');
       assume(mockContext.presetInfos[0].rawName).includes('@file:');
+    });
+
+    it('adds multiple local packages', async () => {
+      mockContext.localPresets = ['../../../fixtures/local-preset', '../../../fixtures/local-preset'];
+
+      await loadPreset(mockContext);
+      assume(mockContext.presetInfos).to.lengthOf(2);
+      assume(mockContext.presetInfos[0]).property('rawName');
+      assume(mockContext.presetInfos[0].rawName).includes('@file:');
+      assume(mockContext.presetInfos[1]).property('rawName');
+      assume(mockContext.presetInfos[1].rawName).includes('@file:');
     });
   });
 
