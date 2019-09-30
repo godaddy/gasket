@@ -1,139 +1,90 @@
-const path = require('path');
-const proxyquire = require('proxyquire').noCallThru();
-const { match, stub } = require('sinon');
+const proxyquire = require('proxyquire');
+const sinon = require('sinon');
 const assume = require('assume');
 
-const GasketCommand = require('../../../src/command');
-const gasketConfigFile = require('../../fixtures/gasket.config');
-const defaultConfig = require('../../../src/config/defaults');
-const packageJSON = require('../../../package.json');
+const getGasketConfigStub = sinon.stub();
+const warnStub = sinon.stub();
+const errorStub = sinon.stub();
+const parseStub = sinon.stub().returns();
+const execStub = sinon.stub().returns();
 
-describe('The init hook', () => {
-  let init, GasketPluginEngine, gasket, metrics, Metrics;
-  let oclifConfig;
+const mockError = new Error('Bad things man.');
+const mockConfig = { mocked: true };
+
+class MockCommand {}
+
+MockCommand.flags = {};
+
+const mockImports = {
+  '@gasket/plugin-engine': class PluginEngine { async exec() { execStub(...arguments); } },
+  '@gasket/command-plugin': { GasketCommand: MockCommand },
+  '../config/config-utils': { getGasketConfig: getGasketConfigStub },
+  '@oclif/parser': { parse: parseStub }
+};
+
+const pluginEngineSpy = sinon.spy(mockImports, '@gasket/plugin-engine');
+
+const _initHook = proxyquire('../../../src/hooks/init', mockImports);
+
+function initHook() {
+  return _initHook.apply({ warn: warnStub, error: errorStub }, arguments);
+}
+
+describe('init hook', () => {
 
   beforeEach(() => {
-    oclifConfig = {
-      warn: stub()
-    };
-
-    gasket = { exec: stub().resolves(), config: { plugins: { add: [] } } };
-    GasketPluginEngine = stub().returns(gasket);
-    metrics = { report: stub().resolves() };
-    Metrics = stub().returns(metrics);
-
-    init = proxyquire('../../../src/hooks/init', {
-      '@gasket/plugin-engine': GasketPluginEngine,
-      '../metrics': Metrics,
-      './default-plugins': ['foo']
-    });
+    sinon.resetHistory();
+    parseStub.returns({ flags: { root: '/path/to/app', config: 'gasket.config' } });
   });
 
-  afterEach(function () {
-    defaultConfig.plugins = {
-      presets: ['default']
-    };
+  it('ends early for create command', async () => {
+    await initHook({ id: 'create' });
+    assume(getGasketConfigStub).not.called();
   });
 
-  it('instantiates plugin engine with default plugins', async () => {
-    await runInit();
-
-    assume(GasketPluginEngine).is.calledWith({
-      plugins: {
-        presets: [],
-        add: ['foo']
-      },
-      root: process.cwd()
-    });
+  it('parses flags', async () => {
+    await initHook({ id: 'build', argv: [] });
+    assume(parseStub).called();
   });
 
-  it('has default plugins added to package json', async () => {
-    assume(packageJSON.dependencies).haveOwnProperty('@gasket/command-plugin');
-    assume(packageJSON.dependencies).haveOwnProperty('@gasket/lifecycle-plugin');
+  it('gets the gasket.config', async () => {
+    await initHook({ id: 'build', argv: [] });
+    assume(getGasketConfigStub).called();
   });
 
-  it('attaches the Gasket plugin engine to the Oclif context', async () => {
-    await runInit({
-      argv: ['--config', path.join(__dirname, '../../fixtures/gasket.config.js')]
-    });
-
-    assume(oclifConfig).property('gasket', gasket);
+  it('instantiates plugin engine with config', async () => {
+    getGasketConfigStub.resolves(mockConfig);
+    await initHook({ id: 'build', argv: [], config: {} });
+    assume(pluginEngineSpy).calledWith(mockConfig);
   });
 
-  it('reports metrics in initialization', async () => {
-    await runInit({
-      argv: ['--config', path.join(__dirname, '../../fixtures/gasket.config.js')]
-    });
-
-    assume(metrics.report).is.called(1);
+  it('instantiates plugin engine resolveFrom root', async () => {
+    getGasketConfigStub.resolves(mockConfig);
+    await initHook({ id: 'build', argv: [], config: {} });
+    assume(pluginEngineSpy).calledWith(sinon.match.object, { resolveFrom: '/path/to/app' });
   });
 
-  it('loads the `gasket.config.js` config file if present', async () => {
-    const root = path.join(__dirname, '../../fixtures');
-
-    await runInit({ argv: ['--root', root] });
-
-    assume(GasketPluginEngine).is.calledWith({
-      ...gasketConfigFile,
-      root
-    });
+  it('executes initOclif gasket lifecycle', async () => {
+    getGasketConfigStub.resolves(mockConfig);
+    await initHook({ id: 'build', argv: [], config: {} });
+    assume(execStub).calledWith('initOclif', sinon.match.object);
   });
 
-  it('uses a default config if there is no config file', async () => {
-    await runInit();
-
-    assume(GasketPluginEngine).is.calledWith({
-      ...defaultConfig,
-      root: match.string
-    });
+  it('warns and exits if no gasket.config was found', async () => {
+    getGasketConfigStub.resolves(null);
+    await initHook({ id: 'build', argv: [], config: {} });
+    assume(warnStub).calledWith('No gasket.config file was found.', { exit: 1 });
   });
 
-  it('does not swallow errors in the gasket config', async () => {
-    try {
-      await runInit({
-        argv: [
-          '--config',
-          path.join(__dirname, '../../fixtures/gasket.config.with-error.js')
-        ]
-      });
-    } catch (err) {
-      assume(err).is.instanceOf(Error);
-      return;
-    }
-
-    throw new Error('Configuration error was swallowed');
+  it('does not warn for help command if no gasket.config was found', async () => {
+    getGasketConfigStub.resolves(null);
+    await initHook({ id: 'help', argv: [], config: {} });
+    assume(warnStub).not.calledWith('No gasket.config file was found.');
   });
 
-  it('adds files in `{root}/plugins` as plugins', async () => {
-    const root = path.join(__dirname, '../../fixtures/with-plugins');
-
-    await runInit({
-      argv: ['--root', root]
-    });
-
-    assume(GasketPluginEngine).is.calledWith({
-      root,
-      plugins: {
-        presets: ['default'],
-        add: [path.join(root, './plugins/custom-plugin'), 'foo']
-      }
-    });
+  it('errors and exits if problem getting gasket.config', async () => {
+    getGasketConfigStub.rejects(mockError);
+    await initHook({ id: 'build', argv: [], config: {} });
+    assume(errorStub).calledWith(mockError, { exit: 1 });
   });
-
-  it('executes an initOclif event', async () => {
-    await runInit();
-
-    assume(gasket.exec).is.calledWith('initOclif', {
-      oclifConfig,
-      GasketCommand
-    });
-  });
-
-  async function runInit({ argv = [] } = {}) {
-    return await init({
-      id: 'build',
-      config: oclifConfig,
-      argv
-    });
-  }
 });

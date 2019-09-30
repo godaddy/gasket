@@ -1,3 +1,4 @@
+/* eslint-disable max-statements */
 const debug = require('diagnostics')('gasket:cli:hooks:init');
 /**
  * oclif hook that loads the gasket.config and instantiates the plugin-engine.
@@ -16,7 +17,7 @@ async function initHook({ id, config: oclifConfig, argv }) {
 
   const { parse } = require('@oclif/parser');
   const { GasketCommand } = require('@gasket/command-plugin');
-  const getGasketConfig = require('../config/loader');
+  const { getGasketConfig } = require('../config/config-utils');
   const PluginEngine = require('@gasket/plugin-engine');
 
   const { flags } = parse(argv, {
@@ -27,9 +28,14 @@ async function initHook({ id, config: oclifConfig, argv }) {
 
   try {
     const gasketConfig = await getGasketConfig(flags);
-    const resolveFrom = flags.root;
-    oclifConfig.gasket = new PluginEngine(gasketConfig, { resolveFrom });
-    await oclifConfig.gasket.exec('initOclif', { oclifConfig });
+
+    if (gasketConfig) {
+      const resolveFrom = flags.root;
+      oclifConfig.gasket = new PluginEngine(gasketConfig, { resolveFrom });
+      await oclifConfig.gasket.exec('initOclif', { oclifConfig });
+    } else if (id !== 'help') {
+      this.warn('No gasket.config file was found.', { exit: 1 });
+    }
 
   } catch (err) {
     this.error(err, { exit: 1 });

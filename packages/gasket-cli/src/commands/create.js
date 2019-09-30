@@ -1,6 +1,7 @@
 /* eslint-disable max-statements */
 
 const { Command, flags } = require('@oclif/command');
+const path = require('path');
 const ora = require('ora');
 const chalk = require('chalk');
 const untildify = require('untildify');
@@ -165,7 +166,7 @@ or relative to the current working directory.`,
       if (path.isAbsolute(filepath)) return filepath;
       return path.resolve(process.cwd(), filepath);
     }
-  }),
+  })
 };
 
 CreateCommand.args = [
