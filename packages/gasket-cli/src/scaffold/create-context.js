@@ -64,8 +64,8 @@ function flatten(acc, values) {
  * @property {String} dest - Path to the target app (Default: cwd/appName)
  * @property {String} relDest - Relative path to the target app
  * @property {Boolean} extant - Whether or not target directory already exists
- * @property {String} presetPath - path to a local preset package
- * @property {PresetDesc[]} rawPresets - Raw preset desc from args. Can include version constraint. Added by load-preset if using presetPath.
+ * @property {[String]} localPresets - paths to the local presets packages
+ * @property {PresetDesc[]} rawPresets - Raw preset desc from args. Can include version constraint. Added by load-preset if using localPresets.
  * @property {PluginDesc[]} rawPlugins - Raw plugin desc from flags, prompts, etc. Can include constraints.
  * @property {PluginName[]} plugins - Short names of plugins
  * @property {String[]} pkgLinks - Local packages that should be linked
@@ -132,17 +132,18 @@ module.exports = function makeCreateContext(argv = [], flags = {}) {
     plugins = [],
     presets = [],
     'npm-link': npmLink = [],
-    'preset-path': presetPath,
+    'preset-path': presetPath = [],
     'package-manager': packageManager
   } = flags;
 
   // Flatten the array of array created by the plugins flag – it
   // supports both multiple instances as well as comma-separated lists.
   const rawPresets = presets.reduce(flatten, []);
+  const localPresets = presetPath.reduce(flatten, []);
   const rawPlugins = plugins.reduce(flatten, []);
   const pkgLinks = npmLink.reduce(flatten, []);
 
-  if (!presetPath && rawPresets.length === 0) {
+  if (localPresets.length === 0 && rawPresets.length === 0) {
     throw new Error('No preset specified.');
   }
 
@@ -165,8 +166,8 @@ module.exports = function makeCreateContext(argv = [], flags = {}) {
     extant,
     npmconfig,
     pkgLinks,
-    presetPath,
-    rawPresets: presetPath ? null : rawPresets,
+    localPresets,
+    rawPresets,
     messages: [],
     warnings: [],
     errors: [],
