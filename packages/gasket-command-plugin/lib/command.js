@@ -52,6 +52,12 @@ const GasketCommand = module.exports = class GasketCommand extends Command {
   }
 };
 
+/**
+ * These are required for all gasket commands, required by the CLI for loading
+ * the appropriate gasket.config file and environment.
+ *
+ * @type {{Object} flags
+ */
 GasketCommand.flags = {
   config: flags.string({
     env: 'GASKET_CONFIG',
@@ -68,11 +74,13 @@ GasketCommand.flags = {
   env: flags.string({
     env: 'NODE_ENV',
     description: 'Target runtime environment'
-  }),
-  record: flags.boolean({
-    env: 'GASKET_RECORD',
-    default: true,
-    description: 'Whether or not to emit this command as part of Gasket\'s metrics lifecycle',
-    allowNo: true
   })
 };
+
+// TODO (agerard): Should be added dynamically by @gasket/metrics-plugin.
+GasketCommand.flags.record = flags.boolean({
+  env: 'GASKET_RECORD',
+  default: true,
+  description: 'Whether or not to emit this command as part of Gasket\'s metrics lifecycle',
+  allowNo: true
+});
