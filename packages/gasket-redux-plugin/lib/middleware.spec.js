@@ -47,6 +47,12 @@ describe('Middleware', () => {
       expect(next).toHaveBeenCalled();
     });
 
+    it('will not invoke callback if headers are sent', async () => {
+      res.headersSent = true;
+      await middleware(req, res, next);
+      expect(next).not.toHaveBeenCalled();
+    });
+
     it('invokes base makeStore', async () => {
       await middleware(req, res, next);
       expect(mockMakeStore).toHaveBeenCalled();
