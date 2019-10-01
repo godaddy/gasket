@@ -1,7 +1,5 @@
-const Git = require('git-shizzle');
-const path = require('path');
 const os = require('os');
-const fs = require('fs');
+const Git = require('git-shizzle');
 const gitUrlParse = require('git-url-parse');
 const debug = require('diagnostics')('gasket:cli:metrics');
 
@@ -17,9 +15,9 @@ class Metrics {
     const { command, config, metadata } = gasket;
     this.gitshizzle = new Git(config.root);
     this.config = config;
-    this.record = config.flags.record;
-    this.metadata = metadata;
     this.cmd = command;
+    this.record = command.flags.record;
+    this.metadata = metadata;
   }
 
   /**
@@ -87,7 +85,7 @@ class Metrics {
       argv: process.argv.slice(2),
 
       time: Date.now(),
-      cmd: this.cmd
+      cmd: this.cmd.id
     };
   }
 
