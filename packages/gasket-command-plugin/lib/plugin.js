@@ -1,14 +1,7 @@
 const { Command } = require('@oclif/config');
 const { flags } = require('@oclif/command');
 const GasketCommand = require('./command');
-
-function hoistBaseFlags(cmd) {
-  cmd.flags = {
-    ...GasketCommand.flags,
-    ...(cmd.flags || {})
-  };
-  return cmd;
-}
+const { hoistBaseFlags } = require('./utils');
 
 module.exports = {
   name: 'command',
@@ -32,7 +25,7 @@ module.exports = {
         }));
 
       oclifConfig.plugins.push({
-        name: 'Plugin gasket commands',
+        name: 'Gasket commands',
         hooks: {},
         topics: [],
         commands

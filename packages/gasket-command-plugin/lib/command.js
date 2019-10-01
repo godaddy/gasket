@@ -2,50 +2,70 @@ const { Command, flags } = require('@oclif/command');
 const { applyEnvironmentOverrides } = require('@gasket/utils');
 
 const GasketCommand = module.exports = class GasketCommand extends Command {
-  async run() {
-    await this.gasket.exec('init');
-    await this.runHooks();
-  }
 
-  runHooks() {
-    throw new Error('The `runHooks` method must be overridden');
+  /**
+   * Abstract method which must be implemented by subclasses, used to execute
+   * Gasket lifecycles, following the `configure` and `init` Gasket lifecycles.
+   * @async
+   * @abstract
+   */
+  async gasketRun() {
+    throw new Error('The `gasketRun` method must be implemented');
   }
 
   /**
-   * Configures the environment, allowing commands that extend this class to
-   * adjust configs and flags before apply env overrides.
+   * Virtual method which may be overridden by subclasses, to adjust the
+   * Gasket Config before env overrides are applied.
    *
    * @param {Object} gasketConfig - Gasket configurations
    * @returns {Promise<{Object}>} gasketConfig
+   * @virtual
    */
-  async configure(gasketConfig) {
-    //
-    // make all flags parsed for this command available from config
-    //
-    gasketConfig.flags = this.flags || {};
-    //
-    // Set the env to user/commmand defined flag value if set
-    //
-    gasketConfig.env = gasketConfig.flags.env || gasketConfig.env;
-    if (!gasketConfig.env) {
-      gasketConfig.env = 'development';
-      this.warn('No env specified, falling back to "development".');
-    }
+  async gasketConfigure(gasketConfig) { return gasketConfig; }
 
-    return applyEnvironmentOverrides(gasketConfig, gasketConfig, './gasket.config.local');
+  /**
+   * Implements the oclif Command method, executed during oclif lifecycles.
+   * GasketCommand subclasses should implement the `gasketRun` method.
+   * @override
+   * @async
+   * @private
+   */
+  async run() {
+    await this.gasket.exec('init');
+    await this.gasketRun();
   }
 
+  /**
+   * Implements the oclif Command method, executed during oclif lifecycles.
+   * This finalizes the Gasket Config, and makes the Gasket API available
+   * to GasketCommand subclasses for executing lifecycles.
+   * @override
+   * @async
+   * @private
+   */
   async init() {
     await super.init();
-    this.flags = this.parse(this.constructor);
-
     // "this.config" is the context that the init hook injected "gasket" into
     this.gasket = this.config.gasket;
     // provide the name of the command used to invoke lifecycles
     this.gasket.command = this.id;
 
-    // Allow commands to modify config
-    let gasketConfig = await this.configure(this.gasket.config);
+    this.parsed = this.parse(this.constructor);
+    let gasketConfig = this.gasket.config;
+
+    // Setup config env based on env flag if set
+    gasketConfig.env = (this.parsed.flags || {}).env || gasketConfig.env;
+
+    // Allow command subclasses to modify config
+    gasketConfig = await this.gasketConfigure(gasketConfig);
+
+    if (!gasketConfig.env) {
+      gasketConfig.env = 'development';
+      this.warn('No env specified, falling back to "development".');
+    }
+
+    gasketConfig = applyEnvironmentOverrides(gasketConfig, gasketConfig, './gasket.config.local');
+
     // Allow plugins to modify config
     gasketConfig = await this.gasket.execWaterfall('configure', gasketConfig);
     this.gasket.config = gasketConfig;

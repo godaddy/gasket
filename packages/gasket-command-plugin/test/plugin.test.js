@@ -1,6 +1,5 @@
 const assume = require('assume');
 const sinon = require('sinon');
-const { flags } = require('@oclif/command');
 const plugin = require('../lib/plugin');
 const GasketCommand = require('../lib/command');
 
@@ -42,13 +41,14 @@ describe('The plugin', () => {
       execStub.resolves([]);
       await plugin.hooks.initOclif(gasket, { oclifConfig });
       const results = execStub.getCall(0).args[1];
-      assume(results).property('flags', flags);
+      assume(results).property('flags', require('@oclif/command').flags);
     });
 
     it('injects plugin with commands to oclifConfig', async () => {
       execStub.resolves([MockCmdA]);
       await plugin.hooks.initOclif(gasket, { oclifConfig });
       assume(oclifConfig.plugins).lengthOf(1);
+      assume(oclifConfig.plugins[0].name).equals('Gasket commands');
       assume(oclifConfig.plugins[0].commands[0].id).equals(MockCmdA.id);
     });
 
@@ -64,19 +64,6 @@ describe('The plugin', () => {
       await plugin.hooks.initOclif(gasket, { oclifConfig });
       assume(MockCmdA).property('flags');
       assume(MockCmdA.flags).eqls(GasketCommand.flags);
-    });
-
-    it('retains flags set on extended class', async () => {
-      MockCmdA.flags = {
-        bogus: flags.string({
-          description: 'A bogus flag'
-        })
-      };
-      execStub.resolves([MockCmdA]);
-      await plugin.hooks.initOclif(gasket, { oclifConfig });
-      assume(Object.keys(MockCmdA.flags)).eqls(
-        Object.keys(GasketCommand.flags).concat('bogus')
-      );
     });
 
     it('adds load method to injected Command', async () => {

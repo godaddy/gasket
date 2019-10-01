@@ -1,4 +1,4 @@
 {
   "root": true,
-  "extends": ["godaddy", "plugin:jest/recommended"]
+  "extends": ["godaddy"]
 }
