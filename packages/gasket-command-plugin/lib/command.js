@@ -51,14 +51,19 @@ class GasketCommand extends Command {
     await super.init();
     // "this.config" is the context that the init hook injected "gasket" into
     this.gasket = this.config.gasket;
-    // provide the name of the command used to invoke lifecycles
-    this.gasket.command = this.id;
-
     this.parsed = this.parse(this.constructor);
+    const parsedFlags = this.parsed.flags || {};
+
+    // Provide details of invoked command to lifecycles
+    this.gasket.command = {
+      id: this.id,
+      flags: parsedFlags
+    };
+
     let gasketConfig = this.gasket.config;
 
     // Setup config env based on env flag if set
-    gasketConfig.env = (this.parsed.flags || {}).env || gasketConfig.env;
+    gasketConfig.env = parsedFlags.env || gasketConfig.env;
 
     // Allow command subclasses to modify config
     gasketConfig = await this.gasketConfigure(gasketConfig);

@@ -6,6 +6,7 @@ const sinon = require('sinon');
 const { hoistBaseFlags } = require('../lib/utils');
 
 const fixturesDir = path.join(__dirname, 'fixtures');
+const ignoreConfig = ['flags'];
 
 describe('GasketCommand', function () {
   let GasketCommand;
@@ -63,6 +64,9 @@ describe('GasketCommand', function () {
       await command.init();
 
       Object.keys(gasket.config).forEach(key => {
+        // if our test doesn't case and is safe to ignore
+        if (ignoreConfig.includes(key) && !expectedConfig[key]) return;
+
         assume(gasket.config[key]).deep.equals(
           expectedConfig[key],
           `Expected "${key}" config not equal`
@@ -244,6 +248,21 @@ describe('GasketCommand', function () {
           other: 'setting'
         }
       });
+    });
+
+    it('exposed invoked command details from gasket instance', async () => {
+      class CustomCommand extends GasketCommand {}
+      CustomCommand.id = 'custom';
+
+      const cmd = instantiateCommand(CustomCommand, ['--env', 'bogus', '--config', 'fake']);
+      await cmd.init();
+
+      assume(cmd.gasket).property('command');
+      assume(cmd.gasket.command).property('id', 'custom');
+      assume(cmd.gasket.command).property('flags');
+      // assume(cmd.gasket.config.flags).property('root');
+      // assume(cmd.gasket.config.flags).property('config', 'fake');
+      // assume(cmd.gasket.config.flags).property('env', 'bogus');
     });
 
     it('allows subclasses to adjust config', async () => {
