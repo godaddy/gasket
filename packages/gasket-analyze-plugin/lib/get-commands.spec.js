@@ -39,7 +39,7 @@ describe('getCommands', () => {
 
     it('executes build lifecycle', async () => {
       await instance.gasketRun();
-      expect(mockGasket.exec).toBeCalledWith('build');
+      expect(mockGasket.exec).toHaveBeenCalledWith('build');
     });
   });
 });

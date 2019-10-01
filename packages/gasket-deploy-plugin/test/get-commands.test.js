@@ -55,17 +55,17 @@ describe('getCommands', () => {
   });
 
   describe('BuildCommand', () => {
-    let BuildCommand = getCommands(mockGasket, mockData)[0];
+    const BuildCommand = getCommands(mockGasket, mockData)[0];
     testCommand(BuildCommand, 'build', ['build']);
   });
 
   describe('StartCommand', () => {
-    let StartCommand = getCommands(mockGasket, mockData)[1];
+    const StartCommand = getCommands(mockGasket, mockData)[1];
     testCommand(StartCommand, 'start', ['preboot', 'start']);
   });
 
   describe('LocalCommand', () => {
-    let LocalCommand = getCommands(mockGasket, mockData)[2];
+    const LocalCommand = getCommands(mockGasket, mockData)[2];
     testCommand(LocalCommand, 'local', ['build', 'preboot', 'start']);
 
     describe('gasketConfigure', () => {
