@@ -1,3 +1,4 @@
+/* eslint-disable no-process-env */
 const assume = require('assume');
 const path = require('path');
 const proxyquire = require('proxyquire');

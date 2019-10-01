@@ -1,7 +1,11 @@
 const { Command, flags } = require('@oclif/command');
 const { applyEnvironmentOverrides } = require('@gasket/utils');
 
-const GasketCommand = module.exports = class GasketCommand extends Command {
+/**
+ * The GasketCommand can be extended to allow plugins to introduce new CLI
+ * commands to invoke Gasket lifecycles.
+ */
+class GasketCommand extends Command {
 
   /**
    * Abstract method which must be implemented by subclasses, used to execute
@@ -70,13 +74,13 @@ const GasketCommand = module.exports = class GasketCommand extends Command {
     gasketConfig = await this.gasket.execWaterfall('configure', gasketConfig);
     this.gasket.config = gasketConfig;
   }
-};
+}
 
 /**
  * These are required for all gasket commands, required by the CLI for loading
  * the appropriate gasket.config file and environment.
  *
- * @type {{Object} flags
+ * @type {Object} flags
  */
 GasketCommand.flags = {
   config: flags.string({
@@ -87,7 +91,7 @@ GasketCommand.flags = {
   }),
   root: flags.string({
     env: 'GASKET_ROOT',
-    default: process.env.FAUX_ROOT || process.cwd(),
+    default: process.env.FAUX_ROOT || process.cwd(), // eslint-disable-line no-process-env
     char: 'r',
     description: 'Top-level app directory'
   }),
@@ -104,3 +108,5 @@ GasketCommand.flags.record = flags.boolean({
   description: 'Whether or not to emit this command as part of Gasket\'s metrics lifecycle',
   allowNo: true
 });
+
+module.exports = GasketCommand;
