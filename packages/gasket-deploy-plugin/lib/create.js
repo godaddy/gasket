@@ -1,5 +1,5 @@
 /**
- * Add files & extend package.json for new apps.
+ * Add scripts for commands to the package.json
  *
  * @param {Gasket} gasket - The gasket API.
  * @param {CreateContext} context - Create context

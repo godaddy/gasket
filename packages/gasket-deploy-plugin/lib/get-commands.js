@@ -2,13 +2,13 @@
  * Get the build, start, and local commands
  *
  * @param {Gasket} gasket - Gasket
- * @param {Object} GasketCommand - Base Gasket command to extend
+ * @param {GasketCommand} GasketCommand - Base Gasket command to extend
  * @returns {GasketCommand[]} commands
  */
 module.exports = function getCommands(gasket, { GasketCommand }) {
 
   class BuildCommand extends GasketCommand {
-    async runHooks() {
+    async gasketRun() {
       await this.gasket.exec('build');
     }
   }
@@ -17,7 +17,7 @@ module.exports = function getCommands(gasket, { GasketCommand }) {
 
 
   class StartCommand extends GasketCommand {
-    async runHooks() {
+    async gasketRun() {
       await this.gasket.exec('preboot');
       await this.gasket.exec('start');
     }
@@ -27,29 +27,19 @@ module.exports = function getCommands(gasket, { GasketCommand }) {
 
 
   class LocalCommand extends StartCommand {
-    async configure(gasketConfig) {
-      this.flags = {
-        ...this.flags,
-        env: 'local'
-      };
-      gasketConfig.env = 'local';
-      return super.configure(gasketConfig);
+    async gasketRun() {
+      // invoke lifecycle from build command
+      await this.gasket.exec('build');
+      // invoke lifecycles from start command
+      return super.gasketRun();
     }
 
-    async runHooks() {
-      //
-      // invoke lifecycles from build command
-      //
-      await this.gasket.exec('build');
-
-      //
-      // invoke lifecycles from start command
-      //
-      return super.runHooks();
+    async gasketConfigure(gasketConfig) {
+      return { ...gasketConfig, env: 'local' };
     }
   }
   LocalCommand.id = 'local';
-  LocalCommand.description = 'Build then start your app in dev mode (env=local)';
+  LocalCommand.description = 'Build then start your app in local environment';
 
   return [
     BuildCommand,
