@@ -28,17 +28,17 @@ describe('getCommands', () => {
     expect(results).toHaveProperty('description');
   });
 
-  it('command implements runHooks', () => {
+  it('command implements gasketRun', () => {
     const results = getCommands(mockGasket, mockData);
-    expect(results.prototype).toHaveProperty('runHooks');
+    expect(results.prototype).toHaveProperty('gasketRun');
   });
 
   describe('instance', () => {
-    const DocsCommand = getCommands(mockGasket, mockData);
-    const instance = new DocsCommand();
+    const AnalyzeCommand = getCommands(mockGasket, mockData);
+    const instance = new AnalyzeCommand();
 
     it('executes build lifecycle', async () => {
-      await instance.runHooks();
+      await instance.gasketRun();
       expect(mockGasket.exec).toBeCalledWith('build');
     });
   });
