@@ -117,6 +117,58 @@ describe('log plugin', function () {
       await plugin.hooks.init.handler(gasket);
     });
 
+    it('sets local option for local env', async () => {
+      const gasket = {
+        exec: sinon.stub(),
+        command: {
+          id: 'start'
+        },
+        config: {
+          env: 'local'
+        }
+      };
+
+      const plugin = assumeLogInit(actual => {
+        assume(actual.local).true();
+      });
+
+      await plugin.hooks.init.handler(gasket);
+    });
+
+    it('sets local option for non-start commands', async () => {
+      const gasket = {
+        exec: sinon.stub(),
+        command: {
+          id: 'fake'
+        },
+        config: {
+          env: 'test'
+        }
+      };
+
+      const plugin = assumeLogInit(actual => {
+        assume(actual.local).true();
+      });
+
+      await plugin.hooks.init.handler(gasket);
+    });
+
+    it('supports older gasket.command format', async () => {
+      const gasket = {
+        exec: sinon.stub(),
+        command: 'start',
+        config: {
+          env: 'test'
+        }
+      };
+
+      const plugin = assumeLogInit(actual => {
+        assume(actual.local).false();
+      });
+
+      await plugin.hooks.init.handler(gasket);
+    });
+
     it('forces { exitOnError: true }', async () => {
       const gasket = {
         exec: async function exec() {

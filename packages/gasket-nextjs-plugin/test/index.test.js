@@ -115,6 +115,12 @@ describe('build hook', () => {
     assume(builderStub).called();
   });
 
+  it('supports older gasket.command format', async () => {
+    const buildHook = getMockedBuildHook();
+    await buildHook({ command: 'local' });
+    assume(builderStub).not.called();
+  });
+
   it('supports older next build', async () => {
     const oldBuilderStub = stub();
     const buildHook = getMockedBuildHook({
