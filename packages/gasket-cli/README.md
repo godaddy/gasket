@@ -8,7 +8,6 @@ CLI for rapid web development with gasket
 * [Tests](#tests)
 * [install extra dependencies](#install-extra-dependencies)
 * [run `gasket local`, for example](#run-gasket-local-for-example)
-* [Metrics](#metrics)
 <!-- tocstop -->
 
 ## Usage
@@ -337,41 +336,6 @@ npm install --no-save @gasket/nextjs-preset @gasket/redux next react-dom
 
 # run `gasket local`, for example
 ./bin/run local --config /path/to/gasket.config.js
-```
-
-# Metrics
-
-> **NOTE:** Metrics are **not** collected by `gasket`. The `metrics` lifecycle
- exists so that _you_ can track metrics and usage of `gasket` within your own 
- organization.
-
-The usage of `gasket` commands can be tracked by a plugin using the `metrics` 
-lifecycle hook. It is important to note that this _does not_ block the 
-execution of the command. The `metrics` lifecycle can be used to gather 
-the following information:
-
-```json
-{
-  "name": "name in package.json",
-  "version": "version in package.json",
-  "gasket": {
-    "@gasket/literally-any-repo": "that is installed"
-  },
-  "repository": "git repository",
-  "branch": "git branch",
-  "config": {
-    "additional keys": "used in gasket.config.js"
-  },
-  "system": {
-    "platform": "os.platform()",
-    "release": "os.release()",
-    "arch": "os.arch()"
-  },
-  "env": "NODE_ENV",
-  "argv": "Literally the args that you passed to gasket",
-  "time": "Date.now()",
-  "cmd": "The gasket command that was run"
-}
 ```
 
 [inquirer questions]: https://github.com/SBoudrias/Inquirer.js#question

@@ -1,56 +1,76 @@
-# `@gasket/metadata-plugin`
+# @gasket/metrics-plugin
 
-Metadata is the information about the register plugins and presets, available
-to plugin lifecycle hooks. At its core, metadata for plugins and presets
-will consist of the info objects gather by the `Loader` from `@gasket/resolve`.
-However, any functions will be **redacted** as metadata is not intended to be
-executed, but rather to is made available to read and inform plugins. 
+Enables plugins to collect metrics about an project when Gasket commands
+are invoked.
+
+> **NOTE:** Metrics are **not** collected by `gasket`. The `metrics` lifecycle
+ exists so that _you_ can track metrics and usage of `gasket` within your own 
+ organization.
+
+## Commands
+
+Metrics are available for all Gasket project commands. However, if you wish to
+not invoke the metrics lifecycle for certain commands or situations, such as a
+during a CICD process, you can run the command with the `--no-record` flag.
 
 ## Lifecycles
 
-#### `metadata`
+### metrics
 
-This plugin implements the `metadata` lifecycle, which plugins can use to
-modify it's own metadata at runtime. Whatever is returned will replace the
-existing metadata.
+The usage of `gasket` commands can be tracked by a plugin using the `metrics` 
+lifecycle hook. It is important to note that this _does not_ block the 
+execution of the command.
 
 ```js
+const fetch = require('node-fetch');
+
 module.exports = {
   name: 'example',
   hooks: {
     /**
+     * Hook the metrics lifecycle and pushed data to a collection endpoint
+     *
      * @param {Gasket} gasket - The Gasket API
-     * @param {PluginInfo} data - This plugin's initial metadata
+     * @param {Object} data - Collected metrics
      * @returns {Object} 
      */
-    async metadata(gasket, data) {
-      console.log(data.name);
-      console.log(data.version);
+    async metrics(gasket, data) {
+      const url = 'https://some.example.api/endpoint';
 
-      // data from package.json of this plugin
-      console.log(data.package.author);
-      
-      // reach into module content info
-      console.log(data.module.hooks);
-
-      // adding extra data to this plugin's metadata
-      return {
-        ...data,
-        extra: 'information'
-      }
-    },
-    /**
-     * An example lifecycle hook which utilizes metadata
-     * 
-     * @param {Gasket} gasket - The Gasket API
-     */
-    async example(gasket) {
-      const { metadata } = gasket;
-     
-      if( metadata.plugins.find(pluginInfo => pluginInfo.name === 'some-plugin') ){
-        // only perform some action if a certain plugin is also registered
-      }
+      await fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
     }
   }
+}
+```
+
+The collected `metrics` data consists of the following information:
+
+```json
+{
+  "name": "name in package.json",
+  "version": "version in package.json",
+  "gasket": {
+    "@gasket/literally-any-repo": "that is installed"
+  },
+  "repository": "git repository",
+  "branch": "git branch",
+  "config": {
+    "additional keys": "used in gasket.config.js"
+  },
+  "system": {
+    "platform": "os.platform()",
+    "release": "os.release()",
+    "arch": "os.arch()"
+  },
+  "env": "NODE_ENV",
+  "argv": "Literally the args that you passed to gasket",
+  "time": "Date.now()",
+  "cmd": "The gasket command that was run"
 }
 ```
