@@ -22,8 +22,8 @@ class GasketCommand extends Command {
    * Gasket Config before env overrides are applied.
    *
    * @param {Object} gasketConfig - Gasket configurations
-   * @returns {Promise<{Object}>} gasketConfig
-   * @virtual
+   * @returns {Object} gasketConfig
+   * @async
    */
   async gasketConfigure(gasketConfig) { return gasketConfig; }
 
@@ -50,14 +50,35 @@ class GasketCommand extends Command {
   async init() {
     await super.init();
     // "this.config" is the context that the init hook injected "gasket" into
+    /**
+     * Gasket Plugin engine instance with details of session
+     *
+     * @type {Gasket} gasket
+     * @property {Object} command - Details of command
+     * @property {String} command.id - Name of command
+     * @property {Object} command.flags - Flags
+     * @property {Array} command.argv - Ordered Arguments
+     * @property {Object} command.args - Named arguments
+     * @property {Object} config - Loaded and modified configuration
+     * @property {String} config.env - Environment set by command flags
+     */
     this.gasket = this.config.gasket;
+
+    /**
+     * Flags and arguments passed with CLI command.
+     *
+     * @type {ParserOutput} parsed - Parsed flags and args
+     * @property {Object} parsed.flags - Flags
+     * @property {Array} parsed.argv - Ordered Arguments
+     * @property {Object} parsed.args - Named arguments
+     */
     this.parsed = this.parse(this.constructor);
-    const parsedFlags = this.parsed.flags || {};
+    const parsedFlags = this.parsed.flags = this.parsed.flags || {};
 
     // Provide details of invoked command to lifecycles
     this.gasket.command = {
       id: this.id,
-      flags: parsedFlags
+      ...this.parsed
     };
 
     let gasketConfig = this.gasket.config;
@@ -86,6 +107,9 @@ class GasketCommand extends Command {
  * the appropriate gasket.config file and environment.
  *
  * @type {Object} flags
+ * @property {string} config - Fully qualified gasket config to load (default: `'gasket.config'`)
+ * @property {string} root - Top-level app directory (default: `process.cwd()`)
+ * @property {string} env - Target runtime environment (default: `NODE_ENV` or `'development'`)
  */
 GasketCommand.flags = {
   config: flags.string({
