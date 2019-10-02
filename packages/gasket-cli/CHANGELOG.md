@@ -1,5 +1,6 @@
 # `@gasket/cli`
 
+- Fetch and load extended presets during create
 - Move app-level commands to plugins ([#74])
 - Move metrics to new plugin ([#74])
 - Check dependencies during create with .has

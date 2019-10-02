@@ -5,7 +5,7 @@ const proxyquire = require('proxyquire');
 
 describe('loadPreset', () => {
   let sandbox, mockContext, mockPkgs, mockImports, loadPreset;
-  let cloneStub, mockFetcherSpy, loadPresetStub, presetDependenciesStub; // eslint-disable-line no-unused-vars
+  let cloneStub, mockFetcherSpy, loadPresetStub; // eslint-disable-line no-unused-vars
 
   beforeEach(() => {
     sandbox = sinon.createSandbox();
@@ -17,7 +17,8 @@ describe('loadPreset', () => {
           version: '1.2.3',
           dependencies: {
             '@gasket/bogus-plugin': '1.2.3',
-            'user-bogus-plugin': '3.2.1'
+            'user-bogus-plugin': '3.2.1',
+            '@gasket/some-preset': '1.0.1'
           }
         }
       },
@@ -28,6 +29,12 @@ describe('loadPreset', () => {
           dependencies: {
             'more-deps-plugin': '4.5.6'
           }
+        }
+      },
+      '@gasket/some-preset@1.0.1': {
+        package: {
+          name: 'some',
+          version: '1.0.1'
         }
       },
       'local-preset': {
@@ -43,8 +50,6 @@ describe('loadPreset', () => {
 
     cloneStub = sandbox.stub();
     loadPresetStub = sandbox.stub();
-    presetDependenciesStub = sandbox.stub();
-    presetDependenciesStub.returns([]);
 
     mockImports = {
       '../fetcher': class MockFetcher {
@@ -63,9 +68,6 @@ describe('loadPreset', () => {
             loadPresetStub(...arguments);
             const info = module.includes('local-preset') ? mockPkgs['local-preset'] : mockPkgs[module];
             return { ...info, ...meta } ;
-          }
-          presetDependencies(module) {
-            return presetDependenciesStub(module);
           }
         }
       },
@@ -115,24 +117,23 @@ describe('loadPreset', () => {
         .deep.property('rawPresets', ['@gasket/bogus-preset@^1.0.0', '@gasket/all-i-ever-wanted-preset@^2.0.0']);
       assume(mockContext).to.have
         .deep.property('localPresets', ['../../../fixtures/local-preset', '../../../fixtures/local-preset']);
-      assume(mockContext).to.have.deep.property('presets', ['bogus', 'all-i-ever-wanted', 'local-preset', 'local-preset']);
+      assume(mockContext).to.have.deep
+        .property('presets', ['bogus', 'all-i-ever-wanted', 'local-preset', 'local-preset', 'some']);
       assume(mockContext.presetInfos).to.lengthOf(4);
     });
 
     it('supports preset extensions', async () => {
-      presetDependenciesStub.withArgs('@gasket/bogus-preset@^1.0.0').returns(['@gasket/some-preset']);
-      presetDependenciesStub.returns([]);
-
       mockContext.rawPresets = ['@gasket/bogus-preset@^1.0.0', '@gasket/all-i-ever-wanted-preset@^2.0.0'];
       mockContext.localPresets = ['../../../fixtures/local-preset', '../../../fixtures/local-preset'];
 
       await loadPreset(mockContext);
       assume(mockContext).to.have
         .deep.property('rawPresets', ['@gasket/bogus-preset@^1.0.0', '@gasket/all-i-ever-wanted-preset@^2.0.0']);
-      assume(mockContext).to.have
-        .deep.property('localPresets', ['../../../fixtures/local-preset', '../../../fixtures/local-preset']);
-      assume(mockContext).to.have.deep.property('presets', ['bogus', 'some', 'all-i-ever-wanted', 'local-preset', 'local-preset']);
-      assume(mockContext.presetInfos).to.lengthOf(5);
+      assume(mockContext).to.have.deep
+        .property('localPresets', ['../../../fixtures/local-preset', '../../../fixtures/local-preset']);
+      assume(mockContext).to.have.deep
+        .property('presets', ['bogus', 'all-i-ever-wanted', 'local-preset', 'local-preset', 'some']);
+      assume(mockContext.presetInfos).to.lengthOf(4);
     });
   });
 
@@ -186,19 +187,19 @@ describe('loadPreset', () => {
 
   it('adds preset short names to context', async () => {
     await loadPreset(mockContext);
-    assume(mockContext).to.have.deep.property('presets', ['bogus']);
+    assume(mockContext).to.have.deep.property('presets', ['bogus', 'some']);
   });
 
   it('sets preset short name from flags', async () => {
     await loadPreset(mockContext);
-    assume(mockContext).to.have.deep.property('presets', ['bogus']);
+    assume(mockContext).to.have.deep.property('presets', ['bogus', 'some']);
   });
 
   it('supports multiple presets', async () => {
     mockContext.rawPresets = ['@gasket/bogus-preset@^1.0.0', '@gasket/all-i-ever-wanted-preset@^2.0.0'];
 
     await loadPreset(mockContext);
-    assume(mockContext).to.have.deep.property('presets', ['bogus', 'all-i-ever-wanted']);
+    assume(mockContext).to.have.deep.property('presets', ['bogus', 'all-i-ever-wanted', 'some']);
     assume(mockContext.presetInfos).to.lengthOf(2);
   });
 
@@ -207,7 +208,8 @@ describe('loadPreset', () => {
     assume(mockContext).to.have.deep.property('presetInfos', [{
       ...mockPkgs['@gasket/bogus-preset@^1.0.0'],
       from: 'cli',
-      rawName: '@gasket/bogus-preset@^1.0.0'
+      rawName: '@gasket/bogus-preset@^1.0.0',
+      presets: [{ package: { name: 'some', version: '1.0.1' }, from: 'bogus', rawName: '@gasket/some-preset@1.0.1' }]
     }]);
   });
 });
