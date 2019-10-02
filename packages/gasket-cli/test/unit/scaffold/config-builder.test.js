@@ -176,6 +176,49 @@ describe('PackageJson', () => {
     });
   });
 
+  describe('.has(key, value', () => {
+    it('finds the value in a plain field', () => {
+      pkg.add('name', 'my-app');
+      const result = pkg.has('name', 'my-app');
+      assume(result).equals(true);
+    });
+
+    it('finds the value in an object field', () => {
+      pkg.add('dependencies', { 'some-pkg': 'latest' });
+      const result = pkg.has('dependencies', 'some-pkg');
+      assume(result).equals(true);
+    });
+
+    it('finds the value in an array field', () => {
+      pkg.add('keys', ['value1', 'value2']);
+      const result = pkg.has('keys', 'value2');
+      assume(result).equals(true);
+    });
+
+    it('fails to find the value if nothing exists for the key', () => {
+      const result = pkg.has('name', 'my-app');
+      assume(result).equals(false);
+    });
+
+    it('fails to find if the value doesnt match in a plain field', () => {
+      pkg.add('name', 'my-app');
+      const result = pkg.has('name', 'my');
+      assume(result).equals(false);
+    });
+
+    it('fails to find if the value doesnt match in an object field', () => {
+      pkg.add('dependencies', { 'some-pkg': 'latest' });
+      const result = pkg.has('dependencies', 'some');
+      assume(result).equals(false);
+    });
+
+    it('fails to find if the value doesnt match in an array field', () => {
+      pkg.add('keys', ['value1', 'value2']);
+      const result = pkg.has('keys', 'value');
+      assume(result).equals(false);
+    });
+  });
+
   describe('.extend(fields)', () => {
     it('adds new fields', () => {
       pkg.extend({ name: 'my-app' });

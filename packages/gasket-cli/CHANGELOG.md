@@ -1,5 +1,6 @@
 # `@gasket/cli`
 
+- Check dependencies during create with .has
 - Support multiple --preset-path with --presets
 - Always execute `configure` lifecycle for GasketCommands ([#71])
 - Use Loader for presets during create ([#66])
