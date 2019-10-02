@@ -7,12 +7,12 @@ deployment.
 
 ### build
 
-Executes the build lifecycle. Use this to prepare your app for running, such as
-bundling files, minifying code, processing assets, etc.
+Executes the `build` lifecycle. Use this to prepare your app for running, such
+as bundling files, minifying code, processing assets, etc.
 
 ### start
 
-Executes the preboot and start lifecycles. Upon building your app, use this
+Executes the `preboot` and `start` lifecycles. Upon building your app, use this
 command to run it.
 
 ### local
@@ -21,8 +21,8 @@ Executes the `build`, `preboot` and `start` lifecycles. This command always
 forces the environment to `local`, and is intended for local app development,
 only.
 
-Plugins that hook the start lifecycle, can inspect the command id, and adjust
-startup behavior based on if **start** or **local** commands was used. This
+Plugins can hook the `start` lifecycle, inspect the command id, and adjust
+startup behavior based on if the **start** or **local** commands was used. This
 is useful, for example, to enabling hot reload or disabling service worker
 caching during development.
 
