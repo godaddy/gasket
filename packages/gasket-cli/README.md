@@ -17,7 +17,7 @@ $ npm install -g @gasket/cli
 $ gasket COMMAND
 running command...
 $ gasket (-v|--version|version)
-@gasket/cli/2.6.1 darwin-x64 node-v10.15.3
+@gasket/cli/2.6.1 darwin-x64 node-v10.16.3
 $ gasket --help [COMMAND]
 USAGE
   $ gasket COMMAND
@@ -27,49 +27,8 @@ USAGE
 
 # Commands
 <!-- commands -->
-* [`gasket analyze`](#gasket-analyze)
-* [`gasket build`](#gasket-build)
 * [`gasket create APPNAME`](#gasket-create-appname)
 * [`gasket help [COMMAND]`](#gasket-help-command)
-* [`gasket local`](#gasket-local)
-* [`gasket start`](#gasket-start)
-
-## `gasket analyze`
-
-Analyze application code bundles
-
-```
-USAGE
-  $ gasket analyze
-
-OPTIONS
-  -c, --config=config    [default: gasket.config] Fully qualified gasket config to load
-  -r, --root=root        [default: /path/to/your/app] Top-level app directory
-  --env=env              Target runtime environment
-  --npmconfig=npmconfig  [default: ~/.npmrc] .npmrc to be used for npm actions in @gasket/cli
-  --[no-]record          Whether or not to emit this command as part of Gasket's metrics lifecycle
-```
-
-_See code: [src/commands/analyze.js](https://github.com/godaddy/gasket/blob/v2.6.1/src/commands/analyze.js)_
-
-## `gasket build`
-
-Prepare your application code for deployment
-
-```
-USAGE
-  $ gasket build
-
-OPTIONS
-  -c, --config=config    [default: gasket.config] Fully qualified gasket config to load
-  -r, --root=root        [default: /path/to/your/app] Top-level app directory
-  --analyze              Top-level app directory
-  --env=env              Target runtime environment
-  --npmconfig=npmconfig  [default: ~/.npmrc] .npmrc to be used for npm actions in @gasket/cli
-  --[no-]record          Whether or not to emit this command as part of Gasket's metrics lifecycle
-```
-
-_See code: [src/commands/build.js](https://github.com/godaddy/gasket/blob/v2.6.1/src/commands/build.js)_
 
 ## `gasket create APPNAME`
 
@@ -116,42 +75,6 @@ OPTIONS
 ```
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v2.2.1/src/commands/help.ts)_
-
-## `gasket local`
-
-Start your application server in local development mode
-
-```
-USAGE
-  $ gasket local
-
-OPTIONS
-  -c, --config=config    [default: gasket.config] Fully qualified gasket config to load
-  -r, --root=root        [default: /path/to/your/app] Top-level app directory
-  --env=env              Target runtime environment
-  --npmconfig=npmconfig  [default: ~/.npmrc] .npmrc to be used for npm actions in @gasket/cli
-  --[no-]record          Whether or not to emit this command as part of Gasket's metrics lifecycle
-```
-
-_See code: [src/commands/local.js](https://github.com/godaddy/gasket/blob/v2.6.1/src/commands/local.js)_
-
-## `gasket start`
-
-Start your application server
-
-```
-USAGE
-  $ gasket start
-
-OPTIONS
-  -c, --config=config    [default: gasket.config] Fully qualified gasket config to load
-  -r, --root=root        [default: /path/to/your/app] Top-level app directory
-  --env=env              Target runtime environment
-  --npmconfig=npmconfig  [default: ~/.npmrc] .npmrc to be used for npm actions in @gasket/cli
-  --[no-]record          Whether or not to emit this command as part of Gasket's metrics lifecycle
-```
-
-_See code: [src/commands/start.js](https://github.com/godaddy/gasket/blob/v2.6.1/src/commands/start.js)_
 <!-- commandsstop -->
 
 
