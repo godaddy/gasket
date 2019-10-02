@@ -14,6 +14,11 @@ const mockPlugin = {
   }
 };
 
+const mockAppInfo = {
+  name: 'my-app',
+  module: null
+};
+
 const mockPluginInfo = {
   name: '@gasket/mock-plugin',
   module: mockPlugin,
@@ -40,7 +45,8 @@ describe('Metadata plugin', function () {
 
     gasket = {
       loader: {
-        loadConfigured: sinon.stub().returns(mockLoadedData)
+        loadConfigured: sinon.stub().returns(mockLoadedData),
+        getModuleInfo: sinon.stub().returns(mockAppInfo)
       },
       config: {
         plugins: {
@@ -77,6 +83,10 @@ describe('Metadata plugin', function () {
 
     it('assigns gasket.metadata', async () => {
       assume(gasket).property('metadata');
+    });
+
+    it('adds moduleInfo for app', async () => {
+      assume(gasket.metadata).property('app');
     });
 
     it('adds presetInfo from loaded config', async () => {

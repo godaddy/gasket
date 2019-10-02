@@ -7,6 +7,7 @@ const isObject = require('lodash.isobject');
  *
  * @param {Object|Array} value - Item to consider
  * @returns {Object|Array} transformed result
+ * @private
  */
 function sanitize(value) {
   if (isFunction(value)) {

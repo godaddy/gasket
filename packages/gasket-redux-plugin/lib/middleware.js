@@ -38,7 +38,7 @@ module.exports = function configureMiddleware(gasket) {
 
     req.store = store;
 
-    next();
+    if (!res.headersSent) return next();
   }
 
   return middleware;

@@ -22,7 +22,9 @@ exports.ENTER = '\x0D';
 exports.getCommandWithMocks = function getCommandWithMocks(command) {
   const gasket = {
     exec: spy(),
-    execWaterfall: spy(),
+    execWaterfall: stub().callsFake((event, payload) => {
+      return payload;
+    }),
     config: {}
   };
 

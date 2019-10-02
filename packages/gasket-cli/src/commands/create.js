@@ -152,10 +152,12 @@ comma-separated values: --npm-link=@gasket/jest-plugin,some-test-preset`,
     parse: commasToArray
   }),
   'preset-path': flags.string({
-    description: `(INTERNAL) Path the a local preset package. Can be absolute
-or relative to the current working directory.`,
-    multiple: false,
-    hidden: true
+    description: `(INTERNAL) Paths the a local preset packages. Can be absolute
+or relative to the current working directory.
+comma-separated values: --preset-path=path1,path2`,
+    multiple: true,
+    hidden: true,
+    parse: commasToArray
   }),
   'npmconfig': flags.string({
     env: 'GASKET_NPM_USERCONFIG',

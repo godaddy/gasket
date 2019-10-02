@@ -212,6 +212,28 @@ class ConfigBuilder {
   }
 
   /**
+   * Checks if a dependency has been already added
+   * @param  {String} key Dependency bucket
+   * @param  {String} value Dependency to search
+   * @returns {Bool} True if the dependency exists on the bucket
+   */
+  has(key, value) {
+    const existing = this.fields[key];
+
+    if (!existing) {
+      return false;
+    }
+
+    if (Array.isArray(existing)) {
+      return existing.includes(value);
+    } else if (isObject(existing)) {
+      return (value in existing);
+    }
+
+    return value === existing;
+  }
+
+  /**
    * Returns the existing and target array merged without duplicates
    * @param  {Array} existing Partial lattice to merge.
    * @param  {Array} target   Partial lattice to merge.

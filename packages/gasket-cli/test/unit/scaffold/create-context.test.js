@@ -145,14 +145,29 @@ describe('makeCreateContext', () => {
     assume(results.rawPresets).deep.equals(['@gasket/bogus-preset@^1.2.3']);
   });
 
-  it('set presetPath from flags', () => {
-    results = makeCreateContext(argv, { 'preset-path': '../bogus/path' });
-    assume(results.presetPath).equals('../bogus/path');
+  it('sets rawPresets from flags with multiple entries', () => {
+    results = makeCreateContext(argv, { presets: ['@gasket/bogus-preset@^1.2.3', '@gasket/test-preset@^3.1.2'] });
+    assume(results.rawPresets).deep.equals(['@gasket/bogus-preset@^1.2.3', '@gasket/test-preset@^3.1.2']);
   });
 
-  it('sets rawPresets to null if presetPath set', () => {
-    results = makeCreateContext(argv, { 'preset-path': '../bogus/path' });
-    assume(results.rawPresets).equals(null);
+  it('sets rawPresets to empty array if not defined', () => {
+    results = makeCreateContext(argv, { 'preset-path': ['../bogus/path'] });
+    assume(results.rawPresets).deep.equals([]);
+  });
+
+  it('sets localPresets from flags', () => {
+    results = makeCreateContext(argv, { 'preset-path': ['../bogus/path'] });
+    assume(results.localPresets).deep.equals(['../bogus/path']);
+  });
+
+  it('sets localPresets from flags with multiple entries', () => {
+    results = makeCreateContext(argv, { 'preset-path': ['../bogus/path', '../test/path'] });
+    assume(results.localPresets).deep.equals(['../bogus/path', '../test/path']);
+  });
+
+  it('sets localPresets to empty array if not defined', () => {
+    results = makeCreateContext(argv, { presets: ['@gasket/bogus-preset@^1.2.3'] });
+    assume(results.localPresets).deep.equals([]);
   });
 
   it('uses npmconfig from flags', () => {
@@ -240,7 +255,7 @@ describe('makeCreateContext', () => {
   it('doesnt throw if preset path found', () => {
     let error;
     try {
-      results = makeCreateContext(argv, { 'preset-path': 'somePath' });
+      results = makeCreateContext(argv, { 'preset-path': ['somePath'] });
     } catch (err) {
       error = err;
     }
