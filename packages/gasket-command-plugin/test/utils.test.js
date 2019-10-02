@@ -3,7 +3,6 @@ const { flags } = require('@oclif/command');
 const GasketCommand = require('../lib/command');
 const { hoistBaseFlags } = require('../lib/utils');
 
-
 describe('utils', () => {
   describe('hoistBaseFlags', () => {
     let MockCommand;

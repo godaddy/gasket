@@ -101,7 +101,7 @@ module.exports = {
         })
       };
       
-      return MyCommand;
+      return [MyCommand];
     }
   }
 };
