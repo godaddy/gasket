@@ -3,12 +3,22 @@
 Gasket plugin for building analysis reports of webpack bundles using
 [webpack-bundle-analyzer].
 
-When running `gasket analyze`, two reports will be outputted:
+## Commands
+
+### analyze
+
+The **analyze** command will execute the `build` lifecycle.
+
+Only when _this_ command is run, will the plugin add [webpack-bundle-analyzer]
+to the webpack config. By default, generated reports are output to a `reports`
+dir at the root of the project.
+
+If using a UI framework such as NextJS which runs webpack for for both browser
+and server-side rendering, two reports will be outputted:
 - `reports/browser-bundles.html`
 - `reports/server-bundles.html`
 
-Webpack is run to bundle for both browser and server-side rendering.
-The **client** report will be the most critical for analysis in order to make
+The **browser** report will be the most critical for analysis in order to make
 sure an app is bundled in a way that is most optimal for users to download.
 
 ## Options
@@ -39,11 +49,6 @@ module.exports = {
   }
 }
 ```
-
-## Commands
-
-### analyze
-
 
 [webpack-bundle-analyzer]:https://github.com/webpack-contrib/webpack-bundle-analyzer
 [plugin options]:https://github.com/webpack-contrib/webpack-bundle-analyzer#options-for-plugin
