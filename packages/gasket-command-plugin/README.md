@@ -129,13 +129,53 @@ module.exports = {
 };
 ```
 
-GasketCommands
+### configure
+
+Configuration for a Gasket session goes through a series of steps:
+
+1. Config file loaded by CLI
+2. Default plugins (including this) are added
+3. Environment is set by base `GasketCommand`
+4. Commands adjust config by implementing `gasketConfigure`
+5. Environment overrides are applied by base `GasketCommand`
+6. Plugins adjust config by hooking `configure` lifecycle
+
+When the CLI starts up, it attempts to loads the `gasket.config` in its default
+expected location, or as specified with [command flags]. After commands have
+done any config adjustments, plugins then have the opportunity.
+
+```js
+// example-plugin.js
+const fetch = require('node-fetch');
+
+module.exports = {
+  name: 'example',
+  hooks: {
+    async configure(gasket, gasketConfig) {
+      const { some: { serviceUrl } } = gasketConfig;
+      const response = await fetch(serviceUrl);
+      const remoteConfig = response.ok ? await response.json() : {};
+      return {
+        ...gasketConfig,
+        ...remoteConfig
+      };
+    }
+  }
+};
+```
+
+In this example, the plugin hooks the `configure` lifecycle, in order to add
+config from a remote service. The `configure` lifecycle is executed with the
+[execWaterfall] method, so returning the modified config is necessary.
+
 
 [getCommands]: #getcommands
 [GasketCommand]: docs/api.md#gasketcommand
 [parsed arguments]: docs/api.md#GasketCommand+parsed
 [command details]: docs/api.md#GasketCommand+gasket
-[environment overrides]: https://github.com/godaddy/gasket/docs/blob/master/guides/configuration.md#environments
+[command flags]: docs/api.md#GasketCommand.flags
+[environment overrides]: /docs/guides/configuration.md#environments
+[execWaterfall]: /packages/gasket-plugin-engine/README.md#execwaterfallevent-value-args
 
 [oclif command]: https://oclif.io/docs/commands.html
 [oclif flags]: https://oclif.io/docs/flags
