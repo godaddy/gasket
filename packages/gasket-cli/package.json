@@ -64,8 +64,6 @@
     "@oclif/plugin-warn-if-update-available": "^1.5.1",
     "concat-stream": "^2.0.0",
     "deepmerge": "^4.0.0",
-    "git-shizzle": "^0.1.0",
-    "git-url-parse": "^11.1.2",
     "handlebars": "^4.0.11",
     "inquirer": "6.3.1",
     "json5": "^2.1.0",

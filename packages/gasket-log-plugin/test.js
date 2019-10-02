@@ -39,6 +39,9 @@ describe('log plugin', function () {
       const gasket = {
         exec: async function exec() {
         },
+        command: {
+          id: 'bogus'
+        },
         config: {
           env: 'test',
           winston: {}
@@ -54,7 +57,9 @@ describe('log plugin', function () {
       const exec = sinon.stub().resolves();
       const gasket = {
         exec,
-        command: 'start',
+        command: {
+          id: 'start'
+        },
         config: {
           env: 'test'
         }
@@ -72,7 +77,9 @@ describe('log plugin', function () {
       const exec = sinon.stub().resolves(['bar', 'bazz', undefined, ['apple', 'banana'], [undefined]]);
       const gasket = {
         exec,
-        command: 'start',
+        command: {
+          id: 'start'
+        },
         config: {
           env: 'test',
           winston: {
@@ -94,7 +101,9 @@ describe('log plugin', function () {
         exec: async function exec() {
           return null;
         },
-        command: 'start',
+        command: {
+          id: 'start'
+        },
         config: {
           env: 'test'
         }
@@ -111,6 +120,9 @@ describe('log plugin', function () {
     it('forces { exitOnError: true }', async () => {
       const gasket = {
         exec: async function exec() {
+        },
+        command: {
+          id: 'bogus'
         },
         config: {
           winston: { exitOnError: false }

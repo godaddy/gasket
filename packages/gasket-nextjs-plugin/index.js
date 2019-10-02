@@ -35,7 +35,7 @@ module.exports = {
     express: async function express(gasket, expressApp) {
       const { exec } = gasket;
       const createNextApp = require('next');
-      const devServer = gasket.command === 'local';
+      const devServer = gasket.command.id === 'local';
 
       const app = createNextApp({
         dev: devServer,
@@ -88,7 +88,7 @@ module.exports = {
     },
     build: async function build(gasket) {
       // Don't do a build, use dev server for local
-      if (gasket.command === 'local') return;
+      if (gasket.command.id === 'local') return;
 
       //
       // Different versions of Nextjs, have different ways of exporting the builder.

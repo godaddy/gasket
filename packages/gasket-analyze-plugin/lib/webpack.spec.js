@@ -10,7 +10,9 @@ describe('webpack', () => {
 
   beforeEach(() => {
     mockGasket = {
-      command: 'analyze',
+      command: {
+        id: 'analyze'
+      },
       config: {}
     };
     mockWebpackConfig = { plugins: [] };
@@ -30,7 +32,7 @@ describe('webpack', () => {
   });
 
   it('does not add BundleAnalyzerPlugin if not analyze command', () => {
-    mockGasket.command = 'bogus';
+    mockGasket.command.id = 'bogus';
     results = webpack(mockGasket, mockWebpackConfig, mockNextData);
     expect(results).toBeNull();
   });

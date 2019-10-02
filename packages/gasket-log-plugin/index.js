@@ -18,7 +18,7 @@ module.exports = {
           transports: [],
           ...config.winston,
           ...config.log,
-          local: config.env === 'local' || gasket.command !== 'start',
+          local: config.env === 'local' || gasket.command.id !== 'start',
           exitOnError: true
         };
 

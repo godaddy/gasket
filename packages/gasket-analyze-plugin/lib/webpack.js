@@ -2,7 +2,7 @@
  * Add the analyzer webpack plugin if analyze flag has been set
  *
  * @param {Object} gasket - Gasket API
- * @param {String} gasket.command - Name of the command
+ * @param {Object} gasket.command - Invoked command details
  * @param {Object} webpackConfig - Webpack config
  * @param {Object} data - Next.js data
  * @returns {Object} webpackConfig
@@ -18,7 +18,7 @@ module.exports = function webpack(gasket, webpackConfig, data) {
   //
   // Only analyze add analyzer plugin for the analyze command
   //
-  if (command === 'analyze') {
+  if (command.id === 'analyze') {
     const merge = require('deepmerge');
     const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
