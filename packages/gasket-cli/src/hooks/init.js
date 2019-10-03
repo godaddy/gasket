@@ -17,7 +17,7 @@ async function initHook({ id, config: oclifConfig, argv }) {
 
   const { parse } = require('@oclif/parser');
   const { GasketCommand } = require('@gasket/command-plugin');
-  const { getGasketConfig } = require('../config/config-utils');
+  const { getGasketConfig } = require('../config/utils');
   const PluginEngine = require('@gasket/plugin-engine');
 
   const { flags } = parse(argv, {

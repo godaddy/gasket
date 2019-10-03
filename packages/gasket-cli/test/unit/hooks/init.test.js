@@ -18,7 +18,7 @@ MockCommand.flags = {};
 const mockImports = {
   '@gasket/plugin-engine': class PluginEngine { async exec() { execStub(...arguments); } },
   '@gasket/command-plugin': { GasketCommand: MockCommand },
-  '../config/config-utils': { getGasketConfig: getGasketConfigStub },
+  '../config/utils': { getGasketConfig: getGasketConfigStub },
   '@oclif/parser': { parse: parseStub }
 };
 

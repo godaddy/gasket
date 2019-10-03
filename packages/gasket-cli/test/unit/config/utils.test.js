@@ -13,7 +13,7 @@ const tryRequireStub = sinon.stub().callsFake(mod => {
   return null;
 });
 
-const utils = proxyquire('../../../src/config/config-utils', {
+const utils = proxyquire('../../../src/config/utils', {
   'util': { promisify: f => f },
   'fs': {
     readdir: readDirStub
