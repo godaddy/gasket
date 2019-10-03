@@ -22,7 +22,7 @@ lifecycle hook. It is important to note that this _does not_ block the
 execution of the command.
 
 ```js
-const fetch = require('node-fetch');
+const fetch = require('@gasket/fetch');
 
 module.exports = {
   name: 'example',
