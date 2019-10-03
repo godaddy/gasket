@@ -7,7 +7,7 @@ Gasket plugin for building analysis reports of webpack bundles using
 
 ### analyze
 
-The **analyze** command will execute the `build` lifecycle.
+The command `gasket analyze` will execute the `build` lifecycle.
 
 Only when _this_ command is run, will the plugin add [webpack-bundle-analyzer]
 to the webpack config. By default, generated reports are output to a `reports`
