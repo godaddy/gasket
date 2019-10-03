@@ -9,8 +9,7 @@ const isPreset = name => presetIdentifier.isValidFullName(name);
 //
 // Add moduleData for app dependencies
 //
-function loadAppModules(loader, metadata) {
-  const { app, modules } = metadata;
+function loadAppModules(loader, app, modules) {
   Object.keys(app.package.dependencies)
     .filter(name => !isPlugin(name) && !isPreset(name))
     .forEach(name => {
@@ -23,53 +22,45 @@ function loadAppModules(loader, metadata) {
 //
 // load moduleInfo for any supporting modules that are declared
 //
-function loadPluginModules(loader, plugins) {
-  plugins.forEach(pluginData => {
-    if (pluginData.modules) {
-      pluginData.modules = pluginData.modules
-        .map(mod => isObject(mod) ? mod : { name: mod })  // normalize string names to objects
-        .map(mod => loader.getModuleInfo(null, mod.name, mod));
-    }
-  });
+function loadPluginModules(pluginData, loader) {
+  if (pluginData.modules) {
+    pluginData.modules = pluginData.modules
+      .map(mod => isObject(mod) ? mod : { name: mod })  // normalize string names to objects
+      .map(mod => loader.getModuleInfo(null, mod.name, mod));
+  }
 }
 
 //
 // flatten moduleData from plugin
 //
-function flattenPluginModules(metadata){
-  const { plugins, modules } = metadata;
-  plugins.reduce((acc, pluginData) => {
-    if (pluginData.modules) {
-      pluginData.modules.forEach(moduleData => {
-        const existing = acc.find(mod => mod.name === moduleData.name);
-        if (existing) {
-          expand(existing, moduleData);
-        } else {
-          acc.push(moduleData);
-        }
-      });
-    }
-  }, modules);
+function flattenPluginModules(pluginData, modules) {
+  if (pluginData.modules) {
+    pluginData.modules.forEach(moduleData => {
+      const existing = modules.find(mod => mod.name === moduleData.name);
+      if (existing) {
+        expand(existing, moduleData);
+      } else {
+        modules.push(moduleData);
+      }
+    });
+  }
 }
 
 
 //
 // assign plugin instances back to preset hierarchy to avoid faulty data
 //
-function fixupHierarchy(metadata) {
-  const { plugins, presets } = metadata;
+function fixupHierarchy(pluginData, presets) {
 
-  plugins.forEach(pluginData => {
-    function checkPreset(presetData) {
-      if (presetData.name === pluginData.from) {
-        const idx = presetData.plugins.findIndex(p => p.name === pluginData.name);
-        presetData.plugins[idx] = pluginData;
-      }
-      presetData.presets && presetData.presets.forEach(checkPreset);
+  function checkPreset(presetData) {
+    if (presetData.name === pluginData.from) {
+      const idx = presetData.plugins.findIndex(p => p.name === pluginData.name);
+      presetData.plugins[idx] = pluginData;
     }
+    presetData.presets && presetData.presets.forEach(checkPreset);
+  }
 
-    presets.forEach(checkPreset);
-  });
+  presets.forEach(checkPreset);
 }
 
 module.exports = {
@@ -81,6 +72,7 @@ module.exports = {
       const loaded = loader.loadConfigured(config.plugins);
       const { presets, plugins } = sanitize(cloneDeep(loaded));
       const app = loader.getModuleInfo(null, root);
+      const modules = [];
 
       /**
        * @type {Metadata}
@@ -89,24 +81,25 @@ module.exports = {
         app,
         presets,
         plugins,
-        modules: []
+        modules
       };
 
-      loadAppModules(loader, gasket.metadata);
+      loadAppModules(loader, app, modules);
 
       //
       // Allow plugins to tune their own metadata via lifecycle
       //
       await gasket.execApply('metadata', async ({ name }, handler) => {
         const idx = plugins.findIndex(p => p.module.name === name || p.name === name);
-        const pluginData = plugins[idx];
-        // eslint-disable-next-line require-atomic-updates
-        plugins[idx] = await handler(pluginData);
-      });
+        const pluginData = await handler(plugins[idx]);
 
-      loadPluginModules(loader, gasket.metadata.plugins);
-      flattenPluginModules(gasket.metadata);
-      fixupHierarchy(gasket.metadata);
+        loadPluginModules(pluginData, loader);
+        flattenPluginModules(pluginData, modules);
+        fixupHierarchy(pluginData, presets);
+
+        // eslint-disable-next-line require-atomic-updates
+        plugins[idx] = pluginData;
+      });
     },
     metadata(gasket, pluginData) {
       return {
