@@ -70,10 +70,10 @@ describe('init hook', () => {
     assume(execStub).calledWith('initOclif', sinon.match.object);
   });
 
-  it('warns and exits if no gasket.config was found', async () => {
+  it('warns if no gasket.config was found', async () => {
     getGasketConfigStub.resolves(null);
     await initHook({ id: 'build', argv: [], config: {} });
-    assume(warnStub).calledWith('No gasket.config file was found.', { exit: 1 });
+    assume(warnStub).calledWith('No gasket.config file was found.');
   });
 
   it('does not warn for help command if no gasket.config was found', async () => {

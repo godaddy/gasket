@@ -34,7 +34,7 @@ async function initHook({ id, config: oclifConfig, argv }) {
       oclifConfig.gasket = new PluginEngine(gasketConfig, { resolveFrom });
       await oclifConfig.gasket.exec('initOclif', { oclifConfig });
     } else if (id !== 'help') {
-      this.warn('No gasket.config file was found.', { exit: 1 });
+      this.warn('No gasket.config file was found.');
     }
 
   } catch (err) {
