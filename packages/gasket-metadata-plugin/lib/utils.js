@@ -39,6 +39,7 @@ function sanitize(value) {
  *
  * @param {Object} target - Object to mutate
  * @param {Object} other - Object to pull from
+ * @private
  */
 function safeAssign(target, other) {
   Object.keys(other)
@@ -52,8 +53,9 @@ function safeAssign(target, other) {
  * Load moduleData for app dependencies
  *
  * @param {Loader} loader - Loader instance
- * @param {ModuleData} app - Metadata for app
+ * @param {AppData} app - Metadata for app
  * @param {ModuleData[]} modules - Metadata for modules
+ * @private
  */
 function loadAppModules(loader, app, modules) {
   app.modules = app.modules || [];
@@ -72,6 +74,7 @@ function loadAppModules(loader, app, modules) {
  *
  * @param {PluginData} pluginData - Metadata for a plugin
  * @param {Loader} loader - Loader instance
+ * @private
  */
 function loadPluginModules(pluginData, loader) {
   if (pluginData.modules) {
@@ -86,6 +89,7 @@ function loadPluginModules(pluginData, loader) {
  *
  * @param {PluginData} pluginData - Metadata for a plugin
  * @param {ModuleData[]} modules - Metadata for modules
+ * @private
  */
 function flattenPluginModules(pluginData, modules) {
   if (pluginData.modules) {
@@ -105,6 +109,7 @@ function flattenPluginModules(pluginData, modules) {
  *
  * @param {PluginData} pluginData - Metadata for a plugin
  * @param {ModuleData[]} presets - Metadata for presets
+ * @private
  */
 function fixupPresetHierarchy(pluginData, presets) {
   /**

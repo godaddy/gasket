@@ -11,7 +11,13 @@
  * @property {String} [from] - Name of module which requires this module
  * @property {String} [range] - Range by which this module was required
  * @property {string} [link] - Path to a doc file or URL
- * @property {ModuleData} [modules] - Data for supporting modules
+ */
+
+/**
+ * App module with meta data
+ *
+ * @typedef {ModuleData} AppData
+ * @property {DetailData[]} [modules] - Description of modules supporting this plugin
  */
 
 /**
@@ -56,7 +62,7 @@
  * Collection data for modules configured for app
  *
  * @typedef {Object} Metadata
- * @property {ModuleData[]} app - App and main package data
+ * @property {AppData[]} app - App and main package data
  * @property {PresetData[]} presets - Preset data with dependency hierarchy
  * @property {PluginData[]} plugins - Flat list of registered plugin data
  * @property {ModuleData[]} modules - Supporting module data
