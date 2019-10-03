@@ -56,11 +56,13 @@ function safeAssign(target, other) {
  * @param {ModuleData[]} modules - Metadata for modules
  */
 function loadAppModules(loader, app, modules) {
+  app.modules = app.modules || [];
   Object.keys(app.package.dependencies)
     .filter(name => !isPlugin(name) && !isPreset(name))
     .forEach(name => {
       const range = app.package.dependencies[name];
       const moduleData = loader.getModuleInfo(null, name, { from: app.name, range });
+      app.modules.push(moduleData);
       modules.push(moduleData);
     });
 }
@@ -105,7 +107,6 @@ function flattenPluginModules(pluginData, modules) {
  * @param {ModuleData[]} presets - Metadata for presets
  */
 function fixupPresetHierarchy(pluginData, presets) {
-
   /**
    * Recursing fixer-upper
    *

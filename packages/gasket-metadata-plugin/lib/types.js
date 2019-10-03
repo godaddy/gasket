@@ -11,6 +11,7 @@
  * @property {String} [from] - Name of module which requires this module
  * @property {String} [range] - Range by which this module was required
  * @property {string} [link] - Path to a doc file or URL
+ * @property {ModuleData} [modules] - Data for supporting modules
  */
 
 /**
