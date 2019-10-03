@@ -1,7 +1,7 @@
 {
   "name": "@gasket/cli",
   "version": "2.6.1",
-  "description": "CLI to create Gasket apps and execute commands",
+  "description": "CLI for rapid application development with gasket",
   "main": "src/index.js",
   "bin": {
     "gasket": "./bin/boot"
