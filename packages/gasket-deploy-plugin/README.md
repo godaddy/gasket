@@ -1,7 +1,6 @@
-# @gasket/deploy-plugin
+# @gasket/start-plugin
 
-Enables commands essential to building and running Gasket projects for
-deployment.
+Enables commands essential to building and running Gasket projects.
 
 ## Commands
 

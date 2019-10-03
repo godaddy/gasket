@@ -8,7 +8,7 @@ describe('Plugin', function () {
   });
 
   it('has expected name', () => {
-    assume(plugin).to.have.property('name', 'deploy');
+    assume(plugin).to.have.property('name', 'start');
   });
 
   it('has expected hooks', () => {

@@ -1,7 +1,7 @@
 {
-  "name": "@gasket/deploy-plugin",
+  "name": "@gasket/start-plugin",
   "version": "0.0.0",
-  "description": "Adds deployment commands building and starting app",
+  "description": "Adds commands for building and starting Gasket apps",
   "main": "lib",
   "scripts": {
     "lint": "eslint lib test",
@@ -30,7 +30,7 @@
   "bugs": {
     "url": "https://github.com/godaddy/gasket/issues"
   },
-  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-deploy-plugin",
+  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-start-plugin",
   "devDependencies": {
     "assume": "^2.2.0",
     "eslint": "^6.1.0",

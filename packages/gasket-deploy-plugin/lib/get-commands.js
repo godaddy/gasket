@@ -13,7 +13,7 @@ module.exports = function getCommands(gasket, { GasketCommand }) {
     }
   }
   BuildCommand.id = 'build';
-  BuildCommand.description = 'Prepare your app code for deployment';
+  BuildCommand.description = 'Prepare your app';
 
 
   class StartCommand extends GasketCommand {

@@ -1,4 +1,4 @@
-# `@gasket/deploy-plugin`
+# `@gasket/start-plugin`
 
 # 1.0.0
 
