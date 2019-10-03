@@ -2,7 +2,6 @@ const path = require('path');
 const action = require('../action-wrapper');
 const PackageFetcher = require('../fetcher');
 const { presetIdentifier, Loader } = require('@gasket/resolve');
-const { flattenPresets } = require('../utils');
 
 const loader = new Loader();
 
@@ -77,7 +76,7 @@ async function loadPreset(context) {
   let presetInfos = await remotePresets(rawPresets, cwd, npmconfig, 'cli');
   presetInfos = presetInfos.concat(localPreset(context));
 
-  const presets = flattenPresets(presetInfos).map(p => presetIdentifier(p.rawName).shortName);
+  const presets = presetInfos.map(p => presetIdentifier(p.rawName).shortName);
   Object.assign(context, { presets, presetInfos });
 }
 

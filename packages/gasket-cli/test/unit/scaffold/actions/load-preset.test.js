@@ -118,7 +118,7 @@ describe('loadPreset', () => {
       assume(mockContext).to.have
         .deep.property('localPresets', ['../../../fixtures/local-preset', '../../../fixtures/local-preset']);
       assume(mockContext).to.have.deep
-        .property('presets', ['bogus', 'all-i-ever-wanted', 'local-preset', 'local-preset', 'some']);
+        .property('presets', ['bogus', 'all-i-ever-wanted', 'local-preset', 'local-preset']);
       assume(mockContext.presetInfos).to.lengthOf(4);
     });
 
@@ -132,7 +132,7 @@ describe('loadPreset', () => {
       assume(mockContext).to.have.deep
         .property('localPresets', ['../../../fixtures/local-preset', '../../../fixtures/local-preset']);
       assume(mockContext).to.have.deep
-        .property('presets', ['bogus', 'all-i-ever-wanted', 'local-preset', 'local-preset', 'some']);
+        .property('presets', ['bogus', 'all-i-ever-wanted', 'local-preset', 'local-preset']);
       assume(mockContext.presetInfos).to.lengthOf(4);
     });
   });
@@ -187,19 +187,19 @@ describe('loadPreset', () => {
 
   it('adds preset short names to context', async () => {
     await loadPreset(mockContext);
-    assume(mockContext).to.have.deep.property('presets', ['bogus', 'some']);
+    assume(mockContext).to.have.deep.property('presets', ['bogus']);
   });
 
   it('sets preset short name from flags', async () => {
     await loadPreset(mockContext);
-    assume(mockContext).to.have.deep.property('presets', ['bogus', 'some']);
+    assume(mockContext).to.have.deep.property('presets', ['bogus']);
   });
 
   it('supports multiple presets', async () => {
     mockContext.rawPresets = ['@gasket/bogus-preset@^1.0.0', '@gasket/all-i-ever-wanted-preset@^2.0.0'];
 
     await loadPreset(mockContext);
-    assume(mockContext).to.have.deep.property('presets', ['bogus', 'all-i-ever-wanted', 'some']);
+    assume(mockContext).to.have.deep.property('presets', ['bogus', 'all-i-ever-wanted']);
     assume(mockContext.presetInfos).to.lengthOf(2);
   });
 
