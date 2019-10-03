@@ -325,7 +325,7 @@ describe('utils - DocsConfigSetBuilder', () => {
     it('"link" and "description" selection priority = overrides > moduleInfo > docsSetup > package', async () => {
       const overrides = { link: 'ONE', description: 'ONE' };
       const mockSetup = { link: 'THREE', description: 'THREE' };
-      const mockInfo = { package: { homepage: 'FOUR', description: 'FOUR' } };
+      const mockInfo = { package: { homepage: 'FOUR', description: 'FOUR' }, path: 'path/to/app' };
       const fullMockInfo = { link: 'TWO', description: 'TWO', ...mockInfo };
 
       let results = await instance._buildDocsConfig(fullMockInfo, mockSetup, overrides);
@@ -343,6 +343,13 @@ describe('utils - DocsConfigSetBuilder', () => {
       results = await instance._buildDocsConfig(mockInfo, {});
       assume(results).property('link', 'FOUR');
       assume(results).property('description', 'FOUR');
+    });
+
+    it('file "link" is set to null if no matching file added', async () => {
+      const mockInfo = { package: {}, path: null };
+
+      const results = await instance._buildDocsConfig(mockInfo);
+      assume(results).property('link', null);
     });
 
     it('"name" and "sourceRoot" selection priority = overrides > moduleInfo', async () => {
@@ -387,22 +394,28 @@ describe('utils - DocsConfigSetBuilder', () => {
     const mockSourceRoot = '/path/to/example-module';
 
     it('adds file from link', async () => {
-      const results = await instance._findAllFiles({}, {}, 'README.md');
+      const results = await instance._findAllFiles({}, {}, 'README.md', mockSourceRoot);
       assume(results).includes('README.md');
     });
 
     it('strips hash from link', async () => {
-      const results = await instance._findAllFiles({}, {}, 'README.md#with-hash');
+      const results = await instance._findAllFiles({}, {}, 'README.md#with-hash', mockSourceRoot);
       assume(results).includes('README.md');
     });
 
+    it('ignores if no sourceRoot', async () => {
+      const results = await instance._findAllFiles({}, {}, 'README.md#with-hash', null);
+      assume(results).not.includes('README.md');
+      assume(results).lengthOf(0);
+    });
+
     it('does not add file if link is URL', async () => {
-      const results = await instance._findAllFiles({}, {}, 'https://example.com');
+      const results = await instance._findAllFiles({}, {}, 'https://example.com', mockSourceRoot);
       assume(results).lengthOf(0);
     });
 
     it('does not add file if link is not set', async () => {
-      const results = await instance._findAllFiles({}, {});
+      const results = await instance._findAllFiles({}, {}, null, mockSourceRoot);
       assume(results).lengthOf(0);
     });
 

@@ -17,7 +17,20 @@ const detailDocsTypes = [
   'lifecycles'
 ];
 
+/**
+ * Defaults for when a docsSetup is not declared.
+ *
+ * @type {{link: string, includes: array}}
+ */
 const docsSetupDefault = { link: 'README.md', includes: ['docs/**/*'] };
+
+/**
+ * Returns a filename with the hash removed
+ *
+ * @param {string} link - Filename that may have hash
+ * @returns {string} filename
+ */
+const noHash = link => link && link.split('#')[0];
 
 /**
  * Util class for constructing the DocsConfigSet
@@ -50,8 +63,8 @@ class DocsConfigSetBuilder {
    * @private
    */
   async _findAllFiles(moduleData, docsSetup, link, sourceRoot) {
+    if (!sourceRoot) return [];
 
-    const noHash = filename => filename.split('#')[0];
     const fileSet = new Set([]);
 
     const tryAdd = maybeFile => {
@@ -132,7 +145,8 @@ class DocsConfigSetBuilder {
       name,
       version,
       description,
-      link,
+      // safety-check: if link wants to be a file but was not found
+      link: !files.includes(noHash(link)) && !isUrl.test(link) ? null : link,
       sourceRoot,
       ...overrides,
       transforms,
