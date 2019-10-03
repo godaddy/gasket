@@ -29,6 +29,21 @@ function sanitize(value) {
   return value;
 }
 
+/**
+ * Add keys to from other object to the target if not present
+ *
+ * @param {Object} target - Object to mutate
+ * @param {Object} other - Object to pull from
+ */
+function expand(target, other) {
+  Object.keys(other)
+    .reduce((acc, key) => {
+      if (!(key in acc)) acc[key] = other[key];
+      return acc;
+    }, target);
+}
+
 module.exports = {
-  sanitize
+  sanitize,
+  expand
 };

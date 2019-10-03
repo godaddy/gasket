@@ -1,5 +1,10 @@
 const cloneDeep = require('lodash.clonedeep');
-const { sanitize } = require('./utils');
+const isObject = require('lodash.isobject');
+const { pluginIdentifier, presetIdentifier } = require('@gasket/resolve');
+const { sanitize, expand } = require('./utils');
+
+const isPlugin = name => pluginIdentifier.isValidFullName(name);
+const isPreset = name => presetIdentifier.isValidFullName(name);
 
 module.exports = {
   name: 'metadata',
@@ -31,7 +36,43 @@ module.exports = {
         plugins[idx] = await handler(pluginData);
       });
 
-      // TODO (agerard): load moduleData for plugin modules
+      //
+      // Add moduleData for app dependencies
+      //
+      Object.keys(app.package.dependencies)
+        .filter(name => !isPlugin(name) && !isPreset(name))
+        .forEach(name => {
+          const range = app.package.dependencies[name];
+          const moduleInfo = loader.getModuleInfo(null, name, { from: app.name, range });
+          gasket.metadata.modules.push(moduleInfo);
+        });
+
+      //
+      // load moduleInfo for any supporting modules that are declared
+      //
+      plugins.forEach(pluginData => {
+        if (pluginData.modules) {
+          pluginData.modules = pluginData.modules
+            .map(mod => isObject(mod) ? mod : { name: mod })  // normalize string names to objects
+            .map(mod => loader.getModuleInfo(null, mod.name, mod));
+        }
+      });
+
+      //
+      // flatten moduleData from plugin
+      //
+      plugins.reduce((modules, pluginData) => {
+        if (pluginData.modules) {
+          pluginData.modules.forEach(moduleData => {
+            const existing = modules.find(mod => mod.name === moduleData.name);
+            if (existing) {
+              expand(existing, moduleData);
+            } else {
+              modules.push(moduleData);
+            }
+          });
+        }
+      }, gasket.metadata.modules);
 
       //
       // assign plugin instances back to preset hierarchy to avoid faulty data
