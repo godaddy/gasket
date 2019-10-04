@@ -6,17 +6,17 @@ const generateIndex = require('./utils/generate-index');
  * Get the docs command
  *
  * @param {Gasket} gasket - Gasket
- * @param {Object} BaseCommand - Base Gasket command to extend
+ * @param {Object} GasketCommand - Base Gasket command to extend
  * @returns {GasketCommand} command
  */
-module.exports = function getCommands(gasket, { BaseCommand }) {
+module.exports = function getCommands(gasket, { GasketCommand }) {
 
-  class DocsCommand extends BaseCommand {
-    async runHooks() {
+  class DocsCommand extends GasketCommand {
+    async gasketRun() {
       const docsConfigSet = await buildDocsConfigSet(gasket);
       await collateFiles(docsConfigSet);
       await generateIndex(docsConfigSet);
-      await gasket.exec('docsView', docsConfigSet);
+      await this.gasket.exec('docsView', docsConfigSet);
     }
   }
 

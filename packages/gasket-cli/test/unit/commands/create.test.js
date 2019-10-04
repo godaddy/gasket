@@ -7,7 +7,7 @@ const proxyquire = require('proxyquire');
 
 describe('create', function () {
   let sandbox, mockImports, CreateCommand;
-  let actionStubs, dumpErrorContext, gasket;
+  let actionStubs, dumpErrorContext;
   let consoleErrorStub;
 
   this.timeout(5000);
@@ -38,20 +38,11 @@ describe('create', function () {
     actionStubs.installModules.update = sandbox.stub();
     actionStubs.linkModules.update = sandbox.stub();
 
-    gasket = {
-      exec: sandbox.stub(),
-      execWaterfall: sandbox.stub(),
-      config: {}
-    };
-
     dumpErrorContext = sandbox.stub();
     consoleErrorStub = sandbox.stub(console, 'error');
 
     mockImports = {
       '../scaffold/actions': actionStubs,
-      '../command': proxyquire('../../../src/command', {
-        '@gasket/plugin-engine': sandbox.stub().returns(gasket)
-      }),
       '../scaffold/dump-error-context': dumpErrorContext,
       'ora': () => ({
         warn: sandbox.stub()

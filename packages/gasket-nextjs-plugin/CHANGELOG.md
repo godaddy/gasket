@@ -1,5 +1,7 @@
 # `@gasket/nextjs-plugin`
 
+- Support `gasket.command` interface change ([#74])
+
 ### 2.2.0
 
 - Use `next@9` for new apps
@@ -33,3 +35,4 @@
 [#23]: https://github.com/godaddy/gasket/pull/23
 [#32]: https://github.com/godaddy/gasket/pull/32
 [#33]: https://github.com/godaddy/gasket/pull/33
+[#74]:https://github.com/godaddy/gasket/pull/74
