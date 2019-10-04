@@ -1,5 +1,7 @@
 # `@gasket/log-plugin`
 
+- Support `gasket.command` interface change ([#74])
+
 ### 3.1.0
 
 - Align package structure and dependencies
@@ -45,3 +47,4 @@
 
 
 [#31]:https://github.com/godaddy/gasket/pull/31
+[#74]:https://github.com/godaddy/gasket/pull/74

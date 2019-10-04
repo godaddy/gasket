@@ -1,7 +1,4 @@
 const debug = require('diagnostics')('gasket:express');
-const express = require('express');
-const cookieParser = require('cookie-parser');
-const compression = require('compression');
 
 module.exports = {
   name: 'express',
@@ -29,6 +26,10 @@ module.exports = {
     */
     // eslint-disable-next-line max-statements
     createServers: async function createServers(gasket, serverOpts) {
+      const express = require('express');
+      const cookieParser = require('cookie-parser');
+      const compression = require('compression');
+
       const { config } = gasket;
       const excludedRoutesRegex = config.express && config.express.excludedRoutesRegex;
       const app = express();

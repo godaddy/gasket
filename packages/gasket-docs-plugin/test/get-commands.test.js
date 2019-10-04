@@ -2,11 +2,16 @@ const assume = require('assume');
 const sinon = require('sinon');
 const proxyquire = require('proxyquire');
 
-class MockBaseCommand {}
 const mockGasket = {
   exec: sinon.stub()
 };
-const mockData = { BaseCommand: MockBaseCommand };
+class MockGasketCommand {
+  constructor() {
+    this.gasket = mockGasket;
+  }
+}
+
+const mockData = { GasketCommand: MockGasketCommand };
 const mockDocsConfigSet = { docsRoot: '/path/to/app/.docs' };
 
 const buildConfigSetStub = sinon.stub().resolves(mockDocsConfigSet);
@@ -23,7 +28,7 @@ describe('getCommands', () => {
 
   it('returns a command', () => {
     const results = getCommands(mockGasket, mockData);
-    assume(results.prototype).instanceOf(MockBaseCommand);
+    assume(results.prototype).instanceOf(MockGasketCommand);
   });
 
   it('command has id', () => {
@@ -36,9 +41,9 @@ describe('getCommands', () => {
     assume(results).property('description');
   });
 
-  it('command implements runHooks', () => {
+  it('command implements gasketRun', () => {
     const results = getCommands(mockGasket, mockData);
-    assume(results.prototype).property('runHooks');
+    assume(results.prototype).property('gasketRun');
   });
 
   describe('instance', () => {
@@ -50,22 +55,22 @@ describe('getCommands', () => {
     });
 
     it('builds docsConfigSet', async () => {
-      await instance.runHooks();
+      await instance.gasketRun();
       assume(buildConfigSetStub).calledWith(mockGasket);
     });
 
     it('collates files', async () => {
-      await instance.runHooks();
+      await instance.gasketRun();
       assume(collateFilesStub).calledWith(mockDocsConfigSet);
     });
 
     it('generates index', async () => {
-      await instance.runHooks();
+      await instance.gasketRun();
       assume(generateIndexStub).calledWith(mockDocsConfigSet);
     });
 
     it('executes docsView lifecycle', async () => {
-      await instance.runHooks();
+      await instance.gasketRun();
       assume(mockGasket.exec).calledWith('docsView', mockDocsConfigSet);
     });
   });

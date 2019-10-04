@@ -2,7 +2,7 @@
 const sinon = require('sinon');
 const assume = require('assume');
 const proxyquire = require('proxyquire');
-const pkgVersion = require('../../../../package.json').version;
+const pkgVersion = '2.2.0';
 
 describe('cliVersion', () => {
   let sandbox, mockContext, cliVersion;
@@ -11,7 +11,10 @@ describe('cliVersion', () => {
     sandbox = sinon.createSandbox();
 
     cliVersion = proxyquire('../../../../src/scaffold/actions/cli-version', {
-      '../action-wrapper': require('../../../helpers').mockActionWrapper
+      '../action-wrapper': require('../../../helpers').mockActionWrapper,
+      '../../../package.json': {
+        version: pkgVersion
+      }
     });
 
     mockContext = {

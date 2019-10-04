@@ -105,14 +105,20 @@ describe('build hook', () => {
 
   it('does not build for local command', async () => {
     const buildHook = getMockedBuildHook();
-    await buildHook({ command: 'local' });
+    await buildHook({ command: { id: 'local' } });
     assume(builderStub).not.called();
   });
 
   it('uses current next build', async () => {
     const buildHook = getMockedBuildHook();
-    await buildHook({ command: 'build' });
+    await buildHook({ command: { id: 'build' } });
     assume(builderStub).called();
+  });
+
+  it('supports older gasket.command format', async () => {
+    const buildHook = getMockedBuildHook();
+    await buildHook({ command: 'local' });
+    assume(builderStub).not.called();
   });
 
   it('supports older next build', async () => {
@@ -122,7 +128,7 @@ describe('build hook', () => {
         default: oldBuilderStub
       }
     });
-    await buildHook({ command: 'build' });
+    await buildHook({ command: { id: 'build' } });
 
     assume(oldBuilderStub).called();
     assume(builderStub).not.called();
@@ -196,6 +202,9 @@ describe('workbox hook', () => {
 
 function mockGasketApi() {
   return {
+    command: {
+      id: 'fake'
+    },
     execWaterfall: stub().returnsArg(1),
     exec: stub().resolves({}),
     execSync: stub().returns([]),

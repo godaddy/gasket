@@ -8,7 +8,7 @@
     "lint:fix": "npm run lint -- --fix",
     "test": "npm run lint",
     "build": "npm run clean && npm run svg-to-react",
-    "prepublish": "npm run build",
+    "prepublishOnly": "npm run build",
     "clean": "rimraf ./react",
     "svg-to-react": "babel-node --presets @babel/env ./scripts/svg-to-react.js"
   },
