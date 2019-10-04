@@ -6,6 +6,7 @@
  * @property {string} link - Markdown link relative to package root
  * @property {glob[]} [files] - Names and/or patterns of files to collect
  * @property {DocsTransform[]} [transforms] - Transforms to apply to collected files
+ * @property {Object.<string, DocsSetup>} [modules] - Setup object for supporting modules
  */
 
 /**
