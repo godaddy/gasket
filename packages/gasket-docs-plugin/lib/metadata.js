@@ -28,18 +28,6 @@ module.exports = function metadata(gasket, meta) {
     structures: [{
       name: outputDir,
       description: 'Output of gasket docs command'
-    }],
-    modules: [{
-      name: 'docsify',
-      link: 'README.md'
-    }, {
-      name: 'redux'
-    }, {
-      name: 'react-redux',
-      link: 'README.md'
-    },
-    'react'
-    ]
-    // modules: ['docsify', 'redux', 'react-redux']
+    }]
   };
 };
