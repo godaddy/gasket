@@ -173,7 +173,7 @@ describe('utils - buildConfigSet', () => {
       assume(mockGasket.execApply).calledWith('docsSetup', sinon.match.func);
     });
 
-    it('adds app if if plugin is null (from ./lifecycles file)', async () => {
+    it('docsSetup defaults are available to hooks', async () => {
       await docsSetupCallback(null, mockHandler);
       assume(mockHandler).calledWith(sinon.match.object);
       assume(mockHandler.getCall(0).args[0]).property('defaults', mockDefaults);
