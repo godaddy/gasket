@@ -17,7 +17,8 @@ describe('loadPreset', () => {
           version: '1.2.3',
           dependencies: {
             '@gasket/bogus-plugin': '1.2.3',
-            'user-bogus-plugin': '3.2.1'
+            'user-bogus-plugin': '3.2.1',
+            '@gasket/some-preset': '1.0.1'
           }
         }
       },
@@ -28,6 +29,12 @@ describe('loadPreset', () => {
           dependencies: {
             'more-deps-plugin': '4.5.6'
           }
+        }
+      },
+      '@gasket/some-preset@1.0.1': {
+        package: {
+          name: 'some',
+          version: '1.0.1'
         }
       },
       'local-preset': {
@@ -106,15 +113,28 @@ describe('loadPreset', () => {
       mockContext.localPresets = ['../../../fixtures/local-preset', '../../../fixtures/local-preset'];
 
       await loadPreset(mockContext);
-      console.log(mockContext);
       assume(mockContext).to.have
         .deep.property('rawPresets', ['@gasket/bogus-preset@^1.0.0', '@gasket/all-i-ever-wanted-preset@^2.0.0']);
       assume(mockContext).to.have
         .deep.property('localPresets', ['../../../fixtures/local-preset', '../../../fixtures/local-preset']);
-      assume(mockContext).to.have.deep.property('presets', ['bogus', 'all-i-ever-wanted', 'local-preset', 'local-preset']);
+      assume(mockContext).to.have.deep
+        .property('presets', ['bogus', 'all-i-ever-wanted', 'local-preset', 'local-preset']);
       assume(mockContext.presetInfos).to.lengthOf(4);
     });
 
+    it('supports preset extensions', async () => {
+      mockContext.rawPresets = ['@gasket/bogus-preset@^1.0.0', '@gasket/all-i-ever-wanted-preset@^2.0.0'];
+      mockContext.localPresets = ['../../../fixtures/local-preset', '../../../fixtures/local-preset'];
+
+      await loadPreset(mockContext);
+      assume(mockContext).to.have
+        .deep.property('rawPresets', ['@gasket/bogus-preset@^1.0.0', '@gasket/all-i-ever-wanted-preset@^2.0.0']);
+      assume(mockContext).to.have.deep
+        .property('localPresets', ['../../../fixtures/local-preset', '../../../fixtures/local-preset']);
+      assume(mockContext).to.have.deep
+        .property('presets', ['bogus', 'all-i-ever-wanted', 'local-preset', 'local-preset']);
+      assume(mockContext.presetInfos).to.lengthOf(4);
+    });
   });
 
   describe('local package', () => {
@@ -188,7 +208,8 @@ describe('loadPreset', () => {
     assume(mockContext).to.have.deep.property('presetInfos', [{
       ...mockPkgs['@gasket/bogus-preset@^1.0.0'],
       from: 'cli',
-      rawName: '@gasket/bogus-preset@^1.0.0'
+      rawName: '@gasket/bogus-preset@^1.0.0',
+      presets: [{ package: { name: 'some', version: '1.0.1' }, from: 'bogus', rawName: '@gasket/some-preset@1.0.1' }]
     }]);
   });
 });
