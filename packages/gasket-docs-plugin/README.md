@@ -65,7 +65,21 @@ module.exports = {
         transforms: [{
           test: /\.md$/,
           handler: content => content.replace('something', 'nothing')
-        }]
+        }],
+        // collate docs for any supporting modules
+        modules: {
+          '@some/module': {
+            link: 'README.md'
+          },
+          'another-module': {
+            link: 'README.md#go-here',
+            files: ['html/**/*'],
+            transforms: [{
+               test: /\.html$/,
+               handler: content => content.replace(/everything/g, 'nothing')
+             }]
+          }
+        }
       }
     }
   }
@@ -82,6 +96,13 @@ to true.
 
 Additional data is available to handlers to help with transformations which
 can be read about in the [DocsTransformHandler] API.
+
+#### Modules
+
+Beside docs for the plugin itself, `docsSetup` for supporting modules can also
+be described. For modules from [metadata], if a `docsSetup` is found, the files
+described will be collected, and link for the generated index go to the link
+specified in the `docsSetup`, instead of the module's homepage.
 
 ### docsView
 
