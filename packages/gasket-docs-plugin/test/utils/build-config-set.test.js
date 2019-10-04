@@ -49,6 +49,9 @@ class MockBuilder {
   }
 }
 
+const mockDefaults = { link: 'FAKE.md#bogus' };
+MockBuilder.docsSetupDefault = mockDefaults;
+
 const buildConfigSet = proxyquire('../../lib/utils/build-config-set', {
   './config-set-builder': MockBuilder
 });
@@ -168,6 +171,12 @@ describe('utils - buildConfigSet', () => {
     it('lifecycle is executed', async () => {
       await buildConfigSet(mockGasket);
       assume(mockGasket.execApply).calledWith('docsSetup', sinon.match.func);
+    });
+
+    it('adds app if if plugin is null (from ./lifecycles file)', async () => {
+      await docsSetupCallback(null, mockHandler);
+      assume(mockHandler).calledWith(sinon.match.object);
+      assume(mockHandler.getCall(0).args[0]).property('defaults', mockDefaults);
     });
 
     it('adds app if if plugin is null (from ./lifecycles file)', async () => {
