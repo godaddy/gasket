@@ -1,25 +1,36 @@
 const { Command } = require('@oclif/config');
+const { flags } = require('@oclif/command');
+const GasketCommand = require('./command');
+const { hoistBaseFlags } = require('./utils');
 
 module.exports = {
   name: 'command',
   hooks: {
-    async initOclif(gasket, { oclifConfig, BaseCommand }) {
-      const commandArrays = await gasket.exec('getCommands', {
-        oclifConfig,
-        BaseCommand
-      });
+    /**
+     * Gets commands from plugins and injects them to the oclif config.
+     *
+     * @param {Gasket} gasket - Gasket API
+     * @param {Object} data - init data
+     * @param {Object} data.oclifConfig - oclif configuration
+     * @async
+     */
+    async initOclif(gasket, { oclifConfig }) {
+      const commands = (await gasket.exec('getCommands', { GasketCommand, flags }))
+        .reduce((all, cmds) => all.concat(cmds), [])
+        .filter(cmd => Boolean(cmd))
+        .map(cmd => hoistBaseFlags(cmd))
+        .map(cmd => ({
+          ...Command.toCached(cmd),
+          load: () => cmd
+        }));
 
       oclifConfig.plugins.push({
-        name: 'External gasket commands',
+        name: 'Gasket commands',
         hooks: {},
         topics: [],
-        commands: commandArrays
-          .reduce((all, commands) => all.concat(commands), [])
-          .map(cmd => ({
-            ...Command.toCached(cmd),
-            load: () => cmd
-          }))
+        commands
       });
     }
-  }
+  },
+  GasketCommand
 };

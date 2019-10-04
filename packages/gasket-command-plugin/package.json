@@ -6,10 +6,13 @@
   "scripts": {
     "lint": "eslint ./lib ./test",
     "lint:fix": "npm run lint -- --fix",
-    "test": "jest",
-    "test:coverage": "jest --coverage",
+    "test": "npm run test:runner",
+    "test:runner": "mocha test/*.test.js --require test/setup.js",
+    "test:watch": "npm run test:runner -- --watch",
+    "test:coverage": "nyc --reporter=text --reporter=html npm run test:runner",
     "posttest": "npm run lint",
-    "prepublishOnly": "npm test"
+    "prepack": "npm run docs",
+    "docs": "jsdoc2md lib/*.js > docs/api.md"
   },
   "repository": {
     "type": "git",
@@ -30,15 +33,22 @@
     "url": "https://github.com/godaddy/gasket/issues"
   },
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-command-plugin",
+  "dependencies": {
+    "@gasket/utils": "^1.2.0"
+  },
   "devDependencies": {
     "@oclif/config": "^1.13.0",
     "@oclif/errors": "^1.1.2",
+    "assume": "^2.2.0",
     "eslint": "^6.1.0",
     "eslint-config-godaddy": "^4.0.0",
     "eslint-plugin-jest": "^22.15.1",
     "eslint-plugin-json": "^1.4.0",
     "eslint-plugin-mocha": "^6.0.0",
-    "jest": "^24.8.0"
+    "jsdoc-to-markdown": "^5.0.1",
+    "mocha": "^6.2.0",
+    "nyc": "^14.1.1",
+    "sinon": "^7.4.1"
   },
   "peerDependencies": {
     "@oclif/config": "^1.13.0",

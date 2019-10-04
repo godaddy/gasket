@@ -1,5 +1,9 @@
 # `@gasket/command-plugin`
 
+- Move GasketCommand to this plugin ([#74])
+- Allow plugins to add flags to commands in `getCommands` lifecycle.
+- Improved documentation
+
 ### 1.1.0
 
 - Align package structure and dependencies
@@ -21,3 +25,4 @@
 - Initial release
 
 [#52]: https://github.com/godaddy/gasket/pull/52
+[#74]: https://github.com/godaddy/gasket/pull/74

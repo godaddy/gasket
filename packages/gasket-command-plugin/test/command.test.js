@@ -1,24 +1,26 @@
+/* eslint-disable no-process-env */
 const assume = require('assume');
 const path = require('path');
 const proxyquire = require('proxyquire');
-const { spy, stub } = require('sinon');
+const sinon = require('sinon');
+const { hoistBaseFlags } = require('../lib/utils');
 
 const fixturesDir = path.join(__dirname, 'fixtures');
+const ignoreConfig = ['flags'];
 
 describe('GasketCommand', function () {
   let GasketCommand;
   let PluginEngine;
   let gasket;
 
-  this.timeout(10000);
-
   /*
-   * Returns a new base GasketCommand with the specified
-   * argv to be parsed.
+   * Returns a GasketCommand instance with the specified argv to be parsed.
    */
-  function createGasketCommand(argv = [], gasketConfig = {}) {
-    const command = new GasketCommand(argv, { bin: 'gasket' });
+  function instantiateCommand(Command, argv = [], gasketConfig = {}) {
+    Command = hoistBaseFlags(Command);
+    const command = new Command(argv, { bin: 'gasket' });
     command.config.gasket = createMockGasketApi(gasketConfig);
+    sinon.stub(command, 'warn');
     return command;
   }
 
@@ -30,8 +32,8 @@ describe('GasketCommand', function () {
   function createMockGasketApi(gasketConfig = {}) {
     gasket = {
       config: gasketConfig,
-      exec: stub().resolves(),
-      execWaterfall: stub().callsFake((event, config) => config)
+      exec: sinon.stub().resolves(),
+      execWaterfall: sinon.stub().callsFake((event, arg) => arg)
     };
 
     return gasket;
@@ -43,11 +45,14 @@ describe('GasketCommand', function () {
    * 3. Assumes expectedConfig is equal to `command.userConfig`.
    */
   async function assumeInitializedWith({
+    withCommand = GasketCommand,
     withArgv,
     withEnv = {},
     withGasketConfig,
     expectedConfig
   }) {
+    const command = instantiateCommand(withCommand, withArgv, withGasketConfig);
+
     // Overwrite process.env values
     const priorEnv = {};
     Object.keys(withEnv).forEach(key => {
@@ -56,10 +61,12 @@ describe('GasketCommand', function () {
     });
 
     try {
-      const command = createGasketCommand(withArgv, withGasketConfig);
       await command.init();
 
       Object.keys(gasket.config).forEach(key => {
+        // if our test doesn't case and is safe to ignore
+        if (ignoreConfig.includes(key) && !expectedConfig[key]) return;
+
         assume(gasket.config[key]).deep.equals(
           expectedConfig[key],
           `Expected "${key}" config not equal`
@@ -76,29 +83,35 @@ describe('GasketCommand', function () {
   beforeEach((done) => {
     process.env.NODE_ENV = 'development';
 
-    gasket = { exec: spy() };
-    PluginEngine = stub().returns(gasket);
+    gasket = { exec: sinon.spy() };
+    PluginEngine = sinon.stub().returns(gasket);
 
-    GasketCommand = proxyquire('../../src/command', {
+    GasketCommand = proxyquire('../lib/command', {
       '@gasket/plugin-engine': PluginEngine
     });
 
     done();
   });
 
-  it('has the expected API', () => {
+  it('implements the expected oclif command API', () => {
     const command = new GasketCommand();
     assume(command);
-    assume(command.configure).is.a('function');
     assume(command.init).is.a('asyncfunction');
     assume(command.run).is.a('asyncfunction');
+  });
+
+  it('exposes the expected Gasket command API', () => {
+    const command = new GasketCommand();
+    assume(command);
+    assume(command.gasketRun).is.a('asyncfunction');
+    assume(command.gasketConfigure).is.a('asyncfunction');
   });
 
   describe('.init()', () => {
     it('deep merges in environment-specific configurations', async () => {
       await assumeInitializedWith({
         withEnv: { NODE_ENV: 'test' },
-        withGasketConfig: require('../fixtures/gasket.config.envs'),
+        withGasketConfig: require('./fixtures/gasket.config.envs'),
         withArgv: [
           '--root', fixturesDir,
           '--env', 'test'
@@ -120,7 +133,7 @@ describe('GasketCommand', function () {
     it('--env arg takes priority over NODE_ENV', async () => {
       await assumeInitializedWith({
         withEnv: { NODE_ENV: 'production' },
-        withGasketConfig: require('../fixtures/gasket.config.envs'),
+        withGasketConfig: require('./fixtures/gasket.config.envs'),
         withArgv: [
           '--root', fixturesDir,
           '--env', 'test'
@@ -145,7 +158,7 @@ describe('GasketCommand', function () {
           '--root', fixturesDir,
           '--env', 'prod.dc2'
         ],
-        withGasketConfig: require('../fixtures/gasket.config.dcs'),
+        withGasketConfig: require('./fixtures/gasket.config.dcs'),
         expectedConfig: {
           env: 'prod.dc2',
           someService: {
@@ -164,7 +177,7 @@ describe('GasketCommand', function () {
         ],
         withGasketConfig: {
           root: fixturesDir,
-          ...require('../fixtures/gasket.config.envs')
+          ...require('./fixtures/gasket.config.envs')
         },
         expectedConfig: {
           root: fixturesDir,
@@ -186,7 +199,7 @@ describe('GasketCommand', function () {
 
       await assumeInitializedWith({
         withArgv: [],
-        withGasketConfig: require('../fixtures/gasket.config.with-env'),
+        withGasketConfig: require('./fixtures/gasket.config.with-env'),
         expectedConfig: {
           env: 'prod.dc1',
           someService: {
@@ -202,7 +215,7 @@ describe('GasketCommand', function () {
       delete process.env.NODE_ENV;
 
       await assumeInitializedWith({
-        withGasketConfig: require('../fixtures/gasket.config'),
+        withGasketConfig: require('./fixtures/gasket.config'),
         expectedConfig: {
           env: 'development',
           some: 'config',
@@ -211,12 +224,21 @@ describe('GasketCommand', function () {
       });
     });
 
+    it('warns if env falls back to development', async () => {
+      delete process.env.NODE_ENV;
+
+      const cmd = instantiateCommand(GasketCommand);
+      await cmd.init();
+
+      assume(cmd.warn).calledWithMatch('falling back to "development"');
+    });
+
     it('overrides any "env" in config with --env', async () => {
       await assumeInitializedWith({
         withArgv: [
           '--env', 'test'
         ],
-        withGasketConfig: require('../fixtures/gasket.config.with-env'),
+        withGasketConfig: require('./fixtures/gasket.config.with-env'),
         expectedConfig: {
           env: 'test',
           someService: {
@@ -228,17 +250,75 @@ describe('GasketCommand', function () {
       });
     });
 
-    it('executes configure lifecycle', async () => {
+    it('exposed invoked command details from gasket instance', async () => {
+      class CustomCommand extends GasketCommand {}
+      CustomCommand.id = 'custom';
+
+      const cmd = instantiateCommand(CustomCommand, ['--env', 'bogus', '--config', 'fake']);
+      await cmd.init();
+
+      assume(cmd.gasket).property('command');
+      assume(cmd.gasket.command).property('id', 'custom');
+      assume(cmd.gasket.command).property('flags');
+      // assume(cmd.gasket.config.flags).property('root');
+      // assume(cmd.gasket.config.flags).property('config', 'fake');
+      // assume(cmd.gasket.config.flags).property('env', 'bogus');
+    });
+
+    it('allows subclasses to adjust config', async () => {
+      class CustomCommand extends GasketCommand {
+        gasketConfigure(config) {
+          return { ...config, extra: true };
+        }
+      }
+
       await assumeInitializedWith({
-        withGasketConfig: require('../fixtures/gasket.config'),
+        withCommand: CustomCommand,
+        withGasketConfig: require('./fixtures/gasket.config'),
         expectedConfig: {
           env: 'development',
           some: 'config',
-          plugins: {}
+          plugins: {},
+          extra: true
         }
       });
+    });
 
-      assume(gasket.execWaterfall).calledWith('configure');
+    it('allows subclasses to override env in config or flags', async () => {
+      class CustomCommand extends GasketCommand {
+        gasketConfigure(config) {
+          return { ...config, env: 'test' };
+        }
+      }
+
+      await assumeInitializedWith({
+        withArgv: [
+          '--env', 'prod'
+        ],
+        withCommand: CustomCommand,
+        withGasketConfig: require('./fixtures/gasket.config.with-env'),
+        expectedConfig: {
+          env: 'test',
+          someService: {
+            url: 'https://some-test.url/',
+            extraSecure: false
+          },
+          other: 'setting'
+        }
+      });
+    });
+
+    it('invokes the configure Gasket lifecycle', async () => {
+      class CustomCommand extends GasketCommand {
+        gasketConfigure(config) {
+          return { ...config, env: 'test' };
+        }
+      }
+
+      const cmd = instantiateCommand(CustomCommand);
+      await cmd.init();
+
+      assume(gasket.execWaterfall).calledWith('configure', sinon.match.object);
     });
   });
 
@@ -247,7 +327,7 @@ describe('GasketCommand', function () {
 
     beforeEach(async () => {
       class MockCommand extends GasketCommand {
-        runHooks() {}
+        gasketRun() {}
       }
 
       MockCommand.flags = { ...GasketCommand.flags };
@@ -258,10 +338,34 @@ describe('GasketCommand', function () {
       await cmd.init();
     });
 
-    it('invokes the `init` hooks', async () => {
+    it('invokes the `init` Gasket lifecycle', async () => {
       await cmd.run();
 
       assume(gasket.exec).is.calledWith('init');
+    });
+
+    it('invokes the `gasketRun` method', async () => {
+      const gasketRunSpy = sinon.spy(cmd, 'gasketRun');
+      await cmd.run();
+
+      assume(gasketRunSpy).is.called();
+    });
+
+    it('throws if sub-class does not implement `gasketRun` method', async () => {
+      class MockCommand extends GasketCommand {}
+
+      MockCommand.flags = { ...GasketCommand.flags };
+
+      cmd = new MockCommand(['--root', fixturesDir]);
+      cmd.config = { gasket: createMockGasketApi() };
+
+      await cmd.init();
+      await assume(cmd.run()).throwAsync();
+
+      // test that the error message is what we expect
+      cmd.run().catch(err => {
+        assume(err.message).includes('The `gasketRun` method must be implemented');
+      });
     });
   });
 });

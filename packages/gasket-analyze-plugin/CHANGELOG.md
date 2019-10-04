@@ -1,5 +1,7 @@
 # `@gasket/analyze-plugin`
 
+- Move **analyze** command from CLI to this plugin ([#74])
+
 ### 1.2.0
 
 - Align package structure and dependencies
@@ -16,3 +18,6 @@
 ### 1.0.0
 
 - Initial release.
+
+
+[#74]: https://github.com/godaddy/gasket/pull/74

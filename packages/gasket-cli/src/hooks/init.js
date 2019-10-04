@@ -1,19 +1,24 @@
-const debug = require('diagnostics')('gasket:cli:hooks:init');
-const Metrics = require('../metrics');
-
 /* eslint-disable max-statements */
+const debug = require('diagnostics')('gasket:cli:hooks:init');
+/**
+ * oclif hook that loads the gasket.config and instantiates the plugin-engine.
+ *
+ * @param {String} id - Name of the command
+ * @param {Object} oclifConfig - oclif configuration
+ * @param {Object} argv - command line arguments
+ * @async
+ */
 async function initHook({ id, config: oclifConfig, argv }) {
   debug('id', id);
   debug('argv', argv);
 
-  // gasket create does not have a config file present.
-  if (id === 'create' || id === '--help' || id === 'readme') return;
+  // end early for create cmd which does not use gasket.config
+  if (id === 'create') return;
 
   const { parse } = require('@oclif/parser');
+  const { GasketCommand } = require('@gasket/command-plugin');
+  const { getGasketConfig } = require('../config/utils');
   const PluginEngine = require('@gasket/plugin-engine');
-  const GasketCommand = require('../command');
-  const getGasketConfig = require('../config/loader');
-  const defaultPlugins = require('./default-plugins');
 
   const { flags } = parse(argv, {
     context: this,
@@ -21,32 +26,20 @@ async function initHook({ id, config: oclifConfig, argv }) {
     strict: false
   });
 
-  let gasketConfig;
-
   try {
-    gasketConfig = await getGasketConfig(flags);
+    const gasketConfig = await getGasketConfig(flags);
 
-    gasketConfig.plugins.add = gasketConfig.plugins.add || [];
-    gasketConfig.plugins.add.push(...defaultPlugins);
-
-    oclifConfig.gasket = new PluginEngine(gasketConfig);
-
-    const metrics = new Metrics(gasketConfig, flags.record, id);
-
-    // we don't await this call so we don't block anything
-    metrics.report()
-      .then(data => oclifConfig.gasket.exec('metrics', data))
-      .catch(this.error);
+    if (gasketConfig) {
+      const resolveFrom = flags.root;
+      oclifConfig.gasket = new PluginEngine(gasketConfig, { resolveFrom });
+      await oclifConfig.gasket.exec('initOclif', { oclifConfig });
+    } else if (id !== 'help') {
+      this.warn('No gasket.config file was found.');
+    }
 
   } catch (err) {
     this.error(err, { exit: 1 });
   }
-
-  await oclifConfig.gasket.exec('initOclif', {
-    oclifConfig,
-    BaseCommand: GasketCommand
-  });
 }
-
 
 module.exports = initHook;

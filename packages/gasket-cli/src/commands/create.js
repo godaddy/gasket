@@ -1,9 +1,10 @@
 /* eslint-disable max-statements */
 
 const { Command, flags } = require('@oclif/command');
+const path = require('path');
 const ora = require('ora');
 const chalk = require('chalk');
-const GasketCommand = require('../command');
+const untildify = require('untildify');
 
 const makeCreateContext = require('../scaffold/create-context');
 
@@ -158,7 +159,16 @@ comma-separated values: --preset-path=path1,path2`,
     hidden: true,
     parse: commasToArray
   }),
-  'npmconfig': GasketCommand.flags.npmconfig
+  'npmconfig': flags.string({
+    env: 'GASKET_NPM_USERCONFIG',
+    default: '~/.npmrc',
+    description: '.npmrc to be used for npm actions in @gasket/cli',
+    parse: (filepath) => {
+      filepath = untildify(filepath);
+      if (path.isAbsolute(filepath)) return filepath;
+      return path.resolve(process.cwd(), filepath);
+    }
+  })
 };
 
 CreateCommand.args = [
