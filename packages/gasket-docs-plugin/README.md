@@ -46,7 +46,7 @@ files that exist under a docs directory. Additionally, if any metadata defines
 
 The `docsSetup` lifecycle allows plugin developers to tune the docsConfig that
 is compile for their plugin. Files or file globs can be set, and links changed
-as needed. 
+as needed. The `defaults` are an available option to reference.
 
 **Example**
 
@@ -54,8 +54,9 @@ as needed.
 module.exports = {
   name: 'example',
   hooks: {
-    async docsSetup() {
+    async docsSetup(gasket, { defaults }) {
       return {
+        ...defaults,
         link: 'OTHER.md',
         files: [
           'API.md',
