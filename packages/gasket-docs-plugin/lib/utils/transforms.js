@@ -63,17 +63,17 @@ const txGasketUrlLinks = {
    * @param {DocsConfigSet} docsConfigSet - Full config set for reference
    * @returns {string} transformed content
    */
-  handler: function txGasketUrlLinks(content, { docsConfigSet }) {
-    const { modules, presets, plugins, docsRoot } = docsConfigSet;
+  handler: function txGasketUrlLinks(content, { filename, docsConfig, docsConfigSet }) {
+    const { targetRoot } = docsConfig;
+    const { modules, presets, plugins } = docsConfigSet;
     const allModuleDocConfigs = modules.concat(plugins).concat(presets);
 
     const tx = makeLinkTransform(link => {
       return link.replace(matchUrlLink, (match, p1, p2) => {
         const moduleName = p1.replace('gasket-', '@gasket/');
-        const docConfig = allModuleDocConfigs.find(m => m.name === moduleName);
-        if (docConfig) {
-          // TODO: Something is broken here
-          const relRoot = path.relative(docsRoot, docConfig.targetRoot);
+        const tgtDocConfig = allModuleDocConfigs.find(m => m.name === moduleName);
+        if (tgtDocConfig) {
+          const relRoot = path.relative(path.join(targetRoot, filename), tgtDocConfig.targetRoot);
           return [relRoot, p2].join('');
         }
         return match;
