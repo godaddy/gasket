@@ -402,6 +402,21 @@ describe('utils - DocsConfigSetBuilder', () => {
     });
   });
 
+  describe('._segregateTransforms', () => {
+
+    it('returns only local transforms', () => {
+      const results = instance._segregateTransforms([{ global: true }, {}]);
+      assume(results).lengthOf(1);
+    });
+
+    it('pushes global transforms to class property', () => {
+      assume(instance._transforms).lengthOf(0);
+      instance._segregateTransforms([{ global: true }, {}]);
+      assume(instance._transforms).lengthOf(1);
+      assume(instance._transforms[0]).property('global');
+    });
+  });
+
   describe('._addModuleDocsSetup', () => {
 
     it('adds docsSetup for a module key', () => {
