@@ -72,6 +72,7 @@ const txGasketUrlLinks = {
         const moduleName = p1.replace('gasket-', '@gasket/');
         const docConfig = allModuleDocConfigs.find(m => m.name === moduleName);
         if (docConfig) {
+          // TODO: Something is broken here
           const relRoot = path.relative(docsRoot, docConfig.targetRoot);
           return [relRoot, p2].join('');
         }

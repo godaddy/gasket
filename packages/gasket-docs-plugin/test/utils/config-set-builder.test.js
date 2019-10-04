@@ -102,6 +102,20 @@ describe('utils - DocsConfigSetBuilder', () => {
       });
     });
 
+    it('add docsSetup for modules', async () => {
+      const mockDocSetup = { link: 'BOGUS.md', modules: { fake: { link: 'BOGUS.md' } } };
+      const spy = sinon.spy(instance, '_addModuleDocsSetup');
+      await instance.addPlugin({ name: 'example-plugin' }, mockDocSetup);
+      assume(spy).calledWithMatch({ fake: { link: 'BOGUS.md' } });
+    });
+
+    it('does not pass docsSetup for modules to builder', async () => {
+      const mockDocSetup = { link: 'BOGUS.md', modules: { fake: { link: 'BOGUS.md' } } };
+      await instance.addPlugin({ name: 'example-plugin' }, mockDocSetup);
+      assume(buildDocsConfigSpy).not.calledWithMatch(sinon.match.object, mockDocSetup);
+      assume(buildDocsConfigSpy).calledWithMatch(sinon.match.object, { link: 'BOGUS.md' });
+    });
+
     describe('app plugins', () => {
 
       it('targetRoot shared with app', async () => {
@@ -204,18 +218,31 @@ describe('utils - DocsConfigSetBuilder', () => {
 
     it('does NOT use default docsSetup if not passed', async () => {
       await instance.addModule({ name: 'example-module' });
-      assume(buildDocsConfigSpy).not.calledWithMatch(sinon.match.object, docsSetupDefault);
+      assume(buildDocsConfigSpy).not.calledWith(sinon.match.object, docsSetupDefault);
+      assume(buildDocsConfigSpy).calledWith(sinon.match.object, {});
+    });
+
+    it('uses docsSetup if added by plugins', async () => {
+      const mockSetup = { link: 'BOGUS.md' };
+      instance._addModuleDocsSetup({ 'example-module': mockSetup });
+      await instance.addModule({ name: 'example-module' });
+      assume(buildDocsConfigSpy).calledWith(sinon.match.object, mockSetup);
+    });
+
+    it('uses default docsSetup if not set for @gasket modules', async () => {
+      await instance.addModule({ name: '@gasket/example' });
+      assume(buildDocsConfigSpy).calledWith(sinon.match.object, docsSetupDefault);
     });
 
     it('accepts custom docsSetup', async () => {
       const mockDocSetup = { link: 'BOGUS.md' };
       await instance.addModule({ name: 'example-module' }, mockDocSetup);
-      assume(buildDocsConfigSpy).calledWithMatch(sinon.match.object, mockDocSetup);
+      assume(buildDocsConfigSpy).calledWith(sinon.match.object, mockDocSetup);
     });
 
     it('adds targetRoot to overrides', async () => {
       await instance.addModule({ name: '@some/example-module' });
-      assume(buildDocsConfigSpy).calledWithMatch(sinon.match.object, sinon.match.object, {
+      assume(buildDocsConfigSpy).calledWith(sinon.match.object, sinon.match.object, {
         targetRoot: path.join(instance._docsRoot, 'modules', '@some', 'example-module')
       });
     });
@@ -375,18 +402,28 @@ describe('utils - DocsConfigSetBuilder', () => {
     });
   });
 
-  describe('._segregateTransforms', () => {
+  describe('._addModuleDocsSetup', () => {
 
-    it('returns only local transforms', () => {
-      const results = instance._segregateTransforms([{ global: true }, {}]);
-      assume(results).lengthOf(1);
+    it('adds docsSetup for a module key', () => {
+      const mockSetup = { link: 'BOGUS.md' };
+      assume(instance._moduleDocsSetups).not.property('fake');
+      instance._addModuleDocsSetup({ fake: mockSetup });
+      assume(instance._moduleDocsSetups).property('fake');
+      assume(instance._moduleDocsSetups.fake).eqls(mockSetup);
     });
 
-    it('pushes global transforms to class property', () => {
-      assume(instance._transforms).lengthOf(0);
-      instance._segregateTransforms([{ global: true }, {}]);
-      assume(instance._transforms).lengthOf(1);
-      assume(instance._transforms[0]).property('global');
+    it('merges existing docsSetup for a module', () => {
+      const mockSetup = { link: 'BOGUS.md' };
+      instance._addModuleDocsSetup({ fake: mockSetup });
+      assume(instance._moduleDocsSetups.fake).property('link', 'BOGUS.md');
+      assume(instance._moduleDocsSetups.fake).not.property('files');
+
+      instance._addModuleDocsSetup({ fake: { link: 'DIFFERENT.md', files: ['extra-docs/**'] } });
+
+      assume(instance._moduleDocsSetups.fake).not.eqls(mockSetup);
+      // first in doesn't change
+      assume(instance._moduleDocsSetups.fake).property('link', 'BOGUS.md');
+      assume(instance._moduleDocsSetups.fake).property('files');
     });
   });
 
