@@ -1,5 +1,6 @@
 # `@gasket/metadata-plugin`
 
+- Allow presets to define metadata
 - Metadata is assigned to gasket instance, and only by this plugin ([#64])
   - Uses [Loader] from gasket instance to get [PluginInfo] and [PresetInfo] data
   - `gasket.metadata` structure matches loaded infos with functions redacted
