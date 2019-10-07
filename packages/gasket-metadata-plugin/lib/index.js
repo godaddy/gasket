@@ -46,6 +46,16 @@ module.exports = {
         }
         presets.forEach(checkPreset);
       });
+
+      // Loading preset metadata from module
+      presets.forEach(preset => {
+        if (preset.module.metadata) {
+          Object.keys(preset.module.metadata).reduce((acc, cur) => {
+            acc[cur] = preset.module.metadata[cur];
+            return acc;
+          }, preset);
+        }
+      });
     },
     metadata(gasket, pluginData) {
       return {
