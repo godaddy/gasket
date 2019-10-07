@@ -12,13 +12,13 @@ module.exports = {
         after: ['lifecycle']
       },
       handler: async function init(gasket) {
-        const { config } = gasket;
+        const { config, command } = gasket;
 
         const options = {
           transports: [],
           ...config.winston,
           ...config.log,
-          local: config.env === 'local' || gasket.command !== 'start',
+          local: config.env === 'local' || (command.id || command) !== 'start',
           exitOnError: true
         };
 

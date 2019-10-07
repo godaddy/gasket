@@ -8,20 +8,38 @@ const loader = new Loader();
 /**
  * Fetches the preset packages and loads PresetInfos
  *
- * @param {CreateContext} context - Create context
+ * @param {[String]} rawPresets - Presets names
+ * @param {String} cwd - Root path
+ * @param {Object} npmconfig - Config
+ * @param {String} from from
  * @returns {PresetInfo[]} loaded presetInfos
  * @private
  */
-async function remotePresets(context) {
-  const { cwd, npmconfig, rawPresets = [] } = context;
+async function remotePresets(rawPresets, cwd, npmconfig, from) {
   if (!rawPresets) { return []; }
 
-  return await Promise.all(rawPresets.map(async rawName => {
+  const allRemotePresets = await Promise.all(rawPresets.map(async rawName => {
     const packageName = presetIdentifier(rawName).full;
     const fetcher = new PackageFetcher({ cwd, npmconfig, packageName });
     const pkgPath = await fetcher.clone();
-    return loader.loadPreset(pkgPath, { from: 'cli', rawName }, { shallow: true });
+
+    const presetInfo = loader.loadPreset(pkgPath, { from: from, rawName }, { shallow: true });
+    const { name: presetName, dependencies } = presetInfo.package;
+    if (!dependencies) {
+      return presetInfo;
+    }
+
+    const presetDeps = Object.keys(dependencies).filter(k => presetIdentifier.isValidFullName(k));
+    const rawPresetsDeps = presetDeps.map(presetDep => `${presetDep}@${dependencies[presetDep]}`);
+
+    const presetInfoDeps = await remotePresets(rawPresetsDeps, cwd, npmconfig, presetName);
+    return {
+      ...presetInfo,
+      presets: presetInfoDeps
+    };
   }));
+
+  return allRemotePresets;
 }
 
 /**
@@ -38,7 +56,7 @@ function localPreset(context) {
   const presetInfos = [];
   localPresets.forEach(localPresetPath => {
     const pkgPath = path.resolve(cwd, localPresetPath);
-    const presetInfo = loader.loadPreset(pkgPath, { from: 'cli' }, { shallow: true });
+    const presetInfo = loader.loadPreset(pkgPath, { from: 'cli' }, { shallow: false });
     presetInfo.rawName = `${presetInfo.package.name}@file:${pkgPath}`;
     presetInfos.push(presetInfo);
   });
@@ -54,7 +72,8 @@ function localPreset(context) {
  * @returns {Promise} promise
  */
 async function loadPreset(context) {
-  let presetInfos = await remotePresets(context);
+  const { rawPresets = [], cwd, npmconfig } = context;
+  let presetInfos = await remotePresets(rawPresets, cwd, npmconfig, 'cli');
   presetInfos = presetInfos.concat(localPreset(context));
 
   const presets = presetInfos.map(p => presetIdentifier(p.rawName).shortName);

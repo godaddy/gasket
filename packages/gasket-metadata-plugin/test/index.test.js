@@ -40,7 +40,12 @@ const mockPluginInfo = {
 
 const mockPresetInfo = {
   name: '@gasket/mock-preset',
-  module: {},
+  metadataKey: 'oldMetadataValue',
+  module: {
+    metadata: {
+      metadataKey: 'metadataValue'
+    }
+  },
   plugins: [mockPluginInfo]
 };
 
@@ -208,6 +213,19 @@ describe('Metadata plugin', function () {
     it('flatting augments moduleInfo with extras from plugins', async () => {
       const result = gasket.metadata.modules.find(mod => mod.name === 'fake-one');
       assume(result).property('extra', true);
+    });
+  });
+
+  describe('presets metadata', function () {
+    it('loads preset metadata', async function () {
+      await plugin.hooks.init(gasket);
+      assume(gasket.metadata.presets[0]).property('metadataKey', 'metadataValue');
+    });
+
+    it('overrides the value if a collision is found', async function () {
+      assume(mockPresetInfo).property('metadataKey', 'oldMetadataValue');
+      await plugin.hooks.init(gasket);
+      assume(gasket.metadata.presets[0]).property('metadataKey', 'metadataValue');
     });
   });
 });

@@ -1,5 +1,8 @@
 # `@gasket/cli`
 
+- Fetch and load extended presets during create
+- Move app-level commands to plugins ([#74])
+- Move metrics to new plugin ([#74])
 - Check dependencies during create with .has
 - Support multiple --preset-path with --presets
 - Always execute `configure` lifecycle for GasketCommands ([#71])
@@ -219,3 +222,4 @@ upon `gasket create`
 [#38]: https://github.com/godaddy/gasket/pull/38
 [#58]: https://github.com/godaddy/gasket/pull/58
 [#64]: https://github.com/godaddy/gasket/pull/64
+[#74]: https://github.com/godaddy/gasket/pull/74
