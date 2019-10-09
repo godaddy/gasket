@@ -10,6 +10,14 @@
  * @property {String} [path] - Path to the root of package
  * @property {String} [from] - Name of module which requires this module
  * @property {String} [range] - Range by which this module was required
+ * @property {string} [link] - Path to a doc file or URL
+ */
+
+/**
+ * App module with meta data
+ *
+ * @typedef {ModuleData} AppData
+ * @property {DetailData[]} [modules] - Description of modules supporting this plugin
  */
 
 /**
@@ -19,6 +27,7 @@
  * @property {DetailData[]} [commands] - Commands enabled by this plugin
  * @property {DetailData[]} [structures] - App files and directories used by plugin
  * @property {DetailData[]} [lifecycles] - Description of lifecycles invoked by plugin
+ * @property {DetailData[]} [modules] - Description of modules supporting this plugin
  */
 
 /**
@@ -53,8 +62,8 @@
  * Collection data for modules configured for app
  *
  * @typedef {Object} Metadata
- * @property {ModuleData[]} app - App and main package data
+ * @property {AppData[]} app - App and main package data
  * @property {PresetData[]} presets - Preset data with dependency hierarchy
  * @property {PluginData[]} plugins - Flat list of registered plugin data
- * @property {PluginData[]} modules - Supporting module data
+ * @property {ModuleData[]} modules - Supporting module data
  */

@@ -55,7 +55,7 @@ function generateContent(docsConfigSet) {
   addSection('Structures', 'Available structure', docsConfigSet.structures, { includeVersion: false });
   addSection('Plugins', 'All configured plugins', docsConfigSet.plugins);
   addSection('Presets', 'All configured presets', docsConfigSet.presets);
-  addSection('Modules', 'Some available modules', docsConfigSet.modules);
+  addSection('Modules', 'Dependencies and supporting modules', docsConfigSet.modules);
 
   addContent('<!-- LINKS -->');
   links.forEach(([name, link]) => {

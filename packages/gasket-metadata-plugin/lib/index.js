@@ -1,5 +1,11 @@
 const cloneDeep = require('lodash.clonedeep');
-const { sanitize } = require('./utils');
+const {
+  sanitize,
+  loadAppModules,
+  loadPluginModules,
+  flattenPluginModules,
+  fixupPresetHierarchy
+} = require('./utils');
 
 module.exports = {
   name: 'metadata',
@@ -10,6 +16,7 @@ module.exports = {
       const loaded = loader.loadConfigured(config.plugins);
       const { presets, plugins } = sanitize(cloneDeep(loaded));
       const app = loader.getModuleInfo(null, root);
+      const modules = [];
 
       /**
        * @type {Metadata}
@@ -18,33 +25,24 @@ module.exports = {
         app,
         presets,
         plugins,
-        modules: []
+        modules
       };
+
+      loadAppModules(loader, app, modules);
 
       //
       // Allow plugins to tune their own metadata via lifecycle
       //
       await gasket.execApply('metadata', async ({ name }, handler) => {
         const idx = plugins.findIndex(p => p.module.name === name || p.name === name);
-        const pluginData = plugins[idx];
+        const pluginData = await handler(plugins[idx]);
+
+        loadPluginModules(pluginData, loader);
+        flattenPluginModules(pluginData, modules);
+        fixupPresetHierarchy(pluginData, presets);
+
         // eslint-disable-next-line require-atomic-updates
-        plugins[idx] = await handler(pluginData);
-      });
-
-      // TODO (agerard): load moduleData for plugin modules
-
-      //
-      // assign plugin instances back to preset hierarchy to avoid faulty data
-      //
-      plugins.forEach(pluginData => {
-        function checkPreset(presetData) {
-          if (presetData.name === pluginData.from) {
-            const idx = presetData.plugins.findIndex(p => p.name === pluginData.name);
-            presetData.plugins[idx] = pluginData;
-          }
-          presetData.presets && presetData.presets.forEach(checkPreset);
-        }
-        presets.forEach(checkPreset);
+        plugins[idx] = pluginData;
       });
 
       // Loading preset metadata from module

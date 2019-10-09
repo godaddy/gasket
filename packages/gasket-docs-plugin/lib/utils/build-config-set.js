@@ -1,4 +1,5 @@
 const DocsConfigSetBuilder = require('./config-set-builder');
+const defaults = DocsConfigSetBuilder.docsSetupDefault;
 
 /**
  * Searches for the pluginData from metadata for a given plugin.
@@ -59,7 +60,7 @@ async function buildDocsConfigSet(gasket) {
     // If this is a lifecycle file, use it to modify the app-level docConfig
     //
     if (!plugin) {
-      const docsSetup = await handler();
+      const docsSetup = await handler({ defaults });
       return await builder.addApp(appData, docsSetup);
     }
 

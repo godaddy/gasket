@@ -40,6 +40,7 @@ Setup object to describe docs configuration for a module
 | link | <code>string</code> | Markdown link relative to package root |
 | [files] | <code>Array.&lt;glob&gt;</code> | Names and/or patterns of files to collect |
 | [transforms] | [<code>Array.&lt;DocsTransform&gt;</code>](#DocsTransform) | Transforms to apply to collected files |
+| [modules] | <code>Object.&lt;string, DocsSetup&gt;</code> | Setup object for supporting modules |
 
 <a name="DocsConfig"></a>
 
