@@ -4,6 +4,9 @@
 <dt><a href="#ModuleData">ModuleData</a> : <code>Object</code></dt>
 <dd><p>Module with meta data</p>
 </dd>
+<dt><a href="#AppData">AppData</a> : <code><a href="#ModuleData">ModuleData</a></code></dt>
+<dd><p>App module with meta data</p>
+</dd>
 <dt><a href="#PluginData">PluginData</a> : <code><a href="#ModuleData">ModuleData</a></code></dt>
 <dd><p>Plugin module with meta data</p>
 </dd>
@@ -38,6 +41,19 @@ Module with meta data
 | [path] | <code>String</code> | Path to the root of package |
 | [from] | <code>String</code> | Name of module which requires this module |
 | [range] | <code>String</code> | Range by which this module was required |
+| [link] | <code>string</code> | Path to a doc file or URL |
+
+<a name="AppData"></a>
+
+## AppData : [<code>ModuleData</code>](#ModuleData)
+App module with meta data
+
+**Kind**: global typedef  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| [modules] | [<code>Array.&lt;DetailData&gt;</code>](#DetailData) | Description of modules supporting this plugin |
 
 <a name="PluginData"></a>
 
@@ -52,6 +68,7 @@ Plugin module with meta data
 | [commands] | [<code>Array.&lt;DetailData&gt;</code>](#DetailData) | Commands enabled by this plugin |
 | [structures] | [<code>Array.&lt;DetailData&gt;</code>](#DetailData) | App files and directories used by plugin |
 | [lifecycles] | [<code>Array.&lt;DetailData&gt;</code>](#DetailData) | Description of lifecycles invoked by plugin |
+| [modules] | [<code>Array.&lt;DetailData&gt;</code>](#DetailData) | Description of modules supporting this plugin |
 
 <a name="PresetData"></a>
 
@@ -104,8 +121,8 @@ Collection data for modules configured for app
 
 | Name | Type | Description |
 | --- | --- | --- |
-| app | [<code>Array.&lt;ModuleData&gt;</code>](#ModuleData) | App and main package data |
+| app | [<code>Array.&lt;AppData&gt;</code>](#AppData) | App and main package data |
 | presets | [<code>Array.&lt;PresetData&gt;</code>](#PresetData) | Preset data with dependency hierarchy |
 | plugins | [<code>Array.&lt;PluginData&gt;</code>](#PluginData) | Flat list of registered plugin data |
-| modules | [<code>Array.&lt;PluginData&gt;</code>](#PluginData) | Supporting module data |
+| modules | [<code>Array.&lt;ModuleData&gt;</code>](#ModuleData) | Supporting module data |
 

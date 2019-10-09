@@ -38,7 +38,7 @@ async function processModule(moduleDocsConfig, docsConfigSet) {
         if (tx.test.test(source)) {
           return tx.handler(acc, { filename, docsConfig: moduleDocsConfig, docsConfigSet });
         }
-        return content;
+        return acc;
       }, content);
       return await writeFile(target, content);
     }
