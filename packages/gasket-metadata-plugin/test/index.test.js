@@ -8,7 +8,12 @@ const mockPlugin = {
     metadata: (gasket, metadata) => {
       return {
         ...metadata,
-        modified: true
+        modified: true,
+        modules: [
+          { name: 'fake-one', extra: true },
+          { name: 'fake-two', extra: true },
+          'fake-three'
+        ]
       };
     }
   }
@@ -16,7 +21,15 @@ const mockPlugin = {
 
 const mockAppInfo = {
   name: 'my-app',
-  module: null
+  module: null,
+  package: {
+    dependencies: {
+      '@gasket/mock-preset': '^1.2.3',
+      '@gasket/mock-plugin': '^10.0.0',
+      '@gasket/mock': '^20.0.0',
+      'fake-one': '^30.0.0'
+    }
+  }
 };
 
 const mockPluginInfo = {
@@ -36,6 +49,26 @@ const mockPresetInfo = {
   plugins: [mockPluginInfo]
 };
 
+const mockInfo = {
+  name: '@gasket/mock',
+  module: {}
+};
+
+const fakeOneInfo = {
+  name: 'fake-one',
+  module: {}
+};
+
+const fakeTwoInfo = {
+  name: 'fake-two',
+  module: {}
+};
+
+const fakeThreeInfo = {
+  name: 'fake-three',
+  module: {}
+};
+
 const mockLoadedData = {
   presets: [mockPresetInfo],
   plugins: [mockPluginInfo]
@@ -51,7 +84,17 @@ describe('Metadata plugin', function () {
     gasket = {
       loader: {
         loadConfigured: sinon.stub().returns(mockLoadedData),
-        getModuleInfo: sinon.stub().returns(mockAppInfo)
+        getModuleInfo: sinon.stub().callsFake((module, name, meta = {}) => {
+          const found = {
+            'my-app': mockAppInfo,
+            '@gasket/mock': mockInfo,
+            'fake-one': fakeOneInfo,
+            'fake-two': fakeTwoInfo,
+            'fake-three': fakeThreeInfo
+          }[name] || mockAppInfo;
+
+          return { ...found, ...meta };
+        })
       },
       config: {
         plugins: {
@@ -102,6 +145,19 @@ describe('Metadata plugin', function () {
       assume(gasket.metadata).property('plugins');
     });
 
+    it('adds moduleInfo from app dependencies', async () => {
+      assume(gasket.metadata.modules).gt(0);
+      const names = gasket.metadata.modules.map(m => m.name);
+      assume(names).includes('@gasket/mock');
+      assume(names).includes('fake-one');
+    });
+
+    it('ignores plugins and presets from app dependencies', async () => {
+      const names = gasket.metadata.modules.map(m => m.name);
+      assume(names).not.includes('@gasket/mock-plugin');
+      assume(names).not.includes('@gasket/mock-preset');
+    });
+
     it('clones loaded data', async () => {
       assume(gasket.metadata).not.equals(mockLoadedData);
       assume(gasket.metadata.presets[0].module).not.equals(mockPresetInfo.module);
@@ -128,6 +184,35 @@ describe('Metadata plugin', function () {
 
     it('augments the metadata with data from the lifecycle hooks', async function () {
       assume(gasket.metadata.plugins[0]).property('modified', true);
+    });
+
+    it('loads moduleInfo for modules declared in plugin metadata', async () => {
+      const names = gasket.metadata.plugins[0].modules.map(m => m.name);
+      assume(names).includes('fake-one');
+      assume(names).includes('fake-two');
+      assume(names).includes('fake-three');
+    });
+
+    it('augments moduleInfo metadata for modules declared modules', async () => {
+      const result = gasket.metadata.plugins[0].modules.find(mod => mod.name === 'fake-one');
+      assume(result).property('extra', true);
+    });
+
+    it('flattens moduleInfo from plugins', async () => {
+      const names = gasket.metadata.modules.map(m => m.name);
+      assume(names).includes('fake-one');
+      assume(names).includes('fake-two');
+      assume(names).includes('fake-three');
+    });
+
+    it('flatting does not duplicate moduleInfo', async () => {
+      const names = gasket.metadata.modules.map(m => m.name);
+      assume(names.filter(n => n === 'fake-one')).lengthOf(1);
+    });
+
+    it('flatting augments moduleInfo with extras from plugins', async () => {
+      const result = gasket.metadata.modules.find(mod => mod.name === 'fake-one');
+      assume(result).property('extra', true);
     });
   });
 

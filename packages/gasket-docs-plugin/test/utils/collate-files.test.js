@@ -31,8 +31,14 @@ const mockLocalTransform = {
 };
 
 const mockGlobalTransform = {
+  global: true,
   test: /\.md$/,
   handler: sinon.stub().callsFake(f => f + '-global')
+};
+
+const mockNoMatchTransform = {
+  test: /NOTHING$/,
+  handler: sinon.stub().callsFake(f => f + '-NOTHING')
 };
 
 const mockDocsConfigSet = {
@@ -58,7 +64,8 @@ const mockDocsConfigSet = {
       'docs/API.md'
     ],
     transforms: [
-      mockLocalTransform
+      mockLocalTransform,
+      mockNoMatchTransform
     ]
   }],
   presets: [{
@@ -173,6 +180,16 @@ describe('Utils - collateFiles', () => {
 
     it('executes local transforms before global', async () => {
       await processModule(mockDocConfig, mockDocsConfigSet);
+      assume(writeFileStub).calledWithMatch(sinon.match.string, /-local-global/);
+    });
+
+    it('does not apply transform handler if test does not match', async () => {
+      await processModule(mockDocConfig, mockDocsConfigSet);
+      assume(mockLocalTransform.handler).called();
+      assume(mockNoMatchTransform.handler).not.called();
+      assume(writeFileStub).not.calledWithMatch(sinon.match.string, /-NOTHING/);
+
+      // make sure previous transformations are not lost
       assume(writeFileStub).calledWithMatch(sinon.match.string, /-local-global/);
     });
 

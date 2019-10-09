@@ -102,6 +102,20 @@ describe('utils - DocsConfigSetBuilder', () => {
       });
     });
 
+    it('add docsSetup for modules', async () => {
+      const mockDocSetup = { link: 'BOGUS.md', modules: { fake: { link: 'BOGUS.md' } } };
+      const spy = sinon.spy(instance, '_addModuleDocsSetup');
+      await instance.addPlugin({ name: 'example-plugin' }, mockDocSetup);
+      assume(spy).calledWithMatch({ fake: { link: 'BOGUS.md' } });
+    });
+
+    it('does not pass docsSetup for modules to builder', async () => {
+      const mockDocSetup = { link: 'BOGUS.md', modules: { fake: { link: 'BOGUS.md' } } };
+      await instance.addPlugin({ name: 'example-plugin' }, mockDocSetup);
+      assume(buildDocsConfigSpy).not.calledWithMatch(sinon.match.object, mockDocSetup);
+      assume(buildDocsConfigSpy).calledWithMatch(sinon.match.object, { link: 'BOGUS.md' });
+    });
+
     describe('app plugins', () => {
 
       it('targetRoot shared with app', async () => {
@@ -204,18 +218,31 @@ describe('utils - DocsConfigSetBuilder', () => {
 
     it('does NOT use default docsSetup if not passed', async () => {
       await instance.addModule({ name: 'example-module' });
-      assume(buildDocsConfigSpy).not.calledWithMatch(sinon.match.object, docsSetupDefault);
+      assume(buildDocsConfigSpy).not.calledWith(sinon.match.object, docsSetupDefault);
+      assume(buildDocsConfigSpy).calledWith(sinon.match.object, {});
+    });
+
+    it('uses docsSetup if added by plugins', async () => {
+      const mockSetup = { link: 'BOGUS.md' };
+      instance._addModuleDocsSetup({ 'example-module': mockSetup });
+      await instance.addModule({ name: 'example-module' });
+      assume(buildDocsConfigSpy).calledWith(sinon.match.object, mockSetup);
+    });
+
+    it('uses default docsSetup if not set for @gasket modules', async () => {
+      await instance.addModule({ name: '@gasket/example' });
+      assume(buildDocsConfigSpy).calledWith(sinon.match.object, docsSetupDefault);
     });
 
     it('accepts custom docsSetup', async () => {
       const mockDocSetup = { link: 'BOGUS.md' };
       await instance.addModule({ name: 'example-module' }, mockDocSetup);
-      assume(buildDocsConfigSpy).calledWithMatch(sinon.match.object, mockDocSetup);
+      assume(buildDocsConfigSpy).calledWith(sinon.match.object, mockDocSetup);
     });
 
     it('adds targetRoot to overrides', async () => {
       await instance.addModule({ name: '@some/example-module' });
-      assume(buildDocsConfigSpy).calledWithMatch(sinon.match.object, sinon.match.object, {
+      assume(buildDocsConfigSpy).calledWith(sinon.match.object, sinon.match.object, {
         targetRoot: path.join(instance._docsRoot, 'modules', '@some', 'example-module')
       });
     });
@@ -325,7 +352,7 @@ describe('utils - DocsConfigSetBuilder', () => {
     it('"link" and "description" selection priority = overrides > moduleInfo > docsSetup > package', async () => {
       const overrides = { link: 'ONE', description: 'ONE' };
       const mockSetup = { link: 'THREE', description: 'THREE' };
-      const mockInfo = { package: { homepage: 'FOUR', description: 'FOUR' } };
+      const mockInfo = { package: { homepage: 'FOUR', description: 'FOUR' }, path: 'path/to/app' };
       const fullMockInfo = { link: 'TWO', description: 'TWO', ...mockInfo };
 
       let results = await instance._buildDocsConfig(fullMockInfo, mockSetup, overrides);
@@ -343,6 +370,13 @@ describe('utils - DocsConfigSetBuilder', () => {
       results = await instance._buildDocsConfig(mockInfo, {});
       assume(results).property('link', 'FOUR');
       assume(results).property('description', 'FOUR');
+    });
+
+    it('file "link" is set to null if no matching file added', async () => {
+      const mockInfo = { package: {}, path: null };
+
+      const results = await instance._buildDocsConfig(mockInfo);
+      assume(results).property('link', null);
     });
 
     it('"name" and "sourceRoot" selection priority = overrides > moduleInfo', async () => {
@@ -383,26 +417,57 @@ describe('utils - DocsConfigSetBuilder', () => {
     });
   });
 
+  describe('._addModuleDocsSetup', () => {
+
+    it('adds docsSetup for a module key', () => {
+      const mockSetup = { link: 'BOGUS.md' };
+      assume(instance._moduleDocsSetups).not.property('fake');
+      instance._addModuleDocsSetup({ fake: mockSetup });
+      assume(instance._moduleDocsSetups).property('fake');
+      assume(instance._moduleDocsSetups.fake).eqls(mockSetup);
+    });
+
+    it('merges existing docsSetup for a module', () => {
+      const mockSetup = { link: 'BOGUS.md' };
+      instance._addModuleDocsSetup({ fake: mockSetup });
+      assume(instance._moduleDocsSetups.fake).property('link', 'BOGUS.md');
+      assume(instance._moduleDocsSetups.fake).not.property('files');
+
+      instance._addModuleDocsSetup({ fake: { link: 'DIFFERENT.md', files: ['extra-docs/**'] } });
+
+      assume(instance._moduleDocsSetups.fake).not.eqls(mockSetup);
+      // first in doesn't change
+      assume(instance._moduleDocsSetups.fake).property('link', 'BOGUS.md');
+      assume(instance._moduleDocsSetups.fake).property('files');
+    });
+  });
+
   describe('._findAllFiles', () => {
     const mockSourceRoot = '/path/to/example-module';
 
     it('adds file from link', async () => {
-      const results = await instance._findAllFiles({}, {}, 'README.md');
+      const results = await instance._findAllFiles({}, {}, 'README.md', mockSourceRoot);
       assume(results).includes('README.md');
     });
 
     it('strips hash from link', async () => {
-      const results = await instance._findAllFiles({}, {}, 'README.md#with-hash');
+      const results = await instance._findAllFiles({}, {}, 'README.md#with-hash', mockSourceRoot);
       assume(results).includes('README.md');
     });
 
+    it('ignores if no sourceRoot', async () => {
+      const results = await instance._findAllFiles({}, {}, 'README.md#with-hash', null);
+      assume(results).not.includes('README.md');
+      assume(results).lengthOf(0);
+    });
+
     it('does not add file if link is URL', async () => {
-      const results = await instance._findAllFiles({}, {}, 'https://example.com');
+      const results = await instance._findAllFiles({}, {}, 'https://example.com', mockSourceRoot);
       assume(results).lengthOf(0);
     });
 
     it('does not add file if link is not set', async () => {
-      const results = await instance._findAllFiles({}, {});
+      const results = await instance._findAllFiles({}, {}, null, mockSourceRoot);
       assume(results).lengthOf(0);
     });
 

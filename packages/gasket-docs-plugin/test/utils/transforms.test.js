@@ -219,9 +219,11 @@ describe('Utils Transforms', () => {
       });
 
       describe('handler', () => {
-        let docsConfigSet;
+        let docsConfigSet, docsConfig, filename;
 
         beforeEach(() => {
+          docsConfig = { name: '@gasket/fake-plugin', targetRoot: '/path/to/some-app/.docs/plugins/@gasket/fake-plugin' };
+
           docsConfigSet = {
             plugins: [{ name: '@gasket/fake-plugin', targetRoot: '/path/to/some-app/.docs/plugins/@gasket/fake-plugin' }],
             presets: [{ name: '@gasket/fake-preset', targetRoot: '/path/to/some-app/.docs/presets/@gasket/fake-preset' }],
@@ -229,6 +231,8 @@ describe('Utils Transforms', () => {
             docs: '/path/to/some-app',
             docsRoot: '/path/to/some-app/.docs'
           };
+
+          filename = 'README.md';
         });
 
         it('is named', () => {
@@ -236,9 +240,9 @@ describe('Utils Transforms', () => {
         });
 
         it('transforms gasket repo URLs to relative links', () => {
-          const results = handler(mockInlineStyle, { docsConfigSet });
+          const results = handler(mockInlineStyle, { filename, docsConfig, docsConfigSet });
           assume(results).not.includes('[6](https://github.com/godaddy/gasket/tree/canary/packages/gasket-fake/path/to/doc.md#with-hash)');
-          assume(results).includes('[6](modules/@gasket/fake/path/to/doc.md#with-hash)');
+          assume(results).includes('[6](../../../../modules/@gasket/fake/path/to/doc.md#with-hash)');
         });
 
         it('transforms gasket repo URLs under any branch', () => {
@@ -247,21 +251,21 @@ describe('Utils Transforms', () => {
 [BOGUS](https://github.com/godaddy/gasket/tree/BOGUS/packages/gasket-fake/path/to/doc.md#with-hash)
 [canary-1.7](https://github.com/godaddy/gasket/tree/canary-1.7/packages/gasket-fake/path/to/doc.md#with-hash)
 `;
-          const results = handler(mockContent, { docsConfigSet });
-          assume(results).includes('[master](modules/@gasket/fake/path/to/doc.md#with-hash)');
-          assume(results).includes('[BOGUS](modules/@gasket/fake/path/to/doc.md#with-hash)');
-          assume(results).includes('[canary-1.7](modules/@gasket/fake/path/to/doc.md#with-hash)');
+          const results = handler(mockContent, { filename, docsConfig, docsConfigSet });
+          assume(results).includes('[master](../../../../modules/@gasket/fake/path/to/doc.md#with-hash)');
+          assume(results).includes('[BOGUS](../../../../modules/@gasket/fake/path/to/doc.md#with-hash)');
+          assume(results).includes('[canary-1.7](../../../../modules/@gasket/fake/path/to/doc.md#with-hash)');
         });
 
         it('does not transforms gasket repo URLs if module not collated', () => {
           const mockContent = `[missing](https://github.com/godaddy/gasket/tree/master/packages/gasket-missing/path/to/doc.md#with-hash)`;
-          const results = handler(mockContent, { docsConfigSet });
+          const results = handler(mockContent, { filename, docsConfig, docsConfigSet });
           assume(results).includes(mockContent);
-          assume(results).not.includes('[missing](modules/@gasket/missing/path/to/doc.md#with-hash)');
+          assume(results).not.includes('[missing](../../../../modules/@gasket/missing/path/to/doc.md#with-hash)');
         });
 
         it('does not transform non gasket repo URLs', () => {
-          const results = handler(mockInlineStyle, { docsConfigSet });
+          const results = handler(mockInlineStyle, { filename, docsConfig, docsConfigSet });
           assume(results).includes('[7](https://doc.gasket.dev)');
         });
       });

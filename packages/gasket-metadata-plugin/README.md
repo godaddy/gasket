@@ -16,6 +16,13 @@ lifecycle in a plugin.
 Metadata provides insights to a plugin's shape and package information.
 Additional [detail info][DetailData] of plugins can added in the [metadata]
 lifecycle, such as what commands, lifecycles, or structures, a plugin provides.
+The [metadata object] be accessed in lifecycle hooks from `gasket.metadata`.
+
+Additionally, [ModuleData] for all the top-level app's dependencies are loaded
+by default, and is available from `gasket.metadata.app.modules`. Plugins can
+choose to bring in metadata for more modules, or augment what has already been
+loaded for the app. These, along with the app's modules, will be flattened and
+available from `gasket.metadata.modules`.
 
 ## Lifecycles
 
@@ -45,7 +52,13 @@ module.exports = {
           description: 'Allows plugins to do something with data',
           method: 'exec',
           parent: 'start'
-        }]
+        }],
+        // Metadata for these modules will be loaded
+        // Declare as strings or objects with additional data
+        modules: [
+          'left-pad',
+          { name: 'right-pad', extra: 'data', link: 'DOC.md' }
+        ]
       }
     },
     /**
@@ -71,6 +84,7 @@ module.exports = {
 [PluginData]: docs/api.md#PluginData
 [PresetData]: docs/api.md#PresetData
 [DetailData]: docs/api.md#DetailData
+[metadata object]: docs/api.md#DetailData
 
 [@gasket/docs-plugin]: /packages/gasket-docs-plugin/README.md
 [@gasket/resolve]: /packages/gasket-resolve/README.md

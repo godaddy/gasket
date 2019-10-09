@@ -1,10 +1,12 @@
 const path = require('path');
+const defaultsDeep = require('lodash.defaultsdeep');
 const { promisify } = require('util');
 
 const glob = promisify(require('glob'));
 
 const isAppPlugin = /^\/.+\/plugins\//;
 const isUrl = /^(https?:)?\/\//;
+const isGasketScope = /^@gasket/;
 
 /**
  * Expected DetailDocsConfig types
@@ -17,7 +19,20 @@ const detailDocsTypes = [
   'lifecycles'
 ];
 
-const docsSetupDefault = { link: 'README.md', includes: ['docs/**/*'] };
+/**
+ * Defaults for when a docsSetup is not declared.
+ *
+ * @type {{link: string, files: array}}
+ */
+const docsSetupDefault = Object.freeze({ link: 'README.md', files: ['docs/**/*'] });
+
+/**
+ * Returns a filename with the hash removed
+ *
+ * @param {string} link - Filename that may have hash
+ * @returns {string} filename
+ */
+const noHash = link => link && link.split('#')[0];
 
 /**
  * Util class for constructing the DocsConfigSet
@@ -34,9 +49,11 @@ class DocsConfigSetBuilder {
     this._modules = [];
     this._transforms = [];
 
-    const { root = process.cwd(), docs: { outputDir } } = gasket.config;
+    const { root, docs: { outputDir } } = gasket.config;
     this._root = root;
     this._docsRoot = path.join(root, outputDir);
+
+    this._moduleDocsSetups = {};
   }
 
   /**
@@ -50,8 +67,8 @@ class DocsConfigSetBuilder {
    * @private
    */
   async _findAllFiles(moduleData, docsSetup, link, sourceRoot) {
+    if (!sourceRoot) return [];
 
-    const noHash = filename => filename.split('#')[0];
     const fileSet = new Set([]);
 
     const tryAdd = maybeFile => {
@@ -103,10 +120,10 @@ class DocsConfigSetBuilder {
   }
 
   /**
-   * Constructs the DocsConfig for a moduled based on it's info and docsSetup
+   * Constructs the DocsConfig for a module based on its info and docsSetup
    *
    * @param {ModuleData} moduleData - Metadata for a module
-   * @param {DocsSetup} docsSetup - Includes and doc defaults
+   * @param {DocsSetup} docsSetup - Files to include and transforms
    * @param {Object} overrides - Pre-configured properties
    * @returns {DocsConfig} docsConfigs
    * @private
@@ -132,7 +149,8 @@ class DocsConfigSetBuilder {
       name,
       version,
       description,
-      link,
+      // safety-check: if link wants to be a file but was not found
+      link: !files.includes(noHash(link)) && !isUrl.test(link) ? null : link,
       sourceRoot,
       ...overrides,
       transforms,
@@ -166,6 +184,18 @@ class DocsConfigSetBuilder {
   }
 
   /**
+   * Adds additional docsSetup for modules, merging duplicates with a first
+   * in wins approach. When a module is then add to be configured, a docSetup
+   * will be looked up from what's been added by plugins here.
+   *
+   * @param {Object.<string, DocsSetup>} moduleDocsSetup - Setups for modules
+   * @private
+   */
+  _addModuleDocsSetup(moduleDocsSetup) {
+    defaultsDeep(this._moduleDocsSetups, moduleDocsSetup);
+  }
+
+  /**
    * Add DocsConfig to the set for the App
    *
    * @param {ModuleData} moduleData - Metadata for app module
@@ -196,10 +226,14 @@ class DocsConfigSetBuilder {
       sourceRoot = path.join(this._root);
       targetRoot = path.join(this._docsRoot, 'app');
     }
-    const docConfig = await this._buildDocsConfig(pluginData, docsSetup, { targetRoot, name, sourceRoot });
+
+    const { modules, ...setup } = docsSetup;
+    const docConfig = await this._buildDocsConfig(pluginData, setup, { targetRoot, name, sourceRoot });
     this._plugins.push(docConfig);
 
-    // TODO (agerard): handle modules from metadata and/or docsSetup
+    if (modules) {
+      this._addModuleDocsSetup(modules);
+    }
   }
 
   /**
@@ -245,7 +279,14 @@ class DocsConfigSetBuilder {
    * @param {DocsSetup} docsSetup - Initial docs setup
    * @async
    */
-  async addModule(moduleData, docsSetup = {}) {
+  async addModule(moduleData, docsSetup) {
+    // If docsSetup is passed, stick with it.
+    // Otherwise, look up a docsSetup added by plugins.
+    // Finally, if this is a @gasket module fall back defaults.
+    docsSetup = docsSetup ||
+      this._moduleDocsSetups[moduleData.name] ||
+      (isGasketScope.test(moduleData.name) ? docsSetupDefault : {});
+
     if (this._modules.find(p => p.metadata === moduleData)) return;
 
     const { name } = moduleData;
