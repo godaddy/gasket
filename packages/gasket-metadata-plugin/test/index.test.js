@@ -1,3 +1,5 @@
+/* eslint-disable max-statements */
+
 const plugin = require('../');
 const assume = require('assume');
 const sinon = require('sinon');
@@ -115,8 +117,17 @@ describe('Metadata plugin', function () {
     assume(plugin.name).equals('metadata');
   });
 
-  it('has an init hook', function () {
-    assume(plugin.hooks.init).exists();
+  it('has expected hooks', () => {
+    const expected = [
+      'init',
+      'metadata'
+    ];
+
+    assume(plugin).to.have.property('hooks');
+
+    const hooks = Object.keys(plugin.hooks);
+    assume(hooks).eqls(expected);
+    assume(hooks).is.length(expected.length);
   });
 
   describe('init', () => {
@@ -214,18 +225,25 @@ describe('Metadata plugin', function () {
       const result = gasket.metadata.modules.find(mod => mod.name === 'fake-one');
       assume(result).property('extra', true);
     });
-  });
 
-  describe('presets metadata', function () {
     it('loads preset metadata', async function () {
       await plugin.hooks.init(gasket);
       assume(gasket.metadata.presets[0]).property('metadataKey', 'metadataValue');
     });
+  });
 
-    it('overrides the value if a collision is found', async function () {
-      assume(mockPresetInfo).property('metadataKey', 'oldMetadataValue');
-      await plugin.hooks.init(gasket);
-      assume(gasket.metadata.presets[0]).property('metadataKey', 'metadataValue');
+  describe('metadata', () => {
+
+    it('retains acquired plugin data', () => {
+      const mockData = { name: '@gasket/mock-plugin' };
+      const results = plugin.hooks.metadata(gasket, mockData);
+      assume(results).property('name', '@gasket/mock-plugin');
+    });
+
+    it('adds lifecycles', () => {
+      const mockData = { name: '@gasket/mock-plugin' };
+      const results = plugin.hooks.metadata(gasket, mockData);
+      assume(results).property('lifecycles');
     });
   });
 });

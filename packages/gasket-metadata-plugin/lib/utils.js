@@ -128,11 +128,32 @@ function fixupPresetHierarchy(pluginData, presets) {
   presets.forEach(fixup);
 }
 
+/**
+ * Expands metadata for presets from metadata property if set in preset module
+ *
+ * @param {ModuleData[]} presets - Presets to expand any metadata attributes for
+ * @private
+ */
+function expandPresetMetadata(presets) {
+  presets.forEach(preset => {
+    if (preset.module && preset.module.metadata) {
+      Object.keys(preset.module.metadata).reduce((acc, cur) => {
+        acc[cur] = preset.module.metadata[cur];
+        return acc;
+      }, preset);
+    }
+    if (preset.presets && preset.presets.length) {
+      expandPresetMetadata(preset.presets);
+    }
+  });
+}
+
 module.exports = {
   sanitize,
   safeAssign,
   loadAppModules,
   loadPluginModules,
   flattenPluginModules,
-  fixupPresetHierarchy
+  fixupPresetHierarchy,
+  expandPresetMetadata
 };

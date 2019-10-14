@@ -4,7 +4,8 @@ const {
   loadAppModules,
   loadPluginModules,
   flattenPluginModules,
-  fixupPresetHierarchy
+  fixupPresetHierarchy,
+  expandPresetMetadata
 } = require('./utils');
 
 module.exports = {
@@ -46,14 +47,7 @@ module.exports = {
       });
 
       // Loading preset metadata from module
-      presets.forEach(preset => {
-        if (preset.module.metadata) {
-          Object.keys(preset.module.metadata).reduce((acc, cur) => {
-            acc[cur] = preset.module.metadata[cur];
-            return acc;
-          }, preset);
-        }
-      });
+      expandPresetMetadata(presets);
     },
     metadata(gasket, pluginData) {
       return {
