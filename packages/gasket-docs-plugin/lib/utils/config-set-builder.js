@@ -253,8 +253,15 @@ class DocsConfigSetBuilder {
    * @param {DocsSetup} docsSetup - Initial docs setup
    * @async
    */
-  async addPreset(presetData, docsSetup = docsSetupDefault) {
+  async addPreset(presetData, docsSetup) {
     if (this._presets.find(p => p.metadata === presetData)) return;
+
+    // If docsSetup is passed, stick with it.
+    // Otherwise, look up a docsSetup defined by preset.
+    // Finally, fall back to defaults.
+    docsSetup = docsSetup ||
+      presetData.module && presetData.module.docsSetup ||
+      docsSetupDefault;
 
     const { name } = presetData;
     const targetRoot = path.join(this._docsRoot, 'presets', ...name.split('/'));
@@ -280,14 +287,14 @@ class DocsConfigSetBuilder {
    * @async
    */
   async addModule(moduleData, docsSetup) {
+    if (this._modules.find(p => p.metadata === moduleData)) return;
+
     // If docsSetup is passed, stick with it.
     // Otherwise, look up a docsSetup added by plugins.
     // Finally, if this is a @gasket module fall back defaults.
     docsSetup = docsSetup ||
       this._moduleDocsSetups[moduleData.name] ||
       (isGasketScope.test(moduleData.name) ? docsSetupDefault : {});
-
-    if (this._modules.find(p => p.metadata === moduleData)) return;
 
     const { name } = moduleData;
     const targetRoot = path.join(this._docsRoot, 'modules', ...name.split('/'));

@@ -6,7 +6,8 @@ const {
   loadAppModules,
   loadPluginModules,
   flattenPluginModules,
-  fixupPresetHierarchy
+  fixupPresetHierarchy,
+  expandPresetMetadata
 } = require('../lib/utils');
 
 describe('Utils', () => {
@@ -221,18 +222,18 @@ describe('Utils', () => {
 
     const mockPluginData = {
       name: '@gasket/mock-plugin',
-      from: '@gasket/mock-plugin'
+      from: '@gasket/mock-preset'
     };
 
     const mockModifiedPluginData = {
       name: '@gasket/mock-plugin',
-      from: '@gasket/mock-plugin',
+      from: '@gasket/mock-preset',
       extra: true
     };
 
     beforeEach(() => {
       mockPresetData = {
-        name: '@gasket/mock-plugin',
+        name: '@gasket/mock-preset',
         plugins: [mockPluginData]
       };
     });
@@ -261,6 +262,76 @@ describe('Utils', () => {
       fixupPresetHierarchy(mockModifiedPluginData, [mockDeepPreset]);
       assume(mockPresetData.plugins).not.includes(mockPluginData);
       assume(mockPresetData.plugins).includes(mockModifiedPluginData);
+    });
+  });
+
+  describe('expandPresetMetadata', () => {
+    let mockPresetOne, mockPresetTwo, mockPresetThree;
+
+    beforeEach(() => {
+      mockPresetOne = {
+        name: '@gasket/one-preset',
+        module: {}
+      };
+      mockPresetTwo = {
+        name: '@gasket/two-preset',
+        module: {}
+      };
+      mockPresetThree = {
+        name: '@gasket/three-preset',
+        module: {}
+      };
+    });
+
+    it('does nothing if no module', async function () {
+      delete mockPresetOne.module;
+      expandPresetMetadata([mockPresetOne]);
+      assume(mockPresetOne).deep.equals({
+        name: '@gasket/one-preset'
+      });
+    });
+
+    it('does nothing if no module.metadata', async function () {
+      expandPresetMetadata([mockPresetOne]);
+      assume(mockPresetOne).deep.equals({
+        name: '@gasket/one-preset',
+        module: {}
+      });
+    });
+
+    it('adds properties from module.metadata to top', async function () {
+      mockPresetOne.module.metadata = { extra: true };
+      expandPresetMetadata([mockPresetOne]);
+      assume(mockPresetOne).property('extra', true);
+    });
+
+    it('overrides metadata from module.metadata', async function () {
+      mockPresetOne.metadataKey = 'oldMetadataValue';
+      mockPresetOne.module.metadata = { metadataKey: 'metadataValue' };
+      assume(mockPresetOne).property('metadataKey', 'oldMetadataValue');
+
+      expandPresetMetadata([mockPresetOne]);
+      assume(mockPresetOne).property('metadataKey', 'metadataValue');
+    });
+
+    it('handles multiple presets', async function () {
+      mockPresetOne.module.metadata = { extra: 1 };
+      mockPresetTwo.module.metadata = { extra: 2 };
+      expandPresetMetadata([mockPresetOne, mockPresetTwo]);
+      assume(mockPresetOne).property('extra', 1);
+      assume(mockPresetTwo).property('extra', 2);
+    });
+
+    it('handles recursive/extended presets', async function () {
+      mockPresetOne.module.metadata = { extra: 1 };
+      mockPresetOne.presets = [mockPresetTwo];
+      mockPresetTwo.module.metadata = { extra: 2 };
+      mockPresetTwo.presets = [mockPresetThree];
+      mockPresetThree.module.metadata = { extra: 3 };
+      expandPresetMetadata([mockPresetOne]);
+      assume(mockPresetOne).property('extra', 1);
+      assume(mockPresetTwo).property('extra', 2);
+      assume(mockPresetThree).property('extra', 3);
     });
   });
 });
