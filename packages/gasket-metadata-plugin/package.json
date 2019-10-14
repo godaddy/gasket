@@ -30,7 +30,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-metadata-plugin",
   "dependencies": {
-    "@gasket/resolve": "^1.5.0",
+    "@gasket/resolve": "^2.0.0-canary.0",
     "lodash.clonedeep": "^4.5.0",
     "lodash.isfunction": "^3.0.9",
     "lodash.isobject": "^3.0.2"
