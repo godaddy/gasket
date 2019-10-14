@@ -128,6 +128,23 @@ module.exports = {
 The [@gasket/docsify-plugin] hooks this lifecycle, to render the docs using
 Docsify.
 
+## Presets
+
+Presets can also set up custom docs. This is done by defining a `docsSetup`
+property object on the module, which will be used to establish the [DocsConfig]
+for the preset.
+
+```js
+// example-preset.js
+module.exports = {
+  require,
+  docsSetup: {
+    link: 'OTHER.md#go-here',
+    files: ['more-docs/**/*'],
+  }
+}
+```
+
 <!-- LINKS -->
 
 [transforms]: #transforms

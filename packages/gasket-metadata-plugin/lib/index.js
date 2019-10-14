@@ -4,7 +4,8 @@ const {
   loadAppModules,
   loadPluginModules,
   flattenPluginModules,
-  fixupPresetHierarchy
+  fixupPresetHierarchy,
+  expandPresetMetadata
 } = require('./utils');
 
 module.exports = {
@@ -29,6 +30,7 @@ module.exports = {
       };
 
       loadAppModules(loader, app, modules);
+      expandPresetMetadata(presets);
 
       //
       // Allow plugins to tune their own metadata via lifecycle
@@ -43,16 +45,6 @@ module.exports = {
 
         // eslint-disable-next-line require-atomic-updates
         plugins[idx] = pluginData;
-      });
-
-      // Loading preset metadata from module
-      presets.forEach(preset => {
-        if (preset.module.metadata) {
-          Object.keys(preset.module.metadata).reduce((acc, cur) => {
-            acc[cur] = preset.module.metadata[cur];
-            return acc;
-          }, preset);
-        }
       });
     },
     metadata(gasket, pluginData) {
