@@ -1,6 +1,6 @@
 {
   "name": "@gasket/https-plugin",
-  "version": "2.1.0",
+  "version": "2.1.1-canary.0",
   "main": "index.js",
   "scripts": {
     "lint": "eslint *.js test/*.js",
