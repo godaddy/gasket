@@ -30,6 +30,7 @@ module.exports = {
       };
 
       loadAppModules(loader, app, modules);
+      expandPresetMetadata(presets);
 
       //
       // Allow plugins to tune their own metadata via lifecycle
@@ -45,9 +46,6 @@ module.exports = {
         // eslint-disable-next-line require-atomic-updates
         plugins[idx] = pluginData;
       });
-
-      // Loading preset metadata from module
-      expandPresetMetadata(presets);
     },
     metadata(gasket, pluginData) {
       return {
