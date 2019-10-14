@@ -169,7 +169,7 @@ describe('utils - DocsConfigSetBuilder', () => {
       assume(buildDocsConfigSpy).calledWith(mockInfo);
     });
 
-    it('uses default docsSetup if not passed', async () => {
+    it('uses default docsSetup if not set', async () => {
       await instance.addPreset({ name: 'example-preset' });
       assume(buildDocsConfigSpy).calledWithMatch(sinon.match.object, docsSetupDefault);
     });
@@ -177,6 +177,20 @@ describe('utils - DocsConfigSetBuilder', () => {
     it('accepts custom docsSetup', async () => {
       const mockDocSetup = { link: 'BOGUS.md' };
       await instance.addPreset({ name: 'example-preset' }, mockDocSetup);
+      assume(buildDocsConfigSpy).calledWithMatch(sinon.match.object, mockDocSetup);
+    });
+
+    it('uses preset-defined docsSetup', async () => {
+      const presetDocSetup = { link: 'BOGUS.md' };
+      await instance.addPreset({ name: 'example-preset', module: { docsSetup: presetDocSetup } });
+      assume(buildDocsConfigSpy).calledWithMatch(sinon.match.object, presetDocSetup);
+    });
+
+    it('prefers custom docsSetup over preset-defined', async () => {
+      const mockDocSetup = { link: 'BOGUS.md' };
+      const presetDocSetup = { link: 'OTHER.md' };
+      await instance.addPreset({ name: 'example-preset', module: { docsSetup: presetDocSetup } }, mockDocSetup);
+      assume(buildDocsConfigSpy).not.calledWithMatch(sinon.match.object, presetDocSetup);
       assume(buildDocsConfigSpy).calledWithMatch(sinon.match.object, mockDocSetup);
     });
 

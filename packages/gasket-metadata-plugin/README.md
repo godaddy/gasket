@@ -33,6 +33,7 @@ modify it's own metadata at runtime. Whatever is returned will replace the
 existing metadata.
 
 ```js
+// example-plugin.js
 module.exports = {
   name: 'example',
   hooks: {
@@ -73,6 +74,21 @@ module.exports = {
         // only perform some action if a certain plugin is also registered
       }
     }
+  }
+}
+```
+
+## Presets
+
+Presets can also set additional metadata. This is done by defining a `metadata`
+property object on the module, which will get expanded to the [PresetData].
+
+```js
+// example-preset.js
+module.exports = {
+  require,
+  metadata: {
+    extra: 'information'
   }
 }
 ```
