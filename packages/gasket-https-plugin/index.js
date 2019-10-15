@@ -13,6 +13,7 @@ module.exports = {
   name: 'https',
   hooks: {
     start: async function start(gasket) {
+      const { logger } = gasket;
       const { hostname, https, http } = gasket.config;
 
       // Retrieving server opts
@@ -24,6 +25,9 @@ module.exports = {
       }
       if (https) {
         configOpts.https = https;
+      }
+      if (!http && !https) {
+        configOpts.http = 80;
       }
 
       const serverOpts = await gasket.execWaterfall('createServers', configOpts);
@@ -43,18 +47,21 @@ module.exports = {
             });
           }
           debug(errorMessage, errors);
+          logger.error(errorMessage.message);
           return;
         }
 
         await gasket.exec('servers', servers);
 
-        if (http) {
-          const port = http.port || http;
-          gasket.logger.info(`Server started at http://${hostname}:${port}/`);
+        const { http: _http, https: _https, hostname: _hostname = 'localhost' } = serverOpts;
+
+        if (_http) {
+          const _port = _http.port || _http;
+          logger.info(`Server started at http://${_hostname}:${_port}/`);
         }
 
-        if (https) {
-          gasket.logger.info(`Server started at https://${hostname}:${https.port}/`);
+        if (_https) {
+          logger.info(`Server started at https://${_hostname}:${_https.port}/`);
         }
       });
     }
