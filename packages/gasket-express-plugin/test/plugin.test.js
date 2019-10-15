@@ -12,7 +12,7 @@ const cookieParser = sinon.stub().returns(cookieParserMiddleware);
 const compressionMiddleware = sinon.spy();
 const compression = sinon.stub().returns(compressionMiddleware);
 
-const plugin = proxyquire('./', {
+const plugin = proxyquire('../index', {
   express,
   'cookie-parser': cookieParser,
   'compression': compression
@@ -162,8 +162,7 @@ describe('createServers', () => {
 });
 
 describe('create', () => {
-
-  let plugin, mockContext;
+  let mockContext;
 
   function assumeCreatedWith(assertFn) {
     return async function assumeCreated() {
@@ -173,8 +172,6 @@ describe('create', () => {
   }
 
   beforeEach(() => {
-    plugin = require('./');
-
     mockContext = {
       pkg: { add: sinon.spy() },
       files: { add: sinon.spy() }

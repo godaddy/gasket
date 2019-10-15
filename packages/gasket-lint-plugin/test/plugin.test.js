@@ -1,6 +1,6 @@
 const { describe, it } = require('mocha');
 const assume = require('assume');
-const plugin = require('./');
+const plugin = require('../index');
 const sinon = require('sinon');
 
 assume.use(require('assume-sinon'));

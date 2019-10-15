@@ -2,7 +2,7 @@ const { describe, it } = require('mocha');
 const assume = require('assume');
 const sinon = require('sinon');
 const proxyquire = require('proxyquire');
-const Plugin = require('./index');
+const Plugin = require('../index');
 
 assume.use(require('assume-sinon'));
 
@@ -11,7 +11,7 @@ assume.use(require('assume-sinon'));
  * to be invoked on creation of Log instances
  */
 function assumeLogInit(assertFn) {
-  return proxyquire('./index', {
+  return proxyquire('../index', {
     '@gasket/log': function Log(opts) {
       assertFn(opts);
     }
