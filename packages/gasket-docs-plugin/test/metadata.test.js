@@ -1,11 +1,12 @@
 const assume = require('assume');
 const metadata = require('../lib/metadata');
+const { defaultConfig } = require('../lib/configure');
 
 describe('metadata', () => {
   const mockGasket = {
     config: {
       docs: {
-        outputDir: '.docs'
+        outputDir: '.my-docs'
       }
     }
   };
@@ -48,5 +49,12 @@ describe('metadata', () => {
     assume(results.structures).lengthOf(1);
     assume(results.structures[0]).property('name', mockGasket.config.docs.outputDir);
     assume(results.structures[0]).property('description');
+  });
+
+  it('falls back to defaults if not configured', () => {
+    delete mockGasket.config.docs;
+    const results = metadata(mockGasket, mockMeta);
+    assume(results).is.an('object');
+    assume(results.structures[0]).property('name', defaultConfig.outputDir);
   });
 });

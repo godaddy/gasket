@@ -6,7 +6,7 @@
  * @returns {Object} Additional meta data
  */
 module.exports = function metadata(gasket, meta) {
-  const { outputDir } = gasket.config.docs;
+  const { outputDir } = gasket.config.docs || require('./configure').defaultConfig;
   return {
     ...meta,
     commands: [{
