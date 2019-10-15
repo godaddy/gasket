@@ -6,7 +6,6 @@ const mockData = { some: 'data' };
 const reportStub = sinon.stub().resolves(mockData);
 const metricsStub = sinon.stub();
 
-
 class MockMetrics {
   constructor() {
     metricsStub(...arguments);
@@ -19,6 +18,14 @@ class MockMetrics {
 const initHook = proxyquire('../lib/index', {
   './metrics': MockMetrics
 }).hooks.init;
+
+
+async function initHandler(mockGasket) {
+  await initHook.handler(mockGasket);
+  // because we don't wait the metric call to avoid blocking
+  // fake a delay so we can test async results
+  return new Promise(resolve => setTimeout(resolve, 30));
+}
 
 describe('init hook', function () {
   let mockGasket;
@@ -43,12 +50,12 @@ describe('init hook', function () {
   });
 
   it('instantiates Metrics object with gasket', async () => {
-    await initHook.handler(mockGasket);
+    await initHandler(mockGasket);
     assume(metricsStub).calledWith(mockGasket);
   });
 
   it('invokes metrics lifecycle with data', async () => {
-    await initHook.handler(mockGasket);
+    await initHandler(mockGasket);
     assume(mockGasket.exec).calledWith('metrics', mockData);
   });
 
@@ -56,7 +63,7 @@ describe('init hook', function () {
     const mockError = new Error('Bad things man');
     reportStub.rejects(mockError);
 
-    await initHook.handler(mockGasket);
+    await initHandler(mockGasket);
     assume(mockGasket.logger.error).calledWith('Bad things man');
   });
 
@@ -66,7 +73,7 @@ describe('init hook', function () {
     const mockError = new Error('Bad things man');
     reportStub.rejects(mockError);
 
-    await initHook.handler(mockGasket);
+    await initHandler(mockGasket);
     assume(consoleStub).calledWith('Bad things man');
   });
 
@@ -74,7 +81,7 @@ describe('init hook', function () {
     const mockError = 'BAD THINGS MAN';
     reportStub.rejects(mockError);
 
-    await initHook.handler(mockGasket);
+    await initHandler(mockGasket);
     assume(mockGasket.logger.error).calledWith('BAD THINGS MAN');
   });
 });
