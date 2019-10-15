@@ -1,35 +1,58 @@
 const proxyquire = require('proxyquire');
-const { spy, stub } = require('sinon');
+const sinon = require('sinon');
 const assume = require('assume');
+
+
+const app = { use: sinon.spy() };
+const express = sinon.stub().returns(app);
+
+const cookieParserMiddleware = sinon.spy();
+const cookieParser = sinon.stub().returns(cookieParserMiddleware);
+
+const compressionMiddleware = sinon.spy();
+const compression = sinon.stub().returns(compressionMiddleware);
+
+const plugin = proxyquire('./', {
+  express,
+  'cookie-parser': cookieParser,
+  'compression': compression
+});
+
+describe('Plugin', function () {
+
+  it('is an object', () => {
+    assume(plugin).is.an('object');
+  });
+
+  it('is named correctly', function () {
+    assume(plugin.name).equals('express');
+  });
+
+  it('has expected hooks', () => {
+    const expected = [
+      'create',
+      'createServers'
+    ];
+
+    assume(plugin).to.have.property('hooks');
+
+    const hooks = Object.keys(plugin.hooks);
+    assume(hooks).eqls(expected);
+    assume(hooks).is.length(expected.length);
+  });
+});
 
 // eslint-disable-next-line max-statements
 describe('createServers', () => {
-  let plugin;
-  let express, app;
-  let cookieParser, cookieParserMiddleware;
-  let compression, compressionMiddleware;
   let gasket;
 
   beforeEach(() => {
+    sinon.resetHistory();
+
     gasket = {
       config: {},
-      exec: stub().resolves([])
+      exec: sinon.stub().resolves([])
     };
-
-    app = { use: spy() };
-    express = stub().returns(app);
-
-    cookieParserMiddleware = spy();
-    cookieParser = stub().returns(cookieParserMiddleware);
-
-    compressionMiddleware = spy();
-    compression = stub().returns(compressionMiddleware);
-
-    plugin = proxyquire('./', {
-      express,
-      'cookie-parser': cookieParser,
-      'compression': compression
-    });
   });
 
   it('returns the handler app', async function () {
@@ -65,7 +88,7 @@ describe('createServers', () => {
   });
 
   it('adds the errorMiddleware', async () => {
-    const errorMiddlewares = [spy()];
+    const errorMiddlewares = [sinon.spy()];
     gasket.exec.withArgs('errorMiddleware').resolves(errorMiddlewares);
 
     await plugin.hooks.createServers(gasket, {});
@@ -153,8 +176,8 @@ describe('create', () => {
     plugin = require('./');
 
     mockContext = {
-      pkg: { add: spy() },
-      files: { add: spy() }
+      pkg: { add: sinon.spy() },
+      files: { add: sinon.spy() }
     };
   });
 

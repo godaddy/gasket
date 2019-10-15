@@ -2,6 +2,7 @@
 
 const { stub } = require('sinon');
 const assume = require('assume');
+const plugin = require('../index');
 
 const baseWebpackConfig = {
   plugins: [],
@@ -16,15 +17,35 @@ const baseWebpackConfig = {
   }
 };
 
-describe('initWebpack', () => {
-  let plugin, gasket, data;
+describe('Plugin', () => {
+
+  it('is an object', () => {
+    assume(plugin).is.an('object');
+  });
+
+  it('has expected name', () => {
+    assume(plugin).to.have.property('name', 'webpack');
+  });
+
+  it('has expected hooks', () => {
+    const expected = [];
+
+    assume(plugin).to.have.property('hooks');
+
+    const hooks = Object.keys(plugin.hooks);
+    assume(hooks).eqls(expected);
+    assume(hooks).is.length(expected.length);
+  });
+});
+
+describe('initWebpack hook', () => {
+  let gasket, data;
 
   beforeEach(() => {
     data = {
       defaultLoaders: {}
     };
     gasket = mockGasketApi();
-    plugin = require('..');
   });
 
   it('executes the `webpackChain` and `webpack` lifecycles', async function () {

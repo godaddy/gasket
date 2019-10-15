@@ -1,7 +1,7 @@
 const path = require('path');
 const plugin = require('./index');
 
-describe('plugin (index.js)', () => {
+describe('Plugin', () => {
   let mockApp;
 
   beforeEach(() => {
@@ -15,14 +15,27 @@ describe('plugin (index.js)', () => {
     expect(plugin).toBeInstanceOf(Object);
   });
 
-  it('has hooks', () => {
+  it('has expected name', () => {
+    expect(plugin).toHaveProperty('name', 'intl');
+  });
+
+  it('has expected hooks', () => {
+    const expected = [
+      'init',
+      'initReduxState',
+      'create',
+      'build',
+      'middleware',
+      'express',
+      'workbox',
+      'serviceWorkerCacheKey'
+    ];
+
     expect(plugin).toHaveProperty('hooks');
-    expect(plugin.hooks).toBeInstanceOf(Object);
-    expect(plugin.hooks).toHaveProperty('initReduxState', expect.any(Function));
-    expect(plugin.hooks).toHaveProperty('create', expect.any(Function));
-    expect(plugin.hooks).toHaveProperty('build', expect.any(Function));
-    expect(plugin.hooks).toHaveProperty('express', expect.any(Function));
-    expect(plugin.hooks).toHaveProperty('workbox', expect.any(Function));
+
+    const hooks = Object.keys(plugin.hooks);
+    expect(hooks).toEqual(expected);
+    expect(hooks).toHaveLength(expected.length);
   });
 
   describe('express', () => {
