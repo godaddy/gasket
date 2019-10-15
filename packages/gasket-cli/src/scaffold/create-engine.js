@@ -1,10 +1,6 @@
 const path = require('path');
 const PluginEngine = require('@gasket/plugin-engine');
-
-const defaultPlugins = [
-  require('@gasket/git-plugin'),
-  require('@gasket/metadata-plugin')
-];
+const defaultPlugins = require('../config/default-plugins');
 
 module.exports  = async function createEngine({ dest, presets = [], plugins = [] }) {
   const resolveFrom = path.join(dest, 'node_modules');

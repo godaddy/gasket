@@ -2,8 +2,7 @@ const sinon = require('sinon');
 const assume = require('assume');
 const proxyquire = require('proxyquire');
 const path = require('path');
-const gitPlugin = require('@gasket/git-plugin');
-const metadataPlugin = require('@gasket/metadata-plugin');
+const defaultPlugins = require('../../../src/config/default-plugins');
 
 describe('createEngine', () => {
   let sandbox, mockImports, mockOpts, createEngine;
@@ -57,14 +56,14 @@ describe('createEngine', () => {
   it('instantiates PluginEngine with built-in git-plugin', async () => {
     await createEngine(mockOpts);
     assume(pluginEngineSpy).calledWithMatch({
-      plugins: { add: [gitPlugin, metadataPlugin, 'bogus-A-plugin', 'bogus-B-plugin'] }
+      plugins: { add: [...defaultPlugins, 'bogus-A-plugin', 'bogus-B-plugin'] }
     });
   });
 
   it('instantiates PluginEngine with plugins from context', async () => {
     await createEngine(mockOpts);
     assume(pluginEngineSpy).calledWithMatch({
-      plugins: { add: [sinon.match.any, sinon.match.any, 'bogus-A-plugin', 'bogus-B-plugin'] }
+      plugins: { add: [...defaultPlugins, 'bogus-A-plugin', 'bogus-B-plugin'] }
     });
   });
 
@@ -75,7 +74,7 @@ describe('createEngine', () => {
 
     await createEngine(mockOpts);
     assume(pluginEngineSpy).calledWithMatch({
-      plugins: { add: [sinon.match.any, sinon.match.any] }
+      plugins: { add: defaultPlugins }
     });
   });
 
