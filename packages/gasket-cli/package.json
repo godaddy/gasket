@@ -49,7 +49,7 @@
   "dependencies": {
     "@gasket/command-plugin": "^2.0.0-canary.0",
     "@gasket/git-plugin": "^1.1.1-canary.0",
-    "@gasket/lifecycle-plugin": "^1.1.0",
+    "@gasket/lifecycle-plugin": "^1.2.0-canary.0",
     "@gasket/metadata-plugin": "^2.0.0-canary.1",
     "@gasket/plugin-engine": "^2.0.0-canary.3",
     "@gasket/resolve": "^2.0.0-canary.0",
