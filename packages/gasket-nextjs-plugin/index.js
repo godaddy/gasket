@@ -75,7 +75,6 @@ module.exports = {
 
         ssr = app.getRequestHandler();
       }
-      /** */
 
       //
       // Now that express has been setup, and users have been able to
