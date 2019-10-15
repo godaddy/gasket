@@ -1,6 +1,8 @@
 # `@gasket/log-plugin`
 
-- Support `gasket.command` interface change ([#74])
+### 3.2.0
+
+- Support `gasket.command` interface change ([#75])
 
 ### 3.1.0
 
@@ -47,4 +49,4 @@
 
 
 [#31]:https://github.com/godaddy/gasket/pull/31
-[#74]:https://github.com/godaddy/gasket/pull/74
+[#75]:https://github.com/godaddy/gasket/pull/75

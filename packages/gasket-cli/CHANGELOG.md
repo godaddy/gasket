@@ -1,5 +1,8 @@
 # `@gasket/cli`
 
+### 3.0.0
+
+- `gasket.command.id` available to create hooks ([#79])
 - Fetch and load extended presets during create
 - Move app-level commands to plugins ([#74])
 - Move metrics to new plugin ([#74])
@@ -223,3 +226,4 @@ upon `gasket create`
 [#58]: https://github.com/godaddy/gasket/pull/58
 [#64]: https://github.com/godaddy/gasket/pull/64
 [#74]: https://github.com/godaddy/gasket/pull/74
+[#79]: https://github.com/godaddy/gasket/pull/79
