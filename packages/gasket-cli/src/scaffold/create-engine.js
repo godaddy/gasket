@@ -13,10 +13,12 @@ module.exports  = async function createEngine({ dest, presets = [], plugins = []
     plugins: {
       presets,
       add: [...defaultPlugins, ...plugins]
-    }
+    },
+    root: dest
   };
 
   const engine = new PluginEngine(engineConfig, { resolveFrom });
+  engine.command = { id: 'create' };
   await engine.exec('init');
 
   return engine;
