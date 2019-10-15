@@ -4,8 +4,6 @@ import { createLogger } from 'redux-logger';
 import Log from '@gasket/log';
 import placeholderReducers from './placeholder-reducers';
 
-const baseMiddleware = [thunk];
-
 /**
  * Set up redux store configuration and return a makeStore function
  *
@@ -15,13 +13,20 @@ const baseMiddleware = [thunk];
  * @param {Array} [options.middleware] - Middleware
  * @param {Function[]} [options.enhancers] - Any additional enhancers
  * @param {Boolean} [options.logging] - logging is enabled by default. Passing false will disable logging completely.
+ * @param {*} [options.thunkExtraArg] - Optionally provide an extra argument for thunks
  * @param {Function} [postCreate] - Optional callback
  * @returns {function(*=): Store<{}>} makeStore
  */
 export default function configureMakeStore(
-  { reducers = {}, initialState = {}, middleware = [], enhancers = [f => f], logging = false } = {},
+  { reducers = {}, initialState = {}, middleware = [], enhancers = [f => f], logging = false, thunkExtraArg } = {},
   postCreate
 ) {
+  const baseMiddleware = [
+    // If an extra argument for the thunk middleware is provided, use that version of the thunk middleware.
+    // (https://github.com/reduxjs/redux-thunk#injecting-a-custom-argument)
+    (thunkExtraArg) ? thunk.withExtraArgument(thunkExtraArg) : thunk
+  ];
+  
   /**
    * Wrapper for store create to create instance with SSR and to hydrate in browser.
    *
