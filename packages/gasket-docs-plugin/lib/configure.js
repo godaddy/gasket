@@ -17,3 +17,6 @@ module.exports = function configureHook(gasket, baseConfig = {}) {
   const docs = defaultsDeep({}, userConfig, defaultConfig);
   return ({ ...baseConfig, docs });
 };
+
+
+module.exports.defaultConfig = defaultConfig;
