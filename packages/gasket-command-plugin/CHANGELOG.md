@@ -1,5 +1,7 @@
 # `@gasket/command-plugin`
 
+### 2.0.0
+
 - Move GasketCommand to this plugin ([#74])
 - Allow plugins to add flags to commands in `getCommands` lifecycle.
 - Improved documentation

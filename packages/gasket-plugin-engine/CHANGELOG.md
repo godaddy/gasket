@@ -1,5 +1,7 @@
 # `@gasket/plugin-engine`
 
+### 2.0.0
+
 - Engine uses [Loader] from `@gasket/resolve` to load configured plugins ([#64])
   - Loader instance exposed by engine instance
   - Engine does not initiate metadata

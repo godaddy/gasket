@@ -1,5 +1,7 @@
 # `@gasket/resolve`
 
+### 2.0.0
+
 - Introduces [Loader] used to load configured presets and plugins ([#64]).
   - Presets no longer depend on this package nor resolve their own plugins.
 
