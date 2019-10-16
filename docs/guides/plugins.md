@@ -36,7 +36,7 @@ options and the `handler`.
 ## Hooks
 
 Each `handler` function assigned to an event is invoked by the plugin engine
-when an event occurs. If the event is used for collection of data, each callback
+when an event occurs. If an event is used for collection of data, each callback
 should return data. If the handling is asynchronous, the callback should return
 a `Promise`.
 
@@ -157,9 +157,9 @@ describe('detective plugin', function () {
 
 ## Documentation
 
-If your application is using the [`docsify` plugin] you can automatically view
-and generate docs for your application via the `gasket docs` command. You can
-capitalize upon this functionality by providing JSDOC in your plugin:
+If applications using your plugin are also using the [`@gasket/docs-plugin`] you
+can automatically view and generate docs for your application via the `gasket docs`
+command. You can capitalize upon this functionality by providing JSDOC in your plugin:
 
 ```js
 module.exports = {
@@ -183,4 +183,4 @@ Then, upon running `gasket docs`, developers will automatically find
 documentation for the `detective` plugin.
 
 [here]: (../../packages/gasket-plugin-engine#GasketAPI)
-[`docsify` plugin]: https://github.com/godaddy/gasket/blob/master/packages/gasket-docsify-plugin
+[`@gasket/docs-plugin`]: https://github.com/godaddy/gasket/blob/master/packages/gasket-docs-plugin
