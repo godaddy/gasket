@@ -91,64 +91,94 @@ functions available on a `GasketAPI` object [here](../../packages/gasket-plugin-
 ## Testing
 
 Because Gasket plugins are just families of functions, it's fairly trivial to
-test them. For example, let's say we have this super
+test them. For example, let's say we have this plugin which hooks the `start`
+lifecycle.
 
 ```js
 module.exports = {
-  name: 'superhero'
+  name: 'detective',
   hooks: {
-    gatherIdentities: async function(gasket) {
-      const names = await Promise.all([
-        gasket.exec('batman'),
-        gasket.exec('superman')
+    start: async function gatherClues(gasket) {
+      const { logger, exec } = gasket;
+      const clues = await Promise.all([
+        gasket.exec('motive'),
+        gasket.exec('alibi')
       ]);
 
-      return names;
+      logger.info(clues);
     },
-    batman: function () {
-      return 'Bruce Wayne';
+    motive: function () {
+      return 'That subtle off-white coloring';
     },
-    superman: function () {
-      return 'Clark Kent';
+    alibi: function () {
+      return 'Went to return some video tapes';
     }
   }
 }
 ```
 
-Here are some basic test, assuming we're using the `mocha` test framework.
+Here are some basic tests, assuming we're using the `mocha` test framework.
 
 ```js
 const plugin = require('/path/to/plugin');
 const assume = require('assume');
-const sinon = require('sinon');
+const { stub }  = require('sinon');
 
-describe('superheroes', function () {
+describe('detective plugin', function () {
   it('hooks the correct lifecycles', function() {
     const hooks = plugin.hooks;
-    assume(Object.keys(hooks)).equals(['gatherIdentities', 'batman', 'superman']);
+    assume(Object.keys(hooks)).equals(['init', 'motive', 'alibi']);
   });
 
-  it('correctly reveals Batman\'s secret identity', function () {
-    const name = plugin.hooks.batman();
-    assume(name).equals('Bruce Wayne');
+  it('provides a motive lifecycle', function () {
+    const name = plugin.hooks.motive();
+    assume(name).contains('subtle');
   });
 
-  it('executes the lifecyles for each superhero', function () {
-    const stub = sinon.stub();
+  it('executes the lifecyles for each clue', function () {
+    const execStub = stub();
+    const logSub = stub();
     const gasket = {
-      exec: async function(hero) {
-        stub(hero);
-        return hero;
-      }
+      exec: async function(clue) {
+        execStub(clue);
+        return clue;
+      },
+      logger: logStub();
     };
 
-    const names = await plugin.hooks.gatherIdenties(gatherIdentities);
-    assume(names).has.length(2);
-    assume(stub.calledTwice).to.be.true();
-    assume(stub.calledWith('batman')).to.be.true();
-    assume(stub.calledWith('superman')).to.be.true();
+    await plugin.hooks.start(gasket);
+
+    assume(execStub.calledTwice).to.be.true();
+    assume(logStub.calledOnce).to.be.true();
   });
 });
 ```
 
 ## Docs
+
+If your application is using the [`docsify` plugin] you can automatically view
+and generate docs for your application via the `gasket docs` command. You can
+capitalize upon this functionality by providing JSDOC in your plugin:
+
+
+```js
+module.exports = {
+  name: 'detective',
+  hooks: {
+    /**
+    * The alibi lifecycle
+    *
+    * @param {Gasket} gasket - Gasket object
+    * @returns {String} What the suspect was doing.
+    */
+    alibi: function (gasket) {
+      return 'A lunch meeting with Cliff Huxtable at the Four Seasons';
+    }
+  }
+}
+```
+
+Then, upon running `gasket docs`, developers will find documentation for the
+`detective` plugin in their browsers.
+
+[`docsify` plugin]: https://github.com/godaddy/gasket/blob/master/packages/gasket-docsify-plugin
