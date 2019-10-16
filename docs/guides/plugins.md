@@ -66,4 +66,4 @@ first or last (if multiple plugins do this, they'll run in parallel).
 
 The handler functions are called with a `GasketAPI` followed by any arguments
 passed when the event was invoked. You can see the full definitions for the
-functions available on a `GasketAPI` object [here](../packages/gasket-plugin-engine#GasketAPI).
+functions available on a `GasketAPI` object [here](../../packages/gasket-plugin-engine#GasketAPI).
