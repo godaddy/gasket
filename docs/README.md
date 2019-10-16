@@ -70,10 +70,11 @@ We reference `npm` for the docs here-on, so assume interchangeability with
 The first command you run is:
 
 ```bash
-gasket create your-app-name
+gasket create your-app-name --presets <preset-name>
 ```
 
-Where `your-app-name` is the name of you app.
+Where `your-app-name` is the name of your app, and `preset-name` is the preset
+you wish to use (i.e. `nextjs`).
 
 The create command lays out the scaffolding and initial structure for your app
 and gives you a working app that you can spin up locally with no other upfront
