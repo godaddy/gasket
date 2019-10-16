@@ -8,7 +8,7 @@
     "lint:fix": "npm run lint -- --fix",
     "test": "npm run test:runner",
     "test:runner": "mocha \"test/**/*.test.js\"",
-    "test:coverage": "nyc --reporter=text --reporter=html npm run test:runner",
+    "test:coverage": "nyc --reporter=text --reporter=json-summary npm run test:runner",
     "posttest": "npm run lint"
   },
   "repository": {

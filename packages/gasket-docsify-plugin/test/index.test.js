@@ -3,6 +3,10 @@ const assume = require('assume');
 
 describe('Plugin', function () {
 
+  it('is an object', () => {
+    assume(plugin).is.an('object');
+  });
+
   it('is named correctly', function () {
     assume(plugin.name).equals('docsify');
   });

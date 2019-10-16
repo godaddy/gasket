@@ -3,32 +3,57 @@ const assume = require('assume');
 assume.use(assumeSinonPlugin);
 
 const proxyquire = require('proxyquire').noCallThru();
-const { spy, stub } = require('sinon');
+const sinon = require('sinon');
 const errs = require('errs');
 
-describe('servers hook', () => {
-  let start, createServersModule, debugStub;
+const createServersModule = sinon.stub().yields(null);
+const debugStub = sinon.spy();
+
+const plugin = proxyquire('../', {
+  'create-servers': createServersModule,
+  'diagnostics': sinon.stub().returns(debugStub)
+});
+
+describe('Plugin', () => {
+
+  it('is an object', () => {
+    assume(plugin).is.an('object');
+  });
+
+  it('has expected name', () => {
+    assume(plugin).to.have.property('name', 'https');
+  });
+
+  it('has expected hooks', () => {
+    const expected = [
+      'start'
+    ];
+
+    assume(plugin).to.have.property('hooks');
+
+    const hooks = Object.keys(plugin.hooks);
+    assume(hooks).eqls(expected);
+    assume(hooks).is.length(expected.length);
+  });
+});
+
+describe('start hook', () => {
+  const start = plugin.hooks.start;
   let gasketAPI, handler;
 
   beforeEach(() => {
+    sinon.resetHistory();
     gasketAPI = {
-      execWaterfall: stub().callsFake((arg1, arg2) => Promise.resolve(arg2)),
-      exec: stub(),
+      execWaterfall: sinon.stub().callsFake((arg1, arg2) => Promise.resolve(arg2)),
+      exec: sinon.stub(),
       config: {},
       logger: {
-        info: spy(),
-        error: spy()
+        info: sinon.spy(),
+        error: sinon.spy()
       }
     };
-    handler = stub().yields();
-
-    createServersModule = stub().yields(null);
-    debugStub = spy();
-
-    start = proxyquire('../', {
-      'create-servers': createServersModule,
-      'diagnostics': stub().returns(debugStub)
-    }).hooks.start;
+    handler = sinon.stub().yields();
+    createServersModule.yields(null);
 
     gasketAPI.exec.withArgs('createServers').resolves([handler]);
   });

@@ -4,7 +4,7 @@ const plugin = require('../lib/plugin');
 const GasketCommand = require('../lib/command');
 
 
-describe('The plugin', () => {
+describe('Plugin', () => {
   let gasket, execStub, oclifConfig, MockCmdA, MockCmdB, MockCmdC;
 
   beforeEach(() => {
@@ -20,6 +20,26 @@ describe('The plugin', () => {
     MockCmdB.id = 'b';
     MockCmdC = class extends GasketCommand {};
     MockCmdC.id = 'c';
+  });
+
+  it('is an object', () => {
+    assume(plugin).is.an('object');
+  });
+
+  it('has expected name', () => {
+    assume(plugin).to.have.property('name', 'command');
+  });
+
+  it('has expected hooks', () => {
+    const expected = [
+      'initOclif'
+    ];
+
+    assume(plugin).to.have.property('hooks');
+
+    const hooks = Object.keys(plugin.hooks);
+    assume(hooks).eqls(expected);
+    assume(hooks).is.length(expected.length);
   });
 
   describe('initOclif hook', () => {

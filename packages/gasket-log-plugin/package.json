@@ -4,10 +4,10 @@
   "description": "Gasket log plugin",
   "main": "./",
   "scripts": {
-    "lint": "eslint index.js test.js",
+    "lint": "eslint index.js test",
     "lint:fix": "npm run lint -- --fix",
     "test": "npm run test:runner",
-    "test:runner": "mocha --require setup-env \"test.js\"",
+    "test:runner": "mocha --require setup-env test/*.test.js",
     "test:watch": "npm run test:runner -- --watch",
     "test:coverage": "nyc --reporter=text --reporter=json-summary npm run test:runner",
     "posttest": "npm run lint"

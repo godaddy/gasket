@@ -4,10 +4,11 @@
   "description": "Adds express support to your application",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint index.js test.js",
+    "lint": "eslint index.js test",
     "lint:fix": "npm run lint -- --fix",
     "test": "npm run test:runner",
-    "test:runner": "mocha --require ./setup.js test.js",
+    "test:runner": "mocha test/*.test.js --require test/setup.js",
+    "test:watch": "npm run test:runner -- --watch",
     "test:coverage": "nyc --reporter=text --reporter=json-summary npm run test:runner",
     "posttest": "npm run lint",
     "report": "nyc report --reporter=lcov"

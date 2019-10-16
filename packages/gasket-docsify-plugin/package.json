@@ -33,7 +33,7 @@
     "docsify": "^4.9.4",
     "docsify-cli": "^4.3.0",
     "glob": "^7.1.4",
-    "handlebars": "^4.2.0",
+    "handlebars": "^4.4.3",
     "lodash.defaultsdeep": "^4.6.0"
   },
   "devDependencies": {
