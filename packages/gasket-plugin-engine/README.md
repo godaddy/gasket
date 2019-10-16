@@ -90,41 +90,6 @@ Items in these arrays are module names. Gasket supports shorthand naming;
 `'mocha'` expands to `@gasket/mocha-plugin` in the `add` and `remove` arrays,
 `nextjs` expands to `@gasket/nextjs-preset` in the `presets` array.
 
-## Authoring Plugins
-
-A published plugin must be its own installable `npm` module, with the naming
-convention `@gasket/{name}-plugin`. You may also create anonymous one-off
-plugins for an application by placing a module in a `plugins` directory in an
-application's root directory.
-
-A plugin's main export has the following shape:
-
-```js
-module.exports = {
-  name: 'awesome', // Required for published plugins. Should match the name in the module pattern '@gasket/{name}-plugin'.
-  dependencies: [/* list of plugin names */],
-  hooks: {
-    hookA(gasket) {
-
-    },
-    async hookB(gasket) {
-
-    },
-    hookC: {
-      timing: {},
-      handler(gasket) {
-
-      }
-    }
-  }
-};
-```
-
-The optional `dependencies` array lists other plugins that must be installed as
-a prerequisite. The `hooks` map has a key for every event the plugin handles,
-with the values being either the function itself or an object specifying timing
-options and the handler.
-
 ### Hooks
 
 Each handler function assigned to an event is invoked by the plugin engine when
@@ -251,10 +216,10 @@ For example, a `package.json` file may look like:
 ```json
 {
   "name": "example-preset",
-  "main": "index.js", 
+  "main": "index.js",
   "dependencies": {
-    "example-plugin": "^1.0.0", 
-    "@my/other-plugin": "^2.0.0" 
+    "example-plugin": "^1.0.0",
+    "@my/other-plugin": "^2.0.0"
   }
 }
 ```
@@ -293,9 +258,9 @@ preset. For example, by adding:
 ```diff
 {
   "name": "example-preset",
-  "main": "index.js", 
+  "main": "index.js",
   "dependencies": {
-    "example-plugin": "^1.0.0", 
+    "example-plugin": "^1.0.0",
     "@my/other-plugin": "^2.0.0",
 +    "@some/base-preset": "^3.0.0"
   }
@@ -309,7 +274,7 @@ This base preset's plugins will also be registered when the app loads.
 When a preset extends another preset, the version of the plugin registered can
 be overridden if the parent preset sets a different dependency version.
 Additionally, if an app specifies a plugin directly in the gasket.config using
-`add`, the version determined by the app will instead be registered. 
+`add`, the version determined by the app will instead be registered.
 
 ## Direct Usage
 
