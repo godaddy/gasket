@@ -2,6 +2,30 @@ const plugin = require('../');
 const assume = require('assume');
 const sinon = require('sinon');
 
+describe('Plugin', function () {
+
+  it('is an object', () => {
+    assume(plugin).is.an('object');
+  });
+
+  it('has expected name', () => {
+    assume(plugin).to.have.property('name', 'manifest');
+  });
+
+  it('has expected hooks', () => {
+    const expected = [
+      'express',
+      'middleware'
+    ];
+
+    assume(plugin).to.have.property('hooks');
+
+    const hooks = Object.keys(plugin.hooks);
+    assume(hooks).eqls(expected);
+    assume(hooks).is.length(expected.length);
+  });
+});
+
 describe('#hooks.middleware', function () {
   const { middleware } = plugin.hooks;
   const { timing, handler } = middleware;

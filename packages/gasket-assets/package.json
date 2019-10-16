@@ -44,7 +44,7 @@
     "mkdirp": "^0.5.1",
     "react": "^16.8.6",
     "recursive-readdir": "^2.2.2",
-    "rimraf": "^2.6.3"
+    "rimraf": "^3.0.0"
   },
   "peerDependencies": {
     "react": "^16.8.4"

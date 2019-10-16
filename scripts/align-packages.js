@@ -50,7 +50,11 @@ const depVersions = {
   'eslint-plugin-react': '^7.14.0',
 
   'enzyme': '^3.10.0',
-  'enzyme-adapter-react-16': '^1.14.0'
+  'enzyme-adapter-react-16': '^1.14.0',
+
+  'handlebars': '^4.4.3',
+  'rimraf': '^3.0.0',
+  'glob': '^7.1.4'
 };
 
 

@@ -113,7 +113,11 @@ describe('Metadata plugin', function () {
     };
   });
 
-  it('is named correctly', function () {
+  it('is an object', () => {
+    assume(plugin).is.an('object');
+  });
+
+  it('has expected name', function () {
     assume(plugin.name).equals('metadata');
   });
 

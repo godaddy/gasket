@@ -5,7 +5,34 @@ const assume = require('assume');
 const path = require('path');
 const proxyquire = require('proxyquire').noCallThru();
 
-describe('next', () => {
+describe('Plugin', function () {
+  const plugin = require('../');
+
+  it('is an object', () => {
+    assume(plugin).is.an('object');
+  });
+
+  it('has expected name', () => {
+    assume(plugin).to.have.property('name', 'nextjs');
+  });
+
+  it('has expected hooks', () => {
+    const expected = [
+      'create',
+      'express',
+      'build',
+      'workbox'
+    ];
+
+    assume(plugin).to.have.property('hooks');
+
+    const hooks = Object.keys(plugin.hooks);
+    assume(hooks).eqls(expected);
+    assume(hooks).is.length(expected.length);
+  });
+});
+
+describe('next hook', () => {
   let next, nextHandler, plugin, expressApp;
 
   beforeEach(() => {
@@ -44,7 +71,7 @@ describe('next', () => {
   });
 });
 
-describe('create', () => {
+describe('create hook', () => {
 
   let plugin, mockContext;
 

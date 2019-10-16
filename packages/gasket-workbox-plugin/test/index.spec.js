@@ -5,14 +5,22 @@ describe('Plugin', () => {
     expect(plugin).toBeInstanceOf(Object);
   });
 
+  it('has expected name', () => {
+    expect(plugin).toHaveProperty('name', 'workbox');
+  });
+
   it('has expected hooks', () => {
+    const expected = [
+      'configure',
+      'build',
+      'express',
+      'composeServiceWorker'
+    ];
+
     expect(plugin).toHaveProperty('hooks');
-    expect(plugin.hooks).toBeInstanceOf(Object);
-    expect(plugin.hooks).toEqual({
-      'configure': expect.any(Function),
-      'composeServiceWorker': expect.any(Function),
-      'build': expect.any(Function),
-      'express': expect.any(Function)
-    });
+
+    const hooks = Object.keys(plugin.hooks);
+    expect(hooks).toEqual(expected);
+    expect(hooks).toHaveLength(expected.length);
   });
 });

@@ -6,8 +6,21 @@ describe('Plugin', () => {
     expect(plugin).toBeInstanceOf(Object);
   });
 
-  it('has hooks', () => {
+  it('has expected name', () => {
+    expect(plugin).toHaveProperty('name', 'analyze');
+  });
+
+  it('has expected hooks', () => {
+    const expected = [
+      'webpack',
+      'getCommands',
+      'create'
+    ];
+
     expect(plugin).toHaveProperty('hooks');
-    expect(plugin.hooks).toBeInstanceOf(Object);
+
+    const hooks = Object.keys(plugin.hooks);
+    expect(hooks).toEqual(expected);
+    expect(hooks).toHaveLength(expected.length);
   });
 });
