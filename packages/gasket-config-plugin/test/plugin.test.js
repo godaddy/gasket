@@ -3,7 +3,7 @@ const path = require('path');
 const plugin = require('../lib/plugin');
 const { ENV_CONFIG } = require('../lib/constants');
 
-describe('The @gasket/config-plugin', () => {
+describe('Plugin', () => {
   let gasket;
 
   beforeEach(() => {
@@ -11,6 +11,28 @@ describe('The @gasket/config-plugin', () => {
       config: {},
       execWaterfall: jest.fn((event, config) => Promise.resolve(config))
     };
+  });
+
+  it('is an object', () => {
+    expect(plugin).toBeInstanceOf(Object);
+  });
+
+  it('has expected name', () => {
+    expect(plugin).toHaveProperty('name', 'config');
+  });
+
+  it('has expected hooks', () => {
+    const expected = [
+      'preboot',
+      'middleware',
+      'initReduxState'
+    ];
+
+    expect(plugin).toHaveProperty('hooks');
+
+    const hooks = Object.keys(plugin.hooks);
+    expect(hooks).toEqual(expected);
+    expect(hooks).toHaveLength(expected.length);
   });
 
   describe('preboot hook', () => {

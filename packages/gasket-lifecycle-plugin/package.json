@@ -7,7 +7,7 @@
     "lint": "eslint --fix *.js test/*.js",
     "lint:fix": "npm run lint -- --fix",
     "test": "npm run test:runner",
-    "test:runner": "mocha test/lifecycle.js",
+    "test:runner": "mocha test/plugin.test.js",
     "test:coverage": "nyc --reporter=text --reporter=json-summary npm run test:runner",
     "posttest": "npm run lint"
   },

@@ -9,7 +9,7 @@ import path from 'path';
 
 chai.use(spies);
 
-describe('mocha plugin', () => {
+describe('Plugin', () => {
   let spyFunc;
 
   async function create() {
@@ -38,6 +38,26 @@ describe('mocha plugin', () => {
   before(async function () {
     const { pkg } = await create();
     spyFunc = chai.spy(pkg.add);
+  });
+
+  it('is an object', () => {
+    expect(plugin).is.an('object');
+  });
+
+  it('has expected name', function () {
+    expect(plugin.name).equals('mocha');
+  });
+
+  it('has expected hooks', () => {
+    const expected = [
+      'create'
+    ];
+
+    expect(plugin).to.have.property('hooks');
+
+    const hooks = Object.keys(plugin.hooks);
+    expect(hooks).eqls(expected);
+    expect(hooks).is.length(expected.length);
   });
 
   describe('files', function () {

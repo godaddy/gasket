@@ -2,7 +2,7 @@ const { describe, it } = require('mocha');
 const assume = require('assume');
 const sinon = require('sinon');
 const proxyquire = require('proxyquire');
-const Plugin = require('./index');
+const Plugin = require('../index');
 
 assume.use(require('assume-sinon'));
 
@@ -11,17 +11,35 @@ assume.use(require('assume-sinon'));
  * to be invoked on creation of Log instances
  */
 function assumeLogInit(assertFn) {
-  return proxyquire('./index', {
+  return proxyquire('../index', {
     '@gasket/log': function Log(opts) {
       assertFn(opts);
     }
   });
 }
 
-describe('log plugin', function () {
-  it('exposes required properties', function () {
-    assume(Plugin).to.have.property('hooks');
+describe('Plugin', function () {
+
+  it('is an object', () => {
+    assume(Plugin).is.an('object');
+  });
+
+  it('has expected name', () => {
     assume(Plugin).to.have.property('name', 'log');
+  });
+
+  it('has expected hooks', () => {
+    const expected = [
+      'init',
+      'create',
+      'destroy'
+    ];
+
+    assume(Plugin).to.have.property('hooks');
+
+    const hooks = Object.keys(Plugin.hooks);
+    assume(hooks).eqls(expected);
+    assume(hooks).is.length(expected.length);
   });
 
   describe('.init', function () {

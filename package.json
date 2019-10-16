@@ -42,7 +42,7 @@
     "eslint-plugin-json": "^1.4.0",
     "eslint-plugin-mocha": "^6.0.0",
     "lerna": "^3.15.0",
-    "rimraf": "^2.6.3"
+    "rimraf": "^3.0.0"
   },
   "eslintConfig": {
     "extends": [

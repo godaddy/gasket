@@ -2,7 +2,7 @@ const self = require('../package.json');
 const plugin = require('../index.js');
 const path = require('path');
 
-describe('jest plugin', () => {
+describe('Plugin', () => {
   async function create() {
     const files = [];
     const pkg = {};
@@ -25,6 +25,26 @@ describe('jest plugin', () => {
       pkg
     };
   }
+
+  it('is an object', () => {
+    expect(plugin).toBeInstanceOf(Object);
+  });
+
+  it('has expected name', () => {
+    expect(plugin).toHaveProperty('name', 'jest');
+  });
+
+  it('has expected hooks', () => {
+    const expected = [
+      'create'
+    ];
+
+    expect(plugin).toHaveProperty('hooks');
+
+    const hooks = Object.keys(plugin.hooks);
+    expect(hooks).toEqual(expected);
+    expect(hooks).toHaveLength(expected.length);
+  });
 
   describe('files', function () {
     it('includes the `generator` folder & contents', async function () {
