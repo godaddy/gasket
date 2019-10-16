@@ -43,8 +43,28 @@ a `Promise`.
 If multiple plugins hook the same event, they'll run in parallel if async or in
 arbitrary order if synchronous. If a plugin wants to specify more specific
 sequencing, the hook should be an object with a timing property and handler
-function instead of a plain function. In short, a hook should have the
-following type:
+function instead of a plain function. For example, this plugin contains an
+`init` hook that specifically runs *after* the `metadata` plugin:
+
+```js
+module.exports = {
+  name: 'will-run-after-metadata',
+  dependencies: [/* List of dependencies */]
+  hooks: {
+    init: {
+      timing: {
+        after: [ 'metadata' ]
+      },
+      handler: async function init(gasket) {
+        const { config } = gasket;
+        console.log(config.name);
+      }
+    }
+  }
+}
+```
+
+In short, a hook should have the following type:
 
 ```ts
 type HandlerFunction = (GasketAPI, ...args: any[]) => any;
