@@ -30,13 +30,13 @@ module.exports = {
 
 The optional `dependencies` array lists other plugins that must be installed as
 a prerequisite. The `hooks` map has a key for every event the plugin handles,
-with the values being either the function itself or an object specifying timing
-options and the handler.
+with the values being either the function itself or an object specifying `timing`
+options and the `handler`.
 
 ## Hooks
 
-Each handler function assigned to an event is invoked by the plugin engine when
-and event occurs. If the event is used for collection of data, each callback
+Each `handler` function assigned to an event is invoked by the plugin engine
+when an event occurs. If the event is used for collection of data, each callback
 should return data. If the handling is asynchronous, the callback should return
 a `Promise`.
 
@@ -49,13 +49,12 @@ function instead of a plain function. For example, this plugin contains an
 ```js
 module.exports = {
   name: 'will-run-after-metadata',
-  dependencies: [/* List of dependencies */]
   hooks: {
     init: {
       timing: {
         after: [ 'metadata' ]
       },
-      handler: async function init(gasket) {
+      handler: async function initHook(gasket) {
         const { config } = gasket;
         console.log(config.name);
       }
@@ -80,17 +79,17 @@ type Hook = HandlerFunction | {
 }
 ```
 
-The before and/or properties establish ordering with respect to other plugins.
-You can also use a first or last boolean instead to try to ensure that it runs
-first or last (if multiple plugins do this, they'll run in parallel).
+The `before` and other timing properties establish ordering with respect to other
+plugins. You can also use a first or last boolean instead to try to ensure that
+it runs first or last (if multiple plugins do this, they'll run in parallel).
 
 The handler functions are called with a `GasketAPI` followed by any arguments
 passed when the event was invoked. You can see the full definitions for the
-functions available on a `GasketAPI` object [here](../../packages/gasket-plugin-engine#GasketAPI).
+functions available on a `GasketAPI` object [here].
 
 ## Testing
 
-Because Gasket plugins are just families of functions, it's fairly trivial to
+Because Gasket plugins are just Objects of functions, it's fairly trivial to
 test them. For example, let's say we have this plugin which hooks the `start`
 lifecycle.
 
@@ -111,7 +110,7 @@ module.exports = {
       return 'That subtle off-white coloring';
     },
     alibi: function () {
-      return 'Went to return some video tapes';
+      return 'Was returning some video tapes';
     }
   }
 }
@@ -139,46 +138,49 @@ describe('detective plugin', function () {
     const execStub = stub();
     const logSub = stub();
     const gasket = {
-      exec: async function(clue) {
-        execStub(clue);
-        return clue;
-      },
-      logger: logStub();
+      exec: execStub,
+      logger: {
+        info: logStub
+      }
     };
 
     await plugin.hooks.start(gasket);
 
     assume(execStub.calledTwice).to.be.true();
+    assume(execStub.calledWith('motive')).to.be.true();
+    assume(execStub.calledWith('alibi')).to.be.true();
+
     assume(logStub.calledOnce).to.be.true();
   });
 });
 ```
 
-## Docs
+## Documentation
 
 If your application is using the [`docsify` plugin] you can automatically view
 and generate docs for your application via the `gasket docs` command. You can
 capitalize upon this functionality by providing JSDOC in your plugin:
 
-
 ```js
 module.exports = {
-  name: 'detective',
+  name: 'bateman',
   hooks: {
     /**
-    * The alibi lifecycle
+    * Hooks the alibi lifecycle to provide an excuse.
     *
     * @param {Gasket} gasket - Gasket object
     * @returns {String} What the suspect was doing.
     */
     alibi: function (gasket) {
+      gasket.logger.info('🤞');
       return 'A lunch meeting with Cliff Huxtable at the Four Seasons';
     }
   }
 }
 ```
 
-Then, upon running `gasket docs`, developers will find documentation for the
-`detective` plugin in their browsers.
+Then, upon running `gasket docs`, developers will automatically find
+documentation for the `detective` plugin.
 
+[here]: (../../packages/gasket-plugin-engine#GasketAPI)
 [`docsify` plugin]: https://github.com/godaddy/gasket/blob/master/packages/gasket-docsify-plugin
