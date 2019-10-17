@@ -1,5 +1,9 @@
 # `@gasket/redux`
 
+### 3.2.0
+
+- Add support to customize thunk middleware ([#80])
+
 ### 3.1.0
 
 - Align package structure and dependencies
