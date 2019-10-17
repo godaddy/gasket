@@ -1,9 +1,11 @@
 const { promisify } = require('util');
 const path = require('path');
 const fs = require('fs');
+const merge = require('deepmerge');
 const { pluginIdentifier } = require('@gasket/resolve');
 const { tryRequire } = require('@gasket/utils');
 const defaultPlugins = require('./default-plugins');
+const { flattenPresets } = require('../scaffold/utils');
 
 const readDir = promisify(fs.readdir);
 const jsExtension = /\.js$/i;
@@ -86,9 +88,23 @@ async function addUserPlugins(gasketConfig) {
   }
 }
 
+/**
+ * Loads config from presets and assigns to the main config.
+ * Merge priority order being:
+ * - loaded file config > preset configs > child preset configs
+ *
+ * @param {Gasket} gasket - Gasket engine instance
+ */
+function assignPresetConfig(gasket) {
+  const { presets } = gasket.loader.loadConfigured(gasket.config.plugins);
+  const presetConfigs = flattenPresets(presets).map(p => p.module && p.module.config).filter(Boolean);
+  Object.assign(gasket.config, merge.all([...presetConfigs.reverse(), gasket.config]));
+}
+
 module.exports = {
   getGasketConfig,
   loadConfigFile,
   addDefaultPlugins,
-  addUserPlugins
+  addUserPlugins,
+  assignPresetConfig
 };
