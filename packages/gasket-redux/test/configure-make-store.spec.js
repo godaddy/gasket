@@ -65,6 +65,29 @@ describe('configureMakeStore', () => {
     expect(applyMiddlewareSpy.mock.calls[0][1]).toBe(mockLoggerMiddleware);
   });
 
+  it('allows adding custom thunk middleware', () => {
+    const functionForExtraArg = jest.fn()
+    const exampleAction = jest.fn(() => {
+      return (getState, dispatch, functionAsExtraArg) => {
+        functionAsExtraArg('value')
+      }
+    })
+    const exampleReducer = jest.fn((state = 'initialState') => state)
+    const thunkMiddleware = thunk.withExtraArgument(functionForExtraArg)
+    makeStore = configureMakeStore({
+      reducers: {
+        exampleReducer
+      },
+      thunkMiddleware
+    })
+    store = makeStore()
+    store.dispatch(exampleAction())
+
+    expect(exampleAction).toHaveBeenCalled()
+    expect(exampleReducer).toHaveBeenCalled()
+    expect(functionForExtraArg).toHaveBeenCalledWith('value')
+  })
+
   it('allows removing logger middleware', () => {
     configureMakeStore({ logging: false })();
     expect(applyMiddlewareSpy.mock.calls[0]).toHaveLength(1);

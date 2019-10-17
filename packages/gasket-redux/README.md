@@ -35,7 +35,7 @@ of your app. If you wish for it to reside elsewhere, direct the
 make-store files should use CommonJS imports since they will be executed in
 NodeJS for SSR.
 
-### Example adding reducers
+### Example: adding reducers
 
 ```js
 // ./store.js
@@ -46,7 +46,7 @@ const reducers = require('./reducers'); // apps reducers
 module.exports = configureMakeStore({ reducers });
 ```
 
-### Example adding middleware in a custom path (redux-saga)
+### Example: adding middleware in a custom path (redux-saga)
 
 ```js
 // ./lib/make-store.js
@@ -82,4 +82,21 @@ module.exports = {
     makeStore: './lib/make-store.js'
   }
 };
+```
+
+### Example: passing custom thunk middleware
+
+The default thunk middleware can be overridden with a customized version by passing `thunkMiddleware`. A common use case for this is to use the `withExtraArgument` feature of `redux-thunk`.
+
+```js
+// ./store.js
+
+const { configureMakeStore } = require('@gasket/redux');
+const reducers = require('./reducers');
+const thunk = require('redux-thunk');
+
+const myExtraArg = {};
+const thunkMiddleware = thunk.withExtraArgument(myExtraArg);
+
+module.exports = configureMakeStore({ reducers, thunkMiddleware })
 ```
