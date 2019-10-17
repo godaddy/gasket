@@ -159,21 +159,30 @@ describe('detective plugin', function () {
 
 If applications using your plugin are also using the [`@gasket/docs-plugin`] you
 can automatically view and generate docs for your application via the `gasket docs`
-command. You can capitalize upon this functionality by providing JSDOC in your plugin:
+command. To best take advantage of this functionality, you should provide a
+`README.md` enumerating documentation, as well as `metadata` hook to best
+illustrate which lifecycles are invoked.
 
 ```js
 module.exports = {
-  name: 'bateman',
+  name: 'detective',
   hooks: {
-    /**
-    * Hooks the alibi lifecycle to provide an excuse.
-    *
-    * @param {Gasket} gasket - Gasket object
-    * @returns {String} What the suspect was doing.
-    */
-    alibi: function (gasket) {
-      gasket.logger.info('🤞');
-      return 'A lunch meeting with Cliff Huxtable at the Four Seasons';
+    // other hook implementations
+    metadata: (gasket, data) {
+      return {
+        ...data,
+        lifecycles: [{
+          name: 'motive',
+          description: 'A reason for doing something.',
+          method: 'exec',
+          parent: 'start'
+        }, {
+          name: 'alibi',
+          description: 'A claim or evidence that one was elsewhere during the act.',
+          method: 'exec',
+          parent: 'start'
+        }]
+      };
     }
   }
 }
