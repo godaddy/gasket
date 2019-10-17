@@ -142,4 +142,110 @@ describe('config utils', () => {
       assume(results.plugins.add).not.includes(path.join('/path/to/app', 'plugins', 'app-plugin'));
     });
   });
+
+  describe('assignPresetConfig', () => {
+    let mockGasket, mockPresets;
+
+    beforeEach(() => {
+      mockPresets = [];
+
+      mockGasket = {
+        config: {
+          pineapple: 'yellow'
+        },
+        loader: {
+          loadConfigured: sinon.stub().returns({ presets: mockPresets })
+        }
+      };
+    });
+
+    it('handles if no presets', function () {
+      const expected = { pineapple: 'yellow' };
+
+      utils.assignPresetConfig(mockGasket);
+      assume(mockGasket.config).eqls(expected);
+    });
+
+    it('no changes if no preset config', function () {
+      mockPresets.push(
+        { name: 'one', module: null },
+        { name: 'two', module: null }
+      );
+      const expected = { pineapple: 'yellow' };
+
+      utils.assignPresetConfig(mockGasket);
+      assume(mockGasket.config).eqls(expected);
+    });
+
+    it('preset config added to gasket.config', function () {
+      mockPresets.push(
+        { name: 'one', module: { config: { apple: 'red' } } },
+        { name: 'two', module: { config: { orange: 'orange' } } }
+      );
+
+      utils.assignPresetConfig(mockGasket);
+      assume(mockGasket.config).property('apple', 'red');
+      assume(mockGasket.config).property('orange', 'orange');
+      assume(mockGasket.config).property('pineapple', 'yellow');
+    });
+
+    it('preset config does not override existing gasket.config', function () {
+      mockGasket.config.apple = 'pink';
+
+      mockPresets.push(
+        { name: 'one', module: { config: { apple: 'red' } } },
+        { name: 'two', module: { config: { orange: 'orange' } } }
+      );
+
+      utils.assignPresetConfig(mockGasket);
+      assume(mockGasket.config).property('apple', 'pink');
+      assume(mockGasket.config).property('orange', 'orange');
+      assume(mockGasket.config).property('pineapple', 'yellow');
+    });
+
+    it('gathers config from extended presets', function () {
+      mockPresets.push(
+        { name: 'one', module: {}, presets: [
+          { name: 'one-a', module: { config: { apple: 'blue', grape: 'purple' } } }
+        ] },
+        { name: 'two', module: { config: { orange: 'orange' } } }
+      );
+
+      utils.assignPresetConfig(mockGasket);
+      assume(mockGasket.config).property('apple', 'blue');
+      assume(mockGasket.config).property('orange', 'orange');
+      assume(mockGasket.config).property('grape', 'purple');
+      assume(mockGasket.config).property('pineapple', 'yellow');
+    });
+
+    it('extended presets do not override parent preset config', function () {
+      mockPresets.push(
+        { name: 'one', module: { config: { apple: 'red' } }, presets: [
+          { name: 'one-a', module: { config: { apple: 'blue', grape: 'purple' } } }
+        ] },
+        { name: 'two', module: { config: { orange: 'orange' } } }
+      );
+
+      utils.assignPresetConfig(mockGasket);
+      assume(mockGasket.config).property('apple', 'red');
+      assume(mockGasket.config).property('orange', 'orange');
+      assume(mockGasket.config).property('grape', 'purple');
+      assume(mockGasket.config).property('pineapple', 'yellow');
+    });
+
+    it('deep merges preset config with existing config', function () {
+      mockGasket.config = { pineapple: { color: 'yellow', quantity: 1 } };
+      mockPresets.push(
+        { name: 'one', module: { config: { apple: { color: 'red', quantity: 2 } } }, presets: [
+          { name: 'one-a', module: { config: { apple: { color: 'blue', weight: '100g' }, grape: { color: 'purple' } } } }
+        ] },
+        { name: 'two', module: { config: { pineapple: { quantity: 2, weight: '900g' } } } }
+      );
+
+      utils.assignPresetConfig(mockGasket);
+      assume(mockGasket.config.apple).eqls({ color: 'red', weight: '100g', quantity: 2 });
+      assume(mockGasket.config.pineapple).eqls({ color: 'yellow', weight: '900g', quantity: 1 });
+      assume(mockGasket.config.grape).eqls({ color: 'purple' });
+    });
+  });
 });
