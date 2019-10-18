@@ -1,6 +1,6 @@
-## @gasket/cli
+# @gasket/cli
 
-CLI for rapid web development with gasket
+CLI for rapid application development with gasket
 
 <!-- toc -->
 * [Commands](#commands)
@@ -75,6 +75,19 @@ OPTIONS
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v2.2.1/src/commands/help.ts)_
 <!-- commandsstop -->
 
+### Package Managers
+
+With `gasket create`, you can choose either [npm] or [yarn] as the package
+manager for your new app. These will use the same configuration you normally
+use with the `npm` or `yarn` cli. If you want to adjust configuration for a
+particular `gasket create` run, you can set the
+[npm environment variables][npm env vars],
+which are also [compatible with yarn][yarn env vars].
+
+For example, to configure the registry for a `gasket create` run:
+```bash
+npm_config_registry=https://custom-registry.com gasket create my-app -p nextjs
+```
 
 # Lifecycle Events
 
@@ -259,6 +272,13 @@ npm install --no-save @gasket/nextjs-preset @gasket/redux next react-dom
 ./bin/run local --config /path/to/gasket.config.js
 ```
 
-[inquirer questions]: https://github.com/SBoudrias/Inquirer.js#question
+<!-- LINKS -->
+
+[npm]:https://docs.npm.red
+[yarn]:https://yarnpkg.com
+[npm env vars]:https://docs.npmjs.com/misc/config#environment-variables
+[yarn env vars]:https://yarnpkg.com/en/docs/envvars#toc-npm-config
+
+[inquirer questions]:https://github.com/SBoudrias/Inquirer.js#question
 [execWaterfall]:https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-engine#execwaterfallevent-value-args
 [exec]:https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-engine#execevent-args
