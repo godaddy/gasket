@@ -90,75 +90,6 @@ Items in these arrays are module names. Gasket supports shorthand naming;
 `'mocha'` expands to `@gasket/mocha-plugin` in the `add` and `remove` arrays,
 `nextjs` expands to `@gasket/nextjs-preset` in the `presets` array.
 
-## Authoring Plugins
-
-A published plugin must be its own installable `npm` module, with the naming
-convention `@gasket/{name}-plugin`. You may also create anonymous one-off
-plugins for an application by placing a module in a `plugins` directory in an
-application's root directory.
-
-A plugin's main export has the following shape:
-
-```js
-module.exports = {
-  name: 'awesome', // Required for published plugins. Should match the name in the module pattern '@gasket/{name}-plugin'.
-  dependencies: [/* list of plugin names */],
-  hooks: {
-    hookA(gasket) {
-
-    },
-    async hookB(gasket) {
-
-    },
-    hookC: {
-      timing: {},
-      handler(gasket) {
-
-      }
-    }
-  }
-};
-```
-
-The optional `dependencies` array lists other plugins that must be installed as
-a prerequisite. The `hooks` map has a key for every event the plugin handles,
-with the values being either the function itself or an object specifying timing
-options and the handler.
-
-### Hooks
-
-Each handler function assigned to an event is invoked by the plugin engine when
-and event occurs. If the event is used for collection of data, each callback
-should return data. If the handling is asynchronous, the callback should return
-a `Promise`.
-
-If multiple plugins hook the same event, they'll run in parallel if async or in
-arbitrary order if synchronous. If a plugin wants to specify more specific
-sequencing, the hook should be an object with a timing property and handler
-function instead of a plain function. In short, a hook should have the
-following type:
-
-```ts
-type HandlerFunction = (GasketAPI, ...args: any[]) => any;
-
-type Hook = HandlerFunction | {
-  timing: {
-    before?: Array<string>,
-    after?: Array<string>,
-    first?: boolean,
-    last?: boolean
-  },
-  handler: HandlerFunction
-}
-```
-
-The before and/or properties establish ordering with respect to other plugins.
-You can also use a first or last boolean instead to try to ensure that it runs
-first or last (if multiple plugins do this, they'll run in parallel).
-
-The handler functions are called with a `GasketAPI` followed by any arguments
-passed when the event was invoked.
-
 ### GasketAPI
 
 The `GasketAPI` object passed to hook functions has the following members:
@@ -251,10 +182,10 @@ For example, a `package.json` file may look like:
 ```json
 {
   "name": "example-preset",
-  "main": "index.js", 
+  "main": "index.js",
   "dependencies": {
-    "example-plugin": "^1.0.0", 
-    "@my/other-plugin": "^2.0.0" 
+    "example-plugin": "^1.0.0",
+    "@my/other-plugin": "^2.0.0"
   }
 }
 ```
@@ -271,11 +202,14 @@ It is recommended, though not required, for presets to export their `require`
 instance. This will help the loader properly resolve plugin dependencies,
 especially during development when module linking may be used.
 
-You can set create values ahead of time in your preset so that the associated
-prompts are never asked. To do so, in a preset's index.js, set the
+### Predefine CreateContext
+
+You can set create context values ahead of time in your preset so that the
+associated prompts are never asked. To do so, in a preset's index.js, set the
 `createContext` object with the properties you want to define.
 
 ```js
+// example-preset.js
 module.exports = {
   require,
   createContext: {
@@ -287,15 +221,43 @@ module.exports = {
 }
 ```
 
+### Predefine Config
+
+Presets can also be used to define predetermined config. This will be loaded
+for app-level commands, such as **build** or **start**, yet can be modified
+in the app's `gasket.config.js`. 
+
+```js
+// example-preset.js
+module.exports = {
+  require,
+  config: {
+    https: {
+      port: 8443
+    },
+    environments: {
+      local: {
+        http: 3000,
+        https: null
+      }
+    }
+  }
+}
+```
+
+Preset config can also set environment overrides.
+
+### Extend other presets
+
 You can also _extend_ other presets by adding them as dependencies to a parent
 preset. For example, by adding:
 
 ```diff
 {
   "name": "example-preset",
-  "main": "index.js", 
+  "main": "index.js",
   "dependencies": {
-    "example-plugin": "^1.0.0", 
+    "example-plugin": "^1.0.0",
     "@my/other-plugin": "^2.0.0",
 +    "@some/base-preset": "^3.0.0"
   }
@@ -309,7 +271,7 @@ This base preset's plugins will also be registered when the app loads.
 When a preset extends another preset, the version of the plugin registered can
 be overridden if the parent preset sets a different dependency version.
 Additionally, if an app specifies a plugin directly in the gasket.config using
-`add`, the version determined by the app will instead be registered. 
+`add`, the version determined by the app will instead be registered.
 
 ## Direct Usage
 

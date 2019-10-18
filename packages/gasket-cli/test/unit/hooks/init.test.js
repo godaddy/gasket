@@ -3,6 +3,7 @@ const sinon = require('sinon');
 const assume = require('assume');
 
 const getGasketConfigStub = sinon.stub();
+const assignPresetConfigStub = sinon.stub().callsFake(config => config);
 const warnStub = sinon.stub();
 const errorStub = sinon.stub();
 const parseStub = sinon.stub().returns();
@@ -18,7 +19,7 @@ MockCommand.flags = {};
 const mockImports = {
   '@gasket/plugin-engine': class PluginEngine { async exec() { execStub(...arguments); } },
   '@gasket/command-plugin': { GasketCommand: MockCommand },
-  '../config/utils': { getGasketConfig: getGasketConfigStub },
+  '../config/utils': { getGasketConfig: getGasketConfigStub, assignPresetConfig: assignPresetConfigStub },
   '@oclif/parser': { parse: parseStub }
 };
 
@@ -62,6 +63,11 @@ describe('init hook', () => {
     getGasketConfigStub.resolves(mockConfig);
     await initHook({ id: 'build', argv: [], config: {} });
     assume(pluginEngineSpy).calledWith(sinon.match.object, { resolveFrom: '/path/to/app' });
+  });
+
+  it('assigns config from presets', async () => {
+    await initHook({ id: 'build', argv: [] });
+    assume(assignPresetConfigStub).called();
   });
 
   it('executes initOclif gasket lifecycle', async () => {

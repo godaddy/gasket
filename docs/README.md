@@ -1,7 +1,7 @@
 # Gasket
 
-Gasket is a framework to help you quickly create a node+React web application. 
-You'll get server-side rendering, Redux, routing, SASS, bundling, and more right 
+Gasket is a framework to help you quickly create a node+React web application.
+You'll get server-side rendering, Redux, routing, SASS, bundling, and more right
 out of the box. For a description of all the technologies, see the [Gasket Tech Stack]
 document.
 
@@ -40,6 +40,7 @@ For an overview of what is available for Gasket apps continue reading below.
 - [Package Management Guide]
 - [Routing Guide]
 - [Configuration Guide]
+- [Plugin Authoring Guide]
 - [Testing Guide]
 - [Lifecycle Guide]
 - [Webpack Guide]
@@ -133,7 +134,7 @@ for code splitting purposes to control load prioritization of your app.
 
 #### locales/
 
-These are JSON files with your text translations, to provide localized text for 
+These are JSON files with your text translations, to provide localized text for
 your users. Locale files can be organized by culture or market id,
 i.e. `en-US.json`,  `fr.json`, or `fr-FR.json`.
 Alternatively, organized with a namespace within culture directories,
@@ -323,6 +324,7 @@ Development modules to help with code quality.
 [Package Management Guide]: guides/package-management.md
 [Routing Guide]: guides/routing.md
 [Configuration Guide]: guides/configuration.md
+[Plugin Authoring Guide]: guides/plugins.md
 [Testing Guide]: guides/testing.md
 [Lifecycle Guide]: guides/lifecycles.md
 [Webpack Guide]: guides/webpack.md
