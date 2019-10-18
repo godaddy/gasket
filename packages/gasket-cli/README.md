@@ -47,8 +47,6 @@ OPTIONS
                                      Or other (multiple) custom presets (e.g. --presets
                                      my-gasket-preset@1.0.0.beta-1,nextjs@^1.0.0)
 
-  --npmconfig=npmconfig              [default: ~/.npmrc] .npmrc to be used for npm actions in @gasket/cli
-
   --package-manager=package-manager  Selects which package manager you would like to use during
                                      installation. (e.g. --package-manager yarn)
 

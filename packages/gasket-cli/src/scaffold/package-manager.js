@@ -68,6 +68,8 @@ module.exports = class PackageManager {
    * @public
    */
   async exec(cmd, args = []) {
+    const env = Object.assign({}, process.env);
+
     if (this.manager === 'npm') {
       //
       // Given that we are spawning `npm` in a child process a number of
@@ -83,15 +85,14 @@ module.exports = class PackageManager {
 
       //
       // Global npmrc configured through gasket flag
-      //
+      // TODO (kinetifex): remove in next major revision
       if (this.npmconfig) argv.push('--userconfig', this.npmconfig);
 
       return await PackageManager.spawnNpm(argv, {
         cwd: this.dest,
-        env: Object.assign({}, process.env)
+        env
       });
     } else if (this.manager === 'yarn') {
-      const env = Object.assign({}, process.env);
       const argv = [cmd].concat(args);
 
       //
@@ -99,7 +100,7 @@ module.exports = class PackageManager {
       // Yarn does not have a "userconfig" CLI flag, it does however still
       // support the npm_config_* environment variables for npm compatibility.
       // @see: https://yarnpkg.com/en/docs/envvars#toc-npm-config
-      //
+      // TODO (kinetifex): remove in next major revision
       if (this.npmconfig) env.NPM_CONFIG_USERCONFIG = this.npmconfig;
 
       return await PackageManager.spawnYarn(argv, {

@@ -157,10 +157,13 @@ comma-separated values: --preset-path=path1,path2`,
     hidden: true,
     parse: commasToArray
   }),
+  // TODO (kinetifex): remove in next major revision
   'npmconfig': flags.string({
     env: 'GASKET_NPM_USERCONFIG',
-    default: '~/.npmrc',
-    description: '.npmrc to be used for npm actions in @gasket/cli'
+    description: `(DEPRECATED) .npmrc to be used for npm actions in @gasket/cli'.
+Instead, prefer environment variables to configure package managers
+`,
+    hidden: true
   })
 };
 
