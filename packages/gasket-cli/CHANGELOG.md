@@ -3,6 +3,8 @@
 ### 3.1.0
 
 - Load config defined by presets ([#86])
+- Deprecate `--npmconfig` and fix create using yarn ([#87])
+  - Instead, use the `$NPM_CONFIG_USERCONFIG` env var.
 
 ### 3.0.0
 
@@ -232,3 +234,4 @@ upon `gasket create`
 [#74]: https://github.com/godaddy/gasket/pull/74
 [#79]: https://github.com/godaddy/gasket/pull/79
 [#86]: https://github.com/godaddy/gasket/pull/86
+[#87]: https://github.com/godaddy/gasket/pull/87
