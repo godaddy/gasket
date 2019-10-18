@@ -1,7 +1,7 @@
 /* eslint-disable max-len, max-statements */
 const fs = require('fs');
 const path = require('path');
-const { addPluginsToContext } = require('../scaffold/utils');
+const { addPluginsToContext, ensureAbsolute } = require('../scaffold/utils');
 
 /**
  * The CreateRuntime represents a shallow proxy to a CreateContext
@@ -164,7 +164,7 @@ module.exports = function makeCreateContext(argv = [], flags = {}) {
     dest,
     relDest,
     extant,
-    npmconfig,
+    npmconfig: npmconfig && ensureAbsolute(npmconfig),
     pkgLinks,
     localPresets,
     rawPresets,

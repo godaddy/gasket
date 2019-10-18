@@ -95,15 +95,10 @@ module.exports = class PackageManager {
       const argv = [cmd].concat(args);
 
       //
-      // Global npmrc configured through gasket flag, unfortunately yarn
-      // does not have a "userconfig" CLI flag, it does however still
-      // support the environment variable alternative as an undocumented
-      // feature.
-      //
-      // However, this functionality is currently broken.
-      //
-      // OG PR: https://github.com/yarnpkg/yarn/pull/1519
-      // ISSUE: https://github.com/yarnpkg/yarn/issues/4568
+      // Support for the .npmrc configured via --npmconfig flag.
+      // Yarn does not have a "userconfig" CLI flag, it does however still
+      // support the npm_config_* environment variables for npm compatibility.
+      // @see: https://yarnpkg.com/en/docs/envvars#toc-npm-config
       //
       if (this.npmconfig) env.NPM_CONFIG_USERCONFIG = this.npmconfig;
 
