@@ -1,10 +1,12 @@
 const sinon = require('sinon');
 const assume = require('assume');
+const path = require('path');
 
 const {
   addPluginsToContext,
   addPluginsToPkg,
-  flattenPresets
+  flattenPresets,
+  ensureAbsolute
 } = require('../../../src/scaffold/utils');
 
 describe('Utils', () => {
@@ -161,6 +163,30 @@ describe('Utils', () => {
       assume(results.map(p => p.name)).eqls([
         'one', 'two', 'one-a', 'one-b', 'two-a', 'two-b', 'one-b-1', 'one-b-2', 'two-b-1', 'two-b-2'
       ]);
+    });
+  });
+
+  describe('ensureAbsolute', () => {
+
+    it('transforms tildy paths to absolute', () => {
+      const filepath = '~/.my-file';
+      const result = ensureAbsolute(filepath);
+      assume(path.isAbsolute(result)).true();
+      assume(result).not.includes('~');
+    });
+
+    it('transforms relative paths to absolute', () => {
+      const filepath = '../.my-file';
+      const result = ensureAbsolute(filepath);
+      assume(path.isAbsolute(result)).true();
+      assume(result).not.includes('..');
+    });
+
+    it('does not transform absolute path', () => {
+      const filepath = '/path/to/.my-file';
+      const result = ensureAbsolute(filepath);
+      assume(path.isAbsolute(result)).true();
+      assume(result).equal(filepath);
     });
   });
 });

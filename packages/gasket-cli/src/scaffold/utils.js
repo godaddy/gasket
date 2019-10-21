@@ -1,3 +1,5 @@
+const path = require('path');
+const untildify = require('untildify');
 const { pluginIdentifier } = require('@gasket/resolve');
 
 /**
@@ -77,8 +79,21 @@ function flattenPresets(presetInfos = []) {
   return flattened.reduce((acc, arr) => acc.concat(arr), []);
 }
 
+/**
+ * Takes a file path and transforms it to be absolute if not already
+ *
+ * @param {string} filepath - Path to file that may be relative or have tildy
+ * @returns {string} absolute filepath
+ */
+function ensureAbsolute(filepath) {
+  filepath = untildify(filepath);
+  if (path.isAbsolute(filepath)) return filepath;
+  return path.resolve(process.cwd(), filepath);
+}
+
 module.exports = {
   addPluginsToContext,
   addPluginsToPkg,
-  flattenPresets
+  flattenPresets,
+  ensureAbsolute
 };
