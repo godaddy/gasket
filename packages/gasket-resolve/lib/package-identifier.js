@@ -1,245 +1,347 @@
 /**
- * Utility class for working with package names and versions
+ * Generate RegExp to help determine aspects of an identifier for a project
  *
- * @type {PackageIdentifier}
+ * @param {string} projectName - Name of the project
+ * @param {string} [type] - Identifier type, defaults to 'plugin'
+ * @returns {{prefixed: {project: RegExp, user: RegExp}, postfixed: {project: RegExp, user: RegExp}, scope: RegExp}}
  */
-class PackageIdentifier {
+function matchMaker(projectName, type = 'plugin') {
+  if (!projectName) throw new Error('projectName required.');
+  return {
+    prefixed: {
+      project: new RegExp(`(@${projectName})\/${type}-([\\w-.]+)`),
+      user: new RegExp(`(@[\\w-.]+)?\\/?${projectName}-${type}-([\\w-.]+)`)
+    },
+    postfixed: {
+      project: new RegExp(`(@${projectName})\/([\\w-.]+)-${type}`),
+      user: new RegExp(`(@[\\w-.]+)?\\/?([\\w-.]+)-${projectName}-${type}`)
+    },
+    scope: /(@[\w-.]+)\/.+/,
+    name: /^(@?[\w/-]+)@?(.*)/
+  };
+}
+
+/**
+ * Generate helpers to expand short names to long names for identifiers of a project
+ *
+ * @param {string} projectName - Name of the project
+ * @param {string} [type] - Identifier type, defaults to 'plugin'
+ * @returns {{prefixed: prefixed, postfixed: postfixed}}
+ */
+function expandMaker(projectName, type = 'plugin') {
+  if (!projectName) throw new Error('projectName required.');
+  const projectScope = `@${projectName}`;
+  const parse = short => short.split('/').reverse();
+  return {
+    prefixed: short => {
+      const [name, scope] = parse(short);
+      if (scope === projectScope) {
+        return `${projectScope}/${type}-${name}`;
+      }
+      const result = `${projectName}-${type}-${name}`;
+      return scope ? `${scope}/${result}` : result;
+    },
+    postfixed: short => {
+      const [name, scope] = parse(short);
+
+      if (scope === projectScope) {
+        return `${projectScope}/${name}-${type}`;
+      }
+      const result = `${name}-${projectName}-${type}`;
+      return scope ? `${scope}/${result}` : result;
+    }
+  };
+}
+
+/**
+ * @typedef {Object} IdentifierFormat
+ *
+ * @property {boolean} prefixed
+ * @property {boolean} short
+ * @property {boolean} project
+ * @property {boolean} scoped
+ */
+
+
+function makePackageIdentifier(projectName, options) {
+  const { type = 'plugin' } = options || {};
+  const re = matchMaker(projectName, type);
+  const expand = expandMaker(projectName, type);
+  const projectScope = `@${projectName}`;
+
+  const isScopedFn = name => re.scope.test(name);
+  const isShortFn = name => !(name.includes(projectName) && name.includes(type));
+  const isPrefixedFn = name => re.prefixed.project.test(name) || re.prefixed.user.test(name);
+  const isProjectScopedFn = name => name.startsWith(projectScope);
+
   /**
-   * Create a new package identifier instance
+   * Utility class for working with package names and versions
    *
-   * @param {String} rawName - Original input name of a package
-   * @param {String} suffix - suffix for special package names (-preset, or -plugin)
+   * @type {PackageIdentifier}
    */
-  constructor(rawName, suffix) {
-    this.rawName = rawName;
-    this.suffix = suffix;
+  class PackageIdentifier {
+    /**
+     * Create a new package identifier instance
+     *
+     * @param {String} rawName - Original input name of a package
+     * @param {Object} [options] - Options
+     * @param {boolean} [options.prefixed] - Disable this to force prefixed/postfixed format for short names
+     */
+    constructor(rawName, options = {}) {
+      this.rawName = rawName;
 
-    this.reShortName = new RegExp(`@gasket\\/([\\w-]+)${suffix}`);
-    this.reName = /^(@?[\w/-]+)@?(.*)/;
-    this.reSuffix = new RegExp(`${suffix}$`);
+      const [, name, version] = re.name.exec(this.rawName);
 
-    //
-    // Validate package description
-    //
-    const [, nameOnly] = this.reName.exec(this.rawName);
-    if (nameOnly.startsWith('@gasket') && !nameOnly.endsWith(suffix)) {
-      throw new Error(`Package descriptions with @gasket scope require suffix '${suffix}' for ${rawName}`);
+      this._parsed = {
+        name,
+        version
+      };
+
+      const short = isShortFn(name);
+      const scoped = isScopedFn(name);
+      const project = isProjectScopedFn(name);
+      const {
+        // default to prefixed for short names
+        prefixed = short ? true : isPrefixedFn(name)
+      } = options;
+
+      /**
+       * @type {Readonly<IdentifierFormat>}
+       * @private
+       */
+      this._format = Object.freeze({
+        short,
+        prefixed,
+        scoped,
+        project
+      });
+
+      this._expand = prefixed ? expand.prefixed : expand.postfixed;
+      this._re = (prefixed ? re.prefixed : re.postfixed)[project ? 'project' : 'user'];
+    }
+
+    /**
+     * Get the full package name
+     *
+     * Examples:
+     * - @gasket/plugin-https@1.2.3 -> @gasket/plugin-https
+     * - @gasket/https -> @gasket/plugin-https
+     *
+     * @returns {string} fullName
+     */
+    get fullName() {
+      const { name } = this._parsed;
+
+      if (this._format.short) {
+        return this._expand(name);
+      }
+
+      return name;
+    }
+
+    /**
+     * Get the long package name
+     *
+     * @alias fullName
+     * @returns {string} fullName
+     */
+    get longName() {
+      return this.fullName;
+    }
+
+    /**
+     * Get the short package name
+     *
+     * Examples:
+     * - @gasket/https-plugin -> https
+     * - https@1.2.3 -> https
+     *
+     * @returns {string} fullName
+     */
+    get shortName() {
+      const { name } = this._parsed;
+
+      if (this._format.short) {
+        return name;
+      }
+
+      const matches = this._re.exec(name);
+      return matches[1] ? `${matches[1]}/${matches[2]}` : matches[2];
+    }
+
+    /**
+     * Get only the package name
+     *
+     * Examples:
+     * - @gasket/https-plugin@1.2.3 -> @gasket/https-plugin
+     * - https@1.2.3 -> https
+     *
+     * @returns {string} fullName
+     */
+    get name() {
+      const { name } = this._parsed;
+
+      return name;
+    }
+
+    /**
+     * Get only the package version
+     *
+     * Examples:
+     * - @gasket/https-plugin@1.2.3 -> 1.2.3
+     * - @gasket/https-plugin -> ''
+     *
+     * @returns {string} fullName
+     */
+    get version() {
+      const { version } = this._parsed;
+
+      return version || null;
+    }
+
+    /**
+     * Get the full package name with version
+     *
+     * Examples:
+     * - @gasket/https-plugin@1.2.3 -> @gasket/https-plugin@1.2.3
+     * - https@1.2.3 -> @gasket/https-plugin@1.2.3
+     *
+     * @returns {string} fullName
+     */
+    get full() {
+      const name = this.fullName;
+      const version = this.version;
+      return name + (version ? `@${version}` : '');
+    }
+
+    get isShort() {
+      return this._format.short;
+    }
+
+    get isLong() {
+      return !this._format.short;
+    }
+
+    get isPrefixed() {
+      return this._format.prefixed;
+    }
+
+    get isPostfixed() {
+      return !this._format.prefixed;
+    }
+
+    get hasScope() {
+      return this._format.scoped;
+    }
+
+    get hasProjectScope() {
+      return this._format.project;
+    }
+
+    get hasVersion() {
+      return Boolean(this._parsed.version);
+    }
+
+    /**
+     * Returns new PackageIdentifier with version added to desc if missing
+     *
+     * Examples:
+     * - @gasket/https-plugin@1.2.3 -> @gasket/https-plugin@1.2.3
+     * - @gasket/https-plugin -> @gasket/https-plugin@latest
+     *
+     * @param {string} [defaultVersion] - the version name to add if missing
+     * @returns {PackageIdentifier} identifier
+     */
+    withVersion(defaultVersion = 'latest') {
+      const { name, version } = this._parsed;
+
+      const nextName = name + '@' + (version || defaultVersion);
+      return new this.constructor(nextName, this.format);
+    }
+
+    /**
+     * If the rawName is short format, get a new identifier, cycling through
+     * formats, used to attempt to resolve packages by different name pattern.
+     *
+     * example            gasket-plugin-example > example-gasket-plugin
+     *                    > @gasket/plugin-example > @gasket/example-plugin   -- In Loader, falls back to these with warnings
+     * @gasket/example    @gasket/plugin-example > @gasket/example-plugin
+     * @user/example      @user/gasket-plugin-example > @user/example-gasket-plugin
+     *
+     * @returns {PackageIdentifier|null} identifier
+     */
+    nextFormat() {
+      if(!this._format.short) return null;
+
+      let rawName = this.rawName;
+
+      const nextFormat = {};
+      if(this._format.prefixed) {
+        nextFormat.prefixed = false;
+      } else {
+        // If we don't have a scope, force to project scope
+        if(!this._format.scoped) {
+          rawName = `${projectScope}/${rawName}`;
+          nextFormat.prefixed = true;
+        }
+      }
+
+      //
+      // if there is nothing to change, return null
+      //
+      if(!Object.keys(nextFormat).length && rawName === this.rawName) {
+        return null;
+      }
+
+      return new this.constructor(rawName, { ...this._format, ...nextFormat });
     }
   }
 
   /**
-   * Get the full package name
+   * Output the original raw name for string concatenation.
    *
-   * Examples:
-   * - @gasket/https-plugin@1.2.3 -> @gasket/https-plugin
-   * - https -> @gasket/https-plugin
-   *
-   * @returns {string} fullName
+   * @returns {String} string
    */
-  get fullName() {
-    const [, name] = this.reName.exec(this.rawName);
+  PackageIdentifier.prototype.toString = function toString() {
+    return this.rawName;
+  };
 
-    return this.reSuffix.test(name) ? name : `@gasket/${name}${this.suffix}`;
+  PackageIdentifier.isValidFullName = function isValidFullName(maybeFullName) {
+    try {
+      return new PackageIdentifier(maybeFullName).fullName === maybeFullName;
+    } catch (e) {
+      return false;
+    }
+  };
+
+  function packageIdentifier(name, format) {
+    return new PackageIdentifier(name, format);
   }
 
   /**
-   * Get the short package name
+   * Util method to check if a full name is valid
    *
    * Examples:
-   * - @gasket/https-plugin -> https
-   * - https@1.2.3 -> https
+   * - @gasket/https-plugin -> true
+   * - @gasket/https-plugin@1.2.3 -> false
+   * - https -> false
    *
-   * @returns {string} fullName
+   * @param {string} maybeFullName - Name to check
+   * @returns {boolean} fullName
    */
-  get shortName() {
-    const [, name] = this.reName.exec(this.rawName);
-    const match = this.reShortName.exec(name);
+  packageIdentifier.isValidFullName = function isValidFullName(maybeFullName) {
+    try {
+      return new PackageIdentifier(maybeFullName).fullName === maybeFullName;
+    } catch (e) {
+      return false;
+    }
+  };
 
-    return match ? match[1] : name;
-  }
-
-  /**
-   * Get only the package name
-   *
-   * Examples:
-   * - @gasket/https-plugin@1.2.3 -> @gasket/https-plugin
-   * - https@1.2.3 -> https
-   *
-   * @returns {string} fullName
-   */
-  get name() {
-    const [, name] = this.reName.exec(this.rawName);
-
-    return name;
-  }
-
-  /**
-   * Get only the package version
-   *
-   * Examples:
-   * - @gasket/https-plugin@1.2.3 -> 1.2.3
-   * - @gasket/https-plugin -> ''
-   *
-   * @returns {string} fullName
-   */
-  get version() {
-    const [, , version] = this.reName.exec(this.rawName);
-
-    return version || null;
-  }
-
-  /**
-   * Get the full package name with version
-   *
-   * Examples:
-   * - @gasket/https-plugin@1.2.3 -> @gasket/https-plugin@1.2.3
-   * - https@1.2.3 -> @gasket/https-plugin@1.2.3
-   *
-   * @returns {string} fullName
-   */
-  get full() {
-    const name = this.fullName;
-    const version = this.version;
-    return name + (version ? `@${version}` : '');
-  }
-
-  /**
-   * Returns new PackageIdentifier with version added to desc if missing
-   *
-   * Examples:
-   * - @gasket/https-plugin@1.2.3 -> @gasket/https-plugin@1.2.3
-   * - @gasket/https-plugin -> @gasket/https-plugin@latest
-   *
-   * @param {string} [defaultVersion] - the version name to add if missing
-   * @returns {PackageIdentifier} identifier
-   */
-  withVersion(defaultVersion = 'latest') {
-    const [, name, version] = this.reName.exec(this.rawName);
-
-    const nextName = name + '@' + (version || defaultVersion);
-    return new PackageIdentifier(nextName, this.suffix);
-  }
+  return packageIdentifier;
 }
-
-/**
- * Output the original raw name for string concatenation.
- *
- * @returns {String} string
- */
-PackageIdentifier.prototype.toString = function () {
-  return this.rawName;
-};
-
-/**
- * The package name with or without version of a plugin.
- *
- * For example:
- *   - @gasket/jest-plugin        - fullName
- *   - jest                       - shortName
- *   - @gasket/jest-plugin@^1.2.3 - full with version
- *   - jest@^1.2.3                - short with version
- *
- * Not intended for use with non-plugin package descriptions.
- * For example, the following patterns will not work:
- *   - @gasket/jest
- *
- * @typedef {String} PluginDesc
- */
-
-/**
- * The package name with or without version of a preset.
- *
- * For example:
- *   - @gasket/nextjs-preset        - fullName
- *   - nextjs                       - shortName
- *   - @gasket/nextjs-preset@^1.2.3 - full with version
- *   - nextjs@^1.2.3                - short with version
- *
- * @typedef {String} PresetDesc
- */
-
-/**
- * The package name only of a plugin.
- *
- * For example:
- *   - @gasket/jest-plugin        - fullName
- *   - jest                       - shortName
- *
- * @typedef {String} PluginName
- */
-
-/**
- * The package name only of a preset.
- *
- * For example:
- *   - @gasket/nextjs-preset        - fullName
- *   - nextjs                       - shortName
- *
- * @typedef {String} PresetName
- */
-
-/**
- * Package identifier for work with plugin name
- *
- * @param {PluginDesc} name - Name of the plugin package
- * @returns {PackageIdentifier} identifier
- */
-function pluginIdentifier(name) {
-  return new PackageIdentifier(name, '-plugin');
-}
-
-/**
- * Util method to check if a full name is valid
- *
- * Examples:
- * - @gasket/https-plugin -> true
- * - @gasket/https-plugin@1.2.3 -> false
- * - https -> false
- *
- * @param {string} maybeFullName - Name to check
- * @returns {boolean} fullName
- */
-pluginIdentifier.isValidFullName = function isValidFullName(maybeFullName) {
-  try {
-    return pluginIdentifier(maybeFullName).fullName === maybeFullName;
-  } catch (e) {
-    return false;
-  }
-};
-
-/**
- * Package identifier for work with preset name
- *
- * @param {PresetDesc} name - Name of the preset package
- * @returns {PackageIdentifier} identifier
- */
-function presetIdentifier(name) {
-  return new PackageIdentifier(name, '-preset');
-}
-
-/**
- * Util method to check if a full name is valid
- *
- * Examples:
- * - @gasket/nextjs-preset -> true
- * - @gasket/nextjs-preset@1.2.3 -> false
- * - nextjs -> false
- *
- * @param {string} maybeFullName - Name to check
- * @returns {boolean} fullName
- */
-presetIdentifier.isValidFullName = function isValidFullName(maybeFullName) {
-  try {
-    return presetIdentifier(maybeFullName).fullName === maybeFullName;
-  } catch (e) {
-    return false;
-  }
-};
-
-
 
 module.exports = {
-  pluginIdentifier,
-  presetIdentifier,
-  PackageIdentifier
+  matchMaker,
+  expandMaker,
+  makePackageIdentifier
 };
