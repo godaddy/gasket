@@ -1,5 +1,7 @@
 # `@gasket/mocha-plugin`
 
+- Fix package.json scripts to wrap glob patterns in double-quotes
+
 ### 1.4.0
 
 - Align package structure and dependencies

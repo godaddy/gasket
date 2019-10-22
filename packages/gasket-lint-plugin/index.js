@@ -34,7 +34,7 @@ module.exports = {
       pkg.add('scripts', {
         'lint': 'eslint --ext .js,.jsx .',
         'lint:fix': `${runCmd} lint -- --fix`,
-        'stylelint': 'stylelint **/*.scss',
+        'stylelint': 'stylelint "**/*.scss"',
         'pretest': `${runCmd} lint && ${runCmd} stylelint`
       });
 

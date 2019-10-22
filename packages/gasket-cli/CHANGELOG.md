@@ -1,5 +1,7 @@
 # `@gasket/cli`
 
+- Fix package.json scripts to wrap glob patterns in double-quotes
+
 ### 3.1.0
 
 - Load config defined by presets ([#86])

@@ -1,5 +1,7 @@
 # `@gasket/intl`
 
+- Fix package.json scripts to wrap glob patterns in double-quotes
+
 ### 4.2.0
 
 - Select language from state for IntlProvider
