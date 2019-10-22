@@ -1,40 +1,40 @@
-# @gasket/express-plugin
+# @gasket/fastify-plugin
 
-The `express-plugin` adds `express` to your application.
+The `fastify-plugin` adds `fastify` to your application.
 
 ## Installation
 
 ```sh
-npm install --save @gasket/express-plugin
+npm install --save @gasket/fastify-plugin
 ```
 
 ## Configuration
 
-The express plugin is configured using the `gasket.config.js` file.
+The fastify plugin is configured using the `gasket.config.js` file.
 
 - First, add it to the `plugins` section of your `gasket.config.js`:
 
 ```js
 {
   "plugins": [
-    "add": ["express"]
+    "add": ["fastify"]
   ]
 }
 ```
 
-All the configurations for the plugin are added under `express` in the config:
+All the configurations for the plugin are added under `fastify` in the config:
 
 - `compression`: true by default. Can to set to false if applying compression differently.
-- `excludedRoutesRegex`: Regex of the routes to exclude by express.
+- `excludedRoutesRegex`: Regex of the routes to exclude by fastify.
 
 #### Example configuration
 
 ```js
 module.exports = {
   plugins: {
-    add: ['express']
+    add: ['fastify']
   },
-  express: {
+  fastify: {
     compression: false,
     excludedRoutesRegex: /^(?!\/_next\/)/
   }
@@ -43,22 +43,22 @@ module.exports = {
 
 ## Hooks
 
-`express` hooks into the following lifecycle in order to work.
+`fastify` hooks into the following lifecycle in order to work.
 
 #### createServers
 
 ```js
 module.exports = {
-  name: 'express',
+  name: 'fastify',
   hooks: {
     /**
-    * Creates the express app
+    * Creates the fastify app
     * @param  {Gasket} gasket The Gasket API
     * @param  {Object} serverOpts Server options.
-    * @return {Promise<Object>} express app
+    * @return {Promise<Object>} fastify app
     */
     'createServers': async function createServers(gasket, serverOpts) {
-      return { ...serverOpts, handler: express() };
+      return { ...serverOpts, handler: fastify() };
     }
   }
 };
@@ -68,17 +68,17 @@ module.exports = {
 
 #### middleware
 
-Executed when the `express` server has been created, it will apply all returned
+Executed when the `fastify` server has been created, it will apply all returned
 functions as middleware.
 
 ```js
 module.exports = {
   hooks: {
     /**
-    * Add Express middleware
+    * Add Fastify middleware
     *
     * @param {Gasket} gasket The Gasket API
-    * @param {Express} app - Express app instance
+    * @param {Fastify} app - Fastify app instance
     * @returns {function|function[]} middleware(s)
     */
     middleware: function (gasket, app) {
@@ -90,22 +90,25 @@ module.exports = {
 
 You may also return an `Array` to inject more than one middleware.
 
-#### express
+#### fastify
 
 Executed **after** the `middleware` event for when you need full control over
-the `express` instance.
+the `fastify` instance.
 
 ```js
 module.exports = {
   hooks: {
     /**
-    * Update Express app instance
+    * Update Fastify app instance
     *
     * @param {Gasket} gasket The Gasket API
-    * @param {Express} express Express app instance
+    * @param {Fastify} fastify Fastify app instance
     * @returns {function|function[]} middleware(s)
     */
-    express: async function (gasket, express) {
+    fastify: async function (gasket, fastify) {
+      fastify.get('/🐰🥚', (req, res) => {
+        res.send('⬆️⬆️⬇️⬇️⬅️➡️⬅️➡️🅱️🅰️');
+      })
     }
   }
 }
@@ -113,14 +116,14 @@ module.exports = {
 
 #### errorMiddleware
 
-Executed after the `express` event. All middleware functions returned from
-this hook will be applied to express.
+Executed after the `fastify` event. All middleware functions returned from
+this hook will be applied to fastify.
 
 ```js
 module.exports = {
   hooks: {
     /**
-    * Add Express error middlewares
+    * Add Fastify error middlewares
     *
     * @param {Gasket} gasket The Gasket API
     * @returns {function|function[]} error middleware(s)

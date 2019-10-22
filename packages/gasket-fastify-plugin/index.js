@@ -1,7 +1,8 @@
-const debug = require('diagnostics')('gasket:express');
+const debug = require('diagnostics')('gasket:fastify');
+const { peerDependencies } = require('./package.json');
 
 module.exports = {
-  name: 'express',
+  name: 'fastify',
   hooks: {
     /**
     * Add files & extend package.json for new apps.
@@ -13,11 +14,13 @@ module.exports = {
     */
     create: async function create(gasket, context) {
       context.pkg.add('dependencies', {
-        express: '^4.16.3'
+        fastify: '^2.10.0'
       });
     },
     /**
-    * Create the Express instance and setup the lifecycle hooks.
+    * Create the Fastify instance and setup the lifecycle hooks.
+    * Fastify is compatible with express middleware out of the box, so we can
+    * use the same middleware lifecycles.
     *
     * @param {Gasket} gasket Gasket API.
     * @param {Object} serverOpts Server options.
@@ -26,13 +29,13 @@ module.exports = {
     */
     // eslint-disable-next-line max-statements
     createServers: async function createServers(gasket, serverOpts) {
-      const express = require('express');
+      const fastify = require('fastify');
       const cookieParser = require('cookie-parser');
       const compression = require('compression');
 
       const { config } = gasket;
-      const excludedRoutesRegex = config.express && config.express.excludedRoutesRegex;
-      const app = express();
+      const excludedRoutesRegex = config.fastify && config.fastify.excludedRoutesRegex;
+      const app = fastify();
 
       if (excludedRoutesRegex) {
         app.use(excludedRoutesRegex, cookieParser());
@@ -40,14 +43,14 @@ module.exports = {
         app.use(cookieParser());
       }
 
-      const { compression: compressionConfig = true } = config.express || {};
+      const { compression: compressionConfig = true } = config.fastify || {};
       if (compressionConfig) {
         app.use(compression());
       }
 
       const middlewares = await gasket.exec('middleware', app);
 
-      debug('applied %s middleware layers to express', middlewares.length);
+      debug('applied %s middleware layers to fastify', middlewares.length);
       middlewares.forEach(layer => {
         if (excludedRoutesRegex) {
           app.use(excludedRoutesRegex, layer);
@@ -56,7 +59,8 @@ module.exports = {
         }
       });
 
-      await gasket.exec('express', app);
+      // allow consuming apps to directly append options to their server
+      await gasket.exec('fastify', app);
 
       const postRenderingStacks = await gasket.exec('errorMiddleware');
       postRenderingStacks.forEach(stack => app.use(stack));
