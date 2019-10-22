@@ -1,6 +1,6 @@
 {
   "name": "@gasket/fastify-plugin",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Adds fastify support to your application",
   "main": "index.js",
   "scripts": {
