@@ -14,7 +14,7 @@ module.exports = {
     */
     create: async function create(gasket, context) {
       context.pkg.add('dependencies', {
-        fastify: '^2.10.0'
+        fastify: peerDependencies.fastify
       });
     },
     /**

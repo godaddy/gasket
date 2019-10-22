@@ -1,10 +1,10 @@
 const proxyquire = require('proxyquire');
 const sinon = require('sinon');
 const assume = require('assume');
-
+const version = require('../package.json').peerDependencies.fastify;
 
 const app = { use: sinon.spy() };
-const express = sinon.stub().returns(app);
+const fastify = sinon.stub().returns(app);
 
 const cookieParserMiddleware = sinon.spy();
 const cookieParser = sinon.stub().returns(cookieParserMiddleware);
@@ -13,7 +13,7 @@ const compressionMiddleware = sinon.spy();
 const compression = sinon.stub().returns(compressionMiddleware);
 
 const plugin = proxyquire('../index', {
-  express,
+  fastify,
   'cookie-parser': cookieParser,
   'compression': compression
 });
@@ -25,7 +25,7 @@ describe('Plugin', function () {
   });
 
   it('is named correctly', function () {
-    assume(plugin.name).equals('express');
+    assume(plugin.name).equals('fastify');
   });
 
   it('has expected hooks', () => {
@@ -65,9 +65,9 @@ describe('createServers', () => {
     assume(gasket.exec).has.been.calledWith('middleware', app);
   });
 
-  it('executes the `express` lifecycle', async function () {
+  it('executes the `fastify` lifecycle', async function () {
     await plugin.hooks.createServers(gasket, {});
-    assume(gasket.exec).has.been.calledWith('express', app);
+    assume(gasket.exec).has.been.calledWith('fastify', app);
   });
 
   it('executes the `errorMiddleware` lifecycle', async function () {
@@ -75,15 +75,15 @@ describe('createServers', () => {
     assume(gasket.exec).has.been.calledWith('errorMiddleware');
   });
 
-  it('executes the `middleware` lifecycle before the `express` lifecycle', async function () {
+  it('executes the `middleware` lifecycle before the `fastify` lifecycle', async function () {
     await plugin.hooks.createServers(gasket, {});
     assume(gasket.exec.firstCall).has.been.calledWith('middleware', app);
-    assume(gasket.exec.secondCall).has.been.calledWith('express', app);
+    assume(gasket.exec.secondCall).has.been.calledWith('fastify', app);
   });
 
-  it('executes the `errorMiddleware` lifecycle after the `express` lifecycle', async function () {
+  it('executes the `errorMiddleware` lifecycle after the `fastify` lifecycle', async function () {
     await plugin.hooks.createServers(gasket, {});
-    assume(gasket.exec.secondCall).has.been.calledWith('express', app);
+    assume(gasket.exec.secondCall).has.been.calledWith('fastify', app);
     assume(gasket.exec.thirdCall).has.been.calledWith('errorMiddleware');
   });
 
@@ -109,7 +109,7 @@ describe('createServers', () => {
 
     const withEvent = event => calledEvent => calledEvent === event;
     const middlewareInjection = findCall(gasket.exec, withEvent('middleware'));
-    const routeInjection = findCall(gasket.exec, withEvent('express'));
+    const routeInjection = findCall(gasket.exec, withEvent('fastify'));
 
     // callId can be used to determine relative call ordering
     assume(cookieParserUsage.callId).to.be.lessThan(middlewareInjection.callId);
@@ -117,7 +117,7 @@ describe('createServers', () => {
   });
 
   it('adds the cookie-parser middleware with a excluded path', async () => {
-    gasket.config.express = { excludedRoutesRegex: /^(?!\/_next\/)/ };
+    gasket.config.fastify = { excludedRoutesRegex: /^(?!\/_next\/)/ };
     await plugin.hooks.createServers(gasket, {});
 
     const cookieParserUsage = findCall(
@@ -136,7 +136,7 @@ describe('createServers', () => {
   });
 
   it('adds the compression middleware when enabled from gasket config', async () => {
-    gasket.config.express = { compression: true };
+    gasket.config.fastify = { compression: true };
     await plugin.hooks.createServers(gasket, {});
 
     const compressionUsage = findCall(
@@ -146,7 +146,7 @@ describe('createServers', () => {
   });
 
   it('does not add the compression middleware when disabled from gasket config', async () => {
-    gasket.config.express = { compression: false };
+    gasket.config.fastify = { compression: false };
     await plugin.hooks.createServers(gasket, {});
 
     const compressionUsage = findCall(
@@ -180,7 +180,7 @@ describe('create', () => {
 
   it('adds appropriate dependencies', assumeCreatedWith(({ pkg }) => {
     assume(pkg.add).calledWith('dependencies', {
-      express: '^4.16.3'
+      fastify: version
     });
   }));
 });
