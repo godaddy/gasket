@@ -1,7 +1,7 @@
 {
-  "name": "@gasket/express-plugin",
-  "version": "2.1.2",
-  "description": "Adds express support to your application",
+  "name": "@gasket/fastify-plugin",
+  "version": "0.0.0",
+  "description": "Adds fastify support to your application",
   "main": "index.js",
   "scripts": {
     "lint": "eslint index.js test",
@@ -18,7 +18,7 @@
     "url": "git+ssh://git@github.com/godaddy/gasket.git"
   },
   "keywords": [
-    "express",
+    "fastify",
     "gasket",
     "plugin"
   ],
@@ -27,7 +27,7 @@
   "bugs": {
     "url": "https://github.com/godaddy/gasket/issues"
   },
-  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-express-plugin",
+  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-fastify-plugin",
   "dependencies": {
     "compression": "^1.7.2",
     "cookie-parser": "^1.4.3",
@@ -40,13 +40,13 @@
     "eslint-config-godaddy": "^4.0.0",
     "eslint-plugin-json": "^1.4.0",
     "eslint-plugin-mocha": "^6.0.0",
-    "express": "^4.16.3",
+    "fastify": "^2.10.0",
     "mocha": "^6.2.0",
     "nyc": "^14.1.1",
     "proxyquire": "^2.1.3",
     "sinon": "^7.4.1"
   },
   "peerDependencies": {
-    "express": "^4.16.3"
+    "fastify": "^2.10.0"
   }
 }
