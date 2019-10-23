@@ -251,4 +251,113 @@ describe('makePackageIdentifier', () => {
     result = instance('example').fullName;
     expect(result).toContain('preset');
   });
+
+  describe('isValidFullName', () => {
+    const packageIdentifier = makePackageIdentifier('gasket');
+
+    it('exposed static method', () => {
+      expect(packageIdentifier.isValidFullName).toBeInstanceOf(Function);
+    });
+
+    it('true for valid @gasket names', () => {
+      result = packageIdentifier.isValidFullName('@gasket/plugin-bogus');
+      expect(result).toBe(true);
+    });
+
+    it('true for valid non-@gasket names', () => {
+      result = packageIdentifier.isValidFullName('gasket-plugin-some-bogus');
+      expect(result).toBe(true);
+    });
+
+    it('false for malformed names', () => {
+      result = packageIdentifier.isValidFullName('some-bogus');
+      expect(result).toBe(false);
+    });
+  });
+
+  describe('lookup', () => {
+    const packageIdentifier = makePackageIdentifier('gasket');
+    let mockSet, mockHandler;
+
+    beforeEach(() => {
+      mockSet = new Set();
+      mockHandler = id => mockSet.has(id.fullName);
+    });
+
+    it('exposed static method', () => {
+      expect(packageIdentifier.lookup).toBeInstanceOf(Function);
+    });
+
+    describe('no scope', () => {
+
+      it('finds prefixed format', () => {
+        mockSet.add('gasket-plugin-example');
+        result = packageIdentifier.lookup('example', mockHandler);
+        expect(result.fullName).toEqual('gasket-plugin-example');
+      });
+
+      it('falls back to postfixed', () => {
+        mockSet.add('example-gasket-plugin');
+        result = packageIdentifier.lookup('example', mockHandler);
+        expect(result.fullName).toEqual('example-gasket-plugin');
+      });
+
+      it('returns null if not found', () => {
+        result = packageIdentifier.lookup('example', mockHandler);
+        expect(result).toBe(null);
+      });
+
+      it('falls back to project + prefixed', () => {
+        mockSet.add('@gasket/plugin-example');
+        result = packageIdentifier.lookup('example', mockHandler);
+        expect(result.fullName).toEqual('@gasket/plugin-example');
+      });
+
+      it('falls back to project + postfixed', () => {
+        mockSet.add('@gasket/example-plugin');
+        result = packageIdentifier.lookup('example', mockHandler);
+        expect(result.fullName).toEqual('@gasket/example-plugin');
+      });
+    });
+
+    describe('user scope', () => {
+
+      it('finds prefixed format', () => {
+        mockSet.add('@user/gasket-plugin-example');
+        result = packageIdentifier.lookup('@user/example', mockHandler);
+        expect(result.fullName).toEqual('@user/gasket-plugin-example');
+      });
+
+      it('falls back to postfixed', () => {
+        mockSet.add('@user/example-gasket-plugin');
+        result = packageIdentifier.lookup('@user/example', mockHandler);
+        expect(result.fullName).toEqual('@user/example-gasket-plugin');
+      });
+
+      it('returns null if not found', () => {
+        result = packageIdentifier.lookup('@user/example', mockHandler);
+        expect(result).toBe(null);
+      });
+    });
+
+    describe('project scope', () => {
+
+      it('finds prefixed format', () => {
+        mockSet.add('@gasket/plugin-example');
+        result = packageIdentifier.lookup('@gasket/example', mockHandler);
+        expect(result.fullName).toEqual('@gasket/plugin-example');
+      });
+
+      it('falls back to postfixed', () => {
+        mockSet.add('@gasket/example-plugin');
+        result = packageIdentifier.lookup('@gasket/example', mockHandler);
+        expect(result.fullName).toEqual('@gasket/example-plugin');
+      });
+
+      it('returns null if not found', () => {
+        result = packageIdentifier.lookup('@gasket/example', mockHandler);
+        expect(result).toBe(null);
+      });
+    });
+  });
 });

@@ -601,26 +601,4 @@ describe('PackageIdentifier instance', () => {
       expect(result).toBe('bogus: example@^1.0.0');
     });
   });
-
-  describe('isValidFullName', () => {
-
-    it('exposed static method', () => {
-      expect(pluginIdentifier.isValidFullName).toBeInstanceOf(Function);
-    });
-
-    it('true for valid @gasket names', () => {
-      result = pluginIdentifier.isValidFullName('@gasket/plugin-bogus');
-      expect(result).toBe(true);
-    });
-
-    it('true for valid non-@gasket names', () => {
-      result = pluginIdentifier.isValidFullName('gasket-plugin-some-bogus');
-      expect(result).toBe(true);
-    });
-
-    it('false for malformed names', () => {
-      result = pluginIdentifier.isValidFullName('some-bogus');
-      expect(result).toBe(false);
-    });
-  });
 });

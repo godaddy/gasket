@@ -271,16 +271,16 @@ function makePackageIdentifier(projectName, options) {
      * @returns {PackageIdentifier|null} identifier
      */
     nextFormat() {
-      if(!this._format.short) return null;
+      if (!this._format.short) return null;
 
       let rawName = this.rawName;
 
       const nextFormat = {};
-      if(this._format.prefixed) {
+      if (this._format.prefixed) {
         nextFormat.prefixed = false;
       } else {
         // If we don't have a scope, force to project scope
-        if(!this._format.scoped) {
+        if (!this._format.scoped) {
           rawName = `${projectScope}/${rawName}`;
           nextFormat.prefixed = true;
         }
@@ -289,7 +289,7 @@ function makePackageIdentifier(projectName, options) {
       //
       // if there is nothing to change, return null
       //
-      if(!Object.keys(nextFormat).length && rawName === this.rawName) {
+      if (!Object.keys(nextFormat).length && rawName === this.rawName) {
         return null;
       }
 
@@ -304,14 +304,6 @@ function makePackageIdentifier(projectName, options) {
    */
   PackageIdentifier.prototype.toString = function toString() {
     return this.rawName;
-  };
-
-  PackageIdentifier.isValidFullName = function isValidFullName(maybeFullName) {
-    try {
-      return new PackageIdentifier(maybeFullName).fullName === maybeFullName;
-    } catch (e) {
-      return false;
-    }
   };
 
   function packageIdentifier(name, format) {
@@ -335,6 +327,27 @@ function makePackageIdentifier(projectName, options) {
     } catch (e) {
       return false;
     }
+  };
+
+  /**
+   * Util method to loop through format options for short names.
+   * The handler will be provide the next formatted identifier to try,
+   * which should return falsy to continue,
+   * or return truthy to end and return the current identifier.
+   *
+   * @param {string} name - Name to check
+   * @param {function(PackageIdentifier)} handler - Attempt to find package current format
+   * @returns {PackageIdentifier|null} identifier
+   */
+  packageIdentifier.lookup = function (name, handler) {
+    let result;
+    let identifier;
+    do {
+      identifier = identifier ? identifier.nextFormat() : new PackageIdentifier(name);
+      result = identifier && handler(identifier);
+    } while (!result && identifier);
+
+    return identifier;
   };
 
   return packageIdentifier;
