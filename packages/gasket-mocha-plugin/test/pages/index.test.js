@@ -1,9 +1,9 @@
-import { shallow, render, mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import { describe, it } from 'mocha';
 import { expect } from 'chai';
 import React from 'react';
 
-function IndexPage(props) {
+function IndexPage() {
   return (
     <div>
       This is my example page

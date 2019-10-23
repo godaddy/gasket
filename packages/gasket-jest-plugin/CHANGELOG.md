@@ -1,5 +1,7 @@
 # `@gasket/jest-plugin`
 
+- Fix package.json scripts to wrap glob patterns in double-quotes
+
 ### 1.2.0
 
 - Align package structure and dependencies
