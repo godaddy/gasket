@@ -15,7 +15,6 @@ const plugin = proxyquire('../', {
 });
 
 describe('Plugin', () => {
-
   it('is an object', () => {
     assume(plugin).is.an('object');
   });
@@ -40,6 +39,10 @@ describe('Plugin', () => {
 describe('start hook', () => {
   const start = plugin.hooks.start;
   let gasketAPI, handler;
+
+  async function executeModule() {
+    return start(gasketAPI);
+  }
 
   beforeEach(() => {
     sinon.resetHistory();
@@ -164,7 +167,6 @@ describe('start hook', () => {
   });
 
   it('rejects with an Error about ports on failure (with http)', async () => {
-
     createServersModule.yields(errs.create({
       http: {
         errno: 'EADDRINUSE'
@@ -180,7 +182,6 @@ describe('start hook', () => {
   });
 
   it('rejects with an Error about ports on failure (with https)', async () => {
-
     createServersModule.yields(errs.create({
       https: {
         errno: 'EADDRINUSE'
@@ -192,8 +193,4 @@ describe('start hook', () => {
     assume(debugStub.args[0][0].message).to.match('Port is already in use');
     assume(debugStub.args[0][1].https.errno).equals('EADDRINUSE');
   });
-
-  async function executeModule() {
-    return start(gasketAPI);
-  }
 });
