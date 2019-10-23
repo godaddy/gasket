@@ -1,5 +1,7 @@
 # `@gasket/redux`
 
+- Fix package.json scripts to wrap glob patterns in double-quotes
+
 ### 3.2.0
 
 - Add support to customize thunk middleware ([#80])

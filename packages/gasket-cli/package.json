@@ -23,10 +23,10 @@
     "manifest": "cross-env FAUX_ROOT='/path/to/your/app' oclif-dev manifest",
     "readme": "cross-env FAUX_ROOT='/path/to/your/app' oclif-dev readme",
     "test:clean": "rimraf ./test/fixtures/create/myapp",
-    "test:integration": "mocha --require test/setup.js --recursive 'test/integration/**/*.test.js'",
+    "test:integration": "mocha --require test/setup.js --recursive \"test/integration/**/*.test.js\"",
     "test:integration:coverage": "nyc --reporter=text --reporter=json-summary --all run-s test:integration",
-    "test:mocha": "mocha --require test/setup.js --recursive 'test/**/*.test.js'",
-    "test:unit": "mocha --require test/setup.js --recursive 'test/unit/**/*.test.js'",
+    "test:mocha": "mocha --require test/setup.js --recursive \"test/**/*.test.js\"",
+    "test:unit": "mocha --require test/setup.js --recursive \"test/unit/**/*.test.js\"",
     "test:unit:coverage": "nyc --reporter=text --reporter=lcov --all run-s test:unit",
     "version": "npm run readme && git add README.md"
   },
