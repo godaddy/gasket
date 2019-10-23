@@ -1,6 +1,6 @@
 const path = require('path');
 const Resolver  = require('./resolver');
-const { pluginIdentifier, presetIdentifier } = require('./package-identifier');
+const { pluginIdentifier, presetIdentifier } = require('./identifiers');
 
 /**
  * Module with meta data
@@ -104,8 +104,12 @@ class Loader extends Resolver {
       return this.getModuleInfo(module, moduleName, { ...meta, preloaded: true });
     }
 
-    const moduleName = isModulePath.test(module) ? module : pluginIdentifier(module).fullName;
-    return this.loadModule(moduleName, meta);
+    if(isModulePath.test(module)) {
+      return this.loadModule(module, meta);
+    }
+
+    const id = pluginIdentifier.lookup(module, id => this.tryRequire(id.fullName));
+    return this.loadModule(id ? id.fullName : module, meta);
   }
 
   /**
@@ -118,7 +122,13 @@ class Loader extends Resolver {
    * @returns {PresetInfo} module
    */
   loadPreset(module, meta, { shallow = false } = {}) {
-    const moduleName = isModulePath.test(module) ? module : presetIdentifier(module).fullName;
+    let moduleName;
+    if(isModulePath.test(module)) {
+      moduleName = module;
+    } else {
+      const id = presetIdentifier.lookup(module, id => this.tryRequire(id.fullName));
+      moduleName = id ? id.fullName : module;
+    }
     const presetInfo = this.loadModule(moduleName, meta);
 
     const { name: from, dependencies } = presetInfo.package;
