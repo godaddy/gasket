@@ -3,9 +3,10 @@
  *
  * @param {Gasket} gasket - Gasket
  * @param {GasketCommand} GasketCommand - Base Gasket command to extend
+ * @param {Object} flags - oclif flags utility
  * @returns {GasketCommand[]} commands
  */
-module.exports = function getCommands(gasket, { GasketCommand }) {
+module.exports = function getCommands(gasket, { GasketCommand, flags }) {
 
   class BuildCommand extends GasketCommand {
     async gasketRun() {
@@ -33,13 +34,16 @@ module.exports = function getCommands(gasket, { GasketCommand }) {
       // invoke lifecycles from start command
       return super.gasketRun();
     }
-
-    async gasketConfigure(gasketConfig) {
-      return { ...gasketConfig, env: 'local' };
-    }
   }
   LocalCommand.id = 'local';
   LocalCommand.description = 'Build then start your app in local environment';
+  LocalCommand.flags = {
+    env: flags.string({
+      env: 'NODE_ENV',
+      description: 'Target runtime environment',
+      default: 'local'
+    })
+  };
 
   return [
     BuildCommand,
