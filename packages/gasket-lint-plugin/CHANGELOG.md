@@ -1,6 +1,10 @@
 # CHANGELOG
 
+- Fix package.json scripts to wrap glob patterns in double-quotes
+- Change output for `stylelint` script to have the glob pattern be double-quoted
+
 ### 1.7.0
+
 - Changed package manager install to support both npm and yarn
 
 ### 1.6.0

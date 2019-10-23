@@ -72,7 +72,7 @@ describe('Plugin', function () {
     assume(pkg.add).calledWith('scripts', {
       'lint': 'eslint --ext .js,.jsx .',
       'lint:fix': `${expected} lint -- --fix`,
-      'stylelint': 'stylelint **/*.scss',
+      'stylelint': 'stylelint "**/*.scss"',
       'pretest': `${expected} lint && ${expected} stylelint`
     });
   }));

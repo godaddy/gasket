@@ -4,7 +4,7 @@
   "description": "Integrates mocha based testing in to your Gasket application",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint index.js test/*.js generator/**/**/*.js",
+    "lint": "eslint index.js \"{test,generator}/**/*.js\"",
     "lint:fix": "npm run lint -- --fix",
     "test": "npm run test:runner",
     "test:runner": "mocha --require setup-env --recursive \"test/**/*.*(test|spec).js\"",

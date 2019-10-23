@@ -19,7 +19,7 @@ For example, in the example commands below `npm run lint` will run eslint on you
   "scripts": {
     "lint": "eslint --ext .js,.jsx .",
     "lint:fix": "npm run lint -- --fix",
-    "stylelint": "stylelint **/*.scss",
+    "stylelint": "stylelint \"**/*.scss\"",
     "pretest": "npm run lint && npm run stylelint"
   },
   ...

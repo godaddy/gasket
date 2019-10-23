@@ -12,7 +12,7 @@
     "test:watch": "jest --watchAll",
     "test:coverage": "jest --coverage",
     "posttest": "npm run lint",
-    "build": "babel src -d lib --ignore '**/*.spec.js'",
+    "build": "babel src -d lib --ignore \"**/*.spec.js\"",
     "prepublishOnly": "npm run build"
   },
   "repository": {
