@@ -1,5 +1,7 @@
 # `@gasket/redux`
 
+### 3.2.1
+
 - Fix package.json scripts to wrap glob patterns in double-quotes
 
 ### 3.2.0

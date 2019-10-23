@@ -1,5 +1,7 @@
 # `@gasket/cli`
 
+### 3.1.1
+
 - Fix package.json scripts to wrap glob patterns in double-quotes
 
 ### 3.1.0

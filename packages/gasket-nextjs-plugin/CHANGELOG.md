@@ -1,5 +1,7 @@
 # `@gasket/nextjs-plugin`
 
+### 2.3.2
+
 - Fix package.json scripts to wrap glob patterns in double-quotes
 
 ### 2.3.0
