@@ -35,6 +35,7 @@ module.exports = function getCommands(gasket, { GasketCommand, flags }) {
       return super.gasketRun();
     }
   }
+
   LocalCommand.id = 'local';
   LocalCommand.description = 'Build then start your app in local environment';
   LocalCommand.flags = {

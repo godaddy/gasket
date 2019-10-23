@@ -66,11 +66,12 @@ describe('getCommands', () => {
     testCommand(StartCommand, 'start', ['preboot', 'start']);
   });
 
-  describe('LocalCommand', async () => {
-    const LocalCommand = getCommands(mockGasket, mockData)[2];
-    await testCommand(LocalCommand, 'local', ['build', 'preboot', 'start']);
+  describe('LocalCommand', () => {
+    let LocalCommand = getCommands(mockGasket, mockData)[2];
+    testCommand(LocalCommand, 'local', ['build', 'preboot', 'start']);
 
     it('has env flag which defaults to local', () => {
+      LocalCommand = getCommands(mockGasket, mockData)[2];
       assume(LocalCommand.flags).property('env');
       assume(mockFlags.string).calledWithMatch({
         default: 'local'
