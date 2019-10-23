@@ -1,5 +1,5 @@
 const path = require('path');
-const Resolver  = require('./resolver');
+const Resolver = require('./resolver');
 const { pluginIdentifier, presetIdentifier } = require('./identifiers');
 
 /**
@@ -104,7 +104,7 @@ class Loader extends Resolver {
       return this.getModuleInfo(module, moduleName, { ...meta, preloaded: true });
     }
 
-    if(isModulePath.test(module)) {
+    if (isModulePath.test(module)) {
       return this.loadModule(module, meta);
     }
 
@@ -123,7 +123,7 @@ class Loader extends Resolver {
    */
   loadPreset(module, meta, { shallow = false } = {}) {
     let moduleName;
-    if(isModulePath.test(module)) {
+    if (isModulePath.test(module)) {
       moduleName = module;
     } else {
       const id = presetIdentifier.lookup(module, id => this.tryRequire(id.fullName));
@@ -170,7 +170,6 @@ class Loader extends Resolver {
    */
   loadConfigured(config) {
     const { presets = [], add = [], remove = [] } = config || {};
-    const pluginsToRemove = new Set(remove.map(name => pluginIdentifier(name).fullName) || []);
 
     const loadedPresets = presets.map(name => this.loadPreset(name, { from: 'config' }));
     const loadedPlugins = add.map(module => this.loadPlugin(module, { from: 'config' }));
@@ -194,6 +193,12 @@ class Loader extends Resolver {
     plugins = plugins.filter((info, idx, self) => self.findIndex(t => t.name === info.name) === idx);
 
     // lastly, filter plugins explicitly configured to removed
+    const pluginsToRemove = remove.reduce((set, name) => {
+      const id = pluginIdentifier.lookup(name, id => plugins.find(info => info.name === id.fullName));
+      set.add(id ? id.fullName : name);
+      return set;
+    }, new Set());
+
     plugins = plugins.filter((info => !pluginsToRemove.has(pluginIdentifier(info.name).fullName)));
 
     return {

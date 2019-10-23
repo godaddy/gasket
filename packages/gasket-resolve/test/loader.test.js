@@ -191,6 +191,14 @@ describe('Loader', () => {
         package: pluginOnePkg
       }));
     });
+    it('supports short names with format fallbacks', () => {
+      const results = loader.loadPlugin('@gasket/one');
+      expect(results).toEqual(expect.objectContaining({
+        name: '@gasket/plugin-one',
+        module: pluginOne,
+        package: pluginOnePkg
+      }));
+    });
 
     it('supports module paths', () => {
       const results = loader.loadPlugin('/app/plugins/app-plugin-one.js');
@@ -240,8 +248,16 @@ describe('Loader', () => {
       expect(() => loader.loadPreset('missing')).toThrow();
     });
 
-    // TODO: test variants
     it('supports short names', () => {
+      const results = loader.loadPreset('@gasket/one');
+      expect(results).toEqual(expect.objectContaining({
+        name: '@gasket/preset-one',
+        module: presetOne,
+        package: presetOnePkg
+      }));
+    });
+
+    it('supports short names with format fallbacks', () => {
       const results = loader.loadPreset('one');
       expect(results).toEqual(expect.objectContaining({
         name: '@gasket/preset-one',
@@ -454,11 +470,25 @@ describe('Loader', () => {
       );
     });
 
-    // TODO: test variants
     it('removes configured plugins', () => {
       const config = {
         presets: ['@gasket/preset-one'],
         remove: ['@gasket/one']
+      };
+      const results = loader.loadConfigured(config);
+      expect(results.plugins).not.toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            module: pluginOne
+          })
+        ])
+      );
+    });
+
+    it('remove configured plugins with format fallbacks', () => {
+      const config = {
+        presets: ['@gasket/preset-one'],
+        remove: ['one']
       };
       const results = loader.loadConfigured(config);
       expect(results.plugins).not.toEqual(
