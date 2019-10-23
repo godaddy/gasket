@@ -1,5 +1,7 @@
 # `@gasket/intl`
 
+### 4.2.1
+
 - Fix package.json scripts to wrap glob patterns in double-quotes
 
 ### 4.2.0
