@@ -213,11 +213,16 @@ You can specify what port to open up on, or what certificates to use via
 };
 ```
 
-Terminus is configured with the following defaults:
+[Terminus][term] is configured with the following defaults:
 
 - `healthcheck`: `/healthcheck`
 - `signals`: `['SIGTERM']`
 
+Any of the options that are specified on the Terminus project page are accepted
+in the `terminus` object. Just note that the functions are already assigned
+by default to trigger the appropriate lifecycle events.
+
 ## LICENSE: [MIT](./LICENSE)
 
 [`create-servers`]: https://github.com/indexzero/create-servers#http--https
+[term]: https://github.com/godaddy/terminus
