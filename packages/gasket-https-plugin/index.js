@@ -102,9 +102,7 @@ async function start(gasket) {
     // Attach terminus before we call the `servers` lifecycle to ensure that
     // everything is setup before the lifecycle is executed.
     //
-    if (servers) {
-      servers.forEach((server) => createTerminus(server, terminusOpts));
-    }
+    servers.forEach((server) => createTerminus(server, terminusOpts));
 
     await gasket.exec('servers', servers);
     const { http: _http, https: _https, hostname: _hostname = 'localhost' } = serverOpts;

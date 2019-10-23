@@ -6,12 +6,16 @@ const proxyquire = require('proxyquire').noCallThru();
 const sinon = require('sinon');
 const errs = require('errs');
 
-const createServersModule = sinon.stub().yields(null);
+const createServersModule = sinon.stub().yields(null, []);
 const debugStub = sinon.spy();
 
 const plugin = proxyquire('../', {
   'create-servers': createServersModule,
-  'diagnostics': sinon.stub().returns(debugStub)
+  'diagnostics': sinon.stub().returns(debugStub),
+  '@godaddy/terminus': {
+    createTerminus: sinon.spy(),
+    HealthCheckError: sinon.spy()
+  }
 });
 
 describe('Plugin', () => {
@@ -56,7 +60,7 @@ describe('start hook', () => {
       }
     };
     handler = sinon.stub().yields();
-    createServersModule.yields(null);
+    createServersModule.yields(null, []);
 
     gasketAPI.exec.withArgs('createServers').resolves([handler]);
   });
