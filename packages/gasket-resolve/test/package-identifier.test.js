@@ -1,3 +1,4 @@
+/* eslint-disable no-undefined */
 const { matchMaker, expandMaker, makePackageIdentifier } = require('../lib/package-identifier');
 
 const range = length => Array(length).fill().map((_, i) => i);
@@ -148,8 +149,6 @@ describe('matchMaker', () => {
 });
 
 describe('expandMaker', () => {
-  let result;
-
   it('returns object with convention positions', () => {
     const expand = expandMaker('gasket');
     expect(expand).toHaveProperty('prefixed');
@@ -230,10 +229,10 @@ describe('makePackageIdentifier', () => {
     expect(result.isValidFullName.name).toEqual('isValidFullName');
   });
 
-  it('factory exposes static method isValidFullName', () => {
+  it('factory exposes static method lookup', () => {
     result = makePackageIdentifier('gasket');
-    expect(result.isValidFullName).toBeInstanceOf(Function);
-    expect(result.isValidFullName.name).toEqual('isValidFullName');
+    expect(result.lookup).toBeInstanceOf(Function);
+    expect(result.lookup.name).toEqual('lookup');
   });
 
   it('requires project name', () => {

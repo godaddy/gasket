@@ -3,17 +3,17 @@
  *
  * @param {string} projectName - Name of the project
  * @param {string} [type] - Identifier type, defaults to 'plugin'
- * @returns {{prefixed: {project: RegExp, user: RegExp}, postfixed: {project: RegExp, user: RegExp}, scope: RegExp}}
+ * @returns {{prefixed: {project: RegExp, user: RegExp}, postfixed: {project: RegExp, user: RegExp}, scope: RegExp}} re
  */
 function matchMaker(projectName, type = 'plugin') {
   if (!projectName) throw new Error('projectName required.');
   return {
     prefixed: {
-      project: new RegExp(`(@${projectName})\/${type}-([\\w-.]+)`),
+      project: new RegExp(`(@${projectName})/${type}-([\\w-.]+)`),
       user: new RegExp(`(@[\\w-.]+)?\\/?${projectName}-${type}-([\\w-.]+)`)
     },
     postfixed: {
-      project: new RegExp(`(@${projectName})\/([\\w-.]+)-${type}`),
+      project: new RegExp(`(@${projectName})/([\\w-.]+)-${type}`),
       user: new RegExp(`(@[\\w-.]+)?\\/?([\\w-.]+)-${projectName}-${type}`)
     },
     scope: /(@[\w-.]+)\/.+/,
@@ -26,7 +26,7 @@ function matchMaker(projectName, type = 'plugin') {
  *
  * @param {string} projectName - Name of the project
  * @param {string} [type] - Identifier type, defaults to 'plugin'
- * @returns {{prefixed: prefixed, postfixed: postfixed}}
+ * @returns {{prefixed: prefixed, postfixed: postfixed}} expand
  */
 function expandMaker(projectName, type = 'plugin') {
   if (!projectName) throw new Error('projectName required.');
@@ -63,8 +63,7 @@ function expandMaker(projectName, type = 'plugin') {
  */
 
 
-function makePackageIdentifier(projectName, options) {
-  const { type = 'plugin' } = options || {};
+function makePackageIdentifier(projectName, { type = 'plugin' } = {}) {
   const re = matchMaker(projectName, type);
   const expand = expandMaker(projectName, type);
   const projectScope = `@${projectName}`;
@@ -278,12 +277,10 @@ function makePackageIdentifier(projectName, options) {
       const nextFormat = {};
       if (this._format.prefixed) {
         nextFormat.prefixed = false;
-      } else {
         // If we don't have a scope, force to project scope
-        if (!this._format.scoped) {
-          rawName = `${projectScope}/${rawName}`;
-          nextFormat.prefixed = true;
-        }
+      } else if (!this._format.scoped) {
+        rawName = `${projectScope}/${rawName}`;
+        nextFormat.prefixed = true;
       }
 
       //
@@ -339,7 +336,7 @@ function makePackageIdentifier(projectName, options) {
    * @param {function(PackageIdentifier)} handler - Attempt to find package current format
    * @returns {PackageIdentifier|null} identifier
    */
-  packageIdentifier.lookup = function (name, handler) {
+  packageIdentifier.lookup = function lookup(name, handler) {
     let result;
     let identifier;
     do {

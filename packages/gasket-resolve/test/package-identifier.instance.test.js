@@ -1,5 +1,5 @@
 const {
-  makePackageIdentifier,
+  makePackageIdentifier
 } = require('../lib/package-identifier');
 
 const pluginIdentifier = makePackageIdentifier('gasket');

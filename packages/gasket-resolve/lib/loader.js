@@ -108,8 +108,8 @@ class Loader extends Resolver {
       return this.loadModule(module, meta);
     }
 
-    const id = pluginIdentifier.lookup(module, id => this.tryRequire(id.fullName));
-    return this.loadModule(id ? id.fullName : module, meta);
+    const identifier = pluginIdentifier.lookup(module, id => this.tryRequire(id.fullName));
+    return this.loadModule(identifier ? identifier.fullName : module, meta);
   }
 
   /**
@@ -126,8 +126,8 @@ class Loader extends Resolver {
     if (isModulePath.test(module)) {
       moduleName = module;
     } else {
-      const id = presetIdentifier.lookup(module, id => this.tryRequire(id.fullName));
-      moduleName = id ? id.fullName : module;
+      const identifier = presetIdentifier.lookup(module, id => this.tryRequire(id.fullName));
+      moduleName = identifier ? identifier.fullName : module;
     }
     const presetInfo = this.loadModule(moduleName, meta);
 
@@ -192,10 +192,10 @@ class Loader extends Resolver {
     // - priority is added plugins > preset plugins > nested preset plugins
     plugins = plugins.filter((info, idx, self) => self.findIndex(t => t.name === info.name) === idx);
 
-    // lastly, filter plugins explicitly configured to removed
+    // lastly, filter plugins explicitly configured to be removed
     const pluginsToRemove = remove.reduce((set, name) => {
-      const id = pluginIdentifier.lookup(name, id => plugins.find(info => info.name === id.fullName));
-      set.add(id ? id.fullName : name);
+      const identifier = pluginIdentifier.lookup(name, id => plugins.find(info => info.name === id.fullName));
+      set.add(identifier ? identifier.fullName : name);
       return set;
     }, new Set());
 
