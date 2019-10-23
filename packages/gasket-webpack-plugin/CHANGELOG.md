@@ -1,5 +1,7 @@
 # `@gasket/webpack-plugin`
 
+### 1.1.1
+
 - Fix package.json scripts to wrap glob patterns in double-quotes
 
 ### 1.1.0

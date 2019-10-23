@@ -1,4 +1,6 @@
-# CHANGELOG
+# `@gasket/lint-plugin`
+
+### 1.7.3
 
 - Fix package.json scripts to wrap glob patterns in double-quotes
 - Change output for `stylelint` script to have the glob pattern be double-quoted
