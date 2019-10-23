@@ -16,9 +16,8 @@ command to run it.
 
 ### local
 
-Executes the `build`, `preboot` and `start` lifecycles. This command always
-forces the environment to `local`, and is intended for local app development,
-only.
+Executes the `build`, `preboot` and `start` lifecycles. This command defaults
+the environment to `local`, and is intended for local app development, only.
 
 Plugins can hook the `start` lifecycle, inspect the command id, and adjust
 startup behavior based on if the **start** or **local** commands was used. This

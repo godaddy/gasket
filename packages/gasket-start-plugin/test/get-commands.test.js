@@ -12,7 +12,9 @@ class MockGasketCommand {
   }
 }
 
-const mockData = { GasketCommand: MockGasketCommand };
+const mockFlags = { string: sinon.stub() };
+
+const mockData = { GasketCommand: MockGasketCommand, flags: mockFlags };
 
 const testCommand = async (Command, name, lifecycles) => {
   it('has expected id', () => {
@@ -65,19 +67,14 @@ describe('getCommands', () => {
   });
 
   describe('LocalCommand', () => {
-    const LocalCommand = getCommands(mockGasket, mockData)[2];
+    let LocalCommand = getCommands(mockGasket, mockData)[2];
     testCommand(LocalCommand, 'local', ['build', 'preboot', 'start']);
 
-    describe('gasketConfigure', () => {
-      it('implements gasketConfigure', () => {
-        assume(LocalCommand.prototype).property('gasketConfigure');
-        assume(LocalCommand.prototype.gasketConfigure).an('asyncfunction');
-      });
-
-      it('forces env to local', async () => {
-        const inst = new LocalCommand();
-        const results = await inst.gasketConfigure({ env: 'test' });
-        assume(results).property('env', 'local');
+    it('has env flag which defaults to local', () => {
+      LocalCommand = getCommands(mockGasket, mockData)[2];
+      assume(LocalCommand.flags).property('env');
+      assume(mockFlags.string).calledWithMatch({
+        default: 'local'
       });
     });
   });
