@@ -4,6 +4,7 @@
  * @param {string} projectName - Name of the project
  * @param {string} [type] - Identifier type, defaults to 'plugin'
  * @returns {{prefixed: {project: RegExp, user: RegExp}, postfixed: {project: RegExp, user: RegExp}, scope: RegExp}} re
+ * @private
  */
 function matchMaker(projectName, type = 'plugin') {
   if (!projectName) throw new Error('projectName required.');
@@ -27,6 +28,7 @@ function matchMaker(projectName, type = 'plugin') {
  * @param {string} projectName - Name of the project
  * @param {string} [type] - Identifier type, defaults to 'plugin'
  * @returns {{prefixed: prefixed, postfixed: postfixed}} expand
+ * @private
  */
 function expandMaker(projectName, type = 'plugin') {
   if (!projectName) throw new Error('projectName required.');
@@ -60,6 +62,7 @@ function expandMaker(projectName, type = 'plugin') {
  * @property {boolean} short
  * @property {boolean} project
  * @property {boolean} scoped
+ * @private
  */
 
 
@@ -74,237 +77,230 @@ function makePackageIdentifier(projectName, { type = 'plugin' } = {}) {
   const isProjectScopedFn = name => name.startsWith(projectScope);
 
   /**
-   * Utility class for working with package names and versions
+   * Create a new package identifier instance
    *
-   * @type {PackageIdentifier}
+   * @typedef {function} packageIdentifier
+   *
+   * @param {String} rawName - Original input name of a package
+   * @param {Object} [options] - Options
+   * @param {boolean} [options.prefixed] - Disable this to force prefixed/postfixed format for short names
+   * @returns {PackageIdentifier} instance
    */
-  class PackageIdentifier {
+  function packageIdentifier(rawName, options) {
+
+    const [, parsedName, parsedVersion] = re.name.exec(rawName);
+
+    const short = isShortFn(parsedName);
+    const scoped = isScopedFn(parsedName);
+    const project = isProjectScopedFn(parsedName);
+    const {
+      // default to prefixed for short names
+      prefixed = short ? true : isPrefixedFn(parsedName)
+    } = options || {};
+
     /**
-     * Create a new package identifier instance
-     *
-     * @param {String} rawName - Original input name of a package
-     * @param {Object} [options] - Options
-     * @param {boolean} [options.prefixed] - Disable this to force prefixed/postfixed format for short names
-     */
-    constructor(rawName, options = {}) {
-      this.rawName = rawName;
-
-      const [, name, version] = re.name.exec(this.rawName);
-
-      this._parsed = {
-        name,
-        version
-      };
-
-      const short = isShortFn(name);
-      const scoped = isScopedFn(name);
-      const project = isProjectScopedFn(name);
-      const {
-        // default to prefixed for short names
-        prefixed = short ? true : isPrefixedFn(name)
-      } = options;
-
-      /**
        * @type {Readonly<IdentifierFormat>}
        * @private
        */
-      this._format = Object.freeze({
-        short,
-        prefixed,
-        scoped,
-        project
-      });
+    const _format = Object.freeze({
+      short,
+      prefixed,
+      scoped,
+      project
+    });
 
-      this._expand = prefixed ? expand.prefixed : expand.postfixed;
-      this._re = (prefixed ? re.prefixed : re.postfixed)[project ? 'project' : 'user'];
-    }
-
+    const _expand = prefixed ? expand.prefixed : expand.postfixed;
+    const _re = (prefixed ? re.prefixed : re.postfixed)[project ? 'project' : 'user'];
     /**
-     * Get the full package name
+     * Utility class for working with package names and versions
      *
-     * Examples:
-     * - @gasket/plugin-https@1.2.3 -> @gasket/plugin-https
-     * - @gasket/https -> @gasket/plugin-https
-     *
-     * @returns {string} fullName
+     * @type {PackageIdentifier}
      */
-    get fullName() {
-      const { name } = this._parsed;
+    class PackageIdentifier {
 
-      if (this._format.short) {
-        return this._expand(name);
+      /**
+       * Get the package name as provided to the identifier
+       *
+       * @returns {string} rawName
+       */
+      get rawName() {
+        return rawName;
       }
 
-      return name;
-    }
+      /**
+       * Get the long package name
+       *
+       * Examples:
+       * - @gasket/plugin-https@1.2.3 -> @gasket/plugin-https
+       * - @gasket/https -> @gasket/plugin-https
+       *
+       * @returns {string} fullName
+       */
+      get fullName() {
+        if (_format.short) {
+          return _expand(parsedName);
+        }
 
-    /**
-     * Get the long package name
-     *
-     * @alias fullName
-     * @returns {string} fullName
-     */
-    get longName() {
-      return this.fullName;
-    }
-
-    /**
-     * Get the short package name
-     *
-     * Examples:
-     * - @gasket/https-plugin -> https
-     * - https@1.2.3 -> https
-     *
-     * @returns {string} fullName
-     */
-    get shortName() {
-      const { name } = this._parsed;
-
-      if (this._format.short) {
-        return name;
+        return parsedName;
       }
 
-      const matches = this._re.exec(name);
-      return matches[1] ? `${matches[1]}/${matches[2]}` : matches[2];
-    }
-
-    /**
-     * Get only the package name
-     *
-     * Examples:
-     * - @gasket/https-plugin@1.2.3 -> @gasket/https-plugin
-     * - https@1.2.3 -> https
-     *
-     * @returns {string} fullName
-     */
-    get name() {
-      const { name } = this._parsed;
-
-      return name;
-    }
-
-    /**
-     * Get only the package version
-     *
-     * Examples:
-     * - @gasket/https-plugin@1.2.3 -> 1.2.3
-     * - @gasket/https-plugin -> ''
-     *
-     * @returns {string} fullName
-     */
-    get version() {
-      const { version } = this._parsed;
-
-      return version || null;
-    }
-
-    /**
-     * Get the full package name with version
-     *
-     * Examples:
-     * - @gasket/https-plugin@1.2.3 -> @gasket/https-plugin@1.2.3
-     * - https@1.2.3 -> @gasket/https-plugin@1.2.3
-     *
-     * @returns {string} fullName
-     */
-    get full() {
-      const name = this.fullName;
-      const version = this.version;
-      return name + (version ? `@${version}` : '');
-    }
-
-    get isShort() {
-      return this._format.short;
-    }
-
-    get isLong() {
-      return !this._format.short;
-    }
-
-    get isPrefixed() {
-      return this._format.prefixed;
-    }
-
-    get isPostfixed() {
-      return !this._format.prefixed;
-    }
-
-    get hasScope() {
-      return this._format.scoped;
-    }
-
-    get hasProjectScope() {
-      return this._format.project;
-    }
-
-    get hasVersion() {
-      return Boolean(this._parsed.version);
-    }
-
-    /**
-     * Returns new PackageIdentifier with version added to desc if missing
-     *
-     * Examples:
-     * - @gasket/https-plugin@1.2.3 -> @gasket/https-plugin@1.2.3
-     * - @gasket/https-plugin -> @gasket/https-plugin@latest
-     *
-     * @param {string} [defaultVersion] - the version name to add if missing
-     * @returns {PackageIdentifier} identifier
-     */
-    withVersion(defaultVersion = 'latest') {
-      const { name, version } = this._parsed;
-
-      const nextName = name + '@' + (version || defaultVersion);
-      return new this.constructor(nextName, this.format);
-    }
-
-    /**
-     * If the rawName is short format, get a new identifier, cycling through
-     * formats, used to attempt to resolve packages by different name pattern.
-     *
-     * example            gasket-plugin-example > example-gasket-plugin
-     *                    > @gasket/plugin-example > @gasket/example-plugin   -- In Loader, falls back to these with warnings
-     * @gasket/example    @gasket/plugin-example > @gasket/example-plugin
-     * @user/example      @user/gasket-plugin-example > @user/example-gasket-plugin
-     *
-     * @returns {PackageIdentifier|null} identifier
-     */
-    nextFormat() {
-      if (!this._format.short) return null;
-
-      let rawName = this.rawName;
-
-      const nextFormat = {};
-      if (this._format.prefixed) {
-        nextFormat.prefixed = false;
-        // If we don't have a scope, force to project scope
-      } else if (!this._format.scoped) {
-        rawName = `${projectScope}/${rawName}`;
-        nextFormat.prefixed = true;
+      /**
+       * Alias to this.fullName
+       *
+       * @returns {string} fullName
+       */
+      get longName() {
+        return this.fullName;
       }
 
-      //
-      // if there is nothing to change, return null
-      //
-      if (!Object.keys(nextFormat).length && rawName === this.rawName) {
-        return null;
+      /**
+       * Get the short package name
+       *
+       * Examples:
+       * - @gasket/https-plugin -> https
+       * - https@1.2.3 -> https
+       *
+       * @returns {string} fullName
+       */
+      get shortName() {
+        if (_format.short) {
+          return parsedName;
+        }
+
+        const matches = _re.exec(parsedName);
+        return matches[1] ? `${matches[1]}/${matches[2]}` : matches[2];
       }
 
-      return new this.constructor(rawName, { ...this._format, ...nextFormat });
+      /**
+       * Get only the package name
+       *
+       * Examples:
+       * - @gasket/https-plugin@1.2.3 -> @gasket/https-plugin
+       * - https@1.2.3 -> https
+       *
+       * @returns {string} fullName
+       */
+      get name() {
+        return parsedName;
+      }
+
+      /**
+       * Get only the package version
+       *
+       * Examples:
+       * - @gasket/https-plugin@1.2.3 -> 1.2.3
+       * - @gasket/https-plugin -> ''
+       *
+       * @returns {string} fullName
+       */
+      get version() {
+        return parsedVersion || null;
+      }
+
+      /**
+       * Get the full package name with version
+       *
+       * Examples:
+       * - @gasket/https-plugin@1.2.3 -> @gasket/https-plugin@1.2.3
+       * - https@1.2.3 -> @gasket/https-plugin@1.2.3
+       *
+       * @returns {string} fullName
+       */
+      get full() {
+        const name = this.fullName;
+        const version = this.version;
+        return name + (version ? `@${version}` : '');
+      }
+
+      get isShort() {
+        return _format.short;
+      }
+
+      get isLong() {
+        return !_format.short;
+      }
+
+      get isPrefixed() {
+        return _format.prefixed;
+      }
+
+      get isPostfixed() {
+        return !_format.prefixed;
+      }
+
+      get hasScope() {
+        return _format.scoped;
+      }
+
+      get hasProjectScope() {
+        return _format.project;
+      }
+
+      get hasVersion() {
+        return Boolean(parsedVersion);
+      }
+
+      /**
+       * Returns new PackageIdentifier with version added to desc if missing
+       *
+       * Examples:
+       * - @gasket/https-plugin@1.2.3 -> @gasket/https-plugin@1.2.3
+       * - @gasket/https-plugin -> @gasket/https-plugin@latest
+       *
+       * @param {string} [defaultVersion] - the version name to add if missing
+       * @returns {PackageIdentifier} identifier
+       */
+      withVersion(defaultVersion = 'latest') {
+        const nextName = parsedName + '@' + (parsedVersion || defaultVersion);
+        return packageIdentifier(nextName, _format);
+      }
+
+      /**
+       * If the rawName is a short name, get a new identifier, cycling through
+       * formats which can be used to attempt to resolve packages by different name pattern.
+       *
+       * Examples:
+       * - example -> gasket-plugin-example > example-gasket-plugin > @gasket/plugin-example > @gasket/example-plugin
+       * - @gasket/example -> @gasket/plugin-example > @gasket/example-plugin
+       * - @user/example -> @user/gasket-plugin-example > @user/example-gasket-plugin
+       *
+       * @returns {PackageIdentifier|null} identifier
+       */
+      nextFormat() {
+        if (!_format.short) return null;
+
+        let nextRawName = this.rawName;
+
+        const nextOptions = {};
+        if (_format.prefixed) {
+          nextOptions.prefixed = false;
+          // If we don't have a scope, force to project scope
+        } else if (!_format.scoped) {
+          nextRawName = `${projectScope}/${nextRawName}`;
+          nextOptions.prefixed = true;
+        }
+
+        //
+        // if there is nothing to change, return null
+        //
+        if (!Object.keys(nextOptions).length && nextRawName === this.rawName) {
+          return null;
+        }
+
+        return packageIdentifier(nextRawName, nextOptions);
+      }
     }
-  }
 
-  /**
-   * Output the original raw name for string concatenation.
-   *
-   * @returns {String} string
-   */
-  PackageIdentifier.prototype.toString = function toString() {
-    return this.rawName;
-  };
+    /**
+     * Output the original raw name for string concatenation.
+     *
+     * @returns {String} string
+     */
+    PackageIdentifier.prototype.toString = function toString() {
+      return rawName;
+    };
 
-  function packageIdentifier(name, format) {
-    return new PackageIdentifier(name, format);
+    return new PackageIdentifier();
   }
 
   /**
@@ -320,7 +316,7 @@ function makePackageIdentifier(projectName, { type = 'plugin' } = {}) {
    */
   packageIdentifier.isValidFullName = function isValidFullName(maybeFullName) {
     try {
-      return new PackageIdentifier(maybeFullName).fullName === maybeFullName;
+      return packageIdentifier(maybeFullName).fullName === maybeFullName;
     } catch (e) {
       return false;
     }
@@ -340,7 +336,7 @@ function makePackageIdentifier(projectName, { type = 'plugin' } = {}) {
     let result;
     let identifier;
     do {
-      identifier = identifier ? identifier.nextFormat() : new PackageIdentifier(name);
+      identifier = identifier ? identifier.nextFormat() : packageIdentifier(name);
       result = identifier && handler(identifier);
     } while (!result && identifier);
 

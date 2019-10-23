@@ -49,12 +49,14 @@ const { makePackageIdentifier } = require('./package-identifier');
  */
 
 /**
+ * Make identifiers for plugins
  *
  * @type {PackageIdentifier}
  */
 const pluginIdentifier = makePackageIdentifier('gasket');
 
 /**
+ * Make identifiers for plugins
  *
  * @type {PackageIdentifier}
  */
