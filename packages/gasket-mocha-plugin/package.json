@@ -1,6 +1,6 @@
 {
   "name": "@gasket/mocha-plugin",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Integrates mocha based testing in to your Gasket application",
   "main": "index.js",
   "scripts": {
