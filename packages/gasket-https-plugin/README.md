@@ -63,15 +63,15 @@ createServers: async function createServers(gasket, serverOpts) {
 #### servers
 
 Your application can use this plugin to hook the `servers` hook. These servers
-are consumed directly from [`create-servers`].
+are provided directly from the [create-servers] callback.
 
 ```js
 /**
  * Called when all servers are created.
  *
- * @param  {Gasket} gasket The Gasket API
- * @param {Servers} manifest Waterfall manifest to adjust
- * @return {Promise<Object>} updated manifest
+ * @param {Gasket} gasket The Gasket API
+ * @param {object} servers - http and/or https servers
+ * @return {Promise<object>} updated manifest
  */
 module.exports = async function serversHook(gasket, servers) {
   const cert = servers.https.cert;
@@ -80,6 +80,11 @@ module.exports = async function serversHook(gasket, servers) {
   console.log(cert);
 }
 ```
+
+In a typical use case, the `servers` object will contain server instances for
+`http` and `https` keys. In some cases if there are multiple configs and servers
+created, this will be an array of servers. See [create-servers] docs for more
+details.
 
 ### terminus
 
@@ -224,5 +229,5 @@ by default to trigger the appropriate lifecycle events.
 
 ## LICENSE: [MIT](./LICENSE)
 
-[`create-servers`]: https://github.com/indexzero/create-servers#http--https
+[create-servers]: https://github.com/http-party/create-servers#create-servers
 [term]: https://github.com/godaddy/terminus
