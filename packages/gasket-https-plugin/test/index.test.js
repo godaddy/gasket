@@ -226,7 +226,6 @@ describe('start hook', () => {
     it('supports multiple servers under object properties', async () => {
       createServersModule.yields(null, { https: [aServer, aServer], http: [aServer, aServer] });
 
-      // console.log('createTerminus', createTerminus.args)
       await start();
       assume(createTerminus).called(4);
       assume(createTerminus.args[0][0]).equals(aServer);
@@ -260,7 +259,7 @@ describe('start hook', () => {
 
     it('calls the healthcheck lifecycle', async () => {
       await start();
-      const lifecycle = createTerminus.args[0][1].healthChecks['/healthcheck']
+      const lifecycle = createTerminus.args[0][1].healthChecks['/healthcheck'];
       await lifecycle();
 
       assume(gasketAPI.exec.args[gasketAPI.exec.args.length - 1][0]).equals('healthcheck');
