@@ -200,17 +200,24 @@ describe('start hook', () => {
   });
 
   describe('terminus', function () {
-    const server = {};
+    const http = {};
+    const servers = { http };
 
     beforeEach(function () {
-      createServersModule.yields(null, [server]);
+      createServersModule.yields(null, servers);
     });
 
-    // TODO (kinetifex): test multiple servers
     it('passes each created server to terminus', async () => {
       await start();
 
-      assume(createTerminus.args[0][0]).equals(server);
+      assume(createTerminus.args[0][0]).equals(http);
+    });
+
+    it('supports multiple servers as object', async () => {
+      createServersModule.yields(null, { https: http, http: http });
+
+      await start();
+      assume(createTerminus.args[0][0]).equals(http);
     });
 
     it('calls terminus with the options', async () => {
