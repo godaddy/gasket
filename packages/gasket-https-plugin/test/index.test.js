@@ -206,6 +206,7 @@ describe('start hook', () => {
       createServersModule.yields(null, [server]);
     });
 
+    // TODO (kinetifex): test multiple servers
     it('passes each created server to terminus', async () => {
       await start();
 
