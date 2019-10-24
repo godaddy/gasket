@@ -204,7 +204,6 @@ describe('start hook', () => {
     const servers = { http: aServer };
 
     beforeEach(function () {
-      // sinon.resetHistory();
       createServersModule.yields(null, servers);
     });
 
