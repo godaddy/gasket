@@ -1,5 +1,9 @@
 # `@gasket/https-plugin`
 
+### 2.2.1
+
+- Handle permeations of [create-servers] callback ([#92])
+
 ### 2.2.0
 
 - Graceful shutdown using [terminus] ([#90])
@@ -21,5 +25,7 @@
 [#23]: https://github.com/godaddy/gasket/pull/23
 [#79]: https://github.com/godaddy/gasket/pull/79
 [#90]: https://github.com/godaddy/gasket/pull/90
+[#92]: https://github.com/godaddy/gasket/pull/92
 
 [terminus]: https://github.com/godaddy/terminus
+[create-servers]: https://github.com/http-party/create-servers
