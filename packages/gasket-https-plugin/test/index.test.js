@@ -200,24 +200,36 @@ describe('start hook', () => {
   });
 
   describe('terminus', function () {
-    const http = {};
-    const servers = { http };
+    const aServer = {};
+    const servers = { http: aServer };
 
     beforeEach(function () {
+      // sinon.resetHistory();
       createServersModule.yields(null, servers);
     });
 
     it('passes each created server to terminus', async () => {
       await start();
 
-      assume(createTerminus.args[0][0]).equals(http);
+      assume(createTerminus).called(1);
+      assume(createTerminus.args[0][0]).equals(aServer);
     });
 
     it('supports multiple servers as object', async () => {
-      createServersModule.yields(null, { https: http, http: http });
+      createServersModule.yields(null, { https: aServer, http: aServer });
 
       await start();
-      assume(createTerminus.args[0][0]).equals(http);
+      assume(createTerminus).called(2);
+      assume(createTerminus.args[0][0]).equals(aServer);
+    });
+
+    it('supports multiple servers under object properties', async () => {
+      createServersModule.yields(null, { https: [aServer, aServer], http: [aServer, aServer] });
+
+      // console.log('createTerminus', createTerminus.args)
+      await start();
+      assume(createTerminus).called(4);
+      assume(createTerminus.args[0][0]).equals(aServer);
     });
 
     it('calls terminus with the options', async () => {
