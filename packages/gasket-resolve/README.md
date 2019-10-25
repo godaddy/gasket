@@ -8,8 +8,8 @@ presets.
 ## Naming convention
 
 Plugins and presets should follow adhere to the project-type prefixed naming
-convention. This formating allows user plugins to be referenced with short names
-and will help avoid collisions. This convention also mimics those by other
+convention. This formatting allows user plugins to be referenced with short
+names and will help avoid collisions. This convention also mimics those by other
 projects such a `@babel` and `@oclif`.
 
 ### Plugins
@@ -30,10 +30,10 @@ projects such a `@babel` and `@oclif`.
 
 ### Fallbacks
 
-To soften the transition from the older postfixed format, the loader supports
-fallbacks for short names to postfixed format, and then to the `@gasket` scope.
-For example, if a short name of `example` is used, the package lookup order
-would be as follows:
+To soften the transition of existing apps and plugins using the older postfixed
+format, the loader supports fallbacks for short names to postfixed format, and
+then to the `@gasket` scope. For example, if a short name of `example` is used,
+the package lookup order would be as follows:
 
 ```
 example --> gasket-plugin-example --> example-gasket-plugin --> gasket/plugin-example --> gasket/example-plugin
@@ -77,8 +77,8 @@ See the [API docs] for more details on the [pluginIdentifier] and
 
 ## Loading
 
-While this package is mostly intended for gasket project internals. If a plugin
-does need to load or resolve packages, a configured [Loader] instance is
+While this package is mostly intended for gasket project internals, if a plugin
+does need to load or resolve modules, a configured [Loader] instance is
 available as `gasket.loader` from the engine instance passed as the first
 argument to all lifecycle hooks.
 
