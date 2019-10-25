@@ -30,41 +30,49 @@
 <dd><p>The package name with or without version of a plugin.</p>
 <p>For example:</p>
 <ul>
-<li>@gasket/jest-plugin        - fullName</li>
-<li>jest                       - shortName</li>
-<li>@gasket/jest-plugin@^1.2.3 - full with version</li>
-<li>jest@^1.2.3                - short with version</li>
+<li>@gasket/plugin-https        - fullName</li>
+<li>@gasket/https               - shortName</li>
+<li>@gasket/plugin-https@^1.2.3 - full with version</li>
+<li>@gasket/https@^1.2.3        - short with version</li>
+<li>gasket-plugin-https         - user fullName</li>
+<li>https                       - user shortName</li>
 </ul>
 <p>Not intended for use with non-plugin package descriptions.
 For example, the following patterns will not work:</p>
 <ul>
-<li>@gasket/jest</li>
+<li>@gasket/https</li>
 </ul>
 </dd>
 <dt><a href="#PresetDesc">PresetDesc</a> : <code>String</code></dt>
 <dd><p>The package name with or without version of a preset.</p>
 <p>For example:</p>
 <ul>
-<li>@gasket/nextjs-preset        - fullName</li>
-<li>nextjs                       - shortName</li>
-<li>@gasket/nextjs-preset@^1.2.3 - full with version</li>
-<li>nextjs@^1.2.3                - short with version</li>
+<li>@gasket/preset-nextjs        - fullName</li>
+<li>@gasket/nextjs               - shortName</li>
+<li>@gasket/preset-nextjs@^1.2.3 - full with version</li>
+<li>@gasket/nextjs@^1.2.3        - short with version</li>
+<li>gasket-preset-nextjs         - user fullName</li>
+<li>nextjs                       - user shortName</li>
 </ul>
 </dd>
 <dt><a href="#PluginName">PluginName</a> : <code>String</code></dt>
 <dd><p>The package name only of a plugin.</p>
 <p>For example:</p>
 <ul>
-<li>@gasket/jest-plugin        - fullName</li>
-<li>jest                       - shortName</li>
+<li>@gasket/plugin-https        - fullName</li>
+<li>@gasket/https               - shortName</li>
+<li>gasket-plugin-https         - user fullName</li>
+<li>https                       - user shortName</li>
 </ul>
 </dd>
 <dt><a href="#PresetName">PresetName</a> : <code>String</code></dt>
 <dd><p>The package name only of a preset.</p>
 <p>For example:</p>
 <ul>
-<li>@gasket/nextjs-preset        - fullName</li>
-<li>nextjs                       - shortName</li>
+<li>@gasket/preset-nextjs        - fullName</li>
+<li>@gasket/nextjs               - shortName</li>
+<li>gasket-preset-nextjs         - user fullName</li>
+<li>nextjs                       - user shortName</li>
 </ul>
 </dd>
 <dt><a href="#ModuleInfo">ModuleInfo</a> : <code>Object</code></dt>
@@ -257,6 +265,8 @@ Get the long package name
 Examples:
 - @gasket/plugin-https@1.2.3 -> @gasket/plugin-https
 - @gasket/https -> @gasket/plugin-https
+- @user/https -> @user/gasket-plugin-https
+- https -> gasket-plugin-https
 
 **Kind**: instance property of [<code>PackageIdentifier</code>](#PackageIdentifier)  
 **Returns**: <code>string</code> - fullName  
@@ -273,8 +283,9 @@ Alias to this.fullName
 Get the short package name
 
 Examples:
-- @gasket/https-plugin -> https
-- https@1.2.3 -> https
+- @gasket/plugin-https -> @gasket/https
+- @user/gasket-plugin-https -> @user/https
+- gasket-plugin-https@1.2.3 -> https
 
 **Kind**: instance property of [<code>PackageIdentifier</code>](#PackageIdentifier)  
 **Returns**: <code>string</code> - fullName  
@@ -284,7 +295,7 @@ Examples:
 Get only the package name
 
 Examples:
-- @gasket/https-plugin@1.2.3 -> @gasket/https-plugin
+- @gasket/plugin-https@1.2.3 -> @gasket/plugin-https
 - https@1.2.3 -> https
 
 **Kind**: instance property of [<code>PackageIdentifier</code>](#PackageIdentifier)  
@@ -295,8 +306,8 @@ Examples:
 Get only the package version
 
 Examples:
-- @gasket/https-plugin@1.2.3 -> 1.2.3
-- @gasket/https-plugin -> ''
+- @gasket/plugin-https@1.2.3 -> 1.2.3
+- @gasket/plugin-https -> ''
 
 **Kind**: instance property of [<code>PackageIdentifier</code>](#PackageIdentifier)  
 **Returns**: <code>string</code> - fullName  
@@ -306,8 +317,8 @@ Examples:
 Get the full package name with version
 
 Examples:
-- @gasket/https-plugin@1.2.3 -> @gasket/https-plugin@1.2.3
-- https@1.2.3 -> @gasket/https-plugin@1.2.3
+- @gasket/plugin-https@1.2.3 -> @gasket/plugin-https@1.2.3
+- https@1.2.3 -> @gasket/plugin-https@1.2.3
 
 **Kind**: instance property of [<code>PackageIdentifier</code>](#PackageIdentifier)  
 **Returns**: <code>string</code> - fullName  
@@ -317,8 +328,8 @@ Examples:
 Returns new PackageIdentifier with version added to desc if missing
 
 Examples:
-- @gasket/https-plugin@1.2.3 -> @gasket/https-plugin@1.2.3
-- @gasket/https-plugin -> @gasket/https-plugin@latest
+- @gasket/plugin-https@1.2.3 -> @gasket/plugin-https@1.2.3
+- @gasket/plugin-https -> @gasket/plugin-https@latest
 
 **Kind**: instance method of [<code>PackageIdentifier</code>](#PackageIdentifier)  
 **Returns**: [<code>PackageIdentifier</code>](#PackageIdentifier) - identifier  
@@ -331,7 +342,8 @@ Examples:
 
 ### packageIdentifier.nextFormat() ⇒ [<code>PackageIdentifier</code>](#PackageIdentifier) \| <code>null</code>
 If the rawName is a short name, get a new identifier, cycling through
-formats which can be used to attempt to resolve packages by different name pattern.
+formats which can be used to attempt to resolve packages by different
+name pattern.
 
 Examples:
 - example -> gasket-plugin-example > example-gasket-plugin > @gasket/plugin-example > @gasket/example-plugin
@@ -430,14 +442,16 @@ Create package identifiers for Gasket presets
 The package name with or without version of a plugin.
 
 For example:
-  - @gasket/jest-plugin        - fullName
-  - jest                       - shortName
-  - @gasket/jest-plugin@^1.2.3 - full with version
-  - jest@^1.2.3                - short with version
+  - @gasket/plugin-https        - fullName
+  - @gasket/https               - shortName
+  - @gasket/plugin-https@^1.2.3 - full with version
+  - @gasket/https@^1.2.3        - short with version
+  - gasket-plugin-https         - user fullName
+  - https                       - user shortName
 
 Not intended for use with non-plugin package descriptions.
 For example, the following patterns will not work:
-  - @gasket/jest
+  - @gasket/https
 
 **Kind**: global typedef  
 <a name="PresetDesc"></a>
@@ -446,10 +460,12 @@ For example, the following patterns will not work:
 The package name with or without version of a preset.
 
 For example:
-  - @gasket/nextjs-preset        - fullName
-  - nextjs                       - shortName
-  - @gasket/nextjs-preset@^1.2.3 - full with version
-  - nextjs@^1.2.3                - short with version
+  - @gasket/preset-nextjs        - fullName
+  - @gasket/nextjs               - shortName
+  - @gasket/preset-nextjs@^1.2.3 - full with version
+  - @gasket/nextjs@^1.2.3        - short with version
+  - gasket-preset-nextjs         - user fullName
+  - nextjs                       - user shortName
 
 **Kind**: global typedef  
 <a name="PluginName"></a>
@@ -458,8 +474,10 @@ For example:
 The package name only of a plugin.
 
 For example:
-  - @gasket/jest-plugin        - fullName
-  - jest                       - shortName
+  - @gasket/plugin-https        - fullName
+  - @gasket/https               - shortName
+  - gasket-plugin-https         - user fullName
+  - https                       - user shortName
 
 **Kind**: global typedef  
 <a name="PresetName"></a>
@@ -468,8 +486,10 @@ For example:
 The package name only of a preset.
 
 For example:
-  - @gasket/nextjs-preset        - fullName
-  - nextjs                       - shortName
+  - @gasket/preset-nextjs        - fullName
+  - @gasket/nextjs               - shortName
+  - gasket-preset-nextjs         - user fullName
+  - nextjs                       - user shortName
 
 **Kind**: global typedef  
 <a name="ModuleInfo"></a>
@@ -534,8 +554,8 @@ Create a new PackageIdentifier instance
 Static util method to check if a full name is valid
 
 Examples:
-- @gasket/https-plugin -> true
-- @gasket/https-plugin@1.2.3 -> false
+- @gasket/plugin-https -> true
+- @gasket/plugin-https@1.2.3 -> false
 - https -> false
 
 **Kind**: static method of [<code>createPackageIdentifier</code>](#createPackageIdentifier)  

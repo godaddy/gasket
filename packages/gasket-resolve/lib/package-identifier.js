@@ -145,6 +145,8 @@ function projectIdentifier(projectName, type = 'plugin') {
        * Examples:
        * - @gasket/plugin-https@1.2.3 -> @gasket/plugin-https
        * - @gasket/https -> @gasket/plugin-https
+       * - @user/https -> @user/gasket-plugin-https
+       * - https -> gasket-plugin-https
        *
        * @returns {string} fullName
        */
@@ -169,8 +171,9 @@ function projectIdentifier(projectName, type = 'plugin') {
        * Get the short package name
        *
        * Examples:
-       * - @gasket/https-plugin -> https
-       * - https@1.2.3 -> https
+       * - @gasket/plugin-https -> @gasket/https
+       * - @user/gasket-plugin-https -> @user/https
+       * - gasket-plugin-https@1.2.3 -> https
        *
        * @returns {string} fullName
        */
@@ -187,7 +190,7 @@ function projectIdentifier(projectName, type = 'plugin') {
        * Get only the package name
        *
        * Examples:
-       * - @gasket/https-plugin@1.2.3 -> @gasket/https-plugin
+       * - @gasket/plugin-https@1.2.3 -> @gasket/plugin-https
        * - https@1.2.3 -> https
        *
        * @returns {string} fullName
@@ -200,8 +203,8 @@ function projectIdentifier(projectName, type = 'plugin') {
        * Get only the package version
        *
        * Examples:
-       * - @gasket/https-plugin@1.2.3 -> 1.2.3
-       * - @gasket/https-plugin -> ''
+       * - @gasket/plugin-https@1.2.3 -> 1.2.3
+       * - @gasket/plugin-https -> ''
        *
        * @returns {string} fullName
        */
@@ -213,8 +216,8 @@ function projectIdentifier(projectName, type = 'plugin') {
        * Get the full package name with version
        *
        * Examples:
-       * - @gasket/https-plugin@1.2.3 -> @gasket/https-plugin@1.2.3
-       * - https@1.2.3 -> @gasket/https-plugin@1.2.3
+       * - @gasket/plugin-https@1.2.3 -> @gasket/plugin-https@1.2.3
+       * - https@1.2.3 -> @gasket/plugin-https@1.2.3
        *
        * @returns {string} fullName
        */
@@ -256,8 +259,8 @@ function projectIdentifier(projectName, type = 'plugin') {
        * Returns new PackageIdentifier with version added to desc if missing
        *
        * Examples:
-       * - @gasket/https-plugin@1.2.3 -> @gasket/https-plugin@1.2.3
-       * - @gasket/https-plugin -> @gasket/https-plugin@latest
+       * - @gasket/plugin-https@1.2.3 -> @gasket/plugin-https@1.2.3
+       * - @gasket/plugin-https -> @gasket/plugin-https@latest
        *
        * @param {string} [defaultVersion] - the version name to add if missing
        * @returns {PackageIdentifier} identifier
@@ -269,7 +272,8 @@ function projectIdentifier(projectName, type = 'plugin') {
 
       /**
        * If the rawName is a short name, get a new identifier, cycling through
-       * formats which can be used to attempt to resolve packages by different name pattern.
+       * formats which can be used to attempt to resolve packages by different
+       * name pattern.
        *
        * Examples:
        * - example -> gasket-plugin-example > example-gasket-plugin > @gasket/plugin-example > @gasket/example-plugin
@@ -286,7 +290,7 @@ function projectIdentifier(projectName, type = 'plugin') {
         const nextOptions = {};
         if (_format.prefixed) {
           nextOptions.prefixed = false;
-          // If we don't have a scope, force to project scope
+          // If we tried postfixed, and we don't have a scope, force to project scope and prefixed
         } else if (!_format.scoped) {
           nextRawName = `${projectScope}/${nextRawName}`;
           nextOptions.prefixed = true;
@@ -319,8 +323,8 @@ function projectIdentifier(projectName, type = 'plugin') {
    * Static util method to check if a full name is valid
    *
    * Examples:
-   * - @gasket/https-plugin -> true
-   * - @gasket/https-plugin@1.2.3 -> false
+   * - @gasket/plugin-https -> true
+   * - @gasket/plugin-https@1.2.3 -> false
    * - https -> false
    *
    * @function createPackageIdentifier.isValidFullName
