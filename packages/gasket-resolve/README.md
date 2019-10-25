@@ -7,7 +7,7 @@ presets.
 
 ## Naming convention
 
-Plugins and presets should follow adhere to the project-type prefixed naming
+Plugins and presets should adhere to the project-type prefixed naming
 convention. This formatting allows user plugins to be referenced with short
 names and will help avoid collisions. This convention also mimics those by other
 projects such a `@babel` and `@oclif`.
