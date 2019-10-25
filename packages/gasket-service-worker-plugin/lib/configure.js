@@ -26,18 +26,7 @@ const defaultConfig = {
  * @param {Object} baseConfig - Base gasket config
  * @returns {Object} config
  */
-module.exports = async function configure(gasket, baseConfig = {}) {
-  const { exec } = gasket;
-  const {
-    cacheKeys: userCacheKeys = [],
-    ...userConfig
-  } = baseConfig.serviceWorker || {};
-
-  const pluginCacheKeys = await exec('serviceWorkerCacheKey');
-
-  const cacheKeys = [...userCacheKeys, ...pluginCacheKeys]
-    .filter(k => typeof k === 'function');
-
-  const serviceWorker = merge.all([defaultConfig, userConfig, { cacheKeys }]);
-  return ({ ...baseConfig, serviceWorker });
+module.exports = function configure(gasket, baseConfig = {}) {
+  baseConfig.serviceWorker = merge(defaultConfig, baseConfig.serviceWorker || {});
+  return baseConfig;
 };
