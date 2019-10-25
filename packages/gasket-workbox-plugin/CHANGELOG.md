@@ -1,5 +1,7 @@
 # `@gasket/workbox-plugin`
 
+- Get library version from `workbox-build` package.json ([#95])
+
 ### 1.1.0
 
 - Align package structure and dependencies
@@ -12,3 +14,4 @@
 
  Initial implementation.
 
+[#95]:https://github.com/godaddy/gasket/pull/95
