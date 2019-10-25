@@ -1,5 +1,7 @@
 # `@gasket/resolve`
 
+- Support for project-type prefixed naming of plugins and presets ([#93])
+
 ### 2.0.0
 
 - Introduces [Loader] used to load configured presets and plugins ([#64]).
@@ -32,5 +34,6 @@
 
 [#8]: https://github.com/godaddy/gasket/pull/8
 [#64]: https://github.com/godaddy/gasket/pull/64
+[#93]: https://github.com/godaddy/gasket/pull/93
 
 [Loader]:/packages/gasket-resolve/README.md#Loader
