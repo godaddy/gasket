@@ -1,8 +1,8 @@
 const {
-  makePackageIdentifier
+  projectIdentifier
 } = require('../lib/package-identifier');
 
-const pluginIdentifier = makePackageIdentifier('gasket');
+const pluginIdentifier = projectIdentifier('gasket');
 
 describe('PackageIdentifier instance', () => {
   let result;

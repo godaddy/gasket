@@ -56,17 +56,7 @@ function expandMaker(projectName, type = 'plugin') {
 }
 
 /**
- * @typedef {Object} IdentifierFormat
- *
- * @property {boolean} prefixed
- * @property {boolean} short
- * @property {boolean} project
- * @property {boolean} scoped
- * @private
- */
-
-/**
- * Create a function used to make instances of the PackageIdentifier.
+ * Create function used to make instances of PackageIdentifier for a project.
  * The `projectName` and `type` are components of the naming convention such as
  * - @<projectName>/<type>-<name>
  * - @<user-scope>/<projectName>-<type>-<name>
@@ -80,7 +70,7 @@ function expandMaker(projectName, type = 'plugin') {
  * @returns {function} function to make
  * @private
  */
-function setupProjectType(projectName, type = 'plugin') {
+function projectIdentifier(projectName, type = 'plugin') {
   const re = matchMaker(projectName, type);
   const expand = expandMaker(projectName, type);
   const projectScope = `@${projectName}`;
@@ -113,9 +103,16 @@ function setupProjectType(projectName, type = 'plugin') {
     } = options || {};
 
     /**
-       * @type {Readonly<IdentifierFormat>}
-       * @private
-       */
+     * The parts of an identifier's name format
+     *
+     * @typedef {Object} NameFormat
+     *
+     * @property {boolean} prefixed
+     * @property {boolean} short
+     * @property {boolean} project
+     * @property {boolean} scoped
+     * @private
+     */
     const _format = Object.freeze({
       short,
       prefixed,
@@ -125,6 +122,7 @@ function setupProjectType(projectName, type = 'plugin') {
 
     const _expand = prefixed ? expand.prefixed : expand.postfixed;
     const _re = (prefixed ? re.prefixed : re.postfixed)[project ? 'project' : 'user'];
+
     /**
      * Utility class for working with package names and versions
      *
@@ -366,5 +364,5 @@ function setupProjectType(projectName, type = 'plugin') {
 module.exports = {
   matchMaker,
   expandMaker,
-  setupProjectType
+  projectIdentifier
 };

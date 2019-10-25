@@ -1,5 +1,5 @@
 /* eslint-disable no-undefined */
-const { matchMaker, expandMaker, makePackageIdentifier } = require('../lib/package-identifier');
+const { matchMaker, expandMaker, projectIdentifier } = require('../lib/package-identifier');
 
 const range = length => Array(length).fill().map((_, i) => i);
 
@@ -214,45 +214,46 @@ describe('expandMaker', () => {
   });
 });
 
-describe('makePackageIdentifier', () => {
+describe('projectIdentifier', () => {
   let result;
 
-  it('returns factory function', () => {
-    result = makePackageIdentifier('gasket');
+  it('returns creator function', () => {
+    result = projectIdentifier('gasket');
     expect(result).toBeInstanceOf(Function);
-    expect(result.name).toEqual('packageIdentifier');
+    expect(result.name).toEqual('createPackageIdentifier');
   });
 
-  it('factory exposes static method isValidFullName', () => {
-    result = makePackageIdentifier('gasket');
+  it('creator exposes static method isValidFullName', () => {
+    result = projectIdentifier('gasket');
     expect(result.isValidFullName).toBeInstanceOf(Function);
     expect(result.isValidFullName.name).toEqual('isValidFullName');
   });
 
-  it('factory exposes static method lookup', () => {
-    result = makePackageIdentifier('gasket');
+  it('creator exposes static method lookup', () => {
+    result = projectIdentifier('gasket');
     expect(result.lookup).toBeInstanceOf(Function);
     expect(result.lookup.name).toEqual('lookup');
   });
 
   it('requires project name', () => {
-    expect(makePackageIdentifier).toThrow('projectName required');
+    expect(projectIdentifier).toThrow('projectName required');
   });
 
   it('defaults type to plugin', () => {
-    const instance = makePackageIdentifier('gasket');
-    result = instance('example').fullName;
+    const identifier = projectIdentifier('gasket');
+    result = identifier('example').fullName;
     expect(result).toContain('plugin');
   });
 
   it('supports custom types', () => {
-    const instance = makePackageIdentifier('gasket', { type: 'preset' });
-    result = instance('example').fullName;
-    expect(result).toContain('preset');
+    const type = 'preset';
+    const identifier = projectIdentifier('gasket', type);
+    result = identifier('example').fullName;
+    expect(result).toContain(type);
   });
 
   describe('isValidFullName', () => {
-    const packageIdentifier = makePackageIdentifier('gasket');
+    const packageIdentifier = projectIdentifier('gasket');
 
     it('exposed static method', () => {
       expect(packageIdentifier.isValidFullName).toBeInstanceOf(Function);
@@ -275,7 +276,7 @@ describe('makePackageIdentifier', () => {
   });
 
   describe('lookup', () => {
-    const packageIdentifier = makePackageIdentifier('gasket');
+    const packageIdentifier = projectIdentifier('gasket');
     let mockSet, mockHandler;
 
     beforeEach(() => {

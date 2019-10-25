@@ -16,10 +16,10 @@
 
 <dl>
 <dt><a href="#pluginIdentifier">pluginIdentifier()</a> : <code><a href="#createPackageIdentifier">createPackageIdentifier</a></code></dt>
-<dd><p>Make identifiers for plugins</p>
+<dd><p>Create package identifiers for Gasket plugins</p>
 </dd>
 <dt><a href="#presetIdentifier">presetIdentifier()</a> : <code><a href="#createPackageIdentifier">createPackageIdentifier</a></code></dt>
-<dd><p>Make identifiers for presets</p>
+<dd><p>Create package identifiers for Gasket presets</p>
 </dd>
 </dl>
 
@@ -415,13 +415,13 @@ Returns the required module, or null if not found
 <a name="pluginIdentifier"></a>
 
 ## pluginIdentifier() : [<code>createPackageIdentifier</code>](#createPackageIdentifier)
-Make identifiers for plugins
+Create package identifiers for Gasket plugins
 
 **Kind**: global function  
 <a name="presetIdentifier"></a>
 
 ## presetIdentifier() : [<code>createPackageIdentifier</code>](#createPackageIdentifier)
-Make identifiers for presets
+Create package identifiers for Gasket presets
 
 **Kind**: global function  
 <a name="PluginDesc"></a>
