@@ -8,9 +8,9 @@ presets.
 ## Naming convention
 
 Plugins and presets should follow adhere to the project-type prefixed naming
-convention. Following this format well help avoid collisions with short names.
-This convention also mimics those by there projects such a `@babel` and
-`@oclif`.
+convention. This formating allows user plugins to be referenced with short names
+and will help avoid collisions. This convention also mimics those by other
+projects such a `@babel` and `@oclif`.
 
 ### Plugins
 
@@ -31,9 +31,9 @@ This convention also mimics those by there projects such a `@babel` and
 ### Fallbacks
 
 To soften the transition from the older postfixed format, the loader supports
-fallbacks for short names to it them, and then to the `@gasket` scope. For
-example, if a short name of `example` is used, the package lookup order would be
-as follows:
+fallbacks for short names to postfixed format, and then to the `@gasket` scope.
+For example, if a short name of `example` is used, the package lookup order
+would be as follows:
 
 ```
 example --> gasket-plugin-example --> example-gasket-plugin --> gasket/plugin-example --> gasket/example-plugin
@@ -46,14 +46,14 @@ format as well. For example, if the short name `@user/example` is used:
 @user/example --> @user/plugin-example --> @user/example-plugin
 ```
 
-Use with caution, and don't rely on it. This behavior may be deprecated in
+Use with caution, and don't rely on it. This behavior may be deprecated in a
 future release. Moving forward, short names without the `@gasket` scope should
 be presumed to resolve to the `gasket-plugin-<name>` format.
 
 ### Utilities
 
-There are util functions for creating objects for working with the different
-parts of package identifiers for plugins and presets.
+There are util functions for creating objects for working with different parts
+of package identifiers for plugins and presets.
 
 ```js
 const { pluginIdentifier } = require('@gasket/resolve');
