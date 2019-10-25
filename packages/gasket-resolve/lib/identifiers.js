@@ -1,4 +1,4 @@
-const { makePackageIdentifier } = require('./package-identifier');
+const { createPackageIdentifier } = require('./package-identifier');
 
 /**
  * The package name with or without version of a plugin.
@@ -51,16 +51,18 @@ const { makePackageIdentifier } = require('./package-identifier');
 /**
  * Make identifiers for plugins
  *
- * @type {PackageIdentifier}
+ * @type {createPackageIdentifier}
+ * @function
  */
-const pluginIdentifier = makePackageIdentifier('gasket');
+const pluginIdentifier = setupProjectType('gasket');
 
 /**
- * Make identifiers for plugins
+ * Make identifiers for presets
  *
- * @type {PackageIdentifier}
+ * @type {createPackageIdentifier}
+ * @function
  */
-const presetIdentifier = makePackageIdentifier('gasket', { type: 'preset' });
+const presetIdentifier = setupProjectType('gasket', 'preset');
 
 
 module.exports = {

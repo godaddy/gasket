@@ -65,8 +65,22 @@ function expandMaker(projectName, type = 'plugin') {
  * @private
  */
 
-
-function makePackageIdentifier(projectName, { type = 'plugin' } = {}) {
+/**
+ * Create a function used to make instances of the PackageIdentifier.
+ * The `projectName` and `type` are components of the naming convention such as
+ * - @<projectName>/<type>-<name>
+ * - @<user-scope>/<projectName>-<type>-<name>
+ * - <projectName>-<type>-<name>
+ *
+ * If a package belongs to the project, it should use `projectName` in its scope.
+ * For user plugins, the `projectName` will be paired with the `type`.
+ *
+ * @param {string} projectName - Name of the project scope and base name
+ * @param {string} [type] - Defaults to 'plugin'.
+ * @returns {function} function to make
+ * @private
+ */
+function setupProjectType(projectName, type = 'plugin') {
   const re = matchMaker(projectName, type);
   const expand = expandMaker(projectName, type);
   const projectScope = `@${projectName}`;
@@ -77,16 +91,16 @@ function makePackageIdentifier(projectName, { type = 'plugin' } = {}) {
   const isProjectScopedFn = name => name.startsWith(projectScope);
 
   /**
-   * Create a new package identifier instance
+   * Create a new PackageIdentifier instance
    *
-   * @typedef {function} packageIdentifier
+   * @typedef {function} createPackageIdentifier
    *
    * @param {String} rawName - Original input name of a package
    * @param {Object} [options] - Options
-   * @param {boolean} [options.prefixed] - Disable this to force prefixed/postfixed format for short names
+   * @param {boolean} [options.prefixed] - Set this to force prefixed/postfixed format for short names
    * @returns {PackageIdentifier} instance
    */
-  function packageIdentifier(rawName, options) {
+  function createPackageIdentifier(rawName, options) {
 
     const [, parsedName, parsedVersion] = re.name.exec(rawName);
 
@@ -252,7 +266,7 @@ function makePackageIdentifier(projectName, { type = 'plugin' } = {}) {
        */
       withVersion(defaultVersion = 'latest') {
         const nextName = parsedName + '@' + (parsedVersion || defaultVersion);
-        return packageIdentifier(nextName, _format);
+        return createPackageIdentifier(nextName, _format);
       }
 
       /**
@@ -287,7 +301,7 @@ function makePackageIdentifier(projectName, { type = 'plugin' } = {}) {
           return null;
         }
 
-        return packageIdentifier(nextRawName, nextOptions);
+        return createPackageIdentifier(nextRawName, nextOptions);
       }
     }
 
@@ -304,50 +318,53 @@ function makePackageIdentifier(projectName, { type = 'plugin' } = {}) {
   }
 
   /**
-   * Util method to check if a full name is valid
+   * Static util method to check if a full name is valid
    *
    * Examples:
    * - @gasket/https-plugin -> true
    * - @gasket/https-plugin@1.2.3 -> false
    * - https -> false
    *
+   * @function createPackageIdentifier.isValidFullName
    * @param {string} maybeFullName - Name to check
    * @returns {boolean} fullName
    */
-  packageIdentifier.isValidFullName = function isValidFullName(maybeFullName) {
+  createPackageIdentifier.isValidFullName = function isValidFullName(maybeFullName) {
     try {
-      return packageIdentifier(maybeFullName).fullName === maybeFullName;
+      return createPackageIdentifier(maybeFullName).fullName === maybeFullName;
     } catch (e) {
       return false;
     }
   };
 
   /**
-   * Util method to loop through format options for short names.
+   * Static util method to loop through format options for short names.
    * The handler will be provide the next formatted identifier to try,
    * which should return falsy to continue,
    * or return truthy to end and return the current identifier.
+   * If the lookup runs out of formats to try, it will return null.
    *
+   * @function createPackageIdentifier.lookup
    * @param {string} name - Name to check
    * @param {function(PackageIdentifier)} handler - Attempt to find package current format
-   * @returns {PackageIdentifier|null} identifier
+   * @returns {PackageIdentifier|null} identifier if found or null
    */
-  packageIdentifier.lookup = function lookup(name, handler) {
+  createPackageIdentifier.lookup = function lookup(name, handler) {
     let result;
     let identifier;
     do {
-      identifier = identifier ? identifier.nextFormat() : packageIdentifier(name);
+      identifier = identifier ? identifier.nextFormat() : createPackageIdentifier(name);
       result = identifier && handler(identifier);
     } while (!result && identifier);
 
     return identifier;
   };
 
-  return packageIdentifier;
+  return createPackageIdentifier;
 }
 
 module.exports = {
   matchMaker,
   expandMaker,
-  makePackageIdentifier
+  setupProjectType
 };
