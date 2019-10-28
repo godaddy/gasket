@@ -1,5 +1,7 @@
 # `@gasket/workbox-plugin`
 
+### 1.1.1
+
 - Get library version from `workbox-build` package.json ([#95])
 
 ### 1.1.0
