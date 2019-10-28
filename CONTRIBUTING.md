@@ -92,7 +92,7 @@ please stick to the code style as defined by the [Godaddy JS styleguide][style].
 - [GitHub Pull Request documentation](https://help.github.com/send-pull-requests/)
 - [JSDoc]
 
-[issues]: https://github.com/godaddy/warehouse.ai/issues
+[issues]: https://github.com/godaddy/github/issues
 // TODO: Add this link once reviewers approve channel creation
 [slack]:
 [JSDoc]: http://usejsdoc.org/

@@ -1,2 +1,3 @@
 # gasket
 
+- Add contribution guidelines
