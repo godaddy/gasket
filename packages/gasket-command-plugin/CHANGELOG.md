@@ -1,5 +1,7 @@
 # `@gasket/command-plugin`
 
+- Fix `init` lifecycle to execute before `configure` ([#94])
+
 ### 2.0.0
 
 - Move GasketCommand to this plugin ([#74])
@@ -28,3 +30,4 @@
 
 [#52]: https://github.com/godaddy/gasket/pull/52
 [#74]: https://github.com/godaddy/gasket/pull/74
+[#94]: https://github.com/godaddy/gasket/pull/94

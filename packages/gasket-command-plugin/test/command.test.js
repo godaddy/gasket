@@ -308,17 +308,31 @@ describe('GasketCommand', function () {
       });
     });
 
-    it('invokes the configure Gasket lifecycle', async () => {
-      class CustomCommand extends GasketCommand {
-        gasketConfigure(config) {
-          return { ...config, env: 'test' };
-        }
-      }
+    it('invokes the `init` Gasket lifecycle', async () => {
+      const cmd = instantiateCommand(GasketCommand);
+      await cmd.init();
 
-      const cmd = instantiateCommand(CustomCommand);
+      assume(gasket.exec).is.calledWith('init');
+    });
+
+    it('invokes the `configure` Gasket lifecycle', async () => {
+      const cmd = instantiateCommand(GasketCommand);
       await cmd.init();
 
       assume(gasket.execWaterfall).calledWith('configure', sinon.match.object);
+    });
+
+    it('invokes `init` before `configure`', async () => {
+      const cmd = instantiateCommand(GasketCommand);
+
+      const orderSpy = sinon.stub();
+      cmd.config.gasket.exec = orderSpy;
+      cmd.config.gasket.execWaterfall = orderSpy;
+
+      await cmd.init();
+
+      assume(orderSpy.firstCall.args[0]).equals('init');
+      assume(orderSpy.secondCall.args[0]).equals('configure');
     });
   });
 
@@ -336,12 +350,6 @@ describe('GasketCommand', function () {
       cmd.config = { gasket: createMockGasketApi() };
 
       await cmd.init();
-    });
-
-    it('invokes the `init` Gasket lifecycle', async () => {
-      await cmd.run();
-
-      assume(gasket.exec).is.calledWith('init');
     });
 
     it('invokes the `gasketRun` method', async () => {
