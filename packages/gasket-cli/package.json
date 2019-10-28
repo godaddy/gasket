@@ -1,6 +1,6 @@
 {
   "name": "@gasket/cli",
-  "version": "3.1.1",
+  "version": "3.1.2",
   "description": "CLI for rapid application development with gasket",
   "main": "src/index.js",
   "bin": {
@@ -47,7 +47,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-cli",
   "dependencies": {
-    "@gasket/command-plugin": "^2.0.1",
+    "@gasket/command-plugin": "^2.0.2",
     "@gasket/git-plugin": "^1.1.1",
     "@gasket/lifecycle-plugin": "^1.1.3",
     "@gasket/metadata-plugin": "^2.0.0",
