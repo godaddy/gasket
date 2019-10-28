@@ -9,7 +9,7 @@ class GasketCommand extends Command {
 
   /**
    * Abstract method which must be implemented by subclasses, used to execute
-   * Gasket lifecycles, following the `configure` and `init` Gasket lifecycles.
+   * Gasket lifecycles, following the `init` and `configure` Gasket lifecycles.
    * @async
    * @abstract
    */
@@ -35,7 +35,6 @@ class GasketCommand extends Command {
    * @private
    */
   async run() {
-    await this.gasket.exec('init');
     await this.gasketRun();
   }
 
@@ -81,24 +80,22 @@ class GasketCommand extends Command {
       ...this.parsed
     };
 
-    let gasketConfig = this.gasket.config;
-
     // Setup config env based on env flag if set
-    gasketConfig.env = parsedFlags.env || gasketConfig.env;
+    this.gasket.config.env = parsedFlags.env || this.gasket.config.env;
 
     // Allow command subclasses to modify config
-    gasketConfig = await this.gasketConfigure(gasketConfig);
+    this.gasket.config = await this.gasketConfigure(this.gasket.config);
 
-    if (!gasketConfig.env) {
-      gasketConfig.env = 'development';
+    if (!this.gasket.config.env) {
+      this.gasket.config.env = 'development';
       this.warn('No env specified, falling back to "development".');
     }
 
-    gasketConfig = applyEnvironmentOverrides(gasketConfig, gasketConfig, './gasket.config.local');
-
+    this.gasket.config = applyEnvironmentOverrides(this.gasket.config, this.gasket.config, './gasket.config.local');
+    // Allow plugins to do things with partial config state
+    await this.gasket.exec('init');
     // Allow plugins to modify config
-    gasketConfig = await this.gasket.execWaterfall('configure', gasketConfig);
-    this.gasket.config = gasketConfig;
+    this.gasket.config = await this.gasket.execWaterfall('configure', this.gasket.config);
   }
 }
 

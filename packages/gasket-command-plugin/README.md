@@ -129,7 +129,29 @@ module.exports = {
 };
 ```
 
+### init
+
+Signals the start of any Gasket command and allows running of code immediately
+before other `gasket` lifecycles. If it errors, the command will exit early.
+
+```js
+// another-example-plugin.js
+module.exports = {
+  name: 'another-example',
+  hooks: {
+    async init(gasket) {
+      console.log('init called for command:', gasket.command.id)
+    }
+  }
+};
+```
+
+Because this lifecycle runs _before_ for the [configure] lifecycle, only the
+partial gasket config is available (see step 5 below).
+
 ### configure
+
+The `configure` lifecycle executes for each Gasket command.
 
 Configuration for a Gasket session goes through a series of steps:
 
@@ -138,11 +160,12 @@ Configuration for a Gasket session goes through a series of steps:
 3. Environment is set by base `GasketCommand`
 4. Commands adjust config by implementing `gasketConfigure`
 5. Environment overrides are applied by base `GasketCommand`
+   - _`init` lifecycle is executed_
 6. Plugins adjust config by hooking `configure` lifecycle
 
 When the CLI starts up, it attempts to loads the `gasket.config` in its default
 expected location, or as specified with [command flags]. After commands have
-done any config adjustments, plugins then have the opportunity.
+done any config adjustments, plugins then have the opportunity in this lifecycle.
 
 ```js
 // example-plugin.js
@@ -170,6 +193,7 @@ config from a remote service. The `configure` lifecycle is executed with the
 
 
 [getCommands]: #getcommands
+[configure]: #configure
 [GasketCommand]: docs/api.md#gasketcommand
 [parsed arguments]: docs/api.md#GasketCommand+parsed
 [command details]: docs/api.md#GasketCommand+gasket
