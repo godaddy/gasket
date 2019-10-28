@@ -1,5 +1,7 @@
 # `@gasket/command-plugin`
 
+### 2.0.2
+
 - Fix `init` lifecycle to execute before `configure` ([#94])
 
 ### 2.0.0
