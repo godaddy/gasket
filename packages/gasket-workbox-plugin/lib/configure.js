@@ -1,12 +1,7 @@
-const util = require('util');
-const fs = require('fs');
 const {
   getWorkboxConfig,
-  getOutputDir,
   getAssetPrefix
 } = require('./utils');
-
-const readDir = util.promisify(fs.readdir);
 
 /**
  * Configure lifecycle to set up SW config with defaults
@@ -17,11 +12,10 @@ const readDir = util.promisify(fs.readdir);
  */
 module.exports = async function configure(gasket, config) {
   const workbox = getWorkboxConfig({ config });
-  const outputDir = getOutputDir({ config });
   const assetPrefix = getAssetPrefix({ config });
 
-  const items = await readDir(outputDir);
-  const libraryVersion = items.find(p => p.startsWith('workbox-')).trim();
+  const { version } = require('workbox-build/package');
+  const libraryVersion = `workbox-v${version}`;
 
   const scriptUrl = [
     ...(assetPrefix ? [assetPrefix] : []),

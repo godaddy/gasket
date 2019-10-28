@@ -1,8 +1,5 @@
-const fs = require('fs');
 const utils = require('../lib/utils');
 const configure = require('../lib/configure');
-
-jest.mock('fs');
 
 describe('configure', () => {
   let results, mockGasket;
@@ -13,11 +10,6 @@ describe('configure', () => {
         root: '/some-root'
       }
     };
-
-    fs.__setMockFiles([
-      'workbox-v4.1.0',
-      'some-other-dir'
-    ]);
   });
 
   it('returns config with workbox settings', async () => {
@@ -45,14 +37,14 @@ describe('configure', () => {
   it('sets library version', async () => {
     results = await configure(mockGasket, mockGasket.config);
     expect(results.workbox).
-      toHaveProperty('libraryVersion', expect.stringContaining('workbox'));
+      toHaveProperty('libraryVersion', expect.stringContaining('workbox-v'));
   });
 
   it('add library script to imports', async () => {
     results = await configure(mockGasket, mockGasket.config);
     expect(results.workbox.config).toHaveProperty('importScripts',
       expect.arrayContaining([
-        expect.stringContaining('_workbox/workbox'),
+        expect.stringContaining('_workbox/workbox-v'),
         expect.stringContaining('workbox-sw.js')
       ]));
   });

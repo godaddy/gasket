@@ -1,5 +1,7 @@
 # `@gasket/service-worker-plugin`
 
+- `serviceWorkerCacheKey` executed in `express` lifecycle ([#95])
+
 ### 1.2.0
 
 - Align package structure and dependencies
@@ -16,3 +18,5 @@
 
 - Initial implementation.
 - Support for caching sw content
+
+[#95]:https://github.com/godaddy/gasket/pull/95

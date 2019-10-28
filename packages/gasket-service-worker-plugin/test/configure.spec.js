@@ -1,17 +1,12 @@
 const configure = require('../lib/configure');
 
 describe('configure', () => {
-  const cacheKeyA = () => 'A';
-  const cacheKeyB = () => 'B';
 
-  let results, mockGasket, mockExec, mockPluginCacheKeys;
+  let results, mockGasket;
 
   beforeEach(() => {
-    mockPluginCacheKeys = [];
-    mockExec = jest.fn().mockResolvedValue(mockPluginCacheKeys);
     mockGasket = {
-      config: {},
-      exec: mockExec
+      config: {}
     };
   });
 
@@ -28,11 +23,10 @@ describe('configure', () => {
   it('sets defaults', async () => {
     results = await configure(mockGasket);
     expect(results.serviceWorker).toEqual({
-      'url': '/sw.js',
+      url: '/sw.js',
       scope: '/',
       content: '',
-      cacheKeys: expect.any(Array),
-      cache:{
+      cache: {
         maxAge: 1000 * 60 * 60 * 24 * 5, // 5 days
         updateAgeOnGet: true
       }
@@ -46,47 +40,5 @@ describe('configure', () => {
       }
     });
     expect(results.serviceWorker).toHaveProperty('url', '/some-sw.js');
-  });
-
-  it('executes exec for serviceWorkerCacheKey lifecycle', async () => {
-    results = await configure(mockGasket);
-    expect(mockExec).toHaveBeenCalledWith('serviceWorkerCacheKey');
-  });
-
-  it('adds cache keys from plugins to config', async () => {
-    mockPluginCacheKeys.push(cacheKeyA);
-    results = await configure(mockGasket);
-    expect(results.serviceWorker).toHaveProperty('cacheKeys');
-    expect(results.serviceWorker.cacheKeys).toEqual([cacheKeyA]);
-  });
-
-  it('adds cache keys from gasket.config to config', async () => {
-    results = await configure(mockGasket, {
-      serviceWorker: {
-        cacheKeys: [cacheKeyA]
-      }
-    });
-    expect(results.serviceWorker).toHaveProperty('cacheKeys');
-    expect(results.serviceWorker.cacheKeys).toEqual([cacheKeyA]);
-  });
-
-  it('merges plugin and gasket.config cache keys', async () => {
-    mockPluginCacheKeys.push(cacheKeyB);
-    results = await configure(mockGasket, {
-      serviceWorker: {
-        cacheKeys: [cacheKeyA]
-      }
-    });
-    expect(results.serviceWorker.cacheKeys).toEqual([cacheKeyA, cacheKeyB]);
-  });
-
-  it('filters non-function cache keys', async () => {
-    mockPluginCacheKeys.push(cacheKeyB, null, undefined, '', {});
-    results = await configure(mockGasket, {
-      serviceWorker: {
-        cacheKeys: [cacheKeyA, null, undefined, '', {}]
-      }
-    });
-    expect(results.serviceWorker.cacheKeys).toEqual([cacheKeyA, cacheKeyB]);
   });
 });

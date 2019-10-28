@@ -1,5 +1,6 @@
 const LRU = require('lru-cache');
 const uglify = require('uglify-js');
+const { getCacheKeys } = require('./utils');
 
 const swHeader = `'use strict';
 
@@ -13,16 +14,17 @@ const swHeader = `'use strict';
  * @param {Gasket} gasket - Gasket
  * @returns {Function} endpoint
  */
-function configureEndpoint(gasket) {
+async function configureEndpoint(gasket) {
   const { logger, config } = gasket;
   const { serviceWorker, env } = config;
-  const { cacheKeys, content, cache: cacheConfig = {}, minify = {} } = serviceWorker;
+  const { content, cache: cacheConfig = {}, minify = {} } = serviceWorker;
   const minifyConfig = minify === true ? {} : minify;
 
   const cache = new LRU(cacheConfig);
+  const cacheKeys = await getCacheKeys(gasket);
 
   return async function sw(req, res) {
-    const cacheKey = cacheKeys.reduce((acc, cur) => acc + cur(req), '_');
+    const cacheKey = cacheKeys.reduce((acc, fn) => acc + fn(req), '_');
 
     let composedContent = cache.get(cacheKey);
     if (!composedContent) {
@@ -55,7 +57,7 @@ function configureEndpoint(gasket) {
  * @param {Gasket} gasket - Gasket
  * @param {Express} app - App
  */
-module.exports = function express(gasket, app) {
+module.exports = async function express(gasket, app) {
   const { serviceWorker: { url } } = gasket.config;
-  app.get(url, configureEndpoint(gasket));
+  app.get(url, await configureEndpoint(gasket));
 };
