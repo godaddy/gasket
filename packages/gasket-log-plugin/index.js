@@ -8,6 +8,8 @@ module.exports = {
   name: 'log',
   hooks: {
     init: {
+      // init after the @gasket/lifecycle-plugin to allow a `logTransports`
+      // file to be define in an app's `./lifecycles` dir.
       timing: {
         after: ['lifecycle']
       },
