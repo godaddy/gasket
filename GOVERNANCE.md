@@ -11,6 +11,8 @@ documentation or otherwise, is a contributor.
 
 Maintainers have commit permissions. They are responsible for creating release
 commits. They also are responsible for maintaining the Gasket [roadmap](./ROADMAP.md).
+Finally, they are responsible for closing out issues that are duplicates, not
+reproducible or otherwise should not be addressed.
 New maintainers are added by existing maintainers at their discretion. If you
 want to become a maintainer, start by looking at Gasket's backlog of issues.
 You can triage existing issues, provide fixes,
