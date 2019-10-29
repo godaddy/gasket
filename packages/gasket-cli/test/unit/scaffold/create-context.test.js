@@ -54,7 +54,6 @@ describe('CreateRuntime', () => {
       if (key === 'pkg' || key === 'files') return;
       assume(runtime[key]).equals(context[key]);
     });
-    console.log('runtime.pkg', runtime.pkg)
   });
 
   it('proxies set for ordinary properties', () => {
