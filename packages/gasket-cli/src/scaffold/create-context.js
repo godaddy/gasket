@@ -103,6 +103,7 @@ function flatten(acc, values) {
  * -- Added by `setup-pkg`
  *
  * @property {ConfigBuilder} pkg - package.json builder
+ * @property {PackageManager} pkgManager - manager to execute npm or yarn commands
  *
  * -- Added by `setup-gasket-config`
  *
