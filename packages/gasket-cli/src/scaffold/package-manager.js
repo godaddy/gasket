@@ -145,7 +145,7 @@ module.exports = class PackageManager {
   async info(args = []) {
     const { stdout } = await this.exec('info', [...args, '--json']);
     // normalize stdout results of yarn and npm before parsing
-    let normalized = this.type === 'npm' ? `{ "data": ${stdout} }` : stdout;
+    let normalized = this.manager === 'npm' ? `{ "data": ${stdout} }` : stdout;
     normalized = stdout ? normalized : '{}';
 
     const { data } = JSON.parse(normalized);
