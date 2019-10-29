@@ -134,4 +134,25 @@ module.exports = class PackageManager {
   async install(args = []) {
     return this.exec('install', args);
   }
+
+  /**
+   * Executes yarn or npm info, and returns parsed JSON data results.
+   *
+   * @param {string[]} args Additional CLI arguments to pass to `npm`.
+   * @returns {Promise<object>} stdout and data
+   * @public
+   */
+  async info(args = []) {
+    const { stdout } = await this.exec('info', [...args, '--json']);
+    // normalize stdout results of yarn and npm before parsing
+    let normalized = this.type === 'npm' ? `{ "data": ${stdout} }` : stdout;
+    normalized = stdout ? normalized : '{}';
+
+    const { data } = JSON.parse(normalized);
+
+    return {
+      stdout,
+      data
+    };
+  }
 };
