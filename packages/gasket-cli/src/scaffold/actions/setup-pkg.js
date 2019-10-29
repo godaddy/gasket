@@ -1,6 +1,7 @@
 const action = require('../action-wrapper');
 const ConfigBuilder = require('../config-builder');
 const { addPluginsToPkg } = require('../utils');
+const PackageManager = require('../package-manager');
 const { presetIdentifier } = require('@gasket/resolve');
 
 /**
@@ -32,7 +33,9 @@ async function setupPkg(context) {
   }));
   addPluginsToPkg(rawPlugins, pkg);
 
-  Object.assign(context, { pkg });
+  const pkgManager = new PackageManager(context);
+
+  Object.assign(context, { pkg, pkgManager });
 }
 
 module.exports = action('Set up package.json', setupPkg, { startSpinner: false });
