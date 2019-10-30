@@ -22,7 +22,7 @@ function makeGatherDevDeps(context) {
   return async function gatherDevDeps(rawName) {
     const [, parsedName, parsedVersion] = reName.exec(rawName);
 
-    let version = parsedVersion ? semver.minVersion(parsedVersion) : null;
+    let version = parsedVersion ? semver.minVersion(parsedVersion).version : null;
     if (!version) {
       version = (await pkgManager.info([parsedName, 'version'])).data;
     }
@@ -60,7 +60,7 @@ function makeRunScriptStr(context) {
   return function runScriptStr(script) {
     let str = [runCmd, script].join(' ');
     if (runCmd === 'yarn') {
-      str = str.replace('-- --', '--');
+      str = str.replace(' -- ', ' ');
     }
     return str;
   };
