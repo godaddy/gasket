@@ -11,7 +11,7 @@
 
 
 /**
- * GoDaddy Code Style
+ * GoDaddy JavaScript Style
  * @see: https://github.com/godaddy/javascript
  *
  * @type {CodeStyle}
@@ -87,7 +87,7 @@ const standard = {
 };
 
 /**
- * JavaScript Standard Style
+ * Airbnb JavaScript Style
  * @see: https://github.com/airbnb/javascript
  *
  * @type {CodeStyle}
@@ -127,17 +127,19 @@ const other = {
     const { pkg, eslintConfig, stylelintConfig } = context;
     const { gatherDevDeps } = utils;
 
-    // TODO (kinetifex): utilize v4 package identifier with prefix format support to handle short names with scopes
-    const configName = !eslintConfig.includes('eslint-config') ? `eslint-config-${eslintConfig}` : eslintConfig;
+    if (eslintConfig) {
+      // TODO (kinetifex): utilize v4 package identifier with prefix format support to handle short names with scopes
+      const configName = !eslintConfig.includes('eslint-config') ? `eslint-config-${eslintConfig}` : eslintConfig;
 
-    pkg.add('devDependencies', (await gatherDevDeps(configName)));
-    pkg.add('eslintConfig', { extends: [configName] });
+      pkg.add('devDependencies', (await gatherDevDeps(configName)));
+      pkg.add('eslintConfig', { extends: [eslintConfig] });
+    }
 
     if (stylelintConfig) {
       const stylelintName = !stylelintConfig.includes('stylelint-config') ?
         `stylelint-config-${stylelintConfig}` : stylelintConfig;
       pkg.add('devDependencies', (await gatherDevDeps(stylelintName)));
-      pkg.add('stylelint', { extends: [stylelintName] });
+      pkg.add('stylelint', { extends: [stylelintConfig] });
     }
   }
 };
@@ -175,12 +177,12 @@ const common = {
           'lint': 'eslint --ext .js,.jsx .',
           'lint:fix': runScriptStr('lint -- --fix')
         });
+      }
 
-        if (pkg.has('devDependencies', 'jest')) {
-          pkg.add('eslintConfig', { env: { jest: true } });
-        } else if (pkg.has('devDependencies', 'mocha')) {
-          pkg.add('eslintConfig', { env: { mocha: true } });
-        }
+      if (pkg.has('devDependencies', 'jest')) {
+        pkg.add('eslintConfig', { env: { jest: true } });
+      } else if (pkg.has('devDependencies', 'mocha')) {
+        pkg.add('eslintConfig', { env: { mocha: true } });
       }
 
       pkg.add('eslintIgnore', [
@@ -217,16 +219,19 @@ const common = {
       if (!pkg.has('scripts', 'stylelint')) {
         pkg.add('scripts', {
           'stylelint': 'stylelint "**/*.scss"',
-          'stylelint:fix': runScriptStr('stylelint -- --fix'),
-          'posttest': `${runScriptStr('lint')} && ${runScriptStr('stylelint')}`
+          'stylelint:fix': runScriptStr('stylelint -- --fix')
         });
       }
     }
 
     if (!pkg.has('scripts', 'posttest')) {
-      pkg.add('scripts', {
-        posttest: `${runScriptStr('lint')}`
-      });
+      if (hasEslint && hasStylelint) {
+        pkg.add('scripts', { posttest: `${runScriptStr('lint')} && ${runScriptStr('stylelint')}` });
+      } else if (hasEslint) {
+        pkg.add('scripts', { posttest: `${runScriptStr('lint')}` });
+      } else if (hasStylelint) {
+        pkg.add('scripts', { posttest: `${runScriptStr('stylelint')}` });
+      }
     }
   }
 };
