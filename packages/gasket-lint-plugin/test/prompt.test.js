@@ -97,4 +97,18 @@ describe('prompt hook', function () {
     assume(question.when({ addStylelint: false, codeStyle: 'other' })).not.true();
     assume(question.when({ addStylelint: false, codeStyle: 'godaddy' })).not.true();
   });
+
+  it('stylelintConfig question transforms input for short names', async () => {
+    await promptHook(gasket, context, { prompt });
+    const question = prompt.getCall(0).args[0][3];
+    assume(question.name).equals('stylelintConfig');
+    assume(question.transformer('short')).equals('stylelint-config-short');
+  });
+
+  it('stylelintConfig question does not transform for scoped names', async () => {
+    await promptHook(gasket, context, { prompt });
+    const question = prompt.getCall(0).args[0][3];
+    assume(question.name).equals('stylelintConfig');
+    assume(question.transformer('@scope/config')).equals('@scope/config');
+  });
 });
