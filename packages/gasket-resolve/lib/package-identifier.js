@@ -71,14 +71,35 @@ function expandMaker(projectName, type = 'plugin') {
  * @private
  */
 function projectIdentifier(projectName, type = 'plugin') {
-  const re = matchMaker(projectName, type);
-  const expand = expandMaker(projectName, type);
-  const projectScope = `@${projectName}`;
 
-  const isScopedFn = name => re.scope.test(name);
-  const isShortFn = name => !(name.includes(projectName) && name.includes(type));
-  const isPrefixedFn = name => re.prefixed.project.test(name) || re.prefixed.user.test(name);
-  const isProjectScopedFn = name => name.startsWith(projectScope);
+  /**
+   * Setup project level variables
+   * @returns {object} vars
+   */
+  function setupProjectVars() {
+    const re = matchMaker(projectName, type);
+    const expand = expandMaker(projectName, type);
+    const projectScope = `@${projectName}`;
+    const isScopedFn = name => re.scope.test(name);
+    const isShortFn = name => !(name.includes(projectName) && name.includes(type));
+    const isPrefixedFn = name => re.prefixed.project.test(name) || re.prefixed.user.test(name);
+    const isProjectScopedFn = name => name.startsWith(projectScope);
+
+    return {
+      re,
+      expand,
+      projectScope,
+      isScopedFn,
+      isShortFn,
+      isPrefixedFn,
+      isProjectScopedFn
+    }
+  }
+
+  //
+  // namespace project vars to avoid clutter child scopes
+  //
+  const projectVars = setupProjectVars();
 
   /**
    * Create a new PackageIdentifier instance
@@ -92,36 +113,52 @@ function projectIdentifier(projectName, type = 'plugin') {
    */
   function createPackageIdentifier(rawName, options) {
 
-    const [, parsedName, parsedVersion] = re.name.exec(rawName);
-
-    const short = isShortFn(parsedName);
-    const scoped = isScopedFn(parsedName);
-    const project = isProjectScopedFn(parsedName);
-    const {
-      // default to prefixed for short names
-      prefixed = short ? true : isPrefixedFn(parsedName)
-    } = options || {};
+    const [, parsedName, parsedVersion] = projectVars.re.name.exec(rawName);
 
     /**
-     * The parts of an identifier's name format
-     *
-     * @typedef {Object} NameFormat
-     *
-     * @property {boolean} prefixed
-     * @property {boolean} short
-     * @property {boolean} project
-     * @property {boolean} scoped
-     * @private
+     * * Setup package level variables
+     * @returns {object} vars
      */
-    const _format = Object.freeze({
-      short,
-      prefixed,
-      scoped,
-      project
-    });
+    function setupPackageVars() {
+      const short = projectVars.isShortFn(parsedName);
+      const scoped = projectVars.isScopedFn(parsedName);
+      const project = projectVars.isProjectScopedFn(parsedName);
+      const {
+        // default to prefixed for short names
+        prefixed = short || projectVars.isPrefixedFn(parsedName)
+      } = options || {};
 
-    const _expand = prefixed ? expand.prefixed : expand.postfixed;
-    const _re = (prefixed ? re.prefixed : re.postfixed)[project ? 'project' : 'user'];
+      /**
+       * The parts of an identifier's name format
+       *
+       * @typedef {Object} NameFormat
+       *
+       * @property {boolean} prefixed
+       * @property {boolean} short
+       * @property {boolean} project
+       * @property {boolean} scoped
+       * @private
+       */
+      const format = Object.freeze({
+        short,
+        prefixed,
+        scoped,
+        project
+      });
+
+      const reType = project && 'project' || 'user';
+      const fixedAs = prefixed && 'prefixed' || 'postfixed';
+      const expand = projectVars.expand[fixedAs];
+      const re = projectVars.re[fixedAs][reType];
+
+      return { format, expand, re };
+    }
+
+    //
+    // Destructure only those vars we need to use in the class
+    //
+    const { format, expand, re } = setupPackageVars();
+    const { projectScope } = projectVars;
 
     /**
      * Utility class for working with package names and versions
@@ -151,8 +188,8 @@ function projectIdentifier(projectName, type = 'plugin') {
        * @returns {string} fullName
        */
       get fullName() {
-        if (_format.short) {
-          return _expand(parsedName);
+        if (format.short) {
+          return expand(parsedName);
         }
 
         return parsedName;
@@ -178,12 +215,12 @@ function projectIdentifier(projectName, type = 'plugin') {
        * @returns {string} fullName
        */
       get shortName() {
-        if (_format.short) {
+        if (format.short) {
           return parsedName;
         }
 
-        const matches = _re.exec(parsedName);
-        return matches[1] ? `${matches[1]}/${matches[2]}` : matches[2];
+        const [, scope, name] = re.exec(parsedName);
+        return scope ? `${scope}/${name}` : name;
       }
 
       /**
@@ -228,27 +265,27 @@ function projectIdentifier(projectName, type = 'plugin') {
       }
 
       get isShort() {
-        return _format.short;
+        return format.short;
       }
 
       get isLong() {
-        return !_format.short;
+        return !format.short;
       }
 
       get isPrefixed() {
-        return _format.prefixed;
+        return format.prefixed;
       }
 
       get isPostfixed() {
-        return !_format.prefixed;
+        return !format.prefixed;
       }
 
       get hasScope() {
-        return _format.scoped;
+        return format.scoped;
       }
 
       get hasProjectScope() {
-        return _format.project;
+        return format.project;
       }
 
       get hasVersion() {
@@ -267,7 +304,7 @@ function projectIdentifier(projectName, type = 'plugin') {
        */
       withVersion(defaultVersion = 'latest') {
         const nextName = parsedName + '@' + (parsedVersion || defaultVersion);
-        return createPackageIdentifier(nextName, _format);
+        return createPackageIdentifier(nextName, format);
       }
 
       /**
@@ -283,15 +320,15 @@ function projectIdentifier(projectName, type = 'plugin') {
        * @returns {PackageIdentifier|null} identifier
        */
       nextFormat() {
-        if (!_format.short) return null;
+        if (!format.short) return null;
 
         let nextRawName = this.rawName;
 
         const nextOptions = {};
-        if (_format.prefixed) {
+        if (format.prefixed) {
           nextOptions.prefixed = false;
           // If we tried postfixed, and we don't have a scope, force to project scope and prefixed
-        } else if (!_format.scoped) {
+        } else if (!format.scoped) {
           nextRawName = `${projectScope}/${nextRawName}`;
           nextOptions.prefixed = true;
         }
