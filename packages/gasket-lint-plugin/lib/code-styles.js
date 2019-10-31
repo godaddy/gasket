@@ -155,7 +155,7 @@ const none = {
 
 /**
  * This does not show up as a prompt choice, but is common setup that runs
- * for all code styles choices (expect, of course, none).
+ * for all code styles choices (except, of course, none).
  *
  * @type {CodeStyle}
  */

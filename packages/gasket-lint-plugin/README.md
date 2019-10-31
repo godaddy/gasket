@@ -99,7 +99,7 @@ the module for the preset, under a `createContext` property.
 - `codeStyle` - (string) One of the choices of [code styles]:
   - `godaddy`
   - `standard`
-  - `airbvb`
+  - `airbnb`
 - `addStylelint` - (boolean) Enable to add stylelint for the `codeStyle` if set.
 - `eslintConfig` - (string) Name of a [ESLint shared config] to add. Only when
   no `codeStyle`.
