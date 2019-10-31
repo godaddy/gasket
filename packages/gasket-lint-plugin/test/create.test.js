@@ -71,4 +71,10 @@ describe('create hook', function () {
     assume(mockCodeStyles.other.create).called();
     assume(mockCodeStyles.common.create).called();
   });
+
+  it('sets codeStyle to other if stylelintConfig is set', async () => {
+    await createHookHandler(gasket, { stylelintConfig: 'bogus' });
+    assume(mockCodeStyles.other.create).called();
+    assume(mockCodeStyles.common.create).called();
+  });
 });

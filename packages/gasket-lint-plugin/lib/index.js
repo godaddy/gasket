@@ -73,13 +73,14 @@ module.exports = {
        * @returns {Promise<void>} promise
        */
       handler: async function createHook(gasket, context) {
-        const { codeStyle, eslintConfig } = context;
+        const { codeStyle, eslintConfig, stylelintConfig } = context;
 
         //
-        // If on eslintConfig has been set, set codeStyle to other
-        // If codeStyle or eslintConfig have not been set somehow, default to none.
+        // Use codeStyle if set.
+        // If eslint or stylelint config has been set, set codeStyle to `other`.
+        // Otherwise, default to `none`.
         //
-        const selectedCodeStyle = codeStyle || (eslintConfig && 'other') || 'none';
+        const selectedCodeStyle = codeStyle || ((eslintConfig || stylelintConfig) && 'other') || 'none';
 
         if (selectedCodeStyle !== 'none') {
           const gatherDevDeps = makeGatherDevDeps(context);
