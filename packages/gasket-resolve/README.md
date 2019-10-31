@@ -46,9 +46,10 @@ format as well. For example, if the short name `@user/example` is used:
 @user/example --> @user/plugin-example --> @user/example-plugin
 ```
 
-Use with caution, and don't rely on it. This behavior may be deprecated in a
-future release. Moving forward, short names without the `@gasket` scope should
-be presumed to resolve to the `gasket-plugin-<name>` format.
+Use with caution, and don't rely on it. Consider this behavior **deprecated**,
+which will be removed in a future major release. Short names without the
+`@gasket` scope should be presumed to resolve to the `gasket-plugin-<name>`
+format.
 
 ### Utilities
 
