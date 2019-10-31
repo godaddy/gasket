@@ -93,7 +93,7 @@ function projectIdentifier(projectName, type = 'plugin') {
       isShortFn,
       isPrefixedFn,
       isProjectScopedFn
-    }
+    };
   }
 
   //
@@ -336,7 +336,7 @@ function projectIdentifier(projectName, type = 'plugin') {
         //
         // if there is nothing to change, return null
         //
-        if (!Object.keys(nextOptions).length && nextRawName === this.rawName) {
+        if (!('prefixed' in nextOptions) && nextRawName === this.rawName) {
           return null;
         }
 
