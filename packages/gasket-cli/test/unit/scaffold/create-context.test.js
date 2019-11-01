@@ -27,8 +27,8 @@ describe('CreateRuntime', () => {
     mockContext = {
       appName: 'my-app',
       dest: '/some/path/my-app',
-      preset: 'bogus-preset',
-      plugins: ['bogus-A-plugin', 'bogus-B-plugin'],
+      preset: 'gasket-preset-bogus',
+      plugins: ['@gasket/plugin-bogus-A', '@gasket/plugin-bogus-B'],
       pkg: {
         add: pkgAddStub,
         extend: pkgExtendStub
@@ -122,7 +122,7 @@ describe('makeCreateContext', () => {
 
   beforeEach(() => {
     argv = ['my-app'];
-    flags = { presets: ['nextjs'] };
+    flags = { presets: ['@gasket/nextjs'] };
   });
 
   it('returns a create context object', () => {
@@ -141,13 +141,13 @@ describe('makeCreateContext', () => {
   });
 
   it('sets rawPresets from flags', () => {
-    results = makeCreateContext(argv, { presets: ['@gasket/bogus-preset@^1.2.3'] });
-    assume(results.rawPresets).deep.equals(['@gasket/bogus-preset@^1.2.3']);
+    results = makeCreateContext(argv, { presets: ['@gasket/preset-bogus@^1.2.3'] });
+    assume(results.rawPresets).deep.equals(['@gasket/preset-bogus@^1.2.3']);
   });
 
   it('sets rawPresets from flags with multiple entries', () => {
-    results = makeCreateContext(argv, { presets: ['@gasket/bogus-preset@^1.2.3', '@gasket/test-preset@^3.1.2'] });
-    assume(results.rawPresets).deep.equals(['@gasket/bogus-preset@^1.2.3', '@gasket/test-preset@^3.1.2']);
+    results = makeCreateContext(argv, { presets: ['@gasket/preset-bogus@^1.2.3', '@gasket/preset-test@^3.1.2'] });
+    assume(results.rawPresets).deep.equals(['@gasket/preset-bogus@^1.2.3', '@gasket/preset-test@^3.1.2']);
   });
 
   it('sets rawPresets to empty array if not defined', () => {
@@ -166,12 +166,12 @@ describe('makeCreateContext', () => {
   });
 
   it('sets localPresets to empty array if not defined', () => {
-    results = makeCreateContext(argv, { presets: ['@gasket/bogus-preset@^1.2.3'] });
+    results = makeCreateContext(argv, { presets: ['@gasket/preset-bogus@^1.2.3'] });
     assume(results.localPresets).deep.equals([]);
   });
 
   it('uses npmconfig from flags', () => {
-    results = makeCreateContext(argv, { npmconfig: '/some/path/to/npmconfig', presets: ['nextjs'] });
+    results = makeCreateContext(argv, { npmconfig: '/some/path/to/npmconfig', presets: ['@gasket/nextjs'] });
     assume(results.npmconfig).equals('/some/path/to/npmconfig');
   });
 
@@ -202,20 +202,20 @@ describe('makeCreateContext', () => {
   });
 
   it('sets pkgLinks from flags', () => {
-    results = makeCreateContext(argv, { 'npm-link': ['jest', 'some-user-plugin'], 'presets': ['godady'] });
-    assume(results.pkgLinks).eqls(['jest', 'some-user-plugin']);
+    results = makeCreateContext(argv, { 'npm-link': ['@gasket/jest', 'gasket-plugin-some-user'], 'presets': ['godady'] });
+    assume(results.pkgLinks).eqls(['@gasket/jest', 'gasket-plugin-some-user']);
   });
 
   it('sets plugins short names from flags', () => {
     results =
-      makeCreateContext(argv, { plugins: ['jest@^1.2.3', 'some-user-plugin', '@gasket/intl-plugin'], presets: ['nextjs'] });
-    assume(results.plugins).eqls(['jest', 'some-user-plugin', 'intl']);
+      makeCreateContext(argv, { plugins: ['@gasket/jest@^1.2.3', 'gasket-plugin-some-user', '@gasket/plugin-intl'], presets: ['@gasket/nextjs'] });
+    assume(results.plugins).eqls(['@gasket/jest', 'some-user', '@gasket/intl']);
   });
 
   it('sets rawPlugins from flags', () => {
     results =
-      makeCreateContext(argv, { plugins: ['jest@^1.2.3', 'some-user-plugin', '@gasket/intl-plugin'], presets: ['nextjs'] });
-    assume(results.rawPlugins).eqls(['jest@^1.2.3', 'some-user-plugin', '@gasket/intl-plugin']);
+      makeCreateContext(argv, { plugins: ['@gasket/jest@^1.2.3', 'gasket-plugin-some-user', '@gasket/plugin-intl'], presets: ['@gasket/nextjs'] });
+    assume(results.rawPlugins).eqls(['@gasket/jest@^1.2.3', 'gasket-plugin-some-user', '@gasket/plugin-intl']);
   });
 
   it('detects whether the target directory exists', () => {
