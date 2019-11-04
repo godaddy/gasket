@@ -26,7 +26,7 @@ module.exports = {
 
       pkg.add('dependencies', {
         '@gasket/assets': '^1.0.0',
-        'next': '^9.0.4',
+        'next': '^9.1.2',
         'prop-types': '^15.6.2',
         'react': '^16.8.4',
         'react-dom': '^16.8.4'

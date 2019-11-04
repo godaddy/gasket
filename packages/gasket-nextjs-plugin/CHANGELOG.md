@@ -1,5 +1,7 @@
 # `@gasket/nextjs-plugin`
 
+- Bump to `next@9.1.2` to fix hanging `gasket build`
+
 ### 2.3.2
 
 - Fix package.json scripts to wrap glob patterns in double-quotes
