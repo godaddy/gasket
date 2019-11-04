@@ -27,7 +27,7 @@ describe('Plugin', () => {
   });
 
   it('has expected name', () => {
-    assume(plugin).to.have.property('name', 'command');
+    assume(plugin).to.have.property('name', '@gasket/command');
   });
 
   it('has expected hooks', () => {
