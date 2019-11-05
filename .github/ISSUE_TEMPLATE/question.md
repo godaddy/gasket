@@ -16,5 +16,4 @@ For questions or help, please see:
 
 ### Please note that this issue tracker is not a help forum and requests for help will be closed.
 
-// TODO: Add this link once reviewers approve channel creation
-[slack]:
+[Slack]: https://godaddy-oss.slack.com/messages/CHXEP5DNH
