@@ -1,5 +1,4 @@
 const action = require('../action-wrapper');
-const PackageManager = require('../package-manager');
 
 /**
  * Installs node_modules using the selected package manager
@@ -8,9 +7,9 @@ const PackageManager = require('../package-manager');
  * @returns {Promise} promise
  */
 async function installModules(context) {
-  const manager = new PackageManager(context);
+  const { pkgManager } = context;
 
-  await manager.install();
+  await pkgManager.install();
 }
 
 

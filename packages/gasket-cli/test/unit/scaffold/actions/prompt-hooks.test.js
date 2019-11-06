@@ -24,19 +24,17 @@ describe('promptHooks', () => {
       pkg: ConfigBuilder.createPackageJson({
         name: 'my-app',
         version: '0.0.0'
-      })
+      }),
+      pkgManager: {
+        install: installStub,
+        link: linkStub
+      }
     };
 
     engineStub = sandbox.stub().returns({ execWaterfall: execWaterfallStub });
 
     mockImports = {
       '../create-engine': engineStub,
-      '../package-manager': class PackageManager {
-        constructor() {
-          this.install = installStub;
-          this.link = linkStub;
-        }
-      },
       'inquirer': {
         createPromptModule: createPromptModuleStub
       },

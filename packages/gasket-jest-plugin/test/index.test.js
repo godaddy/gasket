@@ -64,8 +64,7 @@ describe('Plugin', () => {
     [
       'jest',
       'enzyme',
-      'enzyme-adapter-react-16',
-      'eslint-plugin-jest'
+      'enzyme-adapter-react-16'
     ].forEach(name => {
       it(`adds "${name}" in the devDependencies`, async function () {
         const { pkg } = await create();
@@ -100,16 +99,6 @@ describe('Plugin', () => {
       const { pkg } = await create();
 
       expect(pkg.scripts.test).toEqual('jest');
-    });
-  });
-
-  describe('eslintConfig', function () {
-    it('adds eslint setting to use jest related settings', async function () {
-      const { pkg } = await create();
-
-      expect(pkg.eslintConfig).toEqual({
-        extends: ['plugin:jest/recommended']
-      });
     });
   });
 });

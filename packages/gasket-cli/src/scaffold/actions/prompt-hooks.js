@@ -1,6 +1,5 @@
 const inquirer = require('inquirer');
 const action = require('../action-wrapper');
-const PackageManager = require('../package-manager');
 const { addPluginsToContext, addPluginsToPkg } = require('../utils');
 const { pluginIdentifier } = require('@gasket/resolve');
 const createEngine = require('../create-engine');
@@ -21,7 +20,7 @@ const createAddPlugins = context => {
    * @returns {Promise} promise
    */
   return async function addPlugins(...pluginsToAdd) {
-    const { pkg, pkgLinks = [] } = context;
+    const { pkg, pkgLinks = [], pkgManager } = context;
 
     addPluginsToContext(pluginsToAdd, context);
     addPluginsToPkg(pluginsToAdd, pkg);
@@ -30,15 +29,14 @@ const createAddPlugins = context => {
     // Install new plugins if not already linked
     //
     const pluginIds = pluginsToAdd.map(p => pluginIdentifier(p).withVersion());
-    const manager = new PackageManager(context);
     const toInstall = pluginIds.filter(p => !pkgLinks.includes(p.fullName));
     if (toInstall.length) {
-      await manager.install(toInstall.map(p => p.full));
+      await pkgManager.install(toInstall.map(p => p.full));
       //
       // relink because npm blows them away on installs...
       //
       if (pkgLinks.length) {
-        await manager.link(pkgLinks);
+        await pkgManager.link(pkgLinks);
       }
     }
 

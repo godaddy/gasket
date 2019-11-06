@@ -31,6 +31,10 @@ function makeCreateRuntime(context, source) {
 
       add(key, value) {
         context.pkg.add(key, value, source);
+      },
+
+      has(key, value) {
+        return context.pkg.has(key, value);
       }
     }
   };
@@ -99,6 +103,7 @@ function flatten(acc, values) {
  * -- Added by `setup-pkg`
  *
  * @property {ConfigBuilder} pkg - package.json builder
+ * @property {PackageManager} pkgManager - manager to execute npm or yarn commands
  *
  * -- Added by `setup-gasket-config`
  *

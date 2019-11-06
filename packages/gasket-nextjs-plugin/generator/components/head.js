@@ -3,11 +3,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import NextHead from 'next/head';
 
-const Head = (props) => (
+const Head = ({ title, description }) => (
   <NextHead>
     <meta charSet='UTF-8'/>
-    <title>{props.title}</title>
-    <meta name='description' content={ props.description }/>
+    <title>{title}</title>
+    <meta name='description' content={ description }/>
     <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'/>
   </NextHead>
 );
