@@ -1,3 +1,5 @@
+const { devDependencies } = require('./package.json');
+
 module.exports = {
   name: 'jest',
   hooks: {
@@ -10,20 +12,16 @@ module.exports = {
       );
 
       pkg.add('devDependencies', {
-        'jest': '^24.8.0',
-        'enzyme': '^3.10.0',
-        'enzyme-adapter-react-16': '^1.14.0',
-        'eslint-plugin-jest': '^22.15.1'
+        'jest': devDependencies.jest,
+        // TODO (kinetifex): only add these if react in pkg. Same with setup.js
+        'enzyme': devDependencies.enzyme,
+        'enzyme-adapter-react-16': devDependencies['enzyme-adapter-react-16']
       });
 
       pkg.add('scripts', {
         'test': 'jest',
         'test:watch': 'jest --watchAll',
         'test:coverage': 'jest --coverage'
-      });
-
-      pkg.add('eslintConfig', {
-        extends: ['plugin:jest/recommended']
       });
     }
   }

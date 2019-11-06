@@ -1,18 +1,28 @@
 const sinon = require('sinon');
 const assume = require('assume');
+const proxyquire = require('proxyquire');
 const ConfigBuilder = require('../../../../src/scaffold/config-builder');
 
 
 describe('setupPkg', () => {
-  let sandbox, mockContext, setupPkg;
-  let packageJsonSpy;
+  let sandbox, mockContext, mockImports, setupPkg;
+  let packageJsonSpy, packageManagerSpy;
 
   beforeEach(() => {
     sandbox = sinon.createSandbox();
 
     packageJsonSpy = sandbox.spy(ConfigBuilder, 'createPackageJson');
 
-    setupPkg = require('../../../../src/scaffold/actions/setup-pkg');
+    mockImports = {
+      '../package-manager': class PackageManager {
+        constructor() {}
+      },
+      '../action-wrapper': require('../../../helpers').mockActionWrapper
+    };
+
+    packageManagerSpy = sandbox.spy(mockImports, '../package-manager');
+
+    setupPkg = proxyquire('../../../../src/scaffold/actions/setup-pkg', mockImports);
 
     mockContext = {
       appName: 'my-app',
@@ -39,6 +49,11 @@ describe('setupPkg', () => {
     assume(packageJsonSpy).is.called();
     assume(packageJsonSpy.args[0][0]).property('name', mockContext.appName);
     assume(packageJsonSpy.args[0][0]).property('description', mockContext.appDescription);
+  });
+
+  it('instantiates PackageManager with context', async () => {
+    await setupPkg.wrapped(mockContext);
+    assume(packageManagerSpy).is.calledWith(mockContext);
   });
 
   it('adds the preset to pkg dependencies', async () => {
@@ -78,5 +93,11 @@ describe('setupPkg', () => {
     assume(mockContext.pkg).is.undefined();
     await setupPkg.wrapped(mockContext);
     assume(mockContext.pkg).is.instanceOf(ConfigBuilder);
+  });
+
+  it('adds pkgManager to context', async () => {
+    assume(mockContext.pkgManager).is.undefined();
+    await setupPkg.wrapped(mockContext);
+    assume(mockContext.pkgManager).is.instanceOf(mockImports['../package-manager']);
   });
 });

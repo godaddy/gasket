@@ -5,27 +5,21 @@ const proxyquire = require('proxyquire');
 
 describe('installModules', () => {
   let sandbox, mockContext, mockImports, installModules;
-  let installStub, packageManagerSpy;
+  let installStub;
 
   beforeEach(() => {
     sandbox = sinon.createSandbox();
     installStub = sandbox.stub();
 
     mockImports = {
-      '../package-manager': class PackageManager {
-        constructor() {
-          this.install = installStub;
-        }
-      },
       '../action-wrapper': require('../../../helpers').mockActionWrapper
     };
-
-    packageManagerSpy = sandbox.spy(mockImports, '../package-manager');
 
     installModules = proxyquire('../../../../src/scaffold/actions/install-modules', mockImports);
 
     mockContext = {
-      appName: 'my-app'
+      appName: 'my-app',
+      pkgManager: { install: installStub }
     };
   });
 
@@ -37,8 +31,8 @@ describe('installModules', () => {
     assume(installModules).property('wrapped');
   });
 
-  it('instantiates PackageManager with context', async () => {
+  it('executes install', async () => {
     await installModules(mockContext);
-    assume(packageManagerSpy).is.calledWith(mockContext);
+    assume(installStub).is.called();
   });
 });

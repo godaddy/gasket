@@ -1,5 +1,4 @@
 const action = require('../action-wrapper');
-const PackageManager = require('../package-manager');
 
 /**
  * Links local packages using the selected package manager
@@ -9,12 +8,11 @@ const PackageManager = require('../package-manager');
  * @returns {Promise} promise
  */
 async function linkModules(context, spinner) {
-  const { pkgLinks } = context;
+  const { pkgLinks, pkgManager } = context;
 
   if (pkgLinks && pkgLinks.length) {
     spinner.start();
-    const manager = new PackageManager(context);
-    await manager.link(pkgLinks);
+    await pkgManager.link(pkgLinks);
   }
 }
 
