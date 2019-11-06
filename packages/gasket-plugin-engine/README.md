@@ -3,7 +3,6 @@
 Plugin engine for gasket. This is used internally by `@gasket/cli`.
 
 * [What is a Plugin?](#what-is-a-plugin)
-* [What is a Preset?](#what-is-a-preset)
 * [Configuring Plugins](#configuring-plugins)
 * [Direct Usage](#direct-usage)
 
@@ -17,6 +16,8 @@ optional.
 which will allow them to be referenced using [short names](#short-names).
 Otherwise, plugins need to end with the `-plugin` suffix. This is how gasket
 determines what packages are plugins or not.
+
+If you're looking for documentation on presets, refer to the [preset authoring guide]
 
 #### Good names
 
@@ -187,3 +188,5 @@ The above will resolve all Plugins and Presets from within `./someapp` instead
 of resolving relative to the current directory.
 
 ##### LICENSE: [MIT](./LICENSE)
+
+[preset authoring guide]: /packages/docs/authoring-presets.md
