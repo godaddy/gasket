@@ -1,504 +1,363 @@
-const {
-  pluginIdentifier,
-  presetIdentifier,
-  PackageIdentifier
-} = require('../lib/package-identifier');
+/* eslint-disable no-undefined */
+const { matchMaker, expandMaker, projectIdentifier } = require('../lib/package-identifier');
 
-describe('pluginIdentifier', () => {
+const range = length => Array(length).fill().map((_, i) => i);
+
+describe('matchMaker', () => {
   let result;
 
-  it('is instance of PackageIdentifier', () => {
-    result = pluginIdentifier('jest@^1.0.0');
-    expect(result instanceof PackageIdentifier).toBe(true);
+  it('returns object with convention positions', () => {
+    const re = matchMaker('gasket');
+    expect(re).toHaveProperty('prefixed');
+    expect(re).toHaveProperty('postfixed');
+    // expect(re).toHaveProperty('projectPostfixed', expect.any(RegExp));
   });
 
-  describe('fullName', () => {
+  it('prefixed has expected regex format', () => {
+    const re = matchMaker('gasket');
+    expect(re.prefixed).toHaveProperty('project', expect.any(RegExp));
+    expect(re.prefixed).toHaveProperty('user', expect.any(RegExp));
+  });
 
-    it('expands short plugin names to full', () => {
-      result = pluginIdentifier('jest').fullName;
-      expect(result).toBe('@gasket/jest-plugin');
+  it('postfixed has expected regex format', () => {
+    const re = matchMaker('gasket');
+    expect(re.postfixed).toHaveProperty('project', expect.any(RegExp));
+    expect(re.postfixed).toHaveProperty('user', expect.any(RegExp));
+  });
+
+  it('requires project name', () => {
+    expect(matchMaker).toThrow('projectName required');
+  });
+
+  it('creates regex with project name', () => {
+    const re = matchMaker('gasket');
+    expect(re.prefixed.project.toString()).toContain('@gasket');
+    expect(re.prefixed.user.toString()).toContain('gasket');
+  });
+
+  it('defaults type to plugin', () => {
+    const re = matchMaker('gasket');
+    expect(re.prefixed.project.toString()).toContain('plugin');
+  });
+
+  it('supports custom types', () => {
+    const re = matchMaker('gasket', 'preset');
+    expect(re.prefixed.project.toString()).toContain('preset');
+  });
+
+  function testFormat(position, formatName, {
+    doesMatch,
+    doesNotMatch,
+    matchElements
+  }) {
+    it(`matches format`, () => {
+      const re = matchMaker('gasket');
+      doesMatch.forEach(name => expect(re[position][formatName].test(name)).toBe(true));
     });
 
-    it('expands one letter plugin names to full', () => {
-      result = pluginIdentifier('p').fullName;
-      expect(result).toBe('@gasket/p-plugin');
+    it('does not match other formats', () => {
+      const re = matchMaker('gasket');
+      doesNotMatch.forEach(name => expect(re[position][formatName].test(name)).toBe(false));
     });
 
-    it('ignores full @gasket plugin names', () => {
-      result = pluginIdentifier('@gasket/jest-plugin').fullName;
-      expect(result).toBe('@gasket/jest-plugin');
+    it('extracts match elements', () => {
+      Object.entries(matchElements).forEach(([name, expected]) => {
+        const re = matchMaker('gasket');
+        result = re[position][formatName].exec(name);
+        expect(result).toEqual(expect.arrayContaining(expected));
+        // verify order
+        range(expected.length).forEach(i => expect(result[i]).toEqual(expected[i]));
+      });
     });
+  }
 
-    it('ignores full @gasket plugin names with one letter', () => {
-      result = pluginIdentifier('@gasket/a-plugin').fullName;
-      expect(result).toBe('@gasket/a-plugin');
-    });
-
-    it('ignores full user plugin names', () => {
-      result = pluginIdentifier('my-custom-gasket-plugin').fullName;
-      expect(result).toBe('my-custom-gasket-plugin');
-    });
-
-    it('ignores full user plugin names with one letter', () => {
-      result = pluginIdentifier('a-plugin').fullName;
-      expect(result).toBe('a-plugin');
-    });
-
-    it('drops version if set with short name', () => {
-      result = pluginIdentifier('jest@^1.0.0').fullName;
-      expect(result).toBe('@gasket/jest-plugin');
-    });
-
-    it('drops version if set with short name using one letter', () => {
-      result = pluginIdentifier('j@^1.0.0').fullName;
-      expect(result).toBe('@gasket/j-plugin');
-    });
-
-    it('drops version if set with full name', () => {
-      result = pluginIdentifier('@gasket/jest-plugin@^1.0.0').fullName;
-      expect(result).toBe('@gasket/jest-plugin');
-    });
-
-    it('drops version if set with full name using on eletter', () => {
-      result = pluginIdentifier('@gasket/j-plugin@^1.0.0').fullName;
-      expect(result).toBe('@gasket/j-plugin');
-    });
-
-    it('drops version if set with user name', () => {
-      result = pluginIdentifier('my-custom-gasket-plugin@^1.0.0').fullName;
-      expect(result).toBe('my-custom-gasket-plugin');
-    });
-
-    it('drops version if set with user name using one letter plugin', () => {
-      result = pluginIdentifier('a-plugin@^1.0.0').fullName;
-      expect(result).toBe('a-plugin');
-    });
-
-    it('@gasket scoped desc requires -plugin suffix', () => {
-      try {
-        pluginIdentifier('@gasket/jest');
-      } catch (e) {
-        expect(e.message).toEqual(expect.stringContaining("Package descriptions with @gasket scope require suffix '-plugin'"));
+  describe('prefixed project format', () => {
+    testFormat('prefixed', 'project', {
+      doesMatch: [
+        '@gasket/plugin-example',
+        '@gasket/plugin-another-example'
+      ],
+      doesNotMatch: [
+        '@user/gasket-plugin-example',
+        'gasket-plugin-example',
+        '@gasket/example-plugin'
+      ],
+      matchElements: {
+        '@gasket/plugin-example': ['@gasket/plugin-example', '@gasket', 'example'],
+        '@gasket/plugin-another-example': ['@gasket/plugin-another-example', '@gasket', 'another-example']
       }
     });
   });
 
-  describe('shortName', () => {
-
-    it('gets short name if already short name', () => {
-      result = pluginIdentifier('jest').shortName;
-      expect(result).toBe('jest');
-    });
-
-    it('gets short name if already short name with single letter name', () => {
-      result = pluginIdentifier('j').shortName;
-      expect(result).toBe('j');
-    });
-
-    it('gets short name if set with full name', () => {
-      result = pluginIdentifier('@gasket/jest-plugin').shortName;
-      expect(result).toBe('jest');
-    });
-
-    it('gets short name if set with full name using single letter name', () => {
-      result = pluginIdentifier('@gasket/j-plugin').shortName;
-      expect(result).toBe('j');
-    });
-
-    it('gets user name if set with user name', () => {
-      result = pluginIdentifier('my-custom-gasket-plugin').shortName;
-      expect(result).toBe('my-custom-gasket-plugin');
-    });
-
-    it('gets user name if set with user name using single letter name', () => {
-      result = pluginIdentifier('a-plugin').shortName;
-      expect(result).toBe('a-plugin');
-    });
-
-    it('drops version if set with short name', () => {
-      result = pluginIdentifier('jest@^1.0.0').shortName;
-      expect(result).toBe('jest');
-    });
-
-    it('drops version if set with short name using single letter name', () => {
-      result = pluginIdentifier('j@^1.0.0').shortName;
-      expect(result).toBe('j');
-    });
-
-    it('drops version if set with full name', () => {
-      result = pluginIdentifier('@gasket/jest-plugin@^1.0.0').shortName;
-      expect(result).toBe('jest');
-    });
-
-    it('drops version if set with full name using single letter name', () => {
-      result = pluginIdentifier('@gasket/j-plugin@^1.0.0').shortName;
-      expect(result).toBe('j');
-    });
-
-    it('drops version if set with user name', () => {
-      result = pluginIdentifier('my-custom-gasket-plugin@^1.0.0').shortName;
-      expect(result).toBe('my-custom-gasket-plugin');
-    });
-
-    it('drops version if set with user name using single letter name', () => {
-      result = pluginIdentifier('a-plugin@^1.0.0').shortName;
-      expect(result).toBe('a-plugin');
+  describe('postfixed project format', () => {
+    testFormat('postfixed', 'project', {
+      doesMatch: [
+        '@gasket/example-plugin',
+        '@gasket/another-example-plugin'
+      ],
+      doesNotMatch: [
+        '@user/example-gasket-plugin',
+        'gasket-plugin-example',
+        '@gasket/plugin-example'
+      ],
+      matchElements: {
+        '@gasket/example-plugin': ['@gasket/example-plugin', '@gasket', 'example'],
+        '@gasket/another-example-plugin': ['@gasket/another-example-plugin', '@gasket', 'another-example']
+      }
     });
   });
 
-  describe('name', () => {
-
-    it('returns short plugin name', () => {
-      result = pluginIdentifier('jest').name;
-      expect(result).toBe('jest');
-    });
-
-    it('returns short plugin name with one letter', () => {
-      result = pluginIdentifier('j').name;
-      expect(result).toBe('j');
-    });
-
-    it('returns full plugin name', () => {
-      result = pluginIdentifier('@gasket/jest-plugin').name;
-      expect(result).toBe('@gasket/jest-plugin');
-    });
-
-    it('returns full plugin name using one letter', () => {
-      result = pluginIdentifier('@gasket/j-plugin').name;
-      expect(result).toBe('@gasket/j-plugin');
-    });
-
-    it('ignores user plugin names', () => {
-      result = pluginIdentifier('my-custom-gasket-plugin').name;
-      expect(result).toBe('my-custom-gasket-plugin');
-    });
-
-    it('ignores user plugin names with one letter', () => {
-      result = pluginIdentifier('m').name;
-      expect(result).toBe('m');
-    });
-
-    it('drops version if set with short name', () => {
-      result = pluginIdentifier('jest@^1.0.0').name;
-      expect(result).toBe('jest');
-    });
-
-    it('drops version if set with short name using one letter', () => {
-      result = pluginIdentifier('j@^1.0.0').name;
-      expect(result).toBe('j');
-    });
-
-    it('drops version if set with full name', () => {
-      result = pluginIdentifier('@gasket/jest-plugin@^1.0.0').name;
-      expect(result).toBe('@gasket/jest-plugin');
-    });
-
-    it('drops version if set with full name with one letter', () => {
-      result = pluginIdentifier('@gasket/j-plugin@^1.0.0').name;
-      expect(result).toBe('@gasket/j-plugin');
-    });
-
-    it('drops version if set with user name', () => {
-      result = pluginIdentifier('my-custom-gasket-plugin@^1.0.0').name;
-      expect(result).toBe('my-custom-gasket-plugin');
-    });
-
-    it('drops version if set with user name using one letter', () => {
-      result = pluginIdentifier('m-plugin@^1.0.0').name;
-      expect(result).toBe('m-plugin');
+  describe('prefixed user format', () => {
+    testFormat('prefixed', 'user', {
+      doesMatch: [
+        '@user/gasket-plugin-example',
+        '@user/gasket-plugin-another-example',
+        'gasket-plugin-example',
+        'gasket-plugin-another-example'
+      ],
+      doesNotMatch: [
+        '@gasket/plugin-example'
+      ],
+      matchElements: {
+        '@user/gasket-plugin-example': ['@user/gasket-plugin-example', '@user', 'example'],
+        '@user/gasket-plugin-another-example': ['@user/gasket-plugin-another-example', '@user', 'another-example'],
+        'gasket-plugin-example': ['gasket-plugin-example', undefined, 'example'],
+        'gasket-plugin-another-example': ['gasket-plugin-another-example', undefined, 'another-example']
+      }
     });
   });
 
-  describe('version', () => {
-
-    it('gets version if set with short name', () => {
-      result = pluginIdentifier('jest@^1.0.0').version;
-      expect(result).toBe('^1.0.0');
-    });
-
-    it('gets version if set with short name using single letter', () => {
-      result = pluginIdentifier('j@^1.0.0').version;
-      expect(result).toBe('^1.0.0');
-    });
-
-    it('gets version if set with full name', () => {
-      result = pluginIdentifier('@gasket/jest-plugin@^1.0.0').version;
-      expect(result).toBe('^1.0.0');
-    });
-
-    it('gets version if set with full name using single letter', () => {
-      result = pluginIdentifier('@gasket/j-plugin@^1.0.0').version;
-      expect(result).toBe('^1.0.0');
-    });
-
-    it('gets version if set with user name', () => {
-      result = pluginIdentifier('my-custom-gasket-plugin@^1.0.0').version;
-      expect(result).toBe('^1.0.0');
-    });
-
-    it('gets version if set with user name using single letter', () => {
-      result = pluginIdentifier('m-plugin@^1.0.0').version;
-      expect(result).toBe('^1.0.0');
-    });
-
-    it('returns null if no version set', () => {
-      result = pluginIdentifier('@gasket/jest-plugin').version;
-      expect(result).toBe(null);
-    });
-
-    it('returns null if no version set using single letter', () => {
-      result = pluginIdentifier('@gasket/j-plugin').version;
-      expect(result).toBe(null);
-    });
-  });
-
-  describe('full', () => {
-
-    it('expands short plugin names to full', () => {
-      result = pluginIdentifier('jest').full;
-      expect(result).toBe('@gasket/jest-plugin');
-    });
-
-    it('expands short plugin names to full with single letter', () => {
-      result = pluginIdentifier('j').full;
-      expect(result).toBe('@gasket/j-plugin');
-    });
-
-    it('ignores full @gasket plugin names', () => {
-      result = pluginIdentifier('@gasket/jest-plugin').full;
-      expect(result).toBe('@gasket/jest-plugin');
-    });
-
-    it('ignores full @gasket plugin names with single letter', () => {
-      result = pluginIdentifier('@gasket/j-plugin').full;
-      expect(result).toBe('@gasket/j-plugin');
-    });
-
-    it('ignores full user plugin names', () => {
-      result = pluginIdentifier('my-custom-gasket-plugin').full;
-      expect(result).toBe('my-custom-gasket-plugin');
-    });
-
-    it('ignores full user plugin names with single letter', () => {
-      result = pluginIdentifier('m-plugin').full;
-      expect(result).toBe('m-plugin');
-    });
-
-    it('includes version with full name if set with short name', () => {
-      result = pluginIdentifier('jest@^1.0.0').full;
-      expect(result).toBe('@gasket/jest-plugin@^1.0.0');
-    });
-
-    it('includes version with full name if set with short name using single letter', () => {
-      result = pluginIdentifier('j@^1.0.0').full;
-      expect(result).toBe('@gasket/j-plugin@^1.0.0');
-    });
-
-    it('includes version if set with full name', () => {
-      result = pluginIdentifier('@gasket/jest-plugin@^1.0.0').full;
-      expect(result).toBe('@gasket/jest-plugin@^1.0.0');
-    });
-
-    it('includes version if set with full name using single letter', () => {
-      result = pluginIdentifier('@gasket/j-plugin@^1.0.0').full;
-      expect(result).toBe('@gasket/j-plugin@^1.0.0');
-    });
-
-    it('includes version if set with user name', () => {
-      result = pluginIdentifier('my-custom-gasket-plugin@^1.0.0').full;
-      expect(result).toBe('my-custom-gasket-plugin@^1.0.0');
-    });
-
-    it('includes version if set with user name using single letter', () => {
-      result = pluginIdentifier('m-plugin@^1.0.0').full;
-      expect(result).toBe('m-plugin@^1.0.0');
-    });
-  });
-
-  describe('withVersion', () => {
-
-    it('returns instance of PackageIdentifier', () => {
-      result = pluginIdentifier('jest@^1.0.0').withVersion();
-      expect(result instanceof PackageIdentifier).toBe(true);
-    });
-
-    it('returns instance of PackageIdentifier for single letter plugins', () => {
-      result = pluginIdentifier('j@^1.0.0').withVersion();
-      expect(result instanceof PackageIdentifier).toBe(true);
-    });
-
-    it('retains version if set with short name', () => {
-      result = pluginIdentifier('jest@^1.0.0').withVersion();
-      expect(result.toString()).toBe('jest@^1.0.0');
-    });
-
-    it('retains version if set with short name using single letter', () => {
-      result = pluginIdentifier('j@^1.0.0').withVersion();
-      expect(result.toString()).toBe('j@^1.0.0');
-    });
-
-    it('retains version if set with full name', () => {
-      result = pluginIdentifier('@gasket/jest-plugin@^1.0.0').withVersion();
-      expect(result.toString()).toBe('@gasket/jest-plugin@^1.0.0');
-    });
-
-    it('retains version if set with full name using single letter', () => {
-      result = pluginIdentifier('@gasket/j-plugin@^1.0.0').withVersion();
-      expect(result.toString()).toBe('@gasket/j-plugin@^1.0.0');
-    });
-
-    it('retains version if set with user name', () => {
-      result = pluginIdentifier('my-custom-gasket-plugin@^1.0.0').withVersion();
-      expect(result.toString()).toBe('my-custom-gasket-plugin@^1.0.0');
-    });
-
-    it('retains version if set with user name using single letter', () => {
-      result = pluginIdentifier('m-plugin@^1.0.0').withVersion();
-      expect(result.toString()).toBe('m-plugin@^1.0.0');
-    });
-
-    it('adds default version if no version set', () => {
-      result = pluginIdentifier('@gasket/jest-plugin').withVersion();
-      expect(result.toString()).toBe('@gasket/jest-plugin@latest');
-    });
-
-    it('adds default version if no version set for single letter plugins', () => {
-      result = pluginIdentifier('@gasket/j-plugin').withVersion();
-      expect(result.toString()).toBe('@gasket/j-plugin@latest');
-    });
-
-    it('adds custom default version if no version set', () => {
-      result = pluginIdentifier('@gasket/jest-plugin').withVersion('2.0.0.beta-1');
-      expect(result.toString()).toBe('@gasket/jest-plugin@2.0.0.beta-1');
-    });
-
-    it('adds custom default version if no version set for single letter plugins', () => {
-      result = pluginIdentifier('@gasket/j-plugin').withVersion('2.0.0.beta-1');
-      expect(result.toString()).toBe('@gasket/j-plugin@2.0.0.beta-1');
-    });
-  });
-
-  describe('toString', () => {
-
-    it('returns the plugin name', () => {
-      result = pluginIdentifier('jest@^1.0.0').toString();
-      expect(result).toBe('jest@^1.0.0');
-    });
-
-    it('returns the plugin name for single letter names', () => {
-      result = pluginIdentifier('j@^1.0.0').toString();
-      expect(result).toBe('j@^1.0.0');
-    });
-
-    it('uses plugin name with string concat', () => {
-      result = pluginIdentifier('jest@^1.0.0') + ' bogus';
-      expect(result).toBe('jest@^1.0.0 bogus');
-      result = 'bogus: '.concat(pluginIdentifier('jest@^1.0.0'));
-      expect(result).toBe('bogus: jest@^1.0.0');
-    });
-  });
-
-  describe('isValidFullName', () => {
-
-    it('exposes static method', () => {
-      expect(pluginIdentifier.isValidFullName).toBeInstanceOf(Function);
-    });
-
-    it('true for valid @gasket names', () => {
-      result = pluginIdentifier.isValidFullName('@gasket/bogus-plugin');
-      expect(result).toBe(true);
-    });
-
-    it('true for valid non-@gasket names', () => {
-      result = pluginIdentifier.isValidFullName('some-bogus-plugin');
-      expect(result).toBe(true);
-    });
-
-    it('false for malformed names', () => {
-      result = pluginIdentifier.isValidFullName('some-bogus');
-      expect(result).toBe(false);
+  describe('postfixed user format', () => {
+    testFormat('postfixed', 'user', {
+      doesMatch: [
+        '@user/example-gasket-plugin',
+        'example-gasket-plugin',
+        '@user/another-example-gasket-plugin',
+        'another-example-gasket-plugin'
+      ],
+      doesNotMatch: [
+        '@gasket/example-plugin'
+      ],
+      matchElements: {
+        '@user/example-gasket-plugin': ['@user/example-gasket-plugin', '@user', 'example'],
+        '@user/another-example-gasket-plugin': ['@user/another-example-gasket-plugin', '@user', 'another-example'],
+        'example-gasket-plugin': ['example-gasket-plugin', undefined, 'example'],
+        'another-example-gasket-plugin': ['another-example-gasket-plugin', undefined, 'another-example']
+      }
     });
   });
 });
 
-describe('presetIdentifier', () => {
+describe('expandMaker', () => {
+  it('returns object with convention positions', () => {
+    const expand = expandMaker('gasket');
+    expect(expand).toHaveProperty('prefixed');
+    expect(expand).toHaveProperty('postfixed');
+    // expect(re).toHaveProperty('projectPostfixed', expect.any(RegExp));
+  });
+
+  it('prefixed has expected function', () => {
+    const expand = expandMaker('gasket');
+    expect(expand).toHaveProperty('prefixed', expect.any(Function));
+  });
+
+  it('postfixed has expected function', () => {
+    const expand = expandMaker('gasket');
+    expect(expand).toHaveProperty('postfixed', expect.any(Function));
+  });
+
+  it('requires project name', () => {
+    expect(expandMaker).toThrow('projectName required');
+  });
+
+  it('expands short name with project name', () => {
+    const expand = expandMaker('gasket');
+    expect(expand.prefixed('@gasket/example')).toEqual('@gasket/plugin-example');
+    expect(expand.prefixed('example')).toEqual('gasket-plugin-example');
+  });
+
+  it('defaults type to plugin', () => {
+    const expand = expandMaker('gasket');
+    expect(expand.prefixed('@gasket/example')).toEqual('@gasket/plugin-example');
+  });
+
+  describe('prefixed format', () => {
+    const expand = expandMaker('gasket').prefixed;
+
+    it('expands project scoped short name', () => {
+      expect(expand('@gasket/example')).toEqual('@gasket/plugin-example');
+    });
+
+    it('expands user scoped short name', () => {
+      expect(expand('@user/example')).toEqual('@user/gasket-plugin-example');
+    });
+
+    it('expands user short name', () => {
+      expect(expand('example')).toEqual('gasket-plugin-example');
+    });
+  });
+
+  describe('postfixed format', () => {
+    const expand = expandMaker('gasket').postfixed;
+
+    it('expands project scoped short name', () => {
+      expect(expand('@gasket/example')).toEqual('@gasket/example-plugin');
+    });
+
+    it('expands user scoped short name', () => {
+      expect(expand('@user/example')).toEqual('@user/example-gasket-plugin');
+    });
+
+    it('expands user short name', () => {
+      expect(expand('example')).toEqual('example-gasket-plugin');
+    });
+  });
+});
+
+describe('projectIdentifier', () => {
   let result;
 
-  it('is instance of PackageIdentifier', () => {
-    result = presetIdentifier('nextjs@^1.0.0');
-    expect(result instanceof PackageIdentifier).toBe(true);
+  it('returns creator function', () => {
+    result = projectIdentifier('gasket');
+    expect(result).toBeInstanceOf(Function);
+    expect(result.name).toEqual('createPackageIdentifier');
   });
 
-  it('is instance of PackageIdentifier using single letter preset', () => {
-    result = presetIdentifier('d@^1.0.0');
-    expect(result instanceof PackageIdentifier).toBe(true);
+  it('creator exposes static method isValidFullName', () => {
+    result = projectIdentifier('gasket');
+    expect(result.isValidFullName).toBeInstanceOf(Function);
+    expect(result.isValidFullName.name).toEqual('isValidFullName');
   });
 
-  it('gets short preset name', () => {
-    result = presetIdentifier('@gasket/nextjs-preset').shortName;
-    expect(result).toBe('nextjs');
+  it('creator exposes static method lookup', () => {
+    result = projectIdentifier('gasket');
+    expect(result.lookup).toBeInstanceOf(Function);
+    expect(result.lookup.name).toEqual('lookup');
   });
 
-  it('gets short preset name for single letter preset', () => {
-    result = presetIdentifier('@gasket/d-preset').shortName;
-    expect(result).toBe('d');
+  it('requires project name', () => {
+    expect(projectIdentifier).toThrow('projectName required');
   });
 
-  it('expands short preset names to full', () => {
-    result = presetIdentifier('nextjs').full;
-    expect(result).toBe('@gasket/nextjs-preset');
+  it('defaults type to plugin', () => {
+    const identifier = projectIdentifier('gasket');
+    result = identifier('example').fullName;
+    expect(result).toContain('plugin');
   });
 
-  it('expands short preset names to full for single letter preset', () => {
-    result = presetIdentifier('d').full;
-    expect(result).toBe('@gasket/d-preset');
-  });
-
-  it('plugin is not a valid suffix for presets (becomes expanded)', () => {
-    result = presetIdentifier('some-plugin').full;
-    expect(result).toBe('@gasket/some-plugin-preset');
-  });
-
-  it('plugin is not a valid suffix for presets (becomes expanded) with single letter presets', () => {
-    result = presetIdentifier('s-plugin').full;
-    expect(result).toBe('@gasket/s-plugin-preset');
-  });
-
-  it('@gasket scoped desc requires -preset suffix', () => {
-    try {
-      presetIdentifier('@gasket/nextjs');
-    } catch (e) {
-      expect(e.message).toEqual(expect.stringContaining("Package descriptions with @gasket scope require suffix '-preset'"));
-    }
-  });
-
-  it('@gasket scoped desc requires -preset suffix for single letter presets', () => {
-    try {
-      presetIdentifier('@gasket/d');
-    } catch (e) {
-      expect(e.message).toEqual(expect.stringContaining("Package descriptions with @gasket scope require suffix '-preset'"));
-    }
+  it('supports custom types', () => {
+    const type = 'preset';
+    const identifier = projectIdentifier('gasket', type);
+    result = identifier('example').fullName;
+    expect(result).toContain(type);
   });
 
   describe('isValidFullName', () => {
+    const packageIdentifier = projectIdentifier('gasket');
 
-    it('exposes static method', () => {
-      expect(presetIdentifier.isValidFullName).toBeInstanceOf(Function);
+    it('exposed static method', () => {
+      expect(packageIdentifier.isValidFullName).toBeInstanceOf(Function);
     });
 
     it('true for valid @gasket names', () => {
-      result = presetIdentifier.isValidFullName('@gasket/bogus-preset');
+      result = packageIdentifier.isValidFullName('@gasket/plugin-bogus');
       expect(result).toBe(true);
     });
 
     it('true for valid non-@gasket names', () => {
-      result = presetIdentifier.isValidFullName('some-bogus-preset');
+      result = packageIdentifier.isValidFullName('gasket-plugin-some-bogus');
       expect(result).toBe(true);
     });
 
     it('false for malformed names', () => {
-      result = presetIdentifier.isValidFullName('some-bogus');
+      result = packageIdentifier.isValidFullName('some-bogus');
       expect(result).toBe(false);
+    });
+  });
+
+  describe('lookup', () => {
+    const packageIdentifier = projectIdentifier('gasket');
+    let mockSet, mockHandler;
+
+    beforeEach(() => {
+      mockSet = new Set();
+      mockHandler = id => mockSet.has(id.fullName);
+    });
+
+    it('exposed static method', () => {
+      expect(packageIdentifier.lookup).toBeInstanceOf(Function);
+    });
+
+    describe('no scope', () => {
+
+      it('finds prefixed format', () => {
+        mockSet.add('gasket-plugin-example');
+        result = packageIdentifier.lookup('example', mockHandler);
+        expect(result.fullName).toEqual('gasket-plugin-example');
+      });
+
+      it('falls back to postfixed', () => {
+        mockSet.add('example-gasket-plugin');
+        result = packageIdentifier.lookup('example', mockHandler);
+        expect(result.fullName).toEqual('example-gasket-plugin');
+      });
+
+      it('returns null if not found', () => {
+        result = packageIdentifier.lookup('example', mockHandler);
+        expect(result).toBe(null);
+      });
+
+      it('falls back to project + prefixed', () => {
+        mockSet.add('@gasket/plugin-example');
+        result = packageIdentifier.lookup('example', mockHandler);
+        expect(result.fullName).toEqual('@gasket/plugin-example');
+      });
+
+      it('falls back to project + postfixed', () => {
+        mockSet.add('@gasket/example-plugin');
+        result = packageIdentifier.lookup('example', mockHandler);
+        expect(result.fullName).toEqual('@gasket/example-plugin');
+      });
+    });
+
+    describe('user scope', () => {
+
+      it('finds prefixed format', () => {
+        mockSet.add('@user/gasket-plugin-example');
+        result = packageIdentifier.lookup('@user/example', mockHandler);
+        expect(result.fullName).toEqual('@user/gasket-plugin-example');
+      });
+
+      it('falls back to postfixed', () => {
+        mockSet.add('@user/example-gasket-plugin');
+        result = packageIdentifier.lookup('@user/example', mockHandler);
+        expect(result.fullName).toEqual('@user/example-gasket-plugin');
+      });
+
+      it('returns null if not found', () => {
+        result = packageIdentifier.lookup('@user/example', mockHandler);
+        expect(result).toBe(null);
+      });
+    });
+
+    describe('project scope', () => {
+
+      it('finds prefixed format', () => {
+        mockSet.add('@gasket/plugin-example');
+        result = packageIdentifier.lookup('@gasket/example', mockHandler);
+        expect(result.fullName).toEqual('@gasket/plugin-example');
+      });
+
+      it('falls back to postfixed', () => {
+        mockSet.add('@gasket/example-plugin');
+        result = packageIdentifier.lookup('@gasket/example', mockHandler);
+        expect(result.fullName).toEqual('@gasket/example-plugin');
+      });
+
+      it('returns null if not found', () => {
+        result = packageIdentifier.lookup('@gasket/example', mockHandler);
+        expect(result).toBe(null);
+      });
     });
   });
 });
