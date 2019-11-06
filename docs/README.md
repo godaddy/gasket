@@ -243,7 +243,8 @@ by setting the `redux.makeStore` property of `gasket.config.js`.
 
 ## Presets
 
-Presets are a collection of plugins. See [Preset Authoring Guide] for details.
+Presets are collections of plugins and codified opinions. Please see the
+[preset authoring guide] for details.
 
 ## Plugins
 
@@ -368,7 +369,7 @@ Development modules to help with code quality.
 <!-- Gasket Repo Docs Links -->
 [CLI Commands]:/packages/gasket-cli#commands
 [Configuring Plugins]:/packages/gasket-plugin-engine#configuring-plugins
-[Preset Authoring Guide]:/guides/authoring-presets.md
+[preset authoring guide]:/guides/authoring-presets.md
 
 <!-- Next.js Links -->
 [Next.js]:https://github.com/zeit/next.js
