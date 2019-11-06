@@ -1,6 +1,6 @@
 const path = require('path');
-const Resolver  = require('./resolver');
-const { pluginIdentifier, presetIdentifier } = require('./package-identifier');
+const Resolver = require('./resolver');
+const { pluginIdentifier, presetIdentifier } = require('./identifiers');
 
 /**
  * Module with meta data
@@ -105,8 +105,12 @@ class Loader extends Resolver {
       return this.getModuleInfo(module, moduleName, { ...meta, preloaded: true });
     }
 
-    const moduleName = isModulePath.test(module) ? module : pluginIdentifier(module).fullName;
-    return this.loadModule(moduleName, meta);
+    if (isModulePath.test(module)) {
+      return this.loadModule(module, meta);
+    }
+
+    const identifier = pluginIdentifier.lookup(module, id => this.tryRequire(id.fullName));
+    return this.loadModule(identifier ? identifier.fullName : module, meta);
   }
 
   /**
@@ -119,7 +123,13 @@ class Loader extends Resolver {
    * @returns {PresetInfo} module
    */
   loadPreset(module, meta, { shallow = false } = {}) {
-    const moduleName = isModulePath.test(module) ? module : presetIdentifier(module).fullName;
+    let moduleName;
+    if (isModulePath.test(module)) {
+      moduleName = module;
+    } else {
+      const identifier = presetIdentifier.lookup(module, id => this.tryRequire(id.fullName));
+      moduleName = identifier ? identifier.fullName : module;
+    }
     const presetInfo = this.loadModule(moduleName, meta);
 
     const { name: from, dependencies } = presetInfo.package;
@@ -161,7 +171,6 @@ class Loader extends Resolver {
    */
   loadConfigured(config) {
     const { presets = [], add = [], remove = [] } = config || {};
-    const pluginsToRemove = new Set(remove.map(name => pluginIdentifier(name).fullName) || []);
 
     const loadedPresets = presets.map(name => this.loadPreset(name, { from: 'config' }));
     const loadedPlugins = add.map(module => this.loadPlugin(module, { from: 'config' }));
@@ -184,7 +193,13 @@ class Loader extends Resolver {
     // - priority is added plugins > preset plugins > nested preset plugins
     plugins = plugins.filter((info, idx, self) => self.findIndex(t => t.name === info.name) === idx);
 
-    // lastly, filter plugins explicitly configured to removed
+    // lastly, filter plugins explicitly configured to be removed
+    const pluginsToRemove = remove.reduce((set, name) => {
+      const identifier = pluginIdentifier.lookup(name, id => plugins.find(info => info.name === id.fullName));
+      set.add(identifier ? identifier.fullName : name);
+      return set;
+    }, new Set());
+
     plugins = plugins.filter((info => !pluginsToRemove.has(pluginIdentifier(info.name).fullName)));
 
     return {
