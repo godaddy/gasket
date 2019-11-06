@@ -12,6 +12,7 @@ describe('CreateRuntime', () => {
   let mockPlugin;
   let pkgAddStub;
   let pkgExtendStub;
+  let pkgHasStub;
   let filesAddStub;
   let context;
   let runtime;
@@ -21,6 +22,7 @@ describe('CreateRuntime', () => {
 
     pkgAddStub = sinon.stub();
     pkgExtendStub = sinon.stub();
+    pkgHasStub = sinon.stub().returns(true);
     filesAddStub = sinon.stub();
     mockPlugin = { name: 'mockPlugin' };
 
@@ -31,7 +33,8 @@ describe('CreateRuntime', () => {
       plugins: ['bogus-A-plugin', 'bogus-B-plugin'],
       pkg: {
         add: pkgAddStub,
-        extend: pkgExtendStub
+        extend: pkgExtendStub,
+        has: pkgHasStub
       },
       files: {
         add: filesAddStub
@@ -105,6 +108,16 @@ describe('CreateRuntime', () => {
       extension,
       mockPlugin
     );
+  });
+
+  it('proxies context.pkg.has with return', () => {
+    const result = runtime.pkg.has('name', 'legitimate-use-for-proxy');
+    assume(pkgHasStub).is.calledWithMatch(
+      'name',
+      'legitimate-use-for-proxy'
+    );
+
+    assume(result).is.true();
   });
 
   it('invokes context.files.add with source plugin', () => {
