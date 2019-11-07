@@ -130,7 +130,7 @@ GasketCommand.flags = {
   })
 };
 
-// TODO (agerard): Should be added dynamically by @gasket/metrics-plugin.
+// TODO (agerard): Should be added dynamically by @gasket/plugin-metrics.
 GasketCommand.flags.record = flags.boolean({
   env: 'GASKET_RECORD',
   default: true,

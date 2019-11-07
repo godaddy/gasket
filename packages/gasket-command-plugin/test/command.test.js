@@ -27,7 +27,7 @@ describe('GasketCommand', function () {
   /*
    * Simple helper that makes a mock PluginEngine instance.
    * This is commonly referred to as the "GasketAPI" in
-   * @gasket/plugin-engine documentation.
+   * @gasket/engine documentation.
    */
   function createMockGasketApi(gasketConfig = {}) {
     gasket = {
@@ -87,7 +87,7 @@ describe('GasketCommand', function () {
     PluginEngine = sinon.stub().returns(gasket);
 
     GasketCommand = proxyquire('../lib/command', {
-      '@gasket/plugin-engine': PluginEngine
+      '@gasket/engine': PluginEngine
     });
 
     done();

@@ -143,8 +143,8 @@ comma-separated values: --plugins=jest,zkconfig^1.0.0
   }),
   'npm-link': flags.string({
     description: `(INTERNAL) Local packages to be linked. Can be set as
-multiple flags (e.g. --npm-link @gasket/jest-plugin --npm-link some-test-preset)
-comma-separated values: --npm-link=@gasket/jest-plugin,some-test-preset`,
+multiple flags (e.g. --npm-link @gasket/plugin-jest --npm-link some-test-preset)
+comma-separated values: --npm-link=@gasket/plugin-jest,some-test-preset`,
     multiple: true,
     hidden: true,
     parse: commasToArray
