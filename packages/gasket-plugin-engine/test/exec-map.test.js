@@ -68,7 +68,7 @@ describe('The execMap method', () => {
 
   it('awaits sync or async hooks and resolves a map object', async () => {
     const result = await engine.execMap('eventA');
-    expect(result).toEqual({ pluginA: 1, pluginB: 2, pluginC: 3 });
+    expect(result).toEqual({ 'gasket-plugin-pluginA': 1, 'gasket-plugin-pluginB': 2, 'gasket-plugin-pluginC': 3 });
   });
 
   it('resolves to an empty object if nothing hooked the event', async () => {
@@ -81,6 +81,6 @@ describe('The execMap method', () => {
 
     const result = await execMap('eventA');
 
-    expect(result).toEqual({ pluginA: 1, pluginB: 2, pluginC: 3 });
+    expect(result).toEqual({ 'gasket-plugin-pluginA': 1, 'gasket-plugin-pluginB': 2, 'gasket-plugin-pluginC': 3 });
   });
 });

@@ -12,7 +12,7 @@ describe('Plugin', function () {
   });
 
   it('has expected name', () => {
-    assume(plugin).to.have.property('name', 'lifecycle');
+    assume(plugin).to.have.property('name', '@gasket/lifecycle');
   });
 
   it('has expected hooks', () => {

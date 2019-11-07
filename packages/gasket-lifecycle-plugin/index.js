@@ -69,7 +69,7 @@ async function init(gasket) {
  * @public
  */
 module.exports = {
-  name: 'lifecycle',
+  name: '@gasket/lifecycle',
   hooks: {
     init
   }
