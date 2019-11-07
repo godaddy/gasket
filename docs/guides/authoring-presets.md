@@ -1,22 +1,22 @@
 # Gasket Preset Authoring Guide
 
-## Why do they exist
+* [What is a preset?](#what-is-a-preset)
+* [Naming](#naming)
+  * [Good Names](#good-names)
+  * [Bad Names](#bad-names)
 
-Because people have opinions
+## What is a preset?
 
-## How are they used
+A preset is simply a package with gasket plugins dependencies. Much like
+[babel presets] they allow common plugins to be grouped together, and loaded by
+way of a preset. Because presets are little more than collections of existing
+functionality, they very simply allow developers to codify their opinions
 
-To `create` applicaitons and compose lots of plugins
+At GoDaddy, we have a preset specifically tailored to provide our auth, styling,
+testing frameworks, and more so that creating a standard-conforming app is as
+easy as `gasket create --presets godaddy`.
 
-## What do they consist of
-
-condifications of opinions
-also names:
-
-## What is a Preset?
-
-A preset is simply a package with gasket plugins dependencies. This allows
-common plugins to be grouped together, and loaded by way of a preset.
+## Naming
 
 `@gasket` presets should follow the naming convention `@gasket/{name}-preset`,
 which will allow them to be referenced using [short names](#short-names).
@@ -143,3 +143,5 @@ preset. For example, by adding:
 ```
 
 This base preset's plugins will also be registered when the app loads.
+
+[babel preset]: https://babeljs.io/docs/en/presets
