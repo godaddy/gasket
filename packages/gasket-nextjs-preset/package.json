@@ -1,5 +1,5 @@
 {
-  "name": "@gasket/nextjs-preset",
+  "name": "@gasket/plugin-nextjs",
   "version": "1.0.5",
   "description": "Basic NextJS Framework",
   "repository": {
