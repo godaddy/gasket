@@ -118,7 +118,7 @@ describe('Metadata plugin', function () {
   });
 
   it('has expected name', function () {
-    assume(plugin.name).equals('metadata');
+    assume(plugin.name).equals('@gasket/metadata');
   });
 
   it('has expected hooks', () => {

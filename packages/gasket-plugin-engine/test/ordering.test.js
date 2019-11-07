@@ -86,6 +86,61 @@ describe('Plugin hook ordering', () => {
     });
   });
 
+  it('normalizes plugins to be long name', () => {
+    return verify({
+      withOrderingSpecs: {
+        '@gasket/plugin-testa': null,
+        '@gasket/plugin-testb': null,
+        'gasket-plugin-testc': null,
+        'gasket-plugin-testd': { after: ['teste', '@gasket/testa'], before: ['@gasket/testb', 'testc'] },
+        'gasket-plugin-teste': null
+      },
+      expectOrder: [
+        '@gasket/plugin-testa',
+        'gasket-plugin-teste',
+        'gasket-plugin-testd',
+        '@gasket/plugin-testb',
+        'gasket-plugin-testc'
+      ]
+    });
+  });
+
+  it('supports short name fallback to @gasket scope with warning', async () => {
+    const spy = jest.spyOn(console, 'warn').mockImplementation();
+
+    const plugins = setupLoadedPlugins({
+      '@gasket/plugin-testa': null,
+      '@gasket/plugin-testb': null,
+      'gasket-plugin-testc': null,
+      'gasket-plugin-testd': { after: ['teste', 'testa'], before: ['@gasket/testb', 'testc'] },
+      'gasket-plugin-teste': null
+    });
+
+    await setupEngine(plugins).exec('event');
+
+    expect(spy).toHaveBeenCalledWith(expect.stringContaining(`has 'after' timing of 'testa' which resolved to '@gasket/plugin-testa'`));
+    expect(spy).toHaveBeenCalledWith(expect.stringContaining(`This fallback behavior is DEPRECATED.`));
+    expect(spy).toHaveBeenCalledTimes(1);
+    spy.mockRestore();
+  });
+
+  it('uses original long name if no short name fallback found', async () => {
+    const spy = jest.spyOn(console, 'warn').mockImplementation();
+
+    const plugins = setupLoadedPlugins({
+      '@gasket/plugin-testa': null,
+      'gasket-plugin-testb': null,
+      'gasket-plugin-testd': { before: ['@gasket/testa', 'testb', 'missing'] }
+    });
+
+    await setupEngine(plugins).exec('event');
+
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith(expect.stringContaining('does not have hook'));
+    expect(spy).toHaveBeenCalledWith(expect.stringContaining('gasket-plugin-missing'));
+    spy.mockRestore();
+  });
+
   it('enables a plugin declaring it should be first', () => {
     return verify({
       withOrderingSpecs: {
@@ -152,5 +207,7 @@ describe('Plugin hook ordering', () => {
     await setupEngine(plugins).exec('event');
 
     expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith(expect.stringContaining('does not have hook'));
+    spy.mockRestore();
   });
 });
