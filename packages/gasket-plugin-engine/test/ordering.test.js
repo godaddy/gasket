@@ -124,6 +124,23 @@ describe('Plugin hook ordering', () => {
     spy.mockRestore();
   });
 
+  it('uses original long name if no short name fallback found', async () => {
+    const spy = jest.spyOn(console, 'warn').mockImplementation();
+
+    const plugins = setupLoadedPlugins({
+      '@gasket/plugin-testa': null,
+      'gasket-plugin-testb': null,
+      'gasket-plugin-testd': { before: ['@gasket/testa', 'testb', 'missing'] }
+    });
+
+    await setupEngine(plugins).exec('event');
+
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith(expect.stringContaining('does not have hook'));
+    expect(spy).toHaveBeenCalledWith(expect.stringContaining('gasket-plugin-missing'));
+    spy.mockRestore();
+  });
+
   it('enables a plugin declaring it should be first', () => {
     return verify({
       withOrderingSpecs: {

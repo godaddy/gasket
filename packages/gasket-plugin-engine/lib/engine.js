@@ -117,16 +117,15 @@ class PluginEngine {
     const [before, after] = ['before', 'after'].map(timingType => {
       const arr = (timing || {})[timingType] || [];
       return arr.reduce((acc, rawName) => {
-        const { longName } = pluginIdentifier(rawName);
-        if (longName in this._plugins) {
-          acc.push(longName);
-        } else {
+        let { longName } = pluginIdentifier(rawName);
+        if (!(longName in this._plugins)) {
           const identifier = pluginIdentifier.lookup(rawName, id => id.longName in this._plugins);
           if (identifier) {
             console.warn(`Plugin '${pluginName}' has '${timingType}' timing of '${rawName}' which resolved to '${identifier.longName}'. This fallback behavior is DEPRECATED.`);
-            acc.push(identifier.longName);
+            longName = identifier.longName;
           }
         }
+        acc.push(longName);
         return acc;
       }, []);
     });
