@@ -12,9 +12,9 @@ A preset is simply a package with gasket plugins dependencies. Much like
 way of a preset. Because presets are little more than collections of existing
 functionality, they very simply allow developers to codify their opinions
 
-At GoDaddy, we have a preset specifically tailored to an internal set of plugins
-so that maintaining standars around auth, styling, internalization, and more
-can be easily shipped through a single preset that everyone depends on.
+At GoDaddy, we have presets specifically tailored to internal sets of plugins,
+making maintaining standards around auth, styling, internalization, and more
+significantly easier.
 
 ## Naming
 
