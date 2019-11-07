@@ -28,9 +28,9 @@ describe('setupPkg', () => {
       appName: 'my-app',
       appDescription: 'my cool app',
       presetInfos: [{
-        name: '@gasket/bogus-preset',
+        name: '@gasket/preset-bogus',
         version: '3.2.1',
-        rawName: '@gasket/bogus-preset'
+        rawName: '@gasket/preset-bogus'
       }],
       cliVersionRequired: '^1.2.3'
     };
@@ -59,34 +59,34 @@ describe('setupPkg', () => {
   it('adds the preset to pkg dependencies', async () => {
     await setupPkg.wrapped(mockContext);
     assume(mockContext.pkg.fields).property('dependencies');
-    assume(mockContext.pkg.fields.dependencies).property('@gasket/bogus-preset');
+    assume(mockContext.pkg.fields.dependencies).property('@gasket/preset-bogus');
   });
 
   it('adds the preset version as compatible with package', async () => {
     await setupPkg.wrapped(mockContext);
     assume(mockContext.pkg.fields).property('dependencies');
-    assume(mockContext.pkg.fields.dependencies).property('@gasket/bogus-preset', '^3.2.1');
+    assume(mockContext.pkg.fields.dependencies).property('@gasket/preset-bogus', '^3.2.1');
   });
 
   it('adds the preset version from rawPresets', async () => {
-    mockContext.presetInfos[0].rawName = '@gasket/bogus-preset@4.5.6';
+    mockContext.presetInfos[0].rawName = '@gasket/preset-bogus@4.5.6';
     await setupPkg.wrapped(mockContext);
     assume(mockContext.pkg.fields).property('dependencies');
-    assume(mockContext.pkg.fields.dependencies).property('@gasket/bogus-preset', '4.5.6');
+    assume(mockContext.pkg.fields.dependencies).property('@gasket/preset-bogus', '4.5.6');
   });
 
   it('adds the preset version with presetPath', async () => {
-    mockContext.presetInfos[0].rawName = '@gasket/bogus-preset@file:/path/to/preset';
+    mockContext.presetInfos[0].rawName = '@gasket/preset-bogus@file:/path/to/preset';
     await setupPkg.wrapped(mockContext);
     assume(mockContext.pkg.fields).property('dependencies');
-    assume(mockContext.pkg.fields.dependencies).property('@gasket/bogus-preset', 'file:/path/to/preset');
+    assume(mockContext.pkg.fields.dependencies).property('@gasket/preset-bogus', 'file:/path/to/preset');
   });
 
   it('adds extra plugins to pkg dependencies', async () => {
-    mockContext.rawPlugins = ['jest@1.2.3', 'my-custom-gasket-plugin'];
+    mockContext.rawPlugins = ['@gasket/jest@1.2.3', 'gasket-plugin-custom'];
     await setupPkg.wrapped(mockContext);
-    assume(mockContext.pkg.fields.dependencies).property('@gasket/jest-plugin', '1.2.3');
-    assume(mockContext.pkg.fields.dependencies).property('my-custom-gasket-plugin', 'latest');
+    assume(mockContext.pkg.fields.dependencies).property('@gasket/plugin-jest', '1.2.3');
+    assume(mockContext.pkg.fields.dependencies).property('gasket-plugin-custom', 'latest');
   });
 
   it('adds pkg to context', async () => {

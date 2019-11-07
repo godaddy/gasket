@@ -115,14 +115,14 @@ describe('globalPrompts', () => {
   describe('testPlugin', () => {
 
     it('does not prompt if testPlugin set in context', async () => {
-      mockContext.testPlugin = 'bogus-plugin';
+      mockContext.testPlugin = 'bogus';
       await chooseTestPlugin(mockContext);
 
       assume(promptStub).not.called();
     });
 
     it('does not prompt if a known test plugin included in context plugins', async () => {
-      mockContext.plugins = ['mocha'];
+      mockContext.plugins = ['@gasket/mocha'];
       await chooseTestPlugin(mockContext);
 
       assume(promptStub).not.called();
@@ -131,7 +131,7 @@ describe('globalPrompts', () => {
     it('does not prompt if a known test plugin included by preset', async () => {
       mockContext.presetInfos = [{
         plugins: [
-          { name: '@gasket/jest-plugin' }
+          { name: '@gasket/jest' }
         ]
       }];
       await chooseTestPlugin(mockContext);
@@ -148,8 +148,8 @@ describe('globalPrompts', () => {
     });
 
     it('prompts if a known test plugin not included in context plugins', async () => {
-      mockContext.plugins = ['unknown-test-plugin'];
-      promptStub.returns({ testPlugin: 'bogus-plugin' });
+      mockContext.plugins = ['gasket-plugin-unknown-test'];
+      promptStub.returns({ testPlugin: 'bogus' });
       await chooseTestPlugin(mockContext);
 
       assume(promptStub).is.called();
@@ -158,10 +158,10 @@ describe('globalPrompts', () => {
 
     it('sets testPlugin in context', async () => {
       delete mockContext.testPlugin;
-      promptStub.returns({ testPlugin: 'bogus-plugin' });
+      promptStub.returns({ testPlugin: 'bogus' });
       await chooseTestPlugin(mockContext);
 
-      assume(mockContext).property('testPlugin', 'bogus-plugin');
+      assume(mockContext).property('testPlugin', 'bogus');
     });
   });
 

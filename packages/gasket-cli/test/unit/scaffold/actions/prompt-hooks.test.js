@@ -19,8 +19,8 @@ describe('promptHooks', () => {
     mockContext = {
       appName: 'my-app',
       dest: '/some/path/my-app',
-      presets: ['bogus-preset'],
-      plugins: ['bogus-A-plugin', 'bogus-B-plugin'],
+      presets: ['gasket-preset-bogus'],
+      plugins: ['gasket-plugin-bogus-A', 'gasket-plugin-bogus-B'],
       pkg: ConfigBuilder.createPackageJson({
         name: 'my-app',
         version: '0.0.0'
@@ -80,49 +80,49 @@ describe('promptHooks', () => {
     }
 
     it('adds new plugins to context', async () => {
-      await mockAddPlugins('@gasket/jest-plugin');
-      assume(mockContext.plugins).contains('jest');
+      await mockAddPlugins('@gasket/plugin-jest');
+      assume(mockContext.plugins).contains('@gasket/jest');
     });
 
     it('adds new plugins to pkg', async () => {
-      await mockAddPlugins('@gasket/jest-plugin');
-      assume(pkgAddSpy).is.calledWith('dependencies', { '@gasket/jest-plugin': 'latest' });
+      await mockAddPlugins('@gasket/plugin-jest');
+      assume(pkgAddSpy).is.calledWith('dependencies', { '@gasket/plugin-jest': 'latest' });
     });
 
     it('adds new plugins to pkg with version', async () => {
-      await mockAddPlugins('@gasket/jest-plugin@^1.2.3');
-      assume(pkgAddSpy).is.calledWith('dependencies', { '@gasket/jest-plugin': '^1.2.3' });
+      await mockAddPlugins('@gasket/plugin-jest@^1.2.3');
+      assume(pkgAddSpy).is.calledWith('dependencies', { '@gasket/plugin-jest': '^1.2.3' });
     });
 
     it('installs new packages', async () => {
-      await mockAddPlugins('@gasket/jest-plugin@^1.2.3');
-      assume(installStub).is.calledWith(['@gasket/jest-plugin@^1.2.3']);
+      await mockAddPlugins('@gasket/plugin-jest@^1.2.3');
+      assume(installStub).is.calledWith(['@gasket/plugin-jest@^1.2.3']);
     });
 
     it('re-links packages', async () => {
       mockContext.pkgLinks = ['@gasket/bogus-plugin'];
-      await mockAddPlugins('@gasket/jest-plugin@^1.2.3');
+      await mockAddPlugins('@gasket/plugin-jest@^1.2.3');
       assume(linkStub).is.calledWith(['@gasket/bogus-plugin']);
     });
 
     it('does not re-link if no package links', async () => {
-      await mockAddPlugins('@gasket/jest-plugin@^1.2.3');
+      await mockAddPlugins('@gasket/plugin-jest@^1.2.3');
       assume(linkStub).not.called();
     });
 
     it('does not install packages if marked as linked', async () => {
-      mockContext.pkgLinks = ['@gasket/jest-plugin'];
-      await mockAddPlugins('@gasket/jest-plugin@^1.2.3');
+      mockContext.pkgLinks = ['@gasket/plugin-jest'];
+      await mockAddPlugins('@gasket/plugin-jest@^1.2.3');
       assume(installStub).not.called();
     });
 
     it('re-instantiates PluginEngine with only newly added plugins', async () => {
-      await mockAddPlugins('@gasket/jest-plugin@^1.2.3');
-      assume(engineStub).calledWithMatch({ plugins: ['jest'] });
+      await mockAddPlugins('@gasket/plugin-jest@^1.2.3');
+      assume(engineStub).calledWithMatch({ plugins: ['@gasket/jest'] });
     });
 
     it('re-executes the plugin prompt hook', async () => {
-      await mockAddPlugins('@gasket/jest-plugin@^1.2.3');
+      await mockAddPlugins('@gasket/plugin-jest@^1.2.3');
       assume(execWaterfallStub).is.called(2);
     });
   });

@@ -45,7 +45,7 @@ describe('The execSync method', () => {
 
   it('returns an map of results', () => {
     const result = engine.execMapSync('eventA');
-    expect(result).toEqual({ pluginA: 1, pluginB: 2 });
+    expect(result).toEqual({ 'gasket-plugin-pluginA': 1, 'gasket-plugin-pluginB': 2 });
   });
 
   it('resolves to an empty array if nothing hooked the event', () => {
@@ -58,6 +58,6 @@ describe('The execSync method', () => {
 
     const result = execMapSync('eventA');
 
-    expect(result).toEqual({ pluginA: 1, pluginB: 2 });
+    expect(result).toEqual({ 'gasket-plugin-pluginA': 1, 'gasket-plugin-pluginB': 2 });
   });
 });
