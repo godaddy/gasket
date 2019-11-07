@@ -73,8 +73,10 @@ async function chooseTestPlugin(context) {
     .map(pluginInfo => pluginIdentifier(pluginInfo.name).shortName)
     .concat(plugins);
 
+  const knownTestPlugins = ['@gasket/mocha', '@gasket/jest'];
+
   if (!('testPlugin' in context)) {
-    if (!['mocha', 'jest'].some(p => allPlugins.includes(p))) {
+    if (!knownTestPlugins.some(p => allPlugins.includes(p))) {
       const { testPlugin } = await inquirer.prompt([
         {
           name: 'testPlugin',

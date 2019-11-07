@@ -1,6 +1,7 @@
-const { Loader } = require('@gasket/resolve');
+const { Loader, pluginIdentifier } = require('@gasket/resolve');
 
 let dynamicNamingId = 0;
+const isModulePath = /^[/.]/;
 
 class PluginEngine {
   constructor(config, { resolveFrom } = {}) {
@@ -27,10 +28,18 @@ class PluginEngine {
   _registerPlugins() {
     const { plugins } = this.loader.loadConfigured(this.config.plugins);
 
-    // map the plugin name to content
+    // map the plugin name to module content
+    // if loaded from a file path, prefer module.name
+    // otherwise, prefer package name and normalize to long name form
     this._plugins = plugins
       .reduce((acc, pluginInfo) => {
-        acc[pluginInfo.module.name || pluginInfo.name] = pluginInfo.module;
+        let keyName;
+        if (isModulePath.test(pluginInfo.name)) {
+          keyName = pluginInfo.module.name || pluginInfo.name;
+        } else {
+          keyName = pluginIdentifier(pluginInfo.name || pluginInfo.module.name).longName;
+        }
+        acc[keyName] = pluginInfo.module;
         return acc;
       }, {});
   }
@@ -45,11 +54,20 @@ class PluginEngine {
       .forEach(([pluginName, plugin]) => {
         const { dependencies = [], hooks } = plugin;
 
-        dependencies.forEach(dep => {
-          if (!(dep in this._plugins)) {
-            throw new Error(`Missing dependency ${dep} of plugin ${pluginName}`);
-          }
-        });
+        dependencies
+          .forEach(rawName => {
+            const name = pluginIdentifier(rawName).longName;
+            if (!(name in this._plugins)) {
+              // TODO (kinetifex): remove fallback logic in next major revision
+              // check if we can fall back to a project scope plugin if short name
+              const identifier = pluginIdentifier.lookup(rawName, id => id.longName in this._plugins);
+              if (identifier) {
+                console.warn(`Plugin '${pluginName}' has dependency of '${rawName}' which resolved to '${identifier.longName}'. This fallback behavior is DEPRECATED.`);
+              } else {
+                throw new Error(`Missing dependency ${rawName} of plugin '${pluginName}'`);
+              }
+            }
+          });
 
         Object
           .entries(hooks || {})
@@ -87,13 +105,36 @@ class PluginEngine {
    */
   hook({ event, pluginName, timing, handler }) {
     const hookConfig = this._getHookConfig(event);
-    const { first, before, after, last } = timing || {};
+    const { first, last } = timing || {};
+
+    // normalize to long name form
+    // const before = (timing.before || []).map(rawName => pluginIdentifier(rawName).longName);
+    // const after = (timing.after || []).map(rawName => pluginIdentifier(rawName).longName);
+
+    // TODO (kinetifex): ▲ uncomment normalization and ▼ remove fallback logic in next major revision
+
+    // normalize to long name form with fallback support for short names
+    const [before, after] = ['before', 'after'].map(timingType => {
+      const arr = (timing || {})[timingType] || [];
+      return arr.reduce((acc, rawName) => {
+        let { longName } = pluginIdentifier(rawName);
+        if (!(longName in this._plugins)) {
+          const identifier = pluginIdentifier.lookup(rawName, id => id.longName in this._plugins);
+          if (identifier) {
+            console.warn(`Plugin '${pluginName}' has '${timingType}' timing of '${rawName}' which resolved to '${identifier.longName}'. This fallback behavior is DEPRECATED.`);
+            longName = identifier.longName;
+          }
+        }
+        acc.push(longName);
+        return acc;
+      }, []);
+    });
 
     hookConfig.subscribers[pluginName || `dynamic-${dynamicNamingId++}`] = {
       ordering: {
         first: !!first,
-        before: before || [],
-        after: after || [],
+        before,
+        after,
         last: !!last
       },
       callback: handler.bind(null, this)

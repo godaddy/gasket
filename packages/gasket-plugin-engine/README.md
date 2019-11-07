@@ -9,7 +9,6 @@ Plugin engine for gasket. This is used internally by `@gasket/cli`.
   - [Hooks](#hooks)
   - [Gasket API](#gasketapi)
 * [Authoring Presets](#authoring-presets)
-  - [Preset data structure](#preset-data-structure)
 * [Direct Usage](#direct-usage)
 
 ## What is a Plugin?
@@ -18,56 +17,14 @@ A plugin a a module in the `gasket` ecosystem that provides a unit of
 functionality. Some plugins are core to the overall application, others
 optional.
 
-`@gasket` plugins should follow the naming convention `@gasket/{name}-plugin`,
-which will allow them to be referenced using [short names](#short-names).
-Otherwise, plugins need to end with the `-plugin` suffix. This is how gasket
-determines what packages are plugins or not.
-
-#### Good names
-
-```
-@gasket/example-plugin
-example-plugin
-@myscope/example-plugin
-```
-
-#### Bad names
-
-These will **not** be resolved as valid plugins.
-
-```
-@gasket/example
-example
-@myscope/example
-```
+See the [naming convention] for plugin name determination.
 
 ## What is a Preset?
 
 A preset is simply a package with gasket plugins dependencies. This allows
 common plugins to be grouped together, and loaded by way of a preset.
 
-`@gasket` presets should follow the naming convention `@gasket/{name}-preset`,
-which will allow them to be referenced using [short names](#short-names).
-Otherwise, presets need to end with the `-preset` suffix. This is how gasket
-determines what packages are presets or not.
-
-#### Good names
-
-```
-@gasket/example-preset
-example-preset
-@myscope/example-preset
-```
-
-#### Bad names
-
-These will **not** be resolved as valid presets.
-
-```
-@gasket/example
-example
-@myscope/example
-```
+See the [naming convention] for preset name determination.
 
 ## Configuring Plugins
 
@@ -86,9 +43,11 @@ module.exports = {
 ```
 
 ### Short names
+
 Items in these arrays are module names. Gasket supports shorthand naming;
-`'mocha'` expands to `@gasket/mocha-plugin` in the `add` and `remove` arrays,
-`nextjs` expands to `@gasket/nextjs-preset` in the `presets` array.
+`'@gasket/mocha'` expands to `@gasket/plugin-mocha` in the `add` and `remove`
+arrays, `@gasket/nextjs` expands to `@gasket/preset-nextjs` in the `presets`
+array.
 
 ### GasketAPI
 
@@ -115,10 +74,10 @@ possible.
 
 #### execMap(event, ...args)
 
-The `execMap` method is just like `exec`, only the Promise result is an
-object map with each key being the name of the plugin and each value the
-result from the hook. Only the plugins that hooked the event will have keys
-present in the map.
+The `execMap` method is just like `exec`, only the Promise result is an object
+map with each key being the name of the plugin and each value the result from
+the hook. Only the plugins that hooked the event will have keys present in the
+map.
 
 #### execMapSync(event, ...args)
 
@@ -147,10 +106,10 @@ synchronously.
 
 #### execWaterfall(event, value, ...args)
 
-The `execWaterfall` method is like `exec`, only it allows you to have each
-hook execute sequentially, with each result being passed as the first argument
-to the next hook. It's like an asynchronous version of `Array.prototype.reduce`.
-The final result is returned in the resulting Promise.
+The `execWaterfall` method is like `exec`, only it allows you to have each hook
+execute sequentially, with each result being passed as the first argument to the
+next hook. It's like an asynchronous version of `Array.prototype.reduce`. The
+final result is returned in the resulting Promise.
 
 #### execWaterfallSync(event, value, ...args)
 
@@ -164,11 +123,11 @@ methods whenever possible.
 Injects additional lifecycle hooks at runtime. Takes a single object parameter
 with the following properties:
 
-| Property     | Required? | Description |
-|--------------|-----------|-------------|
-| `event`      | Yes       | The name of the event to hook. This is the same thing as the property name in the `hooks` of a plugin definition. |
-| `handler`    | Yes       | The function to call when the event occurs. The function should take the same form as the `hooks` callbacks in a plugin definition. |
-| `timing`     | No        | Ordering constraints for when the hook will execute. Same as the optional `timing` property in plugin hooks.  |
+| Property     | Required? | Description                                                                                                                                                                                                                                                                                                                                 |
+|:-------------|:----------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `event`      | Yes       | The name of the event to hook. This is the same thing as the property name in the `hooks` of a plugin definition.                                                                                                                                                                                                                           |
+| `handler`    | Yes       | The function to call when the event occurs. The function should take the same form as the `hooks` callbacks in a plugin definition.                                                                                                                                                                                                         |
+| `timing`     | No        | Ordering constraints for when the hook will execute. Same as the optional `timing` property in plugin hooks.                                                                                                                                                                                                                                |
 | `pluginName` | No        | Defaults to an auto-generated name. Only supply this if you need other hooks to be able to order themselves relative to this hook via `timing` constraints. Important note: only one hook per event is allowed per plugin name, so if your plugin is injecting dynamic hooks, be sure that the names are dynamic enough to avoid conflicts. |
 
 ## Authoring Presets
@@ -181,11 +140,11 @@ For example, a `package.json` file may look like:
 
 ```json
 {
-  "name": "example-preset",
+  "name": "gasket-preset-example",
   "main": "index.js",
   "dependencies": {
-    "example-plugin": "^1.0.0",
-    "@my/other-plugin": "^2.0.0"
+    "gasket-plugin-example": "^1.0.0",
+    "@my/gasket-plugin-other": "^2.0.0"
   }
 }
 ```
@@ -225,7 +184,7 @@ module.exports = {
 
 Presets can also be used to define predetermined config. This will be loaded
 for app-level commands, such as **build** or **start**, yet can be modified
-in the app's `gasket.config.js`. 
+in the app's `gasket.config.js`.
 
 ```js
 // example-preset.js
@@ -254,12 +213,12 @@ preset. For example, by adding:
 
 ```diff
 {
-  "name": "example-preset",
+  "name": "gasket-preset-example",
   "main": "index.js",
   "dependencies": {
-    "example-plugin": "^1.0.0",
-    "@my/other-plugin": "^2.0.0",
-+    "@some/base-preset": "^3.0.0"
+    "gasket-plugin-example": "^1.0.0",
+    "@my/gasket-plugin-other": "^2.0.0",
++    "@some/gasket-preset-base": "^3.0.0"
   }
 }
 ```
@@ -295,8 +254,8 @@ and register their hooks. The engine instance is the same
 Execution of plugins through a `PluginEngine` instance is dependent on the
 `context` of that operation. Currently the `context` consists of:
 
-- `resolveFrom`: absolute path to prepend to any `moduleName` before
-  attempting resolution with `require`.
+- `resolveFrom`: absolute path to prepend to any `moduleName` before attempting
+  resolution with `require`.
 
 e.g.
 
@@ -314,3 +273,7 @@ The above will resolve all Plugins and Presets from within `./someapp` instead
 of resolving relative to the current directory.
 
 ##### LICENSE: [MIT](./LICENSE)
+
+
+<!-- LINKS -->
+[naming convention]: /packages/gasket-resolve/README.md#naming-convention
