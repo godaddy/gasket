@@ -108,14 +108,18 @@ These particular keys come from inspecting the prompts shipped internally by
 [`gasket create`](cli prompts). Without any extensions, the Gasket CLI ships
 these prompts which you can override:
 
-```js
-/**
- * {String} appDescription - Application desciption placed into package.json.description`
- * {String} packageManager - Package Manager, typically either npm or yarn
- * {String} testPlugin - What test suite you would like to setup, either mocha, jest, or none
- * {Boolean} destOverride - Whether or not to override the contents of a directory bearing the same name
- */
-```
+- `appDescription`
+  - `String`
+  - Application desciption placed into package.json.description`
+- `packageManager`
+  - `String`
+  - Package Manager, typically either npm or yarn
+- `testPlugin`
+  - `String`
+  - What test suite you would like to setup, either mocha, jest, or none
+- `destOverride`
+  - `Boolean`
+  - Whether or not to override the contents of a directory bearing the same name
 
 If you want to override further context you inspect any plugin with a `prompt`
 lifecycle. For example this prompts:
