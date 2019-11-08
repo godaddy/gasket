@@ -5,6 +5,9 @@
   * [Good Names](#good-names)
   * [Bad Names](#bad-names)
 * [Composition](#composition)
+  * [Predefined `gasket create` context](#predefined-gasket-create-context)
+  * [Predefined `gasket.config.js`](#predefined-gasketconfigjs)
+  * [Extending other presets](#extending-other-presets)
 
 ## Background
 
@@ -107,7 +110,7 @@ module.exports = {
 ```
 
 These particular keys come from inspecting the prompts shipped internally by
-[`gasket create`](cli prompts). Without any extensions, the Gasket CLI ships
+[`gasket create` cli prompts). Without any extensions, the Gasket CLI ships
 these prompts which you can override:
 
 - `appDescription` - `String`
@@ -156,7 +159,7 @@ module.exports = {
 ### Predefined `gasket.config.js`
 
 Presets can also be used to define predetermined config. This will be loaded
-for app-level commands, such as **build** or **start**, yet can be modified
+for app-level commands, such as **build** or **start**, and can be modified
 in the app's `gasket.config.js`.
 
 ```js
@@ -177,7 +180,7 @@ module.exports = {
 }
 ```
 
-Preset config can also set environment overrides. <!-- TODO: what the heck is this -->
+Preset config can also set [environment overrides].
 
 ### Extending other presets
 
@@ -201,4 +204,5 @@ preset. For example, by adding:
 application is loaded.
 
 [babel preset]: https://babeljs.io/docs/en/presets
-[cli prompts]: https://github.com/godaddy/gasket/blob/master/packages/gasket-cli/src/scaffold/actions/global-prompts.js
+[`gasket create` cli prompts]: https://github.com/godaddy/gasket/blob/master/packages/gasket-cli/src/scaffold/actions/global-prompts.js
+[environment overrides]: https://github.com/godaddy/gasket/blob/master/docs/guides/configuration.md#environments
