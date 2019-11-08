@@ -335,7 +335,7 @@ async appEnvConfigHook(gasket, baseConfig) {
 ### initReduxStore
 
 - **Executed during:** Every incoming HTTP request
-- **Documentation:** [https://github.com/godaddy/gasket/tree/master/packages/gasket-redux-plugin#initreduxstore](/packages/gasket-redux-plugin#initreduxstore)
+- **Documentation:** [https://github.com/godaddy/gasket/tree/master/packages/gasket-redux-plugin#initreduxstore](/packages/gasket-plugin-redux)
 
 Read the initial state or fire off actions to populate the store once it's
 created server-side.
@@ -359,7 +359,7 @@ async initReduxStoreHook(gasket, store, req, res) {
 ### initReduxState
 
 - **Executed during:** Every incoming HTTP request
-- **Documentation:** [https://github.com/godaddy/gasket/tree/master/packages/gasket-redux-plugin#initreduxstate](/packages/gasket-redux-plugin#initreduxstate)
+- **Documentation:** [https://github.com/godaddy/gasket/tree/master/packages/gasket-redux-plugin#initreduxstate](/packages/gasket-plugin-redux)
 - [**Flow chart**](../images/lifecycle/events/initReduxState.svg)
 
 Allows you to modify the initial state of the redux store. This state is later

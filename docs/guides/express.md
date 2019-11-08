@@ -89,7 +89,7 @@ middleware injected by another plugin, use the
 [timing mechanism](/packages/gasket-plugin-engine)
 of the plugin engine. For example, if you need your middleware to access
 the server-side redux store created by
-[`@gasket/plugin-redux`](/packages/gasket-redux-plugin#gasketplugin-redux),
+[`@gasket/plugin-redux`](/packages/gasket-plugin-redux),
 you can do something like this:
 
 ```js

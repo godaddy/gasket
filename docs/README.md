@@ -347,7 +347,7 @@ Development modules to help with code quality.
 [@gasket/plugin-intl]:/packages/gasket-plugin-intl
 [@gasket/plugin-lifecycle]:/packages/gasket-plugin-lifecycle
 [@gasket/plugin-log]:/packages/gasket-plugin-log
-[@gasket/plugin-redux]:/packages/gasket-redux-plugin#gasketplugin-redux
+[@gasket/plugin-redux]:/packages/gasket-plugin-redux
 [@gasket/engine]:/packages/gasket-plugin-engine#gasketengine
 [@gasket/fetch]:/packages/gasket-fetch#gasketfetch
 [stylelint-config-godaddy]:https://github.com/godaddy/stylelint-config-godaddy
