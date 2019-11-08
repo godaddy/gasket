@@ -18,7 +18,7 @@ describe('Plugin', () => {
   });
 
   it('has expected name', () => {
-    expect(plugin).toHaveProperty('name', 'config');
+    expect(plugin).toHaveProperty('name', require('../package').name);
   });
 
   it('has expected hooks', () => {

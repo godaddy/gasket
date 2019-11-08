@@ -7,7 +7,7 @@ const getCommands = require('./get-commands');
  * @type {{hooks: {webpack}}}
  */
 module.exports = {
-  name: 'analyze',
+  name: require('../package').name,
   hooks: {
     webpack,
     getCommands,

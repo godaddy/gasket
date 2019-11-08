@@ -7,7 +7,7 @@ describe('Plugin', () => {
   });
 
   it('has expected name', () => {
-    expect(plugin).toHaveProperty('name', 'service-worker');
+    expect(plugin).toHaveProperty('name', require('../package').name);
   });
 
   it('has expected hooks', () => {

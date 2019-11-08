@@ -121,6 +121,6 @@ async function start(gasket) {
 }
 
 module.exports = {
-  name: 'https',
+  name: require('./package').name,
   hooks: { start }
 };

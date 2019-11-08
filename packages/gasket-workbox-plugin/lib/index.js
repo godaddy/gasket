@@ -4,7 +4,7 @@ const express = require('./express');
 const composeServiceWorker = require('./compose-service-worker');
 
 module.exports = {
-  name: 'workbox',
+  name: require('../package').name,
   hooks: {
     configure,
     build,

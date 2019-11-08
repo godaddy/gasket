@@ -4,7 +4,7 @@ const GasketCommand = require('./command');
 const { hoistBaseFlags } = require('./utils');
 
 module.exports = {
-  name: '@gasket/command',
+  name: require('../package').name,
   hooks: {
     /**
      * Gets commands from plugins and injects them to the oclif config.
