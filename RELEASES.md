@@ -11,5 +11,4 @@ please enumerate the changes included in the release. Post about the release in
 [Slack], and allow for two approvers before merging.
 
 [Semantic Versioning]: http://semver.org
-// TODO: Add this link once reviewers approve channel creation
-[Slack]:
+[Slack]: https://godaddy-oss.slack.com/messages/CHXEP5DNH
