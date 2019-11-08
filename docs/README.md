@@ -342,7 +342,7 @@ Development modules to help with code quality.
 [@gasket/intl]:/packages/gasket-intl
 [@gasket/redux]:/packages/gasket-redux#gasketredux
 [@gasket/log]:/packages/gasket-log#gasketlog
-[@gasket/plugin-analyze]:/packages/gasket-analyze-plugin#gasketplugin-analyze
+[@gasket/plugin-analyze]:/packages/gasket-plugin-analyze
 [@gasket/plugin-config]:/packages/gasket-config-plugin#gasketplugin-config
 [@gasket/plugin-intl]:/packages/gasket-intl-plugin#gasketplugin-intl
 [@gasket/plugin-lifecycle]:/packages/gasket-lifecycle-plugin#gasketplugin-lifecycle
