@@ -9,7 +9,7 @@ const {
 } = require('./utils');
 
 module.exports = {
-  name: '@gasket/metadata',
+  name: require('../package').name,
   hooks: {
     async init(gasket) {
       const { loader, config } = gasket;

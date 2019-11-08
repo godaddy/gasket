@@ -4,7 +4,7 @@ const { createConfig } = require('./config');
 
 module.exports = {
   dependencies: ['webpack'],
-  name: 'nextjs',
+  name: require('./package').name,
   hooks: {
     /**
     * Add files & extend package.json for new apps.

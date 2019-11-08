@@ -1,7 +1,7 @@
 const docsView = require('./docs-view');
 
 module.exports = {
-  name: 'docsify',
+  name: require('../package').name,
   hooks: {
     docsView
   }

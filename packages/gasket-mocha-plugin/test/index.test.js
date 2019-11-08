@@ -44,8 +44,8 @@ describe('Plugin', () => {
     expect(plugin).is.an('object');
   });
 
-  it('has expected name', function () {
-    expect(plugin.name).equals('mocha');
+  it('has expected name', () => {
+    expect(plugin).to.have.property('name', require('../package').name);
   });
 
   it('has expected hooks', () => {

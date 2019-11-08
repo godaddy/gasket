@@ -19,7 +19,7 @@ async function gatherManifestData(gasket, req) {
 }
 
 module.exports = {
-  name: 'manifest',
+  name: require('../package').name,
   hooks: {
     /**
      * If configured, serve the resolved manifest.json

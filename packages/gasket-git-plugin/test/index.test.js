@@ -2,14 +2,14 @@ const { describe, it } = require('mocha');
 const assume = require('assume');
 const plugin = require('../lib');
 
-describe('plugin', () => {
+describe('Plugin', () => {
 
   it('is an object', () => {
     assume(plugin).is.an('object');
   });
 
   it('has expected name', () => {
-    assume(plugin).to.have.property('name', 'git');
+    assume(plugin).to.have.property('name', require('../package').name);
   });
 
   it('has expected hooks', () => {

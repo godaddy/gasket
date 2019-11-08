@@ -49,7 +49,6 @@ module.exports = {
 
 ```js
 module.exports = {
-  name: 'express',
   hooks: {
     /**
     * Creates the express app

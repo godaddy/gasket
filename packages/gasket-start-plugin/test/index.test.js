@@ -8,7 +8,7 @@ describe('Plugin', function () {
   });
 
   it('has expected name', () => {
-    assume(plugin).to.have.property('name', '@gasket/start');
+    assume(plugin).to.have.property('name', require('../package').name);
   });
 
   it('has expected hooks', () => {
