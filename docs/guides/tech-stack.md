@@ -171,7 +171,7 @@ started, and it also includes [Enzyme]. Specify this plugin when running
 [Flux]: https://facebook.github.io/flux/docs/overview.html
 [godaddy-style]: https://github.com/godaddy/javascript
 [Intl Components]: /packages/intl
-[Intl Plugin]: /packages/gasket-intl-plugin
+[Intl Plugin]: /packages/gasket-plugin-intl
 [Istanbul]: https://github.com/istanbuljs/nyc
 [Jest]: https://jestjs.io/
 [Jest Plugin]: /packages/gasket-jest-plugin
