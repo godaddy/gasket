@@ -485,7 +485,7 @@ function nextConfig(gasket, config) {
 ### middleware
 
 - **Executed during:** `start` lifecycle
-- **Documentation:** [here](/packages/gasket-express-plugin#middleware)
+- **Documentation:** [here](/packages/gasket-plugin-express)
 - [**Flow chart**](../images/lifecycle/events/middleware.svg)
 
 After the `express` instance has been created it will execute the `middleware`
@@ -551,7 +551,7 @@ async function metadataHook(gasket, data) {
 ### express
 
 - **Executed during:** `start` lifecycle
-- **Documentation:** [here](/packages/gasket-express-plugin#express)
+- **Documentation:** [here](/packages/gasket-plugin-express)
 - [**Flow chart**](../images/lifecycle/events/express.svg)
 
 Executed after the `middleware` lifecycle, this will give you full access to
@@ -573,7 +573,7 @@ async function expressHook(gasket, app) {
 ### errorMiddleware
 
 - **Executed during:** `start` lifecycle
-- **Documentation:** [here](/packages/gasket-express-plugin#errormiddleware)
+- **Documentation:** [here](/packages/gasket-plugin-express)
 
 Allows you to assign middleware layers that can handle potential errors. These
 are added after all our internal routing and `next.js` handoff's are setup.

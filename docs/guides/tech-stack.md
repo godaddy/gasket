@@ -164,7 +164,7 @@ started, and it also includes [Enzyme]. Specify this plugin when running
 
 [Babel]: https://babeljs.io/
 [Chai]: http://www.chaijs.com/
-[Express Plugin]: /packages/gasket-express-plugin
+[Express Plugin]: /packages/gasket-plugin-express
 [Enzyme]: http://airbnb.io/enzyme/
 [ESLint]: https://eslint.org/
 [Express]: http://expressjs.com/

@@ -338,7 +338,7 @@ Development modules to help with code quality.
 [@gasket/cli]:/packages/gasket-cli
 [@gasket/plugin-nextjs]:/packages/gasket-nextjs-plugin#gasketplugin-nextjs
 [@gasket/plugin-webpack]:/packages/gasket-webpack-plugin#gasketplugin-webpack
-[@gasket/plugin-express]:/packages/gasket-express-plugin#gasketplugin-express
+[@gasket/plugin-express]:/packages/gasket-plugin-express
 [@gasket/intl]:/packages/gasket-intl
 [@gasket/redux]:/packages/gasket-redux#gasketredux
 [@gasket/log]:/packages/gasket-log#gasketlog
