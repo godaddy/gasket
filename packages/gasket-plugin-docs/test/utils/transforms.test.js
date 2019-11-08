@@ -127,9 +127,9 @@ describe('Utils Transforms', () => {
 
       it('matches linked gasket repo package markdown files', () => {
         [
-          '/path/to/packages/gasket-some-plugin/README.md',
+          '/path/to/packages/gasket-plugin-some/README.md',
           '/path/to/packages/gasket-something/README.md',
-          '/path/to/packages/gasket-some-preset/README.md'
+          '/path/to/packages/gasket-preset-some/README.md'
         ].forEach(source => {
           assume(test.test(source)).equals(true, `Path ${source}`);
         });
@@ -140,9 +140,9 @@ describe('Utils Transforms', () => {
           '/path/to/node_modules/@gasket/plugin-some/bogus.svg',
           '/path/to/node_modules/@gasket/something/bogus.png',
           '/path/to/node_modules/@gasket/some-preset/bogus.txt',
-          '/path/to/packages/gasket-some-plugin/bogus.svg',
+          '/path/to/packages/gasket-plugin-some/bogus.svg',
           '/path/to/packages/gasket-something/bogus.png',
-          '/path/to/packages/gasket-some-preset/bogus.txt'
+          '/path/to/packages/gasket-preset-some/bogus.txt'
         ].forEach(source => {
           assume(test.test(source)).equals(false, `Path ${source}`);
         });

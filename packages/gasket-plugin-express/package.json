@@ -27,7 +27,7 @@
   "bugs": {
     "url": "https://github.com/godaddy/gasket/issues"
   },
-  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-express-plugin",
+  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-express",
   "dependencies": {
     "compression": "^1.7.2",
     "cookie-parser": "^1.4.3",

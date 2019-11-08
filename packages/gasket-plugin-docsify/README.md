@@ -69,4 +69,4 @@ module.exports = {
 [docsify plugins]: https://docsify.js.org/#/plugins
 [Google Analytics plugin]: https://docsify.js.org/#/plugins?id=google-analytics
 
-[@gasket/plugin-docs]: /packages/gasket-docs-plugin/README.md
+[@gasket/plugin-docs]: /packages/gasket-plugin-docs/README.md

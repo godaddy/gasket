@@ -28,7 +28,7 @@
   "bugs": {
     "url": "https://github.com/godaddy/gasket/issues"
   },
-  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-docsify-plugin",
+  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-docsify",
   "dependencies": {
     "docsify": "^4.9.4",
     "docsify-cli": "^4.3.0",

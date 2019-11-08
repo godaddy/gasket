@@ -156,9 +156,9 @@ module.exports = {
 [DocsTransform]: docs/api.md#DocsTransform
 [DocsTransformHandler]: docs/api.md#DocsTransformHandler
 
-[@gasket/plugin-metadata]: /packages/gasket-metadata-plugin/README.md
-[@gasket/plugin-docsify]: /packages/gasket-docsify-plugin/README.md
-[metadata]: /packages/gasket-metadata-plugin/README.md
+[@gasket/plugin-metadata]: /packages/gasket-plugin-metadata/README.md
+[@gasket/plugin-docsify]: /packages/gasket-plugin-docsify/README.md
+[metadata]: /packages/gasket-plugin-metadata/README.md
 
 [rustdoc]:https://doc.rust-lang.org/rustdoc/
 [RegExp]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions

@@ -28,7 +28,7 @@
   "bugs": {
     "url": "https://github.com/godaddy/gasket/issues"
   },
-  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-service-worker-plugin#readme",
+  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-service-worker#readme",
   "dependencies": {
     "deepmerge": "^4.0.0",
     "lru-cache": "^5.1.1",

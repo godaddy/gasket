@@ -28,7 +28,7 @@
   "bugs": {
     "url": "https://github.com/godaddy/gasket/issues"
   },
-  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-intl-plugin",
+  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-intl",
   "dependencies": {
     "fs-extra": "^5.0.0",
     "intl": "^1.2.5",

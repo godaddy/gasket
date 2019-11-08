@@ -28,7 +28,7 @@
   "bugs": {
     "url": "https://github.com/godaddy/gasket/issues"
   },
-  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-redux-plugin",
+  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-redux",
   "devDependencies": {
     "@gasket/plugin-log": "^3.2.1",
     "@gasket/redux": "^3.2.1",

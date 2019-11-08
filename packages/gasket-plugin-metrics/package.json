@@ -30,7 +30,7 @@
   "bugs": {
     "url": "https://github.com/godaddy/gasket/issues"
   },
-  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-metrics-plugin",
+  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-metrics",
   "dependencies": {
     "git-shizzle": "^0.1.0",
     "git-url-parse": "^11.1.2"

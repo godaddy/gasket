@@ -27,7 +27,7 @@
   "bugs": {
     "url": "https://github.com/godaddy/gasket/issues"
   },
-  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-lint-plugin#readme",
+  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-lint#readme",
   "devDependencies": {
     "assume": "^2.2.0",
     "assume-sinon": "^1.0.1",

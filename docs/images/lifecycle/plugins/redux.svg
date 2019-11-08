@@ -12,7 +12,7 @@
 <!-- initReduxState -->
 <g id="node1" class="node">
 <title>initReduxState</title>
-<g id="a_node1"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-redux-plugin#initreduxstate" xlink:title="initReduxState">
+<g id="a_node1"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-redux#initreduxstate" xlink:title="initReduxState">
 <ellipse fill="#7fff7f" stroke="#000000" cx="82.397" cy="-90" rx="62.8425" ry="18"/>
 <text text-anchor="middle" x="82.397" y="-85.8" font-family="Times,serif" font-size="14.00" fill="#000000">initReduxState</text>
 </a>
@@ -21,7 +21,7 @@
 <!-- config_initReduxState_hook -->
 <g id="node6" class="node">
 <title>config_initReduxState_hook</title>
-<g id="a_node6"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-config-plugin" xlink:title="config&#45;plugin">
+<g id="a_node6"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-config" xlink:title="config&#45;plugin">
 <polygon fill="#ffa500" stroke="#000000" points="142.691,-23.5623 71.397,-36 .1029,-23.5623 .1694,-3.4377 142.6245,-3.4377 142.691,-23.5623"/>
 <text text-anchor="middle" x="71.397" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">config&#45;plugin</text>
 </a>
@@ -36,7 +36,7 @@
 <!-- initReduxStore -->
 <g id="node2" class="node">
 <title>initReduxStore</title>
-<g id="a_node2"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-redux-plugin#initreduxstore" xlink:title="initReduxStore">
+<g id="a_node2"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-redux#initreduxstore" xlink:title="initReduxStore">
 <ellipse fill="#7fff7f" stroke="#000000" cx="224.397" cy="-18" rx="63.8115" ry="18"/>
 <text text-anchor="middle" x="224.397" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">initReduxStore</text>
 </a>
@@ -45,7 +45,7 @@
 <!-- redux_create_hook -->
 <g id="node3" class="node">
 <title>redux_create_hook</title>
-<g id="a_node3"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-redux-plugin" xlink:title="redux&#45;plugin\ncreate hook">
+<g id="a_node3"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-redux" xlink:title="redux&#45;plugin\ncreate hook">
 <polygon fill="#ffa500" stroke="#000000" points="418.7819,-257.1777 341.397,-278.8955 264.012,-257.1777 264.0843,-222.0375 418.7097,-222.0375 418.7819,-257.1777"/>
 <text text-anchor="middle" x="341.397" y="-250.2652" font-family="Times,serif" font-size="14.00" fill="#000000">redux&#45;plugin</text>
 <text text-anchor="middle" x="341.397" y="-236.2652" font-family="Times,serif" font-size="14.00" fill="#000000">create hook</text>
@@ -55,7 +55,7 @@
 <!-- redux_webpack_hook -->
 <g id="node4" class="node">
 <title>redux_webpack_hook</title>
-<g id="a_node4"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-redux-plugin" xlink:title="redux&#45;plugin\nwebpack hook">
+<g id="a_node4"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-redux" xlink:title="redux&#45;plugin\nwebpack hook">
 <polygon fill="#ffa500" stroke="#000000" points="606.3996,-257.1777 521.397,-278.8955 436.3943,-257.1777 436.4737,-222.0375 606.3203,-222.0375 606.3996,-257.1777"/>
 <text text-anchor="middle" x="521.397" y="-250.2652" font-family="Times,serif" font-size="14.00" fill="#000000">redux&#45;plugin</text>
 <text text-anchor="middle" x="521.397" y="-236.2652" font-family="Times,serif" font-size="14.00" fill="#000000">webpack hook</text>
@@ -65,7 +65,7 @@
 <!-- redux_middleware_hook -->
 <g id="node5" class="node">
 <title>redux_middleware_hook</title>
-<g id="a_node5"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-redux-plugin" xlink:title="redux&#45;plugin\nmiddleware hook">
+<g id="a_node5"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-redux" xlink:title="redux&#45;plugin\nmiddleware hook">
 <polygon fill="#ffa500" stroke="#000000" points="246.4478,-257.1777 147.397,-278.8955 48.3461,-257.1777 48.4385,-222.0375 246.3554,-222.0375 246.4478,-257.1777"/>
 <text text-anchor="middle" x="147.397" y="-250.2652" font-family="Times,serif" font-size="14.00" fill="#000000">redux&#45;plugin</text>
 <text text-anchor="middle" x="147.397" y="-236.2652" font-family="Times,serif" font-size="14.00" fill="#000000">middleware hook</text>

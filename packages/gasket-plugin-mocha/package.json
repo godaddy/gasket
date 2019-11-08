@@ -27,7 +27,7 @@
   "bugs": {
     "url": "https://github.com/godaddy/gasket/issues"
   },
-  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-mocha-plugin#readme",
+  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-mocha#readme",
   "devDependencies": {
     "@babel/core": "^7.5.5",
     "@babel/plugin-transform-runtime": "^7.5.5",

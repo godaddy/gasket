@@ -30,7 +30,7 @@
   "bugs": {
     "url": "https://github.com/godaddy/gasket/issues"
   },
-  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-start-plugin",
+  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-start",
   "devDependencies": {
     "assume": "^2.2.0",
     "eslint": "^6.1.0",

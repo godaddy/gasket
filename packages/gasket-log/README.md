@@ -99,4 +99,4 @@ npm run test:server
 
 [winston]: https://github.com/winstonjs/winston
 [diagnostics]: https://github.com/bigpipe/diagnostics
-[log-plugin]: https://github.com/godaddy/gasket/tree/master/packages/gasket-log-plugin
+[log-plugin]: https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-log

@@ -80,26 +80,26 @@
       "_default": "https://github.com/godaddy/gasket/tree/master/packages/gasket-{plugin}-plugin"
     },
     "events": {
-      "appEnvConfig": "https://github.com/godaddy/gasket/tree/master/packages/gasket-config-plugin#appenvconfig",
-      "appRequestConfig": "https://github.com/godaddy/gasket/tree/master/packages/gasket-config-plugin#apprequestconfig",
+      "appEnvConfig": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-config#appenvconfig",
+      "appRequestConfig": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-config#apprequestconfig",
       "build": "https://github.com/godaddy/gasket/tree/master/packages/gasket-cli#gasket-build",
       "create": "https://github.com/godaddy/gasket/tree/master/packages/gasket-cli#create",
-      "errorMiddleware": "https://github.com/godaddy/gasket/tree/master/packages/gasket-express-plugin#errormiddleware",
-      "express": "https://github.com/godaddy/gasket/tree/master/packages/gasket-express-plugin",
-      "getCommands": "https://github.com/godaddy/gasket/tree/master/packages/gasket-command-plugin#getcommands",
+      "errorMiddleware": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-express#errormiddleware",
+      "express": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-express",
+      "getCommands": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-command#getcommands",
       "init": null,
       "initOclif": null,
-      "initReduxState": "https://github.com/godaddy/gasket/tree/master/packages/gasket-redux-plugin#initreduxstate",
-      "initReduxStore": "https://github.com/godaddy/gasket/tree/master/packages/gasket-redux-plugin#initreduxstore",
-      "middleware": "https://github.com/godaddy/gasket/tree/master/packages/gasket-express-plugin#middleware",
-      "next": "https://github.com/godaddy/gasket/tree/master/packages/gasket-nextjs-plugin#next",
+      "initReduxState": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-redux#initreduxstate",
+      "initReduxStore": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-redux#initreduxstore",
+      "middleware": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-express#middleware",
+      "next": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-nextjs#next",
       "preboot": null,
       "start": "https://github.com/godaddy/gasket/tree/master/packages/gasket-cli#gasket-start",
-      "webpack": "https://github.com/godaddy/gasket/tree/master/packages/gasket-webpack-plugin#webpack",
-      "webpackChain": "https://github.com/godaddy/gasket/tree/master/packages/gasket-webpack-plugin#webpackchain",
-      "composeServiceWorker": "https://github.com/godaddy/gasket/tree/master/packages/gasket-service-worker-plugin#composeserviceworker",
-      "serviceWorkerCacheKey": "https://github.com/godaddy/gasket/tree/master/packages/gasket-service-worker-plugin#serviceworkercachekey",
-      "workbox": "https://github.com/godaddy/gasket/tree/master/packages/gasket-workbox-plugin#workbox"
+      "webpack": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-webpack#webpack",
+      "webpackChain": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-webpack#webpackchain",
+      "composeServiceWorker": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-service-worker#composeserviceworker",
+      "serviceWorkerCacheKey": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-service-worker#serviceworkercachekey",
+      "workbox": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-workbox#workbox"
     }
   }
 }

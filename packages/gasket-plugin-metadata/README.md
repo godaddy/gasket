@@ -102,5 +102,5 @@ module.exports = {
 [DetailData]: docs/api.md#DetailData
 [metadata object]: docs/api.md#DetailData
 
-[@gasket/plugin-docs]: /packages/gasket-docs-plugin/README.md
+[@gasket/plugin-docs]: /packages/gasket-plugin-docs/README.md
 [@gasket/resolve]: /packages/gasket-resolve/README.md

@@ -335,7 +335,7 @@ async appEnvConfigHook(gasket, baseConfig) {
 ### initReduxStore
 
 - **Executed during:** Every incoming HTTP request
-- **Documentation:** [https://github.com/godaddy/gasket/tree/master/packages/gasket-redux-plugin#initreduxstore](/packages/gasket-plugin-redux)
+- **Documentation:** [https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-redux#initreduxstore](/packages/gasket-plugin-redux)
 
 Read the initial state or fire off actions to populate the store once it's
 created server-side.
@@ -359,7 +359,7 @@ async initReduxStoreHook(gasket, store, req, res) {
 ### initReduxState
 
 - **Executed during:** Every incoming HTTP request
-- **Documentation:** [https://github.com/godaddy/gasket/tree/master/packages/gasket-redux-plugin#initreduxstate](/packages/gasket-plugin-redux)
+- **Documentation:** [https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-redux#initreduxstate](/packages/gasket-plugin-redux)
 - [**Flow chart**](../images/lifecycle/events/initReduxState.svg)
 
 Allows you to modify the initial state of the redux store. This state is later
@@ -607,7 +607,7 @@ async function errorMiddlewareHook(gasket, app) {
 ### logTransports
 
 - **Executed during:** `init` lifecycle
-- **Documentation:** [https://github.com/godaddy/gasket/tree/master/packages/gasket-log-plugin#logtransports](/packages/gasket-plugin-log)
+- **Documentation:** [https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-log#logtransports](/packages/gasket-plugin-log)
 
 Allows you to define custom `winston` middlewares based on the fully
 loaded configuration for your `gasket` application (including environments).

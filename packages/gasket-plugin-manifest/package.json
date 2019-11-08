@@ -30,7 +30,7 @@
   "bugs": {
     "url": "https://github.com/godaddy/gasket/issues"
   },
-  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-manifest-plugin#readme",
+  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-manifest#readme",
   "dependencies": {
     "escape-string-regexp": "^1.0.5"
   },

@@ -28,7 +28,7 @@
   "bugs": {
     "url": "https://github.com/godaddy/gasket/issues"
   },
-  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-workbox-plugin#readme",
+  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-workbox#readme",
   "dependencies": {
     "deepmerge": "^4.0.0",
     "serve-static": "^1.13.2",

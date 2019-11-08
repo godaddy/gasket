@@ -27,7 +27,7 @@
   "bugs": {
     "url": "https://github.com/godaddy/gasket/issues"
   },
-  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-nextjs-plugin",
+  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-nextjs",
   "dependencies": {
     "@gasket/plugin-webpack": "^1.1.1"
   },
