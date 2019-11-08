@@ -151,9 +151,9 @@ worker features.
 [@gasket/plugin-workbox]:#gasketplugin-workbox
 [@gasket/plugin-manifest]:#gasketplugin-manifest
 
-[service worker plugin docs]:/packages/gasket-service-worker-plugin#gasketplugin-service-worker
-[workbox plugin docs]:/packages/gasket-workbox-plugin#gasketplugin-workbox
-[manifest plugin docs]:/packages/gasket-manifest-plugin#gasketplugin-manifest
+[service worker plugin docs]:/packages/gasket-plugin-service-worker
+[workbox plugin docs]:/packages/gasket-plugin-workbox
+[manifest plugin docs]:/packages/gasket-plugin-manifest
 
 [Service Workers]:https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API
 [PWA]:https://developer.mozilla.org/en-US/docs/Web/Apps/Progressive

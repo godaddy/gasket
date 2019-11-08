@@ -12,7 +12,7 @@
 <!-- middleware -->
 <g id="node1" class="node">
 <title>middleware</title>
-<g id="a_node1"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-express-plugin#middleware" xlink:title="middleware">
+<g id="a_node1"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-express#middleware" xlink:title="middleware">
 <ellipse fill="#7fff7f" stroke="#000000" cx="233.4483" cy="-306" rx="51.7002" ry="18"/>
 <text text-anchor="middle" x="233.4483" y="-301.8" font-family="Times,serif" font-size="14.00" fill="#000000">middleware</text>
 </a>
@@ -21,7 +21,7 @@
 <!-- config_middleware_hook -->
 <g id="node5" class="node">
 <title>config_middleware_hook</title>
-<g id="a_node5"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-config-plugin" xlink:title="config&#45;plugin">
+<g id="a_node5"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-config" xlink:title="config&#45;plugin">
 <polygon fill="#ffa500" stroke="#000000" points="146.7424,-239.5623 75.4483,-252 4.1542,-239.5623 4.2208,-219.4377 146.6758,-219.4377 146.7424,-239.5623"/>
 <text text-anchor="middle" x="75.4483" y="-229.8" font-family="Times,serif" font-size="14.00" fill="#000000">config&#45;plugin</text>
 </a>
@@ -36,7 +36,7 @@
 <!-- redux_middleware_hook -->
 <g id="node6" class="node">
 <title>redux_middleware_hook</title>
-<g id="a_node6"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-redux-plugin" xlink:title="redux&#45;plugin">
+<g id="a_node6"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-redux" xlink:title="redux&#45;plugin">
 <polygon fill="#ffa500" stroke="#000000" points="302.3638,-239.5623 233.4483,-252 164.5328,-239.5623 164.5971,-219.4377 302.2995,-219.4377 302.3638,-239.5623"/>
 <text text-anchor="middle" x="233.4483" y="-229.8" font-family="Times,serif" font-size="14.00" fill="#000000">redux&#45;plugin</text>
 </a>
@@ -51,7 +51,7 @@
 <!-- serviceWorker_middleware_hook -->
 <g id="node7" class="node">
 <title>serviceWorker_middleware_hook</title>
-<g id="a_node7"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-serviceWorker-plugin" xlink:title="serviceWorker&#45;plugin">
+<g id="a_node7"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-serviceWorker" xlink:title="serviceWorker&#45;plugin">
 <polygon fill="#ffa500" stroke="#000000" points="534.5848,-239.5623 427.4483,-252 320.3118,-239.5623 320.4118,-219.4377 534.4848,-219.4377 534.5848,-239.5623"/>
 <text text-anchor="middle" x="427.4483" y="-229.8" font-family="Times,serif" font-size="14.00" fill="#000000">serviceWorker&#45;plugin</text>
 </a>
@@ -66,7 +66,7 @@
 <!-- appRequestConfig -->
 <g id="node2" class="node">
 <title>appRequestConfig</title>
-<g id="a_node2"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-config-plugin#apprequestconfig" xlink:title="appRequestConfig">
+<g id="a_node2"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-config#apprequestconfig" xlink:title="appRequestConfig">
 <ellipse fill="#7fff7f" stroke="#000000" cx="75.4483" cy="-90" rx="75.3966" ry="18"/>
 <text text-anchor="middle" x="75.4483" y="-85.8" font-family="Times,serif" font-size="14.00" fill="#000000">appRequestConfig</text>
 </a>
@@ -75,7 +75,7 @@
 <!-- initReduxState -->
 <g id="node3" class="node">
 <title>initReduxState</title>
-<g id="a_node3"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-redux-plugin#initreduxstate" xlink:title="initReduxState">
+<g id="a_node3"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-redux#initreduxstate" xlink:title="initReduxState">
 <ellipse fill="#7fff7f" stroke="#000000" cx="232.4483" cy="-90" rx="62.8425" ry="18"/>
 <text text-anchor="middle" x="232.4483" y="-85.8" font-family="Times,serif" font-size="14.00" fill="#000000">initReduxState</text>
 </a>
@@ -84,7 +84,7 @@
 <!-- config_initReduxState_hook -->
 <g id="node8" class="node">
 <title>config_initReduxState_hook</title>
-<g id="a_node8"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-config-plugin" xlink:title="config&#45;plugin">
+<g id="a_node8"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-config" xlink:title="config&#45;plugin">
 <polygon fill="#ffa500" stroke="#000000" points="297.7424,-23.5623 226.4483,-36 155.1542,-23.5623 155.2208,-3.4377 297.6758,-3.4377 297.7424,-23.5623"/>
 <text text-anchor="middle" x="226.4483" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">config&#45;plugin</text>
 </a>
@@ -99,7 +99,7 @@
 <!-- initReduxStore -->
 <g id="node4" class="node">
 <title>initReduxStore</title>
-<g id="a_node4"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-redux-plugin#initreduxstore" xlink:title="initReduxStore">
+<g id="a_node4"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-redux#initreduxstore" xlink:title="initReduxStore">
 <ellipse fill="#7fff7f" stroke="#000000" cx="379.4483" cy="-18" rx="63.8115" ry="18"/>
 <text text-anchor="middle" x="379.4483" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">initReduxStore</text>
 </a>
