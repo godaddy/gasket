@@ -1,5 +1,5 @@
 {
-  "name": "@gasket/log-plugin",
+  "name": "@gasket/plugin-log",
   "version": "3.2.1",
   "description": "Gasket log plugin",
   "main": "./",

@@ -1,4 +1,4 @@
-# `@gasket/git-plugin`
+# `@gasket/plugin-git`
 
 ### 1.1.0
 

@@ -1,4 +1,4 @@
-# `@gasket/lint-plugin`
+# `@gasket/plugin-lint`
 
 ### 1.7.3
 

@@ -1,11 +1,11 @@
-# @gasket/lifecycle-plugin
+# @gasket/plugin-lifecycle
 
 Subscribe to gasket lifecycle events using files in a `lifecycles` directory.
 
 ## Installation
 
 ```
-npm install --save @gasket/lifecycle-plugin
+npm install --save @gasket/plugin-lifecycle
 ```
 
 ## Usage
@@ -15,7 +15,7 @@ Add the plugin to the plugin section of your `gasket.config.js` file:
 ```
 {
   plugins: {
-    add: ['lifecycle']
+    add: ['@gasket/lifecycle']
   }
 }
 ```
@@ -64,7 +64,7 @@ module.exports = function middleware(gasket) {
 ```
 
 It is recommended that you use `kebab-case` or `snake_case` naming conventions
-for multi-word lifecycle events to avoid problems with case sensitivity in 
+for multi-word lifecycle events to avoid problems with case sensitivity in
 different file systems. This plugin will automatically map these to the
 `camelCased` event names. For example, `/lifecycles/app-env-config.js` will
 properly hook `appEnvConfig` events.

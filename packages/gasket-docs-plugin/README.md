@@ -1,7 +1,7 @@
-# `@gasket/docs-plugin`
+# `@gasket/plugin-docs`
 
 The plugin enables the **docs** command, which centralizes doc files for the
-app's plugins, presets, and supporting modules. 
+app's plugins, presets, and supporting modules.
 
 ## Options
 
@@ -14,7 +14,7 @@ To be set in under `docs` in the `gasket.config.js`.
 
 ### docs
 
-The **docs** command, inspired by [cargo doc][rustdoc] from the Rust language, 
+The **docs** command, inspired by [cargo doc][rustdoc] from the Rust language,
 allows app developers to generate documentation for their Gasket projects.
 Only those presets and plugins that are configured for a project, will be used
 to determine what documentation is available.
@@ -23,7 +23,7 @@ When running this command, markdown and other files will gathered from installed
 node modules and collated to the output directory when they can be viewed
 together.
 
-#### How it works 
+#### How it works
 
 This command will gather info about plugins and modules from their [metadata]
 and [docsSetup], and will assemble a [docsConfig] for each. These configs are
@@ -38,7 +38,7 @@ content in a more viewable fashion for the user.
 ### docsSetup
 
 The **docs** command will assemble configuration for plugins and modules, based
-on available `metadata`, enabled by the [@gasket/metadata-plugin].
+on available `metadata`, enabled by the [@gasket/plugin-metadata].
 
 By default, the files that are collated include a package's `README.md` and any
 files that exist under a docs directory. Additionally, if any metadata defines
@@ -125,7 +125,7 @@ module.exports = {
 }
 ```
 
-The [@gasket/docsify-plugin] hooks this lifecycle, to render the docs using
+The [@gasket/plugin-docsify] hooks this lifecycle, to render the docs using
 Docsify.
 
 ## Presets
@@ -156,7 +156,8 @@ module.exports = {
 [DocsTransform]: docs/api.md#DocsTransform
 [DocsTransformHandler]: docs/api.md#DocsTransformHandler
 
-[@gasket/docsify-plugin]: /packages/gasket-docsify-plugin/README.md
+[@gasket/plugin-metadata]: /packages/gasket-metadata-plugin/README.md
+[@gasket/plugin-docsify]: /packages/gasket-docsify-plugin/README.md
 [metadata]: /packages/gasket-metadata-plugin/README.md
 
 [rustdoc]:https://doc.rust-lang.org/rustdoc/

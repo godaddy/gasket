@@ -1,6 +1,6 @@
 # Gasket Tech Stack
 
-Gasket brings together a variety of technologies to guide you in creating a web 
+Gasket brings together a variety of technologies to guide you in creating a web
 application.
 
 ![Your node_modules](../images/node_modules.jpeg)
@@ -10,7 +10,7 @@ explain.
 
 ## Runtime Stack
 
-Gasket provides an HTTP/HTTPS application server that has server-side rendering, and 
+Gasket provides an HTTP/HTTPS application server that has server-side rendering, and
 more. It also provides a collection of components which you can use in your application
 code. Here's what's included.
 
@@ -138,7 +138,7 @@ technologies in the JavaScript community for testing and many opinions, so as a
 result Gasket does not provide a standard set of testing tools. It does,
 however, provide two plugins options for two different philosophies.
 
-#### @gasket/mocha-plugin
+#### @gasket/plugin-mocha
 
 Use the [Mocha Plugin] if you don't like the Jest "monolith" and prefer an
 assemblage of single-purpose tools. Although "Mocha" is in the name, this plugin
@@ -152,15 +152,15 @@ is really a collection of various tools:
 - [Enzyme] - Utilities for testing React components
 - Miscellaneous plugins to tie everything together
 
-To install all this test boilerplate, add a `--plugins=mocha` command-line
+To install all this test boilerplate, add a `--plugins=@gasket/mocha` command-line
 option in your `gasket create` call.
 
-#### @gasket/jest-plugin
+#### @gasket/plugin-jest
 
 [Jest] is a batteries-included test framework with developer ease in mind. The
 [Jest Plugin] auto-generates some sample test boilerplate to help get you
 started, and it also includes [Enzyme]. Specify this plugin when running
-`gasket create` via a `--plugins=jest` command-line option.
+`gasket create` via a `--plugins=@gasket/jest` command-line option.
 
 [Babel]: https://babeljs.io/
 [Chai]: http://www.chaijs.com/

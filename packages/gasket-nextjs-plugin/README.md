@@ -1,11 +1,11 @@
-# @gasket/nextjs-plugin
+# @gasket/plugin-nextjs
 
-The `nextjs-plugin` adds `next` to your application.
+This plugin adds `next` to your application.
 
 ## Installation
 
 ```
-npm install --save @gasket/nextjs-plugin
+npm install --save @gasket/plugin-nextjs
 ```
 
 ## Configuration
@@ -15,10 +15,10 @@ The nextjs plugin is configured using the `gasket.config.js` file.
 - First, add it to the `plugins` section of your `gasket.config.js`:
 
 ```js
-{
-  "plugins": [
-    "add": ["nextjs"]
-  ]
+module.exports = {
+  plugins: {
+    add: ['@gasket/nextjs']
+  }
 }
 ```
 
@@ -29,7 +29,7 @@ The nextjs plugin is configured using the `gasket.config.js` file.
 ```js
 module.exports = {
   plugins: {
-    add: ['nextjs']
+    add: ['@gasket/nextjs']
   },
   next: {
     poweredByHeader: false,
@@ -47,14 +47,13 @@ module.exports = {
 
 ```js
 module.exports = {
-  name: 'nextjs',
   hooks: {
     /**
     * Creates the next app
     * @param  {Gasket} gasket The Gasket API
     * @return {Promise<Object>} next app
     */
-    'nextCreate': async function createNext(gasket) {
+    nextCreate: async function createNext(gasket) {
       return nextApp;
     }
   }
@@ -65,14 +64,13 @@ module.exports = {
 
 ```js
 module.exports = {
-  name: 'nextjs',
   hooks: {
     /**
     * Builds next app
     * @param  {Gasket} gasket The Gasket API
     * @return {Promise<Object>} next build
     */
-    'nextBuild': async function createBuild(gasket) {
+    nextBuild: async function createBuild(gasket) {
       return build;
     }
   }

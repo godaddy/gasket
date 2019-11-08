@@ -1,5 +1,5 @@
 {
-  "name": "@gasket/lint-plugin",
+  "name": "@gasket/plugin-lint",
   "version": "1.7.3",
   "description": "Adds GoDaddy standard linting to your application",
   "main": "index.js",

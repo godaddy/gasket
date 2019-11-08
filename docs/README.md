@@ -75,7 +75,7 @@ gasket create your-app-name --presets <preset-name>
 ```
 
 Where `your-app-name` is the name of your app, and `preset-name` is the preset
-you wish to use (i.e. `nextjs`).
+you wish to use (i.e. `@gasket/nextjs`).
 
 The create command lays out the scaffolding and initial structure for your app
 and gives you a working app that you can spin up locally with no other upfront
@@ -142,14 +142,14 @@ i.e. `en-US/home.json` and `en-US/about.json`.
 
 Locales can then be made available to your app at the page or component level
 using the components from [@gasket/intl]. Additional details and configuration
-for managing the locale files are described in the [@gasket/intl-plugin] docs.
+for managing the locale files are described in the [@gasket/plugin-intl] docs.
 
 #### config/
 
 App-level configuration which can be established per environment by files
 per each. For example, you could have `development.js` and `production.js`
 files, whose configuration is loaded and available to your app based
-on the runtime environment. This is enabled by the [@gasket/config-plugin],
+on the runtime environment. This is enabled by the [@gasket/plugin-config],
 whose docs provide greater details on how config files can be structured.
 
 Gasket-level plugins or Next.js configuration can be adjusted in the
@@ -160,7 +160,7 @@ Gasket-level plugins or Next.js configuration can be adjusted in the
 The many features of Gasket are built as plugins, and the ability to create
 app-level plugins is available. Any file in this plugins directory, following
 the `<name>-plugin.js` naming convention, is automatically picked up by the
-[plugin-engine][@gasket/plugin-engine]. This gives you access to tie into
+[plugin-engine][@gasket/engine]. This gives you access to tie into
 lifecycles, set timings, or even add your own hooks.
 
 Plugins are designed with the ability to be reused across apps. So, if you
@@ -170,10 +170,10 @@ which can be versioned, published, and imported to your different apps.
 #### lifecycles/
 
 The simplest way to have app-specific code which can hook into the
-[plugin-engine][@gasket/plugin-engine], is to have a file per lifecycle.
+[plugin-engine][@gasket/engine], is to have a file per lifecycle.
 For example, a `middleware.js` file in this directory is executed during
 the *middleware* lifecycle. This feature is enabled by the
-[@gasket/lifecycle-plugin] whose docs has more details and examples.
+[@gasket/plugin-lifecycle] whose docs has more details and examples.
 
 [Learn more about all available lifecycles](guides/lifecycles.md)
 
@@ -215,7 +215,7 @@ package managers and can also include configuration for other tools.
 #### gasket.config.js
 
 Configuring Gasket plugins or additional Next.js config can be handle here.
-This file is expected by [@gasket/plugin-engine] and each of the [plugins] will
+This file is expected by [@gasket/engine] and each of the [plugins] will
 describe in their docs what configuration options are available.
 
 #### routes.js
@@ -223,14 +223,14 @@ describe in their docs what configuration options are available.
 This special file is discussed in the [advanced routing] guide which utilizes
 [next-routes] for setting up parameterized routes for your pages.
 
-Enabled by the [@gasket/nextjs-plugin], it can be configured to point to a
+Enabled by the [@gasket/plugin-nextjs], it can be configured to point to a
 different file instead by setting the `routes` property of `gasket.config.js`
 
 #### store.js
 
 By default, Gasket uses the `make-store` file from [@gasket/redux].
 However, if you want to configure the make store function, this special file
-is used instead. This feature is enabled by [@gasket/redux-plugin],
+is used instead. This feature is enabled by [@gasket/plugin-redux],
 which has examples of configuring the store creator.
 
 It is possible to configure the plugin to point to a different file instead
@@ -252,21 +252,16 @@ see [Configuring Plugins].
 
 ### Defaults
 
-- [@gasket/analyze-plugin] - For `gasket analyze` to generate bundle reports.
-- [@gasket/assets-plugin] - Adds asset bundling and SVG optimization.
-- [@gasket/config-plugin] - Enables [config/] dir for app-level config.
-- [@gasket/express-plugin] - Add `express` to your application.
-- [@gasket/https-plugin] - Creates `http` and `https` servers based on the given gasket configuration.
-- [@gasket/intl-plugin] - Discover, bundle, and serve locale files.
-- [@gasket/lifecycle-plugin] - Enables [lifecycles/] dir for app-level hooks.
-- [@gasket/log-plugin] - Sets up server logger instance.
-- [@gasket/nextjs-plugin] - Adds `next` to your application.
-- [@gasket/redux-plugin] - Enables [store.js] and redux store for Express.
-- [@gasket/webpack-plugin] - Adds `webpack` support to your application.
-
-#### Extras
-
-- [@gasket/proxy-plugin] - Make functions and endpoints for requests to services.
+- [@gasket/plugin-analyze] - For `gasket analyze` to generate bundle reports.
+- [@gasket/plugin-config] - Enables [config/] dir for app-level config.
+- [@gasket/plugin-express] - Add `express` to your application.
+- [@gasket/plugin-https] - Creates `http` and `https` servers based on the given gasket configuration.
+- [@gasket/plugin-intl] - Discover, bundle, and serve locale files.
+- [@gasket/plugin-lifecycle] - Enables [lifecycles/] dir for app-level hooks.
+- [@gasket/plugin-log] - Sets up server logger instance.
+- [@gasket/plugin-nextjs] - Adds `next` to your application.
+- [@gasket/plugin-redux] - Enables [store.js] and redux store for Express.
+- [@gasket/plugin-webpack] - Adds `webpack` support to your application.
 
 ## Utils
 
@@ -340,25 +335,23 @@ Development modules to help with code quality.
 [Gasket Docs]: README.md
 
 <!-- Gasket Repo Links -->
-[@gasket/cli]:/packages/gasket-cli  
-[@gasket/nextjs-plugin]:/packages/gasket-nextjs-plugin#gasketnextjs-plugin
-[@gasket/webpack-plugin]:/packages/gasket-webpack-plugin#gasketwebpack-plugin
-[@gasket/express-plugin]:/packages/gasket-express-plugin#gasketexpress-plugin
+[@gasket/cli]:/packages/gasket-cli
+[@gasket/plugin-nextjs]:/packages/gasket-nextjs-plugin#gasketplugin-nextjs
+[@gasket/plugin-webpack]:/packages/gasket-webpack-plugin#gasketplugin-webpack
+[@gasket/plugin-express]:/packages/gasket-express-plugin#gasketplugin-express
 [@gasket/intl]:/packages/gasket-intl
 [@gasket/redux]:/packages/gasket-redux#gasketredux
 [@gasket/log]:/packages/gasket-log#gasketlog
-[@gasket/analyze-plugin]:/packages/gasket-analyze-plugin#gasketanalyze-plugin
-[@gasket/assets-plugin]:/packages/gasket-assets-plugin
-[@gasket/config-plugin]:/packages/gasket-config-plugin#gasketconfig-plugin
-[@gasket/intl-plugin]:/packages/gasket-intl-plugin
-[@gasket/lifecycle-plugin]:/packages/gasket-lifecycle-plugin#gasketlifecycle-plugin
-[@gasket/log-plugin]:/packages/gasket-log-plugin#gasket-log-plugin
-[@gasket/proxy-plugin]:/packages/proxy-plugin
-[@gasket/redux-plugin]:/packages/gasket-redux-plugin
-[@gasket/plugin-engine]:/packages/gasket-plugin-engine#gasketplugin-engine
+[@gasket/plugin-analyze]:/packages/gasket-analyze-plugin#gasketplugin-analyze
+[@gasket/plugin-config]:/packages/gasket-config-plugin#gasketplugin-config
+[@gasket/plugin-intl]:/packages/gasket-intl-plugin#gasketplugin-intl
+[@gasket/plugin-lifecycle]:/packages/gasket-lifecycle-plugin#gasketplugin-lifecycle
+[@gasket/plugin-log]:/packages/gasket-log-plugin#gasketplugin-log
+[@gasket/plugin-redux]:/packages/gasket-redux-plugin#gasketplugin-redux
+[@gasket/engine]:/packages/gasket-plugin-engine#gasketengine
 [@gasket/fetch]:/packages/gasket-fetch#gasketfetch
 [stylelint-config-godaddy]:https://github.com/godaddy/stylelint-config-godaddy
-[@gasket/https-plugin]: /packages/gasket-https-plugin#gaskethttps-plugin
+[@gasket/plugin-https]: /packages/gasket-https-plugin#gasketplugin-https
 
 <!-- Other Repo Links -->
 [reduxful]:https://github.com/godaddy/reduxful
@@ -366,7 +359,7 @@ Development modules to help with code quality.
 [@godaddy/eslint-plugin-react-intl]: https://github.com/godaddy/eslint-plugin-react-intl
 
 <!-- Gasket Repo Docs Links -->
-[CLI Commands]:/packages/gasket-cli#commands
+[CLI Commands]:../packages/gasket-cli#commands
 [Configuring Plugins]:/packages/gasket-plugin-engine#configuring-plugins
 
 <!-- Next.js Links -->

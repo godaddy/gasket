@@ -1,4 +1,4 @@
-# `@gasket/workbox-plugin`
+# `@gasket/plugin-workbox`
 
 ### 1.1.0
 

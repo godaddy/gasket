@@ -32,7 +32,7 @@ exports.getCommandWithMocks = function getCommandWithMocks(command) {
 
   const Command = proxyquire(`../src/commands/${command}`, {
     '../command': proxyquire('../src/command', {
-      '@gasket/plugin-engine': PluginEngine
+      '@gasket/engine': PluginEngine
     })
   });
 

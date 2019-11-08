@@ -126,7 +126,7 @@ describe('Utils', () => {
     });
 
     it('ignores plugins and presets', () => {
-      mockApp.package.dependencies['@gasket/mock-plugin'] = '1.2.3';
+      mockApp.package.dependencies['@gasket/plugin-mock'] = '1.2.3';
       mockApp.package.dependencies['@gasket/mock-preset'] = '3.2.1';
       loadAppModules(mockLoader, mockApp, mockModules);
       assume(mockModules).lessThan(Object.keys(mockApp.package.dependencies).length);
@@ -138,7 +138,7 @@ describe('Utils', () => {
     let mockLoader;
 
     const mockPluginData = {
-      name: '@gasket/mock-plugin',
+      name: '@gasket/plugin-mock',
       modules: ['fake-one']
     };
 
@@ -181,7 +181,7 @@ describe('Utils', () => {
     };
 
     const mockPluginData = {
-      name: '@gasket/mock-plugin',
+      name: '@gasket/plugin-mock',
       modules: [mockModuleData]
     };
 
@@ -221,12 +221,12 @@ describe('Utils', () => {
     let mockPresetData;
 
     const mockPluginData = {
-      name: '@gasket/mock-plugin',
+      name: '@gasket/plugin-mock',
       from: '@gasket/mock-preset'
     };
 
     const mockModifiedPluginData = {
-      name: '@gasket/mock-plugin',
+      name: '@gasket/plugin-mock',
       from: '@gasket/mock-preset',
       extra: true
     };

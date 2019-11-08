@@ -1,5 +1,5 @@
 {
-  "name": "@gasket/plugin-engine",
+  "name": "@gasket/engine",
   "version": "2.0.1",
   "description": "Plugin engine for gasket",
   "main": "lib/engine.js",

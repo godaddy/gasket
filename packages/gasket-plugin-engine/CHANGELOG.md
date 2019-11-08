@@ -1,4 +1,4 @@
-# `@gasket/plugin-engine`
+# `@gasket/engine`
 
 ### 2.0.0
 
@@ -38,4 +38,4 @@
 
 [#64]: https://github.com/godaddy/gasket/pull/64
 
-[Loader]:/packages/gasket-resolve/README.md#Loader
+[Loader]:/packages/gasket-resolve/docs/api.md#Loader

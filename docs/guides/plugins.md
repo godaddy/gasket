@@ -134,7 +134,7 @@ describe('detective plugin', function () {
     assume(name).contains('subtle');
   });
 
-  it('executes the lifecyles for each clue', function () {
+  it('executes the lifecyles for each clue', async function () {
     const execStub = stub();
     const logSub = stub();
     const gasket = {
@@ -157,7 +157,7 @@ describe('detective plugin', function () {
 
 ## Documentation
 
-If applications using your plugin are also using the [`@gasket/docs-plugin`] you
+If applications using your plugin are also using the [@gasket/plugin-docs] you
 can automatically view and generate docs for your application via the `gasket docs`
 command. To best take advantage of this functionality, you should provide a
 `README.md` enumerating documentation, as well as `metadata` hook to best
@@ -168,7 +168,7 @@ module.exports = {
   name: 'detective',
   hooks: {
     // other hook implementations
-    metadata: (gasket, data) {
+    metadata(gasket, data) {
       return {
         ...data,
         lifecycles: [{
@@ -191,5 +191,5 @@ module.exports = {
 Then, upon running `gasket docs`, developers will automatically find
 documentation for the `detective` plugin.
 
-[here]: (../../packages/gasket-plugin-engine#GasketAPI)
-[`@gasket/docs-plugin`]: https://github.com/godaddy/gasket/blob/master/packages/gasket-docs-plugin
+[here]: /packages/gasket-plugin-engine#gasketapi
+[@gasket/plugin-docs]: /packages/gasket-docs-plugin
