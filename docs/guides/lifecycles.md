@@ -715,4 +715,4 @@ function workboxHook(gasket, config, req) {
 ```
 
 [`@gasket/resolve`]: /packages/gasket-resolve
-[`@gasket/engine`]: /packages/gasket-plugin-engine#gasketapi
+[`@gasket/engine`]: /packages/gasket-engine

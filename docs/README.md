@@ -348,7 +348,7 @@ Development modules to help with code quality.
 [@gasket/plugin-lifecycle]:/packages/gasket-plugin-lifecycle
 [@gasket/plugin-log]:/packages/gasket-plugin-log
 [@gasket/plugin-redux]:/packages/gasket-plugin-redux
-[@gasket/engine]:/packages/gasket-plugin-engine#gasketengine
+[@gasket/engine]:/packages/gasket-engine
 [@gasket/fetch]:/packages/gasket-fetch#gasketfetch
 [stylelint-config-godaddy]:https://github.com/godaddy/stylelint-config-godaddy
 [@gasket/plugin-https]: /packages/gasket-plugin-https
@@ -360,7 +360,7 @@ Development modules to help with code quality.
 
 <!-- Gasket Repo Docs Links -->
 [CLI Commands]:../packages/gasket-cli#commands
-[Configuring Plugins]:/packages/gasket-plugin-engine#configuring-plugins
+[Configuring Plugins]:/packages/gasket-engine
 
 <!-- Next.js Links -->
 [Next.js]:https://github.com/zeit/next.js

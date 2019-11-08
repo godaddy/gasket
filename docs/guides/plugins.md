@@ -191,5 +191,5 @@ module.exports = {
 Then, upon running `gasket docs`, developers will automatically find
 documentation for the `detective` plugin.
 
-[here]: /packages/gasket-plugin-engine#gasketapi
+[here]: /packages/gasket-engine
 [@gasket/plugin-docs]: /packages/gasket-plugin-docs

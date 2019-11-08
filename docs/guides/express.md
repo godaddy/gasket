@@ -86,7 +86,7 @@ module.exports = {
 
 Remember, if you need any of your injected middleware to come before or after
 middleware injected by another plugin, use the
-[timing mechanism](/packages/gasket-plugin-engine)
+[timing mechanism](/packages/gasket-engine)
 of the plugin engine. For example, if you need your middleware to access
 the server-side redux store created by
 [`@gasket/plugin-redux`](/packages/gasket-plugin-redux),

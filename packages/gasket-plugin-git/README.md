@@ -55,4 +55,4 @@ See [plugin hook timings] for more information.
 
 
 [gasket create command]:/packages/gasket-cli/README.md#gasket-create-appname
-[plugin hook timings]:/packages/gasket-plugin-engine#hooks
+[plugin hook timings]:/packages/gasket-engine

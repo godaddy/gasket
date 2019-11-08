@@ -89,7 +89,7 @@ Lifecycle keys
 The content rendered on each of your application pages comes from `/pages/*` -
 Your app-specific React component pages
 
-[plugin engine]: /packages/gasket-plugin-engine
+[plugin engine]: /packages/gasket-engine
 [lifecycle script]: /packages/gasket-plugin-lifecycle
 [Configuration guide]: ./configuration.md
 [plugins]: /packages
