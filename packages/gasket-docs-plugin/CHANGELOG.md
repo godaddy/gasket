@@ -1,4 +1,4 @@
-# `@gasket/docs-plugin`
+# `@gasket/plugin-docs`
 
 ### 1.0.1
 

@@ -1,11 +1,11 @@
-# @gasket/webpack-plugin
+# @gasket/plugin-webpack
 
 The `webpack-plugin` adds `webpack` support to your application.
 
 ## Installation
 
 ```
-npm install --save @gasket/webpack-plugin
+npm install --save @gasket/plugin-webpack
 ```
 
 ## Configuration
@@ -15,10 +15,10 @@ The webpack plugin is configured using the `gasket.config.js` file.
 - First, add it to the `plugins` section of your `gasket.config.js`:
 
 ```js
-{
-  "plugins": [
-    "add": ["webpack"]
-  ]
+module.exports = {
+  plugins: {
+    add: ['@gasket/webpack']
+  }
 }
 ```
 
@@ -29,7 +29,7 @@ The webpack plugin is configured using the `gasket.config.js` file.
 ```js
 module.exports = {
   plugins: {
-    add: ['webpack']
+    add: ['@gasket/webpack']
   },
   webpack: {}  // user specified webpack config
 }
@@ -44,7 +44,7 @@ module.exports = {
 Use this to initialize the webpack lifecycles in a consuming plugin.
 
 ```js
-const { initWebpack } = require('@gasket/webpack-plugin');
+const { initWebpack } = require('@gasket/plugin-webpack');
 
 /**
 * Creates the webpack config

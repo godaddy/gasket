@@ -100,9 +100,9 @@ describe('promptHooks', () => {
     });
 
     it('re-links packages', async () => {
-      mockContext.pkgLinks = ['@gasket/bogus-plugin'];
+      mockContext.pkgLinks = ['@gasket/plugin-bogus'];
       await mockAddPlugins('@gasket/plugin-jest@^1.2.3');
-      assume(linkStub).is.calledWith(['@gasket/bogus-plugin']);
+      assume(linkStub).is.calledWith(['@gasket/plugin-bogus']);
     });
 
     it('does not re-link if no package links', async () => {

@@ -1,4 +1,4 @@
-# @gasket/config-plugin
+# @gasket/plugin-config
 
 Supports application-specific (non-Gasket) configuration
 
@@ -15,7 +15,7 @@ This plugin:
 ## Installing
 
 ```shell
-npm install --save @gasket/config-plugin
+npm install --save @gasket/plugin-config
 ```
 
 ...and add it to your `gasket.config.js`.
@@ -23,7 +23,7 @@ npm install --save @gasket/config-plugin
 ```js
 module.exports = {
   plugins: {
-    add: ['config']
+    add: ['@gasket/config']
   }
 };
 ```
@@ -41,15 +41,15 @@ module.exports = {
 ```
 
 Gasket first decides which _environment_ you're running in. By default, this
-comes from the `NODE_ENV` environment variable or the `--env` command-line 
-argument. This can also be overridden by the `env` property of 
-`gasket.config.js`. Environments can be sub-divided (say, for multiple data 
+comes from the `NODE_ENV` environment variable or the `--env` command-line
+argument. This can also be overridden by the `env` property of
+`gasket.config.js`. Environments can be sub-divided (say, for multiple data
 centers) through dotted identifiers. Example: `production.v1`.
 
 Once this environment identifier is determined, files are imported based on the
 identifier and deep merged together. Files must be CommonJS `.js` modules or
-`.json` files with the name of your environment. You may optionally have a 
-`base.js[on]` file shared across all environments. Given the example 
+`.json` files with the name of your environment. You may optionally have a
+`base.js[on]` file shared across all environments. Given the example
 environment `production.v1`, the following files may be merged together:
 
 ```
@@ -90,7 +90,7 @@ should not be committed, and specified in `.gitignore`.
 
 ## Accessing Config
 
-The plugin attaches the configuration from your config files to a `config` 
+The plugin attaches the configuration from your config files to a `config`
 property of the express request object. This makes it accessible to server-side
 `getInitialProps` calls:
 
@@ -110,12 +110,12 @@ export default PageComponent extends React.Component {
 }
 ```
 
-...and custom express middleware (provided you ensure that your middleware 
+...and custom express middleware (provided you ensure that your middleware
 runs _after_ the config plugin). For example, in `/lifecycles/middleware.js`:
 
 ```js
 module.exports = {
-  timing: { after: ['config'] },
+  timing: { after: ['@gasket/config'] },
   handler(gasket) {
     return (req, res, next) => {
       if (req.config.featureFlags.betaSite) {

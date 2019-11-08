@@ -1,4 +1,4 @@
-# @gasket/analyze-plugin
+# @gasket/plugin-analyze
 
 Gasket plugin for building analysis reports of webpack bundles using
 [webpack-bundle-analyzer].

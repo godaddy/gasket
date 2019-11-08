@@ -18,14 +18,14 @@ describe('createEngine', () => {
     };
 
     mockImports = {
-      '@gasket/plugin-engine': class PluginEngine {
+      '@gasket/engine': class PluginEngine {
         async exec() {
 
         }
       }
     };
 
-    pluginEngineSpy = sandbox.spy(mockImports, '@gasket/plugin-engine');
+    pluginEngineSpy = sandbox.spy(mockImports, '@gasket/engine');
 
 
     createEngine = proxyquire('../../../src/scaffold/create-engine', mockImports);

@@ -6,7 +6,7 @@ Gasket application.
 ## Installation
 
 ```
-gasket create APPNAME --plugins mocha
+gasket create APPNAME --plugins @gasket/mocha
 ```
 
 ## Usage

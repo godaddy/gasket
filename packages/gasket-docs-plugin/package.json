@@ -1,5 +1,5 @@
 {
-  "name": "@gasket/docs-plugin",
+  "name": "@gasket/plugin-docs",
   "version": "1.0.1",
   "description": "Centralize doc files from plugins and modules",
   "main": "lib",

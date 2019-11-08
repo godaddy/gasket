@@ -1,4 +1,4 @@
-# `@gasket/lint-plugin`
+# `@gasket/plugin-lint`
 
 ### 2.0.0
 

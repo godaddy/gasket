@@ -1,6 +1,6 @@
 /* eslint-disable no-sync */
 
-const Engine = require('@gasket/plugin-engine');
+const Engine = require('@gasket/engine');
 const { stub } = require('sinon');
 const assume = require('assume');
 const { createConfig } = require('../config');
@@ -177,7 +177,7 @@ function lifecycle(config = {}, ...plugins) {
 
   return new Engine({
     plugins: {
-      add: [require('../index'), require('@gasket/webpack-plugin'), ...plugins].filter(Boolean)
+      add: [require('../index'), require('@gasket/plugin-webpack'), ...plugins].filter(Boolean)
     },
     next: {},
     http: {

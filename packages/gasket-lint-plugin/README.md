@@ -1,4 +1,4 @@
-# @gasket/lint-plugin
+# @gasket/plugin-lint
 
 Enables code style linting to be configured for Gasket apps.
 

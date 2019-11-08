@@ -21,9 +21,9 @@ Several elements make a progressive web app as seen from the
 
 Gasket provides plugins to make enabling these features a breeze.
 These include:
-- [@gasket/service-worker-plugin]
-- [@gasket/workbox-plugin]
-- [@gasket/manifest-plugin]
+- [@gasket/plugin-service-worker]
+- [@gasket/plugin-workbox]
+- [@gasket/plugin-manifest]
 
 Utilizing these will allow apps to:
 
@@ -44,9 +44,9 @@ Let's now look into how to use these plugins.
 enable progressive web app features such as precaching, push notifications, and
 background syncing.
 
-### @gasket/service-worker-plugin
+### @gasket/plugin-service-worker
 
-With this plugin enabled, your app will automatically be serving a service 
+With this plugin enabled, your app will automatically be serving a service
 worker! By default, it will be served at `/sw.js`, but this is adjustable via
 config options. The defaults options for this plugin should be sufficient.
 However, they are tunable as needed for your app under `serviceWorker` in
@@ -69,7 +69,7 @@ with on-demand runtime strategies, such as cacheFirst, or networkFirst.
 In additional to speed, precaching unlocks the ability for our apps to have
 offline support for avaliability.
 
-### @gasket/workbox-plugin
+### @gasket/plugin-workbox
 
 This plugin provides precaching as well as runtime caching, by implementing
 service worker configuration using [Workbox].
@@ -85,7 +85,7 @@ execute a `workbox` lifecycle which plugins and the app can hook into which
 allows them to add to the workbox config. The workbox-plugin with then take
 that config, and use it to generate the service worker script.
 
-For example, when using `@gasket/nextjs-plugin`, the next build files and 
+For example, when using `@gasket/plugin-nextjs`, the next build files and
 static assets will be added to the workbox config and automatically ready for
 precaching.
 
@@ -96,7 +96,7 @@ web application and how it should behave when 'installed' on the user's mobile
 device or desktop._ This allows your application to take full advantage of
 being a [Progressive Web App][PWA].
 
-### @gasket/manifest-plugin
+### @gasket/plugin-manifest
 
 This plugin adds support for a custom `manifest.json` to be provided for your
 app. To configure what is in the manifest, you can set this under `manifest` in
@@ -116,8 +116,8 @@ configure your app to be a Progressive Web App!
 // gasket.config.js
 module.exports = {
   plugins: {
-    presets: ['nextjs'],
-    add: ['service-worker', 'workbox', 'manifest']
+    presets: ['@gasket/nextjs'],
+    add: ['@gasket/service-worker', '@gasket/workbox', '@gasket/manifest']
   },
   manifest: {
     name: 'My Full App Name',
@@ -147,13 +147,13 @@ worker features.
 [Caching]:#caching
 [Manifest]:#manifest
 [Setup]:#setup
-[@gasket/service-worker-plugin]:#gasketservice-worker-plugin
-[@gasket/workbox-plugin]:#gasketworkbox-plugin
-[@gasket/manifest-plugin]:#gasketmanifest-plugin
+[@gasket/plugin-service-worker]:#gasketplugin-service-worker
+[@gasket/plugin-workbox]:#gasketplugin-workbox
+[@gasket/plugin-manifest]:#gasketplugin-manifest
 
-[service worker plugin docs]:/packages/gasket-service-worker-plugin#gasketservice-worker-plugin
-[workbox plugin docs]:/packages/gasket-workbox-plugin#gasketworkbox-plugin
-[manifest plugin docs]:/packages/gasket-manifest-plugin#gasketmanifest-plugin
+[service worker plugin docs]:/packages/gasket-service-worker-plugin#gasketplugin-service-worker
+[workbox plugin docs]:/packages/gasket-workbox-plugin#gasketplugin-workbox
+[manifest plugin docs]:/packages/gasket-manifest-plugin#gasketplugin-manifest
 
 [Service Workers]:https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API
 [PWA]:https://developer.mozilla.org/en-US/docs/Web/Apps/Progressive

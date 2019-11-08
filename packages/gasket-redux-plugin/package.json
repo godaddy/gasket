@@ -1,5 +1,5 @@
 {
-  "name": "@gasket/redux-plugin",
+  "name": "@gasket/plugin-redux",
   "version": "2.3.5",
   "description": "Gasket Redux Setup",
   "main": "lib",
@@ -30,7 +30,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-redux-plugin",
   "devDependencies": {
-    "@gasket/log-plugin": "^3.2.2",
+    "@gasket/plugin-log": "^3.2.2",
     "@gasket/redux": "^3.2.1",
     "acorn": "^6.1.1",
     "eslint": "^6.1.0",
@@ -43,7 +43,7 @@
     "react-dom": "^16.8.6"
   },
   "peerDependencies": {
-    "@gasket/log-plugin": "^2.0.0 || ^3.0.0",
+    "@gasket/plugin-log": "^2.0.0 || ^3.0.0",
     "@gasket/redux": "^2.0.0 || ^3.0.0"
   }
 }

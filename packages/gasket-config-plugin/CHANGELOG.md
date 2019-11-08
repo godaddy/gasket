@@ -1,4 +1,4 @@
-# `@gasket/config-plugin`
+# `@gasket/plugin-config`
 
 ### 1.2.0
 

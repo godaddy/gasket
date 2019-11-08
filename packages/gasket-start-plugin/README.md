@@ -1,4 +1,4 @@
-# @gasket/start-plugin
+# @gasket/plugin-start
 
 Enables commands essential to building and running Gasket projects.
 
