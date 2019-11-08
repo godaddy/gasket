@@ -24,8 +24,8 @@ describe('Plugin', function () {
     assume(plugin).is.an('object');
   });
 
-  it('is named correctly', function () {
-    assume(plugin.name).equals('express');
+  it('has expected name', () => {
+    assume(plugin).to.have.property('name', require('../package').name);
   });
 
   it('has expected hooks', () => {

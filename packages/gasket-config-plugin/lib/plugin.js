@@ -5,7 +5,7 @@ const mergeRootConfig = require('./merge-root-config');
 const { ENV_CONFIG } = require('./constants');
 
 module.exports = {
-  name: 'config',
+  name: require('../package').name,
   hooks: {
     async preboot(gasket) {
       gasket[ENV_CONFIG] = await gasket.execWaterfall(

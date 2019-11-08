@@ -2,7 +2,7 @@ const create = require('./create');
 const getCommands = require('./get-commands');
 
 module.exports = {
-  name: '@gasket/start',
+  name: require('../package').name,
   hooks: {
     create,
     getCommands

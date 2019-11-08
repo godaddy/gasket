@@ -4,7 +4,7 @@ const metadata = require('./metadata');
 const docsSetup = require('./docs-setup');
 
 module.exports = {
-  name: 'docs',
+  name: require('../package').name,
   hooks: {
     configure,
     getCommands,
