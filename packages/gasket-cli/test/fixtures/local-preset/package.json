@@ -1,7 +1,0 @@
-{
-  "name": "@gasket/test-preset",
-  "version": "1.2.3",
-  "dependencies": {
-    "bogus-plugin": "^4.5.6"
-  }
-}

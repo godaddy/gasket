@@ -1,7 +1,0 @@
-{
-  "urls": {
-    "fos": "https://www.{rootDomain}/",
-    "mya": "https://accounts.{rootDomain}/products",
-    "gc": "https://websites.{rootDomain}/"
-  }
-}
