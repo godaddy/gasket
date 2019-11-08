@@ -519,7 +519,7 @@ async function middlewareHook(gasket, app) {
 ### metadata
 
 - **Executed during:** : `init` lifecycle
-- **Documentation**: [here](/packages/gasket-metadata-plugin#gasketplugin-metadata)
+- **Documentation**: [here](/packages/gasket-plugin-metadata)
 
 Adds additional metadata to gasket.config.metadata
 
