@@ -1,5 +1,5 @@
 {
-  "name": "@gasket/nextjs-plugin",
+  "name": "@gasket/plugin-nextjs",
   "version": "2.3.3",
   "description": "Adds Next support to your application",
   "main": "index.js",
@@ -29,10 +29,10 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-nextjs-plugin",
   "dependencies": {
-    "@gasket/webpack-plugin": "^1.1.1"
+    "@gasket/plugin-webpack": "^1.1.1"
   },
   "devDependencies": {
-    "@gasket/plugin-engine": "^2.0.2",
+    "@gasket/engine": "^2.0.2",
     "assume": "^2.2.0",
     "assume-sinon": "^1.0.1",
     "babel-eslint": "^10.0.2",

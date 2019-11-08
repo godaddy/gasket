@@ -1,4 +1,4 @@
-# `@gasket/nextjs-plugin`
+# `@gasket/plugin-nextjs`
 
 ### 2.3.3
 

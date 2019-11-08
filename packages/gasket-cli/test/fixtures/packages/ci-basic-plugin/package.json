@@ -1,5 +1,5 @@
 {
-  "name": "@gasket/ci-basic-plugin",
+  "name": "@gasket/plugin-ci-basic",
   "version": "0.0.1",
   "main": "index.js"
 }

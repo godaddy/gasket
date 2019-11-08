@@ -1,13 +1,13 @@
-# `@gasket/manifest-plugin`
+# `@gasket/plugin-manifest`
 
 Adds support for a custom [`manifest.json`] to be provided for your application.
 This allows your application to take full advantage of being a [Progressive Web
 Application]. This is useful for progressive web applications, and works best
-when paired with `@gasket/workbox-plugin` and `@gasket/service-worker-plugin`.
+when paired with `@gasket/plugin-workbox` and `@gasket/plugin-service-worker`.
 
 ## Table of Contents
 
-- [`@gasket/manifest-plugin`](#gasketmanifest-plugin)
+- [`@gasket/plugin-manifest`](#gasketplugin-manifest)
   - [Table of Contents](#table-of-contents)
   - [Installation](#installation)
   - [Configuration](#configuration)
@@ -16,7 +16,7 @@ when paired with `@gasket/workbox-plugin` and `@gasket/service-worker-plugin`.
 ## Installation
 
 ```
-npm install @gasket/manifest-plugin @gasket/service-worker-plugin @gasket/workbox-plugin
+npm install @gasket/plugin-manifest @gasket/plugin-service-worker @gasket/plugin-workbox
 ```
 
 ## Configuration
@@ -24,10 +24,10 @@ npm install @gasket/manifest-plugin @gasket/service-worker-plugin @gasket/workbo
 Add it to the `plugins` section of your `gasket.config.js`:
 
 ```js
-{
-  "plugins": [
-    "add": ["service-worker", "workbox", "manifest"]
-  ]
+module.exports = {
+  plugins: {
+    add: ['@gasket/service-worker', '@gasket/workbox', '@gasket/manifest']
+  }
 }
 ```
 ## Lifecycles

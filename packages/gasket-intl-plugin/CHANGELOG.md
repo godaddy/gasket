@@ -1,4 +1,4 @@
-# `@gasket/intl-plugin`
+# `@gasket/plugin-intl`
 
 ### 4.2.0
 

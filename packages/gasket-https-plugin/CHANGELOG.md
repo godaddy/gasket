@@ -1,4 +1,4 @@
-# `@gasket/https-plugin`
+# `@gasket/plugin-https`
 
 ### 2.2.1
 

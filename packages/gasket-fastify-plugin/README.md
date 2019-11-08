@@ -1,11 +1,11 @@
-# @gasket/fastify-plugin
+# @gasket/plugin-fastify
 
 The `fastify-plugin` adds `fastify` to your application.
 
 ## Installation
 
 ```sh
-npm install --save @gasket/fastify-plugin
+npm install --save @gasket/plugin-fastify
 ```
 
 ## Configuration
@@ -15,10 +15,10 @@ The fastify plugin is configured using the `gasket.config.js` file.
 - First, add it to the `plugins` section of your `gasket.config.js`:
 
 ```js
-{
-  "plugins": [
-    "add": ["fastify"]
-  ]
+module.exports = {
+  plugins: {
+    add: ['@gasket/fastify']
+  }
 }
 ```
 
@@ -32,7 +32,7 @@ All the configurations for the plugin are added under `fastify` in the config:
 ```js
 module.exports = {
   plugins: {
-    add: ['fastify']
+    add: ['@gasket/fastify']
   },
   fastify: {
     compression: false,

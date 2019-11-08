@@ -164,7 +164,7 @@ describe('gasket create', function () {
         setup: vacuumApp('with-plugins'),
         argv: ['create', 'with-plugins',
           '--preset-path', path.join(dirs.packages, 'ci-basic-preset'),
-          '--plugins', `@gasket/ci-add-plugin@file:${path.join(dirs.packages, 'ci-add-plugin')}`
+          '--plugins', `@gasket/plugin-ci-add@file:${path.join(dirs.packages, 'ci-add-plugin')}`
         ],
         spawnWith: { cwd: dirs.create }
       });
@@ -183,7 +183,7 @@ describe('gasket create', function () {
     describe('from flags', () => {
 
       it('added to package.json dependencies', () => {
-        assume(pkg.dependencies).property('@gasket/ci-add-plugin');
+        assume(pkg.dependencies).property('@gasket/plugin-ci-add');
       });
 
       it('added to gasket.config.js plugins', () => {
@@ -199,7 +199,7 @@ describe('gasket create', function () {
       });
 
       it('added to package.json dependencies', () => {
-        assume(pkg.dependencies).property('@gasket/ci-extra-plugin');
+        assume(pkg.dependencies).property('@gasket/plugin-ci-extra');
       });
 
       it('added to gasket.config.js plugins', () => {

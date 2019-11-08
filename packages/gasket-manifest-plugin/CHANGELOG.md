@@ -1,4 +1,4 @@
-# `@gasket/manifest-plugin`
+# `@gasket/plugin-manifest`
 
 ### 1.3.0
 

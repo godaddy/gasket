@@ -8,8 +8,8 @@ const mockPackage = {
   name: 'mock-app',
   version: '7.8.9',
   dependencies: {
-    '@gasket/plugin-engine': '1.2.3',
-    '@gasket/example-plugin': '2.3.4',
+    '@gasket/engine': '1.2.3',
+    '@gasket/plugin-example': '2.3.4',
     '@gasket/example-preset': '3.4.5'
   }
 };
@@ -74,7 +74,7 @@ describe('Metrics', function () {
 
       assume(data.name).equals(mockPackage.name);
       assume(data.version).equals(mockPackage.version);
-      assume(data.gasket).owns('@gasket/plugin-engine');
+      assume(data.gasket).owns('@gasket/engine');
     });
 
     it('includes system data', async function () {
@@ -110,7 +110,7 @@ describe('Metrics', function () {
     it('include the gasket dependencies in a list', async function () {
       const { deps } = await metrics.collect();
       assume(deps).greaterThan(2);
-      assume(deps).contains('@gasket/plugin-engine');
+      assume(deps).contains('@gasket/engine');
     });
   });
 

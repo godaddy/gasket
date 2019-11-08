@@ -1,4 +1,4 @@
-# `@gasket/jest-plugin`
+# `@gasket/plugin-jest`
 
 ### 1.3.0
 

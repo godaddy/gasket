@@ -1,4 +1,4 @@
-# @gasket/service-worker-plugin
+# @gasket/plugin-service-worker
 
 [Service workers] (SW) are scripts that run separate from the main web page and
 enable progressive web app features such as precaching, push notifications, and

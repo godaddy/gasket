@@ -1,4 +1,4 @@
-# @gasket/command-plugin
+# @gasket/plugin-command
 
 Enable plugins to inject new commands to be available for use with the
 Gasket CLI.

@@ -1,4 +1,4 @@
-# `@gasket/express-plugin`
+# `@gasket/plugin-express`
 
 ### 2.1.0
 

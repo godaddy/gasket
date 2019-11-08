@@ -1,4 +1,4 @@
-const { initWebpack } = require('@gasket/webpack-plugin');
+const { initWebpack } = require('@gasket/plugin-webpack');
 
 /**
  * Small helper function that creates nextjs configuration from the gasket

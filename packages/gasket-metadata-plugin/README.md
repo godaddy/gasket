@@ -1,8 +1,8 @@
-# `@gasket/metadata-plugin`
+# `@gasket/plugin-metadata`
 
 Metadata is the information about the register plugins and presets, available
 to plugin lifecycle hooks. This data can be used in various was for plugins,
-most notably the [@gasket/docs-plugin] which uses it to collate docs for an app.
+most notably the [@gasket/plugin-docs] which uses it to collate docs for an app.
 
 ## Overview
 
@@ -102,5 +102,5 @@ module.exports = {
 [DetailData]: docs/api.md#DetailData
 [metadata object]: docs/api.md#DetailData
 
-[@gasket/docs-plugin]: /packages/gasket-docs-plugin/README.md
+[@gasket/plugin-docs]: /packages/gasket-docs-plugin/README.md
 [@gasket/resolve]: /packages/gasket-resolve/README.md

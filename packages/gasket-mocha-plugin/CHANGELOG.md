@@ -1,4 +1,4 @@
-# `@gasket/mocha-plugin`
+# `@gasket/plugin-mocha`
 
 ### 1.4.1
 

@@ -1,5 +1,5 @@
 {
-  "name": "@gasket/git-plugin",
+  "name": "@gasket/plugin-git",
   "version": "1.1.1",
   "description": "Adds git support to your application",
   "main": "lib",
