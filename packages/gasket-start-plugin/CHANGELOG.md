@@ -1,4 +1,4 @@
-# `@gasket/start-plugin`
+# `@gasket/plugin-start`
 
 ### 1.1.0
 

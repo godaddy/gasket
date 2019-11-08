@@ -1,11 +1,11 @@
-# @gasket/lint-plugin
+# @gasket/plugin-lint
 
 The `lint-plugin` adds `eslint-config-godaddy-react` and `stylelint` to your application.
 
 ## Installation
 
 ```
-npm install --save @gasket/lint-plugin
+npm install --save @gasket/plugin-lint
 ```
 
 ## Usage

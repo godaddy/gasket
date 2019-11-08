@@ -1,4 +1,4 @@
-# Gasket log plugin
+# @gasket/plugin-log
 
 Adds a [winston] logger instance to your gasket instance. For documentation on
 the logger itself, see [@gasket/log].
@@ -8,7 +8,7 @@ the logger itself, see [@gasket/log].
 This plugin is published to Artifactory and can be installed with npm:
 
 ```
-npm install --save @gasket/log-plugin
+npm install --save @gasket/plugin-log
 ```
 
 ## Usage
@@ -52,7 +52,7 @@ module.exports = {
 
 ### Options
 
-- `prefix` - (string) used to set the prefix in the `winston` format. 
+- `prefix` - (string) used to set the prefix in the `winston` format.
 - Select `winston` configuration values – (multiple) See below for these
   additional supported properties.
 
@@ -78,7 +78,7 @@ subset of these properties are configurable through `gasket`.
 
 ### Adding custom `winston` transports
 
-`Console` transports are set by default. 
+`Console` transports are set by default.
 Loggers provided by `winston` are highly customizable using [Transports].
 
 **`gasket.config.js`**
@@ -105,7 +105,7 @@ Often defining your `winston` transports are:
 1. **Dependent on the configured environment.** e.g. only turn on the `Console`
    transport when `NODE_ENV=development`.
 2. **Dependent on gasket config.** e.g. adding a `fluentd` Transport that is
-   configured against the `fluentd` endpoint in the current environment. 
+   configured against the `fluentd` endpoint in the current environment.
 
 For these scenarios the `@gasket/log` plugin exposes a `logTransports` hook:
 

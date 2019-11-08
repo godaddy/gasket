@@ -5,7 +5,7 @@ Creates a `jest` with `enzyme` based testing environment for your Gasket applica
 ## Installation
 
 ```
-gasket create APPNAME --plugins jest
+gasket create APPNAME --plugins @gasket/jest
 ```
 
 ## Usage

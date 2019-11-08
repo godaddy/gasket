@@ -1,4 +1,4 @@
-# `@gasket/log-plugin`
+# `@gasket/plugin-log`
 
 ### 3.2.0
 

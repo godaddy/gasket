@@ -52,8 +52,8 @@ OPTIONS
                                      installation. (e.g. --package-manager yarn)
 
   --plugins=plugins                  Additional plugin(s) to install. Can be set as
-                                     multiple flags (e.g. --plugins jest --plugins zkconfig@^1.0.0)
-                                     comma-separated values: --plugins=jest,zkconfig^1.0.0
+                                     multiple flags (e.g. --plugins @gasket/jest --plugins example@^1.0.0)
+                                     comma-separated values: --plugins=@gasket/jest,example^1.0.0
 ```
 
 _See code: [src/commands/create.js](https://github.com/godaddy/gasket/blob/v3.1.1/src/commands/create.js)_

@@ -1,4 +1,4 @@
-# @gasket/redux-plugin
+# @gasket/plugin-redux
 
 Gasket plugin to setup redux store available to express middleware.
 

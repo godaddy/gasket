@@ -1,4 +1,4 @@
-# @gasket/git-plugin
+# @gasket/plugin-git
 
 This a built-in plugin to the Gasket CLI used to set up new apps with git
 repositories when using the [gasket create command].

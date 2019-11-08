@@ -1,4 +1,4 @@
-# `@gasket/command-plugin`
+# `@gasket/plugin-command`
 
 ### 2.0.0
 

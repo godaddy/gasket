@@ -1,4 +1,4 @@
-# `@gasket/metadata-plugin`
+# `@gasket/plugin-metadata`
 
 ### 2.0.0
 
@@ -17,7 +17,7 @@
 [#51]: https://github.com/godaddy/gasket/pull/51
 [#64]: https://github.com/godaddy/gasket/pull/64
 
-[Loader]:/packages/gasket-resolve/README.md#Loader
-[PluginInfo]:/packages/gasket-resolve/README.md#PluginInfo
-[PresetInfo]:/packages/gasket-resolve/README.md#PresetInfo
-[ModuleInfo]:/packages/gasket-resolve/README.md#ModuleInfo
+[Loader]:/packages/gasket-resolve/docs/api.md#Loader
+[PluginInfo]:/packages/gasket-resolve/docs/api.md#PluginInfo
+[PresetInfo]:/packages/gasket-resolve/docs/api.md#PresetInfo
+[ModuleInfo]:/packages/gasket-resolve/docs/api.md#ModuleInfo

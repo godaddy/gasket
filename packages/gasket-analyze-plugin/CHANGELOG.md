@@ -1,4 +1,4 @@
-# `@gasket/analyze-plugin`
+# `@gasket/plugin-analyze`
 
 ### 2.0.0
 

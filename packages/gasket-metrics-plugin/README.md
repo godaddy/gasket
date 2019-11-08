@@ -1,4 +1,4 @@
-# @gasket/metrics-plugin
+# @gasket/plugin-metrics
 
 Enables plugins to collect metrics about an project when Gasket commands
 are invoked.
