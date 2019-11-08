@@ -1,6 +1,6 @@
 # Gasket Preset Authoring Guide
 
-* [Background?](#background)
+* [Background](#background)
 * [Naming](#naming)
   * [Good Names](#good-names)
   * [Bad Names](#bad-names)
@@ -11,13 +11,12 @@
 
 ## Background
 
-A preset is simply a package with Gasket plugins dependencies. Much like
-[babel presets] they allow common plugins to be grouped together, and loaded by
-way of a preset. Because presets are little more than collections of existing
-functionality, they very simply allow developers to codify their opinions
+Much like [babel presets], Gasket presets allow common plugins to be grouped and
+loaded together. They serve 2 purposes: to serve as codified sets of plugins,
+and to facilitate rapid creation of Gasket application.
 
-At GoDaddy, we have presets specifically tailored to internal sets of plugins,
-making maintaining standards around auth, styling, internalization, and more
+At GoDaddy, we have presets specifically tailored with internal sets of plugins,
+making maintaining standards around authentication, style, analytics, and more
 significantly easier.
 
 ## Naming
@@ -82,10 +81,10 @@ especially during development when module linking may be used.
 You can set `gasket create` context values ahead of time in your preset so that
 the associated prompts are never asked. To do so, in a preset's `index.js`, set
 the `createContext` object with the properties you want to define. For example,
-in the following `gasket create` prompt, 3 questions are asked at the beginning.
+in the following `gasket create` prompt, 4 questions are asked at the beginning.
 
 ```
-$ gasket create example --presets nextjs
+$ gasket create example --presets literally-every-preset
 ✔ Load presets
 ? What is your app description?
 ? Which packager would you like to use?
@@ -110,8 +109,8 @@ module.exports = {
 ```
 
 These particular keys come from inspecting the prompts shipped internally by
-[`gasket create` cli prompts). Without any extensions, the Gasket CLI ships
-these prompts which you can override:
+[`gasket create` cli prompts]. Without any extensions, the Gasket CLI ships
+these overridable prompts:
 
 - `appDescription` - `String`
   - Application desciption placed into `package.json.description`
@@ -143,8 +142,8 @@ module.exports = async function promptHook(gasket, context, { prompt }) {
 }
 ```
 
-This prompt can be skipped by providing the `datastore` key in a preset's
-`createContext`:
+This prompt can be entirely skipped by providing the `datastore` key in a
+preset's `createContext`:
 
 ```js
 // preset-datastore/index.js
@@ -159,8 +158,8 @@ module.exports = {
 ### Predefined `gasket.config.js`
 
 Presets can also be used to define predetermined config. This will be loaded
-for app-level commands, such as **build** or **start**, and can be modified
-in the app's `gasket.config.js`.
+for app-level commands, such as **build** or **start**, and will resolve into
+the generated application's `gasket.config.js`.
 
 ```js
 // index.js
@@ -200,9 +199,9 @@ preset. For example, by adding:
 }
 ```
 
-`@tv/preset-episodic`'s plugins will also be registered when the consuming
-application is loaded.
+`@tv/preset-episodic`'s plugins will be registered when the consuming
+application is loaded, in addition to the ones already present as `dependencies`.
 
-[babel preset]: https://babeljs.io/docs/en/presets
+[babel presets]: https://babeljs.io/docs/en/presets
 [`gasket create` cli prompts]: https://github.com/godaddy/gasket/blob/master/packages/gasket-cli/src/scaffold/actions/global-prompts.js
 [environment overrides]: https://github.com/godaddy/gasket/blob/master/docs/guides/configuration.md#environments
