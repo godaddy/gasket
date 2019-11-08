@@ -440,7 +440,7 @@ function webpackHook(gasket, config, data) {
 ### next
 
 - **Executed during:** `start` lifecycle
-- **Documentation:** [here](/packages/gasket-nextjs-plugin#next)
+- **Documentation:** [here](/packages/gasket-plugin-nextjs)
 
 When the `next` server is created this hook will execute. This allows you to
 interact with the `next` application instance. An instance of either
@@ -460,7 +460,7 @@ async function nextHook(gasket, app) {
 ### nextConfig
 
 - **Executed during:** `start`, `build` lifecycles
-- **Documentation:** [here](/packages/gasket-nextjs-plugin#nextconfig)
+- **Documentation:** [here](/packages/gasket-plugin-nextjs)
 
 The `nextConfig` hook allows you to modify the `next` config before the `next`
 server is created.

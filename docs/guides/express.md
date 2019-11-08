@@ -19,7 +19,7 @@ multiple apps, or for a standalone plugin used solely by your app, the plugin
 system is necessary to do any express app customization.
 
 A typical gasket-based application relies on
-[`@gasket/plugin-nextjs`](/packages/gasket-nextjs-plugin#gasketplugin-nextjs) and
+[`@gasket/plugin-nextjs`](/packages/gasket-plugin-nextjs) and
 [`@gasket/plugin-express`](/packages/gasket-plugin-express)
 for creating the web servers and Express application.
 
