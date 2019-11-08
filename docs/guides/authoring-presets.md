@@ -1,13 +1,14 @@
 # Gasket Preset Authoring Guide
 
-* [What is a preset?](#what-is-a-preset)
+* [Background?](#background)
 * [Naming](#naming)
   * [Good Names](#good-names)
   * [Bad Names](#bad-names)
+* [Composition](#composition)
 
-## What is a preset?
+## Background
 
-A preset is simply a package with gasket plugins dependencies. Much like
+A preset is simply a package with Gasket plugins dependencies. Much like
 [babel presets] they allow common plugins to be grouped together, and loaded by
 way of a preset. Because presets are little more than collections of existing
 functionality, they very simply allow developers to codify their opinions
@@ -20,7 +21,7 @@ significantly easier.
 
 `@gasket` presets should follow the naming convention `@gasket/{name}-preset`,
 which will allow them to be referenced using [short names](#short-names).
-Otherwise, presets need to end with the `-preset` suffix. This is how gasket
+Otherwise, presets need to end with the `-preset` suffix. This is how Gasket
 determines what packages are presets or not.
 
 #### Good names
@@ -41,29 +42,22 @@ example
 @myscope/example
 ```
 
-## How do they work
-
-Brief hand wave into pointing at code
-
-## Are there examples?
-
-<!-- BELOW THIS LINE IS PRIOR ART -->
-
-## Authoring Presets
+## Composition
 
 The anatomy of a preset is very simple. In its most basic form, it should have
 an index JavaScript file, which can just export an empty object, and a
-package.json file with dependencies of gasket plugins.
+`package.json` file with dependencies of gasket plugins.
 
 For example, a `package.json` file may look like:
 
 ```json
 {
-  "name": "example-preset",
+  "name": "snl-preset",
   "main": "index.js",
   "dependencies": {
-    "example-plugin": "^1.0.0",
-    "@my/other-plugin": "^2.0.0"
+    "television-plugin": "^1.0.0",
+    "live-plugin": "^1.0.0",
+    "comedy-plugin": "^1.0.0"
   }
 }
 ```
@@ -73,21 +67,21 @@ With the `index.js` as:
 ```js
 module.exports = {
   require
-}
+};
 ```
 
 It is recommended, though not required, for presets to export their `require`
 instance. This will help the loader properly resolve plugin dependencies,
 especially during development when module linking may be used.
 
-### Predefine CreateContext
+### Predefined `gasket create` context
 
-You can set create context values ahead of time in your preset so that the
-associated prompts are never asked. To do so, in a preset's index.js, set the
-`createContext` object with the properties you want to define.
+You can set `gasket create` context values ahead of time in your preset so that
+the associated prompts are never asked. To do so, in a preset's `index.js`, set
+the `createContext` object with the properties you want to define.
 
 ```js
-// example-preset.js
+// index.js
 module.exports = {
   require,
   createContext: {
@@ -99,14 +93,14 @@ module.exports = {
 }
 ```
 
-### Predefine Config
+### Predefined `gasket.config.js`
 
 Presets can also be used to define predetermined config. This will be loaded
 for app-level commands, such as **build** or **start**, yet can be modified
 in the app's `gasket.config.js`.
 
 ```js
-// example-preset.js
+// index.js
 module.exports = {
   require,
   config: {
@@ -125,23 +119,25 @@ module.exports = {
 
 Preset config can also set environment overrides.
 
-### Extend other presets
+### Extending other presets
 
 You can also _extend_ other presets by adding them as dependencies to a parent
 preset. For example, by adding:
 
 ```diff
 {
-  "name": "example-preset",
+  "name": "snl-preset",
   "main": "index.js",
   "dependencies": {
-    "example-plugin": "^1.0.0",
-    "@my/other-plugin": "^2.0.0",
-+    "@some/base-preset": "^3.0.0"
+    "television-plugin": "^1.0.0",
+    "live-plugin": "^1.0.0",
+    "comedy-plugin": "^1.0.0"
++   "@tv/episodic-preset": "^45.0.0"
   }
 }
 ```
 
-This base preset's plugins will also be registered when the app loads.
+`@tv/episodic-preset`s plugins will also be registered when the consuming
+application is loaded.
 
 [babel preset]: https://babeljs.io/docs/en/presets
