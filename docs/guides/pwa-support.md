@@ -152,7 +152,7 @@ worker features.
 [@gasket/plugin-manifest]:#gasketplugin-manifest
 
 [service worker plugin docs]:/packages/gasket-plugin-service-worker
-[workbox plugin docs]:/packages/gasket-workbox-plugin#gasketplugin-workbox
+[workbox plugin docs]:/packages/gasket-plugin-workbox
 [manifest plugin docs]:/packages/gasket-plugin-manifest
 
 [Service Workers]:https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API

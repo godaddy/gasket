@@ -690,7 +690,7 @@ function serviceWorkerCacheKeyHook (gasket) {
 ### workbox
 
 - **Executed during:** `composeServiceWorker` lifecycle
-- **Documentation:**: [here](/packages/gasket-workbox-plugin#workbox)
+- **Documentation:**: [here](/packages/gasket-plugin-workbox)
 
 This hook allows other gasket plugins to add to the Workbox config in order to
 precache files, set runtime cache rules, etc. Hooks should return an object
