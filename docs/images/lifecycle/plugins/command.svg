@@ -12,7 +12,7 @@
 <!-- getCommands -->
 <g id="node1" class="node">
 <title>getCommands</title>
-<g id="a_node1"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-command-plugin#getcommands" xlink:title="getCommands">
+<g id="a_node1"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-command#getcommands" xlink:title="getCommands">
 <ellipse fill="#7fff7f" stroke="#000000" cx="97.5843" cy="-18" rx="61.3978" ry="18"/>
 <text text-anchor="middle" x="97.5843" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">getCommands</text>
 </a>
@@ -21,7 +21,7 @@
 <!-- command_initOclif_hook -->
 <g id="node2" class="node">
 <title>command_initOclif_hook</title>
-<g id="a_node2"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-command-plugin" xlink:title="command&#45;plugin\ninitOclif hook">
+<g id="a_node2"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-command" xlink:title="command&#45;plugin\ninitOclif hook">
 <polygon fill="#ffa500" stroke="#000000" points="195.253,-185.1777 97.5843,-206.8955 -.0844,-185.1777 .0068,-150.0375 195.1618,-150.0375 195.253,-185.1777"/>
 <text text-anchor="middle" x="97.5843" y="-178.2652" font-family="Times,serif" font-size="14.00" fill="#000000">command&#45;plugin</text>
 <text text-anchor="middle" x="97.5843" y="-164.2652" font-family="Times,serif" font-size="14.00" fill="#000000">initOclif hook</text>

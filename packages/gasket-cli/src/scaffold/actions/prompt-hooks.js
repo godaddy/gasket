@@ -45,7 +45,7 @@ const createAddPlugins = context => {
 };
 
 /**
- * Initializes plugin-engine with provide preset and plugins
+ * Initializes engine with provide preset and plugins
  * to execute their prompt lifecycle hooks.
  *
  * @param {CreateContext} context - Create context

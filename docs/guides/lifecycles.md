@@ -280,7 +280,7 @@ async getCommands(gasket, { oclifConfig, BaseCommand }) {
 ### appRequestConfig
 
 - **Executed during:** Every incoming HTTP request
-- **Documentation:** [here](/packages/gasket-config-plugin#apprequestconfig)
+- **Documentation:** [here](/packages/gasket-plugin-config)
 
 Allows plugins to inject configuration derived from the request being
 processed.
@@ -309,7 +309,7 @@ async appRequestConfigHook(gasket, baseConfig, req, res) {
 ### appEnvConfig
 
 - **Executed during:** `preboot` lifecycle.
-- **Documentation:** [here](/packages/gasket-config-plugin#appenvconfig)
+- **Documentation:** [here](/packages/gasket-plugin-config)
 
 Allows you to modify the current configuration and return a new object with
 injected configuration changes.
@@ -335,7 +335,7 @@ async appEnvConfigHook(gasket, baseConfig) {
 ### initReduxStore
 
 - **Executed during:** Every incoming HTTP request
-- **Documentation:** [https://github.com/godaddy/gasket/tree/master/packages/gasket-redux-plugin#initreduxstore](/packages/gasket-redux-plugin#initreduxstore)
+- **Documentation:** [https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-redux#initreduxstore](/packages/gasket-plugin-redux)
 
 Read the initial state or fire off actions to populate the store once it's
 created server-side.
@@ -359,7 +359,7 @@ async initReduxStoreHook(gasket, store, req, res) {
 ### initReduxState
 
 - **Executed during:** Every incoming HTTP request
-- **Documentation:** [https://github.com/godaddy/gasket/tree/master/packages/gasket-redux-plugin#initreduxstate](/packages/gasket-redux-plugin#initreduxstate)
+- **Documentation:** [https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-redux#initreduxstate](/packages/gasket-plugin-redux)
 - [**Flow chart**](../images/lifecycle/events/initReduxState.svg)
 
 Allows you to modify the initial state of the redux store. This state is later
@@ -386,7 +386,7 @@ async initReduxStateHook(gasket, state, req, res) {
 ### webpackChain
 
 - **Executed during:** `start`, `build` lifecycles
-- **Documentation:** [here](/packages/gasket-webpack-plugin#webpackchain)
+- **Documentation:** [here](/packages/gasket-plugin-webpack)
 
 Create the initial webpack configuration using the `webpack-chain` chaining
 syntax. The resulting configuration will be passed to the `webpack` hook.
@@ -411,7 +411,7 @@ function webpackChainHook(gasket, chain, data) {
 ### webpack
 
 - **Executed during:** `start`, `build` lifecycles
-- **Documentation:** [here](/packages/gasket-webpack-plugin#webpack)
+- **Documentation:** [here](/packages/gasket-plugin-webpack)
 - [**Flow chart**](../images/lifecycle/events/webpack.svg)
 
 The `webpack` hook allows you to modify the WebPack configuration that is
@@ -440,7 +440,7 @@ function webpackHook(gasket, config, data) {
 ### next
 
 - **Executed during:** `start` lifecycle
-- **Documentation:** [here](/packages/gasket-nextjs-plugin#next)
+- **Documentation:** [here](/packages/gasket-plugin-nextjs)
 
 When the `next` server is created this hook will execute. This allows you to
 interact with the `next` application instance. An instance of either
@@ -460,7 +460,7 @@ async function nextHook(gasket, app) {
 ### nextConfig
 
 - **Executed during:** `start`, `build` lifecycles
-- **Documentation:** [here](/packages/gasket-nextjs-plugin#nextconfig)
+- **Documentation:** [here](/packages/gasket-plugin-nextjs)
 
 The `nextConfig` hook allows you to modify the `next` config before the `next`
 server is created.
@@ -485,7 +485,7 @@ function nextConfig(gasket, config) {
 ### middleware
 
 - **Executed during:** `start` lifecycle
-- **Documentation:** [here](/packages/gasket-express-plugin#middleware)
+- **Documentation:** [here](/packages/gasket-plugin-express)
 - [**Flow chart**](../images/lifecycle/events/middleware.svg)
 
 After the `express` instance has been created it will execute the `middleware`
@@ -519,7 +519,7 @@ async function middlewareHook(gasket, app) {
 ### metadata
 
 - **Executed during:** : `init` lifecycle
-- **Documentation**: [here](/packages/gasket-metadata-plugin#gasketplugin-metadata)
+- **Documentation**: [here](/packages/gasket-plugin-metadata)
 
 Adds additional metadata to gasket.config.metadata
 
@@ -551,7 +551,7 @@ async function metadataHook(gasket, data) {
 ### express
 
 - **Executed during:** `start` lifecycle
-- **Documentation:** [here](/packages/gasket-express-plugin#express)
+- **Documentation:** [here](/packages/gasket-plugin-express)
 - [**Flow chart**](../images/lifecycle/events/express.svg)
 
 Executed after the `middleware` lifecycle, this will give you full access to
@@ -573,7 +573,7 @@ async function expressHook(gasket, app) {
 ### errorMiddleware
 
 - **Executed during:** `start` lifecycle
-- **Documentation:** [here](/packages/gasket-express-plugin#errormiddleware)
+- **Documentation:** [here](/packages/gasket-plugin-express)
 
 Allows you to assign middleware layers that can handle potential errors. These
 are added after all our internal routing and `next.js` handoff's are setup.
@@ -607,7 +607,7 @@ async function errorMiddlewareHook(gasket, app) {
 ### logTransports
 
 - **Executed during:** `init` lifecycle
-- **Documentation:** [https://github.com/godaddy/gasket/tree/master/packages/gasket-log-plugin#logtransports](/packages/gasket-log-plugin#logtransports)
+- **Documentation:** [https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-log#logtransports](/packages/gasket-plugin-log)
 
 Allows you to define custom `winston` middlewares based on the fully
 loaded configuration for your `gasket` application (including environments).
@@ -634,7 +634,7 @@ module.exports = async function logTransportsHook(gasket) {
 ### composeServiceWorker
 
 - **Executed during:** Incoming requests for the service worker script
-- **Documentation**: [here](/packages/gasket-service-worker-plugin#composeserviceworker)
+- **Documentation**: [here](/packages/gasket-plugin-service-worker)
 
 Allows plugins to add to the service worker script, by concatenating inline
 script text or loaded file data.
@@ -662,7 +662,7 @@ self.addEventListener('push', (event) => {
 ### serviceWorkerCacheKey
 
 - **Executed during:** `configure` lifecycle.
-- **Documentation**: [here](/packages/gasket-service-worker-plugin#serviceworkercachekey)
+- **Documentation**: [here](/packages/gasket-plugin-service-worker)
 
 Allows plugins to effect the cache key based on the request.
 
@@ -690,7 +690,7 @@ function serviceWorkerCacheKeyHook (gasket) {
 ### workbox
 
 - **Executed during:** `composeServiceWorker` lifecycle
-- **Documentation:**: [here](/packages/gasket-workbox-plugin#workbox)
+- **Documentation:**: [here](/packages/gasket-plugin-workbox)
 
 This hook allows other gasket plugins to add to the Workbox config in order to
 precache files, set runtime cache rules, etc. Hooks should return an object
@@ -715,4 +715,4 @@ function workboxHook(gasket, config, req) {
 ```
 
 [`@gasket/resolve`]: /packages/gasket-resolve
-[`@gasket/engine`]: /packages/gasket-plugin-engine#gasketapi
+[`@gasket/engine`]: /packages/gasket-engine

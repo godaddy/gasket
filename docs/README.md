@@ -160,7 +160,7 @@ Gasket-level plugins or Next.js configuration can be adjusted in the
 The many features of Gasket are built as plugins, and the ability to create
 app-level plugins is available. Any file in this plugins directory, following
 the `<name>-plugin.js` naming convention, is automatically picked up by the
-[plugin-engine][@gasket/engine]. This gives you access to tie into
+[engine][@gasket/engine]. This gives you access to tie into
 lifecycles, set timings, or even add your own hooks.
 
 Plugins are designed with the ability to be reused across apps. So, if you
@@ -170,7 +170,7 @@ which can be versioned, published, and imported to your different apps.
 #### lifecycles/
 
 The simplest way to have app-specific code which can hook into the
-[plugin-engine][@gasket/engine], is to have a file per lifecycle.
+[engine][@gasket/engine], is to have a file per lifecycle.
 For example, a `middleware.js` file in this directory is executed during
 the *middleware* lifecycle. This feature is enabled by the
 [@gasket/plugin-lifecycle] whose docs has more details and examples.
@@ -337,22 +337,22 @@ Development modules to help with code quality.
 
 <!-- Gasket Repo Links -->
 [@gasket/cli]:/packages/gasket-cli
-[@gasket/plugin-nextjs]:/packages/gasket-nextjs-plugin#gasketplugin-nextjs
-[@gasket/plugin-webpack]:/packages/gasket-webpack-plugin#gasketplugin-webpack
-[@gasket/plugin-express]:/packages/gasket-express-plugin#gasketplugin-express
+[@gasket/plugin-nextjs]:/packages/gasket-plugin-nextjs
+[@gasket/plugin-webpack]:/packages/gasket-plugin-webpack
+[@gasket/plugin-express]:/packages/gasket-plugin-express
 [@gasket/intl]:/packages/gasket-intl
 [@gasket/redux]:/packages/gasket-redux#gasketredux
 [@gasket/log]:/packages/gasket-log#gasketlog
-[@gasket/plugin-analyze]:/packages/gasket-analyze-plugin#gasketplugin-analyze
-[@gasket/plugin-config]:/packages/gasket-config-plugin#gasketplugin-config
-[@gasket/plugin-intl]:/packages/gasket-intl-plugin#gasketplugin-intl
-[@gasket/plugin-lifecycle]:/packages/gasket-lifecycle-plugin#gasketplugin-lifecycle
-[@gasket/plugin-log]:/packages/gasket-log-plugin#gasketplugin-log
-[@gasket/plugin-redux]:/packages/gasket-redux-plugin#gasketplugin-redux
-[@gasket/engine]:/packages/gasket-plugin-engine#gasketengine
+[@gasket/plugin-analyze]:/packages/gasket-plugin-analyze
+[@gasket/plugin-config]:/packages/gasket-plugin-config
+[@gasket/plugin-intl]:/packages/gasket-plugin-intl
+[@gasket/plugin-lifecycle]:/packages/gasket-plugin-lifecycle
+[@gasket/plugin-log]:/packages/gasket-plugin-log
+[@gasket/plugin-redux]:/packages/gasket-plugin-redux
+[@gasket/engine]:/packages/gasket-engine
 [@gasket/fetch]:/packages/gasket-fetch#gasketfetch
 [stylelint-config-godaddy]:https://github.com/godaddy/stylelint-config-godaddy
-[@gasket/plugin-https]: /packages/gasket-https-plugin#gasketplugin-https
+[@gasket/plugin-https]: /packages/gasket-plugin-https
 
 <!-- Other Repo Links -->
 [reduxful]:https://github.com/godaddy/reduxful
@@ -361,7 +361,7 @@ Development modules to help with code quality.
 
 <!-- Gasket Repo Docs Links -->
 [CLI Commands]:../packages/gasket-cli#commands
-[Configuring Plugins]:/packages/gasket-plugin-engine#configuring-plugins
+[Configuring Plugins]:/packages/gasket-engine
 [preset authoring guide]:/guides/authoring-presets.md
 
 <!-- Next.js Links -->

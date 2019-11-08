@@ -19,8 +19,8 @@ multiple apps, or for a standalone plugin used solely by your app, the plugin
 system is necessary to do any express app customization.
 
 A typical gasket-based application relies on
-[`@gasket/plugin-nextjs`](/packages/gasket-nextjs-plugin#gasketplugin-nextjs) and
-[`@gasket/plugin-express`](/packages/gasket-express-plugin#gasketplugin-express)
+[`@gasket/plugin-nextjs`](/packages/gasket-plugin-nextjs) and
+[`@gasket/plugin-express`](/packages/gasket-plugin-express)
 for creating the web servers and Express application.
 
 After some standard middleware is injected, a plugin can hook the `middleware`
@@ -86,10 +86,10 @@ module.exports = {
 
 Remember, if you need any of your injected middleware to come before or after
 middleware injected by another plugin, use the
-[timing mechanism](/packages/gasket-plugin-engine)
+[timing mechanism](/packages/gasket-engine)
 of the plugin engine. For example, if you need your middleware to access
 the server-side redux store created by
-[`@gasket/plugin-redux`](/packages/gasket-redux-plugin#gasketplugin-redux),
+[`@gasket/plugin-redux`](/packages/gasket-plugin-redux),
 you can do something like this:
 
 ```js
