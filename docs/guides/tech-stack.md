@@ -164,20 +164,20 @@ started, and it also includes [Enzyme]. Specify this plugin when running
 
 [Babel]: https://babeljs.io/
 [Chai]: http://www.chaijs.com/
-[Express Plugin]: /packages/gasket-express-plugin
+[Express Plugin]: /packages/gasket-plugin-express
 [Enzyme]: http://airbnb.io/enzyme/
 [ESLint]: https://eslint.org/
 [Express]: http://expressjs.com/
 [Flux]: https://facebook.github.io/flux/docs/overview.html
 [godaddy-style]: https://github.com/godaddy/javascript
 [Intl Components]: /packages/intl
-[Intl Plugin]: /packages/gasket-intl-plugin
+[Intl Plugin]: /packages/gasket-plugin-intl
 [Istanbul]: https://github.com/istanbuljs/nyc
 [Jest]: https://jestjs.io/
-[Jest Plugin]: /packages/gasket-jest-plugin
+[Jest Plugin]: /packages/gasket-plugin-jest
 [jsdom]: https://github.com/jsdom/jsdom
 [Mocha]: https://mochajs.org/
-[Mocha Plugin]: /packages/gasket-mocha-plugin
+[Mocha Plugin]: /packages/gasket-plugin-mocha
 [Next.js]: https://nextjs.org/
 [Node.js]: https://nodejs.org/en/
 [React]: https://reactjs.org/

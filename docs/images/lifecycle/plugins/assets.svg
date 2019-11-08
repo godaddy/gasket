@@ -12,7 +12,7 @@
 <!-- assets_webpack_hook -->
 <g id="node1" class="node">
 <title>assets_webpack_hook</title>
-<g id="a_node1"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-assets-plugin" xlink:title="assets&#45;plugin\nwebpack hook">
+<g id="a_node1"><a xlink:href="https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-assets" xlink:title="assets&#45;plugin\nwebpack hook">
 <polygon fill="#ffa500" stroke="#000000" points="170.004,-41.1777 85.0013,-62.8955 -.0013,-41.1777 .078,-6.0375 169.9246,-6.0375 170.004,-41.1777"/>
 <text text-anchor="middle" x="85.0013" y="-34.2652" font-family="Times,serif" font-size="14.00" fill="#000000">assets&#45;plugin</text>
 <text text-anchor="middle" x="85.0013" y="-20.2652" font-family="Times,serif" font-size="14.00" fill="#000000">webpack hook</text>
