@@ -346,7 +346,7 @@ Development modules to help with code quality.
 [@gasket/plugin-config]:/packages/gasket-plugin-config
 [@gasket/plugin-intl]:/packages/gasket-plugin-intl
 [@gasket/plugin-lifecycle]:/packages/gasket-plugin-lifecycle
-[@gasket/plugin-log]:/packages/gasket-log-plugin#gasketplugin-log
+[@gasket/plugin-log]:/packages/gasket-plugin-log
 [@gasket/plugin-redux]:/packages/gasket-redux-plugin#gasketplugin-redux
 [@gasket/engine]:/packages/gasket-plugin-engine#gasketengine
 [@gasket/fetch]:/packages/gasket-fetch#gasketfetch

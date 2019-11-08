@@ -607,7 +607,7 @@ async function errorMiddlewareHook(gasket, app) {
 ### logTransports
 
 - **Executed during:** `init` lifecycle
-- **Documentation:** [https://github.com/godaddy/gasket/tree/master/packages/gasket-log-plugin#logtransports](/packages/gasket-log-plugin#logtransports)
+- **Documentation:** [https://github.com/godaddy/gasket/tree/master/packages/gasket-log-plugin#logtransports](/packages/gasket-plugin-log)
 
 Allows you to define custom `winston` middlewares based on the fully
 loaded configuration for your `gasket` application (including environments).
