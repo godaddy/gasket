@@ -19,17 +19,17 @@ significantly easier.
 
 ## Naming
 
-`@gasket` presets should follow the naming convention `@gasket/{name}-preset`,
+`@gasket` presets should follow the naming convention `@gasket/preset-{name}`,
 which will allow them to be referenced using [short names](#short-names).
-Otherwise, presets need to end with the `-preset` suffix. This is how Gasket
+Otherwise, presets need to start with the `preset-` prefix. This is how Gasket
 determines what packages are presets or not.
 
 #### Good names
 
 ```
-@gasket/example-preset
-example-preset
-@myscope/example-preset
+@gasket/preset-example
+preset-example
+@myscope/preset-example
 ```
 
 #### Bad names
@@ -46,23 +46,23 @@ example
 
 The anatomy of a preset is very simple. In its most basic form, it should have
 an index JavaScript file, which can just export an empty object, and a
-`package.json` file with dependencies of gasket plugins.
+`package.json` file with dependencies of Gasket plugins.
 
 For example, a `package.json` file may look like:
 
 ```json
 {
-  "name": "snl-preset",
+  "name": "preset-snl",
   "main": "index.js",
   "dependencies": {
-    "television-plugin": "^1.0.0",
-    "live-plugin": "^1.0.0",
-    "comedy-plugin": "^1.0.0"
+    "plugin-television": "^1.0.0",
+    "plugin-live": "^1.0.0",
+    "plugin-comedy": "^1.0.0"
   }
 }
 ```
 
-With the `index.js` as:
+With an `index.js` as:
 
 ```js
 module.exports = {
@@ -117,7 +117,7 @@ module.exports = {
 }
 ```
 
-Preset config can also set environment overrides.
+Preset config can also set environment overrides. <!-- TODO: what the heck is this -->
 
 ### Extending other presets
 
@@ -126,18 +126,18 @@ preset. For example, by adding:
 
 ```diff
 {
-  "name": "snl-preset",
+  "name": "preset-snl",
   "main": "index.js",
   "dependencies": {
-    "television-plugin": "^1.0.0",
-    "live-plugin": "^1.0.0",
-    "comedy-plugin": "^1.0.0"
-+   "@tv/episodic-preset": "^45.0.0"
+    "plugin-television": "^1.0.0",
+    "plugin-live": "^1.0.0",
+    "plugin-comedy": "^1.0.0"
++   "@tv/preset-episodic": "^45.0.0"
   }
 }
 ```
 
-`@tv/episodic-preset`s plugins will also be registered when the consuming
+`@tv/preset-episodic`s plugins will also be registered when the consuming
 application is loaded.
 
 [babel preset]: https://babeljs.io/docs/en/presets
