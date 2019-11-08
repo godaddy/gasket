@@ -15,7 +15,7 @@
     "@gasket/plugin-express": "^2.1.2",
     "@gasket/plugin-https": "^2.2.1",
     "@gasket/plugin-log": "^3.2.1",
-    "@gasket/engine": "^2.3.2",
+    "@gasket/plugin-nextjs": "^2.3.2",
     "@gasket/plugin-redux": "^2.3.4",
     "@gasket/plugin-webpack": "^1.1.1"
   }
