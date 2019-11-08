@@ -78,7 +78,19 @@ especially during development when module linking may be used.
 
 You can set `gasket create` context values ahead of time in your preset so that
 the associated prompts are never asked. To do so, in a preset's `index.js`, set
-the `createContext` object with the properties you want to define.
+the `createContext` object with the properties you want to define. For example,
+in the following `gasket create` prompt, 3 questions are asked at the beginning.
+
+```
+$ gasket create example --presets nextjs
+✔ Load presets
+? What is your app description?
+? Which packager would you like to use?
+? Choose your unit test suite
+```
+
+You can enumerate pre-defined answers to these questions in your preset so that
+users do not have to answer these questions every time.
 
 ```js
 // index.js
@@ -87,10 +99,55 @@ module.exports = {
   createContext: {
     appDescription: "In a word? .......chaos",
     packageManager: "npm",
-    gitInit: false,
     testPlugin: "none"
   }
 }
+```
+
+These particular keys come from inspecting the prompts shipped internally by
+[`gasket create`](cli prompts). Without any extensions, the Gasket CLI ships
+these prompts which you can override:
+
+```js
+/**
+ * {String} appDescription - Application desciption placed into package.json.description`
+ * {String} packageManager - Package Manager, typically either npm or yarn
+ * {String} testPlugin - What test suite you would like to setup, either mocha, jest, or none
+ * {Boolean} destOverride - Whether or not to override the contents of a directory bearing the same name
+ */
+```
+
+If you want to override further context you inspect any plugin with a `prompt`
+lifecycle. For example this prompts:
+
+```js
+// datastore-plugin/prompt-lifecycle.js
+module.exports = async function promptHook(gasket, context, { prompt }) {
+  if (!('datastore' in context)) {
+    const { datastore } = await prompt([
+      {
+        name: 'datastore',
+        message: 'What is the URL for your datastore?',
+        type: 'input'
+      }]);
+
+    return { ...context, datastore };
+  }
+
+  return context;
+}
+```
+
+Can be overridden in a preset by providing the `datastore` key in `createContext`:
+
+```js
+// preset-datastore/index.js
+module.exports = {
+  require,
+  createContext: {
+    datastore: 'https://store-of-my-data.com'
+  }
+};
 ```
 
 ### Predefined `gasket.config.js`
@@ -137,7 +194,8 @@ preset. For example, by adding:
 }
 ```
 
-`@tv/preset-episodic`s plugins will also be registered when the consuming
+`@tv/preset-episodic`'s plugins will also be registered when the consuming
 application is loaded.
 
 [babel preset]: https://babeljs.io/docs/en/presets
+[cli prompts]: https://github.com/godaddy/gasket/blob/master/packages/gasket-cli/src/scaffold/actions/global-prompts.js
