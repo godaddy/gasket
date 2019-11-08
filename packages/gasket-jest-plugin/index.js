@@ -1,5 +1,5 @@
 module.exports = {
-  name: 'jest',
+  name: require('./package').name,
   hooks: {
     async create(gasket, { files, pkg }) {
       const path = require('path');

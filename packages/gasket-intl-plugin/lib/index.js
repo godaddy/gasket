@@ -25,7 +25,7 @@ async function build(gasket) {
 
 module.exports = {
   dependencies: ['log'],
-  name: 'intl',
+  name: require('../package').name,
   hooks: {
     init,
     async initReduxState(gasket, state, req) {

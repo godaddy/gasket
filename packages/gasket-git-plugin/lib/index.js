@@ -9,7 +9,7 @@ const postCreate = require('./post-create');
  * @public
  */
 module.exports = {
-  name: 'git',
+  name: require('../package').name,
   hooks: {
     prompt,
     create,

@@ -6,7 +6,7 @@ describe('Plugin', () => {
   });
 
   it('has expected name', () => {
-    expect(plugin).toHaveProperty('name', 'workbox');
+    expect(plugin).toHaveProperty('name', require('../package').name);
   });
 
   it('has expected hooks', () => {
