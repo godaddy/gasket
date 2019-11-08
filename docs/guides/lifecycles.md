@@ -386,7 +386,7 @@ async initReduxStateHook(gasket, state, req, res) {
 ### webpackChain
 
 - **Executed during:** `start`, `build` lifecycles
-- **Documentation:** [here](/packages/gasket-webpack-plugin#webpackchain)
+- **Documentation:** [here](/packages/gasket-plugin-webpack)
 
 Create the initial webpack configuration using the `webpack-chain` chaining
 syntax. The resulting configuration will be passed to the `webpack` hook.
@@ -411,7 +411,7 @@ function webpackChainHook(gasket, chain, data) {
 ### webpack
 
 - **Executed during:** `start`, `build` lifecycles
-- **Documentation:** [here](/packages/gasket-webpack-plugin#webpack)
+- **Documentation:** [here](/packages/gasket-plugin-webpack)
 - [**Flow chart**](../images/lifecycle/events/webpack.svg)
 
 The `webpack` hook allows you to modify the WebPack configuration that is
