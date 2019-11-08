@@ -192,4 +192,4 @@ Then, upon running `gasket docs`, developers will automatically find
 documentation for the `detective` plugin.
 
 [here]: /packages/gasket-plugin-engine#gasketapi
-[@gasket/plugin-docs]: /packages/gasket-docs-plugin
+[@gasket/plugin-docs]: /packages/gasket-plugin-docs
