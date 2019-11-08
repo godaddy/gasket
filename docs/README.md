@@ -160,7 +160,7 @@ Gasket-level plugins or Next.js configuration can be adjusted in the
 The many features of Gasket are built as plugins, and the ability to create
 app-level plugins is available. Any file in this plugins directory, following
 the `<name>-plugin.js` naming convention, is automatically picked up by the
-[plugin-engine][@gasket/engine]. This gives you access to tie into
+[engine][@gasket/engine]. This gives you access to tie into
 lifecycles, set timings, or even add your own hooks.
 
 Plugins are designed with the ability to be reused across apps. So, if you
@@ -170,7 +170,7 @@ which can be versioned, published, and imported to your different apps.
 #### lifecycles/
 
 The simplest way to have app-specific code which can hook into the
-[plugin-engine][@gasket/engine], is to have a file per lifecycle.
+[engine][@gasket/engine], is to have a file per lifecycle.
 For example, a `middleware.js` file in this directory is executed during
 the *middleware* lifecycle. This feature is enabled by the
 [@gasket/plugin-lifecycle] whose docs has more details and examples.

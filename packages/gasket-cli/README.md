@@ -281,5 +281,5 @@ npm install --no-save @gasket/nextjs-preset @gasket/redux next react-dom
 [yarn env vars]:https://yarnpkg.com/en/docs/envvars#toc-npm-config
 
 [inquirer questions]:https://github.com/SBoudrias/Inquirer.js#question
-[execWaterfall]:https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-engine#execwaterfallevent-value-args
-[exec]:https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-engine#execevent-args
+[execWaterfall]:https://github.com/godaddy/gasket/tree/master/packages/gasket-engine#execwaterfallevent-value-args
+[exec]:https://github.com/godaddy/gasket/tree/master/packages/gasket-engine#execevent-args

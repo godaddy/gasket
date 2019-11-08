@@ -29,7 +29,7 @@
   "bugs": {
     "url": "https://github.com/godaddy/gasket/issues"
   },
-  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-engine",
+  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-engine",
   "dependencies": {
     "@gasket/resolve": "^2.0.0"
   },

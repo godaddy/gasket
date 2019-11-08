@@ -53,7 +53,7 @@
  *
  * @typedef {DetailData} LifecycleData
  *
- * @property {string} method - Executing method from the plugin-engine
+ * @property {string} method - Executing method from the engine
  * @property {string} [parent] - Lifecycle from which this one is invoked
  * @property {string} [command] - Command from which this lifecycle is invoked
  */

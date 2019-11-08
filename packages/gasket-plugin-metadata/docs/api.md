@@ -107,7 +107,7 @@ Metadata with specifics details for plugin lifecycles
 
 | Name | Type | Description |
 | --- | --- | --- |
-| method | <code>string</code> | Executing method from the plugin-engine |
+| method | <code>string</code> | Executing method from the engine |
 | [parent] | <code>string</code> | Lifecycle from which this one is invoked |
 | [command] | <code>string</code> | Command from which this lifecycle is invoked |
 
