@@ -93,9 +93,9 @@ accidentally committing the changes to your repository, like pointing to
 locally-running dependencies.
 
 To support easy local development, `gasket` can read a special
-`gasket.config.local.js`, use the `local` environment in gasket.config.js, or 
-`gasket.config.local.json` file and merge it in with 
-your `dev` configuration environment. This file should be in your `.gitignore` 
+`gasket.config.local.js`, use the `local` environment in gasket.config.js, or
+`gasket.config.local.json` file and merge it in with
+your `dev` configuration environment. This file should be in your `.gitignore`
 file so that each developer can have distinct overrides.
 
 ## Accessing gasket configuration in your application
@@ -141,5 +141,5 @@ module.exports = {
 
 The [config plugin] has similar lifecycle hooks available for application-level configuration.
 
-[config plugin]: /packages/gasket-config-plugin#gasketconfig-plugin
+[config plugin]: /packages/gasket-plugin-config
 [lifecycle plugin]: /packages/gasket-lifecycle-plugin#gasketlifecycle-plugin

@@ -343,7 +343,7 @@ Development modules to help with code quality.
 [@gasket/redux]:/packages/gasket-redux#gasketredux
 [@gasket/log]:/packages/gasket-log#gasketlog
 [@gasket/plugin-analyze]:/packages/gasket-plugin-analyze
-[@gasket/plugin-config]:/packages/gasket-config-plugin#gasketplugin-config
+[@gasket/plugin-config]:/packages/gasket-plugin-config
 [@gasket/plugin-intl]:/packages/gasket-intl-plugin#gasketplugin-intl
 [@gasket/plugin-lifecycle]:/packages/gasket-lifecycle-plugin#gasketplugin-lifecycle
 [@gasket/plugin-log]:/packages/gasket-log-plugin#gasketplugin-log

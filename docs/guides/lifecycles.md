@@ -280,7 +280,7 @@ async getCommands(gasket, { oclifConfig, BaseCommand }) {
 ### appRequestConfig
 
 - **Executed during:** Every incoming HTTP request
-- **Documentation:** [here](/packages/gasket-config-plugin#apprequestconfig)
+- **Documentation:** [here](/packages/gasket-plugin-config)
 
 Allows plugins to inject configuration derived from the request being
 processed.
@@ -309,7 +309,7 @@ async appRequestConfigHook(gasket, baseConfig, req, res) {
 ### appEnvConfig
 
 - **Executed during:** `preboot` lifecycle.
-- **Documentation:** [here](/packages/gasket-config-plugin#appenvconfig)
+- **Documentation:** [here](/packages/gasket-plugin-config)
 
 Allows you to modify the current configuration and return a new object with
 injected configuration changes.
