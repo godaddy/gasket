@@ -12,9 +12,9 @@ Much of Gasket's behavior can be driven through updating your
 the Gasket config file, and see the documentation for the [plugins] to see which
 config settings are available.
 
-<!-- 
+<!--
     TBD: Create a unified table of all configuration settings so you don't have
-    to hunt for what you need! 
+    to hunt for what you need!
 -->
 
 ## Lifecycle Hooks
@@ -86,10 +86,10 @@ Lifecycle keys
 
 ## Page Content
 
-The content rendered on each of your application pages comes from `/pages/*` - 
+The content rendered on each of your application pages comes from `/pages/*` -
 Your app-specific React component pages
 
 [plugin engine]: /packages/gasket-plugin-engine
-[lifecycle script]: /packages/gasket-lifecycle-plugin
+[lifecycle script]: /packages/gasket-plugin-lifecycle
 [Configuration guide]: ./configuration.md
 [plugins]: /packages

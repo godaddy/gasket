@@ -142,4 +142,4 @@ module.exports = {
 The [config plugin] has similar lifecycle hooks available for application-level configuration.
 
 [config plugin]: /packages/gasket-plugin-config
-[lifecycle plugin]: /packages/gasket-lifecycle-plugin#gasketlifecycle-plugin
+[lifecycle plugin]: /packages/gasket-plugin-lifecycle
