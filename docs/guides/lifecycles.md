@@ -634,7 +634,7 @@ module.exports = async function logTransportsHook(gasket) {
 ### composeServiceWorker
 
 - **Executed during:** Incoming requests for the service worker script
-- **Documentation**: [here](/packages/gasket-service-worker-plugin#composeserviceworker)
+- **Documentation**: [here](/packages/gasket-plugin-service-worker)
 
 Allows plugins to add to the service worker script, by concatenating inline
 script text or loaded file data.
@@ -662,7 +662,7 @@ self.addEventListener('push', (event) => {
 ### serviceWorkerCacheKey
 
 - **Executed during:** `configure` lifecycle.
-- **Documentation**: [here](/packages/gasket-service-worker-plugin#serviceworkercachekey)
+- **Documentation**: [here](/packages/gasket-plugin-service-worker)
 
 Allows plugins to effect the cache key based on the request.
 
