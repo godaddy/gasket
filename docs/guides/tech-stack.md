@@ -177,7 +177,7 @@ started, and it also includes [Enzyme]. Specify this plugin when running
 [Jest Plugin]: /packages/gasket-plugin-jest
 [jsdom]: https://github.com/jsdom/jsdom
 [Mocha]: https://mochajs.org/
-[Mocha Plugin]: /packages/gasket-mocha-plugin
+[Mocha Plugin]: /packages/gasket-plugin-mocha
 [Next.js]: https://nextjs.org/
 [Node.js]: https://nodejs.org/en/
 [React]: https://reactjs.org/
