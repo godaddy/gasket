@@ -87,6 +87,7 @@ $ gasket create example --presets nextjs
 ? What is your app description?
 ? Which packager would you like to use?
 ? Choose your unit test suite
+? Override contents of example? (y/n) y
 ```
 
 You can enumerate pre-defined answers to these questions in your preset so that
@@ -99,7 +100,8 @@ module.exports = {
   createContext: {
     appDescription: "In a word? .......chaos",
     packageManager: "npm",
-    testPlugin: "none"
+    testPlugin: "none",
+    destOverride: false
   }
 }
 ```
@@ -108,21 +110,17 @@ These particular keys come from inspecting the prompts shipped internally by
 [`gasket create`](cli prompts). Without any extensions, the Gasket CLI ships
 these prompts which you can override:
 
-- `appDescription`
-  - `String`
-  - Application desciption placed into package.json.description`
-- `packageManager`
-  - `String`
-  - Package Manager, typically either npm or yarn
-- `testPlugin`
-  - `String`
-  - What test suite you would like to setup, either mocha, jest, or none
-- `destOverride`
-  - `Boolean`
+- `appDescription` - `String`
+  - Application desciption placed into `package.json.description`
+- `packageManager` - `String`
+  - Package Manager, typically either `npm` or `yarn`
+- `testPlugin` - `String`
+  - What test suite you would like to setup, either `mocha`, `jest`, or none
+- `destOverride` - `Boolean`
   - Whether or not to override the contents of a directory bearing the same name
 
-If you want to override further context you inspect any plugin with a `prompt`
-lifecycle. For example this prompts:
+If you want to override further context, you can inspect any plugin with a
+`prompt` lifecycle. For example, this plugin implements a `datastore` prompt:
 
 ```js
 // datastore-plugin/prompt-lifecycle.js
@@ -142,7 +140,8 @@ module.exports = async function promptHook(gasket, context, { prompt }) {
 }
 ```
 
-Can be overridden in a preset by providing the `datastore` key in `createContext`:
+This prompt can be skipped by providing the `datastore` key in a preset's
+`createContext`:
 
 ```js
 // preset-datastore/index.js
