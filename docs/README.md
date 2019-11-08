@@ -351,7 +351,7 @@ Development modules to help with code quality.
 [@gasket/engine]:/packages/gasket-plugin-engine#gasketengine
 [@gasket/fetch]:/packages/gasket-fetch#gasketfetch
 [stylelint-config-godaddy]:https://github.com/godaddy/stylelint-config-godaddy
-[@gasket/plugin-https]: /packages/gasket-https-plugin#gasketplugin-https
+[@gasket/plugin-https]: /packages/gasket-plugin-https
 
 <!-- Other Repo Links -->
 [reduxful]:https://github.com/godaddy/reduxful
