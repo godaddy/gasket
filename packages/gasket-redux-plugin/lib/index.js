@@ -8,7 +8,7 @@ const { getReduxConfig } = require('./utils');
  * @type {{hooks: {middleware, webpack}}}
  */
 module.exports = {
-  name: 'redux',
+  name: require('../package').name,
   dependencies: ['log'],
   hooks: {
     async create(gasket, { pkg }) {

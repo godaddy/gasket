@@ -49,7 +49,6 @@ module.exports = {
 
 ```js
 module.exports = {
-  name: 'fastify',
   hooks: {
     /**
     * Creates the fastify app

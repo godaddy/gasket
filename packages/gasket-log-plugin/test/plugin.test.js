@@ -25,7 +25,7 @@ describe('Plugin', function () {
   });
 
   it('has expected name', () => {
-    assume(Plugin).to.have.property('name', 'log');
+    assume(Plugin).to.have.property('name', require('../package').name);
   });
 
   it('has expected hooks', () => {

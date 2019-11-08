@@ -43,7 +43,7 @@ function initWebpack(gasket, webpackConfig, data) {
 }
 
 module.exports = {
-  name: 'webpack',
+  name: require('./package').name,
   hooks: {},
   initWebpack
 };

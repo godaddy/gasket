@@ -76,7 +76,7 @@ const mockLoadedData = {
   plugins: [mockPluginInfo]
 };
 
-describe('Metadata plugin', function () {
+describe('Plugin', function () {
   let gasket, applyStub, handlerStub;
 
   beforeEach(function () {
@@ -117,8 +117,8 @@ describe('Metadata plugin', function () {
     assume(plugin).is.an('object');
   });
 
-  it('has expected name', function () {
-    assume(plugin.name).equals('@gasket/metadata');
+  it('has expected name', () => {
+    assume(plugin).to.have.property('name', require('../package').name);
   });
 
   it('has expected hooks', () => {

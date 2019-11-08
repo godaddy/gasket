@@ -5,7 +5,7 @@
  * @type {object}
  */
 module.exports = {
-  name: 'log',
+  name: require('./package').name,
   hooks: {
     init: {
       timing: {

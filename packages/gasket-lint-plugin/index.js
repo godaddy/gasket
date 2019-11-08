@@ -5,7 +5,7 @@
  * @public
  */
 module.exports = {
-  name: 'lint',
+  name: require('./package').name,
   hooks: {
     /**
      * The actual lifecycle hook.

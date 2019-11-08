@@ -1,7 +1,7 @@
 const debug = require('diagnostics')('gasket:express');
 
 module.exports = {
-  name: 'express',
+  name: require('./package').name,
   hooks: {
     /**
     * Add files & extend package.json for new apps.

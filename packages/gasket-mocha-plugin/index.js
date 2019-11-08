@@ -1,7 +1,7 @@
 const { devDependencies } = require('./package.json');
 
 module.exports = {
-  name: 'mocha',
+  name: require('./package').name,
   hooks: {
     async create(gasket, { files, pkg, packageManager = 'npm' }) {
       const runCmd = packageManager === 'npm' ? `npm run` : packageManager;

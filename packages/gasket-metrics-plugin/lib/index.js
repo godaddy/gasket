@@ -1,7 +1,7 @@
 const Metrics = require('./metrics');
 
 module.exports = {
-  name: 'metrics',
+  name: require('../package').name,
   dependencies: ['metadata'],
   hooks: {
     init: {
