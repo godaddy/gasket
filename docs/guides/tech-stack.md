@@ -174,7 +174,7 @@ started, and it also includes [Enzyme]. Specify this plugin when running
 [Intl Plugin]: /packages/gasket-plugin-intl
 [Istanbul]: https://github.com/istanbuljs/nyc
 [Jest]: https://jestjs.io/
-[Jest Plugin]: /packages/gasket-jest-plugin
+[Jest Plugin]: /packages/gasket-plugin-jest
 [jsdom]: https://github.com/jsdom/jsdom
 [Mocha]: https://mochajs.org/
 [Mocha Plugin]: /packages/gasket-mocha-plugin
