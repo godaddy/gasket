@@ -1,4 +1,4 @@
-# `@gasket/metrics-plugin`
+# `@gasket/plugin-metrics`
 
 ### 1.0.0
 

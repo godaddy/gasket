@@ -1,4 +1,4 @@
-# `@gasket/express-plugin`
+# `@gasket/plugin-fastify`
 
 - [#88] Initial release.
 

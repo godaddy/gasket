@@ -1,4 +1,4 @@
-# `@gasket/webpack-plugin`
+# `@gasket/plugin-webpack`
 
 ### 1.1.1
 

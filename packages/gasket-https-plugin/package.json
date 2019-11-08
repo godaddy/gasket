@@ -1,5 +1,5 @@
 {
-  "name": "@gasket/https-plugin",
+  "name": "@gasket/plugin-https",
   "version": "2.2.1",
   "main": "index.js",
   "scripts": {

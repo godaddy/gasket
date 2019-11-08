@@ -1,4 +1,4 @@
-# `@gasket/service-worker-plugin`
+# `@gasket/plugin-service-worker`
 
 ### 1.3.0
 

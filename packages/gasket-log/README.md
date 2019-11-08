@@ -11,7 +11,7 @@
 ### Installation
 
 ```
-npm install --save @gasket/log @gasket/log-plugin
+npm install --save @gasket/log @gasket/plugin-log
 ```
 
 See the [log-plugin] for more details on configuration.
@@ -39,7 +39,7 @@ object. This will make the logger instance available for use such as:
 
 ```js
 gasket.logger.error('Critical malfunction in code execution');
-gasket.logger.info('Initializing @gasket/plugin-engine `start` lifecycle event');
+gasket.logger.info('Initializing @gasket/engine `start` lifecycle event');
 ```
 
 The server uses [winston] used for logging. If your app is running locally, all

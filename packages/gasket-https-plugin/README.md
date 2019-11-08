@@ -1,11 +1,11 @@
-# `@gasket/https-plugin`
+# `@gasket/plugin-https`
 
 A plugin that creates `http` and `https` servers based on the given `gasket`
 configuration.
 
 ## Table of Contents
 
-- [`@gasket/https-plugin`](#gaskethttps-plugin)
+- [`@gasket/plugin-https`](#gasketplugin-https)
   - [Table of Contents](#table-of-contents)
   - [Installation](#installation)
   - [Configuration](#configuration)
@@ -24,7 +24,7 @@ configuration.
 ## Installation
 
 ```
-npm install @gasket/https-plugin
+npm install @gasket/plugin-https
 ```
 
 ## Configuration
@@ -32,10 +32,10 @@ npm install @gasket/https-plugin
 Add it to the `plugins` section of your `gasket.config.js`:
 
 ```js
-{
-  "plugins": [
-    "add": ["https"]
-  ]
+module.exports = {
+  plugins: {
+    add: ['@gasket/https']
+  }
 }
 ```
 

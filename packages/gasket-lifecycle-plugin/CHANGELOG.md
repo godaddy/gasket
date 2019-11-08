@@ -1,4 +1,4 @@
-# `@gasket/lifecycle-plugin`
+# `@gasket/plugin-lifecycle`
 
 ### 1.1.0
 

@@ -1,4 +1,4 @@
-# `@gasket/redux-plugin`
+# `@gasket/plugin-redux`
 
 ### 2.3.0
 
@@ -19,7 +19,7 @@
 
 ### 2.0.2
 
-- Allow `@gasket/log-plugin@3`
+- Allow `@gasket/plugin-log@3`
 - Fix security audit failures
 
 ### 2.0.1

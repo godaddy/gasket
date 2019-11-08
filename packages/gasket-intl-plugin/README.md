@@ -1,11 +1,11 @@
-# @gasket/intl-plugin
+# @gasket/plugin-intl
 
 This plugin consolidates all locale files under the build folder.
 
 ## Installation
 
 ```bash
-npm install --save @gasket/intl-plugin
+npm install --save @gasket/plugin-intl
 ```
 
 ## Options

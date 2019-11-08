@@ -1,5 +1,5 @@
 {
-  "name": "@gasket/analyze-plugin",
+  "name": "@gasket/plugin-analyze",
   "version": "2.0.0",
   "description": "Gasket Analyzer Plugin",
   "main": "lib",

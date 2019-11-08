@@ -1,11 +1,11 @@
-# @gasket/express-plugin
+# @gasket/plugin-express
 
 The `express-plugin` adds `express` to your application.
 
 ## Installation
 
 ```sh
-npm install --save @gasket/express-plugin
+npm install --save @gasket/plugin-express
 ```
 
 ## Configuration
@@ -15,10 +15,10 @@ The express plugin is configured using the `gasket.config.js` file.
 - First, add it to the `plugins` section of your `gasket.config.js`:
 
 ```js
-{
-  "plugins": [
-    "add": ["express"]
-  ]
+module.exports = {
+  plugins: {
+    add: ['@gasket/express']
+  }
 }
 ```
 
@@ -32,7 +32,7 @@ All the configurations for the plugin are added under `express` in the config:
 ```js
 module.exports = {
   plugins: {
-    add: ['express']
+    add: ['@gasket/express']
   },
   express: {
     compression: false,

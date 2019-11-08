@@ -1,5 +1,5 @@
 {
-  "name": "@gasket/metrics-plugin",
+  "name": "@gasket/plugin-metrics",
   "version": "1.0.0",
   "description": "Collect metrics for gasket commands",
   "main": "lib",

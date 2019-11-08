@@ -1,4 +1,4 @@
-# @gasket/plugin-engine
+# @gasket/engine
 
 Plugin engine for gasket. This is used internally by `@gasket/cli`.
 
@@ -144,7 +144,7 @@ use this directly. If you do, instantiate an engine, passing in the
 `gasket.config.js` export.
 
 ```js
-const PluginEngine = require('@gasket/plugin-engine');
+const PluginEngine = require('@gasket/engine');
 const gasketConfig = require('../gasket.config');
 
 const pluginEngine = new PluginEngine(gasketConfig, context);
@@ -165,7 +165,7 @@ Execution of plugins through a `PluginEngine` instance is dependent on the
 e.g.
 
 ```js
-const PluginEngine = require('@gasket/plugin-engine');
+const PluginEngine = require('@gasket/engine');
 
 const path = require('path');
 const resolveFrom = path.resolve('./someapp');

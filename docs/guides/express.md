@@ -13,14 +13,14 @@ customize your gasket server with additional routes and middleware, this guide
 is for you!
 
 Before you go on, make sure you understand
-[how to author plugins](/packages/gasket-plugin-engine#authoring-plugins).
+[how to author plugins](plugins.md).
 Whether your custom express middleware is for a plugin to be shared across
 multiple apps, or for a standalone plugin used solely by your app, the plugin
 system is necessary to do any express app customization.
 
-A typical gasket-based application relies on 
-[`@gasket/nextjs-plugin`](/packages/gasket-nextjs-plugin#gasketnextjs-plugin) and
-[`@gasket/express-plugin`](/packages/gasket-express-plugin#gasketexpress-plugin)
+A typical gasket-based application relies on
+[`@gasket/plugin-nextjs`](/packages/gasket-nextjs-plugin#gasketplugin-nextjs) and
+[`@gasket/plugin-express`](/packages/gasket-express-plugin#gasketplugin-express)
 for creating the web servers and Express application.
 
 After some standard middleware is injected, a plugin can hook the `middleware`
@@ -86,21 +86,21 @@ module.exports = {
 
 Remember, if you need any of your injected middleware to come before or after
 middleware injected by another plugin, use the
-[timing mechanism](/packages/gasket-plugin-engine#hooks)
+[timing mechanism](/packages/gasket-plugin-engine)
 of the plugin engine. For example, if you need your middleware to access
 the server-side redux store created by
-[`@gasket/redux-plugin`](/packages/gasket-redux-plugin#gasketredux-plugin),
+[`@gasket/plugin-redux`](/packages/gasket-redux-plugin#gasketplugin-redux),
 you can do something like this:
 
 ```js
 const getFeatureFlags = require('./get-feature-flags');
 
 module.exports = {
-  dependencies: ['redux'],
+  dependencies: ['@gasket/redux'],
   hooks: {
     middleware: {
       timing: {
-        after: ['redux']
+        after: ['@gasket/redux']
       },
       handler(gasket, app) {
         return async (req, res, next) => {

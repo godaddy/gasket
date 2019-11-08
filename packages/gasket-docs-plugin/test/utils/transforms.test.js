@@ -117,7 +117,7 @@ describe('Utils Transforms', () => {
     describe('test', () => {
       it('matches @gasket node_modules markdown files', () => {
         [
-          '/path/to/node_modules/@gasket/some-plugin/README.md',
+          '/path/to/node_modules/@gasket/plugin-some/README.md',
           '/path/to/node_modules/@gasket/something/README.md',
           '/path/to/node_modules/@gasket/some-preset/README.md'
         ].forEach(source => {
@@ -137,7 +137,7 @@ describe('Utils Transforms', () => {
 
       it('does not match non-markdown files', () => {
         [
-          '/path/to/node_modules/@gasket/some-plugin/bogus.svg',
+          '/path/to/node_modules/@gasket/plugin-some/bogus.svg',
           '/path/to/node_modules/@gasket/something/bogus.png',
           '/path/to/node_modules/@gasket/some-preset/bogus.txt',
           '/path/to/packages/gasket-some-plugin/bogus.svg',
@@ -222,10 +222,10 @@ describe('Utils Transforms', () => {
         let docsConfigSet, docsConfig, filename;
 
         beforeEach(() => {
-          docsConfig = { name: '@gasket/fake-plugin', targetRoot: '/path/to/some-app/.docs/plugins/@gasket/fake-plugin' };
+          docsConfig = { name: '@gasket/plugin-fake', targetRoot: '/path/to/some-app/.docs/plugins/@gasket/plugin-fake' };
 
           docsConfigSet = {
-            plugins: [{ name: '@gasket/fake-plugin', targetRoot: '/path/to/some-app/.docs/plugins/@gasket/fake-plugin' }],
+            plugins: [{ name: '@gasket/plugin-fake', targetRoot: '/path/to/some-app/.docs/plugins/@gasket/plugin-fake' }],
             presets: [{ name: '@gasket/fake-preset', targetRoot: '/path/to/some-app/.docs/presets/@gasket/fake-preset' }],
             modules: [{ name: '@gasket/fake', targetRoot: '/path/to/some-app/.docs/modules/@gasket/fake' }],
             docs: '/path/to/some-app',
@@ -307,7 +307,7 @@ describe('Utils Transforms', () => {
       let docsConfig;
 
       beforeEach(() => {
-        docsConfig = { name: '@gasket/fake-plugin', targetRoot: '/path/to/some-app/.docs/plugins/@gasket/fake-plugin' };
+        docsConfig = { name: '@gasket/plugin-fake', targetRoot: '/path/to/some-app/.docs/plugins/@gasket/plugin-fake' };
       });
 
       it('is named', () => {

@@ -27,7 +27,7 @@ const mockAppInfo = {
   package: {
     dependencies: {
       '@gasket/mock-preset': '^1.2.3',
-      '@gasket/mock-plugin': '^10.0.0',
+      '@gasket/plugin-mock': '^10.0.0',
       '@gasket/mock': '^20.0.0',
       'fake-one': '^30.0.0'
     }
@@ -35,7 +35,7 @@ const mockAppInfo = {
 };
 
 const mockPluginInfo = {
-  name: '@gasket/mock-plugin',
+  name: '@gasket/plugin-mock',
   module: mockPlugin,
   from: '@gasket/mock-preset'
 };
@@ -169,7 +169,7 @@ describe('Metadata plugin', function () {
 
     it('ignores plugins and presets from app dependencies', async () => {
       const names = gasket.metadata.modules.map(m => m.name);
-      assume(names).not.includes('@gasket/mock-plugin');
+      assume(names).not.includes('@gasket/plugin-mock');
       assume(names).not.includes('@gasket/mock-preset');
     });
 
@@ -194,7 +194,7 @@ describe('Metadata plugin', function () {
 
     it('metadata hook is passed only metadata for hooking plugin', async function () {
       assume(handlerStub).called();
-      assume(handlerStub.getCall(0).args[0]).property('name', '@gasket/mock-plugin');
+      assume(handlerStub.getCall(0).args[0]).property('name', '@gasket/plugin-mock');
     });
 
     it('augments the metadata with data from the lifecycle hooks', async function () {
@@ -239,13 +239,13 @@ describe('Metadata plugin', function () {
   describe('metadata', () => {
 
     it('retains acquired plugin data', () => {
-      const mockData = { name: '@gasket/mock-plugin' };
+      const mockData = { name: '@gasket/plugin-mock' };
       const results = plugin.hooks.metadata(gasket, mockData);
-      assume(results).property('name', '@gasket/mock-plugin');
+      assume(results).property('name', '@gasket/plugin-mock');
     });
 
     it('adds lifecycles', () => {
-      const mockData = { name: '@gasket/mock-plugin' };
+      const mockData = { name: '@gasket/plugin-mock' };
       const results = plugin.hooks.metadata(gasket, mockData);
       assume(results).property('lifecycles');
     });

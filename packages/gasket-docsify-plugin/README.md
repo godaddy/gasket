@@ -1,14 +1,14 @@
-# @gasket/docsify-plugin
+# @gasket/plugin-docsify
 
 Use [Docsify] to serve a website view of the collated docs from
-[@gasket/docs-plugin]. 
+[@gasket/plugin-docs].
 
 ## Setup
 
 First, install this plugin along with the docs plugin:
 
 ```
-npm install @gasket/docs-plugin @gasket/docsify-plugin
+npm install @gasket/plugin-docs @gasket/plugin-docsify
 ```
 
 Next, add these to the `plugins` section of your `gasket.config.js`:
@@ -18,7 +18,7 @@ Next, add these to the `plugins` section of your `gasket.config.js`:
 
 module.exports = {
   plugins: [
-+    add: ['docs', 'docsify']
++    add: ['@gasket/docs', '@gasket/docsify']
   ]
 }
 ```
@@ -34,7 +34,7 @@ To be set in under `docsify` in the `gasket.config.js`.
   [docsify themes], a URL, or CSS file.
 - `port` - (number) Port to serve the docs from. Default is `3000`.
 - `config` - (object) Any [Docsify config] properties, expect for functions
-  types which are not currently supported. 
+  types which are not currently supported.
   Default has `auth2top` and `relativePath` set to `true`.
 - `stylesheets` (string[]) - Optional additional stylesheet URLs to load.
 - `scripts` (string[]) - Optional additional scripts files, which can include
@@ -69,4 +69,4 @@ module.exports = {
 [docsify plugins]: https://docsify.js.org/#/plugins
 [Google Analytics plugin]: https://docsify.js.org/#/plugins?id=google-analytics
 
-[@gasket/docs-plugin]: /packages/gasket-docs-plugin/README.md
+[@gasket/plugin-docs]: /packages/gasket-docs-plugin/README.md

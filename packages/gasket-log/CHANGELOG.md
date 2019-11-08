@@ -23,7 +23,7 @@
 ### 2.1.2
 
 - Fix to output corresponding levels with log methods.
-  
+
 ### 2.1.1
 
 - General maintenance:

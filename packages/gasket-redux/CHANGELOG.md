@@ -48,3 +48,6 @@
 
 - Upgraded to Babel 7 and the `@babel/` namespace packages.
 - Upgraded to latest `@gasket/*` packages that received the same update.
+
+
+[#80]: https://github.com/godaddy/gasket/pull/80
