@@ -243,7 +243,8 @@ by setting the `redux.makeStore` property of `gasket.config.js`.
 
 ## Presets
 
-Presets are a collection of plugins. See [Configuring Plugins] for details.
+Presets are collections of plugins and codified opinions. Please see the
+[preset authoring guide] for details.
 
 ## Plugins
 
@@ -340,7 +341,7 @@ Development modules to help with code quality.
 [Gasket Docs]: README.md
 
 <!-- Gasket Repo Links -->
-[@gasket/cli]:/packages/gasket-cli  
+[@gasket/cli]:/packages/gasket-cli
 [@gasket/nextjs-plugin]:/packages/gasket-nextjs-plugin#gasketnextjs-plugin
 [@gasket/webpack-plugin]:/packages/gasket-webpack-plugin#gasketwebpack-plugin
 [@gasket/express-plugin]:/packages/gasket-express-plugin#gasketexpress-plugin
@@ -368,6 +369,7 @@ Development modules to help with code quality.
 <!-- Gasket Repo Docs Links -->
 [CLI Commands]:/packages/gasket-cli#commands
 [Configuring Plugins]:/packages/gasket-plugin-engine#configuring-plugins
+[preset authoring guide]:/guides/authoring-presets.md
 
 <!-- Next.js Links -->
 [Next.js]:https://github.com/zeit/next.js
