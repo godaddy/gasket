@@ -19,30 +19,8 @@ At GoDaddy, we have presets specifically tailored with internal sets of plugins,
 making maintaining standards around authentication, style, analytics, and more
 significantly easier.
 
-## Naming
-
-`@gasket` presets should follow the naming convention `@gasket/preset-{name}`,
-which will allow them to be referenced using [short names](#short-names).
-Otherwise, presets need to start with the `preset-` prefix. This is how Gasket
-determines what packages are presets or not.
-
-#### Good names
-
-```
-@gasket/preset-example
-preset-example
-@myscope/preset-example
-```
-
-#### Bad names
-
-These will **not** be resolved as valid presets.
-
-```
-@gasket/example
-example
-@myscope/example
-```
+See the [naming conventions] for how to best name a preset, ensuring that
+Gasket's plugin engine properly resolves it.
 
 ## Composition
 
@@ -54,7 +32,7 @@ For example, a `package.json` file may look like:
 
 ```json
 {
-  "name": "preset-snl",
+  "name": "gasket-preset-snl",
   "main": "index.js",
   "dependencies": {
     "plugin-television": "^1.0.0",
@@ -203,5 +181,6 @@ preset. For example, by adding:
 application is loaded, in addition to the ones already present as `dependencies`.
 
 [babel presets]: https://babeljs.io/docs/en/presets
+[naming conventions]: /packages/gasket-resolve/README.md#naming-convention
 [`gasket create` cli prompts]: https://github.com/godaddy/gasket/blob/master/packages/gasket-cli/src/scaffold/actions/global-prompts.js
 [environment overrides]: https://github.com/godaddy/gasket/blob/master/docs/guides/configuration.md#environments
