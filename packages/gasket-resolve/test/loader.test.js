@@ -121,8 +121,16 @@ describe('Loader', () => {
       }));
     });
 
-    it('updates name and version if package resolves', () => {
+    it('updates name and version if package path resolves', () => {
       const results = loader.getModuleInfo(pluginOne, '/path/to/node_modules/@gasket/one-plugin', { extra: true });
+      expect(results).toEqual(expect.objectContaining({
+        name: '@gasket/one-plugin',
+        version: '1.2.3'
+      }));
+    });
+
+    it('updates name and version if package path resolves on windows', () => {
+      const results = loader.getModuleInfo(pluginOne, 'C:\\path\\to\\node_modules\\@gasket\\one-plugin', { extra: true });
       expect(results).toEqual(expect.objectContaining({
         name: '@gasket/one-plugin',
         version: '1.2.3'
@@ -250,6 +258,15 @@ describe('Loader', () => {
 
     it('supports module paths', () => {
       const results = loader.loadPreset('/path/to/node_modules/@gasket/one-preset');
+      expect(results).toEqual(expect.objectContaining({
+        name: '@gasket/one-preset',
+        module: presetOne,
+        package: presetOnePkg
+      }));
+    });
+
+    it('supports module paths on Windows', () => {
+      const results = loader.loadPreset('C:\\path\\to\\node_modules\\@gasket\\one-preset');
       expect(results).toEqual(expect.objectContaining({
         name: '@gasket/one-preset',
         module: presetOne,
