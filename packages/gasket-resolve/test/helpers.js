@@ -14,11 +14,14 @@ function makeRequire(modules) {
   const _paths = {};
   const _modules = {};
   Object.keys(modules).forEach(name => {
-    const p = isModulePath.test(name) ? name : '/path/to/node_modules/' + name;
-    _paths[name] = p;
-    _paths[p] = p;
+    const pth = isModulePath.test(name) ? name : '/path/to/node_modules/' + name;
+    const windowsPth = isModulePath.test(name) ? name : 'C:\\path\\to\\node_modules\\' + name.replace('/', '\\');
+    _paths[name] = pth;
+    _paths[pth] = pth;
+    _paths[windowsPth] = pth;
     _modules[name] = modules[name];
-    _modules[p] = modules[name];
+    _modules[pth] = modules[name];
+    _modules[windowsPth] = modules[name];
   });
 
   _paths.broken = '/path/to/node_modules/broken';
