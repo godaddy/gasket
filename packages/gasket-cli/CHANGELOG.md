@@ -1,5 +1,10 @@
 # `@gasket/cli`
 
+### 3.2.0
+
+- One instance of pkgManager and made available on create context. ([#98])
+  - pkgManager.info() allows package lookups with normalized JSON results for npm and yarn.
+
 ### 3.1.1
 
 - Fix package.json scripts to wrap glob patterns in double-quotes
@@ -239,3 +244,4 @@ upon `gasket create`
 [#79]: https://github.com/godaddy/gasket/pull/79
 [#86]: https://github.com/godaddy/gasket/pull/86
 [#87]: https://github.com/godaddy/gasket/pull/87
+[#98]: https://github.com/godaddy/gasket/pull/98

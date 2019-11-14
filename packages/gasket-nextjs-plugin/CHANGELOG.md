@@ -1,6 +1,9 @@
 # `@gasket/nextjs-plugin`
 
-- Bump to `next@9.1.2` to fix hanging `gasket build`
+### 2.3.3
+
+- Bump to `next@9.1.2` to fix hanging `gasket build` ([#97])
+- Tune for `react/destructuring-assignment` from Airbnb style ([#98])
 
 ### 2.3.2
 
@@ -44,3 +47,5 @@
 [#32]: https://github.com/godaddy/gasket/pull/32
 [#33]: https://github.com/godaddy/gasket/pull/33
 [#75]: https://github.com/godaddy/gasket/pull/75
+[#97]: https://github.com/godaddy/gasket/pull/97
+[#98]: https://github.com/godaddy/gasket/pull/98

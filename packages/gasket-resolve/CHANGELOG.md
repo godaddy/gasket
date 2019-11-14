@@ -1,5 +1,9 @@
 # `@gasket/resolve`
 
+### 2.0.1
+
+- Fix to support Windows paths when resolving ([#105])
+
 ### 2.0.0
 
 - Introduces [Loader] used to load configured presets and plugins ([#64]).
@@ -32,5 +36,6 @@
 
 [#8]: https://github.com/godaddy/gasket/pull/8
 [#64]: https://github.com/godaddy/gasket/pull/64
+[#105]: https://github.com/godaddy/gasket/pull/105
 
 [Loader]:/packages/gasket-resolve/README.md#Loader

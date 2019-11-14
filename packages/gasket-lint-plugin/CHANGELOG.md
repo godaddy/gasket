@@ -1,5 +1,10 @@
 # `@gasket/lint-plugin`
 
+### 2.0.0
+
+- Refactored to prompt for code styles and allow custom ESLint or stylelint configs to be set. ([#98])
+  - Supported code styles: [GoDaddy], [Standard], [Airbnb]
+
 ### 1.7.3
 
 - Fix package.json scripts to wrap glob patterns in double-quotes
@@ -41,3 +46,9 @@
 ### 1.0.0
 
 - Initial release.
+
+[GoDaddy]: README.md#godaddy
+[Standard]: README.md#standard
+[Airbnb]: README.md#airbnb
+
+[#98]: https://github.com/godaddy/gasket/pull/98
