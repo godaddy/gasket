@@ -1,5 +1,9 @@
 # `@gasket/jest-plugin`
 
+### 1.3.0
+
+- Remove ESLint setup, which should only be handled in the lint-plugin ([#98])
+
 ### 1.2.1
 
 - Fix package.json scripts to wrap glob patterns in double-quotes
@@ -15,3 +19,6 @@
 ### 1.0.0
 
 - Initial release.
+
+
+[#98]: https://github.com/godaddy/gasket/pull/98
