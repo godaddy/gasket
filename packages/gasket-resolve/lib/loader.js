@@ -38,7 +38,7 @@ const { pluginIdentifier, presetIdentifier } = require('./package-identifier');
  * @type {RegExp}
  * @private
  */
-const isModulePath = /^[/.]|node_modules/;
+const isModulePath = /^[/.]|^[a-zA-Z]:\\|node_modules/;
 
 /**
  * Utility to load plugins, presets, and other modules with associated metadata
@@ -67,7 +67,8 @@ class Loader extends Resolver {
       ...meta
     };
 
-    const pkgPath = this.tryResolve(`${moduleName}/package.json`);
+    const tryPath = isModulePath.test(moduleName) ? path.join(moduleName, 'package.json') : `${moduleName}/package.json`;
+    const pkgPath = this.tryResolve(tryPath);
     if (pkgPath) {
       info.path = path.dirname(pkgPath);
       info.package = this.require(pkgPath);
