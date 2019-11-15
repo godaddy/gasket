@@ -122,5 +122,33 @@ async function start(gasket) {
 
 module.exports = {
   name: require('./package').name,
-  hooks: { start }
+  hooks: {
+    start,
+    metadata(gasket, meta) {
+      return {
+        ...meta,
+        lifecycles: [{
+          name: 'createServers',
+          method: 'execWaterfall',
+          description: 'Setup the `create-servers` options',
+          link: 'README.md#createServers',
+          parent: 'start'
+        }, {
+          name: 'terminus',
+          method: 'execWaterfall',
+          description: 'Setup the `terminus` options',
+          link: 'README.md#terminus',
+          parent: 'start',
+          after: 'createServers'
+        }, {
+          name: 'servers',
+          method: 'exec',
+          description: 'Access to the server instances',
+          link: 'README.md#servers',
+          parent: 'start',
+          after: 'terminus'
+        }]
+      };
+    }
+  }
 };

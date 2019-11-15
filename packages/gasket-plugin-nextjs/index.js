@@ -126,6 +126,32 @@ module.exports = {
           '.next/': joined
         }
       };
+    },
+    metadata(gasket, meta) {
+      return {
+        ...meta,
+        lifecycles: [{
+          name: 'nextConfig',
+          method: 'execWaterfall',
+          description: 'Setup the next config',
+          link: 'README.md#nextConfig',
+          parent: 'express',
+        }, {
+          name: 'next',
+          method: 'exec',
+          description: 'Update the next app instance before prepare',
+          link: 'README.md#next',
+          parent: 'express',
+          after: 'nextConfig'
+        }, {
+          name: 'nextExpress',
+          method: 'exec',
+          description: 'Access the prepared next app and express instance',
+          link: 'README.md#nextExpress',
+          parent: 'express',
+          after: 'next'
+        }]
+      };
     }
   }
 };

@@ -82,6 +82,24 @@ module.exports = {
       });
     },
     workbox,
-    serviceWorkerCacheKey
+    serviceWorkerCacheKey,
+    metadata(gasket, meta) {
+      const config = getIntlConfig(gasket);
+      return {
+        ...meta,
+        lifecycles: [{
+          name: 'intlLanguage',
+          method: 'execWaterfall',
+          description: 'Set the language for which locale files to load',
+          link: 'README.md#intlLanguage',
+          parent: 'initReduxState'
+        }],
+        structures: [{
+          name: config.localesDir,
+          description: 'Locale JSON files with translation strings',
+          link: 'README.md#Options'
+        }]
+      };
+    }
   }
 };

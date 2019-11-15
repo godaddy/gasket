@@ -30,7 +30,6 @@ module.exports = {
   }
 }
 ```
-## Lifecycles
 
 By default, this plugin will serve `{}` as your `manifest.json`. Consumers of
 this plugin have 2 options in augmenting this object. The first is through
@@ -45,7 +44,8 @@ this plugin have 2 options in augmenting this object. The first is through
 }
 ```
 
-If you want to serve `manifest.json` from a custom path, the plugin can be configured as follows.
+If you want to serve `manifest.json` from a custom path, the plugin can be
+configured as follows.
 
 ```js
 {
@@ -56,9 +56,14 @@ If you want to serve `manifest.json` from a custom path, the plugin can be confi
 }
 ```
 
-The second is through a `manifest` lifecycle hook. This lifecycle method is
-called every time an incoming http request is made that matches either
-`manifest.json` or the service worker script (which is `sw.js` by default).
+## Lifecycles
+
+### manifest
+
+Another option to adjust the manifest if through a lifecycle hook. This
+lifecycle method is executed every time an incoming http request is made that
+matches either `manifest.json` or the service worker script (which is `sw.js` by
+default).
 
 ```js
 // lifecyles/manifest.js
@@ -87,8 +92,8 @@ It is important to note that conflicting objects from `gasket.config.js` and a
 `manifest` hook will be resolved by using the data from the *hook*.
 
 Once the `manifest.json` has been resolved, it is suggested that consumers of
-this plugin take advantage of the `workbox` hook. For example: here we cache
-any icons that the application might use at runtime:
+this plugin take advantage of the `workbox` hook. For example: here we cache any
+icons that the application might use at runtime:
 
 ```js
 // lifecycles/workbox.js

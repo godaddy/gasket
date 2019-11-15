@@ -44,6 +44,26 @@ function initWebpack(gasket, webpackConfig, data) {
 
 module.exports = {
   name: require('./package').name,
-  hooks: {},
+  hooks: {
+    metadata(gasket, meta) {
+      return {
+        ...meta,
+        lifecycles: [{
+          name: 'webpackChain',
+          method: 'execSync',
+          description: 'Setup webpack config by chaining',
+          link: 'README.md#webpackChain',
+          parent: 'initWebpack'
+        }, {
+          name: 'webpack',
+          method: 'execSync',
+          description: 'Modify webpack config with partials or by mutating',
+          link: 'README.md#webpack',
+          parent: 'initWebpack',
+          after: 'webpackChain'
+        }]
+      }
+    }
+  },
   initWebpack
 };

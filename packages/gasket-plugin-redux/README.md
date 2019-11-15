@@ -4,7 +4,7 @@ Gasket plugin to setup redux store available to express middleware.
 
 By default, Gasket apps will use the makeStore function from
 `@gasket/redux/make-store`. App developers can choose to use different makeStore
-file by utilizing `configureMakeStore` from 
+file by utilizing `configureMakeStore` from
 [`@gasket/redux`](https://github.com/godaddy/gasket/tree/master/packages/gasket-redux#gasketredux)
 and then pointing to this file in the gasket.config.js.
 
@@ -76,11 +76,11 @@ async function doSomethingMiddleware(req, res, next) {
 }
 ```
 
-## Lifecycle Events
+## Lifecycles
 
 ### initReduxState
 
-This plugin fires an `initReduxState` event when constructing the initial 
+This plugin fires an `initReduxState` event when constructing the initial
 server-side state for the redux store. Plugins that need to modify this initial
 state can hook this event and return a modified version of the initial state or
 a Promise that resolves to a new initial state. Example plugin:

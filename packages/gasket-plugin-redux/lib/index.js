@@ -34,6 +34,25 @@ module.exports = {
     },
     middleware(gasket) {
       return require('./middleware')(gasket);
+    },
+    metadata(gasket, meta) {
+      return {
+        ...meta,
+        lifecycles: [{
+          name: 'initReduxState',
+          method: 'execWaterfall',
+          description: 'Setup the next config',
+          link: 'README.md#initReduxState',
+          parent: 'middleware', // TODO: actual execution is for each request
+        }, {
+          name: 'initReduxStore',
+          method: 'exec',
+          description: 'Update the next app instance before prepare',
+          link: 'README.md#initReduxStore',
+          parent: 'middleware', // TODO: actual execution is for each request
+          after: 'initReduxState'
+        }]
+      };
     }
   }
 };

@@ -29,7 +29,7 @@ module.exports = {
      */
     async express(gasket, app) {
       const { config } = gasket;
-      const { path } = (config && config.manifest || {});
+      const { path } = (config && config.manifest || {});
       app.get(path || baseConfig.path, (req, res) => {
         res.send(req.manifest || {});
       });
@@ -58,6 +58,18 @@ module.exports = {
           next();
         };
       }
+    },
+    metadata(gasket, meta) {
+      return {
+        ...meta,
+        lifecycles: [{
+          name: 'manifest',
+          method: 'execWaterfall',
+          description: 'Modify the the web manifest for a request',
+          link: 'README.md#manifest',
+          parent: 'middleware'  // TODO: actual execution is for each request
+        }]
+      };
     }
   }
 };

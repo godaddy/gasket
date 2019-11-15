@@ -23,6 +23,19 @@ module.exports = {
         'test:watch': 'jest --watchAll',
         'test:coverage': 'jest --coverage'
       });
+    },
+    metadata(gasket, meta) {
+      return {
+        ...meta,
+        structures: [{
+          name: 'test',
+          description: 'Test files'
+        }, {
+          name: 'jest.config.js',
+          description: 'Jest configuration',
+          link: 'https://jestjs.io/docs/configuration'
+        }]
+      };
     }
   }
 };
