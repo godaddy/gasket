@@ -2,7 +2,7 @@ const codeStyles = require('./code-styles');
 const { makeGatherDevDeps, makeRunScriptStr, makeSafeRunScript } = require('./utils');
 
 module.exports = {
-  name: 'lint',
+  name: require('../package').name,
   hooks: {
     /**
      * Prompt lifecycle hook which prompts for code style choices.
