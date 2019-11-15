@@ -1,12 +1,13 @@
 # Overview
 
-There are several presets and plugins available with which to make frameworks
-and construct apps. The various commands, lifecycles, and structures are all
-enabled by different plugins you can choose to use.
+Gasket help developers make frameworks to power their apps. There are several
+presets and plugins available with which to make frameworks and construct apps.
+The various commands, lifecycles, and structures are all enabled by different
+plugins you can choose to use.
 
-> The contents of this file are similar to those you seen when using **docs**
-> command from @gasket/plugin-docs. However, in an app, only elements which are
-> configured will be shown.
+> The contents of this file are similar to those when using the **docs** command
+> enabled by [@gasket/plugin-docs] which is recommended for reading docs of
+> apps.
 
 ## Guides
 
@@ -101,7 +102,7 @@ Supporting modules
 
 | Name              | Version | Description                                                                          |
 | ----------------- | ------- | ------------------------------------------------------------------------------------ |
-| [@gasket/cli]     | 3.1.1   | CLI for rapid application development with gasket                                    |
+| [@gasket/cli]     | 3.2.0   | CLI for rapid application development with gasket                                    |
 | [@gasket/assets]  | 1.1.2   | Gasket assets                                                                        |
 | [@gasket/engine]  | 2.0.2   | Plugin engine for gasket                                                             |
 | [@gasket/fetch]   | 1.0.1   | Gasket Fetch API                                                                     |
