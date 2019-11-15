@@ -53,8 +53,8 @@ function generateContent(docsConfigSet) {
   addSection('Commands', 'Available commands', docsConfigSet.commands, { includeVersion: false });
   addSection('Lifecycles', 'Available lifecycles', docsConfigSet.lifecycles, { includeVersion: false });
   addSection('Structures', 'Available structure', docsConfigSet.structures, { includeVersion: false });
-  addSection('Plugins', 'All configured plugins', docsConfigSet.plugins);
   addSection('Presets', 'All configured presets', docsConfigSet.presets);
+  addSection('Plugins', 'All configured plugins', docsConfigSet.plugins);
   addSection('Modules', 'Dependencies and supporting modules', docsConfigSet.modules);
 
   addContent('<!-- LINKS -->');

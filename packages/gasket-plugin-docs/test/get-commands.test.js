@@ -5,13 +5,14 @@ const proxyquire = require('proxyquire');
 const mockGasket = {
   exec: sinon.stub()
 };
+
 class MockGasketCommand {
   constructor() {
     this.gasket = mockGasket;
   }
 }
 
-const mockData = { GasketCommand: MockGasketCommand };
+const mockData = { GasketCommand: MockGasketCommand, flags: { boolean: sinon.stub() } };
 const mockDocsConfigSet = { docsRoot: '/path/to/app/.docs' };
 
 const buildConfigSetStub = sinon.stub().resolves(mockDocsConfigSet);
@@ -52,6 +53,7 @@ describe('getCommands', () => {
 
     beforeEach(() => {
       sinon.resetHistory();
+      instance.parsed = { flags: { view: true } };
     });
 
     it('builds docsConfigSet', async () => {
@@ -72,6 +74,12 @@ describe('getCommands', () => {
     it('executes docsView lifecycle', async () => {
       await instance.gasketRun();
       assume(mockGasket.exec).calledWith('docsView', mockDocsConfigSet);
+    });
+
+    it('does not execute docsView if --no-view flag', async () => {
+      instance.parsed.flags.view = false;
+      await instance.gasketRun();
+      assume(mockGasket.exec).not.called();
     });
   });
 });
