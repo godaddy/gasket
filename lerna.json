@@ -1,7 +1,7 @@
 {
   "packages": [
     "packages/*",
-    "plugins/*"
+    "scripts/generate-docs"
   ],
   "version": "independent",
   "ignoreChanges": [
