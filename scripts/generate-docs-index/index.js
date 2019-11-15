@@ -37,6 +37,7 @@ async function main() {
   content = template.substring(0, start) + '\n\n' + content + template.substring(end);
 
   await writeFile(targetPath, content, 'utf-8');
+  // eslint-disable-next-line no-console
   console.log('DONE');
 }
 
