@@ -47,8 +47,13 @@ function loadConfigFile(flags) {
 function addDefaultPlugins(gasketConfig) {
   const pluginsConfig = gasketConfig.plugins || {};
   const { add = [], remove = [] } = pluginsConfig;
-  const filtered = add.concat(remove).map(p => pluginIdentifier(p).fullName);
-  const pluginsToAdd = defaultPlugins.filter(p => !filtered.includes(pluginIdentifier(p.name).fullName));
+  const filteredNames = new Set([
+    add.concat(remove).map(p => {
+      const name = typeof p === 'string' ? p : p.name;
+      return pluginIdentifier(name).fullName;
+    })
+  ]);
+  const pluginsToAdd = defaultPlugins.filter(p => !filteredNames.has(pluginIdentifier(p.name).fullName));
   return {
     ...gasketConfig,
     plugins: {
