@@ -29,7 +29,7 @@ module.exports = function getCommands(gasket, { GasketCommand, flags }) {
       default: true,
       description: 'View the docs after generating',
       allowNo: true
-    }),
+    })
   };
 
   return DocsCommand;
