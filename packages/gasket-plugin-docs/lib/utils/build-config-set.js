@@ -76,8 +76,7 @@ async function buildDocsConfigSet(gasket) {
   await builder.addModules(metadata.modules);
   await builder.addPresets(metadata.presets);
 
-  const docsConfigSet = builder.getConfigSet();
-  return await gasket.execWaterfall('docsConfigSet', docsConfigSet);
+  return builder.getConfigSet();
 }
 
 buildDocsConfigSet.findPluginData = findPluginData;
