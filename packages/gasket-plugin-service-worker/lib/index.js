@@ -16,7 +16,7 @@ module.exports = {
           method: 'execWaterfall',
           description: 'Update the service worker script',
           link: 'README.md#composeServiceWorker',
-          parent: 'express' // TODO: actual execution is for each request
+          parent: 'express'
         }]
       };
     }

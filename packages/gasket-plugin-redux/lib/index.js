@@ -43,13 +43,13 @@ module.exports = {
           method: 'execWaterfall',
           description: 'Setup the next config',
           link: 'README.md#initReduxState',
-          parent: 'middleware' // TODO: actual execution is for each request
+          parent: 'middleware'
         }, {
           name: 'initReduxStore',
           method: 'exec',
           description: 'Update the next app instance before prepare',
           link: 'README.md#initReduxStore',
-          parent: 'middleware', // TODO: actual execution is for each request
+          parent: 'middleware',
           after: 'initReduxState'
         }]
       };

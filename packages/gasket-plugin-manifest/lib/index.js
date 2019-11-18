@@ -67,7 +67,7 @@ module.exports = {
           method: 'execWaterfall',
           description: 'Modify the the web manifest for a request',
           link: 'README.md#manifest',
-          parent: 'middleware'  // TODO: actual execution is for each request
+          parent: 'middleware'
         }]
       };
     }

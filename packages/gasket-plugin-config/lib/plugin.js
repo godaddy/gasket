@@ -57,7 +57,7 @@ module.exports = {
           method: 'execWaterfall',
           description: 'Adjust app level config for each request',
           link: 'README.md#appRequestConfig',
-          parent: 'middleware'  // TODO: actual execution is for each request
+          parent: 'middleware'
         }],
         structures: [{
           name: 'app.config.js',
