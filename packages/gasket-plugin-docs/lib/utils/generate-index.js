@@ -35,7 +35,6 @@ function generateContent(docsConfigSet) {
   addContent('# App');
   addContent(`[${appDocs.name}] — ${appDocs.description}`);
   refMap.set(appDocs.name, formatLink(appDocs.link, appDocs.targetRoot));
-  // addContent(appDocs.description || '');
 
   const addSection = (sectionTitle, sectionDesc, docs, { includeVersion = true } = {}) => {
     if (!docs || !docs.length) return;
