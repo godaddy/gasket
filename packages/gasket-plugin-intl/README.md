@@ -75,7 +75,9 @@ use for a given language.
 2. Language match, e.g. `da-XX` to match with `da`.
 3. Fallback to US language, e.g. `ar-MA` to fall back to `en-US`.
 
-## The intlLanguage hook
+## Lifecycles
+
+### intlLanguage
 
 When determining what assets to precache, `intl-plugin` defaults to reading the
 first language provided in the `accept-language` header. However, you can

@@ -69,6 +69,32 @@ module.exports = {
         ...serverOpts,
         handler: app
       };
+    },
+    metadata(gasket, meta) {
+      return {
+        ...meta,
+        lifecycles: [{
+          name: 'middleware',
+          method: 'exec',
+          description: 'Add Express style middleware',
+          link: 'README.md#middleware',
+          parent: 'createServers'
+        }, {
+          name: 'fastify',
+          method: 'exec',
+          description: 'Modify the Fastify instance to for adding endpoints',
+          link: 'README.md#express',
+          parent: 'createServers',
+          after: 'middleware'
+        }, {
+          name: 'errorMiddleware',
+          method: 'exec',
+          description: 'Add Express style middleware for handling errors',
+          link: 'README.md#errorMiddleware',
+          parent: 'createServers',
+          after: 'express'
+        }]
+      };
     }
   }
 };

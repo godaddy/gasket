@@ -15,7 +15,8 @@ describe('Plugin', function () {
   it('has expected hooks', () => {
     const expected = [
       'express',
-      'middleware'
+      'middleware',
+      'metadata'
     ];
 
     assume(plugin).to.have.property('hooks');

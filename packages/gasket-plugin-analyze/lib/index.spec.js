@@ -14,7 +14,8 @@ describe('Plugin', () => {
     const expected = [
       'webpack',
       'getCommands',
-      'create'
+      'create',
+      'metadata'
     ];
 
     expect(plugin).toHaveProperty('hooks');

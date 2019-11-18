@@ -1,6 +1,7 @@
 {
   "name": "@gasket/plugin-https",
   "version": "2.2.1",
+  "description": "Create http/s servers with graceful termination",
   "main": "index.js",
   "scripts": {
     "lint": "eslint *.js test/*.js",

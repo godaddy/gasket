@@ -20,6 +20,18 @@ module.exports = {
             logger.error(err.message || `${err}`);
           });
       }
+    },
+    metadata(gasket, meta) {
+      return {
+        ...meta,
+        lifecycles: [{
+          name: 'metrics',
+          method: 'exec',
+          description: 'Collect metrics for an app',
+          link: 'README.md#metrics',
+          parent: 'init'
+        }]
+      };
     }
   }
 };

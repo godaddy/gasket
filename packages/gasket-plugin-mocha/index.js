@@ -43,6 +43,15 @@ module.exports = {
         'test:coverage': `nyc --reporter=text --reporter=json-summary ${runCmd} test:runner`,
         'test:watch': `${runCmd} test:runner -- --watch`
       });
+    },
+    metadata(gasket, meta) {
+      return {
+        ...meta,
+        structures: [{
+          name: 'test/',
+          description: 'Test files'
+        }]
+      };
     }
   }
 };

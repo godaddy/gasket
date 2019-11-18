@@ -23,11 +23,13 @@ module.exports = function metadata(gasket, meta) {
       name: 'docsView',
       description: 'View the collated documentation',
       link: 'README.md#docsView',
-      command: 'docs'
+      command: 'docs',
+      after: 'docsSetup'
     }],
     structures: [{
-      name: outputDir,
-      description: 'Output of gasket docs command'
+      name: outputDir + '/',
+      description: 'Output of gasket docs command',
+      link: 'README.md#options'
     }]
   };
 };

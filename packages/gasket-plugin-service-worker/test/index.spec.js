@@ -14,7 +14,8 @@ describe('Plugin', () => {
     const expected = [
       'configure',
       'middleware',
-      'express'
+      'express',
+      'metadata'
     ];
 
     expect(plugin).toHaveProperty('hooks');
