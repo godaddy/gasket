@@ -32,7 +32,8 @@ describe('Plugin', function () {
     const expected = [
       'init',
       'create',
-      'destroy'
+      'destroy',
+      'metadata'
     ];
 
     assume(Plugin).to.have.property('hooks');

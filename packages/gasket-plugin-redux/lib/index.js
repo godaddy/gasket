@@ -43,7 +43,7 @@ module.exports = {
           method: 'execWaterfall',
           description: 'Setup the next config',
           link: 'README.md#initReduxState',
-          parent: 'middleware', // TODO: actual execution is for each request
+          parent: 'middleware' // TODO: actual execution is for each request
         }, {
           name: 'initReduxStore',
           method: 'exec',

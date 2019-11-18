@@ -62,7 +62,7 @@ module.exports = {
           parent: 'initWebpack',
           after: 'webpackChain'
         }]
-      }
+      };
     }
   },
   initWebpack

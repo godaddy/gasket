@@ -135,7 +135,7 @@ module.exports = {
           method: 'execWaterfall',
           description: 'Setup the next config',
           link: 'README.md#nextConfig',
-          parent: 'express',
+          parent: 'express'
         }, {
           name: 'next',
           method: 'exec',

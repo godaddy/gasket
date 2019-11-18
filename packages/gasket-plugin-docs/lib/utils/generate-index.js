@@ -66,7 +66,7 @@ function generateContent(docsConfigSet) {
   addSection('Modules', 'Dependencies and supporting modules', docsConfigSet.modules);
 
   addContent('<!-- LINKS -->');
-  for (let [name, link] of refMap) {
+  for (const [name, link] of refMap) {
     addLine(`[${name}]:${link}`);
   }
 
