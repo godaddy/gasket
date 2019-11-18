@@ -76,7 +76,7 @@ module.exports = {
         lifecycles: [{
           name: 'middleware',
           method: 'exec',
-          description: 'Add Express style middleware',
+          description: 'Add Express style middleware for Fastify',
           link: 'README.md#middleware',
           parent: 'createServers'
         }, {
@@ -89,7 +89,7 @@ module.exports = {
         }, {
           name: 'errorMiddleware',
           method: 'exec',
-          description: 'Add Express style middleware for handling errors',
+          description: 'Add Express style middleware for handling errors with Fastify',
           link: 'README.md#errorMiddleware',
           parent: 'createServers',
           after: 'express'
