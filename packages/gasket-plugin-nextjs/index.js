@@ -126,6 +126,43 @@ module.exports = {
           '.next/': joined
         }
       };
+    },
+    metadata(gasket, meta) {
+      const { routes = 'routes.js' } = gasket.config || {};
+
+      return {
+        ...meta,
+        lifecycles: [{
+          name: 'nextConfig',
+          method: 'execWaterfall',
+          description: 'Setup the next config',
+          link: 'README.md#nextConfig',
+          parent: 'express'
+        }, {
+          name: 'next',
+          method: 'exec',
+          description: 'Update the next app instance before prepare',
+          link: 'README.md#next',
+          parent: 'express',
+          after: 'nextConfig'
+        }, {
+          name: 'nextExpress',
+          method: 'exec',
+          description: 'Access the prepared next app and express instance',
+          link: 'README.md#nextExpress',
+          parent: 'express',
+          after: 'next'
+        }],
+        structures: [{
+          name: 'pages/',
+          description: 'NextJS routing',
+          link: 'https://nextjs.org/docs#routing'
+        }, {
+          name: routes,
+          description: 'Routing when using `next-routes`',
+          link: 'https://github.com/fridays/next-routes#how-to-use'
+        }]
+      };
     }
   }
 };

@@ -7,6 +7,18 @@ module.exports = {
   hooks: {
     configure,
     middleware,
-    express
+    express,
+    metadata(gasket, meta) {
+      return {
+        ...meta,
+        lifecycles: [{
+          name: 'composeServiceWorker',
+          method: 'execWaterfall',
+          description: 'Update the service worker script',
+          link: 'README.md#composeServiceWorker',
+          parent: 'express'
+        }]
+      };
+    }
   }
 };

@@ -71,6 +71,16 @@ async function init(gasket) {
 module.exports = {
   name: require('./package').name,
   hooks: {
-    init
+    init,
+    metadata(gasket, meta) {
+      return {
+        ...meta,
+        structures: [{
+          name: 'lifecycles/',
+          description: 'JavaScript files to hook lifecycles with matching name',
+          link: 'README.md'
+        }]
+      };
+    }
   }
 };

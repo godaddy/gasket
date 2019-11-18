@@ -116,6 +116,24 @@ describe('Utils - generateIndex', () => {
         assume(content.match(/\[.+]:/g) || []).lengthOf(7);
       });
 
+      it('makes unique references', async () => {
+        const content = await generateContent({
+          ...emptyDocsConfigSet,
+          structures: [{
+            name: 'example-structure',
+            link: 'README.md#structures',
+            targetRoot: '/path/to/app/.docs/test-app/plugins/example-plugin'
+          }, {
+            name: 'example-structure',
+            link: 'README.md#structures',
+            targetRoot: '/path/to/app/.docs/test-app/plugins/example-plugin'
+          }]
+        });
+        assume(content).includes('[example-structure]:');
+        assume(content).includes('[1]:');
+        assume(content).includes('[example-structure][1]');
+      });
+
       it('links are relative to output dir', async () => {
         const config = fullDocsConfigSet.structures[0];
         const expected = path.relative(fullDocsConfigSet.docsRoot, path.join(config.targetRoot, config.link));

@@ -47,14 +47,15 @@ module.exports = {
         plugins[idx] = pluginData;
       });
     },
-    metadata(gasket, pluginData) {
+    metadata(gasket, meta) {
       return {
-        ...pluginData,
+        ...meta,
         lifecycles: [{
           name: 'metadata',
           method: 'execApply',
           description: 'Allows plugins to adjust their metadata',
-          link: 'README.md#metadata'
+          link: 'README.md#metadata',
+          parent: 'init'
         }]
       };
     }

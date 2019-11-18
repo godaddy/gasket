@@ -14,7 +14,8 @@ describe('Plugin', () => {
       'configure',
       'build',
       'express',
-      'composeServiceWorker'
+      'composeServiceWorker',
+      'metadata'
     ];
 
     expect(plugin).toHaveProperty('hooks');

@@ -22,7 +22,9 @@ module.exports = {
 }
 ```
 
-- Instead of adding a dedicated `next.config.js`, the `next` property within `gasket.config.js` is used. Everything you can configure in the [next.config][next.config] can be added here.
+- Instead of adding a dedicated `next.config.js`, the `next` property within
+  `gasket.config.js` is used. Everything you can configure in the
+  [next.config][next.config] can be added here.
 
 #### Example configuration
 
@@ -37,44 +39,6 @@ module.exports = {
     generateBuildId: () => Date.now()
   }
 }
-```
-
-## Hooks
-
-`nextjs` hooks into the following lifecycles in order to work.
-
-#### nextCreate
-
-```js
-module.exports = {
-  hooks: {
-    /**
-    * Creates the next app
-    * @param  {Gasket} gasket The Gasket API
-    * @return {Promise<Object>} next app
-    */
-    nextCreate: async function createNext(gasket) {
-      return nextApp;
-    }
-  }
-};
-```
-
-#### nextBuild
-
-```js
-module.exports = {
-  hooks: {
-    /**
-    * Builds next app
-    * @param  {Gasket} gasket The Gasket API
-    * @return {Promise<Object>} next build
-    */
-    nextBuild: async function createBuild(gasket) {
-      return build;
-    }
-  }
-};
 ```
 
 ## Lifecycles
@@ -101,8 +65,9 @@ module.exports = {
 
 #### nextConfig
 
-Executed before the `next` server has been created. It will receive a reference to the `next` config.
-This will allow you to modify the `next` config before the `next` server is created.
+Executed before the `next` server has been created. It will receive a reference
+to the `next` config. This will allow you to modify the `next` config before the
+`next` server is created.
 
 ```js
 module.exports = {
@@ -118,6 +83,27 @@ module.exports = {
         ...config,
         modification: 'newValue'
       };
+    }
+  }
+}
+```
+
+### nextExpress
+
+Provides access to both `next` and `express` instances which allows
+`next.render` calls in express-based routes.
+
+```js
+module.exports = {
+  hooks: {
+    nextExpress: function (gasket, { next, express }) {
+      express.post('/contact-form', (req, res) => {
+        // DO STUFF WITH RECEIVED DATA
+        //
+        // And once we're done, we can `next.render` to render the `pages/thanks`
+        // file as a response.
+        next.render(req, res, '/thanks', req.params);
+      });
     }
   }
 }

@@ -4,17 +4,17 @@ Enables commands essential to building and running Gasket projects.
 
 ## Commands
 
-### build
+### build command
 
 Executes the `build` lifecycle. Use this to prepare your app for running, such
 as bundling files, minifying code, processing assets, etc.
 
-### start
+### start command
 
 Executes the `preboot` and `start` lifecycles. Upon building your app, use this
 command to run it.
 
-### local
+### local command
 
 Executes the `build`, `preboot` and `start` lifecycles. This command defaults
 the environment to `local`, and is intended for local app development, only.

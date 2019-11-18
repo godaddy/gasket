@@ -28,7 +28,8 @@ describe('Plugin', () => {
       'middleware',
       'express',
       'workbox',
-      'serviceWorkerCacheKey'
+      'serviceWorkerCacheKey',
+      'metadata'
     ];
 
     expect(plugin).toHaveProperty('hooks');
