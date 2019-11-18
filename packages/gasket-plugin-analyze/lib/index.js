@@ -11,6 +11,16 @@ module.exports = {
   hooks: {
     webpack,
     getCommands,
-    create
+    create,
+    metadata(gasket, meta) {
+      return {
+        ...meta,
+        commands: [{
+          name: 'analyze',
+          description: 'Generate analysis report of webpack bundles',
+          link: 'README.md#commands'
+        }]
+      };
+    }
   }
 };

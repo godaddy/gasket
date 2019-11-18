@@ -34,6 +34,31 @@ module.exports = {
     },
     middleware(gasket) {
       return require('./middleware')(gasket);
+    },
+    metadata(gasket, meta) {
+      const { makeStore = 'store.js' } = getReduxConfig(gasket);
+      return {
+        ...meta,
+        lifecycles: [{
+          name: 'initReduxState',
+          method: 'execWaterfall',
+          description: 'Setup the next config',
+          link: 'README.md#initReduxState',
+          parent: 'middleware'
+        }, {
+          name: 'initReduxStore',
+          method: 'exec',
+          description: 'Update the next app instance before prepare',
+          link: 'README.md#initReduxStore',
+          parent: 'middleware',
+          after: 'initReduxState'
+        }],
+        structures: [{
+          name: makeStore,
+          description: 'Setup to make Redux store',
+          link: 'README.md'
+        }]
+      };
     }
   }
 };

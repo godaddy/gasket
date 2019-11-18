@@ -51,7 +51,7 @@ Flags and arguments passed with CLI command.
 
 ### *gasketCommand.gasketRun()*
 Abstract method which must be implemented by subclasses, used to execute
-Gasket lifecycles, following the `configure` and `init` Gasket lifecycles.
+Gasket lifecycles, following the `init` and `configure` Gasket lifecycles.
 
 **Kind**: instance abstract method of [<code>GasketCommand</code>](#GasketCommand)  
 <a name="GasketCommand+gasketConfigure"></a>

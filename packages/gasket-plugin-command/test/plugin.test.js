@@ -32,7 +32,8 @@ describe('Plugin', () => {
 
   it('has expected hooks', () => {
     const expected = [
-      'initOclif'
+      'initOclif',
+      'metadata'
     ];
 
     assume(plugin).to.have.property('hooks');

@@ -21,7 +21,8 @@ describe('Plugin', function () {
       'create',
       'express',
       'build',
-      'workbox'
+      'workbox',
+      'metadata'
     ];
 
     assume(plugin).to.have.property('hooks');

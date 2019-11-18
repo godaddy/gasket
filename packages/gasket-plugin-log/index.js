@@ -43,6 +43,19 @@ module.exports = {
 
     async destroy(gasket) {
       await gasket.logger.close();
+    },
+
+    metadata(gasket, meta) {
+      return {
+        ...meta,
+        lifecycles: [{
+          name: 'logTransports',
+          method: 'exec',
+          description: 'Setup Winston log transports',
+          link: 'README.md#logTransports',
+          parent: 'init'
+        }]
+      };
     }
   }
 };

@@ -26,7 +26,8 @@ describe('Plugin', () => {
     const expected = [
       'create',
       'webpack',
-      'middleware'
+      'middleware',
+      'metadata'
     ];
 
     expect(plugin).toHaveProperty('hooks');

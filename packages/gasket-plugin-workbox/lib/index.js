@@ -9,6 +9,18 @@ module.exports = {
     configure,
     build,
     express,
-    composeServiceWorker
+    composeServiceWorker,
+    metadata(gasket, meta) {
+      return {
+        ...meta,
+        lifecycles: [{
+          name: 'workbox',
+          method: 'exec',
+          description: 'Setup Workbox config and options',
+          link: 'README.md#workbox',
+          parent: 'composeServiceWorker'
+        }]
+      };
+    }
   }
 };
