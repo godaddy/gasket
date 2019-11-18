@@ -191,7 +191,6 @@ class DocsConfigSetBuilder {
       );
     });
 
-    // TODO; sort
     return detailDocsHelpers[type].sort(arr);
   }
 
