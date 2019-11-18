@@ -183,4 +183,4 @@ application is loaded, in addition to the ones already present as `dependencies`
 [babel presets]: https://babeljs.io/docs/en/presets
 [naming conventions]: /packages/gasket-resolve/README.md#naming-convention
 [`gasket create` cli prompts]: https://github.com/godaddy/gasket/blob/master/packages/gasket-cli/src/scaffold/actions/global-prompts.js
-[environment overrides]: https://github.com/godaddy/gasket/blob/master/docs/guides/configuration.md#environments
+[environment overrides]: /packages/gasket-cli/docs/configuration.md

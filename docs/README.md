@@ -87,18 +87,20 @@ Available lifecycles
 
 Available structure
 
-| Name             | Description                                            |
-| ---------------- | ------------------------------------------------------ |
-| [.docs/]         | Output of gasket docs command                          |
-| [config/]        | App configuration using environment files              |
-| [lifecycles/]    | JavaScript files to hook lifecycles with matching name |
-| [locales/]       | Locale JSON files with translation strings             |
-| [pages/]         | NextJS routing                                         |
-| test/            | Test files                                             |
-| [app.config.js]  | App configuration with environment overrides           |
-| [jest.config.js] | Jest configuration                                     |
-| [routes.js]      | Routing when using `next-routes`                       |
-| [store.js]       | Setup to make Redux store                              |
+| Name               | Description                                            |
+| ------------------ | ------------------------------------------------------ |
+| [.docs/]           | Output of gasket docs command                          |
+| [config/]          | App configuration using environment files              |
+| [lifecycles/]      | JavaScript files to hook lifecycles with matching name |
+| [locales/]         | Locale JSON files with translation strings             |
+| [pages/]           | NextJS routing                                         |
+| [plugins/]         | App level plugins                                      |
+| test/              | Test files                                             |
+| [app.config.js]    | App configuration with environment overrides           |
+| [gasket.config.js] | Gasket config for an app                               |
+| [jest.config.js]   | Jest configuration                                     |
+| [routes.js]        | Routing when using `next-routes`                       |
+| [store.js]         | Setup to make Redux store                              |
 
 ## Presets
 
@@ -200,7 +202,9 @@ Supporting modules
 [lifecycles/]:/packages/gasket-plugin-lifecycle/README.md
 [locales/]:/packages/gasket-plugin-intl/README.md#Options
 [pages/]:https://nextjs.org/docs#routing
+[plugins/]:/packages/gasket-engine/README.md
 [app.config.js]:/packages/gasket-plugin-config/README.md
+[gasket.config.js]:/packages/gasket-cli/README.md
 [jest.config.js]:https://jestjs.io/docs/configuration
 [routes.js]:https://github.com/fridays/next-routes#how-to-use
 [store.js]:/packages/gasket-plugin-redux/README.md
@@ -240,7 +244,7 @@ Supporting modules
 [@gasket/utils]:/packages/gasket-utils/README.md
 <!-- END GENERATED -->
 
-[Configuration Guide]: guides/configuration.md
+[Configuration Guide]: /packages/gasket-cli/docs/configuration.md
 [Plugin Authoring Guide]: guides/plugins.md
 [Package Management Guide]: guides/package-management.md
 [Testing Guide]: guides/testing.md
