@@ -27,6 +27,8 @@ async function main() {
     .replace(/Dependencies and supporting/, 'Supporting')
     .replace(/.+:app\/README.md\n/, '')
     .replace(/.+plugins\/config-plugin.+\n/, '')
+    // removed a single test/ dir, duplicate from generating both mocha and jest
+    .replace(/.+test\/.+\n/, '')
   ;
 
   const template = await readFile(targetPath, 'utf-8');
