@@ -1,6 +1,8 @@
+
 const path = require('path');
 const defaultsDeep = require('lodash.defaultsdeep');
 const { promisify } = require('util');
+const { sortModules, sortStructures, sortCommands, sortLifecycles } = require('./sorts');
 
 const glob = promisify(require('glob'));
 
@@ -8,16 +10,24 @@ const isAppPlugin = /^\/.+\/plugins\//;
 const isUrl = /^(https?:)?\/\//;
 const isGasketScope = /^@gasket/;
 
+const detailDocsHelpers = {
+  commands: {
+    sort: sortCommands
+  },
+  structures: {
+    sort: sortStructures
+  },
+  lifecycles: {
+    sort: sortLifecycles
+  }
+};
+
 /**
  * Expected DetailDocsConfig types
  *
  * @type {string[]}
  */
-const detailDocsTypes = [
-  'commands',
-  'structures',
-  'lifecycles'
-];
+const detailDocsTypes = Object.keys(detailDocsHelpers);
 
 /**
  * Defaults for when a docsSetup is not declared.
@@ -180,7 +190,9 @@ class DocsConfigSetBuilder {
         }))
       );
     });
-    return arr;
+
+    // TODO; sort
+    return detailDocsHelpers[type].sort(arr);
   }
 
   /**
@@ -321,11 +333,17 @@ class DocsConfigSetBuilder {
     const detailDocsConfigs = detailDocsTypes
       .reduce((acc, metaType) => ({ ...acc, [metaType]: this._flattenDetails(metaType) }), {});
 
+    // sortByName
+    // - project, scoped, non-scoped
+
+    // structures
+    // dirs, files x hidden, non-hidden
+
     return {
       app: this._app,
-      plugins: this._plugins,
-      presets: this._presets,
-      modules: this._modules,
+      plugins: sortModules(this._plugins),
+      presets: sortModules(this._presets),
+      modules: sortModules(this._modules),
       root: this._root,
       docsRoot: this._docsRoot,
       transforms: this._transforms,
