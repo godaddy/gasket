@@ -47,7 +47,7 @@ describe('metadata', () => {
   it('includes structures with configured outputDir', () => {
     const results = metadata(mockGasket, mockMeta);
     assume(results.structures).lengthOf(1);
-    assume(results.structures[0]).property('name', mockGasket.config.docs.outputDir);
+    assume(results.structures[0]).property('name', mockGasket.config.docs.outputDir + '/');
     assume(results.structures[0]).property('description');
   });
 
@@ -55,6 +55,6 @@ describe('metadata', () => {
     delete mockGasket.config.docs;
     const results = metadata(mockGasket, mockMeta);
     assume(results).is.an('object');
-    assume(results.structures[0]).property('name', defaultConfig.outputDir);
+    assume(results.structures[0]).property('name', defaultConfig.outputDir + '/');
   });
 });
