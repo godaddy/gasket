@@ -36,6 +36,7 @@ module.exports = {
       return require('./middleware')(gasket);
     },
     metadata(gasket, meta) {
+      const { makeStore = 'store.js' } = getReduxConfig(gasket);
       return {
         ...meta,
         lifecycles: [{
@@ -51,6 +52,11 @@ module.exports = {
           link: 'README.md#initReduxStore',
           parent: 'middleware',
           after: 'initReduxState'
+        }],
+        structures: [{
+          name: makeStore,
+          description: 'Setup to make Redux store',
+          link: 'README.md'
         }]
       };
     }

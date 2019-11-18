@@ -48,7 +48,7 @@ module.exports = {
       return {
         ...meta,
         structures: [{
-          name: 'test',
+          name: 'test/',
           description: 'Test files'
         }]
       };

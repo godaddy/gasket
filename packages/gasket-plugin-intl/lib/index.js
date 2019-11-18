@@ -95,7 +95,7 @@ module.exports = {
           parent: 'initReduxState'
         }],
         structures: [{
-          name: config.localesDir,
+          name: config.localesDir + '/',
           description: 'Locale JSON files with translation strings',
           link: 'README.md#Options'
         }]

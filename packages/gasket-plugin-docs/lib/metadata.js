@@ -27,7 +27,7 @@ module.exports = function metadata(gasket, meta) {
       after: 'docsSetup'
     }],
     structures: [{
-      name: outputDir,
+      name: outputDir + '/',
       description: 'Output of gasket docs command',
       link: 'README.md#options'
     }]

@@ -128,6 +128,8 @@ module.exports = {
       };
     },
     metadata(gasket, meta) {
+      const { routes = 'routes.js' } = gasket.config || {};
+
       return {
         ...meta,
         lifecycles: [{
@@ -150,6 +152,15 @@ module.exports = {
           link: 'README.md#nextExpress',
           parent: 'express',
           after: 'next'
+        }],
+        structures: [{
+          name: 'pages/',
+          description: 'NextJS routing',
+          link: 'https://nextjs.org/docs#routing'
+        }, {
+          name: routes,
+          description: 'Routing when using `next-routes`',
+          link: 'https://github.com/fridays/next-routes#how-to-use'
         }]
       };
     }

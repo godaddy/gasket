@@ -43,7 +43,7 @@ module.exports = {
     },
 
     metadata(gasket, meta) {
-      const { configPath = 'config' } = gasket.config;
+      const { configPath = 'config/' } = gasket.config;
       return {
         ...meta,
         lifecycles: [{

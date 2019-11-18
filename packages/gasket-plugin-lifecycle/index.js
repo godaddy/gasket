@@ -76,7 +76,7 @@ module.exports = {
       return {
         ...meta,
         structures: [{
-          name: 'lifecycles',
+          name: 'lifecycles/',
           description: 'JavaScript files to hook lifecycles with matching name',
           link: 'README.md'
         }]

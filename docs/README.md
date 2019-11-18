@@ -89,14 +89,17 @@ Available structure
 
 | Name             | Description                                            |
 | ---------------- | ------------------------------------------------------ |
-| [.docs]          | Output of gasket docs command                          |
+| [.docs/]         | Output of gasket docs command                          |
 | [app.config.js]  | App configuration with environment overrides           |
-| [config]         | App configuration using environment files              |
-| [locales]        | Locale JSON files with translation strings             |
-| test             | Test files                                             |
+| [config/]        | App configuration using environment files              |
+| [locales/]       | Locale JSON files with translation strings             |
+| test/            | Test files                                             |
 | [jest.config.js] | Jest configuration                                     |
-| [lifecycles]     | JavaScript files to hook lifecycles with matching name |
-| test             | Test files                                             |
+| [lifecycles/]    | JavaScript files to hook lifecycles with matching name |
+| test/            | Test files                                             |
+| [pages/]         | NextJS routing                                         |
+| [routes.js]      | Routing when using `next-routes`                       |
+| [store.js]       | Setup to make Redux store                              |
 
 ## Presets
 
@@ -193,12 +196,15 @@ Supporting modules
 [init]:/packages/gasket-plugin-command/README.md#init
 [configure]:/packages/gasket-plugin-command/README.md#configure
 [metadata]:/packages/gasket-plugin-metadata/README.md#metadata
-[.docs]:/packages/gasket-plugin-docs/README.md#options
+[.docs/]:/packages/gasket-plugin-docs/README.md#options
 [app.config.js]:/packages/gasket-plugin-config/README.md
-[config]:/packages/gasket-plugin-config/README.md
-[locales]:/packages/gasket-plugin-intl/README.md#Options
+[config/]:/packages/gasket-plugin-config/README.md
+[locales/]:/packages/gasket-plugin-intl/README.md#Options
 [jest.config.js]:https://jestjs.io/docs/configuration
-[lifecycles]:/packages/gasket-plugin-lifecycle/README.md
+[lifecycles/]:/packages/gasket-plugin-lifecycle/README.md
+[pages/]:https://nextjs.org/docs#routing
+[routes.js]:https://github.com/fridays/next-routes#how-to-use
+[store.js]:/packages/gasket-plugin-redux/README.md
 [@gasket/preset-nextjs]:/packages/gasket-preset-nextjs/README.md
 [@gasket/plugin-docs]:/packages/gasket-plugin-docs/README.md
 [@gasket/plugin-analyze]:/packages/gasket-plugin-analyze/README.md
