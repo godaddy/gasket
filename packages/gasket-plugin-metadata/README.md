@@ -1,16 +1,16 @@
 # `@gasket/plugin-metadata`
 
-Metadata is the information about the register plugins and presets, available
-to plugin lifecycle hooks. This data can be used in various was for plugins,
-most notably the [@gasket/plugin-docs] which uses it to collate docs for an app.
+Metadata is the information about the register plugins and presets, available to
+plugin lifecycle hooks. This data can be used in various was for plugins, most
+notably the [@gasket/plugin-docs] which uses it to collate docs for an app.
 
 ## Overview
 
-Metadata begins with the info objects from the `Loader` of [@gasket/resolve]
-and builds data objects for [plugins][PluginData], and [presets][PresetData],
-and supporting [modules][ModuleData]. Any functions preset will be **redacted**,
-as metadata is not intended to be executed, but rather to is made available to
-read and inform plugins. This data can be added to, by hooking the [metadata]
+Metadata begins with the info objects from the `Loader` of [@gasket/resolve] and
+builds data objects for [plugins][PluginData], and [presets][PresetData], and
+supporting [modules][ModuleData]. Any functions preset will be **redacted**, as
+metadata is not intended to be executed, but rather to is made available to read
+and inform plugins. This data can be added to, by hooking the [metadata]
 lifecycle in a plugin.
 
 Metadata provides insights to a plugin's shape and package information.
@@ -28,9 +28,9 @@ available from `gasket.metadata.modules`.
 
 ### metadata
 
-This plugin implements the `metadata` lifecycle, which plugins can use to
-modify it's own metadata at runtime. Whatever is returned will replace the
-existing metadata.
+This plugin implements the `metadata` lifecycle, which plugins can use to modify
+it's own metadata at runtime. Whatever is returned will replace the existing
+metadata.
 
 ```js
 // example-plugin.js
@@ -93,8 +93,33 @@ module.exports = {
 }
 ```
 
-<!-- LINKS -->
+## Modules
 
+Lastly, modules can described metadata by defining a `gasket.metadata` property
+in the package.json which will get expanded to the [ModuleData]:
+
+```json
+{
+  "name": "example",
+  "version": "1.2.3",
+  "gasket": {
+    "metadata": {
+      "guides": [{
+        "name": "Example Guide",
+        "description": "How to do something",
+        "link": "docs/example.md"
+      }]
+    }
+  }
+}
+```
+
+This is especially useful to surface guides with
+[Gasket docs][@gasket/plugin-docs] for supporting packages that are intended to
+be used with Gasket, but are not plugins.
+
+
+<!-- LINKS -->
 [metadata]: #metadata
 [ModuleData]: docs/api.md#ModuleData
 [PluginData]: docs/api.md#PluginData

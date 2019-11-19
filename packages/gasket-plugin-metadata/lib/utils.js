@@ -146,6 +146,24 @@ function expandPresetMetadata(presets) {
       expandPresetMetadata(preset.presets);
     }
   });
+  expandPackageMetadata(presets);
+}
+
+/**
+ * Expands metadata for modules if gasket.metadata property defined in package.json
+ *
+ * @param {ModuleData[]} modules - Modules to expand
+ * @private
+ */
+function expandPackageMetadata(modules) {
+  (modules).forEach(module => {
+    if (module.package && module.package.gasket && module.package.gasket.metadata) {
+      Object.keys(module.package.gasket.metadata).reduce((acc, cur) => {
+        acc[cur] = acc[cur] || module.package.gasket.metadata[cur];
+        return acc;
+      }, module);
+    }
+  });
 }
 
 module.exports = {
@@ -155,5 +173,6 @@ module.exports = {
   loadPluginModules,
   flattenPluginModules,
   fixupPresetHierarchy,
-  expandPresetMetadata
+  expandPresetMetadata,
+  expandPackageMetadata
 };

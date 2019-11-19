@@ -5,7 +5,8 @@ const {
   loadPluginModules,
   flattenPluginModules,
   fixupPresetHierarchy,
-  expandPresetMetadata
+  expandPresetMetadata,
+  expandPackageMetadata
 } = require('./utils');
 
 module.exports = {
@@ -31,6 +32,8 @@ module.exports = {
 
       loadAppModules(loader, app, modules);
       expandPresetMetadata(presets);
+      expandPackageMetadata([app]);
+      expandPackageMetadata(plugins);
 
       //
       // Allow plugins to tune their own metadata via lifecycle
@@ -46,6 +49,8 @@ module.exports = {
         // eslint-disable-next-line require-atomic-updates
         plugins[idx] = pluginData;
       });
+
+      expandPackageMetadata(modules);
     },
     metadata(gasket, meta) {
       return {
@@ -56,7 +61,10 @@ module.exports = {
           description: 'Allows plugins to adjust their metadata',
           link: 'README.md#metadata',
           parent: 'init'
-        }]
+        }],
+        modules: [
+          '@gasket/cli'
+        ]
       };
     }
   }
