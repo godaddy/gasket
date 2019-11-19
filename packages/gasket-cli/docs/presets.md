@@ -1,9 +1,6 @@
 # Gasket Preset Authoring Guide
 
 * [Background](#background)
-* [Naming](#naming)
-  * [Good Names](#good-names)
-  * [Bad Names](#bad-names)
 * [Composition](#composition)
   * [Predefined `gasket create` context](#predefined-gasket-create-context)
   * [Predefined `gasket.config.js`](#predefined-gasketconfigjs)
