@@ -60,6 +60,7 @@
  * @property {ModuleDocsConfig[]} modules - Docs of supporting modules
  * @property {DetailDocsConfig[]} structures - Docs describing structure elements
  * @property {DetailDocsConfig[]} commands - Docs for available commands
+ * @property {DetailDocsConfig[]} guides - Docs for setups and explanations
  * @property {LifecycleDocsConfig[]} lifecycles - Docs for available lifecycles
  * @property {DocsTransform[]} transforms - Global doc transforms
  * @property {string} root - Absolute path to main package

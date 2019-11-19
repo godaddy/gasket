@@ -43,30 +43,64 @@ function sortByKey(key, compare) {
 }
 
 /**
- * Determine the weight of a package name by scope.
+ * Determine the weight of a package name by scope, followed by type.
  * - gasket scope > user scope > no scope > app plugins
+ * - presets > plugins > packages
  *
  * @param {string} name - Package name
  * @returns {number} weight
  */
 function getModuleWeight(name) {
+  //
+  // weight from scope
+  //
   const isGasketScope = /^@gasket/;
   const isUserScope = /^@/;
   const isAppPlugin = /^plugins\//;
 
-  return (isGasketScope.test(name) && 1000) ||
-    (isUserScope.test(name) && 100) ||
-    (!isAppPlugin.test(name) && 10) ||
+  let weight = (isGasketScope.test(name) && 300) ||
+    (isUserScope.test(name) && 200) ||
+    (!isAppPlugin.test(name) && 100) ||
     0;
+
+  //
+  // weight from type
+  //
+  const isPreset = /preset/;
+  const isPlugin = /plugin/;
+
+  weight += (isPreset.test(name) && 20) ||
+    (isPlugin.test(name) && 10) ||
+    0;
+
+  return weight;
 }
 
 /**
  * Sort an array of modules by name
  *
- * @type {function(Array): Array}
- * @param {ModuleDocsConfig[]} modules
+ * @type {function(ModuleDocsConfig[]): ModuleDocsConfig[]}
  */
 const sortModules = sortByKey('name', makeWeightedCompare(getModuleWeight));
+
+/**
+ * Use the same module weight by name, yet cli is always first
+ *
+ * @param {string} name - Package name
+ * @returns {number} weight
+ */
+function getGuideWeight(name) {
+  const isCli = /^@gasket\/cli/;
+
+  return (isCli.test(name) && 1000) || getModuleWeight(name)
+}
+
+/**
+ * Sort an array of guides by the module their from
+ *
+ * @type {function(ModuleDocsConfig[]): ModuleDocsConfig[]}
+ */
+const sortGuides = sortByKey('from', makeWeightedCompare(getGuideWeight));
 
 
 /**
@@ -89,30 +123,28 @@ function getStructureWeight(name) {
 /**
  * Sort an array of structures by name
  *
- * @type {function(Array): Array}
- * @param {DetailDocsConfig[]} structures
+ * @type {function(DetailDocsConfig[]): DetailDocsConfig[]}
  */
 const sortStructures = sortByKey('name', makeWeightedCompare(getStructureWeight));
 
 /**
  * Sort an array of commands by name
  *
- * @type {function(Array): Array}
- * @param {DetailDocsConfig[]} commands
+ * @type {function(DetailDocsConfig[]): DetailDocsConfig[]}
  */
 const sortCommands = sortByKey('name', alphaCompare);
 
 /**
  * Sort an array of lifeycles by name
  *
- * @type {function(Array): Array}
- * @param {LifecycleDocsConfig[]} lifeycles
+ * @type {function(DetailDocsConfig[]): DetailDocsConfig[]}
  */
 // TODO (kinetifex): eventually sort by parent and order when doing graphing work
 const sortLifecycles = sortByKey('name', alphaCompare);
 
 module.exports = {
   sortModules,
+  sortGuides,
   sortStructures,
   sortCommands,
   sortLifecycles
