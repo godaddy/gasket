@@ -11,6 +11,30 @@ file in the root of your application. This file must be a CommonJS file
 exporting a config object. This must be present for the CLI to know it is
 operating in the context of an app and to configure itself accordingly.
 
+## Presets and Plugins
+
+To configure plugins and presets for an app, update the `plugins` object in
+`gasket.config.js`. This consists of three string arrays:
+
+```js
+module.exports = {
+  plugins: {
+    presets: [ /* Presets you would like to add */ ],
+    add:     [ /* Plugins to add after presets are added */ ],
+    remove:  [ /* Plugins to remove */ ]
+  },
+  // ...
+}
+```
+
+### Short names
+
+Items in these arrays are module names. Gasket supports shorthand naming;
+`'@gasket/mocha'` expands to `@gasket/plugin-mocha` in the `add` and `remove`
+arrays. For `presets`, `@gasket/nextjs` expands to `@gasket/preset-nextjs`.
+
+See the [naming convention] for more details.
+
 ## Environments
 
 The configuration system supports the concept of
@@ -142,6 +166,7 @@ module.exports = {
 The [config plugin] has similar lifecycle hooks available for application-level
 configuration.
 
-[config plugin]: /packages/gasket-plugin-config
-[start plugin]: /packages/gasket-plugin-start
-[lifecycle plugin]: /packages/gasket-plugin-lifecycle
+[config plugin]: /packages/gasket-plugin-config/README.md
+[start plugin]: /packages/gasket-plugin-start/README.md
+[lifecycle plugin]: /packages/gasket-plugin-lifecycle/README.md
+[naming convention]: /packages/gasket-resolve/README.md
