@@ -56,7 +56,7 @@ function generateContent(docsConfigSet) {
     ]);
   };
 
-  // TODO (agerard): add Guides section
+  addSection('Guides', ' Help and explanations docs', docsConfigSet.guides, { includeVersion: false });
   addSection('Commands', 'Available commands', docsConfigSet.commands, { includeVersion: false });
   addSection('Lifecycles', 'Available lifecycles', docsConfigSet.lifecycles, { includeVersion: false });
   addSection('Structures', 'Available structure', docsConfigSet.structures, { includeVersion: false });

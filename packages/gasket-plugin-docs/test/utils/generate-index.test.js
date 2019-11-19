@@ -58,6 +58,11 @@ const fullDocsConfigSet = {
     link: 'README.md#commands',
     targetRoot: '/path/to/app/.docs/test-app/plugins/example-plugin'
   }],
+  guides: [{
+    name: 'Example Guide',
+    link: 'docs/guide.md',
+    targetRoot: '/path/to/app/.docs/test-app/plugins/example-plugin'
+  }],
   lifecycles: [{
     name: 'example-lifecycle',
     link: 'README.md#lifecycles',
@@ -113,7 +118,7 @@ describe('Utils - generateIndex', () => {
         //
         // count the number of ref-style links
         //
-        assume(content.match(/\[.+]:/g) || []).lengthOf(7);
+        assume(content.match(/\[.+]:/g) || []).lengthOf(8);
       });
 
       it('makes unique references', async () => {
@@ -204,6 +209,10 @@ describe('Utils - generateIndex', () => {
 
       describe('structures', () => {
         checkSection('structures', 'Structures');
+      });
+
+      describe('guides', () => {
+        checkSection('guides', 'Guides');
       });
     });
   });

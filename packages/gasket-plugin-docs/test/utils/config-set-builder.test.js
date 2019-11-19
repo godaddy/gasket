@@ -55,6 +55,18 @@ describe('utils - DocsConfigSetBuilder', () => {
       assume(buildDocsConfigSpy).not.calledWith({ name: 'app-two' });
     });
 
+    it('uses custom docsSetup', async () => {
+      const docsSetup = { custom: true };
+      await instance.addApp({ name: 'app-one' }, docsSetup);
+      assume(buildDocsConfigSpy).calledWithMatch(sinon.match.object, docsSetup);
+    });
+
+    it('finds docsSetup from package.json', async () => {
+      const docsSetup = { custom: true };
+      await instance.addApp({ name: 'app-one', package: { gasket: { docsSetup } } });
+      assume(buildDocsConfigSpy).calledWithMatch(sinon.match.object, docsSetup);
+    });
+
     it('uses default docsSetup if not passed', async () => {
       await instance.addApp({ name: 'app-one' });
       assume(buildDocsConfigSpy).calledWithMatch(sinon.match.object, docsSetupDefault);
@@ -93,6 +105,12 @@ describe('utils - DocsConfigSetBuilder', () => {
       const mockDocSetup = { link: 'BOGUS.md' };
       await instance.addPlugin({ name: 'example-plugin' }, mockDocSetup);
       assume(buildDocsConfigSpy).calledWithMatch(sinon.match.object, mockDocSetup);
+    });
+
+    it('finds docsSetup from package.json', async () => {
+      const docsSetup = { custom: true };
+      await instance.addPlugin({ name: 'example-plugin', package: { gasket: { docsSetup } } });
+      assume(buildDocsConfigSpy).calledWithMatch(sinon.match.object, docsSetup);
     });
 
     it('adds targetRoot to overrides', async () => {
@@ -180,6 +198,12 @@ describe('utils - DocsConfigSetBuilder', () => {
       assume(buildDocsConfigSpy).calledWithMatch(sinon.match.object, mockDocSetup);
     });
 
+    it('finds docsSetup from package.json', async () => {
+      const docsSetup = { custom: true };
+      await instance.addPreset({ name: 'example-preset', package: { gasket: { docsSetup } } });
+      assume(buildDocsConfigSpy).calledWithMatch(sinon.match.object, docsSetup);
+    });
+
     it('uses preset-defined docsSetup', async () => {
       const presetDocSetup = { link: 'BOGUS.md' };
       await instance.addPreset({ name: 'example-preset', module: { docsSetup: presetDocSetup } });
@@ -254,6 +278,12 @@ describe('utils - DocsConfigSetBuilder', () => {
       assume(buildDocsConfigSpy).calledWith(sinon.match.object, mockDocSetup);
     });
 
+    it('finds docsSetup from package.json', async () => {
+      const docsSetup = { custom: true };
+      await instance.addModule({ name: 'example-module', package: { gasket: { docsSetup } } });
+      assume(buildDocsConfigSpy).calledWithMatch(sinon.match.object, docsSetup);
+    });
+
     it('adds targetRoot to overrides', async () => {
       await instance.addModule({ name: '@some/example-module' });
       assume(buildDocsConfigSpy).calledWith(sinon.match.object, sinon.match.object, {
@@ -288,6 +318,7 @@ describe('utils - DocsConfigSetBuilder', () => {
         'transforms',
         'structures',
         'lifecycles',
+        'guides',
         'commands'
       ];
       const actual = Object.keys(results);
