@@ -192,7 +192,7 @@ documentation for the `detective` plugin.
 
 ## One-off plugins
 
-While it is encouraged to build plugins are separate packages, the ability to
+While it is encouraged to build plugins as separate packages, the ability to
 create one-off plugins in an app is available. Files in a `plugins/` directory
 at the root of the Gasket project will automatically be loaded by the CLI for
 the engine. This gives you access to tie into lifecycles, set timings, or even
