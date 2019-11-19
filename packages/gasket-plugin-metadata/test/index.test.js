@@ -21,19 +21,6 @@ const mockPlugin = {
   }
 };
 
-const mockAppInfo = {
-  name: 'my-app',
-  module: null,
-  package: {
-    dependencies: {
-      '@gasket/mock-preset': '^1.2.3',
-      '@gasket/plugin-mock': '^10.0.0',
-      '@gasket/mock': '^20.0.0',
-      'fake-one': '^30.0.0'
-    }
-  }
-};
-
 const mockPluginInfo = {
   name: '@gasket/plugin-mock',
   module: mockPlugin,
@@ -68,7 +55,14 @@ const fakeTwoInfo = {
 
 const fakeThreeInfo = {
   name: 'fake-three',
-  module: {}
+  module: {},
+  package: {
+    gasket: {
+      metadata: {
+        fromPackage: true
+      }
+    }
+  }
 };
 
 const mockLoadedData = {
@@ -77,11 +71,24 @@ const mockLoadedData = {
 };
 
 describe('Plugin', function () {
-  let gasket, applyStub, handlerStub;
+  let gasket, applyStub, handlerStub, mockAppInfo;
 
   beforeEach(function () {
     applyStub = sinon.stub();
     handlerStub = sinon.stub();
+
+    mockAppInfo = {
+      name: 'my-app',
+      module: null,
+      package: {
+        dependencies: {
+          '@gasket/mock-preset': '^1.2.3',
+          '@gasket/plugin-mock': '^10.0.0',
+          '@gasket/mock': '^20.0.0',
+          'fake-one': '^30.0.0'
+        }
+      }
+    };
 
     gasket = {
       loader: {
@@ -150,6 +157,14 @@ describe('Plugin', function () {
 
     it('adds moduleInfo for app', async () => {
       assume(gasket.metadata).property('app');
+    });
+
+    it('augments moduleInfo with gasket.metadata from package.json', async () => {
+      assume(gasket.metadata.app).not.property('fromPackage');
+
+      mockAppInfo.package.gasket = { metadata: { fromPackage: true } };
+      await plugin.hooks.init(gasket);
+      assume(gasket.metadata.app).property('fromPackage', true);
     });
 
     it('adds presetInfo from loaded config', async () => {
@@ -228,6 +243,11 @@ describe('Plugin', function () {
     it('flatting augments moduleInfo with extras from plugins', async () => {
       const result = gasket.metadata.modules.find(mod => mod.name === 'fake-one');
       assume(result).property('extra', true);
+    });
+
+    it('augments moduleInfo with extras package.json', async () => {
+      const result = gasket.metadata.modules.find(mod => mod.name === 'fake-three');
+      assume(result).property('fromPackage', true);
     });
 
     it('loads preset metadata', async function () {

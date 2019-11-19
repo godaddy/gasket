@@ -275,7 +275,14 @@ describe('Utils', () => {
       };
       mockPresetTwo = {
         name: '@gasket/two-preset',
-        module: {}
+        module: {},
+        package: {
+          gasket: {
+            metadata: {
+              fromPackage: true
+            }
+          }
+        }
       };
       mockPresetThree = {
         name: '@gasket/three-preset',
@@ -305,6 +312,11 @@ describe('Utils', () => {
       assume(mockPresetOne).property('extra', true);
     });
 
+    it('augments properties from package.json gasket.metadata', async function () {
+      expandPresetMetadata([mockPresetTwo]);
+      assume(mockPresetTwo).property('fromPackage', true);
+    });
+
     it('overrides metadata from module.metadata', async function () {
       mockPresetOne.metadataKey = 'oldMetadataValue';
       mockPresetOne.module.metadata = { metadataKey: 'metadataValue' };
@@ -332,6 +344,42 @@ describe('Utils', () => {
       assume(mockPresetOne).property('extra', 1);
       assume(mockPresetTwo).property('extra', 2);
       assume(mockPresetThree).property('extra', 3);
+    });
+  });
+
+  describe('expandPackageMetadata', () => {
+    let mockPresetOne;
+
+    beforeEach(() => {
+      mockPresetOne = {
+        name: '@gasket/one-preset',
+        package: {
+          gasket: {
+            metadata: {
+              fromPackage: true
+            }
+          }
+        }
+      };
+    });
+
+    it('does nothing if no package', async function () {
+      delete mockPresetOne.package;
+      expandPresetMetadata([mockPresetOne]);
+      assume(mockPresetOne).deep.equals({
+        name: '@gasket/one-preset'
+      });
+    });
+
+    it('augments properties with gasket.metadata from package.json', async function () {
+      expandPresetMetadata([mockPresetOne]);
+      assume(mockPresetOne).property('fromPackage', true);
+    });
+
+    it('does not override existing metadata', async function () {
+      mockPresetOne.package.gasket.metadata.fromPackage = 'Okay!';
+      expandPresetMetadata([mockPresetOne]);
+      assume(mockPresetOne).property('fromPackage', 'Okay!');
     });
   });
 });
