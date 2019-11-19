@@ -118,5 +118,72 @@
     "warn-if-update-available": {
       "timeoutInDays": 7
     }
+  },
+  "gasket": {
+    "metadata": {
+      "guides": [
+        {
+          "name": "Configuration Guide",
+          "description": "Configuring Gasket apps",
+          "link": "docs/configuration.md"
+        },
+        {
+          "name": "Plugins Guide",
+          "description": "How to use and author plugins",
+          "link": "docs/plugins.md"
+        },
+        {
+          "name": "Presets Guide",
+          "description": "How to use and author presets",
+          "link": "docs/presets.md"
+        },
+        {
+          "name": "Package Management Guide",
+          "description": "Managing dependencies in Gasket apps",
+          "link": "docs/package-management.md"
+        }
+      ],
+      "commands": [
+        {
+          "name": "create",
+          "description": "Create a new Gasket app",
+          "link": "README.md#commands"
+        },
+        {
+          "name": "help",
+          "description": "Get usage details for Gasket commands",
+          "link": "README.md#commands"
+        }
+      ],
+      "structures": [
+        {
+          "name": "gasket.config.js",
+          "description": "Gasket config for an app",
+          "link": "docs/configuration.md"
+        },
+        {
+          "name": "plugins/",
+          "description": "One-off plugins for apps",
+          "link": "docs/plugins.md#one-off-plugins"
+        }
+      ],
+      "lifecycles": [
+        {
+          "name": "prompt",
+          "description": "Gasket config for an app",
+          "link": "README.md#prompt"
+        },
+        {
+          "name": "create",
+          "description": "App level plugins",
+          "link": "README.md#create"
+        },
+        {
+          "name": "postCreate",
+          "description": "App level plugins",
+          "link": "README.md#postcreate"
+        }
+      ]
+    }
   }
 }
