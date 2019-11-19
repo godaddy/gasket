@@ -1,4 +1,4 @@
-# Deployment
+# Next.js Deployment Guide
 
 ## Understand the `.next` folder
 
@@ -153,6 +153,6 @@ Ensure that the following files are included when you deploy your application:
 ## Sample `Dockerfile`
 
 You can also define a container for a `gasket` app to run with a `Dockerfile`.
-Follow [this document](./docker-deployment.md) to see a sample `Dockerfile`.
+Follow [this document](docker-deployment.md) to see a sample `Dockerfile`.
 
 [config]: /packages/gasket-cli/docs/configuration.md
