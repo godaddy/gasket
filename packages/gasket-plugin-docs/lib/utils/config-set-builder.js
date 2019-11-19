@@ -2,7 +2,7 @@
 const path = require('path');
 const defaultsDeep = require('lodash.defaultsdeep');
 const { promisify } = require('util');
-const { sortModules, sortStructures, sortCommands, sortLifecycles } = require('./sorts');
+const { sortModules, sortStructures, sortCommands, sortLifecycles, sortGuides } = require('./sorts');
 
 const glob = promisify(require('glob'));
 
@@ -11,6 +11,9 @@ const isUrl = /^(https?:)?\/\//;
 const isGasketScope = /^@gasket/;
 
 const detailDocsHelpers = {
+  guides: {
+    sort: sortGuides
+  },
   commands: {
     sort: sortCommands
   },
@@ -43,6 +46,8 @@ const docsSetupDefault = Object.freeze({ link: 'README.md', files: ['docs/**/*']
  * @returns {string} filename
  */
 const noHash = link => link && link.split('#')[0];
+
+const getDocsSetupFromPkg = moduleData => moduleData.package && moduleData.package.gasket && moduleData.package.gasket.docsSetup;
 
 /**
  * Util class for constructing the DocsConfigSet
@@ -179,10 +184,10 @@ class DocsConfigSetBuilder {
    */
   _flattenDetails(type) {
     const arr = [];
-    this._plugins.forEach(pluginDoc => {
-      const { sourceRoot, targetRoot, name: from } = pluginDoc;
+    this._modules.concat(this._presets).concat(this._plugins).forEach(moduleDoc => {
+      const { sourceRoot, targetRoot, name: from } = moduleDoc;
       arr.push(
-        ...(pluginDoc.metadata[type] || []).map(docsSetup => ({
+        ...(moduleDoc.metadata[type] || []).map(docsSetup => ({
           ...docsSetup,
           from,
           sourceRoot,
@@ -213,7 +218,12 @@ class DocsConfigSetBuilder {
    * @param {DocsSetup} docsSetup - Initial docs setup
    * @async
    */
-  async addApp(moduleData, docsSetup = docsSetupDefault) {
+  async addApp(moduleData, docsSetup) {
+    // If docsSetup is passed, stick with it.
+    // Or, see if gasket.docsSetup in package.json.
+    // Finally, fall back to defaults.
+    docsSetup = docsSetup || getDocsSetupFromPkg(moduleData) || docsSetupDefault;
+
     if (!this._app) {
       const targetRoot = path.join(this._docsRoot, 'app');
       this._app = await this._buildDocsConfig(moduleData, docsSetup, { targetRoot });
@@ -227,8 +237,13 @@ class DocsConfigSetBuilder {
    * @param {DocsSetup} docsSetup - Initial docs setup
    * @async
    */
-  async addPlugin(pluginData, docsSetup = docsSetupDefault) {
+  async addPlugin(pluginData, docsSetup) {
     if (this._plugins.find(p => p.metadata === pluginData)) return;
+
+    // If docsSetup is passed, stick with it.
+    // Or, see if gasket.docsSetup in package.json.
+    // Finally, fall back to defaults.
+    docsSetup = docsSetup || getDocsSetupFromPkg(pluginData) || docsSetupDefault;
 
     let { name, path: sourceRoot } = pluginData;
     let targetRoot = path.join(this._docsRoot, 'plugins', ...name.split('/'));
@@ -269,9 +284,11 @@ class DocsConfigSetBuilder {
 
     // If docsSetup is passed, stick with it.
     // Otherwise, look up a docsSetup defined by preset.
+    // Or, see if gasket.docsSetup in package.json.
     // Finally, fall back to defaults.
     docsSetup = docsSetup ||
       presetData.module && presetData.module.docsSetup ||
+      getDocsSetupFromPkg(presetData) ||
       docsSetupDefault;
 
     const { name } = presetData;
@@ -302,9 +319,11 @@ class DocsConfigSetBuilder {
 
     // If docsSetup is passed, stick with it.
     // Otherwise, look up a docsSetup added by plugins.
+    // Or, see if gasket.docsSetup in package.json.
     // Finally, if this is a @gasket module fall back defaults.
     docsSetup = docsSetup ||
       this._moduleDocsSetups[moduleData.name] ||
+      getDocsSetupFromPkg(moduleData) ||
       (isGasketScope.test(moduleData.name) ? docsSetupDefault : {});
 
     const { name } = moduleData;

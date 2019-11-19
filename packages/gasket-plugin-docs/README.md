@@ -15,9 +15,9 @@ To be set in under `docs` in the `gasket.config.js`.
 ### docs
 
 The **docs** command, inspired by [cargo doc][rustdoc] from the Rust language,
-allows app developers to generate documentation for their Gasket projects.
-Only those presets and plugins that are configured for a project, will be used
-to determine what documentation is available.
+allows app developers to generate documentation for their Gasket projects. Only
+those presets and plugins that are configured for a project, will be used to
+determine what documentation is available.
 
 When running this command, markdown and other files will gathered from installed
 node modules and collated to the output directory when they can be viewed
@@ -27,10 +27,10 @@ together.
 
 This command will gather info about plugins and modules from their [metadata]
 and [docsSetup], and will assemble a [docsConfig] for each. These configs are
-are organized by type in a [docsConfigSet], which is then used to copy files
-to the outputDir, and perform any [transforms] as needed. An index is generated
-in markdown from docsConfigSet which serves as the entry in the doc files.
-If a plugin is installed that hooks the [docsView] lifecycle, it can serve the
+are organized by type in a [docsConfigSet], which is then used to copy files to
+the outputDir, and perform any [transforms] as needed. An index is generated in
+markdown from docsConfigSet which serves as the entry in the doc files. If a
+plugin is installed that hooks the [docsView] lifecycle, it can serve the
 content in a more viewable fashion for the user.
 
 ## Lifecycles
@@ -91,11 +91,11 @@ module.exports = {
 Transforms can also be added in the docsSetup lifecycle. These are plugins to
 adjust content for files that match the transform's test [RegExp]. By default,
 these will only affect docs collected the plugin's package. If the transform
-should be able affect all collected docs, the global property should be set
-to true.
+should be able affect all collected docs, the global property should be set to
+true.
 
-Additional data is available to handlers to help with transformations which
-can be read about in the [DocsTransformHandler] API.
+Additional data is available to handlers to help with transformations which can
+be read about in the [DocsTransformHandler] API.
 
 #### Modules
 
@@ -103,6 +103,25 @@ Beside docs for the plugin itself, `docsSetup` for supporting modules can also
 be described. For modules from [metadata], if a `docsSetup` is found, the files
 described will be collected, and link for the generated index go to the link
 specified in the `docsSetup`, instead of the module's homepage.
+
+Alternatively, modules can described their own setup in their package.json by
+defining a `gasket.docsSetup` property. However, Being JSON, transforms or other
+setup functions cannot be described this way:
+
+```json
+{
+  "name": "example",
+  "version": "1.2.3",
+  "gasket": {
+    "docsSetup": {
+      "link": "OTHER.md#go-here",
+      "files": [
+        "more-docs/**/*"
+      ]
+    }
+  }
+}
+```
 
 ### docsView
 
