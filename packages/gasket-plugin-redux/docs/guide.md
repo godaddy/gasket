@@ -1,6 +1,6 @@
-# State management using redux
+# State Management with Redux
 
-There are two ways to manage the client-side state in a Gasket app. You can either
+There are two ways to manage the client-side state in a Next.js based Gasket app. You can either
 use the React component state or use Redux.
 
 **React state** is managed within a component. If it's needed in another sub-component,
