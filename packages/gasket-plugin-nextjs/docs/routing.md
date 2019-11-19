@@ -1,12 +1,11 @@
-# Routing Guide
+# Next.js Routing Guide
 
-Gasket provides the ability to do universal routing, meaning that inbound HTTP
+Next.js provides the ability to do universal routing, meaning that inbound HTTP
 requests cause specific pages to be rendered and served up, and you can create
 hyperlinks among pages where clicking on them allows you to transition among
-pages without provoking a full page reload. This routing is all implemented
-through the [`next.js`](https://github.com/zeit/next.js) platform. We recommend
-familiarizing yourself with the official documentation, but we'll touch on core
-concepts here as well.
+pages without provoking a full page reload. We recommend familiarizing yourself
+with the official [Next.js documentation](https://github.com/zeit/next.js), but
+we'll touch on core concepts here as well.
 
 ## Automatic file system routing
 
@@ -103,7 +102,7 @@ npm install --save next-routes
 
 
 To enable the routing, add a `/routes.js` to your app directory, require `next-routes`,
-instantiate a router, add your routes, and export the router. This file must be a 
+instantiate a router, add your routes, and export the router. This file must be a
 CommonJS module:
 
 ```jsx harmony
