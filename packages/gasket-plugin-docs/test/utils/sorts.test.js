@@ -1,5 +1,5 @@
 const assume = require('assume');
-const { sortModules, sortStructures, sortCommands } = require('../../lib/utils/sorts');
+const { sortModules, sortStructures, sortCommands, sortGuides } = require('../../lib/utils/sorts');
 
 describe('utils - sorts', () => {
 
@@ -7,35 +7,88 @@ describe('utils - sorts', () => {
     it('gasket scope > user scope > no scope > app plugins', () => {
       const begin = [
         'plugins/gasket-plugin-a',
-        '@gasket/plugin-c',
+        '@gasket/preset-a',
         '@user/gasket-plugin-b',
-        'gasket-plugin-c',
+        'gasket-preset-a',
+        '@gasket/aaa',
         '@gasket/plugin-a',
-        '@user/gasket-plugin-c',
+        '@user/aaa',
+        '@user/gasket-preset-a',
         'gasket-plugin-a',
+        '@gasket/cli',
         '@user/gasket-plugin-a',
         '@gasket/plugin-b',
+        'aaa',
         'plugins/gasket-plugin-b',
         'gasket-plugin-b',
-        'plugins/gasket-plugin-c'
+        'plugins/gasket-preset-a'
       ];
 
       const expected = [
+        '@gasket/preset-a',
         '@gasket/plugin-a',
         '@gasket/plugin-b',
-        '@gasket/plugin-c',
+        '@gasket/aaa',
+        '@gasket/cli',
+        '@user/gasket-preset-a',
         '@user/gasket-plugin-a',
         '@user/gasket-plugin-b',
-        '@user/gasket-plugin-c',
+        '@user/aaa',
+        'gasket-preset-a',
         'gasket-plugin-a',
         'gasket-plugin-b',
-        'gasket-plugin-c',
+        'aaa',
+        'plugins/gasket-preset-a',
         'plugins/gasket-plugin-a',
-        'plugins/gasket-plugin-b',
-        'plugins/gasket-plugin-c'
+        'plugins/gasket-plugin-b'
       ];
 
       const results = sortModules(begin.map(name => ({ name }))).map(p => p.name);
+      assume(results).eqls(expected);
+    });
+  });
+
+  describe('sortGuides', () => {
+    it('gasket/cli > gasket scope > user scope > no scope > app plugins', () => {
+      const begin = [
+        'plugins/gasket-plugin-a',
+        '@gasket/preset-a',
+        '@user/gasket-plugin-b',
+        'gasket-preset-a',
+        '@gasket/aaa',
+        '@gasket/plugin-a',
+        '@user/aaa',
+        '@user/gasket-preset-a',
+        'gasket-plugin-a',
+        '@gasket/cli',
+        '@user/gasket-plugin-a',
+        '@gasket/plugin-b',
+        'aaa',
+        'plugins/gasket-plugin-b',
+        'gasket-plugin-b',
+        'plugins/gasket-preset-a'
+      ];
+
+      const expected = [
+        '@gasket/cli',
+        '@gasket/preset-a',
+        '@gasket/plugin-a',
+        '@gasket/plugin-b',
+        '@gasket/aaa',
+        '@user/gasket-preset-a',
+        '@user/gasket-plugin-a',
+        '@user/gasket-plugin-b',
+        '@user/aaa',
+        'gasket-preset-a',
+        'gasket-plugin-a',
+        'gasket-plugin-b',
+        'aaa',
+        'plugins/gasket-preset-a',
+        'plugins/gasket-plugin-a',
+        'plugins/gasket-plugin-b'
+      ];
+
+      const results = sortGuides(begin.map(from => ({ from }))).map(p => p.from);
       assume(results).eqls(expected);
     });
   });
