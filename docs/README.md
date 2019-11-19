@@ -256,7 +256,7 @@ Supporting modules
 
 [Configuration Guide]: /packages/gasket-cli/docs/configuration.md
 [Plugin Authoring Guide]: /packages/gasket-cli/docs/plugins.md
-[Package Management Guide]: guides/package-management.md
+[Package Management Guide]: /packages/gasket-cli/docs/package-management.md
 [Testing Guide]: guides/testing.md
 [Webpack Guide]: guides/webpack.md
 [Extensibility Guide]: guides/extensibility.md
