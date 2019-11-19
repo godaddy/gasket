@@ -141,6 +141,11 @@
           "name": "Package Management Guide",
           "description": "Managing dependencies in Gasket apps",
           "link": "docs/package-management.md"
+        },
+        {
+          "name": "Common \"Gotchas\"",
+          "description": "Tips and tricks to be aware of",
+          "link": "docs/gotchas.md"
         }
       ],
       "commands": [

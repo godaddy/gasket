@@ -8,6 +8,11 @@ The `express-plugin` adds `express` to your application.
 npm install --save @gasket/plugin-express
 ```
 
+## Guides
+
+- [Setup Guide] for adding middleware and routes.
+- [Common "Gotchas"] encountered with Express middleware.
+
 ## Configuration
 
 The express plugin is configured using the `gasket.config.js` file.
@@ -129,3 +134,6 @@ module.exports = {
   }
 }
 ```
+
+[Setup Guide]:docs/setup.md
+[Common "Gotchas"]:docs/gotchas.md

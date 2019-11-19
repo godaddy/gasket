@@ -57,15 +57,15 @@ code. It also ensures that `@babel/register` itself is not included in your
 
 It is important to note that your `gasket.config.js` must continue to use
 `require` and export using CommonJS syntax (e.g. `module.exports =`). Any
-subsequent files loaded, however, are free to use ES Modules syntax. 
+subsequent files loaded, however, are free to use ES Modules syntax.
 
-Additionally, any other special files directly expected by Gasket (e.g. 
+Additionally, any other special files directly expected by Gasket (e.g.
 `store.js`, `/lifecycles/*.js`, or `/plugins/*.js`) must also use CommonJS
 syntax. The reason being is that default exports will be transformed to have
 a `.default` property, which Gasket plugins won't be expecting or know how to
 handle.
 
-For example, say you write your `store.js` as ES6 module:
+For example, say you write `store.js` for [@gasket/plugin-redux] as ES6 module:
 
 ```js
 // store.js
@@ -116,33 +116,7 @@ module.exports = {
 };
 ```
 
-## `body-parser` not enabled by default
-
-You may encounter middlewares that assume `body-parser` is included earlier in
-your middleware chain. This is somewhat common among modules in the `express`
-ecosystem since `body-parse` is very commonly used. We don't want Gasket apps
-to host full-out APIs (you should have a separately deployed API) so we don't
-normally need JSON parsing included.
-
-To work around this simply include it in the handler for the `middleware`
-hook. e.g. 
-
-**`/lifecycles/middleware.js`**
-```js
-const bodyParser = require('body-parser');
-
-/**
- * Introduce new middleware layers to the stack.
- *
- * @param {Gasket} gasket Reference to the gasket instance
- */
-module.exports = function middleware(gasket) {
-  return bodyParser.json(/* 
-    Valid options. See:
-    https://github.com/expressjs/body-parser#bodyparserjsonoptions
-  */);
-};
-```
-
 [@babel/register]: https://babeljs.io/docs/en/babel-register
 [babel-plugin-add-module-exports]: https://www.npmjs.com/package/babel-plugin-add-module-exports
+
+[@gasket/plugin-redux]:/packages/gasket-plugin-redux/README.md
