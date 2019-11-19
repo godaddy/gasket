@@ -39,7 +39,9 @@ Available commands
 | --------- | ------------------------------------------- |
 | [analyze] | Generate analysis report of webpack bundles |
 | [build]   | Prepare the app to be started               |
+| [create]  | Create a new Gasket app                     |
 | [docs]    | Generate docs for the app                   |
+| [help]    | Get usage details for Gasket commands       |
 | [local]   | Build and start the app in development mode |
 | [start]   | Run the prepared app                        |
 
@@ -54,11 +56,12 @@ Available lifecycles
 | [build][1]             | Prepare the app to be started                                 |
 | [composeServiceWorker] | Update the service worker script                              |
 | [configure]            | Allows plugins to adjust config before command is run         |
+| [create][2]            | App level plugins                                             |
 | [createServers]        | Setup the `create-servers` options                            |
 | [docsSetup]            | Set up what docs are captured and how to transform them       |
 | [docsView]             | View the collated documentation                               |
 | [errorMiddleware]      | Add Express style middleware for handling errors              |
-| [errorMiddleware][2]   | Add Express style middleware for handling errors with Fastify |
+| [errorMiddleware][3]   | Add Express style middleware for handling errors with Fastify |
 | [express]              | Modify the Express instance to for adding endpoints           |
 | [fastify]              | Modify the Fastify instance to for adding endpoints           |
 | [getCommands]          | Allows plugins to add CLI commands                            |
@@ -71,13 +74,15 @@ Available lifecycles
 | [metadata]             | Allows plugins to adjust their metadata                       |
 | [metrics]              | Collect metrics for an app                                    |
 | [middleware]           | Add Express style middleware                                  |
-| [middleware][3]        | Add Express style middleware for Fastify                      |
+| [middleware][4]        | Add Express style middleware for Fastify                      |
 | [next]                 | Update the next app instance before prepare                   |
 | [nextConfig]           | Setup the next config                                         |
 | [nextExpress]          | Access the prepared next app and express instance             |
+| [postCreate]           | App level plugins                                             |
 | [preboot]              | Any setup before the app starts                               |
+| [prompt]               | Gasket config for an app                                      |
 | [servers]              | Access to the server instances                                |
-| [start][4]             | Run the prepared app                                          |
+| [start][5]             | Run the prepared app                                          |
 | [terminus]             | Setup the `terminus` options                                  |
 | [webpack]              | Modify webpack config with partials or by mutating            |
 | [webpackChain]         | Setup webpack config by chaining                              |
@@ -161,7 +166,9 @@ Supporting modules
 
 [analyze]:/packages/gasket-plugin-analyze/README.md#commands
 [build]:/packages/gasket-plugin-start/README.md#build-command
+[create]:/packages/gasket-cli/README.md#commands
 [docs]:/packages/gasket-plugin-docs/README.md#commands
+[help]:/packages/gasket-cli/README.md#commands
 [local]:/packages/gasket-plugin-start/README.md#local-command
 [start]:/packages/gasket-plugin-start/README.md#start-command
 [appEnvConfig]:/packages/gasket-plugin-config/README.md#appEnvConfig
@@ -169,11 +176,12 @@ Supporting modules
 [1]:/packages/gasket-plugin-start/README.md#build
 [composeServiceWorker]:/packages/gasket-plugin-service-worker/README.md#composeServiceWorker
 [configure]:/packages/gasket-plugin-command/README.md#configure
+[2]:/packages/gasket-cli/README.md#create
 [createServers]:/packages/gasket-plugin-https/README.md#createServers
 [docsSetup]:/packages/gasket-plugin-docs/README.md#docsSetup
 [docsView]:/packages/gasket-plugin-docs/README.md#docsView
 [errorMiddleware]:/packages/gasket-plugin-express/README.md#errorMiddleware
-[2]:/packages/gasket-plugin-fastify/README.md#errorMiddleware
+[3]:/packages/gasket-plugin-fastify/README.md#errorMiddleware
 [express]:/packages/gasket-plugin-express/README.md#express
 [fastify]:/packages/gasket-plugin-fastify/README.md#express
 [getCommands]:/packages/gasket-plugin-command/README.md#getCommands
@@ -186,13 +194,15 @@ Supporting modules
 [metadata]:/packages/gasket-plugin-metadata/README.md#metadata
 [metrics]:/packages/gasket-plugin-metrics/README.md#metrics
 [middleware]:/packages/gasket-plugin-express/README.md#middleware
-[3]:/packages/gasket-plugin-fastify/README.md#middleware
+[4]:/packages/gasket-plugin-fastify/README.md#middleware
 [next]:/packages/gasket-plugin-nextjs/README.md#next
 [nextConfig]:/packages/gasket-plugin-nextjs/README.md#nextConfig
 [nextExpress]:/packages/gasket-plugin-nextjs/README.md#nextExpress
+[postCreate]:/packages/gasket-cli/README.md#postcreate
 [preboot]:/packages/gasket-plugin-start/README.md#start
+[prompt]:/packages/gasket-cli/README.md#prompt
 [servers]:/packages/gasket-plugin-https/README.md#servers
-[4]:/packages/gasket-plugin-start/README.md#start
+[5]:/packages/gasket-plugin-start/README.md#start
 [terminus]:/packages/gasket-plugin-https/README.md#terminus
 [webpack]:/packages/gasket-plugin-webpack/README.md#webpack
 [webpackChain]:/packages/gasket-plugin-webpack/README.md#webpackChain
@@ -202,9 +212,9 @@ Supporting modules
 [lifecycles/]:/packages/gasket-plugin-lifecycle/README.md
 [locales/]:/packages/gasket-plugin-intl/README.md#Options
 [pages/]:https://nextjs.org/docs#routing
-[plugins/]:/packages/gasket-engine/README.md
+[plugins/]:/packages/gasket-cli/README.md
 [app.config.js]:/packages/gasket-plugin-config/README.md
-[gasket.config.js]:/packages/gasket-cli/README.md
+[gasket.config.js]:/packages/gasket-cli/docs/configuration.md
 [jest.config.js]:https://jestjs.io/docs/configuration
 [routes.js]:https://github.com/fridays/next-routes#how-to-use
 [store.js]:/packages/gasket-plugin-redux/README.md
@@ -245,7 +255,7 @@ Supporting modules
 <!-- END GENERATED -->
 
 [Configuration Guide]: /packages/gasket-cli/docs/configuration.md
-[Plugin Authoring Guide]: guides/plugins.md
+[Plugin Authoring Guide]: /packages/gasket-cli/docs/plugins.md
 [Package Management Guide]: guides/package-management.md
 [Testing Guide]: guides/testing.md
 [Webpack Guide]: guides/webpack.md

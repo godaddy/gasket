@@ -206,4 +206,4 @@ versioned, published, and imported to your different apps.
 [one-off plugins]:#one-off-plugins
 [here]:/packages/gasket-engine/README.md
 [@gasket/plugin-docs]:/packages/gasket-plugin-docs/README.md
-[naming convention]: /packages/gasket-resolve/README.md#naming-convention
+[naming convention]: /packages/gasket-resolve/README.md

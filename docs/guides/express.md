@@ -13,7 +13,7 @@ customize your gasket server with additional routes and middleware, this guide
 is for you!
 
 Before you go on, make sure you understand
-[how to author plugins](plugins.md).
+[how to author plugins](/packages/gasket-cli/docs/plugins.md).
 Whether your custom express middleware is for a plugin to be shared across
 multiple apps, or for a standalone plugin used solely by your app, the plugin
 system is necessary to do any express app customization.
