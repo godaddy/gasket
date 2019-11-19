@@ -7,22 +7,22 @@ use the React component state or use Redux.
 you will have to pass it explicitly through props and if those values need to be updated
 by these sub-components than they will have to use callback functions to update it.
 
-This works out well normally, until you have a multi-level component structure where 
+This works out well normally, until you have a multi-level component structure where
 component state has to be received and passed down through every component in the middle,
 just so some child component can access and use that state value.
 
-Also, since React state is managed within a component, the state data is lost once the 
+Also, since React state is managed within a component, the state data is lost once the
 component is unmounted. So moving from page to page will re-initialize the state data.
 
-On the other hand, **Redux state** is maintained globally. Any component that needs 
+On the other hand, **Redux state** is maintained globally. Any component that needs
 that value can connect to the store and read it from there. Also, updating the state
 value is as simple as dispatching an `action`.
 
 ## When to use redux
 
-So it may feel like using Redux should *always* be the way to go. However, we have to 
-be careful about that, as there are some drawbacks of using Redux too much. It may 
-have negative performance implications. It will increase the complexity of your 
+So it may feel like using Redux should *always* be the way to go. However, we have to
+be careful about that, as there are some drawbacks of using Redux too much. It may
+have negative performance implications. It will increase the complexity of your
 application, making it harder to refactor, and also likely reduce the re-usability of
 your components.
 
@@ -31,12 +31,12 @@ your components.
 - If a state value is needed across pages.
 
 - If a state value is initialized with server side rendering and later used from client.
-Before we go any further, please take a moment to review [How to use @gasket/redux](/packages/gasket-redux#gasketredux)
+Before we go any further, please take a moment to review [How to use @gasket/redux](/packages/gasket-redux)
 
 ### Example 1: Keep data in redux state
 
-In this example `store.js` creates a redux store, and attaches a reducer from 
-`redux-reducer.js`. `ComponentA` invokes the actions from `redux-actions.js` 
+In this example `store.js` creates a redux store, and attaches a reducer from
+`redux-reducer.js`. `ComponentA` invokes the actions from `redux-actions.js`
 and `ComponentB` connects to redux store to read the current count.
 
 <details><summary>component-a.js</summary>
