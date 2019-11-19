@@ -1,31 +1,20 @@
-# Custom Express Middleware/Routes Guide
+# Express Setup Guide
 
-Normally, the express server that is set up by gasket should have everything you
-need for your application built-in. The main use case for a gasket application
-is for it to be purely responsible for serving up an application front-end. If
-you want to build a web API, we recommend that it lives as a service that
-is separate from your application. See the
-[Slay](https://github.com/godaddy/slay) project for help in creating a
-well-structured API.
-
-If you are building a plugin for gasket, or have special requirements to
-customize your gasket server with additional routes and middleware, this guide
-is for you!
+Normally, the Express server that is set up by Gasket plugins should have
+everything you need for your application built-in. If you are building a Plugin
+for Gasket, or have special requirements to customize your server with
+additional routes and middleware, this guide is for you!
 
 Before you go on, make sure you understand
-[how to author plugins](/packages/gasket-cli/docs/plugins.md).
-Whether your custom express middleware is for a plugin to be shared across
-multiple apps, or for a standalone plugin used solely by your app, the plugin
-system is necessary to do any express app customization.
-
-A typical gasket-based application relies on
-[`@gasket/plugin-nextjs`](/packages/gasket-plugin-nextjs) and
-[`@gasket/plugin-express`](/packages/gasket-plugin-express)
-for creating the web servers and Express application.
+[how to author plugins](/packages/gasket-cli/docs/plugins.md). Whether your
+custom Express middleware is for a plugin to be shared across multiple apps, or
+for a standalone plugin used solely by your app, the plugin system is necessary
+to do any Express app customization.
 
 After some standard middleware is injected, a plugin can hook the `middleware`
-event and return a middleware or array of middlewares to be added. This hook
-is passed the typical `gasket` object as with any hook, and the `express` app:
+lifecycle and return a middleware or array of middlewares to be added. This hook
+is passed the typical `gasket` object as with any hook, and the `express`
+instance:
 
 ```js
 const someMiddleware = require('some-middleware');
@@ -44,8 +33,8 @@ module.exports = {
 };
 ```
 
-The `express` event is next. This provides an opportunity to do things with the
-app object directly, like attaching route handlers:
+The `express` lifecycle is next. This provides an opportunity to do things with
+the app object directly, like attaching route handlers:
 
 ```js
 // Sample plugin
@@ -59,10 +48,9 @@ module.exports = {
 };
 ```
 
-Finally, after the built-in next.js handler is inserted, plugins can hook the
-`errorMiddleware` event and return additional middleware(s), typically
-[error handlers](http://expressjs.com/en/guide/error-handling.html) since
-the next.js handler is a catch-all handler.
+Finally, plugins can hook the `errorMiddleware` lifecycle and return additional
+middleware(s), typically
+[error handlers](http://expressjs.com/en/guide/error-handling.html).
 
 ```js
 const errorLoggingClient = require('some-error-logger');
@@ -86,10 +74,9 @@ module.exports = {
 
 Remember, if you need any of your injected middleware to come before or after
 middleware injected by another plugin, use the
-[timing mechanism](/packages/gasket-engine)
-of the plugin engine. For example, if you need your middleware to access
-the server-side redux store created by
-[`@gasket/plugin-redux`](/packages/gasket-plugin-redux),
+[timing mechanism](/packages/gasket-engine/README.md) of the plugin engine. For
+example, if you need your middleware to access the server-side redux store
+created by [@gasket/plugin-redux](/packages/gasket-plugin-redux/README.md),
 you can do something like this:
 
 ```js
