@@ -235,6 +235,10 @@ function mockGasketApi() {
     execWaterfall: stub().returnsArg(1),
     exec: stub().resolves({}),
     execSync: stub().returns([]),
+    loader: {
+      tryResolve: stub(),
+      require: stub()
+    },
     config: {
       webpack: {},  // user specified webpack config
       next: {},      // user specified next.js config

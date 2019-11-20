@@ -1,4 +1,5 @@
 const { initWebpack } = require('@gasket/webpack-plugin');
+const path = require('path');
 
 /**
  * Small helper function that creates nextjs configuration from the gasket
@@ -10,23 +11,39 @@ const { initWebpack } = require('@gasket/webpack-plugin');
  * @private
  */
 function createConfig(gasket, includeWebpackConfig = true) {
-  const { config } = gasket;
+  const { config, loader } = gasket;
+  const {
+    root,
+    // prefer clearer property name with fall back
+    nextConfig = config.next || {}
+  } = config;
 
-  let nextConfig;
-  if (!includeWebpackConfig) {
-    nextConfig = config.next || {};
-  } else {
-    nextConfig = {
-      ...config.next,
-      webpack: (webpackConfig, data) => {
-        return initWebpack(gasket, webpackConfig, data);
+  const configFile = loader.tryResolve(path.join(root, 'next.config.js'));
+  const configFromFile = configFile && loader.require(configFile) || {};
+
+  const mergedConfig = {
+    ...configFromFile,
+    ...nextConfig
+  };
+
+  if (includeWebpackConfig) {
+    //
+    // Add webpack property to nextConfig and wrap existing
+    //
+    mergedConfig.webpack = function webpack(webpackConfig, data) {
+      if (typeof configFromFile.webpack === 'function') {
+        webpackConfig = configFromFile.webpack(webpackConfig, data);
       }
+      if (typeof nextConfig.webpack === 'function') {
+        webpackConfig = nextConfig.webpack(webpackConfig, data);
+      }
+      return initWebpack(gasket, webpackConfig, data);
     };
   }
 
-  nextConfig.poweredByHeader = false;
+  mergedConfig.poweredByHeader = false;
 
-  return gasket.execWaterfall('nextConfig', nextConfig);
+  return gasket.execWaterfall('nextConfig', mergedConfig);
 }
 
 module.exports = {
