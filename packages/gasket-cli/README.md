@@ -104,18 +104,18 @@ npm_config_registry=https://custom-registry.com gasket create my-app -p nextjs
 
 ### Test Suites
 
-Code that is well testing and that conforms to familiar styles helps the
-collaboration process within teams and across organizations. Gasket apps come
-with some tooling options and configurations to assist in this important area.
+Code that is well-test and conforming to familiar styles helps the collaboration
+process within teams and across organizations. Gasket apps come with some
+tooling options and configurations to assist in this important area.
 
-When creating a new Gasket app, you have the opportunity to choose the unit test
-suite for your app. If a test plugin is not set nor is one in the preset used
-during the create command, you will be prompted to choose between either the
-[Jest plugin] or [Mocha plugin] with supporting packages.
+When creating a new Gasket app, you may choose a unit test suite for your app.
+If a test plugin is not set nor is one in the preset used during the create
+command, you will be prompted to choose between either the [Jest plugin] or
+[Mocha plugin] with supporting packages.
 
 Additional code style choices are prompted during the create command. Some
-predefined choices are provided from the [lint plugin], or you can specify
-your own config.
+predefined choices are provided from the [lint plugin], or you can specify your
+own config.
 
 ## Configuration
 
