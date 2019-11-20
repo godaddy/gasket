@@ -7,18 +7,9 @@
   <meta name="description" content="Robust, pluggable, & render agnostic framework for rapid deliver modern web applications.">
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 <!--  <link rel="stylesheet" href="//unpkg.com/docsify/lib/themes/vue.css">-->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple.css">
-
-  <style>
-    :root {
-      /* Reduce the font size */
-      --base-font-size: 14px;
-
-      /* Change the theme color hue */
-      --theme-hue: 240;
-    }
-  </style>
-
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-defaults.css">
+  <link rel="stylesheet" href="site/gasket-docsify-theme.css">
+  <link rel="stylesheet" href="site/cover.css">
 
 </head>
 <body>
@@ -31,9 +22,12 @@
       coverpage: 'site/cover.html',
       onlyCover: true,
       relativePath: true,
-      auto2top: true
+      auto2top: true,
+      maxLevel: 3
     }
   </script>
   <script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-diff.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
 </body>
 </html>

@@ -1,65 +1,77 @@
-<article class='front-cover'>
-    <!-- Override docsify cover page defaults so we can scroll -->
-    <style>
-        .cover.show {
-            display: block;
-        }
-
-        .cover .cover-main {
-            max-width: none;
-            padding: 0;
-            margin: 0;
-        }
-    </style>
-
-    <!-- Add our styling unique to our cover page -->
-    <style>
-        .cover h1 {
-            color: lightblue;
-            font-weight: bold;
-        }
-
-        .front-cover {
-            width: auto;
-            background-color: white;
-        }
-
-        .front-cover header {
-            padding: 8rem 0;
-            background-color: darkblue;
-            width: 100%;
-        }
-
-        .front-cover footer {
-            padding: 8rem 0;
-            background-color: darkgray;
-            width: 100%;
-        }
-    </style>
+<main class='front-cover'>
 
     <header class="splash">
         <h1>Gasket</h1>
-        <p>Framework maker for JavaScript applications</p>
+        <p>Framework Maker for JavaScript Applications</p>
         <a href="#/docs/README">Get Started</a>
     </header>
-    <section>
-        <h2>How it works</h2>
-        <h4>CLI Loads Configured Presets & Plugins.</h4>
-        <p>The entry point to creating and interacting with apps. The CLI provides the frame and engine upon which apps are built.</p>
-        <h4>Presets Provide Plugins.</h4>
-        <p>Logical groups of plugins to build apps. Tech choices for teams, integrations for communities. Effectively, the framework you want to build apps within.</p>
-        <h4>Plugins Add Commands & Hooks.</h4>
-        <p>The building blocks of an app framework - plugins provide the scaffolding and circuitry to integrate libraries and have them communicate together.</p>
-        <h4>Commands Execute Lifecycles.</h4>
-        <p>Build and start your app. Analyze it, or read the docs. Just a few commands you can execute with available plugins, or create your own.</p>
-        <h4>Lifecycles Handled By Hooks.</h4>
-        <p>The nervous system to transmit signals between parts of apps. Not your typical events; lifecycles can be handled in order and executed in sync.</p>
-        <h4>Hooks Execute Additional Lifecycles.</h4>
-        <p>Receptors to handle lifecycle events and perform the actual work of integrating libraries and implementing application code.</p>
-    </section>
-    <footer>
 
-        <p><strong>GoDaddy</strong></p>
-        <p>Copyright (c) 2019 GoDaddy Operating Company, LLC.</p>
+    <section class="dark">
+        <article>
+            <h2>What is Gasket?</h2>
+            <p>Gasket helps teams and communities compose frameworks to deliver apps of various shapes and sizes. While
+                scaffolding is
+                important, Gasket offers functionality beyond simple boilerplate generation. Gasket also provides the essential
+                elements for libraries and layers of apps to integrate together during runtime.</p>
+        </article>
+    </section>
+
+    <section>
+        <article>
+            <h2>How it works</h2>
+            <h3>CLI loads configured Presets & Plugins</h3>
+            <p>The entry point to creating and interacting with apps. The CLI provides the frame and engine upon which apps are
+                built.</p>
+            <h3>Presets provide Plugins</h3>
+            <p>Logical groups of plugins to build apps. Tech choices for teams, integrations for communities. Effectively, the
+                framework you want to build apps within.</p>
+            <h3>Plugins add Commands & Hooks</h3>
+            <p>The building blocks of an app framework - plugins provide the scaffolding and circuitry to integrate libraries and
+                have
+                them communicate together.</p>
+            <h3>Commands execute Lifecycles</h3>
+            <p>Build and start your app. Analyze it, or read the docs. Just a few commands you can execute with available plugins,
+                or
+                create your own.</p>
+            <h3>Lifecycles handled by Hooks</h3>
+            <p>The nervous system to transmit signals between parts of apps. Not your typical events; lifecycles can be handled in
+                order and executed in sync.</p>
+            <h3>Hooks execute additional Lifecycles</h3>
+            <p>Receptors to handle lifecycle events and perform the actual work of integrating libraries and implementing
+                application
+                code.</p>
+        </article>
+    </section>
+
+    <section class="dark">
+        <article>
+            <h2>Plugins</h2>
+            <p>Brief introduction to what plugins are or what they do in conjunction with Gasket.</p>
+            <svg height="200px"></svg>
+            <p>And much more. See the full list and also how you can contribute!</p>
+        </article>
+    </section>
+
+    <footer>
+        <article>
+            <div class="links">
+                <h4>Docs</h4>
+                <a href="/#/docs/guides/quick-start">Get Started</a>
+                <a href="/#/docs/README">Overview</a>
+                <a href="/#/docs/README?id=guides">Guides</a>
+            </div>
+            <div class="links">
+                <h4>Channel</h4>
+                <a>Slack</a>
+                <a>Twitter</a>
+                <a>Stack Overflow</a>
+            </div>
+            <div class="links">
+                <h4>Contribute</h4>
+                <a href="/#/CONTRIBUTING">Guidelines</a>
+                <a href="https://github.com/godaddy/gasket/">Github</a>
+            </div>
+            <div class="links copyright">Copyright (c) 2019 GoDaddy Operating Company, LLC.</div>
+        </article>
     </footer>
-</article>
+</main>

@@ -1,0 +1,140 @@
+/* --- OVERRIDES --- */
+
+.cover.show {
+    display: block;
+}
+
+.cover .cover-main {
+    max-width: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* --- STYLES --- */
+
+.front-cover {
+    background-repeat: repeat;
+    background-image: url("gasket-bg-stripes.png");
+}
+
+.front-cover h1 {
+    color: var(--color-primary-200);
+    font-size: 96px;
+    font-weight: 500;
+}
+
+.front-cover h2 {
+    margin: 0;
+    padding: 0;
+    margin: var(--heading-h2-margin, var(--heading-margin));
+    padding: var(--heading-h2-padding, var(--heading-padding));
+    font-size: var(--heading-h2-font-size);
+    font-weight: var(--heading-font-weight);
+    line-height: 48px;
+    color: var(--heading-color);
+}
+
+.front-cover h3 {
+    margin: 0;
+    padding: 0;
+    margin: var(--heading-h3-margin, var(--heading-margin));
+    padding: var(--heading-h3-padding, var(--heading-padding));
+    font-size: var(--heading-h3-font-size);
+    font-weight: var(--heading-font-weight);
+    line-height: 48px;
+    color: var(--heading-color);
+}
+
+.front-cover {
+    width: auto;
+    /*background-color: white;*/
+}
+
+.front-cover header {
+    padding: 8rem 0;
+    /*background-color: var(--color-primary-300);*/
+    width: 100%;
+}
+
+
+.front-cover header p {
+    color: var(--color-nuetral-300);
+    font-size: 25px;
+    line-height: 36px;
+    font-weight: 300;
+    padding: 32px 0;
+}
+
+
+.front-cover header a {
+    background-color: var(--color-secondary-100);
+    border-radius: 4px;
+    padding: 10px 24px;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.front-cover section {
+    padding-bottom: 128px;
+}
+
+.front-cover article {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.front-cover footer {
+    color: var(--color-nuetral-300);
+    padding: 8rem 0;
+    background-color: var(--color-nuetral-400);
+    width: 100%;
+    min-height: 450px;
+}
+
+.front-cover .links {
+    text-align: left;
+    color: var(--color-nuetral-300);
+    display: block;
+    float: left;
+    width: 200px;
+    font-size: 13px;
+    line-height: 20px;
+}
+
+.front-cover .links h4 {
+    color: var(--color-primary-100);
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 20px;
+}
+
+.front-cover .links > a {
+    color: var(--color-secondary-100);
+    text-decoration: var(--link-text-decoration);
+    display: block;
+    font-size: 16px;
+    line-height: 28px;
+    margin-bottom: 16px;
+}
+
+.front-cover div.links.copyright {
+    padding-top: 64px;
+    /*display: block;*/
+    /*float: left;*/
+    /*width: 300px;*/
+    /*background-color: pink;*/
+}
+
+.front-cover section.dark {
+    background-color: var(--color-primary-300);
+    background-blend-mode: color-dodge;
+}
+
+.front-cover section.dark h2 {
+    color: var(--color-primary-100);
+}
+
+.front-cover section.dark p {
+    color: var(--color-nuetral-100);
+}
