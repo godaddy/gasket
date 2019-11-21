@@ -69,6 +69,11 @@ module.exports = {
     metadata(gasket, meta) {
       return {
         ...meta,
+        guides: [{
+          name: 'Express Setup Guide',
+          description: 'Adding middleware and routes for Express',
+          link: 'docs/setup.md'
+        }],
         lifecycles: [{
           name: 'middleware',
           method: 'exec',

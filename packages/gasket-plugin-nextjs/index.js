@@ -132,6 +132,15 @@ module.exports = {
 
       return {
         ...meta,
+        guides: [{
+          name: 'Next.js Routing Guide',
+          description: 'Basic and advance routing for Next.js',
+          link: 'docs/routing.md'
+        }, {
+          name: 'Next.js Deployment Guide',
+          description: 'Steps to deploy a Next.js Gasket app',
+          link: 'docs/deployment.md'
+        }],
         lifecycles: [{
           name: 'nextConfig',
           method: 'execWaterfall',

@@ -1,7 +1,7 @@
-# Docker Deployment
+# Gasket Next.js Docker Deployment
 
 Assuming you have domains, certs, load balancing, etc setup in your deployment
-environment. Here is a sample definition for a container that runs a gasket 
+environment. Here is a sample definition for a container that runs a gasket
 application:
 
 ```Dockerfile

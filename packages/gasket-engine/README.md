@@ -1,6 +1,6 @@
 # @gasket/engine
 
-Plugin engine for gasket. This is used internally by `@gasket/cli`.
+Plugin engine for Gasket. This is used internally by `@gasket/cli`.
 
 * [What is a Plugin?](#what-is-a-plugin)
 * [What is a Preset?](#what-is-a-preset)
@@ -13,41 +13,14 @@ A plugin a a module in the `gasket` ecosystem that provides a unit of
 functionality. Some plugins are core to the overall application, others
 optional.
 
-See the [naming convention] for plugin name determination.
-
-For documentation on plugins, refer to the [plugin authoring guide].
+For documentation on plugins, refer to the [plugin guide].
 
 ## What is a Preset?
 
 A preset is simply a package with gasket plugins dependencies. This allows
 common plugins to be grouped together, and loaded by way of a preset.
 
-See the [naming convention] for preset name determination.
-
-For documentation on presets, refer to the [preset authoring guide].
-
-## Configuring Plugins
-
-To configure your plugins and presets, update (or create) `gasket.config.js`,
-adding a `plugins` object. This takes three string arrays:
-
-```js
-module.exports = {
-  plugins: {
-    presets: [ /* Presets you would like to add */ ],
-    add:     [ /* Plugins to add after presets are added */ ],
-    remove:  [ /* Plugins to remove */ ]
-  },
-  // ...
-}
-```
-
-### Short names
-
-Items in these arrays are module names. Gasket supports shorthand naming;
-`'@gasket/mocha'` expands to `@gasket/plugin-mocha` in the `add` and `remove`
-arrays, `@gasket/nextjs` expands to `@gasket/preset-nextjs` in the `presets`
-array.
+For documentation on presets, refer to the [preset guide].
 
 ### GasketAPI
 
@@ -181,6 +154,5 @@ of resolving relative to the current directory.
 
 <!-- LINKS -->
 
-[preset authoring guide]: /docs/guides/authoring-presets.md
-[plugin authoring guide]: /docs/guides/plugins.md
-[naming convention]: /packages/gasket-resolve/README.md#naming-convention
+[preset guide]: /packages/gasket-cli/docs/presets.md
+[plugin guide]: /packages/gasket-cli/docs/plugins.md
