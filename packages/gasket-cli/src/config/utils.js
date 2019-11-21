@@ -1,7 +1,7 @@
 const { promisify } = require('util');
 const path = require('path');
 const fs = require('fs');
-const merge = require('deepmerge');
+const defaultsDeep = require('lodash.defaultsdeep');
 const { pluginIdentifier } = require('@gasket/resolve');
 const { tryRequire } = require('@gasket/utils');
 const defaultPlugins = require('./default-plugins');
@@ -98,7 +98,7 @@ async function addUserPlugins(gasketConfig) {
 function assignPresetConfig(gasket) {
   const { presets } = gasket.loader.loadConfigured(gasket.config.plugins);
   const presetConfigs = flattenPresets(presets).map(p => p.module && p.module.config).filter(Boolean);
-  Object.assign(gasket.config, merge.all([...presetConfigs.reverse(), gasket.config]));
+  Object.assign(gasket.config, defaultsDeep(gasket.config, ...presetConfigs));
 }
 
 module.exports = {
