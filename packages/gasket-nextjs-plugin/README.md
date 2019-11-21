@@ -44,16 +44,19 @@ module.exports = {
 }
 ```
 
-### Example with plugin
+### Example with plugins
 
 ```js
-const withMDX = require('@next/mdx')();
+const withSass = require('@zeit/next-sass');
+const withCss = require('@zeit/next-css');
 
 module.exports = {
   plugins: {
     add: ['nextjs']
   },
-  nextConfig: withMDX()
+  nextConfig: withCss(withSass({
+    /* config options here */
+  }))
 }
 ```
 
