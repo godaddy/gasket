@@ -1,6 +1,6 @@
 # @gasket/nextjs-plugin
 
-The `nextjs-plugin` adds `next` to your application.
+This plugin adds Next.js to your application.
 
 ## Installation
 
@@ -10,73 +10,51 @@ npm install --save @gasket/nextjs-plugin
 
 ## Configuration
 
-The nextjs plugin is configured using the `gasket.config.js` file.
-
-- First, add it to the `plugins` section of your `gasket.config.js`:
+Add the plugin to the `plugins` section of your `gasket.config.js`:
 
 ```js
-{
-  "plugins": [
-    "add": ["nextjs"]
-  ]
+module.exports = {
+  plugins: {
+    add: ['nextjs']
+  }
 }
 ```
 
-- Instead of adding a dedicated `next.config.js`, the `next` property within `gasket.config.js` is used. Everything you can configure in the [next.config][next.config] can be added here.
+Next.js can be configured in a couple of ways when used with Gasket. The primary
+way is for plugins to hook the [nextConfig lifecycle] as explained below.
 
-#### Example configuration
+It is also possible for apps to config Next.js using the `gasket.config.js`
+file. To do so, specify a `nextConfig` object property in the same form as what
+you would set for [custom configurations] or using Next.js plugins.
+
+For general Webpack configurations, it is recommend to utilize features of the
+Gasket [webpack plugin].
+
+### Example
 
 ```js
 module.exports = {
   plugins: {
     add: ['nextjs']
   },
-  next: {
-    poweredByHeader: false,
+  nextConfig: {
     useFileSystemPublicRoutes: false,
     generateBuildId: () => Date.now()
   }
 }
 ```
 
-## Hooks
-
-`nextjs` hooks into the following lifecycles in order to work.
-
-#### nextCreate
+### Example with plugin
 
 ```js
-module.exports = {
-  name: 'nextjs',
-  hooks: {
-    /**
-    * Creates the next app
-    * @param  {Gasket} gasket The Gasket API
-    * @return {Promise<Object>} next app
-    */
-    'nextCreate': async function createNext(gasket) {
-      return nextApp;
-    }
-  }
-};
-```
+const withMDX = require('@next/mdx')();
 
-#### nextBuild
-
-```js
 module.exports = {
-  name: 'nextjs',
-  hooks: {
-    /**
-    * Builds next app
-    * @param  {Gasket} gasket The Gasket API
-    * @return {Promise<Object>} next build
-    */
-    'nextBuild': async function createBuild(gasket) {
-      return build;
-    }
-  }
-};
+  plugins: {
+    add: ['nextjs']
+  },
+  nextConfig: withMDX()
+}
 ```
 
 ## Lifecycles
@@ -103,8 +81,9 @@ module.exports = {
 
 #### nextConfig
 
-Executed before the `next` server has been created. It will receive a reference to the `next` config.
-This will allow you to modify the `next` config before the `next` server is created.
+Executed before the `next` server has been created. It will receive a reference
+to the `next` config. This will allow you to modify the `next` config before the
+`next` server is created.
 
 ```js
 module.exports = {
@@ -125,4 +104,27 @@ module.exports = {
 }
 ```
 
-[next.config]: https://nextjs.org/docs#custom-configuration
+### nextExpress
+
+Provides access to both `next` and `express` instances which allows
+`next.render` calls in express-based routes.
+
+```js
+module.exports = {
+  hooks: {
+    nextExpress: function (gasket, { next, express }) {
+      express.post('/contact-form', (req, res) => {
+        // DO STUFF WITH RECEIVED DATA
+        //
+        // And once we're done, we can `next.render` to render the `pages/thanks`
+        // file as a response.
+        next.render(req, res, '/thanks', req.params);
+      });
+    }
+  }
+}
+```
+
+[nextConfig lifecycle]:#nextconfig
+[custom configurations]: https://nextjs.org/docs#custom-configuration
+[webpack plugin]:/packages/gasket-webpack-plugin/README.md
