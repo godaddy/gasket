@@ -44,23 +44,6 @@ describe('createConfig', () => {
     assume(result).has.property('poweredByHeader', false);
   });
 
-  it('includes `next.config.js` if found', async () => {
-    gasket.loader = {
-      tryResolve: stub().returns('/some/path'),
-      require: stub().returns({ customConfigFromFile: true })
-    };
-    result = await createConfig(gasket);
-    assume(result).has.property('customConfigFromFile', true);
-  });
-
-  it('throws if `next.config.js` found but mis-configured', async () => {
-    gasket.loader = {
-      tryResolve: stub().returns('/some/path'),
-      require: stub().throws(new Error('Bag config'))
-    };
-    await assume(async () => createConfig(gasket)).throwAsync();
-  });
-
   it('includes `nextConfig` from gasket.config', async () => {
     gasket.config.nextConfig = {
       customConfig: true
@@ -77,19 +60,6 @@ describe('createConfig', () => {
     assume(result).has.property('customConfig', true);
   });
 
-  it('combines config from `next.config.js` and `gasket.config.js`', async () => {
-    gasket.loader = {
-      tryResolve: stub().returns('/some/path'),
-      require: stub().returns({ customConfigFromFile: true })
-    };
-    gasket.config.nextConfig = {
-      customConfig: true
-    };
-    result = await createConfig(gasket);
-    assume(result).has.property('customConfigFromFile', true);
-    assume(result).has.property('customConfig', true);
-  });
-
   it('adds webpack hook', async () => {
     result = await createConfig(gasket);
     assume(result).has.property('webpack');
@@ -100,18 +70,6 @@ describe('createConfig', () => {
     const webpackStub = stub();
     gasket.config.nextConfig = {
       webpack: webpackStub
-    };
-    result = await createConfig(gasket);
-    assume(result).has.property('webpack');
-    result.webpack();
-    assume(webpackStub).is.called();
-  });
-
-  it('wraps existing `next.config.js` webpack hook', async () => {
-    const webpackStub = stub();
-    gasket.loader = {
-      tryResolve: stub().returns('/some/path'),
-      require: stub().returns({ webpack: webpackStub })
     };
     result = await createConfig(gasket);
     assume(result).has.property('webpack');
@@ -219,11 +177,7 @@ function mockGasketApi() {
     execSync: stub().returns([]),
     config: {
       root: '/path/to/app',
-      webpack: {},  // user specified webpack config
-    },
-    loader: {
-      tryResolve: stub(),
-      require: stub()
+      webpack: {}  // user specified webpack config
     },
     next: {}
   };
