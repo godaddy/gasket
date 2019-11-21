@@ -1,8 +1,8 @@
-# Deployment
+# Next.js Deployment Guide
 
 ## Understand the `.next` folder
 
-The `.next` folder is generated when your application is built. Which is 
+The `.next` folder is generated when your application is built. Which is
 either done using the `npm run build` command, or when you run the server
 in development mode e.g. `npm run local`. The `.next` folder contains
 the following:
@@ -21,8 +21,8 @@ side.
 
 ## Consistent buildId
 
-Next.js is configured to use a unique UUID V4 for each build. This can lead to 
-issues if you compile or build your application during deployment as you will 
+Next.js is configured to use a unique UUID V4 for each build. This can lead to
+issues if you compile or build your application during deployment as you will
 generate different `buildId`'s for each server.
 
 Fortunately, Next.js allows you to specify a function that generates the
@@ -153,6 +153,6 @@ Ensure that the following files are included when you deploy your application:
 ## Sample `Dockerfile`
 
 You can also define a container for a `gasket` app to run with a `Dockerfile`.
-Follow [this document](./docker-deployment.md) to see a sample `Dockerfile`.
+Follow [this document](docker-deployment.md) to see a sample `Dockerfile`.
 
-[config]: ./configuration.md
+[config]: /packages/gasket-cli/docs/configuration.md

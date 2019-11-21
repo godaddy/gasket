@@ -48,6 +48,11 @@ module.exports = {
     metadata(gasket, meta) {
       return {
         ...meta,
+        guides: [{
+          name: 'Webpack Configuration Guide',
+          description: 'Configuring Webpack in Gasket apps',
+          link: 'docs/webpack.md'
+        }],
         lifecycles: [{
           name: 'webpackChain',
           method: 'execSync',

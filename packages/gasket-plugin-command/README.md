@@ -198,7 +198,7 @@ config from a remote service. The `configure` lifecycle is executed with the
 [parsed arguments]: docs/api.md#GasketCommand+parsed
 [command details]: docs/api.md#GasketCommand+gasket
 [command flags]: docs/api.md#GasketCommand.flags
-[environment overrides]: /docs/guides/configuration.md#environments
+[environment overrides]: /packages/gasket-cli/docs/configuration.md
 [execWaterfall]: /packages/gasket-engine/README.md#execwaterfallevent-value-args
 
 [oclif command]: https://oclif.io/docs/commands.html

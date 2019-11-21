@@ -91,5 +91,5 @@ Your app-specific React component pages
 
 [plugin engine]: /packages/gasket-engine
 [lifecycle script]: /packages/gasket-plugin-lifecycle
-[Configuration guide]: ./configuration.md
+[Configuration guide]: /packages/gasket-cli/docs/configuration.md
 [plugins]: /packages
