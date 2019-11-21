@@ -1,7 +1,9 @@
+<!-- TODO (kinetifex): this doc needs some updates and attention -->
+
 # Configuring webpack
 
 For the most part, additional webpack configuration should not be needed as the
-most common setups are preconfigured for gasket apps. However, there are several
+most common setups are preconfigured for Gasket apps. However, there are several
 integration points for apps should the need arise.
 
 When adjusting webpack configuration, it is important to know the merge order:
@@ -44,7 +46,7 @@ module.exports = {
 
 ## Gasket plugins
 
-After the `gasket.config.js` `next` and `webpack` attribute results are merged,
+After the `gasket.config.js` `webpack` attribute results are merged,
 the resulting config object will be passed to the `webpack` lifecycle or plugin
 hooks. The webpack hook can return a partial webpack config object, which will
 be merged into the base config using [webpack-merge]. This is the preferred
@@ -107,6 +109,6 @@ module.exports = {
 ```
 
 [webpack configurations]:https://webpack.js.org/concepts/
-[configuration environments]:configuration#environments
+[configuration environments]:/packages/gasket-cli/docs/configuration.md#environments
 [Next.js plugins]:https://github.com/zeit/next-plugins
 [webpack-merge]:https://github.com/survivejs/webpack-merge

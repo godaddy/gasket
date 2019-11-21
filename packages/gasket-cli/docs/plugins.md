@@ -1,9 +1,7 @@
 # Authoring Plugins
 
-A published plugin must be its own installable `npm` module, with the naming
-convention `@gasket/{name}-plugin`. You may also create anonymous one-off
-plugins for an application by placing a module in a `plugins` directory in an
-application's root directory.
+A published plugin must be its own installable `npm` module, following the
+plugin [naming convention]. You may also create [one-off plugins] for an app.
 
 A plugin's main export has the following shape:
 
@@ -30,8 +28,8 @@ module.exports = {
 
 The optional `dependencies` array lists other plugins that must be installed as
 a prerequisite. The `hooks` map has a key for every event the plugin handles,
-with the values being either the function itself or an object specifying `timing`
-options and the `handler`.
+with the values being either the function itself or an object specifying
+`timing` options and the `handler`.
 
 ## Hooks
 
@@ -79,9 +77,10 @@ type Hook = HandlerFunction | {
 }
 ```
 
-The `before` and other timing properties establish ordering with respect to other
-plugins. You can also use a first or last boolean instead to try to ensure that
-it runs first or last (if multiple plugins do this, they'll run in parallel).
+The `before` and other timing properties establish ordering with respect to
+other plugins. You can also use a first or last boolean instead to try to ensure
+that it runs first or last (if multiple plugins do this, they'll run in
+parallel).
 
 The handler functions are called with a `GasketAPI` followed by any arguments
 passed when the event was invoked. You can see the full definitions for the
@@ -158,9 +157,9 @@ describe('detective plugin', function () {
 ## Documentation
 
 If applications using your plugin are also using the [@gasket/plugin-docs] you
-can automatically view and generate docs for your application via the `gasket docs`
-command. To best take advantage of this functionality, you should provide a
-`README.md` enumerating documentation, as well as `metadata` hook to best
+can automatically view and generate docs for your application via the `gasket
+docs` command. To best take advantage of this functionality, you should provide
+a `README.md` enumerating documentation, as well as `metadata` hook to best
 illustrate which lifecycles are invoked.
 
 ```js
@@ -191,5 +190,20 @@ module.exports = {
 Then, upon running `gasket docs`, developers will automatically find
 documentation for the `detective` plugin.
 
-[here]: /packages/gasket-engine
-[@gasket/plugin-docs]: /packages/gasket-plugin-docs
+## One-off plugins
+
+While it is encouraged to build plugins as separate packages, the ability to
+create one-off plugins in an app is available. Files in a `plugins/` directory
+at the root of the Gasket project will automatically be loaded by the CLI for
+the engine. This gives you access to tie into lifecycles, set timings, or even
+add your own hooks.
+
+These type of app-level plugins allow you to experiment quickly, before deciding
+what is best for reused across apps. If you find yourself duplicating app-level
+plugins across apps, be sure to extract it as an npm package which can be
+versioned, published, and imported to your different apps.
+
+[one-off plugins]:#one-off-plugins
+[here]:/packages/gasket-engine/README.md
+[@gasket/plugin-docs]:/packages/gasket-plugin-docs/README.md
+[naming convention]: /packages/gasket-resolve/README.md
