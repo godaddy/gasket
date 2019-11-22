@@ -2,11 +2,11 @@ const self = require('../package.json');
 const plugin = require('../index.js');
 const path = require('path');
 
-describe('Plugin', () => {
+describe('Plugin', function () {
   async function create() {
     const pkg = {};
 
-    await plugin.hooks.create({}, {
+    await plugin.hooks.create.handler({}, {
       pkg: {
         add: (key, value) => {
           pkg[key] = pkg[key] || {};
@@ -27,7 +27,7 @@ describe('Plugin', () => {
       }
     };
 
-    await plugin.hooks.create({}, {
+    await plugin.hooks.create.handler({}, {
       pkg: {
         add: (key, value) => {
           pkg[key] = pkg[key] || {};
@@ -48,15 +48,15 @@ describe('Plugin', () => {
     };
   }
 
-  it('is an object', () => {
+  it('is an object', function () {
     expect(plugin).toBeInstanceOf(Object);
   });
 
-  it('has expected name', () => {
+  it('has expected name', function ()  {
     expect(plugin).toHaveProperty('name', require('../package').name);
   });
 
-  it('has expected hooks', () => {
+  it('has expected hooks', function ()  {
     const expected = [
       'create',
       'metadata'
@@ -67,6 +67,11 @@ describe('Plugin', () => {
     const hooks = Object.keys(plugin.hooks);
     expect(hooks).toEqual(expected);
     expect(hooks).toHaveLength(expected.length);
+  });
+
+  it('has the correct create hook timings', function () {
+    expect(plugin.hooks.create.timing.last).toBe(true);
+    expect(plugin.hooks.create.timing.before).toEqual(['@gasket/lint']);
   });
 
   describe('react', function () {

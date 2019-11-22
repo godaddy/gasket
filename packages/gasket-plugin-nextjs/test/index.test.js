@@ -108,10 +108,10 @@ describe('create hook', () => {
     const files = { add: spy() };
     await plugin.hooks.create({}, {
       pkg: {
-        add: spy(),
-        has: stub().withArgs('devDependencies', 'mocha').returns(true)
+        add: spy()
       },
-      files
+      files,
+      plugins: ['@gasket/mocha']
     });
 
     const root = path.join(__dirname, '..');
@@ -125,10 +125,10 @@ describe('create hook', () => {
     const files = { add: spy() };
     await plugin.hooks.create({}, {
       pkg: {
-        add: spy(),
-        has: stub().withArgs('devDependencies', 'jest').returns(true)
+        add: spy()
       },
-      files
+      files,
+      plugins: ['@gasket/jest']
     });
 
     const root = path.join(__dirname, '..');

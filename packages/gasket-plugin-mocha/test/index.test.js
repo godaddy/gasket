@@ -12,7 +12,7 @@ describe('Plugin', () => {
   async function create() {
     const pkg = {};
 
-    await plugin.hooks.create({}, {
+    await plugin.hooks.create.handler({}, {
       pkg: {
         add: (key, value) => {
           pkg[key] = value;
@@ -31,7 +31,7 @@ describe('Plugin', () => {
       }
     };
 
-    await plugin.hooks.create({}, {
+    await plugin.hooks.create.handler({}, {
       pkg: {
         add: (key, value) => {
           pkg[key] = value;
@@ -69,6 +69,11 @@ describe('Plugin', () => {
     const hooks = Object.keys(plugin.hooks);
     expect(hooks).eqls(expected);
     expect(hooks).is.length(expected.length);
+  });
+
+  it('has the correct create hook timings', function () {
+    expect(plugin.hooks.create.timing.last).to.be.true;
+    expect(plugin.hooks.create.timing.before).to.eql(['@gasket/lint']);
   });
 
   describe('dependencies', function () {
