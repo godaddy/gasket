@@ -23,8 +23,8 @@ First, add it to the `plugins` section of your `gasket.config.js`:
 ```
 
 You can optionally define a specific user webpack config using the `webpack`
-property. This configuration will be [smartly merged] into the applications
-currently `webpack` configuration.
+property. This configuration will be [smartly merged] into the application's
+current `webpack` configuration.
 
 ```js
 module.exports = {
@@ -81,12 +81,21 @@ Executed after `webpack-chain` lifecycle. It receives the full webpack config as
 argument. It can be used to add additional configurations to webpack.
 
 ```js
-module.exports = {
-  hooks: {
-    webpack: function (gasket, config, data) {
-      console.log(config);  // webpack.config object.
-    }
-  }
+const { DefinePlugin } = require('webpack');
+
+/**
+ * @param {Gasket} gasket The gasket API
+ * @param {Object} config webpack configuration
+ * @return {Object} resolved webpack configuration
+ */
+function webpackHook(gasket, config) {
+  config.plugins.push(
+    new DefinePlugin({
+      MEANING_OF_LIFE: 42
+    })
+  );
+
+  return config;
 }
 ```
 
