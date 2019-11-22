@@ -1,4 +1,7 @@
 {
+  "extends": ["godaddy-react"],
   "parser": "babel-eslint",
-  "extends": "godaddy"
+  "globals": {
+    "expect": "readonly"
+  }
 }

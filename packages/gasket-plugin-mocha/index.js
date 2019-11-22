@@ -3,15 +3,9 @@ const { devDependencies } = require('./package.json');
 module.exports = {
   name: require('./package').name,
   hooks: {
-    async create(gasket, { files, pkg, packageManager = 'npm' }) {
+    async create(gasket, { pkg, packageManager = 'npm' }) {
       const runCmd = packageManager === 'npm' ? `npm run` : packageManager;
-      const path = require('path');
-
-      files.add(
-        path.join(__dirname, 'generator', '*'),
-        path.join(__dirname, 'generator', '**', '*'),
-        path.join(__dirname, 'generator', '**', '**', '*')
-      );
+      const isReactProject = pkg.has('dependencies', 'react');
 
       pkg.add('devDependencies', {
         //
@@ -24,18 +18,22 @@ module.exports = {
         'setup-env': devDependencies['setup-env'],
 
         //
-        // All dependencies to correctly configure enzyme with shallow rendering
-        //
-        'jsdom': devDependencies.jsdom,
-        'enzyme': devDependencies.enzyme,
-        'enzyme-adapter-react-16': devDependencies['enzyme-adapter-react-16'],
-
-        //
         // To ensure that the mocha tests can run with import scripts
         //
         '@babel/register': devDependencies['@babel/register'],
         '@babel/core': devDependencies['@babel/core']
       });
+
+      if (isReactProject) {
+        pkg.add('devDependencies', {
+          //
+          // All dependencies to correctly configure enzyme with shallow rendering
+          //
+          'jsdom': devDependencies.jsdom,
+          'enzyme': devDependencies.enzyme,
+          'enzyme-adapter-react-16': devDependencies['enzyme-adapter-react-16']
+        });
+      }
 
       pkg.add('scripts', {
         'test': 'npm run test:runner',

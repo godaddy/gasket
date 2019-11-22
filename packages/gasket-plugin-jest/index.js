@@ -5,18 +5,23 @@ module.exports = {
   hooks: {
     async create(gasket, { files, pkg }) {
       const path = require('path');
-
-      files.add(
-        path.join(__dirname, 'generator', '*'),
-        path.join(__dirname, 'generator', '**', '*')
-      );
+      const isReactProject = pkg.has('dependencies', 'react');
 
       pkg.add('devDependencies', {
-        'jest': devDependencies.jest,
-        // TODO (kinetifex): only add these if react in pkg. Same with setup.js
-        'enzyme': devDependencies.enzyme,
-        'enzyme-adapter-react-16': devDependencies['enzyme-adapter-react-16']
+        jest: devDependencies.jest
       });
+
+      if (isReactProject) {
+        files.add(
+          path.join(__dirname, 'generator', '*'),
+          path.join(__dirname, 'generator', '**', '*')
+        );
+
+        pkg.add('devDependencies', {
+          'enzyme': devDependencies.enzyme,
+          'enzyme-adapter-react-16': devDependencies['enzyme-adapter-react-16']
+        });
+      }
 
       pkg.add('scripts', {
         'test': 'jest',

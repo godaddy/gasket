@@ -19,10 +19,19 @@ module.exports = {
       const { files, pkg } = context;
 
       files.add(
-        `${__dirname}/generator/.*`,
-        `${__dirname}/generator/*`,
-        `${__dirname}/generator/**/*`
+        `${__dirname}/generator/app/.*`,
+        `${__dirname}/generator/app/*`,
+        `${__dirname}/generator/app/**/*`
       );
+
+      ['jest', 'mocha'].forEach(tester => {
+        if (pkg.has('devDependencies', tester)) {
+          files.add(
+            `${__dirname}/generator/${tester}/*`,
+            `${__dirname}/generator/${tester}/**/*`
+          );
+        }
+      });
 
       pkg.add('dependencies', {
         '@gasket/assets': '^1.0.0',
