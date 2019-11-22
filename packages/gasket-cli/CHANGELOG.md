@@ -1,5 +1,7 @@
 # `@gasket/cli`
 
+### 3.2.1
+
 - [#113] Stop blowing away named classes when merging config
 
 ### 3.2.0
