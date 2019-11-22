@@ -2,13 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>@gasket/repository - Robust, pluggable, & render agnostic framework for rapid deliver modern web applications.</title>
+  <title>Gasket: Framework Maker</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <meta name="description" content="Robust, pluggable, & render agnostic framework for rapid deliver modern web applications.">
+  <meta name="description" content="Gasket helps developers make frameworks to power their apps.">
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-<!--  <link rel="stylesheet" href="//unpkg.com/docsify/lib/themes/vue.css">-->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-defaults.css">
-  <link rel="stylesheet" href="site/gasket-docsify-theme.css">
+  <link rel="stylesheet" href="/packages/gasket-plugin-docsify/generator/styles/gasket.css">
   <link rel="stylesheet" href="site/cover.css">
 
 </head>
@@ -17,16 +15,22 @@
   <script>
     window.$docsify = {
       name: 'Gasket',
-      nameLink: '#/docs/README',
+      nameLink: '#/',
       loadNavbar: 'site/navbar.md',
       coverpage: 'site/cover.html',
       onlyCover: true,
       relativePath: true,
       auto2top: true,
-      maxLevel: 3
+      maxLevel: 3,
+      tocLink: '#/docs/README'
     }
   </script>
   <script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
+  <script src="/packages/gasket-plugin-docsify/generator/scripts/toc-link-plugin.js"></script>
+  <script src="/packages/gasket-plugin-docsify/generator/scripts/cover-snap-plugin.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-jsx.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-json.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-diff.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
 </body>
