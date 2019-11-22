@@ -5,11 +5,13 @@ const { promisify } = require('util');
 const readFile = promisify(fs.readFile);
 const writeFile = promisify(fs.writeFile);
 const copyFile = promisify(fs.copyFile);
+const mkdirp = promisify(require('mkdirp'));
 const glob = promisify(require('glob'));
 
 const isCssFile = /.css$/;
 const srcDir = path.join(__dirname, '..', 'generator');
 const srcIndex = path.join(srcDir, 'index.html');
+
 
 /**
  * Generate the main index.html served by Docsify
@@ -19,7 +21,7 @@ const srcIndex = path.join(srcDir, 'index.html');
  * @returns {Promise<string>} output file
  */
 async function generateContent(docsifyConfig, docsConfigSet) {
-  const { theme = 'vue', config = {} } = docsifyConfig;
+  const { theme, config = {} } = docsifyConfig;
   const { docsRoot } = docsConfigSet;
 
   const Handlebars = require('handlebars');
@@ -27,10 +29,9 @@ async function generateContent(docsifyConfig, docsConfigSet) {
     return JSON.stringify(context, null, 2);
   });
 
-  const windowConfig = defaultsDeep({
-    name: docsConfigSet.app.name,
-    nameLink: '/'
-  }, config);
+  const windowConfig = defaultsDeep(config, {
+    name: docsConfigSet.app.name
+  });
 
   const stylesheets = [
     isCssFile.test(theme) ? theme : `//unpkg.com/docsify/lib/themes/${theme}.css`,
@@ -39,6 +40,12 @@ async function generateContent(docsifyConfig, docsConfigSet) {
 
   const scripts = [
     '//unpkg.com/docsify/lib/docsify.min.js',
+    '/scripts/toc-link-plugin.js',
+    '/scripts/cover-snap-plugin.js',
+    '//cdn.jsdelivr.net/npm/prismjs@1/components/prism-jsx.min.js',
+    '//cdn.jsdelivr.net/npm/prismjs@1/components/prism-json.min.js',
+    '//cdn.jsdelivr.net/npm/prismjs@1/components/prism-diff.min.js',
+    '//cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js',
     ...(docsifyConfig.scripts || [])
   ];
 
@@ -50,9 +57,17 @@ async function generateContent(docsifyConfig, docsConfigSet) {
   await writeFile(tgtIndex, content);
 
   //
+  // Determine remaining files to copy
+  //
+  const otherFiles = await glob('**/*', { cwd: srcDir, ignore: ['index.html'], nodir: true });
+  //
+  // make sure target dir structure in place
+  //
+  const tgtDirs = Array.from(new Set(otherFiles.map(f => path.dirname(path.join(docsRoot, f)))));
+  await Promise.all(tgtDirs.map(d => mkdirp(d)));
+  //
   // Copy remaining files over
   //
-  const otherFiles = await glob('**/*', { cwd: srcDir, ignore: ['index.html'] });
   await Promise.all(otherFiles.map(f => copyFile(path.join(srcDir, f), path.join(docsRoot, f))));
 
   return tgtIndex;

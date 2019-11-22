@@ -34,7 +34,8 @@
     "docsify-cli": "^4.3.0",
     "glob": "^7.1.4",
     "handlebars": "^4.4.3",
-    "lodash.defaultsdeep": "^4.6.0"
+    "lodash.defaultsdeep": "^4.6.0",
+    "mkdirp": "^0.5.1"
   },
   "devDependencies": {
     "assume": "^2.2.0",

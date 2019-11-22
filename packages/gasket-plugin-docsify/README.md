@@ -23,27 +23,27 @@ module.exports = {
 }
 ```
 
-Now, when you run `npx gasket docs` in your app, a nice Docsify website will
-be launched in your browser.
+Now, when you run `npx gasket docs` in your app, a nice Docsify website will be
+launched in your browser.
 
 ## Options
 
 To be set in under `docsify` in the `gasket.config.js`.
 
-- `theme` - (string) Name of the theme. Default is `vue`. Can be set to name of
-  [docsify themes], a URL, or CSS file.
+- `theme` - (string) Name of the theme. Default is `styles/gasket.css`. Can be
+  set to name of [docsify themes], a URL, or CSS file.
 - `port` - (number) Port to serve the docs from. Default is `3000`.
 - `config` - (object) Any [Docsify config] properties, expect for functions
-  types which are not currently supported.
-  Default has `auth2top` and `relativePath` set to `true`.
+  types which are not currently supported. Default has `auth2top` and
+  `relativePath` set to `true`, with `maxLevel` at `3`.
 - `stylesheets` (string[]) - Optional additional stylesheet URLs to load.
 - `scripts` (string[]) - Optional additional scripts files, which can include
   [docsify plugins].
 
 ### Example
 
-This example uses the `dark` theme, and enables the [Google Analytics plugin]
-by adding the script and config.
+This example uses the `dark` theme, and enables the [Google Analytics plugin] by
+adding the script and config.
 
 ```js
 // gasket.config.js
