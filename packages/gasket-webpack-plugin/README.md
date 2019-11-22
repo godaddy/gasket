@@ -12,7 +12,7 @@ npm install --save @gasket/webpack-plugin
 
 The webpack plugin is configured using the `gasket.config.js` file.
 
-- First, add it to the `plugins` section of your `gasket.config.js`:
+First, add it to the `plugins` section of your `gasket.config.js`:
 
 ```js
 {
@@ -22,18 +22,25 @@ The webpack plugin is configured using the `gasket.config.js` file.
 }
 ```
 
-- You can define a specific user webpack config using the `webpack` property.
-
-#### Example configuration
+You can optionally define a specific user webpack config using the `webpack`
+property. This configuration will be [smartly merged] into the application's
+current `webpack` configuration.
 
 ```js
 module.exports = {
   plugins: {
     add: ['webpack']
   },
-  webpack: {}  // user specified webpack config
-}
+  webpack: {
+    performance: {
+      maxAssetSize: 20000
+    }
+  }
+};
 ```
+
+This config can be further modified by interacting with the [`webpack`](#webpack)
+lifecycle.
 
 ## API
 
@@ -74,11 +81,22 @@ Executed after `webpack-chain` lifecycle. It receives the full webpack config as
 argument. It can be used to add additional configurations to webpack.
 
 ```js
-module.exports = {
-  hooks: {
-    webpack: function (gasket, config, data) {
-      console.log(config);  // webpack.config object.
-    }
-  }
+const { DefinePlugin } = require('webpack');
+
+/**
+ * @param {Gasket} gasket The gasket API
+ * @param {Object} config webpack configuration
+ * @return {Object} resolved webpack configuration
+ */
+function webpackHook(gasket, config) {
+  config.plugins.push(
+    new DefinePlugin({
+      MEANING_OF_LIFE: 42
+    })
+  );
+
+  return config;
 }
 ```
+
+[smartly merged]: https://github.com/survivejs/webpack-merge#smart-merging
