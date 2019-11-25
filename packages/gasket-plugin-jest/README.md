@@ -1,4 +1,4 @@
-# jest-plugin
+# @gasket/plugin-jest
 
 Creates a `jest` with `enzyme` based testing environment for your Gasket
 application.

@@ -21,7 +21,7 @@ it's own metadata at runtime. Whatever is returned will replace the existing
 metadata.
 
 ```js
-// example-plugin.js
+// gasket-plugin-example.js
 module.exports = {
   name: 'example',
   hooks: {
@@ -58,7 +58,7 @@ module.exports = {
     async example(gasket) {
       const { metadata } = gasket;
 
-      if (metadata.plugins.find(pluginData => pluginData.name === 'some-plugin')) {
+      if (metadata.plugins.find(pluginData => pluginData.name === 'gasket-plugin-something')) {
         // only perform some action if a certain plugin is also registered
       }
     }

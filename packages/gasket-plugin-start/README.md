@@ -32,7 +32,7 @@ This simple example hooks the start lifecycle to start up a web server, and
 changes the port if using the local command.
 
 ```js
-// example-server-plugin.js
+// gasket-plugin-example.js
 const http = require('http');
 
 module.exports = {

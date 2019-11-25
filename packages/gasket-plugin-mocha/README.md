@@ -1,4 +1,4 @@
-# mocha-plugin
+# @gasket/plugin-mocha
 
 Creates a `mocha`, `nyc`, `sinon`, `chai` based testing environment for your
 Gasket application.

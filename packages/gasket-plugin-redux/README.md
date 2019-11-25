@@ -118,7 +118,7 @@ a Promise that resolves to a new initial state. Example plugin:
 const getExperiments = require('./get-experiments');
 
 module.exports = {
-  id: 'some-plugin',
+  id: 'gasket-plugin-example',
   hooks: {
     initReduxState(gasket, state, req, res) {
       return {
@@ -150,7 +150,7 @@ actions should return a Promise. Example plugin:
 const getExperiments = require('./get-experiments-action');
 
 module.exports = {
-  id: 'some-plugin',
+  id: 'gasket-plugin-example',
   hooks: {
     initReduxStore(gasket, store, req, res) {
       store.dispatch(getExperiments(req));

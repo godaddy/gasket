@@ -25,7 +25,7 @@ will always be initialized, and the user not prompted.
   "main": "index.js",
   "dependencies": {
     "@gasket/resolve": "^1.0.0",
-    "my-plugin": "^1.0.0"
+    "gasket-plugin-example": "^1.0.0"
   },
   "gasket": {
     "create" : {
@@ -45,12 +45,12 @@ registered to be generated for the app.
 After all the app contents are generated, this plugin's postCreate hook will
 make a first commit for the generated files. The timing for this hook is set to
 run _last_. It is important when creating plugins that implement `postCreate`
-hooks, that their timings do come _after_ the git-plugin, especially if
+hooks, that their timings do come _after_ the Git plugin, especially if
 modifying files, otherwise those modifications will not be part of the first
 commit.
 
 See [plugin hook timings] for more information.
 
 
-[gasket create command]:/packages/gasket-cli/README.md#gasket-create-appname
+[gasket create command]:/packages/gasket-cli/README.md#create-command
 [plugin hook timings]:/packages/gasket-engine/README.md

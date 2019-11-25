@@ -73,7 +73,7 @@ This lifecycle allows plugins to add commands to the CLI. This hook should
 return an extended `GasketCommand` or array of such.
 
 ```js
-// example-plugin.js
+// gasket-plugin-example.js
 module.exports = {
   name: 'example',
   hooks: {
@@ -116,7 +116,7 @@ example, lets make another plugin that hooks our `example` lifecycle from the
 above command.
 
 ```js
-// another-example-plugin.js
+// gasket-plugin-another.js
 module.exports = {
   name: 'another-example',
   hooks: {
@@ -138,7 +138,7 @@ Signals the start of any Gasket command and allows running of code immediately
 before other `gasket` lifecycles. If it errors, the command will exit early.
 
 ```js
-// another-example-plugin.js
+// gasket-plugin-another.js
 module.exports = {
   name: 'another-example',
   hooks: {
@@ -172,7 +172,7 @@ done any config adjustments, plugins then have the opportunity in this
 lifecycle.
 
 ```js
-// example-plugin.js
+// gasket-plugin-example.js
 const fetch = require('@gasket/fetch');
 
 module.exports = {

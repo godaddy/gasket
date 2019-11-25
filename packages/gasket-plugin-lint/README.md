@@ -91,7 +91,7 @@ base airbnb config will be used.
 To add this plugin to a preset, simply install it as a dependency.
 
 ```bash
-npm i @gasket/lint-plugin
+npm i @gasket/plugin-lint
 ```
 
 Presets can also pre-determine the code style to use. This is useful for teams

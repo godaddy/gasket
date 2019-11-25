@@ -119,7 +119,7 @@ module.exports = {
 
 ## How it works
 
-This plugins hooks the [createServers] lifecycles from [@gasket/https-plugin].
+This plugins hooks the [createServers] lifecycles from [@gasket/plugin-https].
 
-[@gasket/https-plugin]:/packages/gasket-plugin-https/README.md
+[@gasket/plugin-https]:/packages/gasket-plugin-https/README.md
 [createServers]:/packages/gasket-plugin-https/README.md#createservers

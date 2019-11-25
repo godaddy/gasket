@@ -38,7 +38,7 @@ module.exports = {
 This plugin utilizes [webpack-bundle-analyzer] and as such, all of it's
 [plugin options] are available for tuning for both both `browser` and `server`
 analysis reports. Do so by setting the `bundleAnalyzerConfig` property in the
-gasket.config.js. The analyze-plugin defaults `analyzeMode` to `static`, and
+gasket.config.js. The analyze plugin defaults `analyzeMode` to `static`, and
 outputs the reports to a `reports` dir at the root of the project.
 
 #### Example

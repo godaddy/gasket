@@ -81,7 +81,7 @@ under `locales` and add files `<namespace>.json` with localization keys.
 
 ## After translation
 
-`intl-plugin` provides a [service worker config] that adds next.js static assets
+This plugin provides a [service worker config] that adds Next.js static assets
 to precache. This config expects that you will translate the contents of the
 `en-US` folder into other folders corresponding to the locales of the
 translations (e.g. `da-DK`).
@@ -99,7 +99,7 @@ use for a given language.
 
 ### intlLanguage
 
-When determining what assets to precache, `intl-plugin` defaults to reading the
+When determining what assets to precache, This plugin defaults to reading the
 first language provided in the `accept-language` header. However, you can
 override this behavior by adding an `intlLanguage` hook. The `intlLanguage` hook
 takes the following parameters:
@@ -109,7 +109,7 @@ takes the following parameters:
 - `req` - (string) The request
 
 It should then return a string indicating the user's language, or null if this
-language cannot be found. `intl-plugin` will populate `intl.language` in the
+language cannot be found. This plugin will populate `intl.language` in the
 react state with this value, and use it for future language operations. If null
 is returned, Gasket will use `en-US`.
 
