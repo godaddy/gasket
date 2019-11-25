@@ -1,41 +1,39 @@
 # @gasket/log
 
-## Table of Contents
+Gasket client and server logger
 
-- [Installation](#installation)
-- [Levels](#levels)
-- [Server](#server)
-- [Client](#client)
-- [Test](#test)
-
-### Installation
+## Installation
 
 ```
-npm install --save @gasket/log @gasket/plugin-log
+npm i @gasket/log @gasket/plugin-log
 ```
 
-See the [log-plugin] for more details on configuration.
+## Configuration
+
+See the [@gasket/plugin-log] for more details on configuration.
+
+## Usage
 
 ### Levels
 
 Syslog levels are used by this packaged. Each level is exposed as a method on
 both server and client logger instances.
 
-| Level   | Description |
-|---------|-------------|
-| debug   | Information useful to developers for debugging. |
-| info    | Normal operational messages that require no action. |
-| notice  | Events that are unusual, but not error conditions. |
+| Level   | Description                                                   |
+|:--------|:--------------------------------------------------------------|
+| debug   | Information useful to developers for debugging.               |
+| info    | Normal operational messages that require no action.           |
+| notice  | Events that are unusual, but not error conditions.            |
 | warning | May indicate that an error will occur if action is not taken. |
-| error   | Error conditions |
-| crit    | Critical conditions |
-| alert   | Should be corrected immediately |
-| emerg   | System is unusable |
+| error   | Error conditions                                              |
+| crit    | Critical conditions                                           |
+| alert   | Should be corrected immediately                               |
+| emerg   | System is unusable                                            |
 
 ### Server
 
-The server requires the `log-plugin` to set up a logger instance on the gasket
-object. This will make the logger instance available for use such as:
+The server requires [@gasket/plugin-log] to set up a logger instance on the
+gasket object. This will make the logger instance available for use such as:
 
 ```js
 gasket.logger.error('Critical malfunction in code execution');
@@ -47,10 +45,10 @@ messages are transported to `process.stdout` aka the `console`.
 
 ### Client
 
-For client logging, new logger instances can be instantiated as need.
-For example, in a component:
+For client logging, new logger instances can be instantiated as need. For
+example, in a component:
 
-```jsx harmony
+```jsx
 import React from 'react';
 import Log from '@gasket/log';
 import someAction from './some-feature';
@@ -82,9 +80,10 @@ class YourComponent extends React.Component {
 ```
 
 > **NOTE:** The client logger uses [diagnostics] to output log messages to the
-console. Ensure one of the [trigger mechanics for diagnostics is set in the browser](https://github.com/bigpipe/diagnostics#browser). The name used for diagnostics is `gasket*`.
+> console. Ensure one of the trigger mechanics for [diagnostics in browser] is
+> set. The name used for diagnostics is `gasket*`.
 
-### Test
+## Test
 
 ```
 npm test
@@ -99,4 +98,5 @@ npm run test:server
 
 [winston]: https://github.com/winstonjs/winston
 [diagnostics]: https://github.com/bigpipe/diagnostics
-[log-plugin]: https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-log
+[diagnostics in browser]: https://github.com/bigpipe/diagnostics#browser
+[@gasket/plugin-log]: /packages/gasket-plugin-log/README.md

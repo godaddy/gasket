@@ -1,42 +1,45 @@
-# `@gasket/plugin-manifest`
+# @gasket/plugin-manifest
 
 Adds support for a custom [`manifest.json`] to be provided for your application.
 This allows your application to take full advantage of being a [Progressive Web
 Application]. This is useful for progressive web applications, and works best
 when paired with `@gasket/plugin-workbox` and `@gasket/plugin-service-worker`.
 
-## Table of Contents
-
-- [`@gasket/plugin-manifest`](#gasketplugin-manifest)
-  - [Table of Contents](#table-of-contents)
-  - [Installation](#installation)
-  - [Configuration](#configuration)
-  - [Lifecycles](#lifecycles)
-
 ## Installation
 
+#### New apps
+
 ```
-npm install @gasket/plugin-manifest @gasket/plugin-service-worker @gasket/plugin-workbox
+gasket create <app-name> --plugins @gasket/plugin-manifest
+```
+
+#### Existing apps
+
+```
+npm i @gasket/plugin-manifest
+```
+
+Modify `plugins` section of your `gasket.config.js`:
+
+```diff
+module.exports = {
+  plugins: [
+    add: [
++      '@gasket/plugin-manifest'
+    ]
+  ]
+}
 ```
 
 ## Configuration
-
-Add it to the `plugins` section of your `gasket.config.js`:
-
-```js
-module.exports = {
-  plugins: {
-    add: ['@gasket/service-worker', '@gasket/workbox', '@gasket/manifest']
-  }
-}
-```
 
 By default, this plugin will serve `{}` as your `manifest.json`. Consumers of
 this plugin have 2 options in augmenting this object. The first is through
 `gasket.config.js`:
 
 ```js
-{
+// gasket.config.js
+module.exports = {
   manifest: {
     short_name: 'PWAwesome',
     name: 'Progressive Web Application'
@@ -48,7 +51,8 @@ If you want to serve `manifest.json` from a custom path, the plugin can be
 configured as follows.
 
 ```js
-{
+// gasket.config.js
+module.exports = {
   manifest: {
     // other options
     path: '/custom/path/manifest.json' // default: /manifest.json

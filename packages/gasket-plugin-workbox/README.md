@@ -7,26 +7,49 @@ device, _before_ they are actually needed. This happens asynchronously and
 results in a faster experience. Additionally, other files and be cached with
 on-demand strategies, such as cacheFirst, or networkFirst.
 
-In additional to SPEED, precaching unlocks the ability for our apps to have
-offline support for AVAILABILITY and is a requirement for Add to Home Screen.
+This plugin implements service worker configuration using [Workbox]. _Workbox is
+a library that bakes in a set of best practices and removes the boilerplate
+every developer writes when working with service workers._
 
-This plugin implements service worker configuration using [Workbox].
-_Workbox is a library that bakes in a set of best practices and removes the
-boilerplate every developer writes when working with service workers._
+## Installation
 
-## Options
+#### New apps
+
+```
+gasket create <app-name> --plugins @gasket/plugin-workbox
+```
+
+#### Existing apps
+
+```
+npm i @gasket/plugin-workbox
+```
+
+Modify `plugins` section of your `gasket.config.js`:
+
+```diff
+module.exports = {
+  plugins: [
+    add: [
++      '@gasket/plugin-workbox'
+    ]
+  ]
+}
+```
+
+## Configuration
 
 Set the Workbox options, in the `gasket.config.js` under `workbox`.
 
 - `outputDir` - (string) path of directory to copy Workbox libraries to
   (default: `./build/workbox`)
 - `assetPrefix` - (string) change the default path to `/_workbox` endpoint by
-  adding a path prefix here. (default: ''). Used for setting up CDN support
-  for Workbox files. `next.assetPrefix` will be used be unless specified here.
+  adding a path prefix here. (default: ''). Used for setting up CDN support for
+  Workbox files. `next.assetPrefix` will be used be unless specified here.
 - `config`: (object) Any initial [workbox config options][generateSWString]
   which will be merged with those from any `workbox` lifecycle hooks.
 
-## Example
+#### Example config
 
 ```js
 // gasket.config
@@ -44,9 +67,9 @@ module.exports = {
 
 ## Lifecycles
 
-#### workbox
+### workbox
 
-This hook allows other gasket plugins to add to the Workbox config in order to
+This hook allows other Gasket plugins to add to the Workbox config in order to
 precache files, set runtime cache rules, etc. Hooks should return an object
 partial which will be deeply merged.
 

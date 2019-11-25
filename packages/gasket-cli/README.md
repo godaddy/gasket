@@ -91,14 +91,14 @@ _See code:
 
 With `gasket create`, you can choose either [npm] or [yarn] as the package
 manager for your new app. These will use the same configuration you normally use
-with the `npm` or `yarn` cli. If you want to adjust configuration for a
+with the `npm` or `yarn` CLI. If you want to adjust configuration for a
 particular `gasket create` run, you can set the
 [npm environment variables][npm env vars], which are also
 [compatible with yarn][yarn env vars].
 
 For example, to configure the registry for a `gasket create` run:
 
-```bash
+```
 npm_config_registry=https://custom-registry.com gasket create my-app -p nextjs
 ```
 

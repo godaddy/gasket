@@ -1,26 +1,36 @@
 # @gasket/plugin-nextjs
 
-This plugin adds `next` to your application.
+This plugin adds Next.js to your application.
 
 ## Installation
 
+#### New apps
+
+***Recommended***
+
 ```
-npm install --save @gasket/plugin-nextjs
+gasket create <app-name> --plugins @gasket/plugin-nextjs
+```
+
+#### Existing apps
+
+```
+npm i @gasket/plugin-nextjs next react react-dom
+```
+
+Modify `plugins` section of your `gasket.config.js`:
+
+```diff
+module.exports = {
+  plugins: [
+    add: [
++      '@gasket/plugin-nextjs'
+    ]
+  ]
+}
 ```
 
 ## Configuration
-
-The nextjs plugin is configured using the `gasket.config.js` file.
-
-- First, add it to the `plugins` section of your `gasket.config.js`:
-
-```js
-module.exports = {
-  plugins: {
-    add: ['@gasket/nextjs']
-  }
-}
-```
 
 - Instead of adding a dedicated `next.config.js`, the `next` property within
   `gasket.config.js` is used. Everything you can configure in the
@@ -43,7 +53,7 @@ module.exports = {
 
 ## Lifecycles
 
-#### next
+### next
 
 Executed when the `next` server has been created. It will receive a reference to
 the created `next` instance.
@@ -63,7 +73,7 @@ module.exports = {
 }
 ```
 
-#### nextConfig
+### nextConfig
 
 Executed before the `next` server has been created. It will receive a reference
 to the `next` config. This will allow you to modify the `next` config before the

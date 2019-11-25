@@ -2,19 +2,24 @@
 
 Gasket related visual assets
 
+## Installation
+
+```
+npm i @gasket/assets
+```
+
 ## Usage
 
-Original SVGs are available, however the primary use case will to be import
-the ready-to-use components for your app. Currently these are available for
-React.
+Original SVGs are available, however the primary use case will to be import the
+ready-to-use components for your app. Currently these are available for React.
 
 ### React
 
 Import a logo or other asset directly and use as you would any other React
-component. You can use `className` or `style` props to adjust size, position, 
+component. You can use `className` or `style` props to adjust size, position,
 etc.
 
-```jsx harmony
+```jsx
 // demo-page.js
 
 import React from 'react';
@@ -32,4 +37,5 @@ const DemoPage = () => {
 Add any new SVG files to the ./svg directory then run `npm run generate` to
 output the importable components.
 
-##### LICENSE: [MIT](./LICENSE)
+#### LICENSE: [MIT](./LICENSE)
+

@@ -1,9 +1,35 @@
-# `@gasket/plugin-docs`
+# @gasket/plugin-docs
 
 The plugin enables the **docs** command, which centralizes doc files for the
 app's plugins, presets, and supporting modules.
 
-## Options
+## Installation
+
+#### New apps
+
+```
+gasket create <app-name> --plugins @gasket/plugin-docs
+```
+
+#### Existing apps
+
+```
+npm i @gasket/plugin-docs
+```
+
+Modify `plugins` section of your `gasket.config.js`:
+
+```diff
+module.exports = {
+  plugins: [
+    add: [
++      '@gasket/plugin-docs'
+    ]
+  ]
+}
+```
+
+## Configuration
 
 To be set in under `docs` in the `gasket.config.js`.
 
@@ -12,7 +38,7 @@ To be set in under `docs` in the `gasket.config.js`.
 
 ## Commands
 
-### docs
+### docs command
 
 The **docs** command, inspired by [cargo doc][rustdoc] from the Rust language,
 allows app developers to generate documentation for their Gasket projects. Only
@@ -22,16 +48,6 @@ determine what documentation is available.
 When running this command, markdown and other files will gathered from installed
 node modules and collated to the output directory when they can be viewed
 together.
-
-#### How it works
-
-This command will gather info about plugins and modules from their [metadata]
-and [docsSetup], and will assemble a [docsConfig] for each. These configs are
-are organized by type in a [docsConfigSet], which is then used to copy files to
-the outputDir, and perform any [transforms] as needed. An index is generated in
-markdown from docsConfigSet which serves as the entry in the doc files. If a
-plugin is installed that hooks the [docsView] lifecycle, it can serve the
-content in a more viewable fashion for the user.
 
 ## Lifecycles
 
@@ -48,7 +64,7 @@ The `docsSetup` lifecycle allows plugin developers to tune the docsConfig that
 is compile for their plugin. Files or file globs can be set, and links changed
 as needed. The `defaults` are an available option to reference.
 
-**Example**
+#### Example setup
 
 ```js
 module.exports = {
@@ -127,7 +143,7 @@ setup functions cannot be described this way:
 
 Allows a plugin to provide a view of the docs for the user.
 
-**Example**
+#### Example viewer
 
 ```js
 const view = require('example-markdown-viewer');
@@ -147,7 +163,9 @@ module.exports = {
 The [@gasket/plugin-docsify] hooks this lifecycle, to render the docs using
 Docsify.
 
-## Presets
+## Usage
+
+### Presets
 
 Presets can also set up custom docs. This is done by defining a `docsSetup`
 property object on the module, which will be used to establish the [DocsConfig]
@@ -163,6 +181,16 @@ module.exports = {
   }
 }
 ```
+
+## How it works
+
+The docs command will gather info about plugins and modules from their
+[metadata] and [docsSetup], and will assemble a [docsConfig] for each. These
+configs are are organized by type in a [docsConfigSet], which is then used to
+copy files to the outputDir, and perform any [transforms] as needed. An index is
+generated in markdown from docsConfigSet which serves as the entry in the doc
+files. If a plugin is installed that hooks the [docsView] lifecycle, it can
+serve the content in a more viewable fashion for the user.
 
 <!-- LINKS -->
 

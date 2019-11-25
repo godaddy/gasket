@@ -3,22 +3,29 @@
 Use [Docsify] to serve a website view of the collated docs from
 [@gasket/plugin-docs].
 
-## Setup
+## Installation
 
-First, install this plugin along with the docs plugin:
+#### New apps
 
 ```
-npm install @gasket/plugin-docs @gasket/plugin-docsify
+gasket create <app-name> --plugins @gasket/plugin-docs,@gasket/plugin-docsify
 ```
 
-Next, add these to the `plugins` section of your `gasket.config.js`:
+#### Existing apps
+
+```
+npm i @gasket/plugin-docs @gasket/plugin-docsify
+```
+
+Modify `plugins` section of your `gasket.config.js`:
 
 ```diff
-// gasket.config.js
-
 module.exports = {
   plugins: [
-+    add: ['@gasket/docs', '@gasket/docsify']
+    add: [
++      '@gasket/plugin-docs',
++      '@gasket/plugin-docsify'
+    ]
   ]
 }
 ```
@@ -26,7 +33,7 @@ module.exports = {
 Now, when you run `npx gasket docs` in your app, a nice Docsify website will be
 launched in your browser.
 
-## Options
+## Configuration
 
 To be set in under `docsify` in the `gasket.config.js`.
 
@@ -40,7 +47,7 @@ To be set in under `docsify` in the `gasket.config.js`.
 - `scripts` (string[]) - Optional additional scripts files, which can include
   [docsify plugins].
 
-### Example
+#### Example
 
 This example uses the `dark` theme, and enables the [Google Analytics plugin] by
 adding the script and config.

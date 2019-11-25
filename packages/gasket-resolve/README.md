@@ -3,7 +3,15 @@
 Essential module resolution and configuration management for Gasket plugins and
 presets.
 
+## Guides
+
 - [API docs]
+
+## Installation
+
+```
+npm i @gasket/redux
+```
 
 ## Naming convention
 
@@ -51,7 +59,7 @@ which will be removed in a future major release. Short names without the
 `@gasket` scope should be presumed to resolve to the `gasket-plugin-<name>`
 format.
 
-### Utilities
+## Utilities
 
 There are util functions for creating objects for working with different parts
 of package identifiers for plugins and presets.

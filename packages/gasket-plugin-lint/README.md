@@ -2,20 +2,24 @@
 
 Enables code style linting to be configured for Gasket apps.
 
-## Usage
+## Installation
 
-This plugin is intended to be used with the `gasket create` command for setting
-up new apps with linting support.
+This plugin should only be used during the create command for new apps.
 
 ```
-gasket create <app-name> --presets <preset-name> --plugins @gasket/lint-plugin
+gasket create <app-name> --plugins @gasket/plugin-lint
 ```
 
 Ideally, and for the most part, this plugin should already be included with
 primary presets, so that the `--plugins` flag is not needed. See the [Presets]
 section below to learn how preconfigure a code style.
 
-## Prompts
+## Usage
+
+The features of this plugin hooks are in the lifecycles it hooks during the
+create process.
+
+### Prompts
 
 During the create process, this plugin will prompt for selections to help choose
 the linting configuration.
@@ -106,12 +110,6 @@ the module for the preset, under a `createContext` property.
 - `stylelintConfig` - (string) Name of a [stylelint shared config] to add. Only
   when no `codeStyle`.
 
-- `cacheKeys` - (function[]) Optional cache key functions that accept the
-  request object as argument and return a string.
-- `cache` - (object) adjust the content cache settings using the
-  [lru-cache options]. By default, content will remained cached for 5 days from
-  last request.
-
 For example, say we have some team that wants to always use [Airbnb] style and
 with stylelint for their apps:
 
@@ -126,7 +124,7 @@ module.exports = {
 };
 ```
 
-Or, say we have another team with an internal ESLint config
+Or, say we have another team with an internal [ESLint] config
 
 ```js
 // @another/team-gasket-preset.js
@@ -150,6 +148,7 @@ with your suggestion.
 [GoDaddy]: #godaddy
 [Standard]: #standard
 [Airbnb]: #airbnb
+[Presets]: #presets
 
 [ESLint]: https://eslint.org/
 [stylelint]: https://stylelint.io/

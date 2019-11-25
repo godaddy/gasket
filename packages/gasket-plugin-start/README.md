@@ -2,6 +2,10 @@
 
 Enables commands essential to building and running Gasket projects.
 
+## Installation
+
+This is a default plugin in the Gasket CLI and is always available for use.
+
 ## Commands
 
 ### build command
@@ -59,8 +63,8 @@ Plugins should hook this lifecycle to prepare files for the app to be run.
 ### start
 
 This lifecycle can be used to run an app, such as by starting up a port
-listener. Generally, the start lifecycle should only be hooked by one plugin
-in an app.
+listener. Generally, the start lifecycle should only be hooked by one plugin in
+an app.
 
 ### preboot
 

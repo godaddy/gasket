@@ -1,12 +1,17 @@
 # @gasket/fetch
 
-Gasket will utilize the Fetch API as our standard request library.
-This package serves as a proxy for fetch implementations with server-side
-support.
+Gasket will utilize the Fetch API as our standard request library. This package
+serves as a proxy for fetch implementations with server-side support.
 
-## How to use it
+## Installation
 
-With promises:
+```
+npm i @gasket/fetch
+```
+
+## Usage
+
+#### Example with promises
 
 ```js
 import fetch from '@gasket/fetch';
@@ -21,7 +26,7 @@ fetch('url/to/resource')
   });
 ```
 
-With async/await:
+#### Example with async/await
 
 ```js
 import fetch from '@gasket/fetch';
@@ -36,7 +41,7 @@ const getSomething = async () => {
 };
 ```
 
-### Reference
+## Reference
 
 - https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
 - https://github.com/lquixada/cross-fetch

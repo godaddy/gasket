@@ -1,32 +1,20 @@
-# `@gasket/plugin-metadata`
+# @gasket/plugin-metadata
 
 Metadata is the information about the register plugins and presets, available to
 plugin lifecycle hooks. This data can be used in various was for plugins, most
 notably the [@gasket/plugin-docs] which uses it to collate docs for an app.
 
-## Overview
+## Installation
 
-Metadata begins with the info objects from the `Loader` of [@gasket/resolve] and
-builds data objects for [plugins][PluginData], and [presets][PresetData], and
-supporting [modules][ModuleData]. Any functions preset will be **redacted**, as
-metadata is not intended to be executed, but rather to is made available to read
-and inform plugins. This data can be added to, by hooking the [metadata]
-lifecycle in a plugin.
-
-Metadata provides insights to a plugin's shape and package information.
-Additional [detail info][DetailData] of plugins can added in the [metadata]
-lifecycle, such as what commands, lifecycles, or structures, a plugin provides.
-The [metadata object] be accessed in lifecycle hooks from `gasket.metadata`.
-
-Additionally, [ModuleData] for all the top-level app's dependencies are loaded
-by default, and is available from `gasket.metadata.app.modules`. Plugins can
-choose to bring in metadata for more modules, or augment what has already been
-loaded for the app. These, along with the app's modules, will be flattened and
-available from `gasket.metadata.modules`.
+This is a default plugin in the Gasket CLI and is always available for use.
 
 ## Lifecycles
 
 ### metadata
+
+Describe metadata for a plugin and optionally its supporting modules.
+
+#### Example
 
 This plugin implements the `metadata` lifecycle, which plugins can use to modify
 it's own metadata at runtime. Whatever is returned will replace the existing
@@ -78,9 +66,14 @@ module.exports = {
 }
 ```
 
-## Presets
+## Usage
 
-Presets can also set additional metadata. This is done by defining a `metadata`
+Beside the lifeycles available to plugins, metadata can also be described for
+preset and modules.
+
+### Presets
+
+Presets can describe additional metadata. This is done by defining a `metadata`
 property object on the module, which will get expanded to the [PresetData].
 
 ```js
@@ -93,9 +86,9 @@ module.exports = {
 }
 ```
 
-## Modules
+### Modules
 
-Lastly, modules can described metadata by defining a `gasket.metadata` property
+Lastly, modules can describe metadata by defining a `gasket.metadata` property
 in the package.json which will get expanded to the [ModuleData]:
 
 ```json
@@ -118,8 +111,28 @@ This is especially useful to surface guides with
 [Gasket docs][@gasket/plugin-docs] for supporting packages that are intended to
 be used with Gasket, but are not plugins.
 
+## How it works
+
+Metadata begins with the info objects from the `Loader` of [@gasket/resolve] and
+builds data objects for [plugins][PluginData], and [presets][PresetData], and
+supporting [modules][ModuleData]. Any functions preset will be **redacted**, as
+metadata is not intended to be executed, but rather to is made available to read
+and inform plugins. This data can be added to, by hooking the [metadata]
+lifecycle in a plugin.
+
+Metadata provides insights to a plugin's shape and package information.
+Additional [detail info][DetailData] of plugins can added in the [metadata]
+lifecycle, such as what commands, lifecycles, or structures, a plugin provides.
+The [metadata object] be accessed in lifecycle hooks from `gasket.metadata`.
+
+Additionally, [ModuleData] for all the top-level app's dependencies are loaded
+by default, and is available from `gasket.metadata.app.modules`. Plugins can
+choose to bring in metadata for more modules, or augment what has already been
+loaded for the app. These, along with the app's modules, will be flattened and
+available from `gasket.metadata.modules`.
 
 <!-- LINKS -->
+
 [metadata]: #metadata
 [ModuleData]: docs/api.md#ModuleData
 [PluginData]: docs/api.md#PluginData

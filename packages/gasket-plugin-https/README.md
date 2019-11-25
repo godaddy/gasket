@@ -1,47 +1,68 @@
-# `@gasket/plugin-https`
+# @gasket/plugin-https
 
 A plugin that creates `http` and `https` servers based on the given `gasket`
 configuration.
 
-## Table of Contents
-
-- [`@gasket/plugin-https`](#gasketplugin-https)
-  - [Table of Contents](#table-of-contents)
-  - [Installation](#installation)
-  - [Configuration](#configuration)
-  - [Lifecycles](#lifecycles)
-    - [createServers](#createservers)
-    - [servers](#servers)
-    - [terminus](#terminus)
-    - [healthcheck](#healthcheck)
-    - [onSendFailureDuringShutdown](#onsendfailureduringshutdown)
-    - [beforeShutdown](#beforeshutdown)
-    - [onSignal](#onsignal)
-    - [onShutdown](#onshutdown)
-  - [Configuration](#configuration-1)
-- [LICENSE: MIT](#license-mit)
-
 ## Installation
 
+#### New apps
+
 ```
-npm install @gasket/plugin-https
+gasket create <app-name> --plugins @gasket/plugin-https
+```
+
+#### Existing apps
+
+```
+npm i @gasket/plugin-https
+```
+
+Modify `plugins` section of your `gasket.config.js`:
+
+```diff
+module.exports = {
+  plugins: [
+    add: [
++      '@gasket/plugin-https'
+    ]
+  ]
+}
 ```
 
 ## Configuration
 
-Add it to the `plugins` section of your `gasket.config.js`:
+You can specify what port to open up on, or what certificates to use via
+`gasket.config.js`.
 
 ```js
+// gasket.config.js
 module.exports = {
-  plugins: {
-    add: ['@gasket/https']
+  http: 80,
+  https: {
+    port: 443,
+    root: '/path/to/ssl/files',
+    key: 'your-key.pem',
+    cert: 'your-cert.pem',
+    ca: 'your-ca.pem' // Can be an Array of CAs
+  },
+  terminus: {
+    healthcheck: '/healthcheck'
   }
-}
+};
 ```
+
+[Terminus] is configured with the following defaults:
+
+- `healthcheck`: `/healthcheck`
+- `signals`: `['SIGTERM']`
+
+Any of the options that are specified on the Terminus project page are accepted
+in the `terminus` object. Just note that the functions are already assigned by
+default to trigger the appropriate lifecycle events.
 
 ## Lifecycles
 
-#### createServers
+### createServers
 
 Executed in order to retrieve the server options and the handler
 
@@ -60,7 +81,7 @@ createServers: async function createServers(gasket, serverOpts) {
 }
 ```
 
-#### servers
+### servers
 
 Your application can use this plugin to hook the `servers` hook. These servers
 are provided directly from the [create-servers] callback.
@@ -90,8 +111,8 @@ details.
 
 Allows you to dynamically configure terminus and override any of the handlers
 that we assign by default. Our default handlers `onSendFailureDuringShutdown`,
-`beforeShutdown`, `onSignal`, and `onShutdown` all take care of triggering
-the appropriate lifecycle events, so if you override those, you will no longer
+`beforeShutdown`, `onSignal`, and `onShutdown` all take care of triggering the
+appropriate lifecycle events, so if you override those, you will no longer
 receive those events.
 
 ```js
@@ -131,8 +152,8 @@ module.exports = {
 }
 ```
 
-The lifecycle receives the custom `HealthCheckError` class from terminus if
-you want to throw custom errors.
+The lifecycle receives the custom `HealthCheckError` class from terminus if you
+want to throw custom errors.
 
 ### onSendFailureDuringShutdown
 
@@ -151,9 +172,9 @@ module.exports = {
 
 ### beforeShutdown
 
-Triggered when we've received a signal that triggered the shutdown process
-of the server. This is the first function that is called and allows you to
-clean up your server before it's stopped.
+Triggered when we've received a signal that triggered the shutdown process of
+the server. This is the first function that is called and allows you to clean up
+your server before it's stopped.
 
 ```js
 module.exports = {
@@ -183,8 +204,8 @@ module.exports = {
 
 ### onShutdown
 
-Triggered when the `onSignal` lifecycle has completed, right before the
-`node` process is killed.
+Triggered when the `onSignal` lifecycle has completed, right before the `node`
+process is killed.
 
 ```js
 module.exports = {
@@ -196,38 +217,7 @@ module.exports = {
 }
 ```
 
-## Configuration
-
-You can specify what port to open up on, or what certificates to use via
-`gasket.config.js`.
-
-```js
-// gasket.config.js
-{
-  http: 80,
-  https: {
-    port: 443,
-    root: '/path/to/ssl/files',
-    key: 'your-key.pem',
-    cert: 'your-cert.pem',
-    ca: 'your-ca.pem', // Can be an Array of CAs
-  },
-  terminus: {
-    healthcheck: '/healthcheck'
-  }
-};
-```
-
-[Terminus][term] is configured with the following defaults:
-
-- `healthcheck`: `/healthcheck`
-- `signals`: `['SIGTERM']`
-
-Any of the options that are specified on the Terminus project page are accepted
-in the `terminus` object. Just note that the functions are already assigned
-by default to trigger the appropriate lifecycle events.
-
 ## LICENSE: [MIT](./LICENSE)
 
 [create-servers]: https://github.com/http-party/create-servers#create-servers
-[term]: https://github.com/godaddy/terminus
+[terminus]: https://github.com/godaddy/terminus
