@@ -29,6 +29,17 @@ nav > .github-logo {
 
 /* --- STYLES --- */
 
+.front-cover a {
+    text-decoration: var(--link-text-decoration);
+    color: var(--color-primary-200);
+}
+
+.front-cover a:hover {
+    cursor: pointer;
+    text-decoration: var(--link-text-decoration--hover);
+    color: var(--color-primary-200);
+}
+
 .front-cover h2 {
     display: block;
     margin: var(--heading-h2-margin, var(--heading-margin));
@@ -79,10 +90,15 @@ nav > .github-logo {
 
 .front-cover header a {
     background-color: var(--color-secondary-100);
+    color: var(--color-primary-300);
     border-radius: 4px;
     padding: 10px 24px;
     text-decoration: none;
     font-weight: 500;
+}
+
+.front-cover header a:hover {
+    color: var(--color-primary-300);
 }
 
 .front-cover section {
@@ -124,16 +140,10 @@ nav > .github-logo {
 
 .front-cover .links > a {
     color: var(--color-secondary-100);
-    text-decoration: var(--link-text-decoration);
     display: block;
     font-size: 16px;
     line-height: 28px;
     margin-bottom: 16px;
-}
-
-.front-cover .links > a:hover {
-    text-decoration: underline;
-    cursor: pointer;
 }
 
 .front-cover .links > a:not([href^="#/"]):after {
@@ -164,6 +174,9 @@ nav > .github-logo {
 
 .front-cover section.dark p {
     color: var(--color-nuetral-100);
+}
+.front-cover section.dark a {
+    color: var(--color-secondary-100);
 }
 
 .gasket-element-row {
