@@ -238,11 +238,31 @@ section.dark:after {
 section.dark:before {
     top: -63px;
     clip-path: polygon(62.5% 98%, 100% 0%, 100% 100%, 0% 100%, 0% 10%);
+    background-image: repeating-linear-gradient(
+            -60deg,
+            var(--color-secondary-100),
+            var(--color-secondary-100) 4px,
+            transparent 4px,
+            transparent 8px
+    );
+    background-repeat: no-repeat;
+    background-size: 62.5% 75%;
 }
 
 section.dark:after {
     bottom: -63px;
     clip-path: polygon(37.5% 2%, 100% 90%, 100% 0%, 0% 0%, 0% 100%);
+    background-image: repeating-linear-gradient(
+            60deg,
+            var(--color-secondary-100),
+            var(--color-secondary-100) 4px,
+            transparent 4px,
+            transparent 8px
+    );
+    background-position-y: 100%;
+    background-position-x: 100%;
+    background-repeat: no-repeat;
+    background-size: 62.5% 75%;
 }
 
 /* --- BREAKPOINTS --- */
@@ -281,11 +301,11 @@ section.dark:after {
         height: 32px;
     }
 
-    .dark:before {
+    section.dark:before {
         top: -31px;
     }
 
-    .dark:after {
+    section.dark:after {
         bottom: -31px;
     }
 
