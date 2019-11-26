@@ -18,7 +18,7 @@ $ npm install -g @gasket/cli
 $ gasket COMMAND
 running command...
 $ gasket (-v|--version|version)
-@gasket/cli/3.2.1 darwin-x64 node-v10.14.2
+@gasket/cli/3.2.2 darwin-x64 node-v8.16.0
 $ gasket --help [COMMAND]
 USAGE
   $ gasket COMMAND
@@ -56,7 +56,7 @@ OPTIONS
                                      comma-separated values: --plugins=jest,zkconfig^1.0.0
 ```
 
-_See code: [src/commands/create.js](https://github.com/godaddy/gasket/blob/v3.2.1/src/commands/create.js)_
+_See code: [src/commands/create.js](https://github.com/godaddy/gasket/blob/v3.2.2/src/commands/create.js)_
 
 ## `gasket help [COMMAND]`
 
