@@ -1,7 +1,15 @@
 <main class='front-cover'>
+    <nav class="app-nav no-badge">
+        <ul>
+            <li><a href="#/docs/README">DOCS</a></li>
+            <li><a href="#/docs/README#plugins">PLUGINS</a></li>
+            <li><a href="#/README"><img class="logo-github" width="40" height="40" src="/site/github.svg" /></a></li>
+        </ul>
+    </nav>
 
     <header class="splash">
-        <h1>Gasket</h1>
+        <img class="logo" src="/site/logo.svg"/>
+        <h2>Introducing Gasket</h2>
         <p>Framework Maker for JavaScript Applications</p>
         <a href="#/docs/README">Get Started</a>
     </header>
@@ -9,45 +17,82 @@
     <section class="dark">
         <article>
             <h2>What is Gasket?</h2>
-            <p>Gasket helps teams and communities compose frameworks to deliver apps of various shapes and sizes. While
-                scaffolding is
-                important, Gasket offers functionality beyond simple boilerplate generation. Gasket also provides the essential
-                elements for libraries and layers of apps to integrate together during runtime.</p>
+            <p>Gasket helps teams and communities compose frameworks to deliver
+                apps of various shapes and sizes. While scaffolding is important,
+                Gasket offers functionality beyond simple boilerplate generation.
+                Gasket also provides the essential elements for libraries and layers
+                of apps to integrate together during runtime.</p>
         </article>
     </section>
 
     <section>
         <article>
             <h2>How it works</h2>
-            <h3>CLI loads configured Presets & Plugins</h3>
-            <p>The entry point to creating and interacting with apps. The CLI provides the frame and engine upon which apps are
-                built.</p>
-            <h3>Presets provide Plugins</h3>
-            <p>Logical groups of plugins to build apps. Tech choices for teams, integrations for communities. Effectively, the
-                framework you want to build apps within.</p>
-            <h3>Plugins add Commands & Hooks</h3>
-            <p>The building blocks of an app framework - plugins provide the scaffolding and circuitry to integrate libraries and
-                have
-                them communicate together.</p>
-            <h3>Commands execute Lifecycles</h3>
-            <p>Build and start your app. Analyze it, or read the docs. Just a few commands you can execute with available plugins,
-                or
-                create your own.</p>
-            <h3>Lifecycles handled by Hooks</h3>
-            <p>The nervous system to transmit signals between parts of apps. Not your typical events; lifecycles can be handled in
-                order and executed in sync.</p>
-            <h3>Hooks execute additional Lifecycles</h3>
-            <p>Receptors to handle lifecycle events and perform the actual work of integrating libraries and implementing
-                application
-                code.</p>
+            <p>TODO: Brief overview of elements</p>
+
+            <div class="gasket-element-row">
+                <div class="gasket-element-column">
+                    <img class="element-icon" src="/site/icon-cli.svg"/>
+                    <div class="element-caption">CLI</div>
+                    <h3>CLI loads configured Presets and Plugins</h3>
+                    <p>The entry point to creating and interacting with apps.
+                        The CLI provides the frame and engine upon which apps are built.</p>
+                </div>
+
+                <div class="gasket-element-column">
+                    <img class="element-icon" src="/site/icon-presets.svg"/>
+                    <div class="element-caption">PRESETS</div>
+                    <h3>Presets provide Plugins</h3>
+                    <p>Logical groups of plugins to build apps. Tech choices for teams, integrations for communities.
+                        Effectively, the framework you want to build apps within.</p>
+                </div>
+            </div>
+
+
+            <div class="gasket-element-row">
+                <div class="gasket-element-column">
+                    <img class="element-icon" src="/site/icon-plugins.svg"/>
+                    <div class="element-caption">PLUGINS</div>
+                    <h3>Plugins add Commands & Hooks</h3>
+                    <p>The building blocks of an app framework - plugins provide the scaffolding
+                        and circuitry to integrate libraries and have them communicate together.</p>
+                </div>
+
+                <div class="gasket-element-column">
+                    <img class="element-icon" src="/site/icon-commands.svg"/>
+                    <div class="element-caption">COMMANDS</div>
+                    <h3>Commands execute Lifecycles</h3>
+                    <p>Build and start your app. Analyze it, or read the docs.
+                        Just a few commands you can execute with available plugins, or create your own.</p>
+                </div>
+            </div>
+
+            <div class="gasket-element-row">
+                <div class="gasket-element-column">
+                    <img class="element-icon" src="/site/icon-lifecycles.svg"/>
+                    <div class="element-caption">LIFECYCLES</div>
+                    <h3>Lifecycles handled by Hooks</h3>
+                    <p>The nervous system to transmit signals between parts of apps.
+                        Not your typical events; lifecycles can be handled in order and executed in sync.</p>
+                </div>
+
+                <div class="gasket-element-column">
+                    <img class="element-icon" src="/site/icon-hooks.svg"/>
+                    <div class="element-caption">HOOKS</div>
+                    <h3>Hooks execute additional Lifecycles</h3>
+                    <p>Receptors to handle lifecycle events and perform the actual work of
+                        integrating libraries and implementing application code.</p>
+                </div>
+            </div>
+
         </article>
     </section>
 
     <section class="dark">
         <article>
             <h2>Plugins</h2>
-            <p>Brief introduction to what plugins are or what they do in conjunction with Gasket.</p>
-            <svg height="200px"></svg>
+            <p>TODO: Brief introduction to what plugins are or what they do in conjunction with Gasket.</p>
+            <img class="plugins-graphic" src="/site/plugin-logos.svg"/>
             <p>And much more. See the full list and also how you can contribute!</p>
         </article>
     </section>

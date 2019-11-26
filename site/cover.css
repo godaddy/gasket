@@ -10,38 +10,52 @@
     margin: 0;
 }
 
+.app-nav.no-badge {
+    right: 24px;
+    font-size: 13px;
+    top: 24px;
+    line-height: 13px;
+}
+
+nav.hidden {
+    display: none;
+}
+
+nav > .logo-github {
+    width: 40px;
+    height: 40px;
+}
 /* --- STYLES --- */
 
 .front-cover {
-    background-repeat: repeat;
-    background-image: url("gasket-bg-stripes.png");
+    /*background-repeat: repeat;*/
+    /*background-image: url("gasket-bg-stripes.png");*/
 }
 
-.front-cover h1 {
-    color: var(--color-primary-200);
-    font-size: 96px;
-    font-weight: 500;
-}
+/*.front-cover h1 {*/
+/*    color: var(--color-primary-200);*/
+/*    font-size: 96px;*/
+/*    font-weight: 500;*/
+/*}*/
 
 .front-cover h2 {
-    margin: 0;
-    padding: 0;
+    display: block;
     margin: var(--heading-h2-margin, var(--heading-margin));
     padding: var(--heading-h2-padding, var(--heading-padding));
+    margin-top: 0;
     font-size: var(--heading-h2-font-size);
     font-weight: var(--heading-font-weight);
-    line-height: 48px;
+    line-height: var(--heading-h2-line-height);
     color: var(--heading-color);
 }
 
 .front-cover h3 {
-    margin: 0;
-    padding: 0;
     margin: var(--heading-h3-margin, var(--heading-margin));
     padding: var(--heading-h3-padding, var(--heading-padding));
+    margin-top: 0;
     font-size: var(--heading-h3-font-size);
     font-weight: var(--heading-font-weight);
-    line-height: 48px;
+    line-height: var(--heading-h3-line-height);
     color: var(--heading-color);
 }
 
@@ -51,18 +65,25 @@
 }
 
 .front-cover header {
+    position: relative;
     padding: 8rem 0;
     /*background-color: var(--color-primary-300);*/
     width: 100%;
 }
 
+.front-cover header .logo {
+    position: absolute;
+    top: 40px;
+    left: 64px;
+}
+
 
 .front-cover header p {
     color: var(--color-nuetral-300);
-    font-size: 25px;
-    line-height: 36px;
+    font-size: 31px;
+    line-height: 40px;
     font-weight: 300;
-    padding: 32px 0;
+    padding-bottom: 24px;
 }
 
 
@@ -75,11 +96,18 @@
 }
 
 .front-cover section {
-    padding-bottom: 128px;
+    padding: 96px 0;
 }
 
 .front-cover article {
-    max-width: 800px;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.front-cover article > p {
+    text-align: center;
+    max-width: 760px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -128,7 +156,7 @@
 
 .front-cover section.dark {
     background-color: var(--color-primary-300);
-    background-blend-mode: color-dodge;
+    /*background-blend-mode: color-dodge;*/
 }
 
 .front-cover section.dark h2 {
@@ -137,4 +165,57 @@
 
 .front-cover section.dark p {
     color: var(--color-nuetral-100);
+}
+
+.gasket-element-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.gasket-element-column {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 100%;
+    flex: 1;
+
+    text-align: left;
+    padding: 64px 0;
+}
+.gasket-element-column:first-of-type {
+    padding-right: 64px;
+    border-right: 1px solid var(--color-primary-100);
+}
+
+.gasket-element-column:last-of-type {
+    padding-left: 64px;
+}
+
+.gasket-element-row {
+    border-bottom: 1px solid var(--color-primary-100);
+    padding: 0 64px;
+}
+
+.gasket-element-row:last-of-type {
+    border-bottom: 0;
+}
+
+.element-icon {
+    width: 48px;
+}
+
+.front-cover .element-caption {
+    margin-top: 28px;
+    border-top: 2px solid var(--color-accent-red-100);
+    padding: 16px 0;
+    width: 96px;
+
+    font-size: 13px;
+    line-height: 20px;
+    color: var(--color-nuetral-300);
+}
+
+.plugins-graphic {
+    padding: 64px 0;
 }
