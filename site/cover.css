@@ -1,9 +1,3 @@
-:root {
-    --bdr-angle-sm: 32px;
-    --bdr-angle-lg: 64px;
-}
-
-
 
 /* --- OVERRIDES --- */
 
@@ -231,54 +225,24 @@ nav > .github-logo {
 
 /* --- BORDERS --- */
 
-.bdr-t,
-.bdr-b {
-    width: 100%;
-    height: auto;
-}
-
-.bdr-t:before,
-.bdr-t:after,
-.bdr-b:before,
-.bdr-b:after {
+section.dark:before,
+section.dark:after {
     content: '';
     position: absolute;
-    height: var(--bdr-angle-lg);
-    background: var(--color-primary-300);
-}
-
-.bdr-t:before,
-.bdr-t:after {
-    bottom: 99.9%;
-}
-
-.bdr-t:before {
     left: 0;
-    width: 62.5%;
-    clip-path: polygon(0 10%, 0% 100%, 100% 100%);
+    width: 100%;
+    height: 64px;
+    background-color: var(--color-primary-300);
 }
 
-.bdr-t:after {
-    right: 0;
-    width: 37.5%;
-    clip-path: polygon(100% 10%, 0% 100%, 100% 100%);
+section.dark:before {
+    top: -63px;
+    clip-path: polygon(62.5% 98%, 100% 0%, 100% 100%, 0% 100%, 0% 10%);
 }
 
-.bdr-b:before,
-.bdr-b:after {
-    top: 99.9%;
-}
-
-.bdr-b:before {
-    left: 0;
-    width: 37.5%;
-    clip-path: polygon(100% 0, 0 0, 0 90%);
-}
-
-.bdr-b:after {
-    right: 0;
-    width: 62.5%;
-    clip-path: polygon(100% 0, 0 0, 100% 90%);
+section.dark:after {
+    bottom: -63px;
+    clip-path: polygon(37.5% 2%, 100% 90%, 100% 0%, 0% 0%, 0% 100%);
 }
 
 /* --- BREAKPOINTS --- */
@@ -312,11 +276,17 @@ nav > .github-logo {
         padding: 0;
     }
 
-    .bdr-t:before,
-    .bdr-t:after,
-    .bdr-b:before,
-    .bdr-b:after {
-        height: var(--bdr-angle-sm);
+    section.dark:before,
+    section.dark:after {
+        height: 32px;
+    }
+
+    .dark:before {
+        top: -31px;
+    }
+
+    .dark:after {
+        bottom: -31px;
     }
 
     .gasket-element-row {
