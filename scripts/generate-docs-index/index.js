@@ -12,7 +12,7 @@ const endTag = '<!-- END GENERATED -->';
 const projectRoot = path.resolve(__dirname, '..', '..');
 const cliBin = path.join(projectRoot, 'packages', 'gasket-cli', 'bin', 'run');
 const sourcePath = path.join(__dirname, '.docs', 'README.md');
-const targetPath = path.join(projectRoot, 'docs', 'README.md');
+const targetPath = path.join(projectRoot, 'README.md');
 
 async function main() {
   await runShellCommand(cliBin, ['docs', '--no-view'], { cwd: __dirname });
