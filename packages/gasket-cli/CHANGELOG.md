@@ -1,5 +1,7 @@
 # `@gasket/cli`
 
+### 3.2.2
+
 -  Fail on on missing modules imported to gasket.config([#115])
 
 ### 3.2.1
