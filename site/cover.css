@@ -25,18 +25,8 @@ nav > .github-logo {
     width: 40px;
     height: 40px;
 }
+
 /* --- STYLES --- */
-
-.front-cover {
-    /*background-repeat: repeat;*/
-    /*background-image: url("gasket-bg-stripes.png");*/
-}
-
-/*.front-cover h1 {*/
-/*    color: var(--color-primary-200);*/
-/*    font-size: 96px;*/
-/*    font-weight: 500;*/
-/*}*/
 
 .front-cover h2 {
     display: block;
@@ -61,22 +51,22 @@ nav > .github-logo {
 
 .front-cover {
     width: auto;
-    /*background-color: white;*/
 }
 
 .front-cover header {
     position: relative;
     padding: 8rem 0;
-    /*background-color: var(--color-primary-300);*/
     width: 100%;
+    /*background-image: url("bg-schematic.svg");*/
+    /*background-position: center bottom;*/
+    /*background-repeat: repeat-x;*/
 }
 
-.front-cover header .logo {
+.front-cover .logo {
     position: absolute;
     top: 40px;
     left: 64px;
 }
-
 
 .front-cover header p {
     color: var(--color-nuetral-300);
@@ -85,7 +75,6 @@ nav > .github-logo {
     font-weight: 300;
     padding-bottom: 24px;
 }
-
 
 .front-cover header a {
     background-color: var(--color-secondary-100);
@@ -100,24 +89,19 @@ nav > .github-logo {
 }
 
 .front-cover article {
-    max-width: 900px;
+    max-width: 800px;
     margin-left: auto;
     margin-right: auto;
-}
-
-.front-cover article > p {
-    text-align: center;
-    max-width: 760px;
-    margin-left: auto;
-    margin-right: auto;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 .front-cover footer {
     color: var(--color-nuetral-300);
-    padding: 8rem 0;
+    padding-top: 64px;
     background-color: var(--color-nuetral-400);
     width: 100%;
-    min-height: 450px;
+    min-height: 350px;
 }
 
 .front-cover .links {
@@ -125,7 +109,7 @@ nav > .github-logo {
     color: var(--color-nuetral-300);
     display: block;
     float: left;
-    width: 200px;
+    width: 25%;
     font-size: 13px;
     line-height: 20px;
 }
@@ -156,12 +140,16 @@ nav > .github-logo {
     padding-left:4px;
 }
 
-.front-cover div.links.copyright {
-    padding-top: 64px;
-    /*display: block;*/
-    /*float: left;*/
-    /*width: 300px;*/
-    /*background-color: pink;*/
+.godaddy-open-source {
+    display: block;
+    background-image: url("godaddy-oss-logo.svg");
+    background-repeat: no-repeat;
+    padding-left: 60px;
+    width: 150px;
+
+    float: left;
+    margin-top: 24px;
+    margin-bottom: 32px;
 }
 
 .front-cover section.dark {
@@ -180,7 +168,8 @@ nav > .github-logo {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    width: 100%;
+    width: 880px;
+    margin-left: -60px;
 }
 
 .gasket-element-column {
@@ -188,10 +177,10 @@ nav > .github-logo {
     flex-direction: column;
     flex-basis: 100%;
     flex: 1;
-
     text-align: left;
     padding: 64px 0;
 }
+
 .gasket-element-column:first-of-type {
     padding-right: 64px;
     border-right: 1px solid var(--color-primary-100);
@@ -227,4 +216,103 @@ nav > .github-logo {
 
 .plugins-graphic {
     padding: 64px 0;
+    max-width: 512px;
+    width: 100%;
+}
+
+@media only screen and (max-width: 992px) {
+
+    .gasket-element-row {
+        width: 100%;
+        padding: 0;
+        margin-left: 0;
+    }
+
+    .gasket-element-column {
+        padding: 64px 32px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+
+    .front-cover {
+        text-align: left;
+    }
+
+    .front-cover article {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .front-cover p {
+        padding: 0;
+    }
+
+    .gasket-element-row {
+        display: inline;
+    }
+
+    .gasket-element-column {
+        display: inline-block;
+        padding: 32px 0 0 0;
+    }
+
+    .gasket-element-column:first-of-type {
+        padding-right: 0;
+        border-right: 0;
+    }
+
+    .gasket-element-column:last-of-type {
+        padding-left: 0;
+    }
+
+    .gasket-element-row {
+        border-bottom: 0;
+        padding: 0;
+    }
+
+    .front-cover .links {
+        width: 33%;
+        padding-right: 24px;
+    }
+
+    .front-cover .links:last-of-type {
+        padding-top: 16px;
+        width: 100%;
+        padding-right: 0;
+    }
+
+    .front-cover .logo {
+        position: absolute;
+        top: 16px;
+        left: 24px;
+    }
+
+    .godaddy-open-source {
+        margin-top: 0;
+        margin-right: 32px;
+    }
+
+    .front-cover footer {
+        min-height: 400px;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .xs-hidden {
+        display: none !important;
+    }
+
+    nav .github-logo {
+        width: 32px;
+        height: 32px;
+    }
+
+    .front-cover .logo {
+        left: 20px;
+    }
+
+    .app-nav.no-badge {
+        right: 20px;
+    }
 }
