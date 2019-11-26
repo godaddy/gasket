@@ -1,6 +1,7 @@
 const path = require('path');
 const url = require('url');
 const { createConfig } = require('./config');
+const { pluginIdentifier } = require('@gasket/resolve');
 
 module.exports = {
   dependencies: ['webpack'],
@@ -13,11 +14,11 @@ module.exports = {
     * @param {CreateContext} context - Create context
     * @param {Files} context.files - The Gasket Files API.
     * @param {PackageJson} context.pkg - The Gasket PackageJson API.
-    * @param {PluginName[]} context.plugins - The short names of included Gasket plugins.
+    * @param {PluginName} context.testPlugin - The name of included test plugins.
     * @public
     */
     create: function create(gasket, context) {
-      const { files, pkg, plugins = [] } = context;
+      const { files, pkg, testPlugin } = context;
 
       files.add(
         `${__dirname}/generator/app/.*`,
@@ -26,7 +27,7 @@ module.exports = {
       );
 
       ['jest', 'mocha'].forEach(tester => {
-        if (plugins.includes(`@gasket/${tester}`)) {
+        if (pluginIdentifier(testPlugin).longName === `@gasket/plugin-${tester}`) {
           files.add(
             `${__dirname}/generator/${tester}/*`,
             `${__dirname}/generator/${tester}/**/*`

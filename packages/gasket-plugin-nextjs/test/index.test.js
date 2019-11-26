@@ -111,7 +111,7 @@ describe('create hook', () => {
         add: spy()
       },
       files,
-      plugins: ['@gasket/mocha']
+      testPlugin: '@gasket/mocha'
     });
 
     const root = path.join(__dirname, '..');
@@ -128,7 +128,7 @@ describe('create hook', () => {
         add: spy()
       },
       files,
-      plugins: ['@gasket/jest']
+      testPlugin: '@gasket/jest'
     });
 
     const root = path.join(__dirname, '..');
