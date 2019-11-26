@@ -6,21 +6,21 @@ const assume = require('assume');
 const defaultPlugins = require('../../../src/config/default-plugins');
 
 const readDirStub = sinon.stub();
-const tryRequireStub = sinon.stub().callsFake(mod => {
-  if (mod === '/path/to/gasket.config') return { mockConfig: true };
-  if (mod === '/path/to/bad/gasket.config') throw new Error('Error reading gasket.config');
-  // if mod is missing
-  return null;
+const statStub = sinon.stub().callsFake(mod => {
+  if (mod === '/path/to/gasket.config.js' || mod === ' /path/to/app/gasket.config.js') return { mockConfig: true };
+  if (mod === '/path/to/bad/gasket.config.js') return { mockConfig: true };
+  if (mod === '/path/to/missing/gasket.config.js') throw new Error('No such file or directory');
 });
 
 const utils = proxyquire('../../../src/config/utils', {
   'util': { promisify: f => f },
   'fs': {
-    readdir: readDirStub
+    readdir: readDirStub,
+    statSync: statStub
   },
-  '@gasket/utils': {
-    tryRequire: tryRequireStub
-  }
+  '/path/to/gasket.config': { mockConfig: true },
+  '/path/to/app/gasket.config': { mockConfig: true },
+  '/path/to/bad/gasket.config': new Error('Bad gasket config')
 });
 
 describe('config utils', () => {
@@ -59,12 +59,19 @@ describe('config utils', () => {
   describe('loadConfigFile', () => {
     it('uses config flag if absolute path', () => {
       utils.loadConfigFile({ config: '/path/to/gasket.config' });
-      assume(tryRequireStub).calledWith('/path/to/gasket.config');
+      assume(statStub).calledWith('/path/to/gasket.config.js');
     });
 
     it('joins root with config if not absolute path', () => {
       utils.loadConfigFile({ root: '/path/to/app/', config: 'gasket.config' });
-      assume(tryRequireStub).calledWith('/path/to/app/gasket.config');
+      assume(statStub).calledWith('/path/to/app/gasket.config.js');
+    });
+
+    it('errors if config is bad', () => {
+      const err = utils.loadConfigFile({ config: '/path/to/bad/gasket.config' });
+      // console.log("What is erro?", err);
+      assume(err instanceof Error).is.true();
+      assume(err.message).eqls('Bad gasket config');
     });
   });
 
