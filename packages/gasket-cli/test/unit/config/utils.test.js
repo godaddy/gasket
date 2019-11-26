@@ -69,7 +69,6 @@ describe('config utils', () => {
 
     it('errors if config is bad', () => {
       const err = utils.loadConfigFile({ config: '/path/to/bad/gasket.config' });
-      // console.log("What is erro?", err);
       assume(err instanceof Error).is.true();
       assume(err.message).eqls('Bad gasket config');
     });
