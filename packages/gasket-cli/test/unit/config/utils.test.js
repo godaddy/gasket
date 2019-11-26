@@ -253,5 +253,13 @@ describe('config utils', () => {
       assume(mockGasket.config.pineapple).eqls({ color: 'yellow', weight: '900g', quantity: 1 });
       assume(mockGasket.config.grape).eqls({ color: 'purple' });
     });
+
+    it('does not blow away named classes present in the config', function () {
+      class Avatar {}
+      mockGasket.config = { aang: new Avatar() };
+
+      utils.assignPresetConfig(mockGasket);
+      assume(mockGasket.config.aang).is.instanceof(Avatar);
+    });
   });
 });

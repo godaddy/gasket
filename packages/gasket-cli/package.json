@@ -1,6 +1,6 @@
 {
   "name": "@gasket/cli",
-  "version": "3.2.0",
+  "version": "3.2.1",
   "description": "CLI for rapid application development with gasket",
   "main": "src/index.js",
   "bin": {
@@ -66,6 +66,7 @@
     "handlebars": "^4.4.3",
     "inquirer": "6.3.1",
     "json5": "^2.1.0",
+    "lodash.defaultsdeep": "^4.6.1",
     "map-stream": "^0.1.0",
     "mkdirp": "^0.5.1",
     "ora": "^3.4.0",
