@@ -1,18 +1,15 @@
 //
-// When the cover page is visible, hide the nav
+// When the cover page is visible, hide the nav and snap to top
 //
 
 function install(hook) {
-  let cover;
-  let nav;
-
   hook.doneEach(function doneEach() {
-    cover = window.Docsify.dom.find('.cover');
-    nav = window.Docsify.dom.find('.app-nav');
+    const nav = window.Docsify.dom.find('.app-nav');
 
-    const hide = cover && cover.classList.contains('show');
-    if (hide) {
+    const isCover = window.location.hash === '#/';
+    if (isCover) {
       nav.classList.add('hidden');
+      window.scrollTo(0, 0);
     } else {
       nav.classList.remove('hidden');
     }

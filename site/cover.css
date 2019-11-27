@@ -22,7 +22,8 @@ nav.hidden {
     display: none;
 }
 
-nav > .github-logo {
+nav .github-logo {
+    display: inline-block;
     width: 40px;
     height: 40px;
 }

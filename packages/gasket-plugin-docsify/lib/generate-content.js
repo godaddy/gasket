@@ -41,7 +41,6 @@ async function generateContent(docsifyConfig, docsConfigSet) {
   const scripts = [
     '//unpkg.com/docsify/lib/docsify.min.js',
     'scripts/toc-link-plugin.js',
-    'scripts/cover-snap-plugin.js',
     '//cdn.jsdelivr.net/npm/prismjs@1/components/prism-jsx.min.js',
     '//cdn.jsdelivr.net/npm/prismjs@1/components/prism-json.min.js',
     '//cdn.jsdelivr.net/npm/prismjs@1/components/prism-diff.min.js',
