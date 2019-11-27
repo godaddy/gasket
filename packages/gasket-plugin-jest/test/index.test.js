@@ -2,16 +2,38 @@ const self = require('../package.json');
 const plugin = require('../index.js');
 const path = require('path');
 
-describe('Plugin', () => {
+describe('Plugin', function () {
   async function create() {
-    const files = [];
     const pkg = {};
 
-    await plugin.hooks.create({}, {
+    await plugin.hooks.create.handler({}, {
       pkg: {
         add: (key, value) => {
-          pkg[key] = value;
-        }
+          pkg[key] = pkg[key] || {};
+          pkg[key] = { ...pkg[key], ...value };
+        },
+        has: (key, value) => !!pkg[key] && !!pkg[key][value]
+      }
+    });
+
+    return { pkg };
+  }
+
+  async function createReact() {
+    const files = [];
+    const pkg = {
+      dependencies: {
+        react: '1.0.0'
+      }
+    };
+
+    await plugin.hooks.create.handler({}, {
+      pkg: {
+        add: (key, value) => {
+          pkg[key] = pkg[key] || {};
+          pkg[key] = { ...pkg[key], ...value };
+        },
+        has: (key, value) => !!pkg[key] && !!pkg[key][value]
       },
       files: {
         add: (...args) => {
@@ -26,15 +48,15 @@ describe('Plugin', () => {
     };
   }
 
-  it('is an object', () => {
+  it('is an object', function () {
     expect(plugin).toBeInstanceOf(Object);
   });
 
-  it('has expected name', () => {
+  it('has expected name', function ()  {
     expect(plugin).toHaveProperty('name', require('../package').name);
   });
 
-  it('has expected hooks', () => {
+  it('has expected hooks', function ()  {
     const expected = [
       'create',
       'metadata'
@@ -47,31 +69,48 @@ describe('Plugin', () => {
     expect(hooks).toHaveLength(expected.length);
   });
 
-  describe('files', function () {
-    it('includes the `generator` folder & contents', async function () {
-      const { files } = await create();
+  it('has the correct create hook timings', function () {
+    expect(plugin.hooks.create.timing.last).toBe(true);
+    expect(plugin.hooks.create.timing.before).toEqual(['@gasket/lint']);
+  });
 
-      expect(files[0]).toEqual(path.join(__dirname, '..', 'generator', '*'));
-    });
-
-    it('includes a glob for the `generator/jest.config.js` contents', async function () {
-      const { files } = await create();
+  describe('react', function () {
+    it('includes a glob for the `generator/jest.config.js` contents for react projects', async function () {
+      const { files } = await createReact();
 
       expect(files[1]).toEqual(path.join(__dirname, '..', 'generator', '**', '*'));
+    });
+
+    describe('adds react specific dependencies', function() {
+      [
+        'jest',
+        'enzyme',
+        'enzyme-adapter-react-16'
+      ].forEach(name => {
+        it(`adds "${name}" in the devDependencies`, async function () {
+          const { pkg } = await createReact();
+  
+          expect(pkg.devDependencies).toHaveProperty(name);
+        });
+      });
+  
+      it('depends on the same versions', async function () {
+        const { pkg } = await createReact();
+  
+        expect(typeof pkg.devDependencies).toBe('object');
+        Object.keys(pkg.devDependencies).forEach((key) => {
+          expect(self.devDependencies).toHaveProperty(key);
+          expect(self.devDependencies[key]).toEqual(pkg.devDependencies[key]);
+        });
+      });
     });
   });
 
   describe('dependencies', function () {
-    [
-      'jest',
-      'enzyme',
-      'enzyme-adapter-react-16'
-    ].forEach(name => {
-      it(`adds "${name}" in the devDependencies`, async function () {
-        const { pkg } = await create();
+    it('adds "jest" in the devDependencies', async function () {
+      const { pkg } = await create();
 
-        expect(pkg.devDependencies).toHaveProperty(name);
-      });
+      expect(pkg.devDependencies).toHaveProperty('jest');
     });
 
     it('depends on the same versions', async function () {
