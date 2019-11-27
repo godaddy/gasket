@@ -42,3 +42,7 @@ async function helloWorld() {
   await runShellCommand('echo', ['hello world']);
 }
 ```
+
+## License
+
+[MIT](./LICENSE.md)

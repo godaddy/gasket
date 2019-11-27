@@ -153,6 +153,11 @@ the manifest contents will be served with the first page-render.
 
 To load and utilize locale files on your app, see the [@gasket/intl] package.
 
+## License
+
+[MIT](./LICENSE.md)
+
+<!-- LINKS -->
 
 [@gasket/intl]: /packages/gasket-intl/README.md
 [service worker config]: /packages/gasket-plugin-service-worker/README.md

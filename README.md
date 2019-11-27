@@ -267,5 +267,8 @@ Supporting modules
 [@gasket/utils]:/packages/gasket-utils/README.md
 <!-- END GENERATED -->
 
-[Quick Start Guide]:docs/quick-start.md
+## License
 
+Gasket is [MIT licensed](./LICENSE.md).
+
+[Quick Start Guide]:docs/quick-start.md

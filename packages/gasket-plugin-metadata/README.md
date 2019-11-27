@@ -131,6 +131,10 @@ choose to bring in metadata for more modules, or augment what has already been
 loaded for the app. These, along with the app's modules, will be flattened and
 available from `gasket.metadata.modules`.
 
+## License
+
+[MIT](./LICENSE.md)
+
 <!-- LINKS -->
 
 [metadata]: #metadata

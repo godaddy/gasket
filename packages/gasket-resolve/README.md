@@ -104,6 +104,10 @@ argument to all lifecycle hooks.
 }
 ```
 
+## License
+
+[MIT](./LICENSE.md)
+
 <!-- LINKS -->
 
 [API docs]:docs/api.md

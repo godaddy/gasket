@@ -192,6 +192,10 @@ generated in markdown from docsConfigSet which serves as the entry in the doc
 files. If a plugin is installed that hooks the [docsView] lifecycle, it can
 serve the content in a more viewable fashion for the user.
 
+## License
+
+[MIT](./LICENSE.md)
+
 <!-- LINKS -->
 
 [transforms]: #transforms

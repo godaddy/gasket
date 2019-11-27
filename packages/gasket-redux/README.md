@@ -109,3 +109,7 @@ const thunkMiddleware = thunk.withExtraArgument(myExtraArg);
 
 module.exports = configureMakeStore({ reducers, thunkMiddleware })
 ```
+
+## License
+
+[MIT](./LICENSE.md)

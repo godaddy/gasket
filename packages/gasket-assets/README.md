@@ -37,5 +37,6 @@ const DemoPage = () => {
 Add any new SVG files to the ./svg directory then run `npm run generate` to
 output the importable components.
 
-#### LICENSE: [MIT](./LICENSE)
+## License
 
+[MIT](./LICENSE.md)

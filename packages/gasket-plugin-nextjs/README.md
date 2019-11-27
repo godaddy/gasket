@@ -119,4 +119,10 @@ module.exports = {
 }
 ```
 
+## License
+
+[MIT](./LICENSE.md)
+
+<!-- LINKS -->
+
 [next.config]: https://nextjs.org/docs#custom-configuration

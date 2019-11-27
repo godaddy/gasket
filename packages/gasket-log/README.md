@@ -96,6 +96,12 @@ npm run test:client
 npm run test:server
 ```
 
+## License
+
+[MIT](./LICENSE.md)
+
+<!-- LINKS -->
+
 [winston]: https://github.com/winstonjs/winston
 [diagnostics]: https://github.com/bigpipe/diagnostics
 [diagnostics in browser]: https://github.com/bigpipe/diagnostics#browser

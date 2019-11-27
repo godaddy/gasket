@@ -268,3 +268,7 @@ const performSomeAction = (payload) => {
   }
 }
 ```
+
+## License
+
+[MIT](./LICENSE.md)

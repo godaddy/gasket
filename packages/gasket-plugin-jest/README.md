@@ -28,5 +28,7 @@ the following `scripts` to the `package.json`:
 `enzyme` is included with this plugin, which makes it easier to assert,
 manipulate, and traverse your React Components.
 
-#### LICENSE: [MIT](./LICENSE)
+## License
+
+[MIT](./LICENSE.md)
 

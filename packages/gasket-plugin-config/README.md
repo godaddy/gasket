@@ -209,6 +209,12 @@ module.exports = {
 }
 ```
 
+## License
+
+[MIT](./LICENSE.md)
+
+<!-- LINKS -->
+
 [Environment per file]:#environment-files
 [Environments inline]:#environments-inline
 

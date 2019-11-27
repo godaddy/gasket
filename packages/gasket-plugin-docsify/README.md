@@ -68,6 +68,10 @@ module.exports = {
 }
 ```
 
+## License
+
+[MIT](./LICENSE.md)
+
 <!-- LINKS -->
 
 [Docsify]: https://docsify.js.org

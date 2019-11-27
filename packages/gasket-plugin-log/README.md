@@ -168,6 +168,12 @@ If you are contributing to this plugin, use the following to run the tests:
 npm test
 ```
 
+## License
+
+[MIT](./LICENSE.md)
+
+<!-- LINKS -->
+
 [winston]: https://github.com/winstonjs/winston
 [winston documentation]: https://github.com/winstonjs/winston#creating-your-own-logger
 [@gasket/log]: /packages/gasket-log/README.md

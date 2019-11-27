@@ -121,5 +121,11 @@ module.exports = {
 
 This plugins hooks the [createServers] lifecycles from [@gasket/plugin-https].
 
+## License
+
+[MIT](./LICENSE.md)
+
+<!-- LINKS -->
+
 [@gasket/plugin-https]:/packages/gasket-plugin-https/README.md
 [createServers]:/packages/gasket-plugin-https/README.md#createservers

@@ -145,7 +145,9 @@ const pluginEngine = new PluginEngine(gasketConfig, { resolveFrom });
 The above will resolve all Plugins and Presets from within `./someapp` instead
 of resolving relative to the current directory.
 
-#### LICENSE: [MIT](./LICENSE)
+## License
+
+[MIT](./LICENSE.md)
 
 <!-- LINKS -->
 

@@ -160,6 +160,10 @@ Description of the lifecycle
 
 Description of what the plugin or package does in 1-3 paragraphs. If more is
 required, move to separate `docs/` file(s).
+
+## License
+
+Include a LICENSE.md file and link to it.
 ```
 
 Some additional rules to note:

@@ -56,3 +56,7 @@ for multi-word lifecycle events to avoid problems with case sensitivity in
 different file systems. This plugin will automatically map these to the
 `camelCased` event names. For example, `/lifecycles/app-env-config.js` will
 properly hook `appEnvConfig` events.
+
+## License
+
+[MIT](./LICENSE.md)

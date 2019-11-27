@@ -76,5 +76,11 @@ and server-side rendering, two reports will be outputted:
 The **browser** report will be the most critical for analysis in order to make
 sure an app is bundled in a way that is most optimal for users to download.
 
+## License
+
+[MIT](./LICENSE.md)
+
+<!-- LINKS -->
+
 [webpack-bundle-analyzer]:https://github.com/webpack-contrib/webpack-bundle-analyzer
 [plugin options]:https://github.com/webpack-contrib/webpack-bundle-analyzer#options-for-plugin

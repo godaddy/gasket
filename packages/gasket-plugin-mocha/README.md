@@ -33,3 +33,7 @@ The tests are automatically processed with babel using the `.babelrc` that is in
 the root of your application. We've also configured `enzyme` for the latest
 support React, and prepared the test environment with `jsdom` so you can use the
 `mount` functionality of `enzyme`.
+
+## License
+
+[MIT](./LICENSE.md)

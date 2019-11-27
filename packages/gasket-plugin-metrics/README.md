@@ -102,3 +102,7 @@ The collected `metrics` data consists of the following information:
   "cmd": "The Gasket command that was run"
 }
 ```
+
+## License
+
+[MIT](./LICENSE.md)

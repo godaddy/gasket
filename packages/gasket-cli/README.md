@@ -284,6 +284,10 @@ npm install --no-save @gasket/preset-nextjs @gasket/redux next react-dom
 ./bin/run local --config /path/to/gasket.config.js
 ```
 
+## License
+
+[MIT](./LICENSE.md)
+
 <!-- LINKS -->
 
 [npm]:https://docs.npm.red

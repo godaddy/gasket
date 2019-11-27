@@ -126,6 +126,12 @@ module.exports = {
 
 This plugins hooks the [createServers] lifecycles from [@gasket/plugin-https].
 
+## License
+
+[MIT](./LICENSE.md)
+
+<!-- LINKS -->
+
 [Setup Guide]:docs/setup.md
 [Common "Gotchas"]:docs/gotchas.md
 

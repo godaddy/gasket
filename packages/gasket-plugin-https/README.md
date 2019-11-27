@@ -217,7 +217,11 @@ module.exports = {
 }
 ```
 
-## LICENSE: [MIT](./LICENSE)
+## License
+
+[MIT](./LICENSE.md)
+
+<!-- LINKS -->
 
 [create-servers]: https://github.com/http-party/create-servers#create-servers
 [terminus]: https://github.com/godaddy/terminus

@@ -195,6 +195,11 @@ In this example, the plugin hooks the `configure` lifecycle, in order to add
 config from a remote service. The `configure` lifecycle is executed with the
 [execWaterfall] method, so returning the modified config is necessary.
 
+## License
+
+[MIT](./LICENSE.md)
+
+<!-- LINKS -->
 
 [getCommands]: #getcommands
 [configure]: #configure

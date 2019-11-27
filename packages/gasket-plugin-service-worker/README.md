@@ -202,6 +202,11 @@ partials. To do so, use the [loaded script] approach which will allow your tests
 to import the script also. Next, you will need to mock the service worker
 environment, which can be easily done using [service-worker-mock].
 
+## License
+
+[MIT](./LICENSE.md)
+
+<!-- LINKS -->
 
 [lru-cache options]:https://github.com/isaacs/node-lru-cache#options
 [`uglify-js`]: https://www.npmjs.com/package/uglify-js

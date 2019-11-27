@@ -108,6 +108,10 @@ directory so that they can be served by the app. The service worker will then
 import these scripts, with requests to the `/_workbox` static files served by
 the app. These can be set up to edge cache by setting the `assetPrefix` option.
 
+## License
+
+[MIT](./LICENSE.md)
+
 <!-- LINKS -->
 
 [composeServiceWorker]:/packages/gasket-plugin-service-worker/README.md#composeserviceworker

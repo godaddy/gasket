@@ -168,6 +168,10 @@ The hook is passed the following parameters:
 | `req`     | The express request object  |
 | `res`     | The express response object |
 
+## License
+
+[MIT](./LICENSE.md)
 
 <!-- LINKS -->
+
 [@gasket/redux]:/packages/gasket-redux/README.md#gasketredux

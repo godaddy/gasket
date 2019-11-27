@@ -71,3 +71,7 @@ an app.
 This lifecycle can be hooked by plugins to prepare an app before startup. This
 should be used for in-memory setup, with an on disk prep handled during the
 build lifecycle.
+
+## License
+
+[MIT](./LICENSE.md)

@@ -51,6 +51,11 @@ commit.
 
 See [plugin hook timings] for more information.
 
+## License
+
+[MIT](./LICENSE.md)
+
+<!-- LINKS -->
 
 [gasket create command]:/packages/gasket-cli/README.md#create-command
 [plugin hook timings]:/packages/gasket-engine/README.md

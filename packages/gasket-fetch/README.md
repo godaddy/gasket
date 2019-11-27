@@ -45,3 +45,7 @@ const getSomething = async () => {
 
 - https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
 - https://github.com/lquixada/cross-fetch
+
+## License
+
+[MIT](./LICENSE.md)

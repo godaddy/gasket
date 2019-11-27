@@ -103,3 +103,7 @@ module.exports = {
   }
 }
 ```
+
+## License
+
+[MIT](./LICENSE.md)

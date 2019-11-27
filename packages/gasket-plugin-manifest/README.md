@@ -121,5 +121,11 @@ module.exports = function (gasket, config, req) {
 };
 ```
 
+## License
+
+[MIT](./LICENSE.md)
+
+<!-- LINKS -->
+
 [`manifest.json`]: https://developers.google.com/web/fundamentals/web-app-manifest/
 [Progressive Web Application]: https://developers.google.com/web/progressive-web-apps/
