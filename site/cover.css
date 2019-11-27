@@ -274,7 +274,7 @@ section.angled:before {
             transparent 8px
     );
     background-repeat: no-repeat;
-    background-size: 62.5% 75%;
+    background-size: 62.5% 50%;
 }
 
 section.angled:after {
@@ -291,7 +291,7 @@ section.angled:after {
     background-position-y: 100%;
     background-position-x: 100%;
     background-repeat: no-repeat;
-    background-size: 62.5% 75%;
+    background-size: 62.5% 50%;
 }
 
 /* --- BREAKPOINTS --- */
