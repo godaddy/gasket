@@ -13,9 +13,7 @@
 
 .app-nav.no-badge {
     right: 24px;
-    font-size: 13px;
     top: 24px;
-    line-height: 13px;
 }
 
 /* --- STYLES --- */
@@ -40,25 +38,22 @@ nav > .github-logo {
     color: var(--color-primary-200);
 }
 
-.front-cover h2 {
-    display: block;
-    margin: var(--heading-h2-margin, var(--heading-margin));
-    padding: var(--heading-h2-padding, var(--heading-padding));
-    margin-top: 0;
-    font-size: var(--heading-h2-font-size);
-    font-weight: var(--heading-font-weight);
-    line-height: var(--heading-h2-line-height);
+.front-cover h2,
+.front-cover h3 {
+    margin: 0 0 0.5rem;
     color: var(--heading-color);
 }
 
+.front-cover h2 {
+    font-size: var(--heading-h2-font-size);
+    font-weight: var(--heading-font-weight);
+    line-height: var(--heading-h2-line-height);
+}
+
 .front-cover h3 {
-    margin: var(--heading-h3-margin, var(--heading-margin));
-    padding: var(--heading-h3-padding, var(--heading-padding));
-    margin-top: 0;
     font-size: var(--heading-h3-font-size);
     font-weight: var(--heading-font-weight);
     line-height: var(--heading-h3-line-height);
-    color: var(--heading-color);
 }
 
 .front-cover {
@@ -238,8 +233,8 @@ nav > .github-logo {
     padding: 16px 0;
     width: 96px;
 
-    font-size: 13px;
-    line-height: 20px;
+    font-size: 0.8125rem;
+    line-height: 1.5;
     color: var(--color-nuetral-300);
 }
 
@@ -385,6 +380,10 @@ section.angled:after {
 
     .front-cover footer {
         min-height: 400px;
+    }
+
+    .front-cover .app-nav > ul > li {
+        margin: 0 0 0 1em;
     }
 }
 

@@ -32,8 +32,8 @@
     /* Base */
     /* ========================================================================= */
     --base-font-family: 'Heebo', sans-serif;
-    --base-line-height: 28px;
-    --base-font-size: 16px;
+    --base-font-size: 1rem; /* 16px; */
+    --base-line-height: 1.75; /* 28px; */
     --base-background-color: var(--color-nuetral-100);
     --base-color: var(--color-nuetral-400);
     --base-font-weight: 400;
@@ -66,21 +66,20 @@
 
     /* Headings */
     --heading-color: var(--color-primary-200);
-
     --heading-font-weight: 300;
 
-    --heading-h1-font-size: 49px;
-    --heading-h1-line-height: 64px;
-    --heading-h1-font-weight: 300;
+    --heading-h1-font-size: 3.0625rem;  /* 49px; */
+    --heading-h1-line-height: 1.33;     /*64px; */
+    --heading-h1-font-weight: 500;
 
-    --heading-h2-font-size: 39px;
-    --heading-h2-line-height: 48px;
+    --heading-h2-font-size: 2.4375rem;  /* 39px; */
+    --heading-h2-line-height: 1.23;     /* 48px; */
 
-    --heading-h3-font-size: 25px;
-    --heading-h3-line-height: 36px;
+    --heading-h3-font-size: 1.9375rem;  /* 25px; */
+    --heading-h3-line-height: 1.25;     /* 36px; */
 
-    --heading-h4-font-size: 20px;
-    --heading-h4-line-height: 32px;
+    --heading-h4-font-size: 1.5625rem;  /* 20px; */
+    --heading-h4-line-height: 1.44;     /* 32px; */
 
     /* Keyboard */
     --kbd-border: 1px solid var(--mono-tint2);
@@ -132,16 +131,9 @@
     /* ========================================================================= */
     /* Background */
     --cover-background-color: var(--color-nuetral-100);
-    /*--cover-background-image: radial-gradient(ellipse at center 115%, rgba(255, 255, 255, 0.9), transparent);*/
 
     /* Blockquote (Subtitle) */
     --cover-blockquote-color: var(--strong-color);
-
-    /* Heading */
-    /*--cover-heading-color: #fff;*/
-    /*--cover-heading-font-size-max: 56; !* Unitless px *!*/
-    /*--cover-heading-font-size-min: 34; !* Unitless px *!*/
-    /*--cover-heading-font-weight: 200;*/
 
 
     /* Navbar */
