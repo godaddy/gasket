@@ -3,26 +3,37 @@ const { devDependencies } = require('./package.json');
 module.exports = {
   name: require('./package').name,
   hooks: {
-    async create(gasket, { files, pkg }) {
-      const path = require('path');
+    create: {
+      timing: {
+        last: true,
+        before: ['@gasket/lint']
+      },
+      handler: async function create(gasket, { files, pkg }) {
+        const path = require('path');
+        const isReactProject = pkg.has('dependencies', 'react');
 
-      files.add(
-        path.join(__dirname, 'generator', '*'),
-        path.join(__dirname, 'generator', '**', '*')
-      );
+        pkg.add('devDependencies', {
+          jest: devDependencies.jest
+        });
 
-      pkg.add('devDependencies', {
-        'jest': devDependencies.jest,
-        // TODO (kinetifex): only add these if react in pkg. Same with setup.js
-        'enzyme': devDependencies.enzyme,
-        'enzyme-adapter-react-16': devDependencies['enzyme-adapter-react-16']
-      });
+        if (isReactProject) {
+          files.add(
+            path.join(__dirname, 'generator', '*'),
+            path.join(__dirname, 'generator', '**', '*')
+          );
 
-      pkg.add('scripts', {
-        'test': 'jest',
-        'test:watch': 'jest --watchAll',
-        'test:coverage': 'jest --coverage'
-      });
+          pkg.add('devDependencies', {
+            'enzyme': devDependencies.enzyme,
+            'enzyme-adapter-react-16': devDependencies['enzyme-adapter-react-16']
+          });
+        }
+
+        pkg.add('scripts', {
+          'test': 'jest',
+          'test:watch': 'jest --watchAll',
+          'test:coverage': 'jest --coverage'
+        });
+      }
     },
     metadata(gasket, meta) {
       return {

@@ -1,11 +1,8 @@
-import { shallow, render, mount } from 'enzyme';
 import { describe, it } from 'mocha';
 import self from '../package.json';
 import chai, { expect } from 'chai';
 import spies from 'chai-spies';
-import React from 'react';
 import plugin from '../';
-import path from 'path';
 
 chai.use(spies);
 
@@ -13,26 +10,39 @@ describe('Plugin', () => {
   let spyFunc;
 
   async function create() {
-    const files = [];
     const pkg = {};
 
-    await plugin.hooks.create({}, {
+    await plugin.hooks.create.handler({}, {
       pkg: {
         add: (key, value) => {
           pkg[key] = value;
-        }
-      },
-      files: {
-        add: (...args) => {
-          files.push(...args);
+        },
+        has: (key, value) => !!pkg[key] && !!pkg[key][value]
+      }
+    });
+
+    return { pkg };
+  }
+
+  async function createReact() {
+    const pkg = {
+      dependencies: {
+        react: '1.0.0'
+      }
+    };
+
+    await plugin.hooks.create.handler({}, {
+      pkg: {
+        add: (key, value) => {
+          pkg[key] = value;
+        },
+        has: (key, value) => {
+          return !!pkg[key] && !!pkg[key][value];
         }
       }
     });
 
-    return {
-      files,
-      pkg
-    };
+    return { pkg };
   }
 
   before(async function () {
@@ -61,28 +71,15 @@ describe('Plugin', () => {
     expect(hooks).is.length(expected.length);
   });
 
-  describe('files', function () {
-    it('includes the `generator/test` folder & contents', async function () {
-      const { files } = await create();
-
-      expect(files[0]).equals(path.join(__dirname, '..', 'generator', '*'));
-      expect(files[1]).equals(path.join(__dirname, '..', 'generator', '**', '*'));
-    });
-
-    it('includes a glob for the `generator/test/pages` contents', async function () {
-      const { files } = await create();
-
-      expect(files[2]).equals(path.join(__dirname, '..', 'generator', '**', '**', '*'));
-    });
+  it('has the correct create hook timings', function () {
+    expect(plugin.hooks.create.timing.last).to.be.true;
+    expect(plugin.hooks.create.timing.before).to.eql(['@gasket/lint']);
   });
 
   describe('dependencies', function () {
     [
-      'enzyme-adapter-react-16',
       '@babel/register',
       '@babel/core',
-      'enzyme',
-      'jsdom',
       'mocha',
       'sinon',
       'chai',
@@ -97,6 +94,42 @@ describe('Plugin', () => {
 
     it('depends on the same versions', async function () {
       const { pkg } = await create();
+
+      expect(pkg.devDependencies).is.a('object');
+      Object.keys(pkg.devDependencies).forEach((key) => {
+        expect(self.devDependencies).to.have.own.property(key);
+        expect(self.devDependencies[key]).equals(pkg.devDependencies[key]);
+      });
+    });
+
+    [
+      'enzyme-adapter-react-16',
+      'enzyme',
+      'jsdom'
+    ].forEach(name => {
+      it(`doesn't add framework specific dependency "${name}" in the devDependencies`, async function () {
+        const { pkg } = await create();
+
+        expect(pkg.devDependencies).not.to.have.own.property(name);
+      });
+    });
+  });
+
+  describe('dependencies - react', function () {
+    [
+      'enzyme-adapter-react-16',
+      'enzyme',
+      'jsdom'
+    ].forEach(name => {
+      it(`adds "${name}" in the devDependencies`, async function () {
+        const { pkg } = await createReact();
+
+        expect(pkg.devDependencies).to.have.own.property(name);
+      });
+    });
+
+    it('depends on the same versions', async function () {
+      const { pkg } = await createReact();
 
       expect(pkg.devDependencies).is.a('object');
       Object.keys(pkg.devDependencies).forEach((key) => {
@@ -154,29 +187,6 @@ describe('Plugin', () => {
         'test:runner': 'mocha --require setup-env --recursive "test/**/*.*(test|spec).js"',
         'test:watch': `yarn test:runner -- --watch`
       });
-    });
-  });
-
-  describe('enzyme', function () {
-    it('correctly configured { shallow }', function () {
-      const Component = () => <div>hello world</div>;
-      const enzyme = shallow(<Component />);
-
-      expect(enzyme.text()).equals('hello world');
-    });
-
-    it('correctly configured { render }', function () {
-      const Component = () => <div>hello world</div>;
-      const enzyme = render(<Component />);
-
-      expect(enzyme.text()).equals('hello world');
-    });
-
-    it('correctly configured { mount }', function () {
-      const Component = () => <div>hello world</div>;
-      const enzyme = mount(<Component />);
-
-      expect(enzyme.text()).equals('hello world');
     });
   });
 });
