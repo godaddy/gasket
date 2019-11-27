@@ -21,7 +21,7 @@ const srcIndex = path.join(srcDir, 'index.html');
  * @returns {Promise<string>} output file
  */
 async function generateContent(docsifyConfig, docsConfigSet) {
-  const { theme, config = {} } = docsifyConfig;
+  const { theme = 'styles/gasket.css', config = {} } = docsifyConfig;
   const { docsRoot } = docsConfigSet;
 
   const Handlebars = require('handlebars');
@@ -40,8 +40,8 @@ async function generateContent(docsifyConfig, docsConfigSet) {
 
   const scripts = [
     '//unpkg.com/docsify/lib/docsify.min.js',
-    '/scripts/toc-link-plugin.js',
-    '/scripts/cover-snap-plugin.js',
+    'scripts/toc-link-plugin.js',
+    'scripts/cover-snap-plugin.js',
     '//cdn.jsdelivr.net/npm/prismjs@1/components/prism-jsx.min.js',
     '//cdn.jsdelivr.net/npm/prismjs@1/components/prism-json.min.js',
     '//cdn.jsdelivr.net/npm/prismjs@1/components/prism-diff.min.js',

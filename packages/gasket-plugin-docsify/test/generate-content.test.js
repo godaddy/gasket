@@ -51,7 +51,7 @@ describe('generateIndex', () => {
     await generateContent({}, mockDocsConfigSet);
     const results = writeFileStub.getCall(0).args[1];
 
-    assume(results).includes(`//unpkg.com/docsify/lib/themes/vue.css`);
+    assume(results).includes(`styles/gasket.css`);
   });
 
   it('renders theme stylesheet tag', async () => {

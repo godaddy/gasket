@@ -92,7 +92,7 @@ const sortModules = sortByKey('name', makeWeightedCompare(getModuleWeight));
 function getGuideWeight(name) {
   const isCli = /^@gasket\/cli/;
 
-  return (isCli.test(name) && 1000) || getModuleWeight(name)
+  return (isCli.test(name) && 1000) || getModuleWeight(name);
 }
 
 /**

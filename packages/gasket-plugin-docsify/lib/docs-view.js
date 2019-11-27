@@ -3,7 +3,7 @@ const { serve } = require('docsify-cli/lib');
 const generateContent = require('./generate-content');
 
 const defaultConfig = {
-  theme: '/styles/gasket.css',
+  theme: 'styles/gasket.css',
   port: 3000,
   config: {
     nameLink: '#/',
