@@ -3,11 +3,13 @@ const { serve } = require('docsify-cli/lib');
 const generateContent = require('./generate-content');
 
 const defaultConfig = {
-  theme: 'vue',
+  theme: 'styles/gasket.css',
   port: 3000,
   config: {
+    nameLink: '#/',
     auto2top: true,
-    relativePath: true
+    relativePath: true,
+    maxLevel: 3
   }
 };
 

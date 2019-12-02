@@ -4,7 +4,7 @@
 
 - Allow presets to define metadata
 - Metadata is assigned to gasket instance, and only by this plugin ([#64])
-  - Uses [Loader] from gasket instance to get [PluginInfo] and [PresetInfo] data
+  - Uses [Loader] from Gasket instance to get [PluginInfo] and [PresetInfo] data
   - `gasket.metadata` structure matches loaded infos with functions redacted
 - Load [ModuleInfo] for main app
 

@@ -1,14 +1,14 @@
-# `@gasket/nextjs-preset`
+# @gasket/nextjs-preset
 
-## Usage
+Framework for building Next.js apps using Gasket.
 
-To spin up a NextJS app with this plugin, using the Gasket CLI:
+## Installation
 
-```bash
-gasket create my-app --presets nextjs
+```
+gasket create <app-name> --presets @gasket/preset-nextjs
 ```
 
-## Included plugins
+## Plugins
 
 - [@gasket/plugin-express](/packages/gasket-plugin-express/README.md)
 - [@gasket/plugin-https](/packages/gasket-plugin-https/README.md)
@@ -16,3 +16,7 @@ gasket create my-app --presets nextjs
 - [@gasket/plugin-nextjs](/packages/gasket-plugin-nextjs/README.md)
 - [@gasket/plugin-redux](/packages/gasket-plugin-redux/README.md)
 - [@gasket/plugin-webpack](/packages/gasket-plugin-webpack/README.md)
+
+## License
+
+[MIT](./LICENSE.md)

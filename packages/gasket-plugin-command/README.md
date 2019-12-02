@@ -1,13 +1,17 @@
 # @gasket/plugin-command
 
-Enable plugins to inject new commands to be available for use with the
-Gasket CLI.
+Enable plugins to inject new commands to be available for use with the Gasket
+CLI.
+
+## Installation
+
+This is a default plugin in the Gasket CLI and is always available for use.
 
 ## Overview
 
-Gasket commands extend the [oclif command], with methods allowing
-interaction with the Gasket engine. To create a new Gasket command, you must
-extend the base [GasketCommand], and implement the `gasketRun` method.
+Gasket commands extend the [oclif command], with methods allowing interaction
+with the Gasket engine. To create a new Gasket command, you must extend the base
+[GasketCommand], and implement the `gasketRun` method.
 
 ```js
 class MyCommand extends GasketCommand {
@@ -49,15 +53,14 @@ While the `gasketRun` method must be implemented, the `gasketConfigure` method
 can be optionally overridden and is available for commands to adjust the Gasket
 config, _before_ [environment overrides] are applied.
 
-The static `id` property, is the name of the command which will be used with
-the Gasket CLI in your app. For example `npx gasket my-cmd`. The `description`
+The static `id` property, is the name of the command which will be used with the
+Gasket CLI in your app. For example `npx gasket my-cmd`. The `description`
 property will show up during `npx gasket help`.
 
 In the above example, you can see we are adding a "special" flag which can be
-used with this command. Flags are described using the [oclif flags] utility
-made available to the [getCommands] lifecycle as described below.
-`GasketCommand` instances will have the the [parsed arguments] available as
-`this.parsed`.
+used with this command. Flags are described using the [oclif flags] utility made
+available to the [getCommands] lifecycle as described below. `GasketCommand`
+instances will have the the [parsed arguments] available as `this.parsed`.
 
 To make your command available to the CLI, it needs to be returned during the
 [getCommands] lifecycle.
@@ -70,7 +73,7 @@ This lifecycle allows plugins to add commands to the CLI. This hook should
 return an extended `GasketCommand` or array of such.
 
 ```js
-// example-plugin.js
+// gasket-plugin-example.js
 module.exports = {
   name: 'example',
   hooks: {
@@ -107,13 +110,13 @@ module.exports = {
 };
 ```
 
-In a lifecycle hook, [command details] can be referenced from the gasket
-instance, allowing plugins to response to _how_ the lifecycle was invoked.
-For example, lets make another plugin that hooks our `example` lifecycle from
-the above command.
+In a lifecycle hook, [command details] can be referenced from the Gasket
+instance, allowing plugins to response to _how_ the lifecycle was invoked. For
+example, lets make another plugin that hooks our `example` lifecycle from the
+above command.
 
 ```js
-// another-example-plugin.js
+// gasket-plugin-another.js
 module.exports = {
   name: 'another-example',
   hooks: {
@@ -135,7 +138,7 @@ Signals the start of any Gasket command and allows running of code immediately
 before other `gasket` lifecycles. If it errors, the command will exit early.
 
 ```js
-// another-example-plugin.js
+// gasket-plugin-another.js
 module.exports = {
   name: 'another-example',
   hooks: {
@@ -147,7 +150,7 @@ module.exports = {
 ```
 
 Because this lifecycle runs _before_ for the [configure] lifecycle, only the
-partial gasket config is available (see step 5 below).
+partial Gasket config is available (see step 5 below).
 
 ### configure
 
@@ -165,10 +168,11 @@ Configuration for a Gasket session goes through a series of steps:
 
 When the CLI starts up, it attempts to loads the `gasket.config` in its default
 expected location, or as specified with [command flags]. After commands have
-done any config adjustments, plugins then have the opportunity in this lifecycle.
+done any config adjustments, plugins then have the opportunity in this
+lifecycle.
 
 ```js
-// example-plugin.js
+// gasket-plugin-example.js
 const fetch = require('@gasket/fetch');
 
 module.exports = {
@@ -191,6 +195,11 @@ In this example, the plugin hooks the `configure` lifecycle, in order to add
 config from a remote service. The `configure` lifecycle is executed with the
 [execWaterfall] method, so returning the modified config is necessary.
 
+## License
+
+[MIT](./LICENSE.md)
+
+<!-- LINKS -->
 
 [getCommands]: #getcommands
 [configure]: #configure

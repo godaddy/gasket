@@ -1,31 +1,40 @@
 # @gasket/plugin-fastify
 
-The `fastify-plugin` adds `fastify` to your application.
+Adds Fastify to your application.
 
 ## Installation
 
-```sh
-npm install --save @gasket/plugin-fastify
+#### New apps
+
+```
+gasket create <app-name> --plugins @gasket/plugin-fastify
+```
+
+#### Existing apps
+
+```
+npm i @gasket/plugin-fastify
+```
+
+Modify `plugins` section of your `gasket.config.js`:
+
+```diff
+module.exports = {
+  plugins: [
+    add: [
++      '@gasket/plugin-fastify'
+    ]
+  ]
+}
 ```
 
 ## Configuration
 
-The fastify plugin is configured using the `gasket.config.js` file.
-
-- First, add it to the `plugins` section of your `gasket.config.js`:
-
-```js
-module.exports = {
-  plugins: {
-    add: ['@gasket/fastify']
-  }
-}
-```
-
 All the configurations for the plugin are added under `fastify` in the config:
 
-- `compression`: true by default. Can to set to false if applying compression differently.
-- `excludedRoutesRegex`: Regex of the routes to exclude by fastify.
+- `compression`: true by default. Can to set to false if applying compression
+  differently.
+- `excludedRoutesRegex`: Regex of the routes to exclude by Fastify.
 
 #### Example configuration
 
@@ -41,31 +50,9 @@ module.exports = {
 }
 ```
 
-## Hooks
-
-`fastify` hooks into the following lifecycle in order to work.
-
-#### createServers
-
-```js
-module.exports = {
-  hooks: {
-    /**
-    * Creates the fastify app
-    * @param  {Gasket} gasket The Gasket API
-    * @param  {Object} serverOpts Server options.
-    * @return {Promise<Object>} fastify app
-    */
-    'createServers': async function createServers(gasket, serverOpts) {
-      return { ...serverOpts, handler: fastify() };
-    }
-  }
-};
-```
-
 ## Lifecycles
 
-#### middleware
+### middleware
 
 Executed when the `fastify` server has been created, it will apply all returned
 functions as middleware.
@@ -89,7 +76,7 @@ module.exports = {
 
 You may also return an `Array` to inject more than one middleware.
 
-#### fastify
+### fastify
 
 Executed **after** the `middleware` event for when you need full control over
 the `fastify` instance.
@@ -105,18 +92,15 @@ module.exports = {
     * @returns {function|function[]} middleware(s)
     */
     fastify: async function (gasket, fastify) {
-      fastify.get('/🐰🥚', (req, res) => {
-        res.send('⬆️⬆️⬇️⬇️⬅️➡️⬅️➡️🅱️🅰️');
-      })
     }
   }
 }
 ```
 
-#### errorMiddleware
+### errorMiddleware
 
-Executed after the `fastify` event. All middleware functions returned from
-this hook will be applied to fastify.
+Executed after the `fastify` event. All middleware functions returned from this
+hook will be applied to Fastify.
 
 ```js
 module.exports = {
@@ -132,3 +116,16 @@ module.exports = {
   }
 }
 ```
+
+## How it works
+
+This plugins hooks the [createServers] lifecycles from [@gasket/plugin-https].
+
+## License
+
+[MIT](./LICENSE.md)
+
+<!-- LINKS -->
+
+[@gasket/plugin-https]:/packages/gasket-plugin-https/README.md
+[createServers]:/packages/gasket-plugin-https/README.md#createservers
