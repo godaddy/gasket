@@ -75,6 +75,7 @@ const pkgOrder = [
   'files',
   'scripts',
   'repository',
+  'publishConfig',
   'keywords',
   'author',
   'maintainers',
@@ -206,6 +207,9 @@ function fixedProperties(pkgJson) {
   pkgJson.repository = {
     type: 'git',
     url: 'git+ssh://git@github.com/godaddy/gasket.git'
+  };
+  pkgJson.publishConfig = {
+    access: 'public'
   };
   pkgJson.license = 'MIT';
   pkgJson.bugs = {

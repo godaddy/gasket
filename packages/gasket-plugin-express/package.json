@@ -17,6 +17,9 @@
     "type": "git",
     "url": "git+ssh://git@github.com/godaddy/gasket.git"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "keywords": [
     "express",
     "gasket",
