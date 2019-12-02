@@ -21,18 +21,19 @@ apps and making your frameworks.
 
 Help and explanations docs
 
-| Name                          | Description                              |
-| ----------------------------- | ---------------------------------------- |
-| [Configuration Guide]         | Configuring Gasket apps                  |
-| [Plugins Guide]               | How to use and author plugins            |
-| [Presets Guide]               | How to use and author presets            |
-| [Package Management Guide]    | Managing dependencies in Gasket apps     |
-| [Common "Gotchas"]            | Tips and tricks to be aware of           |
-| [Express Setup Guide]         | Adding middleware and routes for Express |
-| [Next.js Routing Guide]       | Basic and advance routing for Next.js    |
-| [Next.js Deployment Guide]    | Steps to deploy a Next.js Gasket app     |
-| [State Management with Redux] | Using Redux with Gasket apps             |
-| [Webpack Configuration Guide] | Configuring Webpack in Gasket apps       |
+| Name                          | Description                                   |
+| ----------------------------- | --------------------------------------------- |
+| [Configuration Guide]         | Configuring Gasket apps                       |
+| [Presets Guide]               | How to use and author presets                 |
+| [Package Management Guide]    | Managing dependencies in Gasket apps          |
+| [Common "Gotchas"]            | Tips and tricks to be aware of                |
+| [Plugins Guide]               | How to use and author plugins                 |
+| [Progressive Web Apps Guide]  | Making Progressive Web Apps (PWA) with Gasket |
+| [Express Setup Guide]         | Adding middleware and routes for Express      |
+| [Next.js Routing Guide]       | Basic and advance routing for Next.js         |
+| [Next.js Deployment Guide]    | Steps to deploy a Next.js Gasket app          |
+| [State Management with Redux] | Using Redux with Gasket apps                  |
+| [Webpack Configuration Guide] | Configuring Webpack in Gasket apps            |
 
 ## Commands
 
@@ -114,9 +115,10 @@ Available structure
 
 Available presets
 
-| Name                    | Version | Description            |
-| ----------------------- | ------- | ---------------------- |
-| [@gasket/preset-nextjs] | 1.0.7   | Basic NextJS Framework |
+| Name                    | Version | Description                                |
+| ----------------------- | ------- | ------------------------------------------ |
+| [@gasket/preset-nextjs] | 1.0.7   | Basic NextJS Framework                     |
+| [@gasket/preset-pwa]    | 0.0.0   | Turn Gasket apps into Progressive Web Apps |
 
 ## Plugins
 
@@ -168,10 +170,11 @@ Supporting modules
 <!-- LINKS -->
 
 [Configuration Guide]:/packages/gasket-cli/docs/configuration.md
-[Plugins Guide]:/packages/gasket-cli/docs/plugins.md
 [Presets Guide]:/packages/gasket-cli/docs/presets.md
 [Package Management Guide]:/packages/gasket-cli/docs/package-management.md
 [Common "Gotchas"]:/packages/gasket-cli/docs/gotchas.md
+[Plugins Guide]:/packages/gasket-cli/docs/plugins.md
+[Progressive Web Apps Guide]:/packages/gasket-preset-pwa/docs/pwa-support.md
 [Express Setup Guide]:/packages/gasket-plugin-express/docs/setup.md
 [Next.js Routing Guide]:/packages/gasket-plugin-nextjs/docs/routing.md
 [Next.js Deployment Guide]:/packages/gasket-plugin-nextjs/docs/deployment.md
@@ -232,6 +235,7 @@ Supporting modules
 [routes.js]:https://github.com/fridays/next-routes#how-to-use
 [store.js]:/packages/gasket-plugin-redux/README.md
 [@gasket/preset-nextjs]:/packages/gasket-preset-nextjs/README.md
+[@gasket/preset-pwa]:/packages/gasket-preset-pwa/README.md
 [@gasket/plugin-analyze]:/packages/gasket-plugin-analyze/README.md
 [@gasket/plugin-command]:/packages/gasket-plugin-command/README.md
 [@gasket/plugin-config]:/packages/gasket-plugin-config/README.md
