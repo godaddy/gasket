@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-lint",
-  "version": "2.0.0",
+  "version": "5.0.0-canary.0",
   "description": "Adds GoDaddy standard linting to your application",
   "main": "lib",
   "scripts": {
