@@ -94,28 +94,28 @@ describe('config utils', () => {
       });
     });
 
-    it('does not add default if user added', () => {
-      const results = utils.addDefaultPlugins({ plugins: { add: ['@gasket/command-plugin'] } });
+    it('does not add defaults if user added', () => {
+      const results = utils.addDefaultPlugins({ plugins: { add: ['@gasket/plugin-command'] } });
       assume(results.plugins.add).lengthOf(defaultPlugins.length);
-      assume(results.plugins.add).includes('@gasket/command-plugin');
+      assume(results.plugins.add).includes('@gasket/plugin-command');
       assume(results.plugins.add).not.includes(defaultPlugins[0]);
     });
 
-    it('does not add default if user added (short)', () => {
-      const results = utils.addDefaultPlugins({ plugins: { add: ['command'] } });
+    it('does not add defaults if user added (short)', () => {
+      const results = utils.addDefaultPlugins({ plugins: { add: ['@gasket/command'] } });
       assume(results.plugins.add).lengthOf(defaultPlugins.length);
-      assume(results.plugins.add).includes('command');
+      assume(results.plugins.add).includes('@gasket/command');
       assume(results.plugins.add).not.includes(defaultPlugins[0]);
     });
 
-    it('does not add default if user removed', () => {
-      const results = utils.addDefaultPlugins({ plugins: { remove: ['@gasket/command-plugin'] } });
+    it('does not add defaults if user removed', () => {
+      const results = utils.addDefaultPlugins({ plugins: { remove: ['@gasket/plugin-command'] } });
       assume(results.plugins.add).lessThan(defaultPlugins.length);
       assume(results.plugins.add).not.includes(defaultPlugins[0]);
     });
 
-    it('does not add default if user removed (short)', () => {
-      const results = utils.addDefaultPlugins({ plugins: { remove: ['command'] } });
+    it('does not add defaults if user removed (short)', () => {
+      const results = utils.addDefaultPlugins({ plugins: { remove: ['@gasket/command'] } });
       assume(results.plugins.add).lessThan(defaultPlugins.length);
       assume(results.plugins.add).not.includes(defaultPlugins[0]);
     });

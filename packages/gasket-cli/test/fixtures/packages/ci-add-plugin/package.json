@@ -1,5 +1,5 @@
 {
-  "name": "@gasket/ci-add-plugin",
+  "name": "@gasket/plugin-ci-add",
   "version": "0.0.1",
   "main": "index.js"
 }

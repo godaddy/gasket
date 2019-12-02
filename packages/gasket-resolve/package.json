@@ -10,7 +10,7 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "posttest": "npm run lint",
-    "docs": "jsdoc2md -t jsdoc2md/README.hbs lib/*.js > README.md"
+    "docs": "jsdoc2md lib/*.js > docs/api.md"
   },
   "repository": {
     "type": "git",
@@ -34,7 +34,7 @@
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-resolve#readme",
   "dependencies": {
     "diagnostics": "^2.0.2",
-    "semver": "^6.2.0"
+    "semver": "^6.3.0"
   },
   "devDependencies": {
     "eslint": "^6.1.0",

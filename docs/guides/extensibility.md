@@ -12,9 +12,9 @@ Much of Gasket's behavior can be driven through updating your
 the Gasket config file, and see the documentation for the [plugins] to see which
 config settings are available.
 
-<!-- 
+<!--
     TBD: Create a unified table of all configuration settings so you don't have
-    to hunt for what you need! 
+    to hunt for what you need!
 -->
 
 ## Lifecycle Hooks
@@ -42,54 +42,54 @@ Lifecycle keys
   * local - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-cli#gasket-local) - [flow chart](../images/lifecycle/commands/local.svg)
   * start - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-cli#gasket-start) - [flow chart](../images/lifecycle/commands/start.svg)
 * Plugins
-  * analyze - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-analyze-plugin) - [flow chart](../images/lifecycle/plugins/analyze.svg)
-  * assets - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-assets-plugin) - [flow chart](../images/lifecycle/plugins/assets.svg)
-  * command - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-command-plugin) - [flow chart](../images/lifecycle/plugins/command.svg)
-  * config - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-config-plugin) - [flow chart](../images/lifecycle/plugins/config.svg)
-  * express - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-express-plugin) - [flow chart](../images/lifecycle/plugins/express.svg)
-  * https - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-https-plugin) - [flow chart](../images/lifecycle/plugins/https.svg)
-  * intl - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-intl-plugin) - [flow chart](../images/lifecycle/plugins/intl.svg)
-  * jest - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-jest-plugin) - [flow chart](../images/lifecycle/plugins/jest.svg)
-  * lifecycle - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-lifecycle-plugin) - [flow chart](../images/lifecycle/plugins/lifecycle.svg)
-  * lint - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-lint-plugin) - [flow chart](../images/lifecycle/plugins/lint.svg)
-  * log - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-log-plugin) - [flow chart](../images/lifecycle/plugins/log.svg)
-  * mocha - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-mocha-plugin) - [flow chart](../images/lifecycle/plugins/mocha.svg)
-  * nextjs - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-nextjs-plugin) - [flow chart](../images/lifecycle/plugins/nextjs.svg)
-  * redux - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-redux-plugin) - [flow chart](../images/lifecycle/plugins/redux.svg)
-  * serviceWorker - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-serviceWorker-plugin) - [flow chart](../images/lifecycle/plugins/serviceWorker.svg)
-  * webpack - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-webpack-plugin) - [flow chart](../images/lifecycle/plugins/webpack.svg)
-  * workbox - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-workbox-plugin) - [flow chart](../images/lifecycle/plugins/workbox.svg)
+  * analyze - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-analyze) - [flow chart](../images/lifecycle/plugins/analyze.svg)
+  * assets - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-assets) - [flow chart](../images/lifecycle/plugins/assets.svg)
+  * command - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-command) - [flow chart](../images/lifecycle/plugins/command.svg)
+  * config - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-config) - [flow chart](../images/lifecycle/plugins/config.svg)
+  * express - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-express) - [flow chart](../images/lifecycle/plugins/express.svg)
+  * https - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-https) - [flow chart](../images/lifecycle/plugins/https.svg)
+  * intl - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-intl) - [flow chart](../images/lifecycle/plugins/intl.svg)
+  * jest - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-jest) - [flow chart](../images/lifecycle/plugins/jest.svg)
+  * lifecycle - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-lifecycle) - [flow chart](../images/lifecycle/plugins/lifecycle.svg)
+  * lint - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-lint) - [flow chart](../images/lifecycle/plugins/lint.svg)
+  * log - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-log) - [flow chart](../images/lifecycle/plugins/log.svg)
+  * mocha - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-mocha) - [flow chart](../images/lifecycle/plugins/mocha.svg)
+  * nextjs - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-nextjs) - [flow chart](../images/lifecycle/plugins/nextjs.svg)
+  * redux - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-redux) - [flow chart](../images/lifecycle/plugins/redux.svg)
+  * serviceWorker - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-serviceWorker) - [flow chart](../images/lifecycle/plugins/serviceWorker.svg)
+  * webpack - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-webpack) - [flow chart](../images/lifecycle/plugins/webpack.svg)
+  * workbox - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-workbox) - [flow chart](../images/lifecycle/plugins/workbox.svg)
 * Lifecycle Events
-  * appEnvConfig - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-config-plugin#appenvconfig)
-  * appRequestConfig - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-config-plugin#apprequestconfig)
+  * appEnvConfig - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-config#appenvconfig)
+  * appRequestConfig - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-config#apprequestconfig)
   * build - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-cli#gasket-build) - [flow chart](../images/lifecycle/events/build.svg)
-  * composeServiceWorker - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-service-worker-plugin#composeserviceworker) - [flow chart](../images/lifecycle/events/composeServiceWorker.svg)
+  * composeServiceWorker - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-service-worker#composeserviceworker) - [flow chart](../images/lifecycle/events/composeServiceWorker.svg)
   * configure - docs TBD - [flow chart](../images/lifecycle/events/configure.svg)
   * create - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-cli#create) - [flow chart](../images/lifecycle/events/create.svg)
-  * errorMiddleware - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-express-plugin#errormiddleware)
-  * express - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-express-plugin) - [flow chart](../images/lifecycle/events/express.svg)
-  * getCommands - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-command-plugin#getcommands)
+  * errorMiddleware - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-express#errormiddleware)
+  * express - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-express) - [flow chart](../images/lifecycle/events/express.svg)
+  * getCommands - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-command#getcommands)
   * init - docs TBD - [flow chart](../images/lifecycle/events/init.svg)
   * initOclif - docs TBD - [flow chart](../images/lifecycle/events/initOclif.svg)
-  * initReduxState - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-redux-plugin#initreduxstate) - [flow chart](../images/lifecycle/events/initReduxState.svg)
-  * initReduxStore - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-redux-plugin#initreduxstore)
-  * middleware - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-express-plugin#middleware) - [flow chart](../images/lifecycle/events/middleware.svg)
-  * next - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-nextjs-plugin#next)
+  * initReduxState - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-redux#initreduxstate) - [flow chart](../images/lifecycle/events/initReduxState.svg)
+  * initReduxStore - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-redux#initreduxstore)
+  * middleware - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-express#middleware) - [flow chart](../images/lifecycle/events/middleware.svg)
+  * next - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-nextjs#next)
   * preboot - docs TBD - [flow chart](../images/lifecycle/events/preboot.svg)
-  * serviceWorkerCacheKey - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-service-worker-plugin#serviceworkercachekey)
+  * serviceWorkerCacheKey - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-service-worker#serviceworkercachekey)
   * start - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-cli#gasket-start) - [flow chart](../images/lifecycle/events/start.svg)
-  * webpack - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-webpack-plugin#webpack) - [flow chart](../images/lifecycle/events/webpack.svg)
-  * webpackChain - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-webpack-plugin#webpackchain)
-  * workbox - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-workbox-plugin#workbox)
+  * webpack - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-webpack#webpack) - [flow chart](../images/lifecycle/events/webpack.svg)
+  * webpackChain - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-webpack#webpackchain)
+  * workbox - [docs](https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-workbox#workbox)
 
 <!-- END_LIFECYCLE_AUTOGEN -->
 
 ## Page Content
 
-The content rendered on each of your application pages comes from `/pages/*` - 
+The content rendered on each of your application pages comes from `/pages/*` -
 Your app-specific React component pages
 
-[plugin engine]: /packages/gasket-plugin-engine
-[lifecycle script]: /packages/gasket-lifecycle-plugin
-[Configuration guide]: ./configuration.md
+[plugin engine]: /packages/gasket-engine
+[lifecycle script]: /packages/gasket-plugin-lifecycle
+[Configuration guide]: /packages/gasket-cli/docs/configuration.md
 [plugins]: /packages

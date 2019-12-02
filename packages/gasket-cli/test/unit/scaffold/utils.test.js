@@ -24,48 +24,48 @@ describe('Utils', () => {
   describe('addPluginsToContext', () => {
 
     it('adds rawPlugins to context', () => {
-      addPluginsToContext(['jest', '@gasket/core-plugin'], mockContext);
+      addPluginsToContext(['@gasket/jest', 'gasket-plugin-core'], mockContext);
       assume(mockContext.rawPlugins).eqls([
-        'jest', '@gasket/core-plugin'
+        '@gasket/jest', 'gasket-plugin-core'
       ]);
     });
 
     it('adds rawPlugins to existing context', () => {
       mockContext.rawPlugins = ['some-gasket-plugin'];
-      addPluginsToContext(['jest', '@gasket/core-plugin@1.2.3'], mockContext);
+      addPluginsToContext(['@gasket/jest', 'gasket-plugin-core@1.2.3'], mockContext);
       assume(mockContext.rawPlugins).eqls([
-        'some-gasket-plugin', 'jest', '@gasket/core-plugin@1.2.3'
+        'some-gasket-plugin', '@gasket/jest', 'gasket-plugin-core@1.2.3'
       ]);
     });
 
     it('dedups rawPlugins plugins maintaining order and preferring those with version', () => {
       mockContext.rawPlugins = ['core', 'zebra', 'alpha'];
-      addPluginsToContext(['jest', '@gasket/core-plugin@1.2.3'], mockContext);
+      addPluginsToContext(['@gasket/jest', 'gasket-plugin-core@1.2.3'], mockContext);
       assume(mockContext.rawPlugins).eqls([
-        '@gasket/core-plugin@1.2.3', 'zebra', 'alpha', 'jest'
+        'gasket-plugin-core@1.2.3', 'zebra', 'alpha', '@gasket/jest'
       ]);
     });
 
     it('adds short plugins to context', () => {
-      addPluginsToContext(['jest', '@gasket/core-plugin@1.2.3'], mockContext);
+      addPluginsToContext(['@gasket/jest', 'gasket-plugin-core@1.2.3'], mockContext);
       assume(mockContext.plugins).eqls([
-        'jest', 'core'
+        '@gasket/jest', 'core'
       ]);
     });
 
     it('adds short plugins to existing context', () => {
       mockContext.plugins = ['some-gasket-plugin'];
-      addPluginsToContext(['jest', '@gasket/core-plugin@1.2.3'], mockContext);
+      addPluginsToContext(['@gasket/jest', 'gasket-plugin-core@1.2.3'], mockContext);
       assume(mockContext.plugins).eqls([
-        'some-gasket-plugin', 'jest', 'core'
+        'some-gasket-plugin', '@gasket/jest', 'core'
       ]);
     });
 
     it('dedups short plugins maintaining order', () => {
       mockContext.plugins = ['core', 'zebra', 'alpha'];
-      addPluginsToContext(['jest', 'alpha', '@gasket/core-plugin@1.2.3'], mockContext);
+      addPluginsToContext(['@gasket/jest', 'alpha', 'gasket-plugin-core@1.2.3'], mockContext);
       assume(mockContext.plugins).eqls([
-        'core', 'zebra', 'alpha', 'jest'
+        'core', 'zebra', 'alpha', '@gasket/jest'
       ]);
     });
   });
@@ -80,26 +80,26 @@ describe('Utils', () => {
     });
 
     it('add plugins as dependencies to pkg', () => {
-      addPluginsToPkg(['jest', '@gasket/intl-plugin'], pkgStub);
+      addPluginsToPkg(['@gasket/jest', '@gasket/plugin-intl'], pkgStub);
       assume(pkgStub.add.args[0][1]).eqls({
-        '@gasket/jest-plugin': 'latest',
-        '@gasket/intl-plugin': 'latest'
+        '@gasket/plugin-jest': 'latest',
+        '@gasket/plugin-intl': 'latest'
       });
     });
 
     it('expands short plugin names', () => {
-      addPluginsToPkg(['jest', 'intl'], pkgStub);
+      addPluginsToPkg(['@gasket/jest', '@gasket/intl'], pkgStub);
       assume(pkgStub.add.args[0][1]).eqls({
-        '@gasket/jest-plugin': 'latest',
-        '@gasket/intl-plugin': 'latest'
+        '@gasket/plugin-jest': 'latest',
+        '@gasket/plugin-intl': 'latest'
       });
     });
 
     it('uses version of set by plugin identifier', () => {
-      addPluginsToPkg(['jest@3.2.1', '@gasket/intl-plugin@^1.2.3'], pkgStub);
+      addPluginsToPkg(['@gasket/jest@3.2.1', '@gasket/plugin-intl@^1.2.3'], pkgStub);
       assume(pkgStub.add.args[0][1]).eqls({
-        '@gasket/jest-plugin': '3.2.1',
-        '@gasket/intl-plugin': '^1.2.3'
+        '@gasket/plugin-jest': '3.2.1',
+        '@gasket/plugin-intl': '^1.2.3'
       });
     });
   });

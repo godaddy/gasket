@@ -248,6 +248,8 @@ upon `gasket create`
 [#38]: https://github.com/godaddy/gasket/pull/38
 [#58]: https://github.com/godaddy/gasket/pull/58
 [#64]: https://github.com/godaddy/gasket/pull/64
+[#66]: https://github.com/godaddy/gasket/pull/66
+[#71]: https://github.com/godaddy/gasket/pull/71
 [#74]: https://github.com/godaddy/gasket/pull/74
 [#79]: https://github.com/godaddy/gasket/pull/79
 [#86]: https://github.com/godaddy/gasket/pull/86

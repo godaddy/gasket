@@ -5,15 +5,15 @@ Reusable utilities for Gasket internals
 ## Installation
 
 ```bash
-npm i --save @gasket/utils
+npm i @gasket/utils
 ```
 
 ## Functions
 
 ### tryRequire
 
-Tries to require a module, but ignores if it is not found. If not found,
-result will be null.
+Tries to require a module, but ignores if it is not found. If not found, result
+will be null.
 
 ```js
 const { tryRequire } = require('@gasket/utils');
@@ -42,3 +42,7 @@ async function helloWorld() {
   await runShellCommand('echo', ['hello world']);
 }
 ```
+
+## License
+
+[MIT](./LICENSE.md)

@@ -16,6 +16,9 @@
     "clean:artifacts": "lerna run clean --parallel",
     "clean:packages": "lerna clean --yes",
     "clean:root": "rimraf node_modules",
+    "docs": "lerna run docs && npm run generate-docs-index",
+    "docs-view": "docsify serve",
+    "generate-docs-index": "node scripts/generate-docs-index",
     "postinstall": "npm run bootstrap"
   },
   "repository": {
@@ -37,6 +40,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket#readme",
   "devDependencies": {
+    "docsify-cli": "^4.3.0",
     "eslint": "^6.1.0",
     "eslint-config-godaddy": "^4.0.0",
     "eslint-plugin-json": "^1.4.0",

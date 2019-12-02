@@ -1,6 +1,6 @@
 module.exports = [
-  require('@gasket/command-plugin'),
-  require('@gasket/lifecycle-plugin'),
-  require('@gasket/metadata-plugin'),
-  require('@gasket/start-plugin')
+  require('@gasket/plugin-command'),
+  require('@gasket/plugin-lifecycle'),
+  require('@gasket/plugin-metadata'),
+  require('@gasket/plugin-start')
 ];
