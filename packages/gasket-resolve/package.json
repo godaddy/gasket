@@ -34,7 +34,7 @@
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-resolve#readme",
   "dependencies": {
     "diagnostics": "^2.0.2",
-    "semver": "^6.2.0"
+    "semver": "^6.3.0"
   },
   "devDependencies": {
     "eslint": "^6.1.0",

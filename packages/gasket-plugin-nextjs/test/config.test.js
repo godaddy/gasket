@@ -44,10 +44,37 @@ describe('createConfig', () => {
     assume(result).has.property('poweredByHeader', false);
   });
 
+  it('includes `nextConfig` from gasket.config', async () => {
+    gasket.config.nextConfig = {
+      customConfig: true
+    };
+    result = await createConfig(gasket);
+    assume(result).has.property('customConfig', true);
+  });
+
+  it('fallback support for `next` from gasket.config', async () => {
+    gasket.config.next = {
+      customConfig: true
+    };
+    result = await createConfig(gasket);
+    assume(result).has.property('customConfig', true);
+  });
+
   it('adds webpack hook', async () => {
     result = await createConfig(gasket);
     assume(result).has.property('webpack');
     assume(result.webpack).is.a('function');
+  });
+
+  it('wraps existing nextConfig webpack hook', async () => {
+    const webpackStub = stub();
+    gasket.config.nextConfig = {
+      webpack: webpackStub
+    };
+    result = await createConfig(gasket);
+    assume(result).has.property('webpack');
+    result.webpack();
+    assume(webpackStub).is.called();
   });
 
   describe('#config.webpack', () => {
@@ -149,8 +176,8 @@ function mockGasketApi() {
     exec: stub().resolves({}),
     execSync: stub().returns([]),
     config: {
-      webpack: {},  // user specified webpack config
-      next: {}      // user specified next.js config
+      root: '/path/to/app',
+      webpack: {}  // user specified webpack config
     },
     next: {}
   };
@@ -176,6 +203,7 @@ function lifecycle(config = {}, ...plugins) {
   });
 
   return new Engine({
+    root: '/path/to/app',
     plugins: {
       add: [require('../index'), require('@gasket/plugin-webpack'), ...plugins].filter(Boolean)
     },

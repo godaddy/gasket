@@ -24,7 +24,7 @@ will always be initialized, and the user not prompted.
   "version": "1.2.3",
   "main": "index.js",
   "dependencies": {
-    "@gasket/resolve": "^1.0.0",
+    "@gasket/resolve": "^2.0.0",
     "gasket-plugin-example": "^1.0.0"
   },
   "gasket": {

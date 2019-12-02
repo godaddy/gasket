@@ -1,9 +1,8 @@
 const { promisify } = require('util');
 const path = require('path');
 const fs = require('fs');
-const merge = require('deepmerge');
+const defaultsDeep = require('lodash.defaultsdeep');
 const { pluginIdentifier } = require('@gasket/resolve');
-const { tryRequire } = require('@gasket/utils');
 const defaultPlugins = require('./default-plugins');
 const { flattenPresets } = require('../scaffold/utils');
 
@@ -34,8 +33,15 @@ async function getGasketConfig(flags) {
  */
 function loadConfigFile(flags) {
   const { root, config } = flags;
-  const configFile = !path.isAbsolute(config) ? path.join(root, config) : config;
-  return tryRequire(configFile);
+  const configFilePath = !path.isAbsolute(config) ? path.join(root, config) : config;
+  const configFileName = configFilePath.endsWith('.js') ? configFilePath : configFilePath + '.js';
+  // require the file if config file exist, else return null
+  try {
+    fs.statSync(configFileName); // eslint-disable-line no-sync
+  } catch (err) {
+    return null;
+  }
+  return require(configFilePath);
 }
 
 /**
@@ -103,7 +109,7 @@ async function addUserPlugins(gasketConfig) {
 function assignPresetConfig(gasket) {
   const { presets } = gasket.loader.loadConfigured(gasket.config.plugins);
   const presetConfigs = flattenPresets(presets).map(p => p.module && p.module.config).filter(Boolean);
-  Object.assign(gasket.config, merge.all([...presetConfigs.reverse(), gasket.config]));
+  Object.assign(gasket.config, defaultsDeep(gasket.config, ...presetConfigs));
 }
 
 module.exports = {
