@@ -60,5 +60,5 @@ Gasket feature areas. Here are a few ideas for future working groups:
 * Front-end frameworks: e.g. Nextjs, Svelte
 * Feature areas: e.g. Intl, lint
 
-[Slack]: https://godaddy-oss.slack.com/messages/CHXEP5DNH
+[Slack]: https://godaddy-oss.slack.com/archives/CQ6QXC5E1
 [Gasket Github group]: https://github.com/orgs/godaddy/teams/gasket

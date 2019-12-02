@@ -24,7 +24,7 @@ describe('docsView', () => {
     sinon.resetHistory();
   });
 
-  it('merges user config with defaults', () => {
+  it('merges user config with expected defaults', () => {
     mockGasket.config.docsify = {
       theme: 'bogus',
       config: {
@@ -37,6 +37,7 @@ describe('docsView', () => {
       theme: 'bogus',
       port: 3000,
       config: {
+        nameLink: '#/',
         auto2top: true,
         relativePath: true,
         maxLevel: 4

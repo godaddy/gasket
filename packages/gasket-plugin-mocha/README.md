@@ -1,19 +1,21 @@
-# mocha-plugin
+# @gasket/plugin-mocha
 
 Creates a `mocha`, `nyc`, `sinon`, `chai` based testing environment for your
 Gasket application.
 
 ## Installation
 
+This plugin should only be used during the create command for new apps.
+
 ```
-gasket create APPNAME --plugins @gasket/mocha
+gasket create <app-name> --plugins @gasket/plugin-mocha
 ```
 
 ## Usage
 
 When you create a new gasket application that is configured with the `mocha`
-plugin it will prepare it with a `mocha` based testing environment. It will
-add the following `scripts` to the `package.json`:
+plugin it will prepare it with a `mocha` based testing environment. It will add
+the following `scripts` to the `package.json`:
 
 - `npm test`, Runs the `.test.js` files in your `test` folder and generates
   coverage information of each of the files you test.
@@ -27,7 +29,11 @@ The following test utilities are included:
 - `sinon` Create spies, stubs and mocks.
 - `enzyme` Easier to assert, manipulate, and traverse your React Components.
 
-The tests are automatically processed with babel using the `.babelrc` that is
-in the root of your application. We've also configured `enzyme` for the latest
-support React, and prepared the test environment with `jsdom` so you can use
-the `mount` functionality of `enzyme`.
+The tests are automatically processed with babel using the `.babelrc` that is in
+the root of your application. We've also configured `enzyme` for the latest
+support React, and prepared the test environment with `jsdom` so you can use the
+`mount` functionality of `enzyme`.
+
+## License
+
+[MIT](./LICENSE.md)

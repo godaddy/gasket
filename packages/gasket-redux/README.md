@@ -2,6 +2,12 @@
 
 Redux configuration for Gasket apps.
 
+## Installation
+
+```
+npm i @gasket/redux
+```
+
 ## Functions
 
 - `configureMakeStore(options, [postCreate])` - Returns a makeStore function
@@ -13,7 +19,8 @@ Redux configuration for Gasket apps.
   - `reducers` - (object) Map of identifiers and reducer functions
   - `middleware` - (function[]) Additional redux middleware to apply
   - `enhancers` - (function[]) Any other redux store enhancers
-  - `logging` - (boolean) set to true if you want to enable redux logger. (default: false)
+  - `logging` - (boolean) set to true if you want to enable redux logger.
+    (default: false)
 - `postCreate` - (function) Executed after the store is create the resulting
   store as the argument
 
@@ -22,20 +29,20 @@ Redux configuration for Gasket apps.
 - `makeStore` - (function) Creates the redux store for each server-side request
   and once on the client, hydrating with the state from the server.
 
-## How to use it
+## Usage
 
 Gasket apps ship with a default a redux configuration which includes the
 redux-thunk middleware. This should be sufficient for most app needs, however
-the `configureMakeStore` can be used to do any additional configuration.
-The most common use case is to add reducers as the app level.
+the `configureMakeStore` can be used to do any additional configuration. The
+most common use case is to add reducers as the app level.
 
-By default, custom store configurations can be placed in a `store.js` at the root
-of your app. If you wish for it to reside elsewhere, direct the
+By default, custom store configurations can be placed in a `store.js` at the
+root of your app. If you wish for it to reside elsewhere, direct the
 `redux.makeStore` property to it in your app's gasket.config.js. Custom
 make-store files should use CommonJS imports since they will be executed in
 NodeJS for SSR.
 
-### Example: adding reducers
+#### Example: adding reducers
 
 ```js
 // ./store.js
@@ -46,7 +53,7 @@ const reducers = require('./reducers'); // apps reducers
 module.exports = configureMakeStore({ reducers });
 ```
 
-### Example: adding middleware in a custom path (redux-saga)
+#### Example: adding middleware in a custom path (redux-saga)
 
 ```js
 // ./lib/make-store.js
@@ -71,8 +78,8 @@ module.exports = configureMakeStore({ reducers, middleware }, store => {
 });
 ```
 
-Next in the gasket.config.js, set the `redux.makeStore` field to the file.
-This will start up the app using the custom configuration.
+Next in the gasket.config.js, set the `redux.makeStore` field to the file. This
+will start up the app using the custom configuration.
 
 ```js
 // gasket.config.js
@@ -84,9 +91,11 @@ module.exports = {
 };
 ```
 
-### Example: passing custom thunk middleware
+#### Example: passing custom thunk middleware
 
-The default thunk middleware can be overridden with a customized version by passing `thunkMiddleware`. A common use case for this is to use the `withExtraArgument` feature of `redux-thunk`.
+The default thunk middleware can be overridden with a customized version by
+passing `thunkMiddleware`. A common use case for this is to use the
+`withExtraArgument` feature of `redux-thunk`.
 
 ```js
 // ./store.js
@@ -100,3 +109,7 @@ const thunkMiddleware = thunk.withExtraArgument(myExtraArg);
 
 module.exports = configureMakeStore({ reducers, thunkMiddleware })
 ```
+
+## License
+
+[MIT](./LICENSE.md)

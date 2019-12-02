@@ -3,47 +3,54 @@
 Use [Docsify] to serve a website view of the collated docs from
 [@gasket/plugin-docs].
 
-## Setup
+## Installation
 
-First, install this plugin along with the docs plugin:
+#### New apps
 
 ```
-npm install @gasket/plugin-docs @gasket/plugin-docsify
+gasket create <app-name> --plugins @gasket/plugin-docs,@gasket/plugin-docsify
 ```
 
-Next, add these to the `plugins` section of your `gasket.config.js`:
+#### Existing apps
+
+```
+npm i @gasket/plugin-docs @gasket/plugin-docsify
+```
+
+Modify `plugins` section of your `gasket.config.js`:
 
 ```diff
-// gasket.config.js
-
 module.exports = {
   plugins: [
-+    add: ['@gasket/docs', '@gasket/docsify']
+    add: [
++      '@gasket/plugin-docs',
++      '@gasket/plugin-docsify'
+    ]
   ]
 }
 ```
 
-Now, when you run `npx gasket docs` in your app, a nice Docsify website will
-be launched in your browser.
+Now, when you run `npx gasket docs` in your app, a nice Docsify website will be
+launched in your browser.
 
-## Options
+## Configuration
 
 To be set in under `docsify` in the `gasket.config.js`.
 
-- `theme` - (string) Name of the theme. Default is `vue`. Can be set to name of
-  [docsify themes], a URL, or CSS file.
+- `theme` - (string) Name of the theme. Default is `styles/gasket.css`. Can be
+  set to name of [docsify themes], a URL, or CSS file.
 - `port` - (number) Port to serve the docs from. Default is `3000`.
 - `config` - (object) Any [Docsify config] properties, expect for functions
-  types which are not currently supported.
-  Default has `auth2top` and `relativePath` set to `true`.
+  types which are not currently supported. Default has `auth2top` and
+  `relativePath` set to `true`, with `maxLevel` at `3`.
 - `stylesheets` (string[]) - Optional additional stylesheet URLs to load.
 - `scripts` (string[]) - Optional additional scripts files, which can include
   [docsify plugins].
 
-### Example
+#### Example
 
-This example uses the `dark` theme, and enables the [Google Analytics plugin]
-by adding the script and config.
+This example uses the `dark` theme, and enables the [Google Analytics plugin] by
+adding the script and config.
 
 ```js
 // gasket.config.js
@@ -60,6 +67,10 @@ module.exports = {
   }
 }
 ```
+
+## License
+
+[MIT](./LICENSE.md)
 
 <!-- LINKS -->
 

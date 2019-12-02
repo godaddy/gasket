@@ -4,34 +4,56 @@ This plugin consolidates all locale files under the build folder.
 
 ## Installation
 
-```bash
-npm install --save @gasket/plugin-intl
+#### New apps
+
+```
+gasket create <app-name> --plugins @gasket/plugin-intl
 ```
 
-## Options
+#### Existing apps
+
+```
+npm i @gasket/plugin-intl
+```
+
+Modify `plugins` section of your `gasket.config.js`:
+
+```diff
+module.exports = {
+  plugins: [
+    add: [
++      '@gasket/plugin-intl'
+    ]
+  ]
+}
+```
+
+## Configuration
 
 - `blacklistModules` - (string[]) list of modules to exclude from bundling.
 - `localesDir` - (string) change the name of directory to gather translation
-   files from (default: `locales`)
+  files from (default: `locales`)
 - `outputDir` - (string) path of directory to build locale and manifest files to
-   (default: `./build/locales`)
+  (default: `./build/locales`)
 - `assetPrefix` - (string) change the default path to `/_locale` endpoint by
-   adding a path prefix here. (default: ''). Used for setting up CDN support
-   for locale files. `next.assetPrefix` will be used be unless specified here.
-- `languageMap` - (object) specify a language mapping here if required
-   (default: {}), e.g.
-    ```
-    {
+  adding a path prefix here. (default: ''). Used for setting up CDN support for
+  locale files. `next.assetPrefix` will be used be unless specified here.
+- `languageMap` - (object) specify a language mapping here if required (default:
+  {}), e.g.
+
+  ```
+  {
         'zh-HK': 'zh-TW',
         'zh-SG': 'zh-CN'
     }
-    ```
-    Using this example, if a customer's language is set to `zh-HK`, then the
-    application will load localization data for `zh-TW` instead.
-- `defaultLanguage` - (string) specify a default language to fall back to if
-   none of the fallback language translations are available (default: `en-US`)
+  ```
 
-### Config Example
+  Using this example, if a customer's language is set to `zh-HK`, then the
+  application will load localization data for `zh-TW` instead.
+- `defaultLanguage` - (string) specify a default language to fall back to if
+  none of the fallback language translations are available (default: `en-US`)
+
+#### Example config
 
 ```js
 // gasket.config.js
@@ -45,28 +67,26 @@ module.exports = {
 
 ## Usage
 
-Add the 'intl-plugin' to gasket config.
+### Directory Structure
 
-## Directory Structure
-
-##### Directly under the app folder
+#### Directly under the app folder
 
 Create a `locales` folder in the application root and add a en-US.json file and
 start adding localization keys into it.
 
-##### Under a namespace
+#### Under a namespace
 
 Create a `locales` folder in the application root, create a `en-US` *folder*
 under `locales` and add files `<namespace>.json` with localization keys.
 
 ## After translation
 
-`intl-plugin` provides a [service worker config][./service-worker-plugin/README.md]
-that adds next.js static assets to precache. This config expects that you will
-translate the contents of the `en-US` folder
-into other folders corresponding to the locales of the translations (e.g. `da-DK`).
+This plugin provides a [service worker config] that adds Next.js static assets
+to precache. This config expects that you will translate the contents of the
+`en-US` folder into other folders corresponding to the locales of the
+translations (e.g. `da-DK`).
 
-##### Language Fallback
+#### Language Fallback
 
 The service worker should do a sequence of checks to see which translation to
 use for a given language.
@@ -79,7 +99,7 @@ use for a given language.
 
 ### intlLanguage
 
-When determining what assets to precache, `intl-plugin` defaults to reading the
+When determining what assets to precache, This plugin defaults to reading the
 first language provided in the `accept-language` header. However, you can
 override this behavior by adding an `intlLanguage` hook. The `intlLanguage` hook
 takes the following parameters:
@@ -89,11 +109,11 @@ takes the following parameters:
 - `req` - (string) The request
 
 It should then return a string indicating the user's language, or null if this
-language cannot be found. `intl-plugin` will populate `intl.language` in the
+language cannot be found. This plugin will populate `intl.language` in the
 react state with this value, and use it for future language operations. If null
 is returned, Gasket will use `en-US`.
 
-#### Usage example
+#### Example usage
 
 ```js
 module.exports = {
@@ -133,6 +153,11 @@ the manifest contents will be served with the first page-render.
 
 To load and utilize locale files on your app, see the [@gasket/intl] package.
 
+## License
 
+[MIT](./LICENSE.md)
 
-[@gasket/intl]: ../gasket-intl/README.md
+<!-- LINKS -->
+
+[@gasket/intl]: /packages/gasket-intl/README.md
+[service worker config]: /packages/gasket-plugin-service-worker/README.md

@@ -31,9 +31,9 @@ your components.
 - If a state value is needed across pages.
 
 - If a state value is initialized with server side rendering and later used from client.
-Before we go any further, please take a moment to review [How to use @gasket/redux](/packages/gasket-redux)
+Before we go any further, please take a moment to review How to use [@gasket/redux].
 
-### Example 1: Keep data in redux state
+#### Example 1: Keep data in redux state
 
 In this example `store.js` creates a redux store, and attaches a reducer from
 `redux-reducer.js`. `ComponentA` invokes the actions from `redux-actions.js`
@@ -224,7 +224,7 @@ export default IndexPage;
 </p>
 </details>
 
-### Example 2: Initialize state value with SSR
+#### Example 2: Initialize state value with SSR
 
 Initialize redux state from server side by dispatching redux action.
 Modified `pages/index.js` shown below.
@@ -254,3 +254,7 @@ export const IndexPage = () => (
 
 export default IndexPage;
 ```
+
+<!-- LINKS -->
+
+[@gasket/redux]: /packages/gasket-redux/README.md

@@ -1,28 +1,32 @@
 # @gasket/plugin-log
 
-Adds a [winston] logger instance to your gasket instance. For documentation on
+Adds a [winston] logger instance to your Gasket instance. For documentation on
 the logger itself, see [@gasket/log].
 
-### Installation
+## Installation
 
-This plugin is published to Artifactory and can be installed with npm:
+#### New apps
 
 ```
-npm install --save @gasket/plugin-log
+gasket create <app-name> --plugins @gasket/plugin-log
 ```
 
-## Usage
+#### Existing apps
 
-This plugin is installed by default, so you most likely already have it. If you
-are not using a preset that includes the plugin, add to your `gasket.config.js`
-like this:
+```
+npm i @gasket/plugin-log @gasket/log
+```
 
-```js
+Modify `plugins` section of your `gasket.config.js`:
+
+```diff
 module.exports = {
   plugins: [
-    'log'
+    add: [
++      '@gasket/plugin-log'
+    ]
   ]
-};
+}
 ```
 
 ## Configuration
@@ -53,7 +57,7 @@ module.exports = {
 ### Options
 
 - `prefix` - (string) used to set the prefix in the `winston` format.
-- Select `winston` configuration values – (multiple) See below for these
+- Select `winston` configuration values – (multiple) See below for these
   additional supported properties.
 
 The [winston documentation] enumerates which properties can be configured on
@@ -62,27 +66,28 @@ subset of these properties are configurable through `gasket`.
 
 **Configurable in `gasket`**
 
-| Name          | Default                               |  Description    |
-| ------------- | ------------------------------------- | --------------- |
-| `level`       | `'info'` (`'debug'` in ENV=local)     | Log only if `info.level`less than or equal to this level  |
-| `transports`  | `[new Console()]` _(Console logging)_ | Set of logging targets for `info` messages                 |
-| `silent`      | `false`                               | If true, all logs are suppressed |
+| Name         | Default                               | Description                                              |
+|:-------------|:--------------------------------------|:---------------------------------------------------------|
+| `level`      | `'info'` (`'debug'` in ENV=local)     | Log only if `info.level`less than or equal to this level |
+| `transports` | `[new Console()]` _(Console logging)_ | Set of logging targets for `info` messages               |
+| `silent`     | `false`                               | If true, all logs are suppressed                         |
 
 **Not Configurable in `gasket`**
 
-| Name          | Fixed Value                    |  Description    |
-| ------------- | ------------------------------ | --------------- |
-| `levels`      | `winston.config.syslog.levels` | Levels (and colors) representing log priorities            |
-| `format`      | Gasket-defined format          | Formatting for `info` messages (see: [Formats])           |
-| `exitOnError` | `true`                         | Ensures uncaught errors trigger `process.exit` |
+| Name          | Fixed Value                    | Description                                     |
+|:--------------|:-------------------------------|:------------------------------------------------|
+| `levels`      | `winston.config.syslog.levels` | Levels (and colors) representing log priorities |
+| `format`      | Gasket-defined format          | Formatting for `info` messages (see: [Formats]) |
+| `exitOnError` | `true`                         | Ensures uncaught errors trigger `process.exit`  |
 
-### Adding custom `winston` transports
+#### Example adding custom Winston transports
 
-`Console` transports are set by default.
-Loggers provided by `winston` are highly customizable using [Transports].
+`Console` transports are set by default. Loggers provided by `winston` are
+highly customizable using [Transports].
 
 **`gasket.config.js`**
-``` js
+
+```js
 const { transports } = require('winston');
 
 module.exports = {
@@ -104,12 +109,13 @@ Often defining your `winston` transports are:
 
 1. **Dependent on the configured environment.** e.g. only turn on the `Console`
    transport when `NODE_ENV=development`.
-2. **Dependent on gasket config.** e.g. adding a `fluentd` Transport that is
+2. **Dependent on Gasket config.** e.g. adding a `fluentd` Transport that is
    configured against the `fluentd` endpoint in the current environment.
 
 For these scenarios the `@gasket/log` plugin exposes a `logTransports` hook:
 
 **`gasket.config.js`**
+
 ```js
 module.exports = {
   winston: {
@@ -134,7 +140,9 @@ module.exports = {
 };
 ```
 
-#### logTransports
+## Lifecycles
+
+### logTransports
 
 To handle the `logTransports` hook to create the transport(s) appropriately:
 
@@ -152,7 +160,7 @@ function logTransportsHook(gasket) {
 };
 ```
 
-### Test
+## Test
 
 If you are contributing to this plugin, use the following to run the tests:
 
@@ -160,7 +168,13 @@ If you are contributing to this plugin, use the following to run the tests:
 npm test
 ```
 
+## License
+
+[MIT](./LICENSE.md)
+
+<!-- LINKS -->
+
 [winston]: https://github.com/winstonjs/winston
 [winston documentation]: https://github.com/winstonjs/winston#creating-your-own-logger
-[@gasket/log]: https://github.com/godaddy/gasket/tree/master/packages/gasket-log
+[@gasket/log]: /packages/gasket-log/README.md
 [Formats]: https://github.com/winstonjs/winston#formats

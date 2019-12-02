@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Gasket: Framework Maker</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="Gasket helps developers make frameworks to power their apps.">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link rel="icon" type="image/x-icon" href="packages/gasket-plugin-docsify/generator/favicon.ico">
+  <link rel="stylesheet" href="packages/gasket-plugin-docsify/generator/styles/gasket.css">
+  <link rel="stylesheet" href="site/cover.css">
+
+</head>
+<body>
+  <div id="app"></div>
+  <script>
+    window.$docsify = {
+      name: 'Gasket',
+      nameLink: '#/',
+      logo: 'site/logo-docs.svg',
+      loadNavbar: 'site/navbar.html',
+      coverpage: 'site/cover.html',
+      onlyCover: true,
+      relativePath: true,
+      auto2top: true,
+      maxLevel: 3,
+      tocLink: '#/README'
+    }
+  </script>
+  <script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
+  <script src="packages/gasket-plugin-docsify/generator/scripts/toc-link-plugin.js"></script>
+  <script src="site/cover-plugin.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-jsx.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-json.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-diff.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
+</body>
+</html>
