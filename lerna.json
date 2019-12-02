@@ -1,11 +1,16 @@
 {
+  "version": "4.0.0",
   "packages": [
     "packages/*",
     "scripts/generate-docs"
   ],
-  "version": "independent",
   "ignoreChanges": [
     "**/*.+(test|spec).js",
     "**/CHANGELOG.md"
-  ]
+  ],
+  "command": {
+    "publish": {
+      "npmClientArgs": ["--access", "public"]
+    }
+  }
 }
