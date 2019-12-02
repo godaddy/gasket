@@ -11,16 +11,19 @@ const { initWebpack } = require('@gasket/plugin-webpack');
  */
 function createConfig(gasket, includeWebpackConfig = true) {
   const { config } = gasket;
+  // prefer clearer property name with fall back
+  const { nextConfig = config.next || {} } = config;
 
-  let nextConfig;
-  if (!includeWebpackConfig) {
-    nextConfig = config.next || {};
-  } else {
-    nextConfig = {
-      ...config.next,
-      webpack: (webpackConfig, data) => {
-        return initWebpack(gasket, webpackConfig, data);
+  if (includeWebpackConfig) {
+    const { webpack: existingWebpack } = nextConfig;
+    //
+    // Add webpack property to nextConfig and wrap existing
+    //
+    nextConfig.webpack = function webpack(webpackConfig, data) {
+      if (typeof existingWebpack === 'function') {
+        webpackConfig = existingWebpack(webpackConfig, data);
       }
+      return initWebpack(gasket, webpackConfig, data);
     };
   }
 

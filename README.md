@@ -1,6 +1,6 @@
 # Gasket
 
-Gasket help developers make frameworks to power their apps. There are several
+Gasket helps developers make frameworks to power their apps. There are several
 presets and plugins available with which to make frameworks and construct apps.
 The various commands, lifecycles, and structures are all enabled by different
 plugins you can choose to use.

@@ -36,6 +36,13 @@ module.exports = {
   `gasket.config.js` is used. Everything you can configure in the
   [next.config][next.config] can be added here.
 
+It is also possible for apps to config Next.js using the `gasket.config.js`
+file. To do so, specify a `nextConfig` object property in the same form as what
+you would set for [custom configurations] or using Next.js plugins.
+
+For general Webpack configurations, it is recommend to utilize features of the
+Gasket [webpack plugin].
+
 #### Example configuration
 
 ```js
@@ -43,11 +50,27 @@ module.exports = {
   plugins: {
     add: ['@gasket/nextjs']
   },
-  next: {
+  nextConfig: {
     poweredByHeader: false,
     useFileSystemPublicRoutes: false,
     generateBuildId: () => Date.now()
   }
+}
+```
+
+### Example with plugins
+
+```js
+const withSass = require('@zeit/next-sass');
+const withCss = require('@zeit/next-css');
+
+module.exports = {
+  plugins: {
+    add: ['nextjs']
+  },
+  nextConfig: withCss(withSass({
+    /* config options here */
+  }))
 }
 ```
 
@@ -125,4 +148,6 @@ module.exports = {
 
 <!-- LINKS -->
 
-[next.config]: https://nextjs.org/docs#custom-configuration
+[nextConfig lifecycle]:#nextconfig
+[custom configurations]: https://nextjs.org/docs#custom-configuration
+[webpack plugin]:/packages/gasket-plugin-webpack/README.md
