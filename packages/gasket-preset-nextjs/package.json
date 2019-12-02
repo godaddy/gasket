@@ -1,6 +1,6 @@
 {
   "name": "@gasket/preset-nextjs",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Basic NextJS Framework",
   "repository": {
     "type": "git",
@@ -15,8 +15,8 @@
     "@gasket/plugin-express": "^2.1.2",
     "@gasket/plugin-https": "^2.2.1",
     "@gasket/plugin-log": "^3.2.2",
-    "@gasket/plugin-nextjs": "^2.3.3",
+    "@gasket/plugin-nextjs": "^2.3.4",
     "@gasket/plugin-redux": "^2.3.5",
-    "@gasket/plugin-webpack": "^1.1.1"
+    "@gasket/plugin-webpack": "^1.1.2"
   }
 }

@@ -1,5 +1,13 @@
 # `@gasket/cli`
 
+### 3.2.2
+
+-  Fail on on missing modules imported to gasket.config([#115])
+
+### 3.2.1
+
+- [#113] Stop blowing away named classes when merging config
+
 ### 3.2.0
 
 - One instance of pkgManager and made available on create context. ([#98])
@@ -247,3 +255,5 @@ upon `gasket create`
 [#86]: https://github.com/godaddy/gasket/pull/86
 [#87]: https://github.com/godaddy/gasket/pull/87
 [#98]: https://github.com/godaddy/gasket/pull/98
+[#115]: https://github.com/godaddy/gasket/pull/115
+[#113]: https://github.com/godaddy/gasket/pull/113
