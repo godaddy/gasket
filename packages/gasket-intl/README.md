@@ -1,16 +1,17 @@
-# Gasket Intl
+# @gasket/intl
 
-React component library to enable localization for gasket apps.
+React component library to enable localization for Gasket apps.
 
 ## Installation
 
-```bash
-npm install --save @gasket/intl
+```
+npm i @gasket/intl
 ```
 
 ## Components
 
-- `withLocaleRequired(identifier, otherProps)(component)` - Higher-order component to wrap pages or components.
+- `withLocaleRequired(identifier, otherProps)(component)` - Higher-order
+  component to wrap pages or components.
 
 - `<LocaleRequired>` - Loads messages from locale files.
 
@@ -22,7 +23,8 @@ This tell the components what locale files of which modules to load.
 
 An identifier is made up of 2 parts:
 - `module`: this is the name of a node module or package name. If it is left
-  blank or set to `default`, it will be defaulted to the main app's package name.
+  blank or set to `default`, it will be defaulted to the main app's package
+  name.
 - `namespace`: this is the name of a file within that module's locale directory.
   If it is left blank, the component will not try to load a namespace file.
 
@@ -35,9 +37,9 @@ The parts can be described in the following shapes:
 ## Component Props
 
 - `identifier`: (Identifier) What locale file(s) to load.
-- `loading`: (string|node) Optional content to render while loading.
-  Defaults to null. When using the HOC at the page-level, `getInitialProps`
-  will be invoked and defer rendering until locale content is loaded.
+- `loading`: (string|node) Optional content to render while loading. Defaults to
+  null. When using the HOC at the page-level, `getInitialProps` will be invoked
+  and defer rendering until locale content is loaded.
 
 ## HOC Arguments
 
@@ -47,16 +49,20 @@ The parts can be described in the following shapes:
 
 ## Selectors
 
-### `selectMessage(state, id, [defaultMessage])`
+### selectMessage
+
+`selectMessage(state, id, [defaultMessage])`
 
 For use outside of `react-intl` provider context.
 
 - `state`: (object) redux state
 - `id`: (string) message id or key
-- `defaultMessage`: (string) Optional message if `id` is not found.
-  Otherwise the name of the id will be returned.
+- `defaultMessage`: (string) Optional message if `id` is not found. Otherwise
+  the name of the id will be returned.
 
-### `selectAllMessages(state)`
+### selectAllMessages
+
+`selectAllMessages(state)`
 
 Used by IntlProvider internally, but exposed for some edge use cases.
 
@@ -67,11 +73,11 @@ Used by IntlProvider internally, but exposed for some edge use cases.
 This component loads localization messages for the associated package as
 described by the identifier.
 
-#### Ex.1 : When keys are defined in the `locales` root.
+#### Example : When keys are defined in the `locales` root.
 
-In the below example, `app_more_info` and `app_details` are two keys
-defined in the locale file for our app. If `identifier` prop is not set,
-it will default to the locale file of the app.
+In the below example, `app_more_info` and `app_details` are two keys defined in
+the locale file for our app. If `identifier` prop is not set, it will default to
+the locale file of the app.
 
 ```js
 import { LocaleRequired } from '@gasket/intl';
@@ -84,7 +90,8 @@ import { LocaleRequired } from '@gasket/intl';
 </LocaleRequired>
 ```
 
-#### Ex.2 : When keys are defined under a namespace folder.
+#### Example : When keys are defined under a namespace folder.
+
 The prop `identifier` could be `.namespace` or `{ namespace: 'namespace' }`
 
 ```js
@@ -93,8 +100,10 @@ The prop `identifier` could be `.namespace` or `{ namespace: 'namespace' }`
 </LocaleRequired>
 ```
 
-#### Ex.3 : When keys are defined under a package's `locale` root.
-The prop `identifier` could be `@myscope/some-module` or `{ module: '@myscope/some-module' }`
+#### Example : When keys are defined under a package's `locale` root.
+
+The prop `identifier` could be `@myscope/some-module` or `{ module:
+'@myscope/some-module' }`
 
 ```js
 <LocaleRequired identifier='@myscope/some-module'>
@@ -102,8 +111,10 @@ The prop `identifier` could be `@myscope/some-module` or `{ module: '@myscope/so
 </LocaleRequired>
 ```
 
-#### Ex.4 : When keys are defined under a namespace folder for a package.
-The prop `identifier` could be `@myscope/some-module.namespace` or `{ module: '@myscope/some-module', namespace: 'namespace' }`
+#### Example : When keys are defined under a namespace folder for a package.
+
+The prop `identifier` could be `@myscope/some-module.namespace` or `{ module:
+'@myscope/some-module', namespace: 'namespace' }`
 
 ```js
 <LocaleRequired identifier={{ module: '@myscope/some-module', namespace: 'namespace' }}>
@@ -112,12 +123,12 @@ The prop `identifier` could be `@myscope/some-module.namespace` or `{ module: '@
 ```
 
 
-**Note:** Only one level of namespacing is allowed.
-So if you use `app-name.name.space`, the `module` will be `"app-name"` with the
-`namespace` becoming `"name.space"`.
+**Note:** Only one level of namespacing is allowed. So if you use
+`app-name.name.space`, the `module` will be `"app-name"` with the `namespace`
+becoming `"name.space"`.
 
 
-#### Ex.5 : When keys are defined in multiple spaces
+#### Example : When keys are defined in multiple spaces
 
 ```js
 <LocaleRequired identifier={['app-name', '@myscope/some-module.namespace']}>
@@ -147,7 +158,7 @@ export default withLocaleRequired(<identifier>)(TargetComponent);
 Here are some example uses of the HOC, setting arguments and identifiers in a
 variety of supported formats.
 
-```jsx harmony
+```jsx
 // Defaults the module to the app's package name
 withLocaleRequired()
 withLocaleRequired('')
@@ -173,9 +184,12 @@ withLocaleRequired({ namespace: 'some-namespace' })
 // Loads a namespace file for a node module and sets loading indicator
 withLocaleRequired({ module: 'a-package', namespace: 'some-namespace'}, { loading: <Spinner/> })
 ```
-#### Shallow Rendering with Enzyme When Using `withLocaleRequired`
 
-If you want to test with `shallow(<ComponentName />)` on a react component which uses `withLocaleRequired`, you will need to make two exports in your component file, a named and a default export.
+#### Example shallow rendering with Enzyme When Using `withLocaleRequired`
+
+If you want to test with `shallow(<ComponentName />)` on a react component which
+uses `withLocaleRequired`, you will need to make two exports in your component
+file, a named and a default export.
 
 ```js
 export class ExampleComponent extends Component {
@@ -199,8 +213,8 @@ import { ExampleComponent } from '../../components/examplecomponent';
 
 ### withIntlProvider
 
-This component reads the locale manifest and attaches all the available
-messages data with IntlProvider. It will be added to GasketApp by default.
+This component reads the locale manifest and attaches all the available messages
+data with IntlProvider. It will be added to GasketApp by default.
 
 ```js
 import App from 'next/app';
@@ -213,8 +227,8 @@ export default withRedux(makeStore)(withIntlProvider()(App));
 
 ### Selectors
 
-This example demonstrates how to inject locale messages into a component
-when not using `react-intl`:
+This example demonstrates how to inject locale messages into a component when
+not using `react-intl`:
 
 ```js
 import React, { Fragment } from 'react';
@@ -254,3 +268,7 @@ const performSomeAction = (payload) => {
   }
 }
 ```
+
+## License
+
+[MIT](./LICENSE.md)

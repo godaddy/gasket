@@ -1,36 +1,45 @@
 # @gasket/plugin-express
 
-The `express-plugin` adds `express` to your application.
-
-## Installation
-
-```sh
-npm install --save @gasket/plugin-express
-```
+Adds Express to your application.
 
 ## Guides
 
 - [Setup Guide] for adding middleware and routes.
 - [Common "Gotchas"] encountered with Express middleware.
 
-## Configuration
+## Installation
 
-The express plugin is configured using the `gasket.config.js` file.
+#### New apps
 
-- First, add it to the `plugins` section of your `gasket.config.js`:
+```
+gasket create <app-name> --plugins @gasket/plugin-express
+```
 
-```js
+#### Existing apps
+
+```
+npm i @gasket/plugin-express
+```
+
+Modify `plugins` section of your `gasket.config.js`:
+
+```diff
 module.exports = {
-  plugins: {
-    add: ['@gasket/express']
-  }
+  plugins: [
+    add: [
++      '@gasket/plugin-express'
+    ]
+  ]
 }
 ```
 
+## Configuration
+
 All the configurations for the plugin are added under `express` in the config:
 
-- `compression`: true by default. Can to set to false if applying compression differently.
-- `excludedRoutesRegex`: Regex of the routes to exclude by express.
+- `compression`: true by default. Can to set to false if applying compression
+  differently.
+- `excludedRoutesRegex`: Regex of the routes to exclude by Express.
 
 #### Example configuration
 
@@ -46,31 +55,9 @@ module.exports = {
 }
 ```
 
-## Hooks
-
-`express` hooks into the following lifecycle in order to work.
-
-#### createServers
-
-```js
-module.exports = {
-  hooks: {
-    /**
-    * Creates the express app
-    * @param  {Gasket} gasket The Gasket API
-    * @param  {Object} serverOpts Server options.
-    * @return {Promise<Object>} express app
-    */
-    'createServers': async function createServers(gasket, serverOpts) {
-      return { ...serverOpts, handler: express() };
-    }
-  }
-};
-```
-
 ## Lifecycles
 
-#### middleware
+### middleware
 
 Executed when the `express` server has been created, it will apply all returned
 functions as middleware.
@@ -94,7 +81,7 @@ module.exports = {
 
 You may also return an `Array` to inject more than one middleware.
 
-#### express
+### express
 
 Executed **after** the `middleware` event for when you need full control over
 the `express` instance.
@@ -115,10 +102,10 @@ module.exports = {
 }
 ```
 
-#### errorMiddleware
+### errorMiddleware
 
-Executed after the `express` event. All middleware functions returned from
-this hook will be applied to express.
+Executed after the `express` event. All middleware functions returned from this
+hook will be applied to Express.
 
 ```js
 module.exports = {
@@ -135,5 +122,18 @@ module.exports = {
 }
 ```
 
+## How it works
+
+This plugins hooks the [createServers] lifecycles from [@gasket/plugin-https].
+
+## License
+
+[MIT](./LICENSE.md)
+
+<!-- LINKS -->
+
 [Setup Guide]:docs/setup.md
 [Common "Gotchas"]:docs/gotchas.md
+
+[@gasket/plugin-https]:/packages/gasket-plugin-https/README.md
+[createServers]:/packages/gasket-plugin-https/README.md#createservers

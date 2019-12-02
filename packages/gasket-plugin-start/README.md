@@ -2,6 +2,10 @@
 
 Enables commands essential to building and running Gasket projects.
 
+## Installation
+
+This is a default plugin in the Gasket CLI and is always available for use.
+
 ## Commands
 
 ### build command
@@ -28,7 +32,7 @@ This simple example hooks the start lifecycle to start up a web server, and
 changes the port if using the local command.
 
 ```js
-// example-server-plugin.js
+// gasket-plugin-example.js
 const http = require('http');
 
 module.exports = {
@@ -59,11 +63,15 @@ Plugins should hook this lifecycle to prepare files for the app to be run.
 ### start
 
 This lifecycle can be used to run an app, such as by starting up a port
-listener. Generally, the start lifecycle should only be hooked by one plugin
-in an app.
+listener. Generally, the start lifecycle should only be hooked by one plugin in
+an app.
 
 ### preboot
 
 This lifecycle can be hooked by plugins to prepare an app before startup. This
 should be used for in-memory setup, with an on disk prep handled during the
 build lifecycle.
+
+## License
+
+[MIT](./LICENSE.md)

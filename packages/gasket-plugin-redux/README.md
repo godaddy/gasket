@@ -2,12 +2,42 @@
 
 Gasket plugin to setup redux store available to express middleware.
 
+## Installation
+
+#### New apps
+
+***Recommended***
+
+```
+gasket create <app-name> --plugins @gasket/plugin-redux
+```
+
+#### Existing apps
+
+```
+npm i @gasket/plugin-redux @gasket/redux redux
+```
+
+Modify `plugins` section of your `gasket.config.js`:
+
+```diff
+module.exports = {
+  plugins: [
+    add: [
++      '@gasket/plugin-redux'
+    ]
+  ]
+}
+```
+
+## Configuration
+
 By default, Gasket apps will use the makeStore function from
 `@gasket/redux/make-store`. App developers can choose to use different makeStore
 file by utilizing `configureMakeStore` from [@gasket/redux] and then pointing to
 this file in the gasket.config.js.
 
-## Options
+### Options
 
 - `makeStore` - (string) relative path to a custom makeStore configuration. If
   not specified, the plugin will check if a `store.js` file exists in the root
@@ -15,7 +45,7 @@ this file in the gasket.config.js.
   module.
 - `initState` - (object) initial state to include in the store
 
-### Config Example
+#### Example config
 
 ```js
 // gasket.config.js
@@ -56,13 +86,13 @@ const Log = require('@gasket/log');     // custom log implementation
 module.exports = configureMakeStore({ reducers, logger: new Log() });
 ```
 
-## Middleware
+## Usage
 
 This plugin attaches a `store` object to the node request object. This allows
 redux to be invoked in express middleware and the same store instance used
 during server-side rendering.
 
-### Usage Example
+#### Example middleware
 
 ```js
 async function doSomethingMiddleware(req, res, next) {
@@ -88,7 +118,7 @@ a Promise that resolves to a new initial state. Example plugin:
 const getExperiments = require('./get-experiments');
 
 module.exports = {
-  id: 'some-plugin',
+  id: 'gasket-plugin-example',
   hooks: {
     initReduxState(gasket, state, req, res) {
       return {
@@ -120,7 +150,7 @@ actions should return a Promise. Example plugin:
 const getExperiments = require('./get-experiments-action');
 
 module.exports = {
-  id: 'some-plugin',
+  id: 'gasket-plugin-example',
   hooks: {
     initReduxStore(gasket, store, req, res) {
       store.dispatch(getExperiments(req));
@@ -138,6 +168,10 @@ The hook is passed the following parameters:
 | `req`     | The express request object  |
 | `res`     | The express response object |
 
+## License
+
+[MIT](./LICENSE.md)
 
 <!-- LINKS -->
+
 [@gasket/redux]:/packages/gasket-redux/README.md#gasketredux

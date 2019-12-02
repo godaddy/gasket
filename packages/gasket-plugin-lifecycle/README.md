@@ -1,32 +1,20 @@
 # @gasket/plugin-lifecycle
 
-Subscribe to gasket lifecycle events using files in a `lifecycles` directory.
+Hook Gasket lifecycles using files in a `lifecycles/` directory.
 
 ## Installation
 
-```
-npm install --save @gasket/plugin-lifecycle
-```
+This is a default plugin in the Gasket CLI and is always available for use.
 
 ## Usage
 
-Add the plugin to the plugin section of your `gasket.config.js` file:
+Create a `lifecycles` folder in the root of your application. This folder should
+contain files that can interact with the various of Gasket lifecycles that are
+implemented by the plugins.
 
-```
-{
-  plugins: {
-    add: ['@gasket/lifecycle']
-  }
-}
-```
-
-Next, create a `lifecycles` folder in the root of your application. This folder
-should contain files that can interact with the various of gasket lifecycle
-events that are implemented by the plugins.
-
-The name of the file (excluding the `.js` extension) is used as the name of
-the lifecycle event and the exported function of that file is used as handler
-of the event. So you end up with the following application structure:
+The name of the file (excluding the `.js` extension) is used as the name of the
+lifecycle event and the exported function of that file is used as handler of the
+event. So you end up with the following application structure:
 
 ```
 gasket.config.js
@@ -68,3 +56,7 @@ for multi-word lifecycle events to avoid problems with case sensitivity in
 different file systems. This plugin will automatically map these to the
 `camelCased` event names. For example, `/lifecycles/app-env-config.js` will
 properly hook `appEnvConfig` events.
+
+## License
+
+[MIT](./LICENSE.md)

@@ -1,11 +1,5 @@
 # Gasket Preset Authoring Guide
 
-* [Background](#background)
-* [Composition](#composition)
-  * [Predefined `gasket create` context](#predefined-gasket-create-context)
-  * [Predefined `gasket.config.js`](#predefined-gasketconfigjs)
-  * [Extending other presets](#extending-other-presets)
-
 ## Background
 
 Much like [babel presets], Gasket presets allow common plugins to be grouped and
@@ -51,7 +45,7 @@ It is recommended, though not required, for presets to export their `require`
 instance. This will help the loader properly resolve plugin dependencies,
 especially during development when module linking may be used.
 
-### Predefined `gasket create` context
+### Predefined create context
 
 You can set `gasket create` context values ahead of time in your preset so that
 the associated prompts are never asked. To do so, in a preset's `index.js`, set
@@ -84,7 +78,7 @@ module.exports = {
 ```
 
 These particular keys come from inspecting the prompts shipped internally by
-[`gasket create` cli prompts]. Without any extensions, the Gasket CLI ships
+`gasket create` CLI prompts. Without any extensions, the Gasket CLI ships
 these overridable prompts:
 
 - `appDescription` - `String`
@@ -179,5 +173,4 @@ application is loaded, in addition to the ones already present as `dependencies`
 
 [babel presets]: https://babeljs.io/docs/en/presets
 [naming conventions]: /packages/gasket-resolve/README.md
-[`gasket create` cli prompts]: https://github.com/godaddy/gasket/blob/master/packages/gasket-cli/src/scaffold/actions/global-prompts.js
 [environment overrides]: /packages/gasket-cli/docs/configuration.md

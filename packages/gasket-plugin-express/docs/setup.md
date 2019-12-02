@@ -5,11 +5,10 @@ everything you need for your application built-in. If you are building a Plugin
 for Gasket, or have special requirements to customize your server with
 additional routes and middleware, this guide is for you!
 
-Before you go on, make sure you understand
-[how to author plugins](/packages/gasket-cli/docs/plugins.md). Whether your
-custom Express middleware is for a plugin to be shared across multiple apps, or
-for a standalone plugin used solely by your app, the plugin system is necessary
-to do any Express app customization.
+Before you go on, make sure you understand [how to author plugins][plugins].
+Whether your custom Express middleware is for a plugin to be shared across
+multiple apps, or for a standalone plugin used solely by your app, the plugin
+system is necessary to do any Express app customization.
 
 After some standard middleware is injected, a plugin can hook the `middleware`
 lifecycle and return a middleware or array of middlewares to be added. This hook
@@ -49,8 +48,7 @@ module.exports = {
 ```
 
 Finally, plugins can hook the `errorMiddleware` lifecycle and return additional
-middleware(s), typically
-[error handlers](http://expressjs.com/en/guide/error-handling.html).
+middleware(s), typically for [error handling].
 
 ```js
 const errorLoggingClient = require('some-error-logger');
@@ -73,11 +71,9 @@ module.exports = {
 ```
 
 Remember, if you need any of your injected middleware to come before or after
-middleware injected by another plugin, use the
-[timing mechanism](/packages/gasket-engine/README.md) of the plugin engine. For
-example, if you need your middleware to access the server-side redux store
-created by [@gasket/plugin-redux](/packages/gasket-plugin-redux/README.md),
-you can do something like this:
+middleware injected by another plugin, use the [timing mechanism] of the plugin
+engine. For example, if you need your middleware to access the server-side redux
+store created by [@gasket/plugin-redux], you can do something like this:
 
 ```js
 const getFeatureFlags = require('./get-feature-flags');
@@ -110,3 +106,10 @@ module.exports = {
   }
 }
 ```
+
+<!-- LINKS -->
+
+[error handling]:http://expressjs.com/en/guide/error-handling.html
+[plugins]:/packages/gasket-cli/docs/plugins.md
+[@gasket/plugin-redux]:/packages/gasket-plugin-redux/README.md
+[timing mechanism]:/packages/gasket-engine/README.md

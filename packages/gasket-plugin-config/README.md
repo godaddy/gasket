@@ -1,34 +1,45 @@
 # @gasket/plugin-config
 
-Supports application-specific (non-Gasket) configuration
+Supports application-specific (non-Gasket plugin) configuration.
 
-## What Is This
+This plugin assembles a configuration for your environment from config file(s)
+which is then exposed the configuration to server-side code and can be
+accessible via Redux.
 
-This plugin:
+## Installation
 
-* Assembles a configuration for your environment from
-  [config files](#application-config-files)
-* [Exposes the configuration](#accessing-config) to server-side code and redux
-* Enables plugins to [update the environment's config](#appenvconfig)
-* Enables plugins to [inject request-specific configuration](#apprequestconfig)
+#### New apps
 
-## Installing
-
-```shell
-npm install --save @gasket/plugin-config
+```
+gasket create <app-name> --plugins @gasket/plugin-config
 ```
 
-...and add it to your `gasket.config.js`.
+#### Existing apps
 
-```js
+```
+npm i @gasket/plugin-config
+```
+
+Modify `plugins` section of your `gasket.config.js`:
+
+```diff
 module.exports = {
-  plugins: {
-    add: ['@gasket/config']
-  }
-};
+  plugins: [
+    add: [
++      '@gasket/plugin-config'
+    ]
+  ]
+}
 ```
 
-## Configuring Your Application
+## Usage
+
+There are two file structure methods available for defining config of different
+environments in apps.
+1. Multiple files with [Environment per file]
+2. Single file with [Environments inline]
+
+### Environment files
 
 By default, this plugin imports files from your `/config` directory to assemble
 your application's config. You can change this directory with the `configPath`
@@ -49,8 +60,8 @@ centers) through dotted identifiers. Example: `production.v1`.
 Once this environment identifier is determined, files are imported based on the
 identifier and deep merged together. Files must be CommonJS `.js` modules or
 `.json` files with the name of your environment. You may optionally have a
-`base.js[on]` file shared across all environments. Given the example
-environment `production.v1`, the following files may be merged together:
+`base.js[on]` file shared across all environments. Given the example environment
+`production.v1`, the following files may be merged together:
 
 ```
 production.v1.js
@@ -70,31 +81,35 @@ base.js
 
 The optional `local.overrides.js` is something that can be on individual
 workstations and ignored in your `.gitignore`. Depending on if you're naming
-your development environment `dev` or `development`, that will automatically
-be merged with your `local` configuration.
+your development environment `dev` or `development`, that will automatically be
+merged with your `local` configuration.
 
-## Alternative Configuration
+### Environments inline
 
-Additionally, you can optionally add an `app.config.js` file to the root of
-your app's directory, alongside the `gasket.config.js`. This config file allows
-you to set up [inline environment overrides], as opposed to in separate files,
+Additionally, you can optionally add an `app.config.js` file to the root of your
+app's directory, alongside the `gasket.config.js`. This config file allows you
+to set up [inline environment overrides], as opposed to in separate files,
 following the same rules as the `gasket.config.js`.
 
 If you happen to set up config in both `./config` and `app.config.js`, the
 configurations will be merged with `./config` taking priority. The `.json`
 extension is also supported for this file.
 
-To support easy local development, you can use an `app.config.local.js`
-which will merge in your own local configuration for development. This file
-should not be committed, and specified in `.gitignore`.
+To support easy local development, you can use an `app.config.local.js` which
+will merge in your own local configuration for development. This file should not
+be committed, and specified in `.gitignore`.
 
-## Accessing Config
+### Accessing Config
 
 The plugin attaches the configuration from your config files to a `config`
-property of the express request object. This makes it accessible to server-side
-`getInitialProps` calls:
+property of the Request object.
 
-```jsx harmony
+#### Example with Next.js
+
+If you are developing a front end with Next.js, config is accessible to
+server-side rendering via `getInitialProps`:
+
+```jsx
 import * as React from 'react';
 
 export default PageComponent extends React.Component {
@@ -110,8 +125,10 @@ export default PageComponent extends React.Component {
 }
 ```
 
-...and custom express middleware (provided you ensure that your middleware
-runs _after_ the config plugin). For example, in `/lifecycles/middleware.js`:
+#### Example with Middleware
+
+Custom Express middleware (provided you ensure that your middleware runs _after_
+the config plugin). For example, in `/lifecycles/middleware.js`:
 
 ```js
 module.exports = {
@@ -128,19 +145,21 @@ module.exports = {
 }
 ```
 
+### Config with Redux
+
 If you need access to config values in client-side code, this can be done
 through your redux store. The config plugin looks for a `redux` property of your
 configuration and places it under a `config` property in your initial redux
 state.
 
-## Lifecycle Events
+## Lifecycles
 
 ### appEnvConfig
 
 The `appEnvConfig` event is fired once the config file contents are normalized.
-Hooks are passed the gasket API and the current configuration and should
-return a new configuration object with injected modifications. This event will
-occur once during startup, and hooks may be asynchronous. Sample:
+Hooks are passed the gasket API and the current configuration and should return
+a new configuration object with injected modifications. This event will occur
+once during startup, and hooks may be asynchronous. Sample:
 
 ```js
 const fetchRemoteConfig = require('./remote-config');
@@ -162,11 +181,11 @@ module.exports = {
 ### appRequestConfig
 
 On each request, the `appRequestConfig` event is fired, enabling plugins to
-inject configuration derived from the request being processed. It is passed
-the gasket API, the config, and the Express request & response. Again, hooks
-should return a new object instead of mutating an existing object. This is
-_especially_ vital in the case of this event to avoid cross-request information
-leaks. Sample:
+inject configuration derived from the request being processed. It is passed the
+gasket API, the config, and the Express request & response. Again, hooks should
+return a new object instead of mutating an existing object. This is _especially_
+vital in the case of this event to avoid cross-request information leaks.
+Sample:
 
 ```js
 const getFeatureFlags = require('./feature-flags');
@@ -190,4 +209,13 @@ module.exports = {
 }
 ```
 
-[inline environment overrides]:https://github.com/godaddy/gasket/docs/blob/master/guides/configuration.md#environments
+## License
+
+[MIT](./LICENSE.md)
+
+<!-- LINKS -->
+
+[Environment per file]:#environment-files
+[Environments inline]:#environments-inline
+
+[inline environment overrides]:/packages/gasket-cli/docs/configuration.md#environments

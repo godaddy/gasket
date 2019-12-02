@@ -1,11 +1,31 @@
 # @gasket/plugin-webpack
 
-The `webpack-plugin` adds `webpack` support to your application.
+Adds Webpack support to your application.
 
 ## Installation
 
+#### New apps
+
 ```
-npm install --save @gasket/plugin-webpack
+gasket create <app-name> --plugins @gasket/plugin-webpack
+```
+
+#### Existing apps
+
+```
+npm i @gasket/plugin-webpack webpack
+```
+
+Modify `plugins` section of your `gasket.config.js`:
+
+```diff
+module.exports = {
+  plugins: [
+    add: [
++      '@gasket/plugin-webpack'
+    ]
+  ]
+}
 ```
 
 ## Configuration
@@ -39,7 +59,7 @@ module.exports = {
 
 `webpack` exposes an init function called `initWebpack`.
 
-#### initWebpack
+### initWebpack
 
 Use this to initialize the webpack lifecycles in a consuming plugin.
 
@@ -58,20 +78,21 @@ const config = initWebpack(gasket, webpackConfig, data);
 
 ## Lifecycles
 
-#### webpackChain
+### webpackChain
 
-Executed before the `webpack` lifecycle, allows you to easily create the
-initial webpack configuration using a chaining syntax that is provided by the
+Executed before the `webpack` lifecycle, allows you to easily create the initial
+webpack configuration using a chaining syntax that is provided by the
 `webpack-chain` library. The resulting configuration is then merged with:
 
-- WebPack configuration that is specified in the `gasket.config.js` as `webpack` object.
+- WebPack configuration that is specified in the `gasket.config.js` as `webpack`
+  object.
 
 The result of this will be passed into the `webpack` hook as base configuration.
 
-#### webpack
+### webpack
 
-Executed after `webpack-chain` lifecycle. It receives the full webpack config as first
-argument. It can be used to add additional configurations to webpack.
+Executed after `webpack-chain` lifecycle. It receives the full webpack config as
+first argument. It can be used to add additional configurations to webpack.
 
 ```js
 module.exports = {
@@ -82,3 +103,7 @@ module.exports = {
   }
 }
 ```
+
+## License
+
+[MIT](./LICENSE.md)
