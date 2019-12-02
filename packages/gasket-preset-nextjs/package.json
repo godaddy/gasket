@@ -1,6 +1,6 @@
 {
   "name": "@gasket/preset-nextjs",
-  "version": "1.0.8",
+  "version": "5.0.0-canary.0",
   "description": "Basic NextJS Framework",
   "repository": {
     "type": "git",
@@ -15,11 +15,11 @@
     "url": "https://github.com/godaddy/gasket/issues"
   },
   "dependencies": {
-    "@gasket/plugin-express": "^2.1.2",
-    "@gasket/plugin-https": "^2.2.1",
-    "@gasket/plugin-log": "^3.2.2",
-    "@gasket/plugin-nextjs": "^2.3.4",
-    "@gasket/plugin-redux": "^2.3.5",
-    "@gasket/plugin-webpack": "^1.1.2"
+    "@gasket/plugin-express": "^5.0.0-canary.0",
+    "@gasket/plugin-https": "^5.0.0-canary.0",
+    "@gasket/plugin-log": "^5.0.0-canary.0",
+    "@gasket/plugin-nextjs": "^5.0.0-canary.0",
+    "@gasket/plugin-redux": "^5.0.0-canary.0",
+    "@gasket/plugin-webpack": "^5.0.0-canary.0"
   }
 }

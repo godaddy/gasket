@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-fastify",
-  "version": "1.0.0",
+  "version": "5.0.0-canary.0",
   "description": "Adds fastify support to your application",
   "main": "index.js",
   "scripts": {

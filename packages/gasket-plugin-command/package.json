@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-command",
-  "version": "2.0.2",
+  "version": "5.0.0-canary.0",
   "description": "Plugin to enable other plugins to inject new gasket commands",
   "main": "lib/plugin.js",
   "scripts": {
@@ -37,7 +37,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-command",
   "dependencies": {
-    "@gasket/utils": "^1.2.0"
+    "@gasket/utils": "^5.0.0-canary.0"
   },
   "devDependencies": {
     "@oclif/config": "^1.13.0",

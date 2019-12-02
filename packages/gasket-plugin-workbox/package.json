@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-workbox",
-  "version": "1.1.1",
+  "version": "5.0.0-canary.0",
   "description": "Gasket Workbox Plugin",
   "main": "lib",
   "scripts": {
