@@ -73,24 +73,29 @@ async function chooseTestPlugin(context) {
     .map(pluginInfo => pluginIdentifier(pluginInfo.name).shortName)
     .concat(plugins);
 
+  const knownTestPlugins = ['@gasket/mocha', '@gasket/jest'];
+
   if (!('testPlugin' in context)) {
-    if (!['mocha', 'jest'].some(p => allPlugins.includes(p))) {
-      const { testPlugin } = await inquirer.prompt([
+    let testPlugin = knownTestPlugins.find(p => allPlugins.includes(p));
+
+    if (!testPlugin) {
+      ({ testPlugin } = await inquirer.prompt([
         {
           name: 'testPlugin',
           message: 'Choose your unit test suite',
           type: 'list',
           choices: [
             { name: 'none (not recommended)', value: 'none' },
-            { name: 'mocha + nyc + sinon + chai', value: 'mocha' },
-            { name: 'jest' }
+            { name: 'mocha + nyc + sinon + chai', value: '@gasket/mocha' },
+            { name: 'jest', value: '@gasket/jest' }
           ]
-        }]);
+        }
+      ]));
+    }
 
-      if (testPlugin && testPlugin !== 'none') {
-        addPluginsToContext([testPlugin], context);
-        Object.assign(context, { testPlugin });
-      }
+    if (testPlugin !== 'none') {
+      addPluginsToContext([testPlugin], context);
+      Object.assign(context, { testPlugin });
     }
   }
 }

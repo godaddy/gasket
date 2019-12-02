@@ -1,8 +1,11 @@
 # `@gasket/resolve`
 
+- Support for project-type prefixed naming of plugins and presets ([#93])
+
 ### 2.0.1
 
 - Fix to support Windows paths when resolving ([#105])
+
 
 ### 2.0.0
 
@@ -36,6 +39,5 @@
 
 [#8]: https://github.com/godaddy/gasket/pull/8
 [#64]: https://github.com/godaddy/gasket/pull/64
-[#105]: https://github.com/godaddy/gasket/pull/105
 
 [Loader]:/packages/gasket-resolve/README.md#Loader

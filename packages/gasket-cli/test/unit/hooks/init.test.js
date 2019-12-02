@@ -17,13 +17,13 @@ class MockCommand {}
 MockCommand.flags = {};
 
 const mockImports = {
-  '@gasket/plugin-engine': class PluginEngine { async exec() { execStub(...arguments); } },
-  '@gasket/command-plugin': { GasketCommand: MockCommand },
+  '@gasket/engine': class PluginEngine { async exec() { execStub(...arguments); } },
+  '@gasket/plugin-command': { GasketCommand: MockCommand },
   '../config/utils': { getGasketConfig: getGasketConfigStub, assignPresetConfig: assignPresetConfigStub },
   '@oclif/parser': { parse: parseStub }
 };
 
-const pluginEngineSpy = sinon.spy(mockImports, '@gasket/plugin-engine');
+const pluginEngineSpy = sinon.spy(mockImports, '@gasket/engine');
 
 const _initHook = proxyquire('../../../src/hooks/init', mockImports);
 

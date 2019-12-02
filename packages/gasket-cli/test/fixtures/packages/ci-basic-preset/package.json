@@ -5,6 +5,6 @@
   "dependencies": {
     "@gasket/resolve": "file:../../../../../gasket-resolve",
     "@gasket/cli": "file:../../../../../gasket-cli",
-    "@gasket/ci-basic-plugin": "file:../ci-basic-plugin"
+    "@gasket/plugin-ci-basic": "file:../ci-basic-plugin"
   }
 }

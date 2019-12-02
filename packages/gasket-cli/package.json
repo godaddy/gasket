@@ -18,17 +18,15 @@
     "test": "npm run test:unit",
     "test:coverage": "npm run test:unit:coverage",
     "posttest": "npm run lint",
-    "prepack": "npm run manifest && npm run readme",
+    "prepack": "npm run manifest",
     "postpack": "rm -f oclif.manifest.json",
     "manifest": "cross-env FAUX_ROOT='/path/to/your/app' oclif-dev manifest",
-    "readme": "cross-env FAUX_ROOT='/path/to/your/app' oclif-dev readme",
     "test:clean": "rimraf ./test/fixtures/create/myapp",
     "test:integration": "mocha --require test/setup.js --recursive \"test/integration/**/*.test.js\"",
     "test:integration:coverage": "nyc --reporter=text --reporter=json-summary --all run-s test:integration",
     "test:mocha": "mocha --require test/setup.js --recursive \"test/**/*.test.js\"",
     "test:unit": "mocha --require test/setup.js --recursive \"test/unit/**/*.test.js\"",
-    "test:unit:coverage": "nyc --reporter=text --reporter=lcov --all run-s test:unit",
-    "version": "npm run readme && git add README.md"
+    "test:unit:coverage": "nyc --reporter=text --reporter=lcov --all run-s test:unit"
   },
   "repository": {
     "type": "git",
@@ -47,13 +45,13 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-cli",
   "dependencies": {
-    "@gasket/command-plugin": "^2.0.2",
-    "@gasket/git-plugin": "^1.1.1",
-    "@gasket/lifecycle-plugin": "^1.1.4",
-    "@gasket/metadata-plugin": "^2.0.1",
-    "@gasket/plugin-engine": "^2.0.2",
+    "@gasket/engine": "^2.0.2",
+    "@gasket/plugin-command": "^2.0.2",
+    "@gasket/plugin-git": "^1.1.1",
+    "@gasket/plugin-lifecycle": "^1.1.4",
+    "@gasket/plugin-metadata": "^2.0.1",
+    "@gasket/plugin-start": "^1.1.0",
     "@gasket/resolve": "^2.0.1",
-    "@gasket/start-plugin": "^1.1.0",
     "@gasket/utils": "^1.2.0",
     "@oclif/command": "^1.5.14",
     "@oclif/config": "^1.13.0",
@@ -71,7 +69,7 @@
     "mkdirp": "^0.5.1",
     "ora": "^3.4.0",
     "pump": "^3.0.0",
-    "semver": "^6.2.0",
+    "semver": "^6.3.0",
     "tar-fs": "^2.0.0",
     "untildify": "^4.0.0",
     "vinyl-fs": "^3.0.3"
@@ -102,6 +100,78 @@
     "coverage",
     "**/node_modules"
   ],
+  "gasket": {
+    "metadata": {
+      "guides": [
+        {
+          "name": "Configuration Guide",
+          "description": "Configuring Gasket apps",
+          "link": "docs/configuration.md"
+        },
+        {
+          "name": "Plugins Guide",
+          "description": "How to use and author plugins",
+          "link": "docs/plugins.md"
+        },
+        {
+          "name": "Presets Guide",
+          "description": "How to use and author presets",
+          "link": "docs/presets.md"
+        },
+        {
+          "name": "Package Management Guide",
+          "description": "Managing dependencies in Gasket apps",
+          "link": "docs/package-management.md"
+        },
+        {
+          "name": "Common \"Gotchas\"",
+          "description": "Tips and tricks to be aware of",
+          "link": "docs/gotchas.md"
+        }
+      ],
+      "commands": [
+        {
+          "name": "create",
+          "description": "Create a new Gasket app",
+          "link": "README.md#commands"
+        },
+        {
+          "name": "help",
+          "description": "Get usage details for Gasket commands",
+          "link": "README.md#commands"
+        }
+      ],
+      "structures": [
+        {
+          "name": "gasket.config.js",
+          "description": "Gasket config for an app",
+          "link": "docs/configuration.md"
+        },
+        {
+          "name": "plugins/",
+          "description": "One-off plugins for apps",
+          "link": "docs/plugins.md#one-off-plugins"
+        }
+      ],
+      "lifecycles": [
+        {
+          "name": "prompt",
+          "description": "Gasket config for an app",
+          "link": "README.md#prompt"
+        },
+        {
+          "name": "create",
+          "description": "App level plugins",
+          "link": "README.md#create"
+        },
+        {
+          "name": "postCreate",
+          "description": "App level plugins",
+          "link": "README.md#postcreate"
+        }
+      ]
+    }
+  },
   "engines": {
     "node": ">= 8.0.0"
   },

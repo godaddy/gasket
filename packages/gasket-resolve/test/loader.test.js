@@ -6,54 +6,54 @@ let mockRequire;
 const presetOne = {};
 const presetTwo = {};
 const presetUser = {};
-const pluginOne = { name: 'one' };
-const pluginTwo = { name: 'two' };
+const pluginOne = { name: '@gasket/one' };
+const pluginTwo = { name: '@gasket/two' };
 const pluginUser = { name: 'user' };
 const presetOnePkg = {
-  name: '@gasket/one-preset',
+  name: '@gasket/preset-one',
   version: '4.5.6',
   dependencies: {
-    '@gasket/one-plugin': '^1.0.0',
+    '@gasket/plugin-one': '^1.0.0',
     'some-module': 'latest'
   }
 };
 const presetTwoPkg = {
-  name: '@gasket/two-preset',
+  name: '@gasket/preset-two',
   version: '4.5.7',
   dependencies: {
-    '@gasket/one-plugin': 'latest',
-    '@gasket/two-plugin': '^1.0.0',
-    '@gasket/one-preset': '^4.0.0',
+    '@gasket/plugin-one': 'latest',
+    '@gasket/plugin-two': '^1.0.0',
+    '@gasket/preset-one': '^4.0.0',
     'some-module': 'latest'
   }
 };
 const presetUserPkg = {
-  name: 'user-preset',
+  name: 'gasket-preset-user',
   version: '4.5.8', dependencies: {
-    'user-plugin': '^1.0.0'
+    'gasket-plugin-user': '^1.0.0'
   }
 };
-const pluginOnePkg = { name: '@gasket/one-plugin', version: '1.2.3' };
-const pluginTwoPkg = { name: '@gasket/two-plugin', version: '1.2.4' };
-const pluginUserPkg = { name: 'user-plugin', version: '1.2.5' };
-const appPluginOne = { name: 'app-one-plugin', version: '7.8.9' };
-const appPluginTwo = { name: 'app-two-plugin', version: '7.8.10' };
+const pluginOnePkg = { name: '@gasket/plugin-one', version: '1.2.3' };
+const pluginTwoPkg = { name: '@gasket/plugin-two', version: '1.2.4' };
+const pluginUserPkg = { name: 'gasket-plugin-user', version: '1.2.5' };
+const appPluginOne = { name: 'app-plugin-one', version: '7.8.9' };
+const appPluginTwo = { name: 'app-plugin-two', version: '7.8.10' };
 
 const mockModules = {
-  '@gasket/one-preset': presetOne,
-  '@gasket/two-preset': presetTwo,
-  'user-preset': presetUser,
-  '@gasket/one-plugin': pluginOne,
-  '@gasket/two-plugin': pluginTwo,
-  'user-plugin': pluginUser,
-  '@gasket/one-preset/package.json': presetOnePkg,
-  '@gasket/two-preset/package.json': presetTwoPkg,
-  'user-preset/package.json': presetUserPkg,
-  '@gasket/one-plugin/package.json': pluginOnePkg,
-  '@gasket/two-plugin/package.json': pluginTwoPkg,
-  'user-plugin/package.json': pluginUserPkg,
-  '/app/plugins/app-one-plugin.js': appPluginOne,
-  '/app/plugins/app-two-plugin.js': appPluginTwo
+  '@gasket/preset-one': presetOne,
+  '@gasket/preset-two': presetTwo,
+  'gasket-preset-user': presetUser,
+  '@gasket/plugin-one': pluginOne,
+  '@gasket/plugin-two': pluginTwo,
+  'gasket-plugin-user': pluginUser,
+  '@gasket/preset-one/package.json': presetOnePkg,
+  '@gasket/preset-two/package.json': presetTwoPkg,
+  'gasket-preset-user/package.json': presetUserPkg,
+  '@gasket/plugin-one/package.json': pluginOnePkg,
+  '@gasket/plugin-two/package.json': pluginTwoPkg,
+  'gasket-plugin-user/package.json': pluginUserPkg,
+  '/app/plugins/app-plugin-one.js': appPluginOne,
+  '/app/plugins/app-plugin-two.js': appPluginTwo
 };
 
 describe('Loader', () => {
@@ -88,51 +88,51 @@ describe('Loader', () => {
   describe('.getModuleInfo', () => {
 
     it('returns info object', () => {
-      const results = loader.getModuleInfo(pluginOne, '@gasket/one-plugin');
+      const results = loader.getModuleInfo(pluginOne, '@gasket/plugin-one');
       expect(results).toEqual(expect.objectContaining({
-        name: '@gasket/one-plugin',
+        name: '@gasket/plugin-one',
         module: pluginOne
       }));
     });
 
     it('includes passed meta data', () => {
-      const results = loader.getModuleInfo(pluginOne, '@gasket/one-plugin', { extra: true });
+      const results = loader.getModuleInfo(pluginOne, '@gasket/plugin-one', { extra: true });
       expect(results).toEqual(expect.objectContaining({
         extra: true
       }));
     });
 
     it('tries to resolve package.json', () => {
-      loader.getModuleInfo(pluginOne, '@gasket/one-plugin', { extra: true });
-      expect(mockRequire.resolve).toHaveBeenCalledWith('@gasket/one-plugin/package.json', {});
+      loader.getModuleInfo(pluginOne, '@gasket/plugin-one', { extra: true });
+      expect(mockRequire.resolve).toHaveBeenCalledWith('@gasket/plugin-one/package.json', {});
     });
 
     it('adds package contents if resolves', () => {
-      const results = loader.getModuleInfo(pluginOne, '@gasket/one-plugin', { extra: true });
+      const results = loader.getModuleInfo(pluginOne, '@gasket/plugin-one', { extra: true });
       expect(results).toEqual(expect.objectContaining({
         package: pluginOnePkg
       }));
     });
 
     it('adds path if package resolves', () => {
-      const results = loader.getModuleInfo(pluginOne, '@gasket/one-plugin', { extra: true });
+      const results = loader.getModuleInfo(pluginOne, '@gasket/plugin-one', { extra: true });
       expect(results).toEqual(expect.objectContaining({
-        path: '/path/to/node_modules/@gasket/one-plugin'
+        path: '/path/to/node_modules/@gasket/plugin-one'
       }));
     });
 
     it('updates name and version if package path resolves', () => {
-      const results = loader.getModuleInfo(pluginOne, '/path/to/node_modules/@gasket/one-plugin', { extra: true });
+      const results = loader.getModuleInfo(pluginOne, '/path/to/node_modules/@gasket/plugin-one', { extra: true });
       expect(results).toEqual(expect.objectContaining({
-        name: '@gasket/one-plugin',
+        name: '@gasket/plugin-one',
         version: '1.2.3'
       }));
     });
 
     it('updates name and version if package path resolves on windows', () => {
-      const results = loader.getModuleInfo(pluginOne, 'C:\\path\\to\\node_modules\\@gasket\\one-plugin', { extra: true });
+      const results = loader.getModuleInfo(pluginOne, 'C:\\path\\to\\node_modules\\@gasket\\plugin-one', { extra: true });
       expect(results).toEqual(expect.objectContaining({
-        name: '@gasket/one-plugin',
+        name: '@gasket/plugin-one',
         version: '1.2.3'
       }));
     });
@@ -148,16 +148,16 @@ describe('Loader', () => {
   describe('.loadModule', () => {
 
     it('returns info object', () => {
-      const results = loader.loadModule('@gasket/one-plugin');
+      const results = loader.loadModule('@gasket/plugin-one');
       expect(results).toEqual(expect.objectContaining({
-        name: '@gasket/one-plugin',
+        name: '@gasket/plugin-one',
         module: pluginOne,
         package: pluginOnePkg
       }));
     });
 
     it('includes passed meta data', () => {
-      const results = loader.loadModule('@gasket/one-plugin', { extra: true });
+      const results = loader.loadModule('@gasket/plugin-one', { extra: true });
       expect(results).toEqual(expect.objectContaining({
         extra: true
       }));
@@ -171,38 +171,47 @@ describe('Loader', () => {
   describe('.loadPlugin', () => {
 
     it('returns info object', () => {
-      const results = loader.loadPlugin('@gasket/one-plugin');
+      const results = loader.loadPlugin('@gasket/plugin-one');
       expect(results).toEqual(expect.objectContaining({
-        name: '@gasket/one-plugin',
+        name: '@gasket/plugin-one',
         module: pluginOne,
         package: pluginOnePkg
       }));
     });
 
     it('includes passed meta data', () => {
-      const results = loader.loadPlugin('@gasket/one-plugin', { extra: true });
+      const results = loader.loadPlugin('@gasket/plugin-one', { extra: true });
       expect(results).toEqual(expect.objectContaining({
         extra: true
       }));
     });
 
     it('throws if missing module', () => {
-      expect(() => loader.loadPlugin('missing')).toThrow();
+      expect(() => loader.loadPlugin('missing')).toThrow(/Cannot find module/);
     });
 
+    // TODO: test variants
     it('supports short names', () => {
-      const results = loader.loadPlugin('one');
+      const results = loader.loadPlugin('@gasket/one');
       expect(results).toEqual(expect.objectContaining({
-        name: '@gasket/one-plugin',
+        name: '@gasket/plugin-one',
+        module: pluginOne,
+        package: pluginOnePkg
+      }));
+    });
+    it('supports short names with format fallbacks', () => {
+      const results = loader.loadPlugin('@gasket/one');
+      expect(results).toEqual(expect.objectContaining({
+        name: '@gasket/plugin-one',
         module: pluginOne,
         package: pluginOnePkg
       }));
     });
 
     it('supports module paths', () => {
-      const results = loader.loadPlugin('/app/plugins/app-one-plugin.js');
+      const results = loader.loadPlugin('/app/plugins/app-plugin-one.js');
       expect(results).toEqual(expect.objectContaining({
-        name: '/app/plugins/app-one-plugin.js',
+        name: '/app/plugins/app-plugin-one.js',
         module: appPluginOne
       }));
     });
@@ -210,7 +219,7 @@ describe('Loader', () => {
     it('supports preloaded modules - built-ins', () => {
       const results = loader.loadPlugin(pluginOne);
       expect(results).toEqual(expect.objectContaining({
-        name: '@gasket/one-plugin',
+        name: '@gasket/plugin-one',
         module: pluginOne,
         package: pluginOnePkg
       }));
@@ -228,16 +237,16 @@ describe('Loader', () => {
   describe('.loadPreset', () => {
 
     it('returns info object', () => {
-      const results = loader.loadPreset('@gasket/one-preset');
+      const results = loader.loadPreset('@gasket/preset-one');
       expect(results).toEqual(expect.objectContaining({
-        name: '@gasket/one-preset',
+        name: '@gasket/preset-one',
         module: presetOne,
         package: presetOnePkg
       }));
     });
 
     it('includes passed meta data', () => {
-      const results = loader.loadPreset('@gasket/one-preset', { extra: true });
+      const results = loader.loadPreset('@gasket/preset-one', { extra: true });
       expect(results).toEqual(expect.objectContaining({
         extra: true
       }));
@@ -248,34 +257,43 @@ describe('Loader', () => {
     });
 
     it('supports short names', () => {
+      const results = loader.loadPreset('@gasket/one');
+      expect(results).toEqual(expect.objectContaining({
+        name: '@gasket/preset-one',
+        module: presetOne,
+        package: presetOnePkg
+      }));
+    });
+
+    it('supports short names with format fallbacks', () => {
       const results = loader.loadPreset('one');
       expect(results).toEqual(expect.objectContaining({
-        name: '@gasket/one-preset',
+        name: '@gasket/preset-one',
         module: presetOne,
         package: presetOnePkg
       }));
     });
 
     it('supports module paths', () => {
-      const results = loader.loadPreset('/path/to/node_modules/@gasket/one-preset');
+      const results = loader.loadPreset('/path/to/node_modules/@gasket/preset-one');
       expect(results).toEqual(expect.objectContaining({
-        name: '@gasket/one-preset',
+        name: '@gasket/preset-one',
         module: presetOne,
         package: presetOnePkg
       }));
     });
 
     it('supports module paths on Windows', () => {
-      const results = loader.loadPreset('C:\\path\\to\\node_modules\\@gasket\\one-preset');
+      const results = loader.loadPreset('C:\\path\\to\\node_modules\\@gasket\\preset-one');
       expect(results).toEqual(expect.objectContaining({
-        name: '@gasket/one-preset',
+        name: '@gasket/preset-one',
         module: presetOne,
         package: presetOnePkg
       }));
     });
 
     it('loads plugin dependencies', () => {
-      const results = loader.loadPreset('@gasket/one-preset');
+      const results = loader.loadPreset('@gasket/preset-one');
       expect(results.plugins).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
@@ -286,7 +304,7 @@ describe('Loader', () => {
     });
 
     it('loads preset dependencies', () => {
-      const results = loader.loadPreset('@gasket/two-preset');
+      const results = loader.loadPreset('@gasket/preset-two');
       expect(results.presets).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
@@ -297,11 +315,11 @@ describe('Loader', () => {
     });
 
     it('adds meta data from parent preset', () => {
-      const results = loader.loadPreset('@gasket/one-preset');
+      const results = loader.loadPreset('@gasket/preset-one');
       expect(results.plugins).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
-            from: '@gasket/one-preset',
+            from: '@gasket/preset-one',
             range: '^1.0.0'
           })
         ])
@@ -309,7 +327,7 @@ describe('Loader', () => {
     });
 
     it('does not load non plugin/preset dependencies', () => {
-      const results = loader.loadPreset('@gasket/two-preset');
+      const results = loader.loadPreset('@gasket/preset-two');
       const count = Object.keys(results.package.dependencies).length;
       expect(results.presets.length + results.plugins.length).toBeLessThan(count);
       expect(results.plugins).toHaveLength(2);
@@ -317,24 +335,24 @@ describe('Loader', () => {
     });
 
     it('uses require from preset to load its dependencies', () => {
-      loader.loadPreset('@gasket/two-preset');
-      expect(mockRequire).toHaveBeenCalledWith(expect.stringContaining('two-preset'));
-      expect(mockRequire).not.toHaveBeenCalledWith(expect.stringContaining('one-preset'));
-      expect(mockRequire).not.toHaveBeenCalledWith(expect.stringContaining('one-plugin'));
+      loader.loadPreset('@gasket/preset-two');
+      expect(mockRequire).toHaveBeenCalledWith(expect.stringContaining('preset-two'));
+      expect(mockRequire).not.toHaveBeenCalledWith(expect.stringContaining('preset-one'));
+      expect(mockRequire).not.toHaveBeenCalledWith(expect.stringContaining('gasket-plugin-one'));
 
-      expect(presetTwo.require).toHaveBeenCalledWith(expect.stringContaining('one-preset'));
+      expect(presetTwo.require).toHaveBeenCalledWith(expect.stringContaining('preset-one'));
 
-      expect(presetOne.require).toHaveBeenCalledWith(expect.stringContaining('one-plugin'));
+      expect(presetOne.require).toHaveBeenCalledWith(expect.stringContaining('@gasket/plugin-one'));
     });
 
     it('uses default require if not provide by preset', () => {
-      loader.loadPreset('user-preset');
-      expect(mockRequire).toHaveBeenCalledWith(expect.stringContaining('user-preset'));
-      expect(mockRequire).toHaveBeenCalledWith(expect.stringContaining('user-plugin'));
+      loader.loadPreset('gasket-preset-user');
+      expect(mockRequire).toHaveBeenCalledWith(expect.stringContaining('gasket-preset-user'));
+      expect(mockRequire).toHaveBeenCalledWith(expect.stringContaining('gasket-plugin-user'));
     });
 
     it('shallow does not loads preset dependencies', () => {
-      const results = loader.loadPreset('@gasket/one-preset', {}, { shallow: true });
+      const results = loader.loadPreset('@gasket/preset-one', {}, { shallow: true });
       expect(results.plugins).not.toEqual(
         expect.arrayContaining([
           expect.objectContaining({
@@ -345,9 +363,9 @@ describe('Loader', () => {
       expect(results.plugins).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
-            name: '@gasket/one-plugin',
+            name: '@gasket/plugin-one',
             module: null,
-            from: '@gasket/one-preset'
+            from: '@gasket/preset-one'
           })
         ])
       );
@@ -366,7 +384,7 @@ describe('Loader', () => {
 
     it('loads configured plugins', () => {
       const config = {
-        add: ['@gasket/one-plugin']
+        add: ['@gasket/plugin-one']
       };
       const results = loader.loadConfigured(config);
       expect(results.plugins).toEqual(
@@ -380,7 +398,7 @@ describe('Loader', () => {
 
     it('loads configured presets', () => {
       const config = {
-        presets: ['@gasket/one-preset']
+        presets: ['@gasket/preset-one']
       };
       const results = loader.loadConfigured(config);
       expect(results.presets).toEqual(
@@ -394,7 +412,7 @@ describe('Loader', () => {
 
     it('add from=config to info', () => {
       const config = {
-        add: ['@gasket/one-plugin']
+        add: ['@gasket/plugin-one']
       };
       const results = loader.loadConfigured(config);
       expect(results.plugins).toEqual(
@@ -433,8 +451,8 @@ describe('Loader', () => {
 
     it('supports path names', () => {
       const config = {
-        presets: ['/path/to/node_modules/user-preset'],
-        add: ['/app/plugins/app-one-plugin.js']
+        presets: ['/path/to/node_modules/gasket-preset-user'],
+        add: ['/app/plugins/app-plugin-one.js']
       };
       const results = loader.loadConfigured(config);
       expect(results.presets).toEqual(
@@ -457,7 +475,7 @@ describe('Loader', () => {
 
     it('plugins results contains preset plugins', () => {
       const config = {
-        presets: ['@gasket/one-preset']
+        presets: ['@gasket/preset-one']
       };
       const results = loader.loadConfigured(config);
       expect(results.plugins).toEqual(
@@ -471,7 +489,22 @@ describe('Loader', () => {
 
     it('removes configured plugins', () => {
       const config = {
-        presets: ['@gasket/one-preset'],
+        presets: ['@gasket/preset-one'],
+        remove: ['@gasket/one']
+      };
+      const results = loader.loadConfigured(config);
+      expect(results.plugins).not.toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            module: pluginOne
+          })
+        ])
+      );
+    });
+
+    it('remove configured plugins with format fallbacks', () => {
+      const config = {
+        presets: ['@gasket/preset-one'],
         remove: ['one']
       };
       const results = loader.loadConfigured(config);
@@ -486,14 +519,14 @@ describe('Loader', () => {
 
     it('dedupes plugins preferring parent preset', () => {
       const config = {
-        presets: ['@gasket/two-preset']
+        presets: ['@gasket/preset-two']
       };
       const results = loader.loadConfigured(config);
       expect(results.plugins).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
             module: pluginOne,
-            from: '@gasket/two-preset'
+            from: '@gasket/preset-two'
           })
         ])
       );
@@ -501,7 +534,7 @@ describe('Loader', () => {
 
     it('dedupes plugins preferring add plugins', () => {
       const config = {
-        presets: ['@gasket/two-preset'],
+        presets: ['@gasket/preset-two'],
         add: ['one']
       };
       const results = loader.loadConfigured(config);

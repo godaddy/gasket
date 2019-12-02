@@ -54,7 +54,8 @@ const depVersions = {
 
   'handlebars': '^4.4.3',
   'rimraf': '^3.0.0',
-  'glob': '^7.1.4'
+  'glob': '^7.1.4',
+  'semver': '^6.3.0'
 };
 
 
