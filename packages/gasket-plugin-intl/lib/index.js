@@ -25,7 +25,7 @@ async function build(gasket) {
 }
 
 module.exports = {
-  dependencies: ['log'],
+  dependencies: ['@gasket/plugin-log'],
   name,
   hooks: {
     init,

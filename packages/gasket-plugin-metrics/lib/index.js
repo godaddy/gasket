@@ -2,7 +2,7 @@ const Metrics = require('./metrics');
 
 module.exports = {
   name: require('../package').name,
-  dependencies: ['metadata'],
+  dependencies: ['@gasket/plugin-metadata'],
   hooks: {
     init: {
       timing: {

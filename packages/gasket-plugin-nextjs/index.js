@@ -5,7 +5,7 @@ const { createConfig } = require('./config');
 const { pluginIdentifier } = require('@gasket/resolve');
 
 module.exports = {
-  dependencies: ['webpack'],
+  dependencies: ['@gasket/plugin-webpack'],
   name,
   hooks: {
     /**
