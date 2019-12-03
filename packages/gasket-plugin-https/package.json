@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-https",
-  "version": "5.0.0-canary.2",
+  "version": "5.0.0-canary.3",
   "description": "Create http/s servers with graceful termination",
   "main": "index.js",
   "scripts": {
