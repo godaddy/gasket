@@ -1,4 +1,4 @@
-# @gasket/nextjs-preset
+# @gasket/preset-nextjs
 
 Framework for building Next.js apps using Gasket.
 

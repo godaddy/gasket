@@ -53,7 +53,7 @@ the `createContext` object with the properties you want to define. For example,
 in the following `gasket create` prompt, 4 questions are asked at the beginning.
 
 ```
-$ gasket create example --presets literally-every-preset
+$ gasket create example --presets gasket-preset-example
 ✔ Load presets
 ? What is your app description?
 ? Which packager would you like to use?
