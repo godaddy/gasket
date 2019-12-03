@@ -1,6 +1,6 @@
 {
   "name": "@gasket/redux",
-  "version": "5.0.0-canary.1",
+  "version": "5.0.0-canary.2",
   "description": "Gasket Redux Configuration",
   "main": "./lib",
   "browser": "./lib",
@@ -37,7 +37,7 @@
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-redux",
   "dependencies": {
     "@babel/runtime": "^7.5.5",
-    "@gasket/log": "^5.0.0-canary.1",
+    "@gasket/log": "^5.0.0-canary.2",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0"
   },

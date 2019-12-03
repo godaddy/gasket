@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-docsify",
-  "version": "5.0.0-canary.1",
+  "version": "5.0.0-canary.2",
   "description": "View collated docs with Docsify",
   "main": "lib",
   "scripts": {
