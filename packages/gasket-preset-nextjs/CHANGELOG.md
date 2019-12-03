@@ -1,4 +1,4 @@
-# `@gasket/nextjs-preset`
+# `@gasket/preset-nextjs`
 
 ### 1.0.0
 

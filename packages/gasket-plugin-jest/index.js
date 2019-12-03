@@ -6,7 +6,7 @@ module.exports = {
     create: {
       timing: {
         last: true,
-        before: ['@gasket/lint']
+        before: ['@gasket/plugin-lint']
       },
       handler: async function create(gasket, { files, pkg }) {
         const path = require('path');

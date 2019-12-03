@@ -114,6 +114,7 @@ Set of docs configurations for the app
 | modules | [<code>Array.&lt;ModuleDocsConfig&gt;</code>](#ModuleDocsConfig) | Docs of supporting modules |
 | structures | [<code>Array.&lt;DetailDocsConfig&gt;</code>](#DetailDocsConfig) | Docs describing structure elements |
 | commands | [<code>Array.&lt;DetailDocsConfig&gt;</code>](#DetailDocsConfig) | Docs for available commands |
+| guides | [<code>Array.&lt;DetailDocsConfig&gt;</code>](#DetailDocsConfig) | Docs for setups and explanations |
 | lifecycles | [<code>Array.&lt;LifecycleDocsConfig&gt;</code>](#LifecycleDocsConfig) | Docs for available lifecycles |
 | transforms | [<code>Array.&lt;DocsTransform&gt;</code>](#DocsTransform) | Global doc transforms |
 | root | <code>string</code> | Absolute path to main package |

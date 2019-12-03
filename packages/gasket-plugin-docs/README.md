@@ -172,7 +172,7 @@ property object on the module, which will be used to establish the [DocsConfig]
 for the preset.
 
 ```js
-// example-preset.js
+// gasket-preset-example.js
 module.exports = {
   require,
   docsSetup: {
