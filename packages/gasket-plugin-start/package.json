@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-start",
-  "version": "5.0.0-canary.0",
+  "version": "5.0.0-canary.1",
   "description": "Adds commands for building and starting Gasket apps",
   "main": "lib",
   "scripts": {

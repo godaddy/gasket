@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-redux",
-  "version": "5.0.0-canary.0",
+  "version": "5.0.0-canary.1",
   "description": "Gasket Redux Setup",
   "main": "lib",
   "scripts": {
@@ -33,8 +33,8 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-redux",
   "devDependencies": {
-    "@gasket/plugin-log": "^5.0.0-canary.0",
-    "@gasket/redux": "^5.0.0-canary.0",
+    "@gasket/plugin-log": "^5.0.0-canary.1",
+    "@gasket/redux": "^5.0.0-canary.1",
     "acorn": "^6.1.1",
     "eslint": "^6.1.0",
     "eslint-config-godaddy": "^4.0.0",
