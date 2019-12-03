@@ -43,10 +43,12 @@
     "eslint-plugin-mocha": "^6.0.0",
     "jest": "^24.8.0",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react-dom": "^16.8.6",
+    "react-redux": "^7.1.0",
+    "redux": "^4.0.4"
   },
   "peerDependencies": {
-    "@gasket/plugin-log": "^2.0.0 || ^3.0.0",
-    "@gasket/redux": "^2.0.0 || ^3.0.0"
+    "@gasket/plugin-log": "^5.0.0",
+    "@gasket/redux": "^5.0.0"
   }
 }

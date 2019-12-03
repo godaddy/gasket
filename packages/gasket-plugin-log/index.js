@@ -1,11 +1,13 @@
 /* eslint require-atomic-updates: warn */
+const { name, dependencies } = require('./package');
+
 /**
  * Expose the plugin hooks, listen to the `init` and `destroy` events.
  *
  * @type {object}
  */
 module.exports = {
-  name: require('./package').name,
+  name,
   hooks: {
     init: {
       // init after the @gasket/lifecycle-plugin to allow a `logTransports`
@@ -37,7 +39,7 @@ module.exports = {
 
     async create(gasket, { pkg }) {
       pkg.add('dependencies', {
-        '@gasket/log': '^3.0.0'
+        '@gasket/log': dependencies['@gasket/log']
       });
     },
 

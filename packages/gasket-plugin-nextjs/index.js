@@ -1,11 +1,12 @@
 const path = require('path');
 const url = require('url');
+const { name, devDependencies } = require('./package');
 const { createConfig } = require('./config');
 const { pluginIdentifier } = require('@gasket/resolve');
 
 module.exports = {
   dependencies: ['webpack'],
-  name: require('./package').name,
+  name,
   hooks: {
     /**
     * Add files & extend package.json for new apps.
@@ -36,11 +37,11 @@ module.exports = {
       });
 
       pkg.add('dependencies', {
-        '@gasket/assets': '^1.0.0',
-        'next': '^9.1.2',
-        'prop-types': '^15.6.2',
-        'react': '^16.8.4',
-        'react-dom': '^16.8.4'
+        '@gasket/assets': devDependencies['@gasket/assets'],
+        'next': devDependencies.next,
+        'prop-types': devDependencies['prop-types'],
+        'react': devDependencies.react,
+        'react-dom': devDependencies['react-dom']
       });
     },
     express: async function express(gasket, expressApp) {

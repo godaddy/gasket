@@ -1,5 +1,6 @@
 const path = require('path');
 const serveStatic = require('serve-static');
+const { name, devDependencies } = require('../package');
 const Builder = require('./builder');
 const workbox = require('./workbox');
 const serviceWorkerCacheKey = require('./service-worker-cache-key');
@@ -25,7 +26,7 @@ async function build(gasket) {
 
 module.exports = {
   dependencies: ['log'],
-  name: require('../package').name,
+  name,
   hooks: {
     init,
     async initReduxState(gasket, state, req) {
@@ -49,8 +50,8 @@ module.exports = {
       );
 
       pkg.add('dependencies', {
-        '@gasket/intl': '^4.0.0',
-        'react-intl': '^2.9.0'
+        '@gasket/intl': devDependencies['@gasket/intl'],
+        'react-intl': devDependencies['react-intl']
       });
     },
     build,

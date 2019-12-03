@@ -43,16 +43,18 @@
   "devDependencies": {
     "@babel/preset-env": "^7.5.5",
     "@gasket/plugin-log": "^5.0.0-canary.0",
+    "@gasket/intl": "^5.0.0-canary.0",
     "acorn": "^6.1.1",
     "eslint": "^6.1.0",
     "eslint-config-godaddy": "^4.0.0",
     "eslint-plugin-jest": "^22.15.1",
     "eslint-plugin-json": "^1.4.0",
     "eslint-plugin-mocha": "^6.0.0",
-    "jest": "^24.8.0"
+    "jest": "^24.8.0",
+    "react-intl": "^3.9.1"
   },
   "peerDependencies": {
-    "@gasket/plugin-log": "^2.0.0 || ^3.0.0",
-    "@gasket/plugin-redux": "^2.0.0"
+    "@gasket/plugin-log": "^5.0.0",
+    "@gasket/plugin-redux": "^5.0.0"
   }
 }

@@ -43,15 +43,16 @@ describe('Plugin', () => {
     });
 
     it('adds the expected dependencies', async function () {
+      const { devDependencies } = require('../package');
       const spy = {
         pkg: { add: jest.fn() }
       };
 
       await plugin.hooks.create({}, spy);
       expect(spy.pkg.add).toHaveBeenCalledWith('dependencies', {
-        '@gasket/redux': '^3.0.0',
-        'react-redux': '^7.1.0',
-        'redux': '^4.0.4'
+        '@gasket/redux': devDependencies['@gasket/redux'],
+        'react-redux': devDependencies['react-redux'],
+        'redux': devDependencies.redux
       });
     });
   });

@@ -1,4 +1,5 @@
 const { getReduxConfig } = require('./utils');
+const { name, devDependencies } = require('../package');
 
 /**
  * Gasket Redux Plugin
@@ -8,14 +9,14 @@ const { getReduxConfig } = require('./utils');
  * @type {{hooks: {middleware, webpack}}}
  */
 module.exports = {
-  name: require('../package').name,
+  name,
   dependencies: ['log'],
   hooks: {
     async create(gasket, { pkg }) {
       pkg.add('dependencies', {
-        '@gasket/redux': '^3.0.0',
-        'react-redux': '^7.1.0',
-        'redux': '^4.0.4'
+        '@gasket/redux': devDependencies['@gasket/redux'],
+        'react-redux': devDependencies['react-redux'],
+        'redux': devDependencies.redux
       });
     },
     webpack(gasket) {
