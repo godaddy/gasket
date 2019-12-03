@@ -1,6 +1,6 @@
 {
   "name": "@gasket/fetch",
-  "version": "5.0.0-canary.0",
+  "version": "5.0.0-canary.1",
   "description": "Gasket Fetch API",
   "main": "./index.js",
   "repository": {
