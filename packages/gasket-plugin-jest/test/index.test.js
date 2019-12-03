@@ -71,7 +71,7 @@ describe('Plugin', function () {
 
   it('has the correct create hook timings', function () {
     expect(plugin.hooks.create.timing.last).toBe(true);
-    expect(plugin.hooks.create.timing.before).toEqual(['@gasket/lint']);
+    expect(plugin.hooks.create.timing.before).toEqual(['@gasket/plugin-lint']);
   });
 
   describe('react', function () {
@@ -89,14 +89,14 @@ describe('Plugin', function () {
       ].forEach(name => {
         it(`adds "${name}" in the devDependencies`, async function () {
           const { pkg } = await createReact();
-  
+
           expect(pkg.devDependencies).toHaveProperty(name);
         });
       });
-  
+
       it('depends on the same versions', async function () {
         const { pkg } = await createReact();
-  
+
         expect(typeof pkg.devDependencies).toBe('object');
         Object.keys(pkg.devDependencies).forEach((key) => {
           expect(self.devDependencies).toHaveProperty(key);

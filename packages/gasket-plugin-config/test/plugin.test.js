@@ -197,7 +197,7 @@ describe('Plugin', () => {
     });
 
     it('executes before the "redux" middleware', async () => {
-      expect(plugin.hooks.middleware.timing.before).toContain('redux');
+      expect(plugin.hooks.middleware.timing.before).toContain('@gasket/plugin-redux');
     });
 
     it('sets a `config` property on the request object', async () => {

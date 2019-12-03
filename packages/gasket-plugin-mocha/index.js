@@ -6,7 +6,7 @@ module.exports = {
     create: {
       timing: {
         last: true,
-        before: ['@gasket/lint']
+        before: ['@gasket/plugin-lint']
       },
       handler: async function create(gasket, { pkg, packageManager = 'npm' }) {
         const runCmd = packageManager === 'npm' ? `npm run` : packageManager;

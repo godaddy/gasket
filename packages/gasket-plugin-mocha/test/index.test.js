@@ -73,7 +73,7 @@ describe('Plugin', () => {
 
   it('has the correct create hook timings', function () {
     expect(plugin.hooks.create.timing.last).to.be.true;
-    expect(plugin.hooks.create.timing.before).to.eql(['@gasket/lint']);
+    expect(plugin.hooks.create.timing.before).to.eql(['@gasket/plugin-lint']);
   });
 
   describe('dependencies', function () {

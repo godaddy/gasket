@@ -46,7 +46,7 @@ describe('init hook', function () {
   });
 
   it('sets timing after metadata', () => {
-    assume(initHook.timing.after).includes('metadata');
+    assume(initHook.timing.after).includes('@gasket/plugin-metadata');
   });
 
   it('instantiates Metrics object with gasket', async () => {

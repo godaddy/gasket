@@ -13,7 +13,7 @@ module.exports = {
       // init after the @gasket/lifecycle-plugin to allow a `logTransports`
       // file to be define in an app's `./lifecycles` dir.
       timing: {
-        after: ['lifecycle']
+        after: ['@gasket/plugin-lifecycle']
       },
       handler: async function init(gasket) {
         const { config, command } = gasket;
