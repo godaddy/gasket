@@ -10,7 +10,7 @@ const { name, devDependencies } = require('../package');
  */
 module.exports = {
   name,
-  dependencies: ['log'],
+  dependencies: ['@gasket/plugin-log'],
   hooks: {
     async create(gasket, { pkg }) {
       pkg.add('dependencies', {
