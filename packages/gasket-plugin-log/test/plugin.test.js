@@ -244,7 +244,7 @@ describe('Plugin', function () {
 
       await Plugin.hooks.create({}, spy);
       assume(calls).deep.equals([
-        { key: 'dependencies', value: { '@gasket/log': '^3.0.0' } }
+        { key: 'dependencies', value: { '@gasket/log': require('../package').dependencies['@gasket/log'] } }
       ]);
     });
   });

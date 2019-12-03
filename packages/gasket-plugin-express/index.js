@@ -1,7 +1,8 @@
 const debug = require('diagnostics')('gasket:express');
+const { name, devDependencies } = require('./package');
 
 module.exports = {
-  name: require('./package').name,
+  name,
   hooks: {
     /**
     * Add files & extend package.json for new apps.
@@ -13,7 +14,7 @@ module.exports = {
     */
     create: async function create(gasket, context) {
       context.pkg.add('dependencies', {
-        express: '^4.16.3'
+        express: devDependencies.express
       });
     },
     /**

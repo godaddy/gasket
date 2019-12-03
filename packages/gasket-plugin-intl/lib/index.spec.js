@@ -149,8 +149,8 @@ describe('Plugin', () => {
 
     it('adds the appropriate dependencies', expectCreatedWith(({ pkg }) => {
       expect(pkg.add).toHaveBeenCalledWith('dependencies', {
-        '@gasket/intl': '^4.0.0',
-        'react-intl': '^2.9.0'
+        '@gasket/intl': require('../package').devDependencies['@gasket/intl'],
+        'react-intl': require('../package').devDependencies['react-intl']
       });
     }));
   });
