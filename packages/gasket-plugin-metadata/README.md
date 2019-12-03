@@ -77,7 +77,7 @@ Presets can describe additional metadata. This is done by defining a `metadata`
 property object on the module, which will get expanded to the [PresetData].
 
 ```js
-// example-preset.js
+// gasket-preset-example.js
 module.exports = {
   require,
   metadata: {

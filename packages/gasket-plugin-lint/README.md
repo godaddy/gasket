@@ -114,7 +114,7 @@ For example, say we have some team that wants to always use [Airbnb] style and
 with stylelint for their apps:
 
 ```js
-// @some/team-gasket-preset.js
+// @some/gasket-preset-team-one.js
 module.exports = {
   require,
   createContext: {
@@ -127,7 +127,7 @@ module.exports = {
 Or, say we have another team with an internal [ESLint] config
 
 ```js
-// @another/team-gasket-preset.js
+// @some/gasket-preset-team-two.js
 module.exports = {
   require,
   createContext: {

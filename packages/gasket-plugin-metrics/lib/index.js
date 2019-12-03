@@ -6,7 +6,7 @@ module.exports = {
   hooks: {
     init: {
       timing: {
-        after: ['metadata']
+        after: ['@gasket/plugin-metadata']
       },
       handler: async function init(gasket) {
         const { logger = console } = gasket;

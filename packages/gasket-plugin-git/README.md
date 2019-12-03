@@ -20,7 +20,7 @@ will always be initialized, and the user not prompted.
 
 ```json
 {
-  "name": "my-preset",
+  "name": "gasket-preset-example",
   "version": "1.2.3",
   "main": "index.js",
   "dependencies": {

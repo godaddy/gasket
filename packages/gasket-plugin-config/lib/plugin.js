@@ -16,7 +16,7 @@ module.exports = {
 
     middleware: {
       timing: {
-        before: ['redux']
+        before: ['@gasket/plugin-redux']
       },
       handler(gasket) {
         return async (req, res, next) => {

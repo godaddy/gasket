@@ -51,7 +51,7 @@ describe('Plugin', function () {
 
     it('runs after the lifecycle plugin', function () {
       assume(Plugin.hooks.init.timing).property('after');
-      assume(Plugin.hooks.init.timing.after).contains('lifecycle');
+      assume(Plugin.hooks.init.timing.after).contains('@gasket/plugin-lifecycle');
     });
 
     it('adds a logger instance to the Gasket object', async function () {
