@@ -94,7 +94,7 @@ module.exports = {
 
       // `req` allows SW content based on hostname, cookie, etc.
 
-      return content.concat(```
+      return content.concat(`
 self.addEventListener('push', (event) => {
   const title = 'My App Notification';
   const options = {
@@ -102,7 +102,7 @@ self.addEventListener('push', (event) => {
   };
   event.waitUntil(self.registration.showNotification(title, options));
 });
-```   )
+`)
     }
   }
 }
