@@ -1,5 +1,5 @@
 const concat = require('concat-stream');
-const { spawn } = require('child_process');
+const spawn = require('cross-spawn');
 
 /**
  * Promise friendly wrapper to running a shell command (eg: git, npm, ls):

@@ -1,5 +1,5 @@
 const concat = require('concat-stream');
-const { spawn } = require('child_process');
+const spawn = require('cross-spawn');
 const { test } = require('@oclif/test');
 const assume = require('assume');
 const { spy, stub } = require('sinon');
