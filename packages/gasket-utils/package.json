@@ -32,6 +32,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-utils#readme",
   "dependencies": {
+    "cross-spawn": "^7.0.1",
     "lodash.defaultsdeep": "^4.6.0"
   },
   "devDependencies": {

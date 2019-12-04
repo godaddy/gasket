@@ -28,7 +28,7 @@ const Fetcher = class Fetcher {
    */
   async vacuum(sourceDir) {
     const rename = promisify(fs.rename);
-    const { spawn } = require('child_process');
+    const spawn = require('cross-spawn');
     const basename = path.basename(sourceDir);
     const rootDir = path.join(__dirname, '..', '..');
 
