@@ -39,10 +39,17 @@ nav .github-logo {
     color: var(--color-primary-200);
 }
 
+.front-cover h1,
 .front-cover h2,
 .front-cover h3 {
     margin: 0 0 0.5rem;
     color: var(--heading-color);
+}
+
+.front-cover h1 {
+    font-size: var(--heading-h1-font-size);
+    font-weight: 500;
+    line-height: var(--heading-h1-line-height);
 }
 
 .front-cover h2 {
@@ -65,15 +72,12 @@ nav .github-logo {
     position: relative;
     padding: 8rem 0;
     width: 100%;
-    /*background-image: url("bg-schematic.svg");*/
-    /*background-position: center bottom;*/
-    /*background-repeat: repeat-x;*/
 }
 
 .front-cover .logo {
     position: absolute;
-    top: 40px;
-    left: 64px;
+    top: 16px;
+    left: 24px;
 }
 
 .front-cover header p {
@@ -88,7 +92,7 @@ nav .github-logo {
     background-color: var(--color-secondary-100);
     color: var(--color-primary-300);
     border-radius: 4px;
-    padding: 10px 24px;
+    padding: 10px 48px;
     text-decoration: none;
     font-weight: 500;
 }
@@ -368,12 +372,6 @@ section.angled:after {
         padding-right: 0;
     }
 
-    .front-cover .logo {
-        position: absolute;
-        top: 16px;
-        left: 24px;
-    }
-
     .godaddy-open-source {
         margin-top: 0;
         margin-right: 32px;
@@ -399,10 +397,21 @@ section.angled:after {
     }
 
     .front-cover .logo {
-        left: 20px;
+        left: 16px;
     }
 
     .app-nav.no-badge {
         right: 20px;
+    }
+}
+
+/* no hero bg for mobile devices */
+@media only screen and (min-width: 769px) {
+    .front-cover header {
+        background-image: url("gasket-hero-optimized.svg");
+        background-position: center bottom;
+        background-size: contain;
+        background-repeat: no-repeat;
+        min-height: 400px;
     }
 }
