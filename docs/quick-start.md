@@ -26,14 +26,14 @@ cd ./your-app-name
 From here, you can start your app in local development mode:
 
 ```bash
-npx gasket local
+gasket local
 ```
 
 Otherwise you can build and start your app directly:
 
 ```bash
-npx gasket build
-npx gasket start --env local
+gasket build
+gasket start --env local
 ```
 
 You can use `gasket help` to see what other commands are available in your app.
@@ -77,7 +77,7 @@ Now, when you run the docs command, a site will open in your default browser
 with docs fore what is configured in your app.
 
 ```bash
-npx gasket docs
+gasket docs
 ```
 
 <!-- LINKS -->
