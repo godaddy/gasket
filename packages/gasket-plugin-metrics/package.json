@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-metrics",
-  "version": "5.0.0-canary.3",
+  "version": "5.0.0-canary.4",
   "description": "Collect metrics for gasket commands",
   "main": "lib",
   "scripts": {
