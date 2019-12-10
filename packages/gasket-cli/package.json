@@ -8,6 +8,7 @@
   },
   "files": [
     "bin/",
+    "docs/",
     "src/",
     "oclif.manifest.json"
   ],
