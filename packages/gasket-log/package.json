@@ -1,6 +1,6 @@
 {
   "name": "@gasket/log",
-  "version": "5.0.0-canary.3",
+  "version": "5.0.0-canary.4",
   "description": "Gasket client and server logger",
   "main": "./server.js",
   "browser": "./lib/client.js",

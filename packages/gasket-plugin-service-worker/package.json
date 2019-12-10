@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-service-worker",
-  "version": "5.0.0-canary.3",
+  "version": "5.0.0-canary.4",
   "description": "Gasket Service Worker Plugin",
   "main": "lib",
   "scripts": {
