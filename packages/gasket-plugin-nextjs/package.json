@@ -47,6 +47,7 @@
     "eslint-plugin-mocha": "^6.0.0",
     "mocha": "^6.2.0",
     "next": "^9.1.2",
+    "next-redux-wrapper": "^4.0.1",
     "nyc": "^14.1.1",
     "prop-types": "^15.6.2",
     "proxyquire": "^2.1.3",

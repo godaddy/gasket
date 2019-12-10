@@ -8,41 +8,57 @@ module.exports = {
   dependencies: ['@gasket/plugin-webpack'],
   name,
   hooks: {
-    /**
-    * Add files & extend package.json for new apps.
-    *
-    * @param {Gasket} gasket - The Gasket API.
-    * @param {CreateContext} context - Create context
-    * @param {Files} context.files - The Gasket Files API.
-    * @param {PackageJson} context.pkg - The Gasket PackageJson API.
-    * @param {PluginName} context.testPlugin - The name of included test plugins.
-    * @public
-    */
-    create: function create(gasket, context) {
-      const { files, pkg, testPlugin } = context;
+    create: {
+      timing: {
+        after: ['@gasket/redux-plugin']
+      },
+      /**
+       * Add files & extend package.json for new apps.
+       *
+       * @param {Gasket} gasket - The Gasket API.
+       * @param {CreateContext} context - Create context
+       * @param {Files} context.files - The Gasket Files API.
+       * @param {PackageJson} context.pkg - The Gasket PackageJson API.
+       * @param {PluginName} context.testPlugin - The name of included test plugins.
+       * @public
+       */
+      handler: function create(gasket, context) {
+        const { files, pkg, testPlugin } = context;
 
-      files.add(
-        `${__dirname}/generator/app/.*`,
-        `${__dirname}/generator/app/*`,
-        `${__dirname}/generator/app/**/*`
-      );
+        files.add(
+          `${__dirname}/generator/app/.*`,
+          `${__dirname}/generator/app/*`,
+          `${__dirname}/generator/app/**/*`
+        );
 
-      ['jest', 'mocha'].forEach(tester => {
-        if (pluginIdentifier(testPlugin).longName === `@gasket/plugin-${tester}`) {
+        ['jest', 'mocha'].forEach(tester => {
+          if (pluginIdentifier(testPlugin).longName === `@gasket/plugin-${tester}`) {
+            files.add(
+              `${__dirname}/generator/${tester}/*`,
+              `${__dirname}/generator/${tester}/**/*`
+            );
+          }
+        });
+
+        pkg.add('dependencies', {
+          '@gasket/assets': devDependencies['@gasket/assets'],
+          'next': devDependencies.next,
+          'prop-types': devDependencies['prop-types'],
+          'react': devDependencies.react,
+          'react-dom': devDependencies['react-dom']
+        });
+
+        if (pkg.has('@gasket/redux')) {
+          pkg.add('dependencies', {
+            'next-redux-wrapper': devDependencies['next-redux-wrapper']
+          });
+
           files.add(
-            `${__dirname}/generator/${tester}/*`,
-            `${__dirname}/generator/${tester}/**/*`
+            `${__dirname}/generator/redux/*`,
+            `${__dirname}/generator/redux/**/*`
           );
         }
-      });
-
-      pkg.add('dependencies', {
-        '@gasket/assets': devDependencies['@gasket/assets'],
-        'next': devDependencies.next,
-        'prop-types': devDependencies['prop-types'],
-        'react': devDependencies.react,
-        'react-dom': devDependencies['react-dom']
-      });
+      }
     },
     express: async function express(gasket, expressApp) {
       const { exec, command } = gasket;

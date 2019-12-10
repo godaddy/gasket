@@ -4,6 +4,7 @@ const { spy, stub } = require('sinon');
 const assume = require('assume');
 const path = require('path');
 const proxyquire = require('proxyquire').noCallThru();
+const { devDependencies } = require('../package');
 
 describe('Plugin', function () {
   const plugin = require('../');
@@ -78,7 +79,7 @@ describe('create hook', () => {
 
   function assumeCreatedWith(assertFn) {
     return async function assumeCreated() {
-      await plugin.hooks.create({}, mockContext);
+      await plugin.hooks.create.handler({}, mockContext);
       assertFn(mockContext);
     };
   }
@@ -106,9 +107,10 @@ describe('create hook', () => {
 
   it('adds the appropriate globs for mocha', async function () {
     const files = { add: spy() };
-    await plugin.hooks.create({}, {
+    await plugin.hooks.create.handler({}, {
       pkg: {
-        add: spy()
+        add: spy(),
+        has: spy()
       },
       files,
       testPlugin: '@gasket/mocha'
@@ -123,9 +125,10 @@ describe('create hook', () => {
 
   it('adds the appropriate globs for jest', async function () {
     const files = { add: spy() };
-    await plugin.hooks.create({}, {
+    await plugin.hooks.create.handler({}, {
       pkg: {
-        add: spy()
+        add: spy(),
+        has: spy()
       },
       files,
       testPlugin: '@gasket/jest'
@@ -139,7 +142,6 @@ describe('create hook', () => {
   });
 
   it('adds appropriate dependencies', assumeCreatedWith(({ pkg }) => {
-    const { devDependencies } = require('../package');
     assume(pkg.add).calledWith('dependencies', {
       '@gasket/assets': devDependencies['@gasket/assets'],
       'next': devDependencies.next,
@@ -148,6 +150,39 @@ describe('create hook', () => {
       'react-dom': devDependencies['react-dom']
     });
   }));
+
+  it('adds the appropriate globs for redux', async function () {
+    const files = { add: spy() };
+    await plugin.hooks.create.handler({}, {
+      pkg: {
+        add: spy(),
+        has: stub().callsFake(f => f === '@gasket/redux')
+      },
+      files
+    });
+
+    const root = path.join(__dirname, '..');
+    assume(files.add).calledWith(
+      `${root}/generator/redux/*`,
+      `${root}/generator/redux/**/*`
+    );
+  });
+
+  it('adds appropriate dependencies for redux', async function () {
+    const addSpy = spy();
+    const files = { add: spy() };
+    await plugin.hooks.create.handler({}, {
+      pkg: {
+        add: addSpy,
+        has: stub().callsFake(f => f === '@gasket/redux')
+      },
+      files
+    });
+
+    assume(addSpy).calledWith('dependencies', {
+      'next-redux-wrapper': devDependencies['next-redux-wrapper']
+    });
+  });
 });
 
 describe('build hook', () => {
