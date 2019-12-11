@@ -48,7 +48,7 @@ module.exports = {
           'react-dom': devDependencies['react-dom']
         });
 
-        if (pkg.has('@gasket/redux')) {
+        if (pkg.has('dependencies', '@gasket/redux')) {
           pkg.add('dependencies', {
             'next-redux-wrapper': devDependencies['next-redux-wrapper']
           });

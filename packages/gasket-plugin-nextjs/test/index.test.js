@@ -156,7 +156,7 @@ describe('create hook', () => {
     await plugin.hooks.create.handler({}, {
       pkg: {
         add: spy(),
-        has: stub().callsFake(f => f === '@gasket/redux')
+        has: stub().callsFake((o, f) => o === 'dependencies' && f === '@gasket/redux')
       },
       files
     });
@@ -174,7 +174,7 @@ describe('create hook', () => {
     await plugin.hooks.create.handler({}, {
       pkg: {
         add: addSpy,
-        has: stub().callsFake(f => f === '@gasket/redux')
+        has: stub().callsFake((o, f) => o === 'dependencies' && f === '@gasket/redux')
       },
       files
     });
