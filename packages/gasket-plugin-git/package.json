@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-git",
-  "version": "5.0.0-canary.4",
+  "version": "5.0.0",
   "description": "Adds git support to your application",
   "main": "lib",
   "scripts": {
@@ -31,7 +31,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-git",
   "dependencies": {
-    "@gasket/utils": "^5.0.0-canary.4"
+    "@gasket/utils": "^5.0.0"
   },
   "devDependencies": {
     "assume": "^2.2.0",

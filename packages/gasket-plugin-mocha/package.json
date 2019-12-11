@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-mocha",
-  "version": "5.0.0-canary.4",
+  "version": "5.0.0",
   "description": "Integrates mocha based testing in to your Gasket application",
   "main": "index.js",
   "scripts": {
