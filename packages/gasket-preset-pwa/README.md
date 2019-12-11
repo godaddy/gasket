@@ -11,7 +11,7 @@ Set of plugins to enable a Gasket web app to be a Progressive Web App (PWA).
 #### New apps
 
 ```
-gasket create <app-name> --plugins @gasket/preset-pwa
+gasket create <app-name> --presets @gasket/preset-pwa
 ```
 
 #### Existing apps
