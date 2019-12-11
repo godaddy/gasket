@@ -1,5 +1,9 @@
 # `@gasket/plugin-metadata`
 
+### 5.0.0
+
+- Open Source Release
+
 ### 2.0.0
 
 - Allow presets to define metadata

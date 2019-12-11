@@ -1,12 +1,18 @@
 # `@gasket/cli`
 
+### 5.0.0
+
+- Open Source Release
+- Use cross-spawn for better windows support ([#122])
+- CLI supports new short name resolution ([#100])
+
 ### 3.2.2
 
--  Fail on on missing modules imported to gasket.config([#115])
+-  Fail on on missing modules imported to gasket.config ([#115])
 
 ### 3.2.1
 
-- [#113] Stop blowing away named classes when merging config
+- Stop blowing away named classes when merging config ([#113])
 
 ### 3.2.0
 
@@ -255,5 +261,7 @@ upon `gasket create`
 [#86]: https://github.com/godaddy/gasket/pull/86
 [#87]: https://github.com/godaddy/gasket/pull/87
 [#98]: https://github.com/godaddy/gasket/pull/98
-[#115]: https://github.com/godaddy/gasket/pull/115
+[#100]: https://github.com/godaddy/gasket/pull/100
 [#113]: https://github.com/godaddy/gasket/pull/113
+[#115]: https://github.com/godaddy/gasket/pull/115
+[#122]: https://github.com/godaddy/gasket/pull/122

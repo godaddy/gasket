@@ -1,5 +1,12 @@
 # `@gasket/engine`
 
+### 5.0.0
+
+- Open Source Release
+- Remove unnecessary warning ([#124])
+- Support new name convention with fallback support ([#100])
+- Prefers package names for plugin keying. ([#100])
+
 ### 2.0.0
 
 - Engine uses [Loader] from `@gasket/resolve` to load configured plugins ([#64])
@@ -37,5 +44,7 @@
 - Consolidate resolution methods into `Resolver`.
 
 [#64]: https://github.com/godaddy/gasket/pull/64
+[#100]: https://github.com/godaddy/gasket/pull/100
+[#124]: https://github.com/godaddy/gasket/pull/124
 
 [Loader]:/packages/gasket-resolve/docs/api.md#Loader

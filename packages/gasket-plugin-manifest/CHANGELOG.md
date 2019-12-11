@@ -1,5 +1,9 @@
 # `@gasket/plugin-manifest`
 
+### 5.0.0
+
+- Open Source Release
+
 ### 1.3.0
 
 - Align package structure and dependencies

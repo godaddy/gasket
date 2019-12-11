@@ -1,5 +1,9 @@
 # `@gasket/plugin-log`
 
+### 5.0.0
+
+- Open Source Release
+
 ### 3.2.0
 
 - Support `gasket.command` interface change ([#75])
@@ -36,7 +40,7 @@
 
 ### 2.1.0
 
-- [log#14] Update `@gasket/log` version in create hook.
+- Update `@gasket/log` version in create hook.
 - Includes fix to destroy hook.
 
 ### 1.1.0

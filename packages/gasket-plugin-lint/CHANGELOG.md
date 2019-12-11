@@ -1,5 +1,9 @@
 # `@gasket/plugin-lint`
 
+### 5.0.0
+
+- Open Source Release
+
 ### 2.0.0
 
 - Refactored to prompt for code styles and allow custom ESLint or stylelint configs to be set. ([#98])

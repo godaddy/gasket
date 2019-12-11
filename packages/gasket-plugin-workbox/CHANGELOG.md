@@ -1,5 +1,9 @@
 # `@gasket/plugin-workbox`
 
+### 5.0.0
+
+- Open Source Release
+
 ### 1.1.1
 
 - Get library version from `workbox-build` package.json ([#95])

@@ -1,5 +1,11 @@
 # `@gasket/plugin-nextjs`
 
+### 5.0.0
+
+- Open Source Release
+- Generate `_app.js` for Redux integration ([#125])
+- Move test framework generated content ([#114])
+
 ### 2.3.3
 
 - Bump to `next@9.1.2` to fix hanging `gasket build` ([#97])
@@ -49,3 +55,5 @@
 [#75]: https://github.com/godaddy/gasket/pull/75
 [#97]: https://github.com/godaddy/gasket/pull/97
 [#98]: https://github.com/godaddy/gasket/pull/98
+[#114]: https://github.com/godaddy/gasket/pull/114
+[#125]: https://github.com/godaddy/gasket/pull/125

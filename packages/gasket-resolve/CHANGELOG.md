@@ -1,5 +1,8 @@
 # `@gasket/resolve`
 
+### 5.0.0
+
+- Open Source Release
 - Support for project-type prefixed naming of plugins and presets ([#93])
 
 ### 2.0.1
@@ -39,5 +42,7 @@
 
 [#8]: https://github.com/godaddy/gasket/pull/8
 [#64]: https://github.com/godaddy/gasket/pull/64
+[#93]: https://github.com/godaddy/gasket/pull/93
+[#105]: https://github.com/godaddy/gasket/pull/105
 
 [Loader]:/packages/gasket-resolve/README.md#Loader

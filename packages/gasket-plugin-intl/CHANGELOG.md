@@ -1,5 +1,9 @@
 # `@gasket/plugin-intl`
 
+### 5.0.0
+
+- Open Source Release
+
 ### 4.2.0
 
 - Polyfill Intl in node for SSR
