@@ -1,5 +1,9 @@
 # `@gasket/plugin-service-worker`
 
+### 5.0.0
+
+- Open Source Release
+
 ### 1.3.0
 
 - `serviceWorkerCacheKey` executed in `express` lifecycle ([#95])

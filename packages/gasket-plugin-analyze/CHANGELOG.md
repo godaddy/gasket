@@ -1,5 +1,9 @@
 # `@gasket/plugin-analyze`
 
+### 5.0.0
+
+- Open Source Release
+
 ### 2.0.0
 
 - Move **analyze** command from CLI to this plugin ([#74])

@@ -1,5 +1,9 @@
 # `@gasket/intl`
 
+### 5.0.0
+
+- Open Source Release
+
 ### 4.2.1
 
 - Fix package.json scripts to wrap glob patterns in double-quotes
@@ -21,7 +25,7 @@
 
 - Uses intl.language from redux state instead of market cookie
 - Migrated to monorepo
-- Align package structure and dependencies 
+- Align package structure and dependencies
 
 ### 3.2.0
 

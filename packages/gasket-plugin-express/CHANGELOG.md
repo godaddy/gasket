@@ -1,5 +1,9 @@
 # `@gasket/plugin-express`
 
+### 5.0.0
+
+- Open Source Release
+
 ### 2.1.0
 
 - Align package structure and dependencies

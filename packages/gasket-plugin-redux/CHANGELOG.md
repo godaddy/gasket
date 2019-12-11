@@ -1,5 +1,9 @@
 # `@gasket/plugin-redux`
 
+### 5.0.0
+
+- Open Source Release
+
 ### 2.3.0
 
 - Align package structure and dependencies
