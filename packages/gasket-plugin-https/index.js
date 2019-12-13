@@ -34,7 +34,8 @@ async function start(gasket) {
   // create-servers does not support http or https being `null`
   if (http) configOpts.http = http;
   if (https) configOpts.https = https;
-  if (!http && !https) configOpts.http = 80;
+  // Default port to non-essential port on creation
+  if (!http && !https) configOpts.http = 8080;
 
   const serverOpts = await gasket.execWaterfall('createServers', configOpts);
   const { healthcheck, ...terminusDefaults } = await gasket.execWaterfall('terminus', {

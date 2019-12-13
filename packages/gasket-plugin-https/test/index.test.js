@@ -95,13 +95,13 @@ describe('start hook', () => {
     assume(createServerOpts).to.not.haveOwnProperty('https');
   });
 
-  it('defaults HTTP server to port 80 if neither `http` or `https`', async () => {
+  it('defaults HTTP server to port 8080 if neither `http` or `https`', async () => {
     gasketAPI.config = {};
 
     await start();
 
     const createServerOpts = createServersModule.lastCall.args[0];
-    assume(createServerOpts).property('http', 80);
+    assume(createServerOpts).property('http', 8080);
     assume(createServerOpts).not.property('https');
   });
 
