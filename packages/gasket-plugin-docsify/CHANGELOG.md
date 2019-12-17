@@ -1,5 +1,7 @@
 # `@gasket/plugin-docsify`
 
+- Add support for [mermaid] ([])
+
 ### 5.0.0
 
 - Open Source Release
@@ -13,3 +15,5 @@
 
 
 [#116]:https://github.com/godaddy/gasket/pull/116
+
+[mermaid]:https://mermaid-js.github.io/
