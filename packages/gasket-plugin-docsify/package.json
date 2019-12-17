@@ -33,7 +33,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-docsify",
   "dependencies": {
-    "docsify": "^4.9.4",
+    "docsify": "^4.10.2",
     "docsify-cli": "^4.3.0",
     "glob": "^7.1.4",
     "handlebars": "^4.4.3",
