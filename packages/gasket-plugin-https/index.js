@@ -25,7 +25,7 @@ function portInUseError(errors) {
  * @public
  */
 async function start(gasket) {
-  const { hostname, https, http, terminus } = gasket.config;
+  const { hostname, https, http, terminus, env } = gasket.config;
   const { logger } = gasket;
 
   // Retrieving server opts
@@ -35,7 +35,7 @@ async function start(gasket) {
   if (http) configOpts.http = http;
   if (https) configOpts.https = https;
   // Default port to non-essential port on creation
-  if (!http && !https) configOpts.http = 8080;
+  if (!http && !https && env !== 'local') configOpts.http = 80;
 
   const serverOpts = await gasket.execWaterfall('createServers', configOpts);
   const { healthcheck, ...terminusDefaults } = await gasket.execWaterfall('terminus', {
@@ -124,6 +124,20 @@ async function start(gasket) {
 module.exports = {
   name: require('./package').name,
   hooks: {
+    /**
+     *
+     * @param {Gasket} gasket - The Gasket API
+     * @param {*} context - Create context
+     *
+     */
+    create: async function createHook(gasket, context) {
+      const { gasketConfig } = context;
+      gasketConfig.add('environments', {
+        local: {
+          http: 8080
+        }
+      });
+    },
     start,
     metadata(gasket, meta) {
       return {
