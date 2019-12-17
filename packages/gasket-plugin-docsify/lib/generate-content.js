@@ -35,16 +35,19 @@ async function generateContent(docsifyConfig, docsConfigSet) {
 
   const stylesheets = [
     isCssFile.test(theme) ? theme : `//unpkg.com/docsify/lib/themes/${theme}.css`,
+    '//cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.css',
     ...(docsifyConfig.stylesheets || [])
   ];
 
   const scripts = [
     '//unpkg.com/docsify/lib/docsify.min.js',
-    'scripts/toc-link-plugin.js',
     '//cdn.jsdelivr.net/npm/prismjs@1/components/prism-jsx.min.js',
     '//cdn.jsdelivr.net/npm/prismjs@1/components/prism-json.min.js',
     '//cdn.jsdelivr.net/npm/prismjs@1/components/prism-diff.min.js',
     '//cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js',
+    '//cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js',
+    'scripts/toc-link-plugin.js',
+    'scripts/mermaid-setup.js',
     ...(docsifyConfig.scripts || [])
   ];
 
