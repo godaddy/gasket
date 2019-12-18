@@ -31,6 +31,7 @@ describe('Plugin', () => {
 
   it('has expected hooks', () => {
     const expected = [
+      'create',
       'start',
       'metadata'
     ];
@@ -40,6 +41,37 @@ describe('Plugin', () => {
     const hooks = Object.keys(plugin.hooks);
     assume(hooks).eqls(expected);
     assume(hooks).is.length(expected.length);
+  });
+});
+
+describe('create hook', () => {
+  let mockContext, pkgAddStub;
+
+  async function create() {
+    return plugin.hooks.create({}, mockContext);
+  }
+
+  beforeEach(() => {
+    pkgAddStub = sinon.stub();
+
+    mockContext = {
+      gasketConfig: {
+        add: pkgAddStub
+      }
+    };
+  });
+
+  it('is an async function', function () {
+    assume(create).to.be.an('asyncfunction');
+  });
+
+  it('adds the expected http port for local development', async function () {
+    await create();
+    assume(pkgAddStub).calledWithMatch('environments', {
+      local: {
+        http: 8080
+      }
+    });
   });
 });
 
