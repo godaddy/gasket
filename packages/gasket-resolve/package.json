@@ -10,7 +10,7 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "posttest": "npm run lint",
-    "docs": "jsdoc2md lib/*.js > docs/api.md"
+    "docs": "jsdoc2md --plugin @godaddy/dmd --files lib/*.js > docs/api.md"
   },
   "repository": {
     "type": "git",
