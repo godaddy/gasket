@@ -10,7 +10,7 @@ presets.
 ## Installation
 
 ```
-npm i @gasket/redux
+npm i @gasket/resolve
 ```
 
 ## Naming convention
