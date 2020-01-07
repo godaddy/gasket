@@ -2,12 +2,13 @@ module.exports = {
   name: 'docs-graph',
   hooks: {
     async docGraphs(gasket, data) {
-      let graph = 'graph TD;\n';
+      let graph = 'graph LR;\n';
       data.lifecycles.forEach(lifecycle => {
-        const invokedLifecycle = lifecycle.name;
+        const name = lifecycle.name;
         const from = lifecycle.parent || lifecycle.after || lifecycle.command || lifecycle.from;
-        if (invokedLifecycle !== from) {
-          graph += `${from} --> ${invokedLifecycle};\n`;
+        const arrow = lifecycle.method ? `-- ${lifecycle.method} -->` : '-->';
+        if (name !== from) {
+          graph += `${from} ${arrow} ${name};\n`;
         }
       });
 
@@ -21,4 +22,4 @@ module.exports = {
       };
     }
   }
-};
+}

@@ -69,7 +69,8 @@ module.exports = {
         }, {
           name: 'initWebpack',
           description: 'Create a webpack config',
-          command: 'build'
+          command: 'build',
+          link: 'https://github.com/godaddy/gasket/blob/master/packages/gasket-plugin-webpack/index.js#L23-L43'
         }]
       };
     }
