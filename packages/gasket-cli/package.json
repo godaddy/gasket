@@ -1,6 +1,6 @@
 {
   "name": "@gasket/cli",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "CLI for rapid application development with gasket",
   "main": "src/index.js",
   "bin": {
@@ -49,13 +49,13 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-cli",
   "dependencies": {
-    "@gasket/engine": "^5.0.0",
+    "@gasket/engine": "^5.0.1",
     "@gasket/plugin-command": "^5.0.0",
     "@gasket/plugin-git": "^5.0.0",
-    "@gasket/plugin-lifecycle": "^5.0.0",
-    "@gasket/plugin-metadata": "^5.0.0",
+    "@gasket/plugin-lifecycle": "^5.0.1",
+    "@gasket/plugin-metadata": "^5.0.1",
     "@gasket/plugin-start": "^5.0.0",
-    "@gasket/resolve": "^5.0.0",
+    "@gasket/resolve": "^5.0.1",
     "@gasket/utils": "^5.0.0",
     "@oclif/command": "^1.5.14",
     "@oclif/config": "^1.13.0",
