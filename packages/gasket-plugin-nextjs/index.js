@@ -10,7 +10,7 @@ module.exports = {
   hooks: {
     create: {
       timing: {
-        after: ['@gasket/redux-plugin']
+        after: ['@gasket/plugin-redux']
       },
       /**
        * Add files & extend package.json for new apps.
