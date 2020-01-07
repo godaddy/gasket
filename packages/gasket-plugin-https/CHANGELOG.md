@@ -1,5 +1,9 @@
 # `@gasket/plugin-https`
 
+### 5.0.1
+
+- Update default http port ([#130])
+
 ### 5.0.0
 
 - Open Source Release
@@ -30,6 +34,7 @@
 [#79]: https://github.com/godaddy/gasket/pull/79
 [#90]: https://github.com/godaddy/gasket/pull/90
 [#92]: https://github.com/godaddy/gasket/pull/92
+[#130]: https://github.com/godaddy/gasket/pull/130
 
 [terminus]: https://github.com/godaddy/terminus
 [create-servers]: https://github.com/http-party/create-servers

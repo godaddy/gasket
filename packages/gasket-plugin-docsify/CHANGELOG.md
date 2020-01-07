@@ -1,6 +1,9 @@
 # `@gasket/plugin-docsify`
 
+# 5.0.1
+
 - Add support for [mermaid] ([#132])
+- Update docsify to latest ([#131])
 
 ### 5.0.0
 
@@ -15,6 +18,7 @@
 
 
 [#116]:https://github.com/godaddy/gasket/pull/116
+[#131]:https://github.com/godaddy/gasket/pull/131
 [#132]:https://github.com/godaddy/gasket/pull/132
 
 [mermaid]:https://mermaid-js.github.io/
