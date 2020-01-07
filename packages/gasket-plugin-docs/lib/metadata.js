@@ -25,6 +25,12 @@ module.exports = function metadata(gasket, meta) {
       link: 'README.md#docsView',
       command: 'docs',
       after: 'docsSetup'
+    }, {
+      name: 'docsGraphs',
+      description: 'Generate graphs for display in documation',
+      link: 'README.md#docsGraphs',
+      command: 'docs',
+      after: 'docsSetup'
     }],
     structures: [{
       name: outputDir + '/',

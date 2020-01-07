@@ -163,6 +163,26 @@ module.exports = {
 The [@gasket/plugin-docsify] hooks this lifecycle, to render the docs using
 Docsify.
 
+### docsGraphs
+
+Allows a plugin to add a graph to the static documentation
+
+#### An example graph
+
+```js
+module.exports = {
+  name: 'system-meter',
+  hooks: {
+    async docsGraphs(gasket, docsConfigSet) {
+      return {
+        name: 'System Information',
+        content: JSON.stringify(process, null, 2)
+      };
+    }
+  }
+}
+```
+
 ## Usage
 
 ### Presets
