@@ -29,11 +29,11 @@ Modify `plugins` section of your `gasket.config.js`:
 
 ```diff
 module.exports = {
-  plugins: [
+  plugins: {
     add: [
 +      '@gasket/plugin-workbox'
     ]
-  ]
+  }
 }
 ```
 
@@ -76,10 +76,10 @@ partial which will be deeply merged.
 ```js
 module.exports = {
   hooks: {
-    workbox: function (gasket, config, req) {      
+    workbox: function (gasket, config, req) {
       // the initial `config`
       // `req` allows rules based on headers, cookies, etc.
-      
+
       // return a config partial which will be merged
       return {
         runtimeCaching: [{

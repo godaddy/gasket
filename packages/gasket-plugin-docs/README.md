@@ -21,11 +21,11 @@ Modify `plugins` section of your `gasket.config.js`:
 
 ```diff
 module.exports = {
-  plugins: [
+  plugins: {
     add: [
 +      '@gasket/plugin-docs'
     ]
-  ]
+  }
 }
 ```
 
@@ -153,7 +153,7 @@ module.exports = {
   hooks: {
     async docsView(gasket, docsConfigSet) {
       const { docsRoot } = docsConfigSet;
-    
+
       await view(docsRoot);
     }
   }
