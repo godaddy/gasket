@@ -25,11 +25,11 @@ Modify `plugins` section of your `gasket.config.js`:
 
 ```diff
 module.exports = {
-  plugins: [
+  plugins: {
     add: [
 +      '@gasket/plugin-metrics'
     ]
-  ]
+  }
 }
 ```
 
@@ -60,7 +60,7 @@ module.exports = {
      *
      * @param {Gasket} gasket - The Gasket API
      * @param {Object} data - Collected metrics
-     * @returns {Object} 
+     * @returns {Object}
      */
     async metrics(gasket, data) {
       const url = 'https://some.example.api/endpoint';
