@@ -20,12 +20,14 @@ module.exports = function metadata(gasket, meta) {
       link: 'README.md#docsSetup',
       command: 'docs'
     }, {
+      method: 'exec',
       name: 'docsView',
       description: 'View the collated documentation',
       link: 'README.md#docsView',
       command: 'docs',
       after: 'docsSetup'
     }, {
+      method: 'exec',
       name: 'docsGraphs',
       description: 'Generate graphs for display in documation',
       link: 'README.md#docsGraphs',
