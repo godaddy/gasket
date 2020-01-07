@@ -162,7 +162,8 @@
         {
           "name": "prompt",
           "description": "Gasket config for an app",
-          "link": "README.md#prompt"
+          "link": "README.md#prompt",
+          "after": "create"
         },
         {
           "name": "create",
@@ -172,7 +173,9 @@
         {
           "name": "postCreate",
           "description": "App level plugins",
-          "link": "README.md#postcreate"
+          "link": "README.md#postcreate",
+          "command": "create",
+          "after": "prompt"
         }
       ]
     }

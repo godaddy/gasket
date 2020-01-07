@@ -32,8 +32,7 @@ module.exports = {
           name: 'preboot',
           method: 'exec',
           description: 'Any setup before the app starts',
-          link: 'README.md#start',
-          command: 'start'
+          link: 'README.md#start'
         }, {
           name: 'start',
           method: 'exec',
