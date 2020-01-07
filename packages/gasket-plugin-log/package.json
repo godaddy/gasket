@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-log",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "Gasket log plugin",
   "main": "./",
   "scripts": {

@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-workbox",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "Gasket Workbox Plugin",
   "main": "lib",
   "scripts": {
