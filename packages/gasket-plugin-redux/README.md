@@ -22,11 +22,11 @@ Modify `plugins` section of your `gasket.config.js`:
 
 ```diff
 module.exports = {
-  plugins: [
+  plugins: {
     add: [
 +      '@gasket/plugin-redux'
     ]
-  ]
+  }
 }
 ```
 
@@ -60,7 +60,7 @@ module.exports = {
       }
     }
   },
-  
+
   // You can override initState by environment
   environments: {
     test: {
@@ -100,7 +100,7 @@ async function doSomethingMiddleware(req, res, next) {
     await req.store.dispatch(myActionCreator());
     next();
   } catch(err) {
-    next(err); 
+    next(err);
   }
 }
 ```
