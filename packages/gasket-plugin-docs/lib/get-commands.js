@@ -15,20 +15,20 @@ module.exports = function getCommands(gasket, { GasketCommand, flags }) {
     async gasketRun() {
       const docsConfigSet = await buildDocsConfigSet(gasket);
       await collateFiles(docsConfigSet);
-      let graphs = await this.gasket.exec('docsGenerate', docsConfigSet);
-      if (graphs) {
-        graphs = graphs.reduce((acc, cur) => {
+      let guides = await this.gasket.exec('docsGenerate', docsConfigSet);
+      if (guides) {
+        guides = guides.reduce((acc, cur) => {
           if (Array.isArray(cur)) {
             acc.push(...cur);
           } else {
-            acc.push(cur);
+            cur && acc.push(cur);
           }
           return acc;
         }, []);
       } else {
-        graphs = [];
+        guides = [];
       }
-      docsConfigSet.guides.unshift(...graphs);
+      docsConfigSet.guides.unshift(...guides);
       await generateIndex(docsConfigSet);
       if (this.parsed.flags.view) {
         await this.gasket.exec('docsView', docsConfigSet);

@@ -4,12 +4,12 @@ const fs = require('fs');
 const write = require('util').promisify(fs.writeFile);
 
 module.exports = {
-  name: 'docs-graph',
+  name: require('./package.json').name,
   hooks: {
     async docsGenerate(gasket, docsConfigSet) {
       const { docsRoot } = docsConfigSet;
       const targetRoot = path.join(docsRoot, 'generated-docs');
-      const target = path.join(targetRoot, 'mermaid.md');
+      const target = path.join(targetRoot, 'lifecycle-graphs.md');
 
       let graph = 'graph LR;\n';
       docsConfigSet.lifecycles.forEach(lifecycle => {
@@ -33,7 +33,7 @@ module.exports = {
       return {
         name: 'Lifecycle Flowchart',
         description: 'A flowchart detailing how lifecycles are interrelated.',
-        link: '/mermaid.md',
+        link: '/lifecycle-graphs.md',
         targetRoot
       };
     }

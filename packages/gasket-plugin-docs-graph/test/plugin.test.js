@@ -13,10 +13,10 @@ describe('docs graph plugin', function () {
     };
   });
   it('is named properly', function () {
-    assume(plugin.name).equals('docs-graph');
+    assume(plugin.name).matches('@gasket/plugin-docs-graph');
   });
 
-  it('hooks the docGraphs lifecycle', function () {
+  it('hooks the docsGenerate lifecycle', function () {
     assume(hook).is.an('asyncfunction');
   });
 
@@ -24,7 +24,7 @@ describe('docs graph plugin', function () {
     const data = await hook({}, docsConfigSet);
     assume(data.name).equals('Lifecycle Flowchart');
     assume(data.description).equals('A flowchart detailing how lifecycles are interrelated.');
-    assume(data.link).equals('/mermaid.md');
+    assume(data.link).equals('/lifecycle-graphs.md');
     assume(data.targetRoot).equals(path.join(__dirname, 'fixtures', 'generated-docs'));
   });
 

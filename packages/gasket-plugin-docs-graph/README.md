@@ -1,6 +1,6 @@
 # @gasket/plugin-docs-graph
 
-The plugin enables hooks **docsGraph** lifecycle to provide a [`mermaid`] graph
+The plugin hooks the **docsGenerate** lifecycle to provide a [`mermaid`] graph
 of a given application's lifecycles.
 
 ## Installation
@@ -8,7 +8,7 @@ of a given application's lifecycles.
 #### New apps
 
 ```
-gasket create <app-name> --plugins @gasket/plugin-docs-graph
+gasket create <app-name> --plugins @gasket/plugin-docs,@gasket/plugin-docs-graph
 ```
 
 #### Existing apps
