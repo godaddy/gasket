@@ -15,8 +15,17 @@ module.exports = function getCommands(gasket, { GasketCommand, flags }) {
     async gasketRun() {
       const docsConfigSet = await buildDocsConfigSet(gasket);
       await collateFiles(docsConfigSet);
-      const graphs = await this.gasket.exec('docGraphs', docsConfigSet);
-      await generateIndex(docsConfigSet, graphs);
+      const graphs = (await this.gasket.exec('docsGenerate', docsConfigSet))
+        .reduce((acc, cur) => {
+          if(Array.isArray(cur)) {
+            acc.push(...cur);
+          } else if(Boolean(cur)) {
+            acc.push(cur);
+          }
+          return acc;
+        }, []);
+      docsConfigSet.guides.unshift(...graphs);
+      await generateIndex(docsConfigSet);
       if (this.parsed.flags.view) {
         await this.gasket.exec('docsView', docsConfigSet);
       }
