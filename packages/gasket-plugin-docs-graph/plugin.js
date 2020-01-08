@@ -31,7 +31,7 @@ module.exports = {
       await write(target, content);
 
       return {
-        name: 'Lifecycles',
+        name: 'Lifecycle Flowchart',
         description: 'A flowchart detailing how lifecyles are interrelated.',
         link: '/mermaid.md',
         targetRoot
