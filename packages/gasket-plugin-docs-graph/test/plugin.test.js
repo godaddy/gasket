@@ -11,7 +11,7 @@ describe('docs graph plugin', function () {
       docsRoot: path.join(__dirname, 'fixtures'),
       lifecycles: []
     };
-  })
+  });
   it('is named properly', function () {
     assume(plugin.name).equals('docs-graph');
   });
@@ -23,7 +23,7 @@ describe('docs graph plugin', function () {
   it('provides proper metadata', async function () {
     const data = await hook({}, docsConfigSet);
     assume(data.name).equals('Lifecycle Flowchart');
-    assume(data.description).equals('A flowchart detailing how lifecyles are interrelated.');
+    assume(data.description).equals('A flowchart detailing how lifecycles are interrelated.');
     assume(data.link).equals('/mermaid.md');
     assume(data.targetRoot).equals(path.join(__dirname, 'fixtures', 'generated-docs'));
   });
@@ -58,16 +58,33 @@ describe('docs graph plugin', function () {
     assume(content).matches('crackle -- exec --> pop;');
   });
 
-  it.skip('generates the LHS of the arrows from the correct attribute', async function () {
-    docsConfigSet.lifecycles = [{
+  it('generates the LHS of the arrows from the correct attribute', async function () {
+    const lc = docsConfigSet.lifecycles = [{
       name: 'Anakin',
       parent: 'Shmi',
-      after: '',
-      command: 'bring balance to the Force',
+      after: 'Midichlorian intervention',
+      command: 'Bring balance to the Force',
       from: 'Tatooine'
-    }]
+    }, {
+      name: 'Aang',
+      after: 'The Fire nation attacked',
+      command: 'Bring balance to the world',
+      from: 'Southern Air Temple'
+    }, {
+      name: 'Frodo',
+      command: 'Destroy the one ring',
+      from: 'The Shire'
+    }, {
+      name: 'Paul',
+      from: 'Caladan'
+    }];
 
     const { targetRoot, link } = await hook({}, docsConfigSet);
-    const content = await read(path.join(targetRoot, link));
+    const content = await read(path.join(targetRoot, link), 'utf8');
+
+    assume(content).matches(lc[0].parent + ' --> ' + lc[0].name);
+    assume(content).matches(lc[1].after + ' --> ' + lc[1].name);
+    assume(content).matches(lc[2].command + ' --> ' + lc[2].name);
+    assume(content).matches(lc[3].from + ' --> ' + lc[3].name);
   });
 });

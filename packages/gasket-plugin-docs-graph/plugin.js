@@ -1,3 +1,4 @@
+/* eslint no-sync: 0 */
 const path = require('path');
 const fs = require('fs');
 const write = require('util').promisify(fs.writeFile);
@@ -21,8 +22,7 @@ module.exports = {
       });
 
       graph = graph.replace(/@/g, '');
-      const header = "# "
-      const content = '```mermaid\n' + graph + '\n```';
+      const content = '```mermaid\n' + graph + '```';
 
       if (!fs.existsSync(targetRoot)) {
         fs.mkdirSync(targetRoot);
@@ -32,10 +32,10 @@ module.exports = {
 
       return {
         name: 'Lifecycle Flowchart',
-        description: 'A flowchart detailing how lifecyles are interrelated.',
+        description: 'A flowchart detailing how lifecycles are interrelated.',
         link: '/mermaid.md',
         targetRoot
-      }
+      };
     }
   }
-}
+};
