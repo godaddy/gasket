@@ -163,20 +163,26 @@ module.exports = {
 The [@gasket/plugin-docsify] hooks this lifecycle, to render the docs using
 Docsify.
 
-### docsGraphs
+### docsGenerate
 
-Allows a plugin to add a graph to the static documentation
+Allows a plugin to add documentation that has to be programmatically generated.
 
 #### An example graph
 
 ```js
+const writeFile = require('util').promisify(require('fs').writeFile);
+
 module.exports = {
-  name: 'system-meter',
+  name: 'questions',
   hooks: {
-    async docsGraphs(gasket, docsConfigSet) {
+    async docsGenerate(gasket, docsConfigSet) {
+      await writeFile('FAQ.md', 'Just shoot me a call at (605) 475-6968');
+
       return {
-        name: 'System Information',
-        content: JSON.stringify(process, null, 2)
+        name: 'FAQ',
+        description: 'Frequently Asked Questions',
+        link: '/FAQ.md',
+        targetRoot: docsConfigSet.docsRoot
       };
     }
   }

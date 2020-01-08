@@ -28,9 +28,9 @@ module.exports = function metadata(gasket, meta) {
       after: 'docsSetup'
     }, {
       method: 'exec',
-      name: 'docsGraphs',
+      name: 'docsGenerate',
       description: 'Generate graphs for display in documation',
-      link: 'README.md#docsGraphs',
+      link: 'README.md#docsGenerate',
       command: 'docs',
       after: 'docsSetup'
     }],
