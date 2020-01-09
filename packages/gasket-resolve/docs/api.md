@@ -56,9 +56,9 @@ Loads a module with additional metadata
 
 | Param | Type | Description |
 | --- | --- | --- |
-| module | `String` | Module content |
-| moduleName | `String` | Name of module to load |
-| \[meta\] | `Object` | Additional meta data |
+| module | `string` | Module content |
+| moduleName | `string` | Name of module to load |
+| \[meta\] | `object` | Additional meta data |
 
 
 ### loader.loadModule(moduleName, \[meta\])
@@ -70,8 +70,8 @@ Loads a module with additional metadata
 
 | Param | Type | Description |
 | --- | --- | --- |
-| moduleName | `String` | Name of module to load |
-| \[meta\] | `Object` | Additional meta data |
+| moduleName | `string` | Name of module to load |
+| \[meta\] | `object` | Additional meta data |
 
 
 ### loader.loadPlugin(module, \[meta\])
@@ -84,7 +84,7 @@ Loads a plugin with additional metadata.
 | Param | Type | Description |
 | --- | --- | --- |
 | module | [`PluginName`] \| `Object` | Name of module to load (or module content) |
-| \[meta\] | `Object` | Additional meta data |
+| \[meta\] | `object` | Additional meta data |
 
 
 ### loader.loadPreset(module, \[meta\], \[options\])
@@ -97,9 +97,9 @@ Loads a preset with additional metadata
 | Param | Type | Description |
 | --- | --- | --- |
 | module | [`PresetName`] | Name of module to load |
-| \[meta\] | `Object` | Additional meta data |
-| \[options\] | `Boolean` | Loading options |
-| \[options.shallow\] | `Boolean` | Do not recursively load dependencies |
+| \[meta\] | `object` | Additional meta data |
+| \[options\] | `boolean` | Loading options |
+| \[options.shallow\] | `boolean` | Do not recursively load dependencies |
 
 
 ### loader.loadConfigured(config)
@@ -113,7 +113,7 @@ Plugins will be filtered and ordered as configuration with priority of:
 
 | Param | Type | Description |
 | --- | --- | --- |
-| config | `Object` | Presets and plugins to load |
+| config | `object` | Presets and plugins to load |
 | config.presets | `Array.<PresetName>` | Presets to load and add plugins from |
 | config.add | `Array.<PluginName>` \| `Array.<module>` | Names of plugins to load |
 | config.remove | `Array.<string>` | Names of plugins to remove (from presets) |
@@ -125,11 +125,11 @@ Returns the resolved module filename
 
 **Kind**: instance method of [`Loader`]  
 **Overrides**: `resolve`  
-**Returns**: `String` - filename of the module  
+**Returns**: `string` - filename of the module  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| moduleName | `String` | name of the module |
+| moduleName | `string` | name of the module |
 
 
 ### loader.require(moduleName)
@@ -138,11 +138,11 @@ Returns the required module
 
 **Kind**: instance method of [`Loader`]  
 **Overrides**: `require`  
-**Returns**: `Object` - module contents  
+**Returns**: `object` - module contents  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| moduleName | `String` | name of the module |
+| moduleName | `string` | name of the module |
 
 
 ### loader.tryResolve(moduleName)
@@ -151,11 +151,11 @@ Returns the resolved module filename, or null if not found
 
 **Kind**: instance method of [`Loader`]  
 **Overrides**: `tryResolve`  
-**Returns**: `String` ⎮ `null` - filename of the module  
+**Returns**: `string` ⎮ `null` - filename of the module  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| moduleName | `String` | name of the module |
+| moduleName | `string` | name of the module |
 
 
 ### loader.tryRequire(moduleName)
@@ -164,11 +164,11 @@ Returns the required module, or null if not found
 
 **Kind**: instance method of [`Loader`]  
 **Overrides**: `tryRequire`  
-**Returns**: `Object` ⎮ `null` - module contents  
+**Returns**: `object` ⎮ `null` - module contents  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| moduleName | `String` | name of the module |
+| moduleName | `string` | name of the module |
 
 
 ## PackageIdentifier
@@ -310,8 +310,8 @@ Utility to help resolve and require modules
 
 | Param | Type | Description |
 | --- | --- | --- |
-| options | `Object` | Options |
-| \[options.resolveFrom\] | `String` \| `Array.<String>` | Path(s) to resolve modules from |
+| options | `object` | Options |
+| \[options.resolveFrom\] | `string` \| `Array.<String>` | Path(s) to resolve modules from |
 | \[options.require\] | `require` | Require instance to use |
 
 
@@ -320,11 +320,11 @@ Utility to help resolve and require modules
 Returns the resolved module filename
 
 **Kind**: instance method of [`Resolver`]  
-**Returns**: `String` - filename of the module  
+**Returns**: `string` - filename of the module  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| moduleName | `String` | name of the module |
+| moduleName | `string` | name of the module |
 
 
 ### resolver.require(moduleName)
@@ -332,11 +332,11 @@ Returns the resolved module filename
 Returns the required module
 
 **Kind**: instance method of [`Resolver`]  
-**Returns**: `Object` - module contents  
+**Returns**: `object` - module contents  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| moduleName | `String` | name of the module |
+| moduleName | `string` | name of the module |
 
 
 ### resolver.tryResolve(moduleName)
@@ -344,11 +344,11 @@ Returns the required module
 Returns the resolved module filename, or null if not found
 
 **Kind**: instance method of [`Resolver`]  
-**Returns**: `String` ⎮ `null` - filename of the module  
+**Returns**: `string` ⎮ `null` - filename of the module  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| moduleName | `String` | name of the module |
+| moduleName | `string` | name of the module |
 
 
 ### resolver.tryRequire(moduleName)
@@ -356,11 +356,11 @@ Returns the resolved module filename, or null if not found
 Returns the required module, or null if not found
 
 **Kind**: instance method of [`Resolver`]  
-**Returns**: `Object` ⎮ `null` - module contents  
+**Returns**: `object` ⎮ `null` - module contents  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| moduleName | `String` | name of the module |
+| moduleName | `string` | name of the module |
 
 
 ## pluginIdentifier()
@@ -440,13 +440,13 @@ Module with meta data
 
 | Name | Type | Description |
 | --- | --- | --- |
-| name | `String` | Name of preset |
-| module | `String` | Actual module content |
-| \[package\] | `String` | Package.json contents |
-| \[version\] | `String` | Resolved version |
-| \[path\] | `String` | Path to the root of package |
-| \[from\] | `String` | Name of module which requires this module |
-| \[range\] | `String` | Range by which this module was required |
+| name | `string` | Name of preset |
+| module | `string` | Actual module content |
+| \[package\] | `string` | Package.json contents |
+| \[version\] | `string` | Resolved version |
+| \[path\] | `string` | Path to the root of package |
+| \[from\] | `string` | Name of module which requires this module |
+| \[range\] | `string` | Range by which this module was required |
 
 
 ## PluginInfo
@@ -477,8 +477,8 @@ Create a new PackageIdentifier instance
 
 | Param | Type | Description |
 | --- | --- | --- |
-| rawName | `String` | Original input name of a package |
-| \[options\] | `Object` | Options |
+| rawName | `string` | Original input name of a package |
+| \[options\] | `object` | Options |
 | \[options.prefixed\] | `boolean` | Set this to force prefixed/postfixed format for short names |
 
 
