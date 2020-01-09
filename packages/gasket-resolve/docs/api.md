@@ -28,7 +28,7 @@ Name | Description
 [createPackageIdentifier] | Create a new PackageIdentifier instance
 
 
-## Loader : [`Loader`]
+## Loader
 
 Utility to load plugins, presets, and other modules with associated metadata
 
@@ -36,10 +36,10 @@ Utility to load plugins, presets, and other modules with associated metadata
 **Extends**: [`Resolver`]  
 
 * [Loader]
-    * [.getModuleInfo(module, moduleName, [meta])][1]
-    * [.loadModule(moduleName, [meta])][2]
-    * [.loadPlugin(module, [meta])][3]
-    * [.loadPreset(module, [meta], [options])][4]
+    * [.getModuleInfo(module, moduleName, \[meta\])][1]
+    * [.loadModule(moduleName, \[meta\])][2]
+    * [.loadPlugin(module, \[meta\])][3]
+    * [.loadPreset(module, \[meta\], \[options\])][4]
     * [.loadConfigured(config)]
     * [.resolve(moduleName)]
     * [.require(moduleName)]
@@ -47,7 +47,7 @@ Utility to load plugins, presets, and other modules with associated metadata
     * [.tryRequire(moduleName)]
 
 
-### loader.getModuleInfo(module, moduleName, [meta]) ⇒ `ModuleInfo`
+### loader.getModuleInfo(module, moduleName, \[meta\])
 
 Loads a module with additional metadata
 
@@ -61,7 +61,7 @@ Loads a module with additional metadata
 | \[meta\] | `Object` | Additional meta data |
 
 
-### loader.loadModule(moduleName, [meta]) ⇒ `ModuleInfo`
+### loader.loadModule(moduleName, \[meta\])
 
 Loads a module with additional metadata
 
@@ -74,7 +74,7 @@ Loads a module with additional metadata
 | \[meta\] | `Object` | Additional meta data |
 
 
-### loader.loadPlugin(module, [meta]) ⇒ `PluginInfo`
+### loader.loadPlugin(module, \[meta\])
 
 Loads a plugin with additional metadata.
 
@@ -87,7 +87,7 @@ Loads a plugin with additional metadata.
 | \[meta\] | `Object` | Additional meta data |
 
 
-### loader.loadPreset(module, [meta], [options]) ⇒ `PresetInfo`
+### loader.loadPreset(module, \[meta\], \[options\])
 
 Loads a preset with additional metadata
 
@@ -102,7 +102,7 @@ Loads a preset with additional metadata
 | \[options.shallow\] | `Boolean` | Do not recursively load dependencies |
 
 
-### loader.loadConfigured(config) ⇒ `Object`
+### loader.loadConfigured(config)
 
 Loads presets and plugins as configured.
 Plugins will be filtered and ordered as configuration with priority of:
@@ -119,7 +119,7 @@ Plugins will be filtered and ordered as configuration with priority of:
 | config.remove | `Array.<string>` | Names of plugins to remove (from presets) |
 
 
-### loader.resolve(moduleName) ⇒ `String`
+### loader.resolve(moduleName)
 
 Returns the resolved module filename
 
@@ -132,7 +132,7 @@ Returns the resolved module filename
 | moduleName | `String` | name of the module |
 
 
-### loader.require(moduleName) ⇒ `Object`
+### loader.require(moduleName)
 
 Returns the required module
 
@@ -145,7 +145,7 @@ Returns the required module
 | moduleName | `String` | name of the module |
 
 
-### loader.tryResolve(moduleName) ⇒ `String` ⎮ `null`
+### loader.tryResolve(moduleName)
 
 Returns the resolved module filename, or null if not found
 
@@ -158,7 +158,7 @@ Returns the resolved module filename, or null if not found
 | moduleName | `String` | name of the module |
 
 
-### loader.tryRequire(moduleName) ⇒ `Object` ⎮ `null`
+### loader.tryRequire(moduleName)
 
 Returns the required module, or null if not found
 
@@ -171,7 +171,7 @@ Returns the required module, or null if not found
 | moduleName | `String` | name of the module |
 
 
-## PackageIdentifier : [`PackageIdentifier`]
+## PackageIdentifier
 
 Utility class for working with package names and versions
 
@@ -185,18 +185,18 @@ Utility class for working with package names and versions
     * [.name]
     * [.version]
     * [.full]
-    * [.withVersion([defaultVersion])][5]
+    * [.withVersion(\[defaultVersion\])][5]
     * [.nextFormat()]
 
 
-### packageIdentifier.rawName ⇒ `string`
+### packageIdentifier.rawName
 
 Get the package name as provided to the identifier
 
 **Kind**: instance property of [`PackageIdentifier`]  
 **Returns**: `string` - rawName  
 
-### packageIdentifier.fullName ⇒ `string`
+### packageIdentifier.fullName
 
 Get the long package name
 
@@ -209,14 +209,14 @@ Examples:
 **Kind**: instance property of [`PackageIdentifier`]  
 **Returns**: `string` - fullName  
 
-### packageIdentifier.longName ⇒ `string`
+### packageIdentifier.longName
 
 Alias to this.fullName
 
 **Kind**: instance property of [`PackageIdentifier`]  
 **Returns**: `string` - fullName  
 
-### packageIdentifier.shortName ⇒ `string`
+### packageIdentifier.shortName
 
 Get the short package name
 
@@ -228,7 +228,7 @@ Examples:
 **Kind**: instance property of [`PackageIdentifier`]  
 **Returns**: `string` - fullName  
 
-### packageIdentifier.name ⇒ `string`
+### packageIdentifier.name
 
 Get only the package name
 
@@ -239,7 +239,7 @@ Examples:
 **Kind**: instance property of [`PackageIdentifier`]  
 **Returns**: `string` - fullName  
 
-### packageIdentifier.version ⇒ `string`
+### packageIdentifier.version
 
 Get only the package version
 
@@ -250,7 +250,7 @@ Examples:
 **Kind**: instance property of [`PackageIdentifier`]  
 **Returns**: `string` - fullName  
 
-### packageIdentifier.full ⇒ `string`
+### packageIdentifier.full
 
 Get the full package name with version
 
@@ -261,7 +261,7 @@ Examples:
 **Kind**: instance property of [`PackageIdentifier`]  
 **Returns**: `string` - fullName  
 
-### packageIdentifier.withVersion([defaultVersion]) ⇒ `PackageIdentifier`
+### packageIdentifier.withVersion(\[defaultVersion\])
 
 Returns new PackageIdentifier with version added to desc if missing
 
@@ -277,7 +277,7 @@ Examples:
 | \[defaultVersion\] | `string` | `'latest'` | the version name to add if missing |
 
 
-### packageIdentifier.nextFormat() ⇒ `PackageIdentifier` ⎮ `null`
+### packageIdentifier.nextFormat()
 
 If the rawName is a short name, get a new identifier, cycling through
 formats which can be used to attempt to resolve packages by different
@@ -291,7 +291,7 @@ Examples:
 **Kind**: instance method of [`PackageIdentifier`]  
 **Returns**: [`PackageIdentifier`] ⎮ `null` - identifier  
 
-## Resolver : [`Resolver`]
+## Resolver
 
 Utility to help resolve and require modules
 
@@ -315,7 +315,7 @@ Utility to help resolve and require modules
 | \[options.require\] | `require` | Require instance to use |
 
 
-### resolver.resolve(moduleName) ⇒ `String`
+### resolver.resolve(moduleName)
 
 Returns the resolved module filename
 
@@ -327,7 +327,7 @@ Returns the resolved module filename
 | moduleName | `String` | name of the module |
 
 
-### resolver.require(moduleName) ⇒ `Object`
+### resolver.require(moduleName)
 
 Returns the required module
 
@@ -339,7 +339,7 @@ Returns the required module
 | moduleName | `String` | name of the module |
 
 
-### resolver.tryResolve(moduleName) ⇒ `String` ⎮ `null`
+### resolver.tryResolve(moduleName)
 
 Returns the resolved module filename, or null if not found
 
@@ -351,7 +351,7 @@ Returns the resolved module filename, or null if not found
 | moduleName | `String` | name of the module |
 
 
-### resolver.tryRequire(moduleName) ⇒ `Object` ⎮ `null`
+### resolver.tryRequire(moduleName)
 
 Returns the required module, or null if not found
 
@@ -363,19 +363,19 @@ Returns the required module, or null if not found
 | moduleName | `String` | name of the module |
 
 
-## pluginIdentifier() : [`createPackageIdentifier`]
+## pluginIdentifier()
 
 Create package identifiers for Gasket plugins
 
 **Kind**: global function  
 
-## presetIdentifier() : [`createPackageIdentifier`]
+## presetIdentifier()
 
 Create package identifiers for Gasket presets
 
 **Kind**: global function  
 
-## PluginDesc : `String`
+## PluginDesc
 
 The package name with or without version of a plugin.
 
@@ -393,7 +393,7 @@ For example, the following patterns will not work:
 
 **Kind**: global typedef  
 
-## PresetDesc : `String`
+## PresetDesc
 
 The package name with or without version of a preset.
 
@@ -407,7 +407,7 @@ For example:
 
 **Kind**: global typedef  
 
-## PluginName : `String`
+## PluginName
 
 The package name only of a plugin.
 
@@ -419,7 +419,7 @@ For example:
 
 **Kind**: global typedef  
 
-## PresetName : `String`
+## PresetName
 
 The package name only of a preset.
 
@@ -431,7 +431,7 @@ For example:
 
 **Kind**: global typedef  
 
-## ModuleInfo : `Object`
+## ModuleInfo
 
 Module with meta data
 
@@ -449,13 +449,13 @@ Module with meta data
 | \[range\] | `String` | Range by which this module was required |
 
 
-## PluginInfo : [`ModuleInfo`]
+## PluginInfo
 
 Plugin module with meta data
 
 **Kind**: global typedef  
 
-## PresetInfo : [`ModuleInfo`]
+## PresetInfo
 
 Preset module with meta data
 
@@ -468,7 +468,7 @@ Preset module with meta data
 | plugins | `Array.<PluginInfo>` | Plugins this preset uses |
 
 
-## createPackageIdentifier ⇒ [`PackageIdentifier`]
+## createPackageIdentifier
 
 Create a new PackageIdentifier instance
 
@@ -487,7 +487,7 @@ Create a new PackageIdentifier instance
     * [.lookup(name, handler)]
 
 
-### createPackageIdentifier.isValidFullName(maybeFullName) ⇒ `boolean`
+### createPackageIdentifier.isValidFullName(maybeFullName)
 
 Static util method to check if a full name is valid
 
@@ -504,7 +504,7 @@ Examples:
 | maybeFullName | `string` | Name to check |
 
 
-### createPackageIdentifier.lookup(name, handler) ⇒ `PackageIdentifier` ⎮ `null`
+### createPackageIdentifier.lookup(name, handler)
 
 Static util method to loop through format options for short names.
 The handler will be provide the next formatted identifier to try,
@@ -522,46 +522,46 @@ If the lookup runs out of formats to try, it will return null.
 
 <!-- LINKS -->
 
-[Loader]:#loader--loader
-[PackageIdentifier]:#packageidentifier--packageidentifier
-[Resolver]:#resolver--resolver
-[pluginIdentifier()]:#pluginidentifier--createpackageidentifier
-[presetIdentifier()]:#presetidentifier--createpackageidentifier
-[PluginDesc]:#plugindesc--string
-[PresetDesc]:#presetdesc--string
-[PluginName]:#pluginname--string
-[PresetName]:#presetname--string
-[ModuleInfo]:#moduleinfo--object
-[PluginInfo]:#plugininfo--moduleinfo
-[PresetInfo]:#presetinfo--moduleinfo
-[createPackageIdentifier]:#createpackageidentifier--packageidentifier
-[`Loader`]:#loader--loader
+[Loader]:#loader
+[PackageIdentifier]:#packageidentifier
+[Resolver]:#resolver
+[pluginIdentifier()]:#pluginidentifier
+[presetIdentifier()]:#presetidentifier
+[PluginDesc]:#plugindesc
+[PresetDesc]:#presetdesc
+[PluginName]:#pluginname
+[PresetName]:#presetname
+[ModuleInfo]:#moduleinfo
+[PluginInfo]:#plugininfo
+[PresetInfo]:#presetinfo
+[createPackageIdentifier]:#createpackageidentifier
 [`Resolver`]:#new-resolveroptions
-[1]:#loadergetmoduleinfomodule-modulename-meta--moduleinfo
-[2]:#loaderloadmodulemodulename-meta--moduleinfo
-[3]:#loaderloadpluginmodule-meta--plugininfo
-[4]:#loaderloadpresetmodule-meta-options--presetinfo
-[.loadConfigured(config)]:#loaderloadconfiguredconfig--object
-[.resolve(moduleName)]:#resolverresolvemodulename--string
-[.require(moduleName)]:#resolverrequiremodulename--object
-[.tryResolve(moduleName)]:#resolvertryresolvemodulename--string--null
-[.tryRequire(moduleName)]:#resolvertryrequiremodulename--object--null
-[`ModuleInfo`]:#moduleinfo--object
-[`PluginInfo`]:#plugininfo--moduleinfo
-[`PluginName`]:#pluginname--string
-[`PresetInfo`]:#presetinfo--moduleinfo
-[`PresetName`]:#presetname--string
-[`PackageIdentifier`]:#packageidentifier--packageidentifier
-[.rawName]:#packageidentifierrawname--string
-[.fullName]:#packageidentifierfullname--string
-[.longName]:#packageidentifierlongname--string
-[.shortName]:#packageidentifiershortname--string
-[.name]:#packageidentifiername--string
-[.version]:#packageidentifierversion--string
-[.full]:#packageidentifierfull--string
-[5]:#packageidentifierwithversiondefaultversion--packageidentifier
-[.nextFormat()]:#packageidentifiernextformat--packageidentifier--null
+[1]:#loadergetmoduleinfomodule-modulename-meta
+[2]:#loaderloadmodulemodulename-meta
+[3]:#loaderloadpluginmodule-meta
+[4]:#loaderloadpresetmodule-meta-options
+[.loadConfigured(config)]:#loaderloadconfiguredconfig
+[.resolve(moduleName)]:#resolverresolvemodulename
+[.require(moduleName)]:#resolverrequiremodulename
+[.tryResolve(moduleName)]:#resolvertryresolvemodulename
+[.tryRequire(moduleName)]:#resolvertryrequiremodulename
+[`Loader`]:#loader
+[`ModuleInfo`]:#moduleinfo
+[`PluginInfo`]:#plugininfo
+[`PluginName`]:#pluginname
+[`PresetInfo`]:#presetinfo
+[`PresetName`]:#presetname
+[.rawName]:#packageidentifierrawname
+[.fullName]:#packageidentifierfullname
+[.longName]:#packageidentifierlongname
+[.shortName]:#packageidentifiershortname
+[.name]:#packageidentifiername
+[.version]:#packageidentifierversion
+[.full]:#packageidentifierfull
+[5]:#packageidentifierwithversiondefaultversion
+[.nextFormat()]:#packageidentifiernextformat
+[`PackageIdentifier`]:#packageidentifier
 [new Resolver(options)]:#new-resolveroptions
-[`createPackageIdentifier`]:#createpackageidentifier--packageidentifier
-[.isValidFullName(maybeFullName)]:#createpackageidentifierisvalidfullnamemaybefullname--boolean
-[.lookup(name, handler)]:#createpackageidentifierlookupname-handler--packageidentifier--null
+[.isValidFullName(maybeFullName)]:#createpackageidentifierisvalidfullnamemaybefullname
+[.lookup(name, handler)]:#createpackageidentifierlookupname-handler
+[`createPackageIdentifier`]:#createpackageidentifier
