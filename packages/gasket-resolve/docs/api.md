@@ -83,7 +83,7 @@ Loads a plugin with additional metadata.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| module | [`PluginName`] \| `Object` | Name of module to load (or module content) |
+| module | [`PluginName`] \| `object` | Name of module to load (or module content) |
 | \[meta\] | `object` | Additional meta data |
 
 
@@ -311,7 +311,7 @@ Utility to help resolve and require modules
 | Param | Type | Description |
 | --- | --- | --- |
 | options | `object` | Options |
-| \[options.resolveFrom\] | `string` \| `Array.<String>` | Path(s) to resolve modules from |
+| \[options.resolveFrom\] | `string` \| `Array.<string>` | Path(s) to resolve modules from |
 | \[options.require\] | `require` | Require instance to use |
 
 
