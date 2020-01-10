@@ -1,3 +1,4 @@
+/* eslint no-sync: 0 */
 const path = require('path');
 const fs = require('fs');
 const write = require('util').promisify(fs.writeFile);

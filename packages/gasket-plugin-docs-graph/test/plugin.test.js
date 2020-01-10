@@ -85,7 +85,7 @@ describe('docs graph plugin', function () {
     assume(content).matches(lc[0].parent + ' --> ' + lc[0].name);
     assume(content).matches(lc[1].after + ' --> ' + lc[1].name);
     const cmd = lc[2].command;
-    assume(content).contains(`${cmd}-cmd\(${cmd}\) --> ${lc[2].name}`);
+    assume(content).contains(`${cmd}-cmd(${cmd}) --> ${lc[2].name}`);
     assume(content).matches(lc[3].from + ' --> ' + lc[3].name);
   });
 
