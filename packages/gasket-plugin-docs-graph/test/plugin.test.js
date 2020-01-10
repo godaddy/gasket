@@ -84,7 +84,20 @@ describe('docs graph plugin', function () {
 
     assume(content).matches(lc[0].parent + ' --> ' + lc[0].name);
     assume(content).matches(lc[1].after + ' --> ' + lc[1].name);
-    assume(content).matches(lc[2].command + ' --> ' + lc[2].name);
+    const cmd = lc[2].command;
+    assume(content).contains(`${cmd}-cmd\(${cmd}\) --> ${lc[2].name}`);
     assume(content).matches(lc[3].from + ' --> ' + lc[3].name);
+  });
+
+  it('adds styling tags if using a command as a source', async function () {
+    docsConfigSet.lifecycles = [{
+      name: 'Zhu Li',
+      command: 'Do the thing'
+    }];
+
+    const { targetRoot, link } = await hook({}, docsConfigSet);
+    const content = await read(path.join(targetRoot, link), 'utf8');
+
+    assume(content).contains('style Do the thing-cmd fill: red;');
   });
 });
