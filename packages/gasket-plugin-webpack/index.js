@@ -70,7 +70,7 @@ module.exports = {
           name: 'initWebpack',
           description: 'Create a webpack config',
           command: 'build',
-          link: 'EADME.md#initwebpack'
+          link: 'README.md#initwebpack'
         }]
       };
     }
