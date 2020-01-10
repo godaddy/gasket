@@ -13,7 +13,7 @@ describe('docs graph plugin', function () {
     };
   });
   it('is named properly', function () {
-    assume(plugin.name).matches('@gasket/plugin-docs-graph');
+    assume(plugin.name).matches('@gasket/plugin-docs-graphs');
   });
 
   it('hooks the docsGenerate lifecycle', function () {

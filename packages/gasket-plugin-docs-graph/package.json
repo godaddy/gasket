@@ -1,5 +1,5 @@
 {
-  "name": "@gasket/plugin-docs-graph",
+  "name": "@gasket/plugin-docs-graphs",
   "version": "0.0.0",
   "description": "Generate mermaid graphs of an applications gasket lifecycles",
   "main": "plugin.js",
