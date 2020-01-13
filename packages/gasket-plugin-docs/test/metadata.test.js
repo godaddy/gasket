@@ -33,7 +33,7 @@ describe('metadata', () => {
 
   it('includes lifecycles', () => {
     const results = metadata(mockGasket, mockMeta);
-    assume(results.lifecycles).lengthOf(2);
+    assume(results.lifecycles).lengthOf(3);
     assume(results.lifecycles[0]).property('name', 'docsSetup');
     assume(results.lifecycles[0]).property('link');
     assume(results.lifecycles[0]).property('description');
@@ -42,6 +42,10 @@ describe('metadata', () => {
     assume(results.lifecycles[1]).property('link');
     assume(results.lifecycles[1]).property('description');
     assume(results.lifecycles[1]).property('command');
+    assume(results.lifecycles[2]).property('name', 'docsGenerate');
+    assume(results.lifecycles[2]).property('link');
+    assume(results.lifecycles[2]).property('description');
+    assume(results.lifecycles[2]).property('command');
   });
 
   it('includes structures with configured outputDir', () => {

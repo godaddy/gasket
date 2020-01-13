@@ -13,7 +13,10 @@ class MockGasketCommand {
 }
 
 const mockData = { GasketCommand: MockGasketCommand, flags: { boolean: sinon.stub() } };
-const mockDocsConfigSet = { docsRoot: '/path/to/app/.docs' };
+const mockDocsConfigSet = {
+  docsRoot: '/path/to/app/.docs',
+  guides: []
+};
 
 const buildConfigSetStub = sinon.stub().resolves(mockDocsConfigSet);
 const collateFilesStub = sinon.stub();
@@ -79,7 +82,8 @@ describe('getCommands', () => {
     it('does not execute docsView if --no-view flag', async () => {
       instance.parsed.flags.view = false;
       await instance.gasketRun();
-      assume(mockGasket.exec).not.called();
+      assume(mockGasket.exec.callCount).equals(1);
+      assume(mockGasket.exec.calledWith('docsView')).is.false();
     });
   });
 });
