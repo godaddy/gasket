@@ -47,6 +47,7 @@ async function generateContent(docsifyConfig, docsConfigSet) {
     '//cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js',
     '//cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js',
     'scripts/toc-link-plugin.js',
+    'scripts/simple-slugs-plugin.js',
     'scripts/mermaid-setup.js',
     ...(docsifyConfig.scripts || [])
   ];
