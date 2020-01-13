@@ -66,6 +66,11 @@ module.exports = {
           link: 'README.md#webpack',
           parent: 'initWebpack',
           after: 'webpackChain'
+        }, {
+          name: 'initWebpack',
+          description: 'Create a webpack config',
+          command: 'build',
+          link: 'README.md#initwebpack'
         }]
       };
     }
