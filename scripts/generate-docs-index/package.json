@@ -4,6 +4,6 @@
   "version": "0.0.0",
   "description": "Generate the overview index",
   "dependencies": {
-    "@gasket/cli": "^3.0.1"
+    "copy-dir": "^1.2.0"
   }
 }
