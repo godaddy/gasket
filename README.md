@@ -170,7 +170,6 @@ Supporting modules
 | [@gasket/redux]   | 5.0.0   | Gasket Redux Configuration                                                           |
 | [@gasket/resolve] | 5.0.1   | Essential module resolution & configuration management for gasket plugins & presets. |
 | [@gasket/utils]   | 5.0.0   | Reusable utilities for Gasket internals                                              |
-| [copy-dir]        | 1.2.0   | copy-dir                                                                             |
 
 <!-- LINKS -->
 
@@ -278,7 +277,6 @@ Supporting modules
 [@gasket/redux]:/packages/gasket-redux/README.md
 [@gasket/resolve]:/packages/gasket-resolve/README.md
 [@gasket/utils]:/packages/gasket-utils/README.md
-[copy-dir]:https://github.com/pillys/copy-dir
 <!-- END GENERATED -->
 
 ## License
