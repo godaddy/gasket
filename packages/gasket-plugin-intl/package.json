@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-intl",
-  "version": "5.0.1",
+  "version": "5.0.2",
   "description": "NodeJS script to build localization files.",
   "main": "lib",
   "scripts": {
@@ -42,8 +42,8 @@
   },
   "devDependencies": {
     "@babel/preset-env": "^7.5.5",
-    "@gasket/intl": "^5.0.0",
-    "@gasket/plugin-log": "^5.0.1",
+    "@gasket/intl": "^5.0.2",
+    "@gasket/plugin-log": "^5.0.2",
     "acorn": "^6.1.1",
     "eslint": "^6.1.0",
     "eslint-config-godaddy": "^4.0.0",

@@ -1,6 +1,6 @@
 {
   "name": "@gasket/resolve",
-  "version": "5.0.1",
+  "version": "5.0.2",
   "description": "Essential module resolution & configuration management for gasket plugins & presets.",
   "main": "lib",
   "scripts": {
