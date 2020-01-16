@@ -2,7 +2,7 @@
   "version": "5.0.1",
   "packages": [
     "packages/*",
-    "scripts/generate-docs"
+    "scripts/generate-docs-index"
   ],
   "ignoreChanges": [
     "**/*.+(test|spec).js",

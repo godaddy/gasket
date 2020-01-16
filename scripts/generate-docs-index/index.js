@@ -5,6 +5,7 @@ const { promisify } = require('util');
 
 const readFile = promisify(fs.readFile);
 const writeFile = promisify(fs.writeFile);
+const copyDir = promisify(require('copy-dir'));
 
 const startTag = '<!-- START GENERATED -->';
 const endTag = '<!-- END GENERATED -->';
@@ -16,6 +17,11 @@ const targetPath = path.join(projectRoot, 'README.md');
 
 async function main() {
   await runShellCommand(cliBin, ['docs', '--no-view'], { cwd: __dirname });
+
+  // copy over generated docs generated-docs
+  const genSrc = path.join(__dirname, '.docs', 'generated-docs');
+  const genTgt = path.join(projectRoot, 'docs', 'generated-docs');
+  await copyDir(genSrc, genTgt);
 
   let content = await readFile(sourcePath, 'utf-8');
 
@@ -29,6 +35,7 @@ async function main() {
     .replace(/.+plugins\/config-plugin.+\n/, '')
     // removed a single test/ dir, duplicate from generating both mocha and jest
     .replace(/.+test\/.+\n/, '')
+    .replace(':generated-docs/', ':/docs/generated-docs/')
   ;
 
   const template = await readFile(targetPath, 'utf-8');
