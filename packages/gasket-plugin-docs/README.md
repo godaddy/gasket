@@ -76,7 +76,7 @@ module.exports = {
         link: 'OTHER.md',
         files: [
           'API.md',
-          'docs/**/*'
+          'docs/**/*.md'
         ],
         transforms: [{
           test: /\.md$/,
@@ -89,7 +89,7 @@ module.exports = {
           },
           'another-module': {
             link: 'README.md#go-here',
-            files: ['html/**/*'],
+            files: ['html/**/*.html'],
             transforms: [{
                test: /\.html$/,
                handler: content => content.replace(/everything/g, 'nothing')
@@ -132,7 +132,7 @@ setup functions cannot be described this way:
     "docsSetup": {
       "link": "OTHER.md#go-here",
       "files": [
-        "more-docs/**/*"
+        "more-docs/**/*.*"
       ]
     }
   }
@@ -203,7 +203,7 @@ module.exports = {
   require,
   docsSetup: {
     link: 'OTHER.md#go-here',
-    files: ['more-docs/**/*'],
+    files: ['more-docs/**/*.*'],
   }
 }
 ```
