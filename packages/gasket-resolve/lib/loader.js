@@ -5,16 +5,16 @@ const { pluginIdentifier, presetIdentifier } = require('./identifiers');
 /**
  * Module with meta data
  *
- * @typedef {Object} ModuleInfo
+ * @typedef {object} ModuleInfo
  *
  *
- * @property {String} name - Name of preset
- * @property {String} module - Actual module content
- * @property {String} [package] - Package.json contents
- * @property {String} [version] - Resolved version
- * @property {String} [path] - Path to the root of package
- * @property {String} [from] - Name of module which requires this module
- * @property {String} [range] - Range by which this module was required
+ * @property {string} name - Name of preset
+ * @property {string} module - Actual module content
+ * @property {string} [package] - Package.json contents
+ * @property {string} [version] - Resolved version
+ * @property {string} [path] - Path to the root of package
+ * @property {string} [from] - Name of module which requires this module
+ * @property {string} [range] - Range by which this module was required
  */
 
 /**
@@ -55,9 +55,9 @@ class Loader extends Resolver {
   /**
    * Loads a module with additional metadata
    *
-   * @param {String} module - Module content
-   * @param {String} moduleName - Name of module to load
-   * @param {Object} [meta] - Additional meta data
+   * @param {string} module - Module content
+   * @param {string} moduleName - Name of module to load
+   * @param {object} [meta] - Additional meta data
    * @returns {ModuleInfo} module
    */
   getModuleInfo(module, moduleName, meta = {}) {
@@ -82,8 +82,8 @@ class Loader extends Resolver {
   /**
    * Loads a module with additional metadata
    *
-   * @param {String} moduleName - Name of module to load
-   * @param {Object} [meta] - Additional meta data
+   * @param {string} moduleName - Name of module to load
+   * @param {object} [meta] - Additional meta data
    * @returns {ModuleInfo} module
    */
   loadModule(moduleName, meta = {}) {
@@ -94,8 +94,8 @@ class Loader extends Resolver {
   /**
    * Loads a plugin with additional metadata.
    *
-   * @param {PluginName|Object} module - Name of module to load (or module content)
-   * @param {Object} [meta] - Additional meta data
+   * @param {PluginName|object} module - Name of module to load (or module content)
+   * @param {object} [meta] - Additional meta data
    * @returns {PluginInfo} module
    */
   loadPlugin(module, meta = {}) {
@@ -117,9 +117,9 @@ class Loader extends Resolver {
    * Loads a preset with additional metadata
    *
    * @param {PresetName} module - Name of module to load
-   * @param {Object} [meta] - Additional meta data
-   * @param {Boolean} [options] - Loading options
-   * @param {Boolean} [options.shallow] - Do not recursively load dependencies
+   * @param {object} [meta] - Additional meta data
+   * @param {boolean} [options] - Loading options
+   * @param {boolean} [options.shallow] - Do not recursively load dependencies
    * @returns {PresetInfo} module
    */
   loadPreset(module, meta, { shallow = false } = {}) {
@@ -163,7 +163,7 @@ class Loader extends Resolver {
    * Plugins will be filtered and ordered as configuration with priority of:
    *  - added plugins > preset plugins > nested preset plugins
    *
-   * @param {Object}                config         - Presets and plugins to load
+   * @param {object}                config         - Presets and plugins to load
    * @param {PresetName[]}          config.presets - Presets to load and add plugins from
    * @param {PluginName[]|module[]} config.add     - Names of plugins to load
    * @param {string[]}              config.remove  - Names of plugins to remove (from presets)

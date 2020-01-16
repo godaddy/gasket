@@ -8,8 +8,8 @@ const defaultConfig = {
  * Configure lifecycle to set up SW config with defaults
  *
  * @param {Gasket} gasket - Gasket
- * @param {Object} baseConfig - Base gasket config
- * @returns {Object} config
+ * @param {object} baseConfig - Base gasket config
+ * @returns {object} config
  */
 module.exports = function configureHook(gasket, baseConfig = {}) {
   const userConfig = baseConfig.docs || {};

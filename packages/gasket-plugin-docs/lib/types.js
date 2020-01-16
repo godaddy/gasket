@@ -1,7 +1,7 @@
 /**
  * Setup object to describe docs configuration for a module
  *
- * @typedef {Object} DocsSetup
+ * @typedef {object} DocsSetup
  *
  * @property {string} link - Markdown link relative to package root
  * @property {glob[]} [files] - Names and/or patterns of files to collect
@@ -12,7 +12,7 @@
 /**
  * Base docs configuration
  *
- * @typedef {Object} DocsConfig
+ * @typedef {object} DocsConfig
  *
  * @property {string} name - Name of the the module or element
  * @property {string} [description] - Description of the module or element
@@ -26,7 +26,7 @@
  *
  * @typedef {DocsConfig} ModuleDocsConfig
  *
- * @property {String[]} files - Resolved files from docsSetup
+ * @property {string[]} files - Resolved files from docsSetup
  * @property {DocsTransform[]} transforms - Local doc transforms
  * @property {ModuleData} metadata - Originating metadata for this module
  */
@@ -52,7 +52,7 @@
 /**
  * Set of docs configurations for the app
  *
- * @typedef {Object} DocsConfigSet
+ * @typedef {object} DocsConfigSet
  *
  * @property {ModuleDocsConfig} app - Docs from the main package
  * @property {ModuleDocsConfig[]} plugins - Docs for all configured plugins
@@ -70,9 +70,9 @@
 /**
  * Transform content of doc files matching test pattern
  *
- * @typedef {Object} DocsTransform
+ * @typedef {object} DocsTransform
  *
- * @property {Boolean} [global] - If true, will be applied to all files, otherwise to only files in module.
+ * @property {boolean} [global] - If true, will be applied to all files, otherwise to only files in module.
  * @property {RegExp} test - Expression to test against the full source filename
  * @property {DocsTransformHandler} handler - Function to modify matching files' contents
  */
@@ -80,11 +80,11 @@
 /**
  * Handler to modify file contents for a DocsTransform
  *
- * @typedef {Function} DocsTransformHandler
+ * @typedef {function} DocsTransformHandler
  *
- * @param {String} content - Doc file content to transform
- * @param {Object} data - Additional details relating to the doc file being handled
- * @param {String} data.filename - Relative path of this filename
+ * @param {string} content - Doc file content to transform
+ * @param {object} data - Additional details relating to the doc file being handled
+ * @param {string} data.filename - Relative path of this filename
  * @param {ModuleDocsConfig} data.docsConfig - Docs config for this file's module
  * @param {DocsConfigSet} data.docsConfigSet - Set of configs for the app
  * @returns {string} transformed content
