@@ -181,7 +181,13 @@ Some additional rules to note:
 - jsdocs2md output should go to `docs/API.md`.
 - Prefer reference links to inline.
   - This making for easier reading when not using a markdown viewer
+  
+## Adding new packages to the monorepo
 
+Remember to run the `align-packages` script for new packages. This has been
+an issue in the past with `docs-graphs` missing the `publishConfig` field which
+messed with `lerna publish`. Without this, we had to step into each package and
+manually re-publish the ones that didn’t make it out.
 
 # Additional Resources
 
