@@ -1,5 +1,9 @@
 # `@gasket/plugin-nextjs`
 
+### 5.0.2
+
+- Fix name in plugin timing ([#136])
+
 ### 5.0.0
 
 - Open Source Release
@@ -57,3 +61,4 @@
 [#98]: https://github.com/godaddy/gasket/pull/98
 [#114]: https://github.com/godaddy/gasket/pull/114
 [#125]: https://github.com/godaddy/gasket/pull/125
+[#136]: https://github.com/godaddy/gasket/pull/136
