@@ -36,10 +36,10 @@ Utility to load plugins, presets, and other modules with associated metadata
 **Extends**: [`Resolver`]  
 
 * [Loader]
-    * [.getModuleInfo(module, moduleName, \[meta\])][1]
-    * [.loadModule(moduleName, \[meta\])][2]
-    * [.loadPlugin(module, \[meta\])][3]
-    * [.loadPreset(module, \[meta\], \[options\])][4]
+    * [.getModuleInfo(module, moduleName, \[meta\])]
+    * [.loadModule(moduleName, \[meta\])]
+    * [.loadPlugin(module, \[meta\])]
+    * [.loadPreset(module, \[meta\], \[options\])]
     * [.loadConfigured(config)]
     * [.resolve(moduleName)]
     * [.require(moduleName)]
@@ -185,7 +185,7 @@ Utility class for working with package names and versions
     * [.name]
     * [.version]
     * [.full]
-    * [.withVersion(\[defaultVersion\])][5]
+    * [.withVersion(\[defaultVersion\])]
     * [.nextFormat()]
 
 
@@ -536,10 +536,10 @@ If the lookup runs out of formats to try, it will return null.
 [PresetInfo]:#presetinfo
 [createPackageIdentifier]:#createpackageidentifier
 [`Resolver`]:#new-resolveroptions
-[1]:#loadergetmoduleinfomodule-modulename-meta
-[2]:#loaderloadmodulemodulename-meta
-[3]:#loaderloadpluginmodule-meta
-[4]:#loaderloadpresetmodule-meta-options
+[.getModuleInfo(module, moduleName, \[meta\])]:#loadergetmoduleinfomodule-modulename-meta
+[.loadModule(moduleName, \[meta\])]:#loaderloadmodulemodulename-meta
+[.loadPlugin(module, \[meta\])]:#loaderloadpluginmodule-meta
+[.loadPreset(module, \[meta\], \[options\])]:#loaderloadpresetmodule-meta-options
 [.loadConfigured(config)]:#loaderloadconfiguredconfig
 [.resolve(moduleName)]:#resolverresolvemodulename
 [.require(moduleName)]:#resolverrequiremodulename
@@ -558,7 +558,7 @@ If the lookup runs out of formats to try, it will return null.
 [.name]:#packageidentifiername
 [.version]:#packageidentifierversion
 [.full]:#packageidentifierfull
-[5]:#packageidentifierwithversiondefaultversion
+[.withVersion(\[defaultVersion\])]:#packageidentifierwithversiondefaultversion
 [.nextFormat()]:#packageidentifiernextformat
 [`PackageIdentifier`]:#packageidentifier
 [new Resolver(options)]:#new-resolveroptions
