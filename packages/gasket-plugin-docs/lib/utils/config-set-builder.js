@@ -37,7 +37,7 @@ const detailDocsTypes = Object.keys(detailDocsHelpers);
  *
  * @type {{link: string, files: array}}
  */
-const docsSetupDefault = Object.freeze({ link: 'README.md', files: ['docs/**/*'] });
+const docsSetupDefault = Object.freeze({ link: 'README.md', files: ['docs/**/*.*'] });
 
 /**
  * Returns a filename with the hash removed
