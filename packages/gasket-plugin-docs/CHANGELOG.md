@@ -1,5 +1,7 @@
 # `@gasket/plugin-docs`
 
+- Clean markdown from jsdocs ([#141])
+
 ### 5.0.2
 
 - Only include doc files with extensions by default ([#139])
@@ -19,3 +21,4 @@
 
 [#82]:https://github.com/godaddy/gasket/pull/82
 [#139]:https://github.com/godaddy/gasket/pull/139
+[#141]: https://github.com/godaddy/gasket/pull/141

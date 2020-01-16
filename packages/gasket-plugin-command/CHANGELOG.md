@@ -1,5 +1,7 @@
 # `@gasket/plugin-command`
 
+- Clean markdown from jsdocs ([#141])
+
 ### 5.0.0
 
 - Open Source Release
@@ -37,3 +39,4 @@
 [#52]: https://github.com/godaddy/gasket/pull/52
 [#74]: https://github.com/godaddy/gasket/pull/74
 [#94]: https://github.com/godaddy/gasket/pull/94
+[#141]: https://github.com/godaddy/gasket/pull/141
