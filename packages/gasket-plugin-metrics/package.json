@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-metrics",
-  "version": "5.0.1",
+  "version": "5.0.2",
   "description": "Collect metrics for gasket commands",
   "main": "lib",
   "scripts": {

@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-metadata",
-  "version": "5.0.1",
+  "version": "5.0.2",
   "description": "Adds metadata to gasket lifecycles",
   "main": "lib",
   "scripts": {
@@ -33,7 +33,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-metadata",
   "dependencies": {
-    "@gasket/resolve": "^5.0.1",
+    "@gasket/resolve": "^5.0.2",
     "lodash.clonedeep": "^4.5.0",
     "lodash.isfunction": "^3.0.9",
     "lodash.isobject": "^3.0.2"

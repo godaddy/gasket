@@ -1,6 +1,6 @@
 {
   "name": "@gasket/preset-pwa",
-  "version": "5.0.1",
+  "version": "5.0.2",
   "description": "Turn Gasket apps into Progressive Web Apps",
   "repository": {
     "type": "git",
@@ -15,8 +15,8 @@
     "url": "https://github.com/godaddy/gasket/issues"
   },
   "dependencies": {
-    "@gasket/plugin-manifest": "^5.0.1",
-    "@gasket/plugin-service-worker": "^5.0.1",
-    "@gasket/plugin-workbox": "^5.0.1"
+    "@gasket/plugin-manifest": "^5.0.2",
+    "@gasket/plugin-service-worker": "^5.0.2",
+    "@gasket/plugin-workbox": "^5.0.2"
   }
 }
