@@ -55,7 +55,10 @@ const depVersions = {
   'handlebars': '^4.4.3',
   'rimraf': '^3.0.0',
   'glob': '^7.1.4',
-  'semver': '^6.3.0'
+  'semver': '^6.3.0',
+  'lodash.defaultsdeep': '^4.6.0',
+  'prop-types': '^15.6.2',
+  'react-intl': '^3.9.1'
 };
 
 

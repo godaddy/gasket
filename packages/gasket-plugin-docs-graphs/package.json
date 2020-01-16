@@ -4,9 +4,18 @@
   "description": "Generate mermaid graphs of an applications gasket lifecycles",
   "main": "plugin.js",
   "scripts": {
-    "test": "npm run test:unit && npm run lint",
-    "test:unit": "mocha test/*.test.js",
-    "lint": "eslint --fix *.js test"
+    "lint": "eslint *.js test",
+    "lint:fix": "npm run lint -- --fix",
+    "test": "npm run test:runner",
+    "test:runner": "mocha test/*.test.js",
+    "posttest": "npm run lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/godaddy/gasket.git"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "keywords": [
     "docs",
@@ -16,20 +25,16 @@
   ],
   "author": "GoDaddy Operating Company, LLC",
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/godaddy/gasket.git"
-  },
   "bugs": {
     "url": "https://github.com/godaddy/gasket/issues"
   },
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-doc-graph",
   "devDependencies": {
-    "eslint": "^6.8.0",
+    "eslint": "^6.1.0",
     "eslint-config-godaddy": "^4.0.0",
-    "eslint-plugin-json": "^2.0.1",
-    "eslint-plugin-mocha": "^6.2.2",
-    "mocha": "^7.0.0",
-    "nyc": "^15.0.0"
+    "eslint-plugin-json": "^1.4.0",
+    "eslint-plugin-mocha": "^6.0.0",
+    "mocha": "^6.2.0",
+    "nyc": "^14.1.1"
   }
 }
