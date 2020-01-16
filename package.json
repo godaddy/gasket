@@ -54,6 +54,9 @@
   "eslintConfig": {
     "extends": [
       "godaddy"
+    ],
+    "ignorePatterns": [
+      "node_modules/"
     ]
   },
   "private": true
