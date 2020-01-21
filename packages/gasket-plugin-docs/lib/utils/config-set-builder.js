@@ -139,7 +139,7 @@ class DocsConfigSetBuilder {
    *
    * @param {ModuleData} moduleData - Metadata for a module
    * @param {DocsSetup} docsSetup - Files to include and transforms
-   * @param {Object} overrides - Pre-configured properties
+   * @param {object} overrides - Pre-configured properties
    * @returns {DocsConfig} docsConfigs
    * @private
    */

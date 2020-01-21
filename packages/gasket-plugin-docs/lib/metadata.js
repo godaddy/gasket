@@ -2,8 +2,8 @@
  * Attach additional metadata to pluginData
  *
  * @param {Gasket} gasket - Gasket
- * @param {Object} meta - Initial meta data
- * @returns {Object} Additional meta data
+ * @param {object} meta - Initial meta data
+ * @returns {object} Additional meta data
  */
 module.exports = function metadata(gasket, meta) {
   const { outputDir } = gasket.config.docs || require('./configure').defaultConfig;

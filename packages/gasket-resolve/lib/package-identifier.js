@@ -106,8 +106,8 @@ function projectIdentifier(projectName, type = 'plugin') {
    *
    * @typedef {function} createPackageIdentifier
    *
-   * @param {String} rawName - Original input name of a package
-   * @param {Object} [options] - Options
+   * @param {string} rawName - Original input name of a package
+   * @param {object} [options] - Options
    * @param {boolean} [options.prefixed] - Set this to force prefixed/postfixed format for short names
    * @returns {PackageIdentifier} instance
    */
@@ -131,7 +131,7 @@ function projectIdentifier(projectName, type = 'plugin') {
       /**
        * The parts of an identifier's name format
        *
-       * @typedef {Object} NameFormat
+       * @typedef {object} NameFormat
        *
        * @property {boolean} prefixed
        * @property {boolean} short
@@ -347,7 +347,7 @@ function projectIdentifier(projectName, type = 'plugin') {
     /**
      * Output the original raw name for string concatenation.
      *
-     * @returns {String} string
+     * @returns {string} string
      */
     PackageIdentifier.prototype.toString = function toString() {
       return rawName;

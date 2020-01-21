@@ -96,7 +96,7 @@ const txAbsoluteLinks = {
   /**
    * @type {DocsTransformHandler}
    * @param {string} content - Markdown content
-   * @param {String} filename - Relative package filename
+   * @param {string} filename - Relative package filename
    * @param {ModuleDocsConfig} docsConfig - Docs config for this file's module
    * @returns {string} transformed content
    */

@@ -10,7 +10,7 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "posttest": "npm run lint",
-    "docs": "jsdoc2md lib/*.js > docs/api.md"
+    "docs": "jsdoc2md --plugin @godaddy/dmd --files lib/*.js > docs/api.md"
   },
   "repository": {
     "type": "git",
@@ -40,6 +40,7 @@
     "semver": "^6.3.0"
   },
   "devDependencies": {
+    "@godaddy/dmd": "^1.0.0",
     "eslint": "^6.1.0",
     "eslint-config-godaddy": "^4.0.0",
     "eslint-plugin-jest": "^22.15.1",

@@ -1,35 +1,20 @@
+
 ## Typedefs
 
-<dl>
-<dt><a href="#DocsSetup">DocsSetup</a> : <code>Object</code></dt>
-<dd><p>Setup object to describe docs configuration for a module</p>
-</dd>
-<dt><a href="#DocsConfig">DocsConfig</a> : <code>Object</code></dt>
-<dd><p>Base docs configuration</p>
-</dd>
-<dt><a href="#ModuleDocsConfig">ModuleDocsConfig</a> : <code><a href="#DocsConfig">DocsConfig</a></code></dt>
-<dd><p>Docs configuration for a module</p>
-</dd>
-<dt><a href="#DetailDocsConfig">DetailDocsConfig</a> : <code><a href="#DocsConfig">DocsConfig</a></code></dt>
-<dd><p>Docs configuration for members of a plugin</p>
-</dd>
-<dt><a href="#LifecycleDocsConfig">LifecycleDocsConfig</a> : <code><a href="#DetailDocsConfig">DetailDocsConfig</a></code></dt>
-<dd><p>Docs configuration with specifics for plugin lifecycles</p>
-</dd>
-<dt><a href="#DocsConfigSet">DocsConfigSet</a> : <code>Object</code></dt>
-<dd><p>Set of docs configurations for the app</p>
-</dd>
-<dt><a href="#DocsTransform">DocsTransform</a> : <code>Object</code></dt>
-<dd><p>Transform content of doc files matching test pattern</p>
-</dd>
-<dt><a href="#DocsTransformHandler">DocsTransformHandler</a> ⇒ <code>string</code></dt>
-<dd><p>Handler to modify file contents for a DocsTransform</p>
-</dd>
-</dl>
+Name | Description
+------ | -----------
+[DocsSetup] | Setup object to describe docs configuration for a module
+[DocsConfig] | Base docs configuration
+[ModuleDocsConfig] | Docs configuration for a module
+[DetailDocsConfig] | Docs configuration for members of a plugin
+[LifecycleDocsConfig] | Docs configuration with specifics for plugin lifecycles
+[DocsConfigSet] | Set of docs configurations for the app
+[DocsTransform] | Transform content of doc files matching test pattern
+[DocsTransformHandler] | Handler to modify file contents for a DocsTransform
 
-<a name="DocsSetup"></a>
 
-## DocsSetup : <code>Object</code>
+## DocsSetup
+
 Setup object to describe docs configuration for a module
 
 **Kind**: global typedef  
@@ -37,14 +22,14 @@ Setup object to describe docs configuration for a module
 
 | Name | Type | Description |
 | --- | --- | --- |
-| link | <code>string</code> | Markdown link relative to package root |
-| [files] | <code>Array.&lt;glob&gt;</code> | Names and/or patterns of files to collect |
-| [transforms] | [<code>Array.&lt;DocsTransform&gt;</code>](#DocsTransform) | Transforms to apply to collected files |
-| [modules] | <code>Object.&lt;string, DocsSetup&gt;</code> | Setup object for supporting modules |
+| link | `string` | Markdown link relative to package root |
+| \[files\] | `Array.<glob>` | Names and/or patterns of files to collect |
+| \[transforms\] | `Array.<DocsTransform>` | Transforms to apply to collected files |
+| \[modules\] | `Object.<string, DocsSetup>` | Setup object for supporting modules |
 
-<a name="DocsConfig"></a>
 
-## DocsConfig : <code>Object</code>
+## DocsConfig
+
 Base docs configuration
 
 **Kind**: global typedef  
@@ -52,15 +37,15 @@ Base docs configuration
 
 | Name | Type | Description |
 | --- | --- | --- |
-| name | <code>string</code> | Name of the the module or element |
-| [description] | <code>string</code> | Description of the module or element |
-| [link] | <code>string</code> | Relative path to a doc from the module's package |
-| sourceRoot | <code>string</code> | Absolute path to the module's package |
-| targetRoot | <code>string</code> | Absolute path to output dir for the module |
+| name | `string` | Name of the the module or element |
+| \[description\] | `string` | Description of the module or element |
+| \[link\] | `string` | Relative path to a doc from the module's package |
+| sourceRoot | `string` | Absolute path to the module's package |
+| targetRoot | `string` | Absolute path to output dir for the module |
 
-<a name="ModuleDocsConfig"></a>
 
-## ModuleDocsConfig : [<code>DocsConfig</code>](#DocsConfig)
+## ModuleDocsConfig
+
 Docs configuration for a module
 
 **Kind**: global typedef  
@@ -68,13 +53,13 @@ Docs configuration for a module
 
 | Name | Type | Description |
 | --- | --- | --- |
-| files | <code>Array.&lt;String&gt;</code> | Resolved files from docsSetup |
-| transforms | [<code>Array.&lt;DocsTransform&gt;</code>](#DocsTransform) | Local doc transforms |
-| metadata | <code>ModuleData</code> | Originating metadata for this module |
+| files | `Array.<string>` | Resolved files from docsSetup |
+| transforms | `Array.<DocsTransform>` | Local doc transforms |
+| metadata | `ModuleData` | Originating metadata for this module |
 
-<a name="DetailDocsConfig"></a>
 
-## DetailDocsConfig : [<code>DocsConfig</code>](#DocsConfig)
+## DetailDocsConfig
+
 Docs configuration for members of a plugin
 
 **Kind**: global typedef  
@@ -82,11 +67,11 @@ Docs configuration for members of a plugin
 
 | Name | Type | Description |
 | --- | --- | --- |
-| from | <code>string</code> | Name from the parent ModuleDocsConfig |
+| from | `string` | Name from the parent ModuleDocsConfig |
 
-<a name="LifecycleDocsConfig"></a>
 
-## LifecycleDocsConfig : [<code>DetailDocsConfig</code>](#DetailDocsConfig)
+## LifecycleDocsConfig
+
 Docs configuration with specifics for plugin lifecycles
 
 **Kind**: global typedef  
@@ -94,13 +79,13 @@ Docs configuration with specifics for plugin lifecycles
 
 | Name | Type | Description |
 | --- | --- | --- |
-| method | <code>string</code> | Executing method from the engine |
-| [parent] | <code>string</code> | Lifecycle from which this one is invoked |
-| [command] | <code>string</code> | Command from which this lifecycle is invoked |
+| method | `string` | Executing method from the engine |
+| \[parent\] | `string` | Lifecycle from which this one is invoked |
+| \[command\] | `string` | Command from which this lifecycle is invoked |
 
-<a name="DocsConfigSet"></a>
 
-## DocsConfigSet : <code>Object</code>
+## DocsConfigSet
+
 Set of docs configurations for the app
 
 **Kind**: global typedef  
@@ -108,21 +93,21 @@ Set of docs configurations for the app
 
 | Name | Type | Description |
 | --- | --- | --- |
-| app | [<code>ModuleDocsConfig</code>](#ModuleDocsConfig) | Docs from the main package |
-| plugins | [<code>Array.&lt;ModuleDocsConfig&gt;</code>](#ModuleDocsConfig) | Docs for all configured plugins |
-| presets | [<code>Array.&lt;ModuleDocsConfig&gt;</code>](#ModuleDocsConfig) | Docs for all configured presets |
-| modules | [<code>Array.&lt;ModuleDocsConfig&gt;</code>](#ModuleDocsConfig) | Docs of supporting modules |
-| structures | [<code>Array.&lt;DetailDocsConfig&gt;</code>](#DetailDocsConfig) | Docs describing structure elements |
-| commands | [<code>Array.&lt;DetailDocsConfig&gt;</code>](#DetailDocsConfig) | Docs for available commands |
-| guides | [<code>Array.&lt;DetailDocsConfig&gt;</code>](#DetailDocsConfig) | Docs for setups and explanations |
-| lifecycles | [<code>Array.&lt;LifecycleDocsConfig&gt;</code>](#LifecycleDocsConfig) | Docs for available lifecycles |
-| transforms | [<code>Array.&lt;DocsTransform&gt;</code>](#DocsTransform) | Global doc transforms |
-| root | <code>string</code> | Absolute path to main package |
-| docsRoot | <code>string</code> | Absolute path to output directory |
+| app | [`ModuleDocsConfig`] | Docs from the main package |
+| plugins | `Array.<ModuleDocsConfig>` | Docs for all configured plugins |
+| presets | `Array.<ModuleDocsConfig>` | Docs for all configured presets |
+| modules | `Array.<ModuleDocsConfig>` | Docs of supporting modules |
+| structures | `Array.<DetailDocsConfig>` | Docs describing structure elements |
+| commands | `Array.<DetailDocsConfig>` | Docs for available commands |
+| guides | `Array.<DetailDocsConfig>` | Docs for setups and explanations |
+| lifecycles | `Array.<LifecycleDocsConfig>` | Docs for available lifecycles |
+| transforms | `Array.<DocsTransform>` | Global doc transforms |
+| root | `string` | Absolute path to main package |
+| docsRoot | `string` | Absolute path to output directory |
 
-<a name="DocsTransform"></a>
 
-## DocsTransform : <code>Object</code>
+## DocsTransform
+
 Transform content of doc files matching test pattern
 
 **Kind**: global typedef  
@@ -130,23 +115,36 @@ Transform content of doc files matching test pattern
 
 | Name | Type | Description |
 | --- | --- | --- |
-| [global] | <code>Boolean</code> | If true, will be applied to all files, otherwise to only files in module. |
-| test | <code>RegExp</code> | Expression to test against the full source filename |
-| handler | [<code>DocsTransformHandler</code>](#DocsTransformHandler) | Function to modify matching files' contents |
+| \[global\] | `boolean` | If true, will be applied to all files, otherwise to only files in module. |
+| test | `RegExp` | Expression to test against the full source filename |
+| handler | [`DocsTransformHandler`] | Function to modify matching files' contents |
 
-<a name="DocsTransformHandler"></a>
 
-## DocsTransformHandler ⇒ <code>string</code>
+## DocsTransformHandler
+
 Handler to modify file contents for a DocsTransform
 
 **Kind**: global typedef  
-**Returns**: <code>string</code> - transformed content  
+**Returns**: `string` - transformed content  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| content | <code>String</code> | Doc file content to transform |
-| data | <code>Object</code> | Additional details relating to the doc file being handled |
-| data.filename | <code>String</code> | Relative path of this filename |
-| data.docsConfig | [<code>ModuleDocsConfig</code>](#ModuleDocsConfig) | Docs config for this file's module |
-| data.docsConfigSet | [<code>DocsConfigSet</code>](#DocsConfigSet) | Set of configs for the app |
+| content | `string` | Doc file content to transform |
+| data | `object` | Additional details relating to the doc file being handled |
+| data.filename | `string` | Relative path of this filename |
+| data.docsConfig | [`ModuleDocsConfig`] | Docs config for this file's module |
+| data.docsConfigSet | [`DocsConfigSet`] | Set of configs for the app |
 
+<!-- LINKS -->
+
+[DocsSetup]:#docssetup
+[DocsConfig]:#docsconfig
+[ModuleDocsConfig]:#moduledocsconfig
+[DetailDocsConfig]:#detaildocsconfig
+[LifecycleDocsConfig]:#lifecycledocsconfig
+[DocsConfigSet]:#docsconfigset
+[DocsTransform]:#docstransform
+[DocsTransformHandler]:#docstransformhandler
+[`ModuleDocsConfig`]:#moduledocsconfig
+[`DocsTransformHandler`]:#docstransformhandler
+[`DocsConfigSet`]:#docsconfigset
