@@ -21,8 +21,8 @@ class GasketCommand extends Command {
    * Virtual method which may be overridden by subclasses, to adjust the
    * Gasket Config before env overrides are applied.
    *
-   * @param {Object} gasketConfig - Gasket configurations
-   * @returns {Object} gasketConfig
+   * @param {object} gasketConfig - Gasket configurations
+   * @returns {object} gasketConfig
    * @async
    */
   async gasketConfigure(gasketConfig) { return gasketConfig; }
@@ -53,13 +53,13 @@ class GasketCommand extends Command {
      * Gasket Plugin engine instance with details of session
      *
      * @type {Gasket} gasket
-     * @property {Object} command - Details of command
-     * @property {String} command.id - Name of command
-     * @property {Object} command.flags - Flags
-     * @property {Array} command.argv - Ordered Arguments
-     * @property {Object} command.args - Named arguments
-     * @property {Object} config - Loaded and modified configuration
-     * @property {String} config.env - Environment set by command flags
+     * @property {object} command - Details of command
+     * @property {string} command.id - Name of command
+     * @property {object} command.flags - Flags
+     * @property {string[]} command.argv - Ordered Arguments
+     * @property {object} command.args - Named arguments
+     * @property {object} config - Loaded and modified configuration
+     * @property {string} config.env - Environment set by command flags
      */
     this.gasket = this.config.gasket;
 
@@ -67,9 +67,9 @@ class GasketCommand extends Command {
      * Flags and arguments passed with CLI command.
      *
      * @type {ParserOutput} parsed - Parsed flags and args
-     * @property {Object} parsed.flags - Flags
-     * @property {Array} parsed.argv - Ordered Arguments
-     * @property {Object} parsed.args - Named arguments
+     * @property {object} parsed.flags - Flags
+     * @property {string[]} parsed.argv - Ordered Arguments
+     * @property {object} parsed.args - Named arguments
      */
     this.parsed = this.parse(this.constructor);
     const parsedFlags = this.parsed.flags = this.parsed.flags || {};
@@ -103,7 +103,7 @@ class GasketCommand extends Command {
  * These are required for all gasket commands, required by the CLI for loading
  * the appropriate gasket.config file and environment.
  *
- * @type {Object} flags
+ * @type {object} flags
  * @property {string} config - Fully qualified gasket config to load (default: `'gasket.config'`)
  * @property {string} root - Top-level app directory (default: `process.cwd()`)
  * @property {string} env - Target runtime environment (default: `NODE_ENV` or `'development'`)

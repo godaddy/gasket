@@ -7,8 +7,8 @@ const debug = require('diagnostics')('gasket:resolver');
  */
 class Resolver {
   /**
-   * @param {Object} options - Options
-   * @param {String|String[]} [options.resolveFrom] - Path(s) to resolve modules from
+   * @param {object} options - Options
+   * @param {string|string[]} [options.resolveFrom] - Path(s) to resolve modules from
    * @param {require} [options.require] - Require instance to use
    */
   constructor(options) {
@@ -26,8 +26,8 @@ class Resolver {
   /**
    * Returns the resolved module filename
    *
-   * @param {String} moduleName name of the module
-   * @returns {String} filename of the module
+   * @param {string} moduleName name of the module
+   * @returns {string} filename of the module
    */
   resolve(moduleName) {
     const options = this._resolveFrom ? { paths: this._resolveFrom } : {};
@@ -37,8 +37,8 @@ class Resolver {
   /**
    * Returns the required module
    *
-   * @param {String} moduleName name of the module
-   * @returns {Object} module contents
+   * @param {string} moduleName name of the module
+   * @returns {object} module contents
    */
   require(moduleName) {
     const modulePath = this.resolve(moduleName);
@@ -48,8 +48,8 @@ class Resolver {
   /**
    * Returns the resolved module filename, or null if not found
    *
-   * @param {String} moduleName name of the module
-   * @returns {String|null} filename of the module
+   * @param {string} moduleName name of the module
+   * @returns {string|null} filename of the module
    */
   tryResolve(moduleName) {
     try {
@@ -67,8 +67,8 @@ class Resolver {
   /**
    * Returns the required module, or null if not found
    *
-   * @param {String} moduleName name of the module
-   * @returns {Object|null} module contents
+   * @param {string} moduleName name of the module
+   * @returns {object|null} module contents
    */
   tryRequire(moduleName) {
     try {

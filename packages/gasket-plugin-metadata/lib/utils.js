@@ -10,8 +10,8 @@ const isPreset = name => presetIdentifier.isValidFullName(name);
  * Recurse through an object or array, and transforms, by mutation,
  * any functions to be empty.
  *
- * @param {Object|Array} value - Item to consider
- * @returns {Object|Array} transformed result
+ * @param {object|object[]} value - Item to consider
+ * @returns {object|object[]} transformed result
  * @private
  */
 function sanitize(value) {
@@ -37,8 +37,8 @@ function sanitize(value) {
 /**
  * Add keys to from other object to the target if not present
  *
- * @param {Object} target - Object to mutate
- * @param {Object} other - Object to pull from
+ * @param {object} target - Object to mutate
+ * @param {object} other - Object to pull from
  * @private
  */
 function safeAssign(target, other) {

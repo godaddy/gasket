@@ -15,7 +15,7 @@ const { projectIdentifier } = require('./package-identifier');
  * For example, the following patterns will not work:
  *   - @gasket/https
  *
- * @typedef {String} PluginDesc
+ * @typedef {string} PluginDesc
  */
 
 /**
@@ -29,7 +29,7 @@ const { projectIdentifier } = require('./package-identifier');
  *   - gasket-preset-nextjs         - user fullName
  *   - nextjs                       - user shortName
  *
- * @typedef {String} PresetDesc
+ * @typedef {string} PresetDesc
  */
 
 /**
@@ -41,7 +41,7 @@ const { projectIdentifier } = require('./package-identifier');
  *   - gasket-plugin-https         - user fullName
  *   - https                       - user shortName
  *
- * @typedef {String} PluginName
+ * @typedef {string} PluginName
  */
 
 /**
@@ -53,7 +53,7 @@ const { projectIdentifier } = require('./package-identifier');
  *   - gasket-preset-nextjs         - user fullName
  *   - nextjs                       - user shortName
  *
- * @typedef {String} PresetName
+ * @typedef {string} PresetName
  */
 
 /**

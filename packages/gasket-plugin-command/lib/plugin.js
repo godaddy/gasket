@@ -10,8 +10,8 @@ module.exports = {
      * Gets commands from plugins and injects them to the oclif config.
      *
      * @param {Gasket} gasket - Gasket API
-     * @param {Object} data - init data
-     * @param {Object} data.oclifConfig - oclif configuration
+     * @param {object} data - init data
+     * @param {object} data.oclifConfig - oclif configuration
      * @async
      */
     async initOclif(gasket, { oclifConfig }) {

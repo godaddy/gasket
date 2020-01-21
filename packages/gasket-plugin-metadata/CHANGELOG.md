@@ -1,5 +1,7 @@
 # `@gasket/plugin-metadata`
 
+- Clean markdown from jsdocs ([#141])
+
 ### 5.0.0
 
 - Open Source Release
@@ -20,8 +22,9 @@
 
 [#51]: https://github.com/godaddy/gasket/pull/51
 [#64]: https://github.com/godaddy/gasket/pull/64
+[#141]: https://github.com/godaddy/gasket/pull/141
 
-[Loader]:/packages/gasket-resolve/docs/api.md#Loader
-[PluginInfo]:/packages/gasket-resolve/docs/api.md#PluginInfo
-[PresetInfo]:/packages/gasket-resolve/docs/api.md#PresetInfo
-[ModuleInfo]:/packages/gasket-resolve/docs/api.md#ModuleInfo
+[Loader]:/packages/gasket-resolve/docs/api.md#loader
+[PluginInfo]:/packages/gasket-resolve/docs/api.md#plugininfo
+[PresetInfo]:/packages/gasket-resolve/docs/api.md#presetinfo
+[ModuleInfo]:/packages/gasket-resolve/docs/api.md#moduleinfo

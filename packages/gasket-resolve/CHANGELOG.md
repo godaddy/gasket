@@ -1,5 +1,7 @@
 # `@gasket/resolve`
 
+- Clean markdown from jsdocs ([#141])
+
 ### 5.0.0
 
 - Open Source Release
@@ -44,5 +46,6 @@
 [#64]: https://github.com/godaddy/gasket/pull/64
 [#93]: https://github.com/godaddy/gasket/pull/93
 [#105]: https://github.com/godaddy/gasket/pull/105
+[#141]: https://github.com/godaddy/gasket/pull/141
 
-[Loader]:/packages/gasket-resolve/README.md#Loader
+[Loader]:/packages/gasket-resolve/docs/api.md#loader

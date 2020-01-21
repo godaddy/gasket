@@ -1,15 +1,15 @@
 /**
  * Module with meta data
  *
- * @typedef {Object} ModuleData
+ * @typedef {object} ModuleData
  *
- * @property {String} name - Name of preset
- * @property {String} module - Actual module content
- * @property {String} [package] - Package.json contents
- * @property {String} [version] - Resolved version
- * @property {String} [path] - Path to the root of package
- * @property {String} [from] - Name of module which requires this module
- * @property {String} [range] - Range by which this module was required
+ * @property {string} name - Name of preset
+ * @property {string} module - Actual module content
+ * @property {string} [package] - Package.json contents
+ * @property {string} [version] - Resolved version
+ * @property {string} [path] - Path to the root of package
+ * @property {string} [from] - Name of module which requires this module
+ * @property {string} [range] - Range by which this module was required
  * @property {string} [link] - Path to a doc file or URL
  */
 
@@ -41,7 +41,7 @@
 /**
  * Metadata for details of a plugin
  *
- * @typedef {Object} DetailData
+ * @typedef {object} DetailData
  *
  * @property {string} name - Name of the the module or element
  * @property {string} [description] - Description of the module or element
@@ -61,7 +61,7 @@
 /**
  * Collection data for modules configured for app
  *
- * @typedef {Object} Metadata
+ * @typedef {object} Metadata
  * @property {AppData[]} app - App and main package data
  * @property {PresetData[]} presets - Preset data with dependency hierarchy
  * @property {PluginData[]} plugins - Flat list of registered plugin data
