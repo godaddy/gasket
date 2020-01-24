@@ -13,6 +13,7 @@ Name | Description
 ------ | -----------
 [pluginIdentifier()] | Create package identifiers for Gasket plugins
 [presetIdentifier()] | Create package identifiers for Gasket presets
+[projectIdentifier(projectName, \[type\])] | Create function used to make instances of PackageIdentifier for a project.
 
 ## Typedefs
 
@@ -375,6 +376,34 @@ Create package identifiers for Gasket presets
 
 **Kind**: global function  
 
+## projectIdentifier(projectName, \[type\])
+
+Create function used to make instances of PackageIdentifier for a project.
+
+The `projectName` and `type` are components of the naming convention such as
+- @<projectName>/<type>-<name>
+- @<user-scope>/<projectName>-<type>-<name>
+- <projectName>-<type>-<name>
+
+If a package belongs to the project, it should use `projectName` in its scope.
+For user plugins, the `projectName` will be paired with the `type`.
+
+**Kind**: global function  
+**Returns**: `function` - function to make  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| projectName | `string` |  | Name of the project scope and base name |
+| \[type\] | `string` | `'plugin'` | Defaults to 'plugin'. |
+
+
+### projectIdentifier~setupProjectVars()
+
+Setup project level variables
+
+**Kind**: inner method of [`projectIdentifier`]  
+**Returns**: `object` - vars  
+
 ## PluginDesc
 
 The package name with or without version of a plugin.
@@ -525,8 +554,6 @@ If the lookup runs out of formats to try, it will return null.
 [Loader]:#loader
 [PackageIdentifier]:#packageidentifier
 [Resolver]:#resolver
-[pluginIdentifier()]:#pluginidentifier
-[presetIdentifier()]:#presetidentifier
 [PluginDesc]:#plugindesc
 [PresetDesc]:#presetdesc
 [PluginName]:#pluginname
@@ -536,15 +563,6 @@ If the lookup runs out of formats to try, it will return null.
 [PresetInfo]:#presetinfo
 [createPackageIdentifier]:#createpackageidentifier
 [`Resolver`]:#new-resolveroptions
-[.getModuleInfo(module, moduleName, \[meta\])]:#loadergetmoduleinfomodule-modulename-meta
-[.loadModule(moduleName, \[meta\])]:#loaderloadmodulemodulename-meta
-[.loadPlugin(module, \[meta\])]:#loaderloadpluginmodule-meta
-[.loadPreset(module, \[meta\], \[options\])]:#loaderloadpresetmodule-meta-options
-[.loadConfigured(config)]:#loaderloadconfiguredconfig
-[.resolve(moduleName)]:#resolverresolvemodulename
-[.require(moduleName)]:#resolverrequiremodulename
-[.tryResolve(moduleName)]:#resolvertryresolvemodulename
-[.tryRequire(moduleName)]:#resolvertryrequiremodulename
 [`Loader`]:#loader
 [`ModuleInfo`]:#moduleinfo
 [`PluginInfo`]:#plugininfo
@@ -558,10 +576,23 @@ If the lookup runs out of formats to try, it will return null.
 [.name]:#packageidentifiername
 [.version]:#packageidentifierversion
 [.full]:#packageidentifierfull
+[`PackageIdentifier`]:#packageidentifier
+[`projectIdentifier`]:#projectidentifierprojectname-type
+[`createPackageIdentifier`]:#createpackageidentifier
+[pluginIdentifier()]:#pluginidentifier
+[presetIdentifier()]:#presetidentifier
+[projectIdentifier(projectName, \[type\])]:#projectidentifierprojectname-type
+[.getModuleInfo(module, moduleName, \[meta\])]:#loadergetmoduleinfomodule-modulename-meta
+[.loadModule(moduleName, \[meta\])]:#loaderloadmodulemodulename-meta
+[.loadPlugin(module, \[meta\])]:#loaderloadpluginmodule-meta
+[.loadPreset(module, \[meta\], \[options\])]:#loaderloadpresetmodule-meta-options
+[.loadConfigured(config)]:#loaderloadconfiguredconfig
+[.resolve(moduleName)]:#resolverresolvemodulename
+[.require(moduleName)]:#resolverrequiremodulename
+[.tryResolve(moduleName)]:#resolvertryresolvemodulename
+[.tryRequire(moduleName)]:#resolvertryrequiremodulename
 [.withVersion(\[defaultVersion\])]:#packageidentifierwithversiondefaultversion
 [.nextFormat()]:#packageidentifiernextformat
-[`PackageIdentifier`]:#packageidentifier
 [new Resolver(options)]:#new-resolveroptions
 [.isValidFullName(maybeFullName)]:#createpackageidentifierisvalidfullnamemaybefullname
 [.lookup(name, handler)]:#createpackageidentifierlookupname-handler
-[`createPackageIdentifier`]:#createpackageidentifier

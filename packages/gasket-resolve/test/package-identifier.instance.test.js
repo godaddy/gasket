@@ -57,6 +57,16 @@ describe('PackageIdentifier instance', () => {
         expect(result).toBe('@user/gasket-plugin-p');
       });
 
+      it('expands scope with no name to full', () => {
+        result = pluginIdentifier('@user/gasket-plugin').fullName;
+        expect(result).toBe('@user/gasket-plugin');
+      });
+
+      it('expands scope only names to full', () => {
+        result = pluginIdentifier('@user').fullName;
+        expect(result).toBe('@user/gasket-plugin');
+      });
+
       it('expands multi-word plugin names to full', () => {
         result = pluginIdentifier('@user/another-example').fullName;
         expect(result).toBe('@user/gasket-plugin-another-example');

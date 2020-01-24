@@ -192,6 +192,10 @@ describe('expandMaker', () => {
       expect(expand('@user/example')).toEqual('@user/gasket-plugin-example');
     });
 
+    it('expands user scope-only short name', () => {
+      expect(expand('@user')).toEqual('@user/gasket-plugin');
+    });
+
     it('expands user short name', () => {
       expect(expand('example')).toEqual('gasket-plugin-example');
     });
