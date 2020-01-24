@@ -1,4 +1,6 @@
 /* eslint-disable complexity,max-statements */
+const { eslintConfigIdentifier, stylelintConfigIdentifier } = require('./utils');
+
 
 /**
  *
@@ -128,16 +130,13 @@ const other = {
     const { gatherDevDeps } = utils;
 
     if (eslintConfig) {
-      // TODO (kinetifex): utilize v4 package identifier with prefix format support to handle short names with scopes
-      const configName = !eslintConfig.includes('eslint-config') ? `eslint-config-${eslintConfig}` : eslintConfig;
-
+      const configName = eslintConfigIdentifier(eslintConfig).fullName;
       pkg.add('devDependencies', (await gatherDevDeps(configName)));
       pkg.add('eslintConfig', { extends: [eslintConfig] });
     }
 
     if (stylelintConfig) {
-      const stylelintName = !stylelintConfig.includes('stylelint-config') ?
-        `stylelint-config-${stylelintConfig}` : stylelintConfig;
+      const stylelintName = stylelintConfigIdentifier(stylelintConfig).fullName;
       pkg.add('devDependencies', (await gatherDevDeps(stylelintName)));
       pkg.add('stylelint', { extends: [stylelintConfig] });
     }

@@ -4,7 +4,8 @@ const sinon = require('sinon');
 const {
   makeGatherDevDeps,
   makeRunScriptStr,
-  makeSafeRunScript
+  makeSafeRunScript,
+  eslintConfigIdentifier
 } = require('../lib/utils');
 
 describe('utils', () => {
@@ -135,6 +136,14 @@ describe('utils', () => {
       await safeRunScript('existing');
       assume(runScript).called();
       assume(context.warnings).length(0);
+    });
+  });
+
+  describe('eslintConfigIdentifier', () => {
+    it('does stuff', () => {
+      const config = eslintConfigIdentifier('@scope');
+
+      assume(config.longName).equals('@scope/eslint-config');
     });
   });
 });

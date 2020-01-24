@@ -71,6 +71,7 @@ describe('prompt hook', function () {
     const question = prompt.getCall(0).args[0][1];
     assume(question.name).equals('eslintConfig');
     assume(question.transformer('@scope/config')).equals('@scope/config');
+    assume(question.transformer('@scope')).equals('@scope');
   });
 
   it('addStylelint question shown only codeStyle has support', async () => {
@@ -110,5 +111,6 @@ describe('prompt hook', function () {
     const question = prompt.getCall(0).args[0][3];
     assume(question.name).equals('stylelintConfig');
     assume(question.transformer('@scope/config')).equals('@scope/config');
+    assume(question.transformer('@scope')).equals('@scope');
   });
 });
