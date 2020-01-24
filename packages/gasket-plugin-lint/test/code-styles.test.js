@@ -216,76 +216,102 @@ describe('code styles', () => {
       assume(codeStyle.allowStylelint).true();
     });
 
-    it('uses eslint config', async () => {
-      context.eslintConfig = 'eslint-config-fake';
-      await codeStyle.create(context, utils);
+    describe('eslintConfig', () => {
+      it('gathers dependencies', async () => {
+        context.eslintConfig = 'eslint-config-fake';
+        await codeStyle.create(context, utils);
 
-      assume(pkgAdd).calledWithMatch('devDependencies', {
-        'eslint-config-fake': sinon.match.string
+        assume(utils.gatherDevDeps).calledWith('eslint-config-fake');
       });
-      assume(pkgAdd).calledWithMatch('eslintConfig', {
-        extends: ['eslint-config-fake']
+
+      it('gathers dependencies for short name with version', async () => {
+        context.eslintConfig = 'fake@^1.2.3';
+        await codeStyle.create(context, utils);
+
+        assume(utils.gatherDevDeps).calledWith('eslint-config-fake@^1.2.3');
       });
-    });
 
-    it('uses eslint config with short name', async () => {
-      context.eslintConfig = 'fake';
-      await codeStyle.create(context, utils);
+      it('gathers dependencies for scope-only short names', async () => {
+        context.eslintConfig = '@fake@^1.2.3';
+        await codeStyle.create(context, utils);
 
-      assume(pkgAdd).calledWithMatch('devDependencies', {
-        'eslint-config-fake': sinon.match.string
+        assume(utils.gatherDevDeps).calledWith('@fake/eslint-config@^1.2.3');
       });
-      assume(pkgAdd).calledWithMatch('eslintConfig', {
-        extends: ['fake']
+
+      it('add gathered devDependencies', async () => {
+        context.eslintConfig = 'eslint-config-fake';
+        await codeStyle.create(context, utils);
+
+        assume(pkgAdd).calledWithMatch('devDependencies', {
+          'eslint-config-fake': sinon.match.string
+        });
       });
-    });
 
-    it.skip('uses eslint config with scoped short name', async () => {
-      context.eslintConfig = '@scope/fake';
-      await codeStyle.create(context, utils);
+      it('adds eslint config as short name', async () => {
+        context.eslintConfig = 'eslint-config-fake@^1.2.3';
+        await codeStyle.create(context, utils);
 
-      assume(pkgAdd).calledWithMatch('devDependencies', {
-        '@scope/eslint-config-fake': sinon.match.string
+        assume(pkgAdd).calledWithMatch('eslintConfig', {
+          extends: ['fake']
+        });
       });
-      assume(pkgAdd).calledWithMatch('eslintConfig', {
-        extends: ['@scope/fake']
+
+      it('adds eslint config with scope-only short name', async () => {
+        context.eslintConfig = '@fake/eslint-config@^1.2.3';
+        await codeStyle.create(context, utils);
+
+        assume(pkgAdd).calledWithMatch('eslintConfig', {
+          extends: ['@fake']
+        });
       });
-    });
 
-    it('ignores if no eslint config', async () => {
-      await codeStyle.create(context, utils);
+      it('ignores if no eslint config', async () => {
+        await codeStyle.create(context, utils);
 
-      assume(pkgAdd).not.calledWithMatch('eslintConfig');
-    });
-
-    it('uses stylelint config', async () => {
-      context.stylelintConfig = 'stylelint-config-fake';
-      await codeStyle.create(context, utils);
-
-      assume(pkgAdd).calledWithMatch('devDependencies', {
-        'stylelint-config-fake': sinon.match.string
-      });
-      assume(pkgAdd).calledWithMatch('stylelint', {
-        extends: ['stylelint-config-fake']
-      });
-    });
-
-    it('uses stylelint config with short name', async () => {
-      context.stylelintConfig = 'fake';
-      await codeStyle.create(context, utils);
-
-      assume(pkgAdd).calledWithMatch('devDependencies', {
-        'stylelint-config-fake': sinon.match.string
-      });
-      assume(pkgAdd).calledWithMatch('stylelint', {
-        extends: ['fake']
+        assume(pkgAdd).not.calledWithMatch('eslintConfig');
       });
     });
 
-    it('ignores if no stylelint config', async () => {
-      await codeStyle.create(context, utils);
 
-      assume(pkgAdd).not.calledWithMatch('stylelint');
+    describe('stylelintConfig', () => {
+
+      it('gathers dependencies', async () => {
+        context.stylelintConfig = 'stylelint-config-fake';
+        await codeStyle.create(context, utils);
+
+        assume(utils.gatherDevDeps).calledWith('stylelint-config-fake');
+      });
+
+      it('gathers dependencies with version', async () => {
+        context.stylelintConfig = 'stylelint-config-fake@^1.2.3';
+        await codeStyle.create(context, utils);
+
+        assume(utils.gatherDevDeps).calledWith('stylelint-config-fake@^1.2.3');
+      });
+
+      it('add gathered devDependencies', async () => {
+        context.stylelintConfig = 'stylelint-config-fake';
+        await codeStyle.create(context, utils);
+
+        assume(pkgAdd).calledWithMatch('devDependencies', {
+          'stylelint-config-fake': sinon.match.string
+        });
+      });
+
+      it('adds stylelintConfig as name (does not shorten)', async () => {
+        context.stylelintConfig = 'stylelint-config-fake@^1.2.3';
+        await codeStyle.create(context, utils);
+
+        assume(pkgAdd).calledWithMatch('stylelintConfig', {
+          extends: ['stylelint-config-fake']
+        });
+      });
+
+      it('ignores if no stylelint config', async () => {
+        await codeStyle.create(context, utils);
+
+        assume(pkgAdd).not.calledWithMatch('stylelintConfig');
+      });
     });
   });
 

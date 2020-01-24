@@ -130,15 +130,15 @@ const other = {
     const { gatherDevDeps } = utils;
 
     if (eslintConfig) {
-      const configName = eslintConfigIdentifier(eslintConfig).fullName;
-      pkg.add('devDependencies', (await gatherDevDeps(configName)));
-      pkg.add('eslintConfig', { extends: [eslintConfig] });
+      const identifier = eslintConfigIdentifier(eslintConfig);
+      pkg.add('devDependencies', (await gatherDevDeps(identifier.full)));
+      pkg.add('eslintConfig', { extends: [identifier.shortName] });
     }
 
     if (stylelintConfig) {
-      const stylelintName = stylelintConfigIdentifier(stylelintConfig).fullName;
-      pkg.add('devDependencies', (await gatherDevDeps(stylelintName)));
-      pkg.add('stylelint', { extends: [stylelintConfig] });
+      const identifier = stylelintConfigIdentifier(stylelintConfig);
+      pkg.add('devDependencies', (await gatherDevDeps(identifier.full)));
+      pkg.add('stylelintConfig', { extends: [identifier.name] });
     }
   }
 };
