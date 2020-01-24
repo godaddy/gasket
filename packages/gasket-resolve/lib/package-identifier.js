@@ -14,7 +14,7 @@ function matchMaker(projectName, type = 'plugin') {
   return {
     prefixed: {
       project: new RegExp(`(@${projectName})/${type}-([\\w-.]+)`),
-      user: new RegExp(`(@[\\w-.]+)?\\/?${projectName}-${type}-([\\w-.]+)`)
+      user: new RegExp(`(@[\\w-.]+)?\\/?${projectName}-${type}-?([\\w-.]+)?`)
     },
     postfixed: {
       project: new RegExp(`(@${projectName})/([\\w-.]+)-${type}`),
@@ -226,7 +226,8 @@ function projectIdentifier(projectName, type = 'plugin') {
         }
 
         const [, scope, name] = re.exec(parsedName);
-        return scope ? `${scope}/${name}` : name;
+        if (name) return scope ? `${scope}/${name}` : name;
+        return scope;
       }
 
       /**

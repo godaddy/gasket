@@ -57,8 +57,13 @@ describe('PackageIdentifier instance', () => {
         expect(result).toBe('@user/gasket-plugin-p');
       });
 
-      it('expands scope with no name to full', () => {
+      it('expands scope with no name part to full', () => {
         result = pluginIdentifier('@user/gasket-plugin').fullName;
+        expect(result).toBe('@user/gasket-plugin');
+      });
+
+      it('expands scope with no name part and with version to full', () => {
+        result = pluginIdentifier('@user/gasket-plugin@^1.2.3').fullName;
         expect(result).toBe('@user/gasket-plugin');
       });
 
@@ -169,6 +174,21 @@ describe('PackageIdentifier instance', () => {
       it('gets one-letter short name', () => {
         result = pluginIdentifier('@user/gasket-plugin-p').shortName;
         expect(result).toBe('@user/p');
+      });
+
+      it('gets scope only if full with no name part', () => {
+        result = pluginIdentifier('@user/gasket-plugin').shortName;
+        expect(result).toBe('@user');
+      });
+
+      it('gets scope only with no name part and with version', () => {
+        result = pluginIdentifier('@user/gasket-plugin@^1.2.3').shortName;
+        expect(result).toBe('@user');
+      });
+
+      it('keeps scope only names to shortName', () => {
+        result = pluginIdentifier('@user').shortName;
+        expect(result).toBe('@user');
       });
 
       it('gets multi-word short name', () => {
@@ -401,6 +421,21 @@ describe('PackageIdentifier instance', () => {
       it('expands one-letter plugin names to full', () => {
         result = pluginIdentifier('@user/p').full;
         expect(result).toBe('@user/gasket-plugin-p');
+      });
+
+      it('expands scope with no name part to full', () => {
+        result = pluginIdentifier('@user/gasket-plugin').full;
+        expect(result).toBe('@user/gasket-plugin');
+      });
+
+      it('expands scope with no name part and with version to full', () => {
+        result = pluginIdentifier('@user/gasket-plugin@^1.2.3').full;
+        expect(result).toBe('@user/gasket-plugin@^1.2.3');
+      });
+
+      it('expands scope only names to full', () => {
+        result = pluginIdentifier('@user').full;
+        expect(result).toBe('@user/gasket-plugin');
       });
 
       it('expands multi-word plugin names to full', () => {

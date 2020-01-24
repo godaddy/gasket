@@ -13,7 +13,7 @@ Name | Description
 ------ | -----------
 [pluginIdentifier()] | Create package identifiers for Gasket plugins
 [presetIdentifier()] | Create package identifiers for Gasket presets
-[projectIdentifier(projectName, \[type\])] | Create function used to make instances of PackageIdentifier for a project.
+[projectIdentifier(projectName, \[type\])] | Create function used to make instances of PackageIdentifier for a project
 
 ## Typedefs
 
@@ -378,7 +378,7 @@ Create package identifiers for Gasket presets
 
 ## projectIdentifier(projectName, \[type\])
 
-Create function used to make instances of PackageIdentifier for a project.
+Create function used to make instances of PackageIdentifier for a project
 
 The `projectName` and `type` are components of the naming convention such as
 - @<projectName>/<type>-<name>
