@@ -1,3 +1,6 @@
+const reScope = /(@[\w-.]+)(\/.+)?/;
+const reName = /^(@?[\w/-]+)@?(.*)/;
+
 /**
  * Generate RegExp to help determine aspects of an identifier for a project
  *
@@ -11,14 +14,12 @@ function matchMaker(projectName, type = 'plugin') {
   return {
     prefixed: {
       project: new RegExp(`(@${projectName})/${type}-([\\w-.]+)`),
-      user: new RegExp(`(@[\\w-.]+)?\\/?${projectName}-${type}-([\\w-.]+)`)
+      user: new RegExp(`(@[\\w-.]+)?\\/?${projectName}-${type}-?([\\w-.]+)?`)
     },
     postfixed: {
       project: new RegExp(`(@${projectName})/([\\w-.]+)-${type}`),
       user: new RegExp(`(@[\\w-.]+)?\\/?([\\w-.]+)-${projectName}-${type}`)
-    },
-    scope: /(@[\w-.]+)\/.+/,
-    name: /^(@?[\w/-]+)@?(.*)/
+    }
   };
 }
 
@@ -33,14 +34,19 @@ function matchMaker(projectName, type = 'plugin') {
 function expandMaker(projectName, type = 'plugin') {
   if (!projectName) throw new Error('projectName required.');
   const projectScope = `@${projectName}`;
-  const parse = short => short.split('/').reverse();
+  const parse = short => {
+    if (reScope.test(short) && !short.includes('/')) {
+      return ['', short];
+    }
+    return short.split('/').reverse();
+  };
   return {
     prefixed: short => {
       const [name, scope] = parse(short);
       if (scope === projectScope) {
         return `${projectScope}/${type}-${name}`;
       }
-      const result = `${projectName}-${type}-${name}`;
+      const result = `${projectName}-${type}` + (name ? `-${name}` : '');
       return scope ? `${scope}/${result}` : result;
     },
     postfixed: short => {
@@ -56,7 +62,8 @@ function expandMaker(projectName, type = 'plugin') {
 }
 
 /**
- * Create function used to make instances of PackageIdentifier for a project.
+ * Create function used to make instances of PackageIdentifier for a project
+ *
  * The `projectName` and `type` are components of the naming convention such as
  * - @<projectName>/<type>-<name>
  * - @<user-scope>/<projectName>-<type>-<name>
@@ -68,7 +75,6 @@ function expandMaker(projectName, type = 'plugin') {
  * @param {string} projectName - Name of the project scope and base name
  * @param {string} [type] - Defaults to 'plugin'.
  * @returns {function} function to make
- * @private
  */
 function projectIdentifier(projectName, type = 'plugin') {
 
@@ -80,7 +86,7 @@ function projectIdentifier(projectName, type = 'plugin') {
     const re = matchMaker(projectName, type);
     const expand = expandMaker(projectName, type);
     const projectScope = `@${projectName}`;
-    const isScopedFn = name => re.scope.test(name);
+    const isScopedFn = name => reScope.test(name);
     const isShortFn = name => !(name.includes(projectName) && name.includes(type));
     const isPrefixedFn = name => re.prefixed.project.test(name) || re.prefixed.user.test(name);
     const isProjectScopedFn = name => name.startsWith(projectScope);
@@ -113,7 +119,7 @@ function projectIdentifier(projectName, type = 'plugin') {
    */
   function createPackageIdentifier(rawName, options) {
 
-    const [, parsedName, parsedVersion] = projectVars.re.name.exec(rawName);
+    const [, parsedName, parsedVersion] = reName.exec(rawName);
 
     /**
      * * Setup package level variables
@@ -220,7 +226,8 @@ function projectIdentifier(projectName, type = 'plugin') {
         }
 
         const [, scope, name] = re.exec(parsedName);
-        return scope ? `${scope}/${name}` : name;
+        if (name) return scope ? `${scope}/${name}` : name;
+        return scope;
       }
 
       /**

@@ -26,6 +26,7 @@ projects such a `@babel` and `@oclif`.
 |:--------|:--------------------------------|:------------------|:-------------------------------|
 | project | `@gasket/plugin-<name>`         | `@gasket/<name>`  | Official Gasket project plugin |
 | user    | `@<scope>/gasket-plugin-<name>` | `@<scope>/<name>` | Any user plugins with a scope  |
+| user    | `@<scope>/gasket-plugin`        | `@<scope>`        | Scope-only user plugins        |
 | none    | `gasket-plugin-<name>`          | `<name>`          | Any user plugins with no scope |
 
 ### Presets
@@ -34,6 +35,7 @@ projects such a `@babel` and `@oclif`.
 |:--------|:--------------------------------|:------------------|:-------------------------------|
 | project | `@gasket/preset-<name>`         | `@gasket/<name>`  | Official Gasket project preset |
 | user    | `@<scope>/gasket-preset-<name>` | `@<scope>/<name>` | Any user presets with a scope  |
+| user    | `@<scope>/gasket-preset`        | `@<scope>`        | Scope-only user presets        |
 | none    | `gasket-preset-<name>`          | `<name>`          | Any user presets with no scope |
 
 ### Fallbacks
