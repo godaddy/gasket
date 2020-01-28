@@ -1,5 +1,7 @@
 # `@gasket/plugin-lint`
 
+- Add support for scope-only package short names with eslint configs. ([#142])
+
 ### 5.0.0
 
 - Open Source Release
@@ -56,3 +58,5 @@
 [Airbnb]: README.md#airbnb
 
 [#98]: https://github.com/godaddy/gasket/pull/98
+[#142]: https://github.com/godaddy/gasket/pull/142
+

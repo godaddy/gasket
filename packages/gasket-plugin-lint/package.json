@@ -32,6 +32,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-lint#readme",
   "dependencies": {
+    "@gasket/resolve": "^5.0.2",
     "semver": "^6.3.0"
   },
   "devDependencies": {
