@@ -6,7 +6,7 @@ const zlib = require('zlib');
 const pump = require('pump');
 const mkdirp = promisify(require('mkdirp'));
 const debug = require('diagnostics')('gasket:cli:fetcher');
-const PackageManager = require('./package-manager');
+const { PackageManager } = require('@gasket/utils');
 
 /**
  * Simple helper class that can also be re-used in tests for similar
