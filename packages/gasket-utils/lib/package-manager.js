@@ -1,4 +1,6 @@
-const { runShellCommand } = require('@gasket/utils');
+/* eslint-disable no-process-env */
+
+const runShellCommand = require('./run-shell-command');
 
 /**
  * Wrapper class for executing commands for a given package manager
