@@ -1,7 +1,9 @@
 # `@gasket/cli`
 
+### 5.1.0
+
 - Move and expose PackageManager from `@gasket/utils` ([#143])
-- 
+
 ### 5.0.0
 
 - Open Source Release

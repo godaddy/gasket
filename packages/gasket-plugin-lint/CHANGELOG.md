@@ -1,5 +1,7 @@
 # `@gasket/plugin-lint`
 
+### 5.1.0
+
 - Add support for scope-only package short names with eslint configs. ([#142])
 
 ### 5.0.0
