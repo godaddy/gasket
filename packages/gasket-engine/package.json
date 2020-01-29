@@ -1,6 +1,6 @@
 {
   "name": "@gasket/engine",
-  "version": "5.0.2",
+  "version": "5.1.0",
   "description": "Plugin engine for gasket",
   "main": "lib/engine.js",
   "scripts": {
@@ -34,7 +34,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-engine",
   "dependencies": {
-    "@gasket/resolve": "^5.0.2"
+    "@gasket/resolve": "^5.1.0"
   },
   "devDependencies": {
     "eslint": "^6.1.0",
