@@ -2,20 +2,24 @@ const concat = require('concat-stream');
 const spawn = require('cross-spawn');
 
 /**
- * Promise friendly wrapper to running a shell command (eg: git, npm, ls):
+ * Promise friendly wrapper to running a shell command (eg: git, npm, ls)
+ * which passes back any { stdout, stderr } to the error thrown.
  *
- *     run(command[, args][, options])
+ * @example
+ * const { runShellCommand } = require('@gasket/utils');
  *
- * passes back any { stdout, stderr } to the error thrown.
+ *  async function helloWorld() {
+ *   await runShellCommand('echo', ['hello world']);
+ * }
  *
- * @param {String} cmd binary that is run
- * @param {Array} argv args passed to npm binary through spawn.
- * @param {Object} options options passed to npm binary through spawn
- * @param {Boolean} [debug] When present pipes std{out,err} to process.*
+ * @param {string} cmd binary that is run
+ * @param {array} argv args passed to npm binary through spawn.
+ * @param {object} options options passed to npm binary through spawn
+ * @param {boolean} [debug] When present pipes std{out,err} to process.*
  * @returns {Promise} A promise represents if npm succeeds or fails.
  * @public
  */
-module.exports = function run(cmd, argv, options, debug) {
+function runShellCommand(cmd, argv, options, debug) {
   return new Promise((resolve, reject) => {
     const child = spawn(cmd, argv, options);
 
@@ -47,4 +51,6 @@ module.exports = function run(cmd, argv, options, debug) {
       resolve({ stdout });
     });
   });
-};
+}
+
+module.exports = runShellCommand;

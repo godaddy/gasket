@@ -1,7 +1,7 @@
 const action = require('../action-wrapper');
 const ConfigBuilder = require('../config-builder');
 const { addPluginsToPkg } = require('../utils');
-const PackageManager = require('../package-manager');
+const { PackageManager } = require('@gasket/utils');
 const { presetIdentifier } = require('@gasket/resolve');
 
 /**

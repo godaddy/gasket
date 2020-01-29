@@ -1,11 +1,18 @@
-const { runShellCommand } = require('@gasket/utils');
+/* eslint-disable no-process-env */
+const runShellCommand = require('./run-shell-command');
 
 /**
  * Wrapper class for executing commands for a given package manager
  *
  * @type {PackageManager}
  */
-module.exports = class PackageManager {
+class PackageManager {
+  /**
+   * @param {object} options Options
+   * @param {string} [options.packageManager] Name of manager, either `npm` (default) or `yarn`
+   * @param {string} options.dest Target directory where `node_module` should exist
+   * @param {string} [options.npmconfig] DEPRECATED Path to userconfig
+   */
   constructor({ packageManager = 'npm', dest, npmconfig }) {
     this.manager = packageManager;
     this.dest = dest;
@@ -18,7 +25,7 @@ module.exports = class PackageManager {
    * npm based on process.env.
    *
    * @param {string[]} argv Precise CLI arguments to pass to `npm`.
-   * @param {Object} spawnWith Options for child_process.spawn.
+   * @param {object} spawnWith Options for child_process.spawn.
    * @returns {Promise} promise
    * @public
    */
@@ -40,7 +47,7 @@ module.exports = class PackageManager {
    * npm based on process.env.
    *
    * @param {string[]} argv Precise CLI arguments to pass to `npm`.
-   * @param {Object} spawnWith Options for child_process.spawn.
+   * @param {object} spawnWith Options for child_process.spawn.
    * @returns {Promise} promise
    * @public
    */
@@ -155,4 +162,6 @@ module.exports = class PackageManager {
       data
     };
   }
-};
+}
+
+module.exports = PackageManager;

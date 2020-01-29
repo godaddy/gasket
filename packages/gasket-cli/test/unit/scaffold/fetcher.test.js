@@ -11,7 +11,7 @@ describe('fetcher', () => {
 
   function makeFetcher(Manager) {
     return proxyquire('../../../src/scaffold/fetcher', {
-      './package-manager': Manager
+      '@gasket/utils': { PackageManager: Manager }
     });
   }
 

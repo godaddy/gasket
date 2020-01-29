@@ -1,5 +1,7 @@
 # `@gasket/cli`
 
+- Move and expose PackageManager from `@gasket/utils` ([#143])
+- 
 ### 5.0.0
 
 - Open Source Release
@@ -265,3 +267,4 @@ upon `gasket create`
 [#113]: https://github.com/godaddy/gasket/pull/113
 [#115]: https://github.com/godaddy/gasket/pull/115
 [#122]: https://github.com/godaddy/gasket/pull/122
+[#143]: https://github.com/godaddy/gasket/pull/143

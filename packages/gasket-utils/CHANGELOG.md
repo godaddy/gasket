@@ -1,5 +1,8 @@
 # `@gasket/utils`
 
+- Move and expose PackageManager from `@gasket/cli` ([#143])
+  - Align tests to Mocha suite
+
 ### 5.0.0
 
 - Open Source Release
@@ -18,3 +21,6 @@
 - Initial implementation. Adds:
   - `tryRequire`
   - `applyEnvironmentOverrides`
+
+
+[#143]: https://github.com/godaddy/gasket/pull/143
