@@ -1,5 +1,7 @@
 # `@gasket/utils`
 
+### 5.1.0
+
 - Move and expose PackageManager from `@gasket/cli` ([#143])
   - Align tests to Mocha suite
 

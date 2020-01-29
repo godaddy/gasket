@@ -1,5 +1,7 @@
 # `@gasket/resolve`
 
+### 5.1.0
+
 - Expose projectIdentifier with support for scope-only package short names ([#142])
 - Clean markdown from jsdocs ([#141])
 
