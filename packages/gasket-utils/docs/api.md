@@ -21,6 +21,7 @@ Wrapper class for executing commands for a given package manager
 **Kind**: global class  
 
 * [PackageManager]
+    * [new PackageManager(options)]
     * _instance_
         * [.exec(cmd, args)]
         * [.link(packages)]
@@ -29,6 +30,17 @@ Wrapper class for executing commands for a given package manager
     * _static_
         * [.spawnNpm(argv, spawnWith)]
         * [.spawnYarn(argv, spawnWith)]
+
+
+### new PackageManager(options)
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| options | `object` | Options |
+| \[options.packageManager\] | `string` | Name of manager, either `npm` (default) or `yarn` |
+| options.dest | `string` | Target directory where `node_module` should exist |
+| \[options.npmconfig\] | `string` | DEPRECATED Path to userconfig |
 
 
 ### packageManager.exec(cmd, args)
@@ -182,10 +194,11 @@ const { tryRequire } = require('@gasket/utils');
 <!-- LINKS -->
 
 [PackageManager]:#packagemanager
-[`PackageManager`]:#packagemanager
+[`PackageManager`]:#new-packagemanageroptions
 [applyEnvironmentOverrides(gasketConfig, config, \[localFile\])]:#applyenvironmentoverridesgasketconfig-config-localfile
 [runShellCommand(cmd, argv, options, \[debug\])]:#runshellcommandcmd-argv-options-debug
 [tryRequire(path)]:#tryrequirepath
+[new PackageManager(options)]:#new-packagemanageroptions
 [.exec(cmd, args)]:#packagemanagerexeccmd-args
 [.link(packages)]:#packagemanagerlinkpackages
 [.install(args)]:#packagemanagerinstallargs

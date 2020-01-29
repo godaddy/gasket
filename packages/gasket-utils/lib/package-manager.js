@@ -9,6 +9,12 @@ const runShellCommand = require('./run-shell-command');
  * @type {PackageManager}
  */
 class PackageManager {
+  /**
+   * @param {object} options Options
+   * @param {string} [options.packageManager] Name of manager, either `npm` (default) or `yarn`
+   * @param {string} options.dest Target directory where `node_module` should exist
+   * @param {string} [options.npmconfig] DEPRECATED Path to userconfig
+   */
   constructor({ packageManager = 'npm', dest, npmconfig }) {
     this.manager = packageManager;
     this.dest = dest;
