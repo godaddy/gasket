@@ -1,6 +1,4 @@
 /* eslint-disable no-process-env */
-
-
 const runShellCommand = require('./run-shell-command');
 
 /**
@@ -165,6 +163,5 @@ class PackageManager {
     };
   }
 }
-
 
 module.exports = PackageManager;
