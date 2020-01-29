@@ -1,5 +1,6 @@
 /* eslint-disable no-process-env */
 
+
 const runShellCommand = require('./run-shell-command');
 
 /**
@@ -7,7 +8,7 @@ const runShellCommand = require('./run-shell-command');
  *
  * @type {PackageManager}
  */
-module.exports = class PackageManager {
+class PackageManager {
   constructor({ packageManager = 'npm', dest, npmconfig }) {
     this.manager = packageManager;
     this.dest = dest;
@@ -20,7 +21,7 @@ module.exports = class PackageManager {
    * npm based on process.env.
    *
    * @param {string[]} argv Precise CLI arguments to pass to `npm`.
-   * @param {Object} spawnWith Options for child_process.spawn.
+   * @param {object} spawnWith Options for child_process.spawn.
    * @returns {Promise} promise
    * @public
    */
@@ -42,7 +43,7 @@ module.exports = class PackageManager {
    * npm based on process.env.
    *
    * @param {string[]} argv Precise CLI arguments to pass to `npm`.
-   * @param {Object} spawnWith Options for child_process.spawn.
+   * @param {object} spawnWith Options for child_process.spawn.
    * @returns {Promise} promise
    * @public
    */
@@ -157,4 +158,7 @@ module.exports = class PackageManager {
       data
     };
   }
-};
+}
+
+
+module.exports = PackageManager;
