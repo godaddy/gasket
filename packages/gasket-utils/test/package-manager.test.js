@@ -8,10 +8,8 @@ describe('packageManager', function () {
   let runner;
 
   function manager(run) {
-    return proxyquire('../../../src/scaffold/package-manager', {
-      '@gasket/utils': {
-        runShellCommand: run
-      }
+    return proxyquire('../lib/package-manager', {
+      './run-shell-command': run
     });
   }
 

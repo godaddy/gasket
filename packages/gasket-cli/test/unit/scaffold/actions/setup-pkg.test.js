@@ -13,14 +13,18 @@ describe('setupPkg', () => {
 
     packageJsonSpy = sandbox.spy(ConfigBuilder, 'createPackageJson');
 
+    class PackageManager {
+      constructor() {}
+    }
+
     mockImports = {
-      '../package-manager': class PackageManager {
-        constructor() {}
+      '@gasket/utils': {
+        PackageManager
       },
       '../action-wrapper': require('../../../helpers').mockActionWrapper
     };
 
-    packageManagerSpy = sandbox.spy(mockImports, '../package-manager');
+    packageManagerSpy = sandbox.spy(mockImports['@gasket/utils'], 'PackageManager');
 
     setupPkg = proxyquire('../../../../src/scaffold/actions/setup-pkg', mockImports);
 
@@ -98,6 +102,6 @@ describe('setupPkg', () => {
   it('adds pkgManager to context', async () => {
     assume(mockContext.pkgManager).is.undefined();
     await setupPkg.wrapped(mockContext);
-    assume(mockContext.pkgManager).is.instanceOf(mockImports['../package-manager']);
+    assume(mockContext.pkgManager).is.instanceOf(mockImports['@gasket/utils'].PackageManager);
   });
 });

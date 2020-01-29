@@ -5,10 +5,10 @@ const tryRequire = require('./try-require');
 /**
  * Normalize the config by applying any environment or local overrides
  *
- * @param {Object} gasketConfig - Gasket config
- * @param {Object} config - Target config to be normalized
- * @param {String} [localFile] - Optional file to load relative to gasket root
- * @returns {Object} config
+ * @param {object} gasketConfig - Gasket config
+ * @param {object} config - Target config to be normalized
+ * @param {string} [localFile] - Optional file to load relative to gasket root
+ * @returns {object} config
  */
 function applyEnvironmentOverrides(gasketConfig, config, localFile) {
   const { env, root } = gasketConfig;
