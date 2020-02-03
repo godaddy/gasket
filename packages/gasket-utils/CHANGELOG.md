@@ -1,5 +1,9 @@
 # `@gasket/utils`
 
+### 5.1.1
+
+- Fix missing dependency
+
 ### 5.1.0
 
 - Move and expose PackageManager from `@gasket/cli` ([#143])
