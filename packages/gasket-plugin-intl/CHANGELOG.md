@@ -1,5 +1,7 @@
 # `@gasket/plugin-intl`
 
+- Fixed missing `await` when saving locales-manifest.json file ([#144])
+
 ### 5.0.0
 
 - Open Source Release
@@ -59,3 +61,7 @@
 ### 1.0.0
 
 - Initial release.
+
+<!-- LINK -->
+
+[#144]: https://github.com/godaddy/gasket/pull/144
