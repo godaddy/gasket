@@ -203,12 +203,18 @@ describe('Builder', function () {
         fs.mkdirp = jest.fn().mockReturnValue(Promise.resolve());
         fs.readdir = jest.fn().mockResolvedValue(['test/folder/name.json']);
         fs.readJson = jest.fn().mockResolvedValue({ name: 'bogus-package' });
+        fsUtils.saveJsonFile = jest.fn().mockReturnValue(Promise.resolve());
         builder.processFiles = jest.fn();
       });
 
       it('calls processFiles for each directory', async function () {
         await builder.processDirs(buildDirs);
         expect(builder.processFiles.mock.calls).toHaveLength(2);
+      });
+
+      it('saves locales manifest file', async function () {
+        await builder.processDirs(buildDirs);
+        expect(fsUtils.saveJsonFile).toHaveBeenCalledWith(expect.stringContaining('locales-manifest.json'), expect.any(Object));
       });
     });
 
