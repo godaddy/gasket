@@ -87,7 +87,7 @@ the appropriate gasket.config file and environment.
 [GasketCommand]:#gasketcommand
 [.gasket]:#gasketcommandgasket
 [.parsed]:#gasketcommandparsed
-[.gasketRun()]:#gasketcommandgasketrun
-[.gasketConfigure(gasketConfig)]:#gasketcommandgasketconfiguregasketconfig
 [.flags]:#gasketcommandflags
 [`GasketCommand`]:#gasketcommand
+[.gasketRun()]:#gasketcommandgasketrun
+[.gasketConfigure(gasketConfig)]:#gasketcommandgasketconfiguregasketconfig
