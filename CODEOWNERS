@@ -17,7 +17,7 @@
 /packages/gasket-plugin-docsify/*           @kinetifex
 /packages/gasket-plugin-docs/*              @kinetifex
 /packages/gasket-plugin-express/*           @kinetifex
-/packages/gasket-plugin-fastiify/*          @SivanMehta
+/packages/gasket-plugin-fastify/*           @SivanMehta
 /packages/gasket-plugin-git/*               @SivanMehta
 /packages/gasket-plugin-jest/*              @salilagrawal, @kinetifex
 /packages/gasket-plugin-lifecycle/*         @DullReferenceException
