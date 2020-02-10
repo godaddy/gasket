@@ -227,7 +227,7 @@ class Builder {
       await this.processFiles(srcDir, tgtDir, fileNames);
     }
 
-    fsUtils.saveJsonFile(this._mapFile, this.builderMap);
+    await fsUtils.saveJsonFile(this._mapFile, this.builderMap);
 
     this._logger.log(`build:locales: Completed locale files update.`);
   }
