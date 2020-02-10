@@ -1,0 +1,40 @@
+### Default owners ###
+
+*                                           @godaddy/gasket-admins
+
+### Package maintainers ###
+
+/packages/gasket-cli/*                      @indexzero, @kinetifex
+/packages/gasket-engine/*                   @DullReferenceException
+/packages/gasket-log/*                      @Swaagie
+/packages/gasket-intl/*                     @salilagrawal
+/packages/gasket-fetch/*                    @kinetifex
+/packages/gasket-plugin-command/*           @DullReferenceException
+/packages/gasket-assets/*                   @kinetifex
+/packages/gasket-plugin-analyze/*           @kinetifex
+/packages/gasket-plugin-config/*            @DullReferenceException
+/packages/gasket-plugin-docs-graphs/*       @SivanMehta
+/packages/gasket-plugin-docsify/*           @kinetifex
+/packages/gasket-plugin-docs/*              @kinetifex
+/packages/gasket-plugin-express/*           @kinetifex
+/packages/gasket-plugin-fastiify/*          @SivanMehta
+/packages/gasket-plugin-git/*               @SivanMehta
+/packages/gasket-plugin-jest/*              @salilagrawal, @kinetifex
+/packages/gasket-plugin-lifecycle/*         @DullReferenceException
+/packages/gasket-plugin-https/*             @SivanMehta
+/packages/gasket-plugin-lint/*              @kinetifex
+/packages/gasket-plugin-intl/*              @salilagrawal
+/packages/gasket-plugin-log/*               @Swaagie
+/packages/gasket-plugin-manifest/*          @SivanMehta, @kinetifex
+/packages/gasket-plugin-metadata/*          @kinetifex
+/packages/gasket-plugin-metrics/*           @SivanMehta
+/packages/gasket-plugin-mocha/*             @3rd-Eden
+/packages/gasket-plugin-nextjs/*            @kinetifex
+/packages/gasket-plugin-redux/*             @kinetifex
+/packages/gasket-plugin-service-worker/*    @kinetifex
+/packages/gasket-plugin-start/*             @kinetifex
+/packages/gasket-plugin-webpack/*           @kinetifex
+/packages/gasket-plugin-workbox/*           @kinetifex
+/packages/gasket-redux/*                    @kinetifex
+/packages/gasket-resolve/*                  @indexzero, @DullReferenceException
+/packages/gasket-utils/*                    @kinetifex
