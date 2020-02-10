@@ -1,5 +1,7 @@
 # `@gasket/plugin-intl`
 
+### 5.1.2
+
 - Fixed missing `await` when saving locales-manifest.json file ([#144])
 
 ### 5.0.0
