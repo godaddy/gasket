@@ -26,6 +26,9 @@
     "test"
   ],
   "author": "GoDaddy Operating Company, LLC",
+  "maintainers": [
+    "Arnout Kazemier <akazemier@godaddy.com>"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/godaddy/gasket/issues"

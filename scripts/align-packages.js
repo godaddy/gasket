@@ -242,6 +242,19 @@ function checkScripts(pkgJson) {
 }
 
 /**
+ * Checks if maintainers are set on a packages and warns if not
+ *
+ * @param {object} pkgJson - package.json contents
+ */
+function checkMaintainers(pkgJson) {
+  const { name, maintainers } = pkgJson;
+
+  if (!maintainers) {
+    console.warn(`${name} does not have maintainers.`);
+  }
+}
+
+/**
  * Read, fix up, and write out updated package.json file
  *
  * @param {string} pkgPath path to a package.json file
@@ -259,6 +272,7 @@ async function fixupPackage(pkgPath) {
   fixedProperties(pkgJson);
 
   checkScripts(pkgJson);
+  checkMaintainers(pkgJson);
 
   pkgJson = sortKeys(pkgJson, null, orderedSort(pkgOrder));
   pkgJson = sortKeys(pkgJson, 'scripts', orderedSort(scriptsOrder));
