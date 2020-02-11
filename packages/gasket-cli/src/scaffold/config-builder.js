@@ -290,9 +290,10 @@ class ConfigBuilder {
         return;
       }
 
+      const prevName = this.blame.get(blameId).join(', ');
       const newer = this.tryGetNewerRange(prev, ver);
-      const overriden = newer === ver;
-      if (overriden) {
+      const overridden = newer === ver;
+      if (overridden) {
         existing[dep] = ver;
         this.blame.set(blameId, [name]);
       }
@@ -300,7 +301,7 @@ class ConfigBuilder {
       if (!semver.validRange(prev) || !semver.validRange(ver) || !semver.intersects(prev, ver)) {
         console.warn(`
 Conflicting versions for ${dep} in "${key}":
-- ${prev} provided by ${this.blame.get(blameId).join(', ')}
+- ${prev} provided by ${prevName}
 - ${ver} provided by ${name}
 Using ${existing[dep]}, but this may cause unexpected behavior.`);
       }

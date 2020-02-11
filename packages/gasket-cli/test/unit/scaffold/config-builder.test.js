@@ -4,6 +4,13 @@ const assume = require('assume');
 const stdMocks = require('std-mocks');
 const PackageJson = require('../../../src/scaffold/config-builder');
 
+const pluginOne = {
+  name: 'gasket-plugin-one'
+};
+const pluginTwo = {
+  name: 'gasket-plugin-two'
+}
+
 describe('PackageJson', () => {
   let pkg;
 
@@ -126,36 +133,36 @@ describe('PackageJson', () => {
     });
 
     it('[semver] displays a warning when older range conflicts', () => {
-      pkg.add('dependencies', { 'some-pkg': '^2.2.0' });
+      pkg.add('dependencies', { 'some-pkg': '^2.2.0' }, pluginOne);
       assume(pkg.fields.dependencies).eqls({ 'some-pkg': '^2.2.0' });
 
       // Grab stdout
       stdMocks.use();
-      pkg.add('dependencies', { 'some-pkg': '^1.0.0' });
+      pkg.add('dependencies', { 'some-pkg': '^1.0.0' }, pluginTwo);
       stdMocks.restore();
       const actual = stdMocks.flush();
       const [stderr] = actual.stderr;
 
       assume(stderr).includes('Conflicting versions for some-pkg in "dependencies"');
-      assume(stderr).includes('^2.2.0 provided');
-      assume(stderr).includes('^1.0.0 provided');
+      assume(stderr).includes(`^2.2.0 provided by ${pluginOne.name}`);
+      assume(stderr).includes(`^1.0.0 provided by ${pluginTwo.name}`);
       assume(stderr).includes('Using ^2.2.0, but');
     });
 
     it('[semver] displays a warning when newer range conflicts', () => {
-      pkg.add('dependencies', { 'some-pkg': '^1.2.0' });
+      pkg.add('dependencies', { 'some-pkg': '^1.2.0' }, pluginOne);
       assume(pkg.fields.dependencies).eqls({ 'some-pkg': '^1.2.0' });
 
       // Grab stdout
       stdMocks.use();
-      pkg.add('dependencies', { 'some-pkg': '^2.0.0' });
+      pkg.add('dependencies', { 'some-pkg': '^2.0.0' }, pluginTwo);
       stdMocks.restore();
       const actual = stdMocks.flush();
       const [stderr] = actual.stderr;
 
       assume(stderr).includes('Conflicting versions for some-pkg in "dependencies"');
-      assume(stderr).includes('^1.2.0 provided');
-      assume(stderr).includes('^2.0.0 provided');
+      assume(stderr).includes(`^1.2.0 provided by ${pluginOne.name}`);
+      assume(stderr).includes(`^2.0.0 provided by ${pluginTwo.name}`);
       assume(stderr).includes('Using ^2.0.0, but');
     });
 
