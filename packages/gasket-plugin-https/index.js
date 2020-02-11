@@ -3,6 +3,7 @@ const debug = require('diagnostics')('gasket:https');
 const create = require('create-servers');
 const one = require('one-time/async');
 const errs = require('errs');
+const isLocal = /local/;
 
 /**
  * Check if the supplied errors are a result of the port being in use.
@@ -31,11 +32,8 @@ async function start(gasket) {
   // Retrieving server opts
   const configOpts = { hostname };
 
-  // create-servers does not support http or https being `null`
   if (http) configOpts.http = http;
   if (https) configOpts.https = https;
-  // Default port to non-essential port on creation
-  if (!http && !https && env !== 'local') configOpts.http = 80;
 
   const serverOpts = await gasket.execWaterfall('createServers', configOpts);
   const { healthcheck, ...terminusDefaults } = await gasket.execWaterfall('terminus', {
@@ -44,6 +42,12 @@ async function start(gasket) {
 
     ...(terminus || {})
   });
+
+  // Default port to non-essential port on creation
+  // create-servers does not support http or https being `null`
+  if (!serverOpts.http && !serverOpts.https) {
+    serverOpts.http = isLocal.test(env) ? 8080 : 80;
+  }
 
   //
   // It's possible that we are creating multiple servers that are going to hook
@@ -124,20 +128,6 @@ async function start(gasket) {
 module.exports = {
   name: require('./package').name,
   hooks: {
-    /**
-     *
-     * @param {Gasket} gasket - The Gasket API
-     * @param {*} context - Create context
-     *
-     */
-    create: async function createHook(gasket, context) {
-      const { gasketConfig } = context;
-      gasketConfig.add('environments', {
-        local: {
-          http: 8080
-        }
-      });
-    },
     start,
     metadata(gasket, meta) {
       return {
