@@ -1,4 +1,4 @@
-# @gasket/plugin-docs-graph
+# @gasket/plugin-docs-graphs
 
 The plugin hooks the **docsGenerate** lifecycle to provide a [`mermaid`] graph
 of a given application's lifecycles.
@@ -14,7 +14,7 @@ gasket create <app-name> --plugins @gasket/plugin-docs,@gasket/plugin-docs-graph
 #### Existing apps
 
 ```
-npm i @gasket/plugin-docs-graph
+npm i @gasket/plugin-docs-graphs
 ```
 
 Modify `plugins` section of your `gasket.config.js`:
@@ -23,7 +23,7 @@ Modify `plugins` section of your `gasket.config.js`:
 module.exports = {
   plugins: {
     add: [
-+      '@gasket/plugin-docs-graph'
++      '@gasket/plugin-docs-graphs'
     ]
   }
 }
