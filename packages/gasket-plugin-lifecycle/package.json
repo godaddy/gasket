@@ -24,6 +24,9 @@
     "lifecycle"
   ],
   "author": "GoDaddy Operating Company, LLC",
+  "maintainers": [
+    "Jacob Page <jpage@godaddy.com>"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/godaddy/gasket/issues"
