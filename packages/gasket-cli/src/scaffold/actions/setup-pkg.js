@@ -11,13 +11,13 @@ const { presetIdentifier } = require('@gasket/resolve');
  * @returns {Promise} promise
  */
 async function setupPkg(context) {
-  const { appName, appDescription, presetInfos = [], rawPlugins = [], cliVersionRequired } = context;
+  const { appName, appDescription, presetInfos = [], rawPlugins = [], cliVersionRequired, warnings } = context;
 
   const pkg = ConfigBuilder.createPackageJson({
     name: appName,
     version: '0.0.0',
     description: appDescription
-  });
+  }, { warnings });
 
   // The preset package itself must be included in the dependencies
   // of the `pkg` to be bootstrapped.

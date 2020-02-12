@@ -78,6 +78,7 @@ class ConfigBuilder {
     this.orderedFields = options.orderedFields;
     this.objectFields = options.objectFields;
     this.semverFields = options.semverFields;
+    this.warnings = options.warnings;
 
     // Any semverFields are also object fields and ordered fields.
     if (Array.isArray(this.semverFields)) {
@@ -101,10 +102,12 @@ class ConfigBuilder {
    * Create an instance configured with options for package.json files
    *
    * @param {Object} [fields] - Initial fields
+   * @param {Object} [options] - Additional setup options
    * @returns {ConfigBuilder} instance
    */
-  static createPackageJson(fields = {}) {
+  static createPackageJson(fields = {}, options = {}) {
     return new ConfigBuilder(fields, {
+      ...options,
       orderBy: [
         'name',
         'version',
@@ -127,6 +130,14 @@ class ConfigBuilder {
         'scripts'
       ]
     });
+  }
+
+  warn(message) {
+    if (this.warnings) {
+      this.warnings.push(message);
+    } else {
+      console.warn(message);
+    }
   }
 
   /**
@@ -284,7 +295,7 @@ class ConfigBuilder {
     Object.entries(value).forEach(([dep, ver]) => {
       const prev = existing[dep];
       if (!isValidVersion(ver)) {
-        console.warn(`Invalid "${key}" provided by ${name}: ${dep}@${ver}.`);
+        this.warn(`Invalid "${key}" provided by ${name}: ${dep}@${ver}.`);
         return;
       }
 
@@ -321,11 +332,12 @@ class ConfigBuilder {
       if (!semver.validRange(prev) || !semver.validRange(ver) || !semver.intersects(prev, ver)) {
         let forceMsg = force ? '(forced)' : '';
         forceMsg = forced && force ? '(cannot be forced)' : forceMsg;
-        console.warn(`
-Conflicting versions for ${dep} in "${key}":
-- ${prev} provided by ${prevName} ${forced && '(forced)' || ''}
-- ${ver} provided by ${name} ${forceMsg}
-Using ${existing[dep]}, but this may cause unexpected behavior.`);
+        this.warn(`
+  Conflicting versions for ${dep} in "${key}":
+    - ${prev} provided by ${prevName} ${forced && '(forced)' || ''}
+    - ${ver} provided by ${name} ${forceMsg}
+    Using ${existing[dep]}, but this may cause unexpected behavior.
+`);
       }
     });
   }
