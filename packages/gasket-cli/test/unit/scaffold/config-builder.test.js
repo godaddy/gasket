@@ -9,7 +9,7 @@ const pluginOne = {
 };
 const pluginTwo = {
   name: 'gasket-plugin-two'
-}
+};
 
 describe('PackageJson', () => {
   let pkg;
@@ -132,6 +132,27 @@ describe('PackageJson', () => {
       assume(pkg.fields.dependencies).eqls({ 'some-pkg': 'latest' });
     });
 
+    it('[semver] uses forced range even when older', () => {
+      pkg.add('dependencies', { 'some-pkg': '^2.0.0' }, pluginOne);
+      assume(pkg.fields.dependencies).eqls({ 'some-pkg': '^2.0.0' });
+      pkg.add('dependencies', { 'some-pkg': '^1.2.0' }, pluginTwo, { force: true });
+      assume(pkg.fields.dependencies).eqls({ 'some-pkg': '^1.2.0' });
+    });
+
+    it('[semver] uses previously forced range even when older', () => {
+      pkg.add('dependencies', { 'some-pkg': '^1.2.0' }, pluginOne, { force: true });
+      assume(pkg.fields.dependencies).eqls({ 'some-pkg': '^1.2.0' });
+      pkg.add('dependencies', { 'some-pkg': '^2.0.0' }, pluginTwo);
+      assume(pkg.fields.dependencies).eqls({ 'some-pkg': '^1.2.0' });
+    });
+
+    it('[semver] first forced range cannot be forced out', () => {
+      pkg.add('dependencies', { 'some-pkg': '^1.2.0' }, pluginOne, { force: true });
+      assume(pkg.fields.dependencies).eqls({ 'some-pkg': '^1.2.0' });
+      pkg.add('dependencies', { 'some-pkg': '^2.0.0' }, pluginTwo, { force: true });
+      assume(pkg.fields.dependencies).eqls({ 'some-pkg': '^1.2.0' });
+    });
+
     it('[semver] displays a warning when older range conflicts', () => {
       pkg.add('dependencies', { 'some-pkg': '^2.2.0' }, pluginOne);
       assume(pkg.fields.dependencies).eqls({ 'some-pkg': '^2.2.0' });
@@ -163,6 +184,57 @@ describe('PackageJson', () => {
       assume(stderr).includes('Conflicting versions for some-pkg in "dependencies"');
       assume(stderr).includes(`^1.2.0 provided by ${pluginOne.name}`);
       assume(stderr).includes(`^2.0.0 provided by ${pluginTwo.name}`);
+      assume(stderr).includes('Using ^2.0.0, but');
+    });
+
+    it('[semver] displays a warning when previously forced range conflicts', () => {
+      pkg.add('dependencies', { 'some-pkg': '^1.2.0' }, pluginOne, { force: true });
+      assume(pkg.fields.dependencies).eqls({ 'some-pkg': '^1.2.0' });
+
+      // Grab stdout
+      stdMocks.use();
+      pkg.add('dependencies', { 'some-pkg': '^2.0.0' }, pluginTwo);
+      stdMocks.restore();
+      const actual = stdMocks.flush();
+      const [stderr] = actual.stderr;
+
+      assume(stderr).includes('Conflicting versions for some-pkg in "dependencies"');
+      assume(stderr).includes(`^1.2.0 provided by ${pluginOne.name} (forced)`);
+      assume(stderr).includes(`^2.0.0 provided by ${pluginTwo.name}`);
+      assume(stderr).includes('Using ^1.2.0, but');
+    });
+
+    it('[semver] displays a warning when forced range conflicts', () => {
+      pkg.add('dependencies', { 'some-pkg': '^2.0.0' }, pluginOne);
+      assume(pkg.fields.dependencies).eqls({ 'some-pkg': '^2.0.0' });
+
+      // Grab stdout
+      stdMocks.use();
+      pkg.add('dependencies', { 'some-pkg': '^1.2.0' }, pluginTwo, { force: true });
+      stdMocks.restore();
+      const actual = stdMocks.flush();
+      const [stderr] = actual.stderr;
+
+      assume(stderr).includes('Conflicting versions for some-pkg in "dependencies"');
+      assume(stderr).includes(`^2.0.0 provided by ${pluginOne.name}`);
+      assume(stderr).includes(`^1.2.0 provided by ${pluginTwo.name} (forced)`);
+      assume(stderr).includes('Using ^1.2.0, but');
+    });
+
+    it('[semver] displays a warning when attempted re-force range conflicts', () => {
+      pkg.add('dependencies', { 'some-pkg': '^2.0.0' }, pluginOne, { force: true });
+      assume(pkg.fields.dependencies).eqls({ 'some-pkg': '^2.0.0' });
+
+      // Grab stdout
+      stdMocks.use();
+      pkg.add('dependencies', { 'some-pkg': '^1.2.0' }, pluginTwo, { force: true });
+      stdMocks.restore();
+      const actual = stdMocks.flush();
+      const [stderr] = actual.stderr;
+
+      assume(stderr).includes('Conflicting versions for some-pkg in "dependencies"');
+      assume(stderr).includes(`^2.0.0 provided by ${pluginOne.name} (forced)`);
+      assume(stderr).includes(`^1.2.0 provided by ${pluginTwo.name} (cannot be forced)`);
       assume(stderr).includes('Using ^2.0.0, but');
     });
 
