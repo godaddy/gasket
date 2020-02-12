@@ -1,5 +1,9 @@
 # `@gasket/plugin-https`
 
+### 5.1.3
+
+- Set http fallbacks after createServer lifecycle ([#146])
+
 ### 5.0.1
 
 - Update default http port ([#130])
@@ -35,6 +39,7 @@
 [#90]: https://github.com/godaddy/gasket/pull/90
 [#92]: https://github.com/godaddy/gasket/pull/92
 [#130]: https://github.com/godaddy/gasket/pull/130
+[#146]: https://github.com/godaddy/gasket/pull/146
 
 [terminus]: https://github.com/godaddy/terminus
 [create-servers]: https://github.com/http-party/create-servers
