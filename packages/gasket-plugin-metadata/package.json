@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-metadata",
-  "version": "5.1.0",
+  "version": "5.1.3",
   "description": "Adds metadata to gasket lifecycles",
   "main": "lib",
   "scripts": {
