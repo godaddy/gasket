@@ -5,7 +5,7 @@
 ### Package maintainers ###
 
 /packages/gasket-cli/*                      @indexzero, @kinetifex
-/packages/gasket-engine/*                   @DullReferenceException
+/packages/gasket-engine/*                   @DullReferenceException, @indexzero
 /packages/gasket-log/*                      @Swaagie
 /packages/gasket-intl/*                     @salilagrawal
 /packages/gasket-fetch/*                    @kinetifex
