@@ -1,5 +1,9 @@
 # `@gasket/cli`
 
+### 5.1.3
+
+- Fix output of version blame if overridden ([#147])
+
 ### 5.1.0
 
 - Move and expose PackageManager from `@gasket/utils` ([#143])
@@ -270,3 +274,4 @@ upon `gasket create`
 [#115]: https://github.com/godaddy/gasket/pull/115
 [#122]: https://github.com/godaddy/gasket/pull/122
 [#143]: https://github.com/godaddy/gasket/pull/143
+[#147]: https://github.com/godaddy/gasket/pull/147
