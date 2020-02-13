@@ -1,6 +1,6 @@
 {
   "name": "@gasket/cli",
-  "version": "5.1.3",
+  "version": "5.2.0",
   "description": "CLI for rapid application development with gasket",
   "main": "src/index.js",
   "bin": {
