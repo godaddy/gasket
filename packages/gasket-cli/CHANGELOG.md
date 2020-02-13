@@ -1,5 +1,10 @@
 # `@gasket/cli`
 
+### 5.2.0
+
+- Support force option with pkg.add ([#148])
+  - Output semver warnings with print report
+
 ### 5.1.3
 
 - Fix output of version blame if overridden ([#147])
@@ -275,3 +280,4 @@ upon `gasket create`
 [#122]: https://github.com/godaddy/gasket/pull/122
 [#143]: https://github.com/godaddy/gasket/pull/143
 [#147]: https://github.com/godaddy/gasket/pull/147
+[#148]: https://github.com/godaddy/gasket/pull/148
