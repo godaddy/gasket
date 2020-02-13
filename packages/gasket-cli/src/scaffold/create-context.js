@@ -29,8 +29,8 @@ function makeCreateRuntime(context, source) {
         context.pkg.extend(fields, source);
       },
 
-      add(key, value) {
-        context.pkg.add(key, value, source);
+      add(key, value, options) {
+        context.pkg.add(key, value, source, options);
       },
 
       has(key, value) {

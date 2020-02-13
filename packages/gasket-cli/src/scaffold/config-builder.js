@@ -72,11 +72,13 @@ class ConfigBuilder {
     this.original = fields;
 
     this.blame = new Map();
+    this.force = new Set();
 
     this.orderBy = options.orderBy;
     this.orderedFields = options.orderedFields;
     this.objectFields = options.objectFields;
     this.semverFields = options.semverFields;
+    this.warnings = options.warnings;
 
     // Any semverFields are also object fields and ordered fields.
     if (Array.isArray(this.semverFields)) {
@@ -100,10 +102,12 @@ class ConfigBuilder {
    * Create an instance configured with options for package.json files
    *
    * @param {Object} [fields] - Initial fields
+   * @param {Object} [options] - Additional setup options
    * @returns {ConfigBuilder} instance
    */
-  static createPackageJson(fields = {}) {
+  static createPackageJson(fields = {}, options = {}) {
     return new ConfigBuilder(fields, {
+      ...options,
       orderBy: [
         'name',
         'version',
@@ -126,6 +130,14 @@ class ConfigBuilder {
         'scripts'
       ]
     });
+  }
+
+  warn(message) {
+    if (this.warnings) {
+      this.warnings.push(message);
+    } else {
+      console.warn(message);
+    }
   }
 
   /**
@@ -156,14 +168,16 @@ class ConfigBuilder {
   /**
    * Performs an intelligent, domain-aware merge of the `value` for
    * the given `key` into the package.json fields associated with this instance.
-   * @param {string} key Field in package.json to add or extend.
-   * @param {*} value Target value to set for key provided.
-   * @param {Object} source Plugin to blame if conflicts arise from this operation.
+   * @param {string} key - Field in package.json to add or extend.
+   * @param {*} value - Target value to set for key provided.
+   * @param {Object} source - Plugin to blame if conflicts arise from this operation.
+   * @param {object} [options] - Optional arguments for add behavior
+   * @param {boolean} [options.force] - Should the semver version override other attempts
    *
    * Adapted from @vue/cli under MIT License:
    * https://github.com/vuejs/vue-cli/blob/f09722c/packages/%40vue/cli/lib/GeneratorAPI.js#L117-L150
    */
-  add(key, value, source) {
+  add(key, value, source, options = {}) {
     if (typeof value === 'undefined') return;
 
     const existing = this.fields[key];
@@ -182,7 +196,8 @@ class ConfigBuilder {
           key,
           value,
           existing: this.fields[key],
-          name
+          name,
+          ...options
         });
 
         return;
@@ -265,45 +280,64 @@ class ConfigBuilder {
    * @param  {Object} options.value    Updates for { name: version } pairs
    * @param  {Object} options.existing Existing { name: version } pairs
    * @param  {string} options.name     Plugin name providing merge `value``
+   * @param {boolean} [options.force]  Should the semver version override other attempts
    *
    * Adapted from @vue/cli under MIT License:
    * https://github.com/vuejs/vue-cli/blob/f09722c/packages/%40vue/cli/lib/util/mergeDeps.js
    */
-  semanticMerge({ key, value, existing, name }) {
+  semanticMerge({ key, value, existing, name, force = false }) {
+
+    const setBlame = blameId => {
+      this.blame.set(blameId, [name]);
+      if (force) this.force.add(blameId);
+    };
+
     Object.entries(value).forEach(([dep, ver]) => {
       const prev = existing[dep];
       if (!isValidVersion(ver)) {
-        console.warn(`Invalid "${key}" provided by ${name}: ${dep}@${ver}.`);
+        this.warn(`Invalid "${key}" provided by ${name}: ${dep}@${ver}.`);
         return;
       }
 
       const blameId = `${key}.${dep}`;
       if (!prev) {
         existing[dep] = ver;
-        this.blame.set(blameId, [name]);
+        setBlame(blameId);
         return;
       }
+
+      const blamed = this.blame.get(blameId);
+      const forced = this.force.has(blameId);
 
       if (prev === ver) {
-        const blamed = this.blame.get(blameId);
-        blamed.push(name);
+        if (forced) return;
+        if (force) {
+          setBlame(blameId);
+        } else {
+          blamed.push(name);
+        }
         return;
       }
 
-      const prevName = this.blame.get(blameId).join(', ');
-      const newer = this.tryGetNewerRange(prev, ver);
-      const overridden = newer === ver;
-      if (overridden) {
-        existing[dep] = ver;
-        this.blame.set(blameId, [name]);
+      const prevName = blamed.join(', ');
+      if (!forced) {
+        const newer = force ? ver : this.tryGetNewerRange(prev, ver);
+        const overridden = newer === ver;
+        if (overridden) {
+          existing[dep] = ver;
+          setBlame(blameId);
+        }
       }
 
       if (!semver.validRange(prev) || !semver.validRange(ver) || !semver.intersects(prev, ver)) {
-        console.warn(`
-Conflicting versions for ${dep} in "${key}":
-- ${prev} provided by ${prevName}
-- ${ver} provided by ${name}
-Using ${existing[dep]}, but this may cause unexpected behavior.`);
+        let forceMsg = force ? '(forced)' : '';
+        forceMsg = forced && force ? '(cannot be forced)' : forceMsg;
+        this.warn(`
+  Conflicting versions for ${dep} in "${key}":
+    - ${prev} provided by ${prevName} ${forced && '(forced)' || ''}
+    - ${ver} provided by ${name} ${forceMsg}
+    Using ${existing[dep]}, but this may cause unexpected behavior.
+`);
       }
     });
   }
