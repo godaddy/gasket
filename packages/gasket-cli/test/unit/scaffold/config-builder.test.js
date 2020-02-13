@@ -1,21 +1,27 @@
 /* eslint-disable max-statements */
 
 const assume = require('assume');
-const stdMocks = require('std-mocks');
-const PackageJson = require('../../../src/scaffold/config-builder');
+const sinon = require('sinon');
+const ConfigBuilder = require('../../../src/scaffold/config-builder');
 
 const pluginOne = {
   name: 'gasket-plugin-one'
 };
 const pluginTwo = {
   name: 'gasket-plugin-two'
-}
+};
 
-describe('PackageJson', () => {
-  let pkg;
+describe('ConfigBuilder', () => {
+  let pkg, warnSpy, consoleWarnStub;
 
   beforeEach(() => {
-    pkg = PackageJson.createPackageJson();
+    pkg = ConfigBuilder.createPackageJson();
+    warnSpy = sinon.spy(pkg, 'warn');
+    consoleWarnStub = sinon.spy(console, 'warn');
+  });
+
+  afterEach(() => {
+    consoleWarnStub.restore();
   });
 
   describe('.add(key, value)', () => {
@@ -132,38 +138,85 @@ describe('PackageJson', () => {
       assume(pkg.fields.dependencies).eqls({ 'some-pkg': 'latest' });
     });
 
-    it('[semver] displays a warning when older range conflicts', () => {
+    it('[semver] uses forced range even when older', () => {
+      pkg.add('dependencies', { 'some-pkg': '^2.0.0' }, pluginOne);
+      assume(pkg.fields.dependencies).eqls({ 'some-pkg': '^2.0.0' });
+      pkg.add('dependencies', { 'some-pkg': '^1.2.0' }, pluginTwo, { force: true });
+      assume(pkg.fields.dependencies).eqls({ 'some-pkg': '^1.2.0' });
+    });
+
+    it('[semver] uses previously forced range even when older', () => {
+      pkg.add('dependencies', { 'some-pkg': '^1.2.0' }, pluginOne, { force: true });
+      assume(pkg.fields.dependencies).eqls({ 'some-pkg': '^1.2.0' });
+      pkg.add('dependencies', { 'some-pkg': '^2.0.0' }, pluginTwo);
+      assume(pkg.fields.dependencies).eqls({ 'some-pkg': '^1.2.0' });
+    });
+
+    it('[semver] first forced range cannot be forced out', () => {
+      pkg.add('dependencies', { 'some-pkg': '^1.2.0' }, pluginOne, { force: true });
+      assume(pkg.fields.dependencies).eqls({ 'some-pkg': '^1.2.0' });
+      pkg.add('dependencies', { 'some-pkg': '^2.0.0' }, pluginTwo, { force: true });
+      assume(pkg.fields.dependencies).eqls({ 'some-pkg': '^1.2.0' });
+    });
+
+    it('[semver] warns when older range conflicts', () => {
       pkg.add('dependencies', { 'some-pkg': '^2.2.0' }, pluginOne);
       assume(pkg.fields.dependencies).eqls({ 'some-pkg': '^2.2.0' });
 
-      // Grab stdout
-      stdMocks.use();
       pkg.add('dependencies', { 'some-pkg': '^1.0.0' }, pluginTwo);
-      stdMocks.restore();
-      const actual = stdMocks.flush();
-      const [stderr] = actual.stderr;
 
-      assume(stderr).includes('Conflicting versions for some-pkg in "dependencies"');
-      assume(stderr).includes(`^2.2.0 provided by ${pluginOne.name}`);
-      assume(stderr).includes(`^1.0.0 provided by ${pluginTwo.name}`);
-      assume(stderr).includes('Using ^2.2.0, but');
+      assume(warnSpy).calledWithMatch('Conflicting versions for some-pkg in "dependencies"');
+      assume(warnSpy).calledWithMatch(`^2.2.0 provided by ${pluginOne.name}`);
+      assume(warnSpy).calledWithMatch(`^1.0.0 provided by ${pluginTwo.name}`);
+      assume(warnSpy).calledWithMatch('Using ^2.2.0, but');
     });
 
-    it('[semver] displays a warning when newer range conflicts', () => {
+    it('[semver] warns when newer range conflicts', () => {
       pkg.add('dependencies', { 'some-pkg': '^1.2.0' }, pluginOne);
       assume(pkg.fields.dependencies).eqls({ 'some-pkg': '^1.2.0' });
 
-      // Grab stdout
-      stdMocks.use();
       pkg.add('dependencies', { 'some-pkg': '^2.0.0' }, pluginTwo);
-      stdMocks.restore();
-      const actual = stdMocks.flush();
-      const [stderr] = actual.stderr;
 
-      assume(stderr).includes('Conflicting versions for some-pkg in "dependencies"');
-      assume(stderr).includes(`^1.2.0 provided by ${pluginOne.name}`);
-      assume(stderr).includes(`^2.0.0 provided by ${pluginTwo.name}`);
-      assume(stderr).includes('Using ^2.0.0, but');
+      assume(warnSpy).calledWithMatch('Conflicting versions for some-pkg in "dependencies"');
+      assume(warnSpy).calledWithMatch(`^1.2.0 provided by ${pluginOne.name}`);
+      assume(warnSpy).calledWithMatch(`^2.0.0 provided by ${pluginTwo.name}`);
+      assume(warnSpy).calledWithMatch('Using ^2.0.0, but');
+    });
+
+    it('[semver] warns when previously forced range conflicts', () => {
+      pkg.add('dependencies', { 'some-pkg': '^1.2.0' }, pluginOne, { force: true });
+      assume(pkg.fields.dependencies).eqls({ 'some-pkg': '^1.2.0' });
+
+      pkg.add('dependencies', { 'some-pkg': '^2.0.0' }, pluginTwo);
+
+      assume(warnSpy).calledWithMatch('Conflicting versions for some-pkg in "dependencies"');
+      assume(warnSpy).calledWithMatch(`^1.2.0 provided by ${pluginOne.name} (forced)`);
+      assume(warnSpy).calledWithMatch(`^2.0.0 provided by ${pluginTwo.name}`);
+      assume(warnSpy).calledWithMatch('Using ^1.2.0, but');
+    });
+
+    it('[semver] warns when forced range conflicts', () => {
+      pkg.add('dependencies', { 'some-pkg': '^2.0.0' }, pluginOne);
+      assume(pkg.fields.dependencies).eqls({ 'some-pkg': '^2.0.0' });
+
+      pkg.add('dependencies', { 'some-pkg': '^1.2.0' }, pluginTwo, { force: true });
+
+      assume(warnSpy).calledWithMatch('Conflicting versions for some-pkg in "dependencies"');
+      assume(warnSpy).calledWithMatch(`^2.0.0 provided by ${pluginOne.name}`);
+      assume(warnSpy).calledWithMatch(`^1.2.0 provided by ${pluginTwo.name} (forced)`);
+      assume(warnSpy).calledWithMatch('Using ^1.2.0, but');
+    });
+
+    it('[semver] warns when attempted re-force range conflicts', () => {
+      pkg.add('dependencies', { 'some-pkg': '^2.0.0' }, pluginOne, { force: true });
+      assume(pkg.fields.dependencies).eqls({ 'some-pkg': '^2.0.0' });
+
+      pkg.add('dependencies', { 'some-pkg': '^1.2.0' }, pluginTwo, { force: true });
+
+      assume(warnSpy).calledWithMatch('Conflicting versions for some-pkg in "dependencies"');
+      assume(warnSpy).calledWithMatch(`^2.0.0 provided by ${pluginOne.name} (forced)`);
+      assume(warnSpy).calledWithMatch(`^1.2.0 provided by ${pluginTwo.name} (cannot be forced)`);
+      assume(warnSpy).calledWithMatch('Using ^2.0.0, but');
     });
 
     it('[array] adds new fields', () => {
@@ -414,6 +467,35 @@ describe('PackageJson', () => {
         devDependencies: {},
         whatever: 'ok'
       });
+    });
+  });
+
+  describe('.warn(message)', () => {
+    let warnings;
+
+    beforeEach(() => {
+      warnings = [];
+    });
+
+    it('logs to console if no warnings array in options', () => {
+      pkg.add('dependencies', { 'some-pkg': '^2.2.0' }, pluginOne);
+      pkg.add('dependencies', { 'some-pkg': '^1.0.0' }, pluginTwo);
+
+      assume(warnSpy).called();
+      assume(consoleWarnStub).called();
+      assume(warnings).lengthOf(0);
+    });
+
+    it('adds to warnings array if exists instead of console', () => {
+      pkg = ConfigBuilder.createPackageJson({}, { warnings });
+      warnSpy = sinon.spy(pkg, 'warn');
+
+      pkg.add('dependencies', { 'some-pkg': '^2.2.0' }, pluginOne);
+      pkg.add('dependencies', { 'some-pkg': '^1.0.0' }, pluginTwo);
+
+      assume(warnSpy).called();
+      assume(consoleWarnStub).not.called();
+      assume(warnings).lengthOf(1);
     });
   });
 });

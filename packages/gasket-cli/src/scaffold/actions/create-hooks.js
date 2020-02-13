@@ -11,10 +11,10 @@ const Files = require('../files');
  * @returns {Promise} promise
  */
 async function createHooks(context) {
-  const { dest, presets = [], plugins = [] } = context;
+  const { dest, presets = [], plugins = [], warnings } = context;
 
   const files = new Files();
-  const gasketConfig = ConfigBuilder.create({}, { orderBy: ['plugins'] });
+  const gasketConfig = ConfigBuilder.create({}, { orderBy: ['plugins'], warnings });
   Object.assign(context, { files, gasketConfig });
 
   const gasket = await createEngine({ dest, presets, plugins });

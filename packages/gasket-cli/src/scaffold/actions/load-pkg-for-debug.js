@@ -12,13 +12,13 @@ const ConfigBuilder = require('../config-builder');
  * @returns {Promise} promise
  */
 async function loadPkForDebug(context) {
-  const { dest } = context;
+  const { dest, warnings } = context;
 
   const filePath = path.join(dest, 'package.json');
 
   const contents = await readFile(filePath, 'utf8');
   const fields = JSON.parse(contents);
-  const pkg = ConfigBuilder.createPackageJson(fields);
+  const pkg = ConfigBuilder.createPackageJson(fields, { warnings });
 
   Object.assign(context, { pkg });
 }

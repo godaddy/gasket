@@ -101,6 +101,17 @@ describe('CreateRuntime', () => {
     );
   });
 
+  it('passes through options for context.pkg.add', () => {
+    const mockOptions = { bogus: true };
+    runtime.pkg.add('name', 'legitimate-use-for-proxy', mockOptions);
+    assume(pkgAddStub).is.calledWithMatch(
+      'name',
+      'legitimate-use-for-proxy',
+      mockPlugin,
+      mockOptions
+    );
+  });
+
   it('invokes context.pkg.extend with source plugin', () => {
     const extension = { name: 'legitimate-use-for-proxy' };
     runtime.pkg.extend(extension);
