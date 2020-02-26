@@ -149,8 +149,25 @@ module.exports = {
 
 If you need access to config values in client-side code, this can be done
 through your redux store. The config plugin looks for a `redux` property of your
-configuration and places it under a `config` property in your initial redux
-state.
+configuration in `app.config.js` and places it under a `config` reducer in your initial redux
+state. Example below appears in `config` reducer in client-side code
+
+```js
+module.exports = {
+  environments: {
+    dev: {
+      redux: {
+        url: 'https://your-dev-service-endpoint.com'
+      }
+    },
+    test: {
+      redux: {
+        url: 'https://your-test-service-endpoint.com'
+      }
+    }
+  }
+};
+```
 
 ## Lifecycles
 
