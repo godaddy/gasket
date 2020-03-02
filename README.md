@@ -25,10 +25,10 @@ Help and explanations docs
 | ----------------------------- | ------------------------------------------------------ |
 | [Lifecycle Flowchart]         | A flowchart detailing how lifecycles are interrelated. |
 | [Configuration Guide]         | Configuring Gasket apps                                |
+| [Plugins Guide]               | How to use and author plugins                          |
 | [Presets Guide]               | How to use and author presets                          |
 | [Package Management Guide]    | Managing dependencies in Gasket apps                   |
 | [Common "Gotchas"]            | Tips and tricks to be aware of                         |
-| [Plugins Guide]               | How to use and author plugins                          |
 | [Progressive Web Apps Guide]  | Making Progressive Web Apps (PWA) with Gasket          |
 | [Express Setup Guide]         | Adding middleware and routes for Express               |
 | [Next.js Routing Guide]       | Basic and advance routing for Next.js                  |
@@ -80,8 +80,8 @@ Available lifecycles
 | [manifest]             | Modify the the web manifest for a request                     |
 | [metadata]             | Allows plugins to adjust their metadata                       |
 | [metrics]              | Collect metrics for an app                                    |
-| [middleware]           | Add Express style middleware                                  |
-| [middleware][4]        | Add Express style middleware for Fastify                      |
+| [middleware]           | Add Express style middleware for Fastify                      |
+| [middleware][4]        | Add Express style middleware                                  |
 | [next]                 | Update the next app instance before prepare                   |
 | [nextConfig]           | Setup the next config                                         |
 | [nextExpress]          | Access the prepared next app and express instance             |
@@ -162,7 +162,7 @@ Supporting modules
 | Name              | Version | Description                                                                          |
 | ----------------- | ------- | ------------------------------------------------------------------------------------ |
 | [@gasket/assets]  | 5.0.2   | Gasket assets                                                                        |
-| [@gasket/cli]     | 5.1.3   | CLI for rapid application development with gasket                                    |
+| [@gasket/cli]     | 5.2.0   | CLI for rapid application development with gasket                                    |
 | [@gasket/engine]  | 5.1.3   | Plugin engine for gasket                                                             |
 | [@gasket/fetch]   | 5.0.2   | Gasket Fetch API                                                                     |
 | [@gasket/intl]    | 5.0.2   | React component library to enable localization for gasket apps.                      |
@@ -175,10 +175,10 @@ Supporting modules
 
 [Lifecycle Flowchart]:/docs/generated-docs/lifecycle-graphs.md
 [Configuration Guide]:/packages/gasket-cli/docs/configuration.md
+[Plugins Guide]:/packages/gasket-cli/docs/plugins.md
 [Presets Guide]:/packages/gasket-cli/docs/presets.md
 [Package Management Guide]:/packages/gasket-cli/docs/package-management.md
 [Common "Gotchas"]:/packages/gasket-cli/docs/gotchas.md
-[Plugins Guide]:/packages/gasket-cli/docs/plugins.md
 [Progressive Web Apps Guide]:/packages/gasket-preset-pwa/docs/pwa-support.md
 [Express Setup Guide]:/packages/gasket-plugin-express/docs/setup.md
 [Next.js Routing Guide]:/packages/gasket-plugin-nextjs/docs/routing.md
@@ -216,8 +216,8 @@ Supporting modules
 [manifest]:/packages/gasket-plugin-manifest/README.md#manifest
 [metadata]:/packages/gasket-plugin-metadata/README.md#metadata
 [metrics]:/packages/gasket-plugin-metrics/README.md#metrics
-[middleware]:/packages/gasket-plugin-express/README.md#middleware
-[4]:/packages/gasket-plugin-fastify/README.md#middleware
+[middleware]:/packages/gasket-plugin-fastify/README.md#middleware
+[4]:/packages/gasket-plugin-express/README.md#middleware
 [next]:/packages/gasket-plugin-nextjs/README.md#next
 [nextConfig]:/packages/gasket-plugin-nextjs/README.md#nextConfig
 [nextExpress]:/packages/gasket-plugin-nextjs/README.md#nextExpress
