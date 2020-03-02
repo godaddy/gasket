@@ -265,17 +265,6 @@ describe('makeCreateContext', () => {
     assume(results.generatedFiles).a('set');
   });
 
-  it('throws if not preset or preset path found', () => {
-    let error;
-    try {
-      results = makeCreateContext(argv);
-    } catch (err) {
-      error = err;
-    }
-
-    assume(error.message).to.eqls('No preset specified.');
-  });
-
   it('doesnt throw if preset found', () => {
     let error;
     try {

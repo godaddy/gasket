@@ -147,11 +147,6 @@ module.exports = function makeCreateContext(argv = [], flags = {}) {
   const localPresets = presetPath.reduce(flatten, []);
   const rawPlugins = plugins.reduce(flatten, []);
   const pkgLinks = npmLink.reduce(flatten, []);
-
-  if (localPresets.length === 0 && rawPresets.length === 0) {
-    throw new Error('No preset specified.');
-  }
-
   const cwd = process.cwd();
   const dest = path.join(cwd, appName);
   const relDest = `.${path.sep}${path.relative(cwd, dest)}`;
