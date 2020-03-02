@@ -1,5 +1,9 @@
 # `@gasket/cli`
 
+### 5.3.0
+
+- No longer require a preset for create command ([#152])
+
 ### 5.2.0
 
 - Support force option with pkg.add ([#148])
@@ -281,3 +285,4 @@ upon `gasket create`
 [#143]: https://github.com/godaddy/gasket/pull/143
 [#147]: https://github.com/godaddy/gasket/pull/147
 [#148]: https://github.com/godaddy/gasket/pull/148
+[#152]: https://github.com/godaddy/gasket/pull/152
