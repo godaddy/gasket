@@ -37,7 +37,7 @@ First, add it to the `plugins` section of your `gasket.config.js`:
 ```js
 module.exports = {
   plugins: {
-    add: ['@gasket/webpack']
+    add: ['@gasket/plugin-webpack']
   }
 }
 ```
@@ -49,7 +49,7 @@ current `webpack` configuration.
 ```js
 module.exports = {
   plugins: {
-    add: ['@gasket/webpack']
+    add: ['@gasket/plugin-webpack']
   },
   webpack: {
     performance: {
