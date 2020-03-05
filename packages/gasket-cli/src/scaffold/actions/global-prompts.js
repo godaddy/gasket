@@ -32,7 +32,7 @@ async function chooseAppDescription(context) {
  */
 async function choosePackageManager(context) {
   const packageManager = context.packageManager ||
-    await inquirer.prompt([
+    (await inquirer.prompt([
       {
         name: 'packageManager',
         message: 'Which packager would you like to use?',
@@ -41,7 +41,7 @@ async function choosePackageManager(context) {
           { name: 'npm' },
           { name: 'yarn' }
         ]
-      }]).packageManager;
+      }])).packageManager;
 
   const installCmd = context.installCmd || `${packageManager} install`;
 
