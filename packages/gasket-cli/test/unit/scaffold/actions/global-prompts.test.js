@@ -84,6 +84,13 @@ describe('globalPrompts', () => {
 
         assume(mockContext).property('installCmd', `${manager} install`);
       });
+
+      it(`[${manager}] sets package manager commands in context even when packageManager is already set in context`, async () => {
+        mockContext.packageManager = manager;
+        await choosePackageManager(mockContext);
+
+        assume(mockContext).property('installCmd', `${manager} install`);
+      });
     });
   });
 

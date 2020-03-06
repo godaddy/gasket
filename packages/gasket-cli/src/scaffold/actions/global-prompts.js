@@ -31,8 +31,8 @@ async function chooseAppDescription(context) {
  * @returns {Promise} promise
  */
 async function choosePackageManager(context) {
-  if (!context.packageManager) {
-    const { packageManager } = await inquirer.prompt([
+  const packageManager = context.packageManager ||
+    (await inquirer.prompt([
       {
         name: 'packageManager',
         message: 'Which packager would you like to use?',
@@ -41,19 +41,22 @@ async function choosePackageManager(context) {
           { name: 'npm' },
           { name: 'yarn' }
         ]
-      }]);
+      }])).packageManager;
 
-    const runners = {
-      npm: 'npx',
-      yarn: 'yarn'
-    };
+  const installCmd = context.installCmd || `${packageManager} install`;
 
-    Object.assign(context, {
-      packageManager,
-      installCmd: `${packageManager} install`,
-      localCmd: `${runners[packageManager]} gasket local`
-    });
-  }
+  const runners = {
+    npm: 'npx',
+    yarn: 'yarn'
+  };
+
+  const localCmd = context.localCmd || `${runners[packageManager]} gasket local`;
+
+  Object.assign(context, {
+    packageManager,
+    installCmd,
+    localCmd
+  });
 }
 
 /**
