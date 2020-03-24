@@ -112,7 +112,7 @@ which would enable you to use any arbitrary environment derivation logic.
 The environment for local development is somewhat of a special case in Gasket.
 For one, you'll typically start via the `gasket local` command to use a special
 development-friendly version of the server instead of `gasket start`. These
-commands are enabled for apps by the by the [start plugin]. Additionally, you
+commands are enabled for apps by the [start plugin]. Additionally, you
 may have local settings you want to change without accidentally committing the
 changes to your repository, like pointing to locally-running dependencies.
 
