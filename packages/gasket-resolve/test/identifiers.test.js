@@ -20,6 +20,12 @@ describe('pluginIdentifier', () => {
     result = pluginIdentifier('example').fullName;
     expect(result).toContain('gasket');
   });
+
+  it('generates unique names for anonymous plugins', () => {
+    const name1 = pluginIdentifier().fullName;
+    const name2 = pluginIdentifier().fullName;
+    expect(name1).not.toEqual(name2);
+  });
 });
 
 describe('presetIdentifier', () => {

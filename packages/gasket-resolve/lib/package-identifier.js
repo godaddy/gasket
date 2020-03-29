@@ -107,6 +107,8 @@ function projectIdentifier(projectName, type = 'plugin') {
   //
   const projectVars = setupProjectVars();
 
+  let anonymousId = 1;
+
   /**
    * Create a new PackageIdentifier instance
    *
@@ -119,7 +121,14 @@ function projectIdentifier(projectName, type = 'plugin') {
    */
   function createPackageIdentifier(rawName, options) {
 
-    const [, parsedName, parsedVersion] = reName.exec(rawName);
+    let parsedName, parsedVersion;
+
+    if (rawName) {
+      [, parsedName, parsedVersion] = reName.exec(rawName);
+    } else {
+      parsedName = `anonymous${anonymousId++}`;
+      parsedVersion = '';
+    }
 
     /**
      * * Setup package level variables

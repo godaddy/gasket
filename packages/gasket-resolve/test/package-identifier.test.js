@@ -256,6 +256,13 @@ describe('projectIdentifier', () => {
     expect(result).toContain(type);
   });
 
+  it('generates unique names for anonymous entities', () => {
+    const identifier = projectIdentifier('gasket', 'plugin');
+    const name1 = identifier().fullName;
+    const name2 = identifier().fullName;
+    expect(name1).not.toEqual(name2);
+  });
+
   describe('isValidFullName', () => {
     const packageIdentifier = projectIdentifier('gasket');
 

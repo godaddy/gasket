@@ -232,6 +232,12 @@ describe('Loader', () => {
         preloaded: true
       }));
     });
+
+    it('generates unique names for nameless plugin objects', () => {
+      const plugin1 = loader.loadPlugin({ hooks: { foo: () => { } } });
+      const plugin2 = loader.loadPlugin({ hooks: { bar: () => { } } });
+      expect(plugin1.name).not.toEqual(plugin2.name);
+    });
   });
 
   describe('.loadPreset', () => {
@@ -383,14 +389,22 @@ describe('Loader', () => {
     });
 
     it('loads configured plugins', () => {
+      const objectPlugin1 = { hooks: { foo: () => { } } };
+      const objectPlugin2 = { hooks: { bar: () => { } } };
       const config = {
-        add: ['@gasket/plugin-one']
+        add: ['@gasket/plugin-one', objectPlugin1, objectPlugin2]
       };
       const results = loader.loadConfigured(config);
       expect(results.plugins).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
             module: pluginOne
+          }),
+          expect.objectContaining({
+            module: objectPlugin1
+          }),
+          expect.objectContaining({
+            module: objectPlugin2
           })
         ])
       );
