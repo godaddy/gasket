@@ -1,5 +1,7 @@
 # `@gasket/resolve`
 
+- Generate unique names for anonymous plugins and presets
+
 ### 5.1.0
 
 - Expose projectIdentifier with support for scope-only package short names ([#142])
