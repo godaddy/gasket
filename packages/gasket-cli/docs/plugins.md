@@ -99,8 +99,8 @@ module.exports = {
     start: async function gatherClues(gasket) {
       const { logger, exec } = gasket;
       const clues = await Promise.all([
-        gasket.exec('motive'),
-        gasket.exec('alibi')
+        exec('motive'),
+        exec('alibi')
       ]);
 
       logger.info(clues);
