@@ -21,10 +21,8 @@ describe('pluginIdentifier', () => {
     expect(result).toContain('gasket');
   });
 
-  it('generates unique names for anonymous plugins', () => {
-    const name1 = pluginIdentifier().fullName;
-    const name2 = pluginIdentifier().fullName;
-    expect(name1).not.toEqual(name2);
+  it('requires the supplied name to be a string', () => {
+    expect(pluginIdentifier).toThrow(Error);
   });
 });
 

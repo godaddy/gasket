@@ -233,10 +233,9 @@ describe('Loader', () => {
       }));
     });
 
-    it('generates unique names for nameless plugin objects', () => {
-      const plugin1 = loader.loadPlugin({ hooks: { foo: () => { } } });
-      const plugin2 = loader.loadPlugin({ hooks: { bar: () => { } } });
-      expect(plugin1.name).not.toEqual(plugin2.name);
+    it('throws if a plugin object does not have a name', () => {
+      const plugin = { hooks: { foo: () => { } } };
+      expect(() => loader.loadPlugin(plugin)).toThrow(Error);
     });
   });
 
@@ -389,8 +388,8 @@ describe('Loader', () => {
     });
 
     it('loads configured plugins', () => {
-      const objectPlugin1 = { hooks: { foo: () => { } } };
-      const objectPlugin2 = { hooks: { bar: () => { } } };
+      const objectPlugin1 = { name: 'a', hooks: { foo: () => { } } };
+      const objectPlugin2 = { name: 'b', hooks: { bar: () => { } } };
       const config = {
         add: ['@gasket/plugin-one', objectPlugin1, objectPlugin2]
       };

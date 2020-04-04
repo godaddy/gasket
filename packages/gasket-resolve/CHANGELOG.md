@@ -1,6 +1,6 @@
 # `@gasket/resolve`
 
-- Generate unique names for anonymous plugins and presets
+- Validate that plugin objects are named
 
 ### 5.1.0
 
