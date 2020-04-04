@@ -123,14 +123,7 @@ function projectIdentifier(projectName, type = 'plugin') {
       throw new Error('Package name must be supplied. See the @gasket/resolve documentation for naming conventions: https://github.com/godaddy/gasket/tree/master/packages/gasket-resolve#naming-convention');
     }
 
-    let parsedName, parsedVersion;
-
-    if (rawName) {
-      [, parsedName, parsedVersion] = reName.exec(rawName);
-    } else {
-      parsedName = `anonymous${anonymousId++}`;
-      parsedVersion = '';
-    }
+    const [, parsedName, parsedVersion] = reName.exec(rawName);
 
     /**
      * * Setup package level variables
