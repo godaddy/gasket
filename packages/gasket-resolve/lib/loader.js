@@ -101,6 +101,10 @@ class Loader extends Resolver {
   loadPlugin(module, meta = {}) {
     // If the provide plugin is an already required module, just gather info.
     if (typeof module !== 'string') {
+      if (typeof module.name !== 'string') {
+        throw new Error('Plugin object must have a string `name` property.');
+      }
+
       const moduleName = pluginIdentifier(module.name).fullName;
       return this.getModuleInfo(module, moduleName, { ...meta, preloaded: true });
     }
