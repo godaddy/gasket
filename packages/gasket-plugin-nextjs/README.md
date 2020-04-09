@@ -34,11 +34,11 @@ module.exports = {
 
 - Instead of adding a dedicated `next.config.js`, the `next` property within
   `gasket.config.js` is used. Everything you can configure in the
-  [next.config][next.config] can be added here.
+  [next.config] can be added here.
 
 It is also possible for apps to config Next.js using the `gasket.config.js`
 file. To do so, specify a `nextConfig` object property in the same form as what
-you would set for [custom configurations] or using Next.js plugins.
+you would set for [custom configurations][next.config] or using Next.js plugins.
 
 For general Webpack configurations, it is recommend to utilize features of the
 Gasket [webpack plugin].
@@ -148,6 +148,7 @@ module.exports = {
 
 <!-- LINKS -->
 
+<!--[next.config]-->
 [nextConfig lifecycle]:#nextconfig
-[custom configurations]: https://nextjs.org/docs#custom-configuration
+[next.config]: https://nextjs.org/docs#custom-configuration
 [webpack plugin]:/packages/gasket-plugin-webpack/README.md

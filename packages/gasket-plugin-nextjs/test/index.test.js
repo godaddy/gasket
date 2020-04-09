@@ -74,18 +74,11 @@ describe('next hook', () => {
 });
 
 describe('create hook', () => {
-
-  let plugin, mockContext;
-
-  function assumeCreatedWith(assertFn) {
-    return async function assumeCreated() {
-      await plugin.hooks.create.handler({}, mockContext);
-      assertFn(mockContext);
-    };
-  }
+  let mockContext;
+  const plugin = require('../');
+  const root = path.join(__dirname, '..');
 
   beforeEach(() => {
-    plugin = require('../');
 
     mockContext = {
       pkg: {
@@ -96,60 +89,47 @@ describe('create hook', () => {
     };
   });
 
-  it('adds the appropriate globs', assumeCreatedWith(({ files }) => {
-    const root = path.join(__dirname, '..');
-    assume(files.add).calledWith(
+  it('adds the appropriate globs', async function () {
+    await plugin.hooks.create.handler({}, mockContext);
+
+    assume(mockContext.files.add).calledWith(
       `${root}/generator/app/.*`,
       `${root}/generator/app/*`,
       `${root}/generator/app/**/*`
     );
-  }));
+  });
 
   it('adds the appropriate globs for mocha', async function () {
-    const files = { add: spy() };
-    await plugin.hooks.create.handler({}, {
-      pkg: {
-        add: spy(),
-        has: spy()
-      },
-      files,
-      testPlugin: '@gasket/mocha'
-    });
+    mockContext.testPlugin = '@gasket/mocha';
+    await plugin.hooks.create.handler({}, mockContext);
 
-    const root = path.join(__dirname, '..');
-    assume(files.add).calledWith(
+    assume(mockContext.files.add).calledWith(
       `${root}/generator/mocha/*`,
       `${root}/generator/mocha/**/*`
     );
   });
 
   it('adds the appropriate globs for jest', async function () {
-    const files = { add: spy() };
-    await plugin.hooks.create.handler({}, {
-      pkg: {
-        add: spy(),
-        has: spy()
-      },
-      files,
-      testPlugin: '@gasket/jest'
-    });
+    mockContext.testPlugin = '@gasket/jest';
+    await plugin.hooks.create.handler({}, mockContext);
 
-    const root = path.join(__dirname, '..');
-    assume(files.add).calledWith(
+    assume(mockContext.files.add).calledWith(
       `${root}/generator/jest/*`,
       `${root}/generator/jest/**/*`
     );
   });
 
-  it('adds appropriate dependencies', assumeCreatedWith(({ pkg }) => {
-    assume(pkg.add).calledWith('dependencies', {
+  it('adds appropriate dependencies', async function () {
+    await plugin.hooks.create.handler({}, mockContext);
+
+    assume(mockContext.pkg.add).calledWith('dependencies', {
       '@gasket/assets': devDependencies['@gasket/assets'],
       'next': devDependencies.next,
       'prop-types': devDependencies['prop-types'],
       'react': devDependencies.react,
       'react-dom': devDependencies['react-dom']
     });
-  }));
+  });
 
   it('adds the appropriate globs for redux', async function () {
     const files = { add: spy() };
@@ -161,7 +141,6 @@ describe('create hook', () => {
       files
     });
 
-    const root = path.join(__dirname, '..');
     assume(files.add).calledWith(
       `${root}/generator/redux/*`,
       `${root}/generator/redux/**/*`
