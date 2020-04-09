@@ -1,5 +1,7 @@
 # `@gasket/resolve`
 
+- Validate that plugin objects are named
+
 ### 5.1.0
 
 - Expose projectIdentifier with support for scope-only package short names ([#142])
