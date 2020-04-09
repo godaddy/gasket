@@ -15,6 +15,7 @@ describe('Plugin', () => {
       'configure',
       'middleware',
       'express',
+      'webpack',
       'metadata'
     ];
 

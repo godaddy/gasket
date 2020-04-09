@@ -35,7 +35,8 @@
   "dependencies": {
     "deepmerge": "^4.0.0",
     "lru-cache": "^5.1.1",
-    "uglify-js": "^3.5.3"
+    "uglify-js": "^3.5.3",
+    "webpack-inject-plugin": "^1.5.4"
   },
   "devDependencies": {
     "eslint": "^6.1.0",

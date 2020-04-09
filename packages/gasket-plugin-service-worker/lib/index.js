@@ -1,6 +1,7 @@
 const configure = require('./configure');
 const middleware = require('./middleware');
 const express = require('./express');
+const webpack = require('./webpack');
 
 module.exports = {
   name: require('../package').name,
@@ -8,6 +9,7 @@ module.exports = {
     configure,
     middleware,
     express,
+    webpack,
     metadata(gasket, meta) {
       return {
         ...meta,

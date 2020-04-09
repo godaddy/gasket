@@ -1,29 +1,5 @@
-/* eslint require-atomic-updates: warn */
-
-const util = require('util');
-const fs = require('fs');
-const readFile = util.promisify(fs.readFile);
-
+const { loadRegisterScript } = require('./utils');
 const nonNextRoute = /^(?!\/_next\/)/;
-let __script;
-
-/**
- * Loads template file once with substitutions from config
- *
- * @param {Object} config - ServiceWorker config from gasket.config
- * @returns {Promise<string>} template
- */
-async function loadTemplate(config) {
-  if (!__script) {
-    const { url, scope } = config;
-    const template = require.resolve('./sw-register.template.js');
-
-    __script = (await readFile(template, 'utf8'))
-      .replace('{URL}', url)
-      .replace('{SCOPE}', scope);
-  }
-  return __script;
-}
 
 /**
  * Middleware lifecycle to return middleware layer
@@ -32,7 +8,7 @@ async function loadTemplate(config) {
  * @returns {Function} middleware
  */
 module.exports = function middleware(gasket) {
-  const { serviceWorker } = gasket.config;
+  const { serviceWorker: config } = gasket.config;
 
   /**
    * Middleware layer to attach the service worker registration script to req
@@ -44,8 +20,8 @@ module.exports = function middleware(gasket) {
    */
   async function layer(req, res, next) {
     if (nonNextRoute.test(req.path)) {
-      const content = await loadTemplate(serviceWorker);
-
+      const content = await loadRegisterScript(config);
+      // eslint-disable-next-line require-atomic-updates
       req.swRegisterScript = `<script>${content}</script>`;
     }
     next();
