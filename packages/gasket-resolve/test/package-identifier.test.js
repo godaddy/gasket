@@ -256,6 +256,11 @@ describe('projectIdentifier', () => {
     expect(result).toContain(type);
   });
 
+  it('throws if a name is not provided', () => {
+    const identifier = projectIdentifier('gasket', 'plugin');
+    expect(identifier).toThrow(Error);
+  });
+
   describe('isValidFullName', () => {
     const packageIdentifier = projectIdentifier('gasket');
 

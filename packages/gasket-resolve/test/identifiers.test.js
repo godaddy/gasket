@@ -20,6 +20,10 @@ describe('pluginIdentifier', () => {
     result = pluginIdentifier('example').fullName;
     expect(result).toContain('gasket');
   });
+
+  it('requires the supplied name to be a string', () => {
+    expect(pluginIdentifier).toThrow(Error);
+  });
 });
 
 describe('presetIdentifier', () => {

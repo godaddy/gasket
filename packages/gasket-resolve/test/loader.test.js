@@ -232,6 +232,11 @@ describe('Loader', () => {
         preloaded: true
       }));
     });
+
+    it('throws if a plugin object does not have a name', () => {
+      const plugin = { hooks: { foo: () => { } } };
+      expect(() => loader.loadPlugin(plugin)).toThrow(Error);
+    });
   });
 
   describe('.loadPreset', () => {
@@ -383,14 +388,22 @@ describe('Loader', () => {
     });
 
     it('loads configured plugins', () => {
+      const objectPlugin1 = { name: 'a', hooks: { foo: () => { } } };
+      const objectPlugin2 = { name: 'b', hooks: { bar: () => { } } };
       const config = {
-        add: ['@gasket/plugin-one']
+        add: ['@gasket/plugin-one', objectPlugin1, objectPlugin2]
       };
       const results = loader.loadConfigured(config);
       expect(results.plugins).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
             module: pluginOne
+          }),
+          expect.objectContaining({
+            module: objectPlugin1
+          }),
+          expect.objectContaining({
+            module: objectPlugin2
           })
         ])
       );
