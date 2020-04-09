@@ -96,7 +96,7 @@ async function chooseTestPlugin(context) {
       ]));
     }
 
-    if (testPlugin !== 'none') {
+    if (testPlugin && testPlugin !== 'none') {
       addPluginsToContext([testPlugin], context);
       Object.assign(context, { testPlugin });
     }

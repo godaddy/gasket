@@ -32,7 +32,7 @@ module.exports = {
         );
 
         ['jest', 'mocha'].forEach(tester => {
-          if (pluginIdentifier(testPlugin).longName === `@gasket/plugin-${tester}`) {
+          if (testPlugin && pluginIdentifier(testPlugin).longName === `@gasket/plugin-${tester}`) {
             files.add(
               `${__dirname}/generator/${tester}/*`,
               `${__dirname}/generator/${tester}/**/*`
