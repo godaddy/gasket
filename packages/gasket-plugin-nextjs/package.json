@@ -9,6 +9,7 @@
     "test": "npm run test:runner",
     "test:runner": "mocha --require ./setup.js \"test/**/*.test.js\"",
     "test:coverage": "nyc --reporter=text --reporter=json-summary npm run test:runner",
+    "test:watch": "npm run test:runner -- --watch",
     "posttest": "npm run lint",
     "report": "nyc report --reporter=lcov"
   },
