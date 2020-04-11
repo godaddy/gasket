@@ -8,6 +8,23 @@ module.exports = {
   dependencies: ['@gasket/plugin-webpack'],
   name,
   hooks: {
+    /**
+     * Set up configuration.
+     *
+     * If the service worker plugin, only the _app entry is configured to be
+     * injected with registration script.
+     *
+     * @param {Gasket} gasket - Gasket
+     * @param {Object} baseConfig - Base gasket config
+     * @returns {Object} config
+     */
+    configure: function configure(gasket, baseConfig = {}) {
+      const serviceWorker = {
+        webpackRegister: key => /_app/.test(key),
+        ...(baseConfig.serviceWorker || {})
+      };
+      return { ...baseConfig, serviceWorker };
+    },
     create: {
       timing: {
         after: ['@gasket/plugin-redux']

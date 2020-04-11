@@ -50,6 +50,11 @@ To be set in under `serviceWorker` in the `gasket.config.js`.
   JavaScript. Configuration for this field is passed directly to [`uglify-js`].
   This is turned on in `production` by default. Adding `minify: { }` will turn
   on the default behavior in other environments, if specified.
+- `webpackRegister` - (string|string[]|function|boolean) By default, a service
+  worker registration script will will be injected to the webpack entry modules.
+  This can be disabled by setting this to `false`. If you wish to control which
+  entry modules get injected, read more in the [registering] section.
+
 
 #### Example
 
@@ -169,15 +174,44 @@ module.exports = {
 }
 ```
 
-## Register
+## Registering
 
 Besides any config or lifecycle hooks your app or plugins may implement, the
-service worker itself will need to be registered for your app.
+service worker itself will need to be registered in your app. A registration
+script is generated automatically by the plugin based on your config options,
+and can be included with your app in a couple of ways.
 
-A registration script is generated automatically by the plugin, and made
-available to requests as `req.swRegisterScript`. You can use this when rendering
-the index.html for your app, or other server side rendering, ensuring the
-earliest registration of the service worker.
+### Webpack
+
+When using the [@gasket/plugin-webpack] in your app, the service worker registration script
+will automatically be injected to entry modules by default at build time. If you
+are also using the [@gasket/plugin-nextjs], only the `_app` entry module will be
+injected with the script.
+
+If you otherwise need to tune which Webpack entry modules are injected, you can
+set the `webpackRegister` to the name or array of names of the entries you want
+injected. This can also be set to a lookup function that takes in an entry name
+and returns a boolean whether it should be injected or not.
+
+```js
+// gasket.config.js
+
+module.exports = {
+  serviceWorker: {
+    webpackRegister: key => key === 'main'
+  }
+}
+```
+
+If you do not want the registration script injected by Webpack, you can set
+`webpackRegister` to false.
+
+### Request
+
+The alternative way to set up the registration script is to access the script
+off of the Request object when rendering your pages (`req.swRegisterScript`).
+You can use this when rendering the index.html for your app, or other server
+side rendering.
 
 ## How it works
 
@@ -208,8 +242,11 @@ environment, which can be easily done using [service-worker-mock].
 
 <!-- LINKS -->
 
+[Loaded script]:#example-loaded-script
+[registering]:#registering
 [lru-cache options]:https://github.com/isaacs/node-lru-cache#options
 [`uglify-js`]: https://www.npmjs.com/package/uglify-js
-[Loaded script]:#loaded-script-example
 [service-worker-mock]:https://github.com/pinterest/service-workers/tree/master/packages/service-worker-mock#service-worker-mock
 [service workers]:https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API
+[@gasket/plugin-webpack]:/packages/gasket-plugin-webpack/README.md
+[@gasket/plugin-nextjs]:/packages/gasket-plugin-nextjs/README.md

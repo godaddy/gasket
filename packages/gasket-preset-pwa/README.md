@@ -24,11 +24,11 @@ Modify `plugins.presets` section of your `gasket.config.js`:
 
 ```diff
 module.exports = {
-  plugins: [
+  plugins: {
     presets: [
 +      '@gasket/preset-pwa'
     ]
-  ]
+  }
 }
 ```
 

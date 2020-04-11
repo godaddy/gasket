@@ -19,6 +19,7 @@ describe('Plugin', function () {
 
   it('has expected hooks', () => {
     const expected = [
+      'configure',
       'create',
       'express',
       'build',
@@ -31,6 +32,34 @@ describe('Plugin', function () {
     const hooks = Object.keys(plugin.hooks);
     assume(hooks).eqls(expected);
     assume(hooks).is.length(expected.length);
+  });
+});
+
+describe('configure hook', () => {
+  const configureHook = require('../').hooks.configure;
+
+  it('adds the sw webpackRegister callback', () => {
+    const gasket = mockGasketApi();
+    const results = configureHook(gasket, gasket.config);
+    assume(results).property('serviceWorker');
+    assume(results.serviceWorker).property('webpackRegister');
+    assume(results.serviceWorker.webpackRegister).is.a('function');
+  });
+
+  it('does not override the sw webpackRegister if exists', () => {
+    const gasket = mockGasketApi();
+    gasket.config.serviceWorker = { webpackRegister: 'hello' };
+    const results = configureHook(gasket, gasket.config);
+    assume(results.serviceWorker.webpackRegister).is.a('string');
+  });
+
+  it('webpackRegister callback only true for _app entries', () => {
+    const gasket = mockGasketApi();
+    const results = configureHook(gasket, gasket.config);
+    const entryName = results.serviceWorker.webpackRegister;
+    assume(entryName('bad')).equals(false);
+    assume(entryName('_app')).equals(true);
+    assume(entryName('static/runtime/_app')).equals(true);
   });
 });
 
