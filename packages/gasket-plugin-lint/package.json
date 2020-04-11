@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-lint",
-  "version": "5.1.3",
+  "version": "5.3.1",
   "description": "Adds GoDaddy standard linting to your application",
   "main": "lib",
   "scripts": {
@@ -35,7 +35,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-lint#readme",
   "dependencies": {
-    "@gasket/resolve": "^5.1.0",
+    "@gasket/resolve": "^5.3.1",
     "semver": "^6.3.0"
   },
   "devDependencies": {
