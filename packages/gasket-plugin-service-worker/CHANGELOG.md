@@ -1,5 +1,9 @@
 # `@gasket/plugin-service-worker`
 
+### 5.3.1
+
+- Inject registration script to Webpack entry modules ([#158])
+
 ### 5.0.0
 
 - Open Source Release
@@ -26,3 +30,4 @@
 - Support for caching sw content
 
 [#95]:https://github.com/godaddy/gasket/pull/95
+[#158]: https://github.com/godaddy/gasket/pull/158
