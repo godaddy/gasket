@@ -1,5 +1,9 @@
 # `@gasket/plugin-nextjs`
 
+### 5.3.1
+
+- Configure server worker plugin to inject registration script to _app entry ([#158])
+
 ### 5.0.2
 
 - Fix name in plugin timing ([#136])
@@ -62,3 +66,4 @@
 [#114]: https://github.com/godaddy/gasket/pull/114
 [#125]: https://github.com/godaddy/gasket/pull/125
 [#136]: https://github.com/godaddy/gasket/pull/136
+[#158]: https://github.com/godaddy/gasket/pull/158
