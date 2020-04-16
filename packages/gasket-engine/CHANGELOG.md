@@ -1,5 +1,9 @@
 # `@gasket/engine`
 
+### 5.3.2
+
+- Fix module path check regex to support Windows paths ([#160])
+
 ### 5.0.0
 
 - Open Source Release
@@ -46,5 +50,6 @@
 [#64]: https://github.com/godaddy/gasket/pull/64
 [#100]: https://github.com/godaddy/gasket/pull/100
 [#124]: https://github.com/godaddy/gasket/pull/124
+[#160]: https://github.com/godaddy/gasket/pull/160
 
 [Loader]:/packages/gasket-resolve/docs/api.md#Loader
