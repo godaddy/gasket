@@ -77,13 +77,13 @@ function addDefaultPlugins(gasketConfig) {
  */
 async function addUserPlugins(gasketConfig) {
   try {
-    const pluginsDir = path.join(gasketConfig.root, './plugins');
+    const pluginsDir = path.join(gasketConfig.root, 'plugins');
     const files = await readDir(pluginsDir);
     const moduleNames = files
       .filter(fileName => jsExtension.test(fileName))
       .map(fileName => {
         const fileSansExtension = fileName.replace(jsExtension, '');
-        return path.join(pluginsDir, `./${fileSansExtension}`);
+        return path.join(pluginsDir, fileSansExtension);
       });
 
     const pluginsConfig = gasketConfig.plugins || {};
