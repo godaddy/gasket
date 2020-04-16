@@ -1,5 +1,9 @@
 # `@gasket/cli`
 
+### 5.3.2
+
+- Cleanup unnecessary `./` in path joins ([#160])
+
 ### 5.3.1
 
 - Allow context to set packageManager without overriding run commands ([#154])
@@ -291,3 +295,4 @@ upon `gasket create`
 [#148]: https://github.com/godaddy/gasket/pull/148
 [#152]: https://github.com/godaddy/gasket/pull/152
 [#154]: https://github.com/godaddy/gasket/pull/154
+[#160]: https://github.com/godaddy/gasket/pull/160
