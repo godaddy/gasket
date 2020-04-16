@@ -101,10 +101,23 @@ describe('constructor', () => {
       expect(engine._plugins).toHaveProperty('some-local', mockPlugin.module);
     });
 
+    it('plugins loaded from paths use name from module (windows)', () => {
+      mockPlugin.name = 'C:\\\\path\\to\\some-local-plugin';
+      mockPlugin.module.name = 'some-local';
+      const engine = new PluginEngine(mockConfig);
+      expect(engine._plugins).toHaveProperty('some-local', mockPlugin.module);
+    });
+
     it('plugins loaded from paths fallback to path if name not in module', () => {
       mockPlugin.name = '/path/to/some-local-plugin';
       const engine = new PluginEngine(mockConfig);
       expect(engine._plugins).toHaveProperty('/path/to/some-local-plugin', mockPlugin.module);
+    });
+
+    it('plugins loaded from paths fallback to path if name not in module (windows)', () => {
+      mockPlugin.name = 'C:\\\\path\\to\\some-local-plugin';
+      const engine = new PluginEngine(mockConfig);
+      expect(engine._plugins).toHaveProperty('C:\\\\path\\to\\some-local-plugin', mockPlugin.module);
     });
   });
 });
