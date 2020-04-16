@@ -120,7 +120,7 @@ Available presets
 
 | Name                    | Version | Description                                |
 | ----------------------- | ------- | ------------------------------------------ |
-| [@gasket/preset-nextjs] | 5.3.1   | Basic NextJS Framework                     |
+| [@gasket/preset-nextjs] | 5.3.2   | Basic NextJS Framework                     |
 | [@gasket/preset-pwa]    | 5.3.1   | Turn Gasket apps into Progressive Web Apps |
 
 ## Plugins
@@ -141,14 +141,14 @@ Available plugins
 | [@gasket/plugin-https]          | 5.1.3   | Create http/s servers with graceful termination                            |
 | [@gasket/plugin-intl]           | 5.1.2   | NodeJS script to build localization files.                                 |
 | [@gasket/plugin-jest]           | 5.0.2   | Integrated jest into your application.                                     |
-| [@gasket/plugin-lifecycle]      | 5.3.1   | Allows a gasket/ directory to be used for lifecycle hooks in applications. |
+| [@gasket/plugin-lifecycle]      | 5.3.2   | Allows a gasket/ directory to be used for lifecycle hooks in applications. |
 | [@gasket/plugin-lint]           | 5.3.1   | Adds GoDaddy standard linting to your application                          |
 | [@gasket/plugin-log]            | 5.0.2   | Gasket log plugin                                                          |
 | [@gasket/plugin-manifest]       | 5.0.2   | The web app manifest for progressive Gasket applications                   |
 | [@gasket/plugin-metadata]       | 5.3.1   | Adds metadata to gasket lifecycles                                         |
 | [@gasket/plugin-metrics]        | 5.0.2   | Collect metrics for gasket commands                                        |
 | [@gasket/plugin-mocha]          | 5.1.3   | Integrates mocha based testing in to your Gasket application               |
-| [@gasket/plugin-nextjs]         | 5.3.1   | Adds Next support to your application                                      |
+| [@gasket/plugin-nextjs]         | 5.3.2   | Adds Next support to your application                                      |
 | [@gasket/plugin-redux]          | 5.0.2   | Gasket Redux Setup                                                         |
 | [@gasket/plugin-service-worker] | 5.3.1   | Gasket Service Worker Plugin                                               |
 | [@gasket/plugin-start]          | 5.1.3   | Adds commands for building and starting Gasket apps                        |
@@ -162,8 +162,8 @@ Supporting modules
 | Name              | Version | Description                                                                          |
 | ----------------- | ------- | ------------------------------------------------------------------------------------ |
 | [@gasket/assets]  | 5.0.2   | Gasket assets                                                                        |
-| [@gasket/cli]     | 5.3.1   | CLI for rapid application development with gasket                                    |
-| [@gasket/engine]  | 5.3.1   | Plugin engine for gasket                                                             |
+| [@gasket/cli]     | 5.3.2   | CLI for rapid application development with gasket                                    |
+| [@gasket/engine]  | 5.3.2   | Plugin engine for gasket                                                             |
 | [@gasket/fetch]   | 5.0.2   | Gasket Fetch API                                                                     |
 | [@gasket/intl]    | 5.0.2   | React component library to enable localization for gasket apps.                      |
 | [@gasket/log]     | 5.0.2   | Gasket client and server logger                                                      |
