@@ -34,7 +34,7 @@
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-analyze",
   "dependencies": {
     "deepmerge": "^4.0.0",
-    "webpack-bundle-analyzer": "^3.1.0"
+    "webpack-bundle-analyzer": "^3.7.0"
   },
   "devDependencies": {
     "eslint": "^6.1.0",
