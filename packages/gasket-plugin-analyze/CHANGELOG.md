@@ -1,5 +1,9 @@
 # `@gasket/plugin-analyze`
 
+### 5.3.3
+
+- Update webpack-bundle-analyzer@^3.7.0 ([#161])
+
 ### 5.0.0
 
 - Open Source Release
@@ -27,3 +31,4 @@
 
 
 [#74]: https://github.com/godaddy/gasket/pull/74
+[#161]: https://github.com/godaddy/gasket/pull/161
