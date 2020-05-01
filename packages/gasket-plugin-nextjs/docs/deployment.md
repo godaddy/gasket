@@ -31,7 +31,7 @@ file, you can default to the version of your application as `buildId`:
 
 ```js
 {
-  next: {
+  nextConfig: {
     generateBuildId: async () => {
       return require('./package.json').version;
 
@@ -66,7 +66,7 @@ specific configuration in your `gasket.config.js`:
 {
   environments: {
     production: {
-      next: {
+      nextConfig: {
         assetPrefix: 'https://<your cdn base url>/<directory that contains .next folder>'
       }
     }
