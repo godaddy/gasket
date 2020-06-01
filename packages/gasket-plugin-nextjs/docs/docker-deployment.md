@@ -5,11 +5,11 @@ environment. Here is a sample definition for a container that runs a Gasket
 application:
 
 ```Dockerfile
-FROM jcrugzz/alpine-node-kubernetes:10.15.0-native
+FROM jcrugzz/s6-node-alpine:12.16.1-native
 # create a user that can run the application
 # and define the maximum open files at 16k
 RUN ulimit -n 65536 && \
-    addgroup -g 999 app && \
+    addgroup -g 9999 app && \
     adduser -D  -G app -s /bin/false -u 999 app
 
 ENV HOME /home/app/
@@ -41,5 +41,5 @@ set -e
 
 cd /home/app/your_app
 # using the group that defined above, run npm start
-exec s6-applyuidgid -u 999 -g 999 npm start
+exec s6-applyuidgid -u 9999 -g 999 npm start
 ```
