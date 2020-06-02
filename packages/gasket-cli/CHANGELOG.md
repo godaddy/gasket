@@ -1,5 +1,7 @@
 # `@gasket/cli`
 
+- An ASCII version of the Gasket logo is now displayed in the CLI help
+
 ### 5.3.2
 
 - Cleanup unnecessary `./` in path joins ([#160])
