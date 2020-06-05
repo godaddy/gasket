@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 5.0.3
+
+- Updating version of cross-fetch to 3.0.4 
+
 ### 5.0.0
 
 - Open Source Release
