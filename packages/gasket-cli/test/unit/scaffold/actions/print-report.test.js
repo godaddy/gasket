@@ -36,11 +36,7 @@ describe('printReport', () => {
 
   it('outputs banner', function () {
     printReport(mockContext);
-    assume(logStub).calledWithMatch(`
-    _____         __       __
-   / ___/__ ____ / /_____ / /_
-  / (_ / _ \`(_-</  '_/ -_) __/
-  \\___/\\_,_/___/_/\\_\\\\__/\\__/`);
+    assume(logStub).calledWithMatch(require('../../../../src/utils/logo'));
   });
 
   it('outputs warning and error count', function () {
