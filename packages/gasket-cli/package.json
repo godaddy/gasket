@@ -201,6 +201,6 @@
     "warn-if-update-available": {
       "timeoutInDays": 7
     },
-    "helpClass": "./src/help"
+    "helpClass": "./src/utils/help"
   }
 }
