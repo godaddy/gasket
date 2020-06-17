@@ -1,6 +1,8 @@
 # `@gasket/cli`
 
-- An ASCII version of the Gasket logo is now displayed in the CLI help
+### 5.3.4
+
+- An ASCII version of the Gasket logo is now displayed in the CLI help ([#163])
 
 ### 5.3.2
 
@@ -298,3 +300,4 @@ upon `gasket create`
 [#152]: https://github.com/godaddy/gasket/pull/152
 [#154]: https://github.com/godaddy/gasket/pull/154
 [#160]: https://github.com/godaddy/gasket/pull/160
+[#163]: https://github.com/godaddy/gasket/pull/163
