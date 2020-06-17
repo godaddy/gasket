@@ -10,8 +10,8 @@ Name | Description
 Name | Description
 ------ | -----------
 [applyEnvironmentOverrides(gasketConfig, config, \[localFile\])] | Normalize the config by applying any environment or local overrides
-[runShellCommand(cmd, argv, options, \[debug\])] | Promise friendly wrapper to running a shell command (eg: git, npm, ls)which passes back any { stdout, stderr } to the error thrown.
-[tryRequire(path)] | Tries to require a module, but ignores if it is not found.If not found, result will be null.
+[runShellCommand(cmd, argv, options, \[debug\])] | Promise friendly wrapper to running a shell command (eg: git, npm, ls) which passes back any { stdout, stderr } to the error thrown.
+[tryRequire(path)] | Tries to require a module, but ignores if it is not found. If not found, result will be null.
 
 
 ## PackageManager
