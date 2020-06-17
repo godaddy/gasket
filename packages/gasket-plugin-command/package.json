@@ -41,7 +41,7 @@
   },
   "devDependencies": {
     "@godaddy/dmd": "^1.0.0",
-    "@oclif/config": "^1.13.0",
+    "@oclif/config": "^1.15.0",
     "@oclif/errors": "^1.1.2",
     "assume": "^2.2.0",
     "eslint": "^6.1.0",

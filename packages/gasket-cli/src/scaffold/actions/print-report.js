@@ -1,5 +1,6 @@
 const { bold } = require('chalk');
 const action = require('../action-wrapper');
+const asciiLogo = require('../../utils/logo');
 
 /**
  * Logs a new line in the console
@@ -68,11 +69,7 @@ function printReport(context) {
   console.log(`✨Success!
   
 Finished with ${warnings.length} warnings and ${errors.length} errors using
-    _____         __       __
-   / ___/__ ____ / /_____ / /_
-  / (_ / _ \`(_-</  '_/ -_) __/
-  \\___/\\_,_/___/_/\\_\\\\__/\\__/
-`);
+` + asciiLogo);
 
   Object.entries(report).forEach(([k, v]) => {
     if (!v || !v.length) return;
