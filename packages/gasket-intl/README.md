@@ -274,7 +274,7 @@ const performSomeAction = (payload) => {
 
 This function loops through the module names provided
 and reads the locale files for each of those identifiers and saves them in the Redux store.
-Typically, the `withLocaleRequired` hoc would handle this under the hood if you are working within components. If you need to
+Typically, `withLocaleRequired` would handle this under the hood if you are working within components, but if you need to
 access these translation strings outside of a component, you can call this function directly to load them into state.
 
 ```js
