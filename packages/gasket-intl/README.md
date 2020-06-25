@@ -269,6 +269,34 @@ const performSomeAction = (payload) => {
 }
 ```
 
+### loadLocaleFilesIntoStore
+
+
+This function loops through the module names provided
+and reads the locale files for each of those identifiers and saves them in the Redux store.
+Typically, the `withLocaleRequired` hoc would handle this under the hood if you are working within components. If you need to
+access these translation strings outside of a component, you can call this function directly to load them into state.
+
+```js
+import { loadLocaleFilesIntoStore, selectMessage } from '@gasket/intl';
+
+module.exports = async function assignMessagesMiddleware(req, res, next) {
+  const { store, localesDir } = req;
+
+  await loadLocaleFilesIntoStore(store, ['default'], localesDir);
+
+  const state = store.getState();
+
+  const messages = {
+    title: selectMessage(state, 'select-title'),
+    content: selectMessage(state, 'success-content')
+  };
+
+  req.messages = messages;
+  next();
+}
+```
+
 ## License
 
 [MIT](./LICENSE.md)

@@ -1,5 +1,7 @@
 # `@gasket/intl`
 
+- Expose loadLocaleFilesIntoStore
+
 ### 5.0.0
 
 - Open Source Release
