@@ -5,5 +5,6 @@ describe('index', () => {
     expect(Index).toHaveProperty('LocaleRequired', expect.any(Function));
     expect(Index).toHaveProperty('withLocaleRequired', expect.any(Function));
     expect(Index).toHaveProperty('withIntlProvider', expect.any(Function));
+    expect(Index).toHaveProperty('loadLocaleFilesIntoStore', expect.any(Function));
   });
 });
