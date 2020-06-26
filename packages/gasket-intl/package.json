@@ -1,6 +1,6 @@
 {
   "name": "@gasket/intl",
-  "version": "5.0.2",
+  "version": "5.4.0",
   "description": "React component library to enable localization for gasket apps.",
   "main": "./lib",
   "browser": "./lib",

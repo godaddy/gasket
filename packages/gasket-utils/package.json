@@ -1,6 +1,6 @@
 {
   "name": "@gasket/utils",
-  "version": "5.1.1",
+  "version": "5.4.0",
   "description": "Reusable utilities for Gasket internals",
   "main": "lib",
   "scripts": {
