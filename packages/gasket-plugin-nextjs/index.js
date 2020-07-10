@@ -156,10 +156,9 @@ module.exports = {
     * @returns {Object} config
     */
     workbox: function (gasket) {
-      const { next = {} } = gasket.config;
-      const { assetPrefix = '' } = next;
+      const { zone = '' } = gasket.config;
 
-      const parsed = assetPrefix ? url.parse(assetPrefix) : '';
+      const parsed = zone ? url.parse(zone) : '';
       const joined = parsed ? url.format({ ...parsed, pathname: path.join(parsed.pathname, '_next/') }) : '_next/';
 
       return {

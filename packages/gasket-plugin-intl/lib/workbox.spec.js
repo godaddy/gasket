@@ -47,48 +47,48 @@ describe('workbox', () => {
   });
 
   it('config modifies urls to use assetPrefix URL with trailing slash', async () => {
-    const assetPrefix = 'https://some-cdn.com/';
-    mockGasket.config.next = { assetPrefix };
+    const zone = 'https://some-cdn.com/';
+    mockGasket.config = { zone };
     result = await workbox(mockGasket, mockConfig, mockReq);
 
     expect(result.modifyURLPrefix).toHaveProperty(
-      'build/locales/', assetPrefix + '_locales/'
+      'build/locales/', zone + '_locales/'
     );
   });
 
   it('config modifies urls to use assetPrefix URL without trailing slash', async () => {
-    const assetPrefix = 'https://some-cdn.com';
-    mockGasket.config.next = { assetPrefix };
+    const zone = 'https://some-cdn.com';
+    mockGasket.config = { zone };
     result = await workbox(mockGasket, mockConfig, mockReq);
 
     expect(result.modifyURLPrefix).toHaveProperty(
-      'build/locales/', assetPrefix + '/_locales/'
+      'build/locales/', zone + '/_locales/'
     );
   });
 
   it('config modifies urls to use assetPrefix relative path with trailing slash', async () => {
-    const assetPrefix = '/some/asset/prefix/';
-    mockGasket.config.next = { assetPrefix };
+    const zone = '/some/asset/prefix/';
+    mockGasket.config = { zone };
     result = await workbox(mockGasket, mockConfig, mockReq);
 
     expect(result.modifyURLPrefix).toHaveProperty(
-      'build/locales/', assetPrefix + '_locales/'
+      'build/locales/', zone + '_locales/'
     );
   });
 
   it('config modifies urls to use assetPrefix relative path without trailing slash', async () => {
-    const assetPrefix = '/some/asset/prefix';
-    mockGasket.config.next = { assetPrefix };
+    const zone = '/some/asset/prefix';
+    mockGasket.config = { zone };
     result = await workbox(mockGasket, mockConfig, mockReq);
 
     expect(result.modifyURLPrefix).toHaveProperty(
-      'build/locales/', assetPrefix + '/_locales/'
+      'build/locales/', zone + '/_locales/'
     );
   });
 
   it('manifestTransforms contains an encodeLocaleUrls function', async () => {
-    const assetPrefix = 'https://some-cdn.com/';
-    mockGasket.config.next = { assetPrefix };
+    const zone = 'https://some-cdn.com/';
+    mockGasket.config = { zone };
     result = await workbox(mockGasket, mockConfig, mockReq);
 
     expect(result.manifestTransforms).toEqual([encodeLocaleUrls]);

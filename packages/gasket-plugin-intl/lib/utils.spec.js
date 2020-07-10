@@ -44,11 +44,9 @@ describe('getAssetPrefix', () => {
     expect(results).toEqual('//cdn-a');
   });
 
-  it('returns the assetPrefix from next config', () => {
+  it('returns the assetPrefix from zone config', () => {
     const results = utils.getAssetPrefix(setupGasket({
-      next: {
-        assetPrefix: '//cdn-b'
-      }
+        zone: '//cdn-b'
     }));
     expect(results).toEqual('//cdn-b');
   });
@@ -58,9 +56,7 @@ describe('getAssetPrefix', () => {
       intl: {
         assetPrefix: '//cdn-a'
       },
-      next: {
-        assetPrefix: '//cdn-b'
-      }
+      zone: '//cdn-b'
     }));
     expect(results).toEqual('//cdn-a');
   });

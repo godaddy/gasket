@@ -58,6 +58,7 @@ describe('Plugin', () => {
     beforeEach(() => {
       mockGasket = {
         config: {
+          zone: 'https://some-cdn.com',
           intl: {
             outputDir: 'some/output/dir',
             assetPrefix: 'https://some-cdn.com',
@@ -83,6 +84,7 @@ describe('Plugin', () => {
     it('adds intl settings to redux initState if specified', async () => {
       const reduxState = await plugin.hooks.initReduxState(mockGasket, mockState, mockReq);
       expect(reduxState).toEqual({
+        zone: 'https://some-cdn.com',
         intl: {
           assetPrefix: 'https://some-cdn.com',
           languageMap: {
@@ -100,6 +102,7 @@ describe('Plugin', () => {
       mockGasket.config = {};
       const reduxState = await plugin.hooks.initReduxState(mockGasket, mockState, mockReq);
       expect(reduxState).toEqual({
+        zone: '',
         intl: {
           assetPrefix: '',
           languageMap: {},

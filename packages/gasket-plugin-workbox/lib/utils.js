@@ -45,8 +45,8 @@ function getOutputDir(gasket) {
  * @returns {string} prefix
  */
 function getAssetPrefix(gasket) {
-  const { next = {}, workbox = {} } = gasket.config;
-  let { assetPrefix = '' } = next;
+  const { zone = '', workbox = {} } = gasket.config;
+  let assetPrefix = zone;
   if ('assetPrefix' in workbox) {
     assetPrefix = workbox.assetPrefix;
   }
