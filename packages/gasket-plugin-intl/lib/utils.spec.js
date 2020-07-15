@@ -46,7 +46,7 @@ describe('getAssetPrefix', () => {
 
   it('returns the assetPrefix from zone config', () => {
     const results = utils.getAssetPrefix(setupGasket({
-        zone: '//cdn-b'
+      zone: '//cdn-b'
     }));
     expect(results).toEqual('//cdn-b');
   });

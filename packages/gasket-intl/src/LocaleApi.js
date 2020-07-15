@@ -5,7 +5,8 @@ import { isLoaded } from 'reduxful';
 const apiName = 'LocaleApi';
 
 export const selectAssetPrefix = (state) => {
-  return (state.intl || state || {}).assetPrefix || '';
+  const { intl = {}, zone } = state;
+  return zone || intl.assetPrefix || '';
 };
 
 /**
