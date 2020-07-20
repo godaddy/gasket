@@ -43,9 +43,9 @@ Set the Workbox options, in the `gasket.config.js` under `workbox`.
 
 - `outputDir` - (string) path of directory to copy Workbox libraries to
   (default: `./build/workbox`)
-- `zone` - (string) change the default path to `/_workbox` endpoint by
+- `assetPrefix` - (string) change the default path to `/_workbox` endpoint by
   adding a path prefix here. (default: ''). Used for setting up CDN support for
-  Workbox files.
+  Workbox files. The `zone` config will be used unless `assetPrefix` is set.
 - `config`: (object) Any initial [workbox config options][generateSWString]
   which will be merged with those from any `workbox` lifecycle hooks.
 

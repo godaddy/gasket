@@ -6,7 +6,7 @@ const apiName = 'LocaleApi';
 
 export const selectAssetPrefix = (state) => {
   const { intl = {}, zone } = state;
-  return zone || intl.assetPrefix || '';
+  return intl.assetPrefix || zone || '';
 };
 
 /**

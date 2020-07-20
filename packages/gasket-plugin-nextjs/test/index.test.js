@@ -273,39 +273,74 @@ describe('workbox hook', () => {
     assume(results.modifyURLPrefix).to.have.property('.next/', '_next/');
   });
 
-  it('config modifies urls to use assetPrefix with https', async () => {
+  it('config modifies urls to use zone with https', async () => {
     const zone = 'https://some-cdn.com/';
     gasketAPI.config = { zone };
     const results = await plugin.hooks.workbox(gasketAPI);
     assume(results.modifyURLPrefix).to.have.property('.next/', zone + '_next/');
   });
 
-  it('config modifies urls to use assetPrefix with http', async () => {
+  it('config modifies urls to use zone with http', async () => {
     const zone = 'http://some-cdn.com/';
     gasketAPI.config = { zone };
     const results = await plugin.hooks.workbox(gasketAPI);
     assume(results.modifyURLPrefix).to.have.property('.next/', zone + '_next/');
   });
 
-  it('config modifies urls to use assetPrefix with https but no trailing slash', async () => {
+  it('config modifies urls to use zone with https but no trailing slash', async () => {
     const zone = 'https://some-cdn.com';
     gasketAPI.config = { zone };
     const results = await plugin.hooks.workbox(gasketAPI);
     assume(results.modifyURLPrefix).to.have.property('.next/', `${zone}/_next/`);
   });
 
-  it('config modifies urls to use assetPrefix relative path with trailing slash', async () => {
+  it('config modifies urls to use zone relative path with trailing slash', async () => {
     const zone = '/some/asset/prefix/';
     gasketAPI.config = { zone };
     const results = await plugin.hooks.workbox(gasketAPI);
     assume(results.modifyURLPrefix).to.have.property('.next/', `${zone}_next/`);
   });
 
-  it('config modifies urls to use assetPrefix relative path without trailing slash', async () => {
+  it('config modifies urls to use zone relative path without trailing slash', async () => {
     const zone = '/some/asset/prefix';
     gasketAPI.config = { zone };
     const results = await plugin.hooks.workbox(gasketAPI);
     assume(results.modifyURLPrefix).to.have.property('.next/', `${zone}/_next/`);
+  });
+
+  it('config modifies urls to use assetPrefix with https', async () => {
+    const assetPrefix = 'https://some-cdn.com/';
+    gasketAPI.config = { next: { assetPrefix } };
+    const results = await plugin.hooks.workbox(gasketAPI);
+    assume(results.modifyURLPrefix).to.have.property('.next/', assetPrefix + '_next/');
+  });
+
+  it('config modifies urls to use assetPrefix with http', async () => {
+    const assetPrefix = 'http://some-cdn.com/';
+    gasketAPI.config = { next: { assetPrefix } };
+    const results = await plugin.hooks.workbox(gasketAPI);
+    assume(results.modifyURLPrefix).to.have.property('.next/', assetPrefix + '_next/');
+  });
+
+  it('config modifies urls to use assetPrefix with https but no trailing slash', async () => {
+    const assetPrefix = 'https://some-cdn.com';
+    gasketAPI.config = { next: { assetPrefix } };
+    const results = await plugin.hooks.workbox(gasketAPI);
+    assume(results.modifyURLPrefix).to.have.property('.next/', `${assetPrefix}/_next/`);
+  });
+
+  it('config modifies urls to use assetPrefix relative path with trailing slash', async () => {
+    const assetPrefix = '/some/asset/prefix/';
+    gasketAPI.config = { next: { assetPrefix } };
+    const results = await plugin.hooks.workbox(gasketAPI);
+    assume(results.modifyURLPrefix).to.have.property('.next/', `${assetPrefix}_next/`);
+  });
+
+  it('config modifies urls to use assetPrefix relative path without trailing slash', async () => {
+    const assetPrefix = '/some/asset/prefix';
+    gasketAPI.config = { next: { assetPrefix } };
+    const results = await plugin.hooks.workbox(gasketAPI);
+    assume(results.modifyURLPrefix).to.have.property('.next/', `${assetPrefix}/_next/`);
   });
 });
 

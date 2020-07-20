@@ -9,13 +9,7 @@ function getIntlConfig(gasket) {
 
 function getAssetPrefix(gasket) {
   const { next = {}, intl = {}, zone } = gasket.config;
-  let assetPrefix = zone || next.assetPrefix || '';
-
-  if ('assetPrefix' in intl) {
-    assetPrefix = intl.assetPrefix;
-  }
-
-  return assetPrefix;
+  return intl.assetPrefix || next.assetPrefix || zone || '';
 }
 
 function getIntlLanguageMap(gasket) {
