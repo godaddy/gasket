@@ -35,7 +35,7 @@ module.exports = {
   files from (default: `locales`)
 - `outputDir` - (string) path of directory to build locale and manifest files to
   (default: `./build/locales`)
-- `zone` - (string) change the default path to `/_locale` endpoint by
+- `assetPrefix` - (string) change the default path to `/_locale` endpoint by
   adding a path prefix here. (default: ''). Used for setting up CDN support for
   locale files.
 - `languageMap` - (object) specify a language mapping here if required (default:
