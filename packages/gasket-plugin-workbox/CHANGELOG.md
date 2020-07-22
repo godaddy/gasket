@@ -1,5 +1,9 @@
 # `@gasket/plugin-workbox`
 
+### 5.1.0
+
+- Updated plugins to consume zones gasket config property ([#166])
+
 ### 5.0.0
 
 - Open Source Release
@@ -21,3 +25,4 @@
  Initial implementation.
 
 [#95]:https://github.com/godaddy/gasket/pull/95
+[#166]: https://github.com/godaddy/gasket/pull/166

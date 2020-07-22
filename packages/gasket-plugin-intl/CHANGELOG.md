@@ -1,5 +1,9 @@
 # `@gasket/plugin-intl`
 
+### 5.5.0
+
+- Updated plugins to consume zones gasket config property ([#166])
+
 ### 5.1.2
 
 - Fixed missing `await` when saving locales-manifest.json file ([#144])
@@ -67,3 +71,4 @@
 <!-- LINK -->
 
 [#144]: https://github.com/godaddy/gasket/pull/144
+[#166]: https://github.com/godaddy/gasket/pull/166
