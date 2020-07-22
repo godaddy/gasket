@@ -1,6 +1,6 @@
 # `@gasket/plugin-nextjs`
 
-### 5.4.0
+### 5.5.0
 
 - Updated plugins to consume zones gasket config property ([#166])
 
