@@ -38,19 +38,15 @@ function getOutputDir(gasket) {
 }
 
 /**
- * Get the asset prefix from either next or workbox config.
+ * Get the asset prefix from next, workbox, or zone config.
  * If found in both, the workbox config will be used.
  *
  * @param {Gasket} gasket - Gasket
  * @returns {string} prefix
  */
 function getAssetPrefix(gasket) {
-  const { next = {}, workbox = {} } = gasket.config;
-  let { assetPrefix = '' } = next;
-  if ('assetPrefix' in workbox) {
-    assetPrefix = workbox.assetPrefix;
-  }
-  return assetPrefix;
+  const { workbox = {}, zone } = gasket.config;
+  return workbox.assetPrefix || zone || '';
 }
 
 module.exports = {

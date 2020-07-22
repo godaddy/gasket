@@ -8,12 +8,8 @@ function getIntlConfig(gasket) {
 }
 
 function getAssetPrefix(gasket) {
-  const { next = {}, intl = {} } = gasket.config;
-  let { assetPrefix = '' } = next;
-  if ('assetPrefix' in intl) {
-    assetPrefix = intl.assetPrefix;
-  }
-  return assetPrefix;
+  const { next = {}, intl = {}, zone } = gasket.config;
+  return intl.assetPrefix || next.assetPrefix || zone || '';
 }
 
 function getIntlLanguageMap(gasket) {
