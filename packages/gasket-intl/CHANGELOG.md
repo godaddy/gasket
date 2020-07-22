@@ -1,5 +1,11 @@
 # `@gasket/intl`
 
+### 5.5.0
+
+- Updated plugins to consume zones gasket config property ([#166])
+
+### 5.4.0
+
 - Expose loadLocaleFilesIntoStore
 
 ### 5.0.0
@@ -68,3 +74,5 @@
 ### 1.2.0
 
 - Switch to Reduxful
+
+[#166]: https://github.com/godaddy/gasket/pull/166

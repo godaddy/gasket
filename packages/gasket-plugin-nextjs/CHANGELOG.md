@@ -1,5 +1,9 @@
 # `@gasket/plugin-nextjs`
 
+### 5.4.0
+
+- Updated plugins to consume zones gasket config property ([#166])
+
 ### 5.3.1
 
 - Configure server worker plugin to inject registration script to _app entry ([#158])
@@ -67,3 +71,4 @@
 [#125]: https://github.com/godaddy/gasket/pull/125
 [#136]: https://github.com/godaddy/gasket/pull/136
 [#158]: https://github.com/godaddy/gasket/pull/158
+[#166]: https://github.com/godaddy/gasket/pull/166
