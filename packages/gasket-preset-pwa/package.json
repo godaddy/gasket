@@ -17,6 +17,6 @@
   "dependencies": {
     "@gasket/plugin-manifest": "^5.0.2",
     "@gasket/plugin-service-worker": "^5.3.1",
-    "@gasket/plugin-workbox": "^5.0.2"
+    "@gasket/plugin-workbox": "^5.5.0"
   }
 }
