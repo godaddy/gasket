@@ -4,7 +4,7 @@ Starter Pack for creating Gasket apps.
 
 ### Get Started Immediately
 
-You **don’t** need to install gasket-cli tools
+You **don’t** need to globally install the Gasket CLI
 
 To create a new app, you may choose one of the following methods:
 
