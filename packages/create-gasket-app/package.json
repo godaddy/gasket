@@ -10,7 +10,7 @@
   "bin": {
     "create-gasket-app": "./index.js"
   },
-  "author": "",
+  "author": "GoDaddy Operating Company, LLC",
   "license": "ISC",
   "dependencies": {
     "@gasket/cli": "^5.3.4"
