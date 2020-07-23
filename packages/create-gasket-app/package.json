@@ -11,7 +11,7 @@
     "create-gasket-app": "./index.js"
   },
   "author": "GoDaddy Operating Company, LLC",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "@gasket/cli": "^5.3.4"
   }
