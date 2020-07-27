@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 const { fork } = require('child_process');
+const path = require('path');
 
 const [,, ...args] = process.argv;
 
