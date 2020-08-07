@@ -26,8 +26,8 @@ async function resolve(root, name) {
     }
   }
 
+  const reg = /.*^((?!(test|spec).js).)*\.js$/;
   return files.filter(function filter(file) {
-    const reg = /.*^((?!(test|spec).js).)*\.js$/;
     return !!reg.exec(file);
   }).map(function each(file) {
     const extname = path.extname(file);
