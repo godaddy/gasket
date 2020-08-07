@@ -26,27 +26,27 @@ async function resolve(root, name) {
     }
   }
 
-  const reg = /.*^((?!(\.test|\.spec).js).)*\.js$/;
-  return files.filter(function filter(file) {
-    return !!reg.exec(file);
-  }).map(function each(file) {
-    const extname = path.extname(file);
-    const event = camelCase(path.basename(file, extname));
+  const isJs = /\.js$/i;
+  const isTest = /\.(spec|test)\./i;
+  return files.filter(file => isJs.test(file) && !isTest.test(file))
+    .map(function each(file) {
+      const extname = path.extname(file);
+      const event = camelCase(path.basename(file, extname));
 
-    let hook = require(path.join(dir, file));
-    debug('found %s as lifecycle for %s', file, event);
+      let hook = require(path.join(dir, file));
+      debug('found %s as lifecycle for %s', file, event);
 
-    if (typeof hook === 'function') {
-      hook = {
-        handler: hook
+      if (typeof hook === 'function') {
+        hook = {
+          handler: hook
+        };
+      }
+
+      return {
+        pluginName: file,
+        event,
+        ...hook
       };
-    }
-
-    return {
-      pluginName: file,
-      event,
-      ...hook
-    };
   });
 }
 
