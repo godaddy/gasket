@@ -101,4 +101,23 @@ describe('Plugin', function () {
     await engine.exec('someEvent', 'testing');
     assume(called).is.true();
   });
+
+  it('skips *.test.js and *.spec.js files', async () => {
+    const engine = new PluginEngine({
+      root: path.join(__dirname, './fixtures/with-tests'),
+      plugins: {
+        add: [plugin]
+      }
+    });
+    await engine.exec('init');
+
+    let called = false;
+    proxy.once('someEvent', function () {
+      called = true;
+    });
+
+    await engine.exec('someEvent', 'testing');
+    assume(called).is.false();
+
+  });
 });
