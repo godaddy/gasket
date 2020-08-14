@@ -1,8 +1,8 @@
 # CHANGELOG
 
-### 5.0.3
+### 5.6.0
 
-- Updating version of cross-fetch to 3.0.4 
+- Updating version of cross-fetch to 3.0.4 ([#164])
 
 ### 5.0.0
 
@@ -15,3 +15,7 @@
 ### 1.0.0
 
 - Initial release.
+
+<!-- LINK -->
+
+[#164]: https://github.com/godaddy/gasket/pull/164
