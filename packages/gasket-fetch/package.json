@@ -1,6 +1,6 @@
 {
   "name": "@gasket/fetch",
-  "version": "5.0.2",
+  "version": "5.0.3",
   "description": "Gasket Fetch API",
   "main": "./index.js",
   "repository": {
@@ -24,6 +24,6 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-fetch#readme",
   "dependencies": {
-    "cross-fetch": "^2.1.1"
+    "cross-fetch": "^3.0.4"
   }
 }
