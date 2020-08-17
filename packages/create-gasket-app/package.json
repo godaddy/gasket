@@ -1,6 +1,6 @@
 {
   "name": "create-gasket-app",
-  "version": "1.0.0",
+  "version": "5.6.0",
   "description": "starter pack for creating a gasket app",
   "main": "index.js",
   "scripts": {
@@ -13,6 +13,6 @@
   "author": "GoDaddy Operating Company, LLC",
   "license": "MIT",
   "dependencies": {
-    "@gasket/cli": "^5.3.4"
+    "@gasket/cli": "^5.6.0"
   }
 }
