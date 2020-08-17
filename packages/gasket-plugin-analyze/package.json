@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-analyze",
-  "version": "5.3.3",
+  "version": "5.6.0",
   "description": "Gasket Analyzer Plugin",
   "main": "lib",
   "scripts": {

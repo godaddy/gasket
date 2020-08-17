@@ -1,6 +1,6 @@
 {
   "name": "@gasket/fetch",
-  "version": "5.0.3",
+  "version": "5.6.0",
   "description": "Gasket Fetch API",
   "main": "./index.js",
   "repository": {
