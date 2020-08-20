@@ -1,6 +1,6 @@
 const action = require('../action-wrapper');
 const ConfigBuilder = require('../config-builder');
-const { addPluginsToPkg } = require('../utils');
+const { addPluginsToPkg, getPluginsWithVersions } = require('../utils');
 const { PackageManager } = require('@gasket/utils');
 const { presetIdentifier } = require('@gasket/resolve');
 
@@ -31,9 +31,10 @@ async function setupPkg(context) {
   }, {
     '@gasket/cli': cliVersionRequired
   }));
-  addPluginsToPkg(rawPlugins, pkg);
 
   const pkgManager = new PackageManager(context);
+  const pluginIds = await getPluginsWithVersions(rawPlugins, pkgManager);
+  addPluginsToPkg(pluginIds, pkg);
 
   Object.assign(context, { pkg, pkgManager });
 }

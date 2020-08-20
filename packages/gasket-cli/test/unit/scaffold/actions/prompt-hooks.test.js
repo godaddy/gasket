@@ -27,7 +27,8 @@ describe('promptHooks', () => {
       }),
       pkgManager: {
         install: installStub,
-        link: linkStub
+        link: linkStub,
+        info: sinon.stub().callsFake(() => ({ data: '7.8.9-faked' }))
       }
     };
 
@@ -86,7 +87,7 @@ describe('promptHooks', () => {
 
     it('adds new plugins to pkg', async () => {
       await mockAddPlugins('@gasket/plugin-jest');
-      assume(pkgAddSpy).is.calledWith('dependencies', { '@gasket/plugin-jest': 'latest' });
+      assume(pkgAddSpy).is.calledWith('dependencies', { '@gasket/plugin-jest': '^7.8.9-faked' });
     });
 
     it('adds new plugins to pkg with version', async () => {

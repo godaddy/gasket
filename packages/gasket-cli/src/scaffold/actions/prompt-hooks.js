@@ -1,7 +1,6 @@
 const inquirer = require('inquirer');
 const action = require('../action-wrapper');
-const { addPluginsToContext, addPluginsToPkg } = require('../utils');
-const { pluginIdentifier } = require('@gasket/resolve');
+const { addPluginsToContext, addPluginsToPkg, getPluginsWithVersions } = require('../utils');
 const createEngine = require('../create-engine');
 
 /**
@@ -23,12 +22,12 @@ const createAddPlugins = context => {
     const { pkg, pkgLinks = [], pkgManager } = context;
 
     addPluginsToContext(pluginsToAdd, context);
-    addPluginsToPkg(pluginsToAdd, pkg);
+    const pluginIds = await getPluginsWithVersions(pluginsToAdd, pkgManager);
+    addPluginsToPkg(pluginIds, pkg);
 
     //
     // Install new plugins if not already linked
     //
-    const pluginIds = pluginsToAdd.map(p => pluginIdentifier(p).withVersion());
     const toInstall = pluginIds.filter(p => !pkgLinks.includes(p.fullName));
     if (toInstall.length) {
       await pkgManager.install(toInstall.map(p => p.full));
