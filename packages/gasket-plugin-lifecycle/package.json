@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-lifecycle",
-  "version": "5.6.0",
+  "version": "5.6.1",
   "description": "Allows a gasket/ directory to be used for lifecycle hooks in applications.",
   "main": "lib/index.js",
   "scripts": {
