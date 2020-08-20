@@ -1,10 +1,12 @@
 const sinon = require('sinon');
 const assume = require('assume');
 const path = require('path');
+const { pluginIdentifier } = require('@gasket/resolve');
 
 const {
   addPluginsToContext,
   addPluginsToPkg,
+  getPluginsWithVersions,
   flattenPresets,
   ensureAbsolute
 } = require('../../../src/scaffold/utils');
@@ -101,6 +103,64 @@ describe('Utils', () => {
         '@gasket/plugin-jest': '3.2.1',
         '@gasket/plugin-intl': '^1.2.3'
       });
+    });
+
+    it('accepts pluginIdentifiers instances', () => {
+      const names = ['@gasket/jest', '@gasket/plugin-intl'];
+      addPluginsToPkg(names.map(p => pluginIdentifier(p).withVersion('fake')), pkgStub);
+      assume(pkgStub.add.args[0][1]).eqls({
+        '@gasket/plugin-jest': 'fake',
+        '@gasket/plugin-intl': 'fake'
+      });
+    });
+  });
+
+  describe('getPluginsWithVersions', () => {
+    let pkgManagerStub;
+
+    beforeEach(() => {
+      pkgManagerStub = {
+        info: sinon.stub().callsFake(() => ({ data: '7.8.9-faked' }))
+      };
+    });
+
+    it('looks up latest version on registry if not set', async () => {
+      const names = ['@gasket/jest', '@gasket/plugin-intl'];
+      const results = await getPluginsWithVersions(names, pkgManagerStub);
+
+      assume(pkgManagerStub.info).called(2);
+
+      assume(results.map(o => o.full)).eqls([
+        '@gasket/plugin-jest@^7.8.9-faked',
+        '@gasket/plugin-intl@^7.8.9-faked'
+      ]);
+    });
+
+    it('expands short plugin names', async () => {
+      const names = ['@gasket/jest', '@gasket/intl'];
+      const results = await getPluginsWithVersions(names, pkgManagerStub);
+      assume(results.map(o => o.full)).eqls([
+        '@gasket/plugin-jest@^7.8.9-faked',
+        '@gasket/plugin-intl@^7.8.9-faked'
+      ]);
+    });
+
+    it('uses version of set by plugin identifier', async () => {
+      const names = ['@gasket/jest@3.2.1', '@gasket/plugin-intl@^1.2.3'];
+      const results = await getPluginsWithVersions(names, pkgManagerStub);
+      assume(results.map(o => o.full)).eqls([
+        '@gasket/plugin-jest@3.2.1',
+        '@gasket/plugin-intl@^1.2.3'
+      ]);
+    });
+
+    it('accepts pluginIdentifiers instances', async () => {
+      const names = ['@gasket/jest@3.2.1', '@gasket/plugin-intl'];
+      const results = await getPluginsWithVersions(names.map(p => pluginIdentifier(p)), pkgManagerStub);
+      assume(results.map(o => o.full)).eqls([
+        '@gasket/plugin-jest@3.2.1',
+        '@gasket/plugin-intl@^7.8.9-faked'
+      ]);
     });
   });
 

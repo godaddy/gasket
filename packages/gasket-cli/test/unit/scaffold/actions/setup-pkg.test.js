@@ -15,6 +15,10 @@ describe('setupPkg', () => {
 
     class PackageManager {
       constructor() {}
+
+      info() {
+        return { data: '7.8.9-faked' };
+      }
     }
 
     mockImports = {
@@ -90,7 +94,7 @@ describe('setupPkg', () => {
     mockContext.rawPlugins = ['@gasket/jest@1.2.3', 'gasket-plugin-custom'];
     await setupPkg.wrapped(mockContext);
     assume(mockContext.pkg.fields.dependencies).property('@gasket/plugin-jest', '1.2.3');
-    assume(mockContext.pkg.fields.dependencies).property('gasket-plugin-custom', 'latest');
+    assume(mockContext.pkg.fields.dependencies).property('gasket-plugin-custom', '^7.8.9-faked');
   });
 
   it('adds pkg to context', async () => {
