@@ -42,7 +42,7 @@ function addPluginsToContext(plugins, context) {
 /**
  * Adds plugins and dependencies of the app package
  *
- * @param {PluginDesc[]} plugins - Plugins names
+ * @param {PluginDesc[]|pluginIdentifier[]} plugins - Plugins names
  * @param {PackageJson} pkg - Package builder
  * @param {String} [field] - Dependency type (Default: dependencies)
  */
@@ -54,6 +54,24 @@ function addPluginsToPkg(plugins, pkg, field = 'dependencies') {
     }
     return acc;
   }, {}));
+}
+
+/**
+ * Look up registry version of provided plugin descriptions w/o versions set.
+ *
+ * @param {PluginDesc[]|pluginIdentifier[]} plugins - Plugins names
+ * @param {PackageManager} pkgManager - Package manager instance
+ * @returns {Promise<pluginIdentifier[]>} plugins
+ */
+async function getPluginsWithVersions(plugins, pkgManager) {
+  return await Promise.all(
+    plugins.map(async name => {
+      const id = pluginIdentifier(name);
+      if (id.version !== null) return id;
+      const version = (await pkgManager.info([id.fullName, 'version'])).data;
+      return id.withVersion(`^${version}`);
+    })
+  );
 }
 
 /**
@@ -94,6 +112,7 @@ function ensureAbsolute(filepath) {
 module.exports = {
   addPluginsToContext,
   addPluginsToPkg,
+  getPluginsWithVersions,
   flattenPresets,
   ensureAbsolute
 };
