@@ -232,13 +232,19 @@ describe('makeCreateContext', () => {
 
   it('sets plugins short names from flags', () => {
     results =
-      makeCreateContext(argv, { plugins: ['@gasket/jest@^1.2.3', 'gasket-plugin-some-user', '@gasket/plugin-intl'], presets: ['@gasket/nextjs'] });
+      makeCreateContext(argv, {
+        plugins: ['@gasket/jest@^1.2.3', 'gasket-plugin-some-user', '@gasket/plugin-intl'],
+        presets: ['@gasket/nextjs']
+      });
     assume(results.plugins).eqls(['@gasket/jest', 'some-user', '@gasket/intl']);
   });
 
   it('sets rawPlugins from flags', () => {
     results =
-      makeCreateContext(argv, { plugins: ['@gasket/jest@^1.2.3', 'gasket-plugin-some-user', '@gasket/plugin-intl'], presets: ['@gasket/nextjs'] });
+      makeCreateContext(argv, {
+        plugins: ['@gasket/jest@^1.2.3', 'gasket-plugin-some-user', '@gasket/plugin-intl'],
+        presets: ['@gasket/nextjs']
+      });
     assume(results.rawPlugins).eqls(['@gasket/jest@^1.2.3', 'gasket-plugin-some-user', '@gasket/plugin-intl']);
   });
 

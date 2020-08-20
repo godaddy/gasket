@@ -209,7 +209,8 @@ describe('loadPreset', () => {
       ...mockPkgs['@gasket/preset-bogus@^1.0.0'],
       from: 'cli',
       rawName: '@gasket/preset-bogus@^1.0.0',
-      presets: [{ package: { name: '@gasket/preset-some', version: '1.0.1' }, from: '@gasket/preset-bogus', rawName: '@gasket/preset-some@1.0.1' }]
+      presets: [{ package: { name: '@gasket/preset-some', version: '1.0.1' },
+        from: '@gasket/preset-bogus', rawName: '@gasket/preset-some@1.0.1' }]
     }]);
   });
 });
