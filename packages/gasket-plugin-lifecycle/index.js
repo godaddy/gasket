@@ -47,7 +47,7 @@ async function resolve(root, name) {
         event,
         ...hook
       };
-  });
+    });
 }
 
 /**

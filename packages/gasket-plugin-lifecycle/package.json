@@ -4,7 +4,7 @@
   "description": "Allows a gasket/ directory to be used for lifecycle hooks in applications.",
   "main": "lib/index.js",
   "scripts": {
-    "lint": "eslint --fix *.js test/*.js",
+    "lint": "eslint *.js test/*.js",
     "lint:fix": "npm run lint -- --fix",
     "test": "npm run test:runner",
     "test:runner": "mocha test/plugin.test.js",
