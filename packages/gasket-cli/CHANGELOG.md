@@ -1,5 +1,9 @@
 # `@gasket/cli`
 
+### 5.6.1
+
+- Lookup version for plugins if not set ([#170])
+
 ### 5.3.4
 
 - An ASCII version of the Gasket logo is now displayed in the CLI help ([#163])
@@ -301,3 +305,4 @@ upon `gasket create`
 [#154]: https://github.com/godaddy/gasket/pull/154
 [#160]: https://github.com/godaddy/gasket/pull/160
 [#163]: https://github.com/godaddy/gasket/pull/163
+[#170]: https://github.com/godaddy/gasket/pull/170
