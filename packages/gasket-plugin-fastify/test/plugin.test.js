@@ -110,7 +110,6 @@ describe('createServers', () => {
     assume(app.register).to.have.been.calledWith(middie);
   });
 
-
   it('adds the cookie-parser middleware before plugin middleware', async () => {
     await plugin.hooks.createServers(gasket, {});
 
