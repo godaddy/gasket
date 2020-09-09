@@ -30,12 +30,16 @@ module.exports = {
     // eslint-disable-next-line max-statements
     createServers: async function createServers(gasket, serverOpts) {
       const fastify = require('fastify');
+      const middie = require('middie');
       const cookieParser = require('cookie-parser');
       const compression = require('compression');
 
       const { config } = gasket;
       const excludedRoutesRegex = config.fastify && config.fastify.excludedRoutesRegex;
       const app = fastify();
+
+      // Enable middleware for fastify@3
+      await app.register(middie);
 
       if (excludedRoutesRegex) {
         app.use(excludedRoutesRegex, cookieParser());

@@ -1,9 +1,13 @@
 const proxyquire = require('proxyquire');
 const sinon = require('sinon');
 const assume = require('assume');
+const middie = require('middie');
 const version = require('../package.json').peerDependencies.fastify;
 
-const app = { use: sinon.spy() };
+const app = {
+  register: sinon.spy(),
+  use: sinon.spy()
+};
 const fastify = sinon.stub().returns(app);
 
 const cookieParserMiddleware = sinon.spy();
@@ -99,6 +103,13 @@ describe('createServers', () => {
       (mw) => mw === errorMiddlewares[0]);
     assume(errorMiddleware).to.not.be.null();
   });
+
+  it('registers the middie middleware plugin', async () => {
+    await plugin.hooks.createServers(gasket, {});
+
+    assume(app.register).to.have.been.calledWith(middie);
+  });
+
 
   it('adds the cookie-parser middleware before plugin middleware', async () => {
     await plugin.hooks.createServers(gasket, {});
