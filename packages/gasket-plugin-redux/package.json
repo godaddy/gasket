@@ -45,7 +45,8 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-redux": "^7.1.0",
-    "redux": "^4.0.4"
+    "redux": "^4.0.4",
+    "webpack": "^4.44.1"
   },
   "peerDependencies": {
     "@gasket/plugin-log": "^5.0.0",
