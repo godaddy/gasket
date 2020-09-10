@@ -1,5 +1,8 @@
-const { getReduxConfig } = require('./utils');
+const path = require('path');
 const { name, devDependencies } = require('../package');
+const configure = require('./configure');
+const prompt = require('./prompt');
+const middleware = require('./middleware');
 
 /**
  * Gasket Redux Plugin
@@ -12,7 +15,11 @@ module.exports = {
   name,
   dependencies: ['@gasket/plugin-log'],
   hooks: {
-    async create(gasket, { pkg }) {
+    configure,
+    prompt,
+    async create(gasket, context) {
+      const { pkg, files } = context;
+
       pkg.add('dependencies', {
         '@gasket/redux': devDependencies['@gasket/redux'],
         'react-redux': devDependencies['react-redux'],
@@ -20,24 +27,23 @@ module.exports = {
       });
     },
     webpack(gasket) {
-      const reduxConfig = getReduxConfig(gasket);
+      const { redux: reduxConfig } = gasket.config;
+      // webpack is not listed as a required dependency but if this lifecycle
+      // is invoked we can assume it has been installed by @gasket/plugin-webpack
+      const webpack = require('webpack');
 
-      //
-      // Setup webpack alias to override the default redux/make-store if set in config
-      //
-      return reduxConfig.makeStore && {
-        resolve: {
-          alias: {
-            '@gasket/redux/make-store': reduxConfig.makeStore
-          }
-        }
+      return {
+        plugins: [
+          new webpack.EnvironmentPlugin({
+            GASKET_MAKE_STORE_FILE: reduxConfig.makeStore
+          })
+        ]
       };
     },
-    middleware(gasket) {
-      return require('./middleware')(gasket);
-    },
+    middleware,
     metadata(gasket, meta) {
-      const { makeStore = 'store.js' } = getReduxConfig(gasket);
+      const { root, redux: reduxConfig = {} } = gasket.config;
+      const { makeStore = path.join(root, 'redux', 'store.js') } = reduxConfig;
       return {
         ...meta,
         guides: [{
@@ -48,19 +54,19 @@ module.exports = {
         lifecycles: [{
           name: 'initReduxState',
           method: 'execWaterfall',
-          description: 'Setup the next config',
+          description: 'Instantiate the Redux store from the makeStore',
           link: 'README.md#initReduxState',
           parent: 'middleware'
         }, {
           name: 'initReduxStore',
           method: 'exec',
-          description: 'Update the next app instance before prepare',
+          description: 'Plugin access to Redux store instance',
           link: 'README.md#initReduxStore',
           parent: 'middleware',
           after: 'initReduxState'
         }],
         structures: [{
-          name: makeStore,
+          name: path.relative(root, makeStore),
           description: 'Setup to make Redux store',
           link: 'README.md'
         }]

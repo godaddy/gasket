@@ -24,6 +24,8 @@ describe('Plugin', () => {
 
   it('has expected hooks', () => {
     const expected = [
+      'configure',
+      'prompt',
       'create',
       'webpack',
       'middleware',
@@ -45,7 +47,8 @@ describe('Plugin', () => {
     it('adds the expected dependencies', async function () {
       const { devDependencies } = require('../package');
       const spy = {
-        pkg: { add: jest.fn() }
+        pkg: { add: jest.fn() },
+        files: { add: jest.fn() }
       };
 
       await plugin.hooks.create({}, spy);
@@ -55,16 +58,18 @@ describe('Plugin', () => {
         'redux': devDependencies.redux
       });
     });
-  });
 
-  describe('middleware', () => {
-    it('has expected hook', () => {
-      expect(plugin.hooks).toHaveProperty('middleware', expect.any(Function));
-    });
+    it('adds the expected files', async function () {
+      const spy = {
+        pkg: { add: jest.fn() },
+        files: { add: jest.fn() }
+      };
 
-    it('returns middleware function', () => {
-      results = plugin.hooks.middleware(mockGasket);
-      expect(results).toBeInstanceOf(Function);
+      await plugin.hooks.create({}, spy);
+      expect(spy.files.add).toHaveBeenCalledWith(
+        `${ __dirname }/../generator/*`,
+        `${ __dirname }/../generator/**/*`
+      );
     });
   });
 
@@ -73,24 +78,17 @@ describe('Plugin', () => {
       expect(plugin.hooks).toHaveProperty('webpack', expect.any(Function));
     });
 
-    it('retains the base webpack config if no make store method exists', () => {
-      results = plugin.hooks.webpack(mockGasket, { bogus: 'BOGUS' });
-      expect(results).toBeFalsy();
-    });
-
-    it('safely adds alias to webpack config', () => {
+    it('adds GASKET_MAKE_STORE_FILE to EnvironmentPlugin', function () {
       mockGasket.config.redux = mockReduxConfig;
 
       results = plugin.hooks.webpack(mockGasket, {});
-      expect(results).toHaveProperty('resolve');
-      expect(results.resolve).toHaveProperty('alias');
-    });
-
-    it('set make-store alias if redux.makeStore in config', () => {
-      mockGasket.config.redux = mockReduxConfig;
-
-      results = plugin.hooks.webpack(mockGasket, {});
-      expect(results.resolve.alias).toHaveProperty('@gasket/redux/make-store', `${rootPath}/path/to/some-file.js`);
+      expect(results).toHaveProperty('plugins', expect.arrayContaining([
+        expect.objectContaining({
+          defaultValues: {
+            GASKET_MAKE_STORE_FILE: mockReduxConfig.makeStore
+          }
+        })
+      ]));
     });
   });
 });

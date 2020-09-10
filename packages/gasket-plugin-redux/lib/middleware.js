@@ -1,19 +1,18 @@
 /* eslint require-atomic-updates: warn */
 
-const { getReduxConfig } = require('./utils');
-
 /**
  * Configure middleware
  *
  * @param {Object} gasket - The Gasket API
  * @returns {Function} middleware
  */
-module.exports = function configureMiddleware(gasket) {
-  const reduxConfig = getReduxConfig(gasket) || {};
+module.exports = function middlewareHook(gasket) {
+  const { redux: reduxConfig = {} } = gasket.config;
 
-  const makeStore = require(
-    reduxConfig.makeStore
-    || '@gasket/redux/make-store');
+  if (!reduxConfig.makeStore) {
+    throw new Error('Could not find redux store file. Add a store.js file or configure redux.makeStore in gasket.config.js.');
+  }
+  const makeStore = require(reduxConfig.makeStore);
 
   /**
    * Middleware to attach the redux store to the req object for use in other middleware
