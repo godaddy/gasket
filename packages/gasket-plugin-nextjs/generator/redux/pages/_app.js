@@ -1,18 +1,18 @@
 import React from 'react';
-import App from 'next/app';
-import { Provider } from 'react-redux';
-import withRedux from 'next-redux-wrapper';
-import makeStore from '@gasket/redux/make-store';
+import PropTypes from 'prop-types';
 
-class MyApp extends App {
-  render() {
-    const { Component, pageProps, store } = this.props;
-    return (
-      <Provider store={ store }>
-        <Component { ...pageProps } />
-      </Provider>
-    );
-  }
+// The store path is also available from `process.env.GASKET_MAKE_STORE_FILE`
+const { nextRedux } = require('../redux/store');
+
+// Simple functional App component which we can wrap with next-redux-wrapper
+// @see: https://github.com/kirill-konshin/next-redux-wrapper#usage
+function WrappedApp({ Component, pageProps }) {
+  return <Component { ...pageProps } />;
 }
 
-export default withRedux(makeStore)(MyApp);
+WrappedApp.propTypes = {
+  Component: PropTypes.elementType,
+  pageProps: PropTypes.object
+};
+
+export default nextRedux.withRedux(WrappedApp);
