@@ -32,10 +32,15 @@ module.exports = {
 
 ## Configuration
 
-By default, Gasket apps will use the makeStore function from
-`@gasket/redux/make-store`. App developers can choose to use different makeStore
-file by utilizing `configureMakeStore` from [@gasket/redux] and then pointing to
-this file in the gasket.config.js.
+Gasket apps will need to have a `store.js` file either in a `./redux` directory
+or at the root of the project. New apps created with this plugin will
+automatically have this file generated.
+
+The store.js file should export a makeStore function. Use `configureMakeStore`
+from [@gasket/redux] to simplify this setup.
+
+App developers can choose to use different file location setting the
+`redux.makeStore` option in their gasket.config.js. See option details below.
 
 ### Options
 
@@ -168,6 +173,76 @@ The hook is passed the following parameters:
 | `req`     | The express request object  |
 | `res`     | The express response object |
 
+## Integrations
+
+### Adding reducers
+
+If you have a plugin which installs a package with reducers, you can
+include those in the generated store.js during the **create** command.
+
+In the `create` lifecycle hook of your plugin, you can access
+`reduxReducers` to add import and entry statements while will be injected
+to the store template. The store.js file is generated with as CommonJS
+exports and so the import statements should be in CommonJS format.
+
+```js
+module.exports = {
+  id: 'gasket-plugin-example',
+  hooks: {
+    create(gasket, state, context) {
+      const { reduxReducers } = context;
+      
+      // Prefer to have named reduces in an object
+      reduxReducers.addImport("const manyExampleReducer = require('@example/reducers');")
+      // Add a spread entry of the named reducers
+      reduxReducers.addEntry('...manyExampleReducer')
+      
+      // Ideally, the reducers are keyed already be in a object as
+      // in the previous example. If not, however, you can provide the
+      // key in the entry for a single reducer.
+      reduxReducers.addImport("const { singleExampleReducer } = require('@example/components');")
+      reduxReducers.addEntry('example: singleExampleReducer')      
+    }
+  }
+};
+```
+
+With these imports and entries added, the resulting store file should
+resemble:
+
+```js
+const { configureMakeStore } = require('@gasket/redux');
+const manyExampleReducer = require('@example/reducers');
+const { singleExampleReducer } = require('@example/components');
+
+const reducers = {
+  ...manyExampleReducer,
+  example: singleExampleReducer
+};
+
+const makeStore = configureMakeStore({ reducers });
+
+module.exports = makeStore;
+```
+
+### Accessing store file
+
+In your app code, you should be able to simple import/require the store
+file as needed. In most cases, this should not even be necessary. The
+Redux store instance will be created during a request and made available
+as `req.store`.
+
+In some situations, such as in shared packages used by multiple apps,
+where the store files needs to be accessed but its location unknown,
+an environment variable is set which can be referenced.
+
+```js
+const makeStore = require(process.env.GASKET_MAKE_STORE_FILE);
+```
+
+During runtimes this will be available, and when bundled via Webpack it
+will be replaced by the [EnvironmentPlugin].
+
 ## License
 
 [MIT](./LICENSE.md)
@@ -175,3 +250,4 @@ The hook is passed the following parameters:
 <!-- LINKS -->
 
 [@gasket/redux]:/packages/gasket-redux/README.md#gasketredux
+[EnvironmentPlugin]:https://webpack.js.org/plugins/environment-plugin/
