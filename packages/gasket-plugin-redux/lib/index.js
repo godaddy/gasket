@@ -25,6 +25,11 @@ module.exports = {
         'react-redux': devDependencies['react-redux'],
         'redux': devDependencies.redux
       });
+
+      files.add(
+        `${ __dirname }/../generator/*`,
+        `${ __dirname }/../generator/**/*`
+      );
     },
     webpack(gasket) {
       const { redux: reduxConfig } = gasket.config;
