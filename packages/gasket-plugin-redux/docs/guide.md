@@ -158,7 +158,7 @@ module.exports = {
 ```javascript
 const { INCREASE_BY_ONE, DECREASE_BY_ONE, INITIALIZE_COUNT } = require('../components/redux/redux-actions');
 
-module.exports = function reducer(state = {}, action) {
+function reducer(state = {}, action) {
   const getCurrentCount = (state) => {
     if (!state.currentCount) {
       return 0;
@@ -180,23 +180,36 @@ module.exports = function reducer(state = {}, action) {
       return state;
   }
 };
+
+module.exports = {
+  increment: reducer
+} 
 ```
 
 </p>
 </details>
 
-<details><summary>store.js</summary>
+<details><summary>redux/store.js</summary>
 <p>
 
-```javascript
-const { configureMakeStore } = require('@gasket/redux');
-const reduxReducer = require('./redux-reducer');
+This file will have been generated for you by default. Your job will
+merely be to include the app's reducers.
 
+```diff
+const { configureMakeStore } = require('@gasket/redux');
+const { HYDRATE, createWrapper } = require('next-redux-wrapper');
++ const incrementReducers = require('./redux-reducer');
+
+const rootReducer = (state, { type, payload }) => type === HYDRATE ? { ...state, ...payload } : state;
 const reducers = {
-  reduxReducer
++  ...incrementReducers
 };
 
-module.exports = configureMakeStore({ reducers });
+const makeStore = configureMakeStore({ rootReducer, reducers });
+const nextRedux = createWrapper(({ req }) => makeStore({}, { req }));
+
+module.exports = makeStore;
+module.exports.nextRedux = nextRedux;
 ```
 
 </p>
@@ -233,6 +246,7 @@ Modified `pages/index.js` shown below.
 import React from 'react';
 import ComponentA from '../components/redux/component-a';
 import ComponentB from '../components/redux/component-b';
++ import { nextRedux } from '../redux/store.js'; 
 + import { initialize } from '../components/redux/redux-actions';
 
 export const IndexPage = () => (
@@ -242,12 +256,9 @@ export const IndexPage = () => (
   </div>
 );
 
-+ IndexPage.getInitialProps = async function (ctx) {
-+   const { isServer, store } = ctx;
-+
-+   if (isServer) {
-+     await store.dispatch(initialize(5));
-+   }
++ export const getServerSideProps = nextRedux.getServerSideProps(ctx) {
++   const { store } = ctx;
++   await store.dispatch(initialize(5));
 +
 +   return {};
 + };
