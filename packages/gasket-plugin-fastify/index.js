@@ -34,9 +34,9 @@ module.exports = {
       const cookieParser = require('cookie-parser');
       const compression = require('compression');
 
-      const { config } = gasket;
+      const { logger, config } = gasket;
       const excludedRoutesRegex = config.fastify && config.fastify.excludedRoutesRegex;
-      const app = fastify();
+      const app = fastify({ logger });
 
       // Enable middleware for fastify@3
       await app.register(middie);
@@ -71,7 +71,10 @@ module.exports = {
 
       return {
         ...serverOpts,
-        handler: app
+        handler: async function handler(...args) {
+          await app.ready();
+          app.server.emit('request', ...args);
+        }
       };
     },
     metadata(gasket, meta) {

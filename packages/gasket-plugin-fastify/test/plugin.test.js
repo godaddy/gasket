@@ -5,6 +5,10 @@ const middie = require('middie');
 const version = require('../package.json').peerDependencies.fastify;
 
 const app = {
+  ready: sinon.spy(),
+  server: {
+    emit: sinon.spy()
+  },
   register: sinon.spy(),
   use: sinon.spy()
 };
@@ -55,6 +59,7 @@ describe('createServers', () => {
     sinon.resetHistory();
 
     gasket = {
+      logger: {},
       config: {},
       exec: sinon.stub().resolves([])
     };
@@ -62,7 +67,19 @@ describe('createServers', () => {
 
   it('returns the handler app', async function () {
     const result = await plugin.hooks.createServers(gasket, {});
-    assume(result).deep.equals({ handler: app });
+    assume(result.handler).to.be.an('asyncfunction');
+
+    const request = { mock: 'request' };
+    await result.handler(request);
+
+    assume(app.ready).to.have.been.called();
+    assume(app.server.emit).has.been.calledWith('request', request);
+  });
+
+  it('adds log plugin as logger to fastify', async function () {
+    await plugin.hooks.createServers(gasket, {});
+
+    assume(fastify).has.been.calledWith({ logger: gasket.logger });
   });
 
   it('executes the `middleware` lifecycle', async function () {
