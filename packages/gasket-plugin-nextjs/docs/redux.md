@@ -271,8 +271,8 @@ export default IndexPage;
 
 ## next-redux-wrapper v6
 
-If you are coming from version of [next-redux-wrapper] prior to v6, you will
-need to make the follow changes to your existing store.
+If you are coming from a version of [next-redux-wrapper] prior to v6, you will
+need to make the following changes to your existing store.
 
 ```diff
 const { configureMakeStore } = require('@gasket/redux');
@@ -294,21 +294,21 @@ module.exports = makeStore;
 + module.exports.nextRedux = nextRedux;
 ```
 
-You can now continue to use `getInitialProps` in your pages, or move to using
+You can now continue to use `getInitialProps` in your pages, or move to use
 `getStaticProps` or `getServerSideProps` as in the [SSR example] by import
 `nextRedux` export from the store file.
 
-When it comes to the rootReducer in order handle [state hydration], if have a
-a few different options. For the most part, the generated default and example
-above should suffice. You can also see the `next-redux-wrapper` docs for other
-[state hydration] examples.
+When it comes to the `rootReducer`, you can use this to handle [state hydration].
+There are a few different approaches for this, but the generated default and
+example above should suffice for the most part. See the `next-redux-wrapper`
+docs for other [state hydration] examples.
 
-For example, if your Gasket app and/or plugins set up the initial Redux state
+As an example, if your Gasket app and/or plugins set up the initial Redux state
 for a request, such as with the [initReduxState] lifecycle, then this state will
-be what is need to hydrate the Redux store with in the browser, as well as any
-other state added via `getServerSideProps`. if you notice problems appearing
-with your state be sure to inspect the HYDRATE action with [Redux DevTools] to
-see how you might best reconcile the hydration state or organize the state
+be what is required to hydrate the Redux store within the browser, as well as
+any other state added via `getServerSideProps`. if you notice problems appearing
+with your state, be sure to inspect the `HYDRATE` action with [Redux DevTools]
+to see how you might best reconcile the hydration state or organize the state
 object.
 
 <!-- LINKS -->
