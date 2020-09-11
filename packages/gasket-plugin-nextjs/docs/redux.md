@@ -1,7 +1,7 @@
 # State Management with Redux
 
-There are two ways to manage the client-side state in a Next.js based Gasket app. You can either
-use the React component state or use Redux.
+There are two ways to manage the client-side state in a Next.js based Gasket app.
+You can either use the React component state or use Redux.
 
 **React state** is managed within a component. If it's needed in another sub-component,
 you will have to pass it explicitly through props and if those values need to be updated
@@ -18,7 +18,7 @@ On the other hand, **Redux state** is maintained globally. Any component that ne
 that value can connect to the store and read it from there. Also, updating the state
 value is as simple as dispatching an `action`.
 
-## When to use redux
+## When to use Redux
 
 So it may feel like using Redux should *always* be the way to go. However, we have to
 be careful about that, as there are some drawbacks of using Redux too much. It may
@@ -33,11 +33,11 @@ your components.
 - If a state value is initialized with server side rendering and later used from client.
 Before we go any further, please take a moment to review How to use [@gasket/redux].
 
-#### Example 1: Keep data in redux state
+#### Example 1: Keep data in Redux state
 
-In this example `store.js` creates a redux store, and attaches a reducer from
+In this example `store.js` creates a Redux store, and attaches a reducer from
 `redux-reducer.js`. `ComponentA` invokes the actions from `redux-actions.js`
-and `ComponentB` connects to redux store to read the current count.
+and `ComponentB` connects to Redux store to read the current count.
 
 <details><summary>component-a.js</summary>
 <p>
@@ -212,6 +212,9 @@ module.exports = makeStore;
 module.exports.nextRedux = nextRedux;
 ```
 
+See the section below on [next-redux-wrapper v6] if you have an existing
+app and want to use the latest [automatic optimization] changes from Next.js.
+
 </p>
 </details>
 
@@ -239,7 +242,7 @@ export default IndexPage;
 
 #### Example 2: Initialize state value with SSR
 
-Initialize redux state from server side by dispatching redux action.
+Initialize Redux state from server side by dispatching a Redux action.
 Modified `pages/index.js` shown below.
 
 ```diff
@@ -266,6 +269,56 @@ export const IndexPage = () => (
 export default IndexPage;
 ```
 
+## next-redux-wrapper v6
+
+If you are coming from version of [next-redux-wrapper] prior to v6, you will
+need to make the follow changes to your existing store.
+
+```diff
+const { configureMakeStore } = require('@gasket/redux');
+const incrementReducers = require('./redux-reducer');
++ const { HYDRATE, createWrapper } = require('next-redux-wrapper');
+
++ const rootReducer = (state, { type, payload }) => type === HYDRATE ? { ...state, ...payload } : state;
+const reducers = {
+  ...incrementReducers
+};
+
+const makeStore = configureMakeStore({ 
++  rootReducer,
+  reducers
+});
++ const nextRedux = createWrapper(({ req }) => makeStore({}, { req }));
+
+module.exports = makeStore;
++ module.exports.nextRedux = nextRedux;
+```
+
+You can now continue to use `getInitialProps` in your pages, or move to using
+`getStaticProps` or `getServerSideProps` as in the [SSR example] by import
+`nextRedux` export from the store file.
+
+When it comes to the rootReducer in order handle [state hydration], if have a
+a few different options. For the most part, the generated default and example
+above should suffice. You can also see the `next-redux-wrapper` docs for other
+[state hydration] examples.
+
+For example, if your Gasket app and/or plugins set up the initial Redux state
+for a request, such as with the [initReduxState] lifecycle, then this state will
+be what is need to hydrate the Redux store with in the browser, as well as any
+other state added via `getServerSideProps`. if you notice problems appearing
+with your state be sure to inspect the HYDRATE action with [Redux DevTools] to
+see how you might best reconcile the hydration state or organize the state
+object.
+
 <!-- LINKS -->
 
+[next-redux-wrapper v6]: #next-redux-wrapper-v6
+[SSR example]: #example-2-initialize-state-value-with-ssr
 [@gasket/redux]: /packages/gasket-redux/README.md
+[initReduxState]: /packages/gasket-plugin-redux/README.md#initreduxstate
+
+[automatic optimization]: https://nextjs.org/docs/advanced-features/automatic-static-optimization
+[next-redux-wrapper]: https://github.com/kirill-konshin/next-redux-wrapper
+[state hydration]: https://github.com/kirill-konshin/next-redux-wrapper#state-reconciliation-during-hydration
+[Redux DevTools]: https://github.com/reduxjs/redux-devtools
