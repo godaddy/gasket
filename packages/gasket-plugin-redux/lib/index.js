@@ -59,7 +59,7 @@ module.exports = {
         lifecycles: [{
           name: 'initReduxState',
           method: 'execWaterfall',
-          description: 'Instantiate the Redux store from the makeStore',
+          description: 'Initializes state of the Redux store',
           link: 'README.md#initReduxState',
           parent: 'middleware'
         }, {

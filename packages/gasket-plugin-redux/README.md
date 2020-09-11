@@ -225,22 +225,22 @@ const makeStore = configureMakeStore({ reducers });
 module.exports = makeStore;
 ```
 
-### Accessing store file
+### Accessing the store file
 
-In your app code, you should be able to simple import/require the store
+In your app code, you should be able to simply import/require the store
 file as needed. In most cases, this should not even be necessary. The
 Redux store instance will be created during a request and made available
 as `req.store`.
 
-In some situations, such as in shared packages used by multiple apps,
-where the store files needs to be accessed but its location unknown,
-an environment variable is set which can be referenced.
+In some situations, such as in shared packages used by multiple apps
+where the store file needs to be accessed, but its location is unknown,
+an environment variable is set, which can be referenced.
 
 ```js
 const makeStore = require(process.env.GASKET_MAKE_STORE_FILE);
 ```
 
-During runtimes this will be available, and when bundled via Webpack it
+During runtime this will be available, and when bundled via Webpack it
 will be replaced by the [EnvironmentPlugin].
 
 ## License
