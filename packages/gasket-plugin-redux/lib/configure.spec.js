@@ -1,3 +1,4 @@
+/* eslint-disable no-process-env */
 const fs = require('fs');
 const configureHook = require('./configure');
 const rootPath = process.cwd();
@@ -14,6 +15,10 @@ describe('configureHook', () => {
     mockGasket = {
       config: mockConfig
     };
+  });
+
+  afterEach(() => {
+    delete process.env.GASKET_MAKE_STORE_FILE;
   });
 
   it('returns base config', () => {
@@ -64,6 +69,13 @@ describe('configureHook', () => {
     expect(results.redux).toHaveProperty('makeStore', `${ rootPath }/store.js`);
     spy.mockReset();
     spy.mockRestore();
+  });
+
+  it('sets process.env.GASKET_MAKE_STORE_FILE to makeStore path', () => {
+    mockGasket.config.redux = { ...mockReduxConfig };
+    expect(process.env.GASKET_MAKE_STORE_FILE).toBeUndefined();
+    results = configureHook(mockGasket, mockConfig);
+    expect(process.env.GASKET_MAKE_STORE_FILE).toEqual(`${ rootPath }/path/to/some-file.js`);
   });
 
   it('does not set makeStore if expected file not in project root', () => {

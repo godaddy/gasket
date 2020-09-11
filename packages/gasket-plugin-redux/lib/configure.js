@@ -10,25 +10,24 @@ const fs = require('fs');
  */
 module.exports = function configureHook(gasket, baseConfig) {
   const { root, redux: reduxConfig = {} } = baseConfig;
-  const fixupConfig = {};
 
-  let makeStore = reduxConfig.makeStore;
-  if (makeStore) {
-    makeStore = path.resolve(baseConfig.root, reduxConfig.makeStore);
+  let makeStorePath = reduxConfig.makeStore;
+  if (makeStorePath) {
+    makeStorePath = path.resolve(baseConfig.root, reduxConfig.makeStore);
   } else {
     const possible = [
       path.resolve(root, 'redux', 'store.js'),
       path.resolve(root, 'store.js')
     ];
     // eslint-disable-next-line no-sync
-    makeStore = possible.find(p => fs.existsSync(p));
+    makeStorePath = possible.find(p => fs.existsSync(p));
   }
 
-  if (makeStore) {
-    reduxConfig.makeStore = makeStore;
+  if (makeStorePath) {
+    reduxConfig.makeStore = makeStorePath;
     // This allows packages (not in app) to reference the store file
     // eslint-disable-next-line no-process-env
-    process.env.GASKET_MAKE_STORE_FILE = fixupConfig.makeStore;
+    process.env.GASKET_MAKE_STORE_FILE = makeStorePath;
   }
 
   return {
