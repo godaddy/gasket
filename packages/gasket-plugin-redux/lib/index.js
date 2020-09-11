@@ -51,11 +51,6 @@ module.exports = {
       const { makeStore = path.join(root, 'redux', 'store.js') } = reduxConfig;
       return {
         ...meta,
-        guides: [{
-          name: 'State Management with Redux',
-          description: 'Using Redux with Gasket apps',
-          link: 'docs/guide.md'
-        }],
         lifecycles: [{
           name: 'initReduxState',
           method: 'execWaterfall',

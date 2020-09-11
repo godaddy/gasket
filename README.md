@@ -33,7 +33,7 @@ Help and explanations docs
 | [Express Setup Guide]         | Adding middleware and routes for Express               |
 | [Next.js Routing Guide]       | Basic and advance routing for Next.js                  |
 | [Next.js Deployment Guide]    | Steps to deploy a Next.js Gasket app                   |
-| [State Management with Redux] | Using Redux with Gasket apps                           |
+| [Next.js Redux Guide]         | Using Redux with Next.js Gasket apps                   |
 | [Webpack Configuration Guide] | Configuring Webpack in Gasket apps                     |
 
 ## Commands
@@ -72,8 +72,8 @@ Available lifecycles
 | [fastify]              | Modify the Fastify instance to for adding endpoints           |
 | [getCommands]          | Allows plugins to add CLI commands                            |
 | [init]                 | Signals the start of any Gasket command before it is run      |
-| [initReduxState]       | Setup the next config                                         |
-| [initReduxStore]       | Update the next app instance before prepare                   |
+| [initReduxState]       | Initializes state of the Redux store                          |
+| [initReduxStore]       | Plugin access to Redux store instance                         |
 | [initWebpack]          | Create a webpack config                                       |
 | [intlLanguage]         | Set the language for which locale files to load               |
 | [logTransports]        | Setup Winston log transports                                  |
@@ -111,8 +111,8 @@ Available structure
 | [app.config.js]    | App configuration with environment overrides           |
 | [gasket.config.js] | Gasket config for an app                               |
 | [jest.config.js]   | Jest configuration                                     |
+| [redux/store.js]   | Setup to make Redux store                              |
 | [routes.js]        | Routing when using `next-routes`                       |
-| [store.js]         | Setup to make Redux store                              |
 
 ## Presets
 
@@ -184,7 +184,7 @@ Supporting modules
 [Express Setup Guide]:/packages/gasket-plugin-express/docs/setup.md
 [Next.js Routing Guide]:/packages/gasket-plugin-nextjs/docs/routing.md
 [Next.js Deployment Guide]:/packages/gasket-plugin-nextjs/docs/deployment.md
-[State Management with Redux]:/packages/gasket-plugin-redux/docs/guide.md
+[Next.js Redux Guide]:/packages/gasket-plugin-nextjs/docs/redux.md
 [Webpack Configuration Guide]:/packages/gasket-plugin-webpack/docs/webpack.md
 [analyze]:/packages/gasket-plugin-analyze/README.md#commands
 [build]:/packages/gasket-plugin-start/README.md#build-command
@@ -240,8 +240,8 @@ Supporting modules
 [app.config.js]:/packages/gasket-plugin-config/README.md
 [gasket.config.js]:/packages/gasket-cli/docs/configuration.md
 [jest.config.js]:https://jestjs.io/docs/configuration
+[redux/store.js]:/packages/gasket-plugin-redux/README.md
 [routes.js]:https://github.com/fridays/next-routes#how-to-use
-[store.js]:/packages/gasket-plugin-redux/README.md
 [@gasket/preset-nextjs]:/packages/gasket-preset-nextjs/README.md
 [@gasket/preset-pwa]:/packages/gasket-preset-pwa/README.md
 [@gasket/plugin-analyze]:/packages/gasket-plugin-analyze/README.md
