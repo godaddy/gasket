@@ -4,7 +4,7 @@
   "description": "Adds Next support to your application",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint *.js \"{test,generator}/**/*.js\"",
+    "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "test": "npm run test:runner",
     "test:runner": "mocha --require ./setup.js \"test/**/*.test.js\"",
@@ -63,5 +63,18 @@
     "next": ">=7.0.0 <10.0.0",
     "react": "^16.6.0",
     "react-dom": "^16.6.0"
-  }
+  },
+  "eslintConfig": {
+    "extends": [
+      "godaddy-react"
+    ],
+    "parser": "babel-eslint",
+    "globals": {
+      "expect": "readonly"
+    }
+  },
+  "eslintIgnore": [
+    "coverage",
+    "generator/redux/redux/store.js"
+  ]
 }

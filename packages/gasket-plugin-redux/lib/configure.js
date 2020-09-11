@@ -27,6 +27,7 @@ module.exports = function configureHook(gasket, baseConfig) {
   if (makeStore) {
     reduxConfig.makeStore = makeStore;
     // This allows packages (not in app) to reference the store file
+    // eslint-disable-next-line no-process-env
     process.env.GASKET_MAKE_STORE_FILE = fixupConfig.makeStore;
   }
 
