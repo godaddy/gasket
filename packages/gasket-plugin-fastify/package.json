@@ -37,7 +37,8 @@
   "dependencies": {
     "compression": "^1.7.2",
     "cookie-parser": "^1.4.3",
-    "diagnostics": "^2.0.2"
+    "diagnostics": "^2.0.2",
+    "middie": "5.1.0"
   },
   "devDependencies": {
     "assume": "^2.2.0",
@@ -46,13 +47,13 @@
     "eslint-config-godaddy": "^4.0.0",
     "eslint-plugin-json": "^1.4.0",
     "eslint-plugin-mocha": "^6.0.0",
-    "fastify": "^2.10.0",
+    "fastify": "^3.3.0",
     "mocha": "^6.2.0",
     "nyc": "^14.1.1",
     "proxyquire": "^2.1.3",
     "sinon": "^7.4.1"
   },
   "peerDependencies": {
-    "fastify": "^2.10.0"
+    "fastify": "^3.0.0"
   }
 }

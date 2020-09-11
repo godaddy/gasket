@@ -1,9 +1,17 @@
 const proxyquire = require('proxyquire');
 const sinon = require('sinon');
 const assume = require('assume');
+const middie = require('middie');
 const version = require('../package.json').peerDependencies.fastify;
 
-const app = { use: sinon.spy() };
+const app = {
+  ready: sinon.spy(),
+  server: {
+    emit: sinon.spy()
+  },
+  register: sinon.spy(),
+  use: sinon.spy()
+};
 const fastify = sinon.stub().returns(app);
 
 const cookieParserMiddleware = sinon.spy();
@@ -51,6 +59,7 @@ describe('createServers', () => {
     sinon.resetHistory();
 
     gasket = {
+      logger: {},
       config: {},
       exec: sinon.stub().resolves([])
     };
@@ -58,7 +67,19 @@ describe('createServers', () => {
 
   it('returns the handler app', async function () {
     const result = await plugin.hooks.createServers(gasket, {});
-    assume(result).deep.equals({ handler: app });
+    assume(result.handler).to.be.an('asyncfunction');
+
+    const request = { mock: 'request' };
+    await result.handler(request);
+
+    assume(app.ready).to.have.been.called();
+    assume(app.server.emit).has.been.calledWith('request', request);
+  });
+
+  it('adds log plugin as logger to fastify', async function () {
+    await plugin.hooks.createServers(gasket, {});
+
+    assume(fastify).has.been.calledWith({ logger: gasket.logger });
   });
 
   it('executes the `middleware` lifecycle', async function () {
@@ -98,6 +119,12 @@ describe('createServers', () => {
       app.use,
       (mw) => mw === errorMiddlewares[0]);
     assume(errorMiddleware).to.not.be.null();
+  });
+
+  it('registers the middie middleware plugin', async () => {
+    await plugin.hooks.createServers(gasket, {});
+
+    assume(app.register).to.have.been.calledWith(middie);
   });
 
   it('adds the cookie-parser middleware before plugin middleware', async () => {
