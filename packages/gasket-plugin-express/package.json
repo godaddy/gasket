@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-express",
-  "version": "5.6.0",
+  "version": "6.0.0-canary.0",
   "description": "Adds express support to your application",
   "main": "index.js",
   "scripts": {
