@@ -1,5 +1,7 @@
 # `@gasket/plugin-intl`
 
+### 5.7.0
+
 - Create new apps with `react-intl` v5 ([#175])
 
 ### 5.5.0
