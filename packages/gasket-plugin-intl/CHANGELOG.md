@@ -1,5 +1,7 @@
 # `@gasket/plugin-intl`
 
+- Create new apps with `react-intl` v5 ([#175])
+
 ### 5.5.0
 
 - Updated plugins to consume zones gasket config property ([#166])
@@ -72,3 +74,4 @@
 
 [#144]: https://github.com/godaddy/gasket/pull/144
 [#166]: https://github.com/godaddy/gasket/pull/166
+[#175]: https://github.com/godaddy/gasket/pull/175

@@ -58,7 +58,7 @@ const depVersions = {
   'semver': '^6.3.0',
   'lodash.defaultsdeep': '^4.6.0',
   'prop-types': '^15.6.2',
-  'react-intl': '^3.9.1'
+  'react-intl': '^5.8.1'
 };
 
 

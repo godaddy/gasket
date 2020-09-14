@@ -1,5 +1,7 @@
 # `@gasket/intl`
 
+- Bump `react-intl` peerDependency range to include v5 ([#175])
+
 ### 5.5.0
 
 - Updated plugins to consume zones gasket config property ([#166])
@@ -76,3 +78,4 @@
 - Switch to Reduxful
 
 [#166]: https://github.com/godaddy/gasket/pull/166
+[#175]: https://github.com/godaddy/gasket/pull/175

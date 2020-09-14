@@ -51,7 +51,7 @@
     "eslint-plugin-json": "^1.4.0",
     "eslint-plugin-mocha": "^6.0.0",
     "jest": "^24.8.0",
-    "react-intl": "^3.9.1"
+    "react-intl": "^5.8.1"
   },
   "peerDependencies": {
     "@gasket/plugin-log": "^5.0.0",
