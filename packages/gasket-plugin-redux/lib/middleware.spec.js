@@ -1,6 +1,5 @@
 const configureMiddleware = require('./middleware');
 
-const mockMakeStore = require('@gasket/redux/make-store');
 const customMakeStore = require('custom-make-store');
 
 describe('Middleware', () => {
@@ -10,14 +9,17 @@ describe('Middleware', () => {
   beforeEach(() => {
     gasket = {
       config: {
-        root: __dirname
+        root: __dirname,
+        redux: {
+          makeStore: '../__mocks__/custom-make-store.js'
+        }
       },
       exec: jest.fn(() => Promise.resolve()),
       execWaterfall: jest.fn((event, state) => Promise.resolve(state))
     };
   });
 
-  describe('configureMiddleware', () => {
+  describe('middlewareHook', () => {
 
     it('returns a function', () => {
       results = configureMiddleware(gasket);
@@ -30,7 +32,6 @@ describe('Middleware', () => {
 
     beforeEach(() => {
       middleware = configureMiddleware(gasket);
-      mockMakeStore.mockClear();
       customMakeStore.mockClear();
       res = {};
       req = {};
@@ -53,34 +54,26 @@ describe('Middleware', () => {
       expect(next).not.toHaveBeenCalled();
     });
 
-    it('invokes base makeStore', async () => {
-      await middleware(req, res, next);
-      expect(mockMakeStore).toHaveBeenCalled();
-    });
-
-    it('invokes custom makeStore', async () => {
+    it('invokes makeStore', async () => {
       gasket.config.redux = { makeStore: '../__mocks__/custom-make-store.js' };
 
       middleware = configureMiddleware(gasket);
       await middleware(req, res, next);
-      expect(mockMakeStore).not.toHaveBeenCalled();
       expect(customMakeStore).toHaveBeenCalled();
     });
 
     it('supports a custom initial store state', async () => {
-      gasket.config.redux = {
-        initState: { foo: 'bar' }
-      };
+      gasket.config.redux.initState = { foo: 'bar' };
       middleware = configureMiddleware(gasket);
 
       await middleware(req, res, next);
 
-      expect(mockMakeStore).toHaveBeenCalledWith({ foo: 'bar' }, { req });
+      expect(customMakeStore).toHaveBeenCalledWith({ foo: 'bar' }, { req });
     });
 
     it('supports plugin modification of initial store state', async () => {
       const initState = { foo: 'bar' };
-      gasket.config.redux = { initState };
+      gasket.config.redux.initState = initState;
       gasket.execWaterfall = jest.fn((event, state) => Promise.resolve({
         ...state,
         injected: 'prop'
@@ -91,13 +84,13 @@ describe('Middleware', () => {
 
       expect(gasket.execWaterfall)
         .toHaveBeenCalledWith('initReduxState', initState, req, res);
-      expect(mockMakeStore)
+      expect(customMakeStore)
         .toHaveBeenCalledWith({ foo: 'bar', injected: 'prop' }, { req });
     });
 
     it('executes `initReduxStore` hooks after store creation', async () => {
       const mockStore = { mock: 'store' };
-      mockMakeStore.mockImplementation(() => mockStore);
+      customMakeStore.mockImplementation(() => mockStore);
 
       await middleware(req, res, next);
 

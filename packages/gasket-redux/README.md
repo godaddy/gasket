@@ -16,7 +16,10 @@ npm i @gasket/redux
 
 - `options` - (object) Options object
   - `initialState` - (object) Optionally set any preloaded state
-  - `reducers` - (object) Map of identifiers and reducer functions
+  - `reducers` - (object) Map of identifiers and reducer functions which will
+    be [combined].
+  - `rootReducer` - (function) Optional entry reducer. If returned state is
+    unchanged, it will pass through to combined `reducers`.
   - `middleware` - (function[]) Additional redux middleware to apply
   - `enhancers` - (function[]) Any other redux store enhancers
   - `logging` - (boolean) set to true if you want to enable redux logger.
@@ -37,10 +40,10 @@ the `configureMakeStore` can be used to do any additional configuration. The
 most common use case is to add reducers as the app level.
 
 By default, custom store configurations can be placed in a `store.js` at the
-root of your app. If you wish for it to reside elsewhere, direct the
-`redux.makeStore` property to it in your app's gasket.config.js. Custom
-make-store files should use CommonJS imports since they will be executed in
-NodeJS for SSR.
+root of your app or in a `./redux` dir. If you wish for it to reside elsewhere,
+direct the `redux.makeStore` property to it in your app's gasket.config.js.
+Custom make store files should use CommonJS imports since they will be executed
+in NodeJS for SSR.
 
 #### Example: adding reducers
 
@@ -113,3 +116,7 @@ module.exports = configureMakeStore({ reducers, thunkMiddleware })
 ## License
 
 [MIT](./LICENSE.md)
+
+<!-- LINKS -->
+
+[combined]: https://redux.js.org/api/combinereducers
