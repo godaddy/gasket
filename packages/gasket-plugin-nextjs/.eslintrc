@@ -1,7 +1,0 @@
-{
-  "extends": ["godaddy-react"],
-  "parser": "babel-eslint",
-  "globals": {
-    "expect": "readonly"
-  }
-}

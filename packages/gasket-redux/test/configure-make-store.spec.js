@@ -1,5 +1,5 @@
 import * as redux from 'redux';
-import configureMakeStore from '../src/configure-make-store';
+import configureMakeStore, { prepareReducer } from '../src/configure-make-store';
 import thunk from 'redux-thunk';
 import { mockLoggerMiddleware } from 'redux-logger';
 
@@ -9,16 +9,19 @@ const createStoreSpy = jest.spyOn(redux, 'createStore');
 const composeSpy = jest.spyOn(redux, 'compose');
 
 const mockInitialState = { bogus: 'BOGUS' };
-const mockReducers = {
-  reducer1: f => f || {}
-};
+
 const mockMiddleware = jest.fn(() => next => action => next(action));
 const mockEnhancer = jest.fn(createStore => (reducer, initialState, enhancer) => createStore(reducer, initialState, enhancer));
 const mockPostCreate = jest.fn();
 
-let result, makeStore, store;
 
 describe('configureMakeStore', () => {
+  const mockReducers = {
+    reducer1: f => f || {}
+  };
+
+  let result, makeStore, store;
+
   beforeEach(() => {
     mockMiddleware.mockClear();
     mockPostCreate.mockClear();
@@ -66,27 +69,27 @@ describe('configureMakeStore', () => {
   });
 
   it('allows adding custom thunk middleware', () => {
-    const functionForExtraArg = jest.fn()
+    const functionForExtraArg = jest.fn();
     const exampleAction = jest.fn(() => {
       return (getState, dispatch, functionAsExtraArg) => {
-        functionAsExtraArg('value')
-      }
-    })
-    const exampleReducer = jest.fn((state = 'initialState') => state)
-    const thunkMiddleware = thunk.withExtraArgument(functionForExtraArg)
+        functionAsExtraArg('value');
+      };
+    });
+    const exampleReducer = jest.fn((state = 'initialState') => state);
+    const thunkMiddleware = thunk.withExtraArgument(functionForExtraArg);
     makeStore = configureMakeStore({
       reducers: {
         exampleReducer
       },
       thunkMiddleware
-    })
-    store = makeStore()
-    store.dispatch(exampleAction())
+    });
+    store = makeStore();
+    store.dispatch(exampleAction());
 
-    expect(exampleAction).toHaveBeenCalled()
-    expect(exampleReducer).toHaveBeenCalled()
-    expect(functionForExtraArg).toHaveBeenCalledWith('value')
-  })
+    expect(exampleAction).toHaveBeenCalled();
+    expect(exampleReducer).toHaveBeenCalled();
+    expect(functionForExtraArg).toHaveBeenCalledWith('value');
+  });
 
   it('allows removing logger middleware', () => {
     configureMakeStore({ logging: false })();
@@ -114,6 +117,23 @@ describe('configureMakeStore', () => {
   it('adds placeholder reducers', () => {
     configureMakeStore({ initialState: { bogus: true } })();
     expect(combineReducersSpy).toHaveBeenCalledWith({ bogus: expect.any(Function) });
+  });
+
+  it('allows custom rootReducer', () => {
+    const exampleReducer = jest.fn((state = 'initialState') => state);
+    const exampleRootReducer = jest.fn((state = 'initialState') => state);
+    makeStore = configureMakeStore({
+      rootReducer: exampleRootReducer,
+      reducers: {
+        exampleReducer
+      }
+    });
+    store = makeStore({});
+    store.dispatch({ type: 'EXAMPLE' });
+
+    expect(exampleRootReducer).toHaveBeenCalled();
+    // passes through to combined reducers if state unchanged
+    expect(exampleReducer).toHaveBeenCalled();
   });
 
   it('uses devtools composer if set', () => {
@@ -180,5 +200,60 @@ describe('configureMakeStore', () => {
       result = makeStore({}, { logger: mockLogger, req: { store: mockStore } });
       expect(result).toBe(mockStore);
     });
+  });
+});
+
+describe('prepareReducer', () => {
+  let result;
+  const mockRootReducer = jest.fn((state = {}, { type } = {}) => type === 'ROOT' && { ...state, root: true } || state);
+  const mockReducers = { fake: jest.fn((state = 'one') => state), fake2: jest.fn((state = 'two') => state) };
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('returns base function if no reducers', function () {
+    result = prepareReducer({});
+    expect(result).toBeInstanceOf(Function);
+    expect(result('fake')).toEqual('fake');
+    expect(result()).toEqual({});
+  });
+
+  it('combines reducers', function () {
+    result = prepareReducer(mockReducers);
+
+    expect(combineReducersSpy).toHaveBeenCalled();
+    expect(result).toBeInstanceOf(Function);
+    expect(result()).toEqual({ fake: 'one', fake2: 'two' });
+    expect(mockReducers.fake).toHaveBeenCalled();
+    expect(mockReducers.fake2).toHaveBeenCalled();
+  });
+
+  it('combines with root reducer', function () {
+    result = prepareReducer(mockReducers, mockRootReducer);
+    expect(combineReducersSpy).toHaveBeenCalled();
+    expect(result).toBeInstanceOf(Function);
+  });
+
+  it('pass through if state UNCHANGED by root', function () {
+    result = prepareReducer(mockReducers, mockRootReducer);
+    const initState = {};
+
+    jest.clearAllMocks();
+    expect(result(initState)).toEqual({ fake: 'one', fake2: 'two' });
+    expect(mockRootReducer).toHaveBeenCalledTimes(1);
+    expect(mockReducers.fake).toHaveBeenCalledTimes(1);
+    expect(mockReducers.fake2).toHaveBeenCalledTimes(1);
+  });
+
+  it('does NOT pass through if state CHANGED by root', function () {
+    result = prepareReducer(mockReducers, mockRootReducer);
+    const initState = { existing: true };
+
+    jest.clearAllMocks();
+    expect(result(initState, { type: 'ROOT' })).toEqual({ ...initState, root: true });
+    expect(mockRootReducer).toHaveBeenCalledTimes(1);
+    expect(mockReducers.fake).toHaveBeenCalledTimes(0);
+    expect(mockReducers.fake2).toHaveBeenCalledTimes(0);
   });
 });

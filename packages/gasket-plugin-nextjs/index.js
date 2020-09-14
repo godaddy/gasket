@@ -185,6 +185,10 @@ module.exports = {
           name: 'Next.js Deployment Guide',
           description: 'Steps to deploy a Next.js Gasket app',
           link: 'docs/deployment.md'
+        }, {
+          name: 'Next.js Redux Guide',
+          description: 'Using Redux with Next.js Gasket apps',
+          link: 'docs/redux.md'
         }],
         lifecycles: [{
           name: 'nextConfig',
