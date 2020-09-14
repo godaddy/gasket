@@ -2,6 +2,9 @@
   "name": "@gasket/fetch",
   "version": "6.0.0-canary.0",
   "description": "Gasket Fetch API",
+  "main": "./node.js",
+  "browser": "./browser.js",
+  "react-native": "./react-native.js",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/godaddy/gasket.git"
@@ -22,5 +25,8 @@
     "url": "https://github.com/godaddy/gasket/issues"
   },
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-fetch#readme",
-  "dependencies": {}
+  "dependencies": {},
+  "devDependencies": {
+    "node-fetch": "^2.6.1"
+  }
 }
