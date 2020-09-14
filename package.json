@@ -19,7 +19,8 @@
     "docs": "lerna run docs && npm run generate-docs-index",
     "docs-view": "docsify serve",
     "generate-docs-index": "node scripts/generate-docs-index",
-    "postinstall": "npm run bootstrap"
+    "postinstall": "npm run bootstrap",
+    "publish:canary": "lerna publish --preid canary --dist-tag canary"
   },
   "repository": {
     "type": "git",
