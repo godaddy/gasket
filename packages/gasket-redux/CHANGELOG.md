@@ -1,5 +1,8 @@
 # `@gasket/redux`
 
+- Support for adding an entry root reducer ([#173])
+- No longer provide a default make-store ([#173])
+
 ### 5.0.0
 
 - Open Source Release
@@ -53,5 +56,7 @@
 - Upgraded to Babel 7 and the `@babel/` namespace packages.
 - Upgraded to latest `@gasket/*` packages that received the same update.
 
+<!-- LINKS -->
 
 [#80]: https://github.com/godaddy/gasket/pull/80
+[#173]: https://github.com/godaddy/gasket/pull/173

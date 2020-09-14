@@ -1,5 +1,8 @@
 # `@gasket/plugin-nextjs`
 
+- Generate `pages/_app.s` with [next-redux-wrapper] setup from store ([#173])
+- Generate a `redux/store.js` with [next-redux-wrapper] setup ([#173])
+
 ### 5.5.0
 
 - Updated plugins to consume zones gasket config property ([#166])
@@ -61,6 +64,10 @@
 - Separate next plugins from core
 - Initial release.
 
+<!-- LINKS -->
+
+[next-redux-wrapper]: https://github.com/kirill-konshin/next-redux-wrapper
+
 [#23]: https://github.com/godaddy/gasket/pull/23
 [#32]: https://github.com/godaddy/gasket/pull/32
 [#33]: https://github.com/godaddy/gasket/pull/33
@@ -72,3 +79,4 @@
 [#136]: https://github.com/godaddy/gasket/pull/136
 [#158]: https://github.com/godaddy/gasket/pull/158
 [#166]: https://github.com/godaddy/gasket/pull/166
+[#173]: https://github.com/godaddy/gasket/pull/173
