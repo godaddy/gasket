@@ -1,5 +1,7 @@
 # `@gasket/intl`
 
+### 5.7.0
+
 - Bump `react-intl` peerDependency range to include v5 ([#175])
 
 ### 5.5.0
