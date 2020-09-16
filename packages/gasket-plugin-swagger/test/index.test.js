@@ -13,7 +13,7 @@ describe('Swagger Plugin', () => {
     yamlSafeLoadStub = sinon.stub().resolves({ data: true });
     swaggerJSDocStub = sinon.stub();
 
-    plugin = proxyquire('../plugins/swagger-plugin', {
+    plugin = proxyquire('../index', {
       'fs': {
         readFile: readFileStub,
         writeFile: writeFileStub
@@ -39,7 +39,7 @@ describe('Swagger Plugin', () => {
   });
 
   it('has expected name', () => {
-    assume(plugin).property('name', 'swagger-plugin');
+    assume(plugin).property('name', '@gasket/plugin-swagger');
   });
 
   it('has expected hooks', () => {
