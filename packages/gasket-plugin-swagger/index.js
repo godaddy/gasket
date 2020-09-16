@@ -23,6 +23,7 @@ async function loadSwaggerSpec(root, definitionFile) {
     const target = path.join(root, definitionFile);
     if (isYaml.test(definitionFile)) {
       const content = await readFile(target, 'utf8');
+      // eslint-disable-next-line require-atomic-updates
       __swaggerSpec = require('js-yaml').safeLoad(content);
     } else {
       __swaggerSpec = require(target);

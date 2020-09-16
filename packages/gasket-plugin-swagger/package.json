@@ -21,7 +21,7 @@
     "access": "public"
   },
   "keywords": [
-    "express",
+    "swagger",
     "gasket",
     "plugin"
   ],
@@ -57,9 +57,13 @@
     "sinon": "^7.4.1",
     "sqlite3": "^4.2.0"
   },
-  "nodemonConfig": {
-    "ignore": [
-      "swagger.json"
+  "babel": {
+    "presets": [
+      "@babel/preset-env",
+      "@babel/preset-react"
+    ],
+    "plugins": [
+      "@babel/transform-runtime"
     ]
   }
 }
