@@ -39,6 +39,9 @@ typings/
 # Optional npm cache directory
 .npm
 
+# Optional next cache directory
+.next
+
 # OSX Finder cache files
 .DS_Store
 

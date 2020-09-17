@@ -3,6 +3,34 @@
 Gasket plugin for working with Swagger specs, and uses [swagger-ui-express] to
 serve Swagger UI docs.
 
+## Installation
+
+#### New apps
+
+***Recommended***
+
+```
+gasket create <app-name> --plugins @gasket/plugin-swagger
+```
+
+#### Existing apps
+
+```
+npm i @gasket/plugin-swagger
+```
+
+Modify `plugins` section of your `gasket.config.js`:
+
+```diff
+module.exports = {
+  plugins: {
+    add: [
++      '@gasket/plugin-swagger'
+    ]
+  }
+}
+```
+
 ## Configuration
 
 - **`swagger`** - (object) The base gasket.config object.
@@ -56,6 +84,10 @@ module.exports = {
   }
 }
 ```
+
+## License
+
+[MIT](./LICENSE.md)
 
 <!-- LINK -->
 [swagger-ui-express]: https://github.com/scottie1984/swagger-ui-express
