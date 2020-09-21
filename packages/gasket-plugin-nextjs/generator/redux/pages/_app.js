@@ -1,5 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+{{#if hasGasketIntl}}
+import { withIntlProvider } from '@gasket/intl';
+{{/if}}
 
 // The store path is also available from `process.env.GASKET_MAKE_STORE_FILE`
 const { nextRedux } = require('../redux/store');
@@ -15,4 +18,10 @@ WrappedApp.propTypes = {
   pageProps: PropTypes.object
 };
 
-export default nextRedux.withRedux(WrappedApp);
+export default nextRedux.withRedux(
+  {{#if hasGasketIntl}}
+  withIntlProvider()(WrappedApp)
+  {{else}}
+  WrappedApp
+  {{/if}}
+);

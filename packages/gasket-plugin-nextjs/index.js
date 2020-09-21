@@ -67,7 +67,8 @@ module.exports = {
 
         if (pkg.has('dependencies', '@gasket/redux')) {
           pkg.add('dependencies', {
-            'next-redux-wrapper': devDependencies['next-redux-wrapper']
+            'next-redux-wrapper': devDependencies['next-redux-wrapper'],
+            'lodash.merge': devDependencies['lodash.merge']
           });
 
           files.add(
