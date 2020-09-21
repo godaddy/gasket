@@ -3,6 +3,7 @@ import withLocaleRequired from './WithLocaleRequired';
 import withIntlProvider from './WithIntlProvider';
 import { selectAllMessages, selectMessage } from './LocaleApi';
 import { loadLocaleFilesIntoStore } from './ServerUtils';
+import { withGetServerSideProps } from './next-utils';
 
 export {
   LocaleRequired,
@@ -10,5 +11,6 @@ export {
   withLocaleRequired,
   selectAllMessages,
   selectMessage,
-  loadLocaleFilesIntoStore
+  loadLocaleFilesIntoStore,
+  withGetServerSideProps
 };

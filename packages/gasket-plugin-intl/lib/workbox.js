@@ -1,5 +1,5 @@
 const urljoin = require('url-join');
-const { createGetLanguage, getAssetPrefix } = require('./utils');
+const { createGetLocale, getAssetPrefix } = require('./utils');
 
 const reModulePath = /(.*_locales\/)(.*)(\/.*)/;
 
@@ -32,7 +32,7 @@ const encodeLocaleUrls = originalManifest => {
  * @returns {Promise<Object>} config
  */
 module.exports = async function workbox(gasket, config, req) {
-  const language = createGetLanguage(gasket)(req);
+  const language = createGetLocale(gasket)(req);
   const assetPrefix = getAssetPrefix(gasket);
 
   return {

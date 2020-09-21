@@ -1,13 +1,10 @@
 import { setupApi, makeFetchAdapter } from 'reduxful';
 import fetch from '@gasket/fetch';
 import { isLoaded } from 'reduxful';
+import { isServer } from './Utils';
 
+const manifest = require(process.env.GASKET_INTL_MANIFEST_FILE);
 const apiName = 'LocaleApi';
-
-export const selectAssetPrefix = (state) => {
-  const { intl = {}, zone } = state;
-  return intl.assetPrefix || zone || '';
-};
 
 /**
  * REST API endpoint for loading locale files
@@ -16,8 +13,8 @@ export const selectAssetPrefix = (state) => {
  */
 const localeApi = setupApi(apiName,
   {
-    getLocaleManifest: {
-      url: '/locales-manifest.json'
+    getSettings: {
+      url: '/locales-settings.json'
     },
     getMessages: {
       url: (getState) => {
@@ -59,17 +56,36 @@ export const selectMessage = (state, id, defaultMessage) => {
 };
 
 /**
- * Convenience selector to get locale manifest value from redux state
+ * Select the locale from redux state
  *
- * @param {object} state - redux store state
- * @returns {object} locale manifest data in a json object
+ * @param {object} state - redux state
+ * @param {boolean} browserFallback - If no locale setting in Redux use navigator.languages in browser
+ * @returns {string} locale
  */
-export const selectLocaleManifestValue = (state) => {
-  const manifest = localeApi.selectors.getLocaleManifest(state);
-  if (isLoaded(manifest)) {
-    return manifest.value;
+export function selectLocale(state, browserFallback) {
+  const settings = localeApi.selectors.getSettings(state);
+  let locale;
+  if (isLoaded(settings)) {
+    locale = settings.value.locale;
   }
-};
+
+  return locale || (browserFallback && !isServer && navigator.languages[0]) || null;
+}
+
+/**
+ * Select the locale from redux state
+ *
+ * @param {object} state - redux state
+ * @returns {string} locale
+ */
+export function selectAssetPrefix(state) {
+  const settings = localeApi.selectors.getSettings(state);
+  if (isLoaded(settings)) {
+    return settings.value.assetPrefix || '';
+  }
+
+  return '';
+}
 
 export {
   localeApi as default

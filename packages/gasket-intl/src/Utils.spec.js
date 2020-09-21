@@ -5,19 +5,14 @@ describe('Utils', function () {
 
   beforeEach(() => {
     mockState = {
-      LocaleApi: {
-        getLocaleManifest: {
-          isLoaded: true,
-          value: localeMap
-        }
-      },
       intl: {
-        languageMap: {
+        localeMap: {
           'zh-SG': 'zh-CN',
           'zh-HK': 'zh-TW'
         },
-        defaultLanguage: 'aa-ZZ',
-        language: 'en-US'
+        defaultLocale: 'aa-ZZ',
+        locale: 'en-US',
+        manifest: localeMap
       }
     };
 
@@ -73,30 +68,30 @@ describe('Utils', function () {
       }
     };
   });
-  describe('#getAvailableLanguage', function () {
-    it('should return proper language from the manifest', function () {
-      expect(utils.getAvailableLanguage(mockState, localeMap, 'en-US', 'test-app', '')).toEqual('en-US');
-      expect(utils.getAvailableLanguage(mockState, localeMap, 'en-US', 'test-app', 'a.b.o.u.t')).toEqual('en-US');
-      expect(utils.getAvailableLanguage(mockState, localeMap, 'en-GB', 'test-app', '')).toEqual('en');
-      expect(utils.getAvailableLanguage(mockState, localeMap, 'en-GB', 'test-app', 'a.b.o.u.t')).toEqual('en');
-      expect(utils.getAvailableLanguage(mockState, localeMap, 'es-ES', 'test-app', '')).toEqual('en-US');
-      expect(utils.getAvailableLanguage(mockState, localeMap, 'es-ES', 'test-app', 'a.b.o.u.t')).toEqual('en-US');
-      expect(utils.getAvailableLanguage(mockState, localeMap, 'hi-IN', 'test-app', '')).toEqual('hi-IN');
-      expect(utils.getAvailableLanguage(mockState, localeMap, 'hi-IN', 'test-app', 'a.b.o.u.t')).toEqual('hi-IN');
+  describe('#getAvailableLocale', function () {
+    it('should return proper locale from the manifest', function () {
+      expect(utils.getAvailableLocale(mockState, localeMap, 'en-US', 'test-app', '')).toEqual('en-US');
+      expect(utils.getAvailableLocale(mockState, localeMap, 'en-US', 'test-app', 'a.b.o.u.t')).toEqual('en-US');
+      expect(utils.getAvailableLocale(mockState, localeMap, 'en-GB', 'test-app', '')).toEqual('en');
+      expect(utils.getAvailableLocale(mockState, localeMap, 'en-GB', 'test-app', 'a.b.o.u.t')).toEqual('en');
+      expect(utils.getAvailableLocale(mockState, localeMap, 'es-ES', 'test-app', '')).toEqual('en-US');
+      expect(utils.getAvailableLocale(mockState, localeMap, 'es-ES', 'test-app', 'a.b.o.u.t')).toEqual('en-US');
+      expect(utils.getAvailableLocale(mockState, localeMap, 'hi-IN', 'test-app', '')).toEqual('hi-IN');
+      expect(utils.getAvailableLocale(mockState, localeMap, 'hi-IN', 'test-app', 'a.b.o.u.t')).toEqual('hi-IN');
     });
-    it('should return en-US if non-english language does not exist', function () {
-      expect(utils.getAvailableLanguage(mockState, localeMap, 'es-XX', 'test-app', '')).toEqual('en-US');
+    it('should return en-US if non-english locale does not exist', function () {
+      expect(utils.getAvailableLocale(mockState, localeMap, 'es-XX', 'test-app', '')).toEqual('en-US');
     });
-    it('should return default language if localeMap is unavailable', function () {
-      expect(utils.getAvailableLanguage(mockState, null, 'xx-XX', 'test-app', '')).toEqual('aa-ZZ');
+    it('should return default locale if localeMap is unavailable', function () {
+      expect(utils.getAvailableLocale(mockState, null, 'xx-XX', 'test-app', '')).toEqual('aa-ZZ');
     });
-    it('should return default language if english language does not exist', function () {
+    it('should return default locale if english locale does not exist', function () {
       delete localeMap['test-app'].en;
-      expect(utils.getAvailableLanguage(mockState, localeMap, 'en-IN', 'test-app', '')).toEqual('aa-ZZ');
+      expect(utils.getAvailableLocale(mockState, localeMap, 'en-IN', 'test-app', '')).toEqual('aa-ZZ');
     });
-    it('should return mapped language if language is mapped', function () {
-      expect(utils.getAvailableLanguage(mockState, localeMap, 'zh-HK', 'test-app', '')).toEqual('zh-TW');
-      expect(utils.getAvailableLanguage(mockState, localeMap, 'zh-SG', 'test-app', '')).toEqual('zh-CN');
+    it('should return mapped locale if locale is mapped', function () {
+      expect(utils.getAvailableLocale(mockState, localeMap, 'zh-HK', 'test-app', '')).toEqual('zh-TW');
+      expect(utils.getAvailableLocale(mockState, localeMap, 'zh-SG', 'test-app', '')).toEqual('zh-CN');
     });
   });
 
@@ -189,80 +184,99 @@ describe('Utils', function () {
     });
   });
 
-  describe('#getFallbackLanguage', function () {
-    it('returns fallback language', function () {
-      expect(utils.getFallbackLanguage('hi-IN')).toEqual('hi');
-      expect(utils.getFallbackLanguage('da')).toEqual('en-US');
-      expect(utils.getFallbackLanguage('en')).toEqual(null);
-      expect(utils.getFallbackLanguage('')).toEqual('en-US');
-      expect(utils.getFallbackLanguage()).toEqual('en-US');
+  describe('#getFallbackLocale', function () {
+    it('returns fallback locale', function () {
+      expect(utils.getFallbackLocale('hi-IN')).toEqual('hi');
+      expect(utils.getFallbackLocale('da')).toEqual('en-US');
+      expect(utils.getFallbackLocale('en')).toEqual(null);
+      expect(utils.getFallbackLocale('')).toEqual('en-US');
+      expect(utils.getFallbackLocale()).toEqual('en-US');
     });
   });
 
-  describe('#getLanguageMap', function () {
+  describe('#getLocaleMap', function () {
     it('should return empty object if intl settings not available', function () {
-      expect(utils.getLanguageMap({})).toEqual({});
+      expect(utils.getLocaleMap({})).toEqual({});
     });
-    it('should return empty object if language map not available', function () {
-      expect(utils.getLanguageMap({ intl: {} })).toEqual({});
+    it('should return empty object if locale map not available', function () {
+      expect(utils.getLocaleMap({ intl: {} })).toEqual({});
     });
-    it('should return language map settings if available', function () {
-      const languageMap = { 'a1-A1': 'a2-A2' };
-      expect(utils.getLanguageMap({ intl: { languageMap } })).toEqual(languageMap);
+    it('should return locale map settings if available', function () {
+      const localeMap = { 'a1-A1': 'a2-A2' };
+      expect(utils.getLocaleMap({ intl: { localeMap } })).toEqual(localeMap);
     });
   });
 
-  describe('#getDefaultLanguage', function () {
+  describe('#getDefaultLocale', function () {
     it('should return en-US if intl settings not available', function () {
-      expect(utils.getDefaultLanguage({})).toEqual('en-US');
+      expect(utils.getDefaultLocale({})).toEqual('en-US');
     });
-    it('should return en-US if default language not specified', function () {
-      expect(utils.getDefaultLanguage({ intl: {} })).toEqual('en-US');
+    it('should return en-US if default locale not specified', function () {
+      expect(utils.getDefaultLocale({ intl: {} })).toEqual('en-US');
     });
-    it('should return default language if available', function () {
-      const defaultLanguage = 'aa-XX';
-      expect(utils.getDefaultLanguage({ intl: { defaultLanguage } })).toEqual(defaultLanguage);
+    it('should return default locale if available', function () {
+      const defaultLocale = 'aa-XX';
+      expect(utils.getDefaultLocale({ intl: { defaultLocale } })).toEqual(defaultLocale);
     });
   });
 
-  describe('#getMappedLanguage', function () {
-    let languageMap, mockState2;
+  describe('#getMappedLocale', function () {
+    let localeMap, mockState2;
 
     beforeEach(() => {
-      languageMap = { 'a1-A1': 'a2-A2', 'b1-B1': 'b2-B2' };
+      localeMap = { 'a1-A1': 'a2-A2', 'b1-B1': 'b2-B2' };
       mockState2 = {
         intl: {
-          languageMap
+          localeMap
         }
       };
     });
 
-    it('should return mapped language ids if mapping exists', function () {
-      expect(utils.getMappedLanguage(mockState2, 'a1-A1')).toEqual('a2-A2');
-      expect(utils.getMappedLanguage(mockState2, 'b1-B1')).toEqual('b2-B2');
+    it('should return mapped locale ids if mapping exists', function () {
+      expect(utils.getMappedLocale(mockState2, 'a1-A1')).toEqual('a2-A2');
+      expect(utils.getMappedLocale(mockState2, 'b1-B1')).toEqual('b2-B2');
     });
-    it('should return the same languages if mapping doesnt exist', function () {
-      expect(utils.getMappedLanguage(mockState2, 'c1-C1')).toEqual('c1-C1');
+    it('should return the same locales if mapping doesnt exist', function () {
+      expect(utils.getMappedLocale(mockState2, 'c1-C1')).toEqual('c1-C1');
     });
   });
 
-  describe('#selectLanguage', function () {
+  describe('#selectLocale', function () {
 
-    it('selects language from redux state', function () {
-      expect(utils.selectLanguage(mockState)).toEqual('en-US');
+    it('selects locale from redux state', function () {
+      expect(utils.selectLocale(mockState)).toEqual('en-US');
 
-      mockState.intl.language = 'fr-FR';
-      expect(utils.selectLanguage(mockState)).toEqual('fr-FR');
+      mockState.intl.locale = 'fr-FR';
+      expect(utils.selectLocale(mockState)).toEqual('fr-FR');
     });
 
-    it('falls back to default if language not on state', function () {
-      delete mockState.intl.language;
-      expect(utils.selectLanguage(mockState)).toEqual('aa-ZZ');
+    it('falls back to default if locale not on state', function () {
+      delete mockState.intl.locale;
+      expect(utils.selectLocale(mockState)).toEqual('aa-ZZ');
     });
 
     it('falls back to default if intl not on state', function () {
       delete mockState.intl;
-      expect(utils.selectLanguage(mockState)).toEqual('en-US');
+      expect(utils.selectLocale(mockState)).toEqual('en-US');
+    });
+  });
+
+  describe('selectManifest', function () {
+
+    it('get the locale manifest from redux store', function () {
+      expect(utils.selectManifest(mockState)).toEqual({ id: '123' });
+    });
+
+    it('should return undefined if store has no message resources', function () {
+      expect(utils.selectManifest({})).toBeUndefined();
+    });
+
+    it('should return undefined if store is not loaded', function () {
+      mockState.LocaleApi = {
+        ...mockState.LocaleApi,
+        getLocaleManifest: { isLoaded: false, value: null }
+      };
+      expect(utils.selectManifest(mockState)).toBeUndefined();
     });
   });
 });

@@ -1,45 +1,22 @@
-const path = require('path');
-const fs = require('fs');
-const defaultConfig = require('./default-config');
-
 function getIntlConfig(gasket) {
   const { intl: intlConfig = {} } = gasket.config || {};
-  return { ...defaultConfig, ...intlConfig };
-}
-
-function getAssetPrefix(gasket) {
-  const { next = {}, intl = {}, zone } = gasket.config;
-  return intl.assetPrefix || next.assetPrefix || zone || '';
-}
-
-function getIntlLanguageMap(gasket) {
-  return (gasket.config.intl || {}).languageMap || {};
-}
-
-function getDefaultLanguage(gasket) {
-  return (gasket.config.intl || {}).defaultLanguage || 'en-US';
-}
-
-function getOutputDir(gasket) {
-  const { root } = gasket.config;
-  const { outputDir } = getIntlConfig(gasket);
-  return path.join(root, outputDir);
+  return intlConfig;
 }
 
 /**
- * The language codes will fall back in this sequence
- * (da-DK/da used as an example language)
+ * The locale codes will fall back in this sequence
+ * (da-DK/da used as an example locale)
  * da-DK ==> da ==> en-US ==> en ==> null
  *
- * @param {string} language - current language.
- * @returns {string} language - fallback language to use.
+ * @param {string} locale - current locale.
+ * @returns {string} locale - fallback locale to use.
  */
-function getFallbackLanguage(language = '') {
-  if (language.indexOf('-') > 0) {
-    return language.split('-')[0];
+function getFallbackLocale(locale = '') {
+  if (locale.indexOf('-') > 0) {
+    return locale.split('-')[0];
   }
 
-  if (language !== 'en') {
+  if (locale !== 'en') {
     return 'en-US';
   }
 
@@ -47,105 +24,79 @@ function getFallbackLanguage(language = '') {
 }
 
 /**
- * Get the mapped language code based on mapping from gasket.config.
- * Returns mapped language if a mapping exists, otherwise returns original.
+ * Get the mapped locale code based on mapping from gasket.config.
+ * Returns mapped locale if a mapping exists, otherwise returns original.
  *
  * @param {Gasket} gasket - Gasket config
- * @param {string} language - language
- * @returns {string} mapped language
+ * @param {string} locale - locale
+ * @returns {string} mapped locale
  */
-function getMappedLanguage(gasket, language) {
-  const map = getIntlLanguageMap(gasket);
-  if (language in map && map[language]) {
-    return map[language];
+function getMappedLocale(gasket, locale) {
+  const { localeMap } = getIntlConfig(gasket);
+  if (locale in localeMap && localeMap[locale]) {
+    return localeMap[locale];
   }
-  return language;
+  return locale;
 }
 
-let __manifest;
-/**
- * Loads manifest file once, synchronously, returns loaded manifest for
- * subsequent calls.
- *
- * @param {string} outputDir - where to load locale manifest from
- * @returns {Promise<Object>} manifest
- */
-function loadLocalesManifest(outputDir) {
-  if (!__manifest) {
-    // eslint-disable-next-line no-sync
-    const data = fs.readFileSync(path.join(outputDir, 'locales-manifest.json'), 'utf8');
-    __manifest = JSON.parse(data);
-  }
-  return __manifest;
-}
-loadLocalesManifest.__manifest = __manifest;
+function getAvailableLocales(localesManifest) {
+  const locales = new Set();
 
-
-function getAvailableLanguages(localesManifest) {
-  const languages = new Set();
-
-  const getLanguages = obj => Object.entries(obj).
+  const getLocales = obj => Object.entries(obj).
     forEach(([key, value]) => {
       if (typeof value === 'string') {
         if (key !== '__default__') {
-          languages.add(key);
+          locales.add(key);
         }
       } else if (value) {
-        getLanguages(value);
+        getLocales(value);
       }
     });
 
-  getLanguages(localesManifest);
+  getLocales(localesManifest);
 
-  return languages;
+  return locales;
 }
 
 /**
- * Creates a getLanguage from gasket config to handle mapping,
+ * Creates a getLocale from gasket config to handle mapping,
  * and fallback complexities.
  *
  * @param {Gasket} gasket - Gasket
- * @returns {getLanguage} getLanguage
+ * @returns {getLocale} getLocale
  */
-function createGetLanguage(gasket) {
-  const defaultLanguage = getDefaultLanguage(gasket);
-  const localesManifest = loadLocalesManifest(getOutputDir(gasket));
-  const availableLanguages = getAvailableLanguages(localesManifest);
+function createGetLocale(gasket) {
+  const { defaultLocale, outputDir } = getIntlConfig(gasket);
+  const localesManifest = loadLocalesManifest(outputDir);
+  const availablelocales = getAvailableLocales(localesManifest);
   /**
-   * Derive the language from request headers and use mapping and fallback to
-   * get the an appropriate supported language
+   * Derive the locale from request headers and use mapping and fallback to
+   * get the an appropriate supported locale
    *
-   * @typedef {Function} getLanguage
+   * @typedef {Function} getLocale
    *
    * @param {Request} req - Request object
    * @returns {string} lang
    */
-  return function getLanguage(req) {
+  return function getLocale(req) {
     const { store } = req;
-    const language = store.getState().intl.language;
+    const locale = store.getState().intl.locale;
 
-    let mappedLanguage = language;
-    while (mappedLanguage !== null) {
-      mappedLanguage = getMappedLanguage(gasket, mappedLanguage);
-      if (availableLanguages.has(mappedLanguage)) {
-        return mappedLanguage;
+    let mappedlocale = locale;
+    while (mappedlocale !== null) {
+      mappedlocale = getMappedLocale(gasket, mappedlocale);
+      if (availablelocales.has(mappedlocale)) {
+        return mappedlocale;
       }
-      mappedLanguage = getFallbackLanguage(mappedLanguage);
+      mappedlocale = getFallbackLocale(mappedlocale);
     }
 
-    return defaultLanguage;
+    return defaultLocale;
   };
 }
 
 module.exports = {
   getIntlConfig,
-  getAssetPrefix,
-  getIntlLanguageMap,
-  getDefaultLanguage,
-  getOutputDir,
-  getFallbackLanguage,
-  getMappedLanguage,
-  loadLocalesManifest,
-  getAvailableLanguages,
-  createGetLanguage
+  getAvailableLocales,
+  createGetLocale
 };

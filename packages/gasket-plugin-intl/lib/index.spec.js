@@ -65,7 +65,7 @@ describe('Plugin', () => {
               'aa-AA': 'zz-ZZ',
               'bb-BB': 'yy-YY'
             },
-            defaultLanguage: 'es-MX'
+            defaultLocale: 'es-MX'
           }
         },
         execWaterfall: jest.fn().mockResolvedValue('fr-FR')
@@ -90,7 +90,7 @@ describe('Plugin', () => {
             'bb-BB': 'yy-YY'
           },
           language: 'fr-FR',
-          defaultLanguage: 'es-MX'
+          defaultLocale: 'es-MX'
         }
       });
       expect(mockGasket.execWaterfall).toHaveBeenCalledWith('intlLanguage', 'fr-FR', mockReq);
@@ -104,7 +104,7 @@ describe('Plugin', () => {
           assetPrefix: '',
           languageMap: {},
           language: 'fr-FR',
-          defaultLanguage: 'en-US'
+          defaultLocale: 'en-US'
         }
       });
       expect(mockGasket.execWaterfall).toHaveBeenCalledWith('intlLanguage', 'fr-FR', mockReq);

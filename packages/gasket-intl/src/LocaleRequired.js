@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
 import { isLoaded, getResourceKey } from 'reduxful';
 import { resourceShape } from 'reduxful/react-addons';
-import localeApi from './LocaleApi';
-import { getParamsForIdentifiers } from './Utils';
+import localeApi, { selectLocale } from './LocaleApi';
+import { getParamsForIdentifiers, isServer } from './Utils';
 
 class LocaleRequiredBase extends React.Component {
 
@@ -27,17 +27,13 @@ class LocaleRequiredBase extends React.Component {
     });
   }
 
-  isServer() {
-    return typeof window === 'undefined';
-  }
-
   /**
    * This function checks if locale data has already been checked or not
    *
    * @returns {boolean} returns true if the keys stored match with the keys available.
    */
   allKeysChecked() {
-    if (this.isServer()) {
+    if (isServer) {
       return false;
     }
     const msgs = LocaleRequiredBase.checkedMessages;
@@ -51,7 +47,7 @@ class LocaleRequiredBase extends React.Component {
    * This function stores all the keys that have been checked, for use with allKeysChecked function later
    */
   setKeysChecked() {
-    if (this.isServer()) {
+    if (isServer) {
       return;
     }
     this.props._params.every(p => {
@@ -134,7 +130,8 @@ LocaleRequiredBase.defaultProps = {
 
 function mapStateToProps(state, ownProps) {
   const { module, identifier } = ownProps;
-  const _params = getParamsForIdentifiers(state, identifier || module);
+  const locale = selectLocale(state);
+  const _params = getParamsForIdentifiers(locale, identifier || module);
   const _messages = _params.map(
     params => localeApi.selectors.getMessages(state, params)
   );

@@ -24,7 +24,7 @@ describe('<withIntlProvider />', () => {
     Component = withIntlProvider()(MockComponent);
     initialState = {
       intl: {
-        language: 'fr-FR'
+        locale: 'fr-FR'
       },
       LocaleApi: {
         'getLocaleManifest': {
@@ -90,17 +90,17 @@ describe('<withIntlProvider />', () => {
     });
 
     it('loads locale manifest if running on server', () => {
-      serverUtils.loadLocaleMapIntoStore = jest.fn();
+      serverUtils.loadManifestToStore = jest.fn();
       const testStore = { test: 'store' };
       Component.getInitialProps({ ctx: { isServer: true, store: testStore, req: { localesDir: 'bogus' } } });
-      expect(serverUtils.loadLocaleMapIntoStore).toHaveBeenCalledWith(testStore, 'bogus');
+      expect(serverUtils.loadManifestToStore).toHaveBeenCalledWith(testStore, 'bogus');
     });
 
     it('does not load locale manifest if localeDir not available', () => {
-      serverUtils.loadLocaleMapIntoStore = jest.fn();
+      serverUtils.loadManifestToStore = jest.fn();
       const testStore = { test: 'store' };
       Component.getInitialProps({ ctx: { isServer: true, store: testStore, req: {} } });
-      expect(serverUtils.loadLocaleMapIntoStore).not.toHaveBeenCalled();
+      expect(serverUtils.loadManifestToStore).not.toHaveBeenCalled();
     });
 
     it('logs an error if localeDir not available', () => {
@@ -110,10 +110,10 @@ describe('<withIntlProvider />', () => {
     });
 
     it('does not load locale manifest if not running on server', () => {
-      serverUtils.loadLocaleMapIntoStore = jest.fn();
+      serverUtils.loadManifestToStore = jest.fn();
       const testStore = { test: 'store' };
       Component.getInitialProps({ ctx: { isServer: false, store: testStore, req: { localesDir: 'bogus' } } });
-      expect(serverUtils.loadLocaleMapIntoStore.mock.calls).toHaveLength(0);
+      expect(serverUtils.loadManifestToStore.mock.calls).toHaveLength(0);
     });
   });
 });

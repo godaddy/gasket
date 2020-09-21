@@ -51,7 +51,7 @@ describe('ServerUtils', function () {
   });
 
   describe('#loadLocaleFilesIntoStore', function () {
-    let mockStore, modules, dispatchStub, localeApiData, languageData;
+    let mockStore, modules, dispatchStub, localeApiData, localeData;
     beforeEach(() => {
       localeApiData = {
         getLocaleManifest: {
@@ -70,8 +70,8 @@ describe('ServerUtils', function () {
           }
         }
       };
-      languageData = {
-        language: 'aa-AA'
+      localeData = {
+        locale: 'aa-AA'
       };
       dispatchStub = jest.fn();
       modules = ['module-1', 'module-2'];
@@ -79,7 +79,7 @@ describe('ServerUtils', function () {
     it('should read the locale file and call dispatch', async function () {
       const mockState = {
         LocaleApi: localeApiData,
-        intl: languageData
+        intl: localeData
       };
       mockStore = {
         getState: () => (mockState),
@@ -87,14 +87,14 @@ describe('ServerUtils', function () {
       };
       const mockData = { test: 'data' };
       fs.readFile = jest.fn((path, callback) => { return callback(null, JSON.stringify(mockData)); });
-      await serverUtils.loadLocaleFilesIntoStore(mockStore, modules, mockLocalesDir);
+      await serverUtils.loadLocaleFilesToStore(mockStore, modules, mockLocalesDir);
       expect(dispatchStub.mock.calls).toHaveLength(2);
       expect(fs.readFile.mock.calls).toHaveLength(2);
     });
     it('should read the manifest file and locale file and call dispatch', async function () {
       const mockState = {
         LocaleApi: {},
-        intl: languageData
+        intl: localeData
       };
       mockStore = {
         getState: () => (mockState),
@@ -102,7 +102,7 @@ describe('ServerUtils', function () {
       };
       const mockData = { test: 'data' };
       fs.readFile = jest.fn((path, callback) => { return callback(null, JSON.stringify(mockData)); });
-      await serverUtils.loadLocaleFilesIntoStore(mockStore, modules, mockLocalesDir);
+      await serverUtils.loadLocaleFilesToStore(mockStore, modules, mockLocalesDir);
       expect(dispatchStub.mock.calls).toHaveLength(3);
     });
   });
@@ -119,7 +119,7 @@ describe('ServerUtils', function () {
         dispatch: dispatchStub
       };
       fs.readFile = jest.fn((path, callback) => { return callback(null, JSON.stringify(mockData)); });
-      await serverUtils.loadLocaleMapIntoStore(mockStore, mockLocalesDir);
+      await serverUtils.loadManifestToStore(mockStore, mockLocalesDir);
       expect(dispatchStub).toHaveBeenCalledWith(expect.objectContaining({ type: 'LocaleApi_getLocaleManifest_SUCCESS' }));
     });
     it('should return early if already loaded', async function () {
@@ -135,7 +135,7 @@ describe('ServerUtils', function () {
         getState: () => (mockData),
         dispatch: dispatchStub
       };
-      await serverUtils.loadLocaleMapIntoStore(mockStore);
+      await serverUtils.loadManifestToStore(mockStore);
       expect(dispatchStub).not.toHaveBeenCalled();
     });
   });

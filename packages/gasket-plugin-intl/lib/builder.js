@@ -210,6 +210,7 @@ class Builder {
    * @param {string[]} buildDirs - list of dirs to process
    */
   async processDirs(buildDirs) {
+    let defaultModule;
     for (const srcDir of buildDirs) {
       const pkgName = await this.getPackageName(srcDir);
       const tgtDir = path.join(this._outputDir, pkgName);
@@ -220,16 +221,28 @@ class Builder {
       await fs.mkdirp(tgtDir);
       this.builderMap[pkgName] = {};
       if (this.isMainPackage(srcDir)) {
-        this.builderMap.__default__ = pkgName;
+        defaultModule = pkgName;
       }
 
       const fileNames = await fs.readdir(srcDir);
       await this.processFiles(srcDir, tgtDir, fileNames);
     }
 
-    await fsUtils.saveJsonFile(this._mapFile, this.builderMap);
-
     this._logger.log(`build:locales: Completed locale files update.`);
+    await this.writeManifest(defaultModule);
+  }
+
+  async writeManifest(defaultModule) {
+    const { localeMap, defaultLocale } = this._config;
+    const manifest = {
+      localeMap,
+      defaultLocale,
+      defaultModule,
+      moduleHashes: this.builderMap
+    };
+
+    await fsUtils.saveJsonFile(this._mapFile, manifest);
+    this._logger.log(`build:locales: Wrote locales manifest.`);
   }
 
   /**

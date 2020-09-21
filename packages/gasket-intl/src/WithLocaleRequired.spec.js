@@ -24,7 +24,7 @@ describe('<withLocaleRequired />', () => {
     };
     mockState = {
       intl: {
-        language: 'aa-AA'
+        locale: 'aa-AA'
       },
       LocaleApi: {
         getLocaleManifest: {
@@ -67,17 +67,17 @@ describe('<withLocaleRequired />', () => {
     });
 
     it('reads locale files if running on server', () => {
-      serverUtils.loadLocaleFilesIntoStore = jest.fn();
+      serverUtils.loadLocaleFilesToStore = jest.fn();
       Component.getInitialProps({ isServer: true, store: mockStore, req: { localesDir: 'bogus' } });
-      expect(serverUtils.loadLocaleFilesIntoStore).toHaveBeenCalledWith(mockStore, mockApp, 'bogus');
+      expect(serverUtils.loadLocaleFilesToStore).toHaveBeenCalledWith(mockStore, mockApp, 'bogus');
 
       expect(mockStore.dispatch).not.toHaveBeenCalled();
     });
 
     it('does not load locale file if req.localeDir not available', () => {
-      serverUtils.loadLocaleFilesIntoStore = jest.fn();
+      serverUtils.loadLocaleFilesToStore = jest.fn();
       Component.getInitialProps({ isServer: true, store: mockStore, req: {} });
-      expect(serverUtils.loadLocaleFilesIntoStore).not.toHaveBeenCalled();
+      expect(serverUtils.loadLocaleFilesToStore).not.toHaveBeenCalled();
     });
 
     it('logs an error if req.localeDir not available', () => {
@@ -86,9 +86,9 @@ describe('<withLocaleRequired />', () => {
     });
 
     it('does not read locale files if not running on server', () => {
-      serverUtils.loadLocaleFilesIntoStore = jest.fn();
+      serverUtils.loadLocaleFilesToStore = jest.fn();
       Component.getInitialProps({ isServer: false, store: mockStore });
-      expect(serverUtils.loadLocaleFilesIntoStore).not.toHaveBeenCalled();
+      expect(serverUtils.loadLocaleFilesToStore).not.toHaveBeenCalled();
     });
 
     it('dispatches actions to load locale files in browser', async () => {
@@ -101,7 +101,7 @@ describe('<withLocaleRequired />', () => {
       const spy = jest.spyOn(localeApi.actionCreators, 'getMessages');
       mockState = {
         intl: {
-          language: 'aa-AA'
+          locale: 'aa-AA'
         },
         LocaleApi: {
           'getLocaleManifest': {

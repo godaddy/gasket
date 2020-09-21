@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-import localeApi, { selectLocaleManifestValue } from './LocaleApi';
+import localeApi, { selectLocale } from './LocaleApi';
 import { getParamsForIdentifiers } from './Utils';
 
 /**
@@ -44,32 +44,19 @@ export function readFile(filePath) {
 }
 
 /**
- * Reads the locales.map file from the server. This is called from withLocaleRequired HOC
- * when it renders on server.
- * We will update this when we decide to configure where the locale data is kept.
- *
- * @param {string} localesDir - path to build directory containing locales
- * @returns {Promise} resolves with json data from locales.map file.
- */
-export async function readLocaleManifestFile(localesDir) {
-  const filePath = path.join(localesDir, 'locales-manifest.json');
-  return await readFile(filePath);
-}
-
-/**
  * Reads a locales file from the server, based on the given module path and file name.
  * This is called from withLocaleRequired HOC when it renders on server.
  * We will update this when we decide to configure where the locale data is kept.
  *
  * @param {string} params - this contains module name and namespace.
- * @param {string} localesDir - path to build directory containing locales
  * @param {string} params.module - this contains module name and namespace.
  * @param {string} params.localeFile - this contains the file name including the hash key.
  * @returns {Promise} resolves with json data from locales file.
  */
-export async function readLocaleFile(params, localesDir) {
+export async function readLocaleFile(params) {
   const { module, localeFile } = params;
-  const filePath = path.join(localesDir, module, localeFile);
+  // eslint-disable-next-line no-process-env
+  const filePath = path.join(process.env.GASKET_INTL_LOCALES_DIR, module, localeFile);
   return await readFile(filePath);
 }
 
@@ -79,18 +66,20 @@ export async function readLocaleFile(params, localesDir) {
  *
  * @param {object} store - Redux store from context
  * @param {array} identifiers - list of module names
- * @param {string} localesDir - path to build directory containing locales
+ * @param {string|null} [locale] - Statically set locale name
  */
-export async function loadLocaleFilesIntoStore(store, identifiers, localesDir) {
-  await loadLocaleMapIntoStore(store, localesDir);
-  const state = store.getState();
-  const moduleParams = getParamsForIdentifiers(state, identifiers);
+export async function loadLocaleFilesIntoStore(store, identifiers, locale = null) {
+  if (!locale) {
+    const state = store.getState();
+    locale = selectLocale(state);
+  }
+  const moduleParams = getParamsForIdentifiers(locale, identifiers);
 
+  // TODO: use Promise all here
   for (let i = 0; i < moduleParams.length; i++) {
     const params = moduleParams[i];
-    const fileData = await readLocaleFile(params, localesDir);
-    await store.dispatch(
-      localeApi.actionCreators.getMessages.success(params, fileData));
+    const fileData = await readLocaleFile(params);
+    await store.dispatch(localeApi.actionCreators.getMessages.success(params, fileData));
   }
 }
 
@@ -98,16 +87,10 @@ export async function loadLocaleFilesIntoStore(store, identifiers, localesDir) {
  * This function loads the locales.map file from server and into the Redux store.
  * It gets calls from withIntlProvider.
  *
- * @param {object} store - Redux store from context.
- * @param {string} localesDir - path to build directory containing locales
+ * @param {object} store - Redux store from context
+ * @param {object} settings - settings to preload into store
  */
-export async function loadLocaleMapIntoStore(store, localesDir) {
-  //
-  // return early if already loaded
-  //
-  if (selectLocaleManifestValue(store.getState())) return;
-
-  const manifest = await readLocaleManifestFile(localesDir);
+export async function loadSettingsIntoStore(store, settings) {
   await store.dispatch(
-    localeApi.actionCreators.getLocaleManifest.success({}, manifest));
+    localeApi.actionCreators.getSettings.success({}, settings));
 }

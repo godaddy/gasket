@@ -86,19 +86,19 @@ describe('getIntlLanguageMap', () => {
   });
 });
 
-describe('getDefaultLanguage', () => {
+describe('getDefaultLocale', () => {
 
   it('returns object from config', () => {
-    const results = utils.getDefaultLanguage(setupGasket({
+    const results = utils.getDefaultLocale(setupGasket({
       intl: {
-        defaultLanguage: 'fr-FR'
+        defaultLocale: 'fr-FR'
       }
     }));
     expect(results).toEqual('fr-FR');
   });
 
   it('returns en-US if not configured', () => {
-    const results = utils.getDefaultLanguage(setupGasket({}));
+    const results = utils.getDefaultLocale(setupGasket({}));
     expect(results).toEqual('en-US');
   });
 });
@@ -236,7 +236,7 @@ describe('getAvailableLanguages', () => {
   });
 });
 
-describe('createGetLanguage', () => {
+describe('createGetLocale', () => {
   const mockGasket = setupGasket({
     intl: {
       outputDir: './some/build/dir',
@@ -244,7 +244,7 @@ describe('createGetLanguage', () => {
     }
   });
   it('returns a getLanguage function', () => {
-    const result = utils.createGetLanguage(mockGasket);
+    const result = utils.createGetLocale(mockGasket);
 
     expect(result).toBeInstanceOf(Function);
     expect(result.name).toEqual('getLanguage');
@@ -254,7 +254,7 @@ describe('createGetLanguage', () => {
     let result, getLanguage;
 
     beforeEach(() => {
-      getLanguage = utils.createGetLanguage(mockGasket);
+      getLanguage = utils.createGetLocale(mockGasket);
     });
 
     it('gets language from the redux state', () => {

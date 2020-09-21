@@ -1,6 +1,5 @@
 {
-  "learn_gasket": "Learn Gasket",
-  "learn_gasket_subtitle": "Learn more about working with Gasket",
-  "learn_nextjs": "Learn Next.js",
-  "learn_nextjs_subtitle": "Learn more about Next on Github and in their examples"
+  "gasket_welcome": "Welcome to Gasket!",
+  "gasket_learn": "Learn Gasket",
+  "gasket_edit_page": "To get started, edit pages/index.js and save to reload."
 }

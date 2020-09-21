@@ -73,7 +73,7 @@ describe('<LocaleRequired />', () => {
     beforeEach(() => {
       const initialState = {
         intl: {
-          language: 'es-MX'
+          locale: 'es-MX'
         },
         LocaleApi: {
           'getLocaleManifest': {

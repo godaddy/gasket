@@ -1,4 +1,4 @@
-const { createGetLanguage } = require('./utils');
+const { createGetLocale } = require('./utils');
 
 /**
  * Register a cache key function to get the language from req
@@ -7,5 +7,5 @@ const { createGetLanguage } = require('./utils');
  * @returns {Promise<(getLanguage)>} result
  */
 module.exports = async function serviceWorkerCacheKey(gasket) {
-  return createGetLanguage(gasket);
+  return createGetLocale(gasket);
 };
