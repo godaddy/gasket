@@ -1,6 +1,6 @@
 # `@gasket/plugin-swagger`
 
-### 1.0.0
+### 5.8.0
 
 - Initial release. ([#177])
 
