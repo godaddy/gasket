@@ -8,6 +8,8 @@ const EXISTS = 4;
 
 const processEnvLocaleDir = path.join(process.cwd(), 'public');
 
+// TODO: support for loading multiple locale files
+// TODO: support for asset prefix and/or basePath
 async function loadLocaleData(localePath, locale) {
   const localeFile = `${localePath}/${locale}.json`;
   const diskPath = path.join(processEnvLocaleDir, localeFile);

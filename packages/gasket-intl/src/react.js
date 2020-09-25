@@ -53,15 +53,25 @@ function reducer(state, action) {
           ...files.reduce((a, c) => ({ ...a, [c]: LOADING }), {})
         }
       };
+    case ERROR:
+      return {
+        ...state,
+        files: {
+          ...state.files,
+          ...files.reduce((a, c) => ({ ...a, [c]: ERROR }), {})
+        }
+      };
     default:
       throw new Error();
   }
 }
 
+// TODO: need support for locale map, manifest, and fallback
 function getActiveLocale(fromPage = {}) {
   const { locale } = fromPage;
   if (locale) return locale;
   if (typeof window !== 'undefined') {
+    // TODO: support for walking navigator.languages
     return window.gasketIntl?.locale ?? navigator.languages[0];
   }
   return defaultGasketIntl.locale;
@@ -101,6 +111,7 @@ export function withGasketIntl(App) {
   return Wrapper;
 }
 
+// TODO: support for multiple locale files
 function useGasketIntl(localePath) {
   const { locale, files = {}, dispatch } = useContext(GasketIntlContext);
 
@@ -122,15 +133,24 @@ function useGasketIntl(localePath) {
     }
   });
 
-  // TODO: catch errors
   fetch(localeFile)
-    .then(r => r.json())
+    .then(r => r.ok ? r.json() : throw new Error(`Error loading locale file (${ r.status }): ${ localeFile }`))
     .then(messages => {
       dispatch({
         type: LOADED,
         payload: {
           locale,
           messages,
+          files: [localeFile]
+        }
+      });
+    })
+    .catch(e => {
+      // eslint-disable-next-line no-console
+      console.error(e);
+      dispatch({
+        type: ERROR,
+        payload: {
           files: [localeFile]
         }
       });
