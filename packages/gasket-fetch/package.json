@@ -4,7 +4,6 @@
   "description": "Gasket Fetch API",
   "main": "./node.js",
   "browser": "./browser.js",
-  "react-native": "./react-native.js",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/godaddy/gasket.git"
