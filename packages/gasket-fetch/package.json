@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-fetch#readme",
   "dependencies": {
+    "abort-controller": "^3.0.0",
     "node-fetch": "^2.6.1"
   },
   "devDependencies": {}
