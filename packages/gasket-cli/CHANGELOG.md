@@ -1,5 +1,7 @@
 # `@gasket/cli`
 
+- Add `remove` method to config-builder ([#179])
+
 ### 5.6.1
 
 - Lookup version for plugins if not set ([#170])
@@ -306,3 +308,4 @@ upon `gasket create`
 [#160]: https://github.com/godaddy/gasket/pull/160
 [#163]: https://github.com/godaddy/gasket/pull/163
 [#170]: https://github.com/godaddy/gasket/pull/170
+[#179]: https://github.com/godaddy/gasket/pull/179

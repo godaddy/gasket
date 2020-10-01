@@ -1,5 +1,8 @@
 # `@gasket/plugin-jest`
 
+- Add `postCreate` hook to remove plugin from created gasket
+  app dependencies ([#179])
+
 ### 5.0.0
 
 - Open Source Release
@@ -28,3 +31,4 @@
 
 [#98]: https://github.com/godaddy/gasket/pull/98
 [#114]: https://github.com/godaddy/gasket/pull/114
+[#179]: https://github.com/godaddy/gasket/pull/179
