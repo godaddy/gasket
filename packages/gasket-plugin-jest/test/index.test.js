@@ -59,6 +59,7 @@ describe('Plugin', function () {
   it('has expected hooks', function ()  {
     const expected = [
       'create',
+      'postCreate',
       'metadata'
     ];
 
@@ -81,7 +82,7 @@ describe('Plugin', function () {
       expect(files[1]).toEqual(path.join(__dirname, '..', 'generator', '**', '*'));
     });
 
-    describe('adds react specific dependencies', function() {
+    describe('adds react specific dependencies', function () {
       [
         'jest',
         'enzyme',

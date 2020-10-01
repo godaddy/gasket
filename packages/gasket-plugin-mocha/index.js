@@ -1,7 +1,7 @@
-const { devDependencies } = require('./package.json');
+const { devDependencies, name } = require('./package.json');
 
 module.exports = {
-  name: require('./package').name,
+  name,
   hooks: {
     create: {
       timing: {
@@ -41,12 +41,15 @@ module.exports = {
         }
 
         pkg.add('scripts', {
-          'test': 'npm run test:runner',
+          'test': `${runCmd} test:runner`,
           'test:runner': 'mocha --require setup-env --recursive "test/**/*.*(test|spec).js"',
           'test:coverage': `nyc --reporter=text --reporter=json-summary ${runCmd} test:runner`,
           'test:watch': `${runCmd} test:runner -- --watch`
         });
       }
+    },
+    postCreate: async function postCreate(gasket, { pkg }) {
+      pkg.remove('dependencies', name);
     },
     metadata(gasket, meta) {
       return {

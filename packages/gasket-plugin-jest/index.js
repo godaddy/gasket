@@ -1,7 +1,7 @@
-const { devDependencies } = require('./package.json');
+const { devDependencies, name } = require('./package.json');
 
 module.exports = {
-  name: require('./package').name,
+  name,
   hooks: {
     create: {
       timing: {
@@ -34,6 +34,9 @@ module.exports = {
           'test:coverage': 'jest --coverage'
         });
       }
+    },
+    postCreate: async function postCreate(gasket, { pkg }) {
+      pkg.remove('dependencies', name);
     },
     metadata(gasket, meta) {
       return {

@@ -236,6 +236,30 @@ describe('ConfigBuilder', () => {
     });
   });
 
+  describe('.remove(key)', () => {
+    it('removes the desired package', () => {
+      pkg.add('dependencies', { 'some-pkg': '^1.2.0' });
+      assume(pkg.fields.dependencies['some-pkg']).to.exist();
+      pkg.remove('dependencies', 'some-pkg');
+      assume(pkg.fields.dependencies['some-pkg']).to.not.exist();
+    });
+
+    it('can remove multple dependencies', () => {
+      pkg.add('dependencies', { 'some-pkg': '^1.2.0', 'some-pkg2': '^1.1.0' });
+      assume(pkg.fields.dependencies['some-pkg']).to.exist();
+      assume(pkg.fields.dependencies['some-pkg2']).to.exist();
+      pkg.remove('dependencies', ['some-pkg', 'some-pkg2']);
+      assume(pkg.fields.dependencies['some-pkg']).to.not.exist();
+      assume(pkg.fields.dependencies['some-pkg2']).to.not.exist();
+    });
+    it('should warn if a package doesnt exist', () => {
+      pkg.add('dependencies', { 'some-pkg': '^1.2.0', 'some-pkg2': '^1.1.0' });
+      pkg.remove('dependencies', ['some-pkg', 'some-pkg3']);
+      assume(pkg.fields.dependencies['some-pkg']).to.not.exist();
+      assume(warnSpy).calledWithMatch('The package some-pkg3 doesn\'t exist');
+    });
+  });
+
   describe('.has(key, value', () => {
     it('finds the value in a plain field', () => {
       pkg.add('name', 'my-app');

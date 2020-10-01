@@ -227,6 +227,38 @@ class ConfigBuilder {
   }
 
   /**
+   * Removes a dependecy from the package.json
+   *
+   * @param {String} key Dependency bucket
+   * @param {String|Array} value Dependency(ies) to search for
+   * @param {Object} source - Plugin name that calls this method
+   */
+  remove(key, value, source) {
+    if (typeof value === 'undefined') return;
+
+    const existing = this.fields[key];
+    const { name = 'Unknown plugin' } = (source || this.source || {});
+
+    debug('remove', { [key]: value, existing, from: name });
+
+    const message = (pkg) => `The package ${pkg} doesn't exist`;
+
+    if (Array.isArray(value)) {
+      value.forEach((pkg) => {
+        if (!this.fields[key][pkg]) {
+          this.warn(message(pkg));
+        } else {
+          delete this.fields[key][pkg];
+        }
+      });
+    } else if (!this.fields[key][value]) {
+      this.warn(message(value));
+    } else {
+      delete this.fields[key][value];
+    }
+  }
+
+  /**
    * Checks if a dependency has been already added
    * @param  {String} key Dependency bucket
    * @param  {String} value Dependency to search
