@@ -4,6 +4,10 @@
   "description": "Gasket Fetch API",
   "main": "./node.js",
   "browser": "./browser.js",
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "npm run lint -- --fix"
+  },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/godaddy/gasket.git"
@@ -28,5 +32,15 @@
     "abort-controller": "^3.0.0",
     "node-fetch": "^2.6.1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "eslint": "^6.1.0",
+    "eslint-config-godaddy": "^4.0.0",
+    "eslint-plugin-json": "^1.4.0",
+    "eslint-plugin-mocha": "^6.0.0"
+  },
+  "eslintConfig": {
+    "extends": [
+      "godaddy"
+    ]
+  }
 }
