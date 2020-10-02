@@ -6,6 +6,11 @@ const { defaultPath } = manifest;
 
 const publicDir = path.dirname(process.env.GASKET_INTL_LOCALES_DIR);
 
+//
+// export the React components as a convenience
+//
+export { withGasketIntl, withLocalesRequired, LocalesRequired } from './react';
+
 async function loadLocaleData(localePath, locale) {
   if (Array.isArray(localePath)) {
     const datas = await Promise.all(localePath.map(p => loadLocaleData(p, locale)));
