@@ -9,6 +9,7 @@
     "lint:fix": "npm run lint -- --fix",
     "test": "npm run test:runner",
     "test:runner": "mocha test/*.spec.js --require test/setup.js",
+    "test:server": "mocha test/server.spec.js",
     "test:coverage": "nyc --reporter=text --reporter=json-summary npm run test:runner",
     "posttest": "npm run lint"
   },
