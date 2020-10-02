@@ -1,5 +1,6 @@
-import Enzyme from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+const path = require('path');
+process.env.GASKET_INTL_MANIFEST_FILE = path.resolve(__dirname, 'fixtures/mock-manifest.json');
+process.env.GASKET_INTL_LOCALES_DIR = path.resolve(__dirname, 'fixtures/locales');
 
-// React 16 Enzyme adapter
-Enzyme.configure({ adapter: new Adapter() });
+console.log('process.env.GASKET_INTL_LOCALES_DIR', process.env.GASKET_INTL_LOCALES_DIR)
+console.log('process.env.GASKET_INTL_MANIFEST_FILE', process.env.GASKET_INTL_MANIFEST_FILE)

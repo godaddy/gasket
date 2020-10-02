@@ -4,11 +4,12 @@
   "description": "NodeJS script to build localization files.",
   "main": "lib",
   "scripts": {
-    "lint": "eslint lib/*.js *.js",
+    "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
-    "test": "jest",
-    "test:watch": "jest --watchAll",
-    "test:coverage": "jest --coverage",
+    "test": "npm run test:runner",
+    "test:runner": "mocha --require setup-env \"test/*.test.js\"",
+    "test:watch": "npm run test:runner -- --watch",
+    "test:coverage": "nyc --reporter=text --reporter=json-summary npm run test:runner",
     "posttest": "npm run lint"
   },
   "repository": {
@@ -33,8 +34,8 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-intl",
   "dependencies": {
-    "intl": "^1.2.5",
     "fs-extra": "^5.0.0",
+    "intl": "^1.2.5",
     "loader-utils": "^1.1.0",
     "lodash": "^4.17.11",
     "url-join": "^4.0.0"
@@ -43,17 +44,30 @@
     "@babel/preset-env": "^7.5.5",
     "@gasket/intl": "^6.0.0-canary.0",
     "@gasket/plugin-log": "^6.0.0-canary.0",
-    "acorn": "^6.1.1",
+    "assume": "^2.2.0",
+    "assume-sinon": "^1.0.1",
     "eslint": "^6.1.0",
     "eslint-config-godaddy": "^4.0.0",
     "eslint-plugin-jest": "^22.15.1",
     "eslint-plugin-json": "^1.4.0",
     "eslint-plugin-mocha": "^6.0.0",
-    "jest": "^24.8.0",
-    "react-intl": "^3.9.1"
+    "mocha": "^6.2.0",
+    "nyc": "^14.1.1",
+    "proxyquire": "^2.1.3",
+    "react-intl": "^3.9.1",
+    "setup-env": "^1.2.2",
+    "sinon": "^7.4.1"
   },
   "peerDependencies": {
     "@gasket/plugin-log": "^5.0.0",
     "@gasket/plugin-redux": "^5.0.0"
-  }
+  },
+  "eslintConfig": {
+    "extends": [
+      "godaddy-react"
+    ]
+  },
+  "eslintIgnore": [
+    "coverage"
+  ]
 }

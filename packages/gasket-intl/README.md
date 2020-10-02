@@ -10,10 +10,40 @@ npm i @gasket/intl
 
 ## Components
 
-- `withLocaleRequired(identifier, otherProps)(component)` - Higher-order
+- `withLocaleRequired(localePath, options)(Component)` - Higher-order
   component to wrap pages or components.
 
 - `<LocaleRequired>` - Loads messages from locale files.
+
+
+
+
+
+
+
+
+
+## Scenarios
+
+There are three rendering situations that this package accounts for.
+
+### Static
+
+####
+
+#### Next.js
+
+
+### SSR
+
+### Browser
+
+
+
+
+
+
+
 
 ## Types
 
