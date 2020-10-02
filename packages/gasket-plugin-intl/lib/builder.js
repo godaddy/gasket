@@ -1,7 +1,7 @@
 const fs = require('fs-extra');
 const path = require('path');
-const loaderUtils = require('loader-utils');
 const fsUtils = require('./fsUtils');
+const { getIntlConfig } = require('./utils');
 
 
 class Builder {
@@ -14,43 +14,18 @@ class Builder {
    * @param {Object} config.outputDir - path to output files to
    * @param {Object} config.blacklistModules - Names of modules to exclude
    */
-  constructor(logger, config) {
-    const { outputDir } = config;
+  constructor(gasket) {
+    const { logger, config: { root } } = gasket;
+    const intlConfig = getIntlConfig(gasket);
+
+    const { modules } = intlConfig;
+    const { excludes, localesDir } = modules;
 
     this._logger = logger;
-    this._config = config;
-    this._rootDir = process.cwd();
-    this._outputDir = path.resolve(outputDir);
-    this._nodeModulesDir = path.resolve('./node_modules');
-    this._mapFile = path.join(this._outputDir, 'locales-manifest.json');
-    this.builderMap = {};
-  }
-
-  /**
-   * Update the hash in the locale mappings for a folder copy
-   *
-   * @param {string} tgt - target folder for the locale file
-   * @param {string} fileName - target file name e.g. 8sj901s.en-US.json
-   */
-  updateFolderHash(tgt, fileName) {
-    const pkgName = this.getPackageNameFromDir(tgt);
-    const nameSpace = path.basename(tgt);
-    const [hash, language, ext] = fileName.split('.');
-    if (ext) {
-      this.builderMap[pkgName] = this.builderMap[pkgName] || {};
-      this.builderMap[pkgName][nameSpace] = this.builderMap[pkgName][nameSpace] || {};
-      this.builderMap[pkgName][nameSpace][language] = hash;
-    }
-  }
-
-  /**
-   * The filename in this case is expected to be like about.json or some.weird.namespace.json. This function removes
-   * the extension and returns the remaining portion as the namespace
-   * @param {string} fileName - json file name
-   * @returns {string} fileName without extension
-   */
-  getNamespace(fileName) {
-    return path.basename(fileName, '.json');
+    this._outputDir = path.resolve(path.join(intlConfig.localesDir, 'modules'));
+    this._nodeModulesDir = path.resolve(path.join(root, 'node_modules'));
+    this._lookupDir = localesDir;
+    this._excludes = excludes;
   }
 
   /**
@@ -62,37 +37,15 @@ class Builder {
    * @returns {Promise} promise
    */
   async moveFolder(src, tgt) {
-    const parentFolder = path.dirname(tgt);
-    const language = path.basename(tgt);
     const fileNames = await fs.readdir(src);
 
     const promises = fileNames.map(async fileName => {
       const srcFile = path.join(src, fileName);
       if (path.extname(srcFile) === '.json') {
-        const namespace = this.getNamespace(fileName);
-        const newTgtDir = path.join(parentFolder, namespace);
-        await fs.mkdirp(newTgtDir);
-        return await this.copyFile(srcFile, newTgtDir, true, language);
+        return await this.copyFile(srcFile, tgt, fileName);
       }
     });
     return await Promise.all(promises);
-  }
-
-  /**
-   * Update the hash in the locale mappings for a file copy
-   *
-   * @param {string} tgt - target folder for the locale file
-   * @param {string} fileName - target file name e.g. 8sj901s.en-US.json
-   */
-  updateFileHash(tgt, fileName) {
-    const tgtFile = path.join(tgt, fileName);
-    const pkgName = this.getPackageNameFromDir(tgtFile);
-    const [hash, language, ext] = fileName.split('.');
-
-    if (ext) {
-      this.builderMap[pkgName] = this.builderMap[pkgName] || {};
-      this.builderMap[pkgName][language] = hash;
-    }
   }
 
   /**
@@ -100,26 +53,15 @@ class Builder {
    *
    * @param {string} src - full path to source file
    * @param {string} tgtDir - target folder location
-   * @param {bool} isFolder - true if called from moveFolder, false otherwise
-   * @param {string} filePart - this is used for building the target file name. It contains either the language or
+   * @param {string} fileName - this is used for building the target file name. It contains either the language or
    * the file name.
    * @returns {Promise} - resolves once the file is saved
    */
-  async copyFile(src, tgtDir, isFolder, filePart) {
+  async copyFile(src, tgtDir, fileName) {
+    await fs.mkdirp(tgtDir);
     const buffer = await fs.readFile(src);
-    const hash = loaderUtils.getHashDigest(buffer, 'md5', 'hex', 7);
-
-    let hashedFileName;
-    if (isFolder) {
-      hashedFileName = `${hash}.${filePart}.json`;
-      this.updateFolderHash(tgtDir, hashedFileName);
-    } else {
-      hashedFileName = `${hash}.${filePart}`;
-      this.updateFileHash(tgtDir, hashedFileName);
-    }
-
     const output = JSON.parse(buffer);
-    const tgtFile = path.join(tgtDir, hashedFileName);
+    const tgtFile = path.join(tgtDir, fileName);
     return fsUtils.saveJsonFile(tgtFile, output);
   }
 
@@ -133,7 +75,7 @@ class Builder {
   async moveFile(src, tgt) {
     const newTgtDir = path.dirname(tgt);
     const fileName = path.basename(tgt);
-    return await this.copyFile(src, newTgtDir, false, fileName);
+    return await this.copyFile(src, newTgtDir, fileName);
   }
 
   /**
@@ -194,23 +136,11 @@ class Builder {
   }
 
   /**
-   * Returns if the path for locales files is for the main package and not for a sub-package/dependency module.
-   *
-   * @param {string} srcDir - directory path to the locales folder.
-   * @returns {boolean} returns true if the path matches current package path.
-   */
-  isMainPackage(srcDir) {
-    const { localesDir } = this._config;
-    return srcDir === path.join(this._rootDir, localesDir);
-  }
-
-  /**
    * Processes directories
    *
    * @param {string[]} buildDirs - list of dirs to process
    */
   async processDirs(buildDirs) {
-    let defaultModule;
     for (const srcDir of buildDirs) {
       const pkgName = await this.getPackageName(srcDir);
       const tgtDir = path.join(this._outputDir, pkgName);
@@ -219,30 +149,12 @@ class Builder {
 
       await fs.remove(tgtDir);
       await fs.mkdirp(tgtDir);
-      this.builderMap[pkgName] = {};
-      if (this.isMainPackage(srcDir)) {
-        defaultModule = pkgName;
-      }
 
       const fileNames = await fs.readdir(srcDir);
       await this.processFiles(srcDir, tgtDir, fileNames);
     }
 
     this._logger.log(`build:locales: Completed locale files update.`);
-    await this.writeManifest(defaultModule);
-  }
-
-  async writeManifest(defaultModule) {
-    const { localeMap, defaultLocale } = this._config;
-    const manifest = {
-      localeMap,
-      defaultLocale,
-      defaultModule,
-      moduleHashes: this.builderMap
-    };
-
-    await fsUtils.saveJsonFile(this._mapFile, manifest);
-    this._logger.log(`build:locales: Wrote locales manifest.`);
   }
 
   /**
@@ -251,14 +163,12 @@ class Builder {
    * @returns {string[]} directories - list of paths
    */
   async discoverDirs() {
-    const { localesDir, blacklistModules } = this._config;
     const dirs = await fsUtils.getDirectories(this._nodeModulesDir);
-    dirs.unshift(this._rootDir);
 
     return dirs.reduce(async (prevPromise, dir) => {
       const resArr = await prevPromise;
-      if (blacklistModules.includes(path.basename(dir))) return resArr;
-      const buildDir = path.join(dir, localesDir);
+      if (this._excludes.includes(path.basename(dir))) return resArr;
+      const buildDir = path.join(dir, this._lookupDir);
       try {
         const stat = await fs.lstat(buildDir);
         if (stat.isDirectory()) {
@@ -282,4 +192,7 @@ class Builder {
   }
 }
 
-module.exports = Builder;
+module.exports = async function buildModules(gasket) {
+  const builder = new Builder(gasket);
+  await builder.run();
+};

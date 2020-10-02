@@ -1,23 +1,16 @@
 const path = require('path');
-const serveStatic = require('serve-static');
 const { name, devDependencies } = require('../package');
-const Builder = require('./builder');
+const buildModules = require('./builder');
 const workbox = require('./workbox');
-const defaultConfig = require('./default-config');
 const serviceWorkerCacheKey = require('./service-worker-cache-key');
 const init = require('./init');
+const buildManifest = require('./build-manifest');
 const { getIntlConfig } = require('./utils');
 
-/**
- * Plugin build hook
- *
- * @param {Object} gasket - Gasket config
- **/
-async function build(gasket) {
-  const intlConfig = gasket.config.intl;
-  const builder = new Builder(gasket.logger, intlConfig);
-  await builder.run();
-}
+const moduleDefaults = {
+  localesDir: 'locales',
+  excludes: ['cacache', 'yargs', 'axe-core']
+};
 
 module.exports = {
   dependencies: ['@gasket/plugin-log'],
@@ -25,7 +18,7 @@ module.exports = {
   hooks: {
     init,
     async create(gasket, context) {
-      const { files, pkg, reduxReducers } = context;
+      const { files, pkg } = context;
       const rootDir = path.join(__dirname, '..');
       files.add(
         `${ rootDir }/generator/*`,
@@ -37,105 +30,97 @@ module.exports = {
         'react-intl': devDependencies['react-intl']
       });
 
-      reduxReducers.addImport(`const intlReducers = require('@gasket/intl/reducers');`);
-      reduxReducers.addEntry(`...intlReducers,`);
-
       context.hasGasketIntl = true;
     },
     build: {
       timing: {
         first: true
       },
-      handler: build
+      handler: async function build(gasket) {
+        const intlConfig = getIntlConfig(gasket);
+        if (intlConfig.modules) {
+          await buildModules(gasket);
+        }
+        await buildManifest(gasket);
+      }
     },
-    // start: async function start(gasket) {
-    //   const intlConfig = gasket.config.intl;
-    //   const { localesDir } = intlConfig;
-    //   // global.gasketIntl.manifest = loadLocalesManifest(localesDir);
-    // },
     configure(gasket, config) {
       const { root } = config;
-      // get user defined config and apply defaults
-      const intlConfig = { ...defaultConfig, ...getIntlConfig({ config }) };
+      const intlConfig = { ...getIntlConfig({ config }) };
 
-      const { languageMap, defaultLanguage } = intlConfig;
       // TODO: deprecated warnings for `languageMap`, `defaultLanguage`
+      const { languageMap, defaultLanguage } = intlConfig;
+
+      // get user defined config and apply defaults
       const {
-        outputDir,
-        localeMap = languageMap,
-        defaultLocale = defaultLanguage || 'en-US'
+        defaultPath = '/locales',
+        defaultLocale = defaultLanguage || 'en-US',
+        localesMap = languageMap,
+        localesDir = './public/locales',
+        manifestFilename = 'locales-manifest.json'
       } = intlConfig;
 
-      const fullOutputDir = path.join(root, outputDir);
+      const fullLocalesDir = path.join(root, localesDir);
 
-      const { next = {}, intl = {}, zone } = config;
-      const assetPrefix = intl.assetPrefix || next.assetPrefix || zone || '';
+      const { next = {} } = config;
+      const basePath = intlConfig.basePath || intlConfig.assetPrefix ||
+        next.basePath || next.assetPrefix ||
+        config.basePath || '';
+
+      let { modules = false } = intlConfig;
+      if (modules) {
+        modules = modules === true ? moduleDefaults : { ...moduleDefaults, ...modules };
+      }
 
       // This allows packages (@gasket/intl) to reference certain configs
       /* eslint-disable no-process-env */
-      process.env.GASKET_INTL_LOCALES_DIR = fullOutputDir;
-      process.env.GASKET_INTL_MANIFEST_FILE = path.join(fullOutputDir, 'locales-manifest.json');
+      process.env.GASKET_INTL_LOCALES_DIR = fullLocalesDir;
+      process.env.GASKET_INTL_MANIFEST_FILE = path.join(fullLocalesDir, manifestFilename);
       /* eslint-enable no-process-env */
 
       return {
         ...config,
         intl: {
           ...intlConfig,
-          outputDir: fullOutputDir,
-          assetPrefix,
-          localeMap,
-          defaultLocale
+          basePath,
+          defaultPath,
+          defaultLocale,
+          localesMap,
+          localesDir: fullLocalesDir,
+          manifestFilename,
+          modules
         }
       };
     },
-    webpack(gasket) {
-      const { outputDir } = getIntlConfig(gasket);
+    webpack() {
       // webpack is not listed as a required dependency but if this lifecycle
       // is invoked we can assume it has been installed by @gasket/plugin-webpack
       const webpack = require('webpack');
 
       return {
         plugins: [
-          new webpack.EnvironmentPlugin({
-            GASKET_INTL_LOCALES_DIR: outputDir,
-            GASKET_INTL_MANIFEST_FILE: path.join(outputDir, 'locales-manifest.json')
-          })
+          new webpack.EnvironmentPlugin([
+            'GASKET_INTL_LOCALES_DIR',
+            'GASKET_INTL_MANIFEST_FILE'
+          ])
         ]
       };
     },
     middleware(gasket) {
-      const { assetPrefix } = getIntlConfig(gasket);
+      const { basePath } = getIntlConfig(gasket);
 
       return async function intlMiddleware(req, res, next) {
         const acceptLanguage = (req.headers['accept-language'] || '').split(',')[0];
         const locale = await gasket.execWaterfall('intlLocale', acceptLanguage, req);
-        req.gasketIntl = {
+        // The gasketData object make certain config data available for server
+        // rendering, which it can also be rendered as a browser global object
+        res.gasketData = res.gasketData || {};
+        res.gasketData.intl = {
           locale,
-          assetPrefix
+          basePath
         };
         next();
       };
-    },
-    express(gasket, app) {
-      const { outputDir, assetPrefix } = getIntlConfig(gasket);
-
-      app.use('/_locales', serveStatic(outputDir, {
-        index: false,
-        maxAge: '1y',
-        immutable: true
-      }));
-
-      //
-      // This is generally loading into Redux during SSR but available otherwise
-      //
-      app.get('/locales-settings.json', async (req, res) => {
-        const { locale } = req.gasketIntl;
-        res.send({
-          locale,
-          // because this can change per environment, we need to be able to fetch from browser
-          assetPrefix
-        });
-      });
     },
     workbox,
     serviceWorkerCacheKey,
@@ -148,7 +133,7 @@ module.exports = {
           method: 'execWaterfall',
           description: 'Set the language for which locale files to load',
           link: 'README.md#intlLocale',
-          parent: 'initReduxState'
+          parent: 'middleware'
         }],
         structures: [{
           name: localesDir + '/',

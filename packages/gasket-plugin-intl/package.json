@@ -33,11 +33,10 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-intl",
   "dependencies": {
-    "fs-extra": "^5.0.0",
     "intl": "^1.2.5",
+    "fs-extra": "^5.0.0",
     "loader-utils": "^1.1.0",
     "lodash": "^4.17.11",
-    "serve-static": "^1.13.2",
     "url-join": "^4.0.0"
   },
   "devDependencies": {

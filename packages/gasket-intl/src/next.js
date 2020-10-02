@@ -1,19 +1,30 @@
 import path from 'path';
+import merge from 'lodash.merge';
+import { getLocalePath, LOADED, ERROR } from './utils';
+import { manifest } from './config';
+const { defaultPath } = manifest;
 
-const LOADING = 1;
-const LOADED = 2;
-const ERROR = 3;
-const EXISTS = 4;
+const publicDir = path.dirname(process.env.GASKET_INTL_LOCALES_DIR);
 
-
-const processEnvLocaleDir = path.join(process.cwd(), 'public');
-
-// TODO: support for loading multiple locale files
-// TODO: support for asset prefix and/or basePath
 async function loadLocaleData(localePath, locale) {
-  const localeFile = `${localePath}/${locale}.json`;
-  const diskPath = path.join(processEnvLocaleDir, localeFile);
-  const messages = require(diskPath);
+  if (Array.isArray(localePath)) {
+    const datas = await Promise.all(localePath.map(p => loadLocaleData(p, locale)));
+    return merge(...datas);
+  }
+
+  const localeFile = getLocalePath(localePath, locale);
+  const diskPath = path.join(publicDir, localeFile);
+  let messages;
+  let status;
+  try {
+    messages = require(diskPath);
+    status = LOADED;
+  } catch (e) {
+    console.error(e.message);
+    messages = [];
+    status = ERROR;
+
+  }
   return {
     locale,
     messages: {
@@ -21,13 +32,13 @@ async function loadLocaleData(localePath, locale) {
         ...messages
       }
     },
-    files: {
-      [localeFile]: LOADED
+    status: {
+      [localeFile]: status
     }
   };
 }
 
-export const intlGetStaticProps = (localesPath = '/locales') => async ctx => {
+export const intlGetStaticProps = (localesPath = defaultPath) => async ctx => {
   const { params: { locale } } = ctx;
   const data = await loadLocaleData(localesPath, locale);
 
@@ -38,9 +49,9 @@ export const intlGetStaticProps = (localesPath = '/locales') => async ctx => {
   };
 };
 
-export const intlGetServerSideProps = (localesPath = '/locales') => async ctx => {
-  const { req: { gasketIntl } } = ctx;
-  const { locale } = gasketIntl;
+export const intlGetServerSideProps = (localesPath = defaultPath) => async ctx => {
+  const { res } = ctx;
+  const { locale } = res.gasketData.intl;
   const data = await loadLocaleData(localesPath, locale);
 
   return {
