@@ -8,7 +8,7 @@
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "test": "npm run test:runner",
-    "test:runner": "mocha test/*.spec.js --require test/setup.js",
+    "test:runner": "npm run test:server && npm run test:browser",
     "test:server": "mocha --require core-js test/server.spec.js",
     "test:browser": "mocha --require setup-env test/browser.spec.js",
     "test:coverage": "nyc --reporter=text --reporter=json-summary npm run test:runner",
