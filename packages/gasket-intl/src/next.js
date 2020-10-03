@@ -1,15 +1,10 @@
 import path from 'path';
 import merge from 'lodash.merge';
-import { getLocalePath, LOADED, ERROR } from './utils';
+import { getLocaleFilePath, LOADED, ERROR } from './utils';
 import { manifest } from './config';
 const { defaultPath } = manifest;
 
 const publicDir = path.dirname(process.env.GASKET_INTL_LOCALES_DIR);
-
-//
-// export the React components as a convenience
-//
-export { withGasketIntl, withLocalesRequired, LocalesRequired } from './react';
 
 async function loadLocaleData(localePath, locale) {
   if (Array.isArray(localePath)) {
@@ -17,7 +12,7 @@ async function loadLocaleData(localePath, locale) {
     return merge(...datas);
   }
 
-  const localeFile = getLocalePath(localePath, locale);
+  const localeFile = getLocaleFilePath(localePath, locale);
   const diskPath = path.join(publicDir, localeFile);
   let messages;
   let status;

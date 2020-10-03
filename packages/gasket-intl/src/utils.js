@@ -1,18 +1,68 @@
 import { basePath, defaultLocale, manifest } from './config';
 
+/**
+ * Partial URL representing a directory containing locale .json files
+ * or a URL template with a `:locale` path param to a .json file.
+ * @typedef {string} LocalePathPart
+ *
+ * @example
+ * "/locales"
+ *
+ * @example
+ * "/locales/:locale/component.json"
+ */
+
+/**
+ * URL path to a locale .json file
+ * @typedef {string} LocalePath
+ *
+ * @example
+ * "/locales/en-US.json"
+ *
+ * @example
+ * "/locales/en-US/component.json"
+ */
+
+/**
+ * Language code only
+ * @typedef {string} Lang
+ *
+ * @example
+ * "en"
+ */
+
+/**
+ * Language code with region
+ * @typedef {Lang} Locale
+ *
+ * @example
+ * "en-US"
+ */
+
+/**
+ * Fetch status of a locale file
+ * @typedef {string} LocalePathStatus
+ * @readonly
+ */
+
+/** @type {LocalePathStatus} */
 export const LOADING = 'loading';
+/** @type {LocalePathStatus} */
 export const LOADED = 'loaded';
+/** @type {LocalePathStatus} */
 export const ERROR = 'error';
 
 const reLocale = /(\/[$:{]locale}?\/)/;
 const defaultLang = defaultLocale.split('-')[0];
 
 /**
- * The language codes will fall back in this sequence (da-DK/da used as an example language)
+ * Fallback to the lang part of a locale or to defaultLocale.
+ *
+ * Here's an example using da-DK/da with en-US as defaultLocale
  * da-DK ==> da ==> en-US ==> en ==> null
  *
- * @param {string} locale - current language.
- * @returns {string} language - fallback language to use.
+ * @param {Locale} locale - current language.
+ * @returns {Locale|Lang|null} language - fallback language to use.
  */
 export function getFallbackLocale(locale = '') {
   if (locale.indexOf('-') > 0) {
@@ -27,42 +77,47 @@ export function getFallbackLocale(locale = '') {
 }
 
 /**
+ * Format a localePath with provide locale
  *
- * @param localePath
- * @param locale
- * @return {string|*}
+ * @param {LocalePathPart} localePathPart - Path containing locale files
+ * @param {Locale} locale - Locale
+ * @returns {LocalePath} localePath
  */
-export function formatLocalePath(localePath, locale) {
-  if (reLocale.test(localePath)) {
-    return localePath.replace(reLocale, `/${locale}/`);
+export function formatLocalePath(localePathPart, locale) {
+  if (reLocale.test(localePathPart)) {
+    return localePathPart.replace(reLocale, `/${ locale }/`);
   }
-  return `${ localePath }/${ locale }.json`;
+  return `${ localePathPart }/${ locale }.json`;
 }
 
 /**
+ * Get a formatted localePath considering language mappings and fallbacks
  *
- * @param localePath
- * @param locale
- * @return {string}
+ * @param {LocalePathPart} localePathPart - Path containing locale files
+ * @param {Locale} locale - Locale
+ * @returns {LocalePath} localePath
  */
-export function getLocalePath(localePath, locale) {
+export function getLocalePath(localePathPart, locale) {
   const mappedLocale = manifest.localeMap && manifest.localeMap[locale] || locale;
   let fallbackLocale = mappedLocale;
 
   while (fallbackLocale !== null) {
-    const pathName = formatLocalePath(localePath, fallbackLocale);
-    if (pathName in manifest.paths) return pathName;
+    const localePath = formatLocalePath(localePathPart, fallbackLocale);
+    if (localePath in manifest.paths) return localePath;
     fallbackLocale = getFallbackLocale(fallbackLocale);
   }
-  return formatLocalePath(localePath, mappedLocale);
+  return formatLocalePath(localePathPart, mappedLocale);
 }
 
 /**
  * Add base path from window.gasket.intl or manifest if set to the locale path
  *
- * @param {string} pathName - URL path to a locale file
- * @returns {string} url
+ * @param {LocalePath} localePath - URL path to a locale file
+ * @returns {URL} url
  */
-export function pathToUrl(pathName) {
-  return basePath ? `${basePath}/${pathName}` : pathName;
+export function pathToUrl(localePath) {
+  let url = basePath ? basePath.replace(/\/$/, '') + localePath : localePath;
+  const hash = manifest.paths[localePath];
+  if (hash) url += `?v=${ hash }`;
+  return url;
 }
