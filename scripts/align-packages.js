@@ -39,6 +39,7 @@ const depVersions = {
   'redux': '^4.0.4',
   'deepmerge': '^4.0.0',
   'diagnostics': '^2.0.2',
+  'next': '^9.5.3',
 
   'babel-eslint': '^10.0.2',
   'eslint': '^6.1.0',
