@@ -14,17 +14,18 @@ const GasketIntlContext = React.createContext({
 /**
  * Merges any initial state from render with that from page props
  *
- * @param {LocalesProps|{}} fromPage - Initial props from a Next.js page
+ * @param {LocalesProps|{}} localesProps - Initial props from a Next.js page
  * @returns {LocalesState} state
  */
-function init(fromPage) {
+function init(localesProps) {
   if (isBrowser) {
     // merge any data set on window with what comes from SSR or static page props
     const { messages = {}, status = {} } = clientData;
-    return merge({}, { messages, status }, fromPage);
+    return merge({}, { messages, status }, localesProps);
   }
 
-  return fromPage;
+  const { messages, status } = localesProps;
+  return { messages, status };
 }
 
 /**
@@ -102,23 +103,23 @@ export function withGasketIntl(Component) {
    *
    * @param {object} props - Component props
    * @param {object} [props.pageProps] - Component props from a Next.js page
-   * @param {LocalesProps} [props.pageProps.gasketIntl] - Initial state from a Next.js page
+   * @param {LocalesProps} [props.pageProps.localesProps] - Initial state from a Next.js page
    * @returns {JSX.Element} element
    */
   function Wrapper(props = {}) {
 
     // Support for wrapping Next.js App with data from get server side and static props
-    const { pageProps: { gasketIntl: fromPage } = {} } = props; // eslint-disable-line react/prop-types
+    const { pageProps: { localesProps } = {} } = props; // eslint-disable-line react/prop-types
 
-    const [state, dispatch] = useReducer(reducer, fromPage || {}, init);
+    const [state, dispatch] = useReducer(reducer, localesProps || {}, init);
 
     // If we have incoming pageProps, we need to update state but have to by
     // mutation rather than issuing a dispatch to avoid re-renders and timing issues
-    if (fromPage) {
-      merge(state, fromPage);
+    if (localesProps) {
+      merge(state, localesProps);
     }
 
-    const locale = fromPage?.locale || getActiveLocale();
+    const locale = localesProps?.locale || getActiveLocale();
 
     const { status } = state;
     const messages = (state.messages || {})[locale];

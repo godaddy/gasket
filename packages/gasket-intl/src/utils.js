@@ -113,7 +113,7 @@ export function getLocalePath(localePathPart, locale) {
  * Add base path from window.gasket.intl or manifest if set to the locale path
  *
  * @param {LocalePath} localePath - URL path to a locale file
- * @returns {URL} url
+ * @returns {string} url
  */
 export function pathToUrl(localePath) {
   let url = basePath ? basePath.replace(/\/$/, '') + localePath : localePath;

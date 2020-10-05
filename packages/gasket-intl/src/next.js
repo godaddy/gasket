@@ -1,30 +1,39 @@
 import path from 'path';
 import merge from 'lodash.merge';
-import { getLocaleFilePath, LOADED, ERROR } from './utils';
+import { getLocalePath, LOADED, ERROR } from './utils';
 import { manifest } from './config';
+
 const { defaultPath } = manifest;
 
 const publicDir = path.dirname(process.env.GASKET_INTL_LOCALES_DIR);
 
-async function loadLocaleData(localePath, locale) {
-  if (Array.isArray(localePath)) {
-    const datas = await Promise.all(localePath.map(p => loadLocaleData(p, locale)));
-    return merge(...datas);
+/**
+ * Load locale file(s) are returns localesProps for rendering Next.js pages
+ *
+ * @param {LocalePathPart|LocalePathPart[]} localePathPath - Path(s) containing locale files
+ * @param {Locale} locale - Locale to load
+ * @returns {Promise<LocalesProps>} localesProps
+ */
+async function loadLocaleData(localePathPath, locale) {
+  if (Array.isArray(localePathPath)) {
+    const localesProps = await Promise.all(localePathPath.map(p => loadLocaleData(p, locale)));
+    return merge(...localesProps);
   }
 
-  const localeFile = getLocaleFilePath(localePath, locale);
+  const localeFile = getLocalePath(localePathPath, locale);
   const diskPath = path.join(publicDir, localeFile);
   let messages;
   let status;
+
   try {
     messages = require(diskPath);
     status = LOADED;
   } catch (e) {
     console.error(e.message);
-    messages = [];
+    messages = {};
     status = ERROR;
-
   }
+
   return {
     locale,
     messages: {
@@ -38,25 +47,41 @@ async function loadLocaleData(localePath, locale) {
   };
 }
 
-export const intlGetStaticProps = (localesPath = defaultPath) => async ctx => {
-  const { params: { locale } } = ctx;
-  const data = await loadLocaleData(localesPath, locale);
+/**
+ * Load locale file(s) for Next.js static pages
+ *
+ * @param {LocalePathPart|LocalePathPart[]} localePathPath - Path(s) containing locale files
+ * @returns {function({}): Promise<{props: {localesProps: LocalesProps}}>} pageProps
+ */
+export function intlGetStaticProps(localePathPath = defaultPath) {
+  return async ctx => {
+    const { params: { locale } } = ctx;
+    const localesProps = await loadLocaleData(localePathPath, locale);
 
-  return {
-    props: {
-      gasketIntl: data
-    }
+    return {
+      props: {
+        localesProps
+      }
+    };
   };
-};
+}
 
-export const intlGetServerSideProps = (localesPath = defaultPath) => async ctx => {
-  const { res } = ctx;
-  const { locale } = res.gasketData.intl;
-  const data = await loadLocaleData(localesPath, locale);
+/**
+ * Load locale file(s) for Next.js static pages
+ *
+ * @param {LocalePathPart|LocalePathPart[]} localePathPath - Path(s) containing locale files
+ * @returns {function({}): Promise<{props: {localesProps: LocalesProps}}>} pageProps
+ */
+export function intlGetServerSideProps(localePathPath = defaultPath) {
+  return async ctx => {
+    const { res } = ctx;
+    const { locale } = res.gasketData.intl;
+    const localesProps = await loadLocaleData(localePathPath, locale);
 
-  return {
-    props: {
-      gasketIntl: data
-    }
+    return {
+      props: {
+        localesProps
+      }
+    };
   };
-};
+}
