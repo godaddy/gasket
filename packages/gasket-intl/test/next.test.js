@@ -1,23 +1,13 @@
 /* eslint-disable no-console */
 import assume from 'assume';
 import sinon from 'sinon';
-import proxyquire from 'proxyquire';
-
-const mockManifest = require('./fixtures/mock-manifest.json');
-const mockConfig = {};
-
-const getNext = () => proxyquire('../src/next', {
-  './config': mockConfig
-});
+const next = require('../src/next');
 
 describe('next', function () {
-  let next, res;
+  let res;
 
   beforeEach(function () {
     sinon.stub(console, 'error');
-    mockConfig.basePath = '';
-    mockConfig.defaultLocale = 'en-US';
-    mockConfig.manifest = { ...mockManifest, paths: { ...mockManifest.paths } };
     res = {
       gasketData: {
         intl: {
@@ -25,10 +15,9 @@ describe('next', function () {
         }
       }
     };
-    next = getNext();
   });
 
-  afterEach(function (){
+  afterEach(function () {
     sinon.restore();
   });
 
