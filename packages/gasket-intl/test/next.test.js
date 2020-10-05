@@ -3,7 +3,7 @@ import assume from 'assume';
 import sinon from 'sinon';
 const next = require('../src/next');
 
-describe('next', function () {
+describe('Next.js functions', function () {
   let res;
 
   beforeEach(function () {

@@ -11,13 +11,15 @@ const GasketIntlContext = React.createContext({
   status: {}
 });
 
+export const helpers = {};
+
 /**
  * Merges any initial state from render with that from page props
  *
  * @param {LocalesProps|{}} localesProps - Initial props from a Next.js page
  * @returns {LocalesState} state
  */
-function init(localesProps) {
+helpers.init = function init(localesProps) {
   if (isBrowser) {
     // merge any data set on window with what comes from SSR or static page props
     const { messages = {}, status = {} } = clientData;
@@ -47,7 +49,7 @@ function init(localesProps) {
  * @param {{type: string, payload: {}}} action - State change action
  * @returns {LocalesState} state result
  */
-function reducer(state, action) {
+helpers.reducer = function reducer(state, action) {
   const { type } = action;
   const { locale, messages, file } = action.payload;
   if (type === LOADED) {
@@ -83,62 +85,11 @@ function reducer(state, action) {
  *
  * @returns {Locale} locale
  */
-function getActiveLocale() {
+helpers.getActiveLocale = function getActiveLocale() {
   if (isBrowser) {
     return window.gasketIntlLocale ?? clientData.locale ?? navigator.languages[0];
   }
   return defaultLocale;
-}
-
-/**
- * HOC that adds a provider to managing locale files as well as the react-intl Provider.
- * This can be used to wrap a top level React or a Next.js custom App component.
- *
- * @param {React.Component} Component - Component or App to wrap
- * @returns {React.Component} wrapped component
- */
-export function withGasketIntl(Component) {
-  /**
-   * Wrapper component which sets up providers and reducer hook
-   *
-   * @param {object} props - Component props
-   * @param {object} [props.pageProps] - Component props from a Next.js page
-   * @param {LocalesProps} [props.pageProps.localesProps] - Initial state from a Next.js page
-   * @returns {JSX.Element} element
-   */
-  function Wrapper(props = {}) {
-
-    // Support for wrapping Next.js App with data from get server side and static props
-    const { pageProps: { localesProps } = {} } = props; // eslint-disable-line react/prop-types
-
-    const [state, dispatch] = useReducer(reducer, localesProps || {}, init);
-
-    // If we have incoming pageProps, we need to update state but have to by
-    // mutation rather than issuing a dispatch to avoid re-renders and timing issues
-    if (localesProps) {
-      merge(state, localesProps);
-    }
-
-    const locale = localesProps?.locale || getActiveLocale();
-
-    const { status } = state;
-    const messages = (state.messages || {})[locale];
-    const contextValue = { locale, status, dispatch };
-
-    return (
-      <GasketIntlContext.Provider value={ contextValue }>
-        <IntlProvider locale={ locale } key={ locale } messages={ messages } initialNow={ Date.now() }>
-          <Component { ...props } />
-        </IntlProvider>
-      </GasketIntlContext.Provider>
-    );
-  }
-
-  Wrapper.displayName = `withGasketIntl(${ Component.displayName || Component.name || 'Component' })`;
-  if ('getInitialProps' in Component) {
-    Wrapper.getInitialProps = Component.getInitialProps;
-  }
-  return Wrapper;
 }
 
 /**
@@ -147,7 +98,7 @@ export function withGasketIntl(Component) {
  * @param {LocalePath} localePath - Path containing locale files
  * @returns {LocalePathStatus} status
  */
-function useGasketIntl(localePath) {
+helpers.useGasketIntl = function useGasketIntl(localePath) {
   const { locale, status = {}, dispatch } = useContext(GasketIntlContext);
 
   // We cannot use dispatch from useReducer during SSR, so exit early.
@@ -191,6 +142,57 @@ function useGasketIntl(localePath) {
 }
 
 /**
+ * HOC that adds a provider to managing locale files as well as the react-intl Provider.
+ * This can be used to wrap a top level React or a Next.js custom App component.
+ *
+ * @param {React.Component} Component - Component or App to wrap
+ * @returns {React.Component} wrapped component
+ */
+export function withIntlProvider(Component) {
+  /**
+   * Wrapper component which sets up providers and reducer hook
+   *
+   * @param {object} props - Component props
+   * @param {object} [props.pageProps] - Component props from a Next.js page
+   * @param {LocalesProps} [props.pageProps.localesProps] - Initial state from a Next.js page
+   * @returns {JSX.Element} element
+   */
+  function Wrapper(props = {}) {
+
+    // Support for wrapping Next.js App with data from get server side and static props
+    const { pageProps: { localesProps } = {} } = props; // eslint-disable-line react/prop-types
+
+    const [state, dispatch] = useReducer(helpers.reducer, localesProps || {}, helpers.init);
+
+    // If we have incoming pageProps, we need to update state but have to by
+    // mutation rather than issuing a dispatch to avoid re-renders and timing issues
+    if (localesProps) {
+      merge(state, localesProps);
+    }
+
+    const locale = localesProps?.locale || helpers.getActiveLocale();
+
+    const { status } = state;
+    const messages = (state.messages || {})[locale];
+    const contextValue = { locale, status, dispatch };
+
+    return (
+      <GasketIntlContext.Provider value={ contextValue }>
+        <IntlProvider locale={ locale } key={ locale } messages={ messages } initialNow={ Date.now() }>
+          <Component { ...props } />
+        </IntlProvider>
+      </GasketIntlContext.Provider>
+    );
+  }
+
+  Wrapper.displayName = `withIntlProvider(${ Component.displayName || Component.name || 'Component' })`;
+  if ('getInitialProps' in Component) {
+    Wrapper.getInitialProps = Component.getInitialProps;
+  }
+  return Wrapper;
+}
+
+/**
  * Component that loads a locale file before rendering children
  *
  * @param {object} props - Props
@@ -198,20 +200,20 @@ function useGasketIntl(localePath) {
  * @param {React.Component} [props.loading] - Custom component to show while loading
  * @returns {JSX.Element|null} element
  */
-export function LocalesRequired(props) {
+export function LocaleRequired(props) {
   const { localePath, loading = null, children } = props;
-  const loadState = useGasketIntl(localePath);
+  const loadState = helpers.useGasketIntl(localePath);
   if (loadState === LOADING) return loading;
   return <>{ children }</>;
 }
 
-LocalesRequired.propTypes = {
+LocaleRequired.propTypes = {
   localePath: PropTypes.string,
   loading: PropTypes.node,
   children: PropTypes.node.isRequired
 };
 
-LocalesRequired.defaultProps = {
+LocaleRequired.defaultProps = {
   localePath: manifest.defaultPath
 };
 
@@ -223,16 +225,16 @@ LocalesRequired.defaultProps = {
  * @param {React.Component} [options.loading] - Custom component to show while loading
  * @returns {React.Component} wrapped component
  */
-export const withLocalesRequired = (localePath = manifest.defaultPath, options = {}) => {
+export const withLocaleRequired = (localePath = manifest.defaultPath, options = {}) => {
   const { loading = null } = options;
   return Component => {
     function Wrapper(props) {
-      const loadState = useGasketIntl(localePath);
+      const loadState = helpers.useGasketIntl(localePath);
       if (loadState === LOADING) return loading;
       return <Component { ...props } />;
     }
 
-    Wrapper.displayName = `withLocalesRequired(${ Component.displayName || Component.name || 'Component' })`;
+    Wrapper.displayName = `withLocaleRequired(${ Component.displayName || Component.name || 'Component' })`;
     return Wrapper;
   };
 };
