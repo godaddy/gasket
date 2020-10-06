@@ -58,11 +58,7 @@ the [Next.js routing] docs for more information.
 
 ## Parameterized pages
 
-If you need the contents of the page to be dynamic based on the URL, you can
-read the query string or use the [advanced routing](#advanced-routing) option.
-There are two ways to read the query string. At the page level, the context
-object passed to the static [getInitialProps] method contains a `query` object
-with the parsed query string parameters.
+If you need the contents of the page to be dynamic based on the URL, you can read the query string or use [dynamic routes](https://nextjs.org/docs/routing/dynamic-routes). There are two ways to read the query string. At the page level, the context object passed to the static [getInitialProps] method contains a `query` object with the parsed query string parameters.
 
 ```jsx
 import * as React from 'react';
@@ -86,46 +82,6 @@ export default class BlogPage extends React.Component {
 
 If you need to access router details in a more nested context, you can connect
 your component with the [Next.js router HOC]: `withRouter`.
-
-### Advanced routing
-
-Next.js does not directly support dynamic URL pathnames. However, Gasket does
-provide optional integration with [next-routes] to enable more advanced route
-mappings than provided by vanilla next.js. First, install it:
-
-```
-npm i next-routes
-```
-
-
-To enable the routing, add a `/routes.js` to your app directory, require
-[next-routes], instantiate a router, add your routes, and export the router.
-This file must be a CommonJS module:
-
-```jsx
-const router = require('next-routes');
-
-module.exports = router()
-  .add('about')
-  .add('blog', '/blog/:article');
-```
-
-Each entry you add to the router maps a URL pattern to a page component. To use
-these routes, you must also import a new version of `Link` and `Router` from
-your routes file:
-
-```jsx
-import { Link } from '../routes';
-
-const MyComponent = () => (
-  <Link route="blog" params={{ article: 'announcement' }}>
-    <a>Announcement!</a>
-  </Link>
-);
-```
-
-`next-route` gives you access to route parameters by merging them in with the
-`query` context object passed to `getInitialProps` and the router instance.
 
 <!-- LINKS -->
 
