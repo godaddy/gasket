@@ -68,7 +68,8 @@ describe('express', () => {
       expect(mockGasket.execWaterfall).toHaveBeenCalledWith(
         'composeServiceWorker',
         mockConfig.content,
-        mockReq
+        mockReq,
+        mockRes
       );
     });
 
@@ -101,15 +102,15 @@ describe('express', () => {
       mockCacheKeys.push(cacheKeyA, cacheKeyB);
       const endpoint = await getEndpoint();
       await endpoint(mockReq, mockRes);
-      expect(cacheKeyA).toHaveBeenCalledWith(mockReq);
-      expect(cacheKeyB).toHaveBeenCalledWith(mockReq);
+      expect(cacheKeyA).toHaveBeenCalledWith(mockReq, mockRes);
+      expect(cacheKeyB).toHaveBeenCalledWith(mockReq, mockRes);
     });
 
     it('looks up existing cached content with generated key', async () => {
       mockCacheKeys.push(cacheKeyA, cacheKeyB);
       const endpoint = await getEndpoint();
       await endpoint(mockReq, mockRes);
-      expect(mockCache.getStub).toHaveBeenCalledWith('_AB')
+      expect(mockCache.getStub).toHaveBeenCalledWith('_AB');
     });
 
     it('set new cached content with generated key', async () => {

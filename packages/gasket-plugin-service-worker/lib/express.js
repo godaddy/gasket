@@ -24,7 +24,7 @@ async function configureEndpoint(gasket) {
   const cacheKeys = await getCacheKeys(gasket);
 
   return async function sw(req, res) {
-    const cacheKey = cacheKeys.reduce((acc, fn) => acc + fn(req), '_');
+    const cacheKey = cacheKeys.reduce((acc, fn) => acc + fn(req, res), '_');
 
     let composedContent = cache.get(cacheKey);
     if (!composedContent) {
@@ -33,7 +33,8 @@ async function configureEndpoint(gasket) {
       const composed = await gasket.execWaterfall(
         'composeServiceWorker',
         content,
-        req
+        req,
+        res
       );
 
       composedContent = swHeader + composed;
