@@ -56,20 +56,22 @@ module.exports = {
       };
     },
     middleware(gasket) {
-      const { basePath, localesMap } = getIntlConfig(gasket);
+      const { defaultLocale, basePath, localesMap } = getIntlConfig(gasket);
 
       return async function intlMiddleware(req, res, next) {
-        const acceptLanguage = (req.headers['accept-language'] || '').split(',')[0];
-        const locale = await gasket.execWaterfall('intlLocale', acceptLanguage, req);
+        /* eslint-disable require-atomic-updates */
+        const acceptLanguage = (req.headers['accept-language'] || defaultLocale).split(',')[0];
+        const locale = await gasket.execWaterfall('intlLocale', acceptLanguage, req, res);
         const mappedLocale = localesMap && localesMap[locale] || locale;
         // The gasketData object make certain config data available for server
         // rendering, which it can also be rendered as a browser global object
         res.gasketData = res.gasketData || {};
         res.gasketData.intl = {
-          locale: mappedLocale,
-          basePath
+          locale: mappedLocale
         };
+        if (basePath) res.gasketData.intl.basePath = basePath;
         next();
+        /* eslint-enable require-atomic-updates */
       };
     },
     workbox,

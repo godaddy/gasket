@@ -5,11 +5,39 @@ const moduleDefaults = {
   excludes: ['cacache', 'yargs', 'axe-core']
 };
 
+/**
+ * @typedef {object} IntlConfig
+ *
+ * @property {string} basePath - basePath
+ * @property {string} localesPath - localesPath
+ * @property {string} defaultLocale - defaultLocale
+ * @property {string} localesMap - localesMap
+ * @property {string} localesDir - fullLocalesDir
+ * @property {string} manifestFilename - manifestFilename
+ * @property {object} modules - modules
+ * @property {string} modules.localesDir - Lookup dir for module files
+ * @property {string[]} modules.excludes - List of modules to ignore
+ */
+
+/**
+ * Shortcut to get the gasket.config.intl object
+ *
+ * @param {Gasket} gasket - Gasket API
+ * @returns {IntlConfig} intlConfig
+ */
 function getIntlConfig(gasket) {
-  const { intl: intlConfig = {} } = gasket.config || {};
-  return intlConfig;
+  const { intl = {} } = gasket.config || {};
+  return intl;
 }
 
+/**
+ * Sets up the Intl config for the Gasket session and add process env variables
+ * to access to certain config results where gasket.config is not accessible.
+ *
+ * @param {Gasket} gasket - Gasket API
+ * @param {object} config - Incoming config
+ * @returns {{intl: IntlConfig}} config
+ */
 module.exports = function configureHook(gasket, config) {
   const { logger } = gasket;
   const { root } = config;

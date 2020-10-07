@@ -225,7 +225,7 @@ LocaleRequired.defaultProps = {
  * @param {React.Component} [options.loading] - Custom component to show while loading
  * @returns {React.Component} wrapped component
  */
-export const withLocaleRequired = (localePath = manifest.localesPath, options = {}) => {
+export function withLocaleRequired(localePath = manifest.localesPath, options = {}) {
   const { loading = null } = options;
   return Component => {
     function Wrapper(props) {
@@ -237,4 +237,4 @@ export const withLocaleRequired = (localePath = manifest.localesPath, options = 
     Wrapper.displayName = `withLocaleRequired(${ Component.displayName || Component.name || 'Component' })`;
     return Wrapper;
   };
-};
+}

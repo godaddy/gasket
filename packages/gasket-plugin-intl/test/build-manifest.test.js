@@ -25,7 +25,7 @@ describe('buildManifest', () => {
           localesPath: '/locales',
           defaultLocale: 'en-US',
           localesMap: {
-            'fr-CA': 'fr-FR'
+            'fr-CH': 'fr-FR'
           },
           localesDir: path.join(__dirname, 'fixtures', 'locales'),
           manifestFilename: 'locales-manifest.json'

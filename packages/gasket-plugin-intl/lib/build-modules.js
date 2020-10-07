@@ -8,11 +8,7 @@ class BuildModules {
   /**
    * Instantiate a builder to gather locale files
    *
-   * @param {Object} logger - logger instance
-   * @param {Object} config - config options
-   * @param {Object} config.localeDir - name of directory to discover locale files in
-   * @param {Object} config.outputDir - path to output files to
-   * @param {Object} config.blacklistModules - Names of modules to exclude
+   * @param {Gasket} gasket - Gasket API
    */
   constructor(gasket) {
     const { logger, config: { root } } = gasket;
@@ -177,6 +173,11 @@ class BuildModules {
   }
 }
 
+/**
+ * Discovers locale files under node modules with and copies them to output dir.
+ *
+ * @param {Gasket} gasket - Gasket API
+ */
 module.exports = async function buildModules(gasket) {
   const builder = new BuildModules(gasket);
   await builder.run();
