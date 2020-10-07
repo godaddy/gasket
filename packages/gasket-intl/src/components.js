@@ -3,11 +3,24 @@ import PropTypes from 'prop-types';
 import merge from 'lodash.merge';
 import { IntlProvider } from 'react-intl';
 import fetch from '@gasket/fetch';
-import { isBrowser, defaultLocale, manifest, clientData } from './config';
-import { LOADING, LOADED, ERROR, getLocalePath, pathToUrl } from './utils';
+import { isBrowser, manifest, clientData } from './config';
+import { LOADING, LOADED, ERROR, localeUtils } from './utils';
+
+/**
+ * @typedef {object} LocalesState
+ * @property {{string: string}} messages
+ * @property {{LocalePath: LocalePathStatus}} status
+ */
+
+/**
+ * Props render for a Next.js page containing locale and initial state
+ *
+ * @typedef {LocalesState} LocalesProps
+ * @property {Locale} locale
+ */
 
 const GasketIntlContext = React.createContext({
-  locale: defaultLocale,
+  locale: manifest.defaultLocale,
   status: {}
 });
 
@@ -28,20 +41,7 @@ helpers.init = function init(localesProps) {
 
   const { messages, status } = localesProps;
   return { messages, status };
-}
-
-/**
- * @typedef {object} LocalesState
- * @property {{string: string}} messages
- * @property {{LocalePath: LocalePathStatus}} status
- */
-
-/**
- * Props render for a Next.js page containing locale and initial state
- *
- * @typedef {LocalesState} LocalesProps
- * @property {Locale} locale
- */
+};
 
 /**
  *
@@ -76,7 +76,7 @@ helpers.reducer = function reducer(state, action) {
       [file]: type
     }
   };
-}
+};
 
 /**
  * Determines the active locale from either what was rendered for the page (preferred),
@@ -89,8 +89,8 @@ helpers.getActiveLocale = function getActiveLocale() {
   if (isBrowser) {
     return window.gasketIntlLocale ?? clientData.locale ?? navigator.languages[0];
   }
-  return defaultLocale;
-}
+  return manifest.defaultLocale;
+};
 
 /**
  * React that fetches a locale file and returns loading status
@@ -106,14 +106,14 @@ helpers.useGasketIntl = function useGasketIntl(localePath) {
   // or load with getStaticProps or getServerSideProps.
   if (!isBrowser) return LOADING;
 
-  const localeFile = getLocalePath(localePath, locale);
+  const localeFile = localeUtils.getLocalePath(localePath, locale);
 
   const fileStatus = status[localeFile];
   if (fileStatus) return fileStatus;
   // Mutating status state to avoids an unnecessary render with using dispatch.
   status[localeFile] = LOADING;
 
-  const url = pathToUrl(localeFile);
+  const url = localeUtils.pathToUrl(localeFile);
 
   // Upon fetching, we will dispatch file status and messages to kick off a render.
   fetch(url)
@@ -139,7 +139,7 @@ helpers.useGasketIntl = function useGasketIntl(localePath) {
     });
 
   return LOADING;
-}
+};
 
 /**
  * HOC that adds a provider to managing locale files as well as the react-intl Provider.
@@ -214,7 +214,7 @@ LocaleRequired.propTypes = {
 };
 
 LocaleRequired.defaultProps = {
-  localePath: manifest.defaultPath
+  localePath: manifest.localesPath
 };
 
 /**
@@ -225,7 +225,7 @@ LocaleRequired.defaultProps = {
  * @param {React.Component} [options.loading] - Custom component to show while loading
  * @returns {React.Component} wrapped component
  */
-export const withLocaleRequired = (localePath = manifest.defaultPath, options = {}) => {
+export const withLocaleRequired = (localePath = manifest.localesPath, options = {}) => {
   const { loading = null } = options;
   return Component => {
     function Wrapper(props) {

@@ -1,9 +1,9 @@
 import path from 'path';
 import merge from 'lodash.merge';
-import { getLocalePath, LOADED, ERROR } from './utils';
+import { localeUtils, LOADED, ERROR } from './utils';
 import { manifest } from './config';
 
-const { defaultPath } = manifest;
+const { localesPath } = manifest;
 
 const publicDir = path.dirname(process.env.GASKET_INTL_LOCALES_DIR);
 
@@ -20,7 +20,7 @@ async function loadLocaleData(localePathPath, locale) {
     return merge(...localesProps);
   }
 
-  const localeFile = getLocalePath(localePathPath, locale);
+  const localeFile = localeUtils.getLocalePath(localePathPath, locale);
   const diskPath = path.join(publicDir, localeFile);
   let messages;
   let status;
@@ -53,7 +53,7 @@ async function loadLocaleData(localePathPath, locale) {
  * @param {LocalePathPart|LocalePathPart[]} localePathPath - Path(s) containing locale files
  * @returns {function({}): Promise<{props: {localesProps: LocalesProps}}>} pageProps
  */
-export function intlGetStaticProps(localePathPath = defaultPath) {
+export function intlGetStaticProps(localePathPath = localesPath) {
   return async ctx => {
     const { params: { locale } } = ctx;
     const localesProps = await loadLocaleData(localePathPath, locale);
@@ -72,7 +72,7 @@ export function intlGetStaticProps(localePathPath = defaultPath) {
  * @param {LocalePathPart|LocalePathPart[]} localePathPath - Path(s) containing locale files
  * @returns {function({}): Promise<{props: {localesProps: LocalesProps}}>} pageProps
  */
-export function intlGetServerSideProps(localePathPath = defaultPath) {
+export function intlGetServerSideProps(localePathPath = localesPath) {
   return async ctx => {
     const { res } = ctx;
     const { locale } = res.gasketData.intl;

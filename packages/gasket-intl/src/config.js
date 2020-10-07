@@ -4,15 +4,13 @@ const clientData = isBrowser && window?.gasketData?.intl || {};
 
 const {
   // these properties set in manifest, could also be configured on render
-  basePath = manifest.basePath,
-  defaultLocale = manifest.defaultLocale
+  basePath = manifest.basePath
 } = clientData;
 
 
 export {
   isBrowser,
   basePath,
-  defaultLocale,
   manifest,
   clientData
 };

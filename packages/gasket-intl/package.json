@@ -51,6 +51,7 @@
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-react": "^7.0.0",
     "@babel/register": "^7.5.5",
+    "@gasket/plugin-intl": "^6.0.0-canary.0",
     "assume": "^2.2.0",
     "assume-sinon": "^1.0.1",
     "babel-core": "^7.0.0-bridge.0",
@@ -78,7 +79,7 @@
     "sinon": "^7.4.1"
   },
   "peerDependencies": {
-    "@gasket/plugin-intl": "^5.5.0",
+    "@gasket/plugin-intl": "^6.0.0",
     "react-intl": ">=2.0.0 <4.0.0",
     "react-redux": ">=5.0.0 <8.0.0"
   },
