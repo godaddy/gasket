@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### ...
+
+- Replace cross-fetch with native implementation.
+
 ### 5.6.0
 
 - Updating version of cross-fetch to 3.0.4 ([#164])
