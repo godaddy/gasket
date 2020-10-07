@@ -1,7 +1,8 @@
 import 'whatwg-fetch';
 import { describe, it } from 'mocha';
 
-import fetch, { AbortController, Request, Headers, Response } from '../browser';
+import fetch from '../browser';
+const { AbortController, Request, Headers, Response } = fetch;
 import { assertExports, assertGet, assertAbort, assertPost } from './utils';
 
 describe('fetch is available in browsers', function () {
