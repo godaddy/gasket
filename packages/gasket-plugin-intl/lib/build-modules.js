@@ -1,10 +1,10 @@
 const fs = require('fs-extra');
 const path = require('path');
-const fsUtils = require('./fsUtils');
-const { getIntlConfig } = require('./utils');
+const fsUtils = require('./fs-utils');
+const { getIntlConfig } = require('./configure');
 
 
-class Builder {
+class BuildModules {
   /**
    * Instantiate a builder to gather locale files
    *
@@ -32,17 +32,18 @@ class Builder {
    * Given a source folder, this function minifies all the files in that folder
    * and sets a unique hash for each file and saves in the target location
    *
-   * @param {string} src - Source directory path
-   * @param {string} tgt - Target directory path
+   * @param {string} srcDir - Source directory path
+   * @param {string} tgtDir - Target directory path
    * @returns {Promise} promise
    */
-  async moveFolder(src, tgt) {
-    const fileNames = await fs.readdir(src);
+  async copyFolder(srcDir, tgtDir) {
+    const fileNames = await fs.readdir(srcDir);
 
     const promises = fileNames.map(async fileName => {
-      const srcFile = path.join(src, fileName);
+      const srcFile = path.join(srcDir, fileName);
+      const tgtFile = path.join(tgtDir, fileName);
       if (path.extname(srcFile) === '.json') {
-        return await this.copyFile(srcFile, tgt, fileName);
+        return await this.copyFile(srcFile, tgtFile);
       }
     });
     return await Promise.all(promises);
@@ -52,30 +53,14 @@ class Builder {
    * Copies the source file to proper target location
    *
    * @param {string} src - full path to source file
-   * @param {string} tgtDir - target folder location
-   * @param {string} fileName - this is used for building the target file name. It contains either the language or
-   * the file name.
+   * @param {string} tgt - target folder location
    * @returns {Promise} - resolves once the file is saved
    */
-  async copyFile(src, tgtDir, fileName) {
-    await fs.mkdirp(tgtDir);
+  async copyFile(src, tgt) {
+    await fs.mkdirp(path.dirname(tgt));
     const buffer = await fs.readFile(src);
     const output = JSON.parse(buffer);
-    const tgtFile = path.join(tgtDir, fileName);
-    return fsUtils.saveJsonFile(tgtFile, output);
-  }
-
-  /**
-   * Minifies and sets a unique hash for a file and saves in the target location
-   *
-   * @param {string} src - Source file path
-   * @param {string} tgt - Target file path
-   * @returns {Promise} promise
-   */
-  async moveFile(src, tgt) {
-    const newTgtDir = path.dirname(tgt);
-    const fileName = path.basename(tgt);
-    return await this.copyFile(src, newTgtDir, fileName);
+    return fsUtils.saveJsonFile(tgt, output);
   }
 
   /**
@@ -92,9 +77,9 @@ class Builder {
       const tgtFile = path.join(tgtDir, fileName);
 
       if (path.extname(srcFile) === '.json') {
-        return await this.moveFile(srcFile, tgtFile);
+        return await this.copyFile(srcFile, tgtFile);
       } else if ((await fs.lstat(srcFile)).isDirectory()) {
-        return await this.moveFolder(srcFile, tgtFile);
+        return await this.copyFolder(srcFile, tgtFile);
       }
     });
     return Promise.all(promises);
@@ -193,6 +178,8 @@ class Builder {
 }
 
 module.exports = async function buildModules(gasket) {
-  const builder = new Builder(gasket);
+  const builder = new BuildModules(gasket);
   await builder.run();
 };
+
+module.exports.BuildModules = BuildModules;

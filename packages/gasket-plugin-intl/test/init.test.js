@@ -1,4 +1,5 @@
-const init = require('./init');
+const assume = require('assume');
+const init = require('../lib/init');
 
 const intlPolyfill = require('intl');
 const intlDefault = global.Intl;
@@ -10,8 +11,8 @@ describe('init', () => {
   });
 
   it('polyfills Intl', () => {
-    expect(global.Intl).toBe(intlDefault);
+    assume(global.Intl).equals(intlDefault);
     init();
-    expect(global.Intl).toBe(intlPolyfill);
+    assume(global.Intl).equals(intlPolyfill);
   });
 });

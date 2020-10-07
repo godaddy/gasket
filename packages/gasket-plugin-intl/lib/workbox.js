@@ -1,27 +1,30 @@
+const path = require('path');
 const urljoin = require('url-join');
-const { createGetLocale, getAssetPrefix } = require('./utils');
+const { getIntlConfig } = require('./configure');
 
-const reModulePath = /(.*_locales\/)(.*)(\/.*)/;
 
-/**
- * Encode the identifier part of the locale file uri
- * This is necessary to match request for these assets by `@gasket/intl`
- *
- * @param {Object} originalManifest - Workbox manifest
- * @returns {Object} results - Transformed manifest
- */
-const encodeLocaleUrls = originalManifest => {
-  const manifest = originalManifest.reduce((acc, entry) => {
-    const { url } = entry;
-    if (url.includes('_locales/')) {
-      const [, root, module, file] = reModulePath.exec(url);
-      entry.url = [root, encodeURIComponent(module), file].join('');
-    }
-    acc.push(entry);
-    return acc;
-  }, []);
-  return { manifest };
-};
+function makeEncodeLocaleUrls(localesPath) {
+  const reModulePath = new RegExp(`(.*${ localesPath }/)(.*)(/.*)`);
+  /**
+   * Encode the identifier part of the locale file uri
+   * This is necessary to match request for these assets by `@gasket/intl`
+   *
+   * @param {Object} originalManifest - Workbox manifest
+   * @returns {Object} results - Transformed manifest
+   */
+  return function encodeLocaleUrls(originalManifest) {
+    const manifest = originalManifest.reduce((acc, entry) => {
+      const { url } = entry;
+      if (reModulePath.test(url)) {
+        const [, root, module, file] = reModulePath.exec(url);
+        entry.url = [root, encodeURIComponent(module), file].join('');
+      }
+      acc.push(entry);
+      return acc;
+    }, []);
+    return { manifest };
+  };
+}
 
 /**
  * Workbox config partial to add next.js static assets to precache
@@ -29,19 +32,27 @@ const encodeLocaleUrls = originalManifest => {
  * @param {Gasket} gasket - Gasket
  * @param {Object} config - Initial workbox config
  * @param {Request} req - Request
+ * @param {Response} res - Response
  * @returns {Promise<Object>} config
  */
-module.exports = async function workbox(gasket, config, req) {
-  const language = createGetLocale(gasket)(req);
-  const assetPrefix = getAssetPrefix(gasket);
+module.exports = async function workbox(gasket, config, req, res) {
+  const { root } = gasket.config;
+  let { basePath = '' } = getIntlConfig(gasket);
+  const { localesPath, localesDir } = getIntlConfig(gasket);
+  const { locale } = res.gasketData.intl;
+
+  // Get the relative dir glob path
+  const relGlobDir = path.relative(root, localesDir).replace(/\\/g, '/');
+  const encodeLocaleUrls = makeEncodeLocaleUrls(localesPath);
 
   return {
     globDirectory: '.',
     globPatterns: [
-      `build/locales/**/*.${language}.json`
+      `${ relGlobDir }/**/${ locale }.json`,
+      `${ relGlobDir }/**/${ locale }/*.json`
     ],
     modifyURLPrefix: {
-      'build/locales/': urljoin(assetPrefix, '_locales/')
+      [relGlobDir]: urljoin(basePath.replace(/\/$/, ''), localesPath)
     },
     manifestTransforms: [
       encodeLocaleUrls
@@ -49,5 +60,4 @@ module.exports = async function workbox(gasket, config, req) {
   };
 };
 
-
-module.exports.encodeLocaleUrls = encodeLocaleUrls;
+module.exports.makeEncodeLocaleUrls = makeEncodeLocaleUrls;

@@ -1,11 +1,10 @@
-const { createGetLocale } = require('./utils');
-
 /**
- * Register a cache key function to get the language from req
+ * Register a cache key function to get the language for a request
  *
- * @param {Gasket} gasket - Gasket
- * @returns {Promise<(getLanguage)>} result
+ * @returns {function} cache key function
  */
-module.exports = async function serviceWorkerCacheKey(gasket) {
-  return createGetLocale(gasket);
+module.exports = async function serviceWorkerCacheKey() {
+  return function getLocale(req, res) {
+    return res.gasketData.intl.locale;
+  };
 };
