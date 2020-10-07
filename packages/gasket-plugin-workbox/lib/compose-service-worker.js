@@ -10,13 +10,14 @@ const reComments = /\/\*.*(\n.+)*\*\//g;
  * @param {Gasket} gasket - Gasket
  * @param {String} content - Service worker content
  * @param {Request} req - Request
+ * @param {Response} res - Response
  * @returns {Promise<string>} content
  */
-module.exports = async function composeServiceWorker(gasket, content, req) {
+module.exports = async function composeServiceWorker(gasket, content, req, res) {
   const { exec, config, logger } = gasket;
   const { workbox } = config;
 
-  const configs = (await exec('workbox', workbox.config, req)).filter(Boolean);
+  const configs = (await exec('workbox', workbox.config, req, res)).filter(Boolean);
   const mergedConfig = merge.all([workbox.config, ...configs]);
 
   const build = await generateSWString(mergedConfig);
