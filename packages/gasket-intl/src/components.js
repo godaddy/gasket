@@ -95,10 +95,10 @@ helpers.getActiveLocale = function getActiveLocale() {
 /**
  * React that fetches a locale file and returns loading status
  *
- * @param {LocalePath} localePath - Path containing locale files
+ * @param {LocalePathPart} localePathPart - Path containing locale files
  * @returns {LocalePathStatus} status
  */
-helpers.useGasketIntl = function useGasketIntl(localePath) {
+helpers.useGasketIntl = function useGasketIntl(localePathPart) {
   const { locale, status = {}, dispatch } = useContext(GasketIntlContext);
 
   // We cannot use dispatch from useReducer during SSR, so exit early.
@@ -106,14 +106,14 @@ helpers.useGasketIntl = function useGasketIntl(localePath) {
   // or load with getStaticProps or getServerSideProps.
   if (!isBrowser) return LOADING;
 
-  const localeFile = localeUtils.getLocalePath(localePath, locale);
+  const localePath = localeUtils.getLocalePath(localePathPart, locale);
 
-  const fileStatus = status[localeFile];
+  const fileStatus = status[localePath];
   if (fileStatus) return fileStatus;
   // Mutating status state to avoids an unnecessary render with using dispatch.
-  status[localeFile] = LOADING;
+  status[localePath] = LOADING;
 
-  const url = localeUtils.pathToUrl(localeFile);
+  const url = localeUtils.pathToUrl(localePath);
 
   // Upon fetching, we will dispatch file status and messages to kick off a render.
   fetch(url)
@@ -124,7 +124,7 @@ helpers.useGasketIntl = function useGasketIntl(localePath) {
         payload: {
           locale,
           messages,
-          file: localeFile
+          file: localePath
         }
       });
     })
@@ -133,7 +133,7 @@ helpers.useGasketIntl = function useGasketIntl(localePath) {
       dispatch({
         type: ERROR,
         payload: {
-          file: localeFile
+          file: localePath
         }
       });
     });
@@ -142,94 +142,111 @@ helpers.useGasketIntl = function useGasketIntl(localePath) {
 };
 
 /**
- * HOC that adds a provider to managing locale files as well as the react-intl Provider.
+ * Make an HOC that adds a provider to managing locale files as well as the react-intl Provider.
  * This can be used to wrap a top level React or a Next.js custom App component.
  *
- * @param {React.Component} Component - Component or App to wrap
- * @returns {React.Component} wrapped component
+ * @returns {function} wrapper
  */
-export function withIntlProvider(Component) {
+export function withIntlProvider() {
   /**
-   * Wrapper component which sets up providers and reducer hook
-   *
-   * @param {object} props - Component props
-   * @param {object} [props.pageProps] - Component props from a Next.js page
-   * @param {LocalesProps} [props.pageProps.localesProps] - Initial state from a Next.js page
-   * @returns {JSX.Element} element
+   * Wrap the component
+   * @param {React.Component} Component - Component to wrap
+   * @returns {React.Component} wrapped component
    */
-  function Wrapper(props = {}) {
+  return Component => {
+    /**
+     * Wrapper component which sets up providers and reducer hook
+     *
+     * @param {object} props - Component props
+     * @param {object} [props.pageProps] - Component props from a Next.js page
+     * @param {LocalesProps} [props.pageProps.localesProps] - Initial state from a Next.js page
+     * @returns {JSX.Element} element
+     */
+    function Wrapper(props = {}) {
 
-    // Support for wrapping Next.js App with data from get server side and static props
-    const { pageProps: { localesProps } = {} } = props; // eslint-disable-line react/prop-types
+      // Support for wrapping Next.js App with data from get server side and static props
+      const { pageProps: { localesProps } = {} } = props; // eslint-disable-line react/prop-types
 
-    const [state, dispatch] = useReducer(helpers.reducer, localesProps || {}, helpers.init);
+      const [state, dispatch] = useReducer(helpers.reducer, localesProps || {}, helpers.init);
 
-    // If we have incoming pageProps, we need to update state but have to by
-    // mutation rather than issuing a dispatch to avoid re-renders and timing issues
-    if (localesProps) {
-      merge(state, localesProps);
+      // If we have incoming pageProps, we need to update state but have to by
+      // mutation rather than issuing a dispatch to avoid re-renders and timing issues
+      if (localesProps) {
+        merge(state, localesProps);
+      }
+
+      const locale = localesProps?.locale || helpers.getActiveLocale();
+
+      const { status } = state;
+      const messages = (state.messages || {})[locale];
+      const contextValue = { locale, status, dispatch };
+
+      return (
+        <GasketIntlContext.Provider value={ contextValue }>
+          <IntlProvider locale={ locale } key={ locale } messages={ messages } initialNow={ Date.now() }>
+            <Component { ...props } />
+          </IntlProvider>
+        </GasketIntlContext.Provider>
+      );
     }
 
-    const locale = localesProps?.locale || helpers.getActiveLocale();
-
-    const { status } = state;
-    const messages = (state.messages || {})[locale];
-    const contextValue = { locale, status, dispatch };
-
-    return (
-      <GasketIntlContext.Provider value={ contextValue }>
-        <IntlProvider locale={ locale } key={ locale } messages={ messages } initialNow={ Date.now() }>
-          <Component { ...props } />
-        </IntlProvider>
-      </GasketIntlContext.Provider>
-    );
-  }
-
-  Wrapper.displayName = `withIntlProvider(${ Component.displayName || Component.name || 'Component' })`;
-  if ('getInitialProps' in Component) {
-    Wrapper.getInitialProps = Component.getInitialProps;
-  }
-  return Wrapper;
+    Wrapper.displayName = `withIntlProvider(${ Component.displayName || Component.name || 'Component' })`;
+    if ('getInitialProps' in Component) {
+      Wrapper.getInitialProps = Component.getInitialProps;
+    }
+    return Wrapper;
+  };
 }
 
 /**
  * Component that loads a locale file before rendering children
  *
  * @param {object} props - Props
- * @param {LocalePath} props.localePath - Path containing locale files
+ * @param {LocalePathPart} props.localesPath - Path containing locale files
  * @param {React.Component} [props.loading] - Custom component to show while loading
  * @returns {JSX.Element|null} element
  */
 export function LocaleRequired(props) {
-  const { localePath, loading = null, children } = props;
-  const loadState = helpers.useGasketIntl(localePath);
+  const { localesPath, loading = null, children } = props;
+  const loadState = helpers.useGasketIntl(localesPath);
   if (loadState === LOADING) return loading;
   return <>{ children }</>;
 }
 
 LocaleRequired.propTypes = {
-  localePath: PropTypes.string,
+  localesPath: PropTypes.string,
   loading: PropTypes.node,
   children: PropTypes.node.isRequired
 };
 
 LocaleRequired.defaultProps = {
-  localePath: manifest.localesPath
+  localesPath: manifest.localesPath
 };
 
 /**
- * HOC that loads a locale file before rendering wrapped component
+ * Make an HOC that loads a locale file before rendering wrapped component
  *
- * @param {LocalePath} localePath - Path containing locale files
+ * @param {LocalePathPart} localesPath - Path containing locale files
  * @param {object} [options] - Options
  * @param {React.Component} [options.loading] - Custom component to show while loading
- * @returns {React.Component} wrapped component
+ * @returns {function} wrapper
  */
-export function withLocaleRequired(localePath = manifest.localesPath, options = {}) {
+export function withLocaleRequired(localesPath = manifest.localesPath, options = {}) {
   const { loading = null } = options;
+  /**
+   * Wrap the component
+   * @param {React.Component} Component - Component to wrap
+   * @returns {React.Component} wrapped component
+   */
   return Component => {
+    /**
+     * Wrapper component that returns based on locale file status
+     *
+     * @param {object} props - Component props
+     * @returns {JSX.Element} element
+     */
     function Wrapper(props) {
-      const loadState = helpers.useGasketIntl(localePath);
+      const loadState = helpers.useGasketIntl(localesPath);
       if (loadState === LOADING) return loading;
       return <Component { ...props } />;
     }

@@ -3,8 +3,6 @@ import merge from 'lodash.merge';
 import { localeUtils, LOADED, ERROR } from './utils';
 import { manifest } from './config';
 
-const { localesPath } = manifest;
-
 const publicDir = path.dirname(process.env.GASKET_INTL_LOCALES_DIR);
 
 /**
@@ -50,13 +48,13 @@ async function loadLocaleData(localePathPath, locale) {
 /**
  * Load locale file(s) for Next.js static pages
  *
- * @param {LocalePathPart|LocalePathPart[]} localePathPath - Path(s) containing locale files
+ * @param {LocalePathPart|LocalePathPart[]} localesPath - Path(s) containing locale files
  * @returns {function({}): Promise<{props: {localesProps: LocalesProps}}>} pageProps
  */
-export function intlGetStaticProps(localePathPath = localesPath) {
+export function intlGetStaticProps(localesPath = manifest.localesPath) {
   return async ctx => {
     const { params: { locale } } = ctx;
-    const localesProps = await loadLocaleData(localePathPath, locale);
+    const localesProps = await loadLocaleData(localesPath, locale);
 
     return {
       props: {
@@ -69,14 +67,14 @@ export function intlGetStaticProps(localePathPath = localesPath) {
 /**
  * Load locale file(s) for Next.js static pages
  *
- * @param {LocalePathPart|LocalePathPart[]} localePathPath - Path(s) containing locale files
+ * @param {LocalePathPart|LocalePathPart[]} localesPath - Path(s) containing locale files
  * @returns {function({}): Promise<{props: {localesProps: LocalesProps}}>} pageProps
  */
-export function intlGetServerSideProps(localePathPath = localesPath) {
+export function intlGetServerSideProps(localesPath = manifest.localesPath) {
   return async ctx => {
     const { res } = ctx;
     const { locale } = res.gasketData.intl;
-    const localesProps = await loadLocaleData(localePathPath, locale);
+    const localesProps = await loadLocaleData(localesPath, locale);
 
     return {
       props: {
