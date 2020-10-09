@@ -41,14 +41,12 @@
     "url-join": "^4.0.0"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.5.5",
     "@gasket/intl": "^6.0.0-canary.0",
     "@gasket/plugin-log": "^6.0.0-canary.0",
     "assume": "^2.2.0",
     "assume-sinon": "^1.0.1",
     "eslint": "^6.1.0",
     "eslint-config-godaddy": "^4.0.0",
-    "eslint-plugin-jest": "^22.15.1",
     "eslint-plugin-json": "^1.4.0",
     "eslint-plugin-mocha": "^6.0.0",
     "mocha": "^6.2.0",
@@ -64,7 +62,7 @@
   },
   "eslintConfig": {
     "extends": [
-      "godaddy-react"
+      "godaddy"
     ]
   },
   "eslintIgnore": [
