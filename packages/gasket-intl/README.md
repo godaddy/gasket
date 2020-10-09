@@ -71,8 +71,8 @@ export default withLocaleRequired('/locales')(Component);
 
 ### LocaleRequired
 
-Locale files can also be required by component. This can be useful for
-components that want to render certain quickly, while deferring rendering other
+This component can also require locale files. This can be useful for components
+that want to render certain content quickly, while deferring rendering other
 content until a [split locales] file loads.
 
 **Signature**
@@ -146,7 +146,7 @@ export function getStaticPaths() {
 ```
 
 In the above example, we are using Next.js dynamic routes for to set the locale
-param. The generated pages will be for `/en/example`, and `/fr/example`.
+param. The generated pages will be for `/en/example` and `/fr/example`.
 
 ### intlGetServerSideProps
 

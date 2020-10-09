@@ -129,7 +129,7 @@ As an alternative to the above `<group>/<locale>.json` structural format, an app
 could also organize files by `<locale>/<group>.json`. In this case, the
 `localesPath` must be specified with `locale` as a path param.
 
-For example, lets say we are serving the following locale files:
+For example, let us say we are serving the following locale files:
 
 ```
 locales
@@ -149,7 +149,7 @@ locale, say `en`, it will substitute it in for the `:locale` param in the path.
 ### Locale Fallbacks
 
 Before a locale path is loaded, it's existence is first checked against the
-[locales manifest]. If it does not exist, a fallback will be attempted; if a
+[locales manifest]. If it does not exist, a fallback will be attempted. If a
 locale includes both language and region parts, it will try just the language
 before going to the `defaultLocale`.
 
@@ -171,9 +171,10 @@ de-CH -> de -> en-US -> en
 ```
 
 So for `de-CH`, we would be loading the `en` locale file. Not ideal for your
-customers, but this serves as safety mechanism to make sure your app remains
+customers, but this serves as a safety mechanism to make sure your app remains
 somewhat readable for unexcepted locales. Also note, however, that you can
-associate known locales to share a translation using `localesMap`.
+associate known locales to share a translations with another locale using
+`localesMap`.
 
 ### Locales Map
 
@@ -193,18 +194,18 @@ module.exports = {
 ```
 
 Using this example, if a customer's language is set to `zh-HK`, then the
-application can load the locale file for `zh-TW` instead.
+application can load the locale file for `zh-TW`.
 
 ### Locales Manifest
 
 When the Gasket **build** command is run, a manifest file is generated and
 output to the configured `localesDir`. This is used to inform loader packages of
 the available locale paths and settings. The manifest file can be served as a
-static file, must most commonly is automatically bundled into the app.
+static file, but is most commonly bundled into the app.
 
 Again, the locale manifest is generated at build time, and is useful for static
 settings. If apps or loaders need configuration based on a user's request, the
-respond data can be utilized.
+response data can be utilized.
 
 Because the locales manifest JSON file is generated each build, you may want to
 configure your SCM to ignore committing this file, such as with a `.gitignore`
@@ -236,7 +237,7 @@ takes the following parameters:
 
 It should then return a string indicating the user's locale. If no value is
 returned, Gasket will use `en-US`. Note that this is only available for Gasket
-apps with a server element; not for static sites.
+apps with a server element, not for static sites.
 
 #### Example usage
 
@@ -264,19 +265,18 @@ There are several strategies for managing locale files for an app. By default,
 the plugin assumes they will be static files committed to the app's under a
 `public/locales` directory.
 
-Another practice is to locale files under different npm modules. My enabling the
+Another practice is to locale files under different npm modules. By enabling the
 `intl.modules` option in the `gasket.config.js`, when the app builds, the plugin
-looks for packages with a `locale` directory in the node modules. Each locale
-file is then copied to the `localesDir` to be served or distributed as a static
-file for your app. These will be placed under a `modules` directory, and the
-paths included in the locales manifest with content hashes.
+looks for packages with a `locales` directory in the node modules. Each locale
+file is then copied to the `localesDir` under a `modules` directory, to be
+served or distributed as a static file.
 
-So, say for example, you have a shared package (`my-shared-pkg`) used across
-multiple apps with common locale files. If these exist in a `locales` directory
-at the root of the package (`my-shared-pkg/locales`) they can be copied to your
-static locales directory (`./public/locales/modules/my-shared-pkg/*.json`). You
-can then simply use this for a [locales path] with your loader
-(`/locales/modules/my-shared-pkg`).
+So, for example,say you have a shared package (`my-shared-pkg`) used across
+multiple apps. This packages has common locale JSON files under a `locales`
+directory at the root of the package (`my-shared-pkg/locales`). These will be
+copied to your static locales directory
+(`./public/locales/modules/my-shared-pkg/*.json`). You can then set the
+[locales path] with your loader (`/locales/modules/my-shared-pkg`).
 
 Because the `modules` directory is generated with each build, you may want to
 configure your SCM to ignore committing this file, such as with a `.gitignore`

@@ -1,7 +1,7 @@
 {
   "name": "@gasket/helper-intl",
   "version": "6.0.0-canary.0",
-  "description": "NodeJS script to build localization files.",
+  "description": "Internal helpers used by loaders to resolve locale file paths",
   "main": "lib",
   "scripts": {
     "lint": "eslint .",
