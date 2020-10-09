@@ -7,13 +7,15 @@ import { isBrowser, manifest, clientData } from './config';
 import { LOADING, LOADED, ERROR, localeUtils } from './utils';
 
 /**
+ * State of loaded locale files
+ *
  * @typedef {object} LocalesState
  * @property {{string: string}} messages
  * @property {{LocalePath: LocalePathStatus}} status
  */
 
 /**
- * Props render for a Next.js page containing locale and initial state
+ * Props for a Next.js page containing locale and initial state
  *
  * @typedef {LocalesState} LocalesProps
  * @property {Locale} locale

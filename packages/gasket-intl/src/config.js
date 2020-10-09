@@ -1,3 +1,6 @@
+/**
+ * @type {LocaleManifest}
+ */
 const manifest = require(process.env.GASKET_INTL_MANIFEST_FILE);
 const isBrowser = typeof window !== 'undefined';
 const clientData = isBrowser && window?.gasketData?.intl || {};

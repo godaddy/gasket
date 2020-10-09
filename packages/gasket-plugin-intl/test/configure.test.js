@@ -45,7 +45,7 @@ describe('configure', () => {
       user: 'stuff',
       basePath: '',
       localesPath: '/locales',
-      defaultLocale: 'en-US',
+      defaultLocale: 'en',
       localesMap: {},
       localesDir: '/path/to/root/public/locales',
       manifestFilename: 'locales-manifest.json',
@@ -54,7 +54,7 @@ describe('configure', () => {
   });
 
   it('user config overrides defaults', () => {
-    const results = configure(mockGasket, { root, intl: { user: 'stuff', basePath: 'custom' } });
+    const results = configure(mockGasket, { root, intl: { user: 'stuff', basePath: 'custom', defaultLocale: 'en-US' } });
     assume(results.intl).eqls({
       user: 'stuff',
       basePath: 'custom',

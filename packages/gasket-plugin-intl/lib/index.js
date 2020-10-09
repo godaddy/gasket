@@ -63,9 +63,19 @@ module.exports = {
         const acceptLanguage = (req.headers['accept-language'] || defaultLocale).split(',')[0];
         const locale = await gasket.execWaterfall('intlLocale', acceptLanguage, req, res);
         const mappedLocale = localesMap && localesMap[locale] || locale;
-        // The gasketData object make certain config data available for server
-        // rendering, which it can also be rendered as a browser global object
+
+        // The gasketData object allows certain config data to be available for
+        // rendering as a global object for access in the browser.
         res.gasketData = res.gasketData || {};
+
+        // TODO (@kinetifex): This could probably match LocalesProps used by Next.js loaders,
+        // along with methods on req to preload locale files.
+        /**
+         * Response data to render as global object for browser access
+         *
+         * @typedef {object} GasketIntlData
+         * @property {Locale} locale - Locale derived from request
+         */
         res.gasketData.intl = {
           locale: mappedLocale
         };

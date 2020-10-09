@@ -48,8 +48,8 @@ const reLocale = /(\/[$:{]locale}?\/)/;
  * Utility class for loading locale files
  *
  * @param {Object} config - Configuration
- * @param {Object} config.manifest - Locale file manifest
- * @param {Object} config.basePath - Locale file base path
+ * @param {LocaleManifest} config.manifest - Locale file manifest
+ * @param {string} [config.basePath] - Locale file base path
  * @constructor
  */
 function LocaleUtils(config) {

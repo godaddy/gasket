@@ -6,20 +6,6 @@ const moduleDefaults = {
 };
 
 /**
- * @typedef {object} IntlConfig
- *
- * @property {string} basePath - basePath
- * @property {string} localesPath - localesPath
- * @property {string} defaultLocale - defaultLocale
- * @property {string} localesMap - localesMap
- * @property {string} localesDir - fullLocalesDir
- * @property {string} manifestFilename - manifestFilename
- * @property {object} modules - modules
- * @property {string} modules.localesDir - Lookup dir for module files
- * @property {string[]} modules.excludes - List of modules to ignore
- */
-
-/**
  * Shortcut to get the gasket.config.intl object
  *
  * @param {Gasket} gasket - Gasket API
@@ -43,14 +29,15 @@ module.exports = function configureHook(gasket, config) {
   const { root } = config;
   const intlConfig = { ...getIntlConfig({ config }) };
 
-  const { languageMap, defaultLanguage } = intlConfig;
+  const { languageMap, defaultLanguage, assetPrefix } = intlConfig;
   if (languageMap) logger.warn('DEPRECATED intl config `languageMap` - use `localesMap`');
   if (defaultLanguage) logger.warn('DEPRECATED intl config `defaultLanguage` - use `defaultLocale`');
+  if (assetPrefix) logger.warn('DEPRECATED intl config `assetPrefix` - use `basePath`');
 
   // get user defined config and apply defaults
   const {
     localesPath = '/locales',
-    defaultLocale = defaultLanguage || 'en-US',
+    defaultLocale = defaultLanguage || 'en',
     localesMap = languageMap || {},
     localesDir = './public/locales',
     manifestFilename = 'locales-manifest.json'
@@ -59,7 +46,7 @@ module.exports = function configureHook(gasket, config) {
   const fullLocalesDir = path.join(root, localesDir);
 
   const { next = {} } = config;
-  const basePath = intlConfig.basePath || intlConfig.assetPrefix ||
+  const basePath = intlConfig.basePath || assetPrefix ||
     next.basePath || next.assetPrefix ||
     config.basePath || '';
 
@@ -74,6 +61,19 @@ module.exports = function configureHook(gasket, config) {
   process.env.GASKET_INTL_MANIFEST_FILE = path.join(fullLocalesDir, manifestFilename);
   /* eslint-enable no-process-env */
 
+  /**
+   * @typedef {object} IntlConfig
+   *
+   * @property {string} basePath - Base URL where locale files are served
+   * @property {string} localesPath - Path to endpoint with JSON files
+   * @property {string} defaultLocale - Locale to fallback to when loading files
+   * @property {object} localesMap - Mapping of locales to share files
+   * @property {string} localesDir - Path to on-disk directory where locale files exists
+   * @property {string} manifestFilename - Name of the manifest file
+   * @property {object} modules - Enable locale files collation from node modules
+   * @property {string} modules.localesDir - Lookup dir for module files
+   * @property {string[]} modules.excludes - List of modules to ignore
+   */
   return {
     ...config,
     intl: {
