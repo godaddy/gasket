@@ -22,6 +22,7 @@ module.exports = {
         `${ rootDir }/generator/**/*`
       );
 
+      // TODO (@kinetifex): check if react is being added first
       pkg.add('dependencies', {
         '@gasket/intl': devDependencies['@gasket/intl'],
         'react-intl': devDependencies['react-intl']
@@ -69,7 +70,7 @@ module.exports = {
         res.gasketData = res.gasketData || {};
 
         // TODO (@kinetifex): This could probably match LocalesProps used by Next.js loaders,
-        // along with methods on req to preload locale files.
+        //   along with methods on req to preload locale files.
         /**
          * Response data to render as global object for browser access
          *
