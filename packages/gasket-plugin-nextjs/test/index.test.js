@@ -188,7 +188,8 @@ describe('create hook', () => {
     });
 
     assume(addSpy).calledWith('dependencies', {
-      'next-redux-wrapper': devDependencies['next-redux-wrapper']
+      'next-redux-wrapper': devDependencies['next-redux-wrapper'],
+      'lodash.merge': devDependencies['lodash.merge']
     });
   });
 });
