@@ -1,5 +1,5 @@
 import { basePath, manifest } from './config';
-import LocaleUtils from '@gasket/plugin-intl/locale-utils';
+import { LocaleUtils } from '@gasket/helper-intl';
 
 export const localeUtils = new LocaleUtils({ manifest, basePath });
 

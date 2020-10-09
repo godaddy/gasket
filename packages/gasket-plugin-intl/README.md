@@ -1,7 +1,7 @@
 # @gasket/plugin-intl
 
 This primary responsibility of this plugin is to build a manifest of locale
-settings, and provide a utility for loader packages to resolve locale paths.
+settings for loader packages to load locale paths.
 
 ## Installation
 
@@ -71,11 +71,10 @@ module.exports = {
 
 ## Usage
 
-This plugin provides a utility class for resolving locale paths to load files by
-loader packages. One such loader package is [@gasket/intl] which can manage
-locales for React and Next.js apps. Loaders can utilize settings from the
-[locales manifest]. Also, for apps with a server element, request based settings
-can be made available with the [response data].
+Loader packages, such as [@gasket/intl] for React and Next.js apps, can utilize
+settings from the [locales manifest] for loading locale files. Also, for apps
+with a server element, request based settings can be made available with the
+[response data].
 
 For the most part, app developers should not need to interface directly with
 these setting objects, but rather understand how loaders use them to resolve
@@ -297,7 +296,6 @@ entry.
 [intlLocale lifecycle]:#intllocale
 
 [@gasket/intl]: /packages/gasket-intl/README.md
-[service worker config]: /packages/gasket-plugin-service-worker/README.md
 
 [global window object]:https://developer.mozilla.org/en-US/docs/Glossary/Global_object
 

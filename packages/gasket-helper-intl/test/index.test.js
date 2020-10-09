@@ -3,7 +3,7 @@ const assume = require('assume');
 const mockManifest = require('./fixtures/mock-manifest.json');
 const mockConfig = {};
 
-const LocaleUtils = require('../lib/locale-utils');
+const { LocaleUtils } = require('../lib/index');
 
 describe('LocaleUtils', function () {
   let utils;

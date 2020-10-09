@@ -39,6 +39,7 @@
   "dependencies": {
     "@babel/runtime": "^7.5.5",
     "@gasket/fetch": "^6.0.0-canary.0",
+    "@gasket/helper-intl": "^6.0.0-canary.0",
     "hoist-non-react-statics": "^2.5.0",
     "prop-types": "^15.6.2",
     "reduxful": "^1.0.1"
@@ -51,7 +52,6 @@
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-react": "^7.0.0",
     "@babel/register": "^7.5.5",
-    "@gasket/plugin-intl": "^6.0.0-canary.0",
     "assume": "^2.2.0",
     "assume-sinon": "^1.0.1",
     "babel-core": "^7.0.0-bridge.0",

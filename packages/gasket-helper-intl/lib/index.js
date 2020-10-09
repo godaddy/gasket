@@ -49,7 +49,7 @@ const reLocale = /(\/[$:{]locale}?\/)/;
  *
  * @param {Object} config - Configuration
  * @param {LocaleManifest} config.manifest - Locale file manifest
- * @param {string} [config.basePath] - Locale file base path
+ * @param {string} [config.basePath] - Locale file base path. Defaults to `manifest.basePath`
  * @constructor
  */
 function LocaleUtils(config) {
@@ -130,4 +130,6 @@ function LocaleUtils(config) {
   };
 }
 
-module.exports = LocaleUtils;
+module.exports = {
+  LocaleUtils
+};

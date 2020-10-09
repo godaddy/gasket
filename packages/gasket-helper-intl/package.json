@@ -1,0 +1,58 @@
+{
+  "name": "@gasket/helper-intl",
+  "version": "6.0.0-canary.0",
+  "description": "NodeJS script to build localization files.",
+  "main": "lib",
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "npm run lint -- --fix",
+    "test": "npm run test:runner",
+    "test:runner": "mocha --require setup-env \"test/*.test.js\"",
+    "test:watch": "npm run test:runner -- --watch",
+    "test:coverage": "nyc --reporter=text --reporter=json-summary npm run test:runner",
+    "posttest": "npm run lint",
+    "prepack": "npm run docs",
+    "docs": "jsdoc2md --plugin @godaddy/dmd --files lib/*.js > docs/api.md"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/godaddy/gasket.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "gasket",
+    "helper",
+    "intl"
+  ],
+  "author": "GoDaddy Operating Company, LLC",
+  "maintainers": [
+    "Andrew Gerard <agerard@godaddy.com>"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/godaddy/gasket/issues"
+  },
+  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-helper-intl",
+  "devDependencies": {
+    "@godaddy/dmd": "^1.0.0",
+    "assume": "^2.2.0",
+    "eslint": "^6.1.0",
+    "eslint-config-godaddy": "^4.0.0",
+    "eslint-plugin-json": "^1.4.0",
+    "eslint-plugin-mocha": "^6.0.0",
+    "jsdoc-to-markdown": "^5.0.1",
+    "mocha": "^6.2.0",
+    "nyc": "^14.1.1",
+    "setup-env": "^1.2.2"
+  },
+  "eslintConfig": {
+    "extends": [
+      "godaddy"
+    ]
+  },
+  "eslintIgnore": [
+    "coverage"
+  ]
+}

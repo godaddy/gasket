@@ -1,6 +1,6 @@
 import assume from 'assume';
 import proxyquire from 'proxyquire';
-import LocaleUtils from '@gasket/plugin-intl/locale-utils';
+import { LocaleUtils } from '@gasket/helper-intl';
 
 const mockConfig = { manifest: require('./fixtures/mock-manifest.json') };
 
