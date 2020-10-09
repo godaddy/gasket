@@ -3,6 +3,15 @@
 React component library to enable localization for Gasket apps. Loads and
 manages locale files from [@gasket/plugin-intl].
 
+- React components:
+  - [withIntlProvider]
+  - [withLocaleRequired]
+  - [LocaleRequired]
+
+- Next.js functions:
+  - [intlGetStaticProps]
+  - [intlGetServerSideProps]
+
 ## Installation
 
 ```
@@ -10,10 +19,6 @@ npm i @gasket/intl
 ```
 
 ## Components
-
-- [withIntlProvider]
-- [withLocaleRequired]
-- [LocaleRequired]
 
 ### withIntlProvider
 
@@ -103,7 +108,7 @@ export default Component;
 Loader functions specific to Next.js lifecycles are available from
 `@gasket/intl/next`.
 
-### getStaticProps
+### intlGetStaticProps
 
 To generate static pages for a locale in a Next.js app, you can use
 `intlGetStaticProps` to make a [getStaticProps] function that will take a
@@ -143,7 +148,7 @@ export function getStaticPaths() {
 In the above example, we are using Next.js dynamic routes for to set the locale
 param. The generated pages will be for `/en/example`, and `/fr/example`.
 
-### getServerSideProps
+### intlGetServerSideProps
 
 Locale files can also be preloaded for server-side rendering using
 `intlGetServerSideProps` to make a [getServerSideProps] function. The locale to
@@ -174,6 +179,8 @@ export const getServerSideProps = intlGetServerSideProps('/locales');
 [withIntlProvider]:#withintlprovider
 [withLocaleRequired]:#withlocalerequired
 [LocaleRequired]:#localerequired
+[intlGetStaticProps]:#intlgetstaticprops
+[intlGetServerSideProps]:#intlgetserversideprops
 
 [@gasket/plugin-intl]:/packages/gasket-plugin-intl/README.md
 [locales path]:/packages/gasket-plugin-intl/README.md#locales-path
