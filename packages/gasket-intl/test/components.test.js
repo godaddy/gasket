@@ -39,7 +39,7 @@ describe('React components', function () {
     let Component, wrapper, testProps;
 
     beforeEach(function () {
-      Component = mod.withIntlProvider(MockComponent);
+      Component = mod.withIntlProvider()(MockComponent);
       testProps = {};
     });
 

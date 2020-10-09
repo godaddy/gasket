@@ -37,7 +37,7 @@ function makeEncodeLocaleUrls(localesPath) {
  */
 module.exports = async function workbox(gasket, config, req, res) {
   const { root } = gasket.config;
-  let { basePath = '' } = getIntlConfig(gasket);
+  const { basePath = '' } = getIntlConfig(gasket);
   const { localesPath, localesDir } = getIntlConfig(gasket);
   const { locale } = res.gasketData.intl;
 

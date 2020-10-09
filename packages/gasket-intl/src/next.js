@@ -3,6 +3,7 @@ import merge from 'lodash.merge';
 import { localeUtils, LOADED, ERROR } from './utils';
 import { manifest } from './config';
 
+// eslint-disable-next-line no-process-env
 const publicDir = path.dirname(process.env.GASKET_INTL_LOCALES_DIR);
 
 /**
@@ -27,7 +28,7 @@ async function loadLocaleData(localePathPath, locale) {
     messages = require(diskPath);
     status = LOADED;
   } catch (e) {
-    console.error(e.message);
+    console.error(e.message); // eslint-disable-line no-console
     messages = {};
     status = ERROR;
   }

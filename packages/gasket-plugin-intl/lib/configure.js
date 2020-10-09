@@ -17,6 +17,22 @@ function getIntlConfig(gasket) {
 }
 
 /**
+ * Destructure deprecated options as fallbacks and log warnings if used.
+ *
+ * @param {Gasket} gasket - Gasket API
+ * @param {object} intlConfig - User intl config
+ * @returns {object} config
+ */
+function deprecatedOptions(gasket, intlConfig) {
+  const { logger } = gasket;
+  const { languageMap, defaultLanguage, assetPrefix } = intlConfig;
+  if (languageMap) logger.warn('DEPRECATED intl config `languageMap` - use `localesMap`');
+  if (defaultLanguage) logger.warn('DEPRECATED intl config `defaultLanguage` - use `defaultLocale`');
+  if (assetPrefix) logger.warn('DEPRECATED intl config `assetPrefix` - use `basePath`');
+  return { languageMap, defaultLanguage, assetPrefix };
+}
+
+/**
  * Sets up the Intl config for the Gasket session and add process env variables
  * to access to certain config results where gasket.config is not accessible.
  *
@@ -25,14 +41,10 @@ function getIntlConfig(gasket) {
  * @returns {{intl: IntlConfig}} config
  */
 module.exports = function configureHook(gasket, config) {
-  const { logger } = gasket;
   const { root } = config;
   const intlConfig = { ...getIntlConfig({ config }) };
 
-  const { languageMap, defaultLanguage, assetPrefix } = intlConfig;
-  if (languageMap) logger.warn('DEPRECATED intl config `languageMap` - use `localesMap`');
-  if (defaultLanguage) logger.warn('DEPRECATED intl config `defaultLanguage` - use `defaultLocale`');
-  if (assetPrefix) logger.warn('DEPRECATED intl config `assetPrefix` - use `basePath`');
+  const { languageMap, defaultLanguage, assetPrefix } = deprecatedOptions(gasket, intlConfig);
 
   // get user defined config and apply defaults
   const {

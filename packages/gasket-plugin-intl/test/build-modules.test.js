@@ -1,3 +1,4 @@
+/* eslint-disable max-nested-callbacks */
 const assume = require('assume');
 const sinon = require('sinon');
 const fs = require('fs-extra');
