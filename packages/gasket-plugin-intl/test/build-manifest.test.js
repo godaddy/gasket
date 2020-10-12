@@ -7,14 +7,8 @@ const writeFileStub = sinon.stub().callsFake((...args) => {
   args[args.length - 1](null, true);
 });
 
-const buildManifest = proxyquire('../lib/build-manifest', {
-  fs: {
-    writeFile: writeFileStub
-  }
-});
-
 describe('buildManifest', function () {
-  let mockGasket;
+  let mockGasket, buildManifest;
 
   beforeEach(function () {
     mockGasket = {
@@ -32,6 +26,16 @@ describe('buildManifest', function () {
         }
       }
     };
+
+    buildManifest = proxyquire('../lib/build-manifest', {
+      fs: {
+        writeFile: writeFileStub
+      }
+    });
+  });
+
+  afterEach(function () {
+    sinon.restore();
   });
 
   const getOutput = () => JSON.parse(writeFileStub.getCall(0).args[1]);

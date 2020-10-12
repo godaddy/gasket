@@ -5,14 +5,8 @@ const proxyquire = require('proxyquire');
 const buildManifest = sinon.stub().resolves();
 const buildModules = sinon.stub().resolves();
 
-const plugin = proxyquire('../lib/index', {
-  './build-manifest': buildManifest,
-  './build-modules': buildModules
-});
-const { build: buildHook } = plugin.hooks;
-
 describe('build', function () {
-  let mockGasket;
+  let mockGasket, plugin, buildHook;
 
   beforeEach(function () {
     mockGasket = {
@@ -20,6 +14,13 @@ describe('build', function () {
         intl: {}
       }
     };
+
+    plugin = proxyquire('../lib/index', {
+      './build-manifest': buildManifest,
+      './build-modules': buildModules
+    });
+
+    buildHook = plugin.hooks.build;
   });
 
   afterEach(function () {

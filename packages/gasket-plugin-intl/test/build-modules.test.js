@@ -29,6 +29,10 @@ describe('buildModules', function () {
     };
   });
 
+  afterEach(function () {
+    sinon.restore();
+  });
+
   describe('BuildModules', function () {
     let builder;
 
@@ -38,7 +42,6 @@ describe('buildModules', function () {
 
     afterEach(function () {
       builder = null;
-      sinon.restore();
     });
 
     it('sets up dir constants', function () {
