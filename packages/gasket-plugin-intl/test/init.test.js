@@ -4,13 +4,13 @@ const init = require('../lib/init');
 const intlPolyfill = require('intl');
 const intlDefault = global.Intl;
 
-describe('init', () => {
+describe('init', function () {
 
   afterEach(() => {
     global.Intl = intlDefault;
   });
 
-  it('polyfills Intl', () => {
+  it('polyfills Intl', function () {
     assume(global.Intl).equals(intlDefault);
     init();
     assume(global.Intl).equals(intlPolyfill);

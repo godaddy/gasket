@@ -11,7 +11,7 @@ const plugin = proxyquire('../lib/index', {
 });
 const { build: buildHook } = plugin.hooks;
 
-describe('build', () => {
+describe('build', function () {
   let mockGasket;
 
   beforeEach(function () {

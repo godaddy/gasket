@@ -2,17 +2,17 @@ const assume = require('assume');
 
 const serviceWorkerCacheKey = require('../lib/service-worker-cache-key');
 
-describe('serviceWorkerCacheKey', () => {
+describe('serviceWorkerCacheKey', function () {
   let result;
 
-  it('returns getLocale as cache key function', async () => {
+  it('returns getLocale as cache key function', async function () {
     result = await serviceWorkerCacheKey();
 
     assume(result).instanceOf(Function);
     assume(result.name).equals('getLocale');
   });
 
-  it('cache key function returns a string', async () => {
+  it('cache key function returns a string', async function () {
     const expectedLocale = 'en-US';
     const req = {};
     const res = { gasketData: { intl: { locale: expectedLocale } } };

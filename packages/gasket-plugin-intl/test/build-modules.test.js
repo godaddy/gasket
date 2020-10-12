@@ -49,7 +49,7 @@ describe('buildModules', function () {
 
     describe('#copyFolder', function () {
       it('calls saveJsonFile for correct data', function (done) {
-        sinon.stub(fs, 'mkdirp').returns(Promise.resolve());
+        sinon.stub(fs, 'mkdirp').resolves();
         sinon.stub(fs, 'readdir').resolves(['test/folder/name.json']);
         sinon.stub(fsUtils, 'saveJsonFile').callsFake(() => {
           assume(fs.mkdirp.getCalls()).length(1);
@@ -84,15 +84,7 @@ describe('buildModules', function () {
         const fakeFileName = 'some-dir';
         const fakeFiles = [fakeFileName];
 
-        sinon.stub(fs, 'lstat').callsFake(() => {
-          return new Promise((resolve) => {
-            resolve({
-              isDirectory: () => {
-                return true;
-              }
-            });
-          });
-        });
+        sinon.stub(fs, 'lstat').resolves({ isDirectory: () => true });
 
         await builder.processFiles(fakeSrcDir, fakeTgtDir, fakeFiles);
 
@@ -136,8 +128,8 @@ describe('buildModules', function () {
           '/src/test1/locales',
           '/src/test2/locales'
         ];
-        sinon.stub(fs, 'remove').returns(Promise.resolve());
-        sinon.stub(fs, 'mkdirp').returns(Promise.resolve());
+        sinon.stub(fs, 'remove').resolves();
+        sinon.stub(fs, 'mkdirp').resolves();
         sinon.stub(fs, 'readdir').resolves(['test/folder/name.json']);
         sinon.stub(fs, 'readJson').resolves({ name: 'bogus-package' });
         sinon.stub(fsUtils, 'saveJsonFile').resolves();
@@ -158,41 +150,20 @@ describe('buildModules', function () {
           '/path/to/module/myh-fake2',
           '/path/to/module/myh-fake3'
         ];
-        sinon.stub(fsUtils, 'getDirectories').callsFake(() => (discoveredDirs));
+        sinon.stub(fsUtils, 'getDirectories').resolves(discoveredDirs);
       });
 
       it('returns a list of all locale paths', async function () {
-        sinon.stub(fs, 'lstat').callsFake(() => {
-          return new Promise((resolve) => {
-            resolve({
-              isDirectory: () => {
-                return true;
-              }
-            });
-          });
-        });
+        sinon.stub(fs, 'lstat').resolves({ isDirectory: () => true });
         const results = await builder.discoverDirs();
         assume(results).length(3);
       });
 
       it('returns a list of all locale paths that are folder', async function () {
-        sinon.stub(fs, 'lstat').callsFake(() => {
-          return new Promise((resolve) => {
-            resolve({
-              isDirectory: () => {
-                return true;
-              }
-            });
-          });
-        }).onCall(0).returns(
-          new Promise((resolve) => {
-            resolve({
-              isDirectory: () => {
-                return false;
-              }
-            });
-          })
-        );
+        sinon.stub(fs, 'lstat')
+          .resolves({ isDirectory: () => true })
+          .onCall(0)
+          .resolves({ isDirectory: () => false });
 
         const results = await builder.discoverDirs();
         assume(results).length(2);
@@ -203,15 +174,7 @@ describe('buildModules', function () {
           '/should/blacklist/yargs',
           '/should/not/blacklist/bogus'
         );
-        sinon.stub(fs, 'lstat').callsFake(() => {
-          return new Promise((resolve) => {
-            resolve({
-              isDirectory: () => {
-                return true;
-              }
-            });
-          });
-        });
+        sinon.stub(fs, 'lstat').resolves({ isDirectory: () => true });
         const results = await builder.discoverDirs();
         assume(results).not.includes('/should/blacklist/yargs/locales');
         assume(results).includes('/should/not/blacklist/bogus/locales');
@@ -220,10 +183,10 @@ describe('buildModules', function () {
 
     describe('#run', function () {
       it('only processes discovered locale dirs', async function () {
-        sinon.stub(fs, 'remove').returns(Promise.resolve());
-        sinon.stub(fs, 'mkdirp').returns(Promise.resolve());
-        sinon.stub(builder, 'discoverDirs').returns(Promise.resolve());
-        sinon.stub(builder, 'processDirs').returns(Promise.resolve());
+        sinon.stub(fs, 'remove').resolves();
+        sinon.stub(fs, 'mkdirp').resolves();
+        sinon.stub(builder, 'discoverDirs').resolves();
+        sinon.stub(builder, 'processDirs').resolves();
         await builder.run();
         assume(fs.remove.getCalls()).length(1);
         assume(fs.mkdirp.getCalls()).length(1);

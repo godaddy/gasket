@@ -3,7 +3,7 @@ const sinon = require('sinon');
 const path = require('path');
 const plugin = require('../lib/index');
 
-describe('create', () => {
+describe('create', function () {
   // Simple test-helper to assert created with a clean set of spies.
   function expectCreatedWith(assertFn) {
     return async function expectCreated() {

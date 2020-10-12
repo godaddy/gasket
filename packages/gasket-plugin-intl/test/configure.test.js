@@ -12,7 +12,7 @@ const setupGasket = config => ({
   }
 });
 
-describe('configure', () => {
+describe('configure', function () {
   const root = '/path/to/root';
   const mockGasket = {
     logger: {
@@ -29,17 +29,17 @@ describe('configure', () => {
     sinon.restore();
   });
 
-  it('returns object', () => {
+  it('returns object', function () {
     const results = configure(mockGasket, { root });
     assume(results).is.an('object');
   });
 
-  it('adds intl to config', () => {
+  it('adds intl to config', function () {
     const results = configure(mockGasket, { root });
     assume(results).property('intl');
   });
 
-  it('merges user config with defaults', () => {
+  it('merges user config with defaults', function () {
     const results = configure(mockGasket, { root, intl: { user: 'stuff' } });
     assume(results.intl).eqls({
       user: 'stuff',
@@ -53,7 +53,7 @@ describe('configure', () => {
     });
   });
 
-  it('user config overrides defaults', () => {
+  it('user config overrides defaults', function () {
     const results = configure(mockGasket, { root, intl: { user: 'stuff', basePath: 'custom', defaultLocale: 'en-US' } });
     assume(results.intl).eqls({
       user: 'stuff',
@@ -67,7 +67,7 @@ describe('configure', () => {
     });
   });
 
-  it('adds env variables', () => {
+  it('adds env variables', function () {
     assume(process.env.GASKET_INTL_LOCALES_DIR).is.undefined;
     assume(process.env.GASKET_INTL_MANIFEST_FILE).is.undefined;
     const results = configure(mockGasket, { root });
@@ -77,7 +77,7 @@ describe('configure', () => {
     );
   });
 
-  it('logs deprecation warnings', () => {
+  it('logs deprecation warnings', function () {
     configure(mockGasket, { root, intl: { languageMap: { foo: 'bar' } } });
     assume(mockGasket.logger.warn).calledWithMatch('languageMap');
 
@@ -85,9 +85,9 @@ describe('configure', () => {
     assume(mockGasket.logger.warn).calledWithMatch('defaultLanguage');
   });
 
-  describe('getIntlConfig', () => {
+  describe('getIntlConfig', function () {
 
-    it('returns intl config from gasket.config.js', () => {
+    it('returns intl config from gasket.config.js', function () {
       const results = getIntlConfig(setupGasket({
         intl: {
           assetPrefix: 'BOGUS'
@@ -98,7 +98,7 @@ describe('configure', () => {
       });
     });
 
-    it('returns empty object if no intl config set', () => {
+    it('returns empty object if no intl config set', function () {
       const results = getIntlConfig({});
       assume(results).eqls({});
     });

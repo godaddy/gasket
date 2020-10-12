@@ -3,7 +3,7 @@ const plugin = require('../lib/index');
 
 const { webpack: webpackHook } = plugin.hooks;
 
-describe('webpack', () => {
+describe('webpack', function () {
 
   it('adds env vars to EnvironmentPlugin', function () {
     const mockGasket = {

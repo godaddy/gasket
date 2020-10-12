@@ -5,7 +5,7 @@ const plugin = require('../lib/index');
 
 const { middleware: middlewareHook } = plugin.hooks;
 
-describe('middleware', () => {
+describe('middleware', function () {
   let mockGasket;
 
   beforeEach(function () {

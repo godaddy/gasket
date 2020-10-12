@@ -13,7 +13,7 @@ const buildManifest = proxyquire('../lib/build-manifest', {
   }
 });
 
-describe('buildManifest', () => {
+describe('buildManifest', function () {
   let mockGasket;
 
   beforeEach(function () {
