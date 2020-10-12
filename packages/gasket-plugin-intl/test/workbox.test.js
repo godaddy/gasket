@@ -5,7 +5,7 @@ const { makeEncodeLocaleUrls } = workbox;
 describe('workbox', function () {
   let result, mockGasket, mockConfig, mockReq, mockRes;
 
-  beforeEach(() => {
+  beforeEach(function () {
     mockGasket = {
       config: {
         root: '/path/to/root',
@@ -96,7 +96,7 @@ describe('workbox', function () {
   describe('makeEncodeLocaleUrls', function () {
     let encodeLocaleUrls, mockEntry, mockManifest;
 
-    beforeEach(() => {
+    beforeEach(function () {
       mockEntry = {
         url: 'some/asset.json'
       };

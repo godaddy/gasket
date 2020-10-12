@@ -6,7 +6,7 @@ const intlDefault = global.Intl;
 
 describe('init', function () {
 
-  afterEach(() => {
+  afterEach(function () {
     global.Intl = intlDefault;
   });
 

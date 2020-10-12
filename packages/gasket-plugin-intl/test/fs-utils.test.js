@@ -7,7 +7,7 @@ const fsUtils = require('../lib/fs-utils');
 describe('fsUtils', function () {
   let results;
 
-  beforeEach(() => {
+  beforeEach(function () {
     results = null;
   });
 

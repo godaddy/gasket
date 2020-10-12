@@ -10,7 +10,7 @@ describe('buildModules', function () {
   const testTgtFilePath = '/path/to/tgt/myh-fake/en-US.json';
   let logger, mockGasket;
 
-  beforeEach(() => {
+  beforeEach(function () {
     logger = {
       log: sinon.stub()
     };
@@ -67,7 +67,7 @@ describe('buildModules', function () {
 
     describe('#processFiles', function () {
       let fakeSrcDir, fakeTgtDir;
-      beforeEach(() => {
+      beforeEach(function () {
         fakeSrcDir = '/path/to/src/';
         fakeTgtDir = '/path/to/tgt/';
 
