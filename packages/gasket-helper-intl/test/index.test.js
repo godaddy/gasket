@@ -71,11 +71,18 @@ describe('LocaleUtils', function () {
       assume(results).equals('/locales/en-US.json');
     });
 
-    it('falls back to lang if no localePath', function () {
+    it('falls back to lang if no localePath with region', function () {
       mockConfig.manifest.paths['/locales/da.json'] = 'hash1234';
       utils = new LocaleUtils(mockConfig);
       const results = utils.getLocalePath('/locales', 'da-DK');
       assume(results).equals('/locales/da.json');
+    });
+
+    it('falls back to lang if no localePath with script and region', function () {
+      mockConfig.manifest.paths['/locales/az.json'] = 'hash1234';
+      utils = new LocaleUtils(mockConfig);
+      const results = utils.getLocalePath('/locales', 'az-Cyrl-AZ');
+      assume(results).equals('/locales/az.json');
     });
 
     it('falls back to default locale if no localePath for locale', function () {
