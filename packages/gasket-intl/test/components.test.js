@@ -8,7 +8,7 @@ import { ERROR, LOADED } from '../src/utils';
 
 const fetchStub = sinon.stub();
 const mockManifest = require('./fixtures/mock-manifest.json');
-const mockConfig = {};
+let mockConfig;
 
 const MockComponent = class extends React.Component {
   render() {
@@ -25,9 +25,11 @@ describe('React components', function () {
   let mod;
 
   beforeEach(function () {
-    mockConfig.defaultLocale = 'en-US';
-    mockConfig.manifest = { ...mockManifest, paths: { ...mockManifest.paths } };
-    mockConfig.isBrowser = false;
+    mockConfig = {
+      defaultLocale: 'en-US',
+      manifest: { ...mockManifest, paths: { ...mockManifest.paths } },
+      isBrowser: false
+    };
     mod = getMod();
   });
 

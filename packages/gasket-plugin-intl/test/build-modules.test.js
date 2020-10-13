@@ -51,17 +51,15 @@ describe('buildModules', function () {
     });
 
     describe('#copyFolder', function () {
-      it('calls saveJsonFile for correct data', function (done) {
+      it('calls saveJsonFile for correct data', async function () {
         sinon.stub(fs, 'mkdirp').resolves();
         sinon.stub(fs, 'readdir').resolves(['test/folder/name.json']);
-        sinon.stub(fsUtils, 'saveJsonFile').callsFake(() => {
-          assume(fs.mkdirp.getCalls()).length(1);
-          assume(fs.readdir.getCalls()).length(1);
-          assume(fs.readFile.getCalls()).length(1);
-          done();
-        });
+        sinon.stub(fsUtils, 'saveJsonFile').resolves();
         sinon.stub(fs, 'readFile').resolves('{ "key-1": "value-1" }');
-        builder.copyFolder(testSrcFilePath, testTgtFilePath);
+        await builder.copyFolder(testSrcFilePath, testTgtFilePath);
+        assume(fs.mkdirp).called(1);
+        assume(fs.readdir).called(1);
+        assume(fs.readFile).called(1);
       });
     });
 
@@ -80,8 +78,8 @@ describe('buildModules', function () {
 
         builder.processFiles(fakeSrcDir, fakeTgtDir, fakeFiles);
 
-        assume(builder.copyFile.getCalls()).length(1);
-        assume(builder.copyFolder.getCalls()).length(0);
+        assume(builder.copyFile).called(1);
+        assume(builder.copyFolder).not.called();
       });
       it('calls copyFolder when its a folder', async function () {
         const fakeFileName = 'some-dir';
@@ -91,8 +89,8 @@ describe('buildModules', function () {
 
         await builder.processFiles(fakeSrcDir, fakeTgtDir, fakeFiles);
 
-        assume(builder.copyFile.getCalls()).length(0);
-        assume(builder.copyFolder.getCalls()).length(1);
+        assume(builder.copyFile).not.called();
+        assume(builder.copyFolder).called(1);
       });
     });
 
@@ -141,7 +139,7 @@ describe('buildModules', function () {
 
       it('calls processFiles for each directory', async function () {
         await builder.processDirs(buildDirs);
-        assume(builder.processFiles.getCalls()).length(2);
+        assume(builder.processFiles).called(2);
       });
     });
 
@@ -191,10 +189,10 @@ describe('buildModules', function () {
         sinon.stub(builder, 'discoverDirs').resolves();
         sinon.stub(builder, 'processDirs').resolves();
         await builder.run();
-        assume(fs.remove.getCalls()).length(1);
-        assume(fs.mkdirp.getCalls()).length(1);
-        assume(builder.discoverDirs.getCalls()).length(1);
-        assume(builder.processDirs.getCalls()).length(1);
+        assume(fs.remove).called(1);
+        assume(fs.mkdirp).called(1);
+        assume(builder.discoverDirs).called(1);
+        assume(builder.processDirs).called(1);
       });
     });
   });
