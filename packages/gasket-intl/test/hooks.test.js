@@ -1,4 +1,3 @@
-import React from 'react';
 import assume from 'assume';
 import sinon from 'sinon';
 import proxyquire from 'proxyquire';
