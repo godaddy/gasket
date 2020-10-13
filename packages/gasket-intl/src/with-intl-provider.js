@@ -1,4 +1,5 @@
 import React, { useReducer } from 'react';
+import hoistNonReactStatics from 'hoist-non-react-statics';
 import merge from 'lodash.merge';
 import { IntlProvider } from 'react-intl';
 import { GasketIntlContext } from './hooks';
@@ -107,9 +108,7 @@ export default function withIntlProvider() {
     }
 
     Wrapper.displayName = `withIntlProvider(${ Component.displayName || Component.name || 'Component' })`;
-    if ('getInitialProps' in Component) {
-      Wrapper.getInitialProps = Component.getInitialProps;
-    }
+    hoistNonReactStatics(Wrapper, Component);
     return Wrapper;
   };
 }

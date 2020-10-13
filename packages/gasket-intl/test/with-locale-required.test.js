@@ -43,6 +43,20 @@ describe('withLocaleRequired', function () {
     assume(withLocaleRequired()(MockComponent)).property('displayName', 'withLocaleRequired(MockComponent)');
   });
 
+  it('hoists non-react statics', function () {
+    assume(withLocaleRequired()(MockComponent)).not.property('bogus');
+    MockComponent.bogus = 'BOGUS';
+    assume(withLocaleRequired()(MockComponent)).property('bogus', 'BOGUS');
+    delete MockComponent.bogus;
+  });
+
+  it('hoists getInitialProps if set', function () {
+    assume(withLocaleRequired()(MockComponent)).not.property('getInitialProps');
+    MockComponent.getInitialProps = f => f;
+    assume(withLocaleRequired()(MockComponent)).property('getInitialProps');
+    delete MockComponent.getInitialProps;
+  });
+
   describe('#render', function () {
     it('renders null if loading', function () {
       useGasketIntlStub.returns(LOADING);

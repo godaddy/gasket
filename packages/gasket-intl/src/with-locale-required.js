@@ -1,4 +1,5 @@
 import React from 'react';
+import hoistNonReactStatics from 'hoist-non-react-statics';
 import { manifest } from './config';
 import { LOADING } from './utils';
 import { useGasketIntl } from './hooks';
@@ -32,6 +33,7 @@ export default function withLocaleRequired(localesPath = manifest.localesPath, o
     }
 
     Wrapper.displayName = `withLocaleRequired(${ Component.displayName || Component.name || 'Component' })`;
+    hoistNonReactStatics(Wrapper, Component);
     return Wrapper;
   };
 }
