@@ -32,15 +32,16 @@ export const GasketIntlContext = React.createContext({
 export function useGasketIntl(localePathPart) {
   const { locale, status = {}, dispatch } = useContext(GasketIntlContext);
 
+  const localePath = localeUtils.getLocalePath(localePathPart, locale);
+
+  const fileStatus = status[localePath];
+  if (fileStatus) return fileStatus;
+
   // We cannot use dispatch from useReducer during SSR, so exit early.
   // If you want a locale file to be ready, preload it to gasketIntl data
   // or load with getStaticProps or getServerSideProps.
   if (!isBrowser) return LOADING;
 
-  const localePath = localeUtils.getLocalePath(localePathPart, locale);
-
-  const fileStatus = status[localePath];
-  if (fileStatus) return fileStatus;
   // Mutating status state to avoids an unnecessary render with using dispatch.
   status[localePath] = LOADING;
 
@@ -60,7 +61,7 @@ export function useGasketIntl(localePathPart) {
       });
     })
     .catch(e => {
-      console.error(e); // eslint-disable-line no-console
+      console.error(e.message || e); // eslint-disable-line no-console
       dispatch({
         type: ERROR,
         payload: {
