@@ -12,13 +12,13 @@ import { LOADED, getActiveLocale } from './utils';
  * @returns {LocalesState} state
  */
 export function init(localesProps) {
+  const { messages = {}, status = {} } = localesProps;
   if (isBrowser) {
     // merge any data set on window with what comes from SSR or static page props
-    const { messages = {}, status = {} } = clientData;
-    return merge({}, { messages, status }, localesProps);
+    const { messages: dataMessages = {}, status: dataStatus = {} } = clientData;
+    return merge({}, { messages: dataMessages, status: dataStatus }, { messages, status });
   }
 
-  const { messages, status } = localesProps;
   return { messages, status };
 }
 
