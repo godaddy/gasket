@@ -69,6 +69,18 @@ const Component = props => <h1><FormattedMessage id='welcome'/></h1>
 export default withLocaleRequired('/locales')(Component);
 ```
 
+If you only have a single locales path for your app, the default `localesPath`
+will be used if unspecified:
+
+```jsx
+export default withLocaleRequired()(Component);
+```
+
+This also the behavior for the other components and functions where
+`localesPath` can be specified. If the default path for the app should be
+something different from `/locales`, this can be set in the config for
+[@gasket/plugin-intl].
+
 ### LocaleRequired
 
 This component can also require locale files. This can be useful for components
