@@ -14,6 +14,11 @@
  * @example
  * // as a template
  * "/locales/:locale/component.json"
+ *
+ * @example
+ * // other param formats
+ * "/locales/$locale/component.json"
+ * "/locales/{locale}/component.json"
  */
 
 /**
