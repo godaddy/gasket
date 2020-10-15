@@ -12,6 +12,7 @@
  * "/locales"
  *
  * @example
+ * // as a template
  * "/locales/:locale/component.json"
  */
 
@@ -23,6 +24,7 @@
  * "/locales/en-US.json"
  *
  * @example
+ * // from a template
  * "/locales/en-US/component.json"
  */
 
@@ -42,7 +44,7 @@
  * "en-US"
  */
 
-const reLocale = /(\/[$:{]locale}?\/)/;
+const reLocalePathParam = /(\/[$:{]locale}?\/)/;
 
 /**
  * Utility class for loading locale files
@@ -89,8 +91,8 @@ function LocaleUtils(config) {
    * @method
    */
   this.formatLocalePath = (localePathPart, locale) => {
-    if (reLocale.test(localePathPart)) {
-      return localePathPart.replace(reLocale, `/${ locale }/`);
+    if (reLocalePathParam.test(localePathPart)) {
+      return localePathPart.replace(reLocalePathParam, `/${ locale }/`);
     }
     return `${ localePathPart }/${ locale }.json`;
   };
