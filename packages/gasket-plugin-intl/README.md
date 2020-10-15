@@ -172,7 +172,7 @@ de-CH -> de -> en-US -> en
 
 So for `de-CH`, we would be loading the `en` locale file. Not ideal for your
 customers, but this serves as a safety mechanism to make sure your app remains
-somewhat readable for unexcepted locales. Also note, however, that you can
+somewhat readable for unexpected locales. Also note, however, that you can
 associate known locales to share a translations with another locale using
 `localesMap`.
 
