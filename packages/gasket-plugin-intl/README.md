@@ -263,16 +263,19 @@ module.exports = {
 
 There are several strategies for managing locale files for an app. By default,
 the plugin assumes they will be static files committed to the app's under a
-`public/locales` directory.
+`./public/locales` directory and served under a `/locales` path. This directory
+can be changed with the `localesDir` config option, and the default path
+configured with `localesPath`.
 
 Another practice is to locale files under different npm modules. By enabling the
 `intl.modules` option in the `gasket.config.js`, when the app builds, the plugin
-looks for packages with a `locales` directory in the node modules. Each locale
-file is then copied to the `localesDir` under a `modules` directory, to be
-served or distributed as a static file.
+looks for packages with a `./locales` sub-directory in the node modules. Each
+locale file is then copied to a `modules` directory under the directory
+configured for `localesDir` (i.e. `./public/locales/modules`). This allows these
+files found under node modules to be served or distributed as a static file.
 
 So, for example,say you have a shared package (`my-shared-pkg`) used across
-multiple apps. This packages has common locale JSON files under a `locales`
+multiple apps. This packages has common locale JSON files under a `./locales`
 directory at the root of the package (`my-shared-pkg/locales`). These will be
 copied to your static locales directory
 (`./public/locales/modules/my-shared-pkg/*.json`). You can then set the
