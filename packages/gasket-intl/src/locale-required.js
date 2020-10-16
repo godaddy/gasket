@@ -15,7 +15,6 @@ import { useGasketIntl } from './hooks';
 export default function LocaleRequired(props) {
   const { localesPath, loading = null, children } = props;
   const loadState = useGasketIntl(localesPath);
-  // const loadState = 'useGasketIntl(localesPath)';
   if (loadState === LOADING) return loading;
   return <>{ children }</>;
 }

@@ -2,7 +2,7 @@ import React, { useReducer } from 'react';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import merge from 'lodash.merge';
 import { IntlProvider } from 'react-intl';
-import { GasketIntlContext } from './hooks';
+import { GasketIntlContext } from './context';
 import { clientData, isBrowser } from './config';
 import { LOADED, getActiveLocale } from './utils';
 

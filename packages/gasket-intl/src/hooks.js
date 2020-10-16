@@ -1,27 +1,8 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import fetch from '@gasket/fetch';
-import { isBrowser, manifest } from './config';
+import { isBrowser } from './config';
 import { LOADING, LOADED, ERROR, localeUtils } from './utils';
-
-/**
- * State of loaded locale files
- *
- * @typedef {object} LocalesState
- * @property {{string: string}} messages
- * @property {{LocalePath: LocalePathStatus}} status
- */
-
-/**
- * Props for a Next.js page containing locale and initial state
- *
- * @typedef {LocalesState} LocalesProps
- * @property {Locale} locale
- */
-
-export const GasketIntlContext = React.createContext({
-  locale: manifest.defaultLocale,
-  status: {}
-});
+import { GasketIntlContext } from './context';
 
 /**
  * React that fetches a locale file and returns loading status
