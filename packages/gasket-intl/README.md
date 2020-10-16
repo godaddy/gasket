@@ -76,7 +76,7 @@ will be used if unspecified:
 export default withLocaleRequired()(Component);
 ```
 
-This also the behavior for the other components and functions where
+This is also the behavior for the other components and functions where
 `localesPath` can be specified. If the default path for the app should be
 something different from `/locales`, this can be set in the config for
 [@gasket/plugin-intl].
