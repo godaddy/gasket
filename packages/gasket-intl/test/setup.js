@@ -1,5 +1,7 @@
-import Enzyme from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+/* eslint-disable no-process-env */
+const path = require('path');
 
-// React 16 Enzyme adapter
-Enzyme.configure({ adapter: new Adapter() });
+process.env.GASKET_INTL_MANIFEST_FILE = path.resolve(__dirname, 'fixtures/mock-manifest.json');
+process.env.GASKET_INTL_LOCALES_DIR = path.resolve(__dirname, 'fixtures/locales');
+
+global.Intl = require('intl');

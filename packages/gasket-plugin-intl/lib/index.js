@@ -1,102 +1,105 @@
 const path = require('path');
-const serveStatic = require('serve-static');
 const { name, devDependencies } = require('../package');
-const Builder = require('./builder');
-const workbox = require('./workbox');
-const serviceWorkerCacheKey = require('./service-worker-cache-key');
+const configure = require('./configure');
 const init = require('./init');
-const {
-  getAssetPrefix,
-  getDefaultLanguage,
-  getIntlConfig,
-  getIntlLanguageMap,
-  getOutputDir,
-  loadLocalesManifest
-} = require('./utils');
-
-/**
- * Plugin build hook
- *
- * @param {Object} gasket - Gasket config
- **/
-async function build(gasket) {
-  const builder = new Builder(gasket.logger, getIntlConfig(gasket));
-  await builder.run();
-}
+const serviceWorkerCacheKey = require('./service-worker-cache-key');
+const workbox = require('./workbox');
+const buildManifest = require('./build-manifest');
+const buildModules = require('./build-modules');
+const { getIntlConfig } = require('./configure');
 
 module.exports = {
   dependencies: ['@gasket/plugin-log'],
   name,
   hooks: {
     init,
-    async initReduxState(gasket, state, req) {
-      const acceptLanguage = (req.headers['accept-language'] || '').split(',')[0];
-      const language = await gasket.execWaterfall('intlLanguage', acceptLanguage, req);
-      return {
-        ...state,
-        intl: {
-          language,
-          assetPrefix: getAssetPrefix(gasket),
-          languageMap: getIntlLanguageMap(gasket),
-          defaultLanguage: getDefaultLanguage(gasket)
-        }
-      };
-    },
-    async create(gasket, { files, pkg }) {
+    configure,
+    async create(gasket, context) {
+      const { files, pkg } = context;
       const rootDir = path.join(__dirname, '..');
       files.add(
-        `${rootDir}/generator/*`,
-        `${rootDir}/generator/**/*`
+        `${ rootDir }/generator/*`,
+        `${ rootDir }/generator/**/*`
       );
 
+      // TODO (@kinetifex): check if react is being added first
       pkg.add('dependencies', {
         '@gasket/intl': devDependencies['@gasket/intl'],
         'react-intl': devDependencies['react-intl']
       });
+
+      context.hasGasketIntl = true;
     },
-    build,
-    middleware(gasket) {
-      //
-      // Make the outputDir available from req for loading locale files
-      // during SSR in HOCs
-      //
-      return (req, res, next) => {
-        req.localesDir = getOutputDir(gasket);
-        next();
+    build: {
+      timing: {
+        first: true
+      },
+      handler: async function build(gasket) {
+        const intlConfig = getIntlConfig(gasket);
+        if (intlConfig.modules) {
+          await buildModules(gasket);
+        }
+        await buildManifest(gasket);
+      }
+    },
+    webpack() {
+      // webpack is not listed as a required dependency but if this lifecycle
+      // is invoked we can assume it has been installed by @gasket/plugin-webpack
+      const webpack = require('webpack');
+
+      return {
+        plugins: [
+          new webpack.EnvironmentPlugin([
+            'GASKET_INTL_LOCALES_DIR',
+            'GASKET_INTL_MANIFEST_FILE'
+          ])
+        ]
       };
     },
-    express(gasket, app) {
-      const outputDir = getOutputDir(gasket);
+    middleware(gasket) {
+      const { defaultLocale, basePath, localesMap } = getIntlConfig(gasket);
 
-      app.use('/_locales', serveStatic(outputDir, {
-        index: false,
-        maxAge: '1y',
-        immutable: true
-      }));
+      return async function intlMiddleware(req, res, next) {
+        /* eslint-disable require-atomic-updates */
+        const acceptLanguage = (req.headers['accept-language'] || defaultLocale).split(',')[0];
+        const locale = await gasket.execWaterfall('intlLocale', acceptLanguage, req, res);
+        const mappedLocale = localesMap && localesMap[locale] || locale;
 
-      //
-      // This is generally loading into Redux during SSR but available otherwise
-      //
-      app.get('/locales-manifest.json', async (req, res) => {
-        const data = loadLocalesManifest(outputDir);
-        res.send(data);
-      });
+        // The gasketData object allows certain config data to be available for
+        // rendering as a global object for access in the browser.
+        res.gasketData = res.gasketData || {};
+
+        // TODO (@kinetifex): This could probably match LocalesProps used by Next.js loaders,
+        //   along with methods on req to preload locale files.
+        /**
+         * Response data to render as global object for browser access
+         *
+         * @typedef {object} GasketIntlData
+         * @property {Locale} locale - Locale derived from request
+         */
+        res.gasketData.intl = {
+          locale: mappedLocale
+        };
+        if (basePath) res.gasketData.intl.basePath = basePath;
+        next();
+        /* eslint-enable require-atomic-updates */
+      };
     },
     workbox,
     serviceWorkerCacheKey,
     metadata(gasket, meta) {
-      const config = getIntlConfig(gasket);
+      const { localesDir } = getIntlConfig(gasket);
       return {
         ...meta,
         lifecycles: [{
-          name: 'intlLanguage',
+          name: 'intlLocale',
           method: 'execWaterfall',
           description: 'Set the language for which locale files to load',
-          link: 'README.md#intlLanguage',
-          parent: 'initReduxState'
+          link: 'README.md#intlLocale',
+          parent: 'middleware'
         }],
         structures: [{
-          name: config.localesDir + '/',
+          name: localesDir + '/',
           description: 'Locale JSON files with translation strings',
           link: 'README.md#Options'
         }]

@@ -1,14 +1,5 @@
-import LocaleRequired from './LocaleRequired';
-import withLocaleRequired from './WithLocaleRequired';
-import withIntlProvider from './WithIntlProvider';
-import { selectAllMessages, selectMessage } from './LocaleApi';
-import { loadLocaleFilesIntoStore } from './ServerUtils';
+import withIntlProvider from './with-intl-provider';
+import withLocaleRequired from './with-locale-required';
+import LocaleRequired from './locale-required';
 
-export {
-  LocaleRequired,
-  withIntlProvider,
-  withLocaleRequired,
-  selectAllMessages,
-  selectMessage,
-  loadLocaleFilesIntoStore
-};
+export { withIntlProvider, withLocaleRequired, LocaleRequired };

@@ -95,7 +95,7 @@ content.
 ```js
 module.exports = {
   hooks: {
-    composeServiceWorker: function (gasket, content, req) {
+    composeServiceWorker: function (gasket, content, req, res) {
 
       // `req` allows SW content based on hostname, cookie, etc.
 
@@ -125,7 +125,7 @@ const readFile = util.promisify(fs.readFile);
 
 module.exports = {
   hooks: {
-    composeServiceWorker: async function (gasket, content, req) {
+    composeServiceWorker: async function (gasket, content, req, res) {
 
       const { market = 'en-US' } = req.cookies || {};
       const marketFile = `${market.toLowerCase()}.js`;
@@ -154,7 +154,7 @@ This example returns a function that picks off a variable from cookies.
 module.exports = {
   hooks: {
     serviceWorkerCacheKey: function (gasket) {
-      return function marketCacheKey(req) {
+      return function marketCacheKey(req, res) {
         return req.cookies.market || 'en-US'
       }
     }
@@ -169,7 +169,7 @@ Same example, written differently.
 ```js
 module.exports = {
   hooks: {
-    serviceWorkerCacheKey: () => req => req.cookies.market || 'en-US'
+    serviceWorkerCacheKey: () => (req, res) => req.cookies.market || 'en-US'
   }
 }
 ```

@@ -1,10 +1,11 @@
 const { configureMakeStore } = require('@gasket/redux');
 const { HYDRATE, createWrapper } = require('next-redux-wrapper');
+const merge = require('lodash.merge')
 {{{reduxReducers.imports}}}
 
 // Basic hydrate reducer for next-redux-wrapper
 // @see: https://github.com/kirill-konshin/next-redux-wrapper#usage
-const rootReducer = (state, { type, payload }) => type === HYDRATE ? { ...state, ...payload } : state;
+const rootReducer = (state, { type, payload }) => type === HYDRATE ? merge({}, state, payload) : state;
 
 const reducers = {
 {{{reduxReducers.entries}}}

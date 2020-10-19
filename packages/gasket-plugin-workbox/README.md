@@ -76,7 +76,7 @@ partial which will be deeply merged.
 ```js
 module.exports = {
   hooks: {
-    workbox: function (gasket, config, req) {
+    workbox: function (gasket, config, req, res) {
       // the initial `config`
       // `req` allows rules based on headers, cookies, etc.
 
@@ -115,7 +115,7 @@ the app. These can be set up to edge cache by setting the `assetPrefix` option.
 <!-- LINKS -->
 
 [composeServiceWorker]:/packages/gasket-plugin-service-worker/README.md#composeserviceworker
-[@gasket/plugin-service-worker]:/packages/gasket-plugin-service-worker/README.md#readme
+[@gasket/plugin-service-worker]:/packages/gasket-plugin-service-worker/README.md
 [Workbox]:https://github.com/GoogleChrome/workbox
 [Workbox precaching]:https://developers.google.com/web/tools/workbox/modules/workbox-precaching
 [background sync]:https://developers.google.com/web/updates/2015/12/background-sync

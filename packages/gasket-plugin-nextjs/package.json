@@ -49,8 +49,9 @@
     "eslint-config-godaddy": "^4.0.0",
     "eslint-plugin-json": "^1.4.0",
     "eslint-plugin-mocha": "^6.0.0",
+    "lodash.merge": "^4.6.0",
     "mocha": "^6.2.0",
-    "next": "^9.1.2",
+    "next": "^9.5.3",
     "next-redux-wrapper": "^6.0.1",
     "nyc": "^14.1.1",
     "prop-types": "^15.6.2",
@@ -75,6 +76,7 @@
   },
   "eslintIgnore": [
     "coverage",
-    "generator/redux/redux/store.js"
+    "generator/redux/redux/store.js",
+    "generator/app/pages/_app.js"
   ]
 }

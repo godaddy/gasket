@@ -39,6 +39,7 @@ const depVersions = {
   'redux': '^4.0.4',
   'deepmerge': '^4.0.0',
   'diagnostics': '^2.0.2',
+  'next': '^9.5.3',
 
   'babel-eslint': '^10.0.2',
   'eslint': '^6.1.0',
@@ -58,7 +59,7 @@ const depVersions = {
   'semver': '^6.3.0',
   'lodash.defaultsdeep': '^4.6.0',
   'prop-types': '^15.6.2',
-  'react-intl': '^3.9.1'
+  'react-intl': '^5.8.5'
 };
 
 
