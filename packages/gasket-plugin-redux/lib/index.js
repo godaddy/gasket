@@ -30,6 +30,8 @@ module.exports = {
         `${ __dirname }/../generator/*`,
         `${ __dirname }/../generator/**/*`
       );
+
+      context.hasGasketRedux = true;
     },
     webpack(gasket) {
       const { redux: reduxConfig } = gasket.config;

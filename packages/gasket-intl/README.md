@@ -1,6 +1,16 @@
 # @gasket/intl
 
-React component library to enable localization for Gasket apps.
+React component library to enable localization for Gasket apps. Loads and
+manages locale files from [@gasket/plugin-intl].
+
+- React components:
+  - [withIntlProvider]
+  - [withLocaleRequired]
+  - [LocaleRequired]
+
+- Next.js functions:
+  - [intlGetStaticProps]
+  - [intlGetServerSideProps]
 
 ## Installation
 
@@ -10,291 +20,187 @@ npm i @gasket/intl
 
 ## Components
 
-- `withLocaleRequired(identifier, otherProps)(component)` - Higher-order
-  component to wrap pages or components.
+### withIntlProvider
 
-- `<LocaleRequired>` - Loads messages from locale files.
+Use this to wrap an app to set up the Provider for [react-intl] and context for
+the locale components below.
 
-## Types
+**Signature**
 
-**Identifier**
+- `withIntlProvider(options)`
 
-This tell the components what locale files of which modules to load.
+**Props**
 
-An identifier is made up of 2 parts:
-- `module`: this is the name of a node module or package name. If it is left
-  blank or set to `default`, it will be defaulted to the main app's package
-  name.
-- `namespace`: this is the name of a file within that module's locale directory.
-  If it is left blank, the component will not try to load a namespace file.
+- `[options]` - (object) Optional configuration - currently not used
 
-The parts can be described in the following shapes:
-- string: `<module>.<namespace>`
-- string[]: array of strings in the form `<module>.<namespace>`
-- object: `{module, namespace}`
-- object[]: array of objects with the form `{module, namespace}`
+```jsx
+import { withIntlProvider } from '@gasket/intl';
 
-## Component Props
+const App = props => <div>{props.children}</div>
 
-- `identifier`: (Identifier) What locale file(s) to load.
-- `loading`: (string|node) Optional content to render while loading. Defaults to
-  null. When using the HOC at the page-level, `getInitialProps` will be invoked
-  and defer rendering until locale content is loaded.
-
-## HOC Arguments
-
-- `identifier`: (Identifier) What locale file(s) to load.
-- `otherProps`: (Object) Besides identifier, other props supported by the
-  component.
-
-## Selectors
-
-### selectMessage
-
-`selectMessage(state, id, [defaultMessage])`
-
-For use outside of `react-intl` provider context.
-
-- `state`: (object) redux state
-- `id`: (string) message id or key
-- `defaultMessage`: (string) Optional message if `id` is not found. Otherwise
-  the name of the id will be returned.
-
-### selectAllMessages
-
-`selectAllMessages(state)`
-
-Used by IntlProvider internally, but exposed for some edge use cases.
-
-## Usage
-
-### LocaleRequired
-
-This component loads localization messages for the associated package as
-described by the identifier.
-
-#### Example : When keys are defined in the `locales` root.
-
-In the below example, `app_more_info` and `app_details` are two keys defined in
-the locale file for our app. If `identifier` prop is not set, it will default to
-the locale file of the app.
-
-```js
-import { LocaleRequired } from '@gasket/intl';
-
-<LocaleRequired>
-  <div>
-    <div><FormattedMessage id='app_more_info' /></div>
-    <div><FormattedMessage id='app_details' /></div>
-  </div>
-</LocaleRequired>
-```
-
-#### Example : When keys are defined under a namespace folder.
-
-The prop `identifier` could be `.namespace` or `{ namespace: 'namespace' }`
-
-```js
-<LocaleRequired identifier={{ namespace: 'namespace' }}>
-  ...
-</LocaleRequired>
-```
-
-#### Example : When keys are defined under a package's `locale` root.
-
-The prop `identifier` could be `@myscope/some-module` or `{ module:
-'@myscope/some-module' }`
-
-```js
-<LocaleRequired identifier='@myscope/some-module'>
-  ...
-</LocaleRequired>
-```
-
-#### Example : When keys are defined under a namespace folder for a package.
-
-The prop `identifier` could be `@myscope/some-module.namespace` or `{ module:
-'@myscope/some-module', namespace: 'namespace' }`
-
-```js
-<LocaleRequired identifier={{ module: '@myscope/some-module', namespace: 'namespace' }}>
-  ...
-</LocaleRequired>
-```
-
-
-**Note:** Only one level of namespacing is allowed. So if you use
-`app-name.name.space`, the `module` will be `"app-name"` with the `namespace`
-becoming `"name.space"`.
-
-
-#### Example : When keys are defined in multiple spaces
-
-```js
-<LocaleRequired identifier={['app-name', '@myscope/some-module.namespace']}>
-  ...
-</LocaleRequired>
-
+export default withIntlProvider()(App);
 ```
 
 ### withLocaleRequired
 
-This is a higher order component that wraps components with LocaleRequired.
+Higher-order component to wrap pages or components in an app. This checks to see
+if a locale file has been loaded, and fetches it if not. Once loaded, the
+wrapped component will be rendered.
 
-```js
-import { withLocaleRequired } from '@gasket/intl';
+**Signature**
 
-class TargetComponent extends React.Component {
-  render() {
-    return ...;
-  }
-}
+- `withLocaleRequired(localesPath, options)`
 
-export default withLocaleRequired(<identifier>)(TargetComponent);
-```
+**Props**
 
-#### Examples
+- `localesPath` - (string) Path to endpoint with JSON files. See more about
+  [locales path] in the plugin docs.
+- `[options]` - (object) Optional configuration
+  - `loading` - (string|node) Content to render while loading, otherwise null.
 
-Here are some example uses of the HOC, setting arguments and identifiers in a
-variety of supported formats.
+#### Example
 
 ```jsx
-// Defaults the module to the app's package name
-withLocaleRequired()
-withLocaleRequired('')
-withLocaleRequired('default')
-withLocaleRequired('.some-namespace')
+import { withLocaleRequired } from '@gasket/intl';
+import { FormattedMessage } from 'react-intl';
 
-// Loads locale files of a node module
-withLocaleRequired('a-package')
-withLocaleRequired('a-package.some-namespace')
+const Component = props => <h1><FormattedMessage id='welcome'/></h1>
 
-// Loads multiple locale files
-withLocaleRequired(['a-package.some-namespace', 'b-package.other-namespace'])
-
-// Uses the default module (app's package name), and sets loading indicator
-withLocaleRequired(null, { loading: <Spinner/> })
-
-// Uses locale files of a node module, and sets loading indicator
-withLocaleRequired({ module: 'a-package' }, { loading: <Spinner/> })
-
-// Uses the default module, but with specified namespace
-withLocaleRequired({ namespace: 'some-namespace' })
-
-// Loads a namespace file for a node module and sets loading indicator
-withLocaleRequired({ module: 'a-package', namespace: 'some-namespace'}, { loading: <Spinner/> })
+export default withLocaleRequired('/locales')(Component);
 ```
 
-#### Example shallow rendering with Enzyme When Using `withLocaleRequired`
+If you only have a single locales path for your app, the default `localesPath`
+will be used if unspecified:
 
-If you want to test with `shallow(<ComponentName />)` on a react component which
-uses `withLocaleRequired`, you will need to make two exports in your component
-file, a named and a default export.
-
-```js
-export class ExampleComponent extends Component {
-    ...
-}
-
-export default withLocaleRequired('identifier')(ExampleComponent);
+```jsx
+export default withLocaleRequired()(Component);
 ```
 
-To use the component in another component, use the default import,
+This is also the behavior for the other components and functions where
+`localesPath` can be specified. If the default path for the app should be
+something different from `/locales`, this can be set in the config for
+[@gasket/plugin-intl].
 
-```js
-import ExampleComponent from '../components/examplecomponent';
+### LocaleRequired
+
+This component can also require locale files. This can be useful for components
+that want to render certain content quickly, while deferring rendering other
+content until a [split locales] file loads.
+
+**Signature**
+
+- `<LocaleRequired { ...props } />`
+
+**Props**
+
+- `localesPath` - (string) Path to endpoint with JSON files. See more about
+  [locales path] in the plugin docs.
+- `loading` - (string|node) Content to render while loading, otherwise null.
+
+```jsx
+import { LocaleRequired } from '@gasket/intl';
+import { FormattedMessage } from 'react-intl';
+
+const Component = props => (
+  <>
+    <LocaleRequired localesPath='/locales'>
+      <h1><FormattedMessage id='welcome'/></h1>
+    </LocaleRequired>
+    <LocaleRequired localesPath='/locales/paragraphs' loading='Loading...'>
+      <p><FormattedMessage id='long-description'/></p>
+    </LocaleRequired>
+  </>
+)
+
+export default Component;
 ```
 
-but to test with `shallow(<ComponentName />)`, use the named import.
+## Next.js
 
-```js
-import { ExampleComponent } from '../../components/examplecomponent';
-```
+Loader functions specific to Next.js lifecycles are available from
+`@gasket/intl/next`.
 
-### withIntlProvider
+### intlGetStaticProps
 
-This component reads the locale manifest and attaches all the available messages
-data with IntlProvider. It will be added to GasketApp by default.
+To generate static pages for a locale in a Next.js app, you can use
+`intlGetStaticProps` to make a [getStaticProps] function that will take a
+`locale` param.
 
-```js
-import App from 'next/app';
-import withRedux from 'next-redux-wrapper';
-import makeStore from './redux-store';
-import { withIntlProvider } from '@gasket/intl';
+**Signature**
 
-export default withRedux(makeStore)(withIntlProvider()(App));
-```
+- `intlGetStaticProps(localesPath)`
 
-### Selectors
+**Props**
 
-This example demonstrates how to inject locale messages into a component when
-not using `react-intl`:
+- `localesPath` - (string) Path to endpoint with JSON files. See more about
+  [locales path] in the plugin docs.
 
-```js
-import React, { Fragment } from 'react';
-import { connect } from 'react-redux';
-import { withLocaleRequired, selectMessage } from '@gasket/intl';
+```jsx
+// pages/[locale]/example.js
+import { intlGetStaticProps } from '@gasket/intl/next';
+import { FormattedMessage } from 'react-intl';
 
-const MyComponent = ({ someTitle, someContent }) => (
-  <Fragment>
-    <h1>{someTitle}</h1>
-    <p>{someContent}</p>
-  </Fragment>
-);
+export default const Component = props => <h1><FormattedMessage id='welcome'/></h1>
 
-const mapStateToProps = state => ({
-  someTitle: selectMessage(state, 'someTitle'),
-  someContent: selectMessage(state, 'someContent', 'The is placeholder test')
-});
+export default Component;
 
-export default connect(mapStateToProps)(
-  withLocaleRequired()(MyComponent);
-```
+export const getStaticProps = intlGetStaticProps('/locales');
 
-This example demonstrations how to select a locale message for use in an action
-creator:
-
-```js
-import { selectMessage } from '@gasket/intl';
-import { addGrowlMessage } from '@ux/growl';
-
-const performSomeAction = (payload) => {
-  return (dispatch, getState) => {
-    // do something, then:
-    addGrowlMessage({
-      title: selectMessage(getState(), 'success-title'),
-      content: selectMessage(getState(), 'success-content', 'Great job!')
-    })
-  }
-}
-```
-
-### loadLocaleFilesIntoStore
-
-This function loops through the module names provided
-and reads the locale files for each of those identifiers and saves them in the Redux store.
-Typically, `withLocaleRequired` would handle this under the hood if you are working within components, but if you need to
-access these translation strings outside of a component, you can call this function directly to load them into state.
-
-```js
-import { loadLocaleFilesIntoStore, selectMessage } from '@gasket/intl';
-
-module.exports = async function assignMessagesMiddleware(req, res, next) {
-  const { store, localesDir } = req;
-
-  await loadLocaleFilesIntoStore(store, ['default'], localesDir);
-
-  const state = store.getState();
-
-  const messages = {
-    title: selectMessage(state, 'select-title'),
-    content: selectMessage(state, 'success-content')
+export function getStaticPaths() {
+  return {
+    paths: [
+      { params: { locale: 'en' } },
+      { params: { locale: 'fr' } }
+    ],
+    fallback: false
   };
-
-  req.messages = messages;
-  next();
 }
 ```
+
+In the above example, we are using Next.js dynamic routes for to set the locale
+param. The generated pages will be for `/en/example` and `/fr/example`.
+
+### intlGetServerSideProps
+
+Locale files can also be preloaded for server-side rendering using
+`intlGetServerSideProps` to make a [getServerSideProps] function. The locale to
+be loaded will come from the `res.gasketData` provided by [@gasket/plugin-intl].
+
+**Signature**
+
+- `intlGetServerSideProps(localesPath)`
+
+**Props**
+
+- `localesPath` - (string) Path to endpoint with JSON files. See more about
+  [locales path] in the plugin docs.
+
+```jsx
+import { intlGetServerSideProps } from '@gasket/intl/next';
+import { FormattedMessage } from 'react-intl';
+
+export default const Component = props => <h1><FormattedMessage id='welcome'/></h1>
+
+export default Component;
+
+export const getServerSideProps = intlGetServerSideProps('/locales');
+```
+
+<!-- LINKS -->
+
+[withIntlProvider]:#withintlprovider
+[withLocaleRequired]:#withlocalerequired
+[LocaleRequired]:#localerequired
+[intlGetStaticProps]:#intlgetstaticprops
+[intlGetServerSideProps]:#intlgetserversideprops
+
+[@gasket/plugin-intl]:/packages/gasket-plugin-intl/README.md
+[locales path]:/packages/gasket-plugin-intl/README.md#locales-path
+[split locales]:/packages/gasket-plugin-intl/README.md#split-locales
+
+[react-intl]:https://formatjs.io/docs/react-intl
+[getStaticProps]:https://nextjs.org/docs/basic-features/data-fetching#getstaticprops-static-generation
+[getServerSideProps]:https://nextjs.org/docs/basic-features/data-fetching#getserversideprops-server-side-rendering
 
 ## License
 

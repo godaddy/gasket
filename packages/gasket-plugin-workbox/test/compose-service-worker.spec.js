@@ -6,7 +6,7 @@ describe('composeServiceWorker', () => {
   const expectedComment = 'Welcome to your Workbox-powered service worker!';
   const expectedCode = 'workbox.precaching.precacheAndRoute';
 
-  let results, mockGasket, mockContent, mockReq;
+  let results, mockGasket, mockContent, mockReq, mockRes;
 
   beforeEach(() => {
     mockGasket = {
@@ -24,20 +24,22 @@ describe('composeServiceWorker', () => {
     };
     mockContent = '/* mock sw content */';
     mockReq = {};
+    mockRes = {};
     __setWarnings([]);
   });
 
   it('executes exec for workbox', async () => {
-    await composeServiceWorker(mockGasket, mockContent, mockReq);
+    await composeServiceWorker(mockGasket, mockContent, mockReq, mockRes);
     expect(mockGasket.exec).toHaveBeenCalledWith(
       'workbox',
       utils.defaultConfig.config,
-      mockReq
+      mockReq,
+      mockRes
     );
   });
 
   it('executes generateSWString with merged config', async () => {
-    await composeServiceWorker(mockGasket, mockContent, mockReq);
+    await composeServiceWorker(mockGasket, mockContent, mockReq, mockRes);
     expect(generateSWString).toHaveBeenCalledWith(
       expect.objectContaining({
         ...utils.defaultConfig.config,
@@ -47,7 +49,7 @@ describe('composeServiceWorker', () => {
   });
 
   it('appends generated workbox service worker content', async () => {
-    results = await composeServiceWorker(mockGasket, mockContent, mockReq);
+    results = await composeServiceWorker(mockGasket, mockContent, mockReq, mockRes);
     expect(results).toContain(mockContent);
     expect(results).toContain(expectedCode);
   });
@@ -56,20 +58,20 @@ describe('composeServiceWorker', () => {
     const withComments = await generateSWString();
     expect(withComments.swString).toContain(expectedComment);
 
-    results = await composeServiceWorker(mockGasket, mockContent, mockReq);
+    results = await composeServiceWorker(mockGasket, mockContent, mockReq, mockRes);
     expect(results).not.toContain(expectedComment);
     expect(results).toContain(expectedCode);
   });
 
   it('does not call logger if no warnings', async () => {
-    results = await composeServiceWorker(mockGasket, mockContent, mockReq);
+    results = await composeServiceWorker(mockGasket, mockContent, mockReq, mockRes);
     expect(mockGasket.logger.warning).not.toHaveBeenCalled();
   });
 
   it('logs warnings if they exists', async () => {
     const mockWarnings = ['something bad happened'];
     __setWarnings(mockWarnings);
-    results = await composeServiceWorker(mockGasket, mockContent, mockReq);
+    results = await composeServiceWorker(mockGasket, mockContent, mockReq, mockRes);
     expect(mockGasket.logger.warning).toHaveBeenCalledWith(mockWarnings);
   });
 });
