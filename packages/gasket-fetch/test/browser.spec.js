@@ -1,4 +1,3 @@
-import 'whatwg-fetch';
 import { describe, it } from 'mocha';
 
 import fetch from '../browser';
