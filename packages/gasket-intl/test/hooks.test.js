@@ -15,7 +15,9 @@ describe('useGasketIntl', function () {
       'react': {
         useContext: sinon.stub().returns(mockContext)
       },
-      '@gasket/fetch': fetchStub,
+      '@gasket/fetch': {
+        default: fetchStub
+      },
       './config': mockConfig,
       './utils': proxyquire('../src/utils', {
         './config': mockConfig
@@ -47,6 +49,7 @@ describe('useGasketIntl', function () {
   it('fetches locales url if not loaded', function () {
     const results = useGasketIntl('/locales');
     assume(results).equals(LOADING);
+    assume(fetchStub).called();
     assume(fetchStub).calledWith('/locales/en.json');
   });
 
