@@ -1,0 +1,56 @@
+{
+  "name": "@gasket/data",
+  "version": "6.0.0-canary.0",
+  "description": "Helper package for accessing embedded Gasket Data in the browser",
+  "main": "lib",
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "npm run lint -- --fix",
+    "test": "npm run test:runner",
+    "test:runner": "mocha --require setup-env \"test/*.test.js\"",
+    "test:watch": "npm run test:runner -- --watch",
+    "test:coverage": "nyc --reporter=text --reporter=json-summary npm run test:runner",
+    "posttest": "npm run lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/godaddy/gasket.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "gasket",
+    "helper",
+    "data"
+  ],
+  "author": "GoDaddy Operating Company, LLC",
+  "maintainers": [
+    "Andrew Gerard <agerard@godaddy.com>"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/godaddy/gasket/issues"
+  },
+  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-data",
+  "devDependencies": {
+    "assume": "^2.2.0",
+    "assume-sinon": "^1.0.1",
+    "eslint": "^6.1.0",
+    "eslint-config-godaddy": "^4.0.0",
+    "eslint-plugin-json": "^1.4.0",
+    "eslint-plugin-mocha": "^6.0.0",
+    "mocha": "^6.2.0",
+    "nyc": "^14.1.1",
+    "setup-env": "^1.2.2",
+    "sinon": "^7.4.1"
+  },
+  "eslintConfig": {
+    "extends": [
+      "godaddy"
+    ]
+  },
+  "eslintIgnore": [
+    "coverage"
+  ]
+}
