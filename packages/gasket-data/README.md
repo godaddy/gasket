@@ -11,7 +11,9 @@ npm i @gasket/data
 ## Usage
 
 This helper is intended for use in conjunction with Gasket Data embedded in a
-script tag in the html document. If the follow data is rendered...
+script tag in the html document.
+
+For example, if the following data is rendered...
 
 ```html
 <script id="GasketData" type="application/json">{ "something": "interesting" }</script>

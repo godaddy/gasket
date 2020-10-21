@@ -34,22 +34,4 @@ describe('GasketData', function () {
     const results = getData();
     assume(results).eqls('');
   });
-
-  it('data is immutable', function () {
-    const mockData = {
-      fake: 'results',
-      props: {
-        one: 1,
-        two: 2,
-        nested: {}
-      }
-    };
-    getElementByIdStub.returns({ textContent: JSON.stringify(mockData) });
-    const results = getData();
-    results.fake = false;
-    results.extra = 'value';
-    results.props.one = 'single';
-    delete results.props.nested;
-    assume(results).eqls(mockData);
-  });
 });
