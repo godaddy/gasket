@@ -64,6 +64,3 @@ typings/
 
 # generated docs files
 .docs
-
-# Lockfiles for sub-packages
-**/package-lock.json

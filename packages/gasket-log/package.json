@@ -48,7 +48,7 @@
     "@babel/core": "^7.5.5",
     "@babel/plugin-proposal-class-properties": "^7.3.0",
     "@babel/preset-env": "^7.5.5",
-    "@babel/register": "^7.0.0",
+    "@babel/register": "^7.5.5",
     "assume": "^2.2.0",
     "babel-eslint": "^10.0.2",
     "eslint": "^6.1.0",
