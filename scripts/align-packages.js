@@ -21,6 +21,7 @@ const depVersions = {
   '@babel/core': '^7.5.5',
   '@babel/node': '^7.5.5',
   '@babel/runtime': '^7.5.5',
+  '@babel/register': '^7.5.5',
   '@babel/plugin-transform-runtime': '^7.5.5',
   '@babel/preset-env': '^7.5.5',
   '@babel/preset-react': '^7.0.0',
@@ -49,6 +50,7 @@ const depVersions = {
   'eslint-plugin-jest': '^22.15.1',
   'eslint-plugin-mocha': '^6.0.0',
   'eslint-plugin-react': '^7.14.0',
+  'jsdom': '^16.4.0',
 
   'enzyme': '^3.10.0',
   'enzyme-adapter-react-16': '^1.14.0',
