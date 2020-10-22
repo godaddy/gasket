@@ -42,6 +42,7 @@ module.exports = {
       const compression = require('compression');
 
       const { config } = gasket;
+      const { root, express: { routes } = {} } = config;
       const excludedRoutesRegex = config.express && config.express.excludedRoutesRegex;
       const app = express();
 
@@ -72,12 +73,12 @@ module.exports = {
       const postRenderingStacks = await gasket.exec('errorMiddleware');
       postRenderingStacks.forEach((stack) => app.use(stack));
 
-      if (config.express && config.express.routes) {
-        glob(`${config.express.routes}.js`, { cwd: gasket.config.root }, function (err, files) {
+      if (routes) {
+        glob(`${routes}.js`, { cwd: root }, function (err, files) {
           if (err) throw err;
 
           for (let i = 0; i < files.length; i++) {
-            require(path.join(gasket.config.root, files[i]))(app);
+            require(path.join(root, files[i]))(app);
           }
         });
       }
