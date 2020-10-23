@@ -46,7 +46,8 @@ describe('Swagger Plugin', () => {
     const expected = [
       'configure',
       'build',
-      'express'
+      'express',
+      'create'
     ];
 
     assume(plugin).property('hooks');

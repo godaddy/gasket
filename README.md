@@ -120,6 +120,7 @@ Available presets
 
 | Name                    | Version | Description                                |
 | ----------------------- | ------- | ------------------------------------------ |
+| [@gasket/preset-api]    | 1.0.0   | Create Express-based API with Gasket       |
 | [@gasket/preset-nextjs] | 5.6.0   | Basic NextJS Framework                     |
 | [@gasket/preset-pwa]    | 5.6.0   | Turn Gasket apps into Progressive Web Apps |
 
@@ -243,6 +244,7 @@ Supporting modules
 [jest.config.js]:https://jestjs.io/docs/configuration
 [routes.js]:https://github.com/fridays/next-routes#how-to-use
 [store.js]:/packages/gasket-plugin-redux/README.md
+[@gasket/preset-api]:/packages/gasket-preset-api/README.md
 [@gasket/preset-nextjs]:/packages/gasket-preset-nextjs/README.md
 [@gasket/preset-pwa]:/packages/gasket-preset-pwa/README.md
 [@gasket/plugin-analyze]:/packages/gasket-plugin-analyze/README.md
@@ -286,4 +288,4 @@ Supporting modules
 
 Gasket is [MIT licensed](./LICENSE.md).
 
-[Quick Start Guide]:docs/quick-start.md
+[quick start guide]: docs/quick-start.md
