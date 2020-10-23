@@ -120,6 +120,7 @@ Available presets
 
 | Name                    | Version | Description                                |
 | ----------------------- | ------- | ------------------------------------------ |
+| [@gasket/preset-api]    | 1.0.0   | Create Express-based API with Gasket       |
 | [@gasket/preset-nextjs] | 5.6.0   | Basic NextJS Framework                     |
 | [@gasket/preset-pwa]    | 5.6.0   | Turn Gasket apps into Progressive Web Apps |
 
@@ -284,4 +285,4 @@ Supporting modules
 
 Gasket is [MIT licensed](./LICENSE.md).
 
-[Quick Start Guide]:docs/quick-start.md
+[quick start guide]: docs/quick-start.md

@@ -19,7 +19,6 @@ let __swaggerSpec;
  */
 async function loadSwaggerSpec(root, definitionFile) {
   if (!__swaggerSpec) {
-
     const target = path.join(root, definitionFile);
     if (isYaml.test(definitionFile)) {
       const content = await readFile(target, 'utf8');
@@ -91,6 +90,27 @@ module.exports = {
       const swaggerSpec = await loadSwaggerSpec(root, definitionFile);
 
       app.use(apiDocsRoute, swaggerUi.serve, swaggerUi.setup(swaggerSpec, ui));
+    },
+    /**
+     * Sets swagger plugin prop to true and adds swagger config to gasket.config
+     *
+     * @param {object} gasket - Gasket API
+     * @param {CreateContext} context - Create context
+     *
+     */
+    create(gasket, context) {
+      context.hasSwaggerPlugin = true;
+      context.gasketConfig.add('swagger', {
+        jsdoc: {
+          definition: {
+            info: {
+              title: context.appName,
+              version: '1.0.0'
+            }
+          },
+          apis: ['./routes/*']
+        }
+      });
     }
   }
 };
