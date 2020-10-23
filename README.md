@@ -120,7 +120,7 @@ Available presets
 
 | Name                    | Version | Description                                |
 | ----------------------- | ------- | ------------------------------------------ |
-| [@gasket/preset-api]    | 1.0.0   | Create Express-based API with Gasket       |
+| [@gasket/preset-api]    | 5.9.0   | Create Express-based API with Gasket       |
 | [@gasket/preset-nextjs] | 5.6.0   | Basic NextJS Framework                     |
 | [@gasket/preset-pwa]    | 5.6.0   | Turn Gasket apps into Progressive Web Apps |
 
@@ -136,7 +136,7 @@ Available plugins
 | [@gasket/plugin-docs]           | 5.6.0   | Centralize doc files from plugins and modules                              |
 | [@gasket/plugin-docs-graphs]    | 5.6.0   | Generate mermaid graphs of an applications gasket lifecycles               |
 | [@gasket/plugin-docsify]        | 5.6.0   | View collated docs with Docsify                                            |
-| [@gasket/plugin-express]        | 5.6.0   | Adds express support to your application                                   |
+| [@gasket/plugin-express]        | 5.9.0   | Adds express support to your application                                   |
 | [@gasket/plugin-fastify]        | 5.6.0   | Adds fastify support to your application                                   |
 | [@gasket/plugin-git]            | 5.6.0   | Adds git support to your application                                       |
 | [@gasket/plugin-https]          | 5.6.0   | Create http/s servers with graceful termination                            |
@@ -153,7 +153,7 @@ Available plugins
 | [@gasket/plugin-redux]          | 5.6.0   | Gasket Redux Setup                                                         |
 | [@gasket/plugin-service-worker] | 5.6.0   | Gasket Service Worker Plugin                                               |
 | [@gasket/plugin-start]          | 5.6.0   | Adds commands for building and starting Gasket apps                        |
-| [@gasket/plugin-swagger]        | 5.8.0   | Generate and serve swagger docs                                            |
+| [@gasket/plugin-swagger]        | 5.9.0   | Generate and serve swagger docs                                            |
 | [@gasket/plugin-webpack]        | 5.6.0   | Adds webpack support to your application                                   |
 | [@gasket/plugin-workbox]        | 5.6.0   | Gasket Workbox Plugin                                                      |
 
