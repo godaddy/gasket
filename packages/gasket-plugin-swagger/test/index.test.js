@@ -4,7 +4,8 @@ const proxyquire = require('proxyquire').noCallThru();
 
 describe('Swagger Plugin', () => {
   let plugin;
-  let readFileStub, writeFileStub, yamlSafeDumpStub, yamlSafeLoadStub, swaggerJSDocStub;
+  let readFileStub, writeFileStub, yamlSafeDumpStub, yamlSafeLoadStub, swaggerJSDocStub, F_OKStub, 
+  accessStub;
 
   beforeEach(() => {
     readFileStub = sinon.stub();
@@ -12,19 +13,25 @@ describe('Swagger Plugin', () => {
     yamlSafeDumpStub = sinon.stub();
     yamlSafeLoadStub = sinon.stub().resolves({ data: true });
     swaggerJSDocStub = sinon.stub();
+    F_OKStub = sinon.stub();
+    accessStub = sinon.stub();
 
     plugin = proxyquire('../index', {
-      'fs': {
+      fs: {
         readFile: readFileStub,
-        writeFile: writeFileStub
+        writeFile: writeFileStub,
+        constants: {
+          F_OK: F_OKStub
+        },
+        access: accessStub
       },
       'swagger-jsdoc': swaggerJSDocStub,
       'js-yaml': {
         safeDump: yamlSafeDumpStub,
         safeLoad: yamlSafeLoadStub
       },
-      'util': {
-        promisify: f => f
+      util: {
+        promisify: (f) => f
       },
       '/path/to/app/swagger.json': { data: true }
     });
@@ -93,7 +100,8 @@ describe('Swagger Plugin', () => {
     beforeEach(() => {
       mockGasket = {
         logger: {
-          info: sinon.stub()
+          info: sinon.stub(),
+          warning: sinon.stub()
         },
         config: {
           root: '/path/to/app',
@@ -146,7 +154,8 @@ describe('Swagger Plugin', () => {
     beforeEach(() => {
       mockGasket = {
         logger: {
-          info: sinon.stub()
+          info: sinon.stub(),
+          error: sinon.stub()
         },
         config: {
           root: '/path/to/app',
