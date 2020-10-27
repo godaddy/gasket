@@ -62,13 +62,13 @@ module.exports = {
   hooks: {
     webpack(gasket, webpackConfig) {
       // construct and return some webpack config partial
-      return {
+      return webpackMerge(webpackConfig, {
         resolve: {
           alias: {
             'fancy-module': './path/to/some/other/module'
           }
         }
-      }
+      });
     }
   }
 }
