@@ -25,7 +25,13 @@ async function loadSwaggerSpec(root, definitionFile) {
       // eslint-disable-next-line require-atomic-updates
       __swaggerSpec = require('js-yaml').safeLoad(content);
     } else {
-      __swaggerSpec = require(target);
+      fs.access(target, fs.constants.F_OK, (err) => {
+        if (err) {
+          return;
+        }
+
+        __swaggerSpec = require(target);
+      });
     }
   }
   return __swaggerSpec;
@@ -74,6 +80,10 @@ module.exports = {
 
         await writeFile(target, content, 'utf8');
         gasket.logger.info(`Wrote: ${definitionFile}`);
+      } else {
+        gasket.logger.warning(
+          'Missing swagger config in gasket.config.js: swagger.json was not generated...'
+        );
       }
     },
     /**
@@ -88,6 +98,10 @@ module.exports = {
       const { ui = {}, apiDocsRoute, definitionFile } = swagger;
 
       const swaggerSpec = await loadSwaggerSpec(root, definitionFile);
+
+      if (!swaggerSpec) {
+        gasket.logger.error('Missing swagger.json file...');
+      }
 
       app.use(apiDocsRoute, swaggerUi.serve, swaggerUi.setup(swaggerSpec, ui));
     },
