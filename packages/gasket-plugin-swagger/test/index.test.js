@@ -4,8 +4,8 @@ const proxyquire = require('proxyquire').noCallThru();
 
 describe('Swagger Plugin', () => {
   let plugin;
-  let readFileStub, writeFileStub, yamlSafeDumpStub, yamlSafeLoadStub, swaggerJSDocStub, F_OKStub, 
-  accessStub;
+  let readFileStub, writeFileStub, yamlSafeDumpStub, yamlSafeLoadStub, swaggerJSDocStub, oKStub,
+    accessStub;
 
   beforeEach(() => {
     readFileStub = sinon.stub();
@@ -13,15 +13,15 @@ describe('Swagger Plugin', () => {
     yamlSafeDumpStub = sinon.stub();
     yamlSafeLoadStub = sinon.stub().resolves({ data: true });
     swaggerJSDocStub = sinon.stub();
-    F_OKStub = sinon.stub();
+    oKStub = sinon.stub();
     accessStub = sinon.stub();
 
     plugin = proxyquire('../index', {
-      fs: {
+      'fs': {
         readFile: readFileStub,
         writeFile: writeFileStub,
         constants: {
-          F_OK: F_OKStub
+          F_OK: oKStub
         },
         access: accessStub
       },
@@ -30,7 +30,7 @@ describe('Swagger Plugin', () => {
         safeDump: yamlSafeDumpStub,
         safeLoad: yamlSafeLoadStub
       },
-      util: {
+      'util': {
         promisify: (f) => f
       },
       '/path/to/app/swagger.json': { data: true }
