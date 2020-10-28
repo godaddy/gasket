@@ -66,7 +66,7 @@ module.exports = {
             'fancy-module': './path/to/some/other/module'
           }
         }
-      });
+      }
     }
   }
 }
