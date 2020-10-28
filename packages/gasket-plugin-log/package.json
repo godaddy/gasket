@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-log",
-  "version": "6.0.0-canary.0",
+  "version": "6.0.0-canary.2",
   "description": "Gasket log plugin",
   "main": "./",
   "scripts": {
@@ -37,7 +37,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-log#readme",
   "dependencies": {
-    "@gasket/log": "^6.0.0-canary.0"
+    "@gasket/log": "^6.0.0-canary.2"
   },
   "devDependencies": {
     "assume": "^2.2.0",

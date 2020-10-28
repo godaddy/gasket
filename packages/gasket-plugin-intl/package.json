@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-intl",
-  "version": "6.0.0-canary.0",
+  "version": "6.0.0-canary.2",
   "description": "NodeJS script to build localization files.",
   "main": "lib",
   "scripts": {
@@ -41,8 +41,8 @@
     "url-join": "^4.0.0"
   },
   "devDependencies": {
-    "@gasket/intl": "^6.0.0-canary.0",
-    "@gasket/plugin-log": "^6.0.0-canary.0",
+    "@gasket/intl": "^6.0.0-canary.2",
+    "@gasket/plugin-log": "^6.0.0-canary.2",
     "assume": "^2.2.0",
     "assume-sinon": "^1.0.1",
     "eslint": "^6.1.0",
