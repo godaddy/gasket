@@ -66,7 +66,11 @@ module.exports = {
             'fancy-module': './path/to/some/other/module'
           }
         }
+<<<<<<< HEAD
       }
+=======
+      };
+>>>>>>> d1af5ce18bba2524172e6e10a47819f655b87045
     }
   }
 }
