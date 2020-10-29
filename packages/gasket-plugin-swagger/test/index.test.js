@@ -14,7 +14,7 @@ describe('Swagger Plugin', () => {
     yamlSafeLoadStub = sinon.stub().resolves({ data: true });
     swaggerJSDocStub = sinon.stub();
     oKStub = sinon.stub();
-    accessStub = sinon.stub();
+    accessStub = sinon.stub().resolves();
 
     plugin = proxyquire('../index', {
       'fs': {
@@ -124,6 +124,7 @@ describe('Swagger Plugin', () => {
     });
 
     it('writes spec file', async () => {
+      swaggerJSDocStub.returns({ data: true });
       await plugin.hooks.build(mockGasket);
       assume(writeFileStub).calledWith('/path/to/app/swagger.json');
     });
@@ -135,6 +136,7 @@ describe('Swagger Plugin', () => {
     });
 
     it('yaml content for .yaml definition files', async () => {
+      swaggerJSDocStub.returns({ data: true });
       mockGasket.config.swagger.definitionFile = 'swagger.yaml';
       yamlSafeDumpStub.returns('- data: true');
       await plugin.hooks.build(mockGasket);
@@ -168,6 +170,23 @@ describe('Swagger Plugin', () => {
       mockApp = {
         use: sinon.stub()
       };
+    });
+
+    context('when target definition file is not found', () => {
+      it('returns nothing', async () => {
+        mockGasket.config.swagger.definitionFile = 'swagger.yaml';
+        const result = await plugin.hooks.express(mockGasket, mockApp);
+        assume(result).is.falsely();
+      });
+    });
+
+    context('when swagger file is missing', () => {
+      it('gasket.logger logs error', async () => {
+        mockGasket.config.swagger.definitionFile = 'swagger.yaml';
+        accessStub.rejects();
+        await plugin.hooks.express(mockGasket, mockApp);
+        assume(mockGasket.logger.error).calledWith(`Missing ${mockGasket.config.swagger.definitionFile} file...`);
+      });
     });
 
     it('loads the swagger spec yaml file', async () => {

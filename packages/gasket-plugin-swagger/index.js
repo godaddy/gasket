@@ -5,6 +5,7 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerJSDoc = require('swagger-jsdoc');
 const readFile = promisify(fs.readFile);
 const writeFile = promisify(fs.writeFile);
+const accessFile = promisify(fs.access);
 
 const isYaml = /\.ya?ml$/;
 
@@ -15,24 +16,27 @@ let __swaggerSpec;
  *
  * @param {string} root - App root
  * @param {string} definitionFile - Path to file relative to root
+ * @param {*} logger - gasket logger
  * @returns {Promise<object>} spec
  */
-async function loadSwaggerSpec(root, definitionFile) {
+async function loadSwaggerSpec(root, definitionFile, logger) {
   if (!__swaggerSpec) {
     const target = path.join(root, definitionFile);
-    if (isYaml.test(definitionFile)) {
-      const content = await readFile(target, 'utf8');
-      // eslint-disable-next-line require-atomic-updates
-      __swaggerSpec = require('js-yaml').safeLoad(content);
-    } else {
-      fs.access(target, fs.constants.F_OK, (err) => {
-        if (err) {
-          return;
-        }
 
-        __swaggerSpec = require(target);
+    await accessFile(target, fs.constants.F_OK)
+      .then(async () => {
+        if (isYaml.test(definitionFile)) {
+          const content = await readFile(target, 'utf8');
+          // eslint-disable-next-line require-atomic-updates
+          __swaggerSpec = require('js-yaml').safeLoad(content);
+        } else {
+          __swaggerSpec = require(target);
+        }
+      })
+      .catch(() => {
+        logger.error(`Missing ${definitionFile} file...`);
+        return;
       });
-    }
   }
   return __swaggerSpec;
 }
@@ -71,19 +75,21 @@ module.exports = {
         const target = path.join(root, definitionFile);
         const swaggerSpec = swaggerJSDoc(jsdoc);
 
-        let content;
-        if (isYaml.test(definitionFile)) {
-          content = require('js-yaml').safeDump(swaggerSpec);
+        if (!swaggerSpec) {
+          gasket.logger.warning(
+            'Missing swagger config in gasket.config.js: swagger.json was not generated...'
+          );
         } else {
-          content = JSON.stringify(swaggerSpec, null, 2);
-        }
+          let content;
+          if (isYaml.test(definitionFile)) {
+            content = require('js-yaml').safeDump(swaggerSpec);
+          } else {
+            content = JSON.stringify(swaggerSpec, null, 2);
+          }
 
-        await writeFile(target, content, 'utf8');
-        gasket.logger.info(`Wrote: ${definitionFile}`);
-      } else {
-        gasket.logger.warning(
-          'Missing swagger config in gasket.config.js: swagger.json was not generated...'
-        );
+          await writeFile(target, content, 'utf8');
+          gasket.logger.info(`Wrote: ${definitionFile}`);
+        }
       }
     },
     /**
@@ -97,11 +103,7 @@ module.exports = {
       const { swagger, root } = gasket.config;
       const { ui = {}, apiDocsRoute, definitionFile } = swagger;
 
-      const swaggerSpec = await loadSwaggerSpec(root, definitionFile);
-
-      if (!swaggerSpec) {
-        gasket.logger.error('Missing swagger.json file...');
-      }
+      const swaggerSpec = await loadSwaggerSpec(root, definitionFile, gasket.logger);
 
       app.use(apiDocsRoute, swaggerUi.serve, swaggerUi.setup(swaggerSpec, ui));
     },
