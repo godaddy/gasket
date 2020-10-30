@@ -56,8 +56,6 @@ though this can be brittle and is preferred to be avoid.
 ```js
 // some-custom-plugin.js
 
-const webpackMerge = require('webpack-merge');
-
 module.exports = {
   hooks: {
     webpack(gasket, webpackConfig) {
