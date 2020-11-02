@@ -274,39 +274,39 @@ describe('workbox hook', () => {
     assume(results.modifyURLPrefix).to.have.property('.next/', '_next/');
   });
 
-  it('config modifies urls to use zone with https', async () => {
-    const zone = 'https://some-cdn.com/';
-    gasketAPI.config = { zone };
+  it('config modifies urls to use base path with https', async () => {
+    const basePath = 'https://some-cdn.com/';
+    gasketAPI.config = { basePath };
     const results = await plugin.hooks.workbox(gasketAPI);
-    assume(results.modifyURLPrefix).to.have.property('.next/', zone + '_next/');
+    assume(results.modifyURLPrefix).to.have.property('.next/', basePath + '_next/');
   });
 
-  it('config modifies urls to use zone with http', async () => {
-    const zone = 'http://some-cdn.com/';
-    gasketAPI.config = { zone };
+  it('config modifies urls to use base path with http', async () => {
+    const basePath = 'http://some-cdn.com/';
+    gasketAPI.config = { basePath };
     const results = await plugin.hooks.workbox(gasketAPI);
-    assume(results.modifyURLPrefix).to.have.property('.next/', zone + '_next/');
+    assume(results.modifyURLPrefix).to.have.property('.next/', basePath + '_next/');
   });
 
-  it('config modifies urls to use zone with https but no trailing slash', async () => {
-    const zone = 'https://some-cdn.com';
-    gasketAPI.config = { zone };
+  it('config modifies urls to use base path with https but no trailing slash', async () => {
+    const basePath = 'https://some-cdn.com';
+    gasketAPI.config = { basePath };
     const results = await plugin.hooks.workbox(gasketAPI);
-    assume(results.modifyURLPrefix).to.have.property('.next/', `${zone}/_next/`);
+    assume(results.modifyURLPrefix).to.have.property('.next/', `${basePath}/_next/`);
   });
 
-  it('config modifies urls to use zone relative path with trailing slash', async () => {
-    const zone = '/some/asset/prefix/';
-    gasketAPI.config = { zone };
+  it('config modifies urls to use base path relative path with trailing slash', async () => {
+    const basePath = '/some/asset/prefix/';
+    gasketAPI.config = { basePath };
     const results = await plugin.hooks.workbox(gasketAPI);
-    assume(results.modifyURLPrefix).to.have.property('.next/', `${zone}_next/`);
+    assume(results.modifyURLPrefix).to.have.property('.next/', `${basePath}_next/`);
   });
 
-  it('config modifies urls to use zone relative path without trailing slash', async () => {
-    const zone = '/some/asset/prefix';
-    gasketAPI.config = { zone };
+  it('config modifies urls to use base path relative path without trailing slash', async () => {
+    const basePath = '/some/asset/prefix';
+    gasketAPI.config = { basePath };
     const results = await plugin.hooks.workbox(gasketAPI);
-    assume(results.modifyURLPrefix).to.have.property('.next/', `${zone}/_next/`);
+    assume(results.modifyURLPrefix).to.have.property('.next/', `${basePath}/_next/`);
   });
 
   it('config modifies urls to use assetPrefix with https', async () => {
