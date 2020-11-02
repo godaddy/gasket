@@ -77,7 +77,7 @@ module.exports = {
 
         if (!swaggerSpec) {
           gasket.logger.warning(
-            `No JSDocs for Swagger were found in files (${jsdocs.apis}). Definition file not generated...`
+            `No JSDocs for Swagger were found in files (${jsdoc.apis}). Definition file not generated...`
           );
         } else {
           let content;
