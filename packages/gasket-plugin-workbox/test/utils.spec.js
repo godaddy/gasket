@@ -40,7 +40,7 @@ describe('getAssetPrefix', () => {
 
   it('returns the assetPrefix from next config', () => {
     const results = utils.getAssetPrefix(setupGasket({
-        zone: '//cdn-b'
+      basePath: '//cdn-b'
     }));
     expect(results).toEqual('//cdn-b');
   });
@@ -50,7 +50,7 @@ describe('getAssetPrefix', () => {
       workbox: {
         assetPrefix: '//cdn-a'
       },
-      zone: '//cdn-b'
+      basePath: '//cdn-b'
     }));
     expect(results).toEqual('//cdn-a');
   });
