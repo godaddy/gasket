@@ -153,7 +153,7 @@ Available plugins
 | [@gasket/plugin-redux]          | 5.6.0   | Gasket Redux Setup                                                         |
 | [@gasket/plugin-service-worker] | 5.6.0   | Gasket Service Worker Plugin                                               |
 | [@gasket/plugin-start]          | 5.6.0   | Adds commands for building and starting Gasket apps                        |
-| [@gasket/plugin-swagger]        | 5.9.0   | Generate and serve swagger docs                                            |
+| [@gasket/plugin-swagger]        | 5.10.0  | Generate and serve swagger docs                                            |
 | [@gasket/plugin-webpack]        | 5.6.0   | Adds webpack support to your application                                   |
 | [@gasket/plugin-workbox]        | 5.6.0   | Gasket Workbox Plugin                                                      |
 
