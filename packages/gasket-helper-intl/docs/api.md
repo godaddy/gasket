@@ -104,7 +104,14 @@ or a URL template with a `:locale` path param to a .json file.
 ```
 **Example**  
 ```js
+// as a template
 "/locales/:locale/component.json"
+```
+**Example**  
+```js
+// other param formats
+"/locales/$locale/component.json"
+"/locales/{locale}/component.json"
 ```
 
 ## LocalePath
@@ -118,6 +125,7 @@ URL path to a locale .json file
 ```
 **Example**  
 ```js
+// from a template
 "/locales/en-US/component.json"
 ```
 
