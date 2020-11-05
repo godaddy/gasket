@@ -62,7 +62,7 @@ const reLocalePathParam = /(\/[$:{]locale}?\/)/;
 function LocaleUtils(config) {
   const { manifest } = config;
   const { basePath = manifest.basePath } = config;
-  const { defaultLocale, localesMap, paths } = manifest;
+  const { defaultLocale = 'en', localesMap, paths } = manifest;
   const defaultLang = defaultLocale.split('-')[0];
 
   /**
