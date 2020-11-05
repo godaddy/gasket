@@ -1,5 +1,7 @@
 # `@gasket/plugin-workbox`
 
+- Change `zone` config to `basePath` ([#212])
+
 ### 5.5.0
 
 - Updated plugins to consume zones gasket config property ([#166])
@@ -26,3 +28,4 @@
 
 [#95]:https://github.com/godaddy/gasket/pull/95
 [#166]: https://github.com/godaddy/gasket/pull/166
+[#212]: https://github.com/godaddy/gasket/pull/212

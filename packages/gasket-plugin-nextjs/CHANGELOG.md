@@ -2,6 +2,7 @@
 
 - Generate `pages/_app.s` with [next-redux-wrapper] setup from store ([#173])
 - Generate a `redux/store.js` with [next-redux-wrapper] setup ([#173])
+- Change `zone` config to `basePath` ([#212])
 
 ### 5.5.0
 
@@ -80,3 +81,4 @@
 [#158]: https://github.com/godaddy/gasket/pull/158
 [#166]: https://github.com/godaddy/gasket/pull/166
 [#173]: https://github.com/godaddy/gasket/pull/173
+[#212]: https://github.com/godaddy/gasket/pull/212
