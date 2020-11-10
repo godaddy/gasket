@@ -111,7 +111,6 @@ Available structure
 | [app.config.js]    | App configuration with environment overrides           |
 | [gasket.config.js] | Gasket config for an app                               |
 | [jest.config.js]   | Jest configuration                                     |
-| [routes.js]        | Routing when using `next-routes`                       |
 | [store.js]         | Setup to make Redux store                              |
 
 ## Presets
