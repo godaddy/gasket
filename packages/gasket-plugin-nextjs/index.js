@@ -173,8 +173,6 @@ module.exports = {
       };
     },
     metadata(gasket, meta) {
-      const { routes = 'routes.js' } = gasket.config || {};
-
       return {
         ...meta,
         guides: [{
