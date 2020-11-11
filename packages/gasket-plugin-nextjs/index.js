@@ -210,7 +210,7 @@ module.exports = {
         structures: [{
           name: 'pages/',
           description: 'NextJS routing',
-          link: 'https://nextjs.org/docs#routing'
+          link: 'https://nextjs.org/docs/routing/introduction'
         }]
       };
     }
