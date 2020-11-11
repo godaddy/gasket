@@ -202,8 +202,6 @@ module.exports = {
       };
     },
     metadata(gasket, meta) {
-      const { routes = 'routes.js' } = gasket.config || {};
-
       return {
         ...meta,
         guides: [{
@@ -243,11 +241,7 @@ module.exports = {
         structures: [{
           name: 'pages/',
           description: 'NextJS routing',
-          link: 'https://nextjs.org/docs#routing'
-        }, {
-          name: routes,
-          description: 'Routing when using `next-routes`',
-          link: 'https://github.com/fridays/next-routes#how-to-use'
+          link: 'https://nextjs.org/docs/routing/introduction'
         }]
       };
     }
