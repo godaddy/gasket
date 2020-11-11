@@ -111,7 +111,6 @@ Available structure
 | [app.config.js]    | App configuration with environment overrides           |
 | [gasket.config.js] | Gasket config for an app                               |
 | [jest.config.js]   | Jest configuration                                     |
-| [routes.js]        | Routing when using `next-routes`                       |
 | [store.js]         | Setup to make Redux store                              |
 
 ## Presets
@@ -237,12 +236,11 @@ Supporting modules
 [config/]:/packages/gasket-plugin-config/README.md
 [lifecycles/]:/packages/gasket-plugin-lifecycle/README.md
 [locales/]:/packages/gasket-plugin-intl/README.md#Options
-[pages/]:https://nextjs.org/docs#routing
+[pages/]:https://nextjs.org/docs/routing/introduction
 [plugins/]:/packages/gasket-cli/docs/plugins.md#one-off-plugins
 [app.config.js]:/packages/gasket-plugin-config/README.md
 [gasket.config.js]:/packages/gasket-cli/docs/configuration.md
 [jest.config.js]:https://jestjs.io/docs/configuration
-[routes.js]:https://github.com/fridays/next-routes#how-to-use
 [store.js]:/packages/gasket-plugin-redux/README.md
 [@gasket/preset-api]:/packages/gasket-preset-api/README.md
 [@gasket/preset-nextjs]:/packages/gasket-preset-nextjs/README.md
