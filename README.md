@@ -236,7 +236,7 @@ Supporting modules
 [config/]:/packages/gasket-plugin-config/README.md
 [lifecycles/]:/packages/gasket-plugin-lifecycle/README.md
 [locales/]:/packages/gasket-plugin-intl/README.md#Options
-[pages/]:https://nextjs.org/docs#routing
+[pages/]:https://nextjs.org/docs/routing/introduction
 [plugins/]:/packages/gasket-cli/docs/plugins.md#one-off-plugins
 [app.config.js]:/packages/gasket-plugin-config/README.md
 [gasket.config.js]:/packages/gasket-cli/docs/configuration.md
