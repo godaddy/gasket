@@ -211,10 +211,6 @@ module.exports = {
           name: 'pages/',
           description: 'NextJS routing',
           link: 'https://nextjs.org/docs#routing'
-        }, {
-          name: routes,
-          description: 'Routing when using `next-routes`',
-          link: 'https://github.com/fridays/next-routes#how-to-use'
         }]
       };
     }
