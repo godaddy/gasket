@@ -49,9 +49,6 @@
     "recursive-readdir": "^2.2.2",
     "rimraf": "^3.0.0"
   },
-  "peerDependencies": {
-    "react": "^16.8.4"
-  },
   "eslintConfig": {
     "extends": [
       "godaddy"
