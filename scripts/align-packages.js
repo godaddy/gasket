@@ -35,12 +35,12 @@ const depVersions = {
   'nyc': '^14.1.1',
   'proxyquire': '^2.1.3',
 
-  'react': '^16.8.6',
-  'react-dom': '^16.8.6',
+  'react': '^17.0.1',
+  'react-dom': '^17.0.1',
   'redux': '^4.0.4',
   'deepmerge': '^4.0.0',
   'diagnostics': '^2.0.2',
-  'next': '^9.5.3',
+  'next': '^10.0.1',
 
   'babel-eslint': '^10.0.2',
   'eslint': '^6.1.0',
