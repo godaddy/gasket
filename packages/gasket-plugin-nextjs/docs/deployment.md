@@ -19,34 +19,6 @@ the following:
 All these files are needed to render your application server side or client
 side.
 
-## Consistent buildId
-
-Next.js is configured to use a unique UUID V4 for each build. This can lead to
-issues if you compile or build your application during deployment as you will
-generate different `buildId`'s for each server.
-
-Fortunately, Next.js allows you to specify a function that generates the
-`buildId`. As we are building an application, that already has a `package.json`
-file, you can default to the version of your application as `buildId`:
-
-```js
-{
-  nextConfig: {
-    generateBuildId: async () => {
-      return require('./package.json').version;
-
-      //
-      // You can also use the latest commit of your project. Either
-      // manually set it or use a module that parses it out of the
-      // git command:
-      //
-      // return require('git-shizzle')('.').revParse('HEAD').trim();
-      //
-    }
-  }
-}
-```
-
 ## To CDN or not to CDN
 
 By default all the files that are in the `.next` folder will be hosted on your
