@@ -1,8 +1,11 @@
 # `@gasket/plugin-nextjs`
 
+### 6.0.0
+
 - Generate `pages/_app.s` with [next-redux-wrapper] setup from store ([#173])
 - Generate a `redux/store.js` with [next-redux-wrapper] setup ([#173])
 - Change `zone` config to `basePath` ([#212])
+- Update next@10 and react@17 dependencies ([#216])
 
 ### 5.5.0
 
@@ -82,3 +85,4 @@
 [#166]: https://github.com/godaddy/gasket/pull/166
 [#173]: https://github.com/godaddy/gasket/pull/173
 [#212]: https://github.com/godaddy/gasket/pull/212
+[#216]: https://github.com/godaddy/gasket/pull/216
