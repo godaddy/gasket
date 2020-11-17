@@ -1,5 +1,15 @@
 # `@gasket/plugin-intl`
 
+### 6.0.0
+
+- Decoupled from Redux ([#180])
+  - Request-based settings moved to gasketData in response object
+- Decoupled from Express ([#180])
+  - Locale files should be served with apps static content
+  - Middleware exist for handling locales on server-side
+- Alignment of options terms to locale instead of locale + language ([#180])
+- Fix path for generated locale file ([#216])
+
 ### 5.7.0
 
 - Create new apps with `react-intl` v5 ([#175])
@@ -77,3 +87,5 @@
 [#144]: https://github.com/godaddy/gasket/pull/144
 [#166]: https://github.com/godaddy/gasket/pull/166
 [#175]: https://github.com/godaddy/gasket/pull/175
+[#180]: https://github.com/godaddy/gasket/pull/180
+[#216]: https://github.com/godaddy/gasket/pull/216

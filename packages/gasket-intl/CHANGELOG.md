@@ -1,5 +1,13 @@
 # `@gasket/intl`
 
+### 6.0.0
+
+- Decoupled from Redux ([#180])
+- Support for getStaticProps and getServerSideProps in Next.js apps ([#180])
+  - Removed use of getInitialProps in components.
+- Simplified locale paths (formerly referred to as "identifiers") ([#180])
+- Update next@10 and react@17 dependencies ([#216])
+
 ### 5.7.0
 
 - Bump `react-intl` peerDependency range to include v5 ([#175])
@@ -81,3 +89,5 @@
 
 [#166]: https://github.com/godaddy/gasket/pull/166
 [#175]: https://github.com/godaddy/gasket/pull/175
+[#180]: https://github.com/godaddy/gasket/pull/180
+[#216]: https://github.com/godaddy/gasket/pull/216
