@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-nextjs",
-  "version": "6.0.0-canary.3",
+  "version": "6.0.0-canary.4",
   "description": "Adds Next support to your application",
   "main": "index.js",
   "scripts": {
@@ -40,7 +40,7 @@
     "@gasket/resolve": "^6.0.0-canary.0"
   },
   "devDependencies": {
-    "@gasket/assets": "^6.0.0-canary.0",
+    "@gasket/assets": "^6.0.0-canary.4",
     "@gasket/engine": "^6.0.0-canary.0",
     "assume": "^2.2.0",
     "assume-sinon": "^1.0.1",
