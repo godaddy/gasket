@@ -56,15 +56,15 @@
     "eslint-plugin-react": "^7.14.0",
     "jsdom": "^16.4.0",
     "mocha": "^6.2.0",
-    "next": "^9.5.3",
+    "next": "^10.0.1",
     "nyc": "^14.1.1",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
     "setup-env": "^1.2.2",
     "sinon": "^7.4.1"
   },
   "peerDependencies": {
-    "next": "^9.5.5"
+    "next": "^10.0.1"
   },
   "eslintConfig": {
     "extends": [
