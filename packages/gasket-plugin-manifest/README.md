@@ -64,7 +64,7 @@ module.exports = {
 
 ### manifest
 
-Another option to adjust the manifest if through a lifecycle hook. This
+Another option to adjust the manifest is through a lifecycle hook. This
 lifecycle method is executed every time an incoming http request is made that
 matches either `manifest.json` or the service worker script (which is `sw.js` by
 default).
