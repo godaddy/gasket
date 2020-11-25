@@ -76,9 +76,13 @@ partial which will be deeply merged.
 ```js
 module.exports = {
   hooks: {
-    workbox: function (gasket, config, req, res) {
-      // the initial `config`
-      // `req` allows rules based on headers, cookies, etc.
+    workbox: function (gasket, config, context) {
+      // `config` is the initial workbox config
+      // `context` is the service-worker context.
+      const { req, res } = context;
+      if(req) {
+        // adjust config for request-based service workers using headers, cookies, etc.
+      }
 
       // return a config partial which will be merged
       return {
