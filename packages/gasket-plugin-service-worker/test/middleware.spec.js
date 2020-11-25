@@ -40,13 +40,13 @@ describe('middleware', () => {
     it('attaches swRegisterScript to req', async () => {
       layer = getLayer();
       await layer(mockReq, mockRes, mockNext);
-      expect(mockReq).toHaveProperty('swRegisterScript', expect.any(String))
+      expect(mockReq).toHaveProperty('swRegisterScript', expect.any(String));
     });
 
     it('swRegisterScript has content from sw-register.template', async () => {
       layer = getLayer();
       await layer(mockReq, mockRes, mockNext);
-      expect(mockReq.swRegisterScript).toContain('navigator.serviceWorker.register')
+      expect(mockReq.swRegisterScript).toContain('navigator.serviceWorker.register');
     });
 
     it('swRegisterScript has substituted variables', async () => {
@@ -63,7 +63,7 @@ describe('middleware', () => {
       mockReq.path = '/_next/some/asset.js';
       layer = getLayer();
       await layer(mockReq, mockRes, mockNext);
-      expect(mockReq).not.toHaveProperty('swRegisterScript', expect.any(String))
+      expect(mockReq).not.toHaveProperty('swRegisterScript', expect.any(String));
     });
   });
 });

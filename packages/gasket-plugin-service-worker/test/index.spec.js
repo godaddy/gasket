@@ -13,6 +13,7 @@ describe('Plugin', () => {
   it('has expected hooks', () => {
     const expected = [
       'configure',
+      'build',
       'middleware',
       'express',
       'webpack',
@@ -24,5 +25,14 @@ describe('Plugin', () => {
     const hooks = Object.keys(plugin.hooks);
     expect(hooks).toEqual(expected);
     expect(hooks).toHaveLength(expected.length);
+  });
+
+  describe('meta', function () {
+    it('returns lifecycle metadata', function () {
+      const results = plugin.hooks.metadata({}, {});
+      expect(results).toEqual(expect.objectContaining({
+        lifecycles: expect.any(Array)
+      }));
+    });
   });
 });

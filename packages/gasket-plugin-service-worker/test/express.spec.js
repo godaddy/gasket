@@ -2,16 +2,12 @@ const mockCache = require('lru-cache');
 const mockMinify = require('uglify-js');
 const express = require('../lib/express');
 
-jest.mock('../lib/utils');
-const { getCacheKeys } = require('../lib/utils');
-
 describe('express', () => {
   let mockGasket, mockApp, mockConfig, mockReq, mockRes, mockCacheKeys;
   let cacheKeyA, cacheKeyB;
 
   beforeEach(() => {
     mockCacheKeys = [];
-    getCacheKeys.mockReturnValue(Promise.resolve(mockCacheKeys));
 
     mockConfig = {
       url: '/sw.js',
@@ -24,6 +20,7 @@ describe('express', () => {
       config: {
         serviceWorker: mockConfig
       },
+      exec: jest.fn().mockReturnValue(Promise.resolve(mockCacheKeys)),
       execWaterfall: jest.fn(),
       logger: {
         info: jest.fn()
@@ -54,6 +51,12 @@ describe('express', () => {
     expect(mockApp.get).toHaveBeenCalledWith('/sw.js', expect.any(Function));
   });
 
+  it('does not setup endpoint if staticOutput is configured', async () => {
+    mockConfig.staticOutput = './public/sw.js';
+    await express(mockGasket, mockApp);
+    expect(mockApp.get).not.toHaveBeenCalled();
+  });
+
   it('configures cache', async () => {
     await express(mockGasket, mockApp);
     expect(mockCache).toHaveBeenCalledWith(mockConfig.cache);
@@ -68,8 +71,7 @@ describe('express', () => {
       expect(mockGasket.execWaterfall).toHaveBeenCalledWith(
         'composeServiceWorker',
         mockConfig.content,
-        mockReq,
-        mockRes
+        expect.objectContaining({ req: mockReq, res: mockRes })
       );
     });
 
@@ -83,19 +85,6 @@ describe('express', () => {
       const endpoint = await getEndpoint();
       await endpoint(mockReq, mockRes);
       expect(mockRes.send).toHaveBeenCalled();
-    });
-
-    it('composed service worker contains expected head content', async () => {
-      const endpoint = await getEndpoint();
-      await endpoint(mockReq, mockRes);
-      expect(mockRes.send).toHaveBeenCalledWith(expect.stringContaining('\'use strict\';'));
-    });
-
-    it('composed service worker contains composed hook content', async () => {
-      mockGasket.execWaterfall.mockResolvedValue('composed content');
-      const endpoint = await getEndpoint();
-      await endpoint(mockReq, mockRes);
-      expect(mockRes.send).toHaveBeenCalledWith(expect.stringContaining('composed content'));
     });
 
     it('executes cache key functions', async () => {
@@ -127,34 +116,6 @@ describe('express', () => {
       const endpoint = await getEndpoint();
       await endpoint(mockReq, mockRes);
       expect(mockGasket.execWaterfall).toHaveBeenCalled();
-    });
-
-
-    it('does not minifies code in an unknown environment', async () => {
-      const endpoint = await getEndpoint();
-      await endpoint(mockReq, mockRes);
-      expect(mockMinify.minify).not.toHaveBeenCalled();
-    });
-
-    it('minifies code in the production environment', async () => {
-      mockGasket.config.env = 'production';
-      const endpoint = await getEndpoint();
-      await endpoint(mockReq, mockRes);
-      expect(mockMinify.minify).toHaveBeenCalled();
-    });
-
-    it('minifies code if explicitly specified by gasket', async () => {
-      mockGasket.config.serviceWorker.minify = {};
-      const endpoint = await getEndpoint();
-      await endpoint(mockReq, mockRes);
-      expect(mockMinify.minify).toHaveBeenCalled();
-    });
-
-    it('minifies code if passed a boolean', async () => {
-      mockGasket.config.serviceWorker.minify = true;
-      const endpoint = await getEndpoint();
-      await endpoint(mockReq, mockRes);
-      expect(mockMinify.minify).toHaveBeenCalled();
     });
 
     it('does not execute composeServiceWorker for cached content', async () => {
