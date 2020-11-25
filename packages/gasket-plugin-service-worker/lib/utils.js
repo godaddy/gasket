@@ -1,3 +1,17 @@
+const uglify = require('uglify-js');
+
+const swHeader = `'use strict';
+
+/* Gasket composed service worker. */
+
+`;
+
+function getSWConfig(gasket) {
+  const { config = {} } = gasket;
+  const { serviceWorker = {} } = config;
+  return serviceWorker;
+}
+
 /**
  * Gathers thunks to key caches of composed sw scripts, based on req
  *
@@ -6,15 +20,30 @@
  * @async
  */
 async function getCacheKeys(gasket) {
-  const { exec, config } = gasket;
-  const {
-    cacheKeys: userCacheKeys = []
-  } = config.serviceWorker || {};
+  const { exec } = gasket;
+  const { cacheKeys: userCacheKeys = [] } = getSWConfig(gasket);
 
   const pluginCacheKeys = await exec('serviceWorkerCacheKey');
 
   return [...userCacheKeys, ...pluginCacheKeys]
     .filter(k => typeof k === 'function');
+}
+
+async function getComposedContent(gasket, context) {
+  const { execWaterfall, config: { env } } = gasket;
+  const swConfig = getSWConfig(gasket);
+  const { content, minify = {} } = swConfig;
+  const composed = await execWaterfall('composeServiceWorker', content, context);
+  const minifyConfig = minify === true ? {} : minify;
+
+  let composedContent = swHeader + composed;
+  // if the consuming application has specified minification or
+  // is in a production in environment, minify the service worker script.
+  if ('minify' in swConfig || /prod/i.test(env)) {
+    composedContent = uglify.minify(composedContent, minifyConfig).code;
+  }
+
+  return composedContent;
 }
 
 let __script;
@@ -43,6 +72,8 @@ async function loadRegisterScript(config) {
 }
 
 module.exports = {
+  getSWConfig,
   getCacheKeys,
+  getComposedContent,
   loadRegisterScript
 };

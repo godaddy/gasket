@@ -1,3 +1,5 @@
+const { getSWConfig } = require('./utils');
+
 /**
  * Add the analyzer webpack plugin if analyze flag has been set
  *
@@ -8,14 +10,10 @@
  * @returns {Object} webpackConfig
  */
 module.exports = function webpack(gasket, webpackConfig, data) {
-  const {
-    command,
-    config: {
-      serviceWorker: config = {}
-    }
-  } = gasket;
+  const { command } = gasket;
+  const swConfig = getSWConfig(gasket);
 
-  const { webpackRegister } = config;
+  const { webpackRegister } = swConfig;
   const { isServer } = data;
   //
   // Do not register the service worker for local development or if webpackRegister is false
@@ -38,7 +36,7 @@ module.exports = function webpack(gasket, webpackConfig, data) {
     //
     return {
       plugins: [
-        new WebpackInjectPlugin(() => loadRegisterScript(config), entryName && { entryName })
+        new WebpackInjectPlugin(() => loadRegisterScript(swConfig), entryName && { entryName })
       ]
     };
   }
