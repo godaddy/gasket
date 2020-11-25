@@ -51,14 +51,18 @@ To be set in under `serviceWorker` in the `gasket.config.js`.
   This is turned on in `production` by default. Adding `minify: { }` will turn
   on the default behavior in other environments, if specified.
 - `webpackRegister` - (string|string[]|function|boolean) By default, a service
-  worker registration script will will be injected to the webpack entry modules.
-  This can be disabled by setting this to `false`. If you wish to control which
-  entry modules get injected, read more in the [registering] section.
+  worker registration script will be injected to the webpack entry modules. This
+  can be disabled by setting this to `false`. If you wish to control which entry
+  modules get injected, read more in the [registering] section.
+- `staticOutput` - (string|boolean) If `true`, a static `sw.js` will be output
+  to the `./public` dir. Otherwise, this can be set to a string with a path to
+  an alternate output location. This disables request-based service workers.
+  Default is `false`.
 
 
 #### Example
 
-The defaults options for this plugin should be sufficient. However, they can be
+The defaults option for this plugin should be sufficient. However, they can be
 tuned as needed. A real-world use case may be for a micro-app served under a
 sub-path.
 
@@ -95,10 +99,7 @@ content.
 ```js
 module.exports = {
   hooks: {
-    composeServiceWorker: function (gasket, content, req, res) {
-
-      // `req` allows SW content based on hostname, cookie, etc.
-
+    composeServiceWorker: function (gasket, content, context) {
       return content.concat(`
 self.addEventListener('push', (event) => {
   const title = 'My App Notification';
@@ -125,7 +126,9 @@ const readFile = util.promisify(fs.readFile);
 
 module.exports = {
   hooks: {
-    composeServiceWorker: async function (gasket, content, req, res) {
+    composeServiceWorker: async function (gasket, content, context) {
+      const { req, res } = context;
+      // `req` allows SW content based on hostname, cookie, etc.
 
       const { market = 'en-US' } = req.cookies || {};
       const marketFile = `${market.toLowerCase()}.js`;
@@ -183,10 +186,10 @@ and can be included with your app in a couple of ways.
 
 ### Webpack
 
-When using the [@gasket/plugin-webpack] in your app, the service worker registration script
-will automatically be injected to entry modules by default at build time. If you
-are also using the [@gasket/plugin-nextjs], only the `_app` entry module will be
-injected with the script.
+When using the [@gasket/plugin-webpack] in your app, the service worker
+registration script will automatically be injected to entry modules by default
+at build time. If you are also using the [@gasket/plugin-nextjs], only the
+`_app` entry module will be injected with the script.
 
 If you otherwise need to tune which Webpack entry modules are injected, you can
 set the `webpackRegister` to the name or array of names of the entries you want
@@ -250,3 +253,4 @@ environment, which can be easily done using [service-worker-mock].
 [service workers]:https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API
 [@gasket/plugin-webpack]:/packages/gasket-plugin-webpack/README.md
 [@gasket/plugin-nextjs]:/packages/gasket-plugin-nextjs/README.md
+
