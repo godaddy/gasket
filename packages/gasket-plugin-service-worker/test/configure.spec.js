@@ -1,3 +1,4 @@
+const path = require('path');
 const configure = require('../lib/configure');
 
 describe('configure', () => {
@@ -6,7 +7,9 @@ describe('configure', () => {
 
   beforeEach(() => {
     mockGasket = {
-      config: {}
+      config: {
+        root: '/path/to/app'
+      }
     };
   });
 
@@ -40,5 +43,23 @@ describe('configure', () => {
       }
     });
     expect(results.serviceWorker).toHaveProperty('url', '/some-sw.js');
+  });
+
+  it('configures absolute staticOutput path', async () => {
+    results = await configure(mockGasket, {
+      serviceWorker: {
+        staticOutput: './some/path.js'
+      }
+    });
+    expect(results.serviceWorker).toHaveProperty('staticOutput', path.join(mockGasket.config.root, '/some/path.js'));
+  });
+
+  it('configures staticOutput path if true', async () => {
+    results = await configure(mockGasket, {
+      serviceWorker: {
+        staticOutput: true
+      }
+    });
+    expect(results.serviceWorker).toHaveProperty('staticOutput', path.join(mockGasket.config.root, '/public/sw.js'));
   });
 });

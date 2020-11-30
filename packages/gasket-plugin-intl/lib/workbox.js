@@ -27,18 +27,24 @@ function makeEncodeLocaleUrls(localesPath) {
 }
 
 /**
- * Workbox config partial to add next.js static assets to precache
+ * Workbox config partial to add locale files to precache for request-based
+ * service workers.
  *
  * @param {Gasket} gasket - Gasket
  * @param {Object} config - Initial workbox config
- * @param {Request} req - Request
- * @param {Response} res - Response
+ * @param {Object} context - Service worker context
+ * @param {Response} context.res - Response
  * @returns {Promise<Object>} config
  */
-module.exports = async function workbox(gasket, config, req, res) {
+module.exports = async function workbox(gasket, config, context) {
   const { root } = gasket.config;
   const { basePath = '' } = getIntlConfig(gasket);
   const { localesPath, localesDir } = getIntlConfig(gasket);
+  const { res } = context;
+
+  // since we cannot determine a users' locale at build time, exit early
+  if (!res) return {};
+
   const { locale } = res.gasketData.intl;
 
   // Get the relative dir glob path
