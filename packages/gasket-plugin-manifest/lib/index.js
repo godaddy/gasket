@@ -1,6 +1,12 @@
 /* eslint require-atomic-updates: warn */
+const fs = require('fs');
+const { promisify } = require('util');
+const path = require('path');
+const mkdirp = promisify(require('mkdirp'));
 const baseConfig = require('./base-config');
 const escapeRegex = require('escape-string-regexp');
+
+const writeFile = promisify(fs.writeFile);
 
 /**
  * Merges manifest defaults with gasket.config manifest and passes to
@@ -15,14 +21,32 @@ async function gatherManifestData(gasket, req) {
 
   const fromConfig = gasket.config.manifest;
   const manifest = { ...baseConfig, ...fromConfig };
-  return await gasket.execWaterfall('manifest', manifest, { req }) || [];
+
+  if (!fromConfig.staticOutput) {
+    return await gasket.execWaterfall('manifest', manifest, { req }) || [];
+  }
+
+  return manifest;
 }
 
 module.exports = {
   name: require('../package').name,
   hooks: {
     build: async function build(gasket) {
-      
+      if (gasket.config.manifest && gasket.config.manifest.staticOutput) {
+        const manifest = await gatherManifestData(gasket, { originalUrl: 'static page.' });
+        const pubRoot = path.join(gasket.config.root, '/public');
+        // eslint-disable-next-line no-sync
+        if (!fs.existsSync(pubRoot)) {
+          await mkdirp(pubRoot);
+        }
+
+        try {
+          await writeFile(path.join(pubRoot, gasket.config.manifest.staticOutput), JSON.stringify(manifest), 'utf-8');
+        } catch (err) {
+          gasket.logger.error('Failed to write manifest.json: ', err);
+        }
+      }
     },
     /**
      * If configured, serve the resolved manifest.json

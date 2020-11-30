@@ -60,6 +60,23 @@ module.exports = {
 }
 ```
 
+If you want to generate a `manifest.json` file at build time for use with a static page/application, the plugin can be configured with the `staticOutput` option:
+
+```js
+// gasket.config.js
+module.exports = {
+  manifest: {
+    // other options
+    staticOutput: '/custom/path/manifest.json' // recommended: /manifest.json
+  }
+}
+```
+You will also need to include a link to your `manifest.json` file on your static html pages:
+
+```html
+<link src="/manifest.json" rel="manifest">
+```
+
 ## Lifecycles
 
 ### manifest
