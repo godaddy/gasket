@@ -1,6 +1,9 @@
 # `@gasket/plugin-workbox`
 
+### 6.0.0
+
 - Change `zone` config to `basePath` ([#212])
+- Pass new `composeServiceWorker` context through to `workbox` lifecycle ([#217])
 
 ### 5.5.0
 
@@ -29,3 +32,5 @@
 [#95]:https://github.com/godaddy/gasket/pull/95
 [#166]: https://github.com/godaddy/gasket/pull/166
 [#212]: https://github.com/godaddy/gasket/pull/212
+
+[#217]: https://github.com/godaddy/gasket/pull/217
