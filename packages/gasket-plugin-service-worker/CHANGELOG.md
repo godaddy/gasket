@@ -1,5 +1,10 @@
 # `@gasket/plugin-service-worker`
 
+### 6.0.0
+
+- Ability to configure static output of service workers for build time ([#217])
+- Context for `composeServiceWorker` changes for build vs request-based service workers ([#217])
+
 ### 5.3.1
 
 - Inject registration script to Webpack entry modules ([#158])
@@ -31,3 +36,4 @@
 
 [#95]:https://github.com/godaddy/gasket/pull/95
 [#158]: https://github.com/godaddy/gasket/pull/158
+[#217]: https://github.com/godaddy/gasket/pull/217
