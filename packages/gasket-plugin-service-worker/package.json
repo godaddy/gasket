@@ -4,7 +4,7 @@
   "description": "Gasket Service Worker Plugin",
   "main": "lib",
   "scripts": {
-    "lint": "eslint lib",
+    "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "test": "jest",
     "test:watch": "jest --watchAll",
@@ -35,6 +35,7 @@
   "dependencies": {
     "deepmerge": "^4.0.0",
     "lru-cache": "^5.1.1",
+    "mkdirp": "^0.5.1",
     "uglify-js": "^3.5.3",
     "webpack-inject-plugin": "^1.5.4"
   },
@@ -53,6 +54,8 @@
     ]
   },
   "eslintIgnore": [
-    "*.template.js"
+    "*.template.js",
+    "coverage",
+    "__mocks__"
   ]
 }

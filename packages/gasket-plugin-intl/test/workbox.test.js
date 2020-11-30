@@ -3,7 +3,7 @@ const workbox = require('../lib/workbox');
 const { makeEncodeLocaleUrls } = workbox;
 
 describe('workbox', function () {
-  let result, mockGasket, mockConfig, mockReq, mockRes;
+  let result, mockGasket, mockConfig, mockContext;
 
   beforeEach(function () {
     mockGasket = {
@@ -17,24 +17,34 @@ describe('workbox', function () {
       }
     };
     mockConfig = {};
-    mockReq = {};
-    mockRes = {
-      gasketData: {
-        intl: {
-          locale: 'en-US'
+    mockContext = {
+      req: {},
+      res: {
+        gasketData: {
+          intl: {
+            locale: 'en-US'
+          }
         }
       }
     };
   });
 
   it('returns workbox config partial', async function () {
-    result = await workbox(mockGasket, mockConfig, mockReq, mockRes);
+    result = await workbox(mockGasket, mockConfig, mockContext);
 
     assume(result).instanceOf(Object);
+    assume(result).not.eqls({});
+  });
+
+  it('returns empty partial for static service workers', async function () {
+    result = await workbox(mockGasket, mockConfig, {});
+
+    assume(result).instanceOf(Object);
+    assume(result).eqls({});
   });
 
   it('config partial contains expected properties', async function () {
-    result = await workbox(mockGasket, mockConfig, mockReq, mockRes);
+    result = await workbox(mockGasket, mockConfig, mockContext);
 
     assume(result).property('globDirectory', '.');
     assume(result).property('globPatterns');
@@ -43,7 +53,7 @@ describe('workbox', function () {
   });
 
   it('config modifies urls from to _next', async function () {
-    result = await workbox(mockGasket, mockConfig, mockReq, mockRes);
+    result = await workbox(mockGasket, mockConfig, mockContext);
 
     assume(result.modifyURLPrefix).property(
       'public/locales', 'locales'
@@ -52,7 +62,7 @@ describe('workbox', function () {
 
   it('config modifies urls to use assetPrefix URL with trailing slash', async function () {
     mockGasket.config.intl.basePath = 'https://some-cdn.com/';
-    result = await workbox(mockGasket, mockConfig, mockReq, mockRes);
+    result = await workbox(mockGasket, mockConfig, mockContext);
 
     assume(result.modifyURLPrefix).property(
       'public/locales', 'https://some-cdn.com/locales'
@@ -61,7 +71,7 @@ describe('workbox', function () {
 
   it('config modifies urls to use assetPrefix URL without trailing slash', async function () {
     mockGasket.config.intl.basePath = 'https://some-cdn.com';
-    result = await workbox(mockGasket, mockConfig, mockReq, mockRes);
+    result = await workbox(mockGasket, mockConfig, mockContext);
 
     assume(result.modifyURLPrefix).property(
       'public/locales', 'https://some-cdn.com/locales'
@@ -70,7 +80,7 @@ describe('workbox', function () {
 
   it('config modifies urls to use assetPrefix relative path with trailing slash', async function () {
     mockGasket.config.intl.basePath = '/some/asset/prefix/';
-    result = await workbox(mockGasket, mockConfig, mockReq, mockRes);
+    result = await workbox(mockGasket, mockConfig, mockContext);
 
     assume(result.modifyURLPrefix).property(
       'public/locales', '/some/asset/prefix/locales'
@@ -79,7 +89,7 @@ describe('workbox', function () {
 
   it('config modifies urls to use assetPrefix relative path without trailing slash', async function () {
     mockGasket.config.intl.basePath = '/some/asset/prefix';
-    result = await workbox(mockGasket, mockConfig, mockReq, mockRes);
+    result = await workbox(mockGasket, mockConfig, mockContext);
 
     assume(result.modifyURLPrefix).property(
       'public/locales', '/some/asset/prefix/locales'
@@ -87,7 +97,7 @@ describe('workbox', function () {
   });
 
   it('manifestTransforms contains an encodeLocaleUrls function', async function () {
-    result = await workbox(mockGasket, mockConfig, mockReq, mockRes);
+    result = await workbox(mockGasket, mockConfig, mockContext);
 
     assume(result.manifestTransforms).instanceOf(Array);
     assume(result.manifestTransforms[0]).property('name', 'encodeLocaleUrls');

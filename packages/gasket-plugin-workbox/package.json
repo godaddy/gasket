@@ -4,7 +4,7 @@
   "description": "Gasket Workbox Plugin",
   "main": "lib",
   "scripts": {
-    "lint": "eslint lib",
+    "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "test": "jest",
     "test:watch": "jest --watchAll",
@@ -50,5 +50,9 @@
       "godaddy",
       "plugin:jest/recommended"
     ]
-  }
+  },
+  "eslintIgnore": [
+    "coverage",
+    "__mocks__"
+  ]
 }
