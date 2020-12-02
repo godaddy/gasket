@@ -1,5 +1,6 @@
-const plugin = require('../lib');
 const assume = require('assume');
+
+const plugin = require('../lib');
 
 describe('Plugin', function () {
 
