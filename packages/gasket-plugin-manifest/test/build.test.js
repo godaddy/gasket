@@ -73,6 +73,6 @@ describe('build', function () {
   it('logs completion message', async function () {
     await build(gasket);
     assume(gasket.logger.log.calledOnce).true();
-    assume(gasket.logger.log.args[0][0]).eqls('build:web-manifest: Wrote web manifest file (../../../../../../../../../public/manifest.json).');
+    assume(gasket.logger.log.args[0][0]).includes('/public/manifest.json).');
   });
 });
