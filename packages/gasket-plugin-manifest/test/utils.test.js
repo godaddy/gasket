@@ -3,7 +3,7 @@ const sinon = require('sinon');
 
 const utils = require('../lib/utils');
 
-describe.only('utils', function () {
+describe('utils', function () {
   const { gatherManifestData } = utils;
   let gasket;
 
