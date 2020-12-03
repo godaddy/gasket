@@ -67,7 +67,7 @@ If you want to generate a `manifest.json` file at build time for use with a stat
 module.exports = {
   manifest: {
     // other options
-    staticOutput: '/custom/path/manifest.json' // recommended: /manifest.json
+    staticOutput: '/custom/path/manifest.json'
   }
 }
 ```
@@ -76,6 +76,8 @@ You will also need to include a link to your `manifest.json` file on your static
 ```html
 <link src="/manifest.json" rel="manifest">
 ```
+
+Users also have the option to pass in a boolean value of `true`, which will tell gasket to configure the output path to a default value of `/manifest.json`.
 
 ## Lifecycles
 
