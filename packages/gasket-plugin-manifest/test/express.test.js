@@ -4,6 +4,10 @@ const sinon = require('sinon');
 const express = require('../lib/express');
 
 describe('express', function () {
+  afterEach(function () {
+    sinon.reset();
+  });
+
   it('is a function', function () {
     assume(express).is.a('asyncfunction');
     assume(express).has.length(2);

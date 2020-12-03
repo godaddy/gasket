@@ -1,10 +1,16 @@
 const assume = require('assume');
 const sinon = require('sinon');
-
-const utils = require('../lib/utils');
+const proxyquire = require('proxyquire');
 
 describe('utils', function () {
-  const { gatherManifestData } = utils;
+  const joinStub = sinon.stub();
+
+  const { gatherManifestData, prepareStaticOutputPath } = proxyquire('../lib/utils', {
+    path: {
+      join: joinStub
+    }
+  });
+
   let gasket;
 
   beforeEach(() => {
@@ -24,6 +30,10 @@ describe('utils', function () {
         debug: sinon.stub()
       }
     };
+  });
+
+  afterEach(function () {
+    sinon.reset();
   });
 
   describe('#gatherManifestData', function () {
@@ -51,6 +61,20 @@ describe('utils', function () {
       await gatherManifestData(gasket, {});
       assume(gasket.execWaterfall.calledOnce).is.true();
       assume(gasket.execWaterfall.args[0][1].staticOuput).eqls('path/to/test.json');
+    });
+  });
+
+  describe('#prepareStaticOutputPath', function () {
+    it('is a function', function () {
+      assume(prepareStaticOutputPath).is.a('function');
+      assume(prepareStaticOutputPath).has.length(2);
+    });
+
+    it('sets default output path', function () {
+      prepareStaticOutputPath(true, 'test/');
+
+      assume(joinStub.calledOnce).true();
+      assume(joinStub.args[0]).eqls(['test/', 'public/manifest.json']);
     });
   });
 });

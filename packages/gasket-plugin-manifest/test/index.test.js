@@ -15,6 +15,7 @@ describe('Plugin', function () {
   it('has expected hooks', function () {
     const expected = [
       'build',
+      'configure',
       'express',
       'middleware',
       'metadata'

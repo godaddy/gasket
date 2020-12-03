@@ -25,6 +25,10 @@ describe('middleware', function () {
     };
   });
 
+  afterEach(function () {
+    sinon.reset();
+  });
+
   describe('#timing', () => {
 
     it('is set to last', function () {

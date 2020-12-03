@@ -17,17 +17,12 @@ async function build(gasket) {
   if (!manifest || !manifest.staticOutput) return;
 
   const gatheredManifest = await gatherManifestData(gasket, {});
-  let manifestPath = '/public/manifest.json';
 
-  if (manifest.staticOutput !== true) {
-    manifestPath = manifest.staticOutput;
-  }
+  await mkdirp(manifest.staticOutput.toString().replace('manifest.json', ''));
 
-  await mkdirp(manifestPath);
+  await writeFile(manifest.staticOutput, JSON.stringify(gatheredManifest), 'utf-8');
 
-  await writeFile(manifestPath, JSON.stringify(gatheredManifest), 'utf-8');
-
-  logger.log(`build:web-manifest: Wrote web manifest file (${path.relative(root, manifestPath)}).`);
+  logger.log(`build:web-manifest: Wrote web manifest file (${path.relative(root, manifest.staticOutput)}).`);
 }
 
 /**

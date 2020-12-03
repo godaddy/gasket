@@ -7,8 +7,10 @@ const baseConfig = require('./base-config');
  */
 async function express(gasket, app) {
   const { config } = gasket;
+  const { staticOutput } = (config && config.manifest || {});
   const { path } = (config && config.manifest || {});
-  app.get(path || baseConfig.path, (req, res) => {
+
+  app.get(staticOutput || path || baseConfig.path, (req, res) => {
     res.send(req.manifest || {});
   });
 }

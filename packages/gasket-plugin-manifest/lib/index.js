@@ -1,4 +1,5 @@
 const build = require('./build');
+const configure = require('./configure');
 const express = require('./express');
 const middleware = require('./middleware');
 
@@ -6,6 +7,7 @@ module.exports = {
   name: require('../package').name,
   hooks: {
     build,
+    configure,
     express,
     middleware,
     metadata(gasket, meta) {

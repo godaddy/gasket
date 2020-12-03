@@ -13,7 +13,8 @@ describe('build', function () {
     mkdirp: mkdirpStub,
     util: {
       promisify: f => f
-    }
+    },
+    replace: sinon.stub()
   });
 
   let gasket;
@@ -24,7 +25,7 @@ describe('build', function () {
       config: {
         root: 'test',
         manifest: {
-          staticOutput: true
+          staticOutput: '/custom/manifest.json'
         }
       },
       logger: {
@@ -51,28 +52,22 @@ describe('build', function () {
     assume(mkdirpStub.called).false();
   });
 
-  it('creates default output directory', async function () {
-    await build(gasket);
-    assume(mkdirpStub.calledOnce).true();
-    assume(mkdirpStub.args[0][0]).eqls('/public/manifest.json');
-  });
-
   it('creates custom output directory', async function () {
     gasket.config.manifest.staticOutput = '/super/cool/custom/path/manifest.json';
     await build(gasket);
     assume(mkdirpStub.calledOnce).true();
-    assume(mkdirpStub.args[0][0]).eqls('/super/cool/custom/path/manifest.json');
+    assume(mkdirpStub.args[0][0]).eqls('/super/cool/custom/path/');
   });
 
   it('writes manifest to specified path', async function () {
     await build(gasket);
     assume(writeFileStub.calledOnce).true();
-    assume(writeFileStub.args[0]).eqls(['/public/manifest.json', '[]', 'utf-8']);
+    assume(writeFileStub.args[0]).eqls(['/custom/manifest.json', '[]', 'utf-8']);
   });
 
   it('logs completion message', async function () {
     await build(gasket);
     assume(gasket.logger.log.calledOnce).true();
-    assume(gasket.logger.log.args[0][0]).includes('/public/manifest.json).');
+    assume(gasket.logger.log.args[0][0]).includes('custom/manifest.json).');
   });
 });
