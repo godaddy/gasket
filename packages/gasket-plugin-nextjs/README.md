@@ -52,8 +52,7 @@ module.exports = {
   },
   nextConfig: {
     poweredByHeader: false,
-    useFileSystemPublicRoutes: false,
-    generateBuildId: () => Date.now()
+    useFileSystemPublicRoutes: false
   }
 }
 ```
