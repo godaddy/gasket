@@ -10,9 +10,11 @@ async function express(gasket, app) {
   const { staticOutput } = (config && config.manifest || {});
   const { path } = (config && config.manifest || {});
 
-  app.get(path || baseConfig.path, (req, res) => {
-    res.send(req.manifest || {});
-  });
+  if (!staticOutput) {
+    app.get(path || baseConfig.path, (req, res) => {
+      res.send(req.manifest || {});
+    });
+  }
 }
 
 module.exports = express;

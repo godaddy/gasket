@@ -1,4 +1,4 @@
-const path = require('path');
+
 const baseConfig = require('./base-config');
 
 /**
@@ -12,36 +12,22 @@ const baseConfig = require('./base-config');
 async function gatherManifestData(gasket, context) {
   const { logger, execWaterfall, config } = gasket;
   const source = (context.req && context.req.originalUrl) || 'static manifest';
+  const fromConfig = {};
 
   logger.debug(`Gathering manifest for ${source}`);
 
-  const fromConfig = config.manifest;
+  // Do not include staticOutput in manifest
+  for (const prop in config.manifest) {
+    if (prop !== 'staticOutput') {
+      fromConfig[prop] = config.manifest[prop];
+    }
+  }
+
   const manifest = { ...baseConfig, ...fromConfig };
 
   return await execWaterfall('manifest', manifest, context);
 }
 
-/**
- * Returns path to static output
- *
- * @param {string|boolean} staticOutput output path from config
- * @param {string} root project root
- * @returns {string} path to static output
- */
-function prepareStaticOutputPath(staticOutput, root) {
-  // Fixup staticOutput - use default if true
-  if (staticOutput === true) {
-    staticOutput = 'public/manifest.json';
-  }
-
-  if (staticOutput) {
-    staticOutput = path.join(root, staticOutput);
-  }
-
-  return staticOutput;
-}
-
 module.exports = {
-  gatherManifestData,
-  prepareStaticOutputPath
+  gatherManifestData
 };

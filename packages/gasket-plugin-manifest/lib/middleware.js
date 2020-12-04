@@ -8,7 +8,8 @@ const { gatherManifestData } = require('./utils');
  * @returns {function} Express middleware to apply
  */
 function handler(gasket) {
-  const { serviceWorker: { url: swUrl = '' } = {} } = gasket.config;
+  const { serviceWorker: { url: swUrl = '' } = {}, manifest: { staticOutput = false } } = gasket.config;
+  if (staticOutput) return;
 
   const endpoints = [/manifest\.json/];
   if (swUrl) endpoints.push(new RegExp(escapeRegex(swUrl)));

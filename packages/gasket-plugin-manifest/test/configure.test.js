@@ -17,7 +17,7 @@ describe('configure', function () {
 
   let gasket;
 
-  beforeEach(() => {
+  beforeEach(function () {
     gasket = {
       execWaterfall: sinon.stub().resolves([]),
       config: {
@@ -49,7 +49,7 @@ describe('configure', function () {
     const staticOutput = true;
     const config = { manifest: { staticOutput } };
 
-    deepmergeStub.returns({ ...baseConfig, ...staticOutput });
+    deepmergeStub.returns({ ...baseConfig, staticOutput });
     configure(gasket, config);
 
     assume(deepmergeStub.calledOnce).true();
@@ -57,6 +57,26 @@ describe('configure', function () {
       baseConfig,
       { staticOutput }
     );
+  });
+
+  it('uses default path when staticOutput is true', function () {
+    const staticOutput = true;
+    const config = { manifest: { staticOutput } };
+
+    deepmergeStub.returns({ ...baseConfig, staticOutput });
+    configure(gasket, config);
+
+    assume(joinStub.args[0][1]).eqls('public/manifest.json');
+  });
+
+  it('uses custom path when passed from manifest', function () {
+    const staticOutput = 'custom/path/manifest.json';
+    const config = { manifest: { staticOutput } };
+
+    deepmergeStub.returns({ ...baseConfig, staticOutput });
+    configure(gasket, config);
+
+    assume(joinStub.args[0][1]).eqls(staticOutput);
   });
 
   it('sets static output to false when not configured', function () {

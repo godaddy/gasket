@@ -7,7 +7,7 @@ describe('middleware', function () {
   const { timing, handler } = middleware;
   let gasket;
 
-  beforeEach(() => {
+  beforeEach(function () {
     gasket = {
       execWaterfall: sinon.stub().resolves([]),
       config: {
@@ -29,14 +29,14 @@ describe('middleware', function () {
     sinon.reset();
   });
 
-  describe('#timing', () => {
+  describe('#timing', function () {
 
     it('is set to last', function () {
       assume(timing).property('last', true);
     });
   });
 
-  describe('#handler', () => {
+  describe('#handler', function () {
 
     it('is a function', function () {
       assume(handler).is.a('function');
@@ -54,7 +54,7 @@ describe('middleware', function () {
       const req = {
         path: 'manifest.json'
       };
-      await fn(req, {}, () => { });
+      await fn(req, {}, function () { });
       assume(gasket.execWaterfall.calledOnce).is.true();
     });
 
@@ -63,7 +63,7 @@ describe('middleware', function () {
       const req = {
         path: 'sw.js'
       };
-      await fn(req, {}, () => { });
+      await fn(req, {}, function () { });
       assume(gasket.execWaterfall.calledOnce).is.true();
     });
 
@@ -73,7 +73,7 @@ describe('middleware', function () {
       const req = {
         path: 'manifest.json'
       };
-      await fn(req, {}, () => { });
+      await fn(req, {}, function () { });
       assume(gasket.execWaterfall.args[0]).has.length(3);
       assume(gasket.execWaterfall.args[0][2]).deep.equals(context);
     });
@@ -83,7 +83,7 @@ describe('middleware', function () {
       const req = {
         path: 'manifest.json'
       };
-      await fn(req, {}, () => { });
+      await fn(req, {}, function () { });
       assume(gasket.execWaterfall.args[0][1].display).equals('standalone');
     });
 
@@ -93,7 +93,7 @@ describe('middleware', function () {
       const req = {
         path: 'manifest.json'
       };
-      await fn(req, {}, () => { });
+      await fn(req, {}, function () { });
       assume(gasket.execWaterfall.args[0][1].display).equals('BOGUS');
     });
   });

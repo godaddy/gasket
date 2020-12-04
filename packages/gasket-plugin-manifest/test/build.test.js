@@ -19,7 +19,7 @@ describe('build', function () {
 
   let gasket;
 
-  beforeEach(() => {
+  beforeEach(function () {
     gasket = {
       execWaterfall: sinon.stub().resolves([]),
       config: {
