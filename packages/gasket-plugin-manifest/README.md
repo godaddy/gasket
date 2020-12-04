@@ -77,7 +77,7 @@ You will also need to include a link to your `manifest.json` file on your static
 <link src="/manifest.json" rel="manifest">
 ```
 
-Users also have the option to pass in a boolean value of `true`, which will tell gasket to configure the output path to a default value of `/manifest.json`.
+Users also have the option to pass in a boolean value of `true`, which defaults the path to `public/manifest.json`.
 
 ## Lifecycles
 
