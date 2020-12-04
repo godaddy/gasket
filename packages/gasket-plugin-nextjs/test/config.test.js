@@ -152,14 +152,6 @@ describe('createConfig', () => {
 
     describe('built-ins', () => {
 
-      it('excludes SSR only modules', () => {
-        result = config.webpack(webpackConfig, data);
-        assume(result).to.have.property('node');
-        assume(result.node).to.have.property('fs', 'empty');
-        assume(result.node).to.have.property('net', 'empty');
-        assume(result.node).to.have.property('tls', 'empty');
-      });
-
       it('configures SASS loader', () => {
         result = config.webpack(webpackConfig, data);
 
