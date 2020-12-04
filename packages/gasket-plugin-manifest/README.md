@@ -60,7 +60,7 @@ module.exports = {
 }
 ```
 
-If you want to generate a `manifest.json` file at build time for use with a static page/application, the plugin can be configured with the `staticOutput` option:
+If you want to generate a `manifest.json` file at build time for use with a static app, the plugin can be configured with the `staticOutput` option:
 
 ```js
 // gasket.config.js
