@@ -58,14 +58,7 @@ class PluginEngine {
           .forEach(rawName => {
             const name = pluginIdentifier(rawName).longName;
             if (!(name in this._plugins)) {
-              // TODO (kinetifex): remove fallback logic in next major revision
-              // check if we can fall back to a project scope plugin if short name
-              const identifier = pluginIdentifier.lookup(rawName, id => id.longName in this._plugins);
-              if (identifier) {
-                console.warn(`Plugin '${pluginName}' has dependency of '${rawName}' which resolved to '${identifier.longName}'. This fallback behavior is DEPRECATED.`);
-              } else {
-                throw new Error(`Missing dependency ${rawName} of plugin '${pluginName}'`);
-              }
+              throw new Error(`Missing dependency ${rawName} of plugin '${pluginName}'`);
             }
           });
 
