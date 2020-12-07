@@ -60,11 +60,30 @@ module.exports = {
 }
 ```
 
+If you want to generate a `manifest.json` file at build time for use with a static app, the plugin can be configured with the `staticOutput` option:
+
+```js
+// gasket.config.js
+module.exports = {
+  manifest: {
+    // other options
+    staticOutput: '/custom/path/manifest.json'
+  }
+}
+```
+You will also need to include a link to your `manifest.json` file on your static html pages:
+
+```html
+<link src="/manifest.json" rel="manifest">
+```
+
+Users also have the option to pass in a boolean value of `true`, which defaults the path to `public/manifest.json`.
+
 ## Lifecycles
 
 ### manifest
 
-Another option to adjust the manifest if through a lifecycle hook. This
+Another option to adjust the manifest is through a lifecycle hook. This
 lifecycle method is executed every time an incoming http request is made that
 matches either `manifest.json` or the service worker script (which is `sw.js` by
 default).
