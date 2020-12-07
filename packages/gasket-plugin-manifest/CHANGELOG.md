@@ -1,5 +1,9 @@
 # `@gasket/plugin-manifest`
 
+### 6.0.0
+
+- Ability to configure static output of manifest at build time ([#218])
+
 ### 5.0.0
 
 - Open Source Release
@@ -31,3 +35,5 @@
   - Adding a `link` to the document `<head>`
   - Adding a new `manifest` lifecycle hook
   - Accepting `Manifest` setup in `gasket.config.js`
+
+[#218]: https://github.com/godaddy/gasket/pull/218

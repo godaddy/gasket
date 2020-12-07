@@ -1,5 +1,9 @@
 # `@gasket/plugin-webpack`
 
+### 6.0.0
+
+- Remove node config defaults to support webpack 5 ([#221])
+
 ### 5.0.0
 
 - Open Source Release
@@ -16,3 +20,5 @@
 
 - Separate webpack plugin from core
 - Initial release.
+
+[#221]: https://github.com/godaddy/gasket/pull/221
