@@ -66,7 +66,6 @@ describe('initWebpack hook', () => {
     assume(result).has.property('plugins');
     assume(result).has.property('module');
     assume(result).has.property('optimization');
-    assume(result).has.property('node');
   });
 
   it('returns webpack config object with configs merged', async function () {
@@ -79,7 +78,6 @@ describe('initWebpack hook', () => {
     assume(result).has.property('plugins');
     assume(result).has.property('module');
     assume(result).has.property('optimization');
-    assume(result).has.property('node');
     assume(result).has.property('newConfig1');
     assume(result).has.property('newConfig2');
   });
