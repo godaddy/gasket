@@ -2,17 +2,6 @@ const WebpackChain = require('webpack-chain');
 const webpackMerge = require('webpack-merge');
 const WebpackMetricsPlugin = require('./webpack-metrics-plugin');
 
-const webpackDefaults = {
-  //
-  // Exclude any modules from webpack bundling that are utilized server-side
-  //
-  node: {
-    fs: 'empty',
-    net: 'empty',
-    tls: 'empty'
-  }
-};
-
 /**
 * Creates the webpack config
 * @param  {Gasket} gasket The Gasket API
@@ -32,7 +21,6 @@ function initWebpack(gasket, webpackConfig, data) {
   webpackConfig = webpackMerge.smart(
     webpackConfig,
     { plugins: [new WebpackMetricsPlugin({ gasket })] },
-    webpackDefaults,      // Defaults above
     chain.toConfig(),     // Webpack chain from plugins (partial)
     config.webpack || {}  // Webpack config from user (partial)
   );
