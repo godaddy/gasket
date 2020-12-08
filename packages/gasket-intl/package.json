@@ -39,10 +39,11 @@
   "dependencies": {
     "@babel/runtime": "^7.5.5",
     "@gasket/fetch": "^6.0.0-canary.2",
+    "@gasket/data": "^6.0.0-canary.2",
     "@gasket/helper-intl": "^6.0.0-canary.3",
     "hoist-non-react-statics": "^2.5.0",
-    "prop-types": "^15.6.2",
-    "reduxful": "^1.0.1"
+    "lodash.merge": "^4.6.0",
+    "prop-types": "^15.6.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.5",
