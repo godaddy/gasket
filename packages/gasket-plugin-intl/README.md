@@ -37,7 +37,7 @@ required. However, these options exist to customize an app's setup.
 ### Options
 
 - `basePath` - (string) Base URL where locale files are served
-- `localesPath` - (string) Path to endpoint with JSON files (default:
+- `defaultPath` - (string) Path to endpoint with JSON files (default:
   `/locales`). See [Locales Path] section.
 - `defaultLocale` - (string) Locale to fallback to when loading files (default:
   `en`)

@@ -11,7 +11,7 @@ const localesParentDir = path.dirname(process.env.GASKET_INTL_LOCALES_DIR);
  * @param {LocalePathPart|LocalePathPart[]} localePathPath - Path(s) containing locale files
  * @returns {function({}): Promise<{props: {localesProps: LocalesProps}}>} pageProps
  */
-export function intlGetStaticProps(localesPath = manifest.localesPath) {
+export function intlGetStaticProps(localePathPath = manifest.defaultPath) {
   return async ctx => {
     const { params: { locale } } = ctx;
     const localesProps = localeUtils.serverLoadData(localePathPath, locale, localesParentDir);
@@ -30,7 +30,7 @@ export function intlGetStaticProps(localesPath = manifest.localesPath) {
  * @param {LocalePathPart|LocalePathPart[]} localePathPath - Path(s) containing locale files
  * @returns {function({}): Promise<{props: {localesProps: LocalesProps}}>} pageProps
  */
-export function intlGetServerSideProps(localesPath = manifest.localesPath) {
+export function intlGetServerSideProps(localePathPath = manifest.defaultPath) {
   return async ctx => {
     const { res } = ctx;
     const { locale } = res.locals.gasketData.intl || {};

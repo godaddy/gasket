@@ -48,7 +48,7 @@ module.exports = function configureHook(gasket, config) {
 
   // get user defined config and apply defaults
   const {
-    localesPath = '/locales',
+    defaultPath = '/locales',
     defaultLocale = defaultLanguage || 'en',
     localesMap = languageMap || {},
     localesDir = './public/locales',
@@ -77,7 +77,7 @@ module.exports = function configureHook(gasket, config) {
    * @typedef {object} IntlConfig
    *
    * @property {string} basePath - Base URL where locale files are served
-   * @property {string} localesPath - Path to endpoint with JSON files
+   * @property {string} defaultPath - Path to endpoint with JSON files
    * @property {string} defaultLocale - Locale to fallback to when loading files
    * @property {object} localesMap - Mapping of locales to share files
    * @property {string} localesDir - Path to on-disk directory where locale files exists
@@ -91,7 +91,7 @@ module.exports = function configureHook(gasket, config) {
     intl: {
       ...intlConfig,
       basePath,
-      localesPath,
+      defaultPath,
       defaultLocale,
       localesMap,
       localesDir: fullLocalesDir,

@@ -26,5 +26,5 @@ LocaleRequired.propTypes = {
 };
 
 LocaleRequired.defaultProps = {
-  localesPath: manifest.localesPath
+  localesPath: manifest.defaultPath
 };

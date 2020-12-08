@@ -48,7 +48,7 @@ module.exports = async function buildManifest(gasket) {
    */
   const manifest = {
     basePath,
-    localesPath,
+    defaultPath: localesPath,
     defaultLocale,
     localesMap,
     paths
