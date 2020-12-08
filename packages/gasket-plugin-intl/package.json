@@ -37,11 +37,12 @@
     "fs-extra": "^5.0.0",
     "intl": "^1.2.5",
     "loader-utils": "^1.1.0",
-    "lodash": "^4.17.11",
+    "lodash.merge": "^4.6.0",
     "url-join": "^4.0.0"
   },
   "devDependencies": {
     "@gasket/intl": "^6.0.0-canary.4",
+    "@gasket/helper-intl": "^6.0.0-canary.3",
     "@gasket/plugin-log": "^6.0.0-canary.2",
     "assume": "^2.2.0",
     "assume-sinon": "^1.0.1",

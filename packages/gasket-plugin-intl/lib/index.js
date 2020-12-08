@@ -1,4 +1,6 @@
 const path = require('path');
+const merge = require('lodash.merge');
+const { LocaleUtils } = require('@gasket/helper-intl');
 const { name, devDependencies } = require('../package');
 const configure = require('./configure');
 const init = require('./init');
@@ -57,7 +59,11 @@ module.exports = {
       };
     },
     middleware(gasket) {
-      const { defaultLocale, basePath, localesMap } = getIntlConfig(gasket);
+      const { defaultLocale, basePath, localesMap, localesDir, manifestFilename } = getIntlConfig(gasket);
+
+      const manifest = require(path.join(localesDir, manifestFilename));
+      const localesParentDir = path.dirname(localesDir);
+      const localeUtils = new LocaleUtils({ manifest, basePath });
 
       return async function intlMiddleware(req, res, next) {
         /* eslint-disable require-atomic-updates */
@@ -65,22 +71,43 @@ module.exports = {
         const locale = await gasket.execWaterfall('intlLocale', acceptLanguage, req, res);
         const mappedLocale = localesMap && localesMap[locale] || locale;
 
-        // The gasketData object allows certain config data to be available for
-        // rendering as a global object for access in the browser.
-        res.gasketData = res.gasketData || {};
-
-        // TODO (@kinetifex): This could probably match LocalesProps used by Next.js loaders,
-        //   along with methods on req to preload locale files.
         /**
-         * Response data to render as global object for browser access
+         * Gasket data to render as global object for browser access
          *
-         * @typedef {object} GasketIntlData
-         * @property {Locale} locale - Locale derived from request
+         * @typedef {LocalesProps} GasketIntlData
+         * @property {string} [basePath] - Include base path if configured
          */
-        res.gasketData.intl = {
+        const intlData = {
           locale: mappedLocale
         };
-        if (basePath) res.gasketData.intl.basePath = basePath;
+        if (basePath) intlData.basePath = basePath;
+
+        /**
+         * Load locale file(s) and return localesProps
+         *
+         * @param {LocalePathPart|LocalePathPart[]} localePathPath - Path(s) containing locale files
+         * @returns {LocalesProps} localesProps
+         */
+        req.loadLocaleData = (localePathPath = manifest.defaultPath) => {
+          return localeUtils.serverLoadData(localePathPath, mappedLocale, localesParentDir);
+        };
+
+        /**
+         * Load locale data and makes available from gasketData
+         *
+         * @param {LocalePathPart|LocalePathPart[]} localePathPath - Path(s) containing locale files
+         * @returns {LocalesProps} localesProps
+         */
+        req.withLocaleRequired = (localePathPath = manifest.defaultPath) => {
+          const localesProps = req.loadLocaleData(localePathPath);
+          merge(intlData, localesProps);
+          return localesProps;
+        };
+
+        // The gasketData object allows certain config data to be available for
+        // rendering as a global object for access in the browser.
+        const { gasketData = {} } = res.locals;
+        res.locals.gasketData = { ...gasketData, intl: intlData };
         next();
         /* eslint-enable require-atomic-updates */
       };
