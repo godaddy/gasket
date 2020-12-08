@@ -41,7 +41,7 @@
     "url-join": "^4.0.0"
   },
   "devDependencies": {
-    "@gasket/intl": "^6.0.0-canary.4",
+    "@gasket/react-intl": "^6.0.0-canary.4",
     "@gasket/plugin-log": "^6.0.0-canary.2",
     "assume": "^2.2.0",
     "assume-sinon": "^1.0.1",

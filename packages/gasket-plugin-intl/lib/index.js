@@ -17,18 +17,21 @@ module.exports = {
     async create(gasket, context) {
       const { files, pkg } = context;
       const rootDir = path.join(__dirname, '..');
+      const isReactProject = pkg.has('dependencies', 'react');
+
       files.add(
-        `${ rootDir }/generator/*`,
-        `${ rootDir }/generator/**/*`
+        `${rootDir}/generator/*`,
+        `${rootDir}/generator/**/*`
       );
 
-      // TODO (@kinetifex): check if react is being added first
-      pkg.add('dependencies', {
-        '@gasket/intl': devDependencies['@gasket/intl'],
-        'react-intl': devDependencies['react-intl']
-      });
+      if (isReactProject) {
+        pkg.add('dependencies', {
+          '@gasket/react-intl': devDependencies['@gasket/react-intl'],
+          'react-intl': devDependencies['react-intl']
+        });
 
-      context.hasGasketIntl = true;
+        context.hasGasketIntl = true;
+      }
     },
     build: {
       timing: {

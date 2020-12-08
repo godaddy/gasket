@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 {{#if hasGasketIntl}}
-import { withIntlProvider } from '@gasket/intl';
+import { withIntlProvider } from '@gasket/react-intl';
 {{/if}}
 {{#if hasGasketRedux}}
 const { nextRedux } = require('../redux/store');

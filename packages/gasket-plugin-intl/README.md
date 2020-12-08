@@ -71,7 +71,7 @@ module.exports = {
 
 ## Usage
 
-Loader packages, such as [@gasket/intl] for React and Next.js apps, can utilize
+Loader packages, such as [@gasket/react-intl] for React and Next.js apps, can utilize
 settings from the [locales manifest] for loading locale files. Also, for apps
 with a server element, request based settings can be made available with the
 [response data].
@@ -298,7 +298,7 @@ entry.
 [response data]:#response-data
 [intlLocale lifecycle]:#intllocale
 
-[@gasket/intl]: /packages/gasket-intl/README.md
+[@gasket/react-intl]: /packages/gasket-react-intl/README.md
 
 [global window object]:https://developer.mozilla.org/en-US/docs/Glossary/Global_object
 
