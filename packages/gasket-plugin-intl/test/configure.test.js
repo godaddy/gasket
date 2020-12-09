@@ -44,7 +44,7 @@ describe('configure', function () {
     assume(results.intl).eqls({
       user: 'stuff',
       basePath: '',
-      localesPath: '/locales',
+      defaultPath: '/locales',
       defaultLocale: 'en',
       localesMap: {},
       localesDir: '/path/to/root/public/locales',
@@ -58,7 +58,7 @@ describe('configure', function () {
     assume(results.intl).eqls({
       user: 'stuff',
       basePath: 'custom',
-      localesPath: '/locales',
+      defaultPath: '/locales',
       defaultLocale: 'en-US',
       localesMap: {},
       localesDir: '/path/to/root/public/locales',

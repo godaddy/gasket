@@ -20,7 +20,7 @@ module.exports = async function buildManifest(gasket) {
   const { logger } = gasket;
   const { localesDir, manifestFilename } = getIntlConfig(gasket);
   const tgtFile = path.join(localesDir, manifestFilename);
-  const { basePath, localesPath, defaultLocale, localesMap } = getIntlConfig(gasket);
+  const { basePath, defaultPath, defaultLocale, localesMap } = getIntlConfig(gasket);
 
   // find all the .json files except the manifest
   const files = (await glob('**/*.json', { cwd: localesDir }))
@@ -31,7 +31,7 @@ module.exports = async function buildManifest(gasket) {
     await Promise.all(files.map(async file => {
       const buffer = await readFile(path.join(localesDir, file));
       const hash = loaderUtils.getHashDigest(buffer, 'md5', 'hex', 7);
-      return { [localesPath + '/' + file]: hash };
+      return { [path.basename(localesDir) + '/' + file]: hash };
     })))
     .reduce((a, c) => ({ ...a, ...c }), {});
 
@@ -47,7 +47,7 @@ module.exports = async function buildManifest(gasket) {
    */
   const manifest = {
     basePath,
-    defaultPath: localesPath,
+    defaultPath,
     defaultLocale,
     localesMap,
     paths

@@ -16,7 +16,7 @@ describe('buildManifest', function () {
       config: {
         intl: {
           basePath: '',
-          localesPath: '/locales',
+          defaultPath: '/locales',
           defaultLocale: 'en-US',
           localesMap: {
             'fr-CH': 'fr-FR'
@@ -52,15 +52,15 @@ describe('buildManifest', function () {
     const output = getOutput();
     const keys = Object.keys(output);
     assume(keys).eqls([
-      'basePath', 'localesPath', 'defaultLocale', 'localesMap', 'paths'
+      'basePath', 'defaultPath', 'defaultLocale', 'localesMap', 'paths'
     ]);
   });
 
   it('associates content hashes to locale path', async function () {
     await buildManifest(mockGasket);
     const output = getOutput();
-    assume(output.paths).property('en-US.json', '10decbe');
-    assume(output.paths).property('extra/en-US.json', 'ff5a352');
+    assume(output.paths).property('locales/en-US.json', '10decbe');
+    assume(output.paths).property('locales/extra/en-US.json', 'ff5a352');
   });
 
   it('does not include any existing manifest in paths', async function () {
@@ -73,10 +73,10 @@ describe('buildManifest', function () {
     await buildManifest(mockGasket);
     const output = getOutput();
     assume(output.paths).eqls({
-      'en-US.json': '10decbe',
-      'extra/en-US.json': 'ff5a352',
-      'extra/fr-FR.json': '2155926',
-      'fr-FR.json': '21047f1'
+      'locales/en-US.json': '10decbe',
+      'locales/extra/en-US.json': 'ff5a352',
+      'locales/extra/fr-FR.json': '2155926',
+      'locales/fr-FR.json': '21047f1'
     });
   });
 });

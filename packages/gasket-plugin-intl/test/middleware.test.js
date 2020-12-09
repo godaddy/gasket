@@ -1,6 +1,7 @@
 /* eslint-disable require-atomic-updates */
 const assume = require('assume');
 const sinon = require('sinon');
+const path = require('path');
 const plugin = require('../lib/index');
 
 const { middleware: middlewareHook } = plugin.hooks;
@@ -16,7 +17,9 @@ describe('middleware', function () {
           defaultLocale: 'en-US',
           localesMap: {
             'fr-CH': 'fr-FR'
-          }
+          },
+          localesDir: path.join(__dirname, 'fixtures'),
+          manifestFilename: 'mock-manifest.json'
         }
       }
     };
@@ -41,7 +44,7 @@ describe('middleware', function () {
           'accept-language': 'fr-FR'
         }
       };
-      res = {};
+      res = { locals: {} };
       next = sinon.stub();
     });
 
@@ -62,34 +65,34 @@ describe('middleware', function () {
       assume(mockGasket.execWaterfall).calledWith('intlLocale', 'en-US', req, res);
     });
 
-    it('attaches gasketData to res', async function () {
+    it('attaches gasketData to res.locals', async function () {
       await layer(req, res, next);
-      assume(res).property('gasketData');
-      assume(res.gasketData).eqls({ intl: { locale: 'fr-FR' } });
+      assume(res.locals).property('gasketData');
+      assume(res.locals.gasketData).eqls({ intl: { locale: 'fr-FR' } });
     });
 
-    it('res.gasketData has mapped locale if configured', async function () {
+    it('gasketData has mapped locale if configured', async function () {
       // not mapped example
       req.headers['accept-language'] = 'fr-CA';
       await layer(req, res, next);
-      assume(res.gasketData).eqls({ intl: { locale: 'fr-CA' } });
+      assume(res.locals.gasketData).eqls({ intl: { locale: 'fr-CA' } });
 
       // mapped example
       req.headers['accept-language'] = 'fr-CH';
       await layer(req, res, next);
-      assume(res.gasketData).eqls({ intl: { locale: 'fr-FR' } });
+      assume(res.locals.gasketData).eqls({ intl: { locale: 'fr-FR' } });
     });
 
-    it('res.gasketData has basePath if configured', async function () {
+    it('res.locals.gasketData has basePath if configured', async function () {
       // not configured example
       await layer(req, res, next);
-      assume(res.gasketData.intl).not.property('basePath');
+      assume(res.locals.gasketData.intl).not.property('basePath');
 
       // configured example
       mockGasket.config.intl.basePath = '/some/base/path';
       layer = middlewareHook(mockGasket);
       await layer(req, res, next);
-      assume(res.gasketData.intl).property('basePath', '/some/base/path');
+      assume(res.locals.gasketData.intl).property('basePath', '/some/base/path');
     });
   });
 });
