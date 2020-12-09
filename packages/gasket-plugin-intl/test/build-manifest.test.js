@@ -22,7 +22,7 @@ describe('buildManifest', function () {
             'fr-CH': 'fr-FR'
           },
           localesDir: path.join(__dirname, 'fixtures', 'locales'),
-          manifestFilename: 'locales-manifest.json'
+          manifestFilename: 'mock-manifest.json'
         }
       }
     };
@@ -41,7 +41,7 @@ describe('buildManifest', function () {
   const getOutput = () => JSON.parse(writeFileStub.getCall(0).args[1]);
 
   it('writes a json file in the locales dir', async function () {
-    const expected = path.join(__dirname, 'fixtures', 'locales', 'locales-manifest.json');
+    const expected = path.join(__dirname, 'fixtures', 'locales', 'mock-manifest.json');
     await buildManifest(mockGasket);
     assume(writeFileStub).called();
     assume(writeFileStub.getCall(0).args[0]).equals(expected);
@@ -66,7 +66,7 @@ describe('buildManifest', function () {
   it('does not include any existing manifest in paths', async function () {
     await buildManifest(mockGasket);
     const output = getOutput();
-    assume(output.paths).not.property('locales-manifest.json');
+    assume(output.paths).not.property('mock-manifest.json');
   });
 
   it('includes expected files in paths', async function () {

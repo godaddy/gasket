@@ -11,7 +11,6 @@ module.exports = function middlewareHook(gasket) {
   const localeUtils = new LocaleUtils({ manifest, basePath });
 
   return async function intlMiddleware(req, res, next) {
-    /* eslint-disable require-atomic-updates */
     const acceptLanguage = (req.headers['accept-language'] || defaultLocale).split(',')[0];
     const locale = await gasket.execWaterfall('intlLocale', acceptLanguage, req, res);
     const mappedLocale = localesMap && localesMap[locale] || locale;
@@ -22,10 +21,23 @@ module.exports = function middlewareHook(gasket) {
      * @typedef {LocalesProps} GasketIntlData
      * @property {string} [basePath] - Include base path if configured
      */
-    const intlData = {
-      locale: mappedLocale
-    };
-    if (basePath) intlData.basePath = basePath;
+
+    /**
+     * The gasketData object allows certain config data to be available for
+     * rendering allowing access in the browser.
+     *
+     * @param {GasketIntlData} intlData - data to merge to gasketData
+     */
+    function mergeGasketData(intlData) {
+      const { gasketData = {} } = res.locals;
+      const intl = merge({}, gasketData.intl || {}, intlData);
+      res.locals.gasketData = { ...gasketData, intl };
+    }
+
+    mergeGasketData({
+      locale: mappedLocale,
+      ...(basePath && { basePath } || {})
+    });
 
     /**
      * Load locale file(s) and return localesProps
@@ -45,15 +57,10 @@ module.exports = function middlewareHook(gasket) {
      */
     req.withLocaleRequired = (localePathPath = manifest.defaultPath) => {
       const localesProps = req.loadLocaleData(localePathPath);
-      merge(intlData, localesProps);
+      mergeGasketData(localesProps);
       return localesProps;
     };
 
-    // The gasketData object allows certain config data to be available for
-    // rendering as a global object for access in the browser.
-    const { gasketData = {} } = res.locals;
-    res.locals.gasketData = { ...gasketData, intl: intlData };
     next();
-    /* eslint-enable require-atomic-updates */
   };
 };

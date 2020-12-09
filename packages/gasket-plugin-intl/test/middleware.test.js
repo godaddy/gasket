@@ -16,7 +16,7 @@ describe('middleware', function () {
           localesMap: {
             'fr-CH': 'fr-FR'
           },
-          localesDir: path.join(__dirname, 'fixtures'),
+          localesDir: path.join(__dirname, 'fixtures', 'locales'),
           manifestFilename: 'mock-manifest.json'
         }
       }
@@ -91,6 +91,82 @@ describe('middleware', function () {
       layer = middlewareHook(mockGasket);
       await layer(req, res, next);
       assume(res.locals.gasketData.intl).property('basePath', '/some/base/path');
+    });
+
+    describe('req.loadLocaleData', function () {
+      it('method is added to req', async function () {
+        await layer(req, res, next);
+        assume(req).property('loadLocaleData');
+      });
+
+      it('returns locale props for default path', async function () {
+        await layer(req, res, next);
+        const results = req.loadLocaleData();
+        assume(results).eqls({
+          locale: 'fr-FR',
+          messages: { 'fr-FR': { gasket_welcome: 'Bonjour!', gasket_learn: 'Apprendre Gasket' } },
+          status: { '/locales/fr-FR.json': 'loaded' }
+        });
+      });
+
+      it('returns locale props for other path', async function () {
+        await layer(req, res, next);
+        const results = req.loadLocaleData('/locales/extra');
+        assume(results).eqls({
+          locale: 'fr-FR',
+          messages: { 'fr-FR': { gasket_extra: 'Supplémentaire' } },
+          status: { '/locales/extra/fr-FR.json': 'loaded' }
+        });
+      });
+    });
+
+    describe('req.withLocaleRequired', function () {
+      it('method is added to req', async function () {
+        await layer(req, res, next);
+        assume(req).property('withLocaleRequired');
+      });
+
+      it('add locale props to gasketData for default path', async function () {
+        await layer(req, res, next);
+        req.withLocaleRequired();
+        assume(res.locals.gasketData.intl).eqls({
+          locale: 'fr-FR',
+          messages: { 'fr-FR': { gasket_welcome: 'Bonjour!', gasket_learn: 'Apprendre Gasket' } },
+          status: { '/locales/fr-FR.json': 'loaded' }
+        });
+      });
+
+      it('adds locale props to gasketData for other path', async function () {
+        await layer(req, res, next);
+        req.withLocaleRequired('/locales/extra');
+        assume(res.locals.gasketData.intl).eqls({
+          locale: 'fr-FR',
+          messages: { 'fr-FR': { gasket_extra: 'Supplémentaire' } },
+          status: { '/locales/extra/fr-FR.json': 'loaded' }
+        });
+      });
+
+      it('merges with existing data', async function () {
+        res.locals.gasketData = { intl: { bogus: true } };
+        await layer(req, res, next);
+        req.withLocaleRequired();
+        req.withLocaleRequired('/locales/extra');
+        assume(res.locals.gasketData.intl).eqls({
+          bogus: true,
+          locale: 'fr-FR',
+          messages: {
+            'fr-FR': {
+              gasket_welcome: 'Bonjour!',
+              gasket_learn: 'Apprendre Gasket',
+              gasket_extra: 'Supplémentaire'
+            }
+          },
+          status: {
+            '/locales/fr-FR.json': 'loaded',
+            '/locales/extra/fr-FR.json': 'loaded'
+          }
+        });
+      });
     });
   });
 });
