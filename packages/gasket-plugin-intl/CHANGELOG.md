@@ -37,7 +37,7 @@
 
 ### 4.0.2
 
-- Create new apps with `@gasket/intl@4`
+- Create new apps with `@gasket/react-intl@4`
 
 ### 4.0.1
 

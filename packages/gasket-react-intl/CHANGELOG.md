@@ -1,4 +1,4 @@
-# `@gasket/intl`
+# `@gasket/react-intl`
 
 ### 6.0.0
 
