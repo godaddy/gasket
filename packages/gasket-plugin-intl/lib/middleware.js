@@ -23,6 +23,16 @@ module.exports = function middlewareHook(gasket) {
      */
 
     /**
+     * Get the Intl GasketData from res.locals
+     *
+     * @returns {GasketIntlData} intlData - Intl gasketData
+     */
+    function getIntlData() {
+      const { gasketData = {} } = res.locals;
+      return gasketData.intl || {};
+    }
+
+    /**
      * The gasketData object allows certain config data to be available for
      * rendering allowing access in the browser.
      *
@@ -30,7 +40,7 @@ module.exports = function middlewareHook(gasket) {
      */
     function mergeGasketData(intlData) {
       const { gasketData = {} } = res.locals;
-      const intl = merge({}, gasketData.intl || {}, intlData);
+      const intl = merge({}, getIntlData(), intlData);
       res.locals.gasketData = { ...gasketData, intl };
     }
 
@@ -40,25 +50,29 @@ module.exports = function middlewareHook(gasket) {
     });
 
     /**
-     * Load locale file(s) and return localesProps
-     *
-     * @param {LocalePathPart|LocalePathPart[]} localePathPath - Path(s) containing locale files
-     * @returns {LocalesProps} localesProps
-     */
-    req.loadLocaleData = (localePathPath = manifest.defaultPath) => {
-      return localeUtils.serverLoadData(localePathPath, mappedLocale, localesParentDir);
-    };
-
-    /**
      * Load locale data and makes available from gasketData
      *
      * @param {LocalePathPart|LocalePathPart[]} localePathPath - Path(s) containing locale files
      * @returns {LocalesProps} localesProps
      */
-    req.withLocaleRequired = (localePathPath = manifest.defaultPath) => {
-      const localesProps = req.loadLocaleData(localePathPath);
+    req.withLocaleRequired = function withLocaleRequired(localePathPath = manifest.defaultPath) {
+      const localesProps = localeUtils.serverLoadData(localePathPath, mappedLocale, localesParentDir);
       mergeGasketData(localesProps);
       return localesProps;
+    };
+
+    /**
+     * Select a message for a loaded locale. Fall back to provided default if provided, or
+     * message id if a loaded message is not found.
+     *
+     * @param {string} id - Key of translated message
+     * @param {string} [defaultMessage] - Fallback message if no id found or loaded
+     * @returns {string} message
+     */
+    req.selectLocaleMessage = function selectLocaleMessage(id, defaultMessage) {
+      const localeProps = getIntlData();
+      const messages = localeProps.messages && localeProps.messages[localeProps.locale] || {};
+      return messages[id] || defaultMessage || id;
     };
 
     next();

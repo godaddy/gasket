@@ -93,33 +93,6 @@ describe('middleware', function () {
       assume(res.locals.gasketData.intl).property('basePath', '/some/base/path');
     });
 
-    describe('req.loadLocaleData', function () {
-      it('method is added to req', async function () {
-        await layer(req, res, next);
-        assume(req).property('loadLocaleData');
-      });
-
-      it('returns locale props for default path', async function () {
-        await layer(req, res, next);
-        const results = req.loadLocaleData();
-        assume(results).eqls({
-          locale: 'fr-FR',
-          messages: { 'fr-FR': { gasket_welcome: 'Bonjour!', gasket_learn: 'Apprendre Gasket' } },
-          status: { '/locales/fr-FR.json': 'loaded' }
-        });
-      });
-
-      it('returns locale props for other path', async function () {
-        await layer(req, res, next);
-        const results = req.loadLocaleData('/locales/extra');
-        assume(results).eqls({
-          locale: 'fr-FR',
-          messages: { 'fr-FR': { gasket_extra: 'Supplémentaire' } },
-          status: { '/locales/extra/fr-FR.json': 'loaded' }
-        });
-      });
-    });
-
     describe('req.withLocaleRequired', function () {
       it('method is added to req', async function () {
         await layer(req, res, next);
@@ -166,6 +139,32 @@ describe('middleware', function () {
             '/locales/extra/fr-FR.json': 'loaded'
           }
         });
+      });
+    });
+
+    describe('req.selectLocaleMessage', function () {
+      it('method is added to req', async function () {
+        await layer(req, res, next);
+        assume(req).property('selectLocaleMessage');
+      });
+
+      it('selects loaded message', async function () {
+        await layer(req, res, next);
+        req.withLocaleRequired();
+        const results = req.selectLocaleMessage('gasket_welcome');
+        assume(results).eqls('Bonjour!');
+      });
+
+      it('falls back to message id if not loaded', async function () {
+        await layer(req, res, next);
+        const results = req.selectLocaleMessage('gasket_welcome');
+        assume(results).eqls('gasket_welcome');
+      });
+
+      it('used default message if set and message not loaded', async function () {
+        await layer(req, res, next);
+        const results = req.selectLocaleMessage('gasket_welcome', 'Welcome fallback');
+        assume(results).eqls('Welcome fallback');
       });
     });
   });

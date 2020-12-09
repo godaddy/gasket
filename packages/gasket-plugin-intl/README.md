@@ -71,10 +71,10 @@ module.exports = {
 
 ## Usage
 
-Loader packages, such as [@gasket/react-intl] for React and Next.js apps, can utilize
-settings from the [locales manifest] for loading locale files. Also, for apps
-with a server element, request based settings can be made available with the
-response via [Gasket data].
+Loader packages, such as [@gasket/react-intl] for React and Next.js apps, can
+utilize settings from the [locales manifest] for loading locale files. Also, for
+apps with a server element, request based settings can be made available with
+the response via [Gasket data].
 
 For the most part, app developers should not need to interface directly with
 these setting objects, but rather understand how loaders use them to resolve
@@ -223,9 +223,14 @@ implementing a custom Gasket plugin using the [intlLocale lifecycle].
 
 ### withLocaleRequired
 
-A loader method is attached to the request object (`req.withLocaleRequired`).
-This allows locale paths to be loaded on the server, and rendered as part of the
-`gasketData`.
+**Signature**
+
+- `req.withLocaleRequired(localesPath)`
+
+This loader method is attached to the request object which allows locale paths
+to be loaded on the server. The loaded locale props will added into Gasket data
+at `res.locals.gasketData.intl`, which can be pre-rendered into a
+[GasketData script tag] to avoid an extra request.
 
 ```js
 // lifecycles/middleware.js
@@ -238,35 +243,35 @@ module.exports = function middlewareHook(gasket) {
 }
 ```
 
-The data will now be loaded into `res.locals.gasketData.intl`, and can be
-pre-rendered into a [GasketData script tag] to avoid an extra request.
-
 For Next.js apps, prefer to use one of the loader approaches provided by
 [@gasket/react-intl/next].
 
-### loadLocaleData
+### selectLocaleMessages
+
+**Signature**
+
+- `req.selectLocaleMessages(id, [defaultMessage])`
 
 If you have cases where you need locale messages loaded for non HTML documents,
-such as for as translated API responses, then you can use `req.loadLocaleData`
-get a locale props directly.
+such as for as translated API responses, as a convenience, you can use this
+method to select a loaded message for the request locale.
 
 ```js
 // lifecycles/express.js
 
 module.exports = function expressHook(gasket, app) {
     app.post('/api/v1/something', async function (req, res) {
-      // load messages for the request locale at the locale path
-      const localeProps = req.loadLocaleData('/locales/api');
-      // get the messages from the determined locale and loaded file
-      const messages = localeProps.messages[localeProps.locale];
+      // first, load messages for the request locale at the locale path
+      req.withLocaleRequired('/locales/api');
       
       const ok = doSomething();
       
       // send a translated response message based on results
       if (ok) {
-        res.send(messages.success);
+        res.send(req.selectLocaleMessage('success'));
       } else {
-        res.status(500).send(messages.exception);
+        // Provide a default message incase a locale file as a missing id
+        res.status(500).send(req.selectLocaleMessage('exception', 'Bad things man'));
       }
   });
 }
