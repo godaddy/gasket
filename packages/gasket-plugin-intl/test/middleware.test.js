@@ -2,9 +2,7 @@
 const assume = require('assume');
 const sinon = require('sinon');
 const path = require('path');
-const plugin = require('../lib/index');
-
-const { middleware: middlewareHook } = plugin.hooks;
+const middlewareHook = require('../lib/middleware');
 
 describe('middleware', function () {
   let mockGasket;
