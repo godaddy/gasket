@@ -1,6 +1,6 @@
 {
   "name": "@gasket/react-intl",
-  "version": "6.0.0-canary.4",
+  "version": "6.0.0-canary.7",
   "description": "React component library to enable localization for gasket apps.",
   "main": "./lib",
   "browser": "./lib",
