@@ -67,7 +67,7 @@ module.exports = function configureHook(gasket, config) {
     modules = modules === true ? moduleDefaults : { ...moduleDefaults, ...modules };
   }
 
-  // This allows packages (@gasket/intl) to reference certain configs
+  // This allows packages (@gasket/react-intl) to reference certain configs
   /* eslint-disable no-process-env */
   process.env.GASKET_INTL_LOCALES_DIR = fullLocalesDir;
   process.env.GASKET_INTL_MANIFEST_FILE = path.join(fullLocalesDir, manifestFilename);

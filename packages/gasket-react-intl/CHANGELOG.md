@@ -1,7 +1,8 @@
-# `@gasket/intl`
+# `@gasket/react-intl`
 
 ### 6.0.0
 
+- Renamed from `@gasket/intl` ([#222])
 - Decoupled from Redux ([#180])
 - Support for getStaticProps and getServerSideProps in Next.js apps ([#180])
   - Removed use of getInitialProps in components.
@@ -91,3 +92,4 @@
 [#175]: https://github.com/godaddy/gasket/pull/175
 [#180]: https://github.com/godaddy/gasket/pull/180
 [#216]: https://github.com/godaddy/gasket/pull/216
+[#222]: https://github.com/godaddy/gasket/pull/222
