@@ -12,7 +12,7 @@ import { useGasketIntl } from './hooks';
  * @param {React.Component} [options.loading] - Custom component to show while loading
  * @returns {function} wrapper
  */
-export default function withLocaleRequired(localesPath = manifest.localesPath, options = {}) {
+export default function withLocaleRequired(localesPath = manifest.defaultPath, options = {}) {
   const { loading = null } = options;
   /**
    * Wrap the component

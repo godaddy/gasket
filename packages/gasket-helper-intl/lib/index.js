@@ -3,6 +3,9 @@
  * Do not rely on req, or window.
  */
 
+const path = require('path');
+const merge = require('lodash.merge');
+
 /**
  * Partial URL representing a directory containing locale .json files
  * or a URL template with a `:locale` path param to a .json file.
@@ -49,6 +52,34 @@
  * "en-US"
  */
 
+/**
+ * State of loaded locale files
+ *
+ * @typedef {object} LocalesState
+ * @property {{string: string}} messages
+ * @property {{LocalePath: LocalePathStatus}} status
+ */
+
+/**
+ * Props for a Next.js page containing locale and initial state
+ *
+ * @typedef {LocalesState} LocalesProps
+ * @property {Locale} locale
+ */
+
+/**
+ * Fetch status of a locale file
+ * @typedef {string} LocalePathStatus
+ * @readonly
+ */
+
+/** @type {LocalePathStatus} */
+const LOADING = 'loading';
+/** @type {LocalePathStatus} */
+const LOADED = 'loaded';
+/** @type {LocalePathStatus} */
+const ERROR = 'error';
+
 const reLocalePathParam = /(\/[$:{]locale}?\/)/;
 
 /**
@@ -88,7 +119,8 @@ function LocaleUtils(config) {
   };
 
   /**
-   * Format a localePath with provide locale
+   * Format a localePath with provided locale. Ensures path starts with slash
+   * and ends with .json file.
    *
    * @param {LocalePathPart} localePathPart - Path containing locale files
    * @param {Locale} locale - Locale
@@ -96,10 +128,11 @@ function LocaleUtils(config) {
    * @method
    */
   this.formatLocalePath = (localePathPart, locale) => {
-    if (reLocalePathParam.test(localePathPart)) {
-      return localePathPart.replace(reLocalePathParam, `/${ locale }/`);
+    const cleanPart = '/' + localePathPart.replace(/^\/|\/$/g, '');
+    if (reLocalePathParam.test(cleanPart)) {
+      return cleanPart.replace(reLocalePathParam, `/${ locale }/`);
     }
-    return `${ localePathPart }/${ locale }.json`;
+    return `${ cleanPart }/${ locale }.json`;
   };
 
   /**
@@ -135,8 +168,52 @@ function LocaleUtils(config) {
     if (hash) url += `?v=${ hash }`;
     return url;
   };
+
+  /**
+   * Load locale file(s) and return localesProps
+   *
+   * @param {LocalePathPart|LocalePathPart[]} localePathPath - Path(s) containing locale files
+   * @param {Locale} locale - Locale to load
+   * @param {string} localesDir - Disk path to locale files dir
+   * @returns {LocalesProps} localesProps
+   */
+  this.serverLoadData = (localePathPath, locale, localesDir) => {
+    if (Array.isArray(localePathPath)) {
+      const localesProps = localePathPath.map(p => this.serverLoadData(p, locale, localesDir));
+      return merge(...localesProps);
+    }
+
+    const localeFile = this.getLocalePath(localePathPath, locale);
+    const diskPath = path.join(localesDir, localeFile);
+    let messages;
+    let status;
+
+    try {
+      messages = require(diskPath);
+      status = LOADED;
+    } catch (e) {
+      console.error(e.message); // eslint-disable-line no-console
+      messages = {};
+      status = ERROR;
+    }
+
+    return {
+      locale,
+      messages: {
+        [locale]: {
+          ...messages
+        }
+      },
+      status: {
+        [localeFile]: status
+      }
+    };
+  };
 }
 
 module.exports = {
-  LocaleUtils
+  LocaleUtils,
+  LOADING,
+  LOADED,
+  ERROR
 };
