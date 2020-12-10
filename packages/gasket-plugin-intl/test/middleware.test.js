@@ -1,9 +1,8 @@
 /* eslint-disable require-atomic-updates */
 const assume = require('assume');
 const sinon = require('sinon');
-const plugin = require('../lib/index');
-
-const { middleware: middlewareHook } = plugin.hooks;
+const path = require('path');
+const middlewareHook = require('../lib/middleware');
 
 describe('middleware', function () {
   let mockGasket;
@@ -16,7 +15,9 @@ describe('middleware', function () {
           defaultLocale: 'en-US',
           localesMap: {
             'fr-CH': 'fr-FR'
-          }
+          },
+          localesDir: path.join(__dirname, 'fixtures', 'locales'),
+          manifestFilename: 'mock-manifest.json'
         }
       }
     };
@@ -41,7 +42,7 @@ describe('middleware', function () {
           'accept-language': 'fr-FR'
         }
       };
-      res = {};
+      res = { locals: {} };
       next = sinon.stub();
     });
 
@@ -62,34 +63,109 @@ describe('middleware', function () {
       assume(mockGasket.execWaterfall).calledWith('intlLocale', 'en-US', req, res);
     });
 
-    it('attaches gasketData to res', async function () {
+    it('attaches gasketData to res.locals', async function () {
       await layer(req, res, next);
-      assume(res).property('gasketData');
-      assume(res.gasketData).eqls({ intl: { locale: 'fr-FR' } });
+      assume(res.locals).property('gasketData');
+      assume(res.locals.gasketData).eqls({ intl: { locale: 'fr-FR' } });
     });
 
-    it('res.gasketData has mapped locale if configured', async function () {
+    it('gasketData has mapped locale if configured', async function () {
       // not mapped example
       req.headers['accept-language'] = 'fr-CA';
       await layer(req, res, next);
-      assume(res.gasketData).eqls({ intl: { locale: 'fr-CA' } });
+      assume(res.locals.gasketData).eqls({ intl: { locale: 'fr-CA' } });
 
       // mapped example
       req.headers['accept-language'] = 'fr-CH';
       await layer(req, res, next);
-      assume(res.gasketData).eqls({ intl: { locale: 'fr-FR' } });
+      assume(res.locals.gasketData).eqls({ intl: { locale: 'fr-FR' } });
     });
 
-    it('res.gasketData has basePath if configured', async function () {
+    it('res.locals.gasketData has basePath if configured', async function () {
       // not configured example
       await layer(req, res, next);
-      assume(res.gasketData.intl).not.property('basePath');
+      assume(res.locals.gasketData.intl).not.property('basePath');
 
       // configured example
       mockGasket.config.intl.basePath = '/some/base/path';
       layer = middlewareHook(mockGasket);
       await layer(req, res, next);
-      assume(res.gasketData.intl).property('basePath', '/some/base/path');
+      assume(res.locals.gasketData.intl).property('basePath', '/some/base/path');
+    });
+
+    describe('req.withLocaleRequired', function () {
+      it('method is added to req', async function () {
+        await layer(req, res, next);
+        assume(req).property('withLocaleRequired');
+      });
+
+      it('add locale props to gasketData for default path', async function () {
+        await layer(req, res, next);
+        req.withLocaleRequired();
+        assume(res.locals.gasketData.intl).eqls({
+          locale: 'fr-FR',
+          messages: { 'fr-FR': { gasket_welcome: 'Bonjour!', gasket_learn: 'Apprendre Gasket' } },
+          status: { '/locales/fr-FR.json': 'loaded' }
+        });
+      });
+
+      it('adds locale props to gasketData for other path', async function () {
+        await layer(req, res, next);
+        req.withLocaleRequired('/locales/extra');
+        assume(res.locals.gasketData.intl).eqls({
+          locale: 'fr-FR',
+          messages: { 'fr-FR': { gasket_extra: 'Supplémentaire' } },
+          status: { '/locales/extra/fr-FR.json': 'loaded' }
+        });
+      });
+
+      it('merges with existing data', async function () {
+        res.locals.gasketData = { intl: { bogus: true } };
+        await layer(req, res, next);
+        req.withLocaleRequired();
+        req.withLocaleRequired('/locales/extra');
+        assume(res.locals.gasketData.intl).eqls({
+          bogus: true,
+          locale: 'fr-FR',
+          messages: {
+            'fr-FR': {
+              gasket_welcome: 'Bonjour!',
+              gasket_learn: 'Apprendre Gasket',
+              gasket_extra: 'Supplémentaire'
+            }
+          },
+          status: {
+            '/locales/fr-FR.json': 'loaded',
+            '/locales/extra/fr-FR.json': 'loaded'
+          }
+        });
+      });
+    });
+
+    describe('req.selectLocaleMessage', function () {
+      it('method is added to req', async function () {
+        await layer(req, res, next);
+        assume(req).property('selectLocaleMessage');
+      });
+
+      it('selects loaded message', async function () {
+        await layer(req, res, next);
+        req.withLocaleRequired();
+        const results = req.selectLocaleMessage('gasket_welcome');
+        assume(results).eqls('Bonjour!');
+      });
+
+      it('falls back to message id if not loaded', async function () {
+        await layer(req, res, next);
+        const results = req.selectLocaleMessage('gasket_welcome');
+        assume(results).eqls('gasket_welcome');
+      });
+
+      it('used default message if set and message not loaded', async function () {
+        await layer(req, res, next);
+        const results = req.selectLocaleMessage('gasket_welcome', 'Welcome fallback');
+        assume(results).eqls('Welcome fallback');
+      });
     });
   });
 });
