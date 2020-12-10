@@ -14,7 +14,7 @@ const MockComponent = class extends React.Component {
 };
 
 describe('withLocaleRequired', function () {
-  let mockConfig, useGasketIntlStub, withLocaleRequired, wrapper, serverLoadDataStub;
+  let mockConfig, useGasketIntlStub, withLocaleRequired, wrapper;
 
   const doMount = (...args) => {
     const Wrapped = withLocaleRequired(...args)(MockComponent);
@@ -23,7 +23,6 @@ describe('withLocaleRequired', function () {
 
   beforeEach(function () {
     useGasketIntlStub = sinon.stub();
-    serverLoadDataStub = sinon.stub();
     mockConfig = {
       defaultLocale: 'en-US',
       manifest: { ...mockManifest, paths: { ...mockManifest.paths } },
