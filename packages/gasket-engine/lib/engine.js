@@ -98,36 +98,17 @@ class PluginEngine {
    */
   hook({ event, pluginName, timing, handler }) {
     const hookConfig = this._getHookConfig(event);
-    const { first, last } = timing || {};
+    const { first, last, before, after } = timing || {};
 
     // normalize to long name form
-    // const before = (timing.before || []).map(rawName => pluginIdentifier(rawName).longName);
-    // const after = (timing.after || []).map(rawName => pluginIdentifier(rawName).longName);
-
-    // TODO (kinetifex): ▲ uncomment normalization and ▼ remove fallback logic in next major revision
-
-    // normalize to long name form with fallback support for short names
-    const [before, after] = ['before', 'after'].map(timingType => {
-      const arr = (timing || {})[timingType] || [];
-      return arr.reduce((acc, rawName) => {
-        let { longName } = pluginIdentifier(rawName);
-        if (!(longName in this._plugins)) {
-          const identifier = pluginIdentifier.lookup(rawName, id => id.longName in this._plugins);
-          if (identifier) {
-            console.warn(`Plugin '${pluginName}' has '${timingType}' timing of '${rawName}' which resolved to '${identifier.longName}'. This fallback behavior is DEPRECATED.`);
-            longName = identifier.longName;
-          }
-        }
-        acc.push(longName);
-        return acc;
-      }, []);
-    });
+    const beforeNorm = (before || []).map(rawName => pluginIdentifier(rawName).longName);
+    const afterNorm = (after || []).map(rawName => pluginIdentifier(rawName).longName);
 
     hookConfig.subscribers[pluginName || `dynamic-${dynamicNamingId++}`] = {
       ordering: {
         first: !!first,
-        before,
-        after,
+        before: beforeNorm,
+        after: afterNorm,
         last: !!last
       },
       callback: handler.bind(null, this)
