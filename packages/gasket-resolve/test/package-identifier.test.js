@@ -9,20 +9,12 @@ describe('matchMaker', () => {
   it('returns object with convention positions', () => {
     const re = matchMaker('gasket');
     expect(re).toHaveProperty('prefixed');
-    expect(re).toHaveProperty('postfixed');
-    // expect(re).toHaveProperty('projectPostfixed', expect.any(RegExp));
   });
 
   it('prefixed has expected regex format', () => {
     const re = matchMaker('gasket');
     expect(re.prefixed).toHaveProperty('project', expect.any(RegExp));
     expect(re.prefixed).toHaveProperty('user', expect.any(RegExp));
-  });
-
-  it('postfixed has expected regex format', () => {
-    const re = matchMaker('gasket');
-    expect(re.postfixed).toHaveProperty('project', expect.any(RegExp));
-    expect(re.postfixed).toHaveProperty('user', expect.any(RegExp));
   });
 
   it('requires project name', () => {
@@ -89,24 +81,6 @@ describe('matchMaker', () => {
     });
   });
 
-  describe('postfixed project format', () => {
-    testFormat('postfixed', 'project', {
-      doesMatch: [
-        '@gasket/example-plugin',
-        '@gasket/another-example-plugin'
-      ],
-      doesNotMatch: [
-        '@user/example-gasket-plugin',
-        'gasket-plugin-example',
-        '@gasket/plugin-example'
-      ],
-      matchElements: {
-        '@gasket/example-plugin': ['@gasket/example-plugin', '@gasket', 'example'],
-        '@gasket/another-example-plugin': ['@gasket/another-example-plugin', '@gasket', 'another-example']
-      }
-    });
-  });
-
   describe('prefixed user format', () => {
     testFormat('prefixed', 'user', {
       doesMatch: [
@@ -126,44 +100,17 @@ describe('matchMaker', () => {
       }
     });
   });
-
-  describe('postfixed user format', () => {
-    testFormat('postfixed', 'user', {
-      doesMatch: [
-        '@user/example-gasket-plugin',
-        'example-gasket-plugin',
-        '@user/another-example-gasket-plugin',
-        'another-example-gasket-plugin'
-      ],
-      doesNotMatch: [
-        '@gasket/example-plugin'
-      ],
-      matchElements: {
-        '@user/example-gasket-plugin': ['@user/example-gasket-plugin', '@user', 'example'],
-        '@user/another-example-gasket-plugin': ['@user/another-example-gasket-plugin', '@user', 'another-example'],
-        'example-gasket-plugin': ['example-gasket-plugin', undefined, 'example'],
-        'another-example-gasket-plugin': ['another-example-gasket-plugin', undefined, 'another-example']
-      }
-    });
-  });
 });
 
 describe('expandMaker', () => {
   it('returns object with convention positions', () => {
     const expand = expandMaker('gasket');
     expect(expand).toHaveProperty('prefixed');
-    expect(expand).toHaveProperty('postfixed');
-    // expect(re).toHaveProperty('projectPostfixed', expect.any(RegExp));
   });
 
   it('prefixed has expected function', () => {
     const expand = expandMaker('gasket');
     expect(expand).toHaveProperty('prefixed', expect.any(Function));
-  });
-
-  it('postfixed has expected function', () => {
-    const expand = expandMaker('gasket');
-    expect(expand).toHaveProperty('postfixed', expect.any(Function));
   });
 
   it('requires project name', () => {
@@ -200,22 +147,6 @@ describe('expandMaker', () => {
       expect(expand('example')).toEqual('gasket-plugin-example');
     });
   });
-
-  describe('postfixed format', () => {
-    const expand = expandMaker('gasket').postfixed;
-
-    it('expands project scoped short name', () => {
-      expect(expand('@gasket/example')).toEqual('@gasket/example-plugin');
-    });
-
-    it('expands user scoped short name', () => {
-      expect(expand('@user/example')).toEqual('@user/example-gasket-plugin');
-    });
-
-    it('expands user short name', () => {
-      expect(expand('example')).toEqual('example-gasket-plugin');
-    });
-  });
 });
 
 describe('projectIdentifier', () => {
@@ -223,6 +154,7 @@ describe('projectIdentifier', () => {
 
   it('returns creator function', () => {
     result = projectIdentifier('gasket');
+    console.log(result)
     expect(result).toBeInstanceOf(Function);
     expect(result.name).toEqual('createPackageIdentifier');
   });
@@ -305,12 +237,6 @@ describe('projectIdentifier', () => {
         expect(result.fullName).toEqual('gasket-plugin-example');
       });
 
-      it('falls back to postfixed', () => {
-        mockSet.add('example-gasket-plugin');
-        result = packageIdentifier.lookup('example', mockHandler);
-        expect(result.fullName).toEqual('example-gasket-plugin');
-      });
-
       it('returns null if not found', () => {
         result = packageIdentifier.lookup('example', mockHandler);
         expect(result).toBe(null);
@@ -321,12 +247,6 @@ describe('projectIdentifier', () => {
         result = packageIdentifier.lookup('example', mockHandler);
         expect(result.fullName).toEqual('@gasket/plugin-example');
       });
-
-      it('falls back to project + postfixed', () => {
-        mockSet.add('@gasket/example-plugin');
-        result = packageIdentifier.lookup('example', mockHandler);
-        expect(result.fullName).toEqual('@gasket/example-plugin');
-      });
     });
 
     describe('user scope', () => {
@@ -335,12 +255,6 @@ describe('projectIdentifier', () => {
         mockSet.add('@user/gasket-plugin-example');
         result = packageIdentifier.lookup('@user/example', mockHandler);
         expect(result.fullName).toEqual('@user/gasket-plugin-example');
-      });
-
-      it('falls back to postfixed', () => {
-        mockSet.add('@user/example-gasket-plugin');
-        result = packageIdentifier.lookup('@user/example', mockHandler);
-        expect(result.fullName).toEqual('@user/example-gasket-plugin');
       });
 
       it('returns null if not found', () => {
@@ -355,12 +269,6 @@ describe('projectIdentifier', () => {
         mockSet.add('@gasket/plugin-example');
         result = packageIdentifier.lookup('@gasket/example', mockHandler);
         expect(result.fullName).toEqual('@gasket/plugin-example');
-      });
-
-      it('falls back to postfixed', () => {
-        mockSet.add('@gasket/example-plugin');
-        result = packageIdentifier.lookup('@gasket/example', mockHandler);
-        expect(result.fullName).toEqual('@gasket/example-plugin');
       });
 
       it('returns null if not found', () => {
