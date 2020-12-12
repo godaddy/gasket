@@ -154,7 +154,6 @@ describe('projectIdentifier', () => {
 
   it('returns creator function', () => {
     result = projectIdentifier('gasket');
-    console.log(result)
     expect(result).toBeInstanceOf(Function);
     expect(result.name).toEqual('createPackageIdentifier');
   });
