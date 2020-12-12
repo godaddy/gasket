@@ -11,7 +11,7 @@ npm i @gasket/data
 ## Usage
 
 This helper is intended for use in conjunction with Gasket Data embedded in a
-script tag in the html document.
+[script tag] in the HTML document.
 
 For example, if the following data is rendered...
 
@@ -58,4 +58,4 @@ described above.
 <!-- LINKS -->
 
 [middleware lifecycle]:/packages/gasket-plugin-express/README.md#middleware
-
+[script tag]:https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script

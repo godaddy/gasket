@@ -1,4 +1,4 @@
-# @gasket/intl
+# @gasket/react-intl
 
 React component library to enable localization for Gasket apps. Loads and
 manages locale files from [@gasket/plugin-intl].
@@ -15,7 +15,7 @@ manages locale files from [@gasket/plugin-intl].
 ## Installation
 
 ```
-npm i @gasket/intl
+npm i @gasket/react-intl
 ```
 
 ## Components
@@ -34,7 +34,7 @@ the locale components below.
 - `[options]` - (object) Optional configuration - currently not used
 
 ```jsx
-import { withIntlProvider } from '@gasket/intl';
+import { withIntlProvider } from '@gasket/react-intl';
 
 const App = props => <div>{props.children}</div>
 
@@ -61,7 +61,7 @@ wrapped component will be rendered.
 #### Example
 
 ```jsx
-import { withLocaleRequired } from '@gasket/intl';
+import { withLocaleRequired } from '@gasket/react-intl';
 import { FormattedMessage } from 'react-intl';
 
 const Component = props => <h1><FormattedMessage id='welcome'/></h1>
@@ -98,7 +98,7 @@ content until a [split locales] file loads.
 - `loading` - (string|node) Content to render while loading, otherwise null.
 
 ```jsx
-import { LocaleRequired } from '@gasket/intl';
+import { LocaleRequired } from '@gasket/react-intl';
 import { FormattedMessage } from 'react-intl';
 
 const Component = props => (
@@ -118,7 +118,7 @@ export default Component;
 ## Next.js
 
 Loader functions specific to Next.js lifecycles are available from
-`@gasket/intl/next`.
+`@gasket/react-intl/next`.
 
 ### intlGetStaticProps
 
@@ -137,7 +137,7 @@ To generate static pages for a locale in a Next.js app, you can use
 
 ```jsx
 // pages/[locale]/example.js
-import { intlGetStaticProps } from '@gasket/intl/next';
+import { intlGetStaticProps } from '@gasket/react-intl/next';
 import { FormattedMessage } from 'react-intl';
 
 export default const Component = props => <h1><FormattedMessage id='welcome'/></h1>
@@ -176,7 +176,7 @@ be loaded will come from the `res.gasketData` provided by [@gasket/plugin-intl].
   [locales path] in the plugin docs.
 
 ```jsx
-import { intlGetServerSideProps } from '@gasket/intl/next';
+import { intlGetServerSideProps } from '@gasket/react-intl/next';
 import { FormattedMessage } from 'react-intl';
 
 export default const Component = props => <h1><FormattedMessage id='welcome'/></h1>

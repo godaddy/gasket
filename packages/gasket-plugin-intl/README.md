@@ -37,7 +37,7 @@ required. However, these options exist to customize an app's setup.
 ### Options
 
 - `basePath` - (string) Base URL where locale files are served
-- `localesPath` - (string) Path to endpoint with JSON files (default:
+- `defaultPath` - (string) Path to endpoint with JSON files (default:
   `/locales`). See [Locales Path] section.
 - `defaultLocale` - (string) Locale to fallback to when loading files (default:
   `en`)
@@ -71,10 +71,10 @@ module.exports = {
 
 ## Usage
 
-Loader packages, such as [@gasket/intl] for React and Next.js apps, can utilize
-settings from the [locales manifest] for loading locale files. Also, for apps
-with a server element, request based settings can be made available with the
-[response data].
+Loader packages, such as [@gasket/react-intl] for React and Next.js apps, can
+utilize settings from the [locales manifest] for loading locale files. Also, for
+apps with a server element, request based settings can be made available with
+the response via [Gasket data].
 
 For the most part, app developers should not need to interface directly with
 these setting objects, but rather understand how loaders use them to resolve
@@ -211,15 +211,71 @@ Because the locales manifest JSON file is generated each build, you may want to
 configure your SCM to ignore committing this file, such as with a `.gitignore`
 entry.
 
-### Response Data
+## Gasket Data
 
 Request based settings are available from the response object at
-`res.gasketData.intl`. For apps that support server-rendering, the
-`res.gasketData` object can be rendered as a [global window object] to make the
-`intl` settings further available to loader packages in the browser.
+`res.locals.gasketData.intl`. For apps that support server-rendering, the
+`res.locals.gasketData` object can be rendered as a [global window object] to
+make the `intl` settings further available to loader packages in the browser.
 
 For instance, this could be used to customize the `locale` for a user, by
 implementing a custom Gasket plugin using the [intlLocale lifecycle].
+
+### withLocaleRequired
+
+**Signature**
+
+- `req.withLocaleRequired(localesPath)`
+
+This loader method is attached to the request object which allows locale paths
+to be loaded on the server. The loaded locale props will added into Gasket data
+at `res.locals.gasketData.intl`, which can be pre-rendered into a
+[GasketData script tag] to avoid an extra request.
+
+```js
+// lifecycles/middleware.js
+
+module.exports = function middlewareHook(gasket) {
+  return middleware(req, res, next) {
+    req.withLocaleRequired('/locales');
+    next();
+  }
+}
+```
+
+For Next.js apps, prefer to use one of the loader approaches provided by
+[@gasket/react-intl/next].
+
+### selectLocaleMessages
+
+**Signature**
+
+- `req.selectLocaleMessages(id, [defaultMessage])`
+
+If you have cases where you need locale messages loaded for non HTML documents,
+such as for as translated API responses, as a convenience, you can use this
+method to select a loaded message for the request locale.
+
+```js
+// lifecycles/express.js
+
+module.exports = function expressHook(gasket, app) {
+    app.post('/api/v1/something', async function (req, res) {
+      // first, load messages for the request locale at the locale path
+      req.withLocaleRequired('/locales/api');
+      
+      const ok = doSomething();
+      
+      // send a translated response message based on results
+      if (ok) {
+        res.send(req.selectLocaleMessage('success'));
+      } else {
+        // Provide a default message incase a locale file as a missing id
+        res.status(500).send(req.selectLocaleMessage('exception', 'Bad things man'));
+      }
+  });
+}
+```
 
 ## Lifecycles
 
@@ -295,10 +351,12 @@ entry.
 [locales map]:#locales-map
 [locales manifest]:#locales-manifest
 [module locales]:#locales-manifest
-[response data]:#response-data
+[Gasket data]:#gasket-data
 [intlLocale lifecycle]:#intllocale
 
-[@gasket/intl]: /packages/gasket-intl/README.md
+[@gasket/react-intl]: /packages/gasket-react-intl/README.md
+[@gasket/react-intl/next]: /packages/gasket-react-intl/README.md#nextjs
+[GasketData script tag]: /packages/gasket-data/README.md
 
 [global window object]:https://developer.mozilla.org/en-US/docs/Glossary/Global_object
 

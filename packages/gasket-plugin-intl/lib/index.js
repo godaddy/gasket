@@ -2,6 +2,7 @@ const path = require('path');
 const { name, devDependencies } = require('../package');
 const configure = require('./configure');
 const init = require('./init');
+const middleware = require('./middleware');
 const serviceWorkerCacheKey = require('./service-worker-cache-key');
 const workbox = require('./workbox');
 const buildManifest = require('./build-manifest');
@@ -17,18 +18,21 @@ module.exports = {
     async create(gasket, context) {
       const { files, pkg } = context;
       const rootDir = path.join(__dirname, '..');
+      const isReactProject = pkg.has('dependencies', 'react');
+
       files.add(
-        `${ rootDir }/generator/*`,
-        `${ rootDir }/generator/**/*`
+        `${rootDir}/generator/*`,
+        `${rootDir}/generator/**/*`
       );
 
-      // TODO (@kinetifex): check if react is being added first
-      pkg.add('dependencies', {
-        '@gasket/intl': devDependencies['@gasket/intl'],
-        'react-intl': devDependencies['react-intl']
-      });
+      if (isReactProject) {
+        pkg.add('dependencies', {
+          '@gasket/react-intl': devDependencies['@gasket/react-intl'],
+          'react-intl': devDependencies['react-intl']
+        });
 
-      context.hasGasketIntl = true;
+        context.hasGasketIntl = true;
+      }
     },
     build: {
       timing: {
@@ -56,35 +60,7 @@ module.exports = {
         ]
       };
     },
-    middleware(gasket) {
-      const { defaultLocale, basePath, localesMap } = getIntlConfig(gasket);
-
-      return async function intlMiddleware(req, res, next) {
-        /* eslint-disable require-atomic-updates */
-        const acceptLanguage = (req.headers['accept-language'] || defaultLocale).split(',')[0];
-        const locale = await gasket.execWaterfall('intlLocale', acceptLanguage, req, res);
-        const mappedLocale = localesMap && localesMap[locale] || locale;
-
-        // The gasketData object allows certain config data to be available for
-        // rendering as a global object for access in the browser.
-        res.gasketData = res.gasketData || {};
-
-        // TODO (@kinetifex): This could probably match LocalesProps used by Next.js loaders,
-        //   along with methods on req to preload locale files.
-        /**
-         * Response data to render as global object for browser access
-         *
-         * @typedef {object} GasketIntlData
-         * @property {Locale} locale - Locale derived from request
-         */
-        res.gasketData.intl = {
-          locale: mappedLocale
-        };
-        if (basePath) res.gasketData.intl.basePath = basePath;
-        next();
-        /* eslint-enable require-atomic-updates */
-      };
-    },
+    middleware,
     workbox,
     serviceWorkerCacheKey,
     metadata(gasket, meta) {

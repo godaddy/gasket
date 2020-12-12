@@ -1,6 +1,6 @@
 {
   "basePath": "",
-  "localesPath": "/locales",
+  "defaultPath": "/locales",
   "defaultLocale": "en-US",
   "paths": {
     "/locales/en-US.json": "10decbe",

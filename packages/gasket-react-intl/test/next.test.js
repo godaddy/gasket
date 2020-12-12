@@ -1,20 +1,30 @@
 /* eslint-disable no-console */
 import assume from 'assume';
 import sinon from 'sinon';
-const next = require('../src/next');
+import proxyquire from 'proxyquire';
 
 describe('Next.js functions', function () {
-  let res;
+  let next, res;
 
   beforeEach(function () {
     sinon.stub(console, 'error');
     res = {
-      gasketData: {
-        intl: {
-          locale: 'en-US'
+      locals: {
+        gasketData: {
+          intl: {
+            locale: 'en-US'
+          }
         }
       }
     };
+    next = proxyquire('../src/next', {
+      ['./config']: {
+        manifest: {
+          defaultPath: '/locales',
+          defaultLocale: 'en-US'
+        }
+      }
+    });
   });
 
   afterEach(function () {
@@ -160,7 +170,7 @@ describe('Next.js functions', function () {
     });
 
     it('returns localesProps for default if locale missing', async function () {
-      res.gasketData.intl.locale = 'fr-CA';
+      res.locals.gasketData.intl.locale = 'fr-CA';
       const results = await next.intlGetServerSideProps('/locales')({ res });
       assume(results).eqls({
         props: {

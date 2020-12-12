@@ -1,4 +1,6 @@
 const assume = require('assume');
+const sinon = require('sinon');
+const path = require('path');
 
 const mockManifest = require('./fixtures/mock-manifest.json');
 const mockConfig = {};
@@ -9,8 +11,13 @@ describe('LocaleUtils', function () {
   let utils;
 
   beforeEach(function () {
+    sinon.stub(console, 'error');
     mockConfig.manifest = { ...mockManifest, paths: { ...mockManifest.paths } };
     utils = new LocaleUtils(mockConfig);
+  });
+
+  afterEach(function () {
+    sinon.restore();
   });
 
   describe('.formatLocalePath', function () {
@@ -18,17 +25,30 @@ describe('LocaleUtils', function () {
       const results = utils.formatLocalePath('/locales', 'en-US');
       assume(results).equals('/locales/en-US.json');
     });
+
     it('substitutes $locale in path template', function () {
       const results = utils.formatLocalePath('/locales/$locale/page1.json', 'en-US');
       assume(results).equals('/locales/en-US/page1.json');
     });
+
     it('substitutes :locale in path template', function () {
       const results = utils.formatLocalePath('/locales/:locale/page1.json', 'en-US');
       assume(results).equals('/locales/en-US/page1.json');
     });
+
     it('substitutes {locale} in path template', function () {
       const results = utils.formatLocalePath('/locales/{locale}/page1.json', 'en-US');
       assume(results).equals('/locales/en-US/page1.json');
+    });
+
+    it('ensures forward slash', function () {
+      const results = utils.formatLocalePath('locales', 'en-US');
+      assume(results).equals('/locales/en-US.json');
+    });
+
+    it('ensures no extra end slash', function () {
+      const results = utils.formatLocalePath('locales/', 'en-US');
+      assume(results).equals('/locales/en-US.json');
     });
   });
 
@@ -99,6 +119,51 @@ describe('LocaleUtils', function () {
       utils = new LocaleUtils(mockConfig);
       const results = utils.getLocalePath('/locales', 'da-DK');
       assume(results).equals('/locales/fake.json');
+    });
+  });
+
+  describe('.serverLoadData', function () {
+
+    const localesParentDir = path.resolve(__dirname, 'fixtures');
+
+    it('returns localesProps for other path part', async function () {
+      const results = utils.serverLoadData('/locales/extra', 'en-US', localesParentDir);
+      assume(results).eqls({
+        locale: 'en-US',
+        messages: { 'en-US': { gasket_extra: 'Extra' } },
+        status: { '/locales/extra/en-US.json': 'loaded' }
+      });
+    });
+
+    it('returns localesProps for multiple locale path parts', async function () {
+      const results = utils.serverLoadData(['/locales', '/locales/extra'], 'en-US', localesParentDir);
+      assume(results).eqls({
+        locale: 'en-US',
+        messages: { 'en-US': { gasket_welcome: 'Hello!', gasket_learn: 'Learn Gasket', gasket_extra: 'Extra' } },
+        status: {
+          '/locales/en-US.json': 'loaded',
+          '/locales/extra/en-US.json': 'loaded'
+        }
+      });
+    });
+
+    it('returns localesProps with error for missing path', async function () {
+      const results = utils.serverLoadData('/locales/missing', 'en-US', localesParentDir);
+      assume(results).eqls({
+        locale: 'en-US',
+        messages: { 'en-US': {} },
+        status: { '/locales/missing/en-US.json': 'error' }
+      });
+      assume(console.error).is.calledWithMatch('Cannot find module');
+    });
+
+    it('returns localesProps for default if locale missing', async function () {
+      const results = utils.serverLoadData('/locales', 'fr-CA', localesParentDir);
+      assume(results).eqls({
+        locale: 'fr-CA',
+        messages: { 'fr-CA': { gasket_welcome: 'Hello!', gasket_learn: 'Learn Gasket' } },
+        status: { '/locales/en-US.json': 'loaded' }
+      });
     });
   });
 });
