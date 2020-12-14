@@ -93,6 +93,12 @@ describe('middleware', function () {
       assume(res.locals.gasketData.intl).property('basePath', '/some/base/path');
     });
 
+    it('res.locals has configured localesDir', async function () {
+      layer = middlewareHook(mockGasket);
+      await layer(req, res, next);
+      assume(res.locals).property('localesDir', mockGasket.config.intl.localesDir);
+    });
+
     describe('req.withLocaleRequired', function () {
       it('method is added to req', async function () {
         await layer(req, res, next);
