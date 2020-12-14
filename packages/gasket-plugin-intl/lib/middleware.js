@@ -75,6 +75,8 @@ module.exports = function middlewareHook(gasket) {
       return messages[id] || defaultMessage || id;
     };
 
+    res.locals.localesDir = localesDir;
+
     next();
   };
 };

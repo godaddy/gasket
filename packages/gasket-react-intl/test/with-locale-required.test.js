@@ -1,4 +1,5 @@
 import React from 'react';
+import path from 'path';
 import assume from 'assume';
 import sinon from 'sinon';
 import proxyquire from 'proxyquire';
@@ -17,7 +18,7 @@ describe('withLocaleRequired', function () {
 
   const doMount = (...args) => {
     const Wrapped = withLocaleRequired(...args)(MockComponent);
-    return mount(<Wrapped />);
+    return mount(<Wrapped/>);
   };
 
   beforeEach(function () {
@@ -50,11 +51,59 @@ describe('withLocaleRequired', function () {
     delete MockComponent.bogus;
   });
 
-  it('hoists getInitialProps if set', function () {
-    assume(withLocaleRequired()(MockComponent)).not.property('getInitialProps');
-    MockComponent.getInitialProps = f => f;
-    assume(withLocaleRequired()(MockComponent)).property('getInitialProps');
-    delete MockComponent.getInitialProps;
+  describe('#getInitialProps', function () {
+    afterEach(function () {
+      delete MockComponent.getInitialProps;
+    });
+
+    it('hoists getInitialProps if set', function () {
+      assume(withLocaleRequired()(MockComponent)).not.property('getInitialProps');
+      MockComponent.getInitialProps = sinon.stub();
+      assume(withLocaleRequired()(MockComponent)).property('getInitialProps');
+    });
+
+    it('adds getInitialProps if initialProps set', function () {
+      const wrapped = withLocaleRequired('locales', { initialProps: true })(MockComponent);
+      assume(wrapped).property('getInitialProps');
+    });
+
+    it('executes wrapped getInitialProps', async function () {
+      MockComponent.getInitialProps = sinon.stub().returns({ bogus: true });
+      const wrapped = withLocaleRequired('locales', { initialProps: true })(MockComponent);
+
+      const ctx = {};
+      const props = await wrapped.getInitialProps(ctx);
+      assume(MockComponent.getInitialProps).calledWith(ctx);
+      assume(props).eqls({ bogus: true });
+    });
+
+    it('loads localeProps on server', async function () {
+      MockComponent.getInitialProps = sinon.stub().returns({ bogus: true });
+      const wrapped = withLocaleRequired('locales', { initialProps: true })(MockComponent);
+
+      const ctx = {
+        res: {
+          locals: {
+            localesDir: path.join(__dirname, 'fixtures', 'locales'),
+            gasketData: {
+              intl: {
+                locale: 'fr-FR'
+              }
+            }
+          }
+        }
+      };
+      const props = await wrapped.getInitialProps(ctx);
+      assume(MockComponent.getInitialProps).calledWith(ctx);
+      assume(props).eqls({
+        bogus: true,
+        localesProps: {
+          locale: 'fr-FR',
+          messages: { 'fr-FR': { gasket_welcome: 'Bonjour!', gasket_learn: 'Apprendre Gasket' } },
+          status: { '/locales/fr-FR.json': 'loaded' }
+        }
+      });
+    });
   });
 
   describe('#render', function () {

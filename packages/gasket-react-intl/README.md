@@ -57,6 +57,8 @@ wrapped component will be rendered.
   [locales path] in the plugin docs.
 - `[options]` - (object) Optional configuration
   - `loading` - (string|node) Content to render while loading, otherwise null.
+  - `initialProps` - (boolean) Enable `getInitialProps` to load locale files
+    during server-side rendering for Next.js pages. Defaults to `false`.
 
 #### Example
 
@@ -186,6 +188,31 @@ export default Component;
 export const getServerSideProps = intlGetServerSideProps('/locales');
 ```
 
+One caveat to using `getServerSideProps` is that the locales will be fetched for
+page changes in the browser as well. Since a locale file should only be loaded
+once for an app, consider using `getInitialProps` instead for loading during
+server rendering.
+
+### getInitialProps
+
+To enable `getInitialProps` for preloading locale files during server-side
+rendering if Next.js pages, you can set the `initialProps` options to `true`.
+
+#### Example
+
+```jsx
+import { withLocaleRequired } from '@gasket/react-intl';
+import { FormattedMessage } from 'react-intl';
+
+const Component = props => <h1><FormattedMessage id='welcome'/></h1>
+
+export default withLocaleRequired('/locales', { initialProps: true })(Component);
+```
+
+This cannot be combined with `getServerSideProps`, so in those cases where you
+need it, another option to preload locale props during SSR is with
+[req.withLocaleRequired].
+
 <!-- LINKS -->
 
 [withIntlProvider]:#withintlprovider
@@ -197,6 +224,7 @@ export const getServerSideProps = intlGetServerSideProps('/locales');
 [@gasket/plugin-intl]:/packages/gasket-plugin-intl/README.md
 [locales path]:/packages/gasket-plugin-intl/README.md#locales-path
 [split locales]:/packages/gasket-plugin-intl/README.md#split-locales
+[req.withLocaleRequired]:/packages/gasket-plugin-intl/README.md#withlocalerequired
 
 [react-intl]:https://formatjs.io/docs/react-intl
 [getStaticProps]:https://nextjs.org/docs/basic-features/data-fetching#getstaticprops-static-generation
