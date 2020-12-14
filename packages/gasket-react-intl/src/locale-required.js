@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { manifest } from './config';
-import { LOADING } from './utils';
-import { useGasketIntl } from './hooks';
+import { LocaleStatus } from './utils';
+import useLocaleRequired from './use-locale-required';
 
 /**
  * Component that loads a locale file before rendering children
@@ -14,8 +14,8 @@ import { useGasketIntl } from './hooks';
  */
 export default function LocaleRequired(props) {
   const { localesPath, loading = null, children } = props;
-  const loadState = useGasketIntl(localesPath);
-  if (loadState === LOADING) return loading;
+  const loadState = useLocaleRequired(localesPath);
+  if (loadState === LocaleStatus.LOADING) return loading;
   return <>{ children }</>;
 }
 

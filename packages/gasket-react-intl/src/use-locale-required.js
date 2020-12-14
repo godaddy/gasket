@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import fetch from '@gasket/fetch';
 import { isBrowser } from './config';
-import { LOADING, LOADED, ERROR, localeUtils } from './utils';
+import { localeUtils, LocaleStatus } from './utils';
 import { GasketIntlContext } from './context';
 
 /**
@@ -10,7 +10,7 @@ import { GasketIntlContext } from './context';
  * @param {LocalePathPart} localePathPart - Path containing locale files
  * @returns {LocalePathStatus} status
  */
-export function useGasketIntl(localePathPart) {
+export default function useLocaleRequired(localePathPart) {
   const { locale, status = {}, dispatch } = useContext(GasketIntlContext);
 
   const localePath = localeUtils.getLocalePath(localePathPart, locale);
@@ -21,10 +21,10 @@ export function useGasketIntl(localePathPart) {
   // We cannot use dispatch from useReducer during SSR, so exit early.
   // If you want a locale file to be ready, preload it to gasketIntl data
   // or load with getStaticProps or getServerSideProps.
-  if (!isBrowser) return LOADING;
+  if (!isBrowser) return LocaleStatus.LOADING;
 
   // Mutating status state to avoids an unnecessary render with using dispatch.
-  status[localePath] = LOADING;
+  status[localePath] = LocaleStatus.LOADING;
 
   const url = localeUtils.pathToUrl(localePath);
 
@@ -33,7 +33,7 @@ export function useGasketIntl(localePathPart) {
     .then(r => r.ok ? r.json() : Promise.reject(new Error(`Error loading locale file (${ r.status }): ${ url }`)))
     .then(messages => {
       dispatch({
-        type: LOADED,
+        type: LocaleStatus.LOADED,
         payload: {
           locale,
           messages,
@@ -44,12 +44,12 @@ export function useGasketIntl(localePathPart) {
     .catch(e => {
       console.error(e.message || e); // eslint-disable-line no-console
       dispatch({
-        type: ERROR,
+        type: LocaleStatus.ERROR,
         payload: {
           file: localePath
         }
       });
     });
 
-  return LOADING;
+  return LocaleStatus.LOADING;
 }

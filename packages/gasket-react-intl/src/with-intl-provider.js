@@ -4,7 +4,7 @@ import merge from 'lodash.merge';
 import { IntlProvider } from 'react-intl';
 import { GasketIntlContext } from './context';
 import { clientData, isBrowser } from './config';
-import { LOADED, getActiveLocale } from './utils';
+import { getActiveLocale, LocaleStatus } from './utils';
 
 /**
  * Merges any initial state from render with that from page props
@@ -32,7 +32,7 @@ export function init(localesProps) {
 export function reducer(state, action) {
   const { type } = action;
   const { locale, messages, file } = action.payload;
-  if (type === LOADED) {
+  if (type === LocaleStatus.LOADED) {
     return {
       ...state,
       messages: {
@@ -44,7 +44,7 @@ export function reducer(state, action) {
       },
       status: {
         ...state.status,
-        [file]: LOADED
+        [file]: LocaleStatus.LOADED
       }
     };
   }

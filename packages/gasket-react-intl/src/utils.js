@@ -3,7 +3,7 @@ import { LocaleUtils } from '@gasket/helper-intl';
 
 export const localeUtils = new LocaleUtils({ manifest, basePath });
 
-export { LOADED, LOADING, ERROR } from '@gasket/helper-intl';
+export { LocaleStatus } from '@gasket/helper-intl';
 
 /**
  * Determines the active locale from either what was rendered for the page (preferred),
