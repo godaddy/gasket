@@ -6,7 +6,7 @@ const reName = /^(@?[\w/-]+)@?(.*)/;
  *
  * @param {string} projectName - Name of the project
  * @param {string} [type] - Identifier type, defaults to 'plugin'
- * @returns {{prefixed: {project: RegExp, user: RegExp}, postfixed: {project: RegExp, user: RegExp}, scope: RegExp}} re
+ * @returns {{prefixed: {project: RegExp, user: RegExp}, scope: RegExp}} re
  * @private
  */
 function matchMaker(projectName, type = 'plugin') {
@@ -15,10 +15,6 @@ function matchMaker(projectName, type = 'plugin') {
     prefixed: {
       project: new RegExp(`(@${projectName})/${type}-([\\w-.]+)`),
       user: new RegExp(`(@[\\w-.]+)?\\/?${projectName}-${type}-?([\\w-.]+)?`)
-    },
-    postfixed: {
-      project: new RegExp(`(@${projectName})/([\\w-.]+)-${type}`),
-      user: new RegExp(`(@[\\w-.]+)?\\/?([\\w-.]+)-${projectName}-${type}`)
     }
   };
 }
@@ -28,7 +24,7 @@ function matchMaker(projectName, type = 'plugin') {
  *
  * @param {string} projectName - Name of the project
  * @param {string} [type] - Identifier type, defaults to 'plugin'
- * @returns {{prefixed: prefixed, postfixed: postfixed}} expand
+ * @returns {{prefixed: prefixed}} expand
  * @private
  */
 function expandMaker(projectName, type = 'plugin') {
@@ -47,15 +43,6 @@ function expandMaker(projectName, type = 'plugin') {
         return `${projectScope}/${type}-${name}`;
       }
       const result = `${projectName}-${type}` + (name ? `-${name}` : '');
-      return scope ? `${scope}/${result}` : result;
-    },
-    postfixed: short => {
-      const [name, scope] = parse(short);
-
-      if (scope === projectScope) {
-        return `${projectScope}/${name}-${type}`;
-      }
-      const result = `${name}-${projectName}-${type}`;
       return scope ? `${scope}/${result}` : result;
     }
   };
@@ -114,7 +101,7 @@ function projectIdentifier(projectName, type = 'plugin') {
    *
    * @param {string} rawName - Original input name of a package
    * @param {object} [options] - Options
-   * @param {boolean} [options.prefixed] - Set this to force prefixed/postfixed format for short names
+   * @param {boolean} [options.prefixed] - Set this to force prefixed format for short names
    * @returns {PackageIdentifier} instance
    */
   function createPackageIdentifier(rawName, options) {
@@ -157,9 +144,8 @@ function projectIdentifier(projectName, type = 'plugin') {
       });
 
       const reType = project && 'project' || 'user';
-      const fixedAs = prefixed && 'prefixed' || 'postfixed';
-      const expand = projectVars.expand[fixedAs];
-      const re = projectVars.re[fixedAs][reType];
+      const expand = projectVars.expand.prefixed;
+      const re = projectVars.re.prefixed[reType];
 
       return { format, expand, re };
     }
@@ -287,10 +273,6 @@ function projectIdentifier(projectName, type = 'plugin') {
         return format.prefixed;
       }
 
-      get isPostfixed() {
-        return !format.prefixed;
-      }
-
       get hasScope() {
         return format.scoped;
       }
@@ -336,10 +318,8 @@ function projectIdentifier(projectName, type = 'plugin') {
         let nextRawName = this.rawName;
 
         const nextOptions = {};
-        if (format.prefixed) {
-          nextOptions.prefixed = false;
-          // If we tried postfixed, and we don't have a scope, force to project scope and prefixed
-        } else if (!format.scoped) {
+        // If we don't have a scope, force to project scope and prefixed
+        if (!format.scoped) {
           nextRawName = `${projectScope}/${nextRawName}`;
           nextOptions.prefixed = true;
         }

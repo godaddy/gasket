@@ -55,16 +55,4 @@ describe('Plugin dependencies', () => {
     mockPlugin.module.dependencies.push('@gasket/one', 'two', '@user/three');
     expect(() => withPlugins([mockPlugin, projectPlugin, userPlugin, userScopedPlugin])).not.toThrow(Error);
   });
-
-  it('fallbacks to project scope from short name with warning', () => {
-    const spy = jest.spyOn(console, 'warn').mockImplementation();
-    mockPlugin.module.dependencies.push('one');
-
-    expect(() => withPlugins([mockPlugin, projectPlugin])).not.toThrow(Error);
-
-    expect(spy).toHaveBeenCalledTimes(1);
-    expect(spy).toHaveBeenCalledWith(expect.stringContaining(`has dependency of 'one' which resolved to`));
-    expect(spy).toHaveBeenCalledWith(expect.stringContaining(`This fallback behavior is DEPRECATED.`));
-    spy.mockRestore();
-  });
 });
