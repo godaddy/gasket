@@ -154,6 +154,7 @@ describe('LocaleUtils', function () {
         messages: { 'en-US': {} },
         status: { '/locales/missing/en-US.json': 'error' }
       });
+      // eslint-disable-next-line no-console
       assume(console.error).is.calledWithMatch('Cannot find module');
     });
 

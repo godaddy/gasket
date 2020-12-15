@@ -2,8 +2,8 @@ import React from 'react';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import path from 'path';
 import { manifest } from './config';
-import { LOADING, localeUtils } from './utils';
-import { useGasketIntl } from './hooks';
+import { localeUtils, LocaleStatus } from './utils';
+import useLocaleRequired from './use-locale-required';
 
 const { defaultLocale, defaultPath } = manifest;
 
@@ -59,8 +59,8 @@ export default function withLocaleRequired(localePathPath = defaultPath, options
      * @returns {JSX.Element} element
      */
     function Wrapper(props) {
-      const loadState = useGasketIntl(localePathPath);
-      if (loadState === LOADING) return loading;
+      const loadState = useLocaleRequired(localePathPath);
+      if (loadState === LocaleStatus.LOADING) return loading;
       return <Component { ...props } />;
     }
 

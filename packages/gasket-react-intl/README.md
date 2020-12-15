@@ -8,6 +8,9 @@ manages locale files from [@gasket/plugin-intl].
   - [withLocaleRequired]
   - [LocaleRequired]
 
+- React hooks:
+  - [useLocaleRequired]
+
 - Next.js functions:
   - [intlGetStaticProps]
   - [intlGetServerSideProps]
@@ -117,6 +120,36 @@ const Component = props => (
 export default Component;
 ```
 
+## Hooks
+
+### useLocaleRequired
+
+Use this hook when you need more control vs what the components provide. The
+hook will return the current loading status of the locale file.
+
+**Signature**
+
+- `useLocaleRequired(localesPath): loadState`
+
+**Props**
+
+- `localesPath` - (string) Path to endpoint with JSON files. See more about
+  [locales path] in the plugin docs.
+
+```jsx
+import { useLocaleRequired, LocalStatus } from '@gasket/react-intl';
+import { FormattedMessage } from 'react-intl';
+
+export default function MyComponent(props) {
+  const loadState = useLocaleRequired('/locales/custom');
+  
+  if (loadState === LocalStatus.LOADING) return 'Fetching translations.';
+  if (loadState === LocalStatus.ERROR) return 'Could not translate.';
+
+  return <p><FormattedMessage id='custom_welcome'/></p>;
+}
+```
+
 ## Next.js
 
 Loader functions specific to Next.js lifecycles are available from
@@ -220,6 +253,7 @@ need it, another option to preload locale props during SSR is with
 [LocaleRequired]:#localerequired
 [intlGetStaticProps]:#intlgetstaticprops
 [intlGetServerSideProps]:#intlgetserversideprops
+[useLocaleRequired]:#uselocalerequired
 
 [@gasket/plugin-intl]:/packages/gasket-plugin-intl/README.md
 [locales path]:/packages/gasket-plugin-intl/README.md#locales-path

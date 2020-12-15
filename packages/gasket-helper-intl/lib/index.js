@@ -57,7 +57,7 @@ const merge = require('lodash.merge');
  *
  * @typedef {object} LocalesState
  * @property {{string: string}} messages
- * @property {{LocalePath: LocalePathStatus}} status
+ * @property {{LocalePath: LocaleStatus}} status
  */
 
 /**
@@ -69,16 +69,19 @@ const merge = require('lodash.merge');
 
 /**
  * Fetch status of a locale file
- * @typedef {string} LocalePathStatus
+ * @typedef {string} LocaleStatus
  * @readonly
  */
 
-/** @type {LocalePathStatus} */
-const LOADING = 'loading';
-/** @type {LocalePathStatus} */
-const LOADED = 'loaded';
-/** @type {LocalePathStatus} */
-const ERROR = 'error';
+/**
+ *Enum for local status values
+ * @enum {LocaleStatus}
+ */
+const LocaleStatus = {
+  LOADING: 'loading',
+  LOADED: 'loaded',
+  ERROR: 'error'
+};
 
 const reLocalePathParam = /(\/[$:{]locale}?\/)/;
 
@@ -190,11 +193,11 @@ function LocaleUtils(config) {
 
     try {
       messages = require(diskPath);
-      status = LOADED;
+      status = LocaleStatus.LOADED;
     } catch (e) {
       console.error(e.message); // eslint-disable-line no-console
       messages = {};
-      status = ERROR;
+      status = LocaleStatus.ERROR;
     }
 
     return {
@@ -213,7 +216,5 @@ function LocaleUtils(config) {
 
 module.exports = {
   LocaleUtils,
-  LOADING,
-  LOADED,
-  ERROR
+  LocaleStatus
 };
