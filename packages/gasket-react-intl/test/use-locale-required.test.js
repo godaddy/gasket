@@ -2,16 +2,17 @@ import assume from 'assume';
 import sinon from 'sinon';
 import proxyquire from 'proxyquire';
 import mockManifest from './fixtures/mock-manifest.json';
-import { ERROR, LOADED, LOADING } from '../src/utils';
+import { LocaleStatus } from '../src/utils';
+const { ERROR, LOADED, LOADING } = LocaleStatus;
 
 // helper to wait for async actions
 const pause = ms => new Promise((resolve) => setTimeout(resolve, ms));
 
-describe('useGasketIntl', function () {
-  let mockConfig, mockContext, fetchStub, useGasketIntl;
+describe('useLocaleRequired', function () {
+  let mockConfig, mockContext, fetchStub, useLocaleRequired;
 
   const getModule = () => {
-    return proxyquire('../src/hooks', {
+    return proxyquire('../src/use-locale-required', {
       'react': {
         useContext: sinon.stub().returns(mockContext)
       },
@@ -39,7 +40,7 @@ describe('useGasketIntl', function () {
       manifest: { ...mockManifest, paths: { ...mockManifest.paths } },
       isBrowser: true
     };
-    useGasketIntl = getModule().useGasketIntl;
+    useLocaleRequired = getModule().default;
   });
 
   afterEach(function () {
@@ -47,31 +48,31 @@ describe('useGasketIntl', function () {
   });
 
   it('fetches locales url if not loaded', function () {
-    const results = useGasketIntl('/locales');
+    const results = useLocaleRequired('/locales');
     assume(results).equals(LOADING);
     assume(fetchStub).called();
     assume(fetchStub).calledWith('/locales/en.json');
   });
 
   it('returns LOADING if fetching', function () {
-    const results = useGasketIntl('/locales');
+    const results = useLocaleRequired('/locales');
     assume(results).equals(LOADING);
     assume(fetchStub).called();
   });
 
   it('returns status if set', function () {
     mockContext.status['/locales/en.json'] = LOADED;
-    assume(useGasketIntl('/locales')).equals(LOADED);
+    assume(useLocaleRequired('/locales')).equals(LOADED);
 
     mockContext.status['/locales/en.json'] = ERROR;
-    assume(useGasketIntl('/locales')).equals(ERROR);
+    assume(useLocaleRequired('/locales')).equals(ERROR);
 
     mockContext.status['/locales/en.json'] = LOADING;
-    assume(useGasketIntl('/locales')).equals(LOADING);
+    assume(useLocaleRequired('/locales')).equals(LOADING);
   });
 
   it('dispatches LOADED action when loaded', async function () {
-    useGasketIntl('/locales');
+    useLocaleRequired('/locales');
     assume(fetchStub).called();
 
     await pause(20);
@@ -83,7 +84,7 @@ describe('useGasketIntl', function () {
   it('dispatches ERROR action on bad response', async function () {
     const consoleStub = sinon.stub(console, 'error');
     fetchStub.resolves({ ok: false, status: 404 });
-    useGasketIntl('/locales');
+    useLocaleRequired('/locales');
     assume(fetchStub).called();
 
     await pause(20);
@@ -96,7 +97,7 @@ describe('useGasketIntl', function () {
   it('dispatches ERROR action on rejected fetch', async function () {
     const consoleStub = sinon.stub(console, 'error');
     fetchStub.rejects(new Error('Bad things man!'));
-    useGasketIntl('/locales');
+    useLocaleRequired('/locales');
     assume(fetchStub).called();
 
     await pause(20);
@@ -110,21 +111,21 @@ describe('useGasketIntl', function () {
 
     beforeEach(function () {
       mockConfig.isBrowser = false;
-      useGasketIntl = getModule().useGasketIntl;
+      useLocaleRequired = getModule().default;
     });
 
     it('returns LOADING if no locale file', function () {
-      const results = useGasketIntl('/locales');
+      const results = useLocaleRequired('/locales');
       assume(results).equals(LOADING);
     });
 
     it('returns status if set', function () {
       mockContext.status['/locales/en.json'] = LOADED;
-      assume(useGasketIntl('/locales')).equals(LOADED);
+      assume(useLocaleRequired('/locales')).equals(LOADED);
     });
 
     it('does not fetch', function () {
-      useGasketIntl('/locales');
+      useLocaleRequired('/locales');
       assume(fetchStub).not.called();
     });
   });

@@ -5,7 +5,8 @@ import proxyquire from 'proxyquire';
 import { mount } from 'enzyme';
 import { IntlProvider } from 'react-intl';
 import mockManifest from './fixtures/mock-manifest.json';
-import { ERROR, LOADED, LOADING } from '../src/utils';
+import { LocaleStatus } from '../src/utils';
+const { ERROR, LOADED, LOADING } = LocaleStatus;
 
 const MockComponent = class extends React.Component {
   render() {
