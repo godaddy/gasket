@@ -566,65 +566,6 @@ describe('PackageIdentifier instance', () => {
       result = pluginIdentifier('example').nextFormat();
       expect(result.constructor.name).toEqual('PackageIdentifier');
     });
-
-    describe('no scope', () => {
-
-      it('returns postfixed if was prefixed', () => {
-        result = pluginIdentifier('example');
-        expect(result.isPrefixed).toBe(true);
-
-        result = result.nextFormat();
-        expect(result.isPostfixed).toBe(true);
-      });
-
-      it('returns project scope + prefixed if was postfixed', () => {
-        result = pluginIdentifier('example', { prefixed: false });
-        expect(result.fullName).toEqual('example-gasket-plugin');
-
-        result = result.nextFormat();
-        expect(result.fullName).toEqual('@gasket/plugin-example');
-      });
-    });
-
-    describe('user scope', () => {
-
-      it('returns postfixed if was prefixed', () => {
-        result = pluginIdentifier('@user/example');
-        expect(result.isPrefixed).toBe(true);
-
-        result = result.nextFormat();
-        expect(result.isPostfixed).toBe(true);
-        expect(result.fullName).toEqual('@user/example-gasket-plugin');
-      });
-
-      it('returns null if was postfixed', () => {
-        result = pluginIdentifier('@user/example', { prefixed: false });
-        expect(result.isPostfixed).toBe(true);
-
-        result = result.nextFormat();
-        expect(result).toBe(null);
-      });
-    });
-
-    describe('project scope', () => {
-
-      it('returns postfixed if was prefixed', () => {
-        result = pluginIdentifier('@gasket/example');
-        expect(result.isPrefixed).toBe(true);
-
-        result = result.nextFormat();
-        expect(result.isPostfixed).toBe(true);
-        expect(result.fullName).toEqual('@gasket/example-plugin');
-      });
-
-      it('returns null if was postfixed', () => {
-        result = pluginIdentifier('@gasket/example', { prefixed: false });
-        expect(result.isPostfixed).toBe(true);
-
-        result = result.nextFormat();
-        expect(result).toBe(null);
-      });
-    });
   });
 
   describe('toString', () => {

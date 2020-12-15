@@ -38,29 +38,6 @@ projects such a `@babel` and `@oclif`.
 | user    | `@<scope>/gasket-preset`        | `@<scope>`        | Scope-only user presets        |
 | none    | `gasket-preset-<name>`          | `<name>`          | Any user presets with no scope |
 
-### Fallbacks
-
-To soften the transition of existing apps and plugins using the older postfixed
-format, the loader supports fallbacks for short names to postfixed format, and
-then to the `@gasket` scope. For example, if a short name of `example` is used,
-the package lookup order would be as follows:
-
-```
-example --> gasket-plugin-example --> example-gasket-plugin --> gasket/plugin-example --> gasket/example-plugin
-```
-
-For project and user scoped short names, the loader will fall-back to postfixed
-format as well. For example, if the short name `@user/example` is used:
-
-```
-@user/example --> @user/plugin-example --> @user/example-plugin
-```
-
-Use with caution, and don't rely on it. Consider this behavior **deprecated**,
-which will be removed in a future major release. Short names without the
-`@gasket` scope should be presumed to resolve to the `gasket-plugin-<name>`
-format.
-
 ## Utilities
 
 There are util functions for creating objects for working with different parts
