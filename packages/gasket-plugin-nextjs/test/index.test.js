@@ -1,10 +1,12 @@
 /* eslint-disable no-sync */
 
-const { spy, stub } = require('sinon');
+const sinon = require('sinon');
 const assume = require('assume');
 const path = require('path');
 const proxyquire = require('proxyquire').noCallThru();
 const { devDependencies } = require('../package');
+
+const { spy, stub } = sinon;
 
 describe('Plugin', function () {
   const plugin = require('../');
@@ -63,12 +65,13 @@ describe('configure hook', () => {
   });
 });
 
-describe('next hook', () => {
+describe('express hook', () => {
   let next, nextHandler, plugin, expressApp;
 
   beforeEach(() => {
     expressApp = {
       set: spy(),
+      use: spy(),
       all: spy()
     };
     nextHandler = {
@@ -85,6 +88,54 @@ describe('next hook', () => {
     await plugin.hooks.express(gasket, expressApp, false);
 
     assume(gasket.exec).has.been.calledWith('next', nextHandler);
+  });
+
+  it('attaches middleware to set NEXT_LOCALE cookie', async function () {
+    const gasket = mockGasketApi();
+    await plugin.hooks.express(gasket, expressApp, false);
+
+    assume(expressApp.use).has.been.calledWith(sinon.match.func);
+    const fn = expressApp.use.getCall(0).args[0];
+    assume(fn.name).equals('setNextLocale');
+  });
+
+  it('middleware sets NEXT_LOCALE cookie from gasketData', async function () {
+    const gasket = mockGasketApi();
+    await plugin.hooks.express(gasket, expressApp, false);
+
+    const fn = expressApp.use.getCall(0).args[0];
+
+    const mockReq = { headers: {} };
+    const mockRes = { locals: { gasketData: { intl: { locale: 'fr-FR' } } } };
+    const mockNext = stub();
+    fn(mockReq, mockRes, mockNext);
+    assume(mockReq.headers).has.property('cookie', ';NEXT_LOCALE=fr-FR');
+  });
+
+  it('middleware adds NEXT_LOCALE to existing cookie', async function () {
+    const gasket = mockGasketApi();
+    await plugin.hooks.express(gasket, expressApp, false);
+
+    const fn = expressApp.use.getCall(0).args[0];
+
+    const mockReq = { headers: { cookie: 'bogus=data' } };
+    const mockRes = { locals: { gasketData: { intl: { locale: 'fr-FR' } } } };
+    const mockNext = stub();
+    fn(mockReq, mockRes, mockNext);
+    assume(mockReq.headers).has.property('cookie', 'bogus=data;NEXT_LOCALE=fr-FR');
+  });
+
+  it('middleware does not set NEXT_LOCALE cookie if no gasketData', async function () {
+    const gasket = mockGasketApi();
+    await plugin.hooks.express(gasket, expressApp, false);
+
+    const fn = expressApp.use.getCall(0).args[0];
+
+    const mockReq = { headers: {} };
+    const mockRes = { locals: { gasketData: { } } };
+    const mockNext = stub();
+    fn(mockReq, mockRes, mockNext);
+    assume(mockReq.headers).not.has.property('cookie');
   });
 
   it('executes the `nextExpress` lifecycle', async function () {

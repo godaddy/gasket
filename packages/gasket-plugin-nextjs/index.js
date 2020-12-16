@@ -102,6 +102,21 @@ module.exports = {
 
       await exec('nextExpress', { next: app, express: expressApp });
 
+      // If the Gasket Intl Plugin is used to determine the locale, then we need
+      // to let NextJS know that it has already been detected. We can do this by
+      // forcing the `NEXT_LOCALE` cookie:
+      // https://github.com/vercel/next.js/blob/canary/docs/advanced-features/i18n-routing.md#leveraging-the-next_locale-cookie
+      expressApp.use(function setNextLocale(req, res, next) {
+        if (res.locals && res.locals.gasketData && res.locals.gasketData.intl) {
+          const { locale } = res.locals.gasketData.intl;
+          if (locale) {
+            req.headers.cookie = (req.headers.cookie || '') + `;NEXT_LOCALE=${locale}`;
+          }
+        }
+        next();
+      });
+
+      // TODO: (@kinetifex) we no longer support next-routes - remove this
       const { root, routes } = gasket.config || {};
       const routesModulePath = path.join(root, routes || './routes');
       let ssr;
