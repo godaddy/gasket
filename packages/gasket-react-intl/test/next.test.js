@@ -105,6 +105,19 @@ describe('Next.js functions', function () {
         }
       });
     });
+
+    it('uses locale on context from builtin i18n routing', async function () {
+      const results = await next.intlGetStaticProps('/locales')({ locale: 'fr-CA' });
+      assume(results).eqls({
+        props: {
+          localesProps: {
+            locale: 'fr-CA',
+            messages: { 'fr-CA': { gasket_welcome: 'Hello!', gasket_learn: 'Learn Gasket' } },
+            status: { '/locales/en-US.json': 'loaded' }
+          }
+        }
+      });
+    });
   });
 
   describe('intlGetServerSideProps', function () {
@@ -172,6 +185,19 @@ describe('Next.js functions', function () {
     it('returns localesProps for default if locale missing', async function () {
       res.locals.gasketData.intl.locale = 'fr-CA';
       const results = await next.intlGetServerSideProps('/locales')({ res });
+      assume(results).eqls({
+        props: {
+          localesProps: {
+            locale: 'fr-CA',
+            messages: { 'fr-CA': { gasket_welcome: 'Hello!', gasket_learn: 'Learn Gasket' } },
+            status: { '/locales/en-US.json': 'loaded' }
+          }
+        }
+      });
+    });
+
+    it('uses locale on context from builtin i18n routing', async function () {
+      const results = await next.intlGetServerSideProps('/locales')({ locale: 'fr-CA', res });
       assume(results).eqls({
         props: {
           localesProps: {
