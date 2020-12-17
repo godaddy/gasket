@@ -169,6 +169,19 @@ module.exports = {
 };
 ```
 
+### Config with Public config
+
+If you are not using Redux, but still need access to config values in client-side code, you can define a `public` property in your `gasket.config.js`. The config plugin will return these `public` properties to your browser, to be accessed by the `@gasket/data` plugin.
+
+```js
+module.exports = {
+  public: {
+    test1: 'config values here',
+    test2: 'config values here'
+  }
+};
+```
+
 ## Lifecycles
 
 ### appEnvConfig
