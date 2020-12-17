@@ -17,15 +17,12 @@ function handler(gasket) {
         res);
 
       const { gasketData = {} } = res.locals;
-      let { config = {} } = gasketData;
-      let { public = {} } = config;
+      const { public: config = {} } = req.config;
 
-      const publicConfig = gasket.config.public || {};
-      public = merge(public, publicConfig);
-      config.public = merge(config.public || {}, public)
-      gasketData.config = merge(gasketData.config || {}, config);
+      if (Object.keys(config).length > 0 && config.constructor === Object) {
+        res.locals.gasketData = merge(gasketData, { config });
+      }
 
-      res.locals.gasketData = gasketData;
 
       return void next();
     } catch (err) {
