@@ -26,9 +26,9 @@ function getIntlConfig(gasket) {
 function deprecatedOptions(gasket, intlConfig) {
   const { logger } = gasket;
   const { languageMap, defaultLanguage, assetPrefix } = intlConfig;
-  if (languageMap) logger.warn('DEPRECATED intl config `languageMap` - use `localesMap`');
-  if (defaultLanguage) logger.warn('DEPRECATED intl config `defaultLanguage` - use `defaultLocale`');
-  if (assetPrefix) logger.warn('DEPRECATED intl config `assetPrefix` - use `basePath`');
+  if (languageMap) logger.warning('DEPRECATED intl config `languageMap` - use `localesMap`');
+  if (defaultLanguage) logger.warning('DEPRECATED intl config `defaultLanguage` - use `defaultLocale`');
+  if (assetPrefix) logger.warning('DEPRECATED intl config `assetPrefix` - use `basePath`');
   return { languageMap, defaultLanguage, assetPrefix };
 }
 
@@ -45,6 +45,7 @@ module.exports = function configureHook(gasket, config) {
   const intlConfig = { ...getIntlConfig({ config }) };
 
   const { languageMap, defaultLanguage, assetPrefix } = deprecatedOptions(gasket, intlConfig);
+  const { nextConfig = {} } = config;
 
   // get user defined config and apply defaults
   const {
@@ -57,9 +58,8 @@ module.exports = function configureHook(gasket, config) {
 
   const fullLocalesDir = path.join(root, localesDir);
 
-  const { next = {} } = config;
   const basePath = intlConfig.basePath || assetPrefix ||
-    next.basePath || next.assetPrefix ||
+    nextConfig.basePath || nextConfig.assetPrefix ||
     config.basePath || '';
 
   let { modules = false } = intlConfig;

@@ -16,7 +16,7 @@ describe('configure', function () {
   const root = '/path/to/root';
   const mockGasket = {
     logger: {
-      warn: sinon.stub()
+      warning: sinon.stub()
     },
     config: {
       root
@@ -79,10 +79,10 @@ describe('configure', function () {
 
   it('logs deprecation warnings', function () {
     configure(mockGasket, { root, intl: { languageMap: { foo: 'bar' } } });
-    assume(mockGasket.logger.warn).calledWithMatch('languageMap');
+    assume(mockGasket.logger.warning).calledWithMatch('languageMap');
 
     configure(mockGasket, { root, intl: { defaultLanguage: 'fake' } });
-    assume(mockGasket.logger.warn).calledWithMatch('defaultLanguage');
+    assume(mockGasket.logger.warning).calledWithMatch('defaultLanguage');
   });
 
   describe('getIntlConfig', function () {
