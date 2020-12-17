@@ -23,7 +23,6 @@ function handler(gasket) {
         res.locals.gasketData = merge(gasketData, { config });
       }
 
-
       return void next();
     } catch (err) {
       return void next(err);

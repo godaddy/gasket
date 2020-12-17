@@ -186,7 +186,7 @@ The config plugin will return these `public` properties to your browser, to be a
 ```js
 import gasketData from '@gasket/data';
 
-console.log(gasketData.test1); // config value 1 here
+console.log(gasketData.config.test1); // config value 1 here
 ```
 
 ## Lifecycles
