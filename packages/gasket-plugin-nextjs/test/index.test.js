@@ -38,7 +38,7 @@ describe('Plugin', function () {
 });
 
 describe('configure hook', () => {
-  const configureHook = require('../').hooks.configure;
+  const configureHook = require('../').hooks.configure.handler;
 
   it('adds the sw webpackRegister callback', () => {
     const gasket = mockGasketApi();
@@ -62,6 +62,17 @@ describe('configure hook', () => {
     assume(entryName('bad')).equals(false);
     assume(entryName('_app')).equals(true);
     assume(entryName('static/runtime/_app')).equals(true);
+  });
+
+  it('fallback support for `next` from gasket.config', async () => {
+    const gasket = mockGasketApi();
+    delete gasket.config.nextConfig;
+    gasket.config.next = {
+      customConfig: true
+    };
+    const results = configureHook(gasket, gasket.config);
+    assume(results.nextConfig).has.property('customConfig', true);
+    assume(gasket.logger.warning).calledWithMatch('DEPRECATED');
   });
 });
 
@@ -363,35 +374,35 @@ describe('workbox hook', () => {
 
   it('config modifies urls to use assetPrefix with https', async () => {
     const assetPrefix = 'https://some-cdn.com/';
-    gasketAPI.config = { next: { assetPrefix } };
+    gasketAPI.config = { nextConfig: { assetPrefix } };
     const results = await plugin.hooks.workbox(gasketAPI);
     assume(results.modifyURLPrefix).to.have.property('.next/', assetPrefix + '_next/');
   });
 
   it('config modifies urls to use assetPrefix with http', async () => {
     const assetPrefix = 'http://some-cdn.com/';
-    gasketAPI.config = { next: { assetPrefix } };
+    gasketAPI.config = { nextConfig: { assetPrefix } };
     const results = await plugin.hooks.workbox(gasketAPI);
     assume(results.modifyURLPrefix).to.have.property('.next/', assetPrefix + '_next/');
   });
 
   it('config modifies urls to use assetPrefix with https but no trailing slash', async () => {
     const assetPrefix = 'https://some-cdn.com';
-    gasketAPI.config = { next: { assetPrefix } };
+    gasketAPI.config = { nextConfig: { assetPrefix } };
     const results = await plugin.hooks.workbox(gasketAPI);
     assume(results.modifyURLPrefix).to.have.property('.next/', `${assetPrefix}/_next/`);
   });
 
   it('config modifies urls to use assetPrefix relative path with trailing slash', async () => {
     const assetPrefix = '/some/asset/prefix/';
-    gasketAPI.config = { next: { assetPrefix } };
+    gasketAPI.config = { nextConfig: { assetPrefix } };
     const results = await plugin.hooks.workbox(gasketAPI);
     assume(results.modifyURLPrefix).to.have.property('.next/', `${assetPrefix}_next/`);
   });
 
   it('config modifies urls to use assetPrefix relative path without trailing slash', async () => {
     const assetPrefix = '/some/asset/prefix';
-    gasketAPI.config = { next: { assetPrefix } };
+    gasketAPI.config = { nextConfig: { assetPrefix } };
     const results = await plugin.hooks.workbox(gasketAPI);
     assume(results.modifyURLPrefix).to.have.property('.next/', `${assetPrefix}/_next/`);
   });
@@ -405,11 +416,13 @@ function mockGasketApi() {
     execWaterfall: stub().returnsArg(1),
     exec: stub().resolves({}),
     execSync: stub().returns([]),
+    logger: {
+      warning: stub()
+    },
     config: {
       webpack: {},  // user specified webpack config
-      next: {},      // user specified next.js config
+      nextConfig: {},      // user specified next.js config
       root: '/app/path'
-    },
-    next: {}
+    }
   };
 }

@@ -18,12 +18,24 @@ module.exports = {
      * @param {Object} baseConfig - Base gasket config
      * @returns {Object} config
      */
-    configure: function configure(gasket, baseConfig = {}) {
-      const serviceWorker = {
-        webpackRegister: key => /_app/.test(key),
-        ...(baseConfig.serviceWorker || {})
-      };
-      return { ...baseConfig, serviceWorker };
+    configure: {
+      timing: {
+        first: true // Fixup next -> nextConfig early for reference by other plugins
+      },
+      handler: function configure(gasket, baseConfig = {}) {
+        const { logger } = gasket;
+        const { next, ...rest } = baseConfig;
+        if (next) {
+          logger.warning('DEPRECATED `next` in Gasket config - use `nextConfig`');
+        }
+        const { nextConfig = next || {} } = baseConfig;
+
+        const serviceWorker = {
+          webpackRegister: key => /_app/.test(key),
+          ...(baseConfig.serviceWorker || {})
+        };
+        return { ...rest, serviceWorker, nextConfig };
+      }
     },
     create: {
       timing: {
@@ -173,8 +185,8 @@ module.exports = {
     * @returns {Object} config
     */
     workbox: function (gasket) {
-      const { next = {}, basePath } = gasket.config;
-      const assetPrefix = next.assetPrefix || basePath || '';
+      const { nextConfig = {}, basePath } = gasket.config;
+      const assetPrefix = nextConfig.assetPrefix || basePath || '';
 
       const parsed = assetPrefix ? url.parse(assetPrefix) : '';
       const joined = parsed ? url.format({ ...parsed, pathname: path.join(parsed.pathname, '_next/') }) : '_next/';
