@@ -181,7 +181,7 @@ module.exports = {
   }
 };
 ```
-The config plugin will return these `public` properties to your browser, to be accessed by `@gasket/data`, and used like so:
+The config plugin will return these `public` properties to your browser, to be accessed by `@gasket/data`. They are available as properties on `.config` and used like so:
 
 ```js
 import gasketData from '@gasket/data';
