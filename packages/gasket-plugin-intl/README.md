@@ -41,6 +41,8 @@ required. However, these options exist to customize an app's setup.
   `/locales`). See [Locales Path] section.
 - `defaultLocale` - (string) Locale to fallback to when loading files (default:
   `en`)
+- `locales` - (string[]) Ordered list of accepted locales. If set, the preferred
+  locale will be resolved based on the request `accept-language` header.
 - `localesMap` - (object) Mapping of locales to share files. See [Locales Map]
   section.
 - `localesDir` - (string) Path to on-disk directory where locale files exists
@@ -61,6 +63,7 @@ required. However, these options exist to customize an app's setup.
 module.exports = {
   intl: {
     defaultLocale: 'fr-FR',
+    locales: ['fr-FR', 'en-US', 'zh-TW', 'zh-CN', 'zh-HK', 'zh-SG'],
     localesMap: {
       'zh-HK': 'zh-TW',
       'zh-SG': 'zh-CN'
@@ -236,7 +239,7 @@ at `res.locals.gasketData.intl`, which can be pre-rendered into a
 // lifecycles/middleware.js
 
 module.exports = function middlewareHook(gasket) {
-  return middleware(req, res, next) {
+  return function middleware(req, res, next) {
     req.withLocaleRequired('/locales');
     next();
   }
@@ -281,15 +284,17 @@ module.exports = function expressHook(gasket, app) {
 
 ### intlLocale
 
-By default, the plugin will determine the locale from the first entry in the
-`accept-language` header of a request. However, you can override this behavior
-by implementing an `intlLocale` hook in an app or plugin. The `intlLocale` hook
-takes the following parameters:
+By default, the plugin will determine the locale from the `accept-language`,
+either resolving against the supported `locales` or by taking the first entry.
+However, you can override or adjust this behavior by implementing an
+`intlLocale` hook in an app or plugin. The `intlLocale` hook takes the following
+parameters:
 
 - `gasket` - (object) Gasket session config
 - `locale` - (string) Default locale specified by Gasket Intl
-- `req` - (object) Request object
-- `req` - (object) Response object
+- `context` - (object) Lifecycle hook context
+  - `req` - (object) Request object
+  - `res` - (object) Response object
 
 It should then return a string indicating the user's locale. If no value is
 returned, Gasket will use `en-US`. Note that this is only available for Gasket
@@ -300,7 +305,7 @@ apps with a server element, not for static sites.
 ```js
 module.exports = {
   hooks: {
-    intlLocale: async function intlLocaleHook(gasket, locale, req, res) {
+    intlLocale: async function intlLocaleHook(gasket, locale, { req, res }) {
       const { env } = gasket.config;
       // Always use en-US in dev for some reason....
       if(env === 'dev') return 'en-US';
@@ -308,7 +313,11 @@ module.exports = {
       if(locale.includes('fr')) {
         return 'fr-FR';
       }
-      // If no special cases apply, use the default locale provided by Gasket.
+      // Use the value from a custom cookie...
+      if (req?.cookies?.MY_LOCALE) {
+        return req.cookies.MY_LOCALE;
+      }
+      // If no special cases apply, use the provided default or preferred locale
       return locale;
     }
   }

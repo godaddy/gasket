@@ -1,19 +1,31 @@
 const path = require('path');
 const merge = require('lodash.merge');
+const accept = require('@hapi/accept');
 const { LocaleUtils } = require('@gasket/helper-intl');
 const { getIntlConfig } = require('./configure');
 
+
 module.exports = function middlewareHook(gasket) {
-  const { defaultLocale, basePath, localesMap, localesDir, manifestFilename } = getIntlConfig(gasket);
+  const { defaultLocale, basePath, localesMap, localesDir, manifestFilename, locales } = getIntlConfig(gasket);
 
   const manifest = require(path.join(localesDir, manifestFilename));
   const localesParentDir = path.dirname(localesDir);
   const localeUtils = new LocaleUtils({ manifest, basePath });
 
   return async function intlMiddleware(req, res, next) {
-    const acceptLanguage = (req.headers['accept-language'] || defaultLocale).split(',')[0];
-    const locale = await gasket.execWaterfall('intlLocale', acceptLanguage, req, res);
-    const mappedLocale = localesMap && localesMap[locale] || locale;
+    let preferredLocale = defaultLocale;
+    if (req.headers['accept-language']) {
+      // if we have a list of support locales, fallback to one.
+      preferredLocale = locales && locales.length ?
+        accept.language(req.headers['accept-language'], locales) :
+        // Otherwise just run with the first accept language.
+        req.headers['accept-language'].split(',')[0];
+    }
+
+    // Allow plugins to determine locale to use
+    const pluginLocale = await gasket.execWaterfall('intlLocale', preferredLocale, { req, res });
+    // Once we have a locale, see if there has been any remapping for it
+    const locale = localesMap && localesMap[pluginLocale] || pluginLocale;
 
     /**
      * Gasket data to render as global object for browser access
@@ -45,7 +57,7 @@ module.exports = function middlewareHook(gasket) {
     }
 
     mergeGasketData({
-      locale: mappedLocale,
+      locale,
       ...(basePath && { basePath } || {})
     });
 
@@ -56,7 +68,7 @@ module.exports = function middlewareHook(gasket) {
      * @returns {LocalesProps} localesProps
      */
     req.withLocaleRequired = function withLocaleRequired(localePathPath = manifest.defaultPath) {
-      const localesProps = localeUtils.serverLoadData(localePathPath, mappedLocale, localesParentDir);
+      const localesProps = localeUtils.serverLoadData(localePathPath, locale, localesParentDir);
       mergeGasketData(localesProps);
       return localesProps;
     };

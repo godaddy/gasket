@@ -52,12 +52,86 @@ describe('createConfig', () => {
     assume(result).has.property('customConfig', true);
   });
 
-  it('fallback support for `next` from gasket.config', async () => {
-    gasket.config.next = {
+  it('includes `nextConfig` from gasket.config', async () => {
+    gasket.config.nextConfig = {
       customConfig: true
     };
     result = await createConfig(gasket);
     assume(result).has.property('customConfig', true);
+  });
+
+  it('intl config options forwarded', async () => {
+    gasket.config.intl = {
+      defaultLocale: 'fr-FR',
+      locales: ['fr-FR', 'en-US']
+    };
+    result = await createConfig(gasket);
+    assume(result.i18n).eqls({
+      defaultLocale: 'fr-FR',
+      locales: ['fr-FR', 'en-US']
+    });
+  });
+
+  it('intl config options merge with existing', async () => {
+    gasket.config.intl = {
+      defaultLocale: 'fr-FR',
+      locales: ['fr-FR', 'en-US']
+    };
+    gasket.config.nextConfig = {
+      i18n: {
+        domains: [
+          {
+            domain: 'example.com',
+            defaultLocale: 'en-US'
+          }
+        ]
+      }
+    };
+    result = await createConfig(gasket);
+    assume(result.i18n).eqls({
+      defaultLocale: 'fr-FR',
+      locales: ['fr-FR', 'en-US'],
+      domains: [
+        {
+          domain: 'example.com',
+          defaultLocale: 'en-US'
+        }
+      ]
+    });
+  });
+
+  it('intl config relaces and warns nextConfig values', async () => {
+    gasket.config.intl = {
+      defaultLocale: 'fr-FR',
+      locales: ['fr-FR', 'en-US']
+    };
+    gasket.config.nextConfig = {
+      i18n: {
+        defaultLocale: 'fake',
+        locales: ['fr-FR', 'en-US', 'bogus'],
+        domains: [
+          {
+            domain: 'example.com',
+            defaultLocale: 'en-US'
+          }
+        ]
+      }
+    };
+    result = await createConfig(gasket);
+    assume(result.i18n).eqls({
+      defaultLocale: 'fr-FR',
+      locales: ['fr-FR', 'en-US'],
+      domains: [
+        {
+          domain: 'example.com',
+          defaultLocale: 'en-US'
+        }
+      ]
+    });
+
+    assume(gasket.logger.warning).is.called(2);
+    assume(gasket.logger.warning).is.calledWithMatch('nextConfig.i18n.defaultLocale');
+    assume(gasket.logger.warning).is.calledWithMatch('nextConfig.i18n.locales');
   });
 
   it('adds webpack hook', async () => {
@@ -167,6 +241,9 @@ function mockGasketApi() {
     execWaterfall: stub().returnsArg(1),
     exec: stub().resolves({}),
     execSync: stub().returns([]),
+    logger: {
+      warning: stub()
+    },
     config: {
       root: '/path/to/app',
       webpack: {}  // user specified webpack config

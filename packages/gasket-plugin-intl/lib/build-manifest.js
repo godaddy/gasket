@@ -20,7 +20,7 @@ module.exports = async function buildManifest(gasket) {
   const { logger } = gasket;
   const { localesDir, manifestFilename } = getIntlConfig(gasket);
   const tgtFile = path.join(localesDir, manifestFilename);
-  const { basePath, defaultPath, defaultLocale, localesMap } = getIntlConfig(gasket);
+  const { basePath, defaultPath, defaultLocale, locales, localesMap } = getIntlConfig(gasket);
 
   // find all the .json files except the manifest
   const files = (await glob('**/*.json', { cwd: localesDir }))
@@ -49,6 +49,7 @@ module.exports = async function buildManifest(gasket) {
     basePath,
     defaultPath,
     defaultLocale,
+    locales,
     localesMap,
     paths
   };
