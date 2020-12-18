@@ -1,6 +1,6 @@
 {
   "name": "@gasket/helper-intl",
-  "version": "6.0.0-canary.3",
+  "version": "6.0.0-canary.8",
   "description": "Internal helpers used by loaders to resolve locale file paths",
   "main": "lib",
   "scripts": {

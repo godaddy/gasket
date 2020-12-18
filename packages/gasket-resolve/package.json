@@ -1,6 +1,6 @@
 {
   "name": "@gasket/resolve",
-  "version": "6.0.0-canary.0",
+  "version": "6.0.0-canary.8",
   "description": "Essential module resolution & configuration management for gasket plugins & presets.",
   "main": "lib",
   "scripts": {

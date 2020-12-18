@@ -1,6 +1,6 @@
 {
   "name": "@gasket/cli",
-  "version": "6.0.0-canary.2",
+  "version": "6.0.0-canary.8",
   "description": "CLI for rapid application development with gasket",
   "main": "src/index.js",
   "bin": {
@@ -53,13 +53,13 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-cli",
   "dependencies": {
-    "@gasket/engine": "^6.0.0-canary.0",
+    "@gasket/engine": "^6.0.0-canary.8",
     "@gasket/plugin-command": "^6.0.0-canary.0",
     "@gasket/plugin-git": "^6.0.0-canary.0",
-    "@gasket/plugin-lifecycle": "^6.0.0-canary.0",
-    "@gasket/plugin-metadata": "^6.0.0-canary.0",
+    "@gasket/plugin-lifecycle": "^6.0.0-canary.8",
+    "@gasket/plugin-metadata": "^6.0.0-canary.8",
     "@gasket/plugin-start": "^6.0.0-canary.0",
-    "@gasket/resolve": "^6.0.0-canary.0",
+    "@gasket/resolve": "^6.0.0-canary.8",
     "@gasket/utils": "^6.0.0-canary.0",
     "@oclif/command": "^1.6.1",
     "@oclif/config": "^1.15.0",

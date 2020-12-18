@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-config",
-  "version": "6.0.0-canary.0",
+  "version": "6.0.0-canary.8",
   "description": "Supports application-specific (non-Gasket) configuration",
   "main": "lib/plugin.js",
   "scripts": {
