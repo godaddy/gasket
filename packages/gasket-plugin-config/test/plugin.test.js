@@ -1,4 +1,3 @@
-const { promisify } = require('util');
 const path = require('path');
 const plugin = require('../lib/plugin');
 const { ENV_CONFIG } = require('../lib/constants');
@@ -186,68 +185,6 @@ describe('Plugin', () => {
 
       expect(gasket[ENV_CONFIG]).toEqual(configShouldEqual);
     }
-  });
-
-  describe('middleware hook', () => {
-    let mockReq, mockRes;
-
-    beforeEach(() => {
-      mockReq = { mock: 'request', cookies: { market: 'de-DE' } };
-      mockRes = { mock: 'response' };
-    });
-
-    it('executes before the "redux" middleware', async () => {
-      expect(plugin.hooks.middleware.timing.before).toContain('@gasket/plugin-redux');
-    });
-
-    it('sets a `config` property on the request object', async () => {
-      const mockConfig = { some: 'config' };
-      gasket[ENV_CONFIG] = mockConfig;
-      const middleware = promisify(plugin.hooks.middleware.handler(gasket));
-
-      await middleware(mockReq, mockRes);
-
-      expect(mockReq).toHaveProperty('config', mockConfig);
-    });
-
-    it('allows `appRequestConfig` hooks to modify the config', async () => {
-      gasket[ENV_CONFIG] = { some: 'config' };
-      gasket.execWaterfall.mockImplementation((event, config, req, res) => {
-        expect(event).toEqual('appRequestConfig');
-        expect(req).toEqual(mockReq);
-        expect(res).toEqual(mockRes);
-
-        return {
-          ...config,
-          locale: req.cookies.market
-        };
-      });
-      const middleware = promisify(plugin.hooks.middleware.handler(gasket));
-
-      await middleware(mockReq, mockRes);
-
-      expect(mockReq.config).toEqual({
-        some: 'config',
-        locale: 'de-DE'
-      });
-    });
-
-    it('does not swallow errors from `appRequestConfig` hooks', async () => {
-      gasket[ENV_CONFIG] = { some: 'config' };
-      gasket.execWaterfall.mockImplementation(() => {
-        return Promise.reject(new Error('Something bad'));
-      });
-      const middleware = promisify(plugin.hooks.middleware.handler(gasket));
-
-      try {
-        await middleware(mockReq, mockRes);
-      } catch (err) {
-        expect(err).toBeInstanceOf(Error);
-        return;
-      }
-
-      throw new Error('Middleware should have propagated an error');
-    });
   });
 
   describe('initReduxState hook', () => {
