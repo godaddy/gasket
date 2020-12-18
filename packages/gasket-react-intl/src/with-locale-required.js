@@ -52,26 +52,37 @@ export default function withLocaleRequired(localePathPath = defaultPath, options
    * @returns {React.Component} wrapped component
    */
   return Component => {
+    const displayName = Component.displayName || Component.name || 'Component';
+
     /**
      * Wrapper component that returns based on locale file status
      *
      * @param {object} props - Component props
+     * @param {object} [props.forwardedRef] - Forwarded ref
      * @returns {JSX.Element} element
      */
     function Wrapper(props) {
+      // eslint-disable-next-line react/prop-types
+      const { forwardedRef, ...rest } = props;
       const loadState = useLocaleRequired(localePathPath);
       if (loadState === LocaleStatus.LOADING) return loading;
-      return <Component { ...props } />;
+      return <Component { ...rest } ref={ forwardedRef }/>;
     }
 
     hoistNonReactStatics(Wrapper, Component);
-    Wrapper.displayName = `withLocaleRequired(${ Component.displayName || Component.name || 'Component' })`;
+    Wrapper.displayName = `withLocaleRequired(${ displayName })`;
     Wrapper.WrappedComponent = Component;
 
+    // Forward ref through the HOC
+    const ForwardRef = React.forwardRef((props, ref) => <Wrapper { ...props } forwardedRef={ ref }/>);
+    hoistNonReactStatics(ForwardRef, Component);
+    ForwardRef.displayName = `ForwardRef(withLocaleRequired/${ displayName }))`;
+    ForwardRef.WrappedComponent = Component;
+
     if (initialProps || 'getInitialProps' in Component) {
-      attachGetInitialProps(Wrapper, localePathPath);
+      attachGetInitialProps(ForwardRef, localePathPath);
     }
 
-    return Wrapper;
+    return ForwardRef;
   };
 }

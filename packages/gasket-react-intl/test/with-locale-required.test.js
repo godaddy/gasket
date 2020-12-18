@@ -42,7 +42,7 @@ describe('withLocaleRequired', function () {
   });
 
   it('adds display name', function () {
-    assume(withLocaleRequired()(MockComponent)).property('displayName', 'withLocaleRequired(MockComponent)');
+    assume(withLocaleRequired()(MockComponent)).property('displayName', 'ForwardRef(withLocaleRequired/MockComponent))');
   });
 
   it('hoists non-react statics', function () {
@@ -111,7 +111,7 @@ describe('withLocaleRequired', function () {
     it('renders null if loading', function () {
       useLocaleRequiredStub.returns(LOADING);
       wrapper = doMount();
-      assume(wrapper.html()).eqls(null);
+      assume(wrapper.html()).eqls('');
     });
 
     it('renders custom loader if loading', function () {
@@ -130,6 +130,58 @@ describe('withLocaleRequired', function () {
       useLocaleRequiredStub.returns(ERROR);
       wrapper = doMount({ loading: 'loading...' });
       assume(wrapper.html()).includes('MockComponent');
+    });
+
+    it('forwards refs', function () {
+      class TestComponent extends React.Component {
+        // Used to test ref forwarding
+        getMockData() {
+          return 'MOCK_DATA';
+        }
+
+        render() {
+          return (
+            <span />
+          );
+        }
+      }
+
+      const TestWrappedComponent = withLocaleRequired()(TestComponent);
+
+      class TestRefComponent extends React.Component {
+        constructor(...args) {
+          super(...args);
+          this.componentRef = React.createRef();
+          this.state = {
+            updated: false,
+            data: null
+          };
+        }
+
+        componentDidMount() {
+          this.setState({
+            updated: true,
+            data: this.componentRef.current.getMockData()
+          });
+        }
+
+        render() {
+          return (
+            <React.Fragment>
+              <TestWrappedComponent ref={ this.componentRef } />
+              <span className='data'>{ this.state.data }</span>
+            </React.Fragment>
+          );
+        }
+      }
+
+      const tree = mount(
+        <TestRefComponent />
+      );
+
+      assume(tree.state('updated')).is.true();
+      assume(tree.find('.data').text()).equals('MOCK_DATA');
+      tree.unmount();
     });
   });
 });
