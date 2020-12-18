@@ -32,7 +32,7 @@ This is the simplest and most common setup:
 ```jsx
 // pages/_document.js
 import Document from 'next/document';
-import { withGasketData } from '@gasket/next';
+import { withGasketData } from '@gasket/nextjs';
 
 export default withGasketData()(Document);
 ```

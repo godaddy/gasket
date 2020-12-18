@@ -2,6 +2,7 @@
 
 const mergeConfigFiles = require('./merge-config-files');
 const mergeRootConfig = require('./merge-root-config');
+const middleware = require('./middleware');
 const { ENV_CONFIG } = require('./constants');
 
 module.exports = {
@@ -13,27 +14,7 @@ module.exports = {
         mergeRootConfig(gasket, mergeConfigFiles(gasket))
       );
     },
-
-    middleware: {
-      timing: {
-        before: ['@gasket/plugin-redux']
-      },
-      handler(gasket) {
-        return async (req, res, next) => {
-          try {
-            req.config = await gasket.execWaterfall(
-              'appRequestConfig',
-              gasket[ENV_CONFIG],
-              req,
-              res);
-            return void next();
-          } catch (err) {
-            return void next(err);
-          }
-        };
-      }
-    },
-
+    middleware,
     initReduxState(gasket, state, req) {
       const { redux } = req.config || {};
       return {
@@ -41,7 +22,6 @@ module.exports = {
         config: redux
       };
     },
-
     metadata(gasket, meta) {
       const { configPath = 'config/' } = gasket.config;
       return {
