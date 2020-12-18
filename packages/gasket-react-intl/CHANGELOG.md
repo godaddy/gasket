@@ -2,6 +2,12 @@
 
 ### 6.0.0
 
+- Next GSP and GSSP functions support for locale from context or path param. ([#232])
+- Expose loading hook as `useLocaleRequired` ([#228])
+- Add `initialProps options to enable `getInitialProps` to preload locale files ([#225])
+- Use `@gasket/data` for SSR intl content ([#223])
+  - Updates for defaultPath property name
+- Forward refs from `withLocaleRequired` ([#235])
 - Renamed from `@gasket/intl` ([#222])
 - Decoupled from Redux ([#180])
 - Support for getStaticProps and getServerSideProps in Next.js apps ([#180])
@@ -93,3 +99,8 @@
 [#180]: https://github.com/godaddy/gasket/pull/180
 [#216]: https://github.com/godaddy/gasket/pull/216
 [#222]: https://github.com/godaddy/gasket/pull/222
+[#223]: https://github.com/godaddy/gasket/pull/223
+[#225]: https://github.com/godaddy/gasket/pull/225
+[#228]: https://github.com/godaddy/gasket/pull/228
+[#235]: https://github.com/godaddy/gasket/pull/235
+[#232]: https://github.com/godaddy/gasket/pull/232

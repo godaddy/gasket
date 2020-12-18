@@ -1,5 +1,9 @@
 # `@gasket/resolve`
 
+### 6.0.0
+
+- Remove package name fallbacks ([#227])
+
 ### 5.3.1
 
 - Validate that plugin objects are named ([#156])
@@ -56,5 +60,6 @@
 [#141]: https://github.com/godaddy/gasket/pull/141
 [#142]: https://github.com/godaddy/gasket/pull/142
 [#156]: https://github.com/godaddy/gasket/pull/156
+[#227]: https://github.com/godaddy/gasket/pull/227
 
 [Loader]:/packages/gasket-resolve/docs/api.md#loader
