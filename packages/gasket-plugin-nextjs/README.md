@@ -21,6 +21,7 @@ npm i @gasket/plugin-nextjs next react react-dom
 Modify `plugins` section of your `gasket.config.js`:
 
 ```diff
+// gasket.config.js
 module.exports = {
   plugins: {
     add: [
@@ -32,8 +33,8 @@ module.exports = {
 
 ## Configuration
 
-- Instead of adding a dedicated `next.config.js`, the `next` property within
-  `gasket.config.js` is used. Everything you can configure in the
+- Instead of adding a dedicated `next.config.js`, the `nextConfig` property
+  within `gasket.config.js` is used. Everything you can configure in the
   [next.config] can be added here.
 
 It is also possible for apps to config Next.js using the `gasket.config.js`
@@ -57,7 +58,7 @@ module.exports = {
 }
 ```
 
-### Example with plugins
+#### Example with plugins
 
 ```js
 const withSass = require('@zeit/next-sass');
@@ -72,6 +73,48 @@ module.exports = {
   }))
 }
 ```
+
+### Internationalized Routing
+
+When using this plugin along with [@gasket/plugin-intl] to determine and provide
+locale files, be sure to set the [i18n config] for `defaultLocale` and supported
+`locales` in the `intl` plugin config, instead of the `nextConfig`. This will be
+used by the Gasket Intl plugin, and also passed along with the Next config for
+i18n routing.
+
+```diff
+// gasket.config.js
+module.exports = {
+  intl: {
++    defaultLocale: 'en-US',
++    locales: ['en-US', 'fr', 'nl-NL']
+  },
+  nextConfig: {
+    i18n: {
+-    locales: ['en-US', 'fr', 'nl-NL'],
+-    defaultLocale: 'en-US',
+    domains: [
+      {
+        domain: 'example.com',
+        defaultLocale: 'en-US',
+      },
+      {
+        domain: 'example.nl',
+        defaultLocale: 'nl-NL',
+      },
+      {
+        domain: 'example.fr',
+        defaultLocale: 'fr',
+      },
+    ],
+    }
+  }
+}
+```
+
+Also note when using [@gasket/plugin-intl] to determine the locale, that the
+`NEXT_LOCALE` cookie will have no effect. You can, of course, hook the [intlLocale]
+lifecycle in an app to enable that behavior if desired.
 
 ## Lifecycles
 
@@ -149,5 +192,9 @@ module.exports = {
 
 <!--[next.config]-->
 [nextConfig lifecycle]:#nextconfig
-[next.config]: https://nextjs.org/docs#custom-configuration
+[@gasket/plugin-intl]: /packages/gasket-plugin-intl/README.md
+[intlLocale]: /packages/gasket-plugin-intl/README.md#intllocale
 [webpack plugin]:/packages/gasket-plugin-webpack/README.md
+[next.config]: https://nextjs.org/docs#custom-configuration
+[i18n config]: https://nextjs.org/docs/advanced-features/i18n-routing#getting-started
+

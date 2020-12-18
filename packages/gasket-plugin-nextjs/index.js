@@ -18,12 +18,24 @@ module.exports = {
      * @param {Object} baseConfig - Base gasket config
      * @returns {Object} config
      */
-    configure: function configure(gasket, baseConfig = {}) {
-      const serviceWorker = {
-        webpackRegister: key => /_app/.test(key),
-        ...(baseConfig.serviceWorker || {})
-      };
-      return { ...baseConfig, serviceWorker };
+    configure: {
+      timing: {
+        first: true // Fixup next -> nextConfig early for reference by other plugins
+      },
+      handler: function configure(gasket, baseConfig = {}) {
+        const { logger } = gasket;
+        const { next, ...rest } = baseConfig;
+        if (next) {
+          logger.warning('DEPRECATED `next` in Gasket config - use `nextConfig`');
+        }
+        const { nextConfig = next || {} } = baseConfig;
+
+        const serviceWorker = {
+          webpackRegister: key => /_app/.test(key),
+          ...(baseConfig.serviceWorker || {})
+        };
+        return { ...rest, serviceWorker, nextConfig };
+      }
     },
     create: {
       timing: {
@@ -102,6 +114,21 @@ module.exports = {
 
       await exec('nextExpress', { next: app, express: expressApp });
 
+      // If the Gasket Intl Plugin is used to determine the locale, then we need
+      // to let NextJS know that it has already been detected. We can do this by
+      // forcing the `NEXT_LOCALE` cookie:
+      // https://github.com/vercel/next.js/blob/canary/docs/advanced-features/i18n-routing.md#leveraging-the-next_locale-cookie
+      expressApp.use(function setNextLocale(req, res, next) {
+        if (res.locals && res.locals.gasketData && res.locals.gasketData.intl) {
+          const { locale } = res.locals.gasketData.intl;
+          if (locale) {
+            req.headers.cookie = (req.headers.cookie || '') + `;NEXT_LOCALE=${locale}`;
+          }
+        }
+        next();
+      });
+
+      // TODO: (@kinetifex) we no longer support next-routes - remove this
       const { root, routes } = gasket.config || {};
       const routesModulePath = path.join(root, routes || './routes');
       let ssr;
@@ -158,8 +185,8 @@ module.exports = {
     * @returns {Object} config
     */
     workbox: function (gasket) {
-      const { next = {}, basePath } = gasket.config;
-      const assetPrefix = next.assetPrefix || basePath || '';
+      const { nextConfig = {}, basePath } = gasket.config;
+      const assetPrefix = nextConfig.assetPrefix || basePath || '';
 
       const parsed = assetPrefix ? url.parse(assetPrefix) : '';
       const joined = parsed ? url.format({ ...parsed, pathname: path.join(parsed.pathname, '_next/') }) : '_next/';

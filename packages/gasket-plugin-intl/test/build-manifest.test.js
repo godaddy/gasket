@@ -18,6 +18,7 @@ describe('buildManifest', function () {
           basePath: '',
           defaultPath: '/locales',
           defaultLocale: 'en-US',
+          locales: ['en-US', 'fr-FR', 'fr-CH'],
           localesMap: {
             'fr-CH': 'fr-FR'
           },
@@ -52,7 +53,7 @@ describe('buildManifest', function () {
     const output = getOutput();
     const keys = Object.keys(output);
     assume(keys).eqls([
-      'basePath', 'defaultPath', 'defaultLocale', 'localesMap', 'paths'
+      'basePath', 'defaultPath', 'defaultLocale', 'locales', 'localesMap', 'paths'
     ]);
   });
 

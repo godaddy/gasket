@@ -38,7 +38,8 @@
     "intl": "^1.2.5",
     "loader-utils": "^1.1.0",
     "lodash.merge": "^4.6.0",
-    "url-join": "^4.0.0"
+    "url-join": "^4.0.0",
+    "@hapi/accept": "^5.0.1"
   },
   "devDependencies": {
     "@gasket/helper-intl": "^6.0.0-canary.3",

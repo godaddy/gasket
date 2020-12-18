@@ -1,10 +1,12 @@
 /* eslint-disable no-sync */
 
-const { spy, stub } = require('sinon');
+const sinon = require('sinon');
 const assume = require('assume');
 const path = require('path');
 const proxyquire = require('proxyquire').noCallThru();
 const { devDependencies } = require('../package');
+
+const { spy, stub } = sinon;
 
 describe('Plugin', function () {
   const plugin = require('../');
@@ -36,7 +38,7 @@ describe('Plugin', function () {
 });
 
 describe('configure hook', () => {
-  const configureHook = require('../').hooks.configure;
+  const configureHook = require('../').hooks.configure.handler;
 
   it('adds the sw webpackRegister callback', () => {
     const gasket = mockGasketApi();
@@ -61,14 +63,26 @@ describe('configure hook', () => {
     assume(entryName('_app')).equals(true);
     assume(entryName('static/runtime/_app')).equals(true);
   });
+
+  it('fallback support for `next` from gasket.config', async () => {
+    const gasket = mockGasketApi();
+    delete gasket.config.nextConfig;
+    gasket.config.next = {
+      customConfig: true
+    };
+    const results = configureHook(gasket, gasket.config);
+    assume(results.nextConfig).has.property('customConfig', true);
+    assume(gasket.logger.warning).calledWithMatch('DEPRECATED');
+  });
 });
 
-describe('next hook', () => {
+describe('express hook', () => {
   let next, nextHandler, plugin, expressApp;
 
   beforeEach(() => {
     expressApp = {
       set: spy(),
+      use: spy(),
       all: spy()
     };
     nextHandler = {
@@ -85,6 +99,54 @@ describe('next hook', () => {
     await plugin.hooks.express(gasket, expressApp, false);
 
     assume(gasket.exec).has.been.calledWith('next', nextHandler);
+  });
+
+  it('attaches middleware to set NEXT_LOCALE cookie', async function () {
+    const gasket = mockGasketApi();
+    await plugin.hooks.express(gasket, expressApp, false);
+
+    assume(expressApp.use).has.been.calledWith(sinon.match.func);
+    const fn = expressApp.use.getCall(0).args[0];
+    assume(fn.name).equals('setNextLocale');
+  });
+
+  it('middleware sets NEXT_LOCALE cookie from gasketData', async function () {
+    const gasket = mockGasketApi();
+    await plugin.hooks.express(gasket, expressApp, false);
+
+    const fn = expressApp.use.getCall(0).args[0];
+
+    const mockReq = { headers: {} };
+    const mockRes = { locals: { gasketData: { intl: { locale: 'fr-FR' } } } };
+    const mockNext = stub();
+    fn(mockReq, mockRes, mockNext);
+    assume(mockReq.headers).has.property('cookie', ';NEXT_LOCALE=fr-FR');
+  });
+
+  it('middleware adds NEXT_LOCALE to existing cookie', async function () {
+    const gasket = mockGasketApi();
+    await plugin.hooks.express(gasket, expressApp, false);
+
+    const fn = expressApp.use.getCall(0).args[0];
+
+    const mockReq = { headers: { cookie: 'bogus=data' } };
+    const mockRes = { locals: { gasketData: { intl: { locale: 'fr-FR' } } } };
+    const mockNext = stub();
+    fn(mockReq, mockRes, mockNext);
+    assume(mockReq.headers).has.property('cookie', 'bogus=data;NEXT_LOCALE=fr-FR');
+  });
+
+  it('middleware does not set NEXT_LOCALE cookie if no gasketData', async function () {
+    const gasket = mockGasketApi();
+    await plugin.hooks.express(gasket, expressApp, false);
+
+    const fn = expressApp.use.getCall(0).args[0];
+
+    const mockReq = { headers: {} };
+    const mockRes = { locals: { gasketData: { } } };
+    const mockNext = stub();
+    fn(mockReq, mockRes, mockNext);
+    assume(mockReq.headers).not.has.property('cookie');
   });
 
   it('executes the `nextExpress` lifecycle', async function () {
@@ -312,35 +374,35 @@ describe('workbox hook', () => {
 
   it('config modifies urls to use assetPrefix with https', async () => {
     const assetPrefix = 'https://some-cdn.com/';
-    gasketAPI.config = { next: { assetPrefix } };
+    gasketAPI.config = { nextConfig: { assetPrefix } };
     const results = await plugin.hooks.workbox(gasketAPI);
     assume(results.modifyURLPrefix).to.have.property('.next/', assetPrefix + '_next/');
   });
 
   it('config modifies urls to use assetPrefix with http', async () => {
     const assetPrefix = 'http://some-cdn.com/';
-    gasketAPI.config = { next: { assetPrefix } };
+    gasketAPI.config = { nextConfig: { assetPrefix } };
     const results = await plugin.hooks.workbox(gasketAPI);
     assume(results.modifyURLPrefix).to.have.property('.next/', assetPrefix + '_next/');
   });
 
   it('config modifies urls to use assetPrefix with https but no trailing slash', async () => {
     const assetPrefix = 'https://some-cdn.com';
-    gasketAPI.config = { next: { assetPrefix } };
+    gasketAPI.config = { nextConfig: { assetPrefix } };
     const results = await plugin.hooks.workbox(gasketAPI);
     assume(results.modifyURLPrefix).to.have.property('.next/', `${assetPrefix}/_next/`);
   });
 
   it('config modifies urls to use assetPrefix relative path with trailing slash', async () => {
     const assetPrefix = '/some/asset/prefix/';
-    gasketAPI.config = { next: { assetPrefix } };
+    gasketAPI.config = { nextConfig: { assetPrefix } };
     const results = await plugin.hooks.workbox(gasketAPI);
     assume(results.modifyURLPrefix).to.have.property('.next/', `${assetPrefix}_next/`);
   });
 
   it('config modifies urls to use assetPrefix relative path without trailing slash', async () => {
     const assetPrefix = '/some/asset/prefix';
-    gasketAPI.config = { next: { assetPrefix } };
+    gasketAPI.config = { nextConfig: { assetPrefix } };
     const results = await plugin.hooks.workbox(gasketAPI);
     assume(results.modifyURLPrefix).to.have.property('.next/', `${assetPrefix}/_next/`);
   });
@@ -354,11 +416,13 @@ function mockGasketApi() {
     execWaterfall: stub().returnsArg(1),
     exec: stub().resolves({}),
     execSync: stub().returns([]),
+    logger: {
+      warning: stub()
+    },
     config: {
       webpack: {},  // user specified webpack config
-      next: {},      // user specified next.js config
+      nextConfig: {},      // user specified next.js config
       root: '/app/path'
-    },
-    next: {}
+    }
   };
 }

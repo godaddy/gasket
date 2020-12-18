@@ -13,7 +13,12 @@ const localesParentDir = path.dirname(process.env.GASKET_INTL_LOCALES_DIR);
  */
 export function intlGetStaticProps(localePathPath = manifest.defaultPath) {
   return async ctx => {
-    const { params: { locale } } = ctx;
+    // provide by next i18n
+    let { locale } = ctx;
+    // otherwise, check for locale in path params
+    if (!locale) {
+      locale = ctx.params.locale;
+    }
     const localesProps = localeUtils.serverLoadData(localePathPath, locale, localesParentDir);
 
     return {
@@ -33,7 +38,12 @@ export function intlGetStaticProps(localePathPath = manifest.defaultPath) {
 export function intlGetServerSideProps(localePathPath = manifest.defaultPath) {
   return async ctx => {
     const { res } = ctx;
-    const { locale } = res.locals.gasketData.intl || {};
+    // provide by next i18n
+    let { locale } = ctx;
+    // otherwise, check gasketData
+    if (!locale && res.locals && res.locals.gasketData && res.locals.gasketData.intl) {
+      locale = res.locals.gasketData.intl.locale;
+    }
     const localesProps = localeUtils.serverLoadData(localePathPath, locale, localesParentDir);
 
     return {
