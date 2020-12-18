@@ -2,6 +2,12 @@
 
 ### 6.0.0
 
+- Add locales config to specify a list of supported locales ([#232])
+- Adjust intlLocale lifecycle to provide extras in a context object ([#232])
+- Attach the configured localesDir to `res.locals` for use during SSR ([#225])
+- Add req methods for loading/selecting locales messages with gasketData ([#223])
+  - Updates for defaultPath property name
+  - Fix manifest paths to include base path
 - Decoupled from Redux ([#180])
   - Request-based settings moved to gasketData in response object
 - Decoupled from Express ([#180])
@@ -91,3 +97,6 @@
 [#180]: https://github.com/godaddy/gasket/pull/180
 [#216]: https://github.com/godaddy/gasket/pull/216
 [#217]: https://github.com/godaddy/gasket/pull/217
+[#223]: https://github.com/godaddy/gasket/pull/223
+[#225]: https://github.com/godaddy/gasket/pull/225
+[#232]: https://github.com/godaddy/gasket/pull/232

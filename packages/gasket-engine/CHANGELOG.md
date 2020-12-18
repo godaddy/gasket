@@ -1,5 +1,9 @@
 # `@gasket/engine`
 
+### 6.0.0
+
+- Remove package name fallbacks ([#227])
+
 ### 5.3.2
 
 - Fix module path check regex to support Windows paths ([#160])
@@ -51,5 +55,6 @@
 [#100]: https://github.com/godaddy/gasket/pull/100
 [#124]: https://github.com/godaddy/gasket/pull/124
 [#160]: https://github.com/godaddy/gasket/pull/160
+[#227]: https://github.com/godaddy/gasket/pull/227
 
-[Loader]:/packages/gasket-resolve/docs/api.md#Loader
+[Loader]:/packages/gasket-resolve/docs/api.md#loader
