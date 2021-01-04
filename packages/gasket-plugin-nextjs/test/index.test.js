@@ -293,19 +293,6 @@ describe('build hook', () => {
     await buildHook({ command: 'local' });
     assume(builderStub).not.called();
   });
-
-  it('supports older next build', async () => {
-    const oldBuilderStub = stub();
-    const buildHook = getMockedBuildHook({
-      'next/dist/server/build': {
-        default: oldBuilderStub
-      }
-    });
-    await buildHook({ command: { id: 'build' } });
-
-    assume(oldBuilderStub).called();
-    assume(builderStub).not.called();
-  });
 });
 
 describe('workbox hook', () => {
