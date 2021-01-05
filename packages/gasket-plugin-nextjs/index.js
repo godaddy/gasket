@@ -128,34 +128,12 @@ module.exports = {
         next();
       });
 
-      // TODO: (@kinetifex) we no longer support next-routes - remove this
-      const { root, routes } = gasket.config || {};
-      const routesModulePath = path.join(root, routes || './routes');
-      let ssr;
-
-      try {
-        let router = require(routesModulePath);
-
-        // Handle ES6-style modules
-        if (router.default) {
-          router = router.default;
-        }
-
-        ssr = router.getRequestHandler(app);
-      } catch (err) {
-        if (err.code !== 'MODULE_NOT_FOUND') {
-          throw err;
-        }
-
-        ssr = app.getRequestHandler();
-      }
-
       //
       // Now that express has been setup, and users have been able to
       // interact with the express router we want to add a last, catch all
       // route that will activate the `next`.
       //
-      expressApp.all('*', ssr);
+      expressApp.all('*', app.getRequestHandler());
 
       return app;
     },
@@ -164,18 +142,7 @@ module.exports = {
       // Don't do a build, use dev server for local
       if ((command.id || command) === 'local') return;
 
-      //
-      // Different versions of Nextjs, have different ways of exporting the builder.
-      // In order to support canary, and other versions of next we need to detect
-      // the different locations.
-      //
-      let builder;
-      try {
-        builder = require('next/dist/server/build').default;
-      } catch (e) {
-        builder = require('next/dist/build').default;
-      }
-
+      const builder = require('next/dist/build').default;
       return await builder(path.resolve('.'), await createConfig(gasket, true));
     },
     /**
