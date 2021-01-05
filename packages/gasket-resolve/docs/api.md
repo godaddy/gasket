@@ -508,7 +508,7 @@ Create a new PackageIdentifier instance
 | --- | --- | --- |
 | rawName | `string` | Original input name of a package |
 | \[options\] | `object` | Options |
-| \[options.prefixed\] | `boolean` | Set this to force prefixed/postfixed format for short names |
+| \[options.prefixed\] | `boolean` | Set this to force prefixed format for short names |
 
 
 * [createPackageIdentifier]
