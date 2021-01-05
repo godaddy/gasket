@@ -10,17 +10,17 @@ const serveStaticMw = require('serve-static');
  */
 module.exports = function express(gasket, app) {
   const { root } = gasket.config;
-  const { outputDir: defaultOutputDir, serveStatic } = getIntlConfig(gasket);
+  const { outputDir, serveStatic } = getIntlConfig(gasket);
 
   if (serveStatic) {
-    let outputDir = '';
+    let staticPath = '';
     if (serveStatic === true) {
-      outputDir = defaultOutputDir;
+      staticPath = '/_locales';
     } else {
-      outputDir = serveStatic;
+      staticPath = serveStatic;
     }
 
-    app.use('/_locales', serveStaticMw(path.join(root, outputDir), {
+    app.use(staticPath, serveStaticMw(path.join(root, outputDir), {
       index: false,
       maxAge: '1y',
       immutable: true
