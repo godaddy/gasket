@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-lint",
-  "version": "6.0.0-canary.8",
+  "version": "6.0.0-canary.9",
   "description": "Adds GoDaddy standard linting to your application",
   "main": "lib",
   "scripts": {
@@ -35,7 +35,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-lint#readme",
   "dependencies": {
-    "@gasket/resolve": "^6.0.0-canary.8",
+    "@gasket/resolve": "^6.0.0-canary.9",
     "semver": "^6.3.0"
   },
   "devDependencies": {

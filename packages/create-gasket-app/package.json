@@ -1,6 +1,6 @@
 {
   "name": "create-gasket-app",
-  "version": "6.0.0-canary.8",
+  "version": "6.0.0-canary.9",
   "description": "starter pack for creating a gasket app",
   "main": "index.js",
   "scripts": {
@@ -17,7 +17,7 @@
   "author": "GoDaddy Operating Company, LLC",
   "license": "MIT",
   "dependencies": {
-    "@gasket/cli": "^6.0.0-canary.8"
+    "@gasket/cli": "^6.0.0-canary.9"
   },
   "devDependencies": {
     "assume": "^2.2.0",
