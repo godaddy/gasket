@@ -3,6 +3,7 @@ const { name, devDependencies } = require('../package');
 const configure = require('./configure');
 const init = require('./init');
 const middleware = require('./middleware');
+const express = require('./express');
 const serviceWorkerCacheKey = require('./service-worker-cache-key');
 const workbox = require('./workbox');
 const buildManifest = require('./build-manifest');
@@ -60,6 +61,7 @@ module.exports = {
         ]
       };
     },
+    express,
     middleware,
     workbox,
     serviceWorkerCacheKey,
