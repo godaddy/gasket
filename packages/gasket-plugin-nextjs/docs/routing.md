@@ -89,4 +89,3 @@ your component with the [Next.js router HOC]: `withRouter`.
 [Next.js documentation]:https://github.com/zeit/next.js
 [Next.js routing]:https://github.com/zeit/next.js#routing
 [Next.js router HOC]:https://github.com/zeit/next.js#using-a-higher-order-component
-[next-routes]:https://github.com/fridays/next-routes
