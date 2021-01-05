@@ -410,7 +410,7 @@ section.angled:after {
     .front-cover header {
         background-image: url("gasket-hero-optimized.svg");
         background-position: center bottom;
-        background-size: contain;
+        background-size: cover;
         background-repeat: no-repeat;
         min-height: 400px;
     }
