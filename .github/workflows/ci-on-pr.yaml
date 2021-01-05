@@ -1,6 +1,9 @@
 name: CI
 
-on: [push, pull_request]
+on:
+  pull_request:
+    branches:
+    - '*'
 
 jobs:
   build:
@@ -12,6 +15,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - run: |
+        git fetch --no-tags --prune --depth=1 origin +refs/heads/$GITHUB_BASE_REF:refs/remotes/origin/$GITHUB_BASE_REF
     - uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node }}

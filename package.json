@@ -11,7 +11,7 @@
     "posttest": "npm run lint",
     "build": "lerna run build",
     "align-packages": "node ./scripts/align-packages",
-    "bootstrap": "lerna bootstrap --no-ci --hoist",
+    "bootstrap": "lerna bootstrap --hoist",
     "clean": "npm run clean:artifacts && npm run clean:packages && npm run clean:root",
     "clean:artifacts": "lerna run clean --parallel",
     "clean:packages": "lerna clean --yes",
