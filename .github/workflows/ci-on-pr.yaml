@@ -24,8 +24,8 @@ jobs:
     - name: Install Dependencies
       run: npm ci
 
-    - name: Build
-      run: npm build
+    - name: Bootstrap
+      run: npm run bootstrap
 
     - name: Test
       run: npm test
