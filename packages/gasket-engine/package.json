@@ -1,6 +1,6 @@
 {
   "name": "@gasket/engine",
-  "version": "6.0.0-canary.8",
+  "version": "6.0.0-canary.9",
   "description": "Plugin engine for gasket",
   "main": "lib/engine.js",
   "scripts": {
@@ -35,7 +35,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-engine",
   "dependencies": {
-    "@gasket/resolve": "^6.0.0-canary.8"
+    "@gasket/resolve": "^6.0.0-canary.9"
   },
   "devDependencies": {
     "eslint": "^6.1.0",

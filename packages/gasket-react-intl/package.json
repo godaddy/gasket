@@ -1,6 +1,6 @@
 {
   "name": "@gasket/react-intl",
-  "version": "6.0.0-canary.8",
+  "version": "6.0.0-canary.9",
   "description": "React component library to enable localization for gasket apps.",
   "main": "./lib",
   "browser": "./lib",
@@ -40,7 +40,7 @@
     "@babel/runtime": "^7.5.5",
     "@gasket/data": "^6.0.0-canary.8",
     "@gasket/fetch": "^6.0.0-canary.2",
-    "@gasket/helper-intl": "^6.0.0-canary.8",
+    "@gasket/helper-intl": "^6.0.0-canary.9",
     "hoist-non-react-statics": "^2.5.0",
     "lodash.merge": "^4.6.0",
     "prop-types": "^15.6.2"
