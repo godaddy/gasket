@@ -18,6 +18,7 @@ describe('Plugin', function () {
       'create',
       'build',
       'webpack',
+      'express',
       'middleware',
       'workbox',
       'serviceWorkerCacheKey',

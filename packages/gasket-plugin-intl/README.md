@@ -49,6 +49,7 @@ required. However, these options exist to customize an app's setup.
   (default: `./public/locales`)
 - `manifestFilename` - (string) Change the name of the manifest file (default:
   `locales-manifest.json`)
+- `serveStatic` - (boolean|string) Enables ability to serve static locale files. If set to `true`, the app will use the `defaultPath` as the static endpoint path. This option can also be set to a string, to be used as the static endpoint path.
 - `modules` - (boolean|object) Enable locale files collation from node modules.
   Disabled by default, enable by setting to an object with options below, or set
   to `true` to use the default options. See [Module Locales] section.
