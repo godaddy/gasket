@@ -5,6 +5,12 @@ Name | Description
 ------ | -----------
 [LocaleUtils] | 
 
+## Constants
+
+Name | Description
+------ | -----------
+[path] | NOTICE! These are common utilities used by packages in browser and this plugin. Do not rely on req, or window.
+
 ## Typedefs
 
 Name | Description
@@ -13,6 +19,9 @@ Name | Description
 [LocalePath] | URL path to a locale .json file
 [Lang] | Language code only
 [Locale] | Language code with region
+[LocalesState] | State of loaded locale files
+[LocalesProps] | Props for a Next.js page containing locale and initial state
+[LocaleStatus] | Fetch status of a locale file
 
 
 ## LocaleUtils
@@ -25,6 +34,7 @@ Name | Description
     * [.formatLocalePath(localePathPart, locale)]
     * [.getLocalePath(localePathPart, locale)]
     * [.pathToUrl(localePath)]
+    * [.serverLoadData(localePathPath, locale, localesDir)]
 
 
 ### new LocaleUtils(config)
@@ -56,7 +66,8 @@ da-DK ==> da ==> en-US ==> en ==> null
 
 ### localeUtils.formatLocalePath(localePathPart, locale)
 
-Format a localePath with provide locale
+Format a localePath with provided locale. Ensures path starts with slash
+and ends with .json file.
 
 **Kind**: instance method of [`LocaleUtils`]  
 **Returns**: [`LocalePath`] - localePath  
@@ -91,6 +102,62 @@ Add base path from window.gasket.intl or manifest if set to the locale path
 | --- | --- | --- |
 | localePath | [`LocalePath`] | URL path to a locale file |
 
+
+### localeUtils.serverLoadData(localePathPath, locale, localesDir)
+
+Load locale file(s) and return localesProps
+
+**Kind**: instance method of [`LocaleUtils`]  
+**Returns**: [`LocalesProps`] - localesProps  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| localePathPath | [`LocalePathPart`] \| `Array.<LocalePathPart>` | Path(s) containing locale files |
+| locale | [`Locale`] | Locale to load |
+| localesDir | `string` | Disk path to locale files dir |
+
+
+## LocaleStatus
+
+Enum for local status values
+
+**Kind**: global enum  
+**Properties**
+
+| Name | Type | Default |
+| --- | --- | --- |
+| LOADING | [`LocaleStatus`] | `loading` | 
+| LOADED | [`LocaleStatus`] | `loaded` | 
+| ERROR | [`LocaleStatus`] | `error` | 
+
+
+* [LocaleStatus]
+    * [.LOADING]
+    * [.LOADED]
+    * [.ERROR]
+
+
+### LocaleStatus.LOADING
+
+**Kind**: static property of [`LocaleStatus`]  
+**Default**: `loading`  
+
+### LocaleStatus.LOADED
+
+**Kind**: static property of [`LocaleStatus`]  
+**Default**: `loaded`  
+
+### LocaleStatus.ERROR
+
+**Kind**: static property of [`LocaleStatus`]  
+**Default**: `error`  
+
+## path
+
+NOTICE! These are common utilities used by packages in browser and this plugin.
+Do not rely on req, or window.
+
+**Kind**: global constant  
 
 ## LocalePathPart
 
@@ -148,20 +215,83 @@ Language code with region
 ```js
 "en-US"
 ```
+
+## LocalesState
+
+State of loaded locale files
+
+**Kind**: global typedef  
+**Properties**
+
+| Name | Type |
+| --- | --- |
+| messages | `Object` | 
+| status | `Object` | 
+
+
+## LocalesProps
+
+Props for a Next.js page containing locale and initial state
+
+**Kind**: global typedef  
+**Properties**
+
+| Name | Type |
+| --- | --- |
+| locale | [`Locale`] | 
+
+
+## LocaleStatus
+
+Fetch status of a locale file
+
+**Kind**: global typedef  
+**Read only**: true  
+
+* [LocaleStatus]
+    * [.LOADING]
+    * [.LOADED]
+    * [.ERROR]
+
+
+### LocaleStatus.LOADING
+
+**Kind**: static property of [`LocaleStatus`]  
+**Default**: `loading`  
+
+### LocaleStatus.LOADED
+
+**Kind**: static property of [`LocaleStatus`]  
+**Default**: `loaded`  
+
+### LocaleStatus.ERROR
+
+**Kind**: static property of [`LocaleStatus`]  
+**Default**: `error`  
 <!-- LINKS -->
 
 [LocaleUtils]:#localeutils
+[path]:#path
 [LocalePathPart]:#localepathpart
 [LocalePath]:#localepath
 [Lang]:#lang
 [Locale]:#locale
+[LocalesState]:#localesstate
+[LocalesProps]:#localesprops
+[LocaleStatus]:#localestatus
 [`LocaleUtils`]:#new-localeutilsconfig
 [`Locale`]:#locale
 [`Lang`]:#lang
 [`LocalePath`]:#localepath
 [`LocalePathPart`]:#localepathpart
+[`LocalesProps`]:#localesprops
+[`LocaleStatus`]:#localestatus
+[.LOADING]:#localestatusloading
+[.LOADED]:#localestatusloaded
+[.ERROR]:#localestatuserror
 [new LocaleUtils(config)]:#new-localeutilsconfig
 [.getFallbackLocale(locale)]:#localeutilsgetfallbacklocalelocale
 [.formatLocalePath(localePathPart, locale)]:#localeutilsformatlocalepathlocalepathpart-locale
 [.getLocalePath(localePathPart, locale)]:#localeutilsgetlocalepathlocalepathpart-locale
 [.pathToUrl(localePath)]:#localeutilspathtourllocalepath
+[.serverLoadData(localePathPath, locale, localesDir)]:#localeutilsserverloaddatalocalepathpath-locale-localesdir
