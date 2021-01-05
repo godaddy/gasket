@@ -2,6 +2,7 @@
 
 ### 6.0.0
 
+- Opt-in `serveStatic` support for locales files with server layer ([#242])
 - Add locales config to specify a list of supported locales ([#232])
 - Adjust intlLocale lifecycle to provide extras in a context object ([#232])
 - Attach the configured localesDir to `res.locals` for use during SSR ([#225])
@@ -100,3 +101,4 @@
 [#223]: https://github.com/godaddy/gasket/pull/223
 [#225]: https://github.com/godaddy/gasket/pull/225
 [#232]: https://github.com/godaddy/gasket/pull/232
+[#242]: https://github.com/godaddy/gasket/pull/242
