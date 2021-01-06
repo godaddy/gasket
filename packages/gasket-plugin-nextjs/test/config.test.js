@@ -72,6 +72,14 @@ describe('createConfig', () => {
     });
   });
 
+  it('intl config only forwarded if locales set', async () => {
+    gasket.config.intl = {
+      defaultLocale: 'fr-FR'
+    };
+    result = await createConfig(gasket);
+    assume(result.i18n).not.exist();
+  });
+
   it('intl config options merge with existing', async () => {
     gasket.config.intl = {
       defaultLocale: 'fr-FR',
@@ -100,7 +108,7 @@ describe('createConfig', () => {
     });
   });
 
-  it('intl config relaces and warns nextConfig values', async () => {
+  it('intl config replaces and warns nextConfig values', async () => {
     gasket.config.intl = {
       defaultLocale: 'fr-FR',
       locales: ['fr-FR', 'en-US']

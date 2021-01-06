@@ -8,21 +8,24 @@ const { initWebpack } = require('@gasket/plugin-webpack');
  * @private
  */
 function forwardIntlConfig(gasket, config) {
+  const { logger } = gasket;
   const { intl: intlConfig = {} } = gasket.config;
 
-  const { logger } = gasket;
-  // Carry over defaultLocale and locales from intl config
+  // make a copy of i18n for mutating
+  const i18n = { ...(config.i18n || {}) };
+
   if (intlConfig.locales) {
-    if (config.i18n.locales) {
+    if (i18n.locales) {
       logger.warning('Gasket config has both `intl.locales` (preferred) and `nextConfig.i18n.locales`');
     }
-    config.i18n.locales = intlConfig.locales;
-  }
-  if (intlConfig.defaultLocale) {
-    if (config.i18n.locales) {
+    i18n.locales = intlConfig.locales;
+
+    if (i18n.defaultLocale) {
       logger.warning('Gasket config has both `intl.defaultLocale` (preferred) and `nextConfig.i18n.defaultLocale`');
     }
-    config.i18n.defaultLocale = intlConfig.defaultLocale;
+    i18n.defaultLocale = intlConfig.defaultLocale;
+
+    config.i18n = i18n;
   }
 }
 
@@ -37,13 +40,10 @@ function forwardIntlConfig(gasket, config) {
  */
 function createConfig(gasket, includeWebpackConfig = true) {
   const { nextConfig = {} } = gasket.config;
-  const { i18n = {} } = nextConfig;
 
   const config = {
     poweredByHeader: false,
-    ...nextConfig,
-    // make a copy of i18n for mutating
-    i18n: { ...i18n }
+    ...nextConfig
   };
 
   forwardIntlConfig(gasket, config);
