@@ -15,13 +15,13 @@
     "url": "https://github.com/godaddy/gasket/issues"
   },
   "dependencies": {
-    "@gasket/plugin-config": "^5.0.0",
-    "@gasket/plugin-docs": "^5.0.0",
-    "@gasket/plugin-docsify": "^5.0.0",
-    "@gasket/plugin-express": "^5.0.0",
-    "@gasket/plugin-https": "^5.0.0",
-    "@gasket/plugin-lint": "^5.0.0",
-    "@gasket/plugin-log": "^5.0.0",
-    "@gasket/plugin-swagger": "^5.8.0"
+    "@gasket/plugin-config": "^6.0.0-canary.8",
+    "@gasket/plugin-docs": "^6.0.0-canary.0",
+    "@gasket/plugin-docsify": "^6.0.0-canary.0",
+    "@gasket/plugin-express": "^6.0.0-canary.2",
+    "@gasket/plugin-https": "^6.0.0-canary.0",
+    "@gasket/plugin-lint": "^6.0.0-canary.9",
+    "@gasket/plugin-log": "^6.0.0-canary.2",
+    "@gasket/plugin-swagger": "^6.0.0-canary.9"
   }
 }

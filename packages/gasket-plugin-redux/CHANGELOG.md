@@ -1,5 +1,8 @@
 # `@gasket/plugin-redux`
 
+### 6.0.0
+
+- Update peer dep versions ([#243])
 - Generate a `redux/store.js` with support for adding reducers via plugins ([#173])
 - Set `process.env.GASKET_MAKE_STORE_FILE` for shared package imports ([#173])
 
@@ -49,3 +52,4 @@
 <!-- LINKS -->
 
 [#173]: https://github.com/godaddy/gasket/pull/173
+[#243]: https://github.com/godaddy/gasket/pull/243

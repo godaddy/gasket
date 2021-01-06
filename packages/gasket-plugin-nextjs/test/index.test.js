@@ -180,6 +180,15 @@ describe('create hook', () => {
     };
   });
 
+  it('has expected timings', async function () {
+    assume(plugin.hooks.create.timing.before).eqls([
+      '@gasket/plugin-intl'
+    ]);
+    assume(plugin.hooks.create.timing.after).eqls([
+      '@gasket/plugin-redux'
+    ]);
+  });
+
   it('adds the appropriate globs', async function () {
     await plugin.hooks.create.handler({}, mockContext);
 

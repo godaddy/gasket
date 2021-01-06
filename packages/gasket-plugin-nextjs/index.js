@@ -39,6 +39,7 @@ module.exports = {
     },
     create: {
       timing: {
+        before: ['@gasket/plugin-intl'],
         after: ['@gasket/plugin-redux']
       },
       /**
