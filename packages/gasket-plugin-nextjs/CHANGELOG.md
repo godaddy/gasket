@@ -2,6 +2,9 @@
 
 ### 6.0.0
 
+- Fix to only add i18n to next config if locales array set ([#243])
+- Fix timing to add react dep before intl plugin ([#243])
+- Fix missing deps and peer dep versions ([#243])
 - No longer support old version of Next.js build and next-routes ([#240])
 - Configures `next` as `nextConfig` with deprecation warning ([#232])
 - Force sets the `NEXT_LOCALE` cookie if locale predetermine by Intl plugin ([#232])
@@ -93,3 +96,4 @@
 [#223]: https://github.com/godaddy/gasket/pull/223
 [#232]: https://github.com/godaddy/gasket/pull/232
 [#240]: https://github.com/godaddy/gasket/pull/240
+[#243]: https://github.com/godaddy/gasket/pull/243
