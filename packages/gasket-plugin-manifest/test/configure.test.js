@@ -5,11 +5,9 @@ const proxyquire = require('proxyquire');
 const baseConfig = require('../lib/base-config');
 
 describe('configure', function () {
-  const deepmergeStub = sinon.stub();
   const joinStub = sinon.stub();
 
   const configure = proxyquire('../lib/configure', {
-    deepmerge: deepmergeStub,
     path: {
       join: joinStub
     }
@@ -46,24 +44,28 @@ describe('configure', function () {
   });
 
   it('merges base config with the manifest config', function () {
-    const staticOutput = true;
-    const config = { manifest: { staticOutput } };
+    const scope = '/custom';
+    const config = { manifest: { scope } };
 
-    deepmergeStub.returns({ ...baseConfig, staticOutput });
-    configure(gasket, config);
+    const results = configure(gasket, config);
 
-    assume(deepmergeStub.calledOnce).true();
-    assume(deepmergeStub.args[0][0]).eqls(
-      baseConfig,
-      { staticOutput }
+    assume(results.manifest).eqls(
+      { ...baseConfig, scope }
     );
+  });
+
+  it('works with defaults when not configured', function () {
+    const config = {};
+
+    const results = configure(gasket, config);
+
+    assume(results.manifest).eqls(baseConfig);
   });
 
   it('uses default path when staticOutput is true', function () {
     const staticOutput = true;
     const config = { manifest: { staticOutput } };
 
-    deepmergeStub.returns({ ...baseConfig, staticOutput });
     configure(gasket, config);
 
     assume(joinStub.args[0][1]).eqls('public/manifest.json');
@@ -73,14 +75,12 @@ describe('configure', function () {
     const staticOutput = 'custom/path/manifest.json';
     const config = { manifest: { staticOutput } };
 
-    deepmergeStub.returns({ ...baseConfig, staticOutput });
     configure(gasket, config);
 
     assume(joinStub.args[0][1]).eqls(staticOutput);
   });
 
   it('sets static output to false when not configured', function () {
-    deepmergeStub.returns(baseConfig);
     configure(gasket, { manifest: {} });
     assume(joinStub.called).false();
   });
