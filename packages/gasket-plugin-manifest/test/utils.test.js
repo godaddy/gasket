@@ -70,6 +70,13 @@ describe('utils', function () {
       assume(gasket.execWaterfall.args[0][1]).doesnt.contain('staticOutput');
     });
 
+    it('does not include path manifest', async function () {
+      gasket.config.manifest.path = '/custom/manifest.json';
+      await gatherManifestData(gasket, {});
+      assume(gasket.execWaterfall.calledOnce).is.true();
+      assume(gasket.execWaterfall.args[0][1]).doesnt.contain('path');
+    });
+
     it('calls manifest waterfall', async function () {
       await gatherManifestData(gasket, {});
       assume(gasket.execWaterfall.calledOnce).is.true();

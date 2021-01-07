@@ -1,29 +1,27 @@
-
-const baseConfig = require('./base-config');
+// config options that should not be in manifest output
+const excludes = ['staticOutput', 'path'];
 
 /**
  * Merges manifest defaults with gasket.config manifest and passes to
  * every defined `manifest` hook for further manipulation.
  *
- * @param  {Gasket} gasket The gasket API
- * @param {Object} context TODO
+ * @param  {Gasket} gasket - The gasket API
+ * @param {Object} context - Request context
  * @returns {Object} manifest.json
  */
 async function gatherManifestData(gasket, context) {
   const { logger, execWaterfall, config } = gasket;
   const source = (context.req && context.req.originalUrl) || 'static manifest';
-  const fromConfig = {};
 
   logger.debug(`Gathering manifest for ${source}`);
 
-  // Do not include staticOutput in manifest
-  for (const prop in config.manifest) {
-    if (prop !== 'staticOutput') {
-      fromConfig[prop] = config.manifest[prop];
+  // Remove excluded properties in manifest config
+  const manifest = Object.keys(config.manifest).reduce((acc, key) => {
+    if (!excludes.includes(key)) {
+      acc[key] = config.manifest[key];
     }
-  }
-
-  const manifest = { ...baseConfig, ...fromConfig };
+    return acc;
+  }, {});
 
   return await execWaterfall('manifest', manifest, context);
 }

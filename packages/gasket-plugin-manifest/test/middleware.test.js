@@ -78,15 +78,6 @@ describe('middleware', function () {
       assume(gasket.execWaterfall.args[0][2]).deep.equals(context);
     });
 
-    it('uses the default configuration', async function () {
-      const fn = handler(gasket, {}, {});
-      const req = {
-        path: 'manifest.json'
-      };
-      await fn(req, {}, function () { });
-      assume(gasket.execWaterfall.args[0][1].display).equals('standalone');
-    });
-
     it('takes precedence from gasket config over base config', async function () {
       gasket.config.manifest.display = 'BOGUS';
       const fn = handler(gasket, {}, {});
