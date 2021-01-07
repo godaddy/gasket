@@ -90,17 +90,21 @@ describe('configure', function () {
     it('returns intl config from gasket.config.js', function () {
       const results = getIntlConfig(setupGasket({
         intl: {
+          localesDir: 'custom/locales',
           assetPrefix: 'BOGUS'
         }
       }));
       assume(results).eqls({
+        localesDir: 'custom/locales',
         assetPrefix: 'BOGUS'
       });
     });
 
-    it('returns empty object if no intl config set', function () {
+    it('returns default object if no intl config set', function () {
       const results = getIntlConfig({});
-      assume(results).eqls({});
+      assume(results).eqls({
+        localesDir: path.join('public', 'locales')
+      });
     });
   });
 });
