@@ -43,7 +43,7 @@
     "@gasket/helper-intl": "^6.0.0-canary.9",
     "hoist-non-react-statics": "^2.5.0",
     "lodash.merge": "^4.6.0",
-    "prop-types": "^15.6.2"
+    "prop-types": "^15.7.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.10",
@@ -73,7 +73,7 @@
     "proxyquire": "^2.1.3",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-intl": "^5.8.5",
+    "react-intl": "^5.10.13",
     "react-redux": "^7.1.0",
     "setup-env": "^1.2.2",
     "sinon": "^9.2.3"

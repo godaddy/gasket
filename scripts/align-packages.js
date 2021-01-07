@@ -34,14 +34,16 @@ const depVersions = {
   'chai': '^4.2.0',
   'nyc': '^15.1.0',
   'proxyquire': '^2.1.3',
+  'enzyme': '^3.10.0',
+  'enzyme-adapter-react-16': '^1.14.0',
 
   'react': '^17.0.1',
   'react-dom': '^17.0.1',
+  'react-intl': '^5.10.13',
+  'prop-types': '^15.7.2',
   'redux': '^4.0.5',
   'next': '^10.0.5',
-
-  'deepmerge': '^4.0.0',
-  'diagnostics': '^2.0.2',
+  'jsdom': '^16.4.0',
 
   'babel-eslint': '^10.0.2',
   'eslint': '^6.1.0',
@@ -51,18 +53,14 @@ const depVersions = {
   'eslint-plugin-jest': '^22.15.1',
   'eslint-plugin-mocha': '^6.0.0',
   'eslint-plugin-react': '^7.14.0',
-  'jsdom': '^16.4.0',
 
-  'enzyme': '^3.10.0',
-  'enzyme-adapter-react-16': '^1.14.0',
-
+  'deepmerge': '^4.0.0',
+  'diagnostics': '^2.0.2',
   'handlebars': '^4.4.3',
   'rimraf': '^3.0.0',
   'glob': '^7.1.4',
   'semver': '^6.3.0',
-  'lodash.defaultsdeep': '^4.6.0',
-  'prop-types': '^15.6.2',
-  'react-intl': '^5.8.5'
+  'lodash.defaultsdeep': '^4.6.0'
 };
 
 
