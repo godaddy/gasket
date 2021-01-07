@@ -13,6 +13,8 @@ const moduleDefaults = {
  */
 function getIntlConfig(gasket) {
   const { intl = {} } = gasket.config || {};
+  // handling default here is necessary for metadata which runs before configure hook
+  intl.localesDir = intl.localesDir || path.join('public', 'locales');
   return intl;
 }
 
@@ -52,7 +54,7 @@ module.exports = function configureHook(gasket, config) {
     defaultPath = '/locales',
     defaultLocale = defaultLanguage || 'en',
     localesMap = languageMap || {},
-    localesDir = './public/locales',
+    localesDir,
     manifestFilename = 'locales-manifest.json'
   } = intlConfig;
 
