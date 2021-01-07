@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-manifest",
-  "version": "6.0.0-canary.9",
+  "version": "6.0.0-canary.11",
   "description": "The web app manifest for progressive Gasket applications",
   "main": "lib/index.js",
   "scripts": {
