@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-nextjs",
-  "version": "6.0.0-canary.10",
+  "version": "6.0.0-canary.12",
   "description": "Adds Next support to your application",
   "main": "index.js",
   "scripts": {
