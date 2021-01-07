@@ -12,7 +12,7 @@ const baseConfig = require('./base-config');
  */
 module.exports = function configure(gasket, config = {}) {
   const { config: { root } } = gasket;
-  const manifest = deepmerge(baseConfig, config.manifest);
+  const manifest = deepmerge(baseConfig, config.manifest || {});
   let { staticOutput } = manifest;
 
   // Fixup staticOutput - use default if true
