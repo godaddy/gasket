@@ -37,10 +37,11 @@ const depVersions = {
 
   'react': '^17.0.1',
   'react-dom': '^17.0.1',
-  'redux': '^4.0.4',
+  'redux': '^4.0.5',
+  'next': '^10.0.5',
+
   'deepmerge': '^4.0.0',
   'diagnostics': '^2.0.2',
-  'next': '^10.0.1',
 
   'babel-eslint': '^10.0.2',
   'eslint': '^6.1.0',
