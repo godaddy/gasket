@@ -12,8 +12,8 @@ describe('middleware', function () {
       execWaterfall: jest.fn((event, config) => Promise.resolve(config))
     };
 
-    mockReq = sinon.stub({ mock: 'request', cookies: { market: 'de-DE' } });
-    mockRes = sinon.stub({ mock: 'response', locals: {} });
+    mockReq = { mock: 'request', cookies: { market: 'de-DE' } };
+    mockRes = { mock: 'response', locals: {} };
   });
 
   afterEach(function () {
@@ -63,14 +63,7 @@ describe('middleware', function () {
     });
     const middlewareMock = promisify(middleware.handler(gasket));
 
-    try {
-      await middlewareMock(mockReq, mockRes);
-    } catch (err) {
-      expect(err).toBeInstanceOf(Error);
-      return;
-    }
-
-    throw new Error('Middleware should have propagated an error');
+    await expect(middlewareMock(mockReq, mockRes)).rejects.toThrow();
   });
 
   it('adds public config property to locals response', async () => {
