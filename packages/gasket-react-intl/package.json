@@ -37,7 +37,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-react-intl#readme",
   "dependencies": {
-    "@babel/runtime": "^7.5.5",
+    "@babel/runtime": "^7.12.10",
     "@gasket/data": "^6.0.0-canary.8",
     "@gasket/fetch": "^6.0.0-canary.2",
     "@gasket/helper-intl": "^6.0.0-canary.9",
@@ -46,13 +46,13 @@
     "prop-types": "^15.6.2"
   },
   "devDependencies": {
-    "@babel/cli": "^7.5.5",
-    "@babel/core": "^7.5.5",
+    "@babel/cli": "^7.12.10",
+    "@babel/core": "^7.12.10",
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
-    "@babel/plugin-transform-runtime": "^7.5.5",
-    "@babel/preset-env": "^7.5.5",
-    "@babel/preset-react": "^7.0.0",
-    "@babel/register": "^7.5.5",
+    "@babel/plugin-transform-runtime": "^7.12.10",
+    "@babel/preset-env": "^7.12.10",
+    "@babel/preset-react": "^7.12.10",
+    "@babel/register": "^7.12.10",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.3.1",
     "assume": "^2.2.0",
     "assume-sinon": "^1.0.1",

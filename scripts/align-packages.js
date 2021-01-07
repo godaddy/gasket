@@ -17,14 +17,14 @@ const projectRoot = path.resolve(__dirname, '..');
  * @type {object.<string,string>}
  */
 const depVersions = {
-  '@babel/cli': '^7.5.5',
-  '@babel/core': '^7.5.5',
-  '@babel/node': '^7.5.5',
-  '@babel/runtime': '^7.5.5',
-  '@babel/register': '^7.5.5',
-  '@babel/plugin-transform-runtime': '^7.5.5',
-  '@babel/preset-env': '^7.5.5',
-  '@babel/preset-react': '^7.0.0',
+  '@babel/cli': '^7.12.10',
+  '@babel/core': '^7.12.10',
+  '@babel/node': '^7.12.10',
+  '@babel/runtime': '^7.12.10',
+  '@babel/register': '^7.12.10',
+  '@babel/plugin-transform-runtime': '^7.12.10',
+  '@babel/preset-env': '^7.12.10',
+  '@babel/preset-react': '^7.12.10',
 
   'jest': '^24.8.0',
   'assume': '^2.2.0',
