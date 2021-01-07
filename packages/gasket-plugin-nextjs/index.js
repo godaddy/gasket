@@ -210,6 +210,10 @@ module.exports = {
           name: 'pages/',
           description: 'NextJS routing',
           link: 'https://nextjs.org/docs/routing/introduction'
+        }, {
+          name: 'public/',
+          description: 'NextJS static files',
+          link: 'https://nextjs.org/docs/basic-features/static-file-serving'
         }]
       };
     }
