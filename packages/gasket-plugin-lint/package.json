@@ -36,7 +36,7 @@
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-lint#readme",
   "dependencies": {
     "@gasket/resolve": "^6.0.0-canary.9",
-    "semver": "^6.3.0"
+    "semver": "^7.3.4"
   },
   "devDependencies": {
     "assume": "^2.3.0",

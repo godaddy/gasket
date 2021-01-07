@@ -33,7 +33,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-workbox#readme",
   "dependencies": {
-    "deepmerge": "^4.0.0",
+    "deepmerge": "^4.2.2",
     "serve-static": "^1.13.2",
     "workbox-build": "^4.1.0"
   },

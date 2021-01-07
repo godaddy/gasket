@@ -55,13 +55,13 @@ const depVersions = {
   'eslint-plugin-mocha': '^8.0.0',
   'eslint-plugin-react': '^7.22.0',
 
-  'deepmerge': '^4.0.0',
+  'deepmerge': '^4.2.2',
   'diagnostics': '^2.0.2',
-  'handlebars': '^4.4.3',
-  'rimraf': '^3.0.0',
-  'glob': '^7.1.4',
-  'semver': '^6.3.0',
-  'lodash.defaultsdeep': '^4.6.0'
+  'handlebars': '^4.7.6',
+  'rimraf': '^3.0.2',
+  'glob': '^7.1.6',
+  'semver': '^7.3.4',
+  'lodash.defaultsdeep': '^4.6.1'
 };
 
 
