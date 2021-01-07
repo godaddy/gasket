@@ -26,7 +26,6 @@ const depVersions = {
   '@babel/preset-env': '^7.12.10',
   '@babel/preset-react': '^7.12.10',
 
-  'jest': '^26.6.3',
   'assume': '^2.3.0',
   'sinon': '^9.2.3',
   'assume-sinon': '^1.1.0',
@@ -34,8 +33,10 @@ const depVersions = {
   'chai': '^4.2.0',
   'nyc': '^15.1.0',
   'proxyquire': '^2.1.3',
-  'enzyme': '^3.10.0',
-  'enzyme-adapter-react-16': '^1.14.0',
+
+  'jest': '^26.6.3',
+  'enzyme': '^3.11.0',
+  'enzyme-adapter-react-16': '^1.15.5',
 
   'react': '^17.0.1',
   'react-dom': '^17.0.1',
