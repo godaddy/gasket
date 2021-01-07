@@ -37,7 +37,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-react-intl#readme",
   "dependencies": {
-    "@babel/runtime": "^7.12.10",
+    "@babel/runtime": "^7.12.5",
     "@gasket/data": "^6.0.0-canary.8",
     "@gasket/fetch": "^6.0.0-canary.2",
     "@gasket/helper-intl": "^6.0.0-canary.9",

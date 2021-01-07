@@ -20,7 +20,7 @@ const depVersions = {
   '@babel/cli': '^7.12.10',
   '@babel/core': '^7.12.10',
   '@babel/node': '^7.12.10',
-  '@babel/runtime': '^7.12.10',
+  '@babel/runtime': '^7.12.5',
   '@babel/register': '^7.12.10',
   '@babel/plugin-transform-runtime': '^7.12.10',
   '@babel/preset-env': '^7.12.10',
