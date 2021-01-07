@@ -2,6 +2,7 @@
 
 ### 6.0.0
 
+- Fix to handle default `localesDir` for metadata ([#245])
 - Fix missing dependencies ([#243])
 - Opt-in `serveStatic` support for locales files with server layer ([#242])
 - Add locales config to specify a list of supported locales ([#232])
@@ -104,3 +105,4 @@
 [#232]: https://github.com/godaddy/gasket/pull/232
 [#242]: https://github.com/godaddy/gasket/pull/242
 [#243]: https://github.com/godaddy/gasket/pull/243
+[#245]: https://github.com/godaddy/gasket/pull/245

@@ -2,6 +2,7 @@
 
 ### 6.0.0
 
+- Add public/ to structure metadata for docs index ([#245])
 - Fix to only add i18n to next config if locales array set ([#243])
 - Fix timing to add react dep before intl plugin ([#243])
 - Fix missing deps and peer dep versions ([#243])
@@ -97,3 +98,4 @@
 [#232]: https://github.com/godaddy/gasket/pull/232
 [#240]: https://github.com/godaddy/gasket/pull/240
 [#243]: https://github.com/godaddy/gasket/pull/243
+[#245]: https://github.com/godaddy/gasket/pull/245
