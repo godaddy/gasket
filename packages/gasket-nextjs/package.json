@@ -43,8 +43,8 @@
     "@babel/cli": "^7.12.10",
     "@babel/core": "^7.12.10",
     "@babel/register": "^7.12.10",
-    "assume": "^2.2.0",
-    "assume-sinon": "^1.0.1",
+    "assume": "^2.3.0",
+    "assume-sinon": "^1.1.0",
     "babel-eslint": "^10.0.2",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
@@ -55,13 +55,13 @@
     "eslint-plugin-mocha": "^6.0.0",
     "eslint-plugin-react": "^7.14.0",
     "jsdom": "^16.4.0",
-    "mocha": "^6.2.0",
+    "mocha": "^8.2.1",
     "next": "^10.0.1",
-    "nyc": "^14.1.1",
+    "nyc": "^15.1.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "setup-env": "^1.2.2",
-    "sinon": "^7.4.1"
+    "sinon": "^9.2.3"
   },
   "peerDependencies": {
     "next": "^10.0.1"
