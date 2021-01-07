@@ -76,12 +76,12 @@ describe('Resolver', () => {
 
     it('uses resolver file require by default', () => {
       const resolver = new Resolver();
-      expect(() => resolver.resolve('missing')).toThrow(/from 'resolver.js'/);
+      expect(() => resolver.resolve('missing')).toThrow(/from 'lib\/resolver.js'/);
     });
 
     it('uses passed require', () => {
       const resolver = new Resolver({ require });
-      expect(() => resolver.resolve('missing')).toThrow(/from 'resolver.test.js'/);
+      expect(() => resolver.resolve('missing')).toThrow(/from 'test\/resolver.test.js'/);
     });
   });
 
