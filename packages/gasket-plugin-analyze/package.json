@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-analyze",
-  "version": "6.0.0-canary.0",
+  "version": "6.0.0-canary.13",
   "description": "Gasket Analyzer Plugin",
   "main": "lib",
   "scripts": {
