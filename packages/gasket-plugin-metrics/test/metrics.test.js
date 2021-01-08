@@ -66,7 +66,8 @@ describe('Metrics', function () {
       // new branches locally, which would cause this test to fail.
       //
       assume(data.branch).is.a('string');
-      assume(data.repository).includes('gasket.git');
+      // TODO: Revert to `gasket.git` once actions/checkout bug is fixed
+      assume(data.repository).includes('gasket');
     });
 
     it('includes package from app metadata', async function () {
