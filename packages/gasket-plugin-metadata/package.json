@@ -43,14 +43,14 @@
   },
   "devDependencies": {
     "@godaddy/dmd": "^1.0.0",
-    "assume": "^2.2.0",
-    "eslint": "^6.1.0",
-    "eslint-config-godaddy": "^4.0.0",
-    "eslint-plugin-json": "^1.4.0",
-    "eslint-plugin-mocha": "^6.0.0",
+    "assume": "^2.3.0",
+    "eslint": "^7.17.0",
+    "eslint-config-godaddy": "^4.0.1",
+    "eslint-plugin-json": "^2.1.2",
+    "eslint-plugin-mocha": "^8.0.0",
     "jsdoc-to-markdown": "^5.0.1",
-    "mocha": "^6.2.0",
-    "nyc": "^14.1.1",
-    "sinon": "^7.4.1"
+    "mocha": "^8.2.1",
+    "nyc": "^15.1.0",
+    "sinon": "^9.2.3"
   }
 }
