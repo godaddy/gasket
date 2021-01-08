@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-swagger",
-  "version": "6.0.0-canary.9",
+  "version": "6.0.0-canary.13",
   "description": "Generate and serve swagger docs",
   "main": "index.js",
   "scripts": {

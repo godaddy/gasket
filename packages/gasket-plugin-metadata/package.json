@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-metadata",
-  "version": "6.0.0-canary.9",
+  "version": "6.0.0-canary.13",
   "description": "Adds metadata to gasket lifecycles",
   "main": "lib",
   "scripts": {
@@ -36,7 +36,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-metadata",
   "dependencies": {
-    "@gasket/resolve": "^6.0.0-canary.9",
+    "@gasket/resolve": "^6.0.0-canary.13",
     "lodash.clonedeep": "^4.5.0",
     "lodash.isfunction": "^3.0.9",
     "lodash.isobject": "^3.0.2"
