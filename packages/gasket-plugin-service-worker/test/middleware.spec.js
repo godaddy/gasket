@@ -1,9 +1,14 @@
+const utils = require('../lib/utils');
+jest.mock('../lib/utils');
 const middleware = require('../lib/middleware');
+
+const mockRegisterScript = 'mock script';
 
 describe('middleware', () => {
   let results, mockGasket, mockConfig, mockReq, mockRes, mockNext;
 
   beforeEach(async () => {
+    utils.loadRegisterScript.mockReturnValue(mockRegisterScript);
     mockConfig = {
       url: '/sw.js',
       scope: '/',
@@ -40,30 +45,8 @@ describe('middleware', () => {
     it('attaches swRegisterScript to req', async () => {
       layer = getLayer();
       await layer(mockReq, mockRes, mockNext);
-      expect(mockReq).toHaveProperty('swRegisterScript', expect.any(String))
-    });
-
-    it('swRegisterScript has content from sw-register.template', async () => {
-      layer = getLayer();
-      await layer(mockReq, mockRes, mockNext);
-      expect(mockReq.swRegisterScript).toContain('navigator.serviceWorker.register')
-    });
-
-    it('swRegisterScript has substituted variables', async () => {
-      layer = getLayer();
-      await layer(mockReq, mockRes, mockNext);
-      expect(mockReq.swRegisterScript).not.toContain('{URL}');
-      expect(mockReq.swRegisterScript).toContain('/sw.js');
-
-      expect(mockReq.swRegisterScript).not.toContain('{SCOPE}');
-      expect(mockReq.swRegisterScript).toContain("scope: '/'");
-    });
-
-    it('does not attach swRegisterScript for _next assets req', async () => {
-      mockReq.path = '/_next/some/asset.js';
-      layer = getLayer();
-      await layer(mockReq, mockRes, mockNext);
-      expect(mockReq).not.toHaveProperty('swRegisterScript', expect.any(String))
+      expect(mockReq).toHaveProperty('swRegisterScript', expect.any(String));
+      expect(mockReq.swRegisterScript).toContain(mockRegisterScript);
     });
   });
 });
