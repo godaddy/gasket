@@ -17,51 +17,51 @@ const projectRoot = path.resolve(__dirname, '..');
  * @type {object.<string,string>}
  */
 const depVersions = {
-  '@babel/cli': '^7.5.5',
-  '@babel/core': '^7.5.5',
-  '@babel/node': '^7.5.5',
-  '@babel/runtime': '^7.5.5',
-  '@babel/register': '^7.5.5',
-  '@babel/plugin-transform-runtime': '^7.5.5',
-  '@babel/preset-env': '^7.5.5',
-  '@babel/preset-react': '^7.0.0',
+  '@babel/cli': '^7.12.10',
+  '@babel/core': '^7.12.10',
+  '@babel/node': '^7.12.10',
+  '@babel/runtime': '^7.12.5',
+  '@babel/register': '^7.12.10',
+  '@babel/plugin-transform-runtime': '^7.12.10',
+  '@babel/preset-env': '^7.12.10',
+  '@babel/preset-react': '^7.12.10',
 
-  'jest': '^24.8.0',
-  'assume': '^2.2.0',
-  'sinon': '^7.4.1',
-  'assume-sinon': '^1.0.1',
-  'mocha': '^6.2.0',
+  'assume': '^2.3.0',
+  'sinon': '^9.2.3',
+  'assume-sinon': '^1.1.0',
+  'mocha': '^8.2.1',
   'chai': '^4.2.0',
-  'nyc': '^14.1.1',
+  'nyc': '^15.1.0',
   'proxyquire': '^2.1.3',
+
+  'jest': '^26.6.3',
+  'enzyme': '^3.11.0',
+  'enzyme-adapter-react-16': '^1.15.5',
 
   'react': '^17.0.1',
   'react-dom': '^17.0.1',
-  'redux': '^4.0.4',
-  'deepmerge': '^4.0.0',
-  'diagnostics': '^2.0.2',
-  'next': '^10.0.1',
-
-  'babel-eslint': '^10.0.2',
-  'eslint': '^6.1.0',
-  'eslint-config-godaddy': '^4.0.0',
-  'eslint-config-godaddy-react': '^6.0.0',
-  'eslint-plugin-json': '^1.4.0',
-  'eslint-plugin-jest': '^22.15.1',
-  'eslint-plugin-mocha': '^6.0.0',
-  'eslint-plugin-react': '^7.14.0',
+  'react-intl': '^5.10.13',
+  'prop-types': '^15.7.2',
+  'redux': '^4.0.5',
+  'next': '^10.0.5',
   'jsdom': '^16.4.0',
 
-  'enzyme': '^3.10.0',
-  'enzyme-adapter-react-16': '^1.14.0',
+  'babel-eslint': '^10.1.0',
+  'eslint': '^7.17.0',
+  'eslint-config-godaddy': '^4.0.1',
+  'eslint-config-godaddy-react': '^6.0.1',
+  'eslint-plugin-json': '^2.1.2',
+  'eslint-plugin-jest': '^24.1.3',
+  'eslint-plugin-mocha': '^8.0.0',
+  'eslint-plugin-react': '^7.22.0',
 
-  'handlebars': '^4.4.3',
-  'rimraf': '^3.0.0',
-  'glob': '^7.1.4',
-  'semver': '^6.3.0',
-  'lodash.defaultsdeep': '^4.6.0',
-  'prop-types': '^15.6.2',
-  'react-intl': '^5.8.5'
+  'deepmerge': '^4.2.2',
+  'diagnostics': '^2.0.2',
+  'handlebars': '^4.7.6',
+  'rimraf': '^3.0.2',
+  'glob': '^7.1.6',
+  'semver': '^7.3.4',
+  'lodash.defaultsdeep': '^4.6.1'
 };
 
 
@@ -299,7 +299,7 @@ async function main() {
   const packagesDir = path.join(projectRoot, 'packages');
 
   const paths = fs.readdirSync(packagesDir, { withFileTypes: true })
-    .filter(dirent => dirent.isDirectory() && dirent.name.startsWith('gasket'))
+    .filter(dirent => dirent.isDirectory() && dirent.name.includes('gasket'))
     .map(dirent => path.join(packagesDir, dirent.name, 'package.json'));
 
   paths.push(path.join(projectRoot, 'package.json'));

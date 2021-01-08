@@ -38,20 +38,20 @@
     "compression": "^1.7.2",
     "cookie-parser": "^1.4.3",
     "diagnostics": "^2.0.2",
-    "glob": "^7.1.4"
+    "glob": "^7.1.6"
   },
   "devDependencies": {
-    "assume": "^2.2.0",
-    "assume-sinon": "^1.0.1",
-    "eslint": "^6.1.0",
-    "eslint-config-godaddy": "^4.0.0",
-    "eslint-plugin-json": "^1.4.0",
-    "eslint-plugin-mocha": "^6.0.0",
+    "assume": "^2.3.0",
+    "assume-sinon": "^1.1.0",
+    "eslint": "^7.17.0",
+    "eslint-config-godaddy": "^4.0.1",
+    "eslint-plugin-json": "^2.1.2",
+    "eslint-plugin-mocha": "^8.0.0",
     "express": "^4.16.3",
-    "mocha": "^6.2.0",
-    "nyc": "^14.1.1",
+    "mocha": "^8.2.1",
+    "nyc": "^15.1.0",
     "proxyquire": "^2.1.3",
-    "sinon": "^7.4.1"
+    "sinon": "^9.2.3"
   },
   "peerDependencies": {
     "express": "^4.16.3"

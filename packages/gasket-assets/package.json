@@ -34,20 +34,20 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-assets#readme",
   "devDependencies": {
-    "@babel/core": "^7.5.5",
-    "@babel/node": "^7.5.5",
-    "@babel/preset-env": "^7.5.5",
-    "@babel/preset-react": "^7.0.0",
+    "@babel/core": "^7.12.10",
+    "@babel/node": "^7.12.10",
+    "@babel/preset-env": "^7.12.10",
+    "@babel/preset-react": "^7.12.10",
     "@svgr/core": "^4.3.1",
     "babel-plugin-add-module-exports": "^1.0.2",
-    "eslint": "^6.1.0",
-    "eslint-config-godaddy": "^4.0.0",
-    "eslint-plugin-json": "^1.4.0",
-    "eslint-plugin-mocha": "^6.0.0",
+    "eslint": "^7.17.0",
+    "eslint-config-godaddy": "^4.0.1",
+    "eslint-plugin-json": "^2.1.2",
+    "eslint-plugin-mocha": "^8.0.0",
     "mkdirp": "^0.5.1",
     "react": "^17.0.1",
     "recursive-readdir": "^2.2.2",
-    "rimraf": "^3.0.0"
+    "rimraf": "^3.0.2"
   },
   "eslintConfig": {
     "extends": [
