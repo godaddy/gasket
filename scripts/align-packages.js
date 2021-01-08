@@ -299,7 +299,7 @@ async function main() {
   const packagesDir = path.join(projectRoot, 'packages');
 
   const paths = fs.readdirSync(packagesDir, { withFileTypes: true })
-    .filter(dirent => dirent.isDirectory() && dirent.name.startsWith('gasket'))
+    .filter(dirent => dirent.isDirectory() && dirent.name.includes('gasket'))
     .map(dirent => path.join(packagesDir, dirent.name, 'package.json'));
 
   paths.push(path.join(projectRoot, 'package.json'));
