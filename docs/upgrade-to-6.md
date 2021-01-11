@@ -2,7 +2,7 @@
 
 This guide will take you through updating `@gasket/*` packages to `6.x`.
 
-### Update Dependency Versions
+## Update Dependency Versions
 
 Update all `@gasket/` scoped packages to the v6 major version.
 
@@ -42,35 +42,35 @@ Update `webpack` to v5.
 }
 ```
 
-### Redux
+## Redux
 
-### Gasket Data
+## Gasket Data
 
 We have decoupled several things from Redux, and instead have a new construct for passing configuration down to the browser.
 
-#### @gasket/data
+### @gasket/data
 
 We have created a new helper package for accessing Gasket Data in the browser and/or when rendering on the server. See usage [here](../packages/gasket-data/README.md).
 
 _Impacted Plugins/Packages: `@gasket/data`_
 
-#### `public` Config Property
+### `public` Config Property
 
 We have created the `public` config property in the `gasket.config.js` file to allow the client to access config properties. See usage [here](../packages/gasket-plugin-config/README.md#config-with-public-config).
 
 _Impacted Plugins/Packages: `@gasket/plugin-config`_
 
-### Next.js
+## Next.js
 
-### Fetch
+## Fetch
 
 Gasket is no longer providing a browser ponyfill for the `fetch` api. If you are supporting older browsers that don't have `fetch`, please bring your own polyfill.
 
 _Impacted Plugins/Packages: `@gasket/fetch`_
 
-### Intl Support
+## Intl Support
 
-#### Update `@gasket/intl` Imports
+### Update `@gasket/intl` Imports
 
 `@gasket/intl` has been renamed to `@gasket/react-intl`, so imports will need to be updated.
 
@@ -79,9 +79,9 @@ _Impacted Plugins/Packages: `@gasket/fetch`_
 +   import { withLocaleRequired } from '@gasket/react-intl';
 ```
 
-### Static Site Generation Support
+## Static Site Generation Support
 
-#### Update Lifecycle Signatures with Context Object
+### Update Lifecycle Signatures with Context Object
 
 In order to better support static site generation, we have updated the `@gasket/plugin-service-worker`, `@gasket/plugin-workbox`, `@gasket/plugin-manifest` lifecycles' signatures to pass in a context object instead of the usual `req, res`.
 
@@ -98,11 +98,11 @@ In order to better support static site generation, we have updated the `@gasket/
 
 _Impacted Plugins/Packages: `@gasket/plugin-service-worker`, `@gasket/plugin-workbox`, `@gasket/plugin-manifest`_
 
-### Webpack 5 Config
+## Webpack 5 Config
 
 We have removed the generated Webpack config defaults. The `node` config options that were previously prescribed, have changed. You can find more info about configuring Node.js options with Webpack 5 [here](https://webpack.js.org/configuration/node/).
 
-### Deprecate Zones Config
+## Deprecate Zones Config
 
 In order to continue aligning with Next.js, we have deprecated the `zone` config, and replaced it with the `basePath` config.
 
