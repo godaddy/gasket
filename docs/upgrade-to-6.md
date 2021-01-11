@@ -20,28 +20,6 @@ demonstrate what to look for:
 }
 ```
 
-Update `next` and `react`/`react-dom` versions to v10 and v17 respectively.
-
-```diff
-"dependencies": {
--   "next": "^9.2.1",
-+   "next": "^10.0.0",
--   "react": "^16.13.1",
-+   "react": "^17.0.0",
--   "react-dom": "^16.8.6",
-+   "react-dom": "^17.0.0",
-}
-```
-
-Update `webpack` to v5.
-
-```diff
-"devDependencies": {
--   "webpack": "^4.44.1",
-+   "webpack": "^5.9.0"
-}
-```
-
 ## Redux
 
 ## Gasket Data
@@ -61,6 +39,19 @@ We have created the `public` config property in the `gasket.config.js` file to a
 _Impacted Plugins/Packages: `@gasket/plugin-config`_
 
 ## Next.js
+
+Update `next` and `react`/`react-dom` versions to v10 and v17 respectively.
+
+```diff
+"dependencies": {
+-   "next": "^9.2.1",
++   "next": "^10.0.0",
+-   "react": "^16.13.1",
++   "react": "^17.0.0",
+-   "react-dom": "^16.8.6",
++   "react-dom": "^17.0.0",
+}
+```
 
 ## Fetch
 
@@ -98,7 +89,18 @@ In order to better support static site generation, we have updated the `@gasket/
 
 _Impacted Plugins/Packages: `@gasket/plugin-service-worker`, `@gasket/plugin-workbox`, `@gasket/plugin-manifest`_
 
-## Webpack 5 Config
+## Webpack 5
+
+Update `webpack` to v5.
+
+```diff
+"devDependencies": {
+-   "webpack": "^4.44.1",
++   "webpack": "^5.9.0"
+}
+```
+
+### Config
 
 We have removed the generated Webpack config defaults. The `node` config options that were previously prescribed, have changed. You can find more info about configuring Node.js options with Webpack 5 [here](https://webpack.js.org/configuration/node/).
 
@@ -127,3 +129,7 @@ Update all references to `zone` with `basePath`.
 ```
 
 _Impacted Plugins/Packages: `@gasket/plugin-nextjs`, `@gasket/plugin-workbox`_
+
+## Fallback Naming Removal
+
+
