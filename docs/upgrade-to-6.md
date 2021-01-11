@@ -54,9 +54,9 @@ We have created a new helper package for accessing Gasket Data in the browser an
 
 _Impacted Plugins/Packages: `@gasket/data`_
 
-#### `Public` Config Property
+#### `public` Config Property
 
-We have created the `public` config property in the `gasket.config.js` file to allow the client to access config properties. See usage [here](../packages/gasket-plugin-config/README.md).
+We have created the `public` config property in the `gasket.config.js` file to allow the client to access config properties. See usage [here](../packages/gasket-plugin-config/README.md#config-with-public-config).
 
 _Impacted Plugins/Packages: `@gasket/plugin-config`_
 
