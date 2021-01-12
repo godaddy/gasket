@@ -28,13 +28,63 @@ We have decoupled several things from Redux, and instead have a new construct fo
 
 ### @gasket/data
 
-We have created a new helper package for accessing Gasket Data in the browser and/or when rendering on the server. See usage [here](../packages/gasket-data/README.md).
+We have created a new helper package for accessing Gasket Data in the browser and/or when rendering on the server.
+
+On the client, this package is able to access the gasketData properties rendered in a script tag:
+
+```html
+<!-- example.html -->
+
+<script id="GasketData" type="application/json">
+  { "something": "interesting" }
+</script>
+```
+
+```js
+// example.js
+
+import gasketData from '@gasket/data';
+
+console.log(gasketData.something); // interesting
+```
+
+To make data available for server-side rendering, plugins should add to the `res.locals.gasketData` object:
+
+```js
+// ssr-example.js
+
+middleware() {
+  return (req, res, next) => {
+    res.locals.gasketData = res.locals.gasketData || {};
+    res.locals.gasketData.example = { fake: 'data' };
+    next();
+  }
+}
+```
 
 _Impacted Plugins/Packages: `@gasket/data`_
 
 ### `public` Config Property
 
-We have created the `public` config property in the `gasket.config.js` file to allow the client to access config properties. See usage [here](../packages/gasket-plugin-config/README.md#config-with-public-config).
+We have created the `public` config property in the `gasket.config.js` file to allow the client to access config properties.
+
+```js
+// gasket.config.js
+
+module.exports = {
+  public: {
+    test1: 'config value 1 here',
+  },
+};
+```
+
+The `@gasket/plugin-config` plugin will return these `public` config properties to the browser. The `@gasket/data` package will then be able to access the properties and make them available on `.config`:
+
+```js
+import gasketData from '@gasket/data';
+
+console.log(gasketData.config.test1); // config value 1 here
+```
 
 _Impacted Plugins/Packages: `@gasket/plugin-config`_
 
@@ -100,7 +150,7 @@ Update `webpack` to v5.
 }
 ```
 
-### Config
+### Removed Config Defaults
 
 We have removed the generated Webpack config defaults. The `node` config options that were previously prescribed, have changed. You can find more info about configuring Node.js options with Webpack 5 [here](https://webpack.js.org/configuration/node/).
 
@@ -132,4 +182,26 @@ _Impacted Plugins/Packages: `@gasket/plugin-nextjs`, `@gasket/plugin-workbox`_
 
 ## Fallback Naming Removal
 
+We have removed support of existing apps/plugins using the legacy postfixed
+naming format.
 
+Please ensure that all plugins and presets adhere to the project-type prefixed naming
+convention. This formatting allows user plugins to be referenced with short
+names and will help avoid collisions.
+### Plugins
+
+| scope   | format                          | short             | description                    |
+|:--------|:--------------------------------|:------------------|:-------------------------------|
+| project | `@gasket/plugin-<name>`         | `@gasket/<name>`  | Official Gasket project plugin |
+| user    | `@<scope>/gasket-plugin-<name>` | `@<scope>/<name>` | Any user plugins with a scope  |
+| user    | `@<scope>/gasket-plugin`        | `@<scope>`        | Scope-only user plugins        |
+| none    | `gasket-plugin-<name>`          | `<name>`          | Any user plugins with no scope |
+
+### Presets
+
+| scope   | format                          | short             | description                    |
+|:--------|:--------------------------------|:------------------|:-------------------------------|
+| project | `@gasket/preset-<name>`         | `@gasket/<name>`  | Official Gasket project preset |
+| user    | `@<scope>/gasket-preset-<name>` | `@<scope>/<name>` | Any user presets with a scope  |
+| user    | `@<scope>/gasket-preset`        | `@<scope>`        | Scope-only user presets        |
+| none    | `gasket-preset-<name>`          | `<name>`          | Any user presets with no scope |
