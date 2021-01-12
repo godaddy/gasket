@@ -126,15 +126,56 @@ _Impacted Plugins/Packages: `@gasket/fetch`_
 
 In order to better support static site generation, we have updated the `@gasket/plugin-service-worker`, `@gasket/plugin-workbox`, `@gasket/plugin-manifest` lifecycles' signatures to pass in a context object instead of the usual `req, res`.
 
-```diff
-// potential usage
+```js
+// SERVICE WORKER USAGE EXAMPLE
 
--   module.exports = async function workbox(gasket, config, req, res) {
--     const response = res;
--   }
-+   module.exports = async function workbox(gasket, config, context) {
-+     const { res: response } = context;
-+   }
+module.exports = async function composeServiceWorker(gasket, content, context) {
+  const { req, res } = context;
+
+  const { market = 'en-US' } = req.cookies || {};
+  const marketFile = `${market.toLowerCase()}.js`;
+
+  const partial = await readFile(path.join('sw', marketFile), 'utf8');
+
+  return content + partial;
+};
+```
+
+```js
+// WORKBOX USAGE EXAMPLE
+
+module.exports = function workbox(gasket, config, context) {
+  const { req, res } = context;
+
+  if (req) {
+    // adjust config for request-based service workers using headers, cookies, etc.
+  }
+
+  // return a config partial which will be merged
+  return {
+    runtimeCaching: [
+      {
+        urlPattern: /https:\/\/some.api.com/,
+        handler: 'networkFirst',
+      },
+    ],
+  };
+};
+```
+
+```js
+// MANIFEST USAGE EXAMPLE
+
+module.exports = async function manifest(gasket, manifest, context) {
+  const { req } = context;
+
+  const whitelisted = await checkAgainstRemoteWhitelist(req.ip);
+  return {
+    ...manifest,
+    orientation: gasket.config.orientation,
+    theme_color: req.secure && whitelisted ? '#00ff00' : '#ff0000',
+  };
+};
 ```
 
 _Impacted Plugins/Packages: `@gasket/plugin-service-worker`, `@gasket/plugin-workbox`, `@gasket/plugin-manifest`_
@@ -188,10 +229,11 @@ naming format.
 Please ensure that all plugins and presets adhere to the project-type prefixed naming
 convention. This formatting allows user plugins to be referenced with short
 names and will help avoid collisions.
+
 ### Plugins
 
 | scope   | format                          | short             | description                    |
-|:--------|:--------------------------------|:------------------|:-------------------------------|
+| :------ | :------------------------------ | :---------------- | :----------------------------- |
 | project | `@gasket/plugin-<name>`         | `@gasket/<name>`  | Official Gasket project plugin |
 | user    | `@<scope>/gasket-plugin-<name>` | `@<scope>/<name>` | Any user plugins with a scope  |
 | user    | `@<scope>/gasket-plugin`        | `@<scope>`        | Scope-only user plugins        |
@@ -200,7 +242,7 @@ names and will help avoid collisions.
 ### Presets
 
 | scope   | format                          | short             | description                    |
-|:--------|:--------------------------------|:------------------|:-------------------------------|
+| :------ | :------------------------------ | :---------------- | :----------------------------- |
 | project | `@gasket/preset-<name>`         | `@gasket/<name>`  | Official Gasket project preset |
 | user    | `@<scope>/gasket-preset-<name>` | `@<scope>/<name>` | Any user presets with a scope  |
 | user    | `@<scope>/gasket-preset`        | `@<scope>`        | Scope-only user presets        |
