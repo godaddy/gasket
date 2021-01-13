@@ -145,16 +145,276 @@ polyfill.
 
 _Impacted Plugins/Packages: `@gasket/fetch`_
 
-## Intl Support
+## Intl
 
-### Update `@gasket/intl` Imports
+_Impacted Plugins/Packages: `@gasket/plugin-intl`_
 
-`@gasket/intl` has been renamed to `@gasket/react-intl`, so imports will need to
-be updated.
+### Simplified deployments
+
+We've simplified how the plugin works with source locales files so that they can
+be more easily deployed to a CDN along with other static content. The locale
+files are now no longer copied to a `build/` dir, but now stay put. By default,
+the Gasket Intl plugin will now look for these under `public/locales/`, however
+this can be configured with the `intl.localesDir` [config options].
 
 ```diff
--   import { withLocaleRequired } from '@gasket/intl';
-+   import { withLocaleRequired } from '@gasket/react-intl';
+// gasket.config.js
+
+module.exports = {
+  plugins: {
+    add: ['@gasket/plugin-intl']
+  },
++  intl: {
++    localesDir: 'locales'
++  }
+}
+```
+
+Note that if you are building a Next.js app using [@gasket/plugin-nextjs], you
+could simply move your `locales/` dir, to `public/locales/`, and Next.js will
+serve them along with your other static content.
+
+#### Ignore generated manifest
+
+At build time, a manifest JSON for the locales file is generated. Because this
+will now go into your source locales directory, you may choose to git ignore it
+to avoid unnecessarily committing it.
+
+```diff
+# .gitignore
+
++ locales-manifest.json
+```
+
+#### Opt-in Serving
+
+If you wish to continue having your server serve the locale files, this can be
+enabled using the `intl.serveStatic` [config options].
+
+```diff
+// gasket.config.js
+
+module.exports = {
+  plugins: {
+    add: ['@gasket/plugin-intl']
+  },
++  intl: {
++    serveStatic: true
++  }
+}
+```
+
+### Module files
+
+If your app used locale files from NPM module dependencies, this is an opt-in
+feature now that can be enabled in the Gasket config with the `intl.modules`
+[config options].
+
+```diff
+// gasket.config.js
+
+module.exports = {
+  plugins: {
+    add: ['@gasket/plugin-intl']
+  },
++  intl: {
++    modules: true
++  }
+}
+```
+
+It works slightly different, in that the NPM module locale files will now be
+copied under a `modules/` dir within your working configured `intl.localesDir`.
+This makes the localesPath simple.
+
+For example, if you the change to your code would be something like:
+
+```diff
+- <LocaleRequired identifier={{ module: '@myscope/some-module', namespace: 'namespace' }}>
++ <LocaleRequired localesPath='/locales/modules/@myscope/some-module/namespace'>
+  ...
+</LocaleRequired>
+```
+
+#### Ignore copied files
+
+Because the `modules/` dir will be generated under the localesDir at build time,
+you may choose to `.gitignore` that directory to avoid unnecessarily committing
+it in a git repo.
+
+```diff
+# .gitignore
+
++ public/locales/modules/
+```
+
+### Lifecycle name
+
+If you have a custom lifecycle hook to determine the locale, either in a plugin
+or [lifecycle file], then you will need to update the name and the signature.
+
+```diff
+// gasket-plugin-example.js
+
+module.exports = {
+  hooks: {
+-    intlLanguage: async function intlLanguageHook(gasket, language, req) {
++    intlLocale: async function intlLocaleHook(gasket, locale, { req }) {
+      ...
+      return locale;
+    }
+  }
+}
+```
+
+### Config option names
+
+We have also aligned our config names to use _locale_ instead of _language_.
+
+```diff
+// gasket.config.js
+
+module.exports = {
+  plugins: {
+    add: ['@gasket/plugin-intl']
+  },
+  intl: {
+-    languageMap: { 'zh-HK': 'zh-TW' },
++    localesMap: { 'zh-HK': 'zh-TW' },
+-    defaultLanguage: 'en',
++    defaultLocale: 'en',
+  }
+}
+```
+
+The context option will have the `req` and `res` objects from the request.
+
+### Decoupled from Redux
+
+Before, in order to use `@gasket/plugin-intl` in your app, you were also
+required to use `@gasket/plugin-redux` along with Redux bindings in your React
+code. This is now simplified to
+work with [Gasket Data], and Redux is no longer
+required.
+
+```diff
+// gasket.config.js
+
+module.exports = {
+  plugins: {
+    add: [
+      '@gasket/plugin-intl'
+-      '@gasket/plugin-redux'
+    ]
+  }
+}
+```
+
+If you use Redux for other things in your app, feel free to continue to do so.
+However, there may be some changes in your app code if you were adding locale
+files and selecting messages with the Redux hooks before.
+
+#### Loading messages
+
+To add locale files during server requests now, instead of using the
+`initReduxState` lifecycle hook, you should now use [withLocaleRequired] method
+from the request object in the middleware lifecycle, or wherever `req` is
+accessible in your code flow.
+
+```diff
+// gasket-plugin-example.js
+
+module.exports = {
+  hooks: {
+-    initReduxState() { ... }
++    middleware() {
++      return function middleware(req, res, next) {
++      req.withLocaleRequired('/locales');
++      next();
++    }
+  }
+}
+```
+
+This will load and add those messages from the locales file to GasketData,
+available for server-side rendering, and also for selecting messages in API
+routes or otherwise.
+
+#### Selecting messages
+
+To select messages, you will need to pull them off of `res.locals.gasketData`,
+however there is a helper method added to the request object to make this easy.
+See the Intl plugin docs for a [select locale message example].
+
+## Intl for React
+
+There are a few new features and improvements to the Gasket Intl package for
+React, however this guide focuses on what changes are necessary to upgrade. To
+read up on the new features, refer to the [@gasket/react-intl] docs.
+
+_Impacted Plugins/Packages: ~`@gasket/intl`~, `@gasket/react-intl`_
+
+### Package rename
+
+In order to clarify the purpose of this Gasket Intl package and differentiate it
+from future tie in packages (Vue, Svelte, etc), it has been renamed to include
+React in the name.
+
+As such, `@gasket/intl` should now be brought in as `@gasket/react-intl`. This
+will affect your module imports:
+
+```diff
+// example-component.js
+
+- import { withLocaleRequired } from '@gasket/intl';
++ import { withLocaleRequired } from '@gasket/react-intl';
+```
+
+as well as your package.json dependencies:
+
+```diff
+{
+  "name": "my-app",
+  "dependencies": {
+-   "@gasket/intl": "^5.0.0",
++   "@gasket/react-intl": "^6.0.0"
+    "@gasket/plugin-intl": "^6.0.0"
+  }
+}
+```
+
+### Simplified locale paths
+
+We now have a much simpler approach for specifying paths to load locale files
+from. These were previously referred to as "identifiers" in the old
+documentation. Now, we call them the localesPath, and they are just a string.
+
+```diff
+- <LocaleRequired identifier={{ namespace: 'namespace' }}>
++ <LocaleRequired localesPath='/locales/namespace'>
+  ...
+</LocaleRequired>
+```
+
+For a more detailed explanation, refer to the [localesPath docs][localesPath].
+
+### Next.js Initial Props
+
+In order to allow for static generation of pages, the `withLocaleRequired` HOC
+no longer automatically adds `getInitialProps` to the component. It will still
+fetch the locale file, but this will happen in the browser only now.
+
+However, if you still want to server-render pages with locale files preloaded,
+you can re-enable `getInitialProps` with the HOC `initialProps` option.
+
+```diff
+import { withLocaleRequired } from '@gasket/react-intl';
+import { FormattedMessage } from 'react-intl';
+
+const Component = props => <h1><FormattedMessage id='welcome'/></h1>
+
+- export default withLocaleRequired('/locales')(Component);
++ export default withLocaleRequired('/locales', { initialProps: true })(Component);
 ```
 
 ## Static Progressive Web App Changes
@@ -271,3 +531,16 @@ _Impacted Plugins/Packages: `@gasket/resolve`, `@gasket/engine`_
 [@gasket/plugin-workbox]: /packages/gasket-data/README.md
 [@gasket/plugin-service-worker]: /packages/gasket-data/README.md
 [naming convention]: /packages/gasket-resolve/README.md#plugins
+
+<!-- LINKS -->
+
+[Gasket Data]: #gasket-data
+
+[config options]: /packages/gasket-plugin-intl/README.md#options
+[localesPath]: /packages/gasket-plugin-intl/README.md#locales-path
+[withLocaleRequired]: /packages/gasket-plugin-intl/README.md#withlocalerequired
+[select locale message example]: /packages/gasket-plugin-intl/README.md#selectlocalemessage
+[@gasket/react-intl]: /packages/gasket-react-intl/README.md
+[@gasket/plugin-nextjs]: /packages/gasket-plugin-nextjs/README.md
+[lifecycle file]: /packages/gasket-plugin-lifecycle/README.md
+
