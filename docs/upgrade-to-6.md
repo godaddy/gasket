@@ -24,13 +24,11 @@ demonstrate what to look for:
 
 ## Gasket Data
 
-We have decoupled several things from Redux, and instead have a new construct for passing configuration down to the browser.
+We have decoupled several things from Redux, and instead have a new construct for delivering config data to the client.
 
 ### @gasket/data
 
-We have created a new helper package for accessing Gasket Data in the browser and/or when rendering on the server.
-
-On the client, this package is able to access the gasketData properties rendered in a script tag:
+We have created a new helper package for accessing Gasket Data in the browser. This package retrieves the gasketData properties rendered via a script tag:
 
 ```html
 <!-- example.html -->
@@ -48,7 +46,13 @@ import gasketData from '@gasket/data';
 console.log(gasketData.something); // interesting
 ```
 
-To make data available for server-side rendering, plugins should add to the `res.locals.gasketData` object:
+_Impacted Plugins/Packages: `@gasket/data`_
+
+### How to Add to Gasket Data
+
+There are 2 ways to add data to the Gasket Data object:
+
+1. Add to the `res.locals.gasketData` object on the server:
 
 ```js
 // ssr-example.js
@@ -62,11 +66,11 @@ middleware() {
 }
 ```
 
-_Impacted Plugins/Packages: `@gasket/data`_
+2. Add to the `public` config in `gasket.config.js` _(outlined [here](#public-config-property))_.
 
 ### `public` Config Property
 
-We have created the `public` config property in the `gasket.config.js` file to allow the client to access config properties.
+We have created the `public` config property in the `gasket.config.js` file to allow the client to access app config properties.
 
 ```js
 // gasket.config.js
@@ -78,15 +82,23 @@ module.exports = {
 };
 ```
 
-The `@gasket/plugin-config` plugin will return these `public` config properties to the browser. The `@gasket/data` package will then be able to access the properties and make them available on `.config`:
+The `@gasket/plugin-config` plugin will return these `public` config properties to the browser. The `@gasket/data` package will then have access to the properties and make them available on `.config`:
 
 ```js
+// example.js
+
 import gasketData from '@gasket/data';
 
 console.log(gasketData.config.test1); // config value 1 here
 ```
 
 _Impacted Plugins/Packages: `@gasket/plugin-config`_
+
+### Config Moved to Gasket Data
+
+At this time, the [Intl](#intl-support) and [App config](#public-config-property) objects are the only ones that have been moved to the `gasketData` object.
+
+_Impacted Plugins/Packages: `@gasket/plugin-config`, `@gasket/plugin-intl`_
 
 ## Next.js
 
@@ -102,6 +114,58 @@ Update `next` and `react`/`react-dom` versions to v10 and v17 respectively.
 +   "react-dom": "^17.0.0",
 }
 ```
+
+### @gasket/nextjs
+
+We have created a new package, equipped with an HOC to inject a GasketData script tag into the DOM. This tag is used by the `@gasket/data` package to make server-side data available to the browser.
+
+```js
+// pages/_document.js
+
+import Document from 'next/document';
+import { withGasketData } from '@gasket/next';
+
+export default withGasketData()(Document);
+```
+
+By default this will inject the script in the `<body/>` after the Next.js `<Main/>` component, but before `<NextScript/>`.
+
+_Impacted Plugins/Packages: `@gasket/nextjs`_
+
+### Remove Support for `next-routes`
+
+We have removed built-in support for `next-routes`. Instead, we encourage using Next.js default page routing.
+
+A few examples of differences _(this is not an exhaustive list)_:
+
+1. A `routes.js` file is no longer required to define routes. Next.js has a file-system based router. When a file is added to the `pages` directory it's automatically available as a route.
+
+2. The client-side components have a slightly different API:
+
+```diff
+// pages/index.js
+
+- <Link route='/blog/hello-world'>
++ <Link href="/blog/hello-world">
+    <a>Hello world</a>
+  </Link>
+```
+
+3. To access the `router` object directly, the `useRouter` hook can be used instead of requiring methods from `./routes`.
+
+```diff
+- import { Router } from '../routes'
++ import { useRouter } from 'next/router'
+```
+
+4. The methods available with each `router` object are slightly different.
+
+```diff
+- router.pushRoute('/blog/hello-world')
++ router.push('/blog/hello-world')
+```
+
+These are just a few examples of the differences between `next-routes` and the default Next.js routing. We recommend reviewing the [Next.js routing documentation](https://nextjs.org/docs/routing/introduction) for further details.
 
 ## Fetch
 
