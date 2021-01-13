@@ -45,7 +45,7 @@ module.exports = async function workbox(gasket, config, context) {
   // since we cannot determine a users' locale at build time, exit early
   if (!res) return {};
 
-  const { locale } = res.gasketData.intl;
+  const { locale } = res.locals.gasketData.intl;
 
   // Get the relative dir glob path
   const relGlobDir = path.relative(root, localesDir).replace(/\\/g, '/');

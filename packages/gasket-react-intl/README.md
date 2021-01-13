@@ -199,7 +199,7 @@ param. The generated pages will be for `/en/example` and `/fr/example`.
 
 Locale files can also be preloaded for server-side rendering using
 `intlGetServerSideProps` to make a [getServerSideProps] function. The locale to
-be loaded will come from the `res.gasketData` provided by [@gasket/plugin-intl].
+be loaded will come from the `res.locals.gasketData` provided by [@gasket/plugin-intl].
 
 **Signature**
 

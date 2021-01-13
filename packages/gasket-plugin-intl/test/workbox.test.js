@@ -20,9 +20,11 @@ describe('workbox', function () {
     mockContext = {
       req: {},
       res: {
-        gasketData: {
-          intl: {
-            locale: 'en-US'
+        locals: {
+          gasketData: {
+            intl: {
+              locale: 'en-US'
+            }
           }
         }
       }
