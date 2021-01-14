@@ -15,7 +15,11 @@ describe('serviceWorkerCacheKey', function () {
   it('cache key function returns a string', async function () {
     const expectedLocale = 'en-US';
     const req = {};
-    const res = { gasketData: { intl: { locale: expectedLocale } } };
+    const res = {
+      locals: {
+        gasketData: { intl: { locale: expectedLocale } }
+      }
+    };
 
     const getLocale = await serviceWorkerCacheKey();
 
