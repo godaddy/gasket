@@ -20,31 +20,13 @@ demonstrate what to look for:
 }
 ```
 
-## Redux
-
 ## Gasket Data
 
 We have decoupled several things from Redux, and instead have a new construct for delivering config data to the client.
 
 ### @gasket/data
 
-We have created a new helper package for accessing Gasket Data in the browser. This package retrieves the gasketData properties rendered via a script tag:
-
-```html
-<!-- example.html -->
-
-<script id="GasketData" type="application/json">
-  { "something": "interesting" }
-</script>
-```
-
-```js
-// example.js
-
-import gasketData from '@gasket/data';
-
-console.log(gasketData.something); // interesting
-```
+We have created a new helper package for accessing Gasket Data in the browser. This package retrieves the gasketData properties rendered via a script tag injected into the DOM.
 
 _Impacted Plugins/Packages: `@gasket/data`_
 
@@ -52,51 +34,20 @@ _Impacted Plugins/Packages: `@gasket/data`_
 
 There are 2 ways to add data to the Gasket Data object:
 
-1. Add to the `res.locals.gasketData` object on the server:
-
-```js
-// ssr-example.js
-
-middleware() {
-  return (req, res, next) => {
-    res.locals.gasketData = res.locals.gasketData || {};
-    res.locals.gasketData.example = { fake: 'data' };
-    next();
-  }
-}
-```
-
-2. Add to the `public` config in `gasket.config.js` _(outlined [here](#public-config-property))_.
+1. Add to the `res.locals.gasketData` object on the server.
+2. Add to the `public` config property in `app.config.js`
 
 ### `public` Config Property
 
-We have created the `public` config property in the `gasket.config.js` file to allow the client to access app config properties.
+We have created the `public` property in the `app.config.js` file to allow the client to access app config properties.
 
-```js
-// gasket.config.js
-
-module.exports = {
-  public: {
-    test1: 'config value 1 here',
-  },
-};
-```
-
-The `@gasket/plugin-config` plugin will return these `public` config properties to the browser. The `@gasket/data` package will then have access to the properties and make them available on `.config`:
-
-```js
-// example.js
-
-import gasketData from '@gasket/data';
-
-console.log(gasketData.config.test1); // config value 1 here
-```
+The `@gasket/plugin-config` plugin will return these `public` config properties to the browser. The `@gasket/data` package will then have access to the properties and make them available on `.config`.
 
 _Impacted Plugins/Packages: `@gasket/plugin-config`_
 
 ### Config Moved to Gasket Data
 
-At this time, the [Intl](#intl-support) and [App config](#public-config-property) objects are the only ones that have been moved to the `gasketData` object.
+At this time, the [Intl](#intl-support) and [App config](#public-config-property) objects are the only config objects that have been moved to the `gasketData` object.
 
 _Impacted Plugins/Packages: `@gasket/plugin-config`, `@gasket/plugin-intl`_
 
@@ -118,15 +69,6 @@ Update `next` and `react`/`react-dom` versions to v10 and v17 respectively.
 ### @gasket/nextjs
 
 We have created a new package, equipped with an HOC to inject a GasketData script tag into the DOM. This tag is used by the `@gasket/data` package to make server-side data available to the browser.
-
-```js
-// pages/_document.js
-
-import Document from 'next/document';
-import { withGasketData } from '@gasket/next';
-
-export default withGasketData()(Document);
-```
 
 By default this will inject the script in the `<body/>` after the Next.js `<Main/>` component, but before `<NextScript/>`.
 
@@ -190,55 +132,33 @@ _Impacted Plugins/Packages: `@gasket/fetch`_
 
 In order to better support static site generation, we have updated the `@gasket/plugin-service-worker`, `@gasket/plugin-workbox`, `@gasket/plugin-manifest` lifecycles' signatures to pass in a context object instead of the usual `req, res`.
 
-```js
+```diff
 // SERVICE WORKER USAGE EXAMPLE
 
-module.exports = async function composeServiceWorker(gasket, content, context) {
-  const { req, res } = context;
-
-  const { market = 'en-US' } = req.cookies || {};
-  const marketFile = `${market.toLowerCase()}.js`;
-
-  const partial = await readFile(path.join('sw', marketFile), 'utf8');
-
-  return content + partial;
-};
+- module.exports = async function composeServiceWorker(gasket, content, req) {
++ module.exports = async function composeServiceWorker(gasket, content, context) {
+    const { req } = context;
+    ...
+  };
 ```
 
-```js
+```diff
 // WORKBOX USAGE EXAMPLE
 
-module.exports = function workbox(gasket, config, context) {
-  const { req, res } = context;
-
-  if (req) {
-    // adjust config for request-based service workers using headers, cookies, etc.
-  }
-
-  // return a config partial which will be merged
-  return {
-    runtimeCaching: [
-      {
-        urlPattern: /https:\/\/some.api.com/,
-        handler: 'networkFirst',
-      },
-    ],
+- module.exports = function workbox(gasket, config, req) {
++ module.exports = function workbox(gasket, config, context) {
+    const { req } = context;
+    ...
   };
-};
 ```
 
-```js
+```diff
 // MANIFEST USAGE EXAMPLE
 
-module.exports = async function manifest(gasket, manifest, context) {
+- module.exports = async function manifest(gasket, manifest, { req }) {
++ module.exports = async function manifest(gasket, manifest, context) {
   const { req } = context;
-
-  const whitelisted = await checkAgainstRemoteWhitelist(req.ip);
-  return {
-    ...manifest,
-    orientation: gasket.config.orientation,
-    theme_color: req.secure && whitelisted ? '#00ff00' : '#ff0000',
-  };
+  ...
 };
 ```
 
@@ -290,24 +210,11 @@ _Impacted Plugins/Packages: `@gasket/plugin-nextjs`, `@gasket/plugin-workbox`_
 We have removed support of existing apps/plugins using the legacy postfixed
 naming format.
 
-Please ensure that all plugins and presets adhere to the project-type prefixed naming
-convention. This formatting allows user plugins to be referenced with short
-names and will help avoid collisions.
+```diff
+- @gasket/example-plugin
++ @gasket/plugin-example
+```
 
-### Plugins
+Please ensure that all plugins and presets adhere to the project-type prefixed naming convention. This formatting allows user plugins to be referenced with short names and will help avoid collisions.
 
-| scope   | format                          | short             | description                    |
-| :------ | :------------------------------ | :---------------- | :----------------------------- |
-| project | `@gasket/plugin-<name>`         | `@gasket/<name>`  | Official Gasket project plugin |
-| user    | `@<scope>/gasket-plugin-<name>` | `@<scope>/<name>` | Any user plugins with a scope  |
-| user    | `@<scope>/gasket-plugin`        | `@<scope>`        | Scope-only user plugins        |
-| none    | `gasket-plugin-<name>`          | `<name>`          | Any user plugins with no scope |
-
-### Presets
-
-| scope   | format                          | short             | description                    |
-| :------ | :------------------------------ | :---------------- | :----------------------------- |
-| project | `@gasket/preset-<name>`         | `@gasket/<name>`  | Official Gasket project preset |
-| user    | `@<scope>/gasket-preset-<name>` | `@<scope>/<name>` | Any user presets with a scope  |
-| user    | `@<scope>/gasket-preset`        | `@<scope>`        | Scope-only user presets        |
-| none    | `gasket-preset-<name>`          | `<name>`          | Any user presets with no scope |
+_Impacted Plugins/Packages: `@gasket/resolve`, `@gasket/engine`_
