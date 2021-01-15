@@ -22,13 +22,13 @@ demonstrate what to look for:
 
 ## Gasket Data
 
-We have decoupled several things from Redux, and instead have a new construct
+We have decoupled several things from Redux, and instead, have a new construct
 for delivering config data to the client.
 
-If you are using a non-Next.js app, you will need to manually add the [Gasket
-Data script tag] to be in your document. If you are using a Next.js app, we have
-a [new utility HOC] for which can be used to simplify injecting this script tag
-into the `_document.js` of your app.
+If you are using a non-Next.js app, you will need to add the
+[Gasket Data script tag] to be in your document. If you are using a Next.js app,
+we have a [new utility HOC] for which can be used to simplify injecting this
+script tag into the `_document.js` of your app.
 
 ### @gasket/data
 
@@ -40,7 +40,7 @@ _Impacted Plugins/Packages: `@gasket/data`_
 
 ### How to Add to Gasket Data
 
-There are 2 ways to add data to the Gasket Data object:
+There are two ways to add data to the Gasket Data object:
 
 1. Add to the `res.locals.gasketData` object on the server.
 2. Add to the `public` config property in `app.config.js`
@@ -51,8 +51,8 @@ We have created the `public` property in the `app.config.js` file to allow the
 client to access app config properties.
 
 The [@gasket/plugin-config] plugin will return these `public` config properties
-to the browser. The [@gasket/data] package will then have access to the
-properties and make them available on `.config`.
+to the browser. The [@gasket/data] package will then access the properties and
+make them available on `.config`.
 
 _Impacted Plugins/Packages: `@gasket/plugin-config`_
 
@@ -66,8 +66,8 @@ _Impacted Plugins/Packages: `@gasket/plugin-config`, `@gasket/plugin-intl`_
 ## Redux
 
 As described above, we've made efforts to decouple various plugins from Redux.
-This doesn't mean Redux is not still useful if you want to continue to use it in
-your app or custom plugins. If your app is currently using Redux with the
+This move does not mean Redux is not still useful if you want to continue to use
+it in your app or custom plugins. If your app is currently using Redux with the
 [@gasket/plugin-redux], here are the steps you will need to take to upgrade.
 
 ### Create a store file
@@ -82,7 +82,7 @@ provided. Although uncommon, if your app does not currently have a `store.js`
 For a basic Redux setup, there should be no need for and changes to the make
 store. However, if your app use using Next.js see the
 [Updates for next-redux-wrapper] section below for the necessary changes
-required use the latest changes for Redux in Next.js.
+required to use the latest Redux changes for Next.js.
 
 ## Next.js
 
@@ -101,8 +101,8 @@ Update `next` and `react`/`react-dom` versions to v10 and v17 respectively.
 
 ### Inject Gasket Data
 
-We have created a new package, equipped with an HOC to inject a GasketData
-script tag into the DOM. This tag is used by the [@gasket/data] package to make
+We have created a new package, equipped with a HOC to inject a GasketData script
+tag into the DOM. This tag is used by the [@gasket/data] package to make
 server-side data available to the browser.
 
 ```diff
@@ -112,7 +112,7 @@ server-side data available to the browser.
 + export default withGasketData()(Document);
 ```
 
-By default this will inject the script in the `<body/>` after the Next.js
+By default, this will inject the script in the `<body/>` after the Next.js
 `<Main/>` component, but before `<NextScript/>`.
 
 _Impacted Plugins/Packages: `@gasket/nextjs`_
@@ -120,7 +120,7 @@ _Impacted Plugins/Packages: `@gasket/nextjs`_
 ### Updates for next-redux-wrapper
 
 If you are using [@gasket/plugin-redux] with your Next.js app, then you will
-need to also upgrade [next-redux-wrapper] to take advantage of the latest page
+also need to upgrade [next-redux-wrapper] to take advantage of the latest page
 data fetching function in Next.js.
 
 ```
@@ -195,8 +195,8 @@ Next.js default page routing.
 A few examples of differences _(this is not an exhaustive list)_:
 
 1. A `routes.js` file is no longer required to define routes. Next.js has a
-   file-system based router. When a file is added to the `pages` directory it's
-   automatically available as a route.
+   file-system based router. When a file is added to the `pages` directory, it
+   is automatically available as a route.
 
 2. The client-side components have a slightly different API:
 
@@ -230,7 +230,7 @@ documentation] for further details.
 
 ## Fetch
 
-Gasket is no longer providing a browser ponyfill for the `fetch` api. If you are
+Gasket is no longer providing a browser ponyfill for the `fetch` API. If you are
 supporting older browsers that don't have `fetch`, please bring your own
 polyfill.
 
@@ -240,18 +240,18 @@ _Impacted Plugins/Packages: `@gasket/fetch`_
 
 There are several changes to [@gasket/plugin-intl]. Unfortunately, some of these
 may be breaking changes depending on how your app consumes the plugin. In this
-section we will walk through the potential adjustments require to upgrade this
+section, we will walk through the potential adjustments require to upgrade this
 plugin.
 
 _Impacted Plugins/Packages: `@gasket/plugin-intl`_
 
 ### Simplified deployments
 
-We've simplified how the plugin works with source locales files so that they can
-be more easily deployed to a CDN along with other static content. The locale
-files are now no longer copied to a `build/` dir, but now stay put. By default,
-the [@gasket/plugin-intl] will now look for these under `public/locales/`,
-however this can be configured with the `intl.localesDir` [config options].
+We've simplified how the plugin works with source locales files to be more
+easily deployed to a CDN along with other static content. The locale files are
+now no longer copied to a `build/` dir, but now stay put. By default, the
+[@gasket/plugin-intl] will now look for these under `public/locales/`, however
+this can be configured with the `intl.localesDir` [config options].
 
 ```diff
 // gasket.config.js
@@ -303,7 +303,7 @@ module.exports = {
 ### Module files
 
 If your app used locale files from NPM module dependencies, this is an opt-in
-feature now that can be enabled in the Gasket config with the `intl.modules`
+feature now, which can be enabled in the Gasket config using the `intl.modules`
 [config options].
 
 ```diff
@@ -319,9 +319,9 @@ module.exports = {
 }
 ```
 
-It works slightly different, in that the NPM module locale files will now be
+It works slightly different now in that the NPM module locale files will now be
 copied under a `modules/` dir within your working configured `intl.localesDir`.
-This makes the localesPath simple.
+This makes the localesPath simple for your components.
 
 For example, if you the change to your code would be something like:
 
@@ -334,9 +334,9 @@ For example, if you the change to your code would be something like:
 
 #### Ignore copied files
 
-Because the `modules/` dir will be generated under the localesDir at build time,
-you may choose to `.gitignore` that directory to avoid unnecessarily committing
-it in a git repo.
+Because the `modules/` dir will be generated under the configured
+`intl.localesDir` at build time, you may choose to `.gitignore` that directory
+to avoid unnecessarily committing those files to the git repo.
 
 ```diff
 # .gitignore
@@ -387,10 +387,9 @@ module.exports = {
 
 ### Decoupled from Redux
 
-Before, in order to use [@gasket/plugin-intl] in your app, you were also
-required to use [@gasket/plugin-redux] along with Redux bindings in your React
-code. This is now simplified to work with [Gasket Data], and Redux is no longer
-required.
+Before, to use [@gasket/plugin-intl] in your app, you were also required to use
+[@gasket/plugin-redux] along with Redux bindings in your React code. This is now
+simplified to work with [Gasket Data], and Redux is no longer required.
 
 ```diff
 // gasket.config.js
@@ -438,22 +437,22 @@ routes or otherwise.
 #### Selecting messages
 
 To select messages, you will need to pull them off of `res.locals.gasketData`,
-however there is a helper method added to the request object to make this easy.
+however, there is a helper method added to the request object to make this easy.
 See the Intl plugin docs for a [select locale message example].
 
 ## Intl for React
 
 There are a few new features and improvements to the Gasket Intl package for
-React, however this guide focuses on what changes are necessary to upgrade. To
+React, however, this guide focuses on what changes are necessary to upgrade. To
 read up on the new features, refer to the [@gasket/react-intl] docs.
 
 _Impacted Plugins/Packages: ~`@gasket/intl`~, `@gasket/react-intl`_
 
 ### Package rename
 
-In order to clarify the purpose of this Gasket Intl package and differentiate it
-from future tie in packages (Vue, Svelte, etc), it has been renamed to include
-React in the name.
+To clarify the purpose of this Gasket Intl package and differentiate it from any
+future tie in packages (Vue, Svelte, etc), it has been renamed to include
+"React".
 
 As such, `@gasket/intl` should now be brought in as `@gasket/react-intl`. This
 will affect your module imports:
@@ -481,9 +480,9 @@ as well as your package.json dependencies:
 
 ### Simplified locale paths
 
-We now have a much simpler approach for specifying paths to load locale files
-from. These were previously referred to as "identifiers" in the old
-documentation. Now, we call them the localesPath, and they are just a string.
+We now have a much simpler approach for specifying the paths to load locale
+files from. These were previously referred to as "identifiers" in the old
+documentation. Now, we call them the "localesPath", and they are just a string.
 
 ```diff
 - <LocaleRequired identifier={{ namespace: 'namespace' }}>
@@ -496,8 +495,8 @@ For a more detailed explanation, refer to the [localesPath docs][localesPath].
 
 ### Next.js Initial Props
 
-In order to allow for static generation of pages, the `withLocaleRequired` HOC
-no longer automatically adds `getInitialProps` to the component. It will still
+To allow for a static generation of pages, the `withLocaleRequired` HOC no
+longer automatically adds `getInitialProps` to the component. It will still
 fetch the locale file, but this will happen in the browser only now.
 
 However, if you still want to server-render pages with locale files preloaded,
@@ -517,7 +516,7 @@ const Component = props => <h1><FormattedMessage id='welcome'/></h1>
 
 ### Update Lifecycle Signatures with Context Object
 
-In order to better support static site generation, we have updated the
+To better support static site generation, we have updated the
 [@gasket/plugin-service-worker] and [@gasket/plugin-workbox] lifecycles'
 signatures to pass in a context object instead of the usual `req, res`.
 
@@ -567,7 +566,7 @@ configuring Node.js options with Webpack 5 on the [webpack website].
 ## Aligning Base Path Config
 
 Instead of using the `zone` config, we will now be using the `basePath`
-property, so as to keep in alignment with Next.js.
+property, to keep in alignment with Next.js.
 
 Update property in `gasket.config.js`.
 
