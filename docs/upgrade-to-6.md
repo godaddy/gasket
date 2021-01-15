@@ -116,7 +116,7 @@ If you are using [@gasket/plugin-redux] with your Next.js app, then you will
 also need to upgrade [next-redux-wrapper] to take advantage of the latest page
 data fetching function in Next.js.
 
-```
+```diff
 {
   "name": "my-app",
   "dependencies": {
