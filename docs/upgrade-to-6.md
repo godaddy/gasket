@@ -56,13 +56,6 @@ make them available on `.config`.
 
 _Impacted Plugins/Packages: `@gasket/plugin-config`_
 
-### Config Moved to Gasket Data
-
-At this time, the [Intl] and [App config] objects are the only config objects
-that have been moved to the `gasketData` object.
-
-_Impacted Plugins/Packages: `@gasket/plugin-config`, `@gasket/plugin-intl`_
-
 ## Redux
 
 As described above, we've made efforts to decouple various plugins from Redux.
