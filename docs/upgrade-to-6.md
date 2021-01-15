@@ -26,9 +26,9 @@ We have decoupled several things from Redux, and instead have a new construct
 for delivering config data to the client.
 
 If you are using a non-Next.js app, you will need to manually add the [Gasket
-Data script tag] to your `_document.js`. If you are using a Next.js app, we have
-a [new utility] for injecting an HOC into your application to automatically
-generate this script tag.
+Data script tag] to be in your document. If you are using a Next.js app, we have
+a [new utility HOC] for which can be used to simplify injecting this script tag
+into the `_document.js` of your app.
 
 ### @gasket/data
 
@@ -65,22 +65,24 @@ _Impacted Plugins/Packages: `@gasket/plugin-config`, `@gasket/plugin-intl`_
 
 ## Redux
 
-As described above, we've made efforts to decouple various plugins from Redux. This doesn't
-mean Redux is not still useful if you want to continue to use it in your app or custom plugins.
-If your app is currently using Redux with the [@gasket/plugin-redux], here are the
-steps you will need to take to upgrade.
+As described above, we've made efforts to decouple various plugins from Redux.
+This doesn't mean Redux is not still useful if you want to continue to use it in
+your app or custom plugins. If your app is currently using Redux with the
+[@gasket/plugin-redux], here are the steps you will need to take to upgrade.
 
 ### Create a store file
 
-In the previous version of [@gasket/plugin-redux], a default make store was provided.
-Although uncommon, if your app does not currently have a `store.js` (or `redux/store.js`)
-file, you will now need to create one. See [Redux configuration] for more details.
+In the previous version of [@gasket/plugin-redux], a default make store was
+provided. Although uncommon, if your app does not currently have a `store.js`
+(or `redux/store.js`) file, you will now need to create one. See
+[Redux configuration] for more details.
 
 ### Update store file
 
-For a basic Redux setup, there should be no need for and changes to the make store.
-However, if your app use using Next.js see the [Updates for next-redux-wrapper] section below for the necessary
-changes required use the latest changes for Redux in Next.js.
+For a basic Redux setup, there should be no need for and changes to the make
+store. However, if your app use using Next.js see the
+[Updates for next-redux-wrapper] section below for the necessary changes
+required use the latest changes for Redux in Next.js.
 
 ## Next.js
 
@@ -135,8 +137,9 @@ data fetching function in Next.js.
 ```
 
 You will also want a deep merge utility to help set up a basic HYDRATE actual
-handler in the root reducer, as [required by next-redux-wrapper][hydrate handler].
-In this example, and for newly generated Gasket apps, [lodash.merge] is used.
+handler in the root reducer, as [required by next-redux-wrapper][hydrate
+handler]. In this example, and for newly generated Gasket apps, [lodash.merge]
+is used.
 
 ```diff
 // redux/store.js
@@ -165,8 +168,8 @@ const reducers = {
 In addition to exporting the `makeStore` function, you'll want to export the
 `nextRedux` wrapper for use in your app code.
 
-In the `_app.js`, you will need to wrap the App component. If you do not have an existing
-custom App component, you can do something like this:
+In the `_app.js`, you will need to wrap the App component. If you do not have an
+existing custom App component, you can do something like this:
 
 ```diff
 import React from 'react';
@@ -247,8 +250,8 @@ _Impacted Plugins/Packages: `@gasket/plugin-intl`_
 We've simplified how the plugin works with source locales files so that they can
 be more easily deployed to a CDN along with other static content. The locale
 files are now no longer copied to a `build/` dir, but now stay put. By default,
-the [@gasket/plugin-intl] will now look for these under `public/locales/`, however
-this can be configured with the `intl.localesDir` [config options].
+the [@gasket/plugin-intl] will now look for these under `public/locales/`,
+however this can be configured with the `intl.localesDir` [config options].
 
 ```diff
 // gasket.config.js
@@ -386,8 +389,7 @@ module.exports = {
 
 Before, in order to use [@gasket/plugin-intl] in your app, you were also
 required to use [@gasket/plugin-redux] along with Redux bindings in your React
-code. This is now simplified to
-work with [Gasket Data], and Redux is no longer
+code. This is now simplified to work with [Gasket Data], and Redux is no longer
 required.
 
 ```diff
@@ -516,8 +518,8 @@ const Component = props => <h1><FormattedMessage id='welcome'/></h1>
 ### Update Lifecycle Signatures with Context Object
 
 In order to better support static site generation, we have updated the
-[@gasket/plugin-service-worker] and [@gasket/plugin-workbox] lifecycles' signatures to pass in a context object
-instead of the usual `req, res`.
+[@gasket/plugin-service-worker] and [@gasket/plugin-workbox] lifecycles'
+signatures to pass in a context object instead of the usual `req, res`.
 
 ```diff
 // SERVICE WORKER USAGE EXAMPLE
@@ -545,8 +547,7 @@ _Impacted Plugins/Packages: `@gasket/plugin-service-worker`,
 Webpack 5 support is now available! We have tuned all of our plugins and
 packages to fully support Webpack 5.
 
-> Upgrading to Webpack 5 is not a required prerequisite for upgrading
-> Gasket.
+> Upgrading to Webpack 5 is not a required prerequisite for upgrading Gasket.
 
 Update `webpack` to v5.
 
@@ -619,7 +620,7 @@ _Impacted Plugins/Packages: `@gasket/resolve`, `@gasket/engine`_
 [next.js routing documentation]: https://nextjs.org/docs/routing/introduction
 [webpack website]: https://webpack.js.org/configuration/node/
 [gasket data script tag]: /packages/gasket-data/README.md#usage
-[new utility]: #inject-gasket-data
+[new utility HOC]: #inject-gasket-data
 [@gasket/plugin-config]: /packages/gasket-plugin-config/README.md
 [@gasket/data]: /packages/gasket-data/README.md
 [@gasket/plugin-workbox]: /packages/gasket-data/README.md
@@ -646,3 +647,4 @@ _Impacted Plugins/Packages: `@gasket/resolve`, `@gasket/engine`_
 [hydrate handler]: https://github.com/kirill-konshin/next-redux-wrapper#usage
 [lodash.merge]: https://www.npmjs.com/package/lodash.merge
 [react-redux]: https://github.com/reduxjs/react-redux
+
