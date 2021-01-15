@@ -546,16 +546,36 @@ _Impacted Plugins/Packages: `@gasket/plugin-service-worker`,
 Webpack 5 support is now available! We have tuned all of our plugins and
 packages to fully support Webpack 5.
 
-> Upgrading to Webpack 5 is not a required prerequisite for upgrading Gasket.
-
-Update `webpack` to v5.
-
 ```diff
 "devDependencies": {
 -   "webpack": "^4.44.1",
 +   "webpack": "^5.9.0"
 }
 ```
+
+One potentially breaking change to note is that [@gasket/plugin-webpack] no
+longer sets up predefined package excludes as before. This was necessary to
+support configuration changes in Webpack 5.
+
+If you stick with Webpack 4, yet want to bring back the former excludes, you can
+[configure Webpack] in your `gasket.config.js` with them:
+
+```diff
+// gasket.config.js
+
+module.exports = {
++  webpack: {
++    node: {
++      fs: 'empty',
++      net: 'empty',
++      tls: 'empty'
++    }
++  }
+}
+```
+
+If you do upgrade to Webpack 5, you can instead configure [resolve.fallback] as
+needed, which is described in the [Webpack 5 docs].
 
 ### Removed Config Defaults
 
@@ -641,9 +661,12 @@ _Impacted Plugins/Packages: `@gasket/resolve`, `@gasket/engine`_
 [lifecycle file]: /packages/gasket-plugin-lifecycle/README.md#usage
 [@gasket/plugin-redux]: /packages/gasket-plugin-redux/README.md
 [Redux configuration]: /packages/gasket-plugin-redux/README.md#configuration
+[@gasket/plugin-webpack]: /packages/gasket-plugin-webpack/README.md
+[configure webpack]: /packages/gasket-plugin-webpack/docs/webpack.md#gasket-webpack-config
 
 [next-redux-wrapper]: https://github.com/kirill-konshin/next-redux-wrapper
 [hydrate handler]: https://github.com/kirill-konshin/next-redux-wrapper#usage
 [lodash.merge]: https://www.npmjs.com/package/lodash.merge
 [react-redux]: https://github.com/reduxjs/react-redux
-
+[resolve.fallback]: https://webpack.js.org/configuration/resolve/#resolvefallback
+[Webpack 5 docs]: https://webpack.js.org/configuration/node/
