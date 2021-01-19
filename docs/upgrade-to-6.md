@@ -129,7 +129,7 @@ data fetching function in Next.js.
 }
 ```
 
-You will also want a deep merge utility to help set up a basic HYDRATE actual
+You will also want a deep merge utility to help set up a basic HYDRATE action
 handler in the root reducer, as [required by next-redux-wrapper][hydrate
 handler]. In this example, and for newly generated Gasket apps, [lodash.merge]
 is used.
