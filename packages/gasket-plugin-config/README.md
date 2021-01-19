@@ -171,7 +171,7 @@ module.exports = {
 
 ### Config with Public config
 
-If you are not using Redux, but still need access to config values in client-side code, you can define a `public` property in your `gasket.config.js`.
+If you are not using Redux, but still need access to config values in client-side code, you can define a `public` property in your `app.config.js`.
 
 ```js
 module.exports = {
