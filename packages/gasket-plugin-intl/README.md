@@ -250,11 +250,11 @@ module.exports = function middlewareHook(gasket) {
 For Next.js apps, prefer to use one of the loader approaches provided by
 [@gasket/react-intl/next].
 
-### selectLocaleMessages
+### selectLocaleMessage
 
 **Signature**
 
-- `req.selectLocaleMessages(id, [defaultMessage])`
+- `req.selectLocaleMessage(id, [defaultMessage])`
 
 If you have cases where you need locale messages loaded for non HTML documents,
 such as for as translated API responses, as a convenience, you can use this
@@ -310,7 +310,7 @@ module.exports = {
       const { env } = gasket.config;
       // Always use en-US in dev for some reason....
       if(env === 'dev') return 'en-US';
-      // This example could be handled via languageMap, but...
+      // This example could be handled via localesMap, but...
       if(locale.includes('fr')) {
         return 'fr-FR';
       }
