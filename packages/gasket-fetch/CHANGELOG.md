@@ -1,8 +1,8 @@
-# CHANGELOG
+# `@gasket/fetch`
 
-### ...
+### 6.0.0
 
-- Replace cross-fetch with native implementation.
+- Replace cross-fetch with native implementation. ([#176])
 
 ### 5.6.0
 
@@ -20,6 +20,6 @@
 
 - Initial release.
 
-<!-- LINK -->
 
 [#164]: https://github.com/godaddy/gasket/pull/164
+[#176]: https://github.com/godaddy/gasket/pull/176

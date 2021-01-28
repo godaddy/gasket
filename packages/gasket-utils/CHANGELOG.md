@@ -1,5 +1,10 @@
 # `@gasket/utils`
 
+### 6.0.0
+
+- Version alignment
+- Upgraded dependencies ([#247])
+
 ### 5.1.1
 
 - Fix missing dependency
@@ -30,3 +35,4 @@
 
 
 [#143]: https://github.com/godaddy/gasket/pull/143
+[#247]: https://github.com/godaddy/gasket/pull/247

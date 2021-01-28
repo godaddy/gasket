@@ -1,5 +1,10 @@
 # `@gasket/plugin-analyze`
 
+### 6.0.0
+
+- version alignment
+- upgrade dependencies ([#247])
+
 ### 5.3.3
 
 - Update webpack-bundle-analyzer@^3.7.0 ([#161])
@@ -32,3 +37,4 @@
 
 [#74]: https://github.com/godaddy/gasket/pull/74
 [#161]: https://github.com/godaddy/gasket/pull/161
+[#247]: https://github.com/godaddy/gasket/pull/247

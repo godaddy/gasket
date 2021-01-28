@@ -1,5 +1,10 @@
 # `@gasket/plugin-express`
 
+### 6.0.0
+
+- Version alignment
+- Upgraded dependencies ([#247])
+
 ### 5.9.0
 
 - Created and integrated Gasket API Preset ([#181])
@@ -22,5 +27,7 @@
 - Separate express plugins from core
 - Initial release.
 
+
 [#23]: https://github.com/godaddy/gasket/pull/23
 [#181]: https://github.com/godaddy/gasket/pull/181
+[#247]: https://github.com/godaddy/gasket/pull/247

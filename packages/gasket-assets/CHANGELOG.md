@@ -1,5 +1,10 @@
 # `@gasket/assets`
 
+### 6.0.0
+
+- Version alignment
+- Upgraded dependencies ([#247])
+
 ### 5.0.0
 
 - Open Source Release
@@ -13,4 +18,6 @@
 
 - Initial release.
 
+
 [#120]: https://github.com/godaddy/gasket/pull/120
+[#247]: https://github.com/godaddy/gasket/pull/247

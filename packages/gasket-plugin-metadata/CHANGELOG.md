@@ -1,5 +1,12 @@
 # `@gasket/plugin-metadata`
 
+### 6.0.0
+
+- Version alignment
+- Upgraded dev dependencies ([#247])
+
+### 5.1.0
+
 - Clean markdown from jsdocs ([#141])
 
 ### 5.0.0
@@ -20,9 +27,11 @@
   - Adds `package.json` and hooks to each `gasket.config.metadata`
   - Implements the `metadata` lifecycle
 
+
 [#51]: https://github.com/godaddy/gasket/pull/51
 [#64]: https://github.com/godaddy/gasket/pull/64
 [#141]: https://github.com/godaddy/gasket/pull/141
+[#247]: https://github.com/godaddy/gasket/pull/247
 
 [Loader]:/packages/gasket-resolve/docs/api.md#loader
 [PluginInfo]:/packages/gasket-resolve/docs/api.md#plugininfo

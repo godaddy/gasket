@@ -1,5 +1,12 @@
 # `@gasket/plugin-docs`
 
+### 6.0.0
+
+- Version alignment
+- Upgraded dependencies ([#247])
+
+### 5.1.0
+
 - Clean markdown from jsdocs ([#141])
 
 ### 5.0.2
@@ -22,3 +29,4 @@
 [#82]:https://github.com/godaddy/gasket/pull/82
 [#139]:https://github.com/godaddy/gasket/pull/139
 [#141]: https://github.com/godaddy/gasket/pull/141
+[#247]: https://github.com/godaddy/gasket/pull/247

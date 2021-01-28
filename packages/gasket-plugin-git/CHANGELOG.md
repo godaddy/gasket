@@ -1,5 +1,10 @@
 # `@gasket/plugin-git`
 
+### 6.0.0
+
+- Version alignment
+- Upgraded dev dependencies ([#247])
+
 ### 5.0.0
 
 - Open Source Release
@@ -12,3 +17,6 @@
 
 - Separate git setup from core and cli
 - Initial release.
+
+
+[#247]: https://github.com/godaddy/gasket/pull/247

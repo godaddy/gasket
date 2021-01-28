@@ -1,5 +1,10 @@
 # `@gasket/plugin-lint`
 
+### 6.0.0
+
+- Version alignment
+- Upgraded dev dependencies ([#247])
+
 ### 5.1.0
 
 - Add support for scope-only package short names with eslint configs. ([#142])
@@ -55,10 +60,11 @@
 
 - Initial release.
 
+
 [GoDaddy]: README.md#godaddy
 [Standard]: README.md#standard
 [Airbnb]: README.md#airbnb
 
 [#98]: https://github.com/godaddy/gasket/pull/98
 [#142]: https://github.com/godaddy/gasket/pull/142
-
+[#247]: https://github.com/godaddy/gasket/pull/247

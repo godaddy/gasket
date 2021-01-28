@@ -1,5 +1,10 @@
 # `@gasket/cli`
 
+### 6.0.0
+
+- Version alignment
+- Upgraded dependencies ([#247])
+
 ### 5.6.1
 
 - Lookup version for plugins if not set ([#170])
@@ -306,3 +311,4 @@ upon `gasket create`
 [#160]: https://github.com/godaddy/gasket/pull/160
 [#163]: https://github.com/godaddy/gasket/pull/163
 [#170]: https://github.com/godaddy/gasket/pull/170
+[#247]: https://github.com/godaddy/gasket/pull/247

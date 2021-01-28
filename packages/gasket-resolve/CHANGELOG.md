@@ -3,6 +3,7 @@
 ### 6.0.0
 
 - Remove package name fallbacks ([#227])
+- Upgraded dev dependencies ([#247])
 
 ### 5.3.1
 
@@ -53,6 +54,7 @@
 
 - Initial release.
 
+
 [#8]: https://github.com/godaddy/gasket/pull/8
 [#64]: https://github.com/godaddy/gasket/pull/64
 [#93]: https://github.com/godaddy/gasket/pull/93
@@ -61,5 +63,6 @@
 [#142]: https://github.com/godaddy/gasket/pull/142
 [#156]: https://github.com/godaddy/gasket/pull/156
 [#227]: https://github.com/godaddy/gasket/pull/227
+[#247]: https://github.com/godaddy/gasket/pull/247
 
 [Loader]:/packages/gasket-resolve/docs/api.md#loader

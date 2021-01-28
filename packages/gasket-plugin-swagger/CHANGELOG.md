@@ -1,5 +1,10 @@
 # `@gasket/plugin-swagger`
 
+### 6.0.0
+
+- Version alignment
+- Upgraded dev dependencies ([#247])
+
 ### 5.10.0
 
 - Added check for swagger.json file, with warning/error messaging if not found. ([#186])
@@ -12,6 +17,8 @@
 
 - Initial release. ([#177])
 
+
 [#177]: https://github.com/godaddy/gasket/pull/177
 [#181]: https://github.com/godaddy/gasket/pull/181
 [#186]: https://github.com/godaddy/gasket/pull/186
+[#247]: https://github.com/godaddy/gasket/pull/247
