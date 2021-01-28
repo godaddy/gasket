@@ -41,6 +41,12 @@ module.exports = {
       // Enable middleware for fastify@3
       await app.register(middie);
 
+      // Add express-like `res.locals` object attaching data
+      app.use(function attachLocals(req, res, next) {
+        res.locals = {};
+        next();
+      });
+
       if (excludedRoutesRegex) {
         app.use(excludedRoutesRegex, cookieParser());
       } else {
