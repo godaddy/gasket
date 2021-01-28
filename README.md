@@ -24,7 +24,7 @@ Help and explanations docs
 | Name                          | Description                                            |
 | ----------------------------- | ------------------------------------------------------ |
 | [Quick Start Guide]           | Get up and running on Gasket                           |
-| [Upgrade Guide]               | Guides on how to upgrade versions                      |
+| [Upgrades Guide]              | Steps necessary to upgrade major versions              |
 | [Lifecycle Flowchart]         | A flowchart detailing how lifecycles are interrelated. |
 | [Configuration Guide]         | Configuring Gasket apps                                |
 | [Plugins Guide]               | How to use and author plugins                          |
@@ -140,7 +140,7 @@ Available plugins
 | [@gasket/plugin-docs-graphs]    | 6.0.0   | Generate mermaid graphs of an applications gasket lifecycles               |
 | [@gasket/plugin-docsify]        | 6.0.0   | View collated docs with Docsify                                            |
 | [@gasket/plugin-express]        | 6.0.0   | Adds express support to your application                                   |
-| [@gasket/plugin-fastify]        | 6.0.0   | Adds fastify support to your application                                   |
+| [@gasket/plugin-fastify]        | 6.0.1   | Adds fastify support to your application                                   |
 | [@gasket/plugin-git]            | 6.0.0   | Adds git support to your application                                       |
 | [@gasket/plugin-https]          | 6.0.0   | Create http/s servers with graceful termination                            |
 | [@gasket/plugin-intl]           | 6.0.0   | NodeJS script to build localization files.                                 |
@@ -183,7 +183,7 @@ Supporting modules
 <!-- LINKS -->
 
 [Quick Start Guide]:docs/quick-start.md
-[Upgrade Guide]:docs/upgrades.md
+[Upgrades Guide]:docs/upgrades.md
 [Lifecycle Flowchart]:/docs/generated-docs/lifecycle-graphs.md
 [Configuration Guide]:/packages/gasket-cli/docs/configuration.md
 [Plugins Guide]:/packages/gasket-cli/docs/plugins.md
