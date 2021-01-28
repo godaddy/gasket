@@ -127,6 +127,21 @@ describe('createServers', () => {
     assume(app.register).to.have.been.calledWith(middie);
   });
 
+  it('adds middleware to attach res.locals', async () => {
+    await plugin.hooks.createServers(gasket, {});
+
+    const middleware = app.use.args[0][0];
+    assume(middleware.name).eqls('attachLocals');
+
+    const res = {};
+    const next = sinon.stub();
+    middleware({}, res, next);
+
+    assume(res).property('locals');
+    assume(res.locals).eqls({});
+    assume(next).called();
+  });
+
   it('adds the cookie-parser middleware before plugin middleware', async () => {
     await plugin.hooks.createServers(gasket, {});
 
