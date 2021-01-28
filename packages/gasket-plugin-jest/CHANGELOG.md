@@ -1,5 +1,10 @@
 # `@gasket/plugin-jest`
 
+### 6.0.0
+
+- Version alignment
+- Upgraded dev dependencies ([#216], [#247])
+
 ### 5.0.0
 
 - Open Source Release
@@ -28,3 +33,5 @@
 
 [#98]: https://github.com/godaddy/gasket/pull/98
 [#114]: https://github.com/godaddy/gasket/pull/114
+[#216]: https://github.com/godaddy/gasket/pull/216
+[#247]: https://github.com/godaddy/gasket/pull/247

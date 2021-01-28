@@ -1,5 +1,10 @@
 # `@gasket/plugin-start`
 
+### 6.0.0
+
+- Version alignment
+- Upgraded dev dependencies ([#247])
+
 ### 5.0.0
 
 - Open Source Release
@@ -14,3 +19,4 @@
 
 
 [#91]: https://github.com/godaddy/gasket/pull/91
+[#247]: https://github.com/godaddy/gasket/pull/247

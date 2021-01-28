@@ -1,6 +1,8 @@
 # `@gasket/plugin-fastify`
 
-Enable middleware support
+### 6.0.0
+
+Enable middleware support ([#172])
 - Add `middie@5` as dependency
 - Register `middie` to enable Fastify middleware
 
@@ -12,4 +14,6 @@ Enable middleware support
 
 - [#88] Initial release.
 
+
 [#88]: https://github.com/godaddy/gasket/pull/88
+[#172]: https://github.com/godaddy/gasket/pull/172

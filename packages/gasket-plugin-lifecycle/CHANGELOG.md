@@ -1,5 +1,10 @@
 # `@gasket/plugin-lifecycle`
 
+### 6.0.0
+
+- Version alignment
+- Upgraded dev dependencies ([#247])
+
 ### 5.6.0
 
 - Do Not Autoload Test Files in Lifecycle Plugin ([#168])
@@ -20,6 +25,6 @@
 
 - Initial release
 
-<!-- LINK -->
 
 [#168]: https://github.com/godaddy/gasket/pull/168
+[#247]: https://github.com/godaddy/gasket/pull/247

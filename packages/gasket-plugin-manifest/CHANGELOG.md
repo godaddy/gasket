@@ -5,6 +5,7 @@
 - Fix to allow basic manifest to work with no config ([#244])
 - Fix to remove config-only props from rendering in manifest.json ([#244])
 - Ability to configure static output of manifest at build time ([#218])
+- Upgraded dev dependencies ([#247])
 
 ### 5.0.0
 
@@ -38,5 +39,7 @@
   - Adding a new `manifest` lifecycle hook
   - Accepting `Manifest` setup in `gasket.config.js`
 
+
 [#218]: https://github.com/godaddy/gasket/pull/218
 [#244]: https://github.com/godaddy/gasket/pull/244
+[#247]: https://github.com/godaddy/gasket/pull/247

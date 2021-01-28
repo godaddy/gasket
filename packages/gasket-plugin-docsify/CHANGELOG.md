@@ -1,5 +1,9 @@
 # `@gasket/plugin-docsify`
 
+### 6.0.0
+
+- Version alignment
+
 # 5.0.2
 
 - Add plugin to render simplified slugs ([#137])

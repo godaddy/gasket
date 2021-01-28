@@ -1,5 +1,10 @@
 # `@gasket/plugin-https`
 
+### 6.0.0
+
+- Version alignment
+- Upgraded dev dependencies ([#247])
+
 ### 5.1.3
 
 - Set http fallbacks after createServer lifecycle ([#146])
@@ -40,6 +45,7 @@
 [#92]: https://github.com/godaddy/gasket/pull/92
 [#130]: https://github.com/godaddy/gasket/pull/130
 [#146]: https://github.com/godaddy/gasket/pull/146
+[#247]: https://github.com/godaddy/gasket/pull/247
 
 [terminus]: https://github.com/godaddy/terminus
 [create-servers]: https://github.com/http-party/create-servers

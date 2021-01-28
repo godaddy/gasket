@@ -1,5 +1,10 @@
 # `@gasket/plugin-mocha`
 
+### 6.0.0
+
+- Version alignment
+- Upgraded dev dependencies ([#182], [#216], [#247])
+
 ### 5.0.0
 
 - Open Source Release
@@ -37,4 +42,6 @@
 
 
 [#114]: https://github.com/godaddy/gasket/pull/114
-
+[#182]: https://github.com/godaddy/gasket/pull/182
+[#216]: https://github.com/godaddy/gasket/pull/216
+[#247]: https://github.com/godaddy/gasket/pull/247
