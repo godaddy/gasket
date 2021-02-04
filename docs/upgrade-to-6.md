@@ -505,6 +505,24 @@ const Component = props => <h1><FormattedMessage id='welcome'/></h1>
 + export default withLocaleRequired('/locales', { initialProps: true })(Component);
 ```
 
+### eslintConfig Update
+
+You will need to add a new `settings` object to the `eslintConfig` property in your `package.json`, which will need to have the `localeFiles` attribute set to an array containing the path to your `en-US.json` locale file:
+
+```diff
+// package.json
+
+{
+  "eslintConfig": {
++    "settings": {
++      "localeFiles": [
++        "public/locales/en-US.json"
++      ]
++    }
+  }
+}
+```
+
 ## Static Progressive Web App Changes
 
 ### Update Lifecycle Signatures with Context Object
