@@ -92,7 +92,10 @@ describe('code styles', () => {
         '@godaddy/eslint-plugin-react-intl': sinon.match.string
       });
       assume(pkgAdd).calledWithMatch('eslintConfig', {
-        extends: ['plugin:@godaddy/react-intl/recommended']
+        extends: ['plugin:@godaddy/react-intl/recommended'],
+        settings: {
+          localeFiles: ['public/locales/en-US.json']
+        }
       });
     });
 

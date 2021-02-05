@@ -13,8 +13,8 @@ demonstrate what to look for:
 "dependencies": {
 -    "@gasket/fetch": "^5.0.2",
 +    "@gasket/fetch": "^6.0.0",
--    "@gasket/intl": "^5.5.0",
-+    "@gasket/intl": "^6.0.0",
+-    "@gasket/data": "^5.5.0",
++    "@gasket/data": "^6.0.0",
 -    "@gasket/plugin-workbox": "^5.4.1",
 +    "@gasket/plugin-workbox": "^6.0.0",
 }
@@ -290,6 +290,31 @@ module.exports = {
 +  intl: {
 +    serveStatic: true
 +  }
+}
+```
+
+#### eslintConfig Update
+
+This update is only necessary when moving locale files to the `public/`
+directory, and when using the [@godaddy/eslint-plugin-react-intl] package with
+react-intl functions/components. 
+
+You will need to add a new `settings` object to your eslint config file or
+`eslintConfig` property in your `package.json`. The settings will need to have a
+`localeFiles` attribute set to an array containing the path to your primary
+locale file:
+
+```diff
+// package.json
+
+{
+  "eslintConfig": {
++    "settings": {
++      "localeFiles": [
++        "public/locales/en-US.json"
++      ]
++    }
+  }
 }
 ```
 
@@ -663,3 +688,4 @@ _Impacted Plugins/Packages: `@gasket/resolve`, `@gasket/engine`_
 [react-redux]: https://github.com/reduxjs/react-redux
 [resolve.fallback]: https://webpack.js.org/configuration/resolve/#resolvefallback
 [Webpack 5 docs]: https://webpack.js.org/configuration/node/
+[@godaddy/eslint-plugin-react-intl]: https://github.com/godaddy/eslint-plugin-react-intl
