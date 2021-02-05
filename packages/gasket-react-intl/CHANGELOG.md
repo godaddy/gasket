@@ -1,5 +1,9 @@
 # `@gasket/react-intl`
 
+### 6.0.2
+
+- Updated react-intl config to return an empty manifest object for testing. ([#251])
+
 ### 6.0.0
 
 - Next GSP and GSSP functions support for locale from context or path param. ([#232])
@@ -104,3 +108,4 @@
 [#228]: https://github.com/godaddy/gasket/pull/228
 [#235]: https://github.com/godaddy/gasket/pull/235
 [#232]: https://github.com/godaddy/gasket/pull/232
+[#251]: https://github.com/godaddy/gasket/pull/251
