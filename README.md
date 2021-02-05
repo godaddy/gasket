@@ -146,7 +146,7 @@ Available plugins
 | [@gasket/plugin-intl]           | 6.0.0   | NodeJS script to build localization files.                                 |
 | [@gasket/plugin-jest]           | 6.0.0   | Integrated jest into your application.                                     |
 | [@gasket/plugin-lifecycle]      | 6.0.0   | Allows a gasket/ directory to be used for lifecycle hooks in applications. |
-| [@gasket/plugin-lint]           | 6.0.0   | Adds GoDaddy standard linting to your application                          |
+| [@gasket/plugin-lint]           | 6.0.2   | Adds GoDaddy standard linting to your application                          |
 | [@gasket/plugin-log]            | 6.0.0   | Gasket log plugin                                                          |
 | [@gasket/plugin-manifest]       | 6.0.0   | The web app manifest for progressive Gasket applications                   |
 | [@gasket/plugin-metadata]       | 6.0.0   | Adds metadata to gasket lifecycles                                         |
@@ -174,7 +174,7 @@ Supporting modules
 | [@gasket/helper-intl] | 6.0.0   | Internal helpers used by loaders to resolve locale file paths                        |
 | [@gasket/log]         | 6.0.0   | Gasket client and server logger                                                      |
 | [@gasket/nextjs]      | 6.0.0   | Gasket integrations for Next.js apps                                                 |
-| [@gasket/react-intl]  | 6.0.0   | React component library to enable localization for gasket apps.                      |
+| [@gasket/react-intl]  | 6.0.2   | React component library to enable localization for gasket apps.                      |
 | [@gasket/redux]       | 6.0.0   | Gasket Redux Configuration                                                           |
 | [@gasket/resolve]     | 6.0.0   | Essential module resolution & configuration management for gasket plugins & presets. |
 | [@gasket/utils]       | 6.0.0   | Reusable utilities for Gasket internals                                              |
