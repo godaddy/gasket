@@ -43,7 +43,12 @@ const godaddy = {
 
     if (hasReactIntl) {
       pkg.add('devDependencies', (await gatherDevDeps('@godaddy/eslint-plugin-react-intl')));
-      pkg.add('eslintConfig', { extends: ['plugin:@godaddy/react-intl/recommended'] });
+      pkg.add('eslintConfig', {
+        extends: ['plugin:@godaddy/react-intl/recommended'],
+        settings: {
+          localeFiles: ['public/locales/en-US.json']
+        }
+      });
     }
 
     if (addStylelint) {

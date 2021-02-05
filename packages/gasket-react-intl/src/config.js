@@ -1,7 +1,10 @@
+/* eslint-disable no-process-env */
 /**
  * @type {LocaleManifest}
  */
-const manifest = require(process.env.GASKET_INTL_MANIFEST_FILE); // eslint-disable-line no-process-env
+const manifest = process.env.GASKET_INTL_MANIFEST_FILE ?
+  require(process.env.GASKET_INTL_MANIFEST_FILE) :
+  {};
 const isBrowser = typeof window !== 'undefined';
 const clientData = isBrowser && require('@gasket/data')?.intl || {};
 
