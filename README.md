@@ -124,8 +124,8 @@ Available presets
 | Name                    | Version | Description                                |
 | ----------------------- | ------- | ------------------------------------------ |
 | [@gasket/preset-api]    | 6.0.0   | Create Express-based API with Gasket       |
-| [@gasket/preset-nextjs] | 6.0.0   | Basic NextJS Framework                     |
-| [@gasket/preset-pwa]    | 6.0.0   | Turn Gasket apps into Progressive Web Apps |
+| [@gasket/preset-nextjs] | 6.0.3   | Basic NextJS Framework                     |
+| [@gasket/preset-pwa]    | 6.0.3   | Turn Gasket apps into Progressive Web Apps |
 
 ## Plugins
 
@@ -152,13 +152,13 @@ Available plugins
 | [@gasket/plugin-metadata]       | 6.0.0   | Adds metadata to gasket lifecycles                                         |
 | [@gasket/plugin-metrics]        | 6.0.0   | Collect metrics for gasket commands                                        |
 | [@gasket/plugin-mocha]          | 6.0.0   | Integrates mocha based testing in to your Gasket application               |
-| [@gasket/plugin-nextjs]         | 6.0.0   | Adds Next support to your application                                      |
-| [@gasket/plugin-redux]          | 6.0.0   | Gasket Redux Setup                                                         |
+| [@gasket/plugin-nextjs]         | 6.0.3   | Adds Next support to your application                                      |
+| [@gasket/plugin-redux]          | 6.0.3   | Gasket Redux Setup                                                         |
 | [@gasket/plugin-service-worker] | 6.0.0   | Gasket Service Worker Plugin                                               |
 | [@gasket/plugin-start]          | 6.0.0   | Adds commands for building and starting Gasket apps                        |
 | [@gasket/plugin-swagger]        | 6.0.0   | Generate and serve swagger docs                                            |
-| [@gasket/plugin-webpack]        | 6.0.0   | Adds webpack support to your application                                   |
-| [@gasket/plugin-workbox]        | 6.0.0   | Gasket Workbox Plugin                                                      |
+| [@gasket/plugin-webpack]        | 6.0.3   | Adds webpack support to your application                                   |
+| [@gasket/plugin-workbox]        | 6.0.3   | Gasket Workbox Plugin                                                      |
 
 ## Modules
 
