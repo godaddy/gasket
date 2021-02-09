@@ -1,6 +1,7 @@
 const WebpackChain = require('webpack-chain');
 const webpackMerge = require('webpack-merge');
 const WebpackMetricsPlugin = require('./webpack-metrics-plugin');
+const { name, devDependencies } = require('./package');
 
 /**
 * Creates the webpack config
@@ -31,8 +32,14 @@ function initWebpack(gasket, webpackConfig, data) {
 }
 
 module.exports = {
-  name: require('./package').name,
+  name,
   hooks: {
+    create(gasket, context) {
+      const { pkg } = context;
+      pkg.add('devDependencies', {
+        webpack: devDependencies.webpack
+      });
+    },
     metadata(gasket, meta) {
       return {
         ...meta,

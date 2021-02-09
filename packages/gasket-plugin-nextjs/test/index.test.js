@@ -176,7 +176,10 @@ describe('create hook', () => {
         add: spy(),
         has: spy()
       },
-      files: { add: spy() }
+      files: { add: spy() },
+      gasketConfig: {
+        add: spy()
+      }
     };
   });
 
@@ -233,35 +236,30 @@ describe('create hook', () => {
   });
 
   it('adds the appropriate globs for redux', async function () {
-    const files = { add: spy() };
-    await plugin.hooks.create.handler({}, {
-      pkg: {
-        add: spy(),
-        has: stub().callsFake((o, f) => o === 'dependencies' && f === '@gasket/redux')
-      },
-      files
-    });
+    mockContext.pkg.has = stub().callsFake((o, f) => o === 'dependencies' && f === '@gasket/redux');
+    await plugin.hooks.create.handler({}, mockContext);
 
-    assume(files.add).calledWith(
+    assume(mockContext.files.add).calledWith(
       `${root}/generator/redux/*`,
       `${root}/generator/redux/**/*`
     );
   });
 
   it('adds appropriate dependencies for redux', async function () {
-    const addSpy = spy();
-    const files = { add: spy() };
-    await plugin.hooks.create.handler({}, {
-      pkg: {
-        add: addSpy,
-        has: stub().callsFake((o, f) => o === 'dependencies' && f === '@gasket/redux')
-      },
-      files
-    });
+    mockContext.pkg.has = stub().callsFake((o, f) => o === 'dependencies' && f === '@gasket/redux');
+    await plugin.hooks.create.handler({}, mockContext);
 
-    assume(addSpy).calledWith('dependencies', {
+    assume(mockContext.pkg.add).calledWith('dependencies', {
       'next-redux-wrapper': devDependencies['next-redux-wrapper'],
       'lodash.merge': devDependencies['lodash.merge']
+    });
+  });
+
+  it('adds webpack5 support to nextConfig in gasket.config', async function () {
+    await plugin.hooks.create.handler({}, mockContext);
+
+    assume(mockContext.gasketConfig.add).calledWith('nextConfig', {
+      future: { webpack5: true }
     });
   });
 });
