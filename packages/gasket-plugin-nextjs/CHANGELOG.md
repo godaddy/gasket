@@ -1,5 +1,9 @@
 # `@gasket/plugin-nextjs`
 
+### 6.0.3
+
+- Create gasket.config.js with nextConfig for future webpack5  ([#252])
+
 ### 6.0.0
 
 - Add public/ to structure metadata for docs index ([#245])
@@ -99,3 +103,4 @@
 [#240]: https://github.com/godaddy/gasket/pull/240
 [#243]: https://github.com/godaddy/gasket/pull/243
 [#245]: https://github.com/godaddy/gasket/pull/245
+[#252]: https://github.com/godaddy/gasket/pull/252
