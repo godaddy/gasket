@@ -62,7 +62,8 @@ const depVersions = {
   'glob': '^7.1.6',
   'semver': '^7.3.4',
   'lodash.defaultsdeep': '^4.6.1',
-  'webpack': '^5.21.2'
+  'webpack': '^5.21.2',
+  'serve-static': '^1.14.1'
 };
 
 
