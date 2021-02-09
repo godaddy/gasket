@@ -53,7 +53,7 @@ module.exports = {
        * @public
        */
       handler: function create(gasket, context) {
-        const { files, pkg, testPlugin } = context;
+        const { files, pkg, testPlugin, gasketConfig } = context;
 
         files.add(
           `${__dirname}/generator/app/.*`,
@@ -90,6 +90,14 @@ module.exports = {
             `${__dirname}/generator/redux/**/*`
           );
         }
+
+        // This allows us to default to webpack 5
+        // @see: https://github.com/vercel/next.js/issues/21679#issuecomment-771941447
+        gasketConfig.add('nextConfig', {
+          future: {
+            webpack5: true
+          }
+        });
       }
     },
     express: async function express(gasket, expressApp) {
