@@ -3,6 +3,7 @@
 const { stub } = require('sinon');
 const assume = require('assume');
 const plugin = require('../index');
+const { devDependencies } = require('../package');
 
 const baseWebpackConfig = {
   plugins: [],
@@ -29,6 +30,7 @@ describe('Plugin', () => {
 
   it('has expected hooks', () => {
     const expected = [
+      'create',
       'metadata'
     ];
 
@@ -37,6 +39,27 @@ describe('Plugin', () => {
     const hooks = Object.keys(plugin.hooks);
     assume(hooks).eqls(expected);
     assume(hooks).is.length(expected.length);
+  });
+});
+
+describe('create hook', () => {
+  let mockContext;
+  beforeEach(() => {
+
+    mockContext = {
+      pkg: {
+        add: stub(),
+        has: stub()
+      }
+    };
+  });
+
+  it('adds appropriate devDependencies', async function () {
+    await plugin.hooks.create({}, mockContext);
+
+    assume(mockContext.pkg.add).calledWith('devDependencies', {
+      webpack: devDependencies.webpack
+    });
   });
 });
 
