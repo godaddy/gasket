@@ -13,6 +13,7 @@ WORKDIR /home/node/your_app
 
 USER node:node
 
+RUN npm ci
 RUN npm run build
 RUN npm prune --production
 
