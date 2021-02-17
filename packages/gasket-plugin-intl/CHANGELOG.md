@@ -1,5 +1,9 @@
 # `@gasket/plugin-intl`
 
+### 6.0.4
+
+- Fix to use defaultPath in workbox lifecycle ([#254])
+
 ### 6.0.0
 
 - Fix to handle default `localesDir` for metadata ([#245])
@@ -106,3 +110,4 @@
 [#242]: https://github.com/godaddy/gasket/pull/242
 [#243]: https://github.com/godaddy/gasket/pull/243
 [#245]: https://github.com/godaddy/gasket/pull/245
+[#254]: https://github.com/godaddy/gasket/pull/254
