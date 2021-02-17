@@ -38,8 +38,7 @@ function makeEncodeLocaleUrls(localesPath) {
  */
 module.exports = async function workbox(gasket, config, context) {
   const { root } = gasket.config;
-  const { basePath = '' } = getIntlConfig(gasket);
-  const { localesPath, localesDir } = getIntlConfig(gasket);
+  const { basePath = '', defaultPath, localesDir } = getIntlConfig(gasket);
   const { res } = context;
 
   // since we cannot determine a users' locale at build time, exit early
@@ -49,7 +48,7 @@ module.exports = async function workbox(gasket, config, context) {
 
   // Get the relative dir glob path
   const relGlobDir = path.relative(root, localesDir).replace(/\\/g, '/');
-  const encodeLocaleUrls = makeEncodeLocaleUrls(localesPath);
+  const encodeLocaleUrls = makeEncodeLocaleUrls(defaultPath);
 
   return {
     globDirectory: '.',
@@ -58,7 +57,7 @@ module.exports = async function workbox(gasket, config, context) {
       `${ relGlobDir }/**/${ locale }/*.json`
     ],
     modifyURLPrefix: {
-      [relGlobDir]: urljoin(basePath.replace(/\/$/, ''), localesPath)
+      [relGlobDir]: urljoin(basePath.replace(/\/$/, ''), defaultPath)
     },
     manifestTransforms: [
       encodeLocaleUrls
