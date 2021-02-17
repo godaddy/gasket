@@ -11,7 +11,7 @@ describe('workbox', function () {
         root: '/path/to/root',
         intl: {
           basePath: '',
-          localesPath: '/locales',
+          defaultPath: '/locales',
           localesDir: '/path/to/root/public/locales'
         }
       }
