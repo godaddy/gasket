@@ -45,14 +45,21 @@ describe('Plugin', function () {
 
 // eslint-disable-next-line max-statements
 describe('createServers', () => {
-  let gasket;
+  let gasket, lifecycles;
 
   beforeEach(() => {
     sinon.resetHistory();
 
+    lifecycles = {
+      middleware: sinon.stub().resolves([]),
+      errorMiddleware: sinon.stub().resolves([]),
+      express: sinon.stub().resolves()
+    };
+
     gasket = {
+      logger: {},
       config: {},
-      exec: sinon.stub().resolves([])
+      exec: sinon.stub().callsFake((lifecycle, ...args) => lifecycles[lifecycle](args))
     };
   });
 
@@ -154,6 +161,28 @@ describe('createServers', () => {
       app.use,
       mw => mw === compressionMiddleware);
     assume(compressionUsage).to.be.null();
+  });
+
+  it('adds middleware from lifecycle (ignores falsy)', async () => {
+    await plugin.hooks.createServers(gasket, {});
+    assume(app.use).called(2);
+
+    sinon.resetHistory();
+    lifecycles.middleware.resolves([() => {}, null]);
+
+    await plugin.hooks.createServers(gasket, {});
+    assume(app.use).called(3);
+  });
+
+  it('adds errorMiddleware from lifecycle (ignores falsy)', async () => {
+    await plugin.hooks.createServers(gasket, {});
+    assume(app.use).called(2);
+
+    sinon.resetHistory();
+    lifecycles.errorMiddleware.resolves([() => {}, null]);
+
+    await plugin.hooks.createServers(gasket, {});
+    assume(app.use).called(3);
   });
 
   function findCall(aSpy, aPredicate) {
