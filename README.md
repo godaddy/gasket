@@ -123,8 +123,8 @@ Available presets
 
 | Name                    | Version | Description                                |
 | ----------------------- | ------- | ------------------------------------------ |
-| [@gasket/preset-api]    | 6.0.0   | Create Express-based API with Gasket       |
-| [@gasket/preset-nextjs] | 6.0.3   | Basic NextJS Framework                     |
+| [@gasket/preset-api]    | 6.0.5   | Create Express-based API with Gasket       |
+| [@gasket/preset-nextjs] | 6.0.5   | Basic NextJS Framework                     |
 | [@gasket/preset-pwa]    | 6.0.3   | Turn Gasket apps into Progressive Web Apps |
 
 ## Plugins
@@ -139,11 +139,11 @@ Available plugins
 | [@gasket/plugin-docs]           | 6.0.0   | Centralize doc files from plugins and modules                              |
 | [@gasket/plugin-docs-graphs]    | 6.0.0   | Generate mermaid graphs of an applications gasket lifecycles               |
 | [@gasket/plugin-docsify]        | 6.0.0   | View collated docs with Docsify                                            |
-| [@gasket/plugin-express]        | 6.0.0   | Adds express support to your application                                   |
-| [@gasket/plugin-fastify]        | 6.0.1   | Adds fastify support to your application                                   |
+| [@gasket/plugin-express]        | 6.0.5   | Adds express support to your application                                   |
+| [@gasket/plugin-fastify]        | 6.0.5   | Adds fastify support to your application                                   |
 | [@gasket/plugin-git]            | 6.0.0   | Adds git support to your application                                       |
 | [@gasket/plugin-https]          | 6.0.0   | Create http/s servers with graceful termination                            |
-| [@gasket/plugin-intl]           | 6.0.0   | NodeJS script to build localization files.                                 |
+| [@gasket/plugin-intl]           | 6.0.4   | NodeJS script to build localization files.                                 |
 | [@gasket/plugin-jest]           | 6.0.0   | Integrated jest into your application.                                     |
 | [@gasket/plugin-lifecycle]      | 6.0.0   | Allows a gasket/ directory to be used for lifecycle hooks in applications. |
 | [@gasket/plugin-lint]           | 6.0.2   | Adds GoDaddy standard linting to your application                          |
@@ -152,7 +152,7 @@ Available plugins
 | [@gasket/plugin-metadata]       | 6.0.0   | Adds metadata to gasket lifecycles                                         |
 | [@gasket/plugin-metrics]        | 6.0.0   | Collect metrics for gasket commands                                        |
 | [@gasket/plugin-mocha]          | 6.0.0   | Integrates mocha based testing in to your Gasket application               |
-| [@gasket/plugin-nextjs]         | 6.0.3   | Adds Next support to your application                                      |
+| [@gasket/plugin-nextjs]         | 6.0.4   | Adds Next support to your application                                      |
 | [@gasket/plugin-redux]          | 6.0.3   | Gasket Redux Setup                                                         |
 | [@gasket/plugin-service-worker] | 6.0.0   | Gasket Service Worker Plugin                                               |
 | [@gasket/plugin-start]          | 6.0.0   | Adds commands for building and starting Gasket apps                        |
