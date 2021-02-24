@@ -1,5 +1,9 @@
 # `@gasket/plugin-fastify`
 
+### 6.0.5
+
+- Filter falsy middleware ([#255])
+
 ### 6.0.1
 
 - Fix to add `res.locals` for attaching data ([#250])
@@ -22,3 +26,4 @@ Enable middleware support ([#172])
 [#88]: https://github.com/godaddy/gasket/pull/88
 [#172]: https://github.com/godaddy/gasket/pull/172
 [#250]: https://github.com/godaddy/gasket/pull/250
+[#255]: https://github.com/godaddy/gasket/pull/255

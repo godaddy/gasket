@@ -1,5 +1,9 @@
 # `@gasket/plugin-express`
 
+### 6.0.5
+
+- Filter falsy middleware ([#255])
+
 ### 6.0.0
 
 - Version alignment
@@ -31,3 +35,4 @@
 [#23]: https://github.com/godaddy/gasket/pull/23
 [#181]: https://github.com/godaddy/gasket/pull/181
 [#247]: https://github.com/godaddy/gasket/pull/247
+[#255]: https://github.com/godaddy/gasket/pull/255
