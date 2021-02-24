@@ -57,7 +57,7 @@ module.exports = {
         app.use(compression());
       }
 
-      const middlewares = await gasket.exec('middleware', app);
+      const middlewares = (await gasket.exec('middleware', app)).filter(Boolean);
 
       debug('applied %s middleware layers to express', middlewares.length);
       middlewares.forEach((layer) => {
@@ -70,7 +70,7 @@ module.exports = {
 
       await gasket.exec('express', app);
 
-      const postRenderingStacks = await gasket.exec('errorMiddleware');
+      const postRenderingStacks = (await gasket.exec('errorMiddleware')).filter(Boolean);
       postRenderingStacks.forEach((stack) => app.use(stack));
 
       if (routes) {
