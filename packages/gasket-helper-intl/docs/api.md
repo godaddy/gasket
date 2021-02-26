@@ -3,13 +3,7 @@
 
 Name | Description
 ------ | -----------
-[LocaleUtils] | 
-
-## Constants
-
-Name | Description
------- | -----------
-[path] | NOTICE! These are common utilities used by packages in browser and this plugin. Do not rely on req, or window.
+[LocaleUtils] | Utility class for loading locale files
 
 ## Typedefs
 
@@ -26,6 +20,8 @@ Name | Description
 
 ## LocaleUtils
 
+Utility class for loading locale files
+
 **Kind**: global class  
 
 * [LocaleUtils]
@@ -34,12 +30,10 @@ Name | Description
     * [.formatLocalePath(localePathPart, locale)]
     * [.getLocalePath(localePathPart, locale)]
     * [.pathToUrl(localePath)]
-    * [.serverLoadData(localePathPath, locale, localesDir)]
+    * [.serverLoadData(localePathPart, locale, localesDir)]
 
 
 ### new LocaleUtils(config)
-
-Utility class for loading locale files
 
 
 | Param | Type | Description |
@@ -103,16 +97,17 @@ Add base path from window.gasket.intl or manifest if set to the locale path
 | localePath | [`LocalePath`] | URL path to a locale file |
 
 
-### localeUtils.serverLoadData(localePathPath, locale, localesDir)
+### localeUtils.serverLoadData(localePathPart, locale, localesDir)
 
-Load locale file(s) and return localesProps
+Load locale file(s) and return localesProps.
+Throws error if attempted to use in browser.
 
 **Kind**: instance method of [`LocaleUtils`]  
 **Returns**: [`LocalesProps`] - localesProps  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| localePathPath | [`LocalePathPart`] \| `Array.<LocalePathPart>` | Path(s) containing locale files |
+| localePathPart | [`LocalePathPart`] \| `Array.<LocalePathPart>` | Path(s) containing locale files |
 | locale | [`Locale`] | Locale to load |
 | localesDir | `string` | Disk path to locale files dir |
 
@@ -151,13 +146,6 @@ Enum for local status values
 
 **Kind**: static property of [`LocaleStatus`]  
 **Default**: `error`  
-
-## path
-
-NOTICE! These are common utilities used by packages in browser and this plugin.
-Do not rely on req, or window.
-
-**Kind**: global constant  
 
 ## LocalePathPart
 
@@ -271,7 +259,6 @@ Fetch status of a locale file
 <!-- LINKS -->
 
 [LocaleUtils]:#localeutils
-[path]:#path
 [LocalePathPart]:#localepathpart
 [LocalePath]:#localepath
 [Lang]:#lang
@@ -294,4 +281,4 @@ Fetch status of a locale file
 [.formatLocalePath(localePathPart, locale)]:#localeutilsformatlocalepathlocalepathpart-locale
 [.getLocalePath(localePathPart, locale)]:#localeutilsgetlocalepathlocalepathpart-locale
 [.pathToUrl(localePath)]:#localeutilspathtourllocalepath
-[.serverLoadData(localePathPath, locale, localesDir)]:#localeutilsserverloaddatalocalepathpath-locale-localesdir
+[.serverLoadData(localePathPart, locale, localesDir)]:#localeutilsserverloaddatalocalepathpart-locale-localesdir
