@@ -3,9 +3,6 @@
  * Do not rely on req, or window.
  */
 
-const path = require('path');
-const merge = require('lodash.merge');
-
 /**
  * Partial URL representing a directory containing locale .json files
  * or a URL template with a `:locale` path param to a .json file.
@@ -86,7 +83,7 @@ const LocaleStatus = {
 const reLocalePathParam = /(\/[$:{]locale}?\/)/;
 
 /**
- * Utility class for loading locale files
+ * @classdesc Utility class for loading locale files
  *
  * @param {Object} config - Configuration
  * @param {LocaleManifest} config.manifest - Locale file manifest
@@ -172,46 +169,20 @@ function LocaleUtils(config) {
     return url;
   };
 
+  /* eslint-disable no-unused-vars, valid-jsdoc */
   /**
-   * Load locale file(s) and return localesProps
+   * Load locale file(s) and return localesProps.
+   * Throws error if attempted to use in browser.
    *
-   * @param {LocalePathPart|LocalePathPart[]} localePathPath - Path(s) containing locale files
+   * @param {LocalePathPart|LocalePathPart[]} localePathPart - Path(s) containing locale files
    * @param {Locale} locale - Locale to load
    * @param {string} localesDir - Disk path to locale files dir
    * @returns {LocalesProps} localesProps
    */
-  this.serverLoadData = (localePathPath, locale, localesDir) => {
-    if (Array.isArray(localePathPath)) {
-      const localesProps = localePathPath.map(p => this.serverLoadData(p, locale, localesDir));
-      return merge(...localesProps);
-    }
-
-    const localeFile = this.getLocalePath(localePathPath, locale);
-    const diskPath = path.join(localesDir, localeFile);
-    let messages;
-    let status;
-
-    try {
-      messages = require(diskPath);
-      status = LocaleStatus.LOADED;
-    } catch (e) {
-      console.error(e.message); // eslint-disable-line no-console
-      messages = {};
-      status = LocaleStatus.ERROR;
-    }
-
-    return {
-      locale,
-      messages: {
-        [locale]: {
-          ...messages
-        }
-      },
-      status: {
-        [localeFile]: status
-      }
-    };
+  this.serverLoadData = () => {
+    throw new Error('Not available in browser');
   };
+  /* eslint-enable */
 }
 
 module.exports = {
