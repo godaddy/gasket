@@ -13,9 +13,9 @@ const { defaultLocale, defaultPath } = manifest;
  * will be fetched as normal.
  *
  * @param {React.ComponentType} Wrapper - The HOC
- * @param {LocalePathPart} localePathPath - Path containing locale files
+ * @param {LocalePathPart} localePathPart - Path containing locale files
  */
-function attachGetInitialProps(Wrapper, localePathPath) {
+function attachGetInitialProps(Wrapper, localePathPart) {
   const { WrappedComponent } = Wrapper;
 
   Wrapper.getInitialProps = async (ctx) => {
@@ -25,7 +25,7 @@ function attachGetInitialProps(Wrapper, localePathPath) {
     if (res) {
       const { locale = defaultLocale } = res.locals.gasketData.intl || {};
       const localesParentDir = path.dirname(res.locals.localesDir);
-      localesProps = localeUtils.serverLoadData(localePathPath, locale, localesParentDir);
+      localesProps = localeUtils.serverLoadData(localePathPart, locale, localesParentDir);
     }
 
     return {
@@ -38,13 +38,13 @@ function attachGetInitialProps(Wrapper, localePathPath) {
 /**
  * Make an HOC that loads a locale file before rendering wrapped component
  *
- * @param {LocalePathPart} localePathPath - Path containing locale files
+ * @param {LocalePathPart} localePathPart - Path containing locale files
  * @param {object} [options] - Options
  * @param {React.Component} [options.loading=null] - Custom component to show while loading
  * @param {React.Component} [options.initialProps=false] - Preload locales during SSR with Next.js pages
  * @returns {function} wrapper
  */
-export default function withLocaleRequired(localePathPath = defaultPath, options = {}) {
+export default function withLocaleRequired(localePathPart = defaultPath, options = {}) {
   const { loading = null, initialProps = false } = options;
   /**
    * Wrap the component
@@ -64,7 +64,7 @@ export default function withLocaleRequired(localePathPath = defaultPath, options
     function Wrapper(props) {
       // eslint-disable-next-line react/prop-types
       const { forwardedRef, ...rest } = props;
-      const loadState = useLocaleRequired(localePathPath);
+      const loadState = useLocaleRequired(localePathPart);
       if (loadState === LocaleStatus.LOADING) return loading;
       return <Component { ...rest } ref={ forwardedRef }/>;
     }
@@ -80,7 +80,7 @@ export default function withLocaleRequired(localePathPath = defaultPath, options
     ForwardRef.WrappedComponent = Component;
 
     if (initialProps || 'getInitialProps' in Component) {
-      attachGetInitialProps(ForwardRef, localePathPath);
+      attachGetInitialProps(ForwardRef, localePathPart);
     }
 
     return ForwardRef;
