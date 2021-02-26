@@ -174,7 +174,7 @@ function LocaleUtils(config) {
    * Load locale file(s) and return localesProps.
    * Throws error if attempted to use in browser.
    *
-   * @param {LocalePathPart|LocalePathPart[]} localePathPath - Path(s) containing locale files
+   * @param {LocalePathPart|LocalePathPart[]} localePathPart - Path(s) containing locale files
    * @param {Locale} locale - Locale to load
    * @param {string} localesDir - Disk path to locale files dir
    * @returns {LocalesProps} localesProps

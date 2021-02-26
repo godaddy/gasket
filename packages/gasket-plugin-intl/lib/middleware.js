@@ -64,11 +64,11 @@ module.exports = function middlewareHook(gasket) {
     /**
      * Load locale data and makes available from gasketData
      *
-     * @param {LocalePathPart|LocalePathPart[]} localePathPath - Path(s) containing locale files
+     * @param {LocalePathPart|LocalePathPart[]} localePathPart - Path(s) containing locale files
      * @returns {LocalesProps} localesProps
      */
-    req.withLocaleRequired = function withLocaleRequired(localePathPath = manifest.defaultPath) {
-      const localesProps = localeUtils.serverLoadData(localePathPath, locale, localesParentDir);
+    req.withLocaleRequired = function withLocaleRequired(localePathPart = manifest.defaultPath) {
+      const localesProps = localeUtils.serverLoadData(localePathPart, locale, localesParentDir);
       mergeGasketData(localesProps);
       return localesProps;
     };
