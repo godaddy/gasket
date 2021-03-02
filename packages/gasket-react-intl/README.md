@@ -62,6 +62,7 @@ wrapped component will be rendered.
   - `loading` - (string|node) Content to render while loading, otherwise null.
   - `initialProps` - (boolean) Enable `getInitialProps` to load locale files
     during server-side rendering for Next.js pages. Defaults to `false`.
+  - `forwardRef` - (boolean) Add a ref to the connected wrapper component.
 
 #### Example
 
