@@ -100,51 +100,56 @@ module.exports = {
         });
       }
     },
-    express: async function express(gasket, expressApp) {
-      const { exec, command } = gasket;
-      const createNextApp = require('next');
-      const devServer = (command.id || command) === 'local';
+    express: {
+      timing: {
+        last: true
+      },
+      handler: async function express(gasket, expressApp) {
+        const { exec, command } = gasket;
+        const createNextApp = require('next');
+        const devServer = (command.id || command) === 'local';
 
-      const app = createNextApp({
-        dev: devServer,
-        conf: await createConfig(gasket, devServer)
-      });
+        const app = createNextApp({
+          dev: devServer,
+          conf: await createConfig(gasket, devServer)
+        });
 
-      //
-      // We need to call the `next` lifecycle before we prepare the application
-      // as the prepare step initializes all the routes that a next app can have.
-      // If we wait later, it's possible that our added routes/pages are not
-      // recognized.
-      //
-      await exec('next', app);
-      await app.prepare();
+        //
+        // We need to call the `next` lifecycle before we prepare the application
+        // as the prepare step initializes all the routes that a next app can have.
+        // If we wait later, it's possible that our added routes/pages are not
+        // recognized.
+        //
+        await exec('next', app);
+        await app.prepare();
 
-      expressApp.set(['buildId', app.name].filter(Boolean).join('/'), app.buildId);
+        expressApp.set(['buildId', app.name].filter(Boolean).join('/'), app.buildId);
 
-      await exec('nextExpress', { next: app, express: expressApp });
+        await exec('nextExpress', { next: app, express: expressApp });
 
-      // If the Gasket Intl Plugin is used to determine the locale, then we need
-      // to let NextJS know that it has already been detected. We can do this by
-      // forcing the `NEXT_LOCALE` cookie:
-      // https://github.com/vercel/next.js/blob/canary/docs/advanced-features/i18n-routing.md#leveraging-the-next_locale-cookie
-      expressApp.use(function setNextLocale(req, res, next) {
-        if (res.locals && res.locals.gasketData && res.locals.gasketData.intl) {
-          const { locale } = res.locals.gasketData.intl;
-          if (locale) {
-            req.headers.cookie = (req.headers.cookie || '') + `;NEXT_LOCALE=${locale}`;
+        // If the Gasket Intl Plugin is used to determine the locale, then we need
+        // to let NextJS know that it has already been detected. We can do this by
+        // forcing the `NEXT_LOCALE` cookie:
+        // https://github.com/vercel/next.js/blob/canary/docs/advanced-features/i18n-routing.md#leveraging-the-next_locale-cookie
+        expressApp.use(function setNextLocale(req, res, next) {
+          if (res.locals && res.locals.gasketData && res.locals.gasketData.intl) {
+            const { locale } = res.locals.gasketData.intl;
+            if (locale) {
+              req.headers.cookie = (req.headers.cookie || '') + `;NEXT_LOCALE=${ locale }`;
+            }
           }
-        }
-        next();
-      });
+          next();
+        });
 
-      //
-      // Now that express has been setup, and users have been able to
-      // interact with the express router we want to add a last, catch all
-      // route that will activate the `next`.
-      //
-      expressApp.all('*', app.getRequestHandler());
+        //
+        // Now that express has been setup, and users have been able to
+        // interact with the express router we want to add a last, catch all
+        // route that will activate the `next`.
+        //
+        expressApp.all('*', app.getRequestHandler());
 
-      return app;
+        return app;
+      }
     },
     build: async function build(gasket) {
       const { command } = gasket;
