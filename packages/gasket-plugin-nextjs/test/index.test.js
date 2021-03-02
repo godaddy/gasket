@@ -77,7 +77,7 @@ describe('configure hook', () => {
 });
 
 describe('express hook', () => {
-  let next, nextHandler, plugin, expressApp;
+  let next, nextHandler, plugin, expressApp, hook;
 
   beforeEach(() => {
     expressApp = {
@@ -92,18 +92,27 @@ describe('express hook', () => {
     next = stub().returns(nextHandler);
 
     plugin = proxyquire('../', { next });
+    hook = plugin.hooks.express.handler;
+  });
+
+  it('timing configured last', async function () {
+    const gasket = mockGasketApi();
+    await hook(gasket, expressApp, false);
+
+    assume(plugin.hooks.express).property('timing');
+    assume(plugin.hooks.express.timing).eqls({ last: true });
   });
 
   it('executes the `next` lifecycle', async function () {
     const gasket = mockGasketApi();
-    await plugin.hooks.express(gasket, expressApp, false);
+    await hook(gasket, expressApp, false);
 
     assume(gasket.exec).has.been.calledWith('next', nextHandler);
   });
 
   it('attaches middleware to set NEXT_LOCALE cookie', async function () {
     const gasket = mockGasketApi();
-    await plugin.hooks.express(gasket, expressApp, false);
+    await hook(gasket, expressApp, false);
 
     assume(expressApp.use).has.been.calledWith(sinon.match.func);
     const fn = expressApp.use.getCall(0).args[0];
@@ -112,7 +121,7 @@ describe('express hook', () => {
 
   it('middleware sets NEXT_LOCALE cookie from gasketData', async function () {
     const gasket = mockGasketApi();
-    await plugin.hooks.express(gasket, expressApp, false);
+    await hook(gasket, expressApp, false);
 
     const fn = expressApp.use.getCall(0).args[0];
 
@@ -125,7 +134,7 @@ describe('express hook', () => {
 
   it('middleware adds NEXT_LOCALE to existing cookie', async function () {
     const gasket = mockGasketApi();
-    await plugin.hooks.express(gasket, expressApp, false);
+    await hook(gasket, expressApp, false);
 
     const fn = expressApp.use.getCall(0).args[0];
 
@@ -138,7 +147,7 @@ describe('express hook', () => {
 
   it('middleware does not set NEXT_LOCALE cookie if no gasketData', async function () {
     const gasket = mockGasketApi();
-    await plugin.hooks.express(gasket, expressApp, false);
+    await hook(gasket, expressApp, false);
 
     const fn = expressApp.use.getCall(0).args[0];
 
@@ -151,13 +160,13 @@ describe('express hook', () => {
 
   it('executes the `nextExpress` lifecycle', async function () {
     const gasket = mockGasketApi();
-    await plugin.hooks.express(gasket, expressApp, false);
+    await hook(gasket, expressApp, false);
 
     assume(gasket.exec).has.been.calledWith('nextExpress', { next: nextHandler, express: expressApp });
   });
 
   it('does not derive a webpack config if not running a dev server', async () => {
-    await plugin.hooks.express(mockGasketApi(), expressApp, false);
+    await hook(mockGasketApi(), expressApp, false);
 
     const nextOptions = next.lastCall.args[0];
     assume(nextOptions.conf).to.not.haveOwnProperty('webpack');
