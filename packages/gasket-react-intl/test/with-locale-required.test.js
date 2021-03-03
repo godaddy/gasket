@@ -42,7 +42,12 @@ describe('withLocaleRequired', function () {
   });
 
   it('adds display name', function () {
-    assume(withLocaleRequired()(MockComponent)).property('displayName', 'ForwardRef(withLocaleRequired/MockComponent))');
+    assume(withLocaleRequired()(MockComponent)).property('displayName', 'withLocaleRequired(MockComponent)');
+  });
+
+  it('adds display name with ForwardRef', function () {
+    assume(withLocaleRequired('locales', { forwardRef: true })(MockComponent))
+      .property('displayName', 'ForwardRef(withLocaleRequired/MockComponent))');
   });
 
   it('hoists non-react statics', function () {
@@ -108,10 +113,10 @@ describe('withLocaleRequired', function () {
   });
 
   describe('#render', function () {
-    it('renders null if loading', function () {
+    it('renders empty if loading', function () {
       useLocaleRequiredStub.returns(LOADING);
       wrapper = doMount();
-      assume(wrapper.html()).eqls('');
+      assume(wrapper.html()).falsy();
     });
 
     it('renders custom loader if loading', function () {
@@ -146,7 +151,7 @@ describe('withLocaleRequired', function () {
         }
       }
 
-      const TestWrappedComponent = withLocaleRequired()(TestComponent);
+      const TestWrappedComponent = withLocaleRequired('locales', { forwardRef: true })(TestComponent);
 
       class TestRefComponent extends React.Component {
         constructor(...args) {
