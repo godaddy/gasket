@@ -1,4 +1,21 @@
-# Gasket
+<p align="center">
+  <img alt="Gasket" src="site/logo-cover.svg" width="496">
+</p>
+
+<p align="center">
+Framework Maker for JavaScript Applications
+</p>
+
+---
+<section class="badge-section" align="center">
+
+[![License][license-badge]][license]
+[![Contributors][contributors-badge]][contributors]
+[![PRs Welcome][prs-welcome-badge]][prs-welcome]
+[![Code of Conduct][coc-badge]][coc]
+[![tweet][tweet-badge]][tweet]
+
+</section>
 
 Gasket helps developers make frameworks to power their apps. There are several
 presets and plugins available with which to make frameworks and construct apps.
@@ -299,3 +316,15 @@ Supporting modules
 ## License
 
 Gasket is [MIT licensed](./LICENSE.md).
+
+<!-- badges -->
+[license-badge]: https://img.shields.io/github/license/godaddy/gasket?style=flat-square
+[license]: https://opensource.org/licenses/MIT
+[prs-welcome-badge]: https://img.shields.io/badge/PRs-welcome-blue.svg?style=flat-square
+[prs-welcome]: https://github.com/godaddy/gasket/blob/master/CONTRIBUTING.md
+[coc-badge]: https://img.shields.io/badge/code%20of-conduct-ff69b4.svg?style=flat-square&color=blue
+[coc]: https://github.com/godaddy/gasket/blob/master/CODE_OF_CONDUCT.md
+[contributors-badge]: https://img.shields.io/github/contributors/godaddy/gasket.svg?style=flat-square
+[contributors]: https://github.com/godaddy/gasket/graphs/contributors
+[tweet-badge]: https://img.shields.io/twitter/url?url=https%3A%2F%2Ftwitter.com%2Fgasketjs?style=flat-square
+[tweet]: https://twitter.com/intent/tweet?text=Check%20out%20gasket!%20https://github.com/godaddy/gasket%20%F0%9F%91%8D
