@@ -10,7 +10,6 @@ Framework Maker for JavaScript Applications
 <div align="center">
 
 [![License][license-badge]][license]
-
 [![Contributors][contributors-badge]][contributors]
 [![PRs Welcome][prs-welcome-badge]][prs-welcome]
 [![Code of Conduct][coc-badge]][coc]
