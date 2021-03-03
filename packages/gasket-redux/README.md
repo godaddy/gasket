@@ -78,6 +78,30 @@ const reducers = require('./reducers'); // apps reducers
 module.exports = configureMakeStore({ reducers });
 ```
 
+#### Example: initial state
+
+If you are adding keys to the initial state without reducers, you make get
+an `unexpected key found in previous state` error. In this case consider using
+[@gasket/data] for these static-like values, or register placeholder reducers
+in your store.
+
+```diff
+// ./store.js
+
+const { configureMakeStore } = require('@gasket/redux');
+const myReducers = require('./reducers'); // apps reducers
+
+const reducers = {
+  ...myReducers,
++  custom: f => f || null
+};
+
+const initialState = { custom: 'example' };
+
+module.exports = configureMakeStore({ initialState, reducers });
+```
+
+
 #### Example: adding middleware in a custom path (redux-saga)
 
 ```js
@@ -142,4 +166,4 @@ module.exports = configureMakeStore({ reducers, thunkMiddleware })
 <!-- LINKS -->
 
 [combined]: https://redux.js.org/api/combinereducers
-
+[@gasket/data]: /packages/gasket-data/README.md
