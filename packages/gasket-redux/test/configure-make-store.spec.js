@@ -104,7 +104,6 @@ describe('configureMakeStore', () => {
 
   it('sets a default root reducer if no reducers passed', () => {
     configureMakeStore()();
-    expect(combineReducersSpy).not.toHaveBeenCalled();
     expect(createStoreSpy).toHaveBeenCalledWith(expect.any(Function), expect.any(Object), expect.any(Function));
   });
 
@@ -116,7 +115,10 @@ describe('configureMakeStore', () => {
 
   it('adds placeholder reducers', () => {
     configureMakeStore({ initialState: { bogus: true } })();
-    expect(combineReducersSpy).toHaveBeenCalledWith({ bogus: expect.any(Function) });
+    expect(combineReducersSpy).toHaveBeenCalledWith({
+      bogus: expect.any(Function),
+      config: expect.any(Function) // default added for @gasket/plugin-redux
+    });
   });
 
   it('allows custom rootReducer', () => {
