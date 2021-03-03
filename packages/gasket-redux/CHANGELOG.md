@@ -1,5 +1,9 @@
 # `@gasket/redux`
 
+### 6.0.8
+
+- Add default placeholder for `config` in the initial state ([#261])
+
 ### 6.0.7
 
 - Provide `getOrCreateStore` for finding existing store on a context ([#259])
@@ -68,3 +72,4 @@
 [#173]: https://github.com/godaddy/gasket/pull/173
 [#247]: https://github.com/godaddy/gasket/pull/247
 [#259]: https://github.com/godaddy/gasket/pull/259
+[#261]: https://github.com/godaddy/gasket/pull/261
