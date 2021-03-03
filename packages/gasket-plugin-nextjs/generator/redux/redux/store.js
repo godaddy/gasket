@@ -1,4 +1,4 @@
-const { configureMakeStore } = require('@gasket/redux');
+const { configureMakeStore, getOrCreateStore } = require('@gasket/redux');
 const { HYDRATE, createWrapper } = require('next-redux-wrapper');
 const merge = require('lodash.merge')
 {{{reduxReducers.imports}}}
@@ -12,7 +12,7 @@ const reducers = {
 };
 
 const makeStore = configureMakeStore({ rootReducer, reducers });
-const nextRedux = createWrapper(({ req }) => makeStore({}, { req }));
+const nextRedux = createWrapper(getOrCreateStore(makeStore));
 
 module.exports = makeStore;
 module.exports.nextRedux = nextRedux;

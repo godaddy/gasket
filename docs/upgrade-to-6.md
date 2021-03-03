@@ -137,7 +137,8 @@ is used.
 ```diff
 // redux/store.js
 
-const { configureMakeStore } = require('@gasket/redux');
+- const { configureMakeStore } = require('@gasket/redux');
++ const { configureMakeStore, getOrCreateStore } = require('@gasket/redux');
 + const { HYDRATE, createWrapper } = require('next-redux-wrapper');
 + const merge = require('lodash.merge')
 
@@ -152,11 +153,14 @@ const reducers = {
 
 - module.exports = configureMakeStore({ reducers });
 + const makeStore = configureMakeStore({ rootReducer, reducers });
-+ const nextRedux = createWrapper(({ req }) => makeStore({}, { req }));
++ const nextRedux = createWrapper(getOrCreateStore(makeStore));
 
 + module.exports = makeStore;
 + module.exports.nextRedux = nextRedux;
 ```
+
+The `getOrCreateStore` helper will check if a store instance exists on context
+and return it, or make a new one if not.
 
 In addition to exporting the `makeStore` function, you'll want to export the
 `nextRedux` wrapper for use in your app code.
@@ -297,7 +301,7 @@ module.exports = {
 
 This update is only necessary when moving locale files to the `public/`
 directory, and when using the [@godaddy/eslint-plugin-react-intl] package with
-react-intl functions/components. 
+react-intl functions/components.
 
 You will need to add a new `settings` object to your eslint config file or
 `eslintConfig` property in your `package.json`. The settings will need to have a
@@ -689,3 +693,4 @@ _Impacted Plugins/Packages: `@gasket/resolve`, `@gasket/engine`_
 [resolve.fallback]: https://webpack.js.org/configuration/resolve/#resolvefallback
 [Webpack 5 docs]: https://webpack.js.org/configuration/node/
 [@godaddy/eslint-plugin-react-intl]: https://github.com/godaddy/eslint-plugin-react-intl
+
