@@ -10,14 +10,20 @@ npm i @gasket/redux
 
 ## Functions
 
-- `configureMakeStore(options, [postCreate])` - Returns a makeStore function
+### configureMakeStore
 
-### Parameters
+Set up Redux store configuration and return a `makeStore` function
+
+**Signature**
+
+- `configureMakeStore(options, [postCreate]): makeStore`
+
+**Props**
 
 - `options` - (object) Options object
   - `initialState` - (object) Optionally set any preloaded state
-  - `reducers` - (object) Map of identifiers and reducer functions which will
-    be [combined].
+  - `reducers` - (object) Map of identifiers and reducer functions which will be
+    [combined].
   - `rootReducer` - (function) Optional entry reducer. If returned state is
     unchanged, it will pass through to combined `reducers`.
   - `middleware` - (function[]) Additional redux middleware to apply
@@ -27,10 +33,26 @@ npm i @gasket/redux
 - `postCreate` - (function) Executed after the store is create the resulting
   store as the argument
 
-### Return Value
+**Return Value**
 
 - `makeStore` - (function) Creates the redux store for each server-side request
   and once on the client, hydrating with the state from the server.
+
+### getOrCreateStore
+
+Creates a helper to check if an existing store is in the context, otherwise it
+will make a new instance. Context can include a `store` property directly or on
+`req` and can be Next.js App or Page context.
+
+**Signature**
+
+- `getOrCreateStore(makeStore): (context) => Store`
+
+**Props**
+
+- `makeStore` - (function) Creates the redux store for each server-side request
+  and once on the client, hydrating with the state from the server. Will only
+  be called if an existing store is not found within the context.
 
 ## Usage
 
@@ -120,3 +142,4 @@ module.exports = configureMakeStore({ reducers, thunkMiddleware })
 <!-- LINKS -->
 
 [combined]: https://redux.js.org/api/combinereducers
+
