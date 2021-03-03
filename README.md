@@ -7,20 +7,15 @@ Framework Maker for JavaScript Applications
 </p>
 
 ---
-<div align="center">
+<section class="badge-section" align="center">
 
 [![License][license-badge]][license]
-
 [![Contributors][contributors-badge]][contributors]
 [![PRs Welcome][prs-welcome-badge]][prs-welcome]
 [![Code of Conduct][coc-badge]][coc]
-
-<!-- [![install size](https://packagephobia.com/badge?p=@gasket/cli)](https://packagephobia.com/result?p=@gasket/cli)
-[![downloads](https://img.shields.io/npm/dm/@gasket/cli)](https://npmcharts.com/compare/@gasket/cli?minimal=true) -->
-
 [![tweet][tweet-badge]][tweet]
 
-</div>
+</section>
 
 Gasket helps developers make frameworks to power their apps. There are several
 presets and plugins available with which to make frameworks and construct apps.
