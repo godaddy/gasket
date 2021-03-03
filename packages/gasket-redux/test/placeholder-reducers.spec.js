@@ -1,6 +1,6 @@
 import placeholderReducers  from '../src/placeholder-reducers';
 
-describe('placeholdReducers', () => {
+describe('placeholderReducers', () => {
   let results, mockReducers, mockState;
   beforeEach(() => {
     mockReducers = {
@@ -16,15 +16,21 @@ describe('placeholdReducers', () => {
     expect(results).toEqual(expect.any(Object));
   });
 
-  it('returns empty object if no initial state', () => {
+  it('always returns default config reducer', () => {
     results = placeholderReducers(mockReducers);
-    expect(results).toEqual({});
+    expect(results).toHaveProperty('config', expect.any(Function));
   });
 
-  it('returns empty object if initial state keys match reducers', () => {
+  it('does not return config reducer if custom one set', () => {
+    mockReducers.config = f => f;
+    results = placeholderReducers(mockReducers);
+    expect(results).not.toHaveProperty('config');
+  });
+
+  it('does not include placeholder initial state keys match reducers', () => {
     mockState.group1 = 'bogus';
     results = placeholderReducers(mockReducers, mockState);
-    expect(results).toEqual({});
+    expect(results).not.toHaveProperty('group1');
   });
 
   it('returns placeholder reducer if initial state does not have matching reducer', () => {
