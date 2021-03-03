@@ -1,5 +1,9 @@
 # `@gasket/plugin-nextjs`
 
+### 6.0.7
+
+- Ensure NextJS catchall route for pages is registered last ([#257])
+
 ### 6.0.3
 
 - Create gasket.config.js with nextConfig for future webpack5  ([#252])
@@ -104,3 +108,4 @@
 [#243]: https://github.com/godaddy/gasket/pull/243
 [#245]: https://github.com/godaddy/gasket/pull/245
 [#252]: https://github.com/godaddy/gasket/pull/252
+[#257]: https://github.com/godaddy/gasket/pull/257

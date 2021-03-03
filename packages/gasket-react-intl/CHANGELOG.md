@@ -1,5 +1,9 @@
 # `@gasket/react-intl`
 
+### 6.0.7
+
+- Add `forwardRef` opt-in option to `withLocaleRequired` ([#260])
+
 ### 6.0.2
 
 - Updated react-intl config to return an empty manifest object for testing. ([#251])
@@ -109,3 +113,4 @@
 [#235]: https://github.com/godaddy/gasket/pull/235
 [#232]: https://github.com/godaddy/gasket/pull/232
 [#251]: https://github.com/godaddy/gasket/pull/251
+[#260]: https://github.com/godaddy/gasket/pull/260

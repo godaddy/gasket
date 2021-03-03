@@ -1,5 +1,9 @@
 # `@gasket/redux`
 
+### 6.0.7
+
+- Provide `getOrCreateStore` for finding existing store on a context ([#259])
+
 ### 6.0.0
 
 - Support for adding an entry root reducer ([#173])
@@ -62,5 +66,5 @@
 
 [#80]: https://github.com/godaddy/gasket/pull/80
 [#173]: https://github.com/godaddy/gasket/pull/173
-
 [#247]: https://github.com/godaddy/gasket/pull/247
+[#259]: https://github.com/godaddy/gasket/pull/259
