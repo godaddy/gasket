@@ -42,10 +42,11 @@ function attachGetInitialProps(Wrapper, localePathPart) {
  * @param {object} [options] - Options
  * @param {React.Component} [options.loading=null] - Custom component to show while loading
  * @param {React.Component} [options.initialProps=false] - Preload locales during SSR with Next.js pages
+ * @param {React.Component} [options.forwardRef=false] - Forward refs
  * @returns {function} wrapper
  */
 export default function withLocaleRequired(localePathPart = defaultPath, options = {}) {
-  const { loading = null, initialProps = false } = options;
+  const { loading = null, initialProps = false, forwardRef = false } = options;
   /**
    * Wrap the component
    * @param {React.Component} Component - Component to wrap
@@ -73,16 +74,20 @@ export default function withLocaleRequired(localePathPart = defaultPath, options
     Wrapper.displayName = `withLocaleRequired(${ displayName })`;
     Wrapper.WrappedComponent = Component;
 
-    // Forward ref through the HOC
-    const ForwardRef = React.forwardRef((props, ref) => <Wrapper { ...props } forwardedRef={ ref }/>);
-    hoistNonReactStatics(ForwardRef, Component);
-    ForwardRef.displayName = `ForwardRef(withLocaleRequired/${ displayName }))`;
-    ForwardRef.WrappedComponent = Component;
+    let Result = Wrapper;
 
-    if (initialProps || 'getInitialProps' in Component) {
-      attachGetInitialProps(ForwardRef, localePathPart);
+    // Forward ref through the HOC
+    if (forwardRef) {
+      Result = React.forwardRef((props, ref) => <Wrapper { ...props } forwardedRef={ ref }/>);
+      hoistNonReactStatics(Result, Component);
+      Result.displayName = `ForwardRef(withLocaleRequired/${ displayName }))`;
+      Result.WrappedComponent = Component;
     }
 
-    return ForwardRef;
+    if (initialProps || 'getInitialProps' in Component) {
+      attachGetInitialProps(Result, localePathPart);
+    }
+
+    return Result;
   };
 }
