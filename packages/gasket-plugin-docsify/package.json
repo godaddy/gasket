@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-docsify",
-  "version": "6.0.0",
+  "version": "6.0.9",
   "description": "View collated docs with Docsify",
   "main": "lib",
   "scripts": {
