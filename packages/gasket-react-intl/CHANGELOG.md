@@ -1,5 +1,9 @@
 # `@gasket/react-intl`
 
+### 6.0.9
+
+- Adjust peerDependencies ([#262])
+
 ### 6.0.7
 
 - Add `forwardRef` opt-in option to `withLocaleRequired` ([#260])
@@ -114,3 +118,4 @@
 [#232]: https://github.com/godaddy/gasket/pull/232
 [#251]: https://github.com/godaddy/gasket/pull/251
 [#260]: https://github.com/godaddy/gasket/pull/260
+[#262]: https://github.com/godaddy/gasket/pull/262
