@@ -1,5 +1,9 @@
 # `@gasket/plugin-nextjs`
 
+### 6.0.9
+
+- Adjust peerDependencies ([#262])
+
 ### 6.0.7
 
 - Ensure NextJS catchall route for pages is registered last ([#257])
@@ -109,3 +113,4 @@
 [#245]: https://github.com/godaddy/gasket/pull/245
 [#252]: https://github.com/godaddy/gasket/pull/252
 [#257]: https://github.com/godaddy/gasket/pull/257
+[#262]: https://github.com/godaddy/gasket/pull/262
