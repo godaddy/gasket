@@ -80,7 +80,7 @@
   },
   "peerDependencies": {
     "@gasket/plugin-intl": "^6.0.0",
-    "react-intl": ">=2.0.0 <6.0.0"
+    "react-intl": ">=4.0.0 <6.0.0"
   },
   "eslintConfig": {
     "extends": [
