@@ -1,6 +1,6 @@
 {
   "name": "@gasket/preset-api",
-  "version": "6.0.5",
+  "version": "6.0.9",
   "description": "Create Express-based API with Gasket",
   "repository": {
     "type": "git",
@@ -17,7 +17,7 @@
   "dependencies": {
     "@gasket/plugin-config": "^6.0.0",
     "@gasket/plugin-docs": "^6.0.0",
-    "@gasket/plugin-docsify": "^6.0.0",
+    "@gasket/plugin-docsify": "^6.0.9",
     "@gasket/plugin-express": "^6.0.5",
     "@gasket/plugin-https": "^6.0.0",
     "@gasket/plugin-lint": "^6.0.0",
