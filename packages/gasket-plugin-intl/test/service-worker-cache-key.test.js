@@ -26,4 +26,12 @@ describe('serviceWorkerCacheKey', function () {
     result = getLocale(req, res);
     assume(result).equals(expectedLocale);
   });
+
+  it('does not fail if gasketData is not fully populated', async function () {
+    const req = {};
+    const res = { locals: {}};
+
+    const getLocale = await serviceWorkerCacheKey();
+    assume(() => getLocale(req, res)).does.not.throw();
+  });
 });

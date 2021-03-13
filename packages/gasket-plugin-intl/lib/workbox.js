@@ -42,7 +42,11 @@ module.exports = async function workbox(gasket, config, context) {
   const { res } = context;
 
   // since we cannot determine a users' locale at build time, exit early
-  if (!res) return {};
+  if (!res
+    || !res.locals
+    || !res.locals.gasketData
+    || !res.locals.gasketData.intl
+  ) return {};
 
   const { locale } = res.locals.gasketData.intl;
 

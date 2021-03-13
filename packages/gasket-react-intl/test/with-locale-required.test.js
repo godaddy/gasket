@@ -110,6 +110,27 @@ describe('withLocaleRequired', function () {
         }
       });
     });
+
+    it('handles missing gasketData', async function () {
+      MockComponent.getInitialProps = sinon.stub().returns({ bogus: true });
+      const wrapped = withLocaleRequired('locales', { initialProps: true })(MockComponent);
+
+      const ctx = {
+        res: {
+          locals: {
+            localesDir: path.join(__dirname, 'fixtures', 'locales')
+          }
+        }
+      };
+
+      let error = null;
+      try {
+        await wrapped.getInitialProps(ctx);
+      } catch (err) {
+        error = err;
+      }
+      assume(error).to.equal(null);
+    });
   });
 
   describe('#render', function () {
