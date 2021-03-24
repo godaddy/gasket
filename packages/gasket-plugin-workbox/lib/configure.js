@@ -1,6 +1,6 @@
 const {
   getWorkboxConfig,
-  getAssetPrefix
+  getBasePath
 } = require('./utils');
 
 /**
@@ -11,14 +11,18 @@ const {
  * @returns {Promise<Object>} config
  */
 module.exports = async function configure(gasket, config) {
+  const { logger } = gasket;
   const workbox = getWorkboxConfig({ config });
-  const assetPrefix = getAssetPrefix({ config });
+  const basePath = getBasePath({ config });
+
+  if ('assetPrefix' in workbox) logger.warning('DEPRECATED workbox config `assetPrefix` - use `basePath`');
+  workbox.basePath = basePath;
 
   const { version } = require('workbox-build/package');
   const libraryVersion = `workbox-v${version}`;
 
   const scriptUrl = [
-    ...(assetPrefix ? [assetPrefix] : []),
+    ...(basePath ? [basePath] : []),
     '_workbox',
     libraryVersion,
     'workbox-sw.js'

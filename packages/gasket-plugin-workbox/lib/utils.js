@@ -1,6 +1,8 @@
 const path = require('path');
 const merge = require('deepmerge');
 
+const isDefined = o => typeof o !== 'undefined';
+
 /**
  * Workbox defaults
  *
@@ -38,20 +40,22 @@ function getOutputDir(gasket) {
 }
 
 /**
- * Get the asset prefix from next, workbox, or basePath config.
+ * Get the base path from workbox, or root basePath config.
  * If found in both, the workbox config will be used.
  *
  * @param {Gasket} gasket - Gasket
  * @returns {string} prefix
  */
-function getAssetPrefix(gasket) {
-  const { workbox = {}, basePath } = gasket.config;
-  return workbox.assetPrefix || basePath || '';
+function getBasePath(gasket) {
+  const { workbox = {}, basePath: rootBasePath } = gasket.config;
+  const { basePath, assetPrefix } = workbox;
+
+  return [basePath, assetPrefix, rootBasePath, ''].find(isDefined);
 }
 
 module.exports = {
   defaultConfig,
   getWorkboxConfig,
   getOutputDir,
-  getAssetPrefix
+  getBasePath
 };

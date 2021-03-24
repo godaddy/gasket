@@ -409,6 +409,13 @@ describe('workbox hook', () => {
     const results = await plugin.hooks.workbox(gasketAPI);
     assume(results.modifyURLPrefix).to.have.property('.next/', `${assetPrefix}/_next/`);
   });
+
+  it('config modifies urls to use basePath', async () => {
+    const assetPrefix = '/from-root';
+    gasketAPI.config = { basePath: assetPrefix };
+    const results = await plugin.hooks.workbox(gasketAPI);
+    assume(results.modifyURLPrefix).to.have.property('.next/', `${assetPrefix}/_next/`);
+  });
 });
 
 function mockGasketApi() {
