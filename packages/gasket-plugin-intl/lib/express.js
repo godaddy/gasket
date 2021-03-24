@@ -1,4 +1,3 @@
-const path = require('path');
 const { getIntlConfig } = require('./configure');
 const serveStaticMw = require('serve-static');
 
@@ -9,13 +8,12 @@ const serveStaticMw = require('serve-static');
  * @param {Object} app - Express app
  */
 module.exports = function express(gasket, app) {
-  const { root } = gasket.config;
-  const { outputDir, serveStatic, defaultPath } = getIntlConfig(gasket);
+  const { localesDir, serveStatic, defaultPath } = getIntlConfig(gasket);
 
   if (serveStatic) {
     const staticPath = serveStatic === true ? defaultPath : serveStatic;
 
-    app.use(staticPath, serveStaticMw(path.join(root, outputDir), {
+    app.use(staticPath, serveStaticMw(localesDir, {
       index: false,
       maxAge: '1y',
       immutable: true

@@ -1,9 +1,10 @@
 const assume = require('assume');
 const sinon = require('sinon');
-const expressHook = require('../lib/express');
+const proxyquire = require('proxyquire');
+
 
 describe('express', function () {
-  let mockGasket, mockApp;
+  let mockGasket, mockApp, expressHook, serveStaticStub;
 
   beforeEach(() => {
     mockApp = {
@@ -19,11 +20,16 @@ describe('express', function () {
           defaultPath: '/locales',
           localesMap: { },
           localesDir: './public/locales',
-          manifestFilename: 'mock-manifest.json',
-          outputDir: '/test-output-dir'
+          manifestFilename: 'mock-manifest.json'
         }
       }
     };
+
+    serveStaticStub = sinon.stub();
+
+    expressHook = proxyquire('../lib/express', {
+      'serve-static': serveStaticStub
+    });
   });
 
   afterEach(function () {
@@ -45,5 +51,21 @@ describe('express', function () {
     mockGasket.config.intl.serveStatic = '/custom-path';
     expressHook(mockGasket, mockApp);
     assume(mockApp.use.args[0][0]).eqls(mockGasket.config.intl.serveStatic);
+  });
+
+  it('static serves from configured localesDir', function () {
+    mockGasket.config.intl.serveStatic = true;
+    expressHook(mockGasket, mockApp);
+    assume(serveStaticStub.args[0][0]).eqls(mockGasket.config.intl.localesDir);
+  });
+
+  it('uses expected static serve settings', function () {
+    mockGasket.config.intl.serveStatic = true;
+    expressHook(mockGasket, mockApp);
+    assume(serveStaticStub.args[0][1]).eqls({
+      index: false,
+      maxAge: '1y',
+      immutable: true
+    });
   });
 });
