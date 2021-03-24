@@ -22,7 +22,7 @@ function attachGetInitialProps(Wrapper, localePathPart) {
     const { res } = ctx;
     let localesProps;
 
-    if (res) {
+    if (res && res.locals && res.locals.gasketData) {
       const { locale = defaultLocale } = res.locals.gasketData.intl || {};
       const localesParentDir = path.dirname(res.locals.localesDir);
       localesProps = localeUtils.serverLoadData(localePathPart, locale, localesParentDir);

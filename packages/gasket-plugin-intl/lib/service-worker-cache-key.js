@@ -5,6 +5,16 @@
  */
 module.exports = async function serviceWorkerCacheKey() {
   return function getLocale(req, res) {
-    return res.locals.gasketData.intl.locale;
+    const {
+      locals: {
+        gasketData: {
+          intl: {
+            locale
+          } = {}
+        } = {}
+      } = {}
+    } = res;
+
+    return locale;
   };
 };
