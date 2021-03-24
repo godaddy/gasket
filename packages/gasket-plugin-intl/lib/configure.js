@@ -5,6 +5,8 @@ const moduleDefaults = {
   excludes: ['cacache', 'yargs', 'axe-core']
 };
 
+const isDefined = o => typeof o !== 'undefined';
+
 /**
  * Shortcut to get the gasket.config.intl object
  *
@@ -28,9 +30,9 @@ function getIntlConfig(gasket) {
 function deprecatedOptions(gasket, intlConfig) {
   const { logger } = gasket;
   const { languageMap, defaultLanguage, assetPrefix } = intlConfig;
-  if (languageMap) logger.warning('DEPRECATED intl config `languageMap` - use `localesMap`');
-  if (defaultLanguage) logger.warning('DEPRECATED intl config `defaultLanguage` - use `defaultLocale`');
-  if (assetPrefix) logger.warning('DEPRECATED intl config `assetPrefix` - use `basePath`');
+  if (isDefined(languageMap)) logger.warning('DEPRECATED intl config `languageMap` - use `localesMap`');
+  if (isDefined(defaultLanguage)) logger.warning('DEPRECATED intl config `defaultLanguage` - use `defaultLocale`');
+  if (isDefined(assetPrefix)) logger.warning('DEPRECATED intl config `assetPrefix` - use `basePath`');
   return { languageMap, defaultLanguage, assetPrefix };
 }
 
@@ -60,9 +62,9 @@ module.exports = function configureHook(gasket, config) {
 
   const fullLocalesDir = path.join(root, localesDir);
 
-  const basePath = intlConfig.basePath || assetPrefix ||
-    nextConfig.basePath || nextConfig.assetPrefix ||
-    config.basePath || '';
+  const basePath = [intlConfig.basePath, assetPrefix,
+    nextConfig.assetPrefix, nextConfig.basePath,
+    config.basePath, ''].find(isDefined);
 
   let { modules = false } = intlConfig;
   if (modules) {
