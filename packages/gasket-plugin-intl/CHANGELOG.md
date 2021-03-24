@@ -1,5 +1,7 @@
 # `@gasket/plugin-intl`
 
+- Add additional safety checks around accessing gasketData
+
 ### 6.0.4
 
 - Fix to use defaultPath in workbox lifecycle ([#254])

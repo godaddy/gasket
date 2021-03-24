@@ -105,6 +105,19 @@ describe('workbox', function () {
     assume(result.manifestTransforms[0]).property('name', 'encodeLocaleUrls');
   });
 
+  it('does not assume gasketData to be populated', async function () {
+    delete mockContext.res.locals.gasketData;
+    let error = null;
+
+    try {
+      await workbox(mockGasket, mockConfig, mockContext);
+    } catch (err) {
+      error = err;
+    }
+
+    assume(error).to.equal(null);
+  });
+
   describe('makeEncodeLocaleUrls', function () {
     let encodeLocaleUrls, mockEntry, mockManifest;
 

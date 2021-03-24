@@ -1,5 +1,7 @@
 # `@gasket/react-intl`
 
+- Fix crash that occurs when building static pages
+
 ### 6.0.9
 
 - Adjust peerDependencies ([#262])
