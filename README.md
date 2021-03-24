@@ -141,8 +141,8 @@ Available presets
 | Name                    | Version | Description                                |
 | ----------------------- | ------- | ------------------------------------------ |
 | [@gasket/preset-api]    | 6.0.9   | Create Express-based API with Gasket       |
-| [@gasket/preset-nextjs] | 6.0.9   | Basic NextJS Framework                     |
-| [@gasket/preset-pwa]    | 6.0.3   | Turn Gasket apps into Progressive Web Apps |
+| [@gasket/preset-nextjs] | 6.0.10  | Basic NextJS Framework                     |
+| [@gasket/preset-pwa]    | 6.0.10  | Turn Gasket apps into Progressive Web Apps |
 
 ## Plugins
 
@@ -160,7 +160,7 @@ Available plugins
 | [@gasket/plugin-fastify]        | 6.0.5   | Adds fastify support to your application                                   |
 | [@gasket/plugin-git]            | 6.0.0   | Adds git support to your application                                       |
 | [@gasket/plugin-https]          | 6.0.0   | Create http/s servers with graceful termination                            |
-| [@gasket/plugin-intl]           | 6.0.9   | NodeJS script to build localization files.                                 |
+| [@gasket/plugin-intl]           | 6.0.10  | NodeJS script to build localization files.                                 |
 | [@gasket/plugin-jest]           | 6.0.0   | Integrated jest into your application.                                     |
 | [@gasket/plugin-lifecycle]      | 6.0.0   | Allows a gasket/ directory to be used for lifecycle hooks in applications. |
 | [@gasket/plugin-lint]           | 6.0.2   | Adds GoDaddy standard linting to your application                          |
@@ -169,13 +169,13 @@ Available plugins
 | [@gasket/plugin-metadata]       | 6.0.0   | Adds metadata to gasket lifecycles                                         |
 | [@gasket/plugin-metrics]        | 6.0.0   | Collect metrics for gasket commands                                        |
 | [@gasket/plugin-mocha]          | 6.0.0   | Integrates mocha based testing in to your Gasket application               |
-| [@gasket/plugin-nextjs]         | 6.0.9   | Adds Next support to your application                                      |
+| [@gasket/plugin-nextjs]         | 6.0.10  | Adds Next support to your application                                      |
 | [@gasket/plugin-redux]          | 6.0.8   | Gasket Redux Setup                                                         |
 | [@gasket/plugin-service-worker] | 6.0.0   | Gasket Service Worker Plugin                                               |
 | [@gasket/plugin-start]          | 6.0.0   | Adds commands for building and starting Gasket apps                        |
 | [@gasket/plugin-swagger]        | 6.0.0   | Generate and serve swagger docs                                            |
 | [@gasket/plugin-webpack]        | 6.0.3   | Adds webpack support to your application                                   |
-| [@gasket/plugin-workbox]        | 6.0.3   | Gasket Workbox Plugin                                                      |
+| [@gasket/plugin-workbox]        | 6.0.10  | Gasket Workbox Plugin                                                      |
 
 ## Modules
 
@@ -191,7 +191,7 @@ Supporting modules
 | [@gasket/helper-intl] | 6.0.6   | Internal helpers used by loaders to resolve locale file paths                        |
 | [@gasket/log]         | 6.0.0   | Gasket client and server logger                                                      |
 | [@gasket/nextjs]      | 6.0.9   | Gasket integrations for Next.js apps                                                 |
-| [@gasket/react-intl]  | 6.0.9   | React component library to enable localization for gasket apps.                      |
+| [@gasket/react-intl]  | 6.0.10  | React component library to enable localization for gasket apps.                      |
 | [@gasket/redux]       | 6.0.8   | Gasket Redux Configuration                                                           |
 | [@gasket/resolve]     | 6.0.0   | Essential module resolution & configuration management for gasket plugins & presets. |
 | [@gasket/utils]       | 6.0.0   | Reusable utilities for Gasket internals                                              |
