@@ -1,5 +1,10 @@
 # `@gasket/plugin-workbox`
 
+### 6.0.10
+
+- Safer base path config selection ([#266])
+  - Deprecate assetPrefix in favor of `basePath` config property
+
 ### 6.0.0
 
 - Change `zone` config to `basePath` ([#212])
@@ -36,3 +41,4 @@
 [#212]: https://github.com/godaddy/gasket/pull/212\
 [#217]: https://github.com/godaddy/gasket/pull/217
 [#247]: https://github.com/godaddy/gasket/pull/247
+[#266]: https://github.com/godaddy/gasket/pull/266

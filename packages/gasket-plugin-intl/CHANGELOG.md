@@ -1,6 +1,10 @@
 # `@gasket/plugin-intl`
 
-- Add additional safety checks around accessing gasketData
+### 6.0.10
+
+- Add additional safety checks around accessing gasketData ([#263])
+- Fix to use configured intl.localesDir for serving static files ([#265])
+- Safer base path config selection ([#266])
 
 ### 6.0.4
 
@@ -113,3 +117,6 @@
 [#243]: https://github.com/godaddy/gasket/pull/243
 [#245]: https://github.com/godaddy/gasket/pull/245
 [#254]: https://github.com/godaddy/gasket/pull/254
+[#263]: https://github.com/godaddy/gasket/pull/263
+[#265]: https://github.com/godaddy/gasket/pull/265
+[#266]: https://github.com/godaddy/gasket/pull/266

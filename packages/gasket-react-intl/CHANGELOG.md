@@ -1,6 +1,8 @@
 # `@gasket/react-intl`
 
-- Fix crash that occurs when building static pages
+### 6.0.10
+
+- Add additional safety checks around accessing gasketData ([#263])
 
 ### 6.0.9
 
@@ -121,3 +123,4 @@
 [#251]: https://github.com/godaddy/gasket/pull/251
 [#260]: https://github.com/godaddy/gasket/pull/260
 [#262]: https://github.com/godaddy/gasket/pull/262
+[#263]: https://github.com/godaddy/gasket/pull/263
