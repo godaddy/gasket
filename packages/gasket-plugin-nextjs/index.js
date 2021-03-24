@@ -4,6 +4,8 @@ const { name, devDependencies } = require('./package');
 const { createConfig } = require('./config');
 const { pluginIdentifier } = require('@gasket/resolve');
 
+const isDefined = o => typeof o !== 'undefined';
+
 module.exports = {
   dependencies: ['@gasket/plugin-webpack'],
   name,
@@ -166,8 +168,8 @@ module.exports = {
     * @returns {Object} config
     */
     workbox: function (gasket) {
-      const { nextConfig = {}, basePath } = gasket.config;
-      const assetPrefix = nextConfig.assetPrefix || basePath || '';
+      const { nextConfig = {}, basePath: rootBasePath } = gasket.config;
+      const assetPrefix = [nextConfig.assetPrefix, nextConfig.basePath, rootBasePath, ''].find(isDefined);
 
       const parsed = assetPrefix ? url.parse(assetPrefix) : '';
       const joined = parsed ? url.format({ ...parsed, pathname: path.join(parsed.pathname, '_next/') }) : '_next/';

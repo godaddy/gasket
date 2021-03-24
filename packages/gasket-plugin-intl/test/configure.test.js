@@ -67,6 +67,29 @@ describe('configure', function () {
     });
   });
 
+  it('can use root basePath', function () {
+    const results = configure(mockGasket, { root, basePath: 'from-root' });
+    assume(results.intl).property('basePath', 'from-root');
+  });
+
+  it('can use nextConfig.assetPrefix for basePath', function () {
+    const results = configure(mockGasket, { root, nextConfig: { assetPrefix: 'from-next' } });
+    assume(results.intl).property('basePath', 'from-next');
+  });
+
+  it('can use nextConfig.basePath for basePath', function () {
+    const results = configure(mockGasket, { root, nextConfig: { basePath: 'from-next' } });
+    assume(results.intl).property('basePath', 'from-next');
+  });
+
+  it(`intl.basePath can be empty string, overriding lesser configs`, function () {
+    let results = configure(mockGasket, { root, intl: { basePath: '' }, nextConfig: { assetPrefix: 'from-next' } });
+    assume(results.intl).property('basePath', '');
+
+    results = configure(mockGasket, { root, basePath: 'from-root', intl: { basePath: '' } });
+    assume(results.intl).property('basePath', '');
+  });
+
   it('adds env variables', function () {
     assume(process.env.GASKET_INTL_LOCALES_DIR).is.undefined;
     assume(process.env.GASKET_INTL_MANIFEST_FILE).is.undefined;
@@ -83,6 +106,9 @@ describe('configure', function () {
 
     configure(mockGasket, { root, intl: { defaultLanguage: 'fake' } });
     assume(mockGasket.logger.warning).calledWithMatch('defaultLanguage');
+
+    configure(mockGasket, { root, intl: { assetPrefix: 'fake' } });
+    assume(mockGasket.logger.warning).calledWithMatch('assetPrefix');
   });
 
   describe('getIntlConfig', function () {
