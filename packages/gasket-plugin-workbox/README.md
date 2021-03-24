@@ -43,9 +43,9 @@ Set the Workbox options, in the `gasket.config.js` under `workbox`.
 
 - `outputDir` - (string) path of directory to copy Workbox libraries to
   (default: `./build/workbox`)
-- `assetPrefix` - (string) change the default path to `/_workbox` endpoint by
+- `basePath` - (string) change the default path to `/_workbox` endpoint by
   adding a path prefix here. (default: ''). Used for setting up CDN support for
-  Workbox files. The `basePath` config will be used unless `assetPrefix` is set.
+  Workbox files.
 - `config`: (object) Any initial [workbox config options][generateSWString]
   which will be merged with those from any `workbox` lifecycle hooks.
 
@@ -110,7 +110,7 @@ appended to the service worker content in the [composeServiceWorker] hook from
 During the `build` hook, the Workbox libraries are copied to the build output
 directory so that they can be served by the app. The service worker will then
 import these scripts, with requests to the `/_workbox` static files served by
-the app. These can be set up to edge cache by setting the `assetPrefix` option.
+the app. These can be set up to edge cache by setting the `basePath` option.
 
 ## License
 

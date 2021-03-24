@@ -27,10 +27,19 @@ describe('getWorkboxConfig', () => {
   });
 });
 
-describe('getAssetPrefix', () => {
+describe('getBasePath', () => {
+
+  it('returns the basePath from workbox config', () => {
+    const results = utils.getBasePath(setupGasket({
+      workbox: {
+        basePath: '//cdn-a'
+      }
+    }));
+    expect(results).toEqual('//cdn-a');
+  });
 
   it('returns the assetPrefix from workbox config', () => {
-    const results = utils.getAssetPrefix(setupGasket({
+    const results = utils.getBasePath(setupGasket({
       workbox: {
         assetPrefix: '//cdn-a'
       }
@@ -38,15 +47,15 @@ describe('getAssetPrefix', () => {
     expect(results).toEqual('//cdn-a');
   });
 
-  it('returns the assetPrefix from next config', () => {
-    const results = utils.getAssetPrefix(setupGasket({
+  it('returns the basePath from next config', () => {
+    const results = utils.getBasePath(setupGasket({
       basePath: '//cdn-b'
     }));
     expect(results).toEqual('//cdn-b');
   });
 
-  it('returns the assetPrefix from workbox config over next', () => {
-    const results = utils.getAssetPrefix(setupGasket({
+  it('returns the basePath from workbox config over next', () => {
+    const results = utils.getBasePath(setupGasket({
       workbox: {
         assetPrefix: '//cdn-a'
       },
@@ -56,7 +65,7 @@ describe('getAssetPrefix', () => {
   });
 
   it('returns empty string if not configured', () => {
-    const results = utils.getAssetPrefix(setupGasket({}));
+    const results = utils.getBasePath(setupGasket({}));
     expect(results).toEqual('');
   });
 });
