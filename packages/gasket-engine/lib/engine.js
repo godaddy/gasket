@@ -1,3 +1,4 @@
+const debug = require('debug')('gasket:engine');
 const { Loader, pluginIdentifier } = require('@gasket/resolve');
 
 let dynamicNamingId = 0;
@@ -10,6 +11,7 @@ class PluginEngine {
 
     this._hooks = {};
     this._plans = {};
+    this._traceDepth = 0;
 
     this._registerPlugins();
     this._registerHooks();
@@ -135,14 +137,18 @@ class PluginEngine {
         const subscribers = hookConfig.subscribers;
         const executionPlan = [];
         const pluginThunks = {};
-        this._executeInOrder(hookConfig, plugin => {
-          pluginThunks[plugin] = (pluginTasks, ...passedArgs) => {
-            pluginTasks[plugin] = Promise
-              .all(subscribers[plugin].ordering.after.map(dep => pluginTasks[dep]))
-              .then(() => subscribers[plugin].callback(...passedArgs));
-            return pluginTasks[plugin];
+        this._executeInOrder(hookConfig, pluginName => {
+          pluginThunks[pluginName] = (pluginTasks, ...passedArgs) => {
+            pluginTasks[pluginName] = Promise
+              .all(subscribers[pluginName].ordering.after.map(dep => pluginTasks[dep]))
+              .then(() => this._traceAsyncInvoke({
+                pluginName, event,
+                invokeType: 'exec',
+                fn: () => subscribers[pluginName].callback(...passedArgs)
+              }));
+            return pluginTasks[pluginName];
           };
-          executionPlan.push(pluginThunks[plugin]);
+          executionPlan.push(pluginThunks[pluginName]);
         });
 
         return executionPlan;
@@ -171,8 +177,12 @@ class PluginEngine {
       prepare: hookConfig => {
         const subscribers = hookConfig.subscribers;
         const executionPlan = [];
-        this._executeInOrder(hookConfig, plugin => {
-          executionPlan.push(subscribers[plugin].callback);
+        this._executeInOrder(hookConfig, pluginName => {
+          executionPlan.push((...execArgs) => this._traceSyncInvoke({
+            pluginName, event,
+            invokeType: 'execSync',
+            fn: () => subscribers[pluginName].callback(...execArgs)
+          }));
         });
 
         return executionPlan;
@@ -200,12 +210,16 @@ class PluginEngine {
       prepare: hookConfig => {
         const subscribers = hookConfig.subscribers;
         const executionPlan = {};
-        this._executeInOrder(hookConfig, plugin => {
-          executionPlan[plugin] = (pluginTasks, ...passedArgs) => {
-            pluginTasks[plugin] = Promise
-              .all(subscribers[plugin].ordering.after.map(dep => pluginTasks[dep]))
-              .then(() => subscribers[plugin].callback(...passedArgs));
-            return pluginTasks[plugin];
+        this._executeInOrder(hookConfig, pluginName => {
+          executionPlan[pluginName] = (pluginTasks, ...passedArgs) => {
+            pluginTasks[pluginName] = Promise
+              .all(subscribers[pluginName].ordering.after.map(dep => pluginTasks[dep]))
+              .then(() => this._traceAsyncInvoke({
+                pluginName, event,
+                invokeType: 'execMap',
+                fn: () => subscribers[pluginName].callback(...passedArgs)
+              }));
+            return pluginTasks[pluginName];
           };
         });
 
@@ -240,9 +254,13 @@ class PluginEngine {
       prepare: hookConfig => {
         const subscribers = hookConfig.subscribers;
         const executionPlan = [];
-        this._executeInOrder(hookConfig, plugin => {
+        this._executeInOrder(hookConfig, pluginName => {
           executionPlan.push((resultMap, ...passedArgs) => {
-            resultMap[plugin] = subscribers[plugin].callback(...passedArgs);
+            resultMap[pluginName] = this._traceSyncInvoke({
+              event, pluginName,
+              invokeType: 'execMapSync',
+              fn: () => subscribers[pluginName].callback(...passedArgs)
+            });
           });
         });
 
@@ -275,9 +293,13 @@ class PluginEngine {
         return (passedValue, ...args) => {
           let result = Promise.resolve(passedValue);
 
-          this._executeInOrder(hookConfig, plugin => {
+          this._executeInOrder(hookConfig, pluginName => {
             result = result.then((nextValue) => {
-              return subscribers[plugin].callback(nextValue, ...args);
+              return this._traceAsyncInvoke({
+                event, pluginName,
+                invokeType: 'execWaterfall',
+                fn: () => subscribers[pluginName].callback(nextValue, ...args)
+              });
             });
           });
 
@@ -310,8 +332,12 @@ class PluginEngine {
         return (passedValue, ...args) => {
           let result = passedValue;
 
-          this._executeInOrder(hookConfig, plugin => {
-            result = subscribers[plugin].callback(result, ...args);
+          this._executeInOrder(hookConfig, pluginName => {
+            result = this._traceSyncInvoke({
+              pluginName, event,
+              invokeType: 'execWaterfallSync',
+              fn: () => subscribers[pluginName].callback(result, ...args)
+            });
           });
 
           return result;
@@ -341,14 +367,18 @@ class PluginEngine {
         const subscribers = hookConfig.subscribers;
         const executionPlan = [];
         const pluginThunks = {};
-        this._executeInOrder(hookConfig, plugin => {
-          pluginThunks[plugin] = (pluginTasks) => {
-            pluginTasks[plugin] = Promise
-              .all(subscribers[plugin].ordering.after.map(dep => pluginTasks[dep]))
-              .then(() => applyFn(this._plugins[plugin], subscribers[plugin].callback));
-            return pluginTasks[plugin];
+        this._executeInOrder(hookConfig, pluginName => {
+          pluginThunks[pluginName] = (pluginTasks) => {
+            pluginTasks[pluginName] = Promise
+              .all(subscribers[pluginName].ordering.after.map(dep => pluginTasks[dep]))
+              .then(() => this._traceAsyncInvoke({
+                event, pluginName,
+                invokeType: 'execApply',
+                fn: () => applyFn(this._plugins[pluginName], subscribers[pluginName].callback)
+              }));
+            return pluginTasks[pluginName];
           };
-          executionPlan.push(pluginThunks[plugin]);
+          executionPlan.push(pluginThunks[pluginName]);
         });
 
         return executionPlan;
@@ -375,8 +405,12 @@ class PluginEngine {
       prepare: hookConfig => {
         const subscribers = hookConfig.subscribers;
         const executionPlan = [];
-        this._executeInOrder(hookConfig, plugin => {
-          executionPlan.push(() => applyFn(this._plugins[plugin], subscribers[plugin].callback));
+        this._executeInOrder(hookConfig, pluginName => {
+          executionPlan.push(() => this._traceSyncInvoke({
+            pluginName, event,
+            invokeType: 'execApplySync',
+            fn: () => applyFn(this._plugins[pluginName], subscribers[pluginName].callback)
+          }));
         });
 
         return executionPlan;
@@ -494,6 +528,33 @@ class PluginEngine {
         .concat(orderings.middles)
         .forEach(other => subscribers[plugin].ordering.after.push(other));
     });
+  }
+
+  async _traceAsyncInvoke({ event, pluginName, invokeType, fn }) {
+    this._traceInvokeStart({ event, pluginName, invokeType });
+    try {
+      return await fn();
+    } finally {
+      this._traceInvokeEnd();
+    }
+  }
+
+  _traceSyncInvoke({ event, pluginName, invokeType, fn }) {
+    this._traceInvokeStart({ event, pluginName, invokeType });
+    try {
+      return fn();
+    } finally {
+      this._traceInvokeEnd();
+    }
+  }
+
+  _traceInvokeStart({ event, pluginName, invokeType }) {
+    debug(`${'  '.repeat(this._traceDepth)}${invokeType} ${event}:${pluginName}`);
+    this._traceDepth++;
+  }
+
+  _traceInvokeEnd() {
+    this._traceDepth--;
   }
 }
 

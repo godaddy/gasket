@@ -1,5 +1,7 @@
 # `@gasket/engine`
 
+- Add ability to do debug tracing for the plugin lifecycle
+
 ### 6.0.0
 
 - Remove package name fallbacks ([#227])
