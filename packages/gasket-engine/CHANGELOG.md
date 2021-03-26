@@ -1,6 +1,8 @@
 # `@gasket/engine`
 
-- Add ability to do debug tracing for the plugin lifecycle
+### 6.0.11
+
+- Add ability to do debug tracing for the plugin lifecycle ([#267])
 
 ### 6.0.0
 
@@ -58,5 +60,6 @@
 [#124]: https://github.com/godaddy/gasket/pull/124
 [#160]: https://github.com/godaddy/gasket/pull/160
 [#227]: https://github.com/godaddy/gasket/pull/227
+[#267]: https://github.com/godaddy/gasket/pull/267
 
 [Loader]:/packages/gasket-resolve/docs/api.md#loader
