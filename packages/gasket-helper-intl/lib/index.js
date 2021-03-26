@@ -81,6 +81,8 @@ const LocaleStatus = {
 };
 
 const reLocalePathParam = /(\/[$:{]locale}?\/)/;
+const reLeadingSlash = /^\//;
+const trim = localePath => localePath.replace(reLeadingSlash, '');
 
 /**
  * @classdesc Utility class for loading locale files
@@ -149,8 +151,7 @@ function LocaleUtils(config) {
 
     while (fallbackLocale !== null) {
       const localePath = this.formatLocalePath(localePathPart, fallbackLocale);
-      const localePathTrimmed = localePath.replace('/', '');
-      if (localePathTrimmed in paths) return localePath;
+      if (trim(localePath) in paths) return localePath;
       fallbackLocale = this.getFallbackLocale(fallbackLocale);
     }
     return this.formatLocalePath(localePathPart, mappedLocale);
@@ -164,12 +165,8 @@ function LocaleUtils(config) {
    * @method
    */
   this.pathToUrl = (localePath) => {
-    let url = localePath;
-    const localePathTrimmed = localePath.replace(/^\//, '');
-    if (basePath) {
-      url = basePath.replace(/\/$/, '') + '/' + localePathTrimmed;
-    }
-    const hash = paths[localePathTrimmed];
+    let url = basePath ? basePath.replace(/\/$/, '') + localePath : localePath;
+    const hash = paths[trim(localePath)];
     if (hash) url += `?v=${ hash }`;
     return url;
   };
