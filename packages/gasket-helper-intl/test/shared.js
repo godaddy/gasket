@@ -89,14 +89,14 @@ module.exports = function sharedTests(UtilClass) {
     });
 
     it('falls back to lang if no localePath with region', function () {
-      mockConfig.manifest.paths['/locales/da.json'] = 'hash1234';
+      mockConfig.manifest.paths['locales/da.json'] = 'hash1234';
       utils = new UtilClass(mockConfig);
       const results = utils.getLocalePath('/locales', 'da-DK');
       assume(results).equals('/locales/da.json');
     });
 
     it('falls back to lang if no localePath with script and region', function () {
-      mockConfig.manifest.paths['/locales/az.json'] = 'hash1234';
+      mockConfig.manifest.paths['locales/az.json'] = 'hash1234';
       utils = new UtilClass(mockConfig);
       const results = utils.getLocalePath('/locales', 'az-Cyrl-AZ');
       assume(results).equals('/locales/az.json');
@@ -104,14 +104,14 @@ module.exports = function sharedTests(UtilClass) {
 
     it('falls back to default locale if no localePath for locale', function () {
       mockConfig.manifest.defaultLocale = 'fake';
-      mockConfig.manifest.paths['/locales/fake.json'] = 'hash1234';
+      mockConfig.manifest.paths['locales/fake.json'] = 'hash1234';
       utils = new UtilClass(mockConfig);
       const results = utils.getLocalePath('/locales', 'da-DK');
       assume(results).equals('/locales/fake.json');
     });
 
     it('returns localePath for mapped locales', function () {
-      mockConfig.manifest.paths['/locales/fake.json'] = 'hash1234';
+      mockConfig.manifest.paths['locales/fake.json'] = 'hash1234';
       mockConfig.manifest.localesMap = { 'da-DK': 'fake' };
       utils = new UtilClass(mockConfig);
       const results = utils.getLocalePath('/locales', 'da-DK');

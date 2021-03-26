@@ -3,7 +3,7 @@
   "localesPath": "/locales",
   "defaultLocale": "en-US",
   "paths": {
-    "/locales/en-US.json": "10decbe",
-    "/locales/fr-FR.json": "21047f1"
+    "locales/en-US.json": "10decbe",
+    "locales/fr-FR.json": "21047f1"
   }
 }
