@@ -145,6 +145,10 @@ const pluginEngine = new PluginEngine(gasketConfig, { resolveFrom });
 The above will resolve all Plugins and Presets from within `./someapp` instead
 of resolving relative to the current directory.
 
+## Tracing
+
+The Gasket engine uses the [`debug`](https://www.npmjs.com/package/debug) package to trace the plugin lifecycle. If you set the `DEBUG` environment variable to `gasket:engine` you'll see additional output in `stderr` indicating when things are invoked.
+
 ## License
 
 [MIT](./LICENSE.md)
