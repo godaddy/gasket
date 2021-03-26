@@ -1,3 +1,4 @@
+const debug = require('debug')('gasket:engine');
 const { Loader, pluginIdentifier } = require('@gasket/resolve');
 
 let dynamicNamingId = 0;
@@ -10,6 +11,7 @@ class PluginEngine {
 
     this._hooks = {};
     this._plans = {};
+    this._traceDepth = 0;
 
     this._registerPlugins();
     this._registerHooks();
@@ -131,7 +133,7 @@ class PluginEngine {
     return this._execWithCachedPlan({
       event,
       type: 'exec',
-      prepare: hookConfig => {
+      prepare: (hookConfig, trace) => {
         const subscribers = hookConfig.subscribers;
         const executionPlan = [];
         const pluginThunks = {};
@@ -139,7 +141,10 @@ class PluginEngine {
           pluginThunks[plugin] = (pluginTasks, ...passedArgs) => {
             pluginTasks[plugin] = Promise
               .all(subscribers[plugin].ordering.after.map(dep => pluginTasks[dep]))
-              .then(() => subscribers[plugin].callback(...passedArgs));
+              .then(() => {
+                trace(plugin);
+                return subscribers[plugin].callback(...passedArgs);
+              });
             return pluginTasks[plugin];
           };
           executionPlan.push(pluginThunks[plugin]);
@@ -168,11 +173,14 @@ class PluginEngine {
     return this._execWithCachedPlan({
       event,
       type: 'execSync',
-      prepare: hookConfig => {
+      prepare: (hookConfig, trace) => {
         const subscribers = hookConfig.subscribers;
         const executionPlan = [];
         this._executeInOrder(hookConfig, plugin => {
-          executionPlan.push(subscribers[plugin].callback);
+          executionPlan.push((...execArgs) => {
+            trace(plugin);
+            return subscribers[plugin].callback(...execArgs);
+          });
         });
 
         return executionPlan;
@@ -197,14 +205,17 @@ class PluginEngine {
     return this._execWithCachedPlan({
       event,
       type: 'execMap',
-      prepare: hookConfig => {
+      prepare: (hookConfig, trace) => {
         const subscribers = hookConfig.subscribers;
         const executionPlan = {};
         this._executeInOrder(hookConfig, plugin => {
           executionPlan[plugin] = (pluginTasks, ...passedArgs) => {
             pluginTasks[plugin] = Promise
               .all(subscribers[plugin].ordering.after.map(dep => pluginTasks[dep]))
-              .then(() => subscribers[plugin].callback(...passedArgs));
+              .then(() => {
+                trace(plugin);
+                return subscribers[plugin].callback(...passedArgs);
+              });
             return pluginTasks[plugin];
           };
         });
@@ -237,11 +248,12 @@ class PluginEngine {
     return this._execWithCachedPlan({
       event,
       type: 'execMapSync',
-      prepare: hookConfig => {
+      prepare: (hookConfig, trace) => {
         const subscribers = hookConfig.subscribers;
         const executionPlan = [];
         this._executeInOrder(hookConfig, plugin => {
           executionPlan.push((resultMap, ...passedArgs) => {
+            trace(plugin);
             resultMap[plugin] = subscribers[plugin].callback(...passedArgs);
           });
         });
@@ -269,7 +281,7 @@ class PluginEngine {
     return this._execWithCachedPlan({
       event,
       type: 'execWaterfall',
-      prepare: hookConfig => {
+      prepare: (hookConfig, trace) => {
         const subscribers = hookConfig.subscribers;
 
         return (passedValue, ...args) => {
@@ -277,6 +289,7 @@ class PluginEngine {
 
           this._executeInOrder(hookConfig, plugin => {
             result = result.then((nextValue) => {
+              trace(plugin);
               return subscribers[plugin].callback(nextValue, ...args);
             });
           });
@@ -304,13 +317,14 @@ class PluginEngine {
     return this._execWithCachedPlan({
       event,
       type: 'execWaterfallSync',
-      prepare: hookConfig => {
+      prepare: (hookConfig, trace) => {
         const subscribers = hookConfig.subscribers;
 
         return (passedValue, ...args) => {
           let result = passedValue;
 
           this._executeInOrder(hookConfig, plugin => {
+            trace(plugin);
             result = subscribers[plugin].callback(result, ...args);
           });
 
@@ -337,7 +351,7 @@ class PluginEngine {
     return this._execWithCachedPlan({
       event,
       type: 'execApply',
-      prepare: hookConfig => {
+      prepare: (hookConfig, trace) => {
         const subscribers = hookConfig.subscribers;
         const executionPlan = [];
         const pluginThunks = {};
@@ -345,7 +359,10 @@ class PluginEngine {
           pluginThunks[plugin] = (pluginTasks) => {
             pluginTasks[plugin] = Promise
               .all(subscribers[plugin].ordering.after.map(dep => pluginTasks[dep]))
-              .then(() => applyFn(this._plugins[plugin], subscribers[plugin].callback));
+              .then(() => {
+                trace(plugin);
+                return applyFn(this._plugins[plugin], subscribers[plugin].callback);
+              });
             return pluginTasks[plugin];
           };
           executionPlan.push(pluginThunks[plugin]);
@@ -372,11 +389,14 @@ class PluginEngine {
     return this._execWithCachedPlan({
       event,
       type: 'execApplySync',
-      prepare: hookConfig => {
+      prepare: (hookConfig, trace) => {
         const subscribers = hookConfig.subscribers;
         const executionPlan = [];
         this._executeInOrder(hookConfig, plugin => {
-          executionPlan.push(() => applyFn(this._plugins[plugin], subscribers[plugin].callback));
+          executionPlan.push(() => {
+            trace(plugin);
+            return applyFn(this._plugins[plugin], subscribers[plugin].callback);
+          });
         });
 
         return executionPlan;
@@ -394,14 +414,25 @@ class PluginEngine {
    * @returns {*} result
    */
   _execWithCachedPlan({ event, type, prepare, exec }) {
+    debug(`${'  '.repeat(this._traceDepth++)}${type} ${event}`);
+    const traceDepth = this._traceDepth;
+    const trace = plugin => debug(`${'  '.repeat(traceDepth)}${plugin}:${event}`);
+
     const hookConfig = this._getHookConfig(event);
     const plansByType = this._plans[event] || (
       this._plans[event] = {}
     );
     const plan = plansByType[type] || (
-      plansByType[type] = prepare(hookConfig)
+      plansByType[type] = prepare(hookConfig, trace)
     );
-    return exec(plan);
+
+    const result = exec(plan);
+
+    result.finally
+      ? result.finally(() => this._traceDepth--)
+      : this._traceDepth--;
+
+    return result;
   }
 
   /**
