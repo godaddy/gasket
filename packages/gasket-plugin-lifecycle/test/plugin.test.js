@@ -92,14 +92,23 @@ describe('Plugin', function () {
     await engine.exec('init');
 
     let called = false;
+    let commonJsFileCalled = false;
     proxy.once('someEvent', function (gasket, arg) {
       assume(gasket).equals(engine);
       assume(arg).equals('testing');
       called = true;
     });
 
+    proxy.once('anotherEvent', function (gasket, arg) {
+      assume(gasket).equals(engine);
+      assume(arg).equals('testing_another_event');
+      commonJsFileCalled = true;
+    });
+
     await engine.exec('someEvent', 'testing');
+    await engine.exec('anotherEvent', 'testing_another_event');
     assume(called).is.true();
+    assume(commonJsFileCalled).is.true();
   });
 
   it('skips *.test.js and *.spec.js files', async () => {
