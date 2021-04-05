@@ -178,7 +178,7 @@ const common = {
     if (hasEslint) {
       if (!pkg.has('scripts', 'lint')) {
         pkg.add('scripts', {
-          'lint': 'eslint --ext .js,.jsx .',
+          'lint': 'eslint --ext .js,.jsx,.cjs,.mjs .',
           'lint:fix': runScriptStr('lint -- --fix')
         });
       }
