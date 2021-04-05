@@ -7,7 +7,7 @@ const defaultPlugins = require('./default-plugins');
 const { flattenPresets } = require('../scaffold/utils');
 
 const readDir = promisify(fs.readdir);
-const jsExtension = /\.js$/i;
+const jsExtension = /\.(js|cjs|mjs)$/i;
 
 /**
  * Loads the initial gasket config required for instantiating the PluginEngine.
@@ -34,7 +34,7 @@ async function getGasketConfig(flags) {
 function loadConfigFile(flags) {
   const { root, config } = flags;
   const configFilePath = !path.isAbsolute(config) ? path.join(root, config) : config;
-  const configFileName = configFilePath.endsWith('.js') ? configFilePath : configFilePath + '.js';
+  const configFileName = jsExtension.test(configFilePath) ? configFilePath : configFilePath + '.js';
   // require the file if config file exist, else return null
   try {
     fs.statSync(configFileName); // eslint-disable-line no-sync
@@ -82,7 +82,7 @@ async function addUserPlugins(gasketConfig) {
     const moduleNames = files
       .filter(fileName => jsExtension.test(fileName))
       .map(fileName => {
-        const fileSansExtension = fileName.replace(jsExtension, '');
+        const fileSansExtension = path.parse(fileName).name;
         return path.join(pluginsDir, fileSansExtension);
       });
 
