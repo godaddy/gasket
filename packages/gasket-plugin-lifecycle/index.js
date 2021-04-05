@@ -26,7 +26,7 @@ async function resolve(root, name) {
     }
   }
 
-  const isJs = /\.js$/i;
+  const isJs = /\.(js|cjs)$/i;
   const isTest = /\.(spec|test)\./i;
   return files.filter(file => isJs.test(file) && !isTest.test(file))
     .map(function each(file) {
