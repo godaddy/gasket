@@ -3,16 +3,16 @@ const sinon = require('sinon');
 const proxyquire = require('proxyquire');
 const path = require('path');
 
-const writeFileStub = sinon.stub().callsFake((...args) => {
-  args[args.length - 1](null, true);
-});
-
 describe('buildManifest', function () {
-  let mockGasket, buildManifest;
+  let mockGasket, buildManifest, writeFileStub;
 
   beforeEach(function () {
     mockGasket = {
-      logger: { log: sinon.stub() },
+      logger: {
+        log: sinon.stub(),
+        warning: sinon.stub(),
+        error: sinon.stub()
+      },
       config: {
         intl: {
           basePath: '',
@@ -27,6 +27,10 @@ describe('buildManifest', function () {
         }
       }
     };
+
+    writeFileStub = sinon.stub().callsFake((...args) => {
+      args[args.length - 1](null, true);
+    });
 
     buildManifest = proxyquire('../lib/build-manifest', {
       fs: {
@@ -46,6 +50,18 @@ describe('buildManifest', function () {
     await buildManifest(mockGasket);
     assume(writeFileStub).called();
     assume(writeFileStub.getCall(0).args[0]).equals(expected);
+  });
+
+  it('logs error if failed to write manifest', async function () {
+    writeFileStub.throws(new Error('Bad things man'));
+    await assume(() => buildManifest(mockGasket)).to.throwAsync();
+    assume(mockGasket.logger.error).calledWithMatch('build:locales: Unable to write locales manifest');
+  });
+
+  it('logs warning if no locale files found', async function () {
+    mockGasket.config.intl.localesDir = 'bogus';
+    await buildManifest(mockGasket);
+    assume(mockGasket.logger.warning).calledWithMatch('build:locales: No locale files found');
   });
 
   it('includes expected properties in output', async function () {

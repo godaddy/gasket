@@ -26,6 +26,10 @@ module.exports = async function buildManifest(gasket) {
   const files = (await glob('**/*.json', { cwd: localesDir }))
     .filter(f => f !== manifestFilename);
 
+  if (!files.length) {
+    logger.warning(`build:locales: No locale files found (${localesDir}).`);
+  }
+
   // generate a content hash for each file
   const paths = (
     await Promise.all(files.map(async file => {
@@ -54,6 +58,11 @@ module.exports = async function buildManifest(gasket) {
     paths
   };
 
-  await writeFile(tgtFile, JSON.stringify(manifest), 'utf-8');
-  logger.log(`build:locales: Wrote locales manifest.`);
+  try {
+    await writeFile(tgtFile, JSON.stringify(manifest), 'utf-8');
+    logger.log('build:locales: Wrote locales manifest.');
+  } catch (err) {
+    logger.error('build:locales: Unable to write locales manifest.');
+    throw err;
+  }
 };
