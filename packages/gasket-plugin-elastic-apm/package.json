@@ -1,0 +1,53 @@
+{
+  "name": "@gasket/plugin-elastic-apm",
+  "version": "1.0.0",
+  "description": "Adds Elastic APM instrumentation to your application",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint index.js test",
+    "lint:fix": "npm run lint -- --fix",
+    "test": "npm run test:runner",
+    "test:runner": "jest test/*.test.js",
+    "test:watch": "npm run test:runner -- --watch",
+    "test:coverage": "npm run test:runner -- --coverage --coverageReporters text",
+    "posttest": "npm run lint",
+    "report": "npm run test:runner -- --coverage --coverageReporters lcov"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/godaddy/gasket.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "elastic",
+    "apm",
+    "gasket",
+    "plugin"
+  ],
+  "author": "GoDaddy Operating Company, LLC",
+  "maintainers": [
+    "Keith Bartholomew <kbartholomew@godaddy.com>"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/godaddy/gasket/issues"
+  },
+  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-elastic-apm",
+  "dependencies": {
+    "elastic-apm-node": "3.12.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.17.0",
+    "eslint-config-godaddy": "^4.0.1",
+    "eslint-plugin-jest": "^24.1.3",
+    "eslint-plugin-json": "^2.1.2",
+    "eslint-plugin-mocha": "^8.1.0",
+    "jest": "^26.6.3",
+    "nyc": "^15.1.0"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  }
+}

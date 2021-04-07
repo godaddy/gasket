@@ -16,6 +16,7 @@
 /packages/gasket-plugin-docs-graphs/        @SivanMehta
 /packages/gasket-plugin-docsify/            @kinetifex
 /packages/gasket-plugin-docs/               @kinetifex
+/packages/gasket-plugin-elastic-apm/        @kinetifex
 /packages/gasket-plugin-express/            @kinetifex
 /packages/gasket-plugin-fastify/            @SivanMehta
 /packages/gasket-plugin-git/                @SivanMehta
