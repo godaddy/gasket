@@ -1,5 +1,9 @@
 # `@gasket/plugin-intl`
 
+### 6.0.12
+
+- Improve logging for missing locale files and manifest write errors ([#274])
+
 ### 6.0.10
 
 - Add additional safety checks around accessing gasketData ([#263])
@@ -120,3 +124,4 @@
 [#263]: https://github.com/godaddy/gasket/pull/263
 [#265]: https://github.com/godaddy/gasket/pull/265
 [#266]: https://github.com/godaddy/gasket/pull/266
+[#274]: https://github.com/godaddy/gasket/pull/274

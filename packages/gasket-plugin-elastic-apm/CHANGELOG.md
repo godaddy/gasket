@@ -1,5 +1,5 @@
 # `@gasket/plugin-elastic-apm`
 
-### 1.0.0
+### 6.0.12
 
 - Initial release.
