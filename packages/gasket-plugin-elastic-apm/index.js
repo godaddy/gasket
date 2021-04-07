@@ -7,7 +7,11 @@ const { filterSensitiveCookies } = require('./lib/cookies');
  * @returns {boolean} A combined config object
  */
 const isActive = (config, env) => {
-  const { serverUrl, secretToken } = config || {};
+  const { active, serverUrl, secretToken } = config;
+
+  if (active || env.ELASTIC_APM_ACTIVE) {
+    return true;
+  }
 
   const combined = {
     serverUrl: serverUrl || env.ELASTIC_APM_SERVER_URL,
@@ -23,12 +27,19 @@ const isActive = (config, env) => {
 
 module.exports = {
   hooks: {
+    configure: {
+      handler: async (gasket, config) => {
+        config.elasticAPM = config.elasticAPM || {};
+        // eslint-disable-next-line no-process-env
+        config.elasticAPM.active = isActive(config.elasticAPM, process.env);
+
+        return { ...config };
+      }
+    },
     preboot: {
       handler: async ({ config }) => {
         require('elastic-apm-node')
           .start({
-            // eslint-disable-next-line no-process-env
-            active: isActive(config.elasticAPM || {}, process.env),
             ...config.elasticAPM
           })
           .addFilter(filterSensitiveCookies(config));
