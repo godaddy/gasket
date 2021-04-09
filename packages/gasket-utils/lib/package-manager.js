@@ -139,7 +139,9 @@ class PackageManager {
    * @public
    */
   async install(args = []) {
-    return this.exec('install', args);
+    // Installing with --legacy-peer-deps flag to accommodate npm7, specifically
+    // requiring different versions of react
+    return this.exec('install', [...args, '--legacy-peer-deps']);
   }
 
   /**
