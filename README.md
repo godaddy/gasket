@@ -140,7 +140,7 @@ Available presets
 
 | Name                    | Version | Description                                |
 | ----------------------- | ------- | ------------------------------------------ |
-| [@gasket/preset-api]    | 6.0.12  | Create Express-based API with Gasket       |
+| [@gasket/preset-api]    | 6.0.13  | Create Express-based API with Gasket       |
 | [@gasket/preset-nextjs] | 6.0.12  | Basic NextJS Framework                     |
 | [@gasket/preset-pwa]    | 6.0.12  | Turn Gasket apps into Progressive Web Apps |
 
@@ -151,15 +151,15 @@ Available plugins
 | Name                            | Version | Description                                                                |
 | ------------------------------- | ------- | -------------------------------------------------------------------------- |
 | [@gasket/plugin-analyze]        | 6.0.12  | Gasket Analyzer Plugin                                                     |
-| [@gasket/plugin-command]        | 6.0.12  | Plugin to enable other plugins to inject new gasket commands               |
-| [@gasket/plugin-config]         | 6.0.12  | Supports application-specific (non-Gasket) configuration                   |
+| [@gasket/plugin-command]        | 6.0.13  | Plugin to enable other plugins to inject new gasket commands               |
+| [@gasket/plugin-config]         | 6.0.13  | Supports application-specific (non-Gasket) configuration                   |
 | [@gasket/plugin-docs]           | 6.0.12  | Centralize doc files from plugins and modules                              |
 | [@gasket/plugin-docs-graphs]    | 6.0.12  | Generate mermaid graphs of an applications gasket lifecycles               |
 | [@gasket/plugin-docsify]        | 6.0.12  | View collated docs with Docsify                                            |
 | [@gasket/plugin-elastic-apm]    | 6.0.12  | Adds Elastic APM instrumentation to your application                       |
 | [@gasket/plugin-express]        | 6.0.12  | Adds express support to your application                                   |
 | [@gasket/plugin-fastify]        | 6.0.12  | Adds fastify support to your application                                   |
-| [@gasket/plugin-git]            | 6.0.12  | Adds git support to your application                                       |
+| [@gasket/plugin-git]            | 6.0.13  | Adds git support to your application                                       |
 | [@gasket/plugin-https]          | 6.0.12  | Create http/s servers with graceful termination                            |
 | [@gasket/plugin-intl]           | 6.0.12  | NodeJS script to build localization files.                                 |
 | [@gasket/plugin-jest]           | 6.0.12  | Integrated jest into your application.                                     |
@@ -185,7 +185,7 @@ Supporting modules
 | Name                  | Version | Description                                                                          |
 | --------------------- | ------- | ------------------------------------------------------------------------------------ |
 | [@gasket/assets]      | 6.0.12  | Gasket assets                                                                        |
-| [@gasket/cli]         | 6.0.12  | CLI for rapid application development with gasket                                    |
+| [@gasket/cli]         | 6.0.13  | CLI for rapid application development with gasket                                    |
 | [@gasket/data]        | 6.0.12  | Helper package for accessing embedded Gasket Data in the browser                     |
 | [@gasket/engine]      | 6.0.12  | Plugin engine for gasket                                                             |
 | [@gasket/fetch]       | 6.0.12  | Gasket Fetch API                                                                     |
@@ -195,8 +195,8 @@ Supporting modules
 | [@gasket/react-intl]  | 6.0.12  | React component library to enable localization for gasket apps.                      |
 | [@gasket/redux]       | 6.0.12  | Gasket Redux Configuration                                                           |
 | [@gasket/resolve]     | 6.0.12  | Essential module resolution & configuration management for gasket plugins & presets. |
-| [@gasket/utils]       | 6.0.12  | Reusable utilities for Gasket internals                                              |
-| create-gasket-app     | 6.0.12  | starter pack for creating a gasket app                                               |
+| [@gasket/utils]       | 6.0.13  | Reusable utilities for Gasket internals                                              |
+| create-gasket-app     | 6.0.13  | starter pack for creating a gasket app                                               |
 
 <!-- LINKS -->
 
