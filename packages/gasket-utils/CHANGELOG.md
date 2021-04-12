@@ -1,5 +1,9 @@
 # `@gasket/utils`
 
+### 6.0.13
+
+- Added --legacy-peer-deps flag to install cli. ([#275])
+
 ### 6.0.0
 
 - Version alignment
@@ -36,3 +40,4 @@
 
 [#143]: https://github.com/godaddy/gasket/pull/143
 [#247]: https://github.com/godaddy/gasket/pull/247
+[#275]: https://github.com/godaddy/gasket/pull/275
