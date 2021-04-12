@@ -70,6 +70,13 @@ describe('packageManager', function () {
         assume(res).is.a('object');
         assume(res.stdout).equals(stdout);
       });
+
+      it('contains legacy-peer-deps flag', async function () {
+        const pkg = new PackageManager('npm');
+        await pkg.install();
+
+        assume(runner.firstCall.args[1]).contains('--legacy-peer-deps');
+      });
     });
 
     describe(`[${packageManager}] link`, function () {
