@@ -161,7 +161,7 @@ Available plugins
 | [@gasket/plugin-fastify]        | 6.0.12  | Adds fastify support to your application                                   |
 | [@gasket/plugin-git]            | 6.0.13  | Adds git support to your application                                       |
 | [@gasket/plugin-https]          | 6.0.12  | Create http/s servers with graceful termination                            |
-| [@gasket/plugin-intl]           | 6.0.12  | NodeJS script to build localization files.                                 |
+| [@gasket/plugin-intl]           | 6.0.14  | NodeJS script to build localization files.                                 |
 | [@gasket/plugin-jest]           | 6.0.12  | Integrated jest into your application.                                     |
 | [@gasket/plugin-lifecycle]      | 6.0.12  | Allows a gasket/ directory to be used for lifecycle hooks in applications. |
 | [@gasket/plugin-lint]           | 6.0.12  | Adds GoDaddy standard linting to your application                          |
@@ -189,10 +189,10 @@ Supporting modules
 | [@gasket/data]        | 6.0.12  | Helper package for accessing embedded Gasket Data in the browser                     |
 | [@gasket/engine]      | 6.0.12  | Plugin engine for gasket                                                             |
 | [@gasket/fetch]       | 6.0.12  | Gasket Fetch API                                                                     |
-| [@gasket/helper-intl] | 6.0.12  | Internal helpers used by loaders to resolve locale file paths                        |
+| [@gasket/helper-intl] | 6.0.14  | Internal helpers used by loaders to resolve locale file paths                        |
 | [@gasket/log]         | 6.0.12  | Gasket client and server logger                                                      |
 | [@gasket/nextjs]      | 6.0.12  | Gasket integrations for Next.js apps                                                 |
-| [@gasket/react-intl]  | 6.0.12  | React component library to enable localization for gasket apps.                      |
+| [@gasket/react-intl]  | 6.0.14  | React component library to enable localization for gasket apps.                      |
 | [@gasket/redux]       | 6.0.12  | Gasket Redux Configuration                                                           |
 | [@gasket/resolve]     | 6.0.12  | Essential module resolution & configuration management for gasket plugins & presets. |
 | [@gasket/utils]       | 6.0.13  | Reusable utilities for Gasket internals                                              |
