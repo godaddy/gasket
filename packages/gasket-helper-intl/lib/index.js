@@ -95,7 +95,7 @@ const trim = localePath => localePath.replace(reLeadingSlash, '');
 function LocaleUtils(config) {
   const { manifest } = config;
   const { basePath = manifest.basePath } = config;
-  const { defaultLocale = 'en', localesMap, paths } = manifest;
+  const { defaultLocale = 'en', localesMap, paths, locales } = manifest;
   const defaultLang = defaultLocale.split('-')[0];
 
   /**
@@ -148,6 +148,10 @@ function LocaleUtils(config) {
   this.getLocalePath = (localePathPart, locale) => {
     const mappedLocale = localesMap && localesMap[locale] || locale;
     let fallbackLocale = mappedLocale;
+
+    if (locales && !locales.includes(mappedLocale)) {
+      fallbackLocale = defaultLocale;
+    }
 
     while (fallbackLocale !== null) {
       const localePath = this.formatLocalePath(localePathPart, fallbackLocale);
