@@ -110,6 +110,23 @@ module.exports = function sharedTests(UtilClass) {
       assume(results).equals('/locales/fake.json');
     });
 
+    it('falls back to default locale if requested locale does not exist in locales config', function () {
+      mockConfig.manifest.defaultLocale = 'fake';
+      mockConfig.manifest.paths['locales/fake.json'] = 'hash1234';
+      mockConfig.manifest.locales = ['not-this', 'or-this'];
+      utils = new UtilClass(mockConfig);
+      const results = utils.getLocalePath('/locales', 'da-DK');
+      assume(results).equals('/locales/fake.json');
+    });
+
+    it('does not fallback to default locale if requested locale exists in locales config', function () {
+      mockConfig.manifest.defaultLocale = 'fake';
+      mockConfig.manifest.locales = ['da-DK'];
+      utils = new UtilClass(mockConfig);
+      const results = utils.getLocalePath('/locales', 'da-DK');
+      assume(results).equals('/locales/da-DK.json');
+    });
+
     it('returns localePath for mapped locales', function () {
       mockConfig.manifest.paths['locales/fake.json'] = 'hash1234';
       mockConfig.manifest.localesMap = { 'da-DK': 'fake' };
