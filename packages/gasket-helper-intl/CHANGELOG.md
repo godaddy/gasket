@@ -1,5 +1,9 @@
 # `@gasket/helper-intl`
 
+### 6.0.14
+
+- Added check for locales config to determine fallbackLocale. ([#276])
+
 ### 6.0.11
 
 - Fixed localePath manifest lookup ([#268])
@@ -12,6 +16,8 @@
 
 - Initial release
 
+<!-- LINKS -->
 
-[#256]:https://github.com/godaddy/gasket/pull/256
-[#268]:https://github.com/godaddy/gasket/pull/268
+[#256]: https://github.com/godaddy/gasket/pull/256
+[#268]: https://github.com/godaddy/gasket/pull/268
+[#276]: https://github.com/godaddy/gasket/pull/276
