@@ -139,6 +139,31 @@ describe('Log', function () {
         format.json()
       ]);
     });
+
+    it('allows for custom formats', function () {
+      const spy = sinon.spy(format, 'combine');
+
+      const myFormat = format.json();
+      log = new Log({ local: false, format: myFormat });
+      const logFormat = log.format();
+
+      assume(spy.callCount).to.equal(0);
+      assume(logFormat).to.be.equal(myFormat);
+    });
+  });
+
+  describe('.levels', function () {
+    it('provides default levels', function () {
+      assume(Log.levels).to.deep.equal(config.syslog.levels);
+      assume(log.levels).to.deep.equal(config.syslog.levels);
+    });
+
+    it('allows custom levels', function () {
+      log = new Log({ local: false, levels: { ...Log.levels, weirdStuff: 1337 } });
+      assume(Log.levels).to.deep.equal(config.syslog.levels);
+      assume(log.levels).to.deep.equal({ ...Log.levels, weirdStuff: 1337 });
+      assume(log.weirdStuff).to.be.a('function');
+    });
   });
 
   describe('.transports', function () {

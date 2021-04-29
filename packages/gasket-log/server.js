@@ -187,6 +187,6 @@ Log.getDefaultFormat = function getDefaultFormat(local, prefix) {
     format.label({ label: prefix }),
     format.json()
   );
-}
+};
 
 module.exports = Log;

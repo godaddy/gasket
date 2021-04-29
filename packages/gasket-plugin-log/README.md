@@ -7,13 +7,13 @@ the logger itself, see [@gasket/log].
 
 #### New apps
 
-```
+```shell
 gasket create <app-name> --plugins @gasket/plugin-log
 ```
 
 #### Existing apps
 
-```
+```shell
 npm i @gasket/plugin-log @gasket/log
 ```
 
