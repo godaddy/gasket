@@ -95,6 +95,15 @@ describe('withIntlProvider', function () {
       assume(result.prop('locale')).eqls('fr-FR');
       assume(result.prop('messages')).eqls({ bogus: 'BOGUS' });
     });
+
+    it('IntlProvider uses Next.js router locale if set', function () {
+      testProps.router = {
+        locale: 'fr-FR'
+      };
+      wrapper = doMount(testProps);
+      const result = wrapper.find(IntlProvider);
+      assume(result.prop('locale')).eqls('fr-FR');
+    });
   });
 
   describe('reducer', function () {
