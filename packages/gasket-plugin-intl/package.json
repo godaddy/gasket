@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-intl",
-  "version": "6.0.14",
+  "version": "6.0.15",
   "description": "NodeJS script to build localization files.",
   "main": "lib",
   "scripts": {
@@ -45,7 +45,7 @@
   },
   "devDependencies": {
     "@gasket/plugin-log": "^6.0.12",
-    "@gasket/react-intl": "^6.0.14",
+    "@gasket/react-intl": "^6.0.15",
     "assume": "^2.3.0",
     "assume-sinon": "^1.1.0",
     "eslint": "^7.17.0",
