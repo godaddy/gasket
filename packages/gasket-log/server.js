@@ -66,26 +66,7 @@ class Log {
    * @private
    */
   format() {
-    if (this.local) {
-      return format.combine(
-        reduxLogger(),
-        format.colorize(),
-        format.splat(),
-        format.simple()
-      );
-    }
-
-    //
-    // Remark (@indexzero): in the event that redux logging is not
-    // turned off (i.e. configureMakeStore({ reducers })) AND level
-    // is manually set to 'debug' not having `inlineColors` here
-    // may cause issues.
-    //
-    return format.combine(
-      format.splat(),
-      format.label({ label: this.prefix }),
-      format.json()
-    );
+    return this.options.format || Log.getDefaultFormat(this.local, this.prefix);
   }
 
   /**
@@ -101,6 +82,10 @@ class Log {
     }
 
     return [new transports.Console()];
+  }
+
+  get levels() {
+    return this.options.levels || Log.levels;
   }
 
   /**
@@ -138,8 +123,9 @@ class Log {
    * @public
    */
   spawn() {
+    const levels = this.levels;
     const winston = createLogger({
-      levels: config.syslog.levels,
+      levels,
       level: this.level,
       silent: this.silent,
       format: this.format(),
@@ -149,8 +135,8 @@ class Log {
     //
     // Create proxies per loglevel to each method in winston.
     //
-    Object.keys(config.syslog.levels).forEach(level => {
-      this[level] = winston[level].bind(this.winston);
+    Object.keys(levels).forEach(level => {
+      this[level] = winston[level].bind(winston);
     });
 
     return this.winston = winston;
@@ -158,7 +144,7 @@ class Log {
 }
 
 /**
- * Default prefix for all messages send to fluentd.
+ * Default prefix for all messages.
  *
  * @type {String}
  */
@@ -177,5 +163,30 @@ Log.Console = transports.Console;
 Log.format = {
   color: reduxLogger
 };
+
+Log.levels = { ...config.syslog.levels };
+
+Log.getDefaultFormat = function getDefaultFormat(local, prefix) {
+  if (local) {
+    return format.combine(
+      reduxLogger(),
+      format.colorize(),
+      format.splat(),
+      format.simple()
+    );
+  }
+
+  //
+  // Remark (@indexzero): in the event that redux logging is not
+  // turned off (i.e. configureMakeStore({ reducers })) AND level
+  // is manually set to 'debug' not having `inlineColors` here
+  // may cause issues.
+  //
+  return format.combine(
+    format.splat(),
+    format.label({ label: prefix }),
+    format.json()
+  );
+}
 
 module.exports = Log;
