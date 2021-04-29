@@ -1,5 +1,9 @@
 # `@gasket/react-intl`
 
+### 6.0.15
+
+- Support for `locale` from [Next.js i18n routing] ([#278])
+
 ### 6.0.10
 
 - Add additional safety checks around accessing gasketData ([#263])
@@ -110,6 +114,8 @@
 
 - Switch to Reduxful
 
+[Next.js i18n routing]: https://nextjs.org/docs/advanced-features/i18n-routing
+
 [#166]: https://github.com/godaddy/gasket/pull/166
 [#175]: https://github.com/godaddy/gasket/pull/175
 [#180]: https://github.com/godaddy/gasket/pull/180
@@ -124,3 +130,4 @@
 [#260]: https://github.com/godaddy/gasket/pull/260
 [#262]: https://github.com/godaddy/gasket/pull/262
 [#263]: https://github.com/godaddy/gasket/pull/263
+[#278]: https://github.com/godaddy/gasket/pull/278
