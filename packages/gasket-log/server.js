@@ -124,6 +124,7 @@ class Log {
    */
   spawn() {
     const levels = this.levels;
+    Log.ensureMinimalLevels(levels);
     const winston = createLogger({
       levels,
       level: this.level,
@@ -165,6 +166,14 @@ Log.format = {
 };
 
 Log.levels = { ...config.syslog.levels };
+
+Log.ensureMinimalLevels = function ensureMinimalLevels(levels) {
+  const missingLevels = Object.keys(Log.levels).filter(
+    lvl => !Object.prototype.hasOwnProperty.call(levels, lvl));
+  if (missingLevels.length > 0) {
+    throw new Error(`'levels' is missing necessary levels: ${ missingLevels.join(', ') }`);
+  }
+};
 
 Log.getDefaultFormat = function getDefaultFormat(local, prefix) {
   if (local) {

@@ -158,6 +158,11 @@ describe('Log', function () {
       assume(log.levels).to.deep.equal(config.syslog.levels);
     });
 
+    it('throws if expected levels are not supplied in custom levels', function () {
+      assume(() => new Log({ local: false, levels: { weirdStuff: 1337 } }))
+        .to.throw(`'levels' is missing necessary levels: emerg, alert, crit, error, warning, notice, info, debug`);
+    });
+
     it('allows custom levels', function () {
       log = new Log({ local: false, levels: { ...Log.levels, weirdStuff: 1337 } });
       assume(Log.levels).to.deep.equal(config.syslog.levels);
