@@ -7,13 +7,13 @@ the logger itself, see [@gasket/log].
 
 #### New apps
 
-```
+```shell
 gasket create <app-name> --plugins @gasket/plugin-log
 ```
 
 #### Existing apps
 
-```
+```shell
 npm i @gasket/plugin-log @gasket/log
 ```
 
@@ -71,13 +71,23 @@ subset of these properties are configurable through `gasket`.
 | `level`      | `'info'` (`'debug'` in ENV=local)     | Log only if `info.level`less than or equal to this level |
 | `transports` | `[new Console()]` _(Console logging)_ | Set of logging targets for `info` messages               |
 | `silent`     | `false`                               | If true, all logs are suppressed                         |
+| `levels`     | `winston.config.syslog.levels`        | Levels (and colors) representing log priorities          |
+| `format`      | Gasket-defined format                | Formatting for messages (see: [Formats])                 |
+
+> **Note:** While `levels` are configurable, if you specify your own levels,
+> you should specify a superset of the default levels (available
+> as `Log.levels`) above to ensure you're gasket application functions
+> successfully. You are also responsible for calling `winston.addColors` for
+> any additional levels that you provide.
+
+> **Note:** While `format` is configurable, it is recommended that you call
+> `format.combine` with your custom formats and the result of
+> `Log.getDefaultFormat(local,prefix)` to maintain the consistent functionality
 
 **Not Configurable in `gasket`**
 
 | Name          | Fixed Value                    | Description                                     |
 |:--------------|:-------------------------------|:------------------------------------------------|
-| `levels`      | `winston.config.syslog.levels` | Levels (and colors) representing log priorities |
-| `format`      | Gasket-defined format          | Formatting for `info` messages (see: [Formats]) |
 | `exitOnError` | `true`                         | Ensures uncaught errors trigger `process.exit`  |
 
 #### Example adding custom Winston transports

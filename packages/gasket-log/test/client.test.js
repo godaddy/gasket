@@ -20,13 +20,6 @@ describe('Log', function () {
     assume(log).to.be.instanceof(Log);
   });
 
-  it('exposes methods for syslog levels', function () {
-    Object.keys(config.syslog.levels)
-      .forEach(lvl => {
-        assume(Log.levels).includes(lvl);
-      });
-  });
-
   it('has predefined prefix', function () {
     assume(Log.prefix).to.equal('client');
   });
@@ -75,6 +68,26 @@ describe('Log', function () {
         'Simple log message',
         { additional: 'metadata' }
       ]);
+    });
+  });
+
+  describe('.levels', function () {
+    function assumeDefaultLevels() {
+      Object.keys(config.syslog.levels)
+        .forEach(lvl => {
+          assume(Log.levels).includes(lvl);
+          assume(log[lvl]).to.be.a('function');
+        });
+    }
+
+    it('exposes methods for default syslog levels', function () {
+      assumeDefaultLevels();
+    });
+
+    it('allows custom levels', function () {
+      log = new Log({ levels: [...Log.levels, 'weirdStuff'] });
+      assumeDefaultLevels();
+      assume(log.weirdStuff).to.be.a('function');
     });
   });
 });

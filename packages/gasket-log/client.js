@@ -13,11 +13,11 @@ export default class Log {
    * @param {Object} options configuration.
    * @private
    */
-  constructor({ level, namespace } = {}) {
+  constructor({ level, levels = Log.levels, namespace } = {}) {
     this.namespace = Array.isArray(namespace) ? namespace : [namespace];
-    this.level = ~Log.levels.indexOf(level) ? level : 'info';
+    this.level = ~levels.indexOf(level) ? level : 'info';
 
-    Log.levels.forEach(lvl => {
+    levels.forEach(lvl => {
       this[lvl] = diagnostics(['gasket', lvl, ...this.namespace].filter(Boolean).join(':'));
     });
   }
@@ -38,7 +38,7 @@ export default class Log {
 
 /**
 * Prefix for all messages send to fluentd.
-* TODO (@swaagie) add support for sending aggegrated messages.
+* TODO (@swaagie) add support for sending aggregated messages.
 *
 * @type {String}
 */
