@@ -1,5 +1,9 @@
 # `@gasket/log`
 
+### 6.1.0
+
+- Support for custom log levels ([#279])
+
 ### 6.0.0
 
 - Version alignment
@@ -58,3 +62,4 @@
 
 
 [#247]: https://github.com/godaddy/gasket/pull/247
+[#279]: https://github.com/godaddy/gasket/pull/279
