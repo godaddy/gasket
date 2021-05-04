@@ -1,7 +1,8 @@
 const path = require('path');
 const url = require('url');
-const { name, devDependencies } = require('./package');
+const { name, devDependencies } = require('../package');
 const { createConfig } = require('./config');
+const build = require('./build');
 const { pluginIdentifier } = require('@gasket/resolve');
 
 const isDefined = o => typeof o !== 'undefined';
@@ -153,14 +154,7 @@ module.exports = {
         return app;
       }
     },
-    build: async function build(gasket) {
-      const { command } = gasket;
-      // Don't do a build, use dev server for local
-      if ((command.id || command) === 'local') return;
-
-      const builder = require('next/dist/build').default;
-      return await builder(path.resolve('.'), await createConfig(gasket, true));
-    },
+    build,
     /**
     * Workbox config partial to add next.js static assets to precache
     *

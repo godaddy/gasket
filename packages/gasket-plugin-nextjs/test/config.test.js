@@ -3,7 +3,7 @@
 const Engine = require('@gasket/engine');
 const { stub } = require('sinon');
 const assume = require('assume');
-const { createConfig } = require('../config');
+const { createConfig } = require('../lib/config');
 
 const baseWebpackConfig = {
   plugins: [],
@@ -282,7 +282,7 @@ function lifecycle(config = {}, ...plugins) {
   return new Engine({
     root: '/path/to/app',
     plugins: {
-      add: [require('../index'), require('@gasket/plugin-webpack'), ...plugins].filter(Boolean)
+      add: [require('../lib/index'), require('@gasket/plugin-webpack'), ...plugins].filter(Boolean)
     },
     next: {},
     http: {
