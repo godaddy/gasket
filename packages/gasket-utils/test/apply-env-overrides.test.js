@@ -134,6 +134,30 @@ describe('applyEnvironmentOverrides', () => {
 
   it('local inherits from development env', () => {
     mockGasketConfig.env = 'local';
+
+    mockConfig.someService.requestRate = 5000;
+    mockConfig.environments = {
+      dev: {
+        someService: {
+          url: 'https://some-dev-test.url/',
+          requestRate: 9000
+        }
+      }
+    };
+
+    results = applyEnvironmentOverrides(mockGasketConfig, mockConfig);
+    assume(results).eqls({
+      someService: {
+        url: 'https://some-dev-test.url/',
+        requestRate: 9000
+      }
+    });
+  });
+
+  it('local inherits from development env, supporting local specific settings', () => {
+    mockGasketConfig.env = 'local';
+
+    mockConfig.someService.requestRate = 5000;
     mockConfig.environments = {
       dev: {
         someService: {
