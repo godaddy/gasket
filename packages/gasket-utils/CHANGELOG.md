@@ -1,5 +1,6 @@
 # `@gasket/utils`
 
+### 6.1.0
 
 - Fixed issue where an `environments` section of config files was doing proper inheritance of dev environment settings for the `local` environment.
 
