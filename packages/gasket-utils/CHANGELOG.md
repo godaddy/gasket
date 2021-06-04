@@ -1,5 +1,8 @@
 # `@gasket/utils`
 
+
+- Fixed issue where an `environments` section of config files was doing proper inheritance of dev environment settings for the `local` environment.
+
 ### 6.0.13
 
 - Added --legacy-peer-deps flag to install cli. ([#275])
