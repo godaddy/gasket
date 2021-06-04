@@ -1,6 +1,6 @@
 {
   "name": "create-gasket-app",
-  "version": "6.2.0",
+  "version": "6.3.0",
   "description": "starter pack for creating a gasket app",
   "main": "index.js",
   "bin": {
@@ -27,7 +27,7 @@
     "url": "https://github.com/godaddy/gasket/issues"
   },
   "dependencies": {
-    "@gasket/cli": "^6.2.0"
+    "@gasket/cli": "^6.3.0"
   },
   "devDependencies": {
     "assume": "^2.3.0",
