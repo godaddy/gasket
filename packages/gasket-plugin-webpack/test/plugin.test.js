@@ -2,6 +2,7 @@
 
 const { stub } = require('sinon');
 const assume = require('assume');
+const webpackMerge = require('webpack-merge');
 const plugin = require('../index');
 const { devDependencies } = require('../package');
 
@@ -73,17 +74,17 @@ describe('initWebpack hook', () => {
     gasket = mockGasketApi();
   });
 
-  it('executes the `webpackChain` and `webpack` lifecycles', async function () {
+  it('executes the `webpackChain` and `webpack` lifecycles', function () {
     const webpackConfig = { ...baseWebpackConfig };
-    await plugin.initWebpack(gasket, webpackConfig, data);
+    plugin.initWebpack(gasket, webpackConfig, data);
 
     assume(gasket.execSync.firstCall).has.been.calledWith('webpackChain');
     assume(gasket.execSync.secondCall).has.been.calledWith('webpack');
   });
 
-  it('returns webpack config object', async function () {
+  it('returns webpack config object', function () {
     const webpackConfig = { ...baseWebpackConfig };
-    const result = await plugin.initWebpack(gasket, webpackConfig, data);
+    const result = plugin.initWebpack(gasket, webpackConfig, data);
 
     assume(result).is.an('object');
     assume(result).has.property('plugins');
@@ -91,11 +92,11 @@ describe('initWebpack hook', () => {
     assume(result).has.property('optimization');
   });
 
-  it('returns webpack config object with configs merged', async function () {
+  it('returns webpack config object with configs merged', function () {
     const mockConfigs = [{ newConfig1: 'newConfig1Value' }, { newConfig2: 'newConfig2Value' }];
     gasket.execSync.withArgs('webpack').returns(mockConfigs);
     const webpackConfig = { ...baseWebpackConfig };
-    const result = await plugin.initWebpack(gasket, webpackConfig, data);
+    const result = plugin.initWebpack(gasket, webpackConfig, data);
 
     assume(result).is.an('object');
     assume(result).has.property('plugins');
@@ -104,11 +105,24 @@ describe('initWebpack hook', () => {
     assume(result).has.property('newConfig1');
     assume(result).has.property('newConfig2');
   });
+
+  it('does custom merging through a webpackMerge lifecycle', function () {
+    const originalConfig = { ...baseWebpackConfig };
+    const updatedConfig = { mock: 'config' };
+    gasket.execWaterfallSync.withArgs('webpackMerge').returns(updatedConfig);
+
+    const config = plugin.initWebpack(gasket, originalConfig, data);
+
+    assume(gasket.execWaterfallSync)
+      .has.been.calledWith('webpackMerge', originalConfig, data, webpackMerge);
+    assume(config).equas(updatedConfig);
+  });
 });
 
 function mockGasketApi() {
   return {
     execSync: stub().returns([]),
+    execWaterfallSync: stub().returnsArg(1),
     config: {
       webpack: {}  // user specified webpack config
     }

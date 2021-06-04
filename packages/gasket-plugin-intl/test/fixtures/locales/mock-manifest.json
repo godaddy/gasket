@@ -1,9 +1,1 @@
-{
-  "basePath": "",
-  "defaultPath": "/locales",
-  "defaultLocale": "en-US",
-  "paths": {
-    "locales/en-US.json": "10decbe",
-    "locales/fr-FR.json": "21047f1"
-  }
-}
+{"basePath":"","defaultPath":"/locales","defaultLocale":"en-US","locales":["en-US","fr-FR","fr-CH"],"localesMap":{"fr-CH":"fr-FR"},"paths":{"locales/en-US.json":"10decbe","locales/extra/en-US.json":"ff5a352","locales/extra/fr-FR.json":"2155926","locales/fr-FR.json":"21047f1"}}
