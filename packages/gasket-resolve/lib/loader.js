@@ -126,6 +126,7 @@ class Loader extends Resolver {
    * @param {boolean} [options.shallow] - Do not recursively load dependencies
    * @returns {PresetInfo} module
    */
+  // eslint-disable-next-line max-statements
   loadPreset(module, meta, { shallow = false } = {}) {
     let moduleName;
     if (isModulePath.test(module)) {
