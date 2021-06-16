@@ -6,11 +6,11 @@ const { name, devDependencies } = require('./package');
 /**
 * Creates the webpack config
 * @param  {Gasket} gasket The Gasket API
-* @param {Object} chainConfig Initial webpack config
+* @param {Object} webpackConfig Initial webpack config
 * @param {Object} data Additional info
 * @returns {Object} Final webpack config
 */
-function initWebpack(gasket, chainConfig, data) {
+function initWebpack(gasket, webpackConfig, data) {
   const { execSync, execWaterfallSync, config } = gasket;
 
   const chain = new WebpackChain();
@@ -19,8 +19,8 @@ function initWebpack(gasket, chainConfig, data) {
   //
   // Merge defaults with gasket.config webpack.
   //
-  chainConfig = webpackMerge.smart(
-    chainConfig,
+  const chainConfig = webpackMerge.smart(
+    webpackConfig,
     { plugins: [new WebpackMetricsPlugin({ gasket })] },
     chain.toConfig(),     // Webpack chain from plugins (partial)
     config.webpack || {}  // Webpack config from user (partial)
