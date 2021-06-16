@@ -107,16 +107,16 @@ const { DefinePlugin } = require('webpack');
 /**
  * @param {Gasket} gasket The gasket API
  * @param {Object} config webpack configuration
- * @return {Object} resolved webpack configuration
+ * @return {Object} webpack config partial
  */
 function webpackHook(gasket, config) {
-  config.plugins.push(
-    new DefinePlugin({
-      MEANING_OF_LIFE: 42
-    })
-  );
-
-  return config;
+  return {
+    plugins: [
+      new DefinePlugin({
+        MEANING_OF_LIFE: 42
+      })
+    ]
+  };
 }
 ```
 
