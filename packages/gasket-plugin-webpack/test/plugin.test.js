@@ -107,15 +107,25 @@ describe('initWebpack hook', () => {
   });
 
   it('does custom merging through a webpackMerge lifecycle', function () {
-    const originalConfig = { ...baseWebpackConfig };
-    const updatedConfig = { mock: 'config' };
-    gasket.execWaterfallSync.withArgs('webpackMerge').returns(updatedConfig);
+    const smartMerge = stub(webpackMerge, 'smart');
+    try {
+      const originalConfig = { ...baseWebpackConfig };
+      const smartMergedConfig = { mock: 'smartMerge' };
+      const updatedConfig = { mock: 'config' };
+      webpackMerge.smart.returns(smartMergedConfig);
+      gasket.execWaterfallSync.withArgs('webpackMerge').returns(updatedConfig);
 
-    const config = plugin.initWebpack(gasket, originalConfig, data);
+      const config = plugin.initWebpack(gasket, originalConfig, data);
 
-    assume(gasket.execWaterfallSync)
-      .has.been.calledWith('webpackMerge', originalConfig, data, webpackMerge);
-    assume(config).equas(updatedConfig);
+      assume(gasket.execWaterfallSync).has.been.calledWith(
+        'webpackMerge',
+        smartMergedConfig,
+        data,
+        webpackMerge);
+      assume(config).equals(updatedConfig);
+    } finally {
+      smartMerge.restore();
+    }
   });
 });
 
