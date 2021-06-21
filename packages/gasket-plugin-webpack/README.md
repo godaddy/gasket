@@ -59,7 +59,7 @@ module.exports = {
 };
 ```
 
-This config can be further modified by interacting with the [`webpackMerge`](#webpackMerge)
+This config can be further modified by interacting with the [`webpackConfig`](#webpackConfig)
 lifecycle.
 
 ## API
@@ -87,7 +87,7 @@ const config = initWebpack(gasket, webpackConfig, data);
 
 ### webpackChain
 
-DEPRECATED - we suggest using the [`webpackMerge`](#webpackMerge) lifecycle instead; this may be removed in a future version.
+DEPRECATED - we suggest using the [`webpackConfig`](#webpackConfig) lifecycle instead; this may be removed in a future version.
 
 Executed before the `webpack` lifecycle, allows you to easily create the initial
 webpack configuration using a chaining syntax that is provided by the
@@ -100,7 +100,7 @@ The result of this will be passed into the `webpack` hook as base configuration.
 
 ### webpack
 
-DEPRECATED - we suggest using the [`webpackMerge`](#webpackMerge) lifecycle instead; this may be removed in a future version.
+DEPRECATED - we suggest using the [`webpackConfig`](#webpackConfig) lifecycle instead; this may be removed in a future version.
 
 Executed after `webpack-chain` lifecycle. It receives the full webpack config as
 first argument. It can be used to add additional configurations to webpack.
@@ -124,27 +124,31 @@ function webpackHook(gasket, config) {
 }
 ```
 
-### webpackMerge
+### webpackConfig
 
 Executed after `webpack-chain` and `webpack`, it receives four parameters:
 
 1. The gasket API
 2. A webpack config object
-3. The [next.js config options](https://nextjs.org/docs/api-reference/next.config.js/custom-webpack-config)
-4. The [`webpack-merge`](https://github.com/survivejs/webpack-merge/tree/v4.2.2) API, version 4.
+3. An options object with properties:
+   * `webpack` - The webpack API
+   * `nextOptions` - The [next.js webpack config options](https://nextjs.org/docs/api-reference/next.config.js/custom-webpack-config)
+   * `webpackMerge` - `The [`webpack-merge`](https://github.com/survivejs/webpack-merge/tree/v4.2.2) API, version 4.
 
 A hook should return a new webpack config object derived from the original. The usage of the `webpack-merge` API is recommended when doing so since properly handling the overloaded types within webpack config properties can be tricky. We recommend avoiding `webpack-merge` methods that have been deprecated in version 5 since a future version of this plugin may update to a new breaking version of `webpack-merge`.
 
 
 ```js
-const { DefinePlugin } = require('webpack');
-
-function webpackHook(gasket, config, { isServer }, webpackMerge) {
+function webpackHook(
+  gasket,
+  config,
+  { nextOptions: { isServer }, webpack, webpackMerge }
+) {
   return isServer
     ? config
     : webpackMerge.merge(config, {
       plugins: [
-        new DefinePlugin({
+        new webpack.DefinePlugin({
           MEANING_OF_LIFE: 42
         })
       ]
