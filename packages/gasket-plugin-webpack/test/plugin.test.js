@@ -121,7 +121,7 @@ describe('initWebpack hook', () => {
       assume(gasket.execWaterfallSync).has.been.calledWith(
         'webpackConfig',
         smartMergedConfig,
-        { context, webpackMerge, webpack });
+        { ...context, webpackMerge, webpack });
       assume(config).equals(updatedConfig);
     } finally {
       smartMerge.restore();

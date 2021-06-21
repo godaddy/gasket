@@ -35,7 +35,7 @@ function initWebpack(gasket, initConfig, context) {
   return execWaterfallSync(
     'webpackConfig',
     mergedConfig,
-    { webpack, context, webpackMerge }
+    { ...context, webpack, webpackMerge }
   );
 }
 
