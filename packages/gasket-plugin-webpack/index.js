@@ -6,18 +6,18 @@ const { name, devDependencies } = require('./package');
 
 /**
 * Creates the webpack config
-* @param  {Gasket} gasket The Gasket API
-* @param {Object} initConfig Initial webpack config
-* @param {Object} nextOptions Additional info
-* @returns {Object} Final webpack config
+* @param  {Gasket} gasket     The Gasket API
+* @param {Object} initConfig  Initial webpack config
+* @param {Object} context     Additional context-specific information
+* @returns {Object}           Final webpack config
 */
-function initWebpack(gasket, initConfig, nextOptions) {
+function initWebpack(gasket, initConfig, context) {
   const { execSync, execWaterfallSync, config } = gasket;
 
   const standardPlugins = { plugins: [new WebpackMetricsPlugin({ gasket })] };
 
   const chain = new WebpackChain();
-  execSync('webpackChain', chain, nextOptions);
+  execSync('webpackChain', chain, context);
 
   const baseConfig = webpackMerge.smart(
     initConfig,
@@ -26,7 +26,7 @@ function initWebpack(gasket, initConfig, nextOptions) {
     config.webpack || {}      // From gasket config file (partial)
   );
 
-  const configPartials = execSync('webpack', baseConfig, nextOptions).filter(Boolean);
+  const configPartials = execSync('webpack', baseConfig, context).filter(Boolean);
   const mergedConfig = webpackMerge.smart(
     baseConfig,
     ...configPartials
@@ -35,7 +35,7 @@ function initWebpack(gasket, initConfig, nextOptions) {
   return execWaterfallSync(
     'webpackConfig',
     mergedConfig,
-    { webpack, nextOptions, webpackMerge }
+    { webpack, context, webpackMerge }
   );
 }
 

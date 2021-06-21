@@ -131,8 +131,8 @@ Executed after `webpack-chain` and `webpack`, it receives four parameters:
 1. The gasket API
 2. A webpack config object
 3. An options object with properties:
-   * `webpack` - The webpack API
-   * `nextOptions` - The [next.js webpack config options](https://nextjs.org/docs/api-reference/next.config.js/custom-webpack-config)
+   * `webpack` - The webpack API.
+   * `context` - Additional context about the webpack configuration being generated. For example, in next.js apps, this is the [next.js webpack config options](https://nextjs.org/docs/api-reference/next.config.js/custom-webpack-config).
    * `webpackMerge` - `The [`webpack-merge`](https://github.com/survivejs/webpack-merge/tree/v4.2.2) API, version 4.
 
 A hook should return a new webpack config object derived from the original. The usage of the `webpack-merge` API is recommended when doing so since properly handling the overloaded types within webpack config properties can be tricky. We recommend avoiding `webpack-merge` methods that have been deprecated in version 5 since a future version of this plugin may update to a new breaking version of `webpack-merge`.
@@ -142,7 +142,7 @@ A hook should return a new webpack config object derived from the original. The 
 function webpackHook(
   gasket,
   config,
-  { nextOptions: { isServer }, webpack, webpackMerge }
+  { context: { isServer }, webpack, webpackMerge }
 ) {
   return isServer
     ? config

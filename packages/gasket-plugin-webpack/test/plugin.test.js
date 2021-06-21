@@ -66,10 +66,10 @@ describe('create hook', () => {
 });
 
 describe('initWebpack hook', () => {
-  let gasket, nextOptions;
+  let gasket, context;
 
   beforeEach(() => {
-    nextOptions = {
+    context = {
       defaultLoaders: {}
     };
     gasket = mockGasketApi();
@@ -77,7 +77,7 @@ describe('initWebpack hook', () => {
 
   it('executes the `webpackChain` and `webpack` lifecycles', function () {
     const webpackConfig = { ...baseWebpackConfig };
-    plugin.initWebpack(gasket, webpackConfig, nextOptions);
+    plugin.initWebpack(gasket, webpackConfig, context);
 
     assume(gasket.execSync.firstCall).has.been.calledWith('webpackChain');
     assume(gasket.execSync.secondCall).has.been.calledWith('webpack');
@@ -85,7 +85,7 @@ describe('initWebpack hook', () => {
 
   it('returns webpack config object', function () {
     const webpackConfig = { ...baseWebpackConfig };
-    const result = plugin.initWebpack(gasket, webpackConfig, nextOptions);
+    const result = plugin.initWebpack(gasket, webpackConfig, context);
 
     assume(result).is.an('object');
     assume(result).has.property('plugins');
@@ -97,7 +97,7 @@ describe('initWebpack hook', () => {
     const mockConfigs = [{ newConfig1: 'newConfig1Value' }, { newConfig2: 'newConfig2Value' }];
     gasket.execSync.withArgs('webpack').returns(mockConfigs);
     const webpackConfig = { ...baseWebpackConfig };
-    const result = plugin.initWebpack(gasket, webpackConfig, nextOptions);
+    const result = plugin.initWebpack(gasket, webpackConfig, context);
 
     assume(result).is.an('object');
     assume(result).has.property('plugins');
@@ -116,12 +116,12 @@ describe('initWebpack hook', () => {
       webpackMerge.smart.returns(smartMergedConfig);
       gasket.execWaterfallSync.withArgs('webpackConfig').returns(updatedConfig);
 
-      const config = plugin.initWebpack(gasket, originalConfig, nextOptions);
+      const config = plugin.initWebpack(gasket, originalConfig, context);
 
       assume(gasket.execWaterfallSync).has.been.calledWith(
         'webpackConfig',
         smartMergedConfig,
-        { nextOptions, webpackMerge, webpack });
+        { context, webpackMerge, webpack });
       assume(config).equals(updatedConfig);
     } finally {
       smartMerge.restore();
