@@ -62,7 +62,7 @@
     "sinon": "^9.2.3"
   },
   "peerDependencies": {
-    "next": "^10.0.0",
+    "next": "^10.2.0",
     "react": "^16 || ^17",
     "react-dom": "^16 || ^17"
   },
