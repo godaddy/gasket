@@ -140,10 +140,10 @@ A hook should return a new webpack config object derived from the original. The 
 
 
 ```js
-function webpackHook(
+function webpackConfigHook(
   gasket,
   config,
-  { context: { isServer }, webpack, webpackMerge }
+  { isServer, webpack, webpackMerge }
 ) {
   return isServer
     ? config
