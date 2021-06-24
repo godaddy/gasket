@@ -263,14 +263,6 @@ describe('create hook', () => {
       'lodash.merge': devDependencies['lodash.merge']
     });
   });
-
-  it('adds webpack5 support to nextConfig in gasket.config', async function () {
-    await plugin.hooks.create.handler({}, mockContext);
-
-    assume(mockContext.gasketConfig.add).calledWith('nextConfig', {
-      future: { webpack5: true }
-    });
-  });
 });
 
 describe('build hook', () => {
