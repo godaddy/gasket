@@ -43,7 +43,7 @@ const depVersions = {
   'react-intl': '^5.10.13',
   'prop-types': '^15.7.2',
   'redux': '^4.0.5',
-  'next': '^10.0.5',
+  'next': '^10.2.0',
   'jsdom': '^16.4.0',
 
   'babel-eslint': '^10.1.0',

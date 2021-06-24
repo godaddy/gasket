@@ -56,7 +56,7 @@
     "eslint-plugin-react": "^7.22.0",
     "jsdom": "^16.4.0",
     "mocha": "^8.2.1",
-    "next": "^10.0.5",
+    "next": "^10.2.0",
     "nyc": "^15.1.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
@@ -64,7 +64,7 @@
     "sinon": "^9.2.3"
   },
   "peerDependencies": {
-    "next": "^10.0.0"
+    "next": "^10.2.0"
   },
   "eslintConfig": {
     "extends": [
