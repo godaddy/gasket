@@ -26,7 +26,7 @@ function portInUseError(errors) {
  * @public
  */
 async function start(gasket) {
-  const { hostname, https, http, terminus, env } = gasket.config;
+  const { hostname, http2, https, http, terminus, env } = gasket.config;
   const { logger } = gasket;
 
   // Retrieving server opts
@@ -34,6 +34,7 @@ async function start(gasket) {
 
   if (http) configOpts.http = http;
   if (https) configOpts.https = https;
+  if (http2) configOpts.http2 = http2;
 
   const serverOpts = await gasket.execWaterfall('createServers', configOpts);
   const { healthcheck, ...terminusDefaults } = await gasket.execWaterfall('terminus', {
@@ -45,7 +46,7 @@ async function start(gasket) {
 
   // Default port to non-essential port on creation
   // create-servers does not support http or https being `null`
-  if (!serverOpts.http && !serverOpts.https) {
+  if (!serverOpts.http && !serverOpts.https && !serverOpts.http2) {
     serverOpts.http = isLocal.test(env) ? 8080 : 80;
   }
 
@@ -112,15 +113,15 @@ async function start(gasket) {
       .forEach((server) => createTerminus(server, terminusOpts));
 
     await gasket.exec('servers', servers);
-    const { http: _http, https: _https, hostname: _hostname = 'localhost' } = serverOpts;
+    const { http: _http, https: _https, http2: _http2, hostname: _hostname = 'localhost' } = serverOpts;
 
     if (_http) {
       const _port = _http.port || _http;
       logger.info(`Server started at http://${_hostname}:${_port}/`);
     }
 
-    if (_https) {
-      logger.info(`Server started at https://${_hostname}:${_https.port}/`);
+    if (_https || _http2) {
+      logger.info(`Server started at https://${ _hostname }:${ (_https || _http2).port }/`);
     }
   });
 }

@@ -79,6 +79,7 @@ describe('start hook', () => {
     const createServerOpts = createServersModule.lastCall.args[0];
     assume(createServerOpts).to.not.haveOwnProperty('http');
     assume(createServerOpts).to.haveOwnProperty('https');
+    assume(createServerOpts).to.not.haveOwnProperty('http2');
   });
 
   it('does not create an HTTPS server if `https` is `null`', async () => {
@@ -93,9 +94,24 @@ describe('start hook', () => {
     const createServerOpts = createServersModule.lastCall.args[0];
     assume(createServerOpts).to.haveOwnProperty('http');
     assume(createServerOpts).to.not.haveOwnProperty('https');
+    assume(createServerOpts).to.not.haveOwnProperty('http2');
   });
 
-  it('defaults HTTP server to port 80 if neither `http` or `https`', async () => {
+  it('can create an http2 server', async () => {
+    gasketAPI.config = {
+      hostname: 'local.gasket.godaddy.com',
+      http2: 8080
+    };
+
+    await start();
+
+    const createServerOpts = createServersModule.lastCall.args[0];
+    assume(createServerOpts).to.not.haveOwnProperty('http');
+    assume(createServerOpts).to.not.haveOwnProperty('https');
+    assume(createServerOpts).to.haveOwnProperty('http2');
+  });
+
+  it('defaults HTTP server to port 80 if neither `http` or `https` or `http2`', async () => {
     gasketAPI.config = {};
 
     await start();
@@ -151,6 +167,18 @@ describe('start hook', () => {
       gasketAPI.config = {
         hostname: 'myapp.godaddy.com',
         https: { port: 8443 }
+      };
+
+      await start();
+
+      const logMessages = gasketAPI.logger.info.args.map(([message]) => message);
+      assume(logMessages[0]).to.match(/https:\/\/myapp\.godaddy\.com:8443\//);
+    });
+
+    it('contains the configured hostname for http2', async () => {
+      gasketAPI.config = {
+        hostname: 'myapp.godaddy.com',
+        http2: { port: 8443 }
       };
 
       await start();
