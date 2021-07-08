@@ -215,7 +215,7 @@ describe('start hook', () => {
   });
 
   it('rejects with an Error on failure', async () => {
-    createServersModule.yields(errs.create({ https: { message: 'HTTP server failed to start', errno: 'something' } }));
+    createServersModule.yields(errs.create({ https: { message: 'HTTP server failed to start', code: 'something' } }));
 
     await start();
 
@@ -228,7 +228,7 @@ describe('start hook', () => {
   it('rejects with an Error about ports on failure (with http)', async () => {
     createServersModule.yields(errs.create({
       http: {
-        errno: 'EADDRINUSE'
+        code: 'EADDRINUSE'
       }
     }));
 
@@ -237,20 +237,33 @@ describe('start hook', () => {
     const expected = 'Port is already in use';
     assume(gasketAPI.logger.error).calledWithMatch(expected);
     assume(debugStub.args[0][0].message).to.match(expected);
-    assume(debugStub.args[0][1].http.errno).equals('EADDRINUSE');
+    assume(debugStub.args[0][1].http.code).equals('EADDRINUSE');
   });
 
   it('rejects with an Error about ports on failure (with https)', async () => {
     createServersModule.yields(errs.create({
       https: {
-        errno: 'EADDRINUSE'
+        code: 'EADDRINUSE'
       }
     }));
 
     await start();
 
     assume(debugStub.args[0][0].message).to.match('Port is already in use');
-    assume(debugStub.args[0][1].https.errno).equals('EADDRINUSE');
+    assume(debugStub.args[0][1].https.code).equals('EADDRINUSE');
+  });
+
+  it('rejects with an Error about ports on failure (with http2)', async () => {
+    createServersModule.yields(errs.create({
+      http2: {
+        code: 'EADDRINUSE'
+      }
+    }));
+
+    await start();
+
+    assume(debugStub.args[0][0].message).to.match('Port is already in use');
+    assume(debugStub.args[0][1].http2.code).equals('EADDRINUSE');
   });
 
   describe('terminus', function () {

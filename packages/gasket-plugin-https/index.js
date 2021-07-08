@@ -16,7 +16,7 @@ function portInUseError(errors) {
   if (Array.isArray(errors)) {
     errors = errors[0];
   }
-  return (errors.https || errors.http || {}).errno === 'EADDRINUSE';
+  return (errors.http2 || errors.https || errors.http || {}).code === 'EADDRINUSE';
 }
 
 /**
