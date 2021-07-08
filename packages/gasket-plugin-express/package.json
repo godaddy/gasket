@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-express",
-  "version": "6.0.12",
+  "version": "6.5.0",
   "description": "Adds express support to your application",
   "main": "index.js",
   "scripts": {
