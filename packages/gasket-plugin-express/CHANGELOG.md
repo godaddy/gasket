@@ -1,5 +1,9 @@
 # `@gasket/plugin-express`
 
+### 6.5.0
+
+- Add support for using http2 servers ([#287])
+
 ### 6.0.5
 
 - Filter falsy middleware ([#255])
@@ -36,3 +40,4 @@
 [#181]: https://github.com/godaddy/gasket/pull/181
 [#247]: https://github.com/godaddy/gasket/pull/247
 [#255]: https://github.com/godaddy/gasket/pull/255
+[#287]: https://github.com/godaddy/gasket/pull/287
