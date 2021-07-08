@@ -1,5 +1,9 @@
 # `@gasket/plugin-nextjs`
 
+### 6.4.0
+
+- Upgrade to next@^10.2 ([#285]).
+
 ### 6.0.10
 
 - Safer base path config selection ([#266])
@@ -119,3 +123,4 @@
 [#257]: https://github.com/godaddy/gasket/pull/257
 [#262]: https://github.com/godaddy/gasket/pull/262
 [#266]: https://github.com/godaddy/gasket/pull/266
+[#285]: https://github.com/godaddy/gasket/pull/285
