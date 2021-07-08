@@ -8,7 +8,7 @@
     "lint:fix": "npm run lint -- --fix",
     "test": "npm run test:runner",
     "test:runner": "mocha test/*.test.js",
-    "test:coverage": "nyc --reporter=text --reporter=json-summary npm run test:runner",
+    "test:coverage": "nyc --reporter=text --reporter=lcov npm run test:runner",
     "posttest": "npm run lint"
   },
   "repository": {
@@ -35,7 +35,7 @@
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-https#readme",
   "dependencies": {
     "@godaddy/terminus": "^4.2.0",
-    "create-servers": "^2.6.1",
+    "create-servers": "^3.2.0",
     "diagnostics": "^2.0.2",
     "errs": "^0.3.2",
     "one-time": "^1.0.0"

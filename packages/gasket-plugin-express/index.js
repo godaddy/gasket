@@ -20,7 +20,7 @@ module.exports = {
       });
 
       if (context.apiApp) {
-        context.files.add(`${__dirname}/generator/**/*`);
+        context.files.add(`${ __dirname }/generator/**/*`);
 
         context.gasketConfig.add('express', {
           routes: './routes/*'
@@ -42,9 +42,26 @@ module.exports = {
       const compression = require('compression');
 
       const { config } = gasket;
-      const { root, express: { routes } = {} } = config;
+      const { root, express: { routes } = {}, http2 } = config;
       const excludedRoutesRegex = config.express && config.express.excludedRoutesRegex;
-      const app = express();
+      const app = http2 ? require('http2-express-bridge')(express) : express();
+
+      if (http2) {
+        app.use(
+          /*
+           * This is a patch for the undocumented _implicitHeader used by the
+           * compression middleware which is not present the http2 request object
+           * @see: https://github.com/expressjs/compression/pull/128
+           * and also, by the the 'compiled' version in Next.js
+           * @see: https://github.com/vercel/next.js/issues/11669
+           */
+          function http2Patch(req, res, next) {
+            if (!res._implicitHeader) {
+              res._implicitHeader = () => res.writeHead(res.statusCode);
+            }
+            return next();
+          });
+      }
 
       if (excludedRoutesRegex) {
         app.use(excludedRoutesRegex, cookieParser());
@@ -74,7 +91,7 @@ module.exports = {
       postRenderingStacks.forEach((stack) => app.use(stack));
 
       if (routes) {
-        glob(`${routes}.js`, { cwd: root }, function (err, files) {
+        glob(`${ routes }.js`, { cwd: root }, function (err, files) {
           if (err) throw err;
 
           for (let i = 0; i < files.length; i++) {

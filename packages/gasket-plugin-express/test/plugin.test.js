@@ -5,6 +5,8 @@ const assume = require('assume');
 
 const app = { use: sinon.spy() };
 const express = sinon.stub().returns(app);
+const bridgedApp = { use: sinon.spy() };
+const expressBridge = sinon.stub().returns(bridgedApp);
 
 const cookieParserMiddleware = sinon.spy();
 const cookieParser = sinon.stub().returns(cookieParserMiddleware);
@@ -14,6 +16,7 @@ const compression = sinon.stub().returns(compressionMiddleware);
 
 const plugin = proxyquire('../index', {
   express,
+  'http2-express-bridge': expressBridge,
   'cookie-parser': cookieParser,
   'compression': compression
 });
@@ -68,6 +71,12 @@ describe('createServers', () => {
     assume(result).deep.equals({ handler: app });
   });
 
+  it('returns the handler as http2 bridge app', async function () {
+    gasket.config.http2 = 8080;
+    const result = await plugin.hooks.createServers(gasket);
+    assume(result).deep.equals({ handler: bridgedApp });
+  });
+
   it('executes the `middleware` lifecycle', async function () {
     await plugin.hooks.createServers(gasket, {});
     assume(gasket.exec).has.been.calledWith('middleware', app);
@@ -105,6 +114,24 @@ describe('createServers', () => {
       app.use,
       (mw) => mw === errorMiddlewares[0]);
     assume(errorMiddleware).to.not.be.null();
+  });
+
+  it('setups up patch middleware for http2', async () => {
+    gasket.config.http2 = 8080;
+    await plugin.hooks.createServers(gasket, {});
+
+    // Added as the first middleware
+    const patchMiddleware = bridgedApp.use.args[0][0];
+    assume(patchMiddleware).property('name', 'http2Patch');
+
+    // attaches _implicitHeader to the response object
+    const req = {};
+    const res = {};
+    const next = sinon.stub();
+    patchMiddleware(req, res, next);
+
+    assume(res).property('_implicitHeader');
+    assume(next).is.called();
   });
 
   it('adds the cookie-parser middleware before plugin middleware', async () => {

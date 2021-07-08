@@ -79,6 +79,7 @@ describe('start hook', () => {
     const createServerOpts = createServersModule.lastCall.args[0];
     assume(createServerOpts).to.not.haveOwnProperty('http');
     assume(createServerOpts).to.haveOwnProperty('https');
+    assume(createServerOpts).to.not.haveOwnProperty('http2');
   });
 
   it('does not create an HTTPS server if `https` is `null`', async () => {
@@ -93,9 +94,24 @@ describe('start hook', () => {
     const createServerOpts = createServersModule.lastCall.args[0];
     assume(createServerOpts).to.haveOwnProperty('http');
     assume(createServerOpts).to.not.haveOwnProperty('https');
+    assume(createServerOpts).to.not.haveOwnProperty('http2');
   });
 
-  it('defaults HTTP server to port 80 if neither `http` or `https`', async () => {
+  it('can create an http2 server', async () => {
+    gasketAPI.config = {
+      hostname: 'local.gasket.godaddy.com',
+      http2: 8080
+    };
+
+    await start();
+
+    const createServerOpts = createServersModule.lastCall.args[0];
+    assume(createServerOpts).to.not.haveOwnProperty('http');
+    assume(createServerOpts).to.not.haveOwnProperty('https');
+    assume(createServerOpts).to.haveOwnProperty('http2');
+  });
+
+  it('defaults HTTP server to port 80 if neither `http` or `https` or `http2`', async () => {
     gasketAPI.config = {};
 
     await start();
@@ -159,6 +175,18 @@ describe('start hook', () => {
       assume(logMessages[0]).to.match(/https:\/\/myapp\.godaddy\.com:8443\//);
     });
 
+    it('contains the configured hostname for http2', async () => {
+      gasketAPI.config = {
+        hostname: 'myapp.godaddy.com',
+        http2: { port: 8443 }
+      };
+
+      await start();
+
+      const logMessages = gasketAPI.logger.info.args.map(([message]) => message);
+      assume(logMessages[0]).to.match(/https:\/\/myapp\.godaddy\.com:8443\//);
+    });
+
     it('contains the configured port numbers', async () => {
       gasketAPI.config = {
         hostname: 'local.gasket.godaddy.com',
@@ -187,7 +215,7 @@ describe('start hook', () => {
   });
 
   it('rejects with an Error on failure', async () => {
-    createServersModule.yields(errs.create({ https: { message: 'HTTP server failed to start', errno: 'something' } }));
+    createServersModule.yields(errs.create({ https: { message: 'HTTP server failed to start', code: 'something' } }));
 
     await start();
 
@@ -200,7 +228,7 @@ describe('start hook', () => {
   it('rejects with an Error about ports on failure (with http)', async () => {
     createServersModule.yields(errs.create({
       http: {
-        errno: 'EADDRINUSE'
+        code: 'EADDRINUSE'
       }
     }));
 
@@ -209,20 +237,33 @@ describe('start hook', () => {
     const expected = 'Port is already in use';
     assume(gasketAPI.logger.error).calledWithMatch(expected);
     assume(debugStub.args[0][0].message).to.match(expected);
-    assume(debugStub.args[0][1].http.errno).equals('EADDRINUSE');
+    assume(debugStub.args[0][1].http.code).equals('EADDRINUSE');
   });
 
   it('rejects with an Error about ports on failure (with https)', async () => {
     createServersModule.yields(errs.create({
       https: {
-        errno: 'EADDRINUSE'
+        code: 'EADDRINUSE'
       }
     }));
 
     await start();
 
     assume(debugStub.args[0][0].message).to.match('Port is already in use');
-    assume(debugStub.args[0][1].https.errno).equals('EADDRINUSE');
+    assume(debugStub.args[0][1].https.code).equals('EADDRINUSE');
+  });
+
+  it('rejects with an Error about ports on failure (with http2)', async () => {
+    createServersModule.yields(errs.create({
+      http2: {
+        code: 'EADDRINUSE'
+      }
+    }));
+
+    await start();
+
+    assume(debugStub.args[0][0].message).to.match('Port is already in use');
+    assume(debugStub.args[0][1].http2.code).equals('EADDRINUSE');
   });
 
   describe('terminus', function () {
