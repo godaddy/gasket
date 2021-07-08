@@ -35,7 +35,7 @@
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-https#readme",
   "dependencies": {
     "@godaddy/terminus": "^4.2.0",
-    "create-servers": "^3.1.0",
+    "create-servers": "^3.2.0",
     "diagnostics": "^2.0.2",
     "errs": "^0.3.2",
     "one-time": "^1.0.0"
