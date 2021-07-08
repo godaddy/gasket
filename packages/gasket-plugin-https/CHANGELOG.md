@@ -1,5 +1,9 @@
 # `@gasket/plugin-https`
 
+### 6.5.0
+
+- Add support for http2 servers ([#287])
+
 ### 6.0.0
 
 - Version alignment
@@ -46,6 +50,7 @@
 [#130]: https://github.com/godaddy/gasket/pull/130
 [#146]: https://github.com/godaddy/gasket/pull/146
 [#247]: https://github.com/godaddy/gasket/pull/247
+[#287]: https://github.com/godaddy/gasket/pull/287
 
 [terminus]: https://github.com/godaddy/terminus
 [create-servers]: https://github.com/http-party/create-servers
