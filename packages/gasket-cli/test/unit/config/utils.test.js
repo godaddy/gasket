@@ -135,6 +135,18 @@ describe('config utils', () => {
       assume(results.plugins.add).includes(path.join('example'));
     });
 
+    it('add ES modules from the app\'s plugins dir', async () => {
+      readDirStub.resolves(['app-plugin.mjs']);
+      const results = await utils.addUserPlugins({ root: '/path/to/app' });
+      assume(results.plugins.add).includes(path.join('/path/to/app', 'plugins', 'app-plugin'));
+    });
+
+    it('add CommonJS modules from the app\'s plugins dir', async () => {
+      readDirStub.resolves(['app-plugin.cjs']);
+      const results = await utils.addUserPlugins({ root: '/path/to/app' });
+      assume(results.plugins.add).includes(path.join('/path/to/app', 'plugins', 'app-plugin'));
+    });
+
     it('ignores directory read errors', async () => {
       readDirStub.rejects(new Error('Bad things man'));
       const results = await utils.addUserPlugins({ root: '/path/to/app', plugins: { add: ['example'] } });

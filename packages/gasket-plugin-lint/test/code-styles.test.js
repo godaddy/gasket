@@ -341,12 +341,12 @@ describe('code styles', () => {
       assume(codeStyle.allowStylelint).not.true();
     });
 
-    it('adds lint scripts if eslint present', async () => {
+    it('adds lint scripts with support for .js, .jsx, .cjs, and .mjs if eslint present', async () => {
       pkgHas.callsFake((_, name) => ['eslint'].includes(name));
       await codeStyle.create(context, utils);
 
       assume(pkgAdd).calledWithMatch('scripts', {
-        'lint': sinon.match.string,
+        'lint': 'eslint --ext .js,.jsx,.cjs,.mjs .',
         'lint:fix': sinon.match.string
       });
 
