@@ -1,7 +1,7 @@
 # @gasket/plugin-https
 
-A plugin that creates `http` and `https` servers based on the given `gasket`
-configuration.
+A plugin that creates `http`, `https` and/or `http2` servers based on the given
+`gasket` configuration.
 
 ## Installation
 
@@ -59,6 +59,27 @@ module.exports = {
 Any of the options that are specified on the Terminus project page are accepted
 in the `terminus` object. Just note that the functions are already assigned by
 default to trigger the appropriate lifecycle events.
+
+### HTTP/2
+
+You can configure both HTTPS and HTTP/2 on the same socket with
+[ALPN negotiation].
+
+```diff
+// gasket.config.js
+module.exports = {
+  http: 80,
+-  https: {
++  http2: {
+    port: 443,
+    root: '/path/to/ssl/files',
+    key: 'your-key.pem',
+    cert: 'your-cert.pem',
+    ca: 'your-ca.pem' // Can be an Array of CAs,
++    allowHTTP1: true
+  }
+};
+```
 
 ## Lifecycles
 
@@ -225,3 +246,5 @@ module.exports = {
 
 [create-servers]: https://github.com/http-party/create-servers#create-servers
 [terminus]: https://github.com/godaddy/terminus
+[ALPN negotiation]: https://nodejs.org/api/http2.html#http2_alpn_negotiation
+
