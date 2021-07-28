@@ -1,5 +1,10 @@
 # `@gasket/plugin-nextjs`
 
+### 6.5.1
+
+- Updated default .babelrc to only set modules: 'commonjs' for the test env.
+  ([#289])
+
 ### 6.4.0
 
 - Upgrade to next@^10.2 ([#285]).
@@ -28,8 +33,10 @@
 - Fix missing deps and peer dep versions ([#243])
 - No longer support old version of Next.js build and next-routes ([#240])
 - Configures `next` as `nextConfig` with deprecation warning ([#232])
-- Force sets the `NEXT_LOCALE` cookie if locale predetermine by Intl plugin ([#232])
-- Generate new apps with `GasketData` script injecting to `_document.js` ([#223])
+- Force sets the `NEXT_LOCALE` cookie if locale predetermine by Intl plugin
+  ([#232])
+- Generate new apps with `GasketData` script injecting to `_document.js`
+  ([#223])
 - Generate `pages/_app.s` with [next-redux-wrapper] setup from store ([#173])
 - Generate a `redux/store.js` with [next-redux-wrapper] setup ([#173])
 - Change `zone` config to `basePath` ([#212])
@@ -41,7 +48,8 @@
 
 ### 5.3.1
 
-- Configure server worker plugin to inject registration script to _app entry ([#158])
+- Configure server worker plugin to inject registration script to _app entry
+  ([#158])
 
 ### 5.0.2
 
@@ -124,3 +132,4 @@
 [#262]: https://github.com/godaddy/gasket/pull/262
 [#266]: https://github.com/godaddy/gasket/pull/266
 [#285]: https://github.com/godaddy/gasket/pull/285
+[#289]: https://github.com/godaddy/gasket/pull/289
