@@ -15,11 +15,15 @@ module.exports = function middlewareHook(gasket) {
   return async function intlMiddleware(req, res, next) {
     let preferredLocale = defaultLocale;
     if (req.headers['accept-language']) {
-      // if we have a list of support locales, fallback to one.
-      preferredLocale = locales && locales.length ?
-        accept.language(req.headers['accept-language'], locales) :
-        // Otherwise just run with the first accept language.
-        req.headers['accept-language'].split(',')[0];
+      try {
+        // if we have a list of support locales, fallback to one.
+        preferredLocale = locales && locales.length ?
+          accept.language(req.headers['accept-language'], locales) :
+          // Otherwise just run with the first accept language.
+          req.headers['accept-language'].split(',')[0];
+      } catch (error) {
+        gasket.logger.warn(`Unable to parse accept-language header: ${error.message}`);
+      }
     }
 
     // Allow plugins to determine locale to use

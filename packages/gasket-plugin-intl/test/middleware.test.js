@@ -19,6 +19,9 @@ describe('middleware', function () {
           localesDir: path.join(__dirname, 'fixtures', 'locales'),
           manifestFilename: 'mock-manifest.json'
         }
+      },
+      logger: {
+        warn: sinon.stub()
       }
     };
   });
@@ -105,6 +108,14 @@ describe('middleware', function () {
       layer = middlewareHook(mockGasket);
       await layer(req, res, next);
       assume(res.locals).property('localesDir', mockGasket.config.intl.localesDir);
+    });
+
+    context('when preferredLocale exception is thrown', function () {
+      it('logs a gasket warn log', async function () {
+        req.headers['accept-language'] = new Error('mock error');
+        await layer(req, res, next);
+        assume(mockGasket.logger.warn).called();
+      });
     });
 
     describe('req.withLocaleRequired', function () {
