@@ -1,5 +1,9 @@
 # `@gasket/plugin-intl`
 
+### 6.5.2
+
+- Handle/log accept.language exceptions ([#290])
+
 ### 6.0.12
 
 - Improve logging for missing locale files and manifest write errors ([#274])
@@ -125,3 +129,4 @@
 [#265]: https://github.com/godaddy/gasket/pull/265
 [#266]: https://github.com/godaddy/gasket/pull/266
 [#274]: https://github.com/godaddy/gasket/pull/274
+[#290]: https://github.com/godaddy/gasket/pull/290
