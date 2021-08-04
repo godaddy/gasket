@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const WebpackChain = require('webpack-chain');
 const webpackMerge = require('webpack-merge');
 const WebpackMetricsPlugin = require('./webpack-metrics-plugin');
@@ -5,30 +6,37 @@ const { name, devDependencies } = require('./package');
 
 /**
 * Creates the webpack config
-* @param  {Gasket} gasket The Gasket API
-* @param {Object} webpackConfig Initial webpack config
-* @param {Object} data Additional info
-* @returns {Object} Final webpack config
+* @param  {Gasket} gasket     The Gasket API
+* @param {Object} initConfig  Initial webpack config
+* @param {Object} context     Additional context-specific information
+* @returns {Object}           Final webpack config
 */
-function initWebpack(gasket, webpackConfig, data) {
-  const { execSync, config } = gasket;
+function initWebpack(gasket, initConfig, context) {
+  const { execSync, execWaterfallSync, config } = gasket;
+
+  const standardPlugins = { plugins: [new WebpackMetricsPlugin({ gasket })] };
 
   const chain = new WebpackChain();
-  execSync('webpackChain', chain, data);
+  execSync('webpackChain', chain, context);
 
-  //
-  // Merge defaults with gasket.config webpack.
-  //
-  webpackConfig = webpackMerge.smart(
-    webpackConfig,
-    { plugins: [new WebpackMetricsPlugin({ gasket })] },
-    chain.toConfig(),     // Webpack chain from plugins (partial)
-    config.webpack || {}  // Webpack config from user (partial)
+  const baseConfig = webpackMerge.smart(
+    initConfig,
+    standardPlugins,
+    chain.toConfig(),         // From webpackChain (partial)
+    config.webpack || {}      // From gasket config file (partial)
   );
 
-  const configs = execSync('webpack', webpackConfig, data).filter(Boolean);
+  const configPartials = execSync('webpack', baseConfig, context).filter(Boolean);
+  const mergedConfig = webpackMerge.smart(
+    baseConfig,
+    ...configPartials
+  );
 
-  return webpackMerge.smart(webpackConfig, ...configs);
+  return execWaterfallSync(
+    'webpackConfig',
+    mergedConfig,
+    { ...context, webpack, webpackMerge }
+  );
 }
 
 module.exports = {
@@ -61,6 +69,13 @@ module.exports = {
           link: 'README.md#webpack',
           parent: 'initWebpack',
           after: 'webpackChain'
+        }, {
+          name: 'webpackConfig',
+          method: 'execWaterfallSync',
+          description: 'Transform the webpack config, with the help of webpack-merge',
+          link: 'README.md#webpackConfig',
+          parent: 'initWebpack',
+          after: 'webpack'
         }, {
           name: 'initWebpack',
           description: 'Create a webpack config',

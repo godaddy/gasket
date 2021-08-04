@@ -247,6 +247,7 @@ describe('createConfig', () => {
 function mockGasketApi() {
   return {
     execWaterfall: stub().returnsArg(1),
+    execWaterfallSync: stub().returnsArg(1),
     exec: stub().resolves({}),
     execSync: stub().returns([]),
     logger: {
