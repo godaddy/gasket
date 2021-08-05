@@ -1,5 +1,9 @@
 # `@gasket/plugin-webpack`
 
+### 6.6.0
+
+- Created new webpackConfig lifecycle ([#284])
+
 ### 6.0.3
 
 - Install webpack 5 as a dev dependency by default ([#252])
@@ -30,3 +34,4 @@
 [#221]: https://github.com/godaddy/gasket/pull/221
 [#247]: https://github.com/godaddy/gasket/pull/247
 [#252]: https://github.com/godaddy/gasket/pull/252
+[#284]: https://github.com/godaddy/gasket/pull/284
