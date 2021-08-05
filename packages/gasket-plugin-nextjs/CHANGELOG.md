@@ -1,5 +1,9 @@
 # `@gasket/plugin-nextjs`
 
+### 6.6.0
+
+- Created new webpackConfig lifecycle ([#284])
+
 ### 6.5.1
 
 - Updated default .babelrc to only set modules: 'commonjs' for the test env.
@@ -133,3 +137,4 @@
 [#266]: https://github.com/godaddy/gasket/pull/266
 [#285]: https://github.com/godaddy/gasket/pull/285
 [#289]: https://github.com/godaddy/gasket/pull/289
+[#284]: https://github.com/godaddy/gasket/pull/284
