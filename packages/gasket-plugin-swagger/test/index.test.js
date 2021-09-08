@@ -175,7 +175,7 @@ describe('Swagger Plugin', () => {
     context('when target definition file is not found', () => {
       it('returns nothing', async () => {
         mockGasket.config.swagger.definitionFile = 'swagger.yaml';
-        const result = await plugin.hooks.express(mockGasket, mockApp);
+        const result = await plugin.hooks.express.handler(mockGasket, mockApp);
         assume(result).is.falsely();
       });
     });
@@ -184,33 +184,33 @@ describe('Swagger Plugin', () => {
       it('gasket.logger logs error', async () => {
         mockGasket.config.swagger.definitionFile = 'swagger.yaml';
         accessStub.rejects();
-        await plugin.hooks.express(mockGasket, mockApp);
+        await plugin.hooks.express.handler(mockGasket, mockApp);
         assume(mockGasket.logger.error).calledWith(`Missing ${mockGasket.config.swagger.definitionFile} file...`);
       });
     });
 
     it('loads the swagger spec yaml file', async () => {
       mockGasket.config.swagger.definitionFile = 'swagger.yaml';
-      await plugin.hooks.express(mockGasket, mockApp);
+      await plugin.hooks.express.handler(mockGasket, mockApp);
       assume(yamlSafeLoadStub).called();
     });
 
     it('only loads the swagger spec file once', async () => {
       mockGasket.config.swagger.definitionFile = 'swagger.yaml';
       assume(yamlSafeLoadStub).not.called();
-      await plugin.hooks.express(mockGasket, mockApp);
+      await plugin.hooks.express.handler(mockGasket, mockApp);
       assume(yamlSafeLoadStub).called(1);
-      await plugin.hooks.express(mockGasket, mockApp);
+      await plugin.hooks.express.handler(mockGasket, mockApp);
       assume(yamlSafeLoadStub).called(1);
     });
 
     it('loads the swagger spec json file', async () => {
-      await plugin.hooks.express(mockGasket, mockApp);
+      await plugin.hooks.express.handler(mockGasket, mockApp);
       assume(yamlSafeLoadStub).not.called();
     });
 
     it('sets the api docs route', async () => {
-      await plugin.hooks.express(mockGasket, mockApp);
+      await plugin.hooks.express.handler(mockGasket, mockApp);
       assume(mockApp.use).calledWith('/api-docs');
     });
   });
