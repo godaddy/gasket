@@ -99,13 +99,18 @@ module.exports = {
      * @param {object} app - Express app instance
      * @async
      */
-    async express(gasket, app) {
-      const { swagger, root } = gasket.config;
-      const { ui = {}, apiDocsRoute, definitionFile } = swagger;
+    express: {
+      timing: {
+        before: ['@gasket/plugin-nextjs']
+      },
+      handler: async function express(gasket, app) {
+        const { swagger, root } = gasket.config;
+        const { ui = {}, apiDocsRoute, definitionFile } = swagger;
 
-      const swaggerSpec = await loadSwaggerSpec(root, definitionFile, gasket.logger);
+        const swaggerSpec = await loadSwaggerSpec(root, definitionFile, gasket.logger);
 
-      app.use(apiDocsRoute, swaggerUi.serve, swaggerUi.setup(swaggerSpec, ui));
+        app.use(apiDocsRoute, swaggerUi.serve, swaggerUi.setup(swaggerSpec, ui));
+      }
     },
     /**
      * Sets swagger plugin prop to true and adds swagger config to gasket.config
