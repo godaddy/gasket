@@ -101,7 +101,7 @@ module.exports = {
      */
     express: {
       timing: {
-        after: ['@gasket/plugin-nextjs']
+        before: ['@gasket/plugin-nextjs']
       },
       handler: async function express(gasket, app) {
         const { swagger, root } = gasket.config;
