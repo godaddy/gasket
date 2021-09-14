@@ -37,6 +37,7 @@ preboot -- exec --> start;
 start -- execWaterfall --> terminus;
 initWebpack -- execSync --> webpack;
 initWebpack -- execSync --> webpackChain;
+initWebpack -- execWaterfallSync --> webpackConfig;
 composeServiceWorker -- exec --> workbox;
 style docs-cmd fill: red;
 style *-cmd fill: red;
