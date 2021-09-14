@@ -1,6 +1,6 @@
 # `@gasket/plugin-swagger`
 
-### 6.1.0
+### 6.7.0
 
 - Added timing to express lifecycle ([#294])
 
