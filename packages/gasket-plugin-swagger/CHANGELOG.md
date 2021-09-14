@@ -1,5 +1,9 @@
 # `@gasket/plugin-swagger`
 
+### 6.1.0
+
+- Added timing to express lifecycle ([#294])
+
 ### 6.0.0
 
 - Version alignment
@@ -22,3 +26,4 @@
 [#181]: https://github.com/godaddy/gasket/pull/181
 [#186]: https://github.com/godaddy/gasket/pull/186
 [#247]: https://github.com/godaddy/gasket/pull/247
+[#294]: https://github.com/godaddy/gasket/pull/294
