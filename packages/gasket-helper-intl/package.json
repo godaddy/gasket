@@ -8,7 +8,7 @@
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "test": "npm run test:runner",
-    "test:runner": "mocha --require setup-env \"test/*.test.js\"",
+    "test:runner": "mocha --require test/setup.js --require setup-env \"test/*.test.js\"",
     "test:watch": "npm run test:runner -- --watch",
     "test:coverage": "nyc --reporter=text --reporter=json-summary npm run test:runner",
     "posttest": "npm run lint",
@@ -42,6 +42,7 @@
   "devDependencies": {
     "@godaddy/dmd": "^1.0.0",
     "assume": "^2.3.0",
+    "assume-sinon": "1.1.0",
     "eslint": "^7.17.0",
     "eslint-config-godaddy": "^4.0.1",
     "eslint-plugin-json": "^2.1.2",
