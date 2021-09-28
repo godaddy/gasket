@@ -1,6 +1,6 @@
 {
   "name": "@gasket/react-intl",
-  "version": "6.0.15",
+  "version": "6.7.1",
   "description": "React component library to enable localization for gasket apps.",
   "main": "./lib",
   "browser": "./lib",
@@ -40,7 +40,7 @@
     "@babel/runtime": "^7.12.5",
     "@gasket/data": "^6.0.12",
     "@gasket/fetch": "^6.0.12",
-    "@gasket/helper-intl": "^6.0.14",
+    "@gasket/helper-intl": "^6.7.1",
     "hoist-non-react-statics": "^2.5.0",
     "lodash.merge": "^4.6.0",
     "prop-types": "^15.7.2"
