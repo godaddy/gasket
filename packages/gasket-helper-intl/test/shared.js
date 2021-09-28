@@ -102,6 +102,19 @@ module.exports = function sharedTests(UtilClass) {
       assume(results).equals('/locales/az.json');
     });
 
+    it(
+      'falls back to default locale if no localePath for locale if ' +
+      'language matches before falling back to language',
+      function () {
+        mockConfig.manifest.defaultLocale = 'en-US';
+        mockConfig.manifest.paths['locales/en-US.json'] = 'hash1234';
+        mockConfig.manifest.paths['locales/en.json'] = 'hash4321';
+        utils = new UtilClass(mockConfig);
+        const results = utils.getLocalePath('/locales', 'en-CA');
+        assume(results).equals('/locales/en-US.json');
+      }
+    );
+
     it('falls back to default locale if no localePath for locale', function () {
       mockConfig.manifest.defaultLocale = 'fake';
       mockConfig.manifest.paths['locales/fake.json'] = 'hash1234';
