@@ -1,5 +1,7 @@
 # `@gasket/helper-intl`
 
+### 6.7.1
+
 - Adjust fallback strategy
 - Added missing test dependency for assume-sinon
 
