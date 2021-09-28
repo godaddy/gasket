@@ -100,6 +100,12 @@ function LocaleUtils(config) {
 
   /**
    * Fallback to the lang part of a locale or to defaultLocale.
+   * Strategy is:
+   *  <locale>
+   *  <locale lang (if doesn't match default lang)>
+   *  <default locale (if a locale)>
+   *  <default lang>
+   *  null
    *
    * Here's an example using da-DK/da with en-US as defaultLocale
    * da-DK ==> da ==> en-US ==> en ==> null
@@ -110,7 +116,13 @@ function LocaleUtils(config) {
    */
   this.getFallbackLocale = (locale = '') => {
     if (locale.indexOf('-') > 0) {
-      return locale.split('-')[0];
+      const language = locale.split('-')[0];
+
+      if (defaultLocale.indexOf('-') > 0 && locale !== defaultLocale && language === defaultLang) {
+        return defaultLocale;
+      }
+
+      return language;
     }
 
     if (locale !== defaultLang) {

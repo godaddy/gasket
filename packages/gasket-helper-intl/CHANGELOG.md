@@ -1,5 +1,8 @@
 # `@gasket/helper-intl`
 
+- Adjust fallback strategy
+- Added missing test dependency for assume-sinon
+
 ### 6.0.14
 
 - Added check for locales config to determine fallbackLocale. ([#276])
