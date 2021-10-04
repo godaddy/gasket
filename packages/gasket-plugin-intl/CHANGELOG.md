@@ -1,5 +1,9 @@
 # `@gasket/plugin-intl`
 
+### 6.7.2
+
+- Minor fix to update logger to use `gasket.logger.warning` ([#297])
+
 ### 6.5.2
 
 - Handle/log accept.language exceptions ([#290])
@@ -130,3 +134,4 @@
 [#266]: https://github.com/godaddy/gasket/pull/266
 [#274]: https://github.com/godaddy/gasket/pull/274
 [#290]: https://github.com/godaddy/gasket/pull/290
+[#297]: https://github.com/godaddy/gasket/pull/297
