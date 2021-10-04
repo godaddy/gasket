@@ -22,7 +22,7 @@ module.exports = function middlewareHook(gasket) {
           // Otherwise just run with the first accept language.
           req.headers['accept-language'].split(',')[0];
       } catch (error) {
-        gasket.logger.warn(`Unable to parse accept-language header: ${error.message}`);
+        gasket.logger.warning(`Unable to parse accept-language header: ${error.message}`);
       }
     }
 
