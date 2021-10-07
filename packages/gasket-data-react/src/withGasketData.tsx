@@ -1,42 +1,32 @@
-import React from 'react';
-import { GasketDataProvider } from './GasketDataProvider';
+import React, { ReactNode } from 'react';
 
-let gasketData: Record<string, unknown> = null;
-if (typeof window === 'object') {
-  gasketData = require('@gasket/data');
-}
+type ContextProps = { ctx?: { res?: { locals?: { gasketData?: Record<string, unknown> } } } };
+type SsrComponentType<P> = ComponentType<P> & { getInitialProps?: (data: ContextProps) => Promise<Record<string, unknown>> };
+type ComponentType<P> = React.ComponentType<P>;
+type WrapperProps<P, GD> = P & withGasketDataProps<GD>;
+type WrapperResponse<P, GD> = React.ComponentType<WrapperProps<P, GD>>;
 
-type ContextProps = {
-  ctx?: {
-    res?: {
-      locals?: {
-        gasketData?: Record<string, unknown>
-      }
-    }
-  }
-}
+const clientGasketData = typeof window === 'object' ? require('@gasket/data') : {};
 
-type WrappedComponentType<T> = React.ComponentType<T> & { getInitialProps?: (data: unknown) => unknown };
 
-export const withGasketData = <T extends unknown = Record<string, unknown>>(WrappedComponent: WrappedComponentType<T>) => {
-  const Wrapper = (props: T) => {
-    return <GasketDataProvider data={gasketData}>
-      <WrappedComponent {...props} />
-    </GasketDataProvider>;
+export type withGasketDataProps<GD = Record<string, unknown>> = {
+  gasketData?: GD,
+  children?: ReactNode
+};
+
+export function withGasketData<P, GD>(WrappedComponent: ComponentType<P>): WrapperResponse<P, GD> {
+
+  const Wrapper = (props: WrapperProps<P, GD>) => {
+    return <WrappedComponent {...props}/>;
   };
 
   Wrapper.getInitialProps = async (data: ContextProps) => {
-    const { res } = data.ctx;
-    if (res) {
-      gasketData = res?.locals?.gasketData;
-    }
+    const Component = WrappedComponent as SsrComponentType<P>;
+    const initialProps = Component.getInitialProps ? await Component.getInitialProps(data) : {};
+    const ssrGasketData = data?.ctx?.res?.locals?.gasketData || {};
 
-    if (WrappedComponent.getInitialProps) {
-      return await WrappedComponent.getInitialProps(data);
-    }
-
-    return {};
+    return { ...initialProps, gasketData: { ...ssrGasketData, ...clientGasketData } };
   };
 
   return Wrapper;
-};
+}

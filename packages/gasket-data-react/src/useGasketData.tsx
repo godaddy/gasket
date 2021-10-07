@@ -1,7 +1,7 @@
-import { useContext } from 'react';
+import { Context, useContext } from 'react';
 import { GasketDataContext } from './GasketDataProvider';
 
-export const useGasketData = <T extends unknown = Record<string, unknown>>() => {
-  //eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return useContext<T>(GasketDataContext as any) || {} as T;
+
+export const useGasketData = <GD extends Record<string, unknown> = Record<string, unknown>>() => {
+  return useContext<GD>(GasketDataContext as Context<GD>) || {} as GD;
 };

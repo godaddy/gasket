@@ -1,15 +1,11 @@
 import React from 'react';
-
-type Props = {
-    data: Record<string, unknown>,
-    children: React.ReactNode
-}
+import { withGasketDataProps } from 'withGasketData';
 
 export const GasketDataContext = React.createContext<Record<string, unknown>>({});
 
-export const GasketDataProvider = ({ data, children }: Props) => {
+export const GasketDataProvider = <GD extends Record<string, unknown>>({ gasketData, children }: withGasketDataProps<GD>) => {
   return (
-    <GasketDataContext.Provider value={data}>
+    <GasketDataContext.Provider value={gasketData}>
       {children}
     </GasketDataContext.Provider>
   );

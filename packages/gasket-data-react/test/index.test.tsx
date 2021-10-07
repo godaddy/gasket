@@ -1,18 +1,7 @@
 import React from 'react';
-
-/**
- * Must be before all other imports
- */
-const testData = { test: 'hello' };
-jest.mock('@gasket/data', () => testData);
-/**
- *
- */
-
-import { useGasketData, withGasketData } from '../src';
 import { renderHook } from '@testing-library/react-hooks';
 import { render } from '@testing-library/react';
-import { GasketDataProvider } from '../src/GasketDataProvider';
+import { GasketDataProvider, useGasketData } from '../src';
 
 type ChildrenProps = {
   children: React.FC
@@ -20,7 +9,19 @@ type ChildrenProps = {
 
 describe('GasketDataReact', function () {
 
+  const setup = (testData = {}) => {
+    jest.mock('@gasket/data', () => testData);
+    const { withGasketData } = require('../src');
+
+    return { withGasketData };
+  };
+
+  beforeEach(() => {
+    jest.resetModules();
+  });
+
   it('should render the component', () => {
+    const { withGasketData } = setup();
     const HocComponent = withGasketData(() => <div/>);
     const { container } = render(
       <HocComponent/>
@@ -29,10 +30,12 @@ describe('GasketDataReact', function () {
   });
 
 
-  it('should return gasketData', () => {
+  it('should return gasketData', async () => {
+    const testData = { test: 'hello' };
+
     const { result } = renderHook(() => useGasketData(), {
       wrapper({ children }: ChildrenProps) {
-        return <GasketDataProvider data={testData}>{children}</GasketDataProvider>;
+        return <GasketDataProvider gasketData={testData}>{children}</GasketDataProvider>;
       }
     });
 
@@ -40,20 +43,19 @@ describe('GasketDataReact', function () {
   });
 
 
-  it('should inject gasketData when client side', () => {
-    const HocComponent = withGasketData(({ children }) => <div>{children}</div>);
+  it('should inject gasketData when client side', async () => {
+    const testData = { test: 'hello' };
+    const { withGasketData } = setup(testData);
 
-    const { result } = renderHook(() => useGasketData(), {
-      wrapper({ children }: ChildrenProps) {
-        return <HocComponent>{children}</HocComponent>;
-      }
-    });
+    const HocComponent = withGasketData(({ children }: ChildrenProps) => <div>{children}</div>);
+    const intPropsResponse = await HocComponent.getInitialProps({});
 
-    expect(result.current).toBe(testData);
+    expect(intPropsResponse).toEqual({ gasketData: testData });
   });
 
 
   it('should inject gasketData when SSR', async () => {
+    const { withGasketData } = setup();
     const serverTestData = { test: 'hello world' };
 
     const Component = ({ children }: ChildrenProps) => <div>{children}</div>;
@@ -61,18 +63,13 @@ describe('GasketDataReact', function () {
     const HocComponent = withGasketData(Component);
     const intPropsResponse = await HocComponent.getInitialProps({ ctx: { res: { locals: { gasketData: serverTestData } } } });
 
-    const { result } = renderHook(() => useGasketData(), {
-      wrapper({ children }: ChildrenProps) {
-        return <HocComponent>{children}</HocComponent>;
-      }
-    });
-
-    expect(result.current).toBe(serverTestData);
-    expect(intPropsResponse).toEqual({});
+    expect(intPropsResponse).toEqual({ gasketData: serverTestData });
   });
 
 
   it('should call wrappedComponents getInitialProps', async () => {
+    const { withGasketData } = setup();
+
     const serverTestData = { test: 'hello world' };
     const intProps = { called: true };
 
@@ -82,14 +79,7 @@ describe('GasketDataReact', function () {
     const HocComponent = withGasketData(Component);
     const intPropsResponse = await HocComponent.getInitialProps({ ctx: { res: { locals: { gasketData: serverTestData } } } });
 
-    const { result } = renderHook(() => useGasketData(), {
-      wrapper({ children }: ChildrenProps) {
-        return <HocComponent>{children}</HocComponent>;
-      }
-    });
-
-    expect(result.current).toBe(serverTestData);
-    expect(intPropsResponse).toBe(intProps);
+    expect(intPropsResponse).toEqual({ ...intProps, gasketData: serverTestData });
   });
 
 
