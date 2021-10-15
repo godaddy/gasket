@@ -51,7 +51,7 @@ script at a particular child index of the `<body/>`. To do so, you can set the
 ```jsx
 // pages/_document.js
 import Document, { Html, Head, Main, NextScript } from 'next/document'
-import { withGasketData } from '@gasket/next';
+import { withGasketData } from '@gasket/nextjs';
 
 class MyDocument extends Document {
   static async getInitialProps(ctx) {
@@ -82,6 +82,72 @@ In this example, the `gasketData` script will be injected after the custom
 This is especially useful if you are somehow nesting or extending the `<Main/>`
 and `<NextScript/>` components and the decorator cannot find the right place to
 inject the script.
+
+
+---
+### `withGasketDataProvider` and `useGasketData`
+
+- `withGasketDataProvider`: Inject gasket data in to provider context to share the gasketData with the `useGasketData` hook. This is SSR and client side friendly
+- `useGasketData`: Hook that utilizes the context shared with the `withGasketData` HOC. Gives access to the gasketData.
+
+### Example
+
+---
+>
+>```jsx
+>// pages/_app.js
+>import { AppProps } from 'next/app';
+>import { withGasketDataProvider } from '@gasket/nextjs';
+>
+>
+>const Root = ({ Page, pageProps }) => {
+>  return (
+>    <Page {...pageProps} />
+>  );
+>};
+>
+>export default withGasketDataProvider(Root);
+>```
+>
+>
+>```jsx
+>// MyComponent.js
+>import { useGasketData } from '@gasket/nextjs';
+>
+>
+>export const MyComponent = (props) => {
+>  const gasketData = useGasketData();
+>
+>  return (
+>    <>
+>      <div>{gasketData.something}</div>
+>      <div>{gasketData.here}</div>
+>    </>
+>  );
+>};
+>```
+
+### Adding SSR Data
+
+> Please see @gasket/data docs
+
+To make data available for server-side rendering options, plugins should add to the `res.locals.gasketData` object.
+
+For example when using the [middleware lifecycle] in a plugin:
+
+```js
+module.exports = {
+  hooks: {
+    middleware() {
+      return (req, res, next) => {
+        res.locals.gasketData         = res.locals.gasketData || {};
+        res.locals.gasketData.example = { fake: 'data' };
+        next();
+      }
+    }
+  }
+};
+```
 
 ## License
 

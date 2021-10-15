@@ -37,7 +37,8 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-nextjs#readme",
   "dependencies": {
-    "htmlescape": "^1.1.1"
+    "htmlescape": "^1.1.1",
+    "@gasket/data": "^6.0.12"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.10",
