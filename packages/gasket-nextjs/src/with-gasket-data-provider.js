@@ -1,9 +1,15 @@
 import React from 'react';
-import { GasketDataProvider } from './GasketDataProvider';
+import { GasketDataProvider } from './gasket-data-provider';
 import PropTypes from 'prop-types';
 
 const clientGasketData = typeof window === 'object' ? require('@gasket/data') : {};
 
+/**
+ * Make an HOC that adds a provider for the GasketData.
+ * This can be used to wrap a top level React, Next.js custom App component or Next.js custom Document component.
+ *
+ * @returns {function} wrapper
+ */
 export const withGasketDataProvider = () => (WrappedComponent) => {
 
   const Wrapper = ({ gasketData, ...props }) => {
