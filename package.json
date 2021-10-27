@@ -6,7 +6,6 @@
     "lint": "eslint scripts",
     "lint:fix": "npm run lint -- --fix",
     "lint:fix:all": "npm run lint:fix && lerna run lint:fix --concurrency=1 --stream",
-    "test:mine": "lerna run test --stream --scope @gasket/nextjs",
     "test": "lerna run test --concurrency=1 --stream",
     "test:coverage": "lerna run test:coverage --concurrency=1 --stream",
     "posttest": "npm run lint",
