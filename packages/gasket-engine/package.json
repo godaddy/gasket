@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "eslint lib test",
     "lint:fix": "npm run lint -- --fix",
-    "test": "jest",
+    "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "posttest": "npm run lint"
@@ -39,6 +39,7 @@
     "debug": "^4.3.1"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "eslint": "^7.17.0",
     "eslint-config-godaddy": "^4.0.1",
     "eslint-plugin-jest": "^24.1.3",
