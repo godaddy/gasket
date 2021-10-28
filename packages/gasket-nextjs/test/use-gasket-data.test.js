@@ -1,7 +1,8 @@
 import React from 'react';
 import { renderHook } from '@testing-library/react-hooks';
 import assume from 'assume';
-import { GasketDataProvider, useGasketData } from '../src';
+import { useGasketData } from '../src';
+import { GasketDataProvider } from '../src/gasket-data-provider';
 
 /**
  * need to use @testing-library to properly test hooks
