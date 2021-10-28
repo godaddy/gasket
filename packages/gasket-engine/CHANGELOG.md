@@ -1,7 +1,5 @@
 # `@gasket/engine`
 
-### 6.3.1
-
 - Fix issue causing unhandled rejection warnings to surface
 
 ### 6.0.11
