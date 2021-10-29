@@ -1,6 +1,8 @@
 # `@gasket/engine`
 
-- Fix issue causing unhandled rejection warnings to surface
+### 6.7.3
+
+- Fix issue causing unhandled rejection warnings to surface ([#299])
 
 ### 6.0.11
 
@@ -63,5 +65,6 @@
 [#160]: https://github.com/godaddy/gasket/pull/160
 [#227]: https://github.com/godaddy/gasket/pull/227
 [#267]: https://github.com/godaddy/gasket/pull/267
+[#299]: https://github.com/godaddy/gasket/pull/299
 
 [Loader]:/packages/gasket-resolve/docs/api.md#loader
