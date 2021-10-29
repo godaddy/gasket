@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-nextjs",
-  "version": "6.6.0",
+  "version": "6.7.3",
   "description": "Adds Next support to your application",
   "main": "index.js",
   "scripts": {
@@ -41,7 +41,7 @@
   },
   "devDependencies": {
     "@gasket/assets": "^6.0.12",
-    "@gasket/engine": "^6.3.0",
+    "@gasket/engine": "^6.7.3",
     "@gasket/nextjs": "^6.4.0",
     "assume": "^2.3.0",
     "assume-sinon": "^1.1.0",
