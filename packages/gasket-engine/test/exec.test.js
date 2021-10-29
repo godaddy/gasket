@@ -70,4 +70,15 @@ describe('The exec method', () => {
 
     expect(result).toEqual([1, 2]);
   });
+
+  it('does not cause unhandled rejections on thrown errors', async () => {
+    engine.hook({
+      event: 'mock',
+      async handler() {
+        throw new Error('I am rejecting you');
+      }
+    });
+
+    await expect(engine.exec('mock')).rejects.toThrow(Error);
+  });
 });
