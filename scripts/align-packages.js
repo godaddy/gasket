@@ -63,7 +63,8 @@ const depVersions = {
   'semver': '^7.3.4',
   'lodash.defaultsdeep': '^4.6.1',
   'webpack': '^5.21.2',
-  'serve-static': '^1.14.1'
+  'serve-static': '^1.14.1',
+  'cross-env': '^5.1.6'
 };
 
 
