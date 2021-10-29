@@ -427,11 +427,11 @@ class PluginEngine {
     );
 
     const result = exec(plan);
+    if (result.finally) {
+      return result.finally(() => this._traceDepth--);
+    }
 
-    result.finally
-      ? result.finally(() => this._traceDepth--)
-      : this._traceDepth--;
-
+    this._traceDepth--;
     return result;
   }
 

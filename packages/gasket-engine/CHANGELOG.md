@@ -1,5 +1,7 @@
 # `@gasket/engine`
 
+- Fix issue causing unhandled rejection warnings to surface
+
 ### 6.0.11
 
 - Add ability to do debug tracing for the plugin lifecycle ([#267])
