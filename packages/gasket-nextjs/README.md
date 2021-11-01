@@ -53,7 +53,7 @@ script at a particular child index of the `<body/>`. To do so, you can set the
 ```jsx
 // pages/_document.js
 import Document, {Html, Head, Main, NextScript} from 'next/document'
-import {withGasketData} from '@gasket/nextjs';
+import { withGasketData } from '@gasket/nextjs';
 
 class MyDocument extends Document {
     static async getInitialProps(ctx) {
