@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import assume from 'assume';
-import { GasketDataProvider } from '../src';
+import { GasketDataProvider } from '../src/gasket-data-provider';
 
 describe('GasketDataProvider', function () {
 
