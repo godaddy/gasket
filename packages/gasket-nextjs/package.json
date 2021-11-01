@@ -1,6 +1,6 @@
 {
   "name": "@gasket/nextjs",
-  "version": "6.4.0",
+  "version": "6.8.0",
   "description": "Gasket integrations for Next.js apps",
   "main": "./lib",
   "browser": "./lib",
@@ -37,16 +37,18 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-nextjs#readme",
   "dependencies": {
-    "htmlescape": "^1.1.1",
-    "@gasket/data": "^6.0.12"
+    "@gasket/data": "^6.0.12",
+    "htmlescape": "^1.1.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.10",
     "@babel/core": "^7.12.10",
     "@babel/register": "^7.12.10",
+    "@testing-library/react-hooks": "^7.0.2",
     "assume": "^2.3.0",
     "assume-sinon": "^1.1.0",
     "babel-eslint": "^10.1.0",
+    "decache": "4.6.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.5",
     "eslint": "^7.17.0",
@@ -55,17 +57,15 @@
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-mocha": "^8.0.0",
     "eslint-plugin-react": "^7.22.0",
-    "@testing-library/react-hooks": "^7.0.2",
-    "mock-require": "^3.0.3",
     "jsdom": "^16.4.0",
     "mocha": "^8.2.1",
+    "mock-require": "^3.0.3",
     "next": "^10.2.0",
     "nyc": "^15.1.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "setup-env": "^1.2.2",
-    "sinon": "^9.2.3",
-    "decache": "4.6.0"
+    "sinon": "^9.2.3"
   },
   "peerDependencies": {
     "next": "^10.2.0"
