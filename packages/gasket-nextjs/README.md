@@ -137,9 +137,9 @@ export const MyComponent = (props) => {
 
 ## How it works
 
-During server side lifecycles' data can be added to the gasketData property. When the `withGasketData` hoc is added to a custom nextJs _document, the gasketData is added to the rendered html inside a script tag.
+During server side lifecycles' data can be added to the gasketData property. When the `withGasketData` hoc is added to a custom Next.js _document, the gasketData is added to the rendered html inside a script tag.
 
-The `withGasketDataProvider` can be added to a nextJS custom _app or react component. This HOC will capture the gasket data from server side gasketData property or the script tag that was rendered to the html. If nextJs is preforming a SSR the data will come from the gasketData property, otherwise the data will come from the script tag. The `withGasketDataProvider` hoc will then create a provider and inject gasket data into a context that can be consumed by the `useGasketData` hook.
+The `withGasketDataProvider` can be added to a Next.js custom _app or react component. This HOC will capture the gasket data from server side gasketData property or the script tag that was rendered to the html. If Next.js is preforming a SSR the data will come from the gasketData property, otherwise the data will come from the script tag. The `withGasketDataProvider` hoc will then create a provider and inject gasket data into a context that can be consumed by the `useGasketData` hook.
 
 The `useGasketData` will provided access to the gasket data within the context of the `withGasketDataProvider` so the data can be used within any react component.
 
