@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Main, NextScript } from 'next/document';
 import htmlescape from 'htmlescape';
+import { useGasketData as _useGasketData } from './use-gasket-data';
+import { withGasketDataProvider as _withGasketDataProvider } from './with-gasket-data-provider';
+
 
 /**
  * Renders a script tag with JSON gasketData
@@ -95,5 +98,6 @@ export function withGasketData(options = {}) {
   };
 }
 
-export * from './use-gasket-data';
-export * from './with-gasket-data-provider';
+
+export const useGasketData = _useGasketData;
+export const withGasketDataProvider = _withGasketDataProvider;

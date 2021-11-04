@@ -13,7 +13,7 @@
     "test:watch": "npm run test:runner -- --watch",
     "test:coverage": "nyc --reporter=text --reporter=json-summary npm run test:runner",
     "posttest": "npm run lint",
-    "build": "babel src -d lib",
+    "build": "rimraf lib && babel src -d lib",
     "prepublishOnly": "npm run build"
   },
   "repository": {
@@ -65,7 +65,8 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "setup-env": "^1.2.2",
-    "sinon": "^9.2.3"
+    "sinon": "^9.2.3",
+    "rimraf": "^3.0.2"
   },
   "peerDependencies": {
     "next": "^10.2.0"
