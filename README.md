@@ -164,7 +164,7 @@ Available plugins
 | [@gasket/plugin-https]          | 6.5.1   | Create http/s servers with graceful termination                            |
 | [@gasket/plugin-intl]           | 6.8.0   | NodeJS script to build localization files.                                 |
 | [@gasket/plugin-jest]           | 6.0.12  | Integrated jest into your application.                                     |
-| [@gasket/plugin-lifecycle]      | 6.7.3   | Allows a gasket/ directory to be used for lifecycle hooks in applications. |
+| [@gasket/plugin-lifecycle]      | 6.8.1   | Allows a gasket/ directory to be used for lifecycle hooks in applications. |
 | [@gasket/plugin-lint]           | 6.3.0   | Adds GoDaddy standard linting to your application                          |
 | [@gasket/plugin-log]            | 6.1.0   | Gasket log plugin                                                          |
 | [@gasket/plugin-manifest]       | 6.0.12  | The web app manifest for progressive Gasket applications                   |
@@ -186,7 +186,7 @@ Supporting modules
 | Name                  | Version | Description                                                                          |
 | --------------------- | ------- | ------------------------------------------------------------------------------------ |
 | [@gasket/assets]      | 6.0.12  | Gasket assets                                                                        |
-| [@gasket/cli]         | 6.7.3   | CLI for rapid application development with gasket                                    |
+| [@gasket/cli]         | 6.8.1   | CLI for rapid application development with gasket                                    |
 | [@gasket/data]        | 6.0.12  | Helper package for accessing embedded Gasket Data in the browser                     |
 | [@gasket/engine]      | 6.7.3   | Plugin engine for gasket                                                             |
 | [@gasket/fetch]       | 6.0.12  | Gasket Fetch API                                                                     |
@@ -197,7 +197,7 @@ Supporting modules
 | [@gasket/redux]       | 6.1.0   | Gasket Redux Configuration                                                           |
 | [@gasket/resolve]     | 6.3.0   | Essential module resolution & configuration management for gasket plugins & presets. |
 | [@gasket/utils]       | 6.2.0   | Reusable utilities for Gasket internals                                              |
-| create-gasket-app     | 6.7.3   | starter pack for creating a gasket app                                               |
+| create-gasket-app     | 6.8.1   | starter pack for creating a gasket app                                               |
 
 <!-- LINKS -->
 
