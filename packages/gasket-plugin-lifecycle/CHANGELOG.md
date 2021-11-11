@@ -1,5 +1,9 @@
 # `@gasket/plugin-lifecycle`
 
+### 6.8.1
+
+- Update main field ([#301])
+
 ### 6.0.0
 
 - Version alignment
@@ -28,3 +32,4 @@
 
 [#168]: https://github.com/godaddy/gasket/pull/168
 [#247]: https://github.com/godaddy/gasket/pull/247
+[#301]: https://github.com/godaddy/gasket/pull/301
