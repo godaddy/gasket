@@ -1,7 +1,7 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: Gasket CLI
+  name: "Gasket-CLI"
   # This is an extra long description
   description: CLI for Gasket apps
   links:
