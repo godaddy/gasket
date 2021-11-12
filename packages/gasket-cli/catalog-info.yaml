@@ -8,6 +8,8 @@ metadata:
     - url: https://github.com/godaddy/gasket
       title: GitHub Repo
       icon: github
+  annotations:
+    backstage.io/source-location: url:https://github.com/godaddy/gasket/
 spec:
   type: library
   lifecycle: production
