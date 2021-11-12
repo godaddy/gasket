@@ -1,0 +1,14 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: Gasket CLI
+  # This is an extra long description
+  description: CLI for Gasket apps
+  links:
+    - url: https://github.com/godaddy/gasket
+      title: GitHub Repo
+      icon: github
+spec:
+  type: library
+  lifecycle: production
+  owner: team-gasket
