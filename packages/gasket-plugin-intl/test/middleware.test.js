@@ -69,6 +69,18 @@ describe('middleware', function () {
       assume(mockGasket.execWaterfall).calledWith('intlLocale', 'fr-CH', { req, res });
     });
 
+    it('formats accept-language to lower-UPPER', async function () {
+      req.headers['accept-language'] = 'fr-fr';
+      await layer(req, res, next);
+      assume(mockGasket.execWaterfall).calledWith('intlLocale', 'fr-FR', { req, res });
+    });
+
+    it('formats accept-language to lo-UP-Capitals', async function () {
+      req.headers['accept-language'] = 'az-az-latn';
+      await layer(req, res, next);
+      assume(mockGasket.execWaterfall).calledWith('intlLocale', 'az-AZ-Latn', { req, res });
+    });
+
     it('passes defaultLocale if no accept-language header', async function () {
       delete req.headers['accept-language'];
       await layer(req, res, next);
