@@ -16,13 +16,10 @@ module.exports = function middlewareHook(gasket) {
     let preferredLocale = defaultLocale;
     if (req.headers['accept-language']) {
       try {
-        // if we have a list of support locales, fallback to one.
-        preferredLocale = locales && locales.length ?
-          accept.language(req.headers['accept-language'], locales) :
-          // Otherwise just run with the first accept language.
-          req.headers['accept-language'].split(',')[0];
+        // Get highest or highest from locales if configured
+        preferredLocale = accept.language(req.headers['accept-language'], locales);
       } catch (error) {
-        gasket.logger.warning(`Unable to parse accept-language header: ${error.message}`);
+        gasket.logger.warning(`Unable to parse accept-language header: ${ error.message }`);
       }
     }
 
