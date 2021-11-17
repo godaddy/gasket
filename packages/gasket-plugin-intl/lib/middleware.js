@@ -5,6 +5,29 @@ const { LocaleUtils } = require('@gasket/helper-intl');
 const { getIntlConfig } = require('./configure');
 
 
+function capitalize(str) {
+  return str[0].toUpperCase() + str.substring(1).toLowerCase();
+}
+
+/**
+ * Ensure consistent locale format coming from accept-language header.
+ *
+ * @example
+ * - az-AZ
+ * - az-Arab
+ * - az-AZ-Latn
+ *
+ * @param {string} language - Selected accept-language
+ * @returns {string} locale
+ */
+function formatLocale(language) {
+  const [lang, ...rest] = language ? language.split('-') : [];
+  return [
+    lang.toLowerCase(),
+    ...rest.map(o => o.length === 2 ? o.toUpperCase() : capitalize(o))
+  ].join('-');
+}
+
 module.exports = function middlewareHook(gasket) {
   const { defaultLocale, basePath, localesMap, localesDir, manifestFilename, locales } = getIntlConfig(gasket);
 
@@ -16,13 +39,12 @@ module.exports = function middlewareHook(gasket) {
     let preferredLocale = defaultLocale;
     if (req.headers['accept-language']) {
       try {
-        // if we have a list of support locales, fallback to one.
-        preferredLocale = locales && locales.length ?
-          accept.language(req.headers['accept-language'], locales) :
-          // Otherwise just run with the first accept language.
-          req.headers['accept-language'].split(',')[0];
+        // Get highest or highest from locales if configured
+        preferredLocale = formatLocale(
+          accept.language(req.headers['accept-language'], locales)
+        );
       } catch (error) {
-        gasket.logger.warning(`Unable to parse accept-language header: ${error.message}`);
+        gasket.logger.warning(`Unable to parse accept-language header: ${ error.message }`);
       }
     }
 
