@@ -1,5 +1,9 @@
 # `@gasket/plugin-webpack`
 
+### 6.8.2
+
+- Fix lazy require `initWebpack` dependencies ([#303])
+
 ### 6.6.0
 
 - Created new webpackConfig lifecycle ([#284])
@@ -35,3 +39,4 @@
 [#247]: https://github.com/godaddy/gasket/pull/247
 [#252]: https://github.com/godaddy/gasket/pull/252
 [#284]: https://github.com/godaddy/gasket/pull/284
+[#303]: https://github.com/godaddy/gasket/pull/303
