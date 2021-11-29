@@ -1,7 +1,3 @@
-const webpack = require('webpack');
-const WebpackChain = require('webpack-chain');
-const webpackMerge = require('webpack-merge');
-const WebpackMetricsPlugin = require('./webpack-metrics-plugin');
 const { name, devDependencies } = require('./package');
 
 /**
@@ -12,6 +8,11 @@ const { name, devDependencies } = require('./package');
 * @returns {Object}           Final webpack config
 */
 function initWebpack(gasket, initConfig, context) {
+  const webpack = require('webpack');
+  const WebpackChain = require('webpack-chain');
+  const webpackMerge = require('webpack-merge');
+  const WebpackMetricsPlugin = require('./webpack-metrics-plugin');
+
   const { execSync, execWaterfallSync, config } = gasket;
 
   const standardPlugins = { plugins: [new WebpackMetricsPlugin({ gasket })] };
