@@ -142,7 +142,7 @@ Available presets
 | Name                    | Version | Description                                |
 | ----------------------- | ------- | ------------------------------------------ |
 | [@gasket/preset-api]    | 6.7.0   | Create Express-based API with Gasket       |
-| [@gasket/preset-nextjs] | 6.8.0   | Basic NextJS Framework                     |
+| [@gasket/preset-nextjs] | 6.8.2   | Basic NextJS Framework                     |
 | [@gasket/preset-pwa]    | 6.0.12  | Turn Gasket apps into Progressive Web Apps |
 
 ## Plugins
@@ -162,7 +162,7 @@ Available plugins
 | [@gasket/plugin-fastify]        | 6.0.12  | Adds fastify support to your application                                   |
 | [@gasket/plugin-git]            | 6.2.0   | Adds git support to your application                                       |
 | [@gasket/plugin-https]          | 6.5.1   | Create http/s servers with graceful termination                            |
-| [@gasket/plugin-intl]           | 6.8.0   | NodeJS script to build localization files.                                 |
+| [@gasket/plugin-intl]           | 6.8.2   | NodeJS script to build localization files.                                 |
 | [@gasket/plugin-jest]           | 6.0.12  | Integrated jest into your application.                                     |
 | [@gasket/plugin-lifecycle]      | 6.8.1   | Allows a gasket/ directory to be used for lifecycle hooks in applications. |
 | [@gasket/plugin-lint]           | 6.3.0   | Adds GoDaddy standard linting to your application                          |
@@ -171,12 +171,12 @@ Available plugins
 | [@gasket/plugin-metadata]       | 6.3.0   | Adds metadata to gasket lifecycles                                         |
 | [@gasket/plugin-metrics]        | 6.0.12  | Collect metrics for gasket commands                                        |
 | [@gasket/plugin-mocha]          | 6.0.12  | Integrates mocha based testing in to your Gasket application               |
-| [@gasket/plugin-nextjs]         | 6.8.0   | Adds Next support to your application                                      |
+| [@gasket/plugin-nextjs]         | 6.8.2   | Adds Next support to your application                                      |
 | [@gasket/plugin-redux]          | 6.1.0   | Gasket Redux Setup                                                         |
 | [@gasket/plugin-service-worker] | 6.0.12  | Gasket Service Worker Plugin                                               |
 | [@gasket/plugin-start]          | 6.0.12  | Adds commands for building and starting Gasket apps                        |
 | [@gasket/plugin-swagger]        | 6.7.0   | Generate and serve swagger docs                                            |
-| [@gasket/plugin-webpack]        | 6.6.0   | Adds webpack support to your application                                   |
+| [@gasket/plugin-webpack]        | 6.8.2   | Adds webpack support to your application                                   |
 | [@gasket/plugin-workbox]        | 6.0.12  | Gasket Workbox Plugin                                                      |
 
 ## Modules
