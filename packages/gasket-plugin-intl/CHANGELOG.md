@@ -1,5 +1,9 @@
 # `@gasket/plugin-intl`
 
+### 6.8.2
+
+- Handle malformed and inconsistent formatted accept-language header ([#302])
+
 ### 6.7.2
 
 - Minor fix to update logger to use `gasket.logger.warning` ([#297])
@@ -135,3 +139,4 @@
 [#274]: https://github.com/godaddy/gasket/pull/274
 [#290]: https://github.com/godaddy/gasket/pull/290
 [#297]: https://github.com/godaddy/gasket/pull/297
+[#302]: https://github.com/godaddy/gasket/pull/302
