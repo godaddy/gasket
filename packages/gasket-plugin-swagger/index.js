@@ -9,6 +9,8 @@ const accessFile = promisify(fs.access);
 
 const isYaml = /\.ya?ml$/;
 
+const thisIsATestChange = 'Test Change';
+
 let __swaggerSpec;
 
 /**
