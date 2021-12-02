@@ -1,11 +1,13 @@
+# Workflow to run CI and tests for all branches on push and on pull requests
+
 name: CI
 
-on: push
+on: [push, pull_request]
 
 jobs:
-  build:
+  ci:
 
-    runs-on: [ubuntu-latest]
+    runs-on: ubuntu-latest
 
     strategy:
       matrix:
@@ -14,9 +16,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
-      - run: npm ci
-      - run: npm run build
-      - run: npm test
+      - name: Install Dependencies
+        run: npm ci
+      - name: Build
+        run: npm run build
+      - name: Run Tests & Lint
+        run: npm test
