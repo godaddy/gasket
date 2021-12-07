@@ -80,6 +80,16 @@ describe('createConfig', () => {
     assume(result.i18n).not.exist();
   });
 
+  it('intl config not forwarded if `intl.nextRouting` disabled', async () => {
+    gasket.config.intl = {
+      defaultLocale: 'fr-FR',
+      locales: ['fr-FR', 'en-US'],
+      nextRouting: false
+    };
+    result = await createConfig(gasket);
+    assume(result.i18n).not.exist();
+  });
+
   it('intl config options merge with existing', async () => {
     gasket.config.intl = {
       defaultLocale: 'fr-FR',
