@@ -11,6 +11,10 @@ function forwardIntlConfig(gasket, config) {
   const { logger } = gasket;
   const { intl: intlConfig = {} } = gasket.config;
 
+  if (intlConfig.nextRouting === false) {
+    return;
+  }
+
   // make a copy of i18n for mutating
   const i18n = { ...(config.i18n || {}) };
 
