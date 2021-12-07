@@ -49,12 +49,17 @@ required. However, these options exist to customize an app's setup.
   (default: `./public/locales`)
 - `manifestFilename` - (string) Change the name of the manifest file (default:
   `locales-manifest.json`)
-- `serveStatic` - (boolean|string) Enables ability to serve static locale files. If set to `true`, the app will use the `defaultPath` as the static endpoint path. This option can also be set to a string, to be used as the static endpoint path.
+- `serveStatic` - (boolean|string) Enables ability to serve static locale files.
+  If set to `true`, the app will use the `defaultPath` as the static endpoint
+  path. This option can also be set to a string, to be used as the static
+  endpoint path.
 - `modules` - (boolean|object) Enable locale files collation from node modules.
   Disabled by default, enable by setting to an object with options below, or set
   to `true` to use the default options. See [Module Locales] section.
   - `localesDir` - (string) Lookup dir for module files (default: `locales`)
   - `excludes` - (string[]) List of modules to ignore
+- `nextRouting` - (boolean) Enable [Next.js Routing] when used with
+  [@gasket/plugin-nextjs]. (default: true)
 
 #### Example config
 
@@ -179,6 +184,25 @@ customers, but this serves as a safety mechanism to make sure your app remains
 somewhat readable for unexpected locales. Also note, however, that you can
 associate known locales to share a translations with another locale using
 `localesMap`.
+
+### Next.js Routing
+
+If your Gasket app is using the [@gasket/plugin-nextjs] for Next.js support,
+when setting `locales` and `defaultLocale`, these will automatically be used to
+configure [Next.js Internationalized Routing].
+
+You can opt-out of this behavior by setting `nextRouting` to false.
+
+```js
+// gasket.config.js
+module.exports = {
+  intl: {
+    defaultLocale: 'fr-FR',
+    locales: ['fr-FR', 'en-US', 'zh-TW', 'zh-CN', 'zh-HK', 'zh-SG'],
+    nextRouting: false
+  }
+}
+```
 
 ### Locales Map
 
@@ -363,10 +387,13 @@ entry.
 [module locales]:#locales-manifest
 [Gasket data]:#gasket-data
 [intlLocale lifecycle]:#intllocale
+[Next.js Routing]:#nextjs-routing
 
 [@gasket/react-intl]: /packages/gasket-react-intl/README.md
+[@gasket/plugin-nextjs]: /packages/gasket-plugin-nextjs/README.md
 [@gasket/react-intl/next]: /packages/gasket-react-intl/README.md#nextjs
 [GasketData script tag]: /packages/gasket-data/README.md
+[Next.js Internationalized Routing]: https://nextjs.org/docs/advanced-features/i18n-routing
 
 [global window object]:https://developer.mozilla.org/en-US/docs/Glossary/Global_object
 
