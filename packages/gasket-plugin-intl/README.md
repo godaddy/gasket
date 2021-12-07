@@ -187,7 +187,7 @@ associate known locales to share a translations with another locale using
 
 ### Next.js Routing
 
-If your Gasket app us using the [@gasket/plugin-nextjs] for Next.js support,
+If your Gasket app is using the [@gasket/plugin-nextjs] for Next.js support,
 when setting `locales` and `defaultLocale`, these will automatically be used to
 configure [Next.js Internationalized Routing].
 
