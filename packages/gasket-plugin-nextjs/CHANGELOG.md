@@ -1,5 +1,9 @@
 # `@gasket/plugin-nextjs`
 
+### 6.8.3
+
+- Ability to disable Next.js Intl Routing when configuring `locales` ([#310])
+
 ### 6.6.0
 
 - Created new webpackConfig lifecycle ([#284])
@@ -138,3 +142,4 @@
 [#285]: https://github.com/godaddy/gasket/pull/285
 [#289]: https://github.com/godaddy/gasket/pull/289
 [#284]: https://github.com/godaddy/gasket/pull/284
+[#310]: https://github.com/godaddy/gasket/pull/310
