@@ -1,5 +1,9 @@
 # `@gasket/plugin-intl`
 
+### 6.8.3
+
+- Ability to disable Next.js Intl Routing when configuring `locales` ([#310])
+
 ### 6.8.2
 
 - Handle malformed and inconsistent formatted accept-language header ([#302])
@@ -140,3 +144,4 @@
 [#290]: https://github.com/godaddy/gasket/pull/290
 [#297]: https://github.com/godaddy/gasket/pull/297
 [#302]: https://github.com/godaddy/gasket/pull/302
+[#310]: https://github.com/godaddy/gasket/pull/310
