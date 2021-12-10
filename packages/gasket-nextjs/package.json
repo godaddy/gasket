@@ -44,7 +44,7 @@
     "@babel/cli": "^7.12.10",
     "@babel/core": "^7.12.10",
     "@babel/register": "^7.12.10",
-    "@testing-library/react-hooks": "^7.0.2",
+    "@testing-library/react": "^12.1.2",
     "assume": "^2.3.0",
     "assume-sinon": "^1.1.0",
     "babel-eslint": "^10.1.0",

@@ -3,6 +3,7 @@
   "version": "6.0.12",
   "description": "Collect metrics for gasket commands",
   "main": "lib",
+  "types": "lib/index.d.ts",
   "scripts": {
     "lint": "eslint lib test",
     "lint:fix": "npm run lint -- --fix",
@@ -39,6 +40,7 @@
     "git-url-parse": "^11.1.2"
   },
   "devDependencies": {
+    "@gasket/engine": "^6.7.3",
     "assume": "^2.3.0",
     "assume-sinon": "^1.1.0",
     "eslint": "^7.17.0",

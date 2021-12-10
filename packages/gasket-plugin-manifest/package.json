@@ -3,6 +3,7 @@
   "version": "6.0.12",
   "description": "The web app manifest for progressive Gasket applications",
   "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
@@ -40,6 +41,7 @@
     "mkdirp": "^1.0.4"
   },
   "devDependencies": {
+    "@gasket/engine": "^6.7.3",
     "assume": "^2.3.0",
     "eslint": "^7.17.0",
     "eslint-config-godaddy": "^4.0.1",

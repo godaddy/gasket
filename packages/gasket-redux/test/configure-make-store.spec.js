@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import * as redux from 'redux';
 import configureMakeStore, { prepareReducer } from '../src/configure-make-store';
 import thunk from 'redux-thunk';

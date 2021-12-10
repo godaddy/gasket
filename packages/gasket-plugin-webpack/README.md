@@ -132,7 +132,7 @@ Executed after `webpack-chain` and `webpack`, it receives four parameters:
 2. A webpack config object
 3. A context object with the following properties:
    * `webpack` - The webpack API.
-   * `webpackMerge` - `The [`webpack-merge`](https://github.com/survivejs/webpack-merge/tree/v4.2.2) API, version 4.
+   * `webpackMerge` - The [`webpack-merge`](https://github.com/survivejs/webpack-merge/tree/v4.2.2) API, version 4.
    * `...additionalContext` - Additional context may be exposed. For example, in next.js apps, the [next.js webpack config options](https://nextjs.org/docs/api-reference/next.config.js/custom-webpack-config) are included.
    
 
