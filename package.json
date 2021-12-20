@@ -6,7 +6,6 @@
     "lint": "eslint scripts",
     "lint:fix": "npm run lint -- --fix",
     "lint:fix:all": "npm run lint:fix && lerna run lint:fix --concurrency=1 --stream",
-    "test:package": "lerna run test --stream --scope $*",
     "test": "lerna run test --concurrency=1 --stream",
     "test:coverage": "lerna run test:coverage --concurrency=1 --stream",
     "posttest": "npm run lint",
@@ -21,7 +20,8 @@
     "docs-view": "docsify serve",
     "generate-docs-index": "node scripts/generate-docs-index",
     "postinstall": "npm run bootstrap",
-    "publish:canary": "lerna publish --preid canary --dist-tag canary"
+    "publish:canary": "lerna publish --preid canary --dist-tag canary",
+    "test:package": "lerna run test --stream --scope $*"
   },
   "repository": {
     "type": "git",

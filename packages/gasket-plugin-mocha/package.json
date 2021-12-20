@@ -59,15 +59,6 @@
     "setup-env": "^1.2.2",
     "sinon": "^9.2.3"
   },
-  "babel": {
-    "presets": [
-      "@babel/preset-env",
-      "@babel/preset-react"
-    ],
-    "plugins": [
-      "@babel/transform-runtime"
-    ]
-  },
   "eslintConfig": {
     "extends": [
       "godaddy-react"
@@ -82,5 +73,14 @@
         6
       ]
     }
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env",
+      "@babel/preset-react"
+    ],
+    "plugins": [
+      "@babel/transform-runtime"
+    ]
   }
 }
