@@ -55,10 +55,23 @@
     "eslint-plugin-json": "^2.1.2",
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-mocha": "^8.0.0",
+    "eslint-plugin-unicorn": "^39.0.0",
     "jest": "^26.6.3",
     "redux": "^4.0.5"
   },
   "peerDependencies": {
     "redux": "^3.7.2 || ^4.0.1"
+  },
+  "eslintConfig": {
+    "extends": [
+      "godaddy",
+      "plugin:jest/recommended"
+    ],
+    "plugins": [
+      "unicorn"
+    ],
+    "rules": {
+      "unicorn/filename-case": "error"
+    }
   }
 }

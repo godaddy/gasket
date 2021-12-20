@@ -50,6 +50,7 @@
     "eslint-plugin-json": "^2.1.2",
     "eslint-plugin-mocha": "^8.0.0",
     "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-unicorn": "^39.0.0",
     "jsdom": "^16.4.0",
     "mocha": "^8.2.1",
     "nyc": "^15.1.0",
@@ -66,5 +67,20 @@
     "plugins": [
       "@babel/transform-runtime"
     ]
+  },
+  "eslintConfig": {
+    "extends": [
+      "godaddy-react"
+    ],
+    "plugins": [
+      "unicorn"
+    ],
+    "rules": {
+      "unicorn/filename-case": "error",
+      "max-nested-callbacks": [
+        2,
+        6
+      ]
+    }
   }
 }

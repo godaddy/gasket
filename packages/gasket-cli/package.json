@@ -95,6 +95,7 @@
     "eslint-config-godaddy": "^4.0.1",
     "eslint-plugin-json": "^2.1.2",
     "eslint-plugin-mocha": "^8.0.0",
+    "eslint-plugin-unicorn": "^39.0.0",
     "fancy-test": "^1.2.0",
     "fetch-mock": "^7.3.3",
     "mocha": "^8.2.1",
@@ -104,6 +105,21 @@
     "rimraf": "^3.0.2",
     "sinon": "^9.2.3",
     "std-mocks": "^1.0.1"
+  },
+  "eslintConfig": {
+    "extends": [
+      "godaddy"
+    ],
+    "plugins": [
+      "unicorn"
+    ],
+    "rules": {
+      "unicorn/filename-case": "error",
+      "no-process-env": [
+        0
+      ],
+      "no-console": "off"
+    }
   },
   "eslintIgnore": [
     "coverage",

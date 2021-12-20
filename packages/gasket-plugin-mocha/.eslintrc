@@ -1,7 +1,0 @@
-{
-  "extends": ["godaddy-react"],
-  "parser": "babel-eslint",
-  "rules": {
-    "max-nested-callbacks": [2, 6]
-  }
-}
