@@ -67,5 +67,5 @@
     "rules": {
       "unicorn/filename-case": "error"
     }
-  },
+  }
 }
