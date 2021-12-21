@@ -56,8 +56,7 @@
   },
   "eslintConfig": {
     "extends": [
-      "godaddy",
-      "plugin:jest/recommended"
+      "godaddy"
     ],
     "plugins": [
       "unicorn"

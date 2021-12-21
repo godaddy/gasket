@@ -45,6 +45,7 @@
   "devDependencies": {
     "@godaddy/dmd": "^1.0.0",
     "assume": "^2.3.0",
+    "assume-sinon": "^1.1.0",
     "eslint": "^7.17.0",
     "eslint-config-godaddy": "^4.0.1",
     "eslint-plugin-json": "^2.1.2",

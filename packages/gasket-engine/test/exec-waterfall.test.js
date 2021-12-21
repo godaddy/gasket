@@ -1,4 +1,4 @@
-describe('The execWaterfallSync method', () => {
+describe('The execWaterfall method', () => {
   let engine, pluginA, pluginB;
 
   const mockConfig = {
@@ -34,7 +34,7 @@ describe('The execWaterfallSync method', () => {
       };
     });
 
-    const PluginEngine = require('..');
+    const PluginEngine = require('../lib/engine');
     engine = new PluginEngine(mockConfig);
   });
 
@@ -43,25 +43,25 @@ describe('The execWaterfallSync method', () => {
     jest.restoreAllMocks();
   });
 
-  it('sequentially transforms a value', () => {
-    const result = engine.execWaterfallSync('eventA', 5);
+  it('sequentially transforms a value', async () => {
+    const result = await engine.execWaterfall('eventA', 5);
     expect(result).toEqual(39);
   });
 
-  it('supports additional arguments', () => {
+  it('supports additional arguments', async () => {
     const otherArg = { some: 'thing' };
 
-    const result = engine.execWaterfallSync('eventA', 5, otherArg);
+    const result = await engine.execWaterfall('eventA', 5, otherArg);
 
     expect(pluginA.hooks.eventA).toHaveBeenCalledWith(engine, 5, otherArg);
     expect(pluginB.hooks.eventA).toHaveBeenCalledWith(engine, 35, otherArg);
     expect(result).toEqual(39);
   });
 
-  it('works when invoked without a context', () => {
-    const { execWaterfallSync } = engine;
+  it('works when invoked without a context', async () => {
+    const { execWaterfall } = engine;
 
-    const result = execWaterfallSync('eventA', 5);
+    const result = await execWaterfall('eventA', 5);
 
     expect(result).toEqual(39);
   });

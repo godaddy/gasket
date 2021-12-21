@@ -34,7 +34,7 @@ describe('The execSync method', () => {
       };
     });
 
-    const PluginEngine = require('..');
+    const PluginEngine = require('../lib/engine');
     engine = new PluginEngine(mockConfig);
   });
 
