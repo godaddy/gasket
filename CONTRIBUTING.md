@@ -189,6 +189,15 @@ an issue in the past with `docs-graphs` missing the `publishConfig` field which
 messed with `lerna publish`. Without this, we had to step into each package and
 manually re-publish the ones that didn’t make it out.
 
+## File and Directory Naming
+
+File and directory names should follow kebab-casing. Incorrect naming will generate a linting error.
+
+```
+new-file.js
+example-directory-name/
+```
+
 # Additional Resources
 
 - [General GitHub Documentation](https://help.github.com/)
