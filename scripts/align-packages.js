@@ -54,6 +54,7 @@ const depVersions = {
   'eslint-plugin-jest': '^24.1.3',
   'eslint-plugin-mocha': '^8.0.0',
   'eslint-plugin-react': '^7.22.0',
+  'eslint-plugin-unicorn': '^39.0.0',
 
   'deepmerge': '^4.2.2',
   'diagnostics': '^2.0.2',

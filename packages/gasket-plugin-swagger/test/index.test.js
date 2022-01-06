@@ -42,7 +42,8 @@ describe('Swagger Plugin', () => {
   });
 
   it('is an object', () => {
-    assume(plugin).instanceOf(Object);
+    assume(plugin).is.an('Object');
+    assume(plugin).has.length(2);
   });
 
   it('has expected name', () => {
