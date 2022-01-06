@@ -3,6 +3,7 @@
   "version": "6.8.3",
   "description": "NodeJS script to build localization files.",
   "main": "lib",
+  "types": "lib/index.d.ts",
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
@@ -44,6 +45,7 @@
     "url-join": "^4.0.0"
   },
   "devDependencies": {
+    "@gasket/engine": "^6.7.3",
     "@gasket/plugin-log": "^6.1.0",
     "@gasket/react-intl": "^6.8.0",
     "assume": "^2.3.0",

@@ -1,6 +1,7 @@
 import React from 'react';
-import { renderHook } from '@testing-library/react-hooks';
+import { render } from '@testing-library/react';
 import assume from 'assume';
+import { spy } from 'sinon';
 import { useGasketData } from '../src';
 import { GasketDataProvider } from '../src/gasket-data-provider';
 
@@ -10,14 +11,23 @@ import { GasketDataProvider } from '../src/gasket-data-provider';
 describe('useGasketData', function () {
 
   it('should return gasketData', async () => {
-    const testData = { test: 'hello' };
+    const observeData = spy();
+    const testData = { greeting: 'hello' };
 
-    const { result } = renderHook(() => useGasketData(), {
-      wrapper({ children }) {
-        return <GasketDataProvider gasketData={ testData }>{children}</GasketDataProvider>;
-      }
-    });
+    const MockConsumer = () => {
+      const { greeting } = useGasketData();
 
-    assume(result.current).eql(testData);
+      return <div>{ greeting }</div>;
+    };
+
+    const MockApp = () => (
+      <GasketDataProvider gasketData={ testData }>
+        <MockConsumer onGotData={ observeData }/>
+      </GasketDataProvider>
+    );
+
+    const content = render(<MockApp/>);
+
+    assume(content.baseElement.textContent).equals(testData.greeting);
   });
 });

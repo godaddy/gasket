@@ -3,6 +3,7 @@
   "version": "6.9.0",
   "description": "Adds Next support to your application",
   "main": "index.js",
+  "types": "index.d.ts",
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
@@ -85,6 +86,7 @@
   "eslintIgnore": [
     "coverage",
     "generator/redux/redux/store.js",
-    "generator/app/pages/_app.js"
+    "generator/app/pages/_app.js",
+    "*.d.ts"
   ]
 }

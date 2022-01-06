@@ -34,7 +34,7 @@ const depVersions = {
   'nyc': '^15.1.0',
   'proxyquire': '^2.1.3',
 
-  'jest': '^26.6.3',
+  'jest': '^27.4.5',
   'enzyme': '^3.11.0',
   'enzyme-adapter-react-16': '^1.15.5',
 

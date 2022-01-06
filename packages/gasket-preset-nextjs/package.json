@@ -2,6 +2,7 @@
   "name": "@gasket/preset-nextjs",
   "version": "6.9.0",
   "description": "Basic NextJS Framework",
+  "types": "index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/godaddy/gasket.git"
@@ -21,5 +22,8 @@
     "@gasket/plugin-nextjs": "^6.9.0",
     "@gasket/plugin-redux": "^6.1.0",
     "@gasket/plugin-webpack": "^6.8.2"
+  },
+  "devDependencies": {
+    "@gasket/plugin-start": "^6.0.12"
   }
 }

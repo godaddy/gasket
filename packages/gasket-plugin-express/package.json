@@ -3,6 +3,7 @@
   "version": "6.5.0",
   "description": "Adds express support to your application",
   "main": "index.js",
+  "types": "index.d.ts",
   "scripts": {
     "lint": "eslint index.js test",
     "lint:fix": "npm run lint -- --fix",
@@ -35,6 +36,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-express",
   "dependencies": {
+    "@types/express": "^4.17.13",
     "compression": "^1.7.2",
     "cookie-parser": "^1.4.3",
     "diagnostics": "^2.0.2",
@@ -42,6 +44,7 @@
     "http2-express-bridge": "^1.0.7"
   },
   "devDependencies": {
+    "@gasket/engine": "^6.7.3",
     "assume": "^2.3.0",
     "assume-sinon": "^1.1.0",
     "eslint": "^7.17.0",

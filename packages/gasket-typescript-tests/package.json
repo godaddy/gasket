@@ -1,0 +1,63 @@
+{
+  "name": "@gasket/typescript-tests",
+  "private": true,
+  "version": "6.8.2",
+  "description": "Not a published package; hosts unit tests to verify TypeScript support",
+  "keywords": [
+    "gasket",
+    "typescript"
+  ],
+  "author": "Jacob Page <jpage@godaddy.com>",
+  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/typescript-tests#readme",
+  "license": "MIT",
+  "directories": {
+    "test": "test"
+  },
+  "files": [
+    "lib"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/godaddy/gasket.git"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "bugs": {
+    "url": "https://github.com/godaddy/gasket/issues"
+  },
+  "devDependencies": {
+    "@gasket/engine": "^6.7.3",
+    "@gasket/plugin-analyze": "^6.0.12",
+    "@gasket/plugin-command": "^6.2.0",
+    "@gasket/plugin-config": "^6.2.0",
+    "@gasket/plugin-docs": "^6.0.12",
+    "@gasket/plugin-docsify": "^6.0.12",
+    "@gasket/plugin-elastic-apm": "^6.0.12",
+    "@gasket/plugin-express": "^6.5.0",
+    "@gasket/plugin-https": "^6.5.1",
+    "@gasket/plugin-intl": "^6.8.2",
+    "@gasket/plugin-log": "^6.1.0",
+    "@gasket/plugin-manifest": "^6.0.12",
+    "@gasket/plugin-metadata": "^6.3.0",
+    "@gasket/plugin-metrics": "^6.0.12",
+    "@gasket/plugin-nextjs": "^6.8.2",
+    "@gasket/plugin-redux": "^6.1.0",
+    "@gasket/plugin-service-worker": "^6.0.12",
+    "@gasket/plugin-start": "^6.0.12",
+    "@gasket/plugin-swagger": "^6.7.0",
+    "@gasket/plugin-webpack": "^6.8.2",
+    "@gasket/plugin-workbox": "^6.0.12",
+    "@gasket/preset-api": "^6.7.0",
+    "@gasket/preset-nextjs": "^6.8.2",
+    "@gasket/preset-pwa": "^6.0.12",
+    "@types/express": "^4.17.13",
+    "@types/jest": "^27.0.3",
+    "jest": "^27.4.3",
+    "ts-jest": "^27.1.1",
+    "typescript": "^4.5.2"
+  }
+}

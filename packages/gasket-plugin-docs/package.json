@@ -3,6 +3,7 @@
   "version": "6.0.12",
   "description": "Centralize doc files from plugins and modules",
   "main": "lib",
+  "types": "lib/index.d.ts",
   "scripts": {
     "lint": "eslint lib test",
     "lint:fix": "npm run lint -- --fix",
@@ -43,6 +44,8 @@
     "rimraf": "^3.0.2"
   },
   "devDependencies": {
+    "@gasket/engine": "^6.7.3",
+    "@gasket/plugin-metadata": "^6.3.0",
     "@godaddy/dmd": "^1.0.0",
     "assume": "^2.3.0",
     "assume-sinon": "^1.1.0",
