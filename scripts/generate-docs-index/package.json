@@ -7,6 +7,19 @@
     "@gasket/cli": "^6.8.1"
   },
   "devDependencies": {
-    "copy-dir": "^1.2.0"
+    "copy-dir": "^1.2.0",
+    "eslint": "^8.5.0",
+    "eslint-plugin-unicorn": "^39.0.0"
+  },
+  "eslintConfig": {
+    "extends": [
+      "godaddy"
+    ],
+    "plugins": [
+      "unicorn"
+    ],
+    "rules": {
+      "unicorn/filename-case": "error"
+    }
   }
 }

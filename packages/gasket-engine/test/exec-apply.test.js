@@ -55,7 +55,7 @@ describe('The execApply method', () => {
       };
     });
 
-    const PluginEngine = require('..');
+    const PluginEngine = require('../lib/engine');
     engine = new PluginEngine(mockConfig);
   });
 

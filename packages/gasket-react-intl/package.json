@@ -66,6 +66,7 @@
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-mocha": "^8.0.0",
     "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-unicorn": "^39.0.0",
     "intl": "^1.2.5",
     "jsdom": "^16.4.0",
     "mocha": "^8.2.1",
@@ -85,7 +86,13 @@
   "eslintConfig": {
     "extends": [
       "godaddy-react"
-    ]
+    ],
+    "plugins": [
+      "unicorn"
+    ],
+    "rules": {
+      "unicorn/filename-case": "error"
+    }
   },
   "eslintIgnore": [
     "lib",
