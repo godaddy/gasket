@@ -3,7 +3,7 @@
   "version": "6.8.2",
   "description": "Adds webpack support to your application",
   "main": "index.js",
-  "tests": "index.d.ts",
+  "types": "index.d.ts",
   "scripts": {
     "lint": "eslint *.js \"test/**/*.js\"",
     "lint:fix": "npm run lint -- --fix",
@@ -63,6 +63,5 @@
     "rules": {
       "unicorn/filename-case": "error"
     }
-  },
-  "tests": "index.d.ts"
+  }
 }
