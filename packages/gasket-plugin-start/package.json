@@ -3,6 +3,7 @@
   "version": "6.0.12",
   "description": "Adds commands for building and starting Gasket apps",
   "main": "lib",
+  "types": "lib/index.d.ts",
   "scripts": {
     "lint": "eslint lib test",
     "lint:fix": "npm run lint -- --fix",
@@ -38,6 +39,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-start",
   "devDependencies": {
+    "@gasket/engine": "^6.7.3",
     "assume": "^2.3.0",
     "assume-sinon": "^1.1.0",
     "eslint": "^7.17.0",

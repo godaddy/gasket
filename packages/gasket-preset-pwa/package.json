@@ -2,6 +2,7 @@
   "name": "@gasket/preset-pwa",
   "version": "6.0.12",
   "description": "Turn Gasket apps into Progressive Web Apps",
+  "types": "index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/godaddy/gasket.git"

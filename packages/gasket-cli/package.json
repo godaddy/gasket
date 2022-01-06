@@ -3,6 +3,7 @@
   "version": "6.8.1",
   "description": "CLI for rapid application development with gasket",
   "main": "src/index.js",
+  "types": "src/index.d.ts",
   "bin": {
     "gasket": "./bin/boot"
   },

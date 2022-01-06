@@ -2,6 +2,7 @@
   "name": "@gasket/preset-api",
   "version": "6.7.0",
   "description": "Create Express-based API with Gasket",
+  "types": "./index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/godaddy/gasket.git"
@@ -23,5 +24,8 @@
     "@gasket/plugin-lint": "^6.3.0",
     "@gasket/plugin-log": "^6.1.0",
     "@gasket/plugin-swagger": "^6.7.0"
+  },
+  "devDependencies": {
+    "@gasket/plugin-start": "^6.0.12"
   }
 }

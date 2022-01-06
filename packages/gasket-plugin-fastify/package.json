@@ -3,6 +3,7 @@
   "version": "6.0.12",
   "description": "Adds fastify support to your application",
   "main": "index.js",
+  "types": "index.d.ts",
   "scripts": {
     "lint": "eslint index.js test",
     "lint:fix": "npm run lint -- --fix",
@@ -41,6 +42,7 @@
     "middie": "5.1.0"
   },
   "devDependencies": {
+    "@gasket/engine": "^6.7.3",
     "assume": "^2.3.0",
     "assume-sinon": "^1.1.0",
     "eslint": "^7.17.0",

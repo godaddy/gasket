@@ -3,6 +3,7 @@
   "version": "6.8.2",
   "description": "Adds webpack support to your application",
   "main": "index.js",
+  "tests": "index.d.ts",
   "scripts": {
     "lint": "eslint *.js \"test/**/*.js\"",
     "lint:fix": "npm run lint -- --fix",
@@ -38,6 +39,7 @@
     "webpack-merge": "^4.2.1"
   },
   "devDependencies": {
+    "@gasket/engine": "^6.7.3",
     "assume": "^2.3.0",
     "assume-sinon": "^1.1.0",
     "eslint": "^7.17.0",

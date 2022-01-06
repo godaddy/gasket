@@ -3,6 +3,7 @@
   "version": "6.3.0",
   "description": "Adds metadata to gasket lifecycles",
   "main": "lib",
+  "types": "lib/index.d.ts",
   "scripts": {
     "lint": "eslint lib test",
     "lint:fix": "npm run lint -- --fix",
@@ -42,6 +43,7 @@
     "lodash.isobject": "^3.0.2"
   },
   "devDependencies": {
+    "@gasket/engine": "^6.7.3",
     "@godaddy/dmd": "^1.0.0",
     "assume": "^2.3.0",
     "assume-sinon": "^1.1.0",

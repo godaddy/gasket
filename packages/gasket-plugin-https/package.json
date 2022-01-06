@@ -3,6 +3,11 @@
   "version": "6.5.1",
   "description": "Create http/s servers with graceful termination",
   "main": "index.js",
+  "types": "index.d.ts",
+  "files": [
+    "index.js",
+    "index.d.ts"
+  ],
   "scripts": {
     "lint": "eslint *.js test/*.js",
     "lint:fix": "npm run lint -- --fix",
@@ -35,12 +40,14 @@
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-https#readme",
   "dependencies": {
     "@godaddy/terminus": "^4.2.0",
+    "@types/node": "^16.11.12",
     "create-servers": "^3.2.0",
     "diagnostics": "^2.0.2",
     "errs": "^0.3.2",
     "one-time": "^1.0.0"
   },
   "devDependencies": {
+    "@gasket/engine": "^6.7.3",
     "assume": "^2.3.0",
     "assume-sinon": "^1.1.0",
     "eslint": "^7.17.0",
