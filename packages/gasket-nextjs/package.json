@@ -1,6 +1,6 @@
 {
   "name": "@gasket/nextjs",
-  "version": "6.8.0",
+  "version": "6.9.0",
   "description": "Gasket integrations for Next.js apps",
   "main": "./lib",
   "browser": "./lib",
