@@ -3,32 +3,29 @@
   "private": true,
   "version": "6.8.2",
   "description": "Not a published package; hosts unit tests to verify TypeScript support",
-  "keywords": [
-    "gasket",
-    "typescript"
-  ],
-  "author": "Jacob Page <jpage@godaddy.com>",
-  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/typescript-tests#readme",
-  "license": "MIT",
-  "directories": {
-    "test": "test"
-  },
   "files": [
     "lib"
   ],
-  "publishConfig": {
-    "access": "public"
+  "scripts": {
+    "test": "jest"
   },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/godaddy/gasket.git"
   },
-  "scripts": {
-    "test": "jest"
+  "publishConfig": {
+    "access": "public"
   },
+  "keywords": [
+    "gasket",
+    "typescript"
+  ],
+  "author": "GoDaddy Operating Company, LLC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/godaddy/gasket/issues"
   },
+  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/typescript-tests#readme",
   "devDependencies": {
     "@gasket/engine": "^6.7.3",
     "@gasket/plugin-analyze": "^6.0.12",
@@ -59,5 +56,8 @@
     "jest": "^27.4.3",
     "ts-jest": "^27.1.1",
     "typescript": "^4.5.2"
+  },
+  "directories": {
+    "test": "test"
   }
 }
