@@ -2,12 +2,14 @@ const assume = require('assume');
 const sinon = require('sinon');
 const proxyquire = require('proxyquire').noCallThru();
 
-describe('Swagger Plugin', () => {
+describe('Swagger Plugin', function () {
   let plugin;
   let readFileStub, writeFileStub, yamlSafeDumpStub, yamlSafeLoadStub, swaggerJSDocStub, oKStub,
     accessStub;
 
-  beforeEach(() => {
+  this.timeout(5000);
+
+  beforeEach(function () {
     readFileStub = sinon.stub();
     writeFileStub = sinon.stub();
     yamlSafeDumpStub = sinon.stub();
@@ -37,20 +39,20 @@ describe('Swagger Plugin', () => {
     });
   });
 
-  afterEach(() => {
+  afterEach(function () {
     sinon.restore();
   });
 
-  it('is an object', () => {
+  it('is an object', function () {
     assume(plugin).is.an('Object');
     assume(plugin).has.length(2);
   });
 
-  it('has expected name', () => {
+  it('has expected name', function () {
     assume(plugin).property('name', '@gasket/plugin-swagger');
   });
 
-  it('has expected hooks', () => {
+  it('has expected hooks', function () {
     const expected = [
       'configure',
       'build',
@@ -65,9 +67,9 @@ describe('Swagger Plugin', () => {
     assume(hooks).lengthOf(expected.length);
   });
 
-  describe('configure hook', () => {
+  describe('configure hook', function () {
 
-    it('sets expected defaults', () => {
+    it('sets expected defaults', function () {
       const results = plugin.hooks.configure({}, {});
       assume(results)
         .eqls({
@@ -78,7 +80,7 @@ describe('Swagger Plugin', () => {
         });
     });
 
-    it('uses specified definitionFile', () => {
+    it('uses specified definitionFile', function () {
       const results = plugin.hooks.configure({}, {
         swagger: { definitionFile: 'dist/api-spec.yaml' }
       });
@@ -86,7 +88,7 @@ describe('Swagger Plugin', () => {
       assume(results.swagger.definitionFile).equals('dist/api-spec.yaml');
     });
 
-    it('uses specified apiDocsRoute', () => {
+    it('uses specified apiDocsRoute', function () {
       const results = plugin.hooks.configure({}, {
         swagger: { apiDocsRoute: '/api/v2/docs' }
       });
@@ -95,10 +97,10 @@ describe('Swagger Plugin', () => {
     });
   });
 
-  describe('build hook', () => {
+  describe('build hook', function () {
     let mockGasket;
 
-    beforeEach(() => {
+    beforeEach(function () {
       mockGasket = {
         logger: {
           info: sinon.stub(),
@@ -119,24 +121,24 @@ describe('Swagger Plugin', () => {
       };
     });
 
-    it('sets up swagger spec', async () => {
+    it('sets up swagger spec', async function () {
       await plugin.hooks.build(mockGasket);
       assume(swaggerJSDocStub).called();
     });
 
-    it('writes spec file', async () => {
+    it('writes spec file', async function () {
       swaggerJSDocStub.returns({ data: true });
       await plugin.hooks.build(mockGasket);
       assume(writeFileStub).calledWith('/path/to/app/swagger.json');
     });
 
-    it('json content for .json definition files', async () => {
+    it('json content for .json definition files', async function () {
       swaggerJSDocStub.returns({ data: true });
       await plugin.hooks.build(mockGasket);
       assume(writeFileStub.args[0][1]).includes('"data": true');
     });
 
-    it('yaml content for .yaml definition files', async () => {
+    it('yaml content for .yaml definition files', async function () {
       swaggerJSDocStub.returns({ data: true });
       mockGasket.config.swagger.definitionFile = 'swagger.yaml';
       yamlSafeDumpStub.returns('- data: true');
@@ -144,17 +146,17 @@ describe('Swagger Plugin', () => {
       assume(writeFileStub.args[0][1]).includes('- data: true');
     });
 
-    it('does not setup swagger spec if not configured', async () => {
+    it('does not setup swagger spec if not configured', async function () {
       delete mockGasket.config.swagger.jsdoc;
       await plugin.hooks.build(mockGasket);
       assume(swaggerJSDocStub).not.called();
     });
   });
 
-  describe('express hook', () => {
+  describe('express hook', function () {
     let mockGasket, mockApp;
 
-    beforeEach(() => {
+    beforeEach(function () {
       mockGasket = {
         logger: {
           info: sinon.stub(),
@@ -173,30 +175,30 @@ describe('Swagger Plugin', () => {
       };
     });
 
-    context('when target definition file is not found', () => {
-      it('returns nothing', async () => {
+    context('when target definition file is not found', function () {
+      it('returns nothing', async function () {
         mockGasket.config.swagger.definitionFile = 'swagger.yaml';
         const result = await plugin.hooks.express.handler(mockGasket, mockApp);
         assume(result).is.falsely();
       });
     });
 
-    context('when swagger file is missing', () => {
-      it('gasket.logger logs error', async () => {
+    context('when swagger file is missing', function () {
+      it('gasket.logger logs error', async function () {
         mockGasket.config.swagger.definitionFile = 'swagger.yaml';
         accessStub.rejects();
         await plugin.hooks.express.handler(mockGasket, mockApp);
-        assume(mockGasket.logger.error).calledWith(`Missing ${mockGasket.config.swagger.definitionFile} file...`);
+        assume(mockGasket.logger.error).calledWith(`Missing ${ mockGasket.config.swagger.definitionFile } file...`);
       });
     });
 
-    it('loads the swagger spec yaml file', async () => {
+    it('loads the swagger spec yaml file', async function () {
       mockGasket.config.swagger.definitionFile = 'swagger.yaml';
       await plugin.hooks.express.handler(mockGasket, mockApp);
       assume(yamlSafeLoadStub).called();
     });
 
-    it('only loads the swagger spec file once', async () => {
+    it('only loads the swagger spec file once', async function () {
       mockGasket.config.swagger.definitionFile = 'swagger.yaml';
       assume(yamlSafeLoadStub).not.called();
       await plugin.hooks.express.handler(mockGasket, mockApp);
@@ -205,12 +207,12 @@ describe('Swagger Plugin', () => {
       assume(yamlSafeLoadStub).called(1);
     });
 
-    it('loads the swagger spec json file', async () => {
+    it('loads the swagger spec json file', async function () {
       await plugin.hooks.express.handler(mockGasket, mockApp);
       assume(yamlSafeLoadStub).not.called();
     });
 
-    it('sets the api docs route', async () => {
+    it('sets the api docs route', async function () {
       await plugin.hooks.express.handler(mockGasket, mockApp);
       assume(mockApp.use).calledWith('/api-docs');
     });
