@@ -68,7 +68,7 @@
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-unicorn": "^39.0.0",
     "intl": "^1.2.5",
-    "jsdom": "^16.7.0",
+    "jsdom": "^16.4.0",
     "mocha": "^8.2.1",
     "nyc": "^15.1.0",
     "proxyquire": "^2.1.3",
