@@ -34,7 +34,7 @@ const depVersions = {
   'nyc': '^15.1.0',
   'proxyquire': '^2.1.3',
 
-  'jest': '^27.4.5',
+  'jest': '^27.4.3',
   'enzyme': '^3.11.0',
   'enzyme-adapter-react-16': '^1.15.5',
 
@@ -43,7 +43,7 @@ const depVersions = {
   'react-intl': '^5.10.13',
   'prop-types': '^15.7.2',
   'redux': '^4.0.5',
-  'next': '^10.2.0',
+  'next': '^11.1.1',
   'jsdom': '^16.4.0',
 
   'babel-eslint': '^10.1.0',
@@ -76,12 +76,14 @@ const depVersions = {
  */
 const pkgOrder = [
   'name',
+  'private',
   'version',
   'description',
   'main',
   'browser',
   'module',
   'bin',
+  'types',
   'files',
   'scripts',
   'repository',
