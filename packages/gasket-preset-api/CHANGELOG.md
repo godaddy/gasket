@@ -1,5 +1,9 @@
 # `@gasket/preset-api`
 
+### 6.10.0
+
+- TypeScript definitions for config & lifecycles ([#311])
+
 ### 6.0.0
 
 - Upgrade dependencies to 6.0.0 ([#243])
@@ -10,3 +14,4 @@
 
 [#181]: https://github.com/godaddy/gasket/pull/181
 [#243]: https://github.com/godaddy/gasket/pull/243
+[#311]: https://github.com/godaddy/gasket/pull/311

@@ -1,5 +1,9 @@
 # `@gasket/plugin-https`
 
+### 6.10.0
+
+- TypeScript definitions for config & lifecycles ([#311])
+
 ### 6.5.0
 
 - Add support for http2 servers ([#287])
@@ -51,6 +55,7 @@
 [#146]: https://github.com/godaddy/gasket/pull/146
 [#247]: https://github.com/godaddy/gasket/pull/247
 [#287]: https://github.com/godaddy/gasket/pull/287
+[#311]: https://github.com/godaddy/gasket/pull/311
 
 [terminus]: https://github.com/godaddy/terminus
 [create-servers]: https://github.com/http-party/create-servers

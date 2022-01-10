@@ -1,5 +1,9 @@
 # `@gasket/plugin-intl`
 
+### 6.10.0
+
+- TypeScript definitions for config & lifecycles ([#311])
+
 ### 6.8.3
 
 - Ability to disable Next.js Intl Routing when configuring `locales` ([#310])
@@ -145,3 +149,4 @@
 [#297]: https://github.com/godaddy/gasket/pull/297
 [#302]: https://github.com/godaddy/gasket/pull/302
 [#310]: https://github.com/godaddy/gasket/pull/310
+[#311]: https://github.com/godaddy/gasket/pull/311

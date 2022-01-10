@@ -1,5 +1,9 @@
 # `@gasket/plugin-service-worker`
 
+### 6.10.0
+
+- TypeScript definitions for config & lifecycles ([#311])
+
 ### 6.0.0
 
 - Ability to configure static output of service workers for build time ([#217])
@@ -37,3 +41,4 @@
 [#95]:https://github.com/godaddy/gasket/pull/95
 [#158]: https://github.com/godaddy/gasket/pull/158
 [#217]: https://github.com/godaddy/gasket/pull/217
+[#311]: https://github.com/godaddy/gasket/pull/311

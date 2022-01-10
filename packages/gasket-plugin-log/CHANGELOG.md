@@ -1,5 +1,9 @@
 # `@gasket/plugin-log`
 
+### 6.10.0
+
+- TypeScript definitions for config & lifecycles ([#311])
+
 ### 6.1.0
 
 - Support for custom log levels ([#279])
@@ -65,3 +69,4 @@
 [#75]:https://github.com/godaddy/gasket/pull/75
 [#247]: https://github.com/godaddy/gasket/pull/247
 [#279]: https://github.com/godaddy/gasket/pull/279
+[#311]: https://github.com/godaddy/gasket/pull/311

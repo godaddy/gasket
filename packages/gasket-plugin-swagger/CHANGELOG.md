@@ -1,5 +1,9 @@
 # `@gasket/plugin-swagger`
 
+### 6.10.0
+
+- TypeScript definitions for config & lifecycles ([#311])
+
 ### 6.7.0
 
 - Added timing to express lifecycle ([#294])
@@ -27,3 +31,4 @@
 [#186]: https://github.com/godaddy/gasket/pull/186
 [#247]: https://github.com/godaddy/gasket/pull/247
 [#294]: https://github.com/godaddy/gasket/pull/294
+[#311]: https://github.com/godaddy/gasket/pull/311

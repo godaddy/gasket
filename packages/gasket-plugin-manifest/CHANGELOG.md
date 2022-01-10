@@ -1,5 +1,9 @@
 # `@gasket/plugin-manifest`
 
+### 6.10.0
+
+- TypeScript definitions for config & lifecycles ([#311])
+
 ### 6.0.0
 
 - Fix to allow basic manifest to work with no config ([#244])
@@ -43,3 +47,4 @@
 [#218]: https://github.com/godaddy/gasket/pull/218
 [#244]: https://github.com/godaddy/gasket/pull/244
 [#247]: https://github.com/godaddy/gasket/pull/247
+[#311]: https://github.com/godaddy/gasket/pull/311
