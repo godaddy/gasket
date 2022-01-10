@@ -37,13 +37,13 @@ async function start(gasket) {
   if (http2) configOpts.http2 = http2;
 
   const serverOpts = await gasket.execWaterfall('createServers', configOpts);
-  const { healthcheck, healthcheckHtmlRoute, ...terminusDefaults } = await gasket.execWaterfall('terminus', {
-    healthcheck: '/healthcheck',
-    healthcheckHtmlRoute: '/healthcheck.html',
+  const { healthcheck, ...terminusDefaults } = await gasket.execWaterfall('terminus', {
+    healthcheck: ['/healthcheck', '/healthcheck.html'],
     signals: ['SIGTERM'],
-
     ...(terminus || {})
   });
+
+  const routes = Array.isArray(healthcheck) ? healthcheck : [healthcheck];
 
   // Default port to non-essential port on creation
   // create-servers does not support http or https being `null`
@@ -75,15 +75,15 @@ async function start(gasket) {
     onShutdown: one(async function onShutdown() {
       await gasket.exec('onShutdown');
     }),
-    healthChecks: {
-      [healthcheck]: async function healthCheckRequested() {
-        await gasket.exec('healthcheck', HealthCheckError);
-      },
-      [healthcheckHtmlRoute]: async function healthCheckRequested() {
-        await gasket.exec('healthcheck', HealthCheckError);
+    healthChecks: (function () {
+      const routeFunctions = {};
+      for (const route of routes) {
+        routeFunctions[route] = async function healthCheckRequested() {
+          await gasket.exec('healthcheck', HealthCheckError);
+        };
       }
-    },
-
+      return routeFunctions;
+    }()),
     ...terminusDefaults
   };
 
