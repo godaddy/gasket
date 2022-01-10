@@ -317,7 +317,7 @@ Supporting modules
 [@gasket/resolve]:/packages/gasket-resolve/README.md
 [@gasket/typescript-tests]:/packages/gasket-typescript-tests/README.md
 [@gasket/utils]:/packages/gasket-utils/README.md
-[create-gasket-app]:https://github.com/godaddy/gasket/tree/main/packages/create-gasket-app
+[create-gasket-app]:/packages/create-gasket-app/README.md
 <!-- END GENERATED -->
 
 ## License
