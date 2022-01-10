@@ -1,6 +1,6 @@
 {
   "name": "@gasket/data",
-  "version": "6.0.12",
+  "version": "6.10.0",
   "description": "Helper package for accessing embedded Gasket Data in the browser",
   "main": "lib",
   "scripts": {
