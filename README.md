@@ -198,7 +198,7 @@ Supporting modules
 | [@gasket/resolve]          | 6.10.0  | Essential module resolution & configuration management for gasket plugins & presets. |
 | [@gasket/typescript-tests] | 6.10.0  | Not a published package; hosts unit tests to verify TypeScript support               |
 | [@gasket/utils]            | 6.10.0  | Reusable utilities for Gasket internals                                              |
-| create-gasket-app          | 6.10.0  | starter pack for creating a gasket app                                               |
+| [create-gasket-app]        | 6.10.0  | starter pack for creating a gasket app                                               |
 
 <!-- LINKS -->
 
@@ -317,6 +317,7 @@ Supporting modules
 [@gasket/resolve]:/packages/gasket-resolve/README.md
 [@gasket/typescript-tests]:/packages/gasket-typescript-tests/README.md
 [@gasket/utils]:/packages/gasket-utils/README.md
+[create-gasket-app]:https://github.com/godaddy/gasket/tree/main/packages/create-gasket-app
 <!-- END GENERATED -->
 
 ## License
