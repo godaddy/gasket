@@ -37,7 +37,7 @@
   "bugs": {
     "url": "https://github.com/godaddy/gasket/issues"
   },
-  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-https#readme",
+  "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-https",
   "dependencies": {
     "@godaddy/terminus": "^4.2.0",
     "@types/node": "^16.11.12",

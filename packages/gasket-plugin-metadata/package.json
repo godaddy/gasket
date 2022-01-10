@@ -35,7 +35,7 @@
   "bugs": {
     "url": "https://github.com/godaddy/gasket/issues"
   },
-  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-metadata",
+  "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-metadata",
   "dependencies": {
     "@gasket/resolve": "^6.10.0",
     "lodash.clonedeep": "^4.5.0",

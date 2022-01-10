@@ -39,7 +39,7 @@ const txGasketPackageLinks = {
 
     const tx = makeLinkTransform(link => {
       if (/^\/packages\/gasket-.+/.test(link)) {
-        return ['https://github.com/godaddy/gasket/tree/master', link].join('');
+        return ['https://github.com/godaddy/gasket/tree/main', link].join('');
       }
     });
 
@@ -48,7 +48,7 @@ const txGasketPackageLinks = {
 };
 
 /**
- * Updates all gasket URL links to be to be relative to the collated docs
+ * Updates all gasket URL links to be relative to the collated docs
  * if the target package has a docsConfig.
  *
  * @type {DocsTransform}

@@ -32,7 +32,7 @@
   "bugs": {
     "url": "https://github.com/godaddy/gasket/issues"
   },
-  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-redux",
+  "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-redux",
   "devDependencies": {
     "@gasket/engine": "^6.10.0",
     "@gasket/plugin-log": "^6.10.0",

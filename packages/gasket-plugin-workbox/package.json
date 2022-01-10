@@ -32,7 +32,7 @@
   "bugs": {
     "url": "https://github.com/godaddy/gasket/issues"
   },
-  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-workbox#readme",
+  "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-workbox",
   "dependencies": {
     "@types/workbox-build": "^5.0.1",
     "deepmerge": "^4.2.2",

@@ -31,7 +31,7 @@
   "bugs": {
     "url": "https://github.com/godaddy/gasket/issues"
   },
-  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-lifecycle",
+  "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-lifecycle",
   "dependencies": {
     "diagnostics": "^2.0.2",
     "lodash.camelcase": "^4.3.0"

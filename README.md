@@ -198,7 +198,7 @@ Supporting modules
 | [@gasket/resolve]          | 6.10.0  | Essential module resolution & configuration management for gasket plugins & presets. |
 | [@gasket/typescript-tests] | 6.10.0  | Not a published package; hosts unit tests to verify TypeScript support               |
 | [@gasket/utils]            | 6.10.0  | Reusable utilities for Gasket internals                                              |
-| create-gasket-app          | 6.10.0  | starter pack for creating a gasket app                                               |
+| [create-gasket-app]        | 6.10.0  | starter pack for creating a gasket app                                               |
 
 <!-- LINKS -->
 
@@ -317,6 +317,7 @@ Supporting modules
 [@gasket/resolve]:/packages/gasket-resolve/README.md
 [@gasket/typescript-tests]:/packages/gasket-typescript-tests/README.md
 [@gasket/utils]:/packages/gasket-utils/README.md
+[create-gasket-app]:/packages/create-gasket-app/README.md
 <!-- END GENERATED -->
 
 ## License
@@ -327,9 +328,9 @@ Gasket is [MIT licensed](./LICENSE.md).
 [license-badge]: https://img.shields.io/github/license/godaddy/gasket?style=flat-square
 [license]: https://opensource.org/licenses/MIT
 [prs-welcome-badge]: https://img.shields.io/badge/PRs-welcome-blue.svg?style=flat-square
-[prs-welcome]: https://github.com/godaddy/gasket/blob/master/CONTRIBUTING.md
+[prs-welcome]: https://github.com/godaddy/gasket/blob/main/CONTRIBUTING.md
 [coc-badge]: https://img.shields.io/badge/code%20of-conduct-ff69b4.svg?style=flat-square&color=blue
-[coc]: https://github.com/godaddy/gasket/blob/master/CODE_OF_CONDUCT.md
+[coc]: https://github.com/godaddy/gasket/blob/main/CODE_OF_CONDUCT.md
 [contributors-badge]: https://img.shields.io/github/contributors/godaddy/gasket.svg?style=flat-square
 [contributors]: https://github.com/godaddy/gasket/graphs/contributors
 [tweet-badge]: https://img.shields.io/twitter/url?url=https%3A%2F%2Ftwitter.com%2Fgasketjs?style=flat-square
