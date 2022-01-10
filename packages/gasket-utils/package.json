@@ -1,6 +1,6 @@
 {
   "name": "@gasket/utils",
-  "version": "6.2.0",
+  "version": "6.10.0",
   "description": "Reusable utilities for Gasket internals",
   "main": "lib",
   "types": "lib/index.d.ts",

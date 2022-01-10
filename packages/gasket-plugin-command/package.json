@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-command",
-  "version": "6.2.0",
+  "version": "6.10.0",
   "description": "Plugin to enable other plugins to inject new gasket commands",
   "main": "lib/plugin.js",
   "types": "lib/plugin.d.ts",
@@ -38,10 +38,10 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-command",
   "dependencies": {
-    "@gasket/utils": "^6.2.0"
+    "@gasket/utils": "^6.10.0"
   },
   "devDependencies": {
-    "@gasket/engine": "^6.7.3",
+    "@gasket/engine": "^6.10.0",
     "@godaddy/dmd": "^1.0.0",
     "@oclif/command": "^1.8.16",
     "@oclif/config": "^1.15.0",
