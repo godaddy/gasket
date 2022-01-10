@@ -34,7 +34,7 @@
   "bugs": {
     "url": "https://github.com/godaddy/gasket/issues"
   },
-  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-manifest#readme",
+  "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-manifest",
   "dependencies": {
     "deepmerge": "^4.2.2",
     "escape-string-regexp": "^1.0.5",

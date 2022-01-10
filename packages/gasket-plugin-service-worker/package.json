@@ -32,7 +32,7 @@
   "bugs": {
     "url": "https://github.com/godaddy/gasket/issues"
   },
-  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-service-worker#readme",
+  "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-service-worker",
   "dependencies": {
     "@types/lru-cache": "^5.1.1",
     "@types/uglify-js": "^3.13.1",

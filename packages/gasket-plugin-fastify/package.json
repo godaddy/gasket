@@ -34,7 +34,7 @@
   "bugs": {
     "url": "https://github.com/godaddy/gasket/issues"
   },
-  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-fastify",
+  "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-fastify",
   "dependencies": {
     "compression": "^1.7.2",
     "cookie-parser": "^1.4.3",

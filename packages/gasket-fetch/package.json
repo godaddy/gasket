@@ -33,7 +33,7 @@
   "bugs": {
     "url": "https://github.com/godaddy/gasket/issues"
   },
-  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-fetch#readme",
+  "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-fetch",
   "dependencies": {
     "abort-controller": "^3.0.0",
     "node-fetch": "^2.6.1"

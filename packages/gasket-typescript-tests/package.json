@@ -25,7 +25,7 @@
   "bugs": {
     "url": "https://github.com/godaddy/gasket/issues"
   },
-  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/typescript-tests#readme",
+  "homepage": "https://github.com/godaddy/gasket/tree/main/packages/typescript-tests",
   "devDependencies": {
     "@gasket/engine": "^6.10.0",
     "@gasket/plugin-analyze": "^6.10.0",

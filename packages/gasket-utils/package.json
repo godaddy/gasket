@@ -33,7 +33,7 @@
   "bugs": {
     "url": "https://github.com/godaddy/gasket/issues"
   },
-  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-utils#readme",
+  "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-utils",
   "dependencies": {
     "concat-stream": "^2.0.0",
     "cross-spawn": "^7.0.1",
