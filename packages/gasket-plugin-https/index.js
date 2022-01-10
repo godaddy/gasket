@@ -37,8 +37,9 @@ async function start(gasket) {
   if (http2) configOpts.http2 = http2;
 
   const serverOpts = await gasket.execWaterfall('createServers', configOpts);
-  const { healthcheck, ...terminusDefaults } = await gasket.execWaterfall('terminus', {
+  const { healthcheck, healthcheckHtmlRoute, ...terminusDefaults } = await gasket.execWaterfall('terminus', {
     healthcheck: '/healthcheck',
+    healthcheckHtmlRoute: '/healthcheck.html',
     signals: ['SIGTERM'],
 
     ...(terminus || {})
@@ -52,7 +53,7 @@ async function start(gasket) {
 
   //
   // It's possible that we are creating multiple servers that are going to hook
-  // into terminus. We want to eliminate the posibility of double lifecycle
+  // into terminus. We want to eliminate the possibility of double lifecycle
   // execution so we're going to create a single options object that is going
   // to be used for all terminus based instances.
   //
@@ -76,6 +77,9 @@ async function start(gasket) {
     }),
     healthChecks: {
       [healthcheck]: async function healthCheckRequested() {
+        await gasket.exec('healthcheck', HealthCheckError);
+      },
+      [healthcheckHtmlRoute]: async function healthCheckRequested() {
         await gasket.exec('healthcheck', HealthCheckError);
       }
     },
@@ -121,7 +125,7 @@ async function start(gasket) {
     }
 
     if (_https || _http2) {
-      logger.info(`Server started at https://${ _hostname }:${ (_https || _http2).port }/`);
+      logger.info(`Server started at https://${_hostname}:${(_https || _http2).port}/`);
     }
   });
 }
