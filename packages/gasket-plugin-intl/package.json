@@ -33,7 +33,7 @@
   "bugs": {
     "url": "https://github.com/godaddy/gasket/issues"
   },
-  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-intl",
+  "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-intl",
   "dependencies": {
     "@gasket/helper-intl": "^6.10.0",
     "@hapi/accept": "^5.0.1",

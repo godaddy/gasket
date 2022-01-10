@@ -34,7 +34,7 @@
   "bugs": {
     "url": "https://github.com/godaddy/gasket/issues"
   },
-  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-engine",
+  "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-engine",
   "dependencies": {
     "@gasket/resolve": "^6.10.0",
     "debug": "^4.3.1"

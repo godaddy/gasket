@@ -26,6 +26,7 @@
   "bugs": {
     "url": "https://github.com/godaddy/gasket/issues"
   },
+  "homepage": "https://github.com/godaddy/gasket/tree/main/packages/create-gasket-app",
   "dependencies": {
     "@gasket/cli": "^6.10.0"
   },

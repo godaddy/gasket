@@ -177,7 +177,7 @@ describe('Utils Transforms', () => {
         const results = handler(mockInlineStyle, { docsConfig: mockDocsConfig });
         assume(results).not.equals(mockInlineStyle);
         assume(results).not.includes('[4](/packages/gasket-fake/doc.md#with-hash)');
-        assume(results).includes('[4](https://github.com/godaddy/gasket/tree/master/packages/gasket-fake/doc.md#with-hash)');
+        assume(results).includes('[4](https://github.com/godaddy/gasket/tree/main/packages/gasket-fake/doc.md#with-hash)');
       });
 
       it('does not process if non-@gasket module', () => {
@@ -247,18 +247,18 @@ describe('Utils Transforms', () => {
 
         it('transforms gasket repo URLs under any branch', () => {
           const mockContent = `
-[master](https://github.com/godaddy/gasket/tree/master/packages/gasket-fake/path/to/doc.md#with-hash)
+[main](https://github.com/godaddy/gasket/tree/main/packages/gasket-fake/path/to/doc.md#with-hash)
 [BOGUS](https://github.com/godaddy/gasket/tree/BOGUS/packages/gasket-fake/path/to/doc.md#with-hash)
 [canary-1.7](https://github.com/godaddy/gasket/tree/canary-1.7/packages/gasket-fake/path/to/doc.md#with-hash)
 `;
           const results = handler(mockContent, { filename, docsConfig, docsConfigSet });
-          assume(results).includes('[master](../../../../modules/@gasket/fake/path/to/doc.md#with-hash)');
+          assume(results).includes('[main](../../../../modules/@gasket/fake/path/to/doc.md#with-hash)');
           assume(results).includes('[BOGUS](../../../../modules/@gasket/fake/path/to/doc.md#with-hash)');
           assume(results).includes('[canary-1.7](../../../../modules/@gasket/fake/path/to/doc.md#with-hash)');
         });
 
         it('does not transforms gasket repo URLs if module not collated', () => {
-          const mockContent = `[missing](https://github.com/godaddy/gasket/tree/master/packages/gasket-missing/path/to/doc.md#with-hash)`;
+          const mockContent = `[missing](https://github.com/godaddy/gasket/tree/main/packages/gasket-missing/path/to/doc.md#with-hash)`;
           const results = handler(mockContent, { filename, docsConfig, docsConfigSet });
           assume(results).includes(mockContent);
           assume(results).not.includes('[missing](../../../../modules/@gasket/missing/path/to/doc.md#with-hash)');
