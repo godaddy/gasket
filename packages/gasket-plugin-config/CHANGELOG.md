@@ -1,5 +1,9 @@
 # `@gasket/plugin-config`
 
+### 6.10.0
+
+- TypeScript definitions for config & lifecycles ([#311])
+- 
 ### 6.0.0
 
 - Allow `public` app config to be available via `@gasket/data` ([#231])
@@ -35,3 +39,4 @@
 <!-- LINKS -->
 
 [#231]: https://github.com/godaddy/gasket/pull/231
+[#311]: https://github.com/godaddy/gasket/pull/311

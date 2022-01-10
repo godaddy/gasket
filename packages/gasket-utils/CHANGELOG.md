@@ -1,5 +1,9 @@
 # `@gasket/utils`
 
+### 6.10.0
+
+- TypeScript definitions for config & lifecycles ([#311])
+
 ### 6.3.0
 
 - Fixed issue where an `environments` section of config files was doing proper inheritance of dev environment settings for the `local` environment.
@@ -45,3 +49,4 @@
 [#143]: https://github.com/godaddy/gasket/pull/143
 [#247]: https://github.com/godaddy/gasket/pull/247
 [#275]: https://github.com/godaddy/gasket/pull/275
+[#311]: https://github.com/godaddy/gasket/pull/311

@@ -1,5 +1,9 @@
 # `@gasket/plugin-webpack`
 
+### 6.10.0
+
+- TypeScript definitions for config & lifecycles ([#311])
+
 ### 6.8.2
 
 - Fix lazy require `initWebpack` dependencies ([#303])
@@ -40,3 +44,4 @@
 [#252]: https://github.com/godaddy/gasket/pull/252
 [#284]: https://github.com/godaddy/gasket/pull/284
 [#303]: https://github.com/godaddy/gasket/pull/303
+[#311]: https://github.com/godaddy/gasket/pull/311

@@ -1,5 +1,9 @@
 # `@gasket/plugin-metadata`
 
+### 6.10.0
+
+- TypeScript definitions for config & lifecycles ([#311])
+
 ### 6.0.0
 
 - Version alignment
@@ -32,6 +36,7 @@
 [#64]: https://github.com/godaddy/gasket/pull/64
 [#141]: https://github.com/godaddy/gasket/pull/141
 [#247]: https://github.com/godaddy/gasket/pull/247
+[#311]: https://github.com/godaddy/gasket/pull/311
 
 [Loader]:/packages/gasket-resolve/docs/api.md#loader
 [PluginInfo]:/packages/gasket-resolve/docs/api.md#plugininfo
