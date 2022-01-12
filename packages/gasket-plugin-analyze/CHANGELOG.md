@@ -1,5 +1,9 @@
 # `@gasket/plugin-analyze`
 
+### 6.10.0
+
+- TypeScript definitions for config & lifecycles ([#311])
+
 ### 6.0.0
 
 - version alignment
@@ -38,3 +42,4 @@
 [#74]: https://github.com/godaddy/gasket/pull/74
 [#161]: https://github.com/godaddy/gasket/pull/161
 [#247]: https://github.com/godaddy/gasket/pull/247
+[#311]: https://github.com/godaddy/gasket/pull/311

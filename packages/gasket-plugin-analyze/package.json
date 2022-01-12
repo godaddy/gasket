@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-analyze",
-  "version": "6.0.12",
+  "version": "6.10.1",
   "description": "Gasket Analyzer Plugin",
   "main": "lib",
   "types": "lib/index.d.ts",
@@ -32,14 +32,14 @@
   "bugs": {
     "url": "https://github.com/godaddy/gasket/issues"
   },
-  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-analyze",
+  "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-analyze",
   "dependencies": {
     "@types/webpack-bundle-analyzer": "^4.4.1",
     "deepmerge": "^4.2.2",
     "webpack-bundle-analyzer": "^3.7.0"
   },
   "devDependencies": {
-    "@gasket/engine": "^6.7.3",
+    "@gasket/engine": "^6.10.1",
     "eslint": "^7.17.0",
     "eslint-config-godaddy": "^4.0.1",
     "eslint-plugin-jest": "^24.1.3",

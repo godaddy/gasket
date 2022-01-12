@@ -1,5 +1,9 @@
 # `@gasket/cli`
 
+### 6.10.0
+
+- TypeScript definitions for config & lifecycles ([#311])
+
 ### 6.0.0
 
 - Version alignment
@@ -312,3 +316,4 @@ upon `gasket create`
 [#163]: https://github.com/godaddy/gasket/pull/163
 [#170]: https://github.com/godaddy/gasket/pull/170
 [#247]: https://github.com/godaddy/gasket/pull/247
+[#311]: https://github.com/godaddy/gasket/pull/311

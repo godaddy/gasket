@@ -1,5 +1,9 @@
 # `@gasket/plugin-express`
 
+### 6.10.0
+
+- TypeScript definitions for config & lifecycles ([#311])
+
 ### 6.5.0
 
 - Add support for using http2 servers ([#287])
@@ -41,3 +45,4 @@
 [#247]: https://github.com/godaddy/gasket/pull/247
 [#255]: https://github.com/godaddy/gasket/pull/255
 [#287]: https://github.com/godaddy/gasket/pull/287
+[#311]: https://github.com/godaddy/gasket/pull/311

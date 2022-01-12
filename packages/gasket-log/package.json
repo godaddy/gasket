@@ -1,6 +1,6 @@
 {
   "name": "@gasket/log",
-  "version": "6.1.0",
+  "version": "6.10.1",
   "description": "Gasket client and server logger",
   "main": "./server.js",
   "browser": "./lib/client.js",
@@ -36,7 +36,7 @@
   "bugs": {
     "url": "https://github.com/godaddy/gasket/issues"
   },
-  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-log#readme",
+  "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-log",
   "dependencies": {
     "diagnostics": "^2.0.2",
     "kuler": "^2.0.0",

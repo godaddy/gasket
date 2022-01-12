@@ -1,6 +1,6 @@
 {
   "name": "@gasket/helper-intl",
-  "version": "6.8.0",
+  "version": "6.10.1",
   "description": "Internal helpers used by loaders to resolve locale file paths",
   "main": "lib/server.js",
   "browser": "lib/index.js",
@@ -35,7 +35,7 @@
   "bugs": {
     "url": "https://github.com/godaddy/gasket/issues"
   },
-  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-helper-intl",
+  "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-helper-intl",
   "dependencies": {
     "lodash.merge": "^4.6.0"
   },

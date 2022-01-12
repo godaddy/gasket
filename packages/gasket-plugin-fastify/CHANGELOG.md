@@ -1,5 +1,9 @@
 # `@gasket/plugin-fastify`
 
+### 6.10.0
+
+- TypeScript definitions for config & lifecycles ([#311])
+
 ### 6.0.5
 
 - Filter falsy middleware ([#255])
@@ -27,3 +31,4 @@ Enable middleware support ([#172])
 [#172]: https://github.com/godaddy/gasket/pull/172
 [#250]: https://github.com/godaddy/gasket/pull/250
 [#255]: https://github.com/godaddy/gasket/pull/255
+[#311]: https://github.com/godaddy/gasket/pull/311

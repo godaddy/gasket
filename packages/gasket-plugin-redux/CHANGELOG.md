@@ -1,5 +1,9 @@
 # `@gasket/plugin-redux`
 
+### 6.10.0
+
+- TypeScript definitions for config & lifecycles ([#311])
+
 ### 6.0.0
 
 - Update peer dep versions ([#243])
@@ -53,3 +57,4 @@
 
 [#173]: https://github.com/godaddy/gasket/pull/173
 [#243]: https://github.com/godaddy/gasket/pull/243
+[#311]: https://github.com/godaddy/gasket/pull/311

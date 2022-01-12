@@ -1,5 +1,9 @@
 # `@gasket/plugin-docsify`
 
+### 6.10.0
+
+- TypeScript definitions for config & lifecycles ([#311])
+
 ### 6.0.0
 
 - Version alignment
@@ -29,5 +33,6 @@
 [#131]:https://github.com/godaddy/gasket/pull/131
 [#132]:https://github.com/godaddy/gasket/pull/132
 [#137]:https://github.com/godaddy/gasket/pull/137
+[#311]:https://github.com/godaddy/gasket/pull/311
 
 [mermaid]:https://mermaid-js.github.io/

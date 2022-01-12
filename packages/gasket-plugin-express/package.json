@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-express",
-  "version": "6.5.0",
+  "version": "6.10.1",
   "description": "Adds express support to your application",
   "main": "index.js",
   "types": "index.d.ts",
@@ -34,7 +34,7 @@
   "bugs": {
     "url": "https://github.com/godaddy/gasket/issues"
   },
-  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-express",
+  "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-express",
   "dependencies": {
     "@types/express": "^4.17.13",
     "compression": "^1.7.2",
@@ -44,7 +44,7 @@
     "http2-express-bridge": "^1.0.7"
   },
   "devDependencies": {
-    "@gasket/engine": "^6.7.3",
+    "@gasket/engine": "^6.10.1",
     "assume": "^2.3.0",
     "assume-sinon": "^1.1.0",
     "eslint": "^7.17.0",

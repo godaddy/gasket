@@ -1,14 +1,14 @@
 {
   "name": "generate-docs-index",
   "private": true,
-  "version": "6.8.1",
+  "version": "6.10.1",
   "description": "Generate the overview index",
   "dependencies": {
-    "@gasket/cli": "^6.8.1"
+    "@gasket/cli": "^6.10.1"
   },
   "devDependencies": {
     "copy-dir": "^1.2.0",
-    "eslint": "^8.5.0",
+    "eslint": "^7.17.0",
     "eslint-plugin-unicorn": "^39.0.0"
   },
   "eslintConfig": {

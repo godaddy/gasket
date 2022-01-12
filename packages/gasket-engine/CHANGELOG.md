@@ -1,5 +1,9 @@
 # `@gasket/engine`
 
+### 6.10.0
+
+- TypeScript definitions for config & lifecycles ([#311])
+
 ### 6.7.3
 
 - Fix issue causing unhandled rejection warnings to surface ([#299])
@@ -66,5 +70,6 @@
 [#227]: https://github.com/godaddy/gasket/pull/227
 [#267]: https://github.com/godaddy/gasket/pull/267
 [#299]: https://github.com/godaddy/gasket/pull/299
+[#311]: https://github.com/godaddy/gasket/pull/311
 
 [Loader]:/packages/gasket-resolve/docs/api.md#loader

@@ -36,6 +36,8 @@ async function main() {
     // removed a single test/ dir, duplicate from generating both mocha and jest
     .replace(/.+test\/.+\n/, '')
     .replace(':generated-docs/', ':/docs/generated-docs/')
+    // replace homepage link with relative readme
+    .replace('https://github.com/godaddy/gasket/tree/main/packages/create-gasket-app', '/packages/create-gasket-app/README.md')
   ;
 
   const template = await readFile(targetPath, 'utf-8');

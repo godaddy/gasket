@@ -1,5 +1,9 @@
 # `@gasket/plugin-workbox`
 
+### 6.10.0
+
+- TypeScript definitions for config & lifecycles ([#311])
+
 ### 6.0.10
 
 - Safer base path config selection ([#266])
@@ -42,3 +46,4 @@
 [#217]: https://github.com/godaddy/gasket/pull/217
 [#247]: https://github.com/godaddy/gasket/pull/247
 [#266]: https://github.com/godaddy/gasket/pull/266
+[#311]: https://github.com/godaddy/gasket/pull/311

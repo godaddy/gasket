@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-workbox",
-  "version": "6.0.12",
+  "version": "6.10.1",
   "description": "Gasket Workbox Plugin",
   "main": "lib",
   "types": "lib/index.d.ts",
@@ -32,7 +32,7 @@
   "bugs": {
     "url": "https://github.com/godaddy/gasket/issues"
   },
-  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-workbox#readme",
+  "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-workbox",
   "dependencies": {
     "@types/workbox-build": "^5.0.1",
     "deepmerge": "^4.2.2",
@@ -40,7 +40,7 @@
     "workbox-build": "^4.1.0"
   },
   "devDependencies": {
-    "@gasket/engine": "^6.7.3",
+    "@gasket/engine": "^6.10.1",
     "eslint": "^7.17.0",
     "eslint-config-godaddy": "^4.0.1",
     "eslint-plugin-jest": "^24.1.3",

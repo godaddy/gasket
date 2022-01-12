@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-jest",
-  "version": "6.0.12",
+  "version": "6.10.1",
   "description": "Integrated jest into your application.",
   "main": "index.js",
   "scripts": {
@@ -32,7 +32,7 @@
   "bugs": {
     "url": "https://github.com/godaddy/gasket/issues"
   },
-  "homepage": "https://github.com/godaddy/gasket/tree/master/packages/gasket-plugin-jest",
+  "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-jest",
   "devDependencies": {
     "babel-eslint": "^10.1.0",
     "enzyme": "^3.11.0",
