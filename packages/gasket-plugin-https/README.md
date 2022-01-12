@@ -46,14 +46,14 @@ module.exports = {
     ca: 'your-ca.pem' // Can be an Array of CAs
   },
   terminus: {
-    healthcheck: '/healthcheck'
+    healthcheck: ['/healthcheck', '/healthcheck.html']
   }
 };
 ```
 
 [Terminus] is configured with the following defaults:
 
-- `healthcheck`: `/healthcheck`
+- `healthcheck`: `['/healthcheck', '/healthcheck.html']`
 - `signals`: `['SIGTERM']`
 
 Any of the options that are specified on the Terminus project page are accepted
