@@ -311,6 +311,9 @@ describe('start hook', () => {
 
       assume(config.healthChecks).has.property('/healthcheck');
       assume(config.healthChecks['/healthcheck']).is.a('asyncfunction');
+
+      assume(config.healthChecks).has.property('/healthcheck.html');
+      assume(config.healthChecks['/healthcheck.html']).is.a('asyncfunction');
     });
 
     ['onSendFailureDuringShutdown', 'beforeShutdown', 'onSignal', 'onShutdown'].forEach((type) => {
@@ -326,6 +329,15 @@ describe('start hook', () => {
     it('calls the healthcheck lifecycle', async () => {
       await start();
       const lifecycle = createTerminus.args[0][1].healthChecks['/healthcheck'];
+      await lifecycle();
+
+      assume(gasketAPI.exec.args[gasketAPI.exec.args.length - 1][0]).equals('healthcheck');
+      assume(gasketAPI.exec.args[gasketAPI.exec.args.length - 1][1]).equals(HealthCheckError);
+    });
+
+    it('calls the healthcheck lifecycle for healthcheck.html route', async () => {
+      await start();
+      const lifecycle = createTerminus.args[0][1].healthChecks['/healthcheck.html'];
       await lifecycle();
 
       assume(gasketAPI.exec.args[gasketAPI.exec.args.length - 1][0]).equals('healthcheck');
