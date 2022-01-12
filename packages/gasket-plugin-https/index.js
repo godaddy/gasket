@@ -51,6 +51,10 @@ async function start(gasket) {
     serverOpts.http = isLocal.test(env) ? 8080 : 80;
   }
 
+  async function healthCheckRequested() {
+    await gasket.exec('healthcheck', HealthCheckError);
+  }
+
   //
   // It's possible that we are creating multiple servers that are going to hook
   // into terminus. We want to eliminate the possibility of double lifecycle
@@ -75,15 +79,10 @@ async function start(gasket) {
     onShutdown: one(async function onShutdown() {
       await gasket.exec('onShutdown');
     }),
-    healthChecks: (function () {
-      const routeFunctions = {};
-      for (const route of routes) {
-        routeFunctions[route] = async function healthCheckRequested() {
-          await gasket.exec('healthcheck', HealthCheckError);
-        };
-      }
-      return routeFunctions;
-    }()),
+    healthChecks: routes.reduce((acc, cur) => {
+      acc[cur] = healthCheckRequested;
+      return acc;
+    }, {}),
     ...terminusDefaults
   };
 
