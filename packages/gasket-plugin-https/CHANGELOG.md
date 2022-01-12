@@ -1,5 +1,9 @@
 # `@gasket/plugin-https`
 
+### 6.11.0
+
+-  Added healthcheck.html to terminus options. ([#315])
+
 ### 6.10.0
 
 - TypeScript definitions for config & lifecycles ([#311])
@@ -56,6 +60,7 @@
 [#247]: https://github.com/godaddy/gasket/pull/247
 [#287]: https://github.com/godaddy/gasket/pull/287
 [#311]: https://github.com/godaddy/gasket/pull/311
+[#315]: https://github.com/godaddy/gasket/pull/315
 
 [terminus]: https://github.com/godaddy/terminus
 [create-servers]: https://github.com/http-party/create-servers
