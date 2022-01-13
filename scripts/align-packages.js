@@ -14,7 +14,7 @@ const projectRoot = path.resolve(__dirname, '..');
 /**
  * Dependency name and expected version range
  *
- * @type {object.<string,string>}
+ * @type {Object.<string,string>}
  */
 const depVersions = {
   '@babel/cli': '^7.12.10',
@@ -43,7 +43,7 @@ const depVersions = {
   'react-intl': '^5.10.13',
   'prop-types': '^15.7.2',
   'redux': '^4.0.5',
-  'next': '^11.1.1',
+  'next': '^12.0.8',
   'jsdom': '^16.4.0',
 
   'babel-eslint': '^10.1.0',
@@ -68,6 +68,18 @@ const depVersions = {
   'cross-env': '^5.1.6'
 };
 
+/**
+ * Peer dependency name and expected version range
+ *
+ * @type {object.<string,string>}
+ */
+const peerDepVersions = {
+  'next': '>=10.2.0 < 13',
+  'react': '^16 || ^17',
+  'react-dom': '^16 || ^17',
+  'react-intl': '>=4.0.0 <6.0.0',
+  'redux': '^3.7.2 || ^4.0.1'
+};
 
 /**
  * Expected order of the overall package
@@ -193,16 +205,17 @@ function sortKeys(obj, attr, compare) {
  *
  * @param {object} pkgJson - package.json contents
  * @param {string} attr - Either devDependencies or dependencies
+ * @param {object} [versions] - Map of dependency to version
  * @returns {object} pkgJson
  */
-function alignDeps(pkgJson, attr) {
+function alignDeps(pkgJson, attr, versions = {}) {
   if (!pkgJson[attr]) return pkgJson;
 
   const deps = Object.keys(pkgJson[attr]);
   const updated = {};
 
   deps.forEach(dep => {
-    updated[dep] = depVersions[dep] || pkgJson[attr][dep];
+    updated[dep] = versions[dep] || depVersions[dep] || pkgJson[attr][dep];
   });
   pkgJson[attr] = updated;
   return pkgJson;
@@ -291,6 +304,7 @@ async function fixupPackage(pkgPath) {
 
   pkgJson = alignDeps(pkgJson, 'dependencies');
   pkgJson = alignDeps(pkgJson, 'devDependencies');
+  pkgJson = alignDeps(pkgJson, 'peerDependencies', peerDepVersions);
 
   await writeFile(pkgPath, prettyPrint(pkgJson));
   console.log('aligned', path.relative(projectRoot, pkgPath));
