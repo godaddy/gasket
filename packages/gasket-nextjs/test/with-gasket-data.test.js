@@ -7,7 +7,9 @@ import { withGasketData, GasketDataScript } from '../src';
 
 class MyDocument extends Document {
   static async getInitialProps(ctx) {
-    const initialProps = await Document.getInitialProps(ctx);
+    // placed on context by render in next@12
+    const defaultGetInitialProps = sinon.stub().returns({ html: {}, head: {}, styles: {} });
+    const initialProps = await Document.getInitialProps({ ...ctx, defaultGetInitialProps });
     return { ...initialProps };
   }
 

@@ -54,7 +54,7 @@
     "eslint-plugin-unicorn": "^39.0.0",
     "lodash.merge": "^4.6.0",
     "mocha": "^8.2.1",
-    "next": "^11.1.1",
+    "next": "^12.0.8",
     "next-redux-wrapper": "^6.0.1",
     "nyc": "^15.1.0",
     "prop-types": "^15.7.2",
@@ -64,7 +64,7 @@
     "sinon": "^9.2.3"
   },
   "peerDependencies": {
-    "next": "^11.1.1",
+    "next": ">=10.2.0 < 13",
     "react": "^16 || ^17",
     "react-dom": "^16 || ^17"
   },
