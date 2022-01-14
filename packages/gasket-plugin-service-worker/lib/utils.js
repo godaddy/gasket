@@ -56,9 +56,7 @@ let __script;
  */
 async function loadRegisterScript(config) {
   if (!__script) {
-    const util = require('util');
-    const fs = require('fs');
-    const readFile = util.promisify(fs.readFile);
+    const { readFile } = require('fs/promises');
 
     const { url, scope } = config;
     const template = require.resolve('./sw-register.template.js');

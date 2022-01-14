@@ -2,14 +2,10 @@
 
 import svgr from '@svgr/core';
 import { transform } from '@babel/core';
-import fs from 'fs';
-import { promisify } from 'util';
+import { writeFile, readFile } from 'fs/promises';
 import path from 'path';
 import recursive from 'recursive-readdir';
-
-const mkdirp = promisify(require('mkdirp'));
-const readFile = promisify(fs.readFile);
-const writeFile = promisify(fs.writeFile);
+import mkdirp from 'mkdirp';
 
 const rootDir = path.join(__dirname, '..');
 const srcDir = path.join(rootDir, 'svgs');

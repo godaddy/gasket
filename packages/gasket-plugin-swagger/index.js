@@ -1,12 +1,8 @@
 const path = require('path');
 const fs = require('fs');
-const { promisify } = require('util');
+const { readFile, writeFile, access } = require('fs/promises');
 const swaggerUi = require('swagger-ui-express');
 const swaggerJSDoc = require('swagger-jsdoc');
-const readFile = promisify(fs.readFile);
-const writeFile = promisify(fs.writeFile);
-const accessFile = promisify(fs.access);
-
 const isYaml = /\.ya?ml$/;
 
 let __swaggerSpec;
@@ -23,7 +19,7 @@ async function loadSwaggerSpec(root, definitionFile, logger) {
   if (!__swaggerSpec) {
     const target = path.join(root, definitionFile);
 
-    await accessFile(target, fs.constants.F_OK)
+    await access(target, fs.constants.F_OK)
       .then(async () => {
         if (isYaml.test(definitionFile)) {
           const content = await readFile(target, 'utf8');

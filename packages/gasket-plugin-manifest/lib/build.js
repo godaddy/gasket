@@ -1,10 +1,7 @@
 const path = require('path');
-const { promisify } = require('util');
-const fs = require('fs');
+const { writeFile } = require('fs/promises');
 const mkdirp = require('mkdirp');
 const { gatherManifestData } = require('./utils');
-
-const writeFile = promisify(fs.writeFile);
 
 /**
  * Write a static web manifest file

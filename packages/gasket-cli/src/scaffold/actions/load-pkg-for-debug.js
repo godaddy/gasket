@@ -1,7 +1,5 @@
 const path = require('path');
-const { promisify } = require('util');
-const fs = require('fs');
-const readFile = promisify(fs.readFile);
+const { readFile } = require('fs/promises');
 const action = require('../action-wrapper');
 const ConfigBuilder = require('../config-builder');
 

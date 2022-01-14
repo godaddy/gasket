@@ -1,10 +1,7 @@
 const debug = require('diagnostics')('gasket:lifecycle');
 const path = require('path');
-const fs = require('fs');
-const { promisify } = require('util');
+const { readdir } = require('fs/promises');
 const camelCase = require('lodash.camelcase');
-
-const readDir = promisify(fs.readdir);
 
 /**
  * Resolves a given directory to valid `lifecycle` plugins.
@@ -19,7 +16,7 @@ async function resolve(root, name) {
 
   let files = [];
   try {
-    files = await readDir(dir);
+    files = await readdir(dir);
   } catch (err) {
     if (err.code !== 'ENOENT') {
       throw err;

@@ -1,7 +1,5 @@
-const { promisify } = require('util');
-const fs = require('fs');
+const { mkdir } = require('fs/promises');
 const action = require('../action-wrapper');
-const mkdir = promisify(fs.mkdir);
 
 /**
  * Validates this instance can execute without common blockers:

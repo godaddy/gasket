@@ -1,11 +1,8 @@
 /* eslint-disable max-statements */
 
-const fs = require('fs');
+const { writeFile } = require('fs/promises');
 const path = require('path');
-const { promisify } = require('util');
 const mdTable = require('markdown-table');
-
-const writeFile = promisify(fs.writeFile);
 
 const isUrl = /^(https?:)?\/\//;
 
@@ -90,4 +87,3 @@ async function generateIndex(docsConfigSet) {
 generateIndex.generateContent = generateContent;
 
 module.exports = generateIndex;
-

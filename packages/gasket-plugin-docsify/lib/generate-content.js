@@ -1,11 +1,9 @@
 const defaultsDeep = require('lodash.defaultsdeep');
-const fs = require('fs');
+const { readFile, writeFile, copyFile } = require('fs/promises');
 const path = require('path');
 const { promisify } = require('util');
-const readFile = promisify(fs.readFile);
-const writeFile = promisify(fs.writeFile);
-const copyFile = promisify(fs.copyFile);
-const mkdirp = promisify(require('mkdirp'));
+const mkdirp = require('mkdirp');
+// TODO: Need to review for native promise usage
 const glob = promisify(require('glob'));
 
 const isCssFile = /.css$/;
@@ -20,6 +18,7 @@ const srcIndex = path.join(srcDir, 'index.html');
  * @param {DocsConfigSet} docsConfigSet -
  * @returns {Promise<string>} output file
  */
+// eslint-disable-next-line max-statements
 async function generateContent(docsifyConfig, docsConfigSet) {
   const { theme = 'styles/gasket.css', config = {} } = docsifyConfig;
   const { docsRoot } = docsConfigSet;

@@ -1,12 +1,11 @@
 const path = require('path');
-const fs = require('fs');
+const { readFile, writeFile } = require('fs/promises');
 const { promisify } = require('util');
 const loaderUtils = require('loader-utils');
 const { getIntlConfig } = require('./configure');
 
+// TODO: Need to review for native promise usage
 const glob = promisify(require('glob'));
-const readFile = promisify(fs.readFile);
-const writeFile = promisify(fs.writeFile);
 
 /**
  * Constructs a manifest of locale file paths and settings which can be

@@ -1,12 +1,11 @@
-const { promisify } = require('util');
 const path = require('path');
-const fs = require('fs');
+const { statSync } = require('fs');
+const { readdir } = require('fs/promises');
 const defaultsDeep = require('lodash.defaultsdeep');
 const { pluginIdentifier } = require('@gasket/resolve');
 const defaultPlugins = require('./default-plugins');
 const { flattenPresets } = require('../scaffold/utils');
 
-const readDir = promisify(fs.readdir);
 const jsExtension = /\.js$/i;
 
 /**
@@ -37,7 +36,7 @@ function loadConfigFile(flags) {
   const configFileName = configFilePath.endsWith('.js') ? configFilePath : configFilePath + '.js';
   // require the file if config file exist, else return null
   try {
-    fs.statSync(configFileName); // eslint-disable-line no-sync
+    statSync(configFileName); // eslint-disable-line no-sync
   } catch (err) {
     return null;
   }
@@ -78,7 +77,7 @@ function addDefaultPlugins(gasketConfig) {
 async function addUserPlugins(gasketConfig) {
   try {
     const pluginsDir = path.join(gasketConfig.root, 'plugins');
-    const files = await readDir(pluginsDir);
+    const files = await readdir(pluginsDir);
     const moduleNames = files
       .filter(fileName => jsExtension.test(fileName))
       .map(fileName => {

@@ -22,7 +22,9 @@ describe('load-pkg-for-debug', () => {
     readFileStub = sandbox.stub().resolves(JSON.stringify(mockPkg));
 
     mockImports = {
-      'util': { promisify: () => readFileStub },
+      'fs/promises': {
+        readFile: readFileStub
+      },
       '../action-wrapper': require('../../../helpers').mockActionWrapper
     };
 

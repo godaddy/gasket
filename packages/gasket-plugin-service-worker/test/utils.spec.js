@@ -137,8 +137,8 @@ describe('utils', () => {
 
     beforeEach(() => {
       jest.isolateModules(() => {
-        fs = require('fs');
-        fs.readFile = jest.fn((path, options, callback) => callback(null, 'mock {URL} and {SCOPE}'));
+        fs = require('fs/promises');
+        fs.readFile = jest.fn(() => Promise.resolve('mock {URL} and {SCOPE}'));
       });
     });
 

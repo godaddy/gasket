@@ -1,10 +1,9 @@
-const { promisify } = require('util');
 const path = require('path');
-const fs = require('fs');
+const { rename, unlink, open } = require('fs/promises');
 const tar = require('tar-fs');
 const zlib = require('zlib');
 const pump = require('pump');
-const mkdirp = promisify(require('mkdirp'));
+const mkdirp = require('mkdirp');
 const debug = require('diagnostics')('gasket:cli:fetcher');
 const { PackageManager } = require('@gasket/utils');
 
@@ -27,7 +26,6 @@ const Fetcher = class Fetcher {
    * @returns {Promise} result
    */
   async vacuum(sourceDir) {
-    const rename = promisify(fs.rename);
     const spawn = require('cross-spawn');
     const basename = path.basename(sourceDir);
     const rootDir = path.join(__dirname, '..', '..');
@@ -113,8 +111,6 @@ module.exports = class PackageFetcher {
    * @public
    */
   async clone() {
-    const unlink = promisify(fs.unlink);
-
     await mkdirp(this.tmp.dir);
 
     const tarballFile = await this.fetch(this.packageName, this.tmp.dir);
@@ -174,7 +170,8 @@ module.exports = class PackageFetcher {
     return {
       then: (fulfill, reject) => {
         const logOpts = { tarball, dir };
-        const readableStream = fs.createReadStream(tarball).once('error', this._logError(`fs.createReadStream`, logOpts));
+        const fd = open(tarball);
+        const readableStream = fd.createReadStream(tarball).once('error', this._logError(`fs.createReadStream`, logOpts));
         const unzip = zlib.createUnzip().once('error', this._logError(`zlib.createUnzip`, logOpts));
         const extract = tar.extract(dir).once('error', this._logError(`tar.extract`, logOpts));
 

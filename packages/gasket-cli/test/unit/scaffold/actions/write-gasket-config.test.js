@@ -26,7 +26,9 @@ describe('write-gasket-config', () => {
     writeStub = sandbox.stub();
 
     writeGasketConfig = proxyquire('../../../../src/scaffold/actions/write-gasket-config', {
-      'util': { promisify: () => writeStub },
+      'fs/promises': {
+        writeFile: writeStub
+      },
       '../action-wrapper': require('../../../helpers').mockActionWrapper
     });
   });

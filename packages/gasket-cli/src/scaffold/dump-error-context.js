@@ -1,7 +1,5 @@
 const path = require('path');
-const { promisify } = require('util');
-const fs = require('fs');
-const writeFile = promisify(fs.writeFile);
+const { writeFile } = require('fs/promises');
 
 /**
  * If an error occurs during create, dump the context for debugging.

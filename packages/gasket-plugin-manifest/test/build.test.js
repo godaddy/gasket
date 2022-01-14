@@ -7,14 +7,11 @@ describe('build', function () {
   const mkdirpStub = sinon.stub();
 
   const build = proxyquire('../lib/build', {
-    fs: {
+    'fs/promises': {
       writeFile: writeFileStub
     },
-    mkdirp: mkdirpStub,
-    util: {
-      promisify: f => f
-    },
-    replace: sinon.stub()
+    'mkdirp': mkdirpStub,
+    'replace': sinon.stub()
   });
 
   let gasket;

@@ -45,7 +45,7 @@
     "eslint-plugin-json": "^2.1.2",
     "eslint-plugin-mocha": "^8.0.0",
     "eslint-plugin-unicorn": "^39.0.0",
-    "mkdirp": "^0.5.1",
+    "mkdirp": "^1.0.4",
     "react": "^17.0.1",
     "recursive-readdir": "^2.2.2",
     "rimraf": "^3.0.2"

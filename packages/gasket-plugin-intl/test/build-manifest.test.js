@@ -28,12 +28,12 @@ describe('buildManifest', function () {
       }
     };
 
-    writeFileStub = sinon.stub().callsFake((...args) => {
+    writeFileStub = sinon.stub().resolves((...args) => {
       args[args.length - 1](null, true);
     });
 
     buildManifest = proxyquire('../lib/build-manifest', {
-      fs: {
+      'fs/promises': {
         writeFile: writeFileStub
       }
     });

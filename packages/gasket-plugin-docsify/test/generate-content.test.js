@@ -2,10 +2,8 @@
 const assume = require('assume');
 const sinon = require('sinon');
 const proxyquire = require('proxyquire');
-const fs = require('fs');
+const { readFile } = require('fs/promises');
 const path = require('path');
-const { promisify } = require('util');
-const readFile = promisify(fs.readFile);
 
 const template = readFile(path.join(__dirname, '..', 'generator', 'index.html'), 'utf8');
 
@@ -24,14 +22,16 @@ const readFileStub = sinon.stub().resolves('mock-content');
 const globStub = sinon.stub().resolves(['favicon.ico']);
 const writeFileStub = sinon.stub();
 const copyFileStub = sinon.stub();
+const mkdirpStub = sinon.stub().resolves('/path/to/app');
 const generateContent = proxyquire('../lib/generate-content', {
-  fs: {
+  'fs/promises': {
     readFile: readFileStub.resolves(template),
     writeFile: writeFileStub,
     copyFile: copyFileStub
   },
-  glob: globStub,
-  util: {
+  'mkdirp': mkdirpStub,
+  'glob': globStub,
+  'util': {
     promisify: f => f
   }
 });

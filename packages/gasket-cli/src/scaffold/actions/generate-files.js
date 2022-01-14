@@ -1,5 +1,6 @@
 const { promisify } = require('util');
 const Handlebars = require('handlebars');
+// TODO: See if we can move away from pump to a async solution
 const pump = promisify(require('pump'));
 const map = require('map-stream');
 const path = require('path');

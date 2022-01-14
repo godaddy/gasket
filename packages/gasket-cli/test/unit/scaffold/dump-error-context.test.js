@@ -23,7 +23,9 @@ describe('dumpErrorContext', () => {
     errorStub = sandbox.stub(console, 'error');
 
     dumpErrorContext = proxyquire('../../../src/scaffold/dump-error-context', {
-      util: { promisify: () => writeStub }
+      'fs/promises': {
+        writeFile: writeStub
+      }
     });
   });
 
