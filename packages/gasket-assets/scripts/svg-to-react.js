@@ -2,7 +2,7 @@
 
 import svgr from '@svgr/core';
 import { transform } from '@babel/core';
-import { writeFile, readFile } from 'fs/promises';
+import { promises as fs } from 'fs';
 import path from 'path';
 import recursive from 'recursive-readdir';
 import mkdirp from 'mkdirp';
@@ -32,7 +32,7 @@ async function process(file) {
   const outFile = file.replace(srcDir, outputDir).replace('.svg', '.js');
 
   try {
-    const data = await readFile(file);
+    const data = await fs.readFile(file);
 
     //
     // Convert to React
@@ -48,7 +48,7 @@ async function process(file) {
     // Output the results to file
     //
     await mkdirp(path.dirname(outFile));
-    await writeFile(outFile, banner + results.code, 'utf8');
+    await fs.writeFile(outFile, banner + results.code, 'utf8');
     console.log('wrote', path.relative(rootDir, outFile));
     return Promise.resolve();
   } catch (e) {
