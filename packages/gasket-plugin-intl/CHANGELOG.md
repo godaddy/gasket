@@ -1,5 +1,9 @@
 # `@gasket/plugin-intl`
 
+### 6.11.1
+
+- Reduce bad accept-language log to `debug` level ([#320])
+
 ### 6.10.0
 
 - TypeScript definitions for config & lifecycles ([#311])
@@ -150,3 +154,4 @@
 [#302]: https://github.com/godaddy/gasket/pull/302
 [#310]: https://github.com/godaddy/gasket/pull/310
 [#311]: https://github.com/godaddy/gasket/pull/311
+[#320]: https://github.com/godaddy/gasket/pull/320
