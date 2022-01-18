@@ -44,7 +44,7 @@ module.exports = function middlewareHook(gasket) {
           accept.language(req.headers['accept-language'], locales)
         );
       } catch (error) {
-        gasket.logger.warning(`Unable to parse accept-language header: ${ error.message }`);
+        gasket.logger.debug(`Unable to parse accept-language header: ${ error.message }`);
       }
     }
 

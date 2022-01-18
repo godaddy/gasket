@@ -21,7 +21,7 @@ describe('middleware', function () {
         }
       },
       logger: {
-        warning: sinon.stub()
+        debug: sinon.stub()
       }
     };
   });
@@ -128,9 +128,9 @@ describe('middleware', function () {
         req.headers['accept-language'] = 'fr-CH;+malformed';
       });
 
-      it('logs a gasket warn log', async function () {
+      it('logs a debug message', async function () {
         await layer(req, res, next);
-        assume(mockGasket.logger.warning).called();
+        assume(mockGasket.logger.debug).called();
       });
 
       it('passes defaultLocale with supported locales', async function () {
