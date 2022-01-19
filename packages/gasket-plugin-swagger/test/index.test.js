@@ -22,12 +22,12 @@ describe('Swagger Plugin', function () {
       'fs': {
         constants: {
           F_OK: oKStub
+        },
+        promises: {
+          readFile: readFileStub,
+          writeFile: writeFileStub,
+          access: accessStub
         }
-      },
-      'fs/promises': {
-        readFile: readFileStub,
-        writeFile: writeFileStub,
-        access: accessStub
       },
       'swagger-jsdoc': swaggerJSDocStub,
       'js-yaml': {

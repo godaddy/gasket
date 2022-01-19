@@ -1,6 +1,6 @@
 const debug = require('diagnostics')('gasket:lifecycle');
 const path = require('path');
-const { readdir } = require('fs/promises');
+const { readdir } = require('fs').promises;
 const camelCase = require('lodash.camelcase');
 
 /**

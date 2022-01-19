@@ -1,4 +1,4 @@
-const { readFile, writeFile, copyFile } = require('fs/promises');
+const { readFile, writeFile, copyFile } = require('fs').promises;
 const path = require('path');
 const { promisify } = require('util');
 const mkdirp = require('mkdirp');

@@ -1,5 +1,5 @@
 const path = require('path');
-const { readFile } = require('fs/promises');
+const fs = require('fs').promises;
 const action = require('../action-wrapper');
 const ConfigBuilder = require('../config-builder');
 
@@ -14,7 +14,7 @@ async function loadPkForDebug(context) {
 
   const filePath = path.join(dest, 'package.json');
 
-  const contents = await readFile(filePath, 'utf8');
+  const contents = await fs.readFile(filePath, 'utf8');
   const fields = JSON.parse(contents);
   const pkg = ConfigBuilder.createPackageJson(fields, { warnings });
 

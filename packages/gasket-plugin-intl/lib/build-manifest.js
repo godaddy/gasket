@@ -1,5 +1,5 @@
 const path = require('path');
-const { readFile, writeFile } = require('fs/promises');
+const fs = require('fs').promises;
 const { promisify } = require('util');
 const loaderUtils = require('loader-utils');
 const { getIntlConfig } = require('./configure');
@@ -32,7 +32,7 @@ module.exports = async function buildManifest(gasket) {
   // generate a content hash for each file
   const paths = (
     await Promise.all(files.map(async file => {
-      const buffer = await readFile(path.join(localesDir, file));
+      const buffer = await fs.readFile(path.join(localesDir, file));
       const hash = loaderUtils.getHashDigest(buffer, 'md5', 'hex', 7);
       return { [path.basename(localesDir) + '/' + file]: hash };
     })))
@@ -58,7 +58,7 @@ module.exports = async function buildManifest(gasket) {
   };
 
   try {
-    await writeFile(tgtFile, JSON.stringify(manifest), 'utf-8');
+    await fs.writeFile(tgtFile, JSON.stringify(manifest), 'utf-8');
     logger.log('build:locales: Wrote locales manifest.');
   } catch (err) {
     logger.error('build:locales: Unable to write locales manifest.');

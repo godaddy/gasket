@@ -1,5 +1,5 @@
 const path = require('path');
-const { rename, unlink, open } = require('fs/promises');
+const { rename, unlink, open } = require('fs').promises;
 const tar = require('tar-fs');
 const zlib = require('zlib');
 const pump = require('pump');

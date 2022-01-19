@@ -1,5 +1,5 @@
 const path = require('path');
-const { writeFile } = require('fs/promises');
+const { writeFile } = require('fs').promises;
 const mkdirp = require('mkdirp');
 const { gatherManifestData } = require('./utils');
 

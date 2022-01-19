@@ -21,8 +21,10 @@ describe('mkdir', () => {
     mkdirStub = sandbox.stub();
 
     mkDir = proxyquire('../../../../src/scaffold/actions/mkdir', {
-      'fs/promises': {
-        mkdir: mkdirStub
+      'fs': {
+        promises: {
+          mkdir: mkdirStub
+        }
       },
       '../action-wrapper': require('../../../helpers').mockActionWrapper
     });

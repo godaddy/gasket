@@ -75,8 +75,10 @@ const fullDocsConfigSet = {
 
 const writeFileStub = sinon.stub();
 const generateIndex = proxyquire('../../lib/utils/generate-index', {
-  'fs/promises': {
-    writeFile: writeFileStub
+  fs: {
+    promises: {
+      writeFile: writeFileStub
+    }
   }
 });
 const { generateContent } = generateIndex;

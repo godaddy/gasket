@@ -1,6 +1,6 @@
 const path = require('path');
 const fs = require('fs');
-const { readFile, writeFile, access } = require('fs/promises');
+const { readFile, writeFile, access } = require('fs').promises;
 const swaggerUi = require('swagger-ui-express');
 const swaggerJSDoc = require('swagger-jsdoc');
 const isYaml = /\.ya?ml$/;

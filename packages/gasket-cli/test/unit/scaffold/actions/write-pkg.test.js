@@ -24,8 +24,10 @@ describe('write-pkg', () => {
     writeStub = sandbox.stub();
 
     writePkg = proxyquire('../../../../src/scaffold/actions/write-pkg', {
-      'fs/promises': {
-        writeFile: writeStub
+      'fs': {
+        promises: {
+          writeFile: writeStub
+        }
       },
       '../action-wrapper': require('../../../helpers').mockActionWrapper
     });

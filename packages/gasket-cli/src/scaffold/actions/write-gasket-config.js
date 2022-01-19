@@ -1,6 +1,6 @@
 const JSON5 = require('json5');
 const path = require('path');
-const { writeFile } = require('fs/promises');
+const { writeFile } = require('fs').promises;
 const action = require('../action-wrapper');
 
 /**

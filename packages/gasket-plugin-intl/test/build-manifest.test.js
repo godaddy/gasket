@@ -2,6 +2,7 @@ const assume = require('assume');
 const sinon = require('sinon');
 const proxyquire = require('proxyquire');
 const path = require('path');
+const { readFile } = require('fs').promises;
 
 describe('buildManifest', function () {
   let mockGasket, buildManifest, writeFileStub;
@@ -33,8 +34,11 @@ describe('buildManifest', function () {
     });
 
     buildManifest = proxyquire('../lib/build-manifest', {
-      'fs/promises': {
-        writeFile: writeFileStub
+      fs: {
+        promises: {
+          writeFile: writeFileStub,
+          readFile
+        }
       }
     });
   });

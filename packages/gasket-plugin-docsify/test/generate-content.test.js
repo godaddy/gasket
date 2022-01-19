@@ -2,7 +2,7 @@
 const assume = require('assume');
 const sinon = require('sinon');
 const proxyquire = require('proxyquire');
-const { readFile } = require('fs/promises');
+const { readFile } = require('fs').promises;
 const path = require('path');
 
 const template = readFile(path.join(__dirname, '..', 'generator', 'index.html'), 'utf8');
@@ -24,14 +24,16 @@ const writeFileStub = sinon.stub();
 const copyFileStub = sinon.stub();
 const mkdirpStub = sinon.stub().resolves('/path/to/app');
 const generateContent = proxyquire('../lib/generate-content', {
-  'fs/promises': {
-    readFile: readFileStub.resolves(template),
-    writeFile: writeFileStub,
-    copyFile: copyFileStub
+  fs: {
+    promises: {
+      readFile: readFileStub.resolves(template),
+      writeFile: writeFileStub,
+      copyFile: copyFileStub
+    }
   },
-  'mkdirp': mkdirpStub,
-  'glob': globStub,
-  'util': {
+  mkdirp: mkdirpStub,
+  glob: globStub,
+  util: {
     promisify: f => f
   }
 });

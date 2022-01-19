@@ -1,6 +1,6 @@
 /* eslint-disable max-statements */
 
-const { writeFile } = require('fs/promises');
+const { writeFile } = require('fs').promises;
 const path = require('path');
 const mdTable = require('markdown-table');
 

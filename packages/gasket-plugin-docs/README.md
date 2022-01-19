@@ -170,7 +170,7 @@ Allows a plugin to add documentation that has to be programmatically generated.
 #### An example graph
 
 ```js
-const { writeFile } = require('fs/promises');;
+const { writeFile } = require('fs').promises;;
 
 module.exports = {
   name: 'questions',

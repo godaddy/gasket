@@ -1,4 +1,4 @@
-const { mkdir } = require('fs/promises');
+const { mkdir } = require('fs').promises;
 const action = require('../action-wrapper');
 
 /**

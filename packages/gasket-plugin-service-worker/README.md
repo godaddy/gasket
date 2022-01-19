@@ -120,7 +120,7 @@ In this example, we use the market id from the request to read in a partial
 service worker and add it to the content.
 
 ```js
-const { readFile } = require('fs/promises');
+const { readFile } = require('fs').promises;
 
 module.exports = {
   hooks: {

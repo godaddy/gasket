@@ -1,6 +1,6 @@
 const path = require('path');
-const { statSync } = require('fs');
-const { readdir } = require('fs/promises');
+const { statSync, promises } = require('fs');
+const { readdir } = promises;
 const defaultsDeep = require('lodash.defaultsdeep');
 const { pluginIdentifier } = require('@gasket/resolve');
 const defaultPlugins = require('./default-plugins');
