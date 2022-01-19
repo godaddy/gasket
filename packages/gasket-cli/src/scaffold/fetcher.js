@@ -168,9 +168,10 @@ module.exports = class PackageFetcher {
    */
   async unpack(tarball, dir) {
     return {
-      then: (fulfill, reject) => {
+      then: async (fulfill, reject) => {
         const logOpts = { tarball, dir };
-        const fd = open(tarball);
+        const fd = await open(tarball);
+        console.log(fd);
         const readableStream = fd.createReadStream(tarball).once('error', this._logError(`fs.createReadStream`, logOpts));
         const unzip = zlib.createUnzip().once('error', this._logError(`zlib.createUnzip`, logOpts));
         const extract = tar.extract(dir).once('error', this._logError(`tar.extract`, logOpts));
