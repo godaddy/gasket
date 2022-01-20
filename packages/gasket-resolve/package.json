@@ -48,7 +48,7 @@
     "eslint-plugin-mocha": "^10.0.3",
     "eslint-plugin-unicorn": "^40.1.0",
     "jest": "^27.4.3",
-    "jsdoc-to-markdown": "^5.0.1"
+    "jsdoc-to-markdown": "^7.1.0"
   },
   "eslintConfig": {
     "extends": [

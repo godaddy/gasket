@@ -17,13 +17,13 @@
   },
   "dependencies": {
     "@gasket/plugin-config": "^6.10.1",
-    "@gasket/plugin-docs": "^6.10.1",
-    "@gasket/plugin-docsify": "^6.10.1",
+    "@gasket/plugin-docs": "^6.11.2",
+    "@gasket/plugin-docsify": "^6.11.2",
     "@gasket/plugin-express": "^6.10.1",
     "@gasket/plugin-https": "^6.11.0",
     "@gasket/plugin-lint": "^6.10.1",
     "@gasket/plugin-log": "^6.10.1",
-    "@gasket/plugin-swagger": "^6.10.1"
+    "@gasket/plugin-swagger": "^6.11.2"
   },
   "devDependencies": {
     "@gasket/plugin-start": "^6.10.1"
