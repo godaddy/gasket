@@ -20,12 +20,14 @@ describe('Swagger Plugin', function () {
 
     plugin = proxyquire('../index', {
       'fs': {
-        readFile: readFileStub,
-        writeFile: writeFileStub,
         constants: {
           F_OK: oKStub
         },
-        access: accessStub
+        promises: {
+          readFile: readFileStub,
+          writeFile: writeFileStub,
+          access: accessStub
+        }
       },
       'swagger-jsdoc': swaggerJSDocStub,
       'js-yaml': {

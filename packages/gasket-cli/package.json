@@ -76,7 +76,7 @@
     "json5": "^2.1.0",
     "lodash.defaultsdeep": "^4.6.1",
     "map-stream": "^0.1.0",
-    "mkdirp": "^0.5.1",
+    "mkdirp": "^1.0.4",
     "ora": "^3.4.0",
     "pump": "^3.0.0",
     "semver": "^7.3.4",

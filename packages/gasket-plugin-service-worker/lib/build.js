@@ -1,10 +1,7 @@
 const path = require('path');
-const util = require('util');
-const fs = require('fs');
+const { writeFile } = require('fs').promises;
 const mkdirp = require('mkdirp');
 const { getComposedContent, getSWConfig } = require('./utils');
-
-const writeFile = util.promisify(fs.writeFile);
 
 /**
  * Write a static service worker file

@@ -120,9 +120,7 @@ In this example, we use the market id from the request to read in a partial
 service worker and add it to the content.
 
 ```js
-const util = require('util');
-const fs = require('fs');
-const readFile = util.promisify(fs.readFile);
+const { readFile } = require('fs').promises;
 
 module.exports = {
   hooks: {
@@ -253,4 +251,3 @@ environment, which can be easily done using [service-worker-mock].
 [service workers]:https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API
 [@gasket/plugin-webpack]:/packages/gasket-plugin-webpack/README.md
 [@gasket/plugin-nextjs]:/packages/gasket-plugin-nextjs/README.md
-

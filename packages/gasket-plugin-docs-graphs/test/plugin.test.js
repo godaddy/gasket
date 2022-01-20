@@ -1,5 +1,5 @@
 const path = require('path');
-const read = require('util').promisify(require('fs').readFile);
+const { readFile: read } = require('fs').promises;
 const plugin = require('../');
 const hook = plugin.hooks.docsGenerate;
 const assume = require('assume');

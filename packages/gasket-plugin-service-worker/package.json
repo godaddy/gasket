@@ -38,7 +38,7 @@
     "@types/uglify-js": "^3.13.1",
     "deepmerge": "^4.2.2",
     "lru-cache": "^5.1.1",
-    "mkdirp": "^0.5.1",
+    "mkdirp": "^1.0.4",
     "uglify-js": "^3.5.3",
     "webpack-inject-plugin": "^1.5.4"
   },
