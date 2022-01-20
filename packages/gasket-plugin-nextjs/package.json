@@ -41,6 +41,7 @@
     "@gasket/resolve": "^6.10.1"
   },
   "devDependencies": {
+    "@babel/preset-react": "^7.16.7",
     "@gasket/assets": "^6.11.2",
     "@gasket/engine": "^6.10.1",
     "@gasket/nextjs": "^6.11.1",
@@ -72,7 +73,6 @@
     "extends": [
       "godaddy-react"
     ],
-    "parser": "babel-eslint",
     "globals": {
       "expect": "readonly"
     },
@@ -88,5 +88,10 @@
     "generator/redux/redux/store.js",
     "generator/app/pages/_app.js",
     "*.d.ts"
-  ]
+  ],
+  "babel": {
+    "presets": [
+      "@babel/preset-react"
+    ]
+  }
 }

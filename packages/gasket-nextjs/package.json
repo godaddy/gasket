@@ -85,5 +85,10 @@
   "eslintIgnore": [
     "lib",
     "coverage"
-  ]
+  ],
+  "babel": {
+    "presets": [
+      "next/babel"
+    ]
+  }
 }
