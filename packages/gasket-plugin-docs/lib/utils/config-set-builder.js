@@ -4,6 +4,7 @@ const defaultsDeep = require('lodash.defaultsdeep');
 const { promisify } = require('util');
 const { sortModules, sortStructures, sortCommands, sortLifecycles, sortGuides } = require('./sorts');
 
+// TODO: Need to review for native promise usage
 const glob = promisify(require('glob'));
 
 const isAppPlugin = /^\/.+\/plugins\//;
