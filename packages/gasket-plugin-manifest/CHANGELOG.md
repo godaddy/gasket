@@ -1,5 +1,9 @@
 # `@gasket/plugin-manifest`
 
+### 6.11.2
+
+- Use fs.promises ([#319])
+
 ### 6.10.0
 
 - TypeScript definitions for config & lifecycles ([#311])
@@ -48,3 +52,4 @@
 [#244]: https://github.com/godaddy/gasket/pull/244
 [#247]: https://github.com/godaddy/gasket/pull/247
 [#311]: https://github.com/godaddy/gasket/pull/311
+[#319]: https://github.com/godaddy/gasket/pull/319

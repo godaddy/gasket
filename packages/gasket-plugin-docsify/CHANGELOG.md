@@ -1,5 +1,9 @@
 # `@gasket/plugin-docsify`
 
+### 6.11.2
+
+- Use fs.promises and upgrade mkdirp ([#319])
+
 ### 6.10.0
 
 - TypeScript definitions for config & lifecycles ([#311])
@@ -34,5 +38,6 @@
 [#132]:https://github.com/godaddy/gasket/pull/132
 [#137]:https://github.com/godaddy/gasket/pull/137
 [#311]:https://github.com/godaddy/gasket/pull/311
+[#319]: https://github.com/godaddy/gasket/pull/319
 
 [mermaid]:https://mermaid-js.github.io/

@@ -1,5 +1,9 @@
 # `@gasket/plugin-lifecycle`
 
+### 6.11.2
+
+- Use fs.promises ([#319])
+
 ### 6.8.1
 
 - Update main field ([#301])
@@ -33,3 +37,4 @@
 [#168]: https://github.com/godaddy/gasket/pull/168
 [#247]: https://github.com/godaddy/gasket/pull/247
 [#301]: https://github.com/godaddy/gasket/pull/301
+[#319]: https://github.com/godaddy/gasket/pull/319
