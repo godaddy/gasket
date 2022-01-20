@@ -1,11 +1,8 @@
-const fs = require('fs');
+const { readFile, writeFile, copyFile } = require('fs').promises;
 const path = require('path');
 const { promisify } = require('util');
-
-const readFile = promisify(fs.readFile);
-const writeFile = promisify(fs.writeFile);
-const copyFile = promisify(fs.copyFile);
-const mkdirp = promisify(require('mkdirp'));
+const mkdirp = require('mkdirp');
+// TODO: rimraf currently does not have native promise support https://github.com/isaacs/rimraf/pull/229
 const rimraf = promisify(require('rimraf'));
 
 /**

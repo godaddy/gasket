@@ -13,10 +13,11 @@ const statStub = sinon.stub().callsFake(mod => {
 });
 
 const utils = proxyquire('../../../src/config/utils', {
-  'util': { promisify: f => f },
   'fs': {
-    readdir: readDirStub,
-    statSync: statStub
+    statSync: statStub,
+    promises: {
+      readdir: readDirStub
+    }
   },
   '/path/to/gasket.config': { mockConfig: true },
   '/path/to/app/gasket.config': { mockConfig: true },

@@ -8,12 +8,11 @@ describe('build', function () {
 
   const build = proxyquire('../lib/build', {
     fs: {
-      writeFile: writeFileStub
+      promises: {
+        writeFile: writeFileStub
+      }
     },
     mkdirp: mkdirpStub,
-    util: {
-      promisify: f => f
-    },
     replace: sinon.stub()
   });
 

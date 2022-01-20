@@ -11,9 +11,11 @@ const mkdirpStub = sinon.stub();
 const rimrafStub = sinon.stub();
 const collateFiles = proxyquire('../../lib/utils/collate-files', {
   fs: {
-    readFile: readFileStub,
-    writeFile: writeFileStub,
-    copyFile: copyFileStub
+    promises: {
+      readFile: readFileStub,
+      writeFile: writeFileStub,
+      copyFile: copyFileStub
+    }
   },
   mkdirp: mkdirpStub,
   rimraf: rimrafStub,

@@ -1,13 +1,22 @@
 const mkdirp = require('mkdirp');
 const build = require('../lib/build');
 const fs = require('fs');
-jest.mock('fs');
+
+jest.mock('fs', () => {
+  const originalModule = jest.requireActual('fs');
+
+  return {
+    ...originalModule,
+    promises: {
+      writeFile: jest.fn(() =>  Promise.resolve(null))
+    }
+  };
+});
 
 describe('build', () => {
   let mockConfig, mockGasket;
 
   beforeEach(() => {
-    fs.writeFile.mockImplementation((path, content, options, callback) => callback(null, true));
 
     mockConfig = {
       url: '/sw.js',
@@ -61,11 +70,10 @@ describe('build', () => {
   it('writes file out', async () => {
     mockConfig.content = 'This is preconfigured content';
     await build.handler(mockGasket);
-    expect(fs.writeFile).toHaveBeenCalledWith(
+    expect(fs.promises.writeFile).toHaveBeenCalledWith(
       '/some-root/public/sw.js',
       expect.stringContaining('strict'),
-      'utf-8',
-      expect.any(Function)
+      'utf-8'
     );
   });
 });
