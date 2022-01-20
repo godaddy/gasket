@@ -1,5 +1,9 @@
 # `@gasket/plugin-docs`
 
+### 6.11.2
+
+- Use fs.promises ([#319])
+
 ### 6.10.1
 
 - Generate doc links point to main branch ([#316]) 
@@ -40,3 +44,4 @@
 [#247]: https://github.com/godaddy/gasket/pull/247
 [#311]: https://github.com/godaddy/gasket/pull/311
 [#316]: https://github.com/godaddy/gasket/pull/316
+[#319]: https://github.com/godaddy/gasket/pull/319
