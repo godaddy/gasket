@@ -47,13 +47,13 @@
     "assume": "^2.3.0",
     "assume-sinon": "^1.1.0",
     "babel-eslint": "^10.1.0",
-    "eslint": "^7.17.0",
-    "eslint-config-godaddy": "^4.0.1",
-    "eslint-plugin-json": "^2.1.2",
-    "eslint-plugin-mocha": "^8.0.0",
-    "eslint-plugin-unicorn": "^39.0.0",
+    "eslint": "^8.7.0",
+    "eslint-config-godaddy": "^6.0.0",
+    "eslint-plugin-json": "^3.1.0",
+    "eslint-plugin-mocha": "^10.0.3",
+    "eslint-plugin-unicorn": "^40.1.0",
     "lodash.merge": "^4.6.0",
-    "mocha": "^8.2.1",
+    "mocha": "^9.1.4",
     "next": "^12.0.8",
     "next-redux-wrapper": "^6.0.1",
     "nyc": "^15.1.0",
@@ -61,7 +61,7 @@
     "proxyquire": "^2.1.3",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "sinon": "^9.2.3"
+    "sinon": "^12.0.1"
   },
   "peerDependencies": {
     "next": ">=10.2.0 < 13",

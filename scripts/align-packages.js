@@ -18,7 +18,7 @@ const projectRoot = path.resolve(__dirname, '..');
  */
 const depVersions = {
   '@babel/cli': '^7.12.10',
-  '@babel/core': '^7.12.10',
+  '@babel/core': '^7.16.10',
   '@babel/node': '^7.12.10',
   '@babel/runtime': '^7.12.5',
   '@babel/register': '^7.12.10',
@@ -27,9 +27,9 @@ const depVersions = {
   '@babel/preset-react': '^7.12.10',
 
   'assume': '^2.3.0',
-  'sinon': '^9.2.3',
+  'sinon': '^12.0.1',
   'assume-sinon': '^1.1.0',
-  'mocha': '^8.2.1',
+  'mocha': '^9.1.4',
   'chai': '^4.2.0',
   'nyc': '^15.1.0',
   'proxyquire': '^2.1.3',
@@ -44,17 +44,17 @@ const depVersions = {
   'prop-types': '^15.7.2',
   'redux': '^4.0.5',
   'next': '^12.0.8',
-  'jsdom': '^16.4.0',
+  'jsdom': '^19.0.0',
 
   'babel-eslint': '^10.1.0',
-  'eslint': '^7.17.0',
-  'eslint-config-godaddy': '^4.0.1',
-  'eslint-config-godaddy-react': '^6.0.1',
-  'eslint-plugin-json': '^2.1.2',
-  'eslint-plugin-jest': '^24.1.3',
-  'eslint-plugin-mocha': '^8.0.0',
+  'eslint': '^8.7.0',
+  'eslint-config-godaddy': '^6.0.0',
+  'eslint-config-godaddy-react': '^8.0.0',
+  'eslint-plugin-json': '^3.1.0',
+  'eslint-plugin-jest': '^25.7.0',
+  'eslint-plugin-mocha': '^10.0.3',
   'eslint-plugin-react': '^7.22.0',
-  'eslint-plugin-unicorn': '^39.0.0',
+  'eslint-plugin-unicorn': '^40.1.0',
 
   'deepmerge': '^4.2.2',
   'diagnostics': '^2.0.2',
@@ -65,7 +65,7 @@ const depVersions = {
   'lodash.defaultsdeep': '^4.6.1',
   'webpack': '^5.21.2',
   'serve-static': '^1.14.1',
-  'cross-env': '^5.1.6'
+  'cross-env': '^7.0.3'
 };
 
 /**
