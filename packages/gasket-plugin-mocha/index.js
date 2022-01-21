@@ -32,17 +32,17 @@ module.exports = {
         if (isReactProject) {
           pkg.add('devDependencies', {
             //
-            // All dependencies to correctly configure enzyme with shallow rendering
+            // All dependencies to correctly configure React Testing Library
             //
             'jsdom': devDependencies.jsdom,
-            'enzyme': devDependencies.enzyme,
-            'enzyme-adapter-react-16': devDependencies['enzyme-adapter-react-16']
+            '@testing-library/react': devDependencies['@testing-library/react'],
+            'global-jsdom': devDependencies['global-jsdom']
           });
         }
 
         pkg.add('scripts', {
           'test': 'npm run test:runner',
-          'test:runner': 'mocha --require setup-env --recursive "test/**/*.*(test|spec).js"',
+          'test:runner': 'mocha --require global-jsdom/register --require setup-env --recursive "test/**/*.*(test|spec).js"',
           'test:coverage': `nyc --reporter=text --reporter=json-summary ${runCmd} test:runner`,
           'test:watch': `${runCmd} test:runner -- --watch`
         });
