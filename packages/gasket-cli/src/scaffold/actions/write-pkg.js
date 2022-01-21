@@ -1,8 +1,6 @@
 const path = require('path');
-const { promisify } = require('util');
-const fs = require('fs');
+const { writeFile } = require('fs').promises;
 const action = require('../action-wrapper');
-const writeFile = promisify(fs.writeFile);
 
 /**
  * Writes the contents of `pkg` to the app's package.json.

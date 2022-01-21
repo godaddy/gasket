@@ -1,6 +1,6 @@
 {
   "name": "@gasket/preset-api",
-  "version": "6.11.0",
+  "version": "6.11.2",
   "description": "Create Express-based API with Gasket",
   "types": "./index.d.ts",
   "repository": {

@@ -1,5 +1,9 @@
 # `@gasket/plugin-docs-graph`
 
+### 6.11.2
+
+- Use fs.promises ([#319])
+
 ### 6.0.0
 
 - Version alignment
@@ -11,3 +15,4 @@
 
 
 [#247]: https://github.com/godaddy/gasket/pull/247
+[#319]: https://github.com/godaddy/gasket/pull/319

@@ -1,6 +1,6 @@
 {
   "name": "@gasket/preset-pwa",
-  "version": "6.11.0",
+  "version": "6.11.2",
   "description": "Turn Gasket apps into Progressive Web Apps",
   "types": "index.d.ts",
   "repository": {

@@ -1,5 +1,9 @@
 # `@gasket/plugin-service-worker`
 
+### 6.11.2
+
+- Use fs.promises and upgrade mkdirp ([#319])
+
 ### 6.10.0
 
 - TypeScript definitions for config & lifecycles ([#311])
@@ -42,3 +46,4 @@
 [#158]: https://github.com/godaddy/gasket/pull/158
 [#217]: https://github.com/godaddy/gasket/pull/217
 [#311]: https://github.com/godaddy/gasket/pull/311
+[#319]: https://github.com/godaddy/gasket/pull/319
