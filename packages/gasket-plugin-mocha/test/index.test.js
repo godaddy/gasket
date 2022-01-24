@@ -3,6 +3,7 @@ import self from '../package.json';
 import chai, { expect } from 'chai';
 import spies from 'chai-spies';
 import plugin from '../';
+const sinon = require('sinon');
 
 chai.use(spies);
 
@@ -32,6 +33,9 @@ describe('Plugin', () => {
     };
 
     await plugin.hooks.create.handler({}, {
+      files: {
+        add: sinon.stub()
+      },
       pkg: {
         add: (key, value) => {
           pkg[key] = value;
@@ -103,8 +107,8 @@ describe('Plugin', () => {
     });
 
     [
-      'enzyme-adapter-react-16',
-      'enzyme',
+      'global-jsdom',
+      '@testing-library/react',
       'jsdom'
     ].forEach(name => {
       it(`doesn't add framework specific dependency "${name}" in the devDependencies`, async function () {
@@ -117,8 +121,8 @@ describe('Plugin', () => {
 
   describe('dependencies - react', function () {
     [
-      'enzyme-adapter-react-16',
-      'enzyme',
+      'global-jsdom',
+      '@testing-library/react',
       'jsdom'
     ].forEach(name => {
       it(`adds "${name}" in the devDependencies`, async function () {

@@ -1,5 +1,5 @@
 module.exports = {
-  setupFiles: ['./test/setup.js'],
+  testEnvironment: 'jest-environment-jsdom',
   collectCoverageFrom: ['**/*.js'],
   testURL: 'http://localhost/'
 };
