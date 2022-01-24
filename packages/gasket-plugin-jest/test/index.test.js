@@ -81,11 +81,11 @@ describe('Plugin', function () {
       expect(files[1]).toEqual(path.join(__dirname, '..', 'generator', '**', '*'));
     });
 
-    describe('adds react specific dependencies', function() {
+    describe('adds react specific dependencies', function () {
       [
         'jest',
-        'enzyme',
-        'enzyme-adapter-react-16'
+        '@testing-library/react',
+        '@testing-library/jest-dom'
       ].forEach(name => {
         it(`adds "${name}" in the devDependencies`, async function () {
           const { pkg } = await createReact();
