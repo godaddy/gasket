@@ -1,5 +1,9 @@
 # `@gasket/plugin-mocha`
 
+### 6.12.0
+
+- Replaced enzyme with React Testing Library. ([#324])
+
 ### 6.0.0
 
 - Version alignment
@@ -45,3 +49,4 @@
 [#182]: https://github.com/godaddy/gasket/pull/182
 [#216]: https://github.com/godaddy/gasket/pull/216
 [#247]: https://github.com/godaddy/gasket/pull/247
+[#324]: https://github.com/godaddy/gasket/pull/324
