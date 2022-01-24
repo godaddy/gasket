@@ -1,12 +1,12 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, screen } from '@testing-library/react'
 import { IndexPage } from '../pages/index';
-import Head from '../components/head';
 
 describe('IndexPage', () => {
-  it('shallow renders', () => {
-    const wrapper = shallow(<IndexPage />);
-    expect(wrapper.find(Head)).toHaveLength(1);
+  it('renders page', () => {
+    render(<IndexPage />);
+
+    expect(screen.getByRole('heading').textContent).toBe('Welcome to Gasket!');
   });
 });
 

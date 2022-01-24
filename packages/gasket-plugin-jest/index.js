@@ -23,8 +23,8 @@ module.exports = {
           );
 
           pkg.add('devDependencies', {
-            'enzyme': devDependencies.enzyme,
-            'enzyme-adapter-react-16': devDependencies['enzyme-adapter-react-16']
+            '@testing-library/react': devDependencies['@testing-library/react'],
+            '@testing-library/jest-dom': devDependencies['@testing-library/jest-dom']
           });
         }
 

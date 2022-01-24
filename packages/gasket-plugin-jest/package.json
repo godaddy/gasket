@@ -34,9 +34,9 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-jest",
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.1",
+    "@testing-library/react": "^12.1.2",
     "babel-eslint": "^10.1.0",
-    "enzyme": "^3.11.0",
-    "enzyme-adapter-react-16": "^1.15.5",
     "eslint": "^7.17.0",
     "eslint-config-godaddy-react": "^6.0.1",
     "eslint-plugin-jest": "^24.1.3",
