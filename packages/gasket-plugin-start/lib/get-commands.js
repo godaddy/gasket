@@ -11,10 +11,22 @@ module.exports = function getCommands(gasket, { GasketCommand, flags }) {
   class BuildCommand extends GasketCommand {
     async gasketRun() {
       await this.gasket.exec('build');
+
+      if (this.gasket.command.flags.exit) {
+        this.gasket.logger.debug('force exit');
+        // eslint-disable-next-line no-process-exit
+        process.exit(0);
+      }
     }
   }
   BuildCommand.id = 'build';
   BuildCommand.description = 'Prepare your app';
+  BuildCommand.flags = {
+    exit: flags.boolean({
+      default: false,
+      description: 'Exit process immediately after command completes'
+    })
+  };
 
 
   class StartCommand extends GasketCommand {
