@@ -3,7 +3,10 @@ const sinon = require('sinon');
 const getCommands = require('../lib/get-commands');
 
 const mockGasket = {
-  exec: sinon.stub()
+  exec: sinon.stub(),
+  logger: {
+    debug: sinon.stub()
+  }
 };
 
 class MockGasketCommand {
@@ -12,7 +15,10 @@ class MockGasketCommand {
   }
 }
 
-const mockFlags = { string: sinon.stub() };
+const mockFlags = {
+  string: sinon.stub(),
+  boolean: sinon.stub()
+};
 
 const mockData = { GasketCommand: MockGasketCommand, flags: mockFlags };
 
@@ -43,9 +49,15 @@ const testCommand = async (Command, name, lifecycles) => {
 };
 
 describe('getCommands', () => {
+  let exitStub;
 
   beforeEach(() => {
+    exitStub = sinon.stub(process, 'exit');
+  });
+
+  afterEach(function () {
     sinon.resetHistory();
+    exitStub.restore();
   });
 
   it('returns commands', () => {
@@ -59,6 +71,28 @@ describe('getCommands', () => {
   describe('BuildCommand', () => {
     const BuildCommand = getCommands(mockGasket, mockData)[0];
     testCommand(BuildCommand, 'build', ['build']);
+
+    it('calls process.exit', async function () {
+      const instance = new BuildCommand();
+      instance.gasket.command = {
+        flags: { exit: true }
+      };
+      await instance.gasketRun();
+
+      assume(exitStub).called();
+      assume(mockGasket.logger.debug).calledWith('force exit');
+    });
+
+    it('does not force exit without flag', async function () {
+      const instance = new BuildCommand();
+      instance.gasket.command = {
+        flags: {}
+      };
+      await instance.gasketRun();
+
+      assume(exitStub).not.called();
+      assume(mockGasket.logger.debug).not.calledWith('force exit');
+    });
   });
 
   describe('StartCommand', () => {
