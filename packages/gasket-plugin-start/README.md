@@ -13,8 +13,9 @@ This is a default plugin in the Gasket CLI and is always available for use.
 Executes the `build` lifecycle. Use this to prepare your app for running, such
 as bundling files, minifying code, processing assets, etc.
 
-If you need to force the process to exit once build lifecycle completes, you can
-pass the `--exit` flag. This should be used sparingly.
+If you need to force the process to exit once the build lifecycle completes,
+you can pass the `--exit` flag. This should be used sparingly. Prefer to find
+and fix lingering open handle issues which may be keeping the process running.
 
 ### start command
 
