@@ -1,4 +1,4 @@
-const { Help } = require('@oclif/plugin-help');
+const { Help } = require('@oclif/core');
 const asciiLogo = require('./logo');
 
 module.exports = class GasketHelp extends Help {
