@@ -10,7 +10,7 @@ describe('@gasket/plugin-log', () => {
       },
 
       winston: {
-        level: 'warning'
+        level: 'warn',
       },
     
       environments: {

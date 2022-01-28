@@ -165,7 +165,7 @@ function LocaleUtils(config) {
       fallbackLocale = defaultLocale;
     }
 
-    while (fallbackLocale !== null) {
+    while (fallbackLocale != null) {
       const localePath = this.formatLocalePath(localePathPart, fallbackLocale);
       if (trim(localePath) in paths) return localePath;
       fallbackLocale = this.getFallbackLocale(fallbackLocale);
