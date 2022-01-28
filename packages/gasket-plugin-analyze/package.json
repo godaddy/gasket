@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-analyze",
-  "version": "6.10.1",
+  "version": "6.14.0",
   "description": "Gasket Analyzer Plugin",
   "main": "lib",
   "types": "lib/index.d.ts",
@@ -39,7 +39,7 @@
     "webpack-bundle-analyzer": "^3.7.0"
   },
   "devDependencies": {
-    "@gasket/engine": "^6.10.1",
+    "@gasket/engine": "^6.14.0",
     "eslint": "^8.7.0",
     "eslint-config-godaddy": "^6.0.0",
     "eslint-plugin-jest": "^25.7.0",
