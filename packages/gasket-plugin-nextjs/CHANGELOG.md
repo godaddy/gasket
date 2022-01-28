@@ -1,5 +1,13 @@
 # `@gasket/plugin-nextjs`
 
+### 6.13.0
+
+- Default next-redux-wrapper to v7 for new Gasket apps with Next + Redux ([#326])
+
+### 6.12.0
+
+- Replaced enzyme with React Testing Library. ([#324])
+
 ### 6.10.0
 
 - TypeScript definitions for config & lifecycles ([#311])
@@ -148,3 +156,5 @@
 [#284]: https://github.com/godaddy/gasket/pull/284
 [#310]: https://github.com/godaddy/gasket/pull/310
 [#311]: https://github.com/godaddy/gasket/pull/311
+[#324]: https://github.com/godaddy/gasket/pull/324
+[#326]: https://github.com/godaddy/gasket/pull/326

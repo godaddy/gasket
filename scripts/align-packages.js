@@ -44,6 +44,7 @@ const depVersions = {
   'prop-types': '^15.7.2',
   'redux': '^4.0.5',
   'next': '^12.0.8',
+  'next-redux-wrapper': '^7.0.5',
   'jsdom': '^19.0.0',
 
   'babel-eslint': '^10.1.0',
