@@ -67,7 +67,7 @@ async function getPluginsWithVersions(plugins, pkgManager) {
   return await Promise.all(
     plugins.map(async name => {
       const id = pluginIdentifier(name);
-      if (id.version !== null) return id;
+      if (id.version != null) return id;
       const version = (await pkgManager.info([id.fullName, 'version'])).data;
       return id.withVersion(`^${version}`);
     })
