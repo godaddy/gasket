@@ -1,6 +1,6 @@
 {
   "name": "@gasket/redux",
-  "version": "6.10.1",
+  "version": "6.14.0",
   "description": "Gasket Redux Configuration",
   "main": "./lib",
   "browser": "./lib",
@@ -37,7 +37,7 @@
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-redux",
   "dependencies": {
     "@babel/runtime": "^7.12.5",
-    "@gasket/log": "^6.10.1",
+    "@gasket/log": "^6.14.0",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0"
   },

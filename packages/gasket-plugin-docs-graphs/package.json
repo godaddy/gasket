@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-docs-graphs",
-  "version": "6.11.2",
+  "version": "6.14.0",
   "description": "Generate mermaid graphs of an applications gasket lifecycles",
   "main": "plugin.js",
   "scripts": {
