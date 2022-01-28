@@ -1,5 +1,6 @@
 const path = require('path');
-const { rename, unlink, open } = require('fs').promises;
+const fs = require('fs');
+const { rename, unlink } = fs.promises;
 const tar = require('tar-fs');
 const zlib = require('zlib');
 const pump = require('pump');
@@ -170,9 +171,7 @@ module.exports = class PackageFetcher {
     return {
       then: async (fulfill, reject) => {
         const logOpts = { tarball, dir };
-        const fd = await open(tarball);
-        console.log(fd);
-        const readableStream = fd.createReadStream(tarball).once('error', this._logError(`fs.createReadStream`, logOpts));
+        const readableStream = fs.createReadStream(tarball).once('error', this._logError(`fs.createReadStream`, logOpts));
         const unzip = zlib.createUnzip().once('error', this._logError(`zlib.createUnzip`, logOpts));
         const extract = tar.extract(dir).once('error', this._logError(`tar.extract`, logOpts));
 
