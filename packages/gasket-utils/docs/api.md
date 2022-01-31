@@ -149,7 +149,7 @@ Normalize the config by applying any environment or local overrides
 Promise friendly wrapper to running a shell command (eg: git, npm, ls)
 which passes back any { stdout, stderr } to the error thrown.
 
-Options can be passed to the underlying spawn. An additional `signal option
+Options can be passed to the underlying spawn. An additional `signal` option
 can be passed to use AbortController, allowing processes to be killed when
 no longer needed.
 
@@ -175,7 +175,7 @@ const { runShellCommand } = require('@gasket/utils');
 ```
 **Example**  
 ```js
-// Enable timeout using AbortController
+// With timeout using AbortController
 
 const { runShellCommand } = require('@gasket/utils');
 const AbortController = require('abort-controller');

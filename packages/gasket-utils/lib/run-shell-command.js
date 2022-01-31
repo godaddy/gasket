@@ -5,7 +5,7 @@ const spawn = require('cross-spawn');
  * Promise friendly wrapper to running a shell command (eg: git, npm, ls)
  * which passes back any { stdout, stderr } to the error thrown.
  *
- * Options can be passed to the underlying spawn. An additional `signal option
+ * Options can be passed to the underlying spawn. An additional `signal` option
  * can be passed to use AbortController, allowing processes to be killed when
  * no longer needed.
  *
