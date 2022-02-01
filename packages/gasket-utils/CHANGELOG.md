@@ -1,5 +1,9 @@
 # `@gasket/utils`
 
+### 6.15.0
+
+- Support for AbortController with `runShellCommand` ([#331])
+
 ### 6.10.0
 
 - TypeScript definitions for config & lifecycles ([#311])
@@ -50,3 +54,4 @@
 [#247]: https://github.com/godaddy/gasket/pull/247
 [#275]: https://github.com/godaddy/gasket/pull/275
 [#311]: https://github.com/godaddy/gasket/pull/311
+[#331]: https://github.com/godaddy/gasket/pull/331
