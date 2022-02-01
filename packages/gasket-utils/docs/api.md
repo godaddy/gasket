@@ -149,15 +149,20 @@ Normalize the config by applying any environment or local overrides
 Promise friendly wrapper to running a shell command (eg: git, npm, ls)
 which passes back any { stdout, stderr } to the error thrown.
 
+Options can be passed to the underlying spawn. An additional `signal` option
+can be passed to use AbortController, allowing processes to be killed when
+no longer needed.
+
 **Kind**: global function  
-**Returns**: `Promise` - A promise represents if npm succeeds or fails.  
+**Returns**: `Promise` - A promise represents if command succeeds or fails.  
 **Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | cmd | `string` | binary that is run |
-| argv | `array` | args passed to npm binary through spawn. |
-| options | `object` | options passed to npm binary through spawn |
+| argv | `array` | args passed to npm binary through spawn. |
+| options | `object` | options passed to npm binary through spawn |
+| \[options.signal\] | `object` | AbortControl signal allowing process to be canceled |
 | \[debug\] | `boolean` | When present pipes std{out,err} to process.* |
 
 **Example**  
@@ -166,6 +171,21 @@ const { runShellCommand } = require('@gasket/utils');
 
  async function helloWorld() {
   await runShellCommand('echo', ['hello world']);
+}
+```
+**Example**  
+```js
+// With timeout using AbortController
+
+const { runShellCommand } = require('@gasket/utils');
+const AbortController = require('abort-controller');
+
+ async function helloWorld() {
+  const controller = new AbortController();
+  // abort the process after 60 seconds
+  const id = setTimeout(() => controller.abort(), 60000);
+  await runShellCommand('long-process', ['something'], { signal: controller.signal });
+  clearTimeout(id);
 }
 ```
 
