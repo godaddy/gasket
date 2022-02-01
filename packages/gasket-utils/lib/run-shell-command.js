@@ -38,11 +38,11 @@ const spawn = require('cross-spawn');
  * @returns {Promise} A promise represents if npm succeeds or fails.
  * @public
  */
-function runShellCommand(cmd, argv, options, debug) {
+function runShellCommand(cmd, argv, options = {}, debug = false) {
   const { signal, ...opts } = options;
 
   if (signal && signal.aborted) {
-    return Promise.reject(new Error(`${ cmd } was aborted before spawn`, { argv, aborted: true }));
+    return Promise.reject(Object.assign(new Error(`${ cmd } was aborted before spawn`), { argv, aborted: true }));
   }
 
   return new Promise((resolve, reject) => {
