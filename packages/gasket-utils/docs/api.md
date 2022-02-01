@@ -154,7 +154,7 @@ can be passed to use AbortController, allowing processes to be killed when
 no longer needed.
 
 **Kind**: global function  
-**Returns**: `Promise` - A promise represents if npm succeeds or fails.  
+**Returns**: `Promise` - A promise represents if command succeeds or fails.  
 **Access**: public  
 
 | Param | Type | Description |

@@ -35,7 +35,7 @@ const spawn = require('cross-spawn');
  * @param {object} options options passed to npm binary through spawn
  * @param {object} [options.signal] AbortControl signal allowing process to be canceled
  * @param {boolean} [debug] When present pipes std{out,err} to process.*
- * @returns {Promise} A promise represents if npm succeeds or fails.
+ * @returns {Promise} A promise represents if command succeeds or fails.
  * @public
  */
 function runShellCommand(cmd, argv, options = {}, debug = false) {
