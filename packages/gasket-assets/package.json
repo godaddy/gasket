@@ -1,6 +1,6 @@
 {
   "name": "@gasket/assets",
-  "version": "6.14.0",
+  "version": "6.15.1",
   "description": "Gasket assets",
   "main": "react",
   "scripts": {
