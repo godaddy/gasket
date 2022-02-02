@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 
-import svgr from '@svgr/core';
+import { transform as svgr } from '@svgr/core';
 import { transform } from '@babel/core';
 import { promises as fs } from 'fs';
 import path from 'path';
