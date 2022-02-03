@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-start",
-  "version": "6.14.0",
+  "version": "6.15.2",
   "description": "Adds commands for building and starting Gasket apps",
   "main": "lib",
   "types": "lib/index.d.ts",
@@ -39,7 +39,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-start",
   "devDependencies": {
-    "@gasket/engine": "^6.14.0",
+    "@gasket/engine": "^6.15.2",
     "assume": "^2.3.0",
     "assume-sinon": "^1.1.0",
     "eslint": "^8.7.0",

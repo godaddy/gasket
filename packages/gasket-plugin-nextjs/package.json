@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-nextjs",
-  "version": "6.15.1",
+  "version": "6.15.2",
   "description": "Adds Next support to your application",
   "main": "index.js",
   "types": "index.d.ts",
@@ -37,13 +37,13 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-nextjs",
   "dependencies": {
-    "@gasket/plugin-webpack": "^6.14.0",
-    "@gasket/resolve": "^6.14.0"
+    "@gasket/plugin-webpack": "^6.15.2",
+    "@gasket/resolve": "^6.15.2"
   },
   "devDependencies": {
     "@babel/preset-react": "^7.12.10",
     "@gasket/assets": "^6.15.1",
-    "@gasket/engine": "^6.14.0",
+    "@gasket/engine": "^6.15.2",
     "@gasket/nextjs": "^6.14.0",
     "assume": "^2.3.0",
     "assume-sinon": "^1.1.0",

@@ -1,6 +1,6 @@
 {
   "name": "@gasket/engine",
-  "version": "6.14.0",
+  "version": "6.15.2",
   "description": "Plugin engine for gasket",
   "main": "lib/engine.js",
   "types": "lib/engine.d.ts",
@@ -36,7 +36,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-engine",
   "dependencies": {
-    "@gasket/resolve": "^6.14.0",
+    "@gasket/resolve": "^6.15.2",
     "debug": "^4.3.1"
   },
   "devDependencies": {
