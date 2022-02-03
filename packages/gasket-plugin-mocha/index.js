@@ -13,6 +13,10 @@ module.exports = {
         const path = require('path');
         const isReactProject = pkg.has('dependencies', 'react');
 
+        files.add(
+          path.join(__dirname, 'generator', 'test', 'setup.js')
+        );
+
         pkg.add('devDependencies', {
           //
           // Base assertion dependencies.
@@ -32,8 +36,7 @@ module.exports = {
 
         if (isReactProject) {
           files.add(
-            path.join(__dirname, 'generator', '*'),
-            path.join(__dirname, 'generator', '**', '*')
+            path.join(__dirname, 'generator', 'test', 'mocha-watch-cleanup-after-each.js')
           );
 
           pkg.add('devDependencies', {
@@ -46,12 +49,13 @@ module.exports = {
           });
 
           pkg.add('scripts', {
-            'test:runner': 'mocha --require global-jsdom/register --require setup-env --recursive "test/**/*.*(test|spec).js"',
-            'test:watch': `${runCmd} test:runner -- --watch --require ./test/mocha-watch-cleanup-after-each.js`
+            // eslint-disable-next-line max-len
+            'test:runner': 'mocha -r global-jsdom/register -r setup-env -r ./test/setup.js --recursive "test/**/*.*(test|spec).js"',
+            'test:watch': `${runCmd} test:runner -- --watch -r ./test/mocha-watch-cleanup-after-each.js`
           });
         } else {
           pkg.add('scripts', {
-            'test:runner': 'mocha --require setup-env --recursive "test/**/*.*(test|spec).js"',
+            'test:runner': 'mocha -r setup-env -r ./test/setup.js --recursive "test/**/*.*(test|spec).js"',
             'test:watch': `${runCmd} test:runner -- --watch`
           });
         }
