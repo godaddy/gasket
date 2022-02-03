@@ -5,6 +5,10 @@ const spawn = require('cross-spawn');
  * Promise friendly wrapper to running a shell command (eg: git, npm, ls)
  * which passes back any { stdout, stderr } to the error thrown.
  *
+ * Options can be passed to the underlying spawn. An additional `signal` option
+ * can be passed to use AbortController, allowing processes to be killed when
+ * no longer needed.
+ *
  * @example
  * const { runShellCommand } = require('@gasket/utils');
  *
@@ -12,16 +16,37 @@ const spawn = require('cross-spawn');
  *   await runShellCommand('echo', ['hello world']);
  * }
  *
+ * @example
+ * // With timeout using AbortController
+ *
+ * const { runShellCommand } = require('@gasket/utils');
+ * const AbortController = require('abort-controller');
+ *
+ *  async function helloWorld() {
+ *   const controller = new AbortController();
+ *   // abort the process after 60 seconds
+ *   const id = setTimeout(() => controller.abort(), 60000);
+ *   await runShellCommand('long-process', ['something'], { signal: controller.signal });
+ *   clearTimeout(id);
+ * }
+ *
  * @param {string} cmd binary that is run
- * @param {array} argv args passed to npm binary through spawn.
- * @param {object} options options passed to npm binary through spawn
+ * @param {array} argv args passed to npm binary through spawn.
+ * @param {object} options options passed to npm binary through spawn
+ * @param {object} [options.signal] AbortControl signal allowing process to be canceled
  * @param {boolean} [debug] When present pipes std{out,err} to process.*
- * @returns {Promise} A promise represents if npm succeeds or fails.
+ * @returns {Promise} A promise represents if command succeeds or fails.
  * @public
  */
-function runShellCommand(cmd, argv, options, debug) {
+function runShellCommand(cmd, argv, options = {}, debug = false) {
+  const { signal, ...opts } = options;
+
+  if (signal && signal.aborted) {
+    return Promise.reject(Object.assign(new Error(`${ cmd } was aborted before spawn`), { argv, aborted: true }));
+  }
+
   return new Promise((resolve, reject) => {
-    const child = spawn(cmd, argv, options);
+    const child = spawn(cmd, argv, opts);
 
     let stderr;
     let stdout;
@@ -39,12 +64,22 @@ function runShellCommand(cmd, argv, options, debug) {
       child.stdout.pipe(process.stdout);
     }
 
+    let aborted = false;
+    if (signal) {
+      signal.addEventListener('abort', () => {
+        aborted = true;
+        child.kill();
+      });
+    }
+
     child.on('close', code => {
       if (code !== 0) {
-        return reject(Object.assign(new Error(`${cmd} exited with non-zero code`), {
+        return reject(Object.assign(new Error(`${ cmd } exited with non-zero code`), {
           argv,
           stdout,
-          stderr
+          stderr,
+          aborted,
+          code
         }));
       }
 

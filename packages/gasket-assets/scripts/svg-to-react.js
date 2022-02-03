@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 
-import svgr from '@svgr/core';
+import { transform as svgr } from '@svgr/core';
 import { transform } from '@babel/core';
 import { promises as fs } from 'fs';
 import path from 'path';
@@ -28,7 +28,7 @@ const babelOptions = {
  * @param {string} file - Path of file to process
  * @returns {Promise} promise
  */
-async function process(file) {
+async function processFile(file) {
   const outFile = file.replace(srcDir, outputDir).replace('.svg', '.js');
 
   try {
@@ -72,7 +72,7 @@ async function main() {
   const files = await recursive(srcDir, [filterSvg]);
 
   files.forEach(file => {
-    promises.push(process(file)
+    promises.push(processFile(file)
       .then(() => successCount++, () => errorCount++)
     );
   });
@@ -81,7 +81,11 @@ async function main() {
 
   console.log('-------');
   console.log(`Processed ${successCount}/${files.length} files.`);
-  if (errorCount) console.error(`Errors ${errorCount}.`);
+  if (errorCount) {
+    console.error(`Errors ${errorCount}.`);
+    // eslint-disable-next-line no-process-exit
+    process.exit(1);
+  }
 }
 
 main();

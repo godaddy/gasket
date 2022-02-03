@@ -1,5 +1,9 @@
 # `@gasket/cli`
 
+### 6.14.1
+
+- Fix ti use `fs.createReadStream` for node < 16 support ([#329])
+
 ### 6.11.2
 
 - Use fs.promises and upgrade mkdirp ([#319])
@@ -322,3 +326,4 @@ upon `gasket create`
 [#247]: https://github.com/godaddy/gasket/pull/247
 [#311]: https://github.com/godaddy/gasket/pull/311
 [#319]: https://github.com/godaddy/gasket/pull/319
+[#329]: https://github.com/godaddy/gasket/pull/329

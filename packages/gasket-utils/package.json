@@ -1,6 +1,6 @@
 {
   "name": "@gasket/utils",
-  "version": "6.14.0",
+  "version": "6.15.0",
   "description": "Reusable utilities for Gasket internals",
   "main": "lib",
   "types": "lib/index.d.ts",
@@ -41,6 +41,7 @@
   },
   "devDependencies": {
     "@godaddy/dmd": "^1.0.0",
+    "abort-controller": "^3.0.0",
     "assume": "^2.3.0",
     "assume-sinon": "^1.1.0",
     "eslint": "^8.7.0",
