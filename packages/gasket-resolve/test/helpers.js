@@ -3,9 +3,15 @@
 const isModulePath = /^[/.]|node_modules/;
 
 
-function error(mod) {
-  const err = new Error(`Cannot find module '${mod}' from 'mocked'`);
+function notFoundError(mod) {
+  const err = new Error(`Cannot find module '${ mod }' from 'mocked'`);
   err.code = 'MODULE_NOT_FOUND';
+  return err;
+}
+
+function missingExportError(mod) {
+  const err = new Error(`Package subpath './package.json' is not defined by "exports" in /path/to/node_modules/${ mod }`);
+  err.code = 'ERR_PACKAGE_PATH_NOT_EXPORTED';
   return err;
 }
 
@@ -33,14 +39,17 @@ function makeRequire(modules) {
     if (_modules[mod]) {
       return _modules[mod];
     }
-    throw error(mod);
+    throw notFoundError(mod);
   });
 
   _require.resolve = jest.fn(mod => {
     if (_paths[mod]) {
       return _paths[mod];
     }
-    throw error(mod);
+    if (mod === 'no-exported/package.json') {
+      throw missingExportError(mod);
+    }
+    throw notFoundError(mod);
   });
 
   return _require;
