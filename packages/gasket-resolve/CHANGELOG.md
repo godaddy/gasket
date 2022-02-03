@@ -1,5 +1,9 @@
 # `@gasket/resolve`
 
+### 6.15.2
+
+- Handle missing package exports ([#333])
+
 ### 6.0.0
 
 - Remove package name fallbacks ([#227])
@@ -64,5 +68,6 @@
 [#156]: https://github.com/godaddy/gasket/pull/156
 [#227]: https://github.com/godaddy/gasket/pull/227
 [#247]: https://github.com/godaddy/gasket/pull/247
+[#333]: https://github.com/godaddy/gasket/pull/333
 
 [Loader]:/packages/gasket-resolve/docs/api.md#loader
