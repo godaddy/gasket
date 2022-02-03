@@ -74,6 +74,11 @@ describe('Resolver', () => {
       expect(() => resolver.resolve('missing')).toThrow(/Cannot find module/);
     });
 
+    it('throws if package.json not exported', () => {
+      const resolver = new Resolver({ require: mockRequire });
+      expect(() => resolver.resolve('no-exported/package.json')).toThrow(/Package subpath '\.\/package.json' is not defined by "exports"/);
+    });
+
     it('uses resolver file require by default', () => {
       const resolver = new Resolver();
       expect(() => resolver.resolve('missing')).toThrow(/from 'lib\/resolver.js'/);
@@ -120,6 +125,11 @@ describe('Resolver', () => {
       expect(() => resolver.require('missing')).toThrow(/Cannot find module/);
     });
 
+    it('throws if package.json not exported', () => {
+      const resolver = new Resolver({ require: mockRequire });
+      expect(() => resolver.require('no-exported/package.json')).toThrow(/Package subpath '\.\/package.json' is not defined by "exports"/);
+    });
+
     it('throws if module malformed', () => {
       const resolver = new Resolver({ require: mockRequire });
       expect(() => resolver.require('broken')).toThrow();
@@ -144,6 +154,11 @@ describe('Resolver', () => {
       const resolver = new Resolver();
       expect(() => resolver.tryResolve('missing')).not.toThrow();
     });
+
+    it('does not throw if package.json not exported', () => {
+      const resolver = new Resolver({ require: mockRequire });
+      expect(() => resolver.tryResolve('no-exported/package.json')).not.toThrow();
+    });
   });
 
   describe('.tryRequire', () => {
@@ -163,6 +178,11 @@ describe('Resolver', () => {
     it('does not throw if module not found', () => {
       const resolver = new Resolver();
       expect(() => resolver.tryRequire('missing')).not.toThrow();
+    });
+
+    it('does not throw if package.json not exported', () => {
+      const resolver = new Resolver({ require: mockRequire });
+      expect(() => resolver.tryRequire('no-exported/package.json')).not.toThrow();
     });
 
     it('does throw if module has problems', () => {

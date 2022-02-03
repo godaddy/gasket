@@ -143,6 +143,13 @@ describe('Loader', () => {
       expect(results).not.toHaveProperty('path');
       expect(results).not.toHaveProperty('version');
     });
+
+    it('ignores package info if package.json not exported', () => {
+      const results = loader.getModuleInfo(null, 'no-exported', { extra: true });
+      expect(results).not.toHaveProperty('package');
+      expect(results).not.toHaveProperty('path');
+      expect(results).not.toHaveProperty('version');
+    });
   });
 
   describe('.loadModule', () => {
