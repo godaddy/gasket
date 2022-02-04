@@ -14,12 +14,6 @@ module.exports = {
         const isReactProject = pkg.has('dependencies', 'react');
         const isNextProject = pkg.has('dependencies', 'next');
 
-        if (isNextProject) {
-          files.add(
-            path.join(__dirname, 'generator', 'test', 'setup.js')
-          );
-        }
-
         pkg.add('devDependencies', {
           //
           // Base assertion dependencies.
@@ -39,7 +33,8 @@ module.exports = {
 
         if (isReactProject) {
           files.add(
-            path.join(__dirname, 'generator', 'test', 'mocha-watch-cleanup-after-each.js')
+            path.join(__dirname, 'generator', '*'),
+            path.join(__dirname, 'generator', '**', '*')
           );
 
           pkg.add('devDependencies', {
@@ -53,7 +48,7 @@ module.exports = {
 
           pkg.add('scripts', {
             // eslint-disable-next-line max-len
-            'test:runner': 'mocha -r global-jsdom/register -r setup-env -r ./test/setup.js --recursive "test/**/*.*(test|spec).js"',
+            'test:runner': `mocha -r global-jsdom/register -r setup-env ${isNextProject ? '-r ./test/setup.js' : ''} --recursive "test/**/*.*(test|spec).js"`,
             'test:watch': `${runCmd} test:runner -- --watch -r ./test/mocha-watch-cleanup-after-each.js`
           });
         } else {
