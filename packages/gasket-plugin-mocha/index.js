@@ -12,10 +12,13 @@ module.exports = {
         const runCmd = packageManager === 'npm' ? `npm run` : packageManager;
         const path = require('path');
         const isReactProject = pkg.has('dependencies', 'react');
+        const isNextProject = pkg.has('dependencies', 'next');
 
-        files.add(
-          path.join(__dirname, 'generator', 'test', 'setup.js')
-        );
+        if (isNextProject) {
+          files.add(
+            path.join(__dirname, 'generator', 'test', 'setup.js')
+          );
+        }
 
         pkg.add('devDependencies', {
           //
@@ -55,7 +58,7 @@ module.exports = {
           });
         } else {
           pkg.add('scripts', {
-            'test:runner': 'mocha -r setup-env -r ./test/setup.js --recursive "test/**/*.*(test|spec).js"',
+            'test:runner': 'mocha -r setup-env --recursive "test/**/*.*(test|spec).js"',
             'test:watch': `${runCmd} test:runner -- --watch`
           });
         }
