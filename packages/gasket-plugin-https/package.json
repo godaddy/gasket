@@ -9,7 +9,7 @@
     "index.d.ts"
   ],
   "scripts": {
-    "lint": "eslint *.js test/*.js",
+    "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "test": "npm run test:runner",
     "test:runner": "mocha test/*.test.js",

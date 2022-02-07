@@ -1,4 +1,4 @@
-const { filterSensitiveCookies } = require('./lib/cookies');
+const { filterSensitiveCookies } = require('./cookies');
 
 /**
  * Determines if the Elastic APM agent has sufficient config to be active

@@ -2,10 +2,13 @@
   "name": "@gasket/engine",
   "version": "6.15.2",
   "description": "Plugin engine for gasket",
+  "files": [
+    "lib"
+  ],
   "main": "lib/engine.js",
   "types": "lib/engine.d.ts",
   "scripts": {
-    "lint": "eslint lib test",
+    "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
     "test:watch": "jest --watch",

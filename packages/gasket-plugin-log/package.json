@@ -5,7 +5,7 @@
   "main": "./",
   "types": "./index.d.ts",
   "scripts": {
-    "lint": "eslint index.js test",
+    "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "test": "npm run test:runner",
     "test:runner": "mocha --require setup-env test/*.test.js",

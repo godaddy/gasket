@@ -2,10 +2,14 @@
   "name": "@gasket/plugin-command",
   "version": "6.15.2",
   "description": "Plugin to enable other plugins to inject new gasket commands",
+  "files": [
+    "lib",
+    "docs"
+  ],
   "main": "lib/plugin.js",
   "types": "lib/plugin.d.ts",
   "scripts": {
-    "lint": "eslint ./lib ./test",
+    "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "test": "npm run test:runner",
     "test:runner": "mocha test/*.test.js --require test/setup.js",

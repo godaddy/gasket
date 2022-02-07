@@ -5,7 +5,7 @@
   "main": "lib",
   "types": "lib/index.d.ts",
   "scripts": {
-    "lint": "eslint lib test",
+    "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "test": "npm run test:runner",
     "test:runner": "mocha test/*.test.js --require test/setup.js",

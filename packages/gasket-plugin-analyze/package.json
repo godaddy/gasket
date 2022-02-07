@@ -3,7 +3,6 @@
   "version": "6.15.2",
   "description": "Gasket Analyzer Plugin",
   "files": [
-    "CHANGELOG.md",
     "lib"
   ],
   "main": "lib",

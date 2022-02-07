@@ -2,9 +2,12 @@
   "name": "@gasket/plugin-docs-graphs",
   "version": "6.14.0",
   "description": "Generate mermaid graphs of an applications gasket lifecycles",
+  "files": [
+    "plugin.js"
+  ],
   "main": "plugin.js",
   "scripts": {
-    "lint": "eslint *.js test",
+    "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "test": "npm run test:runner",
     "test:runner": "mocha test/*.test.js",
