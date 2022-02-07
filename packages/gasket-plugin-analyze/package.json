@@ -2,10 +2,14 @@
   "name": "@gasket/plugin-analyze",
   "version": "6.15.2",
   "description": "Gasket Analyzer Plugin",
+  "files": [
+    "CHANGELOG.md",
+    "lib"
+  ],
   "main": "lib",
   "types": "lib/index.d.ts",
   "scripts": {
-    "lint": "eslint lib",
+    "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "test": "jest",
     "test:watch": "jest --watchAll",

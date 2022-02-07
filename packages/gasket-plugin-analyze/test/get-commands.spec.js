@@ -1,4 +1,4 @@
-const getCommands = require('./get-commands');
+const getCommands = require('../lib/get-commands');
 
 const mockGasket = {
   exec: jest.fn()

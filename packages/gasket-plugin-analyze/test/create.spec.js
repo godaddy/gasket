@@ -1,4 +1,4 @@
-const create = require('./create');
+const create = require('../lib/create');
 
 describe('create', () => {
 
