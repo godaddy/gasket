@@ -14,6 +14,9 @@ describe('Plugin', () => {
     const pkg = {};
 
     await plugin.hooks.create.handler({}, {
+      files: {
+        add: sinon.stub()
+      },
       pkg: {
         add: (key, value) => {
           pkg[key] = value;

@@ -12,6 +12,7 @@ module.exports = {
         const runCmd = packageManager === 'npm' ? `npm run` : packageManager;
         const path = require('path');
         const isReactProject = pkg.has('dependencies', 'react');
+        const isNextProject = pkg.has('dependencies', 'next');
 
         pkg.add('devDependencies', {
           //
@@ -46,12 +47,13 @@ module.exports = {
           });
 
           pkg.add('scripts', {
-            'test:runner': 'mocha --require global-jsdom/register --require setup-env --recursive "test/**/*.*(test|spec).js"',
-            'test:watch': `${runCmd} test:runner -- --watch --require ./test/mocha-watch-cleanup-after-each.js`
+            // eslint-disable-next-line max-len
+            'test:runner': `mocha -r global-jsdom/register -r setup-env ${isNextProject ? '-r ./test/setup.js' : ''} --recursive "test/**/*.*(test|spec).js"`,
+            'test:watch': `${runCmd} test:runner -- --watch -r ./test/mocha-watch-cleanup-after-each.js`
           });
         } else {
           pkg.add('scripts', {
-            'test:runner': 'mocha --require setup-env --recursive "test/**/*.*(test|spec).js"',
+            'test:runner': 'mocha -r setup-env --recursive "test/**/*.*(test|spec).js"',
             'test:watch': `${runCmd} test:runner -- --watch`
           });
         }
