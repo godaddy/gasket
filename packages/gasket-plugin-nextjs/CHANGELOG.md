@@ -1,5 +1,9 @@
 # `@gasket/plugin-nextjs`
 
+### 6.16.0
+
+- Updates to support not generating a .babelrc file when creating new apps ([#334])
+
 ### 6.13.0
 
 - Default next-redux-wrapper to v7 for new Gasket apps with Next + Redux ([#326])
@@ -158,3 +162,4 @@
 [#311]: https://github.com/godaddy/gasket/pull/311
 [#324]: https://github.com/godaddy/gasket/pull/324
 [#326]: https://github.com/godaddy/gasket/pull/326
+[#334]: https://github.com/godaddy/gasket/pull/334

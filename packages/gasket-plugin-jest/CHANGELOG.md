@@ -1,5 +1,9 @@
 # `@gasket/plugin-jest`
 
+### 6.16.0
+
+- Updates to support not generating a .babelrc file when creating new apps ([#334])
+
 ### 6.12.0
 
 - Replaced enzyme with React Testing Library. ([#324])
@@ -40,3 +44,4 @@
 [#216]: https://github.com/godaddy/gasket/pull/216
 [#247]: https://github.com/godaddy/gasket/pull/247
 [#324]: https://github.com/godaddy/gasket/pull/324
+[#334]: https://github.com/godaddy/gasket/pull/334
