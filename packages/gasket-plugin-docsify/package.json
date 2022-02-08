@@ -72,5 +72,8 @@
     "rules": {
       "unicorn/filename-case": "error"
     }
-  }
+  },
+  "eslintIgnore": [
+    "generator/scripts"
+  ]
 }
