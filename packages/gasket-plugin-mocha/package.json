@@ -3,6 +3,10 @@
   "version": "6.16.0",
   "description": "Integrates mocha based testing in to your Gasket application",
   "main": "index.js",
+  "files": [
+    "generator",
+    "index.js"
+  ],
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",

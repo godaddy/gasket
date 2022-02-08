@@ -2,11 +2,11 @@
   "name": "@gasket/plugin-service-worker",
   "version": "6.15.2",
   "description": "Gasket Service Worker Plugin",
+  "main": "lib",
+  "types": "lib/index.d.ts",
   "files": [
     "lib"
   ],
-  "main": "lib",
-  "types": "lib/index.d.ts",
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
