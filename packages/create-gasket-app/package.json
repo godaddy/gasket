@@ -6,6 +6,9 @@
   "bin": {
     "create-gasket-app": "./index.js"
   },
+  "files": [
+    "index.js"
+  ],
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",

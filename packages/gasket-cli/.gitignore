@@ -1,3 +1,5 @@
 # Generated test helpers
 test/fixtures/create/*
 !test/fixtures/create/.gitkeep
+
+oclif.manifest.json

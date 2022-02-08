@@ -8,10 +8,10 @@
   },
   "types": "src/index.d.ts",
   "files": [
-    "bin/",
-    "docs/",
-    "src/",
-    "oclif.manifest.json"
+    "oclif.manifest.json",
+    "docs",
+    "bin",
+    "src"
   ],
   "scripts": {
     "lint": "eslint .",
