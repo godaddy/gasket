@@ -4,6 +4,11 @@
   "description": "Adds webpack support to your application",
   "main": "index.js",
   "types": "index.d.ts",
+  "files": [
+    "docs",
+    "index.js",
+    "index.d.ts"
+  ],
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",

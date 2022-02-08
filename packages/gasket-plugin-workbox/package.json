@@ -4,6 +4,9 @@
   "description": "Gasket Workbox Plugin",
   "main": "lib",
   "types": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
