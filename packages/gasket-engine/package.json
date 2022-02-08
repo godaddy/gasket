@@ -2,11 +2,11 @@
   "name": "@gasket/engine",
   "version": "6.15.2",
   "description": "Plugin engine for gasket",
+  "main": "lib/engine.js",
+  "types": "lib/engine.d.ts",
   "files": [
     "lib"
   ],
-  "main": "lib/engine.js",
-  "types": "lib/engine.d.ts",
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
