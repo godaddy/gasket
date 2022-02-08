@@ -3,6 +3,9 @@
   "version": "6.15.2",
   "description": "Adds GoDaddy standard linting to your application",
   "main": "lib",
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",

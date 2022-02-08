@@ -3,6 +3,10 @@
   "version": "6.16.0",
   "description": "Integrated jest into your application.",
   "main": "index.js",
+  "files": [
+    "generator",
+    "index.js"
+  ],
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
