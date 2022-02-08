@@ -2,12 +2,12 @@
   "name": "@gasket/plugin-docs",
   "version": "6.15.2",
   "description": "Centralize doc files from plugins and modules",
+  "main": "lib",
+  "types": "lib/index.d.ts",
   "files": [
     "lib",
     "docs"
   ],
-  "main": "lib",
-  "types": "lib/index.d.ts",
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",

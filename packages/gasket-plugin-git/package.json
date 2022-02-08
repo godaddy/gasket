@@ -3,6 +3,10 @@
   "version": "6.15.0",
   "description": "Adds git support to your application",
   "main": "lib",
+  "files": [
+    "generator",
+    "lib"
+  ],
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",

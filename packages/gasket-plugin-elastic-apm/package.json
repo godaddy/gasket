@@ -2,11 +2,11 @@
   "name": "@gasket/plugin-elastic-apm",
   "version": "6.15.2",
   "description": "Adds Elastic APM instrumentation to your application",
+  "main": "lib",
+  "types": "lib/index.d.ts",
   "files": [
     "lib"
   ],
-  "main": "lib",
-  "types": "lib/index.d.ts",
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
