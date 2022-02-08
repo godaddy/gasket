@@ -2,8 +2,12 @@
   "name": "@gasket/plugin-log",
   "version": "6.15.2",
   "description": "Gasket log plugin",
-  "main": "./",
-  "types": "./index.d.ts",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "files": [
+    "index.js",
+    "index.d.ts"
+  ],
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",

@@ -4,6 +4,10 @@
   "description": "Adds metadata to gasket lifecycles",
   "main": "lib",
   "types": "lib/index.d.ts",
+  "files": [
+    "docs",
+    "lib"
+  ],
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
