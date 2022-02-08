@@ -1,5 +1,9 @@
 # `@gasket/plugin-intl`
 
+### 6.16.1
+
+- Fix to not polyfill intl for node >= 14 ([#336])
+
 ### 6.11.2
 
 - Use fs.promises ([#319])
