@@ -162,7 +162,7 @@ Available plugins
 | [@gasket/plugin-fastify]        | 6.15.2  | Adds fastify support to your application                                   |
 | [@gasket/plugin-git]            | 6.15.0  | Adds git support to your application                                       |
 | [@gasket/plugin-https]          | 6.15.2  | Create http/s servers with graceful termination                            |
-| [@gasket/plugin-intl]           | 6.15.2  | NodeJS script to build localization files.                                 |
+| [@gasket/plugin-intl]           | 6.16.1  | NodeJS script to build localization files.                                 |
 | [@gasket/plugin-jest]           | 6.16.0  | Integrated jest into your application.                                     |
 | [@gasket/plugin-lifecycle]      | 6.15.2  | Allows a gasket/ directory to be used for lifecycle hooks in applications. |
 | [@gasket/plugin-lint]           | 6.15.2  | Adds GoDaddy standard linting to your application                          |
@@ -196,7 +196,7 @@ Supporting modules
 | [@gasket/react-intl]       | 6.14.0  | React component library to enable localization for gasket apps.                      |
 | [@gasket/redux]            | 6.14.0  | Gasket Redux Configuration                                                           |
 | [@gasket/resolve]          | 6.15.2  | Essential module resolution & configuration management for gasket plugins & presets. |
-| [@gasket/typescript-tests] | 6.16.0  | Not a published package; hosts unit tests to verify TypeScript support               |
+| [@gasket/typescript-tests] | 6.16.1  | Not a published package; hosts unit tests to verify TypeScript support               |
 | [@gasket/utils]            | 6.15.0  | Reusable utilities for Gasket internals                                              |
 | [create-gasket-app]        | 6.15.2  | starter pack for creating a gasket app                                               |
 
