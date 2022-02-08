@@ -2,9 +2,13 @@
   "name": "@gasket/nextjs",
   "version": "6.14.0",
   "description": "Gasket integrations for Next.js apps",
-  "main": "./lib",
-  "browser": "./lib",
-  "module": "./src",
+  "main": "lib",
+  "browser": "lib",
+  "module": "src",
+  "files": [
+    "src",
+    "lib"
+  ],
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",

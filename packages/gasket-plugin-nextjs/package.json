@@ -4,6 +4,14 @@
   "description": "Adds Next support to your application",
   "main": "index.js",
   "types": "index.d.ts",
+  "files": [
+    "generator",
+    "docs",
+    "index.js",
+    "index.d.ts",
+    "config.js",
+    "setup.js"
+  ],
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
