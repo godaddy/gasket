@@ -2,9 +2,13 @@
   "name": "@gasket/redux",
   "version": "6.14.0",
   "description": "Gasket Redux Configuration",
-  "main": "./lib",
-  "browser": "./lib",
-  "module": "./src",
+  "main": "lib",
+  "browser": "lib",
+  "module": "src",
+  "files": [
+    "lib",
+    "src"
+  ],
   "scripts": {
     "lint": "eslint src __mocks__",
     "lint:fix": "npm run lint -- --fix",
