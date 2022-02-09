@@ -2,10 +2,10 @@
   "name": "@gasket/plugin-mocha",
   "version": "6.16.0",
   "description": "Integrates mocha based testing in to your Gasket application",
-  "main": "index.js",
+  "main": "lib",
   "files": [
     "generator",
-    "index.js"
+    "lib"
   ],
   "scripts": {
     "lint": "eslint .",

@@ -1,6 +1,6 @@
 const path = require('path');
 const url = require('url');
-const { name, devDependencies } = require('./package');
+const { name, devDependencies } = require('../package');
 const { createConfig } = require('./config');
 const { pluginIdentifier } = require('@gasket/resolve');
 

@@ -1,5 +1,5 @@
 /* eslint require-atomic-updates: warn */
-const { name, dependencies } = require('./package');
+const { name, dependencies } = require('../package');
 
 /**
  * Expose the plugin hooks, listen to the `init` and `destroy` events.

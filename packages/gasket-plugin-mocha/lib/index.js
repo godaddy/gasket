@@ -1,7 +1,7 @@
-const { devDependencies } = require('./package.json');
+const { devDependencies, name } = require('../package.json');
 
 module.exports = {
-  name: require('./package').name,
+  name,
   hooks: {
     create: {
       timing: {
