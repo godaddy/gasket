@@ -1,4 +1,4 @@
-const { name, devDependencies } = require('./package');
+const { name, devDependencies } = require('../package');
 
 /**
 * Creates the webpack config

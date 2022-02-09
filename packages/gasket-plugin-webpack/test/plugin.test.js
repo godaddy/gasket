@@ -4,7 +4,7 @@ const { stub } = require('sinon');
 const assume = require('assume');
 const webpack = require('webpack');
 const webpackMerge = require('webpack-merge');
-const plugin = require('../index');
+const plugin = require('../lib/index');
 const { devDependencies } = require('../package');
 
 const baseWebpackConfig = {

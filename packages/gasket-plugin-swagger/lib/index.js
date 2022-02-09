@@ -38,7 +38,7 @@ async function loadSwaggerSpec(root, definitionFile, logger) {
 }
 
 module.exports = {
-  name: require('./package').name,
+  name: require('../package').name,
   hooks: {
     /**
      * Configure swagger plugin defaults

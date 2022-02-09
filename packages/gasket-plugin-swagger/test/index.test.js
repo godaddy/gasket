@@ -18,7 +18,7 @@ describe('Swagger Plugin', function () {
     oKStub = sinon.stub();
     accessStub = sinon.stub().resolves();
 
-    plugin = proxyquire('../index', {
+    plugin = proxyquire('../lib/index', {
       'fs': {
         constants: {
           F_OK: oKStub
