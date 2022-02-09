@@ -1,8 +1,8 @@
 const debug = require('diagnostics')('gasket:fastify');
-const { peerDependencies } = require('./package.json');
+const { peerDependencies, name } = require('../package.json');
 
 module.exports = {
-  name: require('./package').name,
+  name,
   hooks: {
     /**
     * Add files & extend package.json for new apps.

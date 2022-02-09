@@ -1,7 +1,7 @@
-const { devDependencies } = require('./package.json');
+const { devDependencies, name } = require('../package.json');
 
 module.exports = {
-  name: require('./package').name,
+  name,
   hooks: {
     create: {
       timing: {
@@ -18,8 +18,8 @@ module.exports = {
 
         if (isReactProject) {
           files.add(
-            path.join(__dirname, 'generator', '*'),
-            path.join(__dirname, 'generator', '**', '*')
+            path.join(__dirname, '..', 'generator', '*'),
+            path.join(__dirname, '..', 'generator', '**', '*')
           );
 
           pkg.add('devDependencies', {

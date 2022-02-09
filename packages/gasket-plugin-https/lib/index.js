@@ -130,7 +130,7 @@ async function start(gasket) {
 }
 
 module.exports = {
-  name: require('./package').name,
+  name: require('../package').name,
   hooks: {
     start,
     metadata(gasket, meta) {

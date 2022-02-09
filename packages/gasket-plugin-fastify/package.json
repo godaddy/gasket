@@ -2,11 +2,10 @@
   "name": "@gasket/plugin-fastify",
   "version": "6.15.2",
   "description": "Adds fastify support to your application",
-  "main": "index.js",
-  "types": "index.d.ts",
+  "main": "lib",
+  "types": "lib/index.d.ts",
   "files": [
-    "index.js",
-    "index.d.ts"
+    "lib"
   ],
   "scripts": {
     "lint": "eslint .",

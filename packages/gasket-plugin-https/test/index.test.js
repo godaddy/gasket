@@ -11,7 +11,7 @@ const HealthCheckError = sinon.spy();
 const createTerminus = sinon.spy();
 const debugStub = sinon.spy();
 
-const plugin = proxyquire('../', {
+const plugin = proxyquire('../lib/', {
   'create-servers': createServersModule,
   'diagnostics': sinon.stub().returns(debugStub),
   '@godaddy/terminus': {

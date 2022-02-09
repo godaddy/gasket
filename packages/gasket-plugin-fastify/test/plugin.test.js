@@ -20,7 +20,7 @@ const cookieParser = sinon.stub().returns(cookieParserMiddleware);
 const compressionMiddleware = sinon.spy();
 const compression = sinon.stub().returns(compressionMiddleware);
 
-const plugin = proxyquire('../index', {
+const plugin = proxyquire('../lib/index', {
   fastify,
   'cookie-parser': cookieParser,
   'compression': compression
