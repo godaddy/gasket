@@ -67,7 +67,7 @@ async function init(gasket) {
  * @public
  */
 module.exports = {
-  name: require('./package').name,
+  name: require('../package').name,
   hooks: {
     init,
     metadata(gasket, meta) {
