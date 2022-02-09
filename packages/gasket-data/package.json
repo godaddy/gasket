@@ -2,9 +2,9 @@
   "name": "@gasket/data",
   "version": "6.14.0",
   "description": "Helper package for accessing embedded Gasket Data in the browser",
-  "main": "index.js",
+  "main": "lib",
   "files": [
-    "index.js"
+    "lib"
   ],
   "scripts": {
     "lint": "eslint .",

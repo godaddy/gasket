@@ -2,12 +2,12 @@
   "name": "create-gasket-app",
   "version": "6.15.2",
   "description": "starter pack for creating a gasket app",
-  "main": "index.js",
+  "main": "lib",
   "bin": {
-    "create-gasket-app": "./index.js"
+    "create-gasket-app": "./lib/index.js"
   },
   "files": [
-    "index.js"
+    "lib"
   ],
   "scripts": {
     "lint": "eslint .",

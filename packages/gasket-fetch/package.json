@@ -2,11 +2,10 @@
   "name": "@gasket/fetch",
   "version": "6.14.0",
   "description": "Gasket Fetch API",
-  "main": "node.js",
-  "browser": "browser.js",
+  "main": "lib/node.js",
+  "browser": "lib/browser.js",
   "files": [
-    "browser.js",
-    "node.js"
+    "lib"
   ],
   "scripts": {
     "lint": "eslint .",

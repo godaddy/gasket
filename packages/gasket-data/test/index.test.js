@@ -5,7 +5,7 @@ describe('GasketData', function () {
   let getElementByIdStub;
 
   const getData = () => {
-    return require('../index');
+    return require('../lib/index');
   };
 
   beforeEach(function () {
@@ -13,7 +13,7 @@ describe('GasketData', function () {
   });
 
   afterEach(function () {
-    delete require.cache[require.resolve('../index')];
+    delete require.cache[require.resolve('../lib/index')];
     sinon.restore();
   });
 
