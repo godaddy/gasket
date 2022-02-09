@@ -1,5 +1,5 @@
 const debug = require('diagnostics')('gasket:express');
-const { name, devDependencies } = require('./package');
+const { name, devDependencies } = require('../package');
 const glob = require('glob');
 const path = require('path');
 

@@ -4,7 +4,7 @@ const fs = require('fs');
 const write = fs.promises.writeFile;
 
 module.exports = {
-  name: require('./package.json').name,
+  name: require('../package.json').name,
   hooks: {
     async docsGenerate(gasket, docsConfigSet) {
       const { docsRoot } = docsConfigSet;

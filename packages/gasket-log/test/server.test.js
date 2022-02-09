@@ -3,7 +3,7 @@ const { describe, it } = require('mocha');
 const { SPLAT } = require('triple-beam');
 const assume = require('assume');
 const sinon = require('sinon');
-const Log = require('../server');
+const Log = require('../src/server');
 
 /**
  * Simple helper to check finished state of the stream

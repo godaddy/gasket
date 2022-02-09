@@ -2,13 +2,12 @@
   "name": "@gasket/plugin-express",
   "version": "6.15.2",
   "description": "Adds express support to your application",
-  "main": "index.js",
-  "types": "index.d.ts",
+  "main": "lib",
+  "types": "lib/index.d.ts",
   "files": [
     "generator",
     "docs",
-    "index.js",
-    "index.d.ts"
+    "lib"
   ],
   "scripts": {
     "lint": "eslint .",

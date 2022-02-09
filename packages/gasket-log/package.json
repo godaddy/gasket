@@ -2,21 +2,20 @@
   "name": "@gasket/log",
   "version": "6.14.0",
   "description": "Gasket client and server logger",
-  "main": "server.js",
+  "main": "src/server.js",
   "browser": "lib/client.js",
-  "module": "client.js",
+  "module": "src/client.js",
   "files": [
-    "client.js",
-    "server.js",
-    "lib"
+    "lib",
+    "src"
   ],
   "scripts": {
-    "lint": "eslint *.js test/*.js",
+    "lint": "eslint src/*.js test/*.js",
     "lint:fix": "npm run lint -- --fix",
     "test": "npm run test:client && npm run test:server",
     "test:coverage": "nyc --reporter=text --reporter=json-summary npm run test",
     "posttest": "npm run lint",
-    "build": "babel ./client.js -d lib",
+    "build": "babel ./src/client.js -d lib",
     "prepublishOnly": "npm run build",
     "test:client": "DEBUG=gasket:* mocha --require @babel/register test/client.test.js",
     "test:server": "mocha test/server.test.js"
