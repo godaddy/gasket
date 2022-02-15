@@ -37,12 +37,16 @@ module.exports = {
       }
     },
     preboot: {
-      handler: async ({ config }) => {
+      handler: async (gasket) => {
         require('elastic-apm-node')
           .start({
-            ...config.elasticAPM
+            ...gasket.config.elasticAPM
           })
-          .addFilter(filterSensitiveCookies(config));
+          .addFilter(filterSensitiveCookies(gasket.config));
+        gasket.apm = {
+          setTransactionPath: (path) => console.log('setting path:', path),
+          captureError: (err) => console.log('logging error:', err),
+        };
       }
     }
   }
