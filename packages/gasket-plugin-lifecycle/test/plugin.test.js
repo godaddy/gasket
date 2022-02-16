@@ -2,7 +2,7 @@ const path = require('path');
 const { describe, it } = require('mocha');
 const assume = require('assume');
 const PluginEngine = require('@gasket/engine');
-const plugin = require('../');
+const plugin = require('../lib/');
 const proxy = require('./proxy');
 
 describe('Plugin', function () {

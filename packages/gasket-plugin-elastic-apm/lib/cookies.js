@@ -5,7 +5,7 @@
  * @param {*} config the Gasket config object
  * @returns {string[]} an array of cookie names
  */
- const sensitiveCookies = (config) => {
+const sensitiveCookies = (config) => {
   if (
     typeof config.elasticAPM === 'undefined' ||
     typeof config.elasticAPM.sensitiveCookies === 'undefined'
@@ -23,7 +23,7 @@
  * @param {object} payload The APM payload
  * @returns {object} a modified version of the incoming APM payload
  */
- const filterSensitiveCookies = (config) => (payload) => {
+const filterSensitiveCookies = (config) => (payload) => {
   if (
     payload.context &&
     payload.context.request &&

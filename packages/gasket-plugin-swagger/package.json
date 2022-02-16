@@ -2,10 +2,13 @@
   "name": "@gasket/plugin-swagger",
   "version": "6.15.2",
   "description": "Generate and serve swagger docs",
-  "main": "index.js",
-  "types": "index.d.ts",
+  "main": "lib",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
   "scripts": {
-    "lint": "eslint --ext .js .",
+    "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "test": "npm run test:runner",
     "test:runner": "mocha --require setup-env --recursive \"test/**/*.*(test|spec).js\"",

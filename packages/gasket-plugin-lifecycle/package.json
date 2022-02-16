@@ -2,9 +2,12 @@
   "name": "@gasket/plugin-lifecycle",
   "version": "6.15.2",
   "description": "Allows a gasket/ directory to be used for lifecycle hooks in applications.",
-  "main": "index.js",
+  "main": "lib",
+  "files": [
+    "lib"
+  ],
   "scripts": {
-    "lint": "eslint *.js test/*.js",
+    "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "test": "npm run test:runner",
     "test:runner": "mocha test/plugin.test.js",

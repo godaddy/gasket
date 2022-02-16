@@ -2,8 +2,11 @@
   "name": "@gasket/fetch",
   "version": "6.14.0",
   "description": "Gasket Fetch API",
-  "main": "./node.js",
-  "browser": "./browser.js",
+  "main": "lib/node.js",
+  "browser": "lib/browser.js",
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
@@ -72,9 +75,6 @@
       "unicorn/filename-case": "error"
     }
   },
-  "eslintIgnore": [
-    "coverage"
-  ],
   "babel": {
     "presets": [
       "@babel/preset-env"

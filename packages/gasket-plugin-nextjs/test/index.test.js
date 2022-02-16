@@ -9,7 +9,7 @@ const { devDependencies } = require('../package');
 const { spy, stub } = sinon;
 
 describe('Plugin', function () {
-  const plugin = require('../');
+  const plugin = require('../lib/');
 
   it('is an object', () => {
     assume(plugin).is.an('object');
@@ -38,7 +38,7 @@ describe('Plugin', function () {
 });
 
 describe('configure hook', () => {
-  const configureHook = require('../').hooks.configure.handler;
+  const configureHook = require('../lib/').hooks.configure.handler;
 
   it('adds the sw webpackRegister callback', () => {
     const gasket = mockGasketApi();
@@ -91,7 +91,7 @@ describe('express hook', () => {
     };
     next = stub().returns(nextHandler);
 
-    plugin = proxyquire('../', { next });
+    plugin = proxyquire('../lib/', { next });
     hook = plugin.hooks.express.handler;
   });
 
@@ -175,8 +175,8 @@ describe('express hook', () => {
 
 describe('create hook', () => {
   let mockContext;
-  const plugin = require('../');
-  const root = path.join(__dirname, '..');
+  const plugin = require('../lib/');
+  const root = path.join(__dirname, '..', 'lib');
 
   beforeEach(() => {
 
@@ -273,7 +273,7 @@ describe('build hook', () => {
     createConfigStub = stub();
     builderStub = stub();
 
-    return proxyquire('../', {
+    return proxyquire('../lib/', {
       './config': {
         createConfig: createConfigStub
       },
@@ -309,7 +309,7 @@ describe('workbox hook', () => {
 
   beforeEach(() => {
     gasketAPI = mockGasketApi();
-    plugin = require('../');
+    plugin = require('../lib/');
   });
 
   it('returns workbox config partial', async () => {

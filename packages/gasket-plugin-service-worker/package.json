@@ -4,6 +4,9 @@
   "description": "Gasket Service Worker Plugin",
   "main": "lib",
   "types": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
@@ -66,7 +69,6 @@
   },
   "eslintIgnore": [
     "*.template.js",
-    "coverage",
     "__mocks__"
   ]
 }

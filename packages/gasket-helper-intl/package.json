@@ -4,6 +4,10 @@
   "description": "Internal helpers used by loaders to resolve locale file paths",
   "main": "lib/server.js",
   "browser": "lib/index.js",
+  "files": [
+    "lib",
+    "docs"
+  ],
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
@@ -65,8 +69,5 @@
     "rules": {
       "unicorn/filename-case": "error"
     }
-  },
-  "eslintIgnore": [
-    "coverage"
-  ]
+  }
 }

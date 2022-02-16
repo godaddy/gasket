@@ -1,5 +1,5 @@
 const self = require('../package.json');
-const plugin = require('../index.js');
+const plugin = require('../lib/index.js');
 const config = require('../generator/jest.config.js');
 const path = require('path');
 

@@ -4,8 +4,11 @@
   "description": "Adds commands for building and starting Gasket apps",
   "main": "lib",
   "types": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
   "scripts": {
-    "lint": "eslint lib test",
+    "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "test": "npm run test:runner",
     "test:runner": "mocha test/*.test.js --require test/setup.js",

@@ -2,9 +2,13 @@
   "name": "@gasket/plugin-mocha",
   "version": "6.16.0",
   "description": "Integrates mocha based testing in to your Gasket application",
-  "main": "index.js",
+  "main": "lib",
+  "files": [
+    "generator",
+    "lib"
+  ],
   "scripts": {
-    "lint": "eslint index.js \"{test,generator}/**/*.js\"",
+    "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "test": "npm run test:runner",
     "test:runner": "mocha --require setup-env --recursive \"test/**/*.*(test|spec).js\"",

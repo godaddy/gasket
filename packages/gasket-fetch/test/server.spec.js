@@ -1,6 +1,6 @@
 const { describe, it } = require('mocha');
 
-const fetch = require('../node');
+const fetch = require('../lib/node');
 import { assertExports, assertGet, assertAbort, assertPost } from './utils';
 
 const { AbortController, Request, Headers, Response } = fetch;

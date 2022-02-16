@@ -10,7 +10,7 @@ const mockAPM = {
 
 jest.mock('elastic-apm-node', () => mockAPM);
 const apm = require('elastic-apm-node');
-const plugin = require('../index');
+const plugin = require('../lib/index');
 
 describe('Plugin', () => {
   it('exposes a configure lifecycle hook', () => {

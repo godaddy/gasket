@@ -4,6 +4,10 @@
   "description": "NodeJS script to build localization files.",
   "main": "lib",
   "types": "lib/index.d.ts",
+  "files": [
+    "generator",
+    "lib"
+  ],
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
@@ -76,8 +80,5 @@
     "rules": {
       "unicorn/filename-case": "error"
     }
-  },
-  "eslintIgnore": [
-    "coverage"
-  ]
+  }
 }

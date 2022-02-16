@@ -4,8 +4,11 @@
   "description": "Plugin engine for gasket",
   "main": "lib/engine.js",
   "types": "lib/engine.d.ts",
+  "files": [
+    "lib"
+  ],
   "scripts": {
-    "lint": "eslint lib test",
+    "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
     "test:watch": "jest --watch",
