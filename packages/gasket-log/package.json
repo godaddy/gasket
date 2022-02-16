@@ -10,7 +10,7 @@
     "src"
   ],
   "scripts": {
-    "lint": "eslint src/*.js test/*.js",
+    "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "test": "npm run test:client && npm run test:server",
     "test:coverage": "nyc --reporter=text --reporter=json-summary npm run test",
@@ -80,6 +80,10 @@
       "strict": 0
     }
   },
+  "eslintIgnore": [
+    "lib",
+    "coverage"
+  ],
   "babel": {
     "plugins": [
       "@babel/plugin-proposal-class-properties"
