@@ -43,10 +43,6 @@ module.exports = {
             ...gasket.config.elasticAPM
           })
           .addFilter(filterSensitiveCookies(gasket.config));
-        gasket.apm = {
-          setTransactionPath: (path) => console.log('setting path:', path),
-          captureError: (err) => console.log('logging error:', err),
-        };
       }
     }
   }
