@@ -1,4 +1,4 @@
-const promptHook = require('./prompt');
+const promptHook = require('../lib/prompt');
 
 describe('promptHook', () => {
   let mockGasket, mockCreateContext;

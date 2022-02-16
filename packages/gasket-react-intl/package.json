@@ -100,8 +100,7 @@
     }
   },
   "eslintIgnore": [
-    "lib",
-    "coverage"
+    "lib"
   ],
   "babel": {
     "presets": [

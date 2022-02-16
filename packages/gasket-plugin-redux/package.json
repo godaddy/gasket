@@ -6,8 +6,7 @@
   "types": "lib/index.d.ts",
   "files": [
     "generator",
-    "lib",
-    "!*.spec.js"
+    "lib"
   ],
   "scripts": {
     "lint": "eslint .",
@@ -75,7 +74,6 @@
     }
   },
   "eslintIgnore": [
-    "coverage",
     "generator/redux/store.js"
   ]
 }

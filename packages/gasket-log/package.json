@@ -81,8 +81,7 @@
     }
   },
   "eslintIgnore": [
-    "lib",
-    "coverage"
+    "lib"
   ],
   "babel": {
     "plugins": [

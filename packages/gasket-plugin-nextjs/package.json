@@ -89,7 +89,6 @@
     }
   },
   "eslintIgnore": [
-    "coverage",
     "generator/redux/redux/store.js",
     "generator/app/pages/_app.js",
     "*.d.ts"

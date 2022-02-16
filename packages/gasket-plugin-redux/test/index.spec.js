@@ -1,4 +1,4 @@
-const plugin = require('./index');
+const plugin = require('../lib/index');
 
 const rootPath = process.cwd();
 const mockReduxConfig = { makeStore: './path/to/some-file.js' };
@@ -67,8 +67,8 @@ describe('Plugin', () => {
 
       await plugin.hooks.create({}, spy);
       expect(spy.files.add).toHaveBeenCalledWith(
-        `${ __dirname }/../generator/*`,
-        `${ __dirname }/../generator/**/*`
+        `${ process.cwd() }/lib/../generator/*`,
+        `${ process.cwd() }/lib/../generator/**/*`
       );
     });
   });

@@ -1,6 +1,6 @@
 /* eslint-disable no-process-env */
 const fs = require('fs');
-const configureHook = require('./configure');
+const configureHook = require('../lib/configure');
 const rootPath = process.cwd();
 const mockReduxOtherConfig = { test: 'test setting' };
 const mockReduxConfig = { makeStore: './path/to/some-file.js' };

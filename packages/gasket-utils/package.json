@@ -71,7 +71,6 @@
     }
   },
   "eslintIgnore": [
-    "coverage",
     "test/fixtures"
   ]
 }

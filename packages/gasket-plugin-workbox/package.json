@@ -65,7 +65,6 @@
     }
   },
   "eslintIgnore": [
-    "coverage",
     "__mocks__"
   ]
 }

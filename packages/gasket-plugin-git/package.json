@@ -63,8 +63,5 @@
     "rules": {
       "unicorn/filename-case": "error"
     }
-  },
-  "eslintIgnore": [
-    "coverage"
-  ]
+  }
 }

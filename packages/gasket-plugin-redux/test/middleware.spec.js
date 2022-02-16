@@ -1,4 +1,4 @@
-const configureMiddleware = require('./middleware');
+const configureMiddleware = require('../lib/middleware');
 
 const customMakeStore = require('custom-make-store');
 

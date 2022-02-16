@@ -69,7 +69,6 @@
   },
   "eslintIgnore": [
     "*.template.js",
-    "coverage",
     "__mocks__"
   ]
 }
