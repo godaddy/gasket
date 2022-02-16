@@ -4,8 +4,12 @@
   "description": "Centralize doc files from plugins and modules",
   "main": "lib",
   "types": "lib/index.d.ts",
+  "files": [
+    "lib",
+    "docs"
+  ],
   "scripts": {
-    "lint": "eslint lib test",
+    "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "test": "npm run test:runner",
     "test:runner": "mocha --recursive --require test/setup.js test",

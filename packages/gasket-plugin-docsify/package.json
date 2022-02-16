@@ -4,8 +4,12 @@
   "description": "View collated docs with Docsify",
   "main": "lib",
   "types": "lib/index.d.ts",
+  "files": [
+    "generator",
+    "lib"
+  ],
   "scripts": {
-    "lint": "eslint lib test",
+    "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "test": "npm run test:runner",
     "test:runner": "mocha test/*.test.js --require test/setup.js",
@@ -68,5 +72,8 @@
     "rules": {
       "unicorn/filename-case": "error"
     }
-  }
+  },
+  "eslintIgnore": [
+    "generator/scripts"
+  ]
 }

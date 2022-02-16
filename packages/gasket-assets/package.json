@@ -3,6 +3,10 @@
   "version": "6.15.1",
   "description": "Gasket assets",
   "main": "react",
+  "files": [
+    "react",
+    "svgs"
+  ],
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
@@ -62,7 +66,6 @@
     }
   },
   "eslintIgnore": [
-    "coverage",
     "react"
   ]
 }

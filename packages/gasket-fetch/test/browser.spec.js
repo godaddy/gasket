@@ -1,6 +1,6 @@
 import { describe, it } from 'mocha';
 
-import fetch from '../browser';
+import fetch from '../lib/browser';
 const { AbortController, Request, Headers, Response } = fetch;
 import { assertExports, assertGet, assertAbort, assertPost } from './utils';
 

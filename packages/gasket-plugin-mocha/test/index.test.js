@@ -2,7 +2,7 @@ import { describe, it } from 'mocha';
 import self from '../package.json';
 import chai, { expect } from 'chai';
 import spies from 'chai-spies';
-import plugin from '../';
+import plugin from '../lib/';
 const sinon = require('sinon');
 
 chai.use(spies);

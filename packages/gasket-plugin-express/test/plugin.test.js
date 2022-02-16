@@ -14,7 +14,7 @@ const cookieParser = sinon.stub().returns(cookieParserMiddleware);
 const compressionMiddleware = sinon.spy();
 const compression = sinon.stub().returns(compressionMiddleware);
 
-const plugin = proxyquire('../index', {
+const plugin = proxyquire('../lib/index', {
   express,
   'http2-express-bridge': expressBridge,
   'cookie-parser': cookieParser,

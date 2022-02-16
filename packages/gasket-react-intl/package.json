@@ -2,9 +2,14 @@
   "name": "@gasket/react-intl",
   "version": "6.14.0",
   "description": "React component library to enable localization for gasket apps.",
-  "main": "./lib",
-  "browser": "./lib",
-  "module": "./src",
+  "main": "lib",
+  "browser": "lib",
+  "module": "src",
+  "files": [
+    "lib",
+    "src",
+    "next.js"
+  ],
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
@@ -95,8 +100,7 @@
     }
   },
   "eslintIgnore": [
-    "lib",
-    "coverage"
+    "lib"
   ],
   "babel": {
     "presets": [

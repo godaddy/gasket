@@ -2,10 +2,13 @@
   "name": "@gasket/plugin-fastify",
   "version": "6.15.2",
   "description": "Adds fastify support to your application",
-  "main": "index.js",
-  "types": "index.d.ts",
+  "main": "lib",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
   "scripts": {
-    "lint": "eslint index.js test",
+    "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "test": "npm run test:runner",
     "test:runner": "mocha test/*.test.js --require test/setup.js",

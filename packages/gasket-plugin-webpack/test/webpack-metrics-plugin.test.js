@@ -2,7 +2,7 @@ const assume = require('assume');
 const sinon = require('sinon');
 const mock = require('mock-require');
 
-const WebpackMetricsPlugin = require('../webpack-metrics-plugin');
+const WebpackMetricsPlugin = require('../lib/webpack-metrics-plugin');
 
 describe('webpack metrics plugin', function () {
   let metricsPlugin;

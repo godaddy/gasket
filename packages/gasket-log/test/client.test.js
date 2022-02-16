@@ -1,6 +1,6 @@
 import { describe, it } from 'mocha';
 import { config } from 'winston';
-import Log from '../client';
+import Log from '../src/client';
 import assume from 'assume';
 import sinon from 'sinon';
 

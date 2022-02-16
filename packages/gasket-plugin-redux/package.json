@@ -4,6 +4,10 @@
   "description": "Gasket Redux Setup",
   "main": "lib",
   "types": "lib/index.d.ts",
+  "files": [
+    "generator",
+    "lib"
+  ],
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
@@ -70,7 +74,6 @@
     }
   },
   "eslintIgnore": [
-    "coverage",
     "generator/redux/store.js"
   ]
 }

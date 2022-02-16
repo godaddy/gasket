@@ -2,11 +2,15 @@
   "name": "@gasket/redux",
   "version": "6.14.0",
   "description": "Gasket Redux Configuration",
-  "main": "./lib",
-  "browser": "./lib",
-  "module": "./src",
+  "main": "lib",
+  "browser": "lib",
+  "module": "src",
+  "files": [
+    "lib",
+    "src"
+  ],
   "scripts": {
-    "lint": "eslint src __mocks__",
+    "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "test": "jest",
     "test:watch": "jest --watchAll",
@@ -75,6 +79,9 @@
       "unicorn/filename-case": "error"
     }
   },
+  "eslintIgnore": [
+    "lib"
+  ],
   "babel": {
     "presets": [
       "@babel/preset-env"
