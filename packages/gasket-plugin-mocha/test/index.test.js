@@ -8,14 +8,15 @@ const sinon = require('sinon');
 chai.use(spies);
 
 describe('Plugin', () => {
-  let spyFunc;
+  let spyFunc, filesAddStub;
 
   async function create() {
     const pkg = {};
+    filesAddStub = sinon.stub();
 
     await plugin.hooks.create.handler({}, {
       files: {
-        add: sinon.stub()
+        add: filesAddStub
       },
       pkg: {
         add: (key, value) => {
@@ -37,7 +38,7 @@ describe('Plugin', () => {
 
     await plugin.hooks.create.handler({}, {
       files: {
-        add: sinon.stub()
+        add: filesAddStub
       },
       pkg: {
         add: (key, value) => {
@@ -123,6 +124,14 @@ describe('Plugin', () => {
   });
 
   describe('dependencies - react', function () {
+    it('includes a glob for generator contents', async function () {
+      await createReact();
+
+      const [firstCall, secondCall] = filesAddStub.args[0];
+      expect(firstCall).includes('/../generator/*');
+      expect(secondCall).includes('/../generator/**/*');
+    });
+
     [
       'global-jsdom',
       '@testing-library/react',

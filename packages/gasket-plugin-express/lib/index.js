@@ -15,12 +15,14 @@ module.exports = {
      * @public
      */
     create: async function create(gasket, context) {
+      const generatorDir = `${ __dirname }/../generator`;
+
       context.pkg.add('dependencies', {
         express: devDependencies.express
       });
 
       if (context.apiApp) {
-        context.files.add(`${ __dirname }/generator/**/*`);
+        context.files.add(`${ generatorDir }/**/*`);
 
         context.gasketConfig.add('express', {
           routes: './routes/*'
