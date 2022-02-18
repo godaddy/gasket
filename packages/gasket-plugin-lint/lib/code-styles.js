@@ -28,6 +28,7 @@ const godaddy = {
     const hasFlow = pkg.has('devDependencies', 'flow-bin');
     const hasReact = pkg.has('dependencies', 'react');
     const hasReactIntl = pkg.has('dependencies', 'react-intl');
+    const hasNext = pkg.has('dependencies', 'next');
 
     let configName = 'godaddy';
     if (hasReact && hasFlow) {
@@ -56,6 +57,8 @@ const godaddy = {
       pkg.add('devDependencies', (await gatherDevDeps(stylelintName)));
       pkg.add('stylelint', { extends: [stylelintName] });
     }
+
+    if (hasNext) pkg.add('eslintConfig', { extends: 'next' });
   }
 };
 
@@ -70,6 +73,7 @@ const standard = {
   create: async (context, utils) => {
     const { pkg } = context;
     const { gatherDevDeps } = utils;
+    const hasNext = pkg.has('dependencies', 'next');
 
     const devDeps = await Promise.all([
       gatherDevDeps('standard'),
@@ -90,6 +94,8 @@ const standard = {
     }
 
     pkg.add('standard', { ignore: ['build/'] });
+
+    if (hasNext) pkg.add('eslintConfig', { extends: 'next' });
   }
 };
 
@@ -107,6 +113,7 @@ const airbnb = {
     const { gatherDevDeps } = utils;
 
     const hasReact = pkg.has('dependencies', 'react');
+    const hasNext = pkg.has('dependencies', 'next');
 
     let configName = 'airbnb-base';
     if (hasReact) configName = 'airbnb';
@@ -119,6 +126,8 @@ const airbnb = {
       pkg.add('devDependencies', (await gatherDevDeps(stylelintName)));
       pkg.add('stylelint', { extends: [stylelintName] });
     }
+
+    if (hasNext) pkg.add('eslintConfig', { extends: 'next' });
   }
 };
 
@@ -136,8 +145,12 @@ const other = {
 
     if (eslintConfig) {
       const identifier = eslintConfigIdentifier(eslintConfig);
+      const hasNext = pkg.has('dependencies', 'next');
+
       pkg.add('devDependencies', (await gatherDevDeps(identifier.full)));
       pkg.add('eslintConfig', { extends: [identifier.shortName] });
+
+      if (hasNext) pkg.add('eslintConfig', { extends: 'next' });
     }
 
     if (stylelintConfig) {
@@ -214,6 +227,8 @@ const common = {
           }
         });
       }
+
+      if (hasNext) pkg.add('eslintConfig', { extends: 'next' });
     }
 
     //
