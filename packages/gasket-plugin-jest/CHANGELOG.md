@@ -1,5 +1,9 @@
 # `@gasket/plugin-jest`
 
+### 6.17.1
+
+- Update glob path from `__dirname` ([#337])
+
 ### 6.16.0
 
 - Updates to support not generating a .babelrc file when creating new apps ([#334])
@@ -45,3 +49,4 @@
 [#247]: https://github.com/godaddy/gasket/pull/247
 [#324]: https://github.com/godaddy/gasket/pull/324
 [#334]: https://github.com/godaddy/gasket/pull/334
+[#337]: https://github.com/godaddy/gasket/pull/337

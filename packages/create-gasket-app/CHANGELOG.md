@@ -1,5 +1,9 @@
 # `create-gasket-app`
 
+### 6.17.1
+
+- Update relative path from `__dirname` ([#337])
+
 ### 6.0.0
 
 - Version alignment
@@ -17,3 +21,4 @@
 [#167]: https://github.com/godaddy/gasket/pull/167
 [#171]: https://github.com/godaddy/gasket/pull/171
 [#247]: https://github.com/godaddy/gasket/pull/247
+[#337]: https://github.com/godaddy/gasket/pull/337
