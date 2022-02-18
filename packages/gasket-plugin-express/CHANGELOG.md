@@ -1,5 +1,9 @@
 # `@gasket/plugin-express`
 
+### 6.17.1
+
+- Update glob path from `__dirname` ([#337])
+
 ### 6.10.0
 
 - TypeScript definitions for config & lifecycles ([#311])
@@ -46,3 +50,4 @@
 [#255]: https://github.com/godaddy/gasket/pull/255
 [#287]: https://github.com/godaddy/gasket/pull/287
 [#311]: https://github.com/godaddy/gasket/pull/311
+[#337]: https://github.com/godaddy/gasket/pull/337

@@ -1,5 +1,9 @@
 # `@gasket/plugin-redux`
 
+### 6.17.1
+
+- Align glob path pattern ([#337])
+
 ### 6.10.0
 
 - TypeScript definitions for config & lifecycles ([#311])
@@ -58,3 +62,4 @@
 [#173]: https://github.com/godaddy/gasket/pull/173
 [#243]: https://github.com/godaddy/gasket/pull/243
 [#311]: https://github.com/godaddy/gasket/pull/311
+[#337]: https://github.com/godaddy/gasket/pull/337
