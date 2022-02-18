@@ -17,7 +17,7 @@
     "test:watch": "npm run test:runner -- --watch",
     "test:coverage": "nyc --reporter=text --reporter=json-summary npm run test:runner",
     "posttest": "npm run lint",
-    "build": "babel src -d lib",
+    "build": "babel src -d lib --delete-dir-on-start",
     "prepublishOnly": "npm run build"
   },
   "repository": {
