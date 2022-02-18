@@ -205,9 +205,9 @@ describe('create hook', () => {
     await plugin.hooks.create.handler({}, mockContext);
 
     assume(mockContext.files.add).calledWith(
-      `${root}/generator/app/.*`,
-      `${root}/generator/app/*`,
-      `${root}/generator/app/**/*`
+      `${root}/../generator/app/.*`,
+      `${root}/../generator/app/*`,
+      `${root}/../generator/app/**/*`
     );
   });
 
@@ -216,8 +216,8 @@ describe('create hook', () => {
     await plugin.hooks.create.handler({}, mockContext);
 
     assume(mockContext.files.add).calledWith(
-      `${root}/generator/mocha/*`,
-      `${root}/generator/mocha/**/*`
+      `${root}/../generator/mocha/*`,
+      `${root}/../generator/mocha/**/*`
     );
   });
 
@@ -226,8 +226,8 @@ describe('create hook', () => {
     await plugin.hooks.create.handler({}, mockContext);
 
     assume(mockContext.files.add).calledWith(
-      `${root}/generator/jest/*`,
-      `${root}/generator/jest/**/*`
+      `${root}/../generator/jest/*`,
+      `${root}/../generator/jest/**/*`
     );
   });
 
@@ -249,8 +249,8 @@ describe('create hook', () => {
     await plugin.hooks.create.handler({}, mockContext);
 
     assume(mockContext.files.add).calledWith(
-      `${root}/generator/redux/*`,
-      `${root}/generator/redux/**/*`
+      `${root}/../generator/redux/*`,
+      `${root}/../generator/redux/**/*`
     );
   });
 

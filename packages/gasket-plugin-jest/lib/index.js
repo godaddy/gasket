@@ -9,7 +9,7 @@ module.exports = {
         before: ['@gasket/plugin-lint']
       },
       handler: async function create(gasket, { files, pkg }) {
-        const path = require('path');
+        const generatorDir = `${ __dirname }/../generator`;
         const isReactProject = pkg.has('dependencies', 'react');
 
         pkg.add('devDependencies', {
@@ -18,8 +18,8 @@ module.exports = {
 
         if (isReactProject) {
           files.add(
-            path.join(__dirname, '..', 'generator', '*'),
-            path.join(__dirname, '..', 'generator', '**', '*')
+            `${generatorDir}/*`,
+            `${generatorDir}/**/*`
           );
 
           pkg.add('devDependencies', {

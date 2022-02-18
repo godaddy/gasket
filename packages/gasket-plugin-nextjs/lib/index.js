@@ -56,18 +56,19 @@ module.exports = {
        */
       handler: function create(gasket, context) {
         const { files, pkg, testPlugin } = context;
+        const generatorDir = `${ __dirname }/../generator`;
 
         files.add(
-          `${__dirname}/generator/app/.*`,
-          `${__dirname}/generator/app/*`,
-          `${__dirname}/generator/app/**/*`
+          `${ generatorDir }/app/.*`,
+          `${ generatorDir }/app/*`,
+          `${ generatorDir }/app/**/*`
         );
 
         ['jest', 'mocha'].forEach(tester => {
-          if (testPlugin && pluginIdentifier(testPlugin).longName === `@gasket/plugin-${tester}`) {
+          if (testPlugin && pluginIdentifier(testPlugin).longName === `@gasket/plugin-${ tester }`) {
             files.add(
-              `${__dirname}/generator/${tester}/*`,
-              `${__dirname}/generator/${tester}/**/*`
+              `${ generatorDir }/${ tester }/*`,
+              `${ generatorDir }/${ tester }/**/*`
             );
           }
         });
@@ -88,8 +89,8 @@ module.exports = {
           });
 
           files.add(
-            `${__dirname}/generator/redux/*`,
-            `${__dirname}/generator/redux/**/*`
+            `${ generatorDir }/redux/*`,
+            `${ generatorDir }/redux/**/*`
           );
         }
       }
@@ -154,11 +155,11 @@ module.exports = {
       return await builder(path.resolve('.'), await createConfig(gasket, true));
     },
     /**
-    * Workbox config partial to add next.js static assets to precache
-    *
-    * @param {Gasket} gasket The gasket API.
-    * @returns {Object} config
-    */
+     * Workbox config partial to add next.js static assets to precache
+     *
+     * @param {Gasket} gasket The gasket API.
+     * @returns {Object} config
+     */
     workbox: function (gasket) {
       const { nextConfig = {}, basePath: rootBasePath } = gasket.config;
       const assetPrefix = [nextConfig.assetPrefix, nextConfig.basePath, rootBasePath, ''].find(isDefined);
