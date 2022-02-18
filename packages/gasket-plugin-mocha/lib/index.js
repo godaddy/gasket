@@ -10,7 +10,7 @@ module.exports = {
       },
       handler: async function create(gasket, { files, pkg, packageManager = 'npm' }) {
         const runCmd = packageManager === 'npm' ? `npm run` : packageManager;
-        const path = require('path');
+        const generatorDir = `${ __dirname }/../generator`;
         const isReactProject = pkg.has('dependencies', 'react');
         const isNextProject = pkg.has('dependencies', 'next');
 
@@ -33,8 +33,8 @@ module.exports = {
 
         if (isReactProject) {
           files.add(
-            path.join(__dirname, 'generator', '*'),
-            path.join(__dirname, 'generator', '**', '*')
+            `${generatorDir}/*`,
+            `${generatorDir}/**/*`
           );
 
           pkg.add('devDependencies', {

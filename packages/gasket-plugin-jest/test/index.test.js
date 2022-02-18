@@ -1,7 +1,6 @@
 const self = require('../package.json');
 const plugin = require('../lib/index.js');
 const config = require('../generator/jest.config.js');
-const path = require('path');
 
 describe('Plugin', function () {
   async function create() {
@@ -87,7 +86,8 @@ describe('Plugin', function () {
     it('includes a glob for the `generator/jest.config.js` contents for react projects', async function () {
       const { files } = await createReact();
 
-      expect(files[1]).toEqual(path.join(__dirname, '..', 'generator', '**', '*'));
+      expect(files[0]).toContain('/../generator/*');
+      expect(files[1]).toContain('/../generator/**/*');
     });
 
     describe('adds react specific dependencies', function () {

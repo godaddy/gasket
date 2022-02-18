@@ -19,6 +19,7 @@ module.exports = {
     prompt,
     async create(gasket, context) {
       const { pkg, files } = context;
+      const generatorDir = `${ __dirname }/../generator`;
 
       pkg.add('dependencies', {
         '@gasket/redux': devDependencies['@gasket/redux'],
@@ -27,8 +28,8 @@ module.exports = {
       });
 
       files.add(
-        `${ __dirname }/../generator/*`,
-        `${ __dirname }/../generator/**/*`
+        `${ generatorDir }/*`,
+        `${ generatorDir }/**/*`
       );
 
       context.hasGasketRedux = true;
