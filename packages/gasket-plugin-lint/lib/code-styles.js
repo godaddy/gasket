@@ -1,6 +1,6 @@
 /* eslint-disable complexity,max-statements */
 const { eslintConfigIdentifier, stylelintConfigIdentifier } = require('./utils');
-
+const { devDependencies } = require('../package');
 
 /**
  *
@@ -10,7 +10,6 @@ const { eslintConfigIdentifier, stylelintConfigIdentifier } = require('./utils')
  * @property {function(context: CreateContext, utils: CodeStyleUtils)} create - Create steps for the code style
  * @property {boolean} [allowStylelint] - If should prompt for adding stylelint
  */
-
 
 /**
  * GoDaddy JavaScript Style
@@ -58,7 +57,10 @@ const godaddy = {
       pkg.add('stylelint', { extends: [stylelintName] });
     }
 
-    if (hasNext) pkg.add('eslintConfig', { extends: 'next' });
+    if (hasNext) {
+      pkg.add('devDependencies', devDependencies['eslint-config-next']);
+      pkg.add('eslintConfig', { extends: 'next' });
+    }
   }
 };
 
@@ -95,7 +97,10 @@ const standard = {
 
     pkg.add('standard', { ignore: ['build/'] });
 
-    if (hasNext) pkg.add('eslintConfig', { extends: 'next' });
+    if (hasNext) {
+      pkg.add('devDependencies', devDependencies['eslint-config-next']);
+      pkg.add('eslintConfig', { extends: 'next' });
+    }
   }
 };
 
@@ -127,7 +132,10 @@ const airbnb = {
       pkg.add('stylelint', { extends: [stylelintName] });
     }
 
-    if (hasNext) pkg.add('eslintConfig', { extends: 'next' });
+    if (hasNext) {
+      pkg.add('devDependencies', devDependencies['eslint-config-next']);
+      pkg.add('eslintConfig', { extends: 'next' });
+    }
   }
 };
 
@@ -150,7 +158,10 @@ const other = {
       pkg.add('devDependencies', (await gatherDevDeps(identifier.full)));
       pkg.add('eslintConfig', { extends: [identifier.shortName] });
 
-      if (hasNext) pkg.add('eslintConfig', { extends: 'next' });
+      if (hasNext) {
+        pkg.add('devDependencies', devDependencies['eslint-config-next']);
+        pkg.add('eslintConfig', { extends: 'next' });
+      }
     }
 
     if (stylelintConfig) {
@@ -228,7 +239,10 @@ const common = {
         });
       }
 
-      if (hasNext) pkg.add('eslintConfig', { extends: 'next' });
+      if (hasNext) {
+        pkg.add('devDependencies', devDependencies['eslint-config-next']);
+        pkg.add('eslintConfig', { extends: 'next' });
+      }
     }
 
     //
