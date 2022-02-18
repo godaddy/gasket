@@ -58,8 +58,10 @@ const godaddy = {
     }
 
     if (hasNext) {
-      pkg.add('devDependencies', devDependencies['eslint-config-next']);
-      pkg.add('eslintConfig', { extends: 'next' });
+      pkg.add('devDependencies', {
+        'eslint-config-next': devDependencies['eslint-config-next']
+      });
+      pkg.add('eslintConfig', { extends: ['next'] });
     }
   }
 };
@@ -98,8 +100,10 @@ const standard = {
     pkg.add('standard', { ignore: ['build/'] });
 
     if (hasNext) {
-      pkg.add('devDependencies', devDependencies['eslint-config-next']);
-      pkg.add('eslintConfig', { extends: 'next' });
+      pkg.add('devDependencies', {
+        'eslint-config-next': devDependencies['eslint-config-next']
+      });
+      pkg.add('eslintConfig', { extends: ['next'] });
     }
   }
 };
@@ -133,8 +137,10 @@ const airbnb = {
     }
 
     if (hasNext) {
-      pkg.add('devDependencies', devDependencies['eslint-config-next']);
-      pkg.add('eslintConfig', { extends: 'next' });
+      pkg.add('devDependencies', {
+        'eslint-config-next': devDependencies['eslint-config-next']
+      });
+      pkg.add('eslintConfig', { extends: ['next'] });
     }
   }
 };
@@ -159,8 +165,10 @@ const other = {
       pkg.add('eslintConfig', { extends: [identifier.shortName] });
 
       if (hasNext) {
-        pkg.add('devDependencies', devDependencies['eslint-config-next']);
-        pkg.add('eslintConfig', { extends: 'next' });
+        pkg.add('devDependencies', {
+          'eslint-config-next': devDependencies['eslint-config-next']
+        });
+        pkg.add('eslintConfig', { extends: ['next'] });
       }
     }
 
@@ -240,8 +248,10 @@ const common = {
       }
 
       if (hasNext) {
-        pkg.add('devDependencies', devDependencies['eslint-config-next']);
-        pkg.add('eslintConfig', { extends: 'next' });
+        pkg.add('devDependencies', {
+          'eslint-config-next': devDependencies['eslint-config-next']
+        });
+        pkg.add('eslintConfig', { extends: ['next'] });
       }
     }
 
