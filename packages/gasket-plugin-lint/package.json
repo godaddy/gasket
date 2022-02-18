@@ -42,6 +42,7 @@
     "semver": "^7.3.4"
   },
   "devDependencies": {
+    "@babel/preset-react": "^7.16.7",
     "assume": "^2.3.0",
     "assume-sinon": "^1.1.0",
     "eslint": "^8.7.0",

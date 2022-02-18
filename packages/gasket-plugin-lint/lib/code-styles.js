@@ -1,5 +1,6 @@
 /* eslint-disable complexity,max-statements */
 const { eslintConfigIdentifier, stylelintConfigIdentifier } = require('./utils');
+const { devDependencies } = require('../package.json');
 
 
 /**
@@ -11,6 +12,29 @@ const { eslintConfigIdentifier, stylelintConfigIdentifier } = require('./utils')
  * @property {boolean} [allowStylelint] - If should prompt for adding stylelint
  */
 
+
+/**
+ * Updates eslintConfig and deps to support React
+ *
+ * @param {*} hasReact - If has react
+ * @param {*} pkg - Package.json object to update
+ */
+function verifyBabelPreset(hasReact, pkg) {
+  if (hasReact) {
+    pkg.add('devDependencies', {
+      '@babel/preset-react': devDependencies['@babel/preset-react']
+    });
+    pkg.add('eslintConfig', {
+      parserOptions: {
+        babelOptions: {
+          presets: [
+            '@babel/preset-react'
+          ]
+        }
+      }
+    });
+  }
+}
 
 /**
  * GoDaddy JavaScript Style
@@ -37,6 +61,8 @@ const godaddy = {
     } else if (hasFlow) {
       configName = 'godaddy-flow';
     }
+
+    verifyBabelPreset(hasReact, pkg);
 
     pkg.add('devDependencies', (await gatherDevDeps(`eslint-config-${configName}`)));
     pkg.add('eslintConfig', { extends: [configName] });
@@ -110,6 +136,8 @@ const airbnb = {
 
     let configName = 'airbnb-base';
     if (hasReact) configName = 'airbnb';
+
+    verifyBabelPreset(hasReact, pkg);
 
     pkg.add('devDependencies', (await gatherDevDeps(`eslint-config-${configName}`)));
     pkg.add('eslintConfig', { extends: [configName] });
