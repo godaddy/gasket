@@ -1,5 +1,9 @@
 # `@gasket/plugin-lint`
 
+### 6.17.3
+
+- For GoDaddy code style, always use eslint version from main config ([#341])
+
 ### 6.17.2
 
 - Added logic to add next eslintConfig for new nextjs apps ([#340])
@@ -78,3 +82,4 @@
 [#247]: https://github.com/godaddy/gasket/pull/247
 [#251]: https://github.com/godaddy/gasket/pull/251
 [#340]: https://github.com/godaddy/gasket/pull/340
+[#341]: https://github.com/godaddy/gasket/pull/341
