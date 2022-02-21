@@ -2,6 +2,7 @@ const { describe, it } = require('mocha');
 const assume = require('assume');
 const sinon = require('sinon');
 const codeStyles = require('../lib/code-styles');
+const { devDependencies } = require('../package');
 
 describe('code styles', () => {
   let context, utils, pkgHas, pkgAdd;
@@ -99,6 +100,18 @@ describe('code styles', () => {
       });
     });
 
+    it('adds eslint-config-next if next present', async () => {
+      pkgHas.callsFake((_, name) => ['next'].includes(name));
+      await codeStyle.create(context, utils);
+
+      assume(pkgAdd).calledWithMatch('devDependencies', {
+        'eslint-config-next': devDependencies['eslint-config-next']
+      });
+      assume(pkgAdd).calledWithMatch('eslintConfig', {
+        extends: ['next']
+      });
+    });
+
     it('adds stylelint if configured', async () => {
       context.addStylelint = true;
       await codeStyle.create(context, utils);
@@ -110,7 +123,6 @@ describe('code styles', () => {
         extends: ['stylelint-config-godaddy']
       });
     });
-
   });
 
   describe('airbnb', () => {
@@ -144,6 +156,18 @@ describe('code styles', () => {
       });
       assume(pkgAdd).calledWithMatch('eslintConfig', {
         extends: ['airbnb-base']
+      });
+    });
+
+    it('adds eslint-config-next if next present', async () => {
+      pkgHas.callsFake((_, name) => ['next'].includes(name));
+      await codeStyle.create(context, utils);
+
+      assume(pkgAdd).calledWithMatch('devDependencies', {
+        'eslint-config-next': devDependencies['eslint-config-next']
+      });
+      assume(pkgAdd).calledWithMatch('eslintConfig', {
+        extends: ['next']
       });
     });
 
@@ -206,6 +230,18 @@ describe('code styles', () => {
         ignore: ['build/']
       });
     });
+
+    it('adds eslint-config-next if next present', async () => {
+      pkgHas.callsFake((_, name) => ['next'].includes(name));
+      await codeStyle.create(context, utils);
+
+      assume(pkgAdd).calledWithMatch('devDependencies', {
+        'eslint-config-next': devDependencies['eslint-config-next']
+      });
+      assume(pkgAdd).calledWithMatch('eslintConfig', {
+        extends: ['next']
+      });
+    });
   });
 
   describe('other', () => {
@@ -265,6 +301,20 @@ describe('code styles', () => {
 
         assume(pkgAdd).calledWithMatch('eslintConfig', {
           extends: ['@fake']
+        });
+      });
+
+      it('adds eslint-config-next if next present', async () => {
+        context.eslintConfig = 'eslint-config-fake';
+        // eslint-disable-next-line max-nested-callbacks
+        pkgHas.callsFake((_, name) => ['next'].includes(name));
+        await codeStyle.create(context, utils);
+
+        assume(pkgAdd).calledWithMatch('devDependencies', {
+          'eslint-config-next': devDependencies['eslint-config-next']
+        });
+        assume(pkgAdd).calledWithMatch('eslintConfig', {
+          extends: ['next']
         });
       });
 
@@ -330,6 +380,7 @@ describe('code styles', () => {
     });
   });
 
+  // eslint-disable-next-line max-statements
   describe('common', () => {
     const codeStyle = codeStyles.common;
 
@@ -453,6 +504,18 @@ describe('code styles', () => {
 
       assume(pkgAdd).not.calledWithMatch('scripts', {
         posttest: sinon.match.string
+      });
+    });
+
+    it('adds eslint-config-next if next present', async () => {
+      pkgHas.callsFake((_, name) => ['eslint', 'next'].includes(name));
+      await codeStyle.create(context, utils);
+
+      assume(pkgAdd).calledWithMatch('devDependencies', {
+        'eslint-config-next': devDependencies['eslint-config-next']
+      });
+      assume(pkgAdd).calledWithMatch('eslintConfig', {
+        extends: ['next']
       });
     });
 
