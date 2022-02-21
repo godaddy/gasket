@@ -42,7 +42,6 @@ const godaddy = {
     pkg.add('eslintConfig', { extends: [configName] });
 
     if (hasReactIntl) {
-      pkg.add('devDependencies', (await gatherDevDeps('@godaddy/eslint-plugin-react-intl')));
       pkg.add('eslintConfig', {
         extends: ['plugin:@godaddy/react-intl/recommended'],
         settings: {
