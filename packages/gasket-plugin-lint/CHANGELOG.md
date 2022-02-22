@@ -1,5 +1,9 @@
 # `@gasket/plugin-lint`
 
+### 6.17.4
+
+- Fix to include eslint-plugin-react-intl as devDependency ([#342])
+
 ### 6.17.3
 
 - For GoDaddy code style, always use eslint version from main config ([#341])
@@ -83,3 +87,4 @@
 [#251]: https://github.com/godaddy/gasket/pull/251
 [#340]: https://github.com/godaddy/gasket/pull/340
 [#341]: https://github.com/godaddy/gasket/pull/341
+[#342]: https://github.com/godaddy/gasket/pull/342
