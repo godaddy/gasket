@@ -89,6 +89,9 @@ describe('code styles', () => {
       pkgHas.callsFake((_, name) => ['react-intl'].includes(name));
       await codeStyle.create(context, utils);
 
+      assume(pkgAdd).calledWithMatch('devDependencies', {
+        '@godaddy/eslint-plugin-react-intl': sinon.match.string
+      });
       assume(pkgAdd).calledWithMatch('eslintConfig', {
         extends: ['plugin:@godaddy/react-intl/recommended'],
         settings: {
