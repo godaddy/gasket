@@ -51,10 +51,7 @@ const depVersions = {
   'eslint': '^8.7.0',
   'eslint-config-godaddy': '^6.0.0',
   'eslint-config-godaddy-react': '^8.0.0',
-  'eslint-plugin-json': '^3.1.0',
   'eslint-plugin-jest': '^25.7.0',
-  'eslint-plugin-mocha': '^10.0.3',
-  'eslint-plugin-react': '^7.22.0',
   'eslint-plugin-unicorn': '^40.1.0',
 
   'deepmerge': '^4.2.2',
