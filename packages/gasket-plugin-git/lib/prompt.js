@@ -4,14 +4,26 @@ function serialize(content) {
   let desiredContent = '';
 
   for (const category in content) {
-    if (content[category].length) {
+    if (content[category].size) {
       category !== '' ? desiredContent += `# ${category}\n` : null;
-      desiredContent += content[category].join('\n');
+      desiredContent += [...content[category]].join('\n');
       desiredContent += '\n\n';
     }
   }
 
   return desiredContent;
+}
+
+function instantiateGitignore(context) {
+  const gitignore = new Gitignore();
+  Object.defineProperties(gitignore, {
+    content: {
+      get() {
+        return serialize(this._content);
+      }
+    }
+  });
+  context.gitignore = gitignore;
 }
 
 /**
@@ -32,17 +44,12 @@ module.exports = async function promptHook(gasket, context, { prompt }) {
         type: 'confirm'
       }]);
 
-    const gitignore = new Gitignore();
-    Object.defineProperties(gitignore, {
-      content: {
-        get() {
-          return serialize(this.content);
-        }
-      }
-    });
-    context.gitignore = gitignore;
-
+    instantiateGitignore(context);
     return { ...context, gitInit };
+  }
+
+  if ('gitInit' in context) {
+    instantiateGitignore(context);
   }
 
   return context;

@@ -5,12 +5,12 @@
  */
 module.exports = class Gitignore {
   constructor() {
-    this.content = {
-      dependencies: ['node_modules'],
-      testing: ['coverage', 'reports'],
-      production: ['dist', 'build', '.next'],
-      misc: ['.env', '.idea', '*.iml', '*.log', '*.bak', '.DS_Store'],
-      special: ['app.config.local.js*', 'gasket.config.local.js*', '.docs']
+    this._content = {
+      dependencies: new Set(['node_modules']),
+      testing: new Set(['coverage', 'reports']),
+      production: new Set(['dist', 'build', '.next']),
+      misc: new Set(['.env', '.idea', '*.iml', '*.log', '*.bak', '.DS_Store']),
+      special: new Set(['app.config.local.js*', 'gasket.config.local.js*', '.docs'])
     };
   }
 
@@ -18,9 +18,9 @@ module.exports = class Gitignore {
     if (Array.isArray(name)) {
       name.forEach(n => this.add(n, category));
     } else {
-      this.content[category] ?
-        this.content[category].push(name) :
-        this.content[category] = [name];
+      this._content[category] ?
+        this._content[category].add(name) :
+        this._content[category] = new Set([name]);
     }
   }
 };
