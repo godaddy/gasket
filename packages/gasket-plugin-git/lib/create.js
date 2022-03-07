@@ -1,4 +1,5 @@
 const path = require('path');
+// const Gitignore = require('./gitignore');
 
 /**
  * Create hook adds template files if gitInit
@@ -7,17 +8,14 @@ const path = require('path');
  * @param {CreateContext} context - Create context
  * @returns {Promise} promise
  */
-module.exports = {
-  timing: { last: true },
-  handler: async function create(gasket, context) {
-    const { gitInit, files, gitignore } = context;
+module.exports = async function create(gasket, context) {
+  const { gitInit, files, gitignore = {} } = context;
 
-    if (gitInit) {
-      files.add(
-        path.join(__dirname, '..', 'generator', '.*')
-      );
+  if (gitInit) {
+    files.add(
+      path.join(__dirname, '..', 'generator', '.*')
+    );
 
-      await gitignore.writeFile(context);
-    }
+    await gasket.exec('addGitignore', gitignore);
   }
 };
