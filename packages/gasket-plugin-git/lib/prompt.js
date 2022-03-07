@@ -1,5 +1,11 @@
 const Gitignore = require('./gitignore');
 
+/**
+ * Formats gitignore content
+ *
+ * @param {Object} content - gitignore content
+ * @returns {string} formatted gitignore content
+ */
 function serialize(content) {
   let desiredContent = '';
 
@@ -14,6 +20,11 @@ function serialize(content) {
   return desiredContent;
 }
 
+/**
+ * Instantiates new Gitignore instance, adds get method to content using the serialize function, adds gitignore to context
+ *
+ * @param {CreateContext} context - Create context
+ */
 function instantiateGitignore(context) {
   const gitignore = new Gitignore();
   Object.defineProperties(gitignore, {

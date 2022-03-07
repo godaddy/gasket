@@ -30,6 +30,7 @@ describe('prompt', function () {
     await prompt({}, mockContext, mockUtils);
 
     assume(promptStub).not.called();
+    assume(mockContext.gitignore).to.be.an('object');
   });
 
   it('prompts if gitInit not set in context', async () => {
@@ -53,5 +54,12 @@ describe('prompt', function () {
     const result = await prompt({}, mockContext, mockUtils);
 
     assume(result).equals(mockContext);
+  });
+
+  it('serializes gitignore content', async () => {
+    mockContext.gitInit = true;
+    await prompt({}, mockContext, mockUtils);
+
+    assume(mockContext.gitignore.content).to.be.a('string');
   });
 });

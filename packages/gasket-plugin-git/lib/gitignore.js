@@ -1,7 +1,8 @@
 /**
- * Utility to add content to gitignore
+ * Class to add content to gitignore
  *
  * @type {Gitignore}
+ * @property {Object} _content - Content to add to gitignore
  */
 module.exports = class Gitignore {
   constructor() {
@@ -14,6 +15,12 @@ module.exports = class Gitignore {
     };
   }
 
+  /**
+   * Adds content to gitignore
+   *
+   * @param {String|String[]} name - name of file or directory to add to gitignore
+   * @param {String} category - category of gitignore content
+   */
   add(name, category = '') {
     if (Array.isArray(name)) {
       name.forEach(n => this.add(n, category));
