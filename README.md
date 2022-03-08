@@ -142,7 +142,7 @@ Available presets
 | Name                    | Version | Description                                |
 | ----------------------- | ------- | ------------------------------------------ |
 | [@gasket/preset-api]    | 6.17.4  | Create Express-based API with Gasket       |
-| [@gasket/preset-nextjs] | 6.17.1  | Basic NextJS Framework                     |
+| [@gasket/preset-nextjs] | 6.18.0  | Basic NextJS Framework                     |
 | [@gasket/preset-pwa]    | 6.17.0  | Turn Gasket apps into Progressive Web Apps |
 
 ## Plugins
@@ -160,7 +160,7 @@ Available plugins
 | [@gasket/plugin-elastic-apm]    | 6.17.0  | Adds Elastic APM instrumentation to your application                       |
 | [@gasket/plugin-express]        | 6.17.1  | Adds express support to your application                                   |
 | [@gasket/plugin-fastify]        | 6.17.0  | Adds fastify support to your application                                   |
-| [@gasket/plugin-git]            | 6.17.0  | Adds git support to your application                                       |
+| [@gasket/plugin-git]            | 6.18.0  | Adds git support to your application                                       |
 | [@gasket/plugin-https]          | 6.17.0  | Create http/s servers with graceful termination                            |
 | [@gasket/plugin-intl]           | 6.17.1  | NodeJS script to build localization files.                                 |
 | [@gasket/plugin-jest]           | 6.17.1  | Integrated jest into your application.                                     |
@@ -172,7 +172,7 @@ Available plugins
 | [@gasket/plugin-metrics]        | 6.17.0  | Collect metrics for gasket commands                                        |
 | [@gasket/plugin-mocha]          | 6.17.1  | Integrates mocha based testing in to your Gasket application               |
 | [@gasket/plugin-nextjs]         | 6.17.1  | Adds Next support to your application                                      |
-| [@gasket/plugin-redux]          | 6.17.1  | Gasket Redux Setup                                                         |
+| [@gasket/plugin-redux]          | 6.18.0  | Gasket Redux Setup                                                         |
 | [@gasket/plugin-service-worker] | 6.17.0  | Gasket Service Worker Plugin                                               |
 | [@gasket/plugin-start]          | 6.17.0  | Adds commands for building and starting Gasket apps                        |
 | [@gasket/plugin-swagger]        | 6.17.0  | Generate and serve swagger docs                                            |
@@ -186,7 +186,7 @@ Supporting modules
 | Name                       | Version | Description                                                                          |
 | -------------------------- | ------- | ------------------------------------------------------------------------------------ |
 | [@gasket/assets]           | 6.17.0  | Gasket assets                                                                        |
-| [@gasket/cli]              | 6.17.0  | CLI for rapid application development with gasket                                    |
+| [@gasket/cli]              | 6.18.0  | CLI for rapid application development with gasket                                    |
 | [@gasket/data]             | 6.17.0  | Helper package for accessing embedded Gasket Data in the browser                     |
 | [@gasket/engine]           | 6.17.0  | Plugin engine for gasket                                                             |
 | [@gasket/fetch]            | 6.17.0  | Gasket Fetch API                                                                     |
@@ -196,9 +196,9 @@ Supporting modules
 | [@gasket/react-intl]       | 6.17.1  | React component library to enable localization for gasket apps.                      |
 | [@gasket/redux]            | 6.17.1  | Gasket Redux Configuration                                                           |
 | [@gasket/resolve]          | 6.17.0  | Essential module resolution & configuration management for gasket plugins & presets. |
-| [@gasket/typescript-tests] | 6.17.4  | Not a published package; hosts unit tests to verify TypeScript support               |
+| [@gasket/typescript-tests] | 6.18.0  | Not a published package; hosts unit tests to verify TypeScript support               |
 | [@gasket/utils]            | 6.17.0  | Reusable utilities for Gasket internals                                              |
-| [create-gasket-app]        | 6.17.1  | starter pack for creating a gasket app                                               |
+| [create-gasket-app]        | 6.18.0  | starter pack for creating a gasket app                                               |
 
 <!-- LINKS -->
 
