@@ -1,6 +1,6 @@
 {
   "name": "@gasket/cli",
-  "version": "6.17.0",
+  "version": "6.18.0",
   "description": "CLI for rapid application development with gasket",
   "main": "src/index.js",
   "bin": {
@@ -56,7 +56,7 @@
   "dependencies": {
     "@gasket/engine": "^6.17.0",
     "@gasket/plugin-command": "^6.17.0",
-    "@gasket/plugin-git": "^6.17.0",
+    "@gasket/plugin-git": "^6.18.0",
     "@gasket/plugin-lifecycle": "^6.17.0",
     "@gasket/plugin-metadata": "^6.17.0",
     "@gasket/plugin-start": "^6.17.0",
