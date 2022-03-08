@@ -1,5 +1,9 @@
 # `@gasket/plugin-git`
 
+### 6.18.0
+
+- Added gitignore property to context ([#344])
+
 ### 6.0.0
 
 - Version alignment
@@ -20,3 +24,4 @@
 
 
 [#247]: https://github.com/godaddy/gasket/pull/247
+[#344]: https://github.com/godaddy/gasket/pull/344
