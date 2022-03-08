@@ -189,8 +189,8 @@ exports and so the import statements should be in CommonJS format.
 module.exports = {
   id: 'gasket-plugin-example',
   hooks: {
-    create(gasket, state, context) {
-      const { reduxReducers } = context;
+    create(gasket, createContext) {
+      const { reduxReducers } = createContext;
       
       // Prefer to have named reduces in an object
       reduxReducers.addImport("const manyExampleReducer = require('@example/reducers');")

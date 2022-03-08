@@ -40,6 +40,56 @@ will always be initialized, and the user not prompted.
 During the `create` lifecycle, .gitignore and .gitattributes templates will be
 registered to be generated for the app.
 
+If you have a plugin which needs to add git ignore rules, in the `create`
+lifecycle hook of your plugin, you can access `gitignore` helper to add rules.
+Rules can be added to different categories which will group them under comments.
+
+The `gitignore` helper will only be placed on the CreateContext when this plugin
+is configured and `gitInit` is true, either by preset config or prompt.
+
+#### Example adding gitignore
+
+```js
+module.exports = {
+  id: 'gasket-plugin-example',
+  hooks: {
+    create(gasket, createContext) {
+      const { gitignore } = createContext;
+
+      // See if `gitignore` is on the create context
+      if(gitignore) {        
+        // ignore a single file
+        gitignore.add('file-to-be-ignored.js');
+        
+        // ignore wildcard rules
+        gitignore.add('*.tmp');
+        
+        // ignore multiple files and/or directories
+        gitignore.add(['file1.js', 'dir2/']);
+        
+        // add an ignore under a category 
+        gitignore.add('node_modules', 'dependencies');
+      }
+    }
+  }
+};
+```
+
+The resulting `.gitignore` that is generated will have all the added gitignore
+rules and comments for categories.
+
+```properties
+# -- .gitignore file --
+
+file-to-be-ignored.js
+*.tmp
+file1.js
+dir2/
+
+# dependencies
+node_modules
+```
+
 ### postCreate
 
 After all the app contents are generated, this plugin's postCreate hook will
@@ -59,3 +109,4 @@ See [plugin hook timings] for more information.
 
 [gasket create command]:/packages/gasket-cli/README.md#create-command
 [plugin hook timings]:/packages/gasket-engine/README.md
+[Gitignore]: ./lib/gitignore.js
