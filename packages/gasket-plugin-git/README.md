@@ -51,6 +51,50 @@ commit.
 
 See [plugin hook timings] for more information.
 
+### Dynamically Generate `.gitignore`
+
+In the `prompt` lifecycle, when the `gitInit` context property is set, this plugin will instantiate a new [Gitignore] instance and add it to the context.
+
+```js
+context.gitignore
+```
+
+This context property is responsible for adding and maintaining the files and directories that will be added to the `.gitignore` file.
+
+#### `context.gitignore`
+
+To add a file/directory, pass in the file/directory name as a string, or an array of strings, if you wish to add multiple.
+
+```js
+// example.js
+
+context.gitignore.add('file-to-be-ignored.js');
+context.gitignore.add(['file1.js', 'dir2/']);
+```
+
+```properties
+# -- .gitignore file --
+
+file-to-be-ignored.js
+file1.js
+dir2/
+```
+
+Files/directories can also be added to the `.gitignore` under a specific category. To do this, pass a second parameter to the `add` method.
+
+```js
+// example.js
+
+context.gitignore.add('node_modules', 'dependencies');
+```
+
+```properties
+# -- .gitignore file --
+
+# dependencies
+node_modules
+```
+
 ## License
 
 [MIT](./LICENSE.md)
@@ -59,3 +103,4 @@ See [plugin hook timings] for more information.
 
 [gasket create command]:/packages/gasket-cli/README.md#create-command
 [plugin hook timings]:/packages/gasket-engine/README.md
+[Gitignore]: ./lib/gitignore.js
