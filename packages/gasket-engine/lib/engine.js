@@ -356,12 +356,12 @@ class PluginEngine {
         const executionPlan = [];
         const pluginThunks = {};
         this._executeInOrder(hookConfig, plugin => {
-          pluginThunks[plugin] = (pluginTasks) => {
+          pluginThunks[plugin] = (fn, pluginTasks) => {
             pluginTasks[plugin] = Promise
               .all(subscribers[plugin].ordering.after.map(dep => pluginTasks[dep]))
               .then(() => {
                 trace(plugin);
-                return applyFn(this._plugins[plugin], subscribers[plugin].callback);
+                return fn(this._plugins[plugin], subscribers[plugin].callback);
               });
             return pluginTasks[plugin];
           };
@@ -372,7 +372,7 @@ class PluginEngine {
       },
       exec: executionPlan => {
         const pluginTasks = {};
-        return Promise.all(executionPlan.map(fn => fn(pluginTasks)));
+        return Promise.all(executionPlan.map(fn => fn(applyFn, pluginTasks)));
       }
     });
   }
@@ -393,16 +393,15 @@ class PluginEngine {
         const subscribers = hookConfig.subscribers;
         const executionPlan = [];
         this._executeInOrder(hookConfig, plugin => {
-          executionPlan.push(() => {
+          executionPlan.push(fn => {
             trace(plugin);
-            return applyFn(this._plugins[plugin], subscribers[plugin].callback);
+            return fn(this._plugins[plugin], subscribers[plugin].callback);
           });
         });
-
         return executionPlan;
       },
       exec: executionPlan => {
-        return executionPlan.map(fn => fn());
+        return executionPlan.map(fn => fn(applyFn));
       }
     });
   }
@@ -425,7 +424,6 @@ class PluginEngine {
     const plan = plansByType[type] || (
       plansByType[type] = prepare(hookConfig, trace)
     );
-
     const result = exec(plan);
     if (result.finally) {
       return result.finally(() => this._traceDepth--);
