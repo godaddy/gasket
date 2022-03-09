@@ -117,4 +117,15 @@ describe('The execApply method', () => {
     expect(result[1].plugin).toEqual(pluginB);
     expect(result[2].plugin).toEqual(pluginC);
   });
+
+  it('can be executed with differing callbacks', async () => {
+    const stub1 = jest.fn().mockImplementation((plugin, handler) => handler())
+    const stub2 = jest.fn().mockImplementation((plugin, handler) => handler())
+
+    await engine.execApply('eventA', stub1);
+    await engine.execApply('eventA', stub2);
+
+    expect(stub1).toHaveBeenCalledTimes(3);
+    expect(stub2).toHaveBeenCalledTimes(3);
+  });
 });
