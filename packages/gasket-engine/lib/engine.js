@@ -349,7 +349,6 @@ class PluginEngine {
    */
   execApply(event, applyFn) {
     return this._execWithCachedPlan({
-      cachePlan: false,
       event,
       type: 'execApply',
       prepare: (hookConfig, trace) => {
