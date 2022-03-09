@@ -349,6 +349,7 @@ class PluginEngine {
    */
   execApply(event, applyFn) {
     return this._execWithCachedPlan({
+      cachePlan: false,
       event,
       type: 'execApply',
       prepare: (hookConfig, trace) => {
@@ -387,6 +388,7 @@ class PluginEngine {
    */
   execApplySync(event, applyFn) {
     return this._execWithCachedPlan({
+      cachePlan: false,
       event,
       type: 'execApplySync',
       prepare: (hookConfig, trace) => {
@@ -413,7 +415,7 @@ class PluginEngine {
    * @param {Object} options options
    * @returns {*} result
    */
-  _execWithCachedPlan({ event, type, prepare, exec }) {
+  _execWithCachedPlan({ event, type, prepare, exec, cachePlan = true }) {
     debug(`${'  '.repeat(this._traceDepth++)}${type} ${event}`);
     const traceDepth = this._traceDepth;
     const trace = plugin => debug(`${'  '.repeat(traceDepth)}${plugin}:${event}`);
@@ -422,9 +424,8 @@ class PluginEngine {
     const plansByType = this._plans[event] || (
       this._plans[event] = {}
     );
-    const plan = plansByType[type] || (
-      plansByType[type] = prepare(hookConfig, trace)
-    );
+    const plan = (cachePlan && plansByType[type]) ||
+      (plansByType[type] = prepare(hookConfig, trace));
 
     const result = exec(plan);
     if (result.finally) {
