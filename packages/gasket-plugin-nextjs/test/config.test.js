@@ -180,7 +180,8 @@ describe('createConfig', () => {
 
     it('executes webpack plugin hook', () => {
       result = config.webpack(webpackConfig, data);
-      assume(gasket.execSync).to.be.calledWith('webpack', result, data);
+      // TODO: should not test this deep into webpack plugin
+      assume(gasket.execApplySync).to.be.calledWith('webpack');
     });
 
     it('returns webpack config object', () => {
@@ -260,6 +261,7 @@ function mockGasketApi() {
     execWaterfallSync: stub().returnsArg(1),
     exec: stub().resolves({}),
     execSync: stub().returns([]),
+    execApplySync: stub().returns([]),
     logger: {
       warning: stub()
     },
@@ -290,16 +292,22 @@ function lifecycle(config = {}, ...plugins) {
     };
   });
 
-  return new Engine({
+  const engine = new Engine({
     root: '/path/to/app',
     plugins: {
       add: [require('../lib/index'), require('@gasket/plugin-webpack'), ...plugins].filter(Boolean)
     },
-    next: {},
+    nextConfig: {},
     http: {
       port: 8111
     },
 
     ...config
   });
+
+  engine.logger = {
+    warning: stub()
+  };
+
+  return engine;
 }

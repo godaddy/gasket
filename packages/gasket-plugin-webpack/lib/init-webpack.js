@@ -33,7 +33,7 @@ module.exports = function initWebpack(gasket, initConfig, context) {
   const baseConfig = {
     ...initConfig,
     plugins: [
-      ...(initConfig.plugins ? initConfig.plugins : []),
+      ...(initConfig && initConfig.plugins ? initConfig.plugins : []),
       new WebpackMetricsPlugin({ gasket })
     ].filter(Boolean)
   };
