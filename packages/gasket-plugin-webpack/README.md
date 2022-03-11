@@ -72,12 +72,12 @@ const config = initWebpack(gasket, webpackConfig, data);
 
 ### webpackConfig
 
-Executed with initial, it receives three parameters:
+Executed by [initWebpack](#initwebpack), it receives three parameters:
 
-1. The gasket API
-2. A webpack config object
+1. The Gasket API
+2. A Webpack config object
 3. A context object with the following properties:
-   * `webpack` - The webpack API.
+   * `webpack` - The Webpack API.
    * `webpackMerge` - _DEPRECATED - Use `require('webpack-merge')`._
      Getter returns [webpack-merge v4] API.
    * `...additionalContext` - Additional context may be exposed. For example, in next.js apps, the [next.js webpack config options](https://nextjs.org/docs/api-reference/next.config.js/custom-webpack-config) are included.
