@@ -5,7 +5,7 @@ const mockNextData = {
   defaultLoaders: {}
 };
 
-describe('webpack', () => {
+describe('webpackConfig', () => {
   let results, mockGasket, mockWebpackConfig;
 
   beforeEach(() => {
@@ -18,10 +18,10 @@ describe('webpack', () => {
     mockWebpackConfig = { plugins: [] };
   });
 
-  it('returns new webpack config partial', () => {
+  it('returns updated webpack config object', () => {
     results = webpack(mockGasket,
       { ...mockWebpackConfig, bogus: 'BOGUS' }, mockNextData);
-    expect(results).not.toHaveProperty('bogus', 'BOGUS');
+    expect(results).toHaveProperty('bogus', 'BOGUS');
     expect(results).toHaveProperty('plugins', expect.any(Array));
   });
 
@@ -34,18 +34,18 @@ describe('webpack', () => {
   it('does not add WebpackInjectPlugin if local command', () => {
     mockGasket.command.id = 'local';
     results = webpack(mockGasket, mockWebpackConfig, mockNextData);
-    expect(results).toBeNull();
+    expect(results).toBe(mockWebpackConfig);
   });
 
   it('does not add WebpackInjectPlugin if webpackRegister = false', () => {
     mockGasket.config.serviceWorker = { webpackRegister: false };
     results = webpack(mockGasket, mockWebpackConfig, mockNextData);
-    expect(results).toBeNull();
+    expect(results).toBe(mockWebpackConfig);
   });
 
   it('does not add WebpackInjectPlugin if isServer', () => {
     results = webpack(mockGasket, mockWebpackConfig, { ...mockNextData, isServer: true });
-    expect(results).toBeNull();
+    expect(results).toBe(mockWebpackConfig);
   });
 
   it('defaults to all entries', () => {

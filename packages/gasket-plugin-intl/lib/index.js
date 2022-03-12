@@ -47,13 +47,11 @@ module.exports = {
         await buildManifest(gasket);
       }
     },
-    webpack() {
-      // webpack is not listed as a required dependency but if this lifecycle
-      // is invoked we can assume it has been installed by @gasket/plugin-webpack
-      const webpack = require('webpack');
-
+    webpackConfig(gasket, webpackConfig, { webpack }) {
       return {
+        ...webpackConfig,
         plugins: [
+          ...(webpackConfig.plugins || []),
           new webpack.EnvironmentPlugin([
             'GASKET_INTL_LOCALES_DIR',
             'GASKET_INTL_MANIFEST_FILE'

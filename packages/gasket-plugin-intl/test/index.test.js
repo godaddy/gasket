@@ -17,7 +17,7 @@ describe('Plugin', function () {
       'configure',
       'create',
       'build',
-      'webpack',
+      'webpackConfig',
       'express',
       'middleware',
       'workbox',

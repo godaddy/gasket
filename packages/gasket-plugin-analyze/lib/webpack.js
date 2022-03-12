@@ -7,7 +7,7 @@
  * @param {Object} data - Next.js data
  * @returns {Object} webpackConfig
  */
-module.exports = function webpack(gasket, webpackConfig, data) {
+module.exports = function webpackConfigHook(gasket, webpackConfig, data) {
   const {
     command,
     config: {
@@ -30,12 +30,14 @@ module.exports = function webpack(gasket, webpackConfig, data) {
     // return webpack config partial
     //
     return {
+      ...webpackConfig,
       plugins: [
+        ...(webpackConfig.plugins || []),
         new BundleAnalyzerPlugin({
           ...(isServer ? server : browser)
         })]
     };
   }
 
-  return null;
+  return webpackConfig;
 };
