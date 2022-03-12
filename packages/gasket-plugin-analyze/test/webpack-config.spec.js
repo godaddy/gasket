@@ -1,4 +1,4 @@
-const webpack = require('../lib/webpack');
+const webpack = require('../lib/webpack-config');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 const mockNextData = {

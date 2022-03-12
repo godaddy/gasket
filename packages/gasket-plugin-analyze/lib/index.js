@@ -1,5 +1,5 @@
 const create = require('./create');
-const webpackConfig = require('./webpack');
+const webpackConfig = require('./webpack-config');
 const getCommands = require('./get-commands');
 /**
  * Gasket Analyzer Plugin

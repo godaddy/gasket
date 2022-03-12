@@ -1,4 +1,4 @@
-const webpack = require('../lib/webpack');
+const webpack = require('../lib/webpack-config');
 const WebpackInjectPlugin = require('webpack-inject-plugin').default;
 
 const mockNextData = {
