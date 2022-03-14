@@ -1,5 +1,9 @@
 # `@gasket/plugin-intl`
 
+### 6.19.0
+
+- Migrate `webpack` -> `webpackConfig` lifecycle ([#347])
+
 ### 6.16.1
 
 - Fix to not polyfill intl for node >= 14 ([#336])
@@ -164,3 +168,4 @@
 [#311]: https://github.com/godaddy/gasket/pull/311
 [#320]: https://github.com/godaddy/gasket/pull/320
 [#319]: https://github.com/godaddy/gasket/pull/319
+[#347]: https://github.com/godaddy/gasket/pull/347

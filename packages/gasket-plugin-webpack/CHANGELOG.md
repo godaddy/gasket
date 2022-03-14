@@ -1,5 +1,9 @@
 # `@gasket/plugin-webpack`
 
+### 6.19.0
+
+- Deprecating webpack-merge smart approaches ([#346])
+
 ### 6.10.0
 
 - TypeScript definitions for config & lifecycles ([#311])
