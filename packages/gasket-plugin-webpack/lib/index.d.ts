@@ -3,12 +3,13 @@ import type WebpackApi from 'webpack';
 
 export interface WebpackContext {
   webpack: typeof WebpackApi,
+  /** @deprecated use require('webpack-merge') */
   webpackMerge: any
 }
 
 declare module '@gasket/engine' {
   export interface GasketConfig {
-    webpack?: any  // TODO: Use types when upgrading to next version of `webpack-merge`
+    webpack?: any
   }
 
   export interface HookExecTypes {
