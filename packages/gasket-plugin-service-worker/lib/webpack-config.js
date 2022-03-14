@@ -9,7 +9,7 @@ const { getSWConfig } = require('./utils');
  * @param {Object} data - Next.js data
  * @returns {Object} webpackConfig
  */
-module.exports = function webpack(gasket, webpackConfig, data) {
+module.exports = function webpackConfigHook(gasket, webpackConfig, data) {
   const { command } = gasket;
   const swConfig = getSWConfig(gasket);
 
@@ -35,11 +35,13 @@ module.exports = function webpack(gasket, webpackConfig, data) {
     // return webpack config partial
     //
     return {
+      ...webpackConfig,
       plugins: [
+        ...(webpackConfig.plugins || []),
         new WebpackInjectPlugin(() => loadRegisterScript(swConfig), entryName && { entryName })
       ]
     };
   }
 
-  return null;
+  return webpackConfig;
 };

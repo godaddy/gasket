@@ -12,7 +12,7 @@ describe('Plugin', () => {
 
   it('has expected hooks', () => {
     const expected = [
-      'webpack',
+      'webpackConfig',
       'getCommands',
       'create',
       'metadata'

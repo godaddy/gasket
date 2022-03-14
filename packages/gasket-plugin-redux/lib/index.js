@@ -34,14 +34,13 @@ module.exports = {
 
       context.hasGasketRedux = true;
     },
-    webpack(gasket) {
+    webpackConfig(gasket, webpackConfig, { webpack }) {
       const { redux: reduxConfig } = gasket.config;
-      // webpack is not listed as a required dependency but if this lifecycle
-      // is invoked we can assume it has been installed by @gasket/plugin-webpack
-      const webpack = require('webpack');
 
       return {
+        ...webpackConfig,
         plugins: [
+          ...(webpackConfig.plugins || []),
           new webpack.EnvironmentPlugin({
             GASKET_MAKE_STORE_FILE: reduxConfig.makeStore
           })
