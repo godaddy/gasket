@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-swagger",
-  "version": "6.17.0",
+  "version": "6.19.0",
   "description": "Generate and serve swagger docs",
   "main": "lib",
   "types": "lib/index.d.ts",
@@ -50,7 +50,7 @@
     "@babel/preset-env": "^7.12.10",
     "@babel/preset-react": "^7.12.10",
     "@babel/register": "^7.12.10",
-    "@gasket/engine": "^6.17.0",
+    "@gasket/engine": "^6.19.0",
     "assume": "^2.3.0",
     "assume-sinon": "^1.1.0",
     "eslint": "^8.7.0",
