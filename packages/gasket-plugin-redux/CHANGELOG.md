@@ -1,5 +1,9 @@
 # `@gasket/plugin-redux`
 
+### 6.19.0
+
+- Migrate `webpack` -> `webpackConfig` lifecycle ([#347])
+
 ### 6.17.1
 
 - Align glob path pattern ([#337])
@@ -63,3 +67,4 @@
 [#243]: https://github.com/godaddy/gasket/pull/243
 [#311]: https://github.com/godaddy/gasket/pull/311
 [#337]: https://github.com/godaddy/gasket/pull/337
+[#347]: https://github.com/godaddy/gasket/pull/347

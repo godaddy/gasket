@@ -1,5 +1,9 @@
 # `@gasket/plugin-analyze`
 
+### 6.19.0
+
+- Migrate `webpack` -> `webpackConfig` lifecycle ([#347])
+
 ### 6.10.0
 
 - TypeScript definitions for config & lifecycles ([#311])
@@ -43,3 +47,4 @@
 [#161]: https://github.com/godaddy/gasket/pull/161
 [#247]: https://github.com/godaddy/gasket/pull/247
 [#311]: https://github.com/godaddy/gasket/pull/311
+[#347]: https://github.com/godaddy/gasket/pull/347

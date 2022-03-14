@@ -1,5 +1,9 @@
 # `@gasket/engine`
 
+### 6.19.0
+
+- Allow differing callbacks for `execApply` and `execApplySync` ([#345])
+
 ### 6.10.0
 
 - TypeScript definitions for config & lifecycles ([#311])
@@ -71,5 +75,6 @@
 [#267]: https://github.com/godaddy/gasket/pull/267
 [#299]: https://github.com/godaddy/gasket/pull/299
 [#311]: https://github.com/godaddy/gasket/pull/311
+[#345]: https://github.com/godaddy/gasket/pull/345
 
 [Loader]:/packages/gasket-resolve/docs/api.md#loader

@@ -1,5 +1,9 @@
 # `@gasket/plugin-service-worker`
 
+### 6.19.0
+
+- Migrate `webpack` -> `webpackConfig` lifecycle ([#347])
+
 ### 6.11.2
 
 - Use fs.promises and upgrade mkdirp ([#319])
@@ -47,3 +51,4 @@
 [#217]: https://github.com/godaddy/gasket/pull/217
 [#311]: https://github.com/godaddy/gasket/pull/311
 [#319]: https://github.com/godaddy/gasket/pull/319
+[#347]: https://github.com/godaddy/gasket/pull/347
