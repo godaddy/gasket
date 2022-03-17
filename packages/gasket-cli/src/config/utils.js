@@ -5,7 +5,7 @@ const defaultsDeep = require('lodash.defaultsdeep');
 const { pluginIdentifier } = require('@gasket/resolve');
 const defaultPlugins = require('./default-plugins');
 const { flattenPresets } = require('../scaffold/utils');
-const { applyEnvironmentOverrides } = require('@gasket/utils');
+const { applyConfigOverrides } = require('@gasket/utils');
 
 const jsExtension = /\.js$/i;
 
@@ -27,7 +27,7 @@ async function getGasketConfig(flags, env, commandId) {
     gasketConfig = addDefaultPlugins(gasketConfig);
     gasketConfig = await addUserPlugins(gasketConfig);
 
-    return applyEnvironmentOverrides(gasketConfig, { env, commandId, root, localFile: './gasket.config.local' });
+    return applyConfigOverrides(gasketConfig, { env, commandId, root, localFile: './gasket.config.local' });
   }
 }
 
