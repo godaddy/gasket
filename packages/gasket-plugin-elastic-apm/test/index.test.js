@@ -49,4 +49,16 @@ describe('Plugin', () => {
     await plugin.hooks.preboot.handler({ config });
     expect(apm.start).toHaveBeenCalledWith({ active: true });
   });
+
+  it('exposes the client', async () => {
+    const config = await plugin.hooks.configure.handler({}, {
+      elasticAPM: {
+        secretToken: 'abcd',
+        serverUrl: 'https://example.com'
+      }
+    });
+    const mockGasket = { config };
+    await plugin.hooks.preboot.handler(mockGasket);
+    expect(mockGasket).toHaveProperty('apm');
+  });
 });

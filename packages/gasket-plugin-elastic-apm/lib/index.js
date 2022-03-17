@@ -37,8 +37,9 @@ module.exports = {
       }
     },
     preboot: {
-      handler: async ({ config }) => {
-        require('elastic-apm-node')
+      handler: async (gasket) => {
+        const { config } = gasket;
+        gasket.apm = require('elastic-apm-node')
           .start({
             ...config.elasticAPM
           })
