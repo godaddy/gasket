@@ -7,7 +7,7 @@ const defaultPlugins = require('../../../src/config/default-plugins');
 
 describe('config utils', () => {
   let flags, env, commandId;
-  let mockGasketConfig, readDirStub, statStub, utils;
+  let mockGasketConfig, warnStub, readDirStub, statStub, utils;
 
   beforeEach(() => {
     flags = { root: '/path/to/app', config: '/path/to/gasket.config' };
@@ -15,6 +15,7 @@ describe('config utils', () => {
     commandId = 'test-cmd';
     mockGasketConfig = { mockConfig: true };
 
+    warnStub = sinon.stub();
     readDirStub = sinon.stub();
     statStub = sinon.stub().callsFake(mod => {
       if (mod === '/path/to/gasket.config.js' || mod === ' /path/to/app/gasket.config.js') return mockGasketConfig;
@@ -94,6 +95,29 @@ describe('config utils', () => {
       readDirStub.resolves(['app-plugin.js']);
       const results = await utils.getGasketConfig(flags, env, commandId);
       assume(results.plugins.add).includes(path.join('/path/to/app', 'plugins', 'app-plugin'));
+    });
+  });
+
+  describe('getEnvironment', function () {
+    it('returns env flag', function () {
+      flags.env = env;
+      const results = utils.getEnvironment(flags, commandId, warnStub);
+      assume(results).equals(env);
+    });
+
+    it('returns local for local command', function () {
+      const results = utils.getEnvironment(flags, 'local', warnStub);
+      assume(results).equals('local');
+    });
+
+    it('returns development when no flag or local command', function () {
+      const results = utils.getEnvironment(flags, commandId, warnStub);
+      assume(results).equals('development');
+    });
+
+    it('warns when no flag or local command', function () {
+      utils.getEnvironment(flags, commandId, warnStub);
+      assume(warnStub).calledWith('No env specified, falling back to "development".');
     });
   });
 
@@ -252,9 +276,11 @@ describe('config utils', () => {
 
     it('gathers config from extended presets', function () {
       mockPresets.push(
-        { name: 'one', module: {}, presets: [
-          { name: 'one-a', module: { config: { apple: 'blue', grape: 'purple' } } }
-        ] },
+        {
+          name: 'one', module: {}, presets: [
+            { name: 'one-a', module: { config: { apple: 'blue', grape: 'purple' } } }
+          ]
+        },
         { name: 'two', module: { config: { orange: 'orange' } } }
       );
 
@@ -267,9 +293,11 @@ describe('config utils', () => {
 
     it('extended presets do not override parent preset config', function () {
       mockPresets.push(
-        { name: 'one', module: { config: { apple: 'red' } }, presets: [
-          { name: 'one-a', module: { config: { apple: 'blue', grape: 'purple' } } }
-        ] },
+        {
+          name: 'one', module: { config: { apple: 'red' } }, presets: [
+            { name: 'one-a', module: { config: { apple: 'blue', grape: 'purple' } } }
+          ]
+        },
         { name: 'two', module: { config: { orange: 'orange' } } }
       );
 
@@ -283,9 +311,11 @@ describe('config utils', () => {
     it('deep merges preset config with existing config', function () {
       mockGasket.config = { pineapple: { color: 'yellow', quantity: 1 } };
       mockPresets.push(
-        { name: 'one', module: { config: { apple: { color: 'red', quantity: 2 } } }, presets: [
-          { name: 'one-a', module: { config: { apple: { color: 'blue', weight: '100g' }, grape: { color: 'purple' } } } }
-        ] },
+        {
+          name: 'one', module: { config: { apple: { color: 'red', quantity: 2 } } }, presets: [
+            { name: 'one-a', module: { config: { apple: { color: 'blue', weight: '100g' }, grape: { color: 'purple' } } } }
+          ]
+        },
         { name: 'two', module: { config: { pineapple: { quantity: 2, weight: '900g' } } } }
       );
 
@@ -296,7 +326,9 @@ describe('config utils', () => {
     });
 
     it('does not blow away named classes present in the config', function () {
-      class Avatar {}
+      class Avatar {
+      }
+
       mockGasket.config = { aang: new Avatar() };
 
       utils.assignPresetConfig(mockGasket);
