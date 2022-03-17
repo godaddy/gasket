@@ -5,22 +5,50 @@ const defaultsDeep = require('lodash.defaultsdeep');
 const { pluginIdentifier } = require('@gasket/resolve');
 const defaultPlugins = require('./default-plugins');
 const { flattenPresets } = require('../scaffold/utils');
+const { applyEnvironmentOverrides } = require('@gasket/utils');
 
 const jsExtension = /\.js$/i;
 
 /**
  * Loads the initial gasket config required for instantiating the PluginEngine.
  *
- * @param {Object} flags - CLI Flag
- * @returns {Promise<Object>} gasketConfig
+ * @param {object} flags - CLI Flag
+ * @param {string} env - Environment name
+ * @param {string} commandId - Name of the command
+ * @returns {Promise<object|null>} gasketConfig
  */
-async function getGasketConfig(flags) {
+async function getGasketConfig(flags, env, commandId) {
+  const { root } = flags;
+
   let gasketConfig = loadConfigFile(flags);
   if (gasketConfig) {
-    gasketConfig.root = flags.root;
+    gasketConfig.root = root;
+    gasketConfig.env = env;
     gasketConfig = addDefaultPlugins(gasketConfig);
-    return await addUserPlugins(gasketConfig);
+    gasketConfig = await addUserPlugins(gasketConfig);
+
+    return applyEnvironmentOverrides(gasketConfig, { env, commandId, root, localFile: './gasket.config.local' });
   }
+}
+
+/**
+ * Returns specified env flag if set or appropriate fallback
+ *
+ * @param {Object} flags - CLI Flag
+ * @param {string} commandId - Name of the command
+ * @param {function} warn - Warning logger
+ * @returns {string} environment
+ */
+function getEnvironment(flags, commandId, warn) {
+  if (flags.env) return flags.env;
+
+  // special snowflake case to match up `local` env with command unless set
+  if (commandId === 'local') {
+    return 'local';
+  }
+
+  warn('No env specified, falling back to "development".');
+  return 'development';
 }
 
 /**
@@ -112,6 +140,7 @@ function assignPresetConfig(gasket) {
 }
 
 module.exports = {
+  getEnvironment,
   getGasketConfig,
   loadConfigFile,
   addDefaultPlugins,

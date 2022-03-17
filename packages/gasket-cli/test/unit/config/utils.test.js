@@ -5,54 +5,94 @@ const assume = require('assume');
 
 const defaultPlugins = require('../../../src/config/default-plugins');
 
-const readDirStub = sinon.stub();
-const statStub = sinon.stub().callsFake(mod => {
-  if (mod === '/path/to/gasket.config.js' || mod === ' /path/to/app/gasket.config.js') return { mockConfig: true };
-  if (mod === '/path/to/bad/gasket.config.js') return { mockConfig: true };
-  if (mod === '/path/to/missing/gasket.config.js') throw new Error('No such file or directory');
-});
-
-const utils = proxyquire('../../../src/config/utils', {
-  'fs': {
-    statSync: statStub,
-    promises: {
-      readdir: readDirStub
-    }
-  },
-  '/path/to/gasket.config': { mockConfig: true },
-  '/path/to/app/gasket.config': { mockConfig: true },
-  '/path/to/bad/gasket.config': new Error('Bad gasket config')
-});
-
 describe('config utils', () => {
+  let flags, env, commandId;
+  let mockGasketConfig, readDirStub, statStub, utils;
+
   beforeEach(() => {
-    sinon.resetHistory();
+    flags = { root: '/path/to/app', config: '/path/to/gasket.config' };
+    env = 'test-env';
+    commandId = 'test-cmd';
+    mockGasketConfig = { mockConfig: true };
+
+    readDirStub = sinon.stub();
+    statStub = sinon.stub().callsFake(mod => {
+      if (mod === '/path/to/gasket.config.js' || mod === ' /path/to/app/gasket.config.js') return mockGasketConfig;
+      if (mod === '/path/to/bad/gasket.config.js') return { mockConfig: true };
+      if (mod === '/path/to/missing/gasket.config.js') throw new Error('No such file or directory');
+    });
+
+    utils = proxyquire('../../../src/config/utils', {
+      'fs': {
+        statSync: statStub,
+        promises: {
+          readdir: readDirStub
+        }
+      },
+      '/path/to/gasket.config': mockGasketConfig,
+      '/path/to/app/gasket.config': { mockConfig: true },
+      '/path/to/bad/gasket.config': new Error('Bad gasket config')
+    });
+  });
+
+  after(function () {
+    sinon.restore();
   });
 
   describe('getGasketConfig', () => {
     it('returns config object', async () => {
-      const results = await utils.getGasketConfig({ root: '/path/to/app', config: '/path/to/gasket.config' });
+      const results = await utils.getGasketConfig(flags, env, commandId);
       assume(results).an('object');
     });
 
     it('returns undefined if no config file found', async () => {
-      const results = await utils.getGasketConfig({ root: '/path/to/app', config: '/path/to/missing/gasket.config' });
+      flags.config = '/path/to/missing/gasket.config';
+      const results = await utils.getGasketConfig(flags, env, commandId);
       assume(results).is.undefined;
     });
 
     it('adds root from flags to config', async () => {
-      const results = await utils.getGasketConfig({ root: '/path/to/app', config: '/path/to/gasket.config' });
+      const results = await utils.getGasketConfig(flags, env, commandId);
       assume(results).property('root', '/path/to/app');
     });
 
     it('adds default plugins', async () => {
-      const results = await utils.getGasketConfig({ root: '/path/to/app', config: '/path/to/gasket.config' });
-      assume(results.plugins.add).includes(defaultPlugins[0]);
+      const results = await utils.getGasketConfig(flags, env, commandId);
+      const adds = results.plugins.add.map(p => p.name);
+      defaultPlugins.forEach(p => {
+        assume(adds).includes(p.name);
+      });
+    });
+
+    // overrides are thoroughly tested in @gasket/utils - we are just checking
+    // that the arguments are being passed through as expected
+    describe('overrides', function () {
+      it('applies env overrides', async () => {
+        mockGasketConfig.example = 'base';
+        mockGasketConfig.environments = {
+          'test-env': {
+            example: 'overridden'
+          }
+        };
+        const results = await utils.getGasketConfig(flags, env, commandId);
+        assume(results).property('example', 'overridden');
+      });
+
+      it('applies command overrides', async () => {
+        mockGasketConfig.example = 'base';
+        mockGasketConfig.commands = {
+          'test-cmd': {
+            example: 'overridden'
+          }
+        };
+        const results = await utils.getGasketConfig(flags, env, commandId);
+        assume(results).property('example', 'overridden');
+      });
     });
 
     it('adds user plugins', async () => {
       readDirStub.resolves(['app-plugin.js']);
-      const results = await utils.getGasketConfig({ root: '/path/to/app', config: '/path/to/gasket.config' });
+      const results = await utils.getGasketConfig(flags, env, commandId);
       assume(results.plugins.add).includes(path.join('/path/to/app', 'plugins', 'app-plugin'));
     });
   });

@@ -3,12 +3,13 @@ const assume = require('assume');
 const applyEnvironmentOverrides = require('../lib/apply-env-overrides');
 
 describe('applyEnvironmentOverrides', () => {
-  let results, mockGasketConfig, mockConfig;
+  let results, mockContext, mockConfig;
 
   beforeEach(() => {
-    mockGasketConfig = {
+    mockContext = {
       env: 'dev',
-      root: __dirname
+      root: __dirname,
+      commandId: 'start'
     };
     mockConfig = {
       someService: {
@@ -18,7 +19,7 @@ describe('applyEnvironmentOverrides', () => {
   });
 
   it('returns unmodified config if no "environments"', () => {
-    results = applyEnvironmentOverrides(mockGasketConfig, mockConfig);
+    results = applyEnvironmentOverrides(mockConfig, mockContext);
     assume(results).eqls(mockConfig);
   });
 
@@ -27,7 +28,7 @@ describe('applyEnvironmentOverrides', () => {
       bogus: {}
     };
 
-    results = applyEnvironmentOverrides(mockGasketConfig, mockConfig);
+    results = applyEnvironmentOverrides(mockConfig, mockContext);
     assume(results).not.property('environments');
   });
 
@@ -36,7 +37,7 @@ describe('applyEnvironmentOverrides', () => {
       bogus: {}
     };
 
-    results = applyEnvironmentOverrides(mockGasketConfig, mockConfig);
+    results = applyEnvironmentOverrides(mockConfig, mockContext);
     assume(results).eqls({
       someService: {
         url: 'https://some-test.url/'
@@ -53,7 +54,7 @@ describe('applyEnvironmentOverrides', () => {
       }
     };
 
-    results = applyEnvironmentOverrides(mockGasketConfig, mockConfig);
+    results = applyEnvironmentOverrides(mockConfig, mockContext);
     assume(results).eqls({
       someService: {
         url: 'https://some-test.url/',
@@ -71,7 +72,7 @@ describe('applyEnvironmentOverrides', () => {
       }
     };
 
-    results = applyEnvironmentOverrides(mockGasketConfig, mockConfig);
+    results = applyEnvironmentOverrides(mockConfig, mockContext);
     assume(results).eqls({
       someService: {
         url: 'https://some-dev-test.url/'
@@ -80,7 +81,7 @@ describe('applyEnvironmentOverrides', () => {
   });
 
   it('deep merges sub-env', () => {
-    mockGasketConfig.env = 'dev.sub';
+    mockContext.env = 'dev.sub';
     mockConfig.environments = {
       'dev': {
         someService: {
@@ -96,7 +97,7 @@ describe('applyEnvironmentOverrides', () => {
       }
     };
 
-    results = applyEnvironmentOverrides(mockGasketConfig, mockConfig);
+    results = applyEnvironmentOverrides(mockConfig, mockContext);
     assume(results).eqls({
       someService: {
         url: 'https://some-sub-dev-test.url/',
@@ -107,7 +108,7 @@ describe('applyEnvironmentOverrides', () => {
   });
 
   it('ignores non-matching sub-env', () => {
-    mockGasketConfig.env = 'dev.sub2';
+    mockContext.env = 'dev.sub2';
     mockConfig.environments = {
       'dev': {
         someService: {
@@ -123,7 +124,7 @@ describe('applyEnvironmentOverrides', () => {
       }
     };
 
-    results = applyEnvironmentOverrides(mockGasketConfig, mockConfig);
+    results = applyEnvironmentOverrides(mockConfig, mockContext);
     assume(results).eqls({
       someService: {
         url: 'https://some-dev-test.url/',
@@ -133,7 +134,7 @@ describe('applyEnvironmentOverrides', () => {
   });
 
   it('local inherits from development env', () => {
-    mockGasketConfig.env = 'local';
+    mockContext.env = 'local';
 
     mockConfig.someService.requestRate = 5000;
     mockConfig.environments = {
@@ -145,7 +146,7 @@ describe('applyEnvironmentOverrides', () => {
       }
     };
 
-    results = applyEnvironmentOverrides(mockGasketConfig, mockConfig);
+    results = applyEnvironmentOverrides(mockConfig, mockContext);
     assume(results).eqls({
       someService: {
         url: 'https://some-dev-test.url/',
@@ -155,7 +156,7 @@ describe('applyEnvironmentOverrides', () => {
   });
 
   it('local inherits from development env, supporting local specific settings', () => {
-    mockGasketConfig.env = 'local';
+    mockContext.env = 'local';
 
     mockConfig.someService.requestRate = 5000;
     mockConfig.environments = {
@@ -172,7 +173,7 @@ describe('applyEnvironmentOverrides', () => {
       }
     };
 
-    results = applyEnvironmentOverrides(mockGasketConfig, mockConfig);
+    results = applyEnvironmentOverrides(mockConfig, mockContext);
     assume(results).eqls({
       someService: {
         url: 'https://some-local-test.url/',
@@ -182,11 +183,10 @@ describe('applyEnvironmentOverrides', () => {
   });
 
   it('load locale override file for local env when set', () => {
-    mockGasketConfig.env = 'local';
-    results = applyEnvironmentOverrides(
-      mockGasketConfig,
-      mockConfig,
-      './fixtures/config.local');
+    mockContext.env = 'local';
+    mockContext.localFile = './fixtures/config.local';
+
+    results = applyEnvironmentOverrides(mockConfig, mockContext);
     assume(results).eqls({
       localsOnly: true,
       someService: {
@@ -195,16 +195,53 @@ describe('applyEnvironmentOverrides', () => {
     });
   });
 
-  it('ingores missing local override file', () => {
-    mockGasketConfig.env = 'local';
-    results = applyEnvironmentOverrides(
-      mockGasketConfig,
-      mockConfig,
-      './fixtures/missing');
+  it('ignores missing local override file', () => {
+    mockContext.env = 'local';
+    mockContext.localFile = './fixtures/missing';
+
+    results = applyEnvironmentOverrides(mockConfig, mockContext);
     assume(results).eqls({
       someService: {
         url: 'https://some-test.url/'
       }
+    });
+  });
+
+  describe('commands', function () {
+
+    it('deep merges properties from matching command id', () => {
+      mockConfig.commands = {
+        start: {
+          someService: {
+            requestRate: 9000
+          }
+        }
+      };
+
+      results = applyEnvironmentOverrides(mockConfig, mockContext);
+      assume(results).eqls({
+        someService: {
+          url: 'https://some-test.url/',
+          requestRate: 9000
+        }
+      });
+    });
+
+    it('overrides properties from matching command id', () => {
+      mockConfig.commands = {
+        start: {
+          someService: {
+            url: 'https://some-dev-test.url/'
+          }
+        }
+      };
+
+      results = applyEnvironmentOverrides(mockConfig, mockContext);
+      assume(results).eqls({
+        someService: {
+          url: 'https://some-dev-test.url/'
+        }
+      });
     });
   });
 });

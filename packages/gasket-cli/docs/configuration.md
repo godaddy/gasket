@@ -122,6 +122,27 @@ To support easy local development, the Gasket CLI can read a special
 environment. This file should be in your `.gitignore` file so that each
 developer can have distinct overrides.
 
+## Commands
+
+Much like per-environment overrides, configuration can also be made specific
+for Gasket commands. This can be useful for enabling or disabling plugins for
+certain commands, for example.
+
+```js
+module.exports = {
+  plugins: {
+    presets: ['@gasket/preset-nextjs', '@gasket/preset-pwa']
+  },
+  commands: {
+    local: {
+      plugins: {
+        remove: ['@gasket/plugin-service-worker']
+      }
+    }
+  }
+};
+```
+
 ## Accessing Gasket configuration in your application
 
 Configuring your app code through the `gasket.config.js` file is not
