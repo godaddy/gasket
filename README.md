@@ -142,7 +142,7 @@ Available presets
 | Name                    | Version | Description                                |
 | ----------------------- | ------- | ------------------------------------------ |
 | [@gasket/preset-api]    | 6.20.0  | Create Express-based API with Gasket       |
-| [@gasket/preset-nextjs] | 6.19.0  | Basic NextJS Framework                     |
+| [@gasket/preset-nextjs] | 6.20.1  | Basic NextJS Framework                     |
 | [@gasket/preset-pwa]    | 6.19.0  | Turn Gasket apps into Progressive Web Apps |
 
 ## Plugins
@@ -171,12 +171,12 @@ Available plugins
 | [@gasket/plugin-metadata]       | 6.19.0  | Adds metadata to gasket lifecycles                                         |
 | [@gasket/plugin-metrics]        | 6.19.0  | Collect metrics for gasket commands                                        |
 | [@gasket/plugin-mocha]          | 6.17.1  | Integrates mocha based testing in to your Gasket application               |
-| [@gasket/plugin-nextjs]         | 6.19.0  | Adds Next support to your application                                      |
+| [@gasket/plugin-nextjs]         | 6.20.1  | Adds Next support to your application                                      |
 | [@gasket/plugin-redux]          | 6.19.0  | Gasket Redux Setup                                                         |
 | [@gasket/plugin-service-worker] | 6.19.0  | Gasket Service Worker Plugin                                               |
 | [@gasket/plugin-start]          | 6.19.0  | Adds commands for building and starting Gasket apps                        |
 | [@gasket/plugin-swagger]        | 6.19.0  | Generate and serve swagger docs                                            |
-| [@gasket/plugin-webpack]        | 6.19.0  | Adds webpack support to your application                                   |
+| [@gasket/plugin-webpack]        | 6.20.1  | Adds webpack support to your application                                   |
 | [@gasket/plugin-workbox]        | 6.19.0  | Gasket Workbox Plugin                                                      |
 
 ## Modules
@@ -196,7 +196,7 @@ Supporting modules
 | [@gasket/react-intl]       | 6.17.1  | React component library to enable localization for gasket apps.                      |
 | [@gasket/redux]            | 6.17.1  | Gasket Redux Configuration                                                           |
 | [@gasket/resolve]          | 6.17.0  | Essential module resolution & configuration management for gasket plugins & presets. |
-| [@gasket/typescript-tests] | 6.20.0  | Not a published package; hosts unit tests to verify TypeScript support               |
+| [@gasket/typescript-tests] | 6.20.1  | Not a published package; hosts unit tests to verify TypeScript support               |
 | [@gasket/utils]            | 6.20.0  | Reusable utilities for Gasket internals                                              |
 | [create-gasket-app]        | 6.20.0  | starter pack for creating a gasket app                                               |
 
