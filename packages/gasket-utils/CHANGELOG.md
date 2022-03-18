@@ -1,5 +1,10 @@
 # `@gasket/utils`
 
+### 6.20.0
+
+- Add `applyConfigOverrides` to allow command overrides in config ([#348])
+  - Deprecates `applyEnvironmentOverrides` for improved API
+
 ### 6.15.0
 
 - Support for AbortController with `runShellCommand` ([#331])
@@ -55,3 +60,4 @@
 [#275]: https://github.com/godaddy/gasket/pull/275
 [#311]: https://github.com/godaddy/gasket/pull/311
 [#331]: https://github.com/godaddy/gasket/pull/331
+[#348]: https://github.com/godaddy/gasket/pull/348

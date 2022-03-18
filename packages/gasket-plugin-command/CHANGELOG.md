@@ -1,5 +1,9 @@
 # `@gasket/plugin-command`
 
+### 6.20.0
+
+- Move config overrides to CLI ([#348])
+
 ### 6.10.0
 
 - TypeScript definitions for config & lifecycles ([#311])
@@ -54,3 +58,4 @@
 [#141]: https://github.com/godaddy/gasket/pull/141
 [#247]: https://github.com/godaddy/gasket/pull/247
 [#311]: https://github.com/godaddy/gasket/pull/311
+[#348]: https://github.com/godaddy/gasket/pull/348

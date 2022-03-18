@@ -1,5 +1,10 @@
 # `@gasket/cli`
 
+### 6.20.0
+
+- Determine env and apply config overrides before plugins are loaded ([#348])
+  - Default to local env for local command
+
 ### 6.14.1
 
 - Fix ti use `fs.createReadStream` for node < 16 support ([#329])
@@ -327,3 +332,4 @@ upon `gasket create`
 [#311]: https://github.com/godaddy/gasket/pull/311
 [#319]: https://github.com/godaddy/gasket/pull/319
 [#329]: https://github.com/godaddy/gasket/pull/329
+[#348]: https://github.com/godaddy/gasket/pull/348

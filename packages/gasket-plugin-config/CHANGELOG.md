@@ -1,5 +1,9 @@
 # `@gasket/plugin-config`
 
+### 6.20.0
+
+- Use `applyConfigOverrides` to allow command overrides in app config ([#348])
+
 ### 6.10.0
 
 - TypeScript definitions for config & lifecycles ([#311])
@@ -40,3 +44,4 @@
 
 [#231]: https://github.com/godaddy/gasket/pull/231
 [#311]: https://github.com/godaddy/gasket/pull/311
+[#348]: https://github.com/godaddy/gasket/pull/348
