@@ -15,10 +15,12 @@ async function initHook({ id, config: oclifConfig, argv }) {
 
   // end early for create cmd which does not use gasket.config
   if (id === 'create') return;
+  // avoid config logging for help command
+  const warn = id !== 'help' ? this.warn : f => f;
 
   const { parse } = require('@oclif/parser');
   const { GasketCommand } = require('@gasket/plugin-command');
-  const { getGasketConfig, assignPresetConfig } = require('../config/utils');
+  const { getEnvironment, getGasketConfig, assignPresetConfig } = require('../config/utils');
   const PluginEngine = require('@gasket/engine');
 
   const { flags } = parse(argv, {
@@ -28,7 +30,8 @@ async function initHook({ id, config: oclifConfig, argv }) {
   });
 
   try {
-    const gasketConfig = await getGasketConfig(flags);
+    const env = getEnvironment(flags, id, warn);
+    const gasketConfig = await getGasketConfig(flags, env, id);
 
     if (gasketConfig) {
       const resolveFrom = flags.root;
@@ -37,8 +40,8 @@ async function initHook({ id, config: oclifConfig, argv }) {
 
       oclifConfig.gasket = gasket;
       await gasket.exec('initOclif', { oclifConfig });
-    } else if (id !== 'help') {
-      this.warn('No gasket.config file was found.');
+    } else {
+      warn('No gasket.config file was found.');
     }
 
   } catch (err) {

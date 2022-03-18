@@ -1,5 +1,4 @@
 const { Command, flags } = require('@oclif/command');
-const { applyEnvironmentOverrides } = require('@gasket/utils');
 
 /**
  * The GasketCommand can be extended to allow plugins to introduce new CLI
@@ -19,7 +18,7 @@ class GasketCommand extends Command {
 
   /**
    * Virtual method which may be overridden by subclasses, to adjust the
-   * Gasket Config before env overrides are applied.
+   * Gasket Config.
    *
    * @param {object} gasketConfig - Gasket configurations
    * @returns {object} gasketConfig
@@ -72,7 +71,7 @@ class GasketCommand extends Command {
      * @property {object} parsed.args - Named arguments
      */
     this.parsed = this.parse(this.constructor);
-    const parsedFlags = this.parsed.flags = this.parsed.flags || {};
+    this.parsed.flags = this.parsed.flags || {};
 
     // Provide details of invoked command to lifecycles
     this.gasket.command = {
@@ -80,18 +79,9 @@ class GasketCommand extends Command {
       ...this.parsed
     };
 
-    // Setup config env based on env flag if set
-    this.gasket.config.env = parsedFlags.env || this.gasket.config.env;
-
     // Allow command subclasses to modify config
     this.gasket.config = await this.gasketConfigure(this.gasket.config);
 
-    if (!this.gasket.config.env) {
-      this.gasket.config.env = 'development';
-      this.warn('No env specified, falling back to "development".');
-    }
-
-    this.gasket.config = applyEnvironmentOverrides(this.gasket.config, this.gasket.config, './gasket.config.local');
     // Allow plugins to do things with partial config state
     await this.gasket.exec('init');
     // Allow plugins to modify config
