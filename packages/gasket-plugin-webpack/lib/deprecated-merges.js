@@ -13,13 +13,13 @@ module.exports = function deprecatedMerges(gasket, initConfig, context) {
   const { smart: deprecatedSmartMerge } = require('webpack-merge');
 
   if ('webpack' in config) {
-    logger.warning(`DEPRECATED \`webpack\` in Gasket config - Prefer \`webpackConfig\` lifecycle. See _http://x.co/2wbpckCnfg`);
+    logger.warning(`DEPRECATED \`webpack\` in Gasket config - Prefer \`webpackConfig\` lifecycle. See http://x.co/2wbpckCnfg`);
   }
 
   const chain = new WebpackChain();
   execApplySync('webpackChain', (plugin, handler) => {
     const name = plugin ? plugin.name || 'unnamed plugin' : 'app lifecycles';
-    logger.warning(`DEPRECATED \`webpackChain\` lifecycle in ${ name } - Use \`webpackConfig\`. See _http://x.co/2wbpckCnfg`);
+    logger.warning(`DEPRECATED \`webpackChain\` lifecycle in ${ name } - Use \`webpackConfig\`. See http://x.co/2wbpckCnfg`);
     return handler(chain, context);
   });
 
@@ -31,7 +31,7 @@ module.exports = function deprecatedMerges(gasket, initConfig, context) {
 
   const configPartials = execApplySync('webpack', (plugin, handler) => {
     const name = plugin ? plugin.name || 'unnamed plugin' : 'app lifecycles';
-    logger.warning(`DEPRECATED \`webpack\` lifecycle in ${ name } - Use \`webpackConfig\`. See _http://x.co/2wbpckCnfg`);
+    logger.warning(`DEPRECATED \`webpack\` lifecycle in ${ name } - Use \`webpackConfig\`. See http://x.co/2wbpckCnfg`);
     return handler(baseConfig, context);
   });
 
