@@ -1,5 +1,9 @@
 # `@gasket/plugin-webpack`
 
+### 6.20.1
+
+- Fix migration links
+
 ### 6.19.0
 
 - Deprecating webpack-merge smart approaches ([#346])
