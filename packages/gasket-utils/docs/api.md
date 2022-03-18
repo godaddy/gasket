@@ -9,7 +9,8 @@ Name | Description
 
 Name | Description
 ------ | -----------
-[applyEnvironmentOverrides(gasketConfig, config, \[localFile\])] | Normalize the config by applying any environment or local overrides
+[applyConfigOverrides(config, context)] | Normalize the config by applying any overrides for environments, commands, or local-only config file.
+~~[applyEnvironmentOverrides(gasketConfig, config, \[localFile\])]~~ | Normalize the config by applying any environment or local overrides
 [runShellCommand(cmd, argv, options, \[debug\])] | Promise friendly wrapper to running a shell command (eg: git, npm, ls) which passes back any { stdout, stderr } to the error thrown.
 [tryRequire(path)] | Tries to require a module, but ignores if it is not found. If not found, result will be null.
 
@@ -130,7 +131,27 @@ npm based on process.env.
 | spawnWith | `object` | Options for child_process.spawn. |
 
 
-## applyEnvironmentOverrides(gasketConfig, config, \[localFile\])
+## applyConfigOverrides(config, context)
+
+Normalize the config by applying any overrides for environments, commands,
+or local-only config file.
+
+**Kind**: global function  
+**Returns**: `object` - config  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| config | `object` | Target config to be normalized |
+| context | `object` | Context for applying overrides |
+| context.env | `string` | Name of environment |
+| \[context.commandId\] | `string` | Name of command |
+| \[context.root\] | `string` | Project root; required if using localeFile |
+| \[context.localFile\] | `string` | Optional file to load relative to gasket root |
+
+
+## ~~applyEnvironmentOverrides(gasketConfig, config, \[localFile\])~~
+
+***Deprecated***
 
 Normalize the config by applying any environment or local overrides
 
@@ -215,6 +236,7 @@ const { tryRequire } = require('@gasket/utils');
 
 [PackageManager]:#packagemanager
 [`PackageManager`]:#new-packagemanageroptions
+[applyConfigOverrides(config, context)]:#applyconfigoverridesconfig-context
 [applyEnvironmentOverrides(gasketConfig, config, \[localFile\])]:#applyenvironmentoverridesgasketconfig-config-localfile
 [runShellCommand(cmd, argv, options, \[debug\])]:#runshellcommandcmd-argv-options-debug
 [tryRequire(path)]:#tryrequirepath

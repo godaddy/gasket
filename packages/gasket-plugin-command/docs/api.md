@@ -58,7 +58,7 @@ Gasket lifecycles, following the `init` and `configure` Gasket lifecycles.
 ### gasketCommand.gasketConfigure(gasketConfig)
 
 Virtual method which may be overridden by subclasses, to adjust the
-Gasket Config before env overrides are applied.
+Gasket Config.
 
 **Kind**: instance method of [`GasketCommand`]  
 **Returns**: `object` - gasketConfig  
