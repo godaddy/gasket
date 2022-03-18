@@ -7,7 +7,12 @@ describe('Plugin', () => {
 
   beforeEach(() => {
     gasket = {
-      config: {},
+      command: {
+        id: 'start'
+      },
+      config: {
+        env: 'test'
+      },
       execWaterfall: jest.fn((event, config) => Promise.resolve(config))
     };
   });

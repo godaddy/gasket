@@ -6,6 +6,9 @@ describe('mergeRootConfig', () => {
 
   beforeEach(() => {
     mockGasket = {
+      command: {
+        id: 'start'
+      },
       config: {
         root: path.join(__dirname, 'fixtures', 'root-config'),
         env: 'dev'
@@ -49,6 +52,32 @@ describe('mergeRootConfig', () => {
         url: 'https://some-custom.url/',
         requestRate: 9000
       }
+    });
+  });
+
+  // overrides are thoroughly tested in @gasket/utils - we are just checking
+  // that the arguments are being passed through as expected
+  describe('overrides', function () {
+    it('applies env overrides', async () => {
+      mockConfig.example = 'base';
+      mockConfig.environments = {
+        dev: {
+          example: 'overridden'
+        }
+      };
+      result = mergeRootConfig(mockGasket, mockConfig);
+      expect(result).toHaveProperty('example', 'overridden');
+    });
+
+    it('applies command overrides', async () => {
+      mockConfig.example = 'base';
+      mockConfig.commands = {
+        start: {
+          example: 'overridden'
+        }
+      };
+      result = mergeRootConfig(mockGasket, mockConfig);
+      expect(result).toHaveProperty('example', 'overridden');
     });
   });
 });

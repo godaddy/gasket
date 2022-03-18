@@ -51,7 +51,7 @@ MyCommand.flags = {
 
 While the `gasketRun` method must be implemented, the `gasketConfigure` method
 can be optionally overridden and is available for commands to adjust the Gasket
-config, _before_ [environment overrides] are applied.
+config.
 
 The static `id` property, is the name of the command which will be used with the
 Gasket CLI in your app. For example `npx gasket my-cmd`. The `description`
@@ -159,17 +159,16 @@ The `configure` lifecycle executes for each Gasket command.
 Configuration for a Gasket session goes through a series of steps:
 
 1. Config file loaded by CLI
-2. Default plugins (including this) are added
-3. Environment is set by base `GasketCommand`
-4. Commands adjust config by implementing `gasketConfigure`
-5. Environment overrides are applied by base `GasketCommand`
-   - _`init` lifecycle is executed_
-6. Plugins adjust config by hooking `configure` lifecycle
+   - Environment is set
+   - Overrides are applied
+   - Default plugins (including this) are added
+2. Commands adjust config by implementing `gasketConfigure`
+3. -_`init` lifecycle is executed_
+4. Plugins adjust config by hooking `configure` lifecycle
 
-When the CLI starts up, it attempts to loads the `gasket.config` in its default
-expected location, or as specified with [command flags]. After commands have
-done any config adjustments, plugins then have the opportunity in this
-lifecycle.
+When the CLI starts up, it attempts to load the `gasket.config` in its default
+expected location, or as specified with [command flags]. Plugins then have the
+opportunity in the `configure` lifecycle.
 
 ```js
 // gasket-plugin-example.js

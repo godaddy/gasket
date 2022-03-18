@@ -6,6 +6,7 @@ describe('index', () => {
 
     const expected = [
       'tryRequire',
+      'applyConfigOverrides',
       'applyEnvironmentOverrides',
       'runShellCommand',
       'PackageManager'
