@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-webpack",
-  "version": "6.19.0",
+  "version": "6.20.1",
   "description": "Adds webpack support to your application",
   "main": "lib",
   "types": "lib/index.d.ts",
