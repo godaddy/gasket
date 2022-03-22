@@ -3,9 +3,11 @@
   "version": "6.17.0",
   "description": "Essential module resolution & configuration management for gasket plugins & presets.",
   "main": "lib",
+  "types": "types",
   "files": [
     "lib",
-    "docs"
+    "docs",
+    "types"
   ],
   "scripts": {
     "lint": "eslint .",

@@ -2,9 +2,14 @@
  * Helper to check for an existing store on context, otherwise make a new instance.
  *
  * @param {function} fallbackMakeStore - A makeStore function to create new stores
- * @returns {function(object): Store} getOrCreateStore
+ * @returns {function(object): object} getOrCreateStore
  */
 export default function getOrCreateStore(fallbackMakeStore) {
+  /**
+   * Check context
+   * @param {object} ctx - Context
+   * @returns {object} store
+   */
   return function checkContext(ctx = {}) {
     // normalize Page and App context from Next.js
     const _ctx = ctx.ctx || ctx;

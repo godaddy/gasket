@@ -1,6 +1,17 @@
 /**
- * NOTICE! These are common utilities used by packages in browser and this plugin.
+ * NOTICE! These are common utilities used by packages in browser and node.
  * Do not rely on req, or window.
+ */
+
+/**
+ * Locale settings and known locale file paths
+ * @typedef {object} LocaleManifest
+ *
+ * @property {string} [basePath] - Base URL where locale files are served
+ * @property {LocalePathPart} localesPath - Path to endpoint with JSON files
+ * @property {Locale} defaultLocale - Locale to fallback to when loading files
+ * @property {{Locale: Locale}} [localesMap] - Mapping of locales to share files
+ * @property {{LocalePath: string}} paths - Available locale files to content hashes
  */
 
 /**
@@ -197,7 +208,7 @@ function LocaleUtils(config) {
    * @param {string} localesDir - Disk path to locale files dir
    * @returns {LocalesProps} localesProps
    */
-  this.serverLoadData = () => {
+  this.serverLoadData = (localePathPart, locale, localesDir) => {
     throw new Error('Not available in browser');
   };
   /* eslint-enable */

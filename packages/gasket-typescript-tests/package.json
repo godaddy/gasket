@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/typescript-tests",
   "devDependencies": {
+    "@gasket/data": "^6.17.0",
     "@gasket/engine": "^6.19.0",
     "@gasket/plugin-analyze": "^6.19.0",
     "@gasket/plugin-command": "^6.20.0",

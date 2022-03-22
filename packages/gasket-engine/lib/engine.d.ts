@@ -11,8 +11,8 @@ declare module '@gasket/engine' {
   export type HookHandler<Id extends HookId> = (
     gasket: Gasket,
     ...args: Parameters<HookExecTypes[Id]>
-  ) => ReturnType<HookExecTypes[Id]>;    
-  
+  ) => ReturnType<HookExecTypes[Id]>;
+
   type HookWithTimings<Id extends HookId> = {
     timing: {
       before?: Array<string>;
@@ -22,7 +22,7 @@ declare module '@gasket/engine' {
     };
     handler: HookHandler<Id>;
   };
-  
+
   export type Hook<Id extends HookId> = HookWithTimings<Id> | HookHandler<Id>;
 
   export type Plugin = {
@@ -32,8 +32,11 @@ declare module '@gasket/engine' {
     };
   };
 
-  // This is the config 
+  // This is the config
   export interface GasketConfig {
+    command: {
+      id: string
+    }
     root: string,
     env: string
   }
@@ -72,7 +75,7 @@ declare module '@gasket/engine' {
     ): Array<Return>
   }
 
-  type PartialRecursive<T> = 
+  type PartialRecursive<T> =
     T extends Object
       ? { [K in keyof T]?: PartialRecursive<T[K]> } | undefined
       : T | undefined

@@ -9,8 +9,8 @@ const { pluginIdentifier, presetIdentifier } = require('./identifiers');
  *
  *
  * @property {string} name - Name of preset
- * @property {string} module - Actual module content
- * @property {string} [package] - Package.json contents
+ * @property {object} module - Actual module content
+ * @property {object} [package] - Package.json contents
  * @property {string} [version] - Resolved version
  * @property {string} [path] - Path to the root of package
  * @property {string} [from] - Name of module which requires this module
@@ -55,7 +55,7 @@ class Loader extends Resolver {
   /**
    * Loads a module with additional metadata
    *
-   * @param {string} module - Module content
+   * @param {object} module - Module content
    * @param {string} moduleName - Name of module to load
    * @param {object} [meta] - Additional meta data
    * @returns {ModuleInfo} module
@@ -171,7 +171,7 @@ class Loader extends Resolver {
    * @param {object}                config         - Presets and plugins to load
    * @param {PresetName[]}          config.presets - Presets to load and add plugins from
    * @param {PluginName[]|module[]} config.add     - Names of plugins to load
-   * @param {string[]}              config.remove  - Names of plugins to remove (from presets)
+   * @param {PluginName[]}          config.remove  - Names of plugins to remove (from presets)
    * @returns {{presets: PresetInfo[], plugins: PluginInfo[]}} results
    */
   loadConfigured(config) {

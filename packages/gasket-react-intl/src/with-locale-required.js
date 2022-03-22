@@ -41,8 +41,8 @@ function attachGetInitialProps(Wrapper, localePathPart) {
  * @param {LocalePathPart} localePathPart - Path containing locale files
  * @param {object} [options] - Options
  * @param {React.Component} [options.loading=null] - Custom component to show while loading
- * @param {React.Component} [options.initialProps=false] - Preload locales during SSR with Next.js pages
- * @param {React.Component} [options.forwardRef=false] - Forward refs
+ * @param {boolean} [options.initialProps=false] - Preload locales during SSR with Next.js pages
+ * @param {boolean} [options.forwardRef=false] - Forward refs
  * @returns {function} wrapper
  */
 export default function withLocaleRequired(localePathPart = defaultPath, options = {}) {

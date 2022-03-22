@@ -4,6 +4,7 @@
   "description": "Internal helpers used by loaders to resolve locale file paths",
   "main": "lib/server.js",
   "browser": "lib/index.js",
+  "types": "lib/index.d.ts",
   "files": [
     "lib",
     "docs"

@@ -10,12 +10,10 @@
  * @param {Object.<string,*>} preloadedState - State to preload store with
  * @returns {Object.<string,function>} placeholder reducers
  */
-export default function placeholderReducers(reducers = {}, preloadedState = {}) {
-  const keys = new Set(Object.keys(preloadedState));
-  keys.add('config'); // from @gasket/plugin-config
-
-  return Array.from(keys).reduce((acc, cur) => {
-    if (!(cur in reducers)) acc[cur] = f => f || preloadedState[cur] || null;
-    return acc;
-  }, {});
-}
+export default function placeholderReducers(reducers?: {
+    [x: string]: Function;
+}, preloadedState?: {
+    [x: string]: any;
+}): {
+    [x: string]: Function;
+};

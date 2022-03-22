@@ -5,9 +5,11 @@
   "main": "lib",
   "browser": "lib",
   "module": "src",
+  "types": "types",
   "files": [
     "lib",
-    "src"
+    "src",
+    "types"
   ],
   "scripts": {
     "lint": "eslint .",

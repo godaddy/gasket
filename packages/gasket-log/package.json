@@ -5,6 +5,7 @@
   "main": "src/server.js",
   "browser": "lib/client.js",
   "module": "src/client.js",
+  "types": "src/index.d.ts",
   "files": [
     "lib",
     "src"

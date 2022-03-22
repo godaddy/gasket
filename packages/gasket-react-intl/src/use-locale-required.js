@@ -8,7 +8,7 @@ import { GasketIntlContext } from './context';
  * React that fetches a locale file and returns loading status
  *
  * @param {LocalePathPart} localePathPart - Path containing locale files
- * @returns {LocalePathStatus} status
+ * @returns {LocaleStatus} status
  */
 export default function useLocaleRequired(localePathPart) {
   const { locale, status = {}, dispatch } = useContext(GasketIntlContext);

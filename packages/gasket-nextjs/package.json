@@ -5,6 +5,7 @@
   "main": "lib",
   "browser": "lib",
   "module": "src",
+  "types": "lib/index.d.ts",
   "files": [
     "src",
     "lib"

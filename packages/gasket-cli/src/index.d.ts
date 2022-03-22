@@ -30,7 +30,6 @@ export interface ModuleInfo {
   path?: string;
   package?: PackageJson;
   version?: string;
-  name?: string;
 }
 
 export interface PresetInfo extends ModuleInfo {}
@@ -51,7 +50,7 @@ export interface ConfigBuilder<Config> {
   /**
    * Performs an intelligent, domain-aware merge of the `value` for
    * the given `key` into the package.json fields associated with this instance.
-   * 
+   *
    * @param key - Field in package.json to add or extend.
    * @param value - Target value to set for key provided.
    * @param source - Plugin to blame if conflicts arise from this operation.
@@ -197,7 +196,7 @@ declare module "@gasket/engine" {
     initOclif(args: { oclifConfig: Config }): MaybeAsync<void>;
     prompt(
       context: CreateContext,
-      utils: { 
+      utils: {
         prompt: Inquirer,
         addPlugins: (plugins: Array<string>) => Promise<void>
       }
