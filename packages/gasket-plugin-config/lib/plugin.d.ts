@@ -18,6 +18,6 @@ declare module '@gasket/engine' {
 
 declare module '@gasket/data' {
   export interface GasketData {
-    config: object
+    config?: object
   }
 }

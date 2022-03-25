@@ -52,11 +52,10 @@ export interface LocalesState {
 /**
  * Enum for local status values
  */
-export type LocaleStatus = string;
-export namespace LocaleStatus {
-    const LOADING: string;
-    const LOADED: string;
-    const ERROR: string;
+export enum LocaleStatus {
+    LOADING = 'LOADING',
+    LOADED = 'LOADED',
+    ERROR = 'ERROR'
 }
 
 /**
@@ -66,18 +65,6 @@ export interface LocalesProps extends LocalesState {
     locale: Locale
 }
 
-/**
- * @classdesc Utility class for loading locale files
- *
- * @param {Object} config - Configuration
- * @param {LocaleManifest} config.manifest - Locale file manifest
- * @param {string} [config.basePath] - Locale file base path. Defaults to `manifest.basePath`
- * @constructor
- */
-export function LocaleUtils(config: {
-    manifest: LocaleManifest;
-    basePath?: string;
-}): void;
 export class LocaleUtils {
     /**
      * @classdesc Utility class for loading locale files

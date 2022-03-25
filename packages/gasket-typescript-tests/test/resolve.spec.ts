@@ -9,6 +9,8 @@ import {
 } from '@gasket/resolve';
 
 describe.only('@gasket/resolve', () => {
+  const perform = false;
+
   describe('pluginIdentifier', function () {
     it('exposes expected member types', function () {
       const id = pluginIdentifier('@gasket/plugin-example');
@@ -64,7 +66,6 @@ describe.only('@gasket/resolve', () => {
 
   describe('Loader', function () {
     const loader = new Loader({})
-    let perform = false;
 
     it('accepts expected arguments ', function () {
       new Loader({require: require, resolveFrom: ['.']})
@@ -126,7 +127,6 @@ describe.only('@gasket/resolve', () => {
 
   describe('Resolver', function () {
     const resolver = new Resolver({})
-    let perform = false;
 
     it('accepts expected arguments ', function () {
       new Resolver({require: require, resolveFrom: ['.']})

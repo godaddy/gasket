@@ -1,30 +1,4 @@
 /**
- * Generate RegExp to help determine aspects of an identifier for a project
- *
- * @param {string} projectName - Name of the project
- * @param {string} [type] - Identifier type, defaults to 'plugin'
- * @returns {{prefixed: {project: RegExp, user: RegExp}, scope: RegExp}} re
- * @private
- */
-export function matchMaker(projectName: string, type?: string): {
-    prefixed: {
-        project: RegExp;
-        user: RegExp;
-    };
-    scope: RegExp;
-};
-/**
- * Generate helpers to expand short names to long names for identifiers of a project
- *
- * @param {string} projectName - Name of the project
- * @param {string} [type] - Identifier type, defaults to 'plugin'
- * @returns {{prefixed: prefixed}} expand
- * @private
- */
-export function expandMaker(projectName: string, type?: string): {
-    prefixed: string;
-};
-/**
  * Create function used to make instances of PackageIdentifier for a project
  *
  * The `projectName` and `type` are components of the naming convention such as

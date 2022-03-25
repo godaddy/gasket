@@ -5,11 +5,10 @@
   "main": "lib",
   "browser": "lib",
   "module": "src",
-  "types": "types",
+  "types": "src/index.d.ts",
   "files": [
     "lib",
-    "src",
-    "types"
+    "src"
   ],
   "scripts": {
     "lint": "eslint .",

@@ -37,6 +37,6 @@ export interface GasketDataIntl extends LocalesProps {
 
 declare module '@gasket/data' {
   export interface GasketData {
-    intl: GasketDataIntl
+    intl?: GasketDataIntl
   }
 }
