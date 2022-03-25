@@ -101,12 +101,12 @@ declare function applyEnvironmentOverrides(gasketConfig: GasketConfig, config: G
  * }
  *
  * @param cmd - Binary that is run
- * @param argv - Arguments passed to npm binary through spawn.
- * @param options options passed to npm binary through spawn
+ * @param [argv] - Arguments passed to npm binary through spawn.
+ * @param [options] options passed to npm binary through spawn
  * @param [options.signal] AbortControl signal allowing process to be canceled
  * @param [debug] When present pipes std{out,err} to process.*
  * @returns results
  */
-export function runShellCommand(cmd: string, argv: any[], options?: {
+export function runShellCommand(cmd: string, argv?: string[], options?: {
   signal?: object;
-}, debug?: boolean): Promise<any>;
+}, debug?: boolean): Promise<{ stdout: string }>;
