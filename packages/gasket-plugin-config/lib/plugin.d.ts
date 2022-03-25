@@ -7,7 +7,7 @@ declare module '@gasket/engine' {
   }
 
   export interface HookExecTypes {
-    appEnvConfig(config: any): MaybeAsync<any>,
+    appEnvConfig(config: object): MaybeAsync<object>,
     appRequestConfig(
       config: object,
       req: IncomingMessage,

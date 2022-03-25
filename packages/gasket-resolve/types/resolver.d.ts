@@ -13,8 +13,7 @@ export class Resolver {
         resolveFrom?: string | string[];
         require?: Function;
     });
-    _resolveFrom: any;
-    _require: any;
+
     /**
      * Returns the resolved module filename
      *

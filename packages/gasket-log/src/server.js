@@ -112,7 +112,7 @@ class Log {
   }
 
   /**
-   * Proxy to winston.log using the predefined level.
+   * Default level logging.
    *
    * @param {*} args Info to log and any optional metadata.
    * @returns {Log} fluent interface.

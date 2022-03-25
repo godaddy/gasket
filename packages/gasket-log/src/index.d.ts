@@ -19,50 +19,64 @@ export default class Log {
         local?: boolean;
         prefix?: string;
     });
-    /** @private */
-    private options;
-    /** @private */
-    private local;
-    /** @private */
-    private silent;
-    /** @private */
-    private level;
+
+    public log(...args: any): void;
     /**
-     * Get the prefix
-     * @returns {string} prefix
-     * @private
-     */
-    private get prefix();
-    /**
-     * Combine log formatters based on environment.
-     *
-     * @returns {Object} Combined formats.
-     * @private
-     */
-    private format;
-    /**
-     * Return winston transports based on environment.
-     *
-     * @returns {Array} transports
-     * @private
-     */
-    private transports;
-    /**
-     * Return the configured levels
-     *
-     * @returns {Object.<string,number>} levels
-     * @private
-     */
-    private get levels();
-    /**
-     * Proxy to winston.log using the predefined level.
+     * Emergency level logging.
      *
      * @param {*} args Info to log and any optional metadata.
-     * @returns {Log} fluent interface.
      * @public
      */
-    public log(...args: any): void;
-
+    public emerg(...args: any): void;
+    /**
+     * Alert level logging.
+     *
+     * @param {*} args Info to log and any optional metadata.
+     * @public
+     */
+    public alert(...args: any): void;
+    /**
+     * Critical level logging.
+     *
+     * @param {*} args Info to log and any optional metadata.
+     * @public
+     */
+    public crit(...args: any): void;
+    /**
+     * Error level logging.
+     *
+     * @param {*} args Info to log and any optional metadata.
+     * @public
+     */
+    public error(...args: any): void;
+    /**
+     * Warning level logging.
+     *
+     * @param {*} args Info to log and any optional metadata.
+     * @public
+     */
+    public warning(...args: any): void;
+    /**
+     * Notice level logging.
+     *
+     * @param {*} args Info to log and any optional metadata.
+     * @public
+     */
+    public notice(...args: any): void;
+    /**
+     * Info level logging.
+     *
+     * @param {*} args Info to log and any optional metadata.
+     * @public
+     */
+    public info(...args: any): void;
+    /**
+     * Debug level logging.
+     *
+     * @param {*} args Info to log and any optional metadata.
+     * @public
+     */
+    public debug(...args: any): void;
     /**
      * Dynamically created methods properties for each level name.
      *

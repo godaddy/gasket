@@ -80,7 +80,7 @@ declare module '@gasket/engine' {
       ? { [K in keyof T]?: PartialRecursive<T[K]> } | undefined
       : T | undefined
 
-  export type GasketConfigFile = Omit<GasketConfig, 'root' | 'env'> & {
+  export type GasketConfigFile = Omit<GasketConfig, 'root' | 'env' | 'command'> & {
     root?: string,
     env?: string,
 

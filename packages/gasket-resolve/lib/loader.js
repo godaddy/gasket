@@ -171,7 +171,7 @@ class Loader extends Resolver {
    * @param {object}                config         - Presets and plugins to load
    * @param {PresetName[]}          config.presets - Presets to load and add plugins from
    * @param {PluginName[]|module[]} config.add     - Names of plugins to load
-   * @param {PluginName[]}          config.remove  - Names of plugins to remove (from presets)
+   * @param {PluginName[]}          [config.remove] - Names of plugins to remove (from presets)
    * @returns {{presets: PresetInfo[], plugins: PluginInfo[]}} results
    */
   loadConfigured(config) {

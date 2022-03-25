@@ -34,7 +34,7 @@
  * Preset module with meta data
  *
  * @typedef {ModuleData} PresetData
- * @property {PresetData[]} presets - Presets that this preset extends
+ * @property {PresetData[]} [presets] - Presets that this preset extends
  * @property {PluginData[]} plugins - Plugins this preset uses
  */
 
@@ -62,7 +62,7 @@
  * Collection data for modules configured for app
  *
  * @typedef {object} Metadata
- * @property {AppData[]} app - App and main package data
+ * @property {AppData} app - App and main package data
  * @property {PresetData[]} presets - Preset data with dependency hierarchy
  * @property {PluginData[]} plugins - Flat list of registered plugin data
  * @property {ModuleData[]} modules - Supporting module data

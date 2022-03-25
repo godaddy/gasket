@@ -1,5 +1,6 @@
 import type { LoggerOptions } from 'winston'
 import type Transport from 'winston-transport';
+import type Log from '@gasket/log';
 
 declare module '@gasket/engine' {
   export interface GasketConfig {
@@ -12,5 +13,9 @@ declare module '@gasket/engine' {
 
   export interface HookExecTypes {
     logTransports(): MaybeAsync<MaybeMultiple<Transport>>
+  }
+
+  export interface Gasket {
+    logger: Log
   }
 }

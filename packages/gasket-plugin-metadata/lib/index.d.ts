@@ -18,10 +18,10 @@ export interface ModuleData<Module = any> {
 
   /** Name of module which requires this module */
   from?: string,
-  
+
   /** Range by which this module was required */
   range?: string,
-  
+
   /** Path to a doc file or URL */
   link?: string
 }
@@ -50,7 +50,7 @@ export interface PluginData extends ModuleData {
 /** Preset module with meta data */
 export interface PresetData extends ModuleData {
   /** Presets that this preset extends */
-  presets: Array<PresetData>,
+  presets?: Array<PresetData>,
 
   /** Plugins this preset uses */
   plugins: Array<PluginData>,
@@ -83,7 +83,7 @@ export interface LifecycleData extends DetailData {
 /** Collection data for modules configured for app */
 export interface Metadata {
   /** App and main package data */
-  app: Array<AppData>,
+  app: AppData,
 
   /** Preset data with dependency hierarchy */
   presets: Array<PresetData>,
@@ -98,5 +98,9 @@ export interface Metadata {
 declare module '@gasket/engine' {
   export interface HookExecTypes {
     metadata(origData: PluginData): MaybeAsync<PluginData>
+  }
+
+  export interface Gasket {
+    metadata: Metadata
   }
 }

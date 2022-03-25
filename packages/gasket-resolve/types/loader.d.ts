@@ -55,16 +55,24 @@ export interface PresetInfo extends ModuleInfo {
  * @extends Resolver
  */
 export class Loader extends Resolver {
-    constructor(...args: any[]);
+    /**
+     * @param {object} options - Options
+     * @param {string|string[]} [options.resolveFrom] - Path(s) to resolve modules from
+     * @param {require} [options.require] - Require instance to use
+     */
+    constructor(options: {
+        resolveFrom?: string | string[];
+        require?: Function;
+    });
     /**
      * Loads a module with additional metadata
      *
-     * @param {string} module - Module content
+     * @param {object} module - Module content
      * @param {string} moduleName - Name of module to load
      * @param {object} [meta] - Additional meta data
      * @returns {ModuleInfo} module
      */
-    getModuleInfo(module: string, moduleName: string, meta?: object): ModuleInfo;
+    getModuleInfo(module: object, moduleName: string, meta?: object): ModuleInfo;
     /**
      * Loads a module with additional metadata
      *
@@ -99,13 +107,13 @@ export class Loader extends Resolver {
      * @param {object}                config         - Presets and plugins to load
      * @param {PresetName[]}          config.presets - Presets to load and add plugins from
      * @param {PluginName[]|module[]} config.add     - Names of plugins to load
-     * @param {string[]}              config.remove  - Names of plugins to remove (from presets)
+     * @param {string[]}              [config.remove] - Names of plugins to remove (from presets)
      * @returns {{presets: PresetInfo[], plugins: PluginInfo[]}} results
      */
     loadConfigured(config: {
         presets: PresetName[];
         add: PluginName[] | object[];
-        remove: PluginName[];
+        remove?: PluginName[];
     }): {
         presets: PresetInfo[];
         plugins: PluginInfo[];
