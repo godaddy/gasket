@@ -7,9 +7,9 @@ describe('@gasket/fetch', function () {
   it('has expected API', function () {
     if (perform) {
       fetch('url', { method: 'POST' });
-      // @ts-ignore-error
+      // @ts-expect-error
       fetch(123);
-      // @ts-ignore-error
+      // @ts-expect-error
       fetch('url', { bogus: true });
     }
   });

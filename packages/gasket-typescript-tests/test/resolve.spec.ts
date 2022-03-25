@@ -8,7 +8,7 @@ import {
   ModuleInfo
 } from '@gasket/resolve';
 
-describe.only('@gasket/resolve', () => {
+describe('@gasket/resolve', () => {
   const perform = false;
 
   describe('pluginIdentifier', function () {
@@ -29,7 +29,7 @@ describe.only('@gasket/resolve', () => {
       const hasProjectScope: boolean = id.hasProjectScope;
       const hasVersion: boolean = id.hasVersion;
 
-      // @ts-ignore-error
+      // @ts-expect-error
       id.bogus;
 
       const nextId = id.nextFormat();
@@ -56,7 +56,7 @@ describe.only('@gasket/resolve', () => {
       const hasVersion: boolean = id.hasVersion;
 
       // test invalid member
-      // @ts-ignore-error
+      // @ts-expect-error
       id.bogus;
 
       const nextId = id.nextFormat();
@@ -86,7 +86,7 @@ describe.only('@gasket/resolve', () => {
           result = loader.loadPreset('@example/plugin')
           result = loader.loadPreset('@example/plugin', {extra: true})
           result = loader.loadPreset('@example/plugin', {extra: true}, {shallow: true})
-          // @ts-ignore-error
+          // @ts-expect-error
           result = loader.loadPreset('@example/plugin', {extra: true}, {bogus: 'bad'})
         }
       });

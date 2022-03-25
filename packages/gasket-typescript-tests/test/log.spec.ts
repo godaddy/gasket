@@ -10,7 +10,7 @@ describe('gasket/log', function () {
 
     logger = new Log({ level: 'debug', local: true, prefix: 'awesome', silent: false });
 
-    // @ts-ignore-error
+    // @ts-expect-error
     logger = new Log({ bogus: true });
   });
 

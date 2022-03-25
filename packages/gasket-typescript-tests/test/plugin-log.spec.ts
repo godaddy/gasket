@@ -44,9 +44,7 @@ describe('@gasket/plugin-log', () => {
       notice(...args): void {},
       log(...args: any): void {},
 
-      close(): Promise<any> {
-        return Promise.resolve(undefined);
-      },
+      async close(): Promise<any> {},
     };
   });
 
@@ -62,8 +60,7 @@ describe('@gasket/plugin-log', () => {
       notice(...args): void {},
       log(...args: any): void {},
 
-      // @ts-ignore-error
-      close() {},
+      async close(): Promise<any> {},
 
       custom(...args: any): void {}
     };
