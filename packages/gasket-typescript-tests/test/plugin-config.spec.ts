@@ -1,4 +1,4 @@
-import { Gasket, GasketConfig, GasketConfigFile, Hook } from "@gasket/engine";
+import { Gasket, GasketConfig, GasketConfigFile, Hook } from '@gasket/engine';
 import '@gasket/plugin-config';
 
 describe('@gasket/plugin-config', () => {

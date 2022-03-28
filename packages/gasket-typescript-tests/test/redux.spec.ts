@@ -1,4 +1,4 @@
-import {configureMakeStore, getOrCreateStore, MakeStoreFn} from '@gasket/redux';
+import { configureMakeStore, getOrCreateStore, MakeStoreFn } from '@gasket/redux';
 import type { Store } from 'redux';
 
 
@@ -26,12 +26,12 @@ describe('gasket/redux', function () {
 
   describe('getOrCreateStore', function () {
     it('has expected API', function () {
-      if(perform) {
+      if (perform) {
         const fn: MakeStoreFn = (state) => {
-          return {} as Store
-        }
+          return {} as Store;
+        };
 
-        const results: object = getOrCreateStore(fn)
+        const results: object = getOrCreateStore(fn);
       }
     });
   });

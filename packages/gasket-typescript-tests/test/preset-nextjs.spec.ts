@@ -2,6 +2,8 @@ import type { GasketConfigFile, Plugin } from '@gasket/engine';
 import '@gasket/preset-nextjs';
 
 describe('@gasket/preset-nextjs', () => {
+  const { log } = console;
+
   it('imports config type injections for all plugins', () => {
     const config: GasketConfigFile = {
       http: 8080,
@@ -14,18 +16,18 @@ describe('@gasket/preset-nextjs', () => {
           webpack5: true
         }
       }
-    }
+    };
   });
 
   it('imports lifecycles for all plugins', () => {
     const plugin: Plugin = {
-      name: "dummy-plugin",
+      name: 'dummy-plugin',
       hooks: {
         preboot() {
-          console.log('Preparing...')
+          log('Preparing...');
         },
         servers(gasket, servers) {
-          console.log(servers.http);
+          log(servers.http);
         },
         nextConfig(gasket, config) {
           return {
@@ -33,9 +35,9 @@ describe('@gasket/preset-nextjs', () => {
             future: {
               webpack5: true
             }
-          }
+          };
         }
       }
-    }
+    };
   });
 });

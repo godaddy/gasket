@@ -1,11 +1,11 @@
-import {applyConfigOverrides, runShellCommand, tryRequire} from '@gasket/utils';
-import {GasketConfig} from "@gasket/engine";
+import { applyConfigOverrides, runShellCommand, tryRequire } from '@gasket/utils';
+import { GasketConfig } from '@gasket/engine';
 
 describe('@gasket/utils', function () {
   const perform = false;
 
   describe('applyConfigOverrides', function () {
-    const config: GasketConfig = { command: { id: 'debug' }, root: '/', env: 'debug' }
+    const config: GasketConfig = { command: { id: 'debug' }, root: '/', env: 'debug' };
 
     it('has expected API', function () {
       if (perform) {
@@ -26,9 +26,9 @@ describe('@gasket/utils', function () {
     it('has expected API', function () {
       if (perform) {
         let results: Promise<{ stdout: string }>;
-        results = runShellCommand('cmd')
-        results = runShellCommand('cmd', ['--flag'])
-        results = runShellCommand('cmd', [], { signal: new AbortController().signal })
+        results = runShellCommand('cmd');
+        results = runShellCommand('cmd', ['--flag']);
+        results = runShellCommand('cmd', [], { signal: new AbortController().signal });
       }
     });
   });
@@ -36,8 +36,7 @@ describe('@gasket/utils', function () {
   describe('tryRequire', function () {
     it('has expected API', function () {
       if (perform) {
-        let results: object | null;
-        results = tryRequire('path/to/module')
+        const results: object | null = tryRequire('path/to/module');
       }
     });
   });

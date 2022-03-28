@@ -1,4 +1,4 @@
-import { GasketConfigFile } from "@gasket/engine";
+import { GasketConfigFile } from '@gasket/engine';
 import '@gasket/plugin-docsify';
 
 describe('@gasket/plugin-docsify', () => {

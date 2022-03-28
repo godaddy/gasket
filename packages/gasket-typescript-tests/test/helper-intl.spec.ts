@@ -1,4 +1,4 @@
-import {LocaleStatus, LocaleUtils} from '@gasket/helper-intl';
+import { LocaleStatus, LocaleUtils } from '@gasket/helper-intl';
 
 describe('@gasket/helper-intl', function () {
   const perform = false;
@@ -22,9 +22,9 @@ describe('@gasket/helper-intl', function () {
     });
 
     it('LocaleStatus enum type', function () {
-      const loading: string = LocaleStatus.LOADING
-      const loaded: string = LocaleStatus.LOADED
-      const error: string = LocaleStatus.ERROR
+      const loading: string = LocaleStatus.LOADING;
+      const loaded: string = LocaleStatus.LOADED;
+      const error: string = LocaleStatus.ERROR;
     });
   });
 });

@@ -1,4 +1,4 @@
-import type { GasketConfigFile } from '@gasket/engine'
+import type { GasketConfigFile } from '@gasket/engine';
 import '@gasket/plugin-analyze';
 
 describe('@gasket/plugin-analyze', () => {
@@ -14,6 +14,6 @@ describe('@gasket/plugin-analyze', () => {
           nonsense: 'value'
         }
       }
-    }
+    };
   });
 });

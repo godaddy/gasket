@@ -1,5 +1,5 @@
 import type { IncomingMessage, OutgoingMessage } from 'http';
-import type { Gasket, GasketConfigFile, Hook } from "@gasket/engine";
+import type { Gasket, GasketConfigFile, Hook } from '@gasket/engine';
 import type { Store } from 'redux';
 import '@gasket/plugin-redux';
 
@@ -27,7 +27,7 @@ describe('@gasket/plugin-redux', () => {
           }
         }
       }
-    }
+    };
   });
 
   it('adds an initReduxState lifecycle', () => {
@@ -40,8 +40,8 @@ describe('@gasket/plugin-redux', () => {
       return {
         ...state,
         another: 'property'
-      }
-    }
+      };
+    };
   });
 
   it('adds an initReduxStore lifecycle', () => {
@@ -52,6 +52,6 @@ describe('@gasket/plugin-redux', () => {
       res: OutgoingMessage
     ) => {
       store.dispatch({ type: 'init', payload: { some: 'data' } });
-    }
+    };
   });
 });

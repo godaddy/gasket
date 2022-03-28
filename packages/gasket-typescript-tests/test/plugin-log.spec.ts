@@ -1,4 +1,4 @@
-import type { Gasket, GasketConfigFile, Hook } from "@gasket/engine";
+import type { Gasket, GasketConfigFile, Hook } from '@gasket/engine';
 import type Log from '@gasket/log';
 import { transports } from 'winston';
 import '@gasket/plugin-log';
@@ -11,7 +11,7 @@ describe('@gasket/plugin-log', () => {
       },
 
       winston: {
-        level: 'warn',
+        level: 'warn'
       },
 
       environments: {
@@ -29,7 +29,7 @@ describe('@gasket/plugin-log', () => {
       return [
         new transports.Console()
       ];
-    }
+    };
   });
 
   it('adds a logger property to Gasket', () => {
@@ -44,7 +44,7 @@ describe('@gasket/plugin-log', () => {
       notice(...args): void {},
       log(...args: any): void {},
 
-      async close(): Promise<any> {},
+      async close(): Promise<any> {}
     };
   });
 

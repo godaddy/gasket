@@ -1,4 +1,4 @@
-import type { GasketConfigFile, Plugin } from "@gasket/engine";
+import type { GasketConfigFile, Plugin } from '@gasket/engine';
 import '@gasket/plugin-workbox';
 
 describe('@gasket/plugin-workbox', () => {
@@ -12,12 +12,12 @@ describe('@gasket/plugin-workbox', () => {
           }]
         }
       }
-    }
+    };
   });
 
   it('adds a workbox lifecycle', () => {
     const plugin: Plugin = {
-      name: "fake-plugin",
+      name: 'fake-plugin',
       hooks: {
         workbox: function (gasket, config, context) {
           // `config` is the initial workbox config
@@ -26,16 +26,16 @@ describe('@gasket/plugin-workbox', () => {
           if (req) {
             // adjust config for request-based service workers using headers, cookies, etc.
           }
-    
+
           // return a config partial which will be merged
           return {
             runtimeCaching: [{
               urlPattern: /https:\/\/some.api.com/,
               handler: 'networkFirst'
             }]
-          }
+          };
         }
       }
-    }
+    };
   });
 });

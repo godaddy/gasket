@@ -1,9 +1,10 @@
-import type { Gasket, Hook } from "@gasket/engine";
+import type { Gasket, Hook } from '@gasket/engine';
 import type { PluginData } from '@gasket/plugin-metadata';
 import '@gasket/plugin-metadata';
 
 describe('@gasket/plugin-metadata', () => {
-  type SlimGasket = Omit<Gasket, 'config'|'exec'|'execSync'|'execWaterfall'|'execWaterfallSync'|'execApply'|'execApplySync'|'logger'>
+  type SlimGasket = Omit<Gasket, 'config'|'logger'|
+    'exec'|'execSync'|'execWaterfall'|'execWaterfallSync'|'execApply'|'execApplySync'>
 
   it('defines a metadata lifecycle', () => {
     const hook: Hook<'metadata'> = (gasket: Gasket, origData: PluginData) => ({
@@ -30,7 +31,7 @@ describe('@gasket/plugin-metadata', () => {
           module: '/path/to/app',
           path: '/path/to/app',
           package: {
-            name: 'example',
+            name: 'example'
           }
         },
         plugins: [],
@@ -46,25 +47,25 @@ describe('@gasket/plugin-metadata', () => {
           module: '/path/to/app',
           path: '/path/to/app',
           package: {
-            name: 'example',
+            name: 'example'
           }
         },
         plugins: [{
           name: 'plugin-example',
-          module: '/path/to/plugin-example',
+          module: '/path/to/plugin-example'
         }],
         presets: [{
           name: 'preset-example',
           module: '/path/to/preset-example',
           plugins: [{
             name: 'plugin-example-deep',
-            module: '/path/to/plugin-example-deep',
+            module: '/path/to/plugin-example-deep'
           }]
         }],
         modules: [{
           name: 'module-example',
-          module: '/path/to/module-example',
-        }],
+          module: '/path/to/module-example'
+        }]
       }
     };
   });

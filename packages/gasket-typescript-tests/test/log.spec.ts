@@ -17,7 +17,7 @@ describe('gasket/log', function () {
   it('has default level methods', () => {
     const logger = new Log();
 
-    if(perform) {
+    if (perform) {
       logger.alert('message');
       logger.crit('message');
       logger.debug('message');
@@ -33,7 +33,7 @@ describe('gasket/log', function () {
   it('allows custom level methods', () => {
     const logger = new Log();
 
-    if(perform) {
+    if (perform) {
       logger.custom('message');
     }
   });
