@@ -1,7 +1,7 @@
-import type { GasketConfigFile } from "@gasket/engine";
+import type { GasketConfigFile, MaybeAsync } from '@gasket/engine';
 import type { PackageManager } from '@gasket/utils';
-import type { Config } from "@oclif/config";
-import { Inquirer } from "inquirer";
+import type { Config } from '@oclif/config';
+import { Inquirer } from 'inquirer';
 
 export interface Dependencies {
   dependencies?: Record<string, string>;
@@ -17,9 +17,9 @@ export interface PackageJson extends Dependencies {
   repository?:
     | string
     | {
-        type: "git";
-        url: string;
-      };
+    type: 'git';
+    url: string;
+  };
   scripts?: Record<string, string>;
   optionalDependencies?: Record<string, string>;
 }
@@ -32,9 +32,11 @@ export interface ModuleInfo {
   version?: string;
 }
 
-export interface PresetInfo extends ModuleInfo {}
+export interface PresetInfo extends ModuleInfo {
+}
 
-export interface PluginInfo extends ModuleInfo {}
+export interface PluginInfo extends ModuleInfo {
+}
 
 export interface ConfigBuilder<Config> {
   /**
@@ -75,7 +77,7 @@ export interface PackageJsonBuilder extends ConfigBuilder<PackageJson> {
    * @param  value - Dependency to search
    * @returns True if the dependency exists on the bucket
    */
-   has(key: keyof Dependencies, value: string): boolean;
+  has(key: keyof Dependencies, value: string): boolean;
 }
 
 export interface Files {
@@ -191,9 +193,10 @@ export interface CreateContext {
   files: Files;
 }
 
-declare module "@gasket/engine" {
+declare module '@gasket/engine' {
   export interface HookExecTypes {
     initOclif(args: { oclifConfig: Config }): MaybeAsync<void>;
+
     prompt(
       context: CreateContext,
       utils: {
@@ -201,10 +204,13 @@ declare module "@gasket/engine" {
         addPlugins: (plugins: Array<string>) => Promise<void>
       }
     ): MaybeAsync<CreateContext>;
+
     create(context: CreateContext): MaybeAsync<void>;
+
     postCreate(
       context: CreateContext,
-      utils: { runScript: (script: string) => Promise<void>
-    }): MaybeAsync<void>;
+      utils: {
+        runScript: (script: string) => Promise<void>
+      }): MaybeAsync<void>;
   }
 }

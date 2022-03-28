@@ -1,4 +1,4 @@
-import type { Gasket } from '@gasket/engine';
+import type { Gasket, GasketConfig, MaybeAsync, MaybeMultiple } from '@gasket/engine';
 import type { Command, flags } from '@oclif/command';
 import type { IFlag } from '@oclif/command/lib/flags';
 

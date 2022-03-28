@@ -1,4 +1,4 @@
-import type { Store } from "redux";
+import type { Store } from 'redux';
 
 /**
  * Wrapper for store create to create instance with SSR and to hydrate in browser.
@@ -29,7 +29,15 @@ export type MakeStoreFn = {
  * @param {function} [postCreate] - Optional callback
  * @returns {MakeStoreFn} makeStore
  */
-export function configureMakeStore({ reducers, rootReducer, initialState, middleware, enhancers, logging, thunkMiddleware }?: {
+export function configureMakeStore({
+  reducers,
+  rootReducer,
+  initialState,
+  middleware,
+  enhancers,
+  logging,
+  thunkMiddleware
+}?: {
   reducers: {
     [x: string]: (state: any, action: object) => any;
   };

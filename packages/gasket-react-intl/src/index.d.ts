@@ -1,6 +1,6 @@
-import {LocalePathPart, LocaleStatus} from "@gasket/helper-intl";
+import { LocalePathPart, LocaleStatus } from '@gasket/helper-intl';
 
-export {LocaleStatus};
+export { LocaleStatus };
 
 /**
  * Make an HOC that adds a provider to managing locale files as well as the react-intl Provider.
@@ -21,9 +21,9 @@ export function withIntlProvider(): Function;
  * @returns {function} wrapper
  */
 export function withLocaleRequired(localePathPart?: LocalePathPart, options?: {
-    loading?: React.Component;
-    initialProps?: boolean;
-    forwardRef?: boolean;
+  loading?: React.Component;
+  initialProps?: boolean;
+  forwardRef?: boolean;
 }): Function;
 
 /**
@@ -35,8 +35,8 @@ export function withLocaleRequired(localePathPart?: LocalePathPart, options?: {
  * @returns {JSX.Element|null} element
  */
 export function LocaleRequired(props: {
-    localesPath: LocalePathPart;
-    loading?: React.Component;
+  localesPath: LocalePathPart;
+  loading?: React.Component;
 }): JSX.Element | null;
 
 /**

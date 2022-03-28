@@ -1,4 +1,5 @@
 import type { IncomingMessage, OutgoingMessage } from 'http';
+import type { MaybeAsync } from '@gasket/engine';
 import { LocalesProps } from '@gasket/helper-intl';
 
 declare module '@gasket/engine' {

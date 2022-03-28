@@ -119,8 +119,8 @@ describe('The execApply method', () => {
   });
 
   it('can be executed with differing callbacks', async () => {
-    const stub1 = jest.fn().mockImplementation((plugin, handler) => handler())
-    const stub2 = jest.fn().mockImplementation((plugin, handler) => handler())
+    const stub1 = jest.fn().mockImplementation((plugin, handler) => handler());
+    const stub2 = jest.fn().mockImplementation((plugin, handler) => handler());
 
     await engine.execApply('eventA', stub1);
     await engine.execApply('eventA', stub2);

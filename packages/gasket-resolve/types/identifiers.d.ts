@@ -1,4 +1,4 @@
-import { createPackageIdentifier } from "./package-identifier";
+import { createPackageIdentifier } from './package-identifier';
 
 /**
  * The package name with or without version of a plugin.

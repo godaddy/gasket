@@ -1,4 +1,4 @@
-import {LocalePathPart, LocalesProps} from "@gasket/helper-intl";
+import { LocalePathPart, LocalesProps } from '@gasket/helper-intl';
 
 /**
  * Load locale file(s) for Next.js static pages
@@ -7,10 +7,11 @@ import {LocalePathPart, LocalesProps} from "@gasket/helper-intl";
  * @returns {function({}): Promise<{props: {localesProps: LocalesProps}}>} pageProps
  */
 export function intlGetStaticProps(localePathPart?: LocalePathPart | LocalePathPart[]): (context: {}) => Promise<{
-    props: {
-        localesProps: LocalesProps;
-    };
+  props: {
+    localesProps: LocalesProps;
+  };
 }>;
+
 /**
  * Load locale file(s) for Next.js static pages
  *
@@ -18,7 +19,7 @@ export function intlGetStaticProps(localePathPart?: LocalePathPart | LocalePathP
  * @returns {function({}): Promise<{props: {localesProps: LocalesProps}}>} pageProps
  */
 export function intlGetServerSideProps(localePathPart?: LocalePathPart | LocalePathPart[]): (context: {}) => Promise<{
-    props: {
-        localesProps: LocalesProps;
-    };
+  props: {
+    localesProps: LocalesProps;
+  };
 }>;
