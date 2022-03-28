@@ -6,9 +6,10 @@ export const GasketDataContext = React.createContext({});
 /**
  * Provider for the GasketData, adds context to child elements.
  *
- * @param {object} gasketData - Object of GasketData
- * @param {JSX.Element} children - Element to add GasketData context too
- * @returns {function} wrapper
+ * @param {object} props - Props
+ * @param {GasketData} props.gasketData - Object of GasketData
+ * @param {JSX.Element} props.children - Element to add GasketData context too
+ * @returns {JSX.Element} element
  */
 export const GasketDataProvider = ({ gasketData, children }) => {
   return (

@@ -4,6 +4,7 @@
   "description": "Gasket Fetch API",
   "main": "lib/node.js",
   "browser": "lib/browser.js",
+  "types": "lib/index.d.ts",
   "files": [
     "lib"
   ],

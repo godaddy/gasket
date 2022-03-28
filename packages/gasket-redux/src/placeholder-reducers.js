@@ -6,9 +6,9 @@
  *
  * @see: https://redux.js.org/recipes/structuring-reducers/using-combinereducers#defining-state-shape
  *
- * @param {Object} reducers - Reducers
- * @param {Object} preloadedState - State to preload store with
- * @returns {Object} placeholder reducers
+ * @param {Object.<string,function>} reducers - Reducers
+ * @param {Object.<string,*>} preloadedState - State to preload store with
+ * @returns {Object.<string,function>} placeholder reducers
  */
 export default function placeholderReducers(reducers = {}, preloadedState = {}) {
   const keys = new Set(Object.keys(preloadedState));

@@ -1,4 +1,4 @@
-import { GasketConfigFile } from "@gasket/engine";
+import { GasketConfigFile } from '@gasket/engine';
 import '@gasket/plugin-swagger';
 
 describe('@gasket/plugin-swagger', () => {
@@ -18,6 +18,6 @@ describe('@gasket/plugin-swagger', () => {
         definitionFile: 'swagger.json',
         apiDocsRoute: '/api-docs'
       }
-    }
+    };
   });
 });

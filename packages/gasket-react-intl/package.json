@@ -5,9 +5,11 @@
   "main": "lib",
   "browser": "lib",
   "module": "src",
+  "types": "types",
   "files": [
     "lib",
     "src",
+    "types",
     "next.js"
   ],
   "scripts": {

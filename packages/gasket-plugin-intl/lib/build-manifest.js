@@ -40,13 +40,8 @@ module.exports = async function buildManifest(gasket) {
 
   /**
    * Locale settings and known locale file paths
-   * @typedef {object} LocaleManifest
    *
-   * @property {string} [basePath] - Base URL where locale files are served
-   * @property {LocalePathPart} localesPath - Path to endpoint with JSON files
-   * @property {Locale} defaultLocale - Locale to fallback to when loading files
-   * @property {{Locale: Locale}} [localesMap] - Mapping of locales to share files
-   * @property {{LocalePath: string}} paths - Available locale files to content hashes
+   * @type {LocaleManifest}
    */
   const manifest = {
     basePath,

@@ -3,6 +3,7 @@
   "version": "6.17.0",
   "description": "Helper package for accessing embedded Gasket Data in the browser",
   "main": "lib",
+  "types": "lib/index.d.ts",
   "files": [
     "lib"
   ],

@@ -30,9 +30,9 @@ const spawn = require('cross-spawn');
  *   clearTimeout(id);
  * }
  *
- * @param {string} cmd binary that is run
- * @param {array} argv args passed to npm binary through spawn.
- * @param {object} options options passed to npm binary through spawn
+ * @param {string} cmd Binary that is run
+ * @param {string[]} [argv] Arguments passed to npm binary through spawn.
+ * @param {object} [options] Options passed to npm binary through spawn
  * @param {object} [options.signal] AbortControl signal allowing process to be canceled
  * @param {boolean} [debug] When present pipes std{out,err} to process.*
  * @returns {Promise} A promise represents if command succeeds or fails.

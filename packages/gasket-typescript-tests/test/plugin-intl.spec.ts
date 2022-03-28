@@ -1,5 +1,5 @@
 import type { IncomingMessage, OutgoingMessage } from 'http';
-import type { Gasket, GasketConfigFile, Hook } from "@gasket/engine";
+import type { Gasket, GasketConfigFile, Hook } from '@gasket/engine';
 import '@gasket/plugin-intl';
 
 describe('@gasket/plugin-intl', () => {
@@ -13,7 +13,7 @@ describe('@gasket/plugin-intl', () => {
           'zh-SG': 'zh-CN'
         }
       }
-    }
+    };
   });
 
   it('adds an intlLocale lifecycle', () => {
@@ -23,7 +23,7 @@ describe('@gasket/plugin-intl', () => {
       { req, res }: { req: IncomingMessage, res: OutgoingMessage }
     ) => {
       return 'fr-FR';
-    }
+    };
   });
 
   it('validates intlLocale return types', async () => {
@@ -34,6 +34,6 @@ describe('@gasket/plugin-intl', () => {
       { req, res }: { req: IncomingMessage, res: OutgoingMessage }
     ) => {
       return 3;
-    }
+    };
   });
 });

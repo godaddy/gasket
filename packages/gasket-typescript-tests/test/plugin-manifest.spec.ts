@@ -1,5 +1,5 @@
 import type { IncomingMessage, OutgoingMessage } from 'http';
-import type { Gasket, GasketConfigFile, Hook } from "@gasket/engine";
+import type { Gasket, GasketConfigFile, Hook } from '@gasket/engine';
 import type { Manifest } from '@gasket/plugin-manifest';
 
 describe('@gasket/plugin-manifest', () => {
@@ -26,9 +26,9 @@ describe('@gasket/plugin-manifest', () => {
     ) => {
       return {
         ...manifest,
-        path: '/custom/path/manifest.json', // default: /manifest.json
-      }
-    }
+        path: '/custom/path/manifest.json' // default: /manifest.json
+      };
+    };
 
     const fakeGasket = {} as Gasket;
     const initialManifest = {
@@ -36,14 +36,14 @@ describe('@gasket/plugin-manifest', () => {
       name: 'Sample App',
       path: '/manifest.json',
       staticOutput: '/public/manifest.json'
-    }
+    };
 
     const justWantToCheckTypes = async () => {
       const manifest: Manifest = await fakeGasket.execWaterfall(
         'manifest',
         initialManifest,
         { req: {} as IncomingMessage, res: {} as OutgoingMessage }
-      );  
-    }
+      );
+    };
   });
 });

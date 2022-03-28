@@ -1,6 +1,6 @@
-import type { Gasket, GasketConfigFile, Hook } from "@gasket/engine";
+import type { Gasket, GasketConfigFile, Hook } from '@gasket/engine';
 import type { NextConfig, NextServer } from '@gasket/plugin-nextjs';
-import { Application } from "express";
+import { Application } from 'express';
 
 describe('@gasket/plugin-nextjs', () => {
   it('adds a nextConfig section to Gasket config', () => {
@@ -9,7 +9,7 @@ describe('@gasket/plugin-nextjs', () => {
         poweredByHeader: false,
         useFileSystemPublicRoutes: false
       }
-    }
+    };
   });
 
   it('adds a next lifecycle', () => {
@@ -26,7 +26,7 @@ describe('@gasket/plugin-nextjs', () => {
           ...config.future,
           webpack5: true
         }
-      }
+      };
     };
   });
 
@@ -35,7 +35,7 @@ describe('@gasket/plugin-nextjs', () => {
       gasket: Gasket,
       { next, express }: { next: NextServer, express: Application }
     ) => {
-      
+
     };
   });
 });

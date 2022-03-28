@@ -45,15 +45,32 @@ const reduxLogger = format(function reduxLogger(info, options = {}) {
  * @public
  */
 class Log {
+  /**
+   *
+   * @param {object} [options] - Options
+   * @param {string} [options.level] - Default level to use
+   * @param {boolean} [options.silent] - Should logs be silenced
+   * @param {boolean} [options.local] - Is this for the local development
+   * @param {string} [options.prefix] - Message prefix to use
+   */
   constructor(options = {}) {
+    /** @private */
     this.options = options;
+    /** @private */
     this.local = !!options.local;
 
+    /** @private */
     this.silent = !!this.options.silent || false;
+    /** @private */
     this.level = this.options.level || (this.local ? 'debug' : 'info');
     this.spawn();
   }
 
+  /**
+   * Get the prefix
+   * @returns {string} prefix
+   * @private
+   */
   get prefix() {
     return this.options.prefix || Log.prefix;
   }
@@ -84,14 +101,20 @@ class Log {
     return [new transports.Console()];
   }
 
+  /**
+   * Return the configured levels
+   *
+   * @returns {Object.<string,number>} levels
+   * @private
+   */
   get levels() {
     return this.options.levels || Log.levels;
   }
 
   /**
-   * Proxy to winston.log using the predefined level.
+   * Default level logging.
    *
-   * @param {Mixed} ...args Info to log and any optional metadata.
+   * @param {*} args Info to log and any optional metadata.
    * @returns {Log} fluent interface.
    * @public
    */
@@ -120,7 +143,7 @@ class Log {
    * Create a new Winston logger with a generated configuration.
    *
    * @returns {Winston} Logger.
-   * @public
+   * @private
    */
   spawn() {
     const levels = this.levels;
@@ -140,6 +163,7 @@ class Log {
       this[level] = winston[level].bind(winston);
     });
 
+    /** @private */
     return this.winston = winston;
   }
 }
@@ -167,6 +191,11 @@ Log.format = {
 
 Log.levels = { ...config.syslog.levels };
 
+/**
+ * Ensure all the expected levels utilized by Gasket plugins are set
+ *
+ * @param {Object.<string,number>} levels - Levels to check
+ */
 Log.ensureMinimalLevels = function ensureMinimalLevels(levels) {
   const missingLevels = Object.keys(Log.levels).filter(
     lvl => !Object.prototype.hasOwnProperty.call(levels, lvl));

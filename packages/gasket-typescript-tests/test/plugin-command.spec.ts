@@ -1,4 +1,4 @@
-import type { Gasket, GasketConfig, Hook, Plugin } from '@gasket/engine'
+import type { Gasket, GasketConfig, Hook, Plugin } from '@gasket/engine';
 import '@gasket/plugin-command';
 
 describe('@gasket/plugin-command', () => {
@@ -8,23 +8,23 @@ describe('@gasket/plugin-command', () => {
         static id = 'do';
         static flags = {
           foo: flags.string()
-        }
-        
+        };
+
         async gasketRun() {
-          this.parsed
+          this.parsed;
         }
       }
-      
 
-      return NewCommand;      
-    }
+
+      return NewCommand;
+    };
   });
 
   it('validates getCommands return values', () => {
     // @ts-expect-error
     const hook: Hook<'getCommands'> = (gasket, { GasketCommand, flags }) => {
       return 4;
-    }
+    };
   });
 
   it('defines the init lifecycle', () => {
@@ -33,18 +33,18 @@ describe('@gasket/plugin-command', () => {
       hooks: {
         init: {
           timing: {
-            before: ['foo'],
+            before: ['foo']
           },
           handler() {}
         }
       }
-    }
+    };
   });
 
   it('defines the configure lifecycle', () => {
     const hook: Hook<'configure'> = (gasket: Gasket, config: GasketConfig) => {
       return config;
-    }
+    };
   });
 
   it('validates the return from configure hooks', () => {

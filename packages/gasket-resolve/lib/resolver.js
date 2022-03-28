@@ -9,7 +9,7 @@ class Resolver {
   /**
    * @param {object} options - Options
    * @param {string|string[]} [options.resolveFrom] - Path(s) to resolve modules from
-   * @param {require} [options.require] - Require instance to use
+   * @param {function} [options.require] - Require instance to use
    */
   constructor(options) {
     const {

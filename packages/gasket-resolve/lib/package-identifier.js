@@ -24,7 +24,7 @@ function matchMaker(projectName, type = 'plugin') {
  *
  * @param {string} projectName - Name of the project
  * @param {string} [type] - Identifier type, defaults to 'plugin'
- * @returns {{prefixed: prefixed}} expand
+ * @returns {{prefixed: string}} expand
  * @private
  */
 function expandMaker(projectName, type = 'plugin') {
@@ -61,7 +61,7 @@ function expandMaker(projectName, type = 'plugin') {
  *
  * @param {string} projectName - Name of the project scope and base name
  * @param {string} [type] - Defaults to 'plugin'.
- * @returns {function} function to make
+ * @returns {createPackageIdentifier} function to make
  */
 function projectIdentifier(projectName, type = 'plugin') {
 
@@ -240,7 +240,7 @@ function projectIdentifier(projectName, type = 'plugin') {
        * - @gasket/plugin-https@1.2.3 -> 1.2.3
        * - @gasket/plugin-https -> ''
        *
-       * @returns {string} fullName
+       * @returns {string|null} fullName
        */
       get version() {
         return parsedVersion || null;
