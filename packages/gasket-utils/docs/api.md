@@ -11,7 +11,7 @@ Name | Description
 ------ | -----------
 [applyConfigOverrides(config, context)] | Normalize the config by applying any overrides for environments, commands, or local-only config file.
 ~~[applyEnvironmentOverrides(gasketConfig, config, \[localFile\])]~~ | Normalize the config by applying any environment or local overrides
-[runShellCommand(cmd, argv, options, \[debug\])] | Promise friendly wrapper to running a shell command (eg: git, npm, ls) which passes back any { stdout, stderr } to the error thrown.
+[runShellCommand(cmd, \[argv\], \[options\], \[debug\])] | Promise friendly wrapper to running a shell command (eg: git, npm, ls) which passes back any { stdout, stderr } to the error thrown.
 [tryRequire(path)] | Tries to require a module, but ignores if it is not found. If not found, result will be null.
 
 
@@ -165,7 +165,7 @@ Normalize the config by applying any environment or local overrides
 | \[localFile\] | `string` | Optional file to load relative to gasket root |
 
 
-## runShellCommand(cmd, argv, options, \[debug\])
+## runShellCommand(cmd, \[argv\], \[options\], \[debug\])
 
 Promise friendly wrapper to running a shell command (eg: git, npm, ls)
 which passes back any { stdout, stderr } to the error thrown.
@@ -180,9 +180,9 @@ no longer needed.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| cmd | `string` | binary that is run |
-| argv | `array` | args passed to npm binary through spawn. |
-| options | `object` | options passed to npm binary through spawn |
+| cmd | `string` | Binary that is run |
+| \[argv\] | `Array.<string>` | Arguments passed to npm binary through spawn. |
+| \[options\] | `object` | Options passed to npm binary through spawn |
 | \[options.signal\] | `object` | AbortControl signal allowing process to be canceled |
 | \[debug\] | `boolean` | When present pipes std{out,err} to process.* |
 
@@ -238,7 +238,7 @@ const { tryRequire } = require('@gasket/utils');
 [`PackageManager`]:#new-packagemanageroptions
 [applyConfigOverrides(config, context)]:#applyconfigoverridesconfig-context
 [applyEnvironmentOverrides(gasketConfig, config, \[localFile\])]:#applyenvironmentoverridesgasketconfig-config-localfile
-[runShellCommand(cmd, argv, options, \[debug\])]:#runshellcommandcmd-argv-options-debug
+[runShellCommand(cmd, \[argv\], \[options\], \[debug\])]:#runshellcommandcmd-argv-options-debug
 [tryRequire(path)]:#tryrequirepath
 [new PackageManager(options)]:#new-packagemanageroptions
 [.exec(cmd, args)]:#packagemanagerexeccmd-args

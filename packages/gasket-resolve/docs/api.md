@@ -57,7 +57,7 @@ Loads a module with additional metadata
 
 | Param | Type | Description |
 | --- | --- | --- |
-| module | `string` | Module content |
+| module | `object` | Module content |
 | moduleName | `string` | Name of module to load |
 | \[meta\] | `object` | Additional meta data |
 
@@ -117,7 +117,7 @@ Plugins will be filtered and ordered as configuration with priority of:
 | config | `object` | Presets and plugins to load |
 | config.presets | `Array.<PresetName>` | Presets to load and add plugins from |
 | config.add | `Array.<PluginName>` \| `Array.<module>` | Names of plugins to load |
-| config.remove | `Array.<string>` | Names of plugins to remove (from presets) |
+| \[config.remove\] | `Array.<PluginName>` | Names of plugins to remove (from presets) |
 
 
 ### loader.resolve(moduleName)
@@ -249,7 +249,7 @@ Examples:
 - @gasket/plugin-https -> ''
 
 **Kind**: instance property of [`PackageIdentifier`]  
-**Returns**: `string` - fullName  
+**Returns**: `string` ⎮ `null` - fullName  
 
 ### packageIdentifier.full
 
@@ -313,7 +313,7 @@ Utility to help resolve and require modules
 | --- | --- | --- |
 | options | `object` | Options |
 | \[options.resolveFrom\] | `string` \| `Array.<string>` | Path(s) to resolve modules from |
-| \[options.require\] | `require` | Require instance to use |
+| \[options.require\] | `function` | Require instance to use |
 
 
 ### resolver.resolve(moduleName)
@@ -389,7 +389,7 @@ If a package belongs to the project, it should use `projectName` in its scope.
 For user plugins, the `projectName` will be paired with the `type`.
 
 **Kind**: global function  
-**Returns**: `function` - function to make  
+**Returns**: [`createPackageIdentifier`] - function to make  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -470,8 +470,8 @@ Module with meta data
 | Name | Type | Description |
 | --- | --- | --- |
 | name | `string` | Name of preset |
-| module | `string` | Actual module content |
-| \[package\] | `string` | Package.json contents |
+| module | `object` | Actual module content |
+| \[package\] | `object` | Package.json contents |
 | \[version\] | `string` | Resolved version |
 | \[path\] | `string` | Path to the root of package |
 | \[from\] | `string` | Name of module which requires this module |
@@ -577,8 +577,8 @@ If the lookup runs out of formats to try, it will return null.
 [.version]:#packageidentifierversion
 [.full]:#packageidentifierfull
 [`PackageIdentifier`]:#packageidentifier
-[`projectIdentifier`]:#projectidentifierprojectname-type
 [`createPackageIdentifier`]:#createpackageidentifier
+[`projectIdentifier`]:#projectidentifierprojectname-type
 [pluginIdentifier()]:#pluginidentifier
 [presetIdentifier()]:#presetidentifier
 [projectIdentifier(projectName, \[type\])]:#projectidentifierprojectname-type
