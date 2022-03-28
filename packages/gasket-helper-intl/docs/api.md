@@ -9,6 +9,7 @@ Name | Description
 
 Name | Description
 ------ | -----------
+[LocaleManifest] | Locale settings and known locale file paths
 [LocalePathPart] | Partial URL representing a directory containing locale .json files or a URL template with a `:locale` path param to a .json file.
 [LocalePath] | URL path to a locale .json file
 [Lang] | Language code only
@@ -39,7 +40,7 @@ Utility class for loading locale files
 | Param | Type | Description |
 | --- | --- | --- |
 | config | `Object` | Configuration |
-| config.manifest | `LocaleManifest` | Locale file manifest |
+| config.manifest | [`LocaleManifest`] | Locale file manifest |
 | \[config.basePath\] | `string` | Locale file base path. Defaults to `manifest.basePath` |
 
 
@@ -153,6 +154,22 @@ Enum for local status values
 **Kind**: static property of [`LocaleStatus`]  
 **Default**: `error`  
 
+## LocaleManifest
+
+Locale settings and known locale file paths
+
+**Kind**: global typedef  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| \[basePath\] | `string` | Base URL where locale files are served |
+| localesPath | [`LocalePathPart`] | Path to endpoint with JSON files |
+| defaultLocale | [`Locale`] | Locale to fallback to when loading files |
+| \[localesMap\] | `Object` | Mapping of locales to share files |
+| paths | `Object` | Available locale files to content hashes |
+
+
 ## LocalePathPart
 
 Partial URL representing a directory containing locale .json files
@@ -265,6 +282,7 @@ Fetch status of a locale file
 <!-- LINKS -->
 
 [LocaleUtils]:#localeutils
+[LocaleManifest]:#localemanifest
 [LocalePathPart]:#localepathpart
 [LocalePath]:#localepath
 [Lang]:#lang
@@ -272,6 +290,7 @@ Fetch status of a locale file
 [LocalesState]:#localesstate
 [LocalesProps]:#localesprops
 [LocaleStatus]:#localestatus
+[`LocaleManifest`]:#localemanifest
 [`LocaleUtils`]:#new-localeutilsconfig
 [`Locale`]:#locale
 [`Lang`]:#lang

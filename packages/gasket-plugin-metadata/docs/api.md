@@ -67,7 +67,7 @@ Preset module with meta data
 
 | Name | Type | Description |
 | --- | --- | --- |
-| presets | `Array.<PresetData>` | Presets that this preset extends |
+| \[presets\] | `Array.<PresetData>` | Presets that this preset extends |
 | plugins | `Array.<PluginData>` | Plugins this preset uses |
 
 
@@ -108,7 +108,7 @@ Collection data for modules configured for app
 
 | Name | Type | Description |
 | --- | --- | --- |
-| app | `Array.<AppData>` | App and main package data |
+| app | [`AppData`] | App and main package data |
 | presets | `Array.<PresetData>` | Preset data with dependency hierarchy |
 | plugins | `Array.<PluginData>` | Flat list of registered plugin data |
 | modules | `Array.<ModuleData>` | Supporting module data |
@@ -122,3 +122,4 @@ Collection data for modules configured for app
 [DetailData]:#detaildata
 [LifecycleData]:#lifecycledata
 [Metadata]:#metadata
+[`AppData`]:#appdata
