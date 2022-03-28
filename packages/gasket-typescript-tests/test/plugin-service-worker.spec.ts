@@ -1,5 +1,5 @@
-import { GasketConfigFile, Plugin } from "@gasket/engine";
-import { Request } from 'express'
+import { GasketConfigFile, Plugin } from '@gasket/engine';
+import { Request } from 'express';
 import '@gasket/plugin-service-worker';
 
 describe('@gasket/plugin-service-worker', () => {
@@ -15,7 +15,7 @@ describe('@gasket/plugin-service-worker', () => {
           ie8: true
         }
       }
-    }
+    };
   });
 
   it('adds a composeServiceWorker lifecycle', () => {
@@ -31,18 +31,18 @@ describe('@gasket/plugin-service-worker', () => {
               };
               event.waitUntil(self.registration.showNotification(title, options));
             });
-          `)
+          `);
         }
       }
-    }    
+    };
   });
 
   it('adds a serviceWorkerCacheKey lifecycle', () => {
     const plugin: Plugin = {
-      name: "some-plugin",
+      name: 'some-plugin',
       hooks: {
         serviceWorkerCacheKey: () => (req, res) => (req as Request).cookies.market || 'en-US'
       }
-    }
+    };
   });
 });

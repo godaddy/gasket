@@ -1,5 +1,5 @@
 import type { IncomingMessage, OutgoingMessage } from 'http';
-import type { PartialRecursive } from '@gasket/engine';
+import type { PartialRecursive, MaybeAsync } from '@gasket/engine';
 import type { GenerateSWConfig } from 'workbox-build';
 
 declare module '@gasket/engine' {

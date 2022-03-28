@@ -1,4 +1,4 @@
-import type { GasketConfigFile, Hook } from "@gasket/engine";
+import type { GasketConfigFile, Hook } from '@gasket/engine';
 import '@gasket/plugin-docs';
 
 describe('@gasket/plugin-docs', () => {
@@ -7,7 +7,7 @@ describe('@gasket/plugin-docs', () => {
       docs: {
         outputDir: './out/docs'
       }
-    }
+    };
   });
 
   it('validates config values', () => {
@@ -16,19 +16,19 @@ describe('@gasket/plugin-docs', () => {
         // @ts-expect-error
         outputDir: 3
       }
-    }
+    };
   });
 
   it('declares a docsSetup lifecycle', () => {
     const hook: Hook<'docsSetup'> = (gasket, { defaults }) => {
       return defaults;
-    }
+    };
   });
 
   it('declares a docsView lifecycle', () => {
     const hook: Hook<'docsView'> = (gasket, { docsRoot }) => {
       return;
-    }
+    };
   });
 
   it('declares a docsGenerate lifecycle', () => {
@@ -39,6 +39,6 @@ describe('@gasket/plugin-docs', () => {
         link: '/FAQ.md',
         targetRoot: config.docsRoot
       };
-    }
+    };
   });
 });

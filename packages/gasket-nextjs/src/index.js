@@ -7,7 +7,7 @@ import htmlescape from 'htmlescape';
  * Renders a script tag with JSON gasketData
  *
  * @param {object} props - Props
- * @param {object} props.data - Gasket data from response
+ * @param {GasketData} props.data - Gasket data from response
  * @returns {JSX.Element} script
  */
 export function GasketDataScript(props) {

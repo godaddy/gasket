@@ -119,8 +119,8 @@ describe('The execApplySync method', () => {
   });
 
   it('can be executed with differing callbacks', async () => {
-    const stub1 = jest.fn().mockImplementation((plugin, handler) => handler())
-    const stub2 = jest.fn().mockImplementation((plugin, handler) => handler())
+    const stub1 = jest.fn().mockImplementation((plugin, handler) => handler());
+    const stub2 = jest.fn().mockImplementation((plugin, handler) => handler());
 
     engine.execApplySync('eventA', stub1);
     engine.execApplySync('eventA', stub2);

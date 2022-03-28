@@ -1,4 +1,4 @@
-import { Gasket, GasketConfigFile, Hook } from "@gasket/engine";
+import { Gasket, GasketConfigFile, Hook } from '@gasket/engine';
 import '@gasket/plugin-webpack';
 import '@gasket/plugin-nextjs';
 
@@ -30,5 +30,5 @@ describe('@gasket/plugin-webpack', () => {
           })
         ]
       });
-  })
+  });
 });

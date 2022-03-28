@@ -7,7 +7,7 @@ import placeholderReducers from './placeholder-reducers';
 /**
  * Compose the reducer
  *
- * @param {object} allReducers - Map of identifiers and reducers
+ * @param {Object.<string,function>} allReducers - Map of identifiers and reducers
  * @param {function} [rootReducer] - Entry reducer to run before combined reducers
  * @returns {function} reducer
  * @private
@@ -32,15 +32,15 @@ export function prepareReducer(allReducers, rootReducer) {
  * Set up redux store configuration and return a makeStore function
  *
  * @param {Object} options - Options for create store
- * @param {Object.<String,Function>} options.reducers - Map of identifiers and reducers
+ * @param {Object.<string,function>} options.reducers - Map of identifiers and reducers
  * @param {function} [options.rootReducer] - Entry reducer to run before combined reducers
- * @param {Object} [options.initialState] - Initial redux state
- * @param {Array} [options.middleware] - Middleware
- * @param {Function[]} [options.enhancers] - Any additional enhancers
- * @param {Boolean} [options.logging] - logging is enabled by default. Passing false will disable logging completely.
- * @param {Function} [options.thunkMiddleware] - Optionally provide an extra argument for thunks
- * @param {Function} [postCreate] - Optional callback
- * @returns {MakeStore} makeStore
+ * @param {Object.<string,*>} [options.initialState] - Initial redux state
+ * @param {function[]} [options.middleware] - Middleware
+ * @param {function[]} [options.enhancers] - Any additional enhancers
+ * @param {boolean} [options.logging] - logging is enabled by default. Passing false will disable logging completely.
+ * @param {function} [options.thunkMiddleware] - Optionally provide an extra argument for thunks
+ * @param {function} [postCreate] - Optional callback
+ * @returns {makeStoreFn} makeStore
  */
 export default function configureMakeStore(
   {
@@ -58,12 +58,12 @@ export default function configureMakeStore(
   /**
    * Wrapper for store create to create instance with SSR and to hydrate in browser.
    *
-   * @typedef {Function} MakeStore
+   * @typedef {function} makeStoreFn
    *
-   * @param {Object} state - The initial redux state
+   * @param {Object.<string,*>} state - The initial redux state
    * @param {Object} options - Options
    * @param {Request} options.req - Request if SSR
-   * @returns {Store} reduxStore
+   * @returns {Object} reduxStore
    */
   function makeStore(state = {}, options = {}) {
     const { req, logger = new Log() } = options;

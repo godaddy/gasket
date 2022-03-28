@@ -6,20 +6,20 @@ describe('@gasket/preset-pwa', () => {
     const config: GasketConfigFile = {
       workbox: {},
       serviceWorker: {}
-    }
+    };
   });
 
   it('imports lifecycles for all plugins', () => {
     const plugin: Plugin = {
-      name: "dummy-plugin",
+      name: 'dummy-plugin',
       hooks: {
         composeServiceWorker(gasket, script) {
-          return `${script}; function otherStuff() { }`
+          return `${script}; function otherStuff() { }`;
         },
         serviceWorkerCacheKey(gasket) {
-          return (req) => `${req.url}-${req.headers['accept-language']}`
+          return (req) => `${req.url}-${req.headers['accept-language']}`;
         }
       }
-    }
+    };
   });
 });

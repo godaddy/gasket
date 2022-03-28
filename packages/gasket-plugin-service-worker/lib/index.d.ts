@@ -1,6 +1,7 @@
 import type { IncomingMessage, OutgoingMessage } from 'http';
 import type { Options } from 'lru-cache';
 import type { MinifyOptions } from 'uglify-js';
+import type { MaybeAsync, MaybeMultiple } from '@gasket/engine';
 
 declare module '@gasket/engine' {
   export interface GasketConfig {
@@ -29,7 +30,7 @@ declare module '@gasket/engine' {
        * turned on in production by default. Adding minify: { } will turn on the
        * default behavior in other environments, if specified. */
       minify?: MinifyOptions,
-      
+
       /** By default, a service worker registration script will be injected to
        * the webpack entry modules. This can be disabled by setting this to
        * false. If you wish to control which entry modules get injected, read
@@ -37,8 +38,8 @@ declare module '@gasket/engine' {
       webpackRegister?:
         | boolean
         | MaybeMultiple<string>
-        | ((key: string) => boolean), 
-      
+        | ((key: string) => boolean),
+
       /** If true, a static sw.js will be output to the ./public dir. Otherwise,
        * this can be set to a string with a path to an alternate output
        * location. This disables request-based service workers. Default is

@@ -1,4 +1,4 @@
-import { GasketConfigFile } from "@gasket/engine";
+import { GasketConfigFile } from '@gasket/engine';
 import '@gasket/plugin-elastic-apm';
 
 describe('@gasket/plugin-elastic-apm', () => {
@@ -9,6 +9,6 @@ describe('@gasket/plugin-elastic-apm', () => {
         serverUrl: 'http://localhost:9200',
         sensitiveCookies: ['my_jwt', 'userFullName']
       }
-    }
+    };
   });
 });

@@ -2,6 +2,8 @@ import type { Gasket, GasketConfigFile, Plugin } from '@gasket/engine';
 import '@gasket/preset-api';
 
 describe('@gasket/preset-api', () => {
+  const { log } = console;
+
   it('imports config type injections for all plugins', () => {
     const config: GasketConfigFile = {
       http: 8080,
@@ -14,18 +16,18 @@ describe('@gasket/preset-api', () => {
           isExplorer: true
         }
       }
-    }
+    };
   });
 
   it('imports lifecycles for all plugins', () => {
     const plugin: Plugin = {
-      name: "dummy-plugin",
+      name: 'dummy-plugin',
       hooks: {
         preboot() {
-          console.log('Preparing...')
+          log('Preparing...');
         },
         servers(gasket, servers) {
-          console.log(servers.http);
+          log(servers.http);
         },
         middleware(gasket) {
           return [
@@ -33,9 +35,9 @@ describe('@gasket/preset-api', () => {
               res.statusCode = 404;
               res.send({ message: 'not found' });
             }
-          ]
+          ];
         }
       }
-    }
+    };
   });
 });

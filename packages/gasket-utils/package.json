@@ -44,6 +44,7 @@
     "lodash.defaultsdeep": "^4.6.1"
   },
   "devDependencies": {
+    "@gasket/engine": "^6.19.0",
     "@godaddy/dmd": "^1.0.0",
     "abort-controller": "^3.0.0",
     "assume": "^2.3.0",

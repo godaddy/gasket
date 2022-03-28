@@ -1,7 +1,7 @@
-import type { GasketConfigFile } from "@gasket/engine";
+import type { GasketConfigFile, MaybeAsync } from '@gasket/engine';
 import type { PackageManager } from '@gasket/utils';
-import type { Config } from "@oclif/config";
-import { Inquirer } from "inquirer";
+import type { Config } from '@oclif/config';
+import { Inquirer } from 'inquirer';
 
 export interface Dependencies {
   dependencies?: Record<string, string>;
@@ -17,9 +17,9 @@ export interface PackageJson extends Dependencies {
   repository?:
     | string
     | {
-        type: "git";
-        url: string;
-      };
+    type: 'git';
+    url: string;
+  };
   scripts?: Record<string, string>;
   optionalDependencies?: Record<string, string>;
 }
@@ -30,12 +30,13 @@ export interface ModuleInfo {
   path?: string;
   package?: PackageJson;
   version?: string;
-  name?: string;
 }
 
-export interface PresetInfo extends ModuleInfo {}
+export interface PresetInfo extends ModuleInfo {
+}
 
-export interface PluginInfo extends ModuleInfo {}
+export interface PluginInfo extends ModuleInfo {
+}
 
 export interface ConfigBuilder<Config> {
   /**
@@ -51,7 +52,7 @@ export interface ConfigBuilder<Config> {
   /**
    * Performs an intelligent, domain-aware merge of the `value` for
    * the given `key` into the package.json fields associated with this instance.
-   * 
+   *
    * @param key - Field in package.json to add or extend.
    * @param value - Target value to set for key provided.
    * @param source - Plugin to blame if conflicts arise from this operation.
@@ -76,7 +77,7 @@ export interface PackageJsonBuilder extends ConfigBuilder<PackageJson> {
    * @param  value - Dependency to search
    * @returns True if the dependency exists on the bucket
    */
-   has(key: keyof Dependencies, value: string): boolean;
+  has(key: keyof Dependencies, value: string): boolean;
 }
 
 export interface Files {
@@ -192,20 +193,24 @@ export interface CreateContext {
   files: Files;
 }
 
-declare module "@gasket/engine" {
+declare module '@gasket/engine' {
   export interface HookExecTypes {
     initOclif(args: { oclifConfig: Config }): MaybeAsync<void>;
+
     prompt(
       context: CreateContext,
-      utils: { 
+      utils: {
         prompt: Inquirer,
         addPlugins: (plugins: Array<string>) => Promise<void>
       }
     ): MaybeAsync<CreateContext>;
+
     create(context: CreateContext): MaybeAsync<void>;
+
     postCreate(
       context: CreateContext,
-      utils: { runScript: (script: string) => Promise<void>
-    }): MaybeAsync<void>;
+      utils: {
+        runScript: (script: string) => Promise<void>
+      }): MaybeAsync<void>;
   }
 }

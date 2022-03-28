@@ -1,5 +1,6 @@
 import type { IncomingMessage, OutgoingMessage } from 'http';
 import type { Store } from 'redux';
+import type { MaybeAsync } from '@gasket/engine';
 
 declare module '@gasket/engine' {
   export interface GasketConfig {
