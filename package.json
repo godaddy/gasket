@@ -12,14 +12,13 @@
     "posttest": "npm run lint",
     "build": "lerna run build",
     "align-packages": "node ./scripts/align-packages",
-    "bootstrap": "lerna bootstrap --hoist",
     "clean": "npm run clean:packages && npm run clean:root",
     "clean:packages": "lerna clean --yes",
     "clean:root": "rimraf node_modules",
     "docs": "lerna run docs && npm run generate-docs-index",
     "docs-view": "docsify serve",
     "generate-docs-index": "node scripts/generate-docs-index",
-    "postinstall": "npm run bootstrap",
+    "postinstall": "npm run build",
     "publish:canary": "lerna publish --preid canary --dist-tag canary",
     "test:package": "lerna run test --stream --scope $*"
   },
@@ -69,5 +68,9 @@
     "rules": {
       "unicorn/filename-case": "error"
     }
-  }
+  },
+  "engines": {
+    "npm": "^8.0.0"
+  },
+  "workspaces": ["./packages/*"]
 }

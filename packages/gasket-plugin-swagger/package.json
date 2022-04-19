@@ -11,7 +11,7 @@
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "test": "npm run test:runner",
-    "test:runner": "mocha --require setup-env --recursive \"test/**/*.*(test|spec).js\"",
+    "test:runner": "mocha --require setup-env --recursive \"test/**/*.*(test|spec).js\" --exit",
     "test:watch": "npm run test:runner -- --watch",
     "test:coverage": "nyc --reporter=text --reporter=json-summary npm run test:runner",
     "posttest": "npm run lint",
