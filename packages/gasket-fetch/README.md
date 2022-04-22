@@ -44,7 +44,7 @@ const getSomething = async () => {
 ## Reference
 
 - https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
-- https://github.com/lquixada/cross-fetch
+- https://www.npmjs.com/package/node-fetch
 
 ## License
 
