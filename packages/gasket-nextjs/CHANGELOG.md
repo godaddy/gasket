@@ -1,5 +1,9 @@
 # `@gasket/nextjs`
 
+### 6.20.3
+
+- Switch Enzyme adapter for React 17 ([#354])
+
 ### 6.8.0
 
 - Add `withGasketDataProvider` and `useGasketData` React hook ([#298])
@@ -20,3 +24,4 @@
 [#262]: https://github.com/godaddy/gasket/pull/262
 [#285]: https://github.com/godaddy/gasket/pull/285
 [#298]: https://github.com/godaddy/gasket/pull/298
+[#354]: https://github.com/godaddy/gasket/pull/354

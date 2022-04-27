@@ -1,5 +1,9 @@
 # `@gasket/plugin-analyze`
 
+### 6.20.3
+
+- Upgrade `webpack-bundle-analyzer` ([#354])
+
 ### 6.19.0
 
 - Migrate `webpack` -> `webpackConfig` lifecycle ([#347])
@@ -48,3 +52,4 @@
 [#247]: https://github.com/godaddy/gasket/pull/247
 [#311]: https://github.com/godaddy/gasket/pull/311
 [#347]: https://github.com/godaddy/gasket/pull/347
+[#354]: https://github.com/godaddy/gasket/pull/354
