@@ -1,5 +1,5 @@
 {
-  "version": "6.20.2",
+  "version": "6.20.3",
   "packages": [
     "packages/*",
     "scripts/generate-docs-index"
