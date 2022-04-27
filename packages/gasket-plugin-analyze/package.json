@@ -39,7 +39,7 @@
   "dependencies": {
     "@types/webpack-bundle-analyzer": "^4.4.1",
     "deepmerge": "^4.2.2",
-    "webpack-bundle-analyzer": "^3.7.0"
+    "webpack-bundle-analyzer": "^4.5.0"
   },
   "devDependencies": {
     "@gasket/engine": "^6.20.2",
