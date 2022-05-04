@@ -92,4 +92,8 @@ declare module '@gasket/engine' {
 
     environments?: Record<string, PartialRecursive<GasketConfig>>
   }
+
+  export default class GasketEngine implements Gasket {
+    constructor(config: GasketConfig, context?: { resolveFrom?: string }): Gasket;
+  };
 }
