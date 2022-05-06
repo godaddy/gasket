@@ -1,0 +1,24 @@
+{
+  "name": "@gasket/plugin-cypress",
+  "version": "1.0.0",
+  "description": "Integrates Cypress based testing into your Gasket application",
+  "main": "lib",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/godaddy/gasket.git"
+  },
+  "keywords": [
+    "cypress",
+    "gasket",
+    "plugin"
+  ],
+  "author": "GoDaddy Operating Company, LLC",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/godaddy/gasket/issues"
+  },
+  "homepage": "https://github.com/godaddy/gasket#readme"
+}
