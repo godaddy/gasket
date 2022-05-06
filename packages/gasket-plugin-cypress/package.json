@@ -4,7 +4,11 @@
   "description": "Integrates Cypress based testing into your Gasket application",
   "main": "lib",
   "scripts": {
-    "test": "jest"
+    "lint": "eslint .",
+    "lint:fix": "npm run lint -- --fix",
+    "test": "jest",
+    "test:watch": "jest --watchAll",
+    "test:coverage": "jest --coverage"
   },
   "repository": {
     "type": "git",
@@ -25,6 +29,25 @@
     "@babel/core": "^7.17.10",
     "cypress": "^9.6.0",
     "eslint": "^8.15.0",
-    "eslint-config-godaddy-react": "^8.0.0"
+    "eslint-config-godaddy-react": "^8.0.0",
+    "eslint-plugin-unicorn": "^42.0.0",
+    "jest": "^28.1.0",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0"
+  },
+  "eslintConfig": {
+    "extends": [
+      "godaddy-react"
+    ],
+    "plugins": [
+      "unicorn"
+    ],
+    "rules": {
+      "unicorn/filename-case": "error",
+      "max-nested-callbacks": [
+        2,
+        6
+      ]
+    }
   }
 }
