@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/godaddy/gasket/issues"
   },
-  "homepage": "https://github.com/godaddy/gasket#readme"
+  "homepage": "https://github.com/godaddy/gasket#readme",
+  "devDependencies": {
+    "cypress": "^9.6.0"
+  }
 }
