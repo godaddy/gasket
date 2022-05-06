@@ -20,8 +20,11 @@
   "bugs": {
     "url": "https://github.com/godaddy/gasket/issues"
   },
-  "homepage": "https://github.com/godaddy/gasket#readme",
+  "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-cypress",
   "devDependencies": {
-    "cypress": "^9.6.0"
+    "@babel/core": "^7.17.10",
+    "cypress": "^9.6.0",
+    "eslint": "^8.15.0",
+    "eslint-config-godaddy-react": "^8.0.0"
   }
 }
