@@ -16,7 +16,12 @@ When you create a new gasket application that is configured with the `cypress`
 plugin it will prepare it with a `cypress` based testing environment. It will add
 the following `scripts` to the `package.json`:
 
-<!-- TODO: add usage  -->
+NOTE: before running `npm run cypress` or `npm run cypress:headless`, you should first start the server in a separate tab.
+
+- `npm run cypress`, opens the Cypress Test Runner and uses the default configuration values from `cypress.json`, which uses all tests specified in the **tests** folder
+- `npm run cypress:headless` runs all cypress tests to completion. the cypress tests must be located in the **test** folder or whatever folder value is set for `integrationFolder` in the `cypress.json` config
+- `npm run e2e` starts the Next.js production server in conjunction with opening the Cypress Test Runner
+- `npm run e2e:headless` Same as `npm run e2e`, but runs the cypress tests to completion in the command line
 
 ## License
 
