@@ -93,7 +93,7 @@ describe('Plugin', function () {
   });
 
   describe('adds react specific dependencies', function () {
-    ['cypress', '@testing-library/react'].forEach((name) => {
+    ['cypress', 'start-server-and-test'].forEach((name) => {
       it(`adds "${name}" in the devDependencies`, async function () {
         const { pkg } = await createReact();
 

@@ -41,7 +41,8 @@
     "eslint-plugin-unicorn": "^40.1.0",
     "jest": "^27.4.3",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react-dom": "^17.0.1",
+    "start-server-and-test": "^1.14.0"
   },
   "eslintConfig": {
     "extends": [

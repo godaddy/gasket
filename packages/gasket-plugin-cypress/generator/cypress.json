@@ -1,4 +1,4 @@
 {
-    "integrationFolder": "test/cypress",
-    "video": false
+  "integrationFolder": "test/cypress",
+  "video": false
 }

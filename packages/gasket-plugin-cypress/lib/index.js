@@ -21,7 +21,7 @@ module.exports = {
           files.add(`${generatorDir}/*`, `${generatorDir}/**/*`);
 
           pkg.add('devDependencies', {
-            '@testing-library/react': devDependencies['@testing-library/react']
+            'start-server-and-test': devDependencies['start-server-and-test']
           });
         }
 
