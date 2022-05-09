@@ -78,9 +78,9 @@ describe('Plugin', function () {
   });
 
   it('has the correct custom cypress config', async function () {
-    expect(config).toHaveProperty('integrationFolder', 'test/cypress');
+    expect(config).toHaveProperty('baseUrl', 'http://localhost:80');
+    expect(config).toHaveProperty('integrationFolder', 'test');
     expect(config).toHaveProperty('video', false);
-    // expect(config).toHaveProperty('testURL', 'http://localhost/');
   });
 
   describe('react', function () {
