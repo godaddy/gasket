@@ -9,7 +9,7 @@ module.exports = {
         before: ['@gasket/plugin-lint']
       },
 
-      handler: async function create(gasket, { files, pkg, packageManager = 'npm' }) {
+      handler: async function create(gasket, { files, pkg }) {
         const generatorDir = `${__dirname}/../generator`;
         const isReactProject = pkg.has('dependencies', 'react');
 
@@ -26,10 +26,9 @@ module.exports = {
         }
 
         pkg.add('scripts', {
-          cypress: 'cypress open',
+          'cypress': 'cypress open',
           'cypress:headless': 'cypress run',
-
-          e2e: 'start-server-and-test start http://localhost:80 cypress',
+          'e2e': 'start-server-and-test start http://localhost:80 cypress',
           'e2e:headless':
             'start-server-and-test start http://localhost:80 cypress:headless'
         });
