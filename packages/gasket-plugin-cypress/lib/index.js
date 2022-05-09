@@ -26,8 +26,11 @@ module.exports = {
         }
 
         pkg.add('scripts', {
-          cypress: 'cypress run',
-          'cypress:open': 'cypress open'
+          cypress: 'cypress open',
+          'cypress:headless': 'cypress run',
+          e2e: 'start-server-and-test start http://localhost:3000 cypress',
+          'e2e:headless':
+            'start-server-and-test start http://localhost:3000 cypress:headless'
         });
       }
     },
