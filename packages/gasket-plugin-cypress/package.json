@@ -8,7 +8,9 @@
     "lint:fix": "npm run lint -- --fix",
     "test": "jest",
     "test:watch": "jest --watchAll",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "cypress": "cypress run",
+    "cypress:open": "cypress open"
   },
   "repository": {
     "type": "git",
@@ -27,6 +29,7 @@
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-cypress",
   "devDependencies": {
     "@babel/core": "^7.17.10",
+    "@testing-library/react": "^12.1.2",
     "cypress": "^9.6.0",
     "eslint": "^8.15.0",
     "eslint-config-godaddy-react": "^8.0.0",

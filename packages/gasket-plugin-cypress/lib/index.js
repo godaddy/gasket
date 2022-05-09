@@ -24,6 +24,11 @@ module.exports = {
             '@testing-library/react': devDependencies['@testing-library/react']
           });
         }
+
+        pkg.add('scripts', {
+          cypress: 'cypress run',
+          'cypress:open': 'cypress open'
+        });
       }
     },
     metadata(gasket, meta) {

@@ -1,5 +1,6 @@
 const self = require('../package.json');
 const plugin = require('../lib/index.js');
+const config = require('../generator/cypress.json');
 
 describe('Plugin', function () {
   async function create() {
@@ -76,12 +77,68 @@ describe('Plugin', function () {
     expect(plugin.hooks.create.timing.before).toEqual(['@gasket/plugin-lint']);
   });
 
+  it('has the correct custom cypress config', async function () {
+    expect(config).toHaveProperty('integrationFolder', 'test/cypress');
+    expect(config).toHaveProperty('video', false);
+    // expect(config).toHaveProperty('testURL', 'http://localhost/');
+  });
+
   describe('react', function () {
     it('includes a glob for the `generator/cypress.json` contents for react projects', async function () {
       const { files } = await createReact();
 
       expect(files[0]).toContain('/../generator/*');
       expect(files[1]).toContain('/../generator/**/*');
+    });
+  });
+
+  describe('adds react specific dependencies', function () {
+    ['cypress', '@testing-library/react'].forEach((name) => {
+      it(`adds "${name}" in the devDependencies`, async function () {
+        const { pkg } = await createReact();
+
+        expect(pkg.devDependencies).toHaveProperty(name);
+      });
+    });
+
+    it('depends on the same versions', async function () {
+      const { pkg } = await createReact();
+
+      expect(typeof pkg.devDependencies).toBe('object');
+      Object.keys(pkg.devDependencies).forEach((key) => {
+        expect(self.devDependencies).toHaveProperty(key);
+        expect(self.devDependencies[key]).toEqual(pkg.devDependencies[key]);
+      });
+    });
+  });
+
+  describe('dependencies', function () {
+    it('adds "cypress" in the devDependencies', async function () {
+      const { pkg } = await create();
+
+      expect(pkg.devDependencies).toHaveProperty('cypress');
+    });
+
+    it('depends on the same versions', async function () {
+      const { pkg } = await create();
+
+      expect(typeof pkg.devDependencies).toBe('object');
+      Object.keys(pkg.devDependencies).forEach((key) => {
+        expect(self.devDependencies).toHaveProperty(key);
+        expect(self.devDependencies[key]).toEqual(pkg.devDependencies[key]);
+      });
+    });
+  });
+
+  describe('scripts', function () {
+    it('uses the same scrips in our package.json', async function () {
+      const { pkg } = await create();
+
+      expect(typeof pkg.scripts).toBe('object');
+      Object.keys(pkg.scripts).forEach((key) => {
+        expect(self.scripts).toHaveProperty(key);
+        expect(self.scripts[key]).toEqual(pkg.scripts[key]);
+      });
     });
   });
 });
