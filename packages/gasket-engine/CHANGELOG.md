@@ -1,5 +1,7 @@
 # `@gasket/engine`
 
+- Expose the Gasket engine class so TypeScript code can construct engine instances
+
 ### 6.19.0
 
 - Allow differing callbacks for `execApply` and `execApplySync` ([#345])
