@@ -26,11 +26,12 @@ module.exports = {
         }
 
         pkg.add('scripts', {
+          'start:local': 'gasket start --env local',
           'cypress': 'cypress open',
           'cypress:headless': 'cypress run',
-          'e2e': 'start-server-and-test start http://localhost:80 cypress',
+          'e2e': 'start-server-and-test start:local http://localhost:8080 cypress',
           'e2e:headless':
-            'start-server-and-test start http://localhost:80 cypress:headless'
+            'start-server-and-test start:local http://localhost:8080 cypress:headless'
         });
       }
     },
