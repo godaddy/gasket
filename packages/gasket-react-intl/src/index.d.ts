@@ -21,7 +21,7 @@ export function withIntlProvider<Props>(): (Component: React.ComponentType<Props
  * @returns wrapper
  */
 export function withLocaleRequired<Props>(localePathPart?: LocalePathPart, options?: {
-  loading?: JSX.Element|string;
+  loading?: React.ReactNode;
   initialProps?: boolean;
   forwardRef?: boolean;
 }): (Component: React.ComponentType<Props>) => React.ComponentType<Props>;
@@ -36,8 +36,8 @@ export function withLocaleRequired<Props>(localePathPart?: LocalePathPart, optio
  */
 export function LocaleRequired(props: {
   localesPath: LocalePathPart;
-  loading?: JSX.Element|string;
-}): JSX.Element | null;
+  loading?: React.ReactNode;
+}): React.ReactNode | null;
 
 /**
  * React that fetches a locale file and returns loading status
