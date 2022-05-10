@@ -8,7 +8,7 @@ export { LocaleStatus };
  *
  * @returns wrapper
  */
-export function withIntlProvider(): Function;
+export function withIntlProvider<Props>(): (Component: React.ComponentType<Props>) => React.ComponentType<Props>;
 
 /**
  * Make an HOC that loads a locale file before rendering wrapped component
@@ -20,11 +20,11 @@ export function withIntlProvider(): Function;
  * @param [options.initialProps=false] - Preload locales during SSR with Next.js pages
  * @returns wrapper
  */
-export function withLocaleRequired(localePathPart?: LocalePathPart, options?: {
+export function withLocaleRequired<Props>(localePathPart?: LocalePathPart, options?: {
   loading?: JSX.Element|string;
   initialProps?: boolean;
   forwardRef?: boolean;
-}): Function;
+}): (Component: React.ComponentType<Props>) => React.ComponentType<Props>;
 
 /**
  * Component that loads a locale file before rendering children
