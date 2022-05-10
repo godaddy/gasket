@@ -74,5 +74,8 @@
   },
   "workspaces": [
     "./packages/*"
-  ]
+  ],
+  "dependencies": {
+    "npm": "^8.9.0"
+  }
 }
