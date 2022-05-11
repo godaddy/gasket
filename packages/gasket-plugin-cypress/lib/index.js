@@ -5,8 +5,7 @@ module.exports = {
   hooks: {
     create: {
       timing: {
-        last: true,
-        before: ['@gasket/plugin-lint']
+        after: ['@gasket/plugin-nextjs']
       },
 
       handler: async function create(gasket, { files, pkg }) {

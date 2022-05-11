@@ -73,8 +73,7 @@ describe('Plugin', function () {
   });
 
   it('has the correct create hook timings', function () {
-    expect(plugin.hooks.create.timing.last).toBe(true);
-    expect(plugin.hooks.create.timing.before).toEqual(['@gasket/plugin-lint']);
+    expect(plugin.hooks.create.timing.after).toEqual(['@gasket/plugin-nextjs']);
   });
 
   it('has the correct custom cypress config', async function () {
