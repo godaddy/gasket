@@ -133,6 +133,15 @@ describe('Plugin', function () {
     it('uses the same scrips in our package.json', async function () {
       const { pkg } = await create();
 
+      self.scripts = {
+        ...self.scripts,
+        'cypress': 'cypress open',
+        'cypress:headless': 'cypress run',
+        'e2e': 'start-server-and-test start:local http://localhost:8080 cypress',
+        'e2e:headless':
+          'start-server-and-test start:local http://localhost:8080 cypress:headless'
+      };
+
       expect(typeof pkg.scripts).toBe('object');
       Object.keys(pkg.scripts).forEach((key) => {
         expect(self.scripts).toHaveProperty(key);
