@@ -70,12 +70,9 @@
     }
   },
   "engines": {
-    "npm": "^8.0.0"
+    "npm": ">=8.0.0"
   },
   "workspaces": [
     "./packages/*"
-  ],
-  "dependencies": {
-    "npm": "^8.9.0"
-  }
+  ]
 }
