@@ -56,6 +56,23 @@ describe('middleware', function () {
     });
   });
 
+  it('descriptive error when config is not present in `appRequestConfig` hooks', async () => {
+    gasket[ENV_CONFIG] = undefined;
+    gasket.execWaterfall.mockImplementation((event, config, req, res) => {
+      expect(event).toEqual('appRequestConfig');
+      expect(req).toEqual(mockReq);
+      expect(res).toEqual(mockRes);
+
+      return undefined;
+    });
+
+    const middlewareMock = promisify(middleware.handler(gasket));
+
+    await expect(middlewareMock(mockReq, mockRes)).rejects.toThrowError(
+      'req.config is undefined - Ensure that all plugins hooking into the appRequestConfig and appEnvConfig lifecycle return a config object.'
+    );
+  });
+
   it('does not swallow errors from `appRequestConfig` hooks', async () => {
     gasket[ENV_CONFIG] = { some: 'config' };
     gasket.execWaterfall.mockImplementation(() => {
@@ -77,7 +94,7 @@ describe('middleware', function () {
   });
 
   it('adds nothing to locals response if public config not set', async () => {
-    const mockConfig = { };
+    const mockConfig = {};
     gasket[ENV_CONFIG] = mockConfig;
     const middlewareMock = promisify(middleware.handler(gasket));
 
