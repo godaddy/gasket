@@ -13,6 +13,13 @@ module.exports = {
         'appEnvConfig',
         mergeRootConfig(gasket, mergeConfigFiles(gasket))
       );
+
+      // Better error description for the appRequestConfig lifecycles
+      if (!gasket[ENV_CONFIG]) {
+        throw new Error(
+          'An appEnvConfig lifecycle hook did not return a config object.'
+        );
+      }
     },
     middleware,
     initReduxState(gasket, state, req) {

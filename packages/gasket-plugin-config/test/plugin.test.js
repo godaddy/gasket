@@ -155,6 +155,22 @@ describe('Plugin', () => {
       });
     });
 
+    it('descriptive error when config is not present in `appEnvConfig` hooks', async () => {
+      Object.assign(gasket.config, {
+        root: path.join(__dirname, './fixtures', 'templated'),
+        env: 'test',
+      });
+
+      gasket.execWaterfall.mockImplementation((event, config) => {
+        expect(event).toEqual('appEnvConfig');
+        return undefined;
+      });
+
+      const { preboot } = plugin.hooks;
+
+      await expect(preboot(gasket)).rejects.toThrowError('An appEnvConfig lifecycle hook did not return a config object.');
+    });
+
     it('does not swallow errors in buggy config files', () => {
       return verify({
         withRootDir: 'invalid-config',

@@ -69,7 +69,7 @@ describe('middleware', function () {
     const middlewareMock = promisify(middleware.handler(gasket));
 
     await expect(middlewareMock(mockReq, mockRes)).rejects.toThrowError(
-      'req.config is undefined - Ensure that all plugins hooking into the appRequestConfig and appEnvConfig lifecycle return a config object.'
+      'An appRequestConfig lifecycle hook did not return a config object.'
     );
   });
 
