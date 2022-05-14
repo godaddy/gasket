@@ -158,11 +158,12 @@ describe('Plugin', () => {
     it('descriptive error when config is not present in `appEnvConfig` hooks', async () => {
       Object.assign(gasket.config, {
         root: path.join(__dirname, './fixtures', 'templated'),
-        env: 'test',
+        env: 'test'
       });
 
-      gasket.execWaterfall.mockImplementation((event, config) => {
+      gasket.execWaterfall.mockImplementation((event) => {
         expect(event).toEqual('appEnvConfig');
+        // eslint-disable-next-line no-undefined
         return undefined;
       });
 
