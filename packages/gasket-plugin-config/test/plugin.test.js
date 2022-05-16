@@ -163,8 +163,6 @@ describe('Plugin', () => {
 
       gasket.execWaterfall.mockImplementation((event) => {
         expect(event).toEqual('appEnvConfig');
-        // eslint-disable-next-line no-undefined
-        return undefined;
       });
 
       const { preboot } = plugin.hooks;

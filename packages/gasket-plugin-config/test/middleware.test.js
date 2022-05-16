@@ -63,9 +63,6 @@ describe('middleware', function () {
       expect(event).toEqual('appRequestConfig');
       expect(req).toEqual(mockReq);
       expect(res).toEqual(mockRes);
-
-      // eslint-disable-next-line no-undefined
-      return undefined;
     });
 
     const middlewareMock = promisify(middleware.handler(gasket));
