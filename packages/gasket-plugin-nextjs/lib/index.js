@@ -76,9 +76,9 @@ module.exports = {
         pkg.add('dependencies', {
           '@gasket/assets': devDependencies['@gasket/assets'],
           '@gasket/nextjs': devDependencies['@gasket/nextjs'],
-          next: devDependencies.next,
+          'next': devDependencies.next,
           'prop-types': devDependencies['prop-types'],
-          react: devDependencies.react,
+          'react': devDependencies.react,
           'react-dom': devDependencies['react-dom']
         });
 
