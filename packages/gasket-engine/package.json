@@ -1,6 +1,6 @@
 {
   "name": "@gasket/engine",
-  "version": "6.20.3",
+  "version": "6.20.4",
   "description": "Plugin engine for gasket",
   "main": "lib/engine.js",
   "types": "lib/engine.d.ts",
