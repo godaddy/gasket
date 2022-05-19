@@ -70,7 +70,9 @@
     }
   },
   "engines": {
-    "npm": "^8.0.0"
+    "npm": ">=8.0.0"
   },
-  "workspaces": ["./packages/*"]
+  "workspaces": [
+    "./packages/*"
+  ]
 }

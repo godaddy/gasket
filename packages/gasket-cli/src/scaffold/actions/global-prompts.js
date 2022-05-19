@@ -10,7 +10,6 @@ const { addPluginsToContext, flattenPresets } = require('../utils');
  * @returns {Promise} promise
  */
 async function chooseAppDescription(context) {
-
   if (!('appDescription' in context)) {
     const { appDescription } = await inquirer.prompt([
       {
@@ -18,7 +17,8 @@ async function chooseAppDescription(context) {
         message: 'What is your app description?',
         type: 'input',
         default: 'A basic gasket app'
-      }]);
+      }
+    ]);
 
     Object.assign(context, { appDescription });
   }
@@ -31,17 +31,18 @@ async function chooseAppDescription(context) {
  * @returns {Promise} promise
  */
 async function choosePackageManager(context) {
-  const packageManager = context.packageManager ||
-    (await inquirer.prompt([
-      {
-        name: 'packageManager',
-        message: 'Which packager would you like to use?',
-        type: 'list',
-        choices: [
-          { name: 'npm' },
-          { name: 'yarn' }
-        ]
-      }])).packageManager;
+  const packageManager =
+    context.packageManager ||
+    (
+      await inquirer.prompt([
+        {
+          name: 'packageManager',
+          message: 'Which packager would you like to use?',
+          type: 'list',
+          choices: [{ name: 'npm' }, { name: 'yarn' }]
+        }
+      ])
+    ).packageManager;
 
   const installCmd = context.installCmd || `${packageManager} install`;
 
@@ -71,15 +72,15 @@ async function chooseTestPlugin(context) {
 
   // Flatten all plugins from presets and concat short names with cli plugins
   const allPlugins = flattenPresets(presetInfos)
-    .map(presetInfo => presetInfo.plugins || [])
+    .map((presetInfo) => presetInfo.plugins || [])
     .reduce((acc, arr) => acc.concat(arr), [])
-    .map(pluginInfo => pluginIdentifier(pluginInfo.name).shortName)
+    .map((pluginInfo) => pluginIdentifier(pluginInfo.name).shortName)
     .concat(plugins);
 
-  const knownTestPlugins = ['@gasket/mocha', '@gasket/jest'];
+  const knownTestPlugins = ['@gasket/mocha', '@gasket/jest', '@gasket/cypress'];
 
   if (!('testPlugin' in context)) {
-    let testPlugin = knownTestPlugins.find(p => allPlugins.includes(p));
+    let testPlugin = knownTestPlugins.find((p) => allPlugins.includes(p));
 
     if (!testPlugin) {
       ({ testPlugin } = await inquirer.prompt([
@@ -90,7 +91,8 @@ async function chooseTestPlugin(context) {
           choices: [
             { name: 'none (not recommended)', value: 'none' },
             { name: 'mocha + nyc + sinon + chai', value: '@gasket/mocha' },
-            { name: 'jest', value: '@gasket/jest' }
+            { name: 'jest', value: '@gasket/jest' },
+            { name: 'cypress', value: '@gasket/cypress' }
           ]
         }
       ]));
@@ -113,12 +115,14 @@ async function chooseTestPlugin(context) {
 async function allowExtantOverwriting(context) {
   const { dest, extant } = context;
   if (extant) {
-    const { destOverride } = await inquirer.prompt([{
-      name: 'destOverride',
-      type: 'confirm',
-      message: `Override contents of ${dest} ?`,
-      default: true
-    }]);
+    const { destOverride } = await inquirer.prompt([
+      {
+        name: 'destOverride',
+        type: 'confirm',
+        message: `Override contents of ${dest} ?`,
+        default: true
+      }
+    ]);
 
     Object.assign(context, { destOverride });
   }

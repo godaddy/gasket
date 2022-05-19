@@ -1,0 +1,58 @@
+{
+  "name": "@gasket/plugin-cypress",
+  "version": "1.0.0",
+  "description": "Integrates Cypress based testing into your Gasket application",
+  "main": "lib",
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "npm run lint -- --fix",
+    "test": "jest",
+    "test:watch": "jest --watchAll",
+    "test:coverage": "jest --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/godaddy/gasket.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "cypress",
+    "gasket",
+    "plugin"
+  ],
+  "author": "GoDaddy Operating Company, LLC",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/godaddy/gasket/issues"
+  },
+  "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-cypress",
+  "devDependencies": {
+    "@babel/core": "^7.16.10",
+    "@testing-library/react": "^12.1.2",
+    "cypress": "^9.6.0",
+    "eslint": "^8.7.0",
+    "eslint-config-godaddy-react": "^8.0.0",
+    "eslint-plugin-unicorn": "^40.1.0",
+    "jest": "^27.4.3",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "start-server-and-test": "^1.14.0"
+  },
+  "eslintConfig": {
+    "extends": [
+      "godaddy-react"
+    ],
+    "plugins": [
+      "unicorn"
+    ],
+    "rules": {
+      "unicorn/filename-case": "error",
+      "max-nested-callbacks": [
+        2,
+        6
+      ]
+    }
+  }
+}

@@ -4,7 +4,7 @@ const { name, devDependencies } = require('../package');
 const { createConfig } = require('./config');
 const { pluginIdentifier } = require('@gasket/resolve');
 
-const isDefined = o => typeof o !== 'undefined';
+const isDefined = (o) => typeof o !== 'undefined';
 
 module.exports = {
   dependencies: ['@gasket/plugin-webpack'],
@@ -33,7 +33,7 @@ module.exports = {
         const { nextConfig = next || {} } = baseConfig;
 
         const serviceWorker = {
-          webpackRegister: key => /_app/.test(key),
+          webpackRegister: (key) => /_app/.test(key),
           ...(baseConfig.serviceWorker || {})
         };
         return { ...rest, serviceWorker, nextConfig };
@@ -56,20 +56,20 @@ module.exports = {
        */
       handler: function create(gasket, context) {
         const { files, pkg, testPlugin } = context;
-        const generatorDir = `${ __dirname }/../generator`;
+        const generatorDir = `${__dirname}/../generator`;
 
         files.add(
-          `${ generatorDir }/app/.*`,
-          `${ generatorDir }/app/*`,
-          `${ generatorDir }/app/**/*`
+          `${generatorDir}/app/.*`,
+          `${generatorDir}/app/*`,
+          `${generatorDir}/app/**/*`
         );
 
-        ['jest', 'mocha'].forEach(tester => {
-          if (testPlugin && pluginIdentifier(testPlugin).longName === `@gasket/plugin-${ tester }`) {
-            files.add(
-              `${ generatorDir }/${ tester }/*`,
-              `${ generatorDir }/${ tester }/**/*`
-            );
+        ['jest', 'mocha', 'cypress'].forEach((tester) => {
+          if (
+            testPlugin &&
+            pluginIdentifier(testPlugin).longName === `@gasket/plugin-${tester}`
+          ) {
+            files.add(`${generatorDir}/${tester}/*`, `${generatorDir}/${tester}/**/*`);
           }
         });
 
@@ -88,10 +88,7 @@ module.exports = {
             'lodash.merge': devDependencies['lodash.merge']
           });
 
-          files.add(
-            `${ generatorDir }/redux/*`,
-            `${ generatorDir }/redux/**/*`
-          );
+          files.add(`${generatorDir}/redux/*`, `${generatorDir}/redux/**/*`);
         }
       }
     },
@@ -130,7 +127,7 @@ module.exports = {
           if (res.locals && res.locals.gasketData && res.locals.gasketData.intl) {
             const { locale } = res.locals.gasketData.intl;
             if (locale) {
-              req.headers.cookie = (req.headers.cookie || '') + `;NEXT_LOCALE=${ locale }`;
+              req.headers.cookie = (req.headers.cookie || '') + `;NEXT_LOCALE=${locale}`;
             }
           }
           next();
@@ -162,16 +159,21 @@ module.exports = {
      */
     workbox: function (gasket) {
       const { nextConfig = {}, basePath: rootBasePath } = gasket.config;
-      const assetPrefix = [nextConfig.assetPrefix, nextConfig.basePath, rootBasePath, ''].find(isDefined);
+      const assetPrefix = [
+        nextConfig.assetPrefix,
+        nextConfig.basePath,
+        rootBasePath,
+        ''
+      ].find(isDefined);
 
       const parsed = assetPrefix ? url.parse(assetPrefix) : '';
-      const joined = parsed ? url.format({ ...parsed, pathname: path.join(parsed.pathname, '_next/') }) : '_next/';
+      const joined = parsed
+        ? url.format({ ...parsed, pathname: path.join(parsed.pathname, '_next/') })
+        : '_next/';
 
       return {
         globDirectory: '.',
-        globPatterns: [
-          '.next/static/**'
-        ],
+        globPatterns: ['.next/static/**'],
         modifyURLPrefix: {
           '.next/': joined
         }
@@ -180,49 +182,60 @@ module.exports = {
     metadata(gasket, meta) {
       return {
         ...meta,
-        guides: [{
-          name: 'Next.js Routing Guide',
-          description: 'Basic and advance routing for Next.js',
-          link: 'docs/routing.md'
-        }, {
-          name: 'Next.js Deployment Guide',
-          description: 'Steps to deploy a Next.js Gasket app',
-          link: 'docs/deployment.md'
-        }, {
-          name: 'Next.js Redux Guide',
-          description: 'Using Redux with Next.js Gasket apps',
-          link: 'docs/redux.md'
-        }],
-        lifecycles: [{
-          name: 'nextConfig',
-          method: 'execWaterfall',
-          description: 'Setup the next config',
-          link: 'README.md#nextConfig',
-          parent: 'express'
-        }, {
-          name: 'next',
-          method: 'exec',
-          description: 'Update the next app instance before prepare',
-          link: 'README.md#next',
-          parent: 'express',
-          after: 'nextConfig'
-        }, {
-          name: 'nextExpress',
-          method: 'exec',
-          description: 'Access the prepared next app and express instance',
-          link: 'README.md#nextExpress',
-          parent: 'express',
-          after: 'next'
-        }],
-        structures: [{
-          name: 'pages/',
-          description: 'NextJS routing',
-          link: 'https://nextjs.org/docs/routing/introduction'
-        }, {
-          name: 'public/',
-          description: 'NextJS static files',
-          link: 'https://nextjs.org/docs/basic-features/static-file-serving'
-        }]
+        guides: [
+          {
+            name: 'Next.js Routing Guide',
+            description: 'Basic and advance routing for Next.js',
+            link: 'docs/routing.md'
+          },
+          {
+            name: 'Next.js Deployment Guide',
+            description: 'Steps to deploy a Next.js Gasket app',
+            link: 'docs/deployment.md'
+          },
+          {
+            name: 'Next.js Redux Guide',
+            description: 'Using Redux with Next.js Gasket apps',
+            link: 'docs/redux.md'
+          }
+        ],
+        lifecycles: [
+          {
+            name: 'nextConfig',
+            method: 'execWaterfall',
+            description: 'Setup the next config',
+            link: 'README.md#nextConfig',
+            parent: 'express'
+          },
+          {
+            name: 'next',
+            method: 'exec',
+            description: 'Update the next app instance before prepare',
+            link: 'README.md#next',
+            parent: 'express',
+            after: 'nextConfig'
+          },
+          {
+            name: 'nextExpress',
+            method: 'exec',
+            description: 'Access the prepared next app and express instance',
+            link: 'README.md#nextExpress',
+            parent: 'express',
+            after: 'next'
+          }
+        ],
+        structures: [
+          {
+            name: 'pages/',
+            description: 'NextJS routing',
+            link: 'https://nextjs.org/docs/routing/introduction'
+          },
+          {
+            name: 'public/',
+            description: 'NextJS static files',
+            link: 'https://nextjs.org/docs/basic-features/static-file-serving'
+          }
+        ]
       };
     }
   }
