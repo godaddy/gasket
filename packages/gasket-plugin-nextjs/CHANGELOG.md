@@ -1,5 +1,9 @@
 # `@gasket/plugin-nextjs`
 
+### 6.21.0
+
+- Support for scaffolded cypress tests ([#357])
+
 ### 6.17.1
 
 - Update glob path from `__dirname` ([#337])
@@ -168,3 +172,4 @@
 [#326]: https://github.com/godaddy/gasket/pull/326
 [#334]: https://github.com/godaddy/gasket/pull/334
 [#337]: https://github.com/godaddy/gasket/pull/337
+[#357]: https://github.com/godaddy/gasket/pull/357

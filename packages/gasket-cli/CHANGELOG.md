@@ -1,5 +1,9 @@
 # `@gasket/cli`
 
+### 6.21.0
+
+- Add cypress as a test suite option ([#357])
+
 ### 6.20.0
 
 - Determine env and apply config overrides before plugins are loaded ([#348])
@@ -333,3 +337,4 @@ upon `gasket create`
 [#319]: https://github.com/godaddy/gasket/pull/319
 [#329]: https://github.com/godaddy/gasket/pull/329
 [#348]: https://github.com/godaddy/gasket/pull/348
+[#357]: https://github.com/godaddy/gasket/pull/357
