@@ -1,5 +1,9 @@
 # `@gasket/react-intl`
 
+### 6.20.4
+
+- Fix types path ([#358])
+
 ### 6.0.15
 
 - Support for `locale` from [Next.js i18n routing] ([#278])
@@ -131,3 +135,4 @@
 [#262]: https://github.com/godaddy/gasket/pull/262
 [#263]: https://github.com/godaddy/gasket/pull/263
 [#278]: https://github.com/godaddy/gasket/pull/278
+[#358]: https://github.com/godaddy/gasket/pull/358

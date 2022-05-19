@@ -92,4 +92,33 @@ declare module '@gasket/engine' {
 
     environments?: Record<string, PartialRecursive<GasketConfig>>
   }
+
+  export default class GasketEngine implements Gasket {
+    constructor(config: GasketConfigFile, context?: { resolveFrom?: string });
+    config: GasketConfig;
+    exec<Id extends HookId>(
+      hook: Id,
+      ...args: Parameters<HookExecTypes[Id]>
+    ): Promise<ResolvedType<ReturnType<HookExecTypes[Id]>>[]>;
+    execSync<Id extends HookId>(
+      hook: Id,
+      ...args: Parameters<HookExecTypes[Id]>
+    ): Promise<ResolvedType<ReturnType<HookExecTypes[Id]>>[]>;
+    execWaterfall<Id extends HookId>(
+      hook: Id,
+      ...args: Parameters<HookExecTypes[Id]>
+    ): ReturnType<HookExecTypes[Id]>;
+    execWaterfallSync<Id extends HookId>(
+      hook: Id,
+      ...args: Parameters<HookExecTypes[Id]>
+    ): ReturnType<HookExecTypes[Id]>;
+    execApply<Id extends HookId, Return = void>(
+      hook: Id,
+      callback: (plugin: Plugin, handler: HookHandler<Id>) => Promise<Return>
+    ): Promise<Return[]>;
+    execApplySync<Id extends HookId, Return = void>(
+      hook: Id,
+      callback: (plugin: Plugin, handler: HookHandler<Id>) => Return
+    ): Return[];
+  }
 }

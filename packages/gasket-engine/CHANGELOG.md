@@ -1,5 +1,9 @@
 # `@gasket/engine`
 
+### 6.20.4
+
+- Expose the Gasket engine class so TypeScript code can construct engine instances ([#356])
+
 ### 6.19.0
 
 - Allow differing callbacks for `execApply` and `execApplySync` ([#345])
@@ -76,5 +80,6 @@
 [#299]: https://github.com/godaddy/gasket/pull/299
 [#311]: https://github.com/godaddy/gasket/pull/311
 [#345]: https://github.com/godaddy/gasket/pull/345
+[#356]: https://github.com/godaddy/gasket/pull/356
 
 [Loader]:/packages/gasket-resolve/docs/api.md#loader
