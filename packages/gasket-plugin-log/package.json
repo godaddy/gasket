@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-log",
-  "version": "6.20.3",
+  "version": "6.21.0",
   "description": "Gasket log plugin",
   "main": "lib",
   "types": "lib/index.d.ts",
@@ -41,10 +41,10 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-log",
   "dependencies": {
-    "@gasket/log": "^6.20.2"
+    "@gasket/log": "^6.21.0"
   },
   "devDependencies": {
-    "@gasket/engine": "^6.20.3",
+    "@gasket/engine": "^6.21.0",
     "assume": "^2.3.0",
     "assume-sinon": "^1.1.0",
     "babel-eslint": "^10.1.0",
