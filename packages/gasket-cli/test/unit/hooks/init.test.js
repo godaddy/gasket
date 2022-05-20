@@ -33,7 +33,7 @@ describe('init hook', () => {
 
     const _initHook = proxyquire('../../../src/hooks/init', mockImports);
 
-    initHook = function initHook() {
+    initHook = function mockInitHook() {
       return _initHook.apply({ warn: warnStub, error: errorStub }, arguments);
     };
 

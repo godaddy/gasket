@@ -12,7 +12,7 @@ module.exports = class Files {
    * Return array of globs
    *
    * @deprecated
-   * @return {string[]} `globby` compatible patterns
+   * @returns {string[]} `globby` compatible patterns
    */
   get globs() {
     return this.globSets.reduce((acc, cur) => [...acc, ...cur.globs], []);
