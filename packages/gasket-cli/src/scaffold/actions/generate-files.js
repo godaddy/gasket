@@ -47,7 +47,7 @@ async function getDescriptors(context) {
       const { globs, source } = set;
       const matches = await Promise.all(globs.map(async pattern => {
         const srcPaths = await glob(pattern, { nodir: true });
-        const base = path.resolve(pattern.replace(/\/(.)?\*(.+)?/, ''));
+        const base = path.resolve(pattern.replace(/\/\.?\*.*/, ''));
         const targets = srcPaths.map(pth => pth.replace(base + path.sep, '').replace('.template', ''));
         return targets.map((target, idx) => {
           return {
