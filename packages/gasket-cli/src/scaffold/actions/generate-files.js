@@ -9,6 +9,8 @@ const action = require('../action-wrapper');
 
 const glob = promisify(require('glob'));
 
+const flatten = (acc, values) => (acc || []).concat(values);
+
 /**
  * Find all duplicate target files and reduce to single descriptor.
  * Keeps track of overrides.
@@ -60,9 +62,9 @@ async function getDescriptors(context) {
           };
         });
       }));
-      return matches.flat();
+      return matches.reduce(flatten);
     }))
-  ).flat();
+  ).reduce(flatten);
 
   return reduceDescriptors(descriptors);
 }
