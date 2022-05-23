@@ -1,5 +1,9 @@
 # `@gasket/cli`
 
+### 6.22.1
+
+- Fix missing glob dependency
+
 ### 6.22.0
 
 - Drop `vinyl-fs` and show final plugin source for files that were overridden ([#361])
