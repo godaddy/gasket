@@ -1,5 +1,13 @@
 # `@gasket/cli`
 
+### 6.22.1
+
+- Fix missing glob dependency
+
+### 6.22.0
+
+- Drop `vinyl-fs` and show final plugin source for files that were overridden ([#361])
+
 ### 6.21.0
 
 - Add cypress as a test suite option ([#357])
@@ -338,3 +346,4 @@ upon `gasket create`
 [#329]: https://github.com/godaddy/gasket/pull/329
 [#348]: https://github.com/godaddy/gasket/pull/348
 [#357]: https://github.com/godaddy/gasket/pull/357
+[#361]: https://github.com/godaddy/gasket/pull/361

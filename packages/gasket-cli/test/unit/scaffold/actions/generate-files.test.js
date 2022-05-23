@@ -1,38 +1,44 @@
 const sinon = require('sinon');
 const assume = require('assume');
+const path = require('path');
+const fs = require('fs');
+const Handlebars = require('handlebars');
+const { promisify } = require('util');
 const proxyquire = require('proxyquire');
 
+const fixtures = path.resolve(__dirname, '..', '..', '..', 'fixtures');
+
 describe('generateFiles', () => {
-  let sandbox, mockContext, mockFile, mockImports, generateFiles;
-  let pumpStub, mapStub, registerHelperStub, compileStub, templateNextStub;
+  let mockContext, mockImports, generateFiles;
+  let globSpy, readFileSpy, writeFileStub, mkdirpStub, registerHelperSpy;
 
   beforeEach(() => {
-    sandbox = sinon.createSandbox();
 
-    pumpStub = sandbox.stub();
-    mapStub = sandbox.stub().returns(sandbox.stub());
-    registerHelperStub = sandbox.stub();
-    compileStub = sandbox.stub().returns(() => 'Compiled content');
-    templateNextStub = sandbox.stub();
-
-    pumpStub.callsFake((src, templateFile, dest, cb) => {
-      templateFile(mockFile, templateNextStub);
-      return cb();
-    });
+    readFileSpy = sinon.spy(fs.promises.readFile);
+    writeFileStub = sinon.stub().resolves();
+    mkdirpStub = sinon.stub().resolves();
 
     mockImports = {
       'handlebars': {
-        create: () => ({
-          registerHelper: registerHelperStub,
-          compile: compileStub
-        })
+        create: () => {
+          const handlebars = Handlebars.create();
+          registerHelperSpy = sinon.spy(handlebars, 'registerHelper');
+          return handlebars;
+        }
       },
-      'vinyl-fs': {
-        src: sandbox.stub(),
-        dest: sandbox.stub()
+      'util': {
+        promisify: f => {
+          globSpy = sinon.spy(promisify(f));
+          return globSpy;
+        }
       },
-      'pump': pumpStub,
-      'map-stream': mapStub,
+      'mkdirp': mkdirpStub,
+      'fs': {
+        promises: {
+          readFile: readFileSpy,
+          writeFile: writeFileStub
+        }
+      },
       '../action-wrapper': require('../../../helpers').mockActionWrapper
     };
 
@@ -40,26 +46,23 @@ describe('generateFiles', () => {
 
     mockContext = {
       appName: 'my-app',
-      dest: '/some/path/my-app',
+      dest: '/path/to/my-app',
       files: {
-        globs: ['some/file']
+        globSets: [{
+          globs: [fixtures + '/generator/*'],
+          source: {
+            name: '@gasket/plugin-example'
+          }
+        }]
       },
       warnings: [],
       errors: [],
       generatedFiles: new Set()
     };
-
-    mockFile = {
-      isDirectory: () => false,
-      contents: 'some contents',
-      basename: 'mock-file.md',
-      extname: '.md',
-      path: '/path/to/mock-file.md'
-    };
   });
 
   afterEach(() => {
-    sandbox.restore();
+    sinon.restore();
   });
 
   it('is decorated action', async () => {
@@ -67,93 +70,202 @@ describe('generateFiles', () => {
   });
 
   it('early exit if not files', async () => {
-    mockContext.files.globs = [];
+    mockContext.files.globSets = [];
     await generateFiles(mockContext);
-    assume(pumpStub).not.called();
+    assume(globSpy).not.called();
   });
 
-  it('adds a json helper to handlebars', async () => {
+  it('reads expected source files', async () => {
     await generateFiles(mockContext);
-    assume(registerHelperStub).is.called();
-    assume(registerHelperStub.args[0][0]).to.eqls('json');
+    assume(readFileSpy).is.calledWithMatch('gasket-cli/test/fixtures/generator/file-a.md');
+    assume(readFileSpy).is.calledWithMatch('gasket-cli/test/fixtures/generator/file-b.md');
   });
 
-  it('adds a jspretty helper to handlebars', async () => {
+  it('writes expected target files', async () => {
     await generateFiles(mockContext);
-    assume(registerHelperStub).is.called();
-    assume(registerHelperStub.args[1][0]).to.eqls('jspretty');
+    assume(writeFileStub).is.calledWithMatch('/path/to/my-app/file-a.md');
+    assume(writeFileStub).is.calledWithMatch('/path/to/my-app/file-b.md');
   });
 
-  it('pump resolves promise', async () => {
-    await generateFiles(mockContext);
-    assume(pumpStub).is.called();
+  it('shows warning spinner for any warnings', async () => {
+    const warnStub = sinon.stub();
+
+    mockContext.files.globSets = [{
+      globs: [fixtures + '/generator/missing/*'],
+      source: {
+        name: '@gasket/plugin-missing-example'
+      }
+    }];
+
+    await generateFiles.wrapped(mockContext, { warn: warnStub });
+    assume(mockContext.warnings).lengthOf(1);
+    assume(warnStub).called();
   });
 
-  it('pump rejects promise for errors', async () => {
-    pumpStub.callsFake((src, templateFile, dest, cb) => {
-      return cb('BAD');
-    });
-    try {
+  describe('handlebars', function () {
+    it('adds a json helper to handlebars', async () => {
       await generateFiles(mockContext);
-    } catch (e) {
-      assume(e).is.equal('BAD');
-    }
-  });
-
-  describe('templateFile', () => {
-    beforeEach(() => {
-      mapStub.callsFake(templateFile => templateFile);
+      assume(registerHelperSpy).calledWith('json');
     });
 
-    it('early return if file is directory', async () => {
-      mockFile.isDirectory = () => true;
+    it('adds a jspretty helper to handlebars', async () => {
       await generateFiles(mockContext);
-      const results = templateNextStub.args[0][1];
-      assume(results.source).is.undefined();
+      assume(registerHelperSpy).calledWith('jspretty');
     });
 
-    it('executes callback with transformed file', async () => {
+    it('template handles string replacement', async () => {
       await generateFiles(mockContext);
-      assume(templateNextStub).is.called();
-      assume(templateNextStub.args[0][0]).is.null();
-      assume(templateNextStub.args[0][1]).equals(mockFile);
+      // get the correct args as calls may be unordered
+      const args = writeFileStub.args.find(call => call[0].includes('file-a.md'));
+      assume(args[1]).includes('The app name is my-app');
     });
 
-    it('sets source to original contents', async () => {
-      const { contents: mockContents } = mockFile;
+    it('template handles replacement with helpers', async () => {
       await generateFiles(mockContext);
-      const results = templateNextStub.args[0][1];
-      assume(results.source).equals(mockContents);
+      // get the correct args as calls may be unordered
+      const args = writeFileStub.args.find(call => call[0].includes('file-b.md'));
+      assume(args[1]).includes(`'source':{'name':'@gasket/plugin-example'}`);
     });
 
-    it('sets contents to buffer of compiled results', async () => {
-      const { contents: mockContents } = mockFile;
+    it('template handles compile errors', async () => {
+      mockContext.files.globSets = [{
+        globs: [fixtures + '/generator/missing/*'],
+        source: {
+          name: '@gasket/plugin-missing-example'
+        }
+      }];
       await generateFiles(mockContext);
-      const results = templateNextStub.args[0][1];
-      assume(results.contents).not.equals(mockContents);
-      assume(results.contents).instanceOf(Buffer);
-    });
+      const args = writeFileStub.args.find(call => call[0].includes('file-a.md'));
 
-    it('handles compile error and sets warnings', async () => {
-      compileStub.throws(new Error('something bad happened'));
-      await generateFiles(mockContext);
-      const results = templateNextStub.args[0][1];
-      assume(results.contents).equals(mockFile.contents);
+      // assume output file falls back to source content
+      assume(args[1]).includes(`The context does not have {{{ jspretty missing }}}`);
+
+      // assume a cli warning was added with relevant message
       assume(mockContext.warnings).lengthOf(1);
-      assume(mockContext.warnings[0]).includes('something bad happened');
+      assume(mockContext.warnings[0]).includes(
+        `Error templating /path/to/my-app/file-a.md: Cannot read properties of undefined`);
+    });
+  });
+
+  describe('_getDescriptors', function () {
+
+    it('is async', async function () {
+      const results = generateFiles._getDescriptors(mockContext);
+      assume(results).instanceOf(Promise);
     });
 
-    it('leaves extname in tact', async () => {
-      await generateFiles(mockContext);
-      const results = templateNextStub.args[0][1];
-      assume(results.extname).equals('.md');
+    it('globs each globSet pattern', async function () {
+      await generateFiles._getDescriptors(mockContext);
+      assume(globSpy).called();
     });
 
-    it('strips .template from extname', async () => {
-      mockFile.extname = '.template';
-      await generateFiles(mockContext);
-      const results = templateNextStub.args[0][1];
-      assume(results.extname).equals('');
+    it('returns flat array of descriptor objects', async function () {
+      const results = await generateFiles._getDescriptors(mockContext);
+      assume(results).lengthOf(2);
+      assume(results[0]).objectContaining({
+        target: 'file-a.md',
+        from: '@gasket/plugin-example'
+      });
+      assume(results[1]).objectContaining({
+        target: 'file-b.md',
+        from: '@gasket/plugin-example'
+      });
+    });
+
+    it('descriptor has target destination', async function () {
+      const results = await generateFiles._getDescriptors(mockContext);
+      assume(results[0]).objectContaining({
+        targetFile: sinon.match('/path/to/my-app/file-a.md')
+      });
+    });
+
+    it('descriptor has source file path', async function () {
+      const results = await generateFiles._getDescriptors(mockContext);
+      assume(results[0]).objectContaining({
+        srcFile: sinon.match('/gasket-cli/test/fixtures/generator/file-a.md')
+      });
+    });
+
+    it('descriptor has glob pattern and resolved base path', async function () {
+      const results = await generateFiles._getDescriptors(mockContext);
+      assume(results[0]).objectContaining({
+        pattern: sinon.match('/gasket-cli/test/fixtures/generator/*'),
+        base: sinon.match(/.+fixtures\/generator$/)
+      });
+    });
+
+    it('works with dot file patterns', async function () {
+      mockContext.files.globSets = [{
+        globs: [fixtures + '/generator/.*'],
+        source: {
+          name: '@gasket/plugin-hidden-example'
+        }
+      }];
+      const results = await generateFiles._getDescriptors(mockContext);
+      assume(results).lengthOf(1);
+      assume(results[0]).objectContaining({
+        pattern: sinon.match('/gasket-cli/test/fixtures/generator/.*'),
+        base: sinon.match(/.+fixtures\/generator$/),
+        srcFile: sinon.match('/gasket-cli/test/fixtures/generator/.dot-file-a.md'),
+        targetFile: '/path/to/my-app/.dot-file-a.md',
+        target: '.dot-file-a.md',
+        from: '@gasket/plugin-hidden-example'
+      });
+    });
+
+    it('works with .template extensions', async function () {
+      mockContext.files.globSets = [{
+        globs: [fixtures + '/generator/other/*'],
+        source: {
+          name: '@gasket/plugin-template-example'
+        }
+      }];
+      const results = await generateFiles._getDescriptors(mockContext);
+      assume(results).lengthOf(1);
+      assume(results[0]).objectContaining({
+        pattern: sinon.match('/gasket-cli/test/fixtures/generator/other/*'),
+        base: sinon.match(/.+fixtures\/generator\/other$/),
+        srcFile: sinon.match('/gasket-cli/test/fixtures/generator/other/file-b.md.template'),
+        targetFile: '/path/to/my-app/file-b.md',
+        target: 'file-b.md',
+        from: '@gasket/plugin-template-example'
+      });
+    });
+
+    it('works with recursive patterns', async function () {
+      mockContext.files.globSets = [{
+        globs: [fixtures + '/generator/**/*'],
+        source: {
+          name: '@gasket/plugin-example'
+        }
+      }];
+      const results = await generateFiles._getDescriptors(mockContext);
+      assume(results).lengthOf(5);
+    });
+
+    it('reduces duplicates with overrides prop', async function () {
+      mockContext.files.globSets = [{
+        globs: [fixtures + '/generator/*'],
+        source: {
+          name: '@gasket/plugin-example'
+        }
+      }, {
+        globs: [fixtures + '/generator/override/*'],
+        source: {
+          name: '@gasket/plugin-override-example'
+        }
+      }];
+      const results = await generateFiles._getDescriptors(mockContext);
+      assume(results).lengthOf(2);
+      assume(results[0]).objectContaining({
+        pattern: sinon.match('/gasket-cli/test/fixtures/generator/override/*'),
+        base: sinon.match(/.+fixtures\/generator\/override$/),
+        srcFile: sinon.match('/gasket-cli/test/fixtures/generator/override/file-a.md'),
+        targetFile: '/path/to/my-app/file-a.md',
+        target: 'file-a.md',
+        from: '@gasket/plugin-override-example',
+        overrides: '@gasket/plugin-example'
+      });
     });
   });
 });

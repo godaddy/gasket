@@ -1,6 +1,6 @@
 {
   "name": "@gasket/cli",
-  "version": "6.21.0",
+  "version": "6.22.1",
   "description": "CLI for rapid application development with gasket",
   "main": "src/index.js",
   "bin": {
@@ -72,18 +72,17 @@
     "concat-stream": "^2.0.0",
     "cross-spawn": "^7.0.1",
     "deepmerge": "^4.2.2",
+    "glob": "^7.1.6",
     "handlebars": "^4.7.6",
     "inquirer": "6.3.1",
     "json5": "^2.1.0",
     "lodash.defaultsdeep": "^4.6.1",
-    "map-stream": "^0.1.0",
     "mkdirp": "^1.0.4",
     "ora": "^3.4.0",
     "pump": "^3.0.0",
     "semver": "^7.3.4",
     "tar-fs": "^2.0.0",
-    "untildify": "^4.0.0",
-    "vinyl-fs": "^3.0.3"
+    "untildify": "^4.0.0"
   },
   "devDependencies": {
     "@oclif/dev-cli": "^1.13.31",
