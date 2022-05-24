@@ -8,7 +8,7 @@ This is a default plugin in the Gasket CLI and is always available for use.
 
 ## Usage
 
-Create a `lifecycles` folder in the root of your application. This folder should
+Create a `lifecycles` (or `src/lifecycles`) folder in the root of your application. This folder should
 contain files that can interact with the various of Gasket lifecycles that are
 implemented by the plugins.
 
