@@ -34,7 +34,7 @@ launched in your browser.
 
 ## Configuration
 
-To be set under `docusaurus` in the `gasket.config.js`. A required `docusaurus.config.js` will generated in the root directory if one is not present. Docusaurus allows for additional [configuration/customization](https://docusaurus.io/docs/api/docusaurus-config) options and you can define those directly in the `docusaurus.config.js`.
+To be set under `docusaurus` in the `gasket.config.js`.
 
 - `docsDir` - (string) Name of the root documents folder. Default is `.docs`.
 - `port` - (number) Port to serve the docs from. Default is `3000`.
@@ -52,6 +52,9 @@ module.exports = {
   }
 };
 ```
+
+### `docusaurus.config.js`
+A required `docusaurus.config.js` will generated in the root directory if one is not present. Docusaurus allows for additional [configuration/customization](https://docusaurus.io/docs/api/docusaurus-config) options and you can define those directly in the `docusaurus.config.js`.
 
 ## License
 
