@@ -1,7 +1,6 @@
 # @gasket/plugin-docusaurus
 
-Use [Docusaurus] to serve a website view of the collated docs from
-[@gasket/plugin-docs].
+Use [Docusaurus] to serve a website view of the collated docs from [@gasket/plugin-docs].
 
 ## Installation
 

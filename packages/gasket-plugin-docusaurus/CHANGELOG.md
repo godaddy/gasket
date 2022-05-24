@@ -2,4 +2,8 @@
 
 ### 6.21.0
 
-- Initial release
+- Initial release ([#362])
+
+<!-- Links -->
+
+[#362]: https://github.com/godaddy/gasket/pull/362
