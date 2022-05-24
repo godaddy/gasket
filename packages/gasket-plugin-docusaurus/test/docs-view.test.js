@@ -3,7 +3,7 @@ const sinon = require('sinon');
 const proxyquire = require('proxyquire');
 const fs = require('fs');
 const path = require('path');
-const testConfig = require('./docusaurus.test.config');
+const testConfig = require('./fixtures/docusaurus.config');
 
 const mockDocsConfigSet = { docsRoot: '/path/to/app/.docs' };
 const startStub = sinon.stub();
