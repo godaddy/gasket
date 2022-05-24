@@ -4,6 +4,7 @@ const { start } = require('@docusaurus/core/lib');
 const path = require('path');
 const pluginConfigFile = 'docusaurus.config.js';
 const generateDefaultConfig = require('./generate-default-config');
+const mkdirp = require('mkdirp');
 
 // https://docusaurus.io/docs/cli#docusaurus-start-sitedir
 const defaultConfig = {
@@ -16,6 +17,7 @@ module.exports = async function docsView(gasket, docsConfigSet) {
   const { root } = gasket.config;
   const { name } = gasket.metadata.app;
   const userConfig = gasket.config.docusaurus || {};
+  const { docsDir = false } = userConfig;
   const docusaurusConfig = defaultsDeep(
     {
       config: path.join(root, pluginConfigFile)
@@ -23,6 +25,8 @@ module.exports = async function docsView(gasket, docsConfigSet) {
     userConfig,
     defaultConfig
   );
+
+  docsDir && await mkdirp(docsDir);
 
   try {
     await readFile(path.join(root, pluginConfigFile));
