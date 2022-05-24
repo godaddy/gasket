@@ -33,7 +33,7 @@ module.exports = async function docsView(gasket, docsConfigSet) {
   } catch (error) {
     await writeFile(
       path.join(root, pluginConfigFile),
-      Buffer.from(generateDefaultConfig(name)),
+      generateDefaultConfig(name),
       'utf-8'
     );
   }
