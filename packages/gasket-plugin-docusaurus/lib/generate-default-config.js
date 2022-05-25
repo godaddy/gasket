@@ -11,6 +11,5 @@ const defaultConfig = path.join(__dirname, '..', 'generator', 'docusaurus.config
 module.exports = async function generateDefaultConfig(name) {
   let configStr;
   configStr = await readFile(defaultConfig, 'utf-8');
-  configStr = configStr.replace(/(\$\{name\})/g, name);
-  return configStr;
+  return configStr.replace(/(\$\{name\})/g, name);
 };
