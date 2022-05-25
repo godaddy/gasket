@@ -1,4 +1,5 @@
 const assume = require('assume');
+const sinon = require('sinon');
 const configure = require('../lib/configure');
 
 describe('configure', () => {
@@ -6,6 +7,9 @@ describe('configure', () => {
 
   beforeEach(() => {
     mockGasket = {
+      logger: {
+        warning: sinon.stub()
+      },
       config: {
         root: '/path/to/app/'
       }
@@ -43,6 +47,7 @@ describe('configure', () => {
     mockGasket.config.docs = { outputDir: 'my-docs' };
     mockGasket.config.docusaurus = { docsDir: 'site-docs' };
     const results = await configure.handler(mockGasket, mockGasket.config);
+    assume(mockGasket.logger.warning).called();
     assume(results.docs.outputDir).equals('site-docs/docs');
     assume(results.docusaurus.docsDir).equals('site-docs');
   });

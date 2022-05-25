@@ -6,7 +6,7 @@ async function handler(gasket, config) {
   const { docsDir = '.docs' } = docusaurus;
 
   if (config.docs && config.docs.outputDir) {
-    gasket.logger.warning('Custom config for `docs.outputDir` found. Instead use `docusaurus.docsDir`.')
+    gasket.logger.warning('Custom config for `docs.outputDir` found. Instead use `docusaurus.docsDir`.');
   }
 
   // Docusaurus requires a ./docs folder
