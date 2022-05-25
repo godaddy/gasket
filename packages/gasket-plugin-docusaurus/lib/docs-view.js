@@ -1,7 +1,6 @@
 const defaultsDeep = require('lodash.defaultsdeep');
 const { existsSync } = require('fs');
 const { writeFile } = require('fs').promises;
-const { start } = require('@docusaurus/core/lib');
 const path = require('path');
 const generateDefaultConfig = require('./generate-default-config');
 const pluginConfigFile = 'docusaurus.config.js';
@@ -11,6 +10,7 @@ const defaultConfig = {
 };
 
 module.exports = async function docsView(gasket, docsConfigSet) {
+  const { start } = require('@docusaurus/core/lib');
   const { docsRoot } = docsConfigSet;
   const { root } = gasket.config;
   const { name } = gasket.metadata.app;
