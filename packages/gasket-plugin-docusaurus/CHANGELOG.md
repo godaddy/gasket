@@ -1,6 +1,6 @@
 # `@gasket/plugin-docusaurus`
 
-### 6.21.0
+### 6.23.0
 
 - Initial release ([#362])
 
