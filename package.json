@@ -73,6 +73,7 @@
     "npm": ">=8.0.0"
   },
   "workspaces": [
-    "./packages/*"
+    "./packages/*",
+    "scripts/generate-docs-index"
   ]
 }
