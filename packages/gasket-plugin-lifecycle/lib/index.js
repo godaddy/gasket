@@ -57,12 +57,12 @@ async function init(gasket) {
   const lifecycles = await Promise.all([
     resolve(gasket.config.root, 'lifecycles'),
     resolve(gasket.config.root, 'src', 'lifecycles')
-  ])
+  ]);
 
   lifecycles.reduce((acc, cur) => acc.concat(cur), [])
-  .forEach(function each(cycle) {
-    gasket.hook(cycle);
-  });
+    .forEach(function each(cycle) {
+      gasket.hook(cycle);
+    });
 }
 
 /**
