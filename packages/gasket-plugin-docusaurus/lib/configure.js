@@ -1,5 +1,5 @@
 const path = require('path');
-const timing = { before: [ '@gasket/plugin-docs' ]};
+const timing = { before: ['@gasket/plugin-docs'] };
 
 async function handler(gasket, config) {
   const { docusaurus = {} } = config;
@@ -7,10 +7,19 @@ async function handler(gasket, config) {
 
   // Docusaurus requires a ./docs folder
   // config.docs.outputDir is required to be docs
-  config.docs = {};
-  config.docs.outputDir = path.join(docsDir, 'docs');
-  return config;
-};
+  const outputDir = path.join(docsDir, 'docs');
+  return {
+    ...config,
+    docs: {
+      ...config.docs,
+      outputDir
+    },
+    docusaurus: {
+      ...docusaurus,
+      docsDir
+    }
+  };
+}
 
 module.exports = {
   handler,

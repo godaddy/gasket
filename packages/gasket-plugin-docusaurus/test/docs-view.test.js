@@ -3,27 +3,20 @@ const sinon = require('sinon');
 const proxyquire = require('proxyquire');
 const fs = require('fs');
 const path = require('path');
-const testConfig = require('./fixtures/docusaurus.config');
+const mockDocsConfigSet = { docsRoot: '/path/to/app' };
+const pluginConfigFile = 'docusaurus.config.js';
 
-const mockDocsConfigSet = { docsRoot: '/path/to/app/.docs' };
-const startStub = sinon.stub();
-const writeFileStub = sinon
-  .stub(fs.promises, 'writeFile')
-  .withArgs('/path/to/app/docusaurus.config.js', testConfig)
-  .resolves();
-
-const docsView = proxyquire('../lib/docs-view', {
-  '@docusaurus/core/lib': {
-    start: startStub
-  }
-});
 
 describe('docsView', () => {
-  let mockGasket;
+  let mockGasket, docsView;
+  let startStub, writeFileStub, existsStub;
 
   beforeEach(() => {
+    startStub = sinon.stub();
+    writeFileStub = sinon.stub(fs.promises, 'writeFile');
+    existsStub = sinon.stub(fs, 'existsSync');
+
     mockGasket = {
-      exec: sinon.stub(),
       metadata: {
         app: {
           name: 'App name'
@@ -33,33 +26,37 @@ describe('docsView', () => {
         root: '/path/to/app/'
       }
     };
-    sinon.resetHistory();
+
+    docsView = proxyquire('../lib/docs-view', {
+      '@docusaurus/core/lib': {
+        start: startStub
+      }
+    });
   });
 
   afterEach(() => {
     sinon.restore();
   });
 
-  it('reads docusaurus.config.js', () => {
-    const readConfigStub = sinon
-      .stub(fs.promises, 'readFile')
-      .withArgs('/path/to/app/docusaurus.config.js')
-      .resolves(testConfig);
-    const { root } = mockGasket.config;
-    assume(readConfigStub.withArgs(`${root}docusaurus.config.js`).returns(testConfig));
+  it('check if docusaurus.config.js exists', async function () {
+    await docsView(mockGasket, mockDocsConfigSet);
+    assume(existsStub).called();
   });
 
-  it('writes docusaurus.config.js if does not exist', () => {
-    const readConfigStub = sinon
-      .stub(fs.promises, 'readFile')
-      .withArgs('/path/to/app/docusaurus.config.js')
-      .rejects();
-    const { root } = mockGasket.config;
-    assume(readConfigStub.withArgs(`${root}docusaurus.config.js`).rejects());
-    assume(writeFileStub.withArgs(`${root}docusaurus.config.js`, testConfig).resolves());
+  it('writes docusaurus.config.js if does not exist', async function () {
+    await docsView(mockGasket, mockDocsConfigSet);
+    assume(writeFileStub).called();
+    assume(writeFileStub)
+      .calledWith(path.join(mockDocsConfigSet.docsRoot, pluginConfigFile));
   });
 
-  it('merges user config with defaults and starts server', async () => {
+  it('does not write docusaurus.config.js if exist', async function () {
+    existsStub.returns(true);
+    await docsView(mockGasket, mockDocsConfigSet);
+    assume(writeFileStub).not.called();
+  });
+
+  it('merges user config with defaults and starts server', async function () {
     const { root } = mockGasket.config;
     const { docsRoot } = mockDocsConfigSet;
     mockGasket.config.docusaurus = {

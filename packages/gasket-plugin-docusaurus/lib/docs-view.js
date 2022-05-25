@@ -1,12 +1,10 @@
 const defaultsDeep = require('lodash.defaultsdeep');
-const { writeFile, readFile } = require('fs').promises;
+const { existsSync } = require('fs');
+const { writeFile } = require('fs').promises;
 const { start } = require('@docusaurus/core/lib');
 const path = require('path');
-const pluginConfigFile = 'docusaurus.config.js';
 const generateDefaultConfig = require('./generate-default-config');
-const mkdirp = require('mkdirp');
-
-// https://docusaurus.io/docs/cli#docusaurus-start-sitedir
+const pluginConfigFile = 'docusaurus.config.js';
 const defaultConfig = {
   port: 3000,
   host: 'localhost'
@@ -16,26 +14,14 @@ module.exports = async function docsView(gasket, docsConfigSet) {
   const { docsRoot } = docsConfigSet;
   const { root } = gasket.config;
   const { name } = gasket.metadata.app;
-  const userConfig = gasket.config.docusaurus || {};
-  const { docsDir = false } = userConfig;
-  const docusaurusConfig = defaultsDeep(
-    {
-      config: path.join(root, pluginConfigFile)
-    },
-    userConfig,
-    defaultConfig
-  );
+  const userConfig = gasket.config.docusaurus;
+  const configFilePath = path.join(root, pluginConfigFile);
+  const docusaurusConfig = defaultsDeep({ config: configFilePath }, userConfig, defaultConfig);
 
-  docsDir && await mkdirp(docsDir);
+  if (!existsSync(configFilePath)) {
+    const defaultDocusaurusConfig = await generateDefaultConfig(name);
 
-  try {
-    await readFile(path.join(root, pluginConfigFile));
-  } catch (error) {
-    await writeFile(
-      path.join(root, pluginConfigFile),
-      generateDefaultConfig(name),
-      'utf-8'
-    );
+    await writeFile(configFilePath, defaultDocusaurusConfig, 'utf-8');
   }
 
   start(path.join(docsRoot, '..'), docusaurusConfig);
