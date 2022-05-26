@@ -3,7 +3,7 @@ const build = require('./build');
 const middleware = require('./middleware');
 const express = require('./express');
 const webpackConfig = require('./webpack-config');
-const fasitfy = require('./fastify');
+const fastify = require('./fastify');
 
 module.exports = {
   name: require('../package').name,
@@ -12,7 +12,7 @@ module.exports = {
     build,
     middleware,
     express,
-    fasitfy,
+    fastify,
     webpackConfig,
     metadata(gasket, meta) {
       return {
