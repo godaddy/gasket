@@ -25,12 +25,14 @@ async function getCacheKeys(gasket) {
 
   const pluginCacheKeys = await exec('serviceWorkerCacheKey');
 
-  return [...userCacheKeys, ...pluginCacheKeys]
-    .filter(k => typeof k === 'function');
+  return [...userCacheKeys, ...pluginCacheKeys].filter((k) => typeof k === 'function');
 }
 
 async function getComposedContent(gasket, context) {
-  const { execWaterfall, config: { env } } = gasket;
+  const {
+    execWaterfall,
+    config: { env }
+  } = gasket;
   const swConfig = getSWConfig(gasket);
   const { content, minify = {} } = swConfig;
   const composed = await execWaterfall('composeServiceWorker', content, context);
