@@ -57,6 +57,15 @@ describe('Plugin', () => {
       });
     });
 
+    it('uses a src directory if specified or default', () => {
+      return verify({
+        withRootDir: 'src-dir',
+        withEnv: 'production',
+        withConfigPath: './src',
+        configShouldEqual: { expected: 'src' }
+      });
+    });
+
     it('supports both .js and .json files', () => {
       return verify({
         withRootDir: 'diff-file-types',

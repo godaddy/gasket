@@ -23,7 +23,7 @@ module.exports = {
       };
     },
     metadata(gasket, meta) {
-      const { configPath = 'config/' } = gasket.config;
+      const { configPath = 'src/' } = gasket.config;
       return {
         ...meta,
         lifecycles: [{
