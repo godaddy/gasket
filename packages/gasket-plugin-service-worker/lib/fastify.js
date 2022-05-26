@@ -2,7 +2,7 @@ const { getSWConfig } = require('./utils');
 const configureEndpoint = require('./configure-endpoint');
 
 /**
- * Express lifecycle to add an endpoint to serve service worker script
+ * Fastify lifecycle to add an endpoint to serve service worker script
  *
  * @param {Gasket} gasket - Gasket
  * @param {Fastify} app - App
