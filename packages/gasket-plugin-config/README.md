@@ -41,7 +41,7 @@ environments in apps.
 
 ### Environment files
 
-By default, this plugin imports files from your `/config` directory to assemble
+By default, this plugin imports files from your `/config` (or `src/config`) directory to assemble
 your application's config. You can change this directory with the `configPath`
 option in your `gasket.config.js`:
 
