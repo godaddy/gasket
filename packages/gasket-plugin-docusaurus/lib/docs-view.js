@@ -19,7 +19,7 @@ module.exports = async function docsView(gasket, docsConfigSet) {
   const docusaurusConfig = defaultsDeep({ config: configFilePath }, userConfig, defaultConfig);
 
   if (!existsSync(configFilePath)) {
-    const defaultDocusaurusConfig = await generateDefaultConfig(name);
+    const defaultDocusaurusConfig = await generateDefaultConfig({ name, path: docusaurusConfig.docsDir});
 
     await writeFile(configFilePath, defaultDocusaurusConfig, 'utf-8');
   }
