@@ -24,14 +24,14 @@ describe('generateDefaultConfig', () => {
   });
 
   it('replaces "${name}" with the app name', async function () {
-    const results = await generateDefaultConfig({ name: GASKET_APP_NAME});
+    const results = await generateDefaultConfig({ name: GASKET_APP_NAME });
     const nameFrequency = results.match(new RegExp(GASKET_APP_NAME, 'g'));
     assume(nameFrequency.length).equals(4);
     assume(results).includes(GASKET_APP_NAME);
   });
 
   it('replaces "${path}" with gasket.config.docs.outputDir', async function () {
-    const results = await generateDefaultConfig({ path: GASKET_DOCS_OUTPUTDIR});
+    const results = await generateDefaultConfig({ path: GASKET_DOCS_OUTPUTDIR });
     const nameFrequency = results.match(new RegExp(GASKET_DOCS_OUTPUTDIR, 'g'));
     assume(nameFrequency.length).equals(1);
     assume(results).includes(GASKET_DOCS_OUTPUTDIR);
