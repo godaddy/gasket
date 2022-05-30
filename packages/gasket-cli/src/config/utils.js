@@ -104,15 +104,24 @@ function addDefaultPlugins(gasketConfig) {
  */
 async function addUserPlugins(gasketConfig) {
   try {
-    const pluginsDir = path.join(gasketConfig.root, 'plugins');
-    const files = await readdir(pluginsDir);
-    const moduleNames = files
-      .filter(fileName => jsExtension.test(fileName))
-      .map(fileName => {
-        const fileSansExtension = fileName.replace(jsExtension, '');
-        return path.join(pluginsDir, fileSansExtension);
-      });
+    const dirPathArray = [
+      'plugins',
+      'src/plugins'
+    ];
+    let moduleNames = [];
+    for (let i = 0; i <= dirPathArray.length - 1; i++) {
+      const pluginsDir = path.join(gasketConfig.root, dirPathArray[i]);
+      const files = await readdir(pluginsDir);
+      const moduleNamesFilter = files
+        .filter(fileName => jsExtension.test(fileName))
+        .map(fileName => {
+          const fileSansExtension = fileName.replace(jsExtension, '');
+          return path.join(pluginsDir, fileSansExtension);
+        });
+      await moduleNames.push(moduleNamesFilter);
+    }
 
+    moduleNames = [].concat(...moduleNames);
     const pluginsConfig = gasketConfig.plugins || {};
     return {
       ...gasketConfig,
