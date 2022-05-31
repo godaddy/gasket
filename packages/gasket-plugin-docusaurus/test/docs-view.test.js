@@ -1,7 +1,6 @@
 const assume = require('assume');
 const sinon = require('sinon');
-const proxyquire = require('proxyquire');
-const fs = require('fs');
+const proxyquire = require('proxyquire').noCallThru();
 const path = require('path');
 const pluginConfigFile = 'docusaurus.config.js';
 
@@ -11,8 +10,8 @@ describe('docsView', () => {
 
   beforeEach(() => {
     startStub = sinon.stub();
-    writeFileStub = sinon.stub(fs.promises, 'writeFile');
-    existsStub = sinon.stub(fs, 'existsSync');
+    writeFileStub = sinon.stub();
+    existsStub = sinon.stub();
 
     mockGasket = {
       metadata: {
@@ -34,6 +33,12 @@ describe('docsView', () => {
     docsView = proxyquire('../lib/docs-view', {
       '@docusaurus/core/lib': {
         start: startStub
+      },
+      'fs': {
+        existsSync: existsStub,
+        promises: {
+          writeFile: writeFileStub
+        }
       }
     });
   });
@@ -48,6 +53,7 @@ describe('docsView', () => {
   });
 
   it('writes docusaurus.config.js if does not exist', async function () {
+    existsStub.returns(false);
     await docsView(mockGasket);
     assume(writeFileStub).called();
     assume(writeFileStub)
