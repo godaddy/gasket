@@ -9,20 +9,20 @@ const defaultConfig = {
   host: 'localhost'
 };
 
-module.exports = async function docsView(gasket, docsConfigSet) {
+module.exports = async function docsView(gasket) {
   const { start } = require('@docusaurus/core/lib');
-  const { docsRoot } = docsConfigSet;
-  const { root } = gasket.config;
+  const { config } = gasket;
   const { name } = gasket.metadata.app;
   const userConfig = gasket.config.docusaurus;
-  const configFilePath = path.join(root, pluginConfigFile);
+  const configFilePath = path.join(config.root, pluginConfigFile);
   const docusaurusConfig = defaultsDeep({ config: configFilePath }, userConfig, defaultConfig);
+  const { rootDir, docsDir } = docusaurusConfig;
 
   if (!existsSync(configFilePath)) {
-    const defaultDocusaurusConfig = await generateDefaultConfig({ name, path: docusaurusConfig.docsDir });
+    const defaultDocusaurusConfig = await generateDefaultConfig({ name, path: docsDir });
 
     await writeFile(configFilePath, defaultDocusaurusConfig, 'utf-8');
   }
 
-  start(path.join(docsRoot, '..'), docusaurusConfig);
+  start(path.join(config.root, rootDir), docusaurusConfig);
 };

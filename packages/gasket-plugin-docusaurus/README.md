@@ -36,7 +36,8 @@ launched in your browser.
 
 To be set under `docusaurus` in the `gasket.config.js`.
 
-- `docsRoot` - (string) Name of the root documents folder. Default is `.docs`.
+- `rootDir` - (string) Root Docusaurus directory. Default is `.docs`.
+- `docsDir` - (string) Sub-directory for the generated markdown from the docs plugin. Default is `docs`.
 - `port` - (number) Port to serve the docs from. Default is `3000`.
 - `host` - (string) Hostname to serve the docs from. Default is `localhost`.
 
@@ -45,21 +46,19 @@ To be set under `docusaurus` in the `gasket.config.js`.
 // gasket.config.js
 
 module.exports = {
-  docs: {
-    outputDir: 'documentation' // default is "docs"
-  },
   docusaurus: {
-    docsRoot: 'my-site-documents',
+    rootDir: 'my-site-documents',
+    docsDir: 'markdown',
     port: 8000,
     host: 'custom-host'
   }
 };
 
-// directories
+// structure
 gasket-app/ // app root
 |_ my-site-documents // docusaurus root
   |_ .docusaurus // build folder
-  |_ documention // generated docs from @gasket/plugin-docs
+  |_ markdown // generated docs from @gasket/plugin-docs
 ```
 
 ### `docusaurus.config.js`

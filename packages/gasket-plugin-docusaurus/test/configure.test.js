@@ -17,14 +17,14 @@ describe('configure', () => {
     assume(results.docusaurus).exists();
   });
 
-  it('define the docusaurus config "docsRoot" if it doesn\'t exist"', async function () {
+  it('define the docusaurus config "rootDir" if it doesn\'t exist"', async function () {
     const results = await configure.handler(mockGasket, mockGasket.config);
-    assume(results.docusaurus.docsRoot).exists();
+    assume(results.docusaurus.rootDir).exists();
   });
 
-  it('set default docusaurus "docsRoot" to ".docs"', async function () {
+  it('set default docusaurus "rootDir" to ".docs"', async function () {
     const results = await configure.handler(mockGasket, mockGasket.config);
-    assume(results.docusaurus.docsRoot).equals('.docs');
+    assume(results.docusaurus.rootDir).equals('.docs');
   });
 
   it('define docs property in gasket config if it doesn\'t exist', async function () {
@@ -40,11 +40,10 @@ describe('configure', () => {
   });
 
   it('override gasket config docs property', async function () {
-    mockGasket.config.docs = { outputDir: 'my-docs' };
-    mockGasket.config.docusaurus = { docsRoot: 'site-docs', outputDir: 'my-docs' };
+    mockGasket.config.docusaurus = { rootDir: 'site-docs', docsDir: 'my-docs' };
     const results = await configure.handler(mockGasket, mockGasket.config);
     assume(results.docs.outputDir).equals('site-docs/my-docs');
-    assume(results.docusaurus.docsRoot).equals('site-docs');
-    assume(results.docusaurus.outputDir).equals('my-docs');
+    assume(results.docusaurus.rootDir).equals('site-docs');
+    assume(results.docusaurus.docsDir).equals('my-docs');
   });
 });
