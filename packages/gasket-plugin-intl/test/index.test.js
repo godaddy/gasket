@@ -2,7 +2,6 @@ const assume = require('assume');
 const plugin = require('../lib');
 
 describe('Plugin', function () {
-
   it('is an object', function () {
     assume(plugin).instanceOf(Object);
   });
@@ -19,6 +18,7 @@ describe('Plugin', function () {
       'build',
       'webpackConfig',
       'express',
+      'fastify',
       'middleware',
       'workbox',
       'serviceWorkerCacheKey',

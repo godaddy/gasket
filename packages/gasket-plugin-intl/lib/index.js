@@ -4,6 +4,7 @@ const configure = require('./configure');
 const init = require('./init');
 const middleware = require('./middleware');
 const express = require('./express');
+const fastify = require('./fastify');
 const serviceWorkerCacheKey = require('./service-worker-cache-key');
 const workbox = require('./workbox');
 const buildManifest = require('./build-manifest');
@@ -21,10 +22,7 @@ module.exports = {
       const rootDir = path.join(__dirname, '..');
       const isReactProject = pkg.has('dependencies', 'react');
 
-      files.add(
-        `${rootDir}/generator/*`,
-        `${rootDir}/generator/**/*`
-      );
+      files.add(`${rootDir}/generator/*`, `${rootDir}/generator/**/*`);
 
       if (isReactProject) {
         pkg.add('dependencies', {
@@ -60,6 +58,7 @@ module.exports = {
       };
     },
     express,
+    fastify,
     middleware,
     workbox,
     serviceWorkerCacheKey,
@@ -67,18 +66,22 @@ module.exports = {
       const { localesDir } = getIntlConfig(gasket);
       return {
         ...meta,
-        lifecycles: [{
-          name: 'intlLocale',
-          method: 'execWaterfall',
-          description: 'Set the language for which locale files to load',
-          link: 'README.md#intlLocale',
-          parent: 'middleware'
-        }],
-        structures: [{
-          name: localesDir + '/',
-          description: 'Locale JSON files with translation strings',
-          link: 'README.md#Options'
-        }]
+        lifecycles: [
+          {
+            name: 'intlLocale',
+            method: 'execWaterfall',
+            description: 'Set the language for which locale files to load',
+            link: 'README.md#intlLocale',
+            parent: 'middleware'
+          }
+        ],
+        structures: [
+          {
+            name: localesDir + '/',
+            description: 'Locale JSON files with translation strings',
+            link: 'README.md#Options'
+          }
+        ]
       };
     }
   }
