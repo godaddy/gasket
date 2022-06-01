@@ -1,5 +1,4 @@
 const assume = require('assume');
-const sinon = require('sinon');
 const configure = require('../lib/configure');
 
 describe('configure', () => {
@@ -7,9 +6,6 @@ describe('configure', () => {
 
   beforeEach(() => {
     mockGasket = {
-      logger: {
-        warning: sinon.stub()
-      },
       config: {
         root: '/path/to/app/'
       }
@@ -21,14 +17,14 @@ describe('configure', () => {
     assume(results.docusaurus).exists();
   });
 
-  it('define the docusaurus config "docsDir if it doesn\'t exist"', async function () {
+  it('define the docusaurus config "rootDir" if it doesn\'t exist"', async function () {
     const results = await configure.handler(mockGasket, mockGasket.config);
-    assume(results.docusaurus.docsDir).exists();
+    assume(results.docusaurus.rootDir).exists();
   });
 
-  it('set default docusaurus "docsDir" to ".docs"', async function () {
+  it('set default docusaurus "rootDir" to ".docs"', async function () {
     const results = await configure.handler(mockGasket, mockGasket.config);
-    assume(results.docusaurus.docsDir).equals('.docs');
+    assume(results.docusaurus.rootDir).equals('.docs');
   });
 
   it('define docs property in gasket config if it doesn\'t exist', async function () {
@@ -44,11 +40,10 @@ describe('configure', () => {
   });
 
   it('override gasket config docs property', async function () {
-    mockGasket.config.docs = { outputDir: 'my-docs' };
-    mockGasket.config.docusaurus = { docsDir: 'site-docs' };
+    mockGasket.config.docusaurus = { rootDir: 'site-docs', docsDir: 'my-docs' };
     const results = await configure.handler(mockGasket, mockGasket.config);
-    assume(mockGasket.logger.warning).called();
-    assume(results.docs.outputDir).equals('site-docs/docs');
-    assume(results.docusaurus.docsDir).equals('site-docs');
+    assume(results.docs.outputDir).equals('site-docs/my-docs');
+    assume(results.docusaurus.rootDir).equals('site-docs');
+    assume(results.docusaurus.docsDir).equals('my-docs');
   });
 });
