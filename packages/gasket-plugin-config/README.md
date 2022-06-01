@@ -47,7 +47,7 @@ option in your `gasket.config.js`:
 
 ```js
 module.exports = {
-  configPath: './src'
+  configPath: './src/config'
 };
 ```
 
