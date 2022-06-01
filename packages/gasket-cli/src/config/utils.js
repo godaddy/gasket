@@ -110,6 +110,7 @@ async function addUserPlugins(gasketConfig) {
     ];
     let moduleNames = [];
     for (let i = 0; i <= dirPathArray.length - 1; i++) {
+      try {
         const files = await readdir(dirPathArray[i]);
         const moduleNamesFilter = files
           .filter(fileName => jsExtension.test(fileName))
@@ -118,15 +119,20 @@ async function addUserPlugins(gasketConfig) {
             return path.join(dirPathArray[i], fileSansExtension);
           });
         await moduleNames.push(moduleNamesFilter);
+      } catch (e) {
+        await moduleNames.push(gasketConfig.plugins.add || []);
+      }
     }
 
     moduleNames = [].concat(...moduleNames);
     const pluginsConfig = gasketConfig.plugins || {};
+    moduleNames = (pluginsConfig.add || []).concat(moduleNames);
+    moduleNames = moduleNames.filter((elem, pos) => moduleNames.indexOf(elem) === pos);
     return {
       ...gasketConfig,
       plugins: {
         ...pluginsConfig,
-        add: (pluginsConfig.add || []).concat(moduleNames)
+        add: moduleNames
       }
     };
   } catch (err) {
