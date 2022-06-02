@@ -6,11 +6,12 @@ const pluginConfigFile = 'docusaurus.config.js';
 
 describe('docsView', () => {
   let mockGasket, docsView;
-  let startStub, writeFileStub, existsStub;
+  let startStub, writeFileStub, readFileStub, existsStub;
 
   beforeEach(() => {
     startStub = sinon.stub();
     writeFileStub = sinon.stub();
+    readFileStub = sinon.stub();
     existsStub = sinon.stub();
 
     mockGasket = {
@@ -37,7 +38,8 @@ describe('docsView', () => {
       'fs': {
         existsSync: existsStub,
         promises: {
-          writeFile: writeFileStub
+          writeFile: writeFileStub,
+          readFile: readFileStub
         }
       }
     });
@@ -63,7 +65,25 @@ describe('docsView', () => {
   it('does not write docusaurus.config.js if exist', async function () {
     existsStub.returns(true);
     await docsView(mockGasket);
-    assume(writeFileStub).not.called();
+    assume(writeFileStub)
+      .not
+      .calledWith(path.join(mockGasket.config.root, pluginConfigFile));
+  });
+
+  it('writes LICENSE.md to the docsDir', async function () {
+    const { root, docusaurus } = mockGasket.config;
+    existsStub.returns(true);
+    await docsView(mockGasket);
+    assume(writeFileStub.args[0][0])
+      .equals(
+        path.join(
+          root,
+          docusaurus.rootDir,
+          docusaurus.docsDir,
+          'LICENSE.md'
+        )
+      );
+    assume(readFileStub.args[0][0]).equals(path.join(__dirname, '..', 'LICENSE.md'));
   });
 
   it('merges user config with defaults and starts server', async function () {
