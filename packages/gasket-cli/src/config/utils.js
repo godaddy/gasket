@@ -108,31 +108,29 @@ async function addUserPlugins(gasketConfig) {
       path.join(gasketConfig.root, 'plugins'),
       path.join(gasketConfig.root, 'src', 'plugins')
     ];
-    let moduleNames = [];
-    for (let i = 0; i <= dirPathArray.length - 1; i++) {
-      try {
-        const files = await readdir(dirPathArray[i]);
-        const moduleNamesFilter = files
-          .filter(fileName => jsExtension.test(fileName))
-          .map(fileName => {
-            const fileSansExtension = fileName.replace(jsExtension, '');
-            return path.join(dirPathArray[i], fileSansExtension);
-          });
-        await moduleNames.push(moduleNamesFilter);
-      } catch (e) {
-        await moduleNames.push(gasketConfig.plugins.add || []);
-      }
-    }
 
-    moduleNames = [].concat(...moduleNames);
+    const moduleNames = [];
+    let files = [];
+    for (let i = 0; i <= dirPathArray.length - 1; i++) {
+      try { files = await readdir(dirPathArray[i]); } catch (err) {
+        if (err.code !== 'ENOENT') {
+          throw err;
+        }
+      }
+      const moduleNamesFilter = files
+        .filter(fileName => jsExtension.test(fileName))
+        .map(fileName => {
+          const fileSansExtension = fileName.replace(jsExtension, '');
+          return path.join(dirPathArray[i], fileSansExtension);
+        });
+      await moduleNames.push(...moduleNamesFilter);
+    }
     const pluginsConfig = gasketConfig.plugins || {};
-    moduleNames = (pluginsConfig.add || []).concat(moduleNames);
-    moduleNames = moduleNames.filter((elem, pos) => moduleNames.indexOf(elem) === pos);
     return {
       ...gasketConfig,
       plugins: {
         ...pluginsConfig,
-        add: moduleNames
+        add: (pluginsConfig.add || []).concat(moduleNames)
       }
     };
   } catch (err) {

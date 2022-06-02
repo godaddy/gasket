@@ -209,7 +209,7 @@ describe('config utils', () => {
     });
 
     it('retains user configured plugins from when just is present in one folder', async () => {
-      readDirStub.onFirstCall().returns(new Error('test error')).onSecondCall().returns(['app-plugin.js']);
+      readDirStub.onFirstCall().throws({ code: 'ENOENT' }).onSecondCall().returns(['app-plugin.js']);
       const results = await utils.addUserPlugins({ root: '/path/to/app', plugins: { add: ['example'] } });
       assume(results.plugins.add).includes(path.join('/path/to/app/src', 'plugins', 'app-plugin'));
       assume(results.plugins.add).includes(path.join('example'));
