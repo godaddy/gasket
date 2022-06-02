@@ -1,7 +1,6 @@
 const plugin = require('../lib');
 
 describe('Plugin', () => {
-
   it('is an object', () => {
     expect(plugin).toBeInstanceOf(Object);
   });
@@ -16,6 +15,7 @@ describe('Plugin', () => {
       'build',
       'middleware',
       'express',
+      'fastify',
       'webpackConfig',
       'metadata'
     ];
@@ -30,9 +30,11 @@ describe('Plugin', () => {
   describe('meta', function () {
     it('returns lifecycle metadata', function () {
       const results = plugin.hooks.metadata({}, {});
-      expect(results).toEqual(expect.objectContaining({
-        lifecycles: expect.any(Array)
-      }));
+      expect(results).toEqual(
+        expect.objectContaining({
+          lifecycles: expect.any(Array)
+        })
+      );
     });
   });
 });
