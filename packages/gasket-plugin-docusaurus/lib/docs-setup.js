@@ -4,7 +4,7 @@ module.exports = function docsSetup() {
       global: true,
       test: /\.md$/,
       handler: content => {
-        let mark = content
+        let data = content
           .replace(/.\/LICENSE.md/g, '/LICENSE')
           .replace(/\/README.md/g, '')
           .replace(/(\.\.\/)+/g, '/');
@@ -12,10 +12,10 @@ module.exports = function docsSetup() {
         const challenge = content.match(/(?:\/docs\/)([A-Z|a-z]*)(?:\.md)/);
         if (challenge) {
           const [match, filename] = challenge;
-          return mark.replace(new RegExp(match, 'g'), `./${filename}`);
+          return data.replace(new RegExp(match, 'g'), `./${filename}`);
         }
 
-        return mark;
+        return data;
       }
     }]
   };
