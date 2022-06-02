@@ -2,7 +2,7 @@ const { getIntlConfig } = require('./configure');
 const serveStaticMw = require('serve-static');
 
 /**
- * Express lifecycle to set up route for serving locales
+ * Fastify lifecycle to set up route for serving locales
  *
  * @param {Gasket} gasket - Gasket
  * @param {Object} app - Fastify app
