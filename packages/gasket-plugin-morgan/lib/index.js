@@ -11,7 +11,7 @@ module.exports = {
     middleware: {
       handler: (gasket) => {
         const { logger, config } = gasket;
-        const { morgan: { format = 'tiny', options = {} } } = config;
+        const { morgan: { format = 'tiny', options = {} } = {} } = config;
 
         const stream = split().on('data', (line) => logger.info(line));
 
