@@ -1,0 +1,73 @@
+{
+  "name": "@gasket/plugin-morgan",
+  "version": "1.0.0",
+  "description": "Adds morgan request logger to your app",
+  "main": "lib",
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "npm run lint -- --fix",
+    "test": "npm run test:runner",
+    "test:runner": "mocha test/*.test.js --require test/setup.js",
+    "test:watch": "npm run test:runner -- --watch",
+    "test:coverage": "nyc --reporter=text --reporter=lcov npm run test:runner",
+    "posttest": "npm run lint",
+    "report": "nyc report --reporter=lcov"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/godaddy/gasket.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "morgan",
+    "express",
+    "gasket",
+    "plugin"
+  ],
+  "author": "GoDaddy Operating Company, LLC",
+  "maintainers": [
+    "Paulo D Goncalves <v_pgoncalves@godaddy.com>"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/godaddy/gasket/issues"
+  },
+  "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-morgan",
+  "dependencies": {
+    "morgan": "^1.10.0",
+    "split": "^1.0.1"
+  },
+  "devDependencies": {
+    "@gasket/engine": "^6.21.0",
+    "assume": "^2.3.0",
+    "assume-sinon": "^1.1.0",
+    "eslint": "^8.7.0",
+    "eslint-config-godaddy": "^6.0.0",
+    "eslint-plugin-json": "^3.1.0",
+    "eslint-plugin-mocha": "^10.0.3",
+    "eslint-plugin-unicorn": "^40.1.0",
+    "express": "^4.16.3",
+    "mocha": "^9.1.4",
+    "nyc": "^15.1.0",
+    "sinon": "^12.0.1"
+  },
+  "peerDependencies": {
+    "express": "^4.16.3"
+  },
+  "eslintConfig": {
+    "extends": [
+      "godaddy"
+    ],
+    "plugins": [
+      "unicorn"
+    ],
+    "rules": {
+      "unicorn/filename-case": "error"
+    }
+  },
+  "eslintIgnore": [
+    "generator"
+  ]
+}
