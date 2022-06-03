@@ -1,6 +1,6 @@
 # @gasket/plugin-morgan
 
-Adds morgan request logger to your appplication.
+Adds the `morgan` request logger to your application.
 
 [Morgan] is an HTTP request logger middleware for node.js.
 
