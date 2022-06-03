@@ -3,7 +3,7 @@ const split = require('split');
 const { name } = require('../package');
 
 // set log configuration in gasket.config.js, under `morgan` key
-// configuration options: https://github.com/expressjs/morgan#options
+// configuration options: http://expressjs.com/en/resources/middleware/morgan.html
 module.exports = {
   name,
   dependencies: ['@gasket/plugin-express'],
