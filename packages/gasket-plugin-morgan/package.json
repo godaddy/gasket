@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "Adds morgan request logger to your app",
   "main": "lib",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
@@ -40,6 +44,8 @@
     "split": "^1.0.1"
   },
   "devDependencies": {
+    "@gasket/engine": "^6.21.0",
+    "@types/morgan": "^1.9.3",
     "assume": "^2.3.0",
     "assume-sinon": "^1.1.0",
     "eslint": "^8.7.0",
@@ -64,9 +70,7 @@
     ],
     "rules": {
       "unicorn/filename-case": "error"
-    }
-  },
-  "eslintIgnore": [
-    "generator"
-  ]
+    },
+    "ignorePatterns": "*.d.ts"
+  }
 }
