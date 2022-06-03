@@ -29,7 +29,8 @@ Modify `plugins` section of your `gasket.config.js`:
 module.exports = {
   plugins: {
     add: [
-+      '@gasket/plugin-morgan'
+      '@gasket/plugin-log',
++     '@gasket/plugin-morgan'
     ]
   }
 }
@@ -65,7 +66,8 @@ module.exports = {
 
 ## How it works
 
-This plugins hooks the [middleware] lifecycle from [@gasket/plugin-express].
+This plugins hooks the [middleware] lifecycle from [@gasket/plugin-express] and use [Morgan] to
+format http requests to be logged using the [@gasket/plugin-logger].
 
 ## License
 
