@@ -6,7 +6,7 @@ const { name } = require('../package');
 // configuration options: http://expressjs.com/en/resources/middleware/morgan.html
 module.exports = {
   name,
-  dependencies: ['@gasket/plugin-express'],
+  dependencies: ['@gasket/plugin-express', '@gasket/plugin-log'],
   hooks: {
     middleware: {
       handler: (gasket) => {

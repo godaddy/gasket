@@ -16,7 +16,7 @@ describe('@gasket/plugin-morgan', () => {
 
   it('has expected dependencies', () => {
     assume(Plugin).to.have.property('dependencies');
-    assume(Plugin.dependencies).to.eqls(['@gasket/plugin-express']);
+    assume(Plugin.dependencies).to.eqls(['@gasket/plugin-express', '@gasket/plugin-log']);
   });
 
   it('has expected hooks', () => {

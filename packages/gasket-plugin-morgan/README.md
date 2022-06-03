@@ -9,6 +9,7 @@ Adds the `morgan` request logger to your application.
 ### Requirements
 
 - [@gasket/plugin-express]
+- [@gasket/plugin-log]
 
 ### New apps
 
@@ -50,7 +51,10 @@ Defaults:
 ```js
 module.exports = {
   plugins: {
-    add: ['@gasket/plugin-morgan']
+    add: [
+      '@gasket/plugin-log',
+      '@gasket/plugin-morgan'
+    ]
   },
   morgan: {
     format: 'tiny',
@@ -71,3 +75,4 @@ This plugins hooks the [middleware] lifecycle from [@gasket/plugin-express].
 
 [Morgan]: http://expressjs.com/en/resources/middleware/morgan.html
 [@gasket/plugin-express]: /packages/gasket-plugin-express/README.md
+[@gasket/plugin-log]: /packages/gasket-plugin-log/README.md
