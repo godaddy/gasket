@@ -242,7 +242,7 @@ describe('Utils Transforms', () => {
         it('transforms gasket repo URLs to relative links', () => {
           const results = handler(mockInlineStyle, { filename, docsConfig, docsConfigSet });
           assume(results).not.includes('[6](https://github.com/godaddy/gasket/tree/canary/packages/gasket-fake/path/to/doc.md#with-hash)');
-          assume(results).includes('[6](../../../../modules/@gasket/fake/path/to/doc.md#with-hash)');
+          assume(results).includes('[6](../../../modules/@gasket/fake/path/to/doc.md#with-hash)');
         });
 
         it('transforms gasket repo URLs under any branch', () => {
@@ -252,16 +252,16 @@ describe('Utils Transforms', () => {
 [canary-1.7](https://github.com/godaddy/gasket/tree/canary-1.7/packages/gasket-fake/path/to/doc.md#with-hash)
 `;
           const results = handler(mockContent, { filename, docsConfig, docsConfigSet });
-          assume(results).includes('[main](../../../../modules/@gasket/fake/path/to/doc.md#with-hash)');
-          assume(results).includes('[BOGUS](../../../../modules/@gasket/fake/path/to/doc.md#with-hash)');
-          assume(results).includes('[canary-1.7](../../../../modules/@gasket/fake/path/to/doc.md#with-hash)');
+          assume(results).includes('[main](../../../modules/@gasket/fake/path/to/doc.md#with-hash)');
+          assume(results).includes('[BOGUS](../../../modules/@gasket/fake/path/to/doc.md#with-hash)');
+          assume(results).includes('[canary-1.7](../../../modules/@gasket/fake/path/to/doc.md#with-hash)');
         });
 
         it('does not transforms gasket repo URLs if module not collated', () => {
           const mockContent = `[missing](https://github.com/godaddy/gasket/tree/main/packages/gasket-missing/path/to/doc.md#with-hash)`;
           const results = handler(mockContent, { filename, docsConfig, docsConfigSet });
           assume(results).includes(mockContent);
-          assume(results).not.includes('[missing](../../../../modules/@gasket/missing/path/to/doc.md#with-hash)');
+          assume(results).not.includes('[missing](../../../modules/@gasket/missing/path/to/doc.md#with-hash)');
         });
 
         it('does not transform non gasket repo URLs', () => {
