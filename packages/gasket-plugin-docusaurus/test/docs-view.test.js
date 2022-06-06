@@ -6,12 +6,11 @@ const pluginConfigFile = 'docusaurus.config.js';
 
 describe('docsView', () => {
   let mockGasket, docsView;
-  let startStub, writeFileStub, readFileStub, existsStub;
+  let startStub, writeFileStub, existsStub;
 
   beforeEach(() => {
     startStub = sinon.stub();
     writeFileStub = sinon.stub();
-    readFileStub = sinon.stub();
     existsStub = sinon.stub();
 
     mockGasket = {
@@ -38,8 +37,7 @@ describe('docsView', () => {
       'fs': {
         existsSync: existsStub,
         promises: {
-          writeFile: writeFileStub,
-          readFile: readFileStub
+          writeFile: writeFileStub
         }
       }
     });
