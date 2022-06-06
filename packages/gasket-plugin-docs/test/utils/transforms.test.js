@@ -5,7 +5,8 @@ const {
   makeLinkTransform,
   txGasketPackageLinks,
   txGasketUrlLinks,
-  txAbsoluteLinks
+  txAbsoluteLinks,
+  txLicenseLinks
 } = require('../../lib/utils/transforms');
 
 
@@ -339,6 +340,50 @@ describe('Utils Transforms', () => {
 
         const results = handler(mockContent, { filename, docsConfig });
         assume(results).includes(mockContent);
+      });
+    });
+  });
+
+  describe('txLicenseLinks', () => {
+    const { test, handler } = txLicenseLinks;
+
+    it('is global', () => {
+      assume(txLicenseLinks).property('global', true);
+    });
+
+    describe('test', () => {
+      it('matches markdown files', () => {
+        [
+          'README.md',
+          '/path/to/any/README.md'
+        ].forEach(source => {
+          assume(test.test(source)).equals(true, `Path ${source}`);
+        });
+      });
+
+      it('does not match non-markdown files', () => {
+        [
+          'vector.svg',
+          'raster.png',
+          'text.txt',
+          '/path/to/vector.svg',
+          '/path/to/raster.png',
+          '/path/to/text.txt'
+        ].forEach(source => {
+          assume(test.test(source)).equals(false, `Path ${source}`);
+        });
+      });
+    });
+
+    describe('handler', () => {
+      it('is named', () => {
+        assume(handler).property('name', 'txLicenseLinks');
+      });
+
+      it('transform current directory links to app root', () => {
+        const mockContent = './LICENSE.md';
+        const results = handler(mockContent);
+        assume(results).equals('/LICENSE');
       });
     });
   });

@@ -96,12 +96,6 @@ describe('Utils - generateIndex', () => {
     assume(writeFileStub.getCall(0).args[0]).eqls(path.join(fullDocsConfigSet.docsRoot, 'README.md'));
   });
 
-  it('writes LICENSE.md in docs root', async () => {
-    await generateIndex(fullDocsConfigSet);
-    assume(readFileStub.args[0][0]).eqls(path.join(__dirname, '..', '..', 'LICENSE.md'));
-    assume(writeFileStub.getCall(1).args[0]).eqls(path.join(fullDocsConfigSet.docsRoot, 'LICENSE.md'));
-  });
-
   it('writes generated content to file', async () => {
     const mockContent = await generateContent(fullDocsConfigSet);
     await generateIndex(fullDocsConfigSet);

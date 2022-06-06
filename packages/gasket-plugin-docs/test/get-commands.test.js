@@ -21,11 +21,13 @@ const mockDocsConfigSet = {
 const buildConfigSetStub = sinon.stub().resolves(mockDocsConfigSet);
 const collateFilesStub = sinon.stub();
 const generateIndexStub = sinon.stub();
+const generateLicenseStub = sinon.stub();
 
 const getCommands = proxyquire('../lib/get-commands', {
   './utils/build-config-set': buildConfigSetStub,
   './utils/collate-files': collateFilesStub,
-  './utils/generate-index': generateIndexStub
+  './utils/generate-index': generateIndexStub,
+  './utils/generate-license': generateLicenseStub
 });
 
 describe('getCommands', () => {

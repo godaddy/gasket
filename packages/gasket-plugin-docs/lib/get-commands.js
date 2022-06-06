@@ -1,6 +1,7 @@
 const buildDocsConfigSet = require('./utils/build-config-set');
 const collateFiles = require('./utils/collate-files');
 const generateIndex = require('./utils/generate-index');
+const generateLicense = require('./utils/generate-license');
 
 /**
  * Get the docs command
@@ -30,6 +31,7 @@ module.exports = function getCommands(gasket, { GasketCommand, flags }) {
       }
       docsConfigSet.guides.unshift(...guides);
       await generateIndex(docsConfigSet);
+      await generateLicense(docsConfigSet);
       if (this.parsed.flags.view) {
         await this.gasket.exec('docsView', docsConfigSet);
       }
