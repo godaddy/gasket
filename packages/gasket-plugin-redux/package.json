@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-redux",
-  "version": "6.21.0",
+  "version": "6.24.0",
   "description": "Gasket Redux Setup",
   "main": "lib",
   "types": "lib/index.d.ts",
@@ -38,9 +38,9 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-redux",
   "devDependencies": {
-    "@gasket/engine": "^6.21.0",
-    "@gasket/plugin-log": "^6.21.0",
-    "@gasket/redux": "^6.21.0",
+    "@gasket/engine": "^6.24.0",
+    "@gasket/plugin-log": "^6.24.0",
+    "@gasket/redux": "^6.24.0",
     "acorn": "^6.1.1",
     "eslint": "^8.7.0",
     "eslint-config-godaddy": "^6.0.0",
