@@ -11,8 +11,8 @@ const camelCase = require('lodash.camelcase');
  * @returns {Array} Lifecycle methods.
  * @public
  */
-async function resolve(root, name) {
-  const dir = path.join(root, name);
+async function resolve(root, ...parts) {
+  const dir = path.join(root, ...parts);
 
   let files = [];
   try {
@@ -54,11 +54,15 @@ async function resolve(root, name) {
  * @public
  */
 async function init(gasket) {
-  const lifecycles = await resolve(gasket.config.root, 'lifecycles');
+  const lifecycles = await Promise.all([
+    resolve(gasket.config.root, 'lifecycles'),
+    resolve(gasket.config.root, 'src', 'lifecycles')
+  ]);
 
-  lifecycles.forEach(function each(cycle) {
-    gasket.hook(cycle);
-  });
+  lifecycles.reduce((acc, cur) => acc.concat(cur), [])
+    .forEach(function each(cycle) {
+      gasket.hook(cycle);
+    });
 }
 
 /**
