@@ -69,12 +69,13 @@ const txGasketUrlLinks = {
     const allModuleDocConfigs = modules.concat(plugins).concat(presets);
 
     const tx = makeLinkTransform(link => {
-      return link.replace(matchUrlLink, (match, p1, p2) => {
-        const moduleName = p1.replace('gasket-', '@gasket/');
+      return link.replace(matchUrlLink, (match, pkgMatch, fileMatch) => {
+        const moduleName = pkgMatch.replace('gasket-', '@gasket/');
         const tgtDocConfig = allModuleDocConfigs.find(m => m.name === moduleName);
         if (tgtDocConfig) {
-          const relRoot = path.relative(path.join(targetRoot, filename), tgtDocConfig.targetRoot);
-          return [relRoot, p2].join('');
+          const dirWithLinkRef = path.dirname(path.join(targetRoot, filename));
+          const filePathOfLink = path.join(tgtDocConfig.targetRoot, fileMatch);
+          return path.relative(dirWithLinkRef, filePathOfLink);
         }
         return match;
       });
