@@ -1,6 +1,6 @@
 {
   "name": "@gasket/log",
-  "version": "6.21.0",
+  "version": "6.24.0",
   "description": "Gasket client and server logger",
   "main": "src/server.js",
   "browser": "lib/client.js",
