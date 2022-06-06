@@ -14,7 +14,7 @@ Adds the `morgan` request logger to your application.
 ### New apps
 
 ```
-gasket create <app-name> --plugins @gasket/plugin-express --plugins @gasket/plugin-morgan
+gasket create <app-name> --plugins @gasket/plugin-morgan
 ```
 
 ### Existing apps
@@ -66,8 +66,8 @@ module.exports = {
 
 ## How it works
 
-This plugins hooks the [middleware] lifecycle from [@gasket/plugin-express] and use [Morgan] to
-format http requests to be logged using the [@gasket/plugin-logger].
+This plugins hooks the [middleware] lifecycle from [@gasket/plugin-express] or [@gasket/plugin-fastify],
+adding [Morgan] to format http requests to be logged using the [@gasket/plugin-logger].
 
 ## License
 
@@ -77,4 +77,5 @@ format http requests to be logged using the [@gasket/plugin-logger].
 
 [Morgan]: http://expressjs.com/en/resources/middleware/morgan.html
 [@gasket/plugin-express]: /packages/gasket-plugin-express/README.md
+[@gasket/plugin-fastify]: /packages/gasket-plugin-fastify/README.md
 [@gasket/plugin-log]: /packages/gasket-plugin-log/README.md
