@@ -3,8 +3,7 @@ const { name, devDependencies } = require('../package');
 const configure = require('./configure');
 const init = require('./init');
 const middleware = require('./middleware');
-const express = require('./express');
-const fastify = require('./fastify');
+const serve = require('./serve');
 const serviceWorkerCacheKey = require('./service-worker-cache-key');
 const workbox = require('./workbox');
 const buildManifest = require('./build-manifest');
@@ -57,8 +56,8 @@ module.exports = {
         ]
       };
     },
-    express,
-    fastify,
+    express: serve,
+    fastify: serve,
     middleware,
     workbox,
     serviceWorkerCacheKey,

@@ -2,12 +2,12 @@ const { getIntlConfig } = require('./configure');
 const serveStaticMw = require('serve-static');
 
 /**
- * Fastify lifecycle to set up route for serving locales
+ * Express/Fastify lifecycle to set up route for serving locales
  *
  * @param {Gasket} gasket - Gasket
- * @param {Object} app - Fastify app
+ * @param {Object} app - Express/Fastify app
  */
-module.exports = function fastify(gasket, app) {
+module.exports = function serve(gasket, app) {
   const { localesDir, serveStatic, defaultPath } = getIntlConfig(gasket);
 
   if (serveStatic) {
