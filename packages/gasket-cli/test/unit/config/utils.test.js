@@ -32,7 +32,6 @@ describe('config utils', () => {
       },
       '/path/to/gasket.config': mockGasketConfig,
       '/path/to/app/gasket.config': { mockConfig: true },
-      '/path/to/app/src/gasket.config': { mockConfig: true },
       '/path/to/bad/gasket.config': new Error('Bad gasket config')
     });
   });
@@ -189,9 +188,25 @@ describe('config utils', () => {
 
   describe('addUserPlugins', () => {
     it('add javascript modules from the app\'s plugins dir', async () => {
-      readDirStub.resolves(['app-plugin.js']);
+      readDirStub.onCall(0).resolves(['app-plugin.js']);
       const results = await utils.addUserPlugins({ root: '/path/to/app' });
       assume(results.plugins.add).includes(path.join('/path/to/app', 'plugins', 'app-plugin'));
+      assume(results.plugins.add).not.includes(path.join('/path/to/app', 'src', 'plugins', 'app-plugin'));
+    });
+
+    it('add javascript modules from the /src/plugins dir', async () => {
+      readDirStub.onCall(1).resolves(['app-plugin.js']);
+      const results = await utils.addUserPlugins({ root: '/path/to/app' });
+      assume(results.plugins.add).not.includes(path.join('/path/to/app', 'plugins', 'app-plugin'));
+      assume(results.plugins.add).includes(path.join('/path/to/app', 'src', 'plugins', 'app-plugin'));
+    });
+
+    it('add javascript modules from the both /plugins and /src/plugins dir', async () => {
+      readDirStub.onCall(0).resolves(['app-plugin-in-root.js']);
+      readDirStub.onCall(1).resolves(['app-plugin-in-src.js']);
+      const results = await utils.addUserPlugins({ root: '/path/to/app' });
+      assume(results.plugins.add).includes(path.join('/path/to/app', 'plugins', 'app-plugin-in-root'));
+      assume(results.plugins.add).includes(path.join('/path/to/app', 'src', 'plugins', 'app-plugin-in-src'));
     });
 
     it('retains user configured plugins', async () => {
@@ -201,25 +216,17 @@ describe('config utils', () => {
       assume(results.plugins.add).includes(path.join('example'));
     });
 
-    it('retains user configured plugins from src/plugins ', async () => {
-      readDirStub.resolves(['app-plugin.js']);
-      const results = await utils.addUserPlugins({ root: '/path/to/app', plugins: { add: ['example'] } });
-      assume(results.plugins.add).includes(path.join('/path/to/app/src', 'plugins', 'app-plugin'));
-      assume(results.plugins.add).includes(path.join('example'));
-    });
-
-    it('retains user configured plugins from when just is present in one folder', async () => {
-      readDirStub.onFirstCall().throws({ code: 'ENOENT' }).onSecondCall().returns(['app-plugin.js']);
-      const results = await utils.addUserPlugins({ root: '/path/to/app', plugins: { add: ['example'] } });
-      assume(results.plugins.add).includes(path.join('/path/to/app/src', 'plugins', 'app-plugin'));
-      assume(results.plugins.add).includes(path.join('example'));
-    });
-
-    it('ignores directory read errors', async () => {
-      readDirStub.rejects(new Error('Bad things man'));
+    it('ignores missing dir errors', async () => {
+      readDirStub.rejects({ code: 'ENOENT' });
       const results = await utils.addUserPlugins({ root: '/path/to/app', plugins: { add: ['example'] } });
       assume(results.plugins.add).not.includes(path.join('/path/to/app', 'plugins', 'app-plugin'));
       assume(results.plugins.add).includes(path.join('example'));
+    });
+
+    it('catches non directory read errors', async () => {
+      readDirStub.rejects(new Error('Bad things man'));
+      const testFn = () => utils.addUserPlugins({ root: '/path/to/app', plugins: { add: ['example'] } });
+      assume(testFn).to.throwAsync();
     });
 
     it('ignores non-js files in plugins dir', async () => {
