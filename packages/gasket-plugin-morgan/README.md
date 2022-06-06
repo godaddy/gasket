@@ -8,7 +8,7 @@ Adds the `morgan` request logger to your application.
 
 ### Requirements
 
-- [@gasket/plugin-express]
+- [@gasket/plugin-express] or [@gasket/plugin-fastify]
 - [@gasket/plugin-log]
 
 ### New apps
