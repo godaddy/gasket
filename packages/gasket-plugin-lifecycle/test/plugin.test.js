@@ -120,4 +120,26 @@ describe('Plugin', function () {
     assume(called).is.false();
 
   });
+
+
+  it('handles lifecycle files with src folder', async () => {
+    const engine = new PluginEngine({
+      root: path.join(__dirname, './fixtures/with-src-lifecycles'),
+      plugins: {
+        add: [plugin]
+      }
+    });
+    await engine.exec('init');
+    let called = false;
+    proxy.once('middleware', function (gasket, app) {
+      assume(gasket).equals(engine);
+      assume(app).equals('testing');
+
+      called = true;
+    });
+
+    await engine.exec('middleware', 'testing');
+
+    assume(called).is.true();
+  });
 });

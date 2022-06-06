@@ -32,6 +32,7 @@ describe('config utils', () => {
       },
       '/path/to/gasket.config': mockGasketConfig,
       '/path/to/app/gasket.config': { mockConfig: true },
+      '/path/to/app/src/gasket.config': { mockConfig: true },
       '/path/to/bad/gasket.config': new Error('Bad gasket config')
     });
   });
@@ -197,6 +198,20 @@ describe('config utils', () => {
       readDirStub.resolves(['app-plugin.js']);
       const results = await utils.addUserPlugins({ root: '/path/to/app', plugins: { add: ['example'] } });
       assume(results.plugins.add).includes(path.join('/path/to/app', 'plugins', 'app-plugin'));
+      assume(results.plugins.add).includes(path.join('example'));
+    });
+
+    it('retains user configured plugins from src/plugins ', async () => {
+      readDirStub.resolves(['app-plugin.js']);
+      const results = await utils.addUserPlugins({ root: '/path/to/app', plugins: { add: ['example'] } });
+      assume(results.plugins.add).includes(path.join('/path/to/app/src', 'plugins', 'app-plugin'));
+      assume(results.plugins.add).includes(path.join('example'));
+    });
+
+    it('retains user configured plugins from when just is present in one folder', async () => {
+      readDirStub.onFirstCall().throws({ code: 'ENOENT' }).onSecondCall().returns(['app-plugin.js']);
+      const results = await utils.addUserPlugins({ root: '/path/to/app', plugins: { add: ['example'] } });
+      assume(results.plugins.add).includes(path.join('/path/to/app/src', 'plugins', 'app-plugin'));
       assume(results.plugins.add).includes(path.join('example'));
     });
 
