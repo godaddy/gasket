@@ -1,5 +1,9 @@
 # `@gasket/cli`
 
+### 6.24.0
+
+- Support for `/src/plugins` ([#363])
+
 ### 6.22.1
 
 - Fix missing glob dependency
@@ -347,3 +351,4 @@ upon `gasket create`
 [#348]: https://github.com/godaddy/gasket/pull/348
 [#357]: https://github.com/godaddy/gasket/pull/357
 [#361]: https://github.com/godaddy/gasket/pull/361
+[#363]: https://github.com/godaddy/gasket/pull/363

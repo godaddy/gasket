@@ -1,5 +1,9 @@
 # `@gasket/plugin-service-worker`
 
+### 6.24.0
+
+- Add Fastify support ([#365])
+
 ### 6.19.0
 
 - Migrate `webpack` -> `webpackConfig` lifecycle ([#347])
@@ -52,3 +56,4 @@
 [#311]: https://github.com/godaddy/gasket/pull/311
 [#319]: https://github.com/godaddy/gasket/pull/319
 [#347]: https://github.com/godaddy/gasket/pull/347
+[#365]: https://github.com/godaddy/gasket/pull/365

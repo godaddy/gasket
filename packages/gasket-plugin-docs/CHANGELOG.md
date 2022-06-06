@@ -1,5 +1,9 @@
 # `@gasket/plugin-docs`
 
+### 6.24.0
+
+- Fix relative link transforms ([#369])
+
 ### 6.11.2
 
 - Use fs.promises ([#319])
@@ -45,3 +49,4 @@
 [#311]: https://github.com/godaddy/gasket/pull/311
 [#316]: https://github.com/godaddy/gasket/pull/316
 [#319]: https://github.com/godaddy/gasket/pull/319
+[#369]: https://github.com/godaddy/gasket/pull/369
