@@ -38,7 +38,7 @@ const detailDocsTypes = Object.keys(detailDocsHelpers);
  *
  * @type {{link: string, files: array}}
  */
-const docsSetupDefault = Object.freeze({ link: 'README.md', files: ['docs/**/*.*'] });
+const docsSetupDefault = Object.freeze({ link: 'README.md', files: ['docs/**/*.*', 'LICENSE.md'] });
 
 /**
  * Returns a filename with the hash removed
@@ -357,7 +357,6 @@ class DocsConfigSetBuilder {
 
     // structures
     // dirs, files x hidden, non-hidden
-
     return {
       app: this._app,
       plugins: sortModules(this._plugins),

@@ -23,14 +23,13 @@ describe('docsSetup', () => {
     const {
       txGasketPackageLinks,
       txGasketUrlLinks,
-      txAbsoluteLinks,
-      txLicenseLinks
+      txAbsoluteLinks
     } = require('../lib/utils/transforms');
 
     const results = docsSetup();
     assume(results).property('transforms');
     assume(results.transforms).eqls([
-      txGasketPackageLinks, txGasketUrlLinks, txAbsoluteLinks, txLicenseLinks
+      txGasketPackageLinks, txGasketUrlLinks, txAbsoluteLinks
     ]);
   });
 });

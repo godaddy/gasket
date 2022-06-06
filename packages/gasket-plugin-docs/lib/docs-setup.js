@@ -1,8 +1,7 @@
 const {
   txGasketPackageLinks,
   txGasketUrlLinks,
-  txAbsoluteLinks,
-  txLicenseLinks
+  txAbsoluteLinks
 } = require('./utils/transforms');
 
 /**
@@ -20,8 +19,7 @@ module.exports = function docsSetup() {
     transforms: [
       txGasketPackageLinks,
       txGasketUrlLinks,
-      txAbsoluteLinks,
-      txLicenseLinks
+      txAbsoluteLinks
     ]
   };
 };
