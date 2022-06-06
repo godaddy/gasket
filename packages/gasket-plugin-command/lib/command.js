@@ -103,7 +103,7 @@ GasketCommand.flags = {
     env: 'GASKET_CONFIG',
     default: 'gasket.config',
     char: 'c',
-    description: 'Fully qualified gasket config to load'
+    description: 'Fully qualified Gasket config to load'
   }),
   root: flags.string({
     env: 'GASKET_ROOT',
@@ -114,6 +114,10 @@ GasketCommand.flags = {
   env: flags.string({
     env: 'NODE_ENV',
     description: 'Target runtime environment'
+  }),
+  require: flags.string({
+    description: 'Require module before Gasket is initialized',
+    multiple: true
   })
 };
 
