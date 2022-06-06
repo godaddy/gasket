@@ -1,5 +1,5 @@
 # `@gasket/plugin-morgan`
 
-## 1.0.0
+## 6.24.0
 
 - Initial release
