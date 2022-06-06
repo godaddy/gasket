@@ -14,7 +14,6 @@ describe('Plugin', function () {
   it('has expected hooks', () => {
     const expected = [
       'configure',
-      'docsSetup',
       'docsView'
     ];
     assume(plugin).to.have.property('hooks');

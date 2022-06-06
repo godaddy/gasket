@@ -1,10 +1,27 @@
 /* eslint-disable max-statements */
 
-const { writeFile } = require('fs').promises;
+const { writeFile, readFile } = require('fs').promises;
 const path = require('path');
 const mdTable = require('markdown-table');
 
 const isUrl = /^(https?:)?\/\//;
+
+/**
+ * Generates the LICENSE.md
+ *
+ * @param {DocsConfigSet} docsConfigSet - Docs generation configs
+ */
+async function generateLicense(docsConfigSet) {
+  const { docsRoot } = docsConfigSet;
+  const target = path.join(docsRoot, 'LICENSE.md');
+  // License exists at plugin root
+  const source = path.join(__dirname, '..', '..', 'LICENSE.md');
+  await writeFile(
+    target,
+    await readFile(source, 'utf-8'),
+    'utf-8'
+  );
+}
 
 /**
  * Generates the index README.md
@@ -81,6 +98,7 @@ async function generateIndex(docsConfigSet) {
   const target = path.join(docsRoot, 'README.md');
   const content = await generateIndex.generateContent(docsConfigSet);
   await writeFile(target, content);
+  await generateLicense(docsConfigSet);
   return target;
 }
 

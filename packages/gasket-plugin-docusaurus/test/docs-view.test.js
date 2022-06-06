@@ -70,22 +70,6 @@ describe('docsView', () => {
       .calledWith(path.join(mockGasket.config.root, pluginConfigFile));
   });
 
-  it('writes LICENSE.md to the docsDir', async function () {
-    const { root, docusaurus } = mockGasket.config;
-    existsStub.returns(true);
-    await docsView(mockGasket);
-    assume(writeFileStub.args[0][0])
-      .equals(
-        path.join(
-          root,
-          docusaurus.rootDir,
-          docusaurus.docsDir,
-          'LICENSE.md'
-        )
-      );
-    assume(readFileStub.args[0][0]).equals(path.join(__dirname, '..', 'LICENSE.md'));
-  });
-
   it('merges user config with defaults and starts server', async function () {
     const { root, docusaurus } = mockGasket.config;
     await docsView(mockGasket);

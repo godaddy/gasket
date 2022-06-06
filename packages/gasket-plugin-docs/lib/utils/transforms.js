@@ -117,9 +117,26 @@ const txAbsoluteLinks = {
   }
 };
 
+/**
+ * Update current directory LICENSE.md links
+ * Change them to the "/" app root
+ */
+const txLicenseLinks = {
+  global: true,
+  test: isMarkdown,
+  /**
+   * @param {string} content - Markdown content
+   * @returns {string} transformed content
+   */
+  handler: function txLicenseLinks(content) {
+    return content.replace(/.\/LICENSE.md/g, '/LICENSE');
+  }
+};
+
 module.exports = {
   makeLinkTransform,
   txGasketPackageLinks,
   txGasketUrlLinks,
-  txAbsoluteLinks
+  txAbsoluteLinks,
+  txLicenseLinks
 };
