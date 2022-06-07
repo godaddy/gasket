@@ -223,7 +223,7 @@ describe('config utils', () => {
       assume(results.plugins.add).includes(path.join('example'));
     });
 
-    it('catches non directory read errors', async () => {
+    it('throws for any other read error', async () => {
       readDirStub.rejects(new Error('Bad things man'));
       const testFn = () => utils.addUserPlugins({ root: '/path/to/app', plugins: { add: ['example'] } });
       assume(testFn).to.throwAsync();
