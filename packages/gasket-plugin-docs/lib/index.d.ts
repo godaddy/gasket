@@ -8,21 +8,76 @@ declare module '@gasket/engine' {
     }
   }
 
-  // TODO: correctly document what the full payload is...
-  type DocsConfigSet = {
-    docsRoot: string
-  };
+  export interface DocsTransformHandlerData {
+    filename: String,
+    docsConfig: ModuleDocsConfig,
+    docsConfigSet: DocsConfigSet,
+  }
 
+  export interface DocsTransformHandler {
+    content: String,
+    data: DocsTransformHandlerData,
+  }
+
+  export interface DocsTransform {
+    global?: Boolean,
+    test: RegExp,
+    handler: DocsTransformHandler
+  }
+
+  export interface DocsSetup {
+    link: String,
+    files?: Array<String>,
+    transforms?: Array<DocsTransform>,
+    modules?: Object<string, DocsSetup>
+  }
+
+  export interface DocsConfig {
+    name: String,
+    description?: String,
+    link?: String,
+    sourceRoot: String,
+    targetRoot: String
+  }
+
+  export interface ModuleDocsConfig extends DocsConfig {
+    files: Array<String>,
+    transforms: Array<DocsTransform>,
+    metadata: ModuleData
+  }
+
+  export interface DetailDocsConfig extends DocsConfig {
+    from: String
+  }
+
+  export interface LifecycleDocsConfig extends DetailDocsConfig {
+    method: String,
+    parent?: String,
+    command?: String
+  }
+  export interface DocsConfigSet {
+    app: ModuleDocsConfig,
+    plugins: Array<ModuleDocsConfig>,
+    presets: Array<ModuleDocsConfig>,
+    modules: Array<ModuleDocsConfig>,
+    structures: Array<DetailDocsConfig>,
+    commands: Array<DetailDocsConfig>,
+    guides: Array<DetailDocsConfig>,
+    lifecycles: Array<LifecycleDocsConfig>,
+    transforms: Array<DocsTransform>,
+    root: string,
+    docsRoot: string
+  }
   export interface HookExecTypes {
     docsSetup(args: { defaults: PluginData }): MaybeAsync<PluginData & {
       files?: Array<string>,
       transforms?: Array<{
         test: RegExp,
         global?: boolean,
-        handler: (content: string) => string
+        handler: (content: string, meta: TransformsConfigHandlerMeta) => string
       }>
     }>;
-    
+
     docsView(docs: DocsConfigSet): MaybeAsync<void>;
 
     docsGenerate(docs: DocsConfigSet): MaybeAsync<DetailData>
