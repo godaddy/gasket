@@ -56,7 +56,6 @@ async function buildDocsConfigSet(gasket) {
   const builder = new DocsConfigSetBuilder(gasket);
 
   await gasket.execApply('docsSetup', async (plugin, handler) => {
-    // console.log(plugin);
     //
     // If this is a lifecycle file, use it to modify the app-level docConfig
     //
@@ -67,7 +66,6 @@ async function buildDocsConfigSet(gasket) {
 
     const pluginData = buildDocsConfigSet.findPluginData(plugin, metadata.plugins, logger);
     if (pluginData) {
-      // console.log(pluginData);
       const docsSetup = await handler({ defaults });
       await builder.addPlugin(pluginData, docsSetup);
     }
