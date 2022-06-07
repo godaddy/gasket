@@ -1,3 +1,5 @@
+import { DocsSetup } from './index.d';
+import { ModuleData } from './../../gasket-plugin-metadata/lib/index.d';
 import type { HookExecTypes, MaybeAsync } from '@gasket/engine';
 import type { DetailData, PluginData } from '@gasket/plugin-metadata';
 
@@ -6,6 +8,10 @@ declare module '@gasket/engine' {
     docs?: {
       outputDir?: string
     }
+  }
+
+  export interface DocsSetupModulesConfig {
+    [key: string]: DocsSetup
   }
 
   export interface DocsTransformHandlerData {
@@ -29,7 +35,7 @@ declare module '@gasket/engine' {
     link: String,
     files?: Array<String>,
     transforms?: Array<DocsTransform>,
-    modules?: Object<string, DocsSetup>
+    modules?: DocsSetupModulesConfig
   }
 
   export interface DocsConfig {
@@ -74,7 +80,7 @@ declare module '@gasket/engine' {
       transforms?: Array<{
         test: RegExp,
         global?: boolean,
-        handler: (content: string, meta: TransformsConfigHandlerMeta) => string
+        handler: (content: string, data: DocsTransformHandlerData) => string
       }>
     }>;
 
