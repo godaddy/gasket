@@ -96,6 +96,13 @@ function addDefaultPlugins(gasketConfig) {
   };
 }
 
+/**
+ * Resolves a given directory to valid `lifecycle` plugins.
+ *
+ * @param {string} root - Directory we need to search.
+ * @param {string} parts - path parts of the directory that contains the plugins.
+ * @returns {string[]} found plugin files
+ */
 async function resolveUserPlugins(root, ...parts) {
   const dir = path.join(root, ...parts);
 
