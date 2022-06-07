@@ -12,14 +12,14 @@ const endTag = '<!-- END GENERATED -->';
 
 const projectRoot = path.resolve(__dirname, '..', '..');
 const cliBin = path.join(projectRoot, 'packages', 'gasket-cli', 'bin', 'run');
-const sourcePath = path.join(__dirname, '.docs', 'README.md');
+const sourcePath = path.join(__dirname, '.docs', 'docs', 'README.md');
 const targetPath = path.join(projectRoot, 'README.md');
 
 async function main() {
   await runShellCommand(cliBin, ['docs', '--no-view'], { cwd: __dirname });
 
   // copy over generated docs generated-docs
-  const genSrc = path.join(__dirname, '.docs', 'generated-docs');
+  const genSrc = path.join(__dirname, '.docs', 'docs', 'generated-docs');
   const genTgt = path.join(projectRoot, 'docs', 'generated-docs');
   await copyDir(genSrc, genTgt);
 
