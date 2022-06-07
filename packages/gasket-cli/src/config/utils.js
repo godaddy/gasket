@@ -97,45 +97,52 @@ function addDefaultPlugins(gasketConfig) {
 }
 
 /**
+ * Resolves a given directory to valid `lifecycle` plugins.
+ *
+ * @param {string} root - Directory we need to search.
+ * @param {string} parts - path parts of the directory that contains the plugins.
+ * @returns {string[]} found plugin files
+ */
+async function resolveUserPlugins(root, ...parts) {
+  const dir = path.join(root, ...parts);
+
+  let files;
+  try {
+    files = await readdir(dir);
+  } catch (err) {
+    if (err.code !== 'ENOENT') {
+      throw err;
+    }
+  }
+
+  return (files || [])
+    .filter(fileName => jsExtension.test(fileName))
+    .map(fileName => {
+      const fileSansExtension = fileName.replace(jsExtension, '');
+      return path.join(dir, fileSansExtension);
+    });
+}
+
+/**
  * Finds all plugins from the app's `./plugins` directory and injects in config
  *
  * @param {Object} gasketConfig - Gasket config
  * @returns {Object} updated config
  */
 async function addUserPlugins(gasketConfig) {
-  try {
-    const dirPathArray = [
-      path.join(gasketConfig.root, 'plugins'),
-      path.join(gasketConfig.root, 'src', 'plugins')
-    ];
+  const moduleNames = (await Promise.all([
+    resolveUserPlugins(gasketConfig.root, 'plugins'),
+    resolveUserPlugins(gasketConfig.root, 'src', 'plugins')
+  ])).reduce((acc, cur) => acc.concat(cur), []);
 
-    const moduleNames = [];
-    let files = [];
-    for (let i = 0; i <= dirPathArray.length - 1; i++) {
-      try { files = await readdir(dirPathArray[i]); } catch (err) {
-        if (err.code !== 'ENOENT') {
-          throw err;
-        }
-      }
-      const moduleNamesFilter = files
-        .filter(fileName => jsExtension.test(fileName))
-        .map(fileName => {
-          const fileSansExtension = fileName.replace(jsExtension, '');
-          return path.join(dirPathArray[i], fileSansExtension);
-        });
-      await moduleNames.push(...moduleNamesFilter);
+  const pluginsConfig = gasketConfig.plugins || {};
+  return {
+    ...gasketConfig,
+    plugins: {
+      ...pluginsConfig,
+      add: (pluginsConfig.add || []).concat(moduleNames)
     }
-    const pluginsConfig = gasketConfig.plugins || {};
-    return {
-      ...gasketConfig,
-      plugins: {
-        ...pluginsConfig,
-        add: (pluginsConfig.add || []).concat(moduleNames)
-      }
-    };
-  } catch (err) {
-    return gasketConfig;
-  }
+  };
 }
 
 /**
