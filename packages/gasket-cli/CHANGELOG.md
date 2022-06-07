@@ -1,5 +1,9 @@
 # `@gasket/cli`
 
+### 6.24.1
+
+- Fix reads for root and src plugins dirs ([#371])
+
 ### 6.24.0
 
 - Support for `/src/plugins` ([#363])
@@ -352,3 +356,4 @@ upon `gasket create`
 [#357]: https://github.com/godaddy/gasket/pull/357
 [#361]: https://github.com/godaddy/gasket/pull/361
 [#363]: https://github.com/godaddy/gasket/pull/363
+[#371]: https://github.com/godaddy/gasket/pull/371
