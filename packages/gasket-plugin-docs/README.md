@@ -162,10 +162,10 @@ module.exports = {
   name: 'example',
   hooks: {
     /**
-    * Update Express app instance
+    * Tune the docsConfig that is compiled for a plugin
     *
     * @param {Gasket} gasket The Gasket API
-    * @param {Object} defaults The default docs setup config - is only available with in-app lifecycle hook
+    * @param {Object} defaults The default docs setup config
     * @returns {DocsSetupConfig}
     */
     async docsSetup(gasket, { defaults = {} }) {

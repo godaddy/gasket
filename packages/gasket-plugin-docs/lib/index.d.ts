@@ -1,4 +1,3 @@
-import { DocsSetup } from './index.d';
 import { ModuleData } from './../../gasket-plugin-metadata/lib/index.d';
 import type { HookExecTypes, MaybeAsync } from '@gasket/engine';
 import type { DetailData, PluginData } from '@gasket/plugin-metadata';
