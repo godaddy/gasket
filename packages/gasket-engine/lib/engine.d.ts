@@ -13,6 +13,10 @@ declare module '@gasket/engine' {
     ...args: Parameters<HookExecTypes[Id]>
   ) => ReturnType<HookExecTypes[Id]>;
 
+  export type ApplyHookHandler<Id extends HookId> = (
+    ...args: Parameters<HookExecTypes[Id]>
+  ) => ReturnType<HookExecTypes[Id]>;
+
   type HookWithTimings<Id extends HookId> = {
     timing: {
       before?: Array<string>;
@@ -66,12 +70,12 @@ declare module '@gasket/engine' {
 
     execApply<Id extends HookId, Return = void>(
       hook: Id,
-      callback: (plugin: Plugin | null, handler: HookHandler<Id>) => Promise<Return>
+      callback: (plugin: Plugin | null, handler: ApplyHookHandler<Id>) => Promise<Return>
     ): Promise<Array<Return>>
 
     execApplySync<Id extends HookId, Return = void>(
       hook: Id,
-      callback: (plugin: Plugin | null, handler: HookHandler<Id>) => Return
+      callback: (plugin: Plugin | null, handler: ApplyHookHandler<Id>) => Return
     ): Array<Return>
   }
 
@@ -114,11 +118,11 @@ declare module '@gasket/engine' {
     ): ReturnType<HookExecTypes[Id]>;
     execApply<Id extends HookId, Return = void>(
       hook: Id,
-      callback: (plugin: Plugin, handler: HookHandler<Id>) => Promise<Return>
+      callback: (plugin: Plugin, handler: ApplyHookHandler<Id>) => Promise<Return>
     ): Promise<Return[]>;
     execApplySync<Id extends HookId, Return = void>(
       hook: Id,
-      callback: (plugin: Plugin, handler: HookHandler<Id>) => Return
+      callback: (plugin: Plugin, handler: ApplyHookHandler<Id>) => Return
     ): Return[];
   }
 }
