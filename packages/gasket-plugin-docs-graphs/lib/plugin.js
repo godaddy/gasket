@@ -14,7 +14,9 @@ module.exports = {
 
       let graph = 'graph LR;\n';
       docsConfigSet.lifecycles.forEach(lifecycle => {
-        const name = lifecycle.name;
+        const name = lifecycle.deprecated
+          ? `${lifecycle.name}[${lifecycle.name} (deprecated)]`
+          : lifecycle.name;
         const from = lifecycle.parent || lifecycle.after || lifecycle.command || lifecycle.from;
         let styling = i => i;
         if (from === lifecycle.command) {
