@@ -173,8 +173,14 @@ describe('utils - buildConfigSet', () => {
       assume(mockGasket.execApply).calledWith('docsSetup', sinon.match.func);
     });
 
-    it('docsSetup defaults are available to hooks', async () => {
+    it('docsSetup defaults are available to app-level hooks', async () => {
       await docsSetupCallback(null, mockHandler);
+      assume(mockHandler).calledWith(sinon.match.object);
+      assume(mockHandler.getCall(0).args[0]).property('defaults', mockDefaults);
+    });
+
+    it('docsSetup defaults are available to plugin-level hooks', async () => {
+      await docsSetupCallback({ name: 'example-plugin' }, mockHandler);
       assume(mockHandler).calledWith(sinon.match.object);
       assume(mockHandler.getCall(0).args[0]).property('defaults', mockDefaults);
     });

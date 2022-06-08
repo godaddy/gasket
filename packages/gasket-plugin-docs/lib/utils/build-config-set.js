@@ -66,7 +66,7 @@ async function buildDocsConfigSet(gasket) {
 
     const pluginData = buildDocsConfigSet.findPluginData(plugin, metadata.plugins, logger);
     if (pluginData) {
-      const docsSetup = await handler();
+      const docsSetup = await handler({ defaults });
       await builder.addPlugin(pluginData, docsSetup);
     }
   });
