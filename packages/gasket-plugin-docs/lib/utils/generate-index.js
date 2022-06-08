@@ -34,6 +34,7 @@ function generateContent(docsConfigSet) {
   refMap.set(appDocs.name, formatLink(appDocs.link, appDocs.targetRoot));
 
   const addSection = (sectionTitle, sectionDesc, docs, { includeVersion = true, additionalHeaders = [] } = {}) => {
+    console.log(sectionTitle, docs);
     if (!docs || !docs.length) return;
 
     addContent(`## ${sectionTitle}`);
@@ -44,13 +45,14 @@ function generateContent(docsConfigSet) {
         : ['Name', 'Description'].concat(additionalHeaders),
       ...docs.map(moduleDoc => {
         const additionalHeaderValues = additionalHeaders.map(h => moduleDoc[h.toLowerCase()]);
-        const { name, description, link, version, targetRoot } = moduleDoc;
+        const { name, description, link = 'README.md', version, targetRoot, from } = moduleDoc;
         let itemName = name;
-        if (link) {
+        if (link || from) {
           const ref = uniqueRef(name);
           itemName = ref === name ? `[${name}]` : `[${name}][${ref}]`;
           refMap.set(ref, formatLink(link, targetRoot));
         }
+
         return [
           itemName,
           ...(includeVersion

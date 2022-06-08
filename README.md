@@ -129,8 +129,8 @@ Available structure
 | [plugins/]         | One-off plugins for apps                               |
 | [public/]          | NextJS static files                                    |
 | [public/locales/]  | Locale JSON files with translation strings             |
-| test/              | Test files                                             |
-| test/              | Test files                                             |
+| [test/][6]         | Test files                                             |
+| [test/][7]         | Test files                                             |
 | [app.config.js]    | App configuration with environment overrides           |
 | [cypress.json]     | Cypress configuration                                  |
 | [gasket.config.js] | Gasket config for an app                               |
@@ -211,7 +211,7 @@ Available configuration options in the `gasket.config.js`
 
 | Name             | Description                         | Type   | Default | From                |
 | ---------------- | ----------------------------------- | ------ | ------- | ------------------- |
-| [docs][6]        | Docs config object                  | object | {}      | @gasket/plugin-docs |
+| [docs][8]        | Docs config object                  | object | {}      | @gasket/plugin-docs |
 | [docs.outputDir] | Output directory for generated docs | string | .docs   | @gasket/plugin-docs |
 
 <!-- LINKS -->
@@ -284,6 +284,9 @@ Available configuration options in the `gasket.config.js`
 [plugins/]:/packages/gasket-cli/docs/plugins.md#one-off-plugins
 [public/]:https://nextjs.org/docs/basic-features/static-file-serving
 [public/locales/]:/packages/gasket-plugin-intl/README.md#Options
+[test/]:/packages/gasket-plugin-cypress/README.md
+[6]:/packages/gasket-plugin-jest/README.md
+[7]:/packages/gasket-plugin-mocha/README.md
 [app.config.js]:/packages/gasket-plugin-config/README.md
 [cypress.json]:https://docs.cypress.io/guides/references/configuration
 [gasket.config.js]:/packages/gasket-cli/docs/configuration.md
@@ -336,7 +339,7 @@ Available configuration options in the `gasket.config.js`
 [@gasket/typescript-tests]:/packages/gasket-typescript-tests/README.md
 [@gasket/utils]:/packages/gasket-utils/README.md
 [create-gasket-app]:/packages/create-gasket-app/README.md
-[6]:/packages/gasket-plugin-docs/README.md#configuration
+[8]:/packages/gasket-plugin-docs/README.md#configuration
 [docs.outputDir]:/packages/gasket-plugin-docs/README.md#configuration
 <!-- END GENERATED -->
 
