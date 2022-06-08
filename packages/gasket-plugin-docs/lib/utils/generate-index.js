@@ -34,7 +34,6 @@ function generateContent(docsConfigSet) {
   refMap.set(appDocs.name, formatLink(appDocs.link, appDocs.targetRoot));
 
   const addSection = (sectionTitle, sectionDesc, docs, { includeVersion = true, additionalHeaders = [] } = {}) => {
-    console.log(sectionTitle, docs);
     if (!docs || !docs.length) return;
 
     addContent(`## ${sectionTitle}`);
