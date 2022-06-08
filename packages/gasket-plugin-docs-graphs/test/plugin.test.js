@@ -58,6 +58,24 @@ describe('docs graph plugin', function () {
     assume(content).matches('crackle -- exec --> pop;');
   });
 
+  it('supports deprecated lifecycles', async function () {
+    docsConfigSet.lifecycles = [{
+      parent: 'snap',
+      name: 'crackle'
+    }, {
+      parent: 'crackle',
+      name: 'pop',
+      deprecated: true,
+      method: 'exec'
+    }];
+
+    const { targetRoot, link } = await hook({}, docsConfigSet);
+    const content = await read(path.join(targetRoot, link), 'utf-8');
+
+    assume(content).contains('snap --> crackle;');
+    assume(content).contains('crackle -- exec --> pop[pop (deprecated)];');
+  });
+
   it('generates the LHS of the arrows from the correct attribute', async function () {
     const lc = docsConfigSet.lifecycles = [{
       name: 'Anakin',
