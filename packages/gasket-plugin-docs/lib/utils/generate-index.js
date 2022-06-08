@@ -33,13 +33,15 @@ function generateContent(docsConfigSet) {
   addContent(`[${appDocs.name}] — ${appDocs.description}`);
   refMap.set(appDocs.name, formatLink(appDocs.link, appDocs.targetRoot));
 
-  const addSection = (sectionTitle, sectionDesc, docs, { includeVersion = true } = {}, additionalHeaders = []) => {
+  const addSection = (sectionTitle, sectionDesc, docs, { includeVersion = true, additionalHeaders = [] } = {}) => {
     if (!docs || !docs.length) return;
 
     addContent(`## ${sectionTitle}`);
     addContent(sectionDesc);
     addTable([
-      includeVersion ? ['Name', 'Version', 'Description'].concat(additionalHeaders) : ['Name', 'Description'].concat(additionalHeaders),
+      includeVersion
+        ? ['Name', 'Version', 'Description'].concat(additionalHeaders)
+        : ['Name', 'Description'].concat(additionalHeaders),
       ...docs.map(moduleDoc => {
         const additionalHeaderValues = additionalHeaders.map(h => moduleDoc[h.toLowerCase()]);
         const { name, description, link, version, targetRoot } = moduleDoc;
@@ -49,7 +51,13 @@ function generateContent(docsConfigSet) {
           itemName = ref === name ? `[${name}]` : `[${name}][${ref}]`;
           refMap.set(ref, formatLink(link, targetRoot));
         }
-        return [itemName, ...(includeVersion ? [version, description, ...additionalHeaderValues] : [description, ...additionalHeaderValues])];
+        return [
+          itemName,
+          ...(includeVersion
+            ? [version, description, ...additionalHeaderValues]
+            : [description, ...additionalHeaderValues]
+          )
+        ];
       })
     ]);
   };
@@ -61,7 +69,12 @@ function generateContent(docsConfigSet) {
   addSection('Presets', 'All configured presets', docsConfigSet.presets);
   addSection('Plugins', 'All configured plugins', docsConfigSet.plugins);
   addSection('Modules', 'Dependencies and supporting modules', docsConfigSet.modules);
-  addSection('Configuration', 'Available configuration options in the `gasket.config.js`', docsConfigSet.configurations, { includeVersion: false }, ['Type', 'Default', 'From']);
+  addSection(
+    'Configurations',
+    'Available configuration options in the `gasket.config.js`',
+    docsConfigSet.configurations,
+    { includeVersion: false, additionalHeaders: ['Type', 'Default', 'From'] }
+  );
 
   addContent('<!-- LINKS -->');
   for (const [name, link] of refMap) {

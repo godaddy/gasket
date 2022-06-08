@@ -354,6 +354,7 @@ class DocsConfigSetBuilder {
   getConfigSet() {
     const detailDocsConfigs = detailDocsTypes
       .reduce((acc, metaType) => ({ ...acc, [metaType]: this._flattenDetails(metaType) }), {});
+
     // sortByName
     // - project, scoped, non-scoped
 
