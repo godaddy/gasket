@@ -33,7 +33,13 @@ function generateContent(docsConfigSet) {
   addContent(`[${appDocs.name}] — ${appDocs.description}`);
   refMap.set(appDocs.name, formatLink(appDocs.link, appDocs.targetRoot));
 
-  const addSection = (sectionTitle, sectionDesc, docs, { includeVersion = true, additionalHeaders = [] } = {}) => {
+  const addSection = (sectionTitle, sectionDesc, docs,
+    {
+      includeVersion = true,
+      additionalHeaders = [],
+      linkFallbacks = false
+    } = {}
+  ) => {
     if (!docs || !docs.length) return;
 
     addContent(`## ${sectionTitle}`);
@@ -44,12 +50,12 @@ function generateContent(docsConfigSet) {
         : ['Name', 'Description'].concat(additionalHeaders),
       ...docs.map(moduleDoc => {
         const additionalHeaderValues = additionalHeaders.map(h => moduleDoc[h.toLowerCase()]);
-        const { name, description, link = 'README.md', version, targetRoot, from } = moduleDoc;
+        const { name, description, link, version, targetRoot } = moduleDoc;
         let itemName = name;
-        if (link || from) {
+        if (link || linkFallbacks) {
           const ref = uniqueRef(name);
           itemName = ref === name ? `[${name}]` : `[${name}][${ref}]`;
-          refMap.set(ref, formatLink(link, targetRoot));
+          refMap.set(ref, formatLink(link || 'README.md', targetRoot));
         }
 
         return [
@@ -74,7 +80,7 @@ function generateContent(docsConfigSet) {
     'Configurations',
     'Available configuration options in the `gasket.config.js`',
     docsConfigSet.configurations,
-    { includeVersion: false, additionalHeaders: ['Type', 'Default', 'From'] }
+    { includeVersion: false, additionalHeaders: ['Type', 'Default', 'From'], linkFallbacks: true }
   );
 
   addContent('<!-- LINKS -->');

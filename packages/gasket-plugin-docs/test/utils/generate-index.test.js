@@ -73,6 +73,13 @@ const fullDocsConfigSet = {
   configurations: [{
     name: 'example-gasket-config-param',
     link: 'README.md#configurations',
+    description: 'example-description',
+    type: 'string',
+    default: 'example-default',
+    targetRoot: '/path/to/app/.docs/test-app/plugins/example-plugin',
+    from: 'example-plugin'
+  }, {
+    name: 'some-example-gasket-config-param',
     description: 'some-description',
     type: 'string',
     default: 'some-default',
@@ -130,7 +137,7 @@ describe('Utils - generateIndex', () => {
         //
         // count the number of ref-style links
         //
-        assume(content.match(/\[.+]:/g) || []).lengthOf(9);
+        assume(content.match(/\[.+]:/g) || []).lengthOf(10);
       });
 
       it('makes unique references', async () => {
@@ -157,6 +164,12 @@ describe('Utils - generateIndex', () => {
         const content = await generateContent(fullDocsConfigSet);
         assume(content).includes(`[${config.name}]:`);
         assume(content).includes(`:${expected}`);
+      });
+
+      it('add link fallbacks if configured', async () => {
+        const config = fullDocsConfigSet.configurations[1];
+        const content = await generateContent(fullDocsConfigSet);
+        assume(content).includes(`[${config.name}]:`);
       });
 
       it('does not add links if not configured', async () => {
