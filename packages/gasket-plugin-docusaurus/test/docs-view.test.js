@@ -63,7 +63,9 @@ describe('docsView', () => {
   it('does not write docusaurus.config.js if exist', async function () {
     existsStub.returns(true);
     await docsView(mockGasket);
-    assume(writeFileStub).not.called();
+    assume(writeFileStub)
+      .not
+      .calledWith(path.join(mockGasket.config.root, pluginConfigFile));
   });
 
   it('merges user config with defaults and starts server', async function () {

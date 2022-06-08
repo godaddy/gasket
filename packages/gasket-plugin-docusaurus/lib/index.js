@@ -4,7 +4,7 @@ const configure = require('./configure');
 module.exports = {
   name: require('../package').name,
   hooks: {
-    docsView,
-    configure
+    configure,
+    docsView
   }
 };

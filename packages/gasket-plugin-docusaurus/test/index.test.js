@@ -13,8 +13,8 @@ describe('Plugin', function () {
 
   it('has expected hooks', () => {
     const expected = [
-      'docsView',
-      'configure'
+      'configure',
+      'docsView'
     ];
     assume(plugin).to.have.property('hooks');
 
