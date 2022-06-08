@@ -14,51 +14,51 @@ declare module '@gasket/engine' {
   }
 
   export interface DocsTransformHandlerData {
-    filename: String,
+    filename: string,
     docsConfig: ModuleDocsConfig,
     docsConfigSet: DocsConfigSet,
   }
 
   export interface DocsTransformHandler {
-    content: String,
+    content: string,
     data: DocsTransformHandlerData,
   }
 
   export interface DocsTransform {
-    global?: Boolean,
+    global?: boolean,
     test: RegExp,
     handler: DocsTransformHandler
   }
 
   export interface DocsSetup {
-    link: String,
-    files?: Array<String>,
+    link: string,
+    files?: Array<string>,
     transforms?: Array<DocsTransform>,
     modules?: DocsSetupModulesConfig
   }
 
   export interface DocsConfig {
-    name: String,
-    description?: String,
-    link?: String,
-    sourceRoot: String,
-    targetRoot: String
+    name: string,
+    description?: string,
+    link?: string,
+    sourceRoot: string,
+    targetRoot: string
   }
 
   export interface ModuleDocsConfig extends DocsConfig {
-    files: Array<String>,
+    files: Array<string>,
     transforms: Array<DocsTransform>,
     metadata: ModuleData
   }
 
   export interface DetailDocsConfig extends DocsConfig {
-    from: String
+    from: string
   }
 
   export interface LifecycleDocsConfig extends DetailDocsConfig {
-    method: String,
-    parent?: String,
-    command?: String
+    method: string,
+    parent?: string,
+    command?: string
   }
   export interface DocsConfigSet {
     app: ModuleDocsConfig,
