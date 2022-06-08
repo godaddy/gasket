@@ -209,10 +209,10 @@ Supporting modules
 
 Available configuration options in the `gasket.config.js`
 
-| Name             | Description                         | Type   | Default | From                |
-| ---------------- | ----------------------------------- | ------ | ------- | ------------------- |
-| [docs][6]        | Docs config object                  | object | {}      | @gasket/plugin-docs |
-| [docs.outputDir] | Output directory for generated docs | string | .docs   | @gasket/plugin-docs |
+| Name             | Description                         | Type   | Default |
+| ---------------- | ----------------------------------- | ------ | ------- |
+| [docs][6]        | Docs config object                  | object | {}      |
+| [docs.outputDir] | Output directory for generated docs | string | .docs   |
 
 <!-- LINKS -->
 

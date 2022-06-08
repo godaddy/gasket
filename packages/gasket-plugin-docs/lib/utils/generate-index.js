@@ -80,7 +80,7 @@ function generateContent(docsConfigSet) {
     'Configurations',
     'Available configuration options in the `gasket.config.js`',
     docsConfigSet.configurations,
-    { includeVersion: false, additionalHeaders: ['Type', 'Default', 'From'], linkFallbacks: true }
+    { includeVersion: false, additionalHeaders: ['Type', 'Default'], linkFallbacks: true }
   );
 
   addContent('<!-- LINKS -->');

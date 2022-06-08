@@ -258,7 +258,7 @@ describe('Utils - generateIndex', () => {
       });
 
       describe('configurations', () => {
-        checkSection('configurations', 'Configurations', false, ['Type', 'Default', 'From']);
+        checkSection('configurations', 'Configurations', false, ['Type', 'Default']);
       });
     });
   });
