@@ -1,5 +1,7 @@
 # `@gasket/plugin-webpack`
 
+- Fix invalid lifecycle names which was causing the lifecycle diagram to get a syntax error.
+
 ### 6.20.1
 
 - Fix migration links

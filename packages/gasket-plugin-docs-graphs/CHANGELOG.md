@@ -1,5 +1,7 @@
 # `@gasket/plugin-docs-graph`
 
+- Support showing deprecation for lifecycles
+
 ### 6.11.2
 
 - Use fs.promises ([#319])
