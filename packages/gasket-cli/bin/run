@@ -1,23 +1,5 @@
 #!/usr/bin/env node
-
-const { flags: Flags, parse } = require('@oclif/parser');
-
-const { flags } = parse(process.argv, {
-  flags: {
-    require: Flags.string({
-      multiple: true
-    })
-  },
-  strict: false
-});
-
-if (flags.require) {
-  const { Resolver } = require('@gasket/resolve')
-  const resolver = new Resolver({ resolveFrom: process.cwd() })
-  flags.require.forEach(module => {
-    resolver.require(module)
-  })
-}
+require('../src/utils/setup')();
 
 require('@oclif/command').run()
-  .catch(require('@oclif/errors/handle'))
+  .catch(require('@oclif/errors/handle'));
