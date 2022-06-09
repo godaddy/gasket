@@ -300,27 +300,15 @@ npm install --no-save @gasket/preset-nextjs @gasket/redux next react-dom
 <!-- LINKS -->
 
 [npm]:https://docs.npm.red
-
 [yarn]:https://yarnpkg.com
-
 [npm env vars]:https://docs.npmjs.com/misc/config#environment-variables
-
 [yarn env vars]:https://yarnpkg.com/en/docs/envvars#toc-npm-config
-
 [inquirer questions]:https://github.com/SBoudrias/Inquirer.js#question
-
 [execWaterfall]:/packages/gasket-engine/README.md#execwaterfallevent-value-args
-
 [exec]:/packages/gasket-engine/README.md#execevent-args
-
 [Configuration Guide]: docs/configuration.md
-
 [Plugins Guide]: docs/plugins.md
-
 [Presets Guide]: docs/presets.md
-
 [Jest plugin]:/packages/gasket-plugin-jest/README.md
-
 [Mocha plugin]:/packages/gasket-plugin-mocha/README.md
-
 [lint plugin]:/packages/gasket-plugin-lint/README.md
