@@ -19,13 +19,15 @@ module.exports = {
           link: 'docs/webpack.md'
         }],
         lifecycles: [{
-          name: 'webpackChain (deprecated)',
+          name: 'webpackChain',
+          deprecated: true,
           method: 'execSync',
           description: 'Setup webpack config by chaining',
           link: 'README.md#webpackChain',
           parent: 'initWebpack'
         }, {
-          name: 'webpack (deprecated)',
+          name: 'webpack',
+          deprecated: true,
           method: 'execSync',
           description: 'Modify webpack config with partials or by mutating',
           link: 'README.md#webpack',
