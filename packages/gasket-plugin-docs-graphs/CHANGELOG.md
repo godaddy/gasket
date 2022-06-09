@@ -1,6 +1,8 @@
 # `@gasket/plugin-docs-graph`
 
-- Support showing deprecation for lifecycles
+### 6.24.2
+
+- Support showing deprecation for lifecycles ([#376])
 
 ### 6.11.2
 
@@ -18,3 +20,4 @@
 
 [#247]: https://github.com/godaddy/gasket/pull/247
 [#319]: https://github.com/godaddy/gasket/pull/319
+[#376]: https://github.com/godaddy/gasket/pull/376

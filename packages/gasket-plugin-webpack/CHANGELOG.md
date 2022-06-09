@@ -1,7 +1,8 @@
 # `@gasket/plugin-webpack`
 
-- Fix invalid lifecycle names which was causing the lifecycle diagram to get a syntax error.
+### 6.24.2
 
+- Fix invalid lifecycle names which was causing the lifecycle diagram to get a syntax error. ([#376])
 ### 6.20.1
 
 - Fix migration links
@@ -55,3 +56,4 @@
 [#284]: https://github.com/godaddy/gasket/pull/284
 [#303]: https://github.com/godaddy/gasket/pull/303
 [#311]: https://github.com/godaddy/gasket/pull/311
+[#376]: https://github.com/godaddy/gasket/pull/376

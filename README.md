@@ -73,48 +73,48 @@ Available commands
 
 Available lifecycles
 
-| Name                        | Description                                                   |
-| --------------------------- | ------------------------------------------------------------- |
-| [appEnvConfig]              | Adjust app level config after merged for the env              |
-| [appRequestConfig]          | Adjust app level config for each request                      |
-| [build][1]                  | Prepare the app to be started                                 |
-| [composeServiceWorker]      | Update the service worker script                              |
-| [configure]                 | Allows plugins to adjust config before command is run         |
-| [create][2]                 | App level plugins                                             |
-| [createServers]             | Setup the `create-servers` options                            |
-| [docsGenerate]              | Generate graphs for display in documation                     |
-| [docsSetup]                 | Set up what docs are captured and how to transform them       |
-| [docsView]                  | View the collated documentation                               |
-| [errorMiddleware]           | Add Express style middleware for handling errors with Fastify |
-| [errorMiddleware][3]        | Add Express style middleware for handling errors              |
-| [express]                   | Modify the Express instance to for adding endpoints           |
-| [fastify]                   | Modify the Fastify instance to for adding endpoints           |
-| [getCommands]               | Allows plugins to add CLI commands                            |
-| [init]                      | Signals the start of any Gasket command before it is run      |
-| [initReduxState]            | Initializes state of the Redux store                          |
-| [initReduxStore]            | Plugin access to Redux store instance                         |
-| [initWebpack]               | Create a webpack config                                       |
-| [intlLocale]                | Set the language for which locale files to load               |
-| [logTransports]             | Setup Winston log transports                                  |
-| [manifest]                  | Modify the the web manifest for a request                     |
-| [metadata]                  | Allows plugins to adjust their metadata                       |
-| [metrics]                   | Collect metrics for an app                                    |
-| [middleware]                | Add Express style middleware for Fastify                      |
-| [middleware][4]             | Add Express style middleware                                  |
-| [next]                      | Update the next app instance before prepare                   |
-| [nextConfig]                | Setup the next config                                         |
-| [nextExpress]               | Access the prepared next app and express instance             |
-| [postCreate]                | App level plugins                                             |
-| [preboot]                   | Any setup before the app starts                               |
-| [prompt]                    | Gasket config for an app                                      |
-| [servers]                   | Access to the server instances                                |
-| [serviceWorkerCacheKey]     | Get cache keys for request based service workers              |
-| [start][5]                  | Run the prepared app                                          |
-| [terminus]                  | Setup the `terminus` options                                  |
-| [webpack (deprecated)]      | Modify webpack config with partials or by mutating            |
-| [webpackChain (deprecated)] | Setup webpack config by chaining                              |
-| [webpackConfig]             | Transform the webpack config, with the help of webpack-merge  |
-| [workbox]                   | Setup Workbox config and options                              |
+| Name                    | Description                                                   |
+| ----------------------- | ------------------------------------------------------------- |
+| [appEnvConfig]          | Adjust app level config after merged for the env              |
+| [appRequestConfig]      | Adjust app level config for each request                      |
+| [build][1]              | Prepare the app to be started                                 |
+| [composeServiceWorker]  | Update the service worker script                              |
+| [configure]             | Allows plugins to adjust config before command is run         |
+| [create][2]             | App level plugins                                             |
+| [createServers]         | Setup the `create-servers` options                            |
+| [docsGenerate]          | Generate graphs for display in documation                     |
+| [docsSetup]             | Set up what docs are captured and how to transform them       |
+| [docsView]              | View the collated documentation                               |
+| [errorMiddleware]       | Add Express style middleware for handling errors with Fastify |
+| [errorMiddleware][3]    | Add Express style middleware for handling errors              |
+| [express]               | Modify the Express instance to for adding endpoints           |
+| [fastify]               | Modify the Fastify instance to for adding endpoints           |
+| [getCommands]           | Allows plugins to add CLI commands                            |
+| [init]                  | Signals the start of any Gasket command before it is run      |
+| [initReduxState]        | Initializes state of the Redux store                          |
+| [initReduxStore]        | Plugin access to Redux store instance                         |
+| [initWebpack]           | Create a webpack config                                       |
+| [intlLocale]            | Set the language for which locale files to load               |
+| [logTransports]         | Setup Winston log transports                                  |
+| [manifest]              | Modify the the web manifest for a request                     |
+| [metadata]              | Allows plugins to adjust their metadata                       |
+| [metrics]               | Collect metrics for an app                                    |
+| [middleware]            | Add Express style middleware for Fastify                      |
+| [middleware][4]         | Add Express style middleware                                  |
+| [next]                  | Update the next app instance before prepare                   |
+| [nextConfig]            | Setup the next config                                         |
+| [nextExpress]           | Access the prepared next app and express instance             |
+| [postCreate]            | App level plugins                                             |
+| [preboot]               | Any setup before the app starts                               |
+| [prompt]                | Gasket config for an app                                      |
+| [servers]               | Access to the server instances                                |
+| [serviceWorkerCacheKey] | Get cache keys for request based service workers              |
+| [start][5]              | Run the prepared app                                          |
+| [terminus]              | Setup the `terminus` options                                  |
+| [webpack]               | Modify webpack config with partials or by mutating            |
+| [webpackChain]          | Setup webpack config by chaining                              |
+| [webpackConfig]         | Transform the webpack config, with the help of webpack-merge  |
+| [workbox]               | Setup Workbox config and options                              |
 
 ## Structures
 
@@ -264,8 +264,8 @@ Supporting modules
 [serviceWorkerCacheKey]:/packages/gasket-plugin-service-worker/README.md#serviceWorkerCacheKey
 [5]:/packages/gasket-plugin-start/README.md#start
 [terminus]:/packages/gasket-plugin-https/README.md#terminus
-[webpack (deprecated)]:/packages/gasket-plugin-webpack/README.md#webpack
-[webpackChain (deprecated)]:/packages/gasket-plugin-webpack/README.md#webpackChain
+[webpack]:/packages/gasket-plugin-webpack/README.md#webpack
+[webpackChain]:/packages/gasket-plugin-webpack/README.md#webpackChain
 [webpackConfig]:/packages/gasket-plugin-webpack/README.md#webpackConfig
 [workbox]:/packages/gasket-plugin-workbox/README.md#workbox
 [.docs/]:/packages/gasket-plugin-docs/README.md#options
