@@ -2,29 +2,6 @@ import { ModuleData } from './../../gasket-plugin-metadata/lib/index.d';
 import type { HookExecTypes, MaybeAsync } from '@gasket/engine';
 import type { DetailData, PluginData } from '@gasket/plugin-metadata';
 
-declare module '@gasket/engine' {
-  export interface GasketConfig {
-    docs?: {
-      outputDir?: string
-    }
-  }
-
-  export interface HookExecTypes {
-    docsSetup(args: { defaults: PluginData }): MaybeAsync<PluginData & {
-      files?: Array<string>,
-      transforms?: Array<{
-        test: RegExp,
-        global?: boolean,
-        handler: (content: string, data: DocsTransformHandlerData) => string
-      }>
-    }>;
-
-    docsView(docs: DocsConfigSet): MaybeAsync<void>;
-
-    docsGenerate(docs: DocsConfigSet): MaybeAsync<DetailData>
-  }
-}
-
 export interface DocsSetupModulesConfig {
   [key: string]: DocsSetup
 }
@@ -88,4 +65,27 @@ export interface DocsConfigSet {
   transforms: Array<DocsTransform>,
   root: string,
   docsRoot: string
+}
+
+declare module '@gasket/engine' {
+  export interface GasketConfig {
+    docs?: {
+      outputDir?: string
+    }
+  }
+
+  export interface HookExecTypes {
+    docsSetup(args: { defaults: PluginData }): MaybeAsync<PluginData & {
+      files?: Array<string>,
+      transforms?: Array<{
+        test: RegExp,
+        global?: boolean,
+        handler: (content: string, data: DocsTransformHandlerData) => string
+      }>
+    }>;
+
+    docsView(docs: DocsConfigSet): MaybeAsync<void>;
+
+    docsGenerate(docs: DocsConfigSet): MaybeAsync<DetailData>
+  }
 }
