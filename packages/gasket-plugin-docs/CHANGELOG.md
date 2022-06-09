@@ -1,5 +1,7 @@
 # `@gasket/plugin-docs`
 
+- Include LICENSE.md in docsSetup hook files array
+
 ### 6.24.2
 
 - Update `docsSetupDefault` to include `LICENSE.md` ([#367])
