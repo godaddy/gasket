@@ -1,5 +1,9 @@
 # `@gasket/cli`
 
+### 6.24.3
+
+- Support for --require flag to load modules before Gasket initializes ([#370])
+
 ### 6.24.1
 
 - Fix reads for root and src plugins dirs ([#371])
@@ -356,4 +360,5 @@ upon `gasket create`
 [#357]: https://github.com/godaddy/gasket/pull/357
 [#361]: https://github.com/godaddy/gasket/pull/361
 [#363]: https://github.com/godaddy/gasket/pull/363
+[#370]: https://github.com/godaddy/gasket/pull/370
 [#371]: https://github.com/godaddy/gasket/pull/371

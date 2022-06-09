@@ -1,5 +1,9 @@
 # `@gasket/plugin-command`
 
+### 6.24.3
+
+- Support for --require flag to load modules before Gasket initializes ([#370])
+
 ### 6.20.0
 
 - Move config overrides to CLI ([#348])
@@ -59,3 +63,4 @@
 [#247]: https://github.com/godaddy/gasket/pull/247
 [#311]: https://github.com/godaddy/gasket/pull/311
 [#348]: https://github.com/godaddy/gasket/pull/348
+[#370]: https://github.com/godaddy/gasket/pull/370
