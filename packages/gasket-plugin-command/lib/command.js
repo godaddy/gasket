@@ -108,7 +108,6 @@ GasketCommand.flags = {
   root: flags.string({
     env: 'GASKET_ROOT',
     default: process.env.FAUX_ROOT || process.cwd(), // eslint-disable-line no-process-env
-    char: 'r',
     description: 'Top-level app directory'
   }),
   env: flags.string({
@@ -117,6 +116,7 @@ GasketCommand.flags = {
   }),
   require: flags.string({
     description: 'Require module before Gasket is initialized',
+    char: 'r',
     multiple: true
   })
 };

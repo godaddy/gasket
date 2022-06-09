@@ -8,7 +8,11 @@
 module.exports = function setup(argv = process.argv) {
   // Using to parse args before mounting all of oclif
   const getopts = require('getopts');
-  const opts = getopts(argv);
+  const opts = getopts(argv, {
+    alias: {
+      require: ['r']
+    }
+  });
 
   if (opts.require) {
     const required = Array.isArray(opts.require) ? opts.require : [opts.require];

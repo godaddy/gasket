@@ -131,6 +131,7 @@ comma-separated values: --plugins=jest,zkconfig^1.0.0
   }),
   'require': flags.string({
     description: 'Require module(s) before Gasket is initialized',
+    char: 'r',
     multiple: true
   }),
   'bootstrap': flags.boolean({
