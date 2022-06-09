@@ -2,7 +2,7 @@
 const path = require('path');
 const defaultsDeep = require('lodash.defaultsdeep');
 const { promisify } = require('util');
-const { sortModules, sortStructures, sortCommands, sortLifecycles, sortGuides } = require('./sorts');
+const { sortModules, sortStructures, sortCommands, sortLifecycles, sortGuides, sortConfigurations } = require('./sorts');
 
 // TODO: Need to review for native promise usage
 const glob = promisify(require('glob'));
@@ -23,6 +23,9 @@ const detailDocsHelpers = {
   },
   lifecycles: {
     sort: sortLifecycles
+  },
+  configurations: {
+    sort: sortConfigurations
   }
 };
 
