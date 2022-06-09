@@ -40,12 +40,22 @@ module.exports = {
       }
     },
     preboot: {
-      handler: async ({ config }) => {
-        require('elastic-apm-node')
-          .start({
+      handler: async (gasket) => {
+        const { config, logger } = gasket;
+
+        // prefer app-level dependency in case of duplicates
+        const apm = require(
+          require.resolve('elastic-apm-node', { paths: [config.root, __dirname] })
+        );
+
+        if (!apm.isStarted()) {
+          apm.start({
             ...config.elasticAPM
-          })
-          .addFilter(filterSensitiveCookies(config));
+          });
+          logger.notice('DEPRECATED started Elastic APM agent late. Use `--require elastic-apm-node/start`');
+        }
+
+        apm.addFilter(filterSensitiveCookies(config));
       }
     },
     create: {
