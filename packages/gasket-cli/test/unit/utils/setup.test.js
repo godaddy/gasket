@@ -42,4 +42,16 @@ describe('cli setup', function () {
     assume(require.cache).property(resolvedFile);
     assume(require.cache).property(resolvedPkg);
   });
+
+  it('allows short -r flags', function () {
+    assume(require.cache).not.property(resolvedFile);
+    assume(require.cache).not.property(resolvedPkg);
+    setup([
+      '/path/to/node', '/path/to/cli/bin', 'command',
+      '-r', '../../fixtures/example-setup.js',
+      '-r', 'mocha'
+    ]);
+    assume(require.cache).property(resolvedFile);
+    assume(require.cache).property(resolvedPkg);
+  });
 });
