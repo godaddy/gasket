@@ -105,14 +105,14 @@ class CreateCommand extends Command {
  */
 const commasToArray = input => input.split(',').map(name => name.trim());
 
-CreateCommand.description = `Create a new gasket application`;
+CreateCommand.description = `Create a new Gasket application`;
 CreateCommand.flags = {
   'presets': flags.string({
     env: 'GASKET_PRESETS',
     char: 'p',
     multiple: true,
     parse: commasToArray,
-    description: `Initial gasket preset(s) to use.
+    description: `Initial Gasket preset(s) to use.
 Can be set as short name with version (e.g. --presets nextjs@^1.0.0)
 Or other (multiple) custom presets (e.g. --presets my-gasket-preset@1.0.0.beta-1,nextjs@^1.0.0)`
   }),
@@ -129,15 +129,20 @@ comma-separated values: --plugins=jest,zkconfig^1.0.0
     description: `Selects which package manager you would like to use during
  installation. (e.g. --package-manager yarn)`
   }),
+  'require': flags.string({
+    description: 'Require module(s) before Gasket is initialized',
+    char: 'r',
+    multiple: true
+  }),
   'bootstrap': flags.boolean({
     default: true,
-    description: '(INTERNAL) If provided, skip the bootstrap phase of gasket create',
+    description: '(INTERNAL) If provided, skip the bootstrap phase',
     allowNo: true,
     hidden: true
   }),
   'generate': flags.boolean({
     default: true,
-    description: '(INTERNAL) If provided, skip the generate phase of gasket create',
+    description: '(INTERNAL) If provided, skip the generate phase',
     allowNo: true,
     hidden: true
   }),
@@ -171,7 +176,7 @@ CreateCommand.args = [
   {
     name: 'appname',
     required: true,
-    description: 'Name of the gasket application to create'
+    description: 'Name of the Gasket application to create'
   }
 ];
 
