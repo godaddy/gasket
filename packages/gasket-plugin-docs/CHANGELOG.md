@@ -1,6 +1,9 @@
 # `@gasket/plugin-docs`
 
-- Include LICENSE.md in docsSetup hook files array
+### 6.24.3
+
+- Allow for configurations in metadata config object ([#375])
+- Include LICENSE.md in docsSetup hook files array ([#379])
 
 ### 6.24.2
 
@@ -59,3 +62,5 @@
 [#367]: https://github.com/godaddy/gasket/pull/367
 [#369]: https://github.com/godaddy/gasket/pull/369
 [#374]: https://github.com/godaddy/gasket/pull/374
+[#375]: https://github.com/godaddy/gasket/pull/375
+[#379]: https://github.com/godaddy/gasket/pull/379
