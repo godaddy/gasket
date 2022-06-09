@@ -19,6 +19,15 @@ describe('docsSetup', () => {
     assume(results.files).an('array');
   });
 
+  it('includes specific files', () => {
+    const results = docsSetup();
+    assume(results.files).lengthOf(3);
+    assume(results.files)
+      .includes('README.md')
+      .includes('docs/**/*')
+      .includes('LICENSE.md');
+  });
+
   it('includes expected transforms', () => {
     const {
       txGasketPackageLinks,
