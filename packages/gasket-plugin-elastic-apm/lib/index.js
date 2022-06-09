@@ -32,7 +32,17 @@ module.exports = {
   hooks: {
     configure: {
       handler: async (gasket, config) => {
+        const { logger } = gasket;
         config.elasticAPM = config.elasticAPM || {};
+
+        const { serverUrl, secretToken } = config.elasticAPM;
+        if (isDefined(serverUrl)) {
+          logger.notice('DEPRECATED config `elasticAPM.serverUrl`. Use env var: ELASTIC_APM_SERVER_URL');
+        }
+        if (isDefined(secretToken)) {
+          logger.notice('DEPRECATED config `elasticAPM.secretToken`. Use env var: ELASTIC_APM_SECRET_TOKEN');
+        }
+
         // eslint-disable-next-line no-process-env
         config.elasticAPM.active = isActive(config.elasticAPM, process.env);
 
