@@ -1,4 +1,7 @@
 const { filterSensitiveCookies } = require('./cookies');
+const { dependencies } = require('../package.json');
+
+const isDefined = o => typeof o !== 'undefined';
 
 /**
  * Determines if the Elastic APM agent has sufficient config to be active
@@ -43,6 +46,19 @@ module.exports = {
             ...config.elasticAPM
           })
           .addFilter(filterSensitiveCookies(config));
+      }
+    },
+    create: {
+      timing: {
+        after: ['@gasket/plugin-start']
+      },
+      handler(gasket, { pkg }) {
+        pkg.add('dependencies', {
+          'elastic-apm-node': dependencies['elastic-apm-node']
+        });
+        pkg.add('scripts', {
+          start: 'gasket start --require elastic-apm-node/start'
+        });
       }
     }
   }
