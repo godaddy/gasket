@@ -143,7 +143,7 @@ Available presets
 
 | Name                    | Version | Description                                |
 | ----------------------- | ------- | ------------------------------------------ |
-| [@gasket/preset-api]    | 6.24.2  | Create Express-based API with Gasket       |
+| [@gasket/preset-api]    | 6.24.3  | Create Express-based API with Gasket       |
 | [@gasket/preset-nextjs] | 6.24.2  | Basic NextJS Framework                     |
 | [@gasket/preset-pwa]    | 6.24.2  | Turn Gasket apps into Progressive Web Apps |
 
@@ -154,10 +154,10 @@ Available plugins
 | Name                            | Version | Description                                                                |
 | ------------------------------- | ------- | -------------------------------------------------------------------------- |
 | [@gasket/plugin-analyze]        | 6.24.2  | Gasket Analyzer Plugin                                                     |
-| [@gasket/plugin-command]        | 6.24.2  | Plugin to enable other plugins to inject new gasket commands               |
+| [@gasket/plugin-command]        | 6.24.3  | Plugin to enable other plugins to inject new gasket commands               |
 | [@gasket/plugin-config]         | 6.24.2  | Supports application-specific (non-Gasket) configuration                   |
 | [@gasket/plugin-cypress]        | 6.24.0  | Integrates Cypress based testing into your Gasket application              |
-| [@gasket/plugin-docs]           | 6.24.2  | Centralize doc files from plugins and modules                              |
+| [@gasket/plugin-docs]           | 6.24.3  | Centralize doc files from plugins and modules                              |
 | [@gasket/plugin-docs-graphs]    | 6.24.2  | Generate mermaid graphs of an applications gasket lifecycles               |
 | [@gasket/plugin-docsify]        | 6.24.2  | View collated docs with Docsify                                            |
 | [@gasket/plugin-docusaurus]     | 6.24.2  | Gasket plugin for docusaurus                                               |
@@ -191,7 +191,7 @@ Supporting modules
 | Name                       | Version | Description                                                                          |
 | -------------------------- | ------- | ------------------------------------------------------------------------------------ |
 | [@gasket/assets]           | 6.24.0  | Gasket assets                                                                        |
-| [@gasket/cli]              | 6.24.2  | CLI for rapid application development with gasket                                    |
+| [@gasket/cli]              | 6.24.3  | CLI for rapid application development with gasket                                    |
 | [@gasket/data]             | 6.24.0  | Helper package for accessing embedded Gasket Data in the browser                     |
 | [@gasket/engine]           | 6.24.2  | Plugin engine for gasket                                                             |
 | [@gasket/fetch]            | 6.24.2  | Gasket Fetch API                                                                     |
@@ -201,9 +201,9 @@ Supporting modules
 | [@gasket/react-intl]       | 6.24.2  | React component library to enable localization for gasket apps.                      |
 | [@gasket/redux]            | 6.24.0  | Gasket Redux Configuration                                                           |
 | [@gasket/resolve]          | 6.24.0  | Essential module resolution & configuration management for gasket plugins & presets. |
-| [@gasket/typescript-tests] | 6.24.2  | Not a published package; hosts unit tests to verify TypeScript support               |
+| [@gasket/typescript-tests] | 6.24.3  | Not a published package; hosts unit tests to verify TypeScript support               |
 | [@gasket/utils]            | 6.24.2  | Reusable utilities for Gasket internals                                              |
-| [create-gasket-app]        | 6.24.2  | starter pack for creating a gasket app                                               |
+| [create-gasket-app]        | 6.24.3  | starter pack for creating a gasket app                                               |
 
 ## Configurations
 
