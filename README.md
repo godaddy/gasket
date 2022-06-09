@@ -205,6 +205,15 @@ Supporting modules
 | [@gasket/utils]            | 6.24.0  | Reusable utilities for Gasket internals                                              |
 | [create-gasket-app]        | 6.24.1  | starter pack for creating a gasket app                                               |
 
+## Configurations
+
+Available configuration options in the `gasket.config.js`
+
+| Name             | Description                         | Type   | Default |
+| ---------------- | ----------------------------------- | ------ | ------- |
+| [docs][6]        | Docs config object                  | object | {}      |
+| [docs.outputDir] | Output directory for generated docs | string | .docs   |
+
 <!-- LINKS -->
 
 [Quick Start Guide]:docs/quick-start.md
@@ -327,6 +336,8 @@ Supporting modules
 [@gasket/typescript-tests]:/packages/gasket-typescript-tests/README.md
 [@gasket/utils]:/packages/gasket-utils/README.md
 [create-gasket-app]:/packages/create-gasket-app/README.md
+[6]:/packages/gasket-plugin-docs/README.md#configuration
+[docs.outputDir]:/packages/gasket-plugin-docs/README.md#configuration
 <!-- END GENERATED -->
 
 ## License

@@ -319,7 +319,8 @@ describe('utils - DocsConfigSetBuilder', () => {
         'structures',
         'lifecycles',
         'guides',
-        'commands'
+        'commands',
+        'configurations'
       ];
       const actual = Object.keys(results);
 
@@ -335,13 +336,15 @@ describe('utils - DocsConfigSetBuilder', () => {
         path: '/path/to/node_modules/example-plugin',
         commands: [{ name: 'example-command' }],
         structures: [{ name: 'example-structure' }],
-        lifecycles: [{ name: 'example-lifecycle' }]
+        lifecycles: [{ name: 'example-lifecycle' }],
+        configurations: [{ name: 'example-gasket-config' }]
       }, {
         name: '@some/example-plugin',
         path: '/path/to/node_modules/@some/example-plugin',
         commands: [{ name: 'some-example-command' }],
         structures: [{ name: 'some-example-structure' }],
-        lifecycles: [{ name: 'some-example-lifecycle' }]
+        lifecycles: [{ name: 'some-example-lifecycle' }],
+        configurations: [{ name: 'some-example-gasket-config' }]
       }]);
     });
 
@@ -351,6 +354,7 @@ describe('utils - DocsConfigSetBuilder', () => {
       assume(results.commands).lengthOf(2);
       assume(results.structures).lengthOf(2);
       assume(results.lifecycles).lengthOf(2);
+      assume(results.configurations).lengthOf(2);
     });
 
     it('subDocsConfig includes "from" of parent plugin', async () => {

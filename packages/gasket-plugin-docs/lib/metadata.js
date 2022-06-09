@@ -38,6 +38,19 @@ module.exports = function metadata(gasket, meta) {
       name: outputDir + '/',
       description: 'Output of the docs command',
       link: 'README.md#options'
+    }],
+    configurations: [{
+      name: 'docs',
+      link: 'README.md#configuration',
+      description: 'Docs config object',
+      type: 'object',
+      default: '{}'
+    }, {
+      name: 'docs.outputDir',
+      link: 'README.md#configuration',
+      description: 'Output directory for generated docs',
+      type: 'string',
+      default: '.docs'
     }]
   };
 };
