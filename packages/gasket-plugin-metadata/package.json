@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-metadata",
-  "version": "6.24.0",
+  "version": "6.24.2",
   "description": "Adds metadata to gasket lifecycles",
   "main": "lib",
   "types": "lib/index.d.ts",
@@ -47,7 +47,7 @@
     "lodash.isobject": "^3.0.2"
   },
   "devDependencies": {
-    "@gasket/engine": "^6.24.0",
+    "@gasket/engine": "^6.24.2",
     "@godaddy/dmd": "^1.0.0",
     "assume": "^2.3.0",
     "assume-sinon": "^1.1.0",
