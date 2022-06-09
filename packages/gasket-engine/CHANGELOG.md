@@ -1,5 +1,9 @@
 # `@gasket/engine`
 
+### 6.24.2
+
+- Fix types for execApply* callback handlers - do not need gasket arg ([#377])
+
 ### 6.20.4
 
 - Expose the Gasket engine class so TypeScript code can construct engine instances ([#356])
@@ -81,5 +85,6 @@
 [#311]: https://github.com/godaddy/gasket/pull/311
 [#345]: https://github.com/godaddy/gasket/pull/345
 [#356]: https://github.com/godaddy/gasket/pull/356
+[#377]: https://github.com/godaddy/gasket/pull/377
 
 [Loader]:/packages/gasket-resolve/docs/api.md#loader

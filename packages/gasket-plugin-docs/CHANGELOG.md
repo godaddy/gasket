@@ -1,5 +1,10 @@
 # `@gasket/plugin-docs`
 
+### 6.24.2
+
+- Update `docsSetupDefault` to include `LICENSE.md` ([#367])
+- Pass plugin-level `docsSetup` handler parameters correctly, add test case ([#374])
+
 ### 6.24.0
 
 - Fix relative link transforms ([#369])
@@ -10,7 +15,7 @@
 
 ### 6.10.1
 
-- Generate doc links point to main branch ([#316]) 
+- Generate doc links point to main branch ([#316])
 
 ### 6.10.0
 
@@ -49,4 +54,6 @@
 [#311]: https://github.com/godaddy/gasket/pull/311
 [#316]: https://github.com/godaddy/gasket/pull/316
 [#319]: https://github.com/godaddy/gasket/pull/319
+[#367]: https://github.com/godaddy/gasket/pull/367
 [#369]: https://github.com/godaddy/gasket/pull/369
+[#374]: https://github.com/godaddy/gasket/pull/374
