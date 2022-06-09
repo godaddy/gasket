@@ -19,6 +19,7 @@ const emptyDocsConfigSet = {
   commands: [],
   lifecycles: [],
   transforms: [],
+  configurations: [],
   root: '/path/to/app',
   docsRoot: '/path/to/app/.docs'
 };
@@ -69,6 +70,22 @@ const fullDocsConfigSet = {
     targetRoot: '/path/to/app/.docs/test-app/plugins/example-plugin'
   }],
   transforms: [],
+  configurations: [{
+    name: 'example-gasket-config-param',
+    link: 'README.md#configurations',
+    description: 'example-description',
+    type: 'string',
+    default: 'example-default',
+    targetRoot: '/path/to/app/.docs/test-app/plugins/example-plugin',
+    from: 'example-plugin'
+  }, {
+    name: 'some-example-gasket-config-param',
+    description: 'some-description',
+    type: 'string',
+    default: 'some-default',
+    targetRoot: '/path/to/app/.docs/test-app/plugins/example-plugin',
+    from: 'some-plugin'
+  }],
   root: '/path/to/app',
   docsRoot: '/path/to/app/.docs'
 };
@@ -120,7 +137,7 @@ describe('Utils - generateIndex', () => {
         //
         // count the number of ref-style links
         //
-        assume(content.match(/\[.+]:/g) || []).lengthOf(8);
+        assume(content.match(/\[.+]:/g) || []).lengthOf(10);
       });
 
       it('makes unique references', async () => {
@@ -149,6 +166,12 @@ describe('Utils - generateIndex', () => {
         assume(content).includes(`:${expected}`);
       });
 
+      it('add link fallbacks if configured', async () => {
+        const config = fullDocsConfigSet.configurations[1];
+        const content = await generateContent(fullDocsConfigSet);
+        assume(content).includes(`[${config.name}]:`);
+      });
+
       it('does not add links if not configured', async () => {
         const config = fullDocsConfigSet.structures[1];
         const content = await generateContent(fullDocsConfigSet);
@@ -158,7 +181,7 @@ describe('Utils - generateIndex', () => {
 
     describe('Sections', () => {
 
-      function checkSection(name, title, includeVersion) {
+      function checkSection(name, title, includeVersion, additionalHeaders = []) {
         const fullContent = generateContent(fullDocsConfigSet);
 
         it(`adds section title`, () => {
@@ -175,6 +198,23 @@ describe('Utils - generateIndex', () => {
           it(`includes version in table`, () => {
             assume(fullContent).includes('| Version');
             assume(fullContent).includes('| ----');
+          });
+        }
+
+        if (additionalHeaders.length) {
+          it(`includes additional headers in table`, () => {
+            additionalHeaders.forEach(h => {
+              assume(fullContent).includes(`| ${h}`);
+              assume(fullContent).includes('| ----');
+            });
+          });
+
+          it(`includes additional header values in table`, () => {
+            additionalHeaders.forEach(h => {
+              const value = fullDocsConfigSet[name][0][h.toLowerCase()];
+              assume(fullContent).includes(`| ${value}`);
+              assume(fullContent).includes('| ----');
+            });
           });
         }
 
@@ -215,6 +255,10 @@ describe('Utils - generateIndex', () => {
 
       describe('guides', () => {
         checkSection('guides', 'Guides');
+      });
+
+      describe('configurations', () => {
+        checkSection('configurations', 'Configurations', false, ['Type', 'Default']);
       });
     });
   });

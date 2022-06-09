@@ -1,5 +1,5 @@
 const assume = require('assume');
-const { sortModules, sortStructures, sortCommands, sortGuides } = require('../../lib/utils/sorts');
+const { sortModules, sortStructures, sortCommands, sortGuides, sortConfigurations } = require('../../lib/utils/sorts');
 
 describe('utils - sorts', () => {
 
@@ -184,6 +184,27 @@ describe('utils - sorts', () => {
       ];
 
       const results = sortCommands(begin.map(name => ({ name }))).map(p => p.name);
+      assume(results).eqls(expected);
+    });
+  });
+
+  describe('sortConfigurations', () => {
+    it('sorts alphabetically', () => {
+      const begin = [
+        'b',
+        'd',
+        'c',
+        'a'
+      ];
+
+      const expected = [
+        'a',
+        'b',
+        'c',
+        'd'
+      ];
+
+      const results = sortConfigurations(begin.map(name => ({ name }))).map(p => p.name);
       assume(results).eqls(expected);
     });
   });

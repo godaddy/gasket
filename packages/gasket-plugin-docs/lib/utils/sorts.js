@@ -142,10 +142,18 @@ const sortCommands = sortByKey('name', alphaCompare);
 // TODO (kinetifex): eventually sort by parent and order when doing graphing work
 const sortLifecycles = sortByKey('name', alphaCompare);
 
+/**
+ * Sort an array of configurations by name
+ *
+ * @type {function(DetailDocsConfig[]): DetailDocsConfig[]}
+ */
+const sortConfigurations = sortByKey('name', alphaCompare);
+
 module.exports = {
   sortModules,
   sortGuides,
   sortStructures,
   sortCommands,
-  sortLifecycles
+  sortLifecycles,
+  sortConfigurations
 };
