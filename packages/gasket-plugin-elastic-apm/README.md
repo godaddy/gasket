@@ -72,6 +72,27 @@ module.exports = {
 };
 ```
 
+### Custom Start Configurations
+
+For scenarios where you need to configure the start options for the APM agent,
+you can do so in a custom setup script and require it instead.
+
+For example, add a `setup.js` script to the root of your app:
+
+```
+// setup.js
+require('elastic-apm-node').start({
+  // any configuration options
+})
+```
+
+Then adjust your start script to require it instead:
+
+```diff
+-   "start": "gasket start --require elastic-apm-node/start",
++   "start": "gasket start --require ./setup.js",
+```
+
 ### Custom Filters
 
 According to the [Elastic APM docs], the _Elastic APM agent for Node.js is a
