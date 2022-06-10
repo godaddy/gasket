@@ -37,7 +37,8 @@ describe('@gasket/plugin-docs', () => {
         name: 'FAQ',
         description: 'Frequently Asked Questions',
         link: '/FAQ.md',
-        targetRoot: config.docsRoot
+        targetRoot: config.docsRoot,
+        from: '@some/gasket-plugin-example'
       };
     };
   });

@@ -79,6 +79,6 @@ declare module '@gasket/engine' {
 
     docsView(docs: DocsConfigSet): MaybeAsync<void>
 
-    docsGenerate(docs: DocsConfigSet): MaybeAsync<DetailDocsConfig>
+    docsGenerate(docs: DocsConfigSet): MaybeAsync<Omit<DetailDocsConfig, 'sourceRoot'>>
   }
 }
