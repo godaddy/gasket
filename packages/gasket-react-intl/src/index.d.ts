@@ -34,10 +34,10 @@ export function withLocaleRequired<Props>(localePathPart?: LocalePathPart, optio
  * @param [props.loading] - Custom component to show while loading
  * @returns element
  */
-export function LocaleRequired(props: {
+export function LocaleRequired(props: PropsWithChildren<{
   localesPath: LocalePathPart;
   loading?: React.ReactNode;
-}): React.ReactNode | null;
+}>): React.ReactElement | null;
 
 /**
  * React that fetches a locale file and returns loading status
