@@ -14,7 +14,7 @@
  *
  * @typedef {object} DocsConfig
  *
- * @property {string} name - Name of the the module or element
+ * @property {string} name - Name of the module or element
  * @property {string} [description] - Description of the module or element
  * @property {string} [link] - Relative path to a doc from the module's package
  * @property {string} sourceRoot - Absolute path to the module's package

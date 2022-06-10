@@ -37,7 +37,7 @@ Base docs configuration
 
 | Name | Type | Description |
 | --- | --- | --- |
-| name | `string` | Name of the the module or element |
+| name | `string` | Name of the module or element |
 | \[description\] | `string` | Description of the module or element |
 | \[link\] | `string` | Relative path to a doc from the module's package |
 | sourceRoot | `string` | Absolute path to the module's package |
