@@ -1,5 +1,9 @@
 # `@gasket/plugin-docs`
 
+### 6.25.0
+
+- Update TypeScript types and docs ([#373])
+
 ### 6.24.3
 
 - Allow for configurations in metadata config object ([#375])
@@ -61,6 +65,7 @@
 [#319]: https://github.com/godaddy/gasket/pull/319
 [#367]: https://github.com/godaddy/gasket/pull/367
 [#369]: https://github.com/godaddy/gasket/pull/369
+[#373]: https://github.com/godaddy/gasket/pull/373
 [#374]: https://github.com/godaddy/gasket/pull/374
 [#375]: https://github.com/godaddy/gasket/pull/375
 [#379]: https://github.com/godaddy/gasket/pull/379
