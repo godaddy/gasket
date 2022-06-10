@@ -1,6 +1,5 @@
-import { ModuleData } from './../../gasket-plugin-metadata/lib/index.d';
-import type { HookExecTypes, MaybeAsync } from '@gasket/engine';
-import type { DetailData, PluginData } from '@gasket/plugin-metadata';
+import type { MaybeAsync } from '@gasket/engine';
+import type { ModuleData } from '@gasket/plugin-metadata';
 
 export interface DocsSetupModulesConfig {
   [key: string]: DocsSetup
@@ -53,6 +52,7 @@ export interface LifecycleDocsConfig extends DetailDocsConfig {
   parent?: string,
   command?: string
 }
+
 export interface DocsConfigSet {
   app: ModuleDocsConfig,
   plugins: Array<ModuleDocsConfig>,
@@ -75,17 +75,10 @@ declare module '@gasket/engine' {
   }
 
   export interface HookExecTypes {
-    docsSetup(args: { defaults: PluginData }): MaybeAsync<PluginData & {
-      files?: Array<string>,
-      transforms?: Array<{
-        test: RegExp,
-        global?: boolean,
-        handler: (content: string, data: DocsTransformHandlerData) => string
-      }>
-    }>;
+    docsSetup(args: { defaults: DocsSetup }): MaybeAsync<DocsSetup>
 
-    docsView(docs: DocsConfigSet): MaybeAsync<void>;
+    docsView(docs: DocsConfigSet): MaybeAsync<void>
 
-    docsGenerate(docs: DocsConfigSet): MaybeAsync<DetailData>
+    docsGenerate(docs: DocsConfigSet): MaybeAsync<DetailDocsConfig>
   }
 }
