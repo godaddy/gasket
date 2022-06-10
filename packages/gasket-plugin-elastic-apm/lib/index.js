@@ -1,4 +1,7 @@
 const { filterSensitiveCookies } = require('./cookies');
+const { dependencies } = require('../package.json');
+
+const isDefined = o => typeof o !== 'undefined';
 
 /**
  * Determines if the Elastic APM agent has sufficient config to be active
@@ -29,7 +32,17 @@ module.exports = {
   hooks: {
     configure: {
       handler: async (gasket, config) => {
+        const { logger } = gasket;
         config.elasticAPM = config.elasticAPM || {};
+
+        const { serverUrl, secretToken } = config.elasticAPM;
+        if (isDefined(serverUrl)) {
+          logger.notice('DEPRECATED config `elasticAPM.serverUrl`. Use env var: ELASTIC_APM_SERVER_URL');
+        }
+        if (isDefined(secretToken)) {
+          logger.notice('DEPRECATED config `elasticAPM.secretToken`. Use env var: ELASTIC_APM_SECRET_TOKEN');
+        }
+
         // eslint-disable-next-line no-process-env
         config.elasticAPM.active = isActive(config.elasticAPM, process.env);
 
@@ -37,12 +50,35 @@ module.exports = {
       }
     },
     preboot: {
-      handler: async ({ config }) => {
-        require('elastic-apm-node')
-          .start({
+      handler: async (gasket) => {
+        const { config, logger } = gasket;
+
+        // prefer app-level dependency in case of duplicates
+        const apm = require(
+          require.resolve('elastic-apm-node', { paths: [config.root, __dirname] })
+        );
+
+        if (!apm.isStarted()) {
+          apm.start({
             ...config.elasticAPM
-          })
-          .addFilter(filterSensitiveCookies(config));
+          });
+          logger.notice('DEPRECATED started Elastic APM agent late. Use `--require elastic-apm-node/start`');
+        }
+
+        apm.addFilter(filterSensitiveCookies(config));
+      }
+    },
+    create: {
+      timing: {
+        after: ['@gasket/plugin-start']
+      },
+      handler(gasket, { pkg }) {
+        pkg.add('dependencies', {
+          'elastic-apm-node': dependencies['elastic-apm-node']
+        });
+        pkg.add('scripts', {
+          start: 'gasket start --require elastic-apm-node/start'
+        });
       }
     }
   }
