@@ -62,15 +62,27 @@ files that exist under a docs directory. Additionally, if any metadata defines
 
 The `docsSetup` lifecycle allows plugin developers to tune the docsConfig that
 is compile for their plugin. Files or file globs can be set, and links changed
-as needed. The `defaults` are an available option to reference.
+as needed. Any lifecycle hooks should return a [DocsSetup] object.
+The `defaults` are an available option to reference.
 
 #### Example setup
 
 ```js
+/**
+ * @typedef {import('@gasket/plugin-docs').DocsSetup} DocsSetup
+ */
+
 module.exports = {
   name: 'example',
   hooks: {
-    async docsSetup(gasket, { defaults }) {
+    /**
+    * Tune the docsConfig that is compiled for a plugin
+    *
+    * @param {Gasket} gasket The Gasket API
+    * @param {Object} defaults The default docs setup config
+    * @returns {DocsSetup}
+    */
+    async docsSetup(gasket, { defaults = {} }) {
       return {
         ...defaults,
         link: 'OTHER.md',
