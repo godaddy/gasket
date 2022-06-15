@@ -21,11 +21,11 @@ module.exports = {
           link: 'README.md#commands'
         }],
         configurations: [{
-          "name": "bundleAnalyzerConfig",
-          "link": "README.md#configuration",
-          "description": "The base gasket.config object",
-          "type": "object",
-          "default": "{}"
+          name: 'bundleAnalyzerConfig',
+          link: 'README.md#configuration',
+          description: 'The base gasket.config object',
+          type: 'object',
+          default: '{}'
         }]
       };
     }
