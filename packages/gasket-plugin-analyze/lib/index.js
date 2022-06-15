@@ -19,6 +19,13 @@ module.exports = {
           name: 'analyze',
           description: 'Generate analysis report of webpack bundles',
           link: 'README.md#commands'
+        }],
+        configurations: [{
+          "name": "bundleAnalyzerConfig",
+          "link": "README.md#configuration",
+          "description": "The base gasket.config object",
+          "type": "object",
+          "default": "{}"
         }]
       };
     }
