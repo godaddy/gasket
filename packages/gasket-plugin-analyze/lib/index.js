@@ -25,15 +25,32 @@ module.exports = {
           link: 'README.md#configuration',
           description: 'This plugin utilizes [webpack-bundle-analyzer] for tuning for both `browser` and `server` analysis reports',
           type: 'object',
-          default: JSON.stringify({
-            browser: {
-              defaultSizes: 'gzip'
-            },
-            server: {
-              openAnalyzer: false,
-            }
-          })
-        }]
+    default: '{}'
+  }, {
+    name: 'bundleAnalyzerConfig.browser',
+    link: 'README.md#configuration',
+    description: 'Browser/client-side config object.',
+    type: 'object',
+    default: '{}'
+  }, {
+    name: 'bundleAnalyzerConfig.browser.defaultSizes',
+    link: 'README.md#configuration',
+    description: 'Module sizes to show in report by default.',
+    type: 'string',
+    default: 'parsed'
+  }, {
+    name: 'bundleAnalyzerConfig.server',
+    link: 'README.md#configuration',
+    description: 'Server-side config object.',
+    type: 'object',
+    default: '{}'
+  }, {
+    name: 'bundleAnalyzerConfig.openAnalyzer',
+    link: 'README.md#configuration',
+    description: 'Automatically open report in default browser.',
+    type: 'boolean',
+    default: true
+  }]
       };
     }
   }
