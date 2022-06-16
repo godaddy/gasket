@@ -23,9 +23,16 @@ module.exports = {
         configurations: [{
           name: 'bundleAnalyzerConfig',
           link: 'README.md#configuration',
-          description: 'The base gasket.config object',
+          description: 'This plugin utilizes [webpack-bundle-analyzer] for tuning for both `browser` and `server` analysis reports',
           type: 'object',
-          default: '{}'
+          default: JSON.stringify({
+            browser: {
+              defaultSizes: 'gzip'
+            },
+            server: {
+              openAnalyzer: false,
+            }
+          })
         }]
       };
     }

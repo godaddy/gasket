@@ -209,13 +209,12 @@ Supporting modules
 
 Available configuration options in the `gasket.config.js`
 
-| Name                   | Description                         | Type   | Default |
-| ---------------------- | ----------------------------------- | ------ | ------- |
-| [bundleAnalyzerConfig] | The base gasket.config object       | object | {}      |
-| [docs][6]              | Docs config object                  | object | {}      |
-| [docs][7]              | Docs config object                  | object | {}      |
-| [docs.outputDir]       | Output directory for generated docs | string | .docs   |
-| [docs.outputDir][8]    | Output directory for generated docs | string | .docs   |
+| Name                   | Description                                                                                                | Type   | Default                                                                                              |
+| ---------------------- | ---------------------------------------------------------------------------------------------------------- | ------ | ---------------------------------------------------------------------------------------------------- |
+| [bundleAnalyzerConfig] | This plugin utilizes [webpack-bundle-analyzer] for tuning for both `browser` and `server` analysis reports | object | {"browser":{"defaultSizes":"gzip"},"server":{"openAnalyzer":false}}                                  |
+| [docs][6]              | Docs config object                                                                                         | object | {}                                                                                                   |
+| [docs.outputDir]       | Output directory for generated docs                                                                        | string | .docs                                                                                                |
+| [docusaurus]           | Docusaurus config file.                                                                                    | object | {"docusaurus":{"rootDir":"my-site-documents","docsDir":"markdown","port":8000,"host":"custom-host"}} |
 
 <!-- LINKS -->
 
@@ -340,10 +339,9 @@ Available configuration options in the `gasket.config.js`
 [@gasket/utils]:/packages/gasket-utils/README.md
 [create-gasket-app]:/packages/create-gasket-app/README.md
 [bundleAnalyzerConfig]:/packages/gasket-plugin-analyze/README.md#configuration
-[6]:/packages/gasket-cli/README.md#configuration
-[7]:/packages/gasket-plugin-docs/README.md#configuration
-[docs.outputDir]:/packages/gasket-cli/README.md#configuration
-[8]:/packages/gasket-plugin-docs/README.md#configuration
+[6]:/packages/gasket-plugin-docs/README.md#configuration
+[docs.outputDir]:/packages/gasket-plugin-docs/README.md#configuration
+[docusaurus]:/packages/gasket-plugin-docusaurus/README.md#configuration
 <!-- END GENERATED -->
 
 ## License
