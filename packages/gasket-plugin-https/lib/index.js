@@ -184,12 +184,12 @@ module.exports = {
           default: JSON.stringify({
             http: 80,
             http2: {
-            port: 443,
-            root: '/path/to/ssl/files',
-            key: 'your-key.pem',
-            cert: 'your-cert.pem',
-            ca: 'your-ca.pem', // Can be an Array of CAs,
-            allowHTTP1: true
+             port: 443,
+             root: '/path/to/ssl/files',
+             key: 'your-key.pem',
+             cert: 'your-cert.pem',
+             ca: 'your-ca.pem', // Can be an Array of CAs,
+             allowHTTP1: true
             }
           })
         }]
