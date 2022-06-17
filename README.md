@@ -233,6 +233,9 @@ Available configuration options in the `gasket.config.js`
 | [https]                                     | Setup the https options                                                                                    | object  | {"http":80,"https":{"port":443,"root":"/path/to/ssl/files","key":"your-key.pem","cert":"your-cert.pem","ca":"your-ca.pem"},"terminus":{"healthcheck":["/healthcheck","/healthcheck.html"]}} |
 | [log]                                       | Setup and customize log logger                                                                             | object  | {}                                                                                                                                                                                          |
 | [log.prefix]                                | Used to set the prefix in the winston format.                                                              | string  | parsed                                                                                                                                                                                      |
+| [morgan]                                    | Morgan plugin configuration file.                                                                          | object  | {}                                                                                                                                                                                          |
+| [morgan.format]                             | Log format to print.                                                                                       | string  | parsed                                                                                                                                                                                      |
+| [morgan.options]                            | Morgan options.                                                                                            | object  | {}                                                                                                                                                                                          |
 | [winston]                                   | Setup and customize winston logger.                                                                        | object  | {}                                                                                                                                                                                          |
 | [winston.level]                             | Type or level of logger.                                                                                   | string  | parsed                                                                                                                                                                                      |
 
@@ -380,6 +383,9 @@ Available configuration options in the `gasket.config.js`
 [https]:/packages/gasket-plugin-https/README.md#configuration
 [log]:/packages/gasket-plugin-log/README.md#configuration
 [log.prefix]:/packages/gasket-plugin-log/README.md#configuration
+[morgan]:/packages/gasket-plugin-morgan/README.md#configuration
+[morgan.format]:/packages/gasket-plugin-morgan/README.md#configuration
+[morgan.options]:/packages/gasket-plugin-morgan/README.md#configuration
 [winston]:/packages/gasket-plugin-log/README.md#configuration
 [winston.level]:/packages/gasket-plugin-log/README.md#configuration
 <!-- END GENERATED -->

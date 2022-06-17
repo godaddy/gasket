@@ -19,6 +19,30 @@ module.exports = {
 
         return [morganMiddleware];
       }
+    },
+    metadata(gasket, meta) {
+      return {
+        ...meta,
+        configurations: [{
+          name: 'morgan',
+          link: 'README.md#configuration',
+          description: 'Morgan plugin configuration file.',
+          type: 'object',
+          default: '{}'
+        }, {
+          name: 'morgan.format',
+          link: 'README.md#configuration',
+          description: 'Log format to print.',
+          type: 'string',
+          default: 'parsed'
+        }, {
+          name: 'morgan.options',
+          link: 'README.md#configuration',
+          description: 'Morgan options.',
+          type: 'object',
+          default: '{}'
+        }]
+      };
     }
   }
 };
