@@ -21,7 +21,8 @@ describe('@gasket/plugin-morgan', () => {
 
   it('has expected hooks', () => {
     const expected = [
-      'middleware'
+      'middleware',
+      'metadata'
     ];
 
     assume(Plugin).to.have.property('hooks');
