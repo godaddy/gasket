@@ -147,12 +147,7 @@ module.exports = {
           link: 'README.md#configuration',
           description: 'Express plugin configuration file.',
           type: 'object',
-          default: JSON.stringify({
-            express: {
-              compression: false,
-              excludedRoutesRegex: /^(?!\/_next\/)/
-            }
-          })
+          default: '{}'
         }, {
           name: 'express.compression',
           link: 'README.md#configuration',

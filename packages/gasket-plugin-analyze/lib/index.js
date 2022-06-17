@@ -45,7 +45,7 @@ module.exports = {
           type: 'object',
           default: '{}'
         }, {
-          name: 'bundleAnalyzerConfig.openAnalyzer',
+          name: 'bundleAnalyzerConfig.server.openAnalyzer',
           link: 'README.md#configuration',
           description: 'Automatically open report in default browser.',
           type: 'boolean',

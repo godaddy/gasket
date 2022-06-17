@@ -158,40 +158,50 @@ module.exports = {
           after: 'terminus'
         }],
         configurations: [{
-          name: 'https',
+          name: 'http',
           link: 'README.md#configuration',
-          description: 'Setup the https options',
-          type: 'object',
-          default: JSON.stringify({
-            http: 80,
-            https: {
-              port: 443,
-              root: '/path/to/ssl/files',
-              key: 'your-key.pem',
-              cert: 'your-cert.pem',
-              ca: 'your-ca.pem' // Can be an Array of CAs
-            },
-            terminus: {
-              healthcheck: ['/healthcheck', '/healthcheck.html']
-            }
-          })
-        },
-        {
-          name: 'HTTP/2',
-          link: 'README.md#HTTP/2',
-          description: 'Setup the `HTTP/2` options',
-          type: 'object',
-          default: JSON.stringify({
-            http: 80,
-            http2: {
-             port: 443,
-             root: '/path/to/ssl/files',
-             key: 'your-key.pem',
-             cert: 'your-cert.pem',
-             ca: 'your-ca.pem', // Can be an Array of CAs,
-             allowHTTP1: true
-            }
-          })
+          description: 'HTTP port',
+          type: 'number'
+        }, {
+          name: 'https/http2',
+          link: 'README.md#configuration',
+          description: 'Configure HTTPS or HTTP/2 or both',
+          type: 'object'
+        }, {
+          name: 'https/http2.port',
+          link: 'README.md#configuration',
+          description: 'HTTPS/HTTP/2 port',
+          type: 'number'
+        }, {
+          name: 'https/http2.root',
+          link: 'README.md#configuration',
+          description: 'Root path to files',
+          type: 'string'
+        }, {
+          name: 'https/http2.key',
+          link: 'README.md#configuration',
+          description: 'HTTPS/HTTP/2 key',
+          type: 'string'
+        }, {
+          name: 'https/http2.cert',
+          link: 'README.md#configuration',
+          description: 'HTTPS/HTTP/2 certificate',
+          type: 'string'
+        }, {
+          name: 'https/http2.ca',
+          link: 'README.md#configuration',
+          description: 'HTTPS/HTTP/2 ca(s)',
+          type: 'string/array'
+        }, {
+          name: 'terminus',
+          link: 'README.md#configuration',
+          description: 'Terminus config object',
+          type: 'object'
+        }, {
+          name: 'terminus.healthcheck',
+          link: 'README.md#configuration',
+          description: 'Terminus healthcheck array',
+          type: 'array'
         }]
       };
     }

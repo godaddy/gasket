@@ -34,13 +34,12 @@ module.exports = {
           link: 'README.md#configuration',
           description: 'Log format to print.',
           type: 'string',
-          default: 'parsed'
+          default: 'tiny'
         }, {
           name: 'morgan.options',
           link: 'README.md#configuration',
           description: 'Morgan options.',
-          type: 'object',
-          default: '{}'
+          type: 'object'
         }]
       };
     }

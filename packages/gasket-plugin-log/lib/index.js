@@ -67,8 +67,7 @@ module.exports = {
           name: 'log.prefix',
           link: 'README.md#configuration',
           description: 'Used to set the prefix in the winston format.',
-          type: 'string',
-          default: 'parsed'
+          type: 'string'
         }, {
           name: 'winston',
           link: 'README.md#configuration',
@@ -80,7 +79,6 @@ module.exports = {
           link: 'README.md#configuration',
           description: 'Type or level of logger.',
           type: 'string',
-          default: 'parsed'
         }]
       };
     }
