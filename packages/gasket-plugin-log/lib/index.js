@@ -78,7 +78,7 @@ module.exports = {
           name: 'winston.level',
           link: 'README.md#configuration',
           description: 'Type or level of logger.',
-          type: 'string',
+          type: 'string'
         }]
       };
     }
