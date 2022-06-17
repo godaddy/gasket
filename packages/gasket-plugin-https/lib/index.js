@@ -156,6 +156,42 @@ module.exports = {
           link: 'README.md#servers',
           parent: 'start',
           after: 'terminus'
+        }],
+        configurations: [{
+          name: 'https',
+          link: 'README.md#configuration',
+          description: 'Setup the https options',
+          type: 'object',
+          default: JSON.stringify({
+            http: 80,
+            https: {
+              port: 443,
+              root: '/path/to/ssl/files',
+              key: 'your-key.pem',
+              cert: 'your-cert.pem',
+              ca: 'your-ca.pem' // Can be an Array of CAs
+            },
+            terminus: {
+              healthcheck: ['/healthcheck', '/healthcheck.html']
+            }
+          })
+        },
+        {
+          name: 'HTTP/2',
+          link: 'README.md#HTTP/2',
+          description: 'Setup the `HTTP/2` options',
+          type: 'object',
+          default: JSON.stringify({
+            http: 80,
+            http2: {
+            port: 443,
+            root: '/path/to/ssl/files',
+            key: 'your-key.pem',
+            cert: 'your-cert.pem',
+            ca: 'your-ca.pem', // Can be an Array of CAs,
+            allowHTTP1: true
+            }
+          })
         }]
       };
     }

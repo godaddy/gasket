@@ -56,6 +56,31 @@ module.exports = {
           description: 'Setup Winston log transports',
           link: 'README.md#logTransports',
           parent: 'init'
+        }],
+        configurations: [{
+          name: 'log',
+          link: 'README.md#configuration',
+          description: 'Setup and customize log logger',
+          type: 'object',
+          default: '{}'
+        }, {
+          name: 'log.prefix',
+          link: 'README.md#configuration',
+          description: 'Used to set the prefix in the winston format.',
+          type: 'string',
+          default: 'parsed'
+        }, {
+          name: 'winston',
+          link: 'README.md#configuration',
+          description: 'Setup and customize winston logger.',
+          type: 'object',
+          default: '{}'
+        }, {
+          name: 'winston.level',
+          link: 'README.md#configuration',
+          description: 'Type or level of logger.',
+          type: 'string',
+          default: 'parsed'
         }]
       };
     }

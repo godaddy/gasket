@@ -106,6 +106,25 @@ module.exports = {
           link: 'README.md#errorMiddleware',
           parent: 'createServers',
           after: 'express'
+        }],
+        configurations: [{
+          name: 'fastify',
+          link: 'README.md#configuration',
+          description: 'Regex of the routes to exclude.',
+          type: 'object',
+          default: '{}'
+        }, {
+          name: 'fastify.compression',
+          link: 'README.md#configuration',
+          description: 'Automatic compression.',
+          type: 'boolean',
+          default: true
+        }, {
+          name: 'fastify.excludedRoutesRegex',
+          link: 'README.md#configuration',
+          description: 'Regex of the routes to exclude.',
+          type: 'string',
+          default: ''
         }]
       };
     }

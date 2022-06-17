@@ -209,12 +209,32 @@ Supporting modules
 
 Available configuration options in the `gasket.config.js`
 
-| Name                   | Description                                                                                                | Type   | Default                                                                                              |
-| ---------------------- | ---------------------------------------------------------------------------------------------------------- | ------ | ---------------------------------------------------------------------------------------------------- |
-| [bundleAnalyzerConfig] | This plugin utilizes [webpack-bundle-analyzer] for tuning for both `browser` and `server` analysis reports | object | {"browser":{"defaultSizes":"gzip"},"server":{"openAnalyzer":false}}                                  |
-| [docs][6]              | Docs config object                                                                                         | object | {}                                                                                                   |
-| [docs.outputDir]       | Output directory for generated docs                                                                        | string | .docs                                                                                                |
-| [docusaurus]           | Docusaurus config file.                                                                                    | object | {"docusaurus":{"rootDir":"my-site-documents","docsDir":"markdown","port":8000,"host":"custom-host"}} |
+| Name                                        | Description                                                                                                | Type    | Default                                                                                                                                                                                     |
+| ------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [HTTP/2]                                    | Setup the `HTTP/2` options                                                                                 | object  | {"http":80,"http2":{"port":443,"root":"/path/to/ssl/files","key":"your-key.pem","cert":"your-cert.pem","ca":"your-ca.pem","allowHTTP1":true}}                                               |
+| [bundleAnalyzerConfig]                      | This plugin utilizes [webpack-bundle-analyzer] for tuning for both `browser` and `server` analysis reports | object  | {}                                                                                                                                                                                          |
+| [bundleAnalyzerConfig.browser]              | Browser/client-side config object.                                                                         | object  | {}                                                                                                                                                                                          |
+| [bundleAnalyzerConfig.browser.defaultSizes] | Module sizes to show in report by default.                                                                 | string  | parsed                                                                                                                                                                                      |
+| [bundleAnalyzerConfig.openAnalyzer]         | Automatically open report in default browser.                                                              | boolean | true                                                                                                                                                                                        |
+| [bundleAnalyzerConfig.server]               | Server-side config object.                                                                                 | object  | {}                                                                                                                                                                                          |
+| [docs][6]                                   | Docs config object                                                                                         | object  | {}                                                                                                                                                                                          |
+| [docs.outputDir]                            | Output directory for generated docs                                                                        | string  | .docs                                                                                                                                                                                       |
+| [docusaurus]                                | Docusaurus config file.                                                                                    | object  | {}                                                                                                                                                                                          |
+| [docusaurus.docsDir]                        | Sub-directory for the generated markdown from the docs plugin.                                             | string  | docs                                                                                                                                                                                        |
+| [docusaurus.host]                           | Hostname to serve the docs from.                                                                           | string  | localhost                                                                                                                                                                                   |
+| [docusaurus.port]                           | Sub-directory for the generated markdown from the docs plugin.                                             | number  | 3000                                                                                                                                                                                        |
+| [docusaurus.rootDir]                        | Root Docusaurus directory.                                                                                 | string  | .docs                                                                                                                                                                                       |
+| [express][7]                                | Express plugin configuration file.                                                                         | object  | {"express":{"compression":false,"excludedRoutesRegex":{}}}                                                                                                                                  |
+| [express.compression]                       | Automatic compression.                                                                                     | boolean | true                                                                                                                                                                                        |
+| [express.excludedRoutesRegex]               | Regex of the routes to exclude.                                                                            | string  |                                                                                                                                                                                             |
+| [fastify][8]                                | Regex of the routes to exclude.                                                                            | object  | {}                                                                                                                                                                                          |
+| [fastify.compression]                       | Automatic compression.                                                                                     | boolean | true                                                                                                                                                                                        |
+| [fastify.excludedRoutesRegex]               | Regex of the routes to exclude.                                                                            | string  |                                                                                                                                                                                             |
+| [https]                                     | Setup the https options                                                                                    | object  | {"http":80,"https":{"port":443,"root":"/path/to/ssl/files","key":"your-key.pem","cert":"your-cert.pem","ca":"your-ca.pem"},"terminus":{"healthcheck":["/healthcheck","/healthcheck.html"]}} |
+| [log]                                       | Setup and customize log logger                                                                             | object  | {}                                                                                                                                                                                          |
+| [log.prefix]                                | Used to set the prefix in the winston format.                                                              | string  | parsed                                                                                                                                                                                      |
+| [winston]                                   | Setup and customize winston logger.                                                                        | object  | {}                                                                                                                                                                                          |
+| [winston.level]                             | Type or level of logger.                                                                                   | string  | parsed                                                                                                                                                                                      |
 
 <!-- LINKS -->
 
@@ -338,10 +358,30 @@ Available configuration options in the `gasket.config.js`
 [@gasket/typescript-tests]:/packages/gasket-typescript-tests/README.md
 [@gasket/utils]:/packages/gasket-utils/README.md
 [create-gasket-app]:/packages/create-gasket-app/README.md
+[HTTP/2]:/packages/gasket-plugin-https/README.md#HTTP/2
 [bundleAnalyzerConfig]:/packages/gasket-plugin-analyze/README.md#configuration
+[bundleAnalyzerConfig.browser]:/packages/gasket-plugin-analyze/README.md#configuration
+[bundleAnalyzerConfig.browser.defaultSizes]:/packages/gasket-plugin-analyze/README.md#configuration
+[bundleAnalyzerConfig.openAnalyzer]:/packages/gasket-plugin-analyze/README.md#configuration
+[bundleAnalyzerConfig.server]:/packages/gasket-plugin-analyze/README.md#configuration
 [6]:/packages/gasket-plugin-docs/README.md#configuration
 [docs.outputDir]:/packages/gasket-plugin-docs/README.md#configuration
 [docusaurus]:/packages/gasket-plugin-docusaurus/README.md#configuration
+[docusaurus.docsDir]:/packages/gasket-plugin-docusaurus/README.md#configuration
+[docusaurus.host]:/packages/gasket-plugin-docusaurus/README.md#configuration
+[docusaurus.port]:/packages/gasket-plugin-docusaurus/README.md#configuration
+[docusaurus.rootDir]:/packages/gasket-plugin-docusaurus/README.md#configuration
+[7]:/packages/gasket-plugin-express/README.md#configuration
+[express.compression]:/packages/gasket-plugin-express/README.md#configuration
+[express.excludedRoutesRegex]:/packages/gasket-plugin-express/README.md#configuration
+[8]:/packages/gasket-plugin-fastify/README.md#configuration
+[fastify.compression]:/packages/gasket-plugin-fastify/README.md#configuration
+[fastify.excludedRoutesRegex]:/packages/gasket-plugin-fastify/README.md#configuration
+[https]:/packages/gasket-plugin-https/README.md#configuration
+[log]:/packages/gasket-plugin-log/README.md#configuration
+[log.prefix]:/packages/gasket-plugin-log/README.md#configuration
+[winston]:/packages/gasket-plugin-log/README.md#configuration
+[winston.level]:/packages/gasket-plugin-log/README.md#configuration
 <!-- END GENERATED -->
 
 ## License
