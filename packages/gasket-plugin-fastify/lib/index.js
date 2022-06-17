@@ -110,7 +110,7 @@ module.exports = {
         configurations: [{
           name: 'fastify',
           link: 'README.md#configuration',
-          description: 'Regex of the routes to exclude.',
+          description: 'Fastify configuration object.',
           type: 'object',
           default: '{}'
         }, {
@@ -123,8 +123,7 @@ module.exports = {
           name: 'fastify.excludedRoutesRegex',
           link: 'README.md#configuration',
           description: 'Regex of the routes to exclude.',
-          type: 'string',
-          default: ''
+          type: 'RegExp'
         }]
       };
     }

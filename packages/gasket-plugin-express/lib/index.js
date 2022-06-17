@@ -157,9 +157,7 @@ module.exports = {
         }, {
           name: 'express.excludedRoutesRegex',
           link: 'README.md#configuration',
-          description: 'Regex of the routes to exclude.',
-          type: 'string',
-          default: ''
+          type: 'RegExp'
         }]
       };
     }
