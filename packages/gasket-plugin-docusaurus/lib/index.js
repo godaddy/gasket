@@ -15,7 +15,6 @@ module.exports = {
           description: 'Docusaurus config file.',
           type: 'object',
           default: '{}'
-          })
         }]
       };
     }

@@ -209,12 +209,25 @@ Supporting modules
 
 Available configuration options in the `gasket.config.js`
 
-| Name                   | Description                                                                                                | Type   | Default                                                                                              |
-| ---------------------- | ---------------------------------------------------------------------------------------------------------- | ------ | ---------------------------------------------------------------------------------------------------- |
-| [bundleAnalyzerConfig] | This plugin utilizes [webpack-bundle-analyzer] for tuning for both `browser` and `server` analysis reports | object | {"browser":{"defaultSizes":"gzip"},"server":{"openAnalyzer":false}}                                  |
-| [docs][6]              | Docs config object                                                                                         | object | {}                                                                                                   |
-| [docs.outputDir]       | Output directory for generated docs                                                                        | string | .docs                                                                                                |
-| [docusaurus]           | Docusaurus config file.                                                                                    | object | {"docusaurus":{"rootDir":"my-site-documents","docsDir":"markdown","port":8000,"host":"custom-host"}} |
+| Name                                        | Description                                                                                                | Type         | Default |
+| ------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | ------------ | ------- |
+| [bundleAnalyzerConfig]                      | This plugin utilizes [webpack-bundle-analyzer] for tuning for both `browser` and `server` analysis reports | object       | {}      |
+| [bundleAnalyzerConfig.browser]              | Browser/client-side config object.                                                                         | object       | {}      |
+| [bundleAnalyzerConfig.browser.defaultSizes] | Module sizes to show in report by default.                                                                 | string       | parsed  |
+| [bundleAnalyzerConfig.server]               | Server-side config object.                                                                                 | object       | {}      |
+| [bundleAnalyzerConfig.server.openAnalyzer]  | Automatically open report in default browser.                                                              | boolean      | true    |
+| [docs][6]                                   | Docs config object                                                                                         | object       | {}      |
+| [docs.outputDir]                            | Output directory for generated docs                                                                        | string       | .docs   |
+| [docusaurus]                                | Docusaurus config file.                                                                                    | object       | {}      |
+| [http]                                      | HTTP port                                                                                                  | number       |         |
+| [https]                                     | HTTPS config object                                                                                        | object       |         |
+| [https.ca]                                  | HTTPS ca(s)                                                                                                | string/array |         |
+| [https.cert]                                | HTTPS certificate                                                                                          | string       |         |
+| [https.key]                                 | HTTPS key                                                                                                  | string       |         |
+| [https.port]                                | HTTPS port                                                                                                 | number       |         |
+| [https.root]                                | Root path to files                                                                                         | string       |         |
+| [terminus][7]                               | Terminus config object                                                                                     | object       |         |
+| [terminus.healthcheck]                      | Terminus healthcheck array                                                                                 | array        |         |
 
 <!-- LINKS -->
 
@@ -339,9 +352,22 @@ Available configuration options in the `gasket.config.js`
 [@gasket/utils]:/packages/gasket-utils/README.md
 [create-gasket-app]:/packages/create-gasket-app/README.md
 [bundleAnalyzerConfig]:/packages/gasket-plugin-analyze/README.md#configuration
+[bundleAnalyzerConfig.browser]:/packages/gasket-plugin-analyze/README.md#configuration
+[bundleAnalyzerConfig.browser.defaultSizes]:/packages/gasket-plugin-analyze/README.md#configuration
+[bundleAnalyzerConfig.server]:/packages/gasket-plugin-analyze/README.md#configuration
+[bundleAnalyzerConfig.server.openAnalyzer]:/packages/gasket-plugin-analyze/README.md#configuration
 [6]:/packages/gasket-plugin-docs/README.md#configuration
 [docs.outputDir]:/packages/gasket-plugin-docs/README.md#configuration
 [docusaurus]:/packages/gasket-plugin-docusaurus/README.md#configuration
+[http]:/packages/gasket-plugin-https/README.md#configuration
+[https]:/packages/gasket-plugin-https/README.md#configuration
+[https.ca]:/packages/gasket-plugin-https/README.md#configuration
+[https.cert]:/packages/gasket-plugin-https/README.md#configuration
+[https.key]:/packages/gasket-plugin-https/README.md#configuration
+[https.port]:/packages/gasket-plugin-https/README.md#configuration
+[https.root]:/packages/gasket-plugin-https/README.md#configuration
+[7]:/packages/gasket-plugin-https/README.md#configuration
+[terminus.healthcheck]:/packages/gasket-plugin-https/README.md#configuration
 <!-- END GENERATED -->
 
 ## License

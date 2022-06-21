@@ -156,6 +156,52 @@ module.exports = {
           link: 'README.md#servers',
           parent: 'start',
           after: 'terminus'
+        }],
+        configurations: [{
+          name: 'http',
+          link: 'README.md#configuration',
+          description: 'HTTP port',
+          type: 'number'
+        }, {
+          name: 'https/http2',
+          link: 'README.md#configuration',
+          description: 'Configure HTTPS or HTTP/2 or both',
+          type: 'object'
+        }, {
+          name: 'https/http2.port',
+          link: 'README.md#configuration',
+          description: 'HTTPS/HTTP/2 port',
+          type: 'number'
+        }, {
+          name: 'https/http2.root',
+          link: 'README.md#configuration',
+          description: 'Root path to files',
+          type: 'string'
+        }, {
+          name: 'https/http2.key',
+          link: 'README.md#configuration',
+          description: 'HTTPS/HTTP/2 key',
+          type: 'string'
+        }, {
+          name: 'https/http2.cert',
+          link: 'README.md#configuration',
+          description: 'HTTPS/HTTP/2 certificate',
+          type: 'string'
+        }, {
+          name: 'https/http2.ca',
+          link: 'README.md#configuration',
+          description: 'HTTPS/HTTP/2 ca(s)',
+          type: 'string/array'
+        }, {
+          name: 'terminus',
+          link: 'README.md#configuration',
+          description: 'Terminus config object',
+          type: 'object'
+        }, {
+          name: 'terminus.healthcheck',
+          link: 'README.md#configuration',
+          description: 'Terminus healthcheck array',
+          type: 'array'
         }]
       };
     }
