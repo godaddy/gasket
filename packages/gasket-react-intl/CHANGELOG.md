@@ -1,5 +1,9 @@
 # `@gasket/react-intl`
 
+### 6.26.0
+
+- Update LocaleRequired to accept children and return valid ReactElement ([#380])
+
 ### 6.20.4
 
 - Fix types path ([#358])
@@ -136,3 +140,4 @@
 [#263]: https://github.com/godaddy/gasket/pull/263
 [#278]: https://github.com/godaddy/gasket/pull/278
 [#358]: https://github.com/godaddy/gasket/pull/358
+[#380]: https://github.com/godaddy/gasket/pull/380
