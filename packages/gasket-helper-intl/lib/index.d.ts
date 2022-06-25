@@ -53,9 +53,9 @@ export interface LocalesState {
  * Enum for local status values
  */
 export enum LocaleStatus {
-    LOADING = 'LOADING',
-    LOADED = 'LOADED',
-    ERROR = 'ERROR'
+    LOADING = 'loading',
+    LOADED = 'loaded',
+    ERROR = 'error'
 }
 
 /**
