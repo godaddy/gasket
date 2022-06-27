@@ -1,5 +1,5 @@
 import type { LoggerOptions } from 'winston'
-import type Transport from 'winston-transport';
+import type * as Transport from 'winston-transport';
 import type { MaybeAsync, MaybeMultiple } from '@gasket/engine';
 import type Log from '@gasket/log';
 
@@ -17,6 +17,6 @@ declare module '@gasket/engine' {
   }
 
   export interface Gasket {
-    logger: Log
+    logger?: Log
   }
 }
