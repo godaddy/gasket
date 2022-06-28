@@ -17,6 +17,6 @@ declare module '@gasket/engine' {
   }
 
   export interface Gasket {
-    logger?: Log
+    logger: Log
   }
 }
