@@ -1,5 +1,7 @@
 # `@gasket/plugin-docs-graph`
 
+- Fix syntax error with the deprecation note in the lifecycle diagram
+
 ### 6.24.2
 
 - Support showing deprecation for lifecycles ([#376])
