@@ -24,6 +24,7 @@ describe('Plugin', function () {
       'configure',
       'create',
       'express',
+      'fastify',
       'build',
       'workbox',
       'metadata'
@@ -152,7 +153,7 @@ describe('express hook', () => {
     const fn = expressApp.use.getCall(0).args[0];
 
     const mockReq = { headers: {} };
-    const mockRes = { locals: { gasketData: { } } };
+    const mockRes = { locals: { gasketData: {} } };
     const mockNext = stub();
     fn(mockReq, mockRes, mockNext);
     assume(mockReq.headers).not.has.property('cookie');
@@ -162,7 +163,10 @@ describe('express hook', () => {
     const gasket = mockGasketApi();
     await hook(gasket, expressApp, false);
 
-    assume(gasket.exec).has.been.calledWith('nextExpress', { next: nextHandler, express: expressApp });
+    assume(gasket.exec).has.been.calledWith('nextExpress', {
+      next: nextHandler,
+      express: expressApp
+    });
   });
 
   it('does not derive a webpack config if not running a dev server', async () => {
@@ -179,7 +183,6 @@ describe('create hook', () => {
   const root = path.join(__dirname, '..', 'lib');
 
   beforeEach(() => {
-
     mockContext = {
       pkg: {
         add: spy(),
@@ -193,12 +196,8 @@ describe('create hook', () => {
   });
 
   it('has expected timings', async function () {
-    assume(plugin.hooks.create.timing.before).eqls([
-      '@gasket/plugin-intl'
-    ]);
-    assume(plugin.hooks.create.timing.after).eqls([
-      '@gasket/plugin-redux'
-    ]);
+    assume(plugin.hooks.create.timing.before).eqls(['@gasket/plugin-intl']);
+    assume(plugin.hooks.create.timing.after).eqls(['@gasket/plugin-redux']);
   });
 
   it('adds the appropriate globs', async function () {
@@ -245,7 +244,9 @@ describe('create hook', () => {
   });
 
   it('adds the appropriate globs for redux', async function () {
-    mockContext.pkg.has = stub().callsFake((o, f) => o === 'dependencies' && f === '@gasket/redux');
+    mockContext.pkg.has = stub().callsFake(
+      (o, f) => o === 'dependencies' && f === '@gasket/redux'
+    );
     await plugin.hooks.create.handler({}, mockContext);
 
     assume(mockContext.files.add).calledWith(
@@ -255,7 +256,9 @@ describe('create hook', () => {
   });
 
   it('adds appropriate dependencies for redux', async function () {
-    mockContext.pkg.has = stub().callsFake((o, f) => o === 'dependencies' && f === '@gasket/redux');
+    mockContext.pkg.has = stub().callsFake(
+      (o, f) => o === 'dependencies' && f === '@gasket/redux'
+    );
     await plugin.hooks.create.handler({}, mockContext);
 
     assume(mockContext.pkg.add).calledWith('dependencies', {
@@ -266,7 +269,6 @@ describe('create hook', () => {
 });
 
 describe('build hook', () => {
-
   let createConfigStub, builderStub;
 
   const getMockedBuildHook = (imports = {}) => {
@@ -304,7 +306,6 @@ describe('build hook', () => {
 });
 
 describe('workbox hook', () => {
-
   let gasketAPI, plugin;
 
   beforeEach(() => {
@@ -422,8 +423,8 @@ function mockGasketApi() {
       warning: stub()
     },
     config: {
-      webpack: {},  // user specified webpack config
-      nextConfig: {},      // user specified next.js config
+      webpack: {}, // user specified webpack config
+      nextConfig: {}, // user specified next.js config
       root: '/app/path'
     }
   };

@@ -143,6 +143,10 @@ module.exports = {
         return app;
       }
     },
+    fastify: {
+      timing: {},
+      handler: async function fastify(gasket, fastifyApp) {}
+    },
     build: async function build(gasket) {
       const { command } = gasket;
       // Don't do a build, use dev server for local
