@@ -177,6 +177,106 @@ describe('express hook', () => {
   });
 });
 
+describe('fastify hook', () => {
+  let next, nextHandler, plugin, fastifyApp, hook;
+
+  beforeEach(() => {
+    fastifyApp = {
+      decorate: spy(),
+      register: spy(),
+      all: spy()
+    };
+    nextHandler = {
+      prepare: stub().resolves(),
+      getRequestHandler: stub().resolves({})
+    };
+    next = stub().returns(nextHandler);
+
+    plugin = proxyquire('../lib/', { next });
+    hook = plugin.hooks.fastify.handler;
+  });
+
+  it('timing configured last', async function () {
+    const gasket = mockGasketApi();
+    await hook(gasket, fastifyApp, false);
+
+    assume(plugin.hooks.fastify).property('timing');
+    assume(plugin.hooks.fastify.timing).eqls({ last: true });
+  });
+
+  it('executes the `next` lifecycle', async function () {
+    const gasket = mockGasketApi();
+    await hook(gasket, fastifyApp, false);
+
+    assume(gasket.exec).has.been.calledWith('next', nextHandler);
+  });
+
+  it('attaches middleware to set NEXT_LOCALE cookie', async function () {
+    const gasket = mockGasketApi();
+    await hook(gasket, fastifyApp, false);
+
+    assume(fastifyApp.register).has.been.calledWith(sinon.match.func);
+    const fn = fastifyApp.register.getCall(0).args[0];
+    assume(fn.name).equals('setNextLocale');
+  });
+
+  it('middleware sets NEXT_LOCALE cookie from gasketData', async function () {
+    const gasket = mockGasketApi();
+    await hook(gasket, fastifyApp, false);
+
+    const fn = fastifyApp.register.getCall(0).args[0];
+
+    const mockReq = { headers: {} };
+    const mockRes = { locals: { gasketData: { intl: { locale: 'fr-FR' } } } };
+    const mockNext = stub();
+    fn(mockReq, mockRes, mockNext);
+    assume(mockReq.headers).has.property('cookie', ';NEXT_LOCALE=fr-FR');
+  });
+
+  it('middleware adds NEXT_LOCALE to existing cookie', async function () {
+    const gasket = mockGasketApi();
+    await hook(gasket, fastifyApp, false);
+
+    const fn = fastifyApp.register.getCall(0).args[0];
+
+    const mockReq = { headers: { cookie: 'bogus=data' } };
+    const mockRes = { locals: { gasketData: { intl: { locale: 'fr-FR' } } } };
+    const mockNext = stub();
+    fn(mockReq, mockRes, mockNext);
+    assume(mockReq.headers).has.property('cookie', 'bogus=data;NEXT_LOCALE=fr-FR');
+  });
+
+  it('middleware does not set NEXT_LOCALE cookie if no gasketData', async function () {
+    const gasket = mockGasketApi();
+    await hook(gasket, fastifyApp, false);
+
+    const fn = fastifyApp.register.getCall(0).args[0];
+
+    const mockReq = { headers: {} };
+    const mockRes = { locals: { gasketData: {} } };
+    const mockNext = stub();
+    fn(mockReq, mockRes, mockNext);
+    assume(mockReq.headers).not.has.property('cookie');
+  });
+
+  it('executes the `nextFastify` lifecycle', async function () {
+    const gasket = mockGasketApi();
+    await hook(gasket, fastifyApp, false);
+
+    assume(gasket.exec).has.been.calledWith('nextFastify', {
+      next: nextHandler,
+      fastify: fastifyApp
+    });
+  });
+
+  it('does not derive a webpack config if not running a dev server', async () => {
+    await hook(mockGasketApi(), fastifyApp, false);
+
+    const nextOptions = next.lastCall.args[0];
+    assume(nextOptions.conf).to.not.haveOwnProperty('webpack');
+  });
+});
+
 describe('create hook', () => {
   let mockContext;
   const plugin = require('../lib/');

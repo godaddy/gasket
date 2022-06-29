@@ -144,8 +144,43 @@ module.exports = {
       }
     },
     fastify: {
-      timing: {},
-      handler: async function fastify(gasket, fastifyApp) {}
+      timing: {
+        last: true
+      },
+      handler: async function fastify(gasket, fastifyApp) {
+        const { exec, command } = gasket;
+        const createNextApp = require('next');
+        const devServer = (command.id || command) === 'local';
+
+        const app = createNextApp({
+          dev: devServer,
+          conf: await createConfig(gasket, devServer)
+        });
+
+        await exec('next', app);
+        await app.prepare();
+
+        fastifyApp.decorate(['buildId', app.name].filter(Boolean).join('/'), {
+          getter() {
+            return app.build;
+          }
+        });
+
+        await exec('nextFastify', { next: app, fastify: fastifyApp });
+
+        fastifyApp.register(function setNextLocale(req, res, next) {
+          if (res.locals && res.locals.gasketData && res.locals.gasketData.intl) {
+            const { locale } = res.locals.gasketData.intl;
+            if (locale) {
+              req.headers.cookie = (req.headers.cookie || '') + `;NEXT_LOCALE=${locale}`;
+            }
+          }
+          next();
+        });
+
+        fastifyApp.all('/*', app.getRequestHandler());
+        return app;
+      }
     },
     build: async function build(gasket) {
       const { command } = gasket;
