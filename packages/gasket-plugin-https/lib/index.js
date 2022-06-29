@@ -170,8 +170,8 @@ module.exports = {
         }, {
           name: 'terminus',
           link: 'README.md#configuration',
-          description: 'Terminus config object',
-          type: 'object'
+          description: 'HTTP port or config object',
+          type: 'number | object'
         }, {
           name: 'terminus.healthcheck',
           link: 'README.md#configuration',
