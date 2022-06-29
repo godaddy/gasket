@@ -158,7 +158,7 @@ Available plugins
 | [@gasket/plugin-config]         | 6.26.1  | Supports application-specific (non-Gasket) configuration                   |
 | [@gasket/plugin-cypress]        | 6.24.0  | Integrates Cypress based testing into your Gasket application              |
 | [@gasket/plugin-docs]           | 6.26.1  | Centralize doc files from plugins and modules                              |
-| [@gasket/plugin-docs-graphs]    | 6.24.2  | Generate mermaid graphs of an applications gasket lifecycles               |
+| [@gasket/plugin-docs-graphs]    | 6.26.2  | Generate mermaid graphs of an applications gasket lifecycles               |
 | [@gasket/plugin-docsify]        | 6.26.1  | View collated docs with Docsify                                            |
 | [@gasket/plugin-docusaurus]     | 6.26.1  | Gasket plugin for docusaurus                                               |
 | [@gasket/plugin-elastic-apm]    | 6.26.1  | Adds Elastic APM instrumentation to your application                       |
