@@ -261,6 +261,14 @@ module.exports = {
             link: 'README.md#nextExpress',
             parent: 'express',
             after: 'next'
+          },
+          {
+            name: 'nextFastify',
+            method: 'exec',
+            description: 'Access the prepared next app and fastify instance',
+            link: 'README.md#nextFastify',
+            parent: 'fastify',
+            after: 'next'
           }
         ],
         structures: [
