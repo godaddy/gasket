@@ -143,7 +143,7 @@ Available presets
 
 | Name                    | Version | Description                                |
 | ----------------------- | ------- | ------------------------------------------ |
-| [@gasket/preset-api]    | 6.25.0  | Create Express-based API with Gasket       |
+| [@gasket/preset-api]    | 6.24.3  | Create Express-based API with Gasket       |
 | [@gasket/preset-nextjs] | 6.24.2  | Basic NextJS Framework                     |
 | [@gasket/preset-pwa]    | 6.24.2  | Turn Gasket apps into Progressive Web Apps |
 
@@ -157,11 +157,11 @@ Available plugins
 | [@gasket/plugin-command]        | 6.24.3  | Plugin to enable other plugins to inject new gasket commands               |
 | [@gasket/plugin-config]         | 6.24.2  | Supports application-specific (non-Gasket) configuration                   |
 | [@gasket/plugin-cypress]        | 6.24.0  | Integrates Cypress based testing into your Gasket application              |
-| [@gasket/plugin-docs]           | 6.25.0  | Centralize doc files from plugins and modules                              |
+| [@gasket/plugin-docs]           | 6.24.3  | Centralize doc files from plugins and modules                              |
 | [@gasket/plugin-docs-graphs]    | 6.24.2  | Generate mermaid graphs of an applications gasket lifecycles               |
 | [@gasket/plugin-docsify]        | 6.24.2  | View collated docs with Docsify                                            |
 | [@gasket/plugin-docusaurus]     | 6.24.2  | Gasket plugin for docusaurus                                               |
-| [@gasket/plugin-elastic-apm]    | 6.25.0  | Adds Elastic APM instrumentation to your application                       |
+| [@gasket/plugin-elastic-apm]    | 6.24.2  | Adds Elastic APM instrumentation to your application                       |
 | [@gasket/plugin-express]        | 6.24.2  | Adds express support to your application                                   |
 | [@gasket/plugin-fastify]        | 6.24.2  | Adds fastify support to your application                                   |
 | [@gasket/plugin-git]            | 6.24.2  | Adds git support to your application                                       |
@@ -201,7 +201,7 @@ Supporting modules
 | [@gasket/react-intl]       | 6.24.2  | React component library to enable localization for gasket apps.                      |
 | [@gasket/redux]            | 6.24.0  | Gasket Redux Configuration                                                           |
 | [@gasket/resolve]          | 6.24.0  | Essential module resolution & configuration management for gasket plugins & presets. |
-| [@gasket/typescript-tests] | 6.25.0  | Not a published package; hosts unit tests to verify TypeScript support               |
+| [@gasket/typescript-tests] | 6.24.3  | Not a published package; hosts unit tests to verify TypeScript support               |
 | [@gasket/utils]            | 6.24.2  | Reusable utilities for Gasket internals                                              |
 | [create-gasket-app]        | 6.24.3  | starter pack for creating a gasket app                                               |
 
@@ -209,32 +209,10 @@ Supporting modules
 
 Available configuration options in the `gasket.config.js`
 
-| Name                          | Description                                                                                                | Type     | Default   |
-| ----------------------------- | ---------------------------------------------------------------------------------------------------------- | -------- | --------- |
-| [bundleAnalyzerConfig]        | This plugin utilizes [webpack-bundle-analyzer] for tuning for both `browser` and `server` analysis reports | object   | {}        |
-| [docs][6]                     | Docs config object                                                                                         | object   | {}        |
-| [docs.outputDir]              | Output directory for generated docs                                                                        | string   | .docs     |
-| [docusaurus]                  | Docusaurus plugin config.                                                                                  | object   | {}        |
-| [docusaurus.docsDir]          | Sub-directory for the generated markdown from the docs plugin.                                             | string   | docs      |
-| [docusaurus.host]             | Hostname to serve the docs from.                                                                           | string   | localhost |
-| [docusaurus.port]             | Port number to serve.                                                                                      | number   | 3000      |
-| [docusaurus.rootDir]          | Root Docusaurus directory.                                                                                 | string   | .docs     |
-| [express][7]                  | Express plugin configuration.                                                                              | object   | {}        |
-| [express.compression]         | Automatic compression.                                                                                     | boolean  | true      |
-| [express.excludedRoutesRegex] | Regex of the routes to exclude.                                                                            |          |           |
-| [fastify][8]                  | Fastify configuration object.                                                                              | object   | {}        |
-| [fastify.compression]         | Automatic compression.                                                                                     | boolean  | true      |
-| [fastify.excludedRoutesRegex] | Regex of the routes to exclude.                                                                            | RegExp   |           |
-| [http]                        | HTTP port                                                                                                  | number   |           |
-| [https]                       | Configure HTTPS or HTTP/2 or both                                                                          | object   |           |
-| [log]                         | Setup and customize log logger                                                                             | object   | {}        |
-| [log.prefix]                  | Used to set the prefix in the winston format.                                                              | string   |           |
-| [morgan]                      | Morgan plugin configuration.                                                                               | object   | {}        |
-| [morgan.format]               | Log format to print.                                                                                       | string   | tiny      |
-| [morgan.options]              | Morgan options.                                                                                            | object   |           |
-| [terminus][9]                 | Terminus config object                                                                                     | object   |           |
-| [terminus.healthcheck]        | Custom Terminus healthcheck endpoint names                                                                 | string[] |           |
-| [winston]                     | Setup and customize winston logger.                                                                        | object   | {}        |
+| Name             | Description                         | Type   | Default |
+| ---------------- | ----------------------------------- | ------ | ------- |
+| [docs][6]        | Docs config object                  | object | {}      |
+| [docs.outputDir] | Output directory for generated docs | string | .docs   |
 
 <!-- LINKS -->
 
@@ -358,30 +336,8 @@ Available configuration options in the `gasket.config.js`
 [@gasket/typescript-tests]:/packages/gasket-typescript-tests/README.md
 [@gasket/utils]:/packages/gasket-utils/README.md
 [create-gasket-app]:/packages/create-gasket-app/README.md
-[bundleAnalyzerConfig]:/packages/gasket-plugin-analyze/README.md#configuration
 [6]:/packages/gasket-plugin-docs/README.md#configuration
 [docs.outputDir]:/packages/gasket-plugin-docs/README.md#configuration
-[docusaurus]:/packages/gasket-plugin-docusaurus/README.md#configuration
-[docusaurus.docsDir]:/packages/gasket-plugin-docusaurus/README.md#configuration
-[docusaurus.host]:/packages/gasket-plugin-docusaurus/README.md#configuration
-[docusaurus.port]:/packages/gasket-plugin-docusaurus/README.md#configuration
-[docusaurus.rootDir]:/packages/gasket-plugin-docusaurus/README.md#configuration
-[7]:/packages/gasket-plugin-express/README.md#configuration
-[express.compression]:/packages/gasket-plugin-express/README.md#configuration
-[express.excludedRoutesRegex]:/packages/gasket-plugin-express/README.md#configuration
-[8]:/packages/gasket-plugin-fastify/README.md#configuration
-[fastify.compression]:/packages/gasket-plugin-fastify/README.md#configuration
-[fastify.excludedRoutesRegex]:/packages/gasket-plugin-fastify/README.md#configuration
-[http]:/packages/gasket-plugin-https/README.md#configuration
-[https]:/packages/gasket-plugin-https/README.md#configuration
-[log]:/packages/gasket-plugin-log/README.md#configuration
-[log.prefix]:/packages/gasket-plugin-log/README.md#configuration
-[morgan]:/packages/gasket-plugin-morgan/README.md#configuration
-[morgan.format]:/packages/gasket-plugin-morgan/README.md#configuration
-[morgan.options]:/packages/gasket-plugin-morgan/README.md#configuration
-[9]:/packages/gasket-plugin-https/README.md#configuration
-[terminus.healthcheck]:/packages/gasket-plugin-https/README.md#configuration
-[winston]:/packages/gasket-plugin-log/README.md#configuration
 <!-- END GENERATED -->
 
 ## License
