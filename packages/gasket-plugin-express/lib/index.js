@@ -145,7 +145,7 @@ module.exports = {
         configurations: [{
           name: 'express',
           link: 'README.md#configuration',
-          description: 'Express plugin configuration file.',
+          description: 'Express plugin configuration.',
           type: 'object',
           default: '{}'
         }, {
@@ -157,7 +157,7 @@ module.exports = {
         }, {
           name: 'express.excludedRoutesRegex',
           link: 'README.md#configuration',
-          type: 'RegExp'
+          description: 'Regex of the routes to exclude.'
         }]
       };
     }

@@ -26,7 +26,7 @@ module.exports = {
         configurations: [{
           name: 'morgan',
           link: 'README.md#configuration',
-          description: 'Morgan plugin configuration file.',
+          description: 'Morgan plugin configuration.',
           type: 'object',
           default: '{}'
         }, {

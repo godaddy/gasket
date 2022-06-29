@@ -74,11 +74,6 @@ module.exports = {
           description: 'Setup and customize winston logger.',
           type: 'object',
           default: '{}'
-        }, {
-          name: 'winston.level',
-          link: 'README.md#configuration',
-          description: 'Type or level of logger.',
-          type: 'string'
         }]
       };
     }

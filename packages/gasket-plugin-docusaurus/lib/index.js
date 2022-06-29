@@ -12,7 +12,7 @@ module.exports = {
         configurations: [{
           name: 'docusaurus',
           link: 'README.md#configuration',
-          description: 'Docusaurus config file.',
+          description: 'Docusaurus plugin config.',
           type: 'object',
           default: '{}'
         }, {
@@ -30,7 +30,7 @@ module.exports = {
         }, {
           name: 'docusaurus.port',
           link: 'README.md#configuration',
-          description: 'Sub-directory for the generated markdown from the docs plugin.',
+          description: 'Port number to serve.',
           type: 'number',
           default: 3000
         }, {
