@@ -1,6 +1,8 @@
 # `@gasket/cli`
 
-- Support for `GASKET_ENV` with fallback to `NODE_ENV`
+### 6.27.0
+
+- Support for `GASKET_ENV` with fallback to `NODE_ENV` ([#387])
 - expose Gasket settings on process.env
 
 ### 6.24.3
@@ -365,3 +367,4 @@ upon `gasket create`
 [#363]: https://github.com/godaddy/gasket/pull/363
 [#370]: https://github.com/godaddy/gasket/pull/370
 [#371]: https://github.com/godaddy/gasket/pull/371
+[#387]: https://github.com/godaddy/gasket/pull/387
