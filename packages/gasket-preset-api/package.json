@@ -1,6 +1,6 @@
 {
   "name": "@gasket/preset-api",
-  "version": "6.26.1",
+  "version": "6.27.0",
   "description": "Create Express-based API with Gasket",
   "main": "lib",
   "types": "lib/index.d.ts",
@@ -30,6 +30,6 @@
     "@gasket/plugin-swagger": "^6.26.1"
   },
   "devDependencies": {
-    "@gasket/plugin-start": "^6.26.1"
+    "@gasket/plugin-start": "^6.27.0"
   }
 }
