@@ -80,7 +80,7 @@ the appropriate gasket.config file and environment.
 | --- | --- | --- |
 | config | `string` | Fully qualified gasket config to load (default: `'gasket.config'`) |
 | root | `string` | Top-level app directory (default: `process.cwd()`) |
-| env | `string` | Target runtime environment (default: `NODE_ENV` or `'development'`) |
+| env | `string` | Target runtime environment (default: `GASKET_ENV` or `'development'`) |
 
 <!-- LINKS -->
 
