@@ -36,8 +36,9 @@ describe('config utils', () => {
     });
   });
 
-  after(function () {
+  afterEach(function () {
     sinon.restore();
+    delete process.env.NODE_ENV;
   });
 
   describe('getGasketConfig', () => {
@@ -110,12 +111,24 @@ describe('config utils', () => {
       assume(results).equals('local');
     });
 
-    it('returns development when no flag or local command', function () {
+    it('returns NODE_ENV when no flag or local command', function () {
+      process.env.NODE_ENV = 'fake';
+      const results = utils.getEnvironment(flags, commandId, warnStub);
+      assume(results).equals('fake');
+    });
+
+    it('warns for NODE_ENV when no flag or local command', function () {
+      process.env.NODE_ENV = 'fake';
+      utils.getEnvironment(flags, commandId, warnStub);
+      assume(warnStub).calledWith('No env specified, falling back to NODE_ENV: "fake".');
+    });
+
+    it('returns development when no flag, NODE_ENV, or local command', function () {
       const results = utils.getEnvironment(flags, commandId, warnStub);
       assume(results).equals('development');
     });
 
-    it('warns when no flag or local command', function () {
+    it('warns when no flag, NODE_ENV, or local command', function () {
       utils.getEnvironment(flags, commandId, warnStub);
       assume(warnStub).calledWith('No env specified, falling back to "development".');
     });
