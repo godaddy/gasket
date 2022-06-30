@@ -52,7 +52,7 @@ module.exports = function getCommands(gasket, { GasketCommand, flags }) {
   LocalCommand.description = 'Build then start your app in local environment';
   LocalCommand.flags = {
     env: flags.string({
-      env: 'NODE_ENV',
+      env: 'GASKET_ENV',
       description: 'Target runtime environment',
       default: 'local'
     })

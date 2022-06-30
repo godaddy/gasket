@@ -1,5 +1,7 @@
 # `@gasket/plugin-start`
 
+- Support for `GASKET_ENV` with fallback to `NODE_ENV`
+
 ### 6.13.0
 
 - Add `--exit` flag to build command ([#325])
