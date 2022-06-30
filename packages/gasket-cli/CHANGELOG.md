@@ -1,5 +1,8 @@
 # `@gasket/cli`
 
+- Support for `GASKET_ENV` with fallback to `NODE_ENV`
+- expose Gasket settings on process.env
+
 ### 6.24.3
 
 - Support for --require flag to load modules before Gasket initializes ([#370])
