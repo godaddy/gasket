@@ -141,7 +141,24 @@ module.exports = {
             parent: 'createServers',
             after: 'express'
           }
-        ]
+        ],
+        configurations: [{
+          name: 'express',
+          link: 'README.md#configuration',
+          description: 'Express plugin configuration.',
+          type: 'object',
+          default: '{}'
+        }, {
+          name: 'express.compression',
+          link: 'README.md#configuration',
+          description: 'Automatic compression.',
+          type: 'boolean',
+          default: true
+        }, {
+          name: 'express.excludedRoutesRegex',
+          link: 'README.md#configuration',
+          description: 'Regex of the routes to exclude.'
+        }]
       };
     }
   }
