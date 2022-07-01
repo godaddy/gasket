@@ -3,6 +3,7 @@ const url = require('url');
 const { name, devDependencies } = require('../package');
 const { createConfig } = require('./config');
 const { pluginIdentifier } = require('@gasket/resolve');
+const { setupNextApp } = require('./setup-next-app');
 
 const isDefined = (o) => typeof o !== 'undefined';
 
@@ -97,23 +98,7 @@ module.exports = {
         last: true
       },
       handler: async function express(gasket, expressApp) {
-        const { exec, command } = gasket;
-        const createNextApp = require('next');
-        const devServer = (command.id || command) === 'local';
-
-        const app = createNextApp({
-          dev: devServer,
-          conf: await createConfig(gasket, devServer)
-        });
-
-        //
-        // We need to call the `next` lifecycle before we prepare the application
-        // as the prepare step initializes all the routes that a next app can have.
-        // If we wait later, it's possible that our added routes/pages are not
-        // recognized.
-        //
-        await exec('next', app);
-        await app.prepare();
+        const app = await setupNextApp(gasket);
 
         expressApp.set(['buildId', app.name].filter(Boolean).join('/'), app.buildId);
 
@@ -148,17 +133,7 @@ module.exports = {
         last: true
       },
       handler: async function fastify(gasket, fastifyApp) {
-        const { exec, command } = gasket;
-        const createNextApp = require('next');
-        const devServer = (command.id || command) === 'local';
-
-        const app = createNextApp({
-          dev: devServer,
-          conf: await createConfig(gasket, devServer)
-        });
-
-        await exec('next', app);
-        await app.prepare();
+        const app = await setupNextApp(gasket);
 
         fastifyApp.decorate(['buildId', app.name].filter(Boolean).join('/'), {
           getter() {
@@ -179,7 +154,6 @@ module.exports = {
         });
 
         fastifyApp.all('/*', app.getRequestHandler());
-        return app;
       }
     },
     build: async function build(gasket) {
@@ -251,7 +225,7 @@ module.exports = {
             method: 'exec',
             description: 'Update the next app instance before prepare',
             link: 'README.md#next',
-            parent: 'express',
+            parent: 'express', // dynamically set the parent
             after: 'nextConfig'
           },
           {
