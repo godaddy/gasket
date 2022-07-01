@@ -66,16 +66,16 @@ module.exports = {
       return {
         ...meta,
         lifecycles: [{
-            name: 'intlLocale',
-            method: 'execWaterfall',
-            description: 'Set the language for which locale files to load',
-            link: 'README.md#intlLocale',
-            parent: 'middleware'
+          name: 'intlLocale',
+          method: 'execWaterfall',
+          description: 'Set the language for which locale files to load',
+          link: 'README.md#intlLocale',
+          parent: 'middleware'
         }],
         structures: [{
-            name: localesDir + '/',
-            description: 'Locale JSON files with translation strings',
-            link: 'README.md#Options'
+          name: localesDir + '/',
+          description: 'Locale JSON files with translation strings',
+          link: 'README.md#Options'
         }],
         configurations: [{
           name: 'intl',
