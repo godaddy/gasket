@@ -143,15 +143,9 @@ Available presets
 
 | Name                    | Version | Description                                |
 | ----------------------- | ------- | ------------------------------------------ |
-<<<<<<< HEAD
-| [@gasket/preset-api]    | 6.25.0  | Create Express-based API with Gasket       |
-| [@gasket/preset-nextjs] | 6.24.2  | Basic NextJS Framework                     |
-| [@gasket/preset-pwa]    | 6.24.2  | Turn Gasket apps into Progressive Web Apps |
-=======
 | [@gasket/preset-api]    | 6.27.0  | Create Express-based API with Gasket       |
 | [@gasket/preset-nextjs] | 6.27.0  | Basic NextJS Framework                     |
 | [@gasket/preset-pwa]    | 6.26.1  | Turn Gasket apps into Progressive Web Apps |
->>>>>>> fed68008f7cb2c808043f442d61ae77202201bc7
 
 ## Plugins
 
@@ -163,18 +157,6 @@ Available plugins
 | [@gasket/plugin-command]        | 6.27.0  | Plugin to enable other plugins to inject new gasket commands               |
 | [@gasket/plugin-config]         | 6.26.1  | Supports application-specific (non-Gasket) configuration                   |
 | [@gasket/plugin-cypress]        | 6.24.0  | Integrates Cypress based testing into your Gasket application              |
-<<<<<<< HEAD
-| [@gasket/plugin-docs]           | 6.25.0  | Centralize doc files from plugins and modules                              |
-| [@gasket/plugin-docs-graphs]    | 6.24.2  | Generate mermaid graphs of an applications gasket lifecycles               |
-| [@gasket/plugin-docsify]        | 6.24.2  | View collated docs with Docsify                                            |
-| [@gasket/plugin-docusaurus]     | 6.24.2  | Gasket plugin for docusaurus                                               |
-| [@gasket/plugin-elastic-apm]    | 6.25.0  | Adds Elastic APM instrumentation to your application                       |
-| [@gasket/plugin-express]        | 6.24.2  | Adds express support to your application                                   |
-| [@gasket/plugin-fastify]        | 6.24.2  | Adds fastify support to your application                                   |
-| [@gasket/plugin-git]            | 6.24.2  | Adds git support to your application                                       |
-| [@gasket/plugin-https]          | 6.24.2  | Create http/s servers with graceful termination                            |
-| [@gasket/plugin-intl]           | 6.24.2  | NodeJS script to build localization files.                                 |
-=======
 | [@gasket/plugin-docs]           | 6.26.1  | Centralize doc files from plugins and modules                              |
 | [@gasket/plugin-docs-graphs]    | 6.26.2  | Generate mermaid graphs of an applications gasket lifecycles               |
 | [@gasket/plugin-docsify]        | 6.26.1  | View collated docs with Docsify                                            |
@@ -185,7 +167,6 @@ Available plugins
 | [@gasket/plugin-git]            | 6.26.1  | Adds git support to your application                                       |
 | [@gasket/plugin-https]          | 6.26.1  | Create http/s servers with graceful termination                            |
 | [@gasket/plugin-intl]           | 6.26.1  | NodeJS script to build localization files.                                 |
->>>>>>> fed68008f7cb2c808043f442d61ae77202201bc7
 | [@gasket/plugin-jest]           | 6.24.0  | Integrated jest into your application.                                     |
 | [@gasket/plugin-lifecycle]      | 6.26.1  | Allows a gasket/ directory to be used for lifecycle hooks in applications. |
 | [@gasket/plugin-lint]           | 6.24.0  | Adds GoDaddy standard linting to your application                          |
