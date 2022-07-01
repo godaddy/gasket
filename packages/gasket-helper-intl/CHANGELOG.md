@@ -1,5 +1,9 @@
 # `@gasket/helper-intl`
 
+### 6.26.1
+
+- Fix `LocaleStatus` enum to match to JS ([#383])
+
 ### 6.7.1
 
 - Adjust fallback strategy
@@ -26,3 +30,4 @@
 [#256]: https://github.com/godaddy/gasket/pull/256
 [#268]: https://github.com/godaddy/gasket/pull/268
 [#276]: https://github.com/godaddy/gasket/pull/276
+[#383]: https://github.com/godaddy/gasket/pull/383

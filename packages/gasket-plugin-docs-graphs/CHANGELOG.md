@@ -1,5 +1,9 @@
 # `@gasket/plugin-docs-graph`
 
+### 6.26.2
+
+- Fix syntax error with the deprecation note in the lifecycle diagram ([#386])
+
 ### 6.24.2
 
 - Support showing deprecation for lifecycles ([#376])
@@ -21,3 +25,4 @@
 [#247]: https://github.com/godaddy/gasket/pull/247
 [#319]: https://github.com/godaddy/gasket/pull/319
 [#376]: https://github.com/godaddy/gasket/pull/376
+[#386]: https://github.com/godaddy/gasket/pull/386

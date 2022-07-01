@@ -1,5 +1,9 @@
 # `@gasket/plugin-command`
 
+### 6.27.0
+
+- Support for `GASKET_ENV` with fallback to `NODE_ENV` ([#387])
+
 ### 6.24.3
 
 - Support for --require flag to load modules before Gasket initializes ([#370])
@@ -64,3 +68,4 @@
 [#311]: https://github.com/godaddy/gasket/pull/311
 [#348]: https://github.com/godaddy/gasket/pull/348
 [#370]: https://github.com/godaddy/gasket/pull/370
+[#387]: https://github.com/godaddy/gasket/pull/387

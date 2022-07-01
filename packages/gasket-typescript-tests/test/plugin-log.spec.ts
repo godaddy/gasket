@@ -32,6 +32,15 @@ describe('@gasket/plugin-log', () => {
     };
   });
 
+  it('errors for incorrect transport types', () => {
+    // @ts-expect-error
+    const handler: Hook<'logTransports'> = (gasket: Gasket) => {
+      return [
+        () => {}
+      ];
+    };
+  });
+
   it('adds a logger property to Gasket', () => {
     const logger: Log = {
       alert(...args: any): void {},

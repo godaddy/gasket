@@ -1,5 +1,9 @@
 # `@gasket/plugin-start`
 
+### 6.27.0
+
+- Support for `GASKET_ENV` with fallback to `NODE_ENV` ([#387])
+
 ### 6.13.0
 
 - Add `--exit` flag to build command ([#325])
@@ -32,3 +36,4 @@
 [#311]: https://github.com/godaddy/gasket/pull/311
 [#325]: https://github.com/godaddy/gasket/pull/325
 [#327]: https://github.com/godaddy/gasket/pull/327
+[#387]: https://github.com/godaddy/gasket/pull/387
