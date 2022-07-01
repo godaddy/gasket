@@ -70,6 +70,12 @@ describe('Plugin', () => {
     expect(apm.start).toHaveBeenCalledWith({ active: true, secretToken: 'abcd', serverUrl: 'https://example.com' });
   });
 
+  it('skips preboot lifecycle if run locally', async () => {
+    mockGasket.command = { id: 'local' };
+    await plugin.hooks.preboot.handler(mockGasket);
+    expect(apm.start).not.toHaveBeenCalled();
+  });
+
   it('disables the agent if one of serverUrl and secretToken are not defined', async () => {
     mockGasket.config = await plugin.hooks.configure.handler(mockGasket, mockGasket.config);
     await plugin.hooks.preboot.handler(mockGasket);

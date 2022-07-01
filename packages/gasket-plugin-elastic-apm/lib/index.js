@@ -51,7 +51,9 @@ module.exports = {
     },
     preboot: {
       handler: async (gasket) => {
-        const { config, logger } = gasket;
+        const { config, logger, command } = gasket;
+
+        if (command && command.id === 'local') return;
 
         // prefer app-level dependency in case of duplicates
         const apm = require(
