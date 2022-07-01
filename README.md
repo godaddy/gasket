@@ -143,7 +143,7 @@ Available presets
 
 | Name                    | Version | Description                                |
 | ----------------------- | ------- | ------------------------------------------ |
-| [@gasket/preset-api]    | 6.24.3  | Create Express-based API with Gasket       |
+| [@gasket/preset-api]    | 6.25.0  | Create Express-based API with Gasket       |
 | [@gasket/preset-nextjs] | 6.24.2  | Basic NextJS Framework                     |
 | [@gasket/preset-pwa]    | 6.24.2  | Turn Gasket apps into Progressive Web Apps |
 
@@ -157,11 +157,11 @@ Available plugins
 | [@gasket/plugin-command]        | 6.24.3  | Plugin to enable other plugins to inject new gasket commands               |
 | [@gasket/plugin-config]         | 6.24.2  | Supports application-specific (non-Gasket) configuration                   |
 | [@gasket/plugin-cypress]        | 6.24.0  | Integrates Cypress based testing into your Gasket application              |
-| [@gasket/plugin-docs]           | 6.24.3  | Centralize doc files from plugins and modules                              |
+| [@gasket/plugin-docs]           | 6.25.0  | Centralize doc files from plugins and modules                              |
 | [@gasket/plugin-docs-graphs]    | 6.24.2  | Generate mermaid graphs of an applications gasket lifecycles               |
 | [@gasket/plugin-docsify]        | 6.24.2  | View collated docs with Docsify                                            |
 | [@gasket/plugin-docusaurus]     | 6.24.2  | Gasket plugin for docusaurus                                               |
-| [@gasket/plugin-elastic-apm]    | 6.24.2  | Adds Elastic APM instrumentation to your application                       |
+| [@gasket/plugin-elastic-apm]    | 6.25.0  | Adds Elastic APM instrumentation to your application                       |
 | [@gasket/plugin-express]        | 6.24.2  | Adds express support to your application                                   |
 | [@gasket/plugin-fastify]        | 6.24.2  | Adds fastify support to your application                                   |
 | [@gasket/plugin-git]            | 6.24.2  | Adds git support to your application                                       |
@@ -201,7 +201,7 @@ Supporting modules
 | [@gasket/react-intl]       | 6.24.2  | React component library to enable localization for gasket apps.                      |
 | [@gasket/redux]            | 6.24.0  | Gasket Redux Configuration                                                           |
 | [@gasket/resolve]          | 6.24.0  | Essential module resolution & configuration management for gasket plugins & presets. |
-| [@gasket/typescript-tests] | 6.24.3  | Not a published package; hosts unit tests to verify TypeScript support               |
+| [@gasket/typescript-tests] | 6.25.0  | Not a published package; hosts unit tests to verify TypeScript support               |
 | [@gasket/utils]            | 6.24.2  | Reusable utilities for Gasket internals                                              |
 | [create-gasket-app]        | 6.24.3  | starter pack for creating a gasket app                                               |
 
@@ -209,32 +209,79 @@ Supporting modules
 
 Available configuration options in the `gasket.config.js`
 
-<<<<<<< HEAD
-| Name                                        | Description                                                                                                | Type         | Default |
-| ------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | ------------ | ------- |
-| [bundleAnalyzerConfig]                      | This plugin utilizes [webpack-bundle-analyzer] for tuning for both `browser` and `server` analysis reports | object       | {}      |
-| [bundleAnalyzerConfig.browser]              | Browser/client-side config object.                                                                         | object       | {}      |
-| [bundleAnalyzerConfig.browser.defaultSizes] | Module sizes to show in report by default.                                                                 | string       | parsed  |
-| [bundleAnalyzerConfig.server]               | Server-side config object.                                                                                 | object       | {}      |
-| [bundleAnalyzerConfig.server.openAnalyzer]  | Automatically open report in default browser.                                                              | boolean      | true    |
-| [docs][6]                                   | Docs config object                                                                                         | object       | {}      |
-| [docs.outputDir]                            | Output directory for generated docs                                                                        | string       | .docs   |
-| [docusaurus]                                | Docusaurus config file.                                                                                    | object       | {}      |
-| [http]                                      | HTTP port                                                                                                  | number       |         |
-| [https]                                     | HTTPS config object                                                                                        | object       |         |
-| [https.ca]                                  | HTTPS ca(s)                                                                                                | string/array |         |
-| [https.cert]                                | HTTPS certificate                                                                                          | string       |         |
-| [https.key]                                 | HTTPS key                                                                                                  | string       |         |
-| [https.port]                                | HTTPS port                                                                                                 | number       |         |
-| [https.root]                                | Root path to files                                                                                         | string       |         |
-| [terminus][7]                               | Terminus config object                                                                                     | object       |         |
-| [terminus.healthcheck]                      | Terminus healthcheck array                                                                                 | array        |         |
-=======
-| Name             | Description                         | Type   | Default |
-| ---------------- | ----------------------------------- | ------ | ------- |
-| [docs][6]        | Docs config object                  | object | {}      |
-| [docs.outputDir] | Output directory for generated docs | string | .docs   |
->>>>>>> 6638a0a654ab2335dd4ba4d26c1469ec17c08b77
+| Name                            | Description                                                                                                                                                                               | Type                             | Default               |
+| ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- | --------------------- |
+| [bundleAnalyzerConfig]          | This plugin utilizes [webpack-bundle-analyzer] for tuning for both `browser` and `server` analysis reports                                                                                | object                           | {}                    |
+| [docs][6]                       | Docs config object                                                                                                                                                                        | object                           | {}                    |
+| [docs.outputDir]                | Output directory for generated docs                                                                                                                                                       | string                           | .docs                 |
+| [docsify]                       | Docsify config object                                                                                                                                                                     | object                           |                       |
+| [docsify.config]                | Any [Docsify config] properties, expect for functions types which are not currently supported.
+          Default has `auth2top` and `relativePath` set to `true`, with `maxLevel` at `3`. | object                           |                       |
+| [docsify.port]                  | Port to serve the docs from                                                                                                                                                               | number                           | 3000                  |
+| [docsify.port][7]               | Port to serve the docs from                                                                                                                                                               | number                           | 3000                  |
+| [docsify.scripts]               | Optional additional stylesheet URLs to load                                                                                                                                               | string[]                         |                       |
+| [docsify.stylesheets]           | Optional additional stylesheet URLs to load                                                                                                                                               | string[]                         |                       |
+| [docsify.theme]                 | Name of the theme                                                                                                                                                                         | string                           | styles/gasket.css     |
+| [docusaurus]                    | Docusaurus plugin config.                                                                                                                                                                 | object                           | {}                    |
+| [docusaurus.docsDir]            | Sub-directory for the generated markdown from the docs plugin.                                                                                                                            | string                           | docs                  |
+| [docusaurus.host]               | Hostname to serve the docs from.                                                                                                                                                          | string                           | localhost             |
+| [docusaurus.port]               | Port number to serve docs site.                                                                                                                                                           | number                           | 3000                  |
+| [docusaurus.rootDir]            | Root Docusaurus directory.                                                                                                                                                                | string                           | .docs                 |
+| [express][8]                    | Express plugin configuration.                                                                                                                                                             | object                           | {}                    |
+| [express.compression]           | Automatic compression.                                                                                                                                                                    | boolean                          | true                  |
+| [express.excludedRoutesRegex]   | Regex of the routes to exclude.                                                                                                                                                           |                                  |                       |
+| [fastify][9]                    | Fastify configuration object.                                                                                                                                                             | object                           | {}                    |
+| [fastify.compression]           | Automatic compression.                                                                                                                                                                    | boolean                          | true                  |
+| [fastify.excludedRoutesRegex]   | Regex of the routes to exclude.                                                                                                                                                           | RegExp                           |                       |
+| [http]                          | HTTP port                                                                                                                                                                                 | number                           |                       |
+| [https/http2]                   | Configure HTTPS or HTTP/2 or both                                                                                                                                                         | object                           |                       |
+| [https/http2.ca]                | HTTPS/HTTP/2 ca(s)                                                                                                                                                                        | string/array                     |                       |
+| [https/http2.cert]              | HTTPS/HTTP/2 certificate                                                                                                                                                                  | string                           |                       |
+| [https/http2.key]               | HTTPS/HTTP/2 key                                                                                                                                                                          | string                           |                       |
+| [https/http2.port]              | HTTPS/HTTP/2 port                                                                                                                                                                         | number                           |                       |
+| [https/http2.root]              | Root path to files                                                                                                                                                                        | string                           |                       |
+| [intl]                          | Intl config object                                                                                                                                                                        | object                           |                       |
+| [intl.basePath]                 | Base URL where locale files are served                                                                                                                                                    | string                           |                       |
+| [intl.defaultLocale]            | Locale to fallback to when loading files                                                                                                                                                  | string                           | en                    |
+| [intl.defaultPath]              | Path to endpoint with JSON files                                                                                                                                                          | string                           |                       |
+| [intl.locales]                  | Ordered list of accepted locales                                                                                                                                                          | string[]                         |                       |
+| [intl.localesDir]               | Path to on-disk directory where locale files exists                                                                                                                                       | string                           | ./public/locales      |
+| [intl.localesMap]               | Mapping of locales to share files                                                                                                                                                         | object                           |                       |
+| [intl.localesPath]              | URL endpoint where static JSON files are available                                                                                                                                        | string                           |                       |
+| [intl.manifestFilename]         | Change the name of the manifest file                                                                                                                                                      | string                           | locales-manifest.json |
+| [intl.modules]                  | Enable locale files collation from node modules                                                                                                                                           | boolean/object                   | true                  |
+| [intl.serveStatic]              | Enables ability to serve static locale files                                                                                                                                              | boolean/string                   | locales-manifest.json |
+| [log]                           | Setup and customize log logger                                                                                                                                                            | object                           | {}                    |
+| [log.prefix]                    | Used to set the prefix in the winston format.                                                                                                                                             | string                           |                       |
+| [manifest][10]                  | Manifest plugin config                                                                                                                                                                    | object                           | {}                    |
+| [morgan]                        | Morgan plugin configuration.                                                                                                                                                              | object                           | {}                    |
+| [morgan.format]                 | Log format to print.                                                                                                                                                                      | string                           | tiny                  |
+| [morgan.options]                | Morgan options.                                                                                                                                                                           | object                           |                       |
+| [nextConfig][11]                | Everything you can configure in the `next.config.js` can be added here                                                                                                                    | object                           |                       |
+| [redux]                         | Redux plugin config object                                                                                                                                                                | object                           |                       |
+| [redux.initState]               | initial state to include in the store                                                                                                                                                     | string                           |                       |
+| [redux.makeStore]               | relative path to a custom makeStore configuration                                                                                                                                         | string                           | store.js              |
+| [serviceWorker]                 | Service worker plugin config object                                                                                                                                                       | object                           |                       |
+| [serviceWorker.cache]           | adjust the content cache settings using the lru-cache options                                                                                                                             | object                           |                       |
+| [serviceWorker.cacheKeys]       | Optional cache key functions that accept the request object as argument and return a string                                                                                               | function[]                       |                       |
+| [serviceWorker.content]         | The JavaScript content to be served                                                                                                                                                       | string                           |                       |
+| [serviceWorker.minify]          | Minification options to be used on the composed JavaScript                                                                                                                                | object                           |                       |
+| [serviceWorker.scope]           | From where to intercept requests                                                                                                                                                          | string                           | /                     |
+| [serviceWorker.staticOutput]    | If `true`, a static `sw.js` will be output to the `./public` dir                                                                                                                          | string/boolean                   | false                 |
+| [serviceWorker.url]             | Name the service worker file                                                                                                                                                              | string                           | /sw.js                |
+| [serviceWorker.webpackRegister] | By default, a service worker registration script will be injected to the webpack entry modules                                                                                            | string/string[]/function/boolean |                       |
+| [swagger]                       | The base gasket.config object                                                                                                                                                             | object                           |                       |
+| [swagger.apiDocsRoute]          | Route to Swagger UI                                                                                                                                                                       | string                           | /api-docs             |
+| [swagger.definitionFile]        | Target swagger spec file, either json or yaml                                                                                                                                             | string                           | swagger.json          |
+| [swagger.jsdoc]                 | If set, the definitionFile will be generated based on JSDocs in the configured files                                                                                                      | object                           |                       |
+| [swagger.ui]                    | Optional custom UI options                                                                                                                                                                | object                           |                       |
+| [terminus][12]                  | Terminus config object                                                                                                                                                                    | object                           |                       |
+| [terminus.healthcheck]          | Terminus healthcheck array                                                                                                                                                                | array                            |                       |
+| [winston]                       | Setup and customize winston logger.                                                                                                                                                       | object                           | {}                    |
+| [workbox][13]                   | Workbox config object                                                                                                                                                                     | object                           |                       |
+| [workbox.basePath]              | change the default path to `/_workbox` endpoint by adding a path prefix here                                                                                                              | string                           |                       |
+| [workbox.config]                | Any initial workbox config options which will be merged with those from any `workbox` lifecycle hooks                                                                                     | object                           |                       |
+| [workbox.outputDir]             | path of directory to copy Workbox libraries to                                                                                                                                            | string                           | ./build/workbox       |
 
 <!-- LINKS -->
 
@@ -358,28 +405,76 @@ Available configuration options in the `gasket.config.js`
 [@gasket/typescript-tests]:/packages/gasket-typescript-tests/README.md
 [@gasket/utils]:/packages/gasket-utils/README.md
 [create-gasket-app]:/packages/create-gasket-app/README.md
-<<<<<<< HEAD
 [bundleAnalyzerConfig]:/packages/gasket-plugin-analyze/README.md#configuration
-[bundleAnalyzerConfig.browser]:/packages/gasket-plugin-analyze/README.md#configuration
-[bundleAnalyzerConfig.browser.defaultSizes]:/packages/gasket-plugin-analyze/README.md#configuration
-[bundleAnalyzerConfig.server]:/packages/gasket-plugin-analyze/README.md#configuration
-[bundleAnalyzerConfig.server.openAnalyzer]:/packages/gasket-plugin-analyze/README.md#configuration
 [6]:/packages/gasket-plugin-docs/README.md#configuration
 [docs.outputDir]:/packages/gasket-plugin-docs/README.md#configuration
+[docsify]:/packages/gasket-plugin-docsify/README.md#configuration
+[docsify.config]:/packages/gasket-plugin-docsify/README.md#configuration
+[docsify.port]:/packages/gasket-plugin-docsify/README.md#configuration
+[7]:/packages/gasket-plugin-docsify/README.md#configuration
+[docsify.scripts]:/packages/gasket-plugin-docsify/README.md#configuration
+[docsify.stylesheets]:/packages/gasket-plugin-docsify/README.md#configuration
+[docsify.theme]:/packages/gasket-plugin-docsify/README.md#configuration
 [docusaurus]:/packages/gasket-plugin-docusaurus/README.md#configuration
+[docusaurus.docsDir]:/packages/gasket-plugin-docusaurus/README.md#configuration
+[docusaurus.host]:/packages/gasket-plugin-docusaurus/README.md#configuration
+[docusaurus.port]:/packages/gasket-plugin-docusaurus/README.md#configuration
+[docusaurus.rootDir]:/packages/gasket-plugin-docusaurus/README.md#configuration
+[8]:/packages/gasket-plugin-express/README.md#configuration
+[express.compression]:/packages/gasket-plugin-express/README.md#configuration
+[express.excludedRoutesRegex]:/packages/gasket-plugin-express/README.md#configuration
+[9]:/packages/gasket-plugin-fastify/README.md#configuration
+[fastify.compression]:/packages/gasket-plugin-fastify/README.md#configuration
+[fastify.excludedRoutesRegex]:/packages/gasket-plugin-fastify/README.md#configuration
 [http]:/packages/gasket-plugin-https/README.md#configuration
-[https]:/packages/gasket-plugin-https/README.md#configuration
-[https.ca]:/packages/gasket-plugin-https/README.md#configuration
-[https.cert]:/packages/gasket-plugin-https/README.md#configuration
-[https.key]:/packages/gasket-plugin-https/README.md#configuration
-[https.port]:/packages/gasket-plugin-https/README.md#configuration
-[https.root]:/packages/gasket-plugin-https/README.md#configuration
-[7]:/packages/gasket-plugin-https/README.md#configuration
+[https/http2]:/packages/gasket-plugin-https/README.md#configuration
+[https/http2.ca]:/packages/gasket-plugin-https/README.md#configuration
+[https/http2.cert]:/packages/gasket-plugin-https/README.md#configuration
+[https/http2.key]:/packages/gasket-plugin-https/README.md#configuration
+[https/http2.port]:/packages/gasket-plugin-https/README.md#configuration
+[https/http2.root]:/packages/gasket-plugin-https/README.md#configuration
+[intl]:/packages/gasket-plugin-intl/README.md#configuration
+[intl.basePath]:/packages/gasket-plugin-intl/README.md#configuration
+[intl.defaultLocale]:/packages/gasket-plugin-intl/README.md#configuration
+[intl.defaultPath]:/packages/gasket-plugin-intl/README.md#configuration
+[intl.locales]:/packages/gasket-plugin-intl/README.md#configuration
+[intl.localesDir]:/packages/gasket-plugin-intl/README.md#configuration
+[intl.localesMap]:/packages/gasket-plugin-intl/README.md#configuration
+[intl.localesPath]:/packages/gasket-plugin-intl/README.md#locals-path
+[intl.manifestFilename]:/packages/gasket-plugin-intl/README.md#configuration
+[intl.modules]:/packages/gasket-plugin-intl/README.md#configuration
+[intl.serveStatic]:/packages/gasket-plugin-intl/README.md#configuration
+[log]:/packages/gasket-plugin-log/README.md#configuration
+[log.prefix]:/packages/gasket-plugin-log/README.md#configuration
+[10]:/packages/gasket-plugin-manifest/README.md#configuration
+[morgan]:/packages/gasket-plugin-morgan/README.md#configuration
+[morgan.format]:/packages/gasket-plugin-morgan/README.md#configuration
+[morgan.options]:/packages/gasket-plugin-morgan/README.md#configuration
+[11]:/packages/gasket-plugin-nextjs/README.md#configuration
+[redux]:/packages/gasket-plugin-redux/README.md#configuration
+[redux.initState]:/packages/gasket-plugin-redux/README.md#configuration
+[redux.makeStore]:/packages/gasket-plugin-redux/README.md#configuration
+[serviceWorker]:/packages/gasket-plugin-service-worker/README.md#configuration
+[serviceWorker.cache]:/packages/gasket-plugin-service-worker/README.md#configuration
+[serviceWorker.cacheKeys]:/packages/gasket-plugin-service-worker/README.md#configuration
+[serviceWorker.content]:/packages/gasket-plugin-service-worker/README.md#configuration
+[serviceWorker.minify]:/packages/gasket-plugin-service-worker/README.md#configuration
+[serviceWorker.scope]:/packages/gasket-plugin-service-worker/README.md#configuration
+[serviceWorker.staticOutput]:/packages/gasket-plugin-service-worker/README.md#configuration
+[serviceWorker.url]:/packages/gasket-plugin-service-worker/README.md#configuration
+[serviceWorker.webpackRegister]:/packages/gasket-plugin-service-worker/README.md#configuration
+[swagger]:/packages/gasket-plugin-swagger/README.md#configuration
+[swagger.apiDocsRoute]:/packages/gasket-plugin-swagger/README.md#configuration
+[swagger.definitionFile]:/packages/gasket-plugin-swagger/README.md#configuration
+[swagger.jsdoc]:/packages/gasket-plugin-swagger/README.md#configuration
+[swagger.ui]:/packages/gasket-plugin-swagger/README.md#configuration
+[12]:/packages/gasket-plugin-https/README.md#configuration
 [terminus.healthcheck]:/packages/gasket-plugin-https/README.md#configuration
-=======
-[6]:/packages/gasket-plugin-docs/README.md#configuration
-[docs.outputDir]:/packages/gasket-plugin-docs/README.md#configuration
->>>>>>> 6638a0a654ab2335dd4ba4d26c1469ec17c08b77
+[winston]:/packages/gasket-plugin-log/README.md#configuration
+[13]:/packages/gasket-plugin-workbox/README.md#configuration
+[workbox.basePath]:/packages/gasket-plugin-workbox/README.md#configuration
+[workbox.config]:/packages/gasket-plugin-workbox/README.md#configuration
+[workbox.outputDir]:/packages/gasket-plugin-workbox/README.md#configuration
 <!-- END GENERATED -->
 
 ## License

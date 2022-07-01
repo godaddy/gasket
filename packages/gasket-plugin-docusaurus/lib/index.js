@@ -30,7 +30,7 @@ module.exports = {
         }, {
           name: 'docusaurus.port',
           link: 'README.md#configuration',
-          description: 'Port number to serve.',
+          description: 'Port number to serve docs site.',
           type: 'number',
           default: 3000
         }, {
