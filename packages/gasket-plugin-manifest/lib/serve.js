@@ -5,10 +5,10 @@ const baseConfig = require('./base-config');
  * @param  {Express} app gasket's express server
  * @async
  */
-async function express(gasket, app) {
+async function serve(gasket, app) {
   const { config } = gasket;
-  const { staticOutput } = (config && config.manifest || {});
-  const { path } = (config && config.manifest || {});
+  const { staticOutput } = (config && config.manifest) || {};
+  const { path } = (config && config.manifest) || {};
 
   if (!staticOutput) {
     app.get(path || baseConfig.path, (req, res) => {
@@ -17,4 +17,4 @@ async function express(gasket, app) {
   }
 }
 
-module.exports = express;
+module.exports = serve;

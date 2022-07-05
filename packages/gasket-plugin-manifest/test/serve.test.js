@@ -1,24 +1,24 @@
 const assume = require('assume');
 const sinon = require('sinon');
 
-const express = require('../lib/express');
+const serve = require('../lib/serve');
 
-describe('express', function () {
+describe('serve', function () {
   afterEach(function () {
     sinon.reset();
   });
 
   it('is a function', function () {
-    assume(express).is.a('asyncfunction');
-    assume(express).has.length(2);
+    assume(serve).is.a('asyncfunction');
+    assume(serve).has.length(2);
   });
 
-  it('adds a route to the express server', async function () {
+  it('adds a route to the express/fastify server', async function () {
     const app = {
       get: sinon.stub()
     };
 
-    await express({}, app);
+    await serve({}, app);
     assume(app.get.calledOnce).is.true();
   });
 
@@ -32,7 +32,7 @@ describe('express', function () {
     };
 
     const app = { get };
-    await express({}, app);
+    await serve({}, app);
   });
 
   it('returns the configured manifest on the configured path if option is set', async function (done) {
@@ -54,6 +54,6 @@ describe('express', function () {
     };
 
     const app = { get };
-    await express(gasket, app);
+    await serve(gasket, app);
   });
 });
