@@ -3,7 +3,7 @@ const url = require('url');
 const { name, devDependencies } = require('../package');
 const { createConfig } = require('./config');
 const { pluginIdentifier } = require('@gasket/resolve');
-const { setupNextApp } = require('./setup-next-app');
+const setupNextApp = require('./setup-next-app');
 
 const isDefined = (o) => typeof o !== 'undefined';
 
@@ -133,7 +133,23 @@ module.exports = {
         last: true
       },
       handler: async function fastify(gasket, fastifyApp) {
-        const app = await setupNextApp(gasket);
+        const { exec, command } = gasket;
+        const createNextApp = require('next');
+        const devServer = (command.id || command) === 'local';
+
+        const app = createNextApp({
+          dev: devServer,
+          conf: await createConfig(gasket, devServer)
+        });
+
+        //
+        // We need to call the `next` lifecycle before we prepare the application
+        // as the prepare step initializes all the routes that a next app can have.
+        // If we wait later, it's possible that our added routes/pages are not
+        // recognized.
+        //
+        await exec('next', app);
+        await app.prepare();
 
         fastifyApp.decorate(['buildId', app.name].filter(Boolean).join('/'), {
           getter() {
