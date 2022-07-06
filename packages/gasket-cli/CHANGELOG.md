@@ -1,5 +1,7 @@
 # `@gasket/cli`
 
+- Add git plugin to CLI default plugins
+
 ### 6.27.0
 
 - Support for `GASKET_ENV` with fallback to `NODE_ENV` ([#387])
