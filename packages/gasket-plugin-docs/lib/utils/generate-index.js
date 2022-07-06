@@ -50,7 +50,7 @@ function generateContent(docsConfigSet) {
       ...docs.map(moduleDoc => {
         const additionalHeaderValues = additionalHeaders.map(h => moduleDoc[h.toLowerCase()]);
         const { name, description, link, version, targetRoot, deprecated } = moduleDoc;
-        let itemName = deprecated ? `${name}(deprecated)` : name;
+        let itemName = deprecated ? `${name} (deprecated)` : name;
         if (link || linkFallbacks) {
           const ref = uniqueRef(itemName);
           itemName = ref === name ? `[${itemName}]` : `[${itemName}][${ref}]`;
