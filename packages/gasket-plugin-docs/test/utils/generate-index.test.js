@@ -231,7 +231,7 @@ describe('Utils - generateIndex', () => {
         if (name === 'lifecycles') {
           it(`supports lifecycle deprecated property`, () => {
             const config = fullDocsConfigSet[name][1];
-            assume(fullContent).includes(`${config.name}(deprecated)`);
+            assume(fullContent).includes(`${config.name} (deprecated)`);
           });
         }
 
