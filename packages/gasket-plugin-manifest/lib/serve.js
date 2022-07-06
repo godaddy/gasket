@@ -2,7 +2,7 @@ const baseConfig = require('./base-config');
 /**
  * If configured, serve the resolved manifest.json
  * @param  {Gasket} gasket The gasket API
- * @param  {Express} app gasket's express server
+ * @param  {Express | Fastify} app gasket's express/fastify server
  * @async
  */
 async function serve(gasket, app) {
