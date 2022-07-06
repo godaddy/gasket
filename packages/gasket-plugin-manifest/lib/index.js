@@ -14,15 +14,13 @@ module.exports = {
     metadata(gasket, meta) {
       return {
         ...meta,
-        lifecycles: [
-          {
-            name: 'manifest',
-            method: 'execWaterfall',
-            description: 'Modify the the web manifest for a request',
-            link: 'README.md#manifest',
-            parent: 'middleware'
-          }
-        ]
+        lifecycles: [{
+          name: 'manifest',
+          method: 'execWaterfall',
+          description: 'Modify the the web manifest for a request',
+          link: 'README.md#manifest',
+          parent: 'middleware'
+        }]
       };
     }
   }
