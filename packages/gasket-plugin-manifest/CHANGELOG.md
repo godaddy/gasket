@@ -1,6 +1,6 @@
 # `@gasket/plugin-manifest`
 
-### 6.26.2
+### 6.27.1
 
 - Add Fastify hook ([#390])
 - extract reusable code into serve.js to be used by both Express/Fastify hooks ([#390])

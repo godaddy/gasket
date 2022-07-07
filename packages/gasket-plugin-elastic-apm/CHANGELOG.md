@@ -1,6 +1,6 @@
 # `@gasket/plugin-elastic-apm`
 
-### 6.26.2
+### 6.27.1
 
 - Skip preboot lifecycle when app is run locally ([#388])
 
