@@ -1,5 +1,8 @@
 # `@gasket/cli`
 
+- Address createContext helper types
+- expose `GASKET_COMMAND` on process.env
+
 ### 6.27.0
 
 - Support for `GASKET_ENV` with fallback to `NODE_ENV` ([#387])
