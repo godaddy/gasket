@@ -42,11 +42,9 @@ export interface ConfigBuilder<Config> {
   /**
    * Adds all `[key, value]` pairs in the `fields` provided.
    * @param fields - Object to merge. Can be a function that accepts the current fields and object to merge.
-   * @param source - Plugin to blame if conflicts arise from this operation.
    */
   extend(
-    fields: Partial<Config> | ((current: Config) => Partial<Config>),
-    source: ModuleInfo
+    fields: Partial<Config> | ((current: Config) => Partial<Config>)
   ): void;
 
   /**
@@ -55,7 +53,6 @@ export interface ConfigBuilder<Config> {
    *
    * @param key - Field in package.json to add or extend.
    * @param value - Target value to set for key provided.
-   * @param source - Plugin to blame if conflicts arise from this operation.
    * @param [options] - Optional arguments for add behavior
    * @param [options.force] - Should the semver version override other attempts
    *
@@ -65,7 +62,6 @@ export interface ConfigBuilder<Config> {
   add<Key extends keyof Config>(
     key: Key,
     value: Config[Key],
-    source: ModuleInfo,
     options?: { force?: boolean }
   ): void;
 }
@@ -81,7 +77,7 @@ export interface PackageJsonBuilder extends ConfigBuilder<PackageJson> {
 }
 
 export interface Files {
-  add(args: { globs: Array<string>, source: ModuleInfo }): void
+  add(...args: string[]): void
 }
 
 export interface CreateContext {

@@ -1,6 +1,6 @@
 const build = require('./build');
 const configure = require('./configure');
-const express = require('./express');
+const serve = require('./serve');
 const middleware = require('./middleware');
 
 module.exports = {
@@ -8,7 +8,8 @@ module.exports = {
   hooks: {
     build,
     configure,
-    express,
+    express: serve,
+    fastify: serve,
     middleware,
     metadata(gasket, meta) {
       return {

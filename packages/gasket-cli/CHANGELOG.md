@@ -1,6 +1,8 @@
 # `@gasket/cli`
 
 - Add git plugin to CLI default plugins
+- Address createContext helper types
+- expose `GASKET_COMMAND` on process.env
 
 ### 6.27.0
 

@@ -36,6 +36,7 @@ async function initHook({ id, config: oclifConfig, argv }) {
     process.env.GASKET_ENV = env;
     process.env.GASKET_CONFIG = flags.config;
     process.env.GASKET_ROOT = flags.root;
+    process.env.GASKET_COMMAND = id;
 
     const gasketConfig = await getGasketConfig(flags, env, id);
 
