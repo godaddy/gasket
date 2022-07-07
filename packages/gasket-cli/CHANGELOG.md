@@ -1,8 +1,10 @@
 # `@gasket/cli`
 
-- Add git plugin to CLI default plugins
-- Address createContext helper types
-- expose `GASKET_COMMAND` on process.env
+### 6.27.1
+
+- Add git plugin to CLI default plugins ([#392])
+- Address createContext helper types ([#393])
+- expose `GASKET_COMMAND` on process.env ([#393])
 
 ### 6.27.0
 
@@ -372,3 +374,5 @@ upon `gasket create`
 [#370]: https://github.com/godaddy/gasket/pull/370
 [#371]: https://github.com/godaddy/gasket/pull/371
 [#387]: https://github.com/godaddy/gasket/pull/387
+[#392]: https://github.com/godaddy/gasket/pull/392
+[#393]: https://github.com/godaddy/gasket/pull/393
