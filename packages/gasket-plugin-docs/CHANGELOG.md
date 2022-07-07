@@ -1,6 +1,6 @@
 # `@gasket/plugin-docs`
 
-### 6.26.2
+### 6.27.1
 
 - Add support for lifecycles deprecated property in generated docs ([#391])
 
