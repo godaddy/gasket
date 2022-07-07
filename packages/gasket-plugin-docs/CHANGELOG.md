@@ -1,6 +1,8 @@
 # `@gasket/plugin-docs`
 
-- Add support for lifecycles deprecated property in generated docs
+### 6.26.2
+
+- Add support for lifecycles deprecated property in generated docs ([#391])
 
 ### 6.25.0
 
@@ -71,3 +73,4 @@
 [#374]: https://github.com/godaddy/gasket/pull/374
 [#375]: https://github.com/godaddy/gasket/pull/375
 [#379]: https://github.com/godaddy/gasket/pull/379
+[#391]: https://github.com/godaddy/gasket/pull/391

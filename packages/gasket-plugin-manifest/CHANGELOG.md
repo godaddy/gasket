@@ -1,5 +1,10 @@
 # `@gasket/plugin-manifest`
 
+### 6.26.2
+
+- Add Fastify hook ([#390])
+- extract reusable code into serve.js to be used by both Express/Fastify hooks ([#390])
+
 ### 6.11.2
 
 - Use fs.promises ([#319])
@@ -53,3 +58,4 @@
 [#247]: https://github.com/godaddy/gasket/pull/247
 [#311]: https://github.com/godaddy/gasket/pull/311
 [#319]: https://github.com/godaddy/gasket/pull/319
+[#390]: https://github.com/godaddy/gasket/pull/390

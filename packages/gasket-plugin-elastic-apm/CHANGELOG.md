@@ -1,5 +1,9 @@
 # `@gasket/plugin-elastic-apm`
 
+### 6.26.2
+
+- Skip preboot lifecycle when app is run locally ([#388])
+
 ### 6.25.0
 
 - Prefer `--require` for starting Elastic APM ([#378])
@@ -15,3 +19,4 @@
 
 [#311]:https://github.com/godaddy/gasket/pull/311
 [#378]:https://github.com/godaddy/gasket/pull/378
+[#388]:https://github.com/godaddy/gasket/pull/388
