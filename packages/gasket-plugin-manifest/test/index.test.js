@@ -3,7 +3,6 @@ const assume = require('assume');
 const plugin = require('../lib');
 
 describe('Plugin', function () {
-
   it('is an object', function () {
     assume(plugin).is.an('object');
   });
@@ -17,6 +16,7 @@ describe('Plugin', function () {
       'build',
       'configure',
       'express',
+      'fastify',
       'middleware',
       'metadata'
     ];
