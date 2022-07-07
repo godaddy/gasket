@@ -68,6 +68,11 @@ const fullDocsConfigSet = {
     name: 'example-lifecycle',
     link: 'README.md#lifecycles',
     targetRoot: '/path/to/app/.docs/test-app/plugins/example-plugin'
+  }, {
+    name: 'example-lifecycle-deprecated',
+    link: 'README.md#lifecycles',
+    targetRoot: '/path/to/app/.docs/test-app/plugins/example-plugin',
+    deprecated: true
   }],
   transforms: [],
   configurations: [{
@@ -137,7 +142,7 @@ describe('Utils - generateIndex', () => {
         //
         // count the number of ref-style links
         //
-        assume(content.match(/\[.+]:/g) || []).lengthOf(10);
+        assume(content.match(/\[.+]:/g) || []).lengthOf(11);
       });
 
       it('makes unique references', async () => {
@@ -222,6 +227,13 @@ describe('Utils - generateIndex', () => {
           const config = fullDocsConfigSet[name][0];
           assume(fullContent).includes(`| [${config.name}] `);
         });
+
+        if (name === 'lifecycles') {
+          it(`supports lifecycle deprecated property`, () => {
+            const config = fullDocsConfigSet[name][1];
+            assume(fullContent).includes(`${config.name} (deprecated)`);
+          });
+        }
 
         const emptyContent = generateContent(emptyDocsConfigSet);
         it(`does not add section if no configs`, () => {

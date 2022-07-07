@@ -1,5 +1,7 @@
 # `@gasket/plugin-docs`
 
+- Add support for lifecycles deprecated property in generated docs
+
 ### 6.25.0
 
 - Update TypeScript types and docs ([#373])
