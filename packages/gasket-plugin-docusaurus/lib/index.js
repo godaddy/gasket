@@ -13,8 +13,7 @@ module.exports = {
           name: 'docusaurus',
           link: 'README.md#configuration',
           description: 'Docusaurus plugin config',
-          type: 'object',
-          default: '{}'
+          type: 'object'
         }, {
           name: 'docusaurus.rootDir',
           link: 'README.md#configuration',

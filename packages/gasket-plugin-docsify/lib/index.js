@@ -27,7 +27,7 @@ module.exports = {
         }, {
           name: 'docsify.config',
           link: 'README.md#configuration',
-          description: `Any [Docsify configuration] property except for functions types that are not currently supported. Default has \`auth2top\` and \`relativePath\` set to \`true\`, with \`maxLevel\` at \`3\`.`,
+          description: `Docsify configuration properties, excluding functions`,
           type: 'object'
         }, {
           name: 'docsify.stylesheets',

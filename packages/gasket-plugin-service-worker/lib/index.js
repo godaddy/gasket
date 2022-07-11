@@ -77,7 +77,7 @@ module.exports = {
           name: 'serviceWorker.staticOutput',
           link: 'README.md#configuration',
           description: 'If `true`, a static `sw.js` will be output to the `./public` dir',
-          type: 'string/boolean',
+          type: 'string | boolean',
           default: false
         }]
       };

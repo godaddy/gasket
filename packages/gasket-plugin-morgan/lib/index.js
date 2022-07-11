@@ -27,8 +27,7 @@ module.exports = {
           name: 'morgan',
           link: 'README.md#configuration',
           description: 'Morgan plugin configuration',
-          type: 'object',
-          default: '{}'
+          type: 'object'
         }, {
           name: 'morgan.format',
           link: 'README.md#configuration',

@@ -24,8 +24,7 @@ module.exports = {
           name: 'manifest',
           link: 'README.md#configuration',
           description: 'Manifest plugin config',
-          type: 'object',
-          default: '{}'
+          type: 'object'
         }]
       };
     }

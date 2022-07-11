@@ -111,8 +111,7 @@ module.exports = {
           name: 'fastify',
           link: 'README.md#configuration',
           description: 'Fastify configuration object',
-          type: 'object',
-          default: '{}'
+          type: 'object'
         }, {
           name: 'fastify.compression',
           link: 'README.md#configuration',

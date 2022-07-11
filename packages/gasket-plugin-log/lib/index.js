@@ -61,8 +61,7 @@ module.exports = {
           name: 'log',
           link: 'README.md#configuration',
           description: 'Setup and customize logger',
-          type: 'object',
-          default: '{}'
+          type: 'object'
         }, {
           name: 'log.prefix',
           link: 'README.md#configuration',

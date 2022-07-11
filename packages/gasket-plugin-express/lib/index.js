@@ -146,8 +146,7 @@ module.exports = {
           name: 'express',
           link: 'README.md#configuration',
           description: 'Express plugin configuration',
-          type: 'object',
-          default: '{}'
+          type: 'object'
         }, {
           name: 'express.compression',
           link: 'README.md#configuration',

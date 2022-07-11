@@ -23,9 +23,8 @@ module.exports = {
         configurations: [{
           name: 'bundleAnalyzerConfig',
           link: 'README.md#configuration',
-          description: 'This plugin uses [webpack-bundle-analyzer] to tune both browser and server analysis reports',
-          type: 'object',
-          default: '{}'
+          description: 'Tune both browser and server Webpack analysis reports',
+          type: 'object'
         }]
       };
     }

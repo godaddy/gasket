@@ -43,8 +43,7 @@ module.exports = function metadata(gasket, meta) {
       name: 'docs',
       link: 'README.md#configuration',
       description: 'Docs config object',
-      type: 'object',
-      default: '{}'
+      type: 'object'
     }, {
       name: 'docs.outputDir',
       link: 'README.md#configuration',

@@ -90,8 +90,7 @@ module.exports = {
           name: 'elasticAPM',
           link: 'README.md#configuration',
           description: 'Configuration to provide additional setup helpers',
-          type: 'object',
-          default: '{}'
+          type: 'object'
         }, {
           name: 'elasticAPM.sensitiveCookies',
           link: 'README.md#configuration',
