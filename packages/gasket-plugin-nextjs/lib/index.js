@@ -3,7 +3,7 @@ const url = require('url');
 const { name, devDependencies } = require('../package');
 const { createConfig } = require('./config');
 const { pluginIdentifier } = require('@gasket/resolve');
-const setupNextApp = require('./setup-next-app');
+const { setupNextApp } = require('./setup-next-app');
 
 const isDefined = (o) => typeof o !== 'undefined';
 
@@ -98,6 +98,7 @@ module.exports = {
         last: true
       },
       handler: async function express(gasket, expressApp) {
+        const { exec } = gasket;
         const app = await setupNextApp(gasket);
 
         expressApp.set(['buildId', app.name].filter(Boolean).join('/'), app.buildId);

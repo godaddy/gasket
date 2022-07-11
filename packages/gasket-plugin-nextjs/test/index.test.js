@@ -78,7 +78,7 @@ describe('configure hook', () => {
 });
 
 describe('express hook', () => {
-  let next, nextHandler, plugin, expressApp, hook;
+  let nextHandler, plugin, expressApp, hook;
 
   let setupNextAppStub;
 
@@ -88,17 +88,18 @@ describe('express hook', () => {
       use: spy(),
       all: spy()
     };
-    setupNextAppStub = stub().returns({});
-    // nextHandler = {
-    //   prepare: stub().resolves(),
-    //   getRequestHandler: stub().resolves({})
-    // };
-    // next = stub().returns(nextHandler);
 
-    plugin = proxyquire('../lib/', {
+    nextHandler = {
+      prepare: stub().resolves(),
+      getRequestHandler: stub().resolves({})
+    };
+
+    setupNextAppStub = stub().returns(nextHandler);
+    plugin = proxyquire('../lib/',
+     {
       './setup-next-app': {
         setupNextApp: setupNextAppStub
-      }
+      },
     });
 
     hook = plugin.hooks.express.handler;
@@ -111,13 +112,6 @@ describe('express hook', () => {
     assume(plugin.hooks.express).property('timing');
     assume(plugin.hooks.express.timing).eqls({ last: true });
   });
-
-  // it('executes the `next` lifecycle', async function () {
-  //   const gasket = mockGasketApi();
-  //   await hook(gasket, expressApp, false);
-
-  //   assume(gasket.exec).has.been.calledWith('next', nextHandler);
-  // });
 
   it('attaches middleware to set NEXT_LOCALE cookie', async function () {
     const gasket = mockGasketApi();
@@ -177,12 +171,6 @@ describe('express hook', () => {
     });
   });
 
-  it('does not derive a webpack config if not running a dev server', async () => {
-    await hook(mockGasketApi(), expressApp, false);
-
-    const nextOptions = next.lastCall.args[0];
-    assume(nextOptions.conf).to.not.haveOwnProperty('webpack');
-  });
 });
 
 describe('fastify hook', () => {

@@ -8,7 +8,7 @@ const { createConfig } = require('./config');
  * @returns {NextServer} The Nextjs App
  * @private
  */
-module.exports = async function setupNextApp(gasket) {
+async function setupNextApp(gasket) {
   const { exec, command } = gasket;
   const createNextApp = require('next');
   const devServer = (command.id || command) === 'local';
@@ -29,3 +29,8 @@ module.exports = async function setupNextApp(gasket) {
 
   return app;
 };
+
+
+module.exports = {
+  setupNextApp
+}
