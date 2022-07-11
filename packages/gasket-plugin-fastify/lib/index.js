@@ -110,19 +110,19 @@ module.exports = {
         configurations: [{
           name: 'fastify',
           link: 'README.md#configuration',
-          description: 'Fastify configuration object.',
+          description: 'Fastify configuration object',
           type: 'object',
           default: '{}'
         }, {
           name: 'fastify.compression',
           link: 'README.md#configuration',
-          description: 'Automatic compression.',
+          description: 'Automatic compression',
           type: 'boolean',
           default: true
         }, {
           name: 'fastify.excludedRoutesRegex',
           link: 'README.md#configuration',
-          description: 'Regex of the routes to exclude.',
+          description: 'Routes to be excluded based on a regex',
           type: 'RegExp'
         }]
       };

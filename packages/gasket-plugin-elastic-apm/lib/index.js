@@ -89,13 +89,13 @@ module.exports = {
         configurations: [{
           name: 'elasticAPM',
           link: 'README.md#configuration',
-          description: 'Configuration to provides some additional setup helpers',
+          description: 'Configuration to provide additional setup helpers',
           type: 'object',
           default: '{}'
         }, {
           name: 'elasticAPM.sensitiveCookies',
           link: 'README.md#configuration',
-          description: 'A list of sensitive cookies to filter.',
+          description: 'List of sensitive cookies to filter',
           type: 'string[]',
           default: '[]'
         }]

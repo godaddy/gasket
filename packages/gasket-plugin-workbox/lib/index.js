@@ -28,13 +28,13 @@ module.exports = {
         }, {
           name: 'workbox.outputDir',
           link: 'README.md#configuration',
-          description: 'path of directory to copy Workbox libraries to',
+          description: 'The path to the directory in which the Workbox libraries should be copied',
           type: 'string',
           default: './build/workbox'
         }, {
           name: 'workbox.basePath',
           link: 'README.md#configuration',
-          description: 'change the default path to `/_workbox` endpoint by adding a path prefix here',
+          description: 'Change the default path to `/_workbox` endpoint by adding a path prefix here',
           type: 'string',
           default: ''
         }, {

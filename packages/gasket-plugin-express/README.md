@@ -37,9 +37,9 @@ module.exports = {
 
 All the configurations for the plugin are added under `express` in the config:
 
-- `compression`: true by default. Can to set to false if applying compression
+- `compression`: true by default. Can be set to false if applying compression
   differently.
-- `excludedRoutesRegex`: Regex of the routes to exclude by Express.
+- `excludedRoutesRegex`: Routes to be excluded based on a regex
 
 #### Example configuration
 

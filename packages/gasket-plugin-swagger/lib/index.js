@@ -135,7 +135,7 @@ module.exports = {
         configurations: [{
           name: 'swagger',
           link: 'README.md#configuration',
-          description: 'The base gasket.config object',
+          description: 'Swagger config object',
           type: 'object'
         }, {
           name: 'swagger.definitionFile',

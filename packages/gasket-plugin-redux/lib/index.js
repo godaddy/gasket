@@ -80,14 +80,14 @@ module.exports = {
         }, {
           name: 'redux.makeStore',
           link: 'README.md#configuration',
-          description: 'relative path to a custom makeStore configuration',
+          description: 'Relative path to a custom makeStore configuration',
           type: 'string',
           default: 'store.js'
         }, {
           name: 'redux.initState',
           link: 'README.md#configuration',
-          description: 'initial state to include in the store',
-          type: 'string'
+          description: 'Initial state to include in the store',
+          type: 'object'
         }]
       };
     }

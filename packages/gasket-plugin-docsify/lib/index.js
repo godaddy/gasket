@@ -25,15 +25,9 @@ module.exports = {
           type: 'number',
           default: 3000
         }, {
-          name: 'docsify.port',
-          link: 'README.md#configuration',
-          description: 'Port to serve the docs from',
-          type: 'number',
-          default: 3000
-        }, {
           name: 'docsify.config',
           link: 'README.md#configuration',
-          description: `Any [Docsify config] properties, expect for functions types which are not currently supported. Default has \`auth2top\` and \`relativePath\` set to \`true\`, with \`maxLevel\` at \`3\`.`,
+          description: `Any [Docsify configuration] property except for functions types that are not currently supported. Default has \`auth2top\` and \`relativePath\` set to \`true\`, with \`maxLevel\` at \`3\`.`,
           type: 'object'
         }, {
           name: 'docsify.stylesheets',
@@ -43,7 +37,7 @@ module.exports = {
         }, {
           name: 'docsify.scripts',
           link: 'README.md#configuration',
-          description: 'Optional additional stylesheet URLs to load',
+          description: 'Optional additional script files, which can include docsify plugins',
           type: 'string[]'
         }]
       };

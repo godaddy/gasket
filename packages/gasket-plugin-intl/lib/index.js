@@ -91,6 +91,7 @@ module.exports = {
           name: 'intl.defaultPath',
           link: 'README.md#configuration',
           description: 'Path to endpoint with JSON files',
+          default: '/locales',
           type: 'string'
         }, {
           name: 'intl.localesPath',
@@ -129,14 +130,19 @@ module.exports = {
           name: 'intl.serveStatic',
           link: 'README.md#configuration',
           description: 'Enables ability to serve static locale files',
-          type: 'boolean/string',
+          type: 'boolean | string',
           default: 'locales-manifest.json'
         }, {
           name: 'intl.modules',
           link: 'README.md#configuration',
           description: 'Enable locale files collation from node modules',
-          type: 'boolean/object',
-          default: true
+          type: 'boolean | object'
+        }, {
+          name: 'intl.nextRouting',
+          link: 'README.md#configuration',
+          description: 'Enable Next.js Routing when used with @gasket/plugin-nextjs',
+          type: 'boolean',
+          default: 'true'
         }]
       };
     }

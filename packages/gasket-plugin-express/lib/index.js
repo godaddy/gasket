@@ -145,19 +145,19 @@ module.exports = {
         configurations: [{
           name: 'express',
           link: 'README.md#configuration',
-          description: 'Express plugin configuration.',
+          description: 'Express plugin configuration',
           type: 'object',
           default: '{}'
         }, {
           name: 'express.compression',
           link: 'README.md#configuration',
-          description: 'Automatic compression.',
+          description: 'Automatic compression',
           type: 'boolean',
           default: true
         }, {
           name: 'express.excludedRoutesRegex',
           link: 'README.md#configuration',
-          description: 'Regex of the routes to exclude.'
+          description: 'Routes to be excluded based on a regex'
         }]
       };
     }

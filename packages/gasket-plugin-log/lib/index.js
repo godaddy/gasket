@@ -60,18 +60,18 @@ module.exports = {
         configurations: [{
           name: 'log',
           link: 'README.md#configuration',
-          description: 'Setup and customize log logger',
+          description: 'Setup and customize logger',
           type: 'object',
           default: '{}'
         }, {
           name: 'log.prefix',
           link: 'README.md#configuration',
-          description: 'Used to set the prefix in the winston format.',
+          description: 'Used to set the prefix in the winston format',
           type: 'string'
         }, {
           name: 'winston',
           link: 'README.md#configuration',
-          description: 'Setup and customize winston logger.',
+          description: 'Setup and customize winston logger',
           type: 'object',
           default: '{}'
         }]

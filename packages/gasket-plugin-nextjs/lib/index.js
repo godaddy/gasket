@@ -233,7 +233,7 @@ module.exports = {
         configurations: [{
           name: 'nextConfig',
           link: 'README.md#configuration',
-          description: 'Everything you can configure in the `next.config.js` can be added here',
+          description: 'Everything that can be configured in `next.config.js` can be added here.',
           type: 'object'
         }]
       };

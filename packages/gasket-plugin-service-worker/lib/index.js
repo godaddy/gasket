@@ -39,7 +39,7 @@ module.exports = {
         }, {
           name: 'serviceWorker.url',
           link: 'README.md#configuration',
-          description: 'Name the service worker file',
+          description: 'Name of the service worker file',
           type: 'string',
           default: '/sw.js'
         }, {
@@ -61,7 +61,7 @@ module.exports = {
         }, {
           name: 'serviceWorker.cache',
           link: 'README.md#configuration',
-          description: 'adjust the content cache settings using the lru-cache options',
+          description: 'Adjust the content cache settings using the lru-cache options',
           type: 'object'
         }, {
           name: 'serviceWorker.minify',
@@ -72,7 +72,7 @@ module.exports = {
           name: 'serviceWorker.webpackRegister',
           link: 'README.md#configuration',
           description: 'By default, a service worker registration script will be injected to the webpack entry modules',
-          type: 'string/string[]/function/boolean'
+          type: 'string | string[] | function | boolean'
         }, {
           name: 'serviceWorker.staticOutput',
           link: 'README.md#configuration',

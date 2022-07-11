@@ -160,38 +160,18 @@ module.exports = {
         configurations: [{
           name: 'http',
           link: 'README.md#configuration',
-          description: 'HTTP port',
-          type: 'number'
+          description: 'HTTP port or config object',
+          type: 'number | object'
         }, {
-          name: 'https/http2',
+          name: 'https',
           link: 'README.md#configuration',
-          description: 'Configure HTTPS or HTTP/2 or both',
+          description: 'HTTPS config object',
           type: 'object'
         }, {
-          name: 'https/http2.port',
+          name: 'http2',
           link: 'README.md#configuration',
-          description: 'HTTPS/HTTP/2 port',
-          type: 'number'
-        }, {
-          name: 'https/http2.root',
-          link: 'README.md#configuration',
-          description: 'Root path to files',
-          type: 'string'
-        }, {
-          name: 'https/http2.key',
-          link: 'README.md#configuration',
-          description: 'HTTPS/HTTP/2 key',
-          type: 'string'
-        }, {
-          name: 'https/http2.cert',
-          link: 'README.md#configuration',
-          description: 'HTTPS/HTTP/2 certificate',
-          type: 'string'
-        }, {
-          name: 'https/http2.ca',
-          link: 'README.md#configuration',
-          description: 'HTTPS/HTTP/2 ca(s)',
-          type: 'string/array'
+          description: 'HTTP2 config object',
+          type: 'object'
         }, {
           name: 'terminus',
           link: 'README.md#configuration',
@@ -200,8 +180,9 @@ module.exports = {
         }, {
           name: 'terminus.healthcheck',
           link: 'README.md#configuration',
-          description: 'Terminus healthcheck array',
-          type: 'array'
+          description: 'Custom Terminus healthcheck endpoint names',
+          default: ['/healthcheck', '/healthcheck.html'],
+          type: 'string[]'
         }]
       };
     }

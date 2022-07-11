@@ -26,19 +26,19 @@ module.exports = {
         configurations: [{
           name: 'morgan',
           link: 'README.md#configuration',
-          description: 'Morgan plugin configuration.',
+          description: 'Morgan plugin configuration',
           type: 'object',
           default: '{}'
         }, {
           name: 'morgan.format',
           link: 'README.md#configuration',
-          description: 'Log format to print.',
+          description: 'Log format to print',
           type: 'string',
           default: 'tiny'
         }, {
           name: 'morgan.options',
           link: 'README.md#configuration',
-          description: 'Morgan options.',
+          description: 'Morgan options',
           type: 'object'
         }]
       };
