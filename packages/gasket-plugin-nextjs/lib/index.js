@@ -227,7 +227,7 @@ module.exports = {
             method: 'exec',
             description: 'Update the next app instance before prepare',
             link: 'README.md#next',
-            parent: 'express', // dynamically set the parent
+            parent: 'express',
             after: 'nextConfig'
           },
           {
@@ -237,6 +237,14 @@ module.exports = {
             link: 'README.md#nextExpress',
             parent: 'express',
             after: 'next'
+          },
+          {
+            name: 'next',
+            method: 'exec',
+            description: 'Update the next app instance before prepare',
+            link: 'README.md#next',
+            parent: 'fastify',
+            after: 'nextConfig'
           },
           {
             name: 'nextFastify',
