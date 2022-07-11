@@ -72,7 +72,6 @@ module.exports = {
           link: 'README.md#configuration',
           description: 'Setup and customize winston logger',
           type: 'object',
-          default: '{}'
         }]
       };
     }
