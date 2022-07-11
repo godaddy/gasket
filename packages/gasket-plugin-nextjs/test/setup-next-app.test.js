@@ -7,6 +7,7 @@ const { spy, stub } = sinon;
 
 describe('setupNextApp', () => {
   let next, nextHandler;
+
   let result, gasket, data;
   beforeEach(() => {
     gasket = mockGasketApi();
@@ -15,13 +16,13 @@ describe('setupNextApp', () => {
     //     register: spy(),
     //     all: spy()
     // };
-    nextHandler = {
-      prepare: stub().resolves(),
-      getRequestHandler: stub().resolves({})
-    };
-    next = stub().returns(nextHandler);
+    // nextHandler = {
+    //   prepare: stub().resolves(),
+    //   getRequestHandler: stub().resolves({})
+    // };
+    // next = stub().returns(nextHandler);
 
-    plugin = proxyquire('../lib/', { next });
+    // plugin = proxyquire('../lib/', { next });
     // hook = plugin.hooks.fastify.handler;
   });
 

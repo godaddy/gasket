@@ -1,4 +1,5 @@
 const { createConfig } = require('./config');
+const createNextApp = require('next');
 
 /**
  * Small helper function that creates nextjs app from the gasket
@@ -10,7 +11,6 @@ const { createConfig } = require('./config');
  */
 async function setupNextApp(gasket) {
   const { exec, command } = gasket;
-  const createNextApp = require('next');
   const devServer = (command.id || command) === 'local';
 
   const app = createNextApp({
@@ -28,9 +28,8 @@ async function setupNextApp(gasket) {
   await app.prepare();
 
   return app;
-};
-
+}
 
 module.exports = {
   setupNextApp
-}
+};

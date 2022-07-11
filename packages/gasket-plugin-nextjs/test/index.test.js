@@ -95,8 +95,7 @@ describe('express hook', () => {
     };
 
     setupNextAppStub = stub().returns(nextHandler);
-    plugin = proxyquire('../lib/',
-     {
+    plugin = proxyquire('../lib/', {
       './setup-next-app': {
         setupNextApp: setupNextAppStub
       },
@@ -174,7 +173,9 @@ describe('express hook', () => {
 });
 
 describe('fastify hook', () => {
-  let next, nextHandler, plugin, fastifyApp, hook;
+  let nextHandler, plugin, fastifyApp, hook;
+
+  let setupNextAppStub;
 
   beforeEach(() => {
     fastifyApp = {
@@ -186,9 +187,13 @@ describe('fastify hook', () => {
       prepare: stub().resolves(),
       getRequestHandler: stub().resolves({})
     };
-    next = stub().returns(nextHandler);
+    setupNextAppStub = stub().returns(nextHandler);
 
-    plugin = proxyquire('../lib/', { next });
+    plugin = proxyquire('../lib/', {
+     './setup-next-app': {
+       setupNextApp: setupNextAppStub
+     },
+   });
     hook = plugin.hooks.fastify.handler;
   });
 
@@ -198,13 +203,6 @@ describe('fastify hook', () => {
 
     assume(plugin.hooks.fastify).property('timing');
     assume(plugin.hooks.fastify.timing).eqls({ last: true });
-  });
-
-  it('executes the `next` lifecycle', async function () {
-    const gasket = mockGasketApi();
-    await hook(gasket, fastifyApp, false);
-
-    assume(gasket.exec).has.been.calledWith('next', nextHandler);
   });
 
   it('attaches middleware to set NEXT_LOCALE cookie', async function () {
@@ -263,13 +261,6 @@ describe('fastify hook', () => {
       next: nextHandler,
       fastify: fastifyApp
     });
-  });
-
-  it('does not derive a webpack config if not running a dev server', async () => {
-    await hook(mockGasketApi(), fastifyApp, false);
-
-    const nextOptions = next.lastCall.args[0];
-    assume(nextOptions.conf).to.not.haveOwnProperty('webpack');
   });
 });
 
