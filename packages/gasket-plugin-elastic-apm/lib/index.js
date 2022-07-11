@@ -82,6 +82,23 @@ module.exports = {
           start: 'gasket start --require elastic-apm-node/start'
         });
       }
+    },
+    metadata(gasket, meta) {
+      return {
+        ...meta,
+        configurations: [{
+          name: 'elasticAPM',
+          link: 'README.md#configuration',
+          description: 'Configuration to provide additional setup helpers',
+          type: 'object'
+        }, {
+          name: 'elasticAPM.sensitiveCookies',
+          link: 'README.md#configuration',
+          description: 'List of sensitive cookies to filter',
+          type: 'string[]',
+          default: '[]'
+        }]
+      };
     }
   }
 };
