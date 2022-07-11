@@ -156,6 +156,33 @@ module.exports = {
           link: 'README.md#servers',
           parent: 'start',
           after: 'terminus'
+        }],
+        configurations: [{
+          name: 'http',
+          link: 'README.md#configuration',
+          description: 'HTTP port or config object',
+          type: 'number | object'
+        }, {
+          name: 'https',
+          link: 'README.md#configuration',
+          description: 'HTTPS config object',
+          type: 'object'
+        }, {
+          name: 'http2',
+          link: 'README.md#configuration',
+          description: 'HTTP2 config object',
+          type: 'object'
+        }, {
+          name: 'terminus',
+          link: 'README.md#configuration',
+          description: 'Terminus config object',
+          type: 'object'
+        }, {
+          name: 'terminus.healthcheck',
+          link: 'README.md#configuration',
+          description: 'Custom Terminus healthcheck endpoint names',
+          default: ['/healthcheck', '/healthcheck.html'],
+          type: 'string[]'
         }]
       };
     }

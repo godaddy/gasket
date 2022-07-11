@@ -59,7 +59,8 @@ describe('Swagger Plugin', function () {
       'configure',
       'build',
       'express',
-      'create'
+      'create',
+      'metadata'
     ];
 
     assume(plugin).property('hooks');

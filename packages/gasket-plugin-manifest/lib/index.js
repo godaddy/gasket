@@ -20,6 +20,12 @@ module.exports = {
           description: 'Modify the the web manifest for a request',
           link: 'README.md#manifest',
           parent: 'middleware'
+        }],
+        configurations: [{
+          name: 'manifest',
+          link: 'README.md#configuration',
+          description: 'Manifest plugin config',
+          type: 'object'
         }]
       };
     }

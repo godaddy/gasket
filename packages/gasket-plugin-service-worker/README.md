@@ -36,15 +36,15 @@ module.exports = {
 
 To be set in under `serviceWorker` in the `gasket.config.js`.
 
-- `url` - (string) Name the service worker file. Default is `/sw.js`
+- `url` - (string) Name of the service worker file. Default is `/sw.js`
 - `scope` - (string) From where to intercept requests. Default is `/`
 - `content` - (string) The JavaScript content to be served. While this can be
   initialized in the Gasket config, the expectation is it will be modified by
   plugins using `composeServiceWorker` lifecycle.
 - `cacheKeys` - (function[]) Optional cache key functions that accept the
   request object as argument and return a string.
-- `cache` - (object) adjust the content cache settings using the
-  [lru-cache options]. By default, content will remained cached for 5 days from
+- `cache` - (object) Adjust the content cache settings using the
+  [lru-cache options]. By default, content will remain cached for 5 days from
   last request.
 - `minify` - (object). Minification options to be used on the composed
   JavaScript. Configuration for this field is passed directly to [`uglify-js`].
