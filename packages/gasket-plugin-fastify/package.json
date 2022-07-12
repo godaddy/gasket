@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-fastify",
-  "version": "6.26.1",
+  "version": "6.28.0",
   "description": "Adds fastify support to your application",
   "main": "lib",
   "types": "lib/index.d.ts",
