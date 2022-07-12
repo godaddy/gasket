@@ -12,12 +12,4 @@ describe('@gasket/fetch', function () {
       fetch('url', { bogus: true });
     }
   });
-
-  it('exposes AbortController', function () {
-    if (perform) {
-      // @ts-expect-error
-      const controller = new fetch.AbortController();
-      const signal: AbortSignal = controller.signal;
-    }
-  });
 });
