@@ -1,5 +1,8 @@
 # `@gasket/fetch`
 
+### 6.28.1
+- Update TS types, remove test case ([#394])
+
 ### 6.24.2
 
 - Use wrapper to call through to window.fetch in browser ([#372])
@@ -27,3 +30,4 @@
 [#164]: https://github.com/godaddy/gasket/pull/164
 [#176]: https://github.com/godaddy/gasket/pull/176
 [#372]: https://github.com/godaddy/gasket/pull/372
+[#394]: https://github.com/godaddy/gasket/pull/394
