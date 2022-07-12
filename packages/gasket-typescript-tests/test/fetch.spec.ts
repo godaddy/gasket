@@ -1,5 +1,4 @@
 import { fetch } from '@gasket/fetch';
-import { AbortController } from '@gasket/fetch';
 
 describe('@gasket/fetch', function () {
   const perform = false;
@@ -16,7 +15,8 @@ describe('@gasket/fetch', function () {
 
   it('exposes AbortController', function () {
     if (perform) {
-      const controller = new AbortController();
+      // @ts-expect-error
+      const controller = new fetch.AbortController();
       const signal: AbortSignal = controller.signal;
     }
   });
