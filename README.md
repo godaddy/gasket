@@ -143,9 +143,9 @@ Available presets
 
 | Name                    | Version | Description                                |
 | ----------------------- | ------- | ------------------------------------------ |
-| [@gasket/preset-api]    | 6.27.1  | Create Express-based API with Gasket       |
-| [@gasket/preset-nextjs] | 6.27.0  | Basic NextJS Framework                     |
-| [@gasket/preset-pwa]    | 6.27.1  | Turn Gasket apps into Progressive Web Apps |
+| [@gasket/preset-api]    | 6.28.0  | Create Express-based API with Gasket       |
+| [@gasket/preset-nextjs] | 6.28.0  | Basic NextJS Framework                     |
+| [@gasket/preset-pwa]    | 6.28.0  | Turn Gasket apps into Progressive Web Apps |
 
 ## Plugins
 
@@ -153,36 +153,36 @@ Available plugins
 
 | Name                            | Version | Description                                                                |
 | ------------------------------- | ------- | -------------------------------------------------------------------------- |
-| [@gasket/plugin-analyze]        | 6.26.1  | Gasket Analyzer Plugin                                                     |
+| [@gasket/plugin-analyze]        | 6.28.0  | Gasket Analyzer Plugin                                                     |
 | [@gasket/plugin-command]        | 6.27.1  | Plugin to enable other plugins to inject new gasket commands               |
 | [@gasket/plugin-config]         | 6.26.1  | Supports application-specific (non-Gasket) configuration                   |
 | [@gasket/plugin-cypress]        | 6.24.0  | Integrates Cypress based testing into your Gasket application              |
-| [@gasket/plugin-docs]           | 6.27.1  | Centralize doc files from plugins and modules                              |
+| [@gasket/plugin-docs]           | 6.28.0  | Centralize doc files from plugins and modules                              |
 | [@gasket/plugin-docs-graphs]    | 6.26.2  | Generate mermaid graphs of an applications gasket lifecycles               |
-| [@gasket/plugin-docsify]        | 6.26.1  | View collated docs with Docsify                                            |
-| [@gasket/plugin-docusaurus]     | 6.26.1  | Gasket plugin for docusaurus                                               |
-| [@gasket/plugin-elastic-apm]    | 6.27.1  | Adds Elastic APM instrumentation to your application                       |
-| [@gasket/plugin-express]        | 6.26.1  | Adds express support to your application                                   |
-| [@gasket/plugin-fastify]        | 6.26.1  | Adds fastify support to your application                                   |
+| [@gasket/plugin-docsify]        | 6.28.0  | View collated docs with Docsify                                            |
+| [@gasket/plugin-docusaurus]     | 6.28.0  | Gasket plugin for docusaurus                                               |
+| [@gasket/plugin-elastic-apm]    | 6.28.0  | Adds Elastic APM instrumentation to your application                       |
+| [@gasket/plugin-express]        | 6.28.0  | Adds express support to your application                                   |
+| [@gasket/plugin-fastify]        | 6.28.0  | Adds fastify support to your application                                   |
 | [@gasket/plugin-git]            | 6.26.1  | Adds git support to your application                                       |
-| [@gasket/plugin-https]          | 6.26.1  | Create http/s servers with graceful termination                            |
-| [@gasket/plugin-intl]           | 6.26.1  | NodeJS script to build localization files.                                 |
+| [@gasket/plugin-https]          | 6.28.0  | Create http/s servers with graceful termination                            |
+| [@gasket/plugin-intl]           | 6.28.1  | NodeJS script to build localization files.                                 |
 | [@gasket/plugin-jest]           | 6.24.0  | Integrated jest into your application.                                     |
 | [@gasket/plugin-lifecycle]      | 6.26.1  | Allows a gasket/ directory to be used for lifecycle hooks in applications. |
 | [@gasket/plugin-lint]           | 6.24.0  | Adds GoDaddy standard linting to your application                          |
-| [@gasket/plugin-log]            | 6.26.1  | Gasket log plugin                                                          |
-| [@gasket/plugin-manifest]       | 6.27.1  | The web app manifest for progressive Gasket applications                   |
+| [@gasket/plugin-log]            | 6.28.0  | Gasket log plugin                                                          |
+| [@gasket/plugin-manifest]       | 6.28.0  | The web app manifest for progressive Gasket applications                   |
 | [@gasket/plugin-metadata]       | 6.26.1  | Adds metadata to gasket lifecycles                                         |
 | [@gasket/plugin-metrics]        | 6.26.1  | Collect metrics for gasket commands                                        |
 | [@gasket/plugin-mocha]          | 6.24.0  | Integrates mocha based testing in to your Gasket application               |
-| [@gasket/plugin-morgan]         | 6.26.1  | Adds morgan request logger to your app                                     |
-| [@gasket/plugin-nextjs]         | 6.26.1  | Adds Next support to your application                                      |
-| [@gasket/plugin-redux]          | 6.26.1  | Gasket Redux Setup                                                         |
-| [@gasket/plugin-service-worker] | 6.26.1  | Gasket Service Worker Plugin                                               |
+| [@gasket/plugin-morgan]         | 6.28.0  | Adds morgan request logger to your app                                     |
+| [@gasket/plugin-nextjs]         | 6.28.0  | Adds Next support to your application                                      |
+| [@gasket/plugin-redux]          | 6.28.0  | Gasket Redux Setup                                                         |
+| [@gasket/plugin-service-worker] | 6.28.0  | Gasket Service Worker Plugin                                               |
 | [@gasket/plugin-start]          | 6.27.0  | Adds commands for building and starting Gasket apps                        |
-| [@gasket/plugin-swagger]        | 6.26.1  | Generate and serve swagger docs                                            |
+| [@gasket/plugin-swagger]        | 6.28.0  | Generate and serve swagger docs                                            |
 | [@gasket/plugin-webpack]        | 6.26.1  | Adds webpack support to your application                                   |
-| [@gasket/plugin-workbox]        | 6.26.1  | Gasket Workbox Plugin                                                      |
+| [@gasket/plugin-workbox]        | 6.28.0  | Gasket Workbox Plugin                                                      |
 
 ## Modules
 
@@ -194,14 +194,14 @@ Supporting modules
 | [@gasket/cli]              | 6.27.1  | CLI for rapid application development with gasket                                    |
 | [@gasket/data]             | 6.24.0  | Helper package for accessing embedded Gasket Data in the browser                     |
 | [@gasket/engine]           | 6.26.1  | Plugin engine for gasket                                                             |
-| [@gasket/fetch]            | 6.24.2  | Gasket Fetch API                                                                     |
+| [@gasket/fetch]            | 6.28.1  | Gasket Fetch API                                                                     |
 | [@gasket/helper-intl]      | 6.26.1  | Internal helpers used by loaders to resolve locale file paths                        |
 | [@gasket/log]              | 6.24.0  | Gasket client and server logger                                                      |
 | [@gasket/nextjs]           | 6.24.0  | Gasket integrations for Next.js apps                                                 |
-| [@gasket/react-intl]       | 6.26.1  | React component library to enable localization for gasket apps.                      |
+| [@gasket/react-intl]       | 6.28.1  | React component library to enable localization for gasket apps.                      |
 | [@gasket/redux]            | 6.24.0  | Gasket Redux Configuration                                                           |
 | [@gasket/resolve]          | 6.24.0  | Essential module resolution & configuration management for gasket plugins & presets. |
-| [@gasket/typescript-tests] | 6.27.1  | Not a published package; hosts unit tests to verify TypeScript support               |
+| [@gasket/typescript-tests] | 6.28.1  | Not a published package; hosts unit tests to verify TypeScript support               |
 | [@gasket/utils]            | 6.26.1  | Reusable utilities for Gasket internals                                              |
 | [create-gasket-app]        | 6.27.1  | starter pack for creating a gasket app                                               |
 
@@ -272,7 +272,7 @@ Available configuration options in the `gasket.config.js`
 | [swagger.ui]                    | Optional custom UI options                                                                            | object                                 |                                |
 | [terminus][11]                  | Terminus config object                                                                                | object                                 |                                |
 | [terminus.healthcheck]          | Custom Terminus healthcheck endpoint names                                                            | string[]                               | /healthcheck,/healthcheck.html |
-| [winston]                       | Setup and customize winston logger                                                                    | object                                 | {}                             |
+| [winston]                       | Setup and customize winston logger                                                                    | object                                 |                                |
 | [workbox][12]                   | Workbox config object                                                                                 | object                                 |                                |
 | [workbox.basePath]              | Change the default path to `/_workbox` endpoint by adding a path prefix here                          | string                                 |                                |
 | [workbox.config]                | Any initial workbox config options which will be merged with those from any `workbox` lifecycle hooks | object                                 |                                |
