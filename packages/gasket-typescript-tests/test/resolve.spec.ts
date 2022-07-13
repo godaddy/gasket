@@ -170,7 +170,10 @@ describe('@gasket/resolve', () => {
   describe('assignPresetConfig', function () {
     it('has expected signature', function () {
       if (perform) {
-        const gasket: Gasket = assignPresetConfig({});
+        // @ts-ignore
+        const gasket: Gasket = {};
+
+        const results: Gasket = assignPresetConfig(gasket);
       }
     });
   });
