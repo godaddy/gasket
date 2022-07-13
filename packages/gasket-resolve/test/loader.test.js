@@ -68,7 +68,7 @@ describe('Loader', () => {
   });
 
   it('extends Resolver', () => {
-    expect(loader).toBeInstanceOf(require('../lib/resolver'));
+    expect(loader).toBeInstanceOf(require('../lib/resolver').Resolver);
   });
 
   it('exposes expected methods', () => {
