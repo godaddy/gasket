@@ -567,5 +567,20 @@ describe('Loader', () => {
         ])
       );
     });
+
+    it('memoized calls', () => {
+      const config = {
+        presets: ['@gasket/preset-two'],
+        add: ['one']
+      };
+      const results = loader.loadConfigured(config);
+      const results2 = loader.loadConfigured(config);
+      expect(results2).toBe(results);
+
+      // verify by force clearing then reload
+      loader._loaded.clear();
+      const results3 = loader.loadConfigured(config);
+      expect(results3).not.toBe(results);
+    });
   });
 });

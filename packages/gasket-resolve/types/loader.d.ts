@@ -1,5 +1,6 @@
 import { Resolver } from './resolver';
 import { PluginName, PresetName } from './identifiers';
+import * as module from 'module';
 
 /**
  * Module with meta data
@@ -50,6 +51,21 @@ export interface PresetInfo extends ModuleInfo {
   presets: PresetInfo[]
 }
 
+export interface PluginConfig {
+  /**
+   * Presets to load and add plugins from
+   */
+  presets?: PresetName[]
+  /**
+   * Names of plugins to load
+   */
+  add?: Array<PluginName | object>
+  /**
+   * Names of plugins to remove (from presets)
+   */
+  remove?: PluginName[]
+}
+
 /**
  * Utility to load plugins, presets, and other modules with associated metadata
  *
@@ -58,9 +74,9 @@ export interface PresetInfo extends ModuleInfo {
  */
 export class Loader extends Resolver {
   /**
-   * @param {object} options - Options
-   * @param {string|string[]} [options.resolveFrom] - Path(s) to resolve modules from
-   * @param {require} [options.require] - Require instance to use
+   * @param options - Options
+   * @param [options.resolveFrom] - Path(s) to resolve modules from
+   * @param [options.require] - Require instance to use
    */
   constructor(options: {
     resolveFrom?: string | string[];
@@ -70,39 +86,39 @@ export class Loader extends Resolver {
   /**
    * Loads a module with additional metadata
    *
-   * @param {object} module - Module content
-   * @param {string} moduleName - Name of module to load
-   * @param {object} [meta] - Additional meta data
-   * @returns {ModuleInfo} module
+   * @param module - Module content
+   * @param moduleName - Name of module to load
+   * @param [meta] - Additional meta data
+   * @returns module
    */
   getModuleInfo(module: object, moduleName: string, meta?: object): ModuleInfo;
 
   /**
    * Loads a module with additional metadata
    *
-   * @param {string} moduleName - Name of module to load
-   * @param {object} [meta] - Additional meta data
-   * @returns {ModuleInfo} module
+   * @param moduleName - Name of module to load
+   * @param [meta] - Additional meta data
+   * @returns module
    */
   loadModule(moduleName: string, meta?: object): ModuleInfo;
 
   /**
    * Loads a plugin with additional metadata.
    *
-   * @param {PluginName|object} module - Name of module to load (or module content)
-   * @param {object} [meta] - Additional meta data
-   * @returns {PluginInfo} module
+   * @param module - Name of module to load (or module content)
+   * @param [meta] - Additional meta data
+   * @returns module
    */
   loadPlugin(module: PluginName | object, meta?: object): PluginInfo;
 
   /**
    * Loads a preset with additional metadata
    *
-   * @param {PresetName} module - Name of module to load
-   * @param {object} [meta] - Additional meta data
-   * @param {boolean} [options] - Loading options
-   * @param {boolean} [options.shallow] - Do not recursively load dependencies
-   * @returns {PresetInfo} module
+   * @param module - Name of module to load
+   * @param [meta] - Additional meta data
+   * @param [options] - Loading options
+   * @param [options.shallow] - Do not recursively load dependencies
+   * @returns module
    */
   loadPreset(module: PresetName, meta?: object, { shallow: boolean }?): PresetInfo;
 
@@ -111,17 +127,10 @@ export class Loader extends Resolver {
    * Plugins will be filtered and ordered as configuration with priority of:
    *  - added plugins > preset plugins > nested preset plugins
    *
-   * @param {object}                config         - Presets and plugins to load
-   * @param {PresetName[]}          config.presets - Presets to load and add plugins from
-   * @param {PluginName[]|module[]} config.add     - Names of plugins to load
-   * @param {string[]}              [config.remove] - Names of plugins to remove (from presets)
-   * @returns {{presets: PresetInfo[], plugins: PluginInfo[]}} results
+   * @param pluginConfig - Presets and plugins to load
+   * @returns results
    */
-  loadConfigured(config: {
-    presets: PresetName[];
-    add: PluginName[] | object[];
-    remove?: PluginName[];
-  }): {
+  loadConfigured(pluginConfig: PluginConfig): {
     presets: PresetInfo[];
     plugins: PluginInfo[];
   };
