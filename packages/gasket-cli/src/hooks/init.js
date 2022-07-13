@@ -41,16 +41,11 @@ async function initHook({ id, config: oclifConfig, argv }) {
     process.env.GASKET_COMMAND = id;
 
     let gasketConfig = await loadGasketConfigFile(root, env, id, config);
-    console.log('-- gasketConfig --', gasketConfig);
-
     if (gasketConfig) {
       gasketConfig = addDefaultPlugins(gasketConfig);
-      console.log('-- gasketConfig - addDefaultPlugins --', gasketConfig);
 
       const gasket = new PluginEngine(gasketConfig, { resolveFrom: root });
-      console.log('-- gasket --', gasket);
       assignPresetConfig(gasket);
-      console.log('-- gasket - assignPresetConfig --', gasket);
 
       oclifConfig.gasket = gasket;
       await gasket.exec('initOclif', { oclifConfig });
