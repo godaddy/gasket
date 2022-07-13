@@ -1,5 +1,7 @@
 # `@gasket/resolve`
 
+- Memoize results from plugin loader ([#395])
+
 ### 6.15.2
 
 - Handle missing package exports ([#333])
@@ -69,5 +71,6 @@
 [#227]: https://github.com/godaddy/gasket/pull/227
 [#247]: https://github.com/godaddy/gasket/pull/247
 [#333]: https://github.com/godaddy/gasket/pull/333
+[#395]: https://github.com/godaddy/gasket/pull/395
 
 [Loader]:/packages/gasket-resolve/docs/api.md#loader
