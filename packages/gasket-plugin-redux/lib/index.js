@@ -71,6 +71,23 @@ module.exports = {
           name: path.relative(root, makeStore),
           description: 'Setup to make Redux store',
           link: 'README.md'
+        }],
+        configurations: [{
+          name: 'redux',
+          link: 'README.md#configuration',
+          description: 'Redux plugin config object',
+          type: 'object'
+        }, {
+          name: 'redux.makeStore',
+          link: 'README.md#configuration',
+          description: 'Relative path to a custom makeStore configuration',
+          type: 'string',
+          default: 'store.js'
+        }, {
+          name: 'redux.initState',
+          link: 'README.md#configuration',
+          description: 'Initial state to include in the store',
+          type: 'object'
         }]
       };
     }

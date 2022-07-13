@@ -41,9 +41,8 @@ module.exports = {
 
 Set the Workbox options, in the `gasket.config.js` under `workbox`.
 
-- `outputDir` - (string) path of directory to copy Workbox libraries to
-  (default: `./build/workbox`)
-- `basePath` - (string) change the default path to `/_workbox` endpoint by
+- `outputDir` - (string) The path to the directory in which the Workbox libraries should be copied (default: `./build/workbox`)
+- `basePath` - (string) Change the default path to `/_workbox` endpoint by
   adding a path prefix here. (default: ''). Used for setting up CDN support for
   Workbox files.
 - `config`: (object) Any initial [workbox config options][generateSWString]

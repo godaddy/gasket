@@ -40,8 +40,7 @@ To be set in under `docsify` in the `gasket.config.js`.
 - `theme` - (string) Name of the theme. Default is `styles/gasket.css`. Can be
   set to name of [docsify themes], a URL, or CSS file.
 - `port` - (number) Port to serve the docs from. Default is `3000`.
-- `config` - (object) Any [Docsify config] properties, expect for functions
-  types which are not currently supported. Default has `auth2top` and
+- `config` - (object) Any Docsify configuration property except for functions types that are not currently supported. Default has `auth2top` and
   `relativePath` set to `true`, with `maxLevel` at `3`.
 - `stylesheets` (string[]) - Optional additional stylesheet URLs to load.
 - `scripts` (string[]) - Optional additional scripts files, which can include

@@ -19,6 +19,12 @@ module.exports = {
           name: 'analyze',
           description: 'Generate analysis report of webpack bundles',
           link: 'README.md#commands'
+        }],
+        configurations: [{
+          name: 'bundleAnalyzerConfig',
+          link: 'README.md#configuration',
+          description: 'Tune both browser and server Webpack analysis reports',
+          type: 'object'
         }]
       };
     }
