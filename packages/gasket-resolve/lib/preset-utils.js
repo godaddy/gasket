@@ -1,9 +1,11 @@
 /**
  * Takes list of top-level presets required by an app, and flattens out any that
- * they might extend. Presets are ordered by extended depth, with deeper later.
+ * they might extend.
  *
- * @param {presetInfos[]} presetInfos - Array of preset infos
- * @returns {presetInfos[]} flattened presetInfos
+ * Presets are ordered by extended depth, with deeper later.
+ *
+ * @param {PresetInfo[]} presetInfos - Array of preset infos
+ * @returns {PresetInfo[]} flattened presetInfos
  */
 function flattenPresets(presetInfos = []) {
   const flattened = [[...presetInfos]];

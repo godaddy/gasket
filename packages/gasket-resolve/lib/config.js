@@ -6,7 +6,6 @@ const { flattenPresets } = require('./preset-utils');
 const jsExtension = /\.js$/i;
 
 async function loadGasketConfigFile(root, env, commandId, configFile = 'gasket.config') {
-  console.log('-- loadGasketConfigFile -- ', root, env, commandId, configFile)
   let gasketConfig = loadConfigFile(root, configFile);
   if (gasketConfig) {
     gasketConfig.root = root;
@@ -44,6 +43,7 @@ async function addUserPlugins(gasketConfig) {
  * @param {string} root - Directory we need to search.
  * @param {string} parts - path parts of the directory that contains the plugins.
  * @returns {string[]} found plugin files
+ * @private
  */
 async function resolveUserPlugins(root, ...parts) {
   const dir = path.join(root, ...parts);
@@ -68,6 +68,7 @@ async function resolveUserPlugins(root, ...parts) {
 
 /**
  * Loads config from presets and assigns to the main config.
+ *
  * Merge priority order being:
  * - loaded file config > preset configs > child preset configs
  *
