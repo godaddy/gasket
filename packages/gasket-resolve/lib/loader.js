@@ -31,6 +31,15 @@ const { pluginIdentifier, presetIdentifier } = require('./identifiers');
  * @property {PluginInfo[]} plugins - Plugins this preset uses
  */
 
+/**
+ * Presets and plugins to load
+ *
+ * @typedef {object} PluginConfig
+ *
+ * @property {PresetName[]}          presets - Presets to load and add plugins from
+ * @property {PluginName[]|module[]} add     - Names of plugins to load
+ * @property {PluginName[]}          [remove] - Names of plugins to remove (from presets)
+ */
 
 /**
  * Test if module appears to be a path name.
@@ -50,6 +59,12 @@ class Loader extends Resolver {
 
   constructor() {
     super(...arguments);
+    /**
+     * Loaded plugin configurations
+     * @type {Map<PluginConfig, {presets: PresetInfo[], plugins: PluginInfo[]}>}
+     * @private
+     */
+    this._loaded = new Map();
   }
 
   /**
@@ -168,14 +183,13 @@ class Loader extends Resolver {
    * Plugins will be filtered and ordered as configuration with priority of:
    *  - added plugins > preset plugins > nested preset plugins
    *
-   * @param {object}                config         - Presets and plugins to load
-   * @param {PresetName[]}          config.presets - Presets to load and add plugins from
-   * @param {PluginName[]|module[]} config.add     - Names of plugins to load
-   * @param {PluginName[]}          [config.remove] - Names of plugins to remove (from presets)
+   * @param {PluginConfig} pluginConfig - Presets and plugins to load
    * @returns {{presets: PresetInfo[], plugins: PluginInfo[]}} results
    */
-  loadConfigured(config) {
-    const { presets = [], add = [], remove = [] } = config || {};
+  loadConfigured(pluginConfig) {
+    if (this._loaded.has(pluginConfig)) return this._loaded.get(pluginConfig);
+
+    const { presets = [], add = [], remove = [] } = pluginConfig || {};
 
     const loadedPresets = presets.map(name => this.loadPreset(name, { from: 'config' }));
     const loadedPlugins = add.map(module => this.loadPlugin(module, { from: 'config' }));
@@ -207,10 +221,13 @@ class Loader extends Resolver {
 
     plugins = plugins.filter((info => !pluginsToRemove.has(pluginIdentifier(info.name).fullName)));
 
-    return {
+    const results = {
       presets: loadedPresets,
       plugins
     };
+
+    this._loaded.set(pluginConfig, results);
+    return results;
   }
 }
 
