@@ -1,4 +1,4 @@
-const Loader = require('../lib/loader');
+const { Loader } = require('../lib/loader');
 const { makeRequire } = require('./helpers');
 
 let mockRequire;

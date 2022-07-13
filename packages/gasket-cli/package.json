@@ -77,7 +77,6 @@
     "handlebars": "^4.7.6",
     "inquirer": "6.3.1",
     "json5": "^2.1.0",
-    "lodash.defaultsdeep": "^4.6.1",
     "mkdirp": "^1.0.4",
     "ora": "^3.4.0",
     "pump": "^3.0.0",

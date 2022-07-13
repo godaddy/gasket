@@ -1,5 +1,5 @@
 const path = require('path');
-const Resolver = require('./resolver');
+const { Resolver } = require('./resolver');
 const { pluginIdentifier, presetIdentifier } = require('./identifiers');
 
 /**
@@ -214,4 +214,6 @@ class Loader extends Resolver {
   }
 }
 
-module.exports = Loader;
+module.exports = {
+  Loader
+};

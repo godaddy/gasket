@@ -1,4 +1,4 @@
-const Resolver = require('../lib/resolver');
+const { Resolver } = require('../lib/resolver');
 const { makeRequire } = require('./helpers');
 
 const mockModules = {
@@ -76,7 +76,8 @@ describe('Resolver', () => {
 
     it('throws if package.json not exported', () => {
       const resolver = new Resolver({ require: mockRequire });
-      expect(() => resolver.resolve('no-exported/package.json')).toThrow(/Package subpath '\.\/package.json' is not defined by "exports"/);
+      expect(() => resolver.resolve('no-exported/package.json'))
+        .toThrow(/Package subpath '\.\/package.json' is not defined by "exports"/);
     });
 
     it('uses resolver file require by default', () => {
@@ -127,7 +128,8 @@ describe('Resolver', () => {
 
     it('throws if package.json not exported', () => {
       const resolver = new Resolver({ require: mockRequire });
-      expect(() => resolver.require('no-exported/package.json')).toThrow(/Package subpath '\.\/package.json' is not defined by "exports"/);
+      expect(() => resolver.require('no-exported/package.json'))
+        .toThrow(/Package subpath '\.\/package.json' is not defined by "exports"/);
     });
 
     it('throws if module malformed', () => {

@@ -1,4 +1,4 @@
-import Resolver from './resolver';
+import { Resolver } from './resolver';
 import { PluginName, PresetName } from './identifiers';
 
 /**
