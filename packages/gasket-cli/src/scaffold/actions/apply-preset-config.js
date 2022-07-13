@@ -1,5 +1,5 @@
+const { flattenPresets } = require('@gasket/resolve');
 const action = require('../action-wrapper');
-const { flattenPresets } = require('../utils');
 
 /**
  * Extracts predefined createContext from presets and applies to context.
