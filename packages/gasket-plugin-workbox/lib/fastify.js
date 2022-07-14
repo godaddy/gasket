@@ -7,7 +7,7 @@ const { getOutputDir } = require('./utils');
  * @param {Gasket} gasket - Gasket
  * @param {Object} app - Fastify app
  */
-module.exports = function express(gasket, app) {
+module.exports = function fastify(gasket, app) {
   const outputDir = getOutputDir(gasket);
 
   app.register(serveStatic(outputDir, {
