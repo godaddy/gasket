@@ -156,6 +156,8 @@ module.exports = {
         });
 
         fastifyApp.all('/*', app.getRequestHandler());
+
+        return app;
       }
     },
     build: async function build(gasket) {
