@@ -14,7 +14,6 @@ const isUrl = /^(https?:)?\/\//;
  */
 function generateContent(docsConfigSet) {
   const { app: appDocs, docsRoot } = docsConfigSet;
-
   const refMap = new Map();
   let content = '';
   let idx = 0;
@@ -50,11 +49,11 @@ function generateContent(docsConfigSet) {
         : ['Name', 'Description'].concat(additionalHeaders),
       ...docs.map(moduleDoc => {
         const additionalHeaderValues = additionalHeaders.map(h => moduleDoc[h.toLowerCase()]);
-        const { name, description, link, version, targetRoot } = moduleDoc;
-        let itemName = name;
+        const { name, description, link, version, targetRoot, deprecated } = moduleDoc;
+        let itemName = deprecated ? `${name} (deprecated)` : name;
         if (link || linkFallbacks) {
-          const ref = uniqueRef(name);
-          itemName = ref === name ? `[${name}]` : `[${name}][${ref}]`;
+          const ref = uniqueRef(itemName);
+          itemName = ref === name ? `[${itemName}]` : `[${itemName}][${ref}]`;
           refMap.set(ref, formatLink(link || 'README.md', targetRoot));
         }
 

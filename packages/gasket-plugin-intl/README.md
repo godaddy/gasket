@@ -31,7 +31,7 @@ module.exports = {
 
 ## Configuration
 
-To be set in under `intl` in the `gasket.config.js`. No configuration is
+To be set under `intl` in the `gasket.config.js`. No configuration is
 required. However, these options exist to customize an app's setup.
 
 ### Options

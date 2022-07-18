@@ -96,7 +96,7 @@ class GasketCommand extends Command {
  * @type {object} flags
  * @property {string} config - Fully qualified gasket config to load (default: `'gasket.config'`)
  * @property {string} root - Top-level app directory (default: `process.cwd()`)
- * @property {string} env - Target runtime environment (default: `NODE_ENV` or `'development'`)
+ * @property {string} env - Target runtime environment (default: `GASKET_ENV` or `'development'`)
  */
 GasketCommand.flags = {
   config: flags.string({
@@ -111,7 +111,7 @@ GasketCommand.flags = {
     description: 'Top-level app directory'
   }),
   env: flags.string({
-    env: 'NODE_ENV',
+    env: 'GASKET_ENV',
     description: 'Target runtime environment'
   }),
   require: flags.string({

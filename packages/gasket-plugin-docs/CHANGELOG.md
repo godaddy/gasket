@@ -1,5 +1,9 @@
 # `@gasket/plugin-docs`
 
+### 6.27.1
+
+- Add support for lifecycles deprecated property in generated docs ([#391])
+
 ### 6.25.0
 
 - Update TypeScript types and docs ([#373])
@@ -69,3 +73,4 @@
 [#374]: https://github.com/godaddy/gasket/pull/374
 [#375]: https://github.com/godaddy/gasket/pull/375
 [#379]: https://github.com/godaddy/gasket/pull/379
+[#391]: https://github.com/godaddy/gasket/pull/391

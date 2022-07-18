@@ -1,5 +1,9 @@
 # `@gasket/engine`
 
+### 6.26.1
+
+- GasketEngine types tweaks ([#385])
+
 ### 6.24.2
 
 - Fix types for execApply* callback handlers - do not need gasket arg ([#377])
@@ -86,5 +90,6 @@
 [#345]: https://github.com/godaddy/gasket/pull/345
 [#356]: https://github.com/godaddy/gasket/pull/356
 [#377]: https://github.com/godaddy/gasket/pull/377
+[#385]: https://github.com/godaddy/gasket/pull/385
 
 [Loader]:/packages/gasket-resolve/docs/api.md#loader

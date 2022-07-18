@@ -42,6 +42,10 @@ describe('init hook', () => {
 
   afterEach(function () {
     sinon.restore();
+    delete process.env.GASKET_ENV;
+    delete process.env.GASKET_CONFIG;
+    delete process.env.GASKET_ROOT;
+    delete process.env.GASKET_COMMAND;
   });
 
   it('ends early for create command', async () => {
@@ -52,6 +56,20 @@ describe('init hook', () => {
   it('parses flags', async () => {
     await initHook({ id: 'build', argv: [] });
     assume(parseStub).called();
+  });
+
+  it('set env vars from flags', async () => {
+    assume(process.env).not.property('GASKET_ENV');
+    assume(process.env).not.property('GASKET_ROOT');
+    assume(process.env).not.property('GASKET_CONFIG');
+    assume(process.env).not.property('GASKET_COMMAND');
+
+    await initHook({ id: 'build', argv: [] });
+
+    assume(process.env.GASKET_ENV).equals('development');
+    assume(process.env.GASKET_ROOT).equals('/path/to/app');
+    assume(process.env.GASKET_CONFIG).equals('gasket.config');
+    assume(process.env.GASKET_COMMAND).equals('build');
   });
 
   it('gets the gasket.config', async () => {

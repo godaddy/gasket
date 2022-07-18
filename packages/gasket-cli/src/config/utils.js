@@ -47,6 +47,12 @@ function getEnvironment(flags, commandId, warn) {
     return 'local';
   }
 
+  const { NODE_ENV } = process.env;
+  if (NODE_ENV) {
+    warn(`No env specified, falling back to NODE_ENV: "${ NODE_ENV }".`);
+    return NODE_ENV;
+  }
+
   warn('No env specified, falling back to "development".');
   return 'development';
 }

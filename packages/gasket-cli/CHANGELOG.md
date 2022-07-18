@@ -1,5 +1,16 @@
 # `@gasket/cli`
 
+### 6.27.1
+
+- Add git plugin to CLI default plugins ([#392])
+- Address createContext helper types ([#393])
+- expose `GASKET_COMMAND` on process.env ([#393])
+
+### 6.27.0
+
+- Support for `GASKET_ENV` with fallback to `NODE_ENV` ([#387])
+- expose Gasket settings on process.env
+
 ### 6.24.3
 
 - Support for --require flag to load modules before Gasket initializes ([#370])
@@ -362,3 +373,6 @@ upon `gasket create`
 [#363]: https://github.com/godaddy/gasket/pull/363
 [#370]: https://github.com/godaddy/gasket/pull/370
 [#371]: https://github.com/godaddy/gasket/pull/371
+[#387]: https://github.com/godaddy/gasket/pull/387
+[#392]: https://github.com/godaddy/gasket/pull/392
+[#393]: https://github.com/godaddy/gasket/pull/393

@@ -199,76 +199,76 @@ module.exports = {
     metadata(gasket, meta) {
       return {
         ...meta,
-        guides: [
-          {
-            name: 'Next.js Routing Guide',
-            description: 'Basic and advance routing for Next.js',
-            link: 'docs/routing.md'
-          },
-          {
-            name: 'Next.js Deployment Guide',
-            description: 'Steps to deploy a Next.js Gasket app',
-            link: 'docs/deployment.md'
-          },
-          {
-            name: 'Next.js Redux Guide',
-            description: 'Using Redux with Next.js Gasket apps',
-            link: 'docs/redux.md'
-          }
-        ],
-        lifecycles: [
-          {
-            name: 'nextConfig',
-            method: 'execWaterfall',
-            description: 'Setup the next config',
-            link: 'README.md#nextConfig',
-            parent: 'express'
-          },
-          {
-            name: 'next',
-            method: 'exec',
-            description: 'Update the next app instance before prepare',
-            link: 'README.md#next',
-            parent: 'express',
-            after: 'nextConfig'
-          },
-          {
-            name: 'nextExpress',
-            method: 'exec',
-            description: 'Access the prepared next app and express instance',
-            link: 'README.md#nextExpress',
-            parent: 'express',
-            after: 'next'
-          },
-          {
-            name: 'next',
-            method: 'exec',
-            description: 'Update the next app instance before prepare',
-            link: 'README.md#next',
-            parent: 'fastify',
-            after: 'nextConfig'
-          },
-          {
-            name: 'nextFastify',
-            method: 'exec',
-            description: 'Access the prepared next app and fastify instance',
-            link: 'README.md#nextFastify',
-            parent: 'fastify',
-            after: 'next'
-          }
-        ],
-        structures: [
-          {
-            name: 'pages/',
-            description: 'NextJS routing',
-            link: 'https://nextjs.org/docs/routing/introduction'
-          },
-          {
-            name: 'public/',
-            description: 'NextJS static files',
-            link: 'https://nextjs.org/docs/basic-features/static-file-serving'
-          }
-        ]
+        guides: [{
+          name: 'Next.js Routing Guide',
+          description: 'Basic and advance routing for Next.js',
+          link: 'docs/routing.md'
+        },
+        {
+          name: 'Next.js Deployment Guide',
+          description: 'Steps to deploy a Next.js Gasket app',
+          link: 'docs/deployment.md'
+        },
+        {
+          name: 'Next.js Redux Guide',
+          description: 'Using Redux with Next.js Gasket apps',
+          link: 'docs/redux.md'
+        }],
+        lifecycles: [{
+          name: 'nextConfig',
+          method: 'execWaterfall',
+          description: 'Setup the next config',
+          link: 'README.md#nextConfig',
+          parent: 'express'
+        },
+        {
+          name: 'next',
+          method: 'exec',
+          description: 'Update the next app instance before prepare',
+          link: 'README.md#next',
+          parent: 'express',
+          after: 'nextConfig'
+        },
+        {
+          name: 'nextExpress',
+          method: 'exec',
+          description: 'Access the prepared next app and express instance',
+          link: 'README.md#nextExpress',
+          parent: 'express',
+          after: 'next'
+        },
+        {
+          name: 'next',
+          method: 'exec',
+          description: 'Update the next app instance before prepare',
+          link: 'README.md#next',
+          parent: 'fastify',
+          after: 'nextConfig'
+        },
+        {
+          name: 'nextFastify',
+          method: 'exec',
+          description: 'Access the prepared next app and fastify instance',
+          link: 'README.md#nextFastify',
+          parent: 'fastify',
+          after: 'next'
+        }],
+        structures: [{
+          name: 'pages/',
+          description: 'NextJS routing',
+          link: 'https://nextjs.org/docs/routing/introduction'
+        },
+        {
+          name: 'public/',
+          description: 'NextJS static files',
+          link: 'https://nextjs.org/docs/basic-features/static-file-serving'
+        }],
+        configurations: [{
+          name: 'nextConfig',
+          link: 'README.md#configuration',
+          description: 'Everything that can be configured in `next.config.js` can be added here.',
+          type: 'object'
+        }]
       };
     }
   }

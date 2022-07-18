@@ -1,6 +1,6 @@
 const build = require('./build');
 const configure = require('./configure');
-const express = require('./express');
+const serve = require('./serve');
 const middleware = require('./middleware');
 
 module.exports = {
@@ -8,7 +8,8 @@ module.exports = {
   hooks: {
     build,
     configure,
-    express,
+    express: serve,
+    fastify: serve,
     middleware,
     metadata(gasket, meta) {
       return {
@@ -19,6 +20,12 @@ module.exports = {
           description: 'Modify the the web manifest for a request',
           link: 'README.md#manifest',
           parent: 'middleware'
+        }],
+        configurations: [{
+          name: 'manifest',
+          link: 'README.md#configuration',
+          description: 'Manifest plugin config',
+          type: 'object'
         }]
       };
     }

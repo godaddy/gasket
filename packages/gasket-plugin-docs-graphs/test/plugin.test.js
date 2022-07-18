@@ -73,7 +73,7 @@ describe('docs graph plugin', function () {
     const content = await read(path.join(targetRoot, link), 'utf-8');
 
     assume(content).contains('snap --> crackle;');
-    assume(content).contains('crackle -- exec --> pop[pop (deprecated)];');
+    assume(content).contains('crackle -- exec --> pop["pop (deprecated)"];');
   });
 
   it('generates the LHS of the arrows from the correct attribute', async function () {

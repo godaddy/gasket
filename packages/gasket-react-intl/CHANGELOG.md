@@ -1,5 +1,9 @@
 # `@gasket/react-intl`
 
+### 6.26.1
+
+- Fix typo for `LocaleStatus` in sample code ([#384])
+
 ### 6.26.0
 
 - Update LocaleRequired to accept children and return valid ReactElement ([#380])
@@ -141,3 +145,4 @@
 [#278]: https://github.com/godaddy/gasket/pull/278
 [#358]: https://github.com/godaddy/gasket/pull/358
 [#380]: https://github.com/godaddy/gasket/pull/380
+[#384]: https://github.com/godaddy/gasket/pull/384
