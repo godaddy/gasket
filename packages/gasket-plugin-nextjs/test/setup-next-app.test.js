@@ -1,65 +1,44 @@
 const sinon = require('sinon');
 const assume = require('assume');
 const proxyquire = require('proxyquire').noCallThru();
-const { setupNextApp } = require('../lib/setup-next-app');
 
-const { spy, stub } = sinon;
+const { stub } = sinon;
 
 describe('setupNextApp', () => {
-  let next, nextHandler, module;
-
-  let result, gasket, data, mockConfig, mockCreateConfig, mockCreateApp;
+  let gasket, next, nextHandler, module;
 
   const getModule = () => {
     return proxyquire('../lib/setup-next-app', {
-        // './config': {
-        //     createConfig: mockCreateConfig
-        // }, 
-        // 'next': {
-        //     default: mockCreateApp
-        // }
+      next
     });
-  }
+  };
 
   beforeEach(() => {
-
     nextHandler = {
       prepare: stub().resolves(),
       getRequestHandler: stub().resolves({})
     };
-    mockCreateApp = stub().resolves(nextHandler)
-    
-    // module = proxyquire('../lib/setup-next-app', {
-    //     next: mockCreateApp
-    // })
 
-    module = getModule()
-    // next = stub().returns(nextHandler);
-
-    // plugin = proxyquire('../lib/', { next });
-    // hook = plugin.hooks.fastify.handler;
+    next = stub().returns(nextHandler);
+    module = getModule();
   });
 
   it('exports setupNextApp instance', function () {
     assume(module).property('setupNextApp');
-    console.log(`MODULE : ${module.setupNextApp}`);
-    assume(setupNextApp).to.be.a('function');
+    assume(module.setupNextApp).to.be.a('asyncfunction');
   });
 
   it('executes the `next` lifecycle', async function () {
     gasket = mockGasketApi();
-    result = setupNextApp(gasket);
-    console.log('RESULT ==> ', result);
+    await module.setupNextApp(gasket);
     assume(gasket.exec).has.been.calledWith('next', nextHandler);
-    // assume(result).property('prepare')
   });
 
-  // it('does not derive a webpack config if not running a dev server', async () => {
-  //   await hook(mockGasketApi(), expressApp, false);
-
-  //   const nextOptions = next.lastCall.args[0];
-  //   assume(nextOptions.conf).to.not.haveOwnProperty('webpack');
-  // });
+  it('does not derive a webpack config if not running a dev server', async () => {
+    await module.setupNextApp(gasket);
+    const nextOptions = next.lastCall.args[0];
+    assume(nextOptions.conf).to.not.haveOwnProperty('webpack');
+  });
 });
 
 function mockGasketApi() {

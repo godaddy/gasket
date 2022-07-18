@@ -98,7 +98,7 @@ describe('express hook', () => {
     plugin = proxyquire('../lib/', {
       './setup-next-app': {
         setupNextApp: setupNextAppStub
-      },
+      }
     });
 
     hook = plugin.hooks.express.handler;
@@ -190,10 +190,10 @@ describe('fastify hook', () => {
     setupNextAppStub = stub().returns(nextHandler);
 
     plugin = proxyquire('../lib/', {
-     './setup-next-app': {
-       setupNextApp: setupNextAppStub
-     },
-   });
+      './setup-next-app': {
+        setupNextApp: setupNextAppStub
+      }
+    });
     hook = plugin.hooks.fastify.handler;
   });
 
