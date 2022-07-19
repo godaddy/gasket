@@ -1,5 +1,7 @@
 # `@gasket/resolve`
 
+### 6.29.0
+
 - Moved loadGasketConfigFile and related functions ([#396])
 - Memoize results from plugin loader ([#395])
 
