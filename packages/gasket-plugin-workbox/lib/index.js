@@ -1,6 +1,7 @@
 const configure = require('./configure');
 const build = require('./build');
 const express = require('./express');
+const fastify = require('./fastify');
 const composeServiceWorker = require('./compose-service-worker');
 
 module.exports = {
@@ -9,6 +10,7 @@ module.exports = {
     configure,
     build,
     express,
+    fastify,
     composeServiceWorker,
     metadata(gasket, meta) {
       return {

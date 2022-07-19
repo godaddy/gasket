@@ -14,6 +14,7 @@ describe('Plugin', () => {
       'configure',
       'build',
       'express',
+      'fastify',
       'composeServiceWorker',
       'metadata'
     ];
