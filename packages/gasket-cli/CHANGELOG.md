@@ -1,5 +1,7 @@
 # `@gasket/cli`
 
+### 6.29.0
+
 - Using `loadGasketConfigFile` and `flattenPresets` from [@gasket/resolve] ([#396])
 
 ### 6.27.1
