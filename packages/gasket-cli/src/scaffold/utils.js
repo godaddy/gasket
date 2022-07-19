@@ -75,29 +75,6 @@ async function getPluginsWithVersions(plugins, pkgManager) {
 }
 
 /**
- * Takes list of top-level presets required by an app, and flattens out any that
- * they might extend. Presets are ordered by extended depth, with deeper later.
- *
- * @param {presetInfos[]} presetInfos - Array of preset infos
- * @returns {presetInfos[]} flattened presetInfos
- */
-function flattenPresets(presetInfos = []) {
-  const flattened = [[...presetInfos]];
-
-  function flatten(preset, depth = 1) {
-    const arr = flattened[depth] = flattened[depth] || [];
-    const { presets } = preset;
-    if (Array.isArray(presets)) {
-      arr.push(...presets);
-      presets.forEach(p => flatten(p, depth + 1));
-    }
-  }
-  presetInfos.forEach(p => flatten(p));
-
-  return flattened.reduce((acc, arr) => acc.concat(arr), []);
-}
-
-/**
  * Takes a file path and transforms it to be absolute if not already
  *
  * @param {string} filepath - Path to file that may be relative or have tildy
@@ -113,6 +90,5 @@ module.exports = {
   addPluginsToContext,
   addPluginsToPkg,
   getPluginsWithVersions,
-  flattenPresets,
   ensureAbsolute
 };

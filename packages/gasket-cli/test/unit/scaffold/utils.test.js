@@ -7,7 +7,6 @@ const {
   addPluginsToContext,
   addPluginsToPkg,
   getPluginsWithVersions,
-  flattenPresets,
   ensureAbsolute
 } = require('../../../src/scaffold/utils');
 
@@ -160,68 +159,6 @@ describe('Utils', () => {
       assume(results.map(o => o.full)).eqls([
         '@gasket/plugin-jest@3.2.1',
         '@gasket/plugin-intl@^7.8.9-faked'
-      ]);
-    });
-  });
-
-  describe('flattenPresets', () => {
-    it('returns empty array if no presets', () => {
-      const results = flattenPresets();
-      assume(results).eqls([]);
-    });
-
-    it('returns same array if no extended presets', () => {
-      const results = flattenPresets([
-        { name: 'one' },
-        { name: 'two', presets: [] }
-      ]);
-      assume(results).eqls([
-        { name: 'one' },
-        { name: 'two', presets: [] }
-      ]);
-    });
-
-    it('flattens extended presets', () => {
-      const results = flattenPresets([
-        { name: 'one' },
-        { name: 'two', presets: [
-          { name: 'two-a' },
-          { name: 'two-b', presets: [
-            { name: 'two-b-1' },
-            { name: 'two-b-2' }
-          ]
-          }
-        ]
-        }
-      ]);
-      assume(results.map(p => p.name)).eqls([
-        'one', 'two', 'two-a', 'two-b', 'two-b-1', 'two-b-2'
-      ]);
-    });
-
-    it('flattens presets ordered by depth as parents before children', () => {
-      const results = flattenPresets([
-        { name: 'one', presets: [
-          { name: 'one-a' },
-          { name: 'one-b', presets: [
-            { name: 'one-b-1' },
-            { name: 'one-b-2' }
-          ]
-          }
-        ]
-        },
-        { name: 'two', presets: [
-          { name: 'two-a' },
-          { name: 'two-b', presets: [
-            { name: 'two-b-1' },
-            { name: 'two-b-2' }
-          ]
-          }
-        ]
-        }
-      ]);
-      assume(results.map(p => p.name)).eqls([
-        'one', 'two', 'one-a', 'one-b', 'two-a', 'two-b', 'one-b-1', 'one-b-2', 'two-b-1', 'two-b-2'
       ]);
     });
   });

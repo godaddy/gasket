@@ -2,7 +2,6 @@ const proxyquire = require('proxyquire');
 const sinon = require('sinon');
 const assume = require('assume');
 
-
 describe('init hook', () => {
   let mockError, mockConfig, pluginEngineSpy;
   let initHook;
@@ -25,7 +24,7 @@ describe('init hook', () => {
     const mockImports = {
       '@gasket/engine': class PluginEngine { async exec() { execStub(...arguments); } },
       '@gasket/plugin-command': { GasketCommand: MockCommand },
-      '../config/utils': { getGasketConfig: getGasketConfigStub, assignPresetConfig: assignPresetConfigStub },
+      '@gasket/resolve': { loadGasketConfigFile: getGasketConfigStub, assignPresetConfig: assignPresetConfigStub },
       '@oclif/parser': { parse: parseStub }
     };
 
@@ -80,7 +79,7 @@ describe('init hook', () => {
   it('instantiates plugin engine with config', async () => {
     getGasketConfigStub.resolves(mockConfig);
     await initHook({ id: 'build', argv: [], config: {} });
-    assume(pluginEngineSpy).calledWith(mockConfig);
+    assume(pluginEngineSpy).calledWithMatch(mockConfig);
   });
 
   it('instantiates plugin engine resolveFrom root', async () => {

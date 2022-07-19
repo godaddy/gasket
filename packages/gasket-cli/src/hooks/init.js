@@ -20,7 +20,8 @@ async function initHook({ id, config: oclifConfig, argv }) {
 
   const { parse } = require('@oclif/parser');
   const { GasketCommand } = require('@gasket/plugin-command');
-  const { getEnvironment, getGasketConfig, assignPresetConfig } = require('../config/utils');
+  const { loadGasketConfigFile, assignPresetConfig } = require('@gasket/resolve');
+  const { getEnvironment, addDefaultPlugins } = require('../config/utils');
   const PluginEngine = require('@gasket/engine');
 
   const { flags } = parse(argv, {
@@ -28,21 +29,22 @@ async function initHook({ id, config: oclifConfig, argv }) {
     flags: GasketCommand.flags,
     strict: false
   });
+  const { root, config } = flags;
 
   try {
     const env = getEnvironment(flags, id, warn);
 
     // expose Gasket settings on process
     process.env.GASKET_ENV = env;
-    process.env.GASKET_CONFIG = flags.config;
-    process.env.GASKET_ROOT = flags.root;
+    process.env.GASKET_CONFIG = config;
+    process.env.GASKET_ROOT = root;
     process.env.GASKET_COMMAND = id;
 
-    const gasketConfig = await getGasketConfig(flags, env, id);
-
+    let gasketConfig = await loadGasketConfigFile(root, env, id, config);
     if (gasketConfig) {
-      const resolveFrom = flags.root;
-      const gasket = new PluginEngine(gasketConfig, { resolveFrom });
+      gasketConfig = addDefaultPlugins(gasketConfig);
+
+      const gasket = new PluginEngine(gasketConfig, { resolveFrom: root });
       assignPresetConfig(gasket);
 
       oclifConfig.gasket = gasket;
