@@ -43,9 +43,11 @@
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-resolve",
   "dependencies": {
     "diagnostics": "^2.0.2",
+    "lodash.defaultsdeep": "^4.6.1",
     "semver": "^7.3.4"
   },
   "devDependencies": {
+    "@gasket/engine": "^6.26.1",
     "@godaddy/dmd": "^1.0.0",
     "eslint": "^8.7.0",
     "eslint-config-godaddy": "^6.0.0",

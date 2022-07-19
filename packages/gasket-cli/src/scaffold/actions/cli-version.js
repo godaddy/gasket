@@ -1,6 +1,6 @@
 const semver = require('semver');
+const { flattenPresets } = require('@gasket/resolve');
 const action = require('../action-wrapper');
-const { flattenPresets } = require('../utils');
 const pkgVersion = require('../../../package.json').version;
 const pkgVersionCompatible = `^${pkgVersion}`;
 
