@@ -1,5 +1,10 @@
 # `@gasket/plugin-nextjs`
 
+- Add a `preNextHandling` lifecycle
+- Add a `getNextRoute` function to requests
+- Add a `transactionName` hook
+- Add a `transactionLabels` hook
+
 ### 6.21.0
 
 - Support for scaffolded cypress tests ([#357])

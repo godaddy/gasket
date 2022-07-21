@@ -1,4 +1,5 @@
 const { filterSensitiveCookies } = require('./cookies');
+const middleware = require('./middleware');
 const { dependencies } = require('../package.json');
 
 const isDefined = o => typeof o !== 'undefined';
@@ -83,6 +84,7 @@ module.exports = {
         });
       }
     },
+    middleware,
     metadata(gasket, meta) {
       return {
         ...meta,
@@ -97,6 +99,19 @@ module.exports = {
           description: 'List of sensitive cookies to filter',
           type: 'string[]',
           default: '[]'
+        }],
+        lifecycles: [{
+          name: 'transactionName',
+          method: 'execWaterfall',
+          description: 'Customize the APM transaction name',
+          link: 'README.md#transactionName',
+          parent: 'middleware'
+        }, {
+          name: 'transactionLabels',
+          method: 'execWaterfall',
+          description: 'Customize the APM transaction labels',
+          link: 'README.md#transactionLabels',
+          parent: 'middleware'
         }]
       };
     }

@@ -12,23 +12,26 @@ describe('Plugin', function () {
 
   it('has expected hooks', function () {
     const expected = [
-      'init',
+      'build',
       'configure',
       'create',
-      'build',
-      'webpackConfig',
       'express',
       'fastify',
+      'init',
+      'metadata',
       'middleware',
-      'workbox',
       'serviceWorkerCacheKey',
-      'metadata'
+      'transactionLabels',
+      'webpackConfig',
+      'workbox'
     ];
 
     assume(plugin).property('hooks');
 
     const hooks = Object.keys(plugin.hooks);
-    assume(hooks).eqls(expected);
+    for (const hook of expected) {
+      assume(hooks).contains(hook);
+    }
     assume(hooks).length(expected.length);
   });
 });

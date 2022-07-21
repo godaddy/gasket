@@ -1,18 +1,21 @@
 # `@gasket/plugin-elastic-apm`
 
-### 6.27.1
+- Add a `transactionName` lifecycle
+- Add a `transactionLabels` lifecycle
+
+## 6.27.1
 
 - Skip preboot lifecycle when app is run locally ([#388])
 
-### 6.25.0
+## 6.25.0
 
 - Prefer `--require` for starting Elastic APM ([#378])
 
-### 6.10.0
+## 6.10.0
 
 - TypeScript definitions for config & lifecycles ([#311])
 
-### 6.0.12
+## 6.0.12
 
 - Initial release.
 

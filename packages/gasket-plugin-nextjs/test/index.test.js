@@ -21,17 +21,20 @@ describe('Plugin', function () {
 
   it('has expected hooks', () => {
     const expected = [
+      'build',
       'configure',
       'create',
       'express',
-      'build',
-      'workbox',
-      'metadata'
+      'metadata',
+      'middleware',
+      'transactionLabels',
+      'transactionName',
+      'workbox'
     ];
 
     assume(plugin).to.have.property('hooks');
 
-    const hooks = Object.keys(plugin.hooks);
+    const hooks = Object.keys(plugin.hooks).sort();
     assume(hooks).eqls(expected);
     assume(hooks).is.length(expected.length);
   });
@@ -137,11 +140,11 @@ describe('express hook', () => {
     await hook(gasket, expressApp, false);
 
     const fn = expressApp.use.getCall(0).args[0];
-
     const mockReq = { headers: { cookie: 'bogus=data' } };
     const mockRes = { locals: { gasketData: { intl: { locale: 'fr-FR' } } } };
     const mockNext = stub();
-    fn(mockReq, mockRes, mockNext);
+    await fn(mockReq, mockRes, mockNext);
+
     assume(mockReq.headers).has.property('cookie', 'bogus=data;NEXT_LOCALE=fr-FR');
   });
 
@@ -170,6 +173,24 @@ describe('express hook', () => {
 
     const nextOptions = next.lastCall.args[0];
     assume(nextOptions.conf).to.not.haveOwnProperty('webpack');
+  });
+
+  it('executes nextPreHandling before next.js handles a request', async () => {
+    const gasket = mockGasketApi();
+    await hook(gasket, expressApp, false);
+
+    const routeHandler = expressApp.all.lastCall.args[1];
+
+    const mockReq = { headers: {} };
+    const mockRes = { locals: { gasketData: { } } };
+    const mockNext = stub();
+
+    await routeHandler(mockReq, mockRes, mockNext);
+    assume(gasket.exec).has.been.calledWithMatch('nextPreHandling', {
+      req: mockReq,
+      res: mockRes,
+      next: nextHandler
+    });
   });
 });
 

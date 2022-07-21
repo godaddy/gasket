@@ -44,6 +44,10 @@ describe('Plugin', () => {
     expect(typeof plugin.hooks.preboot.handler).toStrictEqual('function');
   });
 
+  it('hooks the middleware lifecycle', () => {
+    expect(plugin.hooks).toHaveProperty('middleware');
+  });
+
   it('skips start call if already started', async () => {
     mockAPM.isStarted.mockReturnValue(true);
     await plugin.hooks.preboot.handler(mockGasket);
