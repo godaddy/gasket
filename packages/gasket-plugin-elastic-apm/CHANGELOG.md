@@ -1,7 +1,6 @@
 # `@gasket/plugin-elastic-apm`
 
-- Add a `transactionName` lifecycle
-- Add a `transactionLabels` lifecycle
+- Add an `apmTransaction` lifecycle
 
 ### 6.27.1
 

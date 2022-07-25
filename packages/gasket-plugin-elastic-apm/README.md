@@ -4,13 +4,13 @@ Adds Elastic APM instrumentation to your application
 
 ## Installation
 
-### New apps
+#### New apps
 
 ```
 gasket create <app-name> --plugins @gasket/plugin-elastic-apm
 ```
 
-### Existing apps
+#### Existing apps
 
 ```
 npm install @gasket/plugin-elastic-apm elastic-apm-node
@@ -101,9 +101,9 @@ hooks of your Gasket app, such as with the [init] or [middleware] lifecycles.
 
 ## Lifecycles
 
-### transactionName
+### apmTransaction
 
-Enables customizing how transactions are named. Hooks receive the current name of the transaction and details about the request, and must return the desired name for the transaction. Hooks may be asynchronous. The request details are as follows:
+Enables customizing an APM transaction. Hooks receive the current APM [Transaction](https://www.elastic.co/guide/en/apm/agent/nodejs/current/transaction-api.html) and details about the request. Hooks may be asynchronous. The request details are as follows:
 
 | Property | Description |
 |----------|-------------|
@@ -111,26 +111,10 @@ Enables customizing how transactions are named. Hooks receive the current name o
 | `res`    | The HTTP response or framework-specific wrapper around it |
 
 ```javascript
-// /lifecycles/transaction-name.js
+// /lifecycles/apm-transaction.js
 
-module.exports = (gasket, name, { req, res }) => {
-  // Replace square brackets with curly braces
-  return name.replace('[', '{').replace(']', '}');
-}
-```
-
-### transactionLabels
-
-Enables customizing how transactions are labeled. Hooks receive the automatically derived labels as a key/value pair object and details about the request (see above for the shape of these details). The hook should return a new object which may or may not incorporate existing labels that were passed to it.
-
-```javascript
-// /lifecycles/transaction-labels.js
-
-module.exports = (gasket, labels, { req, res }) => {
-  return {
-    ...labels,
-    language: req.headers['accept-language']
-  };
+module.exports = (gasket, transaction, { req, res }) => {
+  transaction.setLabel('language', req.headers['accept-language']);
 }
 ```
 

@@ -1,6 +1,6 @@
 # `@gasket/plugin-intl`
 
-- Add `transactionLabels` hook
+- Add `apmTransaction` hook
 
 ### 6.24.0
 

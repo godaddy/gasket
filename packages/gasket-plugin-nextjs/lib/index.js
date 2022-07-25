@@ -4,8 +4,7 @@ const { name, devDependencies } = require('../package');
 const { createConfig } = require('./config');
 const { pluginIdentifier } = require('@gasket/resolve');
 const getNextRoute = require('./next-route');
-const transactionName = require('./transaction-name');
-const transactionLabels = require('./transaction-labels');
+const apmTransaction = require('./apm-transaction');
 
 const isDefined = (o) => typeof o !== 'undefined';
 
@@ -152,21 +151,12 @@ module.exports = {
         // interact with the express router we want to add a last, catch all
         // route that will activate the `next`.
         //
-        const nextHandler = app.getRequestHandler();
-        expressApp.all('*', async (req, res, next) => {
-          try {
-            await gasket.exec('nextPreHandling', { req, res, next: app });
-            nextHandler(req, res);
-          } catch (err) {
-            return void next(err);
-          }
-        });
+        expressApp.all('*', app.getRequestHandler());
 
         return app;
       }
     },
-    transactionName,
-    transactionLabels,
+    apmTransaction,
     build: async function build(gasket) {
       const { command } = gasket;
       // Don't do a build, use dev server for local
@@ -243,13 +233,6 @@ module.exports = {
           link: 'README.md#nextExpress',
           parent: 'express',
           after: 'next'
-        }, {
-          name: 'nextPreHandling',
-          method: 'exec',
-          description: 'Perform tasks just before next.js request handling',
-          link: 'README.md#nextPreHandling',
-          parent: 'express',
-          after: 'nextExpress'
         }],
         structures: [{
           name: 'pages/',

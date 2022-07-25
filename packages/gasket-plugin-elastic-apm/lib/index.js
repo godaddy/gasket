@@ -101,16 +101,10 @@ module.exports = {
           default: '[]'
         }],
         lifecycles: [{
-          name: 'transactionName',
-          method: 'execWaterfall',
-          description: 'Customize the APM transaction name',
-          link: 'README.md#transactionName',
-          parent: 'middleware'
-        }, {
-          name: 'transactionLabels',
-          method: 'execWaterfall',
-          description: 'Customize the APM transaction labels',
-          link: 'README.md#transactionLabels',
+          name: 'apmTransaction',
+          method: 'exec',
+          description: 'Modify the APM transaction',
+          link: 'README.md#apmtransaction',
           parent: 'middleware'
         }]
       };

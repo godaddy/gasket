@@ -1,5 +1,5 @@
 import type { WebpackContext } from '@gasket/plugin-webpack';
-import type { IncomingMessage, ServerResponse } from 'http'
+import type { IncomingMessage } from 'http'
 import type { NextConfig } from 'next/dist/next-server/server/config-shared';
 import type NextServer from 'next/dist/next-server/server/next-server';
 import type { MaybeAsync } from '@gasket/engine';
@@ -19,11 +19,6 @@ declare module '@gasket/engine' {
       next: NextServer,
       express: Application
     }): MaybeAsync<void>,
-    nextPreHandling(params: {
-      next: NextServer,
-      req: IncomingMessage,
-      res: ServerResponse
-    }): MaybeAsync<void>
   }
 }
 

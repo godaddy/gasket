@@ -1,9 +1,7 @@
 # `@gasket/plugin-nextjs`
 
-- Add a `preNextHandling` lifecycle
 - Add a `getNextRoute` function to requests
-- Add a `transactionName` hook
-- Add a `transactionLabels` hook
+- Add an `apmTransaction` hook
 
 ### 6.21.0
 

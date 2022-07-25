@@ -12,6 +12,7 @@ describe('Plugin', function () {
 
   it('has expected hooks', function () {
     const expected = [
+      'apmTransaction',
       'build',
       'configure',
       'create',
@@ -21,7 +22,6 @@ describe('Plugin', function () {
       'metadata',
       'middleware',
       'serviceWorkerCacheKey',
-      'transactionLabels',
       'webpackConfig',
       'workbox'
     ];

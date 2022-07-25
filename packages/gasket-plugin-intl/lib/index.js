@@ -5,7 +5,7 @@ const init = require('./init');
 const middleware = require('./middleware');
 const serve = require('./serve');
 const serviceWorkerCacheKey = require('./service-worker-cache-key');
-const transactionLabels = require('./transaction-labels');
+const apmTransaction = require('./apm-transaction');
 const workbox = require('./workbox');
 const buildManifest = require('./build-manifest');
 const buildModules = require('./build-modules');
@@ -65,7 +65,7 @@ module.exports = {
         handler: middleware
       }
     },
-    transactionLabels,
+    apmTransaction,
     workbox,
     serviceWorkerCacheKey,
     metadata(gasket, meta) {

@@ -53,7 +53,7 @@ async function loadRoutes(gasket) {
 
   if (!routesPromise) {
     routesPromise = fs
-      .readFile(path.join(gasket.config.root, './.next/routes-manifest.json'))
+      .readFile(path.join(gasket.config.root, '.next', 'routes-manifest.json'))
       .then(content => {
         const routes = JSON.parse(content.toString());
         for (const route of iterateRoutes(routes)) {

@@ -14,7 +14,7 @@ describe('The middleware hook', () => {
 
   beforeEach(() => {
     gasket = {
-      execWaterfall: jest.fn(async (name, value) => value)
+      exec: jest.fn()
     };
     req = {
       url: '/cohorts/Rad%20Dudes'
@@ -31,25 +31,13 @@ describe('The middleware hook', () => {
     });
 
     it('enables customization of transaction name and labels', async () => {
-      gasket.execWaterfall = jest.fn(async (lifecycle, current, context) => {
-        expect(context).toHaveProperty('req', req);
-        expect(context).toHaveProperty('res', res);
-
-        if (lifecycle === 'transactionName') {
-          return 'custom name';
-        } else if (lifecycle === 'transactionLabels') {
-          return { different: 'labels' };
-        }
-
-        return current;
-      });
-
       await middleware(req, res);
 
-      expect(apm.currentTransaction)
-        .toHaveProperty('name', 'custom name');
-      expect(apm.currentTransaction.addLabels)
-        .toBeCalledWith({ different: 'labels' });
+      expect(gasket.exec).toBeCalledWith(
+        'apmTransaction',
+        apm.currentTransaction,
+        { req, res }
+      );
     });
   });
 });

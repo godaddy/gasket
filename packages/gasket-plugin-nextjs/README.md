@@ -44,7 +44,7 @@ you would set for [custom configurations][next.config] or using Next.js plugins.
 For general Webpack configurations, it is recommend to utilize features of the
 Gasket [webpack plugin].
 
-### Example configuration
+#### Example configuration
 
 ```js
 module.exports = {
@@ -58,7 +58,7 @@ module.exports = {
 }
 ```
 
-### Example with plugins
+#### Example with plugins
 
 ```js
 const withSass = require('@zeit/next-sass');
@@ -179,20 +179,6 @@ module.exports = {
         // file as a response.
         next.render(req, res, '/thanks', req.params);
       });
-    }
-  }
-}
-```
-
-### nextPreHandling
-
-Enables execution of custom logic just prior to an HTTP request being handed to next.js for processing. Hooks receive the request, response, and next server (not to be confused with the next function used by express-like middleware):
-
-```js
-module.exports = {
-  hooks: {
-    async nextPreHandling(gasket, { req, res, next }) {
-      await doPreRenderingLogic(req, res);
     }
   }
 }
