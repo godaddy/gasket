@@ -14,7 +14,7 @@ describe('The middleware hook', () => {
 
   beforeEach(() => {
     gasket = {
-      exec: jest.fn(async () => {})
+      exec: jest.fn(() => Promise.resolve())
     };
     req = {
       url: '/cohorts/Rad%20Dudes'
@@ -26,7 +26,7 @@ describe('The middleware hook', () => {
     let middleware;
 
     beforeEach(async () => {
-      [middleware] = await middlewareHook(gasket);
+      [middleware] = middlewareHook(gasket);
       middleware = promisify(middleware);
     });
 
