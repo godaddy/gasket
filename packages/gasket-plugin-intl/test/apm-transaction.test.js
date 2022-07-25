@@ -13,7 +13,7 @@ describe('The apmTransaction hook', () => {
     };
     const transaction = { setLabel: spy() };
 
-    await apmTransaction({}, transaction, { res });
+    apmTransaction({}, transaction, { res });
 
     assume(transaction.setLabel).was.calledWith('locale', 'es-MX');
   });

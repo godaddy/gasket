@@ -99,7 +99,7 @@ module.exports = {
         before: ['@gasket/plugin-elastic-apm']
       },
       handler: (gasket) => [
-        (req, res, next) => {
+        (req, _res, next) => {
           req.getNextRoute = () => getNextRoute(gasket, req);
           next();
         }

@@ -14,7 +14,7 @@ describe('The middleware hook', () => {
 
   beforeEach(() => {
     gasket = {
-      exec: jest.fn()
+      exec: jest.fn(async () => {})
     };
     req = {
       url: '/cohorts/Rad%20Dudes'

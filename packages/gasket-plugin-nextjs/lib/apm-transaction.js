@@ -1,4 +1,4 @@
-module.exports = async (gasket, transaction, { req }) => {
+module.exports = async (_gasket, transaction, { req }) => {
   const route = await req.getNextRoute();
   if (!route) {
     return;
