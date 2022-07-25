@@ -109,6 +109,26 @@ module.exports = {
       }
     },
     /**
+     * Serve the Swagger Docs UI.
+     *
+     * @param {object} gasket - Gasket API
+     * @param {object} app - Fastify app instance
+     * @async
+     */
+    fastify: {
+      timing: {
+        before: ['@gasket/plugin-nextjs']
+      },
+      handler: async function fastify(gasket, app) {
+        const { swagger, root } = gasket.config;
+        const { ui = {}, apiDocsRoute, definitionFile } = swagger;
+
+        const swaggerSpec = await loadSwaggerSpec(root, definitionFile, gasket.logger);
+
+        app.register({ prefix: apiDocsRoute, swagger: swaggerSpec })
+      }
+    },
+    /**
      * Sets swagger plugin prop to true and adds swagger config to gasket.config
      *
      * @param {object} gasket - Gasket API
