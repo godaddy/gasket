@@ -40,11 +40,27 @@ describe('setupNextApp', () => {
     assume(nextOptions.conf).to.not.haveOwnProperty('webpack');
   });
 
-  it('recognizes dev server', async function() {
-    gasket = mockGasketApi();
-    gasket.command = 'local'
-    await module.setupNextApp(gasket);
-    assume(next).to.have.been.calledWith({ dev: true, conf: sinon.match.object })
+  describe('devServer mode', () => {
+    it('creates devServer when gasket command is local', async function() {
+      gasket = mockGasketApi();
+      gasket.command = 'local';
+      await module.setupNextApp(gasket);
+      assume(next).to.have.been.calledWith({ dev: true, conf: sinon.match.object })
+    });
+
+    it('creates devServer when gasket command id is local', async function() {
+      gasket = mockGasketApi();
+      gasket.command = { id: 'local' };
+      await module.setupNextApp(gasket);
+      assume(next).to.have.been.calledWith({ dev: true, conf: sinon.match.object })
+    });
+
+    it('creates default mode nextjs app when gasket command is not local', async function() {
+      gasket = mockGasketApi();
+      await module.setupNextApp(gasket);
+      assume(next).to.have.been.calledWith({ dev: false, conf: sinon.match.object })
+    });
+
   })
 });
 
