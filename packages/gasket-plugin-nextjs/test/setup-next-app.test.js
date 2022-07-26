@@ -9,7 +9,7 @@ describe('setupNextApp', () => {
 
   const getModule = () => {
     return proxyquire('../lib/setup-next-app', {
-      next
+      next    
     });
   };
 
@@ -39,6 +39,13 @@ describe('setupNextApp', () => {
     const nextOptions = next.lastCall.args[0];
     assume(nextOptions.conf).to.not.haveOwnProperty('webpack');
   });
+
+  it('recognizes dev server', async function() {
+    gasket = mockGasketApi();
+    gasket.command = 'local'
+    await module.setupNextApp(gasket);
+    assume(next).to.have.been.calledWith({ dev: true, conf: sinon.match.object })
+  })
 });
 
 function mockGasketApi() {
