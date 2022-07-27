@@ -184,6 +184,29 @@ module.exports = {
 }
 ```
 
+## Utilities
+
+This plugin adds a middleware which attaches a `getNextRoute` function to the request object. It is intended for use in server contexts where you need to know how a request will route to a next.js page. This async function returns null if the manifest could not be parsed or if the requested URL does not match a route. If a match _is_ found, an object with these properties is returned:
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `page`    | `String`  | The page name/path used to identify a page within next.js |
+| `regex`   | `RegExp`  | The regular expression that matches URLs to the page |
+| `routeKeys` | `Object`  | For dynamic routes the mapping of URL placeholders to parsed route parameters |
+| `namedRegex`  | `RegExp`  | Like `regex`, but [named capturing groups] are included to populate dynamic routing parameters |
+
+```javascript
+async function someMiddleware(req, res, next) {
+  const route = await req.getNextRoute();
+  if (route) {
+    const { groups } = req.url.match(route.namedRegex);
+    console.log(`Matched ${route.page} with parameters`, groups);
+  }
+  
+  next();
+}
+```
+
 ## License
 
 [MIT](./LICENSE.md)
@@ -197,4 +220,4 @@ module.exports = {
 [webpack plugin]:/packages/gasket-plugin-webpack/README.md
 [next.config]: https://nextjs.org/docs#custom-configuration
 [i18n config]: https://nextjs.org/docs/advanced-features/i18n-routing#getting-started
-
+[named capturing groups]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Backreferences

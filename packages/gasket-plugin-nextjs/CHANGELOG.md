@@ -1,5 +1,8 @@
 # `@gasket/plugin-nextjs`
 
+- Add a `getNextRoute` function to requests
+- Add an `apmTransaction` hook
+
 ### 6.21.0
 
 - Support for scaffolded cypress tests ([#357])
