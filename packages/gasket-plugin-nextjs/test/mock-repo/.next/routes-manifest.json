@@ -1,0 +1,188 @@
+{
+  "version": 3,
+  "pages404": true,
+  "basePath": "",
+  "redirects": [
+    {
+      "source": "/:path+/",
+      "destination": "/:path+",
+      "internal": true,
+      "statusCode": 308,
+      "regex": "^(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))/$"
+    }
+  ],
+  "headers": [],
+  "dynamicRoutes": [
+    {
+      "page": "/plans/cohorts/[cohort]",
+      "regex": "^/plans/cohorts/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "cohort": "cohort"
+      },
+      "namedRegex": "^/plans/cohorts/(?<cohort>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/plans/edit-entitlement/[featureId]",
+      "regex": "^/plans/edit\\-entitlement/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "featureId": "featureId"
+      },
+      "namedRegex": "^/plans/edit\\-entitlement/(?<featureId>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/plans/edit-plan-entitlement/[planId]/[featureId]",
+      "regex": "^/plans/edit\\-plan\\-entitlement/([^/]+?)/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "planId": "planId",
+        "featureId": "featureId"
+      },
+      "namedRegex": "^/plans/edit\\-plan\\-entitlement/(?<planId>[^/]+?)/(?<featureId>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/plans/[planId]",
+      "regex": "^/plans/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "planId": "planId"
+      },
+      "namedRegex": "^/plans/(?<planId>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/templates/vertical-templates/[groupKey]",
+      "regex": "^/templates/vertical\\-templates/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "groupKey": "groupKey"
+      },
+      "namedRegex": "^/templates/vertical\\-templates/(?<groupKey>[^/]+?)(?:/)?$"
+    }
+  ],
+  "staticRoutes": [
+    {
+      "page": "/",
+      "regex": "^/(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/(?:/)?$"
+    },
+    {
+      "page": "/addons",
+      "regex": "^/addons(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/addons(?:/)?$"
+    },
+    {
+      "page": "/archive",
+      "regex": "^/archive(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/archive(?:/)?$"
+    },
+    {
+      "page": "/backup",
+      "regex": "^/backup(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/backup(?:/)?$"
+    },
+    {
+      "page": "/events",
+      "regex": "^/events(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/events(?:/)?$"
+    },
+    {
+      "page": "/events/dlq",
+      "regex": "^/events/dlq(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/events/dlq(?:/)?$"
+    },
+    {
+      "page": "/lightning-admin",
+      "regex": "^/lightning\\-admin(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/lightning\\-admin(?:/)?$"
+    },
+    {
+      "page": "/page-properties",
+      "regex": "^/page\\-properties(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/page\\-properties(?:/)?$"
+    },
+    {
+      "page": "/plans",
+      "regex": "^/plans(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/plans(?:/)?$"
+    },
+    {
+      "page": "/plans/add-entitlement",
+      "regex": "^/plans/add\\-entitlement(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/plans/add\\-entitlement(?:/)?$"
+    },
+    {
+      "page": "/plans/add-plan",
+      "regex": "^/plans/add\\-plan(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/plans/add\\-plan(?:/)?$"
+    },
+    {
+      "page": "/plans/cohorts",
+      "regex": "^/plans/cohorts(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/plans/cohorts(?:/)?$"
+    },
+    {
+      "page": "/plans/cohorts/add",
+      "regex": "^/plans/cohorts/add(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/plans/cohorts/add(?:/)?$"
+    },
+    {
+      "page": "/plans/feature-availability",
+      "regex": "^/plans/feature\\-availability(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/plans/feature\\-availability(?:/)?$"
+    },
+    {
+      "page": "/plans/groups",
+      "regex": "^/plans/groups(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/plans/groups(?:/)?$"
+    },
+    {
+      "page": "/publish/v6-site",
+      "regex": "^/publish/v6\\-site(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/publish/v6\\-site(?:/)?$"
+    },
+    {
+      "page": "/purge-documents",
+      "regex": "^/purge\\-documents(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/purge\\-documents(?:/)?$"
+    },
+    {
+      "page": "/ssl-admin",
+      "regex": "^/ssl\\-admin(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/ssl\\-admin(?:/)?$"
+    },
+    {
+      "page": "/swap",
+      "regex": "^/swap(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/swap(?:/)?$"
+    },
+    {
+      "page": "/templates/fos-templates",
+      "regex": "^/templates/fos\\-templates(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/templates/fos\\-templates(?:/)?$"
+    },
+    {
+      "page": "/templates/vertical-templates",
+      "regex": "^/templates/vertical\\-templates(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/templates/vertical\\-templates(?:/)?$"
+    }
+  ],
+  "dataRoutes": [],
+  "rewrites": []
+}

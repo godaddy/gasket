@@ -3,6 +3,8 @@ const url = require('url');
 const { name, devDependencies } = require('../package');
 const { createConfig } = require('./config');
 const { pluginIdentifier } = require('@gasket/resolve');
+const getNextRoute = require('./next-route');
+const apmTransaction = require('./apm-transaction');
 
 const isDefined = (o) => typeof o !== 'undefined';
 
@@ -92,6 +94,17 @@ module.exports = {
         }
       }
     },
+    middleware: {
+      timing: {
+        before: ['@gasket/plugin-elastic-apm']
+      },
+      handler: (gasket) => [
+        (req, _res, next) => {
+          req.getNextRoute = () => getNextRoute(gasket, req);
+          next();
+        }
+      ]
+    },
     express: {
       timing: {
         last: true
@@ -143,6 +156,7 @@ module.exports = {
         return app;
       }
     },
+    apmTransaction,
     build: async function build(gasket) {
       const { command } = gasket;
       // Don't do a build, use dev server for local

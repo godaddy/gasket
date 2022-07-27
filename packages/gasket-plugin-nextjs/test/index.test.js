@@ -21,17 +21,19 @@ describe('Plugin', function () {
 
   it('has expected hooks', () => {
     const expected = [
+      'apmTransaction',
+      'build',
       'configure',
       'create',
       'express',
-      'build',
-      'workbox',
-      'metadata'
+      'metadata',
+      'middleware',
+      'workbox'
     ];
 
     assume(plugin).to.have.property('hooks');
 
-    const hooks = Object.keys(plugin.hooks);
+    const hooks = Object.keys(plugin.hooks).sort();
     assume(hooks).eqls(expected);
     assume(hooks).is.length(expected.length);
   });
@@ -137,11 +139,11 @@ describe('express hook', () => {
     await hook(gasket, expressApp, false);
 
     const fn = expressApp.use.getCall(0).args[0];
-
     const mockReq = { headers: { cookie: 'bogus=data' } };
     const mockRes = { locals: { gasketData: { intl: { locale: 'fr-FR' } } } };
     const mockNext = stub();
-    fn(mockReq, mockRes, mockNext);
+    await fn(mockReq, mockRes, mockNext);
+
     assume(mockReq.headers).has.property('cookie', 'bogus=data;NEXT_LOCALE=fr-FR');
   });
 

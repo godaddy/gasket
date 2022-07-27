@@ -1,5 +1,7 @@
 # `@gasket/plugin-intl`
 
+- Add `apmTransaction` hook
+
 ### 6.24.0
 
 - Add Fastify support ([#366])
