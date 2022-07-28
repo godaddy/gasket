@@ -93,8 +93,6 @@ export default function withIntlProvider() {
       }
 
       const locale = localesProps?.locale ||
-        // Support for Next.js i18n routing
-        props.router?.locale || // eslint-disable-line react/prop-types
         getActiveLocale();
 
       const { status } = state;
