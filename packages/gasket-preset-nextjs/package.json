@@ -1,6 +1,6 @@
 {
   "name": "@gasket/preset-nextjs",
-  "version": "6.29.0",
+  "version": "6.30.0",
   "description": "Basic NextJS Framework",
   "main": "lib",
   "types": "lib/index.d.ts",
@@ -22,9 +22,9 @@
   "dependencies": {
     "@gasket/plugin-express": "^6.28.0",
     "@gasket/plugin-https": "^6.28.0",
-    "@gasket/plugin-log": "^6.28.0",
-    "@gasket/plugin-nextjs": "^6.29.0",
-    "@gasket/plugin-redux": "^6.28.0",
+    "@gasket/plugin-log": "^6.30.0",
+    "@gasket/plugin-nextjs": "^6.30.0",
+    "@gasket/plugin-redux": "^6.30.0",
     "@gasket/plugin-webpack": "^6.26.1"
   },
   "devDependencies": {
