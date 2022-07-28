@@ -155,7 +155,7 @@ module.exports = {
           next();
         });
 
-        fastifyApp.all('/*', app.getRequestHandler());
+        fastifyApp.all('*', app.getRequestHandler());
 
         return app;
       }
