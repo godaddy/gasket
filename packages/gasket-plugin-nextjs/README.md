@@ -6,7 +6,7 @@ This plugin adds Next.js to your application.
 
 #### New apps
 
-***Recommended***
+**_Recommended_**
 
 ```
 gasket create <app-name> --plugins @gasket/plugin-nextjs
@@ -55,7 +55,7 @@ module.exports = {
     poweredByHeader: false,
     useFileSystemPublicRoutes: false
   }
-}
+};
 ```
 
 #### Example with plugins
@@ -68,10 +68,12 @@ module.exports = {
   plugins: {
     add: ['nextjs']
   },
-  nextConfig: withCss(withSass({
-    /* config options here */
-  }))
-}
+  nextConfig: withCss(
+    withSass({
+      /* config options here */
+    })
+  )
+};
 ```
 
 ### Internationalized Routing
@@ -127,15 +129,15 @@ the created `next` instance.
 module.exports = {
   hooks: {
     /**
-    * Modify the Next app instance
-    * @param  {Gasket} gasket The Gasket API
-    * @param  {Next} next Next app instance
-    */
+     * Modify the Next app instance
+     * @param  {Gasket} gasket The Gasket API
+     * @param  {Next} next Next app instance
+     */
     next: function next(gasket, next) {
       next.setAssetPrefix('https://my.cdn.com/dir/');
     }
   }
-}
+};
 ```
 
 ### nextConfig
@@ -148,11 +150,11 @@ to the `next` config. This will allow you to modify the `next` config before the
 module.exports = {
   hooks: {
     /**
-    * Modify the Next config
-    * @param  {Gasket} gasket The Gasket API
-    * @param  {Object} config Next config
-    * @returns {Object} config
-    */
+     * Modify the Next config
+     * @param  {Gasket} gasket The Gasket API
+     * @param  {Object} config Next config
+     * @returns {Object} config
+     */
     nextConfig(gasket, config) {
       return {
         ...config,
@@ -160,7 +162,7 @@ module.exports = {
       };
     }
   }
-}
+};
 ```
 
 ### nextExpress
@@ -181,7 +183,28 @@ module.exports = {
       });
     }
   }
-}
+};
+```
+
+### nextFastify
+
+Provides access to both `next` and `fastify` instances which allows
+`next.render` calls in express-based routes.
+
+```js
+module.exports = {
+  hooks: {
+    nextFastify: function (gasket, { next, fastify }) {
+      fastify.post('/contact-form', (req, res) => {
+        // DO STUFF WITH RECEIVED DATA
+        //
+        // And once we're done, we can `next.render` to render the `pages/thanks`
+        // file as a response.
+        next.render(req, res, '/thanks', req.params);
+      });
+    }
+  }
+};
 ```
 
 ## Utilities
@@ -214,10 +237,11 @@ async function someMiddleware(req, res, next) {
 <!-- LINKS -->
 
 <!--[next.config]-->
-[nextConfig lifecycle]:#nextconfig
+
+[nextconfig lifecycle]: #nextconfig
 [@gasket/plugin-intl]: /packages/gasket-plugin-intl/README.md
-[intlLocale]: /packages/gasket-plugin-intl/README.md#intllocale
-[webpack plugin]:/packages/gasket-plugin-webpack/README.md
+[intllocale]: /packages/gasket-plugin-intl/README.md#intllocale
+[webpack plugin]: /packages/gasket-plugin-webpack/README.md
 [next.config]: https://nextjs.org/docs#custom-configuration
 [i18n config]: https://nextjs.org/docs/advanced-features/i18n-routing#getting-started
 [named capturing groups]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Backreferences
