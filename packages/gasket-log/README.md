@@ -79,6 +79,15 @@ class YourComponent extends React.Component {
 }
 ```
 
+The constructor accepts an object with the following optional properties:
+
+| Property    | Description |
+|-------------|-------------|
+| `level`     | The maximum logging level to enable output for. Defaults to `info` |
+| `levels`    | Array of custom logging level names. |
+| `namespace` | String for namespacing your logs. See [diagnostics] for more information. Your namespace is automatically prefixed with `gasket:` |
+| `prod`      | If set to `true` enables logging even for production builds. By default production builds have no client-side logging. |
+
 > **NOTE:** The client logger uses [diagnostics] to output log messages to the
 > console. Ensure one of the trigger mechanics for [diagnostics in browser] is
 > set. The name used for diagnostics is `gasket*`.

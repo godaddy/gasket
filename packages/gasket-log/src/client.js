@@ -13,12 +13,15 @@ export default class Log {
    * @param {Object} options configuration.
    * @private
    */
-  constructor({ level, levels = Log.levels, namespace } = {}) {
+  constructor({ level, levels = Log.levels, namespace, prod } = {}) {
     this.namespace = Array.isArray(namespace) ? namespace : [namespace];
     this.level = ~levels.indexOf(level) ? level : 'info';
 
     levels.forEach(lvl => {
-      this[lvl] = diagnostics(['gasket', lvl, ...this.namespace].filter(Boolean).join(':'));
+      this[lvl] = diagnostics(
+        ['gasket', lvl, ...this.namespace].filter(Boolean).join(':'),
+        { force: Boolean(prod) }
+      );
     });
   }
 
