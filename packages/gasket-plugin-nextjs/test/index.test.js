@@ -6,6 +6,9 @@ const path = require('path');
 const proxyquire = require('proxyquire').noCallThru();
 const { devDependencies } = require('../package');
 
+const fastify = require('fastify')({
+  logger: true
+});
 const { spy, stub } = sinon;
 
 describe('Plugin', function () {
@@ -185,7 +188,9 @@ describe('fastify hook', () => {
     };
     nextHandler = {
       prepare: stub().resolves(),
-      getRequestHandler: stub().resolves({})
+      getRequestHandler: stub().resolves({}),
+      buildId: '1234',
+      name: 'testapp'
     };
     setupNextAppStub = stub().returns(nextHandler);
 
@@ -261,6 +266,13 @@ describe('fastify hook', () => {
       next: nextHandler,
       fastify: fastifyApp
     });
+  });
+
+  it('sets app buildId on fastify app', async function () {
+    const gasket = mockGasketApi();
+    await hook(gasket, fastify, false);
+
+    assume(fastify['buildId/testapp']).equals('1234');
   });
 });
 

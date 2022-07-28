@@ -139,7 +139,7 @@ module.exports = {
 
         fastifyApp.decorate(['buildId', app.name].filter(Boolean).join('/'), {
           getter() {
-            return app.build;
+            return app.buildId;
           }
         });
 
@@ -155,7 +155,11 @@ module.exports = {
           next();
         });
 
-        fastifyApp.all('*', app.getRequestHandler());
+        const handler = () => {
+          return app.getRequestHandler();
+        };
+
+        fastifyApp.all('*', { handler });
 
         return app;
       }
