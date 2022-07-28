@@ -18,7 +18,7 @@
     "posttest": "npm run lint",
     "build": "babel ./src/client.js -d lib --delete-dir-on-start",
     "prepublishOnly": "npm run build",
-    "test:client": "DEBUG=gasket:* mocha --require @babel/register test/client.test.js",
+    "test:client": "mocha test/client.test.js",
     "test:server": "mocha test/server.test.js"
   },
   "repository": {

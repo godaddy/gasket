@@ -1,4 +1,4 @@
-const Loader = require('../lib/loader');
+const { Loader } = require('../lib/loader');
 const { makeRequire } = require('./helpers');
 
 let mockRequire;
@@ -68,7 +68,7 @@ describe('Loader', () => {
   });
 
   it('extends Resolver', () => {
-    expect(loader).toBeInstanceOf(require('../lib/resolver'));
+    expect(loader).toBeInstanceOf(require('../lib/resolver').Resolver);
   });
 
   it('exposes expected methods', () => {

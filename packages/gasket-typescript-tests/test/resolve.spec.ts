@@ -5,8 +5,11 @@ import {
   Resolver,
   PluginInfo,
   PresetInfo,
-  ModuleInfo
+  ModuleInfo,
+  loadGasketConfigFile,
+  flattenPresets, assignPresetConfig
 } from '@gasket/resolve';
+import { Gasket, GasketConfigFile } from '@gasket/engine';
 
 describe('@gasket/resolve', () => {
   const perform = false;
@@ -155,6 +158,42 @@ describe('@gasket/resolve', () => {
           const result: object | null = resolver.tryRequire('moduleName');
         }
       });
+    });
+  });
+
+  describe('loadGasketConfigFile', function () {
+    it('has expected signature', function () {
+      const config: Promise<GasketConfigFile> = loadGasketConfigFile('.', 'dev', 'build', 'gasket.config');
+    });
+  });
+
+  describe('assignPresetConfig', function () {
+    it('has expected signature', function () {
+      if (perform) {
+        // @ts-ignore
+        const gasket: Gasket = {};
+
+        const results: Gasket = assignPresetConfig(gasket);
+      }
+    });
+  });
+
+  describe('flattenPresets', function () {
+    it('has expected signature', function () {
+      const flatten: PresetInfo[] = flattenPresets([
+        { name: 'one', module: {}, plugins: [], presets: [] },
+        {
+          name: 'two', module: {}, plugins: [], presets: [
+            { name: 'two-a', module: {}, plugins: [], presets: [] },
+            {
+              name: 'two-b', module: {}, plugins: [], presets: [
+                { name: 'two-b-1', module: {}, plugins: [], presets: [] },
+                { name: 'two-b-2', module: {}, plugins: [], presets: [] }
+              ]
+            }
+          ]
+        }
+      ]);
     });
   });
 });

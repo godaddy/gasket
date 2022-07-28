@@ -1,5 +1,9 @@
 # `@gasket/cli`
 
+### 6.29.0
+
+- Using `loadGasketConfigFile` and `flattenPresets` from [@gasket/resolve] ([#396])
+
 ### 6.27.1
 
 - Add git plugin to CLI default plugins ([#392])
@@ -339,6 +343,7 @@ upon `gasket create`
 
 - `gasket create APPNAME` MVP.
 
+[@gasket/resolve]: /packages/gasket-resolve/README.md
 
 [#34]: https://github.com/godaddy/gasket/pull/34
 [#38]: https://github.com/godaddy/gasket/pull/38
@@ -376,3 +381,4 @@ upon `gasket create`
 [#387]: https://github.com/godaddy/gasket/pull/387
 [#392]: https://github.com/godaddy/gasket/pull/392
 [#393]: https://github.com/godaddy/gasket/pull/393
+[#396]: https://github.com/godaddy/gasket/pull/396

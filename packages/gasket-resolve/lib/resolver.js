@@ -86,4 +86,6 @@ class Resolver {
   }
 }
 
-module.exports = Resolver;
+module.exports = {
+  Resolver
+};

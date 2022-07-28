@@ -11,9 +11,11 @@ Name | Description
 
 Name | Description
 ------ | -----------
+[assignPresetConfig(gasket)] | Loads config from presets and assigns to the main config.
 [pluginIdentifier()] | Create package identifiers for Gasket plugins
 [presetIdentifier()] | Create package identifiers for Gasket presets
 [projectIdentifier(projectName, \[type\])] | Create function used to make instances of PackageIdentifier for a project
+[flattenPresets(presetInfos)] | Takes list of top-level presets required by an app, and flattens out any that they might extend.
 
 ## Typedefs
 
@@ -364,6 +366,20 @@ Returns the required module, or null if not found
 | moduleName | `string` | name of the module |
 
 
+## assignPresetConfig(gasket)
+
+Loads config from presets and assigns to the main config.
+
+Merge priority order being:
+- loaded file config > preset configs > child preset configs
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| gasket | `Gasket` | Gasket engine instance |
+
+
 ## pluginIdentifier()
 
 Create package identifiers for Gasket plugins
@@ -403,6 +419,21 @@ Setup project level variables
 
 **Kind**: inner method of [`projectIdentifier`]  
 **Returns**: `object` - vars  
+
+## flattenPresets(presetInfos)
+
+Takes list of top-level presets required by an app, and flattens out any that
+they might extend.
+
+Presets are ordered by extended depth, with deeper later.
+
+**Kind**: global function  
+**Returns**: `Array.<PresetInfo>` - flattened presetInfos  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| presetInfos | `Array.<PresetInfo>` | Array of preset infos |
+
 
 ## PluginDesc
 
@@ -579,9 +610,11 @@ If the lookup runs out of formats to try, it will return null.
 [`PackageIdentifier`]:#packageidentifier
 [`createPackageIdentifier`]:#createpackageidentifier
 [`projectIdentifier`]:#projectidentifierprojectname-type
+[assignPresetConfig(gasket)]:#assignpresetconfiggasket
 [pluginIdentifier()]:#pluginidentifier
 [presetIdentifier()]:#presetidentifier
 [projectIdentifier(projectName, \[type\])]:#projectidentifierprojectname-type
+[flattenPresets(presetInfos)]:#flattenpresetspresetinfos
 [.getModuleInfo(module, moduleName, \[meta\])]:#loadergetmoduleinfomodule-modulename-meta
 [.loadModule(moduleName, \[meta\])]:#loaderloadmodulemodulename-meta
 [.loadPlugin(module, \[meta\])]:#loaderloadpluginmodule-meta

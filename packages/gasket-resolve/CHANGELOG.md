@@ -1,5 +1,8 @@
 # `@gasket/resolve`
 
+### 6.29.0
+
+- Moved loadGasketConfigFile and related functions ([#396])
 - Memoize results from plugin loader ([#395])
 
 ### 6.15.2
@@ -72,5 +75,6 @@
 [#247]: https://github.com/godaddy/gasket/pull/247
 [#333]: https://github.com/godaddy/gasket/pull/333
 [#395]: https://github.com/godaddy/gasket/pull/395
+[#396]: https://github.com/godaddy/gasket/pull/396
 
 [Loader]:/packages/gasket-resolve/docs/api.md#loader

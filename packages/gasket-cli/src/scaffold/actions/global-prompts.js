@@ -1,7 +1,7 @@
 const inquirer = require('inquirer');
-const { pluginIdentifier } = require('@gasket/resolve');
+const { pluginIdentifier, flattenPresets } = require('@gasket/resolve');
 const action = require('../action-wrapper');
-const { addPluginsToContext, flattenPresets } = require('../utils');
+const { addPluginsToContext } = require('../utils');
 
 /**
  * What is your app description?

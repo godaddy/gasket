@@ -1,5 +1,7 @@
 # `@gasket/plugin-elastic-apm`
 
+- Add an `apmTransaction` lifecycle
+
 ### 6.27.1
 
 - Skip preboot lifecycle when app is run locally ([#388])
