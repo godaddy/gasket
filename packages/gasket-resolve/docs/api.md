@@ -28,6 +28,7 @@ Name | Description
 [ModuleInfo] | Module with meta data
 [PluginInfo] | Plugin module with meta data
 [PresetInfo] | Preset module with meta data
+[PluginConfig] | Presets and plugins to load
 [createPackageIdentifier] | Create a new PackageIdentifier instance
 
 
@@ -43,7 +44,7 @@ Utility to load plugins, presets, and other modules with associated metadata
     * [.loadModule(moduleName, \[meta\])]
     * [.loadPlugin(module, \[meta\])]
     * [.loadPreset(module, \[meta\], \[options\])]
-    * [.loadConfigured(config)]
+    * [.loadConfigured(pluginConfig)]
     * [.resolve(moduleName)]
     * [.require(moduleName)]
     * [.tryResolve(moduleName)]
@@ -105,7 +106,7 @@ Loads a preset with additional metadata
 | \[options.shallow\] | `boolean` | Do not recursively load dependencies |
 
 
-### loader.loadConfigured(config)
+### loader.loadConfigured(pluginConfig)
 
 Loads presets and plugins as configured.
 Plugins will be filtered and ordered as configuration with priority of:
@@ -116,10 +117,7 @@ Plugins will be filtered and ordered as configuration with priority of:
 
 | Param | Type | Description |
 | --- | --- | --- |
-| config | `object` | Presets and plugins to load |
-| config.presets | `Array.<PresetName>` | Presets to load and add plugins from |
-| config.add | `Array.<PluginName>` \| `Array.<module>` | Names of plugins to load |
-| \[config.remove\] | `Array.<PluginName>` | Names of plugins to remove (from presets) |
+| pluginConfig | [`PluginConfig`] | Presets and plugins to load |
 
 
 ### loader.resolve(moduleName)
@@ -528,6 +526,20 @@ Preset module with meta data
 | plugins | `Array.<PluginInfo>` | Plugins this preset uses |
 
 
+## PluginConfig
+
+Presets and plugins to load
+
+**Kind**: global typedef  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| presets | `Array.<PresetName>` | Presets to load and add plugins from |
+| add | `Array.<PluginName>` \| `Array.<module>` | Names of plugins to load |
+| \[remove\] | `Array.<PluginName>` | Names of plugins to remove (from presets) |
+
+
 ## createPackageIdentifier
 
 Create a new PackageIdentifier instance
@@ -592,6 +604,7 @@ If the lookup runs out of formats to try, it will return null.
 [ModuleInfo]:#moduleinfo
 [PluginInfo]:#plugininfo
 [PresetInfo]:#presetinfo
+[PluginConfig]:#pluginconfig
 [createPackageIdentifier]:#createpackageidentifier
 [`Resolver`]:#new-resolveroptions
 [`Loader`]:#loader
@@ -600,6 +613,7 @@ If the lookup runs out of formats to try, it will return null.
 [`PluginName`]:#pluginname
 [`PresetInfo`]:#presetinfo
 [`PresetName`]:#presetname
+[`PluginConfig`]:#pluginconfig
 [.rawName]:#packageidentifierrawname
 [.fullName]:#packageidentifierfullname
 [.longName]:#packageidentifierlongname
@@ -619,7 +633,7 @@ If the lookup runs out of formats to try, it will return null.
 [.loadModule(moduleName, \[meta\])]:#loaderloadmodulemodulename-meta
 [.loadPlugin(module, \[meta\])]:#loaderloadpluginmodule-meta
 [.loadPreset(module, \[meta\], \[options\])]:#loaderloadpresetmodule-meta-options
-[.loadConfigured(config)]:#loaderloadconfiguredconfig
+[.loadConfigured(pluginConfig)]:#loaderloadconfiguredpluginconfig
 [.resolve(moduleName)]:#resolverresolvemodulename
 [.require(moduleName)]:#resolverrequiremodulename
 [.tryResolve(moduleName)]:#resolvertryresolvemodulename
