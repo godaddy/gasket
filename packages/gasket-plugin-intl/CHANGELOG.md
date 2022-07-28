@@ -1,6 +1,12 @@
 # `@gasket/plugin-intl`
 
-- Add `apmTransaction` hook
+### 6.30.1
+
+- Fix middleware hook handler ([#403])
+
+### 6.30.0
+
+- Add `apmTransaction` hook ([#400])
 
 ### 6.24.0
 
@@ -176,3 +182,5 @@
 [#319]: https://github.com/godaddy/gasket/pull/319
 [#347]: https://github.com/godaddy/gasket/pull/347
 [#366]: https://github.com/godaddy/gasket/pull/366
+[#400]: https://github.com/godaddy/gasket/pull/400
+[#403]: https://github.com/godaddy/gasket/pull/403

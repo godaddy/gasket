@@ -61,9 +61,9 @@ module.exports = {
     fastify: serve,
     middleware: {
       timing: {
-        before: ['@gasket/plugin-elastic-apm'],
-        handler: middleware
-      }
+        before: ['@gasket/plugin-elastic-apm']
+      },
+      handler: middleware
     },
     apmTransaction,
     workbox,

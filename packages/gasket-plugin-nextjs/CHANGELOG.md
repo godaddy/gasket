@@ -1,7 +1,14 @@
 # `@gasket/plugin-nextjs`
 
-- Add a `getNextRoute` function to requests
+### 6.30.1
+
+- Lazy load next package ([#403])
+
+### 6.30.0
+
+- Add a `getNextRoute` function to requests ([#400])
 - Add an `apmTransaction` hook
+- Support for Fastify ([#398])
 
 ### 6.21.0
 
@@ -176,3 +183,6 @@
 [#334]: https://github.com/godaddy/gasket/pull/334
 [#337]: https://github.com/godaddy/gasket/pull/337
 [#357]: https://github.com/godaddy/gasket/pull/357
+[#398]: https://github.com/godaddy/gasket/pull/398
+[#400]: https://github.com/godaddy/gasket/pull/400
+[#403]: https://github.com/godaddy/gasket/pull/403
