@@ -1,6 +1,8 @@
 # `@gasket/plugin-elastic-apm`
 
-- Add an `apmTransaction` lifecycle
+### 6.30.0
+
+- Add an `apmTransaction` lifecycle ([#400])
 
 ### 6.27.1
 
@@ -22,3 +24,4 @@
 [#311]:https://github.com/godaddy/gasket/pull/311
 [#378]:https://github.com/godaddy/gasket/pull/378
 [#388]:https://github.com/godaddy/gasket/pull/388
+[#400]:https://github.com/godaddy/gasket/pull/400

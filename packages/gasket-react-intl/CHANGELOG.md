@@ -1,5 +1,9 @@
 # `@gasket/react-intl`
 
+### 6.30.0
+
+- Fix to prevent next/router from changing locale in IntlProvider ([#401])
+
 ### 6.26.1
 
 - Fix typo for `LocaleStatus` in sample code ([#384])
@@ -146,3 +150,4 @@
 [#358]: https://github.com/godaddy/gasket/pull/358
 [#380]: https://github.com/godaddy/gasket/pull/380
 [#384]: https://github.com/godaddy/gasket/pull/384
+[#401]: https://github.com/godaddy/gasket/pull/401
