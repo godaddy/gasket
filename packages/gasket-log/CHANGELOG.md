@@ -1,6 +1,8 @@
 # `@gasket/log`
 
-- Support enabling logging in production
+### 6.30.0
+
+- Support enabling logging in production ([#402])
 
 ### 6.1.0
 
@@ -65,3 +67,4 @@
 
 [#247]: https://github.com/godaddy/gasket/pull/247
 [#279]: https://github.com/godaddy/gasket/pull/279
+[#402]: https://github.com/godaddy/gasket/pull/402
