@@ -1,3 +1,5 @@
+/* eslint-disable no-process-env */
+
 import { describe, it } from 'mocha';
 import { config } from 'winston';
 import Log from '../src/client';
@@ -8,6 +10,8 @@ describe('Log', function () {
   let log;
 
   beforeEach(function () {
+    process.env.NODE_ENV = 'test';
+    process.env.DEBUG = 'gasket:*';
     log = new Log();
   });
 
@@ -53,6 +57,16 @@ describe('Log', function () {
 
     log = new Log({ level: 'debug' });
     assume(log).to.have.property('level', 'debug');
+  });
+
+  it('has an prod option to enable NODE_ENV=production logging', function () {
+    process.env.NODE_ENV = 'production';
+    const console = sinon.stub(global.console, 'log');
+
+    log = new Log({ namespace: 'uxcore2', prod: true });
+    log.info('something');
+
+    assume(console.callCount).equals(1);
   });
 
   describe('.log', function () {

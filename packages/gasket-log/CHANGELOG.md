@@ -1,5 +1,7 @@
 # `@gasket/log`
 
+- Support enabling logging in production
+
 ### 6.1.0
 
 - Support for custom log levels ([#279])
