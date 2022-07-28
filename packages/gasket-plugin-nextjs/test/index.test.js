@@ -29,16 +29,10 @@ describe('Plugin', function () {
       'configure',
       'create',
       'express',
-<<<<<<< HEAD
       'fastify',
-      'build',
-      'workbox',
-      'metadata'
-=======
       'metadata',
       'middleware',
       'workbox'
->>>>>>> origin
     ];
 
     assume(plugin).to.have.property('hooks');
