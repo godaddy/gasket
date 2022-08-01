@@ -2,6 +2,8 @@ const assume = require('assume');
 const sinon = require('sinon');
 const proxyquire = require('proxyquire').noCallThru();
 
+const fastify = require('fastify')({ logger: true });
+
 describe('Swagger Plugin', function () {
   let plugin;
   let readFileStub, writeFileStub, yamlSafeDumpStub, yamlSafeLoadStub, swaggerJSDocStub, oKStub,
@@ -240,7 +242,9 @@ describe('Swagger Plugin', function () {
         }
       };
       mockApp = {
-        register: sinon.stub()
+        register: sinon.stub(),
+        ready: sinon.stub(),
+        get: sinon.stub()
       };
     });
 
@@ -288,6 +292,13 @@ describe('Swagger Plugin', function () {
         swagger: { data: true },
         uiConfig: {}
       });
+    });
+
+    it('adds new routes to swagger paths', async function () {
+      await plugin.hooks.fastify.handler(mockGasket, fastify);
+      fastify.get('/hello-world', () => {});
+      await fastify.ready();
+      assume(fastify.swagger().paths).to.haveOwnProperty('/hello-world');
     });
   });
 });
