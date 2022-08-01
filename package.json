@@ -75,5 +75,8 @@
   "workspaces": [
     "./packages/*",
     "scripts/generate-docs-index"
-  ]
+  ],
+  "dependencies": {
+    "browserslist-config-godaddy": "^3.0.1"
+  }
 }
