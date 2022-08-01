@@ -6,6 +6,9 @@ const path = require('path');
 const proxyquire = require('proxyquire').noCallThru();
 const { devDependencies } = require('../package');
 
+const fastify = require('fastify')({
+  logger: true
+});
 const { spy, stub } = sinon;
 
 describe('Plugin', function () {
@@ -21,17 +24,20 @@ describe('Plugin', function () {
 
   it('has expected hooks', () => {
     const expected = [
+      'apmTransaction',
+      'build',
       'configure',
       'create',
       'express',
-      'build',
-      'workbox',
-      'metadata'
+      'fastify',
+      'metadata',
+      'middleware',
+      'workbox'
     ];
 
     assume(plugin).to.have.property('hooks');
 
-    const hooks = Object.keys(plugin.hooks);
+    const hooks = Object.keys(plugin.hooks).sort();
     assume(hooks).eqls(expected);
     assume(hooks).is.length(expected.length);
   });
@@ -77,7 +83,9 @@ describe('configure hook', () => {
 });
 
 describe('express hook', () => {
-  let next, nextHandler, plugin, expressApp, hook;
+  let nextHandler, plugin, expressApp, hook;
+
+  let setupNextAppStub;
 
   beforeEach(() => {
     expressApp = {
@@ -85,13 +93,19 @@ describe('express hook', () => {
       use: spy(),
       all: spy()
     };
+
     nextHandler = {
       prepare: stub().resolves(),
       getRequestHandler: stub().resolves({})
     };
-    next = stub().returns(nextHandler);
 
-    plugin = proxyquire('../lib/', { next });
+    setupNextAppStub = stub().returns(nextHandler);
+    plugin = proxyquire('../lib/', {
+      './setup-next-app': {
+        setupNextApp: setupNextAppStub
+      }
+    });
+
     hook = plugin.hooks.express.handler;
   });
 
@@ -101,13 +115,6 @@ describe('express hook', () => {
 
     assume(plugin.hooks.express).property('timing');
     assume(plugin.hooks.express.timing).eqls({ last: true });
-  });
-
-  it('executes the `next` lifecycle', async function () {
-    const gasket = mockGasketApi();
-    await hook(gasket, expressApp, false);
-
-    assume(gasket.exec).has.been.calledWith('next', nextHandler);
   });
 
   it('attaches middleware to set NEXT_LOCALE cookie', async function () {
@@ -137,11 +144,11 @@ describe('express hook', () => {
     await hook(gasket, expressApp, false);
 
     const fn = expressApp.use.getCall(0).args[0];
-
     const mockReq = { headers: { cookie: 'bogus=data' } };
     const mockRes = { locals: { gasketData: { intl: { locale: 'fr-FR' } } } };
     const mockNext = stub();
-    fn(mockReq, mockRes, mockNext);
+    await fn(mockReq, mockRes, mockNext);
+
     assume(mockReq.headers).has.property('cookie', 'bogus=data;NEXT_LOCALE=fr-FR');
   });
 
@@ -152,7 +159,7 @@ describe('express hook', () => {
     const fn = expressApp.use.getCall(0).args[0];
 
     const mockReq = { headers: {} };
-    const mockRes = { locals: { gasketData: { } } };
+    const mockRes = { locals: { gasketData: {} } };
     const mockNext = stub();
     fn(mockReq, mockRes, mockNext);
     assume(mockReq.headers).not.has.property('cookie');
@@ -162,14 +169,112 @@ describe('express hook', () => {
     const gasket = mockGasketApi();
     await hook(gasket, expressApp, false);
 
-    assume(gasket.exec).has.been.calledWith('nextExpress', { next: nextHandler, express: expressApp });
+    assume(gasket.exec).has.been.calledWith('nextExpress', {
+      next: nextHandler,
+      express: expressApp
+    });
   });
 
-  it('does not derive a webpack config if not running a dev server', async () => {
-    await hook(mockGasketApi(), expressApp, false);
+});
 
-    const nextOptions = next.lastCall.args[0];
-    assume(nextOptions.conf).to.not.haveOwnProperty('webpack');
+describe('fastify hook', () => {
+  let nextHandler, plugin, fastifyApp, hook;
+
+  let setupNextAppStub;
+
+  beforeEach(() => {
+    fastifyApp = {
+      decorate: spy(),
+      register: spy(),
+      all: spy()
+    };
+    nextHandler = {
+      prepare: stub().resolves(),
+      getRequestHandler: stub().resolves({}),
+      buildId: '1234',
+      name: 'testapp'
+    };
+    setupNextAppStub = stub().returns(nextHandler);
+
+    plugin = proxyquire('../lib/', {
+      './setup-next-app': {
+        setupNextApp: setupNextAppStub
+      }
+    });
+    hook = plugin.hooks.fastify.handler;
+  });
+
+  it('timing configured last', async function () {
+    const gasket = mockGasketApi();
+    await hook(gasket, fastifyApp, false);
+
+    assume(plugin.hooks.fastify).property('timing');
+    assume(plugin.hooks.fastify.timing).eqls({ last: true });
+  });
+
+  it('attaches middleware to set NEXT_LOCALE cookie', async function () {
+    const gasket = mockGasketApi();
+    await hook(gasket, fastifyApp, false);
+
+    assume(fastifyApp.register).has.been.calledWith(sinon.match.func);
+    const fn = fastifyApp.register.getCall(0).args[0];
+    assume(fn.name).equals('setNextLocale');
+  });
+
+  it('middleware sets NEXT_LOCALE cookie from gasketData', async function () {
+    const gasket = mockGasketApi();
+    await hook(gasket, fastifyApp, false);
+
+    const fn = fastifyApp.register.getCall(0).args[0];
+
+    const mockReq = { headers: {} };
+    const mockRes = { locals: { gasketData: { intl: { locale: 'fr-FR' } } } };
+    const mockNext = stub();
+    fn(mockReq, mockRes, mockNext);
+    assume(mockReq.headers).has.property('cookie', ';NEXT_LOCALE=fr-FR');
+  });
+
+  it('middleware adds NEXT_LOCALE to existing cookie', async function () {
+    const gasket = mockGasketApi();
+    await hook(gasket, fastifyApp, false);
+
+    const fn = fastifyApp.register.getCall(0).args[0];
+
+    const mockReq = { headers: { cookie: 'bogus=data' } };
+    const mockRes = { locals: { gasketData: { intl: { locale: 'fr-FR' } } } };
+    const mockNext = stub();
+    fn(mockReq, mockRes, mockNext);
+    assume(mockReq.headers).has.property('cookie', 'bogus=data;NEXT_LOCALE=fr-FR');
+  });
+
+  it('middleware does not set NEXT_LOCALE cookie if no gasketData', async function () {
+    const gasket = mockGasketApi();
+    await hook(gasket, fastifyApp, false);
+
+    const fn = fastifyApp.register.getCall(0).args[0];
+
+    const mockReq = { headers: {} };
+    const mockRes = { locals: { gasketData: {} } };
+    const mockNext = stub();
+    fn(mockReq, mockRes, mockNext);
+    assume(mockReq.headers).not.has.property('cookie');
+  });
+
+  it('executes the `nextFastify` lifecycle', async function () {
+    const gasket = mockGasketApi();
+    await hook(gasket, fastifyApp, false);
+
+    assume(gasket.exec).has.been.calledWith('nextFastify', {
+      next: nextHandler,
+      fastify: fastifyApp
+    });
+  });
+
+  it('sets app buildId on fastify app', async function () {
+    const gasket = mockGasketApi();
+    await hook(gasket, fastify, false);
+
+    assume(fastify['buildId/testapp']).equals('1234');
   });
 });
 
@@ -179,7 +284,6 @@ describe('create hook', () => {
   const root = path.join(__dirname, '..', 'lib');
 
   beforeEach(() => {
-
     mockContext = {
       pkg: {
         add: spy(),
@@ -193,12 +297,8 @@ describe('create hook', () => {
   });
 
   it('has expected timings', async function () {
-    assume(plugin.hooks.create.timing.before).eqls([
-      '@gasket/plugin-intl'
-    ]);
-    assume(plugin.hooks.create.timing.after).eqls([
-      '@gasket/plugin-redux'
-    ]);
+    assume(plugin.hooks.create.timing.before).eqls(['@gasket/plugin-intl']);
+    assume(plugin.hooks.create.timing.after).eqls(['@gasket/plugin-redux']);
   });
 
   it('adds the appropriate globs', async function () {
@@ -245,7 +345,9 @@ describe('create hook', () => {
   });
 
   it('adds the appropriate globs for redux', async function () {
-    mockContext.pkg.has = stub().callsFake((o, f) => o === 'dependencies' && f === '@gasket/redux');
+    mockContext.pkg.has = stub().callsFake(
+      (o, f) => o === 'dependencies' && f === '@gasket/redux'
+    );
     await plugin.hooks.create.handler({}, mockContext);
 
     assume(mockContext.files.add).calledWith(
@@ -255,7 +357,9 @@ describe('create hook', () => {
   });
 
   it('adds appropriate dependencies for redux', async function () {
-    mockContext.pkg.has = stub().callsFake((o, f) => o === 'dependencies' && f === '@gasket/redux');
+    mockContext.pkg.has = stub().callsFake(
+      (o, f) => o === 'dependencies' && f === '@gasket/redux'
+    );
     await plugin.hooks.create.handler({}, mockContext);
 
     assume(mockContext.pkg.add).calledWith('dependencies', {
@@ -266,7 +370,6 @@ describe('create hook', () => {
 });
 
 describe('build hook', () => {
-
   let createConfigStub, builderStub;
 
   const getMockedBuildHook = (imports = {}) => {
@@ -304,7 +407,6 @@ describe('build hook', () => {
 });
 
 describe('workbox hook', () => {
-
   let gasketAPI, plugin;
 
   beforeEach(() => {
@@ -422,8 +524,8 @@ function mockGasketApi() {
       warning: stub()
     },
     config: {
-      webpack: {},  // user specified webpack config
-      nextConfig: {},      // user specified next.js config
+      webpack: {}, // user specified webpack config
+      nextConfig: {}, // user specified next.js config
       root: '/app/path'
     }
   };

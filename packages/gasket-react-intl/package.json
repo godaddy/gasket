@@ -1,6 +1,6 @@
 {
   "name": "@gasket/react-intl",
-  "version": "6.28.1",
+  "version": "6.30.0",
   "description": "React component library to enable localization for gasket apps.",
   "main": "lib",
   "browser": "lib",

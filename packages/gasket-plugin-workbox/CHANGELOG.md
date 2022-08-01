@@ -1,5 +1,9 @@
 # `@gasket/plugin-workbox`
 
+### 6.30.0
+
+- Support fastify ([#397])
+
 ### 6.10.0
 
 - TypeScript definitions for config & lifecycles ([#311])
@@ -47,3 +51,4 @@
 [#247]: https://github.com/godaddy/gasket/pull/247
 [#266]: https://github.com/godaddy/gasket/pull/266
 [#311]: https://github.com/godaddy/gasket/pull/311
+[#397]: https://github.com/godaddy/gasket/pull/397

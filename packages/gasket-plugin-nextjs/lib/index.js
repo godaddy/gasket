@@ -3,6 +3,9 @@ const url = require('url');
 const { name, devDependencies } = require('../package');
 const { createConfig } = require('./config');
 const { pluginIdentifier } = require('@gasket/resolve');
+const { setupNextApp } = require('./setup-next-app');
+const getNextRoute = require('./next-route');
+const apmTransaction = require('./apm-transaction');
 
 const isDefined = (o) => typeof o !== 'undefined';
 
@@ -92,28 +95,24 @@ module.exports = {
         }
       }
     },
+    middleware: {
+      timing: {
+        before: ['@gasket/plugin-elastic-apm']
+      },
+      handler: (gasket) => [
+        (req, _res, next) => {
+          req.getNextRoute = () => getNextRoute(gasket, req);
+          next();
+        }
+      ]
+    },
     express: {
       timing: {
         last: true
       },
       handler: async function express(gasket, expressApp) {
-        const { exec, command } = gasket;
-        const createNextApp = require('next');
-        const devServer = (command.id || command) === 'local';
-
-        const app = createNextApp({
-          dev: devServer,
-          conf: await createConfig(gasket, devServer)
-        });
-
-        //
-        // We need to call the `next` lifecycle before we prepare the application
-        // as the prepare step initializes all the routes that a next app can have.
-        // If we wait later, it's possible that our added routes/pages are not
-        // recognized.
-        //
-        await exec('next', app);
-        await app.prepare();
+        const { exec } = gasket;
+        const app = await setupNextApp(gasket);
 
         expressApp.set(['buildId', app.name].filter(Boolean).join('/'), app.buildId);
 
@@ -143,6 +142,42 @@ module.exports = {
         return app;
       }
     },
+    fastify: {
+      timing: {
+        last: true
+      },
+      handler: async function fastify(gasket, fastifyApp) {
+        const { exec } = gasket;
+        const app = await setupNextApp(gasket);
+
+        fastifyApp.decorate(['buildId', app.name].filter(Boolean).join('/'), {
+          getter() {
+            return app.buildId;
+          }
+        });
+
+        await exec('nextFastify', { next: app, fastify: fastifyApp });
+
+        fastifyApp.register(function setNextLocale(req, res, next) {
+          if (res.locals && res.locals.gasketData && res.locals.gasketData.intl) {
+            const { locale } = res.locals.gasketData.intl;
+            if (locale) {
+              req.headers.cookie = (req.headers.cookie || '') + `;NEXT_LOCALE=${locale}`;
+            }
+          }
+          next();
+        });
+
+        const handler = () => {
+          return app.getRequestHandler();
+        };
+
+        fastifyApp.all('*', { handler });
+
+        return app;
+      }
+    },
+    apmTransaction,
     build: async function build(gasket) {
       const { command } = gasket;
       // Don't do a build, use dev server for local
@@ -218,6 +253,22 @@ module.exports = {
           description: 'Access the prepared next app and express instance',
           link: 'README.md#nextExpress',
           parent: 'express',
+          after: 'next'
+        },
+        {
+          name: 'next',
+          method: 'exec',
+          description: 'Update the next app instance before prepare',
+          link: 'README.md#next',
+          parent: 'fastify',
+          after: 'nextConfig'
+        },
+        {
+          name: 'nextFastify',
+          method: 'exec',
+          description: 'Access the prepared next app and fastify instance',
+          link: 'README.md#nextFastify',
+          parent: 'fastify',
           after: 'next'
         }],
         structures: [{
