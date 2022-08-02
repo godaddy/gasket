@@ -45,7 +45,7 @@ class CreateCommand extends Command {
    */
   async run() {
     const { argv, flags: parsedFlags } = this.parse(CreateCommand);
-    const { bootstrap, generate } = parsedFlags;
+    const { bootstrap, generate, 'ci-config': ciConfig, 'ci-config-file': ciConfigFile } = parsedFlags;
 
     let context;
     try {
@@ -61,7 +61,12 @@ class CreateCommand extends Command {
         await loadPreset(context);
         cliVersion(context);
         applyPresetConfig(context);
-        await globalPrompts(context);
+        if (ciConfig || ciConfigFile) {
+          // create context from json object or json file
+          // how to validate args provided in create
+        } else {
+          await globalPrompts(context);
+        }
         await mkDir(context);
         await setupPkg(context);
         await writePkg(context);
@@ -169,6 +174,15 @@ comma-separated values: --preset-path=path1,path2`,
 Instead, prefer environment variables to configure package managers
 `,
     hidden: true
+  }),
+  'ci-config': flags.string({
+    env: 'GASKET_PLUGINS',
+    description: `If provided, do not execute prompt lifecycle`,
+    exclusive: ['ci-config-file']
+  }),
+  'ci-config-file': flags.string({
+    description: `If provided, do not execute prompt lifecycle`,
+    exclusive: ['ci-config']
   })
 };
 
