@@ -120,7 +120,7 @@ export class Loader extends Resolver {
    * @param [options.shallow] - Do not recursively load dependencies
    * @returns module
    */
-  loadPreset(module: PresetName, meta?: object, { shallow: boolean }?): PresetInfo;
+  loadPreset(module: PresetName, meta?: object, options?: { shallow: boolean }): PresetInfo;
 
   /**
    * Loads presets and plugins as configured.
