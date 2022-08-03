@@ -1,7 +1,6 @@
 const path = require('path');
 const fs = require('fs');
 const { readFile, writeFile, access } = require('fs').promises;
-const swaggerUi = require('swagger-ui-express');
 const swaggerJSDoc = require('swagger-jsdoc');
 const isYaml = /\.ya?ml$/;
 
@@ -100,6 +99,7 @@ module.exports = {
         before: ['@gasket/plugin-nextjs']
       },
       handler: async function express(gasket, app) {
+        const swaggerUi = require('swagger-ui-express');
         const { swagger, root } = gasket.config;
         const { ui = {}, apiDocsRoute, definitionFile } = swagger;
 
