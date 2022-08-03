@@ -11,7 +11,7 @@ const { addPluginsToContext } = require('../utils');
  * @returns {Promise} promise
  */
 async function getAppDescription(context, ciConfig) {
-  if (!('appDescription' in context)) {
+  if (!('appDescription' in context) && 'appDescription' in ciConfig) {
     Object.assign(context, { appDescription: ciConfig.description });
   }
 }

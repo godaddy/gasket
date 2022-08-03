@@ -22,7 +22,8 @@ const {
   generateFiles,
   writeGasketConfig,
   applyPresetConfig,
-  printReport
+  printReport,
+  readConfig
 } = require('../scaffold/actions');
 
 const dumpErrorContext = require('../scaffold/dump-error-context');
@@ -45,7 +46,7 @@ class CreateCommand extends Command {
    */
   async run() {
     const { argv, flags: parsedFlags } = this.parse(CreateCommand);
-    const { bootstrap, generate, 'ci-config': ciConfig, 'ci-config-file': ciConfigFile } = parsedFlags;
+    const { bootstrap, generate, 'ci-config': ciConfig, 'ci-config-file': ciConfigFilePath } = parsedFlags;
 
     let context;
     try {
@@ -61,9 +62,12 @@ class CreateCommand extends Command {
         await loadPreset(context);
         cliVersion(context);
         applyPresetConfig(context);
-        if (ciConfig || ciConfigFile) {
-          // create context from json object or json file
-          // how to validate args provided in create
+        if (ciConfig) {
+          const parsedCiConfig = JSON.parse(ciConfig);
+          await readConfig(context, parsedCiConfig);
+        } else if (ciConfigFilePath) {
+          const ciConfigFile = require(ciConfigFilePath);
+          await readConfig(context, ciConfigFile);
         } else {
           await globalPrompts(context);
         }
