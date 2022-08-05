@@ -1,7 +1,6 @@
 const path = require('path');
 const fs = require('fs');
 const { readFile, writeFile, access } = require('fs').promises;
-const swaggerUi = require('swagger-ui-express');
 const swaggerJSDoc = require('swagger-jsdoc');
 const isYaml = /\.ya?ml$/;
 
@@ -100,12 +99,37 @@ module.exports = {
         before: ['@gasket/plugin-nextjs']
       },
       handler: async function express(gasket, app) {
+        const swaggerUi = require('swagger-ui-express');
         const { swagger, root } = gasket.config;
         const { ui = {}, apiDocsRoute, definitionFile } = swagger;
 
         const swaggerSpec = await loadSwaggerSpec(root, definitionFile, gasket.logger);
 
         app.use(apiDocsRoute, swaggerUi.serve, swaggerUi.setup(swaggerSpec, ui));
+      }
+    },
+    /**
+     * Serve the Swagger Docs UI.
+     *
+     * @param {object} gasket - Gasket API
+     * @param {object} app - Fastify app instance
+     * @async
+     */
+    fastify: {
+      timing: {
+        before: ['@gasket/plugin-nextjs']
+      },
+      handler: async function fastify(gasket, app) {
+        const { swagger, root } = gasket.config;
+        const { ui = {}, apiDocsRoute, definitionFile } = swagger;
+
+        const swaggerSpec = await loadSwaggerSpec(root, definitionFile, gasket.logger);
+
+        app.register(require('@fastify/swagger'), {
+          prefix: apiDocsRoute,
+          swagger: swaggerSpec,
+          uiConfig: ui
+        });
       }
     },
     /**

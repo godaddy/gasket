@@ -2,6 +2,8 @@ const assume = require('assume');
 const sinon = require('sinon');
 const proxyquire = require('proxyquire').noCallThru();
 
+const fastify = require('fastify')({ logger: true });
+
 describe('Swagger Plugin', function () {
   let plugin;
   let readFileStub, writeFileStub, yamlSafeDumpStub, yamlSafeLoadStub, swaggerJSDocStub, oKStub,
@@ -59,6 +61,7 @@ describe('Swagger Plugin', function () {
       'configure',
       'build',
       'express',
+      'fastify',
       'create',
       'metadata'
     ];
@@ -218,6 +221,84 @@ describe('Swagger Plugin', function () {
     it('sets the api docs route', async function () {
       await plugin.hooks.express.handler(mockGasket, mockApp);
       assume(mockApp.use).calledWith('/api-docs');
+    });
+  });
+
+  describe('fastify hook', function () {
+    let mockGasket, mockApp;
+
+    beforeEach(function () {
+      mockGasket = {
+        logger: {
+          info: sinon.stub(),
+          error: sinon.stub()
+        },
+        config: {
+          root: '/path/to/app',
+          swagger: {
+            definitionFile: 'swagger.json',
+            apiDocsRoute: '/api-docs'
+          }
+        }
+      };
+      mockApp = {
+        register: sinon.stub(),
+        ready: sinon.stub(),
+        get: sinon.stub()
+      };
+    });
+
+    context('when target definition file is not found', function () {
+      it('returns nothing', async function () {
+        mockGasket.config.swagger.definitionFile = 'swagger.yaml';
+        const result = await plugin.hooks.fastify.handler(mockGasket, mockApp);
+        assume(result).is.falsely();
+      });
+    });
+
+    context('when swagger file is missing', function () {
+      it('gasket.logger logs error', async function () {
+        mockGasket.config.swagger.definitionFile = 'swagger.yaml';
+        accessStub.rejects();
+        await plugin.hooks.fastify.handler(mockGasket, mockApp);
+        assume(mockGasket.logger.error).calledWith(`Missing ${ mockGasket.config.swagger.definitionFile } file...`);
+      });
+    });
+
+    it('loads the swagger spec yaml file', async function () {
+      mockGasket.config.swagger.definitionFile = 'swagger.yaml';
+      await plugin.hooks.fastify.handler(mockGasket, mockApp);
+      assume(yamlSafeLoadStub).called();
+    });
+
+    it('only loads the swagger spec file once', async function () {
+      mockGasket.config.swagger.definitionFile = 'swagger.yaml';
+      assume(yamlSafeLoadStub).not.called();
+      await plugin.hooks.fastify.handler(mockGasket, mockApp);
+      assume(yamlSafeLoadStub).called(1);
+      await plugin.hooks.fastify.handler(mockGasket, mockApp);
+      assume(yamlSafeLoadStub).called(1);
+    });
+
+    it('loads the swagger spec json file', async function () {
+      await plugin.hooks.fastify.handler(mockGasket, mockApp);
+      assume(yamlSafeLoadStub).not.called();
+    });
+
+    it('sets the api docs route', async function () {
+      await plugin.hooks.fastify.handler(mockGasket, mockApp);
+      assume(mockApp.register).calledWith(sinon.match.any, {
+        prefix: '/api-docs',
+        swagger: { data: true },
+        uiConfig: {}
+      });
+    });
+
+    it('adds new routes to swagger paths', async function () {
+      await plugin.hooks.fastify.handler(mockGasket, fastify);
+      fastify.get('/hello-world', () => {});
+      await fastify.ready();
+      assume(fastify.swagger().paths).to.haveOwnProperty('/hello-world');
     });
   });
 });
