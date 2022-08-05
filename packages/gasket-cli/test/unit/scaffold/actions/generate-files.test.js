@@ -10,11 +10,11 @@ const fixtures = path.resolve(__dirname, '..', '..', '..', 'fixtures');
 
 describe('generateFiles', () => {
   let mockContext, mockImports, generateFiles;
-  let globSpy, readFileSpy, writeFileStub, mkdirpStub, registerHelperSpy;
+  let globSpy, readFileStub, writeFileStub, mkdirpStub, registerHelperSpy;
 
   beforeEach(() => {
 
-    readFileSpy = sinon.spy(fs.promises.readFile);
+    readFileStub = sinon.stub().callsFake(fs.promises.readFile);
     writeFileStub = sinon.stub().resolves();
     mkdirpStub = sinon.stub().resolves();
 
@@ -35,7 +35,7 @@ describe('generateFiles', () => {
       'mkdirp': mkdirpStub,
       'fs': {
         promises: {
-          readFile: readFileSpy,
+          readFile: readFileStub,
           writeFile: writeFileStub
         }
       },
@@ -77,14 +77,47 @@ describe('generateFiles', () => {
 
   it('reads expected source files', async () => {
     await generateFiles(mockContext);
-    assume(readFileSpy).is.calledWithMatch('gasket-cli/test/fixtures/generator/file-a.md');
-    assume(readFileSpy).is.calledWithMatch('gasket-cli/test/fixtures/generator/file-b.md');
+    assume(readFileStub).is.calledWithMatch('gasket-cli/test/fixtures/generator/file-a.md');
+    assume(readFileStub).is.calledWithMatch('gasket-cli/test/fixtures/generator/file-b.md');
   });
 
   it('writes expected target files', async () => {
     await generateFiles(mockContext);
     assume(writeFileStub).is.calledWithMatch('/path/to/my-app/file-a.md');
     assume(writeFileStub).is.calledWithMatch('/path/to/my-app/file-b.md');
+  });
+
+  it('handles template read errors', async () => {
+    readFileStub.rejects(new Error('Bogus error occurred'));
+    await generateFiles(mockContext);
+    assume(mockContext.errors).length(2);
+    assume(mockContext.errors[0])
+      .contains('Error reading template').contains('file-a.md').contains('Bogus error occurred');
+    assume(mockContext.errors[1])
+      .contains('Error reading template').contains('file-b.md').contains('Bogus error occurred');
+  });
+
+  it('handles template dir read errors as warnings', async () => {
+    const err = new Error('Bogus error occurred');
+    err.code = 'EISDIR';
+    readFileStub.rejects(err);
+    await generateFiles(mockContext);
+    assume(mockContext.warnings).length(2);
+    assume(mockContext.warnings).contains('Directory matched as template file: /path/to/my-app/file-a.md');
+    assume(mockContext.warnings).contains('Directory matched as template file: /path/to/my-app/file-b.md');
+  });
+
+  it('handles dir create errors', async () => {
+    mkdirpStub.rejects(new Error('Bogus error occurred'));
+    await generateFiles(mockContext);
+    assume(mockContext.errors).contains('Error creating directory /path/to/my-app: Bogus error occurred');
+  });
+
+  it('handles file write errors', async () => {
+    writeFileStub.rejects(new Error('Bogus error occurred'));
+    await generateFiles(mockContext);
+    assume(mockContext.errors).contains('Error writing /path/to/my-app/file-a.md: Bogus error occurred');
+    assume(mockContext.errors).contains('Error writing /path/to/my-app/file-b.md: Bogus error occurred');
   });
 
   it('shows warning spinner for any warnings', async () => {
@@ -265,6 +298,61 @@ describe('generateFiles', () => {
         target: 'file-a.md',
         from: '@gasket/plugin-override-example',
         overrides: '@gasket/plugin-example'
+      });
+    });
+  });
+
+  describe('_assembleDescriptors', function () {
+    const from = '@gasket/plugin-example';
+
+    it('has expected output with *nix paths', function () {
+      const results = generateFiles._assembleDescriptors(
+        '/path/to/my-app',
+        from,
+        '/gasket-cli/test/fixtures/rel/../generator/*',
+        [
+          '/gasket-cli/test/fixtures/generator/file-a.md',
+          '/gasket-cli/test/fixtures/generator/file-b.md'
+        ]
+      );
+      assume(results[0]).objectContaining({
+        pattern: sinon.match('/gasket-cli/test/fixtures/rel/../generator/*'),
+        base: sinon.match(/.+fixtures\/generator$/),
+        srcFile: sinon.match('/gasket-cli/test/fixtures/generator/file-a.md'),
+        targetFile: '/path/to/my-app/file-a.md',
+        target: 'file-a.md',
+        from
+      });
+    });
+
+    it('has expected output with windows paths', function () {
+      sinon.stub(path, 'sep').get(() => '\\');
+      sinon.stub(path, 'resolve').callsFake(f => f.replace('/rel/..', ''));
+
+      const results = generateFiles._assembleDescriptors(
+        // mixed slashes for testing
+        'C:\\path\\to/my-app',
+        from,
+        'C:\\gasket-cli\\test\\fixtures/rel/../generator/*',
+        [
+          'C:\\gasket-cli\\test\\fixtures\\generator\\file-a.md',
+          // glob may return with forward-slash
+          'C:/gasket-cli/test/fixtures/generator/file-b.md'
+        ]
+      );
+      assume(results[0]).objectContaining({
+        pattern: 'C:\\gasket-cli\\test\\fixtures/rel/../generator/*',
+        base: 'C:\\gasket-cli\\test\\fixtures\\generator',
+        srcFile: sinon.match('C:\\gasket-cli\\test\\fixtures\\generator\\file-a.md'),
+        targetFile: 'C:\\path\\to\\my-app\\file-a.md',
+        target: 'file-a.md',
+        from
+      });
+      assume(results[1]).objectContaining({
+        srcFile: sinon.match('C:\\gasket-cli\\test\\fixtures\\generator\\file-b.md'),
+        targetFile: 'C:\\path\\to\\my-app\\file-b.md',
+        target: 'file-b.md',
+        from
       });
     });
   });
