@@ -11,6 +11,8 @@ const glob = promisify(require('glob'));
 
 const flatten = (acc, values) => (acc || []).concat(values);
 const reSep = /[/\\]+/;
+const joinSep = pthArr => pthArr.join(path.sep);
+const splitSep = pthStr => pthStr.split(reSep);
 
 /**
  * Find all duplicate target files and reduce to single descriptor.
@@ -47,18 +49,18 @@ function reduceDescriptors(descriptors) {
  * @returns {object[]} descriptors
  */
 function assembleDescriptors(dest, from, pattern, srcPaths) {
-  const output = dest.split(reSep).join(path.sep);
-  const baseParts = path.resolve(pattern.replace(/[/\\]+.?\*.*$/, '')).split(reSep);
-  const base = baseParts.join(path.sep);
+  const output = joinSep(splitSep(dest));
+  const baseParts = splitSep(path.resolve(pattern.replace(/[/\\]+.?\*.*$/, '')));
+  const base = joinSep(baseParts);
   return srcPaths.map((srcPath) => {
-    const parts = srcPath.split(reSep);
-    const srcFile = parts.join(path.sep);
-    const target = parts.slice(baseParts.length).join(path.sep).replace('.template', '');
+    const parts = splitSep(srcPath);
+    const srcFile = joinSep(parts);
+    const target = joinSep(parts.slice(baseParts.length)).replace('.template', '');
     return {
       pattern,
       base,
       srcFile,
-      targetFile: [output, target].join(path.sep),
+      targetFile: joinSep([output, target]),
       target,
       from
     };
