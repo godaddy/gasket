@@ -50,7 +50,7 @@ function reduceDescriptors(descriptors) {
  */
 function assembleDescriptors(dest, from, pattern, srcPaths) {
   const output = joinSep(splitSep(dest));
-  const baseParts = splitSep(path.resolve(pattern.replace(/[/\\]+.?\*.*$/, '')));
+  const baseParts = splitSep(path.resolve(pattern.replace(/[/\\]+\.?\*.*$/, '')));
   const base = joinSep(baseParts);
   return srcPaths.map((srcPath) => {
     const parts = splitSep(srcPath);
