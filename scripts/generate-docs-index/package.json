@@ -1,10 +1,10 @@
 {
   "name": "generate-docs-index",
   "private": true,
-  "version": "6.30.2",
+  "version": "6.31.0",
   "description": "Generate the overview index",
   "dependencies": {
-    "@gasket/cli": "^6.30.2"
+    "@gasket/cli": "^6.31.0"
   },
   "devDependencies": {
     "copy-dir": "^1.2.0",
