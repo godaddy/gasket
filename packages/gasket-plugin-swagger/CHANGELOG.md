@@ -1,5 +1,9 @@
 # `@gasket/plugin-swagger`
 
+### 6.31.0
+
+- Support fastify ([#404])
+
 ### 6.11.2
 
 - Use fs.promises ([#319])
@@ -37,3 +41,4 @@
 [#294]: https://github.com/godaddy/gasket/pull/294
 [#311]: https://github.com/godaddy/gasket/pull/311
 [#319]: https://github.com/godaddy/gasket/pull/319
+[#404]: https://github.com/godaddy/gasket/pull/404
