@@ -24,7 +24,7 @@ const { addPluginsToContext } = require('../utils');
  * @returns {Promise} promise
  */
 async function getPackageManager(context, ciConfig) {
-  const packageManager = context.packageManager || ciConfig.packageManager;
+  const packageManager = context.packageManager || ciConfig.packageManager || ciConfig.package;
 
   const installCmd = context.installCmd || `${packageManager} install`;
 
@@ -66,7 +66,7 @@ async function getTestPlugin(context, ciConfig) {
     let testPlugin = Object.values(testPlugins).find((p) => allPlugins.includes(p));
 
     if (!testPlugin) {
-      testPlugin = testPlugins[ciConfig.testSuite];
+      testPlugin = ciConfig.testPlugin ? Object.values(testPlugins).find((p) => ciConfig.testPlugin === p) : testPlugins[ciConfig.testSuite];
     }
 
     if (testPlugin && testPlugin !== 'none') {
@@ -89,9 +89,9 @@ const loaders = [
  * @returns {Promise} promise
  */
 async function readConfigObject(context, ciConfig) {
-  const { packageManager, testPlugin, ...config } = ciConfig
-  await getPackageManager(context, { packageManager });
-  await getTestPlugin(context, {testPlugin});
+  const { packageManager, package, testPlugin, testSuite, ...config } = ciConfig;
+  await getPackageManager(context, { packageManager, package });
+  await getTestPlugin(context, { testPlugin, testSuite });
   Object.assign(context, config);
 }
 
