@@ -3,18 +3,18 @@ const action = require('../action-wrapper');
 const { addPluginsToContext } = require('../utils');
 
 
-/**
- * Get app description from json object
- *
- * @param {CreateContext} context - Create context
- * @param {Object} ciConfig - command line configuration object
- * @returns {Promise} promise
- */
-async function getAppDescription(context, ciConfig) {
-  if (!('appDescription' in context) && 'appDescription' in ciConfig) {
-    Object.assign(context, { appDescription: ciConfig.description });
-  }
-}
+// /**
+//  * Get app description from json object
+//  *
+//  * @param {CreateContext} context - Create context
+//  * @param {Object} ciConfig - command line configuration object
+//  * @returns {Promise} promise
+//  */
+// async function getAppDescription(context, ciConfig) {
+//   if (!('appDescription' in context) && 'appDescription' in ciConfig) {
+//     Object.assign(context, { appDescription: ciConfig.description });
+//   }
+// }
 
 /**
  * Get package manager from json object
@@ -76,8 +76,7 @@ async function getTestPlugin(context, ciConfig) {
   }
 }
 
-const questions = [
-  getAppDescription,
+const loaders = [
   getPackageManager,
   getTestPlugin
 ];
@@ -90,11 +89,12 @@ const questions = [
  * @returns {Promise} promise
  */
 async function readConfigObject(context, ciConfig) {
-  for (var fn of questions) {
-    await fn(context, ciConfig);
-  }
+  const { packageManager, testPlugin, ...config } = ciConfig
+  await getPackageManager(context, { packageManager });
+  await getTestPlugin(context, {testPlugin});
+  Object.assign(context, config);
 }
 
 module.exports = action('Read config object', readConfigObject, { startSpinner: false });
 
-module.exports.questions = questions;
+module.exports.loaders = loaders;
