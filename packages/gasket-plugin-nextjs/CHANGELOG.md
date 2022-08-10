@@ -1,5 +1,7 @@
 # `@gasket/plugin-nextjs`
 
+- Fix syntax that is not node 14 compatible
+
 ### 6.30.1
 
 - Lazy load next package ([#403])
