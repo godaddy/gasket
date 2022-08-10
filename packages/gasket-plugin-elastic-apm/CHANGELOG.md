@@ -1,5 +1,9 @@
 # `@gasket/plugin-elastic-apm`
 
+### 6.31.1
+
+- Syntax error fix for node@14 support ([#407])
+
 ### 6.30.0
 
 - Add an `apmTransaction` lifecycle ([#400])
@@ -25,3 +29,4 @@
 [#378]:https://github.com/godaddy/gasket/pull/378
 [#388]:https://github.com/godaddy/gasket/pull/388
 [#400]:https://github.com/godaddy/gasket/pull/400
+[#407]:https://github.com/godaddy/gasket/pull/407
