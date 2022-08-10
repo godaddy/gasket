@@ -1,0 +1,5 @@
+{
+  "description": "A basic gasket app",
+  "package": "npm",
+  "testSuite": "mocha"
+}
