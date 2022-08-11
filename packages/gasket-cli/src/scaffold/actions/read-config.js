@@ -7,11 +7,10 @@ const { addPluginsToContext } = require('../utils');
  * Get package manager from json object
  *
  * @param {CreateContext} context - Create context
- * @param {Object} ciConfig - command line configuration object
  * @returns {Promise} promise
  */
-async function getPackageManager(context, ciConfig) {
-  const packageManager = context.packageManager || ciConfig.packageManager || ciConfig.package;
+async function getPackageManager(context) {
+  const packageManager = context.packageManager || context.package;
 
   const installCmd = context.installCmd || `${packageManager} install`;
 
@@ -36,7 +35,7 @@ async function getPackageManager(context, ciConfig) {
  * @param {Object} ciConfig - command line configuration object
  * @returns {Promise} promise
  */
-async function getTestPlugin(context, ciConfig) {
+async function getTestPlugin(context) {
   // Combine user-provided plugins with preset-provided plugins.
   const { presetInfos = [], plugins = [] } = context;
 
@@ -49,17 +48,21 @@ async function getTestPlugin(context, ciConfig) {
 
   const testPlugins = { mocha: '@gasket/mocha', jest: '@gasket/jest', cypress: '@gasket/cypress' };
 
-  if (!('testPlugin' in context)) {
-    let testPlugin = Object.values(testPlugins).find((p) => allPlugins.includes(p));
+  let testPlugin = Object.values(testPlugins).find((p) => allPlugins.includes(p));
 
-    if (!testPlugin) {
-      testPlugin = ciConfig.testPlugin ? Object.values(testPlugins).find((p) => ciConfig.testPlugin === p) : testPlugins[ciConfig.testSuite];
+  if (!testPlugin) {
+    if ('testSuite' in context) {
+      testPlugin = testPlugins[context.testSuite];
+    } else if (('testPlugin' in context)) {
+      testPlugin = Object.values(testPlugins).find((p) => context.testPlugin === p);
     }
-
-    if (testPlugin && testPlugin !== 'none') {
-      addPluginsToContext([testPlugin], context);
-      Object.assign(context, { testPlugin });
-    }
+  }
+  if (testPlugin && testPlugin !== 'none') {
+    addPluginsToContext([testPlugin], context);
+    Object.assign(context, { testPlugin });
+  }
+  if (!testPlugin && ('testPlugin' in context)) {
+    delete context.testPlugin;
   }
 }
 
@@ -76,8 +79,8 @@ const loaders = [
  * @returns {Promise} promise
  */
 async function readConfigObject(context) {
-  const { packageManager, package, testPlugin, testSuite} = context;
-  await getPackageManager(context, { packageManager, package });
+  const { testPlugin, testSuite} = context;
+  await getPackageManager(context);
   await getTestPlugin(context, { testPlugin, testSuite });
 }
 

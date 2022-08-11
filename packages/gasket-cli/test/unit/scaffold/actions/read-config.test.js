@@ -62,10 +62,17 @@ describe('readConfig', () => {
   });
 
   describe('testPlugin', () => {
-    it('assigns testPlugin set in context', async () => {
+    it('does not set unrecognized testPlugin set in context', async () => {
       mockContext.testPlugin = 'bogus';
-      await getTestPlugin(mockContext, {});
-      assume(mockContext).property('testPlugin', 'bogus');
+      await getTestPlugin(mockContext);
+      assume(mockContext).not.property('testPlugin');
+    });
+
+    it('assigns testPlugin set in context', async () => {
+      mockContext.testSuite = 'mocha';
+      await getTestPlugin(mockContext);
+      assume(mockContext).property('testPlugin', '@gasket/mocha');
+      assume(mockContext).property('testSuite', 'mocha');
 
     });
 
@@ -75,20 +82,20 @@ describe('readConfig', () => {
           { name: '@gasket/jest' }
         ]
       }];
-      await getTestPlugin(mockContext, { testPlugin: 'bogus-plugin' });
-
+      await getTestPlugin(mockContext);
       assume(mockContext).property('testPlugin', '@gasket/jest');
     });
 
     it('does not set unrecognized testPlugin from context', async () => {
-      await getTestPlugin(mockContext, { testPlugin: 'bogus-plugin' });
+      Object.assign(mockContext, { testPlugin: 'bogus-plugin' })
+      await getTestPlugin(mockContext);
       assume(mockContext).not.property('testPlugin');
     });
 
-    it('prompts if a known test plugin not included in context plugins', async () => {
+    it('does not set if an unknown test plugin included in context plugins', async () => {
       mockContext.plugins = ['gasket-plugin-unknown-test'];
-      await getTestPlugin(mockContext, { testSuite: 'mocha' });
-      assume(mockContext).property('testPlugin', '@gasket/mocha');
+      await getTestPlugin(mockContext);
+      assume(mockContext).not.property('testPlugin');
     });
   });
 
