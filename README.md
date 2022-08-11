@@ -102,7 +102,6 @@ Available lifecycles
 | [middleware]                                           | Add Express style middleware for Fastify                      |
 | [middleware][4]                                        | Add Express style middleware                                  |
 | [next]                                                 | Update the next app instance before prepare                   |
-| [next][5]                                              | Update the next app instance before prepare                   |
 | [nextConfig]                                           | Setup the next config                                         |
 | [nextExpress]                                          | Access the prepared next app and express instance             |
 | [nextFastify]                                          | Access the prepared next app and fastify instance             |
@@ -330,7 +329,6 @@ Available configuration options in the `gasket.config.js`
 [middleware]:/packages/gasket-plugin-fastify/README.md#middleware
 [4]:/packages/gasket-plugin-express/README.md#middleware
 [next]:/packages/gasket-plugin-nextjs/README.md#next
-[5]:/packages/gasket-plugin-nextjs/README.md#next
 [nextConfig]:/packages/gasket-plugin-nextjs/README.md#nextConfig
 [nextExpress]:/packages/gasket-plugin-nextjs/README.md#nextExpress
 [nextFastify]:/packages/gasket-plugin-nextjs/README.md#nextFastify
