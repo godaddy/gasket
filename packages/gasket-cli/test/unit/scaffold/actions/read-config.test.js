@@ -38,19 +38,15 @@ describe('readConfig', () => {
 
   describe('packageManager', () => {
     ['npm', 'yarn'].forEach((manager) => {
-      it(`[${manager}] does not override packageManager if packageManager set in context`, async () => {
-        mockContext.packageManager = manager;
-        await getPackageManager(mockContext, { packageManager: 'fake' });
-        assume(mockContext.packageManager).to.be.equal(manager);
-      });
-
       it(`[${manager}] sets packageManager in context from config`, async () => {
-        await getPackageManager(mockContext, { packageManager: manager });
-        assume(mockContext.packageManager).to.be.equal(manager);
+        Object.assign(mockContext, { packageManager: manager })
+        await getPackageManager(mockContext);
+        assume(mockContext).property('packageManager', manager);
       });
 
       it(`[${manager}] sets package manager commands in context`, async () => {
-        await getPackageManager(mockContext, { packageManager: manager });
+        Object.assign(mockContext, { packageManager: manager })
+        await getPackageManager(mockContext);
         assume(mockContext).property('installCmd', `${manager} install`);
         assume(mockContext).property('localCmd', `${runners[manager]} gasket local`);
       });
@@ -103,7 +99,8 @@ describe('readConfig', () => {
         package: 'npm',
         testSuite: 'mocha'
       };
-      await readConfig.wrapped(mockContext, mockCiConfig);
+      Object.assign(mockContext, mockCiConfig);
+      await readConfig.wrapped(mockContext);
     
       assume(mockContext).property('testPlugin', '@gasket/mocha');
       assume(mockContext).property('description', mockCiConfig.description);

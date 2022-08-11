@@ -64,10 +64,12 @@ class CreateCommand extends Command {
         applyPresetConfig(context);
         if (ciConfig) {
           const parsedCiConfig = JSON.parse(ciConfig);
-          await readConfig(context, parsedCiConfig);
+          Object.assign(context, parsedCiConfig);
+          await readConfig(context);
         } else if (ciConfigFilePath) {
           const ciConfigFile = require(ciConfigFilePath);
-          await readConfig(context, ciConfigFile);
+          Object.assign(context, ciConfigFile);
+          await readConfig(context);
         } else {
           await globalPrompts(context);
         }

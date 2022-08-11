@@ -3,19 +3,6 @@ const action = require('../action-wrapper');
 const { addPluginsToContext } = require('../utils');
 
 
-// /**
-//  * Get app description from json object
-//  *
-//  * @param {CreateContext} context - Create context
-//  * @param {Object} ciConfig - command line configuration object
-//  * @returns {Promise} promise
-//  */
-// async function getAppDescription(context, ciConfig) {
-//   if (!('appDescription' in context) && 'appDescription' in ciConfig) {
-//     Object.assign(context, { appDescription: ciConfig.description });
-//   }
-// }
-
 /**
  * Get package manager from json object
  *
@@ -82,17 +69,16 @@ const loaders = [
 ];
 
 /**
- * Fire off prompts for user input
+ * Read values from user config object
  *
  * @param {CreateContext} context - Create context
  * @param {Object} ciConfig - command line configuration object
  * @returns {Promise} promise
  */
-async function readConfigObject(context, ciConfig) {
-  const { packageManager, package, testPlugin, testSuite, ...config } = ciConfig;
+async function readConfigObject(context) {
+  const { packageManager, package, testPlugin, testSuite} = context;
   await getPackageManager(context, { packageManager, package });
   await getTestPlugin(context, { testPlugin, testSuite });
-  Object.assign(context, config);
 }
 
 module.exports = action('Read config object', readConfigObject, { startSpinner: false });
