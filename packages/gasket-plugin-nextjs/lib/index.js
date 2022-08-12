@@ -256,14 +256,6 @@ module.exports = {
           after: 'next'
         },
         {
-          name: 'next',
-          method: 'exec',
-          description: 'Update the next app instance before prepare',
-          link: 'README.md#next',
-          parent: 'fastify',
-          after: 'nextConfig'
-        },
-        {
           name: 'nextFastify',
           method: 'exec',
           description: 'Access the prepared next app and fastify instance',
