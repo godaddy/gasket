@@ -1,5 +1,5 @@
 import type { WebpackContext } from '@gasket/plugin-webpack';
-import type { IncomingMessage } from 'http'
+import type { IncomingMessage, ServerResponse } from 'http';
 import type { NextConfig } from 'next/dist/next-server/server/config-shared';
 import type NextServer from 'next/dist/next-server/server/next-server';
 import type { MaybeAsync } from '@gasket/engine';
@@ -9,16 +9,21 @@ export { NextConfig, NextServer };
 
 declare module '@gasket/engine' {
   export interface GasketConfig {
-    nextConfig?: Partial<NextConfig>
+    nextConfig?: Partial<NextConfig>;
   }
 
   export interface HookExecTypes {
-    nextConfig(config: NextConfig): MaybeAsync<NextConfig>,
-    next(nextServer: NextServer): MaybeAsync<void>,
+    nextConfig(config: NextConfig): MaybeAsync<NextConfig>;
+    next(nextServer: NextServer): MaybeAsync<void>;
     nextExpress(params: {
-      next: NextServer,
-      express: Application
-    }): MaybeAsync<void>,
+      next: NextServer;
+      express: Application;
+    }): MaybeAsync<void>;
+    nextPreHandling(params: {
+      next: NextServer;
+      req: IncomingMessage;
+      res: ServerResponse;
+    }): MaybeAsync<void>;
   }
 }
 
@@ -28,14 +33,13 @@ declare module '@gasket/plugin-webpack' {
   }
 }
 
-
 declare module 'http' {
   export interface IncomingMessage {
     getNextRoute(): Promise<null | {
-      page: string,
-      regex: RegExp,
-      routeKeys: Record<string, string>,
-      namedRegex: RegExp
-    }>
+      page: string;
+      regex: RegExp;
+      routeKeys: Record<string, string>;
+      namedRegex: RegExp;
+    }>;
   }
 }

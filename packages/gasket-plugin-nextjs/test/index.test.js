@@ -175,6 +175,24 @@ describe('express hook', () => {
     });
   });
 
+  it('executes nextPreHandling before next.js handles a request', async () => {
+    const gasket = mockGasketApi();
+    await hook(gasket, expressApp, false);
+
+    const routeHandler = expressApp.all.lastCall.args[1];
+
+    const mockReq = { headers: {} };
+    const mockRes = { locals: { gasketData: {} } };
+    const mockNext = stub();
+
+    await routeHandler(mockReq, mockRes, mockNext);
+    assume(gasket.exec).has.been.calledWithMatch('nextPreHandling', {
+      req: mockReq,
+      res: mockRes,
+      next: nextHandler
+    });
+  });
+
 });
 
 describe('fastify hook', () => {

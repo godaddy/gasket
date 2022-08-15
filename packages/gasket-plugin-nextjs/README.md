@@ -207,6 +207,24 @@ module.exports = {
 };
 ```
 
+### nextPreHandling
+
+Enables execution of custom logic just prior to an HTTP request being handed to next.js for processing. Hooks receive the request, response, and next server (not to be confused with the next function used by express-like middleware):
+
+```js
+module.exports = {
+    hooks: {
+        async nextPreHandling(gasket, {
+            req,
+            res,
+            next
+        }) {
+            await doPreRenderingLogic(req, res);
+        }
+    }
+}
+```
+
 ## Utilities
 
 This plugin adds a middleware which attaches a `getNextRoute` function to the request object. It is intended for use in server contexts where you need to know how a request will route to a next.js page. This async function returns null if the manifest could not be parsed or if the requested URL does not match a route. If a match _is_ found, an object with these properties is returned:

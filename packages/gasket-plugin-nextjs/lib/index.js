@@ -137,7 +137,15 @@ module.exports = {
         // interact with the express router we want to add a last, catch all
         // route that will activate the `next`.
         //
-        expressApp.all('*', app.getRequestHandler());
+        const nextHandler = app.getRequestHandler();
+        expressApp.all('*', async (req, res, next) => {
+          try {
+            await gasket.exec('nextPreHandling', { req, res, next: app });
+            nextHandler(req, res);
+          } catch (err) {
+            return void next(err);
+          }
+        });
 
         return app;
       }
@@ -270,6 +278,14 @@ module.exports = {
           link: 'README.md#nextFastify',
           parent: 'fastify',
           after: 'next'
+        },
+        {
+          name: 'nextPreHandling',
+          method: 'exec',
+          description: 'Perform tasks just before next.js request handling',
+          link: 'README.md#nextPreHandling',
+          parent: 'express',
+          after: 'nextExpress'
         }],
         structures: [{
           name: 'pages/',
