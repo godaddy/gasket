@@ -1,7 +1,8 @@
 # @gasket/plugin-swagger
 
 Gasket plugin for working with Swagger specs, and uses [swagger-ui-express] to
-serve Swagger UI docs.
+serve Swagger UI docs with Express and uses [fastify-swagger] to serve Swagger UI 
+docs with Fastify.
 
 ## Installation
 
@@ -41,7 +42,7 @@ module.exports = {
     JSDocs in the configured files. See the [swagger-jsdocs] options for what is
     supported.
   - **`ui`** - (object) Optional custom UI options. See
-    [swagger-ui-express] options for what is supported.
+    [swagger-ui-express] / [fastify-swagger] options for what is supported.
 
 #### Example from JSDocs
 
@@ -91,4 +92,5 @@ module.exports = {
 
 <!-- LINK -->
 [swagger-ui-express]: https://github.com/scottie1984/swagger-ui-express
+[fasitfy-swagger]: https://github.com/fastify/fastify-swagger
 [swagger-jsdocs]: https://github.com/Surnet/swagger-jsdoc/blob/master/docs/GETTING-STARTED.md

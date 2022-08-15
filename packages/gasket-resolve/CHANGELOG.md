@@ -1,5 +1,9 @@
 # `@gasket/resolve`
 
+### 6.30.2
+
+- Fix TS options type ([#405])
+
 ### 6.29.0
 
 - Moved loadGasketConfigFile and related functions ([#396])
@@ -76,5 +80,6 @@
 [#333]: https://github.com/godaddy/gasket/pull/333
 [#395]: https://github.com/godaddy/gasket/pull/395
 [#396]: https://github.com/godaddy/gasket/pull/396
+[#405]: https://github.com/godaddy/gasket/pull/405
 
 [Loader]:/packages/gasket-resolve/docs/api.md#loader
