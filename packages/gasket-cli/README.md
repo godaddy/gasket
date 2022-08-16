@@ -52,7 +52,7 @@ OPTIONS
                                      multiple flags (e.g. --plugins @gasket/jest --plugins example@^1.0.0)
                                      comma-separated values: --plugins=@gasket/jest,example^1.0.0
   
-  --config={}                        Configuration object for the 
+  --config={}                        JSON object that provides the values for any interactive prompts
 
   --config-file
 ```
