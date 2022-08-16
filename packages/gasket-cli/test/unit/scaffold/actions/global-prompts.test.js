@@ -14,7 +14,8 @@ describe('globalPrompts', () => {
       appName: 'my-app',
       dest: '/some/path/my-app',
       plugins: [],
-      extant: false
+      extant: false,
+      prompts: true
     };
 
     promptStub = sandbox.stub().returns({});
@@ -52,6 +53,14 @@ describe('globalPrompts', () => {
     await globalPrompts(mockContext);
 
     assume(promptStub).is.called(3);
+  });
+
+  it('overrides inquirer prompt function with --no-prompts', async () => {
+    promptStub.returns({});
+    mockContext.prompts = false;
+    await globalPrompts(mockContext);
+    assume(mockImports.inquirer.prompt).not.eqls(promptStub);
+    assume(mockImports.inquirer.prompt).is.a('function');
   });
 
   describe('packageManager', () => {

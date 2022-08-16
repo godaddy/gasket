@@ -52,9 +52,9 @@ OPTIONS
                                      multiple flags (e.g. --plugins @gasket/jest --plugins example@^1.0.0)
                                      comma-separated values: --plugins=@gasket/jest,example^1.0.0
   
-  --ci-config={}                     Configuration object for the 
+  --config={}                        Configuration object for the 
 
-  --ci-config-file
+  --config-file
 ```
 
 #### Package Managers

@@ -292,4 +292,26 @@ describe('makeCreateContext', () => {
 
     assume(error).to.be.falsey();
   });
+
+  it('assigns values from config-file flag to context', () => {
+    flags = { 'config-file': '../../test/unit/commands/test-ci-config.json' };
+    results = makeCreateContext(argv, flags);
+    assume(results.testSuite).eqls('mocha');
+    assume(results.description).eqls('A basic gasket app');
+    assume(results.package).eqls('npm');
+  });
+
+  it('assigns values from config flag to context', () => {
+    flags = { config: '{"description":"A test app","package":"npm","testSuite":"fake"}' };
+    results = makeCreateContext(argv, flags);
+    assume(results.testSuite).eqls('fake');
+    assume(results.description).eqls('A test app');
+    assume(results.package).eqls('npm');
+  });
+
+  it('sets prompts from flags', () => {
+    results = makeCreateContext(argv, { prompts: false });
+    assume(results.prompts).false();
+  });
+
 });

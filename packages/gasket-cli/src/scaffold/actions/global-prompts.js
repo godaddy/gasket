@@ -1,4 +1,4 @@
-const inquirer = require('inquirer');
+let inquirer = require('inquirer');
 const { pluginIdentifier, flattenPresets } = require('@gasket/resolve');
 const action = require('../action-wrapper');
 const { addPluginsToContext } = require('../utils');
@@ -11,7 +11,7 @@ const { addPluginsToContext } = require('../utils');
  */
 async function chooseAppDescription(context) {
   if (!('appDescription' in context)) {
-    const { appDescription } = await inquirer.prompt([
+    const { appDescription } = context.description || await inquirer.prompt([
       {
         name: 'appDescription',
         message: 'What is your app description?',
@@ -31,7 +31,7 @@ async function chooseAppDescription(context) {
  * @returns {Promise} promise
  */
 async function choosePackageManager(context) {
-  const packageManager =
+  const packageManager = context.package ||
     context.packageManager ||
     (
       await inquirer.prompt([
@@ -77,10 +77,14 @@ async function chooseTestPlugin(context) {
     .map((pluginInfo) => pluginIdentifier(pluginInfo.name).shortName)
     .concat(plugins);
 
-  const knownTestPlugins = ['@gasket/mocha', '@gasket/jest', '@gasket/cypress'];
+  const knownTestPlugins = { mocha: '@gasket/mocha', jest: '@gasket/jest', cypress: '@gasket/cypress' };
 
   if (!('testPlugin' in context)) {
-    let testPlugin = knownTestPlugins.find((p) => allPlugins.includes(p));
+    let testPlugin = Object.values(knownTestPlugins).find((p) => allPlugins.includes(p));
+
+    if ('testSuite' in  context) {
+      testPlugin = knownTestPlugins[context.testSuite];
+    }
 
     if (!testPlugin) {
       ({ testPlugin } = await inquirer.prompt([
@@ -142,6 +146,9 @@ const questions = [
  * @returns {Promise} promise
  */
 async function globalPrompts(context) {
+  if (!context.prompts) {
+    inquirer.prompt = () => { return {} }
+  }
   for (var fn of questions) {
     await fn(context);
   }

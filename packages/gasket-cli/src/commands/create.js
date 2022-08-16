@@ -22,8 +22,7 @@ const {
   generateFiles,
   writeGasketConfig,
   applyPresetConfig,
-  printReport,
-  readConfig
+  printReport
 } = require('../scaffold/actions');
 
 const dumpErrorContext = require('../scaffold/dump-error-context');
@@ -46,7 +45,7 @@ class CreateCommand extends Command {
    */
   async run() {
     const { argv, flags: parsedFlags } = this.parse(CreateCommand);
-    const { bootstrap, generate, 'ci-config': ciConfig, 'ci-config-file': ciConfigFilePath } = parsedFlags;
+    const { bootstrap, generate, prompts } = parsedFlags;
 
     let context;
     try {
@@ -62,17 +61,7 @@ class CreateCommand extends Command {
         await loadPreset(context);
         cliVersion(context);
         applyPresetConfig(context);
-        if (ciConfig) {
-          const parsedCiConfig = JSON.parse(ciConfig);
-          Object.assign(context, parsedCiConfig);
-          await readConfig(context);
-        } else if (ciConfigFilePath) {
-          const ciConfigFile = require(ciConfigFilePath);
-          Object.assign(context, ciConfigFile);
-          await readConfig(context);
-        } else {
-          await globalPrompts(context);
-        }
+        await globalPrompts(context);
         await mkDir(context);
         await setupPkg(context);
         await writePkg(context);
@@ -181,15 +170,20 @@ Instead, prefer environment variables to configure package managers
 `,
     hidden: true
   }),
-  'ci-config': flags.string({
+  'config': flags.string({
     env: 'GASKET_PLUGINS',
     description: `If provided, do not execute prompt lifecycle`,
-    exclusive: ['ci-config-file']
+    exclusive: ['config-file']
   }),
-  'ci-config-file': flags.string({
+  'config-file': flags.string({
     description: `If provided, do not execute prompt lifecycle`,
-    exclusive: ['ci-config']
-  })
+    exclusive: ['config']
+  }),
+  'prompts': flags.boolean({
+    default: true,
+    description: '(INTERNAL) Disable to skip the prompts',
+    allowNo: true,
+    hidden: true })
 };
 
 CreateCommand.args = [

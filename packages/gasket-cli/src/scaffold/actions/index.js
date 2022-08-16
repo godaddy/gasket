@@ -15,7 +15,6 @@ const generateFiles = require('./generate-files');
 const postCreateHooks = require('./post-create-hooks');
 const applyPresetConfig = require('./apply-preset-config');
 const printReport = require('./print-report');
-const readConfig = require('./read-config');
 
 module.exports = {
   mkDir,
@@ -33,6 +32,5 @@ module.exports = {
   postCreateHooks,
   generateFiles,
   applyPresetConfig,
-  printReport,
-  readConfig
+  printReport
 };

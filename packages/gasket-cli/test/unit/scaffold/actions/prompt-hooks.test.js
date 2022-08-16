@@ -29,7 +29,8 @@ describe('promptHooks', () => {
         install: installStub,
         link: linkStub,
         info: sinon.stub().callsFake(() => ({ data: '7.8.9-faked' }))
-      }
+      },
+      prompts: true
     };
 
     engineStub = sandbox.stub().returns({ execWaterfall: execWaterfallStub });

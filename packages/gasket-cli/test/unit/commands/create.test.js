@@ -32,7 +32,7 @@ describe('create', function () {
       postCreateHooks: sandbox.stub(),
       applyPresetConfig: sandbox.stub(),
       printReport: sandbox.stub(),
-      readConfig: sandbox.stub(),
+      readConfig: sandbox.stub()
     };
 
     actionStubs.writePkg.update = sandbox.stub();
@@ -165,27 +165,13 @@ describe('create', function () {
     const result = CreateCommand.flags.plugins.parse('a,b,c');
     assume(result).eqls(['a', 'b', 'c']);
   });
-
-  it('skips globalPrompts with --ci-config', async () => {
-    const cmd = new CreateCommand(['myapp', '--ci-config={}']);
-    await cmd.run();
-    assume(actionStubs.readConfig).is.called();
-    assume(actionStubs.globalPrompts).is.not.called();
-  });
-
-  it('skips globalPrompts with --ci-config-file', async () => {
-    const cmd = new CreateCommand(['myapp', '--ci-config-file=../../test/unit/commands/test-ci-config.json']);
-    await cmd.run();
-    assume(actionStubs.readConfig).is.called();
-    assume(actionStubs.globalPrompts).is.not.called();
-  });
-
-  it('prints an error if both --ci-config and --ci-config-file are provided', async () => {
-    const cmd = new CreateCommand(['myapp', '--ci-config={}', '--ci-config-file=../../test/unit/commands/test-ci-config.json']);
+  
+  it('prints an error if both --config and --config-file are provided', async () => {
+    const cmd = new CreateCommand(['myapp', '--config={}', '--config-file=../../test/unit/commands/test-ci-config.json']);
     try {
       await cmd.run();
     } catch (e) {
-      assume(e.message).contains('--ci-config-file= cannot also be provided when using --ci-config=');
+      assume(e.message).contains('--config-file= cannot also be provided when using --config=');
     }
   });
 });

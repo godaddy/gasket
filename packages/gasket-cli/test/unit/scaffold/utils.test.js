@@ -7,7 +7,8 @@ const {
   addPluginsToContext,
   addPluginsToPkg,
   getPluginsWithVersions,
-  ensureAbsolute
+  ensureAbsolute,
+  readConfig
 } = require('../../../src/scaffold/utils');
 
 describe('Utils', () => {
@@ -185,5 +186,27 @@ describe('Utils', () => {
       assume(path.isAbsolute(result)).true();
       assume(result).equal(filepath);
     });
+  });
+
+  describe('readConfig', () => {
+    it('adds values from config JSON string to context', () => {
+      const flags = { config: '{"description":"A test app","package":"npm","testSuite":"fake"}' };
+      readConfig(mockContext, flags);
+      assume(mockContext.testSuite).eqls('fake');
+      assume(mockContext.description).eqls('A test app');
+      assume(mockContext.package).eqls('npm');
+    });
+
+    it('adds values from configFile to context', () => {
+      const flags = { configFile : '../../test/unit/commands/test-ci-config.json' };
+      readConfig(mockContext, flags);
+      assume(mockContext.testSuite).eqls('mocha');
+      assume(mockContext.description).eqls('A basic gasket app');
+      assume(mockContext.package).eqls('npm');
+    });
+    it('does not add to context if no configFile/config flag', () => {
+      readConfig(mockContext, {});
+      assume(mockContext).eqls({});
+    })
   });
 });

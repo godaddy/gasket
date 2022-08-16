@@ -1,7 +1,7 @@
 /* eslint-disable max-len, max-statements */
 const fs = require('fs');
 const path = require('path');
-const { addPluginsToContext, ensureAbsolute } = require('../scaffold/utils');
+const { addPluginsToContext, ensureAbsolute, readConfig } = require('../scaffold/utils');
 
 /**
  * The CreateRuntime represents a shallow proxy to a CreateContext
@@ -138,7 +138,10 @@ module.exports = function makeCreateContext(argv = [], flags = {}) {
     presets = [],
     'npm-link': npmLink = [],
     'preset-path': presetPath = [],
-    'package-manager': packageManager
+    'package-manager': packageManager,
+    prompts,
+    config,
+    'config-file': configFile
   } = flags;
 
   // Flatten the array of array created by the plugins flag – it
@@ -172,9 +175,12 @@ module.exports = function makeCreateContext(argv = [], flags = {}) {
     warnings: [],
     errors: [],
     nextSteps: [],
-    generatedFiles: new Set()
+    generatedFiles: new Set(),
+    prompts
   });
 
+  readConfig(context, { config, configFile });
+  
   if (packageManager) {
     context.packageManager = packageManager;
   }

@@ -21,7 +21,6 @@ describe('index', () => {
       'generateFiles',
       'applyPresetConfig',
       'printReport',
-      'readConfig'
     ];
 
     assume(expected.every(k => k in actions)).is.true();
