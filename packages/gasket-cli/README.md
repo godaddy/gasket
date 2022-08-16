@@ -54,7 +54,7 @@ OPTIONS
   
   --config={}                        JSON object that provides the values for any interactive prompts
 
-  --config-file
+  --config-file                        path to a JSON file that provides the values for interactive prompts
 ```
 
 #### Package Managers
