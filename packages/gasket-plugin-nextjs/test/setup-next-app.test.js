@@ -78,7 +78,9 @@ function mockGasketApi() {
     config: {
       webpack: {}, // user specified webpack config
       nextConfig: {}, // user specified next.js config
-      root: '/app/path'
+      root: '/app/path',
+      http: 3000,
+      hostname: 'localhost'
     }
   };
 }
