@@ -1,8 +1,10 @@
 # `@gasket/plugin-https`
 
+- Add `hostname` config setting to type declarations
+
 ### 6.11.0
 
--  Added healthcheck.html to terminus options. ([#315])
+- Added healthcheck.html to terminus options. ([#315])
 
 ### 6.10.0
 
