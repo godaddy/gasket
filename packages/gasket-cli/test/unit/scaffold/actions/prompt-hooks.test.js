@@ -71,6 +71,13 @@ describe('promptHooks', () => {
     assume(execWaterfallStub.args[0][2]).property('addPlugins');
   });
 
+  it('does not execute the plugin prompt hook with --no-prompts', async () => {
+    mockContext.prompts = false;
+    await promptHooks(mockContext);
+    assume(execWaterfallStub.args[0][2].prompt).is.a('function');
+    assume(execWaterfallStub.args[0][2].prompt).not.equals(promptStub);
+  });
+
   describe('addPlugins', () => {
     async function mockAddPlugins(...pluginsToAdd) {
       await promptHooks(mockContext);

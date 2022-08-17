@@ -7,11 +7,12 @@ const { addPluginsToContext } = require('../utils');
  * What is your app description?
  *
  * @param {CreateContext} context - Create context
+ * @param {function} prompt - function to prompt user
  * @returns {Promise} promise
  */
-async function chooseAppDescription(context) {
+async function chooseAppDescription(context, prompt) {
   if (!('appDescription' in context)) {
-    const { appDescription } = context.description || await inquirer.prompt([
+    const { appDescription } = await prompt([
       {
         name: 'appDescription',
         message: 'What is your app description?',
@@ -28,13 +29,14 @@ async function chooseAppDescription(context) {
  * What package manager do you want to use?
  *
  * @param {CreateContext} context - Create context
+ * @param {function} prompt - function to prompt user
  * @returns {Promise} promise
  */
-async function choosePackageManager(context) {
-  const packageManager = context.package ||
+async function choosePackageManager(context, prompt) {
+  const packageManager =
     context.packageManager ||
     (
-      await inquirer.prompt([
+      await prompt([
         {
           name: 'packageManager',
           message: 'Which packager would you like to use?',
@@ -64,9 +66,10 @@ async function choosePackageManager(context) {
  * Choose your unit test suite
  *
  * @param {CreateContext} context - Create context
+ * @param {function} prompt - function to prompt user
  * @returns {Promise} promise
  */
-async function chooseTestPlugin(context) {
+async function chooseTestPlugin(context, prompt) {
   // Combine user-provided plugins with preset-provided plugins.
   const { presetInfos = [], plugins = [] } = context;
 
@@ -87,7 +90,7 @@ async function chooseTestPlugin(context) {
     }
 
     if (!testPlugin) {
-      ({ testPlugin } = await inquirer.prompt([
+      ({ testPlugin } = await prompt([
         {
           name: 'testPlugin',
           message: 'Choose your unit test suite',
@@ -114,12 +117,13 @@ async function chooseTestPlugin(context) {
  * confirm with the user that it's intentionally overwriting that directory
  *
  * @param  {CreateContext} context - Create context
+ * @param {function} prompt - function to prompt user
  * @returns {Promise} promise
  */
-async function allowExtantOverwriting(context) {
+async function allowExtantOverwriting(context, prompt) {
   const { dest, extant } = context;
   if (extant) {
-    const { destOverride } = await inquirer.prompt([
+    const { destOverride } = await prompt([
       {
         name: 'destOverride',
         type: 'confirm',
@@ -146,11 +150,9 @@ const questions = [
  * @returns {Promise} promise
  */
 async function globalPrompts(context) {
-  if (!context.prompts) {
-    inquirer.prompt = () => { return {}; };
-  }
+  const prompt = context.prompts ? inquirer.prompt : () => ({});
   for (var fn of questions) {
-    await fn(context);
+    await fn(context, prompt);
   }
 }
 

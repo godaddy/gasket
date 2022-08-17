@@ -190,11 +190,11 @@ describe('Utils', () => {
 
   describe('readConfig', () => {
     it('adds values from config JSON string to context', () => {
-      const flags = { config: '{"description":"A test app","package":"npm","testSuite":"fake"}' };
+      const flags = { config: '{"appDescription":"A test app","packageManager":"npm","testSuite":"fake"}' };
       readConfig(mockContext, flags);
       assume(mockContext.testSuite).eqls('fake');
-      assume(mockContext.description).eqls('A test app');
-      assume(mockContext.package).eqls('npm');
+      assume(mockContext.appDescription).eqls('A test app');
+      assume(mockContext.packageManager).eqls('npm');
     });
 
     it('adds values from configFile to context', () => {
@@ -202,8 +202,8 @@ describe('Utils', () => {
       const flags = { configFile: './test-ci-config.json' };
       readConfig(mockContext, flags);
       assume(mockContext.testSuite).eqls('mocha');
-      assume(mockContext.description).eqls('A basic gasket app');
-      assume(mockContext.package).eqls('npm');
+      assume(mockContext.appDescription).eqls('A basic gasket app');
+      assume(mockContext.packageManager).eqls('npm');
     });
     it('does not add to context if no configFile/config flag', () => {
       readConfig(mockContext, {});
