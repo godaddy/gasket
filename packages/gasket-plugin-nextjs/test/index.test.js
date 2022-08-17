@@ -189,7 +189,7 @@ describe('express hook', () => {
     assume(gasket.exec).has.been.calledWithMatch('nextPreHandling', {
       req: mockReq,
       res: mockRes,
-      next: nextHandler
+      nextServer: nextHandler
     });
   });
 

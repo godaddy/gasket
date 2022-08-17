@@ -20,7 +20,7 @@ declare module '@gasket/engine' {
       express: Application
     }): MaybeAsync<void>,
     nextPreHandling(params: {
-      next: NextServer,
+      nextServer: NextServer,
       req: IncomingMessage,
       res: ServerResponse
     }): MaybeAsync<void>

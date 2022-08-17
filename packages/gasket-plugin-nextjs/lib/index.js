@@ -140,7 +140,7 @@ module.exports = {
         const nextHandler = app.getRequestHandler();
         expressApp.all('*', async (req, res, next) => {
           try {
-            await gasket.exec('nextPreHandling', { req, res, next: app });
+            await gasket.exec('nextPreHandling', { req, res, nextServer: app });
             nextHandler(req, res);
           } catch (err) {
             return void next(err);

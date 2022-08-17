@@ -217,7 +217,7 @@ module.exports = {
         async nextPreHandling(gasket, {
             req,
             res,
-            next
+            nextServer
         }) {
             await doPreRenderingLogic(req, res);
         }
