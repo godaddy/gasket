@@ -1,4 +1,4 @@
-let inquirer = require('inquirer');
+const inquirer = require('inquirer');
 const { pluginIdentifier, flattenPresets } = require('@gasket/resolve');
 const action = require('../action-wrapper');
 const { addPluginsToContext } = require('../utils');
@@ -147,7 +147,7 @@ const questions = [
  */
 async function globalPrompts(context) {
   if (!context.prompts) {
-    inquirer.prompt = () => { return {} }
+    inquirer.prompt = () => { return {}; };
   }
   for (var fn of questions) {
     await fn(context);

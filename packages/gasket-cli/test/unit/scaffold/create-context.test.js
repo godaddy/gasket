@@ -294,7 +294,7 @@ describe('makeCreateContext', () => {
   });
 
   it('assigns values from config-file flag to context', () => {
-    flags = { 'config-file': '../../test/unit/commands/test-ci-config.json' };
+    flags = { 'config-file': './test/unit/commands/test-ci-config.json' };
     results = makeCreateContext(argv, flags);
     assume(results.testSuite).eqls('mocha');
     assume(results.description).eqls('A basic gasket app');

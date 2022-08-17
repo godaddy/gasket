@@ -45,7 +45,7 @@ class CreateCommand extends Command {
    */
   async run() {
     const { argv, flags: parsedFlags } = this.parse(CreateCommand);
-    const { bootstrap, generate, prompts } = parsedFlags;
+    const { bootstrap, generate } = parsedFlags;
 
     let context;
     try {

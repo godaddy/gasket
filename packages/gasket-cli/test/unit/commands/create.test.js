@@ -165,7 +165,7 @@ describe('create', function () {
     const result = CreateCommand.flags.plugins.parse('a,b,c');
     assume(result).eqls(['a', 'b', 'c']);
   });
-  
+
   it('prints an error if both --config and --config-file are provided', async () => {
     const cmd = new CreateCommand(['myapp', '--config={}', '--config-file=../../test/unit/commands/test-ci-config.json']);
     try {

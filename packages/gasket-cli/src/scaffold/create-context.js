@@ -180,7 +180,7 @@ module.exports = function makeCreateContext(argv = [], flags = {}) {
   });
 
   readConfig(context, { config, configFile });
-  
+
   if (packageManager) {
     context.packageManager = packageManager;
   }

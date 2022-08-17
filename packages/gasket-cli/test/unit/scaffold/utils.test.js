@@ -198,7 +198,8 @@ describe('Utils', () => {
     });
 
     it('adds values from configFile to context', () => {
-      const flags = { configFile : '../../test/unit/commands/test-ci-config.json' };
+      mockContext.cwd = './test/unit/commands';
+      const flags = { configFile: './test-ci-config.json' };
       readConfig(mockContext, flags);
       assume(mockContext.testSuite).eqls('mocha');
       assume(mockContext.description).eqls('A basic gasket app');
@@ -207,6 +208,6 @@ describe('Utils', () => {
     it('does not add to context if no configFile/config flag', () => {
       readConfig(mockContext, {});
       assume(mockContext).eqls({});
-    })
+    });
   });
 });

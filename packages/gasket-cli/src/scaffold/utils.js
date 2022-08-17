@@ -100,7 +100,7 @@ function readConfig(context, { config, configFile }) {
     const parsedConfig = JSON.parse(config);
     Object.assign(context, parsedConfig);
   } else if (configFile) {
-    const parsedConfigFile = require(configFile);
+    const parsedConfigFile = require(path.resolve(context.cwd, configFile));
     Object.assign(context, parsedConfigFile);
   }
 }

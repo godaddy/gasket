@@ -20,7 +20,7 @@ describe('index', () => {
       'postCreateHooks',
       'generateFiles',
       'applyPresetConfig',
-      'printReport',
+      'printReport'
     ];
 
     assume(expected.every(k => k in actions)).is.true();
