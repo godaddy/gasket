@@ -5,6 +5,7 @@ const assume = require('assume');
 const path = require('path');
 const proxyquire = require('proxyquire').noCallThru();
 const { devDependencies } = require('../package');
+const { setupNextHandling } = require('../lib/setup-next-app');
 
 const fastify = require('fastify')({
   logger: true
@@ -83,9 +84,7 @@ describe('configure hook', () => {
 });
 
 describe('express hook', () => {
-  let nextHandler, plugin, expressApp, hook;
-
-  let setupNextAppStub;
+  let nextHandler, plugin, expressApp, hook, setupNextAppStub;
 
   beforeEach(() => {
     expressApp = {
@@ -102,7 +101,8 @@ describe('express hook', () => {
     setupNextAppStub = stub().returns(nextHandler);
     plugin = proxyquire('../lib/', {
       './setup-next-app': {
-        setupNextApp: setupNextAppStub
+        setupNextApp: setupNextAppStub,
+        setupNextHandling
       }
     });
 
@@ -175,6 +175,24 @@ describe('express hook', () => {
     });
   });
 
+  it('executes nextPreHandling before next.js handles a request', async () => {
+    const gasket = mockGasketApi();
+    await hook(gasket, expressApp, false);
+
+    const routeHandler = expressApp.all.lastCall.args[1];
+
+    const mockReq = { headers: {} };
+    const mockRes = { locals: { gasketData: {} } };
+    const mockNext = stub();
+
+    await routeHandler(mockReq, mockRes, mockNext);
+    assume(gasket.exec).has.been.calledWithMatch('nextPreHandling', {
+      req: mockReq,
+      res: mockRes,
+      nextServer: nextHandler
+    });
+  });
+
 });
 
 describe('fastify hook', () => {
@@ -198,7 +216,8 @@ describe('fastify hook', () => {
 
     plugin = proxyquire('../lib/', {
       './setup-next-app': {
-        setupNextApp: setupNextAppStub
+        setupNextApp: setupNextAppStub,
+        setupNextHandling
       }
     });
     hook = plugin.hooks.fastify.handler;
@@ -275,6 +294,24 @@ describe('fastify hook', () => {
     await hook(gasket, fastify, false);
 
     assume(fastify['buildId/testapp']).equals('1234');
+  });
+
+  it('executes nextPreHandling before next.js handles a request', async () => {
+    const gasket = mockGasketApi();
+    await hook(gasket, fastifyApp, false);
+
+    const routeHandler = fastifyApp.all.lastCall.args[1];
+
+    const mockReq = { headers: {} };
+    const mockRes = { locals: { gasketData: {} } };
+    const mockNext = stub();
+
+    await routeHandler(mockReq, mockRes, mockNext);
+    assume(gasket.exec).has.been.calledWithMatch('nextPreHandling', {
+      req: mockReq,
+      res: mockRes,
+      nextServer: nextHandler
+    });
   });
 });
 

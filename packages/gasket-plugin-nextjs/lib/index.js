@@ -3,7 +3,7 @@ const url = require('url');
 const { name, devDependencies } = require('../package');
 const { createConfig } = require('./config');
 const { pluginIdentifier } = require('@gasket/resolve');
-const { setupNextApp } = require('./setup-next-app');
+const { setupNextApp, setupNextHandling } = require('./setup-next-app');
 const getNextRoute = require('./next-route');
 const apmTransaction = require('./apm-transaction');
 
@@ -137,7 +137,7 @@ module.exports = {
         // interact with the express router we want to add a last, catch all
         // route that will activate the `next`.
         //
-        expressApp.all('*', app.getRequestHandler());
+        setupNextHandling(app, expressApp, gasket);
 
         return app;
       }
@@ -168,11 +168,7 @@ module.exports = {
           next();
         });
 
-        const handler = () => {
-          return app.getRequestHandler();
-        };
-
-        fastifyApp.all('*', { handler });
+        setupNextHandling(app, fastifyApp, gasket);
 
         return app;
       }
@@ -270,6 +266,14 @@ module.exports = {
           link: 'README.md#nextFastify',
           parent: 'fastify',
           after: 'next'
+        },
+        {
+          name: 'nextPreHandling',
+          method: 'exec',
+          description: 'Perform tasks just before next.js request handling',
+          link: 'README.md#nextPreHandling',
+          parent: 'express',
+          after: 'nextExpress'
         }],
         structures: [{
           name: 'pages/',
