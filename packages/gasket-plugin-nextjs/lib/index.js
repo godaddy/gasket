@@ -143,7 +143,7 @@ module.exports = {
             await gasket.exec('nextPreHandling', { req, res, nextServer: app });
             nextHandler(req, res);
           } catch (err) {
-            return void next(err);
+            return next(err);
           }
         });
 
@@ -183,7 +183,7 @@ module.exports = {
             await gasket.exec('nextPreHandling', { req, res, nextServer: app });
             nextHandler(req, res);
           } catch (err) {
-            return void next(err);
+            return next(err);
           }
         });
 
