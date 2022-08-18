@@ -176,11 +176,16 @@ module.exports = {
           next();
         });
 
-        const handler = () => {
-          return app.getRequestHandler();
-        };
+        const nextHandler = app.getRequestHandler();
 
-        fastifyApp.all('*', { handler });
+        fastifyApp.all('*', async (req, res, next) => {
+          try {
+            await gasket.exec('nextPreHandling', { req, res, nextServer: app });
+            nextHandler(req, res);
+          } catch (err) {
+            return void next(err);
+          }
+        });
 
         return app;
       }

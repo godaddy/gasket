@@ -294,6 +294,24 @@ describe('fastify hook', () => {
 
     assume(fastify['buildId/testapp']).equals('1234');
   });
+
+  it('executes nextPreHandling before next.js handles a request', async () => {
+    const gasket = mockGasketApi();
+    await hook(gasket, fastifyApp, false);
+
+    const routeHandler = fastifyApp.all.lastCall.args[1];
+
+    const mockReq = { headers: {} };
+    const mockRes = { locals: { gasketData: {} } };
+    const mockNext = stub();
+
+    await routeHandler(mockReq, mockRes, mockNext);
+    assume(gasket.exec).has.been.calledWithMatch('nextPreHandling', {
+      req: mockReq,
+      res: mockRes,
+      nextServer: nextHandler
+    });
+  });
 });
 
 describe('create hook', () => {
