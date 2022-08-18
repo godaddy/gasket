@@ -69,7 +69,6 @@
     "@oclif/plugin-help": "^5.1.10",
     "@oclif/plugin-not-found": "^2.2.4",
     "@oclif/plugin-warn-if-update-available": "^2.0.4",
-    "browserslist-config-godaddy": "^3.0.1",
     "concat-stream": "^2.0.0",
     "cross-spawn": "^7.0.1",
     "deepmerge": "^4.2.2",
