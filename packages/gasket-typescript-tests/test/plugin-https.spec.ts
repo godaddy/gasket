@@ -5,6 +5,12 @@ import '@gasket/plugin-https';
 describe('@gasket/plugin-https', () => {
   const { log } = console;
 
+  it('adds an optional hostname config property', () => {
+    const config: GasketConfigFile = {
+      hostname: 'example.com'
+    };
+  });
+
   it('adds an optional http config property', () => {
     const config: GasketConfigFile = {
       http: 8080,

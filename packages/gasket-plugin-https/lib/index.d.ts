@@ -38,6 +38,7 @@ declare module '@gasket/engine' {
     >;  
 
   interface ServerOptions {
+    hostname?: string,
     http?: number | false | null | MaybeMultiple<BaseListenerConfig>,
     https?: MaybeMultiple<BaseListenerConfig & HttpsSettings & {
       sni?: Record<string, HttpsSettings>
