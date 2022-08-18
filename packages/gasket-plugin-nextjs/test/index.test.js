@@ -5,6 +5,7 @@ const assume = require('assume');
 const path = require('path');
 const proxyquire = require('proxyquire').noCallThru();
 const { devDependencies } = require('../package');
+const { setupNextHandling } = require('../lib/setup-next-app');
 
 const fastify = require('fastify')({
   logger: true
@@ -83,9 +84,7 @@ describe('configure hook', () => {
 });
 
 describe('express hook', () => {
-  let nextHandler, plugin, expressApp, hook;
-
-  let setupNextAppStub;
+  let nextHandler, plugin, expressApp, hook, setupNextAppStub;
 
   beforeEach(() => {
     expressApp = {
@@ -102,7 +101,8 @@ describe('express hook', () => {
     setupNextAppStub = stub().returns(nextHandler);
     plugin = proxyquire('../lib/', {
       './setup-next-app': {
-        setupNextApp: setupNextAppStub
+        setupNextApp: setupNextAppStub,
+        setupNextHandling
       }
     });
 
@@ -216,7 +216,8 @@ describe('fastify hook', () => {
 
     plugin = proxyquire('../lib/', {
       './setup-next-app': {
-        setupNextApp: setupNextAppStub
+        setupNextApp: setupNextAppStub,
+        setupNextHandling
       }
     });
     hook = plugin.hooks.fastify.handler;

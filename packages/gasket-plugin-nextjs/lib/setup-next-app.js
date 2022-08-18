@@ -1,3 +1,4 @@
+const { NextServer } = require('next/dist/server/next');
 const { createConfig } = require('./config');
 
 /**
@@ -30,6 +31,25 @@ async function setupNextApp(gasket) {
   return app;
 }
 
+/**
+ * Sets up the next.js request handler to be called after all other middleware
+ * @param {NextServer} nextServer - The Next.js server instance
+ * @param {any} serverApp - The express server app
+ * @param {any} gasket - The Gasket object
+ */
+function setupNextHandling(nextServer, serverApp, gasket) {
+  const nextHandler = nextServer.getRequestHandler();
+  serverApp.all('*', async (req, res, next) => {
+    try {
+      await gasket.exec('nextPreHandling', { req, res, nextServer });
+      nextHandler(req, res);
+    } catch (err) {
+      return next(err);
+    }
+  });
+}
+
 module.exports = {
-  setupNextApp
+  setupNextApp,
+  setupNextHandling
 };
