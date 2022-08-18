@@ -1,4 +1,3 @@
-const { NextServer } = require('next/dist/server/next');
 const { createConfig } = require('./config');
 
 /**
