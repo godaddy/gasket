@@ -1,6 +1,5 @@
 import React from 'react';
 import hoistNonReactStatics from 'hoist-non-react-statics';
-import path from 'path';
 import { manifest } from './config';
 import { localeUtils, LocaleStatus } from './utils';
 import useLocaleRequired from './use-locale-required';
@@ -24,7 +23,7 @@ function attachGetInitialProps(Wrapper, localePathPart) {
 
     if (res && res.locals && res.locals.gasketData) {
       const { locale = defaultLocale } = res.locals.gasketData.intl || {};
-      const localesParentDir = path.dirname(res.locals.localesDir);
+      const localesParentDir = require('path').dirname(res.locals.localesDir);
       localesProps = localeUtils.serverLoadData(localePathPart, locale, localesParentDir);
     }
 

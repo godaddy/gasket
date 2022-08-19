@@ -1,9 +1,5 @@
-import path from 'path';
-import { localeUtils } from './utils';
+import { localeUtils, getLocalesParentDir } from './utils';
 import { manifest } from './config';
-
-// eslint-disable-next-line no-process-env
-const localesParentDir = path.dirname(process.env.GASKET_INTL_LOCALES_DIR);
 
 /**
  * Load locale file(s) for Next.js static pages
@@ -19,7 +15,9 @@ export function intlGetStaticProps(localePathPart = manifest.defaultPath) {
     if (!locale) {
       locale = ctx.params.locale;
     }
-    const localesProps = localeUtils.serverLoadData(localePathPart, locale, localesParentDir);
+
+    // eslint-disable-next-line no-process-env
+    const localesProps = localeUtils.serverLoadData(localePathPart, locale, getLocalesParentDir());
 
     return {
       props: {
@@ -44,7 +42,7 @@ export function intlGetServerSideProps(localePathPart = manifest.defaultPath) {
     if (!locale && res.locals && res.locals.gasketData && res.locals.gasketData.intl) {
       locale = res.locals.gasketData.intl.locale;
     }
-    const localesProps = localeUtils.serverLoadData(localePathPart, locale, localesParentDir);
+    const localesProps = localeUtils.serverLoadData(localePathPart, locale, getLocalesParentDir());
 
     return {
       props: {
