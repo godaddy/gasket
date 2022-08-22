@@ -45,20 +45,20 @@ describe('setupNextApp', () => {
       gasket = mockGasketApi();
       gasket.command = 'local';
       await module.setupNextApp(gasket);
-      assume(next).to.have.been.calledWith({ dev: true, conf: sinon.match.object });
+      assume(next).to.have.been.calledWith({ dev: true, conf: sinon.match.object, hostname: 'localhost', port: 3000 });
     });
 
     it('creates devServer when gasket command id is local', async function () {
       gasket = mockGasketApi();
       gasket.command = { id: 'local' };
       await module.setupNextApp(gasket);
-      assume(next).to.have.been.calledWith({ dev: true, conf: sinon.match.object });
+      assume(next).to.have.been.calledWith({ dev: true, conf: sinon.match.object, hostname: 'localhost', port: 3000 });
     });
 
     it('creates default mode nextjs app when gasket command is not local', async function () {
       gasket = mockGasketApi();
       await module.setupNextApp(gasket);
-      assume(next).to.have.been.calledWith({ dev: false, conf: sinon.match.object });
+      assume(next).to.have.been.calledWith({ dev: false, conf: sinon.match.object, hostname: 'localhost', port: 3000 });
     });
 
   });
@@ -78,7 +78,9 @@ function mockGasketApi() {
     config: {
       webpack: {}, // user specified webpack config
       nextConfig: {}, // user specified next.js config
-      root: '/app/path'
+      root: '/app/path',
+      http: 3000,
+      hostname: 'localhost'
     }
   };
 }

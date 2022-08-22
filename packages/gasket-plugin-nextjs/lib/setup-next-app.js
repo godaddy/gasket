@@ -9,13 +9,19 @@ const { createConfig } = require('./config');
  * @private
  */
 async function setupNextApp(gasket) {
-  const { exec, command } = gasket;
+  const { exec, command, config } = gasket;
+  const { hostname, http, https, http2 } = config;
   const createNextApp = require('next');
   const devServer = (command.id || command) === 'local';
 
+  const _http = http || https || http2;
+  const port = _http.port || _http;
+
   const app = createNextApp({
     dev: devServer,
-    conf: await createConfig(gasket, devServer)
+    conf: await createConfig(gasket, devServer),
+    hostname,
+    port
   });
 
   //
