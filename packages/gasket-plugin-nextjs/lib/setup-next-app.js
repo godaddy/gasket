@@ -10,7 +10,7 @@ const { createConfig } = require('./config');
  */
 async function setupNextApp(gasket) {
   const { exec, command, config } = gasket;
-  const { hostname, http, https, http2 } = config;
+  const { host, http, https, http2 } = config;
   const createNextApp = require('next');
   const devServer = (command.id || command) === 'local';
 
@@ -20,7 +20,7 @@ async function setupNextApp(gasket) {
   const app = createNextApp({
     dev: devServer,
     conf: await createConfig(gasket, devServer),
-    hostname,
+    host,
     port
   });
 
