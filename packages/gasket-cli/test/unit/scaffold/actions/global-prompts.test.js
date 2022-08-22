@@ -55,13 +55,6 @@ describe('globalPrompts', () => {
     assume(promptStub).is.called(3);
   });
 
-  it('overrides inquirer prompt function with --no-prompts', async () => {
-    promptStub.returns({});
-    mockContext.prompts = false;
-    await globalPrompts(mockContext);
-    assume(mockImports.inquirer.prompt).is.a('function');
-  });
-
   describe('packageManager', () => {
     ['npm', 'yarn'].forEach((manager) => {
       it(`[${manager}] does not prompt if packageManager set in context`, async () => {
