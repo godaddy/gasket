@@ -172,7 +172,7 @@ Instead, prefer environment variables to configure package managers
   }),
   'config': flags.string({
     env: 'GASKET_PLUGINS',
-    description: `If provided, do not execute prompt lifecycle`,
+    description: `JSON object that provides the values for any interactive prompts`,
     exclusive: ['config-file']
   }),
   'config-file': flags.string({
