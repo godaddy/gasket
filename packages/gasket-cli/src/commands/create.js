@@ -176,7 +176,7 @@ Instead, prefer environment variables to configure package managers
     exclusive: ['config-file']
   }),
   'config-file': flags.string({
-    description: `If provided, do not execute prompt lifecycle`,
+    description: `Path to a JSON file that provides the values for interactive prompts`,
     exclusive: ['config']
   }),
   'prompts': flags.boolean({
