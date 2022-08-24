@@ -31,7 +31,8 @@ describe('create', function () {
       generateFiles: sandbox.stub(),
       postCreateHooks: sandbox.stub(),
       applyPresetConfig: sandbox.stub(),
-      printReport: sandbox.stub()
+      printReport: sandbox.stub(),
+      readConfig: sandbox.stub()
     };
 
     actionStubs.writePkg.update = sandbox.stub();
@@ -163,5 +164,14 @@ describe('create', function () {
   it('expands comma separated flag inputs to array', () => {
     const result = CreateCommand.flags.plugins.parse('a,b,c');
     assume(result).eqls(['a', 'b', 'c']);
+  });
+
+  it('prints an error if both --config and --config-file are provided', async () => {
+    const cmd = new CreateCommand(['myapp', '--config={}', '--config-file=../../test/unit/commands/test-ci-config.json']);
+    try {
+      await cmd.run();
+    } catch (e) {
+      assume(e.message).contains('--config-file= cannot also be provided when using --config=');
+    }
   });
 });

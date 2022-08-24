@@ -14,7 +14,8 @@ describe('globalPrompts', () => {
       appName: 'my-app',
       dest: '/some/path/my-app',
       plugins: [],
-      extant: false
+      extant: false,
+      prompts: true
     };
 
     promptStub = sandbox.stub().returns({});
@@ -58,14 +59,14 @@ describe('globalPrompts', () => {
     ['npm', 'yarn'].forEach((manager) => {
       it(`[${manager}] does not prompt if packageManager set in context`, async () => {
         mockContext.packageManager = manager;
-        await choosePackageManager(mockContext);
+        await choosePackageManager(mockContext, promptStub);
 
         assume(promptStub).not.called();
       });
 
       it(`[${manager}] prompts if packageManager not set in context`, async () => {
         promptStub.returns({ packageManager: manager });
-        await choosePackageManager(mockContext);
+        await choosePackageManager(mockContext, promptStub);
 
         assume(promptStub).is.called();
         assume(promptStub.args[0][0][0]).property('name', 'packageManager');
@@ -73,21 +74,21 @@ describe('globalPrompts', () => {
 
       it(`[${manager}] sets packageManager in context`, async () => {
         promptStub.returns({ packageManager: manager });
-        await choosePackageManager(mockContext);
+        await choosePackageManager(mockContext, promptStub);
 
         assume(mockContext).property('packageManager', manager);
       });
 
       it(`[${manager}] sets package manager commands in context`, async () => {
         promptStub.returns({ packageManager: manager });
-        await choosePackageManager(mockContext);
+        await choosePackageManager(mockContext, promptStub);
 
         assume(mockContext).property('installCmd', `${manager} install`);
       });
 
       it(`[${manager}] sets package manager commands in context even when packageManager is already set in context`, async () => {
         mockContext.packageManager = manager;
-        await choosePackageManager(mockContext);
+        await choosePackageManager(mockContext, promptStub);
 
         assume(mockContext).property('installCmd', `${manager} install`);
       });
@@ -98,14 +99,14 @@ describe('globalPrompts', () => {
 
     it('does not prompt if appDescription set in context', async () => {
       mockContext.appDescription = 'My app description';
-      await chooseAppDescription(mockContext);
+      await chooseAppDescription(mockContext, promptStub);
 
       assume(promptStub).not.called();
     });
 
     it('prompts if appDescription not set in context', async () => {
       promptStub.returns({ appDescription: 'Some description' });
-      await chooseAppDescription(mockContext);
+      await chooseAppDescription(mockContext, promptStub);
 
       assume(promptStub).is.called();
       assume(promptStub.args[0][0][0]).property('name', 'appDescription');
@@ -113,7 +114,7 @@ describe('globalPrompts', () => {
 
     it('sets appDescription in context', async () => {
       promptStub.returns({ appDescription: 'Some description' });
-      await chooseAppDescription(mockContext);
+      await chooseAppDescription(mockContext, promptStub);
 
       assume(mockContext).property('appDescription', 'Some description');
     });
@@ -123,14 +124,14 @@ describe('globalPrompts', () => {
 
     it('does not prompt if testPlugin set in context', async () => {
       mockContext.testPlugin = 'bogus';
-      await chooseTestPlugin(mockContext);
+      await chooseTestPlugin(mockContext, promptStub);
 
       assume(promptStub).not.called();
     });
 
     it('does not prompt if a known test plugin included in context plugins', async () => {
       mockContext.plugins = ['@gasket/mocha'];
-      await chooseTestPlugin(mockContext);
+      await chooseTestPlugin(mockContext, promptStub);
 
       assume(promptStub).not.called();
     });
@@ -141,14 +142,14 @@ describe('globalPrompts', () => {
           { name: '@gasket/jest' }
         ]
       }];
-      await chooseTestPlugin(mockContext);
+      await chooseTestPlugin(mockContext, promptStub);
 
       assume(promptStub).not.called();
     });
 
     it('prompts if testPlugin not set in context', async () => {
       promptStub.returns({ testPlugin: 'bogus-plugin' });
-      await chooseTestPlugin(mockContext);
+      await chooseTestPlugin(mockContext, promptStub);
 
       assume(promptStub).is.called();
       assume(promptStub.args[0][0][0]).property('name', 'testPlugin');
@@ -157,7 +158,7 @@ describe('globalPrompts', () => {
     it('prompts if a known test plugin not included in context plugins', async () => {
       mockContext.plugins = ['gasket-plugin-unknown-test'];
       promptStub.returns({ testPlugin: 'bogus' });
-      await chooseTestPlugin(mockContext);
+      await chooseTestPlugin(mockContext, promptStub);
 
       assume(promptStub).is.called();
       assume(promptStub.args[0][0][0]).property('name', 'testPlugin');
@@ -166,7 +167,7 @@ describe('globalPrompts', () => {
     it('sets testPlugin in context', async () => {
       delete mockContext.testPlugin;
       promptStub.returns({ testPlugin: 'bogus' });
-      await chooseTestPlugin(mockContext);
+      await chooseTestPlugin(mockContext, promptStub);
 
       assume(mockContext).property('testPlugin', 'bogus');
     });
@@ -174,14 +175,14 @@ describe('globalPrompts', () => {
 
   describe('allowExtantOverwriting', () => {
     it('does not set confirm if not an extant directory', async () => {
-      await allowExtantOverwriting(mockContext);
+      await allowExtantOverwriting(mockContext, promptStub);
       assume(mockContext).does.not.own('destOverride');
     });
 
     it('sets confirm in context', async () => {
       promptStub.returns({ destOverride: 'roger roger' });
       mockContext.extant = true;
-      await allowExtantOverwriting(mockContext);
+      await allowExtantOverwriting(mockContext, promptStub);
       assume(mockContext).property('destOverride', 'roger roger');
     });
   });

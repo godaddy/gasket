@@ -61,7 +61,7 @@ async function execPluginPrompts(context, plugins = [], presets = []) {
   //
   // @see: https://github.com/SBoudrias/Inquirer.js/#inquirercreatepromptmodule---prompt-function
   //
-  const prompt = inquirer.createPromptModule();
+  const prompt = context.prompts ? inquirer.createPromptModule() : () => ({});
   const addPlugins = createAddPlugins(context);
 
   const nextContext = await gasket.execWaterfall('prompt', context, { prompt, addPlugins });
