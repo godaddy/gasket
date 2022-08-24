@@ -1,5 +1,7 @@
 # `@gasket/react-intl`
 
+- Fix compatibility issue with Webpack 5 caused by top-level import of `path` module in code that could be run browser-side.
+
 ### 6.30.0
 
 - Fix to prevent next/router from changing locale in IntlProvider ([#401])
