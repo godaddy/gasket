@@ -18,3 +18,11 @@ export function getActiveLocale() {
   }
   return manifest.defaultLocale;
 }
+
+let localesParentDir;
+export function getLocalesParentDir() {
+  return localesParentDir || (
+    // eslint-disable-next-line no-process-env
+    localesParentDir = require('path').dirname(process.env.GASKET_INTL_LOCALES_DIR)
+  );
+}
