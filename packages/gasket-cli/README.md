@@ -51,6 +51,10 @@ OPTIONS
   --plugins=plugins                  Additional plugin(s) to install. Can be set as
                                      multiple flags (e.g. --plugins @gasket/jest --plugins example@^1.0.0)
                                      comma-separated values: --plugins=@gasket/jest,example^1.0.0
+  
+  --config={}                        JSON object that provides the values for any interactive prompts
+
+  --config-file                      path to a JSON file that provides the values for interactive prompts
 ```
 
 #### Package Managers

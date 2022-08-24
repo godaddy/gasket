@@ -29,7 +29,8 @@ describe('promptHooks', () => {
         install: installStub,
         link: linkStub,
         info: sinon.stub().callsFake(() => ({ data: '7.8.9-faked' }))
-      }
+      },
+      prompts: true
     };
 
     engineStub = sandbox.stub().returns({ execWaterfall: execWaterfallStub });
@@ -68,6 +69,13 @@ describe('promptHooks', () => {
   it('executes the plugin prompt hook with `addPlugins` util', async () => {
     await promptHooks(mockContext);
     assume(execWaterfallStub.args[0][2]).property('addPlugins');
+  });
+
+  it('does not execute the plugin prompt hook with --no-prompts', async () => {
+    mockContext.prompts = false;
+    await promptHooks(mockContext);
+    assume(execWaterfallStub.args[0][2].prompt).is.a('function');
+    assume(execWaterfallStub.args[0][2].prompt).not.equals(promptStub);
   });
 
   describe('addPlugins', () => {

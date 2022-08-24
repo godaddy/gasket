@@ -169,7 +169,21 @@ comma-separated values: --preset-path=path1,path2`,
 Instead, prefer environment variables to configure package managers
 `,
     hidden: true
-  })
+  }),
+  'config': flags.string({
+    env: 'GASKET_PLUGINS',
+    description: `JSON object that provides the values for any interactive prompts`,
+    exclusive: ['config-file']
+  }),
+  'config-file': flags.string({
+    description: `Path to a JSON file that provides the values for interactive prompts`,
+    exclusive: ['config']
+  }),
+  'prompts': flags.boolean({
+    default: true,
+    description: '(INTERNAL) Disable to skip the prompts',
+    allowNo: true,
+    hidden: true })
 };
 
 CreateCommand.args = [
