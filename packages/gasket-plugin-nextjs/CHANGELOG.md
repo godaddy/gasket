@@ -1,6 +1,11 @@
 # `@gasket/plugin-nextjs`
 
-- Fix syntax that is not node 14 compatible
+### 6.32.0
+
+- Fix syntax that is not node 14 compatible ([#407])
+- Add `nextPreHandling` lifecycle ([#411])
+- Next.js Middleware Support ([#413])
+- Configuring cache dir for deployments ([#416])
 
 ### 6.30.1
 
@@ -188,3 +193,7 @@
 [#398]: https://github.com/godaddy/gasket/pull/398
 [#400]: https://github.com/godaddy/gasket/pull/400
 [#403]: https://github.com/godaddy/gasket/pull/403
+[#407]: https://github.com/godaddy/gasket/pull/407
+[#411]: https://github.com/godaddy/gasket/pull/411
+[#413]: https://github.com/godaddy/gasket/pull/413
+[#416]: https://github.com/godaddy/gasket/pull/416

@@ -1,6 +1,9 @@
 # `@gasket/react-intl`
 
-- Fix compatibility issue with Webpack 5 caused by top-level import of `path` module in code that could be run browser-side.
+### 6.32.0
+
+- Fix compatibility issue with Webpack 5 caused by top-level import of `path`
+  module in code that could be run browser-side. ([#415])
 
 ### 6.30.0
 
@@ -153,3 +156,4 @@
 [#380]: https://github.com/godaddy/gasket/pull/380
 [#384]: https://github.com/godaddy/gasket/pull/384
 [#401]: https://github.com/godaddy/gasket/pull/401
+[#415]: https://github.com/godaddy/gasket/pull/415

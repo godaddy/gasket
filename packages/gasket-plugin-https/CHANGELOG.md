@@ -1,6 +1,8 @@
 # `@gasket/plugin-https`
 
-- Add `hostname` config setting to type declarations
+### 6.32.0
+
+- Add `hostname` config setting to type declarations ([#412])
 
 ### 6.11.0
 
@@ -63,6 +65,7 @@
 [#287]: https://github.com/godaddy/gasket/pull/287
 [#311]: https://github.com/godaddy/gasket/pull/311
 [#315]: https://github.com/godaddy/gasket/pull/315
+[#412]: https://github.com/godaddy/gasket/pull/412
 
 [terminus]: https://github.com/godaddy/terminus
 [create-servers]: https://github.com/http-party/create-servers

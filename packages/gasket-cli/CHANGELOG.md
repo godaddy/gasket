@@ -1,5 +1,9 @@
 # `@gasket/cli`
 
+### 6.32.0
+
+- Add `--config`, `--config-file`, and `--no-prompts` options for create command ([#410])
+
 ### 6.31.0
 
 - Fix Windows path issues and EISDIR errors ([#406])
@@ -386,3 +390,4 @@ upon `gasket create`
 [#392]: https://github.com/godaddy/gasket/pull/392
 [#393]: https://github.com/godaddy/gasket/pull/393
 [#396]: https://github.com/godaddy/gasket/pull/396
+[#410]: https://github.com/godaddy/gasket/pull/410
