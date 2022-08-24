@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-nextjs",
-  "version": "6.31.1",
+  "version": "6.32.0",
   "description": "Adds Next support to your application",
   "main": "lib",
   "types": "lib/index.d.ts",
