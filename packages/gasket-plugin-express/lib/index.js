@@ -44,7 +44,7 @@ module.exports = {
       const compression = require('compression');
 
       const { config } = gasket;
-      const { root, express: { routes } = {}, http2 } = config;
+      const { root, express: { routes } = {}, http2, middleware: middlewareConfig } = config;
       const excludedRoutesRegex = config.express && config.express.excludedRoutesRegex;
       const app = http2 ? require('http2-express-bridge')(express) : express();
 
@@ -76,11 +76,31 @@ module.exports = {
         app.use(compression());
       }
 
-      const middlewares = (await gasket.exec('middleware', app)).filter(Boolean);
+      const middlewares = [];
+      await gasket.execApply('middleware', async (plugin, handler) => {
+        const middleware = handler(app);
+
+        if (middleware) {
+          if (middlewareConfig) {
+            const pluginName = plugin && plugin.name ? plugin.name : '';
+            const mwConfig = middlewareConfig.find(mw => mw.plugin === pluginName);
+            if (mwConfig) {
+              middleware.paths = mwConfig.paths;
+              if (excludedRoutesRegex) {
+                middleware.paths.push(excludedRoutesRegex);
+              }
+            }
+          }
+          middlewares.push(middleware);
+        }
+      });
 
       debug('applied %s middleware layers to express', middlewares.length);
       middlewares.forEach((layer) => {
-        if (excludedRoutesRegex) {
+        const { paths } = layer;
+        if (paths) {
+          app.use(paths, layer);
+        } else if (excludedRoutesRegex) {
           app.use(excludedRoutesRegex, layer);
         } else {
           app.use(layer);
