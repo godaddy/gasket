@@ -56,15 +56,15 @@ You can configure which paths middleware will run on by adding the middleware co
 ```js
   middleware: [
     {
-      plugin:'api-middleware', // Name of the Gasket plugin
+      plugin:'gasket-plugin-api-middleware', // Name of the Gasket plugin
       paths: ['/api']
     },
     {
-      plugin:'default-middlware',
+      plugin:'gasket-plugin-default-middlware',
       paths: [/\/default/]
     },
     {
-      plugin: 'abc-middleware'
+      plugin: 'gasket-plugin-abc-middleware'
       paths: ['/proxy', /\/home/]
     }
   ]
