@@ -53,10 +53,12 @@ describe('Plugin', function () {
 
 // eslint-disable-next-line max-statements
 describe('createServers', () => {
-  let gasket, lifecycles;
+  let gasket, lifecycles, mockMwPlugins;
+  const sandbox = sinon.createSandbox();
 
   beforeEach(() => {
     sinon.resetHistory();
+    mockMwPlugins =  [];
 
     lifecycles = {
       middleware: sinon.stub().resolves([]),
@@ -65,9 +67,17 @@ describe('createServers', () => {
     };
 
     gasket = {
+      middleware: {},
       logger: {},
       config: {},
-      exec: sinon.stub().callsFake((lifecycle, ...args) => lifecycles[lifecycle](args))
+      exec: sinon.stub().callsFake((lifecycle, ...args) => lifecycles[lifecycle](args)),
+      execApply: sandbox.spy(async function (lifecycle, fn) {
+        for (let i = 0; i <  mockMwPlugins.length; i++) {
+          // eslint-disable-next-line  no-loop-func
+          fn(mockMwPlugins[i], () => mockMwPlugins[i]);
+        }
+        return sinon.stub();
+      })
     };
   });
 
@@ -90,7 +100,7 @@ describe('createServers', () => {
 
   it('executes the `middleware` lifecycle', async function () {
     await plugin.hooks.createServers(gasket, {});
-    assume(gasket.exec).has.been.calledWith('middleware', app);
+    assume(gasket.execApply).has.been.calledWith('middleware');
   });
 
   it('executes the `fastify` lifecycle', async function () {
@@ -105,14 +115,14 @@ describe('createServers', () => {
 
   it('executes the `middleware` lifecycle before the `fastify` lifecycle', async function () {
     await plugin.hooks.createServers(gasket, {});
-    assume(gasket.exec.firstCall).has.been.calledWith('middleware', app);
-    assume(gasket.exec.secondCall).has.been.calledWith('fastify', app);
+    assume(gasket.execApply.firstCall).has.been.calledWith('middleware');
+    assume(gasket.exec.firstCall).has.been.calledWith('fastify', app);
   });
 
   it('executes the `errorMiddleware` lifecycle after the `fastify` lifecycle', async function () {
     await plugin.hooks.createServers(gasket, {});
-    assume(gasket.exec.secondCall).has.been.calledWith('fastify', app);
-    assume(gasket.exec.thirdCall).has.been.calledWith('errorMiddleware');
+    assume(gasket.exec.firstCall).has.been.calledWith('fastify', app);
+    assume(gasket.exec.secondCall).has.been.calledWith('errorMiddleware');
   });
 
   it('adds the errorMiddleware', async () => {
@@ -157,7 +167,7 @@ describe('createServers', () => {
     assume(cookieParserUsage).to.not.be.null();
 
     const withEvent = event => calledEvent => calledEvent === event;
-    const middlewareInjection = findCall(gasket.exec, withEvent('middleware'));
+    const middlewareInjection = findCall(gasket.execApply, withEvent('middleware'));
     const routeInjection = findCall(gasket.exec, withEvent('fastify'));
 
     // callId can be used to determine relative call ordering
@@ -209,10 +219,26 @@ describe('createServers', () => {
     assume(app.use).called(3);
 
     sinon.resetHistory();
-    lifecycles.middleware.resolves([() => {}, null]);
+    mockMwPlugins = [
+      { name: 'middlware-1' },
+      null
+    ];
 
     await plugin.hooks.createServers(gasket, {});
     assume(app.use).called(4);
+  });
+
+  it('middleware paths in the config are used', async () => {
+    const paths = ['/home'];
+    gasket.config.middleware = [{
+      plugin: 'middlware-1',
+      paths
+    }];
+    mockMwPlugins = [
+      { name: 'middlware-1' }
+    ];
+    await plugin.hooks.createServers(gasket, {});
+    assume(app.use.lastCall).has.been.calledWith(paths);
   });
 
   it('adds errorMiddleware from lifecycle (ignores falsy)', async () => {

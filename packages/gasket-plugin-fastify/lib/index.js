@@ -35,6 +35,7 @@ module.exports = {
       const compression = require('compression');
 
       const { logger, config } = gasket;
+      const { middleware: middlewareConfig } = config;
       const excludedRoutesRegex = config.fastify && config.fastify.excludedRoutesRegex;
       const app = fastify({ logger });
 
@@ -58,11 +59,30 @@ module.exports = {
         app.use(compression());
       }
 
-      const middlewares = (await gasket.exec('middleware', app)).filter(Boolean);
+      const middlewares = [];
+      await gasket.execApply('middleware', async (plugin, handler) => {
+        const middleware = handler(app);
+        if (middleware) {
+          if (middlewareConfig) {
+            const pluginName = plugin && plugin.name ? plugin.name : '';
+            const mwConfig = middlewareConfig.find(mw => mw.plugin === pluginName);
+            if (mwConfig) {
+              middleware.paths = mwConfig.paths;
+              if (excludedRoutesRegex) {
+                middleware.paths.push(excludedRoutesRegex);
+              }
+            }
+          }
+          middlewares.push(middleware);
+        }
+      });
 
       debug('applied %s middleware layers to fastify', middlewares.length);
       middlewares.forEach(layer => {
-        if (excludedRoutesRegex) {
+        const { paths } = layer;
+        if (paths) {
+          app.use(paths, layer);
+        } else if (excludedRoutesRegex) {
           app.use(excludedRoutesRegex, layer);
         } else {
           app.use(layer);
