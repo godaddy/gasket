@@ -50,6 +50,26 @@ module.exports = {
 }
 ```
 
+### middleware
+
+You can configure which paths middleware will run on by adding the middleware configuration array to your local `gasket.config.js`. The array is made up of objects with the name of the middlware (Gasket plugin name) you want to configure and an array of path patterns representing the paths to match for this middleware. Pattern matching entries in the array can come in the form of path strings and/or regular expressions.
+```js
+  middleware: [
+    {
+      plugin:'gasket-plugin-example', // Name of the Gasket plugin
+      paths: ['/api']
+    },
+    {
+      plugin:'@some/gasket-plugin-example',
+      paths: [/\/default/]
+    },
+    {
+      plugin: '@another/gasket-plugin-example'
+      paths: ['/proxy', /\/home/]
+    }
+  ]
+```
+
 ## Lifecycles
 
 ### middleware
