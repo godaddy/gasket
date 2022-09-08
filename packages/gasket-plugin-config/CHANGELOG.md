@@ -1,5 +1,7 @@
 # `@gasket/plugin-config`
 
+- Avoid potential overwriting of custom config state
+
 ### 6.20.4
 
 - More descriptive error handling for hooks that do not return results ([#359])
