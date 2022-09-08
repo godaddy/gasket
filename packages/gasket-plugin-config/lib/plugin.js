@@ -26,7 +26,10 @@ module.exports = {
       const { redux } = req.config || {};
       return {
         ...state,
-        config: redux
+        config: {
+          ...state.config,
+          ...redux
+        }
       };
     },
     metadata(gasket, meta) {

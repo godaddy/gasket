@@ -232,5 +232,22 @@ describe('Plugin', () => {
         config: { something: 'public' }
       });
     });
+
+    it('does not overwrite any previously-prevent config state', async () => {
+      delete req.config;
+      const startingState = {
+        config: { some: { custom: 'config' } }
+      };
+
+      const newState = await plugin.hooks.initReduxState(
+        gasket,
+        startingState,
+        req,
+        res);
+
+      expect(newState).toEqual({
+        config: { some: { custom: 'config' } }
+      });
+    });
   });
 });
