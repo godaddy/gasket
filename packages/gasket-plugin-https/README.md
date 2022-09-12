@@ -85,7 +85,8 @@ module.exports = {
 
 ### createServers
 
-Executed in order to retrieve the server options and the handler
+Executed in order to retrieve the server options and the handler. Prefer to configure HTTP and port information in the `gasket.config.js` or
+`configure` lifecycle.
 
 ```js
 /**
