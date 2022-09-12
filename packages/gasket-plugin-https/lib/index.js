@@ -141,7 +141,6 @@ async function start(gasket) {
 
 module.exports = {
   name: require('../package').name,
-  getPortFallback,
   hooks: {
     start,
     metadata(gasket, meta) {

@@ -1,5 +1,15 @@
 const { createConfig } = require('./config');
-const { getPortFallback } = require('@gasket/plugin-https');
+
+/**
+ * Provide port defaults
+ *
+ * @param {String} env env property from gasket config
+ * @returns {Number} Default port number
+ * @public
+ */
+function getPortFallback(env = '') {
+  return /local/.test(env) ? 8080 : 80;
+}
 
 /**
  * Small helper function that creates nextjs app from the gasket

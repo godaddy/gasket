@@ -77,7 +77,6 @@ describe('setupNextApp', () => {
       await module.setupNextApp(gasket);
       assume(next).to.have.been.calledWith({ dev: false, conf: sinon.match.object, hostname: 'localhost', port: 8080 });
     });
-    
   });
 });
 
