@@ -61,6 +61,22 @@ describe('setupNextApp', () => {
       assume(next).to.have.been.calledWith({ dev: false, conf: sinon.match.object, hostname: 'localhost', port: 3000 });
     });
 
+    it('uses port 80 as a fallback when the http property is undefined on the Gasket config and not local', async function () {
+      gasket = mockGasketApi();
+      // eslint-disable-next-line no-undefined
+      gasket.config.http = undefined;
+      await module.setupNextApp(gasket);
+      assume(next).to.have.been.calledWith({ dev: false, conf: sinon.match.object, hostname: 'localhost', port: 80 });
+    });
+
+    it('uses port 8080 as a fallback when the http property is undefined on the Gasket config and local', async function () {
+      gasket = mockGasketApi();
+      // eslint-disable-next-line no-undefined
+      gasket.config.http = undefined;
+      gasket.config.env = 'local';
+      await module.setupNextApp(gasket);
+      assume(next).to.have.been.calledWith({ dev: false, conf: sinon.match.object, hostname: 'localhost', port: 8080 });
+    });
   });
 });
 

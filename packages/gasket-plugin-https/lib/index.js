@@ -3,7 +3,17 @@ const debug = require('diagnostics')('gasket:https');
 const create = require('create-servers');
 const one = require('one-time/async');
 const errs = require('errs');
-const isLocal = /local/;
+
+/**
+ * Provide port defaults
+ *
+ * @param {String} env env property from gasket config
+ * @returns {Number} Default port number
+ * @public
+ */
+function getPortFallback(env = '') {
+  return /local/.test(env) ? 8080 : 80;
+}
 
 /**
  * Check if the supplied errors are a result of the port being in use.
@@ -48,7 +58,7 @@ async function start(gasket) {
   // Default port to non-essential port on creation
   // create-servers does not support http or https being `null`
   if (!serverOpts.http && !serverOpts.https && !serverOpts.http2) {
-    serverOpts.http = isLocal.test(env) ? 8080 : 80;
+    serverOpts.http = getPortFallback(env);
   }
 
   async function healthCheckRequested() {
