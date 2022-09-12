@@ -1,3 +1,8 @@
 module.exports = {
-  require
+  require,
+  config: {
+    http: {
+      port: 8443
+    }
+  }
 };
