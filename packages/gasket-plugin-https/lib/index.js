@@ -5,7 +5,7 @@ const one = require('one-time/async');
 const errs = require('errs');
 
 /**
- * Check if the supplied errors are a result of the port being in use
+ * Provide port defaults
  *
  * @param {String} env env property from gasket config
  * @returns {Number} Default port number
