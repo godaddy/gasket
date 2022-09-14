@@ -75,7 +75,7 @@
     "getopts": "^2.3.0",
     "glob": "^7.1.6",
     "handlebars": "^4.7.6",
-    "inquirer": "6.3.1",
+    "inquirer": "6.5.2",
     "json5": "^2.1.0",
     "mkdirp": "^1.0.4",
     "ora": "^3.4.0",
@@ -86,7 +86,7 @@
   },
   "devDependencies": {
     "@oclif/dev-cli": "^1.13.31",
-    "@oclif/test": "^1.1.0",
+    "@oclif/test": "^2.0.0",
     "assume": "^2.3.0",
     "assume-sinon": "^1.1.0",
     "chai": "^4.2.0",
