@@ -1,6 +1,9 @@
 # `@gasket/plugin-nextjs`
 
-- Use level "warning" not "warn" with logger
+### 6.33.1
+
+- Fix for port fallback ([#433])
+- Use level "warning" not "warn" with logger ([#445])
 
 ### 6.32.0
 
@@ -199,3 +202,5 @@
 [#411]: https://github.com/godaddy/gasket/pull/411
 [#413]: https://github.com/godaddy/gasket/pull/413
 [#416]: https://github.com/godaddy/gasket/pull/416
+[#433]: https://github.com/godaddy/gasket/pull/433
+[#445]: https://github.com/godaddy/gasket/pull/445

@@ -1,6 +1,8 @@
 # `@gasket/plugin-fastify`
 
-- Fix ability to use async `middleware` hooks
+### 6.33.1
+
+- Fix ability to use async `middleware` hooks ([#444])
 
 ### 6.10.0
 
@@ -34,3 +36,4 @@ Enable middleware support ([#172])
 [#250]: https://github.com/godaddy/gasket/pull/250
 [#255]: https://github.com/godaddy/gasket/pull/255
 [#311]: https://github.com/godaddy/gasket/pull/311
+[#444]: https://github.com/godaddy/gasket/pull/444

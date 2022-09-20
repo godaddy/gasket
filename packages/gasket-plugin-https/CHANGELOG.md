@@ -1,5 +1,9 @@
 # `@gasket/plugin-https`
 
+### 6.33.1
+
+- Fix for port fallback ([#433])
+
 ### 6.32.0
 
 - Add `hostname` config setting to type declarations ([#412])
@@ -66,6 +70,7 @@
 [#311]: https://github.com/godaddy/gasket/pull/311
 [#315]: https://github.com/godaddy/gasket/pull/315
 [#412]: https://github.com/godaddy/gasket/pull/412
+[#433]: https://github.com/godaddy/gasket/pull/433
 
 [terminus]: https://github.com/godaddy/terminus
 [create-servers]: https://github.com/http-party/create-servers
