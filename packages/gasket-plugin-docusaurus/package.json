@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-docusaurus",
-  "version": "6.28.0",
+  "version": "6.33.1",
   "description": "Gasket plugin for docusaurus",
   "main": "lib",
   "files": [
