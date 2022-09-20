@@ -1,5 +1,7 @@
 # `@gasket/plugin-express`
 
+- Fix ability to use async `middleware` hooks
+
 ### 6.17.1
 
 - Update glob path from `__dirname` ([#337])
