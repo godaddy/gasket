@@ -1,7 +1,7 @@
 const proxyquire = require('proxyquire');
 const sinon = require('sinon');
 const assume = require('assume');
-
+const GasketEngine = require('@gasket/engine');
 
 const app = { use: sinon.spy() };
 const express = sinon.stub().returns(app);
@@ -212,6 +212,28 @@ describe('createServers', () => {
 
     await plugin.hooks.createServers(gasket, {});
     assume(app.use).called(3);
+  });
+
+  it('supports async middleware hooks', async () => {
+    const middleware = Symbol();
+    gasket = new GasketEngine({
+      plugins: {
+        add: [
+          plugin,
+          {
+            name: '@mock/gasket-plugin',
+            hooks: {
+              middleware: async () => middleware
+            }
+          }
+        ]
+      }
+    });
+
+    await gasket.exec('createServers');
+
+    const middlewares = app.use.args.flat();
+    assume(middlewares).contains(middleware);
   });
 
   it('middleware paths in the config are used', async () => {

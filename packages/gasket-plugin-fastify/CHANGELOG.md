@@ -1,5 +1,7 @@
 # `@gasket/plugin-fastify`
 
+- Fix ability to use async `middleware` hooks
+
 ### 6.10.0
 
 - TypeScript definitions for config & lifecycles ([#311])
