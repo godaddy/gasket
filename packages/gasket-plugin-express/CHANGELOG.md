@@ -1,6 +1,8 @@
 # `@gasket/plugin-express`
 
-- Fix ability to use async `middleware` hooks
+### 6.33.1
+
+- Fix ability to use async `middleware` hooks ([#444])
 
 ### 6.17.1
 
@@ -53,3 +55,4 @@
 [#287]: https://github.com/godaddy/gasket/pull/287
 [#311]: https://github.com/godaddy/gasket/pull/311
 [#337]: https://github.com/godaddy/gasket/pull/337
+[#444]: https://github.com/godaddy/gasket/pull/444
