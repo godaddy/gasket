@@ -78,7 +78,7 @@ module.exports = {
 
       const middlewares = [];
       await gasket.execApply('middleware', async (plugin, handler) => {
-        const middleware = handler(app);
+        const middleware = await handler(app);
 
         if (middleware) {
           if (middlewareConfig) {
