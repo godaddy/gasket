@@ -1,5 +1,7 @@
 # `@gasket/plugin-nextjs`
 
+- Use level "warning" not "warn" with logger
+
 ### 6.32.0
 
 - Fix syntax that is not node 14 compatible ([#407])

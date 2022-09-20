@@ -12,7 +12,7 @@ describe('req.getNextRoute()', () => {
         root: ''
       },
       logger: {
-        warn: spy()
+        warning: spy()
       }
     };
 

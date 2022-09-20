@@ -65,7 +65,7 @@ async function loadRoutes(gasket) {
         return routes;
       })
       .catch(err => {
-        gasket.logger.warn('Failed to parse next.js routes', err);
+        gasket.logger.warning('Failed to parse next.js routes', err);
         routesLoadError = err;
       });
   }
