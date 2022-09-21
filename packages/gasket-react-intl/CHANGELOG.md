@@ -1,5 +1,7 @@
 # `@gasket/react-intl`
 
+- Add support for contextual thunk for locales path ([#447])
+
 ### 6.32.0
 
 - Fix compatibility issue with Webpack 5 caused by top-level import of `path`
@@ -157,3 +159,4 @@
 [#384]: https://github.com/godaddy/gasket/pull/384
 [#401]: https://github.com/godaddy/gasket/pull/401
 [#415]: https://github.com/godaddy/gasket/pull/415
+[#447]: https://github.com/godaddy/gasket/pull/447
