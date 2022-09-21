@@ -13,17 +13,14 @@ import useLocaleRequired from './use-locale-required';
  * @returns {JSX.Element|null} element
  */
 export default function LocaleRequired(props) {
-  const { localesPathPart = props.localesPath, loading = null, children } = props;
-  const loadState = useLocaleRequired(localesPathPart);
+  const { localesPath, loading = null, children } = props;
+  const loadState = useLocaleRequired(localesPath);
   if (loadState === LocaleStatus.LOADING) return loading;
   return <>{ children }</>;
 }
 
 LocaleRequired.propTypes = {
-  /** @deprecated use localesPathPart */
-  localesPath: PropTypes.string,
-
-  localesPathPart: PropTypes.oneOfType([
+  localesPath: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.func
   ]),
