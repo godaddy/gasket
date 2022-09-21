@@ -1,3 +1,5 @@
+import { IncomingMessage, OutgoingMessage } from 'http';
+
 /**
  * Locale settings and known locale file paths
  */
@@ -33,7 +35,17 @@ export type LocalePathPart = string;
 /**
  * Callback which receives a context object for resolving a LocalePathPath
  */
-export type LocalePathThunk = (context: {}) => LocalePathPart;
+export type LocalePathThunk = (context: {
+    // Any server render
+    req?: IncomingMessage,
+    res?: OutgoingMessage
+
+    // Possible Next.js contexts
+    // @see: https://nextjs.org/docs/api-reference/data-fetching/get-static-props#context-parameter
+    // @see: https://nextjs.org/docs/api-reference/data-fetching/get-initial-props#context-object
+    // @see: https://nextjs.org/docs/api-reference/data-fetching/get-server-side-props#context-parameter
+    [key: string]: any
+}) => LocalePathPart;
 
 /**
  * Callback which receives a context object for resolving a LocalePathPath
