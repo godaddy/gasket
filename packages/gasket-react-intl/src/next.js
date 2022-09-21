@@ -17,7 +17,7 @@ export function intlGetStaticProps(localePathPart = manifest.defaultPath) {
     }
 
     // eslint-disable-next-line no-process-env
-    const localesProps = localeUtils.serverLoadData(localePathPart, locale, getLocalesParentDir());
+    const localesProps = localeUtils.serverLoadData(localePathPart, locale, getLocalesParentDir(), ctx);
 
     return {
       props: {
@@ -42,7 +42,7 @@ export function intlGetServerSideProps(localePathPart = manifest.defaultPath) {
     if (!locale && res.locals && res.locals.gasketData && res.locals.gasketData.intl) {
       locale = res.locals.gasketData.intl.locale;
     }
-    const localesProps = localeUtils.serverLoadData(localePathPart, locale, getLocalesParentDir());
+    const localesProps = localeUtils.serverLoadData(localePathPart, locale, getLocalesParentDir(), ctx);
 
     return {
       props: {
