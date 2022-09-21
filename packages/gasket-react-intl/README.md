@@ -56,8 +56,8 @@ wrapped component will be rendered.
 
 **Props**
 
-- `localesPath` - (string) Path to endpoint with JSON files. See more about
-  [locales path] in the plugin docs.
+- `localesPath` - (string|function) Path to endpoint with JSON files or
+  [thunk] that returns one. See more about [locales path] in the plugin docs.
 - `[options]` - (object) Optional configuration
   - `loading` - (string|node) Content to render while loading, otherwise null.
   - `initialProps` - (boolean) Enable `getInitialProps` to load locale files
@@ -75,8 +75,8 @@ const Component = props => <h1><FormattedMessage id='welcome'/></h1>
 export default withLocaleRequired('/locales')(Component);
 ```
 
-If you only have a single locales path for your app, the default `localesPath`
-will be used if unspecified:
+If you only have a single locales path for your app, the default
+`localesPath` will be used if unspecified:
 
 ```jsx
 export default withLocaleRequired()(Component);
@@ -99,8 +99,8 @@ content until a [split locales] file loads.
 
 **Props**
 
-- `localesPath` - (string) Path to endpoint with JSON files. See more about
-  [locales path] in the plugin docs.
+- `localesPath` - (string|function) Path to endpoint with JSON files or
+  [thunk] that returns one. See more about [locales path] in the plugin docs.
 - `loading` - (string|node) Content to render while loading, otherwise null.
 
 ```jsx
@@ -134,8 +134,8 @@ hook will return the current loading status of the locale file.
 
 **Props**
 
-- `localesPath` - (string) Path to endpoint with JSON files. See more about
-  [locales path] in the plugin docs.
+- `localesPath` - (string|function) Path to endpoint with JSON files or
+  [thunk] that returns one. See more about [locales path] in the plugin docs.
 
 ```jsx
 import { useLocaleRequired, LocaleStatus } from '@gasket/react-intl';
@@ -168,15 +168,15 @@ To generate static pages for a locale in a Next.js app, you can use
 
 **Props**
 
-- `localesPath` - (string) Path to endpoint with JSON files. See more about
-  [locales path] in the plugin docs.
+- `localesPath` - (string|function) Path to endpoint with JSON files or
+  [thunk] that returns one. See more about [locales path] in the plugin docs.
 
 ```jsx
 // pages/[locale]/example.js
 import { intlGetStaticProps } from '@gasket/react-intl/next';
 import { FormattedMessage } from 'react-intl';
 
-export default const Component = props => <h1><FormattedMessage id='welcome'/></h1>
+export const Component = props => <h1><FormattedMessage id='welcome'/></h1>
 
 export default Component;
 
@@ -208,14 +208,14 @@ be loaded will come from the `res.locals.gasketData` provided by [@gasket/plugin
 
 **Props**
 
-- `localesPath` - (string) Path to endpoint with JSON files. See more about
-  [locales path] in the plugin docs.
+- `localesPath` - (string|function) Path to endpoint with JSON files or
+  [thunk] that returns one. See more about [locales path] in the plugin docs.
 
 ```jsx
 import { intlGetServerSideProps } from '@gasket/react-intl/next';
 import { FormattedMessage } from 'react-intl';
 
-export default const Component = props => <h1><FormattedMessage id='welcome'/></h1>
+export const Component = props => <h1><FormattedMessage id='welcome'/></h1>
 
 export default Component;
 
@@ -247,6 +247,48 @@ This cannot be combined with `getServerSideProps`, so in those cases where you
 need it, another option to preload locale props during SSR is with
 [req.withLocaleRequired].
 
+### Locales path thunk
+
+It is possible to provide a callback function as the `localesPath` argument,
+allowing your app to adjust the locales path string conditionally. The function
+will receive a context object for the rendering state. This is an advanced
+feature and requires some care to handle the various rendering stages your
+component may encounter.
+
+#### Example
+
+```jsx
+import { withLocaleRequired } from '@gasket/react-intl';
+import { FormattedMessage } from 'react-intl';
+
+const Component = props => <h1><FormattedMessage id='welcome'/></h1>
+
+function localesWithVariant(context) {
+  let variant = 'default';
+  
+  // server-side render
+  if (context?.req) {
+    // get the region from query param
+    variant = context.req.query.variant;
+  }
+  // browser render
+  if (typeof window !== 'undefined') {
+    // get a variant query param from location
+    const search = new URLSearchParams(window.location.search)
+    variant = search.get('variant')
+  }
+  // static render (for example)
+  if (context?.params) {
+    // get a variant path param for a static page
+    variant = context.params.variant
+  }
+  
+  return `/locales/${variant}`
+}
+
+export default withLocaleRequired(localesWithVariant, { initialProps: true })(Component);
+```
+
 <!-- LINKS -->
 
 [withIntlProvider]:#withintlprovider
@@ -255,6 +297,7 @@ need it, another option to preload locale props during SSR is with
 [intlGetStaticProps]:#intlgetstaticprops
 [intlGetServerSideProps]:#intlgetserversideprops
 [useLocaleRequired]:#uselocalerequired
+[thunk]:#locales-path-thunk
 
 [@gasket/plugin-intl]:/packages/gasket-plugin-intl/README.md
 [locales path]:/packages/gasket-plugin-intl/README.md#locales-path
