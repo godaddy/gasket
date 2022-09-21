@@ -25,7 +25,7 @@ LocaleRequired.propTypes = {
 
   localesPathPart: PropTypes.oneOfType([
     PropTypes.string,
-    PropTypes.function
+    PropTypes.func
   ]),
   loading: PropTypes.node,
   children: PropTypes.node.isRequired
