@@ -56,24 +56,17 @@ describe('LocaleRequired', function () {
       assume(wrapper.html()).includes('MockComponent');
     });
 
-    it('supports deprecated localesPath', function () {
+    it('supports localesPath', function () {
       useLocaleRequiredStub.returns(LOADING);
       wrapper = doMount({ localesPath: '/bogus' });
       assume(useLocaleRequiredStub).calledWith('/bogus');
       assume(wrapper.html()).eqls(null);
     });
 
-    it('supports localesPathPart', function () {
-      useLocaleRequiredStub.returns(LOADING);
-      wrapper = doMount({ localesPathPart: '/bogus' });
-      assume(useLocaleRequiredStub).calledWith('/bogus');
-      assume(wrapper.html()).eqls(null);
-    });
-
-    it('supports localesPathPart as thunk', function () {
+    it('supports localesPath as thunk', function () {
       const mockThunk = sinon.stub();
       useLocaleRequiredStub.returns(LOADING);
-      wrapper = doMount({ localesPathPart: mockThunk });
+      wrapper = doMount({ localesPath: mockThunk });
       assume(useLocaleRequiredStub).calledWith(mockThunk);
       assume(wrapper.html()).eqls(null);
     });
