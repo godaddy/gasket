@@ -6,9 +6,9 @@
   "scripts": {
     "lint": "eslint scripts",
     "lint:fix": "npm run lint -- --fix",
-    "lint:fix:all": "npm run lint:fix && lerna run lint:fix --concurrency=1 --stream",
-    "test": "lerna run test --concurrency=1 --stream",
-    "test:coverage": "lerna run test:coverage --concurrency=1 --stream",
+    "lint:fix:all": "npm run lint:fix && lerna run lint:fix --stream",
+    "test": "lerna run test --stream",
+    "test:coverage": "lerna run test:coverage --stream",
     "posttest": "npm run lint",
     "build": "lerna run build",
     "align-packages": "node ./scripts/align-packages",
@@ -51,7 +51,8 @@
     "eslint-plugin-mocha": "^10.0.3",
     "eslint-plugin-unicorn": "^40.1.0",
     "jsdom": "^19.0.0",
-    "lerna": "^4.0.0",
+    "lerna": "^5.5.2",
+    "nx": "^14.7.10",
     "rimraf": "^3.0.2"
   },
   "eslintConfig": {
