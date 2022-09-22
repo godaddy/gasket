@@ -20,11 +20,14 @@ export default function LocaleRequired(props) {
 }
 
 LocaleRequired.propTypes = {
-  localesPath: PropTypes.string,
+  localesPath: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.func
+  ]),
   loading: PropTypes.node,
   children: PropTypes.node.isRequired
 };
 
 LocaleRequired.defaultProps = {
-  localesPath: manifest.defaultPath
+  localesPathPart: manifest.defaultPath
 };

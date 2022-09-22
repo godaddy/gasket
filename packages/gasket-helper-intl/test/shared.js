@@ -82,6 +82,16 @@ module.exports = function sharedTests(UtilClass) {
     });
   });
 
+  describe('.resolveLocalePathPart', function () {
+    it('handles thunks for locale paths', function () {
+      const mockContext = { customRoot: '/bogus' };
+      const mockThunk = sinon.stub().callsFake((context) => context.customRoot + '/locales');
+      const results = utils.resolveLocalePathPart(mockThunk, mockContext);
+      assume(results).equals('/bogus/locales');
+      assume(mockThunk).called();
+    });
+  });
+
   describe('.getLocalePath', function () {
     it('returns formatted localePath', function () {
       const results = utils.getLocalePath('/locales', 'en-US');
@@ -146,6 +156,14 @@ module.exports = function sharedTests(UtilClass) {
       utils = new UtilClass(mockConfig);
       const results = utils.getLocalePath('/locales', 'da-DK');
       assume(results).equals('/locales/fake.json');
+    });
+
+    it('handles thunks for locale paths', function () {
+      const mockContext = { customRoot: '/bogus' };
+      const mockThunk = sinon.stub().callsFake((context) => context.customRoot + '/locales');
+      const results = utils.getLocalePath(mockThunk, 'en-US', mockContext);
+      assume(results).equals('/bogus/locales/en-US.json');
+      assume(mockThunk).called();
     });
   });
 };

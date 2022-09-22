@@ -63,6 +63,23 @@ describe('Next.js functions', function () {
       });
     });
 
+    it('handles thunks for locale path part', async function () {
+      const mockContext = { params: { locale: 'en-US' }, extra: true };
+      const mockThunk = sinon.stub().callsFake((context) => context.extra ? '/locales/extra' : '/locales');
+
+      const results = await next.intlGetStaticProps(mockThunk)(mockContext);
+      assume(mockThunk).calledWith(mockContext);
+      assume(results).eqls({
+        props: {
+          localesProps: {
+            locale: 'en-US',
+            messages: { 'en-US': { gasket_extra: 'Extra' } },
+            status: { '/locales/extra/en-US.json': 'loaded' }
+          }
+        }
+      });
+    });
+
     it('returns localesProps for multiple locale path parts', async function () {
       const results = await next.intlGetStaticProps(['/locales', '/locales/extra'])({ params: { locale: 'en-US' } });
       assume(results).eqls({
@@ -141,6 +158,23 @@ describe('Next.js functions', function () {
 
     it('returns localesProps for other path part', async function () {
       const results = await next.intlGetServerSideProps('/locales/extra')({ res });
+      assume(results).eqls({
+        props: {
+          localesProps: {
+            locale: 'en-US',
+            messages: { 'en-US': { gasket_extra: 'Extra' } },
+            status: { '/locales/extra/en-US.json': 'loaded' }
+          }
+        }
+      });
+    });
+
+    it('handles thunks for locale path part', async function () {
+      const mockContext = { res, extra: true };
+      const mockThunk = sinon.stub().callsFake((context) => context.extra ? '/locales/extra' : '/locales');
+
+      const results = await next.intlGetServerSideProps(mockThunk)(mockContext);
+      assume(mockThunk).calledWith(mockContext);
       assume(results).eqls({
         props: {
           localesProps: {

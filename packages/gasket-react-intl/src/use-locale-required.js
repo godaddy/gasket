@@ -7,12 +7,13 @@ import { GasketIntlContext } from './context';
 /**
  * React that fetches a locale file and returns loading status
  *
- * @param {LocalePathPart} localePathPart - Path containing locale files
+ * @param {LocalePathPartOrThunk} localePathPart - Path containing locale files
  * @returns {LocaleStatus} status
  */
 export default function useLocaleRequired(localePathPart) {
   const { locale, status = {}, dispatch } = useContext(GasketIntlContext);
 
+  // thunks are supported but with context will be browser-only (empty object)
   const localePath = localeUtils.getLocalePath(localePathPart, locale);
 
   const fileStatus = status[localePath];
