@@ -21,13 +21,21 @@ function attachGetInitialProps(Wrapper, localePathPart) {
     const { res } = ctx;
     let localesProps;
 
+    let resolvedLocalePathPart;
+    if (typeof localePathPart === 'function') {
+      // While this can be resolved by serverLoadData, we will do it here
+      // and return in it in props to avoid having to re-resolve during hydrate under different context
+      resolvedLocalePathPart = localeUtils.resolveLocalePathPart(localePathPart, ctx);
+    }
+
     if (res && res.locals && res.locals.gasketData) {
       const { locale = defaultLocale } = res.locals.gasketData.intl || {};
       const localesParentDir = require('path').dirname(res.locals.localesDir);
-      localesProps = localeUtils.serverLoadData(localePathPart, locale, localesParentDir);
+      localesProps = localeUtils.serverLoadData(resolvedLocalePathPart ?? localePathPart, locale, localesParentDir);
     }
 
     return {
+      ...(resolvedLocalePathPart ? { localePathPart: resolvedLocalePathPart } : {}),
       ...(localesProps ? { localesProps } : {}),
       ...(WrappedComponent.getInitialProps ? await WrappedComponent.getInitialProps(ctx) : {})
     };
@@ -37,7 +45,7 @@ function attachGetInitialProps(Wrapper, localePathPart) {
 /**
  * Make an HOC that loads a locale file before rendering wrapped component
  *
- * @param {LocalePathPart} localePathPart - Path containing locale files
+ * @param {LocalePathPartOrThunk} localePathPart - Path containing locale files
  * @param {object} [options] - Options
  * @param {React.Component} [options.loading=null] - Custom component to show while loading
  * @param {boolean} [options.initialProps=false] - Preload locales during SSR with Next.js pages
@@ -63,14 +71,14 @@ export default function withLocaleRequired(localePathPart = defaultPath, options
      */
     function Wrapper(props) {
       // eslint-disable-next-line react/prop-types
-      const { forwardedRef, ...rest } = props;
-      const loadState = useLocaleRequired(localePathPart);
+      const { forwardedRef, localePathPart: resolvedLocalePathPart, ...rest } = props;
+      const loadState = useLocaleRequired(resolvedLocalePathPart ?? localePathPart);
       if (loadState === LocaleStatus.LOADING) return loading;
       return <Component { ...rest } ref={ forwardedRef }/>;
     }
 
     hoistNonReactStatics(Wrapper, Component);
-    Wrapper.displayName = `withLocaleRequired(${ displayName })`;
+    Wrapper.displayName = `withLocaleRequired(${displayName})`;
     Wrapper.WrappedComponent = Component;
 
     let Result = Wrapper;
@@ -79,7 +87,7 @@ export default function withLocaleRequired(localePathPart = defaultPath, options
     if (forwardRef) {
       Result = React.forwardRef((props, ref) => <Wrapper { ...props } forwardedRef={ ref }/>);
       hoistNonReactStatics(Result, Component);
-      Result.displayName = `ForwardRef(withLocaleRequired/${ displayName }))`;
+      Result.displayName = `ForwardRef(withLocaleRequired/${displayName}))`;
       Result.WrappedComponent = Component;
     }
 

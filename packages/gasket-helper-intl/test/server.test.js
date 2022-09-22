@@ -1,5 +1,6 @@
 const assume = require('assume');
 const path = require('path');
+const sinon = require('sinon');
 
 const { LocaleUtils } = require('../lib/server');
 
@@ -60,6 +61,19 @@ describe('LocaleUtils (Server)', function () {
         locale: 'fr-CA',
         messages: { 'fr-CA': { gasket_welcome: 'Hello!', gasket_learn: 'Learn Gasket' } },
         status: { '/locales/en-US.json': 'loaded' }
+      });
+    });
+
+    it('handles thunks for locale paths', function () {
+      const mockContext = { extra: true };
+      const mockThunk = sinon.stub().callsFake((context) => context.extra ? '/locales/extra' : '/locales');
+
+      const results = utils.serverLoadData(mockThunk, 'en-US', localesParentDir, mockContext);
+      assume(mockThunk).called();
+      assume(results).eqls({
+        locale: 'en-US',
+        messages: { 'en-US': { gasket_extra: 'Extra' } },
+        status: { '/locales/extra/en-US.json': 'loaded' }
       });
     });
   });

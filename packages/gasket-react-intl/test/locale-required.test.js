@@ -55,5 +55,20 @@ describe('LocaleRequired', function () {
       wrapper = doMount({ loading: 'loading...' });
       assume(wrapper.html()).includes('MockComponent');
     });
+
+    it('supports localesPath', function () {
+      useLocaleRequiredStub.returns(LOADING);
+      wrapper = doMount({ localesPath: '/bogus' });
+      assume(useLocaleRequiredStub).calledWith('/bogus');
+      assume(wrapper.html()).eqls(null);
+    });
+
+    it('supports localesPath as thunk', function () {
+      const mockThunk = sinon.stub();
+      useLocaleRequiredStub.returns(LOADING);
+      wrapper = doMount({ localesPath: mockThunk });
+      assume(useLocaleRequiredStub).calledWith(mockThunk);
+      assume(wrapper.html()).eqls(null);
+    });
   });
 });

@@ -10,13 +10,13 @@ const { LocaleUtils, LocaleStatus } = require('./index');
 function LocaleServerUtils() {
   LocaleUtils.apply(this, arguments);
 
-  this.serverLoadData = (localePathPart, locale, localesDir) => {
+  this.serverLoadData = (localePathPart, locale, localesDir, context = {}) => {
     if (Array.isArray(localePathPart)) {
-      const localesProps = localePathPart.map(p => this.serverLoadData(p, locale, localesDir));
+      const localesProps = localePathPart.map(p => this.serverLoadData(p, locale, localesDir, context));
       return merge(...localesProps);
     }
 
-    const localeFile = this.getLocalePath(localePathPart, locale);
+    const localeFile = this.getLocalePath(localePathPart, locale, context);
     const diskPath = path.join(localesDir, localeFile);
     let messages;
     let status;

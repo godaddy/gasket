@@ -54,6 +54,15 @@ describe('useLocaleRequired', function () {
     assume(fetchStub).calledWith('/locales/en.json');
   });
 
+  it('handle thunks for locale paths', function () {
+    const mockThunk = sinon.stub().callsFake(() => '/custom/locales');
+
+    const results = useLocaleRequired(mockThunk);
+    assume(results).equals(LOADING);
+    assume(fetchStub).called();
+    assume(fetchStub).calledWith('/custom/locales/en.json');
+  });
+
   it('returns LOADING if fetching', function () {
     const results = useLocaleRequired('/locales');
     assume(results).equals(LOADING);

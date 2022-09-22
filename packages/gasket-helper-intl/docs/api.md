@@ -11,6 +11,8 @@ Name | Description
 ------ | -----------
 [LocaleManifest] | Locale settings and known locale file paths
 [LocalePathPart] | Partial URL representing a directory containing locale .json files or a URL template with a `:locale` path param to a .json file.
+[LocalePathThunk] | Callback which receives a context object for resolving a LocalePathPath
+[LocalePathPartOrThunk] | A localePathPart string or callback which returns one
 [LocalePath] | URL path to a locale .json file
 [Lang] | Language code only
 [Locale] | Language code with region
@@ -29,7 +31,8 @@ Utility class for loading locale files
     * [new LocaleUtils(config)]
     * [.getFallbackLocale(locale)]
     * [.formatLocalePath(localePathPart, locale)]
-    * [.getLocalePath(localePathPart, locale)]
+    * [.resolveLocalePathPart(localePathPart, \[context\])]
+    * [.getLocalePath(localePathPart, locale, \[context\])]
     * [.pathToUrl(localePath)]
     * [.serverLoadData(localePathPart, locale, localesDir)]
 
@@ -79,7 +82,20 @@ and ends with .json file.
 | locale | [`Locale`] | Locale |
 
 
-### localeUtils.getLocalePath(localePathPart, locale)
+### localeUtils.resolveLocalePathPart(localePathPart, \[context\])
+
+Get a localePathPart from provided string or thunk callback results
+
+**Kind**: instance method of [`LocaleUtils`]  
+**Returns**: [`LocalePath`] - localePath  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| localePathPart | [`LocalePathPartOrThunk`] | Path containing locale files |
+| \[context\] | `object` | Context |
+
+
+### localeUtils.getLocalePath(localePathPart, locale, \[context\])
 
 Get a formatted localePath considering language mappings and fallbacks
 
@@ -88,8 +104,9 @@ Get a formatted localePath considering language mappings and fallbacks
 
 | Param | Type | Description |
 | --- | --- | --- |
-| localePathPart | [`LocalePathPart`] | Path containing locale files |
+| localePathPart | [`LocalePathPartOrThunk`] | Path containing locale files |
 | locale | [`Locale`] | Locale |
+| \[context\] | `object` | Context |
 
 
 ### localeUtils.pathToUrl(localePath)
@@ -192,6 +209,24 @@ or a URL template with a `:locale` path param to a .json file.
 "/locales/{locale}/component.json"
 ```
 
+## LocalePathThunk
+
+Callback which receives a context object for resolving a LocalePathPath
+
+**Kind**: global typedef  
+**Returns**: `string` - localePathPart  
+
+| Param | Type |
+| --- | --- |
+| context | `object` | 
+
+
+## LocalePathPartOrThunk
+
+A localePathPart string or callback which returns one
+
+**Kind**: global typedef  
+
 ## LocalePath
 
 URL path to a locale .json file
@@ -284,6 +319,8 @@ Fetch status of a locale file
 [LocaleUtils]:#localeutils
 [LocaleManifest]:#localemanifest
 [LocalePathPart]:#localepathpart
+[LocalePathThunk]:#localepaththunk
+[LocalePathPartOrThunk]:#localepathpartorthunk
 [LocalePath]:#localepath
 [Lang]:#lang
 [Locale]:#locale
@@ -296,6 +333,7 @@ Fetch status of a locale file
 [`Lang`]:#lang
 [`LocalePath`]:#localepath
 [`LocalePathPart`]:#localepathpart
+[`LocalePathPartOrThunk`]:#localepathpartorthunk
 [`LocalesProps`]:#localesprops
 [`LocaleStatus`]:#localestatus
 [.LOADING]:#localestatusloading
@@ -304,6 +342,7 @@ Fetch status of a locale file
 [new LocaleUtils(config)]:#new-localeutilsconfig
 [.getFallbackLocale(locale)]:#localeutilsgetfallbacklocalelocale
 [.formatLocalePath(localePathPart, locale)]:#localeutilsformatlocalepathlocalepathpart-locale
-[.getLocalePath(localePathPart, locale)]:#localeutilsgetlocalepathlocalepathpart-locale
+[.resolveLocalePathPart(localePathPart, \[context\])]:#localeutilsresolvelocalepathpartlocalepathpart-context
+[.getLocalePath(localePathPart, locale, \[context\])]:#localeutilsgetlocalepathlocalepathpart-locale-context
 [.pathToUrl(localePath)]:#localeutilspathtourllocalepath
 [.serverLoadData(localePathPart, locale, localesDir)]:#localeutilsserverloaddatalocalepathpart-locale-localesdir

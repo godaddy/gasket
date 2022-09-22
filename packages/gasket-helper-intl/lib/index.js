@@ -33,6 +33,21 @@
  */
 
 /**
+ * Callback which receives a context object for resolving a LocalePathPath
+ *
+ * @typedef {function} LocalePathThunk
+ *
+ * @param {object} context
+ * @returns {string} localePathPart
+ */
+
+/**
+ * A localePathPart string or callback which returns one
+ *
+ * @typedef {LocalePathPart|LocalePathThunk} LocalePathPartOrThunk
+ */
+
+/**
  * URL path to a locale .json file
  * @typedef {string} LocalePath
  *
@@ -161,14 +176,27 @@ function LocaleUtils(config) {
   };
 
   /**
-   * Get a formatted localePath considering language mappings and fallbacks
+   * Get a localePathPart from provided string or thunk callback results
    *
-   * @param {LocalePathPart} localePathPart - Path containing locale files
-   * @param {Locale} locale - Locale
+   * @param {LocalePathPartOrThunk} localePathPart - Path containing locale files
+   * @param {object} [context] - Context
    * @returns {LocalePath} localePath
    * @method
    */
-  this.getLocalePath = (localePathPart, locale) => {
+  this.resolveLocalePathPart = (localePathPart, context = {}) => {
+    return typeof localePathPart === 'function' ? localePathPart(context) : localePathPart;
+  };
+
+  /**
+   * Get a formatted localePath considering language mappings and fallbacks
+   *
+   * @param {LocalePathPartOrThunk} localePathPart - Path containing locale files
+   * @param {Locale} locale - Locale
+   * @param {object} [context] - Context
+   * @returns {LocalePath} localePath
+   * @method
+   */
+  this.getLocalePath = (localePathPart, locale, context = {}) => {
     const mappedLocale = localesMap && localesMap[locale] || locale;
     let fallbackLocale = mappedLocale;
 
@@ -176,12 +204,14 @@ function LocaleUtils(config) {
       fallbackLocale = defaultLocale;
     }
 
+    const resolvedLocalePathPart = this.resolveLocalePathPart(localePathPart, context);
+
     while (fallbackLocale != null) {
-      const localePath = this.formatLocalePath(localePathPart, fallbackLocale);
+      const localePath = this.formatLocalePath(resolvedLocalePathPart, fallbackLocale);
       if (trim(localePath) in paths) return localePath;
       fallbackLocale = this.getFallbackLocale(fallbackLocale);
     }
-    return this.formatLocalePath(localePathPart, mappedLocale);
+    return this.formatLocalePath(resolvedLocalePathPart, mappedLocale);
   };
 
   /**

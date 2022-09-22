@@ -1,3 +1,5 @@
+import { IncomingMessage, OutgoingMessage } from 'http';
+
 /**
  * Locale settings and known locale file paths
  */
@@ -29,6 +31,27 @@ export interface LocaleManifest {
  * or a URL template with a `:locale` path param to a .json file.
  */
 export type LocalePathPart = string;
+
+/**
+ * Callback which receives a context object for resolving a LocalePathPath
+ */
+export type LocalePathThunk = (context: {
+    // Any server render
+    req?: IncomingMessage,
+    res?: OutgoingMessage
+
+    // Possible Next.js contexts
+    // @see: https://nextjs.org/docs/api-reference/data-fetching/get-static-props#context-parameter
+    // @see: https://nextjs.org/docs/api-reference/data-fetching/get-initial-props#context-object
+    // @see: https://nextjs.org/docs/api-reference/data-fetching/get-server-side-props#context-parameter
+    [key: string]: any
+}) => LocalePathPart;
+
+/**
+ * Callback which receives a context object for resolving a LocalePathPath
+ */
+export type LocalePathPartOrThunk = LocalePathPart|LocalePathThunk;
+
 /**
  * URL path to a locale .json file
  */
@@ -126,10 +149,11 @@ export class LocaleUtils {
      * Load locale file(s) and return localesProps.
      * Throws error if attempted to use in browser.
      *
-     * @param {LocalePathPart|LocalePathPart[]} localePathPart - Path(s) containing locale files
+     * @param {LocalePathPartOrThunk|LocalePathPartOrThunk[]} localePathPart - Path(s) containing locale files
      * @param {Locale} locale - Locale to load
      * @param {string} localesDir - Disk path to locale files dir
+     * @param {string} [context] - Context for resolving localePathThunk
      * @returns {LocalesProps} localesProps
      */
-    serverLoadData: (localePathPart: any, locale: any, localesDir: any) => any;
+    serverLoadData: (localePathPart: any, locale: any, localesDir: any, context?: {}) => any;
 }

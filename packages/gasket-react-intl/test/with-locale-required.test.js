@@ -46,7 +46,7 @@ describe('withLocaleRequired', function () {
   });
 
   it('adds display name with ForwardRef', function () {
-    assume(withLocaleRequired('locales', { forwardRef: true })(MockComponent))
+    assume(withLocaleRequired('/locales', { forwardRef: true })(MockComponent))
       .property('displayName', 'ForwardRef(withLocaleRequired/MockComponent))');
   });
 
@@ -69,13 +69,13 @@ describe('withLocaleRequired', function () {
     });
 
     it('adds getInitialProps if initialProps set', function () {
-      const wrapped = withLocaleRequired('locales', { initialProps: true })(MockComponent);
+      const wrapped = withLocaleRequired('/locales', { initialProps: true })(MockComponent);
       assume(wrapped).property('getInitialProps');
     });
 
     it('executes wrapped getInitialProps', async function () {
       MockComponent.getInitialProps = sinon.stub().returns({ bogus: true });
-      const wrapped = withLocaleRequired('locales', { initialProps: true })(MockComponent);
+      const wrapped = withLocaleRequired('/locales', { initialProps: true })(MockComponent);
 
       const ctx = {};
       const props = await wrapped.getInitialProps(ctx);
@@ -85,7 +85,7 @@ describe('withLocaleRequired', function () {
 
     it('loads localeProps on server', async function () {
       MockComponent.getInitialProps = sinon.stub().returns({ bogus: true });
-      const wrapped = withLocaleRequired('locales', { initialProps: true })(MockComponent);
+      const wrapped = withLocaleRequired('/locales', { initialProps: true })(MockComponent);
 
       const ctx = {
         res: {
@@ -113,7 +113,7 @@ describe('withLocaleRequired', function () {
 
     it('handles missing gasketData', async function () {
       MockComponent.getInitialProps = sinon.stub().returns({ bogus: true });
-      const wrapped = withLocaleRequired('locales', { initialProps: true })(MockComponent);
+      const wrapped = withLocaleRequired('/locales', { initialProps: true })(MockComponent);
 
       const ctx = {
         res: {
@@ -130,6 +130,37 @@ describe('withLocaleRequired', function () {
         error = err;
       }
       assume(error).to.equal(null);
+    });
+
+    it('resolve localePahThunk and passes as prop', async function () {
+      const mockThunk = sinon.stub().callsFake((context) => context.extra ? '/locales/extra' : '/locales');
+      MockComponent.getInitialProps = sinon.stub().returns({ bogus: true });
+      const wrapped = withLocaleRequired(mockThunk, { initialProps: true })(MockComponent);
+
+      const ctx = {
+        extra: true,
+        res: {
+          locals: {
+            localesDir: path.join(__dirname, 'fixtures', 'locales'),
+            gasketData: {
+              intl: {
+                locale: 'fr-FR'
+              }
+            }
+          }
+        }
+      };
+      const props = await wrapped.getInitialProps(ctx);
+      assume(MockComponent.getInitialProps).calledWith(ctx);
+      assume(props).eqls({
+        localePathPart: '/locales/extra',
+        bogus: true,
+        localesProps: {
+          locale: 'fr-FR',
+          messages: { 'fr-FR': { gasket_extra: 'Supplémentaire' } },
+          status: { '/locales/extra/fr-FR.json': 'loaded' }
+        }
+      });
     });
   });
 
@@ -172,7 +203,7 @@ describe('withLocaleRequired', function () {
         }
       }
 
-      const TestWrappedComponent = withLocaleRequired('locales', { forwardRef: true })(TestComponent);
+      const TestWrappedComponent = withLocaleRequired('/locales', { forwardRef: true })(TestComponent);
 
       class TestRefComponent extends React.Component {
         constructor(...args) {

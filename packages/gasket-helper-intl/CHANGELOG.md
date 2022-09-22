@@ -1,5 +1,7 @@
 # `@gasket/helper-intl`
 
+- Add support for contextual thunk for locales path ([#447])
+
 ### 6.26.1
 
 - Fix `LocaleStatus` enum to match to JS ([#383])
@@ -31,3 +33,4 @@
 [#268]: https://github.com/godaddy/gasket/pull/268
 [#276]: https://github.com/godaddy/gasket/pull/276
 [#383]: https://github.com/godaddy/gasket/pull/383
+[#447]: https://github.com/godaddy/gasket/pull/447
