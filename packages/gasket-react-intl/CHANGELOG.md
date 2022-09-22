@@ -1,5 +1,7 @@
 # `@gasket/react-intl`
 
+### 6.34.0
+
 - Add support for contextual thunk for locales path ([#447])
 
 ### 6.32.0
