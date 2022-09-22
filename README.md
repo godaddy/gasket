@@ -169,7 +169,7 @@ Available plugins
 | [@gasket/plugin-fastify]        | 6.33.1  | Adds fastify support to your application                                   |
 | [@gasket/plugin-git]            | 6.26.1  | Adds git support to your application                                       |
 | [@gasket/plugin-https]          | 6.33.1  | Create http/s servers with graceful termination                            |
-| [@gasket/plugin-intl]           | 6.33.1  | NodeJS script to build localization files.                                 |
+| [@gasket/plugin-intl]           | 6.34.0  | NodeJS script to build localization files.                                 |
 | [@gasket/plugin-jest]           | 6.24.0  | Integrated jest into your application.                                     |
 | [@gasket/plugin-lifecycle]      | 6.26.1  | Allows a gasket/ directory to be used for lifecycle hooks in applications. |
 | [@gasket/plugin-lint]           | 6.30.2  | Adds GoDaddy standard linting to your application                          |
@@ -198,13 +198,13 @@ Supporting modules
 | [@gasket/data]             | 6.24.0  | Helper package for accessing embedded Gasket Data in the browser                     |
 | [@gasket/engine]           | 6.30.2  | Plugin engine for gasket                                                             |
 | [@gasket/fetch]            | 6.28.1  | Gasket Fetch API                                                                     |
-| [@gasket/helper-intl]      | 6.26.1  | Internal helpers used by loaders to resolve locale file paths                        |
+| [@gasket/helper-intl]      | 6.34.0  | Internal helpers used by loaders to resolve locale file paths                        |
 | [@gasket/log]              | 6.30.0  | Gasket client and server logger                                                      |
 | [@gasket/nextjs]           | 6.24.0  | Gasket integrations for Next.js apps                                                 |
-| [@gasket/react-intl]       | 6.33.1  | React component library to enable localization for gasket apps.                      |
+| [@gasket/react-intl]       | 6.34.0  | React component library to enable localization for gasket apps.                      |
 | [@gasket/redux]            | 6.30.0  | Gasket Redux Configuration                                                           |
 | [@gasket/resolve]          | 6.30.2  | Essential module resolution & configuration management for gasket plugins & presets. |
-| [@gasket/typescript-tests] | 6.33.1  | Not a published package; hosts unit tests to verify TypeScript support               |
+| [@gasket/typescript-tests] | 6.34.0  | Not a published package; hosts unit tests to verify TypeScript support               |
 | [@gasket/utils]            | 6.26.1  | Reusable utilities for Gasket internals                                              |
 | [create-gasket-app]        | 6.33.1  | starter pack for creating a gasket app                                               |
 
