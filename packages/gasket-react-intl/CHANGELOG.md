@@ -1,5 +1,9 @@
 # `@gasket/react-intl`
 
+### 6.34.1
+
+- Fix types ([#452])
+
 ### 6.34.0
 
 - Add support for contextual thunk for locales path ([#447])
@@ -162,3 +166,4 @@
 [#401]: https://github.com/godaddy/gasket/pull/401
 [#415]: https://github.com/godaddy/gasket/pull/415
 [#447]: https://github.com/godaddy/gasket/pull/447
+[#452]: https://github.com/godaddy/gasket/pull/452
