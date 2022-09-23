@@ -12,7 +12,7 @@ describe('gasket/react-intl', function () {
         forwardRef: true
       });
       withLocaleRequired((context) => {
-        const variant = context?.req?.headers['x-locale-varaint'];
+        const variant = context?.req?.headers['x-locale-variant'];
         return variant ? '/locale/' + variant : '/locale';
       });
     });
