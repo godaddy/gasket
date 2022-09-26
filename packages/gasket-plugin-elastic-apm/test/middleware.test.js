@@ -33,7 +33,7 @@ describe('The middleware hook', () => {
     it('enables customization of transaction name and labels', async () => {
       await middleware(req, res);
 
-      expect(gasket.exec).toBeCalledWith(
+      expect(gasket.exec).toHaveBeenCalledWith(
         'apmTransaction',
         apm.currentTransaction,
         { req, res }
