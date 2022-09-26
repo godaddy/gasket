@@ -296,7 +296,10 @@ describe('Swagger Plugin', function () {
 
     it('adds new routes to swagger paths', async function () {
       await plugin.hooks.fastify.handler(mockGasket, fastify);
-      fastify.get('/hello-world', () => {});
+      fastify.register((instance, opts, done) => {
+        instance.get('/hello-world', () => {});
+        done();
+      });
       await fastify.ready();
       assume(fastify.swagger().paths).to.haveOwnProperty('/hello-world');
     });
