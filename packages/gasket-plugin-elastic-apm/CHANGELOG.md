@@ -1,5 +1,9 @@
 # `@gasket/plugin-elastic-apm`
 
+### 6.34.2
+
+- Upgrade eslint-plugin-jest, update test methods to canonical names ([#457])
+
 ### 6.31.1
 
 - Syntax error fix for node@14 support ([#407])
@@ -30,3 +34,4 @@
 [#388]:https://github.com/godaddy/gasket/pull/388
 [#400]:https://github.com/godaddy/gasket/pull/400
 [#407]:https://github.com/godaddy/gasket/pull/407
+[#457]: https://github.com/godaddy/gasket/pull/457

@@ -1,5 +1,9 @@
 # `@gasket/plugin-command`
 
+### 6.34.2
+
+- Upgrade eslint-plugin-jest ([#457])
+
 ### 6.27.0
 
 - Support for `GASKET_ENV` with fallback to `NODE_ENV` ([#387])
@@ -69,3 +73,4 @@
 [#348]: https://github.com/godaddy/gasket/pull/348
 [#370]: https://github.com/godaddy/gasket/pull/370
 [#387]: https://github.com/godaddy/gasket/pull/387
+[#457]: https://github.com/godaddy/gasket/pull/457
