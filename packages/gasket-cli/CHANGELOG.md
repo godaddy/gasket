@@ -3,6 +3,7 @@
 ### 6.34.4
 
 - Upgrade eslint-plugin-unicorn v43 ([#436])
+- Upgrade sinon to v14 ([#460])
 
 ### 6.34.3
 
@@ -408,3 +409,4 @@ upon `gasket create`
 [#437]: https://github.com/godaddy/gasket/pull/437
 [#439]: https://github.com/godaddy/gasket/pull/439
 [#442]: https://github.com/godaddy/gasket/pull/442
+[#460]: https://github.com/godaddy/gasket/pull/460

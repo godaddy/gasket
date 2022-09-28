@@ -3,6 +3,7 @@
 ### 6.34.4
 
 - Upgrade eslint-plugin-unicorn v43 ([#436])
+- Upgrade sinon to v14 ([#460])
 - Avoid potential overwriting of custom config state
 
 ### 6.20.4
@@ -56,3 +57,4 @@
 [#348]: https://github.com/godaddy/gasket/pull/348
 [#359]: https://github.com/godaddy/gasket/pull/359
 [#436]: https://github.com/godaddy/gasket/pull/436
+[#460]: https://github.com/godaddy/gasket/pull/460
