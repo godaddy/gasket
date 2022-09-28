@@ -1,5 +1,9 @@
 # `@gasket/plugin-workbox`
 
+### 6.34.2
+
+- Upgrade eslint-plugin-jest ([#457])
+
 ### 6.30.0
 
 - Support fastify ([#397])
@@ -52,3 +56,4 @@
 [#266]: https://github.com/godaddy/gasket/pull/266
 [#311]: https://github.com/godaddy/gasket/pull/311
 [#397]: https://github.com/godaddy/gasket/pull/397
+[#457]: https://github.com/godaddy/gasket/pull/457

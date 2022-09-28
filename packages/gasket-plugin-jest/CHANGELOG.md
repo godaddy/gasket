@@ -1,5 +1,9 @@
 # `@gasket/plugin-jest`
 
+### 6.34.2
+
+- Upgrade eslint-plugin-jest ([#457])
+
 ### 6.17.1
 
 - Update glob path from `__dirname` ([#337])
@@ -50,3 +54,4 @@
 [#324]: https://github.com/godaddy/gasket/pull/324
 [#334]: https://github.com/godaddy/gasket/pull/334
 [#337]: https://github.com/godaddy/gasket/pull/337
+[#457]: https://github.com/godaddy/gasket/pull/457

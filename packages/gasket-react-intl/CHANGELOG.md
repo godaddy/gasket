@@ -1,5 +1,9 @@
 # `@gasket/react-intl`
 
+### 6.34.2
+
+- Upgrade jsdom to v20 ([#440])
+
 ### 6.34.1
 
 - Fix types ([#452])
@@ -165,5 +169,6 @@
 [#384]: https://github.com/godaddy/gasket/pull/384
 [#401]: https://github.com/godaddy/gasket/pull/401
 [#415]: https://github.com/godaddy/gasket/pull/415
+[#440]: https://github.com/godaddy/gasket/pull/440
 [#447]: https://github.com/godaddy/gasket/pull/447
 [#452]: https://github.com/godaddy/gasket/pull/452
