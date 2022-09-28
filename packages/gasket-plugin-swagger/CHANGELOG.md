@@ -1,5 +1,9 @@
 # `@gasket/plugin-swagger`
 
+### 6.34.3
+
+- Upgrade mocha v10 ([#442])
+
 ### 6.31.0
 
 - Support fastify ([#404])
@@ -42,3 +46,4 @@
 [#311]: https://github.com/godaddy/gasket/pull/311
 [#319]: https://github.com/godaddy/gasket/pull/319
 [#404]: https://github.com/godaddy/gasket/pull/404
+[#442]: https://github.com/godaddy/gasket/pull/442

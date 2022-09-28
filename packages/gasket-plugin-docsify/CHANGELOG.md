@@ -1,5 +1,9 @@
 # `@gasket/plugin-docsify`
 
+### 6.34.3
+
+- Upgrade mocha v10 ([#442])
+
 ### 6.11.2
 
 - Use fs.promises and upgrade mkdirp ([#319])
@@ -39,5 +43,6 @@
 [#137]:https://github.com/godaddy/gasket/pull/137
 [#311]:https://github.com/godaddy/gasket/pull/311
 [#319]: https://github.com/godaddy/gasket/pull/319
+[#442]: https://github.com/godaddy/gasket/pull/442
 
 [mermaid]:https://mermaid-js.github.io/

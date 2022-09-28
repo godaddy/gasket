@@ -1,5 +1,9 @@
 # `@gasket/plugin-lint`
 
+### 6.34.3
+
+- Upgrade mocha v10 ([#442])
+
 ### 6.17.4
 
 - Fix to include eslint-plugin-react-intl as devDependency ([#342])
@@ -88,3 +92,4 @@
 [#340]: https://github.com/godaddy/gasket/pull/340
 [#341]: https://github.com/godaddy/gasket/pull/341
 [#342]: https://github.com/godaddy/gasket/pull/342
+[#442]: https://github.com/godaddy/gasket/pull/442

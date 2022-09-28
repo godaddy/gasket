@@ -1,5 +1,9 @@
 # `@gasket/plugin-https`
 
+### 6.34.3
+
+- Upgrade mocha v10 ([#442])
+
 ### 6.34.2
 
 - Upgrade eslint-plugin-jest ([#457])
@@ -76,6 +80,7 @@
 [#412]: https://github.com/godaddy/gasket/pull/412
 [#433]: https://github.com/godaddy/gasket/pull/433
 [#457]: https://github.com/godaddy/gasket/pull/457
+[#442]: https://github.com/godaddy/gasket/pull/442
 
 [terminus]: https://github.com/godaddy/terminus
 [create-servers]: https://github.com/http-party/create-servers

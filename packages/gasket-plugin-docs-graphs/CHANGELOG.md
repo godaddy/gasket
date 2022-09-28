@@ -1,5 +1,9 @@
 # `@gasket/plugin-docs-graph`
 
+### 6.34.3
+
+- Upgrade mocha v10 ([#442])
+
 ### 6.26.2
 
 - Fix syntax error with the deprecation note in the lifecycle diagram ([#386])
@@ -26,3 +30,4 @@
 [#319]: https://github.com/godaddy/gasket/pull/319
 [#376]: https://github.com/godaddy/gasket/pull/376
 [#386]: https://github.com/godaddy/gasket/pull/386
+[#442]: https://github.com/godaddy/gasket/pull/442

@@ -1,5 +1,9 @@
 # `@gasket/plugin-express`
 
+### 6.34.3
+
+- Upgrade mocha v10 ([#442])
+
 ### 6.33.1
 
 - Fix ability to use async `middleware` hooks ([#444])
@@ -56,3 +60,4 @@
 [#311]: https://github.com/godaddy/gasket/pull/311
 [#337]: https://github.com/godaddy/gasket/pull/337
 [#444]: https://github.com/godaddy/gasket/pull/444
+[#442]: https://github.com/godaddy/gasket/pull/442

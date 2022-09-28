@@ -1,5 +1,9 @@
 # `@gasket/plugin-webpack`
 
+### 6.34.3
+
+- Upgrade mocha v10 ([#442])
+
 ### 6.24.2
 
 - Fix invalid lifecycle names which was causing the lifecycle diagram to get a syntax error. ([#376])
@@ -57,3 +61,4 @@
 [#303]: https://github.com/godaddy/gasket/pull/303
 [#311]: https://github.com/godaddy/gasket/pull/311
 [#376]: https://github.com/godaddy/gasket/pull/376
+[#442]: https://github.com/godaddy/gasket/pull/442
