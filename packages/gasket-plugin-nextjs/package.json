@@ -56,6 +56,7 @@
     "babel-eslint": "^10.1.0",
     "eslint": "^8.7.0",
     "eslint-config-godaddy": "^6.0.0",
+    "eslint-config-godaddy-react": "^8.0.0",
     "eslint-plugin-json": "^3.1.0",
     "eslint-plugin-mocha": "^10.0.3",
     "eslint-plugin-unicorn": "^43.0.0",
@@ -75,9 +76,14 @@
     "react": "^16 || ^17",
     "react-dom": "^16 || ^17"
   },
+  "eslintIgnore": [
+    "generator/redux/redux/store.js",
+    "generator/app/pages/_app.js",
+    "*.d.ts"
+  ],
   "eslintConfig": {
     "extends": [
-      "godaddy-react"
+      "godaddy"
     ],
     "globals": {
       "expect": "readonly"
@@ -87,13 +93,14 @@
     ],
     "rules": {
       "unicorn/filename-case": "error"
-    }
+    },
+    "overrides": [
+      {
+        "files": [ "generator/**/*.js" ],
+        "extends": ["godaddy-react"]
+      }
+    ]
   },
-  "eslintIgnore": [
-    "generator/redux/redux/store.js",
-    "generator/app/pages/_app.js",
-    "*.d.ts"
-  ],
   "babel": {
     "presets": [
       "@babel/preset-react"
