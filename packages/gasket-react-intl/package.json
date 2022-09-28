@@ -1,6 +1,6 @@
 {
   "name": "@gasket/react-intl",
-  "version": "6.34.3",
+  "version": "6.34.4",
   "description": "React component library to enable localization for gasket apps.",
   "main": "lib",
   "browser": "lib",
@@ -45,9 +45,9 @@
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-react-intl",
   "dependencies": {
     "@babel/runtime": "^7.12.5",
-    "@gasket/data": "^6.34.3",
-    "@gasket/fetch": "^6.34.3",
-    "@gasket/helper-intl": "^6.34.3",
+    "@gasket/data": "^6.34.4",
+    "@gasket/fetch": "^6.34.4",
+    "@gasket/helper-intl": "^6.34.4",
     "hoist-non-react-statics": "^2.5.0",
     "lodash.merge": "^4.6.0",
     "prop-types": "^15.7.2"
@@ -73,7 +73,7 @@
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-mocha": "^10.0.3",
     "eslint-plugin-react": "^7.22.0",
-    "eslint-plugin-unicorn": "^40.1.0",
+    "eslint-plugin-unicorn": "^43.0.0",
     "intl": "^1.2.5",
     "jsdom": "^20.0.0",
     "mocha": "^10.0.0",
@@ -81,14 +81,14 @@
     "proxyquire": "^2.1.3",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-intl": "^5.10.13",
+    "react-intl": "^6.0.0",
     "react-redux": "^7.1.0",
-    "setup-env": "^1.2.2",
-    "sinon": "^12.0.1"
+    "setup-env": "^2.0.0",
+    "sinon": "^14.0.0"
   },
   "peerDependencies": {
     "@gasket/plugin-intl": "^6.0.0",
-    "react-intl": ">=4.0.0 <6.0.0"
+    "react-intl": "<7.0.0"
   },
   "eslintConfig": {
     "extends": [

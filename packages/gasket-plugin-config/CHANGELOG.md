@@ -1,5 +1,9 @@
 # `@gasket/plugin-config`
 
+### 6.34.4
+
+- Upgrade eslint-plugin-unicorn v43 ([#436])
+- Upgrade sinon to v14 ([#460])
 - Avoid potential overwriting of custom config state
 
 ### 6.20.4
@@ -13,7 +17,7 @@
 ### 6.10.0
 
 - TypeScript definitions for config & lifecycles ([#311])
-- 
+-
 ### 6.0.0
 
 - Allow `public` app config to be available via `@gasket/data` ([#231])
@@ -52,3 +56,5 @@
 [#311]: https://github.com/godaddy/gasket/pull/311
 [#348]: https://github.com/godaddy/gasket/pull/348
 [#359]: https://github.com/godaddy/gasket/pull/359
+[#436]: https://github.com/godaddy/gasket/pull/436
+[#460]: https://github.com/godaddy/gasket/pull/460

@@ -1,5 +1,9 @@
 # `@gasket/plugin-docs-graph`
 
+### 6.34.4
+
+- Upgrade eslint-plugin-unicorn v43 ([#436])
+
 ### 6.34.3
 
 - Upgrade mocha v10 ([#442])
@@ -30,4 +34,5 @@
 [#319]: https://github.com/godaddy/gasket/pull/319
 [#376]: https://github.com/godaddy/gasket/pull/376
 [#386]: https://github.com/godaddy/gasket/pull/386
+[#436]: https://github.com/godaddy/gasket/pull/436
 [#442]: https://github.com/godaddy/gasket/pull/442

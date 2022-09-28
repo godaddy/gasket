@@ -1,5 +1,10 @@
 # `@gasket/plugin-docsify`
 
+### 6.34.4
+
+- Upgrade eslint-plugin-unicorn v43 ([#436])
+- Upgrade sinon to v14 ([#460])
+
 ### 6.34.3
 
 - Upgrade mocha v10 ([#442])
@@ -43,6 +48,8 @@
 [#137]:https://github.com/godaddy/gasket/pull/137
 [#311]:https://github.com/godaddy/gasket/pull/311
 [#319]: https://github.com/godaddy/gasket/pull/319
+[#436]: https://github.com/godaddy/gasket/pull/436
 [#442]: https://github.com/godaddy/gasket/pull/442
+[#460]: https://github.com/godaddy/gasket/pull/460
 
 [mermaid]:https://mermaid-js.github.io/

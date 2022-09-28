@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-lifecycle",
-  "version": "6.34.3",
+  "version": "6.34.4",
   "description": "Allows a gasket/ directory to be used for lifecycle hooks in applications.",
   "main": "lib",
   "files": [
@@ -40,13 +40,13 @@
     "lodash.camelcase": "^4.3.0"
   },
   "devDependencies": {
-    "@gasket/engine": "^6.34.2",
+    "@gasket/engine": "^6.34.4",
     "assume": "^2.3.0",
     "eslint": "^8.7.0",
     "eslint-config-godaddy": "^6.0.0",
     "eslint-plugin-json": "^3.1.0",
     "eslint-plugin-mocha": "^10.0.3",
-    "eslint-plugin-unicorn": "^40.1.0",
+    "eslint-plugin-unicorn": "^43.0.0",
     "mocha": "^10.0.0",
     "nyc": "^15.1.0"
   },

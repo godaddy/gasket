@@ -3,6 +3,8 @@
 ### 6.34.3
 
 - Upgrade mocha v10 ([#442])
+- Upgrade setup-env to v2 ([#459])
+- Upgrade sinon to v14 ([#460])
 
 ### 6.34.2
 
@@ -43,3 +45,5 @@
 [#394]: https://github.com/godaddy/gasket/pull/394
 [#440]: https://github.com/godaddy/gasket/pull/440
 [#442]: https://github.com/godaddy/gasket/pull/442
+[#459]: https://github.com/godaddy/gasket/pull/459
+[#460]: https://github.com/godaddy/gasket/pull/460

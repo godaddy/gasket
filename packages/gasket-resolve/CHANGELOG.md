@@ -1,5 +1,9 @@
 # `@gasket/resolve`
 
+### 6.34.4
+
+- Upgrade eslint-plugin-unicorn v43 ([#436])
+
 ### 6.34.2
 
 - Upgrade eslint-plugin-jest, update test methods to use canonical names ([#457])
@@ -85,6 +89,7 @@
 [#395]: https://github.com/godaddy/gasket/pull/395
 [#396]: https://github.com/godaddy/gasket/pull/396
 [#405]: https://github.com/godaddy/gasket/pull/405
+[#436]: https://github.com/godaddy/gasket/pull/436
 [#457]: https://github.com/godaddy/gasket/pull/457
 
 [Loader]:/packages/gasket-resolve/docs/api.md#loader

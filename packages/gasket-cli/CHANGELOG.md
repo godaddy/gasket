@@ -1,5 +1,10 @@
 # `@gasket/cli`
 
+### 6.34.4
+
+- Upgrade eslint-plugin-unicorn v43 ([#436])
+- Upgrade sinon to v14 ([#460])
+
 ### 6.34.3
 
 - Upgrade mocha v10 ([#442])
@@ -400,6 +405,8 @@ upon `gasket create`
 [#393]: https://github.com/godaddy/gasket/pull/393
 [#396]: https://github.com/godaddy/gasket/pull/396
 [#410]: https://github.com/godaddy/gasket/pull/410
+[#436]: https://github.com/godaddy/gasket/pull/436
 [#437]: https://github.com/godaddy/gasket/pull/437
 [#439]: https://github.com/godaddy/gasket/pull/439
 [#442]: https://github.com/godaddy/gasket/pull/442
+[#460]: https://github.com/godaddy/gasket/pull/460

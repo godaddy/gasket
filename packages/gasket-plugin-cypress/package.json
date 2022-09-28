@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-cypress",
-  "version": "6.24.0",
+  "version": "6.34.4",
   "description": "Integrates Cypress based testing into your Gasket application",
   "main": "lib",
   "scripts": {
@@ -34,7 +34,7 @@
     "cypress": "^9.6.0",
     "eslint": "^8.7.0",
     "eslint-config-godaddy": "^6.0.0",
-    "eslint-plugin-unicorn": "^40.1.0",
+    "eslint-plugin-unicorn": "^43.0.0",
     "jest": "^27.4.3",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",

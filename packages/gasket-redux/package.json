@@ -1,6 +1,6 @@
 {
   "name": "@gasket/redux",
-  "version": "6.34.3",
+  "version": "6.34.4",
   "description": "Gasket Redux Configuration",
   "main": "lib",
   "browser": "lib",
@@ -42,7 +42,7 @@
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-redux",
   "dependencies": {
     "@babel/runtime": "^7.12.5",
-    "@gasket/log": "^6.34.3",
+    "@gasket/log": "^6.34.4",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0"
   },
@@ -61,7 +61,7 @@
     "eslint-plugin-json": "^3.1.0",
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-mocha": "^10.0.3",
-    "eslint-plugin-unicorn": "^40.1.0",
+    "eslint-plugin-unicorn": "^43.0.0",
     "jest": "^27.4.3",
     "redux": "^4.0.5"
   },
