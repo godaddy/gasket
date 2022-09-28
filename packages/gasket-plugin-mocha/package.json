@@ -60,13 +60,8 @@
     "nyc": "^15.1.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-<<<<<<< HEAD
-    "setup-env": "^1.2.2",
-    "sinon": "^14.0.0"
-=======
-    "setup-env": "^2.0.0",
-    "sinon": "^12.0.1"
->>>>>>> f86a93c0de1503678831cc98aad4dfc20601866b
+    "sinon": "^14.0.0",
+    "setup-env": "^2.0.0"
   },
   "eslintConfig": {
     "extends": [
