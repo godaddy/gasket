@@ -1,5 +1,10 @@
 # `@gasket/plugin-fastify`
 
+### 6.34.4
+
+- Upgrade eslint-plugin-unicorn v43 ([#436])
+- Upgrade sinon to v14 ([#460])
+
 ### 6.34.3
 
 - Upgrade mocha v10 ([#442])
@@ -40,5 +45,7 @@ Enable middleware support ([#172])
 [#250]: https://github.com/godaddy/gasket/pull/250
 [#255]: https://github.com/godaddy/gasket/pull/255
 [#311]: https://github.com/godaddy/gasket/pull/311
+[#436]: https://github.com/godaddy/gasket/pull/436
 [#444]: https://github.com/godaddy/gasket/pull/444
 [#442]: https://github.com/godaddy/gasket/pull/442
+[#460]: https://github.com/godaddy/gasket/pull/460

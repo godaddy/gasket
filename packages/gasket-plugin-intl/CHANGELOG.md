@@ -1,5 +1,11 @@
 # `@gasket/plugin-intl`
 
+### 6.34.4
+
+- Upgrade eslint-plugin-unicorn v43 ([#436])
+- Upgrade react-intl to v6 ([#451])
+- Upgrade sinon to v14 ([#460])
+
 ### 6.34.3
 
 - Upgrade mocha v10 ([#442])
@@ -188,4 +194,7 @@
 [#366]: https://github.com/godaddy/gasket/pull/366
 [#400]: https://github.com/godaddy/gasket/pull/400
 [#403]: https://github.com/godaddy/gasket/pull/403
+[#436]: https://github.com/godaddy/gasket/pull/436
 [#442]: https://github.com/godaddy/gasket/pull/442
+[#451]: https://github.com/godaddy/gasket/pull/451
+[#460]: https://github.com/godaddy/gasket/pull/460

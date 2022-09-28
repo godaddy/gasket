@@ -1,5 +1,9 @@
 # `@gasket/utils`
 
+### 6.34.4
+
+- Upgrade eslint-plugin-unicorn v43 ([#436])
+
 ### 6.20.0
 
 - Add `applyConfigOverrides` to allow command overrides in config ([#348])
@@ -61,3 +65,4 @@
 [#311]: https://github.com/godaddy/gasket/pull/311
 [#331]: https://github.com/godaddy/gasket/pull/331
 [#348]: https://github.com/godaddy/gasket/pull/348
+[#436]: https://github.com/godaddy/gasket/pull/436

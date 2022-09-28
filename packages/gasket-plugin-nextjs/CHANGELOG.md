@@ -1,5 +1,11 @@
 # `@gasket/plugin-nextjs`
 
+### 6.34.4
+
+- Upgrade eslint-plugin-unicorn v43 ([#436])
+- Upgrade next-redux-wrapper to v8 ([#443])
+- Upgrade sinon to v14 ([#460])
+
 ### 6.34.3
 
 - Upgrade mocha v10 ([#442])
@@ -207,5 +213,8 @@
 [#413]: https://github.com/godaddy/gasket/pull/413
 [#416]: https://github.com/godaddy/gasket/pull/416
 [#433]: https://github.com/godaddy/gasket/pull/433
+[#436]: https://github.com/godaddy/gasket/pull/436
 [#445]: https://github.com/godaddy/gasket/pull/445
 [#442]: https://github.com/godaddy/gasket/pull/442
+[#443]: https://github.com/godaddy/gasket/pull/443
+[#460]: https://github.com/godaddy/gasket/pull/460
