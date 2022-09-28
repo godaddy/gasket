@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-docs",
-  "version": "6.34.2",
+  "version": "6.34.3",
   "description": "Centralize doc files from plugins and modules",
   "main": "lib",
   "types": "lib/index.d.ts",
@@ -49,7 +49,7 @@
   },
   "devDependencies": {
     "@gasket/engine": "^6.34.2",
-    "@gasket/plugin-metadata": "^6.34.2",
+    "@gasket/plugin-metadata": "^6.34.3",
     "@godaddy/dmd": "^1.0.0",
     "assume": "^2.3.0",
     "assume-sinon": "^1.1.0",

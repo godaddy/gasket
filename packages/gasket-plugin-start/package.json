@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-start",
-  "version": "6.34.2",
+  "version": "6.34.3",
   "description": "Adds commands for building and starting Gasket apps",
   "main": "lib",
   "types": "lib/index.d.ts",
