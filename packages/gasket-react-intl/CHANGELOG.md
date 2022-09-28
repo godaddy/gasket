@@ -4,6 +4,7 @@
 
 - Upgrade eslint-plugin-unicorn v43 ([#436])
 - Upgrade react-intl to v6 ([#451])
+- Upgrade setup-env to v2 ([#459])
 
 ### 6.34.2
 
@@ -179,3 +180,4 @@
 [#447]: https://github.com/godaddy/gasket/pull/447
 [#451]: https://github.com/godaddy/gasket/pull/451
 [#452]: https://github.com/godaddy/gasket/pull/452
+[#459]: https://github.com/godaddy/gasket/pull/459
