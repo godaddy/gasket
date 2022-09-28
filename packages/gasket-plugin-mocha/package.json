@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-mocha",
-  "version": "6.24.0",
+  "version": "6.34.2",
   "description": "Integrates mocha based testing in to your Gasket application",
   "main": "lib",
   "files": [
@@ -55,8 +55,8 @@
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-unicorn": "^40.1.0",
     "global-jsdom": "^8.4.0",
-    "jsdom": "^19.0.0",
-    "mocha": "^10.0.0",
+    "jsdom": "^20.0.0",
+    "mocha": "^9.1.4",
     "nyc": "^15.1.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
