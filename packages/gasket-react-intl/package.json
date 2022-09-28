@@ -83,8 +83,8 @@
     "react-dom": "^17.0.1",
     "react-intl": "^6.0.0",
     "react-redux": "^7.1.0",
-    "setup-env": "^1.2.2",
-    "sinon": "^14.0.0"
+    "sinon": "^14.0.0",
+    "setup-env": "^2.0.0"
   },
   "peerDependencies": {
     "@gasket/plugin-intl": "^6.0.0",
