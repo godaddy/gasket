@@ -1,5 +1,9 @@
 # `@gasket/plugin-https`
 
+### 6.34.2
+
+- Upgrade eslint-plugin-jest ([#457])
+
 ### 6.33.1
 
 - Fix for port fallback ([#433])
@@ -71,6 +75,7 @@
 [#315]: https://github.com/godaddy/gasket/pull/315
 [#412]: https://github.com/godaddy/gasket/pull/412
 [#433]: https://github.com/godaddy/gasket/pull/433
+[#457]: https://github.com/godaddy/gasket/pull/457
 
 [terminus]: https://github.com/godaddy/terminus
 [create-servers]: https://github.com/http-party/create-servers

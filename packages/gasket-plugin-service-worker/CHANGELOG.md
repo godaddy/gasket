@@ -1,5 +1,9 @@
 # `@gasket/plugin-service-worker`
 
+### 6.34.2
+
+- Upgrade eslint-plugin-jest ([#457])
+
 ### 6.24.0
 
 - Add Fastify support ([#365])
@@ -57,3 +61,4 @@
 [#319]: https://github.com/godaddy/gasket/pull/319
 [#347]: https://github.com/godaddy/gasket/pull/347
 [#365]: https://github.com/godaddy/gasket/pull/365
+[#457]: https://github.com/godaddy/gasket/pull/457

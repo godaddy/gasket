@@ -1,5 +1,9 @@
 # `@gasket/plugin-metrics`
 
+### 6.34.2
+
+- Upgrade git-url-parse package ([#449])
+
 ### 6.10.0
 
 - TypeScript definitions for config & lifecycles ([#311])
@@ -20,3 +24,4 @@
 
 [#247]: https://github.com/godaddy/gasket/pull/247
 [#311]: https://github.com/godaddy/gasket/pull/311
+[#449]: https://github.com/godaddy/gasket/pull/449

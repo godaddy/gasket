@@ -1,5 +1,9 @@
 # `@gasket/resolve`
 
+### 6.34.2
+
+- Upgrade eslint-plugin-jest, update test methods to use canonical names ([#457])
+
 ### 6.30.2
 
 - Fix TS options type ([#405])
@@ -81,5 +85,6 @@
 [#395]: https://github.com/godaddy/gasket/pull/395
 [#396]: https://github.com/godaddy/gasket/pull/396
 [#405]: https://github.com/godaddy/gasket/pull/405
+[#457]: https://github.com/godaddy/gasket/pull/457
 
 [Loader]:/packages/gasket-resolve/docs/api.md#loader

@@ -1,5 +1,9 @@
 # `@gasket/redux`
 
+### 6.34.2
+
+- Upgrade eslint-plugin-jest ([#457])
+
 ### 6.0.8
 
 - Add default placeholder for `config` in the initial state ([#261])
@@ -73,3 +77,4 @@
 [#247]: https://github.com/godaddy/gasket/pull/247
 [#259]: https://github.com/godaddy/gasket/pull/259
 [#261]: https://github.com/godaddy/gasket/pull/261
+[#457]: https://github.com/godaddy/gasket/pull/457
