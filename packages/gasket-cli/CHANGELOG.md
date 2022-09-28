@@ -3,6 +3,7 @@
 ### 6.34.2
 
 - Upgrade fancy-test to v2 ([#437])
+- fetch-mock upgrade v9 ([#439])
 
 ### 6.32.0
 
@@ -396,3 +397,4 @@ upon `gasket create`
 [#396]: https://github.com/godaddy/gasket/pull/396
 [#410]: https://github.com/godaddy/gasket/pull/410
 [#437]: https://github.com/godaddy/gasket/pull/437
+[#439]: https://github.com/godaddy/gasket/pull/439
