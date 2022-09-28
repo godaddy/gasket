@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-git",
-  "version": "6.26.1",
+  "version": "6.34.2",
   "description": "Adds git support to your application",
   "main": "lib",
   "files": [
@@ -38,7 +38,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-git",
   "dependencies": {
-    "@gasket/utils": "^6.26.1"
+    "@gasket/utils": "^6.34.2"
   },
   "devDependencies": {
     "assume": "^2.3.0",
