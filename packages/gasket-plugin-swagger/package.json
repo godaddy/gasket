@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-swagger",
-  "version": "6.34.2",
+  "version": "6.34.3",
   "description": "Generate and serve swagger docs",
   "main": "lib",
   "types": "lib/index.d.ts",
