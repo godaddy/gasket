@@ -1,5 +1,9 @@
 # `@gasket/plugin-nextjs`
 
+### 6.34.3
+
+- Upgrade mocha v10 ([#442])
+
 ### 6.33.1
 
 - Fix for port fallback ([#433])
@@ -204,3 +208,4 @@
 [#416]: https://github.com/godaddy/gasket/pull/416
 [#433]: https://github.com/godaddy/gasket/pull/433
 [#445]: https://github.com/godaddy/gasket/pull/445
+[#442]: https://github.com/godaddy/gasket/pull/442

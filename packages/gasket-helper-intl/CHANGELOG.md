@@ -1,5 +1,9 @@
 # `@gasket/helper-intl`
 
+### 6.34.3
+
+- Upgrade mocha v10 ([#442])
+
 ### 6.34.0
 
 - Add support for contextual thunk for locales path ([#447])
@@ -36,3 +40,4 @@
 [#276]: https://github.com/godaddy/gasket/pull/276
 [#383]: https://github.com/godaddy/gasket/pull/383
 [#447]: https://github.com/godaddy/gasket/pull/447
+[#442]: https://github.com/godaddy/gasket/pull/442

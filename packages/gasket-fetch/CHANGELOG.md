@@ -1,5 +1,9 @@
 # `@gasket/fetch`
 
+### 6.34.3
+
+- Upgrade mocha v10 ([#442])
+
 ### 6.34.2
 
 - Upgrade jsdom to v20 ([#440])
@@ -38,3 +42,4 @@
 [#372]: https://github.com/godaddy/gasket/pull/372
 [#394]: https://github.com/godaddy/gasket/pull/394
 [#440]: https://github.com/godaddy/gasket/pull/440
+[#442]: https://github.com/godaddy/gasket/pull/442

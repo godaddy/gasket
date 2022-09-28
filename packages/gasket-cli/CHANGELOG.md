@@ -1,5 +1,9 @@
 # `@gasket/cli`
 
+### 6.34.3
+
+- Upgrade mocha v10 ([#442])
+
 ### 6.34.2
 
 - Upgrade fancy-test to v2 ([#437])
@@ -398,3 +402,4 @@ upon `gasket create`
 [#410]: https://github.com/godaddy/gasket/pull/410
 [#437]: https://github.com/godaddy/gasket/pull/437
 [#439]: https://github.com/godaddy/gasket/pull/439
+[#442]: https://github.com/godaddy/gasket/pull/442

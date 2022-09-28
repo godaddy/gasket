@@ -1,5 +1,9 @@
 # `@gasket/plugin-log`
 
+### 6.34.3
+
+- Upgrade mocha v10 ([#442])
+
 ### 6.10.0
 
 - TypeScript definitions for config & lifecycles ([#311])
@@ -70,3 +74,4 @@
 [#247]: https://github.com/godaddy/gasket/pull/247
 [#279]: https://github.com/godaddy/gasket/pull/279
 [#311]: https://github.com/godaddy/gasket/pull/311
+[#442]: https://github.com/godaddy/gasket/pull/442

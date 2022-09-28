@@ -1,5 +1,9 @@
 # `@gasket/plugin-command`
 
+### 6.34.3
+
+- Upgrade mocha v10 ([#442])
+
 ### 6.34.2
 
 - Upgrade eslint-plugin-jest ([#457])
@@ -74,3 +78,4 @@
 [#370]: https://github.com/godaddy/gasket/pull/370
 [#387]: https://github.com/godaddy/gasket/pull/387
 [#457]: https://github.com/godaddy/gasket/pull/457
+[#442]: https://github.com/godaddy/gasket/pull/442
