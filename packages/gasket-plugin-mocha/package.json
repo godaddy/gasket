@@ -49,7 +49,7 @@
     "chai": "^4.2.0",
     "chai-spies": "^1.0.0",
     "eslint": "^8.7.0",
-    "eslint-config-godaddy-react": "^8.0.0",
+    "eslint-config-godaddy": "^6.0.0",
     "eslint-plugin-json": "^3.1.0",
     "eslint-plugin-mocha": "^10.0.3",
     "eslint-plugin-react": "^7.22.0",
@@ -65,7 +65,7 @@
   },
   "eslintConfig": {
     "extends": [
-      "godaddy-react"
+      "godaddy"
     ],
     "plugins": [
       "unicorn"

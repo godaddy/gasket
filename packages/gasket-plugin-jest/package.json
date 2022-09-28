@@ -42,7 +42,7 @@
     "@testing-library/react": "^12.1.2",
     "babel-eslint": "^10.1.0",
     "eslint": "^8.7.0",
-    "eslint-config-godaddy-react": "^8.0.0",
+    "eslint-config-godaddy": "^6.0.0",
     "eslint-plugin-jest": "^25.7.0",
     "eslint-plugin-json": "^3.1.0",
     "eslint-plugin-jsx-a11y": "^6.2.1",
@@ -55,7 +55,7 @@
   },
   "eslintConfig": {
     "extends": [
-      "godaddy-react",
+      "godaddy",
       "plugin:jest/recommended"
     ],
     "plugins": [
