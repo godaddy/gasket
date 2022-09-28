@@ -1,5 +1,9 @@
 # `@gasket/plugin-redux`
 
+### 6.34.4
+
+- Upgrade eslint-plugin-unicorn v43 ([#436])
+
 ### 6.34.2
 
 - Upgrade eslint-plugin-jest ([#457])
@@ -72,4 +76,5 @@
 [#311]: https://github.com/godaddy/gasket/pull/311
 [#337]: https://github.com/godaddy/gasket/pull/337
 [#347]: https://github.com/godaddy/gasket/pull/347
+[#436]: https://github.com/godaddy/gasket/pull/436
 [#457]: https://github.com/godaddy/gasket/pull/457

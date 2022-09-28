@@ -1,5 +1,9 @@
 # `@gasket/plugin-docusaurus`
 
+### 6.34.4
+
+- Upgrade eslint-plugin-unicorn v43 ([#436])
+
 ### 6.34.3
 
 - Upgrade mocha v10 ([#442])
@@ -21,4 +25,5 @@
 [#362]: https://github.com/godaddy/gasket/pull/362
 [#364]: https://github.com/godaddy/gasket/pull/364
 [#367]: https://github.com/godaddy/gasket/pull/367
+[#436]: https://github.com/godaddy/gasket/pull/436
 [#442]: https://github.com/godaddy/gasket/pull/442
