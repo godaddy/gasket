@@ -62,7 +62,7 @@
     "lodash.merge": "^4.6.0",
     "mocha": "^10.0.0",
     "next": "^12.0.8",
-    "next-redux-wrapper": "^7.0.5",
+    "next-redux-wrapper": "^8.0.0",
     "nyc": "^15.1.0",
     "prop-types": "^15.7.2",
     "proxyquire": "^2.1.3",
