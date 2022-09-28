@@ -1,5 +1,9 @@
 # `@gasket/plugin-https`
 
+### 6.34.4
+
+- Upgrade eslint-plugin-unicorn v43 ([#436])
+
 ### 6.34.3
 
 - Upgrade mocha v10 ([#442])
@@ -79,6 +83,7 @@
 [#315]: https://github.com/godaddy/gasket/pull/315
 [#412]: https://github.com/godaddy/gasket/pull/412
 [#433]: https://github.com/godaddy/gasket/pull/433
+[#436]: https://github.com/godaddy/gasket/pull/436
 [#457]: https://github.com/godaddy/gasket/pull/457
 [#442]: https://github.com/godaddy/gasket/pull/442
 

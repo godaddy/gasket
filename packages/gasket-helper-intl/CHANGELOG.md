@@ -1,5 +1,9 @@
 # `@gasket/helper-intl`
 
+### 6.34.4
+
+- Upgrade eslint-plugin-unicorn v43 ([#436])
+
 ### 6.34.3
 
 - Upgrade mocha v10 ([#442])
@@ -39,5 +43,6 @@
 [#268]: https://github.com/godaddy/gasket/pull/268
 [#276]: https://github.com/godaddy/gasket/pull/276
 [#383]: https://github.com/godaddy/gasket/pull/383
+[#436]: https://github.com/godaddy/gasket/pull/436
 [#447]: https://github.com/godaddy/gasket/pull/447
 [#442]: https://github.com/godaddy/gasket/pull/442

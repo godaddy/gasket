@@ -1,5 +1,9 @@
 # `@gasket/engine`
 
+### 6.34.4
+
+- Upgrade eslint-plugin-unicorn v43 ([#436])
+
 ### 6.34.2
 
 - Upgrade eslint-plugin-jest ([#457])
@@ -95,6 +99,7 @@
 [#356]: https://github.com/godaddy/gasket/pull/356
 [#377]: https://github.com/godaddy/gasket/pull/377
 [#385]: https://github.com/godaddy/gasket/pull/385
+[#436]: https://github.com/godaddy/gasket/pull/436
 [#457]: https://github.com/godaddy/gasket/pull/457
 
 [Loader]:/packages/gasket-resolve/docs/api.md#loader
