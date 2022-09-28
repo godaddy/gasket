@@ -40,7 +40,7 @@
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-metrics",
   "dependencies": {
     "git-shizzle": "^0.1.0",
-    "git-url-parse": "^11.1.2"
+    "git-url-parse": "^13.1.0"
   },
   "devDependencies": {
     "@gasket/engine": "^6.26.1",
