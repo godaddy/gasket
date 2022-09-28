@@ -1,5 +1,9 @@
 # `@gasket/engine`
 
+### 6.34.2
+
+- Upgrade eslint-plugin-jest ([#457])
+
 ### 6.26.1
 
 - GasketEngine types tweaks ([#385])
@@ -91,5 +95,6 @@
 [#356]: https://github.com/godaddy/gasket/pull/356
 [#377]: https://github.com/godaddy/gasket/pull/377
 [#385]: https://github.com/godaddy/gasket/pull/385
+[#457]: https://github.com/godaddy/gasket/pull/457
 
 [Loader]:/packages/gasket-resolve/docs/api.md#loader

@@ -1,5 +1,9 @@
 # `@gasket/plugin-analyze`
 
+### 6.34.2
+
+- Upgrade eslint-plugin-jest ([#457])
+
 ### 6.20.3
 
 - Upgrade `webpack-bundle-analyzer` ([#354])
@@ -53,3 +57,4 @@
 [#311]: https://github.com/godaddy/gasket/pull/311
 [#347]: https://github.com/godaddy/gasket/pull/347
 [#354]: https://github.com/godaddy/gasket/pull/354
+[#457]: https://github.com/godaddy/gasket/pull/457

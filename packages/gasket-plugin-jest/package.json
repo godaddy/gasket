@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-jest",
-  "version": "6.24.0",
+  "version": "6.34.2",
   "description": "Integrated jest into your application.",
   "main": "lib",
   "files": [
@@ -43,7 +43,7 @@
     "babel-eslint": "^10.1.0",
     "eslint": "^8.7.0",
     "eslint-config-godaddy": "^6.0.0",
-    "eslint-plugin-jest": "^25.7.0",
+    "eslint-plugin-jest": "^27.0.0",
     "eslint-plugin-json": "^3.1.0",
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-mocha": "^10.0.3",

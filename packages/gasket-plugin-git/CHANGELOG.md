@@ -1,5 +1,9 @@
 # `@gasket/plugin-git`
 
+### 6.34.3
+
+- Upgrade mocha v10 ([#442])
+
 ### 6.18.0
 
 - Added gitignore property to context ([#344])
@@ -25,3 +29,4 @@
 
 [#247]: https://github.com/godaddy/gasket/pull/247
 [#344]: https://github.com/godaddy/gasket/pull/344
+[#442]: https://github.com/godaddy/gasket/pull/442

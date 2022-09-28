@@ -1,5 +1,13 @@
 # `@gasket/plugin-mocha`
 
+### 6.34.3
+
+- Upgrade mocha v10 ([#442])
+
+### 6.34.2
+
+- Upgrade jsdom to v20 ([#440])
+
 ### 6.17.1
 
 - Update glob path from `__dirname` ([#337])
@@ -60,3 +68,5 @@
 [#324]: https://github.com/godaddy/gasket/pull/324
 [#334]: https://github.com/godaddy/gasket/pull/334
 [#337]: https://github.com/godaddy/gasket/pull/337
+[#440]: https://github.com/godaddy/gasket/pull/440
+[#442]: https://github.com/godaddy/gasket/pull/442

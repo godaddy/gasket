@@ -157,7 +157,7 @@ describe('config', () => {
       mockReadDir.mockRejectedValue(error);
       await expect(
         utils.addUserPlugins({ root: '/path/to/app', plugins: { add: ['example'] } })
-      ).rejects.toThrowError(error);
+      ).rejects.toThrow(error);
     });
 
     it('ignores non-js files in plugins dir', async () => {

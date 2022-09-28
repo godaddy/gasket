@@ -1,5 +1,9 @@
 # `@gasket/plugin-docs`
 
+### 6.34.3
+
+- Upgrade mocha v10 ([#442])
+
 ### 6.27.1
 
 - Add support for lifecycles deprecated property in generated docs ([#391])
@@ -74,3 +78,4 @@
 [#375]: https://github.com/godaddy/gasket/pull/375
 [#379]: https://github.com/godaddy/gasket/pull/379
 [#391]: https://github.com/godaddy/gasket/pull/391
+[#442]: https://github.com/godaddy/gasket/pull/442

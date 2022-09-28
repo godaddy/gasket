@@ -1,5 +1,9 @@
 # `@gasket/plugin-redux`
 
+### 6.34.2
+
+- Upgrade eslint-plugin-jest ([#457])
+
 ### 6.19.0
 
 - Migrate `webpack` -> `webpackConfig` lifecycle ([#347])
@@ -68,3 +72,4 @@
 [#311]: https://github.com/godaddy/gasket/pull/311
 [#337]: https://github.com/godaddy/gasket/pull/337
 [#347]: https://github.com/godaddy/gasket/pull/347
+[#457]: https://github.com/godaddy/gasket/pull/457

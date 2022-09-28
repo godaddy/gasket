@@ -1,5 +1,9 @@
 # `@gasket/plugin-docusaurus`
 
+### 6.34.3
+
+- Upgrade mocha v10 ([#442])
+
 ### 6.24.2
 
 - Add `index.d.ts` type definitions
@@ -17,3 +21,4 @@
 [#362]: https://github.com/godaddy/gasket/pull/362
 [#364]: https://github.com/godaddy/gasket/pull/364
 [#367]: https://github.com/godaddy/gasket/pull/367
+[#442]: https://github.com/godaddy/gasket/pull/442

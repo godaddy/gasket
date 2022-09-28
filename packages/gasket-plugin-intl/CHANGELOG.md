@@ -1,5 +1,9 @@
 # `@gasket/plugin-intl`
 
+### 6.34.3
+
+- Upgrade mocha v10 ([#442])
+
 ### 6.30.1
 
 - Fix middleware hook handler ([#403])
@@ -184,3 +188,4 @@
 [#366]: https://github.com/godaddy/gasket/pull/366
 [#400]: https://github.com/godaddy/gasket/pull/400
 [#403]: https://github.com/godaddy/gasket/pull/403
+[#442]: https://github.com/godaddy/gasket/pull/442

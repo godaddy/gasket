@@ -167,7 +167,7 @@ describe('Plugin', () => {
 
       const { preboot } = plugin.hooks;
 
-      await expect(preboot(gasket)).rejects.toThrowError('An appEnvConfig lifecycle hook did not return a config object.');
+      await expect(preboot(gasket)).rejects.toThrow('An appEnvConfig lifecycle hook did not return a config object.');
     });
 
     it('does not swallow errors in buggy config files', () => {

@@ -1,5 +1,9 @@
 # `@gasket/plugin-lifecycle`
 
+### 6.34.3
+
+- Upgrade mocha v10 ([#442])
+
 ### 6.24.0
 
 - Support for `/src/lifecycles` ([#363])
@@ -43,3 +47,5 @@
 [#301]: https://github.com/godaddy/gasket/pull/301
 [#319]: https://github.com/godaddy/gasket/pull/319
 [#363]: https://github.com/godaddy/gasket/pull/363
+[#442]: https://github.com/godaddy/gasket/pull/442
+

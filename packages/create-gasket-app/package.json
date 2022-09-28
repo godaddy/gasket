@@ -1,6 +1,6 @@
 {
   "name": "create-gasket-app",
-  "version": "6.33.1",
+  "version": "6.34.3",
   "description": "starter pack for creating a gasket app",
   "main": "lib",
   "bin": {
@@ -31,7 +31,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/create-gasket-app",
   "dependencies": {
-    "@gasket/cli": "^6.33.1"
+    "@gasket/cli": "^6.34.3"
   },
   "devDependencies": {
     "assume": "^2.3.0",
@@ -42,7 +42,7 @@
     "eslint-plugin-json": "^3.1.0",
     "eslint-plugin-mocha": "^10.0.3",
     "eslint-plugin-unicorn": "^40.1.0",
-    "mocha": "^9.1.4",
+    "mocha": "^10.0.0",
     "nyc": "^15.1.0",
     "proxyquire": "^2.1.3",
     "sinon": "^12.0.1"

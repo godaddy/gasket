@@ -1,5 +1,9 @@
 # `@gasket/log`
 
+### 6.34.3
+
+- Upgrade mocha v10 ([#442])
+
 ### 6.30.0
 
 - Support enabling logging in production ([#402])
@@ -68,3 +72,4 @@
 [#247]: https://github.com/godaddy/gasket/pull/247
 [#279]: https://github.com/godaddy/gasket/pull/279
 [#402]: https://github.com/godaddy/gasket/pull/402
+[#442]: https://github.com/godaddy/gasket/pull/442

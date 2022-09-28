@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-metrics",
-  "version": "6.26.1",
+  "version": "6.34.3",
   "description": "Collect metrics for gasket commands",
   "main": "lib",
   "types": "lib/index.d.ts",
@@ -40,10 +40,10 @@
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-metrics",
   "dependencies": {
     "git-shizzle": "^0.1.0",
-    "git-url-parse": "^11.1.2"
+    "git-url-parse": "^13.1.0"
   },
   "devDependencies": {
-    "@gasket/engine": "^6.26.1",
+    "@gasket/engine": "^6.34.2",
     "assume": "^2.3.0",
     "assume-sinon": "^1.1.0",
     "eslint": "^8.7.0",
@@ -51,7 +51,7 @@
     "eslint-plugin-json": "^3.1.0",
     "eslint-plugin-mocha": "^10.0.3",
     "eslint-plugin-unicorn": "^40.1.0",
-    "mocha": "^9.1.4",
+    "mocha": "^10.0.0",
     "nyc": "^15.1.0",
     "proxyquire": "^2.1.3",
     "sinon": "^12.0.1"

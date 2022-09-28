@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-metadata",
-  "version": "6.30.2",
+  "version": "6.34.3",
   "description": "Adds metadata to gasket lifecycles",
   "main": "lib",
   "types": "lib/index.d.ts",
@@ -41,13 +41,13 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-metadata",
   "dependencies": {
-    "@gasket/resolve": "^6.30.2",
+    "@gasket/resolve": "^6.34.2",
     "lodash.clonedeep": "^4.5.0",
     "lodash.isfunction": "^3.0.9",
     "lodash.isobject": "^3.0.2"
   },
   "devDependencies": {
-    "@gasket/engine": "^6.30.2",
+    "@gasket/engine": "^6.34.2",
     "@godaddy/dmd": "^1.0.0",
     "assume": "^2.3.0",
     "assume-sinon": "^1.1.0",
@@ -57,7 +57,7 @@
     "eslint-plugin-mocha": "^10.0.3",
     "eslint-plugin-unicorn": "^40.1.0",
     "jsdoc-to-markdown": "^7.1.0",
-    "mocha": "^9.1.4",
+    "mocha": "^10.0.0",
     "nyc": "^15.1.0",
     "sinon": "^12.0.1"
   },

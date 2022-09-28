@@ -1,5 +1,13 @@
 # `@gasket/nextjs`
 
+### 6.34.3
+
+- Upgrade mocha v10 ([#442])
+
+### 6.34.2
+
+- Upgrade jsdom to v20 ([#440])
+
 ### 6.20.3
 
 - Switch Enzyme adapter for React 17 ([#354])
@@ -25,3 +33,5 @@
 [#285]: https://github.com/godaddy/gasket/pull/285
 [#298]: https://github.com/godaddy/gasket/pull/298
 [#354]: https://github.com/godaddy/gasket/pull/354
+[#440]: https://github.com/godaddy/gasket/pull/440
+[#442]: https://github.com/godaddy/gasket/pull/442
