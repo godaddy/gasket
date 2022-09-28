@@ -1,6 +1,6 @@
 {
   "name": "@gasket/data",
-  "version": "6.34.3",
+  "version": "6.34.4",
   "description": "Helper package for accessing embedded Gasket Data in the browser",
   "main": "lib",
   "types": "lib/index.d.ts",
@@ -47,8 +47,8 @@
     "eslint-plugin-unicorn": "^43.0.0",
     "mocha": "^10.0.0",
     "nyc": "^15.1.0",
-    "sinon": "^14.0.0",
-    "setup-env": "^2.0.0"
+    "setup-env": "^2.0.0",
+    "sinon": "^14.0.0"
   },
   "eslintConfig": {
     "extends": [
