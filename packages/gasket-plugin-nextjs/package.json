@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-nextjs",
-  "version": "6.34.4",
+  "version": "6.34.5",
   "description": "Adds Next support to your application",
   "main": "lib",
   "types": "lib/index.d.ts",
@@ -96,8 +96,12 @@
     },
     "overrides": [
       {
-        "files": [ "generator/**/*.js" ],
-        "extends": ["godaddy-react"]
+        "files": [
+          "generator/**/*.js"
+        ],
+        "extends": [
+          "godaddy-react"
+        ]
       }
     ]
   },

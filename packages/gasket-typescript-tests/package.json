@@ -1,7 +1,7 @@
 {
   "name": "@gasket/typescript-tests",
   "private": true,
-  "version": "6.34.4",
+  "version": "6.34.5",
   "description": "Not a published package; hosts unit tests to verify TypeScript support",
   "files": [
     "lib"
@@ -45,12 +45,12 @@
     "@gasket/plugin-elastic-apm": "^6.34.4",
     "@gasket/plugin-express": "^6.34.4",
     "@gasket/plugin-https": "^6.34.4",
-    "@gasket/plugin-intl": "^6.34.4",
+    "@gasket/plugin-intl": "^6.34.5",
     "@gasket/plugin-log": "^6.34.4",
     "@gasket/plugin-manifest": "^6.34.4",
     "@gasket/plugin-metadata": "^6.34.4",
     "@gasket/plugin-metrics": "^6.34.4",
-    "@gasket/plugin-nextjs": "^6.34.4",
+    "@gasket/plugin-nextjs": "^6.34.5",
     "@gasket/plugin-redux": "^6.34.4",
     "@gasket/plugin-service-worker": "^6.34.4",
     "@gasket/plugin-start": "^6.34.4",
@@ -58,7 +58,7 @@
     "@gasket/plugin-webpack": "^6.34.4",
     "@gasket/plugin-workbox": "^6.34.4",
     "@gasket/preset-api": "^6.34.4",
-    "@gasket/preset-nextjs": "^6.34.4",
+    "@gasket/preset-nextjs": "^6.34.5",
     "@gasket/preset-pwa": "^6.34.4",
     "@gasket/react-intl": "^6.34.4",
     "@gasket/redux": "^6.34.4",
