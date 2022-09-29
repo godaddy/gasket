@@ -1,5 +1,9 @@
 # `@gasket/plugin-intl`
 
+### 6.34.5
+
+- Upgrade fs-extra to v10 ([#467])
+
 ### 6.34.4
 
 - Upgrade eslint-plugin-unicorn v43 ([#436])
