@@ -101,12 +101,12 @@ Available lifecycles
 | [metrics]                                              | Collect metrics for an app                                    |
 | [middleware]                                           | Add Express style middleware for Fastify                      |
 | [middleware][4]                                        | Add Express style middleware                                  |
-| [next]                                                 | Update the next app instance before prepare                   |
-| [next][5]                                              | Update the next app instance before prepare                   |
-| [nextConfig]                                           | Setup the next config                                         |
-| [nextExpress]                                          | Access the prepared next app and express instance             |
-| [nextFastify]                                          | Access the prepared next app and fastify instance             |
-| [nextPreHandling]                                      | Perform tasks just before next.js request handling            |
+| [next]                                                 | Update the Next.js app instance before preparing for Express  |
+| [next][5]                                              | Update the Next.js app instance before preparing for Fastify  |
+| [nextConfig]                                           | Setup the Next.js config                                      |
+| [nextExpress]                                          | Access the prepared Next.js app and Express instance          |
+| [nextFastify]                                          | Access the prepared Next.js app and Fastify instance          |
+| [nextPreHandling]                                      | Perform tasks just before Next.js request handling            |
 | [postCreate]                                           | App level plugins                                             |
 | [preboot]                                              | Any setup before the app starts                               |
 | [prompt]                                               | Gasket config for an app                                      |
@@ -147,7 +147,7 @@ Available presets
 | Name                    | Version | Description                                |
 | ----------------------- | ------- | ------------------------------------------ |
 | [@gasket/preset-api]    | 6.34.4  | Create Express-based API with Gasket       |
-| [@gasket/preset-nextjs] | 6.34.4  | Basic NextJS Framework                     |
+| [@gasket/preset-nextjs] | 6.34.5  | Basic NextJS Framework                     |
 | [@gasket/preset-pwa]    | 6.34.4  | Turn Gasket apps into Progressive Web Apps |
 
 ## Plugins
@@ -159,7 +159,7 @@ Available plugins
 | [@gasket/plugin-analyze]        | 6.34.4  | Gasket Analyzer Plugin                                                     |
 | [@gasket/plugin-command]        | 6.34.4  | Plugin to enable other plugins to inject new gasket commands               |
 | [@gasket/plugin-config]         | 6.34.4  | Supports application-specific (non-Gasket) configuration                   |
-| [@gasket/plugin-cypress]        | 6.34.4  | Integrates Cypress based testing into your Gasket application              |
+| [@gasket/plugin-cypress]        | 6.34.5  | Integrates Cypress based testing into your Gasket application              |
 | [@gasket/plugin-docs]           | 6.34.4  | Centralize doc files from plugins and modules                              |
 | [@gasket/plugin-docs-graphs]    | 6.34.4  | Generate mermaid graphs of an applications gasket lifecycles               |
 | [@gasket/plugin-docsify]        | 6.34.4  | View collated docs with Docsify                                            |
@@ -169,17 +169,17 @@ Available plugins
 | [@gasket/plugin-fastify]        | 6.34.4  | Adds fastify support to your application                                   |
 | [@gasket/plugin-git]            | 6.34.4  | Adds git support to your application                                       |
 | [@gasket/plugin-https]          | 6.34.4  | Create http/s servers with graceful termination                            |
-| [@gasket/plugin-intl]           | 6.34.4  | NodeJS script to build localization files.                                 |
-| [@gasket/plugin-jest]           | 6.34.4  | Integrated jest into your application.                                     |
+| [@gasket/plugin-intl]           | 6.34.5  | NodeJS script to build localization files.                                 |
+| [@gasket/plugin-jest]           | 6.34.5  | Integrated jest into your application.                                     |
 | [@gasket/plugin-lifecycle]      | 6.34.4  | Allows a gasket/ directory to be used for lifecycle hooks in applications. |
 | [@gasket/plugin-lint]           | 6.34.4  | Adds GoDaddy standard linting to your application                          |
 | [@gasket/plugin-log]            | 6.34.4  | Gasket log plugin                                                          |
 | [@gasket/plugin-manifest]       | 6.34.4  | The web app manifest for progressive Gasket applications                   |
 | [@gasket/plugin-metadata]       | 6.34.4  | Adds metadata to gasket lifecycles                                         |
 | [@gasket/plugin-metrics]        | 6.34.4  | Collect metrics for gasket commands                                        |
-| [@gasket/plugin-mocha]          | 6.34.4  | Integrates mocha based testing in to your Gasket application               |
+| [@gasket/plugin-mocha]          | 6.34.5  | Integrates mocha based testing in to your Gasket application               |
 | [@gasket/plugin-morgan]         | 6.34.4  | Adds morgan request logger to your app                                     |
-| [@gasket/plugin-nextjs]         | 6.34.4  | Adds Next support to your application                                      |
+| [@gasket/plugin-nextjs]         | 6.34.5  | Adds Next support to your application                                      |
 | [@gasket/plugin-redux]          | 6.34.4  | Gasket Redux Setup                                                         |
 | [@gasket/plugin-service-worker] | 6.34.4  | Gasket Service Worker Plugin                                               |
 | [@gasket/plugin-start]          | 6.34.4  | Adds commands for building and starting Gasket apps                        |
@@ -204,7 +204,7 @@ Supporting modules
 | [@gasket/react-intl]       | 6.34.4  | React component library to enable localization for gasket apps.                      |
 | [@gasket/redux]            | 6.34.4  | Gasket Redux Configuration                                                           |
 | [@gasket/resolve]          | 6.34.4  | Essential module resolution & configuration management for gasket plugins & presets. |
-| [@gasket/typescript-tests] | 6.34.4  | Not a published package; hosts unit tests to verify TypeScript support               |
+| [@gasket/typescript-tests] | 6.34.5  | Not a published package; hosts unit tests to verify TypeScript support               |
 | [@gasket/utils]            | 6.34.4  | Reusable utilities for Gasket internals                                              |
 | [create-gasket-app]        | 6.34.4  | starter pack for creating a gasket app                                               |
 
