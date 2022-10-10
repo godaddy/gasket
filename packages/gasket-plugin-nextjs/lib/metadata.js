@@ -1,8 +1,8 @@
 // @gasket/plugin-express
 module.exports = function metadata(gasket, meta) {
   const { metadata } = gasket;
-  const hasExpress = Boolean(metadata.plugins.find(pluginData => pluginData.name === '@gasket/plugin-express'))
-  const hasFastify = Boolean(metadata.plugins.find(pluginData => pluginData.name === '@gasket/plugin-fastify'))
+  const hasExpress = Boolean(metadata.plugins.find(pluginData => pluginData.name === '@gasket/plugin-express'));
+  const hasFastify = Boolean(metadata.plugins.find(pluginData => pluginData.name === '@gasket/plugin-fastify'));
 
   const data = {
     ...meta,
@@ -60,9 +60,9 @@ module.exports = function metadata(gasket, meta) {
         type: 'object'
       }
     ]
-  }
+  };
 
-  if(hasExpress) {
+  if (hasExpress) {
     data.lifecycles.push(
       {
         name: 'next',
@@ -80,10 +80,10 @@ module.exports = function metadata(gasket, meta) {
         parent: 'express',
         after: 'next'
       }
-    )
+    );
   }
 
-  if(hasFastify) {
+  if (hasFastify) {
     data.lifecycles.push(
       {
         name: 'next',
@@ -101,8 +101,8 @@ module.exports = function metadata(gasket, meta) {
         parent: 'fastify',
         after: 'next'
       }
-    )
+    );
   }
 
   return data;
-}
+};
