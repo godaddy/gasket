@@ -6,6 +6,7 @@ const { pluginIdentifier } = require('@gasket/resolve');
 const { setupNextApp, setupNextHandling } = require('./setup-next-app');
 const getNextRoute = require('./next-route');
 const apmTransaction = require('./apm-transaction');
+const metadata = require('./metadata');
 
 const isDefined = (o) => typeof o !== 'undefined';
 
@@ -121,7 +122,7 @@ module.exports = {
         // If the Gasket Intl Plugin is used to determine the locale, then we need
         // to let NextJS know that it has already been detected. We can do this by
         // forcing the `NEXT_LOCALE` cookie:
-        // https://github.com/vercel/next.js/blob/canary/docs/advanced-features/i18n-routing.md#leveraging-the-next_locale-cookie
+        // https://github.com/vercel/Next.js/blob/canary/docs/advanced-features/i18n-routing.md#leveraging-the-next_locale-cookie
         expressApp.use(function setNextLocale(req, res, next) {
           if (res.locals && res.locals.gasketData && res.locals.gasketData.intl) {
             const { locale } = res.locals.gasketData.intl;
@@ -183,7 +184,7 @@ module.exports = {
       return await builder(path.resolve('.'), await createConfig(gasket, true));
     },
     /**
-     * Workbox config partial to add next.js static assets to precache
+     * Workbox config partial to add Next.js static assets to precache
      *
      * @param {Gasket} gasket The gasket API.
      * @returns {Object} config
@@ -210,88 +211,6 @@ module.exports = {
         }
       };
     },
-    metadata(gasket, meta) {
-      return {
-        ...meta,
-        guides: [{
-          name: 'Next.js Routing Guide',
-          description: 'Basic and advance routing for Next.js',
-          link: 'docs/routing.md'
-        },
-        {
-          name: 'Next.js Deployment Guide',
-          description: 'Steps to deploy a Next.js Gasket app',
-          link: 'docs/deployment.md'
-        },
-        {
-          name: 'Next.js Redux Guide',
-          description: 'Using Redux with Next.js Gasket apps',
-          link: 'docs/redux.md'
-        }],
-        lifecycles: [{
-          name: 'nextConfig',
-          method: 'execWaterfall',
-          description: 'Setup the next config',
-          link: 'README.md#nextConfig',
-          parent: 'express'
-        },
-        {
-          name: 'next',
-          method: 'exec',
-          description: 'Update the next app instance before prepare',
-          link: 'README.md#next',
-          parent: 'express',
-          after: 'nextConfig'
-        },
-        {
-          name: 'nextExpress',
-          method: 'exec',
-          description: 'Access the prepared next app and express instance',
-          link: 'README.md#nextExpress',
-          parent: 'express',
-          after: 'next'
-        },
-        {
-          name: 'next',
-          method: 'exec',
-          description: 'Update the next app instance before prepare',
-          link: 'README.md#next',
-          parent: 'fastify',
-          after: 'nextConfig'
-        },
-        {
-          name: 'nextFastify',
-          method: 'exec',
-          description: 'Access the prepared next app and fastify instance',
-          link: 'README.md#nextFastify',
-          parent: 'fastify',
-          after: 'next'
-        },
-        {
-          name: 'nextPreHandling',
-          method: 'exec',
-          description: 'Perform tasks just before next.js request handling',
-          link: 'README.md#nextPreHandling',
-          parent: 'express',
-          after: 'nextExpress'
-        }],
-        structures: [{
-          name: 'pages/',
-          description: 'NextJS routing',
-          link: 'https://nextjs.org/docs/routing/introduction'
-        },
-        {
-          name: 'public/',
-          description: 'NextJS static files',
-          link: 'https://nextjs.org/docs/basic-features/static-file-serving'
-        }],
-        configurations: [{
-          name: 'nextConfig',
-          link: 'README.md#configuration',
-          description: 'Everything that can be configured in `next.config.js` can be added here.',
-          type: 'object'
-        }]
-      };
-    }
+    metadata
   }
 };
