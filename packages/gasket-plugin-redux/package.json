@@ -49,8 +49,8 @@
     "eslint-plugin-mocha": "^10.0.3",
     "eslint-plugin-unicorn": "^44.0.0",
     "jest": "^27.4.3",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
     "react-redux": "^8.0.0",
     "redux": "^4.0.5",
     "webpack": "^5.21.2"
