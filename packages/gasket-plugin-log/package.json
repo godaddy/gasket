@@ -53,7 +53,7 @@
     "eslint-plugin-babel": "^5.3.0",
     "eslint-plugin-json": "^3.1.0",
     "eslint-plugin-mocha": "^10.0.3",
-    "eslint-plugin-unicorn": "^43.0.0",
+    "eslint-plugin-unicorn": "^44.0.0",
     "mocha": "^10.0.0",
     "nyc": "^15.1.0",
     "proxyquire": "^2.1.3",
