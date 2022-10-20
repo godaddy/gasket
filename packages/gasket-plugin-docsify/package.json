@@ -43,7 +43,7 @@
   "dependencies": {
     "docsify": "^4.10.2",
     "docsify-cli": "^4.4.2",
-    "glob": "^7.1.6",
+    "glob": "^8.0.0",
     "handlebars": "^4.7.6",
     "lodash.defaultsdeep": "^4.6.1",
     "mkdirp": "^1.0.4"
