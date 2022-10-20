@@ -48,7 +48,7 @@
     "@gasket/data": "^6.34.4",
     "@gasket/fetch": "^6.34.4",
     "@gasket/helper-intl": "^6.34.4",
-    "hoist-non-react-statics": "^2.5.0",
+    "hoist-non-react-statics": "^3.0.0",
     "lodash.merge": "^4.6.0",
     "prop-types": "^15.7.2"
   },
