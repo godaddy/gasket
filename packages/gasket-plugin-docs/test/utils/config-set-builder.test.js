@@ -526,7 +526,7 @@ describe('utils - DocsConfigSetBuilder', () => {
       const files = ['./files/*'];
       await instance._findAllFiles({}, { files }, null, mockSourceRoot);
       files.forEach(file => {
-        assume(globSpy).calledWith(file, { cwd: mockSourceRoot, nonegate: true, nocomment: true });
+        assume(globSpy).calledWith(file, { cwd: mockSourceRoot, nonegate: true, nocomment: true, allowWindowsEscape: true });
       });
     });
 
