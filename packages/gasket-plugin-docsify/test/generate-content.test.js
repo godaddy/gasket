@@ -4,6 +4,7 @@ const sinon = require('sinon');
 const proxyquire = require('proxyquire');
 const { readFile } = require('fs').promises;
 const path = require('path');
+const { promisify } = require('util');
 
 const template = readFile(path.join(__dirname, '..', 'generator', 'index.html'), 'utf8');
 
@@ -19,28 +20,30 @@ const mockDocsConfigSet = {
 };
 
 const readFileStub = sinon.stub().resolves('mock-content');
-const globStub = sinon.stub().resolves(['favicon.ico']);
 const writeFileStub = sinon.stub();
 const copyFileStub = sinon.stub();
 const mkdirpStub = sinon.stub().resolves('/path/to/app');
-const generateContent = proxyquire('../lib/generate-content', {
-  fs: {
-    promises: {
-      readFile: readFileStub.resolves(template),
-      writeFile: writeFileStub,
-      copyFile: copyFileStub
-    }
-  },
-  mkdirp: mkdirpStub,
-  glob: globStub,
-  util: {
-    promisify: f => f
-  }
-});
 
 describe('generateIndex', () => {
+  let generateContent, globSpy;
 
   beforeEach(() => {
+    generateContent = proxyquire('../lib/generate-content', {
+      fs: {
+        promises: {
+          readFile: readFileStub.resolves(template),
+          writeFile: writeFileStub,
+          copyFile: copyFileStub
+        }
+      },
+      mkdirp: mkdirpStub,
+      util: {
+        promisify: f => {
+          globSpy = sinon.spy(promisify(f));
+          return globSpy;
+        }
+      }
+    });
     writeFileStub.resetHistory();
   });
 

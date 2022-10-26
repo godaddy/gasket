@@ -3,30 +3,32 @@ const assume = require('assume');
 const sinon = require('sinon');
 const proxyquire = require('proxyquire');
 const path = require('path');
+const { promisify } = require('util');
 
-const globStub = sinon.stub();
-const DocsConfigSetBuilder = proxyquire('../../lib/utils/config-set-builder', {
-  glob: globStub,
-  util: {
-    promisify: f => f
-  }
-});
-
-const { docsSetupDefault } = DocsConfigSetBuilder;
-
-const buildDocsConfigSpy = sinon.spy(DocsConfigSetBuilder.prototype, '_buildDocsConfig');
-
-const mockGasket = {
-  config: {
-    root: '/path/to/app',
-    docs: { outputDir: '.docs' }
-  }
-};
+const fixtures = path.resolve(__dirname, '..', 'fixtures');
 
 describe('utils - DocsConfigSetBuilder', () => {
-  let instance;
+  let instance, DocsConfigSetBuilder, buildDocsConfigSpy, mockGasket, globSpy;
 
   beforeEach(async () => {
+    DocsConfigSetBuilder = proxyquire('../../lib/utils/config-set-builder', {
+      util: {
+        promisify: f => {
+          globSpy = sinon.spy(promisify(f));
+          return globSpy;
+        }
+      }
+    });
+
+    buildDocsConfigSpy = sinon.spy(DocsConfigSetBuilder.prototype, '_buildDocsConfig');
+
+    mockGasket = {
+      config: {
+        root: '/path/to/app',
+        docs: { outputDir: '.docs' }
+      }
+    };
+
     sinon.resetHistory();
     instance = new DocsConfigSetBuilder(mockGasket);
   });
@@ -69,7 +71,7 @@ describe('utils - DocsConfigSetBuilder', () => {
 
     it('uses default docsSetup if not passed', async () => {
       await instance.addApp({ name: 'app-one' });
-      assume(buildDocsConfigSpy).calledWithMatch(sinon.match.object, docsSetupDefault);
+      assume(buildDocsConfigSpy).calledWithMatch(sinon.match.object, DocsConfigSetBuilder.docsSetupDefault);
     });
 
     it('adds targetRoot to overrides', async () => {
@@ -98,7 +100,7 @@ describe('utils - DocsConfigSetBuilder', () => {
 
     it('uses default docsSetup if not passed', async () => {
       await instance.addPlugin({ name: 'example-plugin' });
-      assume(buildDocsConfigSpy).calledWithMatch(sinon.match.object, docsSetupDefault);
+      assume(buildDocsConfigSpy).calledWithMatch(sinon.match.object, DocsConfigSetBuilder.docsSetupDefault);
     });
 
     it('accepts custom docsSetup', async () => {
@@ -189,7 +191,7 @@ describe('utils - DocsConfigSetBuilder', () => {
 
     it('uses default docsSetup if not set', async () => {
       await instance.addPreset({ name: 'example-preset' });
-      assume(buildDocsConfigSpy).calledWithMatch(sinon.match.object, docsSetupDefault);
+      assume(buildDocsConfigSpy).calledWithMatch(sinon.match.object, DocsConfigSetBuilder.docsSetupDefault);
     });
 
     it('accepts custom docsSetup', async () => {
@@ -256,7 +258,7 @@ describe('utils - DocsConfigSetBuilder', () => {
 
     it('does NOT use default docsSetup if not passed', async () => {
       await instance.addModule({ name: 'example-module' });
-      assume(buildDocsConfigSpy).not.calledWith(sinon.match.object, docsSetupDefault);
+      assume(buildDocsConfigSpy).not.calledWith(sinon.match.object, DocsConfigSetBuilder.docsSetupDefault);
       assume(buildDocsConfigSpy).calledWith(sinon.match.object, {});
     });
 
@@ -269,7 +271,7 @@ describe('utils - DocsConfigSetBuilder', () => {
 
     it('uses default docsSetup if not set for @gasket modules', async () => {
       await instance.addModule({ name: '@gasket/example' });
-      assume(buildDocsConfigSpy).calledWith(sinon.match.object, docsSetupDefault);
+      assume(buildDocsConfigSpy).calledWith(sinon.match.object, DocsConfigSetBuilder.docsSetupDefault);
     });
 
     it('accepts custom docsSetup', async () => {
@@ -492,7 +494,7 @@ describe('utils - DocsConfigSetBuilder', () => {
   });
 
   describe('._findAllFiles', () => {
-    const mockSourceRoot = '/path/to/example-module';
+    const mockSourceRoot = fixtures;
 
     it('adds file from link', async () => {
       const results = await instance._findAllFiles({}, {}, 'README.md', mockSourceRoot);
@@ -521,26 +523,25 @@ describe('utils - DocsConfigSetBuilder', () => {
     });
 
     it('looks up files of docsSetup from sourceRoot', async () => {
-      const files = ['README.md', 'docs/**/*'];
+      const files = ['./files/*'];
       await instance._findAllFiles({}, { files }, null, mockSourceRoot);
       files.forEach(file => {
-        assume(globStub).calledWith(file, { cwd: mockSourceRoot });
+        assume(globSpy).calledWith(file, { cwd: mockSourceRoot, nonegate: true, nocomment: true });
       });
     });
 
     it('adds files from resolved globs', async () => {
-      const files = ['docs/**/*'];
-      const expected = ['docs/ONE.md', 'docs/TWO.md', 'docs/THREE.md'];
-      globStub.resolves(expected);
+      const files = ['./files/*'];
+      const expected = ['./files/file-a.md', './files/file-b.md'];
       const results = await instance._findAllFiles({}, { files }, null, mockSourceRoot);
       assume(results).eqls(expected);
     });
 
     it('files can be a single string (for safety)', async () => {
-      const files = 'docs/**/*';
-      const expected = ['docs/ONE.md', 'docs/TWO.md', 'docs/THREE.md'];
+      const files = './files/*';
+      const expected = ['./files/file-a.md', './files/file-b.md'];
       const results = await instance._findAllFiles({}, { files }, null, mockSourceRoot);
-      assume(globStub).calledWith(files);
+      assume(globSpy).calledWith(files);
       assume(results).eqls(expected);
     });
 
@@ -575,7 +576,6 @@ describe('utils - DocsConfigSetBuilder', () => {
         }]
       };
       const files = ['README.md'];
-      globStub.resolves(['README.md']);
       const results = await instance._findAllFiles(mockInfo, { files }, 'README.md#with-hash', mockSourceRoot);
       assume(results).lengthOf(1);
       assume(results).includes('README.md');
