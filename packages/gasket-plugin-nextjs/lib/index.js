@@ -43,6 +43,17 @@ module.exports = {
         return { ...rest, serviceWorker, nextConfig };
       }
     },
+    async prompt(gasket, context, { prompt }) {
+      const { addSitemap } = await prompt([
+        {
+          name: 'addSitemap',
+          message: 'Do you want to add a sitemap?',
+          type: 'confirm'
+        }
+      ]);
+
+      return { ...context, addSitemap };
+    },
     create: {
       timing: {
         before: ['@gasket/plugin-intl'],
@@ -59,7 +70,7 @@ module.exports = {
        * @public
        */
       handler: function create(gasket, context) {
-        const { files, pkg, testPlugin } = context;
+        const { files, pkg, testPlugin, addSitemap } = context;
         const generatorDir = `${__dirname}/../generator`;
 
         files.add(
@@ -85,6 +96,17 @@ module.exports = {
           'react': devDependencies.react,
           'react-dom': devDependencies['react-dom']
         });
+
+        if (addSitemap) {
+          pkg.add('dependencies', {
+            'next-sitemap': '^3.1.29'
+          });
+
+          files.add(`${generatorDir}/sitemap/*`);
+          pkg.add('scripts', {
+            sitemap: 'next-sitemap'
+          });
+        }
 
         if (pkg.has('dependencies', '@gasket/redux')) {
           pkg.add('dependencies', {
