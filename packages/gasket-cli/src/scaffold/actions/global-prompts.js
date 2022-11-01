@@ -122,7 +122,7 @@ async function chooseTestPlugin(context, prompt) {
  */
 async function allowExtantOverwriting(context, prompt) {
   const { dest, extant } = context;
-  if (extant) {
+  if (extant && !('destOverride' in context)) {
     const { destOverride } = await prompt([
       {
         name: 'destOverride',
