@@ -173,7 +173,7 @@ describe('globalPrompts', () => {
     });
   });
 
-  describe('allowExtantOverwriting', () => {
+  describe.only('allowExtantOverwriting', () => {
     it('does not set confirm if not an extant directory', async () => {
       await allowExtantOverwriting(mockContext, promptStub);
       assume(mockContext).does.not.own('destOverride');
@@ -184,6 +184,15 @@ describe('globalPrompts', () => {
       mockContext.extant = true;
       await allowExtantOverwriting(mockContext, promptStub);
       assume(mockContext).property('destOverride', 'roger roger');
+      assume(promptStub).is.called()
+    });
+
+    it('retains destOverride in context', async () => {
+      mockContext.extant = true;
+      mockContext.destOverride = true;
+      await allowExtantOverwriting(mockContext, promptStub);
+      assume(mockContext).property('destOverride', true);
+      assume(promptStub).is.not.called()
     });
   });
 });
