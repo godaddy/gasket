@@ -184,6 +184,15 @@ describe('globalPrompts', () => {
       mockContext.extant = true;
       await allowExtantOverwriting(mockContext, promptStub);
       assume(mockContext).property('destOverride', 'roger roger');
+      assume(promptStub).is.called();
+    });
+
+    it('retains destOverride in context', async () => {
+      mockContext.extant = true;
+      mockContext.destOverride = true;
+      await allowExtantOverwriting(mockContext, promptStub);
+      assume(mockContext).property('destOverride', true);
+      assume(promptStub).is.not.called();
     });
   });
 });
