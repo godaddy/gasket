@@ -31,6 +31,12 @@ module.exports = {
 }
 ```
 
+## Adding a Sitemap
+
+When creating a new application with this plugin, you will be prompted with a quesion in the CLI asking if you would like to add a [sitemap] to you application. 
+
+Answering yes to this question will install `next-sitemap` as a dependency, generate a next-sitemap.config.js file, and add a `sitemap` npm script to your package.json. `next-sitemap` is an npm package that genaterates sitemaps and a robots.txt file for nextjs applications. Learn more by reading the [next-sitemap docs].
+
 ## Configuration
 
 - Instead of adding a dedicated `next.config.js`, the `nextConfig` property
@@ -263,3 +269,5 @@ async function someMiddleware(req, res, next) {
 [next.config]: https://nextjs.org/docs#custom-configuration
 [i18n config]: https://nextjs.org/docs/advanced-features/i18n-routing#getting-started
 [named capturing groups]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Backreferences
+[sitemap]: https://www.sitemaps.org/
+[next-sitemap docs]: https://github.com/iamvishnusankar/next-sitemap

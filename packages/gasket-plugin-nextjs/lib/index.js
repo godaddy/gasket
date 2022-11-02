@@ -44,15 +44,17 @@ module.exports = {
       }
     },
     async prompt(gasket, context, { prompt }) {
-      const { addSitemap } = await prompt([
-        {
-          name: 'addSitemap',
-          message: 'Do you want to add a sitemap?',
-          type: 'confirm'
-        }
-      ]);
-
-      return { ...context, addSitemap };
+      if (!('addSitemap' in context)) {
+        const { addSitemap } = await prompt([
+          {
+            name: 'addSitemap',
+            message: 'Do you want to add a sitemap?',
+            type: 'confirm'
+          }
+        ]);
+        return { ...context, addSitemap };
+      }
+      return context;
     },
     create: {
       timing: {

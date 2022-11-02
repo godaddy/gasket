@@ -351,6 +351,13 @@ describe('prompt hook', () => {
     const result = await promptHook(gasket, context, { prompt });
     assume(result.addSitemap).equals(false);
   });
+
+  it('does not run prompt if addSitemap is in context', async () => {
+    context.addSitemap = false;
+    const result = await promptHook(gasket, context, { prompt });
+    assume(result).property('addSitemap', false);
+    assume(prompt).is.not.called();
+  });
 });
 
 describe('create hook', () => {
