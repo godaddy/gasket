@@ -33,9 +33,9 @@ module.exports = {
 
 ## Adding a Sitemap
 
-When creating a new application with this plugin, you will be prompted with a quesion in the CLI asking if you would like to add a [sitemap] to you application. 
+When creating a new application with this plugin, you will be prompted with a question in the CLI asking if you would like to add a [sitemap] to your application. 
 
-Answering yes to this question will install `next-sitemap` as a dependency, generate a next-sitemap.config.js file, and add a `sitemap` npm script to your package.json. `next-sitemap` is an npm package that genaterates sitemaps and a robots.txt file for nextjs applications. Learn more by reading the [next-sitemap docs].
+Answering yes to this question will install `next-sitemap` as a dependency, generate a next-sitemap.config.js file, and add a `sitemap` npm script to your package.json. `next-sitemap` is an npm package that generates sitemaps and a robots.txt file for Next.js applications. Learn more by reading the [next-sitemap docs].
 
 ## Configuration
 
