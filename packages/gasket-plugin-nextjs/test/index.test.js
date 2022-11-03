@@ -33,6 +33,7 @@ describe('Plugin', function () {
       'fastify',
       'metadata',
       'middleware',
+      'prompt',
       'workbox'
     ];
 
@@ -315,6 +316,50 @@ describe('fastify hook', () => {
   });
 });
 
+describe('prompt hook', () => {
+  let gasket, context, prompt, mockAnswers;
+  const plugin = require('../lib/');
+  const promptHook = plugin.hooks.prompt;
+
+  beforeEach(() => {
+    gasket = {};
+    context = {};
+    mockAnswers = { addSitemap: true };
+    prompt = sinon.stub().callsFake(() => mockAnswers);
+  });
+
+  it('prompts', async () => {
+    await promptHook(gasket, context, { prompt });
+    assume(prompt).called();
+  });
+
+  it('servers the expected prompt question', async () => {
+    await promptHook(gasket, context, { prompt });
+    const question = prompt.getCall(0).args[0][0];
+    assume(question.name).equals('addSitemap');
+    assume(question.message).equals('Do you want to add a sitemap?');
+    assume(question.type).equals('confirm');
+  });
+
+  it('sets addSitemap to true', async () => {
+    const result = await promptHook(gasket, context, { prompt });
+    assume(result.addSitemap).equals(true);
+  });
+
+  it('sets addSitemap to false', async () => {
+    mockAnswers = { addSitemap: false };
+    const result = await promptHook(gasket, context, { prompt });
+    assume(result.addSitemap).equals(false);
+  });
+
+  it('does not run prompt if addSitemap is in context', async () => {
+    context.addSitemap = false;
+    const result = await promptHook(gasket, context, { prompt });
+    assume(result).property('addSitemap', false);
+    assume(prompt).is.not.called();
+  });
+});
+
 describe('create hook', () => {
   let mockContext;
   const plugin = require('../lib/');
@@ -403,6 +448,25 @@ describe('create hook', () => {
       'next-redux-wrapper': devDependencies['next-redux-wrapper'],
       'lodash.merge': devDependencies['lodash.merge']
     });
+  });
+
+  it('adds appropriate dependencies for sitemap', async function () {
+    mockContext.addSitemap = true;
+    await plugin.hooks.create.handler({}, mockContext);
+
+    assume(mockContext.files.add).calledWith(
+      `${root}/../generator/sitemap/*`
+    );
+    assume(mockContext.pkg.add).calledWith(
+      'dependencies', {
+        'next-sitemap': '^3.1.29'
+      }
+    );
+    assume(mockContext.pkg.add).calledWith(
+      'scripts', {
+        sitemap: 'next-sitemap'
+      }
+    );
   });
 });
 
