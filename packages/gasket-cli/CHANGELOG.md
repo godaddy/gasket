@@ -1,5 +1,9 @@
 # `@gasket/cli`
 
+### 6.34.6
+
+- Retain destOverride from provided create context ([#480])
+
 ### 6.34.4
 
 - Upgrade eslint-plugin-unicorn v43 ([#436])
@@ -410,3 +414,4 @@ upon `gasket create`
 [#439]: https://github.com/godaddy/gasket/pull/439
 [#442]: https://github.com/godaddy/gasket/pull/442
 [#460]: https://github.com/godaddy/gasket/pull/460
+[#480]: https://github.com/godaddy/gasket/pull/480
