@@ -73,7 +73,7 @@
     "cross-spawn": "^7.0.1",
     "deepmerge": "^4.2.2",
     "getopts": "^2.3.0",
-    "glob": "^7.1.6",
+    "glob": "^8.0.0",
     "handlebars": "^4.7.6",
     "inquirer": "6.5.2",
     "json5": "^2.1.0",
