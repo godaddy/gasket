@@ -3,7 +3,7 @@ const { readdir } = require('fs').promises;
 const defaultsDeep = require('lodash.defaultsdeep');
 const { applyConfigOverrides, tryRequire } = require('@gasket/utils');
 const { flattenPresets } = require('./preset-utils');
-const jsExtension = /\.js$/i;
+const jsExtension = /\.(js|cjs)$/i;
 
 async function loadGasketConfigFile(root, env, commandId, configFile = 'gasket.config') {
   let gasketConfig = loadConfigFile(root, configFile);
@@ -22,11 +22,17 @@ function loadConfigFile(root, configFile) {
 }
 
 async function addUserPlugins(gasketConfig) {
+  // console.log(
+  //   await Promise.all([
+  //     resolveUserPlugins(gasketConfig.root, 'plugins'),
+  //     resolveUserPlugins(gasketConfig.root, 'src', 'plugins')
+  //   ])
+  // )
   const moduleNames = (await Promise.all([
     resolveUserPlugins(gasketConfig.root, 'plugins'),
     resolveUserPlugins(gasketConfig.root, 'src', 'plugins')
   ])).reduce((acc, cur) => acc.concat(cur), []);
-
+  // console.log(moduleNames)
   const pluginsConfig = gasketConfig.plugins || {};
   return {
     ...gasketConfig,
@@ -60,10 +66,7 @@ async function resolveUserPlugins(root, ...parts) {
 
   return (files || [])
     .filter(fileName => jsExtension.test(fileName))
-    .map(fileName => {
-      const fileSansExtension = fileName.replace(jsExtension, '');
-      return path.join(dir, fileSansExtension);
-    });
+    .map(fileName => fileName.endsWith('.js') ? path.join(dir, fileName.replace(jsExtension, '')) : fileName);
 }
 
 /**

@@ -113,9 +113,17 @@ describe('config', () => {
   });
 
   describe('addUserPlugins', () => {
-    it('add javascript modules from the app\'s plugins dir', async () => {
+    it.only('add javascript modules from the app\'s plugins dir', async () => {
       mockReadDir.mockResolvedValueOnce(['app-plugin.js']);
       const results = await utils.addUserPlugins({ root: '/path/to/app' });
+      expect(results.plugins.add).toContain(path.join('/path/to/app', 'plugins', 'app-plugin'));
+      expect(results.plugins.add).not.toContain(path.join('/path/to/app', 'src', 'plugins', 'app-plugin'));
+    });
+
+    it.only('add cjs modules from the app\'s plugins dir', async () => {
+      mockReadDir.mockResolvedValueOnce(['app-plugin.cjs']);
+      const results = await utils.addUserPlugins({ root: '/path/to/app' });
+      console.log('----------', results);
       expect(results.plugins.add).toContain(path.join('/path/to/app', 'plugins', 'app-plugin'));
       expect(results.plugins.add).not.toContain(path.join('/path/to/app', 'src', 'plugins', 'app-plugin'));
     });
