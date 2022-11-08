@@ -22,17 +22,11 @@ function loadConfigFile(root, configFile) {
 }
 
 async function addUserPlugins(gasketConfig) {
-  // console.log(
-  //   await Promise.all([
-  //     resolveUserPlugins(gasketConfig.root, 'plugins'),
-  //     resolveUserPlugins(gasketConfig.root, 'src', 'plugins')
-  //   ])
-  // )
   const moduleNames = (await Promise.all([
     resolveUserPlugins(gasketConfig.root, 'plugins'),
     resolveUserPlugins(gasketConfig.root, 'src', 'plugins')
   ])).reduce((acc, cur) => acc.concat(cur), []);
-  // console.log(moduleNames)
+
   const pluginsConfig = gasketConfig.plugins || {};
   return {
     ...gasketConfig,
@@ -66,7 +60,7 @@ async function resolveUserPlugins(root, ...parts) {
 
   return (files || [])
     .filter(fileName => jsExtension.test(fileName))
-    .map(fileName => fileName.endsWith('.js') ? path.join(dir, fileName.replace(jsExtension, '')) : fileName);
+    .map(fileName => path.join(dir, fileName));
 }
 
 /**
