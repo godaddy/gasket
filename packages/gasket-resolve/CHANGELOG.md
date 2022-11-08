@@ -1,5 +1,7 @@
 # `@gasket/resolve`
 
+- Allow for app-level cjs lifecyle & plugin files
+
 ### 6.34.4
 
 - Upgrade eslint-plugin-unicorn v43 ([#436])
