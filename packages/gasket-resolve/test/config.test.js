@@ -108,7 +108,7 @@ describe('config', () => {
     it('adds user plugins', async () => {
       mockReadDir.mockResolvedValueOnce(['app-plugin.js']);
       const results = await utils.loadGasketConfigFile(root, env, commandId);
-      expect(results.plugins.add).toContain(path.join('/path/to/app', 'plugins', 'app-plugin'));
+      expect(results.plugins.add).toContain(path.join('/path/to/app', 'plugins', 'app-plugin.js'));
     });
   });
 
@@ -116,8 +116,15 @@ describe('config', () => {
     it('add javascript modules from the app\'s plugins dir', async () => {
       mockReadDir.mockResolvedValueOnce(['app-plugin.js']);
       const results = await utils.addUserPlugins({ root: '/path/to/app' });
-      expect(results.plugins.add).toContain(path.join('/path/to/app', 'plugins', 'app-plugin'));
-      expect(results.plugins.add).not.toContain(path.join('/path/to/app', 'src', 'plugins', 'app-plugin'));
+      expect(results.plugins.add).toContain(path.join('/path/to/app', 'plugins', 'app-plugin.js'));
+      expect(results.plugins.add).not.toContain(path.join('/path/to/app', 'src', 'plugins', 'app-plugin.js'));
+    });
+
+    it('add cjs modules from the app\'s plugins dir', async () => {
+      mockReadDir.mockResolvedValueOnce(['app-plugin.cjs']);
+      const results = await utils.addUserPlugins({ root: '/path/to/app' });
+      expect(results.plugins.add).toContain(path.join('/path/to/app', 'plugins', 'app-plugin.cjs'));
+      expect(results.plugins.add).not.toContain(path.join('/path/to/app', 'src', 'plugins', 'app-plugin.cjs'));
     });
 
     it('add javascript modules from the /src/plugins dir', async () => {
@@ -126,7 +133,7 @@ describe('config', () => {
         .mockResolvedValueOnce(['app-plugin.js']);
       const results = await utils.addUserPlugins({ root: '/path/to/app' });
       expect(results.plugins.add).not.toContain(path.join('/path/to/app', 'plugins', 'app-plugin'));
-      expect(results.plugins.add).toContain(path.join('/path/to/app', 'src', 'plugins', 'app-plugin'));
+      expect(results.plugins.add).toContain(path.join('/path/to/app', 'src', 'plugins', 'app-plugin.js'));
     });
 
     it('add javascript modules from the both /plugins and /src/plugins dir', async () => {
@@ -134,14 +141,14 @@ describe('config', () => {
         .mockResolvedValueOnce(['app-plugin-in-root.js'])
         .mockResolvedValueOnce(['app-plugin-in-src.js']);
       const results = await utils.addUserPlugins({ root: '/path/to/app' });
-      expect(results.plugins.add).toContain(path.join('/path/to/app', 'plugins', 'app-plugin-in-root'));
-      expect(results.plugins.add).toContain(path.join('/path/to/app', 'src', 'plugins', 'app-plugin-in-src'));
+      expect(results.plugins.add).toContain(path.join('/path/to/app', 'plugins', 'app-plugin-in-root.js'));
+      expect(results.plugins.add).toContain(path.join('/path/to/app', 'src', 'plugins', 'app-plugin-in-src.js'));
     });
 
     it('retains user configured plugins', async () => {
       mockReadDir.mockResolvedValueOnce(['app-plugin.js']);
       const results = await utils.addUserPlugins({ root: '/path/to/app', plugins: { add: ['example'] } });
-      expect(results.plugins.add).toContain(path.join('/path/to/app', 'plugins', 'app-plugin'));
+      expect(results.plugins.add).toContain(path.join('/path/to/app', 'plugins', 'app-plugin.js'));
       expect(results.plugins.add).toContain(path.join('example'));
     });
 

@@ -1,5 +1,7 @@
 # `@gasket/resolve`
 
+- Allow for app-level cjs lifecyle & plugin files ([#482])
+
 ### 6.34.4
 
 - Upgrade eslint-plugin-unicorn v43 ([#436])
@@ -91,5 +93,6 @@
 [#405]: https://github.com/godaddy/gasket/pull/405
 [#436]: https://github.com/godaddy/gasket/pull/436
 [#457]: https://github.com/godaddy/gasket/pull/457
+[#482]: https://github.com/godaddy/gasket/pull/482
 
 [Loader]:/packages/gasket-resolve/docs/api.md#loader

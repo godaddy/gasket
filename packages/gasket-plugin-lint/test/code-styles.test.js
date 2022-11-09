@@ -404,6 +404,18 @@ describe('code styles', () => {
       assume(utils.runScriptStr).calledWith('lint -- --fix');
     });
 
+    it('adds lint scripts support for .js, .jsx, .cjs', async () => {
+      pkgHas.callsFake((_, name) => ['eslint'].includes(name));
+      await codeStyle.create(context, utils);
+
+      assume(pkgAdd).calledWithMatch('scripts', {
+        'lint': 'eslint --ext .js,.jsx,.cjs .',
+        'lint:fix': sinon.match.string
+      });
+
+      assume(utils.runScriptStr).calledWith('lint -- --fix');
+    });
+
     it('does not add lint scripts if already set', async () => {
       pkgHas.callsFake((_, name) => ['eslint', 'lint'].includes(name));
       await codeStyle.create(context, utils);
