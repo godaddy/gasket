@@ -50,6 +50,28 @@ describe('Plugin', function () {
     assume(called).is.true();
   });
 
+  it('allows for cjs file types', async function () {
+    const engine = new PluginEngine({
+      root: path.join(__dirname, './fixtures/with-cjs-lifecycles'),
+      plugins: {
+        add: [plugin]
+      }
+    });
+
+    await engine.exec('init');
+    let called = false;
+    proxy.once('middleware', function (gasket, app) {
+      assume(gasket).equals(engine);
+      assume(app).equals('testing');
+
+      called = true;
+    });
+
+    await engine.exec('middleware', 'testing');
+
+    assume(called).is.true();
+  });
+
   it('handles applications with no lifecycles directory', async () => {
     const engine = new PluginEngine({
       root: path.join(__dirname, './fixtures/without-lifecycles'),
