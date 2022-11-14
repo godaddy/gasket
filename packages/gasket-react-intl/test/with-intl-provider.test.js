@@ -2,8 +2,6 @@ import React from 'react';
 import assume from 'assume';
 import sinon from 'sinon';
 import proxyquire from 'proxyquire';
-import { mount } from 'enzyme';
-import { IntlProvider } from 'react-intl';
 import mockManifest from './fixtures/mock-manifest.json';
 import { LocaleStatus } from '../src/utils';
 const { ERROR, LOADED, LOADING } = LocaleStatus;
@@ -15,12 +13,8 @@ const MockComponent = class extends React.Component {
 };
 
 describe('withIntlProvider', function () {
-  let mockConfig, withIntlProvider, wrapper, testProps, module;
+  let mockConfig, withIntlProvider, module;
 
-  const doMount = props => {
-    const Wrapped = withIntlProvider()(MockComponent);
-    return mount(<Wrapped { ...props } />);
-  };
   const getModule = () => {
     return proxyquire('../src/with-intl-provider', {
       './config': mockConfig,
@@ -39,8 +33,6 @@ describe('withIntlProvider', function () {
     module = getModule();
 
     withIntlProvider = module.default;
-
-    testProps = {};
   });
 
   afterEach(function () {
@@ -63,38 +55,6 @@ describe('withIntlProvider', function () {
     MockComponent.getInitialProps = f => f;
     assume(withIntlProvider()(MockComponent)).property('getInitialProps');
     delete MockComponent.getInitialProps;
-  });
-
-  describe('#render', function () {
-    it('wraps target component with IntlProvider and renders children', function () {
-      wrapper = doMount(testProps);
-      assume(wrapper.find(IntlProvider)).length(1);
-      assume(wrapper.find(MockComponent)).length(1);
-    });
-
-    it('IntlProvider is passed expected default props', function () {
-      wrapper = doMount(testProps);
-      const result = wrapper.find(IntlProvider);
-      assume(result.prop('locale')).eqls('en-US');
-      assume(result.prop('messages')).eqls({});
-    });
-
-    it('IntlProvider is passed expected props from Next.js page', function () {
-      testProps.pageProps = {
-        localesProps: {
-          locale: 'fr-FR',
-          messages: {
-            'fr-FR': {
-              bogus: 'BOGUS'
-            }
-          }
-        }
-      };
-      wrapper = doMount(testProps);
-      const result = wrapper.find(IntlProvider);
-      assume(result.prop('locale')).eqls('fr-FR');
-      assume(result.prop('messages')).eqls({ bogus: 'BOGUS' });
-    });
   });
 
   describe('reducer', function () {
