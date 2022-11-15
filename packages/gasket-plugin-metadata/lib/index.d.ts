@@ -8,7 +8,7 @@ export interface ModuleData<Module = any> {
   module: Module,
 
   /** Package.json contents */
-  package?: PackageJson,
+  package?: object,
 
   /** Resolved version */
   version?: string,
