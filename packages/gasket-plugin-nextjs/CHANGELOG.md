@@ -1,5 +1,10 @@
 # `@gasket/plugin-nextjs`
 
+### 6.35.0
+
+- Prompt to add `next-sitemap` during create ([#479])
+- Upgrade `react` and `react-dom` to v18 ([#463])
+
 ### 6.34.4
 
 - Upgrade eslint-plugin-unicorn v43 ([#436])
@@ -218,3 +223,5 @@
 [#442]: https://github.com/godaddy/gasket/pull/442
 [#443]: https://github.com/godaddy/gasket/pull/443
 [#460]: https://github.com/godaddy/gasket/pull/460
+[#463]: https://github.com/godaddy/gasket/pull/463
+[#479]: https://github.com/godaddy/gasket/pull/479

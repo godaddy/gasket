@@ -1,5 +1,9 @@
 # `@gasket/plugin-jest`
 
+### 6.35.0 
+
+- Upgrade @testing-library/react v13 ([#463])
+
 ### 6.34.4
 
 - Upgrade eslint-plugin-unicorn v43 ([#436])
@@ -60,3 +64,4 @@
 [#337]: https://github.com/godaddy/gasket/pull/337
 [#436]: https://github.com/godaddy/gasket/pull/436
 [#457]: https://github.com/godaddy/gasket/pull/457
+[#463]: https://github.com/godaddy/gasket/pull/463

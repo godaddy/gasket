@@ -1,5 +1,9 @@
 # `@gasket/plugin-metadata`
 
+### 6.35.0
+
+- Fix package object type ([#489])
+
 ### 6.34.4
 
 - Upgrade eslint-plugin-unicorn v43 ([#436])
@@ -49,6 +53,7 @@
 [#436]: https://github.com/godaddy/gasket/pull/436
 [#442]: https://github.com/godaddy/gasket/pull/442
 [#460]: https://github.com/godaddy/gasket/pull/460
+[#489]: https://github.com/godaddy/gasket/pull/489
 
 [Loader]:/packages/gasket-resolve/docs/api.md#loader
 [PluginInfo]:/packages/gasket-resolve/docs/api.md#plugininfo

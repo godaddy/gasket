@@ -1,5 +1,7 @@
 # `@gasket/resolve`
 
+### 6.35.0
+
 - Allow for app-level cjs lifecyle & plugin files ([#482])
 
 ### 6.34.4

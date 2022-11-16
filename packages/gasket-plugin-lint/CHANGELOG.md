@@ -1,5 +1,7 @@
 # `@gasket/plugin-lint`
 
+### 6.35.0
+
 - add cjs extension to lint package ([#482])
 
 ### 6.34.4

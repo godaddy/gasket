@@ -1,5 +1,9 @@
 # `@gasket/plugin-mocha`
 
+### 6.35.0
+
+- Upgrade @testing-library/react v13 ([#463])
+
 ### 6.34.4
 
 - Upgrade eslint-plugin-unicorn v43 ([#436])
@@ -79,3 +83,4 @@
 [#442]: https://github.com/godaddy/gasket/pull/442
 [#459]: https://github.com/godaddy/gasket/pull/459
 [#460]: https://github.com/godaddy/gasket/pull/460
+[#463]: https://github.com/godaddy/gasket/pull/463
