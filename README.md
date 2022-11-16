@@ -146,8 +146,8 @@ Available presets
 
 | Name                    | Version | Description                                |
 | ----------------------- | ------- | ------------------------------------------ |
-| [@gasket/preset-api]    | 6.34.6  | Create Express-based API with Gasket       |
-| [@gasket/preset-nextjs] | 6.34.6  | Basic NextJS Framework                     |
+| [@gasket/preset-api]    | 6.35.0  | Create Express-based API with Gasket       |
+| [@gasket/preset-nextjs] | 6.35.0  | Basic NextJS Framework                     |
 | [@gasket/preset-pwa]    | 6.34.6  | Turn Gasket apps into Progressive Web Apps |
 
 ## Plugins
@@ -159,28 +159,28 @@ Available plugins
 | [@gasket/plugin-analyze]        | 6.34.6  | Gasket Analyzer Plugin                                                     |
 | [@gasket/plugin-command]        | 6.34.6  | Plugin to enable other plugins to inject new gasket commands               |
 | [@gasket/plugin-config]         | 6.34.6  | Supports application-specific (non-Gasket) configuration                   |
-| [@gasket/plugin-cypress]        | 6.34.6  | Integrates Cypress based testing into your Gasket application              |
-| [@gasket/plugin-docs]           | 6.34.6  | Centralize doc files from plugins and modules                              |
+| [@gasket/plugin-cypress]        | 6.35.0  | Integrates Cypress based testing into your Gasket application              |
+| [@gasket/plugin-docs]           | 6.35.0  | Centralize doc files from plugins and modules                              |
 | [@gasket/plugin-docs-graphs]    | 6.34.6  | Generate mermaid graphs of an applications gasket lifecycles               |
-| [@gasket/plugin-docsify]        | 6.34.6  | View collated docs with Docsify                                            |
-| [@gasket/plugin-docusaurus]     | 6.34.6  | Gasket plugin for docusaurus                                               |
+| [@gasket/plugin-docsify]        | 6.35.0  | View collated docs with Docsify                                            |
+| [@gasket/plugin-docusaurus]     | 6.35.0  | Gasket plugin for docusaurus                                               |
 | [@gasket/plugin-elastic-apm]    | 6.34.6  | Adds Elastic APM instrumentation to your application                       |
-| [@gasket/plugin-express]        | 6.34.6  | Adds express support to your application                                   |
+| [@gasket/plugin-express]        | 6.35.0  | Adds express support to your application                                   |
 | [@gasket/plugin-fastify]        | 6.34.6  | Adds fastify support to your application                                   |
 | [@gasket/plugin-git]            | 6.34.6  | Adds git support to your application                                       |
 | [@gasket/plugin-https]          | 6.34.6  | Create http/s servers with graceful termination                            |
-| [@gasket/plugin-intl]           | 6.34.6  | NodeJS script to build localization files.                                 |
-| [@gasket/plugin-jest]           | 6.34.6  | Integrated jest into your application.                                     |
-| [@gasket/plugin-lifecycle]      | 6.34.6  | Allows a gasket/ directory to be used for lifecycle hooks in applications. |
-| [@gasket/plugin-lint]           | 6.34.6  | Adds GoDaddy standard linting to your application                          |
+| [@gasket/plugin-intl]           | 6.35.0  | NodeJS script to build localization files.                                 |
+| [@gasket/plugin-jest]           | 6.35.0  | Integrated jest into your application.                                     |
+| [@gasket/plugin-lifecycle]      | 6.35.0  | Allows a gasket/ directory to be used for lifecycle hooks in applications. |
+| [@gasket/plugin-lint]           | 6.35.0  | Adds GoDaddy standard linting to your application                          |
 | [@gasket/plugin-log]            | 6.34.6  | Gasket log plugin                                                          |
 | [@gasket/plugin-manifest]       | 6.34.6  | The web app manifest for progressive Gasket applications                   |
-| [@gasket/plugin-metadata]       | 6.34.6  | Adds metadata to gasket lifecycles                                         |
+| [@gasket/plugin-metadata]       | 6.35.0  | Adds metadata to gasket lifecycles                                         |
 | [@gasket/plugin-metrics]        | 6.34.6  | Collect metrics for gasket commands                                        |
-| [@gasket/plugin-mocha]          | 6.34.6  | Integrates mocha based testing in to your Gasket application               |
+| [@gasket/plugin-mocha]          | 6.35.0  | Integrates mocha based testing in to your Gasket application               |
 | [@gasket/plugin-morgan]         | 6.34.6  | Adds morgan request logger to your app                                     |
-| [@gasket/plugin-nextjs]         | 6.34.6  | Adds Next support to your application                                      |
-| [@gasket/plugin-redux]          | 6.34.6  | Gasket Redux Setup                                                         |
+| [@gasket/plugin-nextjs]         | 6.35.0  | Adds Next support to your application                                      |
+| [@gasket/plugin-redux]          | 6.35.0  | Gasket Redux Setup                                                         |
 | [@gasket/plugin-service-worker] | 6.34.6  | Gasket Service Worker Plugin                                               |
 | [@gasket/plugin-start]          | 6.34.6  | Adds commands for building and starting Gasket apps                        |
 | [@gasket/plugin-swagger]        | 6.34.6  | Generate and serve swagger docs                                            |
@@ -193,20 +193,20 @@ Supporting modules
 
 | Name                       | Version | Description                                                                          |
 | -------------------------- | ------- | ------------------------------------------------------------------------------------ |
-| [@gasket/assets]           | 6.34.6  | Gasket assets                                                                        |
-| [@gasket/cli]              | 6.34.6  | CLI for rapid application development with gasket                                    |
+| [@gasket/assets]           | 6.35.0  | Gasket assets                                                                        |
+| [@gasket/cli]              | 6.35.0  | CLI for rapid application development with gasket                                    |
 | [@gasket/data]             | 6.34.6  | Helper package for accessing embedded Gasket Data in the browser                     |
-| [@gasket/engine]           | 6.34.6  | Plugin engine for gasket                                                             |
+| [@gasket/engine]           | 6.35.0  | Plugin engine for gasket                                                             |
 | [@gasket/fetch]            | 6.34.6  | Gasket Fetch API                                                                     |
 | [@gasket/helper-intl]      | 6.34.6  | Internal helpers used by loaders to resolve locale file paths                        |
 | [@gasket/log]              | 6.34.6  | Gasket client and server logger                                                      |
-| [@gasket/nextjs]           | 6.34.6  | Gasket integrations for Next.js apps                                                 |
-| [@gasket/react-intl]       | 6.34.6  | React component library to enable localization for gasket apps.                      |
+| [@gasket/nextjs]           | 6.35.0  | Gasket integrations for Next.js apps                                                 |
+| [@gasket/react-intl]       | 6.35.0  | React component library to enable localization for gasket apps.                      |
 | [@gasket/redux]            | 6.34.6  | Gasket Redux Configuration                                                           |
-| [@gasket/resolve]          | 6.34.6  | Essential module resolution & configuration management for gasket plugins & presets. |
-| [@gasket/typescript-tests] | 6.34.6  | Not a published package; hosts unit tests to verify TypeScript support               |
+| [@gasket/resolve]          | 6.35.0  | Essential module resolution & configuration management for gasket plugins & presets. |
+| [@gasket/typescript-tests] | 6.35.0  | Not a published package; hosts unit tests to verify TypeScript support               |
 | [@gasket/utils]            | 6.34.6  | Reusable utilities for Gasket internals                                              |
-| [create-gasket-app]        | 6.34.6  | starter pack for creating a gasket app                                               |
+| [create-gasket-app]        | 6.35.0  | starter pack for creating a gasket app                                               |
 
 ## Configurations
 
