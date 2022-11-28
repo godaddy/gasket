@@ -57,7 +57,8 @@ module.exports = function configureHook(gasket, config) {
     defaultLocale = defaultLanguage || 'en',
     localesMap = languageMap || {},
     localesDir,
-    manifestFilename = 'locales-manifest.json'
+    manifestFilename = 'locales-manifest.json',
+    preloadLocales = false
   } = intlConfig;
 
   const fullLocalesDir = path.join(root, localesDir);
@@ -86,6 +87,7 @@ module.exports = function configureHook(gasket, config) {
    * @property {object} localesMap - Mapping of locales to share files
    * @property {string} localesDir - Path to on-disk directory where locale files exists
    * @property {string} manifestFilename - Name of the manifest file
+   * @property {boolean} preloadLocales - Preloads locale files if set to true
    * @property {object} modules - Enable locale files collation from node modules
    * @property {string} modules.localesDir - Lookup dir for module files
    * @property {string[]} modules.excludes - List of modules to ignore
@@ -100,6 +102,7 @@ module.exports = function configureHook(gasket, config) {
       localesMap,
       localesDir: fullLocalesDir,
       manifestFilename,
+      preloadLocales,
       modules
     }
   };
