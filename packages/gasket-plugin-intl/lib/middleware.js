@@ -43,7 +43,7 @@ module.exports = function middlewareHook(gasket) {
   const localesParentDir = path.dirname(localesDir);
   const localeUtils = new LocaleUtils({ manifest, basePath });
   if (preloadLocales) {
-    Object.keys(manifest.paths).map((localePath) => require(path.join(localesDir.slice(0, -8), localePath)));
+    Object.keys(manifest.paths).map((localePath) => require(path.join(localesParentDir, localePath)));
   }
 
   return async function intlMiddleware(req, res, next) {

@@ -60,7 +60,8 @@ required. However, these options exist to customize an app's setup.
   - `excludes` - (string[]) List of modules to ignore
 - `nextRouting` - (boolean) Enable [Next.js Routing] when used with
   [@gasket/plugin-nextjs]. (default: true)
-- `preloadLocales` (boolean) - Preloads the locale files from the manifest file in the middlewareHook.
+- `preloadLocales` (boolean) - Preloads the locale files from the manifest at startup,
+  allowing a faster first response.
 
 #### Example config
 
