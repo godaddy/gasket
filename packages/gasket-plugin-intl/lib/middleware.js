@@ -29,11 +29,22 @@ function formatLocale(language) {
 }
 
 module.exports = function middlewareHook(gasket) {
-  const { defaultLocale, basePath, localesMap, localesDir, manifestFilename, locales } = getIntlConfig(gasket);
+  const {
+    defaultLocale,
+    basePath,
+    localesMap,
+    localesDir,
+    manifestFilename,
+    locales,
+    preloadLocales
+  } = getIntlConfig(gasket);
 
   const manifest = require(path.join(localesDir, manifestFilename));
   const localesParentDir = path.dirname(localesDir);
   const localeUtils = new LocaleUtils({ manifest, basePath });
+  if (preloadLocales) {
+    Object.keys(manifest.paths).map((localePath) => require(path.join(localesParentDir, localePath)));
+  }
 
   return async function intlMiddleware(req, res, next) {
     let preferredLocale = defaultLocale;
