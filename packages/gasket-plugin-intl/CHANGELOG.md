@@ -1,5 +1,9 @@
 # `@gasket/plugin-intl`
 
+### 6.35.1
+
+- Add option to preload locales file ([#491])
+
 ### 6.34.5
 
 - Upgrade fs-extra to v10 ([#467])
@@ -204,3 +208,4 @@
 [#451]: https://github.com/godaddy/gasket/pull/451
 [#459]: https://github.com/godaddy/gasket/pull/459
 [#460]: https://github.com/godaddy/gasket/pull/460
+[#491]: https://github.com/godaddy/gasket/pull/491
