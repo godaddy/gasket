@@ -49,6 +49,13 @@ describe('middleware', function () {
       next = sinon.stub();
     });
 
+    it('preloadLocales is true', async function () {
+      mockGasket.config.intl.preloadLocales = true;
+      layer = middlewareHook(mockGasket);
+      await layer(req, res, next);
+      assume(mockGasket.execWaterfall).calledWith('intlLocale', 'fr-FR', { req, res });
+    });
+
     it('executes expected lifecycle', async function () {
       await layer(req, res, next);
       assume(mockGasket.execWaterfall).calledWith('intlLocale', 'fr-FR', { req, res });

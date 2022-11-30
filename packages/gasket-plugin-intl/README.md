@@ -60,6 +60,8 @@ required. However, these options exist to customize an app's setup.
   - `excludes` - (string[]) List of modules to ignore
 - `nextRouting` - (boolean) Enable [Next.js Routing] when used with
   [@gasket/plugin-nextjs]. (default: true)
+- `preloadLocales` (boolean) - Preloads the locale files from the manifest at startup,
+  allowing a faster first response.
 
 #### Example config
 
@@ -73,7 +75,8 @@ module.exports = {
     localesMap: {
       'zh-HK': 'zh-TW',
       'zh-SG': 'zh-CN'
-    }
+    },
+    preloadLocales: true
   }
 }
 ```

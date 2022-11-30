@@ -49,12 +49,21 @@ describe('configure', function () {
       localesMap: {},
       localesDir: '/path/to/root/public/locales',
       manifestFilename: 'locales-manifest.json',
+      preloadLocales: false,
       modules: false
     });
   });
 
   it('user config overrides defaults', function () {
-    const results = configure(mockGasket, { root, intl: { user: 'stuff', basePath: 'custom', defaultLocale: 'en-US' } });
+    const results = configure(mockGasket, {
+      root,
+      intl: {
+        user: 'stuff',
+        basePath: 'custom',
+        defaultLocale: 'en-US',
+        preloadLocales: true
+      }
+    });
     assume(results.intl).eqls({
       user: 'stuff',
       basePath: 'custom',
@@ -63,6 +72,7 @@ describe('configure', function () {
       localesMap: {},
       localesDir: '/path/to/root/public/locales',
       manifestFilename: 'locales-manifest.json',
+      preloadLocales: true,
       modules: false
     });
   });
