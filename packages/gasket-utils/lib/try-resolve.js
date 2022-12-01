@@ -1,18 +1,19 @@
 /**
- * Tries to require a module, but ignores if it is not found.
+ * Tries to require.resolve a module, but ignores if it is not found.
  * If not found, result will be null.
  *
  * @example
- * const { tryRequire } = require('@gasket/utils');
+ * const { tryResolve } = require('@gasket/utils');
  *
- *  let someConfig = tryRequire('../might/be/a/path/to/some/file');
+ *  let modulePath: string = tryResolve('../might/be/a/path/to/some/file');
  *
- *  if(!someConfig) {
- *   someConfig = require('./default-config')
+ *  if(modulePath) {
+ *   modulePath = require(modulePath)
  * }
  *
  * @param {string} modulePath - Module to import
- * @returns {object} module
+ * @param {string[]} paths - Paths to search for the module
+ * @returns {string} module path
  */
 function tryResolve(modulePath, paths = []) {
   try {

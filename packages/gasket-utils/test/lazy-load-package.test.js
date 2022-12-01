@@ -1,4 +1,4 @@
-const proxyquire = require('proxyquire').noCallThru();;
+const proxyquire = require('proxyquire').noCallThru();
 const assume = require('assume');
 const sinon = require('sinon');
 
@@ -43,7 +43,7 @@ describe('lazyLoadPackage', function () {
         join: joinStub
       },
       './package-manager': class MockPackageManager {
-        constructor() { packageManagerStub(...arguments) }
+        constructor() { packageManagerStub(...arguments); }
         exec() { packageManagerExecStub(...arguments); }
       },
       './try-resolve': tryResolveStub,

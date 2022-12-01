@@ -6,6 +6,7 @@ describe('index', () => {
 
     const expected = [
       'tryRequire',
+      'tryResolve',
       'applyConfigOverrides',
       'applyEnvironmentOverrides',
       'runShellCommand',
