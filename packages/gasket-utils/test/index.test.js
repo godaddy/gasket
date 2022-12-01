@@ -9,7 +9,8 @@ describe('index', () => {
       'applyConfigOverrides',
       'applyEnvironmentOverrides',
       'runShellCommand',
-      'PackageManager'
+      'PackageManager',
+      'lazyLoadPackage'
     ];
 
     assume(expected.every(k => k in utils)).true();

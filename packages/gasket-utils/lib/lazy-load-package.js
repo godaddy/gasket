@@ -1,6 +1,7 @@
 const fs = require('fs/promises');
 const path = require('path');
 const PackageManager = require('./package-manager');
+const tryResolve = require('./try-resolve');
 
 /**
  * Determine package manager
@@ -32,15 +33,14 @@ module.exports = async function lazyLoadPackage(dependency, gasket) {
   const { root } = gasket.config;
   const cmd = await getPkgManager(root, logger);
   const package = dependency.split('/')[0];
+  const modulePath = tryResolve(dependency, [root, __dirname]);
 
-  try {
-    require(require.resolve(`${dependency}`, { paths: [root, __dirname] }));
+  if (modulePath) {
     logger.info(`LazyLoadPackage - Package "${dependency}" already installed`);
     return require(dependency);
-  } catch (err) {
-    logger.info(`LazyLoadPackage - Package "${dependency}" not found`);
   }
 
+  logger.info(`LazyLoadPackage - Package "${dependency}" not found`);
   logger.warning(`LazyLoadPackage - installing "${package}" - save as a devDependency to avoid this`);
   const manager = new PackageManager({ packageManager: cmd, dest: root });
   await manager.exec('install', [package]);

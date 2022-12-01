@@ -2,7 +2,7 @@ const proxyquire = require('proxyquire').noCallThru();;
 const assume = require('assume');
 const sinon = require('sinon');
 
-describe.only('lazyLoadPackage', function () {
+describe('lazyLoadPackage', function () {
   let lazyLoadPackage;
   let mockGasket;
   let mockImports;
@@ -11,9 +11,9 @@ describe.only('lazyLoadPackage', function () {
   let packageManagerStub;
   let packageManagerExecStub;
   let fakePackage;
-  let loggerInfo;
-  let loggerWarning;
-  let testStub;
+  let loggerInfoStub;
+  let loggerWarningStub;
+  let tryResolveStub;
 
   beforeEach(function () {
     readFileStub = sinon.stub();
@@ -21,17 +21,17 @@ describe.only('lazyLoadPackage', function () {
     packageManagerStub = sinon.stub();
     packageManagerExecStub = sinon.stub();
     fakePackage = sinon.stub();
-    loggerInfo = sinon.stub();
-    loggerWarning = sinon.stub();
-    testStub = sinon.stub(); // temp
+    loggerInfoStub = sinon.stub();
+    loggerWarningStub = sinon.stub();
+    tryResolveStub = sinon.stub();
 
     mockGasket = {
       config: {
         root: '/app'
       },
       logger: {
-        info: loggerInfo,
-        warning: loggerWarning
+        info: loggerInfoStub,
+        warning: loggerWarningStub
       }
     };
 
@@ -46,11 +46,8 @@ describe.only('lazyLoadPackage', function () {
         constructor() { packageManagerStub(...arguments) }
         exec() { packageManagerExecStub(...arguments); }
       },
-      'my-package': fakePackage,
-      'app/my-package': fakePackage,
-      'require': { // temp
-        resolve: testStub // temp
-      } // temp
+      './try-resolve': tryResolveStub,
+      'my-package': fakePackage
     };
 
     lazyLoadPackage = proxyquire('../lib/lazy-load-package', mockImports);
@@ -63,31 +60,32 @@ describe.only('lazyLoadPackage', function () {
   describe('npm package manager', function () {
     it('installs "my-package" with PackageManager', async function () {
       readFileStub.resolves(false);
-      fakePackage.resolves(false); // package should not resolve - not installed
+      tryResolveStub.returns(false);
+      fakePackage.resolves(false);
       await lazyLoadPackage('my-package', mockGasket);
 
-      assume(loggerWarning.args[0][0])
-        .equals('LazyLoadPackage - installing "my-package" - save as a devDependency to avoid this')
-      assume(loggerInfo.args[0][0])
+      assume(loggerWarningStub.args[0][0])
+        .equals('LazyLoadPackage - installing "my-package" - save as a devDependency to avoid this');
+      assume(loggerInfoStub.args[0][0])
         .equals('LazyLoadPackage - Package "my-package" not found');
-      assume(packageManagerStub.args[0][0].packageManager).equals('npm')
-      assume(packageManagerExecStub.args[0][0]).equals('install');
-      assume(packageManagerExecStub.args[0][1][0]).equals('my-package');
+      assume(packageManagerStub.args[0][0].packageManager)
+        .equals('npm');
+      assume(packageManagerExecStub.args[0][0])
+        .equals('install');
+      assume(packageManagerExecStub.args[0][1][0])
+        .equals('my-package');
     });
 
     it('does not install when package is present', async function () {
-      readFileStub.resolves(false);
-      fakePackage.resolves(true); // package should resolve
+      readFileStub.rejects();
+      tryResolveStub.returns(true);
+      fakePackage.resolves(true);
       await lazyLoadPackage('my-package', mockGasket);
-      console.log('--------', testStub.args); // temp
-      assume(loggerWarning.args[0][0])
-        .equals('LazyLoadPackage - installing "my-package" - save as a devDependency to avoid this');
-      assume(loggerInfo.args[0][0])
-        .equals('LazyLoadPackage - Package "my-package" not found'); // this should be a different stdout message - catch block still active
-      console.log(loggerInfo.args)
-      assume(packageManagerStub.args[0][0].packageManager).equals('npm');
-      assume(packageManagerExecStub.args[0][0]).equals('install');
-      assume(packageManagerExecStub.args[0][1][0]).equals('my-package');
+
+      assume(loggerInfoStub.args[0][0])
+        .equals('LazyLoadPackage - Installing using npm');
+      assume(loggerInfoStub.args[1][0])
+        .equals('LazyLoadPackage - Package "my-package" already installed');
     });
   });
 
@@ -96,9 +94,29 @@ describe.only('lazyLoadPackage', function () {
       readFileStub.resolves(true);
       fakePackage.resolves(false);
       await lazyLoadPackage('my-package', mockGasket);
-      assume(packageManagerStub.args[0][0].packageManager).equals('yarn');
-      assume(packageManagerExecStub.args[0][0]).equals('install');
-      assume(packageManagerExecStub.args[0][1][0]).equals('my-package');
+
+      assume(loggerInfoStub.args[0][0])
+        .equals('LazyLoadPackage - Installing using yarn');
+      assume(loggerInfoStub.args[1][0])
+        .equals('LazyLoadPackage - Package "my-package" not found');
+      assume(packageManagerStub.args[0][0].packageManager)
+        .equals('yarn');
+      assume(packageManagerExecStub.args[0][0])
+        .equals('install');
+      assume(packageManagerExecStub.args[0][1][0])
+        .equals('my-package');
+    });
+
+    it('does not install when package is present', async function () {
+      readFileStub.resolves(true);
+      tryResolveStub.returns(true);
+      fakePackage.resolves(true);
+      await lazyLoadPackage('my-package', mockGasket);
+
+      assume(loggerInfoStub.args[0][0])
+        .equals('LazyLoadPackage - Installing using yarn');
+      assume(loggerInfoStub.args[1][0])
+        .equals('LazyLoadPackage - Package "my-package" already installed');
     });
   });
 });
