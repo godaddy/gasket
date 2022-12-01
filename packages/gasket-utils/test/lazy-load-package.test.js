@@ -63,7 +63,7 @@ describe.only('lazyLoadPackage', function () {
   describe('npm package manager', function () {
     it('installs "my-package" with PackageManager', async function () {
       readFileStub.resolves(false);
-      fakePackage.resolves(false);
+      fakePackage.resolves(false); // package should not resolve - not installed
       await lazyLoadPackage('my-package', mockGasket);
 
       assume(loggerWarning.args[0][0])
@@ -77,12 +77,13 @@ describe.only('lazyLoadPackage', function () {
 
     it('does not install when package is present', async function () {
       readFileStub.resolves(false);
+      fakePackage.resolves(true); // package should resolve
       await lazyLoadPackage('my-package', mockGasket);
       console.log('--------', testStub.args); // temp
       assume(loggerWarning.args[0][0])
         .equals('LazyLoadPackage - installing "my-package" - save as a devDependency to avoid this');
       assume(loggerInfo.args[0][0])
-        .equals('LazyLoadPackage - Package "my-package" not found');
+        .equals('LazyLoadPackage - Package "my-package" not found'); // this should be a different stdout message - catch block still active
       console.log(loggerInfo.args)
       assume(packageManagerStub.args[0][0].packageManager).equals('npm');
       assume(packageManagerExecStub.args[0][0]).equals('install');
