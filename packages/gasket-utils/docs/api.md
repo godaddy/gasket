@@ -11,8 +11,10 @@ Name | Description
 ------ | -----------
 [applyConfigOverrides(config, context)] | Normalize the config by applying any overrides for environments, commands, or local-only config file.
 ~~[applyEnvironmentOverrides(gasketConfig, config, \[localFile\])]~~ | Normalize the config by applying any environment or local overrides
+[requireWithInstall(dependency, gasket)] | requireWithInstall - load devDependency programmatically when needed
 [runShellCommand(cmd, \[argv\], \[options\], \[debug\])] | Promise friendly wrapper to running a shell command (eg: git, npm, ls) which passes back any { stdout, stderr } to the error thrown.
 [tryRequire(path)] | Tries to require a module, but ignores if it is not found. If not found, result will be null.
+[tryResolve(modulePath, options)] | 
 
 
 ## PackageManager
@@ -165,6 +167,19 @@ Normalize the config by applying any environment or local overrides
 | \[localFile\] | `string` | Optional file to load relative to gasket root |
 
 
+## requireWithInstall(dependency, gasket)
+
+requireWithInstall - load devDependency programmatically when needed
+
+**Kind**: global function  
+**Returns**: `object` - module  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| dependency | `string` | The require'ed dep needed |
+| gasket | `Gasket` | Gasket instance |
+
+
 ## runShellCommand(cmd, \[argv\], \[options\], \[debug\])
 
 Promise friendly wrapper to running a shell command (eg: git, npm, ls)
@@ -232,14 +247,27 @@ const { tryRequire } = require('@gasket/utils');
   someConfig = require('./default-config')
 }
 ```
+
+## tryResolve(modulePath, options)
+
+**Kind**: global function  
+**Returns**: `string` - module path  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| modulePath | `string` | Module to import |
+| options | `object` | Paths to search for the module |
+
 <!-- LINKS -->
 
 [PackageManager]:#packagemanager
 [`PackageManager`]:#new-packagemanageroptions
 [applyConfigOverrides(config, context)]:#applyconfigoverridesconfig-context
 [applyEnvironmentOverrides(gasketConfig, config, \[localFile\])]:#applyenvironmentoverridesgasketconfig-config-localfile
+[requireWithInstall(dependency, gasket)]:#requirewithinstalldependency-gasket
 [runShellCommand(cmd, \[argv\], \[options\], \[debug\])]:#runshellcommandcmd-argv-options-debug
 [tryRequire(path)]:#tryrequirepath
+[tryResolve(modulePath, options)]:#tryresolvemodulepath-options
 [new PackageManager(options)]:#new-packagemanageroptions
 [.exec(cmd, args)]:#packagemanagerexeccmd-args
 [.link(packages)]:#packagemanagerlinkpackages

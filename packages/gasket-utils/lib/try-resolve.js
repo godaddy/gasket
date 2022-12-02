@@ -14,6 +14,7 @@
 
 /**
  * Wrapped for testing purposes
+ * @private
 * @param {string} modulePath - Module to import
 * @param {object} options - Paths to search for the module
 * @returns {string} module path

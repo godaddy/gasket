@@ -5,6 +5,7 @@ const { tryResolve, resolve } = require('./try-resolve');
 
 /**
  * Determine package manager
+ * @private
  * @param {string} root Gasket root
  * @returns {string} Package manager cmd
  */
@@ -16,7 +17,7 @@ async function getPkgManager(root) {
       cmd: 'add',
       flag: '--dev',
       logMsg: (pkg) =>
-        `LazyLoadPackage - installing "${pkg}" with "yarn" - saving as a devDependency`
+        `requireWithInstall - installing "${pkg}" with "yarn" - saving as a devDependency`
     };
   } catch (err) {
     return {
@@ -24,18 +25,18 @@ async function getPkgManager(root) {
       cmd: 'install',
       flag: '--no-save',
       logMsg: (pkg) =>
-        `LazyLoadPackage - installing "${pkg}" with "npm" - save as a devDependency to avoid this`
+        `requireWithInstall - installing "${pkg}" with "npm" - save as a devDependency to avoid this`
     };
   }
 }
 
 /**
- * Lazy load package - load devDependency programmatically when needed
+ * requireWithInstall - load devDependency programmatically when needed
  * @param {string} dependency The require'ed dep needed
  * @param {Gasket} gasket Gasket instance
  * @returns {object} module
  */
-module.exports = async function lazyLoadPackage(dependency, gasket) {
+async function requireWithInstall(dependency, gasket) {
   const { logger } = gasket;
   const { root } = gasket.config;
   const resolveOptions = { paths: [root] };
@@ -52,8 +53,10 @@ module.exports = async function lazyLoadPackage(dependency, gasket) {
   try {
     await manager.exec(cmd, [pkg, flag]);
   } catch (err) {
-    logger.error(`LazyLoadPackage - Failed to install "${pkg}" using "${pkgMananger}"`);
+    logger.error(`requireWithInstall - Failed to install "${pkg}" using "${pkgMananger}"`);
     throw err;
   }
   return require(resolve(dependency, resolveOptions));
-};
+}
+
+module.exports = requireWithInstall;
