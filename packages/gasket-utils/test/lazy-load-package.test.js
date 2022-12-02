@@ -1,3 +1,4 @@
+/* eslint-disable max-statements */
 const proxyquire = require('proxyquire').noCallThru();
 const assume = require('assume');
 const sinon = require('sinon');
@@ -13,6 +14,7 @@ describe('lazyLoadPackage', function () {
   let fakePackage;
   let loggerInfoStub;
   let tryResolveStub;
+  let resolveStub;
 
   beforeEach(function () {
     readFileStub = sinon.stub();
@@ -22,6 +24,7 @@ describe('lazyLoadPackage', function () {
     fakePackage = sinon.stub();
     loggerInfoStub = sinon.stub();
     tryResolveStub = sinon.stub();
+    resolveStub = sinon.stub();
 
     mockGasket = {
       config: {
@@ -43,7 +46,10 @@ describe('lazyLoadPackage', function () {
         constructor() { packageManagerStub(...arguments); }
         exec() { packageManagerExecStub(...arguments); }
       },
-      './try-resolve': tryResolveStub,
+      './try-resolve': {
+        tryResolve: tryResolveStub,
+        resolve: resolveStub
+      },
       'my-package': fakePackage,
       '@scoped/package': fakePackage
     };
@@ -60,6 +66,7 @@ describe('lazyLoadPackage', function () {
       readFileStub.rejects();
       tryResolveStub.returns(false);
       fakePackage.resolves(false);
+      resolveStub.returns('my-package');
       await lazyLoadPackage('my-package', mockGasket);
 
       assume(loggerInfoStub.args[0][0])
@@ -74,39 +81,43 @@ describe('lazyLoadPackage', function () {
 
     it('does not install when package is present', async function () {
       readFileStub.rejects();
-      tryResolveStub.returns(true);
+      tryResolveStub.returns('my-package');
       fakePackage.resolves(true);
       await lazyLoadPackage('my-package', mockGasket);
 
-      assume(loggerInfoStub.args[0][0])
-        .equals('LazyLoadPackage - Package "my-package" already installed');
+      assume(tryResolveStub()).equals('my-package');
+      assume(await fakePackage()).equals(true);
     });
   });
 
   describe('yarn package manager', function () {
     it('installs "my-package" with PackageManager', async function () {
       readFileStub.resolves();
+      tryResolveStub.returns(false);
       fakePackage.resolves(false);
+      resolveStub.returns('my-package');
       await lazyLoadPackage('my-package', mockGasket);
 
       assume(loggerInfoStub.args[0][0])
-        .equals('LazyLoadPackage - installing "my-package" with "yarn" - save as a devDependency to avoid this');
+        .equals('LazyLoadPackage - installing "my-package" with "yarn" - saving as a devDependency');
       assume(packageManagerStub.args[0][0].packageManager)
         .equals('yarn');
       assume(packageManagerExecStub.args[0][0])
-        .equals('install');
+        .equals('add');
       assume(packageManagerExecStub.args[0][1][0])
         .equals('my-package');
     });
 
     it('does not install when package is present', async function () {
       readFileStub.resolves();
-      tryResolveStub.returns(true);
+      tryResolveStub.returns('my-package');
       fakePackage.resolves(true);
       await lazyLoadPackage('my-package', mockGasket);
 
-      assume(loggerInfoStub.args[0][0])
-        .equals('LazyLoadPackage - Package "my-package" already installed');
+      assume(tryResolveStub())
+        .equals('my-package');
+      assume(await fakePackage())
+        .equals(true);
     });
   });
 
@@ -116,6 +127,7 @@ describe('lazyLoadPackage', function () {
       readFileStub.rejects();
       tryResolveStub.returns(false);
       fakePackage.resolves(false);
+      resolveStub.returns('@scoped/package');
       await lazyLoadPackage('@scoped/package', mockGasket);
 
       assume(loggerInfoStub.args[0][0])
@@ -130,12 +142,14 @@ describe('lazyLoadPackage', function () {
 
     it('does not install when scoped package is present', async function () {
       readFileStub.rejects();
-      tryResolveStub.returns(true);
+      tryResolveStub.returns('@scoped/package');
       fakePackage.resolves(true);
       await lazyLoadPackage('@scoped/package', mockGasket);
 
-      assume(loggerInfoStub.args[0][0])
-        .equals('LazyLoadPackage - Package "@scoped/package" already installed');
+      assume(tryResolveStub())
+        .equals('@scoped/package');
+      assume(await fakePackage())
+        .equals(true);
     });
   });
 });

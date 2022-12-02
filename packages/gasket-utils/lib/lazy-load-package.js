@@ -1,7 +1,7 @@
 const fs = require('fs/promises');
 const path = require('path');
 const PackageManager = require('./package-manager');
-const tryResolve = require('./try-resolve');
+const { tryResolve, resolve } = require('./try-resolve');
 
 /**
  * Determine package manager
@@ -11,9 +11,21 @@ const tryResolve = require('./try-resolve');
 async function getPkgManager(root) {
   try {
     await fs.readFile(path.join(root, 'yarn.lock'), 'utf8');
-    return 'yarn';
+    return {
+      pkgMananger: 'yarn',
+      cmd: 'add',
+      flag: '--dev',
+      logMsg: (pkg) =>
+        `LazyLoadPackage - installing "${pkg}" with "yarn" - saving as a devDependency`
+    };
   } catch (err) {
-    return 'npm';
+    return {
+      pkgMananger: 'npm',
+      cmd: 'install',
+      flag: '--no-save',
+      logMsg: (pkg) =>
+        `LazyLoadPackage - installing "${pkg}" with "npm" - save as a devDependency to avoid this`
+    };
   }
 }
 
@@ -26,19 +38,22 @@ async function getPkgManager(root) {
 module.exports = async function lazyLoadPackage(dependency, gasket) {
   const { logger } = gasket;
   const { root } = gasket.config;
-  const modulePath = tryResolve(dependency, [root, __dirname]);
+  const resolveOptions = { paths: [root] };
+  const modulePath = tryResolve(dependency, resolveOptions);
 
-  if (modulePath) {
-    logger.info(`LazyLoadPackage - Package "${dependency}" already installed`);
-    return require(dependency);
-  }
+  if (modulePath) return require(modulePath);
 
-  const cmd = await getPkgManager(root);
+  const { pkgMananger, cmd, flag, logMsg } = await getPkgManager(root);
   const rePackage = /^(@[^/]+\/)?([^/]+)/;
   const pkg = dependency.match(rePackage)[0];
 
-  logger.info(`LazyLoadPackage - installing "${pkg}" with "${cmd}" - save as a devDependency to avoid this`);
-  const manager = new PackageManager({ packageManager: cmd, dest: root });
-  await manager.exec('install', [pkg]);
-  return require(dependency);
+  const manager = new PackageManager({ packageManager: pkgMananger, dest: root });
+  logger.info(logMsg(pkg));
+  try {
+    await manager.exec(cmd, [pkg, flag]);
+  } catch (err) {
+    logger.error(`LazyLoadPackage - Failed to install "${pkg}" using "${pkgMananger}"`);
+    throw err;
+  }
+  return require(resolve(dependency, resolveOptions));
 };

@@ -1,6 +1,6 @@
 const assume = require('assume');
 const path = require('path');
-const tryResolve = require('../lib/try-resolve');
+const { tryResolve } = require('../lib/try-resolve');
 
 describe('tryResolve', () => {
 

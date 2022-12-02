@@ -10,14 +10,26 @@
  *  if(modulePath) {
  *   modulePath = require(modulePath)
  * }
- *
- * @param {string} modulePath - Module to import
- * @param {object} options - Paths to search for the module
- * @returns {string} module path
  */
-function tryResolve(modulePath, options = { paths: [] }) {
+
+/**
+ * Wrapped for testing purposes
+* @param {string} modulePath - Module to import
+* @param {object} options - Paths to search for the module
+* @returns {string} module path
+*/
+function resolve(modulePath, options) {
+  return require.resolve(modulePath, options);
+}
+
+/**
+* @param {string} modulePath - Module to import
+* @param {object} options - Paths to search for the module
+* @returns {string} module path
+*/
+function tryResolve(modulePath, options) {
   try {
-    return require.resolve(modulePath, options);
+    return resolve(modulePath, options);
   } catch (err) {
     if (err.code === 'MODULE_NOT_FOUND') {
       return null;
@@ -26,4 +38,7 @@ function tryResolve(modulePath, options = { paths: [] }) {
   }
 }
 
-module.exports = tryResolve;
+module.exports = {
+  tryResolve,
+  resolve
+};
