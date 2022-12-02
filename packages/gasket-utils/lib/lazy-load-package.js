@@ -6,20 +6,15 @@ const tryResolve = require('./try-resolve');
 /**
  * Determine package manager
  * @param {string} root Gasket root
- * @param {Logger} logger Gasket logger
  * @returns {string} Package manager cmd
  */
-async function getPkgManager(root, logger) {
-  const yarnLock = await fs.readFile(path.join(root, 'yarn.lock'), 'utf8').catch(() => {
-    logger.info('LazyLoadPackage - Installing using npm');
-  });
-
-  if (yarnLock) {
-    logger.info('LazyLoadPackage - Installing using yarn');
+async function getPkgManager(root) {
+  try {
+    await fs.readFile(path.join(root, 'yarn.lock'), 'utf8');
     return 'yarn';
+  } catch (err) {
+    return 'npm';
   }
-
-  return 'npm';
 }
 
 /**
@@ -31,8 +26,6 @@ async function getPkgManager(root, logger) {
 module.exports = async function lazyLoadPackage(dependency, gasket) {
   const { logger } = gasket;
   const { root } = gasket.config;
-  const cmd = await getPkgManager(root, logger);
-  const pkg = dependency.split('/')[0];
   const modulePath = tryResolve(dependency, [root, __dirname]);
 
   if (modulePath) {
@@ -40,8 +33,11 @@ module.exports = async function lazyLoadPackage(dependency, gasket) {
     return require(dependency);
   }
 
-  logger.info(`LazyLoadPackage - Package "${dependency}" not found`);
-  logger.warning(`LazyLoadPackage - installing "${pkg}" - save as a devDependency to avoid this`);
+  const cmd = await getPkgManager(root);
+  const rePackage = /^(@[^/]+\/)?([^/]+)/;
+  const pkg = dependency.match(rePackage)[0];
+
+  logger.info(`LazyLoadPackage - installing "${pkg}" with "${cmd}" - save as a devDependency to avoid this`);
   const manager = new PackageManager({ packageManager: cmd, dest: root });
   await manager.exec('install', [pkg]);
   return require(dependency);

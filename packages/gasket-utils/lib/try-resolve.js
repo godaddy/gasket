@@ -12,12 +12,12 @@
  * }
  *
  * @param {string} modulePath - Module to import
- * @param {string[]} paths - Paths to search for the module
+ * @param {object} options - Paths to search for the module
  * @returns {string} module path
  */
-function tryResolve(modulePath, paths = []) {
+function tryResolve(modulePath, options = { paths: [] }) {
   try {
-    return require.resolve(modulePath, { paths });
+    return require.resolve(modulePath, options);
   } catch (err) {
     if (err.code === 'MODULE_NOT_FOUND') {
       return null;

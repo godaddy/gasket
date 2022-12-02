@@ -7,7 +7,7 @@ describe('tryResolve', () => {
   it('loads an existing module', () => {
     const results = tryResolve(
       path.join(__dirname, 'fixtures/config.local'),
-      [__dirname]
+      { paths: [__dirname] }
     );
     assume(results).eqls(`${__dirname}/fixtures/config.local.js`);
   });
@@ -15,7 +15,7 @@ describe('tryResolve', () => {
   it('returns null when module not found', () => {
     const results = tryResolve(
       path.join(__dirname, 'fixtures', 'missing'),
-      [__dirname]
+      { paths: [__dirname] }
     );
     assume(results).eqls(null);
   });
