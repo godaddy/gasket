@@ -2,6 +2,7 @@ const fs = require('fs/promises');
 const path = require('path');
 const PackageManager = require('./package-manager');
 const { tryResolve, resolve } = require('./try-resolve');
+const rePackage = /^(@[^/]+\/)?([^/]+)/;
 
 /**
  * Determine package manager
@@ -45,7 +46,6 @@ async function requireWithInstall(dependency, gasket) {
   if (modulePath) return require(modulePath);
 
   const { pkgMananger, cmd, flag, logMsg } = await getPkgManager(root);
-  const rePackage = /^(@[^/]+\/)?([^/]+)/;
   const pkg = dependency.match(rePackage)[0];
 
   const manager = new PackageManager({ packageManager: pkgMananger, dest: root });
