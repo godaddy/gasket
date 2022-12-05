@@ -6,10 +6,12 @@ describe('index', () => {
 
     const expected = [
       'tryRequire',
+      'tryResolve',
       'applyConfigOverrides',
       'applyEnvironmentOverrides',
       'runShellCommand',
-      'PackageManager'
+      'PackageManager',
+      'requireWithInstall'
     ];
 
     assume(expected.every(k => k in utils)).true();
