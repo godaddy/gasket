@@ -1,6 +1,6 @@
 {
   "name": "@gasket/preset-api",
-  "version": "6.35.0",
+  "version": "6.35.2",
   "description": "Create Express-based API with Gasket",
   "main": "lib",
   "types": "lib/index.d.ts",
@@ -20,7 +20,7 @@
     "url": "https://github.com/godaddy/gasket/issues"
   },
   "dependencies": {
-    "@gasket/plugin-config": "^6.34.6",
+    "@gasket/plugin-config": "^6.35.2",
     "@gasket/plugin-docs": "^6.35.0",
     "@gasket/plugin-docsify": "^6.35.0",
     "@gasket/plugin-express": "^6.35.0",
