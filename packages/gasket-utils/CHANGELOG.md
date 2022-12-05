@@ -1,5 +1,8 @@
 # `@gasket/utils`
 
+### 6.35.2
+- add requireWithInstall & tryResolve utils ([#492])
+
 ### 6.34.4
 
 - Upgrade eslint-plugin-unicorn v43 ([#436])
@@ -66,3 +69,4 @@
 [#331]: https://github.com/godaddy/gasket/pull/331
 [#348]: https://github.com/godaddy/gasket/pull/348
 [#436]: https://github.com/godaddy/gasket/pull/436
+[#492]: https://github.com/godaddy/gasket/pull/492
