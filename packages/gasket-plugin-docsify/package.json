@@ -41,8 +41,6 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-docsify",
   "dependencies": {
-    "docsify": "^4.10.2",
-    "docsify-cli": "^4.4.2",
     "glob": "^8.0.0",
     "handlebars": "^4.7.6",
     "lodash.defaultsdeep": "^4.6.1",
@@ -52,6 +50,8 @@
     "@gasket/engine": "^6.35.0",
     "assume": "^2.3.0",
     "assume-sinon": "^1.1.0",
+    "docsify": "^4.10.2",
+    "docsify-cli": "^4.4.2",
     "eslint": "^8.7.0",
     "eslint-config-godaddy": "^6.0.0",
     "eslint-plugin-json": "^3.1.0",

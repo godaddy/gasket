@@ -1,6 +1,6 @@
 const defaultsDeep = require('lodash.defaultsdeep');
-const { serve } = require('docsify-cli/lib');
 const generateContent = require('./generate-content');
+const { requireWithInstall } = require('@gasket/utils');
 
 const defaultConfig = {
   theme: 'styles/gasket.css',
@@ -14,6 +14,7 @@ const defaultConfig = {
 };
 
 module.exports = async function docsView(gasket, docsConfigSet) {
+  const { serve } = await requireWithInstall('docsify-cli/lib', gasket);
   const userConfig = gasket.config.docsify || {};
   const docsifyConfig = defaultsDeep({}, userConfig, defaultConfig);
   const { port } = docsifyConfig;
