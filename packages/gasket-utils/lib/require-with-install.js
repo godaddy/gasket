@@ -14,7 +14,7 @@ async function getPkgManager(root) {
   try {
     await fs.readFile(path.join(root, 'yarn.lock'), 'utf8');
     return {
-      pkgMananger: 'yarn',
+      pkgManager: 'yarn',
       cmd: 'add',
       flags: ['--dev'],
       logMsg: (pkg) =>
@@ -22,7 +22,7 @@ async function getPkgManager(root) {
     };
   } catch (err) {
     return {
-      pkgMananger: 'npm',
+      pkgManager: 'npm',
       cmd: 'install',
       flags: ['--no-save', '--force'],
       logMsg: (pkg) =>
@@ -45,15 +45,15 @@ async function requireWithInstall(dependency, gasket) {
 
   if (modulePath) return require(modulePath);
 
-  const { pkgMananger, cmd, flags, logMsg } = await getPkgManager(root);
+  const { pkgManager, cmd, flags, logMsg } = await getPkgManager(root);
   const pkg = dependency.match(rePackage)[0];
 
-  const manager = new PackageManager({ packageManager: pkgMananger, dest: root });
+  const manager = new PackageManager({ packageManager: pkgManager, dest: root });
   logger.info(logMsg(pkg));
   try {
     await manager.exec(cmd, [pkg, ...flags]);
   } catch (err) {
-    logger.error(`requireWithInstall - Failed to install "${pkg}" using "${pkgMananger}"`);
+    logger.error(`requireWithInstall - Failed to install "${pkg}" using "${pkgManager}"`);
     throw err;
   }
   return require(resolve(dependency, resolveOptions));
