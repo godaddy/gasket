@@ -1,5 +1,7 @@
 # `@gasket/utils`
 
+- force install with npm ([#496])
+
 ### 6.35.2
 - add requireWithInstall & tryResolve utils ([#492])
 
@@ -70,3 +72,4 @@
 [#348]: https://github.com/godaddy/gasket/pull/348
 [#436]: https://github.com/godaddy/gasket/pull/436
 [#492]: https://github.com/godaddy/gasket/pull/492
+[#496]: https://github.com/godaddy/gasket/pull/496
