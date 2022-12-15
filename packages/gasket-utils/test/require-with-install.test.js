@@ -75,8 +75,8 @@ describe('requireWithInstall', function () {
         .equals('npm');
       assume(packageManagerExecStub.args[0][0])
         .equals('install');
-      assume(packageManagerExecStub.args[0][1][0])
-        .equals('my-package');
+      assume(packageManagerExecStub.args[0][1])
+        .eqls(['my-package', '--no-save', '--force']);
     });
 
     it('does not install when package is present', async function () {
@@ -104,8 +104,8 @@ describe('requireWithInstall', function () {
         .equals('yarn');
       assume(packageManagerExecStub.args[0][0])
         .equals('add');
-      assume(packageManagerExecStub.args[0][1][0])
-        .equals('my-package');
+      assume(packageManagerExecStub.args[0][1])
+        .eqls(['my-package', '--dev']);
     });
 
     it('does not install when package is present', async function () {
