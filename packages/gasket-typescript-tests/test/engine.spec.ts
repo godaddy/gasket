@@ -1,4 +1,4 @@
-import Gasket, { MaybeAsync } from '@gasket/engine';
+import Gasket, { MaybeAsync, Plugin } from '@gasket/engine';
 
 declare module '@gasket/engine' {
   interface HookExecTypes {
@@ -15,7 +15,7 @@ describe('@gasket/engine', () => {
     );
   });
 
-  it('should', async function () {
+  it('should infer the types of lifecycle parameters', async function () {
     const gasket = new Gasket(
       { root: __dirname, env: 'test' },
       { resolveFrom: __dirname }
@@ -29,5 +29,17 @@ describe('@gasket/engine', () => {
     gasket.execApplySync('example', async function (plugin, handler) {
       handler('a string', 123, true);
     });
+  });
+
+  it('defines the structure of a Gasket plugin', () => {
+    const myPlugin: Plugin = {
+      name: 'my-plugin',
+      dependencies: ['foo', 'bar'],
+      hooks: {
+        example(gasket, a, b, c) {
+          return true;
+        }
+      }
+    };
   });
 });
