@@ -31,6 +31,7 @@ declare module '@gasket/engine' {
 
   export type Plugin = {
     name: string;
+    dependencies?: Array<string>;
     hooks: {
       [K in HookId]?: Hook<K>;
     };
