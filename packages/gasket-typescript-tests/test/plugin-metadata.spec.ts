@@ -23,8 +23,8 @@ describe('@gasket/plugin-metadata', () => {
     });
   });
 
-  it('adds a manifest property to Gasket', () => {
-    const metadata: SlimGasket = {
+  it('adds a metadata property to Gasket', () => {
+    const gasket1: SlimGasket = {
       metadata: {
         app: {
           name: 'example',
@@ -34,13 +34,26 @@ describe('@gasket/plugin-metadata', () => {
             name: 'example'
           }
         },
-        plugins: [],
+        plugins: [
+          {
+            module: {},
+            name: '@mock/gasket-plugin-x',
+            configurations: [
+              {
+                name: 'configX',
+                description: 'Configures the X plugin',
+                type: 'object',
+                link: 'https://some.docs.url/'
+              }
+            ]
+          }
+        ],
         presets: [],
         modules: []
       }
     };
 
-    const metadata2: SlimGasket = {
+    const gasket2: SlimGasket = {
       metadata: {
         app: {
           name: 'example',
