@@ -1,4 +1,4 @@
-const assume = require('assume');
+// const expect = require('expect');
 const metadata = require('../lib/metadata');
 const { defaultConfig } = require('../lib/configure');
 
@@ -17,48 +17,48 @@ describe('metadata', () => {
 
   it('returns object', () => {
     const results = metadata(mockGasket, mockMeta);
-    assume(results).is.an('object');
+    expect(results).toBeInstanceOf(Object);
   });
 
   it('includes initial meta', () => {
     const results = metadata(mockGasket, mockMeta);
-    assume(results).property('bogus', true);
+    expect(results).toHaveProperty('bogus', true);
   });
 
   it('includes commands', () => {
     const results = metadata(mockGasket, mockMeta);
-    assume(results.commands).lengthOf(1);
-    assume(results.commands[0]).property('name', 'docs');
+    expect(results.commands).toHaveLength(1);
+    expect(results.commands[0]).toHaveProperty('name', 'docs');
   });
 
   it('includes lifecycles', () => {
     const results = metadata(mockGasket, mockMeta);
-    assume(results.lifecycles).lengthOf(3);
-    assume(results.lifecycles[0]).property('name', 'docsSetup');
-    assume(results.lifecycles[0]).property('link');
-    assume(results.lifecycles[0]).property('description');
-    assume(results.lifecycles[0]).property('command');
-    assume(results.lifecycles[1]).property('name', 'docsView');
-    assume(results.lifecycles[1]).property('link');
-    assume(results.lifecycles[1]).property('description');
-    assume(results.lifecycles[1]).property('command');
-    assume(results.lifecycles[2]).property('name', 'docsGenerate');
-    assume(results.lifecycles[2]).property('link');
-    assume(results.lifecycles[2]).property('description');
-    assume(results.lifecycles[2]).property('command');
+    expect(results.lifecycles).toHaveLength(3);
+    expect(results.lifecycles[0]).toHaveProperty('name', 'docsSetup');
+    expect(results.lifecycles[0]).toHaveProperty('link');
+    expect(results.lifecycles[0]).toHaveProperty('description');
+    expect(results.lifecycles[0]).toHaveProperty('command');
+    expect(results.lifecycles[1]).toHaveProperty('name', 'docsView');
+    expect(results.lifecycles[1]).toHaveProperty('link');
+    expect(results.lifecycles[1]).toHaveProperty('description');
+    expect(results.lifecycles[1]).toHaveProperty('command');
+    expect(results.lifecycles[2]).toHaveProperty('name', 'docsGenerate');
+    expect(results.lifecycles[2]).toHaveProperty('link');
+    expect(results.lifecycles[2]).toHaveProperty('description');
+    expect(results.lifecycles[2]).toHaveProperty('command');
   });
 
   it('includes structures with configured outputDir', () => {
     const results = metadata(mockGasket, mockMeta);
-    assume(results.structures).lengthOf(1);
-    assume(results.structures[0]).property('name', mockGasket.config.docs.outputDir + '/');
-    assume(results.structures[0]).property('description');
+    expect(results.structures).toHaveLength(1);
+    expect(results.structures[0]).toHaveProperty('name', mockGasket.config.docs.outputDir + '/');
+    expect(results.structures[0]).toHaveProperty('description');
   });
 
   it('falls back to defaults if not configured', () => {
     delete mockGasket.config.docs;
     const results = metadata(mockGasket, mockMeta);
-    assume(results).is.an('object');
-    assume(results.structures[0]).property('name', defaultConfig.outputDir + '/');
+    expect(results).toBeInstanceOf(Object);
+    expect(results.structures[0]).toHaveProperty('name', defaultConfig.outputDir + '/');
   });
 });
