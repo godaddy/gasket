@@ -32,12 +32,12 @@ async function getPkgManager(root) {
 }
 
 /**
- * requireWithInstall - load devDependency programmatically when needed
+ * requireDependency - load devDependency
  * @param {string} dependency The require'ed dep needed
  * @param {Gasket} gasket Gasket instance
  * @returns {object} module
  */
-async function requireWithInstall(dependency, gasket) {
+async function requireDependency(dependency, gasket) {
   const { logger } = gasket;
   const { root } = gasket.config;
   const resolveOptions = { paths: [root] };
@@ -57,6 +57,25 @@ async function requireWithInstall(dependency, gasket) {
     throw err;
   }
   return require(resolve(dependency, resolveOptions));
+}
+
+/**
+ * requireWithInstall - load devDependency request programmatically when needed
+ * @param {string|string[]} dependencyRequest The require'ed dep/s needed
+ * @param {Gasket} gasket Gasket instance
+ * @returns {object|object[]} module or list of modules
+ */
+async function requireWithInstall(dependencyRequest, gasket) {
+  if (!Array.isArray(dependencyRequest)) {
+    const resolvedDependency = await requireDependency(dependencyRequest, gasket);
+    return resolvedDependency;
+  }
+  const resolvedDependencyList = [];
+  for (const dependency of dependencyRequest) {
+    const resolvedDependency = await requireDependency(dependency, gasket);
+    resolvedDependencyList.push(resolvedDependency);
+  }
+  return resolvedDependencyList;
 }
 
 module.exports = requireWithInstall;
