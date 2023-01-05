@@ -1,5 +1,7 @@
 # `@gasket/plugin-metadata`
 
+- Add missing `configurations` property to plugin metadata type
+
 ### 6.35.0
 
 - Fix package object type ([#489])

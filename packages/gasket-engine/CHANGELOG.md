@@ -1,5 +1,7 @@
 # `@gasket/engine`
 
+- Add missing dependencies property on the `Plugin` type
+
 ### 6.34.4
 
 - Upgrade eslint-plugin-unicorn v43 ([#436])

@@ -8,8 +8,8 @@ const serveStub = sinon.stub();
 
 const docsView = proxyquire('../lib/docs-view', {
   './generate-content': generateContentStub,
-  'docsify-cli/lib': {
-    serve: serveStub
+  '@gasket/utils': {
+    requireWithInstall: () => ({ serve: serveStub })
   }
 });
 
@@ -24,14 +24,14 @@ describe('docsView', () => {
     sinon.resetHistory();
   });
 
-  it('merges user config with expected defaults', () => {
+  it('merges user config with expected defaults', async () => {
     mockGasket.config.docsify = {
       theme: 'bogus',
       config: {
         maxLevel: 4
       }
     };
-    docsView(mockGasket, mockDocsConfigSet);
+    await docsView(mockGasket, mockDocsConfigSet);
     const results = generateContentStub.getCall(0).args[0];
     assume(results).eqls({
       theme: 'bogus',
@@ -45,8 +45,8 @@ describe('docsView', () => {
     });
   });
 
-  it('generates index', () => {
-    docsView(mockGasket, mockDocsConfigSet);
+  it('generates index', async () => {
+    await docsView(mockGasket, mockDocsConfigSet);
     assume(generateContentStub).calledWith(sinon.match.object, mockDocsConfigSet);
   });
 
