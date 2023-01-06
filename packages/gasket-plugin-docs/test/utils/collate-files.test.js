@@ -170,7 +170,7 @@ describe('Utils - collateFiles', () => {
       await processModule(mockDocConfig, mockDocsConfigSet);
       expect(mockWriteFileStub).toHaveBeenCalledWith(
         expect.any(String),
-        expect.stringMatching(/-local/),
+        expect.stringMatching(/-local/)
       );
     });
 
@@ -178,7 +178,7 @@ describe('Utils - collateFiles', () => {
       await processModule(mockDocConfig, mockDocsConfigSet);
       expect(mockWriteFileStub).toHaveBeenCalledWith(
         expect.any(String),
-        expect.stringMatching(/-global/),
+        expect.stringMatching(/-global/)
       );
     });
 
@@ -186,14 +186,14 @@ describe('Utils - collateFiles', () => {
       await processModule(mockDocConfig, mockDocsConfigSet);
       expect(mockWriteFileStub).toHaveBeenCalledWith(
         expect.any(String),
-        expect.stringMatching(/-local-global/),
+        expect.stringMatching(/-local-global/)
       );
     });
 
     it('does not apply transform handler if test does not match', async () => {
       await processModule(mockDocConfig, mockDocsConfigSet);
-      expect(mockLocalTransform.handler).toBeCalled();
-      expect(mockNoMatchTransform.handler).not.toBeCalled();
+      expect(mockLocalTransform.handler).toHaveBeenCalled();
+      expect(mockNoMatchTransform.handler).not.toHaveBeenCalled();
       expect(mockWriteFileStub).not.toHaveBeenCalledWith(
         expect.stringMatching(/-NOTHING/)
       );
@@ -201,7 +201,7 @@ describe('Utils - collateFiles', () => {
       // make sure previous transformations are not lost
       expect(mockWriteFileStub).toHaveBeenCalledWith(
         expect.any(String),
-        expect.stringMatching(/-local-global/),
+        expect.stringMatching(/-local-global/)
       );
     });
 

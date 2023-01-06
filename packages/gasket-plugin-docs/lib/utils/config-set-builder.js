@@ -86,15 +86,12 @@ class DocsConfigSetBuilder {
    * @private
    */
   async _findAllFiles(moduleData, docsSetup, link, sourceRoot) {
-    // console.log(link);
     if (!sourceRoot) return [];
 
     const fileSet = new Set([]);
 
     const tryAdd = maybeFile => {
-      // console.log('maybeFile', maybeFile)
       if (Boolean(maybeFile) && !isUrl.test(maybeFile) && typeof maybeFile === 'string') {
-        console.log('hitter');
         fileSet.add(noHash(maybeFile));
       }
     };

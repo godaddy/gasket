@@ -1,6 +1,5 @@
 /* eslint-disable max-nested-callbacks, max-len, max-statements */
 const path = require('path');
-const util = require('util');
 const glob = require('glob');
 const DocsConfigSetBuilder = require('../../lib/utils/config-set-builder');
 
@@ -45,7 +44,7 @@ describe('utils - DocsConfigSetBuilder', () => {
       expect(buildDocsConfigSpy).toHaveBeenCalledTimes(1);
       expect(buildDocsConfigSpy).toHaveBeenCalledWith(
         expect.objectContaining({ name: 'app-one' }),
-        expect.objectContaining({ files: ["docs/**/*.*", "LICENSE.md"], link: "README.md" }),
+        expect.objectContaining({ files: ['docs/**/*.*', 'LICENSE.md'], link: 'README.md' }),
         expect.any(Object)
       );
       expect(buildDocsConfigSpy).not.toHaveBeenCalledWith({ name: 'app-two' });
@@ -362,7 +361,7 @@ describe('utils - DocsConfigSetBuilder', () => {
       expect(buildDocsConfigSpy).toHaveBeenCalledWith(
         expect.any(Object),
         mockDocSetup,
-        expect.any(Object),
+        expect.any(Object)
       );
     });
 
@@ -372,7 +371,7 @@ describe('utils - DocsConfigSetBuilder', () => {
       expect(buildDocsConfigSpy).toHaveBeenCalledWith(
         expect.any(Object),
         docsSetup,
-        expect.any(Object),
+        expect.any(Object)
       );
     });
 
@@ -619,14 +618,12 @@ describe('utils - DocsConfigSetBuilder', () => {
     it('looks up files of docsSetup from sourceRoot', async () => {
       const files = ['./files/*'];
       await instance._findAllFiles({}, { files }, null, mockSourceRoot);
-      console.log(glob)
-      // console.log(glob.mock)
       expect(glob).toHaveBeenCalled();
       files.forEach(file => {
         expect(glob).toHaveBeenCalledWith(
           file,
           expect.objectContaining({
-            cwd: mockSourceRoot,
+            cwd: mockSourceRoot
           })
         );
       });
@@ -643,7 +640,6 @@ describe('utils - DocsConfigSetBuilder', () => {
       const files = './files/*';
       const expected = ['./files/file-a.md', './files/file-b.md'];
       const results = await instance._findAllFiles({}, { files }, null, mockSourceRoot);
-      console.log(results);
       expect(glob).toHaveBeenCalledWith(files, expect.any(Object));
       expect(results).toEqual(expected);
     });
