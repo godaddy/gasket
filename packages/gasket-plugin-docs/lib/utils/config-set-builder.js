@@ -91,7 +91,7 @@ class DocsConfigSetBuilder {
     const fileSet = new Set([]);
 
     const tryAdd = maybeFile => {
-      if (Boolean(maybeFile) && !isUrl.test(maybeFile)) {
+      if (Boolean(maybeFile) && !isUrl.test(maybeFile) && typeof maybeFile === 'string') {
         fileSet.add(noHash(maybeFile));
       }
     };
@@ -110,7 +110,6 @@ class DocsConfigSetBuilder {
 
     let { files = [] } = docsSetup;
     files = Array.isArray(files) ? files : [files];
-
     (await Promise.all(files.map(async g => await glob(g, { cwd: sourceRoot }))))
       .reduce((acc, cur) => acc.concat(cur), [])
       .forEach(file => tryAdd(file));
