@@ -1,4 +1,3 @@
-// const expect = require('expect');
 const metadata = require('../lib/metadata');
 const { defaultConfig } = require('../lib/configure');
 
