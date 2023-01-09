@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-cypress",
-  "version": "6.35.0",
+  "version": "6.36.1",
   "description": "Integrates Cypress based testing into your Gasket application",
   "main": "lib",
   "scripts": {
