@@ -1,14 +1,13 @@
 const plugin = require('../');
-const assume = require('assume');
 
 describe('Plugin', function () {
 
   it('is an object', () => {
-    assume(plugin).is.an('object');
+    expect(plugin).toBeInstanceOf(Object);
   });
 
   it('has expected name', () => {
-    assume(plugin).to.have.property('name', require('../package').name);
+    expect(plugin).toHaveProperty('name', require('../package').name);
   });
 
   it('has expected hooks', () => {
@@ -19,10 +18,10 @@ describe('Plugin', function () {
       'docsSetup'
     ];
 
-    assume(plugin).to.have.property('hooks');
+    expect(plugin).toHaveProperty('hooks');
 
     const hooks = Object.keys(plugin.hooks);
-    assume(hooks).eqls(expected);
-    assume(hooks).is.length(expected.length);
+    expect(hooks).toEqual(expected);
+    expect(hooks.length).toBe(expected.length);
   });
 });

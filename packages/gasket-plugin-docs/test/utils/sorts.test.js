@@ -1,4 +1,3 @@
-const assume = require('assume');
 const { sortModules, sortStructures, sortCommands, sortGuides, sortConfigurations } = require('../../lib/utils/sorts');
 
 describe('utils - sorts', () => {
@@ -44,7 +43,7 @@ describe('utils - sorts', () => {
       ];
 
       const results = sortModules(begin.map(name => ({ name }))).map(p => p.name);
-      assume(results).eqls(expected);
+      expect(results).toEqual(expected);
     });
   });
 
@@ -89,7 +88,7 @@ describe('utils - sorts', () => {
       ];
 
       const results = sortGuides(begin.map(from => ({ from }))).map(p => p.from);
-      assume(results).eqls(expected);
+      expect(results).toEqual(expected);
     });
   });
 
@@ -126,44 +125,7 @@ describe('utils - sorts', () => {
       ];
 
       const results = sortStructures(begin.map(name => ({ name }))).map(p => p.name);
-      assume(results).eqls(expected);
-    });
-  });
-
-  describe('sortStructures', () => {
-    it('hidden dirs > dirs > hidden files > files', () => {
-      const begin = [
-        'a',
-        '.c/',
-        'b/',
-        '.c',
-        '.a/',
-        'c/',
-        '.a',
-        'a/',
-        '.b/',
-        'b',
-        '.b',
-        'c'
-      ];
-
-      const expected = [
-        '.a/',
-        '.b/',
-        '.c/',
-        'a/',
-        'b/',
-        'c/',
-        '.a',
-        '.b',
-        '.c',
-        'a',
-        'b',
-        'c'
-      ];
-
-      const results = sortStructures(begin.map(name => ({ name }))).map(p => p.name);
-      assume(results).eqls(expected);
+      expect(results).toEqual(expected);
     });
   });
 
@@ -184,7 +146,7 @@ describe('utils - sorts', () => {
       ];
 
       const results = sortCommands(begin.map(name => ({ name }))).map(p => p.name);
-      assume(results).eqls(expected);
+      expect(results).toEqual(expected);
     });
   });
 
@@ -205,7 +167,7 @@ describe('utils - sorts', () => {
       ];
 
       const results = sortConfigurations(begin.map(name => ({ name }))).map(p => p.name);
-      assume(results).eqls(expected);
+      expect(results).toEqual(expected);
     });
   });
 });
