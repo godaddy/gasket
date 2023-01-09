@@ -1,4 +1,3 @@
-const assume = require('assume');
 const configure = require('../lib/configure');
 
 describe('configure', () => {
@@ -8,17 +7,17 @@ describe('configure', () => {
 
   it('returns object', () => {
     const results = configure(mockGasket);
-    assume(results).is.an('object');
+    expect(results).toBeInstanceOf(Object);
   });
 
   it('adds docs to config', () => {
     const results = configure(mockGasket);
-    assume(results).property('docs');
+    expect(results).toHaveProperty('docs');
   });
 
   it('merges user config with defaults', () => {
     const results = configure(mockGasket, { docs: { user: 'stuff' } });
-    assume(results.docs).eqls({
+    expect(results.docs).toEqual({
       user: 'stuff',
       outputDir: '.docs'
     });
@@ -26,7 +25,7 @@ describe('configure', () => {
 
   it('user config overrides defaults', () => {
     const results = configure(mockGasket, { docs: { user: 'stuff', outputDir: 'custom' } });
-    assume(results.docs).eqls({
+    expect(results.docs).toEqual({
       user: 'stuff',
       outputDir: 'custom'
     });

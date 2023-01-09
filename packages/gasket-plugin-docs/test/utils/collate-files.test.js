@@ -1,46 +1,42 @@
 /* eslint-disable max-nested-callbacks, max-len */
-const assume = require('assume');
-const sinon = require('sinon');
-const proxyquire = require('proxyquire');
 const path = require('path');
 
-const readFileStub = sinon.stub().resolves('mock-content');
-const writeFileStub = sinon.stub();
-const copyFileStub = sinon.stub();
-const mkdirpStub = sinon.stub();
-const rimrafStub = sinon.stub();
-const collateFiles = proxyquire('../../lib/utils/collate-files', {
-  fs: {
-    promises: {
-      readFile: readFileStub,
-      writeFile: writeFileStub,
-      copyFile: copyFileStub
-    }
-  },
-  mkdirp: mkdirpStub,
-  rimraf: rimrafStub,
-  util: {
-    promisify: f => f
-  }
-});
+const mockReadFileStub = jest.fn().mockResolvedValue('mock-content');
+const mockWriteFileStub = jest.fn();
+const mockCopyFileStub = jest.fn();
+const mockMkdirpStub = jest.fn();
+const mockRimrafStub = jest.fn();
 
-const processModuleSpy = sinon.spy(collateFiles, 'processModule');
+const collateFiles = require('../../lib/utils/collate-files');
+
+jest.mock('fs', () => ({
+  promises: {
+    readFile: mockReadFileStub,
+    writeFile: mockWriteFileStub,
+    copyFile: mockCopyFileStub
+  }
+}));
+jest.mock('mkdirp', () => mockMkdirpStub);
+jest.mock('rimraf', () => mockRimrafStub);
+jest.mock('util', () => ({ promisify: f => f }));
+
+const processModuleSpy = jest.spyOn(collateFiles, 'processModule');
 const { processModule } = collateFiles;
 
 const mockLocalTransform = {
   test: /README\.md$/,
-  handler: sinon.stub().callsFake(f => f + '-local')
+  handler: jest.fn(f => f + '-local')
 };
 
 const mockGlobalTransform = {
   global: true,
   test: /\.md$/,
-  handler: sinon.stub().callsFake(f => f + '-global')
+  handler: jest.fn(f => f + '-global')
 };
 
 const mockNoMatchTransform = {
   test: /NOTHING$/,
-  handler: sinon.stub().callsFake(f => f + '-NOTHING')
+  handler: jest.fn(f => f + '-NOTHING')
 };
 
 const mockDocsConfigSet = {
@@ -100,38 +96,37 @@ describe('Utils - collateFiles', () => {
 
   beforeEach(() => {
     mockDocConfig = mockDocsConfigSet.plugins[0];
-    sinon.resetHistory();
   });
 
   it('makes output dir', async () => {
     await collateFiles(mockDocsConfigSet);
-    assume(mkdirpStub).calledWith(mockDocsConfigSet.docsRoot);
+    expect(mockMkdirpStub).toHaveBeenCalledWith(mockDocsConfigSet.docsRoot);
   });
 
   it('cleans output dir', async () => {
     await collateFiles(mockDocsConfigSet);
-    assume(rimrafStub).calledWith(mockDocsConfigSet.docsRoot + '/*');
+    expect(mockRimrafStub).toHaveBeenCalledWith(mockDocsConfigSet.docsRoot + '/*');
   });
 
   it('processes app docConfig', async () => {
     await collateFiles(mockDocsConfigSet);
-    assume(processModuleSpy).calledWith(mockDocsConfigSet.app);
+    expect(processModuleSpy).toHaveBeenCalledWith(mockDocsConfigSet.app, mockDocsConfigSet);
   });
 
   it('processes all moduleDocConfigs', async () => {
     await collateFiles(mockDocsConfigSet);
-    assume(processModuleSpy).calledWith(mockDocsConfigSet.plugins[0]);
-    assume(processModuleSpy).calledWith(mockDocsConfigSet.presets[0]);
-    assume(processModuleSpy).calledWith(mockDocsConfigSet.modules[0]);
+    expect(processModuleSpy).toHaveBeenCalledWith(mockDocsConfigSet.plugins[0], mockDocsConfigSet);
+    expect(processModuleSpy).toHaveBeenCalledWith(mockDocsConfigSet.presets[0], mockDocsConfigSet);
+    expect(processModuleSpy).toHaveBeenCalledWith(mockDocsConfigSet.modules[0], mockDocsConfigSet);
   });
 
   describe('processModule', () => {
 
     it('makes target dirs', async () => {
       await processModule(mockDocConfig, mockDocsConfigSet);
-      assume(mkdirpStub).calledWith(mockDocConfig.targetRoot);
-      assume(mkdirpStub).calledWith(path.join(mockDocConfig.targetRoot, 'deep'));
-      assume(mkdirpStub).calledWith(path.join(mockDocConfig.targetRoot, 'deep', 'er'));
+      expect(mockMkdirpStub).toHaveBeenCalledWith(mockDocConfig.targetRoot);
+      expect(mockMkdirpStub).toHaveBeenCalledWith(path.join(mockDocConfig.targetRoot, 'deep'));
+      expect(mockMkdirpStub).toHaveBeenCalledWith(path.join(mockDocConfig.targetRoot, 'deep', 'er'));
     });
 
     it('copies files that do not need transformed', async () => {
@@ -140,7 +135,7 @@ describe('Utils - collateFiles', () => {
       const filename = files[1];
       const expectedSource = path.join(sourceRoot, filename);
       const expectedTarget = path.join(targetRoot, filename);
-      assume(copyFileStub).calledWith(expectedSource, expectedTarget);
+      expect(mockCopyFileStub).toHaveBeenCalledWith(expectedSource, expectedTarget);
     });
 
     it('does not copy files that need transformed', async () => {
@@ -149,7 +144,7 @@ describe('Utils - collateFiles', () => {
       const filename = files[0];
       const expectedSource = path.join(sourceRoot, filename);
       const expectedTarget = path.join(targetRoot, filename);
-      assume(copyFileStub).not.calledWith(expectedSource, expectedTarget);
+      expect(mockCopyFileStub).not.toHaveBeenCalledWith(expectedSource, expectedTarget);
     });
 
     it('loads content of transforming files', async () => {
@@ -157,58 +152,75 @@ describe('Utils - collateFiles', () => {
       const { files, sourceRoot } = mockDocConfig;
       const filename = files[0];
       const expectedSource = path.join(sourceRoot, filename);
-      assume(readFileStub).calledWith(expectedSource);
+      expect(mockReadFileStub).toHaveBeenCalledWith(expectedSource, 'utf8');
     });
 
     it('writes transformed files', async () => {
+      mockWriteFileStub.mockReset();
       await processModule(mockDocConfig, mockDocsConfigSet);
       const { files, targetRoot } = mockDocConfig;
       const filename = files[0];
       const expectedTarget = path.join(targetRoot, filename);
-      assume(writeFileStub).calledWith(expectedTarget);
+      expect(mockWriteFileStub.mock.calls[0]).toEqual(
+        expect.arrayContaining([expectedTarget])
+      );
     });
 
     it('executes local transforms for files', async () => {
       await processModule(mockDocConfig, mockDocsConfigSet);
-      assume(mockLocalTransform.handler).called(1);
-      assume(writeFileStub).calledWithMatch(sinon.match.string, /-local/);
+      expect(mockWriteFileStub).toHaveBeenCalledWith(
+        expect.any(String),
+        expect.stringMatching(/-local/)
+      );
     });
 
     it('executes global transforms for files', async () => {
       await processModule(mockDocConfig, mockDocsConfigSet);
-      assume(mockGlobalTransform.handler).called(2);
-      assume(writeFileStub).calledWithMatch(sinon.match.string, /-global/);
+      expect(mockWriteFileStub).toHaveBeenCalledWith(
+        expect.any(String),
+        expect.stringMatching(/-global/)
+      );
     });
 
     it('executes local transforms before global', async () => {
       await processModule(mockDocConfig, mockDocsConfigSet);
-      assume(writeFileStub).calledWithMatch(sinon.match.string, /-local-global/);
+      expect(mockWriteFileStub).toHaveBeenCalledWith(
+        expect.any(String),
+        expect.stringMatching(/-local-global/)
+      );
     });
 
     it('does not apply transform handler if test does not match', async () => {
       await processModule(mockDocConfig, mockDocsConfigSet);
-      assume(mockLocalTransform.handler).called();
-      assume(mockNoMatchTransform.handler).not.called();
-      assume(writeFileStub).not.calledWithMatch(sinon.match.string, /-NOTHING/);
+      expect(mockLocalTransform.handler).toHaveBeenCalled();
+      expect(mockNoMatchTransform.handler).not.toHaveBeenCalled();
+      expect(mockWriteFileStub).not.toHaveBeenCalledWith(
+        expect.stringMatching(/-NOTHING/)
+      );
 
       // make sure previous transformations are not lost
-      assume(writeFileStub).calledWithMatch(sinon.match.string, /-local-global/);
+      expect(mockWriteFileStub).toHaveBeenCalledWith(
+        expect.any(String),
+        expect.stringMatching(/-local-global/)
+      );
     });
 
     it('does not apply transforms that do not pass test', async () => {
+      mockLocalTransform.handler.mockReset();
+      mockGlobalTransform.handler.mockReset();
       await processModule(mockDocConfig, mockDocsConfigSet);
       // modifies only README.md files
-      assume(mockLocalTransform.handler).called(1);
+      expect(mockLocalTransform.handler).toHaveBeenCalledTimes(1);
       // modifies all .md files
-      assume(mockGlobalTransform.handler).called(2);
+      expect(mockGlobalTransform.handler).toHaveBeenCalledTimes(2);
     });
 
     it('transform handler passed expected arguments', async () => {
       await processModule(mockDocConfig, mockDocsConfigSet);
-      const { files } = mockDocConfig;
-      const filename = files[0];
-      assume(mockGlobalTransform.handler).calledWithMatch('mock-content', {
-        filename,
+      expect(mockGlobalTransform.handler).toHaveBeenCalledTimes(4);
+      expect(mockGlobalTransform.handler.mock.calls[1][0]).toEqual('mock-content');
+      expect(mockGlobalTransform.handler.mock.calls[1][1]).toEqual({
+        filename: 'docs/API.md',
         docsConfig: mockDocConfig,
         docsConfigSet: mockDocsConfigSet
       });

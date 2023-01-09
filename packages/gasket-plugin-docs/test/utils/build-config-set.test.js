@@ -1,21 +1,17 @@
 /* eslint-disable max-nested-callbacks, max-len */
-const assume = require('assume');
-const sinon = require('sinon');
-const proxyquire = require('proxyquire');
 
-
-const builderConstructorStub = sinon.stub();
-const addAppStub = sinon.stub();
-const addPluginStub = sinon.stub();
-const addPluginsStub = sinon.stub();
-const addPresetStub = sinon.stub();
-const addPresetsStub = sinon.stub();
-const addModuleStub = sinon.stub();
-const addModulesStub = sinon.stub();
-const getConfigSetStub = sinon.stub();
+const builderConstructorStub = jest.fn();
+const addAppStub = jest.fn();
+const addPluginStub = jest.fn();
+const addPluginsStub = jest.fn();
+const addPresetStub = jest.fn();
+const addPresetsStub = jest.fn();
+const addModuleStub = jest.fn();
+const addModulesStub = jest.fn();
+const getConfigSetStub = jest.fn();
 const mockLogger = {
-  info: sinon.stub(),
-  error: sinon.stub()
+  info: jest.fn(),
+  error: jest.fn()
 };
 
 class MockBuilder {
@@ -45,21 +41,20 @@ class MockBuilder {
     addModulesStub(...arguments);
   }
   getConfigSet() {
-    getConfigSetStub(...arguments);
+    return getConfigSetStub(...arguments);
   }
 }
 
 const mockDefaults = { link: 'FAKE.md#bogus' };
 MockBuilder.docsSetupDefault = mockDefaults;
 
-const buildConfigSet = proxyquire('../../lib/utils/build-config-set', {
-  './config-set-builder': MockBuilder
-});
+const buildConfigSet = require('../../lib/utils/build-config-set');
+jest.mock('../../lib/utils/config-set-builder', () => MockBuilder);
 
 const { findPluginData } = buildConfigSet;
 
 const makeGasket = () => ({
-  execApply: sinon.stub().callsFake(),
+  execApply: jest.fn(),
   logger: mockLogger,
   config: {
     root: '/path/to/app',
@@ -122,97 +117,93 @@ describe('utils - buildConfigSet', () => {
   let docsSetupCallback, mockHandler, mockDocsSetup;
 
   beforeEach(async () => {
-    sinon.resetHistory();
+    jest.resetAllMocks();
 
     mockGasket = makeGasket();
 
     await buildConfigSet(mockGasket);
-    docsSetupCallback = mockGasket.execApply.getCall(0).args[1];
+
+    docsSetupCallback = mockGasket.execApply.mock.calls[0][1];
 
     mockDocsSetup = {
       link: 'README.md#with-hash'
     };
 
-    mockHandler = sinon.stub().resolves(mockDocsSetup);
+    mockHandler = jest.fn().mockResolvedValue(mockDocsSetup);
   });
 
   it('instantiates a builder', async () => {
     await buildConfigSet(mockGasket);
-    assume(builderConstructorStub).calledWith(mockGasket);
+    expect(builderConstructorStub).toHaveBeenCalledWith(mockGasket);
   });
 
   it('adds app', async () => {
-    assume(addAppStub).calledWith();
+    expect(addAppStub).toHaveBeenCalledWith(mockGasket.metadata.app);
   });
 
   it('adds plugins from metadata', async () => {
-    assume(addPluginsStub).calledWith(mockGasket.metadata.plugins);
+    expect(addPluginsStub).toHaveBeenCalledWith(mockGasket.metadata.plugins);
   });
 
   it('adds presets from metadata', async () => {
-    assume(addPresetsStub).calledWith(mockGasket.metadata.presets);
+    expect(addPresetsStub).toHaveBeenCalledWith(mockGasket.metadata.presets);
   });
 
   it('adds modules from metadata', async () => {
-    assume(addModulesStub).calledWith(mockGasket.metadata.modules);
+    expect(addModulesStub).toHaveBeenCalledWith(mockGasket.metadata.modules);
   });
 
   it('returns docsConfigSet from builder', async () => {
-    getConfigSetStub.resetHistory();
     const results = await buildConfigSet(mockGasket);
-    assume(results).eqls(getConfigSetStub.getCall(0).returnValue);
+    expect(results).toEqual(getConfigSetStub.mock.calls[0].results);
   });
 
   describe('docsSetup lifecycle', () => {
-    beforeEach(async () => {
-      sinon.resetHistory();
-    });
-
     it('lifecycle is executed', async () => {
       await buildConfigSet(mockGasket);
-      assume(mockGasket.execApply).calledWith('docsSetup', sinon.match.func);
+      expect(mockGasket.execApply).toHaveBeenCalledWith('docsSetup', expect.any(Function));
     });
 
     it('docsSetup defaults are available to app-level hooks', async () => {
       await docsSetupCallback(null, mockHandler);
-      assume(mockHandler).calledWith(sinon.match.object);
-      assume(mockHandler.getCall(0).args[0]).property('defaults', mockDefaults);
+      expect(mockHandler).toHaveBeenCalledWith(expect.any(Object));
+      expect(mockHandler.mock.calls[0][0]).toHaveProperty('defaults', mockDefaults);
     });
 
     it('docsSetup defaults are available to plugin-level hooks', async () => {
       await docsSetupCallback({ name: 'example-plugin' }, mockHandler);
-      assume(mockHandler).calledWith(sinon.match.object);
-      assume(mockHandler.getCall(0).args[0]).property('defaults', mockDefaults);
+      expect(mockHandler).toHaveBeenCalledWith(expect.any(Object));
+      expect(mockHandler.mock.calls[0][0]).toHaveProperty('defaults', mockDefaults);
     });
 
     it('adds app if if plugin is null (from ./lifecycles file)', async () => {
       await docsSetupCallback(null, mockHandler);
-      assume(addAppStub).calledWith(mockGasket.metadata.app, mockDocsSetup);
+      expect(addAppStub).toHaveBeenCalledWith(mockGasket.metadata.app, mockDocsSetup);
     });
 
     it('does not add app if no null plugin (from ./lifecycles file)', async () => {
       await docsSetupCallback({ name: 'example-plugin' }, mockHandler);
-      assume(addAppStub).not.calledWith(mockGasket.metadata.app, mockDocsSetup);
+      expect(addAppStub).not.toHaveBeenCalledWith(mockGasket.metadata.app, mockDocsSetup);
     });
 
     it('adds plugin with associated metadata (by name)', async () => {
       await docsSetupCallback({ name: 'example-plugin' }, mockHandler);
-      assume(addPluginStub).calledWith(mockGasket.metadata.plugins[0], mockDocsSetup);
+      expect(addPluginStub).toHaveBeenCalledWith(mockGasket.metadata.plugins[0], mockDocsSetup);
     });
 
     it('adds plugin with associated metadata (by hooks)', async () => {
       await docsSetupCallback({ hooks: { one: f => f } }, mockHandler);
-      assume(addPluginStub).calledWith(mockGasket.metadata.plugins[0], mockDocsSetup);
+      expect(addPluginStub).toHaveBeenCalledWith(mockGasket.metadata.plugins[0], mockDocsSetup);
     });
 
     it('does not add plugin if null', async () => {
       await docsSetupCallback(null, mockHandler);
-      assume(addPluginStub).not.calledWith(sinon.match.object, mockDocsSetup);
+      expect(addPluginStub).not.toHaveBeenCalledWith(expect.any(Object), mockDocsSetup);
     });
 
     it('does not add plugin if no metadata found', async () => {
       await docsSetupCallback({ name: 'missing-plugin' }, mockHandler);
-      assume(addPluginStub).not.calledWith(sinon.match.object, mockDocsSetup);
+      expect(addPluginStub).not.toHaveBeenCalledWith(expect.any(Object), mockDocsSetup);
     });
   });
 
@@ -225,45 +216,45 @@ describe('utils - buildConfigSet', () => {
 
     it('returns found pluginData from plugin name', () => {
       const result = findPluginData({ name: 'example-plugin' }, mockPluginDatas, mockLogger);
-      assume(result).equals(mockPluginDatas[0]);
-      assume(mockLogger.error).not.called();
+      expect(result).toEqual(mockPluginDatas[0]);
+      expect(mockLogger.error).not.toHaveBeenCalled();
     });
 
     it('logs error if no pluginData found', () => {
       const result = findPluginData({ name: 'missing-plugin' }, mockPluginDatas, mockLogger);
-      assume(result).not.exists();
-      assume(mockLogger.error).calledWithMatch('Unable to find pluginData');
+      expect(result).toBeFalsy();
+      expect(mockLogger.error.mock.calls[0][0]).toContain('Unable to find pluginData');
     });
 
     describe('when plugin missing name', () => {
 
       it('returns found pluginData from plugin hooks', () => {
         const result = findPluginData({ hooks: { one: f => f } }, mockPluginDatas, mockLogger);
-        assume(result).equals(mockPluginDatas[0]);
-        assume(mockLogger.error).not.called();
+        expect(result).toEqual(mockPluginDatas[0]);
+        expect(mockLogger.error).not.toHaveBeenCalled();
       });
 
       it('no return value if no pluginData found', () => {
         const result = findPluginData({ hooks: { missing: f => f } }, mockPluginDatas, mockLogger);
-        assume(result).not.exists();
+        expect(result).toBeFalsy();
       });
 
       it('logs info for found plugin', () => {
         const result = findPluginData({ hooks: { one: f => f } }, mockPluginDatas, mockLogger);
-        assume(result).equals(mockPluginDatas[0]);
-        assume(mockLogger.info).calledWithMatch('Determined plugin with missing name');
+        expect(result).toEqual(mockPluginDatas[0]);
+        expect(mockLogger.info.mock.calls[0][0]).toContain('Determined plugin with missing name');
       });
 
       it('logs error if multiple plugins with matching hooks', () => {
         const result = findPluginData({ hooks: { one: f => f, two: f => f } }, mockPluginDatas, mockLogger);
-        assume(result).not.exists();
-        assume(mockLogger.error).calledWithMatch('More than one pluginData');
+        expect(result).toBeFalsy();
+        expect(mockLogger.error.mock.calls[0][0]).toContain('More than one pluginData');
       });
 
       it('logs error if no match found', () => {
         const result = findPluginData({ hooks: { missing: f => f } }, mockPluginDatas, mockLogger);
-        assume(result).not.exists();
-        assume(mockLogger.error).calledWithMatch('Unable to find pluginData');
+        expect(result).toBeFalsy();
+        expect(mockLogger.error.mock.calls[0][0]).toContain('Unable to find pluginData');
       });
     });
   });
