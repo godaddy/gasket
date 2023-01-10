@@ -2,7 +2,6 @@ const path = require('path');
 const { readFile: read } = require('fs').promises;
 const plugin = require('../lib/plugin.js');
 const hook = plugin.hooks.docsGenerate;
-const assume = require('assume');
 
 describe('docs graph plugin', function () {
   let docsConfigSet;
@@ -13,32 +12,32 @@ describe('docs graph plugin', function () {
     };
   });
   it('is named properly', function () {
-    assume(plugin.name).matches('@gasket/plugin-docs-graphs');
+    expect(plugin.name).toMatch('@gasket/plugin-docs-graphs');
   });
 
   it('hooks the docsGenerate lifecycle', function () {
-    assume(hook).is.an('asyncfunction');
+    expect(hook).toEqual(expect.any(Function));
   });
 
   it('provides proper metadata', async function () {
     const data = await hook({}, docsConfigSet);
-    assume(data.name).equals('Lifecycle Flowchart');
-    assume(data.description).equals('A flowchart detailing how lifecycles are interrelated.');
-    assume(data.link).equals('/lifecycle-graphs.md');
-    assume(data.targetRoot).equals(path.join(__dirname, 'fixtures', 'generated-docs'));
+    expect(data.name).toEqual('Lifecycle Flowchart');
+    expect(data.description).toEqual('A flowchart detailing how lifecycles are interrelated.');
+    expect(data.link).toEqual('/lifecycle-graphs.md');
+    expect(data.targetRoot).toEqual(path.join(__dirname, 'fixtures', 'generated-docs'));
   });
 
   it('provides a mermaid markdown block', async function () {
     const { targetRoot, link } = await hook({}, docsConfigSet);
-    const content = await read(path.join(targetRoot, link));
-    assume(content).startWith('```mermaid\n');
-    assume(content).endsWith('\n```');
+    const content = await read(path.join(targetRoot, link), 'utf-8');
+    expect(content).toMatch(/^```mermaid\n/);
+    expect(content).toMatch(/\n```$/);
   });
 
   it('provides a left to right mermaid graph', async function () {
     const { targetRoot, link } = await hook({}, docsConfigSet);
-    const content = await read(path.join(targetRoot, link));
-    assume(content).matches(/graph LR;/);
+    const content = await read(path.join(targetRoot, link), 'utf-8');
+    expect(content).toMatch(/graph LR;/);
   });
 
   it('uses the correct arrows depending on lifecycle method', async function () {
@@ -52,10 +51,10 @@ describe('docs graph plugin', function () {
     }];
 
     const { targetRoot, link } = await hook({}, docsConfigSet);
-    const content = await read(path.join(targetRoot, link));
+    const content = await read(path.join(targetRoot, link), 'utf-8');
 
-    assume(content).matches('snap --> crackle;');
-    assume(content).matches('crackle -- exec --> pop;');
+    expect(content).toMatch('snap --> crackle;');
+    expect(content).toMatch('crackle -- exec --> pop;');
   });
 
   it('supports deprecated lifecycles', async function () {
@@ -72,8 +71,8 @@ describe('docs graph plugin', function () {
     const { targetRoot, link } = await hook({}, docsConfigSet);
     const content = await read(path.join(targetRoot, link), 'utf-8');
 
-    assume(content).contains('snap --> crackle;');
-    assume(content).contains('crackle -- exec --> pop["pop (deprecated)"];');
+    expect(content).toContain('snap --> crackle;');
+    expect(content).toContain('crackle -- exec --> pop["pop (deprecated)"];');
   });
 
   it('generates the LHS of the arrows from the correct attribute', async function () {
@@ -100,11 +99,11 @@ describe('docs graph plugin', function () {
     const { targetRoot, link } = await hook({}, docsConfigSet);
     const content = await read(path.join(targetRoot, link), 'utf8');
 
-    assume(content).matches(lc[0].parent + ' --> ' + lc[0].name);
-    assume(content).matches(lc[1].after + ' --> ' + lc[1].name);
+    expect(content).toMatch(lc[0].parent + ' --> ' + lc[0].name);
+    expect(content).toMatch(lc[1].after + ' --> ' + lc[1].name);
     const cmd = lc[2].command;
-    assume(content).contains(`${cmd}-cmd(${cmd}) --> ${lc[2].name}`);
-    assume(content).matches(lc[3].from + ' --> ' + lc[3].name);
+    expect(content).toContain(`${cmd}-cmd(${cmd}) --> ${lc[2].name}`);
+    expect(content).toMatch(lc[3].from + ' --> ' + lc[3].name);
   });
 
   it('adds styling tags if using a command as a source', async function () {
@@ -116,6 +115,6 @@ describe('docs graph plugin', function () {
     const { targetRoot, link } = await hook({}, docsConfigSet);
     const content = await read(path.join(targetRoot, link), 'utf8');
 
-    assume(content).contains('style Do the thing-cmd fill: red;');
+    expect(content).toContain('style Do the thing-cmd fill: red;');
   });
 });
