@@ -1,6 +1,3 @@
-const assume = require('assume');
-const sinon = require('sinon');
-
 describe('GasketData', function () {
   let getElementByIdStub;
 
@@ -8,30 +5,40 @@ describe('GasketData', function () {
     return require('../lib/index');
   };
 
+  beforeAll(() => {
+    Object.defineProperty(global, 'document', {
+      writable: true,
+      value: {}
+    });
+    Object.defineProperty(global.document, 'getElementById', {
+      writable: true,
+      value: jest.fn()
+    });
+  });
+
   beforeEach(function () {
-    getElementByIdStub = sinon.stub(global.document, 'getElementById');
+    getElementByIdStub = jest.spyOn(global.document, 'getElementById');
   });
 
   afterEach(function () {
-    delete require.cache[require.resolve('../lib/index')];
-    sinon.restore();
+    jest.resetModules();
   });
 
   it('returns parsed JSON data parsed', function () {
-    getElementByIdStub.returns({ textContent: '{"fake":"results"}' });
+    getElementByIdStub.mockReturnValueOnce({ textContent: '{"fake":"results"}' });
     const results = getData();
-    assume(results).eqls({ fake: 'results' });
+    expect(results).toEqual({ fake: 'results' });
   });
 
   it('returns undefined if no element found', function () {
-    getElementByIdStub.returns();
+    getElementByIdStub.mockReturnValueOnce();
     const results = getData();
-    assume(results).undefined();
+    expect(results).toBeUndefined();
   });
 
   it('returns empty string if no script content', function () {
-    getElementByIdStub.returns({ textContent: '' });
+    getElementByIdStub.mockReturnValueOnce({ textContent: '' });
     const results = getData();
-    assume(results).eqls('');
+    expect(results).toEqual('');
   });
 });
