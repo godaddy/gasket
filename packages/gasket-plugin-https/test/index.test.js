@@ -1,15 +1,14 @@
 const errs = require('errs');
-// const mockCreateServersModule = sinon.stub().yields(null, []);
-const mockCreateServersModule = jest.fn(() => Promise.resolve());
+const mockCreateServersModule = jest.fn().mockImplementation((server, fn) => fn(null, server));
 const mockHealthCheckError = jest.fn();
 const mockCreateTerminus = jest.fn();
 const mockDebugStub = jest.fn();
 
 jest.mock('create-servers', () => mockCreateServersModule);
-jest.mock('diagnostics', () => mockDebugStub);
+jest.mock('diagnostics', () => () => mockDebugStub);
 jest.mock('@godaddy/terminus', () => ({
-  mockCreateTerminus,
-  mockHealthCheckError
+  createTerminus: mockCreateTerminus,
+  HealthCheckError: mockHealthCheckError
 }));
 
 const plugin = require('../lib');
@@ -45,9 +44,9 @@ describe('start hook', () => {
   }
 
   beforeEach(() => {
+    jest.clearAllMocks();
     gasketAPI = {
-      execWaterfall: jest.fn(),
-      // .mockImplementation((arg1, arg2) => Promise.resolve(arg2)),
+      execWaterfall: jest.fn().mockImplementation((arg1, arg2) => Promise.resolve(arg2)),
       exec: jest.fn(),
       config: {},
       logger: {
@@ -55,10 +54,7 @@ describe('start hook', () => {
         error: jest.fn()
       }
     };
-    handler = jest.fn(() => fn => fn());
-    // mockCreateServersModule.mock(null, []);
-    mockCreateServersModule.mockImplementation((() => Promise.resolve()));
-
+    handler = jest.fn().mockImplementation(fn => fn());
     gasketAPI.exec.mockResolvedValue([handler]);
   });
 
@@ -145,18 +141,17 @@ describe('start hook', () => {
       gasketAPI.execWaterfall.mockImplementation(() => Promise.resolve(gasketAPI.config));
     });
 
-    // it.only('is output when the servers have been started', async () => {
-    //   gasketAPI.config = {
-    //     hostname: 'local.gasket.godaddy.com',
-    //     http: 8080
-    //   };
+    it('is output when the servers have been started', async () => {
+      gasketAPI.config = {
+        hostname: 'local.gasket.godaddy.com',
+        http: 8080
+      };
 
-    //   await start();
-    //   console.log(mockDebugStub.mock.calls)
-    //   console.log(gasketAPI.execWaterfall.mock.calls)
-    //   const logMessages = gasketAPI.logger.info.mock.calls.flat().map(([message]) => message);
-    //   expect(logMessages[0]).toMatch(/http:\/\/local\.gasket\.godaddy\.com:8080\//);
-    // });
+      await start();
+      const logMessages = gasketAPI.logger.info.mock.calls.flat().map(message => message);
+
+      expect(logMessages[0]).toMatch(/http:\/\/local\.gasket\.godaddy\.com:8080\//);
+    });
 
     it('contains the configured hostname', async () => {
       gasketAPI.config = {
@@ -166,7 +161,7 @@ describe('start hook', () => {
 
       await start();
 
-      const logMessages = gasketAPI.logger.info.args.map(([message]) => message);
+      const logMessages = gasketAPI.logger.info.mock.calls.flat().map(message => message);
       expect(logMessages[0]).toMatch(/https:\/\/myapp\.godaddy\.com:8443\//);
     });
 
@@ -178,7 +173,7 @@ describe('start hook', () => {
 
       await start();
 
-      const logMessages = gasketAPI.logger.info.args.map(([message]) => message);
+      const logMessages = gasketAPI.logger.info.mock.calls.flat().map(message => message);
       expect(logMessages[0]).toMatch(/https:\/\/myapp\.godaddy\.com:8443\//);
     });
 
@@ -190,7 +185,7 @@ describe('start hook', () => {
 
       await start();
 
-      const logMessages = gasketAPI.logger.info.args.map(([message]) => message);
+      const logMessages = gasketAPI.logger.info.mock.calls.flat().map(message => message);
       expect(logMessages[0]).toMatch(/https:\/\/local\.gasket\.godaddy\.com:3000\//);
     });
 
@@ -204,61 +199,70 @@ describe('start hook', () => {
 
       await start();
 
-      const logMessages = gasketAPI.logger.info.calls[0].map(([message]) => message);
+      const logMessages = gasketAPI.logger.info.mock.calls[0].flat().map(message => message);
       expect(logMessages[0]).toMatch(/http:\/\/bogus\.com:9000\//);
     });
   });
 
   it('rejects with an Error on failure', async () => {
-    mockCreateServersModule.mockReturnValue(errs.create({ https: { message: 'HTTP server failed to start', code: 'something' } }));
+    mockCreateServersModule.mockImplementation((_, fn) => fn(
+      errs.create({ https: { message: 'HTTP server failed to start', code: 'something' } })
+    ));
 
     await start();
 
     const expected = 'failed to start the http/https servers';
     expect(gasketAPI.logger.error).toHaveBeenCalledWith(expected);
-    expect(mockDebugStub.args[0][0].message).toEqual(expected);
-    expect(mockDebugStub.args[0][1].https.message).toEqual('HTTP server failed to start');
+    expect(mockDebugStub.mock.calls[0][0].message).toEqual(expected);
+    expect(mockDebugStub.mock.calls[0][1].https.message).toEqual('HTTP server failed to start');
   });
 
   it('rejects with an Error about ports on failure (with http)', async () => {
-    mockCreateServersModule.mockReturnValue(errs.create({
-      http: {
-        code: 'EADDRINUSE'
-      }
-    }));
+    mockCreateServersModule.mockImplementation((_, fn) => fn(
+      errs.create({
+        http: {
+          code: 'EADDRINUSE'
+        }
+      })
+    ));
+
 
     await start();
 
     const expected = 'Port is already in use';
-    expect(gasketAPI.logger.error).toHaveBeenCalledWith(expected);
-    expect(mockDebugStub.args[0][0].message).toMatch(expected);
-    expect(mockDebugStub.args[0][1].http.code).toEqual('EADDRINUSE');
+    expect(gasketAPI.logger.error).toHaveBeenCalledWith(expect.stringContaining(expected));
+    expect(mockDebugStub.mock.calls[0][0].message).toMatch(expected);
+    expect(mockDebugStub.mock.calls[0][1].http.code).toEqual('EADDRINUSE');
   });
 
   it('rejects with an Error about ports on failure (with https)', async () => {
-    mockCreateServersModule.mockReturnValue(errs.create({
-      https: {
-        code: 'EADDRINUSE'
-      }
-    }));
+    mockCreateServersModule.mockImplementation((_, fn) => fn(
+      errs.create({
+        https: {
+          code: 'EADDRINUSE'
+        }
+      })
+    ));
 
     await start();
 
-    expect(mockDebugStub.args[0][0].message).toMatch('Port is already in use');
-    expect(mockDebugStub.args[0][1].https.code).toEqual('EADDRINUSE');
+    expect(mockDebugStub.mock.calls[0][0].message).toMatch('Port is already in use');
+    expect(mockDebugStub.mock.calls[0][1].https.code).toEqual('EADDRINUSE');
   });
 
   it('rejects with an Error about ports on failure (with http2)', async () => {
-    mockCreateServersModule.mockReturnValue(errs.create({
-      http2: {
-        code: 'EADDRINUSE'
-      }
-    }));
+    mockCreateServersModule.mockImplementation((_, fn) => fn(
+      errs.create({
+        http2: {
+          code: 'EADDRINUSE'
+        }
+      })
+    ));
 
     await start();
 
-    expect(mockDebugStub.args[0][0].message).toMatch('Port is already in use');
-    expect(mockDebugStub.args[0][1].http2.code).toEqual('EADDRINUSE');
+    expect(mockDebugStub.mock.calls[0][0].message).toMatch('Port is already in use');
+    expect(mockDebugStub.mock.calls[0][1].http2.code).toEqual('EADDRINUSE');
   });
 
   describe('terminus', function () {
@@ -266,7 +270,7 @@ describe('start hook', () => {
     const servers = { http: aServer };
 
     beforeEach(function () {
-      mockCreateServersModule.mockReturnValue(null, servers);
+      mockCreateServersModule.mockImplementation((_, fn) => fn(null, servers));
     });
 
     it('passes each created server to terminus', async () => {
@@ -277,7 +281,7 @@ describe('start hook', () => {
     });
 
     it('supports multiple servers as object', async () => {
-      mockCreateServersModule.mockReturnValue(null, { https: aServer, http: aServer });
+      mockCreateServersModule.mockImplementation((_, fn) => fn(null, { https: aServer, http: aServer }));
 
       await start();
       expect(mockCreateTerminus).toHaveBeenCalledTimes(2);
@@ -285,7 +289,7 @@ describe('start hook', () => {
     });
 
     it('supports multiple servers under object properties', async () => {
-      mockCreateServersModule.mockReturnValue(null, { https: [aServer, aServer], http: [aServer, aServer] });
+      mockCreateServersModule.mockImplementation((_, fn) => fn(null, { https: [aServer, aServer], http: [aServer, aServer] }));
 
       await start();
       expect(mockCreateTerminus).toHaveBeenCalledTimes(4);
@@ -294,7 +298,6 @@ describe('start hook', () => {
 
     it('calls terminus with the options', async () => {
       await start();
-
       const config = mockCreateTerminus.mock.calls[0][1];
 
       expect(config.signals).toContain('SIGTERM');
@@ -304,10 +307,9 @@ describe('start hook', () => {
       expect(typeof config.beforeShutdown).toBe('function');
       expect(typeof config.onShutdown).toBe('function');
 
-      expect(config.healthChecks).has.toHaveProperty('/healthcheck');
+      expect(config.healthChecks['/healthcheck.html']).toBeTruthy();
+      expect(config.healthChecks['/healthcheck']).toBeTruthy();
       expect(typeof config.healthChecks['/healthcheck']).toBe('function');
-
-      expect(config.healthChecks).has.toHaveProperty('/healthcheck.html');
       expect(typeof config.healthChecks['/healthcheck.html']).toBe('function');
     });
 
@@ -323,7 +325,7 @@ describe('start hook', () => {
 
     it('calls the healthcheck lifecycle', async () => {
       await start();
-      const lifecycle = mockCreateTerminus.args[0][1].healthChecks['/healthcheck'];
+      const lifecycle = mockCreateTerminus.mock.calls[0][1].healthChecks['/healthcheck'];
       await lifecycle();
 
       expect(gasketAPI.exec.mock.calls[gasketAPI.exec.mock.calls.length - 1][0]).toEqual('healthcheck');
@@ -332,7 +334,6 @@ describe('start hook', () => {
 
     it('calls the healthcheck lifecycle for healthcheck.html route', async () => {
       await start();
-      console.log(mockCreateTerminus.mock.calls)
       const lifecycle = mockCreateTerminus.mock.calls[0][1].healthChecks['/healthcheck.html'];
       await lifecycle();
 
