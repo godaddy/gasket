@@ -5,8 +5,8 @@ import { render } from '@testing-library/react';
 
 describe('<GasketDataScript/>', function () {
   it('renders GasketDataScript', function () {
-    const wrapper = render(<GasketDataScript { ...{ data: { bogus: true } } } />);
-    const script = wrapper.querySelector('script');
+    const {container} = render(<GasketDataScript { ...{ data: { bogus: true } } } />);
+    const script = container.querySelector('script');
 
     assume(script.id).eqls('GasketData');
     assume(script.type).eqls('application/json');
