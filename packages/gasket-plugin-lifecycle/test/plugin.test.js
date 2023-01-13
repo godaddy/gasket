@@ -1,3 +1,4 @@
+/* eslint-disable jest/expect-expect */
 const path = require('path');
 const PluginEngine = require('@gasket/engine');
 const plugin = require('../lib/');
