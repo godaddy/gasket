@@ -1,13 +1,12 @@
-const assume = require('assume');
 const plugin = require('../lib');
 
 describe('Plugin', function () {
   it('is an object', function () {
-    assume(plugin).instanceOf(Object);
+    expect(plugin).toBeInstanceOf(Object);
   });
 
   it('has expected name', function () {
-    assume(plugin).property('name', require('../package.json').name);
+    expect(plugin).toHaveProperty('name', require('../package.json').name);
   });
 
   it('has expected hooks', function () {
@@ -26,12 +25,12 @@ describe('Plugin', function () {
       'workbox'
     ];
 
-    assume(plugin).property('hooks');
+    expect(plugin).toHaveProperty('hooks');
 
     const hooks = Object.keys(plugin.hooks);
     for (const hook of expected) {
-      assume(hooks).contains(hook);
+      expect(hooks).toContain(hook);
     }
-    assume(hooks).length(expected.length);
+    expect(hooks).toHaveLength(expected.length);
   });
 });
