@@ -1,15 +1,15 @@
 import React from 'react';
 import assume from 'assume';
-import { shallow } from 'enzyme';
 import { GasketDataScript } from '../src';
+import { render } from '@testing-library/react';
 
 describe('<GasketDataScript/>', function () {
   it('renders GasketDataScript', function () {
-    const wrapper = shallow(<GasketDataScript { ...{ data: { bogus: true } } } />);
-    assume(wrapper.html()).eqls('<script id="GasketData" type="application/json">{"bogus":true}</script>');
-  });
-  it('renders GasketDataScript with escaped JSON data', function () {
-    const wrapper = shallow(<GasketDataScript { ...{ data: { bogus: true } } } />);
-    assume(wrapper.html()).eqls('<script id="GasketData" type="application/json">{"bogus":true}</script>');
+    const wrapper = render(<GasketDataScript { ...{ data: { bogus: true } } } />);
+    const script = wrapper.querySelector('script');
+
+    assume(script.id).eqls('GasketData');
+    assume(script.type).eqls('application/json');
+    assume(script.textContent).eqls('{"bogus":true}');
   });
 });
