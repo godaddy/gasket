@@ -3,10 +3,11 @@ import path from 'path';
 import assume from 'assume';
 import sinon from 'sinon';
 import proxyquire from 'proxyquire';
-import { mount } from 'enzyme';
+import { render, screen } from '@testing-library/react';
 import mockManifest from './fixtures/mock-manifest.json';
 import { LocaleStatus } from '../src/utils';
 const { ERROR, LOADED, LOADING } = LocaleStatus;
+const loadingText = 'loading...';
 
 const MockComponent = class extends React.Component {
   render() {
@@ -19,7 +20,7 @@ describe('withLocaleRequired', function () {
 
   const doMount = (...args) => {
     const Wrapped = withLocaleRequired(...args)(MockComponent);
-    return mount(<Wrapped/>);
+    return render(<Wrapped/>);
   };
 
   beforeEach(function () {
@@ -168,28 +169,31 @@ describe('withLocaleRequired', function () {
     it('renders empty if loading', function () {
       useLocaleRequiredStub.returns(LOADING);
       wrapper = doMount();
-      assume(wrapper.html()).falsy();
+      assume(wrapper.baseElement.innerHTML).eqls('<div></div>');
     });
 
-    it('renders custom loader if loading', function () {
+    it('renders custom loader if loading', async function () {
       useLocaleRequiredStub.returns(LOADING);
-      wrapper = doMount('/locales', { loading: 'loading...' });
-      assume(wrapper.html()).eqls('loading...');
+      doMount('/locales', { loading: loadingText });
+      const textEl = await screen.findByText(loadingText);
+      assume(textEl.innerHTML).eqls(loadingText);
     });
 
-    it('renders wrapped component if LOADED', function () {
+    it('renders wrapped component if LOADED', async function () {
       useLocaleRequiredStub.returns(LOADED);
-      wrapper = doMount({ loading: 'loading...' });
-      assume(wrapper.html()).includes('MockComponent');
+      doMount({ loading: loadingText });
+      const textEl = await screen.findByText('MockComponent');
+      assume(textEl.innerHTML).eqls('MockComponent');
     });
 
-    it('renders wrapped component if ERROR', function () {
+    it('renders wrapped component if ERROR', async function () {
       useLocaleRequiredStub.returns(ERROR);
-      wrapper = doMount({ loading: 'loading...' });
-      assume(wrapper.html()).includes('MockComponent');
+      doMount({ loading: loadingText });
+      const textEl = await screen.findByText('MockComponent');
+      assume(textEl.innerHTML).eqls('MockComponent');
     });
 
-    it('forwards refs', function () {
+    it('forwards refs', async function () {
       class TestComponent extends React.Component {
         // Used to test ref forwarding
         getMockData() {
@@ -226,19 +230,17 @@ describe('withLocaleRequired', function () {
           return (
             <React.Fragment>
               <TestWrappedComponent ref={ this.componentRef } />
-              <span className='data'>{ this.state.data }</span>
+              <span data-testid='data'>{ this.state.data }</span>
             </React.Fragment>
           );
         }
       }
 
-      const tree = mount(
-        <TestRefComponent />
-      );
+      render(<TestRefComponent />);
 
-      assume(tree.state('updated')).is.true();
-      assume(tree.find('.data').text()).equals('MOCK_DATA');
-      tree.unmount();
+      const element = await screen.getByTestId('data');
+
+      assume(element.innerHTML).equals('MOCK_DATA');
     });
   });
 });

@@ -35,8 +35,6 @@ const depVersions = {
   'proxyquire': '^2.1.3',
 
   'jest': '^27.4.3',
-  'enzyme': '^3.11.0',
-  'enzyme-adapter-react-16': '^1.15.5',
 
   'react': '^17.0.1',
   'react-dom': '^17.0.1',
