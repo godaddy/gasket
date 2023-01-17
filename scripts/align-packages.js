@@ -27,39 +27,39 @@ const depVersions = {
   '@babel/preset-react': '^7.12.10',
 
   'assume': '^2.3.0',
-  'sinon': '^12.0.1',
+  'sinon': '^14.0.0',
   'assume-sinon': '^1.1.0',
-  'mocha': '^9.1.4',
+  'mocha': '^10.0.0',
   'chai': '^4.2.0',
   'nyc': '^15.1.0',
   'proxyquire': '^2.1.3',
 
-  'jest': '^27.4.3',
+  'jest': '^29.3.1',
 
-  'react': '^17.0.1',
-  'react-dom': '^17.0.1',
-  'react-intl': '^5.10.13',
+  'react': '^18.0.0',
+  'react-dom': '^18.0.0',
+  'react-intl': '^6.0.0',
   'prop-types': '^15.7.2',
   'redux': '^4.0.5',
   'next': '^12.0.8',
-  'next-redux-wrapper': '^7.0.5',
-  'jsdom': '^19.0.0',
+  'next-redux-wrapper': '^8.0.0',
+  'jsdom': '^20.0.0',
 
   'babel-eslint': '^10.1.0',
   'eslint': '^8.7.0',
   'eslint-config-godaddy': '^6.0.0',
   'eslint-config-godaddy-react': '^8.0.0',
   'eslint-plugin-json': '^3.1.0',
-  'eslint-plugin-jest': '^25.7.0',
+  'eslint-plugin-jest': '^27.2.1',
   'eslint-plugin-mocha': '^10.0.3',
   'eslint-plugin-react': '^7.22.0',
-  'eslint-plugin-unicorn': '^40.1.0',
+  'eslint-plugin-unicorn': '^44.0.0',
 
   'deepmerge': '^4.2.2',
   'diagnostics': '^2.0.2',
   'handlebars': '^4.7.6',
   'rimraf': '^3.0.2',
-  'glob': '^7.1.6',
+  'glob': '^8.0.0',
   'semver': '^7.3.4',
   'lodash.defaultsdeep': '^4.6.1',
   'webpack': '^5.21.2',
@@ -74,9 +74,9 @@ const depVersions = {
  */
 const peerDepVersions = {
   'next': '>=10.2.0 < 13',
-  'react': '^16 || ^17',
-  'react-dom': '^16 || ^17',
-  'react-intl': '>=4.0.0 <6.0.0',
+  'react': '^16 || ^17 || ^18',
+  'react-dom': '^16 || ^17 || ^18',
+  'react-intl': '<7.0.0',
   'redux': '^3.7.2 || ^4.0.1'
 };
 
