@@ -8,7 +8,7 @@ const getById = queryByAttribute.bind(null, 'id');
 
 describe('<GasketDataScript/>', function () {
   it('renders GasketDataScript', function () {
-    const dom = render(<GasketDataScript {...{ data: { bogus: true } }} />);
+    const dom = render(<GasketDataScript { ...{ data: { bogus: true } } } />);
     const gasketDataScript = getById(dom.container, 'GasketData');
 
     assume(gasketDataScript).exists();
