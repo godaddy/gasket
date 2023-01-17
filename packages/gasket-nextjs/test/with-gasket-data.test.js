@@ -29,10 +29,11 @@ class MyDocument extends Document {
 /**
  * Recursively searches through the rendered element tree for the first element
  * that matches the search type
- * 
- * @param renderedElement - The element that was rendered by the component.
- * @param searchType - The type of the element you're looking for.
- * @returns the first element that matches the searchType.
+ *
+ * @param {object} renderedElement - The element that was rendered by the
+ * component.
+ * @param {string} searchType - The type of the element you're looking for.
+ * @returns {object} the first element that matches the searchType.
  */
 function getElementReference(renderedElement, searchType) {
   let elemRef;
