@@ -76,11 +76,6 @@
     "react": "^16 || ^17 || ^18",
     "react-dom": "^16 || ^17 || ^18"
   },
-  "eslintIgnore": [
-    "generator/redux/redux/store.js",
-    "generator/app/pages/_app.js",
-    "*.d.ts"
-  ],
   "eslintConfig": {
     "extends": [
       "godaddy"
@@ -105,6 +100,11 @@
       }
     ]
   },
+  "eslintIgnore": [
+    "generator/redux/redux/store.js",
+    "generator/app/pages/_app.js",
+    "*.d.ts"
+  ],
   "babel": {
     "presets": [
       "@babel/preset-react"
