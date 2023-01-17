@@ -1,8 +1,8 @@
 import React from 'react';
-import { shallow } from 'enzyme';
 import assume from 'assume';
 import decache from 'decache';
 import mock from 'mock-require';
+import { render } from '@testing-library/react';
 
 describe('withGasketDataProvider', function () {
 
@@ -19,7 +19,7 @@ describe('withGasketDataProvider', function () {
   it('should render the component', () => {
     const { withGasketDataProvider } = setup();
     const HocComponent = withGasketDataProvider()(() => <div/>);
-    const container = shallow(<HocComponent/>);
+    const container = render(<HocComponent/>);
 
     assume(container).exists();
   });

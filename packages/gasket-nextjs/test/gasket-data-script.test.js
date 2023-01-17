@@ -1,15 +1,17 @@
 import React from 'react';
 import assume from 'assume';
-import { shallow } from 'enzyme';
+import { render, queryByAttribute } from '@testing-library/react';
+
 import { GasketDataScript } from '../src';
+
+const getById = queryByAttribute.bind(null, 'id');
 
 describe('<GasketDataScript/>', function () {
   it('renders GasketDataScript', function () {
-    const wrapper = shallow(<GasketDataScript { ...{ data: { bogus: true } } } />);
-    assume(wrapper.html()).eqls('<script id="GasketData" type="application/json">{"bogus":true}</script>');
-  });
-  it('renders GasketDataScript with escaped JSON data', function () {
-    const wrapper = shallow(<GasketDataScript { ...{ data: { bogus: true } } } />);
-    assume(wrapper.html()).eqls('<script id="GasketData" type="application/json">{"bogus":true}</script>');
+    const dom = render(<GasketDataScript { ...{ data: { bogus: true } } } />);
+    const gasketDataScript = getById(dom.container, 'GasketData');
+
+    assume(gasketDataScript).exists();
+    assume(gasketDataScript.textContent).equals('{"bogus":true}');
   });
 });
