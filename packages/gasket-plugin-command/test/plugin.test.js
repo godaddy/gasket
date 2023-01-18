@@ -1,5 +1,3 @@
-const assume = require('assume');
-const sinon = require('sinon');
 const plugin = require('../lib/plugin');
 const GasketCommand = require('../lib/command');
 
@@ -8,7 +6,7 @@ describe('Plugin', () => {
   let gasket, execStub, oclifConfig, MockCmdA, MockCmdB, MockCmdC;
 
   beforeEach(() => {
-    execStub = sinon.stub();
+    execStub = jest.fn();
     gasket = {
       exec: execStub
     };
@@ -23,11 +21,11 @@ describe('Plugin', () => {
   });
 
   it('is an object', () => {
-    assume(plugin).is.an('object');
+    expect(plugin).toEqual(expect.any(Object));
   });
 
   it('has expected name', () => {
-    assume(plugin).to.have.property('name', require('../package').name);
+    expect(plugin).toHaveProperty('name', require('../package').name);
   });
 
   it('has expected hooks', () => {
@@ -36,63 +34,63 @@ describe('Plugin', () => {
       'metadata'
     ];
 
-    assume(plugin).to.have.property('hooks');
+    expect(plugin).toHaveProperty('hooks');
 
     const hooks = Object.keys(plugin.hooks);
-    assume(hooks).eqls(expected);
-    assume(hooks).is.length(expected.length);
+    expect(hooks).toEqual(expected);
+    expect(hooks).toHaveLength(expected.length);
   });
 
   describe('initOclif hook', () => {
 
     it('executes getCommands lifecycle', async () => {
-      execStub.resolves([]);
+      execStub.mockResolvedValue([]);
       await plugin.hooks.initOclif(gasket, { oclifConfig });
-      assume(execStub).calledWith('getCommands');
+      expect(execStub).toHaveBeenCalledWith('getCommands', expect.any(Object));
     });
 
     it('passes GasketCommand to getCommands lifecycle args', async () => {
-      execStub.resolves([]);
+      execStub.mockResolvedValue([]);
       await plugin.hooks.initOclif(gasket, { oclifConfig });
-      const results = execStub.getCall(0).args[1];
-      assume(results).property('GasketCommand', GasketCommand);
+      const results = execStub.mock.calls[0][1];
+      expect(results).toHaveProperty('GasketCommand', GasketCommand);
     });
 
     it('passes oclif flags to getCommands lifecycle args', async () => {
-      execStub.resolves([]);
+      execStub.mockResolvedValue([]);
       await plugin.hooks.initOclif(gasket, { oclifConfig });
-      const results = execStub.getCall(0).args[1];
-      assume(results).property('flags', require('@oclif/command').flags);
+      const results = execStub.mock.calls[0][1];
+      expect(results).toHaveProperty('flags', require('@oclif/command').flags);
     });
 
     it('injects plugin with commands to oclifConfig', async () => {
-      execStub.resolves([MockCmdA]);
+      execStub.mockResolvedValue([MockCmdA]);
       await plugin.hooks.initOclif(gasket, { oclifConfig });
-      assume(oclifConfig.plugins).lengthOf(1);
-      assume(oclifConfig.plugins[0].name).equals('Gasket commands');
-      assume(oclifConfig.plugins[0].commands[0].id).equals(MockCmdA.id);
+      expect(oclifConfig.plugins).toHaveLength(1);
+      expect(oclifConfig.plugins[0].name).toEqual('Gasket commands');
+      expect(oclifConfig.plugins[0].commands[0].id).toEqual(MockCmdA.id);
     });
 
     it('flattens and filters undefined for getCommands results', async () => {
       // eslint-disable-next-line no-undefined
-      execStub.resolves([[MockCmdA, undefined], MockCmdB, [undefined, MockCmdC], undefined]);
+      execStub.mockResolvedValue([[MockCmdA, undefined], MockCmdB, [undefined, MockCmdC], undefined]);
       await plugin.hooks.initOclif(gasket, { oclifConfig });
-      assume(oclifConfig.plugins[0].commands).lengthOf(3);
+      expect(oclifConfig.plugins[0].commands).toHaveLength(3);
     });
 
     it('hoists flags from base GasketCommand', async () => {
-      execStub.resolves([MockCmdA]);
+      execStub.mockResolvedValue([MockCmdA]);
       await plugin.hooks.initOclif(gasket, { oclifConfig });
-      assume(MockCmdA).property('flags');
-      assume(MockCmdA.flags).eqls(GasketCommand.flags);
+      expect(MockCmdA).toHaveProperty('flags');
+      expect(MockCmdA.flags).toEqual(GasketCommand.flags);
     });
 
     it('adds load method to injected Command', async () => {
-      execStub.resolves([MockCmdA]);
+      execStub.mockResolvedValue([MockCmdA]);
       await plugin.hooks.initOclif(gasket, { oclifConfig });
       const injectedCmd = oclifConfig.plugins[0].commands[0];
-      assume(injectedCmd).property('load');
-      assume(injectedCmd.load).instanceOf(Function);
+      expect(injectedCmd).toHaveProperty('load');
+      expect(injectedCmd.load).toBeInstanceOf(Function);
     });
   });
 });
