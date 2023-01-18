@@ -1,12 +1,31 @@
-/* eslint-disable max-nested-callbacks, max-len */
-const assume = require('assume');
-const sinon = require('sinon');
-const proxyquire = require('proxyquire');
-const { readFile } = require('fs').promises;
-const path = require('path');
-const { promisify } = require('util');
+/* eslint-disable max-nested-callbacks, max-len, no-sync */
 
-const template = readFile(path.join(__dirname, '..', 'generator', 'index.html'), 'utf8');
+// hoisting requires the order below
+const mockReadFileStub = jest.fn();
+const mockWriteFileStub = jest.fn();
+const mockCopyFileStub = jest.fn();
+const mockMkdirpStub = jest.fn().mockResolvedValue('/path/to/app');
+
+jest.mock('fs', () => {
+  const mod = jest.requireActual('fs');
+  const promises = {
+    readFile: mockReadFileStub,
+    writeFile: mockWriteFileStub,
+    copyFile: mockCopyFileStub
+  };
+  return {
+    ...mod,
+    promises
+  };
+});
+jest.mock('mkdirp', () => mockMkdirpStub);
+
+const path = require('path');
+const fs = require('fs');
+
+// Use readFileSync to avoid jest hoisting of the promise methods
+const mockTemplate = fs.readFileSync(path.join(__dirname, '..', 'generator', 'index.html'), 'utf8');
+const generateContent = require('../lib/generate-content');
 
 const mockDocsConfigSet = {
   app: {
@@ -19,94 +38,76 @@ const mockDocsConfigSet = {
   docsRoot: '/path/to/app/.docs'
 };
 
-const readFileStub = sinon.stub().resolves('mock-content');
-const writeFileStub = sinon.stub();
-const copyFileStub = sinon.stub();
-const mkdirpStub = sinon.stub().resolves('/path/to/app');
-
 describe('generateIndex', () => {
-  let generateContent, globSpy;
 
   beforeEach(() => {
-    generateContent = proxyquire('../lib/generate-content', {
-      fs: {
-        promises: {
-          readFile: readFileStub.resolves(template),
-          writeFile: writeFileStub,
-          copyFile: copyFileStub
-        }
-      },
-      mkdirp: mkdirpStub,
-      util: {
-        promisify: f => {
-          globSpy = sinon.spy(promisify(f));
-          return globSpy;
-        }
-      }
-    });
-    writeFileStub.resetHistory();
+    mockReadFileStub.mockResolvedValue(mockTemplate);
+  });
+
+  afterEach(() => {
+    jest.resetAllMocks();
   });
 
   it('reads index.html template', async () => {
     await generateContent({}, mockDocsConfigSet);
-    assume(readFileStub.getCall(0).args[0]).includes(path.join('generator', 'index.html'));
+    expect(mockReadFileStub.mock.calls[0][0]).toContain(path.join('generator', 'index.html'));
   });
 
   it('renders main stylesheet tag', async () => {
     await generateContent({}, mockDocsConfigSet);
-    const results = writeFileStub.getCall(0).args[1];
+    const results = mockWriteFileStub.mock.calls[0][1];
 
-    assume(results).includes(`styles/gasket.css`);
+    expect(results).toContain(`styles/gasket.css`);
   });
 
   it('renders theme stylesheet tag', async () => {
     await generateContent({ theme: 'dark' }, mockDocsConfigSet);
-    const results = writeFileStub.getCall(0).args[1];
+    const results = mockWriteFileStub.mock.calls[0][1];
 
-    assume(results).includes(`//unpkg.com/docsify/lib/themes/dark.css`);
+    expect(results).toContain(`//unpkg.com/docsify/lib/themes/dark.css`);
   });
 
   it('theme can be a css file', async () => {
     await generateContent({ theme: '../my/custom.css' }, mockDocsConfigSet);
-    const results = writeFileStub.getCall(0).args[1];
+    const results = mockWriteFileStub.mock.calls[0][1];
 
-    assume(results).includes(`<link rel="stylesheet" href="../my/custom.css">`);
+    expect(results).toContain(`<link rel="stylesheet" href="../my/custom.css">`);
   });
 
   it('renders custom stylesheets tags', async () => {
     const stylesheets = ['style1.css', 'https://styles2.css'];
     await generateContent({ stylesheets }, mockDocsConfigSet);
-    const results = writeFileStub.getCall(0).args[1];
+    const results = mockWriteFileStub.mock.calls[0][1];
 
     stylesheets.forEach(style => {
-      assume(results).includes(`<link rel="stylesheet" href="${style}">`);
+      expect(results).toContain(`<link rel="stylesheet" href="${style}">`);
     });
   });
 
   it('renders main script tags', async () => {
     await generateContent({}, mockDocsConfigSet);
-    const results = writeFileStub.getCall(0).args[1];
+    const results = mockWriteFileStub.mock.calls[0][1];
 
-    assume(results).includes(`//unpkg.com/docsify/lib/docsify.min.js`);
+    expect(results).toContain(`//unpkg.com/docsify/lib/docsify.min.js`);
   });
 
   it('renders custom script tags', async () => {
     const scripts = ['style1.js', 'https://styles2.js'];
     await generateContent({ scripts }, mockDocsConfigSet);
-    const results = writeFileStub.getCall(0).args[1];
+    const results = mockWriteFileStub.mock.calls[0][1];
 
     scripts.forEach(script => {
-      assume(results).includes(`<script src="${script}"></script>`);
+      expect(results).toContain(`<script src="${script}"></script>`);
     });
   });
 
   it('writes index.html in docs root', async () => {
     await generateContent({}, mockDocsConfigSet);
-    assume(writeFileStub.getCall(0).args[0]).eqls(path.join(mockDocsConfigSet.docsRoot, 'index.html'));
+    expect(mockWriteFileStub.mock.calls[0][0]).toEqual(path.join(mockDocsConfigSet.docsRoot, 'index.html'));
   });
 
   it('copies remaining generator files', async () => {
     await generateContent({}, mockDocsConfigSet);
-    assume(copyFileStub.getCall(0).args[0]).includes('favicon.ico');
+    expect(mockCopyFileStub.mock.calls[0][0]).toContain('favicon.ico');
   });
 });

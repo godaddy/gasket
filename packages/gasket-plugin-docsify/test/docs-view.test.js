@@ -1,27 +1,19 @@
-const assume = require('assume');
-const sinon = require('sinon');
-const proxyquire = require('proxyquire');
-
 const mockDocsConfigSet = { docsRoot: '/path/to/app/.docs' };
-const generateContentStub = sinon.stub();
-const serveStub = sinon.stub();
+const mockGenerateContentStub = jest.fn();
+const mockServeStub = jest.fn();
+const docsView = require('../lib/docs-view');
 
-const docsView = proxyquire('../lib/docs-view', {
-  './generate-content': generateContentStub,
-  '@gasket/utils': {
-    requireWithInstall: () => ({ serve: serveStub })
-  }
-});
+jest.mock('../lib//generate-content', () => mockGenerateContentStub);
+jest.mock('@gasket/utils', () => ({ requireWithInstall: () => ({ serve: mockServeStub }) }));
 
 describe('docsView', () => {
   let mockGasket;
 
   beforeEach(() => {
     mockGasket = {
-      exec: sinon.stub(),
+      exec: jest.fn(),
       config: {}
     };
-    sinon.resetHistory();
   });
 
   it('merges user config with expected defaults', async () => {
@@ -32,8 +24,8 @@ describe('docsView', () => {
       }
     };
     await docsView(mockGasket, mockDocsConfigSet);
-    const results = generateContentStub.getCall(0).args[0];
-    assume(results).eqls({
+    const results = mockGenerateContentStub.mock.calls[0][0];
+    expect(results).toEqual({
       theme: 'bogus',
       port: 3000,
       config: {
@@ -47,11 +39,11 @@ describe('docsView', () => {
 
   it('generates index', async () => {
     await docsView(mockGasket, mockDocsConfigSet);
-    assume(generateContentStub).calledWith(sinon.match.object, mockDocsConfigSet);
+    expect(mockGenerateContentStub).toHaveBeenCalledWith(expect.any(Object), mockDocsConfigSet);
   });
 
-  it('serves doc root using docsify-cli ', async () => {
+  it('serves doc root using docsify-cli', async () => {
     await docsView(mockGasket, mockDocsConfigSet);
-    assume(serveStub).calledWith(mockDocsConfigSet.docsRoot, true);
+    expect(mockServeStub).toHaveBeenCalledWith(mockDocsConfigSet.docsRoot, true, 3000);
   });
 });
