@@ -1,4 +1,4 @@
-/* eslint-disable no-process-env,jest/expect-expect,jest/no-conditional-expect */
+/* eslint-disable no-process-env,jest/expect-expect */
 const path = require('path');
 const { hoistBaseFlags } = require('../lib/utils');
 
@@ -196,11 +196,7 @@ describe('GasketCommand', function () {
       await cmd.init();
 
       // test that the error message is what we expect
-      try {
-        expect(await cmd.run()).toThrow();
-      } catch (err) {
-        expect(err.message).toContain('The `gasketRun` method must be implemented');
-      }
+      await expect(async () => await cmd.run()).rejects.toThrow('The `gasketRun` method must be implemented');
     });
   });
 });
