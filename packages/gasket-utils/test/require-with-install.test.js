@@ -163,6 +163,7 @@ describe('requireWithInstall', function () {
 
       assume(Array.isArray(pkgList)).equals(true);
       assume(pkgList.length).equals(2);
+      assume(packageManagerExecStub.calledWith('add', ['my-package', '@scoped/package', '--dev'])).to.be.true();
     });
   });
 });
