@@ -1,41 +1,37 @@
-const assume = require('assume');
-const sinon = require('sinon');
-
 const serve = require('../lib/serve');
 
 describe('serve', function () {
   afterEach(function () {
-    sinon.reset();
+    jest.clearAllMocks();
   });
 
   it('is a function', function () {
-    assume(serve).is.a('asyncfunction');
-    assume(serve).has.length(2);
+    expect(typeof serve).toBe('function');
+    expect(serve).toHaveLength(2);
   });
 
   it('adds a route to the express/fastify server', async function () {
     const app = {
-      get: sinon.stub()
+      get: jest.fn()
     };
 
     await serve({}, app);
-    assume(app.get.calledOnce).is.true();
+    expect(app.get).toHaveBeenCalledTimes(1);
   });
 
-  it('returns the configured manifest on the route /manifest.json when path option is not set', async function (done) {
-    const stub = sinon.stub();
+  it('returns the configured manifest on the route /manifest.json when path option is not set', async function () {
+    const stub = jest.fn();
     const get = function (route, f) {
-      assume(route).equals('/manifest.json');
+      expect(route).toEqual('/manifest.json');
       f({}, { send: stub });
-      assume(stub.calledOnce);
-      done();
+      expect(stub).toHaveBeenCalledTimes(1);
     };
 
     const app = { get };
     await serve({}, app);
   });
 
-  it('returns the configured manifest on the configured path if option is set', async function (done) {
+  it('returns the configured manifest on the configured path if option is set', async function () {
     const customPath = '/some/custom/path';
     const gasket = {
       config: {
@@ -45,12 +41,11 @@ describe('serve', function () {
       }
     };
 
-    const stub = sinon.stub();
+    const stub = jest.fn();
     const get = function (route, f) {
-      assume(route).equals(customPath);
+      expect(route).toEqual(customPath);
       f({}, { send: stub });
-      assume(stub.calledOnce);
-      done();
+      expect(stub).toHaveBeenCalledTimes(1);
     };
 
     const app = { get };

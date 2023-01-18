@@ -1,6 +1,3 @@
-const assume = require('assume');
-const sinon = require('sinon');
-
 const middleware = require('../lib/middleware');
 
 describe('middleware', function () {
@@ -9,7 +6,7 @@ describe('middleware', function () {
 
   beforeEach(function () {
     gasket = {
-      execWaterfall: sinon.stub().resolves([]),
+      execWaterfall: jest.fn().mockResolvedValue([]),
       config: {
         manifest: {
           name: 'Walter White',
@@ -20,33 +17,33 @@ describe('middleware', function () {
         }
       },
       logger: {
-        debug: sinon.stub()
+        debug: jest.fn()
       }
     };
   });
 
   afterEach(function () {
-    sinon.reset();
+    jest.clearAllMocks();
   });
 
   describe('#timing', function () {
 
     it('is set to last', function () {
-      assume(timing).property('last', true);
+      expect(timing).toHaveProperty('last', true);
     });
   });
 
   describe('#handler', function () {
 
     it('is a function', function () {
-      assume(handler).is.a('function');
-      assume(handler).has.length(1);
+      expect(typeof handler).toBe('function');
+      expect(handler).toHaveLength(1);
     });
 
     it('returns middleware', function () {
       const fn = handler(gasket, {});
-      assume(fn).is.an('asyncfunction');
-      assume(fn).has.length(3);
+      expect(typeof fn).toBe('function');
+      expect(fn).toHaveLength(3);
     });
 
     it('gathers manifest data if looking for manifest.json', async function () {
@@ -55,7 +52,7 @@ describe('middleware', function () {
         path: 'manifest.json'
       };
       await fn(req, {}, function () { });
-      assume(gasket.execWaterfall.calledOnce).is.true();
+      expect(gasket.execWaterfall).toHaveBeenCalledTimes(1);
     });
 
     it('gathers manifest data if looking for the service worker script', async function () {
@@ -64,7 +61,7 @@ describe('middleware', function () {
         path: 'sw.js'
       };
       await fn(req, {}, function () { });
-      assume(gasket.execWaterfall.calledOnce).is.true();
+      expect(gasket.execWaterfall).toHaveBeenCalledTimes(1);
     });
 
     it('passes the incoming request to the manifest hook', async function () {
@@ -74,8 +71,8 @@ describe('middleware', function () {
         path: 'manifest.json'
       };
       await fn(req, {}, function () { });
-      assume(gasket.execWaterfall.args[0]).has.length(3);
-      assume(gasket.execWaterfall.args[0][2]).deep.equals(context);
+      expect(gasket.execWaterfall.mock.calls[0]).toHaveLength(3);
+      expect(gasket.execWaterfall.mock.calls[0][2]).toEqual(context);
     });
 
     it('takes precedence from gasket config over base config', async function () {
@@ -85,7 +82,7 @@ describe('middleware', function () {
         path: 'manifest.json'
       };
       await fn(req, {}, function () { });
-      assume(gasket.execWaterfall.args[0][1].display).equals('BOGUS');
+      expect(gasket.execWaterfall.mock.calls[0][1].display).toEqual('BOGUS');
     });
   });
 });

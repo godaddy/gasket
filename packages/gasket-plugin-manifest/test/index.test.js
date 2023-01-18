@@ -1,14 +1,12 @@
-const assume = require('assume');
-
 const plugin = require('../lib');
 
 describe('Plugin', function () {
   it('is an object', function () {
-    assume(plugin).is.an('object');
+    expect(typeof plugin).toBe('object');
   });
 
   it('has expected name', function () {
-    assume(plugin).to.have.property('name', require('../package').name);
+    expect(plugin).toHaveProperty('name', require('../package').name);
   });
 
   it('has expected hooks', function () {
@@ -21,17 +19,17 @@ describe('Plugin', function () {
       'metadata'
     ];
 
-    assume(plugin).to.have.property('hooks');
+    expect(plugin).toHaveProperty('hooks');
 
     const hooks = Object.keys(plugin.hooks);
-    assume(hooks).eqls(expected);
-    assume(hooks).is.length(expected.length);
+    expect(hooks).toEqual(expected);
+    expect(hooks).toHaveLength(expected.length);
   });
 
   describe('meta', function () {
     it('returns lifecycle metadata', function () {
       const results = plugin.hooks.metadata({}, {});
-      assume(results.lifecycles).is.an('array');
+      expect(Array.isArray(results.lifecycles)).toBe(true);
     });
   });
 });
