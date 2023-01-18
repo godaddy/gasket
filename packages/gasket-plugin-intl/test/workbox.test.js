@@ -1,4 +1,3 @@
-const assume = require('assume');
 const workbox = require('../lib/workbox');
 const { makeEncodeLocaleUrls } = workbox;
 
@@ -34,30 +33,30 @@ describe('workbox', function () {
   it('returns workbox config partial', async function () {
     result = await workbox(mockGasket, mockConfig, mockContext);
 
-    assume(result).instanceOf(Object);
-    assume(result).not.eqls({});
+    expect(result).toBeInstanceOf(Object);
+    expect(result).not.toEqual({});
   });
 
   it('returns empty partial for static service workers', async function () {
     result = await workbox(mockGasket, mockConfig, {});
 
-    assume(result).instanceOf(Object);
-    assume(result).eqls({});
+    expect(result).toBeInstanceOf(Object);
+    expect(result).toEqual({});
   });
 
   it('config partial contains expected properties', async function () {
     result = await workbox(mockGasket, mockConfig, mockContext);
 
-    assume(result).property('globDirectory', '.');
-    assume(result).property('globPatterns');
-    assume(result).property('modifyURLPrefix');
-    assume(result).property('manifestTransforms');
+    expect(result).toHaveProperty('globDirectory', '.');
+    expect(result).toHaveProperty('globPatterns');
+    expect(result).toHaveProperty('modifyURLPrefix');
+    expect(result).toHaveProperty('manifestTransforms');
   });
 
   it('config modifies urls from to _next', async function () {
     result = await workbox(mockGasket, mockConfig, mockContext);
 
-    assume(result.modifyURLPrefix).property(
+    expect(result.modifyURLPrefix).toHaveProperty(
       'public/locales', 'locales'
     );
   });
@@ -66,7 +65,7 @@ describe('workbox', function () {
     mockGasket.config.intl.basePath = 'https://some-cdn.com/';
     result = await workbox(mockGasket, mockConfig, mockContext);
 
-    assume(result.modifyURLPrefix).property(
+    expect(result.modifyURLPrefix).toHaveProperty(
       'public/locales', 'https://some-cdn.com/locales'
     );
   });
@@ -75,7 +74,7 @@ describe('workbox', function () {
     mockGasket.config.intl.basePath = 'https://some-cdn.com';
     result = await workbox(mockGasket, mockConfig, mockContext);
 
-    assume(result.modifyURLPrefix).property(
+    expect(result.modifyURLPrefix).toHaveProperty(
       'public/locales', 'https://some-cdn.com/locales'
     );
   });
@@ -84,7 +83,7 @@ describe('workbox', function () {
     mockGasket.config.intl.basePath = '/some/asset/prefix/';
     result = await workbox(mockGasket, mockConfig, mockContext);
 
-    assume(result.modifyURLPrefix).property(
+    expect(result.modifyURLPrefix).toHaveProperty(
       'public/locales', '/some/asset/prefix/locales'
     );
   });
@@ -93,7 +92,7 @@ describe('workbox', function () {
     mockGasket.config.intl.basePath = '/some/asset/prefix';
     result = await workbox(mockGasket, mockConfig, mockContext);
 
-    assume(result.modifyURLPrefix).property(
+    expect(result.modifyURLPrefix).toHaveProperty(
       'public/locales', '/some/asset/prefix/locales'
     );
   });
@@ -101,11 +100,11 @@ describe('workbox', function () {
   it('manifestTransforms contains an encodeLocaleUrls function', async function () {
     result = await workbox(mockGasket, mockConfig, mockContext);
 
-    assume(result.manifestTransforms).instanceOf(Array);
-    assume(result.manifestTransforms[0]).property('name', 'encodeLocaleUrls');
+    expect(result.manifestTransforms).toBeInstanceOf(Array);
+    expect(result.manifestTransforms[0]).toHaveProperty('name', 'encodeLocaleUrls');
   });
 
-  it('does not assume gasketData to be populated', async function () {
+  it('does not expect gasketData to be populated', async function () {
     delete mockContext.res.locals.gasketData;
     let error = null;
 
@@ -115,7 +114,7 @@ describe('workbox', function () {
       error = err;
     }
 
-    assume(error).to.equal(null);
+    expect(error).toEqual(null);
   });
 
   describe('makeEncodeLocaleUrls', function () {
@@ -129,29 +128,29 @@ describe('workbox', function () {
       encodeLocaleUrls = makeEncodeLocaleUrls('/locales');
     });
 
-    it('returns an object with manifest property', function () {
+    it('returns an object with manifest toHaveProperty', function () {
       result = encodeLocaleUrls([]);
-      assume(result).eqls({ manifest: [] });
-      assume(result.manifest).eqls([]);
+      expect(result).toEqual({ manifest: [] });
+      expect(result.manifest).toEqual([]);
     });
 
     it('does not adjust non-locale files', function () {
       result = encodeLocaleUrls(mockManifest);
-      assume(result.manifest[0].url).equals('some/asset.json');
+      expect(result.manifest[0].url).toEqual('some/asset.json');
     });
 
     it('encodes module part of relative locale path', function () {
       mockEntry.url = '/locales/@org/mod-name/ns1/ggggggg.en-US.json';
       const expected = '/locales/%40org%2Fmod-name%2Fns1/ggggggg.en-US.json';
       result = encodeLocaleUrls(mockManifest);
-      assume(result.manifest[0].url).equals(expected);
+      expect(result.manifest[0].url).toEqual(expected);
     });
 
     it('encodes module part of asset prefixed locale path', function () {
       mockEntry.url = 'https://some.cdn/path/locales/@org/mod-name/ns1/ggggggg.en-US.json';
       const expected = '/locales/%40org%2Fmod-name%2Fns1';
       result = encodeLocaleUrls(mockManifest);
-      assume(result.manifest[0].url).includes(expected);
+      expect(result.manifest[0].url).toContain(expected);
     });
   });
 });
