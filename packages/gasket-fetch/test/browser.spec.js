@@ -1,4 +1,4 @@
-/* eslint-disable jest/expect-expect, jest/no-done-callback */
+/* eslint-disable jest/expect-expect */
 import 'whatwg-fetch';
 import fetch from '../lib/browser';
 const { AbortController, Request, Headers, Response } = fetch;
