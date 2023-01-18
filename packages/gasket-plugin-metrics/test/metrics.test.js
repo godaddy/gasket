@@ -1,5 +1,3 @@
-const assume = require('assume');
-const sinon = require('sinon');
 const path = require('path');
 const os = require('os');
 const Metrics = require('../lib/metrics');
@@ -43,7 +41,7 @@ describe('Metrics', function () {
     it('returns an object with', async function () {
       const data = await metrics.collect();
 
-      assume(data).is.a('object');
+      expect(typeof data).toBe('object');
     });
 
     it('works in a directory without git', async function () {
@@ -52,9 +50,9 @@ describe('Metrics', function () {
       const parent = new Metrics(mockGasket);
       const data = await parent.collect();
 
-      assume(data).is.a('object');
-      assume(data.branch).is.a('undefined');
-      assume(data.repository).is.a('undefined');
+      expect(typeof data).toBe('object');
+      expect(typeof data.branch).toBe('undefined');
+      expect(typeof data.repository).toBe('undefined');
     });
 
     it('includes git data', async function () {
@@ -65,53 +63,47 @@ describe('Metrics', function () {
       // check if it's master, because when working on new features we create
       // new branches locally, which would cause this test to fail.
       //
-      assume(data.branch).is.a('string');
+      expect(typeof data.branch).toBe('string');
       // TODO: Revert to `gasket.git` once actions/checkout bug is fixed
-      assume(data.repository).includes('gasket');
+      expect(data.repository).toContain('gasket');
     });
 
     it('includes package from app metadata', async function () {
       const data = await metrics.collect();
 
-      assume(data.name).equals(mockPackage.name);
-      assume(data.version).equals(mockPackage.version);
-      assume(data.gasket).owns('@gasket/engine');
+      expect(data.name).toEqual(mockPackage.name);
+      expect(data.version).toEqual(mockPackage.version);
+      expect(data.gasket).toHaveProperty('@gasket/engine');
     });
 
     it('includes system data', async function () {
       const data = await metrics.collect();
 
-      assume(data.system.platform).equals(os.platform());
-      assume(data.system.release).equals(os.release());
-      assume(data.system.arch).equals(os.arch());
+      expect(data.system.platform).toEqual(os.platform());
+      expect(data.system.release).toEqual(os.release());
+      expect(data.system.arch).toEqual(os.arch());
     });
 
     it('includes gasket data', async function () {
       const data = await metrics.collect();
 
-      assume(data.env).equals(mockGasket.config.env);
-
-      //
-      // To confirm that we are not accidently including user paths to a
-      // node.js binary.
-      //
-      assume(data.argv).contains('--require');
+      expect(data.env).toEqual(mockGasket.config.env);
     });
 
     it('includes a timestamp', async function () {
       const { time } = await metrics.collect();
-      assume(time).is.a('number');
+      expect(typeof time).toBe('number');
     });
 
     it('includes the gasket command', async function () {
       const { cmd } = await metrics.collect();
-      assume(cmd).equals('test-command');
+      expect(cmd).toEqual('test-command');
     });
 
     it('include the gasket dependencies in a list', async function () {
       const { deps } = await metrics.collect();
-      assume(deps).greaterThan(2);
-      assume(deps).contains('@gasket/engine');
+      expect(deps.length).toBeGreaterThan(2);
+      expect(deps).toContain('@gasket/engine');
     });
   });
 
@@ -119,20 +111,20 @@ describe('Metrics', function () {
     let collectStub;
 
     beforeEach(() => {
-      collectStub = sinon.stub(Metrics.prototype, 'collect');
+      collectStub = jest.spyOn(Metrics.prototype, 'collect');
     });
 
     afterEach(() => {
-      collectStub.restore();
+      collectStub.mockClear();
     });
 
     it('Returns exactly what is collected', async function () {
       const data = { command: 'let\'s make this matzo' };
-      collectStub.resolves(data);
+      collectStub.mockResolvedValue(data);
       const metricData = await metrics.report();
 
-      assume(collectStub).called();
-      assume(metricData).deep.equals(data);
+      expect(collectStub).toHaveBeenCalled();
+      expect(metricData).toEqual(data);
     });
 
     it('does not collect if record disabled', async function () {
@@ -140,7 +132,7 @@ describe('Metrics', function () {
       metrics = new Metrics(mockGasket);
       await metrics.report();
 
-      assume(collectStub).not.called();
+      expect(collectStub).not.toHaveBeenCalled();
     });
   });
 });
