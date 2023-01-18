@@ -7,13 +7,11 @@ import { assertExports, assertGet, assertAbort, assertPost } from './utils';
 describe('fetch is available in browsers', function () {
 
   it('exposes default classes', assertExports(Request, Headers, Response));
-  it('can fetch resources', (done) => {
-    assertGet(fetch);
-    done();
+  it('can fetch resources', async (done) => {
+    await assertGet(fetch);
   });
-  it('fetch can POST to API', (done) => {
-    assertPost(fetch);
-    done();
+  it('fetch can POST to API', async (done) => {
+    await assertPost(fetch);
   });
   it('can abort fetch', assertAbort(fetch, AbortController));
   it('uses patched version', function () {

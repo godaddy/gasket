@@ -66,7 +66,7 @@ describe('Log', function () {
       });
 
       expect(colored.message).toEqual('\x1b[38;5;196m I will be red \x1b[39;49m');
-      expect(colored?.meta?.length || []).toHaveLength(0);
+      expect(colored.meta || []).toHaveLength(0);
     });
 
     it('can handle unclosed coloring tokens', function () {
@@ -76,7 +76,7 @@ describe('Log', function () {
       });
 
       expect(colored.message).toEqual('\x1b[38;5;21m I will still work and be blue\x1b[39;49m');
-      expect(colored?.meta?.length || []).toHaveLength(0);
+      expect(colored.meta || []).toHaveLength(0);
     });
   });
 

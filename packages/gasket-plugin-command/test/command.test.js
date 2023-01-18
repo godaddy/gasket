@@ -1,4 +1,4 @@
-/* eslint-disable no-process-env,jest/no-done-callback,jest/expect-expect,jest/no-conditional-expect */
+/* eslint-disable no-process-env,jest/expect-expect,jest/no-conditional-expect */
 const path = require('path');
 const { hoistBaseFlags } = require('../lib/utils');
 
@@ -77,7 +77,7 @@ describe('GasketCommand', function () {
     }
   }
 
-  beforeEach((done) => {
+  beforeEach(() => {
     process.env.NODE_ENV = 'development';
 
     gasket = { exec: jest.fn() };
@@ -85,11 +85,6 @@ describe('GasketCommand', function () {
 
     jest.mock('@gasket/engine', () => MockPluginEngine);
     GasketCommand = require('../lib/command');
-    // GasketCommand = proxyquire('../lib/command', {
-    //   '@gasket/engine': MockPluginEngine
-    // });
-
-    done();
   });
 
   it('implements the expected oclif command API', () => {
@@ -118,9 +113,6 @@ describe('GasketCommand', function () {
       expect(cmd.gasket).toHaveProperty('command');
       expect(cmd.gasket.command).toHaveProperty('id', 'custom');
       expect(cmd.gasket.command).toHaveProperty('flags');
-      // expect(cmd.gasket.config.flags).toHaveProperty('root');
-      // expect(cmd.gasket.config.flags).toHaveProperty('config', 'fake');
-      // expect(cmd.gasket.config.flags).toHaveProperty('env', 'bogus');
     });
 
     it('allows subclasses to adjust config', async () => {

@@ -24,7 +24,6 @@ describe('configure', function () {
   afterEach(function () {
     delete process.env.GASKET_INTL_LOCALES_DIR;
     delete process.env.GASKET_INTL_MANIFEST_FILE;
-    // sinon.restore();
     jest.clearAllMocks();
   });
 

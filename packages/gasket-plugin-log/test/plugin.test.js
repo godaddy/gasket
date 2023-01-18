@@ -4,14 +4,6 @@ jest.mock('@gasket/log', () => mockLog);
 
 const Plugin = require('../lib/index');
 
-/*
- * Simple helper that returns the Plugin with a custom assertion
- * to be invoked on creation of Log instances
- */
-// function expectLogInit(assertFn) {
-//   return Plugin
-// }
-
 describe('Plugin', function () {
 
   afterEach(() => {
