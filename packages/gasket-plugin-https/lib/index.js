@@ -1,3 +1,4 @@
+/* eslint-disable max-statements */
 const { createTerminus, HealthCheckError } = require('@godaddy/terminus');
 const debug = require('diagnostics')('gasket:https');
 const create = require('create-servers');
