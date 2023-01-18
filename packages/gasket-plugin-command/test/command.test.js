@@ -1,4 +1,3 @@
-/* eslint-disable no-process-env,jest/expect-expect */
 const path = require('path');
 const { hoistBaseFlags } = require('../lib/utils');
 
