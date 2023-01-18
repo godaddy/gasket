@@ -1,26 +1,21 @@
-const assume = require('assume');
-const sinon = require('sinon');
-const proxyquire = require('proxyquire');
+const mockWriteFileStub = jest.fn();
+const mockMkdirpStub = jest.fn();
+
+jest.mock('fs', () => ({
+  promises: {
+    writeFile: mockWriteFileStub
+  }
+}));
+jest.mock('mkdirp', () => mockMkdirpStub);
+
+const build = require('../lib/build');
 
 describe('build', function () {
-  const writeFileStub = sinon.stub();
-  const mkdirpStub = sinon.stub();
-
-  const build = proxyquire('../lib/build', {
-    fs: {
-      promises: {
-        writeFile: writeFileStub
-      }
-    },
-    mkdirp: mkdirpStub,
-    replace: sinon.stub()
-  });
-
   let gasket;
 
   beforeEach(function () {
     gasket = {
-      execWaterfall: sinon.stub().resolves([]),
+      execWaterfall: jest.fn().mockResolvedValue([]),
       config: {
         root: 'test',
         manifest: {
@@ -28,45 +23,45 @@ describe('build', function () {
         }
       },
       logger: {
-        debug: sinon.stub(),
-        error: sinon.stub(),
-        log: sinon.stub()
+        debug: jest.fn(),
+        error: jest.fn(),
+        log: jest.fn()
       }
     };
   });
 
   afterEach(function () {
-    sinon.reset();
+    jest.clearAllMocks();
   });
 
   it('is a function', function () {
-    assume(build).is.a('asyncfunction');
-    assume(build).has.length(1);
+    expect(typeof build).toBe('function');
+    expect(build).toHaveLength(1);
   });
 
   it('skips logic when staticOutput config is not set', async function () {
     gasket.config.manifest = {};
     await build(gasket);
 
-    assume(mkdirpStub.called).false();
+    expect(mockMkdirpStub).not.toHaveBeenCalled();
   });
 
   it('creates custom output directory', async function () {
     gasket.config.manifest.staticOutput = '/super/cool/custom/path/manifest.json';
     await build(gasket);
-    assume(mkdirpStub.calledOnce).true();
-    assume(mkdirpStub.args[0][0]).eqls('/super/cool/custom/path/');
+    expect(mockMkdirpStub).toHaveBeenCalled();
+    expect(mockMkdirpStub.mock.calls[0][0]).toEqual('/super/cool/custom/path/');
   });
 
   it('writes manifest to specified path', async function () {
     await build(gasket);
-    assume(writeFileStub.calledOnce).true();
-    assume(writeFileStub.args[0]).eqls(['/custom/manifest.json', '[]', 'utf-8']);
+    expect(mockWriteFileStub.mock.calls.length).toBe(1);
+    expect(mockWriteFileStub.mock.calls[0]).toEqual(['/custom/manifest.json', '[]', 'utf-8']);
   });
 
   it('logs completion message', async function () {
     await build(gasket);
-    assume(gasket.logger.log.calledOnce).true();
-    assume(gasket.logger.log.args[0][0]).includes('custom/manifest.json).');
+    expect(gasket.logger.log.mock.calls.length).toBe(1);
+    expect(gasket.logger.log.mock.calls[0][0]).toContain('custom/manifest.json).');
   });
 });
