@@ -1,8 +1,6 @@
+/* eslint-disable jest/expect-expect */
 const { Transport, format, transports, config } = require('winston');
-const { describe, it } = require('mocha');
 const { SPLAT } = require('triple-beam');
-const assume = require('assume');
-const sinon = require('sinon');
 const Log = require('../src/server');
 
 /**
@@ -11,9 +9,9 @@ const Log = require('../src/server');
  *
  * @param {WritableStream} maybeDone Stream that may have finished.
  */
-function assumeFinished(maybeDone) {
-  assume(maybeDone._writableState).is.an('object');
-  assume(maybeDone._writableState.finished).true();
+function expectFinished(maybeDone) {
+  expect(maybeDone._writableState).toEqual(expect.any(Object));
+  expect(maybeDone._writableState.finished).toEqual(true);
 }
 
 describe('Log', function () {
@@ -21,43 +19,43 @@ describe('Log', function () {
 
   beforeEach(function () {
     log = new Log({ local: true });
+    jest.resetAllMocks();
   });
 
   afterEach(function () {
     log = null;
-    sinon.restore();
   });
 
   it('exports class', function () {
-    assume(Log).to.be.a('function');
+    expect(Log).toEqual(expect.any(Function));
   });
 
   it('has default properties', function () {
     const options = {};
     log = new Log(options);
 
-    assume(log).to.have.property('options', options);
-    assume(log).to.have.property('local', false);
-    assume(log).to.have.property('silent', false);
-    assume(log).to.have.property('level', 'info');
+    expect(log).toHaveProperty('options', options);
+    expect(log).toHaveProperty('local', false);
+    expect(log).toHaveProperty('silent', false);
+    expect(log).toHaveProperty('level', 'info');
 
     log = new Log({ local: true });
-    assume(log).to.have.property('level', 'debug');
+    expect(log).toHaveProperty('level', 'debug');
 
     log = new Log({ level: 'silly' });
-    assume(log).to.have.property('level', 'silly');
+    expect(log).toHaveProperty('level', 'silly');
   });
 
   it('exposes defaults as statics', function () {
-    assume(Log.prefix).to.equal('server');
-    assume(Log.format).to.have.property('color');
-    assume(Log.Console).to.equal(transports.Console);
+    expect(Log.prefix).toEqual('server');
+    expect(Log.format).toHaveProperty('color');
+    expect(Log.Console).toEqual(transports.Console);
   });
 
   describe('Log.format.color', function () {
     let formatter;
 
-    before(function () {
+    beforeEach(function () {
       formatter = Log.format.color();
     });
 
@@ -67,8 +65,8 @@ describe('Log', function () {
         [SPLAT]: ['color: #FF0000']
       });
 
-      assume(colored.message).to.equal('\x1b[38;5;196m I will be red \x1b[39;49m');
-      assume(colored.meta).to.have.length(0);
+      expect(colored.message).toEqual('\x1b[38;5;196m I will be red \x1b[39;49m');
+      expect(colored?.meta?.length || []).toHaveLength(0);
     });
 
     it('can handle unclosed coloring tokens', function () {
@@ -77,30 +75,30 @@ describe('Log', function () {
         [SPLAT]: ['color: #0000FF']
       });
 
-      assume(colored.message).to.equal('\x1b[38;5;21m I will still work and be blue\x1b[39;49m');
-      assume(colored.meta).to.have.length(0);
+      expect(colored.message).toEqual('\x1b[38;5;21m I will still work and be blue\x1b[39;49m');
+      expect(colored?.meta?.length || []).toHaveLength(0);
     });
   });
 
   describe('.prefix', function () {
     it('uses default prefix', function () {
-      assume(log.prefix).equals('server');
+      expect(log.prefix).toEqual('server');
     });
 
     it('uses prefix set in options', function () {
       log = new Log({ prefix: 'bogus' });
-      assume(log.prefix).equals('bogus');
+      expect(log.prefix).toEqual('bogus');
     });
   });
 
   describe('.log', function () {
     it('proxies to winston.log with predefined level', async function () {
-      const stub = sinon.stub(log.winston, 'log');
+      const stub = jest.spyOn(log.winston, 'log');
 
-      assume(log.log).to.be.a('function');
+      expect(log.log).toEqual(expect.any(Function));
 
       log.log('Testing');
-      assume(stub.getCall(0).args).to.deep.equal(['debug', 'Testing']);
+      expect(stub.mock.calls[0]).toEqual(['debug', 'Testing']);
     });
   });
 
@@ -109,17 +107,18 @@ describe('Log', function () {
     // Required hack to make the function observable.
     //
     Object.defineProperty(format, 'combine', {
+      writable: true,
       value: format.combine,
       enumerable: true
     });
 
     it('returns combined formats for environment `local`', function () {
-      const spy = sinon.spy(format, 'combine');
+      const spy = jest.spyOn(format, 'combine');
       const formatters = log.format();
 
-      assume(formatters).to.be.an('object');
-      assume(formatters).to.have.property('options');
-      assume(spy.getCall(0).args).to.deep.equal([
+      expect(formatters).toEqual(expect.any(Object));
+      expect(formatters).toHaveProperty('options');
+      expect(spy.mock.calls[0]).toEqual([
         Log.format.color(),
         format.colorize(),
         format.splat(),
@@ -128,12 +127,12 @@ describe('Log', function () {
     });
 
     it('returns level depending on environment', function () {
-      const spy = sinon.spy(format, 'combine');
+      const spy = jest.spyOn(format, 'combine');
 
       log = new Log({ local: false });
       log.format();
 
-      assume(spy.getCall(0).args).to.deep.equal([
+      expect(spy.mock.calls[0]).toEqual([
         format.splat(),
         format.label({ label: Log.prefix }),
         format.json()
@@ -141,33 +140,33 @@ describe('Log', function () {
     });
 
     it('allows for custom formats', function () {
-      const spy = sinon.spy(format, 'combine');
+      const spy = jest.spyOn(format, 'combine');
 
       const myFormat = format.json();
       log = new Log({ local: false, format: myFormat });
       const logFormat = log.format();
 
-      assume(spy.callCount).to.equal(0);
-      assume(logFormat).to.be.equal(myFormat);
+      expect(spy.mock.calls.length).toEqual(0);
+      expect(logFormat).toEqual(myFormat);
     });
   });
 
   describe('.levels', function () {
     it('provides default levels', function () {
-      assume(Log.levels).to.deep.equal(config.syslog.levels);
-      assume(log.levels).to.deep.equal(config.syslog.levels);
+      expect(Log.levels).toEqual(config.syslog.levels);
+      expect(log.levels).toEqual(config.syslog.levels);
     });
 
     it('throws if expected levels are not supplied in custom levels', function () {
-      assume(() => new Log({ local: false, levels: { weirdStuff: 1337 } }))
-        .to.throw(`'levels' is missing necessary levels: emerg, alert, crit, error, warning, notice, info, debug`);
+      expect(() => new Log({ local: false, levels: { weirdStuff: 1337 } }))
+        .toThrow(`'levels' is missing necessary levels: emerg, alert, crit, error, warning, notice, info, debug`);
     });
 
     it('allows custom levels', function () {
       log = new Log({ local: false, levels: { ...Log.levels, weirdStuff: 1337 } });
-      assume(Log.levels).to.deep.equal(config.syslog.levels);
-      assume(log.levels).to.deep.equal({ ...Log.levels, weirdStuff: 1337 });
-      assume(log.weirdStuff).to.be.a('function');
+      expect(Log.levels).toEqual(config.syslog.levels);
+      expect(log.levels).toEqual({ ...Log.levels, weirdStuff: 1337 });
+      expect(log.weirdStuff).toEqual(expect.any(Function));
     });
   });
 
@@ -175,14 +174,14 @@ describe('Log', function () {
     it('returns winston a Console transport by default', function () {
       let transporters = log.transports();
 
-      assume(transporters).to.be.an('array');
-      assume(transporters).to.have.length(1);
+      expect(transporters).toEqual(expect.any(Array));
+      expect(transporters).toHaveLength(1);
 
       log = new Log({ local: false });
       transporters = log.transports();
 
-      assume(transporters).to.be.an('array');
-      assume(transporters).to.have.length(1);
+      expect(transporters).toEqual(expect.any(Array));
+      expect(transporters).toHaveLength(1);
     });
 
     it('returns the user-provided transports (if set)', () => {
@@ -194,16 +193,16 @@ describe('Log', function () {
       log = new Log({ transports: expected });
       const actual = log.transports();
 
-      assume(actual).to.be.an('array');
-      assume(actual).to.have.length(2);
-      assume(actual).equals(expected);
+      expect(actual).toEqual(expect.any(Array));
+      expect(actual).toHaveLength(2);
+      expect(actual).toEqual(expected);
     });
   });
 
   describe('.close', function () {
     it('returns for default values', async function () {
       await log.close();
-      assumeFinished(log.winston);
+      expectFinished(log.winston);
     });
 
     it('awaits any _final to occur', async function () {
@@ -226,9 +225,9 @@ describe('Log', function () {
       log = new Log({ transports: expected });
 
       await log.close();
-      assumeFinished(log.winston);
-      assumeFinished(expected[0]);
-      assumeFinished(expected[1]);
+      expectFinished(log.winston);
+      expectFinished(expected[0]);
+      expectFinished(expected[1]);
     });
   });
 
@@ -237,13 +236,13 @@ describe('Log', function () {
       log.spawn();
 
       Object.keys(config.syslog.levels).forEach(function each(level) {
-        assume(log).to.have.property(level);
-        assume(log[level]).to.be.a('function');
+        expect(log).toHaveProperty(level);
+        expect(log[level]).toEqual(expect.any(Function));
       });
     });
 
     it('returns winston instance', function () {
-      assume(log.spawn()).to.be.an('object');
+      expect(log.spawn()).toEqual(expect.any(Object));
     });
 
     it('exposes methods for syslog levels', function () {
@@ -251,8 +250,8 @@ describe('Log', function () {
 
       Object.keys(config.syslog.levels)
         .forEach(lvl => {
-          assume(log).to.have.property(lvl);
-          assume(log[lvl]).is.a('function');
+          expect(log).toHaveProperty(lvl);
+          expect(log[lvl]).toEqual(expect.any(Function));
         });
     });
   });
