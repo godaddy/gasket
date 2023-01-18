@@ -1,6 +1,4 @@
 /* eslint-disable max-nested-callbacks, max-len */
-const assume = require('assume');
-const sinon = require('sinon');
 const {
   makeLinkTransform,
   txGasketPackageLinks,
@@ -32,54 +30,54 @@ describe('Utils Transforms', () => {
   describe('makeLinkTransform', () => {
     it('returns a function', () => {
       const results = makeLinkTransform(f => f);
-      assume(results).is.a('function');
+      expect(results).toEqual(expect.any(Function));
     });
 
     it('callback is not called if no links', () => {
-      const mockCallback = sinon.stub();
+      const mockCallback = jest.fn();
       makeLinkTransform(mockCallback)('not much here');
-      assume(mockCallback).is.not.called();
+      expect(mockCallback).not.toHaveBeenCalled();
     });
 
     it('callback is executed for all matching links', () => {
-      const mockCallback = sinon.stub();
+      const mockCallback = jest.fn();
       makeLinkTransform(mockCallback)(mockInlineStyle);
-      assume(mockCallback).is.called(7);
+      expect(mockCallback).toHaveBeenCalledTimes(7);
     });
 
     it('callback is passed link', () => {
-      const mockCallback = sinon.stub();
+      const mockCallback = jest.fn();
       makeLinkTransform(mockCallback)(mockInlineStyle);
-      assume(mockCallback).is.calledWith('path/to/doc.md');
+      expect(mockCallback).toHaveBeenCalledWith('path/to/doc.md');
     });
 
     it('matches inline links', () => {
-      const mockCallback = sinon.stub();
+      const mockCallback = jest.fn();
       makeLinkTransform(mockCallback)(mockInlineStyle);
-      assume(mockCallback).is.calledWith('path/to/doc.md');
-      assume(mockCallback).is.calledWith('../path/to/doc.md#with-hash');
-      assume(mockCallback).is.calledWith('/path/to/doc.md#with-hash');
-      assume(mockCallback).is.calledWith('/packages/gasket-fake/doc.md#with-hash');
-      assume(mockCallback).is.calledWith('/packages/not-gasket/doc.md#with-hash');
-      assume(mockCallback).is.calledWith('https://github.com/godaddy/gasket/tree/canary/packages/gasket-fake/path/to/doc.md#with-hash');
-      assume(mockCallback).is.calledWith('https://doc.gasket.dev');
+      expect(mockCallback).toHaveBeenCalledWith('path/to/doc.md');
+      expect(mockCallback).toHaveBeenCalledWith('../path/to/doc.md#with-hash');
+      expect(mockCallback).toHaveBeenCalledWith('/path/to/doc.md#with-hash');
+      expect(mockCallback).toHaveBeenCalledWith('/packages/gasket-fake/doc.md#with-hash');
+      expect(mockCallback).toHaveBeenCalledWith('/packages/not-gasket/doc.md#with-hash');
+      expect(mockCallback).toHaveBeenCalledWith('https://github.com/godaddy/gasket/tree/canary/packages/gasket-fake/path/to/doc.md#with-hash');
+      expect(mockCallback).toHaveBeenCalledWith('https://doc.gasket.dev');
     });
 
     it('matches reference links', () => {
-      const mockCallback = sinon.stub();
+      const mockCallback = jest.fn();
       makeLinkTransform(mockCallback)(mockReferenceStyle);
-      assume(mockCallback).is.calledWith('path/to/doc.md');
-      assume(mockCallback).is.calledWith('../path/to/doc.md#with-hash');
-      assume(mockCallback).is.calledWith('/path/to/doc.md#with-hash');
-      assume(mockCallback).is.calledWith('/packages/gasket-fake/doc.md#with-hash');
-      assume(mockCallback).is.calledWith('/packages/not-gasket/doc.md#with-hash');
-      assume(mockCallback).is.calledWith('https://github.com/godaddy/gasket/tree/canary/packages/gasket-fake/path/to/doc.md#with-hash');
-      assume(mockCallback).is.calledWith('https://doc.gasket.dev');
+      expect(mockCallback).toHaveBeenCalledWith('path/to/doc.md');
+      expect(mockCallback).toHaveBeenCalledWith('../path/to/doc.md#with-hash');
+      expect(mockCallback).toHaveBeenCalledWith('/path/to/doc.md#with-hash');
+      expect(mockCallback).toHaveBeenCalledWith('/packages/gasket-fake/doc.md#with-hash');
+      expect(mockCallback).toHaveBeenCalledWith('/packages/not-gasket/doc.md#with-hash');
+      expect(mockCallback).toHaveBeenCalledWith('https://github.com/godaddy/gasket/tree/canary/packages/gasket-fake/path/to/doc.md#with-hash');
+      expect(mockCallback).toHaveBeenCalledWith('https://doc.gasket.dev');
     });
 
     it('transforms inline links', () => {
       const results = makeLinkTransform(link => link.replace('doc', 'bogus'))(mockInlineStyle);
-      assume(results).equals(`
+      expect(results).toEqual(`
 [1](path/to/bogus.md) [2](../path/to/bogus.md#with-hash) [3](/path/to/bogus.md#with-hash)
 [4](/packages/gasket-fake/bogus.md#with-hash)
 [5](/packages/not-gasket/bogus.md#with-hash)
@@ -90,7 +88,7 @@ describe('Utils Transforms', () => {
 
     it('transforms reference links', () => {
       const results = makeLinkTransform(link => link.replace('doc', 'bogus'))(mockReferenceStyle);
-      assume(results).equals(`
+      expect(results).toEqual(`
 [1]:path/to/bogus.md
 [2]: ../path/to/bogus.md#with-hash
 [3]:/path/to/bogus.md#with-hash
@@ -103,7 +101,7 @@ describe('Utils Transforms', () => {
 
     it('falls back to original if callback does not return', () => {
       const results = makeLinkTransform(() => { /* does nothing */ })(mockReferenceStyle);
-      assume(results).equals(mockReferenceStyle);
+      expect(results).toEqual(mockReferenceStyle);
     });
   });
 
@@ -111,7 +109,7 @@ describe('Utils Transforms', () => {
     const { test, handler } = txGasketPackageLinks;
 
     it('is global', () => {
-      assume(txGasketPackageLinks).property('global', true);
+      expect(txGasketPackageLinks).toHaveProperty('global', true);
     });
 
     describe('test', () => {
@@ -121,7 +119,7 @@ describe('Utils Transforms', () => {
           '/path/to/node_modules/@gasket/something/README.md',
           '/path/to/node_modules/@gasket/some-preset/README.md'
         ].forEach(source => {
-          assume(test.test(source)).equals(true, `Path ${source}`);
+          expect(test.test(source)).toEqual(true, `Path ${source}`);
         });
       });
 
@@ -131,7 +129,7 @@ describe('Utils Transforms', () => {
           '/path/to/packages/gasket-something/README.md',
           '/path/to/packages/gasket-preset-some/README.md'
         ].forEach(source => {
-          assume(test.test(source)).equals(true, `Path ${source}`);
+          expect(test.test(source)).toEqual(true, `Path ${source}`);
         });
       });
 
@@ -144,7 +142,7 @@ describe('Utils Transforms', () => {
           '/path/to/packages/gasket-something/bogus.png',
           '/path/to/packages/gasket-preset-some/bogus.txt'
         ].forEach(source => {
-          assume(test.test(source)).equals(false, `Path ${source}`);
+          expect(test.test(source)).toEqual(false, `Path ${source}`);
         });
       });
 
@@ -157,7 +155,7 @@ describe('Utils Transforms', () => {
           '/path/to/my/gasket/gasket-something/README.md',
           '/path/to/my/cool-gasket-preset/README.md'
         ].forEach(source => {
-          assume(test.test(source)).equals(false, `Path ${source}`);
+          expect(test.test(source)).toEqual(false, `Path ${source}`);
         });
       });
     });
@@ -170,20 +168,20 @@ describe('Utils Transforms', () => {
       });
 
       it('is named', () => {
-        assume(handler).property('name', 'txGasketPackageLinks');
+        expect(handler).toHaveProperty('name', 'txGasketPackageLinks');
       });
 
       it('transforms absolute links under gasket repo to be URLs', () => {
         const results = handler(mockInlineStyle, { docsConfig: mockDocsConfig });
-        assume(results).not.equals(mockInlineStyle);
-        assume(results).not.includes('[4](/packages/gasket-fake/doc.md#with-hash)');
-        assume(results).includes('[4](https://github.com/godaddy/gasket/tree/main/packages/gasket-fake/doc.md#with-hash)');
+        expect(results).not.toEqual(mockInlineStyle);
+        expect(results).not.toContain('[4](/packages/gasket-fake/doc.md#with-hash)');
+        expect(results).toContain('[4](https://github.com/godaddy/gasket/tree/main/packages/gasket-fake/doc.md#with-hash)');
       });
 
       it('does not process if non-@gasket module', () => {
         mockDocsConfig.name = '@not/a-gasket-module';
         const results = handler(mockInlineStyle, { docsConfig: mockDocsConfig });
-        assume(results).equals(mockInlineStyle);
+        expect(results).toEqual(mockInlineStyle);
       });
     });
   });
@@ -192,7 +190,7 @@ describe('Utils Transforms', () => {
     const { test, handler } = txGasketUrlLinks;
 
     it('is global', () => {
-      assume(txGasketUrlLinks).property('global', true);
+      expect(txGasketUrlLinks).toHaveProperty('global', true);
     });
 
     describe('test', () => {
@@ -201,7 +199,7 @@ describe('Utils Transforms', () => {
           'README.md',
           '/path/to/any/README.md'
         ].forEach(source => {
-          assume(test.test(source)).equals(true, `Path ${source}`);
+          expect(test.test(source)).toEqual(true, `Path ${source}`);
         });
       });
 
@@ -214,7 +212,7 @@ describe('Utils Transforms', () => {
           '/path/to/raster.png',
           '/path/to/text.txt'
         ].forEach(source => {
-          assume(test.test(source)).equals(false, `Path ${source}`);
+          expect(test.test(source)).toEqual(false, `Path ${source}`);
         });
       });
 
@@ -236,13 +234,13 @@ describe('Utils Transforms', () => {
         });
 
         it('is named', () => {
-          assume(handler).property('name', 'txGasketUrlLinks');
+          expect(handler).toHaveProperty('name', 'txGasketUrlLinks');
         });
 
         it('transforms gasket repo URLs to relative links', () => {
           const results = handler(mockInlineStyle, { filename, docsConfig, docsConfigSet });
-          assume(results).not.includes('[6](https://github.com/godaddy/gasket/tree/canary/packages/gasket-fake/path/to/doc.md#with-hash)');
-          assume(results).includes('[6](../../../modules/@gasket/fake/path/to/doc.md#with-hash)');
+          expect(results).not.toContain('[6](https://github.com/godaddy/gasket/tree/canary/packages/gasket-fake/path/to/doc.md#with-hash)');
+          expect(results).toContain('[6](../../../modules/@gasket/fake/path/to/doc.md#with-hash)');
         });
 
         it('transforms gasket repo URLs under any branch', () => {
@@ -252,21 +250,21 @@ describe('Utils Transforms', () => {
 [canary-1.7](https://github.com/godaddy/gasket/tree/canary-1.7/packages/gasket-fake/path/to/doc.md#with-hash)
 `;
           const results = handler(mockContent, { filename, docsConfig, docsConfigSet });
-          assume(results).includes('[main](../../../modules/@gasket/fake/path/to/doc.md#with-hash)');
-          assume(results).includes('[BOGUS](../../../modules/@gasket/fake/path/to/doc.md#with-hash)');
-          assume(results).includes('[canary-1.7](../../../modules/@gasket/fake/path/to/doc.md#with-hash)');
+          expect(results).toContain('[main](../../../modules/@gasket/fake/path/to/doc.md#with-hash)');
+          expect(results).toContain('[BOGUS](../../../modules/@gasket/fake/path/to/doc.md#with-hash)');
+          expect(results).toContain('[canary-1.7](../../../modules/@gasket/fake/path/to/doc.md#with-hash)');
         });
 
         it('does not transforms gasket repo URLs if module not collated', () => {
           const mockContent = `[missing](https://github.com/godaddy/gasket/tree/main/packages/gasket-missing/path/to/doc.md#with-hash)`;
           const results = handler(mockContent, { filename, docsConfig, docsConfigSet });
-          assume(results).includes(mockContent);
-          assume(results).not.includes('[missing](../../../modules/@gasket/missing/path/to/doc.md#with-hash)');
+          expect(results).toContain(mockContent);
+          expect(results).not.toContain('[missing](../../../modules/@gasket/missing/path/to/doc.md#with-hash)');
         });
 
         it('does not transform non gasket repo URLs', () => {
           const results = handler(mockInlineStyle, { filename, docsConfig, docsConfigSet });
-          assume(results).includes('[7](https://doc.gasket.dev)');
+          expect(results).toContain('[7](https://doc.gasket.dev)');
         });
       });
     });
@@ -276,7 +274,7 @@ describe('Utils Transforms', () => {
     const { test, handler } = txAbsoluteLinks;
 
     it('is global', () => {
-      assume(txAbsoluteLinks).property('global', true);
+      expect(txAbsoluteLinks).toHaveProperty('global', true);
     });
 
     describe('test', () => {
@@ -285,7 +283,7 @@ describe('Utils Transforms', () => {
           'README.md',
           '/path/to/any/README.md'
         ].forEach(source => {
-          assume(test.test(source)).equals(true, `Path ${source}`);
+          expect(test.test(source)).toEqual(true, `Path ${source}`);
         });
       });
 
@@ -298,7 +296,7 @@ describe('Utils Transforms', () => {
           '/path/to/raster.png',
           '/path/to/text.txt'
         ].forEach(source => {
-          assume(test.test(source)).equals(false, `Path ${source}`);
+          expect(test.test(source)).toEqual(false, `Path ${source}`);
         });
       });
     });
@@ -311,7 +309,7 @@ describe('Utils Transforms', () => {
       });
 
       it('is named', () => {
-        assume(handler).property('name', 'txAbsoluteLinks');
+        expect(handler).toHaveProperty('name', 'txAbsoluteLinks');
       });
 
       it('transform absolute links to relative', () => {
@@ -323,10 +321,10 @@ describe('Utils Transforms', () => {
         const filename = '/path/to/begin.md';
 
         const results = handler(mockContent, { filename, docsConfig });
-        assume(results).not.includes(mockContent);
-        assume(results).includes('[1](peer-doc.md#with-hash)');
-        assume(results).includes('[2](deep/doc.md#with-hash)');
-        assume(results).includes('[3](../../root-doc.md#with-hash)');
+        expect(results).not.toContain(mockContent);
+        expect(results).toContain('[1](peer-doc.md#with-hash)');
+        expect(results).toContain('[2](deep/doc.md#with-hash)');
+        expect(results).toContain('[3](../../root-doc.md#with-hash)');
       });
 
       it('does not transform relative links', () => {
@@ -338,7 +336,7 @@ describe('Utils Transforms', () => {
         const filename = '/path/to/begin.md';
 
         const results = handler(mockContent, { filename, docsConfig });
-        assume(results).includes(mockContent);
+        expect(results).toContain(mockContent);
       });
     });
   });

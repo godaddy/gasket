@@ -1,31 +1,29 @@
-const assume = require('assume');
 const docsSetup = require('../lib/docs-setup');
 
 describe('docsSetup', () => {
 
   it('returns object', () => {
     const results = docsSetup();
-    assume(results).is.an('object');
+    expect(results).toBeInstanceOf(Object);
   });
 
   it('includes link', () => {
     const results = docsSetup();
-    assume(results).property('link');
+    expect(results).toHaveProperty('link');
   });
 
   it('includes files', () => {
     const results = docsSetup();
-    assume(results).property('files');
-    assume(results.files).an('array');
+    expect(results).toHaveProperty('files');
+    expect(results.files).toBeInstanceOf(Array);
   });
 
   it('includes specific files', () => {
     const results = docsSetup();
-    assume(results.files).lengthOf(3);
-    assume(results.files)
-      .includes('README.md')
-      .includes('docs/**/*')
-      .includes('LICENSE.md');
+    expect(results.files).toHaveLength(3);
+    expect(results.files).toContain('README.md');
+    expect(results.files).toContain('docs/**/*');
+    expect(results.files).toContain('LICENSE.md');
   });
 
   it('includes expected transforms', () => {
@@ -36,8 +34,8 @@ describe('docsSetup', () => {
     } = require('../lib/utils/transforms');
 
     const results = docsSetup();
-    assume(results).property('transforms');
-    assume(results.transforms).eqls([
+    expect(results).toHaveProperty('transforms');
+    expect(results.transforms).toEqual([
       txGasketPackageLinks, txGasketUrlLinks, txAbsoluteLinks
     ]);
   });

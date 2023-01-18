@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-docusaurus",
-  "version": "6.35.0",
+  "version": "6.36.1",
   "description": "Gasket plugin for docusaurus",
   "main": "lib",
   "files": [
@@ -45,7 +45,7 @@
     "lodash.defaultsdeep": "^4.6.1"
   },
   "devDependencies": {
-    "@gasket/engine": "^6.35.0",
+    "@gasket/engine": "^6.36.1",
     "assume": "^2.3.0",
     "assume-sinon": "^1.1.0",
     "eslint": "^8.7.0",
