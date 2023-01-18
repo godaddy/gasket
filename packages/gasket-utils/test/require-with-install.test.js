@@ -152,4 +152,18 @@ describe('requireWithInstall', function () {
         .equals(true);
     });
   });
+
+  describe('list of packages', function () {
+    it('allows for the first parameter to be an array of strings', async function () {
+      const dependencies = ['my-package', '@scoped/package'];
+      resolveStub.onCall(0).returns(dependencies[0]);
+      resolveStub.onCall(1).returns(dependencies[1]);
+
+      const pkgList = await requireWithInstall(dependencies, mockGasket);
+
+      assume(Array.isArray(pkgList)).equals(true);
+      assume(pkgList.length).equals(2);
+      assume(packageManagerExecStub.calledWith('add', ['my-package', '@scoped/package', '--dev'])).to.be.true();
+    });
+  });
 });

@@ -32,31 +32,77 @@ async function getPkgManager(root) {
 }
 
 /**
- * requireWithInstall - load devDependency programmatically when needed
- * @param {string} dependency The require'ed dep needed
+ * installDependency - install dependency
+ * @param {string} dependency The dep/s needed
  * @param {Gasket} gasket Gasket instance
- * @returns {object} module
  */
-async function requireWithInstall(dependency, gasket) {
+async function installDependency(dependency, gasket) {
   const { logger } = gasket;
   const { root } = gasket.config;
-  const resolveOptions = { paths: [root] };
-  const modulePath = tryResolve(dependency, resolveOptions);
-
-  if (modulePath) return require(modulePath);
-
   const { pkgManager, cmd, flags, logMsg } = await getPkgManager(root);
-  const pkg = dependency.match(rePackage)[0];
-
   const manager = new PackageManager({ packageManager: pkgManager, dest: root });
-  logger.info(logMsg(pkg));
+
+  const msg = Array.isArray(dependency) ? dependency.toString() : dependency;
+  const args = Array.isArray(dependency) ? [...dependency, ...flags] : [dependency, ...flags];
+
+  logger.info(logMsg(msg));
   try {
-    await manager.exec(cmd, [pkg, ...flags]);
+    await manager.exec(cmd, args);
   } catch (err) {
-    logger.error(`requireWithInstall - Failed to install "${pkg}" using "${pkgManager}"`);
+    logger.error(`requireWithInstall - Failed to install "${dependency}" using "${pkgManager}"`);
     throw err;
   }
-  return require(resolve(dependency, resolveOptions));
+}
+
+/**
+ * requireWithInstall - load devDependency request programmatically when needed
+ * @param {string|string[]} dependency The require'ed dep/s needed
+ * @param {Gasket} gasket Gasket instance
+ * @returns {object|object[]} module or list of modules
+ */
+async function requireWithInstall(dependency, gasket) {
+  const { root } = gasket.config;
+  const resolveOptions = { paths: [root] };
+  if (!Array.isArray(dependency)) {
+    const modulePath = tryResolve(dependency, resolveOptions);
+
+    if (modulePath) return require(modulePath);
+
+    const pkg = dependency.match(rePackage)[0];
+
+    await installDependency(pkg, gasket);
+
+    return require(resolve(dependency, resolveOptions));
+  }
+
+  const idxListToResolve = [];
+  const pkgListToResolve = [];
+  const resolvedDependencyList = dependency.reduce((all, item, index) => {
+    const modulePath = tryResolve(item, resolveOptions);
+
+    if (modulePath) {
+      all.push(require(modulePath));
+    } else {
+      const pkg = item.match(rePackage)[0];
+      all.push(null);
+      idxListToResolve.push(index);
+      pkgListToResolve.push(pkg);
+    }
+    return all;
+  }, []);
+
+  if (!idxListToResolve.length) {
+    return resolvedDependencyList;
+  }
+
+  await installDependency(pkgListToResolve, gasket);
+
+  for (const idx of idxListToResolve) {
+    const resolvedDep = require(resolve(dependency[idx], resolveOptions));
+    resolvedDependencyList[idx] = resolvedDep;
+  }
+
+  return resolvedDependencyList;
 }
 
 module.exports = requireWithInstall;
