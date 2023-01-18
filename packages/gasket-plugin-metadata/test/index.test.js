@@ -185,10 +185,10 @@ describe('Plugin', function () {
       expect(names).not.toContain('@gasket/mock-preset');
     });
 
-    it.only('clones loaded data', async () => {
+    it('clones loaded data', async () => {
       expect(gasket.metadata).not.toEqual(mockLoadedData);
-      console.log(gasket);
-      expect(gasket.metadata.presets[0].module).not.toEqual(mockPresetInfo.module);
+      // .not.toStrictEqual() fails
+      expect(gasket.metadata.presets[0].module === mockPresetInfo.module).toBe(false);
     });
 
     it('sanitizes loaded data', async () => {
