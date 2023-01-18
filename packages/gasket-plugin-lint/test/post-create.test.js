@@ -1,15 +1,10 @@
-const { describe, it } = require('mocha');
-const assume = require('assume');
-const sinon = require('sinon');
-const proxyquire = require('proxyquire');
+const mockMakerStub = jest.fn().mockImplementation((_, script) => script);
 
-const makerStub = sinon.stub().callsFake((_, script) => script);
+jest.mock('../lib/utils', () => ({
+  makeSafeRunScript: mockMakerStub
+}));
 
-const postCreateHook = proxyquire('../lib', {
-  './utils': {
-    makeSafeRunScript: makerStub
-  }
-}).hooks.postCreate;
+const postCreateHook = require('../lib').hooks.postCreate;
 
 describe('postCreate hook', function () {
   let gasket, context, runScript;
@@ -17,21 +12,21 @@ describe('postCreate hook', function () {
   beforeEach(() => {
     gasket = {};
     context = {};
-    runScript = sinon.stub();
+    runScript = jest.fn();
   });
 
   it('makes a safeRunScript function', async () => {
     await postCreateHook(gasket, context, { runScript });
-    assume(makerStub).calledWith(context, runScript);
+    expect(mockMakerStub).toHaveBeenCalledWith(context, runScript);
   });
 
   it('safely attempts to run `lint:fix`', async () => {
     await postCreateHook(gasket, context, { runScript });
-    assume(runScript).calledWith('lint:fix');
+    expect(runScript).toHaveBeenCalledWith('lint:fix');
   });
 
   it('safely attempts to run `stylelint:fix`', async () => {
     await postCreateHook(gasket, context, { runScript });
-    assume(runScript).calledWith('stylelint:fix');
+    expect(runScript).toHaveBeenCalledWith('stylelint:fix');
   });
 });
