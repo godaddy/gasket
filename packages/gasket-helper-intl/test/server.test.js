@@ -1,6 +1,4 @@
-const assume = require('assume');
 const path = require('path');
-const sinon = require('sinon');
 
 const { LocaleUtils } = require('../lib/server');
 
@@ -25,7 +23,7 @@ describe('LocaleUtils (Server)', function () {
 
     it('returns localesProps for other path part', async function () {
       const results = utils.serverLoadData('/locales/extra', 'en-US', localesParentDir);
-      assume(results).eqls({
+      expect(results).toEqual({
         locale: 'en-US',
         messages: { 'en-US': { gasket_extra: 'Extra' } },
         status: { '/locales/extra/en-US.json': 'loaded' }
@@ -34,7 +32,7 @@ describe('LocaleUtils (Server)', function () {
 
     it('returns localesProps for multiple locale path parts', async function () {
       const results = utils.serverLoadData(['/locales', '/locales/extra'], 'en-US', localesParentDir);
-      assume(results).eqls({
+      expect(results).toEqual({
         locale: 'en-US',
         messages: { 'en-US': { gasket_welcome: 'Hello!', gasket_learn: 'Learn Gasket', gasket_extra: 'Extra' } },
         status: {
@@ -46,18 +44,18 @@ describe('LocaleUtils (Server)', function () {
 
     it('returns localesProps with error for missing path', async function () {
       const results = utils.serverLoadData('/locales/missing', 'en-US', localesParentDir);
-      assume(results).eqls({
+      expect(results).toEqual({
         locale: 'en-US',
         messages: { 'en-US': {} },
         status: { '/locales/missing/en-US.json': 'error' }
       });
       // eslint-disable-next-line no-console
-      assume(console.error).is.calledWithMatch('Cannot find module');
+      expect(console.error).toHaveBeenCalledWith(expect.stringContaining('Cannot find module'));
     });
 
     it('returns localesProps for default if locale missing', async function () {
       const results = utils.serverLoadData('/locales', 'fr-CA', localesParentDir);
-      assume(results).eqls({
+      expect(results).toEqual({
         locale: 'fr-CA',
         messages: { 'fr-CA': { gasket_welcome: 'Hello!', gasket_learn: 'Learn Gasket' } },
         status: { '/locales/en-US.json': 'loaded' }
@@ -66,11 +64,11 @@ describe('LocaleUtils (Server)', function () {
 
     it('handles thunks for locale paths', function () {
       const mockContext = { extra: true };
-      const mockThunk = sinon.stub().callsFake((context) => context.extra ? '/locales/extra' : '/locales');
+      const mockThunk = jest.fn().mockImplementation((context) => context.extra ? '/locales/extra' : '/locales');
 
       const results = utils.serverLoadData(mockThunk, 'en-US', localesParentDir, mockContext);
-      assume(mockThunk).called();
-      assume(results).eqls({
+      expect(mockThunk).toHaveBeenCalled();
+      expect(results).toEqual({
         locale: 'en-US',
         messages: { 'en-US': { gasket_extra: 'Extra' } },
         status: { '/locales/extra/en-US.json': 'loaded' }
