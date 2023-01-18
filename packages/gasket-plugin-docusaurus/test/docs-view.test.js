@@ -1,18 +1,31 @@
-const assume = require('assume');
-const sinon = require('sinon');
-const proxyquire = require('proxyquire').noCallThru();
 const path = require('path');
+const mockStartStub = jest.fn();
+const mockWriteFileStub = jest.fn();
+const mockExistsStub = jest.fn();
+
+jest.mock('fs', () => {
+  const mod = jest.requireActual('fs');
+  return {
+    ...mod,
+    existsSync: mockExistsStub,
+    promises: {
+      writeFile: mockWriteFileStub,
+      readFile: mod.promises.readFile
+    }
+  };
+});
+jest.mock('@docusaurus/core/lib', () => ({
+  start: mockStartStub
+}));
+
 const pluginConfigFile = 'docusaurus.config.js';
+const docsView = require('../lib/docs-view');
+
 
 describe('docsView', () => {
-  let mockGasket, docsView;
-  let startStub, writeFileStub, existsStub;
+  let mockGasket;
 
   beforeEach(() => {
-    startStub = sinon.stub();
-    writeFileStub = sinon.stub();
-    existsStub = sinon.stub();
-
     mockGasket = {
       metadata: {
         app: {
@@ -29,49 +42,33 @@ describe('docsView', () => {
         }
       }
     };
-
-    docsView = proxyquire('../lib/docs-view', {
-      '@docusaurus/core/lib': {
-        start: startStub
-      },
-      'fs': {
-        existsSync: existsStub,
-        promises: {
-          writeFile: writeFileStub
-        }
-      }
-    });
-  });
-
-  afterEach(() => {
-    sinon.restore();
   });
 
   it('check if docusaurus.config.js exists', async function () {
     await docsView(mockGasket);
-    assume(existsStub).called();
+    expect(mockExistsStub).toHaveBeenCalled();
   });
 
   it('writes docusaurus.config.js if does not exist', async function () {
-    existsStub.returns(false);
+    mockExistsStub.mockReturnValue(false);
     await docsView(mockGasket);
-    assume(writeFileStub).called();
-    assume(writeFileStub)
-      .calledWith(path.join(mockGasket.config.root, pluginConfigFile));
+    expect(mockWriteFileStub).toHaveBeenCalled();
+    expect(mockWriteFileStub)
+      .toHaveBeenCalledWith(path.join(mockGasket.config.root, pluginConfigFile), expect.any(String), 'utf-8');
   });
 
   it('does not write docusaurus.config.js if exist', async function () {
-    existsStub.returns(true);
+    mockExistsStub.mockReturnValue(true);
     await docsView(mockGasket);
-    assume(writeFileStub)
+    expect(mockWriteFileStub)
       .not
-      .calledWith(path.join(mockGasket.config.root, pluginConfigFile));
+      .toHaveBeenCalledWith(path.join(mockGasket.config.root, pluginConfigFile));
   });
 
   it('merges user config with defaults and starts server', async function () {
     const { root, docusaurus } = mockGasket.config;
     await docsView(mockGasket);
-    assume(startStub).calledWith(path.join(root, docusaurus.rootDir), {
+    expect(mockStartStub).toHaveBeenCalledWith(path.join(root, docusaurus.rootDir), {
       ...docusaurus,
       config: path.join(root, pluginConfigFile)
     });

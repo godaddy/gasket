@@ -1,4 +1,3 @@
-const assume = require('assume');
 const { flags } = require('@oclif/command');
 const GasketCommand = require('../lib/command');
 const { hoistBaseFlags } = require('../lib/utils');
@@ -14,8 +13,8 @@ describe('utils', () => {
     it('hoists flags from base GasketCommand', async () => {
       const results = hoistBaseFlags(MockCommand);
 
-      assume(results).property('flags');
-      assume(results.flags).deep.equals(GasketCommand.flags);
+      expect(results).toHaveProperty('flags');
+      expect(results.flags).toEqual(GasketCommand.flags);
     });
 
     it('retains flags set on extended class', async () => {
@@ -28,7 +27,7 @@ describe('utils', () => {
 
       const results = hoistBaseFlags(MockCommand);
 
-      assume(results.flags).deep.equals({ ...GasketCommand.flags, ...extraFlags });
+      expect(results.flags).toEqual({ ...GasketCommand.flags, ...extraFlags });
     });
   });
 });

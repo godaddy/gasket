@@ -1,14 +1,16 @@
-const assume = require('assume');
-const sinon = require('sinon');
-const proxyquire = require('proxyquire');
+const mockServeStaticStub = jest.fn();
+
+jest.mock('serve-static', () => mockServeStaticStub);
+
+const serveHook = require('../lib/serve');
 
 describe('express', function () {
-  let mockGasket, mockApp, serveHook, serveStaticStub;
+  let mockGasket, mockApp;
 
   beforeEach(() => {
     mockApp = {
-      use: sinon.stub(),
-      get: sinon.stub()
+      use: jest.fn(),
+      get: jest.fn()
     };
 
     mockGasket = {
@@ -23,45 +25,35 @@ describe('express', function () {
         }
       }
     };
-
-    serveStaticStub = sinon.stub();
-
-    serveHook = proxyquire('../lib/serve', {
-      'serve-static': serveStaticStub
-    });
-  });
-
-  afterEach(function () {
-    sinon.restore();
   });
 
   it('should not call app.use() without serveStatic set', function () {
     serveHook(mockGasket, mockApp);
-    assume(mockApp.use).not.called();
+    expect(mockApp.use).not.toHaveBeenCalled();
   });
 
   it('should set staticPath to defaultPath', function () {
     mockGasket.config.intl.serveStatic = true;
     serveHook(mockGasket, mockApp);
-    assume(mockApp.use.args[0][0]).eqls(mockGasket.config.intl.defaultPath);
+    expect(mockApp.use.mock.calls[0][0]).toEqual(mockGasket.config.intl.defaultPath);
   });
 
   it('should set staticPath to custom path', function () {
     mockGasket.config.intl.serveStatic = '/custom-path';
     serveHook(mockGasket, mockApp);
-    assume(mockApp.use.args[0][0]).eqls(mockGasket.config.intl.serveStatic);
+    expect(mockApp.use.mock.calls[0][0]).toEqual(mockGasket.config.intl.serveStatic);
   });
 
   it('static serves from configured localesDir', function () {
     mockGasket.config.intl.serveStatic = true;
     serveHook(mockGasket, mockApp);
-    assume(serveStaticStub.args[0][0]).eqls(mockGasket.config.intl.localesDir);
+    expect(mockServeStaticStub.mock.calls[0][0]).toEqual(mockGasket.config.intl.localesDir);
   });
 
   it('uses expected static serve settings', function () {
     mockGasket.config.intl.serveStatic = true;
     serveHook(mockGasket, mockApp);
-    assume(serveStaticStub.args[0][1]).eqls({
+    expect(mockServeStaticStub.mock.calls[0][1]).toEqual({
       index: false,
       maxAge: '1y',
       immutable: true

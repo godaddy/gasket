@@ -1,4 +1,3 @@
-const assume = require('assume');
 const webpack = require('webpack');
 const plugin = require('../lib/index');
 const { webpackConfig: hook } = plugin.hooks;
@@ -19,10 +18,10 @@ describe('webpackConfig', function () {
 
   it('adds env vars to EnvironmentPlugin', function () {
     const results = hook(mockGasket, mockConfig, { webpack });
-    assume(results).property('plugins');
-    assume(results.plugins).length(1);
-    assume(results.plugins[0]).instanceof(webpack.EnvironmentPlugin);
-    assume(results.plugins[0]).eqls({
+    expect(results).toHaveProperty('plugins');
+    expect(results.plugins).toHaveLength(1);
+    expect(results.plugins[0]).toBeInstanceOf(webpack.EnvironmentPlugin);
+    expect(results.plugins[0]).toEqual({
       keys: ['GASKET_INTL_LOCALES_DIR', 'GASKET_INTL_MANIFEST_FILE'],
       defaultValues: {}
     });
@@ -35,10 +34,10 @@ describe('webpackConfig', function () {
     ];
 
     const results = hook(mockGasket, mockConfig, { webpack });
-    assume(results).property('plugins');
-    assume(results.plugins).length(3);
-    assume(results.plugins[2]).instanceof(webpack.EnvironmentPlugin);
-    assume(results.plugins[2]).eqls({
+    expect(results).toHaveProperty('plugins');
+    expect(results.plugins).toHaveLength(3);
+    expect(results.plugins[2]).toBeInstanceOf(webpack.EnvironmentPlugin);
+    expect(results.plugins[2]).toEqual({
       keys: ['GASKET_INTL_LOCALES_DIR', 'GASKET_INTL_MANIFEST_FILE'],
       defaultValues: {}
     });
@@ -52,10 +51,10 @@ describe('webpackConfig', function () {
     ];
 
     const results = hook(mockGasket, mockConfig, { webpack });
-    assume(results).property('plugins');
-    assume(results.plugins).length(2);
-    assume(results.plugins[1]).instanceof(webpack.EnvironmentPlugin);
-    assume(results.plugins[1]).eqls({
+    expect(results).toHaveProperty('plugins');
+    expect(results.plugins).toHaveLength(2);
+    expect(results.plugins[1]).toBeInstanceOf(webpack.EnvironmentPlugin);
+    expect(results.plugins[1]).toEqual({
       keys: ['GASKET_INTL_LOCALES_DIR', 'GASKET_INTL_MANIFEST_FILE'],
       defaultValues: {}
     });

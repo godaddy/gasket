@@ -1,13 +1,18 @@
-const assume = require('assume');
-const sinon = require('sinon');
 const path = require('path');
+Object.defineProperty(global, 'window', {
+  value: {
+    $docsify: {}
+  },
+  writable: true,
+  enumerable: true
+});
 
 const setup = () => {
   const file = path.join(__dirname, '..', 'generator', 'scripts', 'simple-slugs-plugin.js');
   //
   // we need a fresh require each time
   //
-  delete require.cache[file];
+  jest.resetModules();
   require(file);
 
   const hooks = {};
@@ -25,9 +30,9 @@ describe('simple-slugs-plugin', () => {
   });
 
   it('installs the plugin', () => {
-    assume(global.window.$docsify).not.property('plugins');
+    expect(global.window.$docsify).not.toHaveProperty('plugins');
     setup();
-    assume(global.window.$docsify).property('plugins');
+    expect(global.window.$docsify).toHaveProperty('plugins');
     global.window.$docsify = {};
   });
 
@@ -36,27 +41,27 @@ describe('simple-slugs-plugin', () => {
 
     beforeEach(() => {
       hooks = setup();
-      nextStub = sinon.stub();
+      nextStub = jest.fn();
     });
 
     it('does not modify basic slugs', () => {
       hooks.afterEach('<h1 id="basic-slug"/>', nextStub);
-      assume(nextStub).calledWith('<h1 id="basic-slug"/>');
+      expect(nextStub).toHaveBeenCalledWith('<h1 id="basic-slug"/>');
     });
 
     it('removes encoded text', () => {
       hooks.afterEach('<h1 id="slug-with-%encoded-data"/>', nextStub);
-      assume(nextStub).calledWith('<h1 id="slug-with-data"/>');
+      expect(nextStub).toHaveBeenCalledWith('<h1 id="slug-with-data"/>');
     });
 
     it('removes non-basic characters', () => {
       hooks.afterEach('<h1 id="slug-with-⇒-|-more-data"/>', nextStub);
-      assume(nextStub).calledWith('<h1 id="slug-with-more-data"/>');
+      expect(nextStub).toHaveBeenCalledWith('<h1 id="slug-with-more-data"/>');
     });
 
     it('reduces dash groups to single', () => {
       hooks.afterEach('<h1 id="slug-with--lots---of-------dashes"/>', nextStub);
-      assume(nextStub).calledWith('<h1 id="slug-with-lots-of-dashes"/>');
+      expect(nextStub).toHaveBeenCalledWith('<h1 id="slug-with-lots-of-dashes"/>');
     });
   });
 });

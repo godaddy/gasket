@@ -1,6 +1,3 @@
-const { describe, it } = require('mocha');
-const sinon = require('sinon');
-const assume = require('assume');
 const path = require('path');
 const create = require('../lib/create');
 
@@ -8,7 +5,7 @@ describe('create', function () {
   let mockContext, filesAddStub;
 
   beforeEach(() => {
-    filesAddStub = sinon.stub();
+    filesAddStub = jest.fn();
 
     mockContext = {
       files: {
@@ -18,19 +15,19 @@ describe('create', function () {
   });
 
   it('is async function', function () {
-    assume(create).to.be.an('asyncfunction');
+    expect(create).toEqual(expect.any(Function));
   });
 
   it('adds the expected template files', async function () {
     mockContext.gitInit = true;
     await create({}, mockContext);
     const root = path.join(__dirname, '..');
-    assume(filesAddStub).calledWithMatch(`${root}/generator/.*`);
+    expect(filesAddStub).toHaveBeenCalledWith(`${root}/generator/.*`);
   });
 
   it('does not add template files if no gitInit', async function () {
     mockContext.gitInit = false;
     await create({}, mockContext);
-    assume(filesAddStub).not.called();
+    expect(filesAddStub).not.toHaveBeenCalled();
   });
 });

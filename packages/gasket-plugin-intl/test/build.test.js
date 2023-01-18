@@ -1,12 +1,13 @@
-const assume = require('assume');
-const sinon = require('sinon');
-const proxyquire = require('proxyquire');
+const mockBuildManifest = jest.fn().mockResolvedValue();
+const mockBuildModules = jest.fn().mockResolvedValue();
 
-const buildManifest = sinon.stub().resolves();
-const buildModules = sinon.stub().resolves();
+jest.mock('../lib/build-manifest', () => mockBuildManifest);
+jest.mock('../lib/build-modules', () => mockBuildModules);
+
+const plugin = require('../lib/index');
 
 describe('build', function () {
-  let mockGasket, plugin, buildHook;
+  let mockGasket, buildHook;
 
   beforeEach(function () {
     mockGasket = {
@@ -15,33 +16,24 @@ describe('build', function () {
       }
     };
 
-    plugin = proxyquire('../lib/index', {
-      './build-manifest': buildManifest,
-      './build-modules': buildModules
-    });
-
     buildHook = plugin.hooks.build;
   });
 
-  afterEach(function () {
-    sinon.restore();
-  });
-
   it('has expected timing', function () {
-    assume(buildHook).property('timing');
-    assume(buildHook.timing).property('first', true);
+    expect(buildHook).toHaveProperty('timing');
+    expect(buildHook.timing).toHaveProperty('first', true);
   });
 
   it('builds manifest file', async function () {
     await buildHook.handler(mockGasket);
-    assume(buildModules).not.called();
-    assume(buildManifest).calledWith(mockGasket);
+    expect(mockBuildModules).not.toHaveBeenCalled();
+    expect(mockBuildManifest).toHaveBeenCalledWith(mockGasket);
   });
 
   it('builds modules if set in config', async function () {
     mockGasket.config.intl.modules = {};
     await buildHook.handler(mockGasket);
-    assume(buildModules).calledWith(mockGasket);
-    assume(buildManifest).calledWith(mockGasket);
+    expect(mockBuildModules).toHaveBeenCalledWith(mockGasket);
+    expect(mockBuildManifest).toHaveBeenCalledWith(mockGasket);
   });
 });

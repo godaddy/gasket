@@ -1,11 +1,9 @@
-const assume = require('assume');
-const sinon = require('sinon');
-
+/* eslint-disable jest/no-export */
 module.exports = function sharedTests(UtilClass) {
   let utils, mockConfig;
 
   beforeEach(function () {
-    sinon.stub(console, 'error');
+    jest.spyOn(console, 'error');
     mockConfig = {
       manifest: require('./fixtures/mock-manifest.json')
     };
@@ -13,103 +11,102 @@ module.exports = function sharedTests(UtilClass) {
   });
 
   afterEach(function () {
-    delete require.cache[require.resolve('./fixtures/mock-manifest.json')];
-    sinon.restore();
+    jest.resetModules();
   });
 
   describe('.formatLocalePath', function () {
     it('adds locale json to root path', function () {
       const results = utils.formatLocalePath('/locales', 'en-US');
-      assume(results).equals('/locales/en-US.json');
+      expect(results).toEqual('/locales/en-US.json');
     });
 
     it('substitutes $locale in path template', function () {
       const results = utils.formatLocalePath('/locales/$locale/page1.json', 'en-US');
-      assume(results).equals('/locales/en-US/page1.json');
+      expect(results).toEqual('/locales/en-US/page1.json');
     });
 
     it('substitutes :locale in path template', function () {
       const results = utils.formatLocalePath('/locales/:locale/page1.json', 'en-US');
-      assume(results).equals('/locales/en-US/page1.json');
+      expect(results).toEqual('/locales/en-US/page1.json');
     });
 
     it('substitutes {locale} in path template', function () {
       const results = utils.formatLocalePath('/locales/{locale}/page1.json', 'en-US');
-      assume(results).equals('/locales/en-US/page1.json');
+      expect(results).toEqual('/locales/en-US/page1.json');
     });
 
     it('ensures forward slash', function () {
       const results = utils.formatLocalePath('locales', 'en-US');
-      assume(results).equals('/locales/en-US.json');
+      expect(results).toEqual('/locales/en-US.json');
     });
 
     it('ensures no extra end slash', function () {
       const results = utils.formatLocalePath('locales/', 'en-US');
-      assume(results).equals('/locales/en-US.json');
+      expect(results).toEqual('/locales/en-US.json');
     });
   });
 
   describe('.pathToUrl', function () {
     it('add hash to url', function () {
       const results = utils.pathToUrl('/locales/en-US.json');
-      assume(results).equals('/locales/en-US.json?v=10decbe');
+      expect(results).toEqual('/locales/en-US.json?v=10decbe');
     });
 
     it('does not add hash if localePath not in manifest', function () {
       const results = utils.pathToUrl('/missing/en-US.json');
-      assume(results).equals('/missing/en-US.json');
+      expect(results).toEqual('/missing/en-US.json');
     });
 
     it('returns url WITH base path', function () {
       mockConfig.basePath = '/bogus';
       utils = new UtilClass(mockConfig);
       const results = utils.pathToUrl('/locales/en-US.json');
-      assume(results).equals('/bogus/locales/en-US.json?v=10decbe');
+      expect(results).toEqual('/bogus/locales/en-US.json?v=10decbe');
     });
 
     it('ignores trailing slash from basePath', function () {
       mockConfig.basePath = '/bogus/';
       utils = new UtilClass(mockConfig);
       const results = utils.pathToUrl('/locales/en-US.json');
-      assume(results).equals('/bogus/locales/en-US.json?v=10decbe');
+      expect(results).toEqual('/bogus/locales/en-US.json?v=10decbe');
     });
 
     it('basePath can be a full URL', function () {
       mockConfig.basePath = 'https://bogus.com/';
       utils = new UtilClass(mockConfig);
       const results = utils.pathToUrl('/locales/en-US.json');
-      assume(results).equals('https://bogus.com/locales/en-US.json?v=10decbe');
+      expect(results).toEqual('https://bogus.com/locales/en-US.json?v=10decbe');
     });
   });
 
   describe('.resolveLocalePathPart', function () {
     it('handles thunks for locale paths', function () {
       const mockContext = { customRoot: '/bogus' };
-      const mockThunk = sinon.stub().callsFake((context) => context.customRoot + '/locales');
+      const mockThunk = jest.fn().mockImplementation((context) => context.customRoot + '/locales');
       const results = utils.resolveLocalePathPart(mockThunk, mockContext);
-      assume(results).equals('/bogus/locales');
-      assume(mockThunk).called();
+      expect(results).toEqual('/bogus/locales');
+      expect(mockThunk).toHaveBeenCalled();
     });
   });
 
   describe('.getLocalePath', function () {
     it('returns formatted localePath', function () {
       const results = utils.getLocalePath('/locales', 'en-US');
-      assume(results).equals('/locales/en-US.json');
+      expect(results).toEqual('/locales/en-US.json');
     });
 
     it('falls back to lang if no localePath with region', function () {
       mockConfig.manifest.paths['locales/da.json'] = 'hash1234';
       utils = new UtilClass(mockConfig);
       const results = utils.getLocalePath('/locales', 'da-DK');
-      assume(results).equals('/locales/da.json');
+      expect(results).toEqual('/locales/da.json');
     });
 
     it('falls back to lang if no localePath with script and region', function () {
       mockConfig.manifest.paths['locales/az.json'] = 'hash1234';
       utils = new UtilClass(mockConfig);
       const results = utils.getLocalePath('/locales', 'az-Cyrl-AZ');
-      assume(results).equals('/locales/az.json');
+      expect(results).toEqual('/locales/az.json');
     });
 
     it(
@@ -121,7 +118,7 @@ module.exports = function sharedTests(UtilClass) {
         mockConfig.manifest.paths['locales/en.json'] = 'hash4321';
         utils = new UtilClass(mockConfig);
         const results = utils.getLocalePath('/locales', 'en-CA');
-        assume(results).equals('/locales/en-US.json');
+        expect(results).toEqual('/locales/en-US.json');
       }
     );
 
@@ -130,7 +127,7 @@ module.exports = function sharedTests(UtilClass) {
       mockConfig.manifest.paths['locales/fake.json'] = 'hash1234';
       utils = new UtilClass(mockConfig);
       const results = utils.getLocalePath('/locales', 'da-DK');
-      assume(results).equals('/locales/fake.json');
+      expect(results).toEqual('/locales/fake.json');
     });
 
     it('falls back to default locale if requested locale does not exist in locales config', function () {
@@ -139,7 +136,7 @@ module.exports = function sharedTests(UtilClass) {
       mockConfig.manifest.locales = ['not-this', 'or-this'];
       utils = new UtilClass(mockConfig);
       const results = utils.getLocalePath('/locales', 'da-DK');
-      assume(results).equals('/locales/fake.json');
+      expect(results).toEqual('/locales/fake.json');
     });
 
     it('does not fallback to default locale if requested locale exists in locales config', function () {
@@ -147,7 +144,7 @@ module.exports = function sharedTests(UtilClass) {
       mockConfig.manifest.locales = ['da-DK'];
       utils = new UtilClass(mockConfig);
       const results = utils.getLocalePath('/locales', 'da-DK');
-      assume(results).equals('/locales/da-DK.json');
+      expect(results).toEqual('/locales/da-DK.json');
     });
 
     it('returns localePath for mapped locales', function () {
@@ -155,15 +152,15 @@ module.exports = function sharedTests(UtilClass) {
       mockConfig.manifest.localesMap = { 'da-DK': 'fake' };
       utils = new UtilClass(mockConfig);
       const results = utils.getLocalePath('/locales', 'da-DK');
-      assume(results).equals('/locales/fake.json');
+      expect(results).toEqual('/locales/fake.json');
     });
 
     it('handles thunks for locale paths', function () {
       const mockContext = { customRoot: '/bogus' };
-      const mockThunk = sinon.stub().callsFake((context) => context.customRoot + '/locales');
+      const mockThunk = jest.fn().mockImplementation((context) => context.customRoot + '/locales');
       const results = utils.getLocalePath(mockThunk, 'en-US', mockContext);
-      assume(results).equals('/bogus/locales/en-US.json');
-      assume(mockThunk).called();
+      expect(results).toEqual('/bogus/locales/en-US.json');
+      expect(mockThunk).toHaveBeenCalled();
     });
   });
 };

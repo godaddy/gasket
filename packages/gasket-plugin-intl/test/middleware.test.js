@@ -1,6 +1,4 @@
-/* eslint-disable require-atomic-updates */
-const assume = require('assume');
-const sinon = require('sinon');
+/* eslint-disable require-atomic-updates, max-statements */
 const path = require('path');
 const middlewareHook = require('../lib/middleware');
 
@@ -9,7 +7,7 @@ describe('middleware', function () {
 
   beforeEach(function () {
     mockGasket = {
-      execWaterfall: sinon.stub().callsFake((lifecycle, locale) => Promise.resolve(locale)),
+      execWaterfall: jest.fn().mockImplementation((lifecycle, locale) => Promise.resolve(locale)),
       config: {
         intl: {
           defaultLocale: 'en-US',
@@ -21,23 +19,24 @@ describe('middleware', function () {
         }
       },
       logger: {
-        debug: sinon.stub()
+        debug: jest.fn()
       }
     };
   });
 
   afterEach(function () {
-    sinon.restore();
+    // sinon.restore();
   });
 
   it('returns middleware function', function () {
     const results = middlewareHook(mockGasket);
-    assume(results).instanceOf(Function);
-    assume(results).property('name', 'intlMiddleware');
+    expect(results).toBeInstanceOf(Function);
+    expect(results).toHaveProperty('name', 'intlMiddleware');
   });
 
   describe('middleware function', function () {
     let layer, req, res, next;
+
     beforeEach(function () {
       layer = middlewareHook(mockGasket);
       req = {
@@ -46,19 +45,19 @@ describe('middleware', function () {
         }
       };
       res = { locals: {} };
-      next = sinon.stub();
+      next = jest.fn();
     });
 
     it('preloadLocales is true', async function () {
       mockGasket.config.intl.preloadLocales = true;
       layer = middlewareHook(mockGasket);
       await layer(req, res, next);
-      assume(mockGasket.execWaterfall).calledWith('intlLocale', 'fr-FR', { req, res });
+      expect(mockGasket.execWaterfall).toHaveBeenCalledWith('intlLocale', 'fr-FR', { req, res });
     });
 
     it('executes expected lifecycle', async function () {
       await layer(req, res, next);
-      assume(mockGasket.execWaterfall).calledWith('intlLocale', 'fr-FR', { req, res });
+      expect(mockGasket.execWaterfall).toHaveBeenCalledWith('intlLocale', 'fr-FR', { req, res });
     });
 
     it('passes first accepted from supported locales', async function () {
@@ -67,103 +66,104 @@ describe('middleware', function () {
       layer = middlewareHook(mockGasket);
       req.headers['accept-language'] = 'fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7, *;q=0.5';
       await layer(req, res, next);
-      assume(mockGasket.execWaterfall).calledWith('intlLocale', 'de', { req, res });
+      expect(mockGasket.execWaterfall).toHaveBeenCalledWith('intlLocale', 'de', { req, res });
     });
 
     it('passes first accept-language header', async function () {
       req.headers['accept-language'] = 'fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7, *;q=0.5';
       await layer(req, res, next);
-      assume(mockGasket.execWaterfall).calledWith('intlLocale', 'fr-CH', { req, res });
+      expect(mockGasket.execWaterfall).toHaveBeenCalledWith('intlLocale', 'fr-CH', { req, res });
     });
 
     it('formats accept-language to lower-UPPER', async function () {
       req.headers['accept-language'] = 'fr-fr';
       await layer(req, res, next);
-      assume(mockGasket.execWaterfall).calledWith('intlLocale', 'fr-FR', { req, res });
+      expect(mockGasket.execWaterfall).toHaveBeenCalledWith('intlLocale', 'fr-FR', { req, res });
     });
 
     it('formats accept-language to lo-UP-Capitals', async function () {
       req.headers['accept-language'] = 'az-az-latn';
       await layer(req, res, next);
-      assume(mockGasket.execWaterfall).calledWith('intlLocale', 'az-AZ-Latn', { req, res });
+      expect(mockGasket.execWaterfall).toHaveBeenCalledWith('intlLocale', 'az-AZ-Latn', { req, res });
     });
 
     it('passes defaultLocale if no accept-language header', async function () {
       delete req.headers['accept-language'];
       await layer(req, res, next);
-      assume(mockGasket.execWaterfall).calledWith('intlLocale', 'en-US', { req, res });
+      expect(mockGasket.execWaterfall).toHaveBeenCalledWith('intlLocale', 'en-US', { req, res });
     });
 
     it('attaches gasketData to res.locals', async function () {
       await layer(req, res, next);
-      assume(res.locals).property('gasketData');
-      assume(res.locals.gasketData).eqls({ intl: { locale: 'fr-FR' } });
+      expect(res.locals).toHaveProperty('gasketData');
+      expect(res.locals.gasketData).toEqual({ intl: { locale: 'fr-FR' } });
     });
 
     it('gasketData has mapped locale if configured', async function () {
       // not mapped example
       req.headers['accept-language'] = 'fr-CA';
       await layer(req, res, next);
-      assume(res.locals.gasketData).eqls({ intl: { locale: 'fr-CA' } });
+      expect(res.locals.gasketData).toEqual({ intl: { locale: 'fr-CA' } });
 
       // mapped example
       req.headers['accept-language'] = 'fr-CH';
       await layer(req, res, next);
-      assume(res.locals.gasketData).eqls({ intl: { locale: 'fr-FR' } });
+      expect(res.locals.gasketData).toEqual({ intl: { locale: 'fr-FR' } });
     });
 
     it('res.locals.gasketData has basePath if configured', async function () {
       // not configured example
       await layer(req, res, next);
-      assume(res.locals.gasketData.intl).not.property('basePath');
+      expect(res.locals.gasketData.intl).not.toHaveProperty('basePath');
 
       // configured example
       mockGasket.config.intl.basePath = '/some/base/path';
       layer = middlewareHook(mockGasket);
       await layer(req, res, next);
-      assume(res.locals.gasketData.intl).property('basePath', '/some/base/path');
+      expect(res.locals.gasketData.intl).toHaveProperty('basePath', '/some/base/path');
     });
 
     it('res.locals has configured localesDir', async function () {
       layer = middlewareHook(mockGasket);
       await layer(req, res, next);
-      assume(res.locals).property('localesDir', mockGasket.config.intl.localesDir);
+      expect(res.locals).toHaveProperty('localesDir', mockGasket.config.intl.localesDir);
     });
 
-    context('when accept-language header is malformed', function () {
+    describe('when accept-language header is malformed', function () {
+
       beforeEach(function () {
         req.headers['accept-language'] = 'fr-CH;+malformed';
       });
 
       it('logs a debug message', async function () {
         await layer(req, res, next);
-        assume(mockGasket.logger.debug).called();
+        expect(mockGasket.logger.debug).toHaveBeenCalled();
       });
 
       it('passes defaultLocale with supported locales', async function () {
         mockGasket.config.intl.locales = ['de'];
         layer = middlewareHook(mockGasket);
         await layer(req, res, next);
-        assume(mockGasket.execWaterfall).calledWith('intlLocale', 'en-US', { req, res });
+        expect(mockGasket.execWaterfall).toHaveBeenCalledWith('intlLocale', 'en-US', { req, res });
       });
 
       it('passes defaultLocale without supported locales', async function () {
         layer = middlewareHook(mockGasket);
         await layer(req, res, next);
-        assume(mockGasket.execWaterfall).calledWith('intlLocale', 'en-US', { req, res });
+        expect(mockGasket.execWaterfall).toHaveBeenCalledWith('intlLocale', 'en-US', { req, res });
       });
     });
 
     describe('req.withLocaleRequired', function () {
       it('method is added to req', async function () {
         await layer(req, res, next);
-        assume(req).property('withLocaleRequired');
+        expect(req).toHaveProperty('withLocaleRequired');
       });
 
       it('add locale props to gasketData for default path', async function () {
         await layer(req, res, next);
         req.withLocaleRequired();
-        assume(res.locals.gasketData.intl).eqls({
+        expect(res.locals.gasketData.intl).toEqual({
           locale: 'fr-FR',
           messages: { 'fr-FR': { gasket_welcome: 'Bonjour!', gasket_learn: 'Apprendre Gasket' } },
           status: { '/locales/fr-FR.json': 'loaded' }
@@ -173,7 +173,7 @@ describe('middleware', function () {
       it('adds locale props to gasketData for other path', async function () {
         await layer(req, res, next);
         req.withLocaleRequired('/locales/extra');
-        assume(res.locals.gasketData.intl).eqls({
+        expect(res.locals.gasketData.intl).toEqual({
           locale: 'fr-FR',
           messages: { 'fr-FR': { gasket_extra: 'Supplémentaire' } },
           status: { '/locales/extra/fr-FR.json': 'loaded' }
@@ -185,7 +185,7 @@ describe('middleware', function () {
         await layer(req, res, next);
         req.withLocaleRequired();
         req.withLocaleRequired('/locales/extra');
-        assume(res.locals.gasketData.intl).eqls({
+        expect(res.locals.gasketData.intl).toEqual({
           bogus: true,
           locale: 'fr-FR',
           messages: {
@@ -206,26 +206,26 @@ describe('middleware', function () {
     describe('req.selectLocaleMessage', function () {
       it('method is added to req', async function () {
         await layer(req, res, next);
-        assume(req).property('selectLocaleMessage');
+        expect(req).toHaveProperty('selectLocaleMessage');
       });
 
       it('selects loaded message', async function () {
         await layer(req, res, next);
         req.withLocaleRequired();
         const results = req.selectLocaleMessage('gasket_welcome');
-        assume(results).eqls('Bonjour!');
+        expect(results).toEqual('Bonjour!');
       });
 
       it('falls back to message id if not loaded', async function () {
         await layer(req, res, next);
         const results = req.selectLocaleMessage('gasket_welcome');
-        assume(results).eqls('gasket_welcome');
+        expect(results).toEqual('gasket_welcome');
       });
 
       it('used default message if set and message not loaded', async function () {
         await layer(req, res, next);
         const results = req.selectLocaleMessage('gasket_welcome', 'Welcome fallback');
-        assume(results).eqls('Welcome fallback');
+        expect(results).toEqual('Welcome fallback');
       });
     });
   });
