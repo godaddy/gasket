@@ -1,13 +1,10 @@
-const { describe, it } = require('mocha');
-const sinon = require('sinon');
-const assume = require('assume');
 const prompt = require('../lib/prompt');
 
 describe('prompt', function () {
   let mockContext, mockUtils, promptStub;
 
   beforeEach(() => {
-    promptStub = sinon.stub();
+    promptStub = jest.fn();
 
     mockContext = {
       appName: 'bogus-app'
@@ -18,7 +15,7 @@ describe('prompt', function () {
   });
 
   it('is async function', function () {
-    assume(prompt).to.be.an('asyncfunction');
+    expect(prompt).toEqual(expect.any(Function));
   });
 
   it('does not prompt if gitInit set in context', async () => {
@@ -29,37 +26,37 @@ describe('prompt', function () {
     mockContext.gitInit = true;
     await prompt({}, mockContext, mockUtils);
 
-    assume(promptStub).not.called();
-    assume(mockContext.gitignore).to.be.an('object');
+    expect(promptStub).not.toHaveBeenCalled();
+    expect(typeof mockContext.gitignore).toBe('object');
   });
 
   it('prompts if gitInit not set in context', async () => {
-    promptStub.returns({ gitInit: true });
+    promptStub.mockReturnValue({ gitInit: true });
     await prompt({}, mockContext, mockUtils);
 
-    assume(promptStub).is.called();
-    assume(promptStub.args[0][0][0]).property('name', 'gitInit');
+    expect(promptStub).toHaveBeenCalled();
+    expect(promptStub.mock.calls[0][0][0]).toHaveProperty('name', 'gitInit');
   });
 
   it('sets gitInit in updated context', async () => {
-    promptStub.returns({ gitInit: true });
+    promptStub.mockReturnValue({ gitInit: true });
     const result = await prompt({}, mockContext, mockUtils);
 
-    assume(result).not.equals(mockContext);
-    assume(result).property('gitInit', true);
+    expect(result).not.toEqual(mockContext);
+    expect(result).toHaveProperty('gitInit', true);
   });
 
   it('returns original context if no prompt', async () => {
     mockContext.gitInit = true;
     const result = await prompt({}, mockContext, mockUtils);
 
-    assume(result).equals(mockContext);
+    expect(result).toEqual(mockContext);
   });
 
   it('serializes gitignore content', async () => {
     mockContext.gitInit = true;
     await prompt({}, mockContext, mockUtils);
 
-    assume(mockContext.gitignore.content).to.be.a('string');
+    expect(typeof mockContext.gitignore.content).toBe('string');
   });
 });
