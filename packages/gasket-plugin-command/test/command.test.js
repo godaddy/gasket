@@ -1,8 +1,4 @@
-/* eslint-disable no-process-env */
-const assume = require('assume');
 const path = require('path');
-const proxyquire = require('proxyquire');
-const sinon = require('sinon');
 const { hoistBaseFlags } = require('../lib/utils');
 
 const fixturesDir = path.join(__dirname, 'fixtures');
@@ -10,7 +6,7 @@ const ignoreConfig = ['flags'];
 
 describe('GasketCommand', function () {
   let GasketCommand;
-  let PluginEngine;
+  let MockPluginEngine;
   let gasket;
 
   /*
@@ -20,20 +16,20 @@ describe('GasketCommand', function () {
     Command = hoistBaseFlags(Command);
     const command = new Command(argv, { bin: 'gasket' });
     command.config.gasket = createMockGasketApi(gasketConfig);
-    sinon.stub(command, 'warn');
+    jest.spyOn(command, 'warn');
     return command;
   }
 
   /*
-   * Simple helper that makes a mock PluginEngine instance.
+   * Simple helper that makes a mock MockPluginEngine instance.
    * This is commonly referred to as the "GasketAPI" in
    * @gasket/engine documentation.
    */
   function createMockGasketApi(gasketConfig = {}) {
     gasket = {
       config: gasketConfig,
-      exec: sinon.stub().resolves(),
-      execWaterfall: sinon.stub().callsFake((event, arg) => arg)
+      exec: jest.fn().mockResolvedValue(),
+      execWaterfall: jest.fn((event, arg) => arg)
     };
 
     return gasket;
@@ -44,7 +40,7 @@ describe('GasketCommand', function () {
    * 2. Creates & initializes a new GasketCommand for `withArgv`
    * 3. Assumes expectedConfig is equal to `command.userConfig`.
    */
-  async function assumeInitializedWith({
+  async function expectInitializedWith({
     withCommand = GasketCommand,
     withArgv,
     withEnv = {},
@@ -67,7 +63,7 @@ describe('GasketCommand', function () {
         // if our test doesn't case and is safe to ignore
         if (ignoreConfig.includes(key) && !expectedConfig[key]) return;
 
-        assume(gasket.config[key]).deep.equals(
+        expect(gasket.config[key]).toEqual(
           expectedConfig[key],
           `Expected "${key}" config not equal`
         );
@@ -80,31 +76,28 @@ describe('GasketCommand', function () {
     }
   }
 
-  beforeEach((done) => {
+  beforeEach(() => {
     process.env.NODE_ENV = 'development';
 
-    gasket = { exec: sinon.spy() };
-    PluginEngine = sinon.stub().returns(gasket);
+    gasket = { exec: jest.fn() };
+    MockPluginEngine = jest.fn().mockReturnValue(gasket);
 
-    GasketCommand = proxyquire('../lib/command', {
-      '@gasket/engine': PluginEngine
-    });
-
-    done();
+    jest.mock('@gasket/engine', () => MockPluginEngine);
+    GasketCommand = require('../lib/command');
   });
 
   it('implements the expected oclif command API', () => {
     const command = new GasketCommand();
-    assume(command);
-    assume(command.init).is.a('asyncfunction');
-    assume(command.run).is.a('asyncfunction');
+    expect(command).toBeTruthy();
+    expect(command.init).toEqual(expect.any(Function));
+    expect(command.run).toEqual(expect.any(Function));
   });
 
   it('exposes the expected Gasket command API', () => {
     const command = new GasketCommand();
-    assume(command);
-    assume(command.gasketRun).is.a('asyncfunction');
-    assume(command.gasketConfigure).is.a('asyncfunction');
+    expect(command).toBeTruthy();
+    expect(command.gasketRun).toEqual(expect.any(Function));
+    expect(command.gasketConfigure).toEqual(expect.any(Function));
   });
 
   describe('.init()', () => {
@@ -116,12 +109,9 @@ describe('GasketCommand', function () {
       const cmd = instantiateCommand(CustomCommand, ['--env', 'bogus', '--config', 'fake']);
       await cmd.init();
 
-      assume(cmd.gasket).property('command');
-      assume(cmd.gasket.command).property('id', 'custom');
-      assume(cmd.gasket.command).property('flags');
-      // assume(cmd.gasket.config.flags).property('root');
-      // assume(cmd.gasket.config.flags).property('config', 'fake');
-      // assume(cmd.gasket.config.flags).property('env', 'bogus');
+      expect(cmd.gasket).toHaveProperty('command');
+      expect(cmd.gasket.command).toHaveProperty('id', 'custom');
+      expect(cmd.gasket.command).toHaveProperty('flags');
     });
 
     it('allows subclasses to adjust config', async () => {
@@ -131,7 +121,7 @@ describe('GasketCommand', function () {
         }
       }
 
-      await assumeInitializedWith({
+      await expectInitializedWith({
         withCommand: CustomCommand,
         withGasketConfig: require('./fixtures/gasket.config'),
         expectedConfig: {
@@ -147,27 +137,27 @@ describe('GasketCommand', function () {
       const cmd = instantiateCommand(GasketCommand);
       await cmd.init();
 
-      assume(gasket.exec).is.calledWith('init');
+      expect(gasket.exec).toHaveBeenCalledWith('init');
     });
 
     it('invokes the `configure` Gasket lifecycle', async () => {
       const cmd = instantiateCommand(GasketCommand);
       await cmd.init();
 
-      assume(gasket.execWaterfall).calledWith('configure', sinon.match.object);
+      expect(gasket.execWaterfall).toHaveBeenCalledWith('configure', expect.any(Object));
     });
 
     it('invokes `init` before `configure`', async () => {
       const cmd = instantiateCommand(GasketCommand);
 
-      const orderSpy = sinon.stub();
+      const orderSpy = jest.fn();
       cmd.config.gasket.exec = orderSpy;
       cmd.config.gasket.execWaterfall = orderSpy;
 
       await cmd.init();
 
-      assume(orderSpy.firstCall.args[0]).equals('init');
-      assume(orderSpy.secondCall.args[0]).equals('configure');
+      expect(orderSpy.mock.calls[0][0]).toEqual('init');
+      expect(orderSpy.mock.calls[1][0]).toEqual('configure');
     });
   });
 
@@ -188,10 +178,10 @@ describe('GasketCommand', function () {
     });
 
     it('invokes the `gasketRun` method', async () => {
-      const gasketRunSpy = sinon.spy(cmd, 'gasketRun');
+      const gasketRunSpy = jest.spyOn(cmd, 'gasketRun');
       await cmd.run();
 
-      assume(gasketRunSpy).is.called();
+      expect(gasketRunSpy).toHaveBeenCalled();
     });
 
     it('throws if sub-class does not implement `gasketRun` method', async () => {
@@ -203,12 +193,9 @@ describe('GasketCommand', function () {
       cmd.config = { gasket: createMockGasketApi() };
 
       await cmd.init();
-      await assume(cmd.run()).throwAsync();
 
       // test that the error message is what we expect
-      cmd.run().catch(err => {
-        assume(err.message).includes('The `gasketRun` method must be implemented');
-      });
+      await expect(async () => await cmd.run()).rejects.toThrow('The `gasketRun` method must be implemented');
     });
   });
 });

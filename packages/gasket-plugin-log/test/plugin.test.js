@@ -1,31 +1,21 @@
-const { describe, it } = require('mocha');
-const assume = require('assume');
-const sinon = require('sinon');
-const proxyquire = require('proxyquire');
+const mockLog = jest.fn();
+
+jest.mock('@gasket/log', () => mockLog);
+
 const Plugin = require('../lib/index');
-
-assume.use(require('assume-sinon'));
-
-/*
- * Simple helper that returns the Plugin with a custom assertion
- * to be invoked on creation of Log instances
- */
-function assumeLogInit(assertFn) {
-  return proxyquire('../lib/index', {
-    '@gasket/log': function Log(opts) {
-      assertFn(opts);
-    }
-  });
-}
 
 describe('Plugin', function () {
 
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('is an object', () => {
-    assume(Plugin).is.an('object');
+    expect(typeof Plugin).toBe('object');
   });
 
   it('has expected name', () => {
-    assume(Plugin).to.have.property('name', require('../package').name);
+    expect(Plugin).toHaveProperty('name', require('../package').name);
   });
 
   it('has expected hooks', () => {
@@ -36,22 +26,22 @@ describe('Plugin', function () {
       'metadata'
     ];
 
-    assume(Plugin).to.have.property('hooks');
+    expect(Plugin).toHaveProperty('hooks');
 
     const hooks = Object.keys(Plugin.hooks);
-    assume(hooks).eqls(expected);
-    assume(hooks).is.length(expected.length);
+    expect(hooks).toEqual(expected);
+    expect(hooks).toHaveLength(expected.length);
   });
 
   describe('.init', function () {
     it('runs on the init lifecycle event', function () {
-      assume(Plugin.hooks.init.handler).to.be.an('asyncfunction');
-      assume(Plugin.hooks.init.handler).to.have.length(1);
+      expect(typeof Plugin.hooks.init.handler).toBe('function');
+      expect(Plugin.hooks.init.handler).toHaveLength(1);
     });
 
     it('runs after the lifecycle plugin', function () {
-      assume(Plugin.hooks.init.timing).property('after');
-      assume(Plugin.hooks.init.timing.after).contains('@gasket/plugin-lifecycle');
+      expect(Plugin.hooks.init.timing).toHaveProperty('after');
+      expect(Plugin.hooks.init.timing.after).toContain('@gasket/plugin-lifecycle');
     });
 
     it('adds a logger instance to the Gasket object', async function () {
@@ -67,13 +57,13 @@ describe('Plugin', function () {
         }
       };
 
-      assume(gasket).not.to.have.property('logger');
+      expect(gasket).not.toHaveProperty('logger');
       await Plugin.hooks.init.handler(gasket);
-      assume(gasket).to.have.property('logger');
+      expect(gasket).toHaveProperty('logger');
     });
 
     it('execs the logTransports hook', async () => {
-      const exec = sinon.stub().resolves();
+      const exec = jest.fn().mockResolvedValue();
       const gasket = {
         exec,
         command: {
@@ -84,16 +74,13 @@ describe('Plugin', function () {
         }
       };
 
-      const plugin = assumeLogInit(() => {
-        assume(exec).to.have.been.calledWith('logTransports');
-      });
-
-      await plugin.hooks.init.handler(gasket);
+      await Plugin.hooks.init.handler(gasket);
+      expect(exec).toHaveBeenCalledWith('logTransports');
     });
 
     it('merges in any transports returned by the logTransports hook', async () => {
       // eslint-disable-next-line no-undefined
-      const exec = sinon.stub().resolves(['bar', 'bazz', undefined, ['apple', 'banana'], [undefined]]);
+      const exec = jest.fn().mockResolvedValue(['bar', 'bazz', undefined, ['apple', 'banana'], [undefined]]);
       const gasket = {
         exec,
         command: {
@@ -106,13 +93,9 @@ describe('Plugin', function () {
           }
         }
       };
-
-      const plugin = assumeLogInit(actual => {
-        assume(actual.transports).deep.equals(['foo', 'bar', 'bazz', 'apple', 'banana']);
-        assume(exec).to.have.been.calledWith('logTransports');
-      });
-
-      await plugin.hooks.init.handler(gasket);
+      await Plugin.hooks.init.handler(gasket);
+      expect(mockLog.mock.calls[0][0].transports).toEqual(['foo', 'bar', 'bazz', 'apple', 'banana']);
+      expect(exec).toHaveBeenCalledWith('logTransports');
     });
 
     it('sets defaults appropriately', async () => {
@@ -128,17 +111,14 @@ describe('Plugin', function () {
         }
       };
 
-      const plugin = assumeLogInit(actual => {
-        assume(actual.local).false();
-        assume(actual.transports).is.an('array');
-      });
-
-      await plugin.hooks.init.handler(gasket);
+      await Plugin.hooks.init.handler(gasket);
+      expect(mockLog.mock.calls[0][0].local).toBe(false);
+      expect(Array.isArray(mockLog.mock.calls[0][0].transports)).toBe(true);
     });
 
     it('sets local option for local env', async () => {
       const gasket = {
-        exec: sinon.stub(),
+        exec: jest.fn(),
         command: {
           id: 'start'
         },
@@ -147,16 +127,13 @@ describe('Plugin', function () {
         }
       };
 
-      const plugin = assumeLogInit(actual => {
-        assume(actual.local).true();
-      });
-
-      await plugin.hooks.init.handler(gasket);
+      await Plugin.hooks.init.handler(gasket);
+      expect(mockLog.mock.calls[0][0].local).toBe(true);
     });
 
     it('sets local option for non-start commands', async () => {
       const gasket = {
-        exec: sinon.stub(),
+        exec: jest.fn(),
         command: {
           id: 'fake'
         },
@@ -165,27 +142,21 @@ describe('Plugin', function () {
         }
       };
 
-      const plugin = assumeLogInit(actual => {
-        assume(actual.local).true();
-      });
-
-      await plugin.hooks.init.handler(gasket);
+      await Plugin.hooks.init.handler(gasket);
+      expect(mockLog.mock.calls[0][0].local).toBe(true);
     });
 
     it('supports older gasket.command format', async () => {
       const gasket = {
-        exec: sinon.stub(),
+        exec: jest.fn(),
         command: 'start',
         config: {
           env: 'test'
         }
       };
 
-      const plugin = assumeLogInit(actual => {
-        assume(actual.local).false();
-      });
-
-      await plugin.hooks.init.handler(gasket);
+      await Plugin.hooks.init.handler(gasket);
+      expect(mockLog.mock.calls[0][0].local).toBe(false);
     });
 
     it('forces { exitOnError: true }', async () => {
@@ -200,11 +171,8 @@ describe('Plugin', function () {
         }
       };
 
-      const plugin = assumeLogInit(actual => {
-        assume(actual.exitOnError).true();
-      });
-
-      await plugin.hooks.init.handler(gasket);
+      await Plugin.hooks.init.handler(gasket);
+      expect(mockLog.mock.calls[0][0].exitOnError).toBe(true);
     });
 
     it('merges the correct configuration', async () => {
@@ -221,13 +189,10 @@ describe('Plugin', function () {
         }
       };
 
-      const plugin = assumeLogInit(actual => {
-        assume(actual.local).true();
-        assume(actual.transports).deep.equals(['foo', 'bar']);
-        assume(actual.silent).true();
-      });
-
-      await plugin.hooks.init.handler(gasket);
+      await Plugin.hooks.init.handler(gasket);
+      expect(mockLog.mock.calls[0][0].local).toBe(true);
+      expect(mockLog.mock.calls[0][0].transports).toEqual(['foo', 'bar']);
+      expect(mockLog.mock.calls[0][0].silent).toBe(true);
     });
   });
 
@@ -243,7 +208,7 @@ describe('Plugin', function () {
       };
 
       await Plugin.hooks.create({}, spy);
-      assume(calls).deep.equals([
+      expect(calls).toEqual([
         { key: 'dependencies', value: { '@gasket/log': require('../package').dependencies['@gasket/log'] } }
       ]);
     });
@@ -251,19 +216,19 @@ describe('Plugin', function () {
 
   describe('.destroy', function () {
     it('has destroy lifecycle event', function () {
-      assume(Plugin.hooks.destroy).to.be.an('asyncfunction');
-      assume(Plugin.hooks.destroy).to.have.length(1);
+      expect(typeof Plugin.hooks.destroy).toBe('function');
+      expect(Plugin.hooks.destroy).toHaveLength(1);
     });
 
     it('closes logger instance', async function () {
       const gasket = {
         logger: {
-          close: sinon.spy()
+          close: jest.fn()
         }
       };
 
       await Plugin.hooks.destroy(gasket);
-      assume(gasket.logger.close).is.called();
+      expect(gasket.logger.close).toHaveBeenCalled();
     });
   });
 });

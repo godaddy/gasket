@@ -1,39 +1,47 @@
-const assume = require('assume');
-const sinon = require('sinon');
-const { readFile } = require('fs').promises;
+/* eslint-disable no-sync */
+// hoisting requires the order below
+const mockReadFileStub = jest.fn();
+
+jest.mock('fs', () => {
+  const mod = jest.requireActual('fs');
+  return {
+    ...mod,
+    promises: {
+      readFile: mockReadFileStub
+    }
+  };
+});
+
 const path = require('path');
-const proxyquire = require('proxyquire');
-const DEFAULT_CONFIG = readFile(path.join(__dirname, '..', 'generator', 'docusaurus.config.js'), 'utf-8');
+const fs = require('fs');
+const generateDefaultConfig = require('../lib/generate-default-config');
+const DEFAULT_CONFIG = fs.readFileSync(path.join(__dirname, '..', 'generator', 'docusaurus.config.js'), 'utf-8');
 const GASKET_APP_NAME = 'test-gasket';
 const GASKET_DOCS_OUTPUTDIR = 'my-docs';
-const readFileStub = sinon.stub();
-const generateDefaultConfig = proxyquire('../lib/generate-default-config', {
-  fs: {
-    promises: {
-      readFile: readFileStub.resolves(DEFAULT_CONFIG)
-    }
-  }
-});
 
 describe('generateDefaultConfig', () => {
 
+  beforeEach(() => {
+    mockReadFileStub.mockResolvedValue(DEFAULT_CONFIG);
+  });
+
   it('reads in default config', async function () {
     await generateDefaultConfig(GASKET_APP_NAME);
-    assume(readFileStub).called();
-    assume(readFileStub.getCall(0).args[0]).includes(path.join('generator', 'docusaurus.config.js'));
+    expect(mockReadFileStub).toHaveBeenCalled();
+    expect(mockReadFileStub.mock.calls[0][0]).toContain(path.join('generator', 'docusaurus.config.js'));
   });
 
   it('replaces "${name}" with the app name', async function () {
     const results = await generateDefaultConfig({ name: GASKET_APP_NAME });
     const nameFrequency = results.match(new RegExp(GASKET_APP_NAME, 'g'));
-    assume(nameFrequency.length).equals(4);
-    assume(results).includes(GASKET_APP_NAME);
+    expect(nameFrequency).toHaveLength(4);
+    expect(results).toContain(GASKET_APP_NAME);
   });
 
   it('replaces "${path}" with gasket.config.docs.outputDir', async function () {
     const results = await generateDefaultConfig({ path: GASKET_DOCS_OUTPUTDIR });
     const nameFrequency = results.match(new RegExp(GASKET_DOCS_OUTPUTDIR, 'g'));
-    assume(nameFrequency.length).equals(1);
-    assume(results).includes(GASKET_DOCS_OUTPUTDIR);
+    expect(nameFrequency).toHaveLength(1);
+    expect(results).toContain(GASKET_DOCS_OUTPUTDIR);
   });
 });

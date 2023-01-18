@@ -1,73 +1,76 @@
-const sinon = require('sinon');
-const assume = require('assume');
-const proxyquire = require('proxyquire');
+const mockRunStub = jest.fn();
+
+jest.mock('@gasket/utils', () => ({
+  runShellCommand: mockRunStub
+}));
+
+const postCreate = require('../lib/post-create');
 
 describe('postCreate', () => {
-  let sandbox, mockContext, mockImports, postCreate;
-  let runStub;
+  let mockContext;
 
   beforeEach(() => {
-    sandbox = sinon.createSandbox();
-
     mockContext = {
       appName: 'my-app',
       dest: '/some/path/my-app',
       gitInit: true
     };
-
-    runStub = sandbox.stub();
-
-    mockImports = {
-      '@gasket/utils': {
-        runShellCommand: runStub
-      }
-    };
-
-    postCreate = proxyquire('../lib/post-create', mockImports);
   });
 
   afterEach(() => {
-    sandbox.restore();
+    jest.clearAllMocks();
   });
 
   it('sets timing to last', function () {
-    assume(postCreate).property('timing');
-    assume(postCreate.timing).eqls({ last: true });
+    expect(postCreate).toHaveProperty('timing');
+    expect(postCreate.timing).toEqual({ last: true });
   });
 
   it('handler is async function', function () {
-    assume(postCreate.handler).to.be.an('asyncfunction');
+    expect(postCreate.handler).toEqual(expect.any(Function));
   });
 
   it('ignores if gitInit is false', async () => {
     mockContext.gitInit = false;
     await postCreate.handler({}, mockContext);
-    assume(runStub).not.called();
+    expect(mockRunStub).not.toHaveBeenCalled();
   });
 
   it('ignores if gitInit not set', async () => {
     delete mockContext.gitInit;
     await postCreate.handler({}, mockContext);
-    assume(runStub).not.called();
+    expect(mockRunStub).not.toHaveBeenCalled();
   });
 
   it('uses context dest for cwd', async () => {
     await postCreate.handler({}, mockContext);
-    assume(runStub).is.calledWithMatch('git', ['init'], sinon.match({ cwd: mockContext.dest }));
+    expect(mockRunStub).toHaveBeenCalledWith('git', ['init'], expect.objectContaining({ cwd: mockContext.dest }));
   });
 
   it('inits repo', async () => {
     await postCreate.handler({}, mockContext);
-    assume(runStub).is.calledWithMatch('git', ['init']);
+    expect(mockRunStub).toHaveBeenCalledWith(
+      'git',
+      expect.arrayContaining(['init']),
+      expect.any(Object)
+    );
   });
 
   it('adds files', async () => {
     await postCreate.handler({}, mockContext);
-    assume(runStub).is.calledWithMatch('git', ['add', '.']);
+    expect(mockRunStub).toHaveBeenCalledWith(
+      'git',
+      expect.arrayContaining(['add', '.']),
+      expect.any(Object)
+    );
   });
 
   it('makes a git commit', async () => {
     await postCreate.handler({}, mockContext);
-    assume(runStub).is.calledWithMatch('git', ['commit', '-m', sinon.match.string]);
+    expect(mockRunStub).toHaveBeenCalledWith(
+      'git',
+      expect.arrayContaining(['commit', '-m']),
+      expect.any(Object)
+    );
   });
 });

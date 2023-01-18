@@ -1,5 +1,3 @@
-const assume = require('assume');
-const { spy } = require('sinon');
 const apmTransaction = require('../lib/apm-transaction');
 
 describe('The apmTransaction hook', () => {
@@ -11,10 +9,10 @@ describe('The apmTransaction hook', () => {
         }
       }
     };
-    const transaction = { setLabel: spy() };
+    const transaction = { setLabel: jest.fn() };
 
     apmTransaction({}, transaction, { res });
 
-    assume(transaction.setLabel).was.calledWith('locale', 'es-MX');
+    expect(transaction.setLabel).toHaveBeenCalledWith('locale', 'es-MX');
   });
 });

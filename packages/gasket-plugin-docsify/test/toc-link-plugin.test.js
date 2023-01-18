@@ -1,11 +1,17 @@
-const assume = require('assume');
-const sinon = require('sinon');
 const path = require('path');
+Object.defineProperty(global, 'window', {
+  value: {
+    $docsify: {}
+  },
+  writable: true,
+  enumerable: true
+});
+
 
 const setup = () => {
   const file = path.join(__dirname, '..', 'generator', 'scripts', 'toc-link-plugin.js');
-  window.Docsify = { dom: { create: sinon.stub() } };
-  delete require.cache[file];
+  window.Docsify = { dom: { create: jest.fn() } };
+  jest.resetModules();
   require(file);
 
   const hooks = {};
@@ -24,9 +30,9 @@ describe('toc-link-plugin', () => {
   });
 
   it('installs the plugin', () => {
-    assume(global.window.$docsify).not.property('plugins');
+    expect(global.window.$docsify).not.toHaveProperty('plugins');
     setup();
-    assume(global.window.$docsify).property('plugins');
+    expect(global.window.$docsify).toHaveProperty('plugins');
     global.window.$docsify = {};
   });
 });
