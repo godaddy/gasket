@@ -1,8 +1,6 @@
-const { describe, it } = require('mocha');
-
-const fetch = require('../lib/node');
+/* eslint-disable jest/expect-expect */
 import { assertExports, assertGet, assertAbort, assertPost } from './utils';
-
+const fetch = require('../lib/node');
 const { AbortController, Request, Headers, Response } = fetch;
 
 describe('fetch is available in Node.JS', function () {

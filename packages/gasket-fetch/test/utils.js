@@ -1,4 +1,3 @@
-import assume from 'assume';
 import { createServer, closeServer } from './test-server';
 
 const port = 9090;
@@ -19,17 +18,17 @@ const API = {
  */
 function assertExports(Request, Headers, Response) {
   return () => {
-    [Request, Headers, Response].forEach(className => assume(className).to.be.a('function'));
+    [Request, Headers, Response].forEach(className => expect(className).toEqual(expect.any(Function)));
     const req = new Request(API.GET, { method: 'GET' });
     const res = new Response();
     const headers = new Headers([['Content-Type', 'text/xml']]);
 
-    assume(req).be.instanceof(Request);
-    assume(res).be.instanceof(Response);
-    assume(res.ok).to.equal(true);
-    assume(res.status).to.equal(200);
-    assume(headers).be.instanceof(Headers);
-    assume(headers.get('Content-Type')).to.equal('text/xml');
+    expect(req).toBeInstanceOf(Request);
+    expect(res).toBeInstanceOf(Response);
+    expect(res.ok).toEqual(true);
+    expect(res.status).toEqual(200);
+    expect(headers).toBeInstanceOf(Headers);
+    expect(headers.get('Content-Type')).toEqual('text/xml');
   };
 }
 
@@ -47,10 +46,10 @@ function assertGet(fetch) {
     const body = await res.json();
     const headers = res.headers;
 
-    assume(res.ok).to.be.true();
-    assume(res.status).to.equal(200);
-    assume(headers.get('content-type')).to.equal('application/json; charset=utf-8');
-    assume(body.id).equals(1);
+    expect(res.ok).toEqual(true);
+    expect(res.status).toEqual(200);
+    expect(headers.get('content-type')).toEqual('application/json; charset=utf-8');
+    expect(body.id).toEqual(1);
   };
 }
 
@@ -74,11 +73,11 @@ function assertPost(fetch) {
 
         const body = await res.json();
         const headers = res.headers;
-        assume(res.ok).to.be.true();
-        assume(res.status).to.equal(200);
-        assume(headers.get('content-type')).to.equal('application/json');
-        assume(headers.get('cache-control')).to.equal('max-age=0, no-cache, no-store');
-        assume(body).to.deep.equal({ echo: [domain] });
+        expect(res.ok).toEqual(true);
+        expect(res.status).toEqual(200);
+        expect(headers.get('content-type')).toEqual('application/json');
+        expect(headers.get('cache-control')).toEqual('max-age=0, no-cache, no-store');
+        expect(body).toEqual({ echo: [domain] });
 
         closeServer(server);
       } catch (error) {
@@ -108,10 +107,10 @@ function assertAbort(fetch, AbortController) {
     try {
       res = await fetch(API.GET, { signal: controller.signal });
     } catch (error) {
-      assume(error).to.be.instanceof(Error);
-      assume(error.name).to.equal('AbortError');
+      expect(error).toBeInstanceOf(Error);
+      expect(error.name).toEqual('AbortError');
     } finally {
-      assume(res).to.be.falsy();
+      expect(res).toBeFalsy();
       clearTimeout(timeout);
     }
   };
