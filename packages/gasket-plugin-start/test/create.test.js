@@ -1,19 +1,17 @@
-const assume = require('assume');
-const sinon = require('sinon');
 const create = require('../lib/create');
 
 describe('create', () => {
   let addStub;
   beforeEach(() => {
-    addStub = sinon.stub();
+    addStub = jest.fn();
   });
 
   const doTest = (name) => {
     it(`adds the ${name} script`, async () => {
       await create({}, { pkg: { add: addStub } });
-      assume(addStub).calledWithMatch('scripts', {
+      expect(addStub).toHaveBeenCalledWith('scripts', expect.objectContaining({
         [name]: `gasket ${name}`
-      });
+      }));
     });
   };
 

@@ -1,11 +1,14 @@
-const assume = require('assume');
-const sinon = require('sinon');
 const getCommands = require('../lib/get-commands');
 
 const mockGasket = {
-  exec: sinon.stub(),
+  exec: jest.fn(),
   logger: {
-    debug: sinon.stub()
+    debug: jest.fn()
+  },
+  command: {
+    flags: {
+      exit: ''
+    }
   }
 };
 
@@ -16,35 +19,32 @@ class MockGasketCommand {
 }
 
 const mockFlags = {
-  string: sinon.stub(),
-  boolean: sinon.stub()
+  string: jest.fn(),
+  boolean: jest.fn()
 };
 
 const mockData = { GasketCommand: MockGasketCommand, flags: mockFlags };
 
 const testCommand = async (Command, name, lifecycles) => {
   it('has expected id', () => {
-    assume(Command).property('id', name);
+    expect(Command).toHaveProperty('id', name);
   });
 
   it('has description', () => {
-    assume(Command).property('description');
+    expect(Command).toHaveProperty('description');
   });
 
-  describe('gasketRun', async () => {
+  it('implements gasketRun', () => {
+    expect(Command.prototype).toHaveProperty('gasketRun');
+  });
 
-    it('implements gasketRun', () => {
-      assume(Command.prototype).property('gasketRun');
+  const instance = new Command();
+
+  lifecycles.map(async lifecycle => {
+    it(`executes ${lifecycle} lifecycle`, async () => {
+      await instance.gasketRun();
+      expect(mockGasket.exec).toHaveBeenCalledWith(lifecycle);
     });
-
-    const instance = new Command();
-
-    return Promise.all(lifecycles.map(async lifecycle => {
-      it(`executes ${lifecycle} lifecycle`, async () => {
-        await instance.gasketRun();
-        assume(mockGasket.exec).calledWith(lifecycle);
-      });
-    }));
   });
 };
 
@@ -52,25 +52,24 @@ describe('getCommands', () => {
   let exitStub;
 
   beforeEach(() => {
-    exitStub = sinon.stub(process, 'exit');
+    exitStub = jest.spyOn(process, 'exit').mockImplementation(() => {});
   });
 
   afterEach(function () {
-    sinon.resetHistory();
-    exitStub.restore();
+    jest.clearAllMocks();
   });
 
   it('returns commands', () => {
     const results = getCommands(mockGasket, mockData);
-    assume(results).lengthOf(3);
+    expect(results).toHaveLength(3);
     results.forEach(cmd => {
-      assume(cmd.prototype).instanceOf(MockGasketCommand);
+      expect(cmd.prototype).toBeInstanceOf(MockGasketCommand);
     });
   });
 
   describe('BuildCommand', () => {
     const BuildCommand = getCommands(mockGasket, mockData)[0];
-    testCommand(BuildCommand, 'build', ['build']);
+    (async () => await testCommand(BuildCommand, 'build', ['build']))();
 
     it('calls process.exit', async function () {
       const instance = new BuildCommand();
@@ -79,8 +78,8 @@ describe('getCommands', () => {
       };
       await instance.gasketRun();
 
-      assume(exitStub).called();
-      assume(mockGasket.logger.debug).calledWith('force exit');
+      expect(exitStub).toHaveBeenCalled();
+      expect(mockGasket.logger.debug).toHaveBeenCalledWith('force exit');
     });
 
     it('does not force exit without flag', async function () {
@@ -90,8 +89,8 @@ describe('getCommands', () => {
       };
       await instance.gasketRun();
 
-      assume(exitStub).not.called();
-      assume(mockGasket.logger.debug).not.calledWith('force exit');
+      expect(exitStub).not.toHaveBeenCalled();
+      expect(mockGasket.logger.debug).not.toHaveBeenCalledWith('force exit');
     });
   });
 
@@ -106,10 +105,10 @@ describe('getCommands', () => {
 
     it('has env flag which defaults to local', () => {
       LocalCommand = getCommands(mockGasket, mockData)[2];
-      assume(LocalCommand.flags).property('env');
-      assume(mockFlags.string).calledWithMatch({
+      expect(LocalCommand.flags).toHaveProperty('env');
+      expect(mockFlags.string).toHaveBeenCalledWith(expect.objectContaining({
         default: 'local'
-      });
+      }));
     });
   });
 });
