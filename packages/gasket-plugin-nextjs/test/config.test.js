@@ -236,7 +236,6 @@ describe('createConfig', () => {
         result = config.webpack(webpackConfig, data);
 
         expect(result.module.rules.some(rule => rule.test.test('bogus.scss'))).toBeFalsy();
-        // expect(result.module.rules.some(rule => rule.test.test('bogus.sass')));
       });
     });
   });
