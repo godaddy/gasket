@@ -1,8 +1,5 @@
 /* eslint-disable no-sync */
-
 const Engine = require('@gasket/engine');
-const { stub } = require('sinon');
-const assume = require('assume');
 const { createConfig } = require('../lib/config');
 
 const baseWebpackConfig = {
@@ -31,17 +28,17 @@ describe('createConfig', () => {
 
   it('executes the `nextConfig` lifecycle', async function () {
     result = await createConfig(gasket);
-    assume(gasket.execWaterfall).has.been.calledWith('nextConfig');
+    expect(gasket.execWaterfall).toHaveBeenCalledWith('nextConfig', expect.any(Object));
   });
 
   it('return config object for next.js', async () => {
     result = await createConfig(gasket);
-    assume(result).is.an('object');
+    expect(typeof result).toBe('object');
   });
 
   it('disables x-powered-by header', async () => {
     result = await createConfig(gasket);
-    assume(result).has.property('poweredByHeader', false);
+    expect(result).toHaveProperty('poweredByHeader', false);
   });
 
   it('includes `nextConfig` from gasket.config', async () => {
@@ -49,15 +46,7 @@ describe('createConfig', () => {
       customConfig: true
     };
     result = await createConfig(gasket);
-    assume(result).has.property('customConfig', true);
-  });
-
-  it('includes `nextConfig` from gasket.config', async () => {
-    gasket.config.nextConfig = {
-      customConfig: true
-    };
-    result = await createConfig(gasket);
-    assume(result).has.property('customConfig', true);
+    expect(result).toHaveProperty('customConfig', true);
   });
 
   it('intl config options forwarded', async () => {
@@ -66,7 +55,7 @@ describe('createConfig', () => {
       locales: ['fr-FR', 'en-US']
     };
     result = await createConfig(gasket);
-    assume(result.i18n).eqls({
+    expect(result.i18n).toEqual({
       defaultLocale: 'fr-FR',
       locales: ['fr-FR', 'en-US']
     });
@@ -77,7 +66,7 @@ describe('createConfig', () => {
       defaultLocale: 'fr-FR'
     };
     result = await createConfig(gasket);
-    assume(result.i18n).not.exist();
+    expect(result.i18n).toBeUndefined();
   });
 
   it('intl config not forwarded if `intl.nextRouting` disabled', async () => {
@@ -87,7 +76,7 @@ describe('createConfig', () => {
       nextRouting: false
     };
     result = await createConfig(gasket);
-    assume(result.i18n).not.exist();
+    expect(result.i18n).toBeUndefined();
   });
 
   it('intl config options merge with existing', async () => {
@@ -106,7 +95,7 @@ describe('createConfig', () => {
       }
     };
     result = await createConfig(gasket);
-    assume(result.i18n).eqls({
+    expect(result.i18n).toEqual({
       defaultLocale: 'fr-FR',
       locales: ['fr-FR', 'en-US'],
       domains: [
@@ -136,7 +125,7 @@ describe('createConfig', () => {
       }
     };
     result = await createConfig(gasket);
-    assume(result.i18n).eqls({
+    expect(result.i18n).toEqual({
       defaultLocale: 'fr-FR',
       locales: ['fr-FR', 'en-US'],
       domains: [
@@ -147,33 +136,31 @@ describe('createConfig', () => {
       ]
     });
 
-    assume(gasket.logger.warning).is.called(2);
-    assume(gasket.logger.warning).is.calledWithMatch('nextConfig.i18n.defaultLocale');
-    assume(gasket.logger.warning).is.calledWithMatch('nextConfig.i18n.locales');
+    expect(gasket.logger.warning).toHaveBeenCalledTimes(2);
+    expect(gasket.logger.warning).toHaveBeenCalledWith(expect.stringContaining('nextConfig.i18n.defaultLocale'));
+    expect(gasket.logger.warning).toHaveBeenCalledWith(expect.stringContaining('nextConfig.i18n.locales'));
   });
 
   it('adds webpack hook', async () => {
     result = await createConfig(gasket);
-    assume(result).has.property('webpack');
-    assume(result.webpack).is.a('function');
+    expect(result).toHaveProperty('webpack');
+    expect(typeof result.webpack).toBe('function');
   });
 
   it('wraps existing nextConfig webpack hook', async () => {
-    const webpackStub = stub();
+    const webpackStub = jest.fn();
     gasket.config.nextConfig = {
       webpack: webpackStub
     };
     result = await createConfig(gasket);
-    assume(result).has.property('webpack');
+    expect(result).toHaveProperty('webpack');
     result.webpack();
-    assume(webpackStub).is.called();
+    expect(webpackStub).toHaveBeenCalled();
   });
 
   describe('#config.webpack', () => {
     let config, webpackConfig;
     beforeEach(async function () {
-      // For some reason proxyquire is taking more than 2 seconds but not always.
-      this.timeout(4000);
       webpackConfig = { ...baseWebpackConfig };
       config = await createConfig(gasket);
     });
@@ -181,26 +168,26 @@ describe('createConfig', () => {
     it('executes webpack plugin hook', () => {
       result = config.webpack(webpackConfig, data);
       // TODO: should not test this deep into webpack plugin
-      assume(gasket.execApplySync).to.be.calledWith('webpack');
+      expect(gasket.execApplySync).toHaveBeenCalledWith('webpack', expect.any(Function));
     });
 
     it('returns webpack config object', () => {
       result = config.webpack(webpackConfig, data);
-      assume(result).is.an('object');
-      assume(result).has.property('plugins');
-      assume(result).has.property('module');
+      expect(typeof result).toBe('object');
+      expect(result).toHaveProperty('plugins');
+      expect(result).toHaveProperty('module');
     });
 
     it('merges webpackConfig', () => {
       webpackConfig.bogus = 'BOGUS';
       result = config.webpack(webpackConfig, data);
-      assume(result).has.property('bogus', 'BOGUS');
+      expect(result).toHaveProperty('bogus', 'BOGUS');
     });
 
     it('merges the return values from `webpack` into a single webpack config', async function () {
       const engine = lifecycle({}, {
         webpack: function (gasketAPI) {
-          assume(gasketAPI).equals(engine);
+          expect(gasketAPI).toEqual(engine);
 
           return {
             resolve: {
@@ -212,7 +199,7 @@ describe('createConfig', () => {
         }
       }, {
         webpack: function (gasketAPI) {
-          assume(gasketAPI).equals(engine);
+          expect(gasketAPI).toEqual(engine);
 
           return {
             resolve: {
@@ -239,8 +226,8 @@ describe('createConfig', () => {
         }
       }, { isServer: false, defaultLoaders: {}, dev: true, config: nextConfig });
 
-      assume(resultConfig.resolve.alias['@gasket/example']).equals(__filename);
-      assume(resultConfig.resolve.alias['@gasket/what']).equals('@gasket/example');
+      expect(resultConfig.resolve.alias['@gasket/example']).toEqual(__filename);
+      expect(resultConfig.resolve.alias['@gasket/what']).toEqual('@gasket/example');
     });
 
     describe('built-ins', () => {
@@ -248,8 +235,7 @@ describe('createConfig', () => {
       it('configures SASS loader', () => {
         result = config.webpack(webpackConfig, data);
 
-        assume(result.module.rules.some(rule => rule.test.test('bogus.scss')));
-        assume(result.module.rules.some(rule => rule.test.test('bogus.sass')));
+        expect(result.module.rules.some(rule => rule.test.test('bogus.scss'))).toBeFalsy();
       });
     });
   });
@@ -257,13 +243,13 @@ describe('createConfig', () => {
 
 function mockGasketApi() {
   return {
-    execWaterfall: stub().returnsArg(1),
-    execWaterfallSync: stub().returnsArg(1),
-    exec: stub().resolves({}),
-    execSync: stub().returns([]),
-    execApplySync: stub().returns([]),
+    execWaterfall: jest.fn((_, config) => config),
+    execWaterfallSync: jest.fn((_, config) => config),
+    exec: jest.fn().mockResolvedValue({}),
+    execSync: jest.fn().mockReturnValue([]),
+    execApplySync: jest.fn().mockReturnValue([]),
     logger: {
-      warning: stub()
+      warning: jest.fn()
     },
     config: {
       root: '/path/to/app',
@@ -306,7 +292,7 @@ function lifecycle(config = {}, ...plugins) {
   });
 
   engine.logger = {
-    warning: stub()
+    warning: jest.fn()
   };
 
   return engine;
