@@ -69,7 +69,7 @@ describe('getCommands', () => {
 
   describe('BuildCommand', () => {
     const BuildCommand = getCommands(mockGasket, mockData)[0];
-    (async () => await testCommand(BuildCommand, 'build', ['build']))();
+    testCommand(BuildCommand, 'build', ['build']);
 
     it('calls process.exit', async function () {
       const instance = new BuildCommand();
