@@ -1,6 +1,6 @@
-const proxyquire = require('proxyquire');
-const assume = require('assume');
-const sinon = require('sinon');
+const mockShellStub = jest.fn();
+
+jest.mock('../lib/run-shell-command', () => mockShellStub);
 
 describe('packageManager', function () {
   let stdout;
@@ -8,46 +8,45 @@ describe('packageManager', function () {
   let runner;
 
   function manager(run) {
-    return proxyquire('../lib/package-manager', {
-      './run-shell-command': run
-    });
+    mockShellStub.mockImplementation(run);
+    return require('../lib/package-manager');
   }
 
   beforeEach(function () {
     stdout = 'example output';
-    runner = sinon.stub().resolves({ stdout });
+    runner = jest.fn().mockResolvedValueOnce({ stdout });
     PackageManager = manager(runner);
   });
 
   describe('.spawnYarn', function () {
     it('is a function', function () {
-      assume(PackageManager.spawnYarn).is.a('function');
+      expect(typeof PackageManager.spawnYarn).toBe('function');
     });
 
     it('calls the yarn binary', async function () {
       const res = await PackageManager.spawnYarn(['install'], { cwd: '.' });
 
-      assume(runner.called).is.true();
-      assume(runner.firstCall.args[0]).contains('yarn');
+      expect(runner).toHaveBeenCalled();
+      expect(runner.mock.calls[0][0]).toContain('yarn');
 
-      assume(res).is.a('object');
-      assume(res.stdout).equals(stdout);
+      expect(typeof res).toBe('object');
+      expect(res.stdout).toEqual(stdout);
     });
   });
 
   describe('.spawnNpm', function () {
     it('is a function', function () {
-      assume(PackageManager.spawnNpm).is.a('function');
+      expect(typeof PackageManager.spawnNpm).toBe('function');
     });
 
     it('calls the npm binary', async function () {
       const res = await PackageManager.spawnNpm(['install'], { cwd: '.' });
 
-      assume(runner.called).is.true();
-      assume(runner.firstCall.args[0]).contains('npm');
+      expect(runner).toHaveBeenCalled();
+      expect(runner.mock.calls[0][0]).toContain('npm');
 
-      assume(res).is.a('object');
-      assume(res.stdout).equals(stdout);
+      expect(typeof res).toBe('object');
+      expect(res.stdout).toEqual(stdout);
     });
   });
 
@@ -56,26 +55,26 @@ describe('packageManager', function () {
       it('is a function', function () {
         const pkg = new PackageManager({ packageManager });
 
-        assume(pkg.install).is.a('asyncfunction');
+        expect(typeof pkg.install).toBe('function');
       });
 
       it('calls install with the correct package manager', async function () {
         const pkg = new PackageManager({ packageManager });
         const res = await pkg.install();
 
-        assume(runner.called).is.true();
-        assume(runner.firstCall.args[0]).contains(packageManager);
-        assume(runner.firstCall.args[1]).contains('install');
+        expect(runner).toHaveBeenCalled();
+        expect(runner.mock.calls[0][0]).toContain(packageManager);
+        expect(runner.mock.calls[0][1]).toContain('install');
 
-        assume(res).is.a('object');
-        assume(res.stdout).equals(stdout);
+        expect(typeof res).toBe('object');
+        expect(res.stdout).toEqual(stdout);
       });
 
-      it('contains legacy-peer-deps flag', async function () {
+      it('toContain legacy-peer-deps flag', async function () {
         const pkg = new PackageManager('npm');
         await pkg.install();
 
-        assume(runner.firstCall.args[1]).contains('--legacy-peer-deps');
+        expect(runner.mock.calls[0][1]).toContain('--legacy-peer-deps');
       });
     });
 
@@ -83,19 +82,19 @@ describe('packageManager', function () {
       it('is a function', function () {
         const pkg = new PackageManager({ packageManager });
 
-        assume(pkg.link).is.a('asyncfunction');
+        expect(typeof pkg.link).toBe('function');
       });
 
       it('calls link with the correct package manager', async function () {
         const pkg = new PackageManager({ packageManager });
         const res = await pkg.link();
 
-        assume(runner.called).is.true();
-        assume(runner.firstCall.args[0]).contains(packageManager);
-        assume(runner.firstCall.args[1]).contains('link');
+        expect(runner).toHaveBeenCalled();
+        expect(runner.mock.calls[0][0]).toContain(packageManager);
+        expect(runner.mock.calls[0][1]).toContain('link');
 
-        assume(res).is.a('object');
-        assume(res.stdout).equals(stdout);
+        expect(typeof res).toBe('object');
+        expect(res.stdout).toEqual(stdout);
       });
     });
 
@@ -103,92 +102,92 @@ describe('packageManager', function () {
       it('is a function', function () {
         const pkg = new PackageManager({ packageManager });
 
-        assume(pkg.info).is.a('asyncfunction');
+        expect(typeof pkg.info).toBe('function');
       });
 
       it('calls info with the correct package manager', async function () {
         stdout = '{}';
-        runner = sinon.stub().resolves({ stdout });
+        runner = jest.fn().mockResolvedValueOnce({ stdout });
         PackageManager = manager(runner);
 
         const pkg = new PackageManager({ packageManager });
         await pkg.info();
 
-        assume(runner.called).is.true();
-        assume(runner.firstCall.args[0]).contains(packageManager);
-        assume(runner.firstCall.args[1]).contains('info');
+        expect(runner).toHaveBeenCalled();
+        expect(runner.mock.calls[0][0]).toContain(packageManager);
+        expect(runner.mock.calls[0][1]).toContain('info');
       });
 
       it('calls info with the --json flag', async function () {
         stdout = '{}';
-        runner = sinon.stub().resolves({ stdout });
+        runner = jest.fn().mockResolvedValueOnce({ stdout });
         PackageManager = manager(runner);
 
         const pkg = new PackageManager({ packageManager });
         await pkg.info();
 
-        assume(runner.called).is.true();
-        assume(runner.firstCall.args[1]).contains('--json');
+        expect(runner).toHaveBeenCalled();
+        expect(runner.mock.calls[0][1]).toContain('--json');
       });
 
       it('returns object with stdout and parsed data', async function () {
         stdout = packageManager === 'yarn' ? '{ "data": "1.2.3" }' : '"1.2.3"';
-        runner = sinon.stub().resolves({ stdout });
+        runner = jest.fn().mockResolvedValueOnce({ stdout });
         PackageManager = manager(runner);
 
         const pkg = new PackageManager({ packageManager });
         const res = await pkg.info();
 
-        assume(res).is.a('object');
-        assume(res.stdout).equals(stdout);
-        assume(res.data).equals('1.2.3');
+        expect(typeof res).toBe('object');
+        expect(res.stdout).toEqual(stdout);
+        expect(res.data).toEqual('1.2.3');
       });
 
       it('returns data string', async function () {
         stdout = packageManager === 'yarn' ? '{ "data": "1.2.3" }' : '"1.2.3"';
-        runner = sinon.stub().resolves({ stdout });
+        runner = jest.fn().mockResolvedValueOnce({ stdout });
         PackageManager = manager(runner);
 
         const pkg = new PackageManager({ packageManager });
         const res = await pkg.info();
 
-        assume(res.data).is.a('string');
-        assume(res.data).equals('1.2.3');
+        expect(typeof res.data).toBe('string');
+        expect(res.data).toEqual('1.2.3');
       });
 
       it('returns data object', async function () {
         stdout = packageManager === 'yarn' ? '{ "data": { "something": "^3.4.5" } }' : '{ "something": "^3.4.5" }';
-        runner = sinon.stub().resolves({ stdout });
+        runner = jest.fn().mockResolvedValueOnce({ stdout });
         PackageManager = manager(runner);
 
         const pkg = new PackageManager({ packageManager });
         const res = await pkg.info();
 
-        assume(res.data).is.a('object');
-        assume(res.data).eqls({ something: '^3.4.5' });
+        expect(typeof res.data).toBe('object');
+        expect(res.data).toEqual({ something: '^3.4.5' });
       });
 
       it('returns data array', async function () {
         stdout = packageManager === 'yarn' ? '{ "data": ["maintainer <my@email.com>"] }' : '["maintainer <my@email.com>"]';
-        runner = sinon.stub().resolves({ stdout });
+        runner = jest.fn().mockResolvedValueOnce({ stdout });
         PackageManager = manager(runner);
 
         const pkg = new PackageManager({ packageManager });
         const res = await pkg.info();
 
-        assume(res.data).is.a('array');
-        assume(res.data).eqls(['maintainer <my@email.com>']);
+        expect(Array.isArray(res.data)).toBe(true);
+        expect(res.data).toEqual(['maintainer <my@email.com>']);
       });
 
       it('handles undefined data (or empty stdout)', async function () {
         stdout = packageManager === 'yarn' ? '{}' : '';
-        runner = sinon.stub().resolves({ stdout });
+        runner = jest.fn().mockResolvedValueOnce({ stdout });
         PackageManager = manager(runner);
 
         const pkg = new PackageManager({ packageManager });
         const res = await pkg.info();
 
-        assume(res.data).is.undefined();
+        expect(res.data).toBeUndefined();
       });
     });
   });
