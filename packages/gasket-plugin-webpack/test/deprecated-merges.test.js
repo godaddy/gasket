@@ -5,7 +5,6 @@ jest.mock('webpack-merge', () => ({
 }));
 
 const deprecatedMerges = require('../lib/deprecated-merges');
-const deprecatedSmartMerge = require('webpack-merge').smart;
 
 describe('deprecatedMerges', function () {
   let mockGasket, mockContext, mockConfig;

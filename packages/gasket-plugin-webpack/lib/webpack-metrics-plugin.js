@@ -24,7 +24,6 @@ class WebpackMetricsPlugin {
     // to plugins to logging these errors more obvious to future
     // plugin authors.
     //
-    console.log(this.gasket)
     this.gasket.exec('metrics', metrics);
   }
 
@@ -96,7 +95,6 @@ class WebpackMetricsPlugin {
         // to plugins to logging these errors more obvious to future
         // plugin authors.
         //
-        console.log('hit');
         this.handleMetrics(metrics).catch(() => {});
       }
     );

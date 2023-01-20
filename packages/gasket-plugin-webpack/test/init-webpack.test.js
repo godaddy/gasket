@@ -1,7 +1,6 @@
 /* eslint-disable no-sync */
-jest.mock('../lib/deprecated-merges', (_, config) => config);
+jest.mock('../lib/deprecated-merges', () => (_, config) => config);
 
-const WebpackMetricsPlugin = require('../lib/webpack-metrics-plugin');
 const initWebpack = require('../lib/init-webpack');
 
 describe('deprecated merges', function () {
@@ -12,18 +11,16 @@ describe('deprecated merges', function () {
       execApplySync: jest.fn(),
       logger: {
         warning: jest.fn()
-      }
+      },
+      config: {}
     };
     mockContext = {};
     mockConfig = {};
-
-    // initWebpack = proxyquire('../lib/init-webpack', {
-    //   './deprecated-merges': jest.fn().callsFake((_, config) => config)
-    // });
   });
 
   afterEach(function () {
     jest.clearAllMocks();
+    jest.resetModules();
   });
 
   it('returns webpack config object', function () {
@@ -34,12 +31,12 @@ describe('deprecated merges', function () {
   it('configures webpack metrics plugin', function () {
     const results = initWebpack(mockGasket, mockConfig, mockContext);
     expect(results).toHaveProperty('plugins');
-    expect(results.plugins[0]).toBeInstanceOf(WebpackMetricsPlugin);
+    expect(results.plugins[0].constructor.name).toBe('WebpackMetricsPlugin');
   });
 
   it('executes webpackConfig lifecycle', function () {
     initWebpack(mockGasket, mockConfig, mockContext);
-    expect(mockGasket.execApplySync).toHaveBeenCalledWith('webpackConfig');
+    expect(mockGasket.execApplySync).toHaveBeenCalledWith('webpackConfig', expect.any(Function));
   });
 
   describe('webpackConfig lifecycle callback', function () {
@@ -55,7 +52,7 @@ describe('deprecated merges', function () {
 
     it('called with baseConfig', function () {
       applyFn(mockPlugin, handlerStub);
-      expect(handlerStub).toHaveBeenCalledWith(baseConfig);
+      expect(handlerStub).toHaveBeenCalledWith(baseConfig, expect.any(Object));
     });
 
     it('called with context', function () {
@@ -69,7 +66,7 @@ describe('deprecated merges', function () {
       it('getter logs deprecated warning', function () {
         applyFn(mockPlugin, handlerStub);
         const context = handlerStub.mock.calls[0][1];
-        expect(mockGasket.logger.warning).not.called();
+        expect(mockGasket.logger.warning).not.toHaveBeenCalled();
         context.webpackMerge;
         expect(mockGasket.logger.warning).toHaveBeenCalledWith(expect.stringMatching(/DEPRECATED/));
       });
