@@ -1,5 +1,3 @@
-const assume = require('assume');
-const sinon = require('sinon');
 const {
   sanitize,
   safeAssign,
@@ -17,27 +15,27 @@ describe('Utils', () => {
     it('returns transformed object', () => {
       const target = { some: 'data' };
       const results = sanitize(target);
-      assume(results).equals(target);
+      expect(results).toEqual(target);
     });
 
     it('redacts functions', () => {
       const mockFn = f => f;
       const results = sanitize(mockFn);
 
-      assume(results).a('function');
-      assume(results).not.equals(mockFn);
-      assume(results.name).equals('redacted');
+      expect(typeof results).toBe('function');
+      expect(results).not.toEqual(mockFn);
+      expect(results.name).toEqual('redacted');
     });
 
     it('redacts functions which are object properties', () => {
       const mockFn = f => f;
       const target = { some: 'data', fn: mockFn };
-      assume(target.fn).equals(mockFn);
+      expect(target.fn).toEqual(mockFn);
 
       const results = sanitize(target);
-      assume(results.fn).a('function');
-      assume(results.fn).not.equals(mockFn);
-      assume(results.fn.name).equals('redacted');
+      expect(typeof results.fn).toBe('function');
+      expect(results.fn).not.toEqual(mockFn);
+      expect(results.fn.name).toEqual('redacted');
     });
 
     it('does recurse through objects', () => {
@@ -45,9 +43,9 @@ describe('Utils', () => {
       const target = { some: 'data', deep: { fn: mockFn } };
 
       const results = sanitize(target);
-      assume(results.deep.fn).a('function');
-      assume(results.deep.fn).not.equals(mockFn);
-      assume(results.deep.fn.name).equals('redacted');
+      expect(typeof results.deep.fn).toBe('function');
+      expect(results.deep.fn).not.toEqual(mockFn);
+      expect(results.deep.fn.name).toEqual('redacted');
     });
 
     it('redacts functions within arrays', () => {
@@ -57,16 +55,16 @@ describe('Utils', () => {
       const results = sanitize(target);
 
       results.fns.forEach(fn => {
-        assume(fn).a('function');
-        assume(fn).not.equals(mockFn);
-        assume(fn.name).equals('redacted');
+        expect(typeof fn).toBe('function');
+        expect(fn).not.toEqual(mockFn);
+        expect(fn.name).toEqual('redacted');
       });
     });
 
     it('does not transform non-function properties', () => {
-      assume(sanitize(1)).equals(1);
-      assume(sanitize('a')).equals('a');
-      assume(sanitize([1, 'a'])).deep.equals([1, 'a']);
+      expect(sanitize(1)).toEqual(1);
+      expect(sanitize('a')).toEqual('a');
+      expect(sanitize([1, 'a'])).toEqual([1, 'a']);
     });
   });
 
@@ -74,13 +72,13 @@ describe('Utils', () => {
     it('assigns missing keys to target', () => {
       const target = {};
       safeAssign(target, { one: 1 });
-      assume(target).eqls({ one: 1 });
+      expect(target).toEqual({ one: 1 });
     });
 
     it('does not override existing keys', () => {
       const target = { two: 2 };
       safeAssign(target, { one: 1 });
-      assume(target).eqls({ two: 2, one: 1 });
+      expect(target).toEqual({ two: 2, one: 1 });
     });
   });
 
@@ -93,7 +91,7 @@ describe('Utils', () => {
 
     beforeEach(() => {
       mockLoader = {
-        getModuleInfo: sinon.stub().callsFake((mod, name, meta) => ({ ...mockModuleData, ...meta }))
+        getModuleInfo: jest.fn().mockImplementation((mod, name, meta) => ({ ...mockModuleData, ...meta }))
       };
       mockApp = {
         name: 'my-app',
@@ -108,29 +106,29 @@ describe('Utils', () => {
 
     it('loads moduleData for app dependencies', () => {
       loadAppModules(mockLoader, mockApp, mockModules);
-      assume(mockApp).property('modules');
-      assume(mockApp.modules).lengthOf(1);
-      assume(mockApp.modules[0]).property('name', 'fake-one');
+      expect(mockApp).toHaveProperty('modules');
+      expect(mockApp.modules).toHaveLength(1);
+      expect(mockApp.modules[0]).toHaveProperty('name', 'fake-one');
     });
 
     it('adds moduleData to modules metadata', () => {
       loadAppModules(mockLoader, mockApp, mockModules);
-      assume(mockModules).lengthOf(1);
-      assume(mockModules[0]).property('name', 'fake-one');
+      expect(mockModules).toHaveLength(1);
+      expect(mockModules[0]).toHaveProperty('name', 'fake-one');
     });
 
     it('moduleData includes range and from', () => {
       loadAppModules(mockLoader, mockApp, mockModules);
-      assume(mockModules[0]).property('range', '^1.2.3');
-      assume(mockModules[0]).property('from', 'my-app');
+      expect(mockModules[0]).toHaveProperty('range', '^1.2.3');
+      expect(mockModules[0]).toHaveProperty('from', 'my-app');
     });
 
     it('ignores plugins and presets', () => {
       mockApp.package.dependencies['@gasket/plugin-mock'] = '1.2.3';
       mockApp.package.dependencies['@gasket/mock-preset'] = '3.2.1';
       loadAppModules(mockLoader, mockApp, mockModules);
-      assume(mockModules).lessThan(Object.keys(mockApp.package.dependencies).length);
-      assume(mockModules).lengthOf(1);
+      expect(mockModules.length).toBeLessThan(Object.keys(mockApp.package.dependencies).length);
+      expect(mockModules).toHaveLength(1);
     });
   });
 
@@ -149,26 +147,26 @@ describe('Utils', () => {
 
     beforeEach(() => {
       mockLoader = {
-        getModuleInfo: sinon.stub().callsFake((mod, name, meta) => ({ ...mockModuleData, ...meta }))
+        getModuleInfo: jest.fn().mockImplementation((mod, name, meta) => ({ ...mockModuleData, ...meta }))
       };
     });
 
     it('loads moduleData for plugin modules', () => {
       loadPluginModules(mockPluginData, mockLoader);
-      assume(mockPluginData).property('modules');
-      assume(mockPluginData.modules).lengthOf(1);
-      assume(mockPluginData.modules[0]).property('version', '1.2.3');
+      expect(mockPluginData).toHaveProperty('modules');
+      expect(mockPluginData.modules).toHaveLength(1);
+      expect(mockPluginData.modules[0]).toHaveProperty('version', '1.2.3');
     });
 
     it('normalize modules strings to objects', () => {
       loadPluginModules(mockPluginData, mockLoader);
-      assume(mockLoader.getModuleInfo).calledWithMatch(null, 'fake-one', { name: 'fake-one' });
+      expect(mockLoader.getModuleInfo).toHaveBeenCalledWith(null, 'fake-one', { name: 'fake-one', version: expect.any(String) });
     });
 
     it('ignores if no modules declared', () => {
       delete mockPluginData.modules;
       loadPluginModules(mockPluginData, mockLoader);
-      assume(mockPluginData.modules).not.exists();
+      expect(mockPluginData.modules).toBeFalsy();
     });
   });
 
@@ -191,13 +189,13 @@ describe('Utils', () => {
 
     it('push moduleData on plugins to top-level modules array', () => {
       flattenPluginModules(mockPluginData, mockModules);
-      assume(mockModules).lengthOf(1);
+      expect(mockModules).toHaveLength(1);
     });
 
     it('does not duplicate modules', () => {
       mockModules.push(mockModuleData);
       flattenPluginModules(mockPluginData, mockModules);
-      assume(mockModules).lengthOf(1);
+      expect(mockModules).toHaveLength(1);
     });
 
     it('augments existing module entries', () => {
@@ -207,13 +205,13 @@ describe('Utils', () => {
         extra: true
       }];
       flattenPluginModules(mockPluginData, mockModules);
-      assume(mockModules[0]).property('extra', true);
+      expect(mockModules[0]).toHaveProperty('extra', true);
     });
 
     it('ignores if no modules declared', () => {
       delete mockPluginData.modules;
       flattenPluginModules(mockPluginData, mockModules);
-      assume(mockModules).empty();
+      expect(mockModules).toHaveLength(0);
     });
   });
 
@@ -239,18 +237,18 @@ describe('Utils', () => {
     });
 
     it('assigns modified pluginData instance to parent presets', () => {
-      assume(mockPresetData.plugins).includes(mockPluginData);
-      assume(mockPresetData.plugins).not.includes(mockModifiedPluginData);
+      expect(mockPresetData.plugins).toContain(mockPluginData);
+      expect(mockPresetData.plugins).not.toContain(mockModifiedPluginData);
       fixupPresetHierarchy(mockModifiedPluginData, [mockPresetData]);
-      assume(mockPresetData.plugins).not.includes(mockPluginData);
-      assume(mockPresetData.plugins).includes(mockModifiedPluginData);
+      expect(mockPresetData.plugins).not.toContain(mockPluginData);
+      expect(mockPresetData.plugins).toContain(mockModifiedPluginData);
     });
 
     it('assigns pluginData based on `from` attribute', () => {
       mockPresetData.name = 'bogus';
-      assume(mockPresetData.plugins).includes(mockPluginData);
+      expect(mockPresetData.plugins).toContain(mockPluginData);
       fixupPresetHierarchy(mockModifiedPluginData, [mockPresetData]);
-      assume(mockPresetData.plugins).includes(mockPluginData);
+      expect(mockPresetData.plugins).toContain(mockPluginData);
     });
 
     it('assigns modified pluginData instance to deep presets', () => {
@@ -258,10 +256,10 @@ describe('Utils', () => {
         name: '@gasket/deep-preset',
         presets: [mockPresetData]
       };
-      assume(mockPresetData.plugins).includes(mockPluginData);
+      expect(mockPresetData.plugins).toContain(mockPluginData);
       fixupPresetHierarchy(mockModifiedPluginData, [mockDeepPreset]);
-      assume(mockPresetData.plugins).not.includes(mockPluginData);
-      assume(mockPresetData.plugins).includes(mockModifiedPluginData);
+      expect(mockPresetData.plugins).not.toContain(mockPluginData);
+      expect(mockPresetData.plugins).toContain(mockModifiedPluginData);
     });
   });
 
@@ -293,14 +291,14 @@ describe('Utils', () => {
     it('does nothing if no module', async function () {
       delete mockPresetOne.module;
       expandPresetMetadata([mockPresetOne]);
-      assume(mockPresetOne).deep.equals({
+      expect(mockPresetOne).toEqual({
         name: '@gasket/one-preset'
       });
     });
 
     it('does nothing if no module.metadata', async function () {
       expandPresetMetadata([mockPresetOne]);
-      assume(mockPresetOne).deep.equals({
+      expect(mockPresetOne).toEqual({
         name: '@gasket/one-preset',
         module: {}
       });
@@ -309,29 +307,29 @@ describe('Utils', () => {
     it('adds properties from module.metadata to top', async function () {
       mockPresetOne.module.metadata = { extra: true };
       expandPresetMetadata([mockPresetOne]);
-      assume(mockPresetOne).property('extra', true);
+      expect(mockPresetOne).toHaveProperty('extra', true);
     });
 
     it('augments properties from package.json gasket.metadata', async function () {
       expandPresetMetadata([mockPresetTwo]);
-      assume(mockPresetTwo).property('fromPackage', true);
+      expect(mockPresetTwo).toHaveProperty('fromPackage', true);
     });
 
     it('overrides metadata from module.metadata', async function () {
       mockPresetOne.metadataKey = 'oldMetadataValue';
       mockPresetOne.module.metadata = { metadataKey: 'metadataValue' };
-      assume(mockPresetOne).property('metadataKey', 'oldMetadataValue');
+      expect(mockPresetOne).toHaveProperty('metadataKey', 'oldMetadataValue');
 
       expandPresetMetadata([mockPresetOne]);
-      assume(mockPresetOne).property('metadataKey', 'metadataValue');
+      expect(mockPresetOne).toHaveProperty('metadataKey', 'metadataValue');
     });
 
     it('handles multiple presets', async function () {
       mockPresetOne.module.metadata = { extra: 1 };
       mockPresetTwo.module.metadata = { extra: 2 };
       expandPresetMetadata([mockPresetOne, mockPresetTwo]);
-      assume(mockPresetOne).property('extra', 1);
-      assume(mockPresetTwo).property('extra', 2);
+      expect(mockPresetOne).toHaveProperty('extra', 1);
+      expect(mockPresetTwo).toHaveProperty('extra', 2);
     });
 
     it('handles recursive/extended presets', async function () {
@@ -341,9 +339,9 @@ describe('Utils', () => {
       mockPresetTwo.presets = [mockPresetThree];
       mockPresetThree.module.metadata = { extra: 3 };
       expandPresetMetadata([mockPresetOne]);
-      assume(mockPresetOne).property('extra', 1);
-      assume(mockPresetTwo).property('extra', 2);
-      assume(mockPresetThree).property('extra', 3);
+      expect(mockPresetOne).toHaveProperty('extra', 1);
+      expect(mockPresetTwo).toHaveProperty('extra', 2);
+      expect(mockPresetThree).toHaveProperty('extra', 3);
     });
   });
 
@@ -366,20 +364,20 @@ describe('Utils', () => {
     it('does nothing if no package', async function () {
       delete mockPresetOne.package;
       expandPresetMetadata([mockPresetOne]);
-      assume(mockPresetOne).deep.equals({
+      expect(mockPresetOne).toEqual({
         name: '@gasket/one-preset'
       });
     });
 
     it('augments properties with gasket.metadata from package.json', async function () {
       expandPresetMetadata([mockPresetOne]);
-      assume(mockPresetOne).property('fromPackage', true);
+      expect(mockPresetOne).toHaveProperty('fromPackage', true);
     });
 
     it('does not override existing metadata', async function () {
       mockPresetOne.package.gasket.metadata.fromPackage = 'Okay!';
       expandPresetMetadata([mockPresetOne]);
-      assume(mockPresetOne).property('fromPackage', 'Okay!');
+      expect(mockPresetOne).toHaveProperty('fromPackage', 'Okay!');
     });
   });
 });

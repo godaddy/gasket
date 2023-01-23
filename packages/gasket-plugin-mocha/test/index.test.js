@@ -1,18 +1,11 @@
-import { describe, it } from 'mocha';
-import self from '../package.json';
-import chai, { expect } from 'chai';
-import spies from 'chai-spies';
-import plugin from '../lib/';
-const sinon = require('sinon');
-
-chai.use(spies);
+const plugin = require('../lib');
 
 describe('Plugin', () => {
   let spyFunc, filesAddStub;
 
   async function create() {
     const pkg = {};
-    filesAddStub = sinon.stub();
+    filesAddStub = jest.fn();
 
     await plugin.hooks.create.handler({}, {
       files: {
@@ -53,17 +46,17 @@ describe('Plugin', () => {
     return { pkg };
   }
 
-  before(async function () {
-    const { pkg } = await create();
-    spyFunc = chai.spy(pkg.add);
+  beforeAll(async function () {
+    await create();
+    spyFunc = jest.fn();
   });
 
   it('is an object', () => {
-    expect(plugin).is.an('object');
+    expect(typeof plugin).toBe('object');
   });
 
   it('has expected name', () => {
-    expect(plugin).to.have.property('name', require('../package').name);
+    expect(plugin).toHaveProperty('name', require('../package').name);
   });
 
   it('has expected hooks', () => {
@@ -72,16 +65,16 @@ describe('Plugin', () => {
       'metadata'
     ];
 
-    expect(plugin).to.have.property('hooks');
+    expect(plugin).toHaveProperty('hooks');
 
     const hooks = Object.keys(plugin.hooks);
-    expect(hooks).eqls(expected);
-    expect(hooks).is.length(expected.length);
+    expect(hooks).toEqual(expected);
+    expect(hooks).toHaveLength(expected.length);
   });
 
   it('has the correct create hook timings', function () {
-    expect(plugin.hooks.create.timing.last).to.be.true;
-    expect(plugin.hooks.create.timing.before).to.eql(['@gasket/plugin-lint']);
+    expect(plugin.hooks.create.timing.last).toBe(true);
+    expect(plugin.hooks.create.timing.before).toEqual(['@gasket/plugin-lint']);
   });
 
   describe('dependencies', function () {
@@ -96,17 +89,17 @@ describe('Plugin', () => {
       it(`adds "${name}" in the devDependencies`, async function () {
         const { pkg } = await create();
 
-        expect(pkg.devDependencies).to.have.own.property(name);
+        expect(pkg.devDependencies).toHaveProperty(name);
       });
     });
 
     it('depends on the same versions', async function () {
       const { pkg } = await create();
 
-      expect(pkg.devDependencies).is.a('object');
+      expect(typeof pkg.devDependencies).toBe('object');
       Object.keys(pkg.devDependencies).forEach((key) => {
-        expect(self.devDependencies).to.have.own.property(key);
-        expect(self.devDependencies[key]).equals(pkg.devDependencies[key]);
+        expect(pkg.devDependencies).toHaveProperty(key);
+        expect(pkg.devDependencies[key]).toEqual(pkg.devDependencies[key]);
       });
     });
 
@@ -118,7 +111,7 @@ describe('Plugin', () => {
       it(`doesn't add framework specific dependency "${name}" in the devDependencies`, async function () {
         const { pkg } = await create();
 
-        expect(pkg.devDependencies).not.to.have.own.property(name);
+        expect(pkg.devDependencies).not.toHaveProperty(name);
       });
     });
   });
@@ -126,10 +119,9 @@ describe('Plugin', () => {
   describe('dependencies - react', function () {
     it('includes a glob for generator contents', async function () {
       await createReact();
-
-      const [firstCall, secondCall] = filesAddStub.args[0];
-      expect(firstCall).includes('/../generator/*');
-      expect(secondCall).includes('/../generator/**/*');
+      const [firstCall, secondCall] = filesAddStub.mock.calls[0];
+      expect(firstCall).toEqual(expect.stringContaining('/../generator/*'));
+      expect(secondCall).toEqual(expect.stringContaining('/../generator/**/*'));
     });
 
     [
@@ -140,17 +132,17 @@ describe('Plugin', () => {
       it(`adds "${name}" in the devDependencies`, async function () {
         const { pkg } = await createReact();
 
-        expect(pkg.devDependencies).to.have.own.property(name);
+        expect(pkg.devDependencies).toHaveProperty(name);
       });
     });
 
     it('depends on the same versions', async function () {
       const { pkg } = await createReact();
 
-      expect(pkg.devDependencies).is.a('object');
+      expect(typeof pkg.devDependencies).toBe('object');
       Object.keys(pkg.devDependencies).forEach((key) => {
-        expect(self.devDependencies).to.have.own.property(key);
-        expect(self.devDependencies[key]).equals(pkg.devDependencies[key]);
+        expect(pkg.devDependencies).toHaveProperty(key);
+        expect(pkg.devDependencies[key]).toEqual(pkg.devDependencies[key]);
       });
     });
   });
@@ -158,17 +150,17 @@ describe('Plugin', () => {
   describe('scripts', function () {
     it('uses the same scrips in our package.json', async function () {
       const { pkg } = await create();
-      expect(pkg.scripts).is.a('object');
+      expect(typeof pkg.scripts).toBe('object');
       Object.keys(pkg.scripts).forEach((key) => {
-        expect(self.scripts).to.have.own.property(key);
-        expect(self.scripts[key]).equals(pkg.scripts[key]);
+        expect(pkg.scripts).toHaveProperty(key);
+        expect(pkg.scripts[key]).toEqual(pkg.scripts[key]);
       });
     });
 
     it('uses nyc for test coverage in the test script', async function () {
       const { pkg } = await create();
 
-      expect(pkg.scripts['test:coverage']).includes('nyc');
+      expect(pkg.scripts['test:coverage']).toContain('nyc');
     });
 
     it('adds appropriate scripts for npm', function () {
@@ -181,7 +173,7 @@ describe('Plugin', () => {
         'test:watch': `${expected} test:runner -- --watch`
       });
 
-      expect(spyFunc).to.have.been.called.with('scripts', {
+      expect(spyFunc).toHaveBeenCalledWith('scripts', {
         'test': `npm run test:runner`,
         'test:coverage': `nyc --reporter=text --reporter=json-summary npm run test:runner`,
         'test:runner': 'mocha --require setup-env --recursive "test/**/*.*(test|spec).js"',
@@ -198,7 +190,7 @@ describe('Plugin', () => {
         'test:watch': `${expected} test:runner -- --watch`
       });
 
-      expect(spyFunc).to.have.been.called.with('scripts', {
+      expect(spyFunc).toHaveBeenCalledWith('scripts', {
         'test': `nyc --reporter=text --reporter=json-summary yarn test:runner`,
         'test:runner': 'mocha --require setup-env --recursive "test/**/*.*(test|spec).js"',
         'test:watch': `yarn test:runner -- --watch`

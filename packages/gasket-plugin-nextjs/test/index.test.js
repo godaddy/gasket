@@ -1,27 +1,50 @@
-/* eslint-disable no-sync */
+/* eslint-disable no-sync, max-statements */
+const expressApp = {
+  set: jest.fn(),
+  use: jest.fn(),
+  all: jest.fn()
+};
 
-const sinon = require('sinon');
-const assume = require('assume');
+const fastifyApp = {
+  decorate: jest.fn(),
+  register: jest.fn(),
+  all: jest.fn()
+};
+
+const nextHandler = {
+  prepare: jest.fn().mockResolvedValue(),
+  getRequestHandler: jest.fn().mockResolvedValue({}),
+  buildId: '1234',
+  name: 'testapp'
+};
+
+const mockSetupNextAppStub = jest.fn(() => nextHandler);
+
+jest.mock('../lib/setup-next-app', () => {
+  const mod = jest.requireActual('../lib/setup-next-app');
+  return {
+    setupNextApp: mockSetupNextAppStub,
+    setupNextHandling: mod.setupNextHandling
+  };
+});
+
 const path = require('path');
-const proxyquire = require('proxyquire').noCallThru();
 const { devDependencies } = require('../package');
-const { setupNextHandling } = require('../lib/setup-next-app');
 const middie = require('middie');
 
 const fastify = require('fastify')({
   logger: true
 });
-const { spy, stub } = sinon;
 
 describe('Plugin', function () {
   const plugin = require('../lib/');
 
   it('is an object', () => {
-    assume(plugin).is.an('object');
+    expect(typeof plugin).toBe('object');
   });
 
   it('has expected name', () => {
-    assume(plugin).to.have.property('name', require('../package').name);
+    expect(plugin).toHaveProperty('name', require('../package').name);
   });
 
   it('has expected hooks', () => {
@@ -38,11 +61,11 @@ describe('Plugin', function () {
       'workbox'
     ];
 
-    assume(plugin).to.have.property('hooks');
+    expect(plugin).toHaveProperty('hooks');
 
     const hooks = Object.keys(plugin.hooks).sort();
-    assume(hooks).eqls(expected);
-    assume(hooks).is.length(expected.length);
+    expect(hooks).toEqual(expected);
+    expect(hooks).toHaveLength(expected.length);
   });
 });
 
@@ -52,25 +75,25 @@ describe('configure hook', () => {
   it('adds the sw webpackRegister callback', () => {
     const gasket = mockGasketApi();
     const results = configureHook(gasket, gasket.config);
-    assume(results).property('serviceWorker');
-    assume(results.serviceWorker).property('webpackRegister');
-    assume(results.serviceWorker.webpackRegister).is.a('function');
+    expect(results).toHaveProperty('serviceWorker');
+    expect(results.serviceWorker).toHaveProperty('webpackRegister');
+    expect(typeof results.serviceWorker.webpackRegister).toBe('function');
   });
 
   it('does not override the sw webpackRegister if exists', () => {
     const gasket = mockGasketApi();
     gasket.config.serviceWorker = { webpackRegister: 'hello' };
     const results = configureHook(gasket, gasket.config);
-    assume(results.serviceWorker.webpackRegister).is.a('string');
+    expect(typeof results.serviceWorker.webpackRegister).toBe('string');
   });
 
   it('webpackRegister callback only true for _app entries', () => {
     const gasket = mockGasketApi();
     const results = configureHook(gasket, gasket.config);
     const entryName = results.serviceWorker.webpackRegister;
-    assume(entryName('bad')).equals(false);
-    assume(entryName('_app')).equals(true);
-    assume(entryName('static/runtime/_app')).equals(true);
+    expect(entryName('bad')).toEqual(false);
+    expect(entryName('_app')).toEqual(true);
+    expect(entryName('static/runtime/_app')).toEqual(true);
   });
 
   it('fallback support for `next` from gasket.config', async () => {
@@ -80,34 +103,16 @@ describe('configure hook', () => {
       customConfig: true
     };
     const results = configureHook(gasket, gasket.config);
-    assume(results.nextConfig).has.property('customConfig', true);
-    assume(gasket.logger.warning).calledWithMatch('DEPRECATED');
+    expect(results.nextConfig).toHaveProperty('customConfig', true);
+    expect(gasket.logger.warning).toHaveBeenCalledWith(expect.stringContaining('DEPRECATED'));
   });
 });
 
 describe('express hook', () => {
-  let nextHandler, plugin, expressApp, hook, setupNextAppStub;
+  let plugin, hook;
 
   beforeEach(() => {
-    expressApp = {
-      set: spy(),
-      use: spy(),
-      all: spy()
-    };
-
-    nextHandler = {
-      prepare: stub().resolves(),
-      getRequestHandler: stub().resolves({})
-    };
-
-    setupNextAppStub = stub().returns(nextHandler);
-    plugin = proxyquire('../lib/', {
-      './setup-next-app': {
-        setupNextApp: setupNextAppStub,
-        setupNextHandling
-      }
-    });
-
+    plugin = require('../lib');
     hook = plugin.hooks.express.handler;
   });
 
@@ -115,63 +120,63 @@ describe('express hook', () => {
     const gasket = mockGasketApi();
     await hook(gasket, expressApp, false);
 
-    assume(plugin.hooks.express).property('timing');
-    assume(plugin.hooks.express.timing).eqls({ last: true });
+    expect(plugin.hooks.express).toHaveProperty('timing');
+    expect(plugin.hooks.express.timing).toEqual({ last: true });
   });
 
   it('attaches middleware to set NEXT_LOCALE cookie', async function () {
     const gasket = mockGasketApi();
     await hook(gasket, expressApp, false);
 
-    assume(expressApp.use).has.been.calledWith(sinon.match.func);
-    const fn = expressApp.use.getCall(0).args[0];
-    assume(fn.name).equals('setNextLocale');
+    expect(expressApp.use).toHaveBeenCalledWith(expect.any(Function));
+    const fn = expressApp.use.mock.calls[0][0];
+    expect(fn.name).toEqual('setNextLocale');
   });
 
   it('middleware sets NEXT_LOCALE cookie from gasketData', async function () {
     const gasket = mockGasketApi();
     await hook(gasket, expressApp, false);
 
-    const fn = expressApp.use.getCall(0).args[0];
+    const fn = expressApp.use.mock.calls[0][0];
 
     const mockReq = { headers: {} };
     const mockRes = { locals: { gasketData: { intl: { locale: 'fr-FR' } } } };
-    const mockNext = stub();
+    const mockNext = jest.fn();
     fn(mockReq, mockRes, mockNext);
-    assume(mockReq.headers).has.property('cookie', ';NEXT_LOCALE=fr-FR');
+    expect(mockReq.headers).toHaveProperty('cookie', ';NEXT_LOCALE=fr-FR');
   });
 
   it('middleware adds NEXT_LOCALE to existing cookie', async function () {
     const gasket = mockGasketApi();
     await hook(gasket, expressApp, false);
 
-    const fn = expressApp.use.getCall(0).args[0];
+    const fn = expressApp.use.mock.calls[0][0];
     const mockReq = { headers: { cookie: 'bogus=data' } };
     const mockRes = { locals: { gasketData: { intl: { locale: 'fr-FR' } } } };
-    const mockNext = stub();
+    const mockNext = jest.fn();
     await fn(mockReq, mockRes, mockNext);
 
-    assume(mockReq.headers).has.property('cookie', 'bogus=data;NEXT_LOCALE=fr-FR');
+    expect(mockReq.headers).toHaveProperty('cookie', 'bogus=data;NEXT_LOCALE=fr-FR');
   });
 
   it('middleware does not set NEXT_LOCALE cookie if no gasketData', async function () {
     const gasket = mockGasketApi();
     await hook(gasket, expressApp, false);
 
-    const fn = expressApp.use.getCall(0).args[0];
+    const fn = expressApp.use.mock.calls[0][0];
 
     const mockReq = { headers: {} };
     const mockRes = { locals: { gasketData: {} } };
-    const mockNext = stub();
+    const mockNext = jest.fn();
     fn(mockReq, mockRes, mockNext);
-    assume(mockReq.headers).not.has.property('cookie');
+    expect(mockReq.headers).not.toHaveProperty('cookie');
   });
 
   it('executes the `nextExpress` lifecycle', async function () {
     const gasket = mockGasketApi();
     await hook(gasket, expressApp, false);
 
-    assume(gasket.exec).has.been.calledWith('nextExpress', {
+    expect(gasket.exec).toHaveBeenCalledWith('nextExpress', {
       next: nextHandler,
       express: expressApp
     });
@@ -181,14 +186,14 @@ describe('express hook', () => {
     const gasket = mockGasketApi();
     await hook(gasket, expressApp, false);
 
-    const routeHandler = expressApp.all.lastCall.args[1];
+    const routeHandler = expressApp.all.mock.calls[expressApp.all.mock.calls.length - 1][1];
 
     const mockReq = { headers: {} };
     const mockRes = { locals: { gasketData: {} } };
-    const mockNext = stub();
+    const mockNext = jest.fn();
 
     await routeHandler(mockReq, mockRes, mockNext);
-    assume(gasket.exec).has.been.calledWithMatch('nextPreHandling', {
+    expect(gasket.exec).toHaveBeenCalledWith('nextPreHandling', {
       req: mockReq,
       res: mockRes,
       nextServer: nextHandler
@@ -198,30 +203,10 @@ describe('express hook', () => {
 });
 
 describe('fastify hook', () => {
-  let nextHandler, plugin, fastifyApp, hook;
-
-  let setupNextAppStub;
+  let plugin, hook;
 
   beforeEach(() => {
-    fastifyApp = {
-      decorate: spy(),
-      use: spy(),
-      all: spy()
-    };
-    nextHandler = {
-      prepare: stub().resolves(),
-      getRequestHandler: stub().resolves({}),
-      buildId: '1234',
-      name: 'testapp'
-    };
-    setupNextAppStub = stub().returns(nextHandler);
-
-    plugin = proxyquire('../lib/', {
-      './setup-next-app': {
-        setupNextApp: setupNextAppStub,
-        setupNextHandling
-      }
-    });
+    plugin = require('../lib/');
     hook = plugin.hooks.fastify.handler;
   });
 
@@ -229,63 +214,63 @@ describe('fastify hook', () => {
     const gasket = mockGasketApi();
     await hook(gasket, fastifyApp, false);
 
-    assume(plugin.hooks.fastify).property('timing');
-    assume(plugin.hooks.fastify.timing).eqls({ last: true });
+    expect(plugin.hooks.fastify).toHaveProperty('timing');
+    expect(plugin.hooks.fastify.timing).toEqual({ last: true });
   });
 
   it('attaches middleware to set NEXT_LOCALE cookie', async function () {
     const gasket = mockGasketApi();
     await hook(gasket, fastifyApp, false);
 
-    assume(fastifyApp.use).has.been.calledWith(sinon.match.func);
-    const fn = fastifyApp.use.getCall(0).args[0];
-    assume(fn.name).equals('setNextLocale');
+    expect(fastifyApp.use).toHaveBeenCalledWith(expect.any(Function));
+    const fn = fastifyApp.use.mock.calls[0][0];
+    expect(fn.name).toEqual('setNextLocale');
   });
 
   it('middleware sets NEXT_LOCALE cookie from gasketData', async function () {
     const gasket = mockGasketApi();
     await hook(gasket, fastifyApp, false);
 
-    const fn = fastifyApp.use.getCall(0).args[0];
+    const fn = fastifyApp.use.mock.calls[0][0];
 
     const mockReq = { headers: {} };
     const mockRes = { locals: { gasketData: { intl: { locale: 'fr-FR' } } } };
-    const mockNext = stub();
+    const mockNext = jest.fn();
     fn(mockReq, mockRes, mockNext);
-    assume(mockReq.headers).has.property('cookie', ';NEXT_LOCALE=fr-FR');
+    expect(mockReq.headers).toHaveProperty('cookie', ';NEXT_LOCALE=fr-FR');
   });
 
   it('middleware adds NEXT_LOCALE to existing cookie', async function () {
     const gasket = mockGasketApi();
     await hook(gasket, fastifyApp, false);
 
-    const fn = fastifyApp.use.getCall(0).args[0];
+    const fn = fastifyApp.use.mock.calls[0][0];
 
     const mockReq = { headers: { cookie: 'bogus=data' } };
     const mockRes = { locals: { gasketData: { intl: { locale: 'fr-FR' } } } };
-    const mockNext = stub();
+    const mockNext = jest.fn();
     fn(mockReq, mockRes, mockNext);
-    assume(mockReq.headers).has.property('cookie', 'bogus=data;NEXT_LOCALE=fr-FR');
+    expect(mockReq.headers).toHaveProperty('cookie', 'bogus=data;NEXT_LOCALE=fr-FR');
   });
 
   it('middleware does not set NEXT_LOCALE cookie if no gasketData', async function () {
     const gasket = mockGasketApi();
     await hook(gasket, fastifyApp, false);
 
-    const fn = fastifyApp.use.getCall(0).args[0];
+    const fn = fastifyApp.use.mock.calls[0][0];
 
     const mockReq = { headers: {} };
     const mockRes = { locals: { gasketData: {} } };
-    const mockNext = stub();
+    const mockNext = jest.fn();
     fn(mockReq, mockRes, mockNext);
-    assume(mockReq.headers).not.has.property('cookie');
+    expect(mockReq.headers).not.toHaveProperty('cookie');
   });
 
   it('executes the `nextFastify` lifecycle', async function () {
     const gasket = mockGasketApi();
     await hook(gasket, fastifyApp, false);
 
-    assume(gasket.exec).has.been.calledWith('nextFastify', {
+    expect(gasket.exec).toHaveBeenCalledWith('nextFastify', {
       next: nextHandler,
       fastify: fastifyApp
     });
@@ -295,22 +280,21 @@ describe('fastify hook', () => {
     await fastify.register(middie);
     const gasket = mockGasketApi();
     await hook(gasket, fastify, false);
-
-    assume(fastify['buildId/testapp']).equals('1234');
+    expect(fastify['buildId/testapp']).toEqual('1234');
   });
 
   it('executes nextPreHandling before next.js handles a request', async () => {
     const gasket = mockGasketApi();
     await hook(gasket, fastifyApp, false);
 
-    const routeHandler = fastifyApp.all.lastCall.args[1];
+    const routeHandler = fastifyApp.all.mock.calls[fastifyApp.all.mock.calls.length - 1][1];
 
     const mockReq = { headers: {} };
     const mockRes = { locals: { gasketData: {} } };
-    const mockNext = stub();
+    const mockNext = jest.fn();
 
     await routeHandler(mockReq, mockRes, mockNext);
-    assume(gasket.exec).has.been.calledWithMatch('nextPreHandling', {
+    expect(gasket.exec).toHaveBeenCalledWith('nextPreHandling', {
       req: mockReq,
       res: mockRes,
       nextServer: nextHandler
@@ -327,38 +311,38 @@ describe('prompt hook', () => {
     gasket = {};
     context = {};
     mockAnswers = { addSitemap: true };
-    prompt = sinon.stub().callsFake(() => mockAnswers);
+    prompt = jest.fn().mockImplementation(() => mockAnswers);
   });
 
   it('prompts', async () => {
     await promptHook(gasket, context, { prompt });
-    assume(prompt).called();
+    expect(prompt).toHaveBeenCalled();
   });
 
   it('servers the expected prompt question', async () => {
     await promptHook(gasket, context, { prompt });
-    const question = prompt.getCall(0).args[0][0];
-    assume(question.name).equals('addSitemap');
-    assume(question.message).equals('Do you want to add a sitemap?');
-    assume(question.type).equals('confirm');
+    const question = prompt.mock.calls[0][0][0];
+    expect(question.name).toEqual('addSitemap');
+    expect(question.message).toEqual('Do you want to add a sitemap?');
+    expect(question.type).toEqual('confirm');
   });
 
   it('sets addSitemap to true', async () => {
     const result = await promptHook(gasket, context, { prompt });
-    assume(result.addSitemap).equals(true);
+    expect(result.addSitemap).toEqual(true);
   });
 
   it('sets addSitemap to false', async () => {
     mockAnswers = { addSitemap: false };
     const result = await promptHook(gasket, context, { prompt });
-    assume(result.addSitemap).equals(false);
+    expect(result.addSitemap).toEqual(false);
   });
 
   it('does not run prompt if addSitemap is in context', async () => {
     context.addSitemap = false;
     const result = await promptHook(gasket, context, { prompt });
-    assume(result).property('addSitemap', false);
-    assume(prompt).is.not.called();
+    expect(result).toHaveProperty('addSitemap', false);
+    expect(prompt).not.toHaveBeenCalled();
   });
 });
 
@@ -370,25 +354,25 @@ describe('create hook', () => {
   beforeEach(() => {
     mockContext = {
       pkg: {
-        add: spy(),
-        has: spy()
+        add: jest.fn(),
+        has: jest.fn()
       },
-      files: { add: spy() },
+      files: { add: jest.fn() },
       gasketConfig: {
-        add: spy()
+        add: jest.fn()
       }
     };
   });
 
   it('has expected timings', async function () {
-    assume(plugin.hooks.create.timing.before).eqls(['@gasket/plugin-intl']);
-    assume(plugin.hooks.create.timing.after).eqls(['@gasket/plugin-redux']);
+    expect(plugin.hooks.create.timing.before).toEqual(['@gasket/plugin-intl']);
+    expect(plugin.hooks.create.timing.after).toEqual(['@gasket/plugin-redux']);
   });
 
   it('adds the appropriate globs', async function () {
     await plugin.hooks.create.handler({}, mockContext);
 
-    assume(mockContext.files.add).calledWith(
+    expect(mockContext.files.add).toHaveBeenCalledWith(
       `${root}/../generator/app/.*`,
       `${root}/../generator/app/*`,
       `${root}/../generator/app/**/*`
@@ -399,7 +383,7 @@ describe('create hook', () => {
     mockContext.testPlugin = '@gasket/mocha';
     await plugin.hooks.create.handler({}, mockContext);
 
-    assume(mockContext.files.add).calledWith(
+    expect(mockContext.files.add).toHaveBeenCalledWith(
       `${root}/../generator/mocha/*`,
       `${root}/../generator/mocha/**/*`
     );
@@ -409,7 +393,7 @@ describe('create hook', () => {
     mockContext.testPlugin = '@gasket/jest';
     await plugin.hooks.create.handler({}, mockContext);
 
-    assume(mockContext.files.add).calledWith(
+    expect(mockContext.files.add).toHaveBeenCalledWith(
       `${root}/../generator/jest/*`,
       `${root}/../generator/jest/**/*`
     );
@@ -418,7 +402,7 @@ describe('create hook', () => {
   it('adds appropriate dependencies', async function () {
     await plugin.hooks.create.handler({}, mockContext);
 
-    assume(mockContext.pkg.add).calledWith('dependencies', {
+    expect(mockContext.pkg.add).toHaveBeenCalledWith('dependencies', {
       '@gasket/assets': devDependencies['@gasket/assets'],
       '@gasket/nextjs': devDependencies['@gasket/nextjs'],
       'next': devDependencies.next,
@@ -429,24 +413,24 @@ describe('create hook', () => {
   });
 
   it('adds the appropriate globs for redux', async function () {
-    mockContext.pkg.has = stub().callsFake(
+    mockContext.pkg.has = jest.fn().mockImplementation(
       (o, f) => o === 'dependencies' && f === '@gasket/redux'
     );
     await plugin.hooks.create.handler({}, mockContext);
 
-    assume(mockContext.files.add).calledWith(
+    expect(mockContext.files.add).toHaveBeenCalledWith(
       `${root}/../generator/redux/*`,
       `${root}/../generator/redux/**/*`
     );
   });
 
   it('adds appropriate dependencies for redux', async function () {
-    mockContext.pkg.has = stub().callsFake(
+    mockContext.pkg.has = jest.fn().mockImplementation(
       (o, f) => o === 'dependencies' && f === '@gasket/redux'
     );
     await plugin.hooks.create.handler({}, mockContext);
 
-    assume(mockContext.pkg.add).calledWith('dependencies', {
+    expect(mockContext.pkg.add).toHaveBeenCalledWith('dependencies', {
       'next-redux-wrapper': devDependencies['next-redux-wrapper'],
       'lodash.merge': devDependencies['lodash.merge']
     });
@@ -456,56 +440,53 @@ describe('create hook', () => {
     mockContext.addSitemap = true;
     await plugin.hooks.create.handler({}, mockContext);
 
-    assume(mockContext.files.add).calledWith(
+    expect(mockContext.files.add).toHaveBeenCalledWith(
       `${root}/../generator/sitemap/*`
     );
-    assume(mockContext.pkg.add).calledWith(
-      'dependencies', {
-        'next-sitemap': '^3.1.29'
-      }
-    );
-    assume(mockContext.pkg.add).calledWith(
-      'scripts', {
-        sitemap: 'next-sitemap'
-      }
-    );
+    expect(mockContext.pkg.add).toHaveBeenCalledWith('dependencies', {
+      'next-sitemap': '^3.1.29'
+    });
+    expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts', {
+      sitemap: 'next-sitemap'
+    });
   });
 });
 
 describe('build hook', () => {
-  let createConfigStub, builderStub;
+  let mockCreateConfigStub, mockBuilderStub;
 
-  const getMockedBuildHook = (imports = {}) => {
-    createConfigStub = stub();
-    builderStub = stub();
+  const getMockedBuildHook = () => {
+    mockCreateConfigStub = jest.fn();
+    mockBuilderStub = jest.fn();
 
-    return proxyquire('../lib/', {
-      './config': {
-        createConfig: createConfigStub
-      },
-      'next/dist/build': {
-        default: builderStub
-      },
-      ...imports
-    }).hooks.build;
+    jest.mock('../lib/config', () => ({
+      createConfig: mockCreateConfigStub
+    }));
+
+    jest.mock('next/dist/build', () => ({
+      default: mockBuilderStub
+    }));
+
+    return require('../lib/').hooks.build;
   };
 
   it('does not build for local command', async () => {
     const buildHook = getMockedBuildHook();
     await buildHook({ command: { id: 'local' } });
-    assume(builderStub).not.called();
+    expect(mockBuilderStub).not.toHaveBeenCalled();
   });
 
   it('uses current next build', async () => {
+    const gasket = mockGasketApi();
     const buildHook = getMockedBuildHook();
-    await buildHook({ command: { id: 'build' } });
-    assume(builderStub).called();
+    await buildHook({ ...gasket, command: { id: 'build' } });
+    expect(mockBuilderStub).toHaveBeenCalled();
   });
 
   it('supports older gasket.command format', async () => {
     const buildHook = getMockedBuildHook();
     await buildHook({ command: 'local' });
-    assume(builderStub).not.called();
+    expect(mockBuilderStub).not.toHaveBeenCalled();
   });
 });
 
@@ -520,98 +501,122 @@ describe('workbox hook', () => {
   it('returns workbox config partial', async () => {
     const results = await plugin.hooks.workbox(gasketAPI);
 
-    assume(results).to.be.an('object');
+    expect(typeof results).toBe('object');
   });
 
   it('config partial contains expected properties', async () => {
     const results = await plugin.hooks.workbox(gasketAPI);
 
-    assume(results).to.have.property('globDirectory', '.');
-    assume(results).to.have.property('globPatterns');
-    assume(results).to.have.property('modifyURLPrefix');
+    expect(results).toHaveProperty('globDirectory', '.');
+    expect(results).toHaveProperty('globPatterns');
+    expect(results).toHaveProperty('modifyURLPrefix');
   });
 
   it('config modifies urls from to _next', async () => {
     const results = await plugin.hooks.workbox(gasketAPI);
 
-    assume(results.modifyURLPrefix).to.have.property('.next/', '_next/');
+    expect(results.modifyURLPrefix).toEqual(expect.objectContaining({
+      '.next/': '_next/'
+    }));
   });
 
   it('config modifies urls to use base path with https', async () => {
     const basePath = 'https://some-cdn.com/';
     gasketAPI.config = { basePath };
     const results = await plugin.hooks.workbox(gasketAPI);
-    assume(results.modifyURLPrefix).to.have.property('.next/', basePath + '_next/');
+    expect(results.modifyURLPrefix).toEqual(expect.objectContaining({
+      '.next/': basePath + '_next/'
+    }));
   });
 
   it('config modifies urls to use base path with http', async () => {
     const basePath = 'http://some-cdn.com/';
     gasketAPI.config = { basePath };
     const results = await plugin.hooks.workbox(gasketAPI);
-    assume(results.modifyURLPrefix).to.have.property('.next/', basePath + '_next/');
+    expect(results.modifyURLPrefix).toEqual(expect.objectContaining({
+      '.next/': basePath + '_next/'
+    }));
   });
 
   it('config modifies urls to use base path with https but no trailing slash', async () => {
     const basePath = 'https://some-cdn.com';
     gasketAPI.config = { basePath };
     const results = await plugin.hooks.workbox(gasketAPI);
-    assume(results.modifyURLPrefix).to.have.property('.next/', `${basePath}/_next/`);
+    expect(results.modifyURLPrefix).toEqual(expect.objectContaining({
+      '.next/': `${basePath}/_next/`
+    }));
   });
 
   it('config modifies urls to use base path relative path with trailing slash', async () => {
     const basePath = '/some/asset/prefix/';
     gasketAPI.config = { basePath };
     const results = await plugin.hooks.workbox(gasketAPI);
-    assume(results.modifyURLPrefix).to.have.property('.next/', `${basePath}_next/`);
+    expect(results.modifyURLPrefix).toEqual(expect.objectContaining({
+      '.next/': `${basePath}_next/`
+    }));
   });
 
   it('config modifies urls to use base path relative path without trailing slash', async () => {
     const basePath = '/some/asset/prefix';
     gasketAPI.config = { basePath };
     const results = await plugin.hooks.workbox(gasketAPI);
-    assume(results.modifyURLPrefix).to.have.property('.next/', `${basePath}/_next/`);
+    expect(results.modifyURLPrefix).toEqual(expect.objectContaining({
+      '.next/': `${basePath}/_next/`
+    }));
   });
 
   it('config modifies urls to use assetPrefix with https', async () => {
     const assetPrefix = 'https://some-cdn.com/';
     gasketAPI.config = { nextConfig: { assetPrefix } };
     const results = await plugin.hooks.workbox(gasketAPI);
-    assume(results.modifyURLPrefix).to.have.property('.next/', assetPrefix + '_next/');
+    expect(results.modifyURLPrefix).toEqual(expect.objectContaining({
+      '.next/': assetPrefix + '_next/'
+    }));
   });
 
   it('config modifies urls to use assetPrefix with http', async () => {
     const assetPrefix = 'http://some-cdn.com/';
     gasketAPI.config = { nextConfig: { assetPrefix } };
     const results = await plugin.hooks.workbox(gasketAPI);
-    assume(results.modifyURLPrefix).to.have.property('.next/', assetPrefix + '_next/');
+    expect(results.modifyURLPrefix).toEqual(expect.objectContaining({
+      '.next/': assetPrefix + '_next/'
+    }));
   });
 
   it('config modifies urls to use assetPrefix with https but no trailing slash', async () => {
     const assetPrefix = 'https://some-cdn.com';
     gasketAPI.config = { nextConfig: { assetPrefix } };
     const results = await plugin.hooks.workbox(gasketAPI);
-    assume(results.modifyURLPrefix).to.have.property('.next/', `${assetPrefix}/_next/`);
+    expect(results.modifyURLPrefix).toEqual(expect.objectContaining({
+      '.next/': `${assetPrefix}/_next/`
+    }));
   });
 
   it('config modifies urls to use assetPrefix relative path with trailing slash', async () => {
     const assetPrefix = '/some/asset/prefix/';
     gasketAPI.config = { nextConfig: { assetPrefix } };
     const results = await plugin.hooks.workbox(gasketAPI);
-    assume(results.modifyURLPrefix).to.have.property('.next/', `${assetPrefix}_next/`);
+    expect(results.modifyURLPrefix).toEqual(expect.objectContaining({
+      '.next/': `${assetPrefix}_next/`
+    }));
   });
 
   it('config modifies urls to use assetPrefix relative path without trailing slash', async () => {
     const assetPrefix = '/some/asset/prefix';
     gasketAPI.config = { nextConfig: { assetPrefix } };
     const results = await plugin.hooks.workbox(gasketAPI);
-    assume(results.modifyURLPrefix).to.have.property('.next/', `${assetPrefix}/_next/`);
+    expect(results.modifyURLPrefix).toEqual(expect.objectContaining({
+      '.next/': `${assetPrefix}/_next/`
+    }));
   });
 
   it('config modifies urls to use basePath', async () => {
     const assetPrefix = '/from-root';
     gasketAPI.config = { basePath: assetPrefix };
     const results = await plugin.hooks.workbox(gasketAPI);
-    assume(results.modifyURLPrefix).to.have.property('.next/', `${assetPrefix}/_next/`);
+    expect(results.modifyURLPrefix).toEqual(expect.objectContaining({
+      '.next/': `${assetPrefix}/_next/`
+    }));
   });
 });
 
@@ -620,11 +625,11 @@ function mockGasketApi() {
     command: {
       id: 'fake'
     },
-    execWaterfall: stub().returnsArg(1),
-    exec: stub().resolves({}),
-    execSync: stub().returns([]),
+    execWaterfall: jest.fn((_, arg) => arg),
+    exec: jest.fn().mockResolvedValue({}),
+    execSync: jest.fn().mockReturnValue([]),
     logger: {
-      warning: stub()
+      warning: jest.fn()
     },
     config: {
       webpack: {}, // user specified webpack config
