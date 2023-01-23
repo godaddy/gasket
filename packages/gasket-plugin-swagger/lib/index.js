@@ -125,9 +125,12 @@ module.exports = {
 
         const swaggerSpec = await loadSwaggerSpec(root, definitionFile, gasket.logger);
 
-        app.register(require('@fastify/swagger'), {
-          prefix: apiDocsRoute,
-          swagger: swaggerSpec,
+        await app.register(require('@fastify/swagger'), {
+          swagger: swaggerSpec
+        });
+
+        await app.register(require('@fastify/swagger-ui'), {
+          routePrefix: apiDocsRoute,
           uiConfig: ui
         });
       }

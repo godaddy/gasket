@@ -288,15 +288,14 @@ describe('Swagger Plugin', function () {
     it('sets the api docs route', async function () {
       await plugin.hooks.fastify.handler(mockGasket, mockApp);
       assume(mockApp.register).calledWith(sinon.match.any, {
-        prefix: '/api-docs',
-        swagger: { data: true },
+        routePrefix: '/api-docs',
         uiConfig: {}
       });
     });
 
     it('adds new routes to swagger paths', async function () {
       await plugin.hooks.fastify.handler(mockGasket, fastify);
-      fastify.get('/hello-world', () => {});
+      fastify.put('/hello-world', () => {});
       await fastify.ready();
       assume(fastify.swagger().paths).to.haveOwnProperty('/hello-world');
     });
