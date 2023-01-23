@@ -1,46 +1,42 @@
 /* eslint-disable no-sync */
-const assume = require('assume');
-const sinon = require('sinon');
-const proxyquire = require('proxyquire');
-const WebpackMetricsPlugin = require('../lib/webpack-metrics-plugin');
+jest.mock('../lib/deprecated-merges', () => (_, config) => config);
 
+const initWebpack = require('../lib/init-webpack');
 
 describe('deprecated merges', function () {
-  let initWebpack, mockGasket, mockContext, mockConfig;
+  let mockGasket, mockContext, mockConfig;
 
   beforeEach(function () {
     mockGasket = {
-      execApplySync: sinon.stub(),
+      execApplySync: jest.fn(),
       logger: {
-        warning: sinon.stub()
-      }
+        warning: jest.fn()
+      },
+      config: {}
     };
     mockContext = {};
     mockConfig = {};
-
-    initWebpack = proxyquire('../lib/init-webpack', {
-      './deprecated-merges': sinon.stub().callsFake((_, config) => config)
-    });
   });
 
   afterEach(function () {
-    sinon.restore();
+    jest.clearAllMocks();
+    jest.resetModules();
   });
 
   it('returns webpack config object', function () {
     const results = initWebpack(mockGasket, mockConfig, mockContext);
-    assume(results).is.an('object');
+    expect(typeof results).toBe('object');
   });
 
   it('configures webpack metrics plugin', function () {
     const results = initWebpack(mockGasket, mockConfig, mockContext);
-    assume(results).property('plugins');
-    assume(results.plugins[0]).instanceof(WebpackMetricsPlugin);
+    expect(results).toHaveProperty('plugins');
+    expect(results.plugins[0].constructor.name).toBe('WebpackMetricsPlugin');
   });
 
   it('executes webpackConfig lifecycle', function () {
     initWebpack(mockGasket, mockConfig, mockContext);
-    assume(mockGasket.execApplySync).calledWith('webpackConfig');
+    expect(mockGasket.execApplySync).toHaveBeenCalledWith('webpackConfig', expect.any(Function));
   });
 
   describe('webpackConfig lifecycle callback', function () {
@@ -48,67 +44,67 @@ describe('deprecated merges', function () {
 
     beforeEach(function () {
       mockPlugin = { name: 'mock-plugin' };
-      handlerStub = sinon.stub();
+      handlerStub = jest.fn();
 
       baseConfig = initWebpack(mockGasket, {}, mockContext);
-      applyFn = mockGasket.execApplySync.getCall(0).args[1];
+      applyFn = mockGasket.execApplySync.mock.calls[0][1];
     });
 
     it('called with baseConfig', function () {
       applyFn(mockPlugin, handlerStub);
-      assume(handlerStub).calledWith(baseConfig);
+      expect(handlerStub).toHaveBeenCalledWith(baseConfig, expect.any(Object));
     });
 
     it('called with context', function () {
       applyFn(mockPlugin, handlerStub);
-      const context = handlerStub.getCall(0).args[1];
-      assume(context).is.an('object');
+      const context = handlerStub.mock.calls[0][1];
+      expect(typeof context).toBe('object');
     });
 
     // TODO: remove in next major version
     describe('context.webpackMerge', function () {
       it('getter logs deprecated warning', function () {
         applyFn(mockPlugin, handlerStub);
-        const context = handlerStub.getCall(0).args[1];
-        assume(mockGasket.logger.warning).not.called();
+        const context = handlerStub.mock.calls[0][1];
+        expect(mockGasket.logger.warning).not.toHaveBeenCalled();
         context.webpackMerge;
-        assume(mockGasket.logger.warning).calledWithMatch(/DEPRECATED/);
+        expect(mockGasket.logger.warning).toHaveBeenCalledWith(expect.stringMatching(/DEPRECATED/));
       });
 
       it('logs plugin name', function () {
         applyFn(mockPlugin, handlerStub);
-        const context = handlerStub.getCall(0).args[1];
+        const context = handlerStub.mock.calls[0][1];
         context.webpackMerge;
-        assume(mockGasket.logger.warning).calledWithMatch(/mock-plugin/);
+        expect(mockGasket.logger.warning).toHaveBeenCalledWith(expect.stringMatching(/mock-plugin/));
       });
 
       it('logs recommendation', function () {
         applyFn(mockPlugin, handlerStub);
-        const context = handlerStub.getCall(0).args[1];
+        const context = handlerStub.mock.calls[0][1];
         context.webpackMerge;
-        assume(mockGasket.logger.warning).calledWithMatch(/Use `require\('webpack-merge'\)`/);
+        expect(mockGasket.logger.warning).toHaveBeenCalledWith(expect.stringMatching(/Use `require\('webpack-merge'\)`/));
       });
 
       it('logs `unnamed plugin` if plugin name not set', function () {
         applyFn({}, handlerStub);
-        const context = handlerStub.getCall(0).args[1];
+        const context = handlerStub.mock.calls[0][1];
         context.webpackMerge;
-        assume(mockGasket.logger.warning).calledWithMatch(/unnamed plugin/);
+        expect(mockGasket.logger.warning).toHaveBeenCalledWith(expect.stringMatching(/unnamed plugin/));
       });
 
       it('logs app lifecycle', function () {
         // eslint-disable-next-line no-undefined
         applyFn(undefined, handlerStub);
-        const context = handlerStub.getCall(0).args[1];
+        const context = handlerStub.mock.calls[0][1];
         context.webpackMerge;
-        assume(mockGasket.logger.warning).calledWithMatch(/app lifecycle/);
+        expect(mockGasket.logger.warning).toHaveBeenCalledWith(expect.stringMatching(/app lifecycle/));
       });
     });
 
     it('context.webpack returns webpack', function () {
       applyFn(mockPlugin, handlerStub);
-      const context = handlerStub.getCall(0).args[1];
-      assume(context.webpack).equals(require('webpack'));
+      const context = handlerStub.mock.calls[0][1];
+      expect(context.webpack).toEqual(require('webpack'));
     });
 
   });
