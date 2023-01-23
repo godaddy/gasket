@@ -135,7 +135,7 @@ Available structure
 | test/              | Test files                                             |
 | test/              | Test files                                             |
 | [app.config.js]    | App configuration with environment overrides           |
-| [cypress.json]     | Cypress configuration                                  |
+| [cypress.config.js]| Cypress configuration                                  |
 | [gasket.config.js] | Gasket config for an app                               |
 | [jest.config.js]   | Jest configuration                                     |
 | [redux/store.js]   | Setup to make Redux store                              |
