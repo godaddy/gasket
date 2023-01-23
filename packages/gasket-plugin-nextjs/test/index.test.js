@@ -6,6 +6,7 @@ const path = require('path');
 const proxyquire = require('proxyquire').noCallThru();
 const { devDependencies } = require('../package');
 const { setupNextHandling } = require('../lib/setup-next-app');
+const middie = require('middie');
 
 const fastify = require('fastify')({
   logger: true
@@ -204,7 +205,7 @@ describe('fastify hook', () => {
   beforeEach(() => {
     fastifyApp = {
       decorate: spy(),
-      register: spy(),
+      use: spy(),
       all: spy()
     };
     nextHandler = {
@@ -236,8 +237,8 @@ describe('fastify hook', () => {
     const gasket = mockGasketApi();
     await hook(gasket, fastifyApp, false);
 
-    assume(fastifyApp.register).has.been.calledWith(sinon.match.func);
-    const fn = fastifyApp.register.getCall(0).args[0];
+    assume(fastifyApp.use).has.been.calledWith(sinon.match.func);
+    const fn = fastifyApp.use.getCall(0).args[0];
     assume(fn.name).equals('setNextLocale');
   });
 
@@ -245,7 +246,7 @@ describe('fastify hook', () => {
     const gasket = mockGasketApi();
     await hook(gasket, fastifyApp, false);
 
-    const fn = fastifyApp.register.getCall(0).args[0];
+    const fn = fastifyApp.use.getCall(0).args[0];
 
     const mockReq = { headers: {} };
     const mockRes = { locals: { gasketData: { intl: { locale: 'fr-FR' } } } };
@@ -258,7 +259,7 @@ describe('fastify hook', () => {
     const gasket = mockGasketApi();
     await hook(gasket, fastifyApp, false);
 
-    const fn = fastifyApp.register.getCall(0).args[0];
+    const fn = fastifyApp.use.getCall(0).args[0];
 
     const mockReq = { headers: { cookie: 'bogus=data' } };
     const mockRes = { locals: { gasketData: { intl: { locale: 'fr-FR' } } } };
@@ -271,7 +272,7 @@ describe('fastify hook', () => {
     const gasket = mockGasketApi();
     await hook(gasket, fastifyApp, false);
 
-    const fn = fastifyApp.register.getCall(0).args[0];
+    const fn = fastifyApp.use.getCall(0).args[0];
 
     const mockReq = { headers: {} };
     const mockRes = { locals: { gasketData: {} } };
@@ -291,6 +292,7 @@ describe('fastify hook', () => {
   });
 
   it('sets app buildId on fastify app', async function () {
+    await fastify.register(middie);
     const gasket = mockGasketApi();
     await hook(gasket, fastify, false);
 

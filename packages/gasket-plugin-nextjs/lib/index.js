@@ -183,7 +183,7 @@ module.exports = {
 
         await exec('nextFastify', { next: app, fastify: fastifyApp });
 
-        fastifyApp.register(function setNextLocale(req, res, next) {
+        fastifyApp.use(function setNextLocale(req, res, next) {
           if (res.locals && res.locals.gasketData && res.locals.gasketData.intl) {
             const { locale } = res.locals.gasketData.intl;
             if (locale) {

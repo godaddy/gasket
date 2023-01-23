@@ -61,6 +61,7 @@
     "eslint-plugin-mocha": "^10.0.3",
     "eslint-plugin-unicorn": "^44.0.0",
     "lodash.merge": "^4.6.0",
+    "middie": "^7.1.0",
     "mocha": "^10.0.0",
     "next": "^12.0.8",
     "next-redux-wrapper": "^8.0.0",
