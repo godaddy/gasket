@@ -194,22 +194,6 @@ describe('makeCreateContext', () => {
     assume(results.localPresets).deep.equals([]);
   });
 
-  it('uses npmconfig from flags', () => {
-    results = makeCreateContext(argv, { npmconfig: '/some/path/to/npmconfig', presets: ['@gasket/nextjs'] });
-    assume(results.npmconfig).equals('/some/path/to/npmconfig');
-  });
-
-  it('npmconfig is always absolute', () => {
-    results = makeCreateContext(argv, { npmconfig: '~/.npmconfig', presets: ['nextjs'] });
-    assume(results.npmconfig).includes('/.npmconfig');
-    assume(path.isAbsolute(results.npmconfig)).true();
-  });
-
-  it('handles if npmconfig if not set', () => {
-    results = makeCreateContext(argv, { presets: ['nextjs'] });
-    assume(results.npmconfig).falsey();
-  });
-
   it('sets cwd from process', () => {
     results = makeCreateContext(argv, flags);
     assume(results.cwd).equals(process.cwd());
