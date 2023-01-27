@@ -1,4 +1,4 @@
-const assume = require('assume');
+/* eslint-disable jest/no-conditional-expect */
 const AbortController = require('abort-controller');
 const runShellCommand = require('../lib/run-shell-command');
 
@@ -12,39 +12,39 @@ const pause = ms => new Promise((resolve) => {
 describe('runShellCommand', function () {
   it('returns a promise', async function () {
     const promise = runShellCommand('node', ['./fixtures/test-script.js'], { cwd });
-    assume(promise).is.instanceof(Promise);
+    expect(promise).toBeInstanceOf(Promise);
   });
 
   it('resolves object with stdout', async function () {
     const results = await runShellCommand('node', ['./fixtures/test-script.js'], { cwd });
-    assume(results).is.instanceof(Object);
-    assume(results).property('stdout');
-    assume(results.stdout).includes('waiting');
-    assume(results.stdout).includes('success');
+    expect(results).toBeInstanceOf(Object);
+    expect(results).toHaveProperty('stdout');
+    expect(results.stdout).toContain('waiting');
+    expect(results.stdout).toContain('success');
   });
 
   it('rejects for non-zero exits', async function () {
     const promise = runShellCommand('node', ['./fixtures/test-script.js', failMode], { cwd });
-    await assume(promise).throwsAsync();
+    await expect(promise).rejects.toThrow();
   });
 
   it('rejects with details object', async function () {
     try {
       await runShellCommand('node', ['./fixtures/test-script.js', failMode], { cwd });
     } catch (err) {
-      assume(err).is.instanceof(Object);
-      assume(err).property('message');
-      assume(err.message).includes('exited with non-zero code');
+      expect(err).toBeInstanceOf(Object);
+      expect(err).toHaveProperty('message');
+      expect(err.message).toContain('exited with non-zero code');
 
-      assume(err).property('argv');
-      assume(err).property('stdout');
-      assume(err.stdout).includes('waiting');
+      expect(err).toHaveProperty('argv');
+      expect(err).toHaveProperty('stdout');
+      expect(err.stdout).toContain('waiting');
 
-      assume(err).property('stderr');
-      assume(err.stderr).includes('fail');
+      expect(err).toHaveProperty('stderr');
+      expect(err.stderr).toContain('fail');
 
-      assume(err).property('code', 1);
-      assume(err).property('aborted', false);
+      expect(err).toHaveProperty('code', 1);
+      expect(err).toHaveProperty('aborted', false);
     }
   });
 
@@ -57,13 +57,13 @@ describe('runShellCommand', function () {
 
     it('returns a promise', async function () {
       const promise = runShellCommand('node', ['./fixtures/test-script.js'], { cwd, signal });
-      await assume(promise).not.throwsAsync();
+      await expect(promise).resolves.not.toThrow();
     });
 
     it('early abort rejects before run', async function () {
       controller.abort();
       const promise = runShellCommand('node', ['./fixtures/test-script.js'], { cwd, signal });
-      await assume(promise).throwsAsync();
+      await expect(promise).rejects.toThrow();
     });
 
     it('early abort rejects with details object', async function () {
@@ -71,14 +71,14 @@ describe('runShellCommand', function () {
       try {
         await runShellCommand('node', ['./fixtures/test-script.js'], { cwd, signal });
       } catch (err) {
-        assume(err).is.instanceof(Object);
-        assume(err).property('message');
-        assume(err.message).includes('aborted');
+        expect(err).toBeInstanceOf(Object);
+        expect(err).toHaveProperty('message');
+        expect(err.message).toContain('aborted');
 
-        assume(err).property('argv');
-        assume(err).not.property('stdout');
-        assume(err).not.property('stderr');
-        assume(err).property('aborted', true);
+        expect(err).toHaveProperty('argv');
+        expect(err).not.toHaveProperty('stdout');
+        expect(err).not.toHaveProperty('stderr');
+        expect(err).toHaveProperty('aborted', true);
       }
     });
 
@@ -86,7 +86,7 @@ describe('runShellCommand', function () {
       const promise = runShellCommand('node', ['./fixtures/test-script.js', !failMode, 100], { cwd, signal });
       await pause(10);
       controller.abort();
-      await assume(promise).throwsAsync();
+      await expect(promise).rejects.toThrow();
     });
 
     it('abort rejects with details object', async function () {
@@ -96,17 +96,17 @@ describe('runShellCommand', function () {
         controller.abort();
         await promise;
       } catch (err) {
-        assume(err).is.instanceof(Object);
-        assume(err).property('message');
-        assume(err.message).includes('exited with non-zero code');
+        expect(err).toBeInstanceOf(Object);
+        expect(err).toHaveProperty('message');
+        expect(err.message).toContain('exited with non-zero code');
 
-        assume(err).property('argv');
-        assume(err).property('stdout');
-        assume(err).property('stderr');
-        assume(err).property('code');
+        expect(err).toHaveProperty('argv');
+        expect(err).toHaveProperty('stdout');
+        expect(err).toHaveProperty('stderr');
+        expect(err).toHaveProperty('code');
 
-        assume(err).property('aborted', true);
+        expect(err).toHaveProperty('aborted', true);
       }
-    }, 'early abort rejects with details object');
+    });
   });
 });
