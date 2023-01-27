@@ -1,5 +1,3 @@
-const assume = require('assume');
-
 const applyConfigOverrides = require('../lib/apply-config-overrides');
 
 describe('applyConfigOverrides', () => {
@@ -20,7 +18,7 @@ describe('applyConfigOverrides', () => {
 
   it('returns unmodified config if no "environments"', () => {
     results = applyConfigOverrides(mockConfig, mockContext);
-    assume(results).eqls(mockConfig);
+    expect(results).toEqual(mockConfig);
   });
 
   it('removes "environments" from config result', () => {
@@ -29,7 +27,7 @@ describe('applyConfigOverrides', () => {
     };
 
     results = applyConfigOverrides(mockConfig, mockContext);
-    assume(results).not.property('environments');
+    expect(results).not.toHaveProperty('environments');
   });
 
   it('returns unmodified config if no matching env', () => {
@@ -38,7 +36,7 @@ describe('applyConfigOverrides', () => {
     };
 
     results = applyConfigOverrides(mockConfig, mockContext);
-    assume(results).eqls({
+    expect(results).toEqual({
       someService: {
         url: 'https://some-test.url/'
       }
@@ -55,7 +53,7 @@ describe('applyConfigOverrides', () => {
     };
 
     results = applyConfigOverrides(mockConfig, mockContext);
-    assume(results).eqls({
+    expect(results).toEqual({
       someService: {
         url: 'https://some-test.url/',
         requestRate: 9000
@@ -73,7 +71,7 @@ describe('applyConfigOverrides', () => {
     };
 
     results = applyConfigOverrides(mockConfig, mockContext);
-    assume(results).eqls({
+    expect(results).toEqual({
       someService: {
         url: 'https://some-dev-test.url/'
       }
@@ -98,7 +96,7 @@ describe('applyConfigOverrides', () => {
     };
 
     results = applyConfigOverrides(mockConfig, mockContext);
-    assume(results).eqls({
+    expect(results).toEqual({
       someService: {
         url: 'https://some-sub-dev-test.url/',
         requestRate: 9000
@@ -125,7 +123,7 @@ describe('applyConfigOverrides', () => {
     };
 
     results = applyConfigOverrides(mockConfig, mockContext);
-    assume(results).eqls({
+    expect(results).toEqual({
       someService: {
         url: 'https://some-dev-test.url/',
         requestRate: 9000
@@ -147,7 +145,7 @@ describe('applyConfigOverrides', () => {
     };
 
     results = applyConfigOverrides(mockConfig, mockContext);
-    assume(results).eqls({
+    expect(results).toEqual({
       someService: {
         url: 'https://some-dev-test.url/',
         requestRate: 9000
@@ -174,7 +172,7 @@ describe('applyConfigOverrides', () => {
     };
 
     results = applyConfigOverrides(mockConfig, mockContext);
-    assume(results).eqls({
+    expect(results).toEqual({
       someService: {
         url: 'https://some-local-test.url/',
         requestRate: 9000
@@ -187,7 +185,7 @@ describe('applyConfigOverrides', () => {
     mockContext.localFile = './fixtures/config.local';
 
     results = applyConfigOverrides(mockConfig, mockContext);
-    assume(results).eqls({
+    expect(results).toEqual({
       localsOnly: true,
       someService: {
         url: 'https://some-test.url/'
@@ -200,7 +198,7 @@ describe('applyConfigOverrides', () => {
     mockContext.localFile = './fixtures/missing';
 
     results = applyConfigOverrides(mockConfig, mockContext);
-    assume(results).eqls({
+    expect(results).toEqual({
       someService: {
         url: 'https://some-test.url/'
       }
@@ -219,7 +217,7 @@ describe('applyConfigOverrides', () => {
       };
 
       results = applyConfigOverrides(mockConfig, mockContext);
-      assume(results).eqls({
+      expect(results).toEqual({
         someService: {
           url: 'https://some-test.url/',
           requestRate: 9000
@@ -237,7 +235,7 @@ describe('applyConfigOverrides', () => {
       };
 
       results = applyConfigOverrides(mockConfig, mockContext);
-      assume(results).eqls({
+      expect(results).toEqual({
         someService: {
           url: 'https://some-dev-test.url/'
         }
