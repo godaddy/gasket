@@ -31,7 +31,7 @@
   "devDependencies": {
     "@babel/core": "^7.16.10",
     "@testing-library/react": "^13.4.0",
-    "cypress": "^9.6.0",
+    "cypress": "^12.0.0",
     "eslint": "^8.7.0",
     "eslint-config-godaddy": "^6.0.0",
     "eslint-plugin-unicorn": "^44.0.0",
