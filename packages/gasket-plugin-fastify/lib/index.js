@@ -36,7 +36,7 @@ module.exports = {
       const compression = require('compression');
 
       const { logger, config } = gasket;
-      const { root, fastify: { routes }, middleware: middlewareConfig } = config;
+      const { root, fastify: { routes } = {}, middleware: middlewareConfig } = config;
       const excludedRoutesRegex = config.fastify && config.fastify.excludedRoutesRegex;
       const app = fastify({ logger });
 
