@@ -1,5 +1,7 @@
 const debug = require('diagnostics')('gasket:fastify');
 const { peerDependencies, name } = require('../package.json');
+const glob = require('glob');
+const path = require('path');
 
 module.exports = {
   name,
@@ -30,17 +32,13 @@ module.exports = {
     // eslint-disable-next-line max-statements
     createServers: async function createServers(gasket, serverOpts) {
       const fastify = require('fastify');
-      const middie = require('middie');
       const cookieParser = require('cookie-parser');
       const compression = require('compression');
 
       const { logger, config } = gasket;
-      const { middleware: middlewareConfig } = config;
+      const { root, fastify: { routes }, middleware: middlewareConfig } = config;
       const excludedRoutesRegex = config.fastify && config.fastify.excludedRoutesRegex;
       const app = fastify({ logger });
-
-      // Enable middleware for fastify@3
-      await app.register(middie);
 
       await app.register(require('@fastify/middie'));
 
@@ -96,6 +94,16 @@ module.exports = {
 
       const postRenderingStacks = (await gasket.exec('errorMiddleware')).filter(Boolean);
       postRenderingStacks.forEach(stack => app.use(stack));
+
+      if (routes) {
+        glob(`${ routes }.js`, { cwd: root }, function (err, files) {
+          if (err) throw err;
+
+          for (let i = 0; i < files.length; i++) {
+            require(path.join(root, files[i]))(app);
+          }
+        });
+      }
 
       return {
         ...serverOpts,
