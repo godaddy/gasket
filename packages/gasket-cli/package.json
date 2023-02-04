@@ -28,6 +28,7 @@
     "test:integration:coverage": "nyc --reporter=text --reporter=json-summary --all run-s test:integration",
     "test:mocha": "mocha --require test/setup.js --recursive \"test/**/*.test.js\"",
     "test:unit": "mocha --require test/setup.js --recursive \"test/unit/**/*.test.js\"",
+    "test:unit:watch": "npm run test:unit -- --watch",
     "test:unit:coverage": "nyc --reporter=text --reporter=lcov --all run-s test:unit"
   },
   "repository": {
