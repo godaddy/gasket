@@ -18,20 +18,17 @@ async function loadSwaggerSpec(root, definitionFile, logger) {
   if (!__swaggerSpec) {
     const target = path.join(root, definitionFile);
 
-    await access(target, fs.constants.F_OK)
-      .then(async () => {
-        if (isYaml.test(definitionFile)) {
-          const content = await readFile(target, 'utf8');
-          // eslint-disable-next-line require-atomic-updates
-          __swaggerSpec = require('js-yaml').safeLoad(content);
-        } else {
-          __swaggerSpec = require(target);
-        }
-      })
-      .catch(() => {
-        logger.error(`Missing ${definitionFile} file...`);
-        return;
-      });
+    try {
+      await access(target, fs.constants.F_OK);
+      if (isYaml.test(definitionFile)) {
+        const content = await readFile(target, 'utf8');
+        __swaggerSpec = require('js-yaml').safeLoad(content);
+      } else {
+        __swaggerSpec = require(target);
+      }
+    } catch (err) {
+      logger.error(`Missing ${definitionFile} file...`);
+    }
   }
   return __swaggerSpec;
 }
