@@ -46,7 +46,7 @@
     "@testing-library/react": "^13.4.0",
     "babel-eslint": "^10.1.0",
     "eslint": "^8.7.0",
-    "eslint-config-godaddy": "^6.0.0",
+    "eslint-config-godaddy": "^7.0.0",
     "eslint-plugin-json": "^3.1.0",
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-unicorn": "^44.0.0",
