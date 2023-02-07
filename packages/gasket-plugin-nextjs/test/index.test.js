@@ -30,7 +30,7 @@ jest.mock('../lib/setup-next-app', () => {
 
 const path = require('path');
 const { devDependencies } = require('../package');
-const middie = require('middie');
+const middie = require('@fastify/middie');
 
 const fastify = require('fastify')({
   logger: true
