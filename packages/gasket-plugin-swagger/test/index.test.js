@@ -222,6 +222,7 @@ describe('Swagger Plugin', function () {
 
   describe('fastify hook', function () {
     let mockGasket, mockApp;
+    const fastify = require('fastify')({ logger: true });
 
     beforeEach(function () {
       mockGasket = {
@@ -287,6 +288,25 @@ describe('Swagger Plugin', function () {
           uiConfig: {}
         }
       );
+    });
+
+    it('adds new routes to swagger paths', async function () {
+      await plugin.hooks.fastify.handler(mockGasket, fastify);
+      fastify.get('/hello-world', {
+        schema: {
+          description: 'hello world route',
+          response: {
+            200: {
+              description: 'Returns welcome message.',
+              type: 'object',
+              properties: {
+                hello: { type: 'string' }
+              }
+            }
+          }
+        }
+      }, () => {});
+      expect(fastify.swagger().paths).toHaveProperty('/hello-world');
     });
   });
 });
