@@ -55,7 +55,7 @@
     "jest": "^29.3.1"
   },
   "peerDependencies": {
-    "fastify": "^4.0.0"
+    "fastify": "^3 || ^4"
   },
   "eslintConfig": {
     "extends": [
