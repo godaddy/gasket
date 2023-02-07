@@ -1,6 +1,8 @@
 # `@gasket/cli`
 
-- Fix generation of files on Windows during gasket create when plugins use globs containing Windows separators 
+### 6.38.0
+
+- Fix generation of files on Windows during gasket create when plugins use globs containing Windows separators ([#547]) 
 
 ### 6.34.6
 
@@ -417,3 +419,4 @@ upon `gasket create`
 [#442]: https://github.com/godaddy/gasket/pull/442
 [#460]: https://github.com/godaddy/gasket/pull/460
 [#480]: https://github.com/godaddy/gasket/pull/480
+[#547]: https://github.com/godaddy/gasket/pull/547
