@@ -1,5 +1,7 @@
 # `@gasket/cli`
 
+- Fix generation of files on Windows during gasket create when plugins use globs containing Windows separators 
+
 ### 6.34.6
 
 - Retain destOverride from provided create context ([#480])

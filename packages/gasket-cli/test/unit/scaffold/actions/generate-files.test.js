@@ -276,6 +276,17 @@ describe('generateFiles', () => {
       assume(results).lengthOf(5);
     });
 
+    it('works with Windows path separators', async function () {
+      mockContext.files.globSets = [{
+        globs: [fixtures + '\\generator\\**\\*'],
+        source: {
+          name: '@gasket/plugin-example'
+        }
+      }];
+      const results = await generateFiles._getDescriptors(mockContext);
+      assume(results).lengthOf(5);
+    });
+
     it('reduces duplicates with overrides prop', async function () {
       mockContext.files.globSets = [{
         globs: [fixtures + '/generator/*'],
@@ -333,7 +344,7 @@ describe('generateFiles', () => {
         // mixed slashes for testing
         'C:\\path\\to/my-app',
         from,
-        'C:\\gasket-cli\\test\\fixtures/rel/../generator/*',
+        'C:/gasket-cli/test/fixtures/rel/../generator/*',
         [
           'C:\\gasket-cli\\test\\fixtures\\generator\\file-a.md',
           // glob may return with forward-slash
@@ -341,7 +352,7 @@ describe('generateFiles', () => {
         ]
       );
       assume(results[0]).objectContaining({
-        pattern: 'C:\\gasket-cli\\test\\fixtures/rel/../generator/*',
+        pattern: 'C:/gasket-cli/test/fixtures/rel/../generator/*',
         base: 'C:\\gasket-cli\\test\\fixtures\\generator',
         srcFile: sinon.match('C:\\gasket-cli\\test\\fixtures\\generator\\file-a.md'),
         targetFile: 'C:\\path\\to\\my-app\\file-a.md',
