@@ -1,6 +1,6 @@
 {
   "name": "@gasket/engine",
-  "version": "6.36.1",
+  "version": "6.38.0",
   "description": "Plugin engine for gasket",
   "main": "lib/engine.js",
   "types": "lib/engine.d.ts",
@@ -39,13 +39,13 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-engine",
   "dependencies": {
-    "@gasket/resolve": "^6.36.1",
+    "@gasket/resolve": "^6.38.0",
     "debug": "^4.3.1"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
     "eslint": "^8.7.0",
-    "eslint-config-godaddy": "^6.0.0",
+    "eslint-config-godaddy": "^7.0.0",
     "eslint-plugin-jest": "^27.2.1",
     "eslint-plugin-json": "^3.1.0",
     "eslint-plugin-mocha": "^10.0.3",

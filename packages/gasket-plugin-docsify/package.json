@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-docsify",
-  "version": "6.36.1",
+  "version": "6.38.0",
   "description": "View collated docs with Docsify",
   "main": "lib",
   "types": "lib/index.d.ts",
@@ -45,12 +45,12 @@
     "mkdirp": "^1.0.4"
   },
   "devDependencies": {
-    "@gasket/engine": "^6.36.1",
+    "@gasket/engine": "^6.38.0",
     "cross-env": "^7.0.3",
     "docsify": "^4.10.2",
     "docsify-cli": "^4.4.2",
     "eslint": "^8.7.0",
-    "eslint-config-godaddy": "^6.0.0",
+    "eslint-config-godaddy": "^7.0.0",
     "eslint-plugin-jest": "^27.2.1",
     "eslint-plugin-json": "^3.1.0",
     "eslint-plugin-unicorn": "^44.0.0",

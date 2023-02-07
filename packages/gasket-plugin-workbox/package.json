@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-workbox",
-  "version": "6.36.1",
+  "version": "6.38.0",
   "description": "Gasket Workbox Plugin",
   "main": "lib",
   "types": "lib/index.d.ts",
@@ -43,9 +43,9 @@
     "workbox-build": "^4.1.0"
   },
   "devDependencies": {
-    "@gasket/engine": "^6.36.1",
+    "@gasket/engine": "^6.38.0",
     "eslint": "^8.7.0",
-    "eslint-config-godaddy": "^6.0.0",
+    "eslint-config-godaddy": "^7.0.0",
     "eslint-plugin-jest": "^27.2.1",
     "eslint-plugin-json": "^3.1.0",
     "eslint-plugin-mocha": "^10.0.3",

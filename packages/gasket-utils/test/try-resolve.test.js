@@ -1,4 +1,3 @@
-const assume = require('assume');
 const path = require('path');
 const { tryResolve } = require('../lib/try-resolve');
 
@@ -9,7 +8,7 @@ describe('tryResolve', () => {
       path.join(__dirname, 'fixtures/config.local'),
       { paths: [__dirname] }
     );
-    assume(results).eqls(`${__dirname}/fixtures/config.local.js`);
+    expect(results).toEqual(`${__dirname}/fixtures/config.local.js`);
   });
 
   it('returns null when module not found', () => {
@@ -17,6 +16,6 @@ describe('tryResolve', () => {
       path.join(__dirname, 'fixtures', 'missing'),
       { paths: [__dirname] }
     );
-    assume(results).eqls(null);
+    expect(results).toEqual(null);
   });
 });
