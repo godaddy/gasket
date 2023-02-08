@@ -24,7 +24,8 @@ module.exports = {
 
           pkg.add('devDependencies', {
             '@testing-library/react': devDependencies['@testing-library/react'],
-            '@testing-library/jest-dom': devDependencies['@testing-library/jest-dom']
+            '@testing-library/jest-dom': devDependencies['@testing-library/jest-dom'],
+            'jest-environment-jsdom': devDependencies['jest-environment-jsdom']
           });
         }
 
