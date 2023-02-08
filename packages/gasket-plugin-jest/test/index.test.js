@@ -79,7 +79,7 @@ describe('Plugin', function () {
 
     expect(customJestConfig).toHaveProperty('testEnvironment', 'jest-environment-jsdom');
     expect(customJestConfig).toHaveProperty('collectCoverageFrom', ['**/*.js']);
-    expect(customJestConfig).toHaveProperty('testURL', 'http://localhost/');
+    expect(customJestConfig).toHaveProperty('testEnvironmentOptions', { url: 'http://localhost/' });
   });
 
   describe('react', function () {
