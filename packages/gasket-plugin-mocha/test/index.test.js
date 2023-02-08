@@ -89,7 +89,7 @@ describe('Plugin', () => {
       it(`adds "${name}" in the devDependencies`, async function () {
         const { pkg } = await create();
 
-        expect(pkg.devDependencies).toHaveProperty(name);
+        expect(pkg.devDependencies).toHaveProperty(name, expect.any(String));
       });
     });
 
