@@ -5,7 +5,9 @@ const createJestConfig = nextJest(pathToApp);
 const customJestConfig = {
   testEnvironment: 'jest-environment-jsdom',
   collectCoverageFrom: ['**/*.js'],
-  testURL: 'http://localhost/'
+  testEnvironmentOptions: {
+    url: 'http://localhost/'
+  }
 };
 
 module.exports = createJestConfig(customJestConfig);
