@@ -1,5 +1,9 @@
 # `@gasket/plugin-mocha`
 
+### 6.38.1
+
+- Fix created mocha dependencies ([#553])
+
 ### 6.35.0
 
 - Upgrade @testing-library/react v13 ([#463])
@@ -84,3 +88,4 @@
 [#459]: https://github.com/godaddy/gasket/pull/459
 [#460]: https://github.com/godaddy/gasket/pull/460
 [#463]: https://github.com/godaddy/gasket/pull/463
+[#553]: https://github.com/godaddy/gasket/pull/553
