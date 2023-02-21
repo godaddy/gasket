@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { InltProvider } from '@react-intl';
+import { IntlProvider } from '@react-intl';
 import { describe, it } from 'mocha';
 import { expect } from 'chai';
 import React from 'react';
@@ -16,9 +16,9 @@ import messages from '../../public/locales/en-US.json';
 describe('IndexPage', () => {
   it('renders page', () => {
     render(
-      <InltProvider locale='en-US' messages={ messages }>
+      <IntlProvider locale='en-US' messages={ messages }>
         <IndexPage />
-      </InltProvider>
+      </IntlProvider>
     );
 
     expect(screen.getByText('Welcome to Gasket!')).to.be.ok;
