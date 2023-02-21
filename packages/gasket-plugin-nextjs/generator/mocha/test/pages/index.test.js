@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { IntlProvider } from '@react-intl';
+import { IntlProvider } from 'react-intl';
 import { describe, it } from 'mocha';
 import { expect } from 'chai';
 import React from 'react';
