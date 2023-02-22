@@ -1,5 +1,9 @@
 # `@gasket/plugin-fastify`
 
+### 6.38.2
+
+- Add generated Fastify starter routes file ([#555])
+
 ### 6.34.4
 
 - Upgrade eslint-plugin-unicorn v43 ([#436])
@@ -49,3 +53,4 @@ Enable middleware support ([#172])
 [#444]: https://github.com/godaddy/gasket/pull/444
 [#442]: https://github.com/godaddy/gasket/pull/442
 [#460]: https://github.com/godaddy/gasket/pull/460
+[#555]: https://github.com/godaddy/gasket/pull/555
