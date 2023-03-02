@@ -1,5 +1,9 @@
 # `@gasket/plugin-command`
 
+### 6.38.3
+
+- Tweaks to GasketCommand types ([#557])
+
 ### 6.34.4
 
 - Upgrade eslint-plugin-unicorn v43 ([#436])
