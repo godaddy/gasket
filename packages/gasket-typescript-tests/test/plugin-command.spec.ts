@@ -1,20 +1,29 @@
-import type { Gasket, GasketConfig, Hook, Plugin } from '@gasket/engine';
+import type { Gasket, GasketConfig, Hook, Plugin, GasketCommandClass } from '@gasket/engine';
 import '@gasket/plugin-command';
+
+interface NewCommandFlags {
+  foo: string
+  bar: boolean
+}
 
 describe('@gasket/plugin-command', () => {
   it('defines the getCommands lifecycle', () => {
     const hook: Hook<'getCommands'> = (gasket: Gasket, { GasketCommand, flags }) => {
-      class NewCommand extends GasketCommand {
+      class NewCommand extends (GasketCommand as GasketCommandClass<NewCommandFlags>) {
         static id = 'do';
+        static description = 'do';
         static flags = {
-          foo: flags.string()
+          foo: flags.string(),
+          bar: flags.boolean()
         };
 
         async gasketRun() {
           this.parsed;
+
+          const foo: string = this.parsed.flags.foo;
+          const bar: boolean = this.parsed.flags.bar;
         }
       }
-
 
       return NewCommand;
     };
