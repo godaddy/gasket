@@ -1,13 +1,15 @@
 import type { Gasket, GasketConfig, MaybeAsync, MaybeMultiple } from '@gasket/engine';
-import type { Command, flags } from '@oclif/command';
-import type { IFlag } from '@oclif/command/lib/flags';
+import type { Command, Definition, flags } from '@oclif/command';
 
 declare module '@gasket/engine' {
   class GasketCommand<Flags = {}> extends Command {
     gasket: Gasket;
-    parsed: Flags;
+    parsed: {
+      flags: Flags
+    };
 
     gasketConfigure(gasketConfig: GasketConfig): Promise<GasketConfig>;
+
     gasketRun(): Promise<void>;
 
     run(): Promise<void>;
@@ -18,16 +20,18 @@ declare module '@gasket/engine' {
     id: string;
     description: string;
     flags: {
-      [K in keyof Flags]: IFlag<Flags[K]>
+      [K in keyof Flags]: Definition<Flags[K]>
     }
   }
 
   export interface HookExecTypes {
     init(): MaybeAsync<void>,
+
     getCommands(args: {
       GasketCommand: GasketCommandClass,
       flags: typeof flags
     }): MaybeAsync<MaybeMultiple<GasketCommandClass>>,
+
     configure(config: GasketConfig): MaybeAsync<GasketConfig>
   }
 }
