@@ -1,5 +1,6 @@
 import type { Gasket, GasketConfig, MaybeAsync, MaybeMultiple } from '@gasket/engine';
-import type { Command, Definition, flags } from '@oclif/command';
+import type { Command, flags } from '@oclif/command';
+import type { Definition } from '@oclif/command/lib/flags';
 
 declare module '@gasket/engine' {
   class GasketCommand<Flags = {}> extends Command {
@@ -9,7 +10,6 @@ declare module '@gasket/engine' {
     };
 
     gasketConfigure(gasketConfig: GasketConfig): Promise<GasketConfig>;
-
     gasketRun(): Promise<void>;
 
     run(): Promise<void>;
