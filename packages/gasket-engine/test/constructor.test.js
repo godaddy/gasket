@@ -94,18 +94,18 @@ describe('constructor', () => {
       expect(engine._plugins).toHaveProperty('@user/gasket-plugin-one', mockPlugin.module);
     });
 
-    it('plugins loaded from paths use name from module', () => {
+    it('plugins loaded from paths use normalized name from module', () => {
       mockPlugin.name = '/path/to/some-local-plugin';
       mockPlugin.module.name = 'some-local';
       const engine = new PluginEngine(mockConfig);
-      expect(engine._plugins).toHaveProperty('some-local', mockPlugin.module);
+      expect(engine._plugins).toHaveProperty('gasket-plugin-some-local', mockPlugin.module);
     });
 
-    it('plugins loaded from paths use name from module (windows)', () => {
+    it('plugins loaded from paths use normalized name from module (windows)', () => {
       mockPlugin.name = 'C:\\\\path\\to\\some-local-plugin';
       mockPlugin.module.name = 'some-local';
       const engine = new PluginEngine(mockConfig);
-      expect(engine._plugins).toHaveProperty('some-local', mockPlugin.module);
+      expect(engine._plugins).toHaveProperty('gasket-plugin-some-local', mockPlugin.module);
     });
 
     it('plugins loaded from paths fallback to path if name not in module', () => {

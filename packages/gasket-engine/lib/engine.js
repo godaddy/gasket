@@ -37,7 +37,7 @@ class PluginEngine {
       .reduce((acc, pluginInfo) => {
         let keyName;
         if (isModulePath.test(pluginInfo.name)) {
-          keyName = pluginInfo.module.name || pluginInfo.name;
+          keyName = pluginInfo.module.name ? pluginIdentifier(pluginInfo.module.name).longName : pluginInfo.name;
         } else {
           keyName = pluginIdentifier(pluginInfo.name || pluginInfo.module.name).longName;
         }

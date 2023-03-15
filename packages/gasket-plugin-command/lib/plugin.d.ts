@@ -20,7 +20,7 @@ declare module '@gasket/engine' {
     id: string;
     description: string;
     flags: {
-      [K in keyof Flags]: flags.Definition<Flags[K]>
+      [K in keyof Flags]: flags.IFlag<Flags[K] | undefined>
     }
   }
 
