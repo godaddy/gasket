@@ -1,5 +1,11 @@
 # `@gasket/engine`
 
+### 6.38.5
+
+- Fix to use long name for named app plugins ([#560])
+
+### 6.36.0
+
 - Add missing dependencies property on the `Plugin` type
 
 ### 6.34.4
@@ -103,5 +109,6 @@
 [#385]: https://github.com/godaddy/gasket/pull/385
 [#436]: https://github.com/godaddy/gasket/pull/436
 [#457]: https://github.com/godaddy/gasket/pull/457
+[#560]: https://github.com/godaddy/gasket/pull/560
 
 [Loader]:/packages/gasket-resolve/docs/api.md#loader
