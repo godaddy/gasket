@@ -1,6 +1,6 @@
 import React, { useReducer } from 'react';
 import hoistNonReactStatics from 'hoist-non-react-statics';
-import merge from 'lodash.merge';
+import extend from 'just-extend';
 import { IntlProvider } from 'react-intl';
 import { GasketIntlContext } from './context';
 import { clientData, isBrowser } from './config';
@@ -17,7 +17,7 @@ export function init(localesProps) {
   if (isBrowser) {
     // merge any data set on window with what comes from SSR or static page props
     const { messages: dataMessages = {}, status: dataStatus = {} } = clientData;
-    return merge({}, { messages: dataMessages, status: dataStatus }, { messages, status });
+    return extend(true, {}, { messages: dataMessages, status: dataStatus }, { messages, status });
   }
 
   return { messages, status };
