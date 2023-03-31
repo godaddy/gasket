@@ -13,15 +13,42 @@ export default class Log {
    * @param {Object} options configuration.
    * @private
    */
-  constructor({ level, levels = Log.levels, namespace, prod } = {}) {
+  constructor({ level, levels = Log.levels, namespace, prod, sendToServer = false } = {}) {
     this.namespace = Array.isArray(namespace) ? namespace : [namespace];
     this.level = ~levels.indexOf(level) ? level : 'info';
+    this.sendToServer = sendToServer;
+
+    const sendLogRequest = (lvl, args) => {
+      try {
+        fetch('/api/logs', {
+          method: 'post',
+          body: JSON.stringify({
+            level: lvl,
+            namespace: this.namespace,
+            data: args
+          }),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+      } finally {
+        // Ignore
+      }
+    };
+    window.d = diagnostics;
 
     levels.forEach(lvl => {
-      this[lvl] = diagnostics(
+      const inst = diagnostics(
         ['gasket', lvl, ...this.namespace].filter(Boolean).join(':'),
         { force: Boolean(prod) }
       );
+
+      this[lvl] = (...args) => {
+        if (Array.isArray(this.sendToServer) && this.sendToServer.includes(lvl)) {
+          sendLogRequest(lvl, args);
+        }
+        inst(args);
+      } ;
     });
   }
 

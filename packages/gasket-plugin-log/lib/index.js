@@ -1,5 +1,11 @@
 /* eslint require-atomic-updates: warn */
 const { name, dependencies } = require('../package');
+const express = require('express');
+
+function setupRoutes(gasket, app) {
+  app.use(express.json());
+  app.post('/api/logs', require('./endpoint')(gasket));
+}
 
 /**
  * Expose the plugin hooks, listen to the `init` and `destroy` events.
@@ -9,6 +15,7 @@ const { name, dependencies } = require('../package');
 module.exports = {
   name,
   hooks: {
+    express: setupRoutes,
     init: {
       // init after the @gasket/lifecycle-plugin to allow a `logTransports`
       // file to be define in an app's `./lifecycles` dir.
