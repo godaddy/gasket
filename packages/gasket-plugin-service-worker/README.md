@@ -75,7 +75,7 @@ following settings would be needed:
 
 module.exports = {
   serviceWorker: {
-    url: '/docs/server-worker.js',
+    url: '/docs/sw.js',
     scope: '/docs',
     minify: {
       ie8: true
@@ -121,6 +121,7 @@ service worker and add it to the content.
 
 ```js
 const { readFile } = require('fs').promises;
+const path = require('path');
 
 module.exports = {
   hooks: {
