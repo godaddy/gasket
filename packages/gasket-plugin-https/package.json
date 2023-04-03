@@ -39,7 +39,7 @@
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-https",
   "dependencies": {
     "@godaddy/terminus": "^4.2.0",
-    "@types/node": "^16.11.12",
+    "@types/node": "^18.0.0",
     "create-servers": "^3.2.0",
     "diagnostics": "^2.0.2",
     "errs": "^0.3.2",
