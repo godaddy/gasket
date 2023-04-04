@@ -40,7 +40,7 @@
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-manifest",
   "dependencies": {
     "deepmerge": "^4.2.2",
-    "escape-string-regexp": "^1.0.5",
+    "escape-string-regexp": "^5.0.0",
     "mkdirp": "^1.0.4"
   },
   "devDependencies": {
