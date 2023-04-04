@@ -9,7 +9,7 @@
   "devDependencies": {
     "copy-dir": "^1.2.0",
     "eslint": "^8.7.0",
-    "eslint-plugin-unicorn": "^44.0.0"
+    "eslint-plugin-unicorn": "^46.0.0"
   },
   "eslintConfig": {
     "extends": [

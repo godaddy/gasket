@@ -49,7 +49,7 @@
     "eslint-config-godaddy": "^7.0.0",
     "eslint-plugin-json": "^3.1.0",
     "eslint-plugin-react": "^7.22.0",
-    "eslint-plugin-unicorn": "^44.0.0",
+    "eslint-plugin-unicorn": "^46.0.0",
     "global-jsdom": "^8.4.0",
     "jsdom": "^20.0.0",
     "react": "^18.0.0",

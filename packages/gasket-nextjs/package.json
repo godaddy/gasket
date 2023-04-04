@@ -60,7 +60,7 @@
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-mocha": "^10.0.3",
     "eslint-plugin-react": "^7.22.0",
-    "eslint-plugin-unicorn": "^44.0.0",
+    "eslint-plugin-unicorn": "^46.0.0",
     "jsdom": "^20.0.0",
     "mocha": "^10.0.0",
     "mock-require": "^3.0.3",
