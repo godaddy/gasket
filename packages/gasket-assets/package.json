@@ -42,7 +42,7 @@
     "@babel/node": "^7.12.10",
     "@babel/preset-env": "^7.12.10",
     "@babel/preset-react": "^7.12.10",
-    "@svgr/core": "^6.2.0",
+    "@svgr/core": "^7.0.0",
     "babel-plugin-add-module-exports": "^1.0.2",
     "eslint": "^8.7.0",
     "eslint-config-godaddy": "^7.0.0",
