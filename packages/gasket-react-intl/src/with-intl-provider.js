@@ -89,7 +89,7 @@ export default function withIntlProvider() {
       // If we have incoming pageProps, we need to update state but have to by
       // mutation rather than issuing a dispatch to avoid re-renders and timing issues
       if (localesProps) {
-        merge(state, localesProps);
+        extend(true, state, localesProps);
       }
 
       const locale = localesProps?.locale ||
