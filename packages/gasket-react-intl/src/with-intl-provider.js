@@ -1,6 +1,6 @@
 import React, { useReducer } from 'react';
 import hoistNonReactStatics from 'hoist-non-react-statics';
-import merge from 'lodash.merge';
+import extend from 'just-extend';
 import { IntlProvider } from 'react-intl';
 import { GasketIntlContext } from './context';
 import { clientData, isBrowser } from './config';
@@ -17,7 +17,7 @@ export function init(localesProps) {
   if (isBrowser) {
     // merge any data set on window with what comes from SSR or static page props
     const { messages: dataMessages = {}, status: dataStatus = {} } = clientData;
-    return merge({}, { messages: dataMessages, status: dataStatus }, { messages, status });
+    return extend(true, {}, { messages: dataMessages, status: dataStatus }, { messages, status });
   }
 
   return { messages, status };
@@ -89,7 +89,7 @@ export default function withIntlProvider() {
       // If we have incoming pageProps, we need to update state but have to by
       // mutation rather than issuing a dispatch to avoid re-renders and timing issues
       if (localesProps) {
-        merge(state, localesProps);
+        extend(true, state, localesProps);
       }
 
       const locale = localesProps?.locale ||
