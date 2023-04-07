@@ -1,5 +1,9 @@
 # `@gasket/plugin-docs`
 
+### 6.37.0
+
+- Jest refactor ([#504])
+
 ### 6.34.4
 
 - Upgrade eslint-plugin-unicorn v43 ([#436])
@@ -86,3 +90,4 @@
 [#436]: https://github.com/godaddy/gasket/pull/436
 [#442]: https://github.com/godaddy/gasket/pull/442
 [#460]: https://github.com/godaddy/gasket/pull/460
+[#504]: https://github.com/godaddy/gasket/pull/504

@@ -1,5 +1,3 @@
-const assume = require('assume');
-
 const serviceWorkerCacheKey = require('../lib/service-worker-cache-key');
 
 describe('serviceWorkerCacheKey', function () {
@@ -8,8 +6,8 @@ describe('serviceWorkerCacheKey', function () {
   it('returns getLocale as cache key function', async function () {
     result = await serviceWorkerCacheKey();
 
-    assume(result).instanceOf(Function);
-    assume(result.name).equals('getLocale');
+    expect(result).toBeInstanceOf(Function);
+    expect(result.name).toEqual('getLocale');
   });
 
   it('cache key function returns a string', async function () {
@@ -24,7 +22,7 @@ describe('serviceWorkerCacheKey', function () {
     const getLocale = await serviceWorkerCacheKey();
 
     result = getLocale(req, res);
-    assume(result).equals(expectedLocale);
+    expect(result).toEqual(expectedLocale);
   });
 
   it('does not fail if gasketData is not fully populated', async function () {
@@ -32,6 +30,6 @@ describe('serviceWorkerCacheKey', function () {
     const res = { locals: {} };
 
     const getLocale = await serviceWorkerCacheKey();
-    assume(() => getLocale(req, res)).does.not.throw();
+    expect(() => getLocale(req, res)).not.toThrow();
   });
 });

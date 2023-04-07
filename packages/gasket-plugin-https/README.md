@@ -37,6 +37,7 @@ You can specify what port to open up on, or what certificates to use via
 ```js
 // gasket.config.js
 module.exports = {
+  hostname: 'example.com',
   http: 80,
   https: {
     port: 443,

@@ -1,6 +1,3 @@
-const { describe, it } = require('mocha');
-const assume = require('assume');
-const sinon = require('sinon');
 const {
   makeGatherDevDeps,
   makeRunScriptStr,
@@ -12,7 +9,7 @@ describe('utils', () => {
   let context;
 
   afterEach(() => {
-    sinon.resetHistory();
+    jest.clearAllMocks();
   });
 
   describe('makeGatherDevDeps', () => {
@@ -21,7 +18,7 @@ describe('utils', () => {
     beforeEach(() => {
       context = {
         pkgManager: {
-          info: sinon.stub().callsFake(args => ({ data: args.includes('version') ? '1.2.3' : { bogus: '10.9.7' } }))
+          info: jest.fn().mockImplementation(args => ({ data: args.includes('version') ? '1.2.3' : { bogus: '10.9.7' } }))
         }
       };
 
@@ -29,27 +26,27 @@ describe('utils', () => {
     });
 
     it('returns an async function', () => {
-      assume(gatherDevDeps).is.a('asyncfunction');
+      expect(typeof gatherDevDeps).toBe('function');
     });
 
     it('gatherDevDeps looks up module version if not set', async () => {
       await gatherDevDeps('@some/module');
-      assume(context.pkgManager.info).calledWith([sinon.match.any, 'version']);
+      expect(context.pkgManager.info).toHaveBeenCalledWith([expect.any(String), 'version']);
     });
 
     it('gatherDevDeps uses parsed version', async () => {
       await gatherDevDeps('@some/module@^2.3.4');
-      assume(context.pkgManager.info).not.calledWith([sinon.match.any, 'version']);
+      expect(context.pkgManager.info).not.toHaveBeenCalledWith([expect.any(String), 'version']);
     });
 
     it('looks up peerDependencies of package at specific version', async () => {
       await gatherDevDeps('@some/module@^2.3.4');
-      assume(context.pkgManager.info).calledWith(['@some/module@2.3.4', 'peerDependencies']);
+      expect(context.pkgManager.info).toHaveBeenCalledWith(['@some/module@2.3.4', 'peerDependencies']);
     });
 
     it('returns object with dependencies including main package', async () => {
       const results = await gatherDevDeps('@some/module@^2.3.4');
-      assume(results).eqls({
+      expect(results).toEqual({
         '@some/module': '^2.3.4',
         'bogus': '10.9.7'
       });
@@ -64,30 +61,30 @@ describe('utils', () => {
     });
 
     it('returns a function', () => {
-      assume(forNpm).is.a('function');
-      assume(forYarn).is.a('function');
+      expect(typeof forNpm).toBe('function');
+      expect(typeof forYarn).toBe('function');
     });
 
     it('[npm] returns run cmd', () => {
       const results = forNpm('bogus');
-      assume(results).equals('npm run bogus');
+      expect(results).toEqual('npm run bogus');
     });
 
     it('[npm] returns run cmd with flags', () => {
       const results = forNpm('bogus -- --extra');
-      assume(results).equals('npm run bogus -- --extra');
+      expect(results).toEqual('npm run bogus -- --extra');
     });
 
     it('[yarn] returns cmd', () => {
       context = { packageManager: 'yarn' };
       const results = forYarn('bogus');
-      assume(results).equals('yarn bogus');
+      expect(results).toEqual('yarn bogus');
     });
 
     it('[yarn] returns cmd with flags', () => {
       context = { packageManager: 'yarn' };
       const results = forYarn('bogus -- --extra');
-      assume(results).equals('yarn bogus --extra');
+      expect(results).toEqual('yarn bogus --extra');
     });
 
   });
@@ -95,11 +92,11 @@ describe('utils', () => {
     let safeRunScript, runScript;
 
     beforeEach(() => {
-      runScript = sinon.stub();
+      runScript = jest.fn();
       context = {
         warnings: [],
         pkg: {
-          has: sinon.stub().callsFake((_, name) => name === 'existing')
+          has: jest.fn().mockImplementation((_, name) => name === 'existing')
         }
       };
 
@@ -107,35 +104,35 @@ describe('utils', () => {
     });
 
     it('returns an async function', () => {
-      assume(safeRunScript).is.a('asyncfunction');
+      expect(typeof safeRunScript).toBe('function');
     });
 
     it('checks if script exists', async () => {
       await safeRunScript('existing');
-      assume(context.pkg.has).calledWith('scripts', 'existing');
+      expect(context.pkg.has).toHaveBeenCalledWith('scripts', 'existing');
     });
 
     it('runs script if it exists', async () => {
       await safeRunScript('existing');
-      assume(runScript).calledWith('existing');
+      expect(runScript).toHaveBeenCalledWith('existing');
     });
 
     it('does not runs script if non existent', async () => {
       await safeRunScript('missing');
-      assume(runScript).not.called();
+      expect(runScript).not.toHaveBeenCalled();
     });
 
     it('adds warning if run error occurs', async () => {
-      runScript.rejects('problem');
+      runScript.mockRejectedValue('problem');
       await safeRunScript('existing');
-      assume(runScript).called();
-      assume(context.warnings).length(1);
+      expect(runScript).toHaveBeenCalled();
+      expect(context.warnings).toHaveLength(1);
     });
 
     it('no warnings if no problems', async () => {
       await safeRunScript('existing');
-      assume(runScript).called();
-      assume(context.warnings).length(0);
+      expect(runScript).toHaveBeenCalled();
+      expect(context.warnings).toHaveLength(0);
     });
   });
 
@@ -143,7 +140,7 @@ describe('utils', () => {
     it('does stuff', () => {
       const config = eslintConfigIdentifier('@scope');
 
-      assume(config.longName).equals('@scope/eslint-config');
+      expect(config.longName).toEqual('@scope/eslint-config');
     });
   });
 });

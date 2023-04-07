@@ -1,5 +1,9 @@
 # `@gasket/react-intl`
 
+### 6.37.0
+
+- Migrate from Enzyme to React Testing Library ([#523])
+
 ### 6.34.4
 
 - Upgrade eslint-plugin-unicorn v43 ([#436])
@@ -181,3 +185,4 @@
 [#451]: https://github.com/godaddy/gasket/pull/451
 [#452]: https://github.com/godaddy/gasket/pull/452
 [#459]: https://github.com/godaddy/gasket/pull/459
+[#523]: https://github.com/godaddy/gasket/pull/523

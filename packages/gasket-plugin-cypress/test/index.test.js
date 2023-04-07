@@ -1,6 +1,6 @@
 const self = require('../package.json');
 const plugin = require('../lib/index.js');
-const config = require('../generator/cypress.json');
+const config = require('../generator/cypress.config.js');
 
 describe('Plugin', function () {
   async function create() {
@@ -77,13 +77,16 @@ describe('Plugin', function () {
   });
 
   it('has the correct custom cypress config', async function () {
-    expect(config).toHaveProperty('baseUrl', 'http://localhost:8080');
-    expect(config).toHaveProperty('integrationFolder', 'test');
+    const {e2e} = config;
+    expect(e2e).toHaveProperty('baseUrl', 'http://localhost:8080');
+    expect(e2e).toHaveProperty('supportFile', false);
+    expect(e2e).toHaveProperty('specPattern', 'test/e2e/**/*.cy.{js,jsx,ts,tsx}');
+    expect(typeof e2e.setupNodeEvents).toBe('function');
     expect(config).toHaveProperty('video', false);
   });
 
   describe('react', function () {
-    it('includes a glob for the `generator/cypress.json` contents for react projects', async function () {
+    it('includes a glob for the `generator/cypress.config.js` contents for react projects', async function () {
       const { files } = await createReact();
 
       expect(files[0]).toContain('/../generator/*');

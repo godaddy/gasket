@@ -1,16 +1,14 @@
-const { stub } = require('sinon');
-const assume = require('assume');
 const plugin = require('../lib/index');
 const { devDependencies } = require('../package');
 
 describe('Plugin', () => {
 
   it('is an object', () => {
-    assume(plugin).is.an('object');
+    expect(typeof plugin).toBe('object');
   });
 
   it('has expected name', () => {
-    assume(plugin).to.have.property('name', require('../package').name);
+    expect(plugin).toHaveProperty('name', require('../package').name);
   });
 
   it('has expected hooks', () => {
@@ -19,11 +17,11 @@ describe('Plugin', () => {
       'metadata'
     ];
 
-    assume(plugin).to.have.property('hooks');
+    expect(plugin).toHaveProperty('hooks');
 
     const hooks = Object.keys(plugin.hooks);
-    assume(hooks).eqls(expected);
-    assume(hooks).is.length(expected.length);
+    expect(hooks).toEqual(expected);
+    expect(hooks).toHaveLength(expected.length);
   });
 });
 
@@ -33,8 +31,8 @@ describe('create hook', () => {
 
     mockContext = {
       pkg: {
-        add: stub(),
-        has: stub()
+        add: jest.fn(),
+        has: jest.fn()
       }
     };
   });
@@ -42,7 +40,7 @@ describe('create hook', () => {
   it('adds appropriate devDependencies', async function () {
     await plugin.hooks.create({}, mockContext);
 
-    assume(mockContext.pkg.add).calledWith('devDependencies', {
+    expect(mockContext.pkg.add).toHaveBeenCalledWith('devDependencies', {
       webpack: devDependencies.webpack
     });
   });

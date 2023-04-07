@@ -1,6 +1,4 @@
 /* eslint-disable max-nested-callbacks */
-const assume = require('assume');
-const sinon = require('sinon');
 const fs = require('fs-extra');
 const fsUtils = require('../lib/fs-utils');
 const { BuildModules } = require('../lib/build-modules');
@@ -12,7 +10,7 @@ describe('buildModules', function () {
 
   beforeEach(function () {
     logger = {
-      log: sinon.stub()
+      log: jest.fn()
     };
     mockGasket = {
       logger,
@@ -30,7 +28,7 @@ describe('buildModules', function () {
   });
 
   afterEach(function () {
-    sinon.restore();
+    jest.clearAllMocks();
   });
 
   describe('BuildModules', function () {
@@ -42,83 +40,91 @@ describe('buildModules', function () {
 
     afterEach(function () {
       builder = null;
+      jest.clearAllMocks();
     });
 
     it('sets up dir constants', function () {
-      assume(builder).property('_outputDir');
-      assume(builder).property('_nodeModulesDir');
-      assume(builder).property('_lookupDir');
+      expect(builder).toHaveProperty('_outputDir');
+      expect(builder).toHaveProperty('_nodeModulesDir');
+      expect(builder).toHaveProperty('_lookupDir');
     });
 
     describe('#copyFolder', function () {
       it('calls saveJsonFile for correct data', async function () {
-        sinon.stub(fs, 'mkdirp').resolves();
-        sinon.stub(fs, 'readdir').resolves(['test/folder/name.json']);
-        sinon.stub(fsUtils, 'saveJsonFile').resolves();
-        sinon.stub(fs, 'readFile').resolves('{ "key-1": "value-1" }');
+        jest.spyOn(fs, 'mkdirp').mockResolvedValue();
+        jest.spyOn(fs, 'readdir').mockResolvedValue(['test/folder/name.json']);
+        jest.spyOn(fsUtils, 'saveJsonFile').mockResolvedValue();
+        jest.spyOn(fs, 'readFile').mockResolvedValue('{ "key-1": "value-1" }');
         await builder.copyFolder(testSrcFilePath, testTgtFilePath);
-        assume(fs.mkdirp).called(1);
-        assume(fs.readdir).called(1);
-        assume(fs.readFile).called(1);
+        expect(fs.mkdirp).toHaveBeenCalledTimes(1);
+        expect(fs.readdir).toHaveBeenCalledTimes(1);
+        expect(fs.readFile).toHaveBeenCalledTimes(1);
       });
     });
 
     describe('#processFiles', function () {
       let fakeSrcDir, fakeTgtDir;
+
       beforeEach(function () {
         fakeSrcDir = '/path/to/src/';
         fakeTgtDir = '/path/to/tgt/';
 
-        sinon.stub(builder, 'copyFile');
-        sinon.stub(builder, 'copyFolder');
+        jest.spyOn(builder, 'copyFile');
+        jest.spyOn(builder, 'copyFolder');
       });
+
+      afterEach(() => {
+        jest.clearAllMocks();
+      });
+
       it('calls copyFile for a json file', function () {
         const fakeFileName = 'aa-AA.json';
         const fakeFiles = [fakeFileName];
 
         builder.processFiles(fakeSrcDir, fakeTgtDir, fakeFiles);
 
-        assume(builder.copyFile).called(1);
-        assume(builder.copyFolder).not.called();
+        expect(builder.copyFile).toHaveBeenCalledTimes(1);
+        expect(builder.copyFolder).toHaveBeenCalledTimes(0);
       });
+
       it('calls copyFolder when its a folder', async function () {
         const fakeFileName = 'some-dir';
         const fakeFiles = [fakeFileName];
 
-        sinon.stub(fs, 'lstat').resolves({ isDirectory: () => true });
+        jest.spyOn(fs, 'lstat').mockResolvedValue({ isDirectory: () => true });
+        jest.spyOn(fs, 'readdir').mockResolvedValue(['test/folder']);
 
         await builder.processFiles(fakeSrcDir, fakeTgtDir, fakeFiles);
-
-        assume(builder.copyFile).not.called();
-        assume(builder.copyFolder).called(1);
+        expect(builder.copyFile).not.toHaveBeenCalled();
+        expect(builder.copyFolder).toHaveBeenCalledTimes(1);
       });
     });
 
     describe('#getPackageNameFromDir', function () {
       it('parses and returns the module name', function () {
-        assume(builder.getPackageNameFromDir('/src/path/to/test-app/locales')).equals('test-app');
+        expect(builder.getPackageNameFromDir('/src/path/to/test-app/locales')).toEqual('test-app');
       });
       it('parses and returns the scoped module name', function () {
-        assume(builder.getPackageNameFromDir('/src/path/to/@module/test-app/locales')).equals('@module/test-app');
+        expect(builder.getPackageNameFromDir('/src/path/to/@module/test-app/locales')).toEqual('@module/test-app');
       });
     });
 
     describe('#getPackageName', function () {
       it('parses and returns the app name', async function () {
-        sinon.stub(fs, 'readJson').resolves({ name: 'test-app' });
-        assume(await builder.getPackageName('/src/path/to/test-app/locales')).equals('test-app');
+        jest.spyOn(fs, 'readJson').mockResolvedValue({ name: 'test-app' });
+        expect(await builder.getPackageName('/src/path/to/test-app/locales')).toEqual('test-app');
       });
       it('parses and returns the scoped module name', async function () {
-        sinon.stub(fs, 'readJson').resolves({ name: '@module/test-app' });
-        assume(await builder.getPackageName('/src/path/to/@module/test-app/locales')).equals('@module/test-app');
+        jest.spyOn(fs, 'readJson').mockResolvedValue({ name: '@module/test-app' });
+        expect(await builder.getPackageName('/src/path/to/@module/test-app/locales')).toEqual('@module/test-app');
       });
       it('falls back to name from dir if no name in package.json', async function () {
-        sinon.stub(fs, 'readJson').resolves({ missing: 'name' });
-        assume(await builder.getPackageName('/src/path/to/@another/module/locales')).equals('@another/module');
+        jest.spyOn(fs, 'readJson').mockResolvedValue({ missing: 'name' });
+        expect(await builder.getPackageName('/src/path/to/@another/module/locales')).toEqual('@another/module');
       });
       it('falls back to name from dir if error reading package.json', async function () {
-        sinon.stub(fs, 'readJson').rejects('bad');
-        assume(await builder.getPackageName('/src/path/to/@another/module/locales')).equals('@another/module');
+        jest.spyOn(fs, 'readJson').mockRejectedValue('bad');
+        expect(await builder.getPackageName('/src/path/to/@another/module/locales')).toEqual('@another/module');
       });
     });
 
@@ -129,17 +135,17 @@ describe('buildModules', function () {
           '/src/test1/locales',
           '/src/test2/locales'
         ];
-        sinon.stub(fs, 'remove').resolves();
-        sinon.stub(fs, 'mkdirp').resolves();
-        sinon.stub(fs, 'readdir').resolves(['test/folder/name.json']);
-        sinon.stub(fs, 'readJson').resolves({ name: 'bogus-package' });
-        sinon.stub(fsUtils, 'saveJsonFile').resolves();
-        sinon.stub(builder, 'processFiles');
+        jest.spyOn(fs, 'remove').mockResolvedValue();
+        jest.spyOn(fs, 'mkdirp').mockResolvedValue();
+        jest.spyOn(fs, 'readdir').mockResolvedValue(['test/folder/name.json']);
+        jest.spyOn(fs, 'readJson').mockResolvedValue({ name: 'bogus-package' });
+        jest.spyOn(fsUtils, 'saveJsonFile').mockResolvedValue();
+        jest.spyOn(builder, 'processFiles');
       });
 
       it('calls processFiles for each directory', async function () {
         await builder.processDirs(buildDirs);
-        assume(builder.processFiles).called(2);
+        expect(builder.processFiles).toHaveBeenCalledTimes(2);
       });
     });
 
@@ -151,23 +157,22 @@ describe('buildModules', function () {
           '/path/to/module/myh-fake2',
           '/path/to/module/myh-fake3'
         ];
-        sinon.stub(fsUtils, 'getDirectories').resolves(discoveredDirs);
+        jest.spyOn(fsUtils, 'getDirectories').mockResolvedValue(discoveredDirs);
       });
 
       it('returns a list of all locale paths', async function () {
-        sinon.stub(fs, 'lstat').resolves({ isDirectory: () => true });
+        jest.spyOn(fs, 'lstat').mockResolvedValue({ isDirectory: () => true });
         const results = await builder.discoverDirs();
-        assume(results).length(3);
+        expect(results).toHaveLength(3);
       });
 
       it('returns a list of all locale paths that are folder', async function () {
-        sinon.stub(fs, 'lstat')
-          .resolves({ isDirectory: () => true })
-          .onCall(0)
-          .resolves({ isDirectory: () => false });
+        jest.spyOn(fs, 'lstat')
+          .mockResolvedValueOnce({ isDirectory: () => true })
+          .mockResolvedValueOnce({ isDirectory: () => false });
 
         const results = await builder.discoverDirs();
-        assume(results).length(2);
+        expect(results).toHaveLength(2);
       });
 
       it('excludes blacklisted modules', async function () {
@@ -175,24 +180,24 @@ describe('buildModules', function () {
           '/should/blacklist/yargs',
           '/should/not/blacklist/bogus'
         );
-        sinon.stub(fs, 'lstat').resolves({ isDirectory: () => true });
+        jest.spyOn(fs, 'lstat').mockResolvedValue({ isDirectory: () => true });
         const results = await builder.discoverDirs();
-        assume(results).not.includes('/should/blacklist/yargs/locales');
-        assume(results).includes('/should/not/blacklist/bogus/locales');
+        expect(results).not.toContain('/should/blacklist/yargs/locales');
+        expect(results).toContain('/should/not/blacklist/bogus/locales');
       });
     });
 
     describe('#run', function () {
       it('only processes discovered locale dirs', async function () {
-        sinon.stub(fs, 'remove').resolves();
-        sinon.stub(fs, 'mkdirp').resolves();
-        sinon.stub(builder, 'discoverDirs').resolves();
-        sinon.stub(builder, 'processDirs').resolves();
+        jest.spyOn(fs, 'remove').mockResolvedValue();
+        jest.spyOn(fs, 'mkdirp').mockResolvedValue();
+        jest.spyOn(builder, 'discoverDirs').mockResolvedValue();
+        jest.spyOn(builder, 'processDirs').mockResolvedValue();
         await builder.run();
-        assume(fs.remove).called(1);
-        assume(fs.mkdirp).called(1);
-        assume(builder.discoverDirs).called(1);
-        assume(builder.processDirs).called(1);
+        expect(fs.remove).toHaveBeenCalledTimes(1);
+        expect(fs.mkdirp).toHaveBeenCalledTimes(1);
+        expect(builder.discoverDirs).toHaveBeenCalledTimes(1);
+        expect(builder.processDirs).toHaveBeenCalledTimes(1);
       });
     });
   });

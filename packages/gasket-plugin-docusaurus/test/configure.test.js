@@ -1,4 +1,3 @@
-const assume = require('assume');
 const configure = require('../lib/configure');
 
 describe('configure', () => {
@@ -14,36 +13,34 @@ describe('configure', () => {
 
   it('define default docusaurus config if it doesn\'t exist', async function () {
     const results = await configure.handler(mockGasket, mockGasket.config);
-    assume(results.docusaurus).exists();
+    expect(results.docusaurus).toBeTruthy();
   });
 
   it('define the docusaurus config "rootDir" if it doesn\'t exist"', async function () {
     const results = await configure.handler(mockGasket, mockGasket.config);
-    assume(results.docusaurus.rootDir).exists();
+    expect(results.docusaurus.rootDir).toBeTruthy();
   });
 
   it('set default docusaurus "rootDir" to ".docs"', async function () {
     const results = await configure.handler(mockGasket, mockGasket.config);
-    assume(results.docusaurus.rootDir).equals('.docs');
+    expect(results.docusaurus.rootDir).toEqual('.docs');
   });
 
   it('define docs property in gasket config if it doesn\'t exist', async function () {
     const results = await configure.handler(mockGasket, mockGasket.config);
-    assume(results.docs).exists();
+    expect(results.docs).toBeTruthy();
   });
 
   it('sets default docs outputDir to ".docs/docs"', async function () {
     const results = await configure.handler(mockGasket, mockGasket.config);
-    assume(results.docs.outputDir)
-      .exists()
-      .equals('.docs/docs');
+    expect(results.docs.outputDir).toEqual('.docs/docs');
   });
 
   it('override gasket config docs property', async function () {
     mockGasket.config.docusaurus = { rootDir: 'site-docs', docsDir: 'my-docs' };
     const results = await configure.handler(mockGasket, mockGasket.config);
-    assume(results.docs.outputDir).equals('site-docs/my-docs');
-    assume(results.docusaurus.rootDir).equals('site-docs');
-    assume(results.docusaurus.docsDir).equals('my-docs');
+    expect(results.docs.outputDir).toEqual('site-docs/my-docs');
+    expect(results.docusaurus.rootDir).toEqual('site-docs');
+    expect(results.docusaurus.docsDir).toEqual('my-docs');
   });
 });

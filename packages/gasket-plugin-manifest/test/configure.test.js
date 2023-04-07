@@ -1,23 +1,18 @@
-const assume = require('assume');
-const sinon = require('sinon');
-const proxyquire = require('proxyquire');
+const mockJoinStub = jest.fn();
 
+jest.mock('path', () => ({
+  join: mockJoinStub
+}));
+
+const configure = require('../lib/configure');
 const baseConfig = require('../lib/base-config');
 
 describe('configure', function () {
-  const joinStub = sinon.stub();
-
-  const configure = proxyquire('../lib/configure', {
-    path: {
-      join: joinStub
-    }
-  });
-
   let gasket;
 
   beforeEach(function () {
     gasket = {
-      execWaterfall: sinon.stub().resolves([]),
+      execWaterfall: jest.fn().mockResolvedValue([]),
       config: {
         manifest: {
           name: 'Walter White',
@@ -29,18 +24,18 @@ describe('configure', function () {
         root: 'test/'
       },
       logger: {
-        debug: sinon.stub()
+        debug: jest.fn()
       }
     };
   });
 
   afterEach(function () {
-    sinon.reset();
+    jest.clearAllMocks();
   });
 
   it('is a function', function () {
-    assume(configure).is.a('function');
-    assume(configure).has.length(1);
+    expect(typeof configure).toBe('function');
+    expect(configure).toHaveLength(1);
   });
 
   it('merges base config with the manifest config', function () {
@@ -49,7 +44,7 @@ describe('configure', function () {
 
     const results = configure(gasket, config);
 
-    assume(results.manifest).eqls(
+    expect(results.manifest).toEqual(
       { ...baseConfig, scope }
     );
   });
@@ -59,7 +54,7 @@ describe('configure', function () {
 
     const results = configure(gasket, config);
 
-    assume(results.manifest).eqls(baseConfig);
+    expect(results.manifest).toEqual(baseConfig);
   });
 
   it('uses default path when staticOutput is true', function () {
@@ -68,7 +63,7 @@ describe('configure', function () {
 
     configure(gasket, config);
 
-    assume(joinStub.args[0][1]).eqls('public/manifest.json');
+    expect(mockJoinStub.mock.calls[0][1]).toEqual('public/manifest.json');
   });
 
   it('uses custom path when passed from manifest', function () {
@@ -77,11 +72,11 @@ describe('configure', function () {
 
     configure(gasket, config);
 
-    assume(joinStub.args[0][1]).eqls(staticOutput);
+    expect(mockJoinStub.mock.calls[0][1]).toEqual(staticOutput);
   });
 
   it('sets static output to false when not configured', function () {
     configure(gasket, { manifest: {} });
-    assume(joinStub.called).false();
+    expect(mockJoinStub).not.toHaveBeenCalled();
   });
 });

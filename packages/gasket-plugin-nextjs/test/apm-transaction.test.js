@@ -1,5 +1,3 @@
-const assume = require('assume');
-const { spy } = require('sinon');
 const apmTransaction = require('../lib/apm-transaction');
 
 describe('The apmTransaction hook', () => {
@@ -8,7 +6,7 @@ describe('The apmTransaction hook', () => {
   beforeEach(() => {
     transaction = {
       name: 'GET *',
-      addLabels: spy()
+      addLabels: jest.fn()
     };
   });
 
@@ -18,7 +16,7 @@ describe('The apmTransaction hook', () => {
 
     await apmTransaction({}, transaction, { req });
 
-    assume(transaction.name).equals('GET /proxy/foo');
+    expect(transaction.name).toEqual('GET /proxy/foo');
   });
 
   it('returns the page name if the route is for a page', async () => {
@@ -31,7 +29,7 @@ describe('The apmTransaction hook', () => {
 
     await apmTransaction({}, transaction, { req });
 
-    assume(transaction.name).equals('/customer/[id]');
+    expect(transaction.name).toEqual('/customer/[id]');
   });
 
   it('does not set labels if the route is not for a page', async () => {
@@ -39,7 +37,7 @@ describe('The apmTransaction hook', () => {
 
     await apmTransaction({}, transaction, { req });
 
-    assume(transaction.addLabels).was.not.called();
+    expect(transaction.addLabels).not.toHaveBeenCalled();
   });
 
   it('sets dynamic route params as labels if the route is for a page', async () => {
@@ -53,6 +51,6 @@ describe('The apmTransaction hook', () => {
 
     await apmTransaction({}, transaction, { req });
 
-    assume(transaction.addLabels).was.calledWith({ cohortId: 'Rad People' });
+    expect(transaction.addLabels).toHaveBeenCalledWith({ cohortId: 'Rad People' });
   });
 });

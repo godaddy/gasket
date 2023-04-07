@@ -1,10 +1,7 @@
 const path = require('path');
-const proxyquire = require('proxyquire').noCallThru();
-const assume = require('assume');
-const { spy } = require('sinon');
 
 describe('req.getNextRoute()', () => {
-  let getNextRoute, req, gasket;
+  let req, gasket, getNextRoute;
 
   beforeEach(() => {
     gasket = {
@@ -12,13 +9,17 @@ describe('req.getNextRoute()', () => {
         root: ''
       },
       logger: {
-        warning: spy()
+        warning: jest.fn()
       }
     };
 
     req = { url: '/' };
 
-    getNextRoute = proxyquire('../lib/next-route', {});
+    getNextRoute = require('../lib/next-route');
+  });
+
+  afterEach(() => {
+    jest.resetModules();
   });
 
   it('returns null if a valid routes manifest could not be found', async () => {
@@ -26,7 +27,7 @@ describe('req.getNextRoute()', () => {
 
     const route = await getNextRoute(gasket, req);
 
-    assume(route).equals(null);
+    expect(route).toBeNull();
   });
 
   describe('if a valid .next/routes-manifest.json exists', () => {
@@ -39,7 +40,7 @@ describe('req.getNextRoute()', () => {
 
       const route = await getNextRoute(gasket, req);
 
-      assume(route).equals(null);
+      expect(route).toBeNull();
     });
 
     it('returns a static route if there is a match', async () => {
@@ -47,8 +48,8 @@ describe('req.getNextRoute()', () => {
 
       const route = await getNextRoute(gasket, req);
 
-      assume(route).does.not.equal(null);
-      assume(route.page).equals('/purge-documents');
+      expect(route).not.toBeNull();
+      expect(route.page).toEqual('/purge-documents');
     });
 
     it('returns a dynamic route if there is a match', async () => {
@@ -56,9 +57,9 @@ describe('req.getNextRoute()', () => {
 
       const route = await getNextRoute(gasket, req);
 
-      assume(route).does.not.equal(null);
-      assume(route.page).equals('/plans/cohorts/[cohort]');
-      assume(route.namedRegex.exec(req.url).groups.cohort).equals('US%20Only');
+      expect(route).not.toBeNull();
+      expect(route.page).toEqual('/plans/cohorts/[cohort]');
+      expect(route.namedRegex.exec(req.url).groups.cohort).toEqual('US%20Only');
     });
   });
 });

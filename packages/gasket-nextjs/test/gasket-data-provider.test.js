@@ -1,16 +1,13 @@
 import React from 'react';
-import { shallow } from 'enzyme';
 import assume from 'assume';
+import { render, screen } from '@testing-library/react';
+
 import { GasketDataProvider } from '../src/gasket-data-provider';
 
 describe('GasketDataProvider', function () {
 
   it('should render the component', () => {
-    const container = shallow(
-      <GasketDataProvider gasketData={{ test: 'test' }}>hello</GasketDataProvider>
-    );
-
-    assume(container).exists();
-    assume(container.text()).equals('hello');
+    render(<GasketDataProvider gasketData={{ test: 'test' }}>hello</GasketDataProvider>);
+    assume(screen.getByText('hello')).exists();
   });
 });

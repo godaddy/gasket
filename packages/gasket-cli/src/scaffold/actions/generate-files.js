@@ -79,6 +79,7 @@ async function getDescriptors(context) {
     await Promise.all(files.globSets.map(async set => {
       const { globs, source } = set;
       const matches = await Promise.all(globs.map(async pattern => {
+        pattern = splitSep(pattern).join('/');  // Glob uses / for all OS's
         const srcPaths = await glob(pattern, { nodir: true });
         return assembleDescriptors(dest, source.name, pattern, srcPaths);
       }));

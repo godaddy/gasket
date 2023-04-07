@@ -1,5 +1,3 @@
-const assume = require('assume');
-const sinon = require('sinon');
 const path = require('path');
 const plugin = require('../lib/index');
 
@@ -10,9 +8,9 @@ describe('create', function () {
   let filesAddStub;
 
   beforeEach(function () {
-    pkgHasStub = sinon.stub().returns(true);
-    pkgAddStub = sinon.stub();
-    filesAddStub = sinon.stub();
+    pkgHasStub = jest.fn().mockReturnValue(true);
+    pkgAddStub = jest.fn();
+    filesAddStub = jest.fn();
 
     mockContext = {
       pkg: {
@@ -28,21 +26,21 @@ describe('create', function () {
   it('adds the appropriate globs', async function () {
     const rootDir = path.join(__dirname, '..');
     await plugin.hooks.create({}, mockContext);
-    assume(filesAddStub.args[0][0]).eqls(
+    expect(filesAddStub.mock.calls[0][0]).toEqual(
       `${rootDir}/generator/*`,
       `${rootDir}/generator/**/*`
     );
   });
 
   it('does not add intl dependencies when react is not found', async function () {
-    pkgHasStub.returns(false);
+    pkgHasStub.mockReturnValue(false);
     await plugin.hooks.create({}, mockContext);
-    assume(pkgAddStub).not.called();
+    expect(pkgAddStub).not.toHaveBeenCalled();
   });
 
   it('adds the appropriate dependencies', async function () {
     await plugin.hooks.create({}, mockContext);
-    assume(pkgAddStub.args[0]).eqls(['dependencies', {
+    expect(pkgAddStub.mock.calls[0]).toEqual(['dependencies', {
       '@gasket/react-intl': require('../package.json').devDependencies['@gasket/react-intl'],
       'react-intl': require('../package.json').devDependencies['react-intl']
     }]);

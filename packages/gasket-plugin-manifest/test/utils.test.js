@@ -1,21 +1,17 @@
-const assume = require('assume');
-const sinon = require('sinon');
-const proxyquire = require('proxyquire');
+const mockJoinStub = jest.fn();
+
+jest.mock('path', () => ({
+  join: mockJoinStub
+}));
+
+const { gatherManifestData } = require('../lib/utils');
 
 describe('utils', function () {
-  const joinStub = sinon.stub();
-
-  const { gatherManifestData } = proxyquire('../lib/utils', {
-    path: {
-      join: joinStub
-    }
-  });
-
   let gasket;
 
   beforeEach(function () {
     gasket = {
-      execWaterfall: sinon.stub().resolves([]),
+      execWaterfall: jest.fn().mockResolvedValue([]),
       config: {
         manifest: {
           name: 'Walter White',
@@ -27,25 +23,25 @@ describe('utils', function () {
         }
       },
       logger: {
-        debug: sinon.stub()
+        debug: jest.fn()
       }
     };
   });
 
   afterEach(function () {
-    sinon.reset();
+    jest.clearAllMocks();
   });
 
   describe('#gatherManifestData', function () {
     it('is a function', function () {
-      assume(gatherManifestData).is.a('asyncfunction');
-      assume(gatherManifestData).has.length(2);
+      expect(typeof gatherManifestData).toBe('function');
+      expect(gatherManifestData).toHaveLength(2);
     });
 
     it('uses static source when no url supplied', async function () {
       await gatherManifestData(gasket, {});
-      assume(gasket.logger.debug.calledOnce).is.true();
-      assume(gasket.logger.debug.args[0][0]).eqls('Gathering manifest for static manifest');
+      expect(gasket.logger.debug).toHaveBeenCalledTimes(1);
+      expect(gasket.logger.debug.mock.calls[0][0]).toEqual('Gathering manifest for static manifest');
     });
 
     it('uses req url as source', async function () {
@@ -53,33 +49,33 @@ describe('utils', function () {
         originalUrl: 'www.originalurl.com'
       };
       await gatherManifestData(gasket, { req });
-      assume(gasket.logger.debug.calledOnce).is.true();
-      assume(gasket.logger.debug.args[0][0]).eqls('Gathering manifest for www.originalurl.com');
+      expect(gasket.logger.debug).toHaveBeenCalledTimes(1);
+      expect(gasket.logger.debug.mock.calls[0][0]).toEqual('Gathering manifest for www.originalurl.com');
     });
 
     it('does not include staticOutput in manifest file', async function () {
       await gatherManifestData(gasket, {});
-      assume(gasket.execWaterfall.calledOnce).is.true();
-      assume(gasket.execWaterfall.args[0][1]).doesnt.contain('staticOutput');
+      expect(gasket.execWaterfall).toHaveBeenCalledTimes(1);
+      expect(gasket.execWaterfall.mock.calls[0][1]).not.toContain('staticOutput');
     });
 
     it('does not include false staticOutput in manifest', async function () {
       gasket.config.manifest.staticOutput = false;
       await gatherManifestData(gasket, {});
-      assume(gasket.execWaterfall.calledOnce).is.true();
-      assume(gasket.execWaterfall.args[0][1]).doesnt.contain('staticOutput');
+      expect(gasket.execWaterfall).toHaveBeenCalledTimes(1);
+      expect(gasket.execWaterfall.mock.calls[0][1]).not.toContain('staticOutput');
     });
 
     it('does not include path manifest', async function () {
       gasket.config.manifest.path = '/custom/manifest.json';
       await gatherManifestData(gasket, {});
-      assume(gasket.execWaterfall.calledOnce).is.true();
-      assume(gasket.execWaterfall.args[0][1]).doesnt.contain('path');
+      expect(gasket.execWaterfall).toHaveBeenCalledTimes(1);
+      expect(gasket.execWaterfall.mock.calls[0][1]).not.toContain('path');
     });
 
     it('calls manifest waterfall', async function () {
       await gatherManifestData(gasket, {});
-      assume(gasket.execWaterfall.calledOnce).is.true();
+      expect(gasket.execWaterfall).toHaveBeenCalledTimes(1);
     });
   });
 });

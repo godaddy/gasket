@@ -1,4 +1,3 @@
-const assume = require('assume');
 const metadata = require('../lib/metadata');
 
 describe('metadata', function () {
@@ -21,8 +20,8 @@ describe('metadata', function () {
     ];
 
     const keys = Object.keys(meta);
-    assume(keys).eqls(expected);
-    assume(keys).is.length(expected.length);
+    expect(keys).toEqual(expected);
+    expect(keys).toHaveLength(expected.length);
   });
 
   it('includes express lifecycles for express plugin', function () {
@@ -31,12 +30,12 @@ describe('metadata', function () {
     });
     const meta = metadata(mockGasket, {});
     const expressLifecycles = meta.lifecycles.filter(data => data.description.includes('Express'));
-    assume(expressLifecycles).length(2);
-    assume(expressLifecycles[0]).property('name', 'next');
-    assume(expressLifecycles[1]).property('name', 'nextExpress');
+    expect(expressLifecycles).toHaveLength(2);
+    expect(expressLifecycles[0]).toHaveProperty('name', 'next');
+    expect(expressLifecycles[1]).toHaveProperty('name', 'nextExpress');
 
     const fastifyLifecycles = meta.lifecycles.filter(data => data.description.includes('Fastify'));
-    assume(fastifyLifecycles).length(0);
+    expect(fastifyLifecycles).toHaveLength(0);
   });
 
   it('includes fastify lifecycles for fastify plugin', function () {
@@ -45,12 +44,12 @@ describe('metadata', function () {
     });
     const meta = metadata(mockGasket, {});
     const fastifyLifecycles = meta.lifecycles.filter(data => data.description.includes('Fastify'));
-    assume(fastifyLifecycles).length(2);
-    assume(fastifyLifecycles[0]).property('name', 'next');
-    assume(fastifyLifecycles[1]).property('name', 'nextFastify');
+    expect(fastifyLifecycles).toHaveLength(2);
+    expect(fastifyLifecycles[0]).toHaveProperty('name', 'next');
+    expect(fastifyLifecycles[1]).toHaveProperty('name', 'nextFastify');
 
     const expressLifecycles = meta.lifecycles.filter(data => data.description.includes('Express'));
-    assume(expressLifecycles).length(0);
+    expect(expressLifecycles).toHaveLength(0);
   });
 
   it('includes express AND fastify lifecycles for both plugin', function () {
@@ -63,14 +62,14 @@ describe('metadata', function () {
 
     // Express
     const expressLifecycles = meta.lifecycles.filter(data => data.description.includes('Express'));
-    assume(expressLifecycles).length(2);
-    assume(expressLifecycles[0]).property('name', 'next');
-    assume(expressLifecycles[1]).property('name', 'nextExpress');
+    expect(expressLifecycles).toHaveLength(2);
+    expect(expressLifecycles[0]).toHaveProperty('name', 'next');
+    expect(expressLifecycles[1]).toHaveProperty('name', 'nextExpress');
 
     // Fastify
     const fastifyLifecycles = meta.lifecycles.filter(data => data.description.includes('Fastify'));
-    assume(fastifyLifecycles).length(2);
-    assume(fastifyLifecycles[0]).property('name', 'next');
-    assume(fastifyLifecycles[1]).property('name', 'nextFastify');
+    expect(fastifyLifecycles).toHaveLength(2);
+    expect(fastifyLifecycles[0]).toHaveProperty('name', 'next');
+    expect(fastifyLifecycles[1]).toHaveProperty('name', 'nextFastify');
   });
 });

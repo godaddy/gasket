@@ -1,6 +1,6 @@
 {
   "name": "@gasket/log",
-  "version": "6.34.6",
+  "version": "6.38.0",
   "description": "Gasket client and server logger",
   "main": "src/server.js",
   "browser": "lib/client.js",
@@ -13,13 +13,15 @@
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
-    "test": "npm run test:client && npm run test:server",
-    "test:coverage": "nyc --reporter=text --reporter=json-summary npm run test",
+    "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' npm run test:runner",
+    "test:runner": "npm run test:client && npm run test:server",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:client": "jest test/client.test.js",
+    "test:server": "jest test/server.test.js",
     "posttest": "npm run lint",
     "build": "babel ./src/client.js -d lib --delete-dir-on-start",
-    "prepublishOnly": "npm run build",
-    "test:client": "mocha test/client.test.js",
-    "test:server": "mocha test/server.test.js"
+    "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -54,21 +56,20 @@
     "@babel/plugin-proposal-class-properties": "^7.3.0",
     "@babel/preset-env": "^7.12.10",
     "@babel/register": "^7.12.10",
-    "assume": "^2.3.0",
     "babel-eslint": "^10.1.0",
+    "cross-env": "^7.0.3",
     "eslint": "^8.7.0",
-    "eslint-config-godaddy": "^6.0.0",
+    "eslint-config-godaddy": "^7.0.0",
     "eslint-plugin-babel": "^5.3.0",
+    "eslint-plugin-jest": "^27.2.1",
     "eslint-plugin-json": "^3.1.0",
-    "eslint-plugin-mocha": "^10.0.3",
     "eslint-plugin-unicorn": "^44.0.0",
-    "mocha": "^10.0.0",
-    "nyc": "^15.1.0",
-    "sinon": "^14.0.0"
+    "jest": "^29.3.1"
   },
   "eslintConfig": {
     "extends": [
-      "godaddy"
+      "godaddy",
+      "plugin:jest/recommended"
     ],
     "plugins": [
       "unicorn",

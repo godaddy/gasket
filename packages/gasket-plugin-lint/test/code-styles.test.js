@@ -1,6 +1,3 @@
-const { describe, it } = require('mocha');
-const assume = require('assume');
-const sinon = require('sinon');
 const codeStyles = require('../lib/code-styles');
 const { devDependencies } = require('../package');
 
@@ -8,8 +5,8 @@ describe('code styles', () => {
   let context, utils, pkgHas, pkgAdd;
 
   beforeEach(() => {
-    pkgHas = sinon.stub();
-    pkgAdd = sinon.stub();
+    pkgHas = jest.fn();
+    pkgAdd = jest.fn();
     context = {
       pkg: {
         has: pkgHas,
@@ -17,13 +14,13 @@ describe('code styles', () => {
       }
     };
     utils = {
-      gatherDevDeps: sinon.stub().callsFake(dep => {
+      gatherDevDeps: jest.fn().mockImplementation(dep => {
         return Promise.resolve({
           [dep]: '*',
           example: 'latest'
         });
       }),
-      runScriptStr: sinon.stub().callsFake(name => name)
+      runScriptStr: jest.fn().mockImplementation(name => name)
     };
   });
 
@@ -31,68 +28,68 @@ describe('code styles', () => {
     const codeStyle = codeStyles.godaddy;
 
     it('is named', () => {
-      assume(codeStyle).property('name', 'GoDaddy');
+      expect(codeStyle).toHaveProperty('name', 'GoDaddy');
     });
 
     it('allows stylelint', () => {
-      assume(codeStyle.allowStylelint).true();
+      expect(codeStyle.allowStylelint).toBe(true);
     });
 
     it('uses godaddy-react config if react present', async () => {
-      pkgHas.callsFake((_, name) => ['react'].includes(name));
+      pkgHas.mockImplementation((_, name) => ['react'].includes(name));
       await codeStyle.create(context, utils);
 
-      assume(pkgAdd).calledWithMatch('devDependencies', {
-        'eslint-config-godaddy-react': sinon.match.string
-      });
-      assume(pkgAdd).calledWithMatch('eslintConfig', {
+      expect(pkgAdd).toHaveBeenCalledWith('devDependencies', expect.objectContaining({
+        'eslint-config-godaddy-react': expect.any(String)
+      }));
+      expect(pkgAdd).toHaveBeenCalledWith('eslintConfig', expect.objectContaining({
         extends: ['godaddy-react']
-      });
+      }));
     });
 
     it('uses godaddy-flow config if flow-bin present', async () => {
-      pkgHas.callsFake((_, name) => ['flow-bin'].includes(name));
+      pkgHas.mockImplementation((_, name) => ['flow-bin'].includes(name));
       await codeStyle.create(context, utils);
 
-      assume(pkgAdd).calledWithMatch('devDependencies', {
-        'eslint-config-godaddy-flow': sinon.match.string
-      });
-      assume(pkgAdd).calledWithMatch('eslintConfig', {
+      expect(pkgAdd).toHaveBeenCalledWith('devDependencies', expect.objectContaining({
+        'eslint-config-godaddy-flow': expect.any(String)
+      }));
+      expect(pkgAdd).toHaveBeenCalledWith('eslintConfig', expect.objectContaining({
         extends: ['godaddy-flow']
-      });
+      }));
     });
 
     it('uses godaddy-react-flow config if react & flow-bin present', async () => {
-      pkgHas.callsFake((_, name) => ['react', 'flow-bin'].includes(name));
+      pkgHas.mockImplementation((_, name) => ['react', 'flow-bin'].includes(name));
       await codeStyle.create(context, utils);
 
-      assume(pkgAdd).calledWithMatch('devDependencies', {
-        'eslint-config-godaddy-react-flow': sinon.match.string
-      });
-      assume(pkgAdd).calledWithMatch('eslintConfig', {
+      expect(pkgAdd).toHaveBeenCalledWith('devDependencies', expect.objectContaining({
+        'eslint-config-godaddy-react-flow': expect.any(String)
+      }));
+      expect(pkgAdd).toHaveBeenCalledWith('eslintConfig', expect.objectContaining({
         extends: ['godaddy-react-flow']
-      });
+      }));
     });
 
     it('uses base godaddy if no special dependencies present', async () => {
       await codeStyle.create(context, utils);
 
-      assume(pkgAdd).calledWithMatch('devDependencies', {
-        'eslint-config-godaddy': sinon.match.string
-      });
-      assume(pkgAdd).calledWithMatch('eslintConfig', {
+      expect(pkgAdd).toHaveBeenCalledWith('devDependencies', expect.objectContaining({
+        'eslint-config-godaddy': expect.any(String)
+      }));
+      expect(pkgAdd).toHaveBeenCalledWith('eslintConfig', expect.objectContaining({
         extends: ['godaddy']
-      });
+      }));
     });
 
     it('adds eslint-plugin-react-intl if react-intl present', async () => {
-      pkgHas.callsFake((_, name) => ['react-intl'].includes(name));
+      pkgHas.mockImplementation((_, name) => ['react-intl'].includes(name));
       await codeStyle.create(context, utils);
 
-      assume(pkgAdd).calledWithMatch('devDependencies', {
-        '@godaddy/eslint-plugin-react-intl': sinon.match.string
+      expect(pkgAdd).toHaveBeenCalledWith('devDependencies', {
+        '@godaddy/eslint-plugin-react-intl': expect.any(String)
       });
-      assume(pkgAdd).calledWithMatch('eslintConfig', {
+      expect(pkgAdd).toHaveBeenCalledWith('eslintConfig', {
         extends: ['plugin:@godaddy/react-intl/recommended'],
         settings: {
           localeFiles: ['public/locales/en-US.json']
@@ -101,13 +98,13 @@ describe('code styles', () => {
     });
 
     it('adds eslint-config-next if next present', async () => {
-      pkgHas.callsFake((_, name) => ['next'].includes(name));
+      pkgHas.mockImplementation((_, name) => ['next'].includes(name));
       await codeStyle.create(context, utils);
 
-      assume(pkgAdd).calledWithMatch('devDependencies', {
+      expect(pkgAdd).toHaveBeenCalledWith('devDependencies', {
         'eslint-config-next': devDependencies['eslint-config-next']
       });
-      assume(pkgAdd).calledWithMatch('eslintConfig', {
+      expect(pkgAdd).toHaveBeenCalledWith('eslintConfig', {
         extends: ['next']
       });
     });
@@ -116,12 +113,12 @@ describe('code styles', () => {
       context.addStylelint = true;
       await codeStyle.create(context, utils);
 
-      assume(pkgAdd).calledWithMatch('devDependencies', {
-        'stylelint-config-godaddy': sinon.match.string
-      });
-      assume(pkgAdd).calledWithMatch('stylelint', {
+      expect(pkgAdd).toHaveBeenCalledWith('devDependencies', expect.objectContaining({
+        'stylelint-config-godaddy': expect.any(String)
+      }));
+      expect(pkgAdd).toHaveBeenCalledWith('stylelint', expect.objectContaining({
         extends: ['stylelint-config-godaddy']
-      });
+      }));
     });
   });
 
@@ -129,44 +126,44 @@ describe('code styles', () => {
     const codeStyle = codeStyles.airbnb;
 
     it('is named', () => {
-      assume(codeStyle).property('name', 'Airbnb');
+      expect(codeStyle).toHaveProperty('name', 'Airbnb');
     });
 
     it('allows stylelint', () => {
-      assume(codeStyle.allowStylelint).true();
+      expect(codeStyle.allowStylelint).toBe(true);
     });
 
     it('uses airbnb config if react present', async () => {
-      pkgHas.callsFake((_, name) => ['react'].includes(name));
+      pkgHas.mockImplementation((_, name) => ['react'].includes(name));
       await codeStyle.create(context, utils);
 
-      assume(pkgAdd).calledWithMatch('devDependencies', {
-        'eslint-config-airbnb': sinon.match.string
-      });
-      assume(pkgAdd).calledWithMatch('eslintConfig', {
+      expect(pkgAdd).toHaveBeenCalledWith('devDependencies', expect.objectContaining({
+        'eslint-config-airbnb': expect.any(String)
+      }));
+      expect(pkgAdd).toHaveBeenCalledWith('eslintConfig', expect.objectContaining({
         extends: ['airbnb']
-      });
+      }));
     });
 
     it('uses base airbnb if no special dependencies present', async () => {
       await codeStyle.create(context, utils);
 
-      assume(pkgAdd).calledWithMatch('devDependencies', {
-        'eslint-config-airbnb-base': sinon.match.string
-      });
-      assume(pkgAdd).calledWithMatch('eslintConfig', {
+      expect(pkgAdd).toHaveBeenCalledWith('devDependencies', expect.objectContaining({
+        'eslint-config-airbnb-base': expect.any(String)
+      }));
+      expect(pkgAdd).toHaveBeenCalledWith('eslintConfig', {
         extends: ['airbnb-base']
       });
     });
 
     it('adds eslint-config-next if next present', async () => {
-      pkgHas.callsFake((_, name) => ['next'].includes(name));
+      pkgHas.mockImplementation((_, name) => ['next'].includes(name));
       await codeStyle.create(context, utils);
 
-      assume(pkgAdd).calledWithMatch('devDependencies', {
+      expect(pkgAdd).toHaveBeenCalledWith('devDependencies', {
         'eslint-config-next': devDependencies['eslint-config-next']
       });
-      assume(pkgAdd).calledWithMatch('eslintConfig', {
+      expect(pkgAdd).toHaveBeenCalledWith('eslintConfig', {
         extends: ['next']
       });
     });
@@ -175,10 +172,10 @@ describe('code styles', () => {
       context.addStylelint = true;
       await codeStyle.create(context, utils);
 
-      assume(pkgAdd).calledWithMatch('devDependencies', {
-        'stylelint-config-airbnb': sinon.match.string
-      });
-      assume(pkgAdd).calledWithMatch('stylelint', {
+      expect(pkgAdd).toHaveBeenCalledWith('devDependencies', expect.objectContaining({
+        'stylelint-config-airbnb': expect.any(String)
+      }));
+      expect(pkgAdd).toHaveBeenCalledWith('stylelint', {
         extends: ['stylelint-config-airbnb']
       });
     });
@@ -188,57 +185,57 @@ describe('code styles', () => {
     const codeStyle = codeStyles.standard;
 
     it('is named', () => {
-      assume(codeStyle).property('name', 'Standard');
+      expect(codeStyle).toHaveProperty('name', 'Standard');
     });
 
     it('does not allow stylelint', () => {
-      assume(codeStyle.allowStylelint).not.true();
+      expect(codeStyle.allowStylelint).not.toBe(true);
     });
 
     it('uses standard and snazzy dependencies', async () => {
       await codeStyle.create(context, utils);
 
-      assume(pkgAdd).calledWithMatch('devDependencies', {
-        standard: sinon.match.string,
-        snazzy: sinon.match.string
-      });
+      expect(pkgAdd).toHaveBeenCalledWith('devDependencies', expect.objectContaining({
+        standard: expect.any(String),
+        snazzy: expect.any(String)
+      }));
     });
 
     it('adds env if jest present', async () => {
-      pkgHas.callsFake((_, name) => ['jest'].includes(name));
+      pkgHas.mockImplementation((_, name) => ['jest'].includes(name));
       await codeStyle.create(context, utils);
 
-      assume(pkgAdd).calledWithMatch('standard', {
+      expect(pkgAdd).toHaveBeenCalledWith('standard', {
         env: ['jest']
       });
     });
 
     it('adds env if mocha present', async () => {
-      pkgHas.callsFake((_, name) => ['mocha'].includes(name));
+      pkgHas.mockImplementation((_, name) => ['mocha'].includes(name));
       await codeStyle.create(context, utils);
 
-      assume(pkgAdd).calledWithMatch('standard', {
+      expect(pkgAdd).toHaveBeenCalledWith('standard', {
         env: ['mocha']
       });
     });
 
     it('adds expected ignores', async () => {
-      pkgHas.callsFake((_, name) => ['mocha'].includes(name));
+      pkgHas.mockImplementation((_, name) => ['mocha'].includes(name));
       await codeStyle.create(context, utils);
 
-      assume(pkgAdd).calledWithMatch('standard', {
+      expect(pkgAdd).toHaveBeenCalledWith('standard', {
         ignore: ['build/']
       });
     });
 
     it('adds eslint-config-next if next present', async () => {
-      pkgHas.callsFake((_, name) => ['next'].includes(name));
+      pkgHas.mockImplementation((_, name) => ['next'].includes(name));
       await codeStyle.create(context, utils);
 
-      assume(pkgAdd).calledWithMatch('devDependencies', {
+      expect(pkgAdd).toHaveBeenCalledWith('devDependencies', {
         'eslint-config-next': devDependencies['eslint-config-next']
       });
-      assume(pkgAdd).calledWithMatch('eslintConfig', {
+      expect(pkgAdd).toHaveBeenCalledWith('eslintConfig', {
         extends: ['next']
       });
     });
@@ -248,11 +245,11 @@ describe('code styles', () => {
     const codeStyle = codeStyles.other;
 
     it('is named', () => {
-      assume(codeStyle).property('name');
+      expect(codeStyle).toHaveProperty('name');
     });
 
     it('allows stylelint', () => {
-      assume(codeStyle.allowStylelint).true();
+      expect(codeStyle.allowStylelint).toBe(true);
     });
 
     describe('eslintConfig', () => {
@@ -260,37 +257,37 @@ describe('code styles', () => {
         context.eslintConfig = 'eslint-config-fake';
         await codeStyle.create(context, utils);
 
-        assume(utils.gatherDevDeps).calledWith('eslint-config-fake');
+        expect(utils.gatherDevDeps).toHaveBeenCalledWith('eslint-config-fake');
       });
 
       it('gathers dependencies for short name with version', async () => {
         context.eslintConfig = 'fake@^1.2.3';
         await codeStyle.create(context, utils);
 
-        assume(utils.gatherDevDeps).calledWith('eslint-config-fake@^1.2.3');
+        expect(utils.gatherDevDeps).toHaveBeenCalledWith('eslint-config-fake@^1.2.3');
       });
 
       it('gathers dependencies for scope-only short names', async () => {
         context.eslintConfig = '@fake@^1.2.3';
         await codeStyle.create(context, utils);
 
-        assume(utils.gatherDevDeps).calledWith('@fake/eslint-config@^1.2.3');
+        expect(utils.gatherDevDeps).toHaveBeenCalledWith('@fake/eslint-config@^1.2.3');
       });
 
       it('add gathered devDependencies', async () => {
         context.eslintConfig = 'eslint-config-fake';
         await codeStyle.create(context, utils);
 
-        assume(pkgAdd).calledWithMatch('devDependencies', {
-          'eslint-config-fake': sinon.match.string
-        });
+        expect(pkgAdd).toHaveBeenCalledWith('devDependencies', expect.objectContaining({
+          'eslint-config-fake': expect.any(String)
+        }));
       });
 
       it('adds eslint config as short name', async () => {
         context.eslintConfig = 'eslint-config-fake@^1.2.3';
         await codeStyle.create(context, utils);
 
-        assume(pkgAdd).calledWithMatch('eslintConfig', {
+        expect(pkgAdd).toHaveBeenCalledWith('eslintConfig', {
           extends: ['fake']
         });
       });
@@ -299,7 +296,7 @@ describe('code styles', () => {
         context.eslintConfig = '@fake/eslint-config@^1.2.3';
         await codeStyle.create(context, utils);
 
-        assume(pkgAdd).calledWithMatch('eslintConfig', {
+        expect(pkgAdd).toHaveBeenCalledWith('eslintConfig', {
           extends: ['@fake']
         });
       });
@@ -307,13 +304,13 @@ describe('code styles', () => {
       it('adds eslint-config-next if next present', async () => {
         context.eslintConfig = 'eslint-config-fake';
         // eslint-disable-next-line max-nested-callbacks
-        pkgHas.callsFake((_, name) => ['next'].includes(name));
+        pkgHas.mockImplementation((_, name) => ['next'].includes(name));
         await codeStyle.create(context, utils);
 
-        assume(pkgAdd).calledWithMatch('devDependencies', {
+        expect(pkgAdd).toHaveBeenCalledWith('devDependencies', {
           'eslint-config-next': devDependencies['eslint-config-next']
         });
-        assume(pkgAdd).calledWithMatch('eslintConfig', {
+        expect(pkgAdd).toHaveBeenCalledWith('eslintConfig', {
           extends: ['next']
         });
       });
@@ -321,7 +318,7 @@ describe('code styles', () => {
       it('ignores if no eslint config', async () => {
         await codeStyle.create(context, utils);
 
-        assume(pkgAdd).not.calledWithMatch('eslintConfig');
+        expect(pkgAdd).not.toHaveBeenCalledWith('eslintConfig');
       });
     });
 
@@ -332,30 +329,30 @@ describe('code styles', () => {
         context.stylelintConfig = 'stylelint-config-fake';
         await codeStyle.create(context, utils);
 
-        assume(utils.gatherDevDeps).calledWith('stylelint-config-fake');
+        expect(utils.gatherDevDeps).toHaveBeenCalledWith('stylelint-config-fake');
       });
 
       it('gathers dependencies with version', async () => {
         context.stylelintConfig = 'stylelint-config-fake@^1.2.3';
         await codeStyle.create(context, utils);
 
-        assume(utils.gatherDevDeps).calledWith('stylelint-config-fake@^1.2.3');
+        expect(utils.gatherDevDeps).toHaveBeenCalledWith('stylelint-config-fake@^1.2.3');
       });
 
       it('add gathered devDependencies', async () => {
         context.stylelintConfig = 'stylelint-config-fake';
         await codeStyle.create(context, utils);
 
-        assume(pkgAdd).calledWithMatch('devDependencies', {
-          'stylelint-config-fake': sinon.match.string
-        });
+        expect(pkgAdd).toHaveBeenCalledWith('devDependencies', expect.objectContaining({
+          'stylelint-config-fake': expect.any(String)
+        }));
       });
 
       it('adds stylelintConfig as name (does not shorten)', async () => {
         context.stylelintConfig = 'stylelint-config-fake@^1.2.3';
         await codeStyle.create(context, utils);
 
-        assume(pkgAdd).calledWithMatch('stylelintConfig', {
+        expect(pkgAdd).toHaveBeenCalledWith('stylelintConfig', {
           extends: ['stylelint-config-fake']
         });
       });
@@ -363,7 +360,7 @@ describe('code styles', () => {
       it('ignores if no stylelint config', async () => {
         await codeStyle.create(context, utils);
 
-        assume(pkgAdd).not.calledWithMatch('stylelintConfig');
+        expect(pkgAdd).not.toHaveBeenCalledWith('stylelintConfig');
       });
     });
   });
@@ -372,11 +369,11 @@ describe('code styles', () => {
     const codeStyle = codeStyles.none;
 
     it('is named', () => {
-      assume(codeStyle).property('name');
+      expect(codeStyle).toHaveProperty('name');
     });
 
     it('does not allows stylelint', () => {
-      assume(codeStyle.allowStylelint).not.true();
+      expect(codeStyle.allowStylelint).not.toBe(true);
     });
   });
 
@@ -385,158 +382,158 @@ describe('code styles', () => {
     const codeStyle = codeStyles.common;
 
     it('is not named', () => {
-      assume(codeStyle).not.property('name');
+      expect(codeStyle).not.toHaveProperty('name');
     });
 
     it('does not allows stylelint', () => {
-      assume(codeStyle.allowStylelint).not.true();
+      expect(codeStyle.allowStylelint).not.toBe(true);
     });
 
     it('adds lint scripts if eslint present', async () => {
-      pkgHas.callsFake((_, name) => ['eslint'].includes(name));
+      pkgHas.mockImplementation((_, name) => ['eslint'].includes(name));
       await codeStyle.create(context, utils);
 
-      assume(pkgAdd).calledWithMatch('scripts', {
-        'lint': sinon.match.string,
-        'lint:fix': sinon.match.string
+      expect(pkgAdd).toHaveBeenCalledWith('scripts', {
+        'lint': expect.any(String),
+        'lint:fix': expect.any(String)
       });
 
-      assume(utils.runScriptStr).calledWith('lint -- --fix');
+      expect(utils.runScriptStr).toHaveBeenCalledWith('lint -- --fix');
     });
 
     it('adds lint scripts support for .js, .jsx, .cjs', async () => {
-      pkgHas.callsFake((_, name) => ['eslint'].includes(name));
+      pkgHas.mockImplementation((_, name) => ['eslint'].includes(name));
       await codeStyle.create(context, utils);
 
-      assume(pkgAdd).calledWithMatch('scripts', {
+      expect(pkgAdd).toHaveBeenCalledWith('scripts', {
         'lint': 'eslint --ext .js,.jsx,.cjs .',
-        'lint:fix': sinon.match.string
+        'lint:fix': expect.any(String)
       });
 
-      assume(utils.runScriptStr).calledWith('lint -- --fix');
+      expect(utils.runScriptStr).toHaveBeenCalledWith('lint -- --fix');
     });
 
     it('does not add lint scripts if already set', async () => {
-      pkgHas.callsFake((_, name) => ['eslint', 'lint'].includes(name));
+      pkgHas.mockImplementation((_, name) => ['eslint', 'lint'].includes(name));
       await codeStyle.create(context, utils);
 
-      assume(pkgAdd).not.calledWithMatch('scripts', {
-        'lint': sinon.match.string,
-        'lint:fix': sinon.match.string
+      expect(pkgAdd).not.toHaveBeenCalledWith('scripts', {
+        'lint': expect.any(String),
+        'lint:fix': expect.any(String)
       });
     });
 
     it('adds env if jest present', async () => {
-      pkgHas.callsFake((_, name) => ['eslint', 'jest'].includes(name));
+      pkgHas.mockImplementation((_, name) => ['eslint', 'jest'].includes(name));
       await codeStyle.create(context, utils);
 
-      assume(pkgAdd).calledWithMatch('eslintConfig', {
+      expect(pkgAdd).toHaveBeenCalledWith('eslintConfig', {
         env: { jest: true }
       });
     });
 
     it('adds env if mocha present', async () => {
-      pkgHas.callsFake((_, name) => ['eslint', 'mocha'].includes(name));
+      pkgHas.mockImplementation((_, name) => ['eslint', 'mocha'].includes(name));
       await codeStyle.create(context, utils);
 
-      assume(pkgAdd).calledWithMatch('eslintConfig', {
+      expect(pkgAdd).toHaveBeenCalledWith('eslintConfig', {
         env: { mocha: true }
       });
     });
 
     it('adds expected ignores', async () => {
-      pkgHas.callsFake((_, name) => ['eslint'].includes(name));
+      pkgHas.mockImplementation((_, name) => ['eslint'].includes(name));
       await codeStyle.create(context, utils);
 
-      assume(pkgAdd).calledWithMatch('eslintIgnore', ['coverage/', 'build/']);
+      expect(pkgAdd).toHaveBeenCalledWith('eslintIgnore', ['coverage/', 'build/']);
     });
 
     it('adds jsx-ally rules it and next are present', async () => {
-      pkgHas.callsFake((_, name) => ['eslint', 'next', 'eslint-plugin-jsx-a11y'].includes(name));
+      pkgHas.mockImplementation((_, name) => ['eslint', 'next', 'eslint-plugin-jsx-a11y'].includes(name));
       await codeStyle.create(context, utils);
 
-      assume(pkgAdd).calledWithMatch('eslintConfig', {
+      expect(pkgAdd).toHaveBeenCalledWith('eslintConfig', {
         rules: {
-          'jsx-a11y/anchor-is-valid': sinon.match.array
+          'jsx-a11y/anchor-is-valid': expect.any(Array)
         }
       });
     });
 
     it('adds stylelint scripts if stylelint present', async () => {
-      pkgHas.callsFake((prop, name) => prop === 'devDependencies' && ['stylelint'].includes(name));
+      pkgHas.mockImplementation((prop, name) => prop === 'devDependencies' && ['stylelint'].includes(name));
       await codeStyle.create(context, utils);
 
-      assume(pkgAdd).calledWithMatch('scripts', {
-        'stylelint': sinon.match.string,
-        'stylelint:fix': sinon.match.string
+      expect(pkgAdd).toHaveBeenCalledWith('scripts', {
+        'stylelint': expect.any(String),
+        'stylelint:fix': expect.any(String)
       });
 
-      assume(utils.runScriptStr).calledWith('stylelint -- --fix');
+      expect(utils.runScriptStr).toHaveBeenCalledWith('stylelint -- --fix');
     });
 
     it('adds posttest script for eslint', async () => {
-      pkgHas.callsFake((_, name) => ['eslint'].includes(name));
+      pkgHas.mockImplementation((_, name) => ['eslint'].includes(name));
       await codeStyle.create(context, utils);
 
-      assume(pkgAdd).calledWithMatch('scripts', {
-        posttest: sinon.match.string
+      expect(pkgAdd).toHaveBeenCalledWith('scripts', {
+        posttest: expect.any(String)
       });
 
-      assume(utils.runScriptStr).calledWith('lint');
-      assume(utils.runScriptStr).not.calledWith('stylelint');
+      expect(utils.runScriptStr).toHaveBeenCalledWith('lint');
+      expect(utils.runScriptStr).not.toHaveBeenCalledWith('stylelint');
     });
 
     it('adds posttest script for stylelint', async () => {
-      pkgHas.callsFake((_, name) => ['stylelint'].includes(name));
+      pkgHas.mockImplementation((_, name) => ['stylelint'].includes(name));
       await codeStyle.create(context, utils);
 
-      assume(pkgAdd).calledWithMatch('scripts', {
-        posttest: sinon.match.string
+      expect(pkgAdd).toHaveBeenCalledWith('scripts', {
+        posttest: expect.any(String)
       });
 
-      assume(utils.runScriptStr).not.calledWith('lint');
-      assume(utils.runScriptStr).calledWith('stylelint');
+      expect(utils.runScriptStr).not.toHaveBeenCalledWith('lint');
+      expect(utils.runScriptStr).toHaveBeenCalledWith('stylelint');
     });
 
     it('adds posttest script for lint && stylelint', async () => {
-      pkgHas.callsFake((_, name) => ['eslint', 'stylelint'].includes(name));
+      pkgHas.mockImplementation((_, name) => ['eslint', 'stylelint'].includes(name));
       await codeStyle.create(context, utils);
 
-      assume(pkgAdd).calledWithMatch('scripts', {
-        posttest: sinon.match.string
+      expect(pkgAdd).toHaveBeenCalledWith('scripts', {
+        posttest: expect.any(String)
       });
 
-      assume(utils.runScriptStr).calledWith('lint');
-      assume(utils.runScriptStr).calledWith('stylelint');
+      expect(utils.runScriptStr).toHaveBeenCalledWith('lint');
+      expect(utils.runScriptStr).toHaveBeenCalledWith('stylelint');
     });
 
     it('does not add posttest script if set', async () => {
-      pkgHas.callsFake((_, name) => ['posttest', 'eslint', 'stylelint'].includes(name));
+      pkgHas.mockImplementation((_, name) => ['posttest', 'eslint', 'stylelint'].includes(name));
       await codeStyle.create(context, utils);
 
-      assume(pkgAdd).not.calledWithMatch('scripts', {
-        posttest: sinon.match.string
+      expect(pkgAdd).not.toHaveBeenCalledWith('scripts', {
+        posttest: expect.any(String)
       });
     });
 
     it('adds eslint-config-next if next present', async () => {
-      pkgHas.callsFake((_, name) => ['eslint', 'next'].includes(name));
+      pkgHas.mockImplementation((_, name) => ['eslint', 'next'].includes(name));
       await codeStyle.create(context, utils);
 
-      assume(pkgAdd).calledWithMatch('devDependencies', {
+      expect(pkgAdd).toHaveBeenCalledWith('devDependencies', {
         'eslint-config-next': devDependencies['eslint-config-next']
       });
-      assume(pkgAdd).calledWithMatch('eslintConfig', {
+      expect(pkgAdd).toHaveBeenCalledWith('eslintConfig', {
         extends: ['next']
       });
     });
 
     it('does not add posttest script if no eslint or stylelint', async () => {
-      pkgHas.callsFake((_, name) => [].includes(name));
+      pkgHas.mockImplementation((_, name) => [].includes(name));
       await codeStyle.create(context, utils);
 
-      assume(pkgAdd).not.calledWithMatch('scripts', {
-        posttest: sinon.match.string
+      expect(pkgAdd).not.toHaveBeenCalledWith('scripts', {
+        posttest: expect.any(String)
       });
     });
   });

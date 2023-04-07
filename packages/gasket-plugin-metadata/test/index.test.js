@@ -1,8 +1,5 @@
 /* eslint-disable max-statements */
-
 const plugin = require('../');
-const assume = require('assume');
-const sinon = require('sinon');
 
 const mockPlugin = {
   name: 'mock',
@@ -74,8 +71,8 @@ describe('Plugin', function () {
   let gasket, applyStub, handlerStub, mockAppInfo;
 
   beforeEach(function () {
-    applyStub = sinon.stub();
-    handlerStub = sinon.stub();
+    applyStub = jest.fn();
+    handlerStub = jest.fn();
 
     mockAppInfo = {
       name: 'my-app',
@@ -92,8 +89,8 @@ describe('Plugin', function () {
 
     gasket = {
       loader: {
-        loadConfigured: sinon.stub().returns(mockLoadedData),
-        getModuleInfo: sinon.stub().callsFake((module, name, meta = {}) => {
+        loadConfigured: jest.fn().mockReturnValue(mockLoadedData),
+        getModuleInfo: jest.fn().mockImplementation((module, name, meta = {}) => {
           const found = {
             'my-app': mockAppInfo,
             '@gasket/mock': mockInfo,
@@ -121,11 +118,11 @@ describe('Plugin', function () {
   });
 
   it('is an object', () => {
-    assume(plugin).is.an('object');
+    expect(typeof plugin).toBe('object');
   });
 
   it('has expected name', () => {
-    assume(plugin).to.have.property('name', require('../package').name);
+    expect(plugin).toHaveProperty('name', require('../package').name);
   });
 
   it('has expected hooks', () => {
@@ -134,11 +131,11 @@ describe('Plugin', function () {
       'metadata'
     ];
 
-    assume(plugin).to.have.property('hooks');
+    expect(plugin).toHaveProperty('hooks');
 
     const hooks = Object.keys(plugin.hooks);
-    assume(hooks).eqls(expected);
-    assume(hooks).is.length(expected.length);
+    expect(hooks).toEqual(expected);
+    expect(hooks).toHaveLength(expected.length);
   });
 
   describe('init', () => {
@@ -148,111 +145,112 @@ describe('Plugin', function () {
     });
 
     it('loads config from gasket.loader instance', async () => {
-      assume(gasket.loader.loadConfigured).called();
+      expect(gasket.loader.loadConfigured).toHaveBeenCalled();
     });
 
     it('assigns gasket.metadata', async () => {
-      assume(gasket).property('metadata');
+      expect(gasket).toHaveProperty('metadata');
     });
 
     it('adds moduleInfo for app', async () => {
-      assume(gasket.metadata).property('app');
+      expect(gasket.metadata).toHaveProperty('app');
     });
 
     it('augments moduleInfo with gasket.metadata from package.json', async () => {
-      assume(gasket.metadata.app).not.property('fromPackage');
+      expect(gasket.metadata.app).not.toHaveProperty('fromPackage');
 
       mockAppInfo.package.gasket = { metadata: { fromPackage: true } };
       await plugin.hooks.init(gasket);
-      assume(gasket.metadata.app).property('fromPackage', true);
+      expect(gasket.metadata.app).toHaveProperty('fromPackage', true);
     });
 
     it('adds presetInfo from loaded config', async () => {
-      assume(gasket.metadata).property('presets');
+      expect(gasket.metadata).toHaveProperty('presets');
     });
 
     it('adds pluginInfo from loaded config', async () => {
-      assume(gasket.metadata).property('plugins');
+      expect(gasket.metadata).toHaveProperty('plugins');
     });
 
     it('adds moduleInfo from app dependencies', async () => {
-      assume(gasket.metadata.modules).gt(0);
+      expect(gasket.metadata.modules.length).toBeGreaterThan(0);
       const names = gasket.metadata.modules.map(m => m.name);
-      assume(names).includes('@gasket/mock');
-      assume(names).includes('fake-one');
+      expect(names).toContain('@gasket/mock');
+      expect(names).toContain('fake-one');
     });
 
     it('ignores plugins and presets from app dependencies', async () => {
       const names = gasket.metadata.modules.map(m => m.name);
-      assume(names).not.includes('@gasket/plugin-mock');
-      assume(names).not.includes('@gasket/mock-preset');
+      expect(names).not.toContain('@gasket/plugin-mock');
+      expect(names).not.toContain('@gasket/mock-preset');
     });
 
     it('clones loaded data', async () => {
-      assume(gasket.metadata).not.equals(mockLoadedData);
-      assume(gasket.metadata.presets[0].module).not.equals(mockPresetInfo.module);
+      expect(gasket.metadata).not.toEqual(mockLoadedData);
+      // .not.toStrictEqual() fails
+      expect(gasket.metadata.presets[0].module === mockPresetInfo.module).toBe(false);
     });
 
     it('sanitizes loaded data', async () => {
-      assume(gasket.metadata.plugins[0].module.hooks.metadata.name).equals('redacted');
+      expect(gasket.metadata.plugins[0].module.hooks.metadata.name).toEqual('redacted');
     });
 
     it('relinks plugin instances to preset children (broken by clone)', async () => {
-      assume(gasket.metadata.presets[0].plugins[0]).equals(gasket.metadata.plugins[0]);
+      expect(gasket.metadata.presets[0].plugins[0]).toEqual(gasket.metadata.plugins[0]);
       gasket.metadata.plugins[0].something = 'changed';
-      assume(gasket.metadata.presets[0].plugins[0]).property('something', 'changed');
+      expect(gasket.metadata.presets[0].plugins[0]).toHaveProperty('something', 'changed');
     });
 
     it('executes the metadata lifecycle', async function () {
-      assume(applyStub.calledOnce).is.true();
+      expect(applyStub).toHaveBeenCalledTimes(1);
     });
 
     it('metadata hook is passed only metadata for hooking plugin', async function () {
-      assume(handlerStub).called();
-      assume(handlerStub.getCall(0).args[0]).property('name', '@gasket/plugin-mock');
+      expect(handlerStub).toHaveBeenCalled();
+      expect(handlerStub.mock.calls[0][0]).toHaveProperty('name', '@gasket/plugin-mock');
     });
 
     it('augments the metadata with data from the lifecycle hooks', async function () {
-      assume(gasket.metadata.plugins[0]).property('modified', true);
+      expect(gasket.metadata.plugins[0]).toHaveProperty('modified', true);
     });
 
     it('loads moduleInfo for modules declared in plugin metadata', async () => {
       const names = gasket.metadata.plugins[0].modules.map(m => m.name);
-      assume(names).includes('fake-one');
-      assume(names).includes('fake-two');
-      assume(names).includes('fake-three');
+      expect(names).toContain('fake-one');
+      expect(names).toContain('fake-two');
+      expect(names).toContain('fake-three');
     });
 
     it('augments moduleInfo metadata for modules declared modules', async () => {
       const result = gasket.metadata.plugins[0].modules.find(mod => mod.name === 'fake-one');
-      assume(result).property('extra', true);
+      expect(result).toHaveProperty('extra', true);
     });
 
     it('flattens moduleInfo from plugins', async () => {
       const names = gasket.metadata.modules.map(m => m.name);
-      assume(names).includes('fake-one');
-      assume(names).includes('fake-two');
-      assume(names).includes('fake-three');
+      expect(names).toContain('fake-one');
+      expect(names).toContain('fake-two');
+      expect(names).toContain('fake-three');
     });
 
     it('flatting does not duplicate moduleInfo', async () => {
       const names = gasket.metadata.modules.map(m => m.name);
-      assume(names.filter(n => n === 'fake-one')).lengthOf(1);
+      expect(names.filter(n => n === 'fake-one')).toHaveLength(1);
     });
 
     it('flatting augments moduleInfo with extras from plugins', async () => {
       const result = gasket.metadata.modules.find(mod => mod.name === 'fake-one');
-      assume(result).property('extra', true);
+      expect(result).toHaveProperty('extra', true);
     });
 
     it('augments moduleInfo with extras package.json', async () => {
       const result = gasket.metadata.modules.find(mod => mod.name === 'fake-three');
-      assume(result).property('fromPackage', true);
+      expect(result).toHaveProperty('fromPackage', true);
     });
 
     it('loads preset metadata', async function () {
       await plugin.hooks.init(gasket);
-      assume(gasket.metadata.presets[0]).property('metadataKey', 'metadataValue');
+      expect(gasket.metadata.presets[0]).toHaveProperty('metadataKey', 'metadataValue');
     });
   });
 
@@ -261,13 +259,13 @@ describe('Plugin', function () {
     it('retains acquired plugin data', () => {
       const mockData = { name: '@gasket/plugin-mock' };
       const results = plugin.hooks.metadata(gasket, mockData);
-      assume(results).property('name', '@gasket/plugin-mock');
+      expect(results).toHaveProperty('name', '@gasket/plugin-mock');
     });
 
     it('adds lifecycles', () => {
       const mockData = { name: '@gasket/plugin-mock' };
       const results = plugin.hooks.metadata(gasket, mockData);
-      assume(results).property('lifecycles');
+      expect(results).toHaveProperty('lifecycles');
     });
   });
 });

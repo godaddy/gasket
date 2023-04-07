@@ -1,5 +1,13 @@
 # `@gasket/plugin-nextjs`
 
+### 6.38.2
+
+- Fix generated Mocha example test ([#556])  
+
+### 6.38.0
+
+- Update Cypress examples to v12 ([#541])
+
 ### 6.35.0
 
 - Prompt to add `next-sitemap` during create ([#479])
@@ -225,3 +233,5 @@
 [#460]: https://github.com/godaddy/gasket/pull/460
 [#463]: https://github.com/godaddy/gasket/pull/463
 [#479]: https://github.com/godaddy/gasket/pull/479
+[#541]: https://github.com/godaddy/gasket/pull/541
+[#556]: https://github.com/godaddy/gasket/pull/556

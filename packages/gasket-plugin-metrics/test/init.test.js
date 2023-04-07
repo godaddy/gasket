@@ -1,24 +1,19 @@
-const assume = require('assume');
-const sinon = require('sinon');
-const proxyquire = require('proxyquire');
-
 const mockData = { some: 'data' };
-const reportStub = sinon.stub().resolves(mockData);
-const metricsStub = sinon.stub();
+const mockReportStub = jest.fn().mockResolvedValue(mockData);
+const mockMetricsStub = jest.fn();
 
 class MockMetrics {
   constructor() {
-    metricsStub(...arguments);
+    mockMetricsStub(...arguments);
   }
   report() {
-    return reportStub(...arguments);
+    return mockReportStub(...arguments);
   }
 }
 
-const initHook = proxyquire('../lib/index', {
-  './metrics': MockMetrics
-}).hooks.init;
+jest.mock('../lib/metrics', () => MockMetrics);
 
+const initHook = require('../lib/index').hooks.init;
 
 async function initHandler(mockGasket) {
   await initHook.handler(mockGasket);
@@ -31,57 +26,53 @@ describe('init hook', function () {
   let mockGasket;
 
   beforeEach(() => {
-    sinon.resetHistory();
+    jest.clearAllMocks();
 
     mockGasket = {
-      exec: sinon.stub(),
+      exec: jest.fn(),
       logger: {
-        error: sinon.stub()
+        error: jest.fn()
       }
     };
   });
 
-  afterEach(() => {
-    sinon.restore();
-  });
-
   it('sets timing after metadata', () => {
-    assume(initHook.timing.after).includes('@gasket/plugin-metadata');
+    expect(initHook.timing.after).toContain('@gasket/plugin-metadata');
   });
 
   it('instantiates Metrics object with gasket', async () => {
     await initHandler(mockGasket);
-    assume(metricsStub).calledWith(mockGasket);
+    expect(mockMetricsStub).toHaveBeenCalledWith(mockGasket);
   });
 
   it('invokes metrics lifecycle with data', async () => {
     await initHandler(mockGasket);
-    assume(mockGasket.exec).calledWith('metrics', mockData);
+    expect(mockGasket.exec).toHaveBeenCalledWith('metrics', mockData);
   });
 
   it('catches and logs any errors', async () => {
     const mockError = new Error('Bad things man');
-    reportStub.rejects(mockError);
+    mockReportStub.mockRejectedValue(mockError);
 
     await initHandler(mockGasket);
-    assume(mockGasket.logger.error).calledWith('Bad things man');
+    expect(mockGasket.logger.error).toHaveBeenCalledWith('Bad things man');
   });
 
   it('uses console if not logger instance', async () => {
-    const consoleStub = sinon.stub(console, 'error');
+    const consoleStub = jest.spyOn(console, 'error').mockReturnValue();
     delete mockGasket.logger;
     const mockError = new Error('Bad things man');
-    reportStub.rejects(mockError);
+    mockReportStub.mockRejectedValue(mockError);
 
     await initHandler(mockGasket);
-    assume(consoleStub).calledWith('Bad things man');
+    expect(consoleStub).toHaveBeenCalledWith('Bad things man');
   });
 
   it('logs stringified non error types', async () => {
     const mockError = 'BAD THINGS MAN';
-    reportStub.rejects(mockError);
+    mockReportStub.mockRejectedValue(mockError);
 
     await initHandler(mockGasket);
-    assume(mockGasket.logger.error).calledWith('BAD THINGS MAN');
+    expect(mockGasket.logger.error).toHaveBeenCalledWith('BAD THINGS MAN');
   });
 });

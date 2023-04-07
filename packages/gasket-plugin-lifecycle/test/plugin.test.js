@@ -1,6 +1,5 @@
+/* eslint-disable jest/expect-expect */
 const path = require('path');
-const { describe, it } = require('mocha');
-const assume = require('assume');
 const PluginEngine = require('@gasket/engine');
 const plugin = require('../lib/');
 const proxy = require('./proxy');
@@ -8,11 +7,11 @@ const proxy = require('./proxy');
 describe('Plugin', function () {
 
   it('is an object', () => {
-    assume(plugin).is.an('object');
+    expect(typeof plugin).toBe('object');
   });
 
   it('has expected name', () => {
-    assume(plugin).to.have.property('name', require('../package').name);
+    expect(plugin).toHaveProperty('name', require('../package').name);
   });
 
   it('has expected hooks', () => {
@@ -21,11 +20,11 @@ describe('Plugin', function () {
       'metadata'
     ];
 
-    assume(plugin).to.have.property('hooks');
+    expect(plugin).toHaveProperty('hooks');
 
     const hooks = Object.keys(plugin.hooks);
-    assume(hooks).eqls(expected);
-    assume(hooks).is.length(expected.length);
+    expect(hooks).toEqual(expected);
+    expect(hooks).toHaveLength(expected.length);
   });
 
   it('registers the middleware lifecycle', async function () {
@@ -39,15 +38,15 @@ describe('Plugin', function () {
     await engine.exec('init');
     let called = false;
     proxy.once('middleware', function (gasket, app) {
-      assume(gasket).equals(engine);
-      assume(app).equals('testing');
+      expect(gasket).toEqual(engine);
+      expect(app).toEqual('testing');
 
       called = true;
     });
 
     await engine.exec('middleware', 'testing');
 
-    assume(called).is.true();
+    expect(called).toBe(true);
   });
 
   it('allows for cjs file types', async function () {
@@ -61,15 +60,15 @@ describe('Plugin', function () {
     await engine.exec('init');
     let called = false;
     proxy.once('middleware', function (gasket, app) {
-      assume(gasket).equals(engine);
-      assume(app).equals('testing');
+      expect(gasket).toEqual(engine);
+      expect(app).toEqual('testing');
 
       called = true;
     });
 
     await engine.exec('middleware', 'testing');
 
-    assume(called).is.true();
+    expect(called).toBe(true);
   });
 
   it('handles applications with no lifecycles directory', async () => {
@@ -94,14 +93,14 @@ describe('Plugin', function () {
     });
     await engine.exec('init');
     proxy.once('withTiming', function (gasket, arg) {
-      assume(gasket).equals(engine);
-      assume(arg).equals('testing');
+      expect(gasket).toEqual(engine);
+      expect(arg).toEqual('testing');
       called = true;
     });
 
     await engine.exec('withTiming', 'testing');
 
-    assume(called).is.true();
+    expect(called).toBe(true);
   });
 
   it('maps kebab-cased file names to camelCased event names', async () => {
@@ -115,13 +114,13 @@ describe('Plugin', function () {
 
     let called = false;
     proxy.once('someEvent', function (gasket, arg) {
-      assume(gasket).equals(engine);
-      assume(arg).equals('testing');
+      expect(gasket).toEqual(engine);
+      expect(arg).toEqual('testing');
       called = true;
     });
 
     await engine.exec('someEvent', 'testing');
-    assume(called).is.true();
+    expect(called).toBe(true);
   });
 
   it('skips *.test.js and *.spec.js files', async () => {
@@ -139,7 +138,7 @@ describe('Plugin', function () {
     });
 
     await engine.exec('someEvent', 'testing');
-    assume(called).is.false();
+    expect(called).toBe(false);
 
   });
 
@@ -154,14 +153,14 @@ describe('Plugin', function () {
     await engine.exec('init');
     let called = false;
     proxy.once('middleware', function (gasket, app) {
-      assume(gasket).equals(engine);
-      assume(app).equals('testing');
+      expect(gasket).toEqual(engine);
+      expect(app).toEqual('testing');
 
       called = true;
     });
 
     await engine.exec('middleware', 'testing');
 
-    assume(called).is.true();
+    expect(called).toBe(true);
   });
 });

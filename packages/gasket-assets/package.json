@@ -1,6 +1,6 @@
 {
   "name": "@gasket/assets",
-  "version": "6.35.0",
+  "version": "6.38.1",
   "description": "Gasket assets",
   "main": "react",
   "files": [
@@ -45,7 +45,7 @@
     "@svgr/core": "^6.2.0",
     "babel-plugin-add-module-exports": "^1.0.2",
     "eslint": "^8.7.0",
-    "eslint-config-godaddy": "^6.0.0",
+    "eslint-config-godaddy": "^7.0.0",
     "eslint-plugin-json": "^3.1.0",
     "eslint-plugin-mocha": "^10.0.3",
     "eslint-plugin-unicorn": "^44.0.0",
