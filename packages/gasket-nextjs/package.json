@@ -69,7 +69,7 @@
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "setup-env": "^2.0.0",
-    "sinon": "^14.0.0"
+    "sinon": "^15.0.0"
   },
   "peerDependencies": {
     "next": ">=10.2.0 < 13"
