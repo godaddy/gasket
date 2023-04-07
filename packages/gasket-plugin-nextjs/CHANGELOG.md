@@ -1,5 +1,9 @@
 # `@gasket/plugin-nextjs`
 
+### 6.38.2
+
+- Fix generated Mocha example test ([#556])  
+
 ### 6.38.0
 
 - Update Cypress examples to v12 ([#541])
@@ -230,3 +234,4 @@
 [#463]: https://github.com/godaddy/gasket/pull/463
 [#479]: https://github.com/godaddy/gasket/pull/479
 [#541]: https://github.com/godaddy/gasket/pull/541
+[#556]: https://github.com/godaddy/gasket/pull/556

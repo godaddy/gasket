@@ -13,9 +13,19 @@ module.exports = {
     * @public
     */
     create: async function create(gasket, context) {
+      const generatorDir = `${ __dirname }/../generator`;
+
       context.pkg.add('dependencies', {
         fastify: peerDependencies.fastify
       });
+
+      if (context.apiApp) {
+        context.files.add(`${ generatorDir }/**/*`);
+
+        context.gasketConfig.add('fastify', {
+          routes: './routes/*'
+        });
+      }
     },
     /**
     * Create the Fastify instance and setup the lifecycle hooks.

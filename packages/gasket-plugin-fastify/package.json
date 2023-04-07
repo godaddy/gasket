@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-fastify",
-  "version": "6.38.1",
+  "version": "6.38.5",
   "description": "Adds fastify support to your application",
   "main": "lib",
   "types": "lib/index.d.ts",
@@ -40,10 +40,10 @@
     "compression": "^1.7.2",
     "cookie-parser": "^1.4.3",
     "diagnostics": "^2.0.2",
-    "middie": "5.4.0"
+    "middie": "^5.4.0"
   },
   "devDependencies": {
-    "@gasket/engine": "^6.38.1",
+    "@gasket/engine": "^6.38.5",
     "cross-env": "^7.0.3",
     "eslint": "^8.7.0",
     "eslint-config-godaddy": "^7.0.0",
@@ -67,5 +67,8 @@
     "rules": {
       "unicorn/filename-case": "error"
     }
-  }
+  },
+  "eslintIgnore": [
+    "generator"
+  ]
 }
