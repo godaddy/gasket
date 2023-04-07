@@ -1,5 +1,3 @@
-const assume = require('assume');
-
 const applyEnvironmentOverrides = require('../lib/apply-env-overrides');
 
 describe('applyEnvironmentOverrides', () => {
@@ -19,7 +17,7 @@ describe('applyEnvironmentOverrides', () => {
 
   it('returns unmodified config if no "environments"', () => {
     results = applyEnvironmentOverrides(mockGasketConfig, mockConfig);
-    assume(results).eqls(mockConfig);
+    expect(results).toEqual(mockConfig);
   });
 
   it('removes "environments" from config result', () => {
@@ -28,7 +26,7 @@ describe('applyEnvironmentOverrides', () => {
     };
 
     results = applyEnvironmentOverrides(mockGasketConfig, mockConfig);
-    assume(results).not.property('environments');
+    expect(results).not.toHaveProperty('environments');
   });
 
   it('returns unmodified config if no matching env', () => {
@@ -37,7 +35,7 @@ describe('applyEnvironmentOverrides', () => {
     };
 
     results = applyEnvironmentOverrides(mockGasketConfig, mockConfig);
-    assume(results).eqls({
+    expect(results).toEqual({
       someService: {
         url: 'https://some-test.url/'
       }
@@ -54,7 +52,7 @@ describe('applyEnvironmentOverrides', () => {
     };
 
     results = applyEnvironmentOverrides(mockGasketConfig, mockConfig);
-    assume(results).eqls({
+    expect(results).toEqual({
       someService: {
         url: 'https://some-test.url/',
         requestRate: 9000
@@ -72,7 +70,7 @@ describe('applyEnvironmentOverrides', () => {
     };
 
     results = applyEnvironmentOverrides(mockGasketConfig, mockConfig);
-    assume(results).eqls({
+    expect(results).toEqual({
       someService: {
         url: 'https://some-dev-test.url/'
       }
@@ -97,7 +95,7 @@ describe('applyEnvironmentOverrides', () => {
     };
 
     results = applyEnvironmentOverrides(mockGasketConfig, mockConfig);
-    assume(results).eqls({
+    expect(results).toEqual({
       someService: {
         url: 'https://some-sub-dev-test.url/',
         requestRate: 9000
@@ -124,7 +122,7 @@ describe('applyEnvironmentOverrides', () => {
     };
 
     results = applyEnvironmentOverrides(mockGasketConfig, mockConfig);
-    assume(results).eqls({
+    expect(results).toEqual({
       someService: {
         url: 'https://some-dev-test.url/',
         requestRate: 9000
@@ -146,7 +144,7 @@ describe('applyEnvironmentOverrides', () => {
     };
 
     results = applyEnvironmentOverrides(mockGasketConfig, mockConfig);
-    assume(results).eqls({
+    expect(results).toEqual({
       someService: {
         url: 'https://some-dev-test.url/',
         requestRate: 9000
@@ -173,7 +171,7 @@ describe('applyEnvironmentOverrides', () => {
     };
 
     results = applyEnvironmentOverrides(mockGasketConfig, mockConfig);
-    assume(results).eqls({
+    expect(results).toEqual({
       someService: {
         url: 'https://some-local-test.url/',
         requestRate: 9000
@@ -187,7 +185,7 @@ describe('applyEnvironmentOverrides', () => {
       mockGasketConfig,
       mockConfig,
       './fixtures/config.local');
-    assume(results).eqls({
+    expect(results).toEqual({
       localsOnly: true,
       someService: {
         url: 'https://some-test.url/'
@@ -201,7 +199,7 @@ describe('applyEnvironmentOverrides', () => {
       mockGasketConfig,
       mockConfig,
       './fixtures/missing');
-    assume(results).eqls({
+    expect(results).toEqual({
       someService: {
         url: 'https://some-test.url/'
       }

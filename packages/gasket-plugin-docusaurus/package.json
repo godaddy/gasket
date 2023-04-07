@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-docusaurus",
-  "version": "6.36.1",
+  "version": "6.38.5",
   "description": "Gasket plugin for docusaurus",
   "main": "lib",
   "files": [
@@ -38,15 +38,15 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/",
   "dependencies": {
-    "@docusaurus/core": "2.2.0",
-    "@docusaurus/preset-classic": "2.2.0",
+    "@docusaurus/core": "2.4.0",
+    "@docusaurus/preset-classic": "2.4.0",
     "lodash.defaultsdeep": "^4.6.1"
   },
   "devDependencies": {
-    "@gasket/engine": "^6.36.1",
+    "@gasket/engine": "^6.38.5",
     "cross-env": "^7.0.3",
     "eslint": "^8.7.0",
-    "eslint-config-godaddy": "^6.0.0",
+    "eslint-config-godaddy": "^7.0.0",
     "eslint-plugin-jest": "^27.2.1",
     "eslint-plugin-json": "^3.1.0",
     "eslint-plugin-mocha": "^10.0.3",

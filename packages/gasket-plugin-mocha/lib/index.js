@@ -18,11 +18,11 @@ module.exports = {
           //
           // Base assertion dependencies.
           //
-          'mocha': devDependencies.mocha,
-          'nyc': devDependencies.nyc,
-          'sinon': devDependencies.sinon,
-          'chai': devDependencies.chai,
-          'setup-env': devDependencies['setup-env'],
+          'mocha': '^10.0.0',
+          'nyc': '^15.1.0',
+          'sinon': '^14.0.0',
+          'chai': '^4.2.0',
+          'setup-env': '^2.0.0',
 
           //
           // To ensure that the mocha tests can run with import scripts

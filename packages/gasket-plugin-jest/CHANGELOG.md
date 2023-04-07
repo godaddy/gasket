@@ -1,5 +1,9 @@
 # `@gasket/plugin-jest`
 
+### 6.38.1
+
+- Fix testURL deprecation warning ([#552])
+
 ### 6.35.0 
 
 - Upgrade @testing-library/react v13 ([#463])
@@ -65,3 +69,4 @@
 [#436]: https://github.com/godaddy/gasket/pull/436
 [#457]: https://github.com/godaddy/gasket/pull/457
 [#463]: https://github.com/godaddy/gasket/pull/463
+[#g552]: https://github.com/godaddy/gasket/pull/463

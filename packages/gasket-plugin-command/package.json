@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-command",
-  "version": "6.36.1",
+  "version": "6.38.5",
   "description": "Plugin to enable other plugins to inject new gasket commands",
   "main": "lib/plugin.js",
   "types": "lib/plugin.d.ts",
@@ -41,17 +41,17 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-command",
   "dependencies": {
-    "@gasket/utils": "^6.36.1"
+    "@gasket/utils": "^6.38.5"
   },
   "devDependencies": {
-    "@gasket/engine": "^6.36.1",
+    "@gasket/engine": "^6.38.5",
     "@godaddy/dmd": "^1.0.0",
     "@oclif/command": "^1.8.16",
     "@oclif/config": "^1.18.2",
     "@oclif/errors": "^1.3.5",
     "cross-env": "^7.0.3",
     "eslint": "^8.7.0",
-    "eslint-config-godaddy": "^6.0.0",
+    "eslint-config-godaddy": "^7.0.0",
     "eslint-plugin-jest": "^27.2.1",
     "eslint-plugin-json": "^3.1.0",
     "eslint-plugin-unicorn": "^44.0.0",

@@ -11,7 +11,8 @@ Name | Description
 ------ | -----------
 [applyConfigOverrides(config, context)] | Normalize the config by applying any overrides for environments, commands, or local-only config file.
 ~~[applyEnvironmentOverrides(gasketConfig, config, \[localFile\])]~~ | Normalize the config by applying any environment or local overrides
-[requireWithInstall(dependency, gasket)] | requireWithInstall - load devDependency programmatically when needed
+[installDependency(dependency, gasket)] | installDependency - install dependency
+[requireWithInstall(dependency, gasket)] | requireWithInstall - load devDependency request programmatically when needed
 [runShellCommand(cmd, \[argv\], \[options\], \[debug\])] | Promise friendly wrapper to running a shell command (eg: git, npm, ls) which passes back any { stdout, stderr } to the error thrown.
 [tryRequire(path)] | Tries to require a module, but ignores if it is not found. If not found, result will be null.
 [tryResolve(modulePath, options)] | 
@@ -165,16 +166,28 @@ Normalize the config by applying any environment or local overrides
 | \[localFile\] | `string` | Optional file to load relative to gasket root |
 
 
-## requireWithInstall(dependency, gasket)
+## installDependency(dependency, gasket)
 
-requireWithInstall - load devDependency programmatically when needed
+installDependency - install dependency
 
 **Kind**: global function  
-**Returns**: `object` - module  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| dependency | `string` | The require'ed dep needed |
+| dependency | `string` | The dep/s needed |
+| gasket | `Gasket` | Gasket instance |
+
+
+## requireWithInstall(dependency, gasket)
+
+requireWithInstall - load devDependency request programmatically when needed
+
+**Kind**: global function  
+**Returns**: `object` ⎮ `Array.<object>` - module or list of modules  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| dependency | `string` \| `Array.<string>` | The require'ed dep/s needed |
 | gasket | `Gasket` | Gasket instance |
 
 
@@ -262,6 +275,7 @@ const { tryRequire } = require('@gasket/utils');
 [`PackageManager`]:#new-packagemanageroptions
 [applyConfigOverrides(config, context)]:#applyconfigoverridesconfig-context
 [applyEnvironmentOverrides(gasketConfig, config, \[localFile\])]:#applyenvironmentoverridesgasketconfig-config-localfile
+[installDependency(dependency, gasket)]:#installdependencydependency-gasket
 [requireWithInstall(dependency, gasket)]:#requirewithinstalldependency-gasket
 [runShellCommand(cmd, \[argv\], \[options\], \[debug\])]:#runshellcommandcmd-argv-options-debug
 [tryRequire(path)]:#tryrequirepath
