@@ -41,7 +41,7 @@
   "dependencies": {
     "deepmerge": "^4.2.2",
     "escape-string-regexp": "^1.0.5",
-    "mkdirp": "^1.0.4"
+    "mkdirp": "^3.0.0"
   },
   "devDependencies": {
     "@gasket/engine": "^6.38.5",

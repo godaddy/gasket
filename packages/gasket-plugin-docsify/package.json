@@ -42,7 +42,7 @@
     "glob": "^8.0.0",
     "handlebars": "^4.7.6",
     "lodash.defaultsdeep": "^4.6.1",
-    "mkdirp": "^1.0.4"
+    "mkdirp": "^3.0.0"
   },
   "devDependencies": {
     "@gasket/engine": "^6.38.5",
