@@ -1,5 +1,9 @@
 # `@gasket/resolve`
 
+### 6.35.6
+
+- Hard fail bad requires in gasket.config while preserving missing behavior ([#590])
+
 ### 6.35.0
 
 - Allow for app-level cjs lifecyle & plugin files ([#482])
@@ -96,5 +100,6 @@
 [#436]: https://github.com/godaddy/gasket/pull/436
 [#457]: https://github.com/godaddy/gasket/pull/457
 [#482]: https://github.com/godaddy/gasket/pull/482
+[#590]: https://github.com/godaddy/gasket/pull/590
 
 [Loader]:/packages/gasket-resolve/docs/api.md#loader
