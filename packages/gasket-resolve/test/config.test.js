@@ -69,7 +69,7 @@ describe('config', () => {
     });
 
     it('supports custom config absolute path', async () => {
-      const configFile = path.join(root, 'custom', 'gasket.config.js')
+      const configFile = path.join(root, 'custom', 'gasket.config.js');
       const results = await utils.loadGasketConfigFile('/somewhere', env, commandId, configFile);
       expect(results).toHaveProperty('root', '/somewhere');
       expect(results).toEqual(expect.objectContaining({ custom: true }));
