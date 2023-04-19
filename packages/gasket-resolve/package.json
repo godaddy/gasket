@@ -70,6 +70,9 @@
       "unicorn/filename-case": "error"
     }
   },
+  "eslintIgnore": [
+    "test/fixtures"
+  ],
   "jest": {
     "testEnvironment": "node"
   }
