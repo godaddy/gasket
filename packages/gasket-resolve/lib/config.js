@@ -1,7 +1,7 @@
 const path = require('path');
 const { readdir } = require('fs').promises;
 const defaultsDeep = require('lodash.defaultsdeep');
-const { applyConfigOverrides, tryRequire } = require('@gasket/utils');
+const { applyConfigOverrides, tryResolve } = require('@gasket/utils');
 const { flattenPresets } = require('./preset-utils');
 const jsExtension = /\.(js|cjs)$/i;
 
@@ -18,7 +18,10 @@ async function loadGasketConfigFile(root, env, commandId, configFile = 'gasket.c
 
 function loadConfigFile(root, configFile) {
   const absolutePath = !path.isAbsolute(configFile) ? path.join(root, configFile) : configFile;
-  return tryRequire(absolutePath);
+  const resolvedPath = tryResolve(absolutePath);
+  if (resolvedPath) {
+    return require(resolvedPath);
+  }
 }
 
 async function addUserPlugins(gasketConfig) {
