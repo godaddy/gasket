@@ -1,24 +1,10 @@
 const path = require('path');
 
-let mockGasketConfig;
 const mockReadDir = jest.fn();
 jest.mock('fs', () => {
   return {
     promises: {
       readdir: mockReadDir
-    }
-  };
-});
-
-jest.mock('@gasket/utils', () => {
-  return {
-    ...jest.requireActual('@gasket/utils'),
-    tryRequire(moduleName) {
-      if (moduleName === '/absolute/path/to/gasket.config' ||
-        moduleName === '/path/to/app/custom.gasket.config' ||
-        moduleName === '/path/to/app/custom/gasket.config' ||
-        moduleName === '/path/to/app/gasket.config') return mockGasketConfig;
-      return null;
     }
   };
 });
@@ -29,10 +15,9 @@ describe('config', () => {
   let env, commandId, root;
 
   beforeEach(() => {
-    root = '/path/to/app';
-    env = 'test-env';
-    commandId = 'test-cmd';
-    mockGasketConfig = { mockConfig: true };
+    root = path.join(__dirname, 'fixtures');
+    env = 'development';
+    commandId = 'test';
   });
 
   afterEach(function () {
@@ -47,6 +32,7 @@ describe('config', () => {
     it('returns config object', async () => {
       const results = await utils.loadGasketConfigFile(root, env, commandId);
       expect(results).toBeInstanceOf(Object);
+      expect(results).toEqual(expect.objectContaining({ mockConfig: true }));
     });
 
     it('returns undefined if no config file found', async () => {
@@ -54,61 +40,63 @@ describe('config', () => {
       expect(results).toBeUndefined();
     });
 
+    it('throws for require errors', async () => {
+      await expect(utils.loadGasketConfigFile(root, env, commandId, 'bad.gasket.config'))
+        .rejects
+        .toThrow(/Cannot find module 'some-fake-lib'/);
+    });
+
+    it('throws for malformed errors', async () => {
+      await expect(utils.loadGasketConfigFile(root, env, commandId, 'malformed.gasket.config'))
+        .rejects
+        .toThrow(/malformed is not defined/);
+    });
+
     it('adds root from flags to config', async () => {
       const results = await utils.loadGasketConfigFile(root, env, commandId);
-      expect(results).toHaveProperty('root', '/path/to/app');
+      expect(results).toHaveProperty('root', root);
     });
 
     it('supports custom config name', async () => {
       const results = await utils.loadGasketConfigFile(root, env, commandId, 'custom.gasket.config');
-      expect(results).toHaveProperty('root', '/path/to/app');
+      expect(results).toEqual(expect.objectContaining({ custom: true }));
     });
 
     it('supports custom config relative path', async () => {
       const results = await utils.loadGasketConfigFile(root, env, commandId, './custom/gasket.config');
-      expect(results).toHaveProperty('root', '/path/to/app');
+      expect(results).toHaveProperty('root', root);
+      expect(results).toEqual(expect.objectContaining({ custom: true }));
     });
 
     it('supports custom config absolute path', async () => {
-      const results = await utils.loadGasketConfigFile('/somewhere', env, commandId, '/path/to/app/custom/gasket.config');
+      const configFile = path.join(root, 'custom', 'gasket.config.js')
+      const results = await utils.loadGasketConfigFile('/somewhere', env, commandId, configFile);
       expect(results).toHaveProperty('root', '/somewhere');
-    });
-
-    it('supports custom absolute config path', async () => {
-      const results = await utils.loadGasketConfigFile(root, env, commandId);
-      expect(results).toHaveProperty('root', '/path/to/app');
+      expect(results).toEqual(expect.objectContaining({ custom: true }));
     });
 
     // overrides are thoroughly tested in @gasket/utils - we are just checking
     // that the arguments are being passed through as expected
     describe('overrides', function () {
       it('applies env overrides', async () => {
-        mockGasketConfig.example = 'base';
-        mockGasketConfig.environments = {
-          'test-env': {
-            example: 'overridden'
-          }
-        };
-        const results = await utils.loadGasketConfigFile(root, env, commandId);
-        expect(results).toHaveProperty('example', 'overridden');
+        const baseResults = await utils.loadGasketConfigFile(root, env, commandId);
+        expect(baseResults).toHaveProperty('example', 'base');
+        const overrideResults = await utils.loadGasketConfigFile(root, 'other-env', commandId);
+        expect(overrideResults).toHaveProperty('example', 'overridden from env');
       });
 
       it('applies command overrides', async () => {
-        mockGasketConfig.example = 'base';
-        mockGasketConfig.commands = {
-          'test-cmd': {
-            example: 'overridden'
-          }
-        };
-        const results = await utils.loadGasketConfigFile(root, env, commandId);
-        expect(results).toHaveProperty('example', 'overridden');
+        const baseResults = await utils.loadGasketConfigFile(root, env, commandId);
+        expect(baseResults).toHaveProperty('example', 'base');
+        const overrideResults = await utils.loadGasketConfigFile(root, env, 'other-cmd');
+        expect(overrideResults).toHaveProperty('example', 'overridden from cmd');
       });
     });
 
     it('adds user plugins', async () => {
       mockReadDir.mockResolvedValueOnce(['app-plugin.js']);
       const results = await utils.loadGasketConfigFile(root, env, commandId);
-      expect(results.plugins.add).toContain(path.join('/path/to/app', 'plugins', 'app-plugin.js'));
+      expect(results.plugins.add).toContain(path.join(root, 'plugins', 'app-plugin.js'));
     });
   });
 
