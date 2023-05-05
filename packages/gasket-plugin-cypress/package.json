@@ -30,7 +30,7 @@
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-cypress",
   "devDependencies": {
     "@babel/core": "^7.16.10",
-    "@testing-library/react": "^13.4.0",
+    "@testing-library/react": "^14.0.0",
     "cypress": "^12.3.0",
     "eslint": "^8.7.0",
     "eslint-config-godaddy": "^7.0.0",

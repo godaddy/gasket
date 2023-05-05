@@ -39,7 +39,7 @@
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-jest",
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.1",
-    "@testing-library/react": "^13.4.0",
+    "@testing-library/react": "^14.0.0",
     "babel-eslint": "^10.1.0",
     "eslint": "^8.7.0",
     "eslint-config-godaddy": "^7.0.0",
