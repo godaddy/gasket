@@ -39,7 +39,7 @@
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-webpack",
   "dependencies": {
     "webpack-chain": "^6.0.0",
-    "webpack-merge": "^4.2.1"
+    "webpack-merge": "^5.0.0"
   },
   "devDependencies": {
     "@gasket/engine": "^6.38.5",
