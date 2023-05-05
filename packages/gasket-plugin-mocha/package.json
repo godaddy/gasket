@@ -44,7 +44,7 @@
     "@babel/preset-react": "^7.12.10",
     "@babel/register": "^7.12.10",
     "@testing-library/react": "^13.4.0",
-    "babel-eslint": "^10.1.0",
+    "@babel/eslint-parser": "^7.11.0",
     "eslint": "^8.7.0",
     "eslint-config-godaddy": "^7.0.0",
     "eslint-plugin-json": "^3.1.0",

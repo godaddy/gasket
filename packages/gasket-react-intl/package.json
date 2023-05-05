@@ -64,7 +64,7 @@
     "assume": "^2.3.0",
     "assume-sinon": "^1.1.0",
     "babel-core": "^7.0.0-bridge.0",
-    "babel-eslint": "^10.1.0",
+    "@babel/eslint-parser": "^7.11.0",
     "babel-plugin-root-import": "^6.0.0",
     "eslint": "^8.7.0",
     "eslint-config-godaddy-react": "^9.0.0",
