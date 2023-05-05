@@ -52,7 +52,7 @@
     "mkdirp": "^1.0.4",
     "react": "^18.0.0",
     "recursive-readdir": "^2.2.2",
-    "rimraf": "^3.0.2"
+    "rimraf": "^5.0.0"
   },
   "eslintConfig": {
     "extends": [

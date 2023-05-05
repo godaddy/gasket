@@ -53,7 +53,7 @@
     "jsdom": "^20.0.0",
     "lerna": "^6.0.3",
     "nx": "^15.0.13",
-    "rimraf": "^3.0.2"
+    "rimraf": "^5.0.0"
   },
   "eslintConfig": {
     "extends": [
