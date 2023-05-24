@@ -1,6 +1,8 @@
 # `@gasket/plugin-intl`
 
-- Add missing runtime dependency to the package.json
+### 6.38.7
+
+- Add missing runtime dependency to the package.json ([#593])
 
 ### 6.35.1
 
@@ -211,3 +213,4 @@
 [#459]: https://github.com/godaddy/gasket/pull/459
 [#460]: https://github.com/godaddy/gasket/pull/460
 [#491]: https://github.com/godaddy/gasket/pull/491
+[#593]: https://github.com/godaddy/gasket/pull/593
