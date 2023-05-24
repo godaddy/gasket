@@ -1,5 +1,7 @@
 # `@gasket/plugin-intl`
 
+- Add missing runtime dependency to the package.json
+
 ### 6.35.1
 
 - Add option to preload locales file ([#491])
