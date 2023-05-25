@@ -42,4 +42,36 @@ describe('@gasket/engine', () => {
       }
     };
   });
+
+  it('type checks the hook method', () => {
+    const engine = new Gasket(
+      { root: __dirname, env: 'test' },
+      { resolveFrom: __dirname }
+    );
+
+    // Valid
+    engine.hook({
+      event: 'example',
+      handler(gasket, str, num, bool) {
+        return true;
+      }
+    });
+
+    // Unknown event type
+    engine.hook({
+      // @ts-expect-error
+      event: 'unknown',
+      // @ts-expect-error
+      handler: (gasket) => {}
+    });
+
+    // Invalid return type
+    engine.hook({
+      event: 'example',
+      // @ts-expect-error
+      handler(gasket, str, num, bool) {
+        return 'invalid';
+      }
+    });
+  });
 });
