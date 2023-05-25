@@ -13,7 +13,7 @@ module.exports = {
             if (happy.state === happy.STATE.UNHAPPY) {
                 // flag pod to be removed from LB
                 throw new HealthCheckError(`Pod has exceeded its memory limits \n 
-                    ${JSON.stringify(happyConfig)`)
+                    ${JSON.stringify(happyConfig)}`)
             }
             return 'page ok';
         }
