@@ -1,4 +1,4 @@
-# @gasket/plugin-happy-feet
+# @gasket/plugin-happyfeet
 
 Integrates with [happy-feet](https://github.com/asilvas/happy-feet#usage) to add application instance termination when health metrics such as memory usage enter a bad state.
 
@@ -13,7 +13,7 @@ gasket create <app-name> --plugins @gasket/plugin-happyfeet
 #### Existing apps
 
 ```
-npm i @gasket/plugin-happy-feet
+npm i @gasket/plugin-happyfeet
 ```
 
 Modify the `plugins` section of your `gasket.config.js`:
