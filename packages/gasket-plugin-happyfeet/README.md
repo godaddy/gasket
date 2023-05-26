@@ -48,9 +48,14 @@ module.exports = {
 };
 ```
 
-[Happy Feet] for gasket has no default configuration.
-## License
+[Happy Feet](https://github.com/asilvas/happy-feet#usage) for gasket has no default configuration.
 
+
+### Usage
+You can call gasket.happyFeet directly to manually change the health status for any reason by 
+setting `gasket.happyFeet.status = 'unhappy'` in any context that you have the gasket object available to your function. 
+For example, you can define middleware to run before any healthchecks to define custom termination logic for things not included in the default metrics monitoring.
+## License
 [MIT](./LICENSE.md)
 
 <!-- LINKS -->
