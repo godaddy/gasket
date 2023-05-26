@@ -1,5 +1,7 @@
 # `@gasket/engine`
 
+- Add missing gasket engine `hook` method to types
+
 ### 6.38.5
 
 - Fix to use long name for named app plugins ([#560])
