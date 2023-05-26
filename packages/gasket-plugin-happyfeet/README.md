@@ -16,7 +16,7 @@ gasket create <app-name> --plugins @gasket/plugin-happy-feet
 npm i @gasket/plugin-happy-feet
 ```
 
-Modify `plugins` section of your `gasket.config.js`:
+Modify the `plugins` section of your `gasket.config.js`:
 
 ```diff
 module.exports = {
