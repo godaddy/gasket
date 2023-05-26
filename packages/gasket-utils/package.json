@@ -1,6 +1,6 @@
 {
   "name": "@gasket/utils",
-  "version": "6.38.5",
+  "version": "6.38.8",
   "description": "Reusable utilities for Gasket internals",
   "main": "lib",
   "types": "lib/index.d.ts",
@@ -43,7 +43,7 @@
     "lodash.defaultsdeep": "^4.6.1"
   },
   "devDependencies": {
-    "@gasket/engine": "^6.38.5",
+    "@gasket/engine": "^6.38.8",
     "@godaddy/dmd": "^1.0.0",
     "abort-controller": "^3.0.0",
     "cross-env": "^7.0.3",
