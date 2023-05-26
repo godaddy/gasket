@@ -19,7 +19,7 @@ describe('Plugin', () => {
         try {
             await plugin.hooks.healthcheck(gasket, Error)
         } catch (e) {
-            expect(e.message).toEqual('Pod has exceeded its memory limits\n {}');
+            expect(e.message).toEqual('Happy Feet entered an unhappy state');
         }
     });
     it('Returns page ok when happyfeet is fine', async () => {
