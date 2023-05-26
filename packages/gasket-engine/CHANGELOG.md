@@ -1,5 +1,7 @@
 # `@gasket/engine`
 
+- Fix bug with `execWaterfallSync` not supporting nullish return values
+
 ### 6.38.5
 
 - Fix to use long name for named app plugins ([#560])
