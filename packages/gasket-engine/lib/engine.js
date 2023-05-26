@@ -425,7 +425,7 @@ class PluginEngine {
       plansByType[type] = prepare(hookConfig, trace)
     );
     const result = exec(plan);
-    if (result.finally) {
+    if (typeof result?.finally === 'function') {
       return result.finally(() => this._traceDepth--);
     }
 

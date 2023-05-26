@@ -1,5 +1,6 @@
 # `@gasket/engine`
 
+- Fix bug with `execWaterfallSync` not supporting nullish return values
 - Add missing gasket engine `hook` method to types
 
 ### 6.38.5
