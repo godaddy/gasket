@@ -1,6 +1,6 @@
 # @gasket/plugin-happy-feet
 
-A plugin that creates a [happy-feet](https://github.com/asilvas/happy-feet#usage) instance and adds pod memory healthchecks based on config that you provide.
+Integrates with [happy-feet](https://github.com/asilvas/happy-feet#usage) to add application instance termination when health metrics such as memory usage enter a bad state.
 
 ## Installation
 
