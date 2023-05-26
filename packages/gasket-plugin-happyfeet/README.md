@@ -7,7 +7,7 @@ Integrates with [happy-feet](https://github.com/asilvas/happy-feet#usage) to add
 #### New apps
 
 ```
-gasket create <app-name> --plugins @gasket/plugin-happy-feet
+gasket create <app-name> --plugins @gasket/plugin-happyfeet
 ```
 
 #### Existing apps
