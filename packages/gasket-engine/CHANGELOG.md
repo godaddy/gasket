@@ -1,7 +1,9 @@
 # `@gasket/engine`
 
-- Fix bug with `execWaterfallSync` not supporting nullish return values
-- Add missing gasket engine `hook` method to types
+### 6.38.8
+
+- Fix bug with `execWaterfallSync` not supporting nullish return values ([#596])
+- Add missing gasket engine `hook` method to types ([#594])
 
 ### 6.38.5
 
@@ -113,5 +115,7 @@
 [#436]: https://github.com/godaddy/gasket/pull/436
 [#457]: https://github.com/godaddy/gasket/pull/457
 [#560]: https://github.com/godaddy/gasket/pull/560
+[#594]: https://github.com/godaddy/gasket/pull/594
+[#596]: https://github.com/godaddy/gasket/pull/596
 
 [Loader]:/packages/gasket-resolve/docs/api.md#loader
