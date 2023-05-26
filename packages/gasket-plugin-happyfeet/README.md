@@ -22,7 +22,7 @@ Modify the `plugins` section of your `gasket.config.js`:
 module.exports = {
   plugins: {
     add: [
-+      '@gasket/plugin-happy-feet'
++      '@gasket/plugin-happyfeet'
     ]
   }
 }
