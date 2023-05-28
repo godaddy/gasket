@@ -17,12 +17,7 @@ describe('Plugin', () => {
     const gasket = { config: { get: jest.fn() } };
     await plugin.hooks.preboot(gasket);
     gasket.happyFeet.state = 'unhappy';
-    try {
-      await plugin.hooks.healthcheck(gasket, Error);
-    } catch (e) {
-      // eslint-disable-next-line jest/no-conditional-expect
-      expect(e.message).toEqual('Happy Feet entered an unhappy state');
-    }
+    await expect(plugin.hooks.healthcheck(gasket, Error)).rejects.toThrow('Happy Feet entered an unhappy state');
   });
   it('Returns page ok when happyfeet is fine', async () => {
     const gasket = { config: { get: jest.fn() } };
