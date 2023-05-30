@@ -13,7 +13,7 @@
   "author": "",
   "license": "UNLICENSED",
   "dependencies": {
-    "happy-feet": "^2.1.0"
+    "happy-feet": "^2.2.0"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
@@ -37,4 +37,3 @@
     }
   }
 }
-
