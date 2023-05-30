@@ -5,13 +5,8 @@ declare module '@gasket/engine' {
     export interface GasketConfig {
         happyFeet: HappyFeetOptions
     }
+    export interface Gasket {
+        happyFeet: HappyFeet;
+    }
 }
 
-export interface HookExecTypes {
-    preboot(): MaybeAsync<void>
-    healthcheck(): MaybeAsync<string>
-}
-
-export interface Gasket {
-    happyFeet: HappyFeet;
-}
