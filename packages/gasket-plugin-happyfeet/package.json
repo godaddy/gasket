@@ -11,7 +11,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "dependencies": {
     "happy-feet": "^2.2.0"
   },
