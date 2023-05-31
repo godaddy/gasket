@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-service-worker",
-  "version": "6.38.8",
+  "version": "6.39.0",
   "description": "Gasket Service Worker Plugin",
   "main": "lib",
   "types": "lib/index.d.ts",
@@ -46,7 +46,7 @@
     "webpack-inject-plugin": "^1.5.4"
   },
   "devDependencies": {
-    "@gasket/engine": "^6.38.8",
+    "@gasket/engine": "^6.39.0",
     "eslint": "^8.7.0",
     "eslint-config-godaddy": "^7.0.0",
     "eslint-plugin-jest": "^27.2.1",
