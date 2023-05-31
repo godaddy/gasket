@@ -13,9 +13,9 @@
     "lint:fix": "npm run lint -- --fix",
     "test": "npm run test:runner",
     "test:runner": "npm run test:server && npm run test:browser",
-    "posttest": "npm run lint",
     "test:browser": "jest --detectOpenHandles --env=jsdom test/browser.spec.js",
-    "test:server": "jest --env=node test/server.spec.js"
+    "test:server": "jest --env=node test/server.spec.js",
+    "posttest": "npm run lint"
   },
   "repository": {
     "type": "git",
