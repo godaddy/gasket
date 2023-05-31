@@ -19,6 +19,9 @@
   "keywords": [],
   "author": "",
   "license": "MIT",
+    "bugs": {
+    "url": "https://github.com/godaddy/gasket/issues"
+  },
   "dependencies": {
     "happy-feet": "^2.2.0"
   },
