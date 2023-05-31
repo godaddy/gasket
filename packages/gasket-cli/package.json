@@ -28,8 +28,8 @@
     "test:integration:coverage": "nyc --reporter=text --reporter=json-summary --all run-s test:integration",
     "test:mocha": "mocha --require test/setup.js --recursive \"test/**/*.test.js\"",
     "test:unit": "mocha --require test/setup.js --recursive \"test/unit/**/*.test.js\"",
-    "test:unit:watch": "npm run test:unit -- --watch",
-    "test:unit:coverage": "nyc --reporter=text --reporter=lcov --all run-s test:unit"
+    "test:unit:coverage": "nyc --reporter=text --reporter=lcov --all run-s test:unit",
+    "test:unit:watch": "npm run test:unit -- --watch"
   },
   "repository": {
     "type": "git",
@@ -74,7 +74,7 @@
     "cross-spawn": "^7.0.1",
     "deepmerge": "^4.2.2",
     "getopts": "^2.3.0",
-    "glob": "^8.0.0",
+    "glob": "^8.1.0",
     "handlebars": "^4.7.6",
     "inquirer": "6.5.2",
     "json5": "^2.1.0",

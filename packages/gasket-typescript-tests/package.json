@@ -6,6 +6,9 @@
   "files": [
     "lib"
   ],
+  "directories": {
+    "test": "test"
+  },
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
@@ -90,8 +93,5 @@
     "globals": {
       "JSX": "readonly"
     }
-  },
-  "directories": {
-    "test": "test"
   }
 }
