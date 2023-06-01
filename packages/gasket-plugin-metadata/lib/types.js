@@ -59,6 +59,14 @@
  */
 
 /**
+ * Metadata for plugin configuration properties
+ *
+ * @typedef {DetailData} ConfigurationsData
+ *
+ * @property {string} type - Configuration property type
+ */
+
+/**
  * Collection data for modules configured for app
  *
  * @typedef {object} Metadata

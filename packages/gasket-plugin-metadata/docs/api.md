@@ -9,6 +9,7 @@ Name | Description
 [PresetData] | Preset module with meta data
 [DetailData] | Metadata for details of a plugin
 [LifecycleData] | Metadata with specifics details for plugin lifecycles
+[ConfigurationsData] | Metadata for plugin configuration properties
 [Metadata] | Collection data for modules configured for app
 
 
@@ -99,6 +100,18 @@ Metadata with specifics details for plugin lifecycles
 | \[command\] | `string` | Command from which this lifecycle is invoked |
 
 
+## ConfigurationsData
+
+Metadata for plugin configuration properties
+
+**Kind**: global typedef  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| type | `string` | Configuration property type |
+
+
 ## Metadata
 
 Collection data for modules configured for app
@@ -121,5 +134,6 @@ Collection data for modules configured for app
 [PresetData]:#presetdata
 [DetailData]:#detaildata
 [LifecycleData]:#lifecycledata
+[ConfigurationsData]:#configurationsdata
 [Metadata]:#metadata
 [`AppData`]:#appdata
