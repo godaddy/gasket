@@ -1,5 +1,9 @@
 # `@gasket/plugin-git`
 
+### 6.40.0
+
+- Use `main` as default branch
+
 ### 6.34.4
 
 - Upgrade eslint-plugin-unicorn v43 ([#436])
