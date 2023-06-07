@@ -25,7 +25,7 @@ declare module '@gasket/engine' {
   ) => ReturnType<HookExecTypes[Id]>;
 
   type HookWithTimings<Id extends HookId> = {
-    timing: HookWithTimings;
+    timing: HookTimings;
     handler: HookHandler<Id>;
   };
 
@@ -51,7 +51,7 @@ declare module '@gasket/engine' {
   export default class GasketEngine {
     constructor(config: GasketConfigFile, context?: { resolveFrom?: string });
     config: GasketConfig;
-  
+
     exec<Id extends HookId>(
       hook: Id,
       ...args: Parameters<HookExecTypes[Id]>
