@@ -14,7 +14,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16.x,18.x]
+        node-version: [16.x, 18.x]
 
     steps:
       - uses: actions/checkout@v3
@@ -33,3 +33,16 @@ jobs:
 
       - name: Run Tests & Lint
         run: npm test
+
+  lockfile-changes:
+    runs-on: ubuntu-latest
+    # Permission overwrite is required for Dependabot PRs, see "Common issues" below.
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: NPM Lockfile Changes
+        uses: codepunkt/npm-lockfile-changes@main
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
