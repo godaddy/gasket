@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-docs",
-  "version": "6.39.2",
+  "version": "6.39.3",
   "description": "Centralize doc files from plugins and modules",
   "main": "lib",
   "types": "lib/index.d.ts",
@@ -47,8 +47,8 @@
     "rimraf": "^3.0.2"
   },
   "devDependencies": {
-    "@gasket/engine": "^6.39.0",
-    "@gasket/plugin-metadata": "^6.39.2",
+    "@gasket/engine": "^6.39.3",
+    "@gasket/plugin-metadata": "^6.39.3",
     "@godaddy/dmd": "^1.0.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.7.0",
