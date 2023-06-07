@@ -1,5 +1,9 @@
 # `@gasket/engine`
 
+### 6.39.3
+
+- Fix hook timing type ([#599])
+
 ### 6.38.8
 
 - Fix bug with `execWaterfallSync` not supporting nullish return values ([#596])
@@ -117,5 +121,6 @@
 [#560]: https://github.com/godaddy/gasket/pull/560
 [#594]: https://github.com/godaddy/gasket/pull/594
 [#596]: https://github.com/godaddy/gasket/pull/596
+[#599]: https://github.com/godaddy/gasket/pull/599
 
 [Loader]:/packages/gasket-resolve/docs/api.md#loader
