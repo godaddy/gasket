@@ -1,5 +1,7 @@
 # `@gasket/nextjs`
 
+- Fix TypeScript declarations for HOCs
+
 ### 6.37.0
 
 - Migrate from Enzyme to React Testing Library ([#523])
