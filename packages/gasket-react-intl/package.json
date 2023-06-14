@@ -21,7 +21,8 @@
     "test:coverage": "nyc --reporter=text --reporter=json-summary npm run test:runner",
     "posttest": "npm run lint",
     "build": "babel src -d lib --delete-dir-on-start",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "clean": "rimraf lib"
   },
   "repository": {
     "type": "git",

@@ -19,7 +19,9 @@ export function GasketDataScript(props: { data: GasketData }): JSX.Element;
  * @param {number} [options.index] - Force script injection at particular index
  * @returns {function(NextDocument)} wrapper
  */
-export function withGasketData(options?: { index?: number }): (component: NextDocument) => NextDocument;
+export function withGasketData(options?: {
+  index?: number;
+}): (component: typeof NextDocument) => typeof NextDocument;
 
 /**
  * React hook that fetches GasketData in elements context and returns it
@@ -36,7 +38,9 @@ export function useGasketData(): GasketData;
  * @param {JSX.Element} props.children - Element to add GasketData context too
  * @returns {JSX.Element} element
  */
-export function GasketDataProvider(props: PropsWithChildren<{ gasketData: GasketData }>): JSX.Element;
+export function GasketDataProvider(
+  props: PropsWithChildren<{ gasketData: GasketData }>
+): JSX.Element;
 
 /**
  * Make an HOC that adds a provider for the GasketData.
