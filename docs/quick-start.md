@@ -74,7 +74,7 @@ module.exports = {
 ```
 
 Now, when you run the docs command, a site will open in your default browser
-with docs fore what is configured in your app.
+with docs for what is configured in your app.
 
 ```bash
 gasket docs
