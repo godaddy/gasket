@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-git",
-  "version": "6.39.3",
+  "version": "6.40.0",
   "description": "Adds git support to your application",
   "main": "lib",
   "files": [
