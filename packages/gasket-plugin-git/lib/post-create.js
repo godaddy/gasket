@@ -18,6 +18,9 @@ module.exports = {
       // Init a git repo
       await runShellCommand('git', ['init'], { cwd });
 
+      // Use `main` branch
+      await runShellCommand('git', ['checkout', '-b', 'main'], { cwd });
+
       // Add all files
       await runShellCommand('git', ['add', '.'], { cwd });
 
