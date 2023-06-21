@@ -1,5 +1,9 @@
 # `@gasket/plugin-git`
 
+### 6.40.0
+
+- Use `main` as default branch ([#598])
+
 ### 6.34.4
 
 - Upgrade eslint-plugin-unicorn v43 ([#436])
@@ -37,3 +41,4 @@
 [#436]: https://github.com/godaddy/gasket/pull/436
 [#442]: https://github.com/godaddy/gasket/pull/442
 [#460]: https://github.com/godaddy/gasket/pull/460
+[#598]: https://github.com/godaddy/gasket/pull/598
