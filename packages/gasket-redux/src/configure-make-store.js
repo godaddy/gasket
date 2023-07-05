@@ -44,6 +44,7 @@ export function prepareReducer(allReducers, rootReducer) {
  */
 export default function configureMakeStore(
   {
+    devToolsOptions = {},
     reducers = {},
     rootReducer,
     initialState = {},
@@ -86,7 +87,9 @@ export default function configureMakeStore(
       );
     }
 
-    const composer = (typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
+    const composer = (typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ?
+      window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({ ...devToolsOptions }) : compose;
+
     const enhancer = composer(
       applyMiddleware(...allMiddleware),
       ...enhancers
