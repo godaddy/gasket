@@ -1,6 +1,8 @@
 # `@gasket/cli`
 
-- Add diagnostic logging for environment/config resolution when a `DEBUG=gasket:*` environment variable is set
+### 6.41.0
+
+- Add diagnostic logging for environment/config resolution when a `DEBUG=gasket:*` environment variable is set ([#607])
 
 ### 6.38.0
 
@@ -422,3 +424,4 @@ upon `gasket create`
 [#460]: https://github.com/godaddy/gasket/pull/460
 [#480]: https://github.com/godaddy/gasket/pull/480
 [#547]: https://github.com/godaddy/gasket/pull/547
+[#607]: https://github.com/godaddy/gasket/pull/607
