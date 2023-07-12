@@ -1,6 +1,8 @@
 const { pluginIdentifier } = require('@gasket/resolve');
 const defaultPlugins = require('./default-plugins');
 
+const debug = require('diagnostics')('gasket:cli:config:utils');
+
 /**
  * Returns specified env flag if set or appropriate fallback
  *
@@ -10,10 +12,14 @@ const defaultPlugins = require('./default-plugins');
  * @returns {string} environment
  */
 function getEnvironment(flags, commandId, warn) {
-  if (flags.env) return flags.env;
+  if (flags.env) {
+    debug('Environment was passed through command line flags', flags.env);
+    return flags.env;
+  }
 
   // special snowflake case to match up `local` env with command unless set
   if (commandId === 'local') {
+    debug('Environment defaulting to `local` due to `local` command');
     return 'local';
   }
 
