@@ -1,5 +1,7 @@
 # `@gasket/resolve`
 
+- Add diagnostic logging for environment/config resolution when a `DEBUG=gasket:*` environment variable is set
+
 ### 6.35.6
 
 - Hard fail bad requires in gasket.config while preserving missing behavior ([#590])

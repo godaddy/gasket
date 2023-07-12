@@ -1,5 +1,7 @@
 # `@gasket/cli`
 
+- Add diagnostic logging for environment/config resolution when a `DEBUG=gasket:*` environment variable is set
+
 ### 6.38.0
 
 - Fix generation of files on Windows during gasket create when plugins use globs containing Windows separators ([#547]) 
