@@ -40,6 +40,7 @@
   "dependencies": {
     "concat-stream": "^2.0.0",
     "cross-spawn": "^7.0.1",
+    "diagnostics": "^2.0.2",
     "lodash.defaultsdeep": "^4.6.1"
   },
   "devDependencies": {

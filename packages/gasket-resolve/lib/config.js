@@ -5,6 +5,8 @@ const { applyConfigOverrides, tryResolve } = require('@gasket/utils');
 const { flattenPresets } = require('./preset-utils');
 const jsExtension = /\.(js|cjs)$/i;
 
+const debug = require('diagnostics')('gasket:resolve:config');
+
 async function loadGasketConfigFile(root, env, commandId, configFile = 'gasket.config') {
   let gasketConfig = loadConfigFile(root, configFile);
   if (gasketConfig) {
@@ -22,6 +24,8 @@ function loadConfigFile(root, configFile) {
   if (resolvedPath) {
     return require(resolvedPath);
   }
+
+  debug(`Failed to resolve Gasket config file ${configFile} from root ${root}`);
 }
 
 async function addUserPlugins(gasketConfig) {

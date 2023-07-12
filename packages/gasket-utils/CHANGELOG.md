@@ -1,6 +1,7 @@
 # `@gasket/utils`
 
 - force install with npm ([#496])
+- Add diagnostic logging for environment/config resolution when a `DEBUG=gasket:*` environment variable is set
 
 ### 6.35.2
 - add requireWithInstall & tryResolve utils ([#492])
