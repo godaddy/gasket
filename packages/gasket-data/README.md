@@ -37,7 +37,7 @@ For example when using the [middleware lifecycle] in a plugin:
 ```js
 module.exports = {
   hooks: {
-    middleware() {
+    middleware(gasket, app) {
       return (req, res, next) => {
         res.locals.gasketData = res.locals.gasketData || {};
         res.locals.gasketData.example = { fake: 'data' }; 
