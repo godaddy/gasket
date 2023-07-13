@@ -34,7 +34,7 @@ To add to the data exposed in `@gasket/data`, you can write to the HTTP response
 ```js
 module.exports = {
   hooks: {
-    middleware(gasket) {
+    middleware(gasket, app) {
       return (req, res, next) => {
         res.locals.gasketData = res.locals.gasketData || {};
         res.locals.gasketData.example = { fake: 'data' }; 
@@ -50,7 +50,7 @@ The results of `res.locals.gasketData` should then be rendering in a script as d
 ```js
 // /lifecycles/middleware.js
 
-module.exports = gasket => [
+module.exports = (gasket, app) => [
   (req, res, next) => {
     res.locals.gasketData ??= {};
     res.locals.gasketData.example = gasket.config.somethingWeWantToExpose;
