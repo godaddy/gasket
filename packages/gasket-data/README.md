@@ -27,17 +27,14 @@ import gasketData from '@gasket/data';
 console.log(gasketData.something); // interesting
 ```
 
-### Adding SSR Data
+### Adding Data
 
-To make data available for server-side rendering options, plugins should add to
-the `res.locals.gasketData` object.
-
-For example when using the [middleware lifecycle] in a plugin:
+To add to the data exposed in `@gasket/data`, you can write to the HTTP response object's `locals.gasketData` property. For example when using the [middleware lifecycle] in a plugin:
 
 ```js
 module.exports = {
   hooks: {
-    middleware() {
+    middleware(gasket, app) {
       return (req, res, next) => {
         res.locals.gasketData = res.locals.gasketData || {};
         res.locals.gasketData.example = { fake: 'data' }; 
@@ -48,8 +45,18 @@ module.exports = {
 };
 ```
 
-The results of `res.locals.gasketData` should then be rendering in a script as
-described above.
+The results of `res.locals.gasketData` should then be rendering in a script as described above. Similarly, this can be done in an application lifecycle script:
+
+```js
+// /lifecycles/middleware.js
+
+module.exports = (gasket, app) => [
+  (req, res, next) => {
+    res.locals.gasketData ??= {};
+    res.locals.gasketData.example = gasket.config.somethingWeWantToExpose;
+  }
+];
+```
 
 ## License
 

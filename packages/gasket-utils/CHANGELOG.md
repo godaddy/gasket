@@ -1,8 +1,15 @@
 # `@gasket/utils`
 
+### 6.41.0
+
+- Add diagnostic logging for environment/config resolution when a `DEBUG=gasket:*` environment variable is set ([#607])
+
+### 6.36.0
+
 - force install with npm ([#496])
 
 ### 6.35.2
+
 - add requireWithInstall & tryResolve utils ([#492])
 
 ### 6.34.4
@@ -73,3 +80,4 @@
 [#436]: https://github.com/godaddy/gasket/pull/436
 [#492]: https://github.com/godaddy/gasket/pull/492
 [#496]: https://github.com/godaddy/gasket/pull/496
+[#607]: https://github.com/godaddy/gasket/pull/607

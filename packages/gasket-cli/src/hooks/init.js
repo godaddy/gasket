@@ -33,6 +33,7 @@ async function initHook({ id, config: oclifConfig, argv }) {
 
   try {
     const env = getEnvironment(flags, id, warn);
+    debug('Detected gasket environment', env);
 
     // expose Gasket settings on process
     process.env.GASKET_ENV = env;
