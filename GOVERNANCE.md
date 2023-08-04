@@ -35,7 +35,7 @@ Different levels of consensus are needed for different kinds of changes. For
 small PRs, it is sufficient to get the two approvals you need to merge the PR.
 
 For major design additions or refactors, it is more important to get buy-in from
-other contributors before starting. Post in the [Slack] channel, and allow a few
+other contributors before starting. Post in the [Discussions], and allow a few
 days for other contributors to weigh in. Your goal here is to 1) get feedback on
 your plan before investing the time in a PR and 2) to get buy-in from other
 contributors. Once you have addressed blocking feedback and received some
@@ -46,7 +46,7 @@ change, allow at least a week for as many maintainers as possible to respond.
 Your goal here should be to get buy-in from all maintainers (with silence
 interpreted as approval). In rare cases, there may prove to be irresolvable
 disagreement between maintainers, in which case it is acceptable to conduct a
-majority vote in Slack.
+majority vote.
 
 If the design/roadmap change requires a breaking change or major refactor to the
 plugin engine or the cli, please tag at least one [code owner][code owners] in
@@ -61,6 +61,6 @@ working groups:
 * Front-end frameworks: e.g. Nextjs, Svelte
 * Feature areas: e.g. Intl, lint
 
-[Slack]: https://godaddy-oss.slack.com/archives/CQ6QXC5E1
+[Discussions]: https://github.com/godaddy/gasket/discussions
 [Gasket Github group]: https://github.com/orgs/godaddy/teams/gasket
 [code owners]: ./CODEOWNERS
