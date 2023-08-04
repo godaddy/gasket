@@ -7,16 +7,12 @@ project.
 
 No matter how you want to get involved, we ask that you first learn what’s
 expected of anyone who participates in the project by reading the Contribution
-Guidelines.
-
-**Please Note:** GitHub is for bug reports and contributions primarily - if you
-have a support question head over to
-[GoDaddy's Open Source Software Slack channel][slack].
+Guidelines. 
 
 ## Answering Questions
 
 One of the most important and immediate ways you can support this project is to
-answer questions on [Slack][slack] or [Github][issues]. Whether you’re helping a
+answer questions on  [Github][issues]. Whether you’re helping a
 newcomer understand a feature or troubleshooting an edge case with a seasoned
 developer, your knowledge and experience with JS can go a long way to help
 others.
@@ -62,7 +58,7 @@ From a practical perspective, contributions are as simple as:
 
 If you are interested in making a large change and feel unsure about its overall
 effect, please make sure to first discuss the change and reach a consensus with
-core contributors through [slack]. Then ask about the best way to go about
+core contributors. Then ask about the best way to go about
 making the change.
 
 ## Code Review
@@ -83,8 +79,7 @@ patches:
   to do the same for you. Good will is our currency.
 - Split your change into multiple smaller changes. The smaller your change, the
   higher the probability that somebody will take a quick look at it.
-- Ping the change on [slack]. If it is urgent, provide reasons why it is
-  important to get this change landed. Remember that you’re asking for valuable
+- Remember that you’re asking for valuable
   time from other professional developers.
 
 **Note that anyone is welcome to review and give feedback on a change, but only
@@ -205,7 +200,6 @@ example-directory-name/
 - [JSDoc]
 
 [issues]: https://github.com/godaddy/gasket/issues
-[slack]: https://godaddy-oss.slack.com/messages/CHXEP5DNH
 [JSDoc]: http://usejsdoc.org/
 [npm]: http://npmjs.org/
 [style]: https://github.com/godaddy/javascript/#godaddy-style
