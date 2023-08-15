@@ -1,5 +1,7 @@
 # `@gasket/plugin-metadata`
 
+- Docs on accessing `gasket.metadata` ([#613])
+
 ### 6.39.2
 
 - Add missing `ConfigurationsData` type ([#597])
@@ -64,6 +66,7 @@
 [#489]: https://github.com/godaddy/gasket/pull/489
 [#498]: https://github.com/godaddy/gasket/pull/498
 [#597]: https://github.com/godaddy/gasket/pull/597
+[#613]: https://github.com/godaddy/gasket/pull/613
 
 [Loader]:/packages/gasket-resolve/docs/api.md#loader
 [PluginInfo]:/packages/gasket-resolve/docs/api.md#plugininfo

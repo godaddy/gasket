@@ -1,5 +1,7 @@
 # `@gasket/plugin-fastify`
 
+- Align docs on configuring middleware paths ([#613])
+
 ### 6.38.2
 
 - Add generated Fastify starter routes file ([#555])
@@ -54,3 +56,4 @@ Enable middleware support ([#172])
 [#442]: https://github.com/godaddy/gasket/pull/442
 [#460]: https://github.com/godaddy/gasket/pull/460
 [#555]: https://github.com/godaddy/gasket/pull/555
+[#613]: https://github.com/godaddy/gasket/pull/613
