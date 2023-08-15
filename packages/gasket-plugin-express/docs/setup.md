@@ -10,6 +10,8 @@ Whether your custom Express middleware is for a plugin to be shared across
 multiple apps, or for a standalone plugin used solely by your app, the plugin
 system is necessary to do any Express app customization.
 
+## Middleware lifecycle
+
 After some standard middleware is injected, a plugin can hook the `middleware`
 lifecycle and return a middleware or array of middlewares to be added. This hook
 is passed the typical `gasket` object as with any hook, and the `express`
@@ -32,6 +34,8 @@ module.exports = {
 };
 ```
 
+## Express lifecycle
+
 The `express` lifecycle is next. This provides an opportunity to do things with
 the app object directly, like attaching route handlers:
 
@@ -46,6 +50,8 @@ module.exports = {
   }
 };
 ```
+
+## ErrorMiddleware lifecycle
 
 Finally, plugins can hook the `errorMiddleware` lifecycle and return additional
 middleware(s), typically for [error handling].
@@ -69,6 +75,8 @@ module.exports = {
   }
 };
 ```
+
+## Lifecycle timing
 
 Remember, if you need any of your injected middleware to come before or after
 middleware injected by another plugin, use the [timing mechanism] of the plugin
@@ -106,7 +114,16 @@ module.exports = {
   }
 }
 ```
-You can configure which paths middleware will run on by adding the middleware configuration array to your local `gasket.config.js`. The array is made up of objects with the name of the middlware (Gasket plugin name) you want to configure and an array of path patterns representing the paths to match for this middleware. Pattern matching entries in the array can come in the form of path strings, path pattern strings, and/or regular expressions. Pattern matching logic follows Express's [app.use pattern matching].
+
+## Middleware paths
+
+You can configure which paths middleware will run on by adding the middleware
+configuration array to your local `gasket.config.js`. The array is made up of
+objects with the name of the middleware (Gasket plugin name) you want to
+configure and an array of path patterns representing the paths to match for this
+middleware. Pattern matching entries in the array can come in the form of path
+strings, path pattern strings, and/or regular expressions. Pattern matching
+logic follows Express's [app.use pattern matching].
 
 ```js
   middleware: [
