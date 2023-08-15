@@ -119,7 +119,7 @@ You can configure which paths middleware will run on by adding the middleware co
       paths: [/\/default/]
     },
     {
-      plugin: '@another/gasket-plugin-example'
+      plugin: '@another/gasket-plugin-example',
       paths: ['/proxy', /\/home/]
     }
   ]
