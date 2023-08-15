@@ -17,7 +17,7 @@ Describe metadata for a plugin and optionally its supporting modules.
 #### Example
 
 This plugin implements the `metadata` lifecycle, which plugins can use to modify
-it's own metadata at runtime. Whatever is returned will replace the existing
+its own metadata at runtime. Whatever is returned will replace the existing
 metadata.
 
 ```js
@@ -68,7 +68,7 @@ module.exports = {
 
 ## Usage
 
-Beside the lifeycles available to plugins, metadata can also be described for
+Beside the lifecycles available to plugins, metadata can also be described for
 preset and modules.
 
 ### Presets
@@ -97,11 +97,13 @@ in the package.json which will get expanded to the [ModuleData]:
   "version": "1.2.3",
   "gasket": {
     "metadata": {
-      "guides": [{
-        "name": "Example Guide",
-        "description": "How to do something",
-        "link": "docs/example.md"
-      }]
+      "guides": [
+        {
+          "name": "Example Guide",
+          "description": "How to do something",
+          "link": "docs/example.md"
+        }
+      ]
     }
   }
 }
@@ -110,6 +112,53 @@ in the package.json which will get expanded to the [ModuleData]:
 This is especially useful to surface guides with
 [Gasket docs][@gasket/plugin-docs] for supporting packages that are intended to
 be used with Gasket, but are not plugins.
+
+## Access
+
+Plugins and apps can read from the [metadata object] by accessing
+`gasket.metadata` in most lifecycles.
+
+#### Access example
+
+Back to our example plugin, let's see how we can access details about an
+installed module, and put is some conditional logic. 
+
+```js
+// gasket-plugin-example.js
+const semver = require('semver')
+
+module.exports = {
+  name: 'example',
+  hooks: {
+    // Because metadata is collected during the init lifecycle, we must 
+    // adjust our init hook to occur after in order to read the metadata
+    init: {
+      timing: {
+        after: ['@gasket/metadata']
+      },
+      handler: function initHook(gasket) {
+        const { metadata } = gasket;
+
+        // Find the ModuleData for a package
+        const moduleData = metadata.modules.find(mod => mod.name === 'some-package');
+        
+        // If it is installed, and meets requires
+        if(moduleData && semver.satisfies(moduleData.version, '13.x')) {
+          // Do something special
+        } else {
+          // Skip and issue warning about upgrading
+        }
+
+        // Find the PluginData for a plugin
+        const pluginData = metadata.plugins.find(mod => mod.name === 'gasket-plugin-feature');
+        if(pluginData) {
+          // Fallback for when a certain plugin is not installed
+        }
+      }
+    }
+  }
+};
+```
 
 ## How it works
 
@@ -138,11 +187,19 @@ available from `gasket.metadata.modules`.
 <!-- LINKS -->
 
 [metadata]: #metadata
+
 [ModuleData]: docs/api.md#ModuleData
+
 [PluginData]: docs/api.md#PluginData
+
 [PresetData]: docs/api.md#PresetData
+
 [DetailData]: docs/api.md#DetailData
+
 [metadata object]: docs/api.md#DetailData
 
 [@gasket/plugin-docs]: /packages/gasket-plugin-docs/README.md
+
 [@gasket/resolve]: /packages/gasket-resolve/README.md
+
+[init lifecycle]: /packages/gasket-plugin-command/README.md#init

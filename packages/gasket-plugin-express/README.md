@@ -55,6 +55,29 @@ module.exports = {
 }
 ```
 
+### Middleware paths
+
+The `gasket.config.js` can contain a `middleware` property, which is an array of
+objects that map plugins to route or path patterns, allowing apps to tune which
+middleware are triggered for which requests.
+
+```js
+  middleware: [
+    {
+      plugin:'gasket-plugin-example', // Name of the Gasket plugin
+      paths: ['/api']
+    },
+    {
+      plugin:'@some/gasket-plugin-example',
+      paths: [/\/default/]
+    },
+    {
+      plugin: '@another/gasket-plugin-example',
+      paths: ['/proxy', /\/home/]
+    }
+  ]
+```
+
 ## Lifecycles
 
 ### middleware
