@@ -64,7 +64,7 @@
     "jsdom": "^20.0.0",
     "mocha": "^10.0.0",
     "mock-require": "^3.0.3",
-    "next": "^12.0.8",
+    "next": "^13.1.1",
     "nyc": "^15.1.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
@@ -72,7 +72,7 @@
     "sinon": "^14.0.0"
   },
   "peerDependencies": {
-    "next": ">=10.2.0 < 13"
+    "next": ">=10.2.0 < 14"
   },
   "eslintConfig": {
     "extends": [
