@@ -46,7 +46,7 @@
     "cross-env": "^7.0.3",
     "eslint": "^8.7.0",
     "eslint-config-godaddy": "^7.0.0",
-    "eslint-config-next": "^12.1.0",
+    "eslint-config-next": "^13.4.19",
     "eslint-plugin-jest": "^27.2.1",
     "eslint-plugin-json": "^3.1.0",
     "eslint-plugin-mocha": "^10.0.3",
