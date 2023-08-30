@@ -10,8 +10,8 @@ const debug = require('diagnostics')('gasket:resolve:config');
 async function loadGasketConfigFile(root, env, commandId, configFile = 'gasket.config') {
   let gasketConfig = loadConfigFile(root, configFile);
   if (gasketConfig) {
-    gasketConfig.root = root;
-    gasketConfig.env = env;
+    gasketConfig.root = gasketConfig.root || root;
+    gasketConfig.env = gasketConfig.env || env;
     gasketConfig = await addUserPlugins(gasketConfig);
 
     return applyConfigOverrides(gasketConfig, { env, commandId, root, localFile: './gasket.config.local' });
