@@ -72,7 +72,7 @@
     "sinon": "^14.0.0"
   },
   "peerDependencies": {
-    "next": ">=10.2.0 < 14"
+    "next": ">=10.2.0 <= 13.1.1"
   },
   "eslintConfig": {
     "extends": [
