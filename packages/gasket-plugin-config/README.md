@@ -53,9 +53,9 @@ module.exports = {
 
 Gasket first decides which _environment_ you're running in. By default, this
 comes from the `NODE_ENV` environment variable or the `--env` command-line
-argument. This can also be overridden by the `env` property of
-`gasket.config.js`. Environments can be sub-divided (say, for multiple data
-centers) through dotted identifiers. Example: `production.v1`.
+argument which can be set from the `GASKET_ENV` environment variable. 
+Environments can be sub-divided (say, for multiple data centers) through dotted
+identifiers. Example: `production.v1`.
 
 Once this environment identifier is determined, files are imported based on the
 identifier and deep merged together. Files must be CommonJS `.js` modules or
