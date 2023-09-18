@@ -1,7 +1,6 @@
 import type { GasketConfigFile, MaybeAsync } from '@gasket/engine';
 import type { PackageManager } from '@gasket/utils';
 import type { Config } from '@oclif/config';
-import { Inquirer } from 'inquirer';
 
 export interface Dependencies {
   dependencies?: Record<string, string>;
@@ -196,7 +195,7 @@ declare module '@gasket/engine' {
     prompt(
       context: CreateContext,
       utils: {
-        prompt: Inquirer,
+        prompt: (prompts: Array<Record<string, any>>) => Promise<Record<string,any>>,
         addPlugins: (plugins: Array<string>) => Promise<void>
       }
     ): MaybeAsync<CreateContext>;
