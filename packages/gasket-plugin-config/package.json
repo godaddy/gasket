@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-config",
-  "version": "6.41.0",
+  "version": "6.41.1",
   "description": "Supports application-specific (non-Gasket) configuration",
   "main": "lib/plugin.js",
   "types": "lib/plugin.d.ts",

@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-intl",
-  "version": "6.39.3",
+  "version": "6.41.1",
   "description": "NodeJS script to build localization files.",
   "main": "lib",
   "types": "lib/index.d.ts",
@@ -52,7 +52,7 @@
   "devDependencies": {
     "@gasket/engine": "^6.39.3",
     "@gasket/plugin-log": "^6.39.3",
-    "@gasket/react-intl": "^6.39.0",
+    "@gasket/react-intl": "^6.41.1",
     "cross-env": "^7.0.3",
     "eslint": "^8.7.0",
     "eslint-config-godaddy": "^7.0.0",
