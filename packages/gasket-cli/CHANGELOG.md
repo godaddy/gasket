@@ -1,5 +1,9 @@
 # `@gasket/cli`
 
+### 6.41.1
+
+- Fix prompt handler type declaration ([#617])
+
 ### 6.41.0
 
 - Add diagnostic logging for environment/config resolution when a `DEBUG=gasket:*` environment variable is set ([#607])
@@ -425,3 +429,4 @@ upon `gasket create`
 [#480]: https://github.com/godaddy/gasket/pull/480
 [#547]: https://github.com/godaddy/gasket/pull/547
 [#607]: https://github.com/godaddy/gasket/pull/607
+[#617]: https://github.com/godaddy/gasket/pull/617
