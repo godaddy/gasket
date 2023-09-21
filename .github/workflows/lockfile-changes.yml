@@ -1,0 +1,23 @@
+name: NPM Lockfile Changes
+
+on: [pull_request]
+
+jobs:
+  lockfile_changes:
+    runs-on: ubuntu-latest
+    # Permission overwrite is required for Dependabot PRs
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: NPM Lockfile Changes
+        uses: codepunkt/npm-lockfile-changes@v1.0.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          # Optional inputs, can be deleted safely if you are happy with default values.
+          collapsibleThreshold: 25
+          failOnDowngrade: false
+          path: package-lock.json
+          updateComment: true
