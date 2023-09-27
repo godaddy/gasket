@@ -1,6 +1,7 @@
+const { promisify } = require('util');
 const debug = require('diagnostics')('gasket:express');
 const { name, devDependencies } = require('../package');
-const glob = require('glob');
+const glob = promisify(require('glob'));
 const path = require('path');
 
 module.exports = {
@@ -109,18 +110,15 @@ module.exports = {
 
       await gasket.exec('express', app);
 
+      if (routes) {
+        const files = await glob(`${ routes }.js`, { cwd: root });
+        for (const file of files) {
+          require(path.join(root, file))(app);
+        }
+      }
+
       const postRenderingStacks = (await gasket.exec('errorMiddleware')).filter(Boolean);
       postRenderingStacks.forEach((stack) => app.use(stack));
-
-      if (routes) {
-        glob(`${ routes }.js`, { cwd: root }, function (err, files) {
-          if (err) throw err;
-
-          for (let i = 0; i < files.length; i++) {
-            require(path.join(root, files[i]))(app);
-          }
-        });
-      }
 
       return {
         ...serverOpts,
