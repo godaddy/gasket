@@ -1,5 +1,7 @@
+const path = require('path');
+const { setTimeout } = require('timers/promises');
 const GasketEngine = require('@gasket/engine');
-const app = { use: jest.fn() };
+const app = { use: jest.fn(), post: jest.fn() };
 const mockExpress = jest.fn().mockReturnValue(app);
 const bridgedApp = { use: jest.fn() };
 const mockExpressBridge = jest.fn().mockReturnValue(bridgedApp);
@@ -113,6 +115,28 @@ describe('createServers', () => {
       app.use,
       (mw) => mw === errorMiddlewares[0]);
     expect(errorMiddleware).not.toBeNull();
+  });
+
+  it('adds the errorMiddleware after API routes', async () => {
+    Object.assign(gasket.config, {
+      root: __dirname,
+      express: {
+        root: __dirname,
+        routes: path.join('fixtures', '*')
+      }
+    });
+    const errorMiddlewares = [jest.fn()];
+    gasket.exec.mockResolvedValue(errorMiddlewares);
+
+    await plugin.hooks.createServers(gasket, {});
+    await setTimeout(10); // Make sure routes aren't added asynchronously
+
+    const errorIndex = findCallIndex(
+      app.use,
+      (mw) => mw === errorMiddlewares[0]
+    );
+
+    expect(errorIndex).toEqual(app.use.mock.calls.length - 1);
   });
 
   it('setups up patch middleware for http2', async () => {
@@ -245,8 +269,12 @@ describe('createServers', () => {
   });
 
   function findCall(aSpy, aPredicate) {
-    const callIdx = aSpy.mock.calls.map(args => aPredicate(...args)).indexOf(true);
+    const callIdx = findCallIndex(aSpy, aPredicate);
     return callIdx === -1 ? null : aSpy.mock.calls[callIdx][0];
+  }
+
+  function findCallIndex(aSpy, aPredicate) {
+    return aSpy.mock.calls.map(args => aPredicate(...args)).indexOf(true);
   }
 });
 
