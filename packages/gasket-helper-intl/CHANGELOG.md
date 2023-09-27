@@ -1,5 +1,7 @@
 # `@gasket/helper-intl`
 
+- Support server-side debug logging under `debug` namespace `gasket:helper:intl`
+
 ### 6.34.4
 
 - Upgrade eslint-plugin-unicorn v43 ([#436])

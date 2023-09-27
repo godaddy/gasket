@@ -119,7 +119,7 @@ const trim = localePath => localePath.replace(reLeadingSlash, '');
  * @constructor
  */
 function LocaleUtils(config) {
-  const { manifest } = config;
+  const { manifest, debug = () => {} } = config;
   const { basePath = manifest.basePath } = config;
   const { defaultLocale = 'en', localesMap, paths, locales } = manifest;
   const defaultLang = defaultLocale.split('-')[0];
@@ -145,16 +145,20 @@ function LocaleUtils(config) {
       const language = locale.split('-')[0];
 
       if (defaultLocale.indexOf('-') > 0 && locale !== defaultLocale && language === defaultLang) {
+        debug(`Fallback for locale ${locale} is default locale ${defaultLocale}`);
         return defaultLocale;
       }
 
+      debug(`Fallback for ${locale} is its language ${language}`);
       return language;
     }
 
     if (locale !== defaultLang) {
+      debug(`Fallback for language ${locale} is default locale ${defaultLocale}`);
       return defaultLocale;
     }
 
+    debug(`No fallback determined for ${locale}`);
     return null;
   };
 
@@ -198,6 +202,8 @@ function LocaleUtils(config) {
    */
   this.getLocalePath = (localePathPart, locale, context = {}) => {
     const mappedLocale = localesMap && localesMap[locale] || locale;
+    debug(`Mapped locale for ${locale} is ${mappedLocale}`);
+
     let fallbackLocale = mappedLocale;
 
     if (locales && !locales.includes(mappedLocale)) {
@@ -208,10 +214,17 @@ function LocaleUtils(config) {
 
     while (fallbackLocale != null) {
       const localePath = this.formatLocalePath(resolvedLocalePathPart, fallbackLocale);
-      if (trim(localePath) in paths) return localePath;
+      if (trim(localePath) in paths) {
+        debug(`Locale file for ${locale} is ${localePath}`);
+        return localePath;
+      }
+
       fallbackLocale = this.getFallbackLocale(fallbackLocale);
     }
-    return this.formatLocalePath(resolvedLocalePathPart, mappedLocale);
+
+    const result = this.formatLocalePath(resolvedLocalePathPart, mappedLocale);
+    debug(`Locale file for ${locale} is ${result}`);
+    return result;
   };
 
   /**
@@ -225,6 +238,7 @@ function LocaleUtils(config) {
     let url = basePath ? basePath.replace(/\/$/, '') + localePath : localePath;
     const hash = paths[trim(localePath)];
     if (hash) url += `?v=${ hash }`;
+    debug(`URL for ${localePath} is ${url}`);
     return url;
   };
 

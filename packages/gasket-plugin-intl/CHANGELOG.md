@@ -1,5 +1,7 @@
 # `@gasket/plugin-intl`
 
+- Support debug logging under namespace `gasket:plugin:intl:*`
+
 ### 6.38.7
 
 - Add missing runtime dependency to the package.json ([#593])

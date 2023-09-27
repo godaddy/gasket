@@ -378,6 +378,16 @@ Because the `modules` directory is generated with each build, you may want to
 configure your SCM to ignore committing this file, such as with a `.gitignore`
 entry.
 
+## Debugging
+
+If you are experiencing difficulties seeing with locale files not working as expected, it can be helpful to enable debug logging for your gasket server via the `DEBUG` environment variable under the namespace `gasket`:
+
+```shell
+DEBUG=gasket:* npx gasket local
+```
+
+Once enabled, look for messages under the namespace `gasket:plugin:intl` and `gasket:helper:intl` for a detailed accounting on what's happening behind the scenes.
+
 ## License
 
 [MIT](./LICENSE.md)
