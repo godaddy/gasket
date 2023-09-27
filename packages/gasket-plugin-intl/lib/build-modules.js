@@ -3,6 +3,7 @@ const path = require('path');
 const fsUtils = require('./fs-utils');
 const { getIntlConfig } = require('./configure');
 
+const debug = require('debug')('gasket:plugin:intl:buildModules');
 
 class BuildModules {
   /**
@@ -33,6 +34,8 @@ class BuildModules {
    * @returns {Promise} promise
    */
   async copyFolder(srcDir, tgtDir) {
+    debug(`Copying folder from ${srcDir} to ${tgtDir}`);
+
     const fileNames = await fs.readdir(srcDir);
 
     const promises = fileNames.map(async fileName => {
@@ -53,6 +56,8 @@ class BuildModules {
    * @returns {Promise} - resolves once the file is saved
    */
   async copyFile(src, tgt) {
+    debug(`Copying file from ${src} to ${tgt}`);
+
     await fs.mkdirp(path.dirname(tgt));
     const buffer = await fs.readFile(src);
     const output = JSON.parse(buffer);
@@ -68,6 +73,8 @@ class BuildModules {
    * @returns {Promise} promise
    */
   processFiles(srcDir, tgtDir, fileNames) {
+    debug(`Processing files in ${srcDir} to target ${tgtDir}`);
+
     const promises = fileNames.map(async fileName => {
       const srcFile = path.join(srcDir, fileName);
       const tgtFile = path.join(tgtDir, fileName);

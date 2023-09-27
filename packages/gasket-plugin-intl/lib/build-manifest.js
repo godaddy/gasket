@@ -7,6 +7,8 @@ const { getIntlConfig } = require('./configure');
 // TODO: Need to review for native promise usage
 const glob = promisify(require('glob'));
 
+const debug = require('debug')('gasket:plugin:intl:buildManifest');
+
 /**
  * Constructs a manifest of locale file paths and settings which can be
  * loaded or bundled by the client. Locale paths have content hashes associated
@@ -22,6 +24,7 @@ module.exports = async function buildManifest(gasket) {
   const { basePath, defaultPath, defaultLocale, locales, localesMap } = getIntlConfig(gasket);
 
   // find all the .json files except the manifest
+  debug(`Building manifest ${tgtFile} from JSON files in ${localesDir}`);
   const files = (await glob('**/*.json', { cwd: localesDir }))
     .filter(f => f !== manifestFilename);
 
