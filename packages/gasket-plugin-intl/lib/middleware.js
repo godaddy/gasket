@@ -4,6 +4,7 @@ const accept = require('@hapi/accept');
 const { LocaleUtils } = require('@gasket/helper-intl');
 const { getIntlConfig } = require('./configure');
 
+const debug = require('debug')('gasket:plugin:intl:middleware');
 
 function capitalize(str) {
   return str[0].toUpperCase() + str.substring(1).toLowerCase();
@@ -41,28 +42,29 @@ module.exports = function middlewareHook(gasket) {
 
   const manifest = require(path.join(localesDir, manifestFilename));
   const localesParentDir = path.dirname(localesDir);
-  const localeUtils = new LocaleUtils({ manifest, basePath });
+  const localeUtils = new LocaleUtils({
+    manifest,
+    basePath,
+    debug: require('debug')('gasket:helper:intl')
+  });
   if (preloadLocales) {
-    Object.keys(manifest.paths).map((localePath) => require(path.join(localesParentDir, localePath)));
+    debug(`Preloading locale files from ${localesParentDir}`);
+    Object.keys(manifest.paths).forEach((localePath) => {
+      debug(`Preloading locale file ${localePath}`);
+      require(path.join(localesParentDir, localePath));
+    });
   }
 
   return async function intlMiddleware(req, res, next) {
-    let preferredLocale = defaultLocale;
-    if (req.headers['accept-language']) {
-      try {
-        // Get highest or highest from locales if configured
-        preferredLocale = formatLocale(
-          accept.language(req.headers['accept-language'], locales)
-        );
-      } catch (error) {
-        gasket.logger.debug(`Unable to parse accept-language header: ${ error.message }`);
-      }
-    }
+    const preferredLocale = getPreferredLocale(gasket, req, locales, defaultLocale);
 
     // Allow plugins to determine locale to use
     const pluginLocale = await gasket.execWaterfall('intlLocale', preferredLocale, { req, res });
+    debug(`Locale after plugin updates: ${pluginLocale}`);
+
     // Once we have a locale, see if there has been any remapping for it
     const locale = localesMap && localesMap[pluginLocale] || pluginLocale;
+    debug(`Locale after remapping: ${locale}`);
 
     /**
      * Gasket data to render as global object for browser access
@@ -129,3 +131,23 @@ module.exports = function middlewareHook(gasket) {
     next();
   };
 };
+
+function getPreferredLocale(gasket, req, locales, defaultLocale) {
+  let preferredLocale = defaultLocale;
+  const acceptLanguage = req.headers['accept-language'];
+  if (acceptLanguage) {
+    debug(`Received accept-language of ${acceptLanguage}`);
+    try {
+      // Get highest or highest from locales if configured
+      preferredLocale = formatLocale(accept.language(acceptLanguage, locales));
+      debug(`Using ${preferredLocale} as starting locale`);
+    } catch (error) {
+      gasket.logger.debug(`Unable to parse accept-language header: ${error.message}`);
+    }
+  } else {
+    debug(`No accept-language header; starting with default ${preferredLocale}`);
+  }
+
+  return preferredLocale;
+}
+
