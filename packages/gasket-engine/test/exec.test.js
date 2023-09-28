@@ -19,7 +19,7 @@ describe('The exec method', () => {
         timing: {
           after: ['pluginB']
         },
-        handler: async function () {
+        async handler() {
           const start = Date.now();
           await pause(10);
           return {
@@ -33,7 +33,7 @@ describe('The exec method', () => {
         timing: {
           first: true
         },
-        handler: async function () {
+        async handler() {
           const start = Date.now();
           await pause(10);
           return {
@@ -66,7 +66,7 @@ describe('The exec method', () => {
           first: true,
           before: ['pluginA']
         },
-        handler: async function () {
+        async handler() {
           const start = Date.now();
           await pause(10);
           return {
@@ -138,7 +138,7 @@ describe('The exec method', () => {
     await expect(engine.exec('mock')).rejects.toThrow(Error);
   });
 
-  it('should await if ordered', async function () {
+  it('should await if ordered', async () => {
     const result = await engine.exec('eventB');
 
     expect(result).toEqual([
@@ -150,7 +150,7 @@ describe('The exec method', () => {
     expect(resultsA.start).toBeGreaterThanOrEqual(resultsB.end);
   });
 
-  it('should await if ordered within first grouping', async function () {
+  it('should await if ordered within first grouping', async () => {
     const result = await engine.exec('eventC');
 
     expect(result).toEqual([
