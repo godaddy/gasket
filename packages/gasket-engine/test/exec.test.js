@@ -1,3 +1,7 @@
+async function pause(ms) {
+  await new Promise(resolve => setTimeout(resolve, ms));
+}
+
 describe('The exec method', () => {
   let engine, hookASpy, hookBSpy;
 
@@ -10,6 +14,20 @@ describe('The exec method', () => {
     hooks: {
       eventA() {
         return Promise.resolve(1);
+      },
+      eventB: {
+        timing: {
+          after: ['pluginB']
+        },
+        handler: async function () {
+          const start = Date.now();
+          await pause(10);
+          return {
+            value: 'A',
+            start,
+            end: Date.now()
+          };
+        }
       }
     }
   };
@@ -19,6 +37,15 @@ describe('The exec method', () => {
     hooks: {
       eventA() {
         return 2;
+      },
+      async eventB() {
+        const start = Date.now();
+        await pause(10);
+        return {
+          value: 'B',
+          start,
+          end: Date.now()
+        };
       }
     }
   };
@@ -59,7 +86,7 @@ describe('The exec method', () => {
   });
 
   it('resolves to an empty array if nothing hooked the event', async () => {
-    const result = await engine.exec('eventB');
+    const result = await engine.exec('eventMissing');
     expect(result).toEqual([]);
   });
 
@@ -80,5 +107,17 @@ describe('The exec method', () => {
     });
 
     await expect(engine.exec('mock')).rejects.toThrow(Error);
+  });
+
+  it('should await if ordered', async function () {
+    const result = await engine.exec('eventB');
+
+    expect(result).toEqual([
+      expect.objectContaining({ value: 'B' }),
+      expect.objectContaining({ value: 'A' })
+    ]);
+
+    const [resultsB, resultsA] = result;
+    expect(resultsA.start).toBeGreaterThanOrEqual(resultsB.end);
   });
 });
