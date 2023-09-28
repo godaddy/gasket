@@ -1,3 +1,5 @@
+const debug = require('debug')('gasket:plugin:intl:init');
+
 /**
  * For SSR with Node < 14, we must polyfill Intl to make sure all locale data is
  * available. For the browser, this may need polyfilled matching app requirements.
@@ -11,5 +13,6 @@ module.exports = function initHook() {
   const current = semver.coerce(process.version).version;
   if (!semver.satisfies(current, '>=14')) {
     global.Intl = require('intl');
+    debug('Using Intl polyfill');
   }
 };

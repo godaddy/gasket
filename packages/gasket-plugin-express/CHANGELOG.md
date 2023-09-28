@@ -1,5 +1,6 @@
 # `@gasket/plugin-express`
 
+- Fix ordering of error middlewares so they come after API routes
 - Docs on configuring middleware paths ([#613])
 
 ### 6.34.4
