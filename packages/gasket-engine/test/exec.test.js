@@ -31,8 +31,7 @@ describe('The exec method', () => {
       },
       eventC: {
         timing: {
-          first: true,
-          after: ['pluginB']
+          first: true
         },
         handler: async function () {
           const start = Date.now();
@@ -64,7 +63,8 @@ describe('The exec method', () => {
       },
       eventC: {
         timing: {
-          first: true
+          first: true,
+          before: ['pluginA']
         },
         handler: async function () {
           const start = Date.now();
