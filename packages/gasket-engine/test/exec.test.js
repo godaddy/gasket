@@ -28,6 +28,21 @@ describe('The exec method', () => {
             end: Date.now()
           };
         }
+      },
+      eventC: {
+        timing: {
+          first: true,
+          after: ['pluginB']
+        },
+        handler: async function () {
+          const start = Date.now();
+          await pause(10);
+          return {
+            value: 'A',
+            start,
+            end: Date.now()
+          };
+        }
       }
     }
   };
@@ -46,6 +61,20 @@ describe('The exec method', () => {
           start,
           end: Date.now()
         };
+      },
+      eventC: {
+        timing: {
+          first: true
+        },
+        handler: async function () {
+          const start = Date.now();
+          await pause(10);
+          return {
+            value: 'B',
+            start,
+            end: Date.now()
+          };
+        }
       }
     }
   };
@@ -111,6 +140,18 @@ describe('The exec method', () => {
 
   it('should await if ordered', async function () {
     const result = await engine.exec('eventB');
+
+    expect(result).toEqual([
+      expect.objectContaining({ value: 'B' }),
+      expect.objectContaining({ value: 'A' })
+    ]);
+
+    const [resultsB, resultsA] = result;
+    expect(resultsA.start).toBeGreaterThanOrEqual(resultsB.end);
+  });
+
+  it('should await if ordered within first grouping', async function () {
+    const result = await engine.exec('eventC');
 
     expect(result).toEqual([
       expect.objectContaining({ value: 'B' }),
