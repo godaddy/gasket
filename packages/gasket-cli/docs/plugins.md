@@ -77,10 +77,14 @@ type Hook = HandlerFunction | {
 }
 ```
 
-The `before` and other timing properties establish ordering with respect to
-other plugins. You can also use a first or last boolean instead to try to ensure
-that it runs first or last (if multiple plugins do this, they'll run in
-parallel).
+The timing properties establish the execution order of a lifecycle hook with respect to that of other plugins. This does not change the order of lifecycle events, only the execution order of the hooks for the lifecycle event. 
+
+| Property | Description |
+|----------|-------------|
+| `before` | Array of names of plugins whose hooks for the lifecycle your own hook should run before. This will guarantee that the hooks of those other plugins will wait for your hook to complete before running. |
+| `after` | Array of names of plugins whose hooks for the lifecycle your own hook should run after. This will guarantee that your hook will wait for the hooks of those other plugins to complete before running. |
+| `first` | Boolean indicating that your hook will run before that of any other plugin. You should avoid this whenever possible because it will prevent the ability of other hooks to run before yours, and there may be use cases for this you haven't anticipated. Instead, use the `before` property to list _known plugins_ that have hooks known to be incompatible with running before or in parallel to yours. If multiple plugins use this flag for the same lifecycle, they will run in parallel. |
+| `last` | Boolean indicating that your hook will run after those of all the other plugins. You should avoid this whenever possible because it will prevent the ability of other hooks to run after yours, and there may be use cases for this you haven't anticipated. Instead, use the `after` property to list _known plugins_ that must have their hooks complete before yours runs. If multiple plugins use this flag for the same lifecycle, they will run in parallel. |
 
 The handler functions are called with a `GasketAPI` followed by any arguments
 passed when the event was invoked. You can see the full definitions for the
