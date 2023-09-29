@@ -40,7 +40,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-elastic-apm",
   "dependencies": {
-    "elastic-apm-node": "^3.26.0"
+    "elastic-apm-node": "^3.50.0"
   },
   "devDependencies": {
     "@gasket/engine": "^6.39.3",
