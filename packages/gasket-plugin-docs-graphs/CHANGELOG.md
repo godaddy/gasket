@@ -29,7 +29,6 @@
 
 - Initial implementation
 
-
 [#247]: https://github.com/godaddy/gasket/pull/247
 [#319]: https://github.com/godaddy/gasket/pull/319
 [#376]: https://github.com/godaddy/gasket/pull/376
