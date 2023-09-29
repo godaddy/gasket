@@ -43,9 +43,7 @@
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-nextjs",
   "dependencies": {
     "@gasket/data": "^6.41.1",
-    "htmlescape": "^1.1.1",
-    "prop-types": "^15.8.1",
-    "react": "^18.2.0"
+    "htmlescape": "^1.1.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.10",
@@ -68,12 +66,16 @@
     "mock-require": "^3.0.3",
     "next": "^12.0.8",
     "nyc": "^15.1.0",
+    "prop-types": "^15.7.2",
+    "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "setup-env": "^2.0.0",
     "sinon": "^14.0.0"
   },
   "peerDependencies": {
-    "next": ">=10.2.0 < 13"
+    "next": ">=10.2.0 < 13",
+    "prop-types": "^15",
+    "react": "^16 || ^17 || ^18"
   },
   "eslintConfig": {
     "extends": [

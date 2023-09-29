@@ -67,6 +67,7 @@
   },
   "peerDependencies": {
     "next": ">=10.2.0 < 13",
+    "prop-types": "^15",
     "react": "^16 || ^17 || ^18",
     "react-dom": "^16 || ^17 || ^18"
   },
