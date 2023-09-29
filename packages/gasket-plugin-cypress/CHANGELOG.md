@@ -12,7 +12,6 @@
 
 - Initial release. ([#357])
 
-
 [#357]: https://github.com/godaddy/gasket/pull/357
 [#436]: https://github.com/godaddy/gasket/pull/436
 [#541]: https://github.com/godaddy/gasket/pull/541

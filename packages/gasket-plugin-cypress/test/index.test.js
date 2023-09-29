@@ -1,8 +1,8 @@
 const self = require('../package.json');
-const plugin = require('../lib/index.js');
-const config = require('../generator/cypress.config.js');
+const plugin = require('../lib/index');
+const config = require('../generator/cypress.config');
 
-describe('Plugin', function () {
+describe('Plugin', () => {
   async function create() {
     const pkg = {};
 
@@ -54,15 +54,15 @@ describe('Plugin', function () {
     };
   }
 
-  it('is an object', function () {
+  it('is an object', () => {
     expect(plugin).toBeInstanceOf(Object);
   });
 
-  it('has expected name', function () {
-    expect(plugin).toHaveProperty('name', require('../package').name);
+  it('has expected name', () => {
+    expect(plugin).toHaveProperty('name', require('../package.json').name);
   });
 
-  it('has expected hooks', function () {
+  it('has expected hooks', () => {
     const expected = ['create', 'metadata'];
 
     expect(plugin).toHaveProperty('hooks');
@@ -72,21 +72,24 @@ describe('Plugin', function () {
     expect(hooks).toHaveLength(expected.length);
   });
 
-  it('has the correct create hook timings', function () {
+  it('has the correct create hook timings', () => {
     expect(plugin.hooks.create.timing.after).toEqual(['@gasket/plugin-nextjs']);
   });
 
-  it('has the correct custom cypress config', async function () {
-    const {e2e} = config;
+  it('has the correct custom cypress config', async () => {
+    const { e2e } = config;
     expect(e2e).toHaveProperty('baseUrl', 'http://localhost:8080');
     expect(e2e).toHaveProperty('supportFile', false);
-    expect(e2e).toHaveProperty('specPattern', 'test/e2e/**/*.cy.{js,jsx,ts,tsx}');
+    expect(e2e).toHaveProperty(
+      'specPattern',
+      'test/e2e/**/*.cy.{js,jsx,ts,tsx}'
+    );
     expect(typeof e2e.setupNodeEvents).toBe('function');
     expect(config).toHaveProperty('video', false);
   });
 
-  describe('react', function () {
-    it('includes a glob for the `generator/cypress.config.js` contents for react projects', async function () {
+  describe('react', () => {
+    it('includes a glob for the `generator/cypress.config.js` contents for react projects', async () => {
       const { files } = await createReact();
 
       expect(files[0]).toContain('/../generator/*');
@@ -94,16 +97,16 @@ describe('Plugin', function () {
     });
   });
 
-  describe('adds react specific dependencies', function () {
+  describe('adds react specific dependencies', () => {
     ['cypress', 'start-server-and-test'].forEach((name) => {
-      it(`adds "${name}" in the devDependencies`, async function () {
+      it(`adds "${name}" in the devDependencies`, async () => {
         const { pkg } = await createReact();
 
         expect(pkg.devDependencies).toHaveProperty(name);
       });
     });
 
-    it('depends on the same versions', async function () {
+    it('depends on the same versions', async () => {
       const { pkg } = await createReact();
 
       expect(typeof pkg.devDependencies).toBe('object');
@@ -114,14 +117,14 @@ describe('Plugin', function () {
     });
   });
 
-  describe('dependencies', function () {
-    it('adds "cypress" in the devDependencies', async function () {
+  describe('dependencies', () => {
+    it('adds "cypress" in the devDependencies', async () => {
       const { pkg } = await create();
 
       expect(pkg.devDependencies).toHaveProperty('cypress');
     });
 
-    it('depends on the same versions', async function () {
+    it('depends on the same versions', async () => {
       const { pkg } = await create();
 
       expect(typeof pkg.devDependencies).toBe('object');
@@ -132,15 +135,16 @@ describe('Plugin', function () {
     });
   });
 
-  describe('scripts', function () {
-    it('uses the same scrips in our package.json', async function () {
+  describe('scripts', () => {
+    it('uses the same scrips in our package.json', async () => {
       const { pkg } = await create();
 
       const expected = {
         'start:local': 'gasket start --env local',
         'cypress': 'cypress open',
         'cypress:headless': 'cypress run',
-        'e2e': 'start-server-and-test start:local http://localhost:8080 cypress',
+        'e2e':
+          'start-server-and-test start:local http://localhost:8080 cypress',
         'e2e:headless':
           'start-server-and-test start:local http://localhost:8080 cypress:headless'
       };
