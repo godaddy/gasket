@@ -1,5 +1,5 @@
 {
-  "version": "6.41.2",
+  "version": "6.42.0",
   "$schema": "https://json.schemastore.org/lerna.json",
   "useWorkspaces": true,
   "useNx": true,
