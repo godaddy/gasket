@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-intl",
-  "version": "6.38.5",
+  "version": "6.42.0",
   "description": "NodeJS script to build localization files.",
   "main": "lib",
   "types": "lib/index.d.ts",
@@ -38,9 +38,11 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-intl",
   "dependencies": {
-    "@gasket/helper-intl": "^6.38.1",
+    "@gasket/helper-intl": "^6.41.2",
     "@hapi/accept": "^6.0.0",
+    "debug": "^4.3.4",
     "fs-extra": "^10.0.0",
+    "glob": "^8.1.0",
     "intl": "^1.2.5",
     "loader-utils": "^3.0.0",
     "lodash.merge": "^4.6.0",
@@ -49,9 +51,9 @@
     "url-join": "^4.0.0"
   },
   "devDependencies": {
-    "@gasket/engine": "^6.38.5",
-    "@gasket/plugin-log": "^6.38.5",
-    "@gasket/react-intl": "^6.38.1",
+    "@gasket/engine": "^6.39.3",
+    "@gasket/plugin-log": "^6.39.3",
+    "@gasket/react-intl": "^6.42.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.7.0",
     "eslint-config-godaddy": "^7.0.0",

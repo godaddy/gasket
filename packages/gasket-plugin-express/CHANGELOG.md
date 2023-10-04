@@ -1,5 +1,10 @@
 # `@gasket/plugin-express`
 
+### 6.41.2
+
+- Fix ordering of error middlewares so they come after API routes
+- Docs on configuring middleware paths ([#613])
+
 ### 6.34.4
 
 - Upgrade eslint-plugin-unicorn v43 ([#436])
@@ -68,3 +73,4 @@
 [#444]: https://github.com/godaddy/gasket/pull/444
 [#442]: https://github.com/godaddy/gasket/pull/442
 [#460]: https://github.com/godaddy/gasket/pull/460
+[#613]: https://github.com/godaddy/gasket/pull/613

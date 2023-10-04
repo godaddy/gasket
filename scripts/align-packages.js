@@ -2,14 +2,11 @@
 
 const fs = require('fs');
 const path = require('path');
-const {
-  promisify
-} = require('util');
+const { promisify } = require('util');
 
 const readFile = promisify(fs.readFile);
 const writeFile = promisify(fs.writeFile);
 const projectRoot = path.resolve(__dirname, '..');
-
 
 /**
  * Dependency name and expected version range
@@ -47,8 +44,8 @@ const depVersions = {
 
   'babel-eslint': '^10.1.0',
   'eslint': '^8.7.0',
-  'eslint-config-godaddy': '^6.0.0',
-  'eslint-config-godaddy-react': '^8.0.0',
+  'eslint-config-godaddy': '^7.0.0',
+  'eslint-config-godaddy-react': '^9.0.0',
   'eslint-plugin-json': '^3.1.0',
   'eslint-plugin-jest': '^27.2.1',
   'eslint-plugin-mocha': '^10.0.3',
@@ -59,7 +56,7 @@ const depVersions = {
   'diagnostics': '^2.0.2',
   'handlebars': '^4.7.6',
   'rimraf': '^3.0.2',
-  'glob': '^8.0.0',
+  'glob': '^8.1.0',
   'semver': '^7.3.4',
   'lodash.defaultsdeep': '^4.6.1',
   'webpack': '^5.21.2',
@@ -73,6 +70,7 @@ const depVersions = {
  * @type {object.<string,string>}
  */
 const peerDepVersions = {
+  'prop-types': '^15',
   'next': '>=10.2.0 < 13',
   'react': '^16 || ^17 || ^18',
   'react-dom': '^16 || ^17 || ^18',
@@ -96,6 +94,7 @@ const pkgOrder = [
   'bin',
   'types',
   'files',
+  'directories',
   'scripts',
   'repository',
   'publishConfig',
@@ -130,6 +129,9 @@ const scriptsOrder = [
   'test:runner',
   'test:watch',
   'test:coverage',
+  'test:browser',
+  'test:client',
+  'test:server',
   'posttest',
   'build',
   'build:watch',
@@ -139,14 +141,13 @@ const scriptsOrder = [
   'prepublishOnly'
 ];
 
-
 /**
  * Shortcut to stringfy and object in a readable way
  *
  * @param {object} json - Object to stringify very prettily
  * @returns {string} pretty
  */
-const prettyPrint = json => JSON.stringify(json, null, 2) + '\n';
+const prettyPrint = (json) => JSON.stringify(json, null, 2) + '\n';
 
 /**
  * Builds a sort function from an array.
@@ -156,7 +157,7 @@ const prettyPrint = json => JSON.stringify(json, null, 2) + '\n';
  * @param {Array} arr - Array of sorted keys
  * @returns {function} compare
  */
-const orderedSort = arr => (a, b) => {
+const orderedSort = (arr) => (a, b) => {
   let comparison = 0;
   let aIdx = arr.indexOf(a);
   let bIdx = arr.indexOf(b);
@@ -189,9 +190,11 @@ function sortKeys(obj, attr, compare) {
   if (!target) return obj;
 
   const ordered = {};
-  Object.keys(target).sort(compare).forEach(function (key) {
-    ordered[key] = target[key];
-  });
+  Object.keys(target)
+    .sort(compare)
+    .forEach(function (key) {
+      ordered[key] = target[key];
+    });
 
   if (attr) {
     obj[attr] = ordered;
@@ -213,7 +216,7 @@ function alignDeps(pkgJson, attr, versions = {}) {
   const deps = Object.keys(pkgJson[attr]);
   const updated = {};
 
-  deps.forEach(dep => {
+  deps.forEach((dep) => {
     updated[dep] = versions[dep] || depVersions[dep] || pkgJson[attr][dep];
   });
   pkgJson[attr] = updated;
@@ -226,7 +229,6 @@ function alignDeps(pkgJson, attr, versions = {}) {
  * @param {object} pkgJson - package.json contents
  */
 function fixedProperties(pkgJson) {
-
   pkgJson.author = 'GoDaddy Operating Company, LLC';
   pkgJson.repository = {
     type: 'git',
@@ -249,13 +251,9 @@ function fixedProperties(pkgJson) {
 function checkScripts(pkgJson) {
   const { name, scripts } = pkgJson;
 
-  const expected = [
-    'test',
-    'test:coverage',
-    'posttest'
-  ];
+  const expected = ['test', 'test:coverage', 'posttest'];
 
-  expected.forEach(s => {
+  expected.forEach((s) => {
     if (scripts && !(s in scripts)) {
       console.warn(`${name} does not have script: ${s}`);
     }
@@ -317,13 +315,14 @@ async function fixupPackage(pkgPath) {
 async function main() {
   const packagesDir = path.join(projectRoot, 'packages');
 
-  const paths = fs.readdirSync(packagesDir, { withFileTypes: true })
-    .filter(dirent => dirent.isDirectory() && dirent.name.includes('gasket'))
-    .map(dirent => path.join(packagesDir, dirent.name, 'package.json'));
+  const paths = fs
+    .readdirSync(packagesDir, { withFileTypes: true })
+    .filter((dirent) => dirent.isDirectory() && dirent.name.includes('gasket'))
+    .map((dirent) => path.join(packagesDir, dirent.name, 'package.json'));
 
   paths.push(path.join(projectRoot, 'package.json'));
 
-  await Promise.all(paths.map(pkgPath => fixupPackage(pkgPath)));
+  await Promise.all(paths.map((pkgPath) => fixupPackage(pkgPath)));
   console.log('Finished.');
 }
 

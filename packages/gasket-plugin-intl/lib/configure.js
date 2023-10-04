@@ -1,5 +1,7 @@
 const path = require('path');
 
+const debug = require('debug')('gasket:plugin:intl:configure');
+
 const moduleDefaults = {
   localesDir: 'locales',
   excludes: ['cacache', 'yargs', 'axe-core']
@@ -78,6 +80,20 @@ module.exports = function configureHook(gasket, config) {
   process.env.GASKET_INTL_MANIFEST_FILE = path.join(fullLocalesDir, manifestFilename);
   /* eslint-enable no-process-env */
 
+  const normalizedIntlConfig = {
+    ...intlConfig,
+    basePath,
+    defaultPath,
+    defaultLocale,
+    localesMap,
+    localesDir: fullLocalesDir,
+    manifestFilename,
+    preloadLocales,
+    modules
+  };
+
+  debug(`Normalized intl config: ${JSON.stringify(normalizedIntlConfig)}`);
+
   /**
    * @typedef {object} IntlConfig
    *
@@ -94,17 +110,7 @@ module.exports = function configureHook(gasket, config) {
    */
   return {
     ...config,
-    intl: {
-      ...intlConfig,
-      basePath,
-      defaultPath,
-      defaultLocale,
-      localesMap,
-      localesDir: fullLocalesDir,
-      manifestFilename,
-      preloadLocales,
-      modules
-    }
+    intl: normalizedIntlConfig
   };
 };
 

@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-docsify",
-  "version": "6.38.5",
+  "version": "6.39.3",
   "description": "View collated docs with Docsify",
   "main": "lib",
   "types": "lib/index.d.ts",
@@ -39,13 +39,13 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-docsify",
   "dependencies": {
-    "glob": "^8.0.0",
+    "glob": "^8.1.0",
     "handlebars": "^4.7.6",
     "lodash.defaultsdeep": "^4.6.1",
     "mkdirp": "^1.0.4"
   },
   "devDependencies": {
-    "@gasket/engine": "^6.38.5",
+    "@gasket/engine": "^6.39.3",
     "cross-env": "^7.0.3",
     "docsify": "^4.10.2",
     "docsify-cli": "^4.4.2",

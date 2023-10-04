@@ -1,6 +1,6 @@
 {
   "name": "@gasket/cli",
-  "version": "6.38.5",
+  "version": "6.42.0",
   "description": "CLI for rapid application development with gasket",
   "main": "src/index.js",
   "bin": {
@@ -28,8 +28,8 @@
     "test:integration:coverage": "nyc --reporter=text --reporter=json-summary --all run-s test:integration",
     "test:mocha": "mocha --require test/setup.js --recursive \"test/**/*.test.js\"",
     "test:unit": "mocha --require test/setup.js --recursive \"test/unit/**/*.test.js\"",
-    "test:unit:watch": "npm run test:unit -- --watch",
-    "test:unit:coverage": "nyc --reporter=text --reporter=lcov --all run-s test:unit"
+    "test:unit:coverage": "nyc --reporter=text --reporter=lcov --all run-s test:unit",
+    "test:unit:watch": "npm run test:unit -- --watch"
   },
   "repository": {
     "type": "git",
@@ -55,14 +55,14 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-cli",
   "dependencies": {
-    "@gasket/engine": "^6.38.5",
-    "@gasket/plugin-command": "^6.38.5",
-    "@gasket/plugin-git": "^6.38.5",
-    "@gasket/plugin-lifecycle": "^6.38.5",
-    "@gasket/plugin-metadata": "^6.38.5",
-    "@gasket/plugin-start": "^6.38.5",
-    "@gasket/resolve": "^6.38.5",
-    "@gasket/utils": "^6.38.5",
+    "@gasket/engine": "^6.41.0",
+    "@gasket/plugin-command": "^6.41.0",
+    "@gasket/plugin-git": "^6.41.0",
+    "@gasket/plugin-lifecycle": "^6.39.3",
+    "@gasket/plugin-metadata": "^6.41.1",
+    "@gasket/plugin-start": "^6.39.3",
+    "@gasket/resolve": "^6.41.0",
+    "@gasket/utils": "^6.41.0",
     "@oclif/command": "^1.8.16",
     "@oclif/config": "^1.18.2",
     "@oclif/core": "^1.2.0",
@@ -74,7 +74,7 @@
     "cross-spawn": "^7.0.1",
     "deepmerge": "^4.2.2",
     "getopts": "^2.3.0",
-    "glob": "^8.0.0",
+    "glob": "^8.1.0",
     "handlebars": "^4.7.6",
     "inquirer": "6.5.2",
     "json5": "^2.1.0",

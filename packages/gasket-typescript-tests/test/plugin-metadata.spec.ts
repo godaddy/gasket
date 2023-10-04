@@ -3,8 +3,11 @@ import type { PluginData } from '@gasket/plugin-metadata';
 import '@gasket/plugin-metadata';
 
 describe('@gasket/plugin-metadata', () => {
-  type SlimGasket = Omit<Gasket, 'config'|'logger'|
-    'exec'|'execSync'|'execWaterfall'|'execWaterfallSync'|'execApply'|'execApplySync'>
+  type SlimGasket = Omit<Gasket,
+    |'config'|'logger'
+    |'exec'|'execSync'|'execWaterfall'|'execWaterfallSync'|'execApply'|'execApplySync'
+    |'hook'
+  >
 
   it('defines a metadata lifecycle', () => {
     const hook: Hook<'metadata'> = (gasket: Gasket, origData: PluginData) => ({

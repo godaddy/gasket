@@ -14,17 +14,22 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16.x,18.x]
+        node-version: [18.x, 20.x]
 
     steps:
       - uses: actions/checkout@v3
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
+          cache: npm
+
       - name: Install Dependencies
-        run: npm ci
+        run: npm ci --prefer-offline
+
       - name: Build
         run: npm run build
+
       - name: Run Tests & Lint
         run: npm test

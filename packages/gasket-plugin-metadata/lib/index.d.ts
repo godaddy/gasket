@@ -41,7 +41,7 @@ export interface PluginData extends ModuleData {
   structures?: Array<DetailData>,
 
   /** Configuration options for gasket.config.js */
-  configurations?: Array<DetailData & { type: 'object' }>
+  configurations?: Array<ConfigurationsData>
 
   /** Description of lifecycles invoked by plugin */
   lifecycles?: Array<LifecycleData>,
@@ -81,6 +81,12 @@ export interface LifecycleData extends DetailData {
 
   /** Command from which this lifecycle is invoked */
   command?: string
+}
+
+/** Metadata for plugin configuration properties */
+export interface ConfigurationsData extends DetailData {
+  /** Configuration property type */
+  type: string
 }
 
 /** Collection data for modules configured for app */

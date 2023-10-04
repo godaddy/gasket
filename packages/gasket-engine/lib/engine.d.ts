@@ -8,6 +8,13 @@ declare module '@gasket/engine' {
 
   export type HookId = keyof HookExecTypes
 
+  export type HookTimings = {
+    before?: Array<string>;
+    after?: Array<string>;
+    first?: boolean;
+    last?: boolean;
+  };
+
   export type HookHandler<Id extends HookId> = (
     gasket: Gasket,
     ...args: Parameters<HookExecTypes[Id]>
@@ -18,12 +25,7 @@ declare module '@gasket/engine' {
   ) => ReturnType<HookExecTypes[Id]>;
 
   type HookWithTimings<Id extends HookId> = {
-    timing: {
-      before?: Array<string>;
-      after?: Array<string>;
-      first?: boolean;
-      last?: boolean;
-    };
+    timing: HookTimings;
     handler: HookHandler<Id>;
   };
 
@@ -49,6 +51,7 @@ declare module '@gasket/engine' {
   export default class GasketEngine {
     constructor(config: GasketConfigFile, context?: { resolveFrom?: string });
     config: GasketConfig;
+
     exec<Id extends HookId>(
       hook: Id,
       ...args: Parameters<HookExecTypes[Id]>
@@ -73,6 +76,13 @@ declare module '@gasket/engine' {
       hook: Id,
       callback: (plugin: Plugin, handler: ApplyHookHandler<Id>) => Return
     ): Return[];
+
+    hook<Id extends HookId>(opts: {
+      event: Id,
+      pluginName?: string,
+      timing?: HookTimings,
+      handler: HookHandler<Id>
+    }): void;
   }
 
   export interface Gasket extends GasketEngine {}

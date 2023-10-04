@@ -56,6 +56,15 @@ describe('postCreate', () => {
     );
   });
 
+  it('checkouts \'main\' branch', async () => {
+    await postCreate.handler({}, mockContext);
+    expect(mockRunStub).toHaveBeenCalledWith(
+      'git',
+      expect.arrayContaining(['checkout', '-b', 'main']),
+      expect.any(Object)
+    );
+  });
+
   it('adds files', async () => {
     await postCreate.handler({}, mockContext);
     expect(mockRunStub).toHaveBeenCalledWith(

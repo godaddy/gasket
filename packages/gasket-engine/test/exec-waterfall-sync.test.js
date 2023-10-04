@@ -11,7 +11,8 @@ describe('The execWaterfallSync method', () => {
       hooks: {
         eventA: jest.fn((gasket, value) => {
           return value * 7;
-        })
+        }),
+        eventB: () => null
       }
     };
 
@@ -20,7 +21,8 @@ describe('The execWaterfallSync method', () => {
       hooks: {
         eventA: jest.fn((gasket, value) => {
           return value + 4;
-        })
+        }),
+        eventB: () => null
       }
     };
 
@@ -64,5 +66,13 @@ describe('The execWaterfallSync method', () => {
     const result = execWaterfallSync('eventA', 5);
 
     expect(result).toEqual(39);
+  });
+
+  it('handles the return of nullish values', () => {
+    const { execWaterfallSync } = engine;
+
+    const result = execWaterfallSync('eventB', null);
+
+    expect(result).toEqual(null);
   });
 });

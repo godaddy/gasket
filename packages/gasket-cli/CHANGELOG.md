@@ -1,5 +1,13 @@
 # `@gasket/cli`
 
+### 6.41.1
+
+- Fix prompt handler type declaration ([#617])
+
+### 6.41.0
+
+- Add diagnostic logging for environment/config resolution when a `DEBUG=gasket:*` environment variable is set ([#607])
+
 ### 6.38.0
 
 - Fix generation of files on Windows during gasket create when plugins use globs containing Windows separators ([#547]) 
@@ -420,3 +428,5 @@ upon `gasket create`
 [#460]: https://github.com/godaddy/gasket/pull/460
 [#480]: https://github.com/godaddy/gasket/pull/480
 [#547]: https://github.com/godaddy/gasket/pull/547
+[#607]: https://github.com/godaddy/gasket/pull/607
+[#617]: https://github.com/godaddy/gasket/pull/617

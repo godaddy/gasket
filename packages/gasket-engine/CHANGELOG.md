@@ -1,5 +1,14 @@
 # `@gasket/engine`
 
+### 6.39.3
+
+- Fix hook timing type ([#599])
+
+### 6.38.8
+
+- Fix bug with `execWaterfallSync` not supporting nullish return values ([#596])
+- Add missing gasket engine `hook` method to types ([#594])
+
 ### 6.38.5
 
 - Fix to use long name for named app plugins ([#560])
@@ -110,5 +119,8 @@
 [#436]: https://github.com/godaddy/gasket/pull/436
 [#457]: https://github.com/godaddy/gasket/pull/457
 [#560]: https://github.com/godaddy/gasket/pull/560
+[#594]: https://github.com/godaddy/gasket/pull/594
+[#596]: https://github.com/godaddy/gasket/pull/596
+[#599]: https://github.com/godaddy/gasket/pull/599
 
 [Loader]:/packages/gasket-resolve/docs/api.md#loader

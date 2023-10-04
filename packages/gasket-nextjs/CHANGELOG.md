@@ -1,5 +1,9 @@
 # `@gasket/nextjs`
 
+### 6.40.0
+
+- Fix TypeScript declarations for HOCs ([#603])
+
 ### 6.37.0
 
 - Migrate from Enzyme to React Testing Library ([#523])
@@ -49,3 +53,4 @@
 [#459]: https://github.com/godaddy/gasket/pull/459
 [#460]: https://github.com/godaddy/gasket/pull/460
 [#523]: https://github.com/godaddy/gasket/pull/523
+[#603]: https://github.com/godaddy/gasket/pull/603
