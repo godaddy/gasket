@@ -74,4 +74,19 @@ describe('@gasket/engine', () => {
       }
     });
   });
+
+  it('exposes the running command on the Gasket interface', () => {
+    const engine = new Gasket(
+      { root: __dirname, env: 'test' },
+      { resolveFrom: __dirname }
+    );
+
+    // Valid
+    engine.hook({
+      event: 'example',
+      handler(gasket) {
+        return gasket.command.id === 'start';
+      }
+    });
+  });
 });
