@@ -28,6 +28,7 @@ describe('@gasket/plugin-metadata', () => {
 
   it('adds a metadata property to Gasket', () => {
     const gasket1: SlimGasket = {
+      command: { id: 'docs' },
       metadata: {
         app: {
           name: 'example',
@@ -57,6 +58,7 @@ describe('@gasket/plugin-metadata', () => {
     };
 
     const gasket2: SlimGasket = {
+      command: { id: 'docs' },
       metadata: {
         app: {
           name: 'example',

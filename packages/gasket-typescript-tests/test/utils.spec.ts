@@ -5,7 +5,7 @@ describe('@gasket/utils', function () {
   const perform = false;
 
   describe('applyConfigOverrides', function () {
-    const config: GasketConfig = { command: { id: 'debug' }, root: '/', env: 'debug' };
+    const config: GasketConfig = { root: '/', env: 'debug' };
 
     it('has expected API', function () {
       if (perform) {
