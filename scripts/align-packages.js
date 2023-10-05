@@ -41,7 +41,7 @@ const depVersions = {
   'react-intl': '^6.0.0',
   'prop-types': '^15.7.2',
   'redux': '^4.0.5',
-  'next': '^13.1.1',
+  'next': '13.1.1',
   'next-redux-wrapper': '^8.0.0',
   'jsdom': '^20.0.0',
 
