@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-manifest",
-  "version": "6.39.3",
+  "version": "6.43.0",
   "description": "The web app manifest for progressive Gasket applications",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -44,7 +44,7 @@
     "mkdirp": "^1.0.4"
   },
   "devDependencies": {
-    "@gasket/engine": "^6.39.3",
+    "@gasket/engine": "^6.43.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.7.0",
     "eslint-config-godaddy": "^7.0.0",
