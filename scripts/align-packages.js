@@ -38,7 +38,7 @@ const depVersions = {
   'react-intl': '^6.0.0',
   'prop-types': '^15.7.2',
   'redux': '^4.0.5',
-  'next': '^12.0.8',
+  'next': '13.1.1',
   'next-redux-wrapper': '^8.0.0',
   'jsdom': '^20.0.0',
 
@@ -70,8 +70,8 @@ const depVersions = {
  * @type {object.<string,string>}
  */
 const peerDepVersions = {
+  'next': '>=10.2.0 <= 13.1.1',
   'prop-types': '^15',
-  'next': '>=10.2.0 < 13',
   'react': '^16 || ^17 || ^18',
   'react-dom': '^16 || ^17 || ^18',
   'react-intl': '<7.0.0',
