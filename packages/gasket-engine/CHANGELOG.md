@@ -1,5 +1,7 @@
 # `@gasket/engine`
 
+- Fix incorrect location of the command structure in the TypeScript definition
+
 ### 6.39.3
 
 - Fix hook timing type ([#599])

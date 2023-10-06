@@ -41,9 +41,6 @@ declare module '@gasket/engine' {
 
   // This is the config
   export interface GasketConfig {
-    command: {
-      id: string
-    }
     root: string,
     env: string
   }
@@ -85,7 +82,11 @@ declare module '@gasket/engine' {
     }): void;
   }
 
-  export interface Gasket extends GasketEngine {}
+  export interface Gasket extends GasketEngine {
+    command: {
+      id: string
+    }
+  }
 
   type PartialRecursive<T> =
     T extends Object
