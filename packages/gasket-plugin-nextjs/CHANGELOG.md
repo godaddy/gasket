@@ -1,5 +1,9 @@
 # `@gasket/plugin-nextjs`
 
+### 6.43.0
+
+- Upgrade to Next.js 13.1.1 ([#614])
+
 ### 6.38.2
 
 - Fix generated Mocha example test ([#556])  
@@ -235,3 +239,4 @@
 [#479]: https://github.com/godaddy/gasket/pull/479
 [#541]: https://github.com/godaddy/gasket/pull/541
 [#556]: https://github.com/godaddy/gasket/pull/556
+[#614]: https://github.com/godaddy/gasket/pull/614

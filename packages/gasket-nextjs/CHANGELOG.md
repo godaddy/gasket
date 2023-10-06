@@ -1,5 +1,9 @@
 # `@gasket/nextjs`
 
+### 6.43.0
+
+- Upgrade to Next.js 13.1.1 ([#614])
+
 ### 6.40.0
 
 - Fix TypeScript declarations for HOCs ([#603])
@@ -42,7 +46,6 @@
 
 - Initial release
 
-
 [#262]: https://github.com/godaddy/gasket/pull/262
 [#285]: https://github.com/godaddy/gasket/pull/285
 [#298]: https://github.com/godaddy/gasket/pull/298
@@ -54,3 +57,4 @@
 [#460]: https://github.com/godaddy/gasket/pull/460
 [#523]: https://github.com/godaddy/gasket/pull/523
 [#603]: https://github.com/godaddy/gasket/pull/603
+[#614]: https://github.com/godaddy/gasket/pull/614
