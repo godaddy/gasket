@@ -1,4 +1,4 @@
-const ora = require('ora');
+import ora from 'ora';
 
 /**
  * Decorate a create action with spinner.
@@ -10,7 +10,7 @@ const ora = require('ora');
  * @param {Boolean} startSpinner - Should the spinner start
  * @returns {Function} decorated action
  */
-module.exports = function withSpinner(label, fn, { startSpinner = true } = {}) {
+export default function withSpinner(label, fn, { startSpinner = true } = {}) {
 
   /**
    * Decorated function

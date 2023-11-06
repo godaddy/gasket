@@ -1,7 +1,7 @@
 /* eslint-disable max-len, max-statements */
-const fs = require('fs');
-const path = require('path');
-const { addPluginsToContext, ensureAbsolute, readConfig } = require('../scaffold/utils');
+import fs from 'fs';
+import path from 'path';
+import { addPluginsToContext, ensureAbsolute, readConfig } from '../scaffold/utils.js';
 
 /**
  * The CreateRuntime represents a shallow proxy to a CreateContext
@@ -113,7 +113,7 @@ function flatten(acc, values) {
  *
  * @property {Files} files - Use to add files and templates to generate
  */
-class CreateContext {
+export class CreateContext {
   constructor(initContext = {}) {
     Object.assign(this, initContext);
   }
@@ -130,7 +130,7 @@ class CreateContext {
  * @param {Object} flags - Command flags
  * @returns {CreateContext} context
  */
-module.exports = function makeCreateContext(argv = [], flags = {}) {
+export default function makeCreateContext(argv = [], flags = {}) {
   const appName = argv[0] || 'templated-app';
   const {
     npmconfig,
@@ -193,4 +193,3 @@ module.exports = function makeCreateContext(argv = [], flags = {}) {
   return context;
 };
 
-module.exports.CreateContext = CreateContext;

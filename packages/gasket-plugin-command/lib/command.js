@@ -1,10 +1,10 @@
-const { Command, flags } = require('@oclif/command');
+import { Command, Flags } from '@oclif/core';
 
 /**
  * The GasketCommand can be extended to allow plugins to introduce new CLI
  * commands to invoke Gasket lifecycles.
  */
-class GasketCommand extends Command {
+export class GasketCommand extends Command {
 
   /**
    * Abstract method which must be implemented by subclasses, used to execute
@@ -99,22 +99,22 @@ class GasketCommand extends Command {
  * @property {string} env - Target runtime environment (default: `GASKET_ENV` or `'development'`)
  */
 GasketCommand.flags = {
-  config: flags.string({
+  config: Flags.string({
     env: 'GASKET_CONFIG',
     default: 'gasket.config',
     char: 'c',
     description: 'Fully qualified Gasket config to load'
   }),
-  root: flags.string({
+  root: Flags.string({
     env: 'GASKET_ROOT',
     default: process.env.FAUX_ROOT || process.cwd(), // eslint-disable-line no-process-env
     description: 'Top-level app directory'
   }),
-  env: flags.string({
+  env: Flags.string({
     env: 'GASKET_ENV',
     description: 'Target runtime environment'
   }),
-  require: flags.string({
+  require: Flags.string({
     description: 'Require module before Gasket is initialized',
     char: 'r',
     multiple: true
@@ -122,7 +122,7 @@ GasketCommand.flags = {
 };
 
 // TODO (agerard): Should be added dynamically by @gasket/plugin-metrics.
-GasketCommand.flags.record = flags.boolean({
+GasketCommand.flags.record = Flags.boolean({
   env: 'GASKET_RECORD',
   default: true,
   description: 'Whether or not to emit this command as part of Gasket\'s metrics lifecycle',

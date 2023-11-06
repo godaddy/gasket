@@ -1,11 +1,12 @@
-const debug = require('diagnostics')('gasket:resolver');
+import * as diagnostics from 'diagnostics';
+const debug = diagnostics.default.set('gasket:resolver');
 
 /**
  * Utility to help resolve and require modules
  *
  * @type {Resolver}
  */
-class Resolver {
+export class Resolver {
   /**
    * @param {object} options - Options
    * @param {string|string[]} [options.resolveFrom] - Path(s) to resolve modules from
@@ -14,13 +15,12 @@ class Resolver {
   constructor(options) {
     const {
       resolveFrom,
-      require: _require
     } = options || {};
 
     if (resolveFrom) {
       this._resolveFrom = Array.isArray(resolveFrom) ? resolveFrom : [resolveFrom];
     }
-    this._require = _require || require;
+    this._import = async (path) => await import(path);
   }
 
   /**
@@ -30,8 +30,7 @@ class Resolver {
    * @returns {string} filename of the module
    */
   resolve(moduleName) {
-    const options = this._resolveFrom ? { paths: this._resolveFrom } : {};
-    return this._require.resolve(moduleName, options);
+    return import.meta.resolve(moduleName);
   }
 
   /**
@@ -42,7 +41,7 @@ class Resolver {
    */
   require(moduleName) {
     const modulePath = this.resolve(moduleName);
-    return this._require(modulePath);
+    return this._import(modulePath);
   }
 
   /**
@@ -85,7 +84,3 @@ class Resolver {
     }
   }
 }
-
-module.exports = {
-  Resolver
-};

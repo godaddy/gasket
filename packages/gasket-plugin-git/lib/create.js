@@ -1,4 +1,4 @@
-const path = require('path');
+import path from 'path';
 
 /**
  * Create hook adds template files if gitInit
@@ -7,7 +7,7 @@ const path = require('path');
  * @param {CreateContext} context - Create context
  * @returns {Promise} promise
  */
-module.exports = async function create(gasket, context) {
+export default async function create(gasket, context) {
   const { gitInit, files } = context;
 
   if (gitInit) {

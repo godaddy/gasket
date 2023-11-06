@@ -4,7 +4,7 @@
  * @type {Gitignore}
  * @property {Object} _content - Content to add to gitignore
  */
-module.exports = class Gitignore {
+export class Gitignore {
   constructor() {
     this._content = {
       dependencies: new Set(['node_modules']),

@@ -2,13 +2,14 @@
   "name": "@gasket/resolve",
   "version": "6.43.0",
   "description": "Essential module resolution & configuration management for gasket plugins & presets.",
-  "main": "lib",
+  "main": "lib/index.js",
   "types": "types",
   "files": [
     "lib",
     "docs",
     "types"
   ],
+  "type": "module",
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",

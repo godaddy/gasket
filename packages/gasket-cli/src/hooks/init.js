@@ -1,5 +1,6 @@
 /* eslint-disable max-statements */
-const debug = require('diagnostics')('gasket:cli:hooks:init');
+import * as diagnostics from 'diagnostics';
+const debug = diagnostics.default.set('gasket:cli:hooks:init');
 
 /**
  * oclif hook that loads the gasket.config and instantiates the engine.

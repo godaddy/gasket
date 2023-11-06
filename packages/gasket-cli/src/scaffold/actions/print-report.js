@@ -1,6 +1,7 @@
-const { bold } = require('chalk');
-const action = require('../action-wrapper');
-const asciiLogo = require('../../utils/logo');
+import pkg from 'chalk';
+const { bold } = pkg;
+import action from '../action-wrapper.js';
+import { logo as asciiLogo } from '../../utils/logo.js';
 
 /**
  * Logs a new line in the console
@@ -67,7 +68,7 @@ function printReport(context) {
   const { warnings, errors } = context;
 
   console.log(`✨Success!
-  
+
 Finished with ${warnings.length} warnings and ${errors.length} errors using
 ` + asciiLogo);
 
@@ -85,4 +86,4 @@ Finished with ${warnings.length} warnings and ${errors.length} errors using
   newline();
 }
 
-module.exports = action('Print report', printReport, { startSpinner: false });
+export default action('Print report', printReport, { startSpinner: false });

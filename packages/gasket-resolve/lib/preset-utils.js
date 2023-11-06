@@ -7,7 +7,7 @@
  * @param {PresetInfo[]} presetInfos - Array of preset infos
  * @returns {PresetInfo[]} flattened presetInfos
  */
-function flattenPresets(presetInfos = []) {
+export function flattenPresets(presetInfos = []) {
   const flattened = [[...presetInfos]];
 
   function flatten(preset, depth = 1) {
@@ -22,7 +22,3 @@ function flattenPresets(presetInfos = []) {
 
   return flattened.reduce((acc, arr) => acc.concat(arr), []);
 }
-
-module.exports = {
-  flattenPresets
-};

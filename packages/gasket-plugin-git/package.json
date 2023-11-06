@@ -2,11 +2,12 @@
   "name": "@gasket/plugin-git",
   "version": "6.43.0",
   "description": "Adds git support to your application",
-  "main": "lib",
+  "main": "lib/index.js",
   "files": [
     "generator",
     "lib"
   ],
+  "type": "module",
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",

@@ -1,6 +1,7 @@
-const prompt = require('./prompt');
-const create = require('./create');
-const postCreate = require('./post-create');
+import prompt from './prompt.js';
+import create from './create.js';
+import postCreate from './post-create.js';
+import * as pkg from '../../../package.json' assert { type: 'json' };
 
 /**
  * The git gasket plugin.
@@ -9,7 +10,7 @@ const postCreate = require('./post-create');
  * @public
  */
 module.exports = {
-  name: require('../package').name,
+  name: pkg.name,
   hooks: {
     prompt,
     create,

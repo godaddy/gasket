@@ -2,12 +2,13 @@
   "name": "@gasket/utils",
   "version": "6.43.0",
   "description": "Reusable utilities for Gasket internals",
-  "main": "lib",
+  "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
     "docs",
     "lib"
   ],
+  "type":"module",
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",

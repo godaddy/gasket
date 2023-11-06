@@ -1,17 +1,7 @@
-const tryRequire = require('./try-require');
-const { tryResolve } = require('./try-resolve');
-const applyConfigOverrides = require('./apply-config-overrides');
-const applyEnvironmentOverrides = require('./apply-env-overrides');
-const runShellCommand = require('./run-shell-command');
-const PackageManager = require('./package-manager');
-const requireWithInstall = require('./require-with-install');
-
-module.exports = {
-  tryRequire,
-  tryResolve,
-  applyConfigOverrides,
-  applyEnvironmentOverrides,
-  runShellCommand,
-  PackageManager,
-  requireWithInstall
-};
+export { tryRequire } from './try-require.js';
+export { tryResolve } from './try-resolve.js';
+export { applyConfigOverrides } from './apply-config-overrides.js';
+export { applyEnvironmentOverrides } from './apply-env-overrides.js';
+export { runShellCommand } from './run-shell-command.js';
+export { PackageManager } from './package-manager.js';
+export { requireWithInstall } from './require-with-install.js';

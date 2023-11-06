@@ -1,13 +1,16 @@
-const debug = require('diagnostics')('gasket:cli:generate-files');
-const fs = require('fs').promises;
-const { promisify } = require('util');
-const Handlebars = require('handlebars');
-const path = require('path');
-const mkdirp = require('mkdirp');
-const { dim } = require('chalk');
-const action = require('../action-wrapper');
+import * as diagnostics from 'diagnostics';
+const debug = diagnostics.default.set('gasket:cli:generate-files');
+import fs from 'fs/promises';
+import { promisify } from 'util';
+import Handlebars from 'handlebars';
+import path from 'path';
+import mkdirp from 'mkdirp';
+import chalk from 'chalk';
+const { dim } = chalk;
+import action from '../action-wrapper.js';
+import * as syncGlob from 'glob';
 
-const glob = promisify(require('glob'));
+const glob = promisify(syncGlob.default.sync);
 
 const flatten = (acc, values) => (acc || []).concat(values);
 const reSep = /[/\\]+/;
@@ -177,7 +180,7 @@ async function generateFiles(context, spinner) {
   if (hasError) spinner.fail();
 }
 
-module.exports = action('Generate app contents', generateFiles);
+export default action('Generate app contents', generateFiles);
 // exported for unit testing
-module.exports._getDescriptors = getDescriptors;
-module.exports._assembleDescriptors = assembleDescriptors;
+export const _getDescriptors = getDescriptors;
+export const _assembleDescriptors = assembleDescriptors;

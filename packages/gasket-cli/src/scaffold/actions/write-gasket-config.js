@@ -1,7 +1,7 @@
-const JSON5 = require('json5');
-const path = require('path');
-const { writeFile } = require('fs').promises;
-const action = require('../action-wrapper');
+import * as JSON5 from 'json5';
+import path from 'path';
+import { writeFile } from 'fs/promises';
+import action from '../action-wrapper.js';
 
 /**
  * Writes the contents of `pkg` to the app's package.json.
@@ -29,4 +29,4 @@ async function writeGasketConfig(context) {
   generatedFiles.add(fileName);
 }
 
-module.exports = action('Write gasket config', writeGasketConfig);
+export default action('Write gasket config', writeGasketConfig);

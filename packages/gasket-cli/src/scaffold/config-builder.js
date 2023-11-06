@@ -1,7 +1,9 @@
 /* eslint-disable complexity, max-statements */
-const deepmerge = require('deepmerge');
-const semver = require('semver');
-const debug = require('diagnostics')('gasket:cli:package');
+import deepmerge from 'deepmerge';
+import semver from 'semver';
+import * as diagnostics from 'diagnostics';
+const debug = diagnostics.default.set('gasket:cli:package');
+
 
 /**
  * Simple object check without bringing in a large
@@ -56,7 +58,7 @@ function isValidVersion(v) {
  *
  * @type {ConfigBuilder}
  */
-class ConfigBuilder {
+export class ConfigBuilder {
   /**
    * ConfigBuilder
    *
@@ -444,5 +446,3 @@ class ConfigBuilder {
     }, {});
   }
 }
-
-module.exports = ConfigBuilder;

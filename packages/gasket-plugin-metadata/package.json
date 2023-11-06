@@ -2,12 +2,13 @@
   "name": "@gasket/plugin-metadata",
   "version": "6.43.0",
   "description": "Adds metadata to gasket lifecycles",
-  "main": "lib",
+  "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
     "docs",
     "lib"
   ],
+  "type": "module",
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",

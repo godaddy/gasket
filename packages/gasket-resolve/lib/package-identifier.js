@@ -9,7 +9,7 @@ const reName = /^(@?[\w/-]+)@?(.*)/;
  * @returns {{prefixed: {project: RegExp, user: RegExp}, scope: RegExp}} re
  * @private
  */
-function matchMaker(projectName, type = 'plugin') {
+export function matchMaker(projectName, type = 'plugin') {
   if (!projectName) throw new Error('projectName required.');
   return {
     prefixed: {
@@ -27,7 +27,7 @@ function matchMaker(projectName, type = 'plugin') {
  * @returns {{prefixed: string}} expand
  * @private
  */
-function expandMaker(projectName, type = 'plugin') {
+export function expandMaker(projectName, type = 'plugin') {
   if (!projectName) throw new Error('projectName required.');
   const projectScope = `@${projectName}`;
   const parse = short => {
@@ -63,7 +63,7 @@ function expandMaker(projectName, type = 'plugin') {
  * @param {string} [type] - Defaults to 'plugin'.
  * @returns {createPackageIdentifier} function to make
  */
-function projectIdentifier(projectName, type = 'plugin') {
+export function projectIdentifier(projectName, type = 'plugin') {
 
   /**
    * Setup project level variables
@@ -392,9 +392,3 @@ function projectIdentifier(projectName, type = 'plugin') {
 
   return createPackageIdentifier;
 }
-
-module.exports = {
-  matchMaker,
-  expandMaker,
-  projectIdentifier
-};

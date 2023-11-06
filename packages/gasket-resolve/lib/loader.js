@@ -1,6 +1,6 @@
-const path = require('path');
-const { Resolver } = require('./resolver');
-const { pluginIdentifier, presetIdentifier } = require('./identifiers');
+import path from 'path';
+import { Resolver } from './resolver.js';
+import { pluginIdentifier, presetIdentifier } from './identifiers.js';
 
 /**
  * Module with meta data
@@ -55,7 +55,7 @@ const isModulePath = /^[/.]|^[a-zA-Z]:\\|node_modules/;
  * @type {Loader}
  * @extends Resolver
  */
-class Loader extends Resolver {
+export class Loader extends Resolver {
 
   constructor() {
     super(...arguments);
@@ -230,7 +230,3 @@ class Loader extends Resolver {
     return results;
   }
 }
-
-module.exports = {
-  Loader
-};

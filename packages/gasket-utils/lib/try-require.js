@@ -14,9 +14,9 @@
  * @param {string} path - Module to import
  * @returns {object} module
  */
-function tryRequire(path) {
+export async function tryRequire(path) {
   try {
-    return require(path);
+    return await import(path);
   } catch (err) {
     if (err.code === 'MODULE_NOT_FOUND') {
       return null;
@@ -24,5 +24,3 @@ function tryRequire(path) {
     throw err;
   }
 }
-
-module.exports = tryRequire;
