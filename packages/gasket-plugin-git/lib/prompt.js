@@ -1,4 +1,4 @@
-const Gitignore = require('./gitignore');
+import { Gitignore } from './gitignore.js';
 
 /**
  * Formats gitignore content
@@ -46,7 +46,7 @@ function instantiateGitignore(context) {
  * @param {Function} utils.prompt - Inquirer prompt
  * @returns {Promise<object>} context
  */
-module.exports = async function promptHook(gasket, context, { prompt }) {
+export default async function promptHook(gasket, context, { prompt }) {
   if (!('gitInit' in context)) {
     const { gitInit } = await prompt([
       {

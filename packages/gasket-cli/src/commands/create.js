@@ -1,12 +1,16 @@
 /* eslint-disable max-statements */
+console.log('----------------------------');
+console.log('----------------------------');
+console.log('----------------------------');
+console.log('----------------------------');
+console.log('----------------------------');
+import { Command, Flags } from '@oclif/core';
+import ora from 'ora';
+import chalk from 'chalk';
 
-const { Command, flags } = require('@oclif/command');
-const ora = require('ora');
-const chalk = require('chalk');
+import makeCreateContext from '../scaffold/create-context.js';
 
-const makeCreateContext = require('../scaffold/create-context');
-
-const {
+import {
   mkDir,
   loadPreset,
   cliVersion,
@@ -23,12 +27,12 @@ const {
   writeGasketConfig,
   applyPresetConfig,
   printReport
-} = require('../scaffold/actions');
+} from '../scaffold/actions/index.js';
 
-const dumpErrorContext = require('../scaffold/dump-error-context');
+import { dumpErrorContext } from '../scaffold/dump-error-context.js';
 
 
-class CreateCommand extends Command {
+export class CreateCommand extends Command {
   /**
    *  Gasket create executes a two phase creation process:
    *
@@ -107,7 +111,7 @@ const commasToArray = input => input.split(',').map(name => name.trim());
 
 CreateCommand.description = `Create a new Gasket application`;
 CreateCommand.flags = {
-  'presets': flags.string({
+  'presets': Flags.string({
     env: 'GASKET_PRESETS',
     char: 'p',
     multiple: true,
@@ -116,7 +120,7 @@ CreateCommand.flags = {
 Can be set as short name with version (e.g. --presets nextjs@^1.0.0)
 Or other (multiple) custom presets (e.g. --presets my-gasket-preset@1.0.0.beta-1,nextjs@^1.0.0)`
   }),
-  'plugins': flags.string({
+  'plugins': Flags.string({
     env: 'GASKET_PLUGINS',
     description: `Additional plugin(s) to install. Can be set as
 multiple flags (e.g. --plugins jest --plugins zkconfig@^1.0.0)
@@ -125,28 +129,28 @@ comma-separated values: --plugins=jest,zkconfig^1.0.0
     multiple: true,
     parse: commasToArray
   }),
-  'package-manager': flags.string({
+  'package-manager': Flags.string({
     description: `Selects which package manager you would like to use during
  installation. (e.g. --package-manager yarn)`
   }),
-  'require': flags.string({
+  'require': Flags.string({
     description: 'Require module(s) before Gasket is initialized',
     char: 'r',
     multiple: true
   }),
-  'bootstrap': flags.boolean({
+  'bootstrap': Flags.boolean({
     default: true,
     description: '(INTERNAL) If provided, skip the bootstrap phase',
     allowNo: true,
     hidden: true
   }),
-  'generate': flags.boolean({
+  'generate': Flags.boolean({
     default: true,
     description: '(INTERNAL) If provided, skip the generate phase',
     allowNo: true,
     hidden: true
   }),
-  'npm-link': flags.string({
+  'npm-link': Flags.string({
     description: `(INTERNAL) Local packages to be linked. Can be set as
 multiple flags (e.g. --npm-link @gasket/plugin-jest --npm-link some-test-preset)
 comma-separated values: --npm-link=@gasket/plugin-jest,some-test-preset`,
@@ -154,7 +158,7 @@ comma-separated values: --npm-link=@gasket/plugin-jest,some-test-preset`,
     hidden: true,
     parse: commasToArray
   }),
-  'preset-path': flags.string({
+  'preset-path': Flags.string({
     description: `(INTERNAL) Paths the a local preset packages. Can be absolute
 or relative to the current working directory.
 comma-separated values: --preset-path=path1,path2`,
@@ -163,27 +167,28 @@ comma-separated values: --preset-path=path1,path2`,
     parse: commasToArray
   }),
   // TODO (kinetifex): remove in next major revision
-  'npmconfig': flags.string({
+  'npmconfig': Flags.string({
     env: 'GASKET_NPM_USERCONFIG',
     description: `(DEPRECATED) .npmrc to be used for npm actions in @gasket/cli'.
 Instead, prefer environment variables to configure package managers
 `,
     hidden: true
   }),
-  'config': flags.string({
+  'config': Flags.string({
     env: 'GASKET_PLUGINS',
     description: `JSON object that provides the values for any interactive prompts`,
     exclusive: ['config-file']
   }),
-  'config-file': flags.string({
+  'config-file': Flags.string({
     description: `Path to a JSON file that provides the values for interactive prompts`,
     exclusive: ['config']
   }),
-  'prompts': flags.boolean({
+  'prompts': Flags.boolean({
     default: true,
     description: '(INTERNAL) Disable to skip the prompts',
     allowNo: true,
-    hidden: true })
+    hidden: true
+  })
 };
 
 CreateCommand.args = [
@@ -193,5 +198,3 @@ CreateCommand.args = [
     description: 'Name of the Gasket application to create'
   }
 ];
-
-module.exports = CreateCommand;

@@ -1,7 +1,10 @@
-const debug = require('diagnostics')('gasket:lifecycle');
-const path = require('path');
-const { readdir } = require('fs').promises;
-const camelCase = require('lodash.camelcase');
+import * as diagnostics from 'diagnostics';
+const debug = diagnostics.default.set('gasket:lifecycle');
+import path from 'path';
+import { readdir } from 'fs/promises';
+import lodash from 'lodash';
+const { camelcase: camelCase } = lodash;
+import * as pkg from '../../../package.json' assert { type: 'json' };
 
 /**
  * Resolves a given directory to valid `lifecycle` plugins.
@@ -70,8 +73,8 @@ async function init(gasket) {
  *
  * @public
  */
-module.exports = {
-  name: require('../package').name,
+export default {
+  name: pkg.name,
   hooks: {
     init,
     metadata(gasket, meta) {

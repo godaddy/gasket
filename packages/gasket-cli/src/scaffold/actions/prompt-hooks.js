@@ -1,7 +1,7 @@
-const inquirer = require('inquirer');
-const action = require('../action-wrapper');
-const { addPluginsToContext, addPluginsToPkg, getPluginsWithVersions } = require('../utils');
-const createEngine = require('../create-engine');
+import inquirer from 'inquirer';
+import action from '../action-wrapper.js';
+import { addPluginsToContext, addPluginsToPkg, getPluginsWithVersions } from '../utils.js';
+import { createEngine } from '../create-engine.js';
 
 /**
  * Create the `addPlugins` function with context
@@ -87,4 +87,4 @@ async function promptHooks(context) {
   await execPluginPrompts(context, plugins, presets);
 }
 
-module.exports = action('Plugin prompts', promptHooks, { startSpinner: false });
+export default action('Plugin prompts', promptHooks, { startSpinner: false });

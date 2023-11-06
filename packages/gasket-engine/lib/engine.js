@@ -1,10 +1,11 @@
-const debug = require('debug')('gasket:engine');
-const { Loader, pluginIdentifier } = require('@gasket/resolve');
+import * as diagnostics from 'diagnostics';
+import { Loader, pluginIdentifier } from '@gasket/resolve';
+const debug = diagnostics.default.set('gasket:engine');
 
 let dynamicNamingId = 0;
 const isModulePath = /^[/.]|^[a-zA-Z]:\\/;
 
-class PluginEngine {
+export class PluginEngine {
   constructor(config, { resolveFrom } = {}) {
     this.config = config || {};
     this.loader = new Loader({ resolveFrom });
@@ -525,5 +526,3 @@ class PluginEngine {
     });
   }
 }
-
-module.exports = PluginEngine;

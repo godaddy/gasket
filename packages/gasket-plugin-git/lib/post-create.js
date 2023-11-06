@@ -1,4 +1,4 @@
-const { runShellCommand } = require('@gasket/utils');
+import { runShellCommand } from '@gasket/utils';
 
 /**
  * Initialize the app with a git repo and creates a first commit with generated files
@@ -7,7 +7,7 @@ const { runShellCommand } = require('@gasket/utils');
  * @param {CreateContext} context - Create context
  * @returns {Promise} promise
  */
-module.exports = {
+export default {
   timing: {
     last: true
   },

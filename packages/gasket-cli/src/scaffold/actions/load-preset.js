@@ -1,7 +1,7 @@
-const path = require('path');
-const action = require('../action-wrapper');
-const PackageFetcher = require('../fetcher');
-const { presetIdentifier, Loader } = require('@gasket/resolve');
+import path from 'path';
+import action from '../action-wrapper.js';
+import { PackageFetcher } from '../fetcher.js';
+import { presetIdentifier, Loader } from '@gasket/resolve';
 
 const loader = new Loader();
 
@@ -80,4 +80,4 @@ async function loadPreset(context) {
   Object.assign(context, { presets, presetInfos });
 }
 
-module.exports = action('Load presets', loadPreset);
+export default action('Load presets', loadPreset);

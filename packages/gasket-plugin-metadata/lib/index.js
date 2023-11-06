@@ -1,5 +1,7 @@
-const cloneDeep = require('lodash.clonedeep');
-const {
+import * as pkg from '../../../package.json' assert { type: 'json' };
+import lodash from 'lodash';
+const { clonedeep: cloneDeep } = lodash;
+import {
   sanitize,
   loadAppModules,
   loadPluginModules,
@@ -7,10 +9,10 @@ const {
   fixupPresetHierarchy,
   expandPresetMetadata,
   expandPackageMetadata
-} = require('./utils');
+} from './utils.js';
 
-module.exports = {
-  name: require('../package').name,
+export default {
+  name: pkg.name,
   hooks: {
     async init(gasket) {
       const { loader, config } = gasket;

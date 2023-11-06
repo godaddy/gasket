@@ -1,6 +1,6 @@
-const isFunction = require('lodash.isfunction');
-const isObject = require('lodash.isobject');
-const { pluginIdentifier, presetIdentifier } = require('@gasket/resolve');
+import lodash from 'lodash';
+const { isfunction: isFunction, isobject: isObject } = lodash;
+import { pluginIdentifier, presetIdentifier } from '@gasket/resolve';
 
 // Shortcuts
 const isPlugin = name => pluginIdentifier.isValidFullName(name);
@@ -166,7 +166,7 @@ function expandPackageMetadata(modules) {
   });
 }
 
-module.exports = {
+export {
   sanitize,
   safeAssign,
   loadAppModules,

@@ -7,6 +7,7 @@
   "files": [
     "lib"
   ],
+  "type": "module",
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",

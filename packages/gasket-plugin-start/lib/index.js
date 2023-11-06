@@ -1,8 +1,9 @@
-const create = require('./create');
-const getCommands = require('./get-commands');
+import create from './create.js';
+import getCommands from './get-commands.js';
+import * as pkg from '../../../package.json' assert { type: 'json' };
 
-module.exports = {
-  name: require('../package').name,
+export default {
+  name: pkg.name,
   hooks: {
     create,
     getCommands,

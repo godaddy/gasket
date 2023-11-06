@@ -1,6 +1,6 @@
-const path = require('path');
-const { writeFile } = require('fs').promises;
-const action = require('../action-wrapper');
+import path from 'path';
+import { writeFile } from 'fs/promises';
+import action from '../action-wrapper.js';
 
 /**
  * Writes the contents of `pkg` to the app's package.json.
@@ -18,6 +18,6 @@ async function writePkg(context) {
   generatedFiles.add(fileName);
 }
 
-module.exports = action('Write package.json', writePkg);
+export default action('Write package.json', writePkg);
 
-module.exports.update = action('Update package.json', writePkg);
+export const update = action('Update package.json', writePkg);
