@@ -57,7 +57,7 @@ class Resolver {
       return this.resolve(moduleName);
     } catch (err) {
       debug('try-resolve error', err.message);
-      if (err.code === 'MODULE_NOT_FOUND' && err.message.includes(moduleName) ||
+      if (err.code === 'MODULE_NOT_FOUND' && err.message.replace(/\\/g, '/').includes(moduleName) ||
         err.code === 'ERR_PACKAGE_PATH_NOT_EXPORTED'
       ) return null;
 
