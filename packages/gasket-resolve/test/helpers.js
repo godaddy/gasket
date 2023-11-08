@@ -49,6 +49,9 @@ function makeRequire(modules) {
     if (mod === 'no-exported/package.json') {
       throw missingExportError(mod);
     }
+    if (mod === 'windows-paths/missing') {
+      throw notFoundError(`C:\\some-app\\node_modules\\windows-paths\\missing.js`);
+    }
     throw notFoundError(mod);
   });
 
