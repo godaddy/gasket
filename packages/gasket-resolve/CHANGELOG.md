@@ -1,5 +1,9 @@
 # `@gasket/resolve`
 
+### 6.43.1
+
+- Fix to handle windows path with tryRequire/Resolve ([#631]) 
+
 ### 6.41.0
 
 - Add diagnostic logging for environment/config resolution when a `DEBUG=gasket:*` environment variable is set ([#607])
@@ -106,5 +110,6 @@
 [#482]: https://github.com/godaddy/gasket/pull/482
 [#590]: https://github.com/godaddy/gasket/pull/590
 [#607]: https://github.com/godaddy/gasket/pull/607
+[#631]: https://github.com/godaddy/gasket/pull/631
 
 [Loader]:/packages/gasket-resolve/docs/api.md#loader
