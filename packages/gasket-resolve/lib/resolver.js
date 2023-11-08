@@ -5,6 +5,7 @@ const debug = require('diagnostics')('gasket:resolver');
  *
  * @param {string} message - Message with path to normalize
  * @returns {string} normalized path
+ * @private
  */
 function fixSep(message) {
   return message.replace(/\\/g, '/');
