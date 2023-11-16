@@ -2,8 +2,8 @@ import path from 'path';
 import pkg from 'lodash';
 const { defaultsdeep: defaultsDeep } = pkg;
 import { tryRequire } from './try-require.js';
-import * as diagnostics from 'diagnostics';
-const debug = diagnostics.default.set('gasket:resolver');
+import { default as diagnostics } from 'diagnostics';
+const debug = diagnostics('gasket:resolver');
 
 /**
  * Normalize the config by applying any overrides for environments, commands,

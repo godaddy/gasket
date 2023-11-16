@@ -9,7 +9,7 @@ import * as pkg from '../../../package.json' assert { type: 'json' };
  * @type {Object}
  * @public
  */
-module.exports = {
+export const hooks = {
   name: pkg.name,
   hooks: {
     prompt,

@@ -1,5 +1,5 @@
-import * as diagnostics from 'diagnostics';
-const debug = diagnostics.default.set('gasket:resolver');
+import { default as diagnostics } from 'diagnostics';
+const debug = diagnostics('gasket:resolver');
 
 /**
  * Utility to help resolve and require modules
