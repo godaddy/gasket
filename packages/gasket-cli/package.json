@@ -206,7 +206,7 @@
     "node": ">= 8.0.0"
   },
   "oclif": {
-    "commands": "./src/commands.js",
+    "commands": "./src/commands",
     "bin": "gasket",
     "plugins": [
       "@oclif/plugin-help",

@@ -1,5 +1,5 @@
-import * as diagnostics from 'diagnostics';
-const debug = diagnostics.default.set('gasket:lifecycle');
+import { default as diagnostics } from 'diagnostics';
+const debug = diagnostics('gasket:lifecycle');
 import path from 'path';
 import { readdir } from 'fs/promises';
 import lodash from 'lodash';
@@ -29,11 +29,11 @@ async function resolve(root, ...parts) {
   const isJs = /\.(js|cjs)$/i;
   const isTest = /\.(spec|test)\./i;
   return files.filter(file => isJs.test(file) && !isTest.test(file))
-    .map(function each(file) {
+    .map(async function each(file) {
       const extname = path.extname(file);
       const event = camelCase(path.basename(file, extname));
 
-      let hook = require(path.join(dir, file));
+      let hook = await import(path.join(dir, file));
       debug('found %s as lifecycle for %s', file, event);
 
       if (typeof hook === 'function') {

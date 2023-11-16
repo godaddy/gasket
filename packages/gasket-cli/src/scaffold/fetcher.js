@@ -6,8 +6,9 @@ import zlib from 'zlib';
 import pump from 'pump';
 import mkdirp from 'mkdirp';
 import { PackageManager } from '@gasket/utils';
-import * as diagnostics from 'diagnostics';
-const debug = diagnostics.default.set('gasket:cli:fetcher');
+import { default as diagnostics } from 'diagnostics';
+import os from 'os';
+const debug = diagnostics('gasket:cli:fetcher');
 
 /**
  * Simple helper class that can also be re-used in tests for similar
@@ -15,7 +16,8 @@ const debug = diagnostics.default.set('gasket:cli:fetcher');
  */
 export const Fetcher = class Fetcher {
   constructor(opts = {}) {
-    this.dir = path.join(opts.tmp || require('os').tmpdir(), this._id());
+    this.dir = path.join(opts.tmp || os.tmpdir(), this._id());
+    console.log(this.dir, debug)
     debug('tmpdir', this.dir);
   }
 
@@ -91,7 +93,7 @@ export class PackageFetcher {
    */
   async readPackage() {
     const dest = await this.clone();
-    return require(path.join(dest, 'package.json'));
+    return await import(path.join(dest, 'package.json'));
   }
 
   /**

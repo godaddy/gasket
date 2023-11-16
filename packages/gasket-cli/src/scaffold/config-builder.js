@@ -1,8 +1,8 @@
 /* eslint-disable complexity, max-statements */
 import deepmerge from 'deepmerge';
 import semver from 'semver';
-import * as diagnostics from 'diagnostics';
-const debug = diagnostics.default.set('gasket:cli:package');
+import { default as diagnostics } from 'diagnostics';
+const debug = diagnostics('gasket:cli:package');
 
 
 /**

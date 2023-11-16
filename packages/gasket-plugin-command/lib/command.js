@@ -1,4 +1,4 @@
-import { Command, Flags } from '@oclif/core';
+import { Command, Flags, Parser } from '@oclif/core';
 
 /**
  * The GasketCommand can be extended to allow plugins to introduce new CLI
@@ -70,7 +70,7 @@ export class GasketCommand extends Command {
      * @property {string[]} parsed.argv - Ordered Arguments
      * @property {object} parsed.args - Named arguments
      */
-    this.parsed = this.parse(this.constructor);
+    this.parsed = await Parser.parse(this.constructor);
     this.parsed.flags = this.parsed.flags || {};
 
     // Provide details of invoked command to lifecycles
@@ -128,5 +128,3 @@ GasketCommand.flags.record = Flags.boolean({
   description: 'Whether or not to emit this command as part of Gasket\'s metrics lifecycle',
   allowNo: true
 });
-
-module.exports = GasketCommand;

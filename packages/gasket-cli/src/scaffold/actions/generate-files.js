@@ -1,5 +1,5 @@
-import * as diagnostics from 'diagnostics';
-const debug = diagnostics.default.set('gasket:cli:generate-files');
+import { default as diagnostics } from 'diagnostics';
+const debug = diagnostics('gasket:cli:generate-files');
 import fs from 'fs/promises';
 import { promisify } from 'util';
 import Handlebars from 'handlebars';

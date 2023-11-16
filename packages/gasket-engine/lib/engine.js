@@ -1,6 +1,6 @@
-import * as diagnostics from 'diagnostics';
+import { default as diagnostics } from 'diagnostics';
 import { Loader, pluginIdentifier } from '@gasket/resolve';
-const debug = diagnostics.default.set('gasket:engine');
+const debug = diagnostics('gasket:engine');
 
 let dynamicNamingId = 0;
 const isModulePath = /^[/.]|^[a-zA-Z]:\\/;

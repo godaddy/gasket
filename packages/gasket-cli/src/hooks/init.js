@@ -1,7 +1,7 @@
 /* eslint-disable max-statements */
-import * as diagnostics from 'diagnostics';
-const debug = diagnostics.default.set('gasket:cli:hooks:init');
-
+import { default as diagnostics } from 'diagnostics';
+const debug = diagnostics('gasket:cli:hooks:init');
+console.log('init', diagnostics)
 /**
  * oclif hook that loads the gasket.config and instantiates the engine.
  *
@@ -10,7 +10,7 @@ const debug = diagnostics.default.set('gasket:cli:hooks:init');
  * @param {Object} argv - command line arguments
  * @async
  */
-async function initHook({ id, config: oclifConfig, argv }) {
+export async function initHook({ id, config: oclifConfig, argv }) {
   debug('id', id);
   debug('argv', argv);
 
@@ -19,13 +19,13 @@ async function initHook({ id, config: oclifConfig, argv }) {
   // avoid config logging for help command
   const warn = id !== 'help' ? this.warn : f => f;
 
-  const { parse } = require('@oclif/parser');
-  const { GasketCommand } = require('@gasket/plugin-command');
-  const { loadGasketConfigFile, assignPresetConfig } = require('@gasket/resolve');
-  const { getEnvironment, addDefaultPlugins } = require('../config/utils');
-  const PluginEngine = require('@gasket/engine');
+  const { Parser } = await import('@oclif/core');
+  const { GasketCommand } = await import('@gasket/plugin-command');
+  const { loadGasketConfigFile, assignPresetConfig } = await import('@gasket/resolve');
+  const { getEnvironment, addDefaultPlugins } = await import('../config/utils');
+  const PluginEngine = await import('@gasket/engine');
 
-  const { flags } = parse(argv, {
+  const { flags } = Parser.parse(argv, {
     context: this,
     flags: GasketCommand.flags,
     strict: false
@@ -59,5 +59,3 @@ async function initHook({ id, config: oclifConfig, argv }) {
     this.error(err, { exit: 1 });
   }
 }
-
-module.exports = initHook;

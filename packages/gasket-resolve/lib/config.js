@@ -4,8 +4,8 @@ import pkg from 'lodash';
 const { defaultsdeep: defaultsDeep } = pkg;
 import { applyConfigOverrides, tryResolve } from '@gasket/utils';
 import { flattenPresets } from './preset-utils.js';
-import * as diagnostics from 'diagnostics';
-const debug = diagnostics.default.set('gasket:resolver');
+import { default as diagnostics } from 'diagnostics';
+const debug = diagnostics('gasket:resolver');
 const jsExtension = /\.(js|cjs)$/i;
 
 
