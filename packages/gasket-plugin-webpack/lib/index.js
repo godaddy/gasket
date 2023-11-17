@@ -1,7 +1,7 @@
 const { name, devDependencies } = require('../package');
 const initWebpack = require('./init-webpack');
 
-module.exports = {
+export default {
   name,
   hooks: {
     create(gasket, context) {

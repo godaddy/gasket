@@ -2,7 +2,7 @@
   "name": "@gasket/redux",
   "version": "6.39.0",
   "description": "Gasket Redux Configuration",
-  "main": "lib",
+  "main": "lib/index.js",
   "browser": "lib",
   "module": "src",
   "types": "src/index.d.ts",
@@ -10,6 +10,7 @@
     "lib",
     "src"
   ],
+  "type": "module",
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",

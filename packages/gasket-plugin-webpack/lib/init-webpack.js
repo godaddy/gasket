@@ -27,7 +27,7 @@ function setupContext(gasket, context, name) {
  * @param {object} context - Additional context-specific information
  * @returns {object} Final webpack config
  */
-module.exports = function initWebpack(gasket, initConfig, context) {
+export default function initWebpack(gasket, initConfig, context) {
   const WebpackMetricsPlugin = require('./webpack-metrics-plugin');
 
   const baseConfig = {

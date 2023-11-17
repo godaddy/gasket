@@ -16,3 +16,5 @@
   "debug": false
 }
 ```
+
+- `Deprecation Warning` -  Automatic extension resolution of the "main" field is deprecated for ES modules

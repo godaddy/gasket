@@ -2,11 +2,12 @@
   "name": "@gasket/plugin-https",
   "version": "6.43.0",
   "description": "Create http/s servers with graceful termination",
-  "main": "lib",
+  "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
     "lib"
   ],
+  "type": "module",
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",

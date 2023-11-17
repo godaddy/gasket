@@ -23,7 +23,7 @@ async function remotePresets(rawPresets, cwd, npmconfig, from) {
     const fetcher = new PackageFetcher({ cwd, npmconfig, packageName });
     const pkgPath = await fetcher.clone();
 
-    const presetInfo = loader.loadPreset(pkgPath, { from: from, rawName }, { shallow: true });
+    const presetInfo = await loader.loadPreset(pkgPath, { from: from, rawName }, { shallow: true });
     const { name: presetName, dependencies } = presetInfo.package;
     if (!dependencies) {
       return presetInfo;
@@ -54,9 +54,9 @@ function localPreset(context) {
   if (!localPresets) { return []; }
 
   const presetInfos = [];
-  localPresets.forEach(localPresetPath => {
+  localPresets.forEach(async localPresetPath => {
     const pkgPath = path.resolve(cwd, localPresetPath);
-    const presetInfo = loader.loadPreset(pkgPath, { from: 'cli' }, { shallow: false });
+    const presetInfo = await loader.loadPreset(pkgPath, { from: 'cli' }, { shallow: false });
     presetInfo.rawName = `${presetInfo.package.name}@file:${pkgPath}`;
     presetInfos.push(presetInfo);
   });

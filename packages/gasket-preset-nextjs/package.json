@@ -2,11 +2,12 @@
   "name": "@gasket/preset-nextjs",
   "version": "6.43.0",
   "description": "Basic NextJS Framework",
-  "main": "lib",
+  "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
     "lib"
   ],
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/godaddy/gasket.git"

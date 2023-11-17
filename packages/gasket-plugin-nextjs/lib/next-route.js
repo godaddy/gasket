@@ -2,8 +2,8 @@
 // @ts-check
 /// <reference types="@gasket/engine" />
 
-const path = require('path');
-const fs = require('fs').promises;
+import path from 'path';
+import fs from 'fs/promises';
 
 /**
  * @typedef {import("@gasket/engine").Gasket} Gasket
@@ -21,7 +21,7 @@ const nextRouteForRequest = new WeakMap();
  *
  * @returns {Promise<Object | null>} A Next.JS route object or null
  */
-async function getNextRoute(gasket, req) {
+export async function getNextRoute(gasket, req) {
   if (nextRouteForRequest.has(req)) {
     return nextRouteForRequest.get(req);
   }
@@ -77,5 +77,3 @@ function *iterateRoutes(routes) {
   yield* routes.staticRoutes;
   yield* routes.dynamicRoutes;
 }
-
-module.exports = getNextRoute;
