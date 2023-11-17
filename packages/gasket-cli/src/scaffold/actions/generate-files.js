@@ -9,8 +9,7 @@ import chalk from 'chalk';
 const { dim } = chalk;
 import action from '../action-wrapper.js';
 import * as syncGlob from 'glob';
-
-const glob = promisify(syncGlob.default.sync);
+const glob = promisify(syncGlob.default);
 
 const flatten = (acc, values) => (acc || []).concat(values);
 const reSep = /[/\\]+/;
