@@ -20,7 +20,7 @@ export class Resolver {
     if (resolveFrom) {
       this._resolveFrom = Array.isArray(resolveFrom) ? resolveFrom : [resolveFrom];
     }
-    this._import = async (path) => await import(path);
+    this._import = async (path, assertion) => await import(path, assertion);
   }
 
   /**
@@ -39,9 +39,9 @@ export class Resolver {
    * @param {string} moduleName name of the module
    * @returns {object} module contents
    */
-  require(moduleName) {
+  require(moduleName, assertion = {}) {
     const modulePath = this.resolve(moduleName);
-    return this._import(modulePath);
+    return this._import(modulePath, assertion);
   }
 
   /**

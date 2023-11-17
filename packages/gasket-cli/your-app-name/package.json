@@ -1,0 +1,13 @@
+{
+  "name": "your-app-name",
+  "version": "0.0.0",
+  "description": "A basic gasket app",
+  "scripts": {
+    "build": "gasket build",
+    "start": "gasket start",
+    "local": "gasket local"
+  },
+  "dependencies": {
+    "@gasket/cli": "^6.43.0"
+  }
+}

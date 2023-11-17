@@ -13,11 +13,10 @@ async function writePkg(context) {
   const { dest, pkg, generatedFiles } = context;
   const fileName = 'package.json';
   const filePath = path.join(dest, fileName);
-
   await writeFile(filePath, JSON.stringify(pkg, null, 2), 'utf8');
   generatedFiles.add(fileName);
 }
 
 export default action('Write package.json', writePkg);
 
-export const update = action('Update package.json', writePkg);
+export const writePkgUpdate = action('Update package.json', writePkg);

@@ -1,5 +1,5 @@
 import lodash from 'lodash';
-const { isfunction: isFunction, isobject: isObject } = lodash;
+const { isFunction, isObject } = lodash;
 import { pluginIdentifier, presetIdentifier } from '@gasket/resolve';
 
 // Shortcuts

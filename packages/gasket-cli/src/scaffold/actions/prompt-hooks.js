@@ -55,7 +55,6 @@ const createAddPlugins = context => {
  */
 async function execPluginPrompts(context, plugins = [], presets = []) {
   const { dest } = context;
-
   const gasket = await createEngine({ dest, presets, plugins });
 
   //

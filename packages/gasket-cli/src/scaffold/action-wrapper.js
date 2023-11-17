@@ -11,7 +11,6 @@ import ora from 'ora';
  * @returns {Function} decorated action
  */
 export default function withSpinner(label, fn, { startSpinner = true } = {}) {
-
   /**
    * Decorated function
    *

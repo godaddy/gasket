@@ -15,4 +15,4 @@ async function installModules(context) {
 
 export default action('Install node modules', installModules);
 
-export const update = action('Update node modules', installModules);
+export const installModulesUpdate = action('Update node modules', installModules);

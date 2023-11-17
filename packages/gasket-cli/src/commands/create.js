@@ -12,8 +12,11 @@ import {
   globalPrompts,
   setupPkg,
   writePkg,
+  writePkgUpdate,
   installModules,
+  installModulesUpdate,
   linkModules,
+  linkModulesUpdate,
   loadPkgForDebug,
   promptHooks,
   createHooks,
@@ -157,8 +160,8 @@ export class CreateCommand extends Command {
     try {
       if (bootstrap !== false) {
         await loadPreset(context);
-        cliVersion(context);
-        applyPresetConfig(context);
+        await cliVersion(context);
+        await applyPresetConfig(context);
         await globalPrompts(context);
         await mkDir(context);
         await setupPkg(context);
@@ -177,15 +180,15 @@ export class CreateCommand extends Command {
         await createHooks(context);
         await generateFiles(context);
         await writeGasketConfig(context);
-        await writePkg.update(context);
-        await installModules.update(context);
-        await linkModules.update(context); // relink any that were messed up by re-install
+        await writePkgUpdate(context);
+        await installModulesUpdate(context);
+        await linkModulesUpdate(context); // relink any that were messed up by re-install
         await postCreateHooks(context);
       } else {
         ora('Generate phase skipped.').warn();
       }
 
-      printReport(context);
+      await printReport(context);
 
     } catch (err) {
       console.error(chalk.red('Exiting with errors.'));

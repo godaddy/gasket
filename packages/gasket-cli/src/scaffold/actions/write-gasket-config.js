@@ -1,4 +1,4 @@
-import * as JSON5 from 'json5';
+import { default as JSON5 } from 'json5';
 import path from 'path';
 import { writeFile } from 'fs/promises';
 import action from '../action-wrapper.js';
@@ -22,7 +22,7 @@ async function writeGasketConfig(context) {
   //
   // Use JSON5 to stringify the config and add export for CommonJS
   //
-  const contents = 'module.exports = ' +
+  const contents = 'export default ' +
     JSON5.stringify(gasketConfig, null, 2) + ';\n';
 
   await writeFile(filePath, contents, 'utf8');

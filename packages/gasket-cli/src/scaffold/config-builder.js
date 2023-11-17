@@ -181,7 +181,6 @@ export class ConfigBuilder {
    */
   add(key, value, source, options = {}) {
     if (typeof value === 'undefined') return;
-
     const existing = this.fields[key];
     const { name = 'Unknown plugin' } = (source || this.source || {});
 

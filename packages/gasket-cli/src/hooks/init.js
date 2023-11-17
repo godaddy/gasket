@@ -1,7 +1,7 @@
 /* eslint-disable max-statements */
 import { default as diagnostics } from 'diagnostics';
 const debug = diagnostics('gasket:cli:hooks:init');
-console.log('init', diagnostics)
+
 /**
  * oclif hook that loads the gasket.config and instantiates the engine.
  *
@@ -46,7 +46,7 @@ export async function initHook({ id, config: oclifConfig, argv }) {
     if (gasketConfig) {
       gasketConfig = addDefaultPlugins(gasketConfig);
 
-      const gasket = new PluginEngine(gasketConfig, { resolveFrom: root });
+      const gasket = await new PluginEngine(gasketConfig, { resolveFrom: root });
       assignPresetConfig(gasket);
 
       oclifConfig.gasket = gasket;

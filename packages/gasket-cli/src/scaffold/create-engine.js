@@ -13,7 +13,7 @@ export async function createEngine({ dest, presets = [], plugins = [] }) {
     root: dest
   };
 
-  const engine = new PluginEngine(engineConfig, { resolveFrom });
+  const engine = await new PluginEngine(engineConfig, { resolveFrom });
   engine.command = { id: 'create' };
   await engine.exec('init');
 

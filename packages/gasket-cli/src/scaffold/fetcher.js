@@ -17,7 +17,6 @@ const debug = diagnostics('gasket:cli:fetcher');
 export const Fetcher = class Fetcher {
   constructor(opts = {}) {
     this.dir = path.join(opts.tmp || os.tmpdir(), this._id());
-    console.log(this.dir, debug)
     debug('tmpdir', this.dir);
   }
 
