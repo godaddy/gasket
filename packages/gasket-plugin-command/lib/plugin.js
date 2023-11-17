@@ -1,9 +1,9 @@
 import { Command, Flags } from '@oclif/core';
 import { GasketCommand } from './command.js';
 import { hoistBaseFlags } from './utils.js';
-import * as pkg from '../../../package.json' assert { type: 'json' };
+import { default as pkg } from '../package.json' assert { type: 'json' };
 
-export default {
+export const hooks = {
   name: pkg.name,
   hooks: {
     /**

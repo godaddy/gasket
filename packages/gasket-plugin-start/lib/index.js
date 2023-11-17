@@ -1,8 +1,8 @@
 import create from './create.js';
 import getCommands from './get-commands.js';
-import * as pkg from '../../../package.json' assert { type: 'json' };
+import { default as pkg } from '../package.json' assert { type: 'json' };
 
-export default {
+export const hooks = {
   name: pkg.name,
   hooks: {
     create,

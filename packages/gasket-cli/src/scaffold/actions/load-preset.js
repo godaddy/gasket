@@ -21,7 +21,6 @@ async function remotePresets(rawPresets, cwd, npmconfig, from) {
   const allRemotePresets = await Promise.all(rawPresets.map(async rawName => {
     const packageName = presetIdentifier(rawName).full;
     const fetcher = new PackageFetcher({ cwd, npmconfig, packageName });
-    console.log(' fetcher', fetcher)
     const pkgPath = await fetcher.clone();
 
     const presetInfo = loader.loadPreset(pkgPath, { from: from, rawName }, { shallow: true });

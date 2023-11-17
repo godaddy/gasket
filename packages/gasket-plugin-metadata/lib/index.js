@@ -1,6 +1,6 @@
-import * as pkg from '../../../package.json' assert { type: 'json' };
+import { default as pkg } from '../package.json' assert { type: 'json' };
 import lodash from 'lodash';
-const { clonedeep: cloneDeep } = lodash;
+const { cloneDeep } = lodash;
 import {
   sanitize,
   loadAppModules,
@@ -11,15 +11,15 @@ import {
   expandPackageMetadata
 } from './utils.js';
 
-export default {
+export const hooks = {
   name: pkg.name,
   hooks: {
     async init(gasket) {
       const { loader, config } = gasket;
       const { root = process.cwd() } = config;
-      const loaded = loader.loadConfigured(config.plugins);
+      const loaded = await loader.loadConfigured(config.plugins);
       const { presets, plugins } = sanitize(cloneDeep(loaded));
-      const app = loader.getModuleInfo(null, root);
+      const app = await loader.getModuleInfo(null, root);
       const modules = [];
 
       /**
@@ -32,8 +32,8 @@ export default {
         modules
       };
 
-      loadAppModules(loader, app, modules);
-      expandPresetMetadata(presets);
+      await loadAppModules(loader, app, modules);
+      await expandPresetMetadata(presets);
       expandPackageMetadata([app]);
       expandPackageMetadata(plugins);
 
