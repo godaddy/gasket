@@ -39,9 +39,11 @@ export class Resolver {
    * @param {string} moduleName name of the module
    * @returns {object} module contents
    */
-  require(moduleName, assertion = {}) {
+  async require(moduleName, assertion = {}) {
+    console.log('------------hit require')
     const modulePath = this.resolve(moduleName);
-    return this._import(modulePath, assertion);
+    console.log('------------hit modulePath', modulePath)
+    return await this._import(modulePath, assertion);
   }
 
   /**
@@ -70,10 +72,10 @@ export class Resolver {
    * @param {string} moduleName name of the module
    * @returns {object|null} module contents
    */
-  tryRequire(moduleName) {
+  async tryRequire(moduleName) {
     try {
       debug('try-require', moduleName);
-      return this.require(moduleName);
+      return await this.require(moduleName);
     } catch (err) {
       debug('try-require error', err.message);
       if (err.code === 'MODULE_NOT_FOUND' && err.message.includes(moduleName) ||

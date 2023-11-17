@@ -1,4 +1,4 @@
-const { initWebpack } = require('@gasket/plugin-webpack');
+import { initWebpack } from '@gasket/plugin-webpack';
 
 /**
  * Bring forward configuration from intl plugin to config for next.
@@ -42,7 +42,7 @@ function forwardIntlConfig(gasket, config) {
  * @returns {Promise<Object>} The configuration data for Nextjs
  * @private
  */
-function createConfig(gasket, includeWebpackConfig = true) {
+export function createConfig(gasket, includeWebpackConfig = true) {
   const { nextConfig = {} } = gasket.config;
 
   const config = {
@@ -67,7 +67,3 @@ function createConfig(gasket, includeWebpackConfig = true) {
 
   return gasket.execWaterfall('nextConfig', config);
 }
-
-module.exports = {
-  createConfig
-};

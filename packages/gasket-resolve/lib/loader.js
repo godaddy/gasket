@@ -103,7 +103,8 @@ export class Loader extends Resolver {
    * @returns {ModuleInfo} module
    */
   async loadModule(moduleName, meta = {}) {
-    const module = this.require(moduleName);
+    const { default: pkg } = await this.require(`${moduleName}/package.json`, { assert: { type: "json" } });
+    const module = await this.require(`${moduleName}/${pkg.main || 'index.js'}`);
     return await this.getModuleInfo(module, moduleName, meta);
   }
 

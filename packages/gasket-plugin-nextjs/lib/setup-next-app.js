@@ -1,4 +1,4 @@
-const { createConfig } = require('./config');
+import { createConfig } from './config';
 
 /**
  * Provide port defaults
@@ -19,7 +19,7 @@ function getPortFallback(env = '') {
  * @returns {NextServer} The Nextjs App
  * @private
  */
-async function setupNextApp(gasket) {
+export async function setupNextApp(gasket) {
   const { exec, command, config } = gasket;
   const { hostname, http, https, http2, env } = config;
   const createNextApp = require('next');
@@ -53,7 +53,7 @@ async function setupNextApp(gasket) {
  * @param {any} serverApp - The express server app
  * @param {any} gasket - The Gasket object
  */
-function setupNextHandling(nextServer, serverApp, gasket) {
+export function setupNextHandling(nextServer, serverApp, gasket) {
   const nextHandler = nextServer.getRequestHandler();
   serverApp.all('*', async (req, res, next) => {
     try {
@@ -64,8 +64,3 @@ function setupNextHandling(nextServer, serverApp, gasket) {
     }
   });
 }
-
-module.exports = {
-  setupNextApp,
-  setupNextHandling
-};

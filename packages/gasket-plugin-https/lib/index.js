@@ -1,9 +1,11 @@
 /* eslint-disable max-statements */
-const { createTerminus, HealthCheckError } = require('@godaddy/terminus');
-const debug = require('diagnostics')('gasket:https');
-const create = require('create-servers');
-const one = require('one-time/async');
-const errs = require('errs');
+import { createTerminus, HealthCheckError } from '@godaddy/terminus';
+import { default as diagnostics } from 'diagnostics';
+const debug = diagnostics('gasket:https');
+import { default as create } from 'create-servers';
+import { default as one } from 'one-time/async.js';
+import { default as errs } from 'errs';
+import { default as pkg } from '../package.json' assert { type: 'json' };
 
 /**
  * Provide port defaults
@@ -140,8 +142,8 @@ async function start(gasket) {
   });
 }
 
-module.exports = {
-  name: require('../package').name,
+export default {
+  name: pkg.name,
   hooks: {
     start,
     metadata(gasket, meta) {

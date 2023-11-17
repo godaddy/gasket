@@ -1,16 +1,17 @@
-const path = require('path');
-const url = require('url');
-const { name, devDependencies } = require('../package');
-const { createConfig } = require('./config');
-const { pluginIdentifier } = require('@gasket/resolve');
-const { setupNextApp, setupNextHandling } = require('./setup-next-app');
+import path from 'path';
+import url from 'url';
+import { default as pkg } from '../package.json' assert { type: 'json' };
+const { name, devDependencies } = pkg;
+import { createConfig } from './config';
+import { pluginIdentifier } from '@gasket/resolve';
+import { setupNextApp, setupNextHandling } from './setup-next-app';
 const getNextRoute = require('./next-route');
 const apmTransaction = require('./apm-transaction');
 const metadata = require('./metadata');
 
 const isDefined = (o) => typeof o !== 'undefined';
 
-module.exports = {
+export default {
   dependencies: ['@gasket/plugin-webpack'],
   name,
   hooks: {
@@ -204,7 +205,7 @@ module.exports = {
       // Don't do a build, use dev server for local
       if ((command.id || command) === 'local') return;
 
-      const builder = require('next/dist/build').default;
+      const builder = (await import('next/dist/build')).default;
       return await builder(path.resolve('.'), await createConfig(gasket, true));
     },
     /**
