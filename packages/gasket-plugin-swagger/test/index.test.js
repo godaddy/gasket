@@ -30,8 +30,6 @@ jest.mock('util', () => {
 });
 jest.mock('/path/to/app/swagger.json', () => ({ data: true }), { virtual: true });
 
-const fastify = require('fastify')({ logger: true });
-
 describe('Swagger Plugin', function () {
   let plugin;
 
@@ -55,19 +53,22 @@ describe('Swagger Plugin', function () {
 
   it('has expected hooks', function () {
     const expected = [
-      'configure',
       'build',
+      'configure',
+      'create',
       'express',
       'fastify',
-      'create',
       'metadata'
     ];
 
     expect(plugin).toHaveProperty('hooks');
 
-    const hooks = Object.keys(plugin.hooks);
-    expect(hooks).toEqual(expected);
-    expect(hooks).toHaveLength(expected.length);
+    const hooks = new Set(Object.keys(plugin.hooks));
+    expect(hooks.size).toEqual(expected.length);
+
+    for (const hook of expected) {
+      expect(hooks).toContain(hook);
+    }
   });
 
   describe('configure hook', function () {
@@ -153,150 +154,6 @@ describe('Swagger Plugin', function () {
       delete mockGasket.config.swagger.jsdoc;
       await plugin.hooks.build(mockGasket);
       expect(mockSwaggerJSDocStub).not.toHaveBeenCalled();
-    });
-  });
-
-  describe('express hook', function () {
-    let mockGasket, mockApp;
-
-    beforeEach(function () {
-      mockGasket = {
-        logger: {
-          info: jest.fn(),
-          error: jest.fn()
-        },
-        config: {
-          root: '/path/to/app',
-          swagger: {
-            definitionFile: 'swagger.json',
-            apiDocsRoute: '/api-docs'
-          }
-        }
-      };
-      mockApp = {
-        use: jest.fn()
-      };
-    });
-
-    afterEach(function () {
-      jest.clearAllMocks();
-      jest.resetModules();
-    });
-
-    it('when target definition file is not found', async function () {
-      mockGasket.config.swagger.definitionFile = 'swagger.yaml';
-      const result = await plugin.hooks.express.handler(mockGasket, mockApp);
-      expect(result).toBeFalsy();
-    });
-
-    it('swagger file is missing, gasket.logger logs error', async function () {
-      mockGasket.config.swagger.definitionFile = 'swagger.yaml';
-      mockAccessStub.mockRejectedValueOnce();
-      await plugin.hooks.express.handler(mockGasket, mockApp);
-      expect(mockGasket.logger.error).toHaveBeenCalledWith(`Missing ${mockGasket.config.swagger.definitionFile} file...`);
-    });
-
-    it('loads the swagger spec yaml file', async function () {
-      mockGasket.config.swagger.definitionFile = 'swagger.yaml';
-      await plugin.hooks.express.handler(mockGasket, mockApp);
-      expect(mockYamlSafeLoadStub).toHaveBeenCalled();
-    });
-
-    it('only loads the swagger spec file once', async function () {
-      mockGasket.config.swagger.definitionFile = 'swagger.yaml';
-      expect(mockYamlSafeLoadStub).not.toHaveBeenCalled();
-      await plugin.hooks.express.handler(mockGasket, mockApp);
-      expect(mockYamlSafeLoadStub).toHaveBeenCalledTimes(1);
-      await plugin.hooks.express.handler(mockGasket, mockApp);
-      expect(mockYamlSafeLoadStub).toHaveBeenCalledTimes(1);
-    });
-
-    it('loads the swagger spec json file', async function () {
-      await plugin.hooks.express.handler(mockGasket, mockApp);
-      expect(mockYamlSafeLoadStub).not.toHaveBeenCalled();
-    });
-
-    it('sets the api docs route', async function () {
-      await plugin.hooks.express.handler(mockGasket, mockApp);
-      expect(mockApp.use.mock.calls[0][0]).toEqual('/api-docs');
-    });
-  });
-
-  describe('fastify hook', function () {
-    let mockGasket, mockApp;
-
-    beforeEach(function () {
-      mockGasket = {
-        logger: {
-          info: jest.fn(),
-          error: jest.fn()
-        },
-        config: {
-          root: '/path/to/app',
-          swagger: {
-            definitionFile: 'swagger.json',
-            apiDocsRoute: '/api-docs'
-          }
-        }
-      };
-      mockApp = {
-        register: jest.fn(),
-        ready: jest.fn(),
-        get: jest.fn()
-      };
-    });
-
-
-    it('returns nothing when target definition file is not found', async function () {
-      mockGasket.config.swagger.definitionFile = 'swagger.yaml';
-      const result = await plugin.hooks.fastify.handler(mockGasket, mockApp);
-      expect(result).toBeFalsy();
-    });
-
-    it('swagger file is missing, gasket.logger logs error', async function () {
-      mockGasket.config.swagger.definitionFile = 'swagger.yaml';
-      mockAccessStub.mockRejectedValueOnce();
-      await plugin.hooks.fastify.handler(mockGasket, mockApp);
-      expect(mockGasket.logger.error).toHaveBeenCalledWith(`Missing ${mockGasket.config.swagger.definitionFile} file...`);
-    });
-
-    it('loads the swagger spec yaml file', async function () {
-      mockGasket.config.swagger.definitionFile = 'swagger.yaml';
-      await plugin.hooks.fastify.handler(mockGasket, mockApp);
-      expect(mockYamlSafeLoadStub).toHaveBeenCalled();
-    });
-
-    it('only loads the swagger spec file once', async function () {
-      mockGasket.config.swagger.definitionFile = 'swagger.yaml';
-      expect(mockYamlSafeLoadStub).not.toHaveBeenCalled();
-      await plugin.hooks.fastify.handler(mockGasket, mockApp);
-      expect(mockYamlSafeLoadStub).toHaveBeenCalledTimes(1);
-      await plugin.hooks.fastify.handler(mockGasket, mockApp);
-      expect(mockYamlSafeLoadStub).toHaveBeenCalledTimes(1);
-    });
-
-    it('loads the swagger spec json file', async function () {
-      await plugin.hooks.fastify.handler(mockGasket, mockApp);
-      expect(mockYamlSafeLoadStub).not.toHaveBeenCalled();
-    });
-
-    it('sets the api docs route', async function () {
-      await plugin.hooks.fastify.handler(mockGasket, mockApp);
-      expect(mockApp.register).toHaveBeenCalledWith(
-        expect.any(Function),
-        {
-          prefix: '/api-docs',
-          swagger: { data: true },
-          uiConfig: {}
-        }
-      );
-    });
-
-    it('adds new routes to swagger paths', async function () {
-      await plugin.hooks.fastify.handler(mockGasket, fastify);
-      fastify.get('/hello-world', () => {});
-      await fastify.ready();
-      expect(fastify.swagger().paths).toHaveProperty('/hello-world');
     });
   });
 });

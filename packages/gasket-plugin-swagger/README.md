@@ -86,11 +86,49 @@ module.exports = {
 }
 ```
 
+## Lifecycles
+
+### swaggerExpressMiddleware
+
+The `swaggerExpressMiddleware` lifecycle enables you to add custom middleware that runs prior to the swagger UI middleware if using the express framework. This is useful for adding things like authentication to the swagger UI route. You can add multiple middleware functions by returning an array of functions or a single function.
+
+```js
+// /lifecycles/swagger-express-middleware.js
+
+module.exports = (gasket) => [
+  (req, res, next) => {
+    if (!isAuthorized(req)) {
+      return void res.status(403).end('Internal access only');
+    }
+    next();
+  }
+];
+```
+
+### swaggerFastifyPreHandler
+
+The `swaggerFastifyPreHandler` lifecycle allows you inject a handler or array of handlers that run before the Swagger UI plugin's handler. This will let you accomplish tasks such as authentication.
+
+```js
+// /lifecycles/swagger-fastify-validate-request.js
+
+const httpErrors = require('http-errors');
+
+module.exports = (gasket) => [
+  async (request, reply) => {
+    const isAuthorized = await checkAuth(request);
+    if (!isAuthorized) {
+      return reply.send(httpErrors.Forbidden('Internal access only'));
+    }
+  }
+];
+```
+
 ## License
 
 [MIT](./LICENSE.md)
 
 <!-- LINK -->
 [swagger-ui-express]: https://github.com/scottie1984/swagger-ui-express
-[fasitfy-swagger]: https://github.com/fastify/fastify-swagger
+[fastify-swagger]: https://github.com/fastify/fastify-swagger
 [swagger-jsdocs]: https://github.com/Surnet/swagger-jsdoc/blob/master/docs/GETTING-STARTED.md

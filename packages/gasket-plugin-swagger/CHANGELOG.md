@@ -1,5 +1,7 @@
 # `@gasket/plugin-swagger`
 
+- Add support for custom middleware
+
 ### 6.34.4
 
 - Upgrade eslint-plugin-unicorn v43 ([#436])
