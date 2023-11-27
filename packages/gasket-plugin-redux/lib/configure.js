@@ -1,5 +1,5 @@
-const path = require('path');
-const fs = require('fs');
+import path from 'path';
+import fs from 'fs';
 
 /**
  * Fixup makeStore path to be absolute, allowing relative paths in gasket.config
@@ -8,7 +8,7 @@ const fs = require('fs');
  * @param {object} baseConfig -
  * @returns {Object} reduxConfig - updated gasket.config.redux object.
  */
-module.exports = function configureHook(gasket, baseConfig) {
+export default function configureHook(gasket, baseConfig) {
   const { root, redux: reduxConfig = {} } = baseConfig;
 
   let makeStorePath = reduxConfig.makeStore;

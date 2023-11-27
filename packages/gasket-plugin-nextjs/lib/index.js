@@ -2,12 +2,12 @@ import path from 'path';
 import url from 'url';
 import { default as pkg } from '../package.json' assert { type: 'json' };
 const { name, devDependencies } = pkg;
-import { createConfig } from './config';
+import { createConfig } from './config.js';
 import { pluginIdentifier } from '@gasket/resolve';
-import { setupNextApp, setupNextHandling } from './setup-next-app';
-const getNextRoute = require('./next-route');
-const apmTransaction = require('./apm-transaction');
-const metadata = require('./metadata');
+import { setupNextApp, setupNextHandling } from './setup-next-app.js';
+import { getNextRoute } from './next-route.js';
+import { default as apmTransaction } from './apm-transaction.js';
+import { default as metadata } from './metadata.js';
 
 const isDefined = (o) => typeof o !== 'undefined';
 

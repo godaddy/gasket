@@ -1,8 +1,9 @@
-const path = require('path');
-const { name, devDependencies } = require('../package');
-const configure = require('./configure');
-const prompt = require('./prompt');
-const middleware = require('./middleware');
+import path from 'path';
+import { default as pkg } from '../package.json' assert { type: "json" };
+const { name, devDependencies } = pkg;
+import configure from './configure.js';
+import prompt from './prompt.js';
+import middleware from './middleware.js';
 
 /**
  * Gasket Redux Plugin
@@ -11,7 +12,7 @@ const middleware = require('./middleware');
  *
  * @type {{hooks: {middleware, webpack}}}
  */
-module.exports = {
+export default {
   name,
   dependencies: ['@gasket/plugin-log'],
   hooks: {
