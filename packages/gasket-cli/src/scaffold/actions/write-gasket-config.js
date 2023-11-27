@@ -11,6 +11,14 @@ import action from '../action-wrapper.js';
  */
 async function writeGasketConfig(context) {
   const { dest, gasketConfig, presets, plugins, generatedFiles } = context;
+  console.log(
+    dest,
+    '\n', gasketConfig,
+    '\n', presets,
+    '\n', plugins,
+    '\n', generatedFiles
+  );
+
   const fileName = 'gasket.config.js';
   const filePath = path.join(dest, fileName);
 

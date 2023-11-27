@@ -144,11 +144,18 @@ export default function makeCreateContext(argv = [], flags = {}) {
     'config-file': configFile
   } = flags;
 
+  console.log('--makeCreateContext flags', flags);
+  console.log('--makeCreateContext plugins', plugins);
+  console.log('--makeCreateContext presets', presets);
+
   // Flatten the array of array created by the plugins flag – it
   // supports both multiple instances as well as comma-separated lists.
   const rawPresets = presets.reduce(flatten, []);
+  console.log('--makeCreateContext rawPresets', rawPresets);
   const localPresets = presetPath.reduce(flatten, []);
+  console.log('--makeCreateContext localPresets', localPresets);
   const rawPlugins = plugins.reduce(flatten, []);
+  console.log('--makeCreateContext rawPlugins', rawPlugins);
   const pkgLinks = npmLink.reduce(flatten, []);
   const cwd = process.cwd();
   const dest = path.join(cwd, appName);

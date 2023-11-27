@@ -1,4 +1,4 @@
-import { createConfig } from './config';
+import { createConfig } from './config.js';
 
 /**
  * Provide port defaults

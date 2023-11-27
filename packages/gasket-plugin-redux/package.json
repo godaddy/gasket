@@ -2,12 +2,13 @@
   "name": "@gasket/plugin-redux",
   "version": "6.43.0",
   "description": "Gasket Redux Setup",
-  "main": "lib",
+  "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
     "generator",
     "lib"
   ],
+  "type": "module",
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",

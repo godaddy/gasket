@@ -2,7 +2,7 @@
   "name": "@gasket/plugin-webpack",
   "version": "6.43.0",
   "description": "Adds webpack support to your application",
-  "main": "lib/index",
+  "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
     "docs",
