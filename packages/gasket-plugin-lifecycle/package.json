@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-lifecycle",
-  "version": "6.43.0",
+  "version": "6.43.2-canary-esm-port.0",
   "description": "Allows a gasket/ directory to be used for lifecycle hooks in applications.",
   "main": "lib/index.js",
   "files": [
@@ -41,7 +41,7 @@
     "lodash.camelcase": "^4.3.0"
   },
   "devDependencies": {
-    "@gasket/engine": "^6.43.0",
+    "@gasket/engine": "^6.43.2-canary-esm-port.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.7.0",
     "eslint-config-godaddy": "^7.0.0",

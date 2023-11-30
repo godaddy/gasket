@@ -1,6 +1,6 @@
 {
   "name": "@gasket/utils",
-  "version": "6.43.0",
+  "version": "6.43.2-canary-esm-port.0",
   "description": "Reusable utilities for Gasket internals",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -8,7 +8,7 @@
     "docs",
     "lib"
   ],
-  "type":"module",
+  "type": "module",
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
@@ -45,7 +45,7 @@
     "lodash.defaultsdeep": "^4.6.1"
   },
   "devDependencies": {
-    "@gasket/engine": "^6.43.0",
+    "@gasket/engine": "^6.43.2-canary-esm-port.0",
     "@godaddy/dmd": "^1.0.0",
     "abort-controller": "^3.0.0",
     "cross-env": "^7.0.3",
