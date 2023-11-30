@@ -4,7 +4,7 @@
   "description": "CLI for rapid application development with gasket",
   "main": "src/index.js",
   "bin": {
-    "gasket": "./bin/boot"
+    "gasket": "./bin/boot.js"
   },
   "types": "src/index.d.ts",
   "files": [
