@@ -1,8 +1,0 @@
-{
-  "name": "my-cool-app",
-  "version": "0.0.0",
-  "description": "A basic gasket app",
-  "dependencies": {
-    "@gasket/cli": "^6.43.0"
-  }
-}
