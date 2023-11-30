@@ -161,6 +161,14 @@ describe('Resolver', () => {
       const resolver = new Resolver({ require: mockRequire });
       expect(() => resolver.tryResolve('no-exported/package.json')).not.toThrow();
     });
+
+    it('does not throw if module not found with windows path', () => {
+      const resolver = new Resolver({ require: mockRequire });
+      // ensure our helper will throw for the test setup
+      expect(() => resolver.resolve('windows-paths/missing')).toThrow(/Cannot find module 'C:\\/);
+      // test the expected behavior
+      expect(() => resolver.tryResolve('windows-paths/missing')).not.toThrow();
+    });
   });
 
   describe('.tryRequire', () => {
@@ -190,6 +198,14 @@ describe('Resolver', () => {
     it('does throw if module has problems', () => {
       const resolver = new Resolver({ require: mockRequire });
       expect(() => resolver.tryRequire('broken')).toThrow();
+    });
+
+    it('does not throw if module not found with windows path', () => {
+      const resolver = new Resolver({ require: mockRequire });
+      // ensure our helper will throw for the test setup
+      expect(() => resolver.require('windows-paths/missing')).toThrow(/Cannot find module 'C:\\/);
+      // test the expected behavior
+      expect(() => resolver.tryRequire('windows-paths/missing')).not.toThrow();
     });
   });
 });

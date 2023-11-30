@@ -2,6 +2,17 @@ import { default as diagnostics } from 'diagnostics';
 const debug = diagnostics('gasket:resolver');
 
 /**
+ * Normalize windows paths to unix paths
+ *
+ * @param {string} message - Message with path to normalize
+ * @returns {string} normalized path
+ * @private
+ */
+function fixSep(message) {
+  return message.replace(/\\/g, '/');
+}
+
+/**
  * Utility to help resolve and require modules
  *
  * @type {Resolver}
@@ -58,7 +69,7 @@ export class Resolver {
       return this.resolve(moduleName);
     } catch (err) {
       debug('try-resolve error', err.message);
-      if (err.code === 'MODULE_NOT_FOUND' && err.message.includes(moduleName) ||
+      if (err.code === 'MODULE_NOT_FOUND' && fixSep(err.message).includes(moduleName) ||
         err.code === 'ERR_PACKAGE_PATH_NOT_EXPORTED'
       ) return null;
 
@@ -78,7 +89,7 @@ export class Resolver {
       return await this.require(moduleName);
     } catch (err) {
       debug('try-require error', err.message);
-      if (err.code === 'MODULE_NOT_FOUND' && err.message.includes(moduleName) ||
+      if (err.code === 'MODULE_NOT_FOUND' && fixSep(err.message).includes(moduleName) ||
         err.code === 'ERR_PACKAGE_PATH_NOT_EXPORTED'
       ) return null;
 
