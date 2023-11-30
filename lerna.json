@@ -15,7 +15,8 @@
     "publish": {
       "npmClientArgs": [
         "--access",
-        "public"
+        "public",
+        "--legacy-peers-deps"
       ]
     }
   }
