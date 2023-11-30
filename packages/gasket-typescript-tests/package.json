@@ -1,7 +1,7 @@
 {
   "name": "@gasket/typescript-tests",
   "private": true,
-  "version": "6.43.2-canary-esm-port.1",
+  "version": "6.43.2-canary-esm-port.2",
   "description": "Not a published package; hosts unit tests to verify TypeScript support",
   "files": [
     "lib"
@@ -33,7 +33,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/typescript-tests",
   "devDependencies": {
-    "@gasket/cli": "^6.43.2-canary-esm-port.1",
+    "@gasket/cli": "^6.43.2-canary-esm-port.2",
     "@gasket/data": "^6.41.1",
     "@gasket/engine": "^6.43.2-canary-esm-port.0",
     "@gasket/fetch": "^6.39.0",
