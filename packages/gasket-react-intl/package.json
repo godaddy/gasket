@@ -86,7 +86,7 @@
     "sinon": "^14.0.0"
   },
   "peerDependencies": {
-    "@gasket/plugin-intl": "^6.0.0",
+    "@gasket/plugin-intl": "*",
     "prop-types": "^15",
     "react-intl": "<7.0.0"
   },
