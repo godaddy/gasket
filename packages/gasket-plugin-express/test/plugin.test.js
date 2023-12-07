@@ -176,7 +176,17 @@ describe('createServers', () => {
 
     const cookieParserUsage = findCall(
       app.use,
-      (path, mw) => mw === cookieParserMiddleware);
+      (url, mw) => mw === cookieParserMiddleware);
+    expect(cookieParserUsage).not.toBeNull();
+  });
+
+  it('supports the deprecated property name', async () => {
+    gasket.config.express = { middlewareInclusionRegex: /^(?!\/_next\/)/ };
+    await plugin.hooks.createServers(gasket, {});
+
+    const cookieParserUsage = findCall(
+      app.use,
+      (url, mw) => mw === cookieParserMiddleware);
     expect(cookieParserUsage).not.toBeNull();
   });
 

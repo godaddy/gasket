@@ -45,8 +45,17 @@ module.exports = {
       const compression = require('compression');
 
       const { config } = gasket;
-      const { root, express: { routes } = {}, http2, middleware: middlewareConfig } = config;
-      const excludedRoutesRegex = config.express && config.express.excludedRoutesRegex;
+      const {
+        root,
+        express: {
+          routes,
+          excludedRoutesRegex,
+          middlewareInclusionRegex,
+          compression: compressionConfig = true
+        } = {},
+        http2,
+        middleware: middlewareConfig
+      } = config;
       const app = http2 ? require('http2-express-bridge')(express) : express();
 
       if (http2) {
@@ -66,13 +75,13 @@ module.exports = {
           });
       }
 
-      if (excludedRoutesRegex) {
-        app.use(excludedRoutesRegex, cookieParser());
+      const middlewarePattern = middlewareInclusionRegex || excludedRoutesRegex;
+      if (middlewarePattern) {
+        app.use(middlewarePattern, cookieParser());
       } else {
         app.use(cookieParser());
       }
 
-      const { compression: compressionConfig = true } = config.express || {};
       if (compressionConfig) {
         app.use(compression());
       }
@@ -87,8 +96,8 @@ module.exports = {
             const mwConfig = middlewareConfig.find(mw => mw.plugin === pluginName);
             if (mwConfig) {
               middleware.paths = mwConfig.paths;
-              if (excludedRoutesRegex) {
-                middleware.paths.push(excludedRoutesRegex);
+              if (middlewarePattern) {
+                middleware.paths.push(middlewarePattern);
               }
             }
           }
@@ -101,8 +110,8 @@ module.exports = {
         const { paths } = layer;
         if (paths) {
           app.use(paths, layer);
-        } else if (excludedRoutesRegex) {
-          app.use(excludedRoutesRegex, layer);
+        } else if (middlewarePattern) {
+          app.use(middlewarePattern, layer);
         } else {
           app.use(layer);
         }
@@ -172,9 +181,19 @@ module.exports = {
           type: 'boolean',
           default: true
         }, {
+          name: 'express.routes',
+          link: 'README.md#configuration',
+          description: 'Glob pattern for route setup code',
+          type: 'string'
+        }, {
           name: 'express.excludedRoutesRegex',
           link: 'README.md#configuration',
-          description: 'Routes to be excluded based on a regex'
+          description: 'Routes to be included for Gasket middleware, based on a regex',
+          deprecated: true
+        }, {
+          name: 'express.middlewareInclusionRegex',
+          link: 'README.md#configuration',
+          description: 'Routes to be included for Gasket middleware, based on a regex'
         }]
       };
     }

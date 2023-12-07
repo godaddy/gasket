@@ -1,5 +1,8 @@
 # `@gasket/plugin-express`
 
+- Add missing type definition for `routes` config property
+- Add `middlewareInclusionRegex` config property, deprecating `excludedRoutesRegex`
+
 ### 6.41.2
 
 - Fix ordering of error middlewares so they come after API routes
