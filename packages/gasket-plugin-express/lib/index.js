@@ -44,7 +44,7 @@ module.exports = {
       const cookieParser = require('cookie-parser');
       const compression = require('compression');
 
-      const { config } = gasket;
+      const { config, logger } = gasket;
       const {
         root,
         express: {
@@ -56,6 +56,13 @@ module.exports = {
         http2,
         middleware: middlewareConfig
       } = config;
+
+      if (excludedRoutesRegex) {
+        // eslint-disable-next-line no-console
+        const warn = logger ? logger.warning : console.warn;
+        warn('DEPRECATED express config `excludedRoutesRegex` - use `middlewareInclusionRegex`');
+      }
+
       const app = http2 ? require('http2-express-bridge')(express) : express();
 
       if (http2) {
