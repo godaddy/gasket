@@ -52,7 +52,9 @@ describe('createServers', () => {
 
     gasket = {
       middleware: {},
-      logger: {},
+      logger: {
+        warning: jest.fn()
+      },
       config: {},
       exec: jest.fn().mockImplementation((lifecycle, ...args) => lifecycles[lifecycle](args)),
       execApply: sandbox.mockImplementation(async function (lifecycle, fn) {
