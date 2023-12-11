@@ -1,12 +1,13 @@
 {
   "name": "@gasket/engine",
-  "version": "6.43.1",
+  "version": "6.43.2-canary-esm-port.0",
   "description": "Plugin engine for gasket",
   "main": "lib/engine.js",
   "types": "lib/engine.d.ts",
   "files": [
     "lib"
   ],
+  "type": "module",
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
@@ -39,7 +40,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-engine",
   "dependencies": {
-    "@gasket/resolve": "^6.43.1",
+    "@gasket/resolve": "^6.43.2-canary-esm-port.0",
     "debug": "^4.3.1"
   },
   "devDependencies": {

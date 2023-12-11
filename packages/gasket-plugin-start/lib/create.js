@@ -4,7 +4,7 @@
  * @param {Gasket} gasket - The gasket API.
  * @param {CreateContext} context - Create context
  */
-module.exports = function create(gasket, context) {
+export default function create(gasket, context) {
   const { pkg } = context;
 
   pkg.add('scripts', {

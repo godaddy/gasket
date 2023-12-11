@@ -1,5 +1,5 @@
 // @gasket/plugin-express
-module.exports = function metadata(gasket, meta) {
+export default function metadata(gasket, meta) {
   const { metadata } = gasket;
   const hasExpress = Boolean(metadata.plugins.find(pluginData => pluginData.name === '@gasket/plugin-express'));
   const hasFastify = Boolean(metadata.plugins.find(pluginData => pluginData.name === '@gasket/plugin-fastify'));

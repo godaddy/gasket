@@ -1,6 +1,6 @@
-const path = require('path');
-const { Resolver } = require('./resolver');
-const { pluginIdentifier, presetIdentifier } = require('./identifiers');
+import path from 'path';
+import { Resolver } from './resolver.js';
+import { pluginIdentifier, presetIdentifier } from './identifiers.js';
 
 /**
  * Module with meta data
@@ -55,7 +55,7 @@ const isModulePath = /^[/.]|^[a-zA-Z]:\\|node_modules/;
  * @type {Loader}
  * @extends Resolver
  */
-class Loader extends Resolver {
+export class Loader extends Resolver {
 
   constructor() {
     super(...arguments);
@@ -75,7 +75,7 @@ class Loader extends Resolver {
    * @param {object} [meta] - Additional meta data
    * @returns {ModuleInfo} module
    */
-  getModuleInfo(module, moduleName, meta = {}) {
+  async getModuleInfo(module, moduleName, meta = {}) {
     const info = {
       name: moduleName,
       module,
@@ -85,8 +85,9 @@ class Loader extends Resolver {
     const tryPath = isModulePath.test(moduleName) ? path.join(moduleName, 'package.json') : `${moduleName}/package.json`;
     const pkgPath = this.tryResolve(tryPath);
     if (pkgPath) {
+      const assertion = pkgPath.match(/.json/).length ? { assert: { type: "json" } } : {}
       info.path = path.dirname(pkgPath);
-      info.package = this.require(pkgPath);
+      info.package = (await this.require(pkgPath, assertion)).default;
       info.version = info.package.version;
       info.name = info.package.name;
     }
@@ -101,9 +102,10 @@ class Loader extends Resolver {
    * @param {object} [meta] - Additional meta data
    * @returns {ModuleInfo} module
    */
-  loadModule(moduleName, meta = {}) {
-    const module = this.require(moduleName);
-    return this.getModuleInfo(module, moduleName, meta);
+  async loadModule(moduleName, meta = {}) {
+    const { default: pkg } = await this.require(`${moduleName}/package.json`, { assert: { type: "json" } });
+    const module = await this.require(`${moduleName}/${pkg.main || 'index.js'}`);
+    return await this.getModuleInfo(module, moduleName, meta);
   }
 
   /**
@@ -113,7 +115,7 @@ class Loader extends Resolver {
    * @param {object} [meta] - Additional meta data
    * @returns {PluginInfo} module
    */
-  loadPlugin(module, meta = {}) {
+  async loadPlugin(module, meta = {}) {
     // If the provide plugin is an already required module, just gather info.
     if (typeof module !== 'string') {
       if (typeof module.name !== 'string') {
@@ -121,15 +123,15 @@ class Loader extends Resolver {
       }
 
       const moduleName = pluginIdentifier(module.name).fullName;
-      return this.getModuleInfo(module, moduleName, { ...meta, preloaded: true });
+      return await this.getModuleInfo(module, moduleName, { ...meta, preloaded: true });
     }
 
     if (isModulePath.test(module)) {
-      return this.loadModule(module, meta);
+      return await this.loadModule(module, meta);
     }
 
     const identifier = pluginIdentifier.lookup(module, id => this.tryRequire(id.fullName));
-    return this.loadModule(identifier ? identifier.fullName : module, meta);
+    return await this.loadModule(identifier ? identifier.fullName : module, meta);
   }
 
   /**
@@ -142,7 +144,7 @@ class Loader extends Resolver {
    * @returns {PresetInfo} module
    */
   // eslint-disable-next-line max-statements
-  loadPreset(module, meta, { shallow = false } = {}) {
+  async loadPreset(module, meta, { shallow = false } = {}) {
     let moduleName;
     if (isModulePath.test(module)) {
       moduleName = module;
@@ -150,7 +152,7 @@ class Loader extends Resolver {
       const identifier = presetIdentifier.lookup(module, id => this.tryRequire(id.fullName));
       moduleName = identifier ? identifier.fullName : module;
     }
-    const presetInfo = this.loadModule(moduleName, meta);
+    const presetInfo = await this.loadModule(moduleName, meta);
 
     const { name: from, dependencies } = presetInfo.package;
 
@@ -164,11 +166,11 @@ class Loader extends Resolver {
     let presets;
     let plugins;
     if (shallow) {
-      presets = presetNames.map(name => resolver.getModuleInfo(null, name, { from, range: dependencies[name] }));
-      plugins = pluginNames.map(name => resolver.getModuleInfo(null, name, { from, range: dependencies[name] }));
+      presets = presetNames.map(async name => await resolver.getModuleInfo(null, name, { from, range: dependencies[name] }));
+      plugins = pluginNames.map(async name => await resolver.getModuleInfo(null, name, { from, range: dependencies[name] }));
     } else {
-      presets = presetNames.map(name => resolver.loadPreset(name, { from, range: dependencies[name] }));
-      plugins = pluginNames.map(name => resolver.loadPlugin(name, { from, range: dependencies[name] }));
+      presets = presetNames.map(async name => await resolver.loadPreset(name, { from, range: dependencies[name] }));
+      plugins = pluginNames.map(async name => await resolver.loadPlugin(name, { from, range: dependencies[name] }));
     }
 
     return {
@@ -186,14 +188,12 @@ class Loader extends Resolver {
    * @param {PluginConfig} pluginConfig - Presets and plugins to load
    * @returns {{presets: PresetInfo[], plugins: PluginInfo[]}} results
    */
-  loadConfigured(pluginConfig) {
+  async loadConfigured(pluginConfig) {
     if (this._loaded.has(pluginConfig)) return this._loaded.get(pluginConfig);
 
     const { presets = [], add = [], remove = [] } = pluginConfig || {};
-
-    const loadedPresets = presets.map(name => this.loadPreset(name, { from: 'config' }));
-    const loadedPlugins = add.map(module => this.loadPlugin(module, { from: 'config' }));
-
+    const loadedPresets = await Promise.all(presets.map(name => this.loadPreset(name, { from: 'config' })));
+    const loadedPlugins = await Promise.all(add.map(module => this.loadPlugin(module, { from: 'config' })));
     let plugins = [];
 
     // recursively get plugins from presets
@@ -230,7 +230,3 @@ class Loader extends Resolver {
     return results;
   }
 }
-
-module.exports = {
-  Loader
-};

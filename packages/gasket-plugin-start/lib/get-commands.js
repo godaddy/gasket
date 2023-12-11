@@ -6,7 +6,7 @@
  * @param {Object} flags - oclif flags utility
  * @returns {GasketCommand[]} commands
  */
-module.exports = function getCommands(gasket, { GasketCommand, flags }) {
+export default function getCommands(gasket, { GasketCommand, flags }) {
 
   class BuildCommand extends GasketCommand {
     async gasketRun() {

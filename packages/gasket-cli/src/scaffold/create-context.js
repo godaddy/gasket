@@ -1,7 +1,7 @@
 /* eslint-disable max-len, max-statements */
-const fs = require('fs');
-const path = require('path');
-const { addPluginsToContext, ensureAbsolute, readConfig } = require('../scaffold/utils');
+import fs from 'fs';
+import path from 'path';
+import { addPluginsToContext, ensureAbsolute, readConfig } from '../scaffold/utils.js';
 
 /**
  * The CreateRuntime represents a shallow proxy to a CreateContext
@@ -113,7 +113,7 @@ function flatten(acc, values) {
  *
  * @property {Files} files - Use to add files and templates to generate
  */
-class CreateContext {
+export class CreateContext {
   constructor(initContext = {}) {
     Object.assign(this, initContext);
   }
@@ -130,7 +130,7 @@ class CreateContext {
  * @param {Object} flags - Command flags
  * @returns {CreateContext} context
  */
-module.exports = function makeCreateContext(argv = [], flags = {}) {
+export default function makeCreateContext(argv = [], flags = {}) {
   const appName = argv[0] || 'templated-app';
   const {
     npmconfig,
@@ -144,11 +144,18 @@ module.exports = function makeCreateContext(argv = [], flags = {}) {
     'config-file': configFile
   } = flags;
 
+  console.log('------------hit makeCreateContext flags', flags);
+  console.log('------------hit makeCreateContext plugins', plugins);
+  console.log('------------hit makeCreateContext presets', presets);
+
   // Flatten the array of array created by the plugins flag – it
   // supports both multiple instances as well as comma-separated lists.
   const rawPresets = presets.reduce(flatten, []);
+  console.log('------------hit makeCreateContext rawPresets', rawPresets);
   const localPresets = presetPath.reduce(flatten, []);
+  console.log('------------hit makeCreateContext localPresets', localPresets);
   const rawPlugins = plugins.reduce(flatten, []);
+  console.log('------------hit makeCreateContext rawPlugins', rawPlugins);
   const pkgLinks = npmLink.reduce(flatten, []);
   const cwd = process.cwd();
   const dest = path.join(cwd, appName);
@@ -193,4 +200,3 @@ module.exports = function makeCreateContext(argv = [], flags = {}) {
   return context;
 };
 
-module.exports.CreateContext = CreateContext;

@@ -6,7 +6,7 @@
  * @param {Object} gasket - The Gasket API
  * @returns {Function} middleware
  */
-module.exports = function middlewareHook(gasket) {
+export default function middlewareHook(gasket) {
   const { redux: reduxConfig = {} } = gasket.config;
 
   if (!reduxConfig.makeStore) {

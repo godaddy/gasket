@@ -1,10 +1,14 @@
-const { promisify } = require('util');
-const debug = require('diagnostics')('gasket:express');
-const { name, devDependencies } = require('../package');
-const glob = promisify(require('glob'));
-const path = require('path');
+import { promisify } from 'util';
+import { default as diagnostics } from 'diagnostics';
+const debug = diagnostics('gasket:express');
+import { default as pkg } from '../package.json' assert { type: 'json' };
+const { name, devDependencies } = pkg;
+import * as syncGlob from 'glob';
+const glob = promisify(syncGlob.default);
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
 
-module.exports = {
+export default {
   name,
   hooks: {
     /**
@@ -16,6 +20,8 @@ module.exports = {
      * @public
      */
     create: async function create(gasket, context) {
+      const __filename = fileURLToPath(import.meta.url);
+      const __dirname = dirname(__filename);
       const generatorDir = `${ __dirname }/../generator`;
 
       context.pkg.add('dependencies', {
@@ -40,14 +46,14 @@ module.exports = {
      */
     // eslint-disable-next-line max-statements
     createServers: async function createServers(gasket, serverOpts) {
-      const express = require('express');
-      const cookieParser = require('cookie-parser');
-      const compression = require('compression');
+      const express = await import('express');
+      const cookieParser = await import('cookie-parser');
+      const compression = await import('compression');
 
       const { config } = gasket;
       const { root, express: { routes } = {}, http2, middleware: middlewareConfig } = config;
       const excludedRoutesRegex = config.express && config.express.excludedRoutesRegex;
-      const app = http2 ? require('http2-express-bridge')(express) : express();
+      const app = http2 ? (await import('http2-express-bridge'))(express) : express();
 
       if (http2) {
         app.use(
@@ -113,7 +119,7 @@ module.exports = {
       if (routes) {
         const files = await glob(`${ routes }.js`, { cwd: root });
         for (const file of files) {
-          require(path.join(root, file))(app);
+          await import(join(root, file))(app);
         }
       }
 

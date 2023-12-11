@@ -1,7 +1,10 @@
-const { name, devDependencies } = require('../package');
-const initWebpack = require('./init-webpack');
+import { default as pkg } from '../package.json' assert { type: "json" };
+const { name, devDependencies } = pkg;
+import { initWebpack as init } from './init-webpack.js';
 
-module.exports = {
+export const initWebpack = init;
+
+export default {
   name,
   hooks: {
     create(gasket, context) {

@@ -64,7 +64,7 @@ class ReduxReducers {
  * @param {CreateContext} context - Create context
  * @returns {CreateContext} context
  */
-module.exports = function promptHook(gasket, context) {
+export default function promptHook(gasket, context) {
   const reduxReducers = new ReduxReducers();
 
   // These getters are used in the handlebars template and cannot be on the prototype

@@ -1,4 +1,5 @@
-const path = require('path');
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
 
 /**
  * Create hook adds template files if gitInit
@@ -7,12 +8,13 @@ const path = require('path');
  * @param {CreateContext} context - Create context
  * @returns {Promise} promise
  */
-module.exports = async function create(gasket, context) {
+export default async function create(gasket, context) {
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = dirname(__filename);
   const { gitInit, files } = context;
-
   if (gitInit) {
     files.add(
-      path.join(__dirname, '..', 'generator', '.*')
+      join(__dirname, '..', 'generator', '.*')
     );
   }
 };

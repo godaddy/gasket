@@ -1,12 +1,13 @@
 /* eslint require-atomic-updates: warn */
-const { name, dependencies } = require('../package');
+import { default as pkg } from '../package.json' assert { type: 'json' };
+const { name, dependencies } = pkg;
 
 /**
  * Expose the plugin hooks, listen to the `init` and `destroy` events.
  *
  * @type {object}
  */
-module.exports = {
+export default {
   name,
   hooks: {
     init: {

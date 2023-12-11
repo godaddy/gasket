@@ -1,10 +1,10 @@
 {
   "name": "@gasket/cli",
-  "version": "6.43.1",
+  "version": "6.43.2-canary-esm-port.2",
   "description": "CLI for rapid application development with gasket",
   "main": "src/index.js",
   "bin": {
-    "gasket": "./bin/boot"
+    "gasket": "./bin/boot.js"
   },
   "types": "src/index.d.ts",
   "files": [
@@ -13,6 +13,7 @@
     "bin",
     "src"
   ],
+  "type": "module",
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
@@ -22,7 +23,7 @@
     "posttest": "npm run lint",
     "prepack": "npm run manifest",
     "postpack": "rimraf oclif.manifest.json",
-    "manifest": "cross-env FAUX_ROOT='/path/to/your/app' oclif-dev manifest",
+    "manifest": "cross-env FAUX_ROOT='/path/to/your/app' oclif manifest",
     "test:clean": "rimraf ./test/fixtures/create/myapp",
     "test:integration": "mocha --require test/setup.js --recursive \"test/integration/**/*.test.js\"",
     "test:integration:coverage": "nyc --reporter=text --reporter=json-summary --all run-s test:integration",
@@ -55,17 +56,17 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-cli",
   "dependencies": {
-    "@gasket/engine": "^6.43.1",
-    "@gasket/plugin-command": "^6.43.0",
-    "@gasket/plugin-git": "^6.43.0",
-    "@gasket/plugin-lifecycle": "^6.43.0",
-    "@gasket/plugin-metadata": "^6.43.1",
-    "@gasket/plugin-start": "^6.43.0",
-    "@gasket/resolve": "^6.43.1",
-    "@gasket/utils": "^6.43.0",
+    "@gasket/engine": "^6.43.2-canary-esm-port.0",
+    "@gasket/plugin-command": "^6.43.2-canary-esm-port.0",
+    "@gasket/plugin-git": "^6.43.2-canary-esm-port.0",
+    "@gasket/plugin-lifecycle": "^6.43.2-canary-esm-port.0",
+    "@gasket/plugin-metadata": "^6.43.2-canary-esm-port.0",
+    "@gasket/plugin-start": "^6.43.2-canary-esm-port.0",
+    "@gasket/resolve": "^6.43.2-canary-esm-port.0",
+    "@gasket/utils": "^6.43.2-canary-esm-port.0",
     "@oclif/command": "^1.8.16",
     "@oclif/config": "^1.18.2",
-    "@oclif/core": "^1.2.0",
+    "@oclif/core": "^3.13.1",
     "@oclif/parser": "^3.8.6",
     "@oclif/plugin-help": "^5.1.10",
     "@oclif/plugin-not-found": "^2.2.4",
@@ -86,7 +87,6 @@
     "untildify": "^4.0.0"
   },
   "devDependencies": {
-    "@oclif/dev-cli": "^1.13.31",
     "@oclif/test": "^2.0.0",
     "assume": "^2.3.0",
     "assume-sinon": "^1.1.0",
@@ -103,6 +103,7 @@
     "mocha": "^10.0.0",
     "npm-run-all": "^4.1.3",
     "nyc": "^15.1.0",
+    "oclif": "^4.0.4",
     "proxyquire": "^2.1.3",
     "rimraf": "^3.0.2",
     "sinon": "^14.0.0",
@@ -213,11 +214,11 @@
       "@oclif/plugin-warn-if-update-available"
     ],
     "hooks": {
-      "init": "./src/hooks/init"
+      "init": "./src/hooks/init.js"
     },
     "warn-if-update-available": {
       "timeoutInDays": 7
     },
-    "helpClass": "./src/utils/help"
+    "helpClass": "./src/utils/help.js"
   }
 }
