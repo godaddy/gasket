@@ -3,7 +3,7 @@
  *
  * @type {Files}
  */
-module.exports = class Files {
+export class Files {
   constructor() {
     this.globSets = [];
   }

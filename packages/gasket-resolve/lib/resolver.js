@@ -1,4 +1,6 @@
-const debug = require('diagnostics')('gasket:resolver');
+import { default as diagnostics } from 'diagnostics';
+import { resolve } from 'import-meta-resolve';
+const debug = diagnostics('gasket:resolver');
 
 /**
  * Normalize windows paths to unix paths
@@ -16,7 +18,7 @@ function fixSep(message) {
  *
  * @type {Resolver}
  */
-class Resolver {
+export class Resolver {
   /**
    * @param {object} options - Options
    * @param {string|string[]} [options.resolveFrom] - Path(s) to resolve modules from
@@ -25,13 +27,12 @@ class Resolver {
   constructor(options) {
     const {
       resolveFrom,
-      require: _require
     } = options || {};
 
     if (resolveFrom) {
       this._resolveFrom = Array.isArray(resolveFrom) ? resolveFrom : [resolveFrom];
     }
-    this._require = _require || require;
+    this._import = async (path, assertion) => await import(path, assertion);
   }
 
   /**
@@ -41,8 +42,7 @@ class Resolver {
    * @returns {string} filename of the module
    */
   resolve(moduleName) {
-    const options = this._resolveFrom ? { paths: this._resolveFrom } : {};
-    return this._require.resolve(moduleName, options);
+    return resolve(moduleName, import.meta.url);
   }
 
   /**
@@ -51,9 +51,9 @@ class Resolver {
    * @param {string} moduleName name of the module
    * @returns {object} module contents
    */
-  require(moduleName) {
+  async require(moduleName, assertion = {}) {
     const modulePath = this.resolve(moduleName);
-    return this._require(modulePath);
+    return await this._import(modulePath, assertion);
   }
 
   /**
@@ -82,10 +82,10 @@ class Resolver {
    * @param {string} moduleName name of the module
    * @returns {object|null} module contents
    */
-  tryRequire(moduleName) {
+  async tryRequire(moduleName) {
     try {
       debug('try-require', moduleName);
-      return this.require(moduleName);
+      return await this.require(moduleName);
     } catch (err) {
       debug('try-require error', err.message);
       if (err.code === 'MODULE_NOT_FOUND' && fixSep(err.message).includes(moduleName) ||
@@ -96,7 +96,3 @@ class Resolver {
     }
   }
 }
-
-module.exports = {
-  Resolver
-};

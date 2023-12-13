@@ -1,5 +1,5 @@
-const concat = require('concat-stream');
-const spawn = require('cross-spawn');
+import concat from 'concat-stream';
+import spawn from 'cross-spawn';
 
 /**
  * Promise friendly wrapper to running a shell command (eg: git, npm, ls)
@@ -38,7 +38,7 @@ const spawn = require('cross-spawn');
  * @returns {Promise} A promise represents if command succeeds or fails.
  * @public
  */
-function runShellCommand(cmd, argv, options = {}, debug = false) {
+export function runShellCommand(cmd, argv, options = {}, debug = false) {
   const { signal, ...opts } = options;
 
   if (signal && signal.aborted) {
@@ -87,5 +87,3 @@ function runShellCommand(cmd, argv, options = {}, debug = false) {
     });
   });
 }
-
-module.exports = runShellCommand;

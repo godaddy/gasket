@@ -1,8 +1,8 @@
-const action = require('../action-wrapper');
-const ConfigBuilder = require('../config-builder');
-const { addPluginsToPkg, getPluginsWithVersions } = require('../utils');
-const { PackageManager } = require('@gasket/utils');
-const { presetIdentifier } = require('@gasket/resolve');
+import action from '../action-wrapper.js';
+import { ConfigBuilder } from '../config-builder.js';
+import { addPluginsToPkg, getPluginsWithVersions } from '../utils.js';
+import { PackageManager } from '@gasket/utils';
+import { presetIdentifier } from '@gasket/resolve';
 
 /**
  * Initializes the ConfigBuilder builder and adds to context.
@@ -39,4 +39,4 @@ async function setupPkg(context) {
   Object.assign(context, { pkg, pkgManager });
 }
 
-module.exports = action('Set up package.json', setupPkg, { startSpinner: false });
+export default action('Set up package.json', setupPkg, { startSpinner: false });

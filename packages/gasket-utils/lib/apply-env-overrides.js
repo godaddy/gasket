@@ -1,4 +1,4 @@
-const applyConfigOverrides = require('./apply-config-overrides');
+import { applyConfigOverrides } from './apply-config-overrides.js';
 
 /**
  * Normalize the config by applying any environment or local overrides
@@ -9,9 +9,8 @@ const applyConfigOverrides = require('./apply-config-overrides');
  * @returns {object} config
  * @deprecated use applyConfigOverrides
  */
-function applyEnvironmentOverrides(gasketConfig, config, localFile) {
+export function applyEnvironmentOverrides(gasketConfig, config, localFile) {
   const { env = '', root } = gasketConfig;
   return applyConfigOverrides(config, { env, root, localFile });
 }
 
-module.exports = applyEnvironmentOverrides;

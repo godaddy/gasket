@@ -1,7 +1,9 @@
-const semver = require('semver');
-const { flattenPresets } = require('@gasket/resolve');
-const action = require('../action-wrapper');
-const pkgVersion = require('../../../package.json').version;
+import semver from 'semver';
+import { flattenPresets } from '@gasket/resolve';
+import action from '../action-wrapper.js';
+import { default as pkg } from '../../../package.json' assert { type: 'json' };
+
+const pkgVersion = pkg.version;
 const pkgVersionCompatible = `^${pkgVersion}`;
 
 /**
@@ -81,4 +83,4 @@ function resolveCliVersion(context, spinner) {
   });
 }
 
-module.exports = action('Resolve CLI versions', resolveCliVersion, { startSpinner: false });
+export default action('Resolve CLI versions', resolveCliVersion, { startSpinner: false });

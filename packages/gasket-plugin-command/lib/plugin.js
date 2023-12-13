@@ -1,10 +1,10 @@
-const { Command } = require('@oclif/config');
-const { flags } = require('@oclif/command');
-const GasketCommand = require('./command');
-const { hoistBaseFlags } = require('./utils');
+import { Command, Flags } from '@oclif/core';
+import { GasketCommand } from './command.js';
+import { hoistBaseFlags } from './utils.js';
+import { default as pkg } from '../package.json' assert { type: 'json' };
 
-module.exports = {
-  name: require('../package').name,
+export const plugin = {
+  name: pkg.name,
   hooks: {
     /**
      * Gets commands from plugins and injects them to the oclif config.
@@ -15,7 +15,7 @@ module.exports = {
      * @async
      */
     async initOclif(gasket, { oclifConfig }) {
-      const commands = (await gasket.exec('getCommands', { GasketCommand, flags }))
+      const commands = (await gasket.exec('getCommands', { GasketCommand, Flags }))
         .reduce((all, cmds) => all.concat(cmds), [])
         .filter(cmd => Boolean(cmd))
         .map(cmd => hoistBaseFlags(cmd))

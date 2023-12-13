@@ -1,7 +1,7 @@
-const createEngine = require('../create-engine');
-const action = require('../action-wrapper');
-const ConfigBuilder = require('../config-builder');
-const Files = require('../files');
+import { createEngine } from '../create-engine.js';
+import action from '../action-wrapper.js';
+import { ConfigBuilder } from '../config-builder.js';
+import { Files } from '../files.js';
 
 /**
  * Executes the `create` hook for all registered plugins.
@@ -23,4 +23,4 @@ async function createHooks(context) {
   });
 }
 
-module.exports = action('Execute create hooks', createHooks);
+export default action('Execute create hooks', createHooks);
