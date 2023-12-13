@@ -1,13 +1,9 @@
-const GasketCommand = require('./command');
+import { GasketCommand } from './command.js';
 
-function hoistBaseFlags(cmd) {
+export function hoistBaseFlags(cmd) {
   cmd.flags = {
     ...GasketCommand.flags,
     ...cmd.flags
   };
   return cmd;
 }
-
-module.exports = {
-  hoistBaseFlags
-};

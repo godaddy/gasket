@@ -1,4 +1,5 @@
 import { default as diagnostics } from 'diagnostics';
+import { resolve } from 'import-meta-resolve';
 const debug = diagnostics('gasket:resolver');
 
 /**
@@ -41,7 +42,7 @@ export class Resolver {
    * @returns {string} filename of the module
    */
   resolve(moduleName) {
-    return import.meta.resolve(moduleName);
+    return resolve(moduleName, import.meta.url);
   }
 
   /**
@@ -51,9 +52,7 @@ export class Resolver {
    * @returns {object} module contents
    */
   async require(moduleName, assertion = {}) {
-    console.log('------------hit require')
     const modulePath = this.resolve(moduleName);
-    console.log('------------hit modulePath', modulePath)
     return await this._import(modulePath, assertion);
   }
 

@@ -105,7 +105,6 @@ export function projectIdentifier(projectName, type = 'plugin') {
    * @returns {PackageIdentifier} instance
    */
   function createPackageIdentifier(rawName, options) {
-    console.log('------------hit createPackageIdentifier', rawName);
     if (!rawName) {
       // eslint-disable-next-line max-len
       throw new Error('Package name must be supplied. See the @gasket/resolve documentation for naming conventions: https://github.com/godaddy/gasket/tree/main/packages/gasket-resolve#naming-convention');
