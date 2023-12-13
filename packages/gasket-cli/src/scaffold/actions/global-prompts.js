@@ -1,7 +1,8 @@
-const inquirer = require('inquirer');
-const { pluginIdentifier, flattenPresets } = require('@gasket/resolve');
-const action = require('../action-wrapper');
-const { addPluginsToContext } = require('../utils');
+import inquirer from 'inquirer';
+import action from '../action-wrapper.js';
+
+import { pluginIdentifier, flattenPresets } from '@gasket/resolve';
+import { addPluginsToContext } from '../utils.js';
 
 /**
  * What is your app description?
@@ -136,7 +137,7 @@ async function allowExtantOverwriting(context, prompt) {
   }
 }
 
-const questions = [
+export const questions = [
   chooseAppDescription,
   choosePackageManager,
   chooseTestPlugin,
@@ -156,6 +157,4 @@ async function globalPrompts(context) {
   }
 }
 
-module.exports = action('Global prompts', globalPrompts, { startSpinner: false });
-
-module.exports.questions = questions;
+export default action('Global prompts', globalPrompts, { startSpinner: false });

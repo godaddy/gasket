@@ -1,13 +1,15 @@
-const path = require('path');
-const { readdir } = require('fs').promises;
-const defaultsDeep = require('lodash.defaultsdeep');
-const { applyConfigOverrides, tryResolve } = require('@gasket/utils');
-const { flattenPresets } = require('./preset-utils');
+import path from 'path';
+import { readdir } from 'fs/promises';
+import pkg from 'lodash';
+const { defaultsdeep: defaultsDeep } = pkg;
+import { applyConfigOverrides, tryResolve } from '@gasket/utils';
+import { flattenPresets } from './preset-utils.js';
+import { default as diagnostics } from 'diagnostics';
+const debug = diagnostics('gasket:resolver');
 const jsExtension = /\.(js|cjs)$/i;
 
-const debug = require('diagnostics')('gasket:resolve:config');
 
-async function loadGasketConfigFile(root, env, commandId, configFile = 'gasket.config') {
+export async function loadGasketConfigFile(root, env, commandId, configFile = 'gasket.config') {
   let gasketConfig = loadConfigFile(root, configFile);
   if (gasketConfig) {
     gasketConfig.root = root;
@@ -18,7 +20,7 @@ async function loadGasketConfigFile(root, env, commandId, configFile = 'gasket.c
   }
 }
 
-function loadConfigFile(root, configFile) {
+export function loadConfigFile(root, configFile) {
   const absolutePath = !path.isAbsolute(configFile) ? path.join(root, configFile) : configFile;
   const resolvedPath = tryResolve(absolutePath);
   if (resolvedPath) {
@@ -28,7 +30,7 @@ function loadConfigFile(root, configFile) {
   debug(`Failed to resolve Gasket config file ${configFile} from root ${root}`);
 }
 
-async function addUserPlugins(gasketConfig) {
+export async function addUserPlugins(gasketConfig) {
   const moduleNames = (await Promise.all([
     resolveUserPlugins(gasketConfig.root, 'plugins'),
     resolveUserPlugins(gasketConfig.root, 'src', 'plugins')
@@ -52,7 +54,7 @@ async function addUserPlugins(gasketConfig) {
  * @returns {string[]} found plugin files
  * @private
  */
-async function resolveUserPlugins(root, ...parts) {
+export async function resolveUserPlugins(root, ...parts) {
   const dir = path.join(root, ...parts);
 
   let files;
@@ -78,15 +80,9 @@ async function resolveUserPlugins(root, ...parts) {
  *
  * @param {Gasket} gasket - Gasket engine instance
  */
-function assignPresetConfig(gasket) {
+export function assignPresetConfig(gasket) {
   const { presets } = gasket.loader.loadConfigured(gasket.config.plugins);
   // @ts-ignore
   const presetConfigs = flattenPresets(presets).map(p => p.module && p.module.config).filter(Boolean);
   Object.assign(gasket.config, defaultsDeep(gasket.config, ...presetConfigs));
 }
-
-module.exports = {
-  loadGasketConfigFile,
-  assignPresetConfig,
-  addUserPlugins
-};

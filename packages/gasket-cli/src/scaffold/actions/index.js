@@ -1,30 +1,32 @@
+import mkDir from './mkdir.js';
+import loadPreset from './load-preset.js';
+import cliVersion from './cli-version.js';
+import globalPrompts from './global-prompts.js';
+import setupPkg from './setup-pkg.js';
+import writePkg, { writePkgUpdate } from './write-pkg.js';
+import installModules, { installModulesUpdate } from './install-modules.js';
+import linkModules, { linkModulesUpdate } from './link-modules.js';
+import writeGasketConfig from './write-gasket-config.js';
+import loadPkgForDebug from './load-pkg-for-debug.js';
+import promptHooks from './prompt-hooks.js';
+import createHooks from './create-hooks.js';
+import generateFiles from './generate-files.js';
+import postCreateHooks from './post-create-hooks.js';
+import applyPresetConfig from './apply-preset-config.js';
+import printReport from './print-report.js';
 
-const mkDir = require('./mkdir');
-const loadPreset = require('./load-preset');
-const cliVersion = require('./cli-version');
-const globalPrompts = require('./global-prompts');
-const setupPkg = require('./setup-pkg');
-const writePkg = require('./write-pkg');
-const installModules = require('./install-modules');
-const linkModules = require('./link-modules');
-const writeGasketConfig = require('./write-gasket-config');
-const loadPkgForDebug = require('./load-pkg-for-debug');
-const promptHooks = require('./prompt-hooks');
-const createHooks = require('./create-hooks');
-const generateFiles = require('./generate-files');
-const postCreateHooks = require('./post-create-hooks');
-const applyPresetConfig = require('./apply-preset-config');
-const printReport = require('./print-report');
-
-module.exports = {
+export {
   mkDir,
   loadPreset,
   cliVersion,
   globalPrompts,
   setupPkg,
   writePkg,
+  writePkgUpdate,
   installModules,
+  installModulesUpdate,
   linkModules,
+  linkModulesUpdate,
   writeGasketConfig,
   loadPkgForDebug,
   promptHooks,

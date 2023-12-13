@@ -1,7 +1,7 @@
-const JSON5 = require('json5');
-const path = require('path');
-const { writeFile } = require('fs').promises;
-const action = require('../action-wrapper');
+import { default as JSON5 } from 'json5';
+import path from 'path';
+import { writeFile } from 'fs/promises';
+import action from '../action-wrapper.js';
 
 /**
  * Writes the contents of `pkg` to the app's package.json.
@@ -22,11 +22,11 @@ async function writeGasketConfig(context) {
   //
   // Use JSON5 to stringify the config and add export for CommonJS
   //
-  const contents = 'module.exports = ' +
+  const contents = 'export default ' +
     JSON5.stringify(gasketConfig, null, 2) + ';\n';
 
   await writeFile(filePath, contents, 'utf8');
   generatedFiles.add(fileName);
 }
 
-module.exports = action('Write gasket config', writeGasketConfig);
+export default action('Write gasket config', writeGasketConfig);

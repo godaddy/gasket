@@ -1,8 +1,9 @@
-const path = require('path');
-const defaultsDeep = require('lodash.defaultsdeep');
-const tryRequire = require('./try-require');
-
-const debug = require('diagnostics')('gasket:utils');
+import path from 'path';
+import pkg from 'lodash';
+const { defaultsdeep: defaultsDeep } = pkg;
+import { tryRequire } from './try-require.js';
+import { default as diagnostics } from 'diagnostics';
+const debug = diagnostics('gasket:resolver');
 
 /**
  * Normalize the config by applying any overrides for environments, commands,
@@ -16,14 +17,14 @@ const debug = require('diagnostics')('gasket:utils');
  * @param {string} [context.localFile] - Optional file to load relative to gasket root
  * @returns {object} config
  */
-function applyConfigOverrides(config, { env = '', commandId, root, localFile }) {
+export function applyConfigOverrides(config, { env = '', commandId, root, localFile }) {
   return defaultsDeep(
     {},
     ...getPotentialConfigs({ config, env, commandId, root, localFile })
   );
 }
 
-function *getPotentialConfigs({ config, env, commandId, root, localFile }) {
+function* getPotentialConfigs({ config, env, commandId, root, localFile }) {
   // Separate environment-specific config from other config
   const { environments = {}, commands = {}, ...baseConfig } = config;
   const isLocalEnv = env === 'local';
@@ -35,7 +36,7 @@ function *getPotentialConfigs({ config, env, commandId, root, localFile }) {
   yield baseConfig;
 }
 
-function *getLocalOverrides(isLocalEnv, root, localFile) {
+function* getLocalOverrides(isLocalEnv, root, localFile) {
   // For git-ignorable changes, merge in optional `.local` file
   const localOverrides = isLocalEnv && localFile && tryRequire(path.join(root, localFile));
   if (localOverrides) {
@@ -44,7 +45,7 @@ function *getLocalOverrides(isLocalEnv, root, localFile) {
   }
 }
 
-function *getCommandOverrides(commands, commandId) {
+function* getCommandOverrides(commands, commandId) {
   const commandOverrides = commandId && commands[commandId];
   if (commandOverrides) {
     debug('Including config overrides for command', commandId);
@@ -52,7 +53,7 @@ function *getCommandOverrides(commands, commandId) {
   }
 }
 
-function *getSubEnvironmentOverrides(env, environments) {
+function* getSubEnvironmentOverrides(env, environments) {
   const envParts = env.split('.');
 
   // Iterate over any `.` delimited parts (e.g. `production.subEnv`) and
@@ -67,7 +68,7 @@ function *getSubEnvironmentOverrides(env, environments) {
   }
 }
 
-function *getDevOverrides(isLocalEnv, environments) {
+function* getDevOverrides(isLocalEnv, environments) {
   // Special case for the local environment, which inherits from the
   // development environment
   const devEnv = isLocalEnv && (environments.development || environments.dev);
@@ -76,5 +77,3 @@ function *getDevOverrides(isLocalEnv, environments) {
     yield devEnv;
   }
 }
-
-module.exports = applyConfigOverrides;

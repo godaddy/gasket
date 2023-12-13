@@ -1,12 +1,12 @@
 /* eslint-disable no-process-env */
-const runShellCommand = require('./run-shell-command');
+import { runShellCommand } from './run-shell-command.js';
 
 /**
  * Wrapper class for executing commands for a given package manager
  *
  * @type {PackageManager}
  */
-class PackageManager {
+export class PackageManager {
   /**
    * @param {object} options Options
    * @param {string} [options.packageManager] Name of manager, either `npm` (default) or `yarn`
@@ -165,5 +165,3 @@ class PackageManager {
     };
   }
 }
-
-module.exports = PackageManager;

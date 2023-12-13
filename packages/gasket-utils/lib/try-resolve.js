@@ -19,8 +19,8 @@
 * @param {object} options - Paths to search for the module
 * @returns {string} module path
 */
-function resolve(modulePath, options) {
-  return require.resolve(modulePath, options);
+export function resolve(modulePath, options) {
+  return import.meta.resolve(modulePath, options);
 }
 
 /**
@@ -28,7 +28,7 @@ function resolve(modulePath, options) {
 * @param {object} options - Paths to search for the module
 * @returns {string} module path
 */
-function tryResolve(modulePath, options) {
+export function tryResolve(modulePath, options) {
   try {
     return resolve(modulePath, options);
   } catch (err) {
@@ -38,8 +38,3 @@ function tryResolve(modulePath, options) {
     throw err;
   }
 }
-
-module.exports = {
-  tryResolve,
-  resolve
-};

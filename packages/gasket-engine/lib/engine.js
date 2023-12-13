@@ -1,35 +1,39 @@
-const debug = require('debug')('gasket:engine');
-const { Loader, pluginIdentifier } = require('@gasket/resolve');
+import { default as diagnostics } from 'diagnostics';
+import { Loader, pluginIdentifier } from '@gasket/resolve';
+const debug = diagnostics('gasket:engine');
 
 let dynamicNamingId = 0;
 const isModulePath = /^[/.]|^[a-zA-Z]:\\/;
 
-class PluginEngine {
+export class PluginEngine {
   constructor(config, { resolveFrom } = {}) {
-    this.config = config || {};
-    this.loader = new Loader({ resolveFrom });
+    return (async () => {
+      this.config = config || {};
+      this.loader = new Loader({ resolveFrom });
 
-    this._hooks = {};
-    this._plans = {};
-    this._traceDepth = 0;
+      this._hooks = {};
+      this._plans = {};
+      this._traceDepth = 0;
 
-    this._registerPlugins();
-    this._registerHooks();
+      await this._registerPlugins();
+      this._registerHooks();
 
-    // Allow methods to be called without context (to support destructuring)
-    [
-      'exec', 'execWaterfall', 'execMap', 'execApply',
-      'execSync', 'execWaterfallSync', 'execMapSync', 'execApplySync'
-    ].forEach(method => { this[method] = this[method].bind(this); });
+      // Allow methods to be called without context (to support destructuring)
+      [
+        'exec', 'execWaterfall', 'execMap', 'execApply',
+        'execSync', 'execWaterfallSync', 'execMapSync', 'execApplySync'
+      ].forEach(method => { this[method] = this[method].bind(this); });
+
+      return this;
+    })();
   }
 
   /**
    * Resolves plugins
    * @private
    */
-  _registerPlugins() {
-    const { plugins } = this.loader.loadConfigured(this.config.plugins);
-
+  async _registerPlugins() {
+    const { plugins } = await this.loader.loadConfigured(this.config.plugins);
     // map the plugin name to module content
     // if loaded from a file path, prefer module.name
     // otherwise, prefer package name and normalize to long name form
@@ -525,5 +529,3 @@ class PluginEngine {
     });
   }
 }
-
-module.exports = PluginEngine;

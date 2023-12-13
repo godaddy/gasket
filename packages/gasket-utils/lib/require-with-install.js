@@ -1,7 +1,7 @@
-const fs = require('fs/promises');
-const path = require('path');
-const PackageManager = require('./package-manager');
-const { tryResolve, resolve } = require('./try-resolve');
+import { readFile} from 'fs/promises';
+import path from 'path';
+import { PackageManager } from './package-manager.js';
+import { tryResolve, resolve } from './try-resolve.js';
 const rePackage = /^(@[^/]+\/)?([^/]+)/;
 
 /**
@@ -60,28 +60,28 @@ async function installDependency(dependency, gasket) {
  * @param {Gasket} gasket Gasket instance
  * @returns {object|object[]} module or list of modules
  */
-async function requireWithInstall(dependency, gasket) {
+export async function requireWithInstall(dependency, gasket) {
   const { root } = gasket.config;
   const resolveOptions = { paths: [root] };
   if (!Array.isArray(dependency)) {
     const modulePath = tryResolve(dependency, resolveOptions);
 
-    if (modulePath) return require(modulePath);
+    if (modulePath) return await import(modulePath);
 
     const pkg = dependency.match(rePackage)[0];
 
     await installDependency(pkg, gasket);
 
-    return require(resolve(dependency, resolveOptions));
+    return await import(resolve(dependency, resolveOptions));
   }
 
   const idxListToResolve = [];
   const pkgListToResolve = [];
-  const resolvedDependencyList = dependency.reduce((all, item, index) => {
+  const resolvedDependencyList = dependency.reduce(async (all, item, index) => {
     const modulePath = tryResolve(item, resolveOptions);
 
     if (modulePath) {
-      all.push(require(modulePath));
+      all.push(await import(modulePath));
     } else {
       const pkg = item.match(rePackage)[0];
       all.push(null);
@@ -98,11 +98,9 @@ async function requireWithInstall(dependency, gasket) {
   await installDependency(pkgListToResolve, gasket);
 
   for (const idx of idxListToResolve) {
-    const resolvedDep = require(resolve(dependency[idx], resolveOptions));
+    const resolvedDep = await import(resolve(dependency[idx], resolveOptions));
     resolvedDependencyList[idx] = resolvedDep;
   }
 
   return resolvedDependencyList;
 }
-
-module.exports = requireWithInstall;
