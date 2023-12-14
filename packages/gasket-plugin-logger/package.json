@@ -1,0 +1,53 @@
+{
+  "name": "@gasket/plugin-logger",
+  "version": "6.43.0",
+  "description": "Gasket plugin for logging",
+  "main": "lib",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib",
+    "src"
+  ],
+  "scripts": {
+    "lint": "eslint ./src",
+    "lint:fix": "npm run lint -- --fix",
+    "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "posttest": "npm run lint",
+    "build": "tsc -P ./tsconfig.build.json",
+    "prepublishOnly": "npm test && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/godaddy/gasket.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "gasket",
+    "plugin",
+    "logging"
+  ],
+  "author": "GoDaddy Operating Company, LLC",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/godaddy/gasket/issues"
+  },
+  "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-logger",
+  "devDependencies": {
+    "@gasket/engine": "^6.43.1",
+    "@gasket/plugin-command": "^6.43.0",
+    "@gasket/plugin-https": "^6.43.0",
+    "@gasket/plugin-metadata": "^6.43.1",
+    "@tsconfig/node18": "^18.2.2",
+    "cross-env": "^7.0.3",
+    "eslint": "^8.55.0",
+    "eslint-config-godaddy-typescript": "^4.0.2",
+    "eslint-plugin-jest": "^27.6.0",
+    "eslint-plugin-unicorn": "^49.0.0",
+    "ts-jest": "^29.1.1",
+    "typescript": "^5.3.3"
+  }
+}

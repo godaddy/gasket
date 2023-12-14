@@ -12,7 +12,6 @@ const buildModules = require('./build-modules');
 const { getIntlConfig } = require('./configure');
 
 module.exports = {
-  dependencies: ['@gasket/plugin-log'],
   name,
   hooks: {
     init,

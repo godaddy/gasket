@@ -29,7 +29,7 @@ module.exports = function middlewareHook(gasket) {
       res);
 
     const store = makeStore(initState, {
-      logger: reduxConfig.logger,
+      logger: reduxConfig.logger || req.logger,
       req
     });
 

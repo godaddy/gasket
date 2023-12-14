@@ -32,9 +32,9 @@ function getIntlConfig(gasket) {
 function deprecatedOptions(gasket, intlConfig) {
   const { logger } = gasket;
   const { languageMap, defaultLanguage, assetPrefix } = intlConfig;
-  if (isDefined(languageMap)) logger.warning('DEPRECATED intl config `languageMap` - use `localesMap`');
-  if (isDefined(defaultLanguage)) logger.warning('DEPRECATED intl config `defaultLanguage` - use `defaultLocale`');
-  if (isDefined(assetPrefix)) logger.warning('DEPRECATED intl config `assetPrefix` - use `basePath`');
+  if (isDefined(languageMap)) logger?.warning?.('DEPRECATED intl config `languageMap` - use `localesMap`');
+  if (isDefined(defaultLanguage)) logger?.warning?.('DEPRECATED intl config `defaultLanguage` - use `defaultLocale`');
+  if (isDefined(assetPrefix)) logger?.warning?.('DEPRECATED intl config `assetPrefix` - use `basePath`');
   return { languageMap, defaultLanguage, assetPrefix };
 }
 

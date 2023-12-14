@@ -142,7 +142,7 @@ function getPreferredLocale(gasket, req, locales, defaultLocale) {
       preferredLocale = formatLocale(accept.language(acceptLanguage, locales));
       debug(`Using ${preferredLocale} as starting locale`);
     } catch (error) {
-      gasket.logger.debug(`Unable to parse accept-language header: ${error.message}`);
+      gasket.logger?.debug?.(`Unable to parse accept-language header: ${error.message}`);
     }
   } else {
     debug(`No accept-language header; starting with default ${preferredLocale}`);

@@ -59,6 +59,7 @@
     "@gasket/plugin-command": "^6.43.0",
     "@gasket/plugin-git": "^6.43.0",
     "@gasket/plugin-lifecycle": "^6.43.0",
+    "@gasket/plugin-logger": "^6.43.0",
     "@gasket/plugin-metadata": "^6.43.1",
     "@gasket/plugin-start": "^6.43.0",
     "@gasket/resolve": "^6.43.1",

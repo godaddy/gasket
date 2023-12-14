@@ -13,7 +13,6 @@ const middleware = require('./middleware');
  */
 module.exports = {
   name,
-  dependencies: ['@gasket/plugin-log'],
   hooks: {
     configure,
     prompt,

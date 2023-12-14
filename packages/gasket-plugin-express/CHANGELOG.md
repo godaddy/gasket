@@ -1,5 +1,7 @@
 # `@gasket/plugin-express`
 
+- Add a logger to the request object
+
 ### 6.41.2
 
 - Fix ordering of error middlewares so they come after API routes

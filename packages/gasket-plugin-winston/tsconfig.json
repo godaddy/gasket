@@ -1,0 +1,9 @@
+{
+  "extends": "@tsconfig/node18",
+  "compilerOptions": {
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "module": "commonjs",
+    "moduleResolution": "node"
+  }
+}

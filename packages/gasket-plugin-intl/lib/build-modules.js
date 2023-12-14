@@ -133,7 +133,7 @@ class BuildModules {
       const pkgName = await this.getPackageName(srcDir);
       const tgtDir = path.join(this._outputDir, pkgName);
 
-      this._logger.log(`build:locales: Updating locale files for: ${pkgName}`);
+      this._logger?.log?.(`build:locales: Updating locale files for: ${pkgName}`);
 
       await fs.remove(tgtDir);
       await fs.mkdirp(tgtDir);
@@ -142,7 +142,7 @@ class BuildModules {
       await this.processFiles(srcDir, tgtDir, fileNames);
     }
 
-    this._logger.log(`build:locales: Completed locale files update.`);
+    this._logger?.log?.(`build:locales: Completed locale files update.`);
   }
 
   /**

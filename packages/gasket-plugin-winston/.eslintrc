@@ -1,0 +1,14 @@
+{
+  "extends": [
+    "godaddy",
+    "plugin:jest/recommended"
+  ],
+  "plugins": [
+    "unicorn",
+    "babel"
+  ],
+  "rules": {
+    "unicorn/filename-case": "error"
+  },
+  "ignorePatterns": "*.d.ts"
+}

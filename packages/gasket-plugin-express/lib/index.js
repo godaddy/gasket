@@ -48,6 +48,13 @@ module.exports = {
       const { root, express: { routes } = {}, http2, middleware: middlewareConfig } = config;
       const excludedRoutesRegex = config.express && config.express.excludedRoutesRegex;
       const app = http2 ? require('http2-express-bridge')(express) : express();
+      const conditionallyUse = (...middleware) => middleware.forEach(mw => {
+        if (excludedRoutesRegex) {
+          app.use(excludedRoutesRegex, mw);
+        } else {
+          app.use(mw);
+        }
+      });
 
       if (http2) {
         app.use(
@@ -66,11 +73,19 @@ module.exports = {
           });
       }
 
-      if (excludedRoutesRegex) {
-        app.use(excludedRoutesRegex, cookieParser());
-      } else {
-        app.use(cookieParser());
+      function attachLogEnhancer(req) {
+        req.logger.metadata = metadata => {
+          req.logger = req.logger.child(metadata);
+          attachLogEnhancer(req);
+        };
       }
+
+      conditionallyUse((req, res, next) => {
+        req.logger = gasket.logger;
+        attachLogEnhancer(req);
+        next();
+      });
+      conditionallyUse(cookieParser());
 
       const { compression: compressionConfig = true } = config.express || {};
       if (compressionConfig) {
@@ -101,10 +116,8 @@ module.exports = {
         const { paths } = layer;
         if (paths) {
           app.use(paths, layer);
-        } else if (excludedRoutesRegex) {
-          app.use(excludedRoutesRegex, layer);
         } else {
-          app.use(layer);
+          conditionallyUse(layer);
         }
       });
 

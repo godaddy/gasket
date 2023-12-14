@@ -29,7 +29,7 @@ module.exports = async function buildManifest(gasket) {
     .filter(f => f !== manifestFilename);
 
   if (!files.length) {
-    logger.warning(`build:locales: No locale files found (${localesDir}).`);
+    logger?.warning?.(`build:locales: No locale files found (${localesDir}).`);
   }
 
   // generate a content hash for each file
@@ -57,9 +57,9 @@ module.exports = async function buildManifest(gasket) {
 
   try {
     await fs.writeFile(tgtFile, JSON.stringify(manifest), 'utf-8');
-    logger.log('build:locales: Wrote locales manifest.');
+    logger?.log?.('build:locales: Wrote locales manifest.');
   } catch (err) {
-    logger.error('build:locales: Unable to write locales manifest.');
+    logger?.error?.('build:locales: Unable to write locales manifest.');
     throw err;
   }
 };
