@@ -48,7 +48,7 @@ module.exports = {
       const { root, express: { routes } = {}, http2, middleware: middlewareConfig } = config;
       const excludedRoutesRegex = config.express && config.express.excludedRoutesRegex;
       const app = http2 ? require('http2-express-bridge')(express) : express();
-      const conditionallyUse = (...middleware) => middleware.forEach(mw => {
+      const useForAllowedPaths = (...middleware) => middleware.forEach(mw => {
         if (excludedRoutesRegex) {
           app.use(excludedRoutesRegex, mw);
         } else {
@@ -80,12 +80,12 @@ module.exports = {
         };
       }
 
-      conditionallyUse((req, res, next) => {
+      useForAllowedPaths((req, res, next) => {
         req.logger = gasket.logger;
         attachLogEnhancer(req);
         next();
       });
-      conditionallyUse(cookieParser());
+      useForAllowedPaths(cookieParser());
 
       const { compression: compressionConfig = true } = config.express || {};
       if (compressionConfig) {
@@ -117,7 +117,7 @@ module.exports = {
         if (paths) {
           app.use(paths, layer);
         } else {
-          conditionallyUse(layer);
+          useForAllowedPaths(layer);
         }
       });
 
