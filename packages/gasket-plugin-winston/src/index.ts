@@ -1,7 +1,7 @@
 ///<reference types="@gasket/cli"/>
 ///<reference types="@gasket/plugin-logger"/>
 
-import type { Plugin } from '@gasket/engine';
+import type { Plugin, MaybeAsync, MaybeMultiple } from '@gasket/engine';
 import { type LoggerOptions, createLogger, format, transports } from 'winston';
 import type Transport from 'winston-transport';
 import { name, dependencies } from '../package.json';
@@ -20,10 +20,10 @@ const plugin: Plugin = {
   hooks: {
     async create(gasket, { pkg }) {
       pkg.add('dependencies', {
-        'winston': dependencies.winston
+        winston: dependencies.winston
       });
     },
-    
+
     async createLogger(gasket) {
       const { config } = gasket;
 

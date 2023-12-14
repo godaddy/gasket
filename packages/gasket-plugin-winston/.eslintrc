@@ -1,6 +1,6 @@
 {
   "extends": [
-    "godaddy",
+    "godaddy-typescript",
     "plugin:jest/recommended"
   ],
   "plugins": [
@@ -8,7 +8,8 @@
     "babel"
   ],
   "rules": {
-    "unicorn/filename-case": "error"
+    "unicorn/filename-case": "error",
+    "spaced-comment": "off"
   },
   "ignorePatterns": "*.d.ts"
 }
