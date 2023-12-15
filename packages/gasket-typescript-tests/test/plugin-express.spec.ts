@@ -15,6 +15,28 @@ describe('@gasket/plugin-express', () => {
     };
   });
 
+  it('adds an middlewareInclusionRegex config property', () => {
+    const badConfig: GasketConfigFile = {
+      // @ts-expect-error
+      middlewareInclusionRegex: '/api/*'
+    };
+
+    const goodConfig: GasketConfigFile = {
+      middlewareInclusionRegex: /^(?!\/_next\/)/
+    };
+  });
+
+  it('adds an routes config property', () => {
+    const badConfig: GasketConfigFile = {
+      // @ts-expect-error
+      routes: /^\/api\/\.*$/
+    };
+
+    const goodConfig: GasketConfigFile = {
+      routes: '/api/*.js'
+    };
+  });
+
   it('declares the middleware lifecycle', () => {
     const hook: Hook<'middleware'> = (gasket: Gasket, app) => {
       return [];
