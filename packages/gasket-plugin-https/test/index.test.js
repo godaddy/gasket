@@ -205,16 +205,26 @@ describe('start hook', () => {
   });
 
   it('rejects with an Error on failure', async () => {
-    mockCreateServersModule.mockImplementation((_, fn) => fn(
-      errs.create({ https: { message: 'HTTP server failed to start', code: 'something' } })
-    ));
+    mockCreateServersModule.mockImplementation((_, fn) => {
+      const httpsError = errs.create({
+        message: 'Cert file not found',
+        code: 'something'
+      });
+
+      fn(
+        errs.create({
+          message: httpsError.message,
+          https: httpsError
+        })
+      );
+    });
 
     await start();
 
-    const expected = 'failed to start the http/https servers';
+    const expected = 'Failed to start the web servers: Cert file not found';
     expect(gasketAPI.logger.error).toHaveBeenCalledWith(expected);
     expect(mockDebugStub.mock.calls[0][0].message).toEqual(expected);
-    expect(mockDebugStub.mock.calls[0][1].https.message).toEqual('HTTP server failed to start');
+    expect(mockDebugStub.mock.calls[0][1].https.message).toEqual('Cert file not found');
   });
 
   it('rejects with an Error about ports on failure (with http)', async () => {
