@@ -39,7 +39,9 @@ All the configurations for the plugin are added under `express` in the config:
 
 - `compression`: true by default. Can be set to false if applying compression
   differently.
-- `excludedRoutesRegex`: Routes to be excluded based on a regex
+- `excludedRoutesRegex`: (deprecated) renamed to more correct `middlewareInclusionRegex`.
+- `middlewareInclusionRegex`: RegExp filter to apply toward request URLs to determine when Gasket middleware will run. You can use negative lookahead patterns to exclude routes like static resource paths.
+- `routes`: [Glob pattern](https://github.com/isaacs/node-glob#glob-primer) for source files exporting route-defining functions. These functions will be passed the express `app` object, and therein they can attach handlers and middleware.
 
 #### Example configuration
 
@@ -50,7 +52,8 @@ module.exports = {
   },
   express: {
     compression: false,
-    excludedRoutesRegex: /^(?!\/_next\/)/
+    routes: 'api/*.js',
+    middlewareInclusionRegex: /^(?!\/_next\/)/,
   }
 }
 ```
