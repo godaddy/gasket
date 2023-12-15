@@ -1,7 +1,10 @@
 # `@gasket/plugin-express`
 
-- Add missing type definition for `routes` config property
-- Add `middlewareInclusionRegex` config property, deprecating `excludedRoutesRegex`
+### 6.44.0
+
+- Documentation & type fixes ([#637])
+  - Add missing type definition for `routes` config property
+  - Add `middlewareInclusionRegex` config property, deprecating `excludedRoutesRegex`
 
 ### 6.41.2
 
@@ -77,3 +80,4 @@
 [#442]: https://github.com/godaddy/gasket/pull/442
 [#460]: https://github.com/godaddy/gasket/pull/460
 [#613]: https://github.com/godaddy/gasket/pull/613
+[#637]: https://github.com/godaddy/gasket/pull/637
