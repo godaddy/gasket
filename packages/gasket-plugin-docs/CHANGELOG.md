@@ -1,6 +1,8 @@
 # `@gasket/plugin-docs`
 
-- Add the default docs directory `.docs` to `.gitignore` on project creation.
+### 6.44.1
+
+- Add the default docs directory `.docs` to `.gitignore` on project creation. ([#644])
 
 ### 6.37.0
 
@@ -93,3 +95,4 @@
 [#442]: https://github.com/godaddy/gasket/pull/442
 [#460]: https://github.com/godaddy/gasket/pull/460
 [#504]: https://github.com/godaddy/gasket/pull/504
+[#644]: https://github.com/godaddy/gasket/pull/644
