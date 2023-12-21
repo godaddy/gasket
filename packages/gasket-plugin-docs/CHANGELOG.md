@@ -1,5 +1,7 @@
 # `@gasket/plugin-docs`
 
+- Add the default docs directory `.docs` to `.gitignore` on project creation.
+
 ### 6.37.0
 
 - Jest refactor ([#504])
