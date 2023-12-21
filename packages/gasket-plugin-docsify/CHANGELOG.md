@@ -1,5 +1,7 @@
 # `@gasket/plugin-docsify`
 
+- Workaround to fix `gasket docs` command caused by a [docsify bug](https://github.com/docsifyjs/docsify/issues/2345)
+
 ### 6.34.4
 
 - Upgrade eslint-plugin-unicorn v43 ([#436])
