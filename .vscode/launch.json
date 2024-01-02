@@ -17,7 +17,7 @@
         "create",
         "app",
         "--presets",
-        "@godaddy/webapp"
+        "@gasket/preset-nextjs"
       ],
       "console": "integratedTerminal"
     }
