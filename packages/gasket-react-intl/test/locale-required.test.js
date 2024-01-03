@@ -1,74 +1,66 @@
 import React from 'react';
-import assume from 'assume';
-import sinon from 'sinon';
-import proxyquire from 'proxyquire';
 import { render } from '@testing-library/react';
 import mockManifest from './fixtures/mock-manifest.json';
 import { LocaleStatus } from '../src/utils';
+import LocaleRequired from '../src/locale-required';
+import useLocaleRequired from '../src/use-locale-required';
+
+jest.mock('../src/use-locale-required');
+
 const { ERROR, LOADED, LOADING } = LocaleStatus;
 
 describe('LocaleRequired', function () {
-  let mockConfig, useLocaleRequiredStub, LocaleRequired, wrapper;
+  let mockConfig, wrapper;
 
   const doMount = props => <LocaleRequired { ...props }>MockComponent</LocaleRequired>;
 
   beforeEach(function () {
-    useLocaleRequiredStub = sinon.stub();
     mockConfig = {
       defaultLocale: 'en-US',
       manifest: { ...mockManifest, paths: { ...mockManifest.paths } },
       isBrowser: false
     };
-    LocaleRequired = proxyquire('../src/locale-required', {
-      './config': mockConfig,
-      './use-locale-required': {
-        default: useLocaleRequiredStub
-      }
-    }).default;
-  });
-
-  afterEach(function () {
-    sinon.restore();
+    useLocaleRequired.mockClear();
   });
 
   describe('#render', function () {
     it('renders null if loading', function () {
-      useLocaleRequiredStub.returns(LOADING);
+      useLocaleRequired.mockReturnValue(LOADING);
       wrapper = render(doMount({}));
-      assume(wrapper.baseElement.textContent).eqls('');
+      expect(wrapper.baseElement.textContent).toEqual('');
     });
 
     it('renders custom loader if loading', function () {
-      useLocaleRequiredStub.returns(LOADING);
+      useLocaleRequired.mockReturnValue(LOADING);
       wrapper = render(doMount({ loading: 'loading...' }));
-      assume(wrapper.baseElement.textContent).eqls('loading...');
+      expect(wrapper.baseElement.textContent).toEqual('loading...');
     });
 
     it('renders wrapped component if LOADED', function () {
-      useLocaleRequiredStub.returns(LOADED);
+      useLocaleRequired.mockReturnValue(LOADED);
       wrapper = render(doMount({ loading: 'loading...' }));
-      assume(wrapper.baseElement.textContent).includes('MockComponent');
+      expect(wrapper.baseElement.textContent).toContain('MockComponent');
     });
 
     it('renders wrapped component if ERROR', function () {
-      useLocaleRequiredStub.returns(ERROR);
+      useLocaleRequired.mockReturnValue(ERROR);
       wrapper = render(doMount({ loading: 'loading...' }));
-      assume(wrapper.baseElement.textContent).includes('MockComponent');
+      expect(wrapper.baseElement.textContent).toContain('MockComponent');
     });
 
     it('supports localesPath', function () {
-      useLocaleRequiredStub.returns(LOADING);
+      useLocaleRequired.mockReturnValue(LOADING);
       wrapper = render(doMount({ localesPath: '/bogus' }));
-      assume(useLocaleRequiredStub).calledWith('/bogus');
-      assume(wrapper.baseElement.textContent).eqls('');
+      expect(useLocaleRequired).toHaveBeenCalledWith('/bogus');
+      expect(wrapper.baseElement.textContent).toEqual('');
     });
 
     it('supports localesPath as thunk', function () {
-      const mockThunk = sinon.stub();
-      useLocaleRequiredStub.returns(LOADING);
+      const mockThunk = jest.fn();
+      useLocaleRequired.mockReturnValue(LOADING);
       wrapper = render(doMount({ localesPath: mockThunk }));
-      assume(useLocaleRequiredStub).calledWith(mockThunk);
-      assume(wrapper.baseElement.textContent).eqls('');
+      expect(useLocaleRequired).toHaveBeenCalledWith(mockThunk);
+      expect(wrapper.baseElement.textContent).toEqual('');
     });
   });
 });
