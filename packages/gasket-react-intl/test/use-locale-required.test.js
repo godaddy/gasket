@@ -1,141 +1,138 @@
-import assume from 'assume';
-import sinon from 'sinon';
-import proxyquire from 'proxyquire';
-import mockManifest from './fixtures/mock-manifest.json';
+import { useContext } from 'react';
 import { LocaleStatus } from '../src/utils';
+import useLocaleRequired from '../src/use-locale-required';
+import fetch from '@gasket/fetch';
+
+jest.mock('react', () => ({
+  ...jest.requireActual('react'),
+  useContext: jest.fn()
+}));
+
+jest.mock('@gasket/fetch', () => jest.fn());
+
+jest.mock('../src/config', () => ({
+  isBrowser: true,
+  clientData: {},
+  manifest: require('./fixtures/mock-manifest.json')
+}));
+
 const { ERROR, LOADED, LOADING } = LocaleStatus;
 
 // helper to wait for async actions
 const pause = ms => new Promise((resolve) => setTimeout(resolve, ms));
 
 describe('useLocaleRequired', function () {
-  let mockConfig, mockContext, fetchStub, useLocaleRequired;
-
-  const getModule = () => {
-    return proxyquire('../src/use-locale-required', {
-      'react': {
-        useContext: sinon.stub().returns(mockContext)
-      },
-      '@gasket/fetch': {
-        default: fetchStub
-      },
-      './config': mockConfig,
-      './utils': proxyquire('../src/utils', {
-        './config': mockConfig
-      })
-    });
-  };
+  let mockConfig, mockContext, dispatchMock;
 
   beforeEach(function () {
-    fetchStub = sinon.stub().resolves({ ok: true, json: () => ({ example: 'Example' }) });
+    fetch.mockResolvedValue({ ok: true, json: () => ({ example: 'Example' }) });
+
+    dispatchMock = jest.fn();
 
     mockContext = {
       locale: 'en',
       status: {},
-      dispatch: sinon.stub()
+      dispatch: dispatchMock
     };
 
-    mockConfig = {
-      defaultLocale: 'en-US',
-      manifest: { ...mockManifest, paths: { ...mockManifest.paths } },
-      isBrowser: true
-    };
-    useLocaleRequired = getModule().default;
+    useContext.mockReturnValue(mockContext);
+
+    mockConfig = require('../src/config');
   });
 
-  afterEach(function () {
-    sinon.restore();
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
   it('fetches locales url if not loaded', function () {
     const results = useLocaleRequired('/locales');
-    assume(results).equals(LOADING);
-    assume(fetchStub).called();
-    assume(fetchStub).calledWith('/locales/en.json');
+    expect(results).toEqual(LOADING);
+    expect(fetch).toHaveBeenCalled();
+    expect(fetch).toHaveBeenCalledWith('/locales/en.json');
   });
 
   it('handle thunks for locale paths', function () {
-    const mockThunk = sinon.stub().callsFake(() => '/custom/locales');
+    const mockThunk = jest.fn().mockReturnValue('/custom/locales');
 
     const results = useLocaleRequired(mockThunk);
-    assume(results).equals(LOADING);
-    assume(fetchStub).called();
-    assume(fetchStub).calledWith('/custom/locales/en.json');
+    expect(results).toEqual(LOADING);
+    expect(fetch).toHaveBeenCalled();
+    expect(fetch).toHaveBeenCalledWith('/custom/locales/en.json');
   });
 
   it('returns LOADING if fetching', function () {
     const results = useLocaleRequired('/locales');
-    assume(results).equals(LOADING);
-    assume(fetchStub).called();
+    expect(results).toEqual(LOADING);
+    expect(fetch).toHaveBeenCalled();
   });
 
   it('returns status if set', function () {
     mockContext.status['/locales/en.json'] = LOADED;
-    assume(useLocaleRequired('/locales')).equals(LOADED);
+    expect(useLocaleRequired('/locales')).toEqual(LOADED);
 
     mockContext.status['/locales/en.json'] = ERROR;
-    assume(useLocaleRequired('/locales')).equals(ERROR);
+    expect(useLocaleRequired('/locales')).toEqual(ERROR);
 
     mockContext.status['/locales/en.json'] = LOADING;
-    assume(useLocaleRequired('/locales')).equals(LOADING);
+    expect(useLocaleRequired('/locales')).toEqual(LOADING);
   });
 
   it('dispatches LOADED action when loaded', async function () {
     useLocaleRequired('/locales');
-    assume(fetchStub).called();
+    expect(fetch).toHaveBeenCalled();
 
     await pause(20);
-    assume(mockContext.dispatch).calledWith(
+    expect(dispatchMock).toHaveBeenCalledWith(
       { type: 'loaded', payload: { locale: 'en', messages: { example: 'Example' }, file: '/locales/en.json' } }
     );
   });
 
   it('dispatches ERROR action on bad response', async function () {
-    const consoleStub = sinon.stub(console, 'error');
-    fetchStub.resolves({ ok: false, status: 404 });
+    console.error = jest.fn();
+    fetch.mockResolvedValue({ ok: false, status: 404 });
     useLocaleRequired('/locales');
-    assume(fetchStub).called();
+    expect(fetch).toHaveBeenCalled();
 
     await pause(20);
-    assume(mockContext.dispatch).calledWith(
+    expect(dispatchMock).toHaveBeenCalledWith(
       { type: 'error', payload: { file: '/locales/en.json' } }
     );
-    assume(consoleStub).calledWith('Error loading locale file (404): /locales/en.json');
+    expect(console.error).toHaveBeenCalledWith('Error loading locale file (404): /locales/en.json');
+
   });
 
   it('dispatches ERROR action on rejected fetch', async function () {
-    const consoleStub = sinon.stub(console, 'error');
-    fetchStub.rejects(new Error('Bad things man!'));
+    console.error = jest.fn();
+    fetch.mockRejectedValue(new Error('Bad things man!'));
     useLocaleRequired('/locales');
-    assume(fetchStub).called();
+    expect(fetch).toHaveBeenCalled();
 
     await pause(20);
-    assume(mockContext.dispatch).calledWith(
+    expect(dispatchMock).toHaveBeenCalledWith(
       { type: 'error', payload: { file: '/locales/en.json' } }
     );
-    assume(consoleStub).calledWith('Bad things man!');
+    expect(console.error).toHaveBeenCalledWith('Bad things man!');
   });
 
   describe('SSR', function () {
 
     beforeEach(function () {
       mockConfig.isBrowser = false;
-      useLocaleRequired = getModule().default;
     });
 
     it('returns LOADING if no locale file', function () {
       const results = useLocaleRequired('/locales');
-      assume(results).equals(LOADING);
+      expect(results).toEqual(LOADING);
     });
 
     it('returns status if set', function () {
       mockContext.status['/locales/en.json'] = LOADED;
-      assume(useLocaleRequired('/locales')).equals(LOADED);
+      expect(useLocaleRequired('/locales')).toEqual(LOADED);
     });
 
     it('does not fetch', function () {
       useLocaleRequired('/locales');
-      assume(fetchStub).not.called();
+      expect(fetch).not.toHaveBeenCalled();
     });
   });
 });

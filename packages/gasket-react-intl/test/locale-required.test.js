@@ -1,6 +1,5 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import mockManifest from './fixtures/mock-manifest.json';
 import { LocaleStatus } from '../src/utils';
 import LocaleRequired from '../src/locale-required';
 import useLocaleRequired from '../src/use-locale-required';
@@ -10,16 +9,11 @@ jest.mock('../src/use-locale-required');
 const { ERROR, LOADED, LOADING } = LocaleStatus;
 
 describe('LocaleRequired', function () {
-  let mockConfig, wrapper;
+  let wrapper;
 
   const doMount = props => <LocaleRequired { ...props }>MockComponent</LocaleRequired>;
 
   beforeEach(function () {
-    mockConfig = {
-      defaultLocale: 'en-US',
-      manifest: { ...mockManifest, paths: { ...mockManifest.paths } },
-      isBrowser: false
-    };
     useLocaleRequired.mockClear();
   });
 
