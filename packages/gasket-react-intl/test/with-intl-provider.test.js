@@ -1,5 +1,4 @@
 import React from 'react';
-// import '@testing-library/jest-dom/extend-expect';
 import withIntlProviderDefault, { reducer, init } from '../src/with-intl-provider';
 import { LocaleStatus } from '../src/utils';
 const { ERROR, LOADED, LOADING } = LocaleStatus;
