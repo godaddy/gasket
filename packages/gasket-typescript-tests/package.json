@@ -44,7 +44,6 @@
     "@gasket/plugin-command": "^6.43.0",
     "@gasket/plugin-config": "^6.43.0",
     "@gasket/plugin-docs": "^6.44.1",
-    "@gasket/plugin-docsify": "^6.44.1",
     "@gasket/plugin-elastic-apm": "^6.43.0",
     "@gasket/plugin-express": "^6.44.0",
     "@gasket/plugin-https": "^6.44.0",
@@ -93,5 +92,8 @@
     "globals": {
       "JSX": "readonly"
     }
+  },
+  "dependencies": {
+    "@gasket/plugin-docusaurus": "^6.43.0"
   }
 }
