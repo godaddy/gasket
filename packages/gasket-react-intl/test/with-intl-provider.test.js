@@ -9,21 +9,21 @@ const MockComponent = class extends React.Component {
   }
 };
 
-describe('withIntlProvider', () => {
+describe('withIntlProvider', function () {
   let mockConfig;
   let withIntlProvider;
 
-  beforeEach(() => {
+  beforeEach(function () {
     mockConfig = require('../src/config');
     withIntlProvider = withIntlProviderDefault();
   });
 
-  it('adds display name', () => {
+  it('adds display name', function () {
     const WrappedComponent = withIntlProvider(MockComponent);
     expect(WrappedComponent.displayName).toBe('withIntlProvider(MockComponent)');
   });
 
-  it('hoists non-react statics', () => {
+  it('hoists non-react statics', function () {
     const WrappedComponent = withIntlProvider(MockComponent);
     expect(WrappedComponent).not.toHaveProperty('bogus');
     MockComponent.bogus = 'BOGUS';
@@ -32,7 +32,7 @@ describe('withIntlProvider', () => {
     delete MockComponent.bogus;
   });
 
-  it('hoists getInitialProps if set', () => {
+  it('hoists getInitialProps if set', function () {
     const WrappedComponent = withIntlProvider(MockComponent);
     expect(WrappedComponent).not.toHaveProperty('getInitialProps');
     MockComponent.getInitialProps = f => f;
@@ -41,17 +41,17 @@ describe('withIntlProvider', () => {
     delete MockComponent.getInitialProps;
   });
 
-  describe('reducer', () => {
+  describe('reducer', function () {
     let initState;
 
-    beforeEach(() => {
+    beforeEach(function () {
       initState = {
         messages: { en: { first: 'First' } },
         status: { '/locales/en/first.json': LOADED }
       };
     });
 
-    it('LOADED actions add messages and file status', () => {
+    it('LOADED actions add messages and file status', function () {
       const action = { type: LOADED, payload: { locale: 'en', messages: { example: 'Example' }, file: '/locales/en.json' } };
       const result = reducer(initState, action);
       expect(result).toEqual({
@@ -68,7 +68,7 @@ describe('withIntlProvider', () => {
       });
     });
 
-    it('ERROR actions add file status', () => {
+    it('ERROR actions add file status', function () {
       const action = { type: ERROR, payload: { file: '/locales/en.json' } };
       const result = reducer(initState, action);
       expect(result).toEqual({
@@ -84,7 +84,7 @@ describe('withIntlProvider', () => {
       });
     });
 
-    it('LOADING actions add file status', () => {
+    it('LOADING actions add file status', function () {
       const action = { type: LOADING, payload: { file: '/locales/en.json' } };
       const result = reducer(initState, action);
       expect(result).toEqual({
@@ -101,8 +101,8 @@ describe('withIntlProvider', () => {
     });
   });
 
-  describe('init', () => {
-    it('initializes state with empty objects', () => {
+  describe('init', function () {
+    it('initializes state with empty objects', function () {
       const result = init({});
       expect(result).toEqual({
         messages: {},
@@ -110,7 +110,7 @@ describe('withIntlProvider', () => {
       });
     });
 
-    it('initializes state with locales props', () => {
+    it('initializes state with locales props', function () {
       const result = init({
         locale: 'en',
         messages: { en: { example: 'Example' } },
@@ -122,7 +122,7 @@ describe('withIntlProvider', () => {
       });
     });
 
-    it('merges locales props data with client data', () => {
+    it('merges locales props data with client data', function () {
       mockConfig.clientData = {
         locale: 'en',
         messages: { en: { first: 'First' } },
