@@ -11,12 +11,10 @@ class PackageManager {
    * @param {object} options Options
    * @param {string} [options.packageManager] Name of manager, either `npm` (default) or `yarn`
    * @param {string} options.dest Target directory where `node_module` should exist
-   * @param {string} [options.npmconfig] DEPRECATED Path to userconfig
    */
-  constructor({ packageManager = 'npm', dest, npmconfig }) {
+  constructor({ packageManager = 'npm', dest }) {
     this.manager = packageManager;
     this.dest = dest;
-    this.npmconfig = npmconfig;
   }
 
   /**
@@ -90,25 +88,12 @@ class PackageManager {
         '--progress', 'false'
       ].concat(cmd, args);
 
-      //
-      // Global npmrc configured through gasket flag
-      // TODO (kinetifex): remove in next major revision
-      if (this.npmconfig) argv.push('--userconfig', this.npmconfig);
-
       return await PackageManager.spawnNpm(argv, {
         cwd: this.dest,
         env
       });
     } else if (this.manager === 'yarn') {
       const argv = [cmd].concat(args);
-
-      //
-      // Support for the .npmrc configured via --npmconfig flag.
-      // Yarn does not have a "userconfig" CLI flag, it does however still
-      // support the npm_config_* environment variables for npm compatibility.
-      // @see: https://yarnpkg.com/en/docs/envvars#toc-npm-config
-      // TODO (kinetifex): remove in next major revision
-      if (this.npmconfig) env.NPM_CONFIG_USERCONFIG = this.npmconfig;
 
       return await PackageManager.spawnYarn(argv, {
         cwd: this.dest,
