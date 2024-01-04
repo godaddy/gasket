@@ -1,3 +1,4 @@
+const create = require('./create');
 const configure = require('./configure');
 const getCommands = require('./get-commands');
 const metadata = require('./metadata');
@@ -7,6 +8,7 @@ module.exports = {
   name: require('../package').name,
   hooks: {
     configure,
+    create,
     getCommands,
     metadata,
     docsSetup
