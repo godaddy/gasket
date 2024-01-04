@@ -12,6 +12,7 @@ describe('Plugin', function () {
 
   it('has expected hooks', () => {
     const expected = [
+      'create',
       'docsView',
       'metadata'
     ];
