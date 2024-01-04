@@ -1,7 +1,7 @@
 {
   "name": "@gasket/typescript-tests",
   "private": true,
-  "version": "6.44.1",
+  "version": "6.44.2-canary.0",
   "description": "Not a published package; hosts unit tests to verify TypeScript support",
   "files": [
     "lib"
@@ -59,7 +59,7 @@
     "@gasket/plugin-swagger": "^6.43.0",
     "@gasket/plugin-webpack": "^6.43.0",
     "@gasket/plugin-workbox": "^6.43.0",
-    "@gasket/preset-api": "^6.44.1",
+    "@gasket/preset-api": "^6.44.2-canary.0",
     "@gasket/preset-nextjs": "^6.44.0",
     "@gasket/preset-pwa": "^6.43.0",
     "@gasket/react-intl": "^6.42.0",

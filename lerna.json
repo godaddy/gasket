@@ -1,5 +1,5 @@
 {
-  "version": "6.44.1",
+  "version": "6.44.2-canary.0",
   "$schema": "https://json.schemastore.org/lerna.json",
   "useWorkspaces": true,
   "useNx": true,
