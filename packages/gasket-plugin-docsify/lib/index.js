@@ -1,10 +1,10 @@
-// const create = require('./create');
+const create = require('./create');
 const docsView = require('./docs-view');
 
 module.exports = {
   name: require('../package').name,
   hooks: {
-    // create,
+    create,
     docsView,
     metadata(gasket, meta) {
       return {
