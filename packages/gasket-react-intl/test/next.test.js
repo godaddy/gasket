@@ -1,13 +1,11 @@
 /* eslint-disable no-console */
-import assume from 'assume';
-import sinon from 'sinon';
-import proxyquire from 'proxyquire';
+import { jest } from '@jest/globals';
 
 describe('Next.js functions', function () {
   let next, res;
 
   beforeEach(function () {
-    sinon.stub(console, 'error');
+    jest.spyOn(console, 'error').mockImplementation(() => {});
     res = {
       locals: {
         gasketData: {
@@ -17,29 +15,22 @@ describe('Next.js functions', function () {
         }
       }
     };
-    next = proxyquire('../src/next', {
-      ['./config']: {
-        manifest: {
-          defaultPath: '/locales',
-          defaultLocale: 'en-US'
-        }
-      }
-    });
+    next = require('../src/next');
   });
 
   afterEach(function () {
-    sinon.restore();
+    jest.restoreAllMocks();
   });
 
   describe('intlGetStaticProps', function () {
     it('makes getStaticProps function', function () {
       const results = next.intlGetStaticProps();
-      assume(results).instanceOf(Function);
+      expect(typeof results).toBe('function');
     });
 
     it('returns localesProps for default path', async function () {
-      const results = await next.intlGetStaticProps()({ params: { locale: 'en-US' } });
-      assume(results).eqls({
+      const results = await next.intlGetStaticProps('/locales')({ params: { locale: 'en-US' } });
+      expect(results).toEqual({
         props: {
           localesProps: {
             locale: 'en-US',
@@ -52,7 +43,7 @@ describe('Next.js functions', function () {
 
     it('returns localesProps for other path part', async function () {
       const results = await next.intlGetStaticProps('/locales/extra')({ params: { locale: 'en-US' } });
-      assume(results).eqls({
+      expect(results).toEqual({
         props: {
           localesProps: {
             locale: 'en-US',
@@ -65,11 +56,11 @@ describe('Next.js functions', function () {
 
     it('handles thunks for locale path part', async function () {
       const mockContext = { params: { locale: 'en-US' }, extra: true };
-      const mockThunk = sinon.stub().callsFake((context) => context.extra ? '/locales/extra' : '/locales');
+      const mockThunk = jest.fn().mockImplementation((context) => context.extra ? '/locales/extra' : '/locales');
 
       const results = await next.intlGetStaticProps(mockThunk)(mockContext);
-      assume(mockThunk).calledWith(mockContext);
-      assume(results).eqls({
+      expect(mockThunk).toHaveBeenCalledWith(mockContext);
+      expect(results).toEqual({
         props: {
           localesProps: {
             locale: 'en-US',
@@ -82,7 +73,7 @@ describe('Next.js functions', function () {
 
     it('returns localesProps for multiple locale path parts', async function () {
       const results = await next.intlGetStaticProps(['/locales', '/locales/extra'])({ params: { locale: 'en-US' } });
-      assume(results).eqls({
+      expect(results).toEqual({
         props: {
           localesProps: {
             locale: 'en-US',
@@ -97,8 +88,9 @@ describe('Next.js functions', function () {
     });
 
     it('returns localesProps with error for missing path', async function () {
+      const consoleSpy = jest.spyOn(console, 'error');
       const results = await next.intlGetStaticProps('/locales/missing')({ params: { locale: 'en-US' } });
-      assume(results).eqls({
+      expect(results).toEqual({
         props: {
           localesProps: {
             locale: 'en-US',
@@ -107,12 +99,13 @@ describe('Next.js functions', function () {
           }
         }
       });
-      assume(console.error).is.calledWithMatch('Cannot find module');
+      expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('Cannot find module'));
+      consoleSpy.mockRestore();
     });
 
     it('returns localesProps for default if locale missing', async function () {
       const results = await next.intlGetStaticProps('/locales')({ params: { locale: 'fr-CA' } });
-      assume(results).eqls({
+      expect(results).toEqual({
         props: {
           localesProps: {
             locale: 'fr-CA',
@@ -125,7 +118,7 @@ describe('Next.js functions', function () {
 
     it('uses locale on context from builtin i18n routing', async function () {
       const results = await next.intlGetStaticProps('/locales')({ locale: 'fr-CA' });
-      assume(results).eqls({
+      expect(results).toEqual({
         props: {
           localesProps: {
             locale: 'fr-CA',
@@ -140,12 +133,12 @@ describe('Next.js functions', function () {
   describe('intlGetServerSideProps', function () {
     it('makes getServerSideProps function', function () {
       const results = next.intlGetServerSideProps();
-      assume(results).instanceOf(Function);
+      expect(typeof results).toBe('function');
     });
 
     it('returns localesProps for default path', async function () {
-      const results = await next.intlGetServerSideProps()({ res });
-      assume(results).eqls({
+      const results = await next.intlGetServerSideProps('/locales')({ res });
+      expect(results).toEqual({
         props: {
           localesProps: {
             locale: 'en-US',
@@ -158,7 +151,7 @@ describe('Next.js functions', function () {
 
     it('returns localesProps for other path part', async function () {
       const results = await next.intlGetServerSideProps('/locales/extra')({ res });
-      assume(results).eqls({
+      expect(results).toEqual({
         props: {
           localesProps: {
             locale: 'en-US',
@@ -171,11 +164,11 @@ describe('Next.js functions', function () {
 
     it('handles thunks for locale path part', async function () {
       const mockContext = { res, extra: true };
-      const mockThunk = sinon.stub().callsFake((context) => context.extra ? '/locales/extra' : '/locales');
+      const mockThunk = jest.fn().mockImplementation((context) => context.extra ? '/locales/extra' : '/locales');
 
       const results = await next.intlGetServerSideProps(mockThunk)(mockContext);
-      assume(mockThunk).calledWith(mockContext);
-      assume(results).eqls({
+      expect(mockThunk).toHaveBeenCalledWith(mockContext);
+      expect(results).toEqual({
         props: {
           localesProps: {
             locale: 'en-US',
@@ -188,7 +181,7 @@ describe('Next.js functions', function () {
 
     it('returns localesProps for multiple locale path parts', async function () {
       const results = await next.intlGetServerSideProps(['/locales', '/locales/extra'])({ res });
-      assume(results).eqls({
+      expect(results).toEqual({
         props: {
           localesProps: {
             locale: 'en-US',
@@ -203,8 +196,9 @@ describe('Next.js functions', function () {
     });
 
     it('returns localesProps with error for missing path', async function () {
+      const consoleSpy = jest.spyOn(console, 'error');
       const results = await next.intlGetServerSideProps('/locales/missing')({ res });
-      assume(results).eqls({
+      expect(results).toEqual({
         props: {
           localesProps: {
             locale: 'en-US',
@@ -213,13 +207,14 @@ describe('Next.js functions', function () {
           }
         }
       });
-      assume(console.error).is.calledWithMatch('Cannot find module');
+      expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('Cannot find module'));
+      consoleSpy.mockRestore();
     });
 
     it('returns localesProps for default if locale missing', async function () {
       res.locals.gasketData.intl.locale = 'fr-CA';
       const results = await next.intlGetServerSideProps('/locales')({ res });
-      assume(results).eqls({
+      expect(results).toEqual({
         props: {
           localesProps: {
             locale: 'fr-CA',
@@ -232,7 +227,7 @@ describe('Next.js functions', function () {
 
     it('uses locale on context from builtin i18n routing', async function () {
       const results = await next.intlGetServerSideProps('/locales')({ locale: 'fr-CA', res });
-      assume(results).eqls({
+      expect(results).toEqual({
         props: {
           localesProps: {
             locale: 'fr-CA',
