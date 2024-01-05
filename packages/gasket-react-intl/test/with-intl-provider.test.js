@@ -1,8 +1,5 @@
 import React from 'react';
-import assume from 'assume';
-import sinon from 'sinon';
-import proxyquire from 'proxyquire';
-import mockManifest from './fixtures/mock-manifest.json';
+import withIntlProviderDefault, { reducer, init } from '../src/with-intl-provider';
 import { LocaleStatus } from '../src/utils';
 const { ERROR, LOADED, LOADING } = LocaleStatus;
 
@@ -13,47 +10,34 @@ const MockComponent = class extends React.Component {
 };
 
 describe('withIntlProvider', function () {
-  let mockConfig, withIntlProvider, module;
-
-  const getModule = () => {
-    return proxyquire('../src/with-intl-provider', {
-      './config': mockConfig,
-      './utils': proxyquire('../src/utils', {
-        './config': mockConfig
-      })
-    });
-  };
+  let mockConfig;
+  let withIntlProvider;
 
   beforeEach(function () {
-    mockConfig = {
-      defaultLocale: 'en-US',
-      manifest: { ...mockManifest, paths: { ...mockManifest.paths } },
-      isBrowser: false
-    };
-    module = getModule();
-
-    withIntlProvider = module.default;
-  });
-
-  afterEach(function () {
-    sinon.restore();
+    mockConfig = require('../src/config');
+    withIntlProvider = withIntlProviderDefault();
   });
 
   it('adds display name', function () {
-    assume(withIntlProvider()(MockComponent)).property('displayName', 'withIntlProvider(MockComponent)');
+    const WrappedComponent = withIntlProvider(MockComponent);
+    expect(WrappedComponent.displayName).toBe('withIntlProvider(MockComponent)');
   });
 
   it('hoists non-react statics', function () {
-    assume(withIntlProvider()(MockComponent)).not.property('bogus');
+    const WrappedComponent = withIntlProvider(MockComponent);
+    expect(WrappedComponent).not.toHaveProperty('bogus');
     MockComponent.bogus = 'BOGUS';
-    assume(withIntlProvider()(MockComponent)).property('bogus', 'BOGUS');
+    const WrappedComponentBogus = withIntlProvider(MockComponent);
+    expect(WrappedComponentBogus).toHaveProperty('bogus', 'BOGUS');
     delete MockComponent.bogus;
   });
 
   it('hoists getInitialProps if set', function () {
-    assume(withIntlProvider()(MockComponent)).not.property('getInitialProps');
+    const WrappedComponent = withIntlProvider(MockComponent);
+    expect(WrappedComponent).not.toHaveProperty('getInitialProps');
     MockComponent.getInitialProps = f => f;
-    assume(withIntlProvider()(MockComponent)).property('getInitialProps');
+    const WrappedComponentSetIP = withIntlProvider(MockComponent);
+    expect(WrappedComponentSetIP).toHaveProperty('getInitialProps');
     delete MockComponent.getInitialProps;
   });
 
@@ -69,12 +53,14 @@ describe('withIntlProvider', function () {
 
     it('LOADED actions add messages and file status', function () {
       const action = { type: LOADED, payload: { locale: 'en', messages: { example: 'Example' }, file: '/locales/en.json' } };
-      const result = module.reducer(initState, action);
-      assume(result).eqls({
-        messages: { en: {
-          first: 'First',
-          example: 'Example'
-        } },
+      const result = reducer(initState, action);
+      expect(result).toEqual({
+        messages: {
+          en: {
+            first: 'First',
+            example: 'Example'
+          }
+        },
         status: {
           '/locales/en/first.json': LOADED,
           '/locales/en.json': LOADED
@@ -84,11 +70,13 @@ describe('withIntlProvider', function () {
 
     it('ERROR actions add file status', function () {
       const action = { type: ERROR, payload: { file: '/locales/en.json' } };
-      const result = module.reducer(initState, action);
-      assume(result).eqls({
-        messages: { en: {
-          first: 'First'
-        } },
+      const result = reducer(initState, action);
+      expect(result).toEqual({
+        messages: {
+          en: {
+            first: 'First'
+          }
+        },
         status: {
           '/locales/en/first.json': LOADED,
           '/locales/en.json': ERROR
@@ -98,11 +86,13 @@ describe('withIntlProvider', function () {
 
     it('LOADING actions add file status', function () {
       const action = { type: LOADING, payload: { file: '/locales/en.json' } };
-      const result = module.reducer(initState, action);
-      assume(result).eqls({
-        messages: { en: {
-          first: 'First'
-        } },
+      const result = reducer(initState, action);
+      expect(result).toEqual({
+        messages: {
+          en: {
+            first: 'First'
+          }
+        },
         status: {
           '/locales/en/first.json': LOADED,
           '/locales/en.json': LOADING
@@ -112,46 +102,47 @@ describe('withIntlProvider', function () {
   });
 
   describe('init', function () {
-
     it('initializes state with empty objects', function () {
-      const result = module.init({});
-      assume(result).eqls({
+      const result = init({});
+      expect(result).toEqual({
         messages: {},
         status: {}
       });
     });
 
     it('initializes state with locales props', function () {
-      const result = module.init({
+      const result = init({
         locale: 'en',
         messages: { en: { example: 'Example' } },
         status: { '/locales/en.json': LOADED }
       });
-      assume(result).eqls({
+      expect(result).toEqual({
         messages: { en: { example: 'Example' } },
         status: { '/locales/en.json': LOADED }
       });
     });
 
     it('merges locales props data with client data', function () {
-      mockConfig = { isBrowser: true, clientData: {
+      mockConfig.clientData = {
         locale: 'en',
         messages: { en: { first: 'First' } },
         status: { '/locales/en/first.json': LOADED }
-      } };
+      };
+      mockConfig.isBrowser = true;
 
-      module = getModule();
-
-      const result = module.init({
+      const result = init({
         locale: 'en',
         messages: { en: { example: 'Example' } },
         status: { '/locales/en.json': LOADED }
       });
-      assume(result).eqls({
-        messages: { en: {
-          first: 'First',
-          example: 'Example'
-        } },
+
+      expect(result).toEqual({
+        messages: {
+          en: {
+            first: 'First',
+            example: 'Example'
+          }
+        },
         status: {
           '/locales/en/first.json': LOADED,
           '/locales/en.json': LOADED
