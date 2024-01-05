@@ -146,7 +146,7 @@ Available presets
 
 | Name                    | Version | Description                                |
 | ----------------------- | ------- | ------------------------------------------ |
-| [@gasket/preset-api]    | 6.44.1  | Create Express-based API with Gasket       |
+| [@gasket/preset-api]    | 6.44.2  | Create Express-based API with Gasket       |
 | [@gasket/preset-nextjs] | 6.44.0  | Basic NextJS Framework                     |
 | [@gasket/preset-pwa]    | 6.43.0  | Turn Gasket apps into Progressive Web Apps |
 
@@ -160,9 +160,9 @@ Available plugins
 | [@gasket/plugin-command]        | 6.43.0  | Plugin to enable other plugins to inject new gasket commands               |
 | [@gasket/plugin-config]         | 6.43.0  | Supports application-specific (non-Gasket) configuration                   |
 | [@gasket/plugin-cypress]        | 6.39.0  | Integrates Cypress based testing into your Gasket application              |
-| [@gasket/plugin-docs]           | 6.44.1  | Centralize doc files from plugins and modules                              |
+| [@gasket/plugin-docs]           | 6.44.2  | Centralize doc files from plugins and modules                              |
 | [@gasket/plugin-docs-graphs]    | 6.39.0  | Generate mermaid graphs of an applications gasket lifecycles               |
-| [@gasket/plugin-docsify]        | 6.44.1  | View collated docs with Docsify                                            |
+| [@gasket/plugin-docsify]        | 6.44.2  | View collated docs with Docsify                                            |
 | [@gasket/plugin-docusaurus]     | 6.43.0  | Gasket plugin for docusaurus                                               |
 | [@gasket/plugin-elastic-apm]    | 6.43.0  | Adds Elastic APM instrumentation to your application                       |
 | [@gasket/plugin-express]        | 6.44.0  | Adds express support to your application                                   |
@@ -170,7 +170,7 @@ Available plugins
 | [@gasket/plugin-git]            | 6.43.0  | Adds git support to your application                                       |
 | [@gasket/plugin-happyfeet]      | 6.44.0  | A gasket plugin to enable happyfeet healthchecks                           |
 | [@gasket/plugin-https]          | 6.44.0  | Create http/s servers with graceful termination                            |
-| [@gasket/plugin-intl]           | 6.43.0  | NodeJS script to build localization files.                                 |
+| [@gasket/plugin-intl]           | 6.44.2  | NodeJS script to build localization files.                                 |
 | [@gasket/plugin-jest]           | 6.39.0  | Integrated jest into your application.                                     |
 | [@gasket/plugin-lifecycle]      | 6.43.0  | Allows a gasket/ directory to be used for lifecycle hooks in applications. |
 | [@gasket/plugin-lint]           | 6.44.0  | Adds GoDaddy standard linting to your application                          |
@@ -202,10 +202,10 @@ Supporting modules
 | [@gasket/helper-intl]      | 6.41.2  | Internal helpers used by loaders to resolve locale file paths                        |
 | [@gasket/log]              | 6.39.0  | Gasket client and server logger                                                      |
 | [@gasket/nextjs]           | 6.43.0  | Gasket integrations for Next.js apps                                                 |
-| [@gasket/react-intl]       | 6.42.0  | React component library to enable localization for gasket apps.                      |
+| [@gasket/react-intl]       | 6.44.2  | React component library to enable localization for gasket apps.                      |
 | [@gasket/redux]            | 6.39.0  | Gasket Redux Configuration                                                           |
 | [@gasket/resolve]          | 6.44.0  | Essential module resolution & configuration management for gasket plugins & presets. |
-| [@gasket/typescript-tests] | 6.44.1  | Not a published package; hosts unit tests to verify TypeScript support               |
+| [@gasket/typescript-tests] | 6.44.2  | Not a published package; hosts unit tests to verify TypeScript support               |
 | [@gasket/utils]            | 6.43.0  | Reusable utilities for Gasket internals                                              |
 | [create-gasket-app]        | 6.44.0  | starter pack for creating a gasket app                                               |
 
