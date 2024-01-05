@@ -10,7 +10,6 @@ Name | Description
 Name | Description
 ------ | -----------
 [applyConfigOverrides(config, context)] | Normalize the config by applying any overrides for environments, commands, or local-only config file.
-~~[applyEnvironmentOverrides(gasketConfig, config, \[localFile\])]~~ | Normalize the config by applying any environment or local overrides
 [installDependency(dependency, gasket)] | installDependency - install dependency
 [requireWithInstall(dependency, gasket)] | requireWithInstall - load devDependency request programmatically when needed
 [runShellCommand(cmd, \[argv\], \[options\], \[debug\])] | Promise friendly wrapper to running a shell command (eg: git, npm, ls) which passes back any { stdout, stderr } to the error thrown.
@@ -151,23 +150,6 @@ or local-only config file.
 | \[context.root\] | `string` | Project root; required if using localeFile |
 | \[context.localFile\] | `string` | Optional file to load relative to gasket root |
 
-
-## ~~applyEnvironmentOverrides(gasketConfig, config, \[localFile\])~~
-
-***Deprecated***
-
-Normalize the config by applying any environment or local overrides
-
-**Kind**: global function  
-**Returns**: `object` - config  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| gasketConfig | `object` | Gasket config |
-| config | `object` | Target config to be normalized |
-| \[localFile\] | `string` | Optional file to load relative to gasket root |
-
-
 ## installDependency(dependency, gasket)
 
 installDependency - install dependency
@@ -276,7 +258,6 @@ const { tryRequire } = require('@gasket/utils');
 [PackageManager]:#packagemanager
 [`PackageManager`]:#new-packagemanageroptions
 [applyConfigOverrides(config, context)]:#applyconfigoverridesconfig-context
-[applyEnvironmentOverrides(gasketConfig, config, \[localFile\])]:#applyenvironmentoverridesgasketconfig-config-localfile
 [installDependency(dependency, gasket)]:#installdependencydependency-gasket
 [requireWithInstall(dependency, gasket)]:#requirewithinstalldependency-gasket
 [runShellCommand(cmd, \[argv\], \[options\], \[debug\])]:#runshellcommandcmd-argv-options-debug
