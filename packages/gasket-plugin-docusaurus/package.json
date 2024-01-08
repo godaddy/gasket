@@ -38,11 +38,11 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/",
   "dependencies": {
-    "@docusaurus/core": "2.4.0",
-    "@docusaurus/preset-classic": "2.4.0",
     "lodash.defaultsdeep": "^4.6.1"
   },
   "devDependencies": {
+    "@docusaurus/core": "2.4.0",
+    "@docusaurus/preset-classic": "2.4.0",
     "@gasket/engine": "^6.43.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.7.0",
