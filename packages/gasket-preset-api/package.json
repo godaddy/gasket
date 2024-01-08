@@ -1,6 +1,6 @@
 {
   "name": "@gasket/preset-api",
-  "version": "6.44.2",
+  "version": "6.44.3",
   "description": "Create Express-based API with Gasket",
   "main": "lib",
   "types": "lib/index.d.ts",
@@ -22,7 +22,7 @@
   "dependencies": {
     "@gasket/plugin-config": "^6.43.0",
     "@gasket/plugin-docs": "^6.44.2",
-    "@gasket/plugin-docusaurus": "^6.43.0",
+    "@gasket/plugin-docusaurus": "^6.44.3",
     "@gasket/plugin-express": "^6.44.0",
     "@gasket/plugin-https": "^6.44.0",
     "@gasket/plugin-lint": "^6.44.0",
