@@ -1,6 +1,6 @@
-const proxyquire = require('proxyquire');
-const sinon = require('sinon');
-const assume = require('assume');
+// const proxyquire = require('proxyquire');
+// const sinon = require('sinon');
+// const assume = require('assume');
 
 describe('init hook', () => {
   let mockError, mockConfig, pluginEngineSpy;
