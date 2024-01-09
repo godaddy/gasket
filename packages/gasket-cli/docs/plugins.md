@@ -1,9 +1,10 @@
 # Authoring Plugins
 
 A published plugin must be its own installable `npm` module, following the
-plugin [naming convention]. You may also create [one-off plugins] for an app.
+plugin [naming convention]. Alternatively, you can create [one-off plugins]
+specifically for your app.
 
-A plugin's main export has the following shape:
+A plugin's main export should have the following structure:
 
 ```js
 module.exports = {
@@ -27,19 +28,19 @@ module.exports = {
 ```
 
 The optional `dependencies` array lists other plugins that must be installed as
-a prerequisite. The `hooks` map has a key for every event the plugin handles,
+prerequisites. The `hooks` map has a key for every event the plugin handles,
 with the values being either the function itself or an object specifying
 `timing` options and the `handler`.
 
 ## Hooks
 
 Each `handler` function assigned to an event is invoked by the plugin engine
-when an event occurs. If an event is used for collection of data, each callback
+when that event occurs. If an event is used for data collection, each callback
 should return data. If the handling is asynchronous, the callback should return
 a `Promise`.
 
 If multiple plugins hook the same event, they'll run in parallel if async or in
-arbitrary order if synchronous. If a plugin wants to specify more specific
+arbitrary order if synchronous. If a plugin wants to specify a more specific
 sequencing, the hook should be an object with a timing property and handler
 function instead of a plain function. For example, this plugin contains an
 `init` hook that specifically runs *after* the `metadata` plugin:
@@ -61,7 +62,7 @@ module.exports = {
 }
 ```
 
-In short, a hook should have the following type:
+In summary, a hook should have the following type:
 
 ```ts
 type HandlerFunction = (GasketAPI, ...args: any[]) => any;
@@ -77,14 +78,16 @@ type Hook = HandlerFunction | {
 }
 ```
 
-The timing properties establish the execution order of a lifecycle hook with respect to that of other plugins. This does not change the order of lifecycle events, only the execution order of the hooks for the lifecycle event. 
+The timing properties establish the execution order of a lifecycle hook with
+respect to that of other plugins. This does not change the order of lifecycle
+events, only the execution order of the hooks for the lifecycle event.
 
 | Property | Description |
 |----------|-------------|
-| `before` | Array of names of plugins whose hooks for the lifecycle your own hook should run before. This will guarantee that the hooks of those other plugins will wait for your hook to complete before running. |
-| `after` | Array of names of plugins whose hooks for the lifecycle your own hook should run after. This will guarantee that your hook will wait for the hooks of those other plugins to complete before running. |
-| `first` | Boolean indicating that your hook will run before that of any other plugin. You should avoid this whenever possible because it will prevent the ability of other hooks to run before yours, unless they also set `first`. Instead, use the `before` property to list _known plugins_ that have hooks known to be incompatible with running before or in parallel to yours. If multiple plugins use this flag for the same lifecycle, they will run in parallel unless `before` or `after` are also set. |
-| `last` | Boolean indicating that your hook will run after those of all the other plugins. You should avoid this whenever possible because it will prevent the ability of other hooks to run after yours, unless they also set `last`. Instead, use the `after` property to list _known plugins_ that must have their hooks complete before yours runs. If multiple plugins use this flag for the same lifecycle, they will run in parallel unless `before` or `after` are also set. |
+| `before` | Array of names of plugins whose hooks for the lifecycle your own hook should run before. This guarantees that the hooks of those other plugins will wait for your hook to complete before running. |
+| `after` | Array of names of plugins whose hooks for the lifecycle your own hook should run after. This guarantees that your hook will wait for the hooks of those other plugins to complete before running. |
+| `first` | Boolean indicating that your hook will run before that of any other plugin. This should be avoided whenever possible, as it prevents other hooks from running before yours, unless they also set `first`. Instead, use the `before` property to list *known plugins* that have hooks known to be incompatible with running before or in parallel to yours. If multiple plugins use this flag for the same lifecycle, they will run in parallel unless `before` or `after` are also set. |
+| `last` | Boolean indicating that your hook will run after those of all other plugins. This should be avoided whenever possible, as it prevents other hooks from running after yours, unless they also set `last`. Instead, use the `after` property to list *known plugins* that must have their hooks complete before yours runs. If multiple plugins use this flag for the same lifecycle, they will run in parallel unless `before` or `after` are also set. |
 
 The handler functions are called with a `GasketAPI` followed by any arguments
 passed when the event was invoked. You can see the full definitions for the
@@ -92,9 +95,9 @@ functions available on a `GasketAPI` object [here].
 
 ## Testing
 
-Because Gasket plugins are just Objects of functions, it's fairly trivial to
-test them. For example, let's say we have this plugin which hooks the `start`
-lifecycle.
+Because Gasket plugins are just objects of functions, they are relatively easy
+to test. For example, let's say we have this plugin, which hooks the `start`
+lifecycle:
 
 ```js
 module.exports = {
@@ -119,7 +122,7 @@ module.exports = {
 }
 ```
 
-Here are some basic tests, assuming we're using the `mocha` test framework.
+Here are some basic tests, assuming we're using the `mocha` test framework:
 
 ```js
 const plugin = require('/path/to/plugin');
@@ -127,7 +130,9 @@ const assume = require('assume');
 const { stub }  = require('sinon');
 
 describe('detective plugin', function () {
-  it('hooks the correct lifecycles', function() {
+  it('hooks the correct lifecycles',
+
+ function() {
     const hooks = plugin.hooks;
     assume(Object.keys(hooks)).equals(['init', 'motive', 'alibi']);
   });
@@ -137,7 +142,7 @@ describe('detective plugin', function () {
     assume(name).contains('subtle');
   });
 
-  it('executes the lifecyles for each clue', async function () {
+  it('executes the lifecycles for each clue', async function () {
     const execStub = stub();
     const logSub = stub();
     const gasket = {
@@ -160,11 +165,11 @@ describe('detective plugin', function () {
 
 ## Documentation
 
-If applications using your plugin are also using the [@gasket/plugin-docs] you
-can automatically view and generate docs for your application via the `gasket
-docs` command. To best take advantage of this functionality, you should provide
-a `README.md` enumerating documentation, as well as `metadata` hook to best
-illustrate which lifecycles are invoked.
+If applications using your plugin also use the [@gasket/plugin-docs], you can
+automatically view and generate documentation for your application using the
+`gasket docs` command. To best take advantage of this functionality, provide a
+`README.md` with documentation and a `metadata` hook to illustrate which
+lifecycles are invoked.
 
 ```js
 module.exports = {
@@ -191,21 +196,21 @@ module.exports = {
 }
 ```
 
-Then, upon running `gasket docs`, developers will automatically find
-documentation for the `detective` plugin.
+Then, running `gasket docs` will automatically provide documentation for the
+`detective` plugin.
 
-## One-off plugins
+## One-off Plugins
 
-While it is encouraged to build plugins as separate packages, the ability to
-create one-off plugins in an app is available. Files in a `plugins/` directory
-at the root of the Gasket project will automatically be loaded by the CLI for
-the engine. This gives you access to tie into lifecycles, set timings, or even
+While it's encouraged to build plugins as separate packages, you have the
+flexibility to create one-off plugins for your app. Files in a `plugins/`
+directory at the root of your Gasket project will be automatically loaded by the
+CLI for the engine. This allows you to connect to lifecycles, set timings, or
 add your own hooks.
 
-These type of app-level plugins allow you to experiment quickly, before deciding
-what is best for reused across apps. If you find yourself duplicating app-level
-plugins across apps, be sure to extract it as an npm package which can be
-versioned, published, and imported to your different apps.
+These app-level plugins enable quick experimentation before deciding which ones
+are suitable for reuse across apps. If you find yourself duplicating app-level
+plugins across multiple apps, consider extracting them as npm packages, which
+can be versioned, published, and imported into your different apps.
 
 [one-off plugins]:#one-off-plugins
 [here]:/packages/gasket-engine/README.md

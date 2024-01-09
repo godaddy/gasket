@@ -1,23 +1,22 @@
 # @gasket/assets
 
-Gasket related visual assets
+A collection of Gasket-related visual assets.
 
 ## Installation
 
-```
-npm i @gasket/assets
+```sh
+npm install @gasket/assets
 ```
 
 ## Usage
 
-Original SVGs are available, however the primary use case will to be import the
-ready-to-use components for your app. Currently these are available for React.
+While you can access the original SVGs, the primary use case is to import the
+ready-to-use components for your app, currently available for React.
 
 ### React
 
-Import a logo or other asset directly and use as you would any other React
-component. You can use `className` or `style` props to adjust size, position,
-etc.
+Import a logo or other asset directly and use it like any other React component.
+You can adjust size, position, and more using `className` or `style` props.
 
 ```jsx
 // demo-page.js
@@ -34,9 +33,9 @@ const DemoPage = () => {
 
 ## Development
 
-Add any new SVG files to the ./svg directory then run `npm run generate` to
-output the importable components.
+To add new SVG files, place them in the `./svg` directory, and then run `npm run
+generate` to generate the importable components.
 
 ## License
 
-[MIT](./LICENSE.md)
+[MIT License](./LICENSE.md)

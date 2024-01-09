@@ -1,26 +1,26 @@
 # create-gasket-app
 
-Starter Pack for creating Gasket apps. 
+Starter Pack for effortlessly creating Gasket apps.
 
-### Get Started Immediately
+## Getting Started
 
-You **don’t** need to globally install the Gasket CLI
+You **do not** have to install the Gasket CLI globally to start using it.
 
-To create a new app, you may choose one of the following methods:
+To create a new app, you can opt for one of the following methods:
 
-### npx
+### Using npx
 
 ```sh
 npx create-gasket-app my-app
 ```
 
-### npm
+### Using npm
 
 ```sh
 npm init gasket-app my-app
 ```
 
-### Yarn
+### Using Yarn
 
 ```sh
 yarn create gasket-app my-app
@@ -28,4 +28,4 @@ yarn create gasket-app my-app
 
 ## License
 
-[MIT](./LICENSE.md)
+[MIT License](./LICENSE.md)

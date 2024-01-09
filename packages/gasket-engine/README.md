@@ -1,25 +1,28 @@
 # @gasket/engine
 
-Plugin engine for Gasket. This is used internally by the Gasket CLI.
+The Plugin Engine for Gasket - an internal tool for the Gasket CLI.
 
 ## What is a Plugin?
 
-A plugin a a module in the `gasket` ecosystem that provides a unit of
-functionality. Some plugins are core to the overall application, others
-optional.
+A Plugin is a module in the `gasket` ecosystem that offers a specific unit of
+functionality. Some plugins are integral to the core of the application, while
+others are optional.
 
-For documentation on plugins, refer to the [plugin guide].
+For detailed documentation on plugins, please refer to the [Plugin
+Guide](./packages/gasket-cli/docs/plugins.md).
 
 ## What is a Preset?
 
-A preset is simply a package with Gasket plugins dependencies. This allows
-common plugins to be grouped together, and loaded by way of a preset.
+A Preset is essentially a package containing dependencies on Gasket plugins.
+This allows you to group common plugins together and load them via a preset.
 
-For documentation on presets, refer to the [preset guide].
+For in-depth information on presets, please consult the [Preset
+Guide](./packages/gasket-cli/docs/presets.md).
 
 ## GasketAPI
 
-The `GasketAPI` object passed to hook functions has the following members:
+The `GasketAPI` object, which is passed to hook functions, provides the
+following members:
 
 ### config
 
@@ -27,41 +30,40 @@ The Gasket configuration object, typically derived from `gasket.config.js`.
 
 ### exec(event, ...args)
 
-The `exec` method enables a plugin to introduce new lifecycle events. When
-calling `exec`, await the `Promise` it returns to wait for the hooks of other
-plugins to finish. If the lifecycle event is for producing data, the `Promise`
-will contain an `Array` of the hook data stored in the order the hooks were
-executed.
+The `exec` method enables a plugin to introduce new lifecycle events. When using
+`exec`, make sure to await the `Promise` it returns to ensure that other
+plugins' hooks have completed. If the lifecycle event is intended to produce
+data, the `Promise` will contain an `Array` of hook data stored in the order the
+hooks were executed.
 
 ### execSync(event, ...args)
 
-The `execSync` method is like `exec`, only all hooks must execute synchronously.
-The synchronous result is an Array of the hook return values. Using synchronous
-methods limits flexibility, so it's encouraged to use async methods whenever
-possible.
+The `execSync` method is similar to `exec`, but it requires all hooks to execute
+synchronously. The synchronous result is an Array of hook return values. It is
+recommended to use async methods whenever possible to maintain flexibility.
 
 ### execMap(event, ...args)
 
-The `execMap` method is just like `exec`, only the Promise result is an object
-map with each key being the name of the plugin and each value the result from
-the hook. Only the plugins that hooked the event will have keys present in the
-map.
+The `execMap` method is just like `exec`, except that the Promise result is an
+object map with each key representing the name of the plugin and each value
+containing the result from the hook. Only the plugins that hooked the event will
+have keys present in the map.
 
 ### execMapSync(event, ...args)
 
-The `execSyncSync` method is like `execMap`, only all hooks must execute
+The `execMapSync` method is similar to `execMap`, but all hooks must execute
 synchronously.
 
 ### execApply(event, async applyFn)
 
-The `execApply` method execution is ordered like `exec`, but you must invoke the
-handler yourself with explicit arguments. These arguments can be dynamic based
-on the plugin itself. e.g.:
+The `execApply` method's execution is ordered similarly to `exec`, but you must
+invoke the handler yourself with explicit arguments. These arguments can be
+dynamic based on the plugin itself. For example:
 
 ```js
 await gasket.execApply('someEvent', async (plugin, handler) => {
-  // Creating the "Contextual thing" can be sync or async. async params are
-  // fully supported with this pattern if necessary.
+  // Creating the "Contextual thing" can be synchronous or asynchronous.
+  // Asynchronous parameters are fully supported with this pattern if necessary.
   const arg = await Contextual.thingWith(plugin);
   return handler(arg); // The gasket parameter is automatically applied
 });
@@ -69,47 +71,46 @@ await gasket.execApply('someEvent', async (plugin, handler) => {
 
 ### execApplySync(event, applyFn)
 
-The `execApply` method is like `execApply`, only all hooks must execute
+The `execApply` method is similar to `execApply`, but all hooks must execute
 synchronously.
 
 ### execWaterfall(event, value, ...args)
 
-The `execWaterfall` method is like `exec`, only it allows you to have each hook
-execute sequentially, with each result being passed as the first argument to the
-next hook. It's like an asynchronous version of `Array.prototype.reduce`. The
-final result is returned in the resulting Promise.
+The `execWaterfall` method is akin to `exec`, but it allows you to have each
+hook execute sequentially, with each result being passed as the first argument
+to the next hook. It's similar to an asynchronous version of
+`Array.prototype.reduce`. The final result is returned in the resulting Promise.
 
 ### execWaterfallSync(event, value, ...args)
 
-The `execWaterfallSync` method is like `execWaterfall`, only each hook must
+The `execWaterfallSync` method is similar to `execWaterfall`, but each hook must
 execute synchronously. The final value is returned synchronously from this call.
-Using synchronous methods limits flexibility, so it's encouraged to use async
-methods whenever possible.
+It is encouraged to use async methods whenever possible to maintain flexibility.
 
 ### hook({ event, handler, timing, pluginName })
 
-Injects additional lifecycle hooks at runtime. Takes a single object parameter
-with the following properties:
+This method injects additional lifecycle hooks at runtime. It takes a single
+object parameter with the following properties:
 
 | Property     | Required? | Description                                                                                                                                                                                                                                                                                                                                 |
 |:-------------|:----------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `event`      | Yes       | The name of the event to hook. This is the same thing as the property name in the `hooks` of a plugin definition.                                                                                                                                                                                                                           |
-| `handler`    | Yes       | The function to call when the event occurs. The function should take the same form as the `hooks` callbacks in a plugin definition.                                                                                                                                                                                                         |
-| `timing`     | No        | Ordering constraints for when the hook will execute. Same as the optional `timing` property in plugin hooks.                                                                                                                                                                                                                                |
-| `pluginName` | No        | Defaults to an auto-generated name. Only supply this if you need other hooks to be able to order themselves relative to this hook via `timing` constraints. Important note: only one hook per event is allowed per plugin name, so if your plugin is injecting dynamic hooks, be sure that the names are dynamic enough to avoid conflicts. |
+| `event`      | Yes       | The name of the event to hook, corresponding to the property name in the `hooks` of a plugin definition.                                                                                                                                                                                                                           |
+| `handler`    | Yes       | The function to call when the event occurs, following the same format as the `hooks` callbacks in a plugin definition.                                                                                                                                                                                                         |
+| `timing`     | No        | Ordering constraints for when the hook will execute, matching the optional `timing` property in plugin hooks.                                                                                                                                                                                                                                |
+| `pluginName` | No        | Defaults to an auto-generated name. Only supply this if you need other hooks to be able to order themselves relative to this hook via `timing` constraints. Note: Only one hook per event is allowed per plugin name, so if your plugin is injecting dynamic hooks, ensure that the names are dynamic enough to avoid conflicts.
 
-## Plugin priority
+## Plugin Priority
 
 When a preset extends another preset, the version of the plugin registered can
 be overridden if the parent preset sets a different dependency version.
-Additionally, if an app specifies a plugin directly in the gasket.config using
+Additionally, if an app specifies a plugin directly in the `gasket.config` using
 `add`, the version determined by the app will instead be registered.
 
 ## Direct Usage
 
-This package is used internally by the Gasket CLI, so you probably do not need
-to use this directly. If you do, instantiate an engine, passing in the
-`gasket.config.js` export.
+This package is primarily intended for internal use by the Gasket CLI, so you
+probably do not need to use it directly. However, if you do, instantiate an
+engine by passing in the `gasket.config.js` export.
 
 ```js
 const PluginEngine = require('@gasket/engine');
@@ -124,13 +125,13 @@ and register their hooks. The engine instance is the same
 
 ## PluginEngine `context`
 
-Execution of plugins through a `PluginEngine` instance is dependent on the
-`context` of that operation. Currently the `context` consists of:
+Execution of plugins through a `PluginEngine` instance depends on the `context`
+of that operation. Currently, the `context` consists of:
 
-- `resolveFrom`: absolute path to prepend to any `moduleName` before attempting
-  resolution with `require`.
+- `resolveFrom`: an absolute path to prepend to any `moduleName` before
+  attempting resolution with `require`.
 
-e.g.
+For example:
 
 ```js
 const PluginEngine = require('@gasket/engine');
@@ -142,18 +143,21 @@ const gasketConfig = require(path.join(resolveFrom, 'gasket.config'));
 const pluginEngine = new PluginEngine(gasketConfig, { resolveFrom });
 ```
 
-The above will resolve all Plugins and Presets from within `./someapp` instead
-of resolving relative to the current directory.
+The above code will resolve all Plugins and Presets from within `./someapp`
+instead of resolving relative to the current directory.
 
 ## Tracing
 
-The Gasket engine uses the [`debug`](https://www.npmjs.com/package/debug) package to trace the plugin lifecycle. If you set the `DEBUG` environment variable to `gasket:engine` you'll see additional output in `stderr` indicating when things are invoked.
+The Gasket engine utilizes the [`debug`](https://www.npmjs.com/package/debug)
+package to trace the plugin lifecycle. If you set the `DEBUG` environment
+variable to `gasket:engine`, you'll see additional output in `stderr` indicating
+when things are invoked.
 
 ## License
 
-[MIT](./LICENSE.md)
+[MIT License](./LICENSE.md)
 
 <!-- LINKS -->
 
-[preset guide]: /packages/gasket-cli/docs/presets.md
-[plugin guide]: /packages/gasket-cli/docs/plugins.md
+- [Preset Guide](./packages/gasket-cli/docs/presets.md)
+- [Plugin Guide](./packages/gasket-cli/docs/plugins.md)

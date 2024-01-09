@@ -1,6 +1,6 @@
 # @gasket/cli
 
-CLI for rapid application development
+**CLI for Rapid Application Development**
 
 ## Guides
 
@@ -10,51 +10,51 @@ CLI for rapid application development
 
 ## Installation
 
-```
-npm i -global @gasket/cli
+```bash
+npm i -g @gasket/cli
 ```
 
 ## Configuration
 
-When an app is created, a `gasket.config.js` file will be generated with the
-presets and plugins configured as determined with the create command. Within an
+When you create an app, a `gasket.config.js` file will be generated with the
+presets and plugins configured as determined by the create command. Within an
 app, the CLI will have access to other commands as enabled by plugins.
 
-See the [Configuration Guide] for additional details.
+For additional details, refer to the [Configuration Guide].
 
 ## Commands
 
-With the Gasket CLI, you can run commands to create new apps, or commands that
-perform actions with an app. In a terminal, you can run `gasket` to see what
-commands are available, and `gasket help` to get more details on command.
+With the Gasket CLI, you can run commands to create new apps or perform actions
+with an app. In a terminal, you can run `gasket` to see available commands, and
+`gasket help` to get more details on commands.
 
 ### create command
 
-Use to create a new Gasket app.
+Use this command to create a new Gasket app.
 
-```
+```bash
 USAGE
   $ gasket create APPNAME
 
 ARGUMENTS
-  APPNAME  Name of the gasket application to create
+  APPNAME  Name of the Gasket application to create
 
 OPTIONS
-  -p, --presets=presets              Initial gasket preset(s) to use.
-                                     Can be set as short name with version (e.g. --presets nextjs@^1.0.0)
-                                     Or other (multiple) custom presets (e.g. --presets
+  -p, --presets=presets              Initial Gasket preset(s) to use.
+                                     Can be set as short name with version (e.g., --presets nextjs@^1.0.0)
+                                     Or other (multiple) custom presets (e.g., --presets
                                      my-gasket-preset@1.0.0.beta-1,nextjs@^1.0.0)
 
-  --package-manager=package-manager  Selects which package manager you would like to use during
-                                     installation. (e.g. --package-manager yarn)
+  --package-manager=package-manager  Select which package manager you would like to use during
+                                     installation. (e.g., --package-manager yarn)
 
   --plugins=plugins                  Additional plugin(s) to install. Can be set as
-                                     multiple flags (e.g. --plugins @gasket/jest --plugins example@^1.0.0)
+                                     multiple flags (e.g., --plugins @gasket/jest --plugins example@^1.0.0)
                                      comma-separated values: --plugins=@gasket/jest,example^1.0.0
   
   --config={}                        JSON object that provides the values for any interactive prompts
 
-  --config-file                      path to a JSON file that provides the values for interactive prompts
+  --config-file                      Path to a JSON file that provides the values for interactive prompts
 ```
 
 #### Package Managers
@@ -62,19 +62,18 @@ OPTIONS
 With `gasket create`, you can choose either [npm] or [yarn] as the package
 manager for your new app. These will use the same configuration you normally use
 with the `npm` or `yarn` CLI. If you want to adjust configuration for a
-particular `gasket create` run, you can set the
-[npm environment variables][npm env vars], which are also
-[compatible with yarn][yarn env vars].
+particular `gasket create` run, you can set the [npm environment variables][npm
+env vars], which are also [compatible with yarn][yarn env vars].
 
 For example, to configure the registry for a `gasket create` run:
 
-```
+```bash
 npm_config_registry=https://custom-registry.com gasket create my-app -p @gasket/nextjs
 ```
 
 #### Test Suites
 
-Code that is well-test and conforming to familiar styles helps the collaboration
+Code that is well-tested and conforms to familiar styles helps the collaboration
 process within teams and across organizations. Gasket apps come with some
 tooling options and configurations to assist in this important area.
 
@@ -89,9 +88,9 @@ own config.
 
 ### help command
 
-Display help for Gasket CLI and commands
+Display help for Gasket CLI and commands.
 
-```
+```bash
 USAGE
   $ gasket help [COMMAND]
 
@@ -105,7 +104,7 @@ OPTIONS
 ### --require module
 
 Using this flag allows preloading modules when the CLI starts up. The `module`
-may be either a path to a file, or a node module name. Only CommonJS modules are
+may be either a path to a file or a node module name. Only CommonJS modules are
 supported. This can be useful for loading instrumentation modules.
 
 ```bash
@@ -114,16 +113,16 @@ gasket start --require ./setup.js --require elastic-apm-node/start
 
 ## Lifecycles
 
-Lifecycles for apps are enabled by plugins, however the CLI has some built-in
+Lifecycles for apps are enabled by plugins; however, the CLI has some built-ins
 for use with the create command as described below.
 
 ### prompt
 
 The [create command](#create-command) fires the `prompt` lifecycle for all
-registered plugins. Plugins can use this lifecycle to add to the context which
+registered plugins. Plugins can use this lifecycle to add to the context, which
 will be available to use during the `create` lifecycle.
 
-The `prompt` lifecycle is fired using [execWaterfall] and hooks should return a
+The `prompt` lifecycle is fired using [execWaterfall], and hooks should return a
 modified `context` object.
 
 ```js
@@ -168,7 +167,7 @@ The hook is passed the following parameters:
 | `gasket`           | The `gasket` API                                     |
 | `context`          | The CreateContext to add options to                  |
 | `utils`            | Helper utils                                         |
-| `utils.prompt`     | Trigger prompts for user using [inquirer questions]. |
+| `utils.prompt`     | Trigger prompts for the user using [inquirer questions] |
 | `utils.addPlugins` | Dynamically add plugins to the app                   |
 
 If a plugin uses `addPlugins`, this will install the plugins' node modules and
@@ -215,12 +214,14 @@ The hook is passed the following parameters:
 | `gasket`               | The `gasket` API                                     |
 | `context`              | The CreateContext with data from flags, prompts, etc |
 | `context.pkg`          | Commonly used in create to add to package.json       |
-| `context.file`         | Commonly used to add files and templates for the app |
-| `context.gasketConfig` | Used to add config to the generated gasket.config.js |
-| `context.messages`     | non-error/warning messages to report                 |
-| `context.warnings`     | warnings messages to report                          |
-| `context.errors`       | error messages to report but do not exit process     |
-| `context.nextSteps`    | any next steps to report to the user                 |
+| `context.file`         |
+
+ Commonly used to add files and templates for the app | | `context.gasketConfig`
+| Used to add config to the generated gasket.config.js | | `context.messages`
+| Non-error/warning messages to report                 | | `context.warnings`
+| Warning messages to report                           | | `context.errors`
+| Error messages to report but do not exit the process | | `context.nextSteps`
+| Any next steps to report to the user                 |
 
 ### postCreate
 
@@ -228,9 +229,9 @@ After the [create command](#create-command) is *completed*, the `postCreate`
 lifecycles are fired for all registered plugins. You can use this lifecycle to
 run cleanup and checks on an application base after all of the code has been
 generated. This is useful to use in conjunction with any scripts added in the
-`create` lifecycle
+`create` lifecycle.
 
-The `postCreate` lifecycle is fired by `exec`:
+The `postCreate` lifecycle is fired by `exec`.
 
 ```js
 module.exports = {
@@ -256,12 +257,12 @@ The hook is passed the following parameters:
 |:------------------|:-------------------------------------------------------------------------------------------------------|
 | `gasket`          | The `gasket` API                                                                                       |
 | `context`         | The CreateContext with data from flags, prompts, etc. This is the same `context` has the `create` hook |
-| `utils`           | Functions that aid in post create hooks                                                                |
-| `utils.runScript` | run an `npm` script at the root of the generated `npm` package                                         |
+| `utils`           | Functions that aid in post-create hooks                                                                |
+| `utils.runScript` | Run an `npm` script at the root of the generated `npm` package                                         |
 
-# Tests
+## Tests
 
-Tests are written with `mocha`, `@oclif/test`, and `assume`. They can be run &
+Tests are written with `mocha`, `@oclif/test`, and `assume`. They can be run and
 debugged with `npm`:
 
 ```bash
@@ -282,18 +283,18 @@ DEBUG='gasket*' npm test
 DEBUG=gasket* GASKET_DEBUG_NPM=yes GASKET_DEBUG_TESTS=yes npx mocha --require test/setup.js test/integration/commands/create.test.js
 ```
 
-If you want to use a local copy of the CLI has a drop-in replacement for the one
-bundled in `gasket` applications you can use `--config` flag to manually specify
-where the configuration is. **NB** you will need to install some additional
-dependencies that Gasket apps come with so that the CLI can work properly. Be
-sure to `npm install --no-save` so you don't mutate the built in the
+If you want to use a local copy of the CLI as a drop-in replacement for the one
+bundled in `gasket` applications, you can use the `--config` flag to manually
+specify where the configuration is. **NB** you will need to install some
+additional dependencies that Gasket apps come with so that the CLI can work
+properly. Be sure to `npm install --no-save` so you don't mutate the built-in
 `package.json` for this CLI:
 
 ```bash
-# install extra dependencies
+# Install extra dependencies
 npm install --no-save @gasket/preset-nextjs @gasket/redux next react-dom
 
-# run `gasket local`, for example
+# Run `gasket local`, for example
 ./bin/run local --config /path/to/gasket.config.js
 ```
 
@@ -303,16 +304,16 @@ npm install --no-save @gasket/preset-nextjs @gasket/redux next react-dom
 
 <!-- LINKS -->
 
-[npm]:https://docs.npm.red
-[yarn]:https://yarnpkg.com
-[npm env vars]:https://docs.npmjs.com/misc/config#environment-variables
-[yarn env vars]:https://yarnpkg.com/en/docs/envvars#toc-npm-config
-[inquirer questions]:https://github.com/SBoudrias/Inquirer.js#question
-[execWaterfall]:/packages/gasket-engine/README.md#execwaterfallevent-value-args
-[exec]:/packages/gasket-engine/README.md#execevent-args
+[npm]: https://docs.npm.red
+[yarn]: https://yarnpkg.com
+[npm env vars]: https://docs.npmjs.com/misc/config#environment-variables
+[yarn env vars]: https://yarnpkg.com/en/docs/envvars#toc-npm-config
+[inquirer questions]: https://github.com/SBoudrias/Inquirer.js#question
+[execWaterfall]: /packages/gasket-engine/README.md#execwaterfallevent-value-args
+[exec]: /packages/gasket-engine/README.md#execevent-args
 [Configuration Guide]: docs/configuration.md
 [Plugins Guide]: docs/plugins.md
 [Presets Guide]: docs/presets.md
-[Jest plugin]:/packages/gasket-plugin-jest/README.md
-[Mocha plugin]:/packages/gasket-plugin-mocha/README.md
-[lint plugin]:/packages/gasket-plugin-lint/README.md
+[Jest plugin]: /packages/gasket-plugin-jest/README.md
+[Mocha plugin]: /packages/gasket-plugin-mocha/README.md
+[lint plugin]: /packages/gasket-plugin-lint/README.md

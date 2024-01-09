@@ -1,18 +1,18 @@
 # Package Management Guide
 
-At any time during app development you can add new plugins, packages and/or
-dependencies. These packages can provide new features to your Gasket application
-and/or change the way your application builds or is configured.
+At any stage of app development, you can add new plugins, packages, and
+dependencies to your Gasket application. These packages can introduce new
+features to your application or modify the way it builds and is configured.
 
-## Installing dependencies
+## Installing Dependencies
 
-For example if you want to install an additional plugin you can run either of
-the following commands. Make sure to replace `<plugin-name>` with the actual
-name of the plugin. Optionally, you can provide a version through `[@version]`,
-otherwise `latest` is installed by default. In the examples the scope of the
-plugin is `@gasket`. Similarly this could be your own scope or the package might
-have no scope at all. Regular modules like `react` or `webpack` are good
-examples of this.
+For example, if you want to install an additional plugin, you can use either of
+the following commands. Replace `<plugin-name>` with the actual name of the
+plugin. Optionally, you can specify a version with `[@version]`, with `latest`
+being the default if not provided. In these examples, the plugin is scoped under
+`@gasket`. It could also belong to your own scope or have no scope at all.
+Standard modules like `react` or `webpack` are examples of packages without a
+scope.
 
 ```bash
 npm install @gasket/<plugin-name>[@version]
@@ -24,12 +24,12 @@ OR
 yarn add @gasket/<plugin-name>[@version]
 ```
 
-If your package/module will only be used during `development`. For example if
-you need `stylus` CSS support and want to include `@zeit/next-stylus` you should
-add it as a devDependency. Adding `-D` will make `yarn` or `npm` add the
-dependency to `devDependencies`. Alternatively, `-P` and `-O` are available for
-`peer` or `optional` dependencies. See the [npm][npm install] or
-[yarn][yarn install] install documentation for more details.
+If your package or module is only used during development, such as when you need
+`stylus` CSS support and want to include `@zeit/next-stylus`, you should add it
+as a devDependency. Adding `-D` will make `yarn` or `npm` add the dependency to
+`devDependencies`. Alternatively, `-P` and `-O` are available for `peer` or
+`optional` dependencies. Refer to the [npm][npm install] or [yarn][yarn install]
+install documentation for more details.
 
 ```bash
 npm install -D <package>
@@ -41,7 +41,7 @@ OR
 yarn add -D <package>
 ```
 
-### Symlinking modules
+### Symlinking Modules
 
 If you're creating a generic plugin for reuse in your team's projects, you can
 symlink it into your application's `node_modules` directory during development.
@@ -52,19 +52,19 @@ npm link
 yarn link
 ```
 
-Change to your Gasket application directory and run one of the following
-commands. This will symlink the module from above. Make sure to change
-`<@your-scope/plugin-name>` to the `name` of your above module in its
-`package.json`.
+Navigate to your Gasket application directory and run one of the following
+commands. This will symlink the module from above. Be sure to replace
+`<@your-scope/plugin-name>` with the `name` of your module from its
+`package.json` file.
 
 ```bash
 npm link <@your-scope/plugin-name>
 yarn link <@your-scope/plugin-name>
 ```
 
-Note: If you're creating a plugin that is specific to a single project you're
-better of creating a [one-off plugin] in the `plugins/` folder. Also note that
-creating a symlink will not automatically add it to the `package.json`
+Note: If you're creating a plugin specific to a single project, it's better to
+create a [one-off plugin] in the `plugins/` folder. Additionally, keep in mind
+that creating a symlink will not automatically add it to the `package.json`
 dependency definitions.
 
 [npm install]: https://docs.npmjs.com/cli/install

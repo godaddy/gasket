@@ -2,22 +2,22 @@
 
 ## Background
 
-Much like [babel presets], Gasket presets allow common plugins to be grouped and
-loaded together. They serve 2 purposes: to serve as codified sets of plugins,
-and to facilitate rapid creation of Gasket application.
+Similar to [babel presets], Gasket presets allow you to group and load common
+plugins together. They serve two primary purposes: to serve as codified sets of
+plugins and to facilitate the rapid creation of Gasket applications.
 
 At GoDaddy, we have presets specifically tailored with internal sets of plugins,
-making maintaining standards around authentication, style, analytics, and more
-significantly easier.
+making it significantly easier to maintain standards around authentication,
+style, analytics, and more.
 
-See the [naming conventions] for how to best name a preset, ensuring that
-Gasket's plugin engine properly resolves it.
+Refer to the [naming conventions] for the best practices in naming a preset,
+ensuring that Gasket's plugin engine properly resolves it.
 
 ## Composition
 
-The anatomy of a preset is very simple. In its most basic form, it should have
-an index JavaScript file, which can just export an empty object, and a
-`package.json` file with dependencies of Gasket plugins.
+The structure of a preset is straightforward. In its most basic form, it should
+consist of an index JavaScript file, which can export an empty object, and a
+`package.json` file listing the dependencies of Gasket plugins.
 
 For example, a `package.json` file may look like:
 
@@ -33,7 +33,7 @@ For example, a `package.json` file may look like:
 }
 ```
 
-With an `index.js` as:
+With an `index.js` file like this:
 
 ```js
 module.exports = {
@@ -41,16 +41,16 @@ module.exports = {
 };
 ```
 
-It is recommended, though not required, for presets to export their `require`
-instance. This will help the loader properly resolve plugin dependencies,
-especially during development when module linking may be used.
+While it's recommended but not required, presets can export their `require`
+instance. This helps the loader properly resolve plugin dependencies, especially
+during development when module linking may be used.
 
-### Predefined create context
+### Predefined Create Context
 
 You can set `gasket create` context values ahead of time in your preset so that
-the associated prompts are never asked. To do so, in a preset's `index.js`, set
-the `createContext` object with the properties you want to define. For example,
-in the following `gasket create` prompt, 4 questions are asked at the beginning.
+associated prompts are never asked. To do so, in a preset's `index.js`, set the
+`createContext` object with the properties you want to define. For instance, in
+the following `gasket create` prompt, four questions are asked at the beginning:
 
 ```
 $ gasket create example --presets gasket-preset-example
@@ -61,8 +61,8 @@ $ gasket create example --presets gasket-preset-example
 ? Override contents of example? (y/n) y
 ```
 
-You can enumerate pre-defined answers to these questions in your preset so that
-users do not have to answer these questions every time.
+You can predefine answers to these questions in your preset so that users do not
+have to answer them every time.
 
 ```js
 // index.js
@@ -77,18 +77,18 @@ module.exports = {
 }
 ```
 
-These particular keys come from inspecting the prompts shipped internally by
-`gasket create` CLI prompts. Without any extensions, the Gasket CLI ships
-these overridable prompts:
+These specific keys correspond to the prompts shipped internally by the `gasket
+create` CLI prompts. Without any extensions, the Gasket CLI provides these
+overridable prompts:
 
-- `appDescription` - `String`
-  - Application desciption placed into `package.json.description`
-- `packageManager` - `String`
-  - Package Manager, typically either `npm` or `yarn`
-- `testPlugin` - `String`
-  - What test suite you would like to setup, either `mocha`, `jest`, or none
-- `destOverride` - `Boolean`
-  - Whether or not to override the contents of a directory bearing the same name
+- `appDescription` - `String`: Application description placed into
+  `package.json.description`.
+- `packageManager` - `String`: Package Manager, typically either `npm` or
+  `yarn`.
+- `testPlugin` - `String`: Specifies which test suite you would like to set up,
+  either `mocha`, `jest`, or none.
+- `destOverride` - `Boolean`: Determines whether or not to override the contents
+  of a directory bearing the same name.
 
 If you want to override further context, you can inspect any plugin with a
 `prompt` lifecycle. For example, this plugin implements a `datastore` prompt:
@@ -126,9 +126,9 @@ module.exports = {
 
 ### Predefined `gasket.config.js`
 
-Presets can also be used to define predetermined config. This will be loaded
-for app-level commands, such as **build** or **start**, and will resolve into
-the generated application's `gasket.config.js`.
+Presets can also be used to define predetermined config. This configuration will
+be loaded for app-level commands, such as **build** or **start**, and will be
+resolved into the generated application's `gasket.config.js`.
 
 ```js
 // index.js
@@ -150,7 +150,7 @@ module.exports = {
 
 Preset config can also set [environment overrides].
 
-### Extending other presets
+### Extending Other Presets
 
 You can also _extend_ other presets by adding them as dependencies to a parent
 preset. For example, by adding:
@@ -168,8 +168,9 @@ preset. For example, by adding:
 }
 ```
 
-`@tv/preset-episodic`'s plugins will be registered when the consuming
-application is loaded, in addition to the ones already present as `dependencies`.
+The plugins from `@tv/preset-episodic` will be registered when the consuming
+application is loaded, in addition to the ones already present as
+`dependencies`.
 
 [babel presets]: https://babeljs.io/docs/en/presets
 [naming conventions]: /packages/gasket-resolve/README.md
