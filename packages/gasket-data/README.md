@@ -4,7 +4,7 @@ Helper package for accessing embedded Gasket Data in the browser.
 
 ## Installation
 
-```
+```bash
 npm i @gasket/data
 ```
 
@@ -29,7 +29,9 @@ console.log(gasketData.something); // interesting
 
 ### Adding Data
 
-To add to the data exposed in `@gasket/data`, you can write to the HTTP response object's `locals.gasketData` property. For example when using the [middleware lifecycle] in a plugin:
+To add to the data exposed in `@gasket/data`, you can write to the HTTP response
+object's `locals.gasketData` property. For example, when using the [middleware
+lifecycle] in a plugin:
 
 ```js
 module.exports = {
@@ -45,7 +47,8 @@ module.exports = {
 };
 ```
 
-The results of `res.locals.gasketData` should then be rendering in a script as described above. Similarly, this can be done in an application lifecycle script:
+The results of `res.locals.gasketData` should then be rendered in a script as
+described above. Similarly, this can be done in an application lifecycle script:
 
 ```js
 // /lifecycles/middleware.js
@@ -64,5 +67,5 @@ module.exports = (gasket, app) => [
 
 <!-- LINKS -->
 
-[middleware lifecycle]:/packages/gasket-plugin-express/README.md#middleware
-[script tag]:https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script
+[middleware lifecycle]: /packages/gasket-plugin-express/README.md#middleware
+[script tag]: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script

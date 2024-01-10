@@ -1,11 +1,11 @@
 # @gasket/fetch
 
-Gasket will utilize the Fetch API as our standard request library. This package
-serves as a proxy for fetch implementations with server-side support.
+Gasket will utilize the Fetch API as our standard request library. This
+package serves as a proxy for fetch implementations with server-side support.
 
 ## Installation
 
-```
+```bash
 npm i @gasket/fetch
 ```
 
@@ -43,8 +43,9 @@ const getSomething = async () => {
 
 ## Reference
 
-- https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
-- https://www.npmjs.com/package/node-fetch
+- [Fetch API on Mozilla Developer
+  Network](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)
+- [node-fetch on npm](https://www.npmjs.com/package/node-fetch)
 
 ## License
 
