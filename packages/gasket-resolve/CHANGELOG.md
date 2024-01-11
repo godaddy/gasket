@@ -1,6 +1,6 @@
 # `@gasket/resolve`
 
-### 6.44.1
+### 6.44.4
 
 - Fix partial package resolutions on Windows ([#653])
 
