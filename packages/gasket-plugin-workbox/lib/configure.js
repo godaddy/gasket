@@ -11,11 +11,9 @@ const {
  * @returns {Promise<Object>} config
  */
 module.exports = async function configure(gasket, config) {
-  const { logger } = gasket;
   const workbox = getWorkboxConfig({ config });
   const basePath = getBasePath({ config });
 
-  if ('assetPrefix' in workbox) logger.warning('DEPRECATED workbox config `assetPrefix` - use `basePath`');
   workbox.basePath = basePath;
 
   const { version } = require('workbox-build/package');
