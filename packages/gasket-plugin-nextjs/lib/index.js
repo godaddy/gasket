@@ -29,18 +29,13 @@ module.exports = {
         first: true // Fixup next -> nextConfig early for reference by other plugins
       },
       handler: function configure(gasket, baseConfig = {}) {
-        const { logger } = gasket;
-        const { next, ...rest } = baseConfig;
-        if (next) {
-          logger.warning('DEPRECATED `next` in Gasket config - use `nextConfig`');
-        }
-        const { nextConfig = next || {} } = baseConfig;
+        const { nextConfig = {} } = baseConfig;
 
         const serviceWorker = {
           webpackRegister: (key) => /_app/.test(key),
           ...(baseConfig.serviceWorker || {})
         };
-        return { ...rest, serviceWorker, nextConfig };
+        return { ...baseConfig, serviceWorker, nextConfig };
       }
     },
     async prompt(gasket, context, { prompt }) {
