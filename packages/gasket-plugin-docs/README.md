@@ -172,8 +172,8 @@ module.exports = {
 }
 ```
 
-The [@gasket/plugin-docsify] hooks this lifecycle, to render the docs using
-Docsify.
+The [@gasket/plugin-docusaurus] hooks this lifecycle, to render the docs using
+Docusaurus.
 
 ### docsGenerate
 
@@ -246,7 +246,7 @@ serve the content in a more viewable fashion for the user.
 [DocsTransformHandler]: docs/api.md#DocsTransformHandler
 
 [@gasket/plugin-metadata]: /packages/gasket-plugin-metadata/README.md
-[@gasket/plugin-docsify]: /packages/gasket-plugin-docsify/README.md
+[@gasket/plugin-docusaurus]: /packages/gasket-plugin-docusaurus/README.md
 [metadata]: /packages/gasket-plugin-metadata/README.md
 
 [rustdoc]:https://doc.rust-lang.org/rustdoc/
