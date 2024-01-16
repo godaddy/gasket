@@ -31,7 +31,7 @@ const depVersions = {
   'nyc': '^15.1.0',
   'proxyquire': '^2.1.3',
 
-  'jest': '^29.3.1',
+  'jest': '^29.7.0',
 
   'react': '^18.0.0',
   'react-dom': '^18.0.0',
@@ -43,11 +43,11 @@ const depVersions = {
   'jsdom': '^20.0.0',
 
   'babel-eslint': '^10.1.0',
-  'eslint': '^8.7.0',
-  'eslint-config-godaddy': '^7.0.0',
+  'eslint': '^8.56.0',
+  'eslint-config-godaddy': '^7.0.2',
   'eslint-config-godaddy-react': '^9.0.0',
   'eslint-plugin-json': '^3.1.0',
-  'eslint-plugin-jest': '^27.2.1',
+  'eslint-plugin-jest': '^27.6.3',
   'eslint-plugin-mocha': '^10.0.3',
   'eslint-plugin-react': '^7.22.0',
   'eslint-plugin-unicorn': '^44.0.0',
