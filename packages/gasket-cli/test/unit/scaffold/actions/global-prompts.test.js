@@ -5,8 +5,7 @@ jest.mock('inquirer', () => ({ prompt: mockPromptStub }));
 const globalPrompts = require('../../../../src/scaffold/actions/global-prompts');
 
 describe('globalPrompts', () => {
-  let sandbox, mockContext;
-  let mockPromptStub;
+  let mockContext;
   let chooseAppDescription, choosePackageManager, chooseTestPlugin, allowExtantOverwriting;
 
   beforeEach(() => {
@@ -20,18 +19,6 @@ describe('globalPrompts', () => {
 
     mockPromptStub.mockReturnValue({});
 
-    // mockImports = {
-    //   'inquirer': {
-    //     prompt: mockPromptStub
-    //   },
-    //   '../action-wrapper': require('../../../helpers').mockActionWrapper
-    // };
-
-    // globalPrompts = proxyquire('../../../../src/scaffold/actions/global-prompts', mockImports);
-
-    //
-    // Get the individual prompts. These are ordered in the action.
-    //
     [
       chooseAppDescription,
       choosePackageManager,
@@ -41,18 +28,18 @@ describe('globalPrompts', () => {
   });
 
   afterEach(() => {
-    // sandbox.restore();
+    jest.clearAllMocks();
   });
 
   it('is decorated action', async () => {
-    expect(globalPrompts).property('wrapped');
+    expect(globalPrompts).toHaveProperty('wrapped');
   });
 
   it('executes question functions with context', async () => {
-    mockPromptStub.returns({});
+    mockPromptStub.mockReturnValue({});
     await globalPrompts(mockContext);
 
-    expect(mockPromptStub).is.called(3);
+    expect(mockPromptStub).toHaveBeenCalledTimes(3);
   });
 
   describe('packageManager', () => {
@@ -61,36 +48,36 @@ describe('globalPrompts', () => {
         mockContext.packageManager = manager;
         await choosePackageManager(mockContext, mockPromptStub);
 
-        expect(mockPromptStub).not.called();
+        expect(mockPromptStub).not.toHaveBeenCalled();
       });
 
       it(`[${manager}] prompts if packageManager not set in context`, async () => {
-        mockPromptStub.returns({ packageManager: manager });
+        mockPromptStub.mockReturnValue({ packageManager: manager });
         await choosePackageManager(mockContext, mockPromptStub);
 
-        expect(mockPromptStub).is.called();
-        expect(mockPromptStub.args[0][0][0]).property('name', 'packageManager');
+        expect(mockPromptStub).toHaveBeenCalled();
+        expect(mockPromptStub.mock.calls[0][0][0]).toHaveProperty('name', 'packageManager');
       });
 
       it(`[${manager}] sets packageManager in context`, async () => {
-        mockPromptStub.returns({ packageManager: manager });
+        mockPromptStub.mockReturnValue({ packageManager: manager });
         await choosePackageManager(mockContext, mockPromptStub);
 
-        expect(mockContext).property('packageManager', manager);
+        expect(mockContext).toHaveProperty('packageManager', manager);
       });
 
       it(`[${manager}] sets package manager commands in context`, async () => {
-        mockPromptStub.returns({ packageManager: manager });
+        mockPromptStub.mockReturnValue({ packageManager: manager });
         await choosePackageManager(mockContext, mockPromptStub);
 
-        expect(mockContext).property('installCmd', `${manager} install`);
+        expect(mockContext).toHaveProperty('installCmd', `${manager} install`);
       });
 
       it(`[${manager}] sets package manager commands in context even when packageManager is already set in context`, async () => {
         mockContext.packageManager = manager;
         await choosePackageManager(mockContext, mockPromptStub);
 
-        expect(mockContext).property('installCmd', `${manager} install`);
+        expect(mockContext).toHaveProperty('installCmd', `${manager} install`);
       });
     });
   });
@@ -101,22 +88,22 @@ describe('globalPrompts', () => {
       mockContext.appDescription = 'My app description';
       await chooseAppDescription(mockContext, mockPromptStub);
 
-      expect(mockPromptStub).not.called();
+      expect(mockPromptStub).not.toHaveBeenCalled();
     });
 
     it('prompts if appDescription not set in context', async () => {
-      mockPromptStub.returns({ appDescription: 'Some description' });
+      mockPromptStub.mockReturnValue({ appDescription: 'Some description' });
       await chooseAppDescription(mockContext, mockPromptStub);
 
-      expect(mockPromptStub).is.called();
-      expect(mockPromptStub.args[0][0][0]).property('name', 'appDescription');
+      expect(mockPromptStub).toHaveBeenCalled();
+      expect(mockPromptStub.mock.calls[0][0][0]).toHaveProperty('name', 'appDescription');
     });
 
     it('sets appDescription in context', async () => {
-      mockPromptStub.returns({ appDescription: 'Some description' });
+      mockPromptStub.mockReturnValue({ appDescription: 'Some description' });
       await chooseAppDescription(mockContext, mockPromptStub);
 
-      expect(mockContext).property('appDescription', 'Some description');
+      expect(mockContext).toHaveProperty('appDescription', 'Some description');
     });
   });
 
@@ -126,14 +113,14 @@ describe('globalPrompts', () => {
       mockContext.testPlugin = 'bogus';
       await chooseTestPlugin(mockContext, mockPromptStub);
 
-      expect(mockPromptStub).not.called();
+      expect(mockPromptStub).not.toHaveBeenCalled();
     });
 
     it('does not prompt if a known test plugin included in context plugins', async () => {
       mockContext.plugins = ['@gasket/mocha'];
       await chooseTestPlugin(mockContext, mockPromptStub);
 
-      expect(mockPromptStub).not.called();
+      expect(mockPromptStub).not.toHaveBeenCalled();
     });
 
     it('does not prompt if a known test plugin included by preset', async () => {
@@ -144,55 +131,54 @@ describe('globalPrompts', () => {
       }];
       await chooseTestPlugin(mockContext, mockPromptStub);
 
-      expect(mockPromptStub).not.called();
+      expect(mockPromptStub).not.toHaveBeenCalled();
     });
 
     it('prompts if testPlugin not set in context', async () => {
-      mockPromptStub.returns({ testPlugin: 'bogus-plugin' });
+      mockPromptStub.mockReturnValue({ testPlugin: 'bogus-plugin' });
       await chooseTestPlugin(mockContext, mockPromptStub);
 
-      expect(mockPromptStub).is.called();
-      expect(mockPromptStub.args[0][0][0]).property('name', 'testPlugin');
+      expect(mockPromptStub).toHaveBeenCalled();
+      expect(mockPromptStub.mock.calls[0][0][0]).toHaveProperty('name', 'testPlugin');
     });
 
     it('prompts if a known test plugin not included in context plugins', async () => {
       mockContext.plugins = ['gasket-plugin-unknown-test'];
-      mockPromptStub.returns({ testPlugin: 'bogus' });
+      mockPromptStub.mockReturnValue({ testPlugin: 'bogus' });
       await chooseTestPlugin(mockContext, mockPromptStub);
-
-      expect(mockPromptStub).is.called();
-      expect(mockPromptStub.args[0][0][0]).property('name', 'testPlugin');
+      expect(mockPromptStub).toHaveBeenCalled();
+      expect(mockPromptStub.mock.calls[0][0][0]).toHaveProperty('name', 'testPlugin');
     });
 
     it('sets testPlugin in context', async () => {
       delete mockContext.testPlugin;
-      mockPromptStub.returns({ testPlugin: 'bogus' });
+      mockPromptStub.mockReturnValue({ testPlugin: 'bogus' });
       await chooseTestPlugin(mockContext, mockPromptStub);
 
-      expect(mockContext).property('testPlugin', 'bogus');
+      expect(mockContext).toHaveProperty('testPlugin', 'bogus');
     });
   });
 
   describe('allowExtantOverwriting', () => {
     it('does not set confirm if not an extant directory', async () => {
       await allowExtantOverwriting(mockContext, mockPromptStub);
-      expect(mockContext).does.not.own('destOverride');
+      expect(mockContext).not.toContain('destOverride');
     });
 
     it('sets confirm in context', async () => {
-      mockPromptStub.returns({ destOverride: 'roger roger' });
+      mockPromptStub.mockReturnValue({ destOverride: 'roger roger' });
       mockContext.extant = true;
       await allowExtantOverwriting(mockContext, mockPromptStub);
-      expect(mockContext).property('destOverride', 'roger roger');
-      expect(mockPromptStub).is.called();
+      expect(mockContext).toHaveProperty('destOverride', 'roger roger');
+      expect(mockPromptStub).toHaveBeenCalled();
     });
 
     it('retains destOverride in context', async () => {
       mockContext.extant = true;
       mockContext.destOverride = true;
       await allowExtantOverwriting(mockContext, mockPromptStub);
-      expect(mockContext).property('destOverride', true);
-      expect(mockPromptStub).is.not.called();
+      expect(mockContext).toHaveProperty('destOverride', true);
+      expect(mockPromptStub).not.toHaveBeenCalled();
     });
   });
 });
