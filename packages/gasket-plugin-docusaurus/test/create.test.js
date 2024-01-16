@@ -16,5 +16,5 @@ describe('createHook', () => {
       '@docusaurus/core': expect.any(String),
       '@docusaurus/preset-classic': expect.any(String)
     }));
-  })
+  });
 });

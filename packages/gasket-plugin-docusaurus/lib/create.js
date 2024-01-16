@@ -5,4 +5,4 @@ module.exports = async function create(gasket, { pkg }) {
     '@docusaurus/core': devDependencies['@docusaurus/core'],
     '@docusaurus/preset-classic': devDependencies['@docusaurus/preset-classic']
   });
-}
+};

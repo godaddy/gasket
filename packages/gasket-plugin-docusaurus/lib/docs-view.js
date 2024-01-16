@@ -2,7 +2,7 @@ const defaultsDeep = require('lodash.defaultsdeep');
 const { existsSync } = require('fs');
 const { writeFile } = require('fs').promises;
 const path = require('path');
-const { requireWithInstall, runShellCommand, tryRequire } = require('@gasket/utils');
+const { tryRequire } = require('@gasket/utils');
 const generateDefaultConfig = require('./generate-default-config');
 const pluginConfigFile = 'docusaurus.config.js';
 const defaultConfig = {
@@ -10,17 +10,16 @@ const defaultConfig = {
   host: 'localhost'
 };
 
-function checkDevDependencies(gasket) {
+function checkDevDependencies() {
   const preset = tryRequire('@docusaurus/preset-classic');
   const core = tryRequire('@docusaurus/core');
   if (!preset || !core) {
-    gasket.logger.error('Missing devDependencies. Please run `npm i -D @docusaurus/core @docusaurus/preset-classic`');
-    process.exit(1);
+    throw new Error('Missing devDependencies. Please run `npm i -D @docusaurus/core @docusaurus/preset-classic`');
   }
 }
 
 module.exports = async function docsView(gasket) {
-  checkDevDependencies(gasket);
+  checkDevDependencies();
   const { start } = require('@docusaurus/core/lib');
   const { config } = gasket;
   const { name } = gasket.metadata.app;
