@@ -42,9 +42,9 @@
     "node-fetch": "^2.6.7"
   },
   "devDependencies": {
-    "@babel/core": "^7.16.10",
+    "@babel/core": "^7.23.7",
     "@babel/plugin-transform-runtime": "^7.12.10",
-    "@babel/preset-env": "^7.12.10",
+    "@babel/preset-env": "^7.23.8",
     "@babel/register": "^7.12.10",
     "core-js": "^3.6.5",
     "cross-env": "^7.0.3",

@@ -15,13 +15,13 @@ const projectRoot = path.resolve(__dirname, '..');
  */
 const depVersions = {
   '@babel/cli': '^7.12.10',
-  '@babel/core': '^7.16.10',
-  '@babel/node': '^7.12.10',
+  '@babel/core': '^7.23.7',
+  '@babel/node': '^7.22.19',
   '@babel/runtime': '^7.12.5',
   '@babel/register': '^7.12.10',
   '@babel/plugin-transform-runtime': '^7.12.10',
-  '@babel/preset-env': '^7.12.10',
-  '@babel/preset-react': '^7.12.10',
+  '@babel/preset-env': '^7.23.8',
+  '@babel/preset-react': '^7.23.3',
 
   'assume': '^2.3.0',
   'sinon': '^14.0.0',
@@ -33,7 +33,7 @@ const depVersions = {
 
   'jest': '^29.7.0',
 
-  'react': '^18.0.0',
+  'react': '^18.2.0',
   'react-dom': '^18.0.0',
   'react-intl': '^6.0.0',
   'prop-types': '^15.7.2',
@@ -48,7 +48,7 @@ const depVersions = {
   'eslint-config-godaddy-react': '^9.0.0',
   'eslint-plugin-json': '^3.1.0',
   'eslint-plugin-jest': '^27.6.3',
-  'eslint-plugin-mocha': '^10.0.3',
+  'eslint-plugin-mocha': '^10.2.0',
   'eslint-plugin-react': '^7.22.0',
   'eslint-plugin-unicorn': '^44.0.0',
 

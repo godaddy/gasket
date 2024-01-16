@@ -45,7 +45,7 @@
     "fastify": "^4.1.0"
   },
   "devDependencies": {
-    "@babel/preset-react": "^7.12.10",
+    "@babel/preset-react": "^7.23.3",
     "@gasket/assets": "^6.39.0",
     "@gasket/engine": "^6.44.4",
     "@gasket/nextjs": "^6.43.0",
@@ -62,7 +62,7 @@
     "next": "13.1.1",
     "next-redux-wrapper": "^8.0.0",
     "prop-types": "^15.7.2",
-    "react": "^18.0.0",
+    "react": "^18.2.0",
     "react-dom": "^18.0.0"
   },
   "peerDependencies": {
