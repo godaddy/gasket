@@ -1,22 +1,10 @@
-const sinon = require('sinon');
-const assume = require('assume');
-const proxyquire = require('proxyquire');
-
+const linkStub = jest.fn();
+const linkModules = require('../../../../src/scaffold/actions/link-modules');
 
 describe('linkModules', () => {
-  let sandbox, mockContext, mockImports, linkModules;
-  let linkStub;
+  let mockContext;
 
   beforeEach(() => {
-    sandbox = sinon.createSandbox();
-    linkStub = sandbox.stub();
-
-    mockImports = {
-      '../action-wrapper': require('../../../helpers').mockActionWrapper
-    };
-
-    linkModules = proxyquire('../../../../src/scaffold/actions/link-modules', mockImports);
-
     mockContext = {
       appName: 'my-app',
       pkgLinks: ['some-plugin'],
@@ -24,23 +12,19 @@ describe('linkModules', () => {
     };
   });
 
-  afterEach(() => {
-    sandbox.restore();
-  });
-
   it('is decorated action', async () => {
-    assume(linkModules).property('wrapped');
+    expect(linkModules).toHaveProperty('wrapped');
   });
 
   it('does not do linking if no pkgLinks in context', async () => {
     delete mockContext.pkgLinks;
     await linkModules(mockContext);
-    assume(linkStub).not.called();
+    expect(linkStub).not.toHaveBeenCalled();
   });
 
   it('executes link with pkgLinks from context', async () => {
     await linkModules(mockContext);
-    assume(linkStub).is.called();
-    assume(linkStub.args[0][0]).eqls(mockContext.pkgLinks);
+    expect(linkStub).toHaveBeenCalled();
+    expect(linkStub.mock.calls[0][0]).toEqual(mockContext.pkgLinks);
   });
 });
