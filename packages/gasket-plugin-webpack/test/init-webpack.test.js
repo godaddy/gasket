@@ -1,7 +1,7 @@
 /* eslint-disable no-sync */
 const initWebpack = require('../lib/init-webpack');
 
-describe('deprecated merges', function () {
+describe('init webpack', function () {
   let mockGasket, mockContext, mockConfig;
 
   beforeEach(function () {
