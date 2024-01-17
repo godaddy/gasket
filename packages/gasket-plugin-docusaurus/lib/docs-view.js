@@ -2,7 +2,7 @@ const defaultsDeep = require('lodash.defaultsdeep');
 const { existsSync } = require('fs');
 const { writeFile } = require('fs').promises;
 const path = require('path');
-const { requireWithInstall, runShellCommand, tryRequire } = require('@gasket/utils');
+const { tryRequire } = require('@gasket/utils');
 const generateDefaultConfig = require('./generate-default-config');
 const pluginConfigFile = 'docusaurus.config.js';
 const defaultConfig = {
@@ -10,17 +10,17 @@ const defaultConfig = {
   host: 'localhost'
 };
 
-async function handleDevDependencies(gasket) {
+function checkDevDependencies() {
   const preset = tryRequire('@docusaurus/preset-classic');
-  if (!preset) {
-    gasket.logger.info('Installing devDependencie(s) - installing "@docusaurus/preset-classic" with "npm" - save as a devDependency to avoid this');
-    await runShellCommand('npm', ['install', '@docusaurus/preset-classic', '--no-save']);
+  const core = tryRequire('@docusaurus/core');
+  if (!preset || !core) {
+    throw new Error('Missing devDependencies. Please run `npm i -D @docusaurus/core @docusaurus/preset-classic`');
   }
 }
 
 module.exports = async function docsView(gasket) {
-  await handleDevDependencies(gasket);
-  const { start } = await requireWithInstall('@docusaurus/core/lib', gasket);
+  checkDevDependencies();
+  const { start } = require('@docusaurus/core/lib');
   const { config } = gasket;
   const { name } = gasket.metadata.app;
   const userConfig = gasket.config.docusaurus;

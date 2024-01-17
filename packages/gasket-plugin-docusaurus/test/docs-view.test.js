@@ -1,11 +1,8 @@
 const path = require('path');
-const mockRequireWithInstall = jest.fn();
 const mockStartStub = jest.fn();
-const mockTryRequireStub = jest.fn();
-const mockGasketLoggerInfo = jest.fn();
-const mockRunShellCommand = jest.fn();
 const mockWriteFileStub = jest.fn();
 const mockExistsStub = jest.fn();
+const mockTryRequireStub = jest.fn();
 
 jest.mock('fs', () => {
   const mod = jest.requireActual('fs');
@@ -18,12 +15,13 @@ jest.mock('fs', () => {
     }
   };
 });
-jest.mock('@gasket/utils', () => ({
-  requireWithInstall: mockRequireWithInstall,
-  tryRequire: mockTryRequireStub,
-  runShellCommand: mockRunShellCommand
+jest.mock('@docusaurus/core/lib', () => ({
+  start: mockStartStub
 }));
-jest.mock('@docusaurus/preset-classic', () => ({}));
+
+jest.mock('@gasket/utils', () => ({
+  tryRequire: mockTryRequireStub
+}));
 
 const pluginConfigFile = 'docusaurus.config.js';
 const docsView = require('../lib/docs-view');
@@ -33,9 +31,7 @@ describe('docsView', () => {
   let mockGasket;
 
   beforeEach(() => {
-    jest.clearAllMocks();
-    mockRequireWithInstall.mockReturnValue({ start: mockStartStub });
-
+    mockTryRequireStub.mockReturnValue(true);
     mockGasket = {
       metadata: {
         app: {
@@ -50,9 +46,6 @@ describe('docsView', () => {
           rootDir: 'some-root',
           docsDir: 'sub-dir'
         }
-      },
-      logger: {
-        info: mockGasketLoggerInfo
       }
     };
   });
@@ -87,21 +80,10 @@ describe('docsView', () => {
     });
   });
 
-  it('installs devDependencies if not present', async function () {
+  it('throw on missing devDependencies', async function () {
     mockTryRequireStub.mockReturnValue(false);
-    await docsView(mockGasket);
-    expect(mockGasketLoggerInfo).toHaveBeenCalledWith('Installing devDependencie(s) - installing "@docusaurus/preset-classic" with "npm" - save as a devDependency to avoid this');
-    expect(mockRunShellCommand).toHaveBeenCalledWith('npm', ['install', '@docusaurus/preset-classic', '--no-save']);
-  });
-
-  it('does not install devDependencies if present', async function () {
-    mockTryRequireStub.mockReturnValue(true);
-    await docsView(mockGasket);
-    expect(mockRunShellCommand).not.toHaveBeenCalled();
-  });
-
-  it('uses requireWithInstall to load @docusaurus/core/lib', async function () {
-    await docsView(mockGasket);
-    expect(mockRequireWithInstall).toHaveBeenCalledWith('@docusaurus/core/lib', mockGasket);
+    expect(mockTryRequireStub).toHaveBeenCalledWith('@docusaurus/preset-classic');
+    expect(mockTryRequireStub).toHaveBeenCalledWith('@docusaurus/core');
+    await expect(async () => await docsView(mockGasket)).rejects.toThrow();
   });
 });
