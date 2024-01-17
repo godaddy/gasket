@@ -1,5 +1,9 @@
 # `@gasket/plugin-docusaurus`
 
+### 6.44.5
+
+- add docusaurus to devDeps, add dep check, add create hook ([#658])
+
 ### 6.44.3
 
 - Lazy load Docusaurus, update devDependencies ([#650])
@@ -39,3 +43,4 @@
 [#460]: https://github.com/godaddy/gasket/pull/460
 [#481]: https://github.com/godaddy/gasket/pull/481
 [#650]: https://github.com/godaddy/gasket/pull/650
+[#658]: https://github.com/godaddy/gasket/pull/658
