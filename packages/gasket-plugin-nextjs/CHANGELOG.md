@@ -1,5 +1,7 @@
 # `@gasket/plugin-nextjs`
 
+- Removed support for deprecated `next` config support ([#655])
+
 ### 6.43.0
 
 - Upgrade to Next.js 13.1.1 ([#614])
@@ -240,3 +242,4 @@
 [#541]: https://github.com/godaddy/gasket/pull/541
 [#556]: https://github.com/godaddy/gasket/pull/556
 [#614]: https://github.com/godaddy/gasket/pull/614
+[#655]: https://github.com/godaddy/gasket/pull/655
