@@ -41,10 +41,10 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-helper-intl",
   "dependencies": {
-    "lodash.merge": "^4.6.0"
+    "lodash.merge": "^4.6.2"
   },
   "devDependencies": {
-    "@godaddy/dmd": "^1.0.0",
+    "@godaddy/dmd": "^1.0.4",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
     "eslint-config-godaddy": "^7.0.2",
