@@ -68,7 +68,7 @@ class Resolver {
       return this.resolve(moduleName);
     } catch (err) {
       debug('try-resolve error', err.message);
-      if (err.code === 'MODULE_NOT_FOUND' && fixSep(err.message).includes(moduleName) ||
+      if (err.code === 'MODULE_NOT_FOUND' && fixSep(err.message).includes(fixSep(moduleName)) ||
         err.code === 'ERR_PACKAGE_PATH_NOT_EXPORTED'
       ) return null;
 
@@ -88,7 +88,7 @@ class Resolver {
       return this.require(moduleName);
     } catch (err) {
       debug('try-require error', err.message);
-      if (err.code === 'MODULE_NOT_FOUND' && fixSep(err.message).includes(moduleName) ||
+      if (err.code === 'MODULE_NOT_FOUND' && fixSep(err.message).includes(fixSep(moduleName)) ||
         err.code === 'ERR_PACKAGE_PATH_NOT_EXPORTED'
       ) return null;
 
