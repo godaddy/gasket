@@ -44,8 +44,6 @@ Wrapper class for executing commands for a given package manager
 | options | `object` | Options |
 | \[options.packageManager\] | `string` | Name of manager, either `npm` (default) or `yarn` |
 | options.dest | `string` | Target directory where `node_module` should exist |
-| \[options.npmconfig\] | `string` | DEPRECATED Path to userconfig |
-
 
 ### packageManager.exec(cmd, args)
 

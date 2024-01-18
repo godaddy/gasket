@@ -1,8 +1,6 @@
 const assume = require('assume');
-const path = require('path');
 const sinon = require('sinon');
 const proxyquire = require('proxyquire');
-const { homedir } = require('os');
 
 describe('fetcher', () => {
   let Fetcher;
@@ -24,18 +22,6 @@ describe('fetcher', () => {
   });
 
   describe('#fetch', function () {
-    it('passes npmconfig to npm pack when defined', async () => {
-      const npmconfig = path.join(homedir(), 'whatever', '.npmrc');
-      const packageName = 'whatever';
-      const fetcher = new Fetcher({
-        npmconfig,
-        packageName
-      });
-
-      await fetcher.fetch();
-      assume(ManagerStub.spawnNpm.firstCall.args[0]).contains('--userconfig', npmconfig);
-    });
-
     it('allows the cwd to be configured for package fetching', async () => {
       const fetcher = new Fetcher({});
 
@@ -46,10 +32,8 @@ describe('fetcher', () => {
 
   describe('#clone', function () {
     it('fetches the package into the tmp dir', async () => {
-      const npmconfig = path.join(homedir(), 'whatever', '.npmrc');
       const packageName = 'whatever';
       const fetcher = new Fetcher({
-        npmconfig,
         packageName
       });
 

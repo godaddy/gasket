@@ -1,5 +1,7 @@
 # `@gasket/cli`
 
+- Removed support for deprecated `--npmconfig` flag ([#647])
+
 ### 6.41.1
 
 - Fix prompt handler type declaration ([#617])
@@ -430,3 +432,4 @@ upon `gasket create`
 [#547]: https://github.com/godaddy/gasket/pull/547
 [#607]: https://github.com/godaddy/gasket/pull/607
 [#617]: https://github.com/godaddy/gasket/pull/617
+[#647]: https://github.com/godaddy/gasket/pull/647
