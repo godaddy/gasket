@@ -1,5 +1,7 @@
 # `@gasket/utils`
 
+- Removed support for deprecated `--npmconfig` flag ([#647])
+
 ### 6.41.0
 
 - Add diagnostic logging for environment/config resolution when a `DEBUG=gasket:*` environment variable is set ([#607])
@@ -81,3 +83,4 @@
 [#492]: https://github.com/godaddy/gasket/pull/492
 [#496]: https://github.com/godaddy/gasket/pull/496
 [#607]: https://github.com/godaddy/gasket/pull/607
+[#647]: https://github.com/godaddy/gasket/pull/647
