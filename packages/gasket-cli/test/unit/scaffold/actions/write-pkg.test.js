@@ -1,6 +1,4 @@
-const sinon = require('sinon');
-const assume = require('assume');
-const proxyquire = require('proxyquire');
+
 const path = require('path');
 const ConfigBuilder = require('../../../../src/scaffold/config-builder');
 
@@ -9,8 +7,6 @@ describe('write-pkg', () => {
   let writeStub;
 
   beforeEach(() => {
-    sandbox = sinon.createSandbox();
-
     mockContext = {
       cwd: '/some/path',
       dest: '/some/path/my-app',
@@ -34,7 +30,7 @@ describe('write-pkg', () => {
   });
 
   afterEach(() => {
-    sandbox.restore();
+
   });
 
   it('is decorated action', async () => {
