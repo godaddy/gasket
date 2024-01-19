@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-docsify",
-  "version": "6.44.7",
+  "version": "6.45.0",
   "description": "View collated docs with Docsify",
   "main": "lib",
   "types": "lib/index.d.ts",
@@ -45,7 +45,7 @@
     "mkdirp": "^1.0.4"
   },
   "devDependencies": {
-    "@gasket/engine": "^6.44.4",
+    "@gasket/engine": "^6.45.0",
     "cross-env": "^7.0.3",
     "docsify": "^4.13.1",
     "docsify-cli": "^4.4.4",
