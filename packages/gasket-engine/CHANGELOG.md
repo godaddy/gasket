@@ -1,6 +1,12 @@
 # `@gasket/engine`
 
-- Fix incorrect location of the command structure in the TypeScript definition
+### 6.45.0
+
+- Fix types add plugins to environments ([#638])
+
+### 6.43.0
+
+- Fix incorrect location of the command structure in the TypeScript definition ([#627])
 
 ### 6.39.3
 
@@ -124,5 +130,7 @@
 [#594]: https://github.com/godaddy/gasket/pull/594
 [#596]: https://github.com/godaddy/gasket/pull/596
 [#599]: https://github.com/godaddy/gasket/pull/599
+[#627]: https://github.com/godaddy/gasket/pull/627
+[#638]: https://github.com/godaddy/gasket/pull/638
 
 [Loader]:/packages/gasket-resolve/docs/api.md#loader
