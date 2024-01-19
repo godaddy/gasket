@@ -38,15 +38,15 @@
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-service-worker",
   "dependencies": {
     "@types/lru-cache": "^5.1.1",
-    "@types/uglify-js": "^3.13.1",
+    "@types/uglify-js": "^3.17.4",
     "deepmerge": "^4.3.1",
     "lru-cache": "^5.1.1",
     "mkdirp": "^1.0.4",
-    "uglify-js": "^3.5.3",
-    "webpack-inject-plugin": "^1.5.4"
+    "uglify-js": "^3.17.4",
+    "webpack-inject-plugin": "^1.5.5"
   },
   "devDependencies": {
-    "@gasket/engine": "^6.43.0",
+    "@gasket/engine": "^6.44.4",
     "eslint": "^8.56.0",
     "eslint-config-godaddy": "^7.0.2",
     "eslint-plugin-jest": "^27.6.3",

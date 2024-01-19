@@ -17,7 +17,7 @@ const depVersions = {
   '@babel/cli': '^7.23.4',
   '@babel/core': '^7.23.7',
   '@babel/node': '^7.22.19',
-  '@babel/runtime': '^7.12.5',
+  '@babel/runtime': '^7.23.8',
   '@babel/register': '^7.23.7',
   '@babel/plugin-transform-runtime': '^7.23.7',
   '@babel/preset-env': '^7.23.8',
@@ -59,8 +59,8 @@ const depVersions = {
   'glob': '^8.1.0',
   'semver': '^7.5.4',
   'lodash.defaultsdeep': '^4.6.1',
-  'webpack': '^5.21.2',
-  'serve-static': '^1.14.1',
+  'webpack': '^5.89.0',
+  'serve-static': '^1.15.0',
   'cross-env': '^7.0.3'
 };
 

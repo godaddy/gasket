@@ -39,11 +39,11 @@
   "dependencies": {
     "@types/workbox-build": "^5.0.1",
     "deepmerge": "^4.3.1",
-    "serve-static": "^1.14.1",
+    "serve-static": "^1.15.0",
     "workbox-build": "^4.1.0"
   },
   "devDependencies": {
-    "@gasket/engine": "^6.43.0",
+    "@gasket/engine": "^6.44.4",
     "eslint": "^8.56.0",
     "eslint-config-godaddy": "^7.0.2",
     "eslint-plugin-jest": "^27.6.3",

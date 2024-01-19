@@ -38,15 +38,15 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-https",
   "dependencies": {
-    "@godaddy/terminus": "^4.2.0",
+    "@godaddy/terminus": "^4.12.1",
     "@types/node": "^18.0.0",
-    "create-servers": "^3.2.0",
+    "create-servers": "^3.3.0",
     "diagnostics": "^2.0.2",
     "errs": "^0.3.2",
     "one-time": "^1.0.0"
   },
   "devDependencies": {
-    "@gasket/engine": "^6.44.0",
+    "@gasket/engine": "^6.44.4",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
     "eslint-config-godaddy": "^7.0.2",

@@ -42,8 +42,8 @@
     "split": "^1.0.1"
   },
   "devDependencies": {
-    "@gasket/engine": "^6.43.0",
-    "@types/morgan": "^1.9.3",
+    "@gasket/engine": "^6.44.4",
+    "@types/morgan": "^1.9.9",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
     "eslint-config-godaddy": "^7.0.2",

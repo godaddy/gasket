@@ -37,13 +37,13 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-fastify",
   "dependencies": {
-    "compression": "^1.7.2",
-    "cookie-parser": "^1.4.3",
+    "compression": "^1.7.4",
+    "cookie-parser": "^1.4.6",
     "diagnostics": "^2.0.2",
     "middie": "^5.4.0"
   },
   "devDependencies": {
-    "@gasket/engine": "^6.43.0",
+    "@gasket/engine": "^6.44.4",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
     "eslint-config-godaddy": "^7.0.2",

@@ -45,10 +45,10 @@
     "mkdirp": "^1.0.4"
   },
   "devDependencies": {
-    "@gasket/engine": "^6.43.0",
+    "@gasket/engine": "^6.44.4",
     "cross-env": "^7.0.3",
-    "docsify": "^4.10.2",
-    "docsify-cli": "^4.4.2",
+    "docsify": "^4.13.1",
+    "docsify-cli": "^4.4.4",
     "eslint": "^8.56.0",
     "eslint-config-godaddy": "^7.0.2",
     "eslint-plugin-jest": "^27.6.3",

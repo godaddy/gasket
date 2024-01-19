@@ -47,9 +47,9 @@
     "rimraf": "^3.0.2"
   },
   "devDependencies": {
-    "@gasket/engine": "^6.43.0",
-    "@gasket/plugin-metadata": "^6.43.0",
-    "@godaddy/dmd": "^1.0.0",
+    "@gasket/engine": "^6.44.4",
+    "@gasket/plugin-metadata": "^6.44.4",
+    "@godaddy/dmd": "^1.0.4",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
     "eslint-config-godaddy": "^7.0.2",

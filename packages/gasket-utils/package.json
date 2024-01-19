@@ -39,13 +39,13 @@
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-utils",
   "dependencies": {
     "concat-stream": "^2.0.0",
-    "cross-spawn": "^7.0.1",
+    "cross-spawn": "^7.0.3",
     "diagnostics": "^2.0.2",
     "lodash.defaultsdeep": "^4.6.1"
   },
   "devDependencies": {
-    "@gasket/engine": "^6.43.0",
-    "@godaddy/dmd": "^1.0.0",
+    "@gasket/engine": "^6.44.4",
+    "@godaddy/dmd": "^1.0.4",
     "abort-controller": "^3.0.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",

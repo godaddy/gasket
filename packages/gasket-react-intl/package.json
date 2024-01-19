@@ -44,11 +44,11 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-react-intl",
   "dependencies": {
-    "@babel/runtime": "^7.12.5",
+    "@babel/runtime": "^7.23.8",
     "@gasket/data": "^6.41.1",
     "@gasket/fetch": "^6.39.0",
     "@gasket/helper-intl": "^6.41.2",
-    "hoist-non-react-statics": "^3.0.0",
+    "hoist-non-react-statics": "^3.3.2",
     "just-extend": "^6.2.0"
   },
   "devDependencies": {
@@ -64,11 +64,11 @@
     "assume-sinon": "^1.1.0",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.1.0",
-    "babel-plugin-root-import": "^6.0.0",
+    "babel-plugin-root-import": "^6.6.0",
     "eslint": "^8.56.0",
     "eslint-config-godaddy-react": "^9.0.1",
     "eslint-plugin-json": "^3.1.0",
-    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-jsx-a11y": "^6.8.0",
     "eslint-plugin-mocha": "^10.2.0",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-unicorn": "^44.0.0",
