@@ -1,45 +1,45 @@
-const sinon = require('sinon');
-const assume = require('assume');
-const proxyquire = require('proxyquire');
+const mockConstructorStub = jest.fn();
+
 const path = require('path');
 const defaultPlugins = require('../../../src/config/default-plugins');
 
+jest.mock('@gasket/engine', () => {
+  return class PluginEngine {
+    constructor() {
+      mockConstructorStub(...arguments)
+    }
+    async exec() {
+
+    }
+  }
+});
+
+const createEngine = require('../../../src/scaffold/create-engine');
+const exp = require('constants');
+
 describe('createEngine', () => {
-  let sandbox, mockImports, mockOpts, createEngine;
-  let pluginEngineSpy;
+  let mockOpts;
 
   beforeEach(() => {
-    sandbox = sinon.createSandbox();
-
     mockOpts = {
       dest: '/some/path/my-app',
       presets: ['bogus-preset'],
       plugins: ['bogus-A-plugin', 'bogus-B-plugin']
     };
-
-    mockImports = {
-      '@gasket/engine': class PluginEngine {
-        async exec() {
-
-        }
-      }
-    };
-
-    pluginEngineSpy = sandbox.spy(mockImports, '@gasket/engine');
-
-
-    createEngine = proxyquire('../../../src/scaffold/create-engine', mockImports);
   });
 
   afterEach(() => {
-    sandbox.restore();
+    jest.clearAllMocks();
   });
 
   it('instantiates PluginEngine with preset from context in array', async () => {
     await createEngine(mockOpts);
-    assume(pluginEngineSpy).calledWithMatch({
-      plugins: { presets: ['bogus-preset'] }
-    });
+    expect(mockConstructorStub).toHaveBeenCalledWith(
+      expect.objectContaining({
+        plugins: expect.objectContaining({ presets: ['bogus-preset'] })
+      }),
+      { resolveFrom: path.join(mockOpts.dest, 'node_modules') }
+    );
   });
 
   it('instantiates PluginEngine if no preset in context', async () => {
@@ -48,23 +48,36 @@ describe('createEngine', () => {
     };
 
     await createEngine(mockOpts);
-    assume(pluginEngineSpy).calledWithMatch({
-      plugins: { presets: [] }
-    });
+    expect(mockConstructorStub).toHaveBeenCalledWith(
+      expect.objectContaining({
+        plugins: expect.objectContaining({ presets: [] })
+      }),
+      { resolveFrom: path.join(mockOpts.dest, 'node_modules') }
+    );
   });
 
   it('instantiates PluginEngine with built-in git-plugin', async () => {
     await createEngine(mockOpts);
-    assume(pluginEngineSpy).calledWithMatch({
-      plugins: { add: [...defaultPlugins, 'bogus-A-plugin', 'bogus-B-plugin'] }
-    });
+    expect(mockConstructorStub).toHaveBeenCalledWith(
+      expect.objectContaining({
+        plugins: expect.objectContaining({
+          add: [...defaultPlugins, 'bogus-A-plugin', 'bogus-B-plugin']
+        })
+      }),
+      { resolveFrom: path.join(mockOpts.dest, 'node_modules') }
+    );
   });
 
   it('instantiates PluginEngine with plugins from context', async () => {
     await createEngine(mockOpts);
-    assume(pluginEngineSpy).calledWithMatch({
-      plugins: { add: [...defaultPlugins, 'bogus-A-plugin', 'bogus-B-plugin'] }
-    });
+    expect(mockConstructorStub).toHaveBeenCalledWith(
+      expect.objectContaining({
+        plugins: expect.objectContaining({
+          add: [...defaultPlugins, 'bogus-A-plugin', 'bogus-B-plugin']
+        })
+      }),
+      { resolveFrom: path.join(mockOpts.dest, 'node_modules') }
+    );
   });
 
   it('instantiates PluginEngine if no plugins in context', async () => {
@@ -73,9 +86,14 @@ describe('createEngine', () => {
     };
 
     await createEngine(mockOpts);
-    assume(pluginEngineSpy).calledWithMatch({
-      plugins: { add: defaultPlugins }
-    });
+    expect(mockConstructorStub).toHaveBeenCalledWith(
+      expect.objectContaining({
+        plugins: expect.objectContaining({
+          add: defaultPlugins
+        })
+      }),
+      { resolveFrom: path.join(mockOpts.dest, 'node_modules') }
+    );
   });
 
   it('instantiates PluginEngine with resolveFrom options', async () => {
@@ -84,6 +102,6 @@ describe('createEngine', () => {
     };
 
     await createEngine(mockOpts);
-    assume(pluginEngineSpy).calledWithMatch(sinon.match.any, { resolveFrom: path.join(mockOpts.dest, 'node_modules') });
+    expect(mockConstructorStub).toHaveBeenCalledWith(expect.anything(), { resolveFrom: path.join(mockOpts.dest, 'node_modules') });
   });
 });

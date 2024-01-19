@@ -1,26 +1,26 @@
-const assume = require('assume');
+const mockPackageManagerStub = jest.fn();
+
+jest.mock('@gasket/utils', () => {
+  return {
+    PackageManager: {
+      spawnNpm: mockPackageManagerStub
+    }
+  }
+});
+
 const path = require('path');
-const sinon = require('sinon');
-const proxyquire = require('proxyquire');
 const { homedir } = require('os');
+const Fetcher = require('../../../src/scaffold/fetcher');
 
 describe('fetcher', () => {
-  let Fetcher;
-  let ManagerStub;
   const stdout = 'example.tr.gz\nits all good';
 
-  function makeFetcher(Manager) {
-    return proxyquire('../../../src/scaffold/fetcher', {
-      '@gasket/utils': { PackageManager: Manager }
-    });
-  }
-
   beforeEach(() => {
-    ManagerStub = {
-      spawnNpm: sinon.stub().resolves({ stdout })
-    };
+    mockPackageManagerStub.mockResolvedValue({ stdout })
+  });
 
-    Fetcher = makeFetcher(ManagerStub);
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
   describe('#fetch', function () {
@@ -33,14 +33,14 @@ describe('fetcher', () => {
       });
 
       await fetcher.fetch();
-      assume(ManagerStub.spawnNpm.firstCall.args[0]).contains('--userconfig', npmconfig);
+      expect(mockPackageManagerStub.mock.calls[0][0]).toContain('--userconfig', npmconfig);
     });
 
     it('allows the cwd to be configured for package fetching', async () => {
       const fetcher = new Fetcher({});
 
       await fetcher.fetch('example', '/foo/bar');
-      assume(ManagerStub.spawnNpm.firstCall.args[1].cwd).equals('/foo/bar');
+      expect(mockPackageManagerStub.mock.calls[0][1].cwd).toEqual('/foo/bar');
     });
   });
 
@@ -53,10 +53,9 @@ describe('fetcher', () => {
         packageName
       });
 
-      fetcher.unpack = sinon.stub().resolves('example');
+      fetcher.unpack = jest.fn().mockResolvedValue('example');
       await fetcher.clone();
-
-      assume(ManagerStub.spawnNpm.firstCall.args[1].cwd).includes(fetcher.tmp.dir);
+      expect(mockPackageManagerStub.mock.calls[0][1].cwd).toContain(fetcher.tmp.dir);
     });
   });
 });
