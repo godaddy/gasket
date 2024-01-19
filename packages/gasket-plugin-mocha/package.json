@@ -38,22 +38,22 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-mocha",
   "devDependencies": {
-    "@babel/core": "^7.16.10",
-    "@babel/plugin-transform-runtime": "^7.12.10",
-    "@babel/preset-env": "^7.12.10",
-    "@babel/preset-react": "^7.12.10",
-    "@babel/register": "^7.12.10",
+    "@babel/core": "^7.23.7",
+    "@babel/plugin-transform-runtime": "^7.23.7",
+    "@babel/preset-env": "^7.23.8",
+    "@babel/preset-react": "^7.23.3",
+    "@babel/register": "^7.23.7",
     "@testing-library/react": "^13.4.0",
     "babel-eslint": "^10.1.0",
-    "eslint": "^8.7.0",
-    "eslint-config-godaddy": "^7.0.0",
+    "eslint": "^8.56.0",
+    "eslint-config-godaddy": "^7.0.2",
     "eslint-plugin-json": "^3.1.0",
-    "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-unicorn": "^44.0.0",
     "global-jsdom": "^8.4.0",
     "jsdom": "^20.0.0",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "eslintConfig": {
     "extends": [
