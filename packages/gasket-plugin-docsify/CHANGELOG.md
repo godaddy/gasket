@@ -1,5 +1,7 @@
 # `@gasket/plugin-docsify`
 
+### 6.44.7
+
 - Fix create command failing to find docsify ([#663])
 
 ### 6.44.2
