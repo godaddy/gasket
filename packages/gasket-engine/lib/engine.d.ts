@@ -93,16 +93,18 @@ declare module '@gasket/engine' {
       ? { [K in keyof T]?: PartialRecursive<T[K]> } | undefined
       : T | undefined
 
-  export type GasketConfigFile = Omit<GasketConfig, 'root' | 'env' | 'command'> & {
-    root?: string,
-    env?: string,
-
+  type Plugins = {
     plugins?: {
       presets?: Array<string>;
       add?: Array<string | Plugin>;
       remove?: Array<string>;
-    },
+    };
+  };
 
-    environments?: Record<string, PartialRecursive<GasketConfig>>
+  export type GasketConfigFile = Omit<GasketConfig, 'root' | 'env' | 'command'> & Plugins & {
+    root?: string,
+    env?: string,
+
+    environments?: Record<string, PartialRecursive<GasketConfig & Plugins>>
   }
 }
