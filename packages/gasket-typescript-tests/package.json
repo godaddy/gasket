@@ -1,7 +1,7 @@
 {
   "name": "@gasket/typescript-tests",
   "private": true,
-  "version": "6.44.4",
+  "version": "6.44.7",
   "description": "Not a published package; hosts unit tests to verify TypeScript support",
   "files": [
     "lib"
@@ -43,8 +43,8 @@
     "@gasket/plugin-analyze": "^6.43.0",
     "@gasket/plugin-command": "^6.43.0",
     "@gasket/plugin-config": "^6.43.0",
-    "@gasket/plugin-docs": "^6.44.6",
-    "@gasket/plugin-docusaurus": "^6.44.5",
+    "@gasket/plugin-docs": "^6.44.2",
+    "@gasket/plugin-docusaurus": "^6.44.3",
     "@gasket/plugin-elastic-apm": "^6.43.0",
     "@gasket/plugin-express": "^6.44.0",
     "@gasket/plugin-https": "^6.44.0",
