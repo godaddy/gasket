@@ -1,4 +1,5 @@
-import Gasket, { MaybeAsync, Plugin } from '@gasket/engine';
+import Gasket from '@gasket/engine';
+import type { GasketConfigFile, MaybeAsync, Plugin  } from '@gasket/engine';
 
 declare module '@gasket/engine' {
   interface HookExecTypes {
@@ -88,5 +89,9 @@ describe('@gasket/engine', () => {
         return gasket.command.id === 'start';
       }
     });
+  });
+
+  it('allows environments to contain plugins', () => {
+    const config: GasketConfigFile = { environments: { dev: { plugins: { add: ['plugin-name'] } } } };
   });
 });
