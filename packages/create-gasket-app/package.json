@@ -1,6 +1,6 @@
 {
   "name": "create-gasket-app",
-  "version": "6.44.4",
+  "version": "6.45.0",
   "description": "starter pack for creating a gasket app",
   "main": "lib",
   "bin": {
@@ -31,7 +31,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/create-gasket-app",
   "dependencies": {
-    "@gasket/cli": "^6.44.4"
+    "@gasket/cli": "^6.45.0"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
