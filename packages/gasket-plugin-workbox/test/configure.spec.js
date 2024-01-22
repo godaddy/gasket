@@ -52,15 +52,6 @@ describe('configure', () => {
       ]));
   });
 
-  it('configures basePath with deprecated assetPrefix', async function () {
-    mockGasket.config.workbox = {
-      assetPrefix: '/some/prefix'
-    };
-    results = await configure(mockGasket, mockGasket.config);
-    expect(results.workbox).toHaveProperty('basePath', '/some/prefix');
-    expect(mockGasket.logger.warning).toHaveBeenCalledWith('DEPRECATED workbox config `assetPrefix` - use `basePath`');
-  });
-
   it('add basePath to script path', async () => {
     mockGasket.config.workbox = {
       basePath: '/some/prefix'
