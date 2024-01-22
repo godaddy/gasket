@@ -93,17 +93,6 @@ describe('configure hook', () => {
     expect(entryName('_app')).toEqual(true);
     expect(entryName('static/runtime/_app')).toEqual(true);
   });
-
-  it('fallback support for `next` from gasket.config', async () => {
-    const gasket = mockGasketApi();
-    delete gasket.config.nextConfig;
-    gasket.config.next = {
-      customConfig: true
-    };
-    const results = configureHook(gasket, gasket.config);
-    expect(results.nextConfig).toHaveProperty('customConfig', true);
-    expect(gasket.logger.warning).toHaveBeenCalledWith(expect.stringContaining('DEPRECATED'));
-  });
 });
 
 describe('express hook', () => {
