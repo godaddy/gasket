@@ -1,5 +1,7 @@
 # `@gasket/plugin-workbox`
 
+- Removed deprecated assetPrefix config support ([#661])
+
 ### 6.34.4
 
 - Upgrade eslint-plugin-unicorn v43 ([#436])
@@ -54,7 +56,7 @@
 
 [#95]:https://github.com/godaddy/gasket/pull/95
 [#166]: https://github.com/godaddy/gasket/pull/166
-[#212]: https://github.com/godaddy/gasket/pull/212\
+[#212]: https://github.com/godaddy/gasket/pull/212
 [#217]: https://github.com/godaddy/gasket/pull/217
 [#247]: https://github.com/godaddy/gasket/pull/247
 [#266]: https://github.com/godaddy/gasket/pull/266
@@ -62,3 +64,4 @@
 [#397]: https://github.com/godaddy/gasket/pull/397
 [#436]: https://github.com/godaddy/gasket/pull/436
 [#457]: https://github.com/godaddy/gasket/pull/457
+[#661]: https://github.com/godaddy/gasket/pull/661

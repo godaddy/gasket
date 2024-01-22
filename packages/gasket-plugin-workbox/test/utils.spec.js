@@ -15,15 +15,8 @@ describe('getWorkboxConfig', () => {
   });
 
   it('returns config from gasket.config.js', () => {
-    const results = utils.getWorkboxConfig(setupGasket({
-      workbox: {
-        assetPrefix: 'BOGUS'
-      }
-    }));
-    expect(results).toEqual({
-      ...utils.defaultConfig,
-      assetPrefix: 'BOGUS'
-    });
+    const results = utils.getWorkboxConfig(setupGasket({}));
+    expect(results).toEqual({ ...utils.defaultConfig });
   });
 });
 
@@ -38,30 +31,11 @@ describe('getBasePath', () => {
     expect(results).toEqual('//cdn-a');
   });
 
-  it('returns the assetPrefix from workbox config', () => {
-    const results = utils.getBasePath(setupGasket({
-      workbox: {
-        assetPrefix: '//cdn-a'
-      }
-    }));
-    expect(results).toEqual('//cdn-a');
-  });
-
   it('returns the basePath from next config', () => {
     const results = utils.getBasePath(setupGasket({
       basePath: '//cdn-b'
     }));
     expect(results).toEqual('//cdn-b');
-  });
-
-  it('returns the basePath from workbox config over next', () => {
-    const results = utils.getBasePath(setupGasket({
-      workbox: {
-        assetPrefix: '//cdn-a'
-      },
-      basePath: '//cdn-b'
-    }));
-    expect(results).toEqual('//cdn-a');
   });
 
   it('returns empty string if not configured', () => {

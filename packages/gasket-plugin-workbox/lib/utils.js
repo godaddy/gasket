@@ -48,9 +48,9 @@ function getOutputDir(gasket) {
  */
 function getBasePath(gasket) {
   const { workbox = {}, basePath: rootBasePath } = gasket.config;
-  const { basePath, assetPrefix } = workbox;
+  const { basePath } = workbox;
 
-  return [basePath, assetPrefix, rootBasePath, ''].find(isDefined);
+  return [basePath, rootBasePath, ''].find(isDefined);
 }
 
 module.exports = {
