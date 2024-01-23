@@ -16,10 +16,9 @@ const ConfigBuilder = require('../../../../src/scaffold/config-builder');
 
 
 describe('setupPkg', () => {
-  let mockContext, packageJsonSpy;
+  let mockContext;
 
   beforeEach(() => {
-    packageJsonSpy = jest.spyOn(ConfigBuilder, 'createPackageJson');
     mockContext = {
       appName: 'my-app',
       appDescription: 'my cool app',

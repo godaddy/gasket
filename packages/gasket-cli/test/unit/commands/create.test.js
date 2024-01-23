@@ -104,40 +104,27 @@ describe('create', function () {
   it('exits on action errors', async () => {
     mockActionStubs.mkDir.mockRejectedValueOnce(new Error('YOUR DRIVE EXPLODED!'));
     const cmd = new CreateCommand(['myapp', '--presets=nextjs']);
-    try {
-      await cmd.run();
-    } catch (e) {
-      expect(e.message).toContain('YOUR DRIVE EXPLODED!');
-    }
+    await expect(cmd.run()).rejects.toThrow('YOUR DRIVE EXPLODED!');
   });
 
   it('dumps log on errors', async () => {
     mockActionStubs.mkDir.mockRejectedValueOnce(new Error('YOUR DRIVE EXPLODED!'));
     const cmd = new CreateCommand(['myapp', '--presets=nextjs']);
-    try {
-      await cmd.run();
-    } catch (e) {
-      expect(mockDumpErrorContext).toHaveBeenCalled();
-    }
+    await expect(cmd.run()).rejects.toThrow('YOUR DRIVE EXPLODED!');
+    expect(mockDumpErrorContext).toHaveBeenCalled();
   });
 
   it('prints exit message', async () => {
     mockActionStubs.mkDir.mockRejectedValueOnce(new Error('YOUR DRIVE EXPLODED!'));
     const cmd = new CreateCommand(['myapp', '--presets=nextjs']);
-    try {
-      await cmd.run();
-    } catch (e) {
-      expect(consoleErrorStub).toHaveBeenCalled();
-    }
+    await expect(cmd.run()).rejects.toThrow('YOUR DRIVE EXPLODED!');
+    expect(consoleErrorStub).toHaveBeenCalled();
   });
 
   it('prints exit message when no preset found', async () => {
+    mockActionStubs.loadPreset.mockRejectedValueOnce(new Error('No preset found'));
     const cmd = new CreateCommand(['myapp']);
-    try {
-      await cmd.run();
-    } catch (e) {
-      expect(consoleErrorStub).toHaveBeenCalled();
-    }
+    await expect(cmd.run()).rejects.toThrow('No preset found');
   });
 
   it('expands comma separated flag inputs to array', () => {
@@ -146,11 +133,8 @@ describe('create', function () {
   });
 
   it('prints an error if both --config and --config-file are provided', async () => {
+    mockActionStubs.writeGasketConfig.mockRejectedValueOnce(new Error());
     const cmd = new CreateCommand(['myapp', '--config={}', '--config-file=../../test/unit/commands/test-ci-config.json']);
-    try {
-      await cmd.run();
-    } catch (e) {
-      expect(e.message).toContain('--config-file= cannot also be provided when using --config=');
-    }
+    await expect(cmd.run()).rejects.toThrow('--config-file= cannot also be provided when using --config=');
   });
 });

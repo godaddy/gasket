@@ -108,12 +108,9 @@ describe('actionWrapper', () => {
         throw mockError;
       };
       mockAction = actionWrapper(mockLabel, mockFn);
-
-      try {
+      await expect(async () => {
         await mockAction(mockContext);
-      } catch (e) {
-        expect(e).toEqual(mockError);
-      }
+      }).rejects.toEqual(mockError);
     });
 
     it('adds error stack to context for reporting', async () => {

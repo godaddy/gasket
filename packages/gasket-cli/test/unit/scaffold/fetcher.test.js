@@ -5,7 +5,7 @@ jest.mock('@gasket/utils', () => {
     PackageManager: {
       spawnNpm: mockPackageManagerStub
     }
-  }
+  };
 });
 
 const path = require('path');
@@ -16,7 +16,7 @@ describe('fetcher', () => {
   const stdout = 'example.tr.gz\nits all good';
 
   beforeEach(() => {
-    mockPackageManagerStub.mockResolvedValue({ stdout })
+    mockPackageManagerStub.mockResolvedValue({ stdout });
   });
 
   afterEach(() => {

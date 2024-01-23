@@ -1,7 +1,7 @@
 const mockWarnStub = jest.fn();
 const mockReadDirStub = jest.fn();
 const mockStatStub = jest.fn().mockImplementation(mod => {
-  if (mod === '/path/to/gasket.config.js' || mod === ' /path/to/app/gasket.config.js') return mockGasketConfig;
+  if (mod === '/path/to/gasket.config.js' || mod === ' /path/to/app/gasket.config.js') return { mockConfig: true };
   if (mod === '/path/to/bad/gasket.config.js') return { mockConfig: true };
   if (mod === '/path/to/missing/gasket.config.js') throw new Error('No such file or directory');
 });
@@ -18,13 +18,11 @@ const defaultPlugins = require('../../../src/config/default-plugins');
 
 describe('config utils', () => {
   let flags, env, commandId;
-  let mockGasketConfig;
 
   beforeEach(() => {
     flags = { root: '/path/to/app', config: '/path/to/gasket.config' };
     env = 'test-env';
     commandId = 'test-cmd';
-    mockGasketConfig = { mockConfig: true };
   });
 
   afterEach(function () {

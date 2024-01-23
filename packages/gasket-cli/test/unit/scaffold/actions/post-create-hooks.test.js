@@ -25,7 +25,7 @@ describe('postCreateHooks', () => {
 
   it('executes the postCreate hook for plugins with context', async () => {
     await postCreateHooks(mockContext);
-    expect(mockExecStub).toHaveBeenCalledWith('postCreate', mockContext, { runScript: expect.any(Function)});
+    expect(mockExecStub).toHaveBeenCalledWith('postCreate', mockContext, { runScript: expect.any(Function) });
     expect(mockExecStub.mock.lastCall[2]).toHaveProperty('runScript');
   });
 });

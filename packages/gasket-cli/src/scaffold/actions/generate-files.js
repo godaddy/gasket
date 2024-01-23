@@ -147,7 +147,7 @@ async function performGenerate(context, descriptors) {
       }
     } catch (err) {
       hasError = true;
-      errors.push(`Error creating directory ${targetDir}: ${err.message}`);;
+      errors.push(`Error creating directory ${targetDir}: ${err.message}`);
     }
   }));
 

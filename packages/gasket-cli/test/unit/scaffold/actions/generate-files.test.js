@@ -12,16 +12,9 @@ jest.mock('fs', () => {
       readFile: mockReadFileStub,
       writeFile: mockWriteFileStub
     }
-  }
+  };
 });
 jest.mock('mkdirp', () => mockMkdirpStub);
-// jest.mock('util', () => {
-//   const mod = jest.requireActual('util');
-//   return {
-//     ...mod,
-//     promisify: (f) => mockGlobStub
-//   };
-// });
 jest.mock('handlebars', () => {
   return {
     create: () => {
@@ -30,60 +23,30 @@ jest.mock('handlebars', () => {
       registerHelperSpy = jest.spyOn(handlebars, 'registerHelper');
       return handlebars;
     }
-  }
+  };
 });
-
 jest.mock('glob', () => {
   const mod = jest.requireActual('glob');
   return jest.fn(mod);
 });
 
-
 const path = require('path');
 const generateFiles = require('../../../../src/scaffold/actions/generate-files');
 const fixtures = path.resolve(__dirname, '..', '..', '..', 'fixtures');
 const glob = require('glob');
-// const Handlebars = require('handlebars');
 const fs = require('fs');
 
 describe('generateFiles', () => {
   let mockContext;
-  // let mockRegisterHelperSpy;
 
   beforeEach(() => {
-    mockReadFileStub.mockImplementation((file, encoding) => fs.readFileSync(file, encoding));
+    mockReadFileStub.mockImplementation((file, encoding) => fs.readFileSync(file, encoding)); // eslint-disable-line no-sync
     mockWriteFileStub.mockResolvedValue();
     mockMkdirpStub.mockResolvedValue();
     mockGlobStub.mockResolvedValue([
       '/gasket-cli/test/fixtures/generator/file-a.md',
       '/gasket-cli/test/fixtures/generator/file-b.md'
     ]);
-
-    // mockImports = {
-    //   'handlebars': {
-    //     create: () => {
-    //       const handlebars = Handlebars.create();
-    //       registerHelperSpy = sinon.spy(handlebars, 'registerHelper');
-    //       return handlebars;
-    //     }
-    //   },
-    //   'util': {
-    //     promisify: f => {
-    //       globSpy = sinon.spy(promisify(f));
-    //       return globSpy;
-    //     }
-    //   },
-    //   'mkdirp': mockMkdirpStub,
-    //   'fs': {
-    //     promises: {
-    //       readFile: mockReadFileStub,
-    //       writeFile: mockWriteFileStub
-    //     }
-    //   },
-    //   '../action-wrapper': require('../../../helpers').mockActionWrapper
-    // };
-
-    // generateFiles = proxyquire('../../../../src/scaffold/actions/generate-files', mockImports);
 
     mockContext = {
       appName: 'my-app',
@@ -201,7 +164,6 @@ describe('generateFiles', () => {
       await generateFiles(mockContext);
       // get the correct args as calls may be unordered
       const args = mockWriteFileStub.mock.calls.find(call => call[0].includes('file-b.md'));
-      console.log(mockWriteFileStub.mock.calls)
       expect(args[1]).toContain(`'source':{'name':'@gasket/plugin-example'}`);
     });
 
@@ -219,15 +181,11 @@ describe('generateFiles', () => {
 
       // expect a cli warning was added with relevant message
       expect(mockContext.warnings).toHaveLength(1);
-      expect(mockContext.warnings[0]).toContain(
-        `Error templating /path/to/my-app/file-a.md: Cannot read properties of undefined`);
+      expect(mockContext.warnings[0]).toContain(`Error templating /path/to/my-app/file-a.md: Cannot read properties of undefined`);
     });
   });
 
   describe('_getDescriptors', function () {
-    // beforeEach(() => {
-    //   globSpy = jest.spyOn(glob, 'sync');
-    // });
 
     it('is async', async function () {
       const results = generateFiles._getDescriptors(mockContext);
@@ -419,11 +377,11 @@ describe('generateFiles', () => {
         }));
       expect(results[1]).toEqual(
         expect.objectContaining({
-        srcFile: expect.stringContaining('C:\\gasket-cli\\test\\fixtures\\generator\\file-b.md'),
-        targetFile: 'C:\\path\\to\\my-app\\file-b.md',
-        target: 'file-b.md',
-        from
-      }));
+          srcFile: expect.stringContaining('C:\\gasket-cli\\test\\fixtures\\generator\\file-b.md'),
+          targetFile: 'C:\\path\\to\\my-app\\file-b.md',
+          target: 'file-b.md',
+          from
+        }));
     });
   });
 });

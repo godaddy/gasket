@@ -12,7 +12,7 @@ const ConfigBuilder = require('../../../../src/scaffold/config-builder');
 const promptHooks = require('../../../../src/scaffold/actions/prompt-hooks');
 
 describe('promptHooks', () => {
-  let mockImports, mockContext, pkgAddSpy;
+  let  mockContext, pkgAddSpy;
 
   beforeEach(() => {
     mockExecWaterfallStub.mockResolvedValue();

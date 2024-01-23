@@ -6,16 +6,13 @@ const defaultPlugins = require('../../../src/config/default-plugins');
 jest.mock('@gasket/engine', () => {
   return class PluginEngine {
     constructor() {
-      mockConstructorStub(...arguments)
+      mockConstructorStub(...arguments);
     }
-    async exec() {
-
-    }
-  }
+    async exec() {}
+  };
 });
 
 const createEngine = require('../../../src/scaffold/create-engine');
-const exp = require('constants');
 
 describe('createEngine', () => {
   let mockOpts;

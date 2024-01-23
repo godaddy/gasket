@@ -14,10 +14,10 @@ describe('CreateRuntime', () => {
   let runtime;
 
   beforeEach(() => {
-    pkgAddStub =jest.fn();
-    pkgExtendStub =jest.fn();
-    pkgHasStub =jest.fn().mockReturnValue(true);
-    filesAddStub =jest.fn();
+    pkgAddStub = jest.fn();
+    pkgExtendStub = jest.fn();
+    pkgHasStub = jest.fn().mockReturnValue(true);
+    filesAddStub = jest.fn();
     mockPlugin = { name: 'mockPlugin' };
 
     mockContext = {

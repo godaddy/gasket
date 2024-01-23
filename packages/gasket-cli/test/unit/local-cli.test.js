@@ -1,3 +1,4 @@
+/* eslint-disable jest/no-done-callback */
 const path = require('path');
 
 jest.mock('../../package.json', () => ({

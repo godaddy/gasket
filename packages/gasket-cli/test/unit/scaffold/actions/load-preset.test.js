@@ -169,7 +169,7 @@ describe('loadPreset', () => {
       mockContext.localPresets = ['../../../fixtures/gasket-preset-local'];
     });
 
-    it('does not instantiates Fetcher ', async () => {
+    it('does not instantiates Fetcher', async () => {
       await loadPreset(mockContext);
       expect(mockConstructorStub).not.toHaveBeenCalled();
     });
