@@ -3,17 +3,11 @@
  *
  * @param {Gasket} gasket - The Gasket API
  * @param {object} context - Additional context-specific information
- * @param {string} name - Plugin name
  * @returns {object} context
  */
-function setupContext(gasket, context, name) {
+function setupContext(gasket, context) {
   return {
     ...context,
-    // TODO: Remove in next major version
-    get webpackMerge() {
-      gasket.logger.warning(`DEPRECATED \`context.webpackMerge\` of webpackConfig hook in ${ name } - Use \`require('webpack-merge')\``);
-      return require('webpack-merge');
-    },
     get webpack() {
       return require('webpack');
     }
@@ -30,7 +24,7 @@ function setupContext(gasket, context, name) {
 module.exports = function initWebpack(gasket, initConfig, context) {
   const WebpackMetricsPlugin = require('./webpack-metrics-plugin');
 
-  const baseConfig = {
+  let baseConfig = {
     ...initConfig,
     plugins: [
       ...(initConfig && initConfig.plugins ? initConfig.plugins : []),
@@ -38,14 +32,10 @@ module.exports = function initWebpack(gasket, initConfig, context) {
     ].filter(Boolean)
   };
 
-  // TODO: Remove in next major version
-  let mergedConfig = require('./deprecated-merges')(gasket, baseConfig, context);
-
   // eslint-disable-next-line no-sync
-  gasket.execApplySync('webpackConfig', (plugin, handler) => {
-    const name = plugin ? plugin.name || 'unnamed plugin' : 'app lifecycle';
-    mergedConfig = handler(mergedConfig, setupContext(gasket, context, name));
+  gasket.execApplySync('webpackConfig', (_, handler) => {
+    baseConfig = handler(baseConfig, setupContext(gasket, context));
   });
 
-  return mergedConfig;
+  return baseConfig;
 };
