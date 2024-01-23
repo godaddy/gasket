@@ -1,6 +1,5 @@
 /* eslint-disable max-statements */
 const pkgVersion = '2.2.0';
-jest.mock('../../../../src/scaffold/action-wrapper', () => require('../../../helpers').mockActionWrapper);
 jest.mock('../../../../package.json', () => ({ version: pkgVersion }));
 
 const cliVersion = require('../../../../src/scaffold/actions/cli-version');
