@@ -186,25 +186,13 @@ describe('createConfig', () => {
 
     it('merges the return values from `webpack` into a single webpack config', async function () {
       const engine = lifecycle({}, {
-        webpack: function (gasketAPI) {
+        webpackConfig: function (gasketAPI) {
           expect(gasketAPI).toEqual(engine);
 
           return {
             resolve: {
               alias: {
                 '@gasket/example': __filename
-              }
-            }
-          };
-        }
-      }, {
-        webpack: function (gasketAPI) {
-          expect(gasketAPI).toEqual(engine);
-
-          return {
-            resolve: {
-              alias: {
-                '@gasket/what': '@gasket/example'
               }
             }
           };
@@ -227,7 +215,6 @@ describe('createConfig', () => {
       }, { isServer: false, defaultLoaders: {}, dev: true, config: nextConfig });
 
       expect(resultConfig.resolve.alias['@gasket/example']).toEqual(__filename);
-      expect(resultConfig.resolve.alias['@gasket/what']).toEqual('@gasket/example');
     });
 
     describe('built-ins', () => {
