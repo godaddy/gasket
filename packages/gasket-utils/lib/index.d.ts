@@ -61,17 +61,6 @@ export function applyConfigOverrides(config: GasketConfig, { env, commandId, roo
 }): GasketConfig;
 
 /**
- * Normalize the config by applying any environment or local overrides
- *
- * @param gasketConfig - Gasket config
- * @param config - Target config to be normalized
- * @param [localFile] - Optional file to load relative to gasket root
- * @returns config
- * @deprecated use applyConfigOverrides
- */
-declare function applyEnvironmentOverrides(gasketConfig: GasketConfig, config: GasketConfig, localFile?: string): object;
-
-/**
  * Promise friendly wrapper to running a shell command (eg: git, npm, ls)
  * which passes back any { stdout, stderr } to the error thrown.
  *
