@@ -168,7 +168,7 @@ describe('createConfig', () => {
     it('executes webpack plugin hook', () => {
       result = config.webpack(webpackConfig, data);
       // TODO: should not test this deep into webpack plugin
-      expect(gasket.execApplySync).toHaveBeenCalledWith('webpack', expect.any(Function));
+      expect(gasket.execApplySync).toHaveBeenCalledWith('webpackConfig', expect.any(Function));
     });
 
     it('returns webpack config object', () => {
