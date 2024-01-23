@@ -8,6 +8,7 @@ const { dim } = require('chalk');
 const action = require('../action-wrapper');
 
 const glob = promisify(require('glob'));
+// console.log(glob);
 
 const flatten = (acc, values) => (acc || []).concat(values);
 const reSep = /[/\\]+/;
@@ -117,6 +118,7 @@ async function performGenerate(context, descriptors) {
     try {
       const source = await fs.readFile(desc.srcFile, { encoding: 'utf8' });
       content = source;
+      // console.log('content', content)
       try {
         content = handlebars.compile(source)(context);
       } catch (compileErr) {
@@ -135,20 +137,25 @@ async function performGenerate(context, descriptors) {
       }
     }
     if (!content) return;
+    console.log('content')
 
     try {
-      await mkdirp(targetDir);
+      // await mkdirp(targetDir);
+      console.log('hittttterrrr', await mkdirp(targetDir))
       try {
         await fs.writeFile(desc.targetFile, content, { encoding: 'utf8' });
         const message = desc.target + (desc.overrides ? dim(` – from ${desc.from}`) : '');
         generatedFiles.add(message);
       } catch (writeErr) {
+        console.log('writeErr')
         hasError = true;
         errors.push(`Error writing ${desc.targetFile}: ${writeErr.message}`);
       }
     } catch (err) {
+      console.log('257')
       hasError = true;
       errors.push(`Error creating directory ${targetDir}: ${err.message}`);
+      console.log(errors);
     }
   }));
 
