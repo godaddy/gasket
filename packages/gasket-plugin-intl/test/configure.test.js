@@ -108,17 +108,6 @@ describe('configure', function () {
     );
   });
 
-  it('logs deprecation warnings', function () {
-    configure(mockGasket, { root, intl: { languageMap: { foo: 'bar' } } });
-    expect(mockGasket.logger.warning).toHaveBeenCalledWith(expect.stringContaining('languageMap'));
-
-    configure(mockGasket, { root, intl: { defaultLanguage: 'fake' } });
-    expect(mockGasket.logger.warning).toHaveBeenCalledWith(expect.stringContaining('defaultLanguage'));
-
-    configure(mockGasket, { root, intl: { assetPrefix: 'fake' } });
-    expect(mockGasket.logger.warning).toHaveBeenCalledWith(expect.stringContaining('assetPrefix'));
-  });
-
   describe('getIntlConfig', function () {
 
     it('returns intl config from gasket.config.js', function () {

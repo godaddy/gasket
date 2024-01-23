@@ -23,22 +23,6 @@ function getIntlConfig(gasket) {
 }
 
 /**
- * Destructure deprecated options as fallbacks and log warnings if used.
- *
- * @param {Gasket} gasket - Gasket API
- * @param {object} intlConfig - User intl config
- * @returns {object} config
- */
-function deprecatedOptions(gasket, intlConfig) {
-  const { logger } = gasket;
-  const { languageMap, defaultLanguage, assetPrefix } = intlConfig;
-  if (isDefined(languageMap)) logger.warning('DEPRECATED intl config `languageMap` - use `localesMap`');
-  if (isDefined(defaultLanguage)) logger.warning('DEPRECATED intl config `defaultLanguage` - use `defaultLocale`');
-  if (isDefined(assetPrefix)) logger.warning('DEPRECATED intl config `assetPrefix` - use `basePath`');
-  return { languageMap, defaultLanguage, assetPrefix };
-}
-
-/**
  * Sets up the Intl config for the Gasket session and add process env variables
  * to access to certain config results where gasket.config is not accessible.
  *
@@ -50,14 +34,13 @@ module.exports = function configureHook(gasket, config) {
   const { root } = config;
   const intlConfig = { ...getIntlConfig({ config }) };
 
-  const { languageMap, defaultLanguage, assetPrefix } = deprecatedOptions(gasket, intlConfig);
   const { nextConfig = {} } = config;
 
   // get user defined config and apply defaults
   const {
     defaultPath = '/locales',
-    defaultLocale = defaultLanguage || 'en',
-    localesMap = languageMap || {},
+    defaultLocale = 'en',
+    localesMap = {},
     localesDir,
     manifestFilename = 'locales-manifest.json',
     preloadLocales = false
@@ -65,7 +48,7 @@ module.exports = function configureHook(gasket, config) {
 
   const fullLocalesDir = path.join(root, localesDir);
 
-  const basePath = [intlConfig.basePath, assetPrefix,
+  const basePath = [intlConfig.basePath,
     nextConfig.assetPrefix, nextConfig.basePath,
     config.basePath, ''].find(isDefined);
 
