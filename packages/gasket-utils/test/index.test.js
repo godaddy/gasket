@@ -6,7 +6,6 @@ describe('index', () => {
       'tryRequire',
       'tryResolve',
       'applyConfigOverrides',
-      'applyEnvironmentOverrides',
       'runShellCommand',
       'PackageManager',
       'requireWithInstall'
