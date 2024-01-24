@@ -1,177 +1,140 @@
 /* eslint-disable max-statements */
+const mockDumpErrorContext = jest.fn();
+const consoleErrorStub = jest.spyOn(console, 'error').mockImplementation(() => { });
+const mockActionStubs = {
+  mkDir: jest.fn(),
+  loadPreset: jest.fn(),
+  cliVersion: jest.fn(),
+  globalPrompts: jest.fn(),
+  setupPkg: jest.fn(),
+  writePkg: jest.fn(),
+  installModules: jest.fn(),
+  linkModules: jest.fn(),
+  writeGasketConfig: jest.fn(),
+  loadPkgForDebug: jest.fn(),
+  promptHooks: jest.fn(),
+  createHooks: jest.fn(),
+  generateFiles: jest.fn(),
+  postCreateHooks: jest.fn(),
+  applyPresetConfig: jest.fn(),
+  printReport: jest.fn(),
+  readConfig: jest.fn()
+};
+mockActionStubs.writePkg.update = jest.fn();
+mockActionStubs.installModules.update = jest.fn();
+mockActionStubs.linkModules.update = jest.fn();
 
-const sinon = require('sinon');
-const assume = require('assume');
-const proxyquire = require('proxyquire');
+jest.mock('ora', () => () => ({ warn: jest.fn() }));
+jest.mock('../../../src/scaffold/dump-error-context', () => mockDumpErrorContext);
+jest.mock('../../../src/scaffold/actions', () => mockActionStubs);
 
+const CreateCommand = require('../../../src/commands/create');
 
 describe('create', function () {
-  let sandbox, mockImports, CreateCommand;
-  let actionStubs, dumpErrorContext;
-  let consoleErrorStub;
-
-  this.timeout(5000);
 
   beforeEach(() => {
-    sandbox = sinon.createSandbox();
-
-    actionStubs = {
-      mkDir: sandbox.stub(),
-      loadPreset: sandbox.stub(),
-      cliVersion: sandbox.stub(),
-      globalPrompts: sandbox.stub(),
-      setupPkg: sandbox.stub(),
-      writePkg: sandbox.stub(),
-      installModules: sandbox.stub(),
-      linkModules: sandbox.stub(),
-      writeGasketConfig: sandbox.stub(),
-      loadPkgForDebug: sandbox.stub(),
-      promptHooks: sandbox.stub(),
-      createHooks: sandbox.stub(),
-      generateFiles: sandbox.stub(),
-      postCreateHooks: sandbox.stub(),
-      applyPresetConfig: sandbox.stub(),
-      printReport: sandbox.stub(),
-      readConfig: sandbox.stub()
-    };
-
-    actionStubs.writePkg.update = sandbox.stub();
-    actionStubs.installModules.update = sandbox.stub();
-    actionStubs.linkModules.update = sandbox.stub();
-
-    dumpErrorContext = sandbox.stub();
-    consoleErrorStub = sandbox.stub(console, 'error');
-
-    mockImports = {
-      '../scaffold/actions': actionStubs,
-      '../scaffold/dump-error-context': dumpErrorContext,
-      'ora': () => ({
-        warn: sandbox.stub()
-      })
-    };
-
-    CreateCommand = proxyquire('../../../src/commands/create', mockImports);
-  });
-
-  afterEach(() => {
-    sandbox.restore();
+    jest.clearAllMocks();
   });
 
   it('executes expected bootstrap actions', async () => {
     const cmd = new CreateCommand(['myapp', '--presets=nextjs']);
     await cmd.run();
 
-    assume(actionStubs.mkDir).is.called();
-    assume(actionStubs.loadPreset).is.called();
-    assume(actionStubs.globalPrompts).is.called();
-    assume(actionStubs.setupPkg).is.called();
-    assume(actionStubs.writePkg).is.called();
-    assume(actionStubs.installModules).is.called();
-    assume(actionStubs.linkModules).is.called();
-    assume(actionStubs.postCreateHooks).is.called();
+    expect(mockActionStubs.mkDir).toHaveBeenCalled();
+    expect(mockActionStubs.loadPreset).toHaveBeenCalled();
+    expect(mockActionStubs.globalPrompts).toHaveBeenCalled();
+    expect(mockActionStubs.setupPkg).toHaveBeenCalled();
+    expect(mockActionStubs.writePkg).toHaveBeenCalled();
+    expect(mockActionStubs.installModules).toHaveBeenCalled();
+    expect(mockActionStubs.linkModules).toHaveBeenCalled();
+    expect(mockActionStubs.postCreateHooks).toHaveBeenCalled();
   });
 
   it('skips bootstrap actions with --no-bootstrap', async () => {
     const cmd = new CreateCommand(['myapp', '--no-bootstrap', '--presets=nextjs']);
     await cmd.run();
 
-    assume(actionStubs.mkDir).not.called();
+    expect(mockActionStubs.mkDir).not.toHaveBeenCalled();
   });
 
   it('executes loadPkgForDebug with --no-bootstrap', async () => {
     const cmd = new CreateCommand(['myapp', '--no-bootstrap', '--presets=nextjs']);
     await cmd.run();
 
-    assume(actionStubs.loadPkgForDebug).is.called();
+    expect(mockActionStubs.loadPkgForDebug).toHaveBeenCalled();
   });
 
   it('executes expected generate actions', async () => {
     const cmd = new CreateCommand(['myapp', '--presets=nextjs']);
     await cmd.run();
 
-    assume(actionStubs.promptHooks).is.called();
-    assume(actionStubs.createHooks).is.called();
-    assume(actionStubs.generateFiles).is.called();
-    assume(actionStubs.writeGasketConfig).is.called();
-    assume(actionStubs.writePkg).is.called();
-    assume(actionStubs.installModules).is.called();
-    assume(actionStubs.linkModules).is.called();
-    assume(actionStubs.writePkg.update).is.called();
-    assume(actionStubs.installModules.update).is.called();
-    assume(actionStubs.linkModules.update).is.called();
+    expect(mockActionStubs.promptHooks).toHaveBeenCalled();
+    expect(mockActionStubs.createHooks).toHaveBeenCalled();
+    expect(mockActionStubs.generateFiles).toHaveBeenCalled();
+    expect(mockActionStubs.writeGasketConfig).toHaveBeenCalled();
+    expect(mockActionStubs.writePkg).toHaveBeenCalled();
+    expect(mockActionStubs.installModules).toHaveBeenCalled();
+    expect(mockActionStubs.linkModules).toHaveBeenCalled();
+    expect(mockActionStubs.writePkg.update).toHaveBeenCalled();
+    expect(mockActionStubs.installModules.update).toHaveBeenCalled();
+    expect(mockActionStubs.linkModules.update).toHaveBeenCalled();
   });
 
   it('skips generate actions with --no-generate', async () => {
     const cmd = new CreateCommand(['myapp', '--no-generate', '--presets=nextjs']);
     await cmd.run();
 
-    assume(actionStubs.promptHooks).not.called();
+    expect(mockActionStubs.promptHooks).not.toHaveBeenCalled();
   });
 
   it('does not execute loadPkgForDebug with --no-bootstrap --no-generate', async () => {
     const cmd = new CreateCommand(['myapp', '--no-bootstrap', '--no-generate', '--presets=nextjs']);
     await cmd.run();
 
-    assume(actionStubs.loadPkgForDebug).not.called();
+    expect(mockActionStubs.loadPkgForDebug).not.toHaveBeenCalled();
   });
 
   it('executes printReport', async () => {
     const cmd = new CreateCommand(['myapp', '--presets=nextjs']);
     await cmd.run();
 
-    assume(actionStubs.printReport).is.called();
+    expect(mockActionStubs.printReport).toHaveBeenCalled();
   });
 
   it('exits on action errors', async () => {
-    actionStubs.mkDir.rejects(new Error('YOUR DRIVE EXPLODED!'));
+    mockActionStubs.mkDir.mockRejectedValueOnce(new Error('YOUR DRIVE EXPLODED!'));
     const cmd = new CreateCommand(['myapp', '--presets=nextjs']);
-    try {
-      await cmd.run();
-    } catch (e) {
-      assume(e.message).contains('YOUR DRIVE EXPLODED!');
-    }
+    await expect(cmd.run()).rejects.toThrow('YOUR DRIVE EXPLODED!');
   });
 
   it('dumps log on errors', async () => {
-    actionStubs.mkDir.rejects(new Error('YOUR DRIVE EXPLODED!'));
+    mockActionStubs.mkDir.mockRejectedValueOnce(new Error('YOUR DRIVE EXPLODED!'));
     const cmd = new CreateCommand(['myapp', '--presets=nextjs']);
-    try {
-      await cmd.run();
-    } catch (e) {
-      assume(dumpErrorContext).is.called();
-    }
+    await expect(cmd.run()).rejects.toThrow('YOUR DRIVE EXPLODED!');
+    expect(mockDumpErrorContext).toHaveBeenCalled();
   });
 
   it('prints exit message', async () => {
-    actionStubs.mkDir.rejects(new Error('YOUR DRIVE EXPLODED!'));
+    mockActionStubs.mkDir.mockRejectedValueOnce(new Error('YOUR DRIVE EXPLODED!'));
     const cmd = new CreateCommand(['myapp', '--presets=nextjs']);
-    try {
-      await cmd.run();
-    } catch (e) {
-      assume(consoleErrorStub).is.called();
-    }
+    await expect(cmd.run()).rejects.toThrow('YOUR DRIVE EXPLODED!');
+    expect(consoleErrorStub).toHaveBeenCalled();
   });
 
   it('prints exit message when no preset found', async () => {
+    mockActionStubs.loadPreset.mockRejectedValueOnce(new Error('No preset found'));
     const cmd = new CreateCommand(['myapp']);
-    try {
-      await cmd.run();
-    } catch (e) {
-      assume(consoleErrorStub).is.called();
-    }
+    await expect(cmd.run()).rejects.toThrow('No preset found');
   });
 
   it('expands comma separated flag inputs to array', () => {
     const result = CreateCommand.flags.plugins.parse('a,b,c');
-    assume(result).eqls(['a', 'b', 'c']);
+    expect(result).toEqual(['a', 'b', 'c']);
   });
 
   it('prints an error if both --config and --config-file are provided', async () => {
+    mockActionStubs.writeGasketConfig.mockRejectedValueOnce(new Error());
     const cmd = new CreateCommand(['myapp', '--config={}', '--config-file=../../test/unit/commands/test-ci-config.json']);
-    try {
-      await cmd.run();
-    } catch (e) {
-      assume(e.message).contains('--config-file= cannot also be provided when using --config=');
-    }
+    await expect(cmd.run()).rejects.toThrow('--config-file= cannot also be provided when using --config=');
   });
 });
