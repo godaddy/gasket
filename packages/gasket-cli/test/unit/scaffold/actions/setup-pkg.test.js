@@ -1,37 +1,24 @@
-const sinon = require('sinon');
-const assume = require('assume');
-const proxyquire = require('proxyquire');
+const mockContstructorStub = jest.fn();
+class MockPackageManager {
+  constructor() { mockContstructorStub(...arguments); }
+
+  info() {
+    return { data: '7.8.9-faked' };
+  }
+}
+
+jest.mock('@gasket/utils', () => ({
+  PackageManager: MockPackageManager
+}));
+
+const setupPkg = require('../../../../src/scaffold/actions/setup-pkg');
 const ConfigBuilder = require('../../../../src/scaffold/config-builder');
 
 
 describe('setupPkg', () => {
-  let sandbox, mockContext, mockImports, setupPkg;
-  let packageJsonSpy, packageManagerSpy;
+  let mockContext;
 
   beforeEach(() => {
-    sandbox = sinon.createSandbox();
-
-    packageJsonSpy = sandbox.spy(ConfigBuilder, 'createPackageJson');
-
-    class PackageManager {
-      constructor() {}
-
-      info() {
-        return { data: '7.8.9-faked' };
-      }
-    }
-
-    mockImports = {
-      '@gasket/utils': {
-        PackageManager
-      },
-      '../action-wrapper': require('../../../helpers').mockActionWrapper
-    };
-
-    packageManagerSpy = sandbox.spy(mockImports['@gasket/utils'], 'PackageManager');
-
-    setupPkg = proxyquire('../../../../src/scaffold/actions/setup-pkg', mockImports);
-
     mockContext = {
       appName: 'my-app',
       appDescription: 'my cool app',
@@ -45,67 +32,67 @@ describe('setupPkg', () => {
   });
 
   afterEach(() => {
-    sandbox.restore();
+
   });
 
   it('is decorated action', async () => {
-    assume(setupPkg).property('wrapped');
+    expect(setupPkg).toHaveProperty('wrapped');
   });
 
   it('instantiates PackageJson app name and description', async () => {
     await setupPkg.wrapped(mockContext);
-    assume(packageJsonSpy).is.called();
-    assume(packageJsonSpy.args[0][0]).property('name', mockContext.appName);
-    assume(packageJsonSpy.args[0][0]).property('description', mockContext.appDescription);
+    expect(mockContstructorStub).toHaveBeenCalled();
+    expect(mockContstructorStub.mock.calls[0][0].pkg.fields).toHaveProperty('name', mockContext.appName);
+    expect(mockContstructorStub.mock.calls[0][0].pkg.fields).toHaveProperty('description', mockContext.appDescription);
   });
 
   it('instantiates PackageManager with context', async () => {
     await setupPkg.wrapped(mockContext);
-    assume(packageManagerSpy).is.calledWith(mockContext);
+    expect(mockContstructorStub).toHaveBeenCalledWith(mockContext);
   });
 
   it('adds the preset to pkg dependencies', async () => {
     await setupPkg.wrapped(mockContext);
-    assume(mockContext.pkg.fields).property('dependencies');
-    assume(mockContext.pkg.fields.dependencies).property('@gasket/preset-bogus');
+    expect(mockContext.pkg.fields).toHaveProperty('dependencies');
+    expect(mockContext.pkg.fields.dependencies).toHaveProperty('@gasket/preset-bogus');
   });
 
   it('adds the preset version as compatible with package', async () => {
     await setupPkg.wrapped(mockContext);
-    assume(mockContext.pkg.fields).property('dependencies');
-    assume(mockContext.pkg.fields.dependencies).property('@gasket/preset-bogus', '^3.2.1');
+    expect(mockContext.pkg.fields).toHaveProperty('dependencies');
+    expect(mockContext.pkg.fields.dependencies).toHaveProperty('@gasket/preset-bogus', '^3.2.1');
   });
 
   it('adds the preset version from rawPresets', async () => {
     mockContext.presetInfos[0].rawName = '@gasket/preset-bogus@4.5.6';
     await setupPkg.wrapped(mockContext);
-    assume(mockContext.pkg.fields).property('dependencies');
-    assume(mockContext.pkg.fields.dependencies).property('@gasket/preset-bogus', '4.5.6');
+    expect(mockContext.pkg.fields).toHaveProperty('dependencies');
+    expect(mockContext.pkg.fields.dependencies).toHaveProperty('@gasket/preset-bogus', '4.5.6');
   });
 
   it('adds the preset version with presetPath', async () => {
     mockContext.presetInfos[0].rawName = '@gasket/preset-bogus@file:/path/to/preset';
     await setupPkg.wrapped(mockContext);
-    assume(mockContext.pkg.fields).property('dependencies');
-    assume(mockContext.pkg.fields.dependencies).property('@gasket/preset-bogus', 'file:/path/to/preset');
+    expect(mockContext.pkg.fields).toHaveProperty('dependencies');
+    expect(mockContext.pkg.fields.dependencies).toHaveProperty('@gasket/preset-bogus', 'file:/path/to/preset');
   });
 
   it('adds extra plugins to pkg dependencies', async () => {
     mockContext.rawPlugins = ['@gasket/jest@1.2.3', 'gasket-plugin-custom'];
     await setupPkg.wrapped(mockContext);
-    assume(mockContext.pkg.fields.dependencies).property('@gasket/plugin-jest', '1.2.3');
-    assume(mockContext.pkg.fields.dependencies).property('gasket-plugin-custom', '^7.8.9-faked');
+    expect(mockContext.pkg.fields.dependencies).toHaveProperty('@gasket/plugin-jest', '1.2.3');
+    expect(mockContext.pkg.fields.dependencies).toHaveProperty('gasket-plugin-custom', '^7.8.9-faked');
   });
 
   it('adds pkg to context', async () => {
-    assume(mockContext.pkg).is.undefined();
+    expect(mockContext.pkg).toBeUndefined();
     await setupPkg.wrapped(mockContext);
-    assume(mockContext.pkg).is.instanceOf(ConfigBuilder);
+    expect(mockContext.pkg).toBeInstanceOf(ConfigBuilder);
   });
 
   it('adds pkgManager to context', async () => {
-    assume(mockContext.pkgManager).is.undefined();
+    expect(mockContext.pkgManager).toBeUndefined();
     await setupPkg.wrapped(mockContext);
-    assume(mockContext.pkgManager).is.instanceOf(mockImports['@gasket/utils'].PackageManager);
+    expect(mockContext.pkgManager).toBeInstanceOf(MockPackageManager);
   });
 });

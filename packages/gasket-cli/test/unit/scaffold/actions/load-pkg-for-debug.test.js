@@ -1,16 +1,21 @@
-const sinon = require('sinon');
-const assume = require('assume');
-const proxyquire = require('proxyquire');
+const mockReadFileStub = jest.fn();
+
+jest.mock('fs', () => ({
+  promises: {
+    readFile: mockReadFileStub
+  }
+}));
+
 const path = require('path');
 const ConfigBuilder = require('../../../../src/scaffold/config-builder');
+const loadPkg = require('../../../../src/scaffold/actions/load-pkg-for-debug');
 
 describe('load-pkg-for-debug', () => {
-  let sandbox, mockContext, mockImports, loadPkg, mockPkg;
-  let readFileStub, packageJsonSpy;
+  let mockContext, mockPkg;
+  let packageJsonSpy;
 
   beforeEach(() => {
-    sandbox = sinon.createSandbox();
-
+    jest.restoreAllMocks();
     mockPkg = {
       name: 'my-app',
       description: 'my cool app',
@@ -19,55 +24,38 @@ describe('load-pkg-for-debug', () => {
       }
     };
 
-    readFileStub = sandbox.stub().resolves(JSON.stringify(mockPkg));
-
-    mockImports = {
-      'fs': {
-        promises: {
-          readFile: readFileStub
-        }
-      },
-      '../action-wrapper': require('../../../helpers').mockActionWrapper
-    };
-
-    packageJsonSpy = sandbox.spy(ConfigBuilder, 'createPackageJson');
-
-    loadPkg = proxyquire('../../../../src/scaffold/actions/load-pkg-for-debug', mockImports);
-
+    mockReadFileStub.mockResolvedValue(JSON.stringify(mockPkg));
+    packageJsonSpy = jest.spyOn(ConfigBuilder, 'createPackageJson');
     mockContext = {
       cwd: '/some/path',
       dest: '/some/path/my-app'
     };
   });
 
-  afterEach(() => {
-    sandbox.restore();
-  });
-
   it('is decorated action', async () => {
-    assume(loadPkg).property('wrapped');
+    expect(loadPkg).toHaveProperty('wrapped');
   });
 
   it('loads the package.json file under destination', async () => {
     await loadPkg(mockContext);
     const expected = path.join(mockContext.dest, 'package.json');
-    assume(readFileStub).is.calledWith(expected);
+    expect(mockReadFileStub).toHaveBeenCalledWith(expected, 'utf8');
   });
 
   it('instantiates a new ConfigBuilder', async () => {
     await loadPkg(mockContext);
-    assume(packageJsonSpy).is.called();
+    expect(packageJsonSpy).toHaveBeenCalled();
   });
 
   it('adds the fields from loaded file to pkg', async () => {
     await loadPkg(mockContext);
     const expected = mockPkg;
-    assume(packageJsonSpy).calledWith(expected);
+    expect(packageJsonSpy.mock.calls[0][0]).toEqual(expected);
   });
 
   it('assigns pkg to context', async () => {
     await loadPkg(mockContext);
-    assume(mockContext).property('pkg');
-    assume(mockContext.pkg).instanceOf(ConfigBuilder);
+    expect(mockContext).toHaveProperty('pkg');
+    expect(mockContext.pkg).toBeInstanceOf(ConfigBuilder);
   });
 });
