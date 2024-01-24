@@ -1,5 +1,3 @@
-const assume = require('assume');
-
 describe('index', () => {
   it('exports expected actions', () => {
     const actions = require('../../../../src/scaffold/actions');
@@ -23,7 +21,7 @@ describe('index', () => {
       'printReport'
     ];
 
-    assume(expected.every(k => k in actions)).is.true();
-    assume(Object.keys(actions).length).equals(expected.length);
+    expect(expected.every(k => k in actions)).toBeTruthy();
+    expect(Object.keys(actions).length).toEqual(expected.length);
   });
 });
