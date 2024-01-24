@@ -32,5 +32,5 @@ module.exports = function initWebpack(gasket, initConfig, context) {
   };
 
   // eslint-disable-next-line no-sync
-  return gasket.execApplySync('webpackConfig', baseConfig, setupContext(context));
+  return gasket.execWaterfallSync('webpackConfig', baseConfig, setupContext(context));
 };

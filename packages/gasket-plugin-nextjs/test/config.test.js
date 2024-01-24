@@ -168,7 +168,7 @@ describe('createConfig', () => {
     it('executes webpack plugin hook', () => {
       result = config.webpack(webpackConfig, data);
       // TODO: should not test this deep into webpack plugin
-      expect(gasket.execApplySync).toHaveBeenCalledWith('webpackConfig', expect.any(Function));
+      expect(gasket.execWaterfallSync).toHaveBeenCalledWith('webpackConfig', expect.any(Object), expect.any(Object));
     });
 
     it('returns webpack config object', () => {
@@ -234,7 +234,7 @@ function mockGasketApi() {
     execWaterfallSync: jest.fn((_, config) => config),
     exec: jest.fn().mockResolvedValue({}),
     execSync: jest.fn().mockReturnValue([]),
-    execApplySync: jest.fn().mockReturnValue([]),
+    execApplySync: jest.fn((_, config) => config),
     logger: {
       warning: jest.fn()
     },

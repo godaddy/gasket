@@ -6,7 +6,7 @@ describe('init webpack', function () {
 
   beforeEach(function () {
     mockGasket = {
-      execApplySync: jest.fn(),
+      execWaterfallSync: jest.fn((_, config) => config),
       logger: {
         warning: jest.fn()
       },
@@ -34,35 +34,27 @@ describe('init webpack', function () {
 
   it('executes webpackConfig lifecycle', function () {
     initWebpack(mockGasket, mockConfig, mockContext);
-    expect(mockGasket.execApplySync).toHaveBeenCalledWith('webpackConfig', expect.any(Function));
+    expect(mockGasket.execWaterfallSync).toHaveBeenCalledWith(
+      'webpackConfig', expect.any(Object), { webpack: expect.any(Function) }
+    );
   });
 
   describe('webpackConfig lifecycle callback', function () {
-    let applyFn, mockPlugin, handlerStub, baseConfig;
+    let baseConfig, setupContextStub;
 
     beforeEach(function () {
-      mockPlugin = { name: 'mock-plugin' };
-      handlerStub = jest.fn();
-
       baseConfig = initWebpack(mockGasket, {}, mockContext);
-      applyFn = mockGasket.execApplySync.mock.calls[0][1];
+      setupContextStub = mockGasket.execWaterfallSync.mock.calls[0][2];
     });
 
     it('called with baseConfig', function () {
-      applyFn(mockPlugin, handlerStub);
-      expect(handlerStub).toHaveBeenCalledWith(baseConfig, expect.any(Object));
-    });
-
-    it('called with context', function () {
-      applyFn(mockPlugin, handlerStub);
-      const context = handlerStub.mock.calls[0][1];
-      expect(typeof context).toBe('object');
+      const baseConfigStub = mockGasket.execWaterfallSync.mock.calls[0][1];
+      expect(typeof baseConfigStub).toBe('object');
+      expect(baseConfigStub).toEqual(baseConfig);
     });
 
     it('context.webpack returns webpack', function () {
-      applyFn(mockPlugin, handlerStub);
-      const context = handlerStub.mock.calls[0][1];
-      expect(context.webpack).toEqual(require('webpack'));
+      expect(setupContextStub.webpack).toEqual(require('webpack'));
     });
 
   });
