@@ -1,5 +1,3 @@
-const sinon = require('sinon');
-const assume = require('assume');
 const path = require('path');
 const { pluginIdentifier } = require('@gasket/resolve');
 
@@ -12,22 +10,20 @@ const {
 } = require('../../../src/scaffold/utils');
 
 describe('Utils', () => {
-  let sandbox, mockContext;
+  let mockContext;
 
   beforeEach(() => {
-    sandbox = sinon.createSandbox();
     mockContext = {};
   });
 
   afterEach(() => {
-    sandbox.restore();
   });
 
   describe('addPluginsToContext', () => {
 
     it('adds rawPlugins to context', () => {
       addPluginsToContext(['@gasket/jest', 'gasket-plugin-core'], mockContext);
-      assume(mockContext.rawPlugins).eqls([
+      expect(mockContext.rawPlugins).toEqual([
         '@gasket/jest', 'gasket-plugin-core'
       ]);
     });
@@ -35,7 +31,7 @@ describe('Utils', () => {
     it('adds rawPlugins to existing context', () => {
       mockContext.rawPlugins = ['some-gasket-plugin'];
       addPluginsToContext(['@gasket/jest', 'gasket-plugin-core@1.2.3'], mockContext);
-      assume(mockContext.rawPlugins).eqls([
+      expect(mockContext.rawPlugins).toEqual([
         'some-gasket-plugin', '@gasket/jest', 'gasket-plugin-core@1.2.3'
       ]);
     });
@@ -43,14 +39,14 @@ describe('Utils', () => {
     it('dedups rawPlugins plugins maintaining order and preferring those with version', () => {
       mockContext.rawPlugins = ['core', 'zebra', 'alpha'];
       addPluginsToContext(['@gasket/jest', 'gasket-plugin-core@1.2.3'], mockContext);
-      assume(mockContext.rawPlugins).eqls([
+      expect(mockContext.rawPlugins).toEqual([
         'gasket-plugin-core@1.2.3', 'zebra', 'alpha', '@gasket/jest'
       ]);
     });
 
     it('adds short plugins to context', () => {
       addPluginsToContext(['@gasket/jest', 'gasket-plugin-core@1.2.3'], mockContext);
-      assume(mockContext.plugins).eqls([
+      expect(mockContext.plugins).toEqual([
         '@gasket/jest', 'core'
       ]);
     });
@@ -58,7 +54,7 @@ describe('Utils', () => {
     it('adds short plugins to existing context', () => {
       mockContext.plugins = ['some-gasket-plugin'];
       addPluginsToContext(['@gasket/jest', 'gasket-plugin-core@1.2.3'], mockContext);
-      assume(mockContext.plugins).eqls([
+      expect(mockContext.plugins).toEqual([
         'some-gasket-plugin', '@gasket/jest', 'core'
       ]);
     });
@@ -66,7 +62,7 @@ describe('Utils', () => {
     it('dedups short plugins maintaining order', () => {
       mockContext.plugins = ['core', 'zebra', 'alpha'];
       addPluginsToContext(['@gasket/jest', 'alpha', 'gasket-plugin-core@1.2.3'], mockContext);
-      assume(mockContext.plugins).eqls([
+      expect(mockContext.plugins).toEqual([
         'core', 'zebra', 'alpha', '@gasket/jest'
       ]);
     });
@@ -77,13 +73,13 @@ describe('Utils', () => {
 
     beforeEach(() => {
       pkgStub = {
-        add: sandbox.stub()
+        add: jest.fn()
       };
     });
 
     it('add plugins as dependencies to pkg', () => {
       addPluginsToPkg(['@gasket/jest', '@gasket/plugin-intl'], pkgStub);
-      assume(pkgStub.add.args[0][1]).eqls({
+      expect(pkgStub.add.mock.calls[0][1]).toEqual({
         '@gasket/plugin-jest': 'latest',
         '@gasket/plugin-intl': 'latest'
       });
@@ -91,7 +87,7 @@ describe('Utils', () => {
 
     it('expands short plugin names', () => {
       addPluginsToPkg(['@gasket/jest', '@gasket/intl'], pkgStub);
-      assume(pkgStub.add.args[0][1]).eqls({
+      expect(pkgStub.add.mock.calls[0][1]).toEqual({
         '@gasket/plugin-jest': 'latest',
         '@gasket/plugin-intl': 'latest'
       });
@@ -99,7 +95,7 @@ describe('Utils', () => {
 
     it('uses version of set by plugin identifier', () => {
       addPluginsToPkg(['@gasket/jest@3.2.1', '@gasket/plugin-intl@^1.2.3'], pkgStub);
-      assume(pkgStub.add.args[0][1]).eqls({
+      expect(pkgStub.add.mock.calls[0][1]).toEqual({
         '@gasket/plugin-jest': '3.2.1',
         '@gasket/plugin-intl': '^1.2.3'
       });
@@ -108,7 +104,7 @@ describe('Utils', () => {
     it('accepts pluginIdentifiers instances', () => {
       const names = ['@gasket/jest', '@gasket/plugin-intl'];
       addPluginsToPkg(names.map(p => pluginIdentifier(p).withVersion('fake')), pkgStub);
-      assume(pkgStub.add.args[0][1]).eqls({
+      expect(pkgStub.add.mock.calls[0][1]).toEqual({
         '@gasket/plugin-jest': 'fake',
         '@gasket/plugin-intl': 'fake'
       });
@@ -120,7 +116,7 @@ describe('Utils', () => {
 
     beforeEach(() => {
       pkgManagerStub = {
-        info: sinon.stub().callsFake(() => ({ data: '7.8.9-faked' }))
+        info: jest.fn().mockImplementation(() => ({ data: '7.8.9-faked' }))
       };
     });
 
@@ -128,9 +124,9 @@ describe('Utils', () => {
       const names = ['@gasket/jest', '@gasket/plugin-intl'];
       const results = await getPluginsWithVersions(names, pkgManagerStub);
 
-      assume(pkgManagerStub.info).called(2);
+      expect(pkgManagerStub.info).toHaveBeenCalledTimes(2);
 
-      assume(results.map(o => o.full)).eqls([
+      expect(results.map(o => o.full)).toEqual([
         '@gasket/plugin-jest@^7.8.9-faked',
         '@gasket/plugin-intl@^7.8.9-faked'
       ]);
@@ -139,7 +135,7 @@ describe('Utils', () => {
     it('expands short plugin names', async () => {
       const names = ['@gasket/jest', '@gasket/intl'];
       const results = await getPluginsWithVersions(names, pkgManagerStub);
-      assume(results.map(o => o.full)).eqls([
+      expect(results.map(o => o.full)).toEqual([
         '@gasket/plugin-jest@^7.8.9-faked',
         '@gasket/plugin-intl@^7.8.9-faked'
       ]);
@@ -148,7 +144,7 @@ describe('Utils', () => {
     it('uses version of set by plugin identifier', async () => {
       const names = ['@gasket/jest@3.2.1', '@gasket/plugin-intl@^1.2.3'];
       const results = await getPluginsWithVersions(names, pkgManagerStub);
-      assume(results.map(o => o.full)).eqls([
+      expect(results.map(o => o.full)).toEqual([
         '@gasket/plugin-jest@3.2.1',
         '@gasket/plugin-intl@^1.2.3'
       ]);
@@ -157,7 +153,7 @@ describe('Utils', () => {
     it('accepts pluginIdentifiers instances', async () => {
       const names = ['@gasket/jest@3.2.1', '@gasket/plugin-intl'];
       const results = await getPluginsWithVersions(names.map(p => pluginIdentifier(p)), pkgManagerStub);
-      assume(results.map(o => o.full)).eqls([
+      expect(results.map(o => o.full)).toEqual([
         '@gasket/plugin-jest@3.2.1',
         '@gasket/plugin-intl@^7.8.9-faked'
       ]);
@@ -169,22 +165,22 @@ describe('Utils', () => {
     it('transforms tildy paths to absolute', () => {
       const filepath = '~/.my-file';
       const result = ensureAbsolute(filepath);
-      assume(path.isAbsolute(result)).true();
-      assume(result).not.includes('~');
+      expect(path.isAbsolute(result)).toBe(true);
+      expect(result).not.toContain('~');
     });
 
     it('transforms relative paths to absolute', () => {
       const filepath = '../.my-file';
       const result = ensureAbsolute(filepath);
-      assume(path.isAbsolute(result)).true();
-      assume(result).not.includes('..');
+      expect(path.isAbsolute(result)).toBe(true);
+      expect(result).not.toContain('..');
     });
 
     it('does not transform absolute path', () => {
       const filepath = '/path/to/.my-file';
       const result = ensureAbsolute(filepath);
-      assume(path.isAbsolute(result)).true();
-      assume(result).equal(filepath);
+      expect(path.isAbsolute(result)).toBe(true);
+      expect(result).toEqual(filepath);
     });
   });
 
@@ -192,22 +188,22 @@ describe('Utils', () => {
     it('adds values from config JSON string to context', () => {
       const flags = { config: '{"appDescription":"A test app","packageManager":"npm","testSuite":"fake"}' };
       readConfig(mockContext, flags);
-      assume(mockContext.testSuite).eqls('fake');
-      assume(mockContext.appDescription).eqls('A test app');
-      assume(mockContext.packageManager).eqls('npm');
+      expect(mockContext.testSuite).toEqual('fake');
+      expect(mockContext.appDescription).toEqual('A test app');
+      expect(mockContext.packageManager).toEqual('npm');
     });
 
     it('adds values from configFile to context', () => {
       mockContext.cwd = './test/unit/commands';
       const flags = { configFile: './test-ci-config.json' };
       readConfig(mockContext, flags);
-      assume(mockContext.testSuite).eqls('mocha');
-      assume(mockContext.appDescription).eqls('A basic gasket app');
-      assume(mockContext.packageManager).eqls('npm');
+      expect(mockContext.testSuite).toEqual('jest');
+      expect(mockContext.appDescription).toEqual('A basic gasket app');
+      expect(mockContext.packageManager).toEqual('npm');
     });
     it('does not add to context if no configFile/config flag', () => {
       readConfig(mockContext, {});
-      assume(mockContext).eqls({});
+      expect(mockContext).toEqual({});
     });
   });
 });

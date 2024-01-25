@@ -8,7 +8,8 @@ describe('The create hook', () => {
     create({}, context);
 
     expect(context.pkg.add).toHaveBeenCalledWith(
-      'dependencies',
+      'devDependencies',
+      // expect the hard-coded version to match the dep
       { 'strip-indent': docsifyPackage.dependencies['strip-indent'] }
     );
   });

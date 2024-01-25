@@ -1,14 +1,9 @@
-const sinon = require('sinon');
-const assume = require('assume');
-
 describe('printReport', () => {
-  let sandbox, printReport;
+  let printReport;
   let mockContext, logStub;
 
   beforeEach(() => {
-    sandbox = sinon.createSandbox();
-
-    logStub = sandbox.stub(console, 'log');
+    logStub = jest.spyOn(console, 'log');
 
     mockContext = {
       appName: 'my-app',
@@ -27,53 +22,55 @@ describe('printReport', () => {
   });
 
   afterEach(() => {
-    sandbox.restore();
+    jest.clearAllMocks();
   });
 
   it('is decorated action', async () => {
-    assume(printReport).property('wrapped');
+    expect(printReport).toHaveProperty('wrapped');
   });
 
   it('outputs banner', function () {
     printReport(mockContext);
-    assume(logStub).calledWithMatch(require('../../../../src/utils/logo'));
+    expect(logStub).toHaveBeenCalledWith(expect.stringContaining(require('../../../../src/utils/logo')));
   });
 
   it('outputs warning and error count', function () {
     printReport(mockContext);
-    assume(logStub).calledWithMatch('0 warnings');
-    assume(logStub).calledWithMatch('0 errors');
+    expect(logStub).toHaveBeenNthCalledWith(1, expect.stringContaining('0 warnings'));
+    expect(logStub).toHaveBeenNthCalledWith(1, expect.stringContaining('0 errors'));
 
     mockContext.warnings = ['one', 'two'];
     mockContext.errors = ['one'];
+    logStub.mockClear();
     printReport(mockContext);
-    assume(logStub).calledWithMatch('2 warnings');
-    assume(logStub).calledWithMatch('1 errors');
+    expect(logStub).toHaveBeenNthCalledWith(1, expect.stringContaining('2 warnings'));
+    expect(logStub).toHaveBeenNthCalledWith(1, expect.stringContaining('1 errors'));
+
   });
 
   it('outputs titles as Space Case', function () {
     printReport(mockContext);
-    assume(logStub).calledWithMatch('App Name');
-    assume(logStub).calledWithMatch('Output');
+    expect(logStub.mock.calls[2][0]).toContain('App Name');
+    expect(logStub.mock.calls[5][0]).toContain('Output');
   });
 
   it('outputs content with indentation', function () {
     printReport(mockContext);
-    assume(logStub).calledWithMatch('  my-app');
-    assume(logStub).calledWithMatch('  /some/path/my-app');
+    expect(logStub).toHaveBeenCalledWith('  my-app');
+    expect(logStub).toHaveBeenCalledWith('  /some/path/my-app');
   });
 
   it('outputs sections with content', function () {
     mockContext.warnings = ['one', 'two'];
     printReport(mockContext);
-    assume(logStub).calledWithMatch('Warnings');
-    assume(logStub).calledWithMatch('  one');
-    assume(logStub).calledWithMatch('  two');
+    expect(logStub.mock.calls[8][0]).toContain('Warnings');
+    expect(logStub).toHaveBeenNthCalledWith(10, '  one');
+    expect(logStub).toHaveBeenNthCalledWith(11, '  two');
   });
 
   it('does not output sections with no content', function () {
     printReport(mockContext);
-    assume(logStub).not.calledWithMatch('Warnings');
+    expect(logStub).not.toHaveBeenCalledWith('Warnings');
   });
 
   it('outputs sorted generated files', function () {
@@ -81,9 +78,7 @@ describe('printReport', () => {
     mockContext.generatedFiles.add('apple');
     mockContext.generatedFiles.add('.secret');
     printReport(mockContext);
-
-    const concatOutput = logStub.args.reduce((acc, cur) => acc + cur, '');
-
-    assume(concatOutput).includes('.secret  apple  zebra');
+    const concatOutput = logStub.mock.calls.reduce((acc, cur) => acc + cur, '');
+    expect(concatOutput).toContain('.secret  apple  zebra');
   });
 });
