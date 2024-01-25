@@ -17,8 +17,6 @@ const plugin = require('../lib/index');
 describe('Plugin', () => {
   let mockGasket;
 
-  const BASE_ENV = process.env;
-
   beforeEach(function () {
     mockAPM.isStarted.mockReset();
     mockGasket = {
@@ -29,12 +27,16 @@ describe('Plugin', () => {
         root: '/some/path'
       }
     };
-    process.env = { ...BASE_ENV };
+    process.env.ELASTIC_APM_SERVER_URL = 'FAKE_ELASTIC_APM_URL';
+    process.env.ELASTIC_APM_SECRET_TOKEN = 'TOKEN_1234';
   });
 
   afterEach(function () {
-    process.env = BASE_ENV;
     jest.clearAllMocks();
+
+    delete process.env.ELASTIC_APM_SERVER_URL;
+    delete process.env.ELASTIC_APM_SECRET_TOKEN;
+    delete process.env.ELASTIC_APM_ACTIVE;
   });
 
   it('exposes a configure lifecycle hook', () => {
@@ -97,6 +99,7 @@ describe('Plugin', () => {
     mockGasket.config = await plugin.hooks.configure.handler(mockGasket, {
       ...mockGasket.config
     });
+
     await plugin.hooks.preboot.handler(mockGasket);
     expect(mockGasket.config.elasticAPM).toEqual({ active: false });
   });
