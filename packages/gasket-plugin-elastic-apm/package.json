@@ -64,8 +64,5 @@
     "rules": {
       "unicorn/filename-case": "error"
     }
-  },
-  "jest": {
-    "testEnvironment": "node"
   }
 }
