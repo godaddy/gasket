@@ -1,48 +1,52 @@
-const sinon = require('sinon');
-const assume = require('assume');
-const path = require('path');
-const fs = require('fs');
-const Handlebars = require('handlebars');
-const { promisify } = require('util');
-const proxyquire = require('proxyquire');
+const mockReadFileStub = jest.fn();
+const mockWriteFileStub = jest.fn();
+const mockMkdirpStub = jest.fn();
+const mockGlobStub = jest.fn();
+let registerHelperSpy;
 
+jest.mock('fs', () => {
+  const mod = jest.requireActual('fs');
+  return {
+    ...mod,
+    promises: {
+      readFile: mockReadFileStub,
+      writeFile: mockWriteFileStub
+    }
+  };
+});
+jest.mock('mkdirp', () => mockMkdirpStub);
+jest.mock('handlebars', () => {
+  return {
+    create: () => {
+      const mod = jest.requireActual('handlebars');
+      const handlebars = mod.create();
+      registerHelperSpy = jest.spyOn(handlebars, 'registerHelper');
+      return handlebars;
+    }
+  };
+});
+jest.mock('glob', () => {
+  const mod = jest.requireActual('glob');
+  return jest.fn(mod);
+});
+
+const path = require('path');
+const generateFiles = require('../../../../src/scaffold/actions/generate-files');
 const fixtures = path.resolve(__dirname, '..', '..', '..', 'fixtures');
+const glob = require('glob');
+const fs = require('fs');
 
 describe('generateFiles', () => {
-  let mockContext, mockImports, generateFiles;
-  let globSpy, readFileStub, writeFileStub, mkdirpStub, registerHelperSpy;
+  let mockContext;
 
   beforeEach(() => {
-
-    readFileStub = sinon.stub().callsFake(fs.promises.readFile);
-    writeFileStub = sinon.stub().resolves();
-    mkdirpStub = sinon.stub().resolves();
-
-    mockImports = {
-      'handlebars': {
-        create: () => {
-          const handlebars = Handlebars.create();
-          registerHelperSpy = sinon.spy(handlebars, 'registerHelper');
-          return handlebars;
-        }
-      },
-      'util': {
-        promisify: f => {
-          globSpy = sinon.spy(promisify(f));
-          return globSpy;
-        }
-      },
-      'mkdirp': mkdirpStub,
-      'fs': {
-        promises: {
-          readFile: readFileStub,
-          writeFile: writeFileStub
-        }
-      },
-      '../action-wrapper': require('../../../helpers').mockActionWrapper
-    };
-
-    generateFiles = proxyquire('../../../../src/scaffold/actions/generate-files', mockImports);
+    mockReadFileStub.mockImplementation((file, encoding) => fs.readFileSync(file, encoding)); // eslint-disable-line no-sync
+    mockWriteFileStub.mockResolvedValue();
+    mockMkdirpStub.mockResolvedValue();
+    mockGlobStub.mockResolvedValue([
+      '/gasket-cli/test/fixtures/generator/file-a.md',
+      '/gasket-cli/test/fixtures/generator/file-b.md'
+    ]);
 
     mockContext = {
       appName: 'my-app',
@@ -62,66 +66,69 @@ describe('generateFiles', () => {
   });
 
   afterEach(() => {
-    sinon.restore();
+    jest.clearAllMocks();
   });
 
   it('is decorated action', async () => {
-    assume(generateFiles).property('wrapped');
+    expect(generateFiles).toHaveProperty('wrapped');
   });
 
   it('early exit if not files', async () => {
     mockContext.files.globSets = [];
     await generateFiles(mockContext);
-    assume(globSpy).not.called();
+    expect(glob).not.toHaveBeenCalled();
   });
 
   it('reads expected source files', async () => {
     await generateFiles(mockContext);
-    assume(readFileStub).is.calledWithMatch('gasket-cli/test/fixtures/generator/file-a.md');
-    assume(readFileStub).is.calledWithMatch('gasket-cli/test/fixtures/generator/file-b.md');
+    expect(mockReadFileStub).toHaveBeenCalledWith(expect.stringContaining('gasket-cli/test/fixtures/generator/file-a.md'), expect.any(Object));
+    expect(mockReadFileStub).toHaveBeenCalledWith(expect.stringContaining('gasket-cli/test/fixtures/generator/file-b.md'), expect.any(Object));
   });
 
   it('writes expected target files', async () => {
     await generateFiles(mockContext);
-    assume(writeFileStub).is.calledWithMatch('/path/to/my-app/file-a.md');
-    assume(writeFileStub).is.calledWithMatch('/path/to/my-app/file-b.md');
+    expect(mockWriteFileStub).toHaveBeenCalledWith('/path/to/my-app/file-a.md', expect.any(String), expect.any(Object));
+    expect(mockWriteFileStub).toHaveBeenCalledWith('/path/to/my-app/file-b.md', expect.any(String), expect.any(Object));
   });
 
   it('handles template read errors', async () => {
-    readFileStub.rejects(new Error('Bogus error occurred'));
+    mockReadFileStub.mockRejectedValue(new Error('Bogus error occurred'));
     await generateFiles(mockContext);
-    assume(mockContext.errors).length(2);
-    assume(mockContext.errors[0])
-      .contains('Error reading template').contains('file-a.md').contains('Bogus error occurred');
-    assume(mockContext.errors[1])
-      .contains('Error reading template').contains('file-b.md').contains('Bogus error occurred');
+    expect(mockContext.errors).toHaveLength(2);
+    expect(mockContext.errors[0]).toContain('Error reading template');
+    expect(mockContext.errors[0]).toContain('file-a.md');
+    expect(mockContext.errors[0]).toContain('Bogus error occurred');
+    expect(mockContext.errors[1]).toContain('Error reading template');
+    expect(mockContext.errors[1]).toContain('file-b.md');
+    expect(mockContext.errors[1]).toContain('Bogus error occurred');
   });
 
   it('handles template dir read errors as warnings', async () => {
     const err = new Error('Bogus error occurred');
     err.code = 'EISDIR';
-    readFileStub.rejects(err);
+    mockReadFileStub.mockRejectedValue(err);
     await generateFiles(mockContext);
-    assume(mockContext.warnings).length(2);
-    assume(mockContext.warnings).contains('Directory matched as template file: /path/to/my-app/file-a.md');
-    assume(mockContext.warnings).contains('Directory matched as template file: /path/to/my-app/file-b.md');
+    expect(mockContext.warnings).toHaveLength(2);
+    expect(mockContext.warnings).toContain('Directory matched as template file: /path/to/my-app/file-a.md');
+    expect(mockContext.warnings).toContain('Directory matched as template file: /path/to/my-app/file-b.md');
   });
 
   it('handles dir create errors', async () => {
-    mkdirpStub.rejects(new Error('Bogus error occurred'));
+    mockMkdirpStub.mockRejectedValue(new Error('Bogus error occurred'));
     await generateFiles(mockContext);
-    assume(mockContext.errors).contains('Error creating directory /path/to/my-app: Bogus error occurred');
+    expect(mockContext.errors).toContain('Error creating directory /path/to/my-app: Bogus error occurred');
   });
 
   it('handles file write errors', async () => {
-    writeFileStub.rejects(new Error('Bogus error occurred'));
+    mockWriteFileStub.mockRejectedValue(new Error('Bogus error occurred'));
     await generateFiles(mockContext);
-    assume(mockContext.errors).contains('Error writing /path/to/my-app/file-a.md: Bogus error occurred');
-    assume(mockContext.errors).contains('Error writing /path/to/my-app/file-b.md: Bogus error occurred');
+    expect(mockContext.errors).toContain('Error writing /path/to/my-app/file-a.md: Bogus error occurred');
+    expect(mockContext.errors).toContain('Error writing /path/to/my-app/file-b.md: Bogus error occurred');
   });
 
   it('shows warning spinner for any warnings', async () => {
-    const warnStub = sinon.stub();
+    mockReadFileStub.mockRejectedValue({ code: 'EISDIR' });
+    const warnStub = jest.fn();
 
     mockContext.files.globSets = [{
       globs: [fixtures + '/generator/missing/*'],
@@ -131,33 +138,33 @@ describe('generateFiles', () => {
     }];
 
     await generateFiles.wrapped(mockContext, { warn: warnStub });
-    assume(mockContext.warnings).lengthOf(1);
-    assume(warnStub).called();
+    expect(mockContext.warnings).toHaveLength(1);
+    expect(warnStub).toHaveBeenCalled();
   });
 
   describe('handlebars', function () {
     it('adds a json helper to handlebars', async () => {
       await generateFiles(mockContext);
-      assume(registerHelperSpy).calledWith('json');
+      expect(registerHelperSpy).toHaveBeenNthCalledWith(1, 'json', expect.any(Function));
     });
 
     it('adds a jspretty helper to handlebars', async () => {
       await generateFiles(mockContext);
-      assume(registerHelperSpy).calledWith('jspretty');
+      expect(registerHelperSpy).toHaveBeenNthCalledWith(2, 'jspretty', expect.any(Function));
     });
 
     it('template handles string replacement', async () => {
       await generateFiles(mockContext);
       // get the correct args as calls may be unordered
-      const args = writeFileStub.args.find(call => call[0].includes('file-a.md'));
-      assume(args[1]).includes('The app name is my-app');
+      const args = mockWriteFileStub.mock.calls.find(call => call[0].includes('file-a.md'));
+      expect(args[1]).toContain('The app name is my-app');
     });
 
     it('template handles replacement with helpers', async () => {
       await generateFiles(mockContext);
       // get the correct args as calls may be unordered
-      const args = writeFileStub.args.find(call => call[0].includes('file-b.md'));
-      assume(args[1]).includes(`'source':{'name':'@gasket/plugin-example'}`);
+      const args = mockWriteFileStub.mock.calls.find(call => call[0].includes('file-b.md'));
+      expect(args[1]).toContain(`'source':{'name':'@gasket/plugin-example'}`);
     });
 
     it('template handles compile errors', async () => {
@@ -168,15 +175,13 @@ describe('generateFiles', () => {
         }
       }];
       await generateFiles(mockContext);
-      const args = writeFileStub.args.find(call => call[0].includes('file-a.md'));
+      const args = mockWriteFileStub.mock.calls.find(call => call[0].includes('file-a.md'));
+      // expect output file falls back to source content
+      expect(args[1]).toContain(`The context does not have {{{ jspretty missing }}}`);
 
-      // assume output file falls back to source content
-      assume(args[1]).includes(`The context does not have {{{ jspretty missing }}}`);
-
-      // assume a cli warning was added with relevant message
-      assume(mockContext.warnings).lengthOf(1);
-      assume(mockContext.warnings[0]).includes(
-        `Error templating /path/to/my-app/file-a.md: Cannot read properties of undefined`);
+      // expect a cli warning was added with relevant message
+      expect(mockContext.warnings).toHaveLength(1);
+      expect(mockContext.warnings[0]).toContain(`Error templating /path/to/my-app/file-a.md: Cannot read properties of undefined`);
     });
   });
 
@@ -184,47 +189,52 @@ describe('generateFiles', () => {
 
     it('is async', async function () {
       const results = generateFiles._getDescriptors(mockContext);
-      assume(results).instanceOf(Promise);
+      expect(results).toBeInstanceOf(Promise);
     });
 
     it('globs each globSet pattern', async function () {
       await generateFiles._getDescriptors(mockContext);
-      assume(globSpy).called();
+      expect(glob).toHaveBeenCalled();
     });
 
     it('returns flat array of descriptor objects', async function () {
       const results = await generateFiles._getDescriptors(mockContext);
-      assume(results).lengthOf(2);
-      assume(results[0]).objectContaining({
-        target: 'file-a.md',
-        from: '@gasket/plugin-example'
-      });
-      assume(results[1]).objectContaining({
-        target: 'file-b.md',
-        from: '@gasket/plugin-example'
-      });
+      expect(results).toHaveLength(2);
+      expect(results[0]).toEqual(
+        expect.objectContaining({
+          target: 'file-a.md',
+          from: '@gasket/plugin-example'
+        }));
+      expect(results[1]).toEqual(
+        expect.objectContaining({
+          target: 'file-b.md',
+          from: '@gasket/plugin-example'
+        }));
     });
 
     it('descriptor has target destination', async function () {
       const results = await generateFiles._getDescriptors(mockContext);
-      assume(results[0]).objectContaining({
-        targetFile: sinon.match('/path/to/my-app/file-a.md')
-      });
+      expect(results[0]).toEqual(
+        expect.objectContaining({
+          targetFile: expect.stringContaining('/path/to/my-app/file-a.md')
+        }));
     });
 
     it('descriptor has source file path', async function () {
       const results = await generateFiles._getDescriptors(mockContext);
-      assume(results[0]).objectContaining({
-        srcFile: sinon.match('/gasket-cli/test/fixtures/generator/file-a.md')
-      });
+      expect(results[0]).toEqual(
+        expect.objectContaining({
+          srcFile: expect.stringContaining('/gasket-cli/test/fixtures/generator/file-a.md')
+        }));
     });
 
     it('descriptor has glob pattern and resolved base path', async function () {
       const results = await generateFiles._getDescriptors(mockContext);
-      assume(results[0]).objectContaining({
-        pattern: sinon.match('/gasket-cli/test/fixtures/generator/*'),
-        base: sinon.match(/.+fixtures\/generator$/)
-      });
+      expect(results[0]).toEqual(
+        expect.objectContaining({
+          pattern: expect.stringContaining('/gasket-cli/test/fixtures/generator/*'),
+          base: expect.stringMatching(/.+fixtures\/generator$/)
+        }));
     });
 
     it('works with dot file patterns', async function () {
@@ -235,15 +245,16 @@ describe('generateFiles', () => {
         }
       }];
       const results = await generateFiles._getDescriptors(mockContext);
-      assume(results).lengthOf(1);
-      assume(results[0]).objectContaining({
-        pattern: sinon.match('/gasket-cli/test/fixtures/generator/.*'),
-        base: sinon.match(/.+fixtures\/generator$/),
-        srcFile: sinon.match('/gasket-cli/test/fixtures/generator/.dot-file-a.md'),
-        targetFile: '/path/to/my-app/.dot-file-a.md',
-        target: '.dot-file-a.md',
-        from: '@gasket/plugin-hidden-example'
-      });
+      expect(results).toHaveLength(1);
+      expect(results[0]).toEqual(
+        expect.objectContaining({
+          pattern: expect.stringContaining('/gasket-cli/test/fixtures/generator/.*'),
+          base: expect.stringMatching(/.+fixtures\/generator$/),
+          srcFile: expect.stringContaining('/gasket-cli/test/fixtures/generator/.dot-file-a.md'),
+          targetFile: '/path/to/my-app/.dot-file-a.md',
+          target: '.dot-file-a.md',
+          from: '@gasket/plugin-hidden-example'
+        }));
     });
 
     it('works with .template extensions', async function () {
@@ -254,15 +265,16 @@ describe('generateFiles', () => {
         }
       }];
       const results = await generateFiles._getDescriptors(mockContext);
-      assume(results).lengthOf(1);
-      assume(results[0]).objectContaining({
-        pattern: sinon.match('/gasket-cli/test/fixtures/generator/other/*'),
-        base: sinon.match(/.+fixtures\/generator\/other$/),
-        srcFile: sinon.match('/gasket-cli/test/fixtures/generator/other/file-b.md.template'),
-        targetFile: '/path/to/my-app/file-b.md',
-        target: 'file-b.md',
-        from: '@gasket/plugin-template-example'
-      });
+      expect(results).toHaveLength(1);
+      expect(results[0]).toEqual(
+        expect.objectContaining({
+          pattern: expect.stringContaining('/gasket-cli/test/fixtures/generator/other/*'),
+          base: expect.stringMatching(/.+fixtures\/generator\/other$/),
+          srcFile: expect.stringContaining('/gasket-cli/test/fixtures/generator/other/file-b.md.template'),
+          targetFile: '/path/to/my-app/file-b.md',
+          target: 'file-b.md',
+          from: '@gasket/plugin-template-example'
+        }));
     });
 
     it('works with recursive patterns', async function () {
@@ -273,7 +285,7 @@ describe('generateFiles', () => {
         }
       }];
       const results = await generateFiles._getDescriptors(mockContext);
-      assume(results).lengthOf(5);
+      expect(results).toHaveLength(5);
     });
 
     it('works with Windows path separators', async function () {
@@ -284,7 +296,7 @@ describe('generateFiles', () => {
         }
       }];
       const results = await generateFiles._getDescriptors(mockContext);
-      assume(results).lengthOf(5);
+      expect(results).toHaveLength(5);
     });
 
     it('reduces duplicates with overrides prop', async function () {
@@ -300,16 +312,17 @@ describe('generateFiles', () => {
         }
       }];
       const results = await generateFiles._getDescriptors(mockContext);
-      assume(results).lengthOf(2);
-      assume(results[0]).objectContaining({
-        pattern: sinon.match('/gasket-cli/test/fixtures/generator/override/*'),
-        base: sinon.match(/.+fixtures\/generator\/override$/),
-        srcFile: sinon.match('/gasket-cli/test/fixtures/generator/override/file-a.md'),
-        targetFile: '/path/to/my-app/file-a.md',
-        target: 'file-a.md',
-        from: '@gasket/plugin-override-example',
-        overrides: '@gasket/plugin-example'
-      });
+      expect(results).toHaveLength(2);
+      expect(results[0]).toEqual(
+        expect.objectContaining({
+          pattern: expect.stringContaining('/gasket-cli/test/fixtures/generator/override/*'),
+          base: expect.stringMatching(/.+fixtures\/generator\/override$/),
+          srcFile: expect.stringContaining('/gasket-cli/test/fixtures/generator/override/file-a.md'),
+          targetFile: '/path/to/my-app/file-a.md',
+          target: 'file-a.md',
+          from: '@gasket/plugin-override-example',
+          overrides: '@gasket/plugin-example'
+        }));
     });
   });
 
@@ -326,19 +339,20 @@ describe('generateFiles', () => {
           '/gasket-cli/test/fixtures/generator/file-b.md'
         ]
       );
-      assume(results[0]).objectContaining({
-        pattern: sinon.match('/gasket-cli/test/fixtures/rel/../generator/*'),
-        base: sinon.match(/.+fixtures\/generator$/),
-        srcFile: sinon.match('/gasket-cli/test/fixtures/generator/file-a.md'),
-        targetFile: '/path/to/my-app/file-a.md',
-        target: 'file-a.md',
-        from
-      });
+      expect(results[0]).toEqual(
+        expect.objectContaining({
+          pattern: expect.stringContaining('/gasket-cli/test/fixtures/rel/../generator/*'),
+          base: expect.stringMatching(/.+fixtures\/generator$/),
+          srcFile: expect.stringContaining('/gasket-cli/test/fixtures/generator/file-a.md'),
+          targetFile: '/path/to/my-app/file-a.md',
+          target: 'file-a.md',
+          from
+        }));
     });
 
     it('has expected output with windows paths', function () {
-      sinon.stub(path, 'sep').get(() => '\\');
-      sinon.stub(path, 'resolve').callsFake(f => f.replace('/rel/..', ''));
+      jest.spyOn(path, 'resolve').mockImplementationOnce(f => f.replace('/rel/..', ''));
+      path.sep = '\\';
 
       const results = generateFiles._assembleDescriptors(
         // mixed slashes for testing
@@ -351,20 +365,23 @@ describe('generateFiles', () => {
           'C:/gasket-cli/test/fixtures/generator/file-b.md'
         ]
       );
-      assume(results[0]).objectContaining({
-        pattern: 'C:/gasket-cli/test/fixtures/rel/../generator/*',
-        base: 'C:\\gasket-cli\\test\\fixtures\\generator',
-        srcFile: sinon.match('C:\\gasket-cli\\test\\fixtures\\generator\\file-a.md'),
-        targetFile: 'C:\\path\\to\\my-app\\file-a.md',
-        target: 'file-a.md',
-        from
-      });
-      assume(results[1]).objectContaining({
-        srcFile: sinon.match('C:\\gasket-cli\\test\\fixtures\\generator\\file-b.md'),
-        targetFile: 'C:\\path\\to\\my-app\\file-b.md',
-        target: 'file-b.md',
-        from
-      });
+
+      expect(results[0]).toEqual(
+        expect.objectContaining({
+          pattern: 'C:/gasket-cli/test/fixtures/rel/../generator/*',
+          base: expect.stringContaining('C:\\gasket-cli\\test\\fixtures\\generator'),
+          srcFile: expect.stringContaining('C:\\gasket-cli\\test\\fixtures\\generator\\file-a.md'),
+          targetFile: 'C:\\path\\to\\my-app\\file-a.md',
+          target: 'file-a.md',
+          from
+        }));
+      expect(results[1]).toEqual(
+        expect.objectContaining({
+          srcFile: expect.stringContaining('C:\\gasket-cli\\test\\fixtures\\generator\\file-b.md'),
+          targetFile: 'C:\\path\\to\\my-app\\file-b.md',
+          target: 'file-b.md',
+          from
+        }));
     });
   });
 });

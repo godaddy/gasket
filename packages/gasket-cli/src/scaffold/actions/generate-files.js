@@ -8,7 +8,6 @@ const { dim } = require('chalk');
 const action = require('../action-wrapper');
 
 const glob = promisify(require('glob'));
-
 const flatten = (acc, values) => (acc || []).concat(values);
 const reSep = /[/\\]+/;
 const joinSep = pthArr => pthArr.join(path.sep);

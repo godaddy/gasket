@@ -1,57 +1,57 @@
-const sinon = require('sinon');
-const assume = require('assume');
 const setup = require('../../../src/utils/setup');
 require('../../fixtures/example-setup');
 
 const resolvedFile = require.resolve('../../fixtures/example-setup.js', { paths: [__dirname] });
-const resolvedPkg = require.resolve('mocha', { paths: [__dirname] });
+const resolvedPkg = require.resolve('jest', { paths: [__dirname] });
 delete require.cache[resolvedFile];
 delete require.cache[resolvedPkg];
 
 describe('cli setup', function () {
+  let spy;
   beforeEach(function () {
-    sinon.stub(process, 'cwd').callsFake(() => __dirname);
+    spy = jest.spyOn(process, 'cwd').mockReturnValue(__dirname);
   });
 
   afterEach(function () {
-    sinon.restore();
     delete require.cache[resolvedFile];
     delete require.cache[resolvedPkg];
   });
 
   it('requires correctly resolved file', function () {
-    assume(require.cache).not.property(resolvedFile);
+    expect(require.cache).not.toHaveProperty(resolvedFile);
     setup(['/path/to/node', '/path/to/cli/bin', 'command', '--require', '../../fixtures/example-setup.js']);
-    assume(require.cache).property(resolvedFile);
+    expect(spy).toHaveBeenCalled();
+    expect(require.cache).toEqual(expect.objectContaining({ [resolvedFile]: expect.anything() }));
   });
 
   it('requires correctly resolved package', function () {
-    assume(require.cache).not.property(resolvedPkg);
-    setup(['/path/to/node', '/path/to/cli/bin', 'command', '--require', 'mocha']);
-    assume(require.cache).property(resolvedPkg);
+    expect(require.cache).not.toHaveProperty(resolvedPkg);
+    setup(['/path/to/node', '/path/to/cli/bin', 'command', '--require', 'jest']);
+    expect(spy).toHaveBeenCalled();
+    expect(require.cache).toEqual(expect.objectContaining({ [resolvedPkg]: expect.anything() }));
   });
 
   it('supports multiple flags', function () {
-    assume(require.cache).not.property(resolvedFile);
-    assume(require.cache).not.property(resolvedPkg);
+    expect(require.cache).not.toHaveProperty(resolvedFile);
+    expect(require.cache).not.toHaveProperty(resolvedPkg);
     setup([
       '/path/to/node', '/path/to/cli/bin', 'command',
       '--require', '../../fixtures/example-setup.js',
-      '--require', 'mocha'
+      '--require', 'jest'
     ]);
-    assume(require.cache).property(resolvedFile);
-    assume(require.cache).property(resolvedPkg);
+    expect(require.cache).toEqual(expect.objectContaining({ [resolvedFile]: expect.anything() }));
+    expect(require.cache).toEqual(expect.objectContaining({ [resolvedPkg]: expect.anything() }));
   });
 
   it('allows short -r flags', function () {
-    assume(require.cache).not.property(resolvedFile);
-    assume(require.cache).not.property(resolvedPkg);
+    expect(require.cache).not.toHaveProperty(resolvedFile);
+    expect(require.cache).not.toHaveProperty(resolvedPkg);
     setup([
       '/path/to/node', '/path/to/cli/bin', 'command',
       '-r', '../../fixtures/example-setup.js',
-      '-r', 'mocha'
+      '-r', 'jest'
     ]);
-    assume(require.cache).property(resolvedFile);
-    assume(require.cache).property(resolvedPkg);
+    expect(require.cache).toEqual(expect.objectContaining({ [resolvedFile]: expect.anything() }));
+    expect(require.cache).toEqual(expect.objectContaining({ [resolvedPkg]: expect.anything() }));
   });
 });

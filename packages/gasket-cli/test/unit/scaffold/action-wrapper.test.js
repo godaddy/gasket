@@ -1,14 +1,17 @@
-const assume = require('assume');
-const sinon = require('sinon');
-const proxyquire = require('proxyquire');
+const mockStartStub = jest.fn();
+const mockSucceedStub = jest.fn();
+const mockWarnStub = jest.fn();
+const mockFailStub = jest.fn();
+const mockOraStub = jest.fn();
+
+jest.mock('ora', () => mockOraStub);
+
+const actionWrapper = require('../../../src/scaffold/action-wrapper');
 
 describe('actionWrapper', () => {
-  let sandbox, mockContext, mockImports, actionWrapper;
-  let mockFn, mockLabel, mockSpinner, oraStub, startStub, succeedStub, warnStub, failStub;
+  let mockContext, mockFn, mockLabel, mockSpinner;
 
   beforeEach(() => {
-    sandbox = sinon.createSandbox();
-
     mockLabel = 'mockAction';
     mockFn = () => {
     };
@@ -21,42 +24,31 @@ describe('actionWrapper', () => {
       errors: []
     };
 
-    startStub = sandbox.stub();
-    succeedStub = sandbox.stub();
-    warnStub = sandbox.stub();
-    failStub = sandbox.stub();
-
     mockSpinner = {
-      succeed: succeedStub,
-      warn: warnStub,
-      fail: failStub
+      succeed: mockSucceedStub,
+      warn: mockWarnStub,
+      fail: mockFailStub
     };
     mockSpinner.start = () => {
       mockSpinner.isSpinning = true;
-      startStub();
+      mockStartStub();
     };
 
-    oraStub = sandbox.stub().returns(mockSpinner);
-
-    mockImports = {
-      ora: oraStub
-    };
-
-    actionWrapper = proxyquire('../../../src/scaffold/action-wrapper', mockImports);
+    mockOraStub.mockReturnValue(mockSpinner);
   });
 
   afterEach(() => {
-    sandbox.restore();
+    jest.clearAllMocks();
   });
 
   it('returns a wrapped async function', () => {
     const result = actionWrapper(mockLabel, mockFn);
-    assume(result).a('asyncfunction');
+    expect(result.constructor.name).toBe('AsyncFunction');
   });
 
   it('exposes wrapped function', () => {
     const result = actionWrapper(mockLabel, mockFn);
-    assume(result).property('wrapped', mockFn);
+    expect(result).toHaveProperty('wrapped', mockFn);
   });
 
   describe('instance', () => {
@@ -69,31 +61,31 @@ describe('actionWrapper', () => {
     it('instantiates spinner with label', async () => {
       mockAction = actionWrapper(mockLabel, mockFn);
       await mockAction(mockContext);
-      assume(oraStub).calledWith(mockLabel);
+      expect(mockOraStub).toHaveBeenCalledWith(mockLabel);
     });
 
     it('starts the spinner by default', async () => {
       mockAction = actionWrapper(mockLabel, mockFn);
       await mockAction(mockContext);
-      assume(startStub).called();
+      expect(mockStartStub).toHaveBeenCalled();
     });
 
     it('does not start spinner if disabled', async () => {
       mockAction = actionWrapper(mockLabel, mockFn, { startSpinner: false });
       await mockAction(mockContext);
-      assume(startStub).not.called();
+      expect(mockStartStub).not.toHaveBeenCalled();
     });
 
     it('sets spinner to succeed if started', async () => {
       mockAction = actionWrapper(mockLabel, mockFn);
       await mockAction(mockContext);
-      assume(succeedStub).called();
+      expect(mockSucceedStub).toHaveBeenCalled();
     });
 
     it('ignores spinner succeed if not started', async () => {
       mockAction = actionWrapper(mockLabel, mockFn, { startSpinner: false });
       await mockAction(mockContext);
-      assume(succeedStub).not.called();
+      expect(mockSucceedStub).not.toHaveBeenCalled();
     });
 
     it('sets spinner to fail if error', async () => {
@@ -107,7 +99,7 @@ describe('actionWrapper', () => {
       } catch (e) {
         // continue
       }
-      assume(failStub).called();
+      expect(mockFailStub).toHaveBeenCalled();
     });
 
     it('rethrows originating error', async () => {
@@ -116,12 +108,9 @@ describe('actionWrapper', () => {
         throw mockError;
       };
       mockAction = actionWrapper(mockLabel, mockFn);
-
-      try {
+      await expect(async () => {
         await mockAction(mockContext);
-      } catch (e) {
-        assume(e).equals(mockError);
-      }
+      }).rejects.toEqual(mockError);
     });
 
     it('adds error stack to context for reporting', async () => {
@@ -137,12 +126,12 @@ describe('actionWrapper', () => {
         // continue
       }
 
-      assume(mockContext.errors).includes(mockError.stack);
+      expect(mockContext.errors).toContain(mockError.stack);
     });
 
     it('injects spinner to wrapped function', async () => {
       mockFn = (ctx, spinner) => {
-        assume(spinner).equals(mockSpinner);
+        expect(spinner).toEqual(mockSpinner);
       };
       mockAction = actionWrapper(mockLabel, mockFn);
       await mockAction(mockContext);

@@ -1,6 +1,10 @@
 # `@gasket/cli`
 
 - Removed support for deprecated `--npmconfig` flag ([#647])
+- 
+### 6.45.1
+
+- @gasket/cli Jest refactor ([#667])
 
 ### 6.41.1
 
@@ -12,7 +16,7 @@
 
 ### 6.38.0
 
-- Fix generation of files on Windows during gasket create when plugins use globs containing Windows separators ([#547]) 
+- Fix generation of files on Windows during gasket create when plugins use globs containing Windows separators ([#547])
 
 ### 6.34.6
 
@@ -432,4 +436,5 @@ upon `gasket create`
 [#547]: https://github.com/godaddy/gasket/pull/547
 [#607]: https://github.com/godaddy/gasket/pull/607
 [#617]: https://github.com/godaddy/gasket/pull/617
+[#667]: https://github.com/godaddy/gasket/pull/667
 [#647]: https://github.com/godaddy/gasket/pull/647

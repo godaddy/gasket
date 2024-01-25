@@ -1,14 +1,17 @@
-const sinon = require('sinon');
-const assume = require('assume');
-const proxyquire = require('proxyquire');
+const mockMkdirStub = jest.fn();
+
+jest.mock('fs', () => ({
+  promises: {
+    mkdir: mockMkdirStub
+  }
+}));
+
+const mkDir = require('../../../../src/scaffold/actions/mkdir');
 
 describe('mkdir', () => {
-  let sandbox, mockContext, mkDir;
-  let mkdirStub;
+  let mockContext;
 
   beforeEach(() => {
-    sandbox = sinon.createSandbox();
-
     mockContext = {
       cwd: '/some/path',
       dest: '/some/path/my-app',
@@ -17,54 +20,39 @@ describe('mkdir', () => {
       destOverride: true,
       errors: []
     };
-
-    mkdirStub = sandbox.stub();
-
-    mkDir = proxyquire('../../../../src/scaffold/actions/mkdir', {
-      'fs': {
-        promises: {
-          mkdir: mkdirStub
-        }
-      },
-      '../action-wrapper': require('../../../helpers').mockActionWrapper
-    });
   });
 
   afterEach(() => {
-    sandbox.restore();
+    jest.clearAllMocks();
   });
 
   it('is decorated action', async () => {
-    assume(mkDir).property('wrapped');
+    expect(mkDir).toHaveProperty('wrapped');
   });
 
   it('Makes a directory with context.dest', async () => {
-    mkdirStub.resolves();
+    mockMkdirStub.mockResolvedValue();
     await mkDir(mockContext);
-    assume(mkdirStub).is.calledWith(mockContext.dest);
+    expect(mockMkdirStub).toHaveBeenCalledWith(mockContext.dest);
   });
 
   it('Rejects with message if directory was not allowed to be overwritten', async () => {
-    try {
+    await expect(async () => {
       await mkDir({ ...mockContext, extant: true, destOverride: false });
-    } catch (e) {
-      assume(e.message).includes('was not allowed to be overwritten');
-    }
+    }).rejects.toThrow('was not allowed to be overwritten');
   });
 
   it('Does not create a directory if allowed to override an existing one', async () => {
-    mkdirStub.resolves();
+    mockMkdirStub.mockResolvedValue();
     await mkDir({ ...mockContext, extant: true, destOverride: true });
-    assume(mkdirStub.called).is.false();
+    expect(mockMkdirStub.called).toBeFalsy();
   });
 
   it('Rejects with original error for other issues', async () => {
     const mockError = { code: 'BOGUS' };
-    mkdirStub.rejects(mockError);
-    try {
+    mockMkdirStub.mockRejectedValue(mockError);
+    await expect(async () => {
       await mkDir(mockContext);
-    } catch (e) {
-      assume(e).to.equals(mockError);
-    }
+    }).rejects.toEqual(mockError);
   });
 });
