@@ -1,5 +1,4 @@
-import React from 'react';
-import assume from 'assume';
+import React from 'react';;
 import { render, queryByAttribute } from '@testing-library/react';
 
 import { GasketDataScript } from '../src';
@@ -11,7 +10,7 @@ describe('<GasketDataScript/>', function () {
     const dom = render(<GasketDataScript { ...{ data: { bogus: true } } } />);
     const gasketDataScript = getById(dom.container, 'GasketData');
 
-    assume(gasketDataScript).exists();
-    assume(gasketDataScript.textContent).equals('{"bogus":true}');
+    expect(gasketDataScript).toBeDefined();
+    expect(gasketDataScript.textContent).toEqual('{"bogus":true}');
   });
 });
