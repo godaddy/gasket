@@ -125,7 +125,7 @@ const getExperiments = require('./get-experiments');
 module.exports = {
   id: 'gasket-plugin-example',
   hooks: {
-    initReduxState(gasket, state, req, res) {
+    initReduxState(gasket, state, { req, res }) {
       return {
         ...state,
         experiments: getExperiments(req)
@@ -157,7 +157,7 @@ const getExperiments = require('./get-experiments-action');
 module.exports = {
   id: 'gasket-plugin-example',
   hooks: {
-    initReduxStore(gasket, store, req, res) {
+    initReduxStore(gasket, store, { req, res }) {
       store.dispatch(getExperiments(req));
     }
   }
