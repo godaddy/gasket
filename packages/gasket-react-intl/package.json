@@ -76,8 +76,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-intl": "^6.0.0",
-    "react-redux": "^8.0.0",
-    "setup-env": "^2.0.0"
+    "react-redux": "^8.0.0"
   },
   "peerDependencies": {
     "@gasket/plugin-intl": "^6.0.0",
