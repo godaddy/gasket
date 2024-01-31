@@ -12,7 +12,7 @@
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
-    "test": "jest",
+    "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
     "posttest": "npm run lint"
   },
   "repository": {
@@ -69,6 +69,7 @@
     "@gasket/utils": "^6.45.0",
     "@types/express": "^4.17.21",
     "@types/jest": "^29.5.11",
+    "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
     "eslint-config-godaddy-react-typescript": "^4.0.2",
     "eslint-plugin-unicorn": "^44.0.0",
