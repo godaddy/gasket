@@ -1,5 +1,9 @@
 # `@gasket/assets`
 
+### 6.45.2
+
+- Remove `eslint-plugin-mocha` from devDeps ([#670])
+
 ### 6.34.4
 
 - Upgrade eslint-plugin-unicorn v43 ([#436])
@@ -36,3 +40,4 @@
 [#319]: https://github.com/godaddy/gasket/pull/319
 [#332]: https://github.com/godaddy/gasket/pull/332
 [#436]: https://github.com/godaddy/gasket/pull/436
+[#670]: https://github.com/godaddy/gasket/pull/670
