@@ -1,7 +1,6 @@
 const { promisify } = require('util');
 const middleware = require('../lib/middleware');
 const { ENV_CONFIG } = require('../lib/constants');
-const sinon = require('sinon');
 
 describe('middleware', function () {
   let gasket, mockReq, mockRes;
@@ -14,10 +13,6 @@ describe('middleware', function () {
 
     mockReq = { mock: 'request', cookies: { market: 'de-DE' } };
     mockRes = { mock: 'response', locals: {} };
-  });
-
-  afterEach(function () {
-    sinon.restore();
   });
 
   it('executes before the "redux" middleware', async () => {

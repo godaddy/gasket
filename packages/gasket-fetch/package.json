@@ -56,7 +56,6 @@
     "jest": "^29.7.0",
     "jsdom": "^20.0.0",
     "regenerator-runtime": "^0.14.1",
-    "setup-env": "^2.0.0",
     "whatwg-fetch": "3.6.20"
   },
   "eslintConfig": {
