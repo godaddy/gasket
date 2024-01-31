@@ -17,7 +17,7 @@ describe('Plugin', () => {
     };
   });
 
-  it('is an object', () => {
+  it('should be an object', () => {
     expect(plugin).toBeInstanceOf(Object);
   });
 
@@ -26,12 +26,7 @@ describe('Plugin', () => {
   });
 
   it('has expected hooks', () => {
-    const expected = [
-      'preboot',
-      'middleware',
-      'initReduxState',
-      'metadata'
-    ];
+    const expected = ['preboot', 'middleware', 'initReduxState', 'metadata'];
 
     expect(plugin).toHaveProperty('hooks');
 
@@ -120,16 +115,19 @@ describe('Plugin', () => {
         expect(event).toEqual('appEnvConfig');
         return Promise.resolve({
           ...config,
-          urls: Object.entries(config.urls).reduce((result, [key, value]) => ({
-            goDaddy: {
-              ...result.goDaddy,
-              [key]: value.replace('{rootDomain}', config.rootDomain)
-            },
-            resellers: {
-              ...result.resellers,
-              [key]: value.replace('{rootDomain}', config.rootResellerDomain)
-            }
-          }), {})
+          urls: Object.entries(config.urls).reduce(
+            (result, [key, value]) => ({
+              goDaddy: {
+                ...result.goDaddy,
+                [key]: value.replace('{rootDomain}', config.rootDomain)
+              },
+              resellers: {
+                ...result.resellers,
+                [key]: value.replace('{rootDomain}', config.rootResellerDomain)
+              }
+            }),
+            {}
+          )
         });
       });
 
@@ -167,7 +165,9 @@ describe('Plugin', () => {
 
       const { preboot } = plugin.hooks;
 
-      await expect(preboot(gasket)).rejects.toThrow('An appEnvConfig lifecycle hook did not return a config object.');
+      await expect(preboot(gasket)).rejects.toThrow(
+        'An appEnvConfig lifecycle hook did not return a config object.'
+      );
     });
 
     it('does not swallow errors in buggy config files', () => {
@@ -224,8 +224,11 @@ describe('Plugin', () => {
       const newState = await plugin.hooks.initReduxState(
         gasket,
         startingState,
-        req,
-        res);
+        {
+          req,
+          res
+        }
+      );
 
       expect(newState).toEqual({
         auth: { some: 'details' },
@@ -242,8 +245,11 @@ describe('Plugin', () => {
       const newState = await plugin.hooks.initReduxState(
         gasket,
         startingState,
-        req,
-        res);
+        {
+          req,
+          res
+        }
+      );
 
       expect(newState).toEqual({
         config: { some: { custom: 'config' } }
