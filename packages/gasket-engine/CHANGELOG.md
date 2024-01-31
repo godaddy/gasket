@@ -1,5 +1,9 @@
 # `@gasket/engine`
 
+### 6.45.2
+
+- Remove `eslint-plugin-mocha` from devDeps ([#670])
+
 ### 6.45.0
 
 - Fix types add plugins to environments ([#638])
@@ -132,5 +136,6 @@
 [#599]: https://github.com/godaddy/gasket/pull/599
 [#627]: https://github.com/godaddy/gasket/pull/627
 [#638]: https://github.com/godaddy/gasket/pull/638
+[#670]: https://github.com/godaddy/gasket/pull/670
 
 [Loader]:/packages/gasket-resolve/docs/api.md#loader

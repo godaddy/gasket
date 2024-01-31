@@ -1,5 +1,9 @@
 # `@gasket/nextjs`
 
+### 6.45.2
+
+- Refactor tests to Jest, update test scripts, add `cross-env`, remove obsolete `devDeps` ([#670])
+
 ### 6.43.0
 
 - Upgrade to Next.js 13.1.1 ([#614])
@@ -58,3 +62,4 @@
 [#523]: https://github.com/godaddy/gasket/pull/523
 [#603]: https://github.com/godaddy/gasket/pull/603
 [#614]: https://github.com/godaddy/gasket/pull/614
+[#670]: https://github.com/godaddy/gasket/pull/670

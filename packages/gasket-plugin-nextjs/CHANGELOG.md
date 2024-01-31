@@ -2,13 +2,17 @@
 
 - Removed support for deprecated `next` config support ([#655])
 
+### 6.45.2
+
+- Add `peerDeps` ([#670])
+
 ### 6.43.0
 
 - Upgrade to Next.js 13.1.1 ([#614])
 
 ### 6.38.2
 
-- Fix generated Mocha example test ([#556])  
+- Fix generated Mocha example test ([#556])
 
 ### 6.38.0
 
@@ -243,3 +247,4 @@
 [#556]: https://github.com/godaddy/gasket/pull/556
 [#614]: https://github.com/godaddy/gasket/pull/614
 [#655]: https://github.com/godaddy/gasket/pull/655
+[#670]: https://github.com/godaddy/gasket/pull/670

@@ -1,5 +1,9 @@
 # `@gasket/fetch`
 
+### 6.45.2
+
+- Remove `setup-env` ([#670])
+
 ### 6.34.3
 
 - Upgrade mocha v10 ([#442])
@@ -47,3 +51,4 @@
 [#442]: https://github.com/godaddy/gasket/pull/442
 [#459]: https://github.com/godaddy/gasket/pull/459
 [#460]: https://github.com/godaddy/gasket/pull/460
+[#670]: https://github.com/godaddy/gasket/pull/670

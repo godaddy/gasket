@@ -1,5 +1,9 @@
 # `@gasket/data`
 
+### 6.45.2
+
+- Remove `setup-env`, adjust test watcher script ([#670])
+
 ### 6.37.0
 
 - Jest refactor ([#507])
@@ -24,3 +28,4 @@
 [#459]: https://github.com/godaddy/gasket/pull/459
 [#460]: https://github.com/godaddy/gasket/pull/460
 [#507]: https://github.com/godaddy/gasket/pull/507
+[#670]: https://github.com/godaddy/gasket/pull/670
