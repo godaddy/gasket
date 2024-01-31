@@ -134,7 +134,7 @@ describe('Plugin', function () {
   });
 
   describe('scripts', function () {
-    it('uses the same scrips in our package.json', async function () {
+    it('uses the same scripts in our package.json', async function () {
       const { pkg } = await create();
 
       expect(typeof pkg.scripts).toBe('object');
