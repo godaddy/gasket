@@ -1,5 +1,9 @@
 # `@gasket/plugin-log`
 
+### 6.45.2
+
+- Tune `devDeps` ([#670])
+
 ### 6.34.4
 
 - Upgrade eslint-plugin-unicorn v43 ([#436])
@@ -84,3 +88,4 @@
 [#442]: https://github.com/godaddy/gasket/pull/442
 [#459]: https://github.com/godaddy/gasket/pull/459
 [#460]: https://github.com/godaddy/gasket/pull/460
+[#670]: https://github.com/godaddy/gasket/pull/670

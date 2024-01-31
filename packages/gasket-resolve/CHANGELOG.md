@@ -1,5 +1,9 @@
 # `@gasket/resolve`
 
+### 6.45.2
+
+- Tune `devDeps`, update test script ([#670])
+
 ### 6.44.4
 
 - Fix partial package resolutions on Windows ([#653])
@@ -119,5 +123,6 @@
 [#607]: https://github.com/godaddy/gasket/pull/607
 [#631]: https://github.com/godaddy/gasket/pull/631
 [#653]: https://github.com/godaddy/gasket/pull/653
+[#670]: https://github.com/godaddy/gasket/pull/670
 
 [Loader]:/packages/gasket-resolve/docs/api.md#loader
