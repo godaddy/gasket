@@ -1,5 +1,9 @@
 # `@gasket/plugin-lint`
 
+### 6.45.2
+
+- Tune `devDeps` ([#670])
+
 ### 6.35.0
 
 - add cjs extension to lint package ([#482])
@@ -105,3 +109,4 @@
 [#442]: https://github.com/godaddy/gasket/pull/442
 [#460]: https://github.com/godaddy/gasket/pull/460
 [#482]: https://github.com/godaddy/gasket/pull/482
+[#670]: https://github.com/godaddy/gasket/pull/670

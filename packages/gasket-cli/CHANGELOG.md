@@ -1,5 +1,9 @@
 # `@gasket/cli`
 
+### 6.45.2
+
+- Remove `eslint-plugin-mocha` from devDeps, add `cross-env`, update test script ([#670])
+
 ### 6.45.1
 
 - @gasket/cli Jest refactor ([#667])
@@ -435,3 +439,4 @@ upon `gasket create`
 [#607]: https://github.com/godaddy/gasket/pull/607
 [#617]: https://github.com/godaddy/gasket/pull/617
 [#667]: https://github.com/godaddy/gasket/pull/667
+[#670]: https://github.com/godaddy/gasket/pull/670

@@ -1,5 +1,9 @@
 # `@gasket/plugin-elastic-apm`
 
+### 6.45.2
+
+- Remove `eslint-plugin-mocha` ([#670])
+
 ### 6.34.4
 
 - Upgrade eslint-plugin-unicorn v43 ([#436])
@@ -40,3 +44,4 @@
 [#407]:https://github.com/godaddy/gasket/pull/407
 [#436]: https://github.com/godaddy/gasket/pull/436
 [#457]: https://github.com/godaddy/gasket/pull/457
+[#670]: https://github.com/godaddy/gasket/pull/670
