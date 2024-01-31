@@ -36,7 +36,7 @@ describe('middleware', function () {
 
   it('allows `appRequestConfig` hooks to modify the config', async () => {
     gasket[ENV_CONFIG] = { some: 'config' };
-    gasket.execWaterfall.mockImplementation((event, config, req, res) => {
+    gasket.execWaterfall.mockImplementation((event, config, { req, res }) => {
       expect(event).toEqual('appRequestConfig');
       expect(req).toEqual(mockReq);
       expect(res).toEqual(mockRes);
@@ -59,7 +59,7 @@ describe('middleware', function () {
   it('descriptive error when config is not present in `appRequestConfig` hooks', async () => {
     // eslint-disable-next-line no-undefined
     gasket[ENV_CONFIG] = undefined;
-    gasket.execWaterfall.mockImplementation((event, config, req, res) => {
+    gasket.execWaterfall.mockImplementation((event, config, { req, res }) => {
       expect(event).toEqual('appRequestConfig');
       expect(req).toEqual(mockReq);
       expect(res).toEqual(mockRes);
@@ -89,7 +89,9 @@ describe('middleware', function () {
 
     await middlewareMock(mockReq, mockRes);
 
-    expect(mockRes.locals.gasketData).toHaveProperty('config', { test: 'config' });
+    expect(mockRes.locals.gasketData).toHaveProperty('config', {
+      test: 'config'
+    });
   });
 
   it('adds nothing to locals response if public config not set', async () => {
@@ -101,5 +103,4 @@ describe('middleware', function () {
 
     expect(mockRes.locals.gasketData).toBeUndefined();
   });
-
 });

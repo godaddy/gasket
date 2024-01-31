@@ -20,7 +20,6 @@ describe('Middleware', () => {
   });
 
   describe('middlewareHook', () => {
-
     it('returns a function', () => {
       results = configureMiddleware(gasket);
       expect(results).toBeInstanceOf(Function);
@@ -74,18 +73,28 @@ describe('Middleware', () => {
     it('supports plugin modification of initial store state', async () => {
       const initState = { foo: 'bar' };
       gasket.config.redux.initState = initState;
-      gasket.execWaterfall = jest.fn((event, state) => Promise.resolve({
-        ...state,
-        injected: 'prop'
-      }));
+      gasket.execWaterfall = jest.fn((event, state) =>
+        Promise.resolve({
+          ...state,
+          injected: 'prop'
+        })
+      );
 
       middleware = configureMiddleware(gasket);
       await middleware(req, res, next);
 
-      expect(gasket.execWaterfall)
-        .toHaveBeenCalledWith('initReduxState', initState, req, res);
-      expect(customMakeStore)
-        .toHaveBeenCalledWith({ foo: 'bar', injected: 'prop' }, { req });
+      expect(gasket.execWaterfall).toHaveBeenCalledWith(
+        'initReduxState',
+        initState,
+        {
+          req,
+          res
+        }
+      );
+      expect(customMakeStore).toHaveBeenCalledWith(
+        { foo: 'bar', injected: 'prop' },
+        { req }
+      );
     });
 
     it('executes `initReduxStore` hooks after store creation', async () => {
@@ -94,8 +103,10 @@ describe('Middleware', () => {
 
       await middleware(req, res, next);
 
-      expect(gasket.exec)
-        .toHaveBeenCalledWith('initReduxStore', mockStore, req, res);
+      expect(gasket.exec).toHaveBeenCalledWith('initReduxStore', mockStore, {
+        req,
+        res
+      });
     });
   });
 });
