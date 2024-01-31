@@ -10,12 +10,15 @@ module.exports = function middlewareHook(gasket) {
   const { redux: reduxConfig = {} } = gasket.config;
 
   if (!reduxConfig.makeStore) {
-    throw new Error('Could not find redux store file. Add a store.js file or configure redux.makeStore in gasket.config.js.');
+    throw new Error(
+      'Could not find redux store file. Add a store.js file or configure redux.makeStore in gasket.config.js.'
+    );
   }
   const makeStore = require(reduxConfig.makeStore);
 
   /**
-   * Middleware to attach the redux store to the req object for use in other middleware
+   * Middleware to attach the redux store to the req object for use in other
+   * middleware
    *
    * @param {Request} req - Request
    * @param {Response} res - Response
@@ -25,15 +28,18 @@ module.exports = function middlewareHook(gasket) {
     const initState = await gasket.execWaterfall(
       'initReduxState',
       reduxConfig.initState || {},
-      req,
-      res);
+      {
+        req,
+        res
+      }
+    );
 
     const store = makeStore(initState, {
       logger: reduxConfig.logger,
       req
     });
 
-    await gasket.exec('initReduxStore', store, req, res);
+    await gasket.exec('initReduxStore', store, { req, res });
 
     req.store = store;
 
