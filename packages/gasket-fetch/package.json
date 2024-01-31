@@ -1,6 +1,6 @@
 {
   "name": "@gasket/fetch",
-  "version": "6.45.0",
+  "version": "6.45.2",
   "description": "Gasket Fetch API",
   "main": "lib/node.js",
   "browser": "lib/browser.js",
