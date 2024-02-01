@@ -18,7 +18,7 @@ describe('create lifecycle', function () {
 
   it('adds the start script with --require', async () => {
     const add = jest.fn();
-    await create.handler({}, { pkg: { add } });
+    await create.handler({}, { pkg: { add }, files: { add } });
     expect(add).toHaveBeenCalledWith('scripts', {
       start: 'gasket start --require elastic-apm-node/start'
     });
@@ -26,7 +26,7 @@ describe('create lifecycle', function () {
 
   it('adds expected dependencies', async () => {
     const add = jest.fn();
-    await create.handler({}, { pkg: { add } });
+    await create.handler({}, { pkg: { add }, files: { add } });
     expect(add).toHaveBeenCalledWith('dependencies', {
       'elastic-apm-node': require('../package.json').dependencies['elastic-apm-node']
     });

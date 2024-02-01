@@ -1,4 +1,3 @@
-const { filterSensitiveCookies } = require('./cookies');
 const middleware = require('./middleware');
 const { dependencies } = require('../package.json');
 
@@ -49,20 +48,26 @@ module.exports = {
           logger.notice('WARNING Elastic APM agent is not started. Use `--require elastic-apm-node/start`');
         }
 
-        apm.addFilter(filterSensitiveCookies(config));
+        if (config.elasticAPM && config.elasticAPM.sensitiveCookies) {
+          logger.notice('WARNING: elasticAPM.sensitiveCookies has been removed. Filter sensitive data in the setup.js script.');
+        }
       }
     },
     create: {
       timing: {
         after: ['@gasket/plugin-start']
       },
-      handler(gasket, { pkg }) {
+      handler(gasket, { pkg, files }) {
+        const generatorDir = `${ __dirname }/../generator`;
+
         pkg.add('dependencies', {
           'elastic-apm-node': dependencies['elastic-apm-node']
         });
         pkg.add('scripts', {
           start: 'gasket start --require elastic-apm-node/start'
         });
+
+        files.add(`${generatorDir}/*`);
       }
     },
     middleware,
@@ -74,13 +79,15 @@ module.exports = {
           link: 'README.md#configuration',
           description: 'Configuration to provide additional setup helpers',
           type: 'object'
-        }, {
-          name: 'elasticAPM.sensitiveCookies',
-          link: 'README.md#configuration',
-          description: 'List of sensitive cookies to filter',
-          type: 'string[]',
-          default: '[]'
         }],
+        // ,
+        //  {
+        //   name: 'elasticAPM.sensitiveCookies',
+        //   link: 'README.md#configuration',
+        //   description: 'List of sensitive cookies to filter',
+        //   type: 'string[]',
+        //   default: '[]'
+        // }
         lifecycles: [{
           name: 'apmTransaction',
           method: 'exec',
