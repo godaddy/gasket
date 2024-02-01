@@ -1,5 +1,13 @@
 # `@gasket/cli`
 
+### 6.45.2
+
+- Remove `eslint-plugin-mocha` from devDeps, add `cross-env`, update test script ([#670])
+
+### 6.45.1
+
+- @gasket/cli Jest refactor ([#667])
+
 ### 6.41.1
 
 - Fix prompt handler type declaration ([#617])
@@ -10,7 +18,7 @@
 
 ### 6.38.0
 
-- Fix generation of files on Windows during gasket create when plugins use globs containing Windows separators ([#547]) 
+- Fix generation of files on Windows during gasket create when plugins use globs containing Windows separators ([#547])
 
 ### 6.34.6
 
@@ -430,3 +438,5 @@ upon `gasket create`
 [#547]: https://github.com/godaddy/gasket/pull/547
 [#607]: https://github.com/godaddy/gasket/pull/607
 [#617]: https://github.com/godaddy/gasket/pull/617
+[#667]: https://github.com/godaddy/gasket/pull/667
+[#670]: https://github.com/godaddy/gasket/pull/670

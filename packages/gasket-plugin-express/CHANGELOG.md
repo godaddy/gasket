@@ -1,5 +1,9 @@
 # `@gasket/plugin-express`
 
+### 6.45.2
+
+- Remove obsolete `devDeps` ([#670])
+
 ### 6.44.0
 
 - Documentation & type fixes ([#637])
@@ -81,3 +85,4 @@
 [#460]: https://github.com/godaddy/gasket/pull/460
 [#613]: https://github.com/godaddy/gasket/pull/613
 [#637]: https://github.com/godaddy/gasket/pull/637
+[#670]: https://github.com/godaddy/gasket/pull/670

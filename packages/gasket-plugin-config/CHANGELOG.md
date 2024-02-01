@@ -1,5 +1,9 @@
 # `@gasket/plugin-config`
 
+### 6.45.2
+
+- Add `cross-env`, adjust test script, remove `eslint-plugin-mocha`, refactor test ([#670])
+
 ### 6.34.4
 
 - Upgrade eslint-plugin-unicorn v43 ([#436])
@@ -58,3 +62,4 @@
 [#359]: https://github.com/godaddy/gasket/pull/359
 [#436]: https://github.com/godaddy/gasket/pull/436
 [#460]: https://github.com/godaddy/gasket/pull/460
+[#670]: https://github.com/godaddy/gasket/pull/670

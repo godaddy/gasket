@@ -1,5 +1,13 @@
 # `@gasket/plugin-docsify`
 
+### 6.45.2
+
+- Add `peerDeps` ([#670])
+
+### 6.44.7
+
+- Fix create command failing to find docsify ([#663])
+
 ### 6.44.2
 
 - Deprecate Docsify ([#648])
@@ -61,5 +69,7 @@
 [#460]: https://github.com/godaddy/gasket/pull/460
 [#643]: https://github.com/godaddy/gasket/pull/643
 [#648]: https://github.com/godaddy/gasket/pull/648
+[#663]: https://github.com/godaddy/gasket/pull/663
+[#670]: https://github.com/godaddy/gasket/pull/670
 
 [mermaid]:https://mermaid-js.github.io/
