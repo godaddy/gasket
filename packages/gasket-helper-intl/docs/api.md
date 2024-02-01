@@ -20,6 +20,7 @@ Name | Description
 [LocalesProps] | Props for a Next.js page containing locale and initial state
 [LocaleStatus] | Fetch status of a locale file
 
+
 ## LocaleUtils
 
 Utility class for loading locale files
@@ -27,21 +28,24 @@ Utility class for loading locale files
 **Kind**: global class  
 
 * [LocaleUtils]
-  * [new LocaleUtils(config)]
-  * [.getFallbackLocale(locale)]
-  * [.formatLocalePath(localePathPart, locale)]
-  * [.resolveLocalePathPart(localePathPart, \[context\])]
-  * [.getLocalePath(localePathPart, locale, \[context\])]
-  * [.pathToUrl(localePath)]
-  * [.serverLoadData(localePathPart, locale, localesDir)]
+    * [new LocaleUtils(config)]
+    * [.getFallbackLocale(locale)]
+    * [.formatLocalePath(localePathPart, locale)]
+    * [.resolveLocalePathPart(localePathPart, \[context\])]
+    * [.getLocalePath(localePathPart, locale, \[context\])]
+    * [.pathToUrl(localePath)]
+    * [.serverLoadData(localePathPart, locale, localesDir)]
+
 
 ### new LocaleUtils(config)
+
 
 | Param | Type | Description |
 | --- | --- | --- |
 | config | `Object` | Configuration |
 | config.manifest | [`LocaleManifest`] | Locale file manifest |
 | \[config.basePath\] | `string` | Locale file base path. Defaults to `manifest.basePath` |
+
 
 ### localeUtils.getFallbackLocale(locale)
 
@@ -63,6 +67,7 @@ da-DK ==> da ==> en-US ==> en ==> null
 | --- | --- | --- |
 | locale | [`Locale`] | Current locale |
 
+
 ### localeUtils.formatLocalePath(localePathPart, locale)
 
 Format a localePath with provided locale. Ensures path starts with slash
@@ -76,6 +81,7 @@ and ends with .json file.
 | localePathPart | [`LocalePathPart`] | Path containing locale files |
 | locale | [`Locale`] | Locale |
 
+
 ### localeUtils.resolveLocalePathPart(localePathPart, \[context\])
 
 Get a localePathPart from provided string or thunk callback results
@@ -87,6 +93,7 @@ Get a localePathPart from provided string or thunk callback results
 | --- | --- | --- |
 | localePathPart | [`LocalePathPartOrThunk`] | Path containing locale files |
 | \[context\] | `object` | Context |
+
 
 ### localeUtils.getLocalePath(localePathPart, locale, \[context\])
 
@@ -101,6 +108,7 @@ Get a formatted localePath considering language mappings and fallbacks
 | locale | [`Locale`] | Locale |
 | \[context\] | `object` | Context |
 
+
 ### localeUtils.pathToUrl(localePath)
 
 Add base path from window.gasket.intl or manifest if set to the locale path
@@ -111,6 +119,7 @@ Add base path from window.gasket.intl or manifest if set to the locale path
 | Param | Type | Description |
 | --- | --- | --- |
 | localePath | [`LocalePath`] | URL path to a locale file |
+
 
 ### localeUtils.serverLoadData(localePathPart, locale, localesDir)
 
@@ -126,6 +135,7 @@ Throws error if attempted to use in browser.
 | locale | [`Locale`] | Locale to load |
 | localesDir | `string` | Disk path to locale files dir |
 
+
 ## LocaleStatus
 
 Enum for local status values
@@ -135,14 +145,16 @@ Enum for local status values
 
 | Name | Type | Default |
 | --- | --- | --- |
-| LOADING | [`LocaleStatus`] | `loading` |
-| LOADED | [`LocaleStatus`] | `loaded` |
-| ERROR | [`LocaleStatus`] | `error` |
+| LOADING | [`LocaleStatus`] | `loading` | 
+| LOADED | [`LocaleStatus`] | `loaded` | 
+| ERROR | [`LocaleStatus`] | `error` | 
+
 
 * [LocaleStatus]
-  * [.LOADING]
-  * [.LOADED]
-  * [.ERROR]
+    * [.LOADING]
+    * [.LOADED]
+    * [.ERROR]
+
 
 ### LocaleStatus.LOADING
 
@@ -174,6 +186,7 @@ Locale settings and known locale file paths
 | \[localesMap\] | `Object` | Mapping of locales to share files |
 | paths | `Object` | Available locale files to content hashes |
 
+
 ## LocalePathPart
 
 Partial URL representing a directory containing locale .json files
@@ -181,20 +194,15 @@ or a URL template with a `:locale` path param to a .json file.
 
 **Kind**: global typedef  
 **Example**  
-
 ```js
 "/locales"
 ```
-
 **Example**  
-
 ```js
 // as a template
 "/locales/:locale/component.json"
 ```
-
 **Example**  
-
 ```js
 // other param formats
 "/locales/$locale/component.json"
@@ -210,7 +218,8 @@ Callback which receives a context object for resolving a LocalePathPath
 
 | Param | Type |
 | --- | --- |
-| context | `object` |
+| context | `object` | 
+
 
 ## LocalePathPartOrThunk
 
@@ -224,13 +233,10 @@ URL path to a locale .json file
 
 **Kind**: global typedef  
 **Example**  
-
 ```js
 "/locales/en-US.json"
 ```
-
 **Example**  
-
 ```js
 // from a template
 "/locales/en-US/component.json"
@@ -242,7 +248,6 @@ Language code only
 
 **Kind**: global typedef  
 **Example**  
-
 ```js
 "en"
 ```
@@ -253,7 +258,6 @@ Language code with region
 
 **Kind**: global typedef  
 **Example**  
-
 ```js
 "en-US"
 ```
@@ -267,8 +271,9 @@ State of loaded locale files
 
 | Name | Type |
 | --- | --- |
-| messages | `Object` |
-| status | `Object` |
+| messages | `Object` | 
+| status | `Object` | 
+
 
 ## LocalesProps
 
@@ -279,7 +284,8 @@ Props for a Next.js page containing locale and initial state
 
 | Name | Type |
 | --- | --- |
-| locale | [`Locale`] |
+| locale | [`Locale`] | 
+
 
 ## LocaleStatus
 
@@ -289,9 +295,10 @@ Fetch status of a locale file
 **Read only**: true  
 
 * [LocaleStatus]
-  * [.LOADING]
-  * [.LOADED]
-  * [.ERROR]
+    * [.LOADING]
+    * [.LOADED]
+    * [.ERROR]
+
 
 ### LocaleStatus.LOADING
 
