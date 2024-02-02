@@ -21,8 +21,10 @@ declare module '@gasket/engine' {
     }): MaybeAsync<void>,
     nextPreHandling(params: {
       nextServer: NextServer,
-      req: IncomingMessage,
-      res: ServerResponse
+      context: {
+        req: IncomingMessage,
+        res: ServerResponse
+      }
     }): MaybeAsync<void>
   }
 }

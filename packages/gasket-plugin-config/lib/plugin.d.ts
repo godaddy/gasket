@@ -10,8 +10,7 @@ declare module '@gasket/engine' {
     appEnvConfig(config: object): MaybeAsync<object>,
     appRequestConfig(
       config: object,
-      req: IncomingMessage,
-      res: OutgoingMessage
+      context: { req: IncomingMessage, res: OutgoingMessage }
     ): MaybeAsync<object>
   }
 }

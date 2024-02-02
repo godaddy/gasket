@@ -13,13 +13,11 @@ declare module '@gasket/engine' {
   export interface HookExecTypes {
     initReduxState<State>(
       state: State,
-      req: IncomingMessage,
-      res: OutgoingMessage
+      context: { req: IncomingMessage, res: OutgoingMessage }
     ): MaybeAsync<State>;
     initReduxStore(
       store: Store,
-      req: IncomingMessage,
-      res: OutgoingMessage
+      context: { req: IncomingMessage, res: OutgoingMessage }
     ): MaybeAsync<void>
   }
 }

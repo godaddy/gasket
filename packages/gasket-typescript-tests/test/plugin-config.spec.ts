@@ -24,7 +24,7 @@ describe('@gasket/plugin-config', () => {
   });
 
   it('defines the appRequestConfig lifecycle', () => {
-    const hook: Hook<'appRequestConfig'> = (gasket, config, req, res) => ({
+    const hook: Hook<'appRequestConfig'> = (gasket, config, { req, res }) => ({
       ...config,
       serviceName: req.headers.host
     });
