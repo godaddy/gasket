@@ -1,3 +1,4 @@
+/* eslint-disable no-process-env */
 const apmGeneric = {
   start: jest.fn(),
   addFilter: jest.fn()
@@ -26,10 +27,16 @@ describe('Plugin', () => {
         root: '/some/path'
       }
     };
+    process.env.ELASTIC_APM_SERVER_URL = 'FAKE_ELASTIC_APM_URL';
+    process.env.ELASTIC_APM_SECRET_TOKEN = 'TOKEN_1234';
   });
 
   afterEach(function () {
     jest.clearAllMocks();
+
+    delete process.env.ELASTIC_APM_SERVER_URL;
+    delete process.env.ELASTIC_APM_SECRET_TOKEN;
+    delete process.env.ELASTIC_APM_ACTIVE;
   });
 
   it('exposes a configure lifecycle hook', () => {
@@ -60,62 +67,61 @@ describe('Plugin', () => {
     expect(apm.addFilter).toHaveBeenCalledTimes(1);
   });
 
-  it('calls apm.start()', async () => {
-    mockGasket.config = await plugin.hooks.configure.handler(mockGasket, {
-      ...mockGasket.config,
-      elasticAPM: {
-        secretToken: 'abcd',
-        serverUrl: 'https://example.com'
-      }
-    });
-    await plugin.hooks.preboot.handler(mockGasket);
-
-    expect(apm.start).toHaveBeenCalledTimes(1);
-    expect(apm.start).toHaveBeenCalledWith({ active: true, secretToken: 'abcd', serverUrl: 'https://example.com' });
-  });
-
   it('skips preboot lifecycle if run locally', async () => {
     mockGasket.command = { id: 'local' };
     await plugin.hooks.preboot.handler(mockGasket);
     expect(apm.start).not.toHaveBeenCalled();
   });
 
-  it('disables the agent if one of serverUrl and secretToken are not defined', async () => {
-    mockGasket.config = await plugin.hooks.configure.handler(mockGasket, mockGasket.config);
+  it('does not start within preboot', async function () {
     await plugin.hooks.preboot.handler(mockGasket);
-    expect(apm.start).toHaveBeenCalledWith({ active: false });
+    expect(apm.start).toHaveBeenCalledTimes(0);
+    expect(mockGasket.logger.notice).toHaveBeenCalledWith(
+      expect.stringContaining('WARNING Elastic APM agent is not started. Use `--require elastic-apm-node/start`')
+    );
   });
 
   it('respects a user-defined "active" config value', async () => {
+    delete process.env.ELASTIC_APM_SECRET_TOKEN;
+    delete process.env.ELASTIC_APM_SECRET_TOKEN;
+    process.env.ELASTIC_APM_ACTIVE = true;
+
     mockGasket.config = await plugin.hooks.configure.handler(mockGasket, {
       ...mockGasket.config,
       elasticAPM: { active: true }
     });
     await plugin.hooks.preboot.handler(mockGasket);
-    expect(apm.start).toHaveBeenCalledWith({ active: true });
+    expect(mockGasket.config.elasticAPM).toEqual({ active: true });
   });
 
-  it('warns if starting within preboot', async function () {
-    await plugin.hooks.preboot.handler(mockGasket);
-    expect(apm.start).toHaveBeenCalledTimes(1);
-    expect(mockGasket.logger.notice).toHaveBeenCalledWith(
-      expect.stringContaining('DEPRECATED started Elastic APM agent late')
-    );
-  });
-
-  it('warns if using deprecated gasket.config', async function () {
+  it('is not active if missing ELASTIC_APM_SERVER_URL env var', async () => {
+    delete process.env.ELASTIC_APM_SERVER_URL;
     mockGasket.config = await plugin.hooks.configure.handler(mockGasket, {
-      ...mockGasket.config,
-      elasticAPM: {
-        secretToken: 'abcd',
-        serverUrl: 'https://example.com'
-      }
+      ...mockGasket.config
     });
-    expect(mockGasket.logger.notice).toHaveBeenCalledWith(
-      expect.stringMatching('DEPRECATED config `elasticAPM.serverUrl`. Use env var: ELASTIC_APM_SERVER_URL')
-    );
-    expect(mockGasket.logger.notice).toHaveBeenCalledWith(
-      expect.stringMatching('DEPRECATED config `elasticAPM.secretToken`. Use env var: ELASTIC_APM_SECRET_TOKEN')
-    );
+
+    await plugin.hooks.preboot.handler(mockGasket);
+    expect(mockGasket.config.elasticAPM).toEqual({ active: false });
+  });
+
+  it('is not active if missing ELASTIC_APM_SECRET_TOKEN env var', async () => {
+    delete process.env.ELASTIC_APM_SECRET_TOKEN;
+    mockGasket.config = await plugin.hooks.configure.handler(mockGasket, {
+      ...mockGasket.config
+    });
+    await plugin.hooks.preboot.handler(mockGasket);
+    expect(mockGasket.config.elasticAPM).toEqual({ active: false });
+  });
+
+  it('respects a user-defined "ELASTIC_APM_ACTIVE" env var', async () => {
+    delete process.env.ELASTIC_APM_SECRET_TOKEN;
+    delete process.env.ELASTIC_APM_SECRET_TOKEN;
+    process.env.ELASTIC_APM_ACTIVE = true;
+
+    mockGasket.config = await plugin.hooks.configure.handler(mockGasket, {
+      ...mockGasket.config
+    });
+    await plugin.hooks.preboot.handler(mockGasket);
+    expect(mockGasket.config.elasticAPM).toEqual({ active: true });
   });
 });
