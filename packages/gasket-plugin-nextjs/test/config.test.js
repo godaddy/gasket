@@ -168,7 +168,7 @@ describe('createConfig', () => {
     it('executes webpack plugin hook', () => {
       result = config.webpack(webpackConfig, data);
       // TODO: should not test this deep into webpack plugin
-      expect(gasket.execApplySync).toHaveBeenCalledWith('webpack', expect.any(Function));
+      expect(gasket.execWaterfallSync).toHaveBeenCalledWith('webpackConfig', expect.any(Object), expect.any(Object));
     });
 
     it('returns webpack config object', () => {
@@ -186,25 +186,13 @@ describe('createConfig', () => {
 
     it('merges the return values from `webpack` into a single webpack config', async function () {
       const engine = lifecycle({}, {
-        webpack: function (gasketAPI) {
+        webpackConfig: function (gasketAPI) {
           expect(gasketAPI).toEqual(engine);
 
           return {
             resolve: {
               alias: {
                 '@gasket/example': __filename
-              }
-            }
-          };
-        }
-      }, {
-        webpack: function (gasketAPI) {
-          expect(gasketAPI).toEqual(engine);
-
-          return {
-            resolve: {
-              alias: {
-                '@gasket/what': '@gasket/example'
               }
             }
           };
@@ -227,7 +215,6 @@ describe('createConfig', () => {
       }, { isServer: false, defaultLoaders: {}, dev: true, config: nextConfig });
 
       expect(resultConfig.resolve.alias['@gasket/example']).toEqual(__filename);
-      expect(resultConfig.resolve.alias['@gasket/what']).toEqual('@gasket/example');
     });
 
     describe('built-ins', () => {
@@ -247,7 +234,7 @@ function mockGasketApi() {
     execWaterfallSync: jest.fn((_, config) => config),
     exec: jest.fn().mockResolvedValue({}),
     execSync: jest.fn().mockReturnValue([]),
-    execApplySync: jest.fn().mockReturnValue([]),
+    execApplySync: jest.fn((_, config) => config),
     logger: {
       warning: jest.fn()
     },

@@ -34,8 +34,10 @@ describe('@gasket/plugin-redux', () => {
     const hook: Hook<'initReduxState'> = (
       gasket: Gasket,
       state: any,
-      req: IncomingMessage,
-      res: OutgoingMessage
+      {
+        req: IncomingMessage,
+        res: OutgoingMessage
+      }
     ) => {
       return {
         ...state,
@@ -48,8 +50,10 @@ describe('@gasket/plugin-redux', () => {
     const hook: Hook<'initReduxStore'> = (
       gasket: Gasket,
       store: Store,
-      req: IncomingMessage,
-      res: OutgoingMessage
+      {
+        req: IncomingMessage,
+        res: OutgoingMessage
+      }
     ) => {
       store.dispatch({ type: 'init', payload: { some: 'data' } });
     };
