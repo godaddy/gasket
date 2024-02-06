@@ -61,8 +61,8 @@ will accomplish this. To configure the APM agent, set the environment variables
 described in the [configuration options documentation].
 
 In particular, the APM server URL (`ELASTIC_APM_SERVER_URL`) and secret token
-(`ELASTIC_APM_SECRET_TOKEN`) are both required configuration. If either
-of these are not present, the APM agent will be disabled.
+(`ELASTIC_APM_SECRET_TOKEN`) are both required configuration. If either of these
+are not present, the APM agent will be disabled.
 
 
 #### Filtering Sensitive Fields
@@ -99,7 +99,9 @@ hooks of your Gasket app, such as with the [init] or [middleware] lifecycles.
 
 ### apmTransaction
 
-Enables customizing an APM transaction. Hooks receive the current APM [Transaction](https://www.elastic.co/guide/en/apm/agent/nodejs/current/transaction-api.html) and details about the request. Hooks may be asynchronous. The request details are as follows:
+Enables customizing an APM transaction. Hooks receive the current APM
+[Transaction] and details about the request. Hooks may be asynchronous. The
+request details are as follows:
 
 | Property | Description |
 |----------|-------------|
@@ -116,11 +118,11 @@ module.exports = (gasket, transaction, { req, res }) => {
 
 ## How it works
 
-This plugin hooks the Gasket [preboot] lifecycle from [@gasket/plugin-start]
-and will set up additional filtering, such as for sensitive cookies. If the
+This plugin hooks the Gasket [preboot] lifecycle from [@gasket/plugin-start] and
+will set up additional filtering, such as for sensitive cookies. If the
 `preboot` hook finds that the APM agent has not yet been started using the
-recommended `--require elastic-apm-node/start`, it will start it here.
-However, you risk not bootstrapping necessary modules with a late start.
+recommended `--require elastic-apm-node/start`, it will start it here. However,
+you risk not bootstrapping necessary modules with a late start.
 
 ## License
 
@@ -136,3 +138,4 @@ However, you risk not bootstrapping necessary modules with a late start.
 [Elastic APM docs]:https://www.elastic.co/guide/en/apm/agent/nodejs/master/agent-api.html
 [sanitizeFieldNames]:https://www.elastic.co/guide/en/apm/agent/nodejs/4.x/configuration.html#sanitize-field-names
 [APM Add Filter API]:https://www.elastic.co/guide/en/apm/agent/nodejs/4.x/agent-api.html#apm-add-filter
+[Transaction]:(https://www.elastic.co/guide/en/apm/agent/nodejs/current/transaction-api.html)

@@ -69,7 +69,7 @@ await gasket.execApply('someEvent', async (plugin, handler) => {
 
 ### execApplySync(event, applyFn)
 
-The `execApply` method is like `execApply`, only all hooks must execute
+The `execApplySync` method is like `execApply`, only all hooks must execute
 synchronously.
 
 ### execWaterfall(event, value, ...args)

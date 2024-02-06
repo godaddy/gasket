@@ -5,7 +5,9 @@ const merge = require('lodash.merge');
  * Add middleware to gather config details
  *
  * @param {Gasket} gasket - The gasket API
- * @returns {function} Express middleware to apply
+ * @returns {Function} Express middleware to apply
+ * @throws {Error} If the appRequestConfig lifecycle hook did not return a
+ * config object.
  */
 function handler(gasket) {
   return async (req, res, next) => {
@@ -13,8 +15,11 @@ function handler(gasket) {
       req.config = await gasket.execWaterfall(
         'appRequestConfig',
         gasket[ENV_CONFIG],
-        req,
-        res);
+        {
+          req,
+          res
+        }
+      );
 
       // Error handling
       // Better error description for the appRequestConfig lifecycles

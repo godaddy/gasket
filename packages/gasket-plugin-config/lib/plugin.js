@@ -22,7 +22,7 @@ module.exports = {
       }
     },
     middleware,
-    initReduxState(gasket, state, req) {
+    initReduxState(gasket, state, { req }) {
       const { redux } = req.config || {};
       return {
         ...state,
@@ -36,28 +36,34 @@ module.exports = {
       const { configPath = 'config/' } = gasket.config;
       return {
         ...meta,
-        lifecycles: [{
-          name: 'appEnvConfig',
-          method: 'execWaterfall',
-          description: 'Adjust app level config after merged for the env',
-          link: 'README.md#appEnvConfig',
-          parent: 'preboot'
-        }, {
-          name: 'appRequestConfig',
-          method: 'execWaterfall',
-          description: 'Adjust app level config for each request',
-          link: 'README.md#appRequestConfig',
-          parent: 'middleware'
-        }],
-        structures: [{
-          name: 'app.config.js',
-          description: 'App configuration with environment overrides',
-          link: 'README.md'
-        }, {
-          name: configPath,
-          description: 'App configuration using environment files',
-          link: 'README.md'
-        }]
+        lifecycles: [
+          {
+            name: 'appEnvConfig',
+            method: 'execWaterfall',
+            description: 'Adjust app level config after merged for the env',
+            link: 'README.md#appEnvConfig',
+            parent: 'preboot'
+          },
+          {
+            name: 'appRequestConfig',
+            method: 'execWaterfall',
+            description: 'Adjust app level config for each request',
+            link: 'README.md#appRequestConfig',
+            parent: 'middleware'
+          }
+        ],
+        structures: [
+          {
+            name: 'app.config.js',
+            description: 'App configuration with environment overrides',
+            link: 'README.md'
+          },
+          {
+            name: configPath,
+            description: 'App configuration using environment files',
+            link: 'README.md'
+          }
+        ]
       };
     }
   }
