@@ -22,7 +22,7 @@
   "dependencies": {
     "@gasket/plugin-config": "^6.45.0",
     "@gasket/plugin-docs": "^6.45.0",
-    "@gasket/plugin-docsify": "^6.45.0",
+    "@gasket/plugin-docusaurus": "^6.45.0",
     "@gasket/plugin-express": "^6.45.0",
     "@gasket/plugin-https": "^6.45.0",
     "@gasket/plugin-lint": "^6.45.0",
