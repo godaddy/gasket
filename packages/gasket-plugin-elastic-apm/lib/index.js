@@ -62,7 +62,7 @@ module.exports = {
 
         pkg.add('dependencies', {
           'elastic-apm-node': dependencies['elastic-apm-node'],
-          'dot-env': dependencies['dot-env']
+          'dotenv': dependencies.dotenv
         });
         pkg.add('scripts', {
           start: 'gasket start --require ./setup.js'
