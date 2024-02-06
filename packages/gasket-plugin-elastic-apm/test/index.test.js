@@ -71,7 +71,7 @@ describe('Plugin', () => {
     await plugin.hooks.preboot.handler(mockGasket);
     expect(apm.start).toHaveBeenCalledTimes(0);
     expect(mockGasket.logger.notice).toHaveBeenCalledWith(
-      expect.stringContaining('WARNING Elastic APM agent is not started. Use `--require elastic-apm-node/start`')
+      expect.stringContaining('WARNING Elastic APM agent is not started. Use `--require ./setup.js`')
     );
   });
 

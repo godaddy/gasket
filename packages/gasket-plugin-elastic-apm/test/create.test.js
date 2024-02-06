@@ -20,7 +20,7 @@ describe('create lifecycle', function () {
     const add = jest.fn();
     await create.handler({}, { pkg: { add }, files: { add } });
     expect(add).toHaveBeenCalledWith('scripts', {
-      start: 'gasket start --require elastic-apm-node/start'
+      start: 'gasket start --require ./setup.js'
     });
   });
 
@@ -28,7 +28,8 @@ describe('create lifecycle', function () {
     const add = jest.fn();
     await create.handler({}, { pkg: { add }, files: { add } });
     expect(add).toHaveBeenCalledWith('dependencies', {
-      'elastic-apm-node': require('../package.json').dependencies['elastic-apm-node']
+      'elastic-apm-node': require('../package.json').dependencies['elastic-apm-node'],
+      'dotenv': require('../package.json').dependencies.dotenv
     });
   });
 });
