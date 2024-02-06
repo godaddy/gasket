@@ -34,15 +34,29 @@ Add a `--require` flag to a `package.json` start script:
   "scripts": {
     "build": "gasket build",
 -   "start": "gasket start",
-+   "start": "gasket start --require elastic-apm-node/start",
++   "start": "gasket start --require ./setup.js",
     "local": "gasket local"
   }
+```
+
+Add a `setup.js` script to the root of your app
+
+```
+// setup.js
+require('dotenv').config();
+
+require('elastic-apm-node').start({
+  serviceName: 'my-service-name',
+  secretToken: process.env.ELASTIC_APM_SECRET_TOKEN,
+  serverUrl: process.env.ELASTIC_APM_SERVER_URL
+  // any additional configurations options
+});
 ```
 
 ## Configuration
 
 The [start recommendations] for the APM agent are to require it as early as
-possible in your app. For Gasket apps, using `--require elastic-apm-node/start`
+possible in your app. For Gasket apps, using `--require ./setup.js`
 will accomplish this. To configure the APM agent, set the environment variables
 described in the [configuration options documentation].
 
@@ -50,48 +64,30 @@ In particular, the APM server URL (`ELASTIC_APM_SERVER_URL`) and secret token
 (`ELASTIC_APM_SECRET_TOKEN`) are both required configuration. If either
 of these are not present, the APM agent will be disabled.
 
-### Plugin Configurations
 
-The Gasket plugin provides some additional setup helpers. These can be
-configured under `elasticAPM` in the `gasket.config.js`.
-
-- **`sensitiveCookies`** - (string[]) A list of sensitive cookies to filter
-
-#### Filtering Sensitive Cookies
+#### Filtering Sensitive Fields
 
 If your application’s users send session credentials or any other sensitive
 information in their cookies, you may wish to filter them out before they are
 stored in Elasticsearch. Specify a list of cookie names to redact in
-`gasket.config.js`:
-
-```js
-module.exports = {
-  elasticAPM: {
-    sensitiveCookies: ['my_jwt', 'userFullName']
-  }
-};
-```
-
-### Custom Start Configurations
-
-For scenarios where you need to configure the start options for the APM agent,
-you can do so in a custom setup script and require it instead.
-
-For example, add a `setup.js` script to the root of your app:
+`setup.js` using the [sanitizeFieldNames] configuration option:
 
 ```
 // setup.js
+require('dotenv').config();
+
 require('elastic-apm-node').start({
-  // any configuration options
-})
+  ...,
+  sanitizeFieldNames: ['foo', 'bar', '*token*']
+});
 ```
 
-Then adjust your start script to require it instead:
+The `sanitizeFieldNames` config option can be used for:
+- request and response HTTP headers
+- HTTP request cookies
+- any form field captured during an `application/x-www-form-urlencoded` data request
 
-```diff
--   "start": "gasket start --require elastic-apm-node/start",
-+   "start": "gasket start --require ./setup.js",
-```
+To filter out other data, use the [APM Add Filter API].
 
 ### Custom Filters
 
@@ -138,3 +134,5 @@ However, you risk not bootstrapping necessary modules with a late start.
 [configuration options documentation]:https://www.elastic.co/guide/en/apm/agent/nodejs/current/configuration.html
 [start recommendations]:https://www.elastic.co/guide/en/apm/agent/nodejs/master/agent-api.html#apm-start
 [Elastic APM docs]:https://www.elastic.co/guide/en/apm/agent/nodejs/master/agent-api.html
+[sanitizeFieldNames]:https://www.elastic.co/guide/en/apm/agent/nodejs/4.x/configuration.html#sanitize-field-names
+[APM Add Filter API]:https://www.elastic.co/guide/en/apm/agent/nodejs/4.x/agent-api.html#apm-add-filter

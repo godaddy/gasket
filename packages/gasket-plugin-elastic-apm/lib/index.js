@@ -45,7 +45,7 @@ module.exports = {
         );
 
         if (!apm.isStarted()) {
-          logger.notice('WARNING Elastic APM agent is not started. Use `--require elastic-apm-node/start`');
+          logger.notice('WARNING Elastic APM agent is not started. Use `--require ./setup.js`');
         }
 
         if (config.elasticAPM && config.elasticAPM.sensitiveCookies) {
@@ -61,10 +61,11 @@ module.exports = {
         const generatorDir = `${ __dirname }/../generator`;
 
         pkg.add('dependencies', {
-          'elastic-apm-node': dependencies['elastic-apm-node']
+          'elastic-apm-node': dependencies['elastic-apm-node'],
+          'dot-env': dependencies['dot-env']
         });
         pkg.add('scripts', {
-          start: 'gasket start --require elastic-apm-node/start'
+          start: 'gasket start --require ./setup.js'
         });
 
         files.add(`${generatorDir}/*`);
@@ -74,20 +75,6 @@ module.exports = {
     metadata(gasket, meta) {
       return {
         ...meta,
-        configurations: [{
-          name: 'elasticAPM',
-          link: 'README.md#configuration',
-          description: 'Configuration to provide additional setup helpers',
-          type: 'object'
-        }],
-        // ,
-        //  {
-        //   name: 'elasticAPM.sensitiveCookies',
-        //   link: 'README.md#configuration',
-        //   description: 'List of sensitive cookies to filter',
-        //   type: 'string[]',
-        //   default: '[]'
-        // }
         lifecycles: [{
           name: 'apmTransaction',
           method: 'exec',
