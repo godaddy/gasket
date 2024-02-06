@@ -12,12 +12,14 @@ export default class Log {
      * @param {boolean} [options.silent] - Should logs be silenced
      * @param {boolean} [options.local] - Is this for the local development
      * @param {string} [options.prefix] - Message prefix to use
+     * @param {boolean} [options.prod] - Force logs in production mode
      */
     constructor(options?: {
         level?: string;
         silent?: boolean;
         local?: boolean;
         prefix?: string;
+        prod?: boolean;
     });
 
     public log(...args: any): void;
