@@ -12,7 +12,7 @@ const defaultConfig = {
 
 function checkDevDependencies() {
   const preset = tryRequire('@docusaurus/preset-classic');
-  const core = tryRequire('@docusaurus/core');
+  const core = tryRequire('@docusaurus/core/lib');
   if (!preset || !core) {
     throw new Error('Missing devDependencies. Please run `npm i -D @docusaurus/core @docusaurus/preset-classic`');
   }
