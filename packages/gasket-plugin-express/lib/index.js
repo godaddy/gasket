@@ -51,7 +51,8 @@ module.exports = {
           routes,
           excludedRoutesRegex,
           middlewareInclusionRegex,
-          compression: compressionConfig = true
+          compression: compressionConfig = true,
+          trustProxy = false
         } = {},
         http2,
         middleware: middlewareConfig
@@ -64,6 +65,10 @@ module.exports = {
       }
 
       const app = http2 ? require('http2-express-bridge')(express) : express();
+
+      if (trustProxy) {
+        app.set('trust proxy', trustProxy);
+      }
 
       if (http2) {
         app.use(
@@ -93,7 +98,14 @@ module.exports = {
         app.use(compression());
       }
 
-      const middlewares = [];
+      const middlewares = [
+        () => {
+          return (req, res, next) => {
+            req.trustProxy = app.get('trust proxy');
+            next();
+          };
+        }
+      ];
       await gasket.execApply('middleware', async (plugin, handler) => {
         const middleware = await handler(app);
 
