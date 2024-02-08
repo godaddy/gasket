@@ -21,7 +21,7 @@ describe('Plugin', () => {
     mockAPM.isStarted.mockReset();
     mockGasket = {
       logger: {
-        notice: jest.fn()
+        warning: jest.fn()
       },
       config: {
         root: '/some/path'
@@ -70,8 +70,8 @@ describe('Plugin', () => {
   it('does not start within preboot', async function () {
     await plugin.hooks.preboot.handler(mockGasket);
     expect(apm.start).toHaveBeenCalledTimes(0);
-    expect(mockGasket.logger.notice).toHaveBeenCalledWith(
-      expect.stringContaining('WARNING Elastic APM agent is not started. Use `--require ./setup.js`')
+    expect(mockGasket.logger.warning).toHaveBeenCalledWith(
+      expect.stringContaining('Elastic APM agent is not started. Use `--require ./setup.js`')
     );
   });
 
@@ -81,9 +81,9 @@ describe('Plugin', () => {
       sensitiveCookies: ['foo', 'bar']
     };
     await plugin.hooks.preboot.handler(mockGasket);
-    expect(mockGasket.logger.notice).toHaveBeenCalledWith(
+    expect(mockGasket.logger.warning).toHaveBeenCalledWith(
       expect.stringContaining(
-        'WARNING: elasticAPM.sensitiveCookies has been removed. Filter sensitive data in the setup.js script.'
+        'elasticAPM.sensitiveCookies has been removed. Filter sensitive data in the setup.js script.'
       )
     );
   });

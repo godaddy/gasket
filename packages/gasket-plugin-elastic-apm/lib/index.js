@@ -45,11 +45,11 @@ module.exports = {
         );
 
         if (!apm.isStarted()) {
-          logger.notice('WARNING Elastic APM agent is not started. Use `--require ./setup.js`');
+          logger.warning('Elastic APM agent is not started. Use `--require ./setup.js`');
         }
 
         if (config.elasticAPM && config.elasticAPM.sensitiveCookies) {
-          logger.notice('WARNING: elasticAPM.sensitiveCookies has been removed. Filter sensitive data in the setup.js script.');
+          logger.warning('elasticAPM.sensitiveCookies has been removed. Filter sensitive data in the setup.js script.');
         }
       }
     },
