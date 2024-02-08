@@ -1,7 +1,7 @@
 const path = require('path');
 const { setTimeout } = require('timers/promises');
 const GasketEngine = require('@gasket/engine');
-const app = { use: jest.fn(), post: jest.fn() };
+const app = { use: jest.fn(), post: jest.fn(), set: jest.fn() };
 const mockExpress = jest.fn().mockReturnValue(app);
 const bridgedApp = { use: jest.fn() };
 const mockExpressBridge = jest.fn().mockReturnValue(bridgedApp);
@@ -237,13 +237,13 @@ describe('createServers', () => {
 
   it('adds middleware from lifecycle (ignores falsy)', async () => {
     await plugin.hooks.createServers(gasket, {});
-    expect(app.use).toHaveBeenCalledTimes(2);
+    expect(app.use).toHaveBeenCalledTimes(3);
 
     app.use.mockClear();
     mockMwPlugins = [{ name: 'middlware-1' }, null];
 
     await plugin.hooks.createServers(gasket, {});
-    expect(app.use).toHaveBeenCalledTimes(3);
+    expect(app.use).toHaveBeenCalledTimes(4);
   });
 
   it('supports async middleware hooks', async () => {
@@ -279,16 +279,36 @@ describe('createServers', () => {
     mockMwPlugins = [{ name: 'middlware-1' }];
     await plugin.hooks.createServers(gasket, {});
 
-    expect(app.use.mock.calls[2]).toContain(paths);
+    expect(app.use.mock.calls[3]).toContain(paths);
   });
 
   it('adds errorMiddleware from lifecycle (ignores falsy)', async () => {
     await plugin.hooks.createServers(gasket, {});
-    expect(app.use).toHaveBeenCalledTimes(2);
+    expect(app.use).toHaveBeenCalledTimes(3);
     lifecycles.errorMiddleware.mockResolvedValue([() => {}, null]);
     app.use.mockClear();
     await plugin.hooks.createServers(gasket, {});
-    expect(app.use).toHaveBeenCalledTimes(3);
+    expect(app.use).toHaveBeenCalledTimes(4);
+  });
+
+  it('does not enable trust proxy by default', async () => {
+    await plugin.hooks.createServers(gasket, {});
+
+    expect(app.set).not.toHaveBeenCalled();
+  });
+
+  it('does enable trust proxy by if set to true', async () => {
+    gasket.config.express = { trustProxy: true };
+    await plugin.hooks.createServers(gasket, {});
+
+    expect(app.set).toHaveBeenCalledWith('trust proxy', true);
+  });
+
+  it('does enable trust proxy by if set to string', async () => {
+    gasket.config.express = { trustProxy: '127.0.0.1' };
+    await plugin.hooks.createServers(gasket, {});
+
+    expect(app.set).toHaveBeenCalledWith('trust proxy', '127.0.0.1');
   });
 
   function findCall(aSpy, aPredicate) {
