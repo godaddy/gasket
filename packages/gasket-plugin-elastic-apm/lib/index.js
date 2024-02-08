@@ -1,5 +1,5 @@
 const middleware = require('./middleware');
-const { dependencies } = require('../package.json');
+const { devDependencies } = require('../package.json');
 
 /**
  * Determines if the Elastic APM agent has sufficient config to be active
@@ -61,8 +61,8 @@ module.exports = {
         const generatorDir = `${ __dirname }/../generator`;
 
         pkg.add('dependencies', {
-          'elastic-apm-node': dependencies['elastic-apm-node'],
-          'dotenv': dependencies.dotenv
+          'elastic-apm-node': devDependencies['elastic-apm-node'],
+          'dotenv': devDependencies.dotenv
         });
         pkg.add('scripts', {
           start: 'gasket start --require ./setup.js'

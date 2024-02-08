@@ -28,8 +28,8 @@ describe('create lifecycle', function () {
     const add = jest.fn();
     await create.handler({}, { pkg: { add }, files: { add } });
     expect(add).toHaveBeenCalledWith('dependencies', {
-      'elastic-apm-node': require('../package.json').dependencies['elastic-apm-node'],
-      'dotenv': require('../package.json').dependencies.dotenv
+      'elastic-apm-node': require('../package.json').devDependencies['elastic-apm-node'],
+      'dotenv': require('../package.json').devDependencies.dotenv
     });
   });
 });
