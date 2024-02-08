@@ -1,18 +1,17 @@
-import { Writable } from 'node:stream';
-import type Transport from 'winston-transport';
-import { LEVEL, MESSAGE, } from 'triple-beam';
-import GasketEngine, { Gasket } from '@gasket/engine';
-import plugin from '../src';
+const { Writable } = require('stream');
+const GasketEngine = require('@gasket/engine');
+const plugin = require('../lib/index');
+const { LEVEL, MESSAGE } = require('triple-beam');
 
 describe('@gasket/plugin-winston', function () {
-  let gasket: Gasket
+  let gasket;
 
   beforeEach(() => {
     gasket = new GasketEngine({
       plugins: {
         add: ['@gasket/plugin-logger', plugin]
       }
-    }) as Gasket;
+    });
   });
 
   afterEach(() => {
@@ -33,14 +32,13 @@ describe('@gasket/plugin-winston', function () {
         pkg: {
           add: jest.fn()
         }
-      } as any;
+      };
 
       await gasket.exec('create', spy);
 
-      expect(spy.pkg.add).toBeCalledWith(
-        'dependencies',
-        { winston: require('../package').dependencies.winston }
-      );
+      expect(spy.pkg.add).toHaveBeenCalledWith('dependencies', {
+        winston: require('../package').dependencies.winston
+      });
     });
   });
 
@@ -55,62 +53,71 @@ describe('@gasket/plugin-winston', function () {
     });
 
     it('uses the console as the default transport', async function () {
-      //@ts-ignore
-      const consoleSpy = jest.spyOn(console._stdout, 'write').mockImplementation();
+      const consoleSpy = jest
+        .spyOn(console._stdout, 'write')
+        .mockImplementation();
       try {
         const [logger] = await gasket.exec('createLogger');
 
         logger.error('test');
-  
-        expect(consoleSpy).toBeCalledWith(JSON.stringify({
-          level: 'error',
-          message: 'test'
-        }) + '\n');  
+
+        expect(consoleSpy).toHaveBeenCalledWith(
+          JSON.stringify({
+            level: 'error',
+            message: 'test'
+          }) + '\n'
+        );
       } finally {
         consoleSpy.mockRestore();
       }
     });
 
     describe('custom transports', () => {
-      let transportWriter1: jest.Mock, transport1: Transport;
-      let transportWriter2: jest.Mock, transport2: Transport;
+      let transportWriter1, transport1;
+      let transportWriter2, transport2;
 
       beforeEach(() => {
         transportWriter1 = jest.fn();
         transport1 = Object.assign(
           new Writable({ write: transportWriter1, objectMode: true }),
-          { log: jest.fn() });
-  
+          { log: jest.fn() }
+        );
+
         transportWriter2 = jest.fn();
         transport2 = Object.assign(
           new Writable({ write: transportWriter2, objectMode: true }),
-          { log: jest.fn() });
+          { log: jest.fn() }
+        );
       });
 
       it('can be injected individually via hook', async function () {
         gasket.hook({ event: 'logTransports', handler: () => transport1 });
         const [logger] = await gasket.exec('createLogger');
-  
+
         logger.error('test');
-  
-        expect(transportWriter1).toBeCalledWith(
+
+        expect(transportWriter1).toHaveBeenCalledWith(
           {
             level: 'error',
             message: 'test',
             [LEVEL]: 'error',
-            [MESSAGE]: JSON.stringify({ level: 'error', message: 'test' })
+            [MESSAGE]: JSON.stringify({
+              level: 'error',
+              message: 'test'
+            })
           },
           'utf8',
-          expect.any(Function));
+          expect.any(Function)
+        );
       });
-  
+
       it('can be injected individually via config', async function () {
         gasket.config.winston = { transports: transport1 };
-  
+
         const [logger] = await gasket.exec('createLogger');
         logger.error('test');
-  
-        expect(transportWriter1).toBeCalledWith(
+
+        expect(transportWriter1).toHaveBeenCalledWith(
           {
             level: 'error',
             message: 'test',
@@ -118,17 +125,21 @@ describe('@gasket/plugin-winston', function () {
             [MESSAGE]: JSON.stringify({ level: 'error', message: 'test' })
           },
           'utf8',
-          expect.any(Function));
+          expect.any(Function)
+        );
       });
-  
+
       it('can be injected via hook', async function () {
-        gasket.hook({ event: 'logTransports', handler: () => [transport1, transport2] });
+        gasket.hook({
+          event: 'logTransports',
+          handler: () => [transport1, transport2]
+        });
         const [logger] = await gasket.exec('createLogger');
-  
+
         logger.error('test');
-  
-        [transportWriter1, transportWriter2].forEach(writer => {
-          expect(writer).toBeCalledWith(
+
+        [transportWriter1, transportWriter2].forEach((writer) => {
+          expect(writer).toHaveBeenCalledWith(
             {
               level: 'error',
               message: 'test',
@@ -140,15 +151,15 @@ describe('@gasket/plugin-winston', function () {
           );
         });
       });
-  
+
       it('can be injected via config', async function () {
         gasket.config.winston = { transports: [transport1, transport2] };
         const [logger] = await gasket.exec('createLogger');
-  
+
         logger.error('test');
-  
-        [transportWriter1, transportWriter2].forEach(writer => {
-          expect(writer).toBeCalledWith(
+
+        [transportWriter1, transportWriter2].forEach((writer) => {
+          expect(writer).toHaveBeenCalledWith(
             {
               level: 'error',
               message: 'test',
@@ -171,13 +182,15 @@ describe('@gasket/plugin-winston', function () {
       });
 
       expect(meta.lifecycles).toEqual(
-        expect.arrayContaining([{
-          name: 'logTransports',
-          method: 'exec',
-          description: 'Setup Winston log transports',
-          link: 'README.md#logTransports',
-          parent: 'createLogger'
-        }])
+        expect.arrayContaining([
+          {
+            name: 'logTransports',
+            method: 'exec',
+            description: 'Setup Winston log transports',
+            link: 'README.md#logTransports',
+            parent: 'createLogger'
+          }
+        ])
       );
     });
 
@@ -188,12 +201,14 @@ describe('@gasket/plugin-winston', function () {
       });
 
       expect(meta.configurations).toEqual(
-        expect.arrayContaining([{
-          name: 'winston',
-          link: 'README.md#configuration',
-          description: 'Setup and customize winston logger',
-          type: 'object'
-        }])
+        expect.arrayContaining([
+          {
+            name: 'winston',
+            link: 'README.md#configuration',
+            description: 'Setup and customize winston logger',
+            type: 'object'
+          }
+        ])
       );
     });
   });

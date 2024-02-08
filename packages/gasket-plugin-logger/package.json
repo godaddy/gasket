@@ -5,18 +5,15 @@
   "main": "lib",
   "types": "lib/index.d.ts",
   "files": [
-    "lib",
-    "src"
+    "lib"
   ],
   "scripts": {
-    "lint": "eslint ./src",
+    "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "posttest": "npm run lint",
-    "build": "tsc -P ./tsconfig.build.json",
-    "prepublishOnly": "npm test && npm run build"
+    "posttest": "npm run lint"
   },
   "repository": {
     "type": "git",
@@ -41,13 +38,23 @@
     "@gasket/plugin-command": "^6.43.0",
     "@gasket/plugin-https": "^6.43.0",
     "@gasket/plugin-metadata": "^6.43.1",
-    "@tsconfig/node18": "^18.2.2",
     "cross-env": "^7.0.3",
     "eslint": "^8.55.0",
-    "eslint-config-godaddy-typescript": "^4.0.2",
+    "eslint-config-godaddy": "^7.0.0",
     "eslint-plugin-jest": "^27.6.0",
     "eslint-plugin-unicorn": "^49.0.0",
-    "ts-jest": "^29.1.1",
-    "typescript": "^5.3.3"
+    "jest": "^29.3.1"
+  },
+  "eslintConfig": {
+    "extends": [
+      "godaddy",
+      "plugin:jest/recommended"
+    ],
+    "plugins": [
+      "unicorn"
+    ],
+    "rules": {
+      "unicorn/filename-case": "error"
+    }
   }
 }
