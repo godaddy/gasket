@@ -1,5 +1,9 @@
 # `@gasket/plugin-https`
 
+### 6.44.0
+
+- Better surfacing of server startup errors ([#634])
+
 ### 6.34.4
 
 - Upgrade eslint-plugin-unicorn v43 ([#436])
@@ -88,6 +92,7 @@
 [#457]: https://github.com/godaddy/gasket/pull/457
 [#442]: https://github.com/godaddy/gasket/pull/442
 [#460]: https://github.com/godaddy/gasket/pull/460
+[#634]: https://github.com/godaddy/gasket/pull/634
 
 [terminus]: https://github.com/godaddy/terminus
 [create-servers]: https://github.com/http-party/create-servers

@@ -1,5 +1,17 @@
 # `@gasket/plugin-docsify`
 
+### 6.44.7
+
+- Fix create command failing to find docsify ([#663])
+
+### 6.44.2
+
+- Deprecate Docsify ([#648])
+
+### 6.44.1
+
+- Workaround to fix `gasket docs` command caused by a [docsify bug](https://github.com/docsifyjs/docsify/issues/2345) ([#643])
+
 ### 6.34.4
 
 - Upgrade eslint-plugin-unicorn v43 ([#436])
@@ -51,5 +63,8 @@
 [#436]: https://github.com/godaddy/gasket/pull/436
 [#442]: https://github.com/godaddy/gasket/pull/442
 [#460]: https://github.com/godaddy/gasket/pull/460
+[#643]: https://github.com/godaddy/gasket/pull/643
+[#648]: https://github.com/godaddy/gasket/pull/648
+[#663]: https://github.com/godaddy/gasket/pull/663
 
 [mermaid]:https://mermaid-js.github.io/

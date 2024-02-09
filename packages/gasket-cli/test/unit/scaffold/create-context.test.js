@@ -1,14 +1,10 @@
 /* eslint-disable max-statements */
-
 const path = require('path');
-const assume = require('assume');
-const sinon = require('sinon');
 const makeCreateContext = require('../../../src/scaffold/create-context');
 const { CreateContext } = makeCreateContext;
 
 describe('CreateRuntime', () => {
   let mockContext;
-  let sandbox;
   let mockPlugin;
   let pkgAddStub;
   let pkgExtendStub;
@@ -18,12 +14,10 @@ describe('CreateRuntime', () => {
   let runtime;
 
   beforeEach(() => {
-    sandbox = sinon.createSandbox();
-
-    pkgAddStub = sinon.stub();
-    pkgExtendStub = sinon.stub();
-    pkgHasStub = sinon.stub().returns(true);
-    filesAddStub = sinon.stub();
+    pkgAddStub = jest.fn();
+    pkgExtendStub = jest.fn();
+    pkgHasStub = jest.fn().mockReturnValue(true);
+    filesAddStub = jest.fn();
     mockPlugin = { name: 'mockPlugin' };
 
     mockContext = {
@@ -46,13 +40,13 @@ describe('CreateRuntime', () => {
   });
 
   afterEach(() => {
-    sandbox.restore();
+    jest.clearAllMocks();
   });
 
   it('has all properties of the inner context', () => {
     Object.keys(mockContext).forEach(key => {
       if (key === 'pkg' || key === 'files') return;
-      assume(runtime[key]).equals(context[key]);
+      expect(runtime[key]).toEqual(context[key]);
     });
   });
 
@@ -62,10 +56,10 @@ describe('CreateRuntime', () => {
     runtime.appName = 'proxied';
     runtime.preset = 'proxy-preset';
 
-    assume(runtime.appName).equals('proxied');
-    assume(runtime.appName).not.equals(appName);
-    assume(runtime.preset).equals('proxy-preset');
-    assume(runtime.preset).not.equals(preset);
+    expect(runtime.appName).toEqual('proxied');
+    expect(runtime.appName).not.toEqual(appName);
+    expect(runtime.preset).toEqual('proxy-preset');
+    expect(runtime.preset).not.toEqual(preset);
   });
 
   it('silently refuses to set { files, pkg, source }', () => {
@@ -75,36 +69,37 @@ describe('CreateRuntime', () => {
     runtime.pkg = '';
     runtime.source = '';
 
-    assume(runtime.files).equals(files);
-    assume(runtime.pkg).equals(pkg);
-    assume(runtime.source).equals(source);
+    expect(runtime.files).toEqual(files);
+    expect(runtime.pkg).toEqual(pkg);
+    expect(runtime.source).toEqual(source);
   });
 
   it('sets the source to be the plugin provided', () => {
-    assume(runtime.source).equals(mockPlugin);
+    expect(runtime.source).toEqual(mockPlugin);
   });
 
   it('proxies to another files object', () => {
-    assume(runtime.files).not.equals(mockContext.files);
+    expect(runtime.files).not.toEqual(mockContext.files);
   });
 
   it('proxies to another pkg object', () => {
-    assume(runtime.files).not.equals(mockContext.files);
+    expect(runtime.files).not.toEqual(mockContext.files);
   });
 
   it('invokes context.pkg.add with source plugin', () => {
     runtime.pkg.add('name', 'legitimate-use-for-proxy');
-    assume(pkgAddStub).is.calledWithMatch(
+    expect(pkgAddStub).toHaveBeenCalledWith(
       'name',
       'legitimate-use-for-proxy',
-      mockPlugin
+      mockPlugin,
+      expect.undefined
     );
   });
 
   it('passes through options for context.pkg.add', () => {
     const mockOptions = { bogus: true };
     runtime.pkg.add('name', 'legitimate-use-for-proxy', mockOptions);
-    assume(pkgAddStub).is.calledWithMatch(
+    expect(pkgAddStub).toHaveBeenCalledWith(
       'name',
       'legitimate-use-for-proxy',
       mockPlugin,
@@ -115,7 +110,7 @@ describe('CreateRuntime', () => {
   it('invokes context.pkg.extend with source plugin', () => {
     const extension = { name: 'legitimate-use-for-proxy' };
     runtime.pkg.extend(extension);
-    assume(pkgExtendStub).is.calledWithMatch(
+    expect(pkgExtendStub).toHaveBeenCalledWith(
       extension,
       mockPlugin
     );
@@ -123,18 +118,18 @@ describe('CreateRuntime', () => {
 
   it('proxies context.pkg.has with return', () => {
     const result = runtime.pkg.has('name', 'legitimate-use-for-proxy');
-    assume(pkgHasStub).is.calledWithMatch(
+    expect(pkgHasStub).toHaveBeenCalledWith(
       'name',
       'legitimate-use-for-proxy'
     );
 
-    assume(result).is.true();
+    expect(result).toBeTruthy();
   });
 
   it('invokes context.files.add with source plugin', () => {
     const globs = ['foo/bar/bazz', 'buzz/fizz/foo'];
     runtime.files.add(...globs);
-    assume(filesAddStub).is.calledWithMatch({
+    expect(filesAddStub).toHaveBeenCalledWith({
       globs,
       source: mockPlugin
     });
@@ -151,83 +146,67 @@ describe('makeCreateContext', () => {
 
   it('returns a create context object', () => {
     results = makeCreateContext([], flags);
-    assume(results).instanceOf(CreateContext);
+    expect(results).toBeInstanceOf(CreateContext);
   });
 
   it('gets appName from arg values', () => {
     results = makeCreateContext(argv, flags);
-    assume(results.appName).equals('my-app');
+    expect(results.appName).toEqual('my-app');
   });
 
   it('defaults the appName if no arg value', () => {
     results = makeCreateContext([], flags);
-    assume(results.appName).equals('templated-app');
+    expect(results.appName).toEqual('templated-app');
   });
 
   it('sets rawPresets from flags', () => {
     results = makeCreateContext(argv, { presets: ['@gasket/preset-bogus@^1.2.3'] });
-    assume(results.rawPresets).deep.equals(['@gasket/preset-bogus@^1.2.3']);
+    expect(results.rawPresets).toEqual(['@gasket/preset-bogus@^1.2.3']);
   });
 
   it('sets rawPresets from flags with multiple entries', () => {
     results = makeCreateContext(argv, { presets: ['@gasket/preset-bogus@^1.2.3', '@gasket/preset-test@^3.1.2'] });
-    assume(results.rawPresets).deep.equals(['@gasket/preset-bogus@^1.2.3', '@gasket/preset-test@^3.1.2']);
+    expect(results.rawPresets).toEqual(['@gasket/preset-bogus@^1.2.3', '@gasket/preset-test@^3.1.2']);
   });
 
   it('sets rawPresets to empty array if not defined', () => {
     results = makeCreateContext(argv, { 'preset-path': ['../bogus/path'] });
-    assume(results.rawPresets).deep.equals([]);
+    expect(results.rawPresets).toEqual([]);
   });
 
   it('sets localPresets from flags', () => {
     results = makeCreateContext(argv, { 'preset-path': ['../bogus/path'] });
-    assume(results.localPresets).deep.equals(['../bogus/path']);
+    expect(results.localPresets).toEqual(['../bogus/path']);
   });
 
   it('sets localPresets from flags with multiple entries', () => {
     results = makeCreateContext(argv, { 'preset-path': ['../bogus/path', '../test/path'] });
-    assume(results.localPresets).deep.equals(['../bogus/path', '../test/path']);
+    expect(results.localPresets).toEqual(['../bogus/path', '../test/path']);
   });
 
   it('sets localPresets to empty array if not defined', () => {
     results = makeCreateContext(argv, { presets: ['@gasket/preset-bogus@^1.2.3'] });
-    assume(results.localPresets).deep.equals([]);
-  });
-
-  it('uses npmconfig from flags', () => {
-    results = makeCreateContext(argv, { npmconfig: '/some/path/to/npmconfig', presets: ['@gasket/nextjs'] });
-    assume(results.npmconfig).equals('/some/path/to/npmconfig');
-  });
-
-  it('npmconfig is always absolute', () => {
-    results = makeCreateContext(argv, { npmconfig: '~/.npmconfig', presets: ['nextjs'] });
-    assume(results.npmconfig).includes('/.npmconfig');
-    assume(path.isAbsolute(results.npmconfig)).true();
-  });
-
-  it('handles if npmconfig if not set', () => {
-    results = makeCreateContext(argv, { presets: ['nextjs'] });
-    assume(results.npmconfig).falsey();
+    expect(results.localPresets).toEqual([]);
   });
 
   it('sets cwd from process', () => {
     results = makeCreateContext(argv, flags);
-    assume(results.cwd).equals(process.cwd());
+    expect(results.cwd).toEqual(process.cwd());
   });
 
   it('sets dest from cwd and appName', () => {
     results = makeCreateContext(argv, flags);
-    assume(results.dest).equals(path.join(process.cwd(), 'my-app'));
+    expect(results.dest).toEqual(path.join(process.cwd(), 'my-app'));
   });
 
   it('sets relDest as relative to cwd', () => {
     results = makeCreateContext(argv, flags);
-    assume(results.relDest).equals('./my-app');
+    expect(results.relDest).toEqual('./my-app');
   });
 
   it('sets pkgLinks from flags', () => {
     results = makeCreateContext(argv, { 'npm-link': ['@gasket/jest', 'gasket-plugin-some-user'], 'presets': ['godady'] });
-    assume(results.pkgLinks).eqls(['@gasket/jest', 'gasket-plugin-some-user']);
+    expect(results.pkgLinks).toEqual(['@gasket/jest', 'gasket-plugin-some-user']);
   });
 
   it('sets plugins short names from flags', () => {
@@ -236,7 +215,7 @@ describe('makeCreateContext', () => {
         plugins: ['@gasket/jest@^1.2.3', 'gasket-plugin-some-user', '@gasket/plugin-intl'],
         presets: ['@gasket/nextjs']
       });
-    assume(results.plugins).eqls(['@gasket/jest', 'some-user', '@gasket/intl']);
+    expect(results.plugins).toEqual(['@gasket/jest', 'some-user', '@gasket/intl']);
   });
 
   it('sets rawPlugins from flags', () => {
@@ -245,30 +224,30 @@ describe('makeCreateContext', () => {
         plugins: ['@gasket/jest@^1.2.3', 'gasket-plugin-some-user', '@gasket/plugin-intl'],
         presets: ['@gasket/nextjs']
       });
-    assume(results.rawPlugins).eqls(['@gasket/jest@^1.2.3', 'gasket-plugin-some-user', '@gasket/plugin-intl']);
+    expect(results.rawPlugins).toEqual(['@gasket/jest@^1.2.3', 'gasket-plugin-some-user', '@gasket/plugin-intl']);
   });
 
   it('detects whether the target directory exists', () => {
     results = makeCreateContext(argv, flags);
-    assume(results.extant).eqls(false);
+    expect(results.extant).toEqual(false);
   });
 
   it('notes if creating in an extant directory', () => {
     results = makeCreateContext(['test'], flags);
-    assume(results.extant).eqls(true);
+    expect(results.extant).toEqual(true);
   });
 
   it('adds arrays for report messaging', () => {
     results = makeCreateContext(argv, flags);
-    assume(results.messages).an('array');
-    assume(results.warnings).an('array');
-    assume(results.errors).an('array');
-    assume(results.nextSteps).an('array');
+    expect(results.messages).toBeInstanceOf(Array);
+    expect(results.warnings).toBeInstanceOf(Array);
+    expect(results.errors).toBeInstanceOf(Array);
+    expect(results.nextSteps).toBeInstanceOf(Array);
   });
 
   it('adds set for reporting generated files', () => {
     results = makeCreateContext(argv, flags);
-    assume(results.generatedFiles).a('set');
+    expect(results.generatedFiles).toBeInstanceOf(Set);
   });
 
   it('doesnt throw if preset found', () => {
@@ -279,7 +258,7 @@ describe('makeCreateContext', () => {
       error = err;
     }
 
-    assume(error).to.be.falsey();
+    expect(error).toBeFalsy();
   });
 
   it('doesnt throw if preset path found', () => {
@@ -290,28 +269,28 @@ describe('makeCreateContext', () => {
       error = err;
     }
 
-    assume(error).to.be.falsey();
+    expect(error).toBeFalsy();
   });
 
   it('assigns values from config-file flag to context', () => {
     flags = { 'config-file': './test/unit/commands/test-ci-config.json' };
     results = makeCreateContext(argv, flags);
-    assume(results.testSuite).eqls('mocha');
-    assume(results.appDescription).eqls('A basic gasket app');
-    assume(results.packageManager).eqls('npm');
+    expect(results.testSuite).toEqual('jest');
+    expect(results.appDescription).toEqual('A basic gasket app');
+    expect(results.packageManager).toEqual('npm');
   });
 
   it('assigns values from config flag to context', () => {
     flags = { config: '{"description":"A test app","package":"npm","testSuite":"fake"}' };
     results = makeCreateContext(argv, flags);
-    assume(results.testSuite).eqls('fake');
-    assume(results.description).eqls('A test app');
-    assume(results.package).eqls('npm');
+    expect(results.testSuite).toEqual('fake');
+    expect(results.description).toEqual('A test app');
+    expect(results.package).toEqual('npm');
   });
 
   it('sets prompts from flags', () => {
     results = makeCreateContext(argv, { prompts: false });
-    assume(results.prompts).false();
+    expect(results.prompts).toBeFalsy();
   });
 
 });

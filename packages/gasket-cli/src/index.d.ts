@@ -111,9 +111,6 @@ export interface CreateContext {
   /** Local packages that should be linked */
   pkgLinks: Array<string>;
 
-  /** Path to npmconfig file */
-  npmconfig: string;
-
   /** non-error/warning messages to report */
   messages: Array<string>;
 

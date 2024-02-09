@@ -2,8 +2,6 @@ const { filterSensitiveCookies } = require('./cookies');
 const middleware = require('./middleware');
 const { dependencies } = require('../package.json');
 
-const isDefined = o => typeof o !== 'undefined';
-
 /**
  * Determines if the Elastic APM agent has sufficient config to be active
  * @param {object} config gasket config
@@ -11,18 +9,13 @@ const isDefined = o => typeof o !== 'undefined';
  * @returns {boolean} A combined config object
  */
 const isActive = (config, env) => {
-  const { active, serverUrl, secretToken } = config;
+  const { active } = config;
 
   if (active || env.ELASTIC_APM_ACTIVE) {
     return true;
   }
 
-  const combined = {
-    serverUrl: serverUrl || env.ELASTIC_APM_SERVER_URL,
-    secretToken: secretToken || env.ELASTIC_APM_SECRET_TOKEN
-  };
-
-  if (combined.serverUrl && combined.secretToken) {
+  if (env.ELASTIC_APM_SERVER_URL && env.ELASTIC_APM_SECRET_TOKEN) {
     return true;
   }
 
@@ -33,16 +26,7 @@ module.exports = {
   hooks: {
     configure: {
       handler: async (gasket, config) => {
-        const { logger } = gasket;
         config.elasticAPM = config.elasticAPM || {};
-
-        const { serverUrl, secretToken } = config.elasticAPM;
-        if (isDefined(serverUrl)) {
-          logger.notice('DEPRECATED config `elasticAPM.serverUrl`. Use env var: ELASTIC_APM_SERVER_URL');
-        }
-        if (isDefined(secretToken)) {
-          logger.notice('DEPRECATED config `elasticAPM.secretToken`. Use env var: ELASTIC_APM_SECRET_TOKEN');
-        }
 
         // eslint-disable-next-line no-process-env
         config.elasticAPM.active = isActive(config.elasticAPM, process.env);
@@ -62,10 +46,7 @@ module.exports = {
         );
 
         if (!apm.isStarted()) {
-          apm.start({
-            ...config.elasticAPM
-          });
-          logger.notice('DEPRECATED started Elastic APM agent late. Use `--require elastic-apm-node/start`');
+          logger.notice('WARNING Elastic APM agent is not started. Use `--require elastic-apm-node/start`');
         }
 
         apm.addFilter(filterSensitiveCookies(config));

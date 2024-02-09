@@ -1,6 +1,6 @@
 {
   "name": "@gasket/preset-api",
-  "version": "6.43.1",
+  "version": "6.45.0",
   "description": "Create Express-based API with Gasket",
   "main": "lib",
   "types": "lib/index.d.ts",
@@ -20,17 +20,18 @@
     "url": "https://github.com/godaddy/gasket/issues"
   },
   "dependencies": {
-    "@gasket/plugin-config": "^6.43.0",
-    "@gasket/plugin-docs": "^6.43.0",
-    "@gasket/plugin-docsify": "^6.43.0",
-    "@gasket/plugin-express": "^6.43.0",
-    "@gasket/plugin-https": "^6.43.0",
-    "@gasket/plugin-lint": "^6.43.1",
     "@gasket/plugin-logger": "^6.43.0",
-    "@gasket/plugin-swagger": "^6.43.0",
-    "@gasket/plugin-winston": "^6.43.0"
+    "@gasket/plugin-winston": "^6.43.0",
+    "@gasket/plugin-config": "^6.45.0",
+    "@gasket/plugin-docs": "^6.45.0",
+    "@gasket/plugin-docsify": "^6.45.0",
+    "@gasket/plugin-express": "^6.45.0",
+    "@gasket/plugin-https": "^6.45.0",
+    "@gasket/plugin-lint": "^6.45.0",
+    "@gasket/plugin-log": "^6.45.0",
+    "@gasket/plugin-swagger": "^6.45.0"
   },
   "devDependencies": {
-    "@gasket/plugin-start": "^6.43.0"
+    "@gasket/plugin-start": "^6.45.0"
   }
 }

@@ -7,7 +7,7 @@ const moduleDefaults = {
   excludes: ['cacache', 'yargs', 'axe-core']
 };
 
-const isDefined = o => typeof o !== 'undefined';
+const isDefined = (o) => typeof o !== 'undefined';
 
 /**
  * Shortcut to get the gasket.config.intl object
@@ -23,22 +23,6 @@ function getIntlConfig(gasket) {
 }
 
 /**
- * Destructure deprecated options as fallbacks and log warnings if used.
- *
- * @param {Gasket} gasket - Gasket API
- * @param {object} intlConfig - User intl config
- * @returns {object} config
- */
-function deprecatedOptions(gasket, intlConfig) {
-  const { logger } = gasket;
-  const { languageMap, defaultLanguage, assetPrefix } = intlConfig;
-  if (isDefined(languageMap)) logger?.warning?.('DEPRECATED intl config `languageMap` - use `localesMap`');
-  if (isDefined(defaultLanguage)) logger?.warning?.('DEPRECATED intl config `defaultLanguage` - use `defaultLocale`');
-  if (isDefined(assetPrefix)) logger?.warning?.('DEPRECATED intl config `assetPrefix` - use `basePath`');
-  return { languageMap, defaultLanguage, assetPrefix };
-}
-
-/**
  * Sets up the Intl config for the Gasket session and add process env variables
  * to access to certain config results where gasket.config is not accessible.
  *
@@ -50,14 +34,13 @@ module.exports = function configureHook(gasket, config) {
   const { root } = config;
   const intlConfig = { ...getIntlConfig({ config }) };
 
-  const { languageMap, defaultLanguage, assetPrefix } = deprecatedOptions(gasket, intlConfig);
   const { nextConfig = {} } = config;
 
   // get user defined config and apply defaults
   const {
     defaultPath = '/locales',
-    defaultLocale = defaultLanguage || 'en',
-    localesMap = languageMap || {},
+    defaultLocale = 'en',
+    localesMap = {},
     localesDir,
     manifestFilename = 'locales-manifest.json',
     preloadLocales = false
@@ -65,19 +48,27 @@ module.exports = function configureHook(gasket, config) {
 
   const fullLocalesDir = path.join(root, localesDir);
 
-  const basePath = [intlConfig.basePath, assetPrefix,
-    nextConfig.assetPrefix, nextConfig.basePath,
-    config.basePath, ''].find(isDefined);
+  const basePath = [
+    intlConfig.basePath,
+    nextConfig.assetPrefix,
+    nextConfig.basePath,
+    config.basePath,
+    ''
+  ].find(isDefined);
 
   let { modules = false } = intlConfig;
   if (modules) {
-    modules = modules === true ? moduleDefaults : { ...moduleDefaults, ...modules };
+    modules =
+      modules === true ? moduleDefaults : { ...moduleDefaults, ...modules };
   }
 
   // This allows packages (@gasket/react-intl) to reference certain configs
   /* eslint-disable no-process-env */
   process.env.GASKET_INTL_LOCALES_DIR = fullLocalesDir;
-  process.env.GASKET_INTL_MANIFEST_FILE = path.join(fullLocalesDir, manifestFilename);
+  process.env.GASKET_INTL_MANIFEST_FILE = path.join(
+    fullLocalesDir,
+    manifestFilename
+  );
   /* eslint-enable no-process-env */
 
   const normalizedIntlConfig = {

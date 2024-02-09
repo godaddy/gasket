@@ -1,62 +1,45 @@
-const assume = require('assume');
-const path = require('path');
-const sinon = require('sinon');
-const proxyquire = require('proxyquire');
-const { homedir } = require('os');
+const mockPackageManagerStub = jest.fn();
+
+jest.mock('@gasket/utils', () => {
+  return {
+    PackageManager: {
+      spawnNpm: mockPackageManagerStub
+    }
+  };
+});
+
+const Fetcher = require('../../../src/scaffold/fetcher');
 
 describe('fetcher', () => {
-  let Fetcher;
-  let ManagerStub;
   const stdout = 'example.tr.gz\nits all good';
 
-  function makeFetcher(Manager) {
-    return proxyquire('../../../src/scaffold/fetcher', {
-      '@gasket/utils': { PackageManager: Manager }
-    });
-  }
-
   beforeEach(() => {
-    ManagerStub = {
-      spawnNpm: sinon.stub().resolves({ stdout })
-    };
+    mockPackageManagerStub.mockResolvedValue({ stdout });
+  });
 
-    Fetcher = makeFetcher(ManagerStub);
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
   describe('#fetch', function () {
-    it('passes npmconfig to npm pack when defined', async () => {
-      const npmconfig = path.join(homedir(), 'whatever', '.npmrc');
-      const packageName = 'whatever';
-      const fetcher = new Fetcher({
-        npmconfig,
-        packageName
-      });
-
-      await fetcher.fetch();
-      assume(ManagerStub.spawnNpm.firstCall.args[0]).contains('--userconfig', npmconfig);
-    });
-
     it('allows the cwd to be configured for package fetching', async () => {
       const fetcher = new Fetcher({});
 
       await fetcher.fetch('example', '/foo/bar');
-      assume(ManagerStub.spawnNpm.firstCall.args[1].cwd).equals('/foo/bar');
+      expect(mockPackageManagerStub.mock.calls[0][1].cwd).toEqual('/foo/bar');
     });
   });
 
   describe('#clone', function () {
     it('fetches the package into the tmp dir', async () => {
-      const npmconfig = path.join(homedir(), 'whatever', '.npmrc');
       const packageName = 'whatever';
       const fetcher = new Fetcher({
-        npmconfig,
         packageName
       });
 
-      fetcher.unpack = sinon.stub().resolves('example');
+      fetcher.unpack = jest.fn().mockResolvedValue('example');
       await fetcher.clone();
-
-      assume(ManagerStub.spawnNpm.firstCall.args[1].cwd).includes(fetcher.tmp.dir);
+      expect(mockPackageManagerStub.mock.calls[0][1].cwd).toContain(fetcher.tmp.dir);
     });
   });
 });

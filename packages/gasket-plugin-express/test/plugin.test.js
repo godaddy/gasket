@@ -48,7 +48,9 @@ describe('createServers', () => {
 
     gasket = {
       middleware: {},
-      logger: {},
+      logger: {
+        warning: jest.fn()
+      },
       config: {},
       exec: jest
         .fn()
@@ -185,7 +187,18 @@ describe('createServers', () => {
 
     const cookieParserUsage = findCall(
       app.use,
-      (path, mw) => mw === cookieParserMiddleware
+      (url, mw) => mw === cookieParserMiddleware
+    );
+    expect(cookieParserUsage).not.toBeNull();
+  });
+
+  it('supports the deprecated property name', async () => {
+    gasket.config.express = { middlewareInclusionRegex: /^(?!\/_next\/)/ };
+    await plugin.hooks.createServers(gasket, {});
+
+    const cookieParserUsage = findCall(
+      app.use,
+      (url, mw) => mw === cookieParserMiddleware
     );
     expect(cookieParserUsage).not.toBeNull();
   });
@@ -328,7 +341,7 @@ describe('create', () => {
     'adds appropriate dependencies',
     expectCreatedWith(({ pkg }) => {
       expect(pkg.add).toHaveBeenCalledWith('dependencies', {
-        express: '^4.16.3'
+        express: '^4.18.2'
       });
     })
   );

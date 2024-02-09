@@ -2,6 +2,7 @@ const path = require('path');
 const mockStartStub = jest.fn();
 const mockWriteFileStub = jest.fn();
 const mockExistsStub = jest.fn();
+const mockTryRequireStub = jest.fn();
 
 jest.mock('fs', () => {
   const mod = jest.requireActual('fs');
@@ -18,6 +19,10 @@ jest.mock('@docusaurus/core/lib', () => ({
   start: mockStartStub
 }));
 
+jest.mock('@gasket/utils', () => ({
+  tryRequire: mockTryRequireStub
+}));
+
 const pluginConfigFile = 'docusaurus.config.js';
 const docsView = require('../lib/docs-view');
 
@@ -26,6 +31,7 @@ describe('docsView', () => {
   let mockGasket;
 
   beforeEach(() => {
+    mockTryRequireStub.mockReturnValue(true);
     mockGasket = {
       metadata: {
         app: {
@@ -72,5 +78,12 @@ describe('docsView', () => {
       ...docusaurus,
       config: path.join(root, pluginConfigFile)
     });
+  });
+
+  it('throw on missing devDependencies', async function () {
+    mockTryRequireStub.mockReturnValue(false);
+    expect(mockTryRequireStub).toHaveBeenCalledWith('@docusaurus/preset-classic');
+    expect(mockTryRequireStub).toHaveBeenCalledWith('@docusaurus/core');
+    await expect(async () => await docsView(mockGasket)).rejects.toThrow();
   });
 });

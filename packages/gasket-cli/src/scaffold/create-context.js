@@ -1,7 +1,7 @@
 /* eslint-disable max-len, max-statements */
 const fs = require('fs');
 const path = require('path');
-const { addPluginsToContext, ensureAbsolute, readConfig } = require('../scaffold/utils');
+const { addPluginsToContext, readConfig } = require('../scaffold/utils');
 
 /**
  * The CreateRuntime represents a shallow proxy to a CreateContext
@@ -73,7 +73,6 @@ function flatten(acc, values) {
  * @property {PluginDesc[]} rawPlugins - Raw plugin desc from flags, prompts, etc. Can include constraints.
  * @property {PluginName[]} plugins - Short names of plugins
  * @property {String[]} pkgLinks - Local packages that should be linked
- * @property {String} npmconfig - Path to npmconfig file
  * @property {String[]} messages - non-error/warning messages to report
  * @property {String[]} warnings - warnings messages to report
  * @property {String[]} errors - error messages to report but do not exit process
@@ -133,7 +132,6 @@ class CreateContext {
 module.exports = function makeCreateContext(argv = [], flags = {}) {
   const appName = argv[0] || 'templated-app';
   const {
-    npmconfig,
     plugins = [],
     presets = [],
     'npm-link': npmLink = [],
@@ -167,7 +165,6 @@ module.exports = function makeCreateContext(argv = [], flags = {}) {
     dest,
     relDest,
     extant,
-    npmconfig: npmconfig && ensureAbsolute(npmconfig),
     pkgLinks,
     localPresets,
     rawPresets,
