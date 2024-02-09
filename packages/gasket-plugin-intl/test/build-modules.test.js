@@ -10,7 +10,8 @@ describe('buildModules', function () {
 
   beforeEach(function () {
     logger = {
-      log: jest.fn()
+      log: jest.fn(),
+      warning: jest.fn()
     };
     mockGasket = {
       logger,
@@ -153,11 +154,11 @@ describe('buildModules', function () {
       let discoveredDirs;
       beforeEach(function () {
         discoveredDirs = [
-          '/path/to/module/myh-fake',
-          '/path/to/module/myh-fake2',
-          '/path/to/module/myh-fake3'
+          ['myh-fake', '/path/to/module/myh-fake'],
+          ['myh-fake2', '/path/to/module/myh-fake2'],
+          ['myh-fake3', '/path/to/module/myh-fake3']
         ];
-        jest.spyOn(fsUtils, 'getDirectories').mockResolvedValue(discoveredDirs);
+        jest.spyOn(fsUtils, 'getPackageDirs').mockResolvedValue(discoveredDirs);
       });
 
       it('returns a list of all locale paths', async function () {
@@ -176,14 +177,48 @@ describe('buildModules', function () {
       });
 
       it('excludes blacklisted modules', async function () {
-        discoveredDirs.push(
-          '/should/blacklist/yargs',
-          '/should/not/blacklist/bogus'
-        );
+        const expected = ['mod1', '/should/not/blacklist/bogus'];
+        const notExpected = ['mod2', '/should/blacklist/yargs'];
+        discoveredDirs.push(expected, notExpected);
         jest.spyOn(fs, 'lstat').mockResolvedValue({ isDirectory: () => true });
         const results = await builder.discoverDirs();
-        expect(results).not.toContain('/should/blacklist/yargs/locales');
-        expect(results).toContain('/should/not/blacklist/bogus/locales');
+        expect(results).toHaveLength(discoveredDirs.length - 1);
+        expect(results).toEqual(expect.arrayContaining([
+          ['mod1', '/should/not/blacklist/bogus/locales']
+        ]));
+      });
+    });
+
+    describe('#gatherModules', function () {
+      beforeEach(function () {
+        mockGasket.config.intl.modules = [
+          '@first/package',
+          '@second/package/custom-locales',
+          '@third/package/missing-locales'
+        ];
+        builder = new BuildModules(mockGasket);
+
+        jest.spyOn(fs, 'lstat')
+          .mockResolvedValueOnce({ isDirectory: () => true })
+          .mockResolvedValueOnce({ isDirectory: () => true })
+          .mockResolvedValueOnce({ isDirectory: () => false });
+      });
+
+      it('returns a list of all packages with verified dirs', async function () {
+        const results = await builder.gatherModuleDirs();
+        expect(results).toHaveLength(2);
+        expect(results).toEqual(expect.arrayContaining([
+          ['@first/package', '/path/to/somewhere/node_modules/@first/package/locales'],
+          ['@second/package', '/path/to/somewhere/node_modules/@second/package/custom-locales']
+        ]));
+      });
+
+      it('logs warning when locales dir not found', async function () {
+        const results = await builder.gatherModuleDirs();
+        expect(results).toHaveLength(2);
+        expect(logger.warning).toHaveBeenCalledWith(
+          'build:locales: locales directory not found for: @third/package/missing-locales'
+        );
       });
     });
 

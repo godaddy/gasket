@@ -1,20 +1,29 @@
 const fs = require('fs-extra');
 const path = require('path');
 
+/**
+ * Tuple of package name and path
+ * @typedef {[string, string]} SrcPkgDir
+ * @private
+ */
+
+/**
+ * Utility class for file system operations
+ */
 class FsUtils {
 
   /**
-   * Check if path is module. It will look for a package.json file.
+   * Check if path has package.json file and return the name.
    *
    * @param {string} targetDir - File path
-   * @returns {boolean} result
+   * @returns {string|undefined} result
    */
-  async isModule(targetDir) {
+  async packageName(targetDir) {
     try {
-      const stats = await fs.stat(path.join(targetDir, 'package.json'));
-      return !!stats;
+      const pkg = await fs.readJson(path.join(targetDir, 'package.json'));
+      return pkg.name;
     } catch (e) {
-      return false;
+      // skip;
     }
   }
 
@@ -22,18 +31,19 @@ class FsUtils {
    * Find all directories under target dir, recursively
    *
    * @param {string} parentDir - Path to parent directory
-   * @param {string[]} dirList - List of full paths
-   * @returns {string[]} directories - List of full paths
+   * @param {SrcPkgDir[]} dirList - List of full paths
+   * @returns {SrcPkgDir[]} directories - List of full paths
    */
-  async getDirectories(parentDir, dirList = []) {
+  async getPackageDirs(parentDir, dirList = []) {
     const files = await fs.readdir(parentDir);
     for (const file of files) {
       const filePath = path.join(parentDir, file);
       if ((await fs.stat(filePath)).isDirectory()) {
-        if (await this.isModule(filePath)) {
-          dirList.push(filePath);
+        const pkgName = await this.packageName(filePath);
+        if (pkgName) {
+          dirList.push([pkgName, filePath]);
         } else {
-          dirList.concat(await this.getDirectories(path.join(filePath, '/'), dirList));
+          dirList.concat(await this.getPackageDirs(path.join(filePath, '/'), dirList));
         }
       }
     }

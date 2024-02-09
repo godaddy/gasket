@@ -5,6 +5,8 @@ const { getIntlConfig } = require('./configure');
 
 const debug = require('debug')('gasket:plugin:intl:buildModules');
 
+const rePkgParts = /^(?<name>(?:@[^/]+\/)?[\w-]+)(?<dir>\/.+)?/;
+
 class BuildModules {
   /**
    * Instantiate a builder to gather locale files
@@ -16,6 +18,11 @@ class BuildModules {
     const intlConfig = getIntlConfig(gasket);
 
     const { modules } = intlConfig;
+
+    if (Array.isArray(modules)) {
+      this._lookupModuleDirs = modules;
+    }
+
     const { excludes, localesDir } = modules;
 
     this._logger = logger;
@@ -126,11 +133,11 @@ class BuildModules {
   /**
    * Processes directories
    *
-   * @param {string[]} buildDirs - list of dirs to process
+   * @param {SrcPkgDir[]} srcPkgDirs - list of dirs to process
    */
-  async processDirs(buildDirs) {
-    for (const srcDir of buildDirs) {
-      const pkgName = await this.getPackageName(srcDir);
+  async processDirs(srcPkgDirs) {
+    for (const srcPkgDir of srcPkgDirs) {
+      const [pkgName, srcDir] = srcPkgDir;
       const tgtDir = path.join(this._outputDir, pkgName);
 
       this._logger.log(`build:locales: Updating locale files for: ${pkgName}`);
@@ -148,19 +155,21 @@ class BuildModules {
   /**
    * Find modules that have /locales folder to process
    *
-   * @returns {string[]} directories - list of paths
+   * @returns {SrcPkgDir[]} source package directories
    */
   async discoverDirs() {
-    const dirs = await fsUtils.getDirectories(this._nodeModulesDir);
+    const pkgDirs = await fsUtils.getPackageDirs(this._nodeModulesDir);
 
-    return dirs.reduce(async (prevPromise, dir) => {
+    return pkgDirs.reduce(async (prevPromise, pkgDir) => {
+      const [pkgName, dir] = pkgDir;
       const resArr = await prevPromise;
+
       if (this._excludes.includes(path.basename(dir))) return resArr;
-      const buildDir = path.join(dir, this._lookupDir);
+      const buildDir = path.resolve(path.join(dir, ...this._lookupDir.split('/')));
       try {
         const stat = await fs.lstat(buildDir);
         if (stat.isDirectory()) {
-          resArr.push(buildDir);
+          resArr.push([pkgName, buildDir]);
         }
       } catch (e) {
         // ignore
@@ -170,13 +179,53 @@ class BuildModules {
   }
 
   /**
+   * Find modules with locale directories to process
+   *
+   * @returns {SrcPkgDir[]} source package directories
+   */
+  async gatherModuleDirs() {
+    if (this._lookupModuleDirs) {
+      const promises = this._lookupModuleDirs.map(async lookupDir => {
+        const match = lookupDir.match(rePkgParts);
+        const pkgName = match.groups.name;
+        const subDir = (match.groups.dir ?? '/locales').substring(1);
+
+        const buildDir = path.join(
+          this._nodeModulesDir,
+          ...pkgName.split('/'),
+          ...subDir.split('/')
+        );
+
+        let results;
+        try {
+          const stat = await fs.lstat(buildDir);
+          if (stat.isDirectory()) {
+            results = [pkgName, buildDir];
+          }
+        } catch (e) {
+          // skip
+        }
+        if (!results) {
+          this._logger.warning(`build:locales: locales directory not found for: ${lookupDir}`);
+        }
+        return results;
+      });
+
+      const results = await Promise.all(promises);
+      return results.filter(Boolean);
+    }
+
+    return this.discoverDirs();
+  }
+
+  /**
    * Starts the build process
    */
   async run() {
     await fs.remove(this._outputDir);
     await fs.mkdirp(this._outputDir);
-    const srcDirs = await this.discoverDirs();
-    await this.processDirs(srcDirs);
+    const srcPkgDirs = await this.gatherModuleDirs();
+    await this.processDirs(srcPkgDirs);
   }
 }
 
