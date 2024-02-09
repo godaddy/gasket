@@ -237,13 +237,13 @@ describe('createServers', () => {
 
   it('adds middleware from lifecycle (ignores falsy)', async () => {
     await plugin.hooks.createServers(gasket, {});
-    expect(app.use).toHaveBeenCalledTimes(3);
+    expect(app.use).toHaveBeenCalledTimes(4);
 
     app.use.mockClear();
     mockMwPlugins = [{ name: 'middlware-1' }, null];
 
     await plugin.hooks.createServers(gasket, {});
-    expect(app.use).toHaveBeenCalledTimes(4);
+    expect(app.use).toHaveBeenCalledTimes(5);
   });
 
   it('supports async middleware hooks', async () => {
@@ -279,16 +279,16 @@ describe('createServers', () => {
     mockMwPlugins = [{ name: 'middlware-1' }];
     await plugin.hooks.createServers(gasket, {});
 
-    expect(app.use.mock.calls[3]).toContain(paths);
+    expect(app.use.mock.calls[4]).toContain(paths);
   });
 
   it('adds errorMiddleware from lifecycle (ignores falsy)', async () => {
     await plugin.hooks.createServers(gasket, {});
-    expect(app.use).toHaveBeenCalledTimes(3);
+    expect(app.use).toHaveBeenCalledTimes(4);
     lifecycles.errorMiddleware.mockResolvedValue([() => {}, null]);
     app.use.mockClear();
     await plugin.hooks.createServers(gasket, {});
-    expect(app.use).toHaveBeenCalledTimes(4);
+    expect(app.use).toHaveBeenCalledTimes(5);
   });
 
   it('attaches a logger to the request', async () => {

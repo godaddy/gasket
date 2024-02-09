@@ -147,7 +147,7 @@ module.exports = {
         } else if (middlewarePattern) {
           app.use(middlewarePattern, layer);
         } else {
-          useForAllowedPaths(layer);
+          app.use(layer);
         }
       });
 
