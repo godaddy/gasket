@@ -99,11 +99,9 @@ module.exports = {
       }
 
       const middlewares = [
-        () => {
-          return (req, res, next) => {
-            req.trustProxy = app.get('trust proxy');
-            next();
-          };
+        (req, res, next) => {
+          req.trustProxy = app.get('trust proxy');
+          next();
         }
       ];
       await gasket.execApply('middleware', async (plugin, handler) => {
