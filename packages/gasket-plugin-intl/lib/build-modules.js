@@ -185,7 +185,6 @@ class BuildModules {
   async gatherModuleDirs() {
     if (this._lookupModuleDirs) {
       const promises = this._lookupModuleDirs.map(async lookupDir => {
-        let results;
 
         const match = lookupDir.match(rePkgParts);
         if (!match?.groups?.name) {
@@ -205,16 +204,13 @@ class BuildModules {
         try {
           const stat = await fs.lstat(buildDir);
           if (stat.isDirectory()) {
-            results = [pkgName, buildDir];
+            return [pkgName, buildDir];
           }
         } catch (e) {
           // skip
         }
 
-        if (!results) {
-          this._logger.warning(`build:locales: locales directory not found for: ${lookupDir}`);
-        }
-        return results;
+        this._logger.warning(`build:locales: locales directory not found for: ${lookupDir}`);
       });
 
       const results = await Promise.all(promises);
