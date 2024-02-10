@@ -190,21 +190,17 @@ describe('buildModules', function () {
     });
 
     describe('#gatherModules', function () {
-      beforeEach(function () {
+
+      it('returns a list of all packages with verified dirs', async function () {
+        jest.spyOn(fs, 'lstat').mockResolvedValueOnce({ isDirectory: () => true });
+
         mockGasket.config.intl.modules = [
           '@first/package',
-          '@second/package/custom-locales',
-          '@third/package/missing-locales'
+          '@second/package/custom-locales'
         ];
         builder = new BuildModules(mockGasket);
 
-        jest.spyOn(fs, 'lstat')
-          .mockResolvedValueOnce({ isDirectory: () => true })
-          .mockResolvedValueOnce({ isDirectory: () => true })
-          .mockResolvedValueOnce({ isDirectory: () => false });
-      });
 
-      it('returns a list of all packages with verified dirs', async function () {
         const results = await builder.gatherModuleDirs();
         expect(results).toHaveLength(2);
         expect(results).toEqual(expect.arrayContaining([
@@ -214,11 +210,68 @@ describe('buildModules', function () {
       });
 
       it('logs warning when locales dir not found', async function () {
+        jest.spyOn(fs, 'lstat').mockResolvedValueOnce({ isDirectory: () => false });
+
+        mockGasket.config.intl.modules = [
+          '@third/package/missing-locales'
+        ];
+        builder = new BuildModules(mockGasket);
+
+
         const results = await builder.gatherModuleDirs();
-        expect(results).toHaveLength(2);
+        expect(results).toHaveLength(0);
+
         expect(logger.warning).toHaveBeenCalledWith(
           'build:locales: locales directory not found for: @third/package/missing-locales'
         );
+      });
+
+      it('logs warning when module names are malformed', async function () {
+        jest.spyOn(fs, 'lstat').mockResolvedValueOnce({ isDirectory: () => true });
+
+        mockGasket.config.intl.modules = [
+          '@malformed',
+          'wrong!',
+          '@scope/wrong!',
+          '@b&d/path',
+          '@looks/good/but/**ps'
+        ];
+        builder = new BuildModules(mockGasket);
+        const results = await builder.gatherModuleDirs();
+
+        expect(results).toHaveLength(0);
+
+        mockGasket.config.intl.modules.forEach((name) => {
+          expect(logger.warning).toHaveBeenCalledWith(
+            `build:locales: malformed module name: ${name}`
+          );
+        });
+      });
+
+      it('supports expected module formats', async function () {
+        jest.spyOn(fs, 'lstat').mockResolvedValueOnce({ isDirectory: () => true });
+
+        mockGasket.config.intl.modules = [
+          '@first/package',
+          '@second/package/custom-locales',
+          'an_underscore_package',
+          'a-dash-package',
+          'an_underscore_package/with_underscore_locales',
+          'a-dash-package/with-dash-locales',
+          '@an_underscore_scope/and_package',
+          '@a-dash-scope/and-package'
+        ];
+        builder = new BuildModules(mockGasket);
+        const results = await builder.gatherModuleDirs();
+
+        expect(results).toHaveLength(mockGasket.config.intl.modules.length);
+        expect(logger.warning).not.toHaveBeenCalled();
+
+        mockGasket.config.intl.modules.forEach((name) => {
+          expect(results).toEqual(expect.arrayContaining([
+            [expect.any(String), expect.stringContaining(name)]
+          ]));
+        });
       });
     });
 

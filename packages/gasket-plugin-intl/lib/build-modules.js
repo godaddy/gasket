@@ -5,7 +5,7 @@ const { getIntlConfig } = require('./configure');
 
 const debug = require('debug')('gasket:plugin:intl:buildModules');
 
-const rePkgParts = /^(?<name>(?:@[^/]+\/)?[\w-]+)(?<dir>\/.+)?/;
+const rePkgParts = /^(?<name>(?:@[\w-]+\/)?[\w-]+)(?<dir>\/[\w-]+)?$/;
 
 class BuildModules {
   /**
@@ -186,7 +186,14 @@ class BuildModules {
   async gatherModuleDirs() {
     if (this._lookupModuleDirs) {
       const promises = this._lookupModuleDirs.map(async lookupDir => {
+        let results;
+
         const match = lookupDir.match(rePkgParts);
+        if (!match?.groups?.name) {
+          this._logger.warning(`build:locales: malformed module name: ${lookupDir}`);
+          return;
+        }
+
         const pkgName = match.groups.name;
         const subDir = (match.groups.dir ?? '/locales').substring(1);
 
@@ -196,7 +203,6 @@ class BuildModules {
           ...subDir.split('/')
         );
 
-        let results;
         try {
           const stat = await fs.lstat(buildDir);
           if (stat.isDirectory()) {
@@ -205,6 +211,7 @@ class BuildModules {
         } catch (e) {
           // skip
         }
+
         if (!results) {
           this._logger.warning(`build:locales: locales directory not found for: ${lookupDir}`);
         }
