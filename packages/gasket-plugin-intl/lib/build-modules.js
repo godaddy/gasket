@@ -136,8 +136,7 @@ class BuildModules {
    * @param {SrcPkgDir[]} srcPkgDirs - list of dirs to process
    */
   async processDirs(srcPkgDirs) {
-    for (const srcPkgDir of srcPkgDirs) {
-      const [pkgName, srcDir] = srcPkgDir;
+    for (const [pkgName, srcDir] of srcPkgDirs) {
       const tgtDir = path.join(this._outputDir, pkgName);
 
       this._logger.log(`build:locales: Updating locale files for: ${pkgName}`);
