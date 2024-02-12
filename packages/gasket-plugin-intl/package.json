@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-intl",
-  "version": "6.45.2",
+  "version": "6.46.0",
   "description": "NodeJS script to build localization files.",
   "main": "lib",
   "types": "lib/index.d.ts",
@@ -52,7 +52,7 @@
   },
   "devDependencies": {
     "@gasket/engine": "^6.45.2",
-    "@gasket/plugin-log": "^6.45.2",
+    "@gasket/plugin-log": "^6.46.0",
     "@gasket/react-intl": "^6.45.2",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
