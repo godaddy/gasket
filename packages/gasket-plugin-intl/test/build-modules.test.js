@@ -1,7 +1,9 @@
 /* eslint-disable max-nested-callbacks */
 const fs = require('fs-extra');
-const fsUtils = require('../lib/fs-utils');
+const { getPackageDirs, saveJsonFile } = require('../lib/fs-utils');
 const { BuildModules } = require('../lib/build-modules');
+
+jest.mock('../lib/fs-utils');
 
 describe('buildModules', function () {
   const testSrcFilePath = '/path/to/src/myh-fake/locale/en-US.json';
@@ -54,7 +56,7 @@ describe('buildModules', function () {
       it('calls saveJsonFile for correct data', async function () {
         jest.spyOn(fs, 'mkdirp').mockResolvedValue();
         jest.spyOn(fs, 'readdir').mockResolvedValue(['test/folder/name.json']);
-        jest.spyOn(fsUtils, 'saveJsonFile').mockResolvedValue();
+        saveJsonFile.mockResolvedValue();
         jest.spyOn(fs, 'readFile').mockResolvedValue('{ "key-1": "value-1" }');
         await builder.copyFolder(testSrcFilePath, testTgtFilePath);
         expect(fs.mkdirp).toHaveBeenCalledTimes(1);
@@ -140,7 +142,7 @@ describe('buildModules', function () {
         jest.spyOn(fs, 'mkdirp').mockResolvedValue();
         jest.spyOn(fs, 'readdir').mockResolvedValue(['test/folder/name.json']);
         jest.spyOn(fs, 'readJson').mockResolvedValue({ name: 'bogus-package' });
-        jest.spyOn(fsUtils, 'saveJsonFile').mockResolvedValue();
+        saveJsonFile.mockResolvedValue();
         jest.spyOn(builder, 'processFiles');
       });
 
@@ -158,7 +160,11 @@ describe('buildModules', function () {
           ['myh-fake2', '/path/to/module/myh-fake2'],
           ['myh-fake3', '/path/to/module/myh-fake3']
         ];
-        jest.spyOn(fsUtils, 'getPackageDirs').mockResolvedValue(discoveredDirs);
+        getPackageDirs.mockImplementation(async function *mockGen() {
+          for (const pair of discoveredDirs) {
+            yield pair;
+          }
+        });
       });
 
       it('returns a list of all locale paths', async function () {

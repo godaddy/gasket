@@ -1,6 +1,6 @@
 const fs = require('fs-extra');
 const path = require('path');
-const fsUtils = require('./fs-utils');
+const { getPackageDirs, saveJsonFile } = require('./fs-utils');
 const { getIntlConfig } = require('./configure');
 
 const debug = require('debug')('gasket:plugin:intl:buildModules');
@@ -68,7 +68,7 @@ class BuildModules {
     await fs.mkdirp(path.dirname(tgt));
     const buffer = await fs.readFile(src);
     const output = JSON.parse(buffer);
-    return fsUtils.saveJsonFile(tgt, output);
+    return saveJsonFile(tgt, output);
   }
 
   /**
@@ -157,24 +157,22 @@ class BuildModules {
    * @returns {SrcPkgDir[]} source package directories
    */
   async discoverDirs() {
-    const pkgDirs = await fsUtils.getPackageDirs(this._nodeModulesDir);
-
-    return pkgDirs.reduce(async (prevPromise, pkgDir) => {
-      const [pkgName, dir] = pkgDir;
-      const resArr = await prevPromise;
-
-      if (this._excludes.includes(path.basename(dir))) return resArr;
-      const buildDir = path.resolve(path.join(dir, ...this._lookupDir.split('/')));
-      try {
-        const stat = await fs.lstat(buildDir);
-        if (stat.isDirectory()) {
-          resArr.push([pkgName, buildDir]);
+    const results = [];
+    for await (const [pkgName, dir] of getPackageDirs(this._nodeModulesDir)) {
+      if (!this._excludes.includes(path.basename(dir))) {
+        const buildDir = path.resolve(path.join(dir, ...this._lookupDir.split('/')));
+        try {
+          const stat = await fs.lstat(buildDir);
+          if (stat.isDirectory()) {
+            results.push([pkgName, buildDir]);
+          }
+        } catch (e) {
+          // ignore
         }
-      } catch (e) {
-        // ignore
       }
-      return resArr;
-    }, Promise.resolve([]));
+    }
+
+    return results;
   }
 
   /**
