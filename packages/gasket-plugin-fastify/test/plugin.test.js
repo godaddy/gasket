@@ -209,7 +209,7 @@ describe('createServers', () => {
 
   it('adds middleware from lifecycle (ignores falsy)', async () => {
     await plugin.hooks.createServers(gasket, {});
-    expect(app.use).toHaveBeenCalledTimes(4);
+    expect(app.use).toHaveBeenCalledTimes(3);
 
     app.use.mockClear();
     mockMwPlugins = [
@@ -218,7 +218,7 @@ describe('createServers', () => {
     ];
 
     await plugin.hooks.createServers(gasket, {});
-    expect(app.use).toHaveBeenCalledTimes(5);
+    expect(app.use).toHaveBeenCalledTimes(4);
   });
 
   it('supports async middleware hooks', async () => {
@@ -258,13 +258,13 @@ describe('createServers', () => {
 
   it('adds errorMiddleware from lifecycle (ignores falsy)', async () => {
     await plugin.hooks.createServers(gasket, {});
-    expect(app.use).toHaveBeenCalledTimes(4);
+    expect(app.use).toHaveBeenCalledTimes(3);
 
     app.use.mockClear();
     lifecycles.errorMiddleware.mockResolvedValue([() => {}, null]);
 
     await plugin.hooks.createServers(gasket, {});
-    expect(app.use).toHaveBeenCalledTimes(5);
+    expect(app.use).toHaveBeenCalledTimes(4);
   });
 
   it('does not enable trust proxy by default', async () => {
