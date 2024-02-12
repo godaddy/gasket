@@ -35,6 +35,7 @@ All the configurations for the plugin are added under `fastify` in the config:
 - `compression`: true by default. Can be set to false if applying compression
   differently.
 - `excludedRoutesRegex`: Routes to be excluded based on a regex
+- `trustProxy`: Enable trust proxy option, [see Fastify documentation for possible values](https://fastify.dev/docs/latest/Reference/Server/#trustproxy)
 
 #### Example configuration
 
@@ -45,7 +46,8 @@ module.exports = {
   },
   fastify: {
     compression: false,
-    excludedRoutesRegex: /^(?!\/_next\/)/
+    excludedRoutesRegex: /^(?!\/_next\/)/,
+    trustProxy: true
   }
 }
 ```

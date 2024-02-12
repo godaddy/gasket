@@ -46,8 +46,9 @@ module.exports = {
 
       const { logger, config } = gasket;
       const { middleware: middlewareConfig } = config;
+      const trustProxy = config.fastify?.trustProxy ?? false;
       const excludedRoutesRegex = config.fastify && config.fastify.excludedRoutesRegex;
-      const app = fastify({ logger });
+      const app = fastify({ logger, trustProxy });
 
       // Enable middleware for fastify@3
       await app.register(middie);
