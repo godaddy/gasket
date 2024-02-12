@@ -16,6 +16,39 @@ describe('@gasket/plugin-intl', () => {
     };
   });
 
+  it('module configurations', () => {
+    const config: GasketConfigFile = {
+      intl: {
+        modules: true
+      }
+    };
+
+    const config2: GasketConfigFile = {
+      intl: {
+        modules: {
+          localesDir: 'locales',
+          excludes: ['test']
+        }
+      }
+    };
+
+    const config3: GasketConfigFile = {
+      intl: {
+        modules: [
+          '@site/shared-pkg',
+          '@site/other-pkg/i18n'
+        ]
+      }
+    };
+
+    const badConfig: GasketConfigFile = {
+      intl: {
+        // @ts-expect-error
+        modules: 12345
+      }
+    };
+  });
+
   it('adds an intlLocale lifecycle', () => {
     const hook: Hook<'intlLocale'> = (
       gasket: Gasket,
