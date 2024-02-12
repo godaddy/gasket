@@ -13,10 +13,16 @@ declare module '@gasket/engine' {
       localesDir?: string,
       manifestFilename?: string,
       serveStatic?: boolean | string,
-      modules?: boolean | {
-        localesDir?: string,
-        excludes?: Array<string>
-      },
+      modules?:
+        /* default scan settings */
+        boolean |
+        /* custom scan settings */
+        {
+          localesDir?: string,
+          excludes?: Array<string>
+        } |
+        /* specific packages w/ optional subdirectories */
+        string[],
       nextRouting?: boolean
     }
   }

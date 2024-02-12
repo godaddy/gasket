@@ -1,9 +1,11 @@
 const fs = require('fs-extra');
 const path = require('path');
-const fsUtils = require('./fs-utils');
+const { getPackageDirs, saveJsonFile } = require('./fs-utils');
 const { getIntlConfig } = require('./configure');
 
 const debug = require('debug')('gasket:plugin:intl:buildModules');
+
+const rePkgParts = /^(?<name>(?:@[\w-]+\/)?[\w-]+)(?<dir>\/[\w-]+)?$/;
 
 class BuildModules {
   /**
@@ -16,6 +18,11 @@ class BuildModules {
     const intlConfig = getIntlConfig(gasket);
 
     const { modules } = intlConfig;
+
+    if (Array.isArray(modules)) {
+      this._lookupModuleDirs = modules;
+    }
+
     const { excludes, localesDir } = modules;
 
     this._logger = logger;
@@ -61,7 +68,7 @@ class BuildModules {
     await fs.mkdirp(path.dirname(tgt));
     const buffer = await fs.readFile(src);
     const output = JSON.parse(buffer);
-    return fsUtils.saveJsonFile(tgt, output);
+    return saveJsonFile(tgt, output);
   }
 
   /**
@@ -126,11 +133,10 @@ class BuildModules {
   /**
    * Processes directories
    *
-   * @param {string[]} buildDirs - list of dirs to process
+   * @param {SrcPkgDir[]} srcPkgDirs - list of dirs to process
    */
-  async processDirs(buildDirs) {
-    for (const srcDir of buildDirs) {
-      const pkgName = await this.getPackageName(srcDir);
+  async processDirs(srcPkgDirs) {
+    for (const [pkgName, srcDir] of srcPkgDirs) {
       const tgtDir = path.join(this._outputDir, pkgName);
 
       this._logger.log(`build:locales: Updating locale files for: ${pkgName}`);
@@ -148,25 +154,68 @@ class BuildModules {
   /**
    * Find modules that have /locales folder to process
    *
-   * @returns {string[]} directories - list of paths
+   * @returns {SrcPkgDir[]} source package directories
    */
   async discoverDirs() {
-    const dirs = await fsUtils.getDirectories(this._nodeModulesDir);
-
-    return dirs.reduce(async (prevPromise, dir) => {
-      const resArr = await prevPromise;
-      if (this._excludes.includes(path.basename(dir))) return resArr;
-      const buildDir = path.join(dir, this._lookupDir);
-      try {
-        const stat = await fs.lstat(buildDir);
-        if (stat.isDirectory()) {
-          resArr.push(buildDir);
+    const results = [];
+    for await (const [pkgName, dir] of getPackageDirs(this._nodeModulesDir)) {
+      if (!this._excludes.includes(path.basename(dir))) {
+        const buildDir = path.resolve(path.join(dir, ...this._lookupDir.split('/')));
+        try {
+          const stat = await fs.lstat(buildDir);
+          if (stat.isDirectory()) {
+            results.push([pkgName, buildDir]);
+          }
+        } catch (e) {
+          // ignore
         }
-      } catch (e) {
-        // ignore
       }
-      return resArr;
-    }, Promise.resolve([]));
+    }
+
+    return results;
+  }
+
+  /**
+   * Find modules with locale directories to process
+   *
+   * @returns {SrcPkgDir[]} source package directories
+   */
+  async gatherModuleDirs() {
+    if (this._lookupModuleDirs) {
+      const promises = this._lookupModuleDirs.map(async lookupDir => {
+
+        const match = lookupDir.match(rePkgParts);
+        const pkgName = match?.groups?.name;
+
+        if (!pkgName) {
+          this._logger.warning(`build:locales: malformed module name: ${lookupDir}`);
+          return;
+        }
+
+        const subDir = (match.groups.dir ?? '/locales').substring(1);
+        const buildDir = path.join(
+          this._nodeModulesDir,
+          ...pkgName.split('/'),
+          ...subDir.split('/')
+        );
+
+        try {
+          const stat = await fs.lstat(buildDir);
+          if (stat.isDirectory()) {
+            return [pkgName, buildDir];
+          }
+        } catch (e) {
+          // skip
+        }
+
+        this._logger.warning(`build:locales: locales directory not found for: ${lookupDir}`);
+      });
+
+      const results = await Promise.all(promises);
+      return results.filter(Boolean);
+    }
+
+    return this.discoverDirs();
   }
 
   /**
@@ -175,8 +224,8 @@ class BuildModules {
   async run() {
     await fs.remove(this._outputDir);
     await fs.mkdirp(this._outputDir);
-    const srcDirs = await this.discoverDirs();
-    await this.processDirs(srcDirs);
+    const srcPkgDirs = await this.gatherModuleDirs();
+    await this.processDirs(srcPkgDirs);
   }
 }
 
