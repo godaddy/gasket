@@ -1,6 +1,6 @@
 # @gasket/plugin-winston
 
-Adds a [winston] logger instance to your Gasket instance.
+Set up a [winston] logger instance for the Gasket logger.
 
 ## Installation
 
