@@ -1,5 +1,11 @@
 # `@gasket/plugin-fastify`
 
+### 6.46.0
+
+- Add native Gasket trust proxy support to Express config ([#675])
+
+### 6.41.1
+
 - Align docs on configuring middleware paths ([#613])
 
 ### 6.38.2
@@ -57,3 +63,4 @@ Enable middleware support ([#172])
 [#460]: https://github.com/godaddy/gasket/pull/460
 [#555]: https://github.com/godaddy/gasket/pull/555
 [#613]: https://github.com/godaddy/gasket/pull/613
+[#675]: https://github.com/godaddy/gasket/pull/675
