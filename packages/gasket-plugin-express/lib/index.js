@@ -98,12 +98,7 @@ module.exports = {
         app.use(compression());
       }
 
-      const middlewares = [
-        (req, res, next) => {
-          req.trustProxy = app.get('trust proxy');
-          next();
-        }
-      ];
+      const middlewares = [];
       await gasket.execApply('middleware', async (plugin, handler) => {
         const middleware = await handler(app);
 
