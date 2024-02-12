@@ -36,11 +36,9 @@ async function *getPackageDirs(parentDir, dirList = []) {
     if ((await fs.stat(filePath)).isDirectory()) {
       const pkgName = await packageName(filePath);
       if (pkgName) {
-        yield await Promise.resolve([pkgName, filePath]);
+        yield await [pkgName, filePath];
       } else {
-        for await (const srcPkgDir of getPackageDirs(path.join(filePath, '/'), dirList)) {
-          yield await Promise.resolve(srcPkgDir);
-        }
+        yield* getPackageDirs(path.join(filePath, '/'), dirList);
       }
     }
   }
