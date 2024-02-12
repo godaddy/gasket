@@ -185,14 +185,14 @@ class BuildModules {
       const promises = this._lookupModuleDirs.map(async lookupDir => {
 
         const match = lookupDir.match(rePkgParts);
-        if (!match?.groups?.name) {
+        const pkgName = match?.groups?.name;
+
+        if (!pkgName) {
           this._logger.warning(`build:locales: malformed module name: ${lookupDir}`);
           return;
         }
 
-        const pkgName = match.groups.name;
         const subDir = (match.groups.dir ?? '/locales').substring(1);
-
         const buildDir = path.join(
           this._nodeModulesDir,
           ...pkgName.split('/'),
