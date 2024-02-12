@@ -1,7 +1,9 @@
-const { Writable } = require('stream');
 const GasketEngine = require('@gasket/engine');
 const plugin = require('../lib/index');
 const { LEVEL, MESSAGE } = require('triple-beam');
+
+// Mock console methods
+jest.spyOn(console, 'error').mockImplementation(() => {});
 
 describe('@gasket/plugin-winston', function () {
   let gasket;
@@ -54,6 +56,7 @@ describe('@gasket/plugin-winston', function () {
 
     it('uses the console as the default transport', async function () {
       const consoleSpy = jest
+        // eslint-disable-next-line no-console
         .spyOn(console._stdout, 'write')
         .mockImplementation();
       try {
@@ -73,21 +76,20 @@ describe('@gasket/plugin-winston', function () {
     });
 
     describe('custom transports', () => {
-      let transportWriter1, transport1;
-      let transportWriter2, transport2;
+      let transport1;
+      let transport2;
 
       beforeEach(() => {
-        transportWriter1 = jest.fn();
-        transport1 = Object.assign(
-          new Writable({ write: transportWriter1, objectMode: true }),
-          { log: jest.fn() }
-        );
+        transport1 = {
+          log: jest.fn(),
+          on: jest.fn()
+        };
 
-        transportWriter2 = jest.fn();
-        transport2 = Object.assign(
-          new Writable({ write: transportWriter2, objectMode: true }),
-          { log: jest.fn() }
-        );
+        transport2 = {
+          write: jest.fn(),
+          log: jest.fn(),
+          on: jest.fn()
+        };
       });
 
       it('can be injected individually via hook', async function () {
@@ -96,7 +98,9 @@ describe('@gasket/plugin-winston', function () {
 
         logger.error('test');
 
-        expect(transportWriter1).toHaveBeenCalledWith(
+        expect(transport1.log).toHaveBeenCalledWith(
+          'error',
+          'test',
           {
             level: 'error',
             message: 'test',
@@ -106,7 +110,6 @@ describe('@gasket/plugin-winston', function () {
               message: 'test'
             })
           },
-          'utf8',
           expect.any(Function)
         );
       });
@@ -117,14 +120,15 @@ describe('@gasket/plugin-winston', function () {
         const [logger] = await gasket.exec('createLogger');
         logger.error('test');
 
-        expect(transportWriter1).toHaveBeenCalledWith(
+        expect(transport1.log).toHaveBeenCalledWith(
+          'error',
+          'test',
           {
             level: 'error',
             message: 'test',
             [LEVEL]: 'error',
             [MESSAGE]: JSON.stringify({ level: 'error', message: 'test' })
           },
-          'utf8',
           expect.any(Function)
         );
       });
@@ -138,15 +142,16 @@ describe('@gasket/plugin-winston', function () {
 
         logger.error('test');
 
-        [transportWriter1, transportWriter2].forEach((writer) => {
+        [transport1.log, transport2.log].forEach((writer) => {
           expect(writer).toHaveBeenCalledWith(
+            'error',
+            'test',
             {
               level: 'error',
               message: 'test',
               [LEVEL]: 'error',
               [MESSAGE]: JSON.stringify({ level: 'error', message: 'test' })
             },
-            'utf8',
             expect.any(Function)
           );
         });
@@ -158,15 +163,16 @@ describe('@gasket/plugin-winston', function () {
 
         logger.error('test');
 
-        [transportWriter1, transportWriter2].forEach((writer) => {
+        [transport1.log, transport2.log].forEach((writer) => {
           expect(writer).toHaveBeenCalledWith(
+            'error',
+            'test',
             {
               level: 'error',
               message: 'test',
               [LEVEL]: 'error',
               [MESSAGE]: JSON.stringify({ level: 'error', message: 'test' })
             },
-            'utf8',
             expect.any(Function)
           );
         });
