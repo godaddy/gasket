@@ -7,7 +7,6 @@
     "@gasket/cli": "^6.45.2"
   },
   "devDependencies": {
-    "copy-dir": "^1.3.0",
     "eslint": "^8.56.0",
     "eslint-plugin-unicorn": "^44.0.0"
   },

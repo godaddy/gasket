@@ -1,11 +1,8 @@
 const { runShellCommand } = require('../../packages/gasket-utils');
-const fs = require('fs');
+const copySiteDocs = require('./utils/copy-site-docs');
+const wait = require('./utils/wait');
+const { readFile, writeFile, cp } = require('fs').promises;
 const path = require('path');
-const { promisify } = require('util');
-
-const readFile = promisify(fs.readFile);
-const writeFile = promisify(fs.writeFile);
-const copyDir = promisify(require('copy-dir'));
 
 const startTag = '<!-- START GENERATED -->';
 const endTag = '<!-- END GENERATED -->';
@@ -21,7 +18,7 @@ async function main() {
   // copy over generated docs generated-docs
   const genSrc = path.join(__dirname, '.docs', 'docs', 'generated-docs');
   const genTgt = path.join(projectRoot, 'docs', 'generated-docs');
-  await copyDir(genSrc, genTgt);
+  await cp(genSrc, genTgt, { recursive: true });
 
   let content = await readFile(sourcePath, 'utf-8');
 
@@ -38,16 +35,21 @@ async function main() {
     .replace(':generated-docs/', ':/docs/generated-docs/')
     // replace homepage link with relative readme
     .replace('https://github.com/godaddy/gasket/tree/main/packages/create-gasket-app', '/packages/create-gasket-app/README.md')
-  ;
+    ;
 
   const template = await readFile(targetPath, 'utf-8');
+  // await writeFile(path.join(projectRoot, 'HEY.md'), content, 'utf-8');
   const start = template.indexOf(startTag) + startTag.length;
   const end = template.indexOf(endTag);
+  // console.log(start, end)
 
   // substitute in the generated content
   content = template.substring(0, start) + '\n\n' + content + template.substring(end);
 
   await writeFile(targetPath, content, 'utf-8');
+  // Need to wait for the docs to be generated before copying them
+  await wait(100);
+  await copySiteDocs(projectRoot);
   // eslint-disable-next-line no-console
   console.log('DONE');
 }

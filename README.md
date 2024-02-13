@@ -1,5 +1,5 @@
 <p align="center">
-  <img alt="Gasket" src="site/logo-cover.svg" width="496">
+  <img alt="Gasket" src="/img/logo-cover.svg" width="496" />
 </p>
 
 <p align="center">
@@ -75,6 +75,7 @@ Available lifecycles
 
 | Name                                                   | Description                                                   |
 | ------------------------------------------------------ | ------------------------------------------------------------- |
+| [apmTransaction]                                       | Modify the APM transaction                                    |
 | [appEnvConfig]                                         | Adjust app level config after merged for the env              |
 | [appRequestConfig]                                     | Adjust app level config for each request                      |
 | [build][1]                                             | Prepare the app to be started                                 |
@@ -187,6 +188,7 @@ Available plugins
 | [@gasket/plugin-swagger]        | 6.45.2  | Generate and serve swagger docs                                            |
 | [@gasket/plugin-webpack]        | 6.45.2  | Adds webpack support to your application                                   |
 | [@gasket/plugin-workbox]        | 6.45.2  | Gasket Workbox Plugin                                                      |
+| plugins/site-docs-plugin.js     |         |                                                                            |
 
 ## Modules
 
@@ -229,6 +231,8 @@ Available configuration options in the `gasket.config.js`
 | [docusaurus.host]                                                                    | Hostname to serve the docs from                                                                       | string                                 | localhost                      |
 | [docusaurus.port]                                                                    | Port number to serve docs site                                                                        | number                                 | 3000                           |
 | [docusaurus.rootDir]                                                                 | Root Docusaurus directory                                                                             | string                                 | .docs                          |
+| [elasticAPM]                                                                         | Configuration to provide additional setup helpers                                                     | object                                 |                                |
+| [elasticAPM.sensitiveCookies]                                                        | List of sensitive cookies to filter                                                                   | string[]                               | []                             |
 | [express][8]                                                                         | Express plugin configuration                                                                          | object                                 |                                |
 | [express.compression]                                                                | Automatic compression                                                                                 | boolean                                | true                           |
 | [express.excludedRoutesRegex (deprecated)][express.excludedRoutesRegex (deprecated)] | Routes to be included for Gasket middleware, based on a regex                                         |                                        |                                |
@@ -307,6 +311,7 @@ Available configuration options in the `gasket.config.js`
 [help]:/packages/gasket-cli/README.md#commands
 [local]:/packages/gasket-plugin-start/README.md#local-command
 [start]:/packages/gasket-plugin-start/README.md#start-command
+[apmTransaction]:/packages/gasket-plugin-elastic-apm/README.md#apmtransaction
 [appEnvConfig]:/packages/gasket-plugin-config/README.md#appEnvConfig
 [appRequestConfig]:/packages/gasket-plugin-config/README.md#appRequestConfig
 [1]:/packages/gasket-plugin-start/README.md#build
@@ -424,6 +429,8 @@ Available configuration options in the `gasket.config.js`
 [docusaurus.host]:/packages/gasket-plugin-docusaurus/README.md#configuration
 [docusaurus.port]:/packages/gasket-plugin-docusaurus/README.md#configuration
 [docusaurus.rootDir]:/packages/gasket-plugin-docusaurus/README.md#configuration
+[elasticAPM]:/packages/gasket-plugin-elastic-apm/README.md#configuration
+[elasticAPM.sensitiveCookies]:/packages/gasket-plugin-elastic-apm/README.md#configuration
 [8]:/packages/gasket-plugin-express/README.md#configuration
 [express.compression]:/packages/gasket-plugin-express/README.md#configuration
 [express.excludedRoutesRegex (deprecated)]:/packages/gasket-plugin-express/README.md#configuration
