@@ -1,3 +1,4 @@
+const { filterSensitiveCookies } = require('./cookies');
 const middleware = require('./middleware');
 const { devDependencies } = require('../package.json');
 
@@ -48,9 +49,7 @@ module.exports = {
           logger.warning('Elastic APM agent is not started. Use `--require ./setup.js`');
         }
 
-        if (config.elasticAPM && config.elasticAPM.sensitiveCookies) {
-          logger.warning('elasticAPM.sensitiveCookies has been removed. Filter sensitive data in the setup.js script.');
-        }
+        apm.addFilter(filterSensitiveCookies(config));
       }
     },
     create: {
@@ -75,6 +74,18 @@ module.exports = {
     metadata(gasket, meta) {
       return {
         ...meta,
+        configurations: [{
+          name: 'elasticAPM',
+          link: 'README.md#configuration',
+          description: 'Configuration to provide additional setup helpers',
+          type: 'object'
+        }, {
+          name: 'elasticAPM.sensitiveCookies',
+          link: 'README.md#configuration',
+          description: 'List of sensitive cookies to filter',
+          type: 'string[]',
+          default: '[]'
+        }],
         lifecycles: [{
           name: 'apmTransaction',
           method: 'exec',

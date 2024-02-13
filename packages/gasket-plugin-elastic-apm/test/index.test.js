@@ -75,17 +75,10 @@ describe('Plugin', () => {
     );
   });
 
-  it('logs a warning if elasticApm.sensitiveCookies is defined', async () => {
-    mockGasket.config.elasticAPM = {
-      ...mockGasket.config.elasticAPM,
-      sensitiveCookies: ['foo', 'bar']
-    };
+  it('adds apm filters', async () => {
+    mockAPM.isStarted.mockReturnValue(true);
     await plugin.hooks.preboot.handler(mockGasket);
-    expect(mockGasket.logger.warning).toHaveBeenCalledWith(
-      expect.stringContaining(
-        'elasticAPM.sensitiveCookies has been removed. Filter sensitive data in the setup.js script.'
-      )
-    );
+    expect(apm.addFilter).toHaveBeenCalledTimes(1);
   });
 
   it('respects a user-defined "active" config value', async () => {

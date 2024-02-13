@@ -65,7 +65,29 @@ In particular, the APM server URL (`ELASTIC_APM_SERVER_URL`) and secret token
 are not present, the APM agent will be disabled.
 
 
-#### Filtering Sensitive Fields
+### Plugin Configurations
+
+The Gasket plugin provides some additional setup helpers. These can be
+configured under `elasticAPM` in the `gasket.config.js`.
+
+- **`sensitiveCookies`** - (string[]) A list of sensitive cookies to filter
+
+#### Filtering Sensitive Cookies
+
+If your application’s users send session credentials or any other sensitive
+information in their cookies, you may wish to filter them out before they are
+stored in Elasticsearch. Specify a list of cookie names to redact in
+`gasket.config.js`:
+
+```js
+module.exports = {
+  elasticAPM: {
+    sensitiveCookies: ['my_jwt', 'userFullName']
+  }
+};
+```
+
+#### Custom Filtering Sensitive Fields
 
 If your application’s users send session credentials or any other sensitive
 information in their cookies, you may wish to filter them out before they are
