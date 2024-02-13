@@ -89,7 +89,7 @@ async function copyRootDocs(projectRoot, targetRoot) {
   }
 
   const readme = transformLinks(await readFile(path.join(projectRoot, 'README.md'), 'utf-8'));
-  await writeFile(path.join(targetRoot, 'README.md'),readme,'utf8');
+  await writeFile(path.join(targetRoot, 'README.md'), readme, 'utf8');
   await copyFile(path.join(projectRoot, 'LICENSE.md'), path.join(targetRoot, 'LICENSE.md'));
   await copyCreateGasketApp(projectRoot);
 }
@@ -104,4 +104,4 @@ module.exports = async function copySiteDocs(projectRoot) {
   await copyPackageDocs(sourceRoot, targetRoot);
   await copyLifecyleGraph(targetRoot);
   await copyRootDocs(projectRoot, targetRoot);
-}
+};

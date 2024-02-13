@@ -3,7 +3,7 @@ const isMarkdown = /\.md$/;
 
 /**
  * formatFilename - Format the filename to be more human readable
- * @param {string} filename
+ * @param {string} filename The filename to format
  * @returns {string} The formatted filename
  */
 function formatFilename(filename) {
@@ -31,7 +31,7 @@ const txFixLinks = {
 
     return content;
   }
-}
+};
 
 /**
  * txFixLicenseLinks - Fix license links
@@ -66,7 +66,7 @@ const txFrontMatter = {
 
     const data = Object.entries(frontMatter).map(([key, value]) => `${key}: ${value}`).join('\n');
 
-    content = `---\n${data}\n---\n\n${content}`
+    content = `---\n${data}\n---\n\n${content}`;
 
     return content;
   }
@@ -94,4 +94,4 @@ module.exports = {
       }
     }
   }
-}
+};
