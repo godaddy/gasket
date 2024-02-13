@@ -24,7 +24,7 @@ describe('buildManifest', function () {
     mockGasket = {
       logger: {
         info: jest.fn(),
-        warning: jest.fn(),
+        warn: jest.fn(),
         error: jest.fn()
       },
       config: {
@@ -76,7 +76,7 @@ describe('buildManifest', function () {
   it('logs warning if no locale files found', async function () {
     mockGasket.config.intl.localesDir = 'bogus';
     await buildManifest(mockGasket);
-    expect(mockGasket.logger.warning).toHaveBeenCalledWith(
+    expect(mockGasket.logger.warn).toHaveBeenCalledWith(
       expect.stringContaining('build:locales: No locale files found')
     );
   });

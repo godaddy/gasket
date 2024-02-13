@@ -49,7 +49,7 @@ describe('createServers', () => {
     gasket = {
       middleware: {},
       logger: {
-        warning: jest.fn()
+        warn: jest.fn()
       },
       config: {},
       exec: jest

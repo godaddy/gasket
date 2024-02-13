@@ -59,7 +59,7 @@ module.exports = {
 
       if (excludedRoutesRegex) {
         // eslint-disable-next-line no-console
-        const warn = logger ? logger.warning : console.warn;
+        const warn = logger ? logger.warn : console.warn;
         warn(
           'DEPRECATED express config `excludedRoutesRegex` - use `middlewareInclusionRegex`'
         );

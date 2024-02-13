@@ -24,7 +24,7 @@ describe('gasket/log', function () {
       logger.emerg('message');
       logger.error('message');
       logger.info('message');
-      logger.warning('message');
+      logger.warn('message');
       logger.notice('message');
     }
   });

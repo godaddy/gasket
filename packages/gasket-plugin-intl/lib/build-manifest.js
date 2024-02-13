@@ -31,7 +31,7 @@ module.exports = async function buildManifest(gasket) {
   );
 
   if (!files.length) {
-    logger.warning(`build:locales: No locale files found (${localesDir}).`);
+    logger.warn(`build:locales: No locale files found (${localesDir}).`);
   }
 
   // generate a content hash for each file
