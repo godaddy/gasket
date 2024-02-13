@@ -77,7 +77,7 @@ describe('Plugin', function () {
   });
 
   it('has the correct custom cypress config', async function () {
-    const {e2e} = config;
+    const { e2e } = config;
     expect(e2e).toHaveProperty('baseUrl', 'http://localhost:8080');
     expect(e2e).toHaveProperty('supportFile', false);
     expect(e2e).toHaveProperty('specPattern', 'test/e2e/**/*.cy.{js,jsx,ts,tsx}');
