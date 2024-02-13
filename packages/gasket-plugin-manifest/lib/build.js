@@ -10,16 +10,28 @@ const { gatherManifestData } = require('./utils');
  * @async
  */
 async function build(gasket) {
-  const { logger, config: { root, manifest } } = gasket;
+  const {
+    logger,
+    config: { root, manifest }
+  } = gasket;
   if (!manifest || !manifest.staticOutput) return;
 
   const gatheredManifest = await gatherManifestData(gasket, {});
 
   await mkdirp(manifest.staticOutput.toString().replace('manifest.json', ''));
 
-  await writeFile(manifest.staticOutput, JSON.stringify(gatheredManifest), 'utf-8');
+  await writeFile(
+    manifest.staticOutput,
+    JSON.stringify(gatheredManifest),
+    'utf-8'
+  );
 
-  logger.log(`build:web-manifest: Wrote web manifest file (${path.relative(root, manifest.staticOutput)}).`);
+  logger.info(
+    `build:web-manifest: Wrote web manifest file (${path.relative(
+      root,
+      manifest.staticOutput
+    )}).`
+  );
 }
 
 /**

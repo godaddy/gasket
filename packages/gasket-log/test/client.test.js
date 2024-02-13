@@ -23,7 +23,7 @@ describe('Log', function () {
 
   it('has logger for each level', function () {
     // had to change from process.stdout "write" to get passing test
-    const write = jest.spyOn(console, 'log').mockImplementation(msg => msg);
+    const write = jest.spyOn(console, 'log').mockImplementation((msg) => msg);
 
     Log.levels.forEach(function (level, i) {
       const msg = `I will be logging as gasket:${level}`;
@@ -39,8 +39,8 @@ describe('Log', function () {
     log = new Log({ namespace: 'uxcore2' });
 
     // had to change from process.stdout "write" to get passing test
-    const write = jest.spyOn(console, 'log').mockImplementation(msg => msg);
-    log.log('test');
+    const write = jest.spyOn(console, 'log').mockImplementation((msg) => msg);
+    log.info('test');
 
     expect(log).toHaveProperty('namespace', ['uxcore2']);
     expect(write.mock.calls[0][0]).toContain('gasket:info:uxcore');
@@ -72,7 +72,7 @@ describe('Log', function () {
     it('defers arguments to appropriate diagnostics level', function () {
       const logger = jest.spyOn(log, 'info');
 
-      log.log('Simple log message', { additional: 'metadata' });
+      log.info('Simple log message', { additional: 'metadata' });
       expect(logger.mock.calls[0]).toEqual([
         'Simple log message',
         { additional: 'metadata' }
@@ -82,11 +82,10 @@ describe('Log', function () {
 
   describe('.levels', function () {
     function expectDefaultLevels() {
-      Object.keys(config.syslog.levels)
-        .forEach(lvl => {
-          expect(Log.levels).toContain(lvl);
-          expect(log[lvl]).toEqual(expect.any(Function));
-        });
+      Object.keys(config.syslog.levels).forEach((lvl) => {
+        expect(Log.levels).toContain(lvl);
+        expect(log[lvl]).toEqual(expect.any(Function));
+      });
     }
 
     it('exposes methods for default syslog levels', function () {

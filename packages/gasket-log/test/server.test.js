@@ -4,8 +4,7 @@ const { SPLAT } = require('triple-beam');
 const Log = require('../src/server');
 
 /**
- * Simple helper to check finished state of the stream
- * that is `maybeDone`.
+ * Simple helper to check finished state of the stream that is `maybeDone`.
  *
  * @param {WritableStream} maybeDone Stream that may have finished.
  */
@@ -65,7 +64,9 @@ describe('Log', function () {
         [SPLAT]: ['color: #FF0000']
       });
 
-      expect(colored.message).toEqual('\x1b[38;5;196m I will be red \x1b[39;49m');
+      expect(colored.message).toEqual(
+        '\x1b[38;5;196m I will be red \x1b[39;49m'
+      );
       expect(colored.meta || []).toHaveLength(0);
     });
 
@@ -75,7 +76,9 @@ describe('Log', function () {
         [SPLAT]: ['color: #0000FF']
       });
 
-      expect(colored.message).toEqual('\x1b[38;5;21m I will still work and be blue\x1b[39;49m');
+      expect(colored.message).toEqual(
+        '\x1b[38;5;21m I will still work and be blue\x1b[39;49m'
+      );
       expect(colored.meta || []).toHaveLength(0);
     });
   });
@@ -158,12 +161,18 @@ describe('Log', function () {
     });
 
     it('throws if expected levels are not supplied in custom levels', function () {
-      expect(() => new Log({ local: false, levels: { weirdStuff: 1337 } }))
-        .toThrow(`'levels' is missing necessary levels: emerg, alert, crit, error, warning, notice, info, debug`);
+      expect(
+        () => new Log({ local: false, levels: { weirdStuff: 1337 } })
+      ).toThrow(
+        `'levels' is missing necessary levels: emerg, alert, crit, error, warning, notice, info, debug`
+      );
     });
 
     it('allows custom levels', function () {
-      log = new Log({ local: false, levels: { ...Log.levels, weirdStuff: 1337 } });
+      log = new Log({
+        local: false,
+        levels: { ...Log.levels, weirdStuff: 1337 }
+      });
       expect(Log.levels).toEqual(config.syslog.levels);
       expect(log.levels).toEqual({ ...Log.levels, weirdStuff: 1337 });
       expect(log.weirdStuff).toEqual(expect.any(Function));
@@ -185,10 +194,7 @@ describe('Log', function () {
     });
 
     it('returns the user-provided transports (if set)', () => {
-      const expected = [
-        new transports.Console(),
-        new transports.Console()
-      ];
+      const expected = [new transports.Console(), new transports.Console()];
 
       log = new Log({ transports: expected });
       const actual = log.transports();
@@ -206,7 +212,7 @@ describe('Log', function () {
     });
 
     it('awaits any _final to occur', async function () {
-      class CleanupTransport extends Transport {
+      class CleanupTransport extends Transport {
         log(info, callback) {
           // Do nothing with info
           if (callback) return callback();
@@ -217,10 +223,7 @@ describe('Log', function () {
         }
       }
 
-      const expected = [
-        new transports.Console(),
-        new CleanupTransport()
-      ];
+      const expected = [new transports.Console(), new CleanupTransport()];
 
       log = new Log({ transports: expected });
 
@@ -248,11 +251,10 @@ describe('Log', function () {
     it('exposes methods for syslog levels', function () {
       log.spawn();
 
-      Object.keys(config.syslog.levels)
-        .forEach(lvl => {
-          expect(log).toHaveProperty(lvl);
-          expect(log[lvl]).toEqual(expect.any(Function));
-        });
+      Object.keys(config.syslog.levels).forEach((lvl) => {
+        expect(log).toHaveProperty(lvl);
+        expect(log[lvl]).toEqual(expect.any(Function));
+      });
     });
   });
 });

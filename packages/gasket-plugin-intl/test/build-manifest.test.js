@@ -1,5 +1,7 @@
 const path = require('path');
-const mockWriteFileStub = jest.fn().mockResolvedValue((...args) => { args[args.length - 1](null, true); });
+const mockWriteFileStub = jest.fn().mockResolvedValue((...args) => {
+  args[args.length - 1](null, true);
+});
 
 jest.mock('fs', () => {
   const mod = jest.requireActual('fs');
@@ -21,7 +23,7 @@ describe('buildManifest', function () {
   beforeEach(function () {
     mockGasket = {
       logger: {
-        log: jest.fn(),
+        info: jest.fn(),
         warning: jest.fn(),
         error: jest.fn()
       },
@@ -42,13 +44,20 @@ describe('buildManifest', function () {
   });
 
   afterEach(function () {
-    mockWriteFileStub.mockResolvedValue((...args) => { args[args.length - 1](null, true); });
+    mockWriteFileStub.mockResolvedValue((...args) => {
+      args[args.length - 1](null, true);
+    });
   });
 
   const getOutput = () => JSON.parse(mockWriteFileStub.mock.calls[0][1]);
 
   it('writes a json file in the locales dir', async function () {
-    const expected = path.join(__dirname, 'fixtures', 'locales', 'mock-manifest.json');
+    const expected = path.join(
+      __dirname,
+      'fixtures',
+      'locales',
+      'mock-manifest.json'
+    );
     await buildManifest(mockGasket);
     expect(mockWriteFileStub).toHaveBeenCalled();
     expect(mockWriteFileStub.mock.calls[0][0]).toEqual(expected);
@@ -56,14 +65,20 @@ describe('buildManifest', function () {
 
   it('logs error if failed to write manifest', async function () {
     mockWriteFileStub.mockRejectedValue(new Error('Bad things man'));
-    await expect(async () => { await buildManifest(mockGasket); }).rejects.toThrow('Bad things man');
-    expect(mockGasket.logger.error).toHaveBeenCalledWith('build:locales: Unable to write locales manifest.');
+    await expect(async () => {
+      await buildManifest(mockGasket);
+    }).rejects.toThrow('Bad things man');
+    expect(mockGasket.logger.error).toHaveBeenCalledWith(
+      'build:locales: Unable to write locales manifest.'
+    );
   });
 
   it('logs warning if no locale files found', async function () {
     mockGasket.config.intl.localesDir = 'bogus';
     await buildManifest(mockGasket);
-    expect(mockGasket.logger.warning).toHaveBeenCalledWith(expect.stringContaining('build:locales: No locale files found'));
+    expect(mockGasket.logger.warning).toHaveBeenCalledWith(
+      expect.stringContaining('build:locales: No locale files found')
+    );
   });
 
   it('includes expected properties in output', async function () {
@@ -71,7 +86,12 @@ describe('buildManifest', function () {
     const output = getOutput();
     const keys = Object.keys(output);
     expect(keys).toEqual([
-      'basePath', 'defaultPath', 'defaultLocale', 'locales', 'localesMap', 'paths'
+      'basePath',
+      'defaultPath',
+      'defaultLocale',
+      'locales',
+      'localesMap',
+      'paths'
     ]);
   });
 
