@@ -1,12 +1,21 @@
 const path = require('path');
 const isMarkdown = /\.md$/;
 
+/**
+ * formatFilename - Format the filename to be more human readable
+ * @param {string} filename
+ * @returns {string} The formatted filename
+ */
 function formatFilename(filename) {
   filename = `${filename.charAt(0).toUpperCase()}${filename.slice(1)}`;
   filename = filename.split('-').map(word => `${word.charAt(0).toUpperCase()}${word.slice(1)}`).join(' ');
   return filename.replace('.md', '');
 }
 
+/**
+ * txFixLinks - Fix links in markdown files
+ * Change relative package links to the root docs
+ */
 const txFixLinks = {
   global: true,
   test: isMarkdown,
@@ -24,6 +33,10 @@ const txFixLinks = {
   }
 }
 
+/**
+ * txFixLicenseLinks - Fix license links
+ * Change relative package links to the root LICENSE.md
+ */
 const txFixLicenseLinks = {
   global: true,
   test: isMarkdown,
@@ -34,6 +47,10 @@ const txFixLicenseLinks = {
   }
 };
 
+/**
+ * txFrontMatter - Add front matter to markdown files
+ * https://docusaurus.io/docs/markdown-features#front-matter
+ */
 const txFrontMatter = {
   global: true,
   test: isMarkdown,
@@ -66,8 +83,7 @@ module.exports = {
         return {
           files: [
             'README.md',
-            'docs/**/*',
-            'docs/*'
+            'docs/**/*'
           ],
           transforms: [
             txFrontMatter,

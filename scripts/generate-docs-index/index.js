@@ -38,10 +38,8 @@ async function main() {
     ;
 
   const template = await readFile(targetPath, 'utf-8');
-  // await writeFile(path.join(projectRoot, 'HEY.md'), content, 'utf-8');
   const start = template.indexOf(startTag) + startTag.length;
   const end = template.indexOf(endTag);
-  // console.log(start, end)
 
   // substitute in the generated content
   content = template.substring(0, start) + '\n\n' + content + template.substring(end);
@@ -49,6 +47,7 @@ async function main() {
   await writeFile(targetPath, content, 'utf-8');
   // Need to wait for the docs to be generated before copying them
   await wait(100);
+  // Copy docs for docs site and format for use
   await copySiteDocs(projectRoot);
   // eslint-disable-next-line no-console
   console.log('DONE');
