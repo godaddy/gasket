@@ -68,7 +68,8 @@ jobs:
       - name: Build Docs
         run: ${{ steps.detect-package-manager.outputs.runner }} npm run docs
       - name: Build Docusaurus
-        run: ${{ steps.detect-package-manager.outputs.runner }} npm run docs:build
+        working-directory: './classic'
+        run: ${{ steps.detect-package-manager.outputs.runner }} npm run build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
