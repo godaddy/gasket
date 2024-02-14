@@ -1,7 +1,7 @@
 const { themes } = require('prism-react-renderer');
 
 /** @type {import('@docusaurus/types').Config} */
-const config = {
+module.exports = {
   title: 'Gasket',
   staticDirectories: ['public', 'static'],
   tagline: 'Gasket is cool',
@@ -102,5 +102,3 @@ const config = {
       },
     }),
 };
-
-export default config;
