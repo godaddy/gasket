@@ -17,7 +17,6 @@
     "clean:root": "rimraf node_modules",
     "docs": "lerna run docs && npm run generate-docs-index",
     "docs-view": "docusaurus start",
-    "docs:build": "lerna run docs:build",
     "generate-docs-index": "node scripts/generate-docs-index",
     "postinstall": "npm run build",
     "publish:canary": "lerna publish --preid canary --dist-tag canary",
