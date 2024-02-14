@@ -44,7 +44,8 @@
   },
   "homepage": "https://github.com/godaddy/gasket#readme",
   "devDependencies": {
-    "docsify-cli": "^4.4.4",
+    "@docusaurus/core": "^3.1.1",
+    "@docusaurus/preset-classic": "^3.1.1",
     "eslint": "^8.56.0",
     "eslint-config-godaddy": "^7.0.2",
     "eslint-plugin-json": "^3.1.0",
@@ -77,5 +78,9 @@
   "workspaces": [
     "./packages/*",
     "scripts/generate-docs-index"
-  ]
+  ],
+  "dependencies": {
+    "@docusaurus/core": "^3.1.1",
+    "@docusaurus/preset-classic": "^3.1.1"
+  }
 }
