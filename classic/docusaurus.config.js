@@ -11,7 +11,7 @@ module.exports = {
   url: 'https://mmason2-godaddy.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/',
+  baseUrl: '/gasket-os/',
   trailingSlash: true,
 
   // GitHub pages deployment config.
