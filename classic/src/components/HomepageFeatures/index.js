@@ -4,38 +4,62 @@ import styles from './styles.module.css';
 
 const FeatureList = [
   {
-    title: 'Easy to Use',
-    Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
+    title: 'CLI loads configured Presets and Plugins',
+    Svg: require('@site/static/img/icon-cli.svg').default,
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        The entry point to creating and interacting with apps. The CLI provides the frame and engine upon which apps are built.
       </>
     ),
   },
   {
-    title: 'Focus on What Matters',
-    Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
+    title: 'Presets provide Plugins',
+    Svg: require('@site/static/img/icon-presets.svg').default,
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        Logical groups of plugins to build apps. Tech choices for teams, integrations for communities. Effectively, the framework you want to build apps within.
       </>
     ),
   },
   {
-    title: 'Powered by React',
-    Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
+    title: 'Plugins add Commands & Hooks',
+    Svg: require('@site/static/img/icon-plugins.svg').default,
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        The building blocks of an app framework - plugins provide the scaffolding and circuitry to integrate libraries and have them communicate together.
       </>
     ),
   },
+  {
+    title: 'Commands execute Lifecycles',
+    Svg: require('@site/static/img/icon-commands.svg').default,
+    description: (
+      <>
+        Build and start your app. Analyze it, or read the docs. Just a few commands you can execute with available plugins, or create your own.
+      </>
+    ),
+  },
+  {
+    title: 'Lifecycles handled by Hooks',
+    Svg: require('@site/static/img/icon-lifecycles.svg').default,
+    description: (
+      <>
+        The nervous system to transmit signals between parts of apps. Not your typical events; lifecycles can be handled in order and executed in sync.
+      </>
+    ),
+  },
+  {
+    title: 'Hooks execute additional Lifecycles',
+    Svg: require('@site/static/img/icon-hooks.svg').default,
+    description: (
+      <>
+        Receptors to handle lifecycle events and perform the actual work of integrating libraries and implementing application code.
+      </>
+    ),
+  }
 ];
 
-function Feature({Svg, title, description}) {
+function Feature({ Svg, title, description }) {
   return (
     <div className={clsx('col col--4')}>
       <div className="text--center">

@@ -25,7 +25,7 @@ The `GasketAPI` object passed to hook functions has the following members:
 
 The Gasket configuration object, typically derived from `gasket.config.js`.
 
-### exec(event, ...args)
+### `exec(event, ...args)`
 
 The `exec` method enables a plugin to introduce new lifecycle events. When
 calling `exec`, await the `Promise` it returns to wait for the hooks of other
@@ -33,26 +33,26 @@ plugins to finish. If the lifecycle event is for producing data, the `Promise`
 will contain an `Array` of the hook data stored in the order the hooks were
 executed.
 
-### execSync(event, ...args)
+### `execSync(event, ...args)`
 
 The `execSync` method is like `exec`, only all hooks must execute synchronously.
 The synchronous result is an Array of the hook return values. Using synchronous
 methods limits flexibility, so it's encouraged to use async methods whenever
 possible.
 
-### execMap(event, ...args)
+### `execMap(event, ...args)`
 
 The `execMap` method is just like `exec`, only the Promise result is an object
 map with each key being the name of the plugin and each value the result from
 the hook. Only the plugins that hooked the event will have keys present in the
 map.
 
-### execMapSync(event, ...args)
+### `execMapSync(event, ...args)`
 
 The `execSyncSync` method is like `execMap`, only all hooks must execute
 synchronously.
 
-### execApply(event, async applyFn)
+### `execApply(event, async applyFn)`
 
 The `execApply` method execution is ordered like `exec`, but you must invoke the
 handler yourself with explicit arguments. These arguments can be dynamic based
@@ -67,26 +67,26 @@ await gasket.execApply('someEvent', async (plugin, handler) => {
 });
 ```
 
-### execApplySync(event, applyFn)
+### `execApplySync(event, applyFn)`
 
 The `execApply` method is like `execApply`, only all hooks must execute
 synchronously.
 
-### execWaterfall(event, value, ...args)
+### `execWaterfall(event, value, ...args)`
 
 The `execWaterfall` method is like `exec`, only it allows you to have each hook
 execute sequentially, with each result being passed as the first argument to the
 next hook. It's like an asynchronous version of `Array.prototype.reduce`. The
 final result is returned in the resulting Promise.
 
-### execWaterfallSync(event, value, ...args)
+### `execWaterfallSync(event, value, ...args)`
 
 The `execWaterfallSync` method is like `execWaterfall`, only each hook must
 execute synchronously. The final value is returned synchronously from this call.
 Using synchronous methods limits flexibility, so it's encouraged to use async
 methods whenever possible.
 
-### hook({ event, handler, timing, pluginName })
+### `hook({ event, handler, timing, pluginName })`
 
 Injects additional lifecycle hooks at runtime. Takes a single object parameter
 with the following properties:

@@ -16,6 +16,7 @@
     "clean:packages": "lerna clean --yes",
     "clean:root": "rimraf node_modules",
     "docs": "lerna run docs && npm run generate-docs-index",
+    "docs:build": "cd classic && npm run build",
     "docs-view": "docusaurus start",
     "generate-docs-index": "node scripts/generate-docs-index",
     "postinstall": "npm run build",
