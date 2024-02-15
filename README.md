@@ -1,5 +1,5 @@
 <p align="center">
-  <img alt="Gasket" src="/img/logo-cover.svg" class="gasket-cover" width="496" />
+  <img alt="Gasket" src="/site/static/img/logo-cover.svg" class="gasket-cover" width="496" />
 </p>
 
 <p align="center">

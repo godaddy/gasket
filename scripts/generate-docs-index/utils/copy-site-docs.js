@@ -16,7 +16,7 @@ function addFrontMatter(content, filename) {
       sidebar_position: 1,
       imports: ['import useBaseUrl from \'@docusaurus/useBaseUrl\';'],
       transforms: [{
-        search: '"/img/logo-cover.svg"',
+        search: '"/site/static/img/logo-cover.svg"',
         replace: '{useBaseUrl(\'img/logo-cover.svg\')}'
       }]
     },
@@ -81,6 +81,12 @@ function transformLinks(content) {
   return content;
 }
 
+/**
+ * transformFile - Transform the content of a file
+ * @param {string} content The content of the file
+ * @param {string} filename The name of the file
+ * @returns {string} The transformed content
+ */
 function transformFile(content, filename) {
   content = transformLinks(content);
   content = addFrontMatter(content, filename);
@@ -131,7 +137,11 @@ async function copyPackageDocs(sourceRoot, targetRoot) {
         filter
       }
     );
-    await writeFile(path.join(targetRoot, dir, `${formatFilename(dir)}.mdx`), `import DocCardList from '@theme/DocCardList';\n\n<DocCardList />`, 'utf8');
+    await writeFile(
+      path.join(targetRoot, dir, `${formatFilename(dir)}.mdx`),
+      `import DocCardList from '@theme/DocCardList';\n\n<DocCardList />`,
+      'utf8'
+    );
   }
 }
 
