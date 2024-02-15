@@ -129,7 +129,9 @@ async function copyPackageDocs(sourceRoot, targetRoot) {
       {
         recursive: true,
         filter
-      });
+      }
+    );
+    await writeFile(path.join(targetRoot, dir, `${formatFilename(dir)}.mdx`), `import DocCardList from '@theme/DocCardList';\n\n<DocCardList />`, 'utf8');
   }
 }
 
