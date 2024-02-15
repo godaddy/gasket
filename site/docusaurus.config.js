@@ -25,7 +25,10 @@ module.exports = {
     defaultLocale: 'en',
     locales: ['en'],
   },
-
+  markdown: {
+    mermaid: true,
+  },
+  themes: ['@docusaurus/theme-mermaid'],
   presets: [
     [
       'classic',
@@ -97,5 +100,8 @@ module.exports = {
         theme: themes.github,
         darkTheme: themes.dracula,
       },
+      mermaid: {
+        theme: { light: 'neutral', dark: 'dark' },
+      }
     }),
 };

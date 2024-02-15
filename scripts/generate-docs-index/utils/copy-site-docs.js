@@ -3,11 +3,22 @@ const { cp, stat, mkdir, readdir, readFile, writeFile } = require('fs').promises
 const filter = (src) => !src.includes('LICENSE.md');
 const formatFilename = require('./format-filename');
 
+/**
+ * addFrontMatter - Add front matter to the content
+ * @param {string} content The content of the file
+ * @param {string} filename The name of the file
+ * @returns {string} The content with front matter
+ */
 function addFrontMatter(content, filename) {
   const config = {
     'README.md': {
-      label: 'Gasket',
-      sidebar_position: 1
+      label: 'Overview',
+      sidebar_position: 1,
+      imports: ['import useBaseUrl from \'@docusaurus/useBaseUrl\';'],
+      transforms: [{
+        search: '"/img/logo-cover.svg"',
+        replace: '{useBaseUrl(\'img/logo-cover.svg\')}'
+      }]
     },
     'quick-start.md': {
       sidebar_position: 2
@@ -33,6 +44,12 @@ function addFrontMatter(content, filename) {
     }
   };
 
+  if (config[filename]?.transforms) {
+    content = config[filename].transforms.reduce((content, transform) => {
+      return content.replace(transform.search, transform.replace);
+    }, content);
+  }
+
   const frontMatter = {
     title: `''`,
     hide_title: true,
@@ -41,8 +58,11 @@ function addFrontMatter(content, filename) {
   };
 
   const data = Object.entries(frontMatter).map(([key, value]) => `${key}: ${value}`).join('\n');
+  const imports = config[filename]?.imports
+    ? `\n${config[filename].imports.join('\n')}\n`
+    : '';
 
-  return `---\n${data}\n---\n\n${content}`;
+  return `---\n${data}\n---\n${imports}\n${content}`;
 }
 
 /**
@@ -87,7 +107,7 @@ async function createDir(targetRoot, dir) {
  */
 async function copyCreateGasketApp(projectRoot) {
   const sourceFile = path.join(projectRoot, 'packages', 'create-gasket-app', 'README.md');
-  const targetFile = path.join(projectRoot, 'classic', 'docs', 'create-gasket-app.md');
+  const targetFile = path.join(projectRoot, 'site', 'docs', 'create-gasket-app.md');
   const file = transformFile(await readFile(sourceFile, 'utf8'), 'create-gasket-app.md');
   await writeFile(targetFile, file, 'utf8');
 }
@@ -139,7 +159,7 @@ async function copyRootDocs(projectRoot, targetRoot) {
   }
 
   const readme = transformFile(await readFile(path.join(projectRoot, 'README.md'), 'utf-8'), 'README.md');
-  await writeFile(path.join(targetRoot, 'README.md'), readme, 'utf8');
+  await writeFile(path.join(targetRoot, 'README.mdx'), readme, 'utf8');
 
   const license = transformFile(await readFile(path.join(projectRoot, 'LICENSE.md'), 'utf-8'), 'LICENSE.md');
   await writeFile(path.join(targetRoot, 'LICENSE.md'), license, 'utf8');
@@ -147,12 +167,12 @@ async function copyRootDocs(projectRoot, targetRoot) {
 }
 
 /**
- * copySiteDocs - Copy the site docs to the classic docs
+ * copySiteDocs - Copy the site docs to the site docs
  * @param {string} projectRoot The root of the project
  */
 module.exports = async function copySiteDocs(projectRoot) {
   const sourceRoot = path.join(__dirname, '..', '.docs', 'docs');
-  const targetRoot = path.join(projectRoot, 'classic', 'docs');
+  const targetRoot = path.join(projectRoot, 'site', 'docs');
   await copyPackageDocs(sourceRoot, targetRoot);
   await copyLifecyleGraph(targetRoot);
   await copyRootDocs(projectRoot, targetRoot);

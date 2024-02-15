@@ -25,3 +25,12 @@
 .heroBannerLogo {
   filter: brightness(0.50);
 }
+
+.mainAlign {
+  text-align: center;
+}
+
+.centerFlex {
+  align-items: center;
+  justify-content: center;
+}

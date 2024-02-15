@@ -16,7 +16,7 @@
     "clean:packages": "lerna clean --yes",
     "clean:root": "rimraf node_modules",
     "docs": "lerna run docs && npm run generate-docs-index",
-    "docs-view": "docusaurus start",
+    "docs-view": "npm run generate-docs-index && cd site && docusaurus start",
     "generate-docs-index": "node scripts/generate-docs-index",
     "postinstall": "npm run build",
     "publish:canary": "lerna publish --preid canary --dist-tag canary",
@@ -46,6 +46,7 @@
   "devDependencies": {
     "@docusaurus/core": "^3.1.1",
     "@docusaurus/preset-classic": "^3.1.1",
+    "@docusaurus/theme-mermaid": "^3.1.1",
     "eslint": "^8.56.0",
     "eslint-config-godaddy": "^7.0.2",
     "eslint-plugin-json": "^3.1.0",
@@ -78,9 +79,5 @@
   "workspaces": [
     "./packages/*",
     "scripts/generate-docs-index"
-  ],
-  "dependencies": {
-    "@docusaurus/core": "^3.1.1",
-    "@docusaurus/preset-classic": "^3.1.1"
-  }
+  ]
 }
