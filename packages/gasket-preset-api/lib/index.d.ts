@@ -1,4 +1,4 @@
-import '@gasket/plugin-config';
+import '@gasket/plugin-response-data';
 import '@gasket/plugin-docs';
 import '@gasket/plugin-docusaurus';
 import '@gasket/plugin-express';

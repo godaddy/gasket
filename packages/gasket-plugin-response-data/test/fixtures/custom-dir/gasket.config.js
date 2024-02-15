@@ -1,4 +1,4 @@
 module.exports = {
   env: 'production',
-  configPath: './src/config'
+  gasketDataDir: './src/custom'
 };

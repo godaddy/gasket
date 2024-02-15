@@ -22,7 +22,7 @@ To see complete the list of plugins configured in your app, and what commands, l
 
 ## Plugins
 
-- [@gasket/plugin-config](/packages/gasket-plugin-config/README.md)
+- [@gasket/plugin-response-data](/packages/gasket-plugin-response-data/README.md)
 - [@gasket/plugin-swagger](/packages/gasket-plugin-swagger/README.md)
 - [@gasket/plugin-docs](/packages/gasket-plugin-docs/README.md)
 - [@gasket/plugin-docusaurus](/packages/gasket-plugin-docusaurus/README.md)

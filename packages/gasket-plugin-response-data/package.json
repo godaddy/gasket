@@ -1,5 +1,5 @@
 {
-  "name": "@gasket/plugin-config",
+  "name": "@gasket/plugin-response-data",
   "version": "6.45.2",
   "description": "Supports application-specific (non-Gasket) configuration",
   "main": "lib/plugin.js",

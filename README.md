@@ -159,7 +159,7 @@ Available plugins
 | ------------------------------- | ------- | -------------------------------------------------------------------------- |
 | [@gasket/plugin-analyze]        | 6.45.2  | Gasket Analyzer Plugin                                                     |
 | [@gasket/plugin-command]        | 6.45.2  | Plugin to enable other plugins to inject new gasket commands               |
-| [@gasket/plugin-config]         | 6.45.2  | Supports application-specific (non-Gasket) configuration                   |
+| [@gasket/plugin-response-data]         | 6.45.2  | Supports application-specific (non-Gasket) configuration                   |
 | [@gasket/plugin-cypress]        | 6.45.2  | Integrates Cypress based testing into your Gasket application              |
 | [@gasket/plugin-docs]           | 6.45.2  | Centralize doc files from plugins and modules                              |
 | [@gasket/plugin-docs-graphs]    | 6.45.0  | Generate mermaid graphs of an applications gasket lifecycles               |
@@ -306,8 +306,8 @@ Available configuration options in the `gasket.config.js`
 [help]:/packages/gasket-cli/README.md#commands
 [local]:/packages/gasket-plugin-start/README.md#local-command
 [start]:/packages/gasket-plugin-start/README.md#start-command
-[appEnvConfig]:/packages/gasket-plugin-config/README.md#appEnvConfig
-[appRequestConfig]:/packages/gasket-plugin-config/README.md#appRequestConfig
+[appEnvConfig]:/packages/gasket-plugin-response-data/README.md#appEnvConfig
+[appRequestConfig]:/packages/gasket-plugin-response-data/README.md#appRequestConfig
 [1]:/packages/gasket-plugin-start/README.md#build
 [composeServiceWorker]:/packages/gasket-plugin-service-worker/README.md#composeServiceWorker
 [configure]:/packages/gasket-plugin-command/README.md#configure
@@ -351,13 +351,13 @@ Available configuration options in the `gasket.config.js`
 [winstonTransports]:/packages/gasket-plugin-winston/README.md#winstonTransports
 [workbox]:/packages/gasket-plugin-workbox/README.md#workbox
 [.docs/]:/packages/gasket-plugin-docs/README.md#options
-[config/]:/packages/gasket-plugin-config/README.md
+[config/]:/packages/gasket-plugin-response-data/README.md
 [lifecycles/]:/packages/gasket-plugin-lifecycle/README.md
 [pages/]:https://nextjs.org/docs/routing/introduction
 [plugins/]:/packages/gasket-cli/docs/plugins.md#one-off-plugins
 [public/]:https://nextjs.org/docs/basic-features/static-file-serving
 [public/locales/]:/packages/gasket-plugin-intl/README.md#Options
-[app.config.js]:/packages/gasket-plugin-config/README.md
+[app.config.js]:/packages/gasket-plugin-response-data/README.md
 [cypress.json]:https://docs.cypress.io/guides/references/configuration
 [gasket.config.js]:/packages/gasket-cli/docs/configuration.md
 [jest.config.js]:https://jestjs.io/docs/configuration
@@ -367,7 +367,7 @@ Available configuration options in the `gasket.config.js`
 [@gasket/preset-pwa]:/packages/gasket-preset-pwa/README.md
 [@gasket/plugin-analyze]:/packages/gasket-plugin-analyze/README.md
 [@gasket/plugin-command]:/packages/gasket-plugin-command/README.md
-[@gasket/plugin-config]:/packages/gasket-plugin-config/README.md
+[@gasket/plugin-response-data]:/packages/gasket-plugin-response-data/README.md
 [@gasket/plugin-cypress]:/packages/gasket-plugin-cypress/README.md
 [@gasket/plugin-docs]:/packages/gasket-plugin-docs/README.md
 [@gasket/plugin-docs-graphs]:/packages/gasket-plugin-docs-graphs/README.md

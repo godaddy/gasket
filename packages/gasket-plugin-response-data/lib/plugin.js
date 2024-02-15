@@ -3,63 +3,65 @@
 const mergeConfigFiles = require('./merge-config-files');
 const mergeRootConfig = require('./merge-root-config');
 const middleware = require('./middleware');
-const { ENV_CONFIG } = require('./constants');
+const { gasketDataMap } = require('./data-map');
 
 module.exports = {
   name: require('../package').name,
   hooks: {
     async preboot(gasket) {
-      gasket[ENV_CONFIG] = await gasket.execWaterfall(
-        'appEnvConfig',
+      const data = await gasket.execWaterfall(
+        'gasketData',
         mergeRootConfig(gasket, mergeConfigFiles(gasket))
       );
 
-      // Better error description for the appRequestConfig lifecycles
-      if (!gasket[ENV_CONFIG]) {
+      // Better error description for the lifecycles
+      if (!data) {
         throw new Error(
-          'An appEnvConfig lifecycle hook did not return a config object.'
+          'An gasketData lifecycle hook did not return a config object.'
         );
       }
+
+      gasketDataMap.set(gasket, data);
     },
     middleware,
-    initReduxState(gasket, state, { req }) {
-      const { redux } = req.config || {};
+    initReduxState(gasket, state, { res }) {
+      const gasketData = res.locals?.gasketData || {};
       return {
         ...state,
-        config: {
-          ...state.config,
-          ...redux
+        gasketData: {
+          ...state.gasketData,
+          ...gasketData
         }
       };
     },
     metadata(gasket, meta) {
-      const { configPath = 'config/' } = gasket.config;
+      const { gasketDataDir = 'gasket-data/' } = gasket.config;
       return {
         ...meta,
         lifecycles: [
           {
-            name: 'appEnvConfig',
+            name: 'gasketData',
             method: 'execWaterfall',
-            description: 'Adjust app level config after merged for the env',
-            link: 'README.md#appEnvConfig',
+            description: 'Adjust app level data after merged for the env',
+            link: 'README.md#gasketData',
             parent: 'preboot'
           },
           {
-            name: 'appRequestConfig',
+            name: 'responseData',
             method: 'execWaterfall',
-            description: 'Adjust app level config for each request',
-            link: 'README.md#appRequestConfig',
+            description: 'Adjust response level data for each request',
+            link: 'README.md#responseData',
             parent: 'middleware'
           }
         ],
         structures: [
           {
-            name: 'app.config.js',
+            name: 'gasket-data.config.js',
             description: 'App configuration with environment overrides',
             link: 'README.md'
           },
           {
-            name: configPath,
+            name: gasketDataDir,
             description: 'App configuration using environment files',
             link: 'README.md'
           }

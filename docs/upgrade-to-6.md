@@ -662,7 +662,7 @@ _Impacted Plugins/Packages: `@gasket/resolve`, `@gasket/engine`_
 [webpack website]: https://webpack.js.org/configuration/node/
 [gasket data script tag]: /packages/gasket-data/README.md#usage
 [new utility HOC]: #inject-gasket-data
-[@gasket/plugin-config]: /packages/gasket-plugin-config/README.md
+[@gasket/plugin-config]: /packages/gasket-plugin-response-data/README.md
 [@gasket/data]: /packages/gasket-data/README.md
 [@gasket/plugin-workbox]: /packages/gasket-data/README.md
 [@gasket/plugin-service-worker]: /packages/gasket-data/README.md
