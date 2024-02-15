@@ -52,9 +52,9 @@ function addFrontMatter(content, filename) {
  */
 function transformLinks(content) {
   content = content
-    .replace(/\/packages\/gasket-plugin/g, '/docs/Plugins/plugin')
-    .replace(/\/packages\/gasket-preset/g, '/docs/Presets/preset')
-    .replace(/\/packages\/gasket-(?!plugin)(?!preset)/g, '/docs/Modules/')
+    .replace(/\/packages\/gasket-plugin/g, '/docs/plugins/plugin')
+    .replace(/\/packages\/gasket-preset/g, '/docs/presets/preset')
+    .replace(/\/packages\/gasket-(?!plugin)(?!preset)/g, '/docs/modules/')
     .replace('/docs/generated-docs/', '/docs/')
     .replace('./LICENSE.md', '/docs/LICENSE.md')
     .replace('/packages/create-gasket-app/README.md', '/docs/create-gasket-app');
@@ -102,7 +102,7 @@ async function copyPackageDocs(sourceRoot, targetRoot) {
   const excludedPath = '@gasket';
 
   for (const dir of dirs) {
-    await createDir(targetRoot, formatFilename(dir));
+    await createDir(targetRoot, dir);
     await cp(
       path.join(sourceRoot, dir, excludedPath),
       path.join(targetRoot, dir),

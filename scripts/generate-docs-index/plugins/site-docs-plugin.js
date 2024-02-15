@@ -11,12 +11,12 @@ const txFixLinks = {
   test: isMarkdown,
   handler: function fixLinks(content) {
     content = content
-      .replace(/(\.\.\/)+plugins/g, '/docs/Plugins')
-      .replace(/(\.\.\/)+presets/g, '/docs/Presets')
-      .replace(/(\.\.\/)+modules/g, '/docs/Modules')
-      .replace(/(\.\.\/)+plugin-/g, '/docs/Plugins/plugin-')
-      .replace(/(\.\.\/)+preset-/g, '/docs/Presets/preset-')
-      .replace(/packages\/gasket-plugin/g, '/docs/Plugins/plugin')
+      .replace(/(\.\.\/)+plugins/g, '/docs/plugins')
+      .replace(/(\.\.\/)+presets/g, '/docs/presets')
+      .replace(/(\.\.\/)+modules/g, '/docs/modules')
+      .replace(/(\.\.\/)+plugin-/g, '/docs/plugins/plugin-')
+      .replace(/(\.\.\/)+preset-/g, '/docs/presets/preset-')
+      .replace(/packages\/gasket-plugin/g, '/docs/plugins/plugin')
       .replace(/\/@gasket\//g, '/');
 
     return content;
