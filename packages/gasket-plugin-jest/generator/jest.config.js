@@ -10,8 +10,8 @@ const customJestConfig = {
   },
   // Parse css imports & style paths
   moduleNameMapper: {
-    '^.+\\.(css)$': '<rootDir>/test/styleMock.js',
-    '@ux/pivot/styles': '<rootDir>/test/styleMock.js'
+    '^.+\\.(css)$': '<rootDir>/test/style-mock.js',
+    '@ux/pivot/styles': '<rootDir>/test/style-mock.js'
   }
 };
 
