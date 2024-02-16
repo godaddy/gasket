@@ -1,13 +1,19 @@
 /* eslint require-atomic-updates: warn */
-
+const { name, devDependencies } = require('../package');
 const mergeConfigFiles = require('./merge-config-files');
 const mergeRootConfig = require('./merge-root-config');
 const middleware = require('./middleware');
 const { gasketDataMap } = require('./data-map');
 
 module.exports = {
-  name: require('../package').name,
+  name,
   hooks: {
+    async create(gasket, context) {
+      const { pkg } = context;
+      pkg.add('dependencies', {
+        '@gasket/data': devDependencies['@gasket/data']
+      });
+    },
     async preboot(gasket) {
       const data = await gasket.execWaterfall(
         'gasketData',

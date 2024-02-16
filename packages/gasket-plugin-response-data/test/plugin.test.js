@@ -26,7 +26,13 @@ describe('Plugin', () => {
   });
 
   it('has expected hooks', () => {
-    const expected = ['preboot', 'middleware', 'initReduxState', 'metadata'];
+    const expected = [
+      'create',
+      'preboot',
+      'middleware',
+      'initReduxState',
+      'metadata'
+    ];
 
     expect(plugin).toHaveProperty('hooks');
 
