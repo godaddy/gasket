@@ -14,6 +14,6 @@ describe('IndexPage', () => {
   it('renders page', () => {
     render(<IndexPage />);
 
-    expect(screen.getByText('Welcome to Gasket!')).toBeTruthy();
+    expect(screen.getByRole('heading').textContent).toBe('Welcome to Gasket!');
   });
 });
