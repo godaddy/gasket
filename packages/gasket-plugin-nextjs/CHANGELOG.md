@@ -1,6 +1,5 @@
 # `@gasket/plugin-nextjs`
 
-### 6.45.3
 
 - Use `req.path` instead of `req.url` in path matching in `getNextRoute` ([#679])
 
