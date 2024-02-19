@@ -7,7 +7,7 @@ declare module '@gasket/engine' {
       sensitiveCookies?: Array<string>
     },
   }
-
+  
   export interface HookExecTypes {
     apmTransaction(
       transaction: Transaction,

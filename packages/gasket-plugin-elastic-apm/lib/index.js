@@ -1,6 +1,6 @@
 const { filterSensitiveCookies } = require('./cookies');
 const middleware = require('./middleware');
-const { dependencies } = require('../package.json');
+const { devDependencies } = require('../package.json');
 
 /**
  * Determines if the Elastic APM agent has sufficient config to be active
@@ -46,7 +46,7 @@ module.exports = {
         );
 
         if (!apm.isStarted()) {
-          logger.notice('WARNING Elastic APM agent is not started. Use `--require elastic-apm-node/start`');
+          logger.warning('Elastic APM agent is not started. Use `--require ./setup.js`');
         }
 
         apm.addFilter(filterSensitiveCookies(config));
@@ -56,13 +56,18 @@ module.exports = {
       timing: {
         after: ['@gasket/plugin-start']
       },
-      handler(gasket, { pkg }) {
+      handler(gasket, { pkg, files }) {
+        const generatorDir = `${ __dirname }/../generator`;
+
         pkg.add('dependencies', {
-          'elastic-apm-node': dependencies['elastic-apm-node']
+          'elastic-apm-node': devDependencies['elastic-apm-node'],
+          'dotenv': devDependencies.dotenv
         });
         pkg.add('scripts', {
-          start: 'gasket start --require elastic-apm-node/start'
+          start: 'gasket start --require ./setup.js'
         });
+
+        files.add(`${generatorDir}/*`);
       }
     },
     middleware,
