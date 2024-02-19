@@ -43,7 +43,7 @@ which may not be in the preset. For example, if you want the `gasket docs`
 command in the app, you could specify the additional plugins as:
 
 ```bash
-gasket create your-app-name --presets @gasket/nextjs --plugins @gasket/docs,@gasket/docsify
+gasket create your-app-name --presets @gasket/nextjs --plugins @gasket/docs,@gasket/docusaurus
 ```
 
 Notice also, that you can use [short-hand names] for presets and plugins here.
@@ -54,7 +54,7 @@ If you have an existing app, some plugins can be added after create.
 First, install the necessary node modules:
 
 ```bash
-npm i @gasket/plugin-docs @gasket/plugin-docsify
+npm i @gasket/plugin-docs @gasket/plugin-docusaurus
 ```
 
 Then, in the app's `gasket.config.js`, add the plugins:
@@ -67,7 +67,7 @@ module.exports = {
 +    ],
 +    add: [
 +      '@gasket/docs',
-+      '@gasket/docsify'
++      '@gasket/docusaurus'
     ]
   }
 };
