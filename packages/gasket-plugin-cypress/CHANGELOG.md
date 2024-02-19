@@ -2,6 +2,10 @@
 
 - Upgrade Cypress to v13 ([#660])
 
+### 6.45.2
+
+- Add `cross-env`, adjust test script ([#670])
+
 ### 6.38.0
 
 - Upgrade Cypress to v12 ([#541])
@@ -19,3 +23,4 @@
 [#436]: https://github.com/godaddy/gasket/pull/436
 [#541]: https://github.com/godaddy/gasket/pull/541
 [#660]: https://github.com/godaddy/gasket/pull/660
+[#670]: https://github.com/godaddy/gasket/pull/670

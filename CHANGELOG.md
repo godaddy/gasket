@@ -1,5 +1,7 @@
 # gasket
 
+- Remove `eslint-plugin-mocha` from devDeps ([#670])
+
 - Set version of mermaid and docsify for gasket.dev. ([#664])
 
 - #[#128], [#131] Update to latest `docsify`
@@ -15,3 +17,4 @@
 [#128]: https://github.com/godaddy/gasket/issues/128
 [#131]: https://github.com/godaddy/gasket/pull/131
 [#664]: https://github.com/godaddy/gasket/pull/664
+[#670]: https://github.com/godaddy/gasket/pull/670

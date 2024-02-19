@@ -83,7 +83,7 @@ describe('docsView', () => {
   it('throw on missing devDependencies', async function () {
     mockTryRequireStub.mockReturnValue(false);
     expect(mockTryRequireStub).toHaveBeenCalledWith('@docusaurus/preset-classic');
-    expect(mockTryRequireStub).toHaveBeenCalledWith('@docusaurus/core');
+    expect(mockTryRequireStub).toHaveBeenCalledWith('@docusaurus/core/package.json');
     await expect(async () => await docsView(mockGasket)).rejects.toThrow();
   });
 });
