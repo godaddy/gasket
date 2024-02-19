@@ -24,6 +24,8 @@ const sensitiveCookies = (config) => {
  * @returns {object} a modified version of the incoming APM payload
  */
 const filterSensitiveCookies = (config) => (payload) => {
+  const cookiesToRedact = sensitiveCookies(config);
+
   if (
     payload.context &&
     payload.context.request &&
@@ -31,12 +33,22 @@ const filterSensitiveCookies = (config) => (payload) => {
     payload.context.request.headers.cookie
   ) {
     let cookie = payload.context.request.headers.cookie;
-
-    sensitiveCookies(config).forEach((sc) => {
+    cookiesToRedact.forEach((sc) => {
       cookie = cookie.replace(new RegExp(sc + '=([^;]+)'), sc + '=[REDACTED]');
     });
 
     payload.context.request.headers.cookie = cookie;
+  }
+
+  if (payload.context &&
+    payload.context.request &&
+    payload.context.request.cookies
+  ) {
+    cookiesToRedact.forEach((sc) => {
+      if (sc in payload.context.request.cookies) {
+        payload.context.request.cookies[sc] = '[REDACTED]';
+      }
+    });
   }
 
   return payload;

@@ -21,7 +21,7 @@ describe('Plugin', () => {
     mockAPM.isStarted.mockReset();
     mockGasket = {
       logger: {
-        notice: jest.fn()
+        warning: jest.fn()
       },
       config: {
         root: '/some/path'
@@ -61,12 +61,6 @@ describe('Plugin', () => {
     expect(apm.start).not.toHaveBeenCalled();
   });
 
-  it('adds apm filters', async () => {
-    mockAPM.isStarted.mockReturnValue(true);
-    await plugin.hooks.preboot.handler(mockGasket);
-    expect(apm.addFilter).toHaveBeenCalledTimes(1);
-  });
-
   it('skips preboot lifecycle if run locally', async () => {
     mockGasket.command = { id: 'local' };
     await plugin.hooks.preboot.handler(mockGasket);
@@ -76,9 +70,15 @@ describe('Plugin', () => {
   it('does not start within preboot', async function () {
     await plugin.hooks.preboot.handler(mockGasket);
     expect(apm.start).toHaveBeenCalledTimes(0);
-    expect(mockGasket.logger.notice).toHaveBeenCalledWith(
-      expect.stringContaining('WARNING Elastic APM agent is not started. Use `--require elastic-apm-node/start`')
+    expect(mockGasket.logger.warning).toHaveBeenCalledWith(
+      expect.stringContaining('Elastic APM agent is not started. Use `--require ./setup.js`')
     );
+  });
+
+  it('adds apm filters', async () => {
+    mockAPM.isStarted.mockReturnValue(true);
+    await plugin.hooks.preboot.handler(mockGasket);
+    expect(apm.addFilter).toHaveBeenCalledTimes(1);
   });
 
   it('respects a user-defined "active" config value', async () => {

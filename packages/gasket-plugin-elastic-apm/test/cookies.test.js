@@ -14,12 +14,16 @@ describe('filterSensitiveCookies', () => {
     );
   });
 
-  it('redacts sensitive cookies', () => {
+  it('redacts sensitive cookies from both cookies and header cookies', () => {
     const samplePayload = {
       context: {
         request: {
           headers: {
             cookie: 'secret=foo; alsosecret=bar'
+          },
+          cookies: {
+            secret: 'foo',
+            cust_idp: 'bar'
           }
         }
       }
@@ -30,6 +34,7 @@ describe('filterSensitiveCookies', () => {
     })(samplePayload);
 
     expect(filtered.context.request.headers.cookie).toStrictEqual('secret=[REDACTED]; alsosecret=[REDACTED]');
+    expect(filtered.context.request.cookies).toStrictEqual({ secret: '[REDACTED]', cust_idp: 'bar' });
   });
 });
 
