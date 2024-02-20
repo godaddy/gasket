@@ -63,28 +63,30 @@ module.exports = {
         },
         items: [
           {
-            type: 'doc',
-            docId: 'README',
-            position: 'left',
+            to: '/docs/',
             label: 'Docs',
-            sidebarPosition: 'collapsed',
+            position: 'left',
           },
-          // {
-          //   to: '/docs#modules',
-          //   label: 'Modules',
-          //   position: 'left',
-          // },
-          // {
-          //   to: '/docs#plugins',
-          //   label: 'Plugins',
-          //   position: 'left',
-          // },
-          // {
-          //   to: '/docs#presets',
-          //   label: 'Presets',
-          //   position: 'left',
-          // },
-          // {to: '/blog', label: 'Blog', position: 'left'},
+          {
+            to: '/docs/modules',
+            label: 'Modules',
+            position: 'left',
+          },
+          {
+            to: '/docs/plugins',
+            label: 'Plugins',
+            position: 'left',
+          },
+          {
+            to: '/docs/presets',
+            label: 'Presets',
+            position: 'left',
+          },
+          {
+            to: '/blog',
+            label: 'Blog',
+            position: 'right'
+          },
           {
             href: 'https://github.com/godaddy/gasket',
             label: 'GitHub',
@@ -93,8 +95,56 @@ module.exports = {
         ],
       },
       footer: {
-        style: 'light',
-        copyright: `Made with ❤️ by the Gasket Team`,
+        copyright: `Copyright (c) 1999 - ${new Date().getFullYear()} GoDaddy Operating Company, LLC.`,
+        links: [
+          {
+            title: 'Docs',
+            items: [
+              {
+                label: 'Get Started',
+                to: '/docs/quick-start',
+              },
+              {
+                label: 'Overview',
+                to: '/docs/README',
+              },
+              {
+                label: 'Guides',
+                to: '/docs/README#guides',
+              },
+            ],
+          },
+          {
+            title: 'Channel',
+            items: [
+              {
+                label: 'Blog',
+                href: 'https://blog.gasket.dev',
+              },
+              {
+                label: 'Twitter',
+                href: 'https://twitter.com/gasketjs',
+              },
+              {
+                label: 'Stack Overflow',
+                href: 'https://stackoverflow.com/questions/tagged/gasket',
+              },
+            ],
+          },
+          {
+            title: 'Contribute',
+            items: [
+              {
+                label: 'Guidelines',
+                to: '/docs/CONTRIBUTING',
+              },
+              {
+                label: 'Github',
+                href: 'https://github.com/godaddy/gasket/',
+              },
+            ],
+          }
+        ]
       },
       prism: {
         theme: themes.github,

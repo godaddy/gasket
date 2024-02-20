@@ -106,6 +106,7 @@ nav .github-logo {
 }
 
 .front-cover article {
+    text-align: center;
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
@@ -113,61 +114,60 @@ nav .github-logo {
     padding-right: 20px;
 }
 
-.front-cover footer {
+.footer {
     color: var(--color-nuetral-300);
     padding-top: 64px;
-    background-color: var(--color-nuetral-400);
+    /* background-color: var(--color-nuetral-400); */
     width: 100%;
     min-height: 350px;
 }
 
-.footer-links,
+.footer__item,
 .footer-copyright {
     text-align: left;
-    color: var(--color-nuetral-300);
+    /* color: var(--color-nuetral-300); */
     display: block;
-    float: left;
     width: 25%;
     font-size: 13px;
     line-height: 20px;
 }
 
-.footer-copyright a {
-    color: var(--color-nuetral-300);
-}
+/* .footer-copyright a { */
+    /* color: var(--color-nuetral-300); */
+/* } */
 
 .footer-copyright a:hover {
-    color: var(--color-secondary-100);
+    /* color: var(--color-secondary-100); */
     text-decoration: underline;
 }
 
-.footer-links h4 {
-    color: var(--color-primary-100);
+.footer__item h4 {
+    /* color: var(--color-primary-100); */
     font-weight: normal;
     font-size: 13px;
     line-height: 20px;
 }
 
-.footer-links a {
-    color: var(--color-secondary-100);
+.footer__item a {
+    /* color: var(--color-secondary-100); */
     display: block;
     font-size: 16px;
     line-height: 28px;
     margin-bottom: 16px;
 }
 
-.footer-links a:hover {
-    color: var(--color-secondary-100);
-}
+/* .footer__item a:hover { */
+    /* color: var(--color-secondary-100); */
+/* } */
 
-.footer-links a:not([href^="#/"]):after {
+/* .footer__item a:not([href^="#/"]):after {
     content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"><g fill="%2304E7AE" transform="translate(0,2)"><path d="M12.1875,12.5625a.75.75,0,0,1-.53027-1.28027L19.18945,3.75H14a.75.75,0,0,1,0-1.5h6.99414c.0166,0,.042.00049.0625.00195a.75032.75032,0,0,1,.40039.15332l.001.00049h0a.78015.78015,0,0,1,.10937.103.75162.75162,0,0,1,.18262.48242h0V10a.75.75,0,0,1-1.5,0V4.81055l-7.53223,7.53222A.74754.74754,0,0,1,12.1875,12.5625Z"/><path d="M18.75,21.75H5.25a3.00328,3.00328,0,0,1-3-3V5.25a3.00328,3.00328,0,0,1,3-3H10a.75.75,0,0,1,0,1.5H5.25a1.50164,1.50164,0,0,0-1.5,1.5v13.5a1.50164,1.50164,0,0,0,1.5,1.5h13.5a1.50164,1.50164,0,0,0,1.5-1.5V14a.75.75,0,0,1,1.5,0v4.75A3.00328,3.00328,0,0,1,18.75,21.75Z"/></g></svg>');
     padding-left: 4px;
-}
+} */
 
 .godaddy-open-source {
     display: block;
-    background-image: url("godaddy-oss-logo.svg");
+    background-image: url("/img/godaddy-oss-logo.svg");
     background-repeat: no-repeat;
     padding-left: 60px;
     width: 150px;
@@ -361,7 +361,7 @@ section.angled:after {
         padding: 0;
     }
 
-    .footer-links {
+    .footer__item {
         width: 33%;
         padding-right: 24px;
     }
@@ -408,8 +408,8 @@ section.angled:after {
 /* no hero bg for mobile devices */
 @media only screen and (min-width: 769px) {
     .front-cover header {
-        background-image: url("gasket-hero-optimized.svg");
-        background-position: center bottom;
+        background-image: url("/img/gasket-hero-optimized.svg");
+        background-position: center;
         background-size: cover;
         background-repeat: no-repeat;
         min-height: 400px;

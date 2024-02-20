@@ -38,9 +38,17 @@ function addFrontMatter(content, filename) {
     'upgrade-to-6.md': {
       sidebar_position: 7
     },
+    'CONTRIBUTING.md': {
+      label: 'Contributing',
+      sidebar_position: 8
+    },
+    'SECURITY.md': {
+      label: 'Security',
+      sidebar_position: 9
+    },
     'LICENSE.md': {
       label: 'License',
-      sidebar_position: 8
+      sidebar_position: 10
     }
   };
 
@@ -77,7 +85,8 @@ function transformLinks(content) {
     .replace(/\/packages\/gasket-(?!plugin)(?!preset)/g, '/docs/modules/')
     .replace('/docs/generated-docs/', '/docs/')
     .replace('./LICENSE.md', '/docs/LICENSE.md')
-    .replace('/packages/create-gasket-app/README.md', '/docs/create-gasket-app');
+    .replace('/packages/create-gasket-app/README.md', '/docs/create-gasket-app')
+    .replace('./SECURITY.md', '/docs/SECURITY');
   return content;
 }
 
@@ -172,6 +181,12 @@ async function copyRootDocs(projectRoot, targetRoot) {
 
   const readme = transformFile(await readFile(path.join(projectRoot, 'README.md'), 'utf-8'), 'README.md');
   await writeFile(path.join(targetRoot, 'README.mdx'), readme, 'utf8');
+
+  const contributing = transformFile(await readFile(path.join(projectRoot, 'CONTRIBUTING.md'), 'utf-8'), 'CONTRIBUTING.md');
+  await writeFile(path.join(targetRoot, 'CONTRIBUTING.md'), contributing, 'utf8');
+
+  const security = transformFile(await readFile(path.join(projectRoot, 'SECURITY.md'), 'utf-8'), 'SECURITY.md');
+  await writeFile(path.join(targetRoot, 'SECURITY.md'), security, 'utf8');
 
   const license = transformFile(await readFile(path.join(projectRoot, 'LICENSE.md'), 'utf-8'), 'LICENSE.md');
   await writeFile(path.join(targetRoot, 'LICENSE.md'), license, 'utf8');
