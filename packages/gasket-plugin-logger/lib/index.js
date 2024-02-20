@@ -4,15 +4,23 @@ const name = require('../package.json').name;
 function createChildLogger(parent, metadata) {
   return {
     ...parent,
-    error: (...args) => console.error(...args, metadata),
-    warn: (...args) => console.warn(...args, metadata),
-    info: (...args) => console.info(...args, metadata),
-    verbose: (...args) => console.info(...args, metadata),
     debug: (...args) => console.debug(...args, metadata),
+    error: (...args) => console.error(...args, metadata),
+    info: (...args) => console.info(...args, metadata),
+    warn: (...args) => console.warn(...args, metadata),
     child(meta) {
       return createChildLogger(this, { ...metadata, ...meta });
     }
   };
+}
+
+function verifyLoggerLevels(logger) {
+  const levels = ['debug', 'error', 'info', 'warn', 'child'];
+  levels.forEach((level) => {
+    if (typeof logger[level] !== 'function') {
+      throw new Error(`Logger is missing required level: ${level}`);
+    }
+  });
 }
 
 module.exports = {
@@ -24,11 +32,10 @@ module.exports = {
       if (!loggers || loggers.length === 0) {
         // Handle the case where loggers is undefined or empty array
         gasket.logger = {
-          error: console.error,
-          warn: console.warn,
-          info: console.info,
-          verbose: console.log,
           debug: console.debug,
+          error: console.error,
+          info: console.info,
+          warn: console.warn,
           child(meta) {
             return createChildLogger(this, meta);
           }
@@ -38,6 +45,9 @@ module.exports = {
           'Multiple plugins are hooking createLogger. Only one logger is supported.'
         );
       } else {
+        // Verify that the logger has the required levels
+        verifyLoggerLevels(loggers[0]);
+
         // Set the logger to the first element of loggers array
         gasket.logger = loggers[0];
       }

@@ -13,7 +13,7 @@ gasket create <app-name> --plugins @gasket/plugin-docs,@gasket/plugin-docs-graph
 
 #### Existing apps
 
-```
+```sh
 npm i @gasket/plugin-docs-graphs
 ```
 

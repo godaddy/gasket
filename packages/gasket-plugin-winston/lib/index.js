@@ -11,8 +11,8 @@ module.exports = {
     },
     async createLogger(gasket) {
       const { config } = gasket;
-
       const transportOrTransports = config.winston?.transports;
+
       let configTransports;
       if (transportOrTransports) {
         if (Array.isArray(transportOrTransports)) {

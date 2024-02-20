@@ -9,11 +9,10 @@ jest.spyOn(console, 'debug').mockImplementation(() => {});
 
 // Mock logger object
 const mockLogger = {
-  error: jest.fn(),
-  warn: jest.fn(),
-  info: jest.fn(),
-  verbose: jest.fn(),
   debug: jest.fn(),
+  error: jest.fn(),
+  info: jest.fn(),
+  warn: jest.fn(),
   child: jest.fn()
 };
 
@@ -55,7 +54,6 @@ describe('@gasket/plugin-logger', () => {
         childLogger.error('error message');
         childLogger.warn('warn message');
         childLogger.info('info message');
-        childLogger.verbose('verbose message');
         childLogger.debug('debug message');
 
         // Ensure console methods were called
@@ -69,7 +67,6 @@ describe('@gasket/plugin-logger', () => {
           error: console.error,
           warn: console.warn,
           info: console.info,
-          verbose: console.log,
           debug: console.debug,
           child: expect.any(Function)
         });
