@@ -1,6 +1,8 @@
 # `@gasket/plugin-nextjs`
 
+### 6.46.1
 
+- Adjust generated page tests for initial flexibility ([#678])
 - Use `req.path` instead of `req.url` in path matching in `getNextRoute` ([#679])
 
 ### 6.45.2
@@ -248,3 +250,5 @@
 [#556]: https://github.com/godaddy/gasket/pull/556
 [#614]: https://github.com/godaddy/gasket/pull/614
 [#670]: https://github.com/godaddy/gasket/pull/670
+[#678]: https://github.com/godaddy/gasket/pull/678
+[#679]: https://github.com/godaddy/gasket/pull/679
