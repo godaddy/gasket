@@ -1,5 +1,8 @@
 # `@gasket/plugin-nextjs`
 
+
+- Use `req.path` instead of `req.url` in path matching in `getNextRoute` ([#679])
+
 ### 6.45.2
 
 - Add `peerDeps` ([#670])
