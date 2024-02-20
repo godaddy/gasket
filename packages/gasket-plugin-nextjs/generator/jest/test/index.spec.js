@@ -8,6 +8,7 @@ import { expect } from '@jest/globals';
 const { getComputedStyle } = window;
 window.getComputedStyle = (elt) => getComputedStyle(elt);
 
+// Mocking react-intl to fix error where provider is not found
 jest.mock('react-intl');
 
 describe('IndexPage', () => {
