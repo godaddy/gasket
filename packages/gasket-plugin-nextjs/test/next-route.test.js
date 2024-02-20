@@ -59,18 +59,18 @@ describe('req.getNextRoute()', () => {
 
       expect(route).not.toBeNull();
       expect(route.page).toEqual('/plans/cohorts/[cohort]');
-      expect(route.namedRegex.exec(req.url).groups.cohort).toEqual('US%20Only');
+      expect(route.namedRegex.exec(req.path).groups.cohort).toEqual('US%20Only');
     });
 
     it('returns valid static route if url has query param', async () => {
-      req.path = '/addons';
-      req.url = '/addons?addon=addon1';
+      req.path = '/plans/cohorts/US%20Only';
+      req.url = '/plans/cohorts/US%20Only?addon=addon1';
 
       const route = await getNextRoute(gasket, req);
 
       expect(route).not.toBeNull();
       expect(route.page).toEqual('/plans/cohorts/[cohort]');
-      expect(route.namedRegex.exec(req.url).groups.cohort).toEqual('US%20Only');
+      expect(route.namedRegex.exec(req.path).groups.cohort).toEqual('US%20Only');
     });
   });
 });
