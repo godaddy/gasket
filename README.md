@@ -162,7 +162,6 @@ Available plugins
 | [@gasket/plugin-cypress]        | 6.45.2  | Integrates Cypress based testing into your Gasket application              |
 | [@gasket/plugin-docs]           | 6.45.2  | Centralize doc files from plugins and modules                              |
 | [@gasket/plugin-docs-graphs]    | 6.45.0  | Generate mermaid graphs of an applications gasket lifecycles               |
-| [@gasket/plugin-docsify]        | 6.45.2  | View collated docs with Docsify                                            |
 | [@gasket/plugin-docusaurus]     | 6.46.0  | Gasket plugin for docusaurus                                               |
 | [@gasket/plugin-elastic-apm]    | 6.45.2  | Adds Elastic APM instrumentation to your application                       |
 | [@gasket/plugin-express]        | 6.46.0  | Adds express support to your application                                   |
@@ -218,12 +217,6 @@ Available configuration options in the `gasket.config.js`
 | [bundleAnalyzerConfig]                                                               | Tune both browser and server Webpack analysis reports                                                 | object                                 |                                |
 | [docs][7]                                                                            | Docs config object                                                                                    | object                                 |                                |
 | [docs.outputDir]                                                                     | Output directory for generated docs                                                                   | string                                 | .docs                          |
-| [docsify]                                                                            | Docsify config object                                                                                 | object                                 |                                |
-| [docsify.config]                                                                     | Docsify configuration properties, excluding functions                                                 | object                                 |                                |
-| [docsify.port]                                                                       | Port to serve the docs from                                                                           | number                                 | 3000                           |
-| [docsify.scripts]                                                                    | Optional additional script files, which can include docsify plugins                                   | string[]                               |                                |
-| [docsify.stylesheets]                                                                | Optional additional stylesheet URLs to load                                                           | string[]                               |                                |
-| [docsify.theme]                                                                      | Name of the theme                                                                                     | string                                 | styles/gasket.css              |
 | [docusaurus]                                                                         | Docusaurus plugin config                                                                              | object                                 |                                |
 | [docusaurus.docsDir]                                                                 | Sub-directory for the generated markdown from the docs plugin                                         | string                                 | docs                           |
 | [docusaurus.host]                                                                    | Hostname to serve the docs from                                                                       | string                                 | localhost                      |
@@ -371,7 +364,6 @@ Available configuration options in the `gasket.config.js`
 [@gasket/plugin-cypress]:/packages/gasket-plugin-cypress/README.md
 [@gasket/plugin-docs]:/packages/gasket-plugin-docs/README.md
 [@gasket/plugin-docs-graphs]:/packages/gasket-plugin-docs-graphs/README.md
-[@gasket/plugin-docsify]:/packages/gasket-plugin-docsify/README.md
 [@gasket/plugin-docusaurus]:/packages/gasket-plugin-docusaurus/README.md
 [@gasket/plugin-elastic-apm]:/packages/gasket-plugin-elastic-apm/README.md
 [@gasket/plugin-express]:/packages/gasket-plugin-express/README.md
@@ -413,12 +405,6 @@ Available configuration options in the `gasket.config.js`
 [bundleAnalyzerConfig]:/packages/gasket-plugin-analyze/README.md#configuration
 [7]:/packages/gasket-plugin-docs/README.md#configuration
 [docs.outputDir]:/packages/gasket-plugin-docs/README.md#configuration
-[docsify]:/packages/gasket-plugin-docsify/README.md#configuration
-[docsify.config]:/packages/gasket-plugin-docsify/README.md#configuration
-[docsify.port]:/packages/gasket-plugin-docsify/README.md#configuration
-[docsify.scripts]:/packages/gasket-plugin-docsify/README.md#configuration
-[docsify.stylesheets]:/packages/gasket-plugin-docsify/README.md#configuration
-[docsify.theme]:/packages/gasket-plugin-docsify/README.md#configuration
 [docusaurus]:/packages/gasket-plugin-docusaurus/README.md#configuration
 [docusaurus.docsDir]:/packages/gasket-plugin-docusaurus/README.md#configuration
 [docusaurus.host]:/packages/gasket-plugin-docusaurus/README.md#configuration
