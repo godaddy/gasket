@@ -148,7 +148,7 @@ Available presets
 | Name                    | Version | Description                                |
 | ----------------------- | ------- | ------------------------------------------ |
 | [@gasket/preset-api]    | 6.46.0  | Create Express-based API with Gasket       |
-| [@gasket/preset-nextjs] | 6.46.0  | Basic NextJS Framework                     |
+| [@gasket/preset-nextjs] | 6.46.1  | Basic NextJS Framework                     |
 | [@gasket/preset-pwa]    | 6.45.2  | Turn Gasket apps into Progressive Web Apps |
 
 ## Plugins
@@ -172,7 +172,7 @@ Available plugins
 | [@gasket/plugin-happyfeet]      | 6.45.0  | A gasket plugin to enable happyfeet healthchecks                           |
 | [@gasket/plugin-https]          | 6.45.2  | Create http/s servers with graceful termination                            |
 | [@gasket/plugin-intl]           | 6.46.0  | NodeJS script to build localization files.                                 |
-| [@gasket/plugin-jest]           | 6.45.2  | Integrated jest into your application.                                     |
+| [@gasket/plugin-jest]           | 6.46.1  | Integrated jest into your application.                                     |
 | [@gasket/plugin-lifecycle]      | 6.45.2  | Allows a gasket/ directory to be used for lifecycle hooks in applications. |
 | [@gasket/plugin-lint]           | 6.45.2  | Adds GoDaddy standard linting to your application                          |
 | [@gasket/plugin-log]            | 6.46.0  | Gasket log plugin                                                          |
@@ -181,7 +181,7 @@ Available plugins
 | [@gasket/plugin-metrics]        | 6.45.2  | Collect metrics for gasket commands                                        |
 | [@gasket/plugin-mocha]          | 6.45.0  | Integrates mocha based testing in to your Gasket application               |
 | [@gasket/plugin-morgan]         | 6.45.2  | Adds morgan request logger to your app                                     |
-| [@gasket/plugin-nextjs]         | 6.45.2  | Adds Next support to your application                                      |
+| [@gasket/plugin-nextjs]         | 6.46.1  | Adds Next support to your application                                      |
 | [@gasket/plugin-redux]          | 6.46.0  | Gasket Redux Setup                                                         |
 | [@gasket/plugin-service-worker] | 6.45.2  | Gasket Service Worker Plugin                                               |
 | [@gasket/plugin-start]          | 6.45.2  | Adds commands for building and starting Gasket apps                        |
@@ -207,7 +207,7 @@ Supporting modules
 | [@gasket/react-intl]       | 6.45.2  | React component library to enable localization for gasket apps.                      |
 | [@gasket/redux]            | 6.46.0  | Gasket Redux Configuration                                                           |
 | [@gasket/resolve]          | 6.45.2  | Essential module resolution & configuration management for gasket plugins & presets. |
-| [@gasket/typescript-tests] | 6.46.0  | Not a published package; hosts unit tests to verify TypeScript support               |
+| [@gasket/typescript-tests] | 6.46.1  | Not a published package; hosts unit tests to verify TypeScript support               |
 | [@gasket/utils]            | 6.45.2  | Reusable utilities for Gasket internals                                              |
 | [create-gasket-app]        | 6.45.2  | starter pack for creating a gasket app                                               |
 
