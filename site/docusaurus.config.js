@@ -3,24 +3,14 @@ const { themes } = require('prism-react-renderer');
 /** @type {import('@docusaurus/types').Config} */
 module.exports = {
   title: 'Gasket',
-  staticDirectories: ['public', 'static'],
-  tagline: 'Gasket is cool',
+  staticDirectories: ['static'],
+  tagline: 'Framework Maker for JavaScript Applications',
   favicon: 'img/favicon.ico',
-  url: 'https://mmason2-godaddy.github.io',
-  baseUrl: '/gasket-os/',
+  url: 'https://gasket.dev',
+  baseUrl: '/gasket/',
   trailingSlash: true,
-
-  // GitHub pages deployment config.
-  // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'mmason2-godaddy', // Usually your GitHub org/user name.
-  projectName: 'gasket-os', // Usually your repo name.
-  deploymentBranch: 'PFX-238',
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
-
-  // Even if you don't use internationalization, you can use this field to set
-  // useful metadata like html lang. For example, if your site is Chinese, you
-  // may want to replace "en" with "zh-Hans".
   i18n: {
     defaultLocale: 'en',
     locales: ['en'],
