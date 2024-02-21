@@ -9,7 +9,7 @@ const createDir = require('./create-dir');
  * transformFile - Transform the content of a file
  * @param {string} content The content of the file
  * @param {string} filename The name of the file
- * @returns {string} The transformed content
+ * @returns {object} The transformed content
  */
 function transformFile(content, filename) {
   content = transformLinks(content);
