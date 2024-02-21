@@ -47,6 +47,7 @@ async function copyPackageDocs(sourceRoot, targetRoot) {
         filter: (src) => !src.includes('LICENSE.md')
       }
     );
+    // Create an index file for each folder
     await writeFile(
       path.join(targetRoot, dir, `${formatFilename(dir)}.mdx`),
       `import DocCardList from '@theme/DocCardList';\n\n<DocCardList />`,
