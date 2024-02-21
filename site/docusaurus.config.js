@@ -106,11 +106,11 @@ module.exports = {
               },
               {
                 label: 'Overview',
-                to: '/docs/README',
+                to: '/docs',
               },
               {
                 label: 'Guides',
-                to: '/docs/README#guides',
+                to: '/docs#guides',
               },
             ],
           },
@@ -119,7 +119,7 @@ module.exports = {
             items: [
               {
                 label: 'Blog',
-                href: 'https://blog.gasket.dev',
+                href: '/blog',
               },
               {
                 label: 'Twitter',
