@@ -1,11 +1,13 @@
-import clsx from 'clsx';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
-import Layout from '@theme/Layout';
-// import HomepageFeatures from '@site/src/components/HomepageFeatures';
 import useBaseUrl from '@docusaurus/useBaseUrl';
-
-// import Heading from '@theme/Heading';
-// import styles from './index.module.css';
+import Layout from '@theme/Layout';
+import IconCliImg from '@site/static/img/icon-cli.svg';
+import IconPresetsImg from '@site/static/img/icon-presets.svg';
+import IconPluginsImg from '@site/static/img/icon-plugins.svg';
+import IconCommandsImg from '@site/static/img/icon-commands.svg';
+import IconLifecyclesImg from '@site/static/img/icon-lifecycles.svg';
+import IconHooksImg from '@site/static/img/icon-hooks.svg';
+import PluginLogosImg from '@site/static/img/plugin-logos.svg';
 
 function HomepageHeader() {
   return (
@@ -43,7 +45,7 @@ function HomepageSections() {
 
           <div className="gasket-element-row">
             <div className="gasket-element-column">
-              <img className="element-icon" src={useBaseUrl('/img/icon-cli.svg')} />
+              <IconCliImg className='gasket-icon' />
               <div className="element-caption">CLI</div>
               <h3>CLI loads configured Presets and Plugins</h3>
               <p>The entry point to creating and interacting with apps.
@@ -51,7 +53,7 @@ function HomepageSections() {
             </div>
 
             <div className="gasket-element-column">
-              <img className="element-icon" src={useBaseUrl('/img/icon-presets.svg')} />
+              <IconPresetsImg className='gasket-icon' />
               <div className="element-caption">PRESETS</div>
               <h3>Presets provide Plugins</h3>
               <p>Logical groups of plugins to build apps. Tech choices for teams, integrations for communities.
@@ -62,7 +64,7 @@ function HomepageSections() {
 
           <div className="gasket-element-row">
             <div className="gasket-element-column">
-              <img className="element-icon" src={useBaseUrl('/img/icon-plugins.svg')} />
+              <IconPluginsImg className='gasket-icon' />
               <div className="element-caption">PLUGINS</div>
               <h3>Plugins add Commands & Hooks</h3>
               <p>The building blocks of an app framework - plugins provide the scaffolding
@@ -70,7 +72,7 @@ function HomepageSections() {
             </div>
 
             <div className="gasket-element-column">
-              <img className="element-icon" src={useBaseUrl('/img/icon-commands.svg')} />
+              <IconCommandsImg className='gasket-icon' />
               <div className="element-caption">COMMANDS</div>
               <h3>Commands execute Lifecycles</h3>
               <p>Build and start your app. Analyze it, or read the docs.
@@ -80,7 +82,7 @@ function HomepageSections() {
 
           <div className="gasket-element-row">
             <div className="gasket-element-column">
-              <img className="element-icon" src={useBaseUrl('/img/icon-lifecycles.svg')} />
+              <IconLifecyclesImg className='gasket-icon' />
               <div className="element-caption">LIFECYCLES</div>
               <h3>Lifecycles handled by Hooks</h3>
               <p>The nervous system to transmit signals between parts of apps.
@@ -88,7 +90,7 @@ function HomepageSections() {
             </div>
 
             <div className="gasket-element-column">
-              <img className="element-icon" src={useBaseUrl('/img/icon-hooks.svg')} />
+              <IconHooksImg className='gasket-icon' />
               <div className="element-caption">HOOKS</div>
               <h3>Hooks execute additional Lifecycles</h3>
               <p>Receptors to handle lifecycle events and perform the actual work of
@@ -124,37 +126,6 @@ export default function Home() {
       <main className='front-cover'>
         <HomepageHeader />
         <HomepageSections />
-        {/* <footer>
-          <article>
-            <div className="footer-links">
-              <h4>Docs</h4>
-              <a href="#/docs/quick-start">Get Started</a>
-              <a href="#/README">Overview</a>
-              <a href="#/README?id=guides">Guides</a>
-            </div>
-            <div className="footer-links">
-              <h4>Channel</h4>
-              <a href="https://blog.gasket.dev">Blog</a>
-              <a target="_blank" href="https://twitter.com/gasketjs">Twitter</a>
-              <a target="_blank" href="https://stackoverflow.com/questions/tagged/gasket">Stack Overflow</a>
-            </div>
-            <div className="footer-links">
-              <h4>Contribute</h4>
-              <a href="#/CONTRIBUTING">Guidelines</a>
-              <a target="_blank" href="https://github.com/godaddy/gasket/">Github</a>
-            </div>
-            <div className="footer-copyright">
-              <a target="_blank" href="https://www.godaddy.com/engineering/">
-                <div className="godaddy-open-source">
-                  GODADDY OPEN SOURCE
-                </div>
-              </a>
-              <span className="godaddy-copyright">
-                Copyright (c) 1999 - 2020 GoDaddy Operating Company, LLC.
-              </span>
-            </div>
-          </article>
-        </footer> */}
       </main>
     </Layout>
   );

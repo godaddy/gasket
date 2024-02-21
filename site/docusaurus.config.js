@@ -57,7 +57,7 @@ module.exports = {
         logo: {
           alt: 'Gasket Framework Logo',
           src: 'img/logo-docs.svg',
-          srcDark: 'img/logo-docs.svg',
+          srcDark: 'img/logo-docs-dark.svg',
           href: '/',
           className: 'gasket-navbar-logo',
         },

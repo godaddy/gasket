@@ -31,19 +31,3 @@
   --ifm-color-primary-lightest: #d4d9f0;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
-
-.gasket-navbar-logo {
-  filter: brightness(0.2);
-}
-
-[data-theme='dark'] .gasket-navbar-logo {
-  filter: brightness(1);
-}
-
-.gasket-cover {
-  filter: brightness(1);
-}
-
-[data-theme='dark'] .gasket-cover {
-  filter: brightness(1.25);
-}

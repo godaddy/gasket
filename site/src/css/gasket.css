@@ -268,3 +268,7 @@ a.toc-link:after {
     float: left;
     content: "←";
 }
+
+svg * {
+    fill: var(--ifm-color-primary);
+}
