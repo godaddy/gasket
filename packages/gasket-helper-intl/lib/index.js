@@ -129,7 +129,7 @@ function LocaleUtils(config) {
    * Strategy is:
    *  `<locale>`
    *  `<locale lang (if doesn't match default lang)>`
-   * `<default locale (if a locale)>`
+   *  `<default locale (if a locale)>`
    *  `<default lang>`
    *  `null`
    *

@@ -52,8 +52,8 @@ const frontMatterConfig = {
 module.exports = function addFrontMatter(content, filename) {
   // File specific transforms
   if (frontMatterConfig[filename]?.transforms) {
-    content = frontMatterConfig[filename].transforms.reduce((content, transform) => {
-      return content.replace(transform.search, transform.replace);
+    content = frontMatterConfig[filename].transforms.reduce((acc, transform) => {
+      return acc.replace(transform.search, transform.replace);
     }, content);
   }
 
