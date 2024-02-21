@@ -30,7 +30,7 @@ async function getNextRoute(gasket, req) {
   const routes = await loadRoutes(gasket);
   if (routes) {
     for (const route of iterateRoutes(routes)) {
-      if (route.regex.test(req.url)) {
+      if (route.regex.test(req.path)) {
         result = route;
         break;
       }
