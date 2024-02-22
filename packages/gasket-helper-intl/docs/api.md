@@ -53,7 +53,7 @@ Fallback to the lang part of a locale or to defaultLocale.
 Strategy is:
  `<locale>`
  `<locale lang (if doesn't match default lang)>`
-`<default locale (if a locale)>`
+ `<default locale (if a locale)>`
  `<default lang>`
  `null`
 
