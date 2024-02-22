@@ -3,7 +3,7 @@ const spawn = require('cross-spawn');
 
 /**
  * Promise friendly wrapper to running a shell command (eg: git, npm, ls)
- * which passes back any { stdout, stderr } to the error thrown.
+ * which passes back any `{ stdout, stderr }` to the error thrown.
  *
  * Options can be passed to the underlying spawn. An additional `signal` option
  * can be passed to use AbortController, allowing processes to be killed when
@@ -34,7 +34,7 @@ const spawn = require('cross-spawn');
  * @param {string[]} [argv] Arguments passed to npm binary through spawn.
  * @param {object} [options] Options passed to npm binary through spawn
  * @param {object} [options.signal] AbortControl signal allowing process to be canceled
- * @param {boolean} [debug] When present pipes std{out,err} to process.*
+ * @param {boolean} [debug] When present pipes `std{out,err}` to process.*
  * @returns {Promise} A promise represents if command succeeds or fails.
  * @public
  */

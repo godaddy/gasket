@@ -41,8 +41,8 @@
     "lodash.defaultsdeep": "^4.6.1"
   },
   "devDependencies": {
-    "@docusaurus/core": "^2.4.0",
-    "@docusaurus/preset-classic": "^2.4.0",
+    "@docusaurus/core": "^3.1.1",
+    "@docusaurus/preset-classic": "^3.1.1",
     "@gasket/engine": "^6.45.2",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",

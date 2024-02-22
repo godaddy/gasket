@@ -21,6 +21,7 @@ async function metadata(gasket, data) {
 
 
 module.exports = {
+  name: 'config-plugin',
   hooks: {
     metadata,
     docsSetup: () => ({}),
