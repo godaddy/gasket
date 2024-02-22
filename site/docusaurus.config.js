@@ -7,7 +7,7 @@ module.exports = {
   tagline: 'Framework Maker for JavaScript Applications',
   favicon: 'img/favicon.ico',
   url: 'https://gasket.dev',
-  baseUrl: '/gasket/',
+  baseUrl: '/',
   trailingSlash: true,
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
