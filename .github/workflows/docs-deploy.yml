@@ -4,7 +4,7 @@ name: Deploy Docs Site
 on:
   # Runs on pushes targeting the default branch
   push:
-    branches: [PFX-238-void] # Disable workflow for now
+    branches: [PFX-238] # Disable workflow for now
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
