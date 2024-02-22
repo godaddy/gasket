@@ -11,6 +11,7 @@ module.exports = function transformLinks(content) {
     .replace('/docs/generated-docs/', '/docs/')
     .replace('./LICENSE.md', '/docs/LICENSE.md')
     .replace('/packages/create-gasket-app/README.md', '/docs/create-gasket-app')
-    .replace('./SECURITY.md', '/docs/SECURITY');
+    .replace('./SECURITY.md', '/docs/SECURITY')
+    .replace(/#([a-z]+[A-Z].*)/g, (_, match) => '#' + match.toLowerCase());
   return content;
 };
