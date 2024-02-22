@@ -16,3 +16,8 @@ jobs:
         uses: codepunkt/npm-lockfile-changes@v1.0.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          # Optional inputs, can be deleted safely if you are happy with default values.
+          collapsibleThreshold: 25
+          failOnDowngrade: false
+          path: package-lock.json
+          updateComment: true
