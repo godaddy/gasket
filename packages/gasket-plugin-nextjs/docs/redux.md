@@ -42,7 +42,8 @@ In this example `store.js` creates a Redux store, and attaches a reducer from
 `redux-reducer.js`. `ComponentA` invokes the actions from `redux-actions.js` and
 `ComponentB` connects to Redux store to read the current count.
 
-<details><summary>component-a.js</summary>
+<details>
+<summary>component-a.js</summary>
 <p>
 
 ```javascript
@@ -81,7 +82,8 @@ export default connect(null, { increment, decrement })(ComponentA);
 </p>
 </details>
 
-<details><summary>component-b.js</summary>
+<details>
+<summary>component-b.js</summary>
 <p>
 
 ```javascript
@@ -115,7 +117,8 @@ export default connect(mapStateToProps)(ComponentB);
 </p>
 </details>
 
-<details><summary>redux-actions.js</summary>
+<details>
+<summary>redux-actions.js</summary>
 <p>
 
 ```javascript
@@ -155,7 +158,8 @@ module.exports = {
 </p>
 </details>
 
-<details><summary>redux-reducer.js</summary>
+<details>
+<summary>redux-reducer.js</summary>
 <p>
 
 ```javascript
@@ -186,13 +190,14 @@ function reducer(state = {}, action) {
 
 module.exports = {
   increment: reducer
-} 
+}
 ```
 
 </p>
 </details>
 
-<details><summary>redux/store.js</summary>
+<details>
+<summary>redux/store.js</summary>
 <p>
 
 This file will have been generated for you by default. Your job will merely be
@@ -222,7 +227,8 @@ want to use the latest [automatic optimization] changes from Next.js.
 </p>
 </details>
 
-<details><summary>pages/index.js</summary>
+<details>
+<summary>pages/index.js</summary>
 <p>
 
 ```javascript
@@ -253,7 +259,7 @@ Initialize Redux state from server side by dispatching a Redux action. Modified
 import React from 'react';
 import ComponentA from '../components/redux/component-a';
 import ComponentB from '../components/redux/component-b';
-+ import { nextRedux } from '../redux/store.js'; 
++ import { nextRedux } from '../redux/store.js';
 + import { initialize } from '../components/redux/redux-actions';
 
 export const IndexPage = () => (
@@ -289,7 +295,7 @@ const reducers = {
   ...incrementReducers
 };
 
-const makeStore = configureMakeStore({ 
+const makeStore = configureMakeStore({
 +  rootReducer,
   reducers
 });

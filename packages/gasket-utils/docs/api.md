@@ -13,7 +13,7 @@ Name | Description
 ~~[applyEnvironmentOverrides(gasketConfig, config, \[localFile\])]~~ | Normalize the config by applying any environment or local overrides
 [installDependency(dependency, gasket)] | installDependency - install dependency
 [requireWithInstall(dependency, gasket)] | requireWithInstall - load devDependency request programmatically when needed
-[runShellCommand(cmd, \[argv\], \[options\], \[debug\])] | Promise friendly wrapper to running a shell command (eg: git, npm, ls) which passes back any { stdout, stderr } to the error thrown.
+[runShellCommand(cmd, \[argv\], \[options\], \[debug\])] | Promise friendly wrapper to running a shell command (eg: git, npm, ls) which passes back any `{ stdout, stderr }` to the error thrown.
 [tryRequire(path)] | Tries to require a module, but ignores if it is not found. If not found, result will be null.
 [tryResolve(modulePath, options)] | 
 
@@ -196,7 +196,7 @@ requireWithInstall - load devDependency request programmatically when needed
 ## runShellCommand(cmd, \[argv\], \[options\], \[debug\])
 
 Promise friendly wrapper to running a shell command (eg: git, npm, ls)
-which passes back any { stdout, stderr } to the error thrown.
+which passes back any `{ stdout, stderr }` to the error thrown.
 
 Options can be passed to the underlying spawn. An additional `signal` option
 can be passed to use AbortController, allowing processes to be killed when
@@ -212,7 +212,7 @@ no longer needed.
 | \[argv\] | `Array.<string>` | Arguments passed to npm binary through spawn. |
 | \[options\] | `object` | Options passed to npm binary through spawn |
 | \[options.signal\] | `object` | AbortControl signal allowing process to be canceled |
-| \[debug\] | `boolean` | When present pipes std{out,err} to process.* |
+| \[debug\] | `boolean` | When present pipes `std{out,err}` to process.* |
 
 **Example**  
 ```js
