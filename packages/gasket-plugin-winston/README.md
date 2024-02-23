@@ -112,7 +112,7 @@ module.exports = {
 
 ### logTransports
 
-To add custom logger transports, you can also hook the `logTransports` lifecycle and return a transport or an array of transports you wish to add to the logger. Here's an example gasket config and a hook that uses that config to add a FluentD traport:
+To add custom logger transports, you can also hook the `logTransports` lifecycle and return a transport or an array of transports you wish to add to the logger. Here's an example gasket config and a hook that uses that config to add a FluentD transport:
 
 ```js
 // gasket.config.js
