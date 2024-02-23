@@ -24,7 +24,7 @@ module.exports = {
         configTransports = [new transports.Console()];
       }
 
-      const pluginTransports = await gasket.exec('logTransports');
+      const pluginTransports = await gasket.exec('winstonTransports');
 
       return createLogger({
         ...config.winston,
@@ -42,10 +42,10 @@ module.exports = {
         ...meta,
         lifecycles: [
           {
-            name: 'logTransports',
+            name: 'winstonTransports',
             method: 'exec',
             description: 'Setup Winston log transports',
-            link: 'README.md#logTransports',
+            link: 'README.md#winstonTransports',
             parent: 'createLogger'
           }
         ],

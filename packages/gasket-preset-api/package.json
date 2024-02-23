@@ -26,8 +26,6 @@
     "@gasket/plugin-express": "^6.45.0",
     "@gasket/plugin-https": "^6.45.0",
     "@gasket/plugin-lint": "^6.45.0",
-    "@gasket/plugin-log": "^6.45.0",
-    "@gasket/plugin-logger": "^6.43.0",
     "@gasket/plugin-swagger": "^6.45.0",
     "@gasket/plugin-winston": "^6.43.0"
   },

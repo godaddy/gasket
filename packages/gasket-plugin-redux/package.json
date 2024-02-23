@@ -39,7 +39,6 @@
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-redux",
   "devDependencies": {
     "@gasket/engine": "^6.45.0",
-    "@gasket/plugin-log": "^6.45.0",
     "@gasket/redux": "^6.45.0",
     "acorn": "^8.11.3",
     "eslint": "^8.56.0",

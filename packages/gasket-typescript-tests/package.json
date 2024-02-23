@@ -38,7 +38,6 @@
     "@gasket/engine": "^6.45.0",
     "@gasket/fetch": "^6.45.0",
     "@gasket/helper-intl": "^6.45.0",
-    "@gasket/log": "^6.45.0",
     "@gasket/nextjs": "^6.45.0",
     "@gasket/plugin-analyze": "^6.45.0",
     "@gasket/plugin-command": "^6.45.0",

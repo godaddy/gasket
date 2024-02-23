@@ -44,6 +44,7 @@ Wrapper class for executing commands for a given package manager
 | \[options.packageManager\] | `string` | Name of manager, either `npm` (default) or `yarn` |
 | options.dest | `string` | Target directory where `node_module` should exist |
 
+
 ### packageManager.exec(cmd, args)
 
 Executes npm in the application directory `this.dest`.
@@ -147,6 +148,7 @@ or local-only config file.
 | \[context.commandId\] | `string` | Name of command |
 | \[context.root\] | `string` | Project root; required if using localeFile |
 | \[context.localFile\] | `string` | Optional file to load relative to gasket root |
+
 
 ## installDependency(dependency, gasket)
 

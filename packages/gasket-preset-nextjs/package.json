@@ -22,8 +22,6 @@
   "dependencies": {
     "@gasket/plugin-express": "^6.45.0",
     "@gasket/plugin-https": "^6.45.0",
-    "@gasket/plugin-log": "^6.45.0",
-    "@gasket/plugin-logger": "^6.43.0",
     "@gasket/plugin-nextjs": "^6.45.0",
     "@gasket/plugin-redux": "^6.45.0",
     "@gasket/plugin-webpack": "^6.45.0",

@@ -1,7 +1,6 @@
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
-import Log from '@gasket/log';
 import placeholderReducers from './placeholder-reducers';
 
 /**
@@ -13,7 +12,9 @@ import placeholderReducers from './placeholder-reducers';
  * @private
  */
 export function prepareReducer(allReducers, rootReducer) {
-  const combinedReducer = Object.keys(allReducers).length ? combineReducers(allReducers) : (f = {}) => f;
+  const combinedReducer = Object.keys(allReducers).length
+    ? combineReducers(allReducers)
+    : (f = {}) => f;
 
   if (rootReducer) {
     return (state, action) => {
@@ -48,8 +49,9 @@ export default function configureMakeStore(
     rootReducer,
     initialState = {},
     middleware = [],
-    enhancers = [f => f],
-    logging = false, thunkMiddleware = thunk
+    enhancers = [(f) => f],
+    logging = false,
+    thunkMiddleware = thunk
   } = {},
   postCreate
 ) {
@@ -66,7 +68,7 @@ export default function configureMakeStore(
    * @returns {Object} reduxStore
    */
   function makeStore(state = {}, options = {}) {
-    const { req, logger = new Log() } = options;
+    const { req, logger = console } = options;
 
     //
     // Use existing redux store if it has been already been instantiated by redux-plugin
@@ -86,14 +88,17 @@ export default function configureMakeStore(
       );
     }
 
-    const composer = (typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
-    const enhancer = composer(
-      applyMiddleware(...allMiddleware),
-      ...enhancers
-    );
+    const composer =
+      (typeof window !== 'undefined' &&
+        window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
+      compose;
+    const enhancer = composer(applyMiddleware(...allMiddleware), ...enhancers);
 
     const preloadedState = { ...initialState, ...state };
-    const allReducers = { ...reducers, ...placeholderReducers(reducers, preloadedState) };
+    const allReducers = {
+      ...reducers,
+      ...placeholderReducers(reducers, preloadedState)
+    };
     const reducer = prepareReducer(allReducers, rootReducer);
     const store = createStore(reducer, { ...initialState, ...state }, enhancer);
 

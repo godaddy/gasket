@@ -110,9 +110,12 @@ module.exports = {
 
 ## Lifecycles
 
-### logTransports
+### winstonTransports
 
-To add custom logger transports, you can also hook the `logTransports` lifecycle and return a transport or an array of transports you wish to add to the logger. Here's an example gasket config and a hook that uses that config to add a FluentD transport:
+To add custom logger transports, you can also hook the `winstonTransports`
+lifecycle and return a transport or an array of transports you wish to add to
+the logger. Here's an example gasket config and a hook that uses that config to
+add a FluentD traport:
 
 ```js
 // gasket.config.js
@@ -140,7 +143,6 @@ module.exports = {
 };
 ```
 
-
 ```js
 // /lifecycles/log-transports.js
 
@@ -152,7 +154,7 @@ const FluentTransport = fluent.support.winstonTransport();
  * @param {Gasket} gasket The gasket API
  * @return {Transport|Transport[]} winston Transports to consume
  */
-function logTransportsHook(gasket) {
+function winstonTransportsHook(gasket) {
   return new FluentTransport('mytag', gasket.config.fluentd);
 };
 ```
@@ -173,5 +175,4 @@ npm test
 
 [winston]: https://github.com/winstonjs/winston
 [winston documentation]: https://github.com/winstonjs/winston#creating-your-own-logger
-[@gasket/plugin-logger]: /packages/gasket-plugin-logger/README.md
 [Formats]: https://github.com/winstonjs/winston#formats

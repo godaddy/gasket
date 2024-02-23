@@ -93,7 +93,7 @@ describe('@gasket/plugin-winston', function () {
       });
 
       it('can be injected individually via hook', async function () {
-        gasket.hook({ event: 'logTransports', handler: () => transport1 });
+        gasket.hook({ event: 'winstonTransports', handler: () => transport1 });
         const [logger] = await gasket.exec('createLogger');
 
         logger.error('test');
@@ -135,7 +135,7 @@ describe('@gasket/plugin-winston', function () {
 
       it('can be injected via hook', async function () {
         gasket.hook({
-          event: 'logTransports',
+          event: 'winstonTransports',
           handler: () => [transport1, transport2]
         });
         const [logger] = await gasket.exec('createLogger');
@@ -190,10 +190,10 @@ describe('@gasket/plugin-winston', function () {
       expect(meta.lifecycles).toEqual(
         expect.arrayContaining([
           {
-            name: 'logTransports',
+            name: 'winstonTransports',
             method: 'exec',
             description: 'Setup Winston log transports',
-            link: 'README.md#logTransports',
+            link: 'README.md#winstonTransports',
             parent: 'createLogger'
           }
         ])
