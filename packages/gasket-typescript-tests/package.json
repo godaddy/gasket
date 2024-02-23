@@ -48,7 +48,6 @@
     "@gasket/plugin-express": "^6.45.0",
     "@gasket/plugin-https": "^6.45.0",
     "@gasket/plugin-intl": "^6.45.0",
-    "@gasket/plugin-log": "^6.45.0",
     "@gasket/plugin-manifest": "^6.45.0",
     "@gasket/plugin-metadata": "^6.45.0",
     "@gasket/plugin-metrics": "^6.45.0",

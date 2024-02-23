@@ -51,7 +51,6 @@ Defaults:
 module.exports = {
   plugins: {
     add: [
-      '@gasket/plugin-logger',
       '@gasket/plugin-morgan'
     ]
   },
