@@ -31,7 +31,7 @@ function handler(gasket) {
       // it will result in an error in the destructuring of req.gasketData
       if (!publicGasketData) {
         throw new Error(
-          'An responseData lifecycle hook did not return a config object.'
+          'A responseData lifecycle hook did not return a config object.'
         );
       }
 

@@ -23,7 +23,7 @@ module.exports = {
       // Better error description for the lifecycles
       if (!data) {
         throw new Error(
-          'An gasketData lifecycle hook did not return a config object.'
+          'A gasketData lifecycle hook did not return a config object.'
         );
       }
 

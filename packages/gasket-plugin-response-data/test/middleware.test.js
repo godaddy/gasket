@@ -89,7 +89,7 @@ describe('middleware', function () {
     const middlewareMock = promisify(middleware.handler(gasket));
 
     await expect(middlewareMock(mockReq, mockRes)).rejects.toThrow(
-      'An responseData lifecycle hook did not return a config object.'
+      'A responseData lifecycle hook did not return a config object.'
     );
   });
 

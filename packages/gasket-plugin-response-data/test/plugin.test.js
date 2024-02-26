@@ -173,7 +173,7 @@ describe('Plugin', () => {
       const { preboot } = plugin.hooks;
 
       await expect(preboot(gasket)).rejects.toThrow(
-        'An gasketData lifecycle hook did not return a config object.'
+        'A gasketData lifecycle hook did not return a config object.'
       );
     });
 
