@@ -1,7 +1,9 @@
 import semver from 'semver';
 import { flattenPresets } from '@gasket/resolve';
 import action from '../action-wrapper.js';
-import { default as pkg } from '../../../package.json' assert { type: 'json' };
+import { createRequire } from 'node:module';
+const require = createRequire(import.meta.url);
+const pkg = require('../../../package.json');
 
 const pkgVersion = pkg.version;
 const pkgVersionCompatible = `^${pkgVersion}`;
