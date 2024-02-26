@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-config",
-  "version": "6.45.2",
+  "version": "6.46.2-esm.0",
   "description": "Supports application-specific (non-Gasket) configuration",
   "main": "lib/plugin.js",
   "types": "lib/plugin.d.ts",
@@ -37,12 +37,12 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-config",
   "dependencies": {
-    "@gasket/utils": "^6.45.2",
+    "@gasket/utils": "^6.46.2-esm.0",
     "lodash.defaultsdeep": "^4.6.1",
     "lodash.merge": "^4.6.2"
   },
   "devDependencies": {
-    "@gasket/engine": "^6.45.2",
+    "@gasket/engine": "^6.46.2-esm.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
     "eslint-config-godaddy": "^7.0.2",
