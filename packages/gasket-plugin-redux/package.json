@@ -55,9 +55,6 @@
     "redux": "^4.0.5",
     "webpack": "^5.89.0"
   },
-  "peerDependencies": {
-    "@gasket/plugin-log": "^6.45.0"
-  },
   "eslintConfig": {
     "extends": [
       "godaddy",

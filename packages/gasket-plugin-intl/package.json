@@ -64,9 +64,6 @@
     "react-intl": "^6.0.0",
     "webpack": "^5.89.0"
   },
-  "peerDependencies": {
-    "@gasket/plugin-log": "^6.0.0"
-  },
   "eslintConfig": {
     "extends": [
       "godaddy",
