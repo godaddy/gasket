@@ -16,7 +16,9 @@ module.exports = async function composeServiceWorker(gasket, content, context) {
   const { exec, config, logger } = gasket;
   const { workbox } = config;
 
-  const configs = (await exec('workbox', workbox.config, context)).filter(Boolean);
+  const configs = (await exec('workbox', workbox.config, context)).filter(
+    Boolean
+  );
   const mergedConfig = merge.all([workbox.config, ...configs]);
 
   const build = await generateSWString(mergedConfig);
@@ -26,7 +28,7 @@ module.exports = async function composeServiceWorker(gasket, content, context) {
   const workboxContent = build.swString.replace(reComments, '');
 
   if (build.warnings && build.warnings.length) {
-    logger.warning(build.warnings);
+    logger.warn(build.warnings);
   }
 
   return content + workboxContent;

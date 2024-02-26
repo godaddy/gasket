@@ -1,5 +1,8 @@
 # `@gasket/plugin-redux`
 
+- Use per-request logger
+- Remove dependency on `@gasket/plugin-log`
+
 ### 6.45.2
 
 - Tune `peerDeps` & `devDeps`, update test script ([#670])

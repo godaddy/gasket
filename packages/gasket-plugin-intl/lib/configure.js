@@ -7,7 +7,7 @@ const moduleDefaults = {
   excludes: ['cacache', 'yargs', 'axe-core']
 };
 
-const isDefined = o => typeof o !== 'undefined';
+const isDefined = (o) => typeof o !== 'undefined';
 
 /**
  * Shortcut to get the gasket.config.intl object
@@ -48,19 +48,27 @@ module.exports = function configureHook(gasket, config) {
 
   const fullLocalesDir = path.join(root, localesDir);
 
-  const basePath = [intlConfig.basePath,
-    nextConfig.assetPrefix, nextConfig.basePath,
-    config.basePath, ''].find(isDefined);
+  const basePath = [
+    intlConfig.basePath,
+    nextConfig.assetPrefix,
+    nextConfig.basePath,
+    config.basePath,
+    ''
+  ].find(isDefined);
 
   let { modules = false } = intlConfig;
   if (modules && !Array.isArray(modules)) {
-    modules = modules === true ? moduleDefaults : { ...moduleDefaults, ...modules };
+    modules =
+      modules === true ? moduleDefaults : { ...moduleDefaults, ...modules };
   }
 
   // This allows packages (@gasket/react-intl) to reference certain configs
   /* eslint-disable no-process-env */
   process.env.GASKET_INTL_LOCALES_DIR = fullLocalesDir;
-  process.env.GASKET_INTL_MANIFEST_FILE = path.join(fullLocalesDir, manifestFilename);
+  process.env.GASKET_INTL_MANIFEST_FILE = path.join(
+    fullLocalesDir,
+    manifestFilename
+  );
   /* eslint-enable no-process-env */
 
   const normalizedIntlConfig = {

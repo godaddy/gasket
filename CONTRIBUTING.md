@@ -7,15 +7,14 @@ project.
 
 No matter how you want to get involved, we ask that you first learn what’s
 expected of anyone who participates in the project by reading the Contribution
-Guidelines. 
+Guidelines.
 
 ## Answering Questions
 
 One of the most important and immediate ways you can support this project is to
-answer questions on  [Github][issues]. Whether you’re helping a
-newcomer understand a feature or troubleshooting an edge case with a seasoned
-developer, your knowledge and experience with JS can go a long way to help
-others.
+answer questions on  [Github][issues]. Whether you’re helping a newcomer
+understand a feature or troubleshooting an edge case with a seasoned developer,
+your knowledge and experience with JS can go a long way to help others.
 
 ## Reporting Bugs
 
@@ -29,6 +28,7 @@ please create a Github issue in that project. All dependencies are open source
 software and can be easily found through [npm].
 
 Submit a ticket for your issue, assuming one does not already exist:
+
 - Create it on our [Issue Tracker][issues]
 - Clearly describe the issue by following the template layout
   - Make sure to include steps to reproduce the bug.
@@ -47,6 +47,7 @@ test that reproduces a bug in just a few lines of code is easier than reasoning
 about a longer sample.
 
 From a practical perspective, contributions are as simple as:
+
 - Forking the repository on GitHub.
 - Making changes to your forked repository.
 - When committing, reference your issue (if present) and include a note about
@@ -58,8 +59,7 @@ From a practical perspective, contributions are as simple as:
 
 If you are interested in making a large change and feel unsure about its overall
 effect, please make sure to first discuss the change and reach a consensus with
-core contributors. Then ask about the best way to go about
-making the change.
+core contributors. Then ask about the best way to go about making the change.
 
 ## Code Review
 
@@ -79,8 +79,8 @@ patches:
   to do the same for you. Good will is our currency.
 - Split your change into multiple smaller changes. The smaller your change, the
   higher the probability that somebody will take a quick look at it.
-- Remember that you’re asking for valuable
-  time from other professional developers.
+- Remember that you’re asking for valuable time from other professional
+  developers.
 
 **Note that anyone is welcome to review and give feedback on a change, but only
 people with commit access to the repository can approve it.**
@@ -108,7 +108,7 @@ in a book when used with `gasket docs`. Different styles and layouts can result
 in a disjointed experience for readers. In general, and certainly for the
 top-level README, the following headings should be used.
 
-```
+```md
 # Name of package
 
 Short one or two sentence summary.
@@ -162,6 +162,7 @@ Include a LICENSE.md file and link to it.
 ```
 
 Some additional rules to note:
+
 - Examples should always use `####` heading (H4)
 - Example headings should always begin with "Example"
   - Good:
@@ -179,14 +180,15 @@ Some additional rules to note:
   
 ## Adding new packages to the monorepo
 
-Remember to run the `align-packages` script for new packages. This has been
-an issue in the past with `docs-graphs` missing the `publishConfig` field which
+Remember to run the `align-packages` script for new packages. This has been an
+issue in the past with `docs-graphs` missing the `publishConfig` field which
 messed with `lerna publish`. Without this, we had to step into each package and
 manually re-publish the ones that didn’t make it out.
 
 ## File and Directory Naming
 
-File and directory names should follow kebab-casing. Incorrect naming will generate a linting error.
+File and directory names should follow kebab-casing. Incorrect naming will
+generate a linting error.
 
 ```
 new-file.js

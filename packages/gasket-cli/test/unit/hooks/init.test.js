@@ -7,12 +7,15 @@ const mockError = new Error('Bad things man.');
 const mockConfig = { mocked: true };
 const PluginEngine = require('@gasket/engine');
 
-class MockCommand { };
+class MockCommand {}
 MockCommand.flags = {};
 
 jest.mock('@gasket/engine');
 jest.mock('@gasket/plugin-command', () => ({ GasketCommand: MockCommand }));
-jest.mock('@gasket/resolve', () => ({ loadGasketConfigFile: mockGetGasketConfigStub, assignPresetConfig: mockAssignPresetConfigStub }));
+jest.mock('@gasket/resolve', () => ({
+  loadGasketConfigFile: mockGetGasketConfigStub,
+  assignPresetConfig: mockAssignPresetConfigStub
+}));
 jest.mock('@oclif/parser', () => ({ parse: mockParseStub }));
 jest.mock('../../../src/config/utils', () => ({
   ...jest.requireActual('../../../src/config/utils'),
@@ -22,15 +25,19 @@ jest.mock('../../../src/config/utils', () => ({
 const _initHook = require('../../../src/hooks/init');
 
 const initHook = function mockInitHook() {
-  return _initHook.apply({ warn: mockWarnStub, error: mockErrorStub }, arguments);
+  return _initHook.apply(
+    { warn: mockWarnStub, error: mockErrorStub },
+    arguments
+  );
 };
 
 describe('init hook', () => {
-
   beforeEach(() => {
     mockGetGasketConfigStub.mockResolvedValue(mockConfig);
     mockAssignPresetConfigStub.mockReturnValue(mockConfig);
-    mockParseStub.mockReturnValue({ flags: { root: '/path/to/app', config: 'gasket.config' } });
+    mockParseStub.mockReturnValue({
+      flags: { root: '/path/to/app', config: 'gasket.config' }
+    });
   });
 
   afterEach(function () {
@@ -73,12 +80,16 @@ describe('init hook', () => {
 
   it('instantiates plugin engine with config', async () => {
     await initHook({ id: 'build', argv: [], config: {} });
-    expect(PluginEngine).toHaveBeenCalledWith(mockConfig, { resolveFrom: '/path/to/app' });
+    expect(PluginEngine).toHaveBeenCalledWith(mockConfig, {
+      resolveFrom: '/path/to/app'
+    });
   });
 
   it('instantiates plugin engine resolveFrom root', async () => {
     await initHook({ id: 'build', argv: [], config: {} });
-    expect(PluginEngine).toHaveBeenCalledWith(mockConfig, { resolveFrom: '/path/to/app' });
+    expect(PluginEngine).toHaveBeenCalledWith(mockConfig, {
+      resolveFrom: '/path/to/app'
+    });
   });
 
   it('assigns config from presets', async () => {
@@ -95,25 +106,33 @@ describe('init hook', () => {
   it('warns if no env specified', async () => {
     mockGetGasketConfigStub.mockResolvedValueOnce(null);
     await initHook({ id: 'build', argv: [], config: {} });
-    expect(mockWarnStub).toHaveBeenCalledWith('No env specified, falling back to "development".');
+    expect(mockWarnStub).toHaveBeenCalledWith(
+      'No env specified, falling back to "development".'
+    );
   });
 
   it('does not warn if no env specified for help command', async () => {
     mockGetGasketConfigStub.mockResolvedValueOnce(null);
     await initHook({ id: 'help', argv: [], config: {} });
-    expect(mockWarnStub).not.toHaveBeenCalledWith('No env specified, falling back to "development".');
+    expect(mockWarnStub).not.toHaveBeenCalledWith(
+      'No env specified, falling back to "development".'
+    );
   });
 
   it('warns if no gasket.config was found', async () => {
     mockGetGasketConfigStub.mockResolvedValueOnce(null);
     await initHook({ id: 'build', argv: [], config: {} });
-    expect(mockWarnStub).toHaveBeenCalledWith('No gasket.config file was found.');
+    expect(mockWarnStub).toHaveBeenCalledWith(
+      'No gasket.config file was found.'
+    );
   });
 
   it('does not warn if no gasket.config was found for help command', async () => {
     mockGetGasketConfigStub.mockResolvedValueOnce(null);
     await initHook({ id: 'help', argv: [], config: {} });
-    expect(mockWarnStub).not.toHaveBeenCalledWith('No gasket.config file was found.');
+    expect(mockWarnStub).not.toHaveBeenCalledWith(
+      'No gasket.config file was found.'
+    );
   });
 
   it('errors and exits if problem getting gasket.config', async () => {

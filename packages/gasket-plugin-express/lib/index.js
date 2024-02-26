@@ -16,14 +16,14 @@ module.exports = {
      * @public
      */
     create: async function create(gasket, context) {
-      const generatorDir = `${ __dirname }/../generator`;
+      const generatorDir = `${__dirname}/../generator`;
 
       context.pkg.add('dependencies', {
         express: devDependencies.express
       });
 
       if (context.apiApp) {
-        context.files.add(`${ generatorDir }/**/*`);
+        context.files.add(`${generatorDir}/**/*`);
 
         context.gasketConfig.add('express', {
           routes: './routes/*'
@@ -60,11 +60,21 @@ module.exports = {
 
       if (excludedRoutesRegex) {
         // eslint-disable-next-line no-console
-        const warn = logger ? logger.warning : console.warn;
-        warn('DEPRECATED express config `excludedRoutesRegex` - use `middlewareInclusionRegex`');
+        const warn = logger ? logger.warn : console.warn;
+        warn(
+          'DEPRECATED express config `excludedRoutesRegex` - use `middlewareInclusionRegex`'
+        );
       }
 
       const app = http2 ? require('http2-express-bridge')(express) : express();
+      const useForAllowedPaths = (...middleware) =>
+        middleware.forEach((mw) => {
+          if (excludedRoutesRegex) {
+            app.use(excludedRoutesRegex, mw);
+          } else {
+            app.use(mw);
+          }
+        });
 
       if (trustProxy) {
         app.set('trust proxy', trustProxy);
@@ -84,8 +94,23 @@ module.exports = {
               res._implicitHeader = () => res.writeHead(res.statusCode);
             }
             return next();
-          });
+          }
+        );
       }
+
+      function attachLogEnhancer(req) {
+        req.logger.metadata = (metadata) => {
+          req.logger = req.logger.child(metadata);
+          attachLogEnhancer(req);
+        };
+      }
+
+      useForAllowedPaths((req, res, next) => {
+        req.logger = gasket.logger;
+        attachLogEnhancer(req);
+        next();
+      });
+      useForAllowedPaths(cookieParser());
 
       const middlewarePattern = middlewareInclusionRegex || excludedRoutesRegex;
       if (middlewarePattern) {
@@ -105,7 +130,9 @@ module.exports = {
         if (middleware) {
           if (middlewareConfig) {
             const pluginName = plugin && plugin.name ? plugin.name : '';
-            const mwConfig = middlewareConfig.find(mw => mw.plugin === pluginName);
+            const mwConfig = middlewareConfig.find(
+              (mw) => mw.plugin === pluginName
+            );
             if (mwConfig) {
               middleware.paths = mwConfig.paths;
               if (middlewarePattern) {
@@ -132,13 +159,15 @@ module.exports = {
       await gasket.exec('express', app);
 
       if (routes) {
-        const files = await glob(`${ routes }.js`, { cwd: root });
+        const files = await glob(`${routes}.js`, { cwd: root });
         for (const file of files) {
           require(path.join(root, file))(app);
         }
       }
 
-      const postRenderingStacks = (await gasket.exec('errorMiddleware')).filter(Boolean);
+      const postRenderingStacks = (await gasket.exec('errorMiddleware')).filter(
+        Boolean
+      );
       postRenderingStacks.forEach((stack) => app.use(stack));
 
       return {
@@ -181,32 +210,40 @@ module.exports = {
             after: 'express'
           }
         ],
-        configurations: [{
-          name: 'express',
-          link: 'README.md#configuration',
-          description: 'Express plugin configuration',
-          type: 'object'
-        }, {
-          name: 'express.compression',
-          link: 'README.md#configuration',
-          description: 'Automatic compression',
-          type: 'boolean',
-          default: true
-        }, {
-          name: 'express.routes',
-          link: 'README.md#configuration',
-          description: 'Glob pattern for route setup code',
-          type: 'string'
-        }, {
-          name: 'express.excludedRoutesRegex',
-          link: 'README.md#configuration',
-          description: 'Routes to be included for Gasket middleware, based on a regex',
-          deprecated: true
-        }, {
-          name: 'express.middlewareInclusionRegex',
-          link: 'README.md#configuration',
-          description: 'Routes to be included for Gasket middleware, based on a regex'
-        }]
+        configurations: [
+          {
+            name: 'express',
+            link: 'README.md#configuration',
+            description: 'Express plugin configuration',
+            type: 'object'
+          },
+          {
+            name: 'express.compression',
+            link: 'README.md#configuration',
+            description: 'Automatic compression',
+            type: 'boolean',
+            default: true
+          },
+          {
+            name: 'express.routes',
+            link: 'README.md#configuration',
+            description: 'Glob pattern for route setup code',
+            type: 'string'
+          },
+          {
+            name: 'express.excludedRoutesRegex',
+            link: 'README.md#configuration',
+            description:
+              'Routes to be included for Gasket middleware, based on a regex',
+            deprecated: true
+          },
+          {
+            name: 'express.middlewareInclusionRegex',
+            link: 'README.md#configuration',
+            description:
+              'Routes to be included for Gasket middleware, based on a regex'
+          }
+        ]
       };
     }
   }

@@ -8,7 +8,7 @@ jest.mock('fs', () => {
   return {
     ...originalModule,
     promises: {
-      writeFile: jest.fn(() =>  Promise.resolve(null))
+      writeFile: jest.fn(() => Promise.resolve(null))
     }
   };
 });
@@ -17,7 +17,6 @@ describe('build', () => {
   let mockConfig, mockGasket;
 
   beforeEach(() => {
-
     mockConfig = {
       url: '/sw.js',
       scope: '/',
@@ -33,7 +32,7 @@ describe('build', () => {
         serviceWorker: mockConfig
       },
       logger: {
-        log: jest.fn()
+        info: jest.fn()
       },
       execWaterfall: jest.fn()
     };

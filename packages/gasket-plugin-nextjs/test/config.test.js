@@ -28,7 +28,10 @@ describe('createConfig', () => {
 
   it('executes the `nextConfig` lifecycle', async function () {
     result = await createConfig(gasket);
-    expect(gasket.execWaterfall).toHaveBeenCalledWith('nextConfig', expect.any(Object));
+    expect(gasket.execWaterfall).toHaveBeenCalledWith(
+      'nextConfig',
+      expect.any(Object)
+    );
   });
 
   it('return config object for next.js', async () => {
@@ -136,9 +139,13 @@ describe('createConfig', () => {
       ]
     });
 
-    expect(gasket.logger.warning).toHaveBeenCalledTimes(2);
-    expect(gasket.logger.warning).toHaveBeenCalledWith(expect.stringContaining('nextConfig.i18n.defaultLocale'));
-    expect(gasket.logger.warning).toHaveBeenCalledWith(expect.stringContaining('nextConfig.i18n.locales'));
+    expect(gasket.logger.warn).toHaveBeenCalledTimes(2);
+    expect(gasket.logger.warn).toHaveBeenCalledWith(
+      expect.stringContaining('nextConfig.i18n.defaultLocale')
+    );
+    expect(gasket.logger.warn).toHaveBeenCalledWith(
+      expect.stringContaining('nextConfig.i18n.locales')
+    );
   });
 
   it('adds webpack hook', async () => {
@@ -168,7 +175,11 @@ describe('createConfig', () => {
     it('executes webpack plugin hook', () => {
       result = config.webpack(webpackConfig, data);
       // TODO: should not test this deep into webpack plugin
-      expect(gasket.execWaterfallSync).toHaveBeenCalledWith('webpackConfig', expect.any(Object), expect.any(Object));
+      expect(gasket.execWaterfallSync).toHaveBeenCalledWith(
+        'webpackConfig',
+        expect.any(Object),
+        expect.any(Object)
+      );
     });
 
     it('returns webpack config object', () => {
@@ -185,44 +196,51 @@ describe('createConfig', () => {
     });
 
     it('merges the return values from `webpack` into a single webpack config', async function () {
-      const engine = lifecycle({}, {
-        webpackConfig: function (gasketAPI) {
-          expect(gasketAPI).toEqual(engine);
+      const engine = lifecycle(
+        {},
+        {
+          webpackConfig: function (gasketAPI) {
+            expect(gasketAPI).toEqual(engine);
 
-          return {
-            resolve: {
-              alias: {
-                '@gasket/example': __filename
+            return {
+              resolve: {
+                alias: {
+                  '@gasket/example': __filename
+                }
               }
-            }
-          };
+            };
+          }
         }
-      });
+      );
 
       const nextConfig = await createConfig(engine);
-      const resultConfig = nextConfig.webpack({
-        plugins: [],
-        output: {},
-        module: {
-          rules: []
-        },
-        optimization: {
-          splitChunks: {
-            cacheGroups: {}
+      const resultConfig = nextConfig.webpack(
+        {
+          plugins: [],
+          output: {},
+          module: {
+            rules: []
           },
-          minimize: false
-        }
-      }, { isServer: false, defaultLoaders: {}, dev: true, config: nextConfig });
+          optimization: {
+            splitChunks: {
+              cacheGroups: {}
+            },
+            minimize: false
+          }
+        },
+        { isServer: false, defaultLoaders: {}, dev: true, config: nextConfig }
+      );
 
       expect(resultConfig.resolve.alias['@gasket/example']).toEqual(__filename);
     });
 
     describe('built-ins', () => {
-
       it('configures SASS loader', () => {
         result = config.webpack(webpackConfig, data);
 
-        expect(result.module.rules.some(rule => rule.test.test('bogus.scss'))).toBeFalsy();
+        expect(
+          result.module.rules.some((rule) => rule.test.test('bogus.scss'))
+        ).toBeFalsy();
       });
     });
   });
@@ -236,11 +254,11 @@ function mockGasketApi() {
     execSync: jest.fn().mockReturnValue([]),
     execApplySync: jest.fn((_, config) => config),
     logger: {
-      warning: jest.fn()
+      warn: jest.fn()
     },
     config: {
       root: '/path/to/app',
-      webpack: {}  // user specified webpack config
+      webpack: {} // user specified webpack config
     },
     next: {}
   };
@@ -268,7 +286,11 @@ function lifecycle(config = {}, ...plugins) {
   const engine = new Engine({
     root: '/path/to/app',
     plugins: {
-      add: [require('../lib/index'), require('@gasket/plugin-webpack'), ...plugins].filter(Boolean)
+      add: [
+        require('../lib/index'),
+        require('@gasket/plugin-webpack'),
+        ...plugins
+      ].filter(Boolean)
     },
     nextConfig: {},
     http: {
@@ -279,7 +301,7 @@ function lifecycle(config = {}, ...plugins) {
   });
 
   engine.logger = {
-    warning: jest.fn()
+    warn: jest.fn()
   };
 
   return engine;

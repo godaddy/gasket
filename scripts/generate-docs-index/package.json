@@ -3,6 +3,10 @@
   "private": true,
   "version": "6.45.2",
   "description": "Generate the overview index",
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "npm run lint -- --fix"
+  },
   "dependencies": {
     "@gasket/cli": "^6.45.2"
   },

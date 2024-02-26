@@ -14,7 +14,10 @@ class BuildModules {
    * @param {Gasket} gasket - Gasket API
    */
   constructor(gasket) {
-    const { logger, config: { root } } = gasket;
+    const {
+      logger,
+      config: { root }
+    } = gasket;
     const intlConfig = getIntlConfig(gasket);
 
     const { modules } = intlConfig;
@@ -45,7 +48,7 @@ class BuildModules {
 
     const fileNames = await fs.readdir(srcDir);
 
-    const promises = fileNames.map(async fileName => {
+    const promises = fileNames.map(async (fileName) => {
       const srcFile = path.join(srcDir, fileName);
       const tgtFile = path.join(tgtDir, fileName);
       if (path.extname(srcFile) === '.json') {
@@ -82,7 +85,7 @@ class BuildModules {
   processFiles(srcDir, tgtDir, fileNames) {
     debug(`Processing files in ${srcDir} to target ${tgtDir}`);
 
-    const promises = fileNames.map(async fileName => {
+    const promises = fileNames.map(async (fileName) => {
       const srcFile = path.join(srcDir, fileName);
       const tgtFile = path.join(tgtDir, fileName);
 
@@ -139,7 +142,7 @@ class BuildModules {
     for (const [pkgName, srcDir] of srcPkgDirs) {
       const tgtDir = path.join(this._outputDir, pkgName);
 
-      this._logger.log(`build:locales: Updating locale files for: ${pkgName}`);
+      this._logger.info(`build:locales: Updating locale files for: ${pkgName}`);
 
       await fs.remove(tgtDir);
       await fs.mkdirp(tgtDir);
@@ -148,7 +151,7 @@ class BuildModules {
       await this.processFiles(srcDir, tgtDir, fileNames);
     }
 
-    this._logger.log(`build:locales: Completed locale files update.`);
+    this._logger.info(`build:locales: Completed locale files update.`);
   }
 
   /**
@@ -160,7 +163,9 @@ class BuildModules {
     const results = [];
     for await (const [pkgName, dir] of getPackageDirs(this._nodeModulesDir)) {
       if (!this._excludes.includes(path.basename(dir))) {
-        const buildDir = path.resolve(path.join(dir, ...this._lookupDir.split('/')));
+        const buildDir = path.resolve(
+          path.join(dir, ...this._lookupDir.split('/'))
+        );
         try {
           const stat = await fs.lstat(buildDir);
           if (stat.isDirectory()) {
@@ -182,13 +187,14 @@ class BuildModules {
    */
   async gatherModuleDirs() {
     if (this._lookupModuleDirs) {
-      const promises = this._lookupModuleDirs.map(async lookupDir => {
-
+      const promises = this._lookupModuleDirs.map(async (lookupDir) => {
         const match = lookupDir.match(rePkgParts);
         const pkgName = match?.groups?.name;
 
         if (!pkgName) {
-          this._logger.warning(`build:locales: malformed module name: ${lookupDir}`);
+          this._logger.warn(
+            `build:locales: malformed module name: ${lookupDir}`
+          );
           return;
         }
 
@@ -208,7 +214,9 @@ class BuildModules {
           // skip
         }
 
-        this._logger.warning(`build:locales: locales directory not found for: ${lookupDir}`);
+        this._logger.warn(
+          `build:locales: locales directory not found for: ${lookupDir}`
+        );
       });
 
       const results = await Promise.all(promises);

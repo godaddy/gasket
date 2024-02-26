@@ -28,7 +28,9 @@ jest.mock('util', () => {
     promisify: (f) => f
   };
 });
-jest.mock('/path/to/app/swagger.json', () => ({ data: true }), { virtual: true });
+jest.mock('/path/to/app/swagger.json', () => ({ data: true }), {
+  virtual: true
+});
 
 const fastify = require('fastify')({ logger: true });
 
@@ -71,30 +73,34 @@ describe('Swagger Plugin', function () {
   });
 
   describe('configure hook', function () {
-
     it('sets expected defaults', function () {
       const results = plugin.hooks.configure({}, {});
-      expect(results)
-        .toEqual({
-          swagger: {
-            definitionFile: 'swagger.json',
-            apiDocsRoute: '/api-docs'
-          }
-        });
+      expect(results).toEqual({
+        swagger: {
+          definitionFile: 'swagger.json',
+          apiDocsRoute: '/api-docs'
+        }
+      });
     });
 
     it('uses specified definitionFile', function () {
-      const results = plugin.hooks.configure({}, {
-        swagger: { definitionFile: 'dist/api-spec.yaml' }
-      });
+      const results = plugin.hooks.configure(
+        {},
+        {
+          swagger: { definitionFile: 'dist/api-spec.yaml' }
+        }
+      );
 
       expect(results.swagger.definitionFile).toEqual('dist/api-spec.yaml');
     });
 
     it('uses specified apiDocsRoute', function () {
-      const results = plugin.hooks.configure({}, {
-        swagger: { apiDocsRoute: '/api/v2/docs' }
-      });
+      const results = plugin.hooks.configure(
+        {},
+        {
+          swagger: { apiDocsRoute: '/api/v2/docs' }
+        }
+      );
 
       expect(results.swagger.apiDocsRoute).toEqual('/api/v2/docs');
     });
@@ -107,7 +113,7 @@ describe('Swagger Plugin', function () {
       mockGasket = {
         logger: {
           info: jest.fn(),
-          warning: jest.fn()
+          warn: jest.fn()
         },
         config: {
           root: '/path/to/app',
@@ -132,7 +138,11 @@ describe('Swagger Plugin', function () {
     it('writes spec file', async function () {
       mockSwaggerJSDocStub.mockReturnValue({ data: true });
       await plugin.hooks.build(mockGasket);
-      expect(mockWriteFileStub).toHaveBeenCalledWith('/path/to/app/swagger.json', expect.any(String), 'utf8');
+      expect(mockWriteFileStub).toHaveBeenCalledWith(
+        '/path/to/app/swagger.json',
+        expect.any(String),
+        'utf8'
+      );
     });
 
     it('json content for .json definition files', async function () {
@@ -193,7 +203,9 @@ describe('Swagger Plugin', function () {
       mockGasket.config.swagger.definitionFile = 'swagger.yaml';
       mockAccessStub.mockRejectedValueOnce();
       await plugin.hooks.express.handler(mockGasket, mockApp);
-      expect(mockGasket.logger.error).toHaveBeenCalledWith(`Missing ${mockGasket.config.swagger.definitionFile} file...`);
+      expect(mockGasket.logger.error).toHaveBeenCalledWith(
+        `Missing ${mockGasket.config.swagger.definitionFile} file...`
+      );
     });
 
     it('loads the swagger spec yaml file', async function () {
@@ -246,7 +258,6 @@ describe('Swagger Plugin', function () {
       };
     });
 
-
     it('returns nothing when target definition file is not found', async function () {
       mockGasket.config.swagger.definitionFile = 'swagger.yaml';
       const result = await plugin.hooks.fastify.handler(mockGasket, mockApp);
@@ -257,7 +268,9 @@ describe('Swagger Plugin', function () {
       mockGasket.config.swagger.definitionFile = 'swagger.yaml';
       mockAccessStub.mockRejectedValueOnce();
       await plugin.hooks.fastify.handler(mockGasket, mockApp);
-      expect(mockGasket.logger.error).toHaveBeenCalledWith(`Missing ${mockGasket.config.swagger.definitionFile} file...`);
+      expect(mockGasket.logger.error).toHaveBeenCalledWith(
+        `Missing ${mockGasket.config.swagger.definitionFile} file...`
+      );
     });
 
     it('loads the swagger spec yaml file', async function () {
@@ -282,14 +295,11 @@ describe('Swagger Plugin', function () {
 
     it('sets the api docs route', async function () {
       await plugin.hooks.fastify.handler(mockGasket, mockApp);
-      expect(mockApp.register).toHaveBeenCalledWith(
-        expect.any(Function),
-        {
-          prefix: '/api-docs',
-          swagger: { data: true },
-          uiConfig: {}
-        }
-      );
+      expect(mockApp.register).toHaveBeenCalledWith(expect.any(Function), {
+        prefix: '/api-docs',
+        swagger: { data: true },
+        uiConfig: {}
+      });
     });
 
     it('adds new routes to swagger paths', async function () {
