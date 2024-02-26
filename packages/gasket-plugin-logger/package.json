@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-logger",
-  "version": "6.43.0",
+  "version": "6.46.0",
   "description": "Gasket plugin for logging",
   "main": "lib",
   "types": "lib/index.d.ts",

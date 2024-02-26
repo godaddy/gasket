@@ -35,7 +35,6 @@ To customize the logger, add a `winston` object to your `gasket.config.js`. The 
 ```js
 module.exports = {
   winston: {
-    prefix: 'my-app',
     level: 'warning'
   },
 
@@ -51,7 +50,6 @@ module.exports = {
 
 ### Options
 
-- `prefix` - (string) used to set the prefix in the `winston` format.
 - Select `winston` configuration values – (multiple) See below for these
   additional supported properties.
 
