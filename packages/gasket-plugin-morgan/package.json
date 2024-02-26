@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-morgan",
-  "version": "6.45.2",
+  "version": "6.46.2-esm.0",
   "description": "Adds morgan request logger to your app",
   "main": "lib",
   "types": "lib/index.d.ts",
@@ -42,7 +42,7 @@
     "split": "^1.0.1"
   },
   "devDependencies": {
-    "@gasket/engine": "^6.45.2",
+    "@gasket/engine": "^6.46.2-esm.0",
     "@types/morgan": "^1.9.9",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
