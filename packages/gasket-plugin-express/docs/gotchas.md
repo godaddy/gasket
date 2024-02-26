@@ -2,9 +2,9 @@
 
 ## `body-parser` not enabled by default
 
-You may encounter middlewares that assume `body-parser` is included earlier in
+You may encounter middlewares that assume [body-parser] is included earlier in
 your middleware chain. This is somewhat common among modules in the Express
-ecosystem since `body-parse` is very commonly used.
+ecosystem since `body-parser` is very commonly used.
 
 When using Gasket for Next.js webapps, this is generally unnecessary to have.
 However, if using Gasket for an Express API, you may encounter this issue.
@@ -27,3 +27,5 @@ module.exports = function middleware(gasket) {
   */);
 };
 ```
+
+[body-parser]: https://github.com/expressjs/body-parser
