@@ -163,7 +163,9 @@ class BuildModules {
     const results = [];
     for await (const [pkgName, dir] of getPackageDirs(this._nodeModulesDir)) {
       if (!this._excludes.includes(path.basename(dir))) {
-        const buildDir = path.resolve(path.join(dir, ...this._lookupDir.split('/')));
+        const buildDir = path.resolve(
+          path.join(dir, ...this._lookupDir.split('/'))
+        );
         try {
           const stat = await fs.lstat(buildDir);
           if (stat.isDirectory()) {
@@ -185,13 +187,14 @@ class BuildModules {
    */
   async gatherModuleDirs() {
     if (this._lookupModuleDirs) {
-      const promises = this._lookupModuleDirs.map(async lookupDir => {
-
+      const promises = this._lookupModuleDirs.map(async (lookupDir) => {
         const match = lookupDir.match(rePkgParts);
         const pkgName = match?.groups?.name;
 
         if (!pkgName) {
-          this._logger.warning(`build:locales: malformed module name: ${lookupDir}`);
+          this._logger.warn(
+            `build:locales: malformed module name: ${lookupDir}`
+          );
           return;
         }
 
@@ -211,7 +214,9 @@ class BuildModules {
           // skip
         }
 
-        this._logger.warning(`build:locales: locales directory not found for: ${lookupDir}`);
+        this._logger.warn(
+          `build:locales: locales directory not found for: ${lookupDir}`
+        );
       });
 
       const results = await Promise.all(promises);

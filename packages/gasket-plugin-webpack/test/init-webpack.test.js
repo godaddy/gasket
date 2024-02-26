@@ -8,7 +8,7 @@ describe('init webpack', function () {
     mockGasket = {
       execWaterfallSync: jest.fn((_, config) => config),
       logger: {
-        warning: jest.fn()
+        warn: jest.fn()
       },
       config: {}
     };
@@ -35,7 +35,9 @@ describe('init webpack', function () {
   it('executes webpackConfig lifecycle', function () {
     initWebpack(mockGasket, mockConfig, mockContext);
     expect(mockGasket.execWaterfallSync).toHaveBeenCalledWith(
-      'webpackConfig', expect.any(Object), { webpack: expect.any(Function) }
+      'webpackConfig',
+      expect.any(Object),
+      { webpack: expect.any(Function) }
     );
   });
 
@@ -56,6 +58,5 @@ describe('init webpack', function () {
     it('context.webpack returns webpack', function () {
       expect(setupContextStub.webpack).toEqual(require('webpack'));
     });
-
   });
 });

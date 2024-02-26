@@ -7,7 +7,7 @@ describe('configure', () => {
   beforeAll(() => {
     mockGasket = {
       logger: {
-        warning: jest.fn()
+        warn: jest.fn()
       },
       config: {
         root: '/some-root'
@@ -21,35 +21,43 @@ describe('configure', () => {
   });
 
   it('retains base config settings', async () => {
-    results = await configure(mockGasket,
-      { ...mockGasket.config, bogus: 'BOGUS' });
+    results = await configure(mockGasket, {
+      ...mockGasket.config,
+      bogus: 'BOGUS'
+    });
     expect(results).toHaveProperty('bogus', 'BOGUS');
   });
 
   it('sets defaults', async () => {
     results = await configure(mockGasket, mockGasket.config);
-    expect(results.workbox).toEqual(expect.objectContaining({
-      ...utils.defaultConfig,
-      config: {
-        ...utils.defaultConfig.config,
-        importScripts: expect.any(Array)
-      }
-    }));
+    expect(results.workbox).toEqual(
+      expect.objectContaining({
+        ...utils.defaultConfig,
+        config: {
+          ...utils.defaultConfig.config,
+          importScripts: expect.any(Array)
+        }
+      })
+    );
   });
 
   it('sets library version', async () => {
     results = await configure(mockGasket, mockGasket.config);
-    expect(results.workbox).
-      toHaveProperty('libraryVersion', expect.stringContaining('workbox-v'));
+    expect(results.workbox).toHaveProperty(
+      'libraryVersion',
+      expect.stringContaining('workbox-v')
+    );
   });
 
   it('add library script to imports', async () => {
     results = await configure(mockGasket, mockGasket.config);
-    expect(results.workbox.config).toHaveProperty('importScripts',
+    expect(results.workbox.config).toHaveProperty(
+      'importScripts',
       expect.arrayContaining([
         expect.stringContaining('_workbox/workbox-v'),
         expect.stringContaining('workbox-sw.js')
-      ]));
+      ])
+    );
   });
 
   it('add basePath to script path', async () => {
@@ -57,12 +65,14 @@ describe('configure', () => {
       basePath: '/some/prefix'
     };
     results = await configure(mockGasket, mockGasket.config);
-    expect(results.workbox.config).toHaveProperty('importScripts',
+    expect(results.workbox.config).toHaveProperty(
+      'importScripts',
       expect.arrayContaining([
         expect.stringContaining('/some/prefix'),
         expect.stringContaining('_workbox/workbox'),
         expect.stringContaining('workbox-sw.js')
-      ]));
+      ])
+    );
   });
 
   it('allows workbox settings to be customized by user', async () => {

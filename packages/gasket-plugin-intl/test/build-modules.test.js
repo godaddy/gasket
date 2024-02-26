@@ -12,7 +12,8 @@ describe('buildModules', function () {
 
   beforeEach(function () {
     logger = {
-      info: jest.fn()
+      info: jest.fn(),
+      warn: jest.fn()
     };
     mockGasket = {
       logger,
@@ -170,7 +171,7 @@ describe('buildModules', function () {
           ['myh-fake2', '/path/to/module/myh-fake2'],
           ['myh-fake3', '/path/to/module/myh-fake3']
         ];
-        getPackageDirs.mockImplementation(async function* mockGen() {
+        getPackageDirs.mockImplementation(async function *mockGen() {
           for (const pair of discoveredDirs) {
             yield pair;
           }
@@ -247,7 +248,7 @@ describe('buildModules', function () {
         const results = await builder.gatherModuleDirs();
         expect(results).toHaveLength(0);
 
-        expect(logger.warning).toHaveBeenCalledWith(
+        expect(logger.warn).toHaveBeenCalledWith(
           'build:locales: locales directory not found for: @third/package/missing-locales'
         );
       });
@@ -270,7 +271,7 @@ describe('buildModules', function () {
         expect(results).toHaveLength(0);
 
         mockGasket.config.intl.modules.forEach((name) => {
-          expect(logger.warning).toHaveBeenCalledWith(
+          expect(logger.warn).toHaveBeenCalledWith(
             `build:locales: malformed module name: ${name}`
           );
         });
@@ -295,7 +296,7 @@ describe('buildModules', function () {
         const results = await builder.gatherModuleDirs();
 
         expect(results).toHaveLength(mockGasket.config.intl.modules.length);
-        expect(logger.warning).not.toHaveBeenCalled();
+        expect(logger.warn).not.toHaveBeenCalled();
 
         mockGasket.config.intl.modules.forEach((name) => {
           expect(results).toEqual(

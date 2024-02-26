@@ -301,7 +301,7 @@ function lifecycle(config = {}, ...plugins) {
   });
 
   engine.logger = {
-    warning: jest.fn()
+    warn: jest.fn()
   };
 
   return engine;

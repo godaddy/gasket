@@ -3,7 +3,7 @@ const path = require('path');
 const configure = require('../lib/configure');
 const { getIntlConfig } = configure;
 
-const setupGasket = config => ({
+const setupGasket = (config) => ({
   config: {
     root: '/path/to/root',
     ...config
@@ -14,7 +14,7 @@ describe('configure', function () {
   const root = '/path/to/root';
   const mockGasket = {
     logger: {
-      warning: jest.fn()
+      warn: jest.fn()
     },
     config: {
       root
@@ -81,20 +81,34 @@ describe('configure', function () {
   });
 
   it('can use nextConfig.assetPrefix for basePath', function () {
-    const results = configure(mockGasket, { root, nextConfig: { assetPrefix: 'from-next' } });
+    const results = configure(mockGasket, {
+      root,
+      nextConfig: { assetPrefix: 'from-next' }
+    });
     expect(results.intl).toHaveProperty('basePath', 'from-next');
   });
 
   it('can use nextConfig.basePath for basePath', function () {
-    const results = configure(mockGasket, { root, nextConfig: { basePath: 'from-next' } });
+    const results = configure(mockGasket, {
+      root,
+      nextConfig: { basePath: 'from-next' }
+    });
     expect(results.intl).toHaveProperty('basePath', 'from-next');
   });
 
   it(`intl.basePath can be empty string, overriding lesser configs`, function () {
-    let results = configure(mockGasket, { root, intl: { basePath: '' }, nextConfig: { assetPrefix: 'from-next' } });
+    let results = configure(mockGasket, {
+      root,
+      intl: { basePath: '' },
+      nextConfig: { assetPrefix: 'from-next' }
+    });
     expect(results.intl).toHaveProperty('basePath', '');
 
-    results = configure(mockGasket, { root, basePath: 'from-root', intl: { basePath: '' } });
+    results = configure(mockGasket, {
+      root,
+      basePath: 'from-root',
+      intl: { basePath: '' }
+    });
     expect(results.intl).toHaveProperty('basePath', '');
   });
 
@@ -102,21 +116,24 @@ describe('configure', function () {
     expect(process.env.GASKET_INTL_LOCALES_DIR).toBeUndefined();
     expect(process.env.GASKET_INTL_MANIFEST_FILE).toBeUndefined();
     const results = configure(mockGasket, { root });
-    expect(process.env.GASKET_INTL_LOCALES_DIR).toEqual(results.intl.localesDir);
+    expect(process.env.GASKET_INTL_LOCALES_DIR).toEqual(
+      results.intl.localesDir
+    );
     expect(process.env.GASKET_INTL_MANIFEST_FILE).toEqual(
       path.join(results.intl.localesDir, results.intl.manifestFilename)
     );
   });
 
   describe('getIntlConfig', function () {
-
     it('returns intl config from gasket.config.js', function () {
-      const results = getIntlConfig(setupGasket({
-        intl: {
-          localesDir: 'custom/locales',
-          assetPrefix: 'BOGUS'
-        }
-      }));
+      const results = getIntlConfig(
+        setupGasket({
+          intl: {
+            localesDir: 'custom/locales',
+            assetPrefix: 'BOGUS'
+          }
+        })
+      );
       expect(results).toEqual({
         localesDir: 'custom/locales',
         assetPrefix: 'BOGUS'
