@@ -20,12 +20,16 @@ function forwardIntlConfig(gasket, config) {
 
   if (intlConfig.locales) {
     if (i18n.locales) {
-      logger.warning('Gasket config has both `intl.locales` (preferred) and `nextConfig.i18n.locales`');
+      logger.warn(
+        'Gasket config has both `intl.locales` (preferred) and `nextConfig.i18n.locales`'
+      );
     }
     i18n.locales = intlConfig.locales;
 
     if (i18n.defaultLocale) {
-      logger.warning('Gasket config has both `intl.defaultLocale` (preferred) and `nextConfig.i18n.defaultLocale`');
+      logger.warn(
+        'Gasket config has both `intl.defaultLocale` (preferred) and `nextConfig.i18n.defaultLocale`'
+      );
     }
     i18n.defaultLocale = intlConfig.defaultLocale;
 

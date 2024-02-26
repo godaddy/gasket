@@ -14,12 +14,11 @@ describe('composeServiceWorker', () => {
         root: '/some-root',
         workbox: utils.defaultConfig
       },
-      exec: jest.fn().mockResolvedValue([
-        { configA: 'one' },
-        { configB: 'two' }
-      ]),
+      exec: jest
+        .fn()
+        .mockResolvedValue([{ configA: 'one' }, { configB: 'two' }]),
       logger: {
-        warning: jest.fn()
+        warn: jest.fn()
       }
     };
     mockContent = '/* mock sw content */';
@@ -43,7 +42,8 @@ describe('composeServiceWorker', () => {
         ...utils.defaultConfig.config,
         configA: 'one',
         configB: 'two'
-      }));
+      })
+    );
   });
 
   it('appends generated workbox service worker content', async () => {
@@ -63,13 +63,13 @@ describe('composeServiceWorker', () => {
 
   it('does not call logger if no warnings', async () => {
     results = await composeServiceWorker(mockGasket, mockContent, mockContext);
-    expect(mockGasket.logger.warning).not.toHaveBeenCalled();
+    expect(mockGasket.logger.warn).not.toHaveBeenCalled();
   });
 
   it('logs warnings if they exists', async () => {
     const mockWarnings = ['something bad happened'];
     __setWarnings(mockWarnings);
     results = await composeServiceWorker(mockGasket, mockContent, mockContext);
-    expect(mockGasket.logger.warning).toHaveBeenCalledWith(mockWarnings);
+    expect(mockGasket.logger.warn).toHaveBeenCalledWith(mockWarnings);
   });
 });

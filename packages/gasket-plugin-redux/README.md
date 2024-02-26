@@ -8,13 +8,13 @@ Gasket plugin to setup redux store available to express middleware.
 
 ***Recommended***
 
-```
+```sh
 gasket create <app-name> --plugins @gasket/plugin-redux
 ```
 
 #### Existing apps
 
-```
+```sh
 npm i @gasket/plugin-redux @gasket/redux redux
 ```
 
@@ -86,9 +86,8 @@ module.exports = {
 
 const { configureMakeStore } = require('@gasket/redux');
 const reducers = require('./reducers'); // app's reducers
-const Log = require('@gasket/log');     // custom log implementation
 
-module.exports = configureMakeStore({ reducers, logger: new Log() });
+module.exports = configureMakeStore({ reducers });
 ```
 
 ## Usage

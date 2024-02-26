@@ -7,6 +7,8 @@
     "lib": "lib"
   },
   "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "npm run lint -- --fix",
     "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest"
   },
   "repository": {

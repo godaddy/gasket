@@ -6,7 +6,6 @@ const { name } = require('../package');
 // configuration options: http://expressjs.com/en/resources/middleware/morgan.html
 module.exports = {
   name,
-  dependencies: ['@gasket/plugin-log'],
   hooks: {
     middleware: {
       handler: (gasket) => {
@@ -23,23 +22,27 @@ module.exports = {
     metadata(gasket, meta) {
       return {
         ...meta,
-        configurations: [{
-          name: 'morgan',
-          link: 'README.md#configuration',
-          description: 'Morgan plugin configuration',
-          type: 'object'
-        }, {
-          name: 'morgan.format',
-          link: 'README.md#configuration',
-          description: 'Log format to print',
-          type: 'string',
-          default: 'tiny'
-        }, {
-          name: 'morgan.options',
-          link: 'README.md#configuration',
-          description: 'Morgan options',
-          type: 'object'
-        }]
+        configurations: [
+          {
+            name: 'morgan',
+            link: 'README.md#configuration',
+            description: 'Morgan plugin configuration',
+            type: 'object'
+          },
+          {
+            name: 'morgan.format',
+            link: 'README.md#configuration',
+            description: 'Log format to print',
+            type: 'string',
+            default: 'tiny'
+          },
+          {
+            name: 'morgan.options',
+            link: 'README.md#configuration',
+            description: 'Morgan options',
+            type: 'object'
+          }
+        ]
       };
     }
   }

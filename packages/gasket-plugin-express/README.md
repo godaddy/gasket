@@ -83,6 +83,22 @@ middleware are triggered for which requests.
   ]
 ```
 
+## Logging
+
+This plugin attaches a `logger` object to the request object. This object has a `metadata` method that allows you to attach details to any log entry related to the request. For example, you can add the user ID to each log entry. When logging within the context of a request, use the `req.logger` object instead of the global `gasket.logger` so that contextual information is included in the log entry. Here is an example of how to attach metadata to  `req.logger` object and how to use it:
+
+```js
+function someMiddleware(req, res, next) {
+  req.logger.metadata({ userId: req.user.id });
+  next();
+}
+
+function someOtherMiddleware(req, res, next) {
+  req.logger.info('Some log message');
+  next();
+}
+```
+
 ## Lifecycles
 
 ### middleware

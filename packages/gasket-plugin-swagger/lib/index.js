@@ -68,7 +68,7 @@ module.exports = {
         const swaggerSpec = swaggerJSDoc(jsdoc);
 
         if (!swaggerSpec) {
-          gasket.logger.warning(
+          gasket.logger.warn(
             `No JSDocs for Swagger were found in files (${jsdoc.apis}). Definition file not generated...`
           );
         } else {
@@ -100,9 +100,17 @@ module.exports = {
         const { swagger, root } = gasket.config;
         const { ui = {}, apiDocsRoute, definitionFile } = swagger;
 
-        const swaggerSpec = await loadSwaggerSpec(root, definitionFile, gasket.logger);
+        const swaggerSpec = await loadSwaggerSpec(
+          root,
+          definitionFile,
+          gasket.logger
+        );
 
-        app.use(apiDocsRoute, swaggerUi.serve, swaggerUi.setup(swaggerSpec, ui));
+        app.use(
+          apiDocsRoute,
+          swaggerUi.serve,
+          swaggerUi.setup(swaggerSpec, ui)
+        );
       }
     },
     /**
@@ -120,7 +128,11 @@ module.exports = {
         const { swagger, root } = gasket.config;
         const { ui = {}, apiDocsRoute, definitionFile } = swagger;
 
-        const swaggerSpec = await loadSwaggerSpec(root, definitionFile, gasket.logger);
+        const swaggerSpec = await loadSwaggerSpec(
+          root,
+          definitionFile,
+          gasket.logger
+        );
 
         app.register(require('@fastify/swagger'), {
           prefix: apiDocsRoute,
@@ -153,34 +165,41 @@ module.exports = {
     metadata(gasket, meta) {
       return {
         ...meta,
-        configurations: [{
-          name: 'swagger',
-          link: 'README.md#configuration',
-          description: 'Swagger config object',
-          type: 'object'
-        }, {
-          name: 'swagger.definitionFile',
-          link: 'README.md#configuration',
-          description: 'Target swagger spec file, either json or yaml',
-          type: 'string',
-          default: 'swagger.json'
-        }, {
-          name: 'swagger.apiDocsRoute',
-          link: 'README.md#configuration',
-          description: 'Route to Swagger UI',
-          type: 'string',
-          default: '/api-docs'
-        }, {
-          name: 'swagger.jsdoc',
-          link: 'README.md#configuration',
-          description: 'If set, the definitionFile will be generated based on JSDocs in the configured files',
-          type: 'object'
-        }, {
-          name: 'swagger.ui',
-          link: 'README.md#configuration',
-          description: 'Optional custom UI options',
-          type: 'object'
-        }]
+        configurations: [
+          {
+            name: 'swagger',
+            link: 'README.md#configuration',
+            description: 'Swagger config object',
+            type: 'object'
+          },
+          {
+            name: 'swagger.definitionFile',
+            link: 'README.md#configuration',
+            description: 'Target swagger spec file, either json or yaml',
+            type: 'string',
+            default: 'swagger.json'
+          },
+          {
+            name: 'swagger.apiDocsRoute',
+            link: 'README.md#configuration',
+            description: 'Route to Swagger UI',
+            type: 'string',
+            default: '/api-docs'
+          },
+          {
+            name: 'swagger.jsdoc',
+            link: 'README.md#configuration',
+            description:
+              'If set, the definitionFile will be generated based on JSDocs in the configured files',
+            type: 'object'
+          },
+          {
+            name: 'swagger.ui',
+            link: 'README.md#configuration',
+            description: 'Optional custom UI options',
+            type: 'object'
+          }
+        ]
       };
     }
   }

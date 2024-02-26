@@ -12,8 +12,8 @@ describe('buildModules', function () {
 
   beforeEach(function () {
     logger = {
-      log: jest.fn(),
-      warning: jest.fn()
+      info: jest.fn(),
+      warn: jest.fn()
     };
     mockGasket = {
       logger,
@@ -105,39 +105,50 @@ describe('buildModules', function () {
 
     describe('#getPackageNameFromDir', function () {
       it('parses and returns the module name', function () {
-        expect(builder.getPackageNameFromDir('/src/path/to/test-app/locales')).toEqual('test-app');
+        expect(
+          builder.getPackageNameFromDir('/src/path/to/test-app/locales')
+        ).toEqual('test-app');
       });
       it('parses and returns the scoped module name', function () {
-        expect(builder.getPackageNameFromDir('/src/path/to/@module/test-app/locales')).toEqual('@module/test-app');
+        expect(
+          builder.getPackageNameFromDir('/src/path/to/@module/test-app/locales')
+        ).toEqual('@module/test-app');
       });
     });
 
     describe('#getPackageName', function () {
       it('parses and returns the app name', async function () {
         jest.spyOn(fs, 'readJson').mockResolvedValue({ name: 'test-app' });
-        expect(await builder.getPackageName('/src/path/to/test-app/locales')).toEqual('test-app');
+        expect(
+          await builder.getPackageName('/src/path/to/test-app/locales')
+        ).toEqual('test-app');
       });
       it('parses and returns the scoped module name', async function () {
-        jest.spyOn(fs, 'readJson').mockResolvedValue({ name: '@module/test-app' });
-        expect(await builder.getPackageName('/src/path/to/@module/test-app/locales')).toEqual('@module/test-app');
+        jest
+          .spyOn(fs, 'readJson')
+          .mockResolvedValue({ name: '@module/test-app' });
+        expect(
+          await builder.getPackageName('/src/path/to/@module/test-app/locales')
+        ).toEqual('@module/test-app');
       });
       it('falls back to name from dir if no name in package.json', async function () {
         jest.spyOn(fs, 'readJson').mockResolvedValue({ missing: 'name' });
-        expect(await builder.getPackageName('/src/path/to/@another/module/locales')).toEqual('@another/module');
+        expect(
+          await builder.getPackageName('/src/path/to/@another/module/locales')
+        ).toEqual('@another/module');
       });
       it('falls back to name from dir if error reading package.json', async function () {
         jest.spyOn(fs, 'readJson').mockRejectedValue('bad');
-        expect(await builder.getPackageName('/src/path/to/@another/module/locales')).toEqual('@another/module');
+        expect(
+          await builder.getPackageName('/src/path/to/@another/module/locales')
+        ).toEqual('@another/module');
       });
     });
 
     describe('#processDirs', function () {
       let buildDirs;
       beforeEach(function () {
-        buildDirs = [
-          '/src/test1/locales',
-          '/src/test2/locales'
-        ];
+        buildDirs = ['/src/test1/locales', '/src/test2/locales'];
         jest.spyOn(fs, 'remove').mockResolvedValue();
         jest.spyOn(fs, 'mkdirp').mockResolvedValue();
         jest.spyOn(fs, 'readdir').mockResolvedValue(['test/folder/name.json']);
@@ -174,7 +185,8 @@ describe('buildModules', function () {
       });
 
       it('returns a list of all locale paths that are folder', async function () {
-        jest.spyOn(fs, 'lstat')
+        jest
+          .spyOn(fs, 'lstat')
           .mockResolvedValueOnce({ isDirectory: () => true })
           .mockResolvedValueOnce({ isDirectory: () => false });
 
@@ -189,16 +201,19 @@ describe('buildModules', function () {
         jest.spyOn(fs, 'lstat').mockResolvedValue({ isDirectory: () => true });
         const results = await builder.discoverDirs();
         expect(results).toHaveLength(discoveredDirs.length - 1);
-        expect(results).toEqual(expect.arrayContaining([
-          ['mod1', '/should/not/blacklist/bogus/locales']
-        ]));
+        expect(results).toEqual(
+          expect.arrayContaining([
+            ['mod1', '/should/not/blacklist/bogus/locales']
+          ])
+        );
       });
     });
 
     describe('#gatherModules', function () {
-
       it('returns a list of all packages with verified dirs', async function () {
-        jest.spyOn(fs, 'lstat').mockResolvedValueOnce({ isDirectory: () => true });
+        jest
+          .spyOn(fs, 'lstat')
+          .mockResolvedValueOnce({ isDirectory: () => true });
 
         mockGasket.config.intl.modules = [
           '@first/package',
@@ -206,34 +221,42 @@ describe('buildModules', function () {
         ];
         builder = new BuildModules(mockGasket);
 
-
         const results = await builder.gatherModuleDirs();
         expect(results).toHaveLength(2);
-        expect(results).toEqual(expect.arrayContaining([
-          ['@first/package', '/path/to/somewhere/node_modules/@first/package/locales'],
-          ['@second/package', '/path/to/somewhere/node_modules/@second/package/custom-locales']
-        ]));
+        expect(results).toEqual(
+          expect.arrayContaining([
+            [
+              '@first/package',
+              '/path/to/somewhere/node_modules/@first/package/locales'
+            ],
+            [
+              '@second/package',
+              '/path/to/somewhere/node_modules/@second/package/custom-locales'
+            ]
+          ])
+        );
       });
 
       it('logs warning when locales dir not found', async function () {
-        jest.spyOn(fs, 'lstat').mockResolvedValueOnce({ isDirectory: () => false });
+        jest
+          .spyOn(fs, 'lstat')
+          .mockResolvedValueOnce({ isDirectory: () => false });
 
-        mockGasket.config.intl.modules = [
-          '@third/package/missing-locales'
-        ];
+        mockGasket.config.intl.modules = ['@third/package/missing-locales'];
         builder = new BuildModules(mockGasket);
-
 
         const results = await builder.gatherModuleDirs();
         expect(results).toHaveLength(0);
 
-        expect(logger.warning).toHaveBeenCalledWith(
+        expect(logger.warn).toHaveBeenCalledWith(
           'build:locales: locales directory not found for: @third/package/missing-locales'
         );
       });
 
       it('logs warning when module names are malformed', async function () {
-        jest.spyOn(fs, 'lstat').mockResolvedValueOnce({ isDirectory: () => true });
+        jest
+          .spyOn(fs, 'lstat')
+          .mockResolvedValueOnce({ isDirectory: () => true });
 
         mockGasket.config.intl.modules = [
           '@malformed',
@@ -248,14 +271,16 @@ describe('buildModules', function () {
         expect(results).toHaveLength(0);
 
         mockGasket.config.intl.modules.forEach((name) => {
-          expect(logger.warning).toHaveBeenCalledWith(
+          expect(logger.warn).toHaveBeenCalledWith(
             `build:locales: malformed module name: ${name}`
           );
         });
       });
 
       it('supports expected module formats', async function () {
-        jest.spyOn(fs, 'lstat').mockResolvedValueOnce({ isDirectory: () => true });
+        jest
+          .spyOn(fs, 'lstat')
+          .mockResolvedValueOnce({ isDirectory: () => true });
 
         mockGasket.config.intl.modules = [
           '@first/package',
@@ -271,12 +296,14 @@ describe('buildModules', function () {
         const results = await builder.gatherModuleDirs();
 
         expect(results).toHaveLength(mockGasket.config.intl.modules.length);
-        expect(logger.warning).not.toHaveBeenCalled();
+        expect(logger.warn).not.toHaveBeenCalled();
 
         mockGasket.config.intl.modules.forEach((name) => {
-          expect(results).toEqual(expect.arrayContaining([
-            [expect.any(String), expect.stringContaining(name)]
-          ]));
+          expect(results).toEqual(
+            expect.arrayContaining([
+              [expect.any(String), expect.stringContaining(name)]
+            ])
+          );
         });
       });
     });
