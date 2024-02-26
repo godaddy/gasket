@@ -8,9 +8,6 @@ describe('@gasket/preset-api', () => {
     const config: GasketConfigFile = {
       http: 8080,
       compression: true,
-      log: {
-        prefix: 'my-api'
-      },
       swagger: {
         ui: {
           isExplorer: true
