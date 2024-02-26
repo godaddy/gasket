@@ -56,5 +56,6 @@
   },
   "eslintIgnore": [
     "test/fixtures"
-  ]
+  ],
+  "gitHead": "c0faf55b1b01b7442a3157bd310577d3c8082c50"
 }
