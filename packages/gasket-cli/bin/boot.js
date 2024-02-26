@@ -11,6 +11,9 @@ const local = join(process.cwd(), 'node_modules', ...location);
 // executable instead of our own.
 //
 import(local).catch(async () => {
+  console.log('------------------------------');
+  console.log('ESM PORT!!!');
+  console.log('------------------------------');
   //
   // If the local installation failed, we're going to execute our own `run`
   // executable.
