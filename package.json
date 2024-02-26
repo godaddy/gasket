@@ -5,20 +5,20 @@
   "description": "Robust, pluggable, & render agnostic framework for rapid deliver modern web applications.",
   "scripts": {
     "lint": "eslint scripts",
-    "lint:fix": "npm run lint -- --fix",
-    "lint:fix:all": "npm run lint:fix && lerna run lint:fix --stream",
+    "lint:fix": "pnpm run lint -- --fix",
+    "lint:fix:all": "pnpm run lint:fix && lerna run lint:fix --stream",
     "test": "lerna run test --stream",
     "test:coverage": "lerna run test:coverage --stream",
-    "posttest": "npm run lint",
+    "posttest": "pnpm run lint",
     "build": "lerna run build",
     "align-packages": "node ./scripts/align-packages",
-    "clean": "npm run clean:packages && npm run clean:root",
+    "clean": "pnpm run clean:packages && pnpm run clean:root",
     "clean:packages": "lerna clean --yes",
     "clean:root": "rimraf node_modules",
-    "docs": "lerna run docs && npm run generate-docs-index",
-    "docs-view": "npm run generate-docs-index && cd site && docusaurus start",
+    "docs": "lerna run docs && pnpm run generate-docs-index",
+    "docs-view": "pnpm run generate-docs-index && cd site && docusaurus start",
     "generate-docs-index": "node scripts/generate-docs-index",
-    "postinstall": "npm run build",
+    "postinstall": "pnpm run build",
     "publish:canary": "lerna publish --preid canary --dist-tag canary",
     "test:package": "lerna run test --stream --scope $*"
   },
@@ -72,12 +72,5 @@
     "rules": {
       "unicorn/filename-case": "error"
     }
-  },
-  "engines": {
-    "npm": ">=8.0.0"
-  },
-  "workspaces": [
-    "./packages/*",
-    "scripts/generate-docs-index"
-  ]
+  }
 }
