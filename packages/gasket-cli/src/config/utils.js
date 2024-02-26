@@ -1,6 +1,5 @@
-const { pluginIdentifier } = require('@gasket/resolve');
-const defaultPlugins = require('./default-plugins');
-
+import { pluginIdentifier } from '@gasket/resolve';
+const defaultPlugins = (async () => (await import('../config/default-plugins')).plugins)();
 const debug = require('diagnostics')('gasket:cli:config:utils');
 
 /**
