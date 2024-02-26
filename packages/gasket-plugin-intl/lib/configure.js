@@ -57,7 +57,7 @@ module.exports = function configureHook(gasket, config) {
   ].find(isDefined);
 
   let { modules = false } = intlConfig;
-  if (modules) {
+  if (modules && !Array.isArray(modules)) {
     modules =
       modules === true ? moduleDefaults : { ...moduleDefaults, ...modules };
   }

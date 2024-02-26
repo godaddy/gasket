@@ -51,7 +51,8 @@ module.exports = {
           routes,
           excludedRoutesRegex,
           middlewareInclusionRegex,
-          compression: compressionConfig = true
+          compression: compressionConfig = true,
+          trustProxy = false
         } = {},
         http2,
         middleware: middlewareConfig
@@ -74,6 +75,10 @@ module.exports = {
             app.use(mw);
           }
         });
+
+      if (trustProxy) {
+        app.set('trust proxy', trustProxy);
+      }
 
       if (http2) {
         app.use(

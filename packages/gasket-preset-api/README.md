@@ -25,7 +25,7 @@ To see complete the list of plugins configured in your app, and what commands, l
 - [@gasket/plugin-config](/packages/gasket-plugin-config/README.md)
 - [@gasket/plugin-swagger](/packages/gasket-plugin-swagger/README.md)
 - [@gasket/plugin-docs](/packages/gasket-plugin-docs/README.md)
-- [@gasket/plugin-docsify](/packages/gasket-plugin-docsify/README.md)
+- [@gasket/plugin-docusaurus](/packages/gasket-plugin-docusaurus/README.md)
 - [@gasket/plugin-express](/packages/gasket-plugin-express/README.md)
 - [@gasket/plugin-https](/packages/gasket-plugin-https/README.md)
 - [@gasket/plugin-lint](/packages/gasket-plugin-lint/README.md)

@@ -3,6 +3,10 @@
 - Use per-request logger
 - Remove dependency on `@gasket/plugin-log`
 
+### 6.45.2
+
+- Tune `peerDeps` & `devDeps`, update test script ([#670])
+
 ### 6.34.4
 
 - Upgrade eslint-plugin-unicorn v43 ([#436])
@@ -81,3 +85,4 @@
 [#347]: https://github.com/godaddy/gasket/pull/347
 [#436]: https://github.com/godaddy/gasket/pull/436
 [#457]: https://github.com/godaddy/gasket/pull/457
+[#670]: https://github.com/godaddy/gasket/pull/670

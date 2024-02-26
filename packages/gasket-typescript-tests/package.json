@@ -1,7 +1,7 @@
 {
   "name": "@gasket/typescript-tests",
   "private": true,
-  "version": "6.45.1",
+  "version": "6.46.0",
   "description": "Not a published package; hosts unit tests to verify TypeScript support",
   "files": [
     "lib"
@@ -12,7 +12,7 @@
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
-    "test": "jest",
+    "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
     "posttest": "npm run lint"
   },
   "repository": {
@@ -67,6 +67,7 @@
     "@gasket/utils": "^6.45.2",
     "@types/express": "^4.17.21",
     "@types/jest": "^29.5.12",
+    "cross-env": "^7.0.3",
     "eslint": "^8.57.0",
     "eslint-config-godaddy-react-typescript": "^4.0.2",
     "eslint-plugin-unicorn": "^44.0.0",

@@ -1,5 +1,8 @@
 # `@gasket/helper-intl`
 
+### 6.45.2
+
+- Remove `setup-env` ([#670])
 - Support server-side debug logging under `debug` namespace `gasket:helper:intl`
 
 ### 6.34.4
@@ -52,3 +55,4 @@
 [#442]: https://github.com/godaddy/gasket/pull/442
 [#459]: https://github.com/godaddy/gasket/pull/459
 [#460]: https://github.com/godaddy/gasket/pull/460
+[#670]: https://github.com/godaddy/gasket/pull/670

@@ -92,7 +92,7 @@ describe('createServers', () => {
   it('adds log plugin as logger to fastify', async function () {
     await plugin.hooks.createServers(gasket, {});
 
-    expect(mockFastify).toHaveBeenCalledWith({ logger: gasket.logger });
+    expect(mockFastify).toHaveBeenCalledWith({ logger: gasket.logger, trustProxy: false });
   });
 
   it('executes the `middleware` lifecycle', async function () {
@@ -265,6 +265,29 @@ describe('createServers', () => {
 
     await plugin.hooks.createServers(gasket, {});
     expect(app.use).toHaveBeenCalledTimes(4);
+  });
+
+  it('does not enable trust proxy by default', async () => {
+    await plugin.hooks.createServers(gasket, {});
+
+    expect(mockFastify).toHaveBeenCalledWith({ logger: gasket.logger, trustProxy: false });
+  });
+
+  it('does enable trust proxy by if set to true', async () => {
+    gasket.config.fastify = { trustProxy: true };
+    await plugin.hooks.createServers(gasket, {});
+
+    expect(mockFastify).toHaveBeenCalledWith({ logger: gasket.logger, trustProxy: true });
+  });
+
+  it('does enable trust proxy by if set to string', async () => {
+    gasket.config.fastify = { trustProxy: '127.0.0.1' };
+    await plugin.hooks.createServers(gasket, {});
+
+    expect(mockFastify).toHaveBeenCalledWith({
+      logger: gasket.logger,
+      trustProxy: '127.0.0.1'
+    });
   });
 
   function findCall(aSpy, aPredicate) {

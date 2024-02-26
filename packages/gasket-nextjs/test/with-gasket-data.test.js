@@ -1,13 +1,11 @@
 import React from 'react';
-import assume from 'assume';
-import sinon from 'sinon';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 import { withGasketData } from '../src';
 
 class MyDocument extends Document {
   static async getInitialProps(ctx) {
     // placed on context by render in next@12
-    const defaultGetInitialProps = sinon.stub().returns({ html: {}, head: {}, styles: {} });
+    const defaultGetInitialProps = jest.fn().mockReturnValue({ html: {}, head: {}, styles: {} });
     const initialProps = await Document.getInitialProps({ ...ctx, defaultGetInitialProps });
     return { ...initialProps };
   }
@@ -67,39 +65,35 @@ describe('withGasketData', function () {
       }
     };
     mockContext = {
-      renderPage: sinon.stub().returns({})
+      renderPage: jest.fn().mockReturnValue({})
     };
-  });
-
-  afterEach(function () {
-    sinon.restore();
   });
 
   describe('#getInitialProps', function () {
     it('executes parent method', async function () {
-      const spy = sinon.spy(MyDocument, 'getInitialProps');
+      const spy = jest.spyOn(MyDocument, 'getInitialProps');
       WrappedDocument = withGasketData()(MyDocument);
 
       await WrappedDocument.getInitialProps(mockContext);
-      assume(spy).calledWith(mockContext);
+      expect(spy).toHaveBeenCalledWith(mockContext);
     });
 
     it('adds gasketData to initial props', async function () {
       WrappedDocument = withGasketData()(MyDocument);
 
       const results = await WrappedDocument.getInitialProps(mockContext);
-      assume(results).property('gasketData');
+      expect(results).toHaveProperty('gasketData');
 
       // from parent
-      assume(results).property('html');
-      assume(results).property('head');
+      expect(results).toHaveProperty('html');
+      expect(results).toHaveProperty('head');
     });
 
     it('gasketData is empty object if no response data', async function () {
       WrappedDocument = withGasketData()(MyDocument);
 
       const results = await WrappedDocument.getInitialProps(mockContext);
-      assume(results.gasketData).eqls({});
+      expect(results.gasketData).toEqual({});
     });
 
     it('gasketData is from res.locals', async function () {
@@ -111,7 +105,7 @@ describe('withGasketData', function () {
       };
 
       const results = await WrappedDocument.getInitialProps(mockContext);
-      assume(results.gasketData).eqls({ bogus: true });
+      expect(results.gasketData).toEqual({ bogus: true });
     });
   });
 
@@ -127,7 +121,7 @@ describe('withGasketData', function () {
       const body = element.render().props.children[1];
       const gasketDataScript = body.props.children[1];
 
-      assume(gasketDataScript).exists();
+      expect(gasketDataScript).toBeDefined();
     });
 
     it('in custom document body', function () {
@@ -137,7 +131,7 @@ describe('withGasketData', function () {
       const body = element.render().props.children[1];
       const gasketDataScript = body.props.children[1];
 
-      assume(gasketDataScript).exists();
+      expect(gasketDataScript).toBeDefined();
     });
 
     it('retains all original content', function () {
@@ -151,14 +145,14 @@ describe('withGasketData', function () {
       const gasketDataScript = body.props.children[1];
       const nextScript = body.props.children[1];
 
-      assume(gasketDataScript).exists();
+      expect(gasketDataScript).toBeDefined();
 
       // from parent
-      assume(html).exists();
-      assume(head).exists();
-      assume(main).exists();
-      assume(nextScript).exists();
-      assume(getElementReference(html, 'p')).exists();
+      expect(html).toBeDefined();
+      expect(head).toBeDefined();
+      expect(main).toBeDefined();
+      expect(nextScript).toBeDefined();
+      expect(getElementReference(html, 'p')).toBeDefined();
     });
 
     it('between Main and NextScript', function () {
@@ -167,9 +161,9 @@ describe('withGasketData', function () {
       element.props = mockProps;
       const body = getElementReference(element.render(), 'body');
 
-      assume(body.props.children[0].type.name).equals('Main');
-      assume(body.props.children[1].type.name).equals('GasketDataScript');
-      assume(body.props.children[2].type.name).equals('NextScript');
+      expect(body.props.children[0].type.name).toEqual('Main');
+      expect(body.props.children[1].type.name).toEqual('GasketDataScript');
+      expect(body.props.children[2].type.name).toEqual('NextScript');
     });
 
     it('before other body scripts', function () {
@@ -198,13 +192,13 @@ describe('withGasketData', function () {
       element.props = mockProps;
       const body = getElementReference(element.render(), 'body');
 
-      assume(body.props.children[0].type).equals('div');
-      assume(body.props.children[1].type.name).equals('GasketDataScript');
-      assume(body.props.children[2].type).equals('script');
-      assume(body.props.children[3].type.name).equals('NextScript');
+      expect(body.props.children[0].type).toEqual('div');
+      expect(body.props.children[1].type.name).toEqual('GasketDataScript');
+      expect(body.props.children[2].type).toEqual('script');
+      expect(body.props.children[3].type.name).toEqual('NextScript');
     });
 
-    it('after first element (assume to be wrapping Main)', function () {
+    it('after first element (expect to be wrapping Main)', function () {
       class MyDocumentWithScript extends Document {
         static async getInitialProps(ctx) {
           const initialProps = await Document.getInitialProps(ctx);
@@ -233,9 +227,9 @@ describe('withGasketData', function () {
       element.props = mockProps;
       const body = getElementReference(element.render(), 'body');
 
-      assume(body.props.children[0].type).equals('div');
-      assume(body.props.children[1].type.name).equals('GasketDataScript');
-      assume(body.props.children[2].type).equals('div');
+      expect(body.props.children[0].type).toEqual('div');
+      expect(body.props.children[1].type.name).toEqual('GasketDataScript');
+      expect(body.props.children[2].type).toEqual('div');
     });
 
     it('at forced index set in options', function () {
@@ -267,13 +261,13 @@ describe('withGasketData', function () {
       element.props = mockProps;
       const body = getElementReference(element.render(), 'body');
 
-      assume(body.props.children[0].type).equals('header');
-      assume(body.props.children[1].type.name).equals('Main');
-      assume(body.props.children[2].type).equals('script');
-      assume(body.props.children[3].type).equals('div');
-      assume(body.props.children[4].type.name).equals('GasketDataScript');
-      assume(body.props.children[5].type).equals('footer');
-      assume(body.props.children[6].type.name).equals('NextScript');
+      expect(body.props.children[0].type).toEqual('header');
+      expect(body.props.children[1].type.name).toEqual('Main');
+      expect(body.props.children[2].type).toEqual('script');
+      expect(body.props.children[3].type).toEqual('div');
+      expect(body.props.children[4].type.name).toEqual('GasketDataScript');
+      expect(body.props.children[5].type).toEqual('footer');
+      expect(body.props.children[6].type.name).toEqual('NextScript');
     });
   });
 });
