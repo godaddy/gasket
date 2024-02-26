@@ -175,7 +175,7 @@ Available plugins
 | [@gasket/plugin-jest]           | 6.45.2  | Integrated jest into your application.                                     |
 | [@gasket/plugin-lifecycle]      | 6.45.2  | Allows a gasket/ directory to be used for lifecycle hooks in applications. |
 | [@gasket/plugin-lint]           | 6.45.2  | Adds GoDaddy standard linting to your application                          |
-| [@gasket/plugin-logger]         | 6.43.0  | Gasket plugin for logging                                                  |
+| [@gasket/plugin-logger]         | 6.46.0  | Gasket plugin for logging                                                  |
 | [@gasket/plugin-manifest]       | 6.45.2  | The web app manifest for progressive Gasket applications                   |
 | [@gasket/plugin-metadata]       | 6.45.2  | Adds metadata to gasket lifecycles                                         |
 | [@gasket/plugin-metrics]        | 6.45.2  | Collect metrics for gasket commands                                        |
