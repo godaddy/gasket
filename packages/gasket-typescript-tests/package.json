@@ -1,7 +1,7 @@
 {
   "name": "@gasket/typescript-tests",
   "private": true,
-  "version": "6.46.2-esm.3",
+  "version": "6.46.2-esm.4",
   "description": "Not a published package; hosts unit tests to verify TypeScript support",
   "files": [
     "lib"
@@ -33,7 +33,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/typescript-tests",
   "devDependencies": {
-    "@gasket/cli": "^6.46.2-esm.3",
+    "@gasket/cli": "^6.46.2-esm.4",
     "@gasket/data": "^6.45.2",
     "@gasket/engine": "^6.46.2-esm.0",
     "@gasket/fetch": "^6.45.2",
