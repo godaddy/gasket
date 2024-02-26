@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const { join } = require('path');
+import { join } from 'path';
 const location = ['@gasket', 'cli', 'bin', 'run'];
 const local = join(process.cwd(), 'node_modules', ...location);
 
@@ -10,5 +10,10 @@ const local = join(process.cwd(), 'node_modules', ...location);
 // as dependency, and if that is the case, we're going to execute that `run`
 // executable instead of our own.
 //
-try { require(local); }
-catch (e) { require('./run'); }
+import(local).catch(async () => {
+  //
+  // If the local installation failed, we're going to execute our own `run`
+  // executable.
+  //
+  await import('./run.js');
+});

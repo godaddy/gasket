@@ -1,2 +1,1 @@
-module.exports = require('@oclif/command');
-
+export { Command, Flags } from '@oclif/core';
