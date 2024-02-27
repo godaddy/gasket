@@ -1,6 +1,6 @@
 {
   "name": "create-gasket-app",
-  "version": "7.0.0-canary.0",
+  "version": "7.0.0-canary.1",
   "description": "starter pack for creating a gasket app",
   "main": "lib",
   "bin": {
@@ -31,7 +31,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/create-gasket-app",
   "dependencies": {
-    "@gasket/cli": "^7.0.0-canary.0"
+    "@gasket/cli": "^7.0.0-canary.1"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",

@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-jest",
-  "version": "7.0.0-canary.0",
+  "version": "7.0.0-canary.1",
   "description": "Integrated jest into your application.",
   "main": "lib",
   "files": [

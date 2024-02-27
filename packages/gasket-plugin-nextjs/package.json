@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-nextjs",
-  "version": "7.0.0-canary.0",
+  "version": "7.0.0-canary.1",
   "description": "Adds Next support to your application",
   "main": "lib",
   "types": "lib/index.d.ts",
@@ -40,15 +40,15 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-nextjs",
   "dependencies": {
-    "@gasket/plugin-webpack": "^7.0.0-canary.0",
-    "@gasket/resolve": "^7.0.0-canary.0",
+    "@gasket/plugin-webpack": "^7.0.0-canary.1",
+    "@gasket/resolve": "^7.0.0-canary.1",
     "fastify": "^4.25.2"
   },
   "devDependencies": {
     "@babel/preset-react": "^7.23.3",
-    "@gasket/assets": "^7.0.0-canary.0",
-    "@gasket/engine": "^7.0.0-canary.0",
-    "@gasket/nextjs": "^7.0.0-canary.0",
+    "@gasket/assets": "^7.0.0-canary.1",
+    "@gasket/engine": "^7.0.0-canary.1",
+    "@gasket/nextjs": "^7.0.0-canary.1",
     "babel-eslint": "^10.1.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",

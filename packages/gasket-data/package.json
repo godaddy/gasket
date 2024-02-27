@@ -1,6 +1,6 @@
 {
   "name": "@gasket/data",
-  "version": "7.0.0-canary.0",
+  "version": "7.0.0-canary.1",
   "description": "Helper package for accessing embedded Gasket Data in the browser",
   "main": "lib",
   "types": "lib/index.d.ts",

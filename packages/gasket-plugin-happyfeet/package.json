@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-happyfeet",
-  "version": "7.0.0-canary.0",
+  "version": "7.0.0-canary.1",
   "description": "A gasket plugin to enable happyfeet healthchecks",
   "main": "lib/index.js",
   "directories": {

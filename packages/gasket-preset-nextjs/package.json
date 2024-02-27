@@ -1,6 +1,6 @@
 {
   "name": "@gasket/preset-nextjs",
-  "version": "7.0.0-canary.0",
+  "version": "7.0.0-canary.1",
   "description": "Basic NextJS Framework",
   "main": "lib",
   "types": "lib/index.d.ts",
@@ -20,14 +20,14 @@
     "url": "https://github.com/godaddy/gasket/issues"
   },
   "dependencies": {
-    "@gasket/plugin-express": "^7.0.0-canary.0",
-    "@gasket/plugin-https": "^7.0.0-canary.0",
+    "@gasket/plugin-express": "^7.0.0-canary.1",
+    "@gasket/plugin-https": "^7.0.0-canary.1",
     "@gasket/plugin-nextjs": "^6.46.1",
-    "@gasket/plugin-redux": "^7.0.0-canary.0",
-    "@gasket/plugin-webpack": "^7.0.0-canary.0",
-    "@gasket/plugin-winston": "^7.0.0-canary.0"
+    "@gasket/plugin-redux": "^7.0.0-canary.1",
+    "@gasket/plugin-webpack": "^7.0.0-canary.1",
+    "@gasket/plugin-winston": "^7.0.0-canary.1"
   },
   "devDependencies": {
-    "@gasket/plugin-start": "^7.0.0-canary.0"
+    "@gasket/plugin-start": "^7.0.0-canary.1"
   }
 }

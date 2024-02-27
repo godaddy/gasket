@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-cypress",
-  "version": "7.0.0-canary.0",
+  "version": "7.0.0-canary.1",
   "description": "Integrates Cypress based testing into your Gasket application",
   "main": "lib",
   "scripts": {

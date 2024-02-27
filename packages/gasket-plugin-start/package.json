@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-start",
-  "version": "7.0.0-canary.0",
+  "version": "7.0.0-canary.1",
   "description": "Adds commands for building and starting Gasket apps",
   "main": "lib",
   "types": "lib/index.d.ts",
@@ -40,7 +40,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-start",
   "devDependencies": {
-    "@gasket/engine": "^7.0.0-canary.0",
+    "@gasket/engine": "^7.0.0-canary.1",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
     "eslint-config-godaddy": "^7.0.2",

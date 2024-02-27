@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-service-worker",
-  "version": "7.0.0-canary.0",
+  "version": "7.0.0-canary.1",
   "description": "Gasket Service Worker Plugin",
   "main": "lib",
   "types": "lib/index.d.ts",
@@ -46,7 +46,7 @@
     "webpack-inject-plugin": "^1.5.5"
   },
   "devDependencies": {
-    "@gasket/engine": "^7.0.0-canary.0",
+    "@gasket/engine": "^7.0.0-canary.1",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
     "eslint-config-godaddy": "^7.0.2",
