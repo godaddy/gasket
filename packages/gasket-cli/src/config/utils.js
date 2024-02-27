@@ -1,6 +1,7 @@
 import { pluginIdentifier } from '@gasket/resolve';
-const defaultPlugins = (async () => (await import('../config/default-plugins')).plugins)();
-const debug = require('diagnostics')('gasket:cli:config:utils');
+import { default as diagnostics } from 'diagnostics';
+const defaultPlugins = (async () => (await import('./default-plugins.js')).plugins)();
+const debug = diagnostics('gasket:cli:config:utils');
 
 /**
  * Returns specified env flag if set or appropriate fallback
