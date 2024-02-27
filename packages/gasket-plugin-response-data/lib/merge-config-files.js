@@ -3,7 +3,7 @@ const merge = require('lodash.merge');
 const { tryRequire } = require('@gasket/utils');
 
 module.exports = function loadConfig(gasket) {
-  const { root, env, configPath = 'config' } = gasket.config;
+  const { root, env, gasketDataDir = 'gasket-data' } = gasket.config;
 
   let configChain = ['base'];
 
@@ -22,7 +22,7 @@ module.exports = function loadConfig(gasket) {
     }
   }
 
-  const configDir = path.resolve(root, configPath);
+  const configDir = path.resolve(root, gasketDataDir);
 
   return configChain.reduce((result, name) => {
     return merge(result, tryRequire(path.resolve(configDir, name)));

@@ -1,4 +1,4 @@
-# `@gasket/plugin-config`
+# `@gasket/plugin-response-data`
 
 ### 6.45.2
 

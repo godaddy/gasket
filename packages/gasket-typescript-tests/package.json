@@ -41,7 +41,7 @@
     "@gasket/nextjs": "^6.45.2",
     "@gasket/plugin-analyze": "^6.45.2",
     "@gasket/plugin-command": "^6.45.2",
-    "@gasket/plugin-config": "^6.45.2",
+    "@gasket/plugin-response-data": "^6.45.2",
     "@gasket/plugin-docs": "^6.45.2",
     "@gasket/plugin-docusaurus": "^6.46.0",
     "@gasket/plugin-elastic-apm": "^6.45.2",
