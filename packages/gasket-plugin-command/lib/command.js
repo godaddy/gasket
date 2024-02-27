@@ -1,10 +1,10 @@
-const { Command, Flags, Parser } = require('@oclif/core');
+import { Command, Flags, Parser } from '@oclif/core';
 
 /**
  * The GasketCommand can be extended to allow plugins to introduce new CLI
  * commands to invoke Gasket lifecycles.
  */
-class GasketCommand extends Command {
+export class GasketCommand extends Command {
 
   /**
    * Abstract method which must be implemented by subclasses, used to execute
@@ -101,7 +101,7 @@ class GasketCommand extends Command {
 GasketCommand.flags = {
   config: Flags.string({
     env: 'GASKET_CONFIG',
-    default: 'gasket.config.cjs',
+    default: 'gasket.config',
     char: 'c',
     description: 'Fully qualified Gasket config to load'
   }),
@@ -128,5 +128,3 @@ GasketCommand.flags.record = Flags.boolean({
   description: 'Whether or not to emit this command as part of Gasket\'s metrics lifecycle',
   allowNo: true
 });
-
-module.exports = GasketCommand;

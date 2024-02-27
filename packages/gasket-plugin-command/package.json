@@ -18,6 +18,7 @@
     "prepack": "npm run docs",
     "docs": "jsdoc2md --plugin @godaddy/dmd --files lib/*.js > docs/api.md"
   },
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/godaddy/gasket.git"
