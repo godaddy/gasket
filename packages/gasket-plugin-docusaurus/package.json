@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-docusaurus",
-  "version": "7.0.0-canary.0",
+  "version": "7.0.0-canary.1",
   "description": "Gasket plugin for docusaurus",
   "main": "lib",
   "files": [
@@ -43,7 +43,7 @@
   "devDependencies": {
     "@docusaurus/core": "^2.4.0",
     "@docusaurus/preset-classic": "^2.4.0",
-    "@gasket/engine": "^7.0.0-canary.0",
+    "@gasket/engine": "^7.0.0-canary.1",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
     "eslint-config-godaddy": "^7.0.2",

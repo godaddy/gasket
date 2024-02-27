@@ -1,6 +1,6 @@
 {
   "name": "@gasket/preset-api",
-  "version": "7.0.0-canary.0",
+  "version": "7.0.0-canary.1",
   "description": "Create Express-based API with Gasket",
   "main": "lib",
   "types": "lib/index.d.ts",
@@ -20,16 +20,16 @@
     "url": "https://github.com/godaddy/gasket/issues"
   },
   "dependencies": {
-    "@gasket/plugin-docs": "^7.0.0-canary.0",
-    "@gasket/plugin-docusaurus": "^7.0.0-canary.0",
-    "@gasket/plugin-express": "^7.0.0-canary.0",
-    "@gasket/plugin-https": "^7.0.0-canary.0",
-    "@gasket/plugin-lint": "^7.0.0-canary.0",
-    "@gasket/plugin-response-data": "^7.0.0-canary.0",
-    "@gasket/plugin-swagger": "^7.0.0-canary.0",
-    "@gasket/plugin-winston": "^7.0.0-canary.0"
+    "@gasket/plugin-docs": "^7.0.0-canary.1",
+    "@gasket/plugin-docusaurus": "^7.0.0-canary.1",
+    "@gasket/plugin-express": "^7.0.0-canary.1",
+    "@gasket/plugin-https": "^7.0.0-canary.1",
+    "@gasket/plugin-lint": "^7.0.0-canary.1",
+    "@gasket/plugin-response-data": "^7.0.0-canary.1",
+    "@gasket/plugin-swagger": "^7.0.0-canary.1",
+    "@gasket/plugin-winston": "^7.0.0-canary.1"
   },
   "devDependencies": {
-    "@gasket/plugin-start": "^7.0.0-canary.0"
+    "@gasket/plugin-start": "^7.0.0-canary.1"
   }
 }

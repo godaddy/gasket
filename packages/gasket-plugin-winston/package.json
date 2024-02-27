@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-winston",
-  "version": "7.0.0-canary.0",
+  "version": "7.0.0-canary.1",
   "description": "Gasket logger based on Winston",
   "main": "lib",
   "types": "lib/index.d.ts",
@@ -39,9 +39,9 @@
     "winston": "^3.11.0"
   },
   "devDependencies": {
-    "@gasket/cli": "^7.0.0-canary.0",
-    "@gasket/engine": "^7.0.0-canary.0",
-    "@gasket/plugin-logger": "^7.0.0-canary.0",
+    "@gasket/cli": "^7.0.0-canary.1",
+    "@gasket/engine": "^7.0.0-canary.1",
+    "@gasket/plugin-logger": "^7.0.0-canary.1",
     "babel-eslint": "^10.1.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",

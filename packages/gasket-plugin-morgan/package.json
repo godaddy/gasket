@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-morgan",
-  "version": "7.0.0-canary.0",
+  "version": "7.0.0-canary.1",
   "description": "Adds morgan request logger to your app",
   "main": "lib",
   "types": "lib/index.d.ts",
@@ -42,7 +42,7 @@
     "split": "^1.0.1"
   },
   "devDependencies": {
-    "@gasket/engine": "^7.0.0-canary.0",
+    "@gasket/engine": "^7.0.0-canary.1",
     "@types/morgan": "^1.9.9",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",

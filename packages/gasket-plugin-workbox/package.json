@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-workbox",
-  "version": "7.0.0-canary.0",
+  "version": "7.0.0-canary.1",
   "description": "Gasket Workbox Plugin",
   "main": "lib",
   "types": "lib/index.d.ts",
@@ -43,7 +43,7 @@
     "workbox-build": "^4.1.0"
   },
   "devDependencies": {
-    "@gasket/engine": "^7.0.0-canary.0",
+    "@gasket/engine": "^7.0.0-canary.1",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
     "eslint-config-godaddy": "^7.0.2",
