@@ -32,7 +32,10 @@ export async function initHook({ id, config: oclifConfig, argv }) {
     strict: false
   });
   const { root, config } = flags;
-
+  console.log('-------------------');
+  console.log('root', root);
+  console.log('config', config)
+  console.log('-------------------');
   try {
     const env = getEnvironment(flags, id, warn);
     debug('Detected gasket environment', env);
