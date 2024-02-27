@@ -15,6 +15,7 @@ module.exports = {
      * @async
      */
     async initOclif(gasket, { oclifConfig }) {
+      console.log('initOclif:plugin-command');
       const commands = (await gasket.exec('getCommands', { GasketCommand, flags }))
         .reduce((all, cmds) => all.concat(cmds), [])
         .filter(cmd => Boolean(cmd))
@@ -23,7 +24,7 @@ module.exports = {
           ...Command.toCached(cmd),
           load: () => cmd
         }));
-
+      console.log('getCommands:plugin-command');
       oclifConfig.plugins.push({
         name: 'Gasket commands',
         hooks: {},

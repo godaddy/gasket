@@ -11,6 +11,7 @@ const debug = diagnostics('gasket:cli:hooks:init');
  * @async
  */
 export async function initHook({ id, config: oclifConfig, argv }) {
+  console.log('initHook');
   debug('id', id);
   debug('argv', argv);
 
@@ -20,7 +21,7 @@ export async function initHook({ id, config: oclifConfig, argv }) {
   const warn = id !== 'help' ? this.warn : f => f;
 
   const { Parser } = await import('@oclif/core');
-  const { GasketCommand } = await import('@gasket/plugin-command');
+  const { default: { GasketCommand } } = await import('@gasket/plugin-command');
   const { loadGasketConfigFile, assignPresetConfig } = await import('@gasket/resolve');
   const { getEnvironment, addDefaultPlugins } = await import('../config/utils.js');
   const PluginEngine = await import('@gasket/engine');
