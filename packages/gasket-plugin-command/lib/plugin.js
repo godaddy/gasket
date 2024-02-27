@@ -5,7 +5,6 @@ import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 const pkg = require('../package.json');
 
-
 export const plugin = {
   name: pkg.name,
   hooks: {
@@ -18,7 +17,7 @@ export const plugin = {
      * @async
      */
     async initOclif(gasket, { oclifConfig }) {
-      const commands = (await gasket.exec('getCommands', { GasketCommand, Flags }))
+      const commands = (await gasket.exec('getCommands', { GasketCommand, flags: Flags }))
         .reduce((all, cmds) => all.concat(cmds), [])
         .filter(cmd => Boolean(cmd))
         .map(cmd => hoistBaseFlags(cmd))
