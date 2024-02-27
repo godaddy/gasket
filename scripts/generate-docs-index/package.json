@@ -1,10 +1,10 @@
 {
   "name": "generate-docs-index",
   "private": true,
-  "version": "6.46.2-esm.4",
+  "version": "6.46.2-esm.5",
   "description": "Generate the overview index",
   "dependencies": {
-    "@gasket/cli": "^6.46.2-esm.4"
+    "@gasket/cli": "^6.46.2-esm.5"
   },
   "devDependencies": {
     "eslint": "^8.56.0",
