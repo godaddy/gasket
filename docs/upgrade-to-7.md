@@ -105,6 +105,8 @@ The lifecycles have been renamed also.
 - `gasketData` can be used to tune up the base object during app `init`.
 - `responseData` can be used to tune up the "public" data uniquely for each response.
 
+[(#680)]
+
 ## Bring Your Own Logger
 
 Gasket's logging infrastructure comprises two main parts:
