@@ -52,7 +52,6 @@
   },
   "devDependencies": {
     "@gasket/engine": "^6.45.2",
-    "@gasket/plugin-log": "^6.46.0",
     "@gasket/react-intl": "^6.45.2",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
@@ -63,9 +62,6 @@
     "jest": "^29.7.0",
     "react-intl": "^6.0.0",
     "webpack": "^5.89.0"
-  },
-  "peerDependencies": {
-    "@gasket/plugin-log": "^6.0.0"
   },
   "eslintConfig": {
     "extends": [

@@ -20,14 +20,14 @@
     "url": "https://github.com/godaddy/gasket/issues"
   },
   "dependencies": {
-    "@gasket/plugin-config": "^6.45.2",
+    "@gasket/plugin-response-data": "^6.45.2",
     "@gasket/plugin-docs": "^6.45.2",
     "@gasket/plugin-docusaurus": "^6.45.2",
     "@gasket/plugin-express": "^6.46.0",
     "@gasket/plugin-https": "^6.45.2",
     "@gasket/plugin-lint": "^6.45.2",
-    "@gasket/plugin-log": "^6.46.0",
-    "@gasket/plugin-swagger": "^6.45.2"
+    "@gasket/plugin-swagger": "^6.45.2",
+    "@gasket/plugin-winston": "^6.43.0"
   },
   "devDependencies": {
     "@gasket/plugin-start": "^6.45.2"

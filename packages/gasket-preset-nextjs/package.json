@@ -22,10 +22,10 @@
   "dependencies": {
     "@gasket/plugin-express": "^6.46.0",
     "@gasket/plugin-https": "^6.45.2",
-    "@gasket/plugin-log": "^6.46.0",
-    "@gasket/plugin-nextjs": "^6.45.2",
+    "@gasket/plugin-nextjs": "^6.46.1",
     "@gasket/plugin-redux": "^6.46.0",
-    "@gasket/plugin-webpack": "^6.45.2"
+    "@gasket/plugin-webpack": "^6.45.2",
+    "@gasket/plugin-winston": "^6.43.0"
   },
   "devDependencies": {
     "@gasket/plugin-start": "^6.45.2"

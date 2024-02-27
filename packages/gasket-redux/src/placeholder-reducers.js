@@ -12,7 +12,7 @@
  */
 export default function placeholderReducers(reducers = {}, preloadedState = {}) {
   const keys = new Set(Object.keys(preloadedState));
-  keys.add('config'); // from @gasket/plugin-config
+  keys.add('config'); // from @gasket/plugin-response-data
 
   return Array.from(keys).reduce((acc, cur) => {
     if (!(cur in reducers)) acc[cur] = f => f || preloadedState[cur] || null;

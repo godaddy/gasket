@@ -41,12 +41,14 @@ module.exports = {
         if (command && command.id === 'local') return;
 
         // prefer app-level dependency in case of duplicates
-        const apm = require(
-          require.resolve('elastic-apm-node', { paths: [config.root, __dirname] })
-        );
+        const apm = require(require.resolve('elastic-apm-node', {
+          paths: [config.root, __dirname]
+        }));
 
         if (!apm.isStarted()) {
-          logger.warning('Elastic APM agent is not started. Use `--require ./setup.js`');
+          logger.warn(
+            'Elastic APM agent is not started. Use `--require ./setup.js`'
+          );
         }
 
         apm.addFilter(filterSensitiveCookies(config));
@@ -57,7 +59,7 @@ module.exports = {
         after: ['@gasket/plugin-start']
       },
       handler(gasket, { pkg, files }) {
-        const generatorDir = `${ __dirname }/../generator`;
+        const generatorDir = `${__dirname}/../generator`;
 
         pkg.add('dependencies', {
           'elastic-apm-node': devDependencies['elastic-apm-node'],
@@ -74,25 +76,30 @@ module.exports = {
     metadata(gasket, meta) {
       return {
         ...meta,
-        configurations: [{
-          name: 'elasticAPM',
-          link: 'README.md#configuration',
-          description: 'Configuration to provide additional setup helpers',
-          type: 'object'
-        }, {
-          name: 'elasticAPM.sensitiveCookies',
-          link: 'README.md#configuration',
-          description: 'List of sensitive cookies to filter',
-          type: 'string[]',
-          default: '[]'
-        }],
-        lifecycles: [{
-          name: 'apmTransaction',
-          method: 'exec',
-          description: 'Modify the APM transaction',
-          link: 'README.md#apmtransaction',
-          parent: 'middleware'
-        }]
+        configurations: [
+          {
+            name: 'elasticAPM',
+            link: 'README.md#configuration',
+            description: 'Configuration to provide additional setup helpers',
+            type: 'object'
+          },
+          {
+            name: 'elasticAPM.sensitiveCookies',
+            link: 'README.md#configuration',
+            description: 'List of sensitive cookies to filter',
+            type: 'string[]',
+            default: '[]'
+          }
+        ],
+        lifecycles: [
+          {
+            name: 'apmTransaction',
+            method: 'exec',
+            description: 'Modify the APM transaction',
+            link: 'README.md#apmtransaction',
+            parent: 'middleware'
+          }
+        ]
       };
     }
   }

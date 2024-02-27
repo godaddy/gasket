@@ -81,6 +81,7 @@ Available lifecycles
 | [composeServiceWorker]                                 | Update the service worker script                              |
 | [configure]                                            | Allows plugins to adjust config before command is run         |
 | [create][2]                                            | App level plugins                                             |
+| [createLogger]                                         | Custom logger creation                                        |
 | [createServers]                                        | Setup the `create-servers` options                            |
 | [docsGenerate]                                         | Generate graphs for display in documation                     |
 | [docsSetup]                                            | Set up what docs are captured and how to transform them       |
@@ -95,7 +96,6 @@ Available lifecycles
 | [initReduxStore]                                       | Plugin access to Redux store instance                         |
 | [initWebpack]                                          | Create a webpack config                                       |
 | [intlLocale]                                           | Set the language for which locale files to load               |
-| [logTransports]                                        | Setup Winston log transports                                  |
 | [manifest]                                             | Modify the the web manifest for a request                     |
 | [metadata]                                             | Allows plugins to adjust their metadata                       |
 | [metrics]                                              | Collect metrics for an app                                    |
@@ -117,6 +117,7 @@ Available lifecycles
 | [webpack (deprecated)][webpack (deprecated)]           | Modify webpack config with partials or by mutating            |
 | [webpackChain (deprecated)][webpackChain (deprecated)] | Setup webpack config by chaining                              |
 | [webpackConfig]                                        | Transform the webpack config, with the help of webpack-merge  |
+| [winstonTransports]                                    | Setup Winston log transports                                  |
 | [workbox]                                              | Setup Workbox config and options                              |
 
 ## Structures
@@ -158,7 +159,7 @@ Available plugins
 | ------------------------------- | ------- | -------------------------------------------------------------------------- |
 | [@gasket/plugin-analyze]        | 6.45.2  | Gasket Analyzer Plugin                                                     |
 | [@gasket/plugin-command]        | 6.45.2  | Plugin to enable other plugins to inject new gasket commands               |
-| [@gasket/plugin-config]         | 6.45.2  | Supports application-specific (non-Gasket) configuration                   |
+| [@gasket/plugin-response-data]         | 6.45.2  | Supports application-specific (non-Gasket) configuration                   |
 | [@gasket/plugin-cypress]        | 6.45.2  | Integrates Cypress based testing into your Gasket application              |
 | [@gasket/plugin-docs]           | 6.45.2  | Centralize doc files from plugins and modules                              |
 | [@gasket/plugin-docs-graphs]    | 6.45.0  | Generate mermaid graphs of an applications gasket lifecycles               |
@@ -173,7 +174,7 @@ Available plugins
 | [@gasket/plugin-jest]           | 6.45.2  | Integrated jest into your application.                                     |
 | [@gasket/plugin-lifecycle]      | 6.45.2  | Allows a gasket/ directory to be used for lifecycle hooks in applications. |
 | [@gasket/plugin-lint]           | 6.45.2  | Adds GoDaddy standard linting to your application                          |
-| [@gasket/plugin-log]            | 6.46.0  | Gasket log plugin                                                          |
+| [@gasket/plugin-logger]         | 6.46.0  | Gasket plugin for logging                                                  |
 | [@gasket/plugin-manifest]       | 6.45.2  | The web app manifest for progressive Gasket applications                   |
 | [@gasket/plugin-metadata]       | 6.45.2  | Adds metadata to gasket lifecycles                                         |
 | [@gasket/plugin-metrics]        | 6.45.2  | Collect metrics for gasket commands                                        |
@@ -185,6 +186,7 @@ Available plugins
 | [@gasket/plugin-start]          | 6.45.2  | Adds commands for building and starting Gasket apps                        |
 | [@gasket/plugin-swagger]        | 6.45.2  | Generate and serve swagger docs                                            |
 | [@gasket/plugin-webpack]        | 6.45.2  | Adds webpack support to your application                                   |
+| [@gasket/plugin-winston]        | 6.46.0  | Gasket logger based on Winston                                             |
 | [@gasket/plugin-workbox]        | 6.45.2  | Gasket Workbox Plugin                                                      |
 
 ## Modules
@@ -199,7 +201,6 @@ Supporting modules
 | [@gasket/engine]           | 6.45.2  | Plugin engine for gasket                                                             |
 | [@gasket/fetch]            | 6.45.2  | Gasket Fetch API                                                                     |
 | [@gasket/helper-intl]      | 6.45.2  | Internal helpers used by loaders to resolve locale file paths                        |
-| [@gasket/log]              | 6.46.0  | Gasket client and server logger                                                      |
 | [@gasket/nextjs]           | 6.45.2  | Gasket integrations for Next.js apps                                                 |
 | [@gasket/react-intl]       | 6.45.2  | React component library to enable localization for gasket apps.                      |
 | [@gasket/redux]            | 6.46.0  | Gasket Redux Configuration                                                           |
@@ -245,8 +246,6 @@ Available configuration options in the `gasket.config.js`
 | [intl.modules]                                                                       | Enable locale files collation from node modules                                                       | boolean | object                       |                                |
 | [intl.nextRouting]                                                                   | Enable Next.js Routing when used with @gasket/plugin-nextjs                                           | boolean                                | true                           |
 | [intl.serveStatic]                                                                   | Enables ability to serve static locale files                                                          | boolean | string                       | locales-manifest.json          |
-| [log]                                                                                | Setup and customize logger                                                                            | object                                 |                                |
-| [log.prefix]                                                                         | Used to set the prefix in the winston format                                                          | string                                 |                                |
 | [manifest][10]                                                                       | Manifest plugin config                                                                                | object                                 |                                |
 | [morgan]                                                                             | Morgan plugin configuration                                                                           | object                                 |                                |
 | [morgan.format]                                                                      | Log format to print                                                                                   | string                                 | tiny                           |
@@ -300,12 +299,13 @@ Available configuration options in the `gasket.config.js`
 [help]:/packages/gasket-cli/README.md#commands
 [local]:/packages/gasket-plugin-start/README.md#local-command
 [start]:/packages/gasket-plugin-start/README.md#start-command
-[appEnvConfig]:/packages/gasket-plugin-config/README.md#appEnvConfig
-[appRequestConfig]:/packages/gasket-plugin-config/README.md#appRequestConfig
+[appEnvConfig]:/packages/gasket-plugin-response-data/README.md#appEnvConfig
+[appRequestConfig]:/packages/gasket-plugin-response-data/README.md#appRequestConfig
 [1]:/packages/gasket-plugin-start/README.md#build
 [composeServiceWorker]:/packages/gasket-plugin-service-worker/README.md#composeServiceWorker
 [configure]:/packages/gasket-plugin-command/README.md#configure
 [2]:/packages/gasket-cli/README.md#create
+[createLogger]:/packages/gasket-plugin-logger/README.md#createLogger
 [createServers]:/packages/gasket-plugin-https/README.md#createServers
 [docsGenerate]:/packages/gasket-plugin-docs/README.md#docsGenerate
 [docsSetup]:/packages/gasket-plugin-docs/README.md#docsSetup
@@ -320,7 +320,6 @@ Available configuration options in the `gasket.config.js`
 [initReduxStore]:/packages/gasket-plugin-redux/README.md#initReduxStore
 [initWebpack]:/packages/gasket-plugin-webpack/README.md#initwebpack
 [intlLocale]:/packages/gasket-plugin-intl/README.md#intlLocale
-[logTransports]:/packages/gasket-plugin-log/README.md#logTransports
 [manifest]:/packages/gasket-plugin-manifest/README.md#manifest
 [metadata]:/packages/gasket-plugin-metadata/README.md#metadata
 [metrics]:/packages/gasket-plugin-metrics/README.md#metrics
@@ -342,15 +341,16 @@ Available configuration options in the `gasket.config.js`
 [webpack (deprecated)]:/packages/gasket-plugin-webpack/README.md#webpack
 [webpackChain (deprecated)]:/packages/gasket-plugin-webpack/README.md#webpackChain
 [webpackConfig]:/packages/gasket-plugin-webpack/README.md#webpackConfig
+[winstonTransports]:/packages/gasket-plugin-winston/README.md#winstonTransports
 [workbox]:/packages/gasket-plugin-workbox/README.md#workbox
 [.docs/]:/packages/gasket-plugin-docs/README.md#options
-[config/]:/packages/gasket-plugin-config/README.md
+[config/]:/packages/gasket-plugin-response-data/README.md
 [lifecycles/]:/packages/gasket-plugin-lifecycle/README.md
 [pages/]:https://nextjs.org/docs/routing/introduction
 [plugins/]:/packages/gasket-cli/docs/plugins.md#one-off-plugins
 [public/]:https://nextjs.org/docs/basic-features/static-file-serving
 [public/locales/]:/packages/gasket-plugin-intl/README.md#Options
-[app.config.js]:/packages/gasket-plugin-config/README.md
+[app.config.js]:/packages/gasket-plugin-response-data/README.md
 [cypress.json]:https://docs.cypress.io/guides/references/configuration
 [gasket.config.js]:/packages/gasket-cli/docs/configuration.md
 [jest.config.js]:https://jestjs.io/docs/configuration
@@ -360,7 +360,7 @@ Available configuration options in the `gasket.config.js`
 [@gasket/preset-pwa]:/packages/gasket-preset-pwa/README.md
 [@gasket/plugin-analyze]:/packages/gasket-plugin-analyze/README.md
 [@gasket/plugin-command]:/packages/gasket-plugin-command/README.md
-[@gasket/plugin-config]:/packages/gasket-plugin-config/README.md
+[@gasket/plugin-response-data]:/packages/gasket-plugin-response-data/README.md
 [@gasket/plugin-cypress]:/packages/gasket-plugin-cypress/README.md
 [@gasket/plugin-docs]:/packages/gasket-plugin-docs/README.md
 [@gasket/plugin-docs-graphs]:/packages/gasket-plugin-docs-graphs/README.md
@@ -375,7 +375,7 @@ Available configuration options in the `gasket.config.js`
 [@gasket/plugin-jest]:/packages/gasket-plugin-jest/README.md
 [@gasket/plugin-lifecycle]:/packages/gasket-plugin-lifecycle/README.md
 [@gasket/plugin-lint]:/packages/gasket-plugin-lint/README.md
-[@gasket/plugin-log]:/packages/gasket-plugin-log/README.md
+[@gasket/plugin-logger]:/packages/gasket-plugin-logger/README.md
 [@gasket/plugin-manifest]:/packages/gasket-plugin-manifest/README.md
 [@gasket/plugin-metadata]:/packages/gasket-plugin-metadata/README.md
 [@gasket/plugin-metrics]:/packages/gasket-plugin-metrics/README.md
@@ -387,6 +387,7 @@ Available configuration options in the `gasket.config.js`
 [@gasket/plugin-start]:/packages/gasket-plugin-start/README.md
 [@gasket/plugin-swagger]:/packages/gasket-plugin-swagger/README.md
 [@gasket/plugin-webpack]:/packages/gasket-plugin-webpack/README.md
+[@gasket/plugin-winston]:/packages/gasket-plugin-winston/README.md
 [@gasket/plugin-workbox]:/packages/gasket-plugin-workbox/README.md
 [@gasket/assets]:/packages/gasket-assets/README.md
 [@gasket/cli]:/packages/gasket-cli/README.md
@@ -394,7 +395,6 @@ Available configuration options in the `gasket.config.js`
 [@gasket/engine]:/packages/gasket-engine/README.md
 [@gasket/fetch]:/packages/gasket-fetch/README.md
 [@gasket/helper-intl]:/packages/gasket-helper-intl/README.md
-[@gasket/log]:/packages/gasket-log/README.md
 [@gasket/nextjs]:/packages/gasket-nextjs/README.md
 [@gasket/react-intl]:/packages/gasket-react-intl/README.md
 [@gasket/redux]:/packages/gasket-redux/README.md
@@ -433,8 +433,6 @@ Available configuration options in the `gasket.config.js`
 [intl.modules]:/packages/gasket-plugin-intl/README.md#configuration
 [intl.nextRouting]:/packages/gasket-plugin-intl/README.md#configuration
 [intl.serveStatic]:/packages/gasket-plugin-intl/README.md#configuration
-[log]:/packages/gasket-plugin-log/README.md#configuration
-[log.prefix]:/packages/gasket-plugin-log/README.md#configuration
 [10]:/packages/gasket-plugin-manifest/README.md#configuration
 [morgan]:/packages/gasket-plugin-morgan/README.md#configuration
 [morgan.format]:/packages/gasket-plugin-morgan/README.md#configuration
@@ -459,7 +457,7 @@ Available configuration options in the `gasket.config.js`
 [swagger.ui]:/packages/gasket-plugin-swagger/README.md#configuration
 [12]:/packages/gasket-plugin-https/README.md#configuration
 [terminus.healthcheck]:/packages/gasket-plugin-https/README.md#configuration
-[winston]:/packages/gasket-plugin-log/README.md#configuration
+[winston]:/packages/gasket-plugin-winston/README.md#configuration
 [13]:/packages/gasket-plugin-workbox/README.md#configuration
 [workbox.basePath]:/packages/gasket-plugin-workbox/README.md#configuration
 [workbox.config]:/packages/gasket-plugin-workbox/README.md#configuration

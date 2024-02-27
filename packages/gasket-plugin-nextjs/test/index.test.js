@@ -143,7 +143,10 @@ describe('express hook', () => {
     const mockNext = jest.fn();
     await fn(mockReq, mockRes, mockNext);
 
-    expect(mockReq.headers).toHaveProperty('cookie', 'bogus=data;NEXT_LOCALE=fr-FR');
+    expect(mockReq.headers).toHaveProperty(
+      'cookie',
+      'bogus=data;NEXT_LOCALE=fr-FR'
+    );
   });
 
   it('middleware does not set NEXT_LOCALE cookie if no gasketData', async function () {
@@ -173,7 +176,8 @@ describe('express hook', () => {
     const gasket = mockGasketApi();
     await hook(gasket, expressApp, false);
 
-    const routeHandler = expressApp.all.mock.calls[expressApp.all.mock.calls.length - 1][1];
+    const routeHandler =
+      expressApp.all.mock.calls[expressApp.all.mock.calls.length - 1][1];
 
     const mockReq = { headers: {} };
     const mockRes = { locals: { gasketData: {} } };
@@ -186,7 +190,6 @@ describe('express hook', () => {
       nextServer: nextHandler
     });
   });
-
 });
 
 describe('fastify hook', () => {
@@ -237,7 +240,10 @@ describe('fastify hook', () => {
     const mockRes = { locals: { gasketData: { intl: { locale: 'fr-FR' } } } };
     const mockNext = jest.fn();
     fn(mockReq, mockRes, mockNext);
-    expect(mockReq.headers).toHaveProperty('cookie', 'bogus=data;NEXT_LOCALE=fr-FR');
+    expect(mockReq.headers).toHaveProperty(
+      'cookie',
+      'bogus=data;NEXT_LOCALE=fr-FR'
+    );
   });
 
   it('middleware does not set NEXT_LOCALE cookie if no gasketData', async function () {
@@ -273,7 +279,8 @@ describe('fastify hook', () => {
     const gasket = mockGasketApi();
     await hook(gasket, fastifyApp, false);
 
-    const routeHandler = fastifyApp.all.mock.calls[fastifyApp.all.mock.calls.length - 1][1];
+    const routeHandler =
+      fastifyApp.all.mock.calls[fastifyApp.all.mock.calls.length - 1][1];
 
     const mockReq = { headers: {} };
     const mockRes = { locals: { gasketData: {} } };
@@ -399,9 +406,11 @@ describe('create hook', () => {
   });
 
   it('adds the appropriate globs for redux', async function () {
-    mockContext.pkg.has = jest.fn().mockImplementation(
-      (o, f) => o === 'dependencies' && f === '@gasket/redux'
-    );
+    mockContext.pkg.has = jest
+      .fn()
+      .mockImplementation(
+        (o, f) => o === 'dependencies' && f === '@gasket/redux'
+      );
     await plugin.hooks.create.handler({}, mockContext);
 
     expect(mockContext.files.add).toHaveBeenCalledWith(
@@ -411,9 +420,11 @@ describe('create hook', () => {
   });
 
   it('adds appropriate dependencies for redux', async function () {
-    mockContext.pkg.has = jest.fn().mockImplementation(
-      (o, f) => o === 'dependencies' && f === '@gasket/redux'
-    );
+    mockContext.pkg.has = jest
+      .fn()
+      .mockImplementation(
+        (o, f) => o === 'dependencies' && f === '@gasket/redux'
+      );
     await plugin.hooks.create.handler({}, mockContext);
 
     expect(mockContext.pkg.add).toHaveBeenCalledWith('dependencies', {
@@ -501,108 +512,132 @@ describe('workbox hook', () => {
   it('config modifies urls from to _next', async () => {
     const results = await plugin.hooks.workbox(gasketAPI);
 
-    expect(results.modifyURLPrefix).toEqual(expect.objectContaining({
-      '.next/': '_next/'
-    }));
+    expect(results.modifyURLPrefix).toEqual(
+      expect.objectContaining({
+        '.next/': '_next/'
+      })
+    );
   });
 
   it('config modifies urls to use base path with https', async () => {
     const basePath = 'https://some-cdn.com/';
     gasketAPI.config = { basePath };
     const results = await plugin.hooks.workbox(gasketAPI);
-    expect(results.modifyURLPrefix).toEqual(expect.objectContaining({
-      '.next/': basePath + '_next/'
-    }));
+    expect(results.modifyURLPrefix).toEqual(
+      expect.objectContaining({
+        '.next/': basePath + '_next/'
+      })
+    );
   });
 
   it('config modifies urls to use base path with http', async () => {
     const basePath = 'http://some-cdn.com/';
     gasketAPI.config = { basePath };
     const results = await plugin.hooks.workbox(gasketAPI);
-    expect(results.modifyURLPrefix).toEqual(expect.objectContaining({
-      '.next/': basePath + '_next/'
-    }));
+    expect(results.modifyURLPrefix).toEqual(
+      expect.objectContaining({
+        '.next/': basePath + '_next/'
+      })
+    );
   });
 
   it('config modifies urls to use base path with https but no trailing slash', async () => {
     const basePath = 'https://some-cdn.com';
     gasketAPI.config = { basePath };
     const results = await plugin.hooks.workbox(gasketAPI);
-    expect(results.modifyURLPrefix).toEqual(expect.objectContaining({
-      '.next/': `${basePath}/_next/`
-    }));
+    expect(results.modifyURLPrefix).toEqual(
+      expect.objectContaining({
+        '.next/': `${basePath}/_next/`
+      })
+    );
   });
 
   it('config modifies urls to use base path relative path with trailing slash', async () => {
     const basePath = '/some/asset/prefix/';
     gasketAPI.config = { basePath };
     const results = await plugin.hooks.workbox(gasketAPI);
-    expect(results.modifyURLPrefix).toEqual(expect.objectContaining({
-      '.next/': `${basePath}_next/`
-    }));
+    expect(results.modifyURLPrefix).toEqual(
+      expect.objectContaining({
+        '.next/': `${basePath}_next/`
+      })
+    );
   });
 
   it('config modifies urls to use base path relative path without trailing slash', async () => {
     const basePath = '/some/asset/prefix';
     gasketAPI.config = { basePath };
     const results = await plugin.hooks.workbox(gasketAPI);
-    expect(results.modifyURLPrefix).toEqual(expect.objectContaining({
-      '.next/': `${basePath}/_next/`
-    }));
+    expect(results.modifyURLPrefix).toEqual(
+      expect.objectContaining({
+        '.next/': `${basePath}/_next/`
+      })
+    );
   });
 
   it('config modifies urls to use assetPrefix with https', async () => {
     const assetPrefix = 'https://some-cdn.com/';
     gasketAPI.config = { nextConfig: { assetPrefix } };
     const results = await plugin.hooks.workbox(gasketAPI);
-    expect(results.modifyURLPrefix).toEqual(expect.objectContaining({
-      '.next/': assetPrefix + '_next/'
-    }));
+    expect(results.modifyURLPrefix).toEqual(
+      expect.objectContaining({
+        '.next/': assetPrefix + '_next/'
+      })
+    );
   });
 
   it('config modifies urls to use assetPrefix with http', async () => {
     const assetPrefix = 'http://some-cdn.com/';
     gasketAPI.config = { nextConfig: { assetPrefix } };
     const results = await plugin.hooks.workbox(gasketAPI);
-    expect(results.modifyURLPrefix).toEqual(expect.objectContaining({
-      '.next/': assetPrefix + '_next/'
-    }));
+    expect(results.modifyURLPrefix).toEqual(
+      expect.objectContaining({
+        '.next/': assetPrefix + '_next/'
+      })
+    );
   });
 
   it('config modifies urls to use assetPrefix with https but no trailing slash', async () => {
     const assetPrefix = 'https://some-cdn.com';
     gasketAPI.config = { nextConfig: { assetPrefix } };
     const results = await plugin.hooks.workbox(gasketAPI);
-    expect(results.modifyURLPrefix).toEqual(expect.objectContaining({
-      '.next/': `${assetPrefix}/_next/`
-    }));
+    expect(results.modifyURLPrefix).toEqual(
+      expect.objectContaining({
+        '.next/': `${assetPrefix}/_next/`
+      })
+    );
   });
 
   it('config modifies urls to use assetPrefix relative path with trailing slash', async () => {
     const assetPrefix = '/some/asset/prefix/';
     gasketAPI.config = { nextConfig: { assetPrefix } };
     const results = await plugin.hooks.workbox(gasketAPI);
-    expect(results.modifyURLPrefix).toEqual(expect.objectContaining({
-      '.next/': `${assetPrefix}_next/`
-    }));
+    expect(results.modifyURLPrefix).toEqual(
+      expect.objectContaining({
+        '.next/': `${assetPrefix}_next/`
+      })
+    );
   });
 
   it('config modifies urls to use assetPrefix relative path without trailing slash', async () => {
     const assetPrefix = '/some/asset/prefix';
     gasketAPI.config = { nextConfig: { assetPrefix } };
     const results = await plugin.hooks.workbox(gasketAPI);
-    expect(results.modifyURLPrefix).toEqual(expect.objectContaining({
-      '.next/': `${assetPrefix}/_next/`
-    }));
+    expect(results.modifyURLPrefix).toEqual(
+      expect.objectContaining({
+        '.next/': `${assetPrefix}/_next/`
+      })
+    );
   });
 
   it('config modifies urls to use basePath', async () => {
     const assetPrefix = '/from-root';
     gasketAPI.config = { basePath: assetPrefix };
     const results = await plugin.hooks.workbox(gasketAPI);
-    expect(results.modifyURLPrefix).toEqual(expect.objectContaining({
-      '.next/': `${assetPrefix}/_next/`
-    }));
+    expect(results.modifyURLPrefix).toEqual(
+      expect.objectContaining({
+        '.next/': `${assetPrefix}/_next/`
+      })
+    );
   });
 });
 
@@ -615,7 +650,7 @@ function mockGasketApi() {
     exec: jest.fn().mockResolvedValue({}),
     execSync: jest.fn().mockReturnValue([]),
     logger: {
-      warning: jest.fn()
+      warn: jest.fn()
     },
     config: {
       webpack: {}, // user specified webpack config
