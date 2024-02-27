@@ -1,7 +1,9 @@
 import { Command, Flags } from '@oclif/core';
 import { GasketCommand } from './command.js';
 import { hoistBaseFlags } from './utils.js';
-import { default as pkg } from '../package.json' assert { type: 'json' };
+import { createRequire } from 'node:module';
+const require = createRequire(import.meta.url);
+const pkg = require('../package.json');
 
 export const plugin = {
   name: pkg.name,
