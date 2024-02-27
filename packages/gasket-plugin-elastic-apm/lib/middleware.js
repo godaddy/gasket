@@ -22,7 +22,6 @@ async function customizeTransaction(gasket, req, res) {
   const apm = gasket.apm;
 
   if (!apm.isStarted()) {
-    gasket.logger.warning('Elastic APM has not been started properly.');
     return;
   }
 

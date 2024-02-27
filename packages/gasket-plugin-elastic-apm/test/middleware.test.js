@@ -3,12 +3,10 @@ const middlewareHook = require('../lib/middleware');
 
 describe('The middleware hook', () => {
   let gasket, req, res;
-  const loggerMock = { warning: jest.fn() };
 
   beforeEach(() => {
     gasket = {
       exec: jest.fn(() => Promise.resolve()),
-      logger: loggerMock,
       apm: {
         isStarted: jest.fn().mockReturnValue(true),
         currentTransaction: {
@@ -43,22 +41,18 @@ describe('The middleware hook', () => {
         gasket.apm.currentTransaction,
         { req, res }
       );
-      expect(gasket.logger.warning).not.toHaveBeenCalled();
     });
 
     it('logs a warning if apm is not started', async () => {
       gasket.apm.isStarted = jest.fn().mockReturnValue(false);
 
       await middleware(req, res);
-
-      expect(gasket.logger.warning).toHaveBeenCalledWith('Elastic APM has not been started properly.');
       expect(gasket.exec).not.toHaveBeenCalled();
     });
 
     it('returns if currentTransaction is not defined', async () => {
       gasket.apm.currentTransaction = null;
       await middleware(req, res);
-      expect(gasket.logger.warning).not.toHaveBeenCalled();
       expect(gasket.exec).not.toHaveBeenCalled();
     });
   });

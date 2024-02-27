@@ -1,6 +1,5 @@
 import type { IncomingMessage, ServerResponse } from 'http';
 import type { Agent, AgentConfigOptions, Transaction } from 'elastic-apm-node';
-import type Log from '@gasket/log';
 
 declare module '@gasket/engine' {
   export interface GasketConfig {
@@ -11,7 +10,6 @@ declare module '@gasket/engine' {
 
   export interface Gasket {
     apm: Agent;
-    logger: Log;
   }
 
   export interface HookExecTypes {
