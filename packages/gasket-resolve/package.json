@@ -1,6 +1,6 @@
 {
   "name": "@gasket/resolve",
-  "version": "6.46.2-esm.0",
+  "version": "6.46.2-esm.8",
   "description": "Essential module resolution & configuration management for gasket plugins & presets.",
   "main": "lib",
   "types": "types",
@@ -47,7 +47,7 @@
     "semver": "^7.5.4"
   },
   "devDependencies": {
-    "@gasket/engine": "^6.46.2-esm.0",
+    "@gasket/engine": "^6.46.2-esm.8",
     "@godaddy/dmd": "^1.0.4",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
