@@ -24,15 +24,15 @@ demonstrate what to look for:
 
 ### @gasket/gasket-cli
 
-Remove deprecated `--npmconfig` flag from gasket-cli. [(#647)]
+Removed support for deprecated `--npmconfig` flag. [(#647)]
 
 ### @gasket/plugin-workbox
 
-Remove deprecated `assetPrefix` config support from `@gasket/plugin-workbox`. [(#661)]
+Remove deprecated `assetPrefix` config support. Use `basePath` instead [(#661)]
 
-### @gasket/plugin-nextjs 
+### @gasket/plugin-nextjs
 
-Remove deprecated `next` config support. [(#655)]
+Remove deprecated `next` config support. Use `nextConfig` instead[(#655)]
 
 ### @gasket/gasket-utils
 
@@ -60,9 +60,9 @@ Remove deprecated support for `languageMap`, `defaultLanguage`, `assetPrefix` co
 
 Update Cypress version to 12.3.0. [(#660)]
 
-## Set Docusaraus as Default Docs
+## Set Docusaraus as The Default Docs Generator
 
-- Replace `docsify` with `docusaurus` for gasket docs. [(#673)]
+Replace `docsify` with `docusaurus` for gasket docs. [(#673)]
 
 ## Align Lifecycles to use Context Object in Params
 
@@ -80,6 +80,13 @@ Affected lifecycles:
 - `nextPreHandling` `.d.ts` type file
 
 [(#669)]
+
+If your app or plugins hooks these lifecycles you may need to adjust them.
+
+```diff
+- async appRequestConfig(gasket, config, req, res) {
++ async appRequestConfig(gasket, config, { req, res }) {
+```
 
 ## @gasket/plugin-elastic-apm
 
