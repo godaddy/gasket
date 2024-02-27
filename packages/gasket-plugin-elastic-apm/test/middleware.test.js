@@ -1,13 +1,5 @@
 const { promisify } = require('util');
-// const apm = require('elastic-apm-node');
 const middlewareHook = require('../lib/middleware');
-
-// jest.mock('elastic-apm-node', () => ({
-//   currentTransaction: {
-//     name: 'transaction name',
-//     addLabels: jest.fn()
-//   }
-// }));
 
 describe('The middleware hook', () => {
   let gasket, req, res;
