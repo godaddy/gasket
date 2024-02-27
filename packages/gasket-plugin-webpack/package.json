@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-webpack",
-  "version": "6.45.2",
+  "version": "7.0.0-canary.0",
   "description": "Adds webpack support to your application",
   "main": "lib",
   "types": "lib/index.d.ts",
@@ -42,7 +42,7 @@
     "webpack-merge": "^4.2.1"
   },
   "devDependencies": {
-    "@gasket/engine": "^6.45.2",
+    "@gasket/engine": "^7.0.0-canary.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
     "eslint-config-godaddy": "^7.0.2",
