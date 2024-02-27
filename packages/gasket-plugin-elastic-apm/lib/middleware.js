@@ -10,7 +10,6 @@
  */
 
 const { callbackify } = require('util');
-const apm = require('elastic-apm-node');
 
 /**
  * Middleware for customizing transactions
@@ -20,6 +19,13 @@ const apm = require('elastic-apm-node');
  * @param {Response}  res     The server response
  */
 async function customizeTransaction(gasket, req, res) {
+  const apm = gasket.apm;
+
+  if (!apm.isStarted()) {
+    gasket.logger.warning('Elastic APM has not been started properly.');
+    return;
+  }
+
   const transaction = apm.currentTransaction;
   if (!transaction) {
     return;
