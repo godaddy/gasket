@@ -1,11 +1,11 @@
 import { Gasket, GasketConfig, GasketConfigFile, Hook } from '@gasket/engine';
-import '@gasket/plugin-config';
+import '@gasket/plugin-response-data';
 
-describe('@gasket/plugin-config', () => {
+describe('@gasket/plugin-response-data', () => {
 
   it('adds an optional configPath property to gasket config', () => {
     const config: GasketConfigFile = {
-      configPath: './config/path'
+      gasketDataDir: './custom/path'
     };
   });
 
@@ -16,15 +16,15 @@ describe('@gasket/plugin-config', () => {
     };
   });
 
-  it('defines the appEnvConfig lifecycle', () => {
-    const hook: Hook<'appEnvConfig'> = (gasket: Gasket, config): object => ({
+  it('defines the gasketData lifecycle', () => {
+    const hook: Hook<'gasketData'> = (gasket: Gasket, config): object => ({
       ...config,
       maxRequestsPerSecond: 100
     });
   });
 
-  it('defines the appRequestConfig lifecycle', () => {
-    const hook: Hook<'appRequestConfig'> = (gasket, config, { req, res }) => ({
+  it('defines the responseData lifecycle', () => {
+    const hook: Hook<'responseData'> = (gasket, config, { req, res }) => ({
       ...config,
       serviceName: req.headers.host
     });

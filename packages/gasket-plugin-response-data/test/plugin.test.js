@@ -1,6 +1,6 @@
 const path = require('path');
 const plugin = require('../lib/plugin');
-const { ENV_CONFIG } = require('../lib/constants');
+const { gasketDataMap } = require('../lib/data-map');
 
 describe('Plugin', () => {
   let gasket;
@@ -26,7 +26,13 @@ describe('Plugin', () => {
   });
 
   it('has expected hooks', () => {
-    const expected = ['preboot', 'middleware', 'initReduxState', 'metadata'];
+    const expected = [
+      'create',
+      'preboot',
+      'middleware',
+      'initReduxState',
+      'metadata'
+    ];
 
     expect(plugin).toHaveProperty('hooks');
 
@@ -35,11 +41,12 @@ describe('Plugin', () => {
     expect(hooks).toHaveLength(expected.length);
   });
 
+  /* eslint-disable jest/expect-expect */
   describe('preboot hook', () => {
     it('sets the environment config to {} if no config files exist', () => {
       return verify({
         withRootDir: 'no-config',
-        configShouldEqual: {}
+        shouldEqual: {}
       });
     });
 
@@ -47,15 +54,15 @@ describe('Plugin', () => {
       return verify({
         withRootDir: 'custom-dir',
         withEnv: 'production',
-        withConfigPath: './src/config',
-        configShouldEqual: { expected: 'config' }
+        withGasketDataDir: './src/custom',
+        shouldEqual: { expected: 'config' }
       });
     });
 
     it('supports both .js and .json files', () => {
       return verify({
         withRootDir: 'diff-file-types',
-        configShouldEqual: {
+        shouldEqual: {
           base: 'config',
           env: 'setting'
         }
@@ -65,7 +72,7 @@ describe('Plugin', () => {
     it('supports a base config file', () => {
       return verify({
         withRootDir: 'base-config',
-        configShouldEqual: {
+        shouldEqual: {
           base: 'config',
           env: 'setting'
         }
@@ -76,7 +83,7 @@ describe('Plugin', () => {
       return verify({
         withRootDir: 'sub-envs',
         withEnv: 'production.v1',
-        configShouldEqual: {
+        shouldEqual: {
           common: 'config',
           someSetting: 'overridden value'
         }
@@ -87,7 +94,7 @@ describe('Plugin', () => {
       return verify({
         withRootDir: 'local-config',
         withEnv: 'local',
-        configShouldEqual: {
+        shouldEqual: {
           urls: {
             fos: 'https://www.test-domain.com/',
             gcAPI: 'https://api.test-domain.com:8443/'
@@ -100,7 +107,7 @@ describe('Plugin', () => {
       return verify({
         withRootDir: 'local-overrides',
         withEnv: 'local',
-        configShouldEqual: {
+        shouldEqual: {
           port: 8843,
           urls: {
             fos: 'https://www.test-domain.com/',
@@ -110,9 +117,9 @@ describe('Plugin', () => {
       });
     });
 
-    it('supports `appEnvConfig` hooks', () => {
+    it('supports `gasketData` hooks', () => {
       gasket.execWaterfall.mockImplementation((event, config) => {
-        expect(event).toEqual('appEnvConfig');
+        expect(event).toEqual('gasketData');
         return Promise.resolve({
           ...config,
           urls: Object.entries(config.urls).reduce(
@@ -134,7 +141,7 @@ describe('Plugin', () => {
       return verify({
         withRootDir: 'templated',
         withEnv: 'test',
-        configShouldEqual: {
+        shouldEqual: {
           rootDomain: 'test.domain.com',
           rootResellerDomain: 'test.net',
           urls: {
@@ -153,20 +160,20 @@ describe('Plugin', () => {
       });
     });
 
-    it('descriptive error when config is not present in `appEnvConfig` hooks', async () => {
+    it('descriptive error when config is not present in `gasketData` hooks', async () => {
       Object.assign(gasket.config, {
         root: path.join(__dirname, './fixtures', 'templated'),
         env: 'test'
       });
 
       gasket.execWaterfall.mockImplementation((event) => {
-        expect(event).toEqual('appEnvConfig');
+        expect(event).toEqual('gasketData');
       });
 
       const { preboot } = plugin.hooks;
 
       await expect(preboot(gasket)).rejects.toThrow(
-        'An appEnvConfig lifecycle hook did not return a config object.'
+        'A gasketData lifecycle hook did not return a config object.'
       );
     });
 
@@ -180,14 +187,14 @@ describe('Plugin', () => {
     async function verify({
       withRootDir,
       withEnv = 'development',
-      withConfigPath,
-      configShouldEqual,
+      withGasketDataDir,
+      shouldEqual,
       shouldThrow = false
     }) {
       Object.assign(gasket.config, {
         root: path.join(__dirname, './fixtures', withRootDir),
         env: withEnv,
-        configPath: withConfigPath
+        gasketDataDir: withGasketDataDir
       });
 
       try {
@@ -203,20 +210,23 @@ describe('Plugin', () => {
         throw new Error('Expected init hook to fail');
       }
 
-      expect(gasket[ENV_CONFIG]).toEqual(configShouldEqual);
+      expect(gasketDataMap.get(gasket)).toEqual(shouldEqual);
     }
   });
+  /* eslint-enable jest/expect-expect */
 
   describe('initReduxState hook', () => {
     let req, res;
 
     beforeEach(() => {
       req = {};
-      res = {};
+      res = {
+        locals: {}
+      };
     });
 
-    it('adds the `redux` config section to the redux state', async () => {
-      req.config = { something: 'private', redux: { something: 'public' } };
+    it('adds the `public` config section to the redux state', async () => {
+      res.locals.gasketData = { something: 'public' };
       const startingState = {
         auth: { some: 'details' }
       };
@@ -232,14 +242,14 @@ describe('Plugin', () => {
 
       expect(newState).toEqual({
         auth: { some: 'details' },
-        config: { something: 'public' }
+        gasketData: { something: 'public' }
       });
     });
 
-    it('does not overwrite any previously-prevent config state', async () => {
-      delete req.config;
+    it('does not overwrite any previously-present gasketData state', async () => {
+      res.locals.gasketData = { something: 'public' };
       const startingState = {
-        config: { some: { custom: 'config' } }
+        gasketData: { some: { existing: 'state' } }
       };
 
       const newState = await plugin.hooks.initReduxState(
@@ -252,7 +262,10 @@ describe('Plugin', () => {
       );
 
       expect(newState).toEqual({
-        config: { some: { custom: 'config' } }
+        gasketData: {
+          some: { existing: 'state' },
+          something: 'public'
+        }
       });
     });
   });

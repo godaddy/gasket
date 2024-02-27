@@ -1,5 +1,5 @@
 {
-  "name": "@gasket/plugin-config",
+  "name": "@gasket/plugin-response-data",
   "version": "6.45.2",
   "description": "Supports application-specific (non-Gasket) configuration",
   "main": "lib/plugin.js",
@@ -35,13 +35,14 @@
   "bugs": {
     "url": "https://github.com/godaddy/gasket/issues"
   },
-  "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-config",
+  "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-response-data",
   "dependencies": {
     "@gasket/utils": "^6.45.2",
     "lodash.defaultsdeep": "^4.6.1",
     "lodash.merge": "^4.6.2"
   },
   "devDependencies": {
+    "@gasket/data": "^6.45.2",
     "@gasket/engine": "^6.45.2",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",

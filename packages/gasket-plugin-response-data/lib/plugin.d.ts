@@ -3,20 +3,14 @@ import type { IncomingMessage, OutgoingMessage } from 'http';
 
 declare module '@gasket/engine' {
   export interface GasketConfig {
-    configPath?: string
+    gasketDataDir?: string
   }
 
   export interface HookExecTypes {
-    appEnvConfig(config: object): MaybeAsync<object>,
-    appRequestConfig(
+    gasketData(config: object): MaybeAsync<object>,
+    responseData(
       config: object,
       context: { req: IncomingMessage, res: OutgoingMessage }
     ): MaybeAsync<object>
-  }
-}
-
-declare module '@gasket/data' {
-  export interface GasketData {
-    config?: object
   }
 }
