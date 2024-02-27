@@ -16,7 +16,8 @@ async function setupPkg(context) {
   const pkg = ConfigBuilder.createPackageJson({
     name: appName,
     version: '0.0.0',
-    description: appDescription
+    description: appDescription,
+    type: 'module'
   }, { warnings });
 
   // The preset package itself must be included in the dependencies

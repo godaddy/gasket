@@ -11,7 +11,7 @@ import action from '../action-wrapper.js';
  */
 async function writeGasketConfig(context) {
   const { dest, gasketConfig, presets, plugins, generatedFiles } = context;
-  const fileName = 'gasket.config.js';
+  const fileName = 'gasket.config.cjs';
   const filePath = path.join(dest, fileName);
 
   gasketConfig.add('plugins', {
@@ -22,7 +22,7 @@ async function writeGasketConfig(context) {
   //
   // Use JSON5 to stringify the config and add export for CommonJS
   //
-  const contents = 'export default ' +
+  const contents = 'module.exports = ' +
     JSON5.stringify(gasketConfig, null, 2) + ';\n';
 
   await writeFile(filePath, contents, 'utf8');
