@@ -75,7 +75,6 @@ The reason for utilizing this context object is to enable the execution of these
 
 Affected lifecycles:
 
-- `appRequestConfig`
 - `initReduxState`
 - `nextPreHandling` `.d.ts` type file
 
@@ -84,8 +83,8 @@ Affected lifecycles:
 If your app or plugins hooks these lifecycles you may need to adjust them.
 
 ```diff
-- async appRequestConfig(gasket, config, req, res) {
-+ async appRequestConfig(gasket, config, { req, res }) {
+- async initReduxState(gasket, config, req, res) {
++ async initReduxState(gasket, config, { req, res }) {
 ```
 
 ## @gasket/plugin-elastic-apm
@@ -94,6 +93,17 @@ If your app or plugins hooks these lifecycles you may need to adjust them.
 - Remove sensitive cookie filter and config.
 
 [(#672)]
+
+
+## Rename and refactor @gasket/plugin-config as @gasket/plugin-response-data
+
+We have had a lot of confusion around the config plugin and it's purpose. As such, we are renaming and refocusing what the plugin does. That is, to allow environment specific data to be accessible for requests, with public data available with responses.
+
+Instead of the generic 'config' name, we will term this gasketData which pairs well with the `@gasket/data` package - which is what makes this data accessible in browser code. We are dropping the `redux` property, aligning on `public` which will be added to the Redux state as `gasketData` for apps that choose to opt-in to Redux.
+
+The lifecycles have been renamed also.
+- `gasketData` can be used to tune up the base object during app `init`.
+- `responseData` can be used to tune up the "public" data uniquely for each response.
 
 ## Bring Your Own Logger
 
@@ -128,5 +138,6 @@ Updates:
 [(#673)]:https://github.com/godaddy/gasket/pull/673
 [(#672)]:https://github.com/godaddy/gasket/pull/672
 [(#640)]:https://github.com/godaddy/gasket/pull/640
+[(#680)]:https://github.com/godaddy/gasket/pull/680
 
 <!-- LINKS -->
