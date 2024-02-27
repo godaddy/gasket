@@ -101,7 +101,7 @@ class GasketCommand extends Command {
 GasketCommand.flags = {
   config: Flags.string({
     env: 'GASKET_CONFIG',
-    default: 'gasket.config',
+    default: 'gasket.config.cjs',
     char: 'c',
     description: 'Fully qualified Gasket config to load'
   }),
