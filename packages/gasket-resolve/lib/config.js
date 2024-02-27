@@ -21,6 +21,13 @@ async function loadGasketConfigFile(root, env, commandId, configFile = 'gasket.c
 function loadConfigFile(root, configFile) {
   const absolutePath = !path.isAbsolute(configFile) ? path.join(root, configFile) : configFile;
   const resolvedPath = tryResolve(absolutePath);
+  console.log('-------------------');
+  console.log('gasket:resolve');
+  console.log('root', root);
+  console.log('configFile', configFile);
+  console.log('resolvedPath', resolvedPath);
+  console.log('absolutePath', absolutePath);
+  console.log('-------------------');
   if (resolvedPath) {
     return require(resolvedPath);
   }
