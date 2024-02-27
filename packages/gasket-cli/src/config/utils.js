@@ -11,7 +11,7 @@ const debug = diagnostics('gasket:cli:config:utils');
  * @param {function} warn - Warning logger
  * @returns {string} environment
  */
-function getEnvironment(flags, commandId, warn) {
+export function getEnvironment(flags, commandId, warn) {
   if (flags.env) {
     debug('Environment was passed through command line flags', flags.env);
     return flags.env;
@@ -39,7 +39,7 @@ function getEnvironment(flags, commandId, warn) {
  * @param {Object} gasketConfig - Gasket config
  * @returns {Object} updated config
  */
-function addDefaultPlugins(gasketConfig) {
+export function addDefaultPlugins(gasketConfig) {
   const pluginsConfig = gasketConfig.plugins || {};
   const { add = [], remove = [] } = pluginsConfig;
   const filteredNames = new Set(
@@ -57,8 +57,3 @@ function addDefaultPlugins(gasketConfig) {
     }
   };
 }
-
-module.exports = {
-  getEnvironment,
-  addDefaultPlugins
-};
