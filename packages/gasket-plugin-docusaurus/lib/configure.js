@@ -6,7 +6,9 @@ async function handler(gasket, config) {
   const { rootDir = '.docs', docsDir = 'docs' } = docusaurus;
 
   if (config.docs && config.docs.outputDir) {
-    gasket.logger.warning('Custom config for `docs.outputDir` found. Instead use `docusaurus.docsDir`.');
+    gasket.logger.warn(
+      'Custom config for `docs.outputDir` found. Instead use `docusaurus.docsDir`.'
+    );
   }
 
   return {

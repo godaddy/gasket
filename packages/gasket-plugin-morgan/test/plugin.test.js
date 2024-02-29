@@ -9,16 +9,8 @@ describe('@gasket/plugin-morgan', () => {
     expect(Plugin).toHaveProperty('name', '@gasket/plugin-morgan');
   });
 
-  it('has expected dependencies', () => {
-    expect(Plugin).toHaveProperty('dependencies');
-    expect(Plugin.dependencies).toEqual(['@gasket/plugin-log']);
-  });
-
   it('has expected hooks', () => {
-    const expected = [
-      'middleware',
-      'metadata'
-    ];
+    const expected = ['middleware', 'metadata'];
 
     expect(Plugin).toHaveProperty('hooks');
 
@@ -28,9 +20,7 @@ describe('@gasket/plugin-morgan', () => {
   });
 
   describe('.middleware', () => {
-
     describe('.handler', () => {
-
       it('runs on the middleware lifecycle event', function () {
         expect(typeof Plugin.hooks.middleware.handler).toBe('function');
         expect(Plugin.hooks.middleware.handler).toHaveLength(1);
@@ -65,7 +55,8 @@ describe('@gasket/plugin-morgan', () => {
         };
 
         const [morganMiddleware] = Plugin.hooks.middleware.handler(gasketMock);
-        morganMiddleware(reqMock, resMock, function next() { // eslint-disable-line max-nested-callbacks
+        // eslint-disable-next-line max-nested-callbacks
+        morganMiddleware(reqMock, resMock, function next() {
           expect(loggerMock.info).toHaveBeenCalledWith('GET /foobar');
         });
       });

@@ -25,7 +25,7 @@ function formatLocale(language) {
   const [lang, ...rest] = language ? language.split('-') : [];
   return [
     lang.toLowerCase(),
-    ...rest.map(o => o.length === 2 ? o.toUpperCase() : capitalize(o))
+    ...rest.map((o) => (o.length === 2 ? o.toUpperCase() : capitalize(o)))
   ].join('-');
 }
 
@@ -56,14 +56,23 @@ module.exports = function middlewareHook(gasket) {
   }
 
   return async function intlMiddleware(req, res, next) {
-    const preferredLocale = getPreferredLocale(gasket, req, locales, defaultLocale);
+    const preferredLocale = getPreferredLocale(
+      gasket,
+      req,
+      locales,
+      defaultLocale
+    );
 
     // Allow plugins to determine locale to use
-    const pluginLocale = await gasket.execWaterfall('intlLocale', preferredLocale, { req, res });
+    const pluginLocale = await gasket.execWaterfall(
+      'intlLocale',
+      preferredLocale,
+      { req, res }
+    );
     debug(`Locale after plugin updates: ${pluginLocale}`);
 
     // Once we have a locale, see if there has been any remapping for it
-    const locale = localesMap && localesMap[pluginLocale] || pluginLocale;
+    const locale = (localesMap && localesMap[pluginLocale]) || pluginLocale;
     debug(`Locale after remapping: ${locale}`);
 
     /**
@@ -97,7 +106,7 @@ module.exports = function middlewareHook(gasket) {
 
     mergeGasketData({
       locale,
-      ...(basePath && { basePath } || {})
+      ...((basePath && { basePath }) || {})
     });
 
     /**
@@ -106,8 +115,14 @@ module.exports = function middlewareHook(gasket) {
      * @param {LocalePathPart|LocalePathPart[]} localePathPart - Path(s) containing locale files
      * @returns {LocalesProps} localesProps
      */
-    req.withLocaleRequired = function withLocaleRequired(localePathPart = manifest.defaultPath) {
-      const localesProps = localeUtils.serverLoadData(localePathPart, locale, localesParentDir);
+    req.withLocaleRequired = function withLocaleRequired(
+      localePathPart = manifest.defaultPath
+    ) {
+      const localesProps = localeUtils.serverLoadData(
+        localePathPart,
+        locale,
+        localesParentDir
+      );
       mergeGasketData(localesProps);
       return localesProps;
     };
@@ -122,7 +137,9 @@ module.exports = function middlewareHook(gasket) {
      */
     req.selectLocaleMessage = function selectLocaleMessage(id, defaultMessage) {
       const localeProps = getIntlData();
-      const messages = localeProps.messages && localeProps.messages[localeProps.locale] || {};
+      const messages =
+        (localeProps.messages && localeProps.messages[localeProps.locale]) ||
+        {};
       return messages[id] || defaultMessage || id;
     };
 
@@ -142,12 +159,15 @@ function getPreferredLocale(gasket, req, locales, defaultLocale) {
       preferredLocale = formatLocale(accept.language(acceptLanguage, locales));
       debug(`Using ${preferredLocale} as starting locale`);
     } catch (error) {
-      gasket.logger.debug(`Unable to parse accept-language header: ${error.message}`);
+      gasket.logger.debug(
+        `Unable to parse accept-language header: ${error.message}`
+      );
     }
   } else {
-    debug(`No accept-language header; starting with default ${preferredLocale}`);
+    debug(
+      `No accept-language header; starting with default ${preferredLocale}`
+    );
   }
 
   return preferredLocale;
 }
-

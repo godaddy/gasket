@@ -38,20 +38,35 @@ describe('setupNextApp', () => {
       gasket = mockGasketApi();
       gasket.command = 'local';
       await module.setupNextApp(gasket);
-      expect(mockNext).toHaveBeenCalledWith({ dev: true, conf: expect.any(Object), hostname: 'localhost', port: 3000 });
+      expect(mockNext).toHaveBeenCalledWith({
+        dev: true,
+        conf: expect.any(Object),
+        hostname: 'localhost',
+        port: 3000
+      });
     });
 
     it('creates devServer when gasket command id is local', async function () {
       gasket = mockGasketApi();
       gasket.command = { id: 'local' };
       await module.setupNextApp(gasket);
-      expect(mockNext).toHaveBeenCalledWith({ dev: true, conf: expect.any(Object), hostname: 'localhost', port: 3000 });
+      expect(mockNext).toHaveBeenCalledWith({
+        dev: true,
+        conf: expect.any(Object),
+        hostname: 'localhost',
+        port: 3000
+      });
     });
 
     it('creates default mode nextjs app when gasket command is not local', async function () {
       gasket = mockGasketApi();
       await module.setupNextApp(gasket);
-      expect(mockNext).toHaveBeenCalledWith({ dev: false, conf: expect.any(Object), hostname: 'localhost', port: 3000 });
+      expect(mockNext).toHaveBeenCalledWith({
+        dev: false,
+        conf: expect.any(Object),
+        hostname: 'localhost',
+        port: 3000
+      });
     });
 
     it('uses port 80 as a fallback when the http property is undefined on the Gasket config and not local', async function () {
@@ -59,7 +74,12 @@ describe('setupNextApp', () => {
       // eslint-disable-next-line no-undefined
       gasket.config.http = undefined;
       await module.setupNextApp(gasket);
-      expect(mockNext).toHaveBeenCalledWith({ dev: false, conf: expect.any(Object), hostname: 'localhost', port: 80 });
+      expect(mockNext).toHaveBeenCalledWith({
+        dev: false,
+        conf: expect.any(Object),
+        hostname: 'localhost',
+        port: 80
+      });
     });
 
     it('uses port 8080 as a fallback when the http property is undefined on the Gasket config and local', async function () {
@@ -68,7 +88,12 @@ describe('setupNextApp', () => {
       gasket.config.http = undefined;
       gasket.config.env = 'local';
       await module.setupNextApp(gasket);
-      expect(mockNext).toHaveBeenCalledWith({ dev: false, conf: expect.any(Object), hostname: 'localhost', port: 8080 });
+      expect(mockNext).toHaveBeenCalledWith({
+        dev: false,
+        conf: expect.any(Object),
+        hostname: 'localhost',
+        port: 8080
+      });
     });
   });
 });
@@ -82,7 +107,7 @@ function mockGasketApi() {
     exec: jest.fn().mockResolvedValue({}),
     execSync: jest.fn().mockReturnValue([]),
     logger: {
-      warning: jest.fn()
+      warn: jest.fn()
     },
     config: {
       webpack: {}, // user specified webpack config

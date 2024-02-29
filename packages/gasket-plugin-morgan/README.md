@@ -9,7 +9,6 @@ Adds the `morgan` request logger to your application.
 ### Requirements
 
 - [@gasket/plugin-express] or [@gasket/plugin-fastify]
-- [@gasket/plugin-log]
 
 ### New apps
 
@@ -29,7 +28,6 @@ Modify `plugins` section of your `gasket.config.js`:
 module.exports = {
   plugins: {
     add: [
-      '@gasket/plugin-log',
 +     '@gasket/plugin-morgan'
     ]
   }
@@ -53,7 +51,6 @@ Defaults:
 module.exports = {
   plugins: {
     add: [
-      '@gasket/plugin-log',
       '@gasket/plugin-morgan'
     ]
   },
@@ -78,4 +75,3 @@ adding [Morgan] to format http requests to be logged using the [@gasket/plugin-l
 [Morgan]: http://expressjs.com/en/resources/middleware/morgan.html
 [@gasket/plugin-express]: /packages/gasket-plugin-express/README.md
 [@gasket/plugin-fastify]: /packages/gasket-plugin-fastify/README.md
-[@gasket/plugin-log]: /packages/gasket-plugin-log/README.md

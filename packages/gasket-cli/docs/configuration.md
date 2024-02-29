@@ -187,7 +187,7 @@ module.exports = {
 The [config plugin] has similar lifecycle hooks available for application-level
 configuration.
 
-[config plugin]: /packages/gasket-plugin-config/README.md
+[config plugin]: /packages/gasket-plugin-response-data/README.md
 [start plugin]: /packages/gasket-plugin-start/README.md
 [lifecycle plugin]: /packages/gasket-plugin-lifecycle/README.md
 [naming convention]: /packages/gasket-resolve/README.md

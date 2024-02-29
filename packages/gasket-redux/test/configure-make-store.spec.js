@@ -121,7 +121,7 @@ describe('configureMakeStore', () => {
     configureMakeStore({ initialState: { bogus: true } })();
     expect(combineReducersSpy).toHaveBeenCalledWith({
       bogus: expect.any(Function),
-      config: expect.any(Function) // default added for @gasket/plugin-redux
+      gasketData: expect.any(Function) // default added for @gasket/plugin-redux
     });
   });
 

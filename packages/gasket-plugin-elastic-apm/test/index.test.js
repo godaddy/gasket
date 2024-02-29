@@ -21,7 +21,7 @@ describe('Plugin', () => {
     mockAPM.isStarted.mockReset();
     mockGasket = {
       logger: {
-        warning: jest.fn()
+        warn: jest.fn()
       },
       config: {
         root: '/some/path'
@@ -70,8 +70,10 @@ describe('Plugin', () => {
   it('does not start within preboot', async function () {
     await plugin.hooks.preboot.handler(mockGasket);
     expect(apm.start).toHaveBeenCalledTimes(0);
-    expect(mockGasket.logger.warning).toHaveBeenCalledWith(
-      expect.stringContaining('Elastic APM agent is not started. Use `--require ./setup.js`')
+    expect(mockGasket.logger.warn).toHaveBeenCalledWith(
+      expect.stringContaining(
+        'Elastic APM agent is not started. Use `--require ./setup.js`'
+      )
     );
   });
 

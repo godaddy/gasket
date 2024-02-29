@@ -25,7 +25,7 @@ describe('build', function () {
       logger: {
         debug: jest.fn(),
         error: jest.fn(),
-        log: jest.fn()
+        info: jest.fn()
       }
     };
   });
@@ -47,7 +47,8 @@ describe('build', function () {
   });
 
   it('creates custom output directory', async function () {
-    gasket.config.manifest.staticOutput = '/super/cool/custom/path/manifest.json';
+    gasket.config.manifest.staticOutput =
+      '/super/cool/custom/path/manifest.json';
     await build(gasket);
     expect(mockMkdirpStub).toHaveBeenCalled();
     expect(mockMkdirpStub.mock.calls[0][0]).toEqual('/super/cool/custom/path/');
@@ -56,12 +57,18 @@ describe('build', function () {
   it('writes manifest to specified path', async function () {
     await build(gasket);
     expect(mockWriteFileStub.mock.calls.length).toBe(1);
-    expect(mockWriteFileStub.mock.calls[0]).toEqual(['/custom/manifest.json', '[]', 'utf-8']);
+    expect(mockWriteFileStub.mock.calls[0]).toEqual([
+      '/custom/manifest.json',
+      '[]',
+      'utf-8'
+    ]);
   });
 
   it('logs completion message', async function () {
     await build(gasket);
-    expect(gasket.logger.log.mock.calls.length).toBe(1);
-    expect(gasket.logger.log.mock.calls[0][0]).toContain('custom/manifest.json).');
+    expect(gasket.logger.info.mock.calls.length).toBe(1);
+    expect(gasket.logger.info.mock.calls[0][0]).toContain(
+      'custom/manifest.json).'
+    );
   });
 });

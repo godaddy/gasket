@@ -49,7 +49,7 @@ describe('createServers', () => {
     gasket = {
       middleware: {},
       logger: {
-        warning: jest.fn()
+        warn: jest.fn()
       },
       config: {},
       exec: jest
@@ -237,13 +237,13 @@ describe('createServers', () => {
 
   it('adds middleware from lifecycle (ignores falsy)', async () => {
     await plugin.hooks.createServers(gasket, {});
-    expect(app.use).toHaveBeenCalledTimes(2);
+    expect(app.use).toHaveBeenCalledTimes(4);
 
     app.use.mockClear();
     mockMwPlugins = [{ name: 'middlware-1' }, null];
 
     await plugin.hooks.createServers(gasket, {});
-    expect(app.use).toHaveBeenCalledTimes(3);
+    expect(app.use).toHaveBeenCalledTimes(5);
   });
 
   it('supports async middleware hooks', async () => {
@@ -279,16 +279,35 @@ describe('createServers', () => {
     mockMwPlugins = [{ name: 'middlware-1' }];
     await plugin.hooks.createServers(gasket, {});
 
-    expect(app.use.mock.calls[2]).toContain(paths);
+    expect(app.use.mock.calls[4]).toContain(paths);
   });
 
   it('adds errorMiddleware from lifecycle (ignores falsy)', async () => {
     await plugin.hooks.createServers(gasket, {});
-    expect(app.use).toHaveBeenCalledTimes(2);
+    expect(app.use).toHaveBeenCalledTimes(4);
     lifecycles.errorMiddleware.mockResolvedValue([() => {}, null]);
     app.use.mockClear();
     await plugin.hooks.createServers(gasket, {});
-    expect(app.use).toHaveBeenCalledTimes(3);
+    expect(app.use).toHaveBeenCalledTimes(5);
+  });
+
+  it('attaches a logger to the request', async () => {
+    const augmentedLogger = { info: jest.fn() };
+    gasket.logger = { child: jest.fn().mockReturnValue(augmentedLogger) };
+    await plugin.hooks.createServers(gasket, {});
+
+    const req = {};
+    const res = {};
+    const next = jest.fn();
+
+    app.use.mock.calls.forEach(([middleware]) => middleware(req, res, next));
+    expect(req).toHaveProperty('logger', gasket.logger);
+
+    req.logger.metadata({ userId: '123' });
+    expect(gasket.logger.child).toHaveBeenCalledWith({ userId: '123' });
+
+    req.logger.info('test');
+    expect(augmentedLogger.info).toHaveBeenCalledWith('test');
   });
 
   it('does not enable trust proxy by default', async () => {

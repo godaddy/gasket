@@ -8,7 +8,8 @@
     "lint:fix": "npm run lint -- --fix",
     "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
     "test:watch": "jest --watchAll",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "posttest": "npm run lint"
   },
   "repository": {
     "type": "git",
@@ -31,7 +32,7 @@
   "devDependencies": {
     "@babel/core": "^7.23.7",
     "@testing-library/react": "^13.4.0",
-    "cypress": "^13.6.3",
+    "cypress": "^13.6.6",
     "eslint": "^8.56.0",
     "eslint-config-godaddy": "^7.0.2",
     "eslint-plugin-unicorn": "^44.0.0",
@@ -42,7 +43,8 @@
   },
   "eslintConfig": {
     "extends": [
-      "godaddy"
+      "godaddy",
+      "plugin:jest/recommended"
     ],
     "plugins": [
       "unicorn"

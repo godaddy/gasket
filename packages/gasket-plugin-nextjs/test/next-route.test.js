@@ -9,7 +9,7 @@ describe('req.getNextRoute()', () => {
         root: ''
       },
       logger: {
-        warning: jest.fn()
+        warn: jest.fn()
       }
     };
 
