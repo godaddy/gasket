@@ -91,7 +91,7 @@ If your app or plugins hooks these lifecycles you may need to adjust them.
 
 Add setup script to create hook. [(#672)]
 
-## Rename and refactor @gasket/plugin-config as @gasket/plugin-response-data
+## Rename and Refactor @gasket/plugin-config as @gasket/plugin-response-data
 
 We have had a lot of confusion around the config plugin and it's purpose. As such, we are renaming and refocusing what the plugin does. That is, to allow environment specific data to be accessible for requests, with public data available with responses.
 
@@ -123,6 +123,30 @@ Updates:
 
 [(#640)]
 
+## Update Redux Store to Use gasketData
+
+Update the placeholder reducer for the initial Redux state with `gasketData`.
+
+![alt text](images/redux-with-gasket-data.png)
+
+Additionally, `@gasket/plugin-nextjs` now generates a `_app.js` file with `getInitialAppProps` for Next.js apps that use Redux. This change allows the developer to more easily verify Redux piping is working as expected and to make adjustments as needed.
+
+```diff
+// _app.js
+
++ App.getInitialProps = nextRedux.getInitialAppProps(
++  (store) => async (appContext) => {
++    const { Component, ctx } = appContext;
++    const pageProps = Component.getInitialProps ? await Component.getInitialProps({ ... ctx, store }) : {};
++    return {
++      pageProps
++    };
++  }
++ );
+```
+
+[(#693)]
+
 <!-- PRs -->
 [(#647)]:https://github.com/godaddy/gasket/pull/647
 [(#661)]:https://github.com/godaddy/gasket/pull/661
@@ -137,5 +161,6 @@ Updates:
 [(#672)]:https://github.com/godaddy/gasket/pull/672
 [(#640)]:https://github.com/godaddy/gasket/pull/640
 [(#680)]:https://github.com/godaddy/gasket/pull/680
+[(#693)]:https://github.com/godaddy/gasket/pull/693
 
 <!-- LINKS -->
