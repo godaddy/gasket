@@ -69,6 +69,8 @@ module.exports = {
         }
 
         apm.addFilter(filterSensitiveCookies(config));
+
+        gasket.apm = apm;
       }
     },
     create: {
