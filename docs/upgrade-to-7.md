@@ -89,11 +89,7 @@ If your app or plugins hooks these lifecycles you may need to adjust them.
 
 ## @gasket/plugin-elastic-apm
 
-- Add setup script to create hook.
-- Remove sensitive cookie filter and config.
-
-[(#672)]
-
+Add setup script to create hook. [(#672)]
 
 ## Rename and refactor @gasket/plugin-config as @gasket/plugin-response-data
 
