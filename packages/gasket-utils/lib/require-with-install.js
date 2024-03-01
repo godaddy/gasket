@@ -1,5 +1,4 @@
 const fs = require('fs/promises');
-const path = require('path');
 const PackageManager = require('./package-manager');
 const { tryResolve, resolve } = require('./try-resolve');
 const rePackage = /^(@[^/]+\/)?([^/]+)/;
@@ -11,23 +10,40 @@ const rePackage = /^(@[^/]+\/)?([^/]+)/;
  * @returns {string} Package manager cmd
  */
 async function getPkgManager(root) {
-  try {
-    await fs.readFile(path.join(root, 'yarn.lock'), 'utf8');
-    return {
-      pkgManager: 'yarn',
-      cmd: 'add',
-      flags: ['--dev'],
-      logMsg: (pkg) =>
-        `requireWithInstall - installing "${pkg}" with "yarn" - saving as a devDependency`
-    };
-  } catch (err) {
-    return {
-      pkgManager: 'npm',
-      cmd: 'install',
-      flags: ['--no-save', '--force'],
-      logMsg: (pkg) =>
-        `requireWithInstall - installing "${pkg}" with "npm" - save as a devDependency to avoid this`
-    };
+  const files = await fs.readdir(root, { withFileTypes: true });
+  const filesNames = files.map((file) => file.name);
+  let packageManager = 'npm';
+  if (filesNames.includes('yarn.lock')) {
+    packageManager = 'yarn';
+  } else if (filesNames.includes('pnpm-lock.yaml')) {
+    packageManager = 'pnpm';
+  }
+
+  switch (packageManager) {
+    case 'yarn':
+      return {
+        pkgManager: 'yarn',
+        cmd: 'add',
+        flags: ['--dev'],
+        logMsg: (pkg) =>
+          `requireWithInstall - installing "${pkg}" with "yarn" - saving as a devDependency`
+      };
+    case 'pnpm':
+      return {
+        pkgManager: 'pnpm',
+        cmd: 'add',
+        flags: ['--save-dev'],
+        logMsg: (pkg) =>
+          `requireWithInstall - installing "${pkg}" with "pnpm" - saving as a devDependency`
+      };
+    default:
+      return {
+        pkgManager: 'npm',
+        cmd: 'install',
+        flags: ['--no-save', '--force'],
+        logMsg: (pkg) =>
+          `requireWithInstall - installing "${pkg}" with "npm" - save as a devDependency to avoid this`
+      };
   }
 }
 
