@@ -60,6 +60,7 @@ typings/
 # Editor files
 .idea
 *.iml
+.vscode/
 
 # generated docs files
 .docs
