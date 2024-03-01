@@ -1,7 +1,7 @@
 const path = require('path');
 const { setTimeout } = require('timers/promises');
 const GasketEngine = require('@gasket/engine');
-const app = { use: jest.fn(), post: jest.fn() };
+const app = { use: jest.fn(), post: jest.fn(), set: jest.fn() };
 const mockExpress = jest.fn().mockReturnValue(app);
 const bridgedApp = { use: jest.fn() };
 const mockExpressBridge = jest.fn().mockReturnValue(bridgedApp);
@@ -27,11 +27,7 @@ describe('Plugin', () => {
   });
 
   it('has expected hooks', () => {
-    const expected = [
-      'create',
-      'createServers',
-      'metadata'
-    ];
+    const expected = ['create', 'createServers', 'metadata'];
     expect(Object.keys(plugin.hooks)).toEqual(expected);
   });
 });
@@ -42,7 +38,7 @@ describe('createServers', () => {
   const sandbox = jest.fn();
 
   beforeEach(() => {
-    mockMwPlugins =  [];
+    mockMwPlugins = [];
 
     lifecycles = {
       middleware: jest.fn().mockResolvedValue([]),
@@ -56,9 +52,13 @@ describe('createServers', () => {
         warning: jest.fn()
       },
       config: {},
-      exec: jest.fn().mockImplementation((lifecycle, ...args) => lifecycles[lifecycle](args)),
+      exec: jest
+        .fn()
+        .mockImplementation((lifecycle, ...args) =>
+          lifecycles[lifecycle](args)
+        ),
       execApply: sandbox.mockImplementation(async function (lifecycle, fn) {
-        for (let i = 0; i <  mockMwPlugins.length; i++) {
+        for (let i = 0; i < mockMwPlugins.length; i++) {
           // eslint-disable-next-line  no-loop-func
           fn(mockMwPlugins[i], () => mockMwPlugins[i]);
         }
@@ -82,7 +82,10 @@ describe('createServers', () => {
 
   it('executes the `middleware` lifecycle', async function () {
     await plugin.hooks.createServers(gasket, {});
-    expect(gasket.execApply).toHaveBeenCalledWith('middleware', expect.any(Function));
+    expect(gasket.execApply).toHaveBeenCalledWith(
+      'middleware',
+      expect.any(Function)
+    );
   });
 
   it('executes the `express` lifecycle', async function () {
@@ -115,7 +118,8 @@ describe('createServers', () => {
 
     const errorMiddleware = findCall(
       app.use,
-      (mw) => mw === errorMiddlewares[0]);
+      (mw) => mw === errorMiddlewares[0]
+    );
     expect(errorMiddleware).not.toBeNull();
   });
 
@@ -164,12 +168,17 @@ describe('createServers', () => {
 
     const cookieParserUsage = findCall(
       app.use,
-      (mw) => mw === cookieParserMiddleware);
+      (mw) => mw === cookieParserMiddleware
+    );
     expect(cookieParserUsage).not.toBeNull();
 
     // callId can be used to determine relative call ordering
-    expect(mockCookieParser.mock.invocationCallOrder[0]).toBeLessThan(gasket.exec.mock.invocationCallOrder[0]);
-    expect(mockCookieParser.mock.invocationCallOrder[0]).toBeLessThan(gasket.execApply.mock.invocationCallOrder[0]);
+    expect(mockCookieParser.mock.invocationCallOrder[0]).toBeLessThan(
+      gasket.exec.mock.invocationCallOrder[0]
+    );
+    expect(mockCookieParser.mock.invocationCallOrder[0]).toBeLessThan(
+      gasket.execApply.mock.invocationCallOrder[0]
+    );
   });
 
   it('adds the cookie-parser middleware with a excluded path', async () => {
@@ -178,7 +187,8 @@ describe('createServers', () => {
 
     const cookieParserUsage = findCall(
       app.use,
-      (url, mw) => mw === cookieParserMiddleware);
+      (url, mw) => mw === cookieParserMiddleware
+    );
     expect(cookieParserUsage).not.toBeNull();
   });
 
@@ -188,7 +198,8 @@ describe('createServers', () => {
 
     const cookieParserUsage = findCall(
       app.use,
-      (url, mw) => mw === cookieParserMiddleware);
+      (url, mw) => mw === cookieParserMiddleware
+    );
     expect(cookieParserUsage).not.toBeNull();
   });
 
@@ -197,7 +208,8 @@ describe('createServers', () => {
 
     const compressionUsage = findCall(
       app.use,
-      mw => mw === compressionMiddleware);
+      (mw) => mw === compressionMiddleware
+    );
     expect(compressionUsage).not.toBeNull();
   });
 
@@ -207,7 +219,8 @@ describe('createServers', () => {
 
     const compressionUsage = findCall(
       app.use,
-      mw =>  mw === compressionMiddleware);
+      (mw) => mw === compressionMiddleware
+    );
     expect(compressionUsage).not.toBeNull();
   });
 
@@ -217,7 +230,8 @@ describe('createServers', () => {
 
     const compressionUsage = findCall(
       app.use,
-      mw => mw === compressionMiddleware);
+      (mw) => mw === compressionMiddleware
+    );
     expect(compressionUsage).toBeNull();
   });
 
@@ -226,10 +240,7 @@ describe('createServers', () => {
     expect(app.use).toHaveBeenCalledTimes(2);
 
     app.use.mockClear();
-    mockMwPlugins = [
-      { name: 'middlware-1' },
-      null
-    ];
+    mockMwPlugins = [{ name: 'middlware-1' }, null];
 
     await plugin.hooks.createServers(gasket, {});
     expect(app.use).toHaveBeenCalledTimes(3);
@@ -259,13 +270,13 @@ describe('createServers', () => {
 
   it('middleware paths in the config are used', async () => {
     const paths = ['/home'];
-    gasket.config.middleware = [{
-      plugin: 'middlware-1',
-      paths
-    }];
-    mockMwPlugins = [
-      { name: 'middlware-1' }
+    gasket.config.middleware = [
+      {
+        plugin: 'middlware-1',
+        paths
+      }
     ];
+    mockMwPlugins = [{ name: 'middlware-1' }];
     await plugin.hooks.createServers(gasket, {});
 
     expect(app.use.mock.calls[2]).toContain(paths);
@@ -280,13 +291,33 @@ describe('createServers', () => {
     expect(app.use).toHaveBeenCalledTimes(3);
   });
 
+  it('does not enable trust proxy by default', async () => {
+    await plugin.hooks.createServers(gasket, {});
+
+    expect(app.set).not.toHaveBeenCalled();
+  });
+
+  it('does enable trust proxy by if set to true', async () => {
+    gasket.config.express = { trustProxy: true };
+    await plugin.hooks.createServers(gasket, {});
+
+    expect(app.set).toHaveBeenCalledWith('trust proxy', true);
+  });
+
+  it('does enable trust proxy by if set to string', async () => {
+    gasket.config.express = { trustProxy: '127.0.0.1' };
+    await plugin.hooks.createServers(gasket, {});
+
+    expect(app.set).toHaveBeenCalledWith('trust proxy', '127.0.0.1');
+  });
+
   function findCall(aSpy, aPredicate) {
     const callIdx = findCallIndex(aSpy, aPredicate);
     return callIdx === -1 ? null : aSpy.mock.calls[callIdx][0];
   }
 
   function findCallIndex(aSpy, aPredicate) {
-    return aSpy.mock.calls.map(args => aPredicate(...args)).indexOf(true);
+    return aSpy.mock.calls.map((args) => aPredicate(...args)).indexOf(true);
   }
 });
 
@@ -307,9 +338,12 @@ describe('create', () => {
     };
   });
 
-  it('adds appropriate dependencies', expectCreatedWith(({ pkg }) => {
-    expect(pkg.add).toHaveBeenCalledWith('dependencies', {
-      express: '^4.16.3'
-    });
-  }));
+  it(
+    'adds appropriate dependencies',
+    expectCreatedWith(({ pkg }) => {
+      expect(pkg.add).toHaveBeenCalledWith('dependencies', {
+        express: '^4.18.2'
+      });
+    })
+  );
 });

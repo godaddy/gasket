@@ -1,5 +1,13 @@
 # `@gasket/plugin-intl`
 
+### 6.46.0
+
+- Fix to nested module.localesDir lookup ([#676]) 
+- Add support for specific module packages and subdirectory configure ([#676]) 
+
+### 6.45.2
+
+- Remove `eslint-plugin-mocha` & `setup-env` ([#670])
 - Support debug logging under namespace `gasket:plugin:intl:*`
 
 ### 6.38.7
@@ -216,3 +224,5 @@
 [#460]: https://github.com/godaddy/gasket/pull/460
 [#491]: https://github.com/godaddy/gasket/pull/491
 [#593]: https://github.com/godaddy/gasket/pull/593
+[#670]: https://github.com/godaddy/gasket/pull/670
+[#676]: https://github.com/godaddy/gasket/pull/676

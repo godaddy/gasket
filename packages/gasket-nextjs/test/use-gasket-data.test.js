@@ -1,7 +1,5 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import assume from 'assume';
-import { spy } from 'sinon';
 import { useGasketData } from '../src';
 import { GasketDataProvider } from '../src/gasket-data-provider';
 
@@ -11,7 +9,7 @@ import { GasketDataProvider } from '../src/gasket-data-provider';
 describe('useGasketData', function () {
 
   it('should return gasketData', async () => {
-    const observeData = spy();
+    const observeData = jest.fn();
     const testData = { greeting: 'hello' };
 
     const MockConsumer = () => {
@@ -28,6 +26,6 @@ describe('useGasketData', function () {
 
     const content = render(<MockApp/>);
 
-    assume(content.baseElement.textContent).equals(testData.greeting);
+    expect(content.baseElement.textContent).toEqual(testData.greeting);
   });
 });

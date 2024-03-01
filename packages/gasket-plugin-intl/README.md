@@ -53,7 +53,7 @@ required. However, these options exist to customize an app's setup.
   If set to `true`, the app will use the `defaultPath` as the static endpoint
   path. This option can also be set to a string, to be used as the static
   endpoint path.
-- `modules` - (boolean|object) Enable locale files collation from node modules.
+- `modules` - (boolean|object|string[]) Enable locale files collation from node modules.
   Disabled by default, enable by setting to an object with options below, or set
   to `true` to use the default options. See [Module Locales] section.
   - `localesDir` - (string) Lookup dir for module files (default: `locales`)
@@ -378,6 +378,51 @@ Because the `modules` directory is generated with each build, you may want to
 configure your SCM to ignore committing this file, such as with a `.gitignore`
 entry.
 
+## Module Files Examples
+
+Finds all node_modules with a `./locales` subdirectory.
+
+```js
+// gasket.config.js
+
+module.exports = {
+  intl: {
+    modules: true
+  }
+}
+```
+
+Find all node_modules with a `./i18n` subdirectory, excluding `my-shared-pkg`.
+
+```js
+// gasket.config.js
+
+module.exports = {
+  intl: {
+    modules: {
+        localesDir: 'i18n',
+        excludes: ['my-shared-pkg']
+    }
+  }
+}
+```
+
+Find all packages listed and their `./locales` dir or specified subdirectory.
+
+```js
+// gasket.config.js
+
+module.exports = {
+  intl: {
+    modules: [
+      'my-shared-pkg',
+      '@site/my-shared-pkg',
+      'my-other-shared-pkg/with/custom/locales-dir'
+    ]
+  }
+}
+```
+
 ## Debugging
 
 If you are experiencing difficulties seeing with locale files not working as expected, it can be helpful to enable debug logging for your gasket server via the `DEBUG` environment variable under the namespace `gasket`:
@@ -397,7 +442,7 @@ Once enabled, look for messages under the namespace `gasket:plugin:intl` and `ga
 [locales path]:#locales-path
 [locales map]:#locales-map
 [locales manifest]:#locales-manifest
-[module locales]:#locales-manifest
+[module locales]:#module-files
 [Gasket data]:#gasket-data
 [intlLocale lifecycle]:#intllocale
 [Next.js Routing]:#nextjs-routing

@@ -1,62 +1,68 @@
-import assume from 'assume';
-import sinon from 'sinon';
-import proxyquire from 'proxyquire';
 import { LocaleUtils } from '@gasket/helper-intl';
+import * as utils from '../src/utils';
+
+jest.mock('../src/config', () => ({
+  isBrowser: false,
+  clientData: {},
+  manifest: require('./fixtures/mock-manifest.json')
+}));
 
 describe('utils', function () {
-  let mockConfig, utils;
-
-  const getModule = () => {
-    return proxyquire('../src/utils', {
-      './config': mockConfig
-    });
-  };
+  let mockConfig;
 
   beforeEach(function () {
-    mockConfig = { isBrowser: false, clientData: {}, manifest: require('./fixtures/mock-manifest.json') };
-    utils = getModule();
+    mockConfig = require('../src/config');
   });
 
   afterEach(function () {
-    sinon.restore();
+    jest.restoreAllMocks();
     delete global.window.gasketIntlLocale;
     delete global.navigator.languages;
   });
 
   it('exports localeUtils instance', function () {
-    assume(utils).property('localeUtils');
-    assume(utils.localeUtils).instanceOf(LocaleUtils);
+    expect(utils).toHaveProperty('localeUtils');
+    expect(utils.localeUtils).toBeInstanceOf(LocaleUtils);
   });
 
   describe('getActiveLocale', function () {
-
     it('returns defaultLocale from manifest', function () {
       const results = utils.getActiveLocale();
-      assume(results).equals(mockConfig.manifest.defaultLocale);
+      expect(results).toEqual(mockConfig.manifest.defaultLocale);
     });
 
     it('returns locale from window property', function () {
       mockConfig.isBrowser = true;
       mockConfig.clientData.locale = 'fr';
       global.window.gasketIntlLocale = 'de';
-      global.navigator.languages = ['jp'];
+      Object.defineProperty(global.navigator, 'languages', {
+        value: ['jp'],
+        configurable: true
+      });
       const results = utils.getActiveLocale();
-      assume(results).equals('de');
+      expect(results).toEqual('de');
     });
 
     it('returns locale from clientData', function () {
       mockConfig.isBrowser = true;
       mockConfig.clientData.locale = 'fr';
-      global.navigator.languages = ['jp'];
-      const results = getModule().getActiveLocale();
-      assume(results).equals('fr');
+      Object.defineProperty(global.navigator, 'languages', {
+        value: ['jp'],
+        configurable: true
+      });
+      const results = utils.getActiveLocale();
+      expect(results).toEqual('fr');
     });
 
     it('returns locale from first navigator.languages', function () {
       mockConfig.isBrowser = true;
-      global.navigator.languages = ['jp'];
+      mockConfig.clientData.locale = null;
+      Object.defineProperty(global.navigator, 'languages', {
+        value: ['jp'],
+        configurable: true
+      });
       const results = utils.getActiveLocale();
-      assume(results).equals('jp');
+      expect(results).toEqual('jp');
     });
   });
 });

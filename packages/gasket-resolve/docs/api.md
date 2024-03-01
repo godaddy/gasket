@@ -395,9 +395,9 @@ Create package identifiers for Gasket presets
 Create function used to make instances of PackageIdentifier for a project
 
 The `projectName` and `type` are components of the naming convention such as
-- @<projectName>/<type>-<name>
-- @<user-scope>/<projectName>-<type>-<name>
-- <projectName>-<type>-<name>
+- `@<projectName>/<type>-<name>`
+- `@<user-scope>/<projectName>-<type>-<name>`
+- `<projectName>-<type>-<name>`
 
 If a package belongs to the project, it should use `projectName` in its scope.
 For user plugins, the `projectName` will be paired with the `type`.

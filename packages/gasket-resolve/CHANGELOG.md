@@ -1,16 +1,26 @@
 # `@gasket/resolve`
 
+### 6.45.2
+
+- Tune `devDeps`, update test script ([#670])
+
+### 6.44.4
+
+- Fix partial package resolutions on Windows ([#653])
+
 ### 6.43.1
 
-- Fix to handle windows path with tryRequire/Resolve ([#631]) 
+- Fix to handle windows path with tryRequire/Resolve ([#631])
 
 ### 6.41.0
 
-- Add diagnostic logging for environment/config resolution when a `DEBUG=gasket:*` environment variable is set ([#607])
+- Add diagnostic logging for environment/config resolution when a
+  `DEBUG=gasket:*` environment variable is set ([#607])
 
 ### 6.35.6
 
-- Hard fail bad requires in gasket.config while preserving missing behavior ([#590])
+- Hard fail bad requires in gasket.config while preserving missing behavior
+  ([#590])
 
 ### 6.35.0
 
@@ -22,7 +32,8 @@
 
 ### 6.34.2
 
-- Upgrade eslint-plugin-jest, update test methods to use canonical names ([#457])
+- Upgrade eslint-plugin-jest, update test methods to use canonical names
+  ([#457])
 
 ### 6.30.2
 
@@ -48,7 +59,8 @@
 
 ### 5.1.0
 
-- Expose projectIdentifier with support for scope-only package short names ([#142])
+- Expose projectIdentifier with support for scope-only package short names
+  ([#142])
 - Clean markdown from jsdocs ([#141])
 
 ### 5.0.0
@@ -59,7 +71,6 @@
 ### 2.0.1
 
 - Fix to support Windows paths when resolving ([#105])
-
 
 ### 2.0.0
 
@@ -73,7 +84,8 @@
 
 ### 1.4.0
 
-- Including `package-identifier.js` and exposing new relative path resolve functions.
+- Including `package-identifier.js` and exposing new relative path resolve
+  functions.
 
 ### 1.3.0
 
@@ -90,7 +102,6 @@
 ### 1.0.0
 
 - Initial release.
-
 
 [#8]: https://github.com/godaddy/gasket/pull/8
 [#64]: https://github.com/godaddy/gasket/pull/64
@@ -111,5 +122,7 @@
 [#590]: https://github.com/godaddy/gasket/pull/590
 [#607]: https://github.com/godaddy/gasket/pull/607
 [#631]: https://github.com/godaddy/gasket/pull/631
+[#653]: https://github.com/godaddy/gasket/pull/653
+[#670]: https://github.com/godaddy/gasket/pull/670
 
 [Loader]:/packages/gasket-resolve/docs/api.md#loader

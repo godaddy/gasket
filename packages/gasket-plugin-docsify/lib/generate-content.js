@@ -17,6 +17,7 @@ const srcIndex = path.join(srcDir, 'index.html');
  * @param {Object} docsifyConfig - Config for docsify plugin
  * @param {DocsConfigSet} docsConfigSet -
  * @returns {Promise<string>} output file
+ * @deprecated use @gasket/plugin-docusaurus
  */
 // eslint-disable-next-line max-statements
 async function generateContent(docsifyConfig, docsConfigSet) {

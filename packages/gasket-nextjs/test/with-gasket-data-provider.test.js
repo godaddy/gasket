@@ -1,37 +1,31 @@
-import React from 'react';
-import assume from 'assume';
-import decache from 'decache';
-import mock from 'mock-require';
+import React from 'react';;
 import { render } from '@testing-library/react';
 
 describe('withGasketDataProvider', function () {
 
-  const setup = (testData = {}) => {
-    mock('@gasket/data', testData);
+  const setup = (mockData = {}) => {
+    jest.mock('@gasket/data', () => mockData);
     const { withGasketDataProvider } = require('../src/with-gasket-data-provider');
     return { withGasketDataProvider };
   };
 
-  beforeEach(() => {
-    decache('../src/with-gasket-data-provider');
+  afterEach(() => {
+    jest.resetModules();
   });
 
   it('should render the component', () => {
     const { withGasketDataProvider } = setup();
-    const HocComponent = withGasketDataProvider()(() => <div/>);
-    const container = render(<HocComponent/>);
+    const HocComponent = withGasketDataProvider()(() => <div />);
+    const container = render(<HocComponent />);
 
-    assume(container).exists();
+    expect(container).toBeDefined();
   });
 
   it('should inject gasketData when client side', async () => {
-    const testData = { test: 'hello' };
-    const { withGasketDataProvider } = setup(testData);
-
+    const { withGasketDataProvider } = setup({ test: 'hello' });
     const HocComponent = withGasketDataProvider()(({ children }) => <div>{children}</div>);
     const intPropsResponse = await HocComponent.getInitialProps({});
-
-    assume(intPropsResponse).eql({ gasketData: testData });
+    expect(intPropsResponse).toEqual({ gasketData: { test: 'hello' } });
   });
 
 
@@ -45,7 +39,7 @@ describe('withGasketDataProvider', function () {
     const HocComponent = withGasketDataProvider()(Component);
     const intPropsResponse = await HocComponent.getInitialProps({ ctx: { res: { locals: { gasketData: serverTestData } } } });
 
-    assume(intPropsResponse).eql({ gasketData: serverTestData });
+    expect(intPropsResponse).toEqual({ gasketData: serverTestData });
   });
 
 
@@ -62,6 +56,6 @@ describe('withGasketDataProvider', function () {
     const HocComponent = withGasketDataProvider()(Component);
     const intPropsResponse = await HocComponent.getInitialProps({ ctx: { res: { locals: { gasketData: serverTestData } } } });
 
-    assume(intPropsResponse).eql({ ...intProps, gasketData: serverTestData });
+    expect(intPropsResponse).toEqual({ ...intProps, gasketData: serverTestData });
   });
 });

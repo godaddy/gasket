@@ -7,6 +7,10 @@ const customJestConfig = {
   collectCoverageFrom: ['**/*.js'],
   testEnvironmentOptions: {
     url: 'http://localhost/'
+  },
+  // Parse css imports & style paths
+  moduleNameMapper: {
+    '^.+\\.(css)$': '<rootDir>/test/style-mock.js'
   }
 };
 

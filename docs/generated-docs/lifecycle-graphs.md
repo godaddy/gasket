@@ -1,5 +1,6 @@
 ```mermaid
 graph LR;
+middleware -- exec --> apmTransaction;
 preboot -- execWaterfall --> appEnvConfig;
 middleware -- execWaterfall --> appRequestConfig;
 express -- execWaterfall --> composeServiceWorker;

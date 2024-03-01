@@ -1,5 +1,4 @@
 /* eslint no-unused-vars: 0 */
-const assume = require('assume');
 const Files = require('../../../src/scaffold/files');
 
 
@@ -10,46 +9,46 @@ describe('Files', () => {
   });
 
   it('keeps track of added globs', () => {
-    assume(mockFiles.globs).instanceOf(Array);
+    expect(mockFiles.globs).toBeInstanceOf(Array);
   });
 
   it('adds files to globs', () => {
     mockFiles.add({ globs: ['some/file/path'] });
-    assume(mockFiles.globs).length(1);
+    expect(mockFiles.globs).toHaveLength(1);
     mockFiles.add({ globs: ['another/file/path'] });
-    assume(mockFiles.globs).length(2);
+    expect(mockFiles.globs).toHaveLength(2);
   });
 
   it('add multiple file arguments to globs', () => {
     mockFiles.add({ globs: ['some/file/path', 'another/file/path'] });
-    assume(mockFiles.globs).length(2);
+    expect(mockFiles.globs).toHaveLength(2);
   });
 
   it('keeps track of added globSets', () => {
-    assume(mockFiles.globSets).instanceOf(Array);
+    expect(mockFiles.globSets).toBeInstanceOf(Array);
   });
 
   it('adds info to globSets', () => {
     mockFiles.add({ globs: ['some/file/path'], source: '@gasket/plugin-example' });
-    assume(mockFiles.globSets).length(1);
-    assume(mockFiles.globSets[0]).objectContaining({
+    expect(mockFiles.globSets).toHaveLength(1);
+    expect(mockFiles.globSets[0]).toEqual(expect.objectContaining({
       globs: ['some/file/path'],
       source: '@gasket/plugin-example'
-    });
+    }));
     mockFiles.add({ globs: ['another/file/path'], source: '@gasket/plugin-other-example' });
-    assume(mockFiles.globs).length(2);
-    assume(mockFiles.globSets[1]).objectContaining({
+    expect(mockFiles.globs).toHaveLength(2);
+    expect(mockFiles.globSets[1]).toEqual(expect.objectContaining({
       globs: ['another/file/path'],
       source: '@gasket/plugin-other-example'
-    });
+    }));
   });
 
   it('allows multiple glob arguments to globSets', () => {
     mockFiles.add({ globs: ['some/file/path', 'another/file/path'], source: '@gasket/plugin-multi-example' });
-    assume(mockFiles.globSets).length(1);
-    assume(mockFiles.globSets[0]).objectContaining({
+    expect(mockFiles.globSets).toHaveLength(1);
+    expect(mockFiles.globSets[0]).toEqual(expect.objectContaining({
       globs: ['some/file/path', 'another/file/path'],
       source: '@gasket/plugin-multi-example'
-    });
+    }));
   });
 });

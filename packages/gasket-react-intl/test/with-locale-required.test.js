@@ -1,11 +1,11 @@
 import React from 'react';
 import path from 'path';
-import assume from 'assume';
-import sinon from 'sinon';
-import proxyquire from 'proxyquire';
 import { render, screen } from '@testing-library/react';
-import mockManifest from './fixtures/mock-manifest.json';
 import { LocaleStatus } from '../src/utils';
+import withLocaleRequired from '../src/with-locale-required';
+
+jest.mock('../src/use-locale-required', () => jest.fn());
+
 const { ERROR, LOADED, LOADING } = LocaleStatus;
 const loadingText = 'loading...';
 
@@ -16,45 +16,37 @@ const MockComponent = class extends React.Component {
 };
 
 describe('withLocaleRequired', function () {
-  let mockConfig, useLocaleRequiredStub, withLocaleRequired, wrapper;
+  let useLocaleRequiredMock, wrapper;
 
   const doMount = (...args) => {
     const Wrapped = withLocaleRequired(...args)(MockComponent);
-    return render(<Wrapped/>);
+    return render(<Wrapped />);
   };
 
   beforeEach(function () {
-    useLocaleRequiredStub = sinon.stub();
-    mockConfig = {
-      defaultLocale: 'en-US',
-      manifest: { ...mockManifest, paths: { ...mockManifest.paths } },
-      isBrowser: false
-    };
-    withLocaleRequired = proxyquire('../src/with-locale-required', {
-      './config': mockConfig,
-      './use-locale-required': {
-        default: useLocaleRequiredStub
-      }
-    }).default;
+    useLocaleRequiredMock = require('../src/use-locale-required');
   });
 
   afterEach(function () {
-    sinon.restore();
+    jest.restoreAllMocks();
   });
 
   it('adds display name', function () {
-    assume(withLocaleRequired()(MockComponent)).property('displayName', 'withLocaleRequired(MockComponent)');
+    const wrapped = withLocaleRequired()(MockComponent);
+    expect(wrapped.displayName).toBe('withLocaleRequired(MockComponent)');
   });
 
   it('adds display name with ForwardRef', function () {
-    assume(withLocaleRequired('/locales', { forwardRef: true })(MockComponent))
-      .property('displayName', 'ForwardRef(withLocaleRequired/MockComponent))');
+    const wrapped = withLocaleRequired('/locales', { forwardRef: true })(MockComponent);
+    expect(wrapped.displayName).toBe('ForwardRef(withLocaleRequired/MockComponent))');
   });
 
   it('hoists non-react statics', function () {
-    assume(withLocaleRequired()(MockComponent)).not.property('bogus');
+    const wrapped = withLocaleRequired()(MockComponent);
+    expect(wrapped).not.toHaveProperty('bogus');
     MockComponent.bogus = 'BOGUS';
-    assume(withLocaleRequired()(MockComponent)).property('bogus', 'BOGUS');
+    const wrappedBogus = withLocaleRequired()(MockComponent);
+    expect(wrappedBogus).toHaveProperty('bogus', 'BOGUS');
     delete MockComponent.bogus;
   });
 
@@ -64,30 +56,30 @@ describe('withLocaleRequired', function () {
     });
 
     it('hoists getInitialProps if set', function () {
-      assume(withLocaleRequired()(MockComponent)).not.property('getInitialProps');
-      MockComponent.getInitialProps = sinon.stub();
-      assume(withLocaleRequired()(MockComponent)).property('getInitialProps');
+      const wrapped = withLocaleRequired()(MockComponent);
+      expect(wrapped).not.toHaveProperty('getInitialProps');
+      MockComponent.getInitialProps = jest.fn();
+      const wrappedGetInitialProps = withLocaleRequired()(MockComponent);
+      expect(wrappedGetInitialProps).toHaveProperty('getInitialProps');
     });
 
     it('adds getInitialProps if initialProps set', function () {
       const wrapped = withLocaleRequired('/locales', { initialProps: true })(MockComponent);
-      assume(wrapped).property('getInitialProps');
+      expect(wrapped).toHaveProperty('getInitialProps');
     });
 
     it('executes wrapped getInitialProps', async function () {
-      MockComponent.getInitialProps = sinon.stub().returns({ bogus: true });
+      MockComponent.getInitialProps = jest.fn().mockResolvedValue({ bogus: true });
       const wrapped = withLocaleRequired('/locales', { initialProps: true })(MockComponent);
-
       const ctx = {};
       const props = await wrapped.getInitialProps(ctx);
-      assume(MockComponent.getInitialProps).calledWith(ctx);
-      assume(props).eqls({ bogus: true });
+      expect(MockComponent.getInitialProps).toHaveBeenCalledWith(ctx);
+      expect(props).toEqual({ bogus: true });
     });
 
     it('loads localeProps on server', async function () {
-      MockComponent.getInitialProps = sinon.stub().returns({ bogus: true });
+      MockComponent.getInitialProps = jest.fn().mockResolvedValue({ bogus: true });
       const wrapped = withLocaleRequired('/locales', { initialProps: true })(MockComponent);
-
       const ctx = {
         res: {
           locals: {
@@ -101,8 +93,8 @@ describe('withLocaleRequired', function () {
         }
       };
       const props = await wrapped.getInitialProps(ctx);
-      assume(MockComponent.getInitialProps).calledWith(ctx);
-      assume(props).eqls({
+      expect(MockComponent.getInitialProps).toHaveBeenCalledWith(ctx);
+      expect(props).toEqual({
         bogus: true,
         localesProps: {
           locale: 'fr-FR',
@@ -113,9 +105,8 @@ describe('withLocaleRequired', function () {
     });
 
     it('handles missing gasketData', async function () {
-      MockComponent.getInitialProps = sinon.stub().returns({ bogus: true });
+      MockComponent.getInitialProps = jest.fn().mockResolvedValue({ bogus: true });
       const wrapped = withLocaleRequired('/locales', { initialProps: true })(MockComponent);
-
       const ctx = {
         res: {
           locals: {
@@ -123,21 +114,19 @@ describe('withLocaleRequired', function () {
           }
         }
       };
-
       let error = null;
       try {
         await wrapped.getInitialProps(ctx);
       } catch (err) {
         error = err;
       }
-      assume(error).to.equal(null);
+      expect(error).toBe(null);
     });
 
     it('resolve localePahThunk and passes as prop', async function () {
-      const mockThunk = sinon.stub().callsFake((context) => context.extra ? '/locales/extra' : '/locales');
-      MockComponent.getInitialProps = sinon.stub().returns({ bogus: true });
+      const mockThunk = jest.fn().mockImplementation((context) => (context.extra ? '/locales/extra' : '/locales'));
+      MockComponent.getInitialProps = jest.fn().mockResolvedValue({ bogus: true });
       const wrapped = withLocaleRequired(mockThunk, { initialProps: true })(MockComponent);
-
       const ctx = {
         extra: true,
         res: {
@@ -152,8 +141,8 @@ describe('withLocaleRequired', function () {
         }
       };
       const props = await wrapped.getInitialProps(ctx);
-      assume(MockComponent.getInitialProps).calledWith(ctx);
-      assume(props).eqls({
+      expect(MockComponent.getInitialProps).toHaveBeenCalledWith(ctx);
+      expect(props).toEqual({
         localePathPart: '/locales/extra',
         bogus: true,
         localesProps: {
@@ -167,30 +156,30 @@ describe('withLocaleRequired', function () {
 
   describe('#render', function () {
     it('renders empty if loading', function () {
-      useLocaleRequiredStub.returns(LOADING);
+      useLocaleRequiredMock.mockReturnValue(LOADING);  // Set the mock return value to LOADING;
       wrapper = doMount();
-      assume(wrapper.baseElement.innerHTML).eqls('<div></div>');
+      expect(wrapper.baseElement.innerHTML).toEqual('<div></div>');
     });
 
     it('renders custom loader if loading', async function () {
-      useLocaleRequiredStub.returns(LOADING);
+      useLocaleRequiredMock.mockReturnValue(LOADING);
       doMount('/locales', { loading: loadingText });
       const textEl = await screen.findByText(loadingText);
-      assume(textEl.innerHTML).eqls(loadingText);
+      expect(textEl.innerHTML).toEqual(loadingText);
     });
 
     it('renders wrapped component if LOADED', async function () {
-      useLocaleRequiredStub.returns(LOADED);
+      useLocaleRequiredMock.mockReturnValue(LOADED);
       doMount({ loading: loadingText });
       const textEl = await screen.findByText('MockComponent');
-      assume(textEl.innerHTML).eqls('MockComponent');
+      expect(textEl.innerHTML).toEqual('MockComponent');
     });
 
     it('renders wrapped component if ERROR', async function () {
-      useLocaleRequiredStub.returns(ERROR);
+      useLocaleRequiredMock.mockReturnValue(ERROR);
       doMount({ loading: loadingText });
       const textEl = await screen.findByText('MockComponent');
-      assume(textEl.innerHTML).eqls('MockComponent');
+      expect(textEl.innerHTML).toEqual('MockComponent');
     });
 
     it('forwards refs', async function () {
@@ -201,9 +190,7 @@ describe('withLocaleRequired', function () {
         }
 
         render() {
-          return (
-            <span />
-          );
+          return <span />;
         }
       }
 
@@ -230,17 +217,15 @@ describe('withLocaleRequired', function () {
           return (
             <React.Fragment>
               <TestWrappedComponent ref={ this.componentRef } />
-              <span data-testid='data'>{ this.state.data }</span>
+              <span data-testid='data'>{this.state.data}</span>
             </React.Fragment>
           );
         }
       }
 
       render(<TestRefComponent />);
-
       const element = await screen.getByTestId('data');
-
-      assume(element.innerHTML).equals('MOCK_DATA');
+      expect(element.innerHTML).toEqual('MOCK_DATA');
     });
   });
 });

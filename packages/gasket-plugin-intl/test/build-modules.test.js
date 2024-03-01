@@ -1,7 +1,9 @@
 /* eslint-disable max-nested-callbacks */
 const fs = require('fs-extra');
-const fsUtils = require('../lib/fs-utils');
+const { getPackageDirs, saveJsonFile } = require('../lib/fs-utils');
 const { BuildModules } = require('../lib/build-modules');
+
+jest.mock('../lib/fs-utils');
 
 describe('buildModules', function () {
   const testSrcFilePath = '/path/to/src/myh-fake/locale/en-US.json';
@@ -10,7 +12,8 @@ describe('buildModules', function () {
 
   beforeEach(function () {
     logger = {
-      log: jest.fn()
+      log: jest.fn(),
+      warning: jest.fn()
     };
     mockGasket = {
       logger,
@@ -53,7 +56,7 @@ describe('buildModules', function () {
       it('calls saveJsonFile for correct data', async function () {
         jest.spyOn(fs, 'mkdirp').mockResolvedValue();
         jest.spyOn(fs, 'readdir').mockResolvedValue(['test/folder/name.json']);
-        jest.spyOn(fsUtils, 'saveJsonFile').mockResolvedValue();
+        saveJsonFile.mockResolvedValue();
         jest.spyOn(fs, 'readFile').mockResolvedValue('{ "key-1": "value-1" }');
         await builder.copyFolder(testSrcFilePath, testTgtFilePath);
         expect(fs.mkdirp).toHaveBeenCalledTimes(1);
@@ -139,7 +142,7 @@ describe('buildModules', function () {
         jest.spyOn(fs, 'mkdirp').mockResolvedValue();
         jest.spyOn(fs, 'readdir').mockResolvedValue(['test/folder/name.json']);
         jest.spyOn(fs, 'readJson').mockResolvedValue({ name: 'bogus-package' });
-        jest.spyOn(fsUtils, 'saveJsonFile').mockResolvedValue();
+        saveJsonFile.mockResolvedValue();
         jest.spyOn(builder, 'processFiles');
       });
 
@@ -153,11 +156,15 @@ describe('buildModules', function () {
       let discoveredDirs;
       beforeEach(function () {
         discoveredDirs = [
-          '/path/to/module/myh-fake',
-          '/path/to/module/myh-fake2',
-          '/path/to/module/myh-fake3'
+          ['myh-fake', '/path/to/module/myh-fake'],
+          ['myh-fake2', '/path/to/module/myh-fake2'],
+          ['myh-fake3', '/path/to/module/myh-fake3']
         ];
-        jest.spyOn(fsUtils, 'getDirectories').mockResolvedValue(discoveredDirs);
+        getPackageDirs.mockImplementation(async function *mockGen() {
+          for (const pair of discoveredDirs) {
+            yield pair;
+          }
+        });
       });
 
       it('returns a list of all locale paths', async function () {
@@ -176,14 +183,101 @@ describe('buildModules', function () {
       });
 
       it('excludes blacklisted modules', async function () {
-        discoveredDirs.push(
-          '/should/blacklist/yargs',
-          '/should/not/blacklist/bogus'
-        );
+        const expected = ['mod1', '/should/not/blacklist/bogus'];
+        const notExpected = ['mod2', '/should/blacklist/yargs'];
+        discoveredDirs.push(expected, notExpected);
         jest.spyOn(fs, 'lstat').mockResolvedValue({ isDirectory: () => true });
         const results = await builder.discoverDirs();
-        expect(results).not.toContain('/should/blacklist/yargs/locales');
-        expect(results).toContain('/should/not/blacklist/bogus/locales');
+        expect(results).toHaveLength(discoveredDirs.length - 1);
+        expect(results).toEqual(expect.arrayContaining([
+          ['mod1', '/should/not/blacklist/bogus/locales']
+        ]));
+      });
+    });
+
+    describe('#gatherModules', function () {
+
+      it('returns a list of all packages with verified dirs', async function () {
+        jest.spyOn(fs, 'lstat').mockResolvedValueOnce({ isDirectory: () => true });
+
+        mockGasket.config.intl.modules = [
+          '@first/package',
+          '@second/package/custom-locales'
+        ];
+        builder = new BuildModules(mockGasket);
+
+
+        const results = await builder.gatherModuleDirs();
+        expect(results).toHaveLength(2);
+        expect(results).toEqual(expect.arrayContaining([
+          ['@first/package', '/path/to/somewhere/node_modules/@first/package/locales'],
+          ['@second/package', '/path/to/somewhere/node_modules/@second/package/custom-locales']
+        ]));
+      });
+
+      it('logs warning when locales dir not found', async function () {
+        jest.spyOn(fs, 'lstat').mockResolvedValueOnce({ isDirectory: () => false });
+
+        mockGasket.config.intl.modules = [
+          '@third/package/missing-locales'
+        ];
+        builder = new BuildModules(mockGasket);
+
+
+        const results = await builder.gatherModuleDirs();
+        expect(results).toHaveLength(0);
+
+        expect(logger.warning).toHaveBeenCalledWith(
+          'build:locales: locales directory not found for: @third/package/missing-locales'
+        );
+      });
+
+      it('logs warning when module names are malformed', async function () {
+        jest.spyOn(fs, 'lstat').mockResolvedValueOnce({ isDirectory: () => true });
+
+        mockGasket.config.intl.modules = [
+          '@malformed',
+          'wrong!',
+          '@scope/wrong!',
+          '@b&d/path',
+          '@looks/good/but/**ps'
+        ];
+        builder = new BuildModules(mockGasket);
+        const results = await builder.gatherModuleDirs();
+
+        expect(results).toHaveLength(0);
+
+        mockGasket.config.intl.modules.forEach((name) => {
+          expect(logger.warning).toHaveBeenCalledWith(
+            `build:locales: malformed module name: ${name}`
+          );
+        });
+      });
+
+      it('supports expected module formats', async function () {
+        jest.spyOn(fs, 'lstat').mockResolvedValueOnce({ isDirectory: () => true });
+
+        mockGasket.config.intl.modules = [
+          '@first/package',
+          '@second/package/custom-locales',
+          'an_underscore_package',
+          'a-dash-package',
+          'an_underscore_package/with_underscore_locales',
+          'a-dash-package/with-dash-locales',
+          '@an_underscore_scope/and_package',
+          '@a-dash-scope/and-package'
+        ];
+        builder = new BuildModules(mockGasket);
+        const results = await builder.gatherModuleDirs();
+
+        expect(results).toHaveLength(mockGasket.config.intl.modules.length);
+        expect(logger.warning).not.toHaveBeenCalled();
+
+        mockGasket.config.intl.modules.forEach((name) => {
+          expect(results).toEqual(expect.arrayContaining([
+            [expect.any(String), expect.stringContaining(name)]
+          ]));
+        });
       });
     });
 

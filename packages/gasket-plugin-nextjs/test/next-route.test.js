@@ -13,7 +13,7 @@ describe('req.getNextRoute()', () => {
       }
     };
 
-    req = { url: '/' };
+    req = { path: '/', url: '/' };
 
     getNextRoute = require('../lib/next-route');
   });
@@ -36,7 +36,7 @@ describe('req.getNextRoute()', () => {
     });
 
     it('returns null if the URL does not match a route', async () => {
-      req.url = '/does/not/exist';
+      req.path = '/does/not/exist';
 
       const route = await getNextRoute(gasket, req);
 
@@ -44,7 +44,7 @@ describe('req.getNextRoute()', () => {
     });
 
     it('returns a static route if there is a match', async () => {
-      req.url = '/purge-documents';
+      req.path = '/purge-documents';
 
       const route = await getNextRoute(gasket, req);
 
@@ -53,13 +53,24 @@ describe('req.getNextRoute()', () => {
     });
 
     it('returns a dynamic route if there is a match', async () => {
-      req.url = '/plans/cohorts/US%20Only';
+      req.path = '/plans/cohorts/US%20Only';
 
       const route = await getNextRoute(gasket, req);
 
       expect(route).not.toBeNull();
       expect(route.page).toEqual('/plans/cohorts/[cohort]');
-      expect(route.namedRegex.exec(req.url).groups.cohort).toEqual('US%20Only');
+      expect(route.namedRegex.exec(req.path).groups.cohort).toEqual('US%20Only');
+    });
+
+    it('returns valid static route if url has query param', async () => {
+      req.path = '/plans/cohorts/US%20Only';
+      req.url = '/plans/cohorts/US%20Only?addon=addon1';
+
+      const route = await getNextRoute(gasket, req);
+
+      expect(route).not.toBeNull();
+      expect(route.page).toEqual('/plans/cohorts/[cohort]');
+      expect(route.namedRegex.exec(req.path).groups.cohort).toEqual('US%20Only');
     });
   });
 });

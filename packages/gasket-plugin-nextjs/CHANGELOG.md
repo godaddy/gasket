@@ -1,12 +1,21 @@
 # `@gasket/plugin-nextjs`
 
+### 6.46.1
+
+- Adjust generated page tests for initial flexibility ([#678])
+- Use `req.path` instead of `req.url` in path matching in `getNextRoute` ([#679])
+
+### 6.45.2
+
+- Add `peerDeps` ([#670])
+
 ### 6.43.0
 
 - Upgrade to Next.js 13.1.1 ([#614])
 
 ### 6.38.2
 
-- Fix generated Mocha example test ([#556])  
+- Fix generated Mocha example test ([#556])
 
 ### 6.38.0
 
@@ -240,3 +249,6 @@
 [#541]: https://github.com/godaddy/gasket/pull/541
 [#556]: https://github.com/godaddy/gasket/pull/556
 [#614]: https://github.com/godaddy/gasket/pull/614
+[#670]: https://github.com/godaddy/gasket/pull/670
+[#678]: https://github.com/godaddy/gasket/pull/678
+[#679]: https://github.com/godaddy/gasket/pull/679
