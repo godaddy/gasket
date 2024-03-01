@@ -50,7 +50,23 @@ describe('packageManager', function () {
     });
   });
 
-  ['yarn', 'npm'].forEach(function each(packageManager) {
+  describe('.spawnPnpm', function () {
+    it('is a function', function () {
+      expect(typeof PackageManager.spawnPnpm).toBe('function');
+    });
+
+    it('calls the pnpm binary', async function () {
+      const res = await PackageManager.spawnPnpm(['install'], { cwd: '.' });
+
+      expect(runner).toHaveBeenCalled();
+      expect(runner.mock.calls[0][0]).toContain('pnpm');
+
+      expect(typeof res).toBe('object');
+      expect(res.stdout).toEqual(stdout);
+    });
+  });
+
+  ['yarn', 'npm', 'pnpm'].forEach(function each(packageManager) {
     describe(`[${packageManager}] install`, function () {
       it('is a function', function () {
         const pkg = new PackageManager({ packageManager });
