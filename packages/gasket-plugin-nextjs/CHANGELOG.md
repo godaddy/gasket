@@ -1,6 +1,7 @@
 # `@gasket/plugin-nextjs`
 
 - Removed support for deprecated `next` config support ([#655])
+- With Redux, generate _app with example `getInitialAppProps` ([#693])
 
 ### 6.45.2
 
@@ -248,3 +249,4 @@
 [#614]: https://github.com/godaddy/gasket/pull/614
 [#655]: https://github.com/godaddy/gasket/pull/655
 [#670]: https://github.com/godaddy/gasket/pull/670
+[#693]: https://github.com/godaddy/gasket/pull/693

@@ -16,15 +16,15 @@ describe('placeholderReducers', () => {
     expect(results).toEqual(expect.any(Object));
   });
 
-  it('always returns default config reducer', () => {
+  it('always returns default gasketData reducer', () => {
     results = placeholderReducers(mockReducers);
-    expect(results).toHaveProperty('config', expect.any(Function));
+    expect(results).toHaveProperty('gasketData', expect.any(Function));
   });
 
-  it('does not return config reducer if custom one set', () => {
-    mockReducers.config = f => f;
+  it('does not return gasketData reducer if custom one set', () => {
+    mockReducers.gasketData = f => f;
     results = placeholderReducers(mockReducers);
-    expect(results).not.toHaveProperty('config');
+    expect(results).not.toHaveProperty('gasketData');
   });
 
   it('does not include placeholder initial state keys match reducers', () => {
