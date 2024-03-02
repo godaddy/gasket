@@ -8,7 +8,6 @@
   },
   "types": "src/index.d.ts",
   "files": [
-    "oclif.manifest.json",
     "docs",
     "bin",
     "src"
@@ -21,8 +20,6 @@
     "test:watch": "jest --watch test/unit",
     "posttest": "npm run lint",
     "prepack": "npm run manifest",
-    "postpack": "rimraf oclif.manifest.json",
-    "manifest": "cross-env FAUX_ROOT='/path/to/your/app' oclif-dev manifest",
     "test:clean": "rimraf ./test/fixtures/create/myapp"
   },
   "repository": {
@@ -35,7 +32,6 @@
   "keywords": [
     "gasket",
     "cli",
-    "oclif",
     "dx"
   ],
   "author": "GoDaddy Operating Company, LLC",
@@ -57,13 +53,6 @@
     "@gasket/plugin-start": "^6.45.2",
     "@gasket/resolve": "^6.45.2",
     "@gasket/utils": "^6.45.2",
-    "@oclif/command": "^1.8.16",
-    "@oclif/config": "^1.18.2",
-    "@oclif/core": "^1.2.0",
-    "@oclif/parser": "^3.8.6",
-    "@oclif/plugin-help": "^5.1.10",
-    "@oclif/plugin-not-found": "^2.2.4",
-    "@oclif/plugin-warn-if-update-available": "^2.0.4",
     "commander": "^12.0.0",
     "concat-stream": "^2.0.0",
     "cross-env": "^7.0.3",
@@ -82,8 +71,6 @@
     "untildify": "^4.0.0"
   },
   "devDependencies": {
-    "@oclif/dev-cli": "^1.13.31",
-    "@oclif/test": "^2.0.0",
     "cross-env": "^7.0.3",
     "diagnostics": "^2.0.2",
     "eslint": "^8.56.0",
@@ -190,21 +177,5 @@
   },
   "engines": {
     "node": ">= 8.0.0"
-  },
-  "oclif": {
-    "commands": "./src/commands",
-    "bin": "gasket",
-    "plugins": [
-      "@oclif/plugin-help",
-      "@oclif/plugin-not-found",
-      "@oclif/plugin-warn-if-update-available"
-    ],
-    "hooks": {
-      "init": "./src/hooks/init"
-    },
-    "warn-if-update-available": {
-      "timeoutInDays": 7
-    },
-    "helpClass": "./src/utils/help"
   }
 }

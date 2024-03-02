@@ -1,9 +1,4 @@
-// const { Command } = require('@oclif/config');
-const { Command } = require('commander');
-const { flags } = require('@oclif/command');
-const GasketCommand = require('./command');
-const { hoistBaseFlags } = require('./utils');
-
+// Testing only, not a real plugin
 module.exports = {
   name: require('../package').name,
   hooks: {
@@ -18,67 +13,6 @@ module.exports = {
           default: true,
         }
       ];
-    },
-    /**
-     * Gets commands from plugins and injects them to the oclif config.
-     *
-     * @param {Gasket} gasket - Gasket API
-     * @param {object} data - init data
-     * @param {object} data.oclifConfig - oclif configuration
-     * @async
-     */
-    async initCLI(gasket, config) {
-      const commands = (await gasket.exec('getCommands', { GasketCommand, flags }))
-        .reduce((all, cmds) => all.concat(cmds), [])
-        .filter(cmd => Boolean(cmd))
-        .map(cmd => hoistBaseFlags(cmd))
-        .map(cmd => ({
-          ...Command.toCached(cmd),
-          load: () => cmd
-        }));
-
-
-        const commandz = [
-          {
-            id: 'local',
-            arguments: [
-              {
-                name: 'env',
-                description: 'Target runtime environment',
-                required: false
-              }
-            ],
-            options: [
-              {
-                name: 'exit',
-                short: 'asd',
-                description: 'Exit process immediately after command completes',
-                required: false
-              }
-            ],
-            handler: (gasket, args, context) => {
-
-            }
-          }
-        ]
-
-      /**
-       * start
-       * build
-       * local
-       */
-
-      /*
-
-      {
-        handler: (),
-      */
-      oclifConfig.plugins.push({
-        name: 'Gasket commands',
-        hooks: {},
-        topics: [],
-        commands
-      });
     },
     metadata(gasket, meta) {
       return {
@@ -105,6 +39,5 @@ module.exports = {
         }]
       };
     }
-  },
-  GasketCommand
+  }
 };
