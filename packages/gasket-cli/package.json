@@ -4,7 +4,7 @@
   "description": "CLI for rapid application development with gasket",
   "main": "src/index.js",
   "bin": {
-    "gasket": "./bin/boot"
+    "gasket": "./bin/boot.js"
   },
   "types": "src/index.d.ts",
   "files": [
@@ -64,6 +64,7 @@
     "@oclif/plugin-help": "^5.1.10",
     "@oclif/plugin-not-found": "^2.2.4",
     "@oclif/plugin-warn-if-update-available": "^2.0.4",
+    "commander": "^12.0.0",
     "concat-stream": "^2.0.0",
     "cross-env": "^7.0.3",
     "cross-spawn": "^7.0.3",

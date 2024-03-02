@@ -1,11 +1,51 @@
-const { Command, flags } = require('@oclif/command');
+const { Command } = require('commander');
+const commasToArray = input => input.split(',').map(name => name.trim());
 
 /**
  * The GasketCommand can be extended to allow plugins to introduce new CLI
  * commands to invoke Gasket lifecycles.
  */
 class GasketCommand extends Command {
+  // GasketCommand.flags = {
+  //   config: flags.string({
+  //     env: 'GASKET_CONFIG',
+  //     default: 'gasket.config',
+  //     char: 'c',
+  //     description: 'Fully qualified Gasket config to load'
+  //   }),
+  //   root: flags.string({
+  //     env: 'GASKET_ROOT',
+  //     default: process.env.FAUX_ROOT || process.cwd(), // eslint-disable-line no-process-env
+  //     description: 'Top-level app directory'
+  //   }),
+  //   env: flags.string({
+  //     env: 'GASKET_ENV',
+  //     description: 'Target runtime environment'
+  //   }),
+  //   require: flags.string({
+  //     description: 'Require module before Gasket is initialized',
+  //     char: 'r',
+  //     multiple: true
+  //   })
+  // };
 
+  // // TODO (agerard): Should be added dynamically by @gasket/plugin-metrics.
+  // GasketCommand.flags.record = flags.boolean({
+  //   env: 'GASKET_RECORD',
+  //   default: true,
+  //   description: 'Whether or not to emit this command as part of Gasket\'s metrics lifecycle',
+  //   allowNo: true
+  // });
+
+  constructor() {
+    super();
+    this
+      .option('-c, --config <config>', 'Fully qualified Gasket config to load', 'gasket.config')
+      .option('--root <root>', 'Top-level app directory', process.env.FAUX_ROOT || process.cwd())
+      .option('-e, --env <env>', 'Target runtime environment')
+      .option('-r, --require <require>', 'Require module before Gasket is initialized', commasToArray)
+      .option('--record', 'Whether or not to emit this command as part of Gasket\'s metrics lifecycle', true);
+  }
   /**
    * Abstract method which must be implemented by subclasses, used to execute
    * Gasket lifecycles, following the `init` and `configure` Gasket lifecycles.
@@ -46,7 +86,7 @@ class GasketCommand extends Command {
    * @private
    */
   async init() {
-    await super.init();
+    // await super.init();
     // "this.config" is the context that the init hook injected "gasket" into
     /**
      * Gasket Plugin engine instance with details of session
@@ -70,7 +110,7 @@ class GasketCommand extends Command {
      * @property {string[]} parsed.argv - Ordered Arguments
      * @property {object} parsed.args - Named arguments
      */
-    this.parsed = this.parse(this.constructor);
+    this.parsed = this.parse();
     this.parsed.flags = this.parsed.flags || {};
 
     // Provide details of invoked command to lifecycles
@@ -98,35 +138,35 @@ class GasketCommand extends Command {
  * @property {string} root - Top-level app directory (default: `process.cwd()`)
  * @property {string} env - Target runtime environment (default: `GASKET_ENV` or `'development'`)
  */
-GasketCommand.flags = {
-  config: flags.string({
-    env: 'GASKET_CONFIG',
-    default: 'gasket.config',
-    char: 'c',
-    description: 'Fully qualified Gasket config to load'
-  }),
-  root: flags.string({
-    env: 'GASKET_ROOT',
-    default: process.env.FAUX_ROOT || process.cwd(), // eslint-disable-line no-process-env
-    description: 'Top-level app directory'
-  }),
-  env: flags.string({
-    env: 'GASKET_ENV',
-    description: 'Target runtime environment'
-  }),
-  require: flags.string({
-    description: 'Require module before Gasket is initialized',
-    char: 'r',
-    multiple: true
-  })
-};
+// GasketCommand.flags = {
+//   config: flags.string({
+//     env: 'GASKET_CONFIG',
+//     default: 'gasket.config',
+//     char: 'c',
+//     description: 'Fully qualified Gasket config to load'
+//   }),
+//   root: flags.string({
+//     env: 'GASKET_ROOT',
+//     default: process.env.FAUX_ROOT || process.cwd(), // eslint-disable-line no-process-env
+//     description: 'Top-level app directory'
+//   }),
+//   env: flags.string({
+//     env: 'GASKET_ENV',
+//     description: 'Target runtime environment'
+//   }),
+//   require: flags.string({
+//     description: 'Require module before Gasket is initialized',
+//     char: 'r',
+//     multiple: true
+//   })
+// };
 
-// TODO (agerard): Should be added dynamically by @gasket/plugin-metrics.
-GasketCommand.flags.record = flags.boolean({
-  env: 'GASKET_RECORD',
-  default: true,
-  description: 'Whether or not to emit this command as part of Gasket\'s metrics lifecycle',
-  allowNo: true
-});
+// // TODO (agerard): Should be added dynamically by @gasket/plugin-metrics.
+// GasketCommand.flags.record = flags.boolean({
+//   env: 'GASKET_RECORD',
+//   default: true,
+//   description: 'Whether or not to emit this command as part of Gasket\'s metrics lifecycle',
+//   allowNo: true
+// });
 
 module.exports = GasketCommand;
