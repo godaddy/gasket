@@ -1,4 +1,5 @@
-const { Command } = require('@oclif/config');
+// const { Command } = require('@oclif/config');
+const { Command } = require('commander');
 const { flags } = require('@oclif/command');
 const GasketCommand = require('./command');
 const { hoistBaseFlags } = require('./utils');
@@ -6,6 +7,18 @@ const { hoistBaseFlags } = require('./utils');
 module.exports = {
   name: require('../package').name,
   hooks: {
+    async getBinArgs() {
+      return [];
+    },
+    async getCommandOptions(gasket, config) {
+      return [
+        {
+          name: 'record',
+          description: 'Whether or not to emit this command as part of Gasket\'s metrics lifecycle',
+          default: true,
+        }
+      ];
+    },
     /**
      * Gets commands from plugins and injects them to the oclif config.
      *
@@ -14,7 +27,7 @@ module.exports = {
      * @param {object} data.oclifConfig - oclif configuration
      * @async
      */
-    async initOclif(gasket, { oclifConfig }) {
+    async initCLI(gasket, config) {
       const commands = (await gasket.exec('getCommands', { GasketCommand, flags }))
         .reduce((all, cmds) => all.concat(cmds), [])
         .filter(cmd => Boolean(cmd))
@@ -24,6 +37,42 @@ module.exports = {
           load: () => cmd
         }));
 
+
+        const commandz = [
+          {
+            id: 'local',
+            arguments: [
+              {
+                name: 'env',
+                description: 'Target runtime environment',
+                required: false
+              }
+            ],
+            options: [
+              {
+                name: 'exit',
+                short: 'asd',
+                description: 'Exit process immediately after command completes',
+                required: false
+              }
+            ],
+            handler: (gasket, args, context) => {
+
+            }
+          }
+        ]
+
+      /**
+       * start
+       * build
+       * local
+       */
+
+      /*
+
+      {
+        handler: (),
+      */
       oclifConfig.plugins.push({
         name: 'Gasket commands',
         hooks: {},

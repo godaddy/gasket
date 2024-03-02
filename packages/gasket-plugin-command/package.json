@@ -41,7 +41,8 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-command",
   "dependencies": {
-    "@gasket/utils": "^6.45.2"
+    "@gasket/utils": "^6.45.2",
+    "commander": "^12.0.0"
   },
   "devDependencies": {
     "@gasket/engine": "^6.45.2",
