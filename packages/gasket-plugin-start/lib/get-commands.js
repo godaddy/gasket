@@ -7,27 +7,20 @@
  * @returns {GasketCommand[]} commands
  */
 module.exports = function getCommands(gasket) {
-  async function run() {
-    await gasket.exec('init');
-    gasket.config = await gasket.execWaterfall('configure', gasket.config);
-  }
-
   const BuildCommand = {
     id: 'build',
     description: 'Prepare your app',
     options: [
       {
-        name: 'exit',
+        name: 'no-exit',
         description: 'Exit process immediately after command completes',
         type: 'boolean',
-        default: true
+        default: false
       }
     ],
-    action: async function ({ Exit }) {
-      await run();
+    action: async function ({ NoExit }) {
       await gasket.exec('build');
-
-      if (Exit) {
+      if (!NoExit) {
         gasket.logger.debug('force exit');
         // eslint-disable-next-line no-process-exit
         process.exit(0);
@@ -46,7 +39,6 @@ module.exports = function getCommands(gasket) {
       }
     ],
     action: async function () {
-      await run();
       await gasket.exec('preboot');
       await gasket.exec('start');
     }
@@ -64,7 +56,6 @@ module.exports = function getCommands(gasket) {
       }
     ],
     action: async function () {
-      await run();
       // invoke lifecycle from build command
       await gasket.exec('build');
       // invoke lifecycles from start command

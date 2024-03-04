@@ -6,6 +6,8 @@ const { processCommand } = require('../src/utils/commands');
 const CreateCommand = require('../src/commands/create');
 const logo = require('../src/utils/logo');
 const init = require('./init');
+
+// Create Gasket CLI
 const gasketBin = program
   .name('gasket')
   .description(pkg.description)
@@ -16,7 +18,7 @@ const gasketBin = program
 async function run() {
   const cmd = process.argv[2];
   gasketBin.addCommand(processCommand(CreateCommand));
-  // gasketBin.exitOverride();
+  // processCommand(gasketBin, CreateCommand)
 
   if (cmd === 'create') return await gasketBin.parseAsync();
 
@@ -25,7 +27,7 @@ async function run() {
     config: {
       bin: gasketBin,
       root: process.cwd(),
-      options: gasketBin.opts()
+      options: gasketBin.optsWithGlobals()
     },
     argv: process.argv
   });

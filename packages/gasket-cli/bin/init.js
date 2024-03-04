@@ -2,6 +2,30 @@
 /* eslint-disable max-statements */
 const debug = require('diagnostics')('gasket:cli:hooks:init');
 const { processOptions, processCommand } = require('../src/utils/commands');
+const { loadGasketConfigFile, assignPresetConfig } = require('@gasket/resolve');
+const { getEnvironment, addDefaultPlugins } = require('../src/config/utils');
+const PluginEngine = require('@gasket/engine');
+
+function parseEnvOption(argv) {
+  const regex = /--env=|--env/;
+  const match = argv.find(arg => regex.test(arg));
+  const index = argv.indexOf(match);
+
+  if (index > -1) {
+    return match.includes('=')
+      ? argv[index].split('=')[1]
+      : argv[index + 1];
+  }
+
+  return 'local';
+}
+
+function handleEnvVars({ env, root, id, gasketConfig }) {
+  if (!process.env.GASKET_ENV) process.env.GASKET_ENV = env;
+  if (!process.env.GASKET_CONFIG) process.env.GASKET_CONFIG = gasketConfig;
+  if (!process.env.GASKET_ROOT) process.env.GASKET_ROOT = root;
+  if (!process.env.GASKET_COMMAND) process.env.GASKET_COMMAND = id;
+}
 
 async function init({ id, config, argv }) {
   debug('id', id);
@@ -10,21 +34,12 @@ async function init({ id, config, argv }) {
   // avoid config logging for help command
   const warn = id !== 'help' ? console.warn : f => f;
 
-  const { loadGasketConfigFile, assignPresetConfig } = require('@gasket/resolve');
-  const { getEnvironment, addDefaultPlugins } = require('../src/config/utils');
-  const PluginEngine = require('@gasket/engine');
-
   try {
     const { root, bin, options } = config;
+    options.env = parseEnvOption(argv);
     const env = getEnvironment(options, id, warn);
+    handleEnvVars({ env, root, id, gasketConfig: options.gasketConfig})
     debug('Detected gasket environment', env);
-
-    // expose Gasket settings on process
-    // Check if set first TODO
-    process.env.GASKET_ENV = env;
-    process.env.GASKET_CONFIG = options.gasketConfig;
-    process.env.GASKET_ROOT = root;
-    process.env.GASKET_COMMAND = id;
 
     let configFile = await loadGasketConfigFile(root, env, id, options.gasketConfig);
     if (configFile) {
@@ -46,6 +61,8 @@ async function init({ id, config, argv }) {
         .map(cmd => processCommand(cmd));
       commands.forEach(cmd => bin.addCommand(cmd));
 
+      await gasket.exec('init');
+      gasket.config = await gasket.execWaterfall('configure', gasket.config);
       await bin.parseAsync();
     } else {
       await bin.parseAsync();

@@ -2,10 +2,8 @@
 module.exports = {
   name: require('../package').name,
   hooks: {
-    async getBinArgs() {
-      return [];
-    },
-    async getCommandOptions(gasket, config) {
+    // Just an example of a global command flag that could be added
+    async getCommandOptions() {
       return [
         {
           name: 'record',
