@@ -1,13 +1,24 @@
+/* eslint-disable spaced-comment */
+/// <reference types="@gasket/plugin-webpack" />
+/// <reference types="@gasket/plugin-command" />
+/// <reference types="@gasket/plugin-metadata" />
+/// <reference types="@gasket/cli" />
+
+/**
+ * @typedef {import('./index')} Plugin
+ */
+
 const create = require('./create');
 const webpackConfig = require('./webpack-config');
 const getCommands = require('./get-commands');
+const { name } = require('../package.json');
+
 /**
- * Gasket Analyzer Plugin
- *
- * @type {{hooks: {webpack}}}
+ * Plugin definition
+ * @type {Plugin}
  */
-module.exports = {
-  name: require('../package').name,
+const plugin = {
+  name,
   hooks: {
     webpackConfig,
     getCommands,
@@ -15,18 +26,25 @@ module.exports = {
     metadata(gasket, meta) {
       return {
         ...meta,
-        commands: [{
-          name: 'analyze',
-          description: 'Generate analysis report of webpack bundles',
-          link: 'README.md#commands'
-        }],
-        configurations: [{
-          name: 'bundleAnalyzerConfig',
-          link: 'README.md#configuration',
-          description: 'Tune both browser and server Webpack analysis reports',
-          type: 'object'
-        }]
+        commands: [
+          {
+            name: 'analyze',
+            description: 'Generate analysis report of webpack bundles',
+            link: 'README.md#commands'
+          }
+        ],
+        configurations: [
+          {
+            name: 'bundleAnalyzerConfig',
+            link: 'README.md#configuration',
+            description:
+              'Tune both browser and server Webpack analysis reports',
+            type: 'object'
+          }
+        ]
       };
     }
   }
 };
+
+module.exports = plugin;

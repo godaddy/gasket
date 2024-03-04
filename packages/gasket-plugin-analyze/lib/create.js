@@ -1,9 +1,6 @@
-/**
- * Add files & extend package.json for new apps.
- *
- * @param {Gasket} gasket - The gasket API.
- * @param {CreateContext} context - Create context
- */
+/// <reference types="@gasket/cli" />
+
+/** @type {import('@gasket/engine').HookHandler<'create'>} */
 module.exports = function create(gasket, context) {
   const { pkg } = context;
 

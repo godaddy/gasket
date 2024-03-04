@@ -1,41 +1,30 @@
-/**
- * Add the analyzer webpack plugin if analyze flag has been set
- *
- * @param {Object} gasket - Gasket API
- * @param {Object} gasket.command - Invoked command details
- * @param {Object} webpackConfig - Webpack config
- * @param {Object} data - Next.js data
- * @returns {Object} webpackConfig
- */
-module.exports = function webpackConfigHook(gasket, webpackConfig, data) {
+/// <reference types="@gasket/plugin-nextjs" />
+
+/** @type {import('@gasket/engine').HookHandler<'webpackConfig'>} */
+module.exports = function webpackConfigHook(gasket, webpackConfig, context) {
   const {
     command,
-    config: {
-      bundleAnalyzerConfig: userConfig = {}
-    }
+    config: { bundleAnalyzerConfig: userConfig = {} }
   } = gasket;
 
-  //
   // Only analyze add analyzer plugin for the analyze command
-  //
   if (command.id === 'analyze') {
     const merge = require('deepmerge');
     const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
-    const { isServer } = data;
+    const { isServer } = context;
     const bundleAnalyzerConfig = merge(require('./default-config'), userConfig);
     const { browser, server } = bundleAnalyzerConfig;
 
-    //
     // return webpack config partial
-    //
     return {
       ...webpackConfig,
       plugins: [
         ...(webpackConfig.plugins || []),
         new BundleAnalyzerPlugin({
           ...(isServer ? server : browser)
-        })]
+        })
+      ]
     };
   }
 
