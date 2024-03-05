@@ -1,3 +1,6 @@
+/* eslint-disable no-unused-vars */
+require('dotenv').config();
+
 module.exports = (app) => {
   {{#if hasSwaggerPlugin}}
   /**

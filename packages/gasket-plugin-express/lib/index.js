@@ -19,7 +19,8 @@ module.exports = {
       const generatorDir = `${__dirname}/../generator`;
 
       context.pkg.add('dependencies', {
-        express: devDependencies.express
+        express: devDependencies.express,
+        dotenv: devDependencies.dotenv
       });
 
       if (context.apiApp) {

@@ -361,7 +361,8 @@ describe('create', () => {
     'adds appropriate dependencies',
     expectCreatedWith(({ pkg }) => {
       expect(pkg.add).toHaveBeenCalledWith('dependencies', {
-        express: '^4.18.2'
+        express: '^4.18.2',
+        dotenv: '^16.4.5'
       });
     })
   );

@@ -49,6 +49,7 @@
   "devDependencies": {
     "@gasket/engine": "^6.45.2",
     "cross-env": "^7.0.3",
+    "dotenv": "^16.4.5",
     "eslint": "^8.56.0",
     "eslint-config-godaddy": "^7.0.2",
     "eslint-plugin-jest": "^27.6.3",
