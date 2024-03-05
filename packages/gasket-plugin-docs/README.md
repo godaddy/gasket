@@ -173,7 +173,7 @@ module.exports = {
 ```
 
 The [@gasket/plugin-docusaurus] hooks this lifecycle, to render the docs using
-Docsify.
+Docusaurus.
 
 ### docsGenerate
 
