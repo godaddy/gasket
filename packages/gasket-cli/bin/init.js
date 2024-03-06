@@ -5,7 +5,7 @@ import { processOptions, processCommand } from '../src/utils/commands/index.js';
 import { getEnvironment, addDefaultPlugins } from '../src/config/utils.js';
 const debug = diagnostics('gasket:cli:hooks:init');
 import { loadGasketConfigFile, assignPresetConfig } from '@gasket/resolve';
-import { default as PluginEngine } from '@gasket/engine';
+import { PluginEngine } from '@gasket/engine';
 
 function parseEnvOption(argv) {
   const regex = /--env=|--env/;

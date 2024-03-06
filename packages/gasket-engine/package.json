@@ -15,6 +15,7 @@
     "test:coverage": "jest --coverage",
     "posttest": "npm run lint"
   },
+  "type":"module",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/godaddy/gasket.git"
