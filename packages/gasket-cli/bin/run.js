@@ -18,7 +18,6 @@ const gasketBin = program
 async function run() {
   const cmd = process.argv[2];
   gasketBin.addCommand(processCommand(CreateCommand));
-  // processCommand(gasketBin, CreateCommand)
 
   if (cmd === 'create') return await gasketBin.parseAsync();
 
