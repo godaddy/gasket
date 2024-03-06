@@ -63,7 +63,7 @@ const depVersions = {
   'serve-static': '^1.15.0',
   'cross-env': '^7.0.3',
 
-  'typescript': '^5.3.3'
+  'typescript': '^4.5.2'
 };
 
 /**
