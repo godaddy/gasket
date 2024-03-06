@@ -1,7 +1,10 @@
 /// <reference types="@gasket/plugin-command" />
 /// <reference types="@gasket/plugin-start" />
 
-/** @type {import('@gasket/engine').HookHandler<'getCommands'>} */
+/**
+ * Get the analyze command
+ * @type {import('@gasket/engine').HookHandler<'getCommands'>}
+ */
 module.exports = function getCommands(gasket, { GasketCommand }) {
   class AnalyzeCommand extends GasketCommand {
     async gasketRun() {

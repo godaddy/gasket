@@ -1,6 +1,9 @@
 /// <reference types="@gasket/cli" />
 
-/** @type {import('@gasket/engine').HookHandler<'create'>} */
+/**
+ * Add files & extend package.json for new apps.
+ * @type {import('@gasket/engine').HookHandler<'create'>}
+ */
 module.exports = function create(gasket, context) {
   const { pkg } = context;
 

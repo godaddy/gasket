@@ -1,23 +1,18 @@
-/* eslint-disable spaced-comment */
-/// <reference types="@gasket/plugin-webpack" />
-/// <reference types="@gasket/plugin-command" />
-/// <reference types="@gasket/plugin-metadata" />
-/// <reference types="@gasket/cli" />
-
-/**
- * @typedef {import('./index')} Plugin
- */
-
 const create = require('./create');
 const webpackConfig = require('./webpack-config');
 const getCommands = require('./get-commands');
 const { name } = require('../package.json');
 
+
 /**
- * Plugin definition
+ * @typedef {import('@gasket/engine').Plugin} Plugin
+ */
+
+/**
+ * Gasket Analyzer Plugin
  * @type {Plugin}
  */
-const plugin = {
+module.exports = {
   name,
   hooks: {
     webpackConfig,
@@ -46,5 +41,3 @@ const plugin = {
     }
   }
 };
-
-module.exports = plugin;

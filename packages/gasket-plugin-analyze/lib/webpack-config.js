@@ -1,6 +1,9 @@
 /// <reference types="@gasket/plugin-nextjs" />
 
-/** @type {import('@gasket/engine').HookHandler<'webpackConfig'>} */
+/**
+ * Add the analyzer webpack plugin if analyze flag has been set
+ * @type {import('@gasket/engine').HookHandler<'webpackConfig'>}
+ */
 module.exports = function webpackConfigHook(gasket, webpackConfig, context) {
   const {
     command,
