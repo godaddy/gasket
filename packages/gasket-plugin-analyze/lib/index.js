@@ -3,14 +3,9 @@ const webpackConfig = require('./webpack-config');
 const getCommands = require('./get-commands');
 const { name } = require('../package.json');
 
-
-/**
- * @typedef {import('@gasket/engine').Plugin} Plugin
- */
-
 /**
  * Gasket Analyzer Plugin
- * @type {Plugin}
+ * @type {import('@gasket/engine').Plugin}
  */
 module.exports = {
   name,
