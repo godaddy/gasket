@@ -103,6 +103,11 @@ describe('Plugin', () => {
     );
   });
 
+  it('sets gasket.apm', async function () {
+    await plugin.hooks.preboot.handler(mockGasket);
+    expect(mockGasket.apm).toEqual(apm);
+  });
+
   it('warns if using deprecated gasket.config', async function () {
     mockGasket.config = await plugin.hooks.configure.handler(mockGasket, {
       ...mockGasket.config,

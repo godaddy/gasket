@@ -1,11 +1,15 @@
 import type { IncomingMessage, ServerResponse } from 'http';
-import type { AgentConfigOptions, Transaction } from 'elastic-apm-node';
+import type { Agent, AgentConfigOptions, Transaction } from 'elastic-apm-node';
 
 declare module '@gasket/engine' {
   export interface GasketConfig {
     elasticAPM?: AgentConfigOptions & {
       sensitiveCookies?: Array<string>
     },
+  }
+
+  export interface Gasket {
+    apm: Agent;
   }
 
   export interface HookExecTypes {
