@@ -61,7 +61,9 @@ const depVersions = {
   'lodash.defaultsdeep': '^4.6.1',
   'webpack': '^5.89.0',
   'serve-static': '^1.15.0',
-  'cross-env': '^7.0.3'
+  'cross-env': '^7.0.3',
+
+  'typescript': '^5.3.3'
 };
 
 /**
