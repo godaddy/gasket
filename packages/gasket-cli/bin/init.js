@@ -46,7 +46,7 @@ export async function init({ id, config, argv }) {
     if (configFile) {
       configFile = addDefaultPlugins(configFile);
 
-      const gasket = new PluginEngine(configFile, { resolveFrom: root });
+      const gasket = await new PluginEngine(configFile, { resolveFrom: root });
       assignPresetConfig(gasket);
       config.gasket = gasket;
       config.gasket.command = { id, argv };
