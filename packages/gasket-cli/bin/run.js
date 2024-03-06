@@ -13,7 +13,7 @@ const pkg = require('../package.json');
 const gasketBin = program
   .name('gasket')
   .description(pkg.description)
-  .option('--gasket-config [gasket-config-path]', 'Fully qualified Gasket config to load', 'gasket.config.js')
+  .option('--gasket-config [gasket-config-path]', 'Fully qualified Gasket config to load', 'gasket.config.cjs')
   .version(pkg.version)
   .addHelpText('beforeAll', logo);
 

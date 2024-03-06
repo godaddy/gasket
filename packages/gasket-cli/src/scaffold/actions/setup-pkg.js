@@ -17,6 +17,7 @@ async function setupPkg(context) {
     name: appName,
     version: '0.0.0',
     description: appDescription,
+    // type: 'module' // commented out for now
   }, { warnings });
 
   // The preset package itself must be included in the dependencies
