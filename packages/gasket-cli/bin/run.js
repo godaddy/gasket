@@ -1,17 +1,19 @@
 #!/usr/bin/env node
-const pkg = require('../package.json');
-const { Command } = require('commander');
+import { Command } from 'commander';
 const program = new Command();
-const { processCommand } = require('../src/utils/commands');
-const CreateCommand = require('../src/commands/create');
-const logo = require('../src/utils/logo');
-const init = require('./init');
+import { processCommand } from '../src/utils/commands/index.js';
+import { CreateCommand } from '../src/commands/create.js';
+import { logo } from '../src/utils/logo.js';
+import { init } from './init.js';
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+const pkg = require('../package.json');
 
 // Create Gasket CLI
 const gasketBin = program
   .name('gasket')
   .description(pkg.description)
-  .option('--gasket-config [gasket-config-path]', 'Fully qualified Gasket config to load', 'gasket.config')
+  .option('--gasket-config [gasket-config-path]', 'Fully qualified Gasket config to load', 'gasket.config.js')
   .version(pkg.version)
   .addHelpText('beforeAll', logo);
 

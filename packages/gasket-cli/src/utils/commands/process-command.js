@@ -1,7 +1,6 @@
-const { Command } = require('commander');
+import { Command } from 'commander';
+import { processArgs, processOptions } from './index.js';
 const program = new Command();
-const processArgs = require('./process-args');
-const processOptions = require('./process-options');
 
 function isValidCommand(command) {
   const keys = Object.keys(command);
@@ -14,7 +13,7 @@ function isValidCommand(command) {
     typeof command.action === 'function';
 }
 
-function processCommand(command) {
+export function processCommand(command) {
   if (!isValidCommand(command)) throw new Error('Invalid command signature');
   const cmd = program
     .command(command.id)
@@ -33,5 +32,3 @@ function processCommand(command) {
 
   return cmd;
 }
-
-module.exports = processCommand

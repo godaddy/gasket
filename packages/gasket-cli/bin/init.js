@@ -1,10 +1,11 @@
 #!/usr/bin/env node
 /* eslint-disable max-statements */
-const debug = require('diagnostics')('gasket:cli:hooks:init');
-const { processOptions, processCommand } = require('../src/utils/commands');
-const { loadGasketConfigFile, assignPresetConfig } = require('@gasket/resolve');
-const { getEnvironment, addDefaultPlugins } = require('../src/config/utils');
-const PluginEngine = require('@gasket/engine');
+import { default as diagnostics } from 'diagnostics';
+import { processOptions, processCommand } from '../src/utils/commands/index.js';
+import { getEnvironment, addDefaultPlugins } from '../src/config/utils.js';
+const debug = diagnostics('gasket:cli:hooks:init');
+import { loadGasketConfigFile, assignPresetConfig } from '@gasket/resolve';
+import { default as PluginEngine } from '@gasket/engine';
 
 function parseEnvOption(argv) {
   const regex = /--env=|--env/;
@@ -27,7 +28,7 @@ function handleEnvVars({ env, root, id, gasketConfig }) {
   if (!process.env.GASKET_COMMAND) process.env.GASKET_COMMAND = id;
 }
 
-async function init({ id, config, argv }) {
+export async function init({ id, config, argv }) {
   debug('id', id);
   debug('argv', argv);
 
@@ -38,7 +39,7 @@ async function init({ id, config, argv }) {
     const { root, bin, options } = config;
     options.env = parseEnvOption(argv);
     const env = getEnvironment(options, id, warn);
-    handleEnvVars({ env, root, id, gasketConfig: options.gasketConfig})
+    handleEnvVars({ env, root, id, gasketConfig: options.gasketConfig })
     debug('Detected gasket environment', env);
 
     let configFile = await loadGasketConfigFile(root, env, id, options.gasketConfig);
@@ -73,5 +74,3 @@ async function init({ id, config, argv }) {
     console.error(err, { exit: 1 });
   }
 }
-
-module.exports = init;

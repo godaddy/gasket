@@ -1,5 +1,5 @@
-const { flattenPresets } = require('@gasket/resolve');
-const action = require('../action-wrapper');
+import { flattenPresets } from '@gasket/resolve';
+import action from '../action-wrapper.js';
 
 /**
  * Extracts predefined createContext from presets and applies to context.
@@ -26,4 +26,4 @@ function applyPresetConfig(context) {
   Object.assign(context, presetContext);
 }
 
-module.exports = action('Apply preset context', applyPresetConfig, { startSpinner: false });
+export default action('Apply preset context', applyPresetConfig, { startSpinner: false });

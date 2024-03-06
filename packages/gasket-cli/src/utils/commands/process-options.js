@@ -6,7 +6,7 @@ function isValidOption(option) {
     option.description;
 }
 
-function processOptions(options) {
+export function processOptions(options) {
   if (!Array.isArray(options) && options.every(isValidOption)) throw new Error('Invalid options signature');
 
   return options.reduce((acc, option) => {
@@ -37,5 +37,3 @@ function processOptions(options) {
     return acc;
   }, []);
 }
-
-module.exports = processOptions;

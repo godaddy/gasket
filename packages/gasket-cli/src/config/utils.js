@@ -1,7 +1,7 @@
-const { pluginIdentifier } = require('@gasket/resolve');
-const defaultPlugins = require('./default-plugins');
-
-const debug = require('diagnostics')('gasket:cli:config:utils');
+import { default as diagnostics } from 'diagnostics';
+import { pluginIdentifier } from '@gasket/resolve';
+import { defaultPlugins } from './default-plugins.js';
+const debug = diagnostics('gasket:cli:config:utils');
 
 /**
  * Returns specified env option if set or appropriate fallback
@@ -11,7 +11,7 @@ const debug = require('diagnostics')('gasket:cli:config:utils');
  * @param {function} warn - Warning logger
  * @returns {string} environment
  */
-function getEnvironment(options, commandId, warn) {
+export function getEnvironment(options, commandId, warn) {
   if (options.env) {
     debug('Environment was passed through command line options', options.env);
     return options.env;
@@ -39,7 +39,7 @@ function getEnvironment(options, commandId, warn) {
  * @param {Object} gasketConfig - Gasket config
  * @returns {Object} updated config
  */
-function addDefaultPlugins(gasketConfig) {
+export function addDefaultPlugins(gasketConfig) {
   const pluginsConfig = gasketConfig.plugins || {};
   const { add = [], remove = [] } = pluginsConfig;
   const filteredNames = new Set(
@@ -57,8 +57,3 @@ function addDefaultPlugins(gasketConfig) {
     }
   };
 }
-
-module.exports = {
-  getEnvironment,
-  addDefaultPlugins
-};

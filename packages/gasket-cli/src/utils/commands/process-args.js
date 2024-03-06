@@ -5,7 +5,7 @@ function isValidArg(arg) {
     arg.name && arg.description;
 }
 
-function processArgs(args) {
+export function processArgs(args) {
   if (!Array.isArray(args) && args.every(isValidArg)) throw new Error('Invalid args signature');
 
   return args.reduce((acc, arg) => {
@@ -21,5 +21,3 @@ function processArgs(args) {
 
   }, []);
 }
-
-module.exports = processArgs;

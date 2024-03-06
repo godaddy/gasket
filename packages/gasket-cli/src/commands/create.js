@@ -1,18 +1,20 @@
 /* eslint-disable max-statements */
-const { Command } = require('commander');
-const ora = require('ora');
-const chalk = require('chalk');
-const makeCreateContext = require('../scaffold/create-context');
-const dumpErrorContext = require('../scaffold/dump-error-context');
-const {
+import ora from 'ora';
+import chalk from 'chalk';
+import { makeCreateContext } from '../scaffold/create-context.js';
+import { dumpErrorContext } from '../scaffold/dump-error-context.js';
+import {
   mkDir,
   loadPreset,
   cliVersion,
   globalPrompts,
   setupPkg,
   writePkg,
+  writePkgUpdate,
   installModules,
+  installModulesUpdate,
   linkModules,
+  linkModulesUpdate,
   loadPkgForDebug,
   promptHooks,
   createHooks,
@@ -21,7 +23,7 @@ const {
   writeGasketConfig,
   applyPresetConfig,
   printReport
-} = require('../scaffold/actions');
+} from '../scaffold/actions/index.js';
 
 async function bootstrap(context) {
   await loadPreset(context);
@@ -40,9 +42,9 @@ async function generate(context) {
   await createHooks(context);
   await generateFiles(context);
   await writeGasketConfig(context);
-  await writePkg.update(context);
-  await installModules.update(context);
-  await linkModules.update(context); // relink any that were messed up by re-install
+  await writePkgUpdate(context);
+  await installModulesUpdate(context);
+  await linkModulesUpdate(context); // relink any that were messed up by re-install
   await postCreateHooks(context);
 }
 
@@ -92,7 +94,7 @@ async function run(appname, options, command) {
  */
 const commasToArray = input => input.split(',').map(name => name.trim());
 
-module.exports = {
+export const CreateCommand = {
   id: 'create',
   description: 'Create a new Gasket application',
   args: [

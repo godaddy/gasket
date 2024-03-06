@@ -22,6 +22,7 @@
     "prepack": "npm run manifest",
     "test:clean": "rimraf ./test/fixtures/create/myapp"
   },
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/godaddy/gasket.git"
