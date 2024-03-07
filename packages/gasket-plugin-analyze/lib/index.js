@@ -1,3 +1,5 @@
+/// <reference types="@gasket/plugin-metadata" />
+
 const create = require('./create');
 const webpackConfig = require('./webpack-config');
 const getCommands = require('./get-commands');
@@ -7,7 +9,7 @@ const { name } = require('../package.json');
  * Gasket Analyzer Plugin
  * @type {import('@gasket/engine').Plugin}
  */
-module.exports = {
+const plugin = {
   name,
   hooks: {
     webpackConfig,
@@ -36,3 +38,5 @@ module.exports = {
     }
   }
 };
+
+module.exports = plugin;

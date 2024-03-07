@@ -3,12 +3,15 @@
     "allowJs": true,
     "checkJs": true,
     "noEmit": true,
+    "skipLibCheck": false,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "lib": ["esnext", "dom"],
+    "types": [
+      "@types/jest"
+    ]
   },
-  "include": [
-    "lib/**/*.js",
-    "lib/**/*.ts"
-  ],
   "exclude": [
-    "node_modules"
+    "test"
   ]
 }
