@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useContext } from 'react';
 import { LocaleStatus } from '../src/utils';
 import useLocaleRequired from '../src/use-locale-required';
