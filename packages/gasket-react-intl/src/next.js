@@ -1,5 +1,13 @@
-import { localeUtils, getLocalesParentDir } from './utils';
+import { localeUtils } from './utils';
 import { manifest } from './config';
+
+let localesParentDir;
+export function getLocalesParentDir() {
+  return localesParentDir || (
+    // eslint-disable-next-line no-process-env
+    localesParentDir = require('path').dirname(process.env.GASKET_INTL_LOCALES_DIR)
+  );
+}
 
 /**
  * Load locale file(s) for Next.js static pages
