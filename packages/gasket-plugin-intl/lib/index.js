@@ -45,16 +45,16 @@ module.exports = {
         await buildManifest(gasket);
       }
     },
-    webpackConfig(gasket, webpackConfig, { webpack }) {
+    webpackConfig(gasket, webpackConfig, { webpack, isServer }) {
       return {
         ...webpackConfig,
         plugins: [
           ...(webpackConfig.plugins || []),
-          new webpack.EnvironmentPlugin([
+          isServer ? new webpack.EnvironmentPlugin([
             'GASKET_INTL_LOCALES_DIR',
             'GASKET_INTL_MANIFEST_FILE'
-          ])
-        ]
+          ]) : null
+        ].filter(Boolean)
       };
     },
     express: serve,
