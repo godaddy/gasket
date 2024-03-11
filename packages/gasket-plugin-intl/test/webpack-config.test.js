@@ -17,7 +17,7 @@ describe('webpackConfig', function () {
   });
 
   it('adds env vars to EnvironmentPlugin', function () {
-    const results = hook(mockGasket, mockConfig, { webpack });
+    const results = hook(mockGasket, mockConfig, { webpack, isServer: true });
     expect(results).toHaveProperty('plugins');
     expect(results.plugins).toHaveLength(1);
     expect(results.plugins[0]).toBeInstanceOf(webpack.EnvironmentPlugin);
@@ -27,13 +27,19 @@ describe('webpackConfig', function () {
     });
   });
 
+  it('does NOT add EnvironmentPlugin for client', function () {
+    const results = hook(mockGasket, mockConfig, { webpack });
+    expect(results).toHaveProperty('plugins');
+    expect(results.plugins).toHaveLength(0);
+  });
+
   it('merges with existing plugins', function () {
     mockConfig.plugins = [
       new webpack.EntryOptionPlugin(),
       new webpack.DynamicEntryPlugin()
     ];
 
-    const results = hook(mockGasket, mockConfig, { webpack });
+    const results = hook(mockGasket, mockConfig, { webpack, isServer: true });
     expect(results).toHaveProperty('plugins');
     expect(results.plugins).toHaveLength(3);
     expect(results.plugins[2]).toBeInstanceOf(webpack.EnvironmentPlugin);
@@ -50,7 +56,7 @@ describe('webpackConfig', function () {
       ])
     ];
 
-    const results = hook(mockGasket, mockConfig, { webpack });
+    const results = hook(mockGasket, mockConfig, { webpack, isServer: true });
     expect(results).toHaveProperty('plugins');
     expect(results.plugins).toHaveLength(2);
     expect(results.plugins[1]).toBeInstanceOf(webpack.EnvironmentPlugin);

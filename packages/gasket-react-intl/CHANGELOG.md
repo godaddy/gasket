@@ -1,5 +1,9 @@
 # `@gasket/react-intl`
 
+### 6.46.3
+
+- Move next-specific utility function to avoid inclusion for browser bundles ([#696])
+
 ### 6.45.2
 
 - Tune `devDeps`, update test script ([#670])
@@ -191,3 +195,4 @@
 [#459]: https://github.com/godaddy/gasket/pull/459
 [#523]: https://github.com/godaddy/gasket/pull/523
 [#670]: https://github.com/godaddy/gasket/pull/670
+[#696]: https://github.com/godaddy/gasket/pull/696
