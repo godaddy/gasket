@@ -23,7 +23,7 @@ declare module '@gasket/engine' {
   export interface HookExecTypes {
     middleware(app: Application): MaybeAsync<MaybeMultiple<Handler> & { paths?: (string | RegExp)[] }>;
     express(app: Application): MaybeAsync<void>;
-    errorMiddleware(): MaybeAsync<MaybeMultiple<ErrorRequestHandler>>;
+    errorMiddleware(app: Application): MaybeAsync<MaybeMultiple<ErrorRequestHandler>>;
   }
 }
 
