@@ -142,8 +142,14 @@ describe('loadPreset', () => {
       mockContext.localPresets = ['../../../fixtures/gasket-preset-local', '../../../fixtures/gasket-preset-local'];
 
       await loadPreset(mockContext);
-      expect(mockContext).toHaveProperty('rawPresets', ['@gasket/preset-bogus@^1.0.0', '@gasket/preset-all-i-ever-wanted@^2.0.0']);
-      expect(mockContext).toHaveProperty('localPresets', ['../../../fixtures/gasket-preset-local', '../../../fixtures/gasket-preset-local']);
+      expect(mockContext).toHaveProperty(
+        'rawPresets',
+        ['@gasket/preset-bogus@^1.0.0', '@gasket/preset-all-i-ever-wanted@^2.0.0']
+      );
+      expect(mockContext).toHaveProperty(
+        'localPresets',
+        ['../../../fixtures/gasket-preset-local', '../../../fixtures/gasket-preset-local']
+      );
       expect(mockContext)
         .toHaveProperty('presets', ['@gasket/bogus', '@gasket/all-i-ever-wanted', 'local', 'local']);
       expect(mockContext.presetInfos).toHaveLength(4);
@@ -154,7 +160,10 @@ describe('loadPreset', () => {
       mockContext.localPresets = ['../../../fixtures/gasket-preset-local', '../../../fixtures/gasket-preset-local'];
 
       await loadPreset(mockContext);
-      expect(mockContext).toHaveProperty('rawPresets', ['@gasket/preset-bogus@^1.0.0', '@gasket/preset-all-i-ever-wanted@^2.0.0']);
+      expect(mockContext).toHaveProperty(
+        'rawPresets',
+        ['@gasket/preset-bogus@^1.0.0', '@gasket/preset-all-i-ever-wanted@^2.0.0']
+      );
       expect(mockContext)
         .toHaveProperty('localPresets', ['../../../fixtures/gasket-preset-local', '../../../fixtures/gasket-preset-local']);
       expect(mockContext)

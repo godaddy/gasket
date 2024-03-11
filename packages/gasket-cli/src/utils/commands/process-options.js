@@ -35,7 +35,7 @@ function processOptions(options) {
       def.push(parse);
     }
 
-    acc.push({options: def, conflicts});
+    acc.push({ options: def, conflicts });
     return acc;
   }, []);
 }

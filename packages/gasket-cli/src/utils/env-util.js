@@ -1,7 +1,7 @@
 /**
  * parseEnvOption - Parses the environment option from argv
  * We need to parse this option early before Commander does its own parsing
- * @param {process.argv} argv
+ * @param {process.argv} argv The process arguments
  * @returns {string} Parsed environment option
  */
 function parseEnvOption(argv) {

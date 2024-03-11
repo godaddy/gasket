@@ -8,7 +8,7 @@ jest.mock('@gasket/engine', () => {
     constructor() {
       mockConstructorStub(...arguments);
     }
-    async exec() {}
+    async exec() { }
   };
 });
 
@@ -99,6 +99,9 @@ describe('createEngine', () => {
     };
 
     await createEngine(mockOpts);
-    expect(mockConstructorStub).toHaveBeenCalledWith(expect.anything(), { resolveFrom: path.join(mockOpts.dest, 'node_modules') });
+    expect(mockConstructorStub).toHaveBeenCalledWith(
+      expect.anything(),
+      { resolveFrom: path.join(mockOpts.dest, 'node_modules') }
+    );
   });
 });

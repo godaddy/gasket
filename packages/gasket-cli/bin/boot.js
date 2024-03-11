@@ -9,5 +9,4 @@ const local = join(process.cwd(), 'node_modules', ...location);
 // as dependency, and if that is the case, we're going to execute that `run`
 // executable instead of our own.
 //
-try { require(local); }
-catch (e) { require('./run'); }
+try { require(local); } catch (e) { require('./run'); }

@@ -28,7 +28,7 @@ async function init({ id, config, argv }) {
     options.env = parseEnvOption(argv);
     const env = getEnvironment(options, id, warn);
     // Set environment variables for gasket
-    handleEnvVars({ env, root, id, gasketConfig: options.gasketConfig})
+    handleEnvVars({ env, root, id, gasketConfig: options.gasketConfig });
     debug('Detected gasket environment', env);
 
     let configFile = await loadGasketConfigFile(root, env, id, options.gasketConfig);

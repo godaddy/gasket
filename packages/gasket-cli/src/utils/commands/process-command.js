@@ -7,7 +7,7 @@ function isValidCommand(command) {
   const keys = Object.keys(command);
   return keys.length &&
     keys.length <= 5 &&
-    command !== undefined &&
+    command &&
     command.id &&
     command.description &&
     command.action &&
@@ -40,4 +40,4 @@ function processCommand(command) {
   return cmd;
 }
 
-module.exports = processCommand
+module.exports = processCommand;

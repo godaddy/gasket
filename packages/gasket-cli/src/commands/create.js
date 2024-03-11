@@ -68,16 +68,16 @@ const CreateCommand = {
       parse: commasToArray
     },
     {
-      name: 'no-bootstrap',
+      name: 'bootstrap',
       description: '(INTERNAL) If provided, skip the bootstrap phase',
       default: false,
-      type: 'boolean',
+      type: 'boolean'
     },
     {
-      name: 'no-generate',
+      name: 'generate',
       description: '(INTERNAL) If provided, skip the generate phase',
       default: false,
-      type: 'boolean',
+      type: 'boolean'
     },
     {
       name: 'npm-link',
@@ -122,7 +122,7 @@ const CreateCommand = {
 
 /**
  * bootstrap - Bootstrap the application
- * @param {CreateContext} context
+ * @param {CreateContext} context - Create context
  */
 async function bootstrap(context) {
   await loadPreset(context);
@@ -138,7 +138,7 @@ async function bootstrap(context) {
 
 /**
  * generate - Generate the application
- * @param {CreateContext} context
+ * @param {CreateContext} context - Create context
  */
 async function generate(context) {
   await promptHooks(context);
@@ -155,12 +155,12 @@ async function generate(context) {
  * CreateCommand action
  * @param {string} appname Required cmd arg - name of the app to create
  * @param {object} options cmd options
- * @param {Command} command
- * @return {Promise<void>}
+ * @param {Command} command - the command instance
+ * @returns {Promise<void>} void
  */
 CreateCommand.action = async function run(appname, options, command) {
   const argv = [appname];
-  const { NoBootstrap, NoGenerate } = options;
+  const { bootstrap: noBootstrap, generate: noGenerate } = options;
 
   let context;
   try {
@@ -171,16 +171,16 @@ CreateCommand.action = async function run(appname, options, command) {
   }
 
   try {
-    if (!NoBootstrap) {
+    if (!noBootstrap) {
       await bootstrap(context);
     } else {
       ora('Bootstrap phase skipped.').warn();
-      if (!NoGenerate) {
+      if (!noGenerate) {
         await loadPkgForDebug(context);
       }
     }
 
-    if (!NoGenerate) {
+    if (!noGenerate) {
       await generate(context);
     } else {
       ora('Generate phase skipped.').warn();
@@ -193,6 +193,6 @@ CreateCommand.action = async function run(appname, options, command) {
     dumpErrorContext(context, err);
     throw err;
   }
-}
+};
 
 module.exports = CreateCommand;
