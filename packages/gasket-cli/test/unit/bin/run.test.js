@@ -56,7 +56,7 @@ describe('run', () => {
 
   afterEach(() => {
     jest.clearAllMocks();
-    jest.resetModules()
+    jest.resetModules();
   });
 
   it('creates program', async () => {

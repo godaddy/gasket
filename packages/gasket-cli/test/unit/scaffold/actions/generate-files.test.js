@@ -81,8 +81,14 @@ describe('generateFiles', () => {
 
   it('reads expected source files', async () => {
     await generateFiles(mockContext);
-    expect(mockReadFileStub).toHaveBeenCalledWith(expect.stringContaining('gasket-cli/test/fixtures/generator/file-a.md'), expect.any(Object));
-    expect(mockReadFileStub).toHaveBeenCalledWith(expect.stringContaining('gasket-cli/test/fixtures/generator/file-b.md'), expect.any(Object));
+    expect(mockReadFileStub).toHaveBeenCalledWith(
+      expect.stringContaining('gasket-cli/test/fixtures/generator/file-a.md'),
+      expect.any(Object)
+    );
+    expect(mockReadFileStub).toHaveBeenCalledWith(
+      expect.stringContaining('gasket-cli/test/fixtures/generator/file-b.md'),
+      expect.any(Object)
+    );
   });
 
   it('writes expected target files', async () => {
@@ -181,7 +187,9 @@ describe('generateFiles', () => {
 
       // expect a cli warning was added with relevant message
       expect(mockContext.warnings).toHaveLength(1);
-      expect(mockContext.warnings[0]).toContain(`Error templating /path/to/my-app/file-a.md: Cannot read properties of undefined`);
+      expect(mockContext.warnings[0]).toContain(
+        `Error templating /path/to/my-app/file-a.md: Cannot read properties of undefined`
+      );
     });
   });
 

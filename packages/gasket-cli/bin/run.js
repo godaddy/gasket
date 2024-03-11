@@ -33,6 +33,6 @@ async function run() {
     },
     argv: process.argv
   });
-};
+}
 
 run();

@@ -31,7 +31,11 @@ describe('dumpErrorContext', () => {
   it('writes log file to destination', async () => {
     mockWriteStub.mockResolvedValue();
     await dumpErrorContext(mockContext, mockError);
-    expect(mockWriteStub).toHaveBeenCalledWith(expect.stringContaining(path.join(mockContext.cwd, 'gasket-create-error.log')), expect.any(String), 'utf8');
+    expect(mockWriteStub).toHaveBeenCalledWith(
+      expect.stringContaining(path.join(mockContext.cwd, 'gasket-create-error.log')),
+      expect.any(String),
+      'utf8'
+    );
   });
 
   it('writes context as JSON to log', async () => {

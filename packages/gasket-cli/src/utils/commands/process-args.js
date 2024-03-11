@@ -9,7 +9,7 @@ function processArgs(args) {
   if (!Array.isArray(args) || !args.every(isValidArg)) throw new Error('Invalid argument(s) configuration');
 
   return args.reduce((acc, arg) => {
-    const def = []
+    const def = [];
     if (arg.required) {
       def.push(`<${arg.name}>`, arg.description);
     } else {

@@ -6,7 +6,10 @@ const mockConfig = { mocked: true };
 const PluginEngine = require('@gasket/engine');
 
 jest.mock('@gasket/engine');
-jest.mock('@gasket/resolve', () => ({ loadGasketConfigFile: mockGetGasketConfigStub, assignPresetConfig: mockAssignPresetConfigStub }));
+jest.mock('@gasket/resolve', () => ({
+  loadGasketConfigFile: mockGetGasketConfigStub,
+  assignPresetConfig: mockAssignPresetConfigStub
+}));
 jest.mock('../../../src/config/utils', () => ({
   ...jest.requireActual('../../../src/config/utils'),
   addDefaultPlugins: jest.fn().mockReturnValue(mockConfig)
@@ -20,7 +23,7 @@ describe('init hook', () => {
   beforeEach(() => {
     mockInitConfig = {
       bin: {
-        parseAsync: jest.fn(),
+        parseAsync: jest.fn()
       },
       root: '/path/to/app',
       options: { gasketConfig: 'gasket.config' }
@@ -45,7 +48,7 @@ describe('init hook', () => {
     expect(process.env).not.toHaveProperty('GASKET_CONFIG');
     expect(process.env).not.toHaveProperty('GASKET_COMMAND');
 
-    await initHook({ id: 'build', argv: [], config: mockInitConfig});
+    await initHook({ id: 'build', argv: [], config: mockInitConfig });
 
     expect(process.env.GASKET_ENV).toEqual('development');
     expect(process.env.GASKET_ROOT).toEqual('/path/to/app');
@@ -54,7 +57,7 @@ describe('init hook', () => {
   });
 
   it('gets the gasket.config', async () => {
-    await initHook({ id: 'build', argv: [], config: mockInitConfig});
+    await initHook({ id: 'build', argv: [], config: mockInitConfig });
     expect(mockGetGasketConfigStub).toHaveBeenCalled();
   });
 
@@ -75,35 +78,35 @@ describe('init hook', () => {
 
   it('warns if no env specified', async () => {
     mockGetGasketConfigStub.mockResolvedValueOnce(null);
-    const spy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+    const spy = jest.spyOn(console, 'warn').mockImplementation(() => { });
     await initHook({ id: 'build', argv: [], config: mockInitConfig });
     expect(spy).toHaveBeenCalledWith('No env specified, falling back to "development".');
   });
 
   it('does not warn if no env specified for help command', async () => {
     mockGetGasketConfigStub.mockResolvedValueOnce(null);
-    const spy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+    const spy = jest.spyOn(console, 'warn').mockImplementation(() => { });
     await initHook({ id: 'help', argv: [], config: mockInitConfig });
     expect(spy).not.toHaveBeenCalledWith('No env specified, falling back to "development".');
   });
 
   it('warns if no gasket.config was found', async () => {
     mockGetGasketConfigStub.mockResolvedValueOnce(null);
-    const spy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+    const spy = jest.spyOn(console, 'warn').mockImplementation(() => { });
     await initHook({ id: 'build', argv: [], config: mockInitConfig });
     expect(spy).toHaveBeenCalledWith('No gasket.config file was found.');
   });
 
   it('does not warn if no gasket.config was found for help command', async () => {
     mockGetGasketConfigStub.mockResolvedValueOnce(null);
-    const spy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+    const spy = jest.spyOn(console, 'warn').mockImplementation(() => { });
     await initHook({ id: 'help', argv: [], config: mockInitConfig });
     expect(spy).not.toHaveBeenCalledWith('No gasket.config file was found.');
   });
 
   it('errors and exits if problem getting gasket.config', async () => {
     mockGetGasketConfigStub.mockRejectedValueOnce(mockError);
-    const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const spy = jest.spyOn(console, 'error').mockImplementation(() => { });
     await initHook({ id: 'build', argv: [], config: mockInitConfig });
     expect(spy).toHaveBeenCalledWith(mockError, { exit: 1 });
   });

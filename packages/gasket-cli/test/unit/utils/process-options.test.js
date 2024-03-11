@@ -28,8 +28,14 @@ describe('processOptions', () => {
     ];
     const result = processOptions(mockOptions);
     expect(result).toEqual([
-      ['-o, --option1 <option1>', 'description1'],
-      ['-t, --option2 [option2]', 'description2']
+      {
+        options: ['-o, --option1 <option1>', 'description1'],
+        conflicts: []
+      },
+      {
+        options: ['-t, --option2 [option2]', 'description2'],
+        conflicts: []
+      }
     ]);
   });
 
@@ -40,8 +46,14 @@ describe('processOptions', () => {
     ];
     const result = processOptions(mockOptions);
     expect(result).toEqual([
-      ['-o, --option1', 'description1'],
-      ['-t, --option2', 'description2']
+      {
+        options: ['-o, --option1', 'description1'],
+        conflicts: []
+      },
+      {
+        options: ['-t, --option2', 'description2'],
+        conflicts: []
+      }
     ]);
   });
 

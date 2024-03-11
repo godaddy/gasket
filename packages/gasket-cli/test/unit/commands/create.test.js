@@ -1,4 +1,4 @@
-/* eslint-disable max-statements */
+/* eslint-disable max-statements, jest/no-conditional-expect */
 const { Command } = require('commander');
 const { processCommand } = require('../../../src/utils/commands');
 const mockDumpErrorContext = jest.fn();
@@ -39,7 +39,7 @@ describe('create', function () {
     program.name('gasket');
     program.exitOverride();
     program.addCommand(processCommand(CreateCommand));
-    program.hook('preAction', (_, actionCommand) => cmdOptions = actionCommand.opts());
+    program.hook('preAction', (_, actionCommand) => { cmdOptions = actionCommand.opts(); });
     return program;
   })();
 
@@ -98,15 +98,15 @@ describe('create', function () {
     expect(mockActionStubs.linkModules).toHaveBeenCalled();
   });
 
-  it('skips bootstrap actions with --no-bootstrap', async () => {
-    await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--no-bootstrap', '--presets=nextjs']);
-    expect(cmdOptions.NoBootstrap).toBe(true);
+  it('skips bootstrap actions with --bootstrap', async () => {
+    await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--bootstrap', '--presets=nextjs']);
+    expect(cmdOptions.bootstrap).toBe(true);
     expect(mockActionStubs.mkDir).not.toHaveBeenCalled();
   });
 
-  it('executes loadPkgForDebug with --no-bootstrap', async () => {
-    await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--no-bootstrap', '--presets=nextjs']);
-    expect(cmdOptions.NoBootstrap).toBe(true);
+  it('executes loadPkgForDebug with --bootstrap', async () => {
+    await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--bootstrap', '--presets=nextjs']);
+    expect(cmdOptions.bootstrap).toBe(true);
     expect(mockActionStubs.loadPkgForDebug).toHaveBeenCalled();
   });
 
@@ -121,16 +121,16 @@ describe('create', function () {
     expect(mockActionStubs.linkModules.update).toHaveBeenCalled();
   });
 
-  it('skips generate actions with --no-generate', async () => {
-    await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--no-generate', '--presets=nextjs']);
-    expect(cmdOptions.NoGenerate).toBe(true);
+  it('skips generate actions with --generate', async () => {
+    await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--generate', '--presets=nextjs']);
+    expect(cmdOptions.generate).toBe(true);
     expect(mockActionStubs.promptHooks).not.toHaveBeenCalled();
   });
 
-  it('does not execute loadPkgForDebug with --no-bootstrap --no-generate', async () => {
-    await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--no-bootstrap', '--no-generate', '--presets=nextjs']);
-    expect(cmdOptions.NoBootstrap).toBe(true);
-    expect(cmdOptions.NoGenerate).toBe(true);
+  it('does not execute loadPkgForDebug with --bootstrap --generate', async () => {
+    await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--bootstrap', '--generate', '--presets=nextjs']);
+    expect(cmdOptions.bootstrap).toBe(true);
+    expect(cmdOptions.generate).toBe(true);
     expect(cmdOptions.presets).toEqual(['nextjs']);
     expect(mockActionStubs.loadPkgForDebug).not.toHaveBeenCalled();
   });
@@ -143,7 +143,7 @@ describe('create', function () {
   it('exits on action errors', async () => {
     mockActionStubs.mkDir.mockRejectedValueOnce(new Error('YOUR DRIVE EXPLODED!'));
     try {
-      await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--presets=nextjs'])
+      await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--presets=nextjs']);
     } catch (err) {
       expect(err.message).toEqual('YOUR DRIVE EXPLODED!');
     }
@@ -152,7 +152,7 @@ describe('create', function () {
   it('dumps log on errors', async () => {
     mockActionStubs.mkDir.mockRejectedValueOnce(new Error('YOUR DRIVE EXPLODED!'));
     try {
-      await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--presets=nextjs'])
+      await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--presets=nextjs']);
     } catch (err) {
       expect(err.message).toEqual('YOUR DRIVE EXPLODED!');
       expect(mockDumpErrorContext).toHaveBeenCalled();
@@ -162,7 +162,7 @@ describe('create', function () {
   it('prints exit message', async () => {
     mockActionStubs.mkDir.mockRejectedValueOnce(new Error('YOUR DRIVE EXPLODED!'));
     try {
-      await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--presets=nextjs'])
+      await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--presets=nextjs']);
     } catch (err) {
       expect(err.message).toEqual('YOUR DRIVE EXPLODED!');
       expect(consoleErrorStub).toHaveBeenCalled();
@@ -184,11 +184,14 @@ describe('create', function () {
   });
 
   it('prints an error if both --config and --config-file are provided', async () => {
-    mockActionStubs.writeGasketConfig.mockRejectedValueOnce(new Error());
-    try {
-      await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--config={}', '--config-file=../../test/unit/commands/test-ci-config.json']);
-    } catch (err) {
-      expect(err.message).toEqual('--config-file= cannot also be provided when using --config=');
-    }
+    const writeSpy = jest.spyOn(process.stderr, 'write').mockImplementation((err) => err);
+    const exitSpy = jest.spyOn(process, 'exit').mockImplementation((err) => err);
+    await cmd.parseAsync(
+      ['node', 'gasket', 'create', 'myapp', '--config={}', '--config-file=../../test/unit/commands/test-ci-config.json']
+    );
+    expect(writeSpy).toHaveBeenCalledWith(
+      `error: option '--config-file [config-file]' cannot be used with option '--config [config]'\n`
+    );
+    expect(exitSpy).toHaveBeenCalledWith(1);
   });
 });
