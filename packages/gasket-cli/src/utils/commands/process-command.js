@@ -1,4 +1,4 @@
-const { Command } = require('commander');
+const { Command, Option } = require('commander');
 const program = new Command();
 const processArgs = require('./process-args');
 const processOptions = require('./process-options');
@@ -27,8 +27,14 @@ function processCommand(command) {
   }
 
   if (command.options) {
-    const options = processOptions(command.options);
-    options.forEach(option => cmd.option(...option));
+    const opts = processOptions(command.options);
+    opts.forEach(o => {
+      if (o.conflicts.length) {
+        cmd.addOption(new Option(...o.options).conflicts(o.conflicts));
+      } else {
+        cmd.option(...o.options);
+      }
+    });
   }
 
   return cmd;

@@ -15,6 +15,9 @@ const gasketBin = program
   .version(pkg.version)
   .addHelpText('beforeAll', logo);
 
+/**
+ * Entry to the CLI
+ */
 async function run() {
   const cmd = process.argv[2];
   gasketBin.addCommand(processCommand(CreateCommand));

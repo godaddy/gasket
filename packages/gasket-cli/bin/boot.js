@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-
 const { join } = require('path');
 const location = ['@gasket', 'cli', 'bin', 'run'];
 const local = join(process.cwd(), 'node_modules', ...location);

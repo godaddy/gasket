@@ -12,6 +12,7 @@ const debug = require('diagnostics')('gasket:cli:config:utils');
  * @returns {string} environment
  */
 function getEnvironment(options, commandId, warn) {
+  console.log(options, commandId)
   if (options.env) {
     debug('Environment was passed through command line options', options.env);
     return options.env;

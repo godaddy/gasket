@@ -46,7 +46,6 @@
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-cli",
   "dependencies": {
     "@gasket/engine": "^6.46.2",
-    "@gasket/plugin-command": "^6.46.2",
     "@gasket/plugin-git": "^6.46.2",
     "@gasket/plugin-lifecycle": "^6.46.2",
     "@gasket/plugin-metadata": "^6.46.2",

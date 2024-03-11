@@ -5,7 +5,7 @@ interface NewCommandFlags {
   foo: string
   bar: boolean
 }
-
+// TODO
 describe('@gasket/plugin-command', () => {
   it('defines the getCommands lifecycle', () => {
     const hook: Hook<'getCommands'> = (gasket: Gasket, { GasketCommand, flags }) => {
