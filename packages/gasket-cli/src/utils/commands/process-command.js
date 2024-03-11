@@ -3,6 +3,11 @@ const program = new Command();
 const processArgs = require('./process-args');
 const processOptions = require('./process-options');
 
+/**
+ * isValidCommand - Validates the command configuration
+ * @param {object} command The command configuration
+ * @returns {boolean} True if valid, false otherwise
+ */
 function isValidCommand(command) {
   const keys = Object.keys(command);
   return keys.length &&
@@ -14,8 +19,13 @@ function isValidCommand(command) {
     typeof command.action === 'function';
 }
 
+/**
+ * processCommand - Process the command configuration
+ * @param {object} command The command configuration
+ * @returns {Command} The command instance
+ */
 function processCommand(command) {
-  if (!isValidCommand(command)) throw new Error('Invalid command signature');
+  if (!isValidCommand(command)) throw new Error('Invalid command configuration');
   const cmd = program
     .command(command.id)
     .description(command.description)
