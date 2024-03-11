@@ -4,19 +4,19 @@ describe('process-command', () => {
 
   describe('isValidCommand', () => {
     it('throws error for undefined command', () => {
-      expect(() => processCommand({})).toThrow('Invalid command signature');
+      expect(() => processCommand({})).toThrow('Invalid command configuration');
     });
 
     it('throws error on missing id', () => {
-      expect(() => processCommand({ description: 'test', action: () => {} })).toThrow('Invalid command signature');
+      expect(() => processCommand({ description: 'test', action: () => {} })).toThrow('Invalid command configuration');
     });
 
     it('throws error on missing description', () => {
-      expect(() => processCommand({ id: 'test', action: () => {} })).toThrow('Invalid command signature');
+      expect(() => processCommand({ id: 'test', action: () => {} })).toThrow('Invalid command configuration');
     });
 
     it('throws error on missing action', () => {
-      expect(() => processCommand({ id: 'test', description: 'test' })).toThrow('Invalid command signature');
+      expect(() => processCommand({ id: 'test', description: 'test' })).toThrow('Invalid command configuration');
     });
   });
 
