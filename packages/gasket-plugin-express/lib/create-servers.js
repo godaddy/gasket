@@ -52,7 +52,9 @@ module.exports = async function createServers(gasket, serverOpts) {
        * @see: https://github.com/vercel/next.js/issues/11669
        */
       function http2Patch(req, res, next) {
+        // @ts-ignore
         if (!res._implicitHeader) {
+          // @ts-ignore
           res._implicitHeader = () => res.writeHead(res.statusCode);
         }
         return next();

@@ -16,12 +16,12 @@ declare module '@gasket/engine' {
     };
     middleware?: {
       plugin: string;
-      paths?: string[];
+      paths?: (string | RegExp)[];
     }[];
   }
 
   export interface HookExecTypes {
-    middleware(app: Application): MaybeAsync<MaybeMultiple<Handler>>;
+    middleware(app: Application): MaybeAsync<MaybeMultiple<Handler> & { paths?: (string | RegExp)[] }>;
     express(app: Application): MaybeAsync<void>;
     errorMiddleware(): MaybeAsync<MaybeMultiple<ErrorRequestHandler>>;
   }
