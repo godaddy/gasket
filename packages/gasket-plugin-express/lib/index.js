@@ -1,9 +1,11 @@
+/// <reference types="@gasket/plugin-metadata" />
+
 const { name } = require('../package.json');
 const create = require('./create');
 const createServers = require('./create-servers');
 
 /** @type {import('@gasket/engine').Plugin} */
-module.exports = {
+const plugin = {
   name,
   hooks: {
     create,
@@ -63,13 +65,17 @@ module.exports = {
           name: 'express.excludedRoutesRegex',
           link: 'README.md#configuration',
           description: 'Routes to be included for Gasket middleware, based on a regex',
-          deprecated: true
+          deprecated: true,
+          type: 'RegExp'
         }, {
           name: 'express.middlewareInclusionRegex',
           link: 'README.md#configuration',
-          description: 'Routes to be included for Gasket middleware, based on a regex'
+          description: 'Routes to be included for Gasket middleware, based on a regex',
+          type: 'RegExp'
         }]
       };
     }
   }
 };
+
+module.exports = plugin;
