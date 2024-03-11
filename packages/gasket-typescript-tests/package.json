@@ -41,7 +41,6 @@
     "@gasket/log": "^6.46.0",
     "@gasket/nextjs": "^6.45.2",
     "@gasket/plugin-analyze": "^6.46.2",
-    "@gasket/plugin-command": "^6.46.2",
     "@gasket/plugin-config": "^6.46.2",
     "@gasket/plugin-docs": "^6.46.2",
     "@gasket/plugin-docusaurus": "^6.46.2",
