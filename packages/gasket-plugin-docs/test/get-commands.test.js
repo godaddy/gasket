@@ -7,13 +7,6 @@ const mockGasket = {
   exec: jest.fn()
 };
 
-class MockGasketCommand {
-  constructor() {
-    this.gasket = mockGasket;
-  }
-}
-
-const mockData = { GasketCommand: MockGasketCommand, flags: { boolean: jest.fn() } };
 const mockDocsConfigSet = {
   docsRoot: '/path/to/app/.docs',
   guides: []
@@ -26,57 +19,49 @@ jest.mock('../lib/utils/generate-index');
 describe('getCommands', () => {
 
   it('returns a command', () => {
-    const results = getCommands(mockGasket, mockData);
-    expect(results.prototype).toBeInstanceOf(MockGasketCommand);
+    const results = getCommands(mockGasket);
+    expect(results).toBeDefined();
   });
 
   it('command has id', () => {
-    const results = getCommands(mockGasket, mockData);
+    const results = getCommands(mockGasket);
     expect(results).toHaveProperty('id', 'docs');
   });
 
   it('command has description', () => {
-    const results = getCommands(mockGasket, mockData);
+    const results = getCommands(mockGasket);
     expect(results).toHaveProperty('description');
   });
 
-  it('command implements gasketRun', () => {
-    const results = getCommands(mockGasket, mockData);
-    expect(results.prototype).toHaveProperty('gasketRun');
-  });
-
   describe('instance', () => {
-    const DocsCommand = getCommands(mockGasket, mockData);
-    const instance = new DocsCommand();
+    const DocsCommand = getCommands(mockGasket);
 
     beforeEach(() => {
-      instance.parsed = { flags: { view: true } };
       jest.clearAllMocks();
     });
 
     it('builds docsConfigSet', async () => {
-      await instance.gasketRun();
+      await DocsCommand.action({ view: true });
       expect(buildDocsConfigSet).toHaveBeenCalledWith(mockGasket);
     });
 
     it('collates files', async () => {
-      await instance.gasketRun();
+      await DocsCommand.action({ view: true });
       expect(collateFiles).toHaveBeenCalledWith(mockDocsConfigSet);
     });
 
     it('generates index', async () => {
-      await instance.gasketRun();
+      await DocsCommand.action({ view: true });
       expect(generateIndex).toHaveBeenCalledWith(mockDocsConfigSet);
     });
 
     it('executes docsView lifecycle', async () => {
-      await instance.gasketRun();
+      await DocsCommand.action({ view: true });
       expect(mockGasket.exec).toHaveBeenCalledWith('docsView', mockDocsConfigSet);
     });
 
     it('does not execute docsView if --no-view flag', async () => {
-      instance.parsed.flags.view = false;
-      await instance.gasketRun();
+      await DocsCommand.action({ view: false });
       expect(mockGasket.exec).toHaveBeenCalledTimes(1);
       expect(mockGasket.exec).toHaveBeenCalledWith('docsGenerate', mockDocsConfigSet);
     });
