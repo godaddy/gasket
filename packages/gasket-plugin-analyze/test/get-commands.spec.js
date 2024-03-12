@@ -3,42 +3,34 @@ const getCommands = require('../lib/get-commands');
 const mockGasket = {
   exec: jest.fn()
 };
-class MockGasketCommand {
-  constructor() {
-    this.gasket = mockGasket;
-  }
-}
-
-const mockData = { GasketCommand: MockGasketCommand };
 
 describe('getCommands', () => {
 
   it('returns a command', () => {
-    const results = getCommands(mockGasket, mockData);
-    expect(results.prototype).toBeInstanceOf(MockGasketCommand);
+    const results = getCommands(mockGasket);
+    expect(results).toBeDefined();
   });
 
   it('command has id', () => {
-    const results = getCommands(mockGasket, mockData);
+    const results = getCommands(mockGasket);
     expect(results).toHaveProperty('id', 'analyze');
   });
 
   it('command has description', () => {
-    const results = getCommands(mockGasket, mockData);
+    const results = getCommands(mockGasket);
     expect(results).toHaveProperty('description');
   });
 
-  it('command implements gasketRun', () => {
-    const results = getCommands(mockGasket, mockData);
-    expect(results.prototype).toHaveProperty('gasketRun');
+  it('command has action', () => {
+    const results = getCommands(mockGasket);
+    expect(results).toHaveProperty('action');
   });
 
   describe('instance', () => {
-    const AnalyzeCommand = getCommands(mockGasket, mockData);
-    const instance = new AnalyzeCommand();
+    const AnalyzeCommand = getCommands(mockGasket);
 
     it('executes build lifecycle', async () => {
-      await instance.gasketRun();
+      await AnalyzeCommand.action();
       expect(mockGasket.exec).toHaveBeenCalledWith('build');
     });
   });
