@@ -14,13 +14,13 @@ module.exports = function getCommands(gasket) {
     description: 'Generate docs for the app',
     options: [
       {
-        name: 'view',
+        name: 'no-view',
         description: 'View the docs after generating',
         default: false,
         type: 'boolean'
       }
     ],
-    action: async function (options) {
+    action: async function ({ view }) {
       const docsConfigSet = await buildDocsConfigSet(gasket);
       await collateFiles(docsConfigSet);
       let guides = await gasket.exec('docsGenerate', docsConfigSet);
@@ -38,7 +38,7 @@ module.exports = function getCommands(gasket) {
       }
       docsConfigSet.guides.unshift(...guides);
       await generateIndex(docsConfigSet);
-      if (options.View) {
+      if (view) {
         await gasket.exec('docsView', docsConfigSet);
       }
     }
