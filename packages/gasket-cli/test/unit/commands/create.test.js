@@ -38,7 +38,8 @@ describe('create', function () {
     const program = new Command();
     program.name('gasket');
     program.exitOverride();
-    program.addCommand(processCommand(CreateCommand));
+    const { command } = processCommand(CreateCommand);
+    program.addCommand(command);
     program.hook('preAction', (_, actionCommand) => { cmdOptions = actionCommand.opts(); });
     return program;
   })();
