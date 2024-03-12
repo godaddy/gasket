@@ -22,6 +22,18 @@ describe('The middleware hook', () => {
     res = {};
   });
 
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('does not include the middleware if apm is not started', async () => {
+    delete gasket.apm;
+
+    const middleware = middlewareHook(gasket);
+
+    expect(middleware).toHaveLength(0);
+  });
+
   describe('middleware', () => {
     let middleware;
 

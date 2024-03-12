@@ -1,5 +1,11 @@
 # `@gasket/plugin-elastic-apm`
 
+- (fix) handle case when APM is not available
+
+### 6.46.2
+
+- Ensure consistent apm instance ([#692])
+
 ### 6.45.2
 
 - Remove `eslint-plugin-mocha` ([#670])
@@ -45,3 +51,4 @@
 [#436]: https://github.com/godaddy/gasket/pull/436
 [#457]: https://github.com/godaddy/gasket/pull/457
 [#670]: https://github.com/godaddy/gasket/pull/670
+[#692]: https://github.com/godaddy/gasket/pull/692

@@ -20,6 +20,12 @@ const apm = require('elastic-apm-node');
  * @param {Response}  res     The server response
  */
 async function customizeTransaction(gasket, req, res) {
+  const apm = gasket.apm;
+
+  if (!apm?.isStarted()) {
+    return;
+  }
+
   const transaction = apm.currentTransaction;
   if (!transaction) {
     return;
@@ -28,6 +34,8 @@ async function customizeTransaction(gasket, req, res) {
   await gasket.exec('apmTransaction', transaction, { req, res });
 }
 
-module.exports = (gasket) => [
-  callbackify(async (req, res) => customizeTransaction(gasket, req, res))
-];
+module.exports = (gasket) => {
+  return gasket.apm
+    ? [callbackify(async (req, res) => customizeTransaction(gasket, req, res))]
+    : [];
+};
