@@ -1,5 +1,6 @@
 import type { IncomingMessage, ServerResponse } from 'http';
 import type { Agent, AgentConfigOptions, Transaction } from 'elastic-apm-node';
+import type { MaybeAsync } from '@gasket/engine';
 
 declare module '@gasket/engine' {
   export interface GasketConfig {
@@ -9,7 +10,7 @@ declare module '@gasket/engine' {
   }
 
   export interface Gasket {
-    apm: Agent;
+    apm?: Agent;
   }
 
   export interface HookExecTypes {

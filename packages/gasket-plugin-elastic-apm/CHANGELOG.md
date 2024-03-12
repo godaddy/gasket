@@ -1,5 +1,7 @@
 # `@gasket/plugin-elastic-apm`
 
+- (fix) handle case when APM is not available
+
 ### 6.46.2
 
 - Ensure consistent apm instance ([#692])
