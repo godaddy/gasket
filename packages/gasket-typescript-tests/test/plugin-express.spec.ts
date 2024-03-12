@@ -65,7 +65,7 @@ describe('@gasket/plugin-express', () => {
   });
 
   it('declares the errorMiddleware lifecycle', () => {
-    const hook: Hook<'errorMiddleware'> = (gasket: Gasket, app: Application) => [
+    const hook: Hook<'errorMiddleware'> = (gasket: Gasket) => [
       (err, req, res, next) => {
         // eslint-disable-next-line no-console
         console.error(err);
