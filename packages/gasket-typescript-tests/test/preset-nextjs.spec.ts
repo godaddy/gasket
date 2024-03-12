@@ -10,7 +10,9 @@ describe('@gasket/preset-nextjs', () => {
         { name: 'example-plugin', hooks: {} }
       ],
       http: 8080,
-      compression: true,
+      express: {
+        compression: true
+      },
       nextConfig: {
         future: {
           webpack5: true

@@ -329,11 +329,21 @@ describe('createServers', () => {
     expect(app.set).toHaveBeenCalledWith('trust proxy', '127.0.0.1');
   });
 
+  /**
+   *
+   * @param aSpy
+   * @param aPredicate
+   */
   function findCall(aSpy, aPredicate) {
     const callIdx = findCallIndex(aSpy, aPredicate);
     return callIdx === -1 ? null : aSpy.mock.calls[callIdx][0];
   }
 
+  /**
+   *
+   * @param aSpy
+   * @param aPredicate
+   */
   function findCallIndex(aSpy, aPredicate) {
     return aSpy.mock.calls.map((args) => aPredicate(...args)).indexOf(true);
   }
@@ -342,6 +352,10 @@ describe('createServers', () => {
 describe('create', () => {
   let mockContext;
 
+  /**
+   *
+   * @param assertFn
+   */
   function expectCreatedWith(assertFn) {
     return async function expectCreated() {
       await plugin.hooks.create({}, mockContext);

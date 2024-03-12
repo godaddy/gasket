@@ -15,7 +15,8 @@ declare module '@gasket/engine' {
   type BaseListenerConfig = {
     port?: number,
     host?: string,
-    timeout?: number
+    timeout?: number,
+    handler?: Function
   }
 
   type CertInput = string | Buffer;
@@ -92,6 +93,7 @@ declare module '@gasket/engine' {
     http2?: MaybeMultiple<BaseListenerConfig & Http2Settings & {
       sni?: Record<string, HttpsSettings>
     }>,
+    handler?: Function
   }
 
   export interface GasketConfig extends ServerOptions {
