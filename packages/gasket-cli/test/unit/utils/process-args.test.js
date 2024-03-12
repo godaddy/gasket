@@ -1,4 +1,4 @@
-const processArgs = require('../../../src/utils/commands/process-args');
+const { processArgs } = require('../../../src/utils');
 
 describe('processArgs', () => {
   let mockArgs;

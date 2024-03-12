@@ -1,7 +1,8 @@
-const { Command, Option } = require('commander');
+const { Command } = require('commander');
 const program = new Command();
 const processArgs = require('./process-args');
 const processOptions = require('./process-options');
+const createOption = require('./create-option');
 
 /**
  * isValidCommand - Validates the command configuration
@@ -40,16 +41,7 @@ function processCommand(command) {
   if (options) {
     const cmdOpts = processOptions(options);
     cmdOpts.forEach(o => {
-      const option = new Option(...o.options);
-      const { defaultValue, conflicts, parse, required } = o;
-      const optHidden = o.hidden || false;
-
-      if (conflicts.length) option.conflicts(o.conflicts);
-      if (optHidden) option.hideHelp();
-      if (defaultValue) option.default(defaultValue);
-      if (parse) option.argParser(parse);
-      if (required) option.required();
-
+      const option = createOption(o);
       cmd.addOption(option);
     });
   }

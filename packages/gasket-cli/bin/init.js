@@ -1,11 +1,16 @@
 #!/usr/bin/env node
 /* eslint-disable max-statements */
 const debug = require('diagnostics')('gasket:cli:hooks:init');
-const { processOptions, processCommand } = require('../src/utils/commands');
 const { loadGasketConfigFile, assignPresetConfig } = require('@gasket/resolve');
-const { parseEnvOption, handleEnvVars } = require('../src/utils/env-util');
 const { getEnvironment, addDefaultPlugins } = require('../src/config/utils');
 const PluginEngine = require('@gasket/engine');
+const {
+  processOptions,
+  processCommand,
+  createOption,
+  parseEnvOption,
+  handleEnvVars
+} = require('../src/utils');
 
 /**
  * init - Initialize the Gasket CLI
@@ -19,8 +24,8 @@ async function init({ id, config, argv }) {
   debug('id', id);
   debug('argv', argv);
 
-  // avoid config logging for help command
-  const warn = id !== 'help' ? console.warn : f => f;
+  // avoid config logging for help command or no command
+  const warn = id && id !== 'help' ? console.warn : f => f;
 
   try {
     const { root, bin, options } = config;
@@ -44,14 +49,18 @@ async function init({ id, config, argv }) {
       const globalOptions = (await gasket.exec('getCommandOptions', config))
         .reduce((all, opts) => all.concat(opts), [])
         .filter(opt => Boolean(opt));
-      processOptions(globalOptions).forEach(opt => bin.option(...opt));
+      processOptions(globalOptions)
+        .forEach(opt => {
+          bin.addOption(createOption(opt));
+        });
 
       // Add commands to the bin
       const commands = (await gasket.exec('getCommands', config))
         .reduce((all, cmds) => all.concat(cmds), [])
         .filter(cmd => Boolean(cmd))
         .map(cmd => processCommand(cmd));
-      commands.forEach(cmd => bin.addCommand(cmd));
+      commands.forEach(cmd =>
+        bin.addCommand(cmd.command, { hidden: cmd.hidden, isDefault: cmd.isDefault }));
 
       // Initialize Gasket
       await gasket.exec('init');

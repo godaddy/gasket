@@ -29,7 +29,7 @@ const mockCreateCommand = {
 jest.mock('../../../bin/init', () => mockInit);
 jest.mock('../../../package.json', () => ({ description: 'mockDescription', version: 'mockVersion' }));
 jest.mock('../../../src/commands/create', () => mockCreateCommand);
-jest.mock('../../../src/utils/commands', () => ({
+jest.mock('../../../src/utils', () => ({
   processCommand: mockProcessCommand.mockReturnValue('mockCommand')
 }));
 jest.mock('commander', () => ({
