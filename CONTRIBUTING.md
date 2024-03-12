@@ -98,6 +98,10 @@ Ensure that every function exposed by a Gasket module is documented and follows
 the standards set by [JSDoc]. Finally, please stick to the code style as defined
 by the [Godaddy JS styleguide][style].
 
+## Type Safety
+
+Please ensure that all contributed code utilizes our defined type checking method outlined in our [Type Safety with JSDoc document].
+
 ## Markdown Documentation
 
 Each package should have a `README.md`, with guides and other documents under a
@@ -195,13 +199,14 @@ new-file.js
 example-directory-name/
 ```
 
-# Additional Resources
+## Additional Resources
 
 - [General GitHub Documentation](https://help.github.com/)
 - [GitHub Pull Request documentation](https://help.github.com/send-pull-requests/)
 - [JSDoc]
 
 [issues]: https://github.com/godaddy/gasket/issues
-[JSDoc]: http://usejsdoc.org/
+[JSDoc]: https://jsdoc.app/
 [npm]: http://npmjs.org/
 [style]: https://github.com/godaddy/javascript/#godaddy-style
+[Type Safety with JSDoc document]: https://github.com/godaddy/gasket/blob/main/docs/jsdoc-type-safety.md

@@ -6,14 +6,18 @@ describe('@gasket/plugin-express', () => {
   it('adds a compression config property', () => {
     const config: GasketConfigDefinition = {
       plugins: [{ name: 'example-plugin', hooks: {} }],
-      compression: false
+      express: {
+        compression: false
+      }
     };
   });
 
   it('adds an excludedRoutesRegex config property', () => {
     const config: GasketConfigDefinition = {
       plugins: [{ name: 'example-plugin', hooks: {} }],
-      excludedRoutesRegex: /^(?!\/_next\/)/
+      express: {
+        excludedRoutesRegex: /^(?!\/_next\/)/
+      }
     };
   });
 
@@ -25,7 +29,9 @@ describe('@gasket/plugin-express', () => {
 
     const goodConfig: GasketConfigDefinition = {
       plugins: [{ name: 'example-plugin', hooks: {} }],
-      middlewareInclusionRegex: /^(?!\/_next\/)/
+      express: {
+        middlewareInclusionRegex: /^(?!\/_next\/)/
+      }
     };
   });
 
@@ -37,7 +43,9 @@ describe('@gasket/plugin-express', () => {
 
     const goodConfig: GasketConfigDefinition = {
       plugins: [{ name: 'example-plugin', hooks: {} }],
-      routes: '/api/*.js'
+      express: {
+        routes: '/api/*.js'
+      }
     };
   });
 
@@ -61,7 +69,7 @@ describe('@gasket/plugin-express', () => {
   });
 
   it('declares the errorMiddleware lifecycle', () => {
-    const hook: Hook<'errorMiddleware'> = (gasket: Gasket, app) => [
+    const hook: Hook<'errorMiddleware'> = (gasket: Gasket) => [
       (err, req, res, next) => {
         // eslint-disable-next-line no-console
         console.error(err);
