@@ -1,30 +1,33 @@
 /**
  * isValidArg - Validates the argument configuration
- * @param {object} arg The argument configuration
+ * @param {CLICommandArg} arg The argument configuration
  * @returns {boolean} True if valid, false otherwise
  */
 function isValidArg(arg) {
   const keys = Object.keys(arg);
   return keys.length &&
-    keys.length <= 3 &&
+    keys.length <= 4 &&
     arg.name && arg.description;
 }
 
 /**
  * processArgs - Process the arguments configuration
- * @param {array} args Array of argument configurations
- * @returns {array} Array of argument definitions
+ * @param {CLICommandArg[]} args Array of argument configurations
+ * @returns {ProccesedCLICommandArg[]} Array of argument definitions
  */
 function processArgs(args) {
   if (!Array.isArray(args) || !args.every(isValidArg)) throw new Error('Invalid argument(s) configuration');
 
   return args.reduce((acc, arg) => {
     const def = [];
-    if (arg.required) {
-      def.push(`<${arg.name}>`, arg.description);
+    const { name, description, required = false, default: defaultValue } = arg;
+    if (required) {
+      def.push(`<${name}>`, description);
     } else {
-      def.push(`[${arg.name}]`, arg.description);
+      def.push(`[${name}]`, description);
     }
+
+    if (defaultValue) def.push(defaultValue);
 
     acc.push(def);
     return acc;

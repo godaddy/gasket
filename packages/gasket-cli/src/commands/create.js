@@ -71,13 +71,15 @@ const CreateCommand = {
       name: 'bootstrap',
       description: '(INTERNAL) If provided, skip the bootstrap phase',
       default: false,
-      type: 'boolean'
+      type: 'boolean',
+      hidden: true
     },
     {
       name: 'generate',
       description: '(INTERNAL) If provided, skip the generate phase',
       default: false,
-      type: 'boolean'
+      type: 'boolean',
+      hidden: true
     },
     {
       name: 'npm-link',
@@ -115,6 +117,7 @@ const CreateCommand = {
       name: 'prompts',
       description: '(INTERNAL) Disable to skip the prompts',
       default: true,
+      type: 'boolean',
       hidden: true
     }
   ]

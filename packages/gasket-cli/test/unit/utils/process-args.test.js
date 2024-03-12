@@ -29,6 +29,15 @@ describe('processArgs', () => {
     ]);
   });
 
+  it('includes default value if provided and not required', () => {
+    mockArgs[1].default = 'default';
+    const result = processArgs(mockArgs);
+    expect(result).toEqual([
+      ['<arg1>', 'description1'],
+      ['[arg2]', 'description2', 'default']
+    ]);
+  });
+
   it('allows for an empty array', () => {
     const result = processArgs([]);
     expect(result).toEqual([]);

@@ -1,3 +1,4 @@
+/* eslint-disable no-undefined */
 const processOptions = require('../../../src/utils/commands/process-options');
 
 describe('processOptions', () => {
@@ -30,11 +31,19 @@ describe('processOptions', () => {
     expect(result).toEqual([
       {
         options: ['-o, --option1 <option1>', 'description1'],
-        conflicts: []
+        conflicts: [],
+        hidden: false,
+        required: true,
+        parse: undefined,
+        defaultValue: undefined
       },
       {
         options: ['-t, --option2 [option2]', 'description2'],
-        conflicts: []
+        conflicts: [],
+        hidden: false,
+        required: false,
+        parse: undefined,
+        defaultValue: undefined
       }
     ]);
   });
@@ -48,11 +57,123 @@ describe('processOptions', () => {
     expect(result).toEqual([
       {
         options: ['-o, --option1', 'description1'],
-        conflicts: []
+        conflicts: [],
+        hidden: false,
+        required: true,
+        parse: undefined,
+        defaultValue: undefined
       },
       {
         options: ['-t, --option2', 'description2'],
-        conflicts: []
+        conflicts: [],
+        hidden: false,
+        required: false,
+        parse: undefined,
+        defaultValue: undefined
+      }
+    ]);
+  });
+
+  it('processes default values', () => {
+    const mockOptions = [
+      { name: 'option1', description: 'description1', required: true, short: 'o', default: 'default1' },
+      { name: 'option2', description: 'description2', required: false, short: 't', default: 'default2' }
+    ];
+    const result = processOptions(mockOptions);
+    expect(result).toEqual([
+      {
+        options: ['-o, --option1 <option1>', 'description1'],
+        conflicts: [],
+        hidden: false,
+        required: true,
+        parse: undefined,
+        defaultValue: 'default1'
+      },
+      {
+        options: ['-t, --option2 [option2]', 'description2'],
+        conflicts: [],
+        hidden: false,
+        required: false,
+        parse: undefined,
+        defaultValue: 'default2'
+      }
+    ]);
+  });
+
+  it('processes parse functions', () => {
+    const mockOptions = [
+      { name: 'option1', description: 'description1', required: true, short: 'o', parse: () => { } },
+      { name: 'option2', description: 'description2', required: false, short: 't', parse: () => { } }
+    ];
+    const result = processOptions(mockOptions);
+    expect(result).toEqual([
+      {
+        options: ['-o, --option1 <option1>', 'description1'],
+        conflicts: [],
+        hidden: false,
+        required: true,
+        parse: expect.any(Function),
+        defaultValue: undefined
+      },
+      {
+        options: ['-t, --option2 [option2]', 'description2'],
+        conflicts: [],
+        hidden: false,
+        required: false,
+        parse: expect.any(Function),
+        defaultValue: undefined
+      }
+    ]);
+  });
+
+  it('processes conflicts', () => {
+    const mockOptions = [
+      { name: 'option1', description: 'description1', required: true, short: 'o', conflicts: ['option2'] },
+      { name: 'option2', description: 'description2', required: false, short: 't', conflicts: ['option1'] }
+    ];
+    const result = processOptions(mockOptions);
+    expect(result).toEqual([
+      {
+        options: ['-o, --option1 <option1>', 'description1'],
+        conflicts: ['option2'],
+        hidden: false,
+        required: true,
+        parse: undefined,
+        defaultValue: undefined
+      },
+      {
+        options: ['-t, --option2 [option2]', 'description2'],
+        conflicts: ['option1'],
+        hidden: false,
+        required: false,
+        parse: undefined,
+        defaultValue: undefined
+      }
+    ]);
+  });
+
+  it('processes hidden options', () => {
+    const mockOptions = [
+      { name: 'option1', description: 'description1', required: true, short: 'o', hidden: true },
+      { name: 'option2', description: 'description2', required: false, short: 't', hidden: true }
+    ];
+    const result = processOptions(mockOptions);
+    expect(result).toEqual([
+      {
+        options: ['-o, --option1 <option1>', 'description1'],
+        conflicts: [],
+        hidden: true,
+        required: true,
+        parse: undefined,
+        defaultValue: undefined
+      },
+      {
+        options: ['-t, --option2 [option2]', 'description2'],
+        conflicts: [],
+        hidden: true,
+        required: false,
+        parse: undefined,
+        defaultValue: undefined
       }
     ]);
   });
