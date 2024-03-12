@@ -21,6 +21,18 @@ module.exports = {
           });
       }
     },
+    /**
+     * Option that is applied to all commands at the `gasket` level
+     */
+    async getCommandOptions() {
+      return [
+        {
+          name: 'record',
+          description: 'Whether or not to emit this command as part of Gasket\'s metrics lifecycle',
+          default: true,
+        }
+      ];
+    },
     metadata(gasket, meta) {
       return {
         ...meta,

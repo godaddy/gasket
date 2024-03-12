@@ -43,7 +43,6 @@ async function init({ id, config, argv }) {
       const gasket = new PluginEngine(configFile, { resolveFrom: root });
       assignPresetConfig(gasket);
       config.gasket = gasket;
-      config.gasket.command = { id, argv };
 
       // Add global options to the bin
       const globalOptions = (await gasket.exec('getCommandOptions', config))
@@ -61,6 +60,10 @@ async function init({ id, config, argv }) {
         .map(cmd => processCommand(cmd));
       commands.forEach(cmd =>
         bin.addCommand(cmd.command, { hidden: cmd.hidden, isDefault: cmd.isDefault }));
+
+      // Set the gasket command and options for lifecycles
+      // Need to define after getCommandOptions and getCommands
+      config.gasket.command = { id, argv, options: bin.opts() };
 
       // Initialize Gasket
       await gasket.exec('init');
