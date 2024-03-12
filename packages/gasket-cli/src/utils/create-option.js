@@ -11,7 +11,7 @@ function createOption(definition) {
 
   if (conflicts.length) option.conflicts(definition.conflicts);
   if (hidden) option.hideHelp();
-  if (defaultValue) option.default(defaultValue);
+  if (typeof defaultValue !== 'undefined') option.default(defaultValue);
   if (parse) option.argParser(parse);
   if (required) option.makeOptionMandatory();
   return option;
