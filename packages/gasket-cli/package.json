@@ -19,7 +19,6 @@
     "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest test/unit",
     "test:watch": "jest --watch test/unit",
     "posttest": "npm run lint",
-    "prepack": "npm run manifest",
     "test:clean": "rimraf ./test/fixtures/create/myapp"
   },
   "repository": {
