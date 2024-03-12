@@ -1,5 +1,5 @@
 const { Command } = require('commander');
-const processCommand = require('../../../src/utils/commands/process-command');
+const { processCommand } = require('../../../src/utils');
 
 describe('process-command', () => {
 
@@ -136,7 +136,7 @@ describe('process-command', () => {
     const defaultCmd = {
       id: 'default-cmd',
       description: 'test command',
-      action: () => { console.log('default-cmd output greatness');},
+      action: () => { console.log('default-cmd output greatness'); },
       default: true
     };
 

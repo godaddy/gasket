@@ -1,5 +1,6 @@
 /* eslint-disable no-undefined */
-const processOptions = require('../../../src/utils/commands/process-options');
+const { Command } = require('commander');
+const { processOptions, processCommand } = require('../../../src/utils');
 
 describe('processOptions', () => {
 
@@ -181,5 +182,34 @@ describe('processOptions', () => {
   it('allows for an empty array', () => {
     const result = processOptions([]);
     expect(result).toEqual([]);
+  });
+
+  it('throws when required option is missing', async () => {
+    const bin = (() => {
+      const program = new Command();
+      program.name('process-option-test');
+      program.exitOverride();
+      return program;
+    })();
+
+    const writeSpy = jest.spyOn(process.stderr, 'write').mockImplementation((err) => err);
+    const exitSpy = jest.spyOn(process, 'exit').mockImplementation((err) => err);
+    const mockCmd = {
+      id: 'test',
+      description: 'test command',
+      options: [{ name: 'option1', description: 'description1', required: true }],
+      action: () => { }
+    };
+    const { command } = processCommand(mockCmd);
+    bin.addCommand(command);
+
+    try {
+      await bin.parseAsync(['node', 'process-option-test', 'test']);
+    } catch (error) {
+      // ignore
+    }
+
+    expect(writeSpy).toHaveBeenCalledWith(expect.stringContaining('required option'));
+    expect(exitSpy).toHaveBeenCalledWith(1);
   });
 });

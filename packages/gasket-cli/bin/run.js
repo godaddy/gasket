@@ -2,9 +2,8 @@
 const pkg = require('../package.json');
 const { Command } = require('commander');
 const program = new Command();
-const { processCommand } = require('../src/utils/commands');
 const CreateCommand = require('../src/commands/create');
-const logo = require('../src/utils/logo');
+const { processCommand, logo } = require('../src/utils');
 const init = require('./init');
 
 // Create Gasket CLI

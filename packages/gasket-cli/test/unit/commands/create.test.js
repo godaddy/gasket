@@ -1,6 +1,6 @@
 /* eslint-disable max-statements, jest/no-conditional-expect */
 const { Command } = require('commander');
-const { processCommand } = require('../../../src/utils/commands');
+const { processCommand } = require('../../../src/utils');
 const mockDumpErrorContext = jest.fn();
 const consoleErrorStub = jest.spyOn(console, 'error').mockImplementation(() => { });
 const mockActionStubs = {
