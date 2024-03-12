@@ -7,7 +7,7 @@ project.
 
 No matter how you want to get involved, we ask that you first learn what’s
 expected of anyone who participates in the project by reading the Contribution
-Guidelines. 
+Guidelines.
 
 ## Answering Questions
 
@@ -29,6 +29,7 @@ please create a Github issue in that project. All dependencies are open source
 software and can be easily found through [npm].
 
 Submit a ticket for your issue, assuming one does not already exist:
+
 - Create it on our [Issue Tracker][issues]
 - Clearly describe the issue by following the template layout
   - Make sure to include steps to reproduce the bug.
@@ -47,6 +48,7 @@ test that reproduces a bug in just a few lines of code is easier than reasoning
 about a longer sample.
 
 From a practical perspective, contributions are as simple as:
+
 - Forking the repository on GitHub.
 - Making changes to your forked repository.
 - When committing, reference your issue (if present) and include a note about
@@ -97,6 +99,10 @@ Generally speaking, Git handles attribution automatically.
 Ensure that every function exposed by a Gasket module is documented and follows
 the standards set by [JSDoc]. Finally, please stick to the code style as defined
 by the [Godaddy JS styleguide][style].
+
+## Type Safety
+
+Please ensure that all contributed code utilizes our defined type checking method outlined in our [Type Safety with JSDoc document].
 
 ## Markdown Documentation
 
@@ -162,6 +168,7 @@ Include a LICENSE.md file and link to it.
 ```
 
 Some additional rules to note:
+
 - Examples should always use `####` heading (H4)
 - Example headings should always begin with "Example"
   - Good:
@@ -193,13 +200,14 @@ new-file.js
 example-directory-name/
 ```
 
-# Additional Resources
+## Additional Resources
 
 - [General GitHub Documentation](https://help.github.com/)
 - [GitHub Pull Request documentation](https://help.github.com/send-pull-requests/)
 - [JSDoc]
 
 [issues]: https://github.com/godaddy/gasket/issues
-[JSDoc]: http://usejsdoc.org/
+[JSDoc]: https://jsdoc.app/
 [npm]: http://npmjs.org/
 [style]: https://github.com/godaddy/javascript/#godaddy-style
+[Type Safety with JSDoc document]: https://github.com/godaddy/gasket/blob/main/docs/jsdoc-type-safety.md

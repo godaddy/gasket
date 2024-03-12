@@ -7,7 +7,9 @@ describe('@gasket/preset-nextjs', () => {
   it('imports config type injections for all plugins', () => {
     const config: GasketConfigFile = {
       http: 8080,
-      compression: true,
+      express: {
+        compression: true
+      },
       log: {
         prefix: 'my-api'
       },
