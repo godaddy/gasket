@@ -5,6 +5,7 @@
  */
 function isValidArg(arg) {
   const keys = Object.keys(arg);
+  if (arg.required && arg.default) return false;
   return keys.length &&
     keys.length <= 4 &&
     arg.name && arg.description;
