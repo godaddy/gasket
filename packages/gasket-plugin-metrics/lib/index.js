@@ -1,7 +1,8 @@
 const Metrics = require('./metrics');
+const { name } = require('../package');
 
 module.exports = {
-  name: require('../package').name,
+  name,
   dependencies: ['@gasket/plugin-metadata'],
   hooks: {
     init: {
@@ -20,6 +21,18 @@ module.exports = {
             logger.error(err.message || `${err}`);
           });
       }
+    },
+    /**
+     * Option that is applied to all commands at the `gasket` level
+     */
+    async getCommandOptions() {
+      return [
+        {
+          name: 'record',
+          description: `${name}: Whether or not to emit this command as part of Gasket's metrics lifecycle`,
+          default: true
+        }
+      ];
     },
     metadata(gasket, meta) {
       return {

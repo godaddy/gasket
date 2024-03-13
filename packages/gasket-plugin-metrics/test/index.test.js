@@ -13,6 +13,7 @@ describe('Plugin', function () {
   it('has expected hooks', () => {
     const expected = [
       'init',
+      'getCommandOptions',
       'metadata'
     ];
 
