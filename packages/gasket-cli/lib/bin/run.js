@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+// Script for instrumentation
+require('../utils/setup')();
 const pkg = require('../../package.json');
 const { Command } = require('commander');
 const program = new Command();
