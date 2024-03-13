@@ -1,8 +1,10 @@
 const mockGetGasketConfigStub = jest.fn();
 const mockAssignPresetConfigStub = jest.fn();
+const mockConstructorStub = jest.fn();
 const mockError = new Error('Bad things man.');
 const mockConfig = { mocked: true };
-const PluginEngine = require('@gasket/engine');
+const mockExecStub = jest.fn();
+const mockExecWaterfallStub = jest.fn();
 
 jest.mock('@gasket/engine');
 jest.mock('@gasket/resolve', () => ({
@@ -13,6 +15,21 @@ jest.mock('../../../lib/config/utils', () => ({
   ...jest.requireActual('../../../lib/config/utils'),
   addDefaultPlugins: jest.fn().mockReturnValue(mockConfig)
 }));
+jest.mock('@gasket/engine', () => {
+  return class PluginEngine {
+    constructor() {
+      mockConstructorStub(...arguments);
+      this.config = mockConfig;
+    }
+    async exec() {
+      return mockExecStub(...arguments);
+    }
+
+    async execWaterfall() {
+      return mockExecWaterfallStub(...arguments);
+    }
+  };
+});
 
 const initHook = require('../../../lib/bin/init');
 
@@ -22,13 +39,16 @@ describe('init hook', () => {
   beforeEach(() => {
     mockInitConfig = {
       bin: {
-        parseAsync: jest.fn()
+        parseAsync: jest.fn(),
+        opts: jest.fn().mockReturnValue({})
       },
       root: '/path/to/app',
       options: { gasketConfig: 'gasket.config' }
     };
     mockGetGasketConfigStub.mockResolvedValue(mockConfig);
     mockAssignPresetConfigStub.mockReturnValue(mockConfig);
+    mockExecStub.mockResolvedValue([]);
+    mockExecWaterfallStub.mockResolvedValue([]);
   });
 
   afterEach(function () {
@@ -61,12 +81,12 @@ describe('init hook', () => {
 
   it('instantiates plugin engine with config', async () => {
     await initHook({ id: 'build', argv: [], config: mockInitConfig });
-    expect(PluginEngine).toHaveBeenCalledWith(mockConfig, { resolveFrom: '/path/to/app' });
+    expect(mockConstructorStub).toHaveBeenCalledWith(mockConfig, { resolveFrom: '/path/to/app' });
   });
 
   it('instantiates plugin engine resolveFrom root', async () => {
     await initHook({ id: 'build', argv: [], config: mockInitConfig });
-    expect(PluginEngine).toHaveBeenCalledWith(mockConfig, { resolveFrom: '/path/to/app' });
+    expect(mockConstructorStub).toHaveBeenCalledWith(mockConfig, { resolveFrom: '/path/to/app' });
   });
 
   it('assigns config from presets', async () => {
@@ -107,5 +127,32 @@ describe('init hook', () => {
     const spy = jest.spyOn(console, 'error').mockImplementation(() => { });
     await initHook({ id: 'build', argv: [], config: mockInitConfig });
     expect(spy).toHaveBeenCalledWith(mockError, { exit: 1 });
+  });
+
+  describe('execute lifecycle hooks', () => {
+
+    it('getCommandOptions', async () => {
+      await initHook({ id: 'build', argv: [], config: mockInitConfig });
+      expect(mockExecStub).toHaveBeenCalled();
+      expect(mockExecStub.mock.calls[0][0]).toEqual('getCommandOptions');
+      expect(mockExecStub.mock.calls[0][1]).toEqual(mockInitConfig);
+    });
+
+    it('getCommands', async () => {
+      await initHook({ id: 'build', argv: [], config: mockInitConfig });
+      expect(mockExecStub.mock.calls[1][0]).toEqual('getCommands');
+      expect(mockExecStub.mock.calls[1][1]).toEqual(mockInitConfig);
+    });
+
+    it('init', async () => {
+      await initHook({ id: 'build', argv: [], config: mockInitConfig });
+      expect(mockExecStub.mock.calls[2][0]).toEqual('init');
+    });
+
+    it('configure', async () => {
+      await initHook({ id: 'build', argv: [], config: mockInitConfig });
+      expect(mockExecWaterfallStub.mock.calls[0][0]).toEqual('configure');
+      expect(mockExecWaterfallStub.mock.calls[0][1]).toEqual(mockConfig);
+    });
   });
 });
