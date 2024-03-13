@@ -1,4 +1,4 @@
-const apply = require('../../../../lib/scaffold/actions/apply-preset-config');
+const apply = require('../../../../src/scaffold/actions/apply-preset-config');
 
 describe('applyPresetConfig', function () {
   it('should not override anything if there is not a create object', function () {

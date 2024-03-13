@@ -39,7 +39,7 @@ let mockPkgs = {
   }
 };
 
-jest.mock('../../../../lib/scaffold/fetcher', () => class MockFetcher {
+jest.mock('../../../../src/scaffold/fetcher', () => class MockFetcher {
   constructor(options) {
     mockConstructorStub(...arguments);
     this.packageName = options.packageName;
@@ -61,7 +61,7 @@ jest.mock('@gasket/resolve', () => ({
   }
 }));
 
-const loadPreset = require('../../../../lib/scaffold/actions/load-preset');
+const loadPreset = require('../../../../src/scaffold/actions/load-preset');
 
 describe('loadPreset', () => {
   let mockContext;
@@ -142,14 +142,8 @@ describe('loadPreset', () => {
       mockContext.localPresets = ['../../../fixtures/gasket-preset-local', '../../../fixtures/gasket-preset-local'];
 
       await loadPreset(mockContext);
-      expect(mockContext).toHaveProperty(
-        'rawPresets',
-        ['@gasket/preset-bogus@^1.0.0', '@gasket/preset-all-i-ever-wanted@^2.0.0']
-      );
-      expect(mockContext).toHaveProperty(
-        'localPresets',
-        ['../../../fixtures/gasket-preset-local', '../../../fixtures/gasket-preset-local']
-      );
+      expect(mockContext).toHaveProperty('rawPresets', ['@gasket/preset-bogus@^1.0.0', '@gasket/preset-all-i-ever-wanted@^2.0.0']);
+      expect(mockContext).toHaveProperty('localPresets', ['../../../fixtures/gasket-preset-local', '../../../fixtures/gasket-preset-local']);
       expect(mockContext)
         .toHaveProperty('presets', ['@gasket/bogus', '@gasket/all-i-ever-wanted', 'local', 'local']);
       expect(mockContext.presetInfos).toHaveLength(4);
@@ -160,10 +154,7 @@ describe('loadPreset', () => {
       mockContext.localPresets = ['../../../fixtures/gasket-preset-local', '../../../fixtures/gasket-preset-local'];
 
       await loadPreset(mockContext);
-      expect(mockContext).toHaveProperty(
-        'rawPresets',
-        ['@gasket/preset-bogus@^1.0.0', '@gasket/preset-all-i-ever-wanted@^2.0.0']
-      );
+      expect(mockContext).toHaveProperty('rawPresets', ['@gasket/preset-bogus@^1.0.0', '@gasket/preset-all-i-ever-wanted@^2.0.0']);
       expect(mockContext)
         .toHaveProperty('localPresets', ['../../../fixtures/gasket-preset-local', '../../../fixtures/gasket-preset-local']);
       expect(mockContext)

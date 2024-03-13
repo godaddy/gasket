@@ -2,7 +2,7 @@ const mockPromptStub = jest.fn();
 
 jest.mock('inquirer', () => ({ prompt: mockPromptStub }));
 
-const globalPrompts = require('../../../../lib/scaffold/actions/global-prompts');
+const globalPrompts = require('../../../../src/scaffold/actions/global-prompts');
 
 describe('globalPrompts', () => {
   let mockContext;

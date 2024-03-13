@@ -6,7 +6,7 @@ jest.mock('fs', () => ({
   }
 }));
 
-const mkDir = require('../../../../lib/scaffold/actions/mkdir');
+const mkDir = require('../../../../src/scaffold/actions/mkdir');
 
 describe('mkdir', () => {
   let mockContext;

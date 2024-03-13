@@ -1,6 +1,6 @@
 /* eslint-disable max-statements */
 
-const ConfigBuilder = require('../../../lib/scaffold/config-builder');
+const ConfigBuilder = require('../../../src/scaffold/config-builder');
 
 const pluginOne = {
   name: 'gasket-plugin-one'

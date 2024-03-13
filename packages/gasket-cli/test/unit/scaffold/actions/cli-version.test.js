@@ -2,7 +2,7 @@
 const pkgVersion = '2.2.0';
 jest.mock('../../../../package.json', () => ({ version: pkgVersion }));
 
-const cliVersion = require('../../../../lib/scaffold/actions/cli-version');
+const cliVersion = require('../../../../src/scaffold/actions/cli-version');
 
 describe('cliVersion', () => {
   let mockContext;

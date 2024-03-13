@@ -5,10 +5,10 @@ jest.mock('fs', () => ({
     writeFile: mockWriteStub
   }
 }));
-const writeGasketConfig = require('../../../../lib/scaffold/actions/write-gasket-config');
+const writeGasketConfig = require('../../../../src/scaffold/actions/write-gasket-config');
 const JSON5 = require('json5');
 const path = require('path');
-const ConfigBuilder = require('../../../../lib/scaffold/config-builder');
+const ConfigBuilder = require('../../../../src/scaffold/config-builder');
 
 describe('write-gasket-config', () => {
   let mockContext;
