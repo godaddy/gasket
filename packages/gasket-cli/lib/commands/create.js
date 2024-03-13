@@ -30,7 +30,7 @@ const {
  */
 const commasToArray = input => input.split(',').map(name => name.trim());
 
-const CreateCommand = {
+const createCommand = {
   id: 'create',
   description: 'Create a new Gasket application',
   args: [
@@ -155,13 +155,13 @@ async function generate(context) {
 }
 
 /**
- * CreateCommand action
+ * createCommand action
  * @param {string} appname Required cmd arg - name of the app to create
  * @param {object} options cmd options
  * @param {Command} command - the command instance
  * @returns {Promise<void>} void
  */
-CreateCommand.action = async function run(appname, options, command) {
+createCommand.action = async function run(appname, options, command) {
   const argv = [appname];
   const { bootstrap: noBootstrap, generate: noGenerate } = options;
 
@@ -198,4 +198,4 @@ CreateCommand.action = async function run(appname, options, command) {
   }
 };
 
-module.exports = CreateCommand;
+module.exports = createCommand;
