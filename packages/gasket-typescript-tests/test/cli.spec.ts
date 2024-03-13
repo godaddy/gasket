@@ -1,5 +1,5 @@
 import type { Gasket, GasketConfig, Hook, MaybeAsync, Plugin } from '@gasket/engine';
-import type { Config, CreateContext } from '@gasket/cli';
+import type { Config, CreateContext } from '@gasket/cli/lib';
 
 describe('@gasket/cli', () => {
   it('defines the create lifecycle', () => {

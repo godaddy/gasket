@@ -1,4 +1,4 @@
-const { parseEnvOption, handleEnvVars } = require('../../../src/utils/env-util');
+const { parseEnvOption, handleEnvVars } = require('../../../lib/utils/env-util');
 
 describe('env-util', () => {
 

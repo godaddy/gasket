@@ -1,9 +1,9 @@
 #!/usr/bin/env node
-const pkg = require('../package.json');
+const pkg = require('../../package.json');
 const { Command } = require('commander');
 const program = new Command();
-const CreateCommand = require('../src/commands/create');
-const { processCommand, logo } = require('../src/utils');
+const CreateCommand = require('../commands/create');
+const { processCommand, logo } = require('../utils');
 const init = require('./init');
 
 // Create Gasket CLI

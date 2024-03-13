@@ -1,6 +1,6 @@
 describe('index', () => {
   it('exports expected actions', () => {
-    const actions = require('../../../../src/scaffold/actions');
+    const actions = require('../../../../lib/scaffold/actions');
 
     const expected = [
       'mkDir',

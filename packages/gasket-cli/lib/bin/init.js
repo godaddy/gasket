@@ -2,7 +2,7 @@
 /* eslint-disable max-statements */
 const debug = require('diagnostics')('gasket:cli:hooks:init');
 const { loadGasketConfigFile, assignPresetConfig } = require('@gasket/resolve');
-const { getEnvironment, addDefaultPlugins } = require('../src/config/utils');
+const { getEnvironment, addDefaultPlugins } = require('../config/utils');
 const PluginEngine = require('@gasket/engine');
 const {
   processOptions,
@@ -10,7 +10,7 @@ const {
   createOption,
   parseEnvOption,
   handleEnvVars
-} = require('../src/utils');
+} = require('../utils');
 
 /**
  * init - Initialize the Gasket CLI

@@ -1,6 +1,6 @@
 /* eslint-disable no-undefined */
 const { Command } = require('commander');
-const { processOptions, processCommand } = require('../../../src/utils');
+const { processOptions, processCommand } = require('../../../lib/utils');
 
 describe('processOptions', () => {
 
