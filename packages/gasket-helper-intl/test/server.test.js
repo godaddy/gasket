@@ -43,14 +43,14 @@ describe('LocaleUtils (Server)', function () {
     });
 
     it('returns localesProps with error for missing path', async function () {
+      const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
       const results = utils.serverLoadData('/locales/missing', 'en-US', localesParentDir);
       expect(results).toEqual({
         locale: 'en-US',
         messages: { 'en-US': {} },
         status: { '/locales/missing/en-US.json': 'error' }
       });
-      // eslint-disable-next-line no-console
-      expect(console.error).toHaveBeenCalledWith(expect.stringContaining('Cannot find module'));
+      expect(errorSpy).toHaveBeenCalledWith(expect.stringContaining('Cannot find module'));
     });
 
     it('returns localesProps for default if locale missing', async function () {

@@ -3,7 +3,6 @@ module.exports = function sharedTests(UtilClass) {
   let utils, mockConfig;
 
   beforeEach(function () {
-    jest.spyOn(console, 'error');
     mockConfig = {
       manifest: require('./fixtures/mock-manifest.json')
     };
@@ -12,6 +11,7 @@ module.exports = function sharedTests(UtilClass) {
 
   afterEach(function () {
     jest.resetModules();
+    jest.restoreAllMocks();
   });
 
   describe('.formatLocalePath', function () {
@@ -161,6 +161,16 @@ module.exports = function sharedTests(UtilClass) {
       const results = utils.getLocalePath(mockThunk, 'en-US', mockContext);
       expect(results).toEqual('/bogus/locales/en-US.json');
       expect(mockThunk).toHaveBeenCalled();
+    });
+
+    it('handles missing manifest paths', function () {
+      utils = new UtilClass({
+        manifest: {
+          defaultLocale: 'fake'
+        }
+      });
+      const results = utils.getLocalePath('/locales', 'da-DK');
+      expect(results).toEqual('/locales/da-DK.json');
     });
   });
 };
