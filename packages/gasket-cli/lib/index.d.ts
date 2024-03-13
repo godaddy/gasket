@@ -3,20 +3,38 @@ import type { PackageManager } from '@gasket/utils';
 import type { Command } from 'commander';
 
 export interface Config {
+  /* Commander instance */
   bin: Command;
+
+  /* Root directory of the CLI */
   root: string;
+
+  /* CLI Options */
   options: Record<string, any>;
   [key: string]: any;
 }
 
 export interface CLICommand {
+  /* Command id/name */
   id: string;
+
+  /* Command description */
   description: string;
+
+  /* Command arguments */
   args?: Array<CLICommandArg>;
+
+  /* Command options */
   options?: Array<CLICommandOption>;
+
+  /* Command action handler */
   action: (...args: any[]) => MaybeAsync<void>;
-  hidden?: boolean; // Hide from help output
-  default?: boolean; // Default command to run if no command is provided
+
+  /* Hide from help output */
+  hidden?: boolean;
+
+  /* Default command to run if no command is provided */
+  default?: boolean;
 }
 
 export interface ProccesedCLICommand {
@@ -27,9 +45,16 @@ export interface ProccesedCLICommand {
 
 // Default cannot be used when required is true
 export type CLICommandArg = {
+  /* Argument name */
   name: string;
+
+  /* Argument description */
   description: string;
+
+  /* Is the argument required */
   required?: true;
+
+  /* Default value for the argument - never if required is true*/
   default?: never;
 } | {
   name: string;
@@ -41,15 +66,32 @@ export type CLICommandArg = {
 export type ProccesedCLICommandArg = Array<string | boolean>;
 
 export interface CLICommandOption {
+  /* Long option name */
   name: string;
+
+  /* Option description */
   description: string;
+
+  /* Is the option required */
   required?: boolean;
+
+  /* Short option name */
   short?: string;
+
+  /* Function to parse the option value */
   parse?: (value: string) => any;
+
+  /* Default is always string - boolean changes the format of the option */
   type?: 'string' | 'boolean';
-  conflicts?: Array<string>; // list of option names that cannot be used together
-  hidden?: boolean; // Hide from command help output
-  default?: any; // default value
+
+  /* list of option names that cannot be used together */
+  conflicts?: Array<string>;
+
+  /* Hide from command help output */
+  hidden?: boolean;
+
+  /* Default option value */
+  default?: any;
 }
 
 export interface ProccesedCLICommandOption {
@@ -169,9 +211,6 @@ export interface CreateContext {
 
   /** Local packages that should be linked */
   pkgLinks: Array<string>;
-
-  /** Path to npmconfig file */
-  npmconfig: string;
 
   /** non-error/warning messages to report */
   messages: Array<string>;
