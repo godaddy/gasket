@@ -1,5 +1,9 @@
 # `@gasket/plugin-https`
 
+### 6.46.4
+
+- Adjust JSDocs and TS types ([#695])
+
 ### 6.44.0
 
 - Better surfacing of server startup errors ([#634])
@@ -93,6 +97,7 @@
 [#442]: https://github.com/godaddy/gasket/pull/442
 [#460]: https://github.com/godaddy/gasket/pull/460
 [#634]: https://github.com/godaddy/gasket/pull/634
+[#695]: https://github.com/godaddy/gasket/pull/695
 
 [terminus]: https://github.com/godaddy/terminus
 [create-servers]: https://github.com/http-party/create-servers

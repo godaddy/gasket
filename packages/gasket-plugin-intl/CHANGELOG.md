@@ -1,5 +1,9 @@
 # `@gasket/plugin-intl`
 
+### 6.46.4
+
+- Fix for missing manifest paths ([#701])
+
 ### 6.46.3
 
 - Only config webpack with add env vars for server bundles ([#696])
@@ -231,3 +235,4 @@
 [#670]: https://github.com/godaddy/gasket/pull/670
 [#676]: https://github.com/godaddy/gasket/pull/676
 [#696]: https://github.com/godaddy/gasket/pull/696
+[#701]: https://github.com/godaddy/gasket/pull/701

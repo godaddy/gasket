@@ -1,6 +1,8 @@
 # `@gasket/plugin-elastic-apm`
 
-- (fix) handle case when APM is not available
+### 6.46.4
+
+- Fix to handle case when APM is not available ([#697])
 
 ### 6.46.2
 
@@ -52,3 +54,4 @@
 [#457]: https://github.com/godaddy/gasket/pull/457
 [#670]: https://github.com/godaddy/gasket/pull/670
 [#692]: https://github.com/godaddy/gasket/pull/692
+[#697]: https://github.com/godaddy/gasket/pull/697

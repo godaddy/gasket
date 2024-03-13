@@ -1,5 +1,9 @@
 # `@gasket/plugin-analyze`
 
+### 6.46.4
+
+- Adjust JSDocs and TS types ([#695])
+
 ### 6.45.2
 
 - Add `cross-env`, adjust test script, remove `eslint-plugin-mocha` ([#670])
@@ -68,3 +72,4 @@
 [#436]: https://github.com/godaddy/gasket/pull/436
 [#457]: https://github.com/godaddy/gasket/pull/457
 [#670]: https://github.com/godaddy/gasket/pull/670
+[#695]: https://github.com/godaddy/gasket/pull/695
