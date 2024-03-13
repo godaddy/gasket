@@ -27,10 +27,15 @@ describe('webpackConfig', function () {
     });
   });
 
-  it('does NOT add EnvironmentPlugin for client', function () {
+  it('does NOT add GASKET_INTL_LOCALES_DIR for client', function () {
     const results = hook(mockGasket, mockConfig, { webpack });
     expect(results).toHaveProperty('plugins');
-    expect(results.plugins).toHaveLength(0);
+    expect(results.plugins).toHaveLength(1);
+    expect(results.plugins[0]).toBeInstanceOf(webpack.EnvironmentPlugin);
+    expect(results.plugins[0]).toEqual({
+      keys: ['GASKET_INTL_MANIFEST_FILE'],
+      defaultValues: {}
+    });
   });
 
   it('merges with existing plugins', function () {
@@ -59,6 +64,13 @@ describe('webpackConfig', function () {
     const results = hook(mockGasket, mockConfig, { webpack, isServer: true });
     expect(results).toHaveProperty('plugins');
     expect(results.plugins).toHaveLength(2);
+
+    expect(results.plugins[0]).toBeInstanceOf(webpack.EnvironmentPlugin);
+    expect(results.plugins[0]).toEqual({
+      keys: ['GASKET_BOGUS'],
+      defaultValues: {}
+    });
+
     expect(results.plugins[1]).toBeInstanceOf(webpack.EnvironmentPlugin);
     expect(results.plugins[1]).toEqual({
       keys: ['GASKET_INTL_LOCALES_DIR', 'GASKET_INTL_MANIFEST_FILE'],

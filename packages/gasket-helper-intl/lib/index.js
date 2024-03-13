@@ -121,7 +121,7 @@ const trim = localePath => localePath.replace(reLeadingSlash, '');
 function LocaleUtils(config) {
   const { manifest, debug = () => {} } = config;
   const { basePath = manifest.basePath } = config;
-  const { defaultLocale = 'en', localesMap, paths, locales } = manifest;
+  const { defaultLocale = 'en', localesMap, paths = {}, locales } = manifest;
   const defaultLang = defaultLocale.split('-')[0];
 
   /**
