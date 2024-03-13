@@ -1,5 +1,9 @@
 # `@gasket/plugin-nextjs`
 
+### 6.46.4
+
+- Adjust JSDocs and TS types ([#695])
+
 ### 6.46.1
 
 - Adjust generated page tests for initial flexibility ([#678])
@@ -252,3 +256,4 @@
 [#670]: https://github.com/godaddy/gasket/pull/670
 [#678]: https://github.com/godaddy/gasket/pull/678
 [#679]: https://github.com/godaddy/gasket/pull/679
+[#695]: https://github.com/godaddy/gasket/pull/695
