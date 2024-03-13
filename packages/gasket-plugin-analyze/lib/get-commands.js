@@ -5,13 +5,11 @@
  * @returns {GasketCommand} command
  */
 module.exports = function getCommands(gasket) {
-  const AnalyzeCommand = {
+  return {
     id: 'analyze',
     description: 'Analyze application code bundles',
     action: async function () {
       await gasket.exec('build');
     }
   };
-
-  return AnalyzeCommand;
 };

@@ -9,7 +9,7 @@ const generateIndex = require('./utils/generate-index');
  * @returns {GasketCommand} command
  */
 module.exports = function getCommands(gasket) {
-  const DocsCommand = {
+  return {
     id: 'docs',
     description: 'Generate docs for the app',
     options: [
@@ -43,6 +43,4 @@ module.exports = function getCommands(gasket) {
       }
     }
   };
-
-  return DocsCommand;
 };
