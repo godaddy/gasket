@@ -1,5 +1,9 @@
 # `@gasket/plugin-express`
 
+### 6.46.4
+
+- Adjust JSDocs and TS types ([#695])
+ 
 ### 6.46.0
 
 - Add native Gasket trust proxy support to Express config ([#675])
@@ -90,3 +94,4 @@
 [#637]: https://github.com/godaddy/gasket/pull/637
 [#670]: https://github.com/godaddy/gasket/pull/670
 [#675]: https://github.com/godaddy/gasket/pull/675
+[#695]: https://github.com/godaddy/gasket/pull/695

@@ -1,5 +1,9 @@
 # `@gasket/helper-intl`
 
+### 6.46.4
+
+- Fix for missing manifest paths ([#701])
+
 ### 6.45.2
 
 - Remove `setup-env` ([#670])
@@ -56,3 +60,4 @@
 [#459]: https://github.com/godaddy/gasket/pull/459
 [#460]: https://github.com/godaddy/gasket/pull/460
 [#670]: https://github.com/godaddy/gasket/pull/670
+[#701]: https://github.com/godaddy/gasket/pull/701
