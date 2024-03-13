@@ -14,7 +14,7 @@ export interface Config {
   [key: string]: any;
 }
 
-export interface CLICommand {
+export interface GasketCommandDefinition {
   /* Command id/name */
   id: string;
 
@@ -22,10 +22,10 @@ export interface CLICommand {
   description: string;
 
   /* Command arguments */
-  args?: Array<CLICommandArg>;
+  args?: Array<GasketArgDefinition>;
 
   /* Command options */
-  options?: Array<CLICommandOption>;
+  options?: Array<GasketOptionDefinition>;
 
   /* Command action handler */
   action: (...args: any[]) => MaybeAsync<void>;
@@ -37,14 +37,14 @@ export interface CLICommand {
   default?: boolean;
 }
 
-export interface ProccesedCLICommand {
+export interface GasketCommand {
   command: Command;
   hidden: boolean;
   isDefault: boolean;
 }
 
 // Default cannot be used when required is true
-export type CLICommandArg = {
+export type GasketArgDefinition = {
   /* Argument name */
   name: string;
 
@@ -63,9 +63,9 @@ export type CLICommandArg = {
   default?: any;
 };
 
-export type ProccesedCLICommandArg = Array<string | boolean>;
+export type GasketCommandArg = Array<string | boolean>;
 
-export interface CLICommandOption {
+export interface GasketOptionDefinition {
   /* Long option name */
   name: string;
 
@@ -94,7 +94,7 @@ export interface CLICommandOption {
   default?: any;
 }
 
-export interface ProccesedCLICommandOption {
+export interface GasketCommandOption {
   options: Array<string>;
   conflicts: Array<string>;
   hidden: boolean;
@@ -288,9 +288,9 @@ export interface CreateContext {
 
 declare module '@gasket/engine' {
   export interface HookExecTypes {
-    getCommandOptions(config: Config): MaybeAsync<Array<CLICommandOption>>;
+    getCommandOptions(config: Config): MaybeAsync<Array<GasketOptionDefinition>>;
 
-    getCommands(config: Config): MaybeAsync<Array<CLICommand> | CLICommand>;
+    getCommands(config: Config): MaybeAsync<Array<GasketCommandDefinition> | GasketCommandDefinition>;
 
     prompt(
       context: CreateContext,
