@@ -1,5 +1,3 @@
-/* eslint-disable spaced-comment */
-/// <reference types="@gasket/cli" />
 /**
  * Get the build, start, and local commands
  *
@@ -7,7 +5,7 @@
  * @returns {CLICommand[]} commands
  */
 module.exports = function getCommands(gasket) {
-  const BuildCommand = {
+  const buildCommand = {
     id: 'build',
     description: 'Prepare your app',
     options: [
@@ -28,7 +26,7 @@ module.exports = function getCommands(gasket) {
     }
   };
 
-  const StartCommand = {
+  const startCommand = {
     id: 'start',
     description: 'Start your app',
     options: [
@@ -45,7 +43,7 @@ module.exports = function getCommands(gasket) {
   };
 
 
-  const LocalCommand = {
+  const localCommand = {
     id: 'local',
     description: 'Build then start your app in local environment',
     options: [
@@ -64,8 +62,8 @@ module.exports = function getCommands(gasket) {
   };
 
   return [
-    BuildCommand,
-    StartCommand,
-    LocalCommand
+    buildCommand,
+    startCommand,
+    localCommand
   ];
 };
