@@ -214,7 +214,7 @@ function LocaleUtils(config) {
 
     while (fallbackLocale != null) {
       const localePath = this.formatLocalePath(resolvedLocalePathPart, fallbackLocale);
-      if (trim(localePath) in paths) {
+      if (paths && trim(localePath) in paths) {
         debug(`Locale file for ${locale} is ${localePath}`);
         return localePath;
       }
