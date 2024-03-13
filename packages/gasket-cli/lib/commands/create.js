@@ -98,13 +98,6 @@ const createCommand = {
       hidden: true
     },
     {
-      name: 'npmconfig',
-      description: `(DEPRECATED) .npmrc to be used for npm actions in @gasket/cli'.
-      Instead, prefer environment variables to configure package managers
-      `,
-      hidden: true
-    },
-    {
       name: 'config',
       description: 'JSON object that provides the values for any interactive prompts'
     },
