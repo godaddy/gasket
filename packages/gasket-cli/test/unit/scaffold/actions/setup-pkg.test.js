@@ -11,8 +11,8 @@ jest.mock('@gasket/utils', () => ({
   PackageManager: MockPackageManager
 }));
 
-const setupPkg = require('../../../../src/scaffold/actions/setup-pkg');
-const ConfigBuilder = require('../../../../src/scaffold/config-builder');
+const setupPkg = require('../../../../lib/scaffold/actions/setup-pkg');
+const ConfigBuilder = require('../../../../lib/scaffold/config-builder');
 
 
 describe('setupPkg', () => {
