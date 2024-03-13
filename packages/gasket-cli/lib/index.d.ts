@@ -2,7 +2,6 @@ import type { GasketConfigFile, MaybeAsync } from '@gasket/engine';
 import type { PackageManager } from '@gasket/utils';
 import type { Command } from 'commander';
 
-// ------ START OF CLI TYPES ------
 export interface Config {
   bin: Command;
   root: string;
@@ -61,8 +60,6 @@ export interface ProccesedCLICommandOption {
   parse: (value: string) => any | undefined;
   required: boolean;
 }
-
-// ------ END OF CLI TYPES ------
 
 export interface Dependencies {
   dependencies?: Record<string, string>;
