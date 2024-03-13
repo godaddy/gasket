@@ -1,6 +1,68 @@
 import type { GasketConfigFile, MaybeAsync } from '@gasket/engine';
 import type { PackageManager } from '@gasket/utils';
-import type { Config } from '@oclif/config';
+import type { Command } from 'commander';
+
+// ------ START OF CLI TYPES ------
+export interface Config {
+  bin: Command;
+  root: string;
+  options: Record<string, any>;
+  [key: string]: any;
+}
+
+export interface CLICommand {
+  id: string;
+  description: string;
+  args?: Array<CLICommandArg>;
+  options?: Array<CLICommandOption>;
+  action: (...args: any[]) => MaybeAsync<void>;
+  hidden?: boolean; // Hide from help output
+  default?: boolean; // Default command to run if no command is provided
+}
+
+export interface ProccesedCLICommand {
+  command: Command;
+  hidden: boolean;
+  isDefault: boolean;
+}
+
+// Default cannot be used when required is true
+export type CLICommandArg = {
+  name: string;
+  description: string;
+  required?: true;
+  default?: never;
+} | {
+  name: string;
+  description: string;
+  required?: false;
+  default?: any;
+};
+
+export type ProccesedCLICommandArg = Array<string | boolean>;
+
+export interface CLICommandOption {
+  name: string;
+  description: string;
+  required?: boolean;
+  short?: string;
+  parse?: (value: string) => any;
+  type?: 'string' | 'boolean';
+  conflicts?: Array<string>; // list of option names that cannot be used together
+  hidden?: boolean; // Hide from command help output
+  default?: any; // default value
+}
+
+export interface ProccesedCLICommandOption {
+  options: Array<string>;
+  conflicts: Array<string>;
+  hidden: boolean;
+  defaultValue: any | undefined;
+  parse: (value: string) => any | undefined;
+  required: boolean;
+}
+
+// ------ END OF CLI TYPES ------
 
 export interface Dependencies {
   dependencies?: Record<string, string>;
@@ -14,8 +76,8 @@ export interface PackageJson extends Dependencies {
   description?: string;
   license?: string;
   repository?:
-    | string
-    | {
+  | string
+  | {
     type: 'git';
     url: string;
   };
@@ -111,6 +173,9 @@ export interface CreateContext {
   /** Local packages that should be linked */
   pkgLinks: Array<string>;
 
+  /** Path to npmconfig file */
+  npmconfig: string;
+
   /** non-error/warning messages to report */
   messages: Array<string>;
 
@@ -187,12 +252,14 @@ export interface CreateContext {
 
 declare module '@gasket/engine' {
   export interface HookExecTypes {
-    initOclif(args: { oclifConfig: Config }): MaybeAsync<void>;
+    getCommandOptions(config: Config): MaybeAsync<Array<CLICommandOption>>;
+
+    getCommands(config: Config): MaybeAsync<Array<CLICommand> | CLICommand>;
 
     prompt(
       context: CreateContext,
       utils: {
-        prompt: (prompts: Array<Record<string, any>>) => Promise<Record<string,any>>,
+        prompt: (prompts: Array<Record<string, any>>) => Promise<Record<string, any>>,
         addPlugins: (plugins: Array<string>) => Promise<void>
       }
     ): MaybeAsync<CreateContext>;

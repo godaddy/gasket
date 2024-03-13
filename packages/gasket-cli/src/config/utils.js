@@ -4,17 +4,17 @@ const defaultPlugins = require('./default-plugins');
 const debug = require('diagnostics')('gasket:cli:config:utils');
 
 /**
- * Returns specified env flag if set or appropriate fallback
+ * Returns specified env option if set or appropriate fallback
  *
- * @param {Object} flags - CLI Flag
+ * @param {Object} options - CLI Option
  * @param {string} commandId - Name of the command
  * @param {function} warn - Warning logger
  * @returns {string} environment
  */
-function getEnvironment(flags, commandId, warn) {
-  if (flags.env) {
-    debug('Environment was passed through command line flags', flags.env);
-    return flags.env;
+function getEnvironment(options, commandId, warn) {
+  if (options.env) {
+    debug('Environment was passed through command line options', options.env);
+    return options.env;
   }
 
   // special snowflake case to match up `local` env with command unless set
