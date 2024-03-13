@@ -189,6 +189,22 @@ describe('makeCreateContext', () => {
     expect(results.localPresets).toEqual([]);
   });
 
+  it('uses npmconfig from flags', () => {
+    results = makeCreateContext(argv, { npmconfig: '/some/path/to/npmconfig', presets: ['@gasket/nextjs'] });
+    expect(results.npmconfig).toEqual('/some/path/to/npmconfig');
+  });
+
+  it('npmconfig is always absolute', () => {
+    results = makeCreateContext(argv, { npmconfig: '~/.npmconfig', presets: ['nextjs'] });
+    expect(results.npmconfig).toContain('/.npmconfig');
+    expect(path.isAbsolute(results.npmconfig)).toBeTruthy();
+  });
+
+  it('handles if npmconfig if not set', () => {
+    results = makeCreateContext(argv, { presets: ['nextjs'] });
+    expect(results.npmconfig).toBeFalsy();
+  });
+
   it('sets cwd from process', () => {
     results = makeCreateContext(argv, flags);
     expect(results.cwd).toEqual(process.cwd());
