@@ -1,5 +1,5 @@
 import type { Gasket, GasketConfig, Hook, MaybeAsync, Plugin } from '@gasket/engine';
-import type { Config, CreateContext } from '@gasket/cli';
+import type { CLICommand, Config, CreateContext } from '@gasket/cli';
 
 describe('@gasket/cli', () => {
   it('defines the create lifecycle', () => {
@@ -30,7 +30,7 @@ describe('@gasket/cli', () => {
     const hook: Hook<'getCommands'> = async (gasket: Gasket, config: Config) => {
       return [
         {
-          name: 'my-command',
+          id: 'my-command',
           description: 'My command description',
           action: async (...args: any[]) => {
             // ...
@@ -38,6 +38,7 @@ describe('@gasket/cli', () => {
         }
       ];
     };
+
   });
 
   it('defines the getCommandOptions hook', () => {
