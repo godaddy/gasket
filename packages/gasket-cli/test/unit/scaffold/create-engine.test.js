@@ -1,7 +1,7 @@
 const mockConstructorStub = jest.fn();
 
 const path = require('path');
-const defaultPlugins = require('../../../src/config/default-plugins');
+const defaultPlugins = require('../../../lib/config/default-plugins');
 
 jest.mock('@gasket/engine', () => {
   return class PluginEngine {
@@ -12,7 +12,7 @@ jest.mock('@gasket/engine', () => {
   };
 });
 
-const createEngine = require('../../../src/scaffold/create-engine');
+const createEngine = require('../../../lib/scaffold/create-engine');
 
 describe('createEngine', () => {
   let mockOpts;

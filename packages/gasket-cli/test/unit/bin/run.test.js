@@ -26,10 +26,10 @@ const mockCreateCommand = {
   action: jest.fn()
 };
 
-jest.mock('../../../bin/init', () => mockInit);
+jest.mock('../../../lib/bin/init', () => mockInit);
 jest.mock('../../../package.json', () => ({ description: 'mockDescription', version: 'mockVersion' }));
-jest.mock('../../../src/commands/create', () => mockCreateCommand);
-jest.mock('../../../src/utils', () => ({
+jest.mock('../../../lib/commands/create', () => mockCreateCommand);
+jest.mock('../../../lib/utils', () => ({
   processCommand: mockProcessCommand.mockReturnValue('mockCommand')
 }));
 jest.mock('commander', () => ({
@@ -60,39 +60,39 @@ describe('run', () => {
   });
 
   it('creates program', async () => {
-    await require('../../../bin/run');
+    await require('../../../lib/bin/run');
     expect(Command).toHaveBeenCalled();
   });
 
   it('defines gasketBin', async () => {
-    await require('../../../bin/run');
+    await require('../../../lib/bin/run');
     expect(mockNameMethod).toHaveBeenCalledWith('gasket');
     expect(mockDescriptionMethod).toHaveBeenCalledWith('mockDescription');
     expect(mockVersionMethod).toHaveBeenCalledWith('mockVersion');
   });
 
   it('adds create command', async () => {
-    await require('../../../bin/run');
+    await require('../../../lib/bin/run');
     expect(mockProcessCommand).toHaveBeenCalledWith(mockCreateCommand);
     expect(mockAddCommand).toHaveBeenCalled();
   });
 
   it('exits early for create command', async () => {
     jest.replaceProperty(process, 'argv', ['node', 'gasket', 'create']);
-    await require('../../../bin/run');
+    await require('../../../lib/bin/run');
     expect(mockParseAsync).toHaveBeenCalled();
     expect(mockInit).not.toHaveBeenCalled();
   });
 
   it('calls init for other commands', async () => {
     jest.replaceProperty(process, 'argv', ['node', 'gasket', 'build']);
-    await require('../../../bin/run');
+    await require('../../../lib/bin/run');
     expect(mockInit).toHaveBeenCalled();
   });
 
   it('passes args to init', async () => {
     jest.replaceProperty(process, 'argv', ['node', 'gasket', 'build']);
-    await require('../../../bin/run');
+    await require('../../../lib/bin/run');
     expect(mockInit).toHaveBeenCalledWith({
       id: 'build',
       config: {

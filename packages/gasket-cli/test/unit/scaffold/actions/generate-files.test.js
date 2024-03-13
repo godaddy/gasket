@@ -31,7 +31,7 @@ jest.mock('glob', () => {
 });
 
 const path = require('path');
-const generateFiles = require('../../../../src/scaffold/actions/generate-files');
+const generateFiles = require('../../../../lib/scaffold/actions/generate-files');
 const fixtures = path.resolve(__dirname, '..', '..', '..', 'fixtures');
 const glob = require('glob');
 const fs = require('fs');

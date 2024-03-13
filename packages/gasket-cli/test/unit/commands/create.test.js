@@ -1,6 +1,6 @@
 /* eslint-disable max-statements, jest/no-conditional-expect */
 const { Command } = require('commander');
-const { processCommand } = require('../../../src/utils');
+const { processCommand } = require('../../../lib/utils');
 const mockDumpErrorContext = jest.fn();
 const consoleErrorStub = jest.spyOn(console, 'error').mockImplementation(() => { });
 const mockActionStubs = {
@@ -27,10 +27,10 @@ mockActionStubs.installModules.update = jest.fn();
 mockActionStubs.linkModules.update = jest.fn();
 
 jest.mock('ora', () => () => ({ warn: jest.fn() }));
-jest.mock('../../../src/scaffold/dump-error-context', () => mockDumpErrorContext);
-jest.mock('../../../src/scaffold/actions', () => mockActionStubs);
+jest.mock('../../../lib/scaffold/dump-error-context', () => mockDumpErrorContext);
+jest.mock('../../../lib/scaffold/actions', () => mockActionStubs);
 
-const CreateCommand = require('../../../src/commands/create');
+const CreateCommand = require('../../../lib/commands/create');
 
 describe('create', function () {
   let cmdOptions;

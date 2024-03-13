@@ -9,7 +9,7 @@ jest.mock('fs', () => ({
 }));
 
 const path = require('path');
-const dumpErrorContext = require('../../../src/scaffold/dump-error-context');
+const dumpErrorContext = require('../../../lib/scaffold/dump-error-context');
 
 describe('dumpErrorContext', () => {
   let mockContext, mockError;

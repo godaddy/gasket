@@ -1,4 +1,4 @@
-const { logo } = require('../../../src/utils');
+const { logo } = require('../../../lib/utils');
 
 describe('logo', () => {
 

@@ -13,8 +13,8 @@ jest.mock('fs', () => ({
   }
 }));
 
-const utils = require('../../../src/config/utils');
-const defaultPlugins = require('../../../src/config/default-plugins');
+const utils = require('../../../lib/config/utils');
+const defaultPlugins = require('../../../lib/config/default-plugins');
 
 describe('config utils', () => {
   let flags, env, commandId;

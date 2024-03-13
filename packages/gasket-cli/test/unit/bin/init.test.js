@@ -1,6 +1,5 @@
 const mockGetGasketConfigStub = jest.fn();
 const mockAssignPresetConfigStub = jest.fn();
-const mockParseStub = jest.fn();
 const mockError = new Error('Bad things man.');
 const mockConfig = { mocked: true };
 const PluginEngine = require('@gasket/engine');
@@ -10,12 +9,12 @@ jest.mock('@gasket/resolve', () => ({
   loadGasketConfigFile: mockGetGasketConfigStub,
   assignPresetConfig: mockAssignPresetConfigStub
 }));
-jest.mock('../../../src/config/utils', () => ({
-  ...jest.requireActual('../../../src/config/utils'),
+jest.mock('../../../lib/config/utils', () => ({
+  ...jest.requireActual('../../../lib/config/utils'),
   addDefaultPlugins: jest.fn().mockReturnValue(mockConfig)
 }));
 
-const initHook = require('../../../bin/init');
+const initHook = require('../../../lib/bin/init');
 
 describe('init hook', () => {
   let mockInitConfig;
@@ -30,7 +29,6 @@ describe('init hook', () => {
     };
     mockGetGasketConfigStub.mockResolvedValue(mockConfig);
     mockAssignPresetConfigStub.mockReturnValue(mockConfig);
-    mockParseStub.mockReturnValue({ flags: { root: '/path/to/app', config: 'gasket.config' } });
   });
 
   afterEach(function () {

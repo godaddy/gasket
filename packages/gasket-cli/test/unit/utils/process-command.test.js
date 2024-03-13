@@ -1,5 +1,5 @@
 const { Command } = require('commander');
-const { processCommand } = require('../../../src/utils');
+const { processCommand } = require('../../../lib/utils');
 
 describe('process-command', () => {
 

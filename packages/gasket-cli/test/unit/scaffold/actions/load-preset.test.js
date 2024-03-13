@@ -39,7 +39,7 @@ let mockPkgs = {
   }
 };
 
-jest.mock('../../../../src/scaffold/fetcher', () => class MockFetcher {
+jest.mock('../../../../lib/scaffold/fetcher', () => class MockFetcher {
   constructor(options) {
     mockConstructorStub(...arguments);
     this.packageName = options.packageName;
@@ -61,7 +61,7 @@ jest.mock('@gasket/resolve', () => ({
   }
 }));
 
-const loadPreset = require('../../../../src/scaffold/actions/load-preset');
+const loadPreset = require('../../../../lib/scaffold/actions/load-preset');
 
 describe('loadPreset', () => {
   let mockContext;

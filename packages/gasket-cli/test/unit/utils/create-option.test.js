@@ -1,4 +1,4 @@
-const { createOption } = require('../../../src/utils');
+const { createOption } = require('../../../lib/utils');
 
 describe('createOption', () => {
 

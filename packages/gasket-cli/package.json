@@ -2,15 +2,14 @@
   "name": "@gasket/cli",
   "version": "6.46.2",
   "description": "CLI for rapid application development with gasket",
-  "main": "src/index.js",
+  "main": "lib/index.js",
   "bin": {
-    "gasket": "./bin/boot.js"
+    "gasket": "./lib/bin/boot.js"
   },
-  "types": "src/index.d.ts",
+  "types": "lib/index.d.ts",
   "files": [
     "docs",
-    "bin",
-    "src"
+    "lib"
   ],
   "scripts": {
     "lint": "eslint .",
