@@ -1,5 +1,11 @@
 # `@gasket/plugin-metadata`
 
+### 6.46.4
+
+- Adjust JSDocs and TS types ([#695])
+
+### 6.41.1
+
 - Docs on accessing `gasket.metadata` ([#613])
 
 ### 6.39.2
@@ -67,6 +73,7 @@
 [#498]: https://github.com/godaddy/gasket/pull/498
 [#597]: https://github.com/godaddy/gasket/pull/597
 [#613]: https://github.com/godaddy/gasket/pull/613
+[#695]: https://github.com/godaddy/gasket/pull/695
 
 [Loader]:/packages/gasket-resolve/docs/api.md#loader
 [PluginInfo]:/packages/gasket-resolve/docs/api.md#plugininfo

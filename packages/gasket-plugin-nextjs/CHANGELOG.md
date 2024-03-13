@@ -3,6 +3,15 @@
 - Removed support for deprecated `next` config support ([#655])
 - With Redux, generate _app with example `getInitialAppProps` ([#693])
 
+### 6.46.4
+
+- Adjust JSDocs and TS types ([#695])
+
+### 6.46.1
+
+- Adjust generated page tests for initial flexibility ([#678])
+- Use `req.path` instead of `req.url` in path matching in `getNextRoute` ([#679])
+
 ### 6.45.2
 
 - Add `peerDeps` ([#670])
@@ -249,4 +258,7 @@
 [#614]: https://github.com/godaddy/gasket/pull/614
 [#655]: https://github.com/godaddy/gasket/pull/655
 [#670]: https://github.com/godaddy/gasket/pull/670
+[#678]: https://github.com/godaddy/gasket/pull/678
+[#679]: https://github.com/godaddy/gasket/pull/679
+[#695]: https://github.com/godaddy/gasket/pull/695
 [#693]: https://github.com/godaddy/gasket/pull/693
