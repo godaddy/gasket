@@ -1,5 +1,9 @@
 # `@gasket/plugin-intl`
 
+### 6.46.3
+
+- Only config webpack with add env vars for server bundles ([#696])
+
 ### 6.46.0
 
 - Fix to nested module.localesDir lookup ([#676]) 
@@ -226,3 +230,4 @@
 [#593]: https://github.com/godaddy/gasket/pull/593
 [#670]: https://github.com/godaddy/gasket/pull/670
 [#676]: https://github.com/godaddy/gasket/pull/676
+[#696]: https://github.com/godaddy/gasket/pull/696

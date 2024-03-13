@@ -254,7 +254,7 @@ declare module '@gasket/engine' {
   export interface HookExecTypes {
     getCommandOptions(config: Config): MaybeAsync<Array<CLICommandOption>>;
 
-    getCommands(config: Config): MaybeAsync<Array<Record<string, any>>>;
+    getCommands(config: Config): MaybeAsync<Array<CLICommand> | CLICommand>;
 
     prompt(
       context: CreateContext,

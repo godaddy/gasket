@@ -62,7 +62,7 @@ const errorLoggingClient = require('some-error-logger');
 // Sample plugin
 module.exports = {
   hooks: {
-    errorMiddleware(gasket, app) {
+    errorMiddleware(gasket) {
       return async (err, req, res, next) => {
         try {
           await errorLoggingClient.logError(err, req);

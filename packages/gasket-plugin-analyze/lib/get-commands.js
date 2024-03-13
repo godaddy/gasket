@@ -1,8 +1,10 @@
+/// <reference types="@gasket/cli" />
+/// <reference types="@gasket/plugin-start" />
+
 /**
  * Get the analyze command
  *
- * @param {Gasket} gasket - Gasket
- * @returns {GasketCommand} command
+ * @type {import('@gasket/engine').HookHandler<'getCommands'>}
  */
 module.exports = function getCommands(gasket) {
   const AnalyzeCommand = {

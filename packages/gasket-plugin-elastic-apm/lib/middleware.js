@@ -21,7 +21,7 @@ const { callbackify } = require('util');
 async function customizeTransaction(gasket, req, res) {
   const apm = gasket.apm;
 
-  if (!apm.isStarted()) {
+  if (!apm?.isStarted()) {
     return;
   }
 
@@ -33,6 +33,8 @@ async function customizeTransaction(gasket, req, res) {
   await gasket.exec('apmTransaction', transaction, { req, res });
 }
 
-module.exports = (gasket) => [
-  callbackify(async (req, res) => customizeTransaction(gasket, req, res))
-];
+module.exports = (gasket) => {
+  return gasket.apm
+    ? [callbackify(async (req, res) => customizeTransaction(gasket, req, res))]
+    : [];
+};

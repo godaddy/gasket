@@ -5,13 +5,17 @@ import '@gasket/plugin-express';
 describe('@gasket/plugin-express', () => {
   it('adds a compression config property', () => {
     const config: GasketConfigFile = {
-      compression: false
+      express: {
+        compression: false
+      }
     };
   });
 
   it('adds an excludedRoutesRegex config property', () => {
     const config: GasketConfigFile = {
-      excludedRoutesRegex: /^(?!\/_next\/)/
+      express: {
+        excludedRoutesRegex: /^(?!\/_next\/)/
+      }
     };
   });
 
@@ -22,7 +26,9 @@ describe('@gasket/plugin-express', () => {
     };
 
     const goodConfig: GasketConfigFile = {
-      middlewareInclusionRegex: /^(?!\/_next\/)/
+      express: {
+        middlewareInclusionRegex: /^(?!\/_next\/)/
+      }
     };
   });
 
@@ -33,7 +39,9 @@ describe('@gasket/plugin-express', () => {
     };
 
     const goodConfig: GasketConfigFile = {
-      routes: '/api/*.js'
+      express: {
+        routes: '/api/*.js'
+      }
     };
   });
 
@@ -57,7 +65,7 @@ describe('@gasket/plugin-express', () => {
   });
 
   it('declares the errorMiddleware lifecycle', () => {
-    const hook: Hook<'errorMiddleware'> = (gasket: Gasket, app) => [
+    const hook: Hook<'errorMiddleware'> = (gasket: Gasket) => [
       (err, req, res, next) => {
         // eslint-disable-next-line no-console
         console.error(err);

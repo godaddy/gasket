@@ -1,7 +1,7 @@
 {
   "name": "@gasket/typescript-tests",
   "private": true,
-  "version": "6.46.2",
+  "version": "6.46.3",
   "description": "Not a published package; hosts unit tests to verify TypeScript support",
   "files": [
     "lib"
@@ -47,7 +47,7 @@
     "@gasket/plugin-elastic-apm": "^6.46.2",
     "@gasket/plugin-express": "^6.46.2",
     "@gasket/plugin-https": "^6.46.2",
-    "@gasket/plugin-intl": "^6.46.2",
+    "@gasket/plugin-intl": "^6.46.3",
     "@gasket/plugin-log": "^6.46.2",
     "@gasket/plugin-manifest": "^6.46.2",
     "@gasket/plugin-metadata": "^6.46.2",
@@ -62,7 +62,7 @@
     "@gasket/preset-api": "^6.46.2",
     "@gasket/preset-nextjs": "^6.46.2",
     "@gasket/preset-pwa": "^6.46.2",
-    "@gasket/react-intl": "^6.46.2",
+    "@gasket/react-intl": "^6.46.3",
     "@gasket/redux": "^6.46.0",
     "@gasket/resolve": "^6.46.2",
     "@gasket/utils": "^6.46.2",
@@ -75,7 +75,7 @@
     "jest": "^29.7.0",
     "redux": "^4.0.5",
     "ts-jest": "^29.1.1",
-    "typescript": "^4.5.2"
+    "typescript": "^5.4.2"
   },
   "eslintConfig": {
     "extends": [

@@ -47,7 +47,10 @@ export interface PluginData extends ModuleData {
   lifecycles?: Array<LifecycleData>,
 
   /** Description of modules supporting this plugin */
-  modules?: Array<string | DetailData>
+  modules?: Array<string | DetailData>,
+  
+  /** Description of guides for this plugin */
+  guides?: Array<DetailData>
 }
 
 /** Preset module with meta data */
