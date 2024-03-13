@@ -49,10 +49,10 @@ module.exports = {
         ...webpackConfig,
         plugins: [
           ...(webpackConfig.plugins || []),
-          isServer ? new webpack.EnvironmentPlugin([
-            'GASKET_INTL_LOCALES_DIR',
+          new webpack.EnvironmentPlugin([
+            isServer ? 'GASKET_INTL_LOCALES_DIR' : null,
             'GASKET_INTL_MANIFEST_FILE'
-          ]) : null
+          ].filter(Boolean))
         ].filter(Boolean)
       };
     },
