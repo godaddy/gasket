@@ -2,11 +2,11 @@ const mockHandlerStub = jest.fn();
 const mockExecApplyStub = jest.fn();
 const mockCreateEngineStub = jest.fn();
 
-jest.mock('../../../../lib/scaffold/create-engine', () => mockCreateEngineStub);
-jest.mock('../../../../lib/scaffold/files', () => class Files {});
-const Files = require('../../../../lib/scaffold/files');
-const ConfigBuilder = require('../../../../lib/scaffold/config-builder');
-const createHooks = require('../../../../lib/scaffold/actions/create-hooks');
+jest.mock('../../../../src/scaffold/create-engine', () => mockCreateEngineStub);
+jest.mock('../../../../src/scaffold/files', () => class Files {});
+const Files = require('../../../../src/scaffold/files');
+const ConfigBuilder = require('../../../../src/scaffold/config-builder');
+const createHooks = require('../../../../src/scaffold/actions/create-hooks');
 
 describe('createHooks', () => {
   let mockContext, mockPlugin;

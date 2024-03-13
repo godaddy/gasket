@@ -1,5 +1,5 @@
 /* eslint no-unused-vars: 0 */
-const Files = require('../../../lib/scaffold/files');
+const Files = require('../../../src/scaffold/files');
 
 
 describe('Files', () => {

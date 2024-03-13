@@ -7,7 +7,7 @@ const {
   getPluginsWithVersions,
   ensureAbsolute,
   readConfig
-} = require('../../../lib/scaffold/utils');
+} = require('../../../src/scaffold/utils');
 
 describe('Utils', () => {
   let mockContext;

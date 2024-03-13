@@ -18,7 +18,7 @@ describe('printReport', () => {
       nextSteps: []
     };
 
-    printReport = require('../../../../lib/scaffold/actions/print-report');
+    printReport = require('../../../../src/scaffold/actions/print-report');
   });
 
   afterEach(() => {
@@ -31,7 +31,7 @@ describe('printReport', () => {
 
   it('outputs banner', function () {
     printReport(mockContext);
-    expect(logStub).toHaveBeenCalledWith(expect.stringContaining(require('../../../../lib/utils/logo')));
+    expect(logStub).toHaveBeenCalledWith(expect.stringContaining(require('../../../../src/utils/logo')));
   });
 
   it('outputs warning and error count', function () {

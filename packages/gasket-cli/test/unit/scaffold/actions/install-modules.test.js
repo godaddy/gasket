@@ -1,5 +1,5 @@
 const installStub = jest.fn();
-const installModules = require('../../../../lib/scaffold/actions/install-modules');
+const installModules = require('../../../../src/scaffold/actions/install-modules');
 
 describe('installModules', () => {
   let mockContext;

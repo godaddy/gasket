@@ -8,9 +8,7 @@ jest.mock('@gasket/utils', () => {
   };
 });
 
-const path = require('path');
-const { homedir } = require('os');
-const Fetcher = require('../../../lib/scaffold/fetcher');
+const Fetcher = require('../../../src/scaffold/fetcher');
 
 describe('fetcher', () => {
   const stdout = 'example.tr.gz\nits all good';
@@ -24,18 +22,6 @@ describe('fetcher', () => {
   });
 
   describe('#fetch', function () {
-    it('passes npmconfig to npm pack when defined', async () => {
-      const npmconfig = path.join(homedir(), 'whatever', '.npmrc');
-      const packageName = 'whatever';
-      const fetcher = new Fetcher({
-        npmconfig,
-        packageName
-      });
-
-      await fetcher.fetch();
-      expect(mockPackageManagerStub.mock.calls[0][0]).toContain('--userconfig', npmconfig);
-    });
-
     it('allows the cwd to be configured for package fetching', async () => {
       const fetcher = new Fetcher({});
 
@@ -46,10 +32,8 @@ describe('fetcher', () => {
 
   describe('#clone', function () {
     it('fetches the package into the tmp dir', async () => {
-      const npmconfig = path.join(homedir(), 'whatever', '.npmrc');
       const packageName = 'whatever';
       const fetcher = new Fetcher({
-        npmconfig,
         packageName
       });
 

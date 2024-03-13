@@ -1,5 +1,5 @@
 const linkStub = jest.fn();
-const linkModules = require('../../../../lib/scaffold/actions/link-modules');
+const linkModules = require('../../../../src/scaffold/actions/link-modules');
 
 describe('linkModules', () => {
   let mockContext;
