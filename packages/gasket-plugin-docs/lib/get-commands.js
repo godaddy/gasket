@@ -38,7 +38,7 @@ module.exports = function getCommands(gasket) {
       }
       docsConfigSet.guides.unshift(...guides);
       await generateIndex(docsConfigSet);
-      if (view) {
+      if (!view) {
         await gasket.exec('docsView', docsConfigSet);
       }
     }
