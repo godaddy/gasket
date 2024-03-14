@@ -52,9 +52,6 @@
     "jest": "^29.7.0",
     "triple-beam": "^1.4.1"
   },
-  "peerDependencies": {
-    "@gasket/plugin-logger": "^6.0.0"
-  },
   "eslintConfig": {
     "extends": [
       "godaddy",
