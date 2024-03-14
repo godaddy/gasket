@@ -35,7 +35,6 @@
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-logger",
   "devDependencies": {
     "@gasket/engine": "^7.0.0-cli.0",
-    "@gasket/plugin-command": "^6.45.2",
     "@gasket/plugin-https": "^7.0.0-cli.0",
     "@gasket/plugin-metadata": "^7.0.0-cli.0",
     "cross-env": "^7.0.3",
