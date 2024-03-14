@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-winston",
-  "version": "7.0.0-cli.2",
+  "version": "7.0.0-cli.3",
   "description": "Gasket logger based on Winston",
   "main": "lib",
   "types": "lib/index.d.ts",
@@ -39,9 +39,9 @@
     "winston": "^3.11.0"
   },
   "devDependencies": {
-    "@gasket/cli": "^7.0.0-cli.2",
-    "@gasket/engine": "^7.0.0-cli.2",
-    "@gasket/plugin-logger": "^7.0.0-cli.2",
+    "@gasket/cli": "^7.0.0-cli.3",
+    "@gasket/engine": "^7.0.0-cli.3",
+    "@gasket/plugin-logger": "^7.0.0-cli.3",
     "babel-eslint": "^10.1.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
