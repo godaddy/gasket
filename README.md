@@ -194,23 +194,22 @@ Available plugins
 
 Supporting modules
 
-| Name                                                     | Version | Description                                                                          |
-| -------------------------------------------------------- | ------- | ------------------------------------------------------------------------------------ |
-| [@gasket/assets]                                         | 6.45.2  | Gasket assets                                                                        |
-| [@gasket/cli]                                            | 6.46.4  | CLI for rapid application development with gasket                                    |
-| [@gasket/data]                                           | 6.45.2  | Helper package for accessing embedded Gasket Data in the browser                     |
-| [@gasket/engine]                                         | 6.46.2  | Plugin engine for gasket                                                             |
-| [@gasket/fetch]                                          | 6.45.2  | Gasket Fetch API                                                                     |
-| [@gasket/helper-intl]                                    | 6.46.4  | Internal helpers used by loaders to resolve locale file paths                        |
-| [@gasket/log]                                            | 6.46.0  | Gasket client and server logger                                                      |
-| [@gasket/nextjs]                                         | 6.45.2  | Gasket integrations for Next.js apps                                                 |
-| [@gasket/react-intl]                                     | 6.46.4  | React component library to enable localization for gasket apps.                      |
-| [@gasket/redux]                                          | 6.46.0  | Gasket Redux Configuration                                                           |
-| [@gasket/resolve]                                        | 6.46.2  | Essential module resolution & configuration management for gasket plugins & presets. |
-| [@gasket/typescript-tests]                               | 6.46.4  | Not a published package; hosts unit tests to verify TypeScript support               |
-| [@gasket/utils]                                          | 6.46.2  | Reusable utilities for Gasket internals                                              |
-| /Users/agerard/dev/ghec/godaddy/gasket/packages/iso-test |         |                                                                                      |
-| [create-gasket-app]                                      | 6.46.4  | starter pack for creating a gasket app                                               |
+| Name                       | Version | Description                                                                          |
+| -------------------------- | ------- | ------------------------------------------------------------------------------------ |
+| [@gasket/assets]           | 6.45.2  | Gasket assets                                                                        |
+| [@gasket/cli]              | 6.46.4  | CLI for rapid application development with gasket                                    |
+| [@gasket/data]             | 6.45.2  | Helper package for accessing embedded Gasket Data in the browser                     |
+| [@gasket/engine]           | 6.46.2  | Plugin engine for gasket                                                             |
+| [@gasket/fetch]            | 6.45.2  | Gasket Fetch API                                                                     |
+| [@gasket/helper-intl]      | 6.46.4  | Internal helpers used by loaders to resolve locale file paths                        |
+| [@gasket/log]              | 6.46.0  | Gasket client and server logger                                                      |
+| [@gasket/nextjs]           | 6.45.2  | Gasket integrations for Next.js apps                                                 |
+| [@gasket/react-intl]       | 6.46.4  | React component library to enable localization for gasket apps.                      |
+| [@gasket/redux]            | 6.46.0  | Gasket Redux Configuration                                                           |
+| [@gasket/resolve]          | 6.46.2  | Essential module resolution & configuration management for gasket plugins & presets. |
+| [@gasket/typescript-tests] | 6.46.4  | Not a published package; hosts unit tests to verify TypeScript support               |
+| [@gasket/utils]            | 6.46.2  | Reusable utilities for Gasket internals                                              |
+| [create-gasket-app]        | 6.46.4  | starter pack for creating a gasket app                                               |
 
 ## Configurations
 
