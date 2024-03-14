@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-docs",
-  "version": "7.0.0-cli.0",
+  "version": "7.0.3-cli.0",
   "description": "Centralize doc files from plugins and modules",
   "main": "lib",
   "types": "lib/index.d.ts",
