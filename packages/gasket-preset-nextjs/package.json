@@ -1,6 +1,6 @@
 {
   "name": "@gasket/preset-nextjs",
-  "version": "6.46.1-cli.0",
+  "version": "6.46.1-cli.1",
   "description": "Basic NextJS Framework",
   "main": "lib",
   "types": "lib/index.d.ts",
@@ -25,7 +25,7 @@
     "@gasket/plugin-nextjs": "^6.46.1",
     "@gasket/plugin-redux": "^6.46.1-cli.0",
     "@gasket/plugin-webpack": "^6.46.1-cli.0",
-    "@gasket/plugin-winston": "^6.46.1-cli.0"
+    "@gasket/plugin-winston": "^6.46.1-cli.1"
   },
   "devDependencies": {
     "@gasket/plugin-start": "^6.46.1-cli.0"
