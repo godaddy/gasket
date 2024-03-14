@@ -3,7 +3,7 @@ const ConfigBuilder = require('../config-builder');
 const { addPluginsToPkg, getPluginsWithVersions } = require('../utils');
 const { PackageManager } = require('@gasket/utils');
 const { presetIdentifier } = require('@gasket/resolve');
-const { devDependencies } = require('../package');
+const { devDependencies } = require('../../../package');
 
 /**
  * Initializes the ConfigBuilder builder and adds to context.
