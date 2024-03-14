@@ -24,7 +24,7 @@ async function run() {
   const { command, hidden, isDefault } = processCommand(CreateCommand);
   gasketBin.addCommand(command, { hidden, isDefault });
 
-  if (cmd === 'create') return await gasketBin.parseAsync();
+  if (cmd === 'create' || /-v|-V/.test(cmd)) return await gasketBin.parseAsync();
 
   await init({
     id: process.argv[2],
