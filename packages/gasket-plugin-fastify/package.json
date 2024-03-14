@@ -53,7 +53,7 @@
     "fastify": "^3.3.0",
     "jest": "^29.7.0"
   },
-  "peerDependencies": {
+  "peerDeps": {
     "fastify": "^3.0.0"
   },
   "eslintConfig": {
