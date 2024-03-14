@@ -8,9 +8,6 @@ describe('@gasket/preset-nextjs', () => {
     const config: GasketConfigFile = {
       http: 8080,
       compression: true,
-      log: {
-        prefix: 'my-api'
-      },
       nextConfig: {
         future: {
           webpack5: true
