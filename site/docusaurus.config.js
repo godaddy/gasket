@@ -58,6 +58,11 @@ module.exports = {
             position: 'left',
           },
           {
+            to: '/docs/#lifecycles',
+            label: 'Lifecycles',
+            position: 'left',
+          },
+          {
             to: '/docs/modules',
             label: 'Modules',
             position: 'left',
