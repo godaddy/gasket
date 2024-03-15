@@ -21,10 +21,11 @@ const gasketBin = program
  */
 async function run() {
   const cmd = process.argv[2];
+  const isFlag = cmd && cmd.charAt(0) === '-';
   const { command, hidden, isDefault } = processCommand(CreateCommand);
   gasketBin.addCommand(command, { hidden, isDefault });
 
-  if (cmd === 'create' || cmd.charAt(0) === '-') return await gasketBin.parseAsync();
+  if (cmd === 'create' || isFlag) return await gasketBin.parseAsync();
 
   await init({
     id: process.argv[2],

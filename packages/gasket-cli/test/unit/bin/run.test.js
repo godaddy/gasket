@@ -84,6 +84,27 @@ describe('run', () => {
     expect(mockInit).not.toHaveBeenCalled();
   });
 
+  it('exits early for --version flag', async () => {
+    jest.replaceProperty(process, 'argv', ['node', 'gasket', '--version']);
+    await require('../../../lib/bin/run');
+    expect(mockParseAsync).toHaveBeenCalled();
+    expect(mockInit).not.toHaveBeenCalled();
+  });
+
+  it('exits early for -V flag', async () => {
+    jest.replaceProperty(process, 'argv', ['node', 'gasket', '-V']);
+    await require('../../../lib/bin/run');
+    expect(mockParseAsync).toHaveBeenCalled();
+    expect(mockInit).not.toHaveBeenCalled();
+  });
+
+  it('exits early for --help flag', async () => {
+    jest.replaceProperty(process, 'argv', ['node', 'gasket', '--help']);
+    await require('../../../lib/bin/run');
+    expect(mockParseAsync).toHaveBeenCalled();
+    expect(mockInit).not.toHaveBeenCalled();
+  });
+
   it('calls init for other commands', async () => {
     jest.replaceProperty(process, 'argv', ['node', 'gasket', 'build']);
     await require('../../../lib/bin/run');
