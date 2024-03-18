@@ -194,7 +194,12 @@ module.exports = {
   },
 ```
 
-Existing Gasket apps will need to make changes to how they handle logging.
+Existing Gasket apps will need to make changes to how they handle logging. Logging levels now follow `console` conventions. Loggers at minimum support the following levels:
+
+- `debug`
+- `error`
+- `info`
+- `warn`
 
 ```diff
 // gasket.logger.warning changes
