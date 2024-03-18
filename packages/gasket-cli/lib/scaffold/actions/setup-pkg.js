@@ -3,6 +3,7 @@ const ConfigBuilder = require('../config-builder');
 const { addPluginsToPkg, getPluginsWithVersions } = require('../utils');
 const { PackageManager } = require('@gasket/utils');
 const { presetIdentifier } = require('@gasket/resolve');
+const { devDependencies } = require('../../../package');
 
 /**
  * Initializes the ConfigBuilder builder and adds to context.
@@ -31,6 +32,10 @@ async function setupPkg(context) {
   }, {
     '@gasket/cli': cliVersionRequired
   }));
+
+  pkg.add('depencencies', {
+    dotenv: devDependencies.dotenv
+  });
 
   const pkgManager = new PackageManager(context);
   const pluginIds = await getPluginsWithVersions(rawPlugins, pkgManager);
