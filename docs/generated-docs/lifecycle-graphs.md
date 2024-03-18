@@ -1,6 +1,9 @@
 ```mermaid
 graph LR;
+* -- exec --> commandOptions;
+* -- exec --> commands;
 express -- execWaterfall --> composeServiceWorker;
+init -- execWaterfall --> configure;
 gasket/cli --> create;
 init -- exec --> createLogger;
 start -- execWaterfall --> createServers;
@@ -12,6 +15,7 @@ createServers -- exec --> errorMiddleware;
 createServers -- exec --> express;
 createServers -- exec --> fastify;
 preboot -- execWaterfall --> gasketData;
+*-cmd(*) -- exec --> init;
 middleware -- execWaterfall --> initReduxState;
 middleware -- exec --> initReduxStore;
 build-cmd(build) --> initWebpack;
@@ -41,5 +45,6 @@ initWebpack -- execWaterfallSync --> webpackConfig;
 createLogger -- exec --> winstonTransports;
 composeServiceWorker -- exec --> workbox;
 style docs-cmd fill: red;
+style *-cmd fill: red;
 style build-cmd fill: red;
 ```

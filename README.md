@@ -76,7 +76,10 @@ Available lifecycles
 | Name                                                   | Description                                                   |
 | ------------------------------------------------------ | ------------------------------------------------------------- |
 | [build][1]                                             | Prepare the app to be started                                 |
+| [commandOptions]                                       | Allows plugins to add CLI options to Gasket                   |
+| [commands]                                             | Allows plugins to add CLI commands                            |
 | [composeServiceWorker]                                 | Update the service worker script                              |
+| [configure]                                            | Allows plugins to adjust config before command is run         |
 | [create][2]                                            | App level plugins                                             |
 | [createLogger]                                         | Custom logger creation                                        |
 | [createServers]                                        | Setup the `create-servers` options                            |
@@ -88,6 +91,7 @@ Available lifecycles
 | [express]                                              | Modify the Express instance to for adding endpoints           |
 | [fastify]                                              | Modify the Fastify instance to for adding endpoints           |
 | [gasketData]                                           | Adjust app level data after merged for the env                |
+| [init]                                                 | Signals the start of any Gasket command before it is run      |
 | [initReduxState]                                       | Initializes state of the Redux store                          |
 | [initReduxStore]                                       | Plugin access to Redux store instance                         |
 | [initWebpack]                                          | Create a webpack config                                       |
@@ -296,7 +300,10 @@ Available configuration options in the `gasket.config.js`
 [local]:/packages/gasket-plugin-start/README.md#local-command
 [start]:/packages/gasket-plugin-start/README.md#start-command
 [1]:/packages/gasket-plugin-start/README.md#build
+[commandOptions]:/packages/gasket-cli/README.md#commandsOptions
+[commands]:/packages/gasket-cli/README.md#commands
 [composeServiceWorker]:/packages/gasket-plugin-service-worker/README.md#composeServiceWorker
+[configure]:/packages/gasket-cli/README.md#configure
 [2]:/packages/gasket-cli/README.md#create
 [createLogger]:/packages/gasket-plugin-logger/README.md#createLogger
 [createServers]:/packages/gasket-plugin-https/README.md#createServers
@@ -308,6 +315,7 @@ Available configuration options in the `gasket.config.js`
 [express]:/packages/gasket-plugin-express/README.md#express
 [fastify]:/packages/gasket-plugin-fastify/README.md#express
 [gasketData]:/packages/gasket-plugin-response-data/README.md#gasketData
+[init]:/packages/gasket-cli/README.md#init
 [initReduxState]:/packages/gasket-plugin-redux/README.md#initReduxState
 [initReduxStore]:/packages/gasket-plugin-redux/README.md#initReduxStore
 [initWebpack]:/packages/gasket-plugin-webpack/README.md#initwebpack
