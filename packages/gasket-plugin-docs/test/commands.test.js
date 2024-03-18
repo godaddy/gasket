@@ -56,12 +56,12 @@ describe('commands', () => {
     });
 
     it('executes docsView lifecycle', async () => {
-      await DocsCommand.action({ view: false });
+      await DocsCommand.action({ view: true });
       expect(mockGasket.exec).toHaveBeenCalledWith('docsView', mockDocsConfigSet);
     });
 
     it('does not execute docsView if --no-view flag', async () => {
-      await DocsCommand.action({ view: true });
+      await DocsCommand.action({ view: false });
       expect(mockGasket.exec).toHaveBeenCalledTimes(1);
       expect(mockGasket.exec).toHaveBeenCalledWith('docsGenerate', mockDocsConfigSet);
     });
