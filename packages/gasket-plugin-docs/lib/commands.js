@@ -16,7 +16,6 @@ module.exports = function commands(gasket) {
       {
         name: 'no-view',
         description: 'View the docs after generating',
-        default: false,
         type: 'boolean'
       }
     ],
@@ -38,7 +37,7 @@ module.exports = function commands(gasket) {
       }
       docsConfigSet.guides.unshift(...guides);
       await generateIndex(docsConfigSet);
-      if (!view) {
+      if (view) {
         await gasket.exec('docsView', docsConfigSet);
       }
     }
