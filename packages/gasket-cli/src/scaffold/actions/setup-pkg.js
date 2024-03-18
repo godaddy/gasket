@@ -19,23 +19,29 @@ async function setupPkg(context) {
     description: appDescription
   }, { warnings });
 
-  // The preset package itself must be included in the dependencies
-  // of the `pkg` to be bootstrapped.
+  // Expand preset dependencies
   pkg.add('dependencies', presetInfos.reduce((acc, presetInfo) => {
-    // Use rawName in case version or file path was set in cli args
-    // Otherwise fallback to resolved version
-    const { fullName, version } = presetIdentifier(presetInfo.rawName).withVersion(`^${presetInfo.version}`);
-
-    acc[fullName] = version;
+    const { package: { dependencies } } = presetInfo;
+    Object.assign(acc, dependencies);
     return acc;
   }, {
     '@gasket/cli': cliVersionRequired
   }));
 
+  // Add preset devDependencies
+  pkg.add('devDependencies', presetInfos.reduce((acc, presetInfo) => {
+    const { package: { devDependencies } } = presetInfo;
+    Object.assign(acc, devDependencies);
+    return acc;
+  }, {}));
+
   const pkgManager = new PackageManager(context);
   const pluginIds = await getPluginsWithVersions(rawPlugins, pkgManager);
   addPluginsToPkg(pluginIds, pkg);
 
+  // Empty presets array to avoid loading
+  // Preset isn't a dependency of the app
+  context.presets = [];
   Object.assign(context, { pkg, pkgManager });
 }
 
