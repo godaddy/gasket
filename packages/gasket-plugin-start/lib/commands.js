@@ -4,7 +4,7 @@
  * @param {Gasket} gasket - Gasket
  * @returns {CLICommand[]} commands
  */
-module.exports = function getCommands(gasket) {
+module.exports = function commands(gasket) {
   const buildCommand = {
     id: 'build',
     description: 'Prepare your app',

@@ -1,4 +1,4 @@
-const getCommands = require('../lib/get-commands');
+const commands = require('../lib/commands');
 const buildDocsConfigSet = require('../lib/utils/build-config-set');
 const collateFiles = require('../lib/utils/collate-files');
 const generateIndex = require('../lib/utils/generate-index');
@@ -16,25 +16,25 @@ jest.mock('../lib/utils/build-config-set', () => jest.fn(() => Promise.resolve(m
 jest.mock('../lib/utils/collate-files');
 jest.mock('../lib/utils/generate-index');
 
-describe('getCommands', () => {
+describe('commands', () => {
 
   it('returns a command', () => {
-    const results = getCommands(mockGasket);
+    const results = commands(mockGasket);
     expect(results).toBeDefined();
   });
 
   it('command has id', () => {
-    const results = getCommands(mockGasket);
+    const results = commands(mockGasket);
     expect(results).toHaveProperty('id', 'docs');
   });
 
   it('command has description', () => {
-    const results = getCommands(mockGasket);
+    const results = commands(mockGasket);
     expect(results).toHaveProperty('description');
   });
 
   describe('instance', () => {
-    const DocsCommand = getCommands(mockGasket);
+    const DocsCommand = commands(mockGasket);
 
     beforeEach(() => {
       jest.clearAllMocks();

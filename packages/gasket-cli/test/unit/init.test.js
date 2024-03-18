@@ -138,9 +138,9 @@ describe('init hook', () => {
       expect(mockExecStub.mock.calls[0][1]).toEqual(mockInitConfig);
     });
 
-    it('getCommands', async () => {
+    it('commands', async () => {
       await initHook({ id: 'build', argv: [], config: mockInitConfig });
-      expect(mockExecStub.mock.calls[1][0]).toEqual('getCommands');
+      expect(mockExecStub.mock.calls[1][0]).toEqual('commands');
       expect(mockExecStub.mock.calls[1][1]).toEqual(mockInitConfig);
     });
 

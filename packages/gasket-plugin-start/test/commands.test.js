@@ -1,4 +1,4 @@
-const getCommands = require('../lib/get-commands');
+const commands = require('../lib/commands');
 
 const mockGasket = {
   exec: jest.fn(),
@@ -33,7 +33,7 @@ const testCommand = async (cmd, name, lifecycles) => {
   });
 };
 
-describe('getCommands', () => {
+describe('commands', () => {
   let exitStub;
 
   beforeEach(() => {
@@ -45,7 +45,7 @@ describe('getCommands', () => {
   });
 
   it('returns commands', () => {
-    const results = getCommands(mockGasket);
+    const results = commands(mockGasket);
     expect(results).toHaveLength(3);
     results.forEach(cmd => {
       expect(cmd).toHaveProperty('id');
@@ -55,7 +55,7 @@ describe('getCommands', () => {
   });
 
   describe('BuildCommand', () => {
-    const BuildCommand = getCommands(mockGasket)[0];
+    const BuildCommand = commands(mockGasket)[0];
     testCommand(BuildCommand, 'build', ['build']);
 
     it('calls process.exit', async function () {
@@ -72,12 +72,12 @@ describe('getCommands', () => {
   });
 
   describe('StartCommand', () => {
-    const StartCommand = getCommands(mockGasket)[1];
+    const StartCommand = commands(mockGasket)[1];
     testCommand(StartCommand, 'start', ['preboot', 'start']);
   });
 
   describe('LocalCommand', () => {
-    const LocalCommand = getCommands(mockGasket)[2];
+    const LocalCommand = commands(mockGasket)[2];
     testCommand(LocalCommand, 'local', ['build', 'start']);
 
     it('has env flag which defaults to local', () => {

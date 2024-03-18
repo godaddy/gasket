@@ -8,7 +8,7 @@ const generateIndex = require('./utils/generate-index');
  * @param {Gasket} gasket - Gasket
  * @returns {GasketCommand} command
  */
-module.exports = function getCommands(gasket) {
+module.exports = function commands(gasket) {
   return {
     id: 'docs',
     description: 'Generate docs for the app',
