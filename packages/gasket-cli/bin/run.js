@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 // Script for instrumentation
-require('../utils/setup')();
-const pkg = require('../../package.json');
+require('../lib/utils/setup')();
+const pkg = require('../package.json');
 const { Command } = require('commander');
 const program = new Command();
-const CreateCommand = require('../commands/create');
-const { processCommand, logo } = require('../utils');
-const init = require('./init');
+const CreateCommand = require('../lib/commands/create');
+const { processCommand, logo } = require('../lib/utils');
+const init = require('../lib/init');
 
 // Create Gasket CLI
 const gasketBin = program

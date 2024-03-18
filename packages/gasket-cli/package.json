@@ -4,11 +4,12 @@
   "description": "CLI for rapid application development with gasket",
   "main": "lib/index.js",
   "bin": {
-    "gasket": "./lib/bin/boot.js"
+    "gasket": "./bin/boot.js"
   },
   "types": "lib/index.d.ts",
   "files": [
     "docs",
+    "bin",
     "lib"
   ],
   "scripts": {
