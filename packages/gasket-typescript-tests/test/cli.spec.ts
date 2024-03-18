@@ -26,8 +26,8 @@ describe('@gasket/cli', () => {
     };
   });
 
-  it('defines the getCommands hook', () => {
-    const hook: Hook<'getCommands'> = async (gasket: Gasket, config: Config) => {
+  it('defines the commands hook', () => {
+    const hook: Hook<'commands'> = async (gasket: Gasket, config: Config) => {
       return [
         {
           id: 'my-command',
@@ -39,8 +39,8 @@ describe('@gasket/cli', () => {
 
   });
 
-  it('defines the getCommandOptions hook', () => {
-    const hook: Hook<'getCommandOptions'> = async (gasket: Gasket, config: Config) => {
+  it('defines the commandOptions hook', () => {
+    const hook: Hook<'commandOptions'> = async (gasket: Gasket, config: Config) => {
       return [
         {
           name: 'my-option',

@@ -288,9 +288,9 @@ export interface CreateContext {
 
 declare module '@gasket/engine' {
   export interface HookExecTypes {
-    getCommandOptions(config: Config): MaybeAsync<Array<GasketOptionDefinition> | GasketOptionDefinition>;
+    commandOptions(config: Config): MaybeAsync<Array<GasketOptionDefinition> | GasketOptionDefinition>;
 
-    getCommands(config: Config): MaybeAsync<Array<GasketCommandDefinition> | GasketCommandDefinition>;
+    commands(config: Config): MaybeAsync<Array<GasketCommandDefinition> | GasketCommandDefinition>;
 
     prompt(
       context: CreateContext,
