@@ -68,16 +68,14 @@ const createCommand = {
       parse: commasToArray
     },
     {
-      name: 'bootstrap',
+      name: 'no-bootstrap',
       description: '(INTERNAL) If provided, skip the bootstrap phase',
-      default: false,
       type: 'boolean',
       hidden: true
     },
     {
-      name: 'generate',
+      name: 'no-generate',
       description: '(INTERNAL) If provided, skip the generate phase',
-      default: false,
       type: 'boolean',
       hidden: true
     },
@@ -120,7 +118,7 @@ const createCommand = {
  * bootstrap - Bootstrap the application
  * @param {CreateContext} context - Create context
  */
-async function bootstrap(context) {
+async function bootstrapHandler(context) {
   await loadPreset(context);
   cliVersion(context);
   applyPresetConfig(context);
@@ -136,7 +134,7 @@ async function bootstrap(context) {
  * generate - Generate the application
  * @param {CreateContext} context - Create context
  */
-async function generate(context) {
+async function generateHandler(context) {
   await promptHooks(context);
   await createHooks(context);
   await generateFiles(context);
@@ -156,7 +154,7 @@ async function generate(context) {
  */
 createCommand.action = async function run(appname, options, command) {
   const argv = [appname];
-  const { bootstrap: noBootstrap, generate: noGenerate } = options;
+  const { bootstrap = true, generate = true } = options;
 
   let context;
   try {
@@ -167,17 +165,17 @@ createCommand.action = async function run(appname, options, command) {
   }
 
   try {
-    if (!noBootstrap) {
-      await bootstrap(context);
+    if (bootstrap) {
+      await bootstrapHandler(context);
     } else {
       ora('Bootstrap phase skipped.').warn();
-      if (!noGenerate) {
+      if (generate) {
         await loadPkgForDebug(context);
       }
     }
 
-    if (!noGenerate) {
-      await generate(context);
+    if (generate) {
+      await generateHandler(context);
     } else {
       ora('Generate phase skipped.').warn();
     }

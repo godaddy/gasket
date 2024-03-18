@@ -99,15 +99,15 @@ describe('create', function () {
     expect(mockActionStubs.linkModules).toHaveBeenCalled();
   });
 
-  it('skips bootstrap actions with --bootstrap', async () => {
-    await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--bootstrap', '--presets=nextjs']);
-    expect(cmdOptions.bootstrap).toBe(true);
+  it('skips bootstrap actions with --no-bootstrap', async () => {
+    await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--no-bootstrap', '--presets=nextjs']);
+    expect(cmdOptions.bootstrap).toBe(false);
     expect(mockActionStubs.mkDir).not.toHaveBeenCalled();
   });
 
-  it('executes loadPkgForDebug with --bootstrap', async () => {
-    await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--bootstrap', '--presets=nextjs']);
-    expect(cmdOptions.bootstrap).toBe(true);
+  it('executes loadPkgForDebug with --no-bootstrap', async () => {
+    await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--no-bootstrap', '--presets=nextjs']);
+    expect(cmdOptions.bootstrap).toBe(false);
     expect(mockActionStubs.loadPkgForDebug).toHaveBeenCalled();
   });
 
@@ -122,16 +122,16 @@ describe('create', function () {
     expect(mockActionStubs.linkModules.update).toHaveBeenCalled();
   });
 
-  it('skips generate actions with --generate', async () => {
-    await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--generate', '--presets=nextjs']);
-    expect(cmdOptions.generate).toBe(true);
+  it('skips generate actions with --no-generate', async () => {
+    await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--no-generate', '--presets=nextjs']);
+    expect(cmdOptions.generate).toBe(false);
     expect(mockActionStubs.promptHooks).not.toHaveBeenCalled();
   });
 
-  it('does not execute loadPkgForDebug with --bootstrap --generate', async () => {
-    await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--bootstrap', '--generate', '--presets=nextjs']);
-    expect(cmdOptions.bootstrap).toBe(true);
-    expect(cmdOptions.generate).toBe(true);
+  it('does not execute loadPkgForDebug with --no-bootstrap --no-generate', async () => {
+    await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--no-bootstrap', '--no-generate', '--presets=nextjs']);
+    expect(cmdOptions.bootstrap).toBe(false);
+    expect(cmdOptions.generate).toBe(false);
     expect(cmdOptions.presets).toEqual(['nextjs']);
     expect(mockActionStubs.loadPkgForDebug).not.toHaveBeenCalled();
   });

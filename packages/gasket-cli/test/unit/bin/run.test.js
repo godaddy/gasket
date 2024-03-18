@@ -26,7 +26,7 @@ const mockCreateCommand = {
   action: jest.fn()
 };
 
-jest.mock('../../../lib/bin/init', () => mockInit);
+jest.mock('../../../lib/init', () => mockInit);
 jest.mock('../../../package.json', () => ({ description: 'mockDescription', version: 'mockVersion' }));
 jest.mock('../../../lib/commands/create', () => mockCreateCommand);
 jest.mock('../../../lib/utils', () => ({
@@ -60,60 +60,60 @@ describe('run', () => {
   });
 
   it('creates program', async () => {
-    await require('../../../lib/bin/run');
+    await require('../../../bin/run');
     expect(Command).toHaveBeenCalled();
   });
 
   it('defines gasketBin', async () => {
-    await require('../../../lib/bin/run');
+    await require('../../../bin/run');
     expect(mockNameMethod).toHaveBeenCalledWith('gasket');
     expect(mockDescriptionMethod).toHaveBeenCalledWith('mockDescription');
     expect(mockVersionMethod).toHaveBeenCalledWith('mockVersion');
   });
 
   it('adds create command', async () => {
-    await require('../../../lib/bin/run');
+    await require('../../../bin/run');
     expect(mockProcessCommand).toHaveBeenCalledWith(mockCreateCommand);
     expect(mockAddCommand).toHaveBeenCalled();
   });
 
   it('exits early for create command', async () => {
     jest.replaceProperty(process, 'argv', ['node', 'gasket', 'create']);
-    await require('../../../lib/bin/run');
+    await require('../../../bin/run');
     expect(mockParseAsync).toHaveBeenCalled();
     expect(mockInit).not.toHaveBeenCalled();
   });
 
   it('exits early for --version flag', async () => {
     jest.replaceProperty(process, 'argv', ['node', 'gasket', '--version']);
-    await require('../../../lib/bin/run');
+    await require('../../../bin/run');
     expect(mockParseAsync).toHaveBeenCalled();
     expect(mockInit).not.toHaveBeenCalled();
   });
 
   it('exits early for -V flag', async () => {
     jest.replaceProperty(process, 'argv', ['node', 'gasket', '-V']);
-    await require('../../../lib/bin/run');
+    await require('../../../bin/run');
     expect(mockParseAsync).toHaveBeenCalled();
     expect(mockInit).not.toHaveBeenCalled();
   });
 
   it('exits early for --help flag', async () => {
     jest.replaceProperty(process, 'argv', ['node', 'gasket', '--help']);
-    await require('../../../lib/bin/run');
+    await require('../../../bin/run');
     expect(mockParseAsync).toHaveBeenCalled();
     expect(mockInit).not.toHaveBeenCalled();
   });
 
   it('calls init for other commands', async () => {
     jest.replaceProperty(process, 'argv', ['node', 'gasket', 'build']);
-    await require('../../../lib/bin/run');
+    await require('../../../bin/run');
     expect(mockInit).toHaveBeenCalled();
   });
 
   it('passes args to init', async () => {
     jest.replaceProperty(process, 'argv', ['node', 'gasket', 'build']);
-    await require('../../../lib/bin/run');
+    await require('../../../bin/run');
     expect(mockInit).toHaveBeenCalledWith({
       id: 'build',
       config: {

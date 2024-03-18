@@ -9,7 +9,7 @@ jest.mock('../../package.json', () => ({
 
 describe('local-cli', () => {
   const root = path.join(__dirname, '..', '..');
-  const preboot = path.join(root, 'lib', 'bin', 'boot');
+  const preboot = path.join(root, 'bin', 'boot');
 
   afterEach(() => {
     jest.resetModules();
@@ -21,7 +21,7 @@ describe('local-cli', () => {
   });
 
   it('requires the node_modules cli', (done) => {
-    jest.doMock('@gasket/cli/lib/bin/run', () => {
+    jest.doMock('@gasket/cli/bin/run', () => {
       setTimeout(() => {
         done();
       }, 0);
@@ -32,7 +32,7 @@ describe('local-cli', () => {
   });
 
   it('requires our own cli when no local-cli is found', (done) => {
-    jest.doMock(path.join(root, 'lib', 'bin', 'run'), () => {
+    jest.doMock(path.join(root, 'bin', 'run'), () => {
       setTimeout(() => {
         done();
       }, 0);
