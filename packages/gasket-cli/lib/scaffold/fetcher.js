@@ -78,7 +78,6 @@ module.exports = class PackageFetcher {
     this.cwd = opts.cwd || process.cwd();
     this.packageName = opts.packageName;
     this.tmp = new Fetcher(opts);
-    this.npmconfig = opts.npmconfig;
     debug('init', this.packageName, this.tmp.dir);
   }
 
@@ -142,8 +141,6 @@ module.exports = class PackageFetcher {
       '--loglevel', 'error',
       '--prefer-online'
     ];
-
-    if (this.npmconfig) argv.push('--userconfig', this.npmconfig);
 
     const { stdout } = await PackageManager.spawnNpm(argv, {
       cwd: dir
