@@ -25,7 +25,7 @@ module.exports = {
     /**
      * Option that is applied to all commands at the `gasket` level
      */
-    async getCommandOptions() {
+    async commandOptions() {
       return {
         name: 'record',
         description: `${name}: Whether or not to emit this command as part of Gasket's metrics lifecycle`,

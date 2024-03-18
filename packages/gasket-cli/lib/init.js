@@ -44,7 +44,7 @@ async function init({ id, config, argv }) {
       config.gasket = gasket;
 
       // Add global options to the bin
-      const globalOptions = (await gasket.exec('getCommandOptions', config))
+      const globalOptions = (await gasket.exec('commandOptions', config))
         .reduce((all, opts) => all.concat(opts), [])
         .filter(opt => Boolean(opt));
       processOptions(globalOptions)
@@ -61,7 +61,7 @@ async function init({ id, config, argv }) {
         bin.addCommand(cmd.command, { hidden: cmd.hidden, isDefault: cmd.isDefault }));
 
       // Set the gasket command and options for lifecycles
-      // Need to define after getCommandOptions and commands are executed
+      // Need to define after commandOptions and commands are executed
       config.gasket.command = { id, argv, options: bin.opts() };
 
       // Initialize Gasket

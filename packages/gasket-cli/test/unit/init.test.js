@@ -131,10 +131,10 @@ describe('init hook', () => {
 
   describe('execute lifecycle hooks', () => {
 
-    it('getCommandOptions', async () => {
+    it('commandOptions', async () => {
       await initHook({ id: 'build', argv: [], config: mockInitConfig });
       expect(mockExecStub).toHaveBeenCalled();
-      expect(mockExecStub.mock.calls[0][0]).toEqual('getCommandOptions');
+      expect(mockExecStub.mock.calls[0][0]).toEqual('commandOptions');
       expect(mockExecStub.mock.calls[0][1]).toEqual(mockInitConfig);
     });
 
