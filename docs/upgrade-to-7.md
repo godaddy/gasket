@@ -206,7 +206,7 @@ Existing Gasket apps will need to make changes to how they handle logging.
 + logger.info
 ```
 
-The lifecycle method formerly known as `logTransports` is now `addTransports`.
+The lifecycle method formerly known as `logTransports` is now `winstonTransports`.
 
 ```diff
 - // /lifecycles/log-transports.js
