@@ -30,7 +30,7 @@ describe('The middleware hook', () => {
 
     const middleware = middlewareHook(gasket);
 
-    expect(middleware).toHaveLength(0);
+    expect(middleware).toBeFalsy();
   });
 
   describe('middleware', () => {
