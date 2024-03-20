@@ -15,6 +15,7 @@ const composeSpy = jest.spyOn(redux, 'compose');
 const mockInitialState = { bogus: 'BOGUS' };
 
 const mockMiddleware = jest.fn(() => next => action => next(action));
+const mockDevToolsOptions = jest.fn();
 const mockEnhancer = jest.fn(createStore => (reducer, initialState, enhancer) => createStore(reducer, initialState, enhancer));
 const mockPostCreate = jest.fn();
 
@@ -148,6 +149,18 @@ describe('configureMakeStore', () => {
     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ = mockDevToolsCompose;
     configureMakeStore({ enhancers: [mockEnhancer] })();
     expect(mockDevToolsCompose).toHaveBeenCalled();
+    expect(composeSpy).not.toHaveBeenCalled();
+    delete window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
+  });
+
+  it('allows devtoolsOptions to be set for devtools composer', () => {
+    const mockDevToolsCompose = jest.fn();
+    // eslint-disable-next-line id-length
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ = mockDevToolsCompose;
+    configureMakeStore({ devToolsOptions: mockDevToolsOptions, enhancers: [mockEnhancer] })();
+    expect(mockDevToolsCompose).toHaveBeenCalled();
+    expect(mockDevToolsCompose).toHaveBeenCalledWith({ devToolsOptions: mockDevToolsOptions, enhancers: [mockEnhancer] });
+    expect(mockDevToolsOptions).toHaveBeenCalled()
     expect(composeSpy).not.toHaveBeenCalled();
     delete window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
   });
