@@ -1,8 +1,8 @@
 # create-gasket-app
 
-Starter Pack for creating Gasket apps. 
+Starter Pack for creating Gasket apps.
 
-### Get Started Immediately
+## Get Started Immediately
 
 You **don’t** need to globally install the Gasket CLI
 
