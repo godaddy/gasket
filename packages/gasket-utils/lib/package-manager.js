@@ -42,6 +42,22 @@ class PackageManager {
   }
 
   /**
+   * Executes the appropriate pnpm binary with the verbatim `argv` and
+   * `spawnWith` options provided. Passes appropriate debug flag for
+   * pnpm based on process.env.
+   *
+   * @param {string[]} argv Precise CLI arguments to pass to `pnpm`.
+   * @param {object} spawnWith Options for child_process.spawn.
+   * @returns {Promise} promise
+   * @public
+   */
+  static spawnPnpm(argv, spawnWith) {
+    const pnpmBin = 'pnpm';
+
+    return runShellCommand(pnpmBin, argv, spawnWith, !!process.env.GASKET_DEBUG_PNPM);
+  }
+
+  /**
    * Executes the appropriate yarn binary with the verbatim `argv` and
    * `spawnWith` options provided. Passes appropriate debug flag for
    * npm based on process.env.
@@ -114,6 +130,19 @@ class PackageManager {
         cwd: this.dest,
         env
       });
+    } else if (this.manager === 'pnpm') {
+      const argv = [cmd].concat(args);
+
+      //
+      // Support for the .npmrc configured via --npmconfig flag.
+      // pnpm does not have a "userconfig" CLI flag, it does however still
+      // support the npm_config_* environment variables for npm compatibility.
+      if (this.npmconfig) env.NPM_CONFIG_USERCONFIG = this.npmconfig;
+
+      return await PackageManager.spawnPnpm(argv, {
+        cwd: this.dest,
+        env
+      });
     }
 
     return Promise.reject(new Error(`Package manager ${this.manager} is not supported by Gasket`));
@@ -141,6 +170,9 @@ class PackageManager {
   async install(args = []) {
     // Installing with --legacy-peer-deps flag to accommodate npm7, specifically
     // requiring different versions of react
+    if (this.manager === 'pnpm') {
+      return this.exec('install', args);
+    }
     return this.exec('install', [...args, '--legacy-peer-deps']);
   }
 
@@ -154,7 +186,7 @@ class PackageManager {
   async info(args = []) {
     const { stdout } = await this.exec('info', [...args, '--json']);
     // normalize stdout results of yarn and npm before parsing
-    let normalized = this.manager === 'npm' ? `{ "data": ${stdout} }` : stdout;
+    let normalized = this.manager.endsWith('npm') ? `{ "data": ${stdout} }` : stdout;
     normalized = stdout ? normalized : '{}';
 
     const { data } = JSON.parse(normalized);

@@ -7,6 +7,7 @@ const mockFakePackage = jest.fn();
 const mockLoggerInfoStub = jest.fn();
 const mockTryResolveStub = jest.fn();
 const mockResolveStub = jest.fn();
+const mockReaddirStub = jest.fn();
 
 const mockGasket = {
   config: {
@@ -18,7 +19,8 @@ const mockGasket = {
 };
 
 jest.mock('fs/promises', () => ({
-  readFile: mockReadFileStub
+  readFile: mockReadFileStub,
+  readdir: mockReaddirStub
 }));
 
 jest.mock('path', () => ({
@@ -49,8 +51,39 @@ describe('requireWithInstall', function () {
     jest.resetModules();
   });
 
+  describe('pnpm package manager', function () {
+    it('installs "my-package" with PackageManager', async function () {
+      mockReaddirStub.mockResolvedValueOnce([{ name: 'package.json' }, { name: 'pnpm-lock.yaml' }]);
+      mockReadFileStub.mockRejectedValueOnce();
+      mockTryResolveStub.mockReturnValueOnce(false);
+      mockFakePackage.mockResolvedValueOnce(false);
+      mockResolveStub.mockReturnValueOnce('my-package');
+      await requireWithInstall('my-package', mockGasket);
+
+      expect(mockLoggerInfoStub.mock.calls[0][0])
+        .toEqual('requireWithInstall - installing "my-package" with "pnpm" - saving as a devDependency');
+      expect(mockPackageManagerStub.mock.calls[0][0].packageManager)
+        .toEqual('pnpm');
+      expect(mockPackageManagerExecStub.mock.calls[0][0])
+        .toEqual('add');
+      expect(mockPackageManagerExecStub.mock.calls[0][1])
+        .toEqual(['my-package', '--save-dev']);
+    });
+
+    it('does not install when package is present', async function () {
+      mockReadFileStub.mockRejectedValueOnce();
+      mockTryResolveStub.mockReturnValueOnce('my-package');
+      mockFakePackage.mockResolvedValueOnce(true);
+      await requireWithInstall('my-package', mockGasket);
+
+      expect(mockTryResolveStub.mock.results[0].value).toEqual('my-package');
+      expect(await mockFakePackage()).toEqual(true);
+    });
+  });
+
   describe('npm package manager', function () {
     it('installs "my-package" with PackageManager', async function () {
+      mockReaddirStub.mockResolvedValueOnce([{ name: 'package.json' }, { name: 'package-lock.json' }]);
       mockReadFileStub.mockRejectedValueOnce();
       mockTryResolveStub.mockReturnValueOnce(false);
       mockFakePackage.mockResolvedValueOnce(false);
@@ -80,6 +113,7 @@ describe('requireWithInstall', function () {
 
   describe('yarn package manager', function () {
     it('installs "my-package" with PackageManager', async function () {
+      mockReaddirStub.mockResolvedValueOnce([{ name: 'package.json' }, { name: 'yarn.lock' }]);
       mockReadFileStub.mockResolvedValueOnce(true);
       mockTryResolveStub.mockReturnValueOnce(false);
       mockFakePackage.mockResolvedValueOnce(false);
@@ -110,6 +144,7 @@ describe('requireWithInstall', function () {
   describe('scoped packages', function () {
 
     it('allows for scoped package', async function () {
+      mockReaddirStub.mockResolvedValueOnce([{ name: 'package.json' }, { name: 'package-lock.json' }]);
       mockReadFileStub.mockRejectedValueOnce();
       mockTryResolveStub.mockReturnValueOnce(false);
       mockFakePackage.mockResolvedValueOnce(false);
@@ -140,6 +175,7 @@ describe('requireWithInstall', function () {
 
   describe('list of packages', function () {
     it('allows for the first parameter to be an array of strings', async function () {
+      mockReaddirStub.mockResolvedValueOnce([{ name: 'package.json' }, { name: 'yarn.lock' }]);
       const dependencies = ['my-package', '@scoped/package'];
       mockResolveStub
         .mockReturnValueOnce(dependencies[0])
