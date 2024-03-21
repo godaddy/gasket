@@ -104,6 +104,14 @@ describe('createServers', () => {
     expect(gasket.exec.mock.calls[0]).toContain('express', app);
   });
 
+  it('does not use empty middleware arrays', async function () {
+    lifecycles.middleware.mockResolvedValue([[]]);
+
+    await plugin.hooks.createServers(gasket, {});
+
+    expect(app.use).not.toHaveBeenCalledWith([]);
+  });
+
   it('executes the `errorMiddleware` lifecycle after the `express` lifecycle', async function () {
     await plugin.hooks.createServers(gasket, {});
     expect(gasket.exec.mock.calls[0]).toContain('express', app);
