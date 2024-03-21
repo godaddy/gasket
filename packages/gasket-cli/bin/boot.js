@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 require('dotenv').config();
 const { join } = require('path');
-const location = ['@gasket', 'cli', 'lib', 'bin', 'run'];
+const location = ['@gasket', 'cli', 'bin', 'run'];
 const local = join(process.cwd(), 'node_modules', ...location);
 
 //
