@@ -76,7 +76,7 @@ module.exports = async function createServers(gasket, serverOpts) {
   await gasket.execApply('middleware', async (plugin, handler) => {
     const middleware = await handler(app);
 
-    if (middleware) {
+    if (middleware && (!Array.isArray(middleware) || middleware.length)) {
       if (middlewareConfig) {
         const pluginName = plugin && plugin.name ? plugin.name : '';
         const mwConfig = middlewareConfig.find(mw => mw.plugin === pluginName);

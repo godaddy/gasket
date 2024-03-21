@@ -1,5 +1,7 @@
 # `@gasket/plugin-express`
 
+- Support the case of middleware hooks returning empty arrays
+
 ### 6.46.4
 
 - Adjust JSDocs and TS types ([#695])
