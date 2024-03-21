@@ -1,4 +1,4 @@
-const setup = require('../../../src/utils/setup');
+const setup = require('../../../lib/utils/setup');
 require('../../fixtures/example-setup');
 
 const resolvedFile = require.resolve('../../fixtures/example-setup.js', { paths: [__dirname] });

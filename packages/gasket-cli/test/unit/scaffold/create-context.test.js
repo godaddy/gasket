@@ -1,6 +1,6 @@
 /* eslint-disable max-statements */
 const path = require('path');
-const makeCreateContext = require('../../../src/scaffold/create-context');
+const makeCreateContext = require('../../../lib/scaffold/create-context');
 const { CreateContext } = makeCreateContext;
 
 describe('CreateRuntime', () => {
