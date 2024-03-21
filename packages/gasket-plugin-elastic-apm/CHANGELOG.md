@@ -1,6 +1,8 @@
 # `@gasket/plugin-elastic-apm`
 
-- Fix bug with express middleware injection when APM is not available
+### 6.46.5
+
+- Fix bug with express middleware injection when APM is not available ([#708])
 
 ### 6.46.4
 
@@ -57,3 +59,4 @@
 [#670]: https://github.com/godaddy/gasket/pull/670
 [#692]: https://github.com/godaddy/gasket/pull/692
 [#697]: https://github.com/godaddy/gasket/pull/697
+[#708]: https://github.com/godaddy/gasket/pull/708
