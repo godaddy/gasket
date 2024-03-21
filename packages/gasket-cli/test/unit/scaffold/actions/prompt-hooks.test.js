@@ -5,11 +5,11 @@ const mockLinkStub = jest.fn();
 const mockPromptStub = jest.fn();
 const mockCreatePromptModuleStub = jest.fn();
 
-jest.mock('../../../../src/scaffold/create-engine', () => mockEngineStub);
+jest.mock('../../../../lib/scaffold/create-engine', () => mockEngineStub);
 jest.mock('inquirer', () => ({ createPromptModule: mockCreatePromptModuleStub }));
 
-const ConfigBuilder = require('../../../../src/scaffold/config-builder');
-const promptHooks = require('../../../../src/scaffold/actions/prompt-hooks');
+const ConfigBuilder = require('../../../../lib/scaffold/config-builder');
+const promptHooks = require('../../../../lib/scaffold/actions/prompt-hooks');
 
 describe('promptHooks', () => {
   let  mockContext, pkgAddSpy;

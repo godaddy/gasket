@@ -8,7 +8,7 @@ jest.mock('@gasket/utils', () => {
   };
 });
 
-const Fetcher = require('../../../src/scaffold/fetcher');
+const Fetcher = require('../../../lib/scaffold/fetcher');
 
 describe('fetcher', () => {
   const stdout = 'example.tr.gz\nits all good';

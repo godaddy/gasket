@@ -31,7 +31,7 @@ jest.mock('glob', () => {
 });
 
 const path = require('path');
-const generateFiles = require('../../../../src/scaffold/actions/generate-files');
+const generateFiles = require('../../../../lib/scaffold/actions/generate-files');
 const fixtures = path.resolve(__dirname, '..', '..', '..', 'fixtures');
 const glob = require('glob');
 const fs = require('fs');
@@ -81,8 +81,10 @@ describe('generateFiles', () => {
 
   it('reads expected source files', async () => {
     await generateFiles(mockContext);
-    expect(mockReadFileStub).toHaveBeenCalledWith(expect.stringContaining('gasket-cli/test/fixtures/generator/file-a.md'), expect.any(Object));
-    expect(mockReadFileStub).toHaveBeenCalledWith(expect.stringContaining('gasket-cli/test/fixtures/generator/file-b.md'), expect.any(Object));
+    expect(mockReadFileStub)
+      .toHaveBeenCalledWith(expect.stringContaining('gasket-cli/test/fixtures/generator/file-a.md'), expect.any(Object));
+    expect(mockReadFileStub)
+      .toHaveBeenCalledWith(expect.stringContaining('gasket-cli/test/fixtures/generator/file-b.md'), expect.any(Object));
   });
 
   it('writes expected target files', async () => {
@@ -181,7 +183,9 @@ describe('generateFiles', () => {
 
       // expect a cli warning was added with relevant message
       expect(mockContext.warnings).toHaveLength(1);
-      expect(mockContext.warnings[0]).toContain(`Error templating /path/to/my-app/file-a.md: Cannot read properties of undefined`);
+      expect(mockContext.warnings[0]).toContain(
+        `Error templating /path/to/my-app/file-a.md: Cannot read properties of undefined`
+      );
     });
   });
 
