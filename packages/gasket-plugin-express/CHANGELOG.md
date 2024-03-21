@@ -1,6 +1,8 @@
 # `@gasket/plugin-express`
 
-- Support the case of middleware hooks returning empty arrays
+### 6.46.5
+
+- Support the case of middleware hooks returning empty arrays ([#708])
 
 ### 6.46.4
 
@@ -97,3 +99,4 @@
 [#670]: https://github.com/godaddy/gasket/pull/670
 [#675]: https://github.com/godaddy/gasket/pull/675
 [#695]: https://github.com/godaddy/gasket/pull/695
+[#708]: https://github.com/godaddy/gasket/pull/708
