@@ -1,5 +1,7 @@
 # `@gasket/plugin-elastic-apm`
 
+- Fix bug with express middleware injection when APM is not available
+
 ### 6.46.4
 
 - Fix to handle case when APM is not available ([#697])
