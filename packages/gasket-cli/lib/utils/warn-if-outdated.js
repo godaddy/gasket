@@ -52,7 +52,6 @@ async function getLatestVersion(pkgName, currentTime, cache) {
  * @param {string} currentVersion - current version of the package
  */
 module.exports = async function warnIfOutdated(pkgName, currentVersion) {
-  debugger;
   const currentTime = new Date().getTime();
   let cache = {};
 
