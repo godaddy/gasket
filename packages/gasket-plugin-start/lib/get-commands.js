@@ -1,10 +1,9 @@
+/// <reference types="@gasket/plugin-command" />
+/// <reference types="@gasket/plugin-log" />
+
 /**
  * Get the build, start, and local commands
- *
- * @param {Gasket} gasket - Gasket
- * @param {GasketCommand} GasketCommand - Base Gasket command to extend
- * @param {Object} flags - oclif flags utility
- * @returns {GasketCommand[]} commands
+ * @type {import('@gasket/engine').HookHandler<'getCommands'>}
  */
 module.exports = function getCommands(gasket, { GasketCommand, flags }) {
 

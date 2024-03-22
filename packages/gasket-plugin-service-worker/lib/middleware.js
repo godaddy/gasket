@@ -1,18 +1,17 @@
+/// <reference types="@gasket/plugin-express" />
+
 const { loadRegisterScript } = require('./utils');
 const nonNextRoute = /^(?!\/_next\/)/;
 
 /**
  * Middleware lifecycle to return middleware layer
- *
- * @param {Gasket} gasket - Gasket
- * @returns {Function} middleware
+ * @type {import('@gasket/engine').HookHandler<'middleware'>}
  */
 module.exports = function middleware(gasket) {
   const { serviceWorker: config } = gasket.config;
 
   /**
    * Middleware layer to attach the service worker registration script to req
-   *
    * @param {Request} req - Request
    * @param {Response} res - Response
    * @param {Function} next - Callback

@@ -2,7 +2,7 @@
 
 const { Command, flags } = require('@oclif/command');
 const ora = require('ora');
-const chalk = require('chalk');
+const chalk = require('chalk').default;
 
 const makeCreateContext = require('../scaffold/create-context');
 
@@ -99,9 +99,8 @@ class CreateCommand extends Command {
 
 /**
  * Parses comma separated flag input to array
- *
- * @param {String} input - Flag argument
- * @returns {String[]} results
+ * @param {string} input - Flag argument
+ * @returns {string[]} results
  */
 const commasToArray = input => input.split(',').map(name => name.trim());
 

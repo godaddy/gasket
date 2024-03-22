@@ -6,15 +6,13 @@ const pkgVersionCompatible = `^${pkgVersion}`;
 
 /**
  * Helper to check if a module version is a file path
- *
  * @param {string} v - Version to check
- * @returns {Boolean} result
+ * @returns {boolean} result
  */
 const isFile = v => v && v.includes('file:');
 
 /**
  * Determines the active cli version, and the version required to be installed for app.
- *
  * @param {CreateContext} context - Create context
  * @param {Spinner} spinner - Spinner
  */

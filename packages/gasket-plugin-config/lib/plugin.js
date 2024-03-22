@@ -1,12 +1,18 @@
+/// <reference types="@gasket/plugin-start" />
+/// <reference types="@gasket/plugin-redux" />
+/// <reference types="@gasket/plugin-metadata" />
+
 /* eslint require-atomic-updates: warn */
 
 const mergeConfigFiles = require('./merge-config-files');
 const mergeRootConfig = require('./merge-root-config');
 const middleware = require('./middleware');
 const { ENV_CONFIG } = require('./constants');
+const { name } = require('../package.json');
 
-module.exports = {
-  name: require('../package').name,
+/** @type {import('@gasket/engine').Plugin} */
+const plugin = {
+  name,
   hooks: {
     async preboot(gasket) {
       gasket[ENV_CONFIG] = await gasket.execWaterfall(
@@ -62,3 +68,5 @@ module.exports = {
     }
   }
 };
+
+module.exports = plugin;

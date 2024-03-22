@@ -9,7 +9,9 @@
     "lint:fix:all": "npm run lint:fix && lerna run lint:fix --stream",
     "test": "lerna run test --stream",
     "test:coverage": "lerna run test:coverage --stream",
-    "posttest": "npm run lint",
+    "posttest": "npm run lint && npm run typecheck",
+    "typecheck": "tsc",
+    "typecheck:watch": "tsc --watch",
     "build": "lerna run build",
     "align-packages": "node ./scripts/align-packages",
     "clean": "npm run clean:packages && npm run clean:root",
@@ -48,7 +50,7 @@
     "@docusaurus/preset-classic": "^3.1.1",
     "@docusaurus/theme-mermaid": "^3.1.1",
     "eslint": "^8.56.0",
-    "eslint-config-godaddy": "^7.0.2",
+    "eslint-config-godaddy": "^7.1.0",
     "eslint-plugin-json": "^3.1.0",
     "eslint-plugin-unicorn": "^44.0.0",
     "jsdom": "^20.0.0",
@@ -60,14 +62,16 @@
   },
   "eslintConfig": {
     "extends": [
-      "godaddy"
+      "godaddy",
+      "plugin:jsdoc/recommended-typescript-flavor"
     ],
     "ignorePatterns": [
       "node_modules/",
       "coverage/"
     ],
     "plugins": [
-      "unicorn"
+      "unicorn",
+      "jsdoc"
     ],
     "rules": {
       "unicorn/filename-case": "error"

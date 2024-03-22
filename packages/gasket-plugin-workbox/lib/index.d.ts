@@ -7,23 +7,28 @@ declare module '@gasket/engine' {
     workbox?: {
       /** path of directory to copy Workbox libraries to (default:
        * ./build/workbox) */
-      outputDir?: string,
+      outputDir?: string;
 
       /** change the default path to /_workbox endpoint by adding a path prefix
        * here. (default: ''). Used for setting up CDN support for Workbox
        * files. */
-      basePath?: string,
+      basePath?: string;
 
       /** Any initial workbox config options which will be merged with those
        * from any workbox lifecycle hooks. */
-      config?: PartialRecursive<GenerateSWConfig>
-    }
+      config?: PartialRecursive<GenerateSWConfig>;
+
+      /** @deprecated This property is deprecated. Use basePath instead. */
+      assetPrefix?: string;
+    };
+
+    basePath?: string;
   }
 
   export interface HookExecTypes {
     workbox(
       config: GenerateSWConfig,
-      context: { req?: IncomingMessage, res?: OutgoingMessage }
-    ): MaybeAsync<PartialRecursive<GenerateSWConfig>>
+      context: { req?: IncomingMessage; res?: OutgoingMessage }
+    ): MaybeAsync<PartialRecursive<GenerateSWConfig>>;
   }
 }

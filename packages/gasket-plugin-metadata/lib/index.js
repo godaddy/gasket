@@ -9,7 +9,8 @@ const {
   expandPackageMetadata
 } = require('./utils');
 
-module.exports = {
+/** @type {import('@gasket/engine').Plugin} */
+const plugin = {
   name: require('../package').name,
   hooks: {
     async init(gasket) {
@@ -69,3 +70,5 @@ module.exports = {
     }
   }
 };
+
+module.exports = plugin;

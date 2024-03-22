@@ -13,8 +13,7 @@ const debug = require('debug')('gasket:plugin:intl:buildManifest');
  * Constructs a manifest of locale file paths and settings which can be
  * loaded or bundled by the client. Locale paths have content hashes associated
  * with them which can be used for cache busting.
- *
- * @param {Gasket} gasket - Gasket API
+ * @param {import("@gasket/engine").Gasket} gasket - Gasket API
  * @async
  */
 module.exports = async function buildManifest(gasket) {
@@ -43,7 +42,6 @@ module.exports = async function buildManifest(gasket) {
 
   /**
    * Locale settings and known locale file paths
-   *
    * @type {LocaleManifest}
    */
   const manifest = {

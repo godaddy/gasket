@@ -4,8 +4,8 @@ const { LocaleUtils, LocaleStatus } = require('./index');
 
 /**
  * Server variant to load locale files from disk path
- * @extends { LocaleUtils }
- * @constructor
+ * @augments { LocaleUtils }
+ * @class
  */
 function LocaleServerUtils() {
   LocaleUtils.apply(this, arguments);

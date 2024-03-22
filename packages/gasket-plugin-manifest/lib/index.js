@@ -2,9 +2,11 @@ const build = require('./build');
 const configure = require('./configure');
 const serve = require('./serve');
 const middleware = require('./middleware');
+const { name } = require('../package.json');
 
-module.exports = {
-  name: require('../package').name,
+/** @type {import('@gasket/engine').Plugin} */
+const plugin = {
+  name,
   hooks: {
     build,
     configure,
@@ -31,3 +33,5 @@ module.exports = {
     }
   }
 };
+
+module.exports = plugin;

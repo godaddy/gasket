@@ -1,6 +1,6 @@
 const path = require('path');
 const url = require('url');
-const { name, devDependencies } = require('../package');
+const { name, devDependencies } = require('../package.json');
 const { createConfig } = require('./config');
 const { pluginIdentifier } = require('@gasket/resolve');
 const { setupNextApp, setupNextHandling } = require('./setup-next-app');
@@ -10,7 +10,8 @@ const metadata = require('./metadata');
 
 const isDefined = (o) => typeof o !== 'undefined';
 
-module.exports = {
+/** @type {import('@gasket/engine').Plugin} */
+const plugin = {
   dependencies: ['@gasket/plugin-webpack'],
   name,
   hooks: {
@@ -19,10 +20,9 @@ module.exports = {
      *
      * If the service worker plugin, only the _app entry is configured to be
      * injected with registration script.
-     *
      * @param {Gasket} gasket - Gasket
-     * @param {Object} baseConfig - Base gasket config
-     * @returns {Object} config
+     * @param {object} baseConfig - Base gasket config
+     * @returns {object} config
      */
     configure: {
       timing: {
@@ -32,7 +32,9 @@ module.exports = {
         const { logger } = gasket;
         const { next, ...rest } = baseConfig;
         if (next) {
-          logger.warning('DEPRECATED `next` in Gasket config - use `nextConfig`');
+          logger.warning(
+            'DEPRECATED `next` in Gasket config - use `nextConfig`'
+          );
         }
         const { nextConfig = next || {} } = baseConfig;
 
@@ -63,7 +65,6 @@ module.exports = {
       },
       /**
        * Add files & extend package.json for new apps.
-       *
        * @param {Gasket} gasket - The Gasket API.
        * @param {CreateContext} context - Create context
        * @param {Files} context.files - The Gasket Files API.
@@ -86,7 +87,10 @@ module.exports = {
             testPlugin &&
             pluginIdentifier(testPlugin).longName === `@gasket/plugin-${tester}`
           ) {
-            files.add(`${generatorDir}/${tester}/*`, `${generatorDir}/${tester}/**/*`);
+            files.add(
+              `${generatorDir}/${tester}/*`,
+              `${generatorDir}/${tester}/**/*`
+            );
           }
         });
 
@@ -139,7 +143,10 @@ module.exports = {
         const { exec } = gasket;
         const app = await setupNextApp(gasket);
 
-        expressApp.set(['buildId', app.name].filter(Boolean).join('/'), app.buildId);
+        expressApp.set(
+          ['buildId', app.name].filter(Boolean).join('/'),
+          app.buildId
+        );
 
         await exec('nextExpress', { next: app, express: expressApp });
 
@@ -148,10 +155,15 @@ module.exports = {
         // forcing the `NEXT_LOCALE` cookie:
         // https://github.com/vercel/Next.js/blob/canary/docs/advanced-features/i18n-routing.md#leveraging-the-next_locale-cookie
         expressApp.use(function setNextLocale(req, res, next) {
-          if (res.locals && res.locals.gasketData && res.locals.gasketData.intl) {
+          if (
+            res.locals &&
+            res.locals.gasketData &&
+            res.locals.gasketData.intl
+          ) {
             const { locale } = res.locals.gasketData.intl;
             if (locale) {
-              req.headers.cookie = (req.headers.cookie || '') + `;NEXT_LOCALE=${locale}`;
+              req.headers.cookie =
+                (req.headers.cookie || '') + `;NEXT_LOCALE=${locale}`;
             }
           }
           next();
@@ -184,10 +196,15 @@ module.exports = {
         await exec('nextFastify', { next: app, fastify: fastifyApp });
 
         fastifyApp.register(function setNextLocale(req, res, next) {
-          if (res.locals && res.locals.gasketData && res.locals.gasketData.intl) {
+          if (
+            res.locals &&
+            res.locals.gasketData &&
+            res.locals.gasketData.intl
+          ) {
             const { locale } = res.locals.gasketData.intl;
             if (locale) {
-              req.headers.cookie = (req.headers.cookie || '') + `;NEXT_LOCALE=${locale}`;
+              req.headers.cookie =
+                (req.headers.cookie || '') + `;NEXT_LOCALE=${locale}`;
             }
           }
           next();
@@ -209,9 +226,8 @@ module.exports = {
     },
     /**
      * Workbox config partial to add Next.js static assets to precache
-     *
      * @param {Gasket} gasket The gasket API.
-     * @returns {Object} config
+     * @returns {object} config
      */
     workbox: function (gasket) {
       const { nextConfig = {}, basePath: rootBasePath } = gasket.config;
@@ -224,7 +240,10 @@ module.exports = {
 
       const parsed = assetPrefix ? url.parse(assetPrefix) : '';
       const joined = parsed
-        ? url.format({ ...parsed, pathname: path.join(parsed.pathname, '_next/') })
+        ? url.format({
+          ...parsed,
+          pathname: path.join(parsed.pathname, '_next/')
+        })
         : '_next/';
 
       return {
@@ -238,3 +257,5 @@ module.exports = {
     metadata
   }
 };
+
+module.exports = plugin;

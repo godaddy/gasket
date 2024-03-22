@@ -3,6 +3,7 @@ const { Command, flags } = require('@oclif/command');
 /**
  * The GasketCommand can be extended to allow plugins to introduce new CLI
  * commands to invoke Gasket lifecycles.
+ * @type {import('@gasket/engine').GasketCommandClass}
  */
 class GasketCommand extends Command {
 
@@ -19,9 +20,7 @@ class GasketCommand extends Command {
   /**
    * Virtual method which may be overridden by subclasses, to adjust the
    * Gasket Config.
-   *
-   * @param {object} gasketConfig - Gasket configurations
-   * @returns {object} gasketConfig
+   * @param gasketConfig
    * @async
    */
   async gasketConfigure(gasketConfig) { return gasketConfig; }
@@ -31,7 +30,6 @@ class GasketCommand extends Command {
    * GasketCommand subclasses should implement the `gasketRun` method.
    * @override
    * @async
-   * @private
    */
   async run() {
     await this.gasketRun();
@@ -43,15 +41,13 @@ class GasketCommand extends Command {
    * to GasketCommand subclasses for executing lifecycles.
    * @override
    * @async
-   * @private
    */
   async init() {
     await super.init();
     // "this.config" is the context that the init hook injected "gasket" into
     /**
      * Gasket Plugin engine instance with details of session
-     *
-     * @type {Gasket} gasket
+     * @type {import("@gasket/engine").Gasket} gasket
      * @property {object} command - Details of command
      * @property {string} command.id - Name of command
      * @property {object} command.flags - Flags
@@ -64,7 +60,6 @@ class GasketCommand extends Command {
 
     /**
      * Flags and arguments passed with CLI command.
-     *
      * @type {ParserOutput} parsed - Parsed flags and args
      * @property {object} parsed.flags - Flags
      * @property {string[]} parsed.argv - Ordered Arguments
@@ -92,7 +87,6 @@ class GasketCommand extends Command {
 /**
  * These are required for all gasket commands, required by the CLI for loading
  * the appropriate gasket.config file and environment.
- *
  * @type {object} flags
  * @property {string} config - Fully qualified gasket config to load (default: `'gasket.config'`)
  * @property {string} root - Top-level app directory (default: `process.cwd()`)

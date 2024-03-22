@@ -1,3 +1,5 @@
+/// <reference types="@gasket/plugin-command" />
+
 const path = require('path');
 const merge = require('deepmerge');
 const { getSWConfig } = require('./utils');
@@ -23,12 +25,9 @@ const defaultConfig = {
 
 /**
  * Configure lifecycle to set up SW config with defaults
- *
- * @param {Gasket} gasket - Gasket
- * @param {Object} config - Base gasket config
- * @returns {Object} config
+ * @type {import('@gasket/engine').HookHandler<'configure'>}
  */
-module.exports = function configure(gasket, config = {}) {
+module.exports = function configure(gasket, config) {
   const { config: { root } } = gasket;
   const serviceWorker = merge(defaultConfig, getSWConfig({ config }));
   let { staticOutput } = serviceWorker;

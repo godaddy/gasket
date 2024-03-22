@@ -1,4 +1,8 @@
-// Wrapper to access window.fetch in case of polyfill or monkey patch
+/**
+ * Wrapper to access window.fetch in case of polyfill or monkey patch
+ * @param {...any} args - Arguments to pass to fetch
+ * @returns {Promise<Response>} - The fetch response
+ */
 function fetchWrapper(...args) {
   return window.fetch(...args);
 }

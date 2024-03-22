@@ -10,6 +10,13 @@ declare module '@gasket/engine' {
     }
   }
 
+  export interface State {
+    [key: string]: any;
+    config?: {
+      [key: string]: any;
+    }
+  }
+
   export interface HookExecTypes {
     initReduxState<State>(
       state: State,

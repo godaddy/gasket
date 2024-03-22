@@ -1,6 +1,9 @@
+/// <reference types="@gasket/plugin-command" />
+
 const path = require('path');
 const timing = { before: ['@gasket/plugin-docs'] };
 
+/** @type {import('@gasket/engine').HookHandler<'configure'>} */
 async function handler(gasket, config) {
   const { docusaurus = {} } = config;
   const { rootDir = '.docs', docsDir = 'docs' } = docusaurus;

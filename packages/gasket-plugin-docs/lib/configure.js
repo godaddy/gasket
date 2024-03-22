@@ -1,3 +1,4 @@
+/// <reference types="@gasket/plugin-command" />
 const defaultsDeep = require('lodash.defaultsdeep');
 
 const defaultConfig = {
@@ -6,10 +7,7 @@ const defaultConfig = {
 
 /**
  * Configure lifecycle to set up SW config with defaults
- *
- * @param {Gasket} gasket - Gasket
- * @param {object} baseConfig - Base gasket config
- * @returns {object} config
+ * @type {import('@gasket/engine').HookHandler<'configure'>}
  */
 module.exports = function configureHook(gasket, baseConfig = {}) {
   const userConfig = baseConfig.docs || {};

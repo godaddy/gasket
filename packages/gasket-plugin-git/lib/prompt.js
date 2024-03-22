@@ -2,8 +2,7 @@ const Gitignore = require('./gitignore');
 
 /**
  * Formats gitignore content
- *
- * @param {Object} content - gitignore content
+ * @param {object} content - gitignore content
  * @returns {string} formatted gitignore content
  */
 function serialize(content) {
@@ -22,7 +21,6 @@ function serialize(content) {
 
 /**
  * Instantiates new Gitignore instance, adds get method to content using the serialize function, adds gitignore to context
- *
  * @param {CreateContext} context - Create context
  */
 function instantiateGitignore(context) {
@@ -39,10 +37,9 @@ function instantiateGitignore(context) {
 
 /**
  * Prompt for git settings during gasket create
- *
- * @param {Gasket} gasket - Gasket
+ * @param {import("@gasket/engine").Gasket} gasket - Gasket
  * @param {CreateContext} context - Create context
- * @param {Object} utils - Prompt utils
+ * @param {object} utils - Prompt utils
  * @param {Function} utils.prompt - Inquirer prompt
  * @returns {Promise<object>} context
  */

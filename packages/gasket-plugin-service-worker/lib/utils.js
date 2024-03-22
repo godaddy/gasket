@@ -6,6 +6,10 @@ const swHeader = `'use strict';
 
 `;
 
+/**
+ *  Get the service worker config from gasket.config
+ * @param {import("@gasket/engine").Gasket} gasket - Gasket
+ */
 function getSWConfig(gasket) {
   const { config = {} } = gasket;
   const { serviceWorker = {} } = config;
@@ -14,9 +18,8 @@ function getSWConfig(gasket) {
 
 /**
  * Gathers thunks to key caches of composed sw scripts, based on req
- *
- * @param {Gasket} gasket - Gasket
- * @returns {function[]} cacheKeys
+ * @param {import("@gasket/engine").Gasket} gasket - Gasket
+ * @returns {Function[]} cacheKeys
  * @async
  */
 async function getCacheKeys(gasket) {
@@ -28,6 +31,11 @@ async function getCacheKeys(gasket) {
   return [...userCacheKeys, ...pluginCacheKeys].filter((k) => typeof k === 'function');
 }
 
+/**
+ *
+ * @param {import("@gasket/engine").Gasket} gasket - Gasket
+ * @param context
+ */
 async function getComposedContent(gasket, context) {
   const {
     execWaterfall,
@@ -52,8 +60,7 @@ let __script;
 
 /**
  * Loads template file once with substitutions from config
- *
- * @param {Object} config - ServiceWorker config from gasket.config
+ * @param {object} config - ServiceWorker config from gasket.config
  * @returns {Promise<string>} template
  */
 async function loadRegisterScript(config) {

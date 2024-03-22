@@ -1,11 +1,7 @@
 /* eslint require-atomic-updates: warn */
+/// <reference types="@gasket/plugin-express" />
 
-/**
- * Configure middleware
- *
- * @param {Object} gasket - The Gasket API
- * @returns {Function} middleware
- */
+/** @type {import('@gasket/engine').HookHandler<'middleware'>} */
 module.exports = function middlewareHook(gasket) {
   const { redux: reduxConfig = {} } = gasket.config;
 
@@ -16,7 +12,6 @@ module.exports = function middlewareHook(gasket) {
 
   /**
    * Middleware to attach the redux store to the req object for use in other middleware
-   *
    * @param {Request} req - Request
    * @param {Response} res - Response
    * @param {Function} next - Callback

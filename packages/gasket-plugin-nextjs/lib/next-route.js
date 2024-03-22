@@ -1,25 +1,17 @@
 /* eslint-disable spaced-comment */
-// @ts-check
 /// <reference types="@gasket/engine" />
 
 const path = require('path');
 const fs = require('fs').promises;
-
-/**
- * @typedef {import("@gasket/engine").Gasket} Gasket
- * @typedef {import("http").IncomingMessage}  Request
- */
 
 // Because getNextRoute may be called multiple times during a request, cache
 const nextRouteForRequest = new WeakMap();
 
 /**
  * Gets the NextJS route matching the request
- *
- * @param {Gasket}  gasket  The gasket engine
- * @param {Request} req     The HTTP request
- *
- * @returns {Promise<Object | null>} A Next.JS route object or null
+ * @param {import("@gasket/engine").Gasket}  gasket  The gasket engine
+ * @param {import("http").IncomingMessage} req     The HTTP request
+ * @returns {Promise<object | null>} A Next.JS route object or null
  */
 async function getNextRoute(gasket, req) {
   if (nextRouteForRequest.has(req)) {
@@ -42,6 +34,10 @@ async function getNextRoute(gasket, req) {
 }
 
 let routesPromise, routesLoadError, cachedRoutes;
+/**
+ *
+ * @param gasket
+ */
 async function loadRoutes(gasket) {
   if (routesLoadError) {
     return null;
@@ -73,6 +69,10 @@ async function loadRoutes(gasket) {
   return routesPromise;
 }
 
+/**
+ *
+ * @param routes
+ */
 function *iterateRoutes(routes) {
   yield* routes.staticRoutes;
   yield* routes.dynamicRoutes;

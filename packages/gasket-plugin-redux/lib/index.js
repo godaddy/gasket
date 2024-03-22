@@ -4,14 +4,8 @@ const configure = require('./configure');
 const prompt = require('./prompt');
 const middleware = require('./middleware');
 
-/**
- * Gasket Redux Plugin
- *
- * Adds middleware to the express server with webpack configuration
- *
- * @type {{hooks: {middleware, webpack}}}
- */
-module.exports = {
+/** @type {import('@gasket/engine').Plugin} */
+const plugin = {
   name,
   dependencies: ['@gasket/plugin-log'],
   hooks: {
@@ -93,3 +87,5 @@ module.exports = {
     }
   }
 };
+
+module.exports = plugin;

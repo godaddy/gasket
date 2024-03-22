@@ -31,21 +31,18 @@ const detailDocsHelpers = {
 
 /**
  * Expected DetailDocsConfig types
- *
  * @type {string[]}
  */
 const detailDocsTypes = Object.keys(detailDocsHelpers);
 
 /**
  * Defaults for when a docsSetup is not declared.
- *
- * @type {{link: string, files: array}}
+ * @type {{link: string, files: Array}}
  */
 const docsSetupDefault = Object.freeze({ link: 'README.md', files: ['docs/**/*.*', 'LICENSE.md'] });
 
 /**
  * Returns a filename with the hash removed
- *
  * @param {string} link - Filename that may have hash
  * @returns {string} filename
  */
@@ -60,7 +57,7 @@ const getDocsSetupFromPkg = moduleData => moduleData.package && moduleData.packa
  */
 class DocsConfigSetBuilder {
   /**
-   * @param {Gasket} gasket - Gasket API
+   * @param {import("@gasket/engine").Gasket} gasket - Gasket API
    */
   constructor(gasket) {
     this._plugins = [];
@@ -77,7 +74,6 @@ class DocsConfigSetBuilder {
 
   /**
    * Look up all doc files for a module
-   *
    * @param {ModuleData} moduleData - Metadata for a module
    * @param {DocsSetup} docsSetup - Docs setup
    * @param {string} link - main file
@@ -121,7 +117,6 @@ class DocsConfigSetBuilder {
    * Divides global and local transforms from a docsSetup.
    * Global transforms are added to the top-level set.
    * Local transforms will be added to the module's docConfig.
-   *
    * @param {DocsTransform[]} transforms - Transforms to segregate
    * @returns {DocsTransform[]} remaining local transforms
    * @private
@@ -139,7 +134,6 @@ class DocsConfigSetBuilder {
 
   /**
    * Constructs the DocsConfig for a module based on its info and docsSetup
-   *
    * @param {ModuleData} moduleData - Metadata for a module
    * @param {DocsSetup} docsSetup - Files to include and transforms
    * @param {object} overrides - Pre-configured properties
@@ -180,7 +174,6 @@ class DocsConfigSetBuilder {
   /**
    * Flattens all detail types from plugins' metadata.
    * Add a from property with name of parent plugin.
-   *
    * @param {string} type - Detail type in metadata
    * @returns {DetailDocsConfig[]} flattened
    * @private
@@ -206,7 +199,6 @@ class DocsConfigSetBuilder {
    * Adds additional docsSetup for modules, merging duplicates with a first
    * in wins approach. When a module is then add to be configured, a docSetup
    * will be looked up from what's been added by plugins here.
-   *
    * @param {Object.<string, DocsSetup>} moduleDocsSetup - Setups for modules
    * @private
    */
@@ -216,7 +208,6 @@ class DocsConfigSetBuilder {
 
   /**
    * Add DocsConfig to the set for the App
-   *
    * @param {ModuleData} moduleData - Metadata for app module
    * @param {DocsSetup} docsSetup - Initial docs setup
    * @async
@@ -235,7 +226,6 @@ class DocsConfigSetBuilder {
 
   /**
    * Add DocsConfig to the set for a plugin
-   *
    * @param {PluginData} pluginData - Metadata for plugin
    * @param {DocsSetup} docsSetup - Initial docs setup
    * @async
@@ -267,7 +257,6 @@ class DocsConfigSetBuilder {
 
   /**
    * Add DocsConfig to the set for multiple plugins if not already added
-   *
    * @param {PluginData[]} pluginDatas - Metadata for multiple plugins
    * @async
    */
@@ -277,7 +266,6 @@ class DocsConfigSetBuilder {
 
   /**
    * Add DocsConfig to the set for a preset
-   *
    * @param {PresetData} presetData - Metadata for preset
    * @param {DocsSetup} docsSetup - Initial docs setup
    * @async
@@ -302,7 +290,6 @@ class DocsConfigSetBuilder {
 
   /**
    * Add DocsConfig to the set for multiple presets if not already added
-   *
    * @param {PresetData[]} presetDatas - Metadata for multiple presets
    * @async
    */
@@ -312,7 +299,6 @@ class DocsConfigSetBuilder {
 
   /**
    * Add DocsConfig to the set for a module
-   *
    * @param {ModuleData} moduleData - Metadata for a module
    * @param {DocsSetup} docsSetup - Initial docs setup
    * @async
@@ -337,7 +323,6 @@ class DocsConfigSetBuilder {
 
   /**
    * Add DocsConfig to the set for multiple modules if not already added
-   *
    * @param {ModuleData[]} moduleDatas - Metadata for multiple modules
    * @async
    */
@@ -347,7 +332,6 @@ class DocsConfigSetBuilder {
 
   /**
    * Picks out properties to return as the config set
-   *
    * @returns {DocsConfigSet} docsConfigSet - Configuration for docs generation
    */
   getConfigSet() {

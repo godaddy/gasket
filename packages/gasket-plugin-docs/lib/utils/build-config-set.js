@@ -5,7 +5,6 @@ const defaults = DocsConfigSetBuilder.docsSetupDefault;
  * Searches for the pluginData from metadata for a given plugin.
  * If the plugin does not have a name, a unique match by hooks is attempted,
  * otherwise a console warning is issued.
- *
  * @param {Plugin} plugin - Plugin instance to look up info for
  * @param {PluginData[]} pluginsDatas - Metadata for plugins
  * @param {Log} logger - log instance
@@ -41,13 +40,12 @@ function findPluginData(plugin, pluginsDatas, logger) {
  * Processes metadata and docsSetup hooks to assemble the set of docs configs
  *
  * Order of operations for building docsConfig:
- *   - docsSetup hooked plugins
- *   - metadata or docsSetup lifecycle file for app
- *   - metadata for plugins without docsSetup hook
- *   - metadata for modules not processed with plugins
- *   - metadata for presets
- *
- * @param {Gasket} gasket - Gasket API
+ * - docsSetup hooked plugins
+ * - metadata or docsSetup lifecycle file for app
+ * - metadata for plugins without docsSetup hook
+ * - metadata for modules not processed with plugins
+ * - metadata for presets
+ * @param {import("@gasket/engine").Gasket} gasket - Gasket API
  * @returns {DocsConfigSet} docsConfigSet
  */
 async function buildDocsConfigSet(gasket) {

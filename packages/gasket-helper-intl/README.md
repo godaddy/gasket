@@ -15,4 +15,3 @@ settings provided by [@gasket/plugin-intl].
 
 [API docs]:docs/api.md
 [@gasket/plugin-intl]: /packages/gasket-plugin-intl/README.md
-

@@ -1,3 +1,5 @@
+/// <reference types="@gasket/plugin-command" />
+
 const {
   getWorkboxConfig,
   getBasePath
@@ -5,10 +7,7 @@ const {
 
 /**
  * Configure lifecycle to set up SW config with defaults
- *
- * @param {Gasket} gasket - Gasket
- * @param {Object} config - Base gasket config
- * @returns {Promise<Object>} config
+ * @type {import('@gasket/engine').HookHandler<'configure'>}
  */
 module.exports = async function configure(gasket, config) {
   const { logger } = gasket;
@@ -18,7 +17,7 @@ module.exports = async function configure(gasket, config) {
   if ('assetPrefix' in workbox) logger.warning('DEPRECATED workbox config `assetPrefix` - use `basePath`');
   workbox.basePath = basePath;
 
-  const { version } = require('workbox-build/package');
+  const { version } = require('workbox-build/package.json');
   const libraryVersion = `workbox-v${version}`;
 
   const scriptUrl = [

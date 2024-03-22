@@ -1,7 +1,6 @@
 /**
  * Sets up a context object with special getters
- *
- * @param {Gasket} gasket - The Gasket API
+ * @param {import("@gasket/engine").Gasket} gasket - The Gasket API
  * @param {object} context - Additional context-specific information
  * @param {string} name - Plugin name
  * @returns {object} context
@@ -22,7 +21,7 @@ function setupContext(gasket, context, name) {
 
 /**
  * Creates the webpack config
- * @param {Gasket} gasket - The Gasket API
+ * @param {import("@gasket/engine").Gasket} gasket - The Gasket API
  * @param {object} initConfig - Initial webpack config
  * @param {object} context - Additional context-specific information
  * @returns {object} Final webpack config

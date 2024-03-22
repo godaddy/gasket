@@ -1,7 +1,11 @@
-const { name, devDependencies } = require('../package');
+/// <reference types="@gasket/cli" />
+/// <reference types="@gasket/plugin-metadata" />
+
+const { name, devDependencies } = require('../package.json');
 const initWebpack = require('./init-webpack');
 
-module.exports = {
+/** @type {import('@gasket/engine').Plugin} */
+const plugin = {
   name,
   hooks: {
     create(gasket, context) {
@@ -51,3 +55,5 @@ module.exports = {
   },
   initWebpack
 };
+
+module.exports = plugin;

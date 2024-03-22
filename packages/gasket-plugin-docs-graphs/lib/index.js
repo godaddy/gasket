@@ -1,9 +1,13 @@
+/// <reference types="node" />
+/// <reference types="@gasket/plugin-docs" />
+
 /* eslint no-sync: 0 */
 const path = require('path');
 const fs = require('fs');
 const write = fs.promises.writeFile;
 
-module.exports = {
+/** @type {import('@gasket/engine').Plugin} */
+const plugin = {
   name: require('../package.json').name,
   hooks: {
     async docsGenerate(gasket, docsConfigSet) {
@@ -53,3 +57,5 @@ module.exports = {
     }
   }
 };
+
+module.exports = plugin;

@@ -1,3 +1,5 @@
+/// <reference types="@gasket/plugin-docs" />
+
 const defaultsDeep = require('lodash.defaultsdeep');
 const { existsSync } = require('fs');
 const { writeFile } = require('fs').promises;
@@ -10,6 +12,9 @@ const defaultConfig = {
   host: 'localhost'
 };
 
+/**
+ *
+ */
 function checkDevDependencies() {
   const preset = tryRequire('@docusaurus/preset-classic');
   const core = tryRequire('@docusaurus/core/package.json');
@@ -18,6 +23,7 @@ function checkDevDependencies() {
   }
 }
 
+/** @type {import('@gasket/engine').HookHandler<'docsView'>} */
 module.exports = async function docsView(gasket) {
   checkDevDependencies();
   const { start } = require('@docusaurus/core/lib');

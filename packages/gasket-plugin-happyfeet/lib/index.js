@@ -1,6 +1,7 @@
 const happyFeet = require('happy-feet');
 
-module.exports = {
+/** @type {import('@gasket/engine').Plugin} */
+const plugin = {
   name: require('../package').name,
   hooks: {
     preboot: async function preboot(gasket) {
@@ -17,3 +18,5 @@ module.exports = {
     }
   }
 };
+
+module.exports = plugin;

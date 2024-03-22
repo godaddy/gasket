@@ -1,17 +1,12 @@
+// / <reference types="@gasket/cli" />
+
 const debug = require('diagnostics')('gasket:fastify');
 const { peerDependencies, name } = require('../package.json');
 
-module.exports = {
+/** @type {import('@gasket/engine').Plugin} */
+const plugin = {
   name,
   hooks: {
-    /**
-    * Add files & extend package.json for new apps.
-    *
-    * @param {Gasket} gasket - The gasket API.
-    * @param {CreateContext} context - Create context
-    * @param {PackageJson} context.pkg - The Gasket PackageJson API.
-    * @public
-    */
     create: async function create(gasket, context) {
       const generatorDir = `${ __dirname }/../generator`;
 
@@ -28,15 +23,14 @@ module.exports = {
       }
     },
     /**
-    * Create the Fastify instance and setup the lifecycle hooks.
-    * Fastify is compatible with express middleware out of the box, so we can
-    * use the same middleware lifecycles.
-    *
-    * @param {Gasket} gasket Gasket API.
-    * @param {Object} serverOpts Server options.
-    * @returns {Express} The web server.
-    * @public
-    */
+     * Create the Fastify instance and setup the lifecycle hooks.
+     * Fastify is compatible with express middleware out of the box, so we can
+     * use the same middleware lifecycles.
+     * @param {import("@gasket/engine").Gasket} gasket Gasket API.
+     * @param {object} serverOpts Server options.
+     * @returns {Express} The web server.
+     * @public
+     */
     // eslint-disable-next-line max-statements
     createServers: async function createServers(gasket, serverOpts) {
       const fastify = require('fastify');
@@ -159,3 +153,5 @@ module.exports = {
     }
   }
 };
+
+module.exports = plugin;

@@ -1,13 +1,9 @@
+/// <reference types="@gasket/plugin-webpack" />
 const { getSWConfig } = require('./utils');
 
 /**
  * Add the analyzer webpack plugin if analyze flag has been set
- *
- * @param {Object} gasket - Gasket API
- * @param {Object} gasket.command - Invoked command details
- * @param {Object} webpackConfig - Webpack config
- * @param {Object} data - Next.js data
- * @returns {Object} webpackConfig
+ * @type {import('@gasket/engine').HookHandler<'webpackConfig'>}
  */
 module.exports = function webpackConfigHook(gasket, webpackConfig, data) {
   const { command } = gasket;

@@ -3,10 +3,9 @@ const debug = require('diagnostics')('gasket:cli:hooks:init');
 
 /**
  * oclif hook that loads the gasket.config and instantiates the engine.
- *
- * @param {String} id - Name of the command
- * @param {Object} oclifConfig - oclif configuration
- * @param {Object} argv - command line arguments
+ * @param {string} id - Name of the command
+ * @param {object} oclifConfig - oclif configuration
+ * @param {object} argv - command line arguments
  * @async
  */
 async function initHook({ id, config: oclifConfig, argv }) {

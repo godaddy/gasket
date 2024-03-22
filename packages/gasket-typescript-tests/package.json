@@ -13,7 +13,9 @@
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
-    "posttest": "npm run lint"
+    "posttest": "npm run lint && npm run typecheck",
+    "typecheck": "tsc",
+    "typecheck:watch": "tsc --watch"
   },
   "repository": {
     "type": "git",
@@ -81,10 +83,12 @@
   "eslintConfig": {
     "extends": [
       "godaddy-react-typescript",
-      "plugin:jest/recommended"
+      "plugin:jest/recommended",
+      "plugin:jsdoc/recommended-typescript-flavor"
     ],
     "plugins": [
-      "unicorn"
+      "unicorn",
+      "jsdoc"
     ],
     "rules": {
       "unicorn/filename-case": "error",

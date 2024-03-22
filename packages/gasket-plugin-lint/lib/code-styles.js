@@ -5,7 +5,6 @@ const { devDependencies } = require('../package');
 /**
  *
  * @typedef {object} CodeStyle
- *
  * @property {string} name - Proper name to show in prompt. Do not set to keep from prompt choices
  * @property {function(context: CreateContext, utils: CodeStyleUtils)} create - Create steps for the code style
  * @property {boolean} [allowStylelint] - If should prompt for adding stylelint
@@ -14,7 +13,6 @@ const { devDependencies } = require('../package');
 /**
  * GoDaddy JavaScript Style
  * @see: https://github.com/godaddy/javascript
- *
  * @type {CodeStyle}
  */
 const godaddy = {
@@ -74,7 +72,6 @@ const godaddy = {
 /**
  * JavaScript Standard Style
  * @see: https://standardjs.com/
- *
  * @type {CodeStyle}
  */
 const standard = {
@@ -116,7 +113,6 @@ const standard = {
 /**
  * Airbnb JavaScript Style
  * @see: https://github.com/airbnb/javascript
- *
  * @type {CodeStyle}
  */
 const airbnb = {
@@ -152,7 +148,6 @@ const airbnb = {
 
 /**
  * Allows users to type in the name of an eslint config and stylelint config.
- *
  * @type {CodeStyle}
  */
 const other = {
@@ -187,7 +182,6 @@ const other = {
 
 /**
  * Create an app without any linting setup
- *
  * @type {CodeStyle}
  */
 const none = {
@@ -197,7 +191,6 @@ const none = {
 /**
  * This does not show up as a prompt choice, but is common setup that runs
  * for all code styles choices (except, of course, none).
- *
  * @type {CodeStyle}
  */
 const common = {

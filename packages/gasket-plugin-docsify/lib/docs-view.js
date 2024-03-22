@@ -1,3 +1,5 @@
+/// <reference types="@gasket/plugin-docs" />
+
 const defaultsDeep = require('lodash.defaultsdeep');
 const generateContent = require('./generate-content');
 const { requireWithInstall } = require('@gasket/utils');
@@ -13,6 +15,7 @@ const defaultConfig = {
   }
 };
 
+/** @type {import('@gasket/engine').HookHandler<'docsView'>} */
 module.exports = async function docsView(gasket, docsConfigSet) {
   const { serve } = await requireWithInstall('docsify-cli/lib', gasket);
   const userConfig = gasket.config.docsify || {};

@@ -2,8 +2,7 @@ const { runShellCommand } = require('@gasket/utils');
 
 /**
  * Initialize the app with a git repo and creates a first commit with generated files
- *
- * @param {Gasket} gasket - Gasket
+ * @param {import("@gasket/engine").Gasket} gasket - Gasket
  * @param {CreateContext} context - Create context
  * @returns {Promise} promise
  */

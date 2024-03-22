@@ -1,11 +1,11 @@
+/// <reference types="@gasket/plugin-express" />
+
 const escapeRegex = require('escape-string-regexp');
 const { gatherManifestData } = require('./utils');
 
 /**
  * Add some middleware to gather manifest details for certain endpoints
- *
- * @param {Gasket} gasket - The gasket API
- * @returns {function} Express middleware to apply
+ * @type {import('@gasket/engine').HookHandler<'middleware'>}
  */
 function handler(gasket) {
   const { serviceWorker: { url: swUrl = '' } = {}, manifest: { staticOutput = false } } = gasket.config;

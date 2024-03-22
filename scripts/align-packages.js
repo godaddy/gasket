@@ -44,7 +44,7 @@ const depVersions = {
 
   'babel-eslint': '^10.1.0',
   'eslint': '^8.56.0',
-  'eslint-config-godaddy': '^7.0.2',
+  'eslint-config-godaddy': '^7.1.0',
   'eslint-config-godaddy-react': '^9.0.1',
   'eslint-plugin-json': '^3.1.0',
   'eslint-plugin-jest': '^27.6.3',
@@ -63,6 +63,7 @@ const depVersions = {
   'serve-static': '^1.15.0',
   'cross-env': '^7.0.3',
 
+  'eslint-plugin-jsdoc': '^48.2.1',
   'typescript': '^5.4.2'
 };
 
@@ -135,6 +136,8 @@ const scriptsOrder = [
   'test:client',
   'test:server',
   'posttest',
+  'typecheck',
+  'typecheck:watch',
   'build',
   'build:watch',
   'prepack',
@@ -245,6 +248,27 @@ function fixedProperties(pkgJson) {
   };
 }
 
+function updateEslintConfig(pkgJson) {
+  if (!pkgJson.eslintConfig) {
+    pkgJson.eslintConfig = {
+      extends: 'godaddy'
+    };
+  }
+
+  if (!pkgJson.eslintConfig.extends) {
+    pkgJson.eslintConfig.extends = 'godaddy';
+  }
+
+  if (pkgJson.eslintConfig.extends.indexOf('plugin:jsdoc/recommended-typescript-flavor') === -1) {
+    pkgJson.eslintConfig.extends.push('plugin:jsdoc/recommended-typescript-flavor');
+  }
+
+  if (pkgJson.eslintConfig.plugins.indexOf('jsdoc') === -1) {
+    pkgJson.eslintConfig.plugins.push('jsdoc');
+  }
+
+}
+
 /**
  * Checks for expected scripts and warns if missing
  *
@@ -294,6 +318,7 @@ async function fixupPackage(pkgPath) {
 
   checkScripts(pkgJson);
   checkMaintainers(pkgJson);
+  updateEslintConfig(pkgJson);
 
   pkgJson = sortKeys(pkgJson, null, orderedSort(pkgOrder));
   pkgJson = sortKeys(pkgJson, 'scripts', orderedSort(scriptsOrder));

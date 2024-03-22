@@ -2,15 +2,17 @@ import diagnostics from 'diagnostics';
 
 /**
  * Log utility for client-side usage. Displays scoped messages in the console.
- *
  * @class Log
  * @public
  */
 export default class Log {
   /**
    * Setup log instances for each level.
-   *
-   * @param {Object} options configuration.
+   * @param {object} options configuration.
+   * @param options.level
+   * @param options.levels
+   * @param options.namespace
+   * @param options.prod
    * @private
    */
   constructor({ level, levels = Log.levels, namespace, prod } = {}) {
@@ -27,8 +29,8 @@ export default class Log {
 
   /**
    * Generic log function.
-   *
    * @param {Array} ...args Additional arguments.
+   * @param {...any} args
    * @returns {Log} fluent interface.
    * @public
    */
@@ -40,19 +42,17 @@ export default class Log {
 }
 
 /**
-* Prefix for all messages send to fluentd.
-* TODO (@swaagie) add support for sending aggregated messages.
-*
-* @type {String}
-*/
+ * Prefix for all messages send to fluentd.
+ * TODO (@swaagie) add support for sending aggregated messages.
+ * @type {string}
+ */
 Log.prefix = 'client';
 
 /**
-* Log levels comparable to winston's syslog levels.
-* https://github.com/winstonjs/triple-beam/blob/master/config/syslog.js
-*
-* @type {Object}
-*/
+ * Log levels comparable to winston's syslog levels.
+ * https://github.com/winstonjs/triple-beam/blob/master/config/syslog.js
+ * @type {object}
+ */
 Log.levels = [
   'debug',
   'info',

@@ -1,11 +1,15 @@
+/// <reference types="@gasket/plugin-metadata" />
+
 const configure = require('./configure');
 const build = require('./build');
 const express = require('./express');
 const fastify = require('./fastify');
 const composeServiceWorker = require('./compose-service-worker');
+const { name } = require('../package.json');
 
-module.exports = {
-  name: require('../package').name,
+/** @type {import('@gasket/engine').Plugin} */
+const plugin = {
+  name,
   hooks: {
     configure,
     build,
@@ -49,3 +53,5 @@ module.exports = {
     }
   }
 };
+
+module.exports = plugin;

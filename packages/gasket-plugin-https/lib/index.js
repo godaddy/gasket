@@ -7,9 +7,8 @@ const errs = require('errs');
 
 /**
  * Provide port defaults
- *
- * @param {String} env env property from gasket config
- * @returns {Number} Default port number
+ * @param {string} env env property from gasket config
+ * @returns {number} Default port number
  * @public
  */
 function getPortFallback(env = '') {
@@ -18,9 +17,8 @@ function getPortFallback(env = '') {
 
 /**
  * Check if the supplied errors are a result of the port being in use.
- *
  * @param {Array} errors Errors received from create-servers
- * @returns {Boolean} Indication if the port was in use.
+ * @returns {boolean} Indication if the port was in use.
  * @private
  */
 function portInUseError(errors) {
@@ -32,8 +30,7 @@ function portInUseError(errors) {
 
 /**
  * Start lifecycle of a gasket application
- *
- * @param {Gasket} gasket Gasket instance
+ * @param {import("@gasket/engine").Gasket} gasket Gasket instance
  * @public
  */
 async function start(gasket) {
@@ -62,6 +59,9 @@ async function start(gasket) {
     serverOpts.http = getPortFallback(env);
   }
 
+  /**
+   *
+   */
   async function healthCheckRequested() {
     await gasket.exec('healthcheck', HealthCheckError);
   }
@@ -140,7 +140,8 @@ async function start(gasket) {
   });
 }
 
-module.exports = {
+/** @type {import('@gasket/engine').Plugin} */
+const plugin = {
   name: require('../package').name,
   hooks: {
     start,
@@ -199,3 +200,5 @@ module.exports = {
     }
   }
 };
+
+module.exports = plugin;

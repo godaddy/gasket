@@ -2,13 +2,8 @@ const prompt = require('./prompt');
 const create = require('./create');
 const postCreate = require('./post-create');
 
-/**
- * The git gasket plugin.
- *
- * @type {Object}
- * @public
- */
-module.exports = {
+/** @type {import('@gasket/engine').Plugin} */
+const plugin = {
   name: require('../package').name,
   hooks: {
     prompt,
@@ -16,3 +11,5 @@ module.exports = {
     postCreate
   }
 };
+
+module.exports = plugin;

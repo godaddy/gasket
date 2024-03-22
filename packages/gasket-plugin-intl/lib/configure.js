@@ -1,3 +1,4 @@
+/// <reference types="@gasket/plugin-command" />
 const path = require('path');
 
 const debug = require('debug')('gasket:plugin:intl:configure');
@@ -7,11 +8,10 @@ const moduleDefaults = {
   excludes: ['cacache', 'yargs', 'axe-core']
 };
 
-const isDefined = o => typeof o !== 'undefined';
+const isDefined = (o) => typeof o !== 'undefined';
 
 /**
  * Shortcut to get the gasket.config.intl object
- *
  * @param {Gasket} gasket - Gasket API
  * @returns {IntlConfig} intlConfig
  */
@@ -24,7 +24,6 @@ function getIntlConfig(gasket) {
 
 /**
  * Destructure deprecated options as fallbacks and log warnings if used.
- *
  * @param {Gasket} gasket - Gasket API
  * @param {object} intlConfig - User intl config
  * @returns {object} config
@@ -32,25 +31,30 @@ function getIntlConfig(gasket) {
 function deprecatedOptions(gasket, intlConfig) {
   const { logger } = gasket;
   const { languageMap, defaultLanguage, assetPrefix } = intlConfig;
-  if (isDefined(languageMap)) logger.warning('DEPRECATED intl config `languageMap` - use `localesMap`');
-  if (isDefined(defaultLanguage)) logger.warning('DEPRECATED intl config `defaultLanguage` - use `defaultLocale`');
-  if (isDefined(assetPrefix)) logger.warning('DEPRECATED intl config `assetPrefix` - use `basePath`');
+  if (isDefined(languageMap))
+    logger.warning('DEPRECATED intl config `languageMap` - use `localesMap`');
+  if (isDefined(defaultLanguage))
+    logger.warning(
+      'DEPRECATED intl config `defaultLanguage` - use `defaultLocale`'
+    );
+  if (isDefined(assetPrefix))
+    logger.warning('DEPRECATED intl config `assetPrefix` - use `basePath`');
   return { languageMap, defaultLanguage, assetPrefix };
 }
 
 /**
  * Sets up the Intl config for the Gasket session and add process env variables
  * to access to certain config results where gasket.config is not accessible.
- *
- * @param {Gasket} gasket - Gasket API
- * @param {object} config - Incoming config
- * @returns {{intl: IntlConfig}} config
+ * @type {import('@gasket/engine').HookHandler<'configure'>}
  */
-module.exports = function configureHook(gasket, config) {
+module.exports = function configure(gasket, config) {
   const { root } = config;
   const intlConfig = { ...getIntlConfig({ config }) };
 
-  const { languageMap, defaultLanguage, assetPrefix } = deprecatedOptions(gasket, intlConfig);
+  const { languageMap, defaultLanguage, assetPrefix } = deprecatedOptions(
+    gasket,
+    intlConfig
+  );
   const { nextConfig = {} } = config;
 
   // get user defined config and apply defaults
@@ -65,13 +69,19 @@ module.exports = function configureHook(gasket, config) {
 
   const fullLocalesDir = path.join(root, localesDir);
 
-  const basePath = [intlConfig.basePath, assetPrefix,
-    nextConfig.assetPrefix, nextConfig.basePath,
-    config.basePath, ''].find(isDefined);
+  const basePath = [
+    intlConfig.basePath,
+    assetPrefix,
+    nextConfig.assetPrefix,
+    nextConfig.basePath,
+    config.basePath,
+    ''
+  ].find(isDefined);
 
   let { modules = false } = intlConfig;
   if (modules && !Array.isArray(modules)) {
-    modules = modules === true ? moduleDefaults : { ...moduleDefaults, ...modules };
+    modules =
+      modules === true ? moduleDefaults : { ...moduleDefaults, ...modules };
   }
 
   /* eslint-disable no-process-env */
@@ -80,7 +90,10 @@ module.exports = function configureHook(gasket, config) {
   process.env.GASKET_INTL_LOCALES_DIR = fullLocalesDir;
 
   // Allows @gasket/react-intl to access manifest, and is bundled for browser
-  process.env.GASKET_INTL_MANIFEST_FILE = path.join(fullLocalesDir, manifestFilename);
+  process.env.GASKET_INTL_MANIFEST_FILE = path.join(
+    fullLocalesDir,
+    manifestFilename
+  );
 
   /* eslint-enable no-process-env */
 
@@ -100,7 +113,6 @@ module.exports = function configureHook(gasket, config) {
 
   /**
    * @typedef {object} IntlConfig
-   *
    * @property {string} basePath - Base URL where locale files are served
    * @property {string} defaultPath - Path to endpoint with JSON files
    * @property {string} defaultLocale - Locale to fallback to when loading files
