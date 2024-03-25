@@ -1,7 +1,7 @@
 import type { MaybeAsync } from '@gasket/engine';
 
 
-  export type LogLevel = 'error' | 'warn' | 'info' | 'debug';
+  export type LogLevel = 'error' | 'warn' | 'info' | 'debug' | 'fatal' | 'trace';
 
   type LogMethods = Record<LogLevel, (...args: any[]) => void>;
 

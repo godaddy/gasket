@@ -1,5 +1,7 @@
 const debug = require('diagnostics')('gasket:fastify');
 const { peerDependencies, name } = require('../package.json');
+const { glob } = require('glob');
+const path = require('path');
 
 module.exports = {
   name,
@@ -39,23 +41,25 @@ module.exports = {
     */
     // eslint-disable-next-line max-statements
     createServers: async function createServers(gasket, serverOpts) {
-      const fastify = require('fastify');
-      const middie = require('middie');
       const cookieParser = require('cookie-parser');
       const compression = require('compression');
 
-      const { logger, config } = gasket;
-      const { middleware: middlewareConfig } = config;
+      const {
+        logger,
+        config } = gasket;
+      const { root, fastify: { routes } = {}, middleware: middlewareConfig } = config;
       const trustProxy = config.fastify?.trustProxy ?? false;
       const excludedRoutesRegex = config.fastify && config.fastify.excludedRoutesRegex;
-      const app = fastify({ logger, trustProxy });
 
-      // Enable middleware for fastify@3
-      await app.register(middie);
+      const app = require('fastify')({ logger, trustProxy });
 
-      // Add express-like `res.locals` object attaching data
-      app.use(function attachLocals(req, res, next) {
-        res.locals = {};
+      // Enable middleware for fastify@4
+      await app.register(require('@fastify/middie'));
+
+      app.decorateReply('locals', null);
+
+      app.addHook('preHandler', function (req, reply, next) {
+        reply.locals = {};
         next();
       });
 
@@ -105,6 +109,13 @@ module.exports = {
 
       const postRenderingStacks = (await gasket.exec('errorMiddleware')).filter(Boolean);
       postRenderingStacks.forEach(stack => app.use(stack));
+
+      if (routes) {
+        const files = await glob(`${routes}.js`, { cwd: root });
+        for (const file of files) {
+          require(path.join(root, file))(app);
+        }
+      }
 
       return {
         ...serverOpts,

@@ -1,4 +1,4 @@
-const middie = require('middie');
+const middie = require('@fastify/middie');
 const GasketEngine = require('@gasket/engine');
 const version = require('../package.json').peerDependencies.fastify;
 

@@ -270,6 +270,7 @@ describe('fastify hook', () => {
   });
 
   it('sets app buildId on fastify app', async function () {
+    await fastify.register(require('@fastify/middie'));
     const gasket = mockGasketApi();
     await hook(gasket, fastify, false);
     expect(fastify['buildId/testapp']).toEqual('1234');

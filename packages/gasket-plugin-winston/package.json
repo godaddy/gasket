@@ -53,7 +53,7 @@
     "triple-beam": "^1.4.1"
   },
   "peerDependencies": {
-    "@gasket/plugin-logger": "^6.0.0"
+    "@gasket/plugin-logger": "^6.0.0 || ^7"
   },
   "eslintConfig": {
     "extends": [

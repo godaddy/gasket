@@ -1,4 +1,4 @@
-const { createLogger, format, transports } = require('winston');
+const { createLogger, format, transports, config: winstonConfig } = require('winston');
 const { name, dependencies } = require('../package.json');
 
 module.exports = {
@@ -34,6 +34,7 @@ module.exports = {
         format:
           config.winston?.format ??
           format.combine(format.splat(), format.json()),
+        levels : Object.assign({ 'fatal' : 0, 'warn' : 4, 'trace' : 7 }, winstonConfig.syslog.levels),
         exitOnError: true
       });
     },

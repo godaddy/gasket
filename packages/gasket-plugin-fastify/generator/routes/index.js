@@ -17,7 +17,7 @@ module.exports = (app) => {
   {{/if}}
   app.get('/default', async (req, res) => {
     if (res.statusCode === 200) {
-      res.send({ message: 'Welcome to your default route...' });
+      res.send({ message: 'Welcome to your default Fastify route...' });
     }
   });
 };

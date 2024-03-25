@@ -6,6 +6,7 @@ jest.spyOn(console, 'error').mockImplementation(() => {});
 jest.spyOn(console, 'warn').mockImplementation(() => {});
 jest.spyOn(console, 'info').mockImplementation(() => {});
 jest.spyOn(console, 'debug').mockImplementation(() => {});
+jest.spyOn(console, 'trace').mockImplementation(() => {});
 
 // Mock logger object
 const mockLogger = {
@@ -13,6 +14,8 @@ const mockLogger = {
   error: jest.fn(),
   info: jest.fn(),
   warn: jest.fn(),
+  fatal: jest.fn(),
+  trace: jest.fn(),
   child: jest.fn()
 };
 
@@ -44,6 +47,7 @@ describe('@gasket/plugin-logger', () => {
         expect(gasket.logger).toEqual(fakeLogger);
       });
 
+      // eslint-disable-next-line max-statements
       it('should set logger to default if no loggers are hooked', async () => {
         gasket.exec.mockResolvedValue([]);
 
@@ -55,12 +59,15 @@ describe('@gasket/plugin-logger', () => {
         childLogger.warn('warn message');
         childLogger.info('info message');
         childLogger.debug('debug message');
+        childLogger.fatal('fatal message');
+        childLogger.trace('trace message');
 
         // Ensure console methods were called
         expect(console.error).toHaveBeenCalled();
         expect(console.warn).toHaveBeenCalled();
         expect(console.info).toHaveBeenCalled();
         expect(console.debug).toHaveBeenCalled();
+        expect(console.trace).toHaveBeenCalled();
 
         // Ensure logger is set to default
         expect(gasket.logger).toEqual({
@@ -68,6 +75,8 @@ describe('@gasket/plugin-logger', () => {
           warn: console.warn,
           info: console.info,
           debug: console.debug,
+          fatal: console.error,
+          trace: console.trace,
           child: expect.any(Function)
         });
       });
