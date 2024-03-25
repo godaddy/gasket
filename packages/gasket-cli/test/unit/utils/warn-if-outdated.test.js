@@ -1,75 +1,148 @@
+/* eslint-disable no-sync,  no-control-regex */
 const { runShellCommand } = require('@gasket/utils');
-const chalk = require('chalk');
 const { warnIfOutdated } = require('../../../lib/utils');
+const fs = require('fs');
+
+const currentTime = 1711147722892;
+const eightDaysBeforeCurrentTime = 1710456522892;
+const oneDayBeforeCurrentTime = 1711061322892;
+const pkgName = '@gasket/cli';
+const currentVersion = '1.1.0';
+const latestVersion = '1.2.0';
+
+function createCacheData(time, version) {
+  return JSON.stringify({ latestVersionUpdateTime: time, latestVersion: version });
+}
+
+function stripAnsi(str) {
+  // Regular expression to match ANSI escape codes
+  const ansiRegex = /\u001b\[[0-9;]*m/g;
+
+  // Replace ANSI escape codes with an empty string
+  return str.replace(ansiRegex, '');
+}
 
 jest.mock('@gasket/utils', () => ({
-  runShellCommand: jest.fn()
+  runShellCommand: jest.fn(),
+  readFileSync: jest.fn()
+}));
+
+jest.mock('fs', () => ({
+  existsSync: jest.fn(),
+  readFileSync: jest.fn(),
+  writeFileSync: jest.fn()
 }));
 
 describe('warnIfOutdated', function () {
+  let consoleWarnSpy, consoleErrorSpy;
+  beforeEach(function () {
+    jest.spyOn(global, 'Date').mockImplementation(() => ({
+      getTime: () => currentTime
+    }));
+    consoleWarnSpy = jest.spyOn(console, 'warn');
+    consoleErrorSpy = jest.spyOn(console, 'error');
+  });
+
   afterEach(function () {
     jest.clearAllMocks();
+    jest.restoreAllMocks();
   });
 
-  it('should log a warning if the package version is outdated', async function () {
-    // Mock the npm view command result
-    runShellCommand.mockResolvedValueOnce({ stdout: '1.2.0' });
+  describe('no cache file', function () {
+    beforeEach(function () {
+      fs.existsSync.mockReturnValue(false);
+    });
 
-    const pkgName = '@gasket/cli';
-    const currentVersion = '1.1.0';
+    it('logs a warning if outdated', async function () {
+      runShellCommand.mockResolvedValueOnce({ stdout: latestVersion });
 
-    // Capture console.warn output
-    const consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation();
+      await warnIfOutdated(pkgName, currentVersion);
+      const strippedAnsiWarnLog = stripAnsi(consoleWarnSpy.mock.calls[0][0]);
 
-    // Call the function
-    await warnIfOutdated(pkgName, currentVersion);
+      expect(strippedAnsiWarnLog.includes('@gasket/cli update available from 1.2.0 to 1.1.0')).toBe(true);
+    });
 
-    // Verify that runShellCommand was called with the correct arguments
-    expect(runShellCommand).toHaveBeenCalledWith('npm', ['view', pkgName, 'version'], {});
+    it('does not log a warning if not outdated', async function () {
+      runShellCommand.mockResolvedValueOnce({ stdout: currentVersion });
 
-    // Verify that the warning message was logged
-    expect(consoleWarnSpy).toHaveBeenCalledWith(
-      ` ${chalk.yellow('›')}   Warning: @gasket/cli update available from ${chalk.green('1.2.0')} to ${chalk.green('1.1.0')}`
-    );
+      await warnIfOutdated(pkgName, currentVersion);
+
+      expect(consoleWarnSpy).not.toHaveBeenCalled();
+    });
+
+    it('log an error when there is an error fetching latest version', async function () {
+      runShellCommand.mockRejectedValueOnce(new Error('new error'));
+
+      await warnIfOutdated(pkgName, currentVersion);
+
+      expect(consoleErrorSpy).toHaveBeenCalledWith('Error fetching latest version:', new Error('new error'));
+    });
   });
 
-  it('should not log a warning if the package version is up to date', async function () {
-    // Mock the npm view command result
-    runShellCommand.mockResolvedValueOnce({ stdout: '1.1.0' });
+  describe('has cache file', function () {
+    beforeEach(function () {
+      fs.existsSync.mockReturnValue(true);
+    });
 
-    const pkgName = '@gasket/cli';
-    const currentVersion = '1.1.0';
+    it('logs a warning if the cache version is outdated', async function () {
+      fs.readFileSync.mockReturnValue(createCacheData(oneDayBeforeCurrentTime, latestVersion));
 
-    // Capture console.warn output
-    const consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation();
+      await warnIfOutdated(pkgName, currentVersion);
+      const strippedAnsiWarnLog = stripAnsi(consoleWarnSpy.mock.calls[0][0]);
 
-    // Call the function
-    await warnIfOutdated(pkgName, currentVersion);
+      expect(strippedAnsiWarnLog.includes('@gasket/cli update available from 1.2.0 to 1.1.0')).toBe(true);
+    });
 
-    // Verify that runShellCommand was called with the correct arguments
-    expect(runShellCommand).toHaveBeenCalledWith('npm', ['view', pkgName, 'version'], {});
+    it('does not log a warning if the cache version is not outdated', async function () {
+      fs.readFileSync.mockReturnValue(createCacheData(currentTime, currentVersion));
 
-    // Verify that no warning message was logged
-    expect(consoleWarnSpy).not.toHaveBeenCalled();
-  });
+      await warnIfOutdated(pkgName, currentVersion);
 
-  it('should handle missing npm view result', async function () {
-    // Mock an empty npm view command result
-    runShellCommand.mockResolvedValueOnce({});
+      expect(consoleWarnSpy).not.toHaveBeenCalled();
+    });
 
-    const pkgName = '@gasket/cli';
-    const currentVersion = '1.1.0';
+    it('calls runShellCommand to get latest version if cache is update time is outdated', async function () {
+      fs.readFileSync.mockReturnValue(createCacheData(eightDaysBeforeCurrentTime, latestVersion));
+      runShellCommand.mockResolvedValueOnce({ stdout: latestVersion });
 
-    // Capture console.warn output
-    const consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation();
+      await warnIfOutdated(pkgName, currentVersion);
+      const strippedAnsiWarnLog = stripAnsi(consoleWarnSpy.mock.calls[0][0]);
 
-    // Call the function
-    await warnIfOutdated(pkgName, currentVersion);
+      expect(strippedAnsiWarnLog.includes('@gasket/cli update available from 1.2.0 to 1.1.0')).toBe(true);
+      expect(runShellCommand).toHaveBeenCalledWith('npm', ['view', pkgName, 'version'], {});
+    });
 
-    // Verify that runShellCommand was called with the correct arguments
-    expect(runShellCommand).toHaveBeenCalledWith('npm', ['view', pkgName, 'version'], {});
+    it('calls runShellCommand to get latest version if cache update time is falsy', async function () {
+      fs.readFileSync.mockReturnValue(createCacheData(null, latestVersion));
+      runShellCommand.mockResolvedValueOnce({ stdout: latestVersion });
 
-    // Verify that no warning message was logged
-    expect(consoleWarnSpy).not.toHaveBeenCalled();
+      await warnIfOutdated(pkgName, currentVersion);
+      const strippedAnsiWarnLog = stripAnsi(consoleWarnSpy.mock.calls[0][0]);
+
+      expect(strippedAnsiWarnLog.includes('@gasket/cli update available from 1.2.0 to 1.1.0')).toBe(true);
+      expect(runShellCommand).toHaveBeenCalledWith('npm', ['view', pkgName, 'version'], {});
+    });
+
+    it('calls runShellCommand to get latest version if cache version is falsy', async function () {
+      fs.readFileSync.mockReturnValue(createCacheData(oneDayBeforeCurrentTime, null));
+      runShellCommand.mockResolvedValueOnce({ stdout: latestVersion });
+
+      await warnIfOutdated(pkgName, currentVersion);
+      const strippedAnsiWarnLog = stripAnsi(consoleWarnSpy.mock.calls[0][0]);
+
+      expect(strippedAnsiWarnLog.includes('@gasket/cli update available from 1.2.0 to 1.1.0')).toBe(true);
+      expect(runShellCommand).toHaveBeenCalledWith('npm', ['view', pkgName, 'version'], {});
+    });
+
+    it('logs an error when reading the cache file', async function () {
+      fs.readFileSync.mockImplementation(() => { throw new Error('new error'); });
+      runShellCommand.mockResolvedValueOnce({ stdout: latestVersion });
+
+      await warnIfOutdated(pkgName, currentVersion);
+      const strippedAnsiWarnLog = stripAnsi(consoleWarnSpy.mock.calls[0][0]);
+
+      expect(consoleErrorSpy).toHaveBeenCalledWith('Error reading cache file:', new Error('new error'));
+      expect(strippedAnsiWarnLog.includes('@gasket/cli update available from 1.2.0 to 1.1.0')).toBe(true);
+    });
   });
 });

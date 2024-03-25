@@ -1,3 +1,4 @@
+/* eslint-disable no-sync */
 const { runShellCommand } = require('@gasket/utils');
 const semver = require('semver');
 const chalk = require('chalk');
@@ -8,7 +9,7 @@ const cachePath = path.join(__dirname, '..', '..', '.cache'); // Place at root o
 const LATEST_VERSION = 'latestVersion';
 const LATEST_VERSION_UPDATE_TIME = 'latestVersionUpdateTime';
 
-/** 
+/**
  * Checks if the latest version update time is older than seven days
  * @param {number} currentTime - current time in milliseconds
  * @param {number} latestVersionUpdateTime - latest version update time in milliseconds
@@ -66,7 +67,9 @@ module.exports = async function warnIfOutdated(pkgName, currentVersion) {
 
   const latestVersion = await getLatestVersion(pkgName, currentTime, cache);
 
-  if (semver.gt(latestVersion, currentVersion)) {
-    console.warn(` ${chalk.yellow('›')}   Warning: ${pkgName} update available from ${chalk.green(latestVersion)} to ${chalk.green(currentVersion)}`);
+  if (typeof latestVersion === 'string' && semver.gt(latestVersion, currentVersion)) {
+    console.warn(
+      ` ${chalk.yellow('›')}   Warning: ${pkgName} update available from ${chalk.green(latestVersion)} to ${chalk.green(currentVersion)}`
+    );
   }
 };
