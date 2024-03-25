@@ -1,6 +1,6 @@
 {
   "name": "@gasket/assets",
-  "version": "7.0.0-cli.6",
+  "version": "7.0.0-cli.7",
   "description": "Gasket assets",
   "main": "react",
   "files": [
