@@ -1,8 +1,7 @@
-/* eslint-disable no-sync */
 const { runShellCommand } = require('@gasket/utils');
 const semver = require('semver');
 const chalk = require('chalk');
-const fs = require('fs');
+const { readFile, writeFile } = require('fs/promises');
 const path = require('path');
 
 const cachePath = path.join(__dirname, '..', '..', '.cache'); // Place at root of gasket-cli
@@ -36,7 +35,7 @@ async function getLatestVersion(pkgName, currentTime, cache) {
         const latestVersion = cmdResult.stdout.trim();
         cache[LATEST_VERSION_UPDATE_TIME] = currentTime;
         cache[LATEST_VERSION] = latestVersion;
-        fs.writeFileSync(cachePath, JSON.stringify(cache));
+        await writeFile(cachePath, JSON.stringify(cache));
         return latestVersion;
       }
     } catch (error) {
@@ -56,13 +55,11 @@ module.exports = async function warnIfOutdated(pkgName, currentVersion) {
   const currentTime = new Date().getTime();
   let cache = {};
 
-  if (fs.existsSync(cachePath)) {
-    try {
-      const file = fs.readFileSync(cachePath, 'utf8');
-      cache = JSON.parse(file);
-    } catch (error) {
-      console.error('Error reading cache file:', error);
-    }
+  try {
+    const file = await readFile(cachePath, 'utf8');
+    cache = JSON.parse(file);
+  } catch (error) {
+    // console.error('Error reading cache file:', error);
   }
 
   const latestVersion = await getLatestVersion(pkgName, currentTime, cache);
