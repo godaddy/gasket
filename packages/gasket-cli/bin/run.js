@@ -5,7 +5,7 @@ const pkg = require('../package.json');
 const { Command } = require('commander');
 const program = new Command();
 const CreateCommand = require('../lib/commands/create');
-const { processCommand, logo } = require('../lib/utils');
+const { processCommand, logo, warnIfOutdated } = require('../lib/utils');
 const init = require('../lib/init');
 
 // Create Gasket CLI
@@ -23,6 +23,7 @@ async function run() {
   const cmd = process.argv[2];
   const isFlag = cmd && cmd.charAt(0) === '-';
   const { command, hidden, isDefault } = processCommand(CreateCommand);
+  await warnIfOutdated(pkg.name, pkg.version);
   gasketBin.addCommand(command, { hidden, isDefault });
 
   if (cmd === 'create' || isFlag) return await gasketBin.parseAsync();
