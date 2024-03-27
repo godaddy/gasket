@@ -1,5 +1,9 @@
 # `create-gasket-app`
 
+### 6.46.6
+
+- Fix resolve cli path ([#712])
+
 ### 6.34.4
 
 - Upgrade eslint-plugin-unicorn v43 ([#436])
@@ -34,3 +38,4 @@
 [#436]: https://github.com/godaddy/gasket/pull/436
 [#442]: https://github.com/godaddy/gasket/pull/442
 [#460]: https://github.com/godaddy/gasket/pull/460
+[#712]: https://github.com/godaddy/gasket/pull/712
