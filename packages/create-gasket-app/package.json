@@ -1,6 +1,6 @@
 {
   "name": "create-gasket-app",
-  "version": "6.46.4",
+  "version": "6.46.6",
   "description": "starter pack for creating a gasket app",
   "main": "lib",
   "bin": {
