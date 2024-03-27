@@ -57,6 +57,7 @@
     "cross-env": "^7.0.3",
     "cross-spawn": "^7.0.3",
     "deepmerge": "^4.3.1",
+    "dotenv": "^16.4.5",
     "getopts": "^2.3.0",
     "glob": "^8.1.0",
     "handlebars": "^4.7.8",
@@ -72,7 +73,6 @@
   "devDependencies": {
     "cross-env": "^7.0.3",
     "diagnostics": "^2.0.2",
-    "dotenv": "^16.4.5",
     "eslint": "^8.56.0",
     "eslint-config-godaddy": "^7.0.2",
     "eslint-plugin-jest": "^27.6.3",
