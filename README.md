@@ -147,8 +147,8 @@ Available presets
 
 | Name                    | Version | Description                                |
 | ----------------------- | ------- | ------------------------------------------ |
-| [@gasket/preset-api]    | 6.46.4  | Create Express-based API with Gasket       |
-| [@gasket/preset-nextjs] | 6.46.4  | Basic NextJS Framework                     |
+| [@gasket/preset-api]    | 6.46.5  | Create Express-based API with Gasket       |
+| [@gasket/preset-nextjs] | 6.46.5  | Basic NextJS Framework                     |
 | [@gasket/preset-pwa]    | 6.46.2  | Turn Gasket apps into Progressive Web Apps |
 
 ## Plugins
@@ -165,8 +165,8 @@ Available plugins
 | [@gasket/plugin-docs-graphs]    | 6.45.0  | Generate mermaid graphs of an applications gasket lifecycles               |
 | [@gasket/plugin-docsify]        | 6.46.2  | View collated docs with Docsify                                            |
 | [@gasket/plugin-docusaurus]     | 6.46.2  | Gasket plugin for docusaurus                                               |
-| [@gasket/plugin-elastic-apm]    | 6.46.4  | Adds Elastic APM instrumentation to your application                       |
-| [@gasket/plugin-express]        | 6.46.4  | Adds express support to your application                                   |
+| [@gasket/plugin-elastic-apm]    | 6.46.5  | Adds Elastic APM instrumentation to your application                       |
+| [@gasket/plugin-express]        | 6.46.5  | Adds express support to your application                                   |
 | [@gasket/plugin-fastify]        | 6.46.2  | Adds fastify support to your application                                   |
 | [@gasket/plugin-git]            | 6.46.2  | Adds git support to your application                                       |
 | [@gasket/plugin-happyfeet]      | 6.45.0  | A gasket plugin to enable happyfeet healthchecks                           |
@@ -207,9 +207,9 @@ Supporting modules
 | [@gasket/react-intl]       | 6.46.4  | React component library to enable localization for gasket apps.                      |
 | [@gasket/redux]            | 6.46.0  | Gasket Redux Configuration                                                           |
 | [@gasket/resolve]          | 6.46.2  | Essential module resolution & configuration management for gasket plugins & presets. |
-| [@gasket/typescript-tests] | 6.46.4  | Not a published package; hosts unit tests to verify TypeScript support               |
+| [@gasket/typescript-tests] | 6.46.5  | Not a published package; hosts unit tests to verify TypeScript support               |
 | [@gasket/utils]            | 6.46.2  | Reusable utilities for Gasket internals                                              |
-| [create-gasket-app]        | 6.46.4  | starter pack for creating a gasket app                                               |
+| [create-gasket-app]        | 6.46.6  | starter pack for creating a gasket app                                               |
 
 ## Configurations
 
