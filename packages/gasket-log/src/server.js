@@ -4,7 +4,7 @@ const kuler = require('kuler');
 
 /**
  * Regular expression for the redux logger format.
- * @type {object}
+ * @type {Object}
  */
 const patterns = {
   token: /%c(.+?)((?:%c)|$)/g,
@@ -13,8 +13,9 @@ const patterns = {
 
 /**
  * Color formatter for Winston based on redux-logger metadata.
- * @param {object} info log information.
- * @returns {object} info
+ *
+ * @param {Object} info log information.
+ * @returns {Object} info
  * @private
  */
 const reduxLogger = format(function reduxLogger(info, options = {}) {
@@ -39,10 +40,19 @@ const reduxLogger = format(function reduxLogger(info, options = {}) {
 
 /**
  * Log instance that tracks fluentd connections and sets up a winston logger.
- * @type {import('@gasket/log').default}
+ *
+ * @class Log
  * @public
  */
 class Log {
+  /**
+   *
+   * @param {object} [options] - Options
+   * @param {string} [options.level] - Default level to use
+   * @param {boolean} [options.silent] - Should logs be silenced
+   * @param {boolean} [options.local] - Is this for the local development
+   * @param {string} [options.prefix] - Message prefix to use
+   */
   constructor(options = {}) {
     /** @private */
     this.options = options;
@@ -68,7 +78,8 @@ class Log {
   /**
    * Combine log formatters based on environment.
    * TODO (@swaagie) this might need a k8 pod label as well
-   * @returns {object} Combined formats.
+   *
+   * @returns {Object} Combined formats.
    * @private
    */
   format() {
@@ -77,6 +88,7 @@ class Log {
 
   /**
    * Return winston transports based on environment.
+   *
    * @returns {Array} transports
    * @private
    */
@@ -91,6 +103,7 @@ class Log {
 
   /**
    * Return the configured levels
+   *
    * @returns {Object.<string,number>} levels
    * @private
    */
@@ -100,6 +113,7 @@ class Log {
 
   /**
    * Default level logging.
+   *
    * @param {*} args Info to log and any optional metadata.
    * @returns {Log} fluent interface.
    * @public
@@ -114,6 +128,7 @@ class Log {
    * Wait for the 'finish' event to be emitted from the Writable
    * stream (i.e the winston logger). This will allow all underlying
    * Transports to gracefully close any open resources.
+   *
    * @returns {Promise} Resolve on connection close.
    * @public
    */
@@ -126,6 +141,7 @@ class Log {
 
   /**
    * Create a new Winston logger with a generated configuration.
+   *
    * @returns {Winston} Logger.
    * @private
    */
@@ -154,12 +170,14 @@ class Log {
 
 /**
  * Default prefix for all messages.
- * @type {string}
+ *
+ * @type {String}
  */
 Log.prefix = 'server';
 
 /**
  * Reference to Console Transport class.
+ *
  * @type {TransportConsole}
  */
 Log.Console = transports.Console;
@@ -175,6 +193,7 @@ Log.levels = { ...config.syslog.levels };
 
 /**
  * Ensure all the expected levels utilized by Gasket plugins are set
+ *
  * @param {Object.<string,number>} levels - Levels to check
  */
 Log.ensureMinimalLevels = function ensureMinimalLevels(levels) {
