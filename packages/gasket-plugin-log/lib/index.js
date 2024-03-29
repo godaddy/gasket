@@ -1,10 +1,12 @@
-/// <reference types="@gasket/plugin-command" />
-
 /* eslint require-atomic-updates: warn */
-const { name, dependencies } = require('../package.json');
+const { name, dependencies } = require('../package');
 
-/** @type {import('@gasket/engine').Plugin} */
-const plugin = {
+/**
+ * Expose the plugin hooks, listen to the `init` and `destroy` events.
+ *
+ * @type {object}
+ */
+module.exports = {
   name,
   hooks: {
     init: {
@@ -75,5 +77,3 @@ const plugin = {
     }
   }
 };
-
-module.exports = plugin;
