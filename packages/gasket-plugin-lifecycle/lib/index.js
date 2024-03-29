@@ -5,9 +5,9 @@ const camelCase = require('lodash.camelcase');
 
 /**
  * Resolves a given directory to valid `lifecycle` plugins.
- * @param {string} root Directory we need to search.
- * @param {string} name Name of the directory that contains the lifecycles.
- * @param {...any} parts
+ *
+ * @param {String} root Directory we need to search.
+ * @param {String} name Name of the directory that contains the lifecycles.
  * @returns {Array} Lifecycle methods.
  * @public
  */
@@ -49,6 +49,7 @@ async function resolve(root, ...parts) {
 
 /**
  * Register all hooks as lifecycle that are in a given directory.
+ *
  * @param {Gasket} gasket Gasket/Plugin-Engine instance.
  * @public
  */
@@ -64,8 +65,12 @@ async function init(gasket) {
     });
 }
 
-/** @type {import('@gasket/engine').Plugin} */
-const plugin = {
+/**
+ * Expose the plugin.
+ *
+ * @public
+ */
+module.exports = {
   name: require('../package').name,
   hooks: {
     init,
@@ -81,6 +86,3 @@ const plugin = {
     }
   }
 };
-
-module.exports = plugin;
-
