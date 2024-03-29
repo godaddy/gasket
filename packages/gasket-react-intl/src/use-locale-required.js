@@ -6,7 +6,6 @@ import { GasketIntlContext } from './context';
 
 /**
  * React that fetches a locale file and returns loading status
- *
  * @param {LocalePathPartOrThunk} localePathPart - Path containing locale files
  * @returns {LocaleStatus} status
  */

@@ -7,7 +7,8 @@ const GasketCommand = require('./command');
 const { hoistBaseFlags } = require('./utils');
 const { name } = require('../package.json');
 
-/** @type {import('@gasket/engine').Plugin} */
+// This plugin is completely refactored in a new version of Gasket, so types
+// will not match for the time being.
 const plugin = {
   name,
   hooks: {

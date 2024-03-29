@@ -3,13 +3,17 @@
  * they might extend.
  *
  * Presets are ordered by extended depth, with deeper later.
- *
  * @param {PresetInfo[]} presetInfos - Array of preset infos
  * @returns {PresetInfo[]} flattened presetInfos
  */
 function flattenPresets(presetInfos = []) {
   const flattened = [[...presetInfos]];
 
+  /**
+   *
+   * @param preset
+   * @param depth
+   */
   function flatten(preset, depth = 1) {
     const arr = flattened[depth] = flattened[depth] || [];
     const { presets } = preset;

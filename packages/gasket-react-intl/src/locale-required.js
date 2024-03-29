@@ -6,7 +6,6 @@ import useLocaleRequired from './use-locale-required';
 
 /**
  * Component that loads a locale file before rendering children
- *
  * @param {object} props - Props
  * @param {LocalePathPart} props.localesPath - Path containing locale files
  * @param {React.Component} [props.loading] - Custom component to show while loading

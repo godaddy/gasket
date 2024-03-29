@@ -10,7 +10,6 @@
     "test": "lerna run test --stream",
     "test:coverage": "lerna run test:coverage --stream",
     "posttest": "npm run lint",
-    "typecheck:all": "lerna run typecheck --stream",
     "build": "lerna run build",
     "align-packages": "node ./scripts/align-packages",
     "clean": "npm run clean:packages && npm run clean:root",
@@ -21,7 +20,8 @@
     "generate-docs-index": "node scripts/generate-docs-index",
     "postinstall": "npm run build",
     "publish:canary": "lerna publish --preid canary --dist-tag canary",
-    "test:package": "lerna run test --stream --scope $*"
+    "test:package": "lerna run test --stream --scope $*",
+    "typecheck:all": "lerna run typecheck --stream"
   },
   "repository": {
     "type": "git",

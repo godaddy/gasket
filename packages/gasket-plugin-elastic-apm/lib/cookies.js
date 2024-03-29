@@ -1,7 +1,6 @@
 /**
  * Returns an array of cookie names which are considered sensitive because they
  * may contain session credential or PII
- *
  * @param {*} config the Gasket config object
  * @returns {string[]} an array of cookie names
  */
@@ -18,7 +17,6 @@ const sensitiveCookies = (config) => {
 
 /**
  * Redacts the contents of user-specified sensitive cookies
- *
  * @param {object} config The Gasket config
  * @param {object} payload The APM payload
  * @returns {object} a modified version of the incoming APM payload

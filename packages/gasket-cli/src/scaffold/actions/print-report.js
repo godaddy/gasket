@@ -13,19 +13,17 @@ const newline = () => {
 /**
  * Converts a camelCase string to Space Case
  * @see: https://stackoverflow.com/questions/4149276/javascript-camelcase-to-regular-form?answertab=active#tab-top
- *
  * @param {string} str - camelCase string to fixup
  * @returns {string} result
  * @private
  */
-const toSpaceCase = str => str.replace(/([A-Z])/g, ' $1')
-  .replace(/^./, s => s.toUpperCase());
+const toSpaceCase = (str) =>
+  str.replace(/([A-Z])/g, ' $1').replace(/^./, (s) => s.toUpperCase());
 
 /**
  * Builds the report object from context
- *
- * @param {CreateContext} context - Create context
- * @returns {Object} report
+ * @param {import("@gasket/cli").CreateContext} context - Create context
+ * @returns {object} report
  * @private
  */
 function buildReport(context) {
@@ -59,24 +57,25 @@ function buildReport(context) {
 
 /**
  * Outputs create command details to the console
-
- * @param {CreateContext} context - Create context
+ * @param {import("@gasket/cli").CreateContext} context - Create context
  */
 function printReport(context) {
   const report = buildReport(context);
   const { warnings, errors } = context;
 
-  console.log(`✨Success!
+  console.log(
+    `✨Success!
   
 Finished with ${warnings.length} warnings and ${errors.length} errors using
-` + asciiLogo);
+` + asciiLogo
+  );
 
   Object.entries(report).forEach(([k, v]) => {
     if (!v || !v.length) return;
     newline();
     console.log(`${bold(toSpaceCase(k))}`);
     if (Array.isArray(v)) {
-      v.map(o => console.log(`  ${o}`));
+      v.map((o) => console.log(`  ${o}`));
     } else {
       console.log(`  ${v}`);
     }

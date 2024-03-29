@@ -2,7 +2,6 @@ const debug = require('diagnostics')('gasket:resolver');
 
 /**
  * Normalize windows paths to unix paths
- *
  * @param {string} message - Message with path to normalize
  * @returns {string} normalized path
  * @private
@@ -13,14 +12,13 @@ function fixSep(message) {
 
 /**
  * Utility to help resolve and require modules
- *
  * @type {Resolver}
  */
 class Resolver {
   /**
    * @param {object} options - Options
    * @param {string|string[]} [options.resolveFrom] - Path(s) to resolve modules from
-   * @param {function} [options.require] - Require instance to use
+   * @param {Function} [options.require] - Require instance to use
    */
   constructor(options) {
     const {
@@ -36,7 +34,6 @@ class Resolver {
 
   /**
    * Returns the resolved module filename
-   *
    * @param {string} moduleName name of the module
    * @returns {string} filename of the module
    */
@@ -47,7 +44,6 @@ class Resolver {
 
   /**
    * Returns the required module
-   *
    * @param {string} moduleName name of the module
    * @returns {object} module contents
    */
@@ -58,7 +54,6 @@ class Resolver {
 
   /**
    * Returns the resolved module filename, or null if not found
-   *
    * @param {string} moduleName name of the module
    * @returns {string|null} filename of the module
    */
@@ -78,7 +73,6 @@ class Resolver {
 
   /**
    * Returns the required module, or null if not found
-   *
    * @param {string} moduleName name of the module
    * @returns {object|null} module contents
    */

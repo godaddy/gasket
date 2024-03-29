@@ -2,9 +2,8 @@ const { createConfig } = require('./config');
 
 /**
  * Provide port defaults
- *
- * @param {String} env env property from gasket config
- * @returns {Number} Default port number
+ * @param {string} env env property from gasket config
+ * @returns {number} Default port number
  * @public
  */
 function getPortFallback(env = '') {
@@ -14,7 +13,6 @@ function getPortFallback(env = '') {
 /**
  * Small helper function that creates nextjs app from the gasket
  * configuration.
- *
  * @param   {Gasket}  gasket                The gasket API.
  * @returns {NextServer} The Nextjs App
  * @private

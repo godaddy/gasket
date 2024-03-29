@@ -4,18 +4,15 @@ const ora = require('ora');
  * Decorate a create action with spinner.
  * If an action throws, a fail spinner will render for the step, regardless of
  * if the spinner was started or not.
- *
- * @param {String} label - Label for the spinner
+ * @param {string} label - Label for the spinner
  * @param {Function} fn - Action to wrap
- * @param {Boolean} startSpinner - Should the spinner start
+ * @param {boolean} startSpinner - Should the spinner start
  * @returns {Function} decorated action
  */
 module.exports = function withSpinner(label, fn, { startSpinner = true } = {}) {
-
   /**
    * Decorated function
-   *
-   * @param {CreateContext} context - Create context
+   * @param {import("@gasket/cli").CreateContext} context - Create context
    * @returns {Promise} promise
    */
   async function wrapper(context) {

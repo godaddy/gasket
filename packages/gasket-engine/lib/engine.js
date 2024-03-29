@@ -4,6 +4,7 @@ const { Loader, pluginIdentifier } = require('@gasket/resolve');
 let dynamicNamingId = 0;
 const isModulePath = /^[/.]|^[a-zA-Z]:\\/;
 
+/** @type {import('@gasket/engine').default} */
 class PluginEngine {
   constructor(config, { resolveFrom } = {}) {
     this.config = config || {};

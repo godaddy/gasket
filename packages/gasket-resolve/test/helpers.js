@@ -3,12 +3,20 @@
 const isModulePath = /^[/.]|node_modules/;
 
 
+/**
+ *
+ * @param mod
+ */
 function notFoundError(mod) {
   const err = new Error(`Cannot find module '${ mod }' from 'mocked'`);
   err.code = 'MODULE_NOT_FOUND';
   return err;
 }
 
+/**
+ *
+ * @param mod
+ */
 function missingExportError(mod) {
   const err = new Error(`Package subpath './package.json' is not defined by "exports" in /path/to/node_modules/${ mod }`);
   err.code = 'ERR_PACKAGE_PATH_NOT_EXPORTED';
@@ -16,6 +24,10 @@ function missingExportError(mod) {
 }
 
 
+/**
+ *
+ * @param modules
+ */
 function makeRequire(modules) {
   const _paths = {};
   const _modules = {};

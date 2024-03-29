@@ -10,7 +10,6 @@ const { defaultLocale, defaultPath } = manifest;
  * Sets up and attaches the getInitialProps static method which preloads locale
  * files during SSR for Next.js pages. For browser routing, the locale files
  * will be fetched as normal.
- *
  * @param {React.ComponentType} Wrapper - The HOC
  * @param {LocalePathPart} localePathPart - Path containing locale files
  */
@@ -44,13 +43,12 @@ function attachGetInitialProps(Wrapper, localePathPart) {
 
 /**
  * Make an HOC that loads a locale file before rendering wrapped component
- *
  * @param {LocalePathPartOrThunk} localePathPart - Path containing locale files
  * @param {object} [options] - Options
- * @param {React.Component} [options.loading=null] - Custom component to show while loading
- * @param {boolean} [options.initialProps=false] - Preload locales during SSR with Next.js pages
- * @param {boolean} [options.forwardRef=false] - Forward refs
- * @returns {function} wrapper
+ * @param {React.Component} [options.loading] - Custom component to show while loading
+ * @param {boolean} [options.initialProps] - Preload locales during SSR with Next.js pages
+ * @param {boolean} [options.forwardRef] - Forward refs
+ * @returns {Function} wrapper
  */
 export default function withLocaleRequired(localePathPart = defaultPath, options = {}) {
   const { loading = null, initialProps = false, forwardRef = false } = options;
@@ -64,7 +62,6 @@ export default function withLocaleRequired(localePathPart = defaultPath, options
 
     /**
      * Wrapper component that returns based on locale file status
-     *
      * @param {object} props - Component props
      * @param {object} [props.forwardedRef] - Forwarded ref
      * @returns {JSX.Element} element

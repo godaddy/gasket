@@ -8,14 +8,12 @@ const spawn = require('cross-spawn');
  * Options can be passed to the underlying spawn. An additional `signal` option
  * can be passed to use AbortController, allowing processes to be killed when
  * no longer needed.
- *
  * @example
  * const { runShellCommand } = require('@gasket/utils');
  *
  *  async function helloWorld() {
  *   await runShellCommand('echo', ['hello world']);
  * }
- *
  * @example
  * // With timeout using AbortController
  *
@@ -29,7 +27,6 @@ const spawn = require('cross-spawn');
  *   await runShellCommand('long-process', ['something'], { signal: controller.signal });
  *   clearTimeout(id);
  * }
- *
  * @param {string} cmd Binary that is run
  * @param {string[]} [argv] Arguments passed to npm binary through spawn.
  * @param {object} [options] Options passed to npm binary through spawn

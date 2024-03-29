@@ -8,7 +8,6 @@ import { getActiveLocale, LocaleStatus } from './utils';
 
 /**
  * Merges any initial state from render with that from page props
- *
  * @param {LocalesProps|{}} localesProps - Initial props from a Next.js page
  * @returns {LocalesState} state
  */
@@ -61,8 +60,7 @@ export function reducer(state, action) {
 /**
  * Make an HOC that adds a provider to managing locale files as well as the react-intl Provider.
  * This can be used to wrap a top level React or a Next.js custom App component.
- *
- * @returns {function} wrapper
+ * @returns {Function} wrapper
  */
 export default function withIntlProvider() {
   /**
@@ -73,7 +71,6 @@ export default function withIntlProvider() {
   return Component => {
     /**
      * Wrapper component which sets up providers and reducer hook
-     *
      * @param {object} props - Component props
      * @param {object} [props.pageProps] - Component props from a Next.js page
      * @param {LocalesProps} [props.pageProps.localesProps] - Initial state from a Next.js page

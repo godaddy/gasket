@@ -1,6 +1,6 @@
 /**
  * Default values for manifest.json
- * @type {Object}
+ * @type {object}
  */
 module.exports =  {
   start_url: '/?source=pwa',

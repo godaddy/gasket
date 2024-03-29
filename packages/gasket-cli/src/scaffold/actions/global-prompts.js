@@ -5,9 +5,8 @@ const { addPluginsToContext } = require('../utils');
 
 /**
  * What is your app description?
- *
- * @param {CreateContext} context - Create context
- * @param {function} prompt - function to prompt user
+ * @param {import("@gasket/cli").CreateContext} context - Create context
+ * @param {Function} prompt - function to prompt user
  * @returns {Promise} promise
  */
 async function chooseAppDescription(context, prompt) {
@@ -27,9 +26,8 @@ async function chooseAppDescription(context, prompt) {
 
 /**
  * What package manager do you want to use?
- *
- * @param {CreateContext} context - Create context
- * @param {function} prompt - function to prompt user
+ * @param {import("@gasket/cli").CreateContext} context - Create context
+ * @param {Function} prompt - function to prompt user
  * @returns {Promise} promise
  */
 async function choosePackageManager(context, prompt) {
@@ -53,7 +51,8 @@ async function choosePackageManager(context, prompt) {
     yarn: 'yarn'
   };
 
-  const localCmd = context.localCmd || `${runners[packageManager]} gasket local`;
+  const localCmd =
+    context.localCmd || `${runners[packageManager]} gasket local`;
 
   Object.assign(context, {
     packageManager,
@@ -64,9 +63,8 @@ async function choosePackageManager(context, prompt) {
 
 /**
  * Choose your unit test suite
- *
- * @param {CreateContext} context - Create context
- * @param {function} prompt - function to prompt user
+ * @param {import("@gasket/cli").CreateContext} context - Create context
+ * @param {Function} prompt - function to prompt user
  * @returns {Promise} promise
  */
 async function chooseTestPlugin(context, prompt) {
@@ -80,12 +78,18 @@ async function chooseTestPlugin(context, prompt) {
     .map((pluginInfo) => pluginIdentifier(pluginInfo.name).shortName)
     .concat(plugins);
 
-  const knownTestPlugins = { mocha: '@gasket/mocha', jest: '@gasket/jest', cypress: '@gasket/cypress' };
+  const knownTestPlugins = {
+    mocha: '@gasket/mocha',
+    jest: '@gasket/jest',
+    cypress: '@gasket/cypress'
+  };
 
   if (!('testPlugin' in context)) {
-    let testPlugin = Object.values(knownTestPlugins).find((p) => allPlugins.includes(p));
+    let testPlugin = Object.values(knownTestPlugins).find((p) =>
+      allPlugins.includes(p)
+    );
 
-    if ('testSuite' in  context) {
+    if ('testSuite' in context) {
       testPlugin = knownTestPlugins[context.testSuite];
     }
 
@@ -115,9 +119,8 @@ async function chooseTestPlugin(context, prompt) {
 /**
  * Given that gasket is creating in an already existing directory, it should
  * confirm with the user that it's intentionally overwriting that directory
- *
- * @param  {CreateContext} context - Create context
- * @param {function} prompt - function to prompt user
+ * @param  {import("@gasket/cli").CreateContext} context - Create context
+ * @param {Function} prompt - function to prompt user
  * @returns {Promise} promise
  */
 async function allowExtantOverwriting(context, prompt) {
@@ -145,8 +148,7 @@ const questions = [
 
 /**
  * Fire off prompts for user input
- *
- * @param {CreateContext} context - Create context
+ * @param {import("@gasket/cli").CreateContext} context - Create context
  * @returns {Promise} promise
  */
 async function globalPrompts(context) {
@@ -156,6 +158,8 @@ async function globalPrompts(context) {
   }
 }
 
-module.exports = action('Global prompts', globalPrompts, { startSpinner: false });
+module.exports = action('Global prompts', globalPrompts, {
+  startSpinner: false
+});
 
 module.exports.questions = questions;

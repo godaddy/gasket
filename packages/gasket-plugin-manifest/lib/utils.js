@@ -4,10 +4,9 @@ const excludes = ['staticOutput', 'path'];
 /**
  * Merges manifest defaults with gasket.config manifest and passes to
  * every defined `manifest` hook for further manipulation.
- *
  * @param  {Gasket} gasket - The gasket API
- * @param {Object} context - Request context
- * @returns {Object} manifest.json
+ * @param {object} context - Request context
+ * @returns {object} manifest.json
  */
 async function gatherManifestData(gasket, context) {
   const { logger, execWaterfall, config } = gasket;

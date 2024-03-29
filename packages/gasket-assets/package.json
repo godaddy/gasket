@@ -11,12 +11,12 @@
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "test": "npm run lint && npm run typecheck",
+    "typecheck": "tsc",
+    "typecheck:watch": "tsc --watch",
     "build": "npm run clean && npm run svg-to-react",
     "prepublishOnly": "npm run build",
     "clean": "rimraf ./react",
-    "svg-to-react": "babel-node --presets @babel/env ./scripts/svg-to-react.js",
-    "typecheck": "tsc",
-    "typecheck:watch": "tsc --watch"
+    "svg-to-react": "babel-node --presets @babel/env ./scripts/svg-to-react.js"
   },
   "repository": {
     "type": "git",

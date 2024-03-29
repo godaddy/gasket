@@ -3,12 +3,10 @@
  * or reducers, for consistency between browser and server rendering.
  * As such, if keys in preloadedState do not have corresponding reducers,
  * this will add placeholders.
- *
  * @see: https://redux.js.org/recipes/structuring-reducers/using-combinereducers#defining-state-shape
- *
- * @param {Object.<string,function>} reducers - Reducers
+ * @param {Object.<string, Function>} reducers - Reducers
  * @param {Object.<string,*>} preloadedState - State to preload store with
- * @returns {Object.<string,function>} placeholder reducers
+ * @returns {Object.<string, Function>} placeholder reducers
  */
 export default function placeholderReducers(reducers = {}, preloadedState = {}) {
   const keys = new Set(Object.keys(preloadedState));

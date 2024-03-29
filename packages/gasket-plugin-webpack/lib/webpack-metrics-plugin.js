@@ -2,9 +2,8 @@ const path = require('path');
 
 /**
  * This is a webpack plugin for gathering bundle size data
- *
- * @param {Object} opts Options object
- * @param {Gasket} opts.gasket gasket API
+ * @param {object} opts Options object
+ * @param {import("@gasket/engine").Gasket} opts.gasket gasket API
  * @public
  */
 class WebpackMetricsPlugin {
@@ -14,37 +13,29 @@ class WebpackMetricsPlugin {
 
   /**
    * Helper function to call the metrics lifecycle
-   *
-   * @param {Object} metrics metrics data gathered from plugin
+   * @param {object} metrics metrics data gathered from plugin
    * @private
    */
   async handleMetrics(metrics) {
     //
-    // TODO (crobbins): better expose gasket logging utilities
-    // to plugins to logging these errors more obvious to future
-    // plugin authors.
+    // TODO (crobbins): better expose gasket logging utilities to plugins to
+    // logging these errors more obvious to future plugin authors.
     //
     this.gasket.exec('metrics', metrics);
   }
 
   /**
-   * This plugin will calculate the sizes of the directories from the webpack bundle
-   * sent to the browser and call the metrics lifecycle with the data.
+   * This plugin will calculate the sizes of the directories from the webpack
+   * bundle sent to the browser and call the metrics lifecycle with the data.
    *
    * Example format of data to emit:
    *
-   * { name: '@gasket/canary-app',
-   *    event: 'webpack',
-   *    data: {
-   *     images: { totalSize: 101231, jpg: 101231 },
-   *     chunks: { totalSize: 128770, js: 128770 },
-   *     runtime: { totalSize: 17671, js: 17671 },
-   *     css: { totalSize: 749, css: 749 },
-   *     pages: { totalSize: 782744, js: 782744 },
-   *     'bundle.svgs': { totalSize: 10188, svgs: 10188 } },
-   *   time: 1559323660583 }
-   *
-   * @param {Object} compiler - webpack compiler object
+   * { name: '@gasket/canary-app', event: 'webpack', data: { images: {
+   * totalSize: 101231, jpg: 101231 }, chunks: { totalSize: 128770, js: 128770
+   * }, runtime: { totalSize: 17671, js: 17671 }, css: { totalSize: 749, css:
+   * 749 }, pages: { totalSize: 782744, js: 782744 }, 'bundle.svgs': {
+   * totalSize: 10188, svgs: 10188 } }, time: 1559323660583 }
+   * @param {object} compiler - webpack compiler object
    */
   apply(compiler) {
     const { target, context } = compiler.options;
@@ -52,6 +43,7 @@ class WebpackMetricsPlugin {
 
     compiler.hooks.emit.tap(
       'WebpackMetricsPlugin',
+      // eslint-disable-next-line max-statements
       ({ assets }) => {
         const map = {};
         let name;
@@ -91,9 +83,8 @@ class WebpackMetricsPlugin {
         };
 
         //
-        // TODO (crobbins): better expose gasket logging utilities
-        // to plugins to logging these errors more obvious to future
-        // plugin authors.
+        // TODO (crobbins): better expose gasket logging utilities to plugins to
+        // logging these errors more obvious to future plugin authors.
         //
         this.handleMetrics(metrics).catch(() => {});
       }

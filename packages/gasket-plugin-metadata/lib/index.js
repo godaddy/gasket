@@ -1,3 +1,5 @@
+/// <reference types="@gasket/plugin-command" />
+
 const cloneDeep = require('lodash.clonedeep');
 const {
   sanitize,
@@ -8,10 +10,11 @@ const {
   expandPresetMetadata,
   expandPackageMetadata
 } = require('./utils');
+const { name } = require('../package.json');
 
 /** @type {import('@gasket/engine').Plugin} */
 const plugin = {
-  name: require('../package').name,
+  name,
   hooks: {
     async init(gasket) {
       const { loader, config } = gasket;
@@ -36,11 +39,11 @@ const plugin = {
       expandPackageMetadata([app]);
       expandPackageMetadata(plugins);
 
-      //
       // Allow plugins to tune their own metadata via lifecycle
-      //
       await gasket.execApply('metadata', async ({ name }, handler) => {
-        const idx = plugins.findIndex(p => p.module.name === name || p.name === name);
+        const idx = plugins.findIndex(
+          (p) => p.module.name === name || p.name === name
+        );
         const pluginData = await handler(plugins[idx]);
 
         loadPluginModules(pluginData, loader);
@@ -56,16 +59,16 @@ const plugin = {
     metadata(gasket, meta) {
       return {
         ...meta,
-        lifecycles: [{
-          name: 'metadata',
-          method: 'execApply',
-          description: 'Allows plugins to adjust their metadata',
-          link: 'README.md#metadata',
-          parent: 'init'
-        }],
-        modules: [
-          '@gasket/cli'
-        ]
+        lifecycles: [
+          {
+            name: 'metadata',
+            method: 'execApply',
+            description: 'Allows plugins to adjust their metadata',
+            link: 'README.md#metadata',
+            parent: 'init'
+          }
+        ],
+        modules: ['@gasket/cli']
       };
     }
   }

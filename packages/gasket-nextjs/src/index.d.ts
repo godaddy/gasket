@@ -1,7 +1,7 @@
 import type { GasketData } from '@gasket/data';
 import type { ComponentType, PropsWithChildren } from 'react';
 
-type SubstitutableHOC = <C extends ComponentType<any>>(component: C) => C;
+type SubstitutableHOC<T> = <C extends ComponentType<T>>(component: C) => C;
 
 /**
  * Renders a script tag with JSON gasketData
@@ -20,7 +20,7 @@ export const GasketDataScript: ComponentType<{ data: GasketData }>;
  * @param {number} [options.index] - Force script injection at particular index
  * @returns {function(NextDocument)} wrapper
  */
-export function withGasketData(options?: { index?: number }): SubstitutableHOC;
+export function withGasketData(options?: { index?: number }): SubstitutableHOC<{}>;
 
 /**
  * React hook that fetches GasketData in elements context and returns it
@@ -40,9 +40,10 @@ export function useGasketData(): GasketData;
 export const GasketDataProvider: ComponentType<PropsWithChildren<{ gasketData: GasketData }>>;
 
 /**
- * Make an HOC that adds a provider for the GasketData.
- * This can be used to wrap a top level React, Next.js custom App component or Next.js custom NextDocument component.
+ * Make an HOC that adds a provider for the GasketData. This can be used to wrap
+ * a top level React, Next.js custom App component or Next.js custom
+ * NextDocument component.
  *
  * @returns {function} wrapper
  */
-export function withGasketDataProvider(): SubstitutableHOC;
+export function withGasketDataProvider(): SubstitutableHOC<{}>;

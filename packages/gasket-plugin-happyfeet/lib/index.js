@@ -1,8 +1,9 @@
 const happyFeet = require('happy-feet');
+const { name } = require('../package.json');
 
 /** @type {import('@gasket/engine').Plugin} */
 const plugin = {
-  name: require('../package').name,
+  name,
   hooks: {
     preboot: async function preboot(gasket) {
       const happyConfig = gasket.config.happyFeet || {};

@@ -4,7 +4,6 @@ const defaultConfig = path.join(__dirname, '..', 'generator', 'docusaurus.config
 
 /**
  * Generate base docusaurus config
- *
  * @param {object} configOptions - Object to contain Docusaurus config options that will be added to the root config
  * @returns {string} - docusaurus config file
  */

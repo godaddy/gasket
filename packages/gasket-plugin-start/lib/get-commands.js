@@ -11,6 +11,8 @@ module.exports = function getCommands(gasket, { GasketCommand, flags }) {
     async gasketRun() {
       await this.gasket.exec('build');
 
+      // @ts-ignore
+      // TEMP: ignoring as a temporary workaround until plugin-command is updated
       if (this.gasket.command.flags.exit) {
         this.gasket.logger.debug('force exit');
         // eslint-disable-next-line no-process-exit

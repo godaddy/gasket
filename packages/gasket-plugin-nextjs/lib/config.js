@@ -2,7 +2,6 @@ const { initWebpack } = require('@gasket/plugin-webpack');
 
 /**
  * Bring forward configuration from intl plugin to config for next.
- *
  * @param {Gasket} gasket - The gasket API
  * @param {object} config - Configuration to pass to Nextjs
  * @private
@@ -36,10 +35,9 @@ function forwardIntlConfig(gasket, config) {
 /**
  * Small helper function that creates nextjs configuration from the gasket
  * configuration.
- *
  * @param   {Gasket}  gasket                The gasket API.
- * @param   {Boolean} includeWebpackConfig  `true` to generate webpack config
- * @returns {Promise<Object>} The configuration data for Nextjs
+ * @param   {boolean} includeWebpackConfig  `true` to generate webpack config
+ * @returns {Promise<object>} The configuration data for Nextjs
  * @private
  */
 function createConfig(gasket, includeWebpackConfig = true) {

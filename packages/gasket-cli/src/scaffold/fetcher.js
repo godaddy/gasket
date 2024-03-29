@@ -56,7 +56,7 @@ const Fetcher = class Fetcher {
 
   /**
    * Returns a reasonably unique name for a subdirectory in `os.tmpdir()`
-   * @returns {String} Reasonably unique name
+   * @returns {string} Reasonably unique name
    * @private
    */
   _id() {
@@ -69,7 +69,6 @@ const Fetcher = class Fetcher {
  * Package fetcher that represents the core file system logic
  * for getting npm packages without having to perform a
  * configuration.
- *
  * @type {PackageFetcher}
  * @public
  */
@@ -85,8 +84,7 @@ module.exports = class PackageFetcher {
   /**
    * Simple wrapper around clone that also reads the package.json
    * from disk once it has been downloaded.
-   *
-   * @returns {Promise<Object>} Parsed package.json for the fetched package.
+   * @returns {Promise<object>} Parsed package.json for the fetched package.
    */
   async readPackage() {
     const dest = await this.clone();
@@ -105,9 +103,8 @@ module.exports = class PackageFetcher {
    * 1. Create the target `tmp` directory to untar into
    * 2. Fetch the tarball using `npm pack` directly as a child process
    * 3. Unpack the tarball into the target `tmp` directory
-   *   - All `npm` package tarbals have a nested "package" directory in them.
+   * - All `npm` package tarbals have a nested "package" directory in them.
    * 4. Remove the tarball created by `npm pack`.
-   *
    * @returns {Promise<string>} Full path of the cloned destination on local disk.
    * @public
    */
@@ -130,7 +127,6 @@ module.exports = class PackageFetcher {
 
   /**
    * Fetch the tarball for the scaffold
-   *
    * @param {string} packageName An npm package name (e.g. @gasket/app-template).
    * @param {string} [dir] Directory the package needs to be downloaded.
    * @returns {Promise} A promise represents if fetch succeeds or fails
@@ -161,9 +157,8 @@ module.exports = class PackageFetcher {
    * Unpack the tarball into given directory.
    *
    * Used from https://github.com/ywangii/await-targz under MIT.
-   *
-   * @param {String} tarball Path for tarball to be extracted
-   * @param {String} dir Path for the file to be extracted
+   * @param {string} tarball Path for tarball to be extracted
+   * @param {string} dir Path for the file to be extracted
    * @returns {Promise} A promise represents if unpack tarball succeeds or fails
    * @public
    */

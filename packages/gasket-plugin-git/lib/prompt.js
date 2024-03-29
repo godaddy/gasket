@@ -10,7 +10,7 @@ function serialize(content) {
 
   for (const category in content) {
     if (content[category].size) {
-      category !== '' ? desiredContent += `# ${category}\n` : null;
+      category !== '' ? (desiredContent += `# ${category}\n`) : null;
       desiredContent += [...content[category]].join('\n');
       desiredContent += '\n\n';
     }
@@ -20,8 +20,9 @@ function serialize(content) {
 }
 
 /**
- * Instantiates new Gitignore instance, adds get method to content using the serialize function, adds gitignore to context
- * @param {CreateContext} context - Create context
+ * Instantiates new Gitignore instance, adds get method to content using the
+ * serialize function, adds gitignore to context
+ * @param {import("@gasket/cli").CreateContext} context - Create context
  */
 function instantiateGitignore(context) {
   const gitignore = new Gitignore();
@@ -37,11 +38,7 @@ function instantiateGitignore(context) {
 
 /**
  * Prompt for git settings during gasket create
- * @param {import("@gasket/engine").Gasket} gasket - Gasket
- * @param {CreateContext} context - Create context
- * @param {object} utils - Prompt utils
- * @param {Function} utils.prompt - Inquirer prompt
- * @returns {Promise<object>} context
+ * @type {import('@gasket/engine').HookHandler<'prompt'>}
  */
 module.exports = async function promptHook(gasket, context, { prompt }) {
   if (!('gitInit' in context)) {
@@ -50,7 +47,8 @@ module.exports = async function promptHook(gasket, context, { prompt }) {
         name: 'gitInit',
         message: 'Do you want a git repo to be initialized?',
         type: 'confirm'
-      }]);
+      }
+    ]);
 
     instantiateGitignore(context);
     return { ...context, gitInit };

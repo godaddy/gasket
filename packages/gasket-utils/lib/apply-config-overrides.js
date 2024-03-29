@@ -7,7 +7,6 @@ const debug = require('diagnostics')('gasket:utils');
 /**
  * Normalize the config by applying any overrides for environments, commands,
  * or local-only config file.
- *
  * @param {object} config - Target config to be normalized
  * @param {object} context - Context for applying overrides
  * @param {string} context.env - Name of environment
@@ -23,6 +22,15 @@ function applyConfigOverrides(config, { env = '', commandId, root, localFile }) 
   );
 }
 
+/**
+ *
+ * @param root0
+ * @param root0.config
+ * @param root0.env
+ * @param root0.commandId
+ * @param root0.root
+ * @param root0.localFile
+ */
 function *getPotentialConfigs({ config, env, commandId, root, localFile }) {
   // Separate environment-specific config from other config
   const { environments = {}, commands = {}, ...baseConfig } = config;
@@ -35,6 +43,12 @@ function *getPotentialConfigs({ config, env, commandId, root, localFile }) {
   yield baseConfig;
 }
 
+/**
+ *
+ * @param isLocalEnv
+ * @param root
+ * @param localFile
+ */
 function *getLocalOverrides(isLocalEnv, root, localFile) {
   // For git-ignorable changes, merge in optional `.local` file
   const localOverrides = isLocalEnv && localFile && tryRequire(path.join(root, localFile));
@@ -44,6 +58,11 @@ function *getLocalOverrides(isLocalEnv, root, localFile) {
   }
 }
 
+/**
+ *
+ * @param commands
+ * @param commandId
+ */
 function *getCommandOverrides(commands, commandId) {
   const commandOverrides = commandId && commands[commandId];
   if (commandOverrides) {
@@ -52,6 +71,11 @@ function *getCommandOverrides(commands, commandId) {
   }
 }
 
+/**
+ *
+ * @param env
+ * @param environments
+ */
 function *getSubEnvironmentOverrides(env, environments) {
   const envParts = env.split('.');
 
@@ -67,6 +91,11 @@ function *getSubEnvironmentOverrides(env, environments) {
   }
 }
 
+/**
+ *
+ * @param isLocalEnv
+ * @param environments
+ */
 function *getDevOverrides(isLocalEnv, environments) {
   // Special case for the local environment, which inherits from the
   // development environment

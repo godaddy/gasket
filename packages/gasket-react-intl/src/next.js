@@ -2,6 +2,9 @@ import { localeUtils } from './utils';
 import { manifest } from './config';
 
 let localesParentDir;
+/**
+ *
+ */
 export function getLocalesParentDir() {
   return localesParentDir || (
     // eslint-disable-next-line no-process-env
@@ -11,7 +14,6 @@ export function getLocalesParentDir() {
 
 /**
  * Load locale file(s) for Next.js static pages
- *
  * @param {LocalePathPart|LocalePathPart[]} localePathPart - Path(s) containing locale files
  * @returns {function({}): Promise<{props: {localesProps: LocalesProps}}>} pageProps
  */
@@ -37,7 +39,6 @@ export function intlGetStaticProps(localePathPart = manifest.defaultPath) {
 
 /**
  * Load locale file(s) for Next.js static pages
- *
  * @param {LocalePathPart|LocalePathPart[]} localePathPart - Path(s) containing locale files
  * @returns {function({}): Promise<{props: {localesProps: LocalesProps}}>} pageProps
  */

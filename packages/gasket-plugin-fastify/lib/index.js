@@ -1,4 +1,4 @@
-// / <reference types="@gasket/cli" />
+/// <reference types="@gasket/cli" />
 
 const debug = require('diagnostics')('gasket:fastify');
 const { peerDependencies, name } = require('../package.json');

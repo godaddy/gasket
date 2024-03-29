@@ -66,7 +66,7 @@ const plugin = {
       /**
        * Add files & extend package.json for new apps.
        * @param {Gasket} gasket - The Gasket API.
-       * @param {CreateContext} context - Create context
+       * @param {import("@gasket/cli").CreateContext} context - Create context
        * @param {Files} context.files - The Gasket Files API.
        * @param {PackageJson} context.pkg - The Gasket PackageJson API.
        * @param {PluginName} context.testPlugin - The name of included test plugins.

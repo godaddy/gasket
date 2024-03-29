@@ -2,6 +2,7 @@
 /// <reference types="@gasket/plugin-start" />
 /// <reference types="@gasket/cli" />
 /// <reference types="@gasket/plugin-metadata" />
+/// <reference types="@gasket/plugin-log" />
 
 const { filterSensitiveCookies } = require('./cookies');
 const middleware = require('./middleware');

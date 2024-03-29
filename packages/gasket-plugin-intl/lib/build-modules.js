@@ -10,7 +10,6 @@ const rePkgParts = /^(?<name>(?:@[\w-]+\/)?[\w-]+)(?<dir>\/[\w-]+)?$/;
 class BuildModules {
   /**
    * Instantiate a builder to gather locale files
-   *
    * @param {Gasket} gasket - Gasket API
    */
   constructor(gasket) {
@@ -35,7 +34,6 @@ class BuildModules {
   /**
    * Given a source folder, this function minifies all the files in that folder
    * and sets a unique hash for each file and saves in the target location
-   *
    * @param {string} srcDir - Source directory path
    * @param {string} tgtDir - Target directory path
    * @returns {Promise} promise
@@ -57,7 +55,6 @@ class BuildModules {
 
   /**
    * Copies the source file to proper target location
-   *
    * @param {string} src - full path to source file
    * @param {string} tgt - target folder location
    * @returns {Promise} - resolves once the file is saved
@@ -73,7 +70,6 @@ class BuildModules {
 
   /**
    * Processes locale files from source to target build directory
-   *
    * @param {string} srcDir - Source locale directory
    * @param {string} tgtDir - Target locale directory
    * @param {string[]} fileNames - Names of the locale files
@@ -97,7 +93,6 @@ class BuildModules {
 
   /**
    * Reads the source directory and returns the package name e.g. @gasket/next
-   *
    * @param {string} srcDir - Source directory path
    * @returns {string} package name
    */
@@ -116,7 +111,6 @@ class BuildModules {
 
   /**
    * Reads the package.json and returns the package name e.g. @gasket/next
-   *
    * @param {string} srcDir - Source directory path (a locales directory)
    * @returns {string} package name
    */
@@ -132,7 +126,6 @@ class BuildModules {
 
   /**
    * Processes directories
-   *
    * @param {SrcPkgDir[]} srcPkgDirs - list of dirs to process
    */
   async processDirs(srcPkgDirs) {
@@ -153,7 +146,6 @@ class BuildModules {
 
   /**
    * Find modules that have /locales folder to process
-   *
    * @returns {SrcPkgDir[]} source package directories
    */
   async discoverDirs() {
@@ -177,7 +169,6 @@ class BuildModules {
 
   /**
    * Find modules with locale directories to process
-   *
    * @returns {SrcPkgDir[]} source package directories
    */
   async gatherModuleDirs() {
@@ -231,7 +222,6 @@ class BuildModules {
 
 /**
  * Discovers locale files under node modules with and copies them to output dir.
- *
  * @param {Gasket} gasket - Gasket API
  */
 module.exports = async function buildModules(gasket) {

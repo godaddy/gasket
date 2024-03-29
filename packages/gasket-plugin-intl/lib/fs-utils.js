@@ -9,7 +9,6 @@ const path = require('path');
 
 /**
  * Check if path has package.json file and return the name.
- *
  * @param {string} targetDir - File path
  * @returns {string|undefined} result
  */
@@ -24,7 +23,6 @@ async function packageName(targetDir) {
 
 /**
  * Find all directories under target dir, recursively
- *
  * @param {string} parentDir - Path to parent directory
  * @param {SrcPkgDir[]} dirList - List of full paths
  * @returns {AsyncGenerator<SrcPkgDir>} source package directories
@@ -46,7 +44,6 @@ async function *getPackageDirs(parentDir, dirList = []) {
 
 /**
  * Saves a json file to disk
- *
  * @param {string} filePath - Path to the target file
  * @param {object} json - JSON to write out
  * @returns {Promise} promise

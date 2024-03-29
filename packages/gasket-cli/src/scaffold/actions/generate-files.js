@@ -10,14 +10,13 @@ const action = require('../action-wrapper');
 const glob = promisify(require('glob'));
 const flatten = (acc, values) => (acc || []).concat(values);
 const reSep = /[/\\]+/;
-const joinSep = pthArr => pthArr.join(path.sep);
-const splitSep = pthStr => pthStr.split(reSep);
+const joinSep = (pthArr) => pthArr.join(path.sep);
+const splitSep = (pthStr) => pthStr.split(reSep);
 
 /**
  * Find all duplicate target files and reduce to single descriptor.
  * Keeps track of overrides.
  * Last in wins.
- *
  * @param {object[]} descriptors - Details about files to generate
  * @returns {object[]} descriptors
  */
@@ -40,7 +39,6 @@ function reduceDescriptors(descriptors) {
 
 /**
  * Assemble the description objects from glob results
- *
  * @param {string} dest - app destination
  * @param {string} from - Plugin source name
  * @param {string} pattern - pattern to glob
@@ -49,12 +47,17 @@ function reduceDescriptors(descriptors) {
  */
 function assembleDescriptors(dest, from, pattern, srcPaths) {
   const output = joinSep(splitSep(dest));
-  const baseParts = splitSep(path.resolve(pattern.replace(/[/\\]+\.?\*.*$/, '')));
+  const baseParts = splitSep(
+    path.resolve(pattern.replace(/[/\\]+\.?\*.*$/, ''))
+  );
   const base = joinSep(baseParts);
   return srcPaths.map((srcPath) => {
     const parts = splitSep(srcPath);
     const srcFile = joinSep(parts);
-    const target = joinSep(parts.slice(baseParts.length)).replace('.template', '');
+    const target = joinSep(parts.slice(baseParts.length)).replace(
+      '.template',
+      ''
+    );
     return {
       pattern,
       base,
@@ -68,22 +71,25 @@ function assembleDescriptors(dest, from, pattern, srcPaths) {
 
 /**
  * Build a list of descriptions of all files we want to generate
- *
- * @param {CreateContext} context - Create context
+ * @param {import("@gasket/cli").CreateContext} context - Create context
  * @returns {object[]} descriptors
  */
 async function getDescriptors(context) {
   const { dest, files } = context;
   const descriptors = (
-    await Promise.all(files.globSets.map(async set => {
-      const { globs, source } = set;
-      const matches = await Promise.all(globs.map(async pattern => {
-        pattern = splitSep(pattern).join('/');  // Glob uses / for all OS's
-        const srcPaths = await glob(pattern, { nodir: true });
-        return assembleDescriptors(dest, source.name, pattern, srcPaths);
-      }));
-      return matches.reduce(flatten);
-    }))
+    await Promise.all(
+      files.globSets.map(async (set) => {
+        const { globs, source } = set;
+        const matches = await Promise.all(
+          globs.map(async (pattern) => {
+            pattern = splitSep(pattern).join('/'); // Glob uses / for all OS's
+            const srcPaths = await glob(pattern, { nodir: true });
+            return assembleDescriptors(dest, source.name, pattern, srcPaths);
+          })
+        );
+        return matches.reduce(flatten);
+      })
+    )
   ).reduce(flatten);
 
   return reduceDescriptors(descriptors);
@@ -91,8 +97,7 @@ async function getDescriptors(context) {
 
 /**
  * Read file content, apply templating, then write out target file.
- *
- * @param {CreateContext} context - Create context
+ * @param {import("@gasket/cli").CreateContext} context - Create context
  * @param {object[]} descriptors - Details about files to generate
  * @returns {boolean} hasWarnings
  */
@@ -104,60 +109,68 @@ async function performGenerate(context, descriptors) {
   const handlebars = Handlebars.create();
   handlebars.registerHelper('json', JSON.stringify);
   handlebars.registerHelper('jspretty', (data) => {
-    return JSON.stringify(data).replace(/"/g, '\'');
+    return JSON.stringify(data).replace(/"/g, "'");
   });
 
   debug('descriptors', JSON.stringify(descriptors, null, 2));
 
-  await Promise.all(descriptors.map(async desc => {
-    const targetDir = path.dirname(desc.targetFile);
-    let content;
+  await Promise.all(
+    descriptors.map(async (desc) => {
+      const targetDir = path.dirname(desc.targetFile);
+      let content;
 
-    try {
-      const source = await fs.readFile(desc.srcFile, { encoding: 'utf8' });
-      content = source;
       try {
-        content = handlebars.compile(source)(context);
-      } catch (compileErr) {
-        hasWarning = true;
-        warnings.push(`Error templating ${desc.targetFile}: ${compileErr.message}`);
+        const source = await fs.readFile(desc.srcFile, { encoding: 'utf8' });
+        content = source;
+        try {
+          content = handlebars.compile(source)(context);
+        } catch (compileErr) {
+          hasWarning = true;
+          warnings.push(
+            `Error templating ${desc.targetFile}: ${compileErr.message}`
+          );
+        }
+      } catch (readErr) {
+        if (readErr.code === 'EISDIR') {
+          // Skipping directory errors.
+          // node-glob seems to incorrectly captures some directories on Windows
+          hasWarning = true;
+          warnings.push(
+            `Directory matched as template file: ${desc.targetFile}`
+          );
+        } else {
+          hasError = true;
+          errors.push(
+            `Error reading template ${desc.srcFile}: ${readErr.message}`
+          );
+        }
       }
-    } catch (readErr) {
-      if (readErr.code === 'EISDIR') {
-        // Skipping directory errors.
-        // node-glob seems to incorrectly captures some directories on Windows
-        hasWarning = true;
-        warnings.push(`Directory matched as template file: ${desc.targetFile}`);
-      } else {
-        hasError = true;
-        errors.push(`Error reading template ${desc.srcFile}: ${readErr.message}`);
-      }
-    }
-    if (!content) return;
+      if (!content) return;
 
-    try {
-      await mkdirp(targetDir);
       try {
-        await fs.writeFile(desc.targetFile, content, { encoding: 'utf8' });
-        const message = desc.target + (desc.overrides ? dim(` – from ${desc.from}`) : '');
-        generatedFiles.add(message);
-      } catch (writeErr) {
+        await mkdirp(targetDir);
+        try {
+          await fs.writeFile(desc.targetFile, content, { encoding: 'utf8' });
+          const message =
+            desc.target + (desc.overrides ? dim(` – from ${desc.from}`) : '');
+          generatedFiles.add(message);
+        } catch (writeErr) {
+          hasError = true;
+          errors.push(`Error writing ${desc.targetFile}: ${writeErr.message}`);
+        }
+      } catch (err) {
         hasError = true;
-        errors.push(`Error writing ${desc.targetFile}: ${writeErr.message}`);
+        errors.push(`Error creating directory ${targetDir}: ${err.message}`);
       }
-    } catch (err) {
-      hasError = true;
-      errors.push(`Error creating directory ${targetDir}: ${err.message}`);
-    }
-  }));
+    })
+  );
 
   return [hasWarning, hasError];
 }
 
 /**
  * Generate the app files and templates using context
- *
- * @param {CreateContext} context - Create context
+ * @param {import("@gasket/cli").CreateContext} context - Create context
  * @param {Spinner} spinner - Spinner
  * @returns {Promise} promise
  */

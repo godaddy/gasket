@@ -9,11 +9,11 @@ const pkgVersionCompatible = `^${pkgVersion}`;
  * @param {string} v - Version to check
  * @returns {boolean} result
  */
-const isFile = v => v && v.includes('file:');
+const isFile = (v) => v && v.includes('file:');
 
 /**
  * Determines the active cli version, and the version required to be installed for app.
- * @param {CreateContext} context - Create context
+ * @param {import("@gasket/cli").CreateContext} context - Create context
  * @param {Spinner} spinner - Spinner
  */
 function resolveCliVersion(context, spinner) {
@@ -23,8 +23,8 @@ function resolveCliVersion(context, spinner) {
   // Gather presets with cli dependencies
   //
   const cliPresets = flattenPresets(presetInfos)
-    .map(p => p.package)
-    .filter(p => p.dependencies && p.dependencies['@gasket/cli']);
+    .map((p) => p.package)
+    .filter((p) => p.dependencies && p.dependencies['@gasket/cli']);
 
   //
   // Find the preset with minimum cli version required.
@@ -35,7 +35,10 @@ function resolveCliVersion(context, spinner) {
     const prevVersion = acc && acc.dependencies['@gasket/cli'];
     if (isFile(nextVersion)) return cur;
     if (isFile(prevVersion)) return acc;
-    return !acc || semver.gt(semver.coerce(prevVersion), semver.coerce(nextVersion)) ? cur : acc;
+    return !acc ||
+      semver.gt(semver.coerce(prevVersion), semver.coerce(nextVersion))
+      ? cur
+      : acc;
   }, null);
 
   const requiredVersion = minPreset && minPreset.dependencies['@gasket/cli'];
@@ -45,14 +48,14 @@ function resolveCliVersion(context, spinner) {
   //
   if (requiredVersion && !isFile(requiredVersion)) {
     let hasWarning = false;
-    cliPresets.forEach(p => {
+    cliPresets.forEach((p) => {
       const v = p.dependencies['@gasket/cli'];
       // installed version mismatch
       if (!semver.satisfies(semver.coerce(v).version, requiredVersion)) {
         warnings.push(
           `Installed @gasket/cli@${requiredVersion} for ${minPreset.name}@${minPreset.version} ` +
-          `which does not satisfy version (${v}) ` +
-          `required by ${p.name}@${p.version}`
+            `which does not satisfy version (${v}) ` +
+            `required by ${p.name}@${p.version}`
         );
         hasWarning = true;
       }
@@ -64,8 +67,8 @@ function resolveCliVersion(context, spinner) {
     if (!semver.satisfies(pkgVersion, requiredVersion)) {
       warnings.push(
         `Installed @gasket/cli@${requiredVersion} ` +
-        `which is not compatible with global version (${pkgVersion}) ` +
-        `used to execute \`gasket create\``
+          `which is not compatible with global version (${pkgVersion}) ` +
+          `used to execute \`gasket create\``
       );
       hasWarning = true;
     }
@@ -79,4 +82,6 @@ function resolveCliVersion(context, spinner) {
   });
 }
 
-module.exports = action('Resolve CLI versions', resolveCliVersion, { startSpinner: false });
+module.exports = action('Resolve CLI versions', resolveCliVersion, {
+  startSpinner: false
+});

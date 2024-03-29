@@ -5,8 +5,7 @@ const ConfigBuilder = require('../config-builder');
 
 /**
  * Debug-only load existing app package.json for context.pkg
- *
- * @param {CreateContext} context - Create context
+ * @param {import("@gasket/cli").CreateContext} context - Create context
  * @returns {Promise} promise
  */
 async function loadPkForDebug(context) {
@@ -21,4 +20,7 @@ async function loadPkForDebug(context) {
   Object.assign(context, { pkg });
 }
 
-module.exports = action('Load package.json for debug. 🐲 Here be dragons!', loadPkForDebug);
+module.exports = action(
+  'Load package.json for debug. 🐲 Here be dragons!',
+  loadPkForDebug
+);

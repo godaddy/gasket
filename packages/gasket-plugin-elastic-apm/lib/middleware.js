@@ -1,7 +1,5 @@
 /// <reference types="@gasket/plugin-express" />
 
-const { callbackify } = require('util');
-
 /**
  * Middleware for customizing transactions
  * @param {import('@gasket/engine').Gasket} gasket - The Gasket engine
@@ -28,7 +26,15 @@ async function customizeTransaction(gasket, req, res) {
  * @type {import('@gasket/engine').HookHandler<'middleware'>}
  */
 module.exports = (gasket) => {
-  return gasket.apm
-    ? [callbackify(async (req, res) => customizeTransaction(gasket, req, res))]
-    : [];
+  return (
+    gasket.apm &&
+    async function apmTransactionMiddleware(req, res, next) {
+      try {
+        customizeTransaction(gasket, req, res);
+      } catch (error) {
+        return next(error);
+      }
+      next();
+    }
+  );
 };

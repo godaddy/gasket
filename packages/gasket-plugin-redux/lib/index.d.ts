@@ -5,21 +5,20 @@ import type { MaybeAsync } from '@gasket/engine';
 declare module '@gasket/engine' {
   export interface GasketConfig {
     redux?: {
-      makeStore?: string,
-      initState?: any
-    }
+      makeStore?: string;
+      initState?: any;
+    };
   }
 
-  export interface State {
-    [key: string]: any;
+  export interface State extends Record<string, any> {
     config?: {
       [key: string]: any;
-    }
+    };
   }
 
   export interface HookExecTypes {
-    initReduxState<State>(
-      state: State,
+    initReduxState<T extends State>(
+      state: T,
       req: IncomingMessage,
       res: OutgoingMessage
     ): MaybeAsync<State>;
@@ -27,6 +26,12 @@ declare module '@gasket/engine' {
       store: Store,
       req: IncomingMessage,
       res: OutgoingMessage
-    ): MaybeAsync<void>
+    ): MaybeAsync<void>;
+  }
+}
+
+declare module '@gasket/cli' {
+  export interface CreateContext {
+    hasGasketRedux?: boolean;
   }
 }

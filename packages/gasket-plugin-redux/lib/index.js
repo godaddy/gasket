@@ -1,5 +1,8 @@
+/// <reference types="@gasket/plugin-webpack" />
+/// <reference types="@gasket/plugin-metadata" />
+
 const path = require('path');
-const { name, devDependencies } = require('../package');
+const { name, devDependencies } = require('../package.json');
 const configure = require('./configure');
 const prompt = require('./prompt');
 const middleware = require('./middleware');

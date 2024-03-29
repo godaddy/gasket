@@ -1,15 +1,15 @@
+/// <reference types="@gasket/cli" />
+
 const { runShellCommand } = require('@gasket/utils');
 
 /**
  * Initialize the app with a git repo and creates a first commit with generated files
- * @param {import("@gasket/engine").Gasket} gasket - Gasket
- * @param {CreateContext} context - Create context
- * @returns {Promise} promise
  */
 module.exports = {
   timing: {
     last: true
   },
+  /** @type {import('@gasket/engine').HookHandler<'postCreate'>} */
   handler: async function postCreateHook(gasket, context) {
     const { gitInit, dest: cwd } = context;
 
@@ -24,8 +24,11 @@ module.exports = {
       await runShellCommand('git', ['add', '.'], { cwd });
 
       // Create a commit
-      await runShellCommand('git', ['commit', '-m', ':tada: Created new repository with gasket create'], { cwd });
+      await runShellCommand(
+        'git',
+        ['commit', '-m', ':tada: Created new repository with gasket create'],
+        { cwd }
+      );
     }
   }
 };
-

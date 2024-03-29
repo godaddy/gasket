@@ -2,8 +2,7 @@ const action = require('../action-wrapper');
 
 /**
  * Installs node_modules using the selected package manager
- *
- * @param {CreateContext} context - Create context
+ * @param {import("@gasket/cli").CreateContext} context - Create context
  * @returns {Promise} promise
  */
 async function installModules(context) {
@@ -11,7 +10,6 @@ async function installModules(context) {
 
   await pkgManager.install();
 }
-
 
 module.exports = action('Install node modules', installModules);
 

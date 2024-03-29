@@ -1,14 +1,17 @@
 /* eslint-disable max-len, max-statements */
 const fs = require('fs');
 const path = require('path');
-const { addPluginsToContext, ensureAbsolute, readConfig } = require('../scaffold/utils');
+const {
+  addPluginsToContext,
+  ensureAbsolute,
+  readConfig
+} = require('../scaffold/utils');
 
 /**
  * The CreateRuntime represents a shallow proxy to a CreateContext
  * that automatically adds transactional information for providing
  * CLI users with blame information in the event of conflicts.
- *
- * @param {CreateContext} context - Create context.
+ * @param {import("@gasket/cli").CreateContext} context - Create context.
  * @param {Plugin} source - Gasket plugin the create context is within.
  * @returns {Proxy} Shallow proxy to the `context` provided that will
  * pass `source` to `context.{files,pkg}.*` methods.
@@ -52,65 +55,62 @@ function makeCreateRuntime(context, source) {
   });
 }
 
+/**
+ *
+ * @param acc
+ * @param values
+ */
 function flatten(acc, values) {
   return acc.concat(values);
 }
 
 /**
  * Create Context
- *
- * @type {CreateContext}
+ * @type {import("@gasket/cli").CreateContext}
  *
  * -- Added by command args and flags
- *
- * @property {String} appName - Short name of the app
- * @property {String} cwd - Current work directory
- * @property {String} dest - Path to the target app (Default: cwd/appName)
- * @property {String} relDest - Relative path to the target app
- * @property {Boolean} extant - Whether or not target directory already exists
- * @property {[String]} localPresets - paths to the local presets packages
+ * @property {string} appName - Short name of the app
+ * @property {string} cwd - Current work directory
+ * @property {string} dest - Path to the target app (Default: cwd/appName)
+ * @property {string} relDest - Relative path to the target app
+ * @property {boolean} extant - Whether or not target directory already exists
+ * @property {[string]} localPresets - paths to the local presets packages
  * @property {PresetDesc[]} rawPresets - Raw preset desc from args. Can include version constraint. Added by load-preset if using localPresets.
  * @property {PluginDesc[]} rawPlugins - Raw plugin desc from flags, prompts, etc. Can include constraints.
  * @property {PluginName[]} plugins - Short names of plugins
- * @property {String[]} pkgLinks - Local packages that should be linked
- * @property {String} npmconfig - Path to npmconfig file
- * @property {String[]} messages - non-error/warning messages to report
- * @property {String[]} warnings - warnings messages to report
- * @property {String[]} errors - error messages to report but do not exit process
- * @property {String[]} nextSteps - any next steps to report for user
- * @property {Set<String>} generatedFiles - any generated files to show in report
+ * @property {string[]} pkgLinks - Local packages that should be linked
+ * @property {string} npmconfig - Path to npmconfig file
+ * @property {string[]} messages - non-error/warning messages to report
+ * @property {string[]} warnings - warnings messages to report
+ * @property {string[]} errors - error messages to report but do not exit process
+ * @property {string[]} nextSteps - any next steps to report for user
+ * @property {Set<string>} generatedFiles - any generated files to show in report
  *
  * -- Added by `global-prompts`
- *
- * @property {String} appDescription - Description of app
- * @property {Boolean} gitInit - Should a git repo be initialized and first commit
- * @property {String} testPlugin - Name of the plugin for unit tests
- * @property {String} packageManager - Which package manager to use (Default: 'npm')
- * @property {String} installCmd - Derived install command (Default: 'npm install')
- * @property {String} localCmd - Derived local run command (Default: 'npx gasket local')
- * @property {Boolean} destOverride - Whether or not the user wants to override an extant directory
+ * @property {string} appDescription - Description of app
+ * @property {boolean} gitInit - Should a git repo be initialized and first commit
+ * @property {string} testPlugin - Name of the plugin for unit tests
+ * @property {string} packageManager - Which package manager to use (Default: 'npm')
+ * @property {string} installCmd - Derived install command (Default: 'npm install')
+ * @property {string} localCmd - Derived local run command (Default: 'npx gasket local')
+ * @property {boolean} destOverride - Whether or not the user wants to override an extant directory
  *
  * -- Added by `load-preset`
- *
  * @property {PresetName[]} presets - Short name of presets
  * @property {PresetInfo[]} presetInfos - Shallow load of presets with meta data
  *
  * -- Added by `cli-version`
- *
  * @property {string} cliVersion - Version of current CLI used to issue `create` command
  * @property {string} cliVersionRequired - Version of CLI to install, either current or min compatible version required by preset(s)
  *
  * -- Added by `setup-pkg`
- *
  * @property {ConfigBuilder} pkg - package.json builder
  * @property {PackageManager} pkgManager - manager to execute npm or yarn commands
  *
  * -- Added by `setup-gasket-config`
- *
  * @property {ConfigBuilder} gasketConfig - gasket.config builder
  *
  * -- Added by `create-hooks`
- *
  * @property {Files} files - Use to add files and templates to generate
  */
 class CreateContext {
@@ -125,10 +125,9 @@ class CreateContext {
 
 /**
  * Makes the initial context used through the create command flow.
- *
- * @param {String[]} argv - Commands args
- * @param {Object} flags - Command flags
- * @returns {CreateContext} context
+ * @param {string[]} argv - Commands args
+ * @param {object} flags - Command flags
+ * @returns {import("@gasket/cli").CreateContext} context
  */
 module.exports = function makeCreateContext(argv = [], flags = {}) {
   const appName = argv[0] || 'templated-app';
@@ -158,8 +157,7 @@ module.exports = function makeCreateContext(argv = [], flags = {}) {
 
   /**
    * Input context which will be appended by prompts and passed to create hooks
-   *
-   * @type {CreateContext}
+   * @type {import("@gasket/cli").CreateContext}
    */
   const context = new CreateContext({
     destOverride: true,

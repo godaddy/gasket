@@ -1,3 +1,4 @@
+// @ts-nocheck
 const { Command, flags } = require('@oclif/command');
 
 /**

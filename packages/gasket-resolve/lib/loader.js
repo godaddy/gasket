@@ -4,10 +4,7 @@ const { pluginIdentifier, presetIdentifier } = require('./identifiers');
 
 /**
  * Module with meta data
- *
  * @typedef {object} ModuleInfo
- *
- *
  * @property {string} name - Name of preset
  * @property {object} module - Actual module content
  * @property {object} [package] - Package.json contents
@@ -19,13 +16,11 @@ const { pluginIdentifier, presetIdentifier } = require('./identifiers');
 
 /**
  * Plugin module with meta data
- *
  * @typedef {ModuleInfo} PluginInfo
  */
 
 /**
  * Preset module with meta data
- *
  * @typedef {ModuleInfo} PresetInfo
  * @property {PresetInfo[]} presets - Presets that this preset extends
  * @property {PluginInfo[]} plugins - Plugins this preset uses
@@ -33,9 +28,7 @@ const { pluginIdentifier, presetIdentifier } = require('./identifiers');
 
 /**
  * Presets and plugins to load
- *
  * @typedef {object} PluginConfig
- *
  * @property {PresetName[]}          presets - Presets to load and add plugins from
  * @property {PluginName[]|module[]} add     - Names of plugins to load
  * @property {PluginName[]}          [remove] - Names of plugins to remove (from presets)
@@ -43,7 +36,6 @@ const { pluginIdentifier, presetIdentifier } = require('./identifiers');
 
 /**
  * Test if module appears to be a path name.
- *
  * @type {RegExp}
  * @private
  */
@@ -51,9 +43,8 @@ const isModulePath = /^[/.]|^[a-zA-Z]:\\|node_modules/;
 
 /**
  * Utility to load plugins, presets, and other modules with associated metadata
- *
  * @type {Loader}
- * @extends Resolver
+ * @augments Resolver
  */
 class Loader extends Resolver {
 
@@ -69,7 +60,6 @@ class Loader extends Resolver {
 
   /**
    * Loads a module with additional metadata
-   *
    * @param {object} module - Module content
    * @param {string} moduleName - Name of module to load
    * @param {object} [meta] - Additional meta data
@@ -96,7 +86,6 @@ class Loader extends Resolver {
 
   /**
    * Loads a module with additional metadata
-   *
    * @param {string} moduleName - Name of module to load
    * @param {object} [meta] - Additional meta data
    * @returns {ModuleInfo} module
@@ -108,7 +97,6 @@ class Loader extends Resolver {
 
   /**
    * Loads a plugin with additional metadata.
-   *
    * @param {PluginName|object} module - Name of module to load (or module content)
    * @param {object} [meta] - Additional meta data
    * @returns {PluginInfo} module
@@ -134,7 +122,6 @@ class Loader extends Resolver {
 
   /**
    * Loads a preset with additional metadata
-   *
    * @param {PresetName} module - Name of module to load
    * @param {object} [meta] - Additional meta data
    * @param {boolean} [options] - Loading options
@@ -181,8 +168,7 @@ class Loader extends Resolver {
   /**
    * Loads presets and plugins as configured.
    * Plugins will be filtered and ordered as configuration with priority of:
-   *  - added plugins > preset plugins > nested preset plugins
-   *
+   * - added plugins > preset plugins > nested preset plugins
    * @param {PluginConfig} pluginConfig - Presets and plugins to load
    * @returns {{presets: PresetInfo[], plugins: PluginInfo[]}} results
    */
@@ -197,6 +183,10 @@ class Loader extends Resolver {
     let plugins = [];
 
     // recursively get plugins from presets
+    /**
+     *
+     * @param preset
+     */
     function pullPlugins(preset) {
       plugins.push(...preset.plugins);
       if (Array.isArray(preset.presets)) {

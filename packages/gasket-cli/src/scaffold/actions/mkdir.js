@@ -3,10 +3,9 @@ const action = require('../action-wrapper');
 
 /**
  * Validates this instance can execute without common blockers:
- *   - Target destination on disk is available. Validate by acquiring
- *     a lock through `mkdir`.
- *
- * @param {CreateContext} context - Create context
+ * - Target destination on disk is available. Validate by acquiring
+ * a lock through `mkdir`.
+ * @param {import("@gasket/cli").CreateContext} context - Create context
  * @param {Spinner} spinner - Spinner
  * @returns {Promise} promise
  */

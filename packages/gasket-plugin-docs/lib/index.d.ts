@@ -11,10 +11,10 @@ export interface DocsTransformHandlerData {
   docsConfigSet: DocsConfigSet;
 }
 
-export interface DocsTransformHandler {
-  content: string;
-  data: DocsTransformHandlerData;
-}
+export type DocsTransformHandler = (
+  content: string,
+  data: DocsTransformHandlerData
+) => string;
 
 export interface DocsTransform {
   global?: boolean;
@@ -32,6 +32,7 @@ export interface DocsSetup {
 export interface DocsConfig {
   name: string;
   description?: string;
+  deprecated?: boolean;
   link?: string;
   sourceRoot: string;
   targetRoot: string;
@@ -51,6 +52,7 @@ export interface LifecycleDocsConfig extends DetailDocsConfig {
   method: string;
   parent?: string;
   command?: string;
+  after?: string;
 }
 
 export interface DocsConfigSet {
@@ -65,6 +67,10 @@ export interface DocsConfigSet {
   transforms: Array<DocsTransform>;
   root: string;
   docsRoot: string;
+}
+
+export interface LinkTransform {
+  (callback: (link: string) => string): (content: string) => string;
 }
 
 declare module '@gasket/engine' {
@@ -84,3 +90,7 @@ declare module '@gasket/engine' {
     ): MaybeAsync<Omit<DetailDocsConfig, 'sourceRoot'>>;
   }
 }
+
+// * @param {function(string): string} callback - Takes a link and returns
+//  * modified link
+//  * @returns {function(string): string} thunk that transforms content

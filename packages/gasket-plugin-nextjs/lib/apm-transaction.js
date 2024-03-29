@@ -1,3 +1,6 @@
+/// <reference types="@gasket/plugin-elastic-apm" />
+
+/** @type {import('@gasket/engine').HookHandler<'apmTransaction'>} */
 module.exports = async (_gasket, transaction, { req }) => {
   const route = await req.getNextRoute();
   if (!route) {
@@ -14,7 +17,10 @@ module.exports = async (_gasket, transaction, { req }) => {
 
   transaction.addLabels(
     Object.fromEntries(
-      Object.entries(groups).map(([key, value]) => [key, decodeURIComponent(value)])
+      Object.entries(groups).map(([key, value]) => [
+        key,
+        decodeURIComponent(value)
+      ])
     )
   );
 };
