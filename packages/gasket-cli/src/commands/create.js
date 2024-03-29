@@ -2,7 +2,7 @@
 
 const { Command, flags } = require('@oclif/command');
 const ora = require('ora');
-const chalk = require('chalk').default;
+const chalk = require('chalk');
 
 const makeCreateContext = require('../scaffold/create-context');
 
@@ -33,15 +33,15 @@ class CreateCommand extends Command {
    *  Gasket create executes a two phase creation process:
    *
    *  ## Bootstrap
-   *    Creates the initial app directory and package.json based on the preset
-   *    and global prompts.
+   *    Creates the initial app directory and package.json
+   *    based on the preset and global prompts.
    *
    *  ## Generate
-   *    Executes prompt and create hooks from plugins, then creates the
-   *    additional files.
+   *    Executes prompt and create hooks from plugins,
+   *    then creates the additional files.
    *
-   *    If bootstrap phase is skipped, it will try to use an existing directory
-   *    and package.json for the app.
+   *    If bootstrap phase is skipped, it will try to use
+   *    an existing directory and package.json for the app.
    */
   async run() {
     const { argv, flags: parsedFlags } = this.parse(CreateCommand);
@@ -99,8 +99,9 @@ class CreateCommand extends Command {
 
 /**
  * Parses comma separated flag input to array
- * @param {string} input - Flag argument
- * @returns {string[]} results
+ *
+ * @param {String} input - Flag argument
+ * @returns {String[]} results
  */
 const commasToArray = input => input.split(',').map(name => name.trim());
 

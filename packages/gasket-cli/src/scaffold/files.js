@@ -1,5 +1,6 @@
 /**
  * Utility for plugins to add files and templates for generating
+ *
  * @type {Files}
  */
 module.exports = class Files {
@@ -9,6 +10,7 @@ module.exports = class Files {
 
   /**
    * Return array of globs
+   *
    * @deprecated
    * @returns {string[]} `globby` compatible patterns
    */
@@ -20,7 +22,7 @@ module.exports = class Files {
    * Adds the specified `globby` compatible patterns, `globs`,
    * into the set of all sources for this set of files.
    * @param {string[]} globs - `globby` compatible patterns
-   * @param {object} source - Plugin to blame if conflicts arise from this operation.
+   * @param {Object} source - Plugin to blame if conflicts arise from this operation.
    */
   add({ globs, source }) {
     this.globSets.push({ globs, source });

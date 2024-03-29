@@ -4,7 +4,8 @@ const fs = require('fs').promises;
 /**
  * If an error occurs during create, dump the context for debugging.
  * The error which cause the exit is also included in the log.
- * @param {import("@gasket/cli").CreateContext} context - Create context
+ *
+ * @param {CreateContext} context - Create context
  * @param {Error} error - Exiting error
  * @returns {Promise<void>} promise
  */

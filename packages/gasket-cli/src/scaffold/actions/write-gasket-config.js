@@ -5,7 +5,8 @@ const action = require('../action-wrapper');
 
 /**
  * Writes the contents of `pkg` to the app's package.json.
- * @param {import("@gasket/cli").CreateContext} context - Create context
+ *
+ * @param {CreateContext} context - Create context
  * @returns {Promise} promise
  */
 async function writeGasketConfig(context) {
@@ -21,8 +22,8 @@ async function writeGasketConfig(context) {
   //
   // Use JSON5 to stringify the config and add export for CommonJS
   //
-  const contents =
-    'module.exports = ' + JSON5.stringify(gasketConfig, null, 2) + ';\n';
+  const contents = 'module.exports = ' +
+    JSON5.stringify(gasketConfig, null, 2) + ';\n';
 
   await writeFile(filePath, contents, 'utf8');
   generatedFiles.add(fileName);

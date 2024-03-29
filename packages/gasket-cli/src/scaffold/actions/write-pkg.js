@@ -4,8 +4,9 @@ const action = require('../action-wrapper');
 
 /**
  * Writes the contents of `pkg` to the app's package.json.
- * @param {import("@gasket/cli").CreateContext} context - Create context
- * @param {boolean} update - Is an update step
+ *
+ * @param {CreateContext} context - Create context
+ * @param {Boolean} update - Is an update step
  * @returns {Promise} promise
  */
 async function writePkg(context) {

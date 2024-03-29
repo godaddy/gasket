@@ -5,13 +5,16 @@ const createEngine = require('../create-engine');
 
 /**
  * Create the `addPlugins` function with context
- * @param {import("@gasket/cli").CreateContext} context - Create context
+ *
+ * @param {CreateContext} context - Create context
  * @returns {addPlugins} addPlugins
  */
 const createAddPlugins = context => {
   /**
    * Allows plugins to add plugins based on user input.
+   *
    * @typedef {Function} addPlugins
+   *
    * @param {...PluginDesc} pluginsToAdd - Additional plugins to add
    * @returns {Promise} promise
    */
@@ -43,9 +46,10 @@ const createAddPlugins = context => {
 /**
  * Initializes engine with provide preset and plugins
  * to execute their prompt lifecycle hooks.
- * @param {import("@gasket/cli").CreateContext} context - Create context
- * @param {string[]} plugins - plugins to load
- * @param {string} [presets] - presets to load
+ *
+ * @param {CreateContext} context - Create context
+ * @param {String[]} plugins - plugins to load
+ * @param {String} [presets] - presets to load
  * @returns {Promise} promise
  * @private
  */
@@ -70,7 +74,8 @@ async function execPluginPrompts(context, plugins = [], presets = []) {
 /**
  * Executes the `prompt` hook for all registered plugins.
  * Adds `prompt` and `addPlugins` util functions for prompting features.
- * @param {import("@gasket/cli").CreateContext} context - Create context
+ *
+ * @param {CreateContext} context - Create context
  * @returns {Promise} promise
  */
 async function promptHooks(context) {

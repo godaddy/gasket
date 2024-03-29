@@ -5,9 +5,10 @@ const debug = require('diagnostics')('gasket:cli:config:utils');
 
 /**
  * Returns specified env flag if set or appropriate fallback
- * @param {object} flags - CLI Flag
+ *
+ * @param {Object} flags - CLI Flag
  * @param {string} commandId - Name of the command
- * @param {Function} warn - Warning logger
+ * @param {function} warn - Warning logger
  * @returns {string} environment
  */
 function getEnvironment(flags, commandId, warn) {
@@ -34,8 +35,9 @@ function getEnvironment(flags, commandId, warn) {
 
 /**
  * Inject the default plugins into the loaded config
- * @param {object} gasketConfig - Gasket config
- * @returns {object} updated config
+ *
+ * @param {Object} gasketConfig - Gasket config
+ * @returns {Object} updated config
  */
 function addDefaultPlugins(gasketConfig) {
   const pluginsConfig = gasketConfig.plugins || {};

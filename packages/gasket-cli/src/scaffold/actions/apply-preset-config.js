@@ -13,24 +13,17 @@ const action = require('../action-wrapper');
  * config that is the context at this point must come from CLI flags,
  * as none of the global prompts have run yet. Parent presets take priority
  * over extended presets.
- * @param {import('../../index').CreateContext} context - Create context
+ *
+ * @param {CreateContext} context - Create context
  */
 function applyPresetConfig(context) {
   const { presetInfos = [] } = context;
 
-  const presetContext = flattenPresets(presetInfos).reduce(
-    (acc, presetInfo) => {
-      return {
-        ...((presetInfo.module && presetInfo.module.createContext) || {}),
-        ...acc
-      };
-    },
-    context
-  );
+  const presetContext = flattenPresets(presetInfos).reduce((acc, presetInfo) => {
+    return { ...(presetInfo.module && presetInfo.module.createContext || {}), ...acc };
+  }, context);
 
   Object.assign(context, presetContext);
 }
 
-module.exports = action('Apply preset context', applyPresetConfig, {
-  startSpinner: false
-});
+module.exports = action('Apply preset context', applyPresetConfig, { startSpinner: false });

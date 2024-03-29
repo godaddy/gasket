@@ -1,11 +1,13 @@
-/// <reference types="@gasket/plugin-command" />
-
 /* eslint-disable max-statements */
 const debug = require('diagnostics')('gasket:cli:hooks:init');
 
 /**
  * oclif hook that loads the gasket.config and instantiates the engine.
- * @type {import('@gasket/engine').HookHandler<'init'>}
+ *
+ * @param {String} id - Name of the command
+ * @param {Object} oclifConfig - oclif configuration
+ * @param {Object} argv - command line arguments
+ * @async
  */
 async function initHook({ id, config: oclifConfig, argv }) {
   debug('id', id);
@@ -14,14 +16,11 @@ async function initHook({ id, config: oclifConfig, argv }) {
   // end early for create cmd which does not use gasket.config
   if (id === 'create') return;
   // avoid config logging for help command
-  const warn = id !== 'help' ? this.warn : (f) => f;
+  const warn = id !== 'help' ? this.warn : f => f;
 
   const { parse } = require('@oclif/parser');
   const { GasketCommand } = require('@gasket/plugin-command');
-  const {
-    loadGasketConfigFile,
-    assignPresetConfig
-  } = require('@gasket/resolve');
+  const { loadGasketConfigFile, assignPresetConfig } = require('@gasket/resolve');
   const { getEnvironment, addDefaultPlugins } = require('../config/utils');
   const PluginEngine = require('@gasket/engine');
 
@@ -54,6 +53,7 @@ async function initHook({ id, config: oclifConfig, argv }) {
     } else {
       warn('No gasket.config file was found.');
     }
+
   } catch (err) {
     this.error(err, { exit: 1 });
   }

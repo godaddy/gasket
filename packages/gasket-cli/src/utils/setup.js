@@ -1,7 +1,8 @@
 /**
- * Step which runs before oclif any everything else is required. Handles the
- * `--require` flags to allow for early importing of instrumentation modules and
- * the like.
+ * Step which runs before oclif any everything else is required.
+ * Handles the `--require` flags to allow for early importing of instrumentation
+ * modules and the like.
+ *
  * @param {string[]} [argv] - CLI arguments - defaults to process.argv
  */
 module.exports = function setup(argv = process.argv) {
