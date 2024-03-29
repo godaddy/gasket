@@ -24,6 +24,7 @@ const babelOptions = {
 
 /**
  * Reads and converts an svg file to react component and transform with babel.
+ *
  * @param {string} file - Path of file to process
  * @returns {Promise} promise
  */
@@ -31,16 +32,21 @@ async function processFile(file) {
   const outFile = file.replace(srcDir, outputDir).replace('.svg', '.js');
 
   try {
-    const dataBuffer = await fs.readFile(file);
-    const data = dataBuffer.toString(); // Convert Buffer to string
+    const data = await fs.readFile(file);
 
+    //
     // Convert to React
+    //
     const component = await svgr(data);
 
+    //
     // Transform to React components
+    //
     const results = transform(component, babelOptions);
 
+    //
     // Output the results to file
+    //
     await mkdirp(path.dirname(outFile));
     await fs.writeFile(outFile, banner + results.code, 'utf8');
     console.log('wrote', path.relative(rootDir, outFile));
@@ -54,6 +60,7 @@ async function processFile(file) {
 /**
  * Find all the *.svg files in the ./svgs dir, and convert them to browser
  * compatible React components into the ./react dir.
+ *
  * @returns {Promise} promise
  */
 async function main() {

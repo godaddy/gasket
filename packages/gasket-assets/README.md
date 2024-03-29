@@ -4,7 +4,7 @@ Gasket related visual assets
 
 ## Installation
 
-```sh
+```
 npm i @gasket/assets
 ```
 

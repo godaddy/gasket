@@ -10,9 +10,7 @@
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
-    "test": "npm run lint && npm run typecheck",
-    "typecheck": "tsc",
-    "typecheck:watch": "tsc --watch",
+    "test": "npm run lint",
     "build": "npm run clean && npm run svg-to-react",
     "prepublishOnly": "npm run build",
     "clean": "rimraf ./react",
@@ -47,23 +45,20 @@
     "@svgr/core": "^6.2.0",
     "babel-plugin-add-module-exports": "^1.0.4",
     "eslint": "^8.56.0",
-    "eslint-config-godaddy": "^7.1.0",
+    "eslint-config-godaddy": "^7.0.2",
     "eslint-plugin-json": "^3.1.0",
     "eslint-plugin-unicorn": "^44.0.0",
     "mkdirp": "^1.0.4",
     "react": "^18.2.0",
     "recursive-readdir": "^2.2.3",
-    "rimraf": "^3.0.2",
-    "typescript": "^5.4.2"
+    "rimraf": "^3.0.2"
   },
   "eslintConfig": {
     "extends": [
-      "godaddy",
-      "plugin:jsdoc/recommended-typescript-flavor"
+      "godaddy"
     ],
     "plugins": [
-      "unicorn",
-      "jsdoc"
+      "unicorn"
     ],
     "rules": {
       "unicorn/filename-case": "error"
