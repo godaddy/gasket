@@ -3,6 +3,7 @@ const reName = /^(@?[\w/-]+)@?(.*)/;
 
 /**
  * Generate RegExp to help determine aspects of an identifier for a project
+ *
  * @param {string} projectName - Name of the project
  * @param {string} [type] - Identifier type, defaults to 'plugin'
  * @returns {{prefixed: {project: RegExp, user: RegExp}, scope: RegExp}} re
@@ -20,6 +21,7 @@ function matchMaker(projectName, type = 'plugin') {
 
 /**
  * Generate helpers to expand short names to long names for identifiers of a project
+ *
  * @param {string} projectName - Name of the project
  * @param {string} [type] - Identifier type, defaults to 'plugin'
  * @returns {{prefixed: string}} expand
@@ -56,6 +58,7 @@ function expandMaker(projectName, type = 'plugin') {
  *
  * If a package belongs to the project, it should use `projectName` in its scope.
  * For user plugins, the `projectName` will be paired with the `type`.
+ *
  * @param {string} projectName - Name of the project scope and base name
  * @param {string} [type] - Defaults to 'plugin'.
  * @returns {createPackageIdentifier} function to make
@@ -93,7 +96,9 @@ function projectIdentifier(projectName, type = 'plugin') {
 
   /**
    * Create a new PackageIdentifier instance
-   * @typedef {Function} createPackageIdentifier
+   *
+   * @typedef {function} createPackageIdentifier
+   *
    * @param {string} rawName - Original input name of a package
    * @param {object} [options] - Options
    * @param {boolean} [options.prefixed] - Set this to force prefixed format for short names
@@ -108,7 +113,7 @@ function projectIdentifier(projectName, type = 'plugin') {
     const [, parsedName, parsedVersion] = reName.exec(rawName);
 
     /**
-     * Setup package level variables
+     * * Setup package level variables
      * @returns {object} vars
      */
     function setupPackageVars() {
@@ -122,7 +127,9 @@ function projectIdentifier(projectName, type = 'plugin') {
 
       /**
        * The parts of an identifier's name format
+       *
        * @typedef {object} NameFormat
+       *
        * @property {boolean} prefixed
        * @property {boolean} short
        * @property {boolean} project
@@ -151,12 +158,14 @@ function projectIdentifier(projectName, type = 'plugin') {
 
     /**
      * Utility class for working with package names and versions
+     *
      * @type {PackageIdentifier}
      */
     class PackageIdentifier {
 
       /**
        * Get the package name as provided to the identifier
+       *
        * @returns {string} rawName
        */
       get rawName() {
@@ -171,6 +180,7 @@ function projectIdentifier(projectName, type = 'plugin') {
        * - @gasket/https -> @gasket/plugin-https
        * - @user/https -> @user/gasket-plugin-https
        * - https -> gasket-plugin-https
+       *
        * @returns {string} fullName
        */
       get fullName() {
@@ -183,6 +193,7 @@ function projectIdentifier(projectName, type = 'plugin') {
 
       /**
        * Alias to this.fullName
+       *
        * @returns {string} fullName
        */
       get longName() {
@@ -196,6 +207,7 @@ function projectIdentifier(projectName, type = 'plugin') {
        * - @gasket/plugin-https -> @gasket/https
        * - @user/gasket-plugin-https -> @user/https
        * - gasket-plugin-https@1.2.3 -> https
+       *
        * @returns {string} fullName
        */
       get shortName() {
@@ -214,6 +226,7 @@ function projectIdentifier(projectName, type = 'plugin') {
        * Examples:
        * - @gasket/plugin-https@1.2.3 -> @gasket/plugin-https
        * - https@1.2.3 -> https
+       *
        * @returns {string} fullName
        */
       get name() {
@@ -226,6 +239,7 @@ function projectIdentifier(projectName, type = 'plugin') {
        * Examples:
        * - @gasket/plugin-https@1.2.3 -> 1.2.3
        * - @gasket/plugin-https -> ''
+       *
        * @returns {string|null} fullName
        */
       get version() {
@@ -238,6 +252,7 @@ function projectIdentifier(projectName, type = 'plugin') {
        * Examples:
        * - @gasket/plugin-https@1.2.3 -> @gasket/plugin-https@1.2.3
        * - https@1.2.3 -> @gasket/plugin-https@1.2.3
+       *
        * @returns {string} fullName
        */
       get full() {
@@ -276,6 +291,7 @@ function projectIdentifier(projectName, type = 'plugin') {
        * Examples:
        * - @gasket/plugin-https@1.2.3 -> @gasket/plugin-https@1.2.3
        * - @gasket/plugin-https -> @gasket/plugin-https@latest
+       *
        * @param {string} [defaultVersion] - the version name to add if missing
        * @returns {PackageIdentifier} identifier
        */
@@ -293,6 +309,7 @@ function projectIdentifier(projectName, type = 'plugin') {
        * - example -> gasket-plugin-example > example-gasket-plugin > @gasket/plugin-example > @gasket/example-plugin
        * - @gasket/example -> @gasket/plugin-example > @gasket/example-plugin
        * - @user/example -> @user/gasket-plugin-example > @user/example-gasket-plugin
+       *
        * @returns {PackageIdentifier|null} identifier
        */
       nextFormat() {
@@ -320,6 +337,7 @@ function projectIdentifier(projectName, type = 'plugin') {
 
     /**
      * Output the original raw name for string concatenation.
+     *
      * @returns {string} string
      */
     PackageIdentifier.prototype.toString = function toString() {
@@ -336,6 +354,7 @@ function projectIdentifier(projectName, type = 'plugin') {
    * - @gasket/plugin-https -> true
    * - @gasket/plugin-https@1.2.3 -> false
    * - https -> false
+   *
    * @function createPackageIdentifier.isValidFullName
    * @param {string} maybeFullName - Name to check
    * @returns {boolean} fullName
@@ -354,6 +373,7 @@ function projectIdentifier(projectName, type = 'plugin') {
    * which should return falsy to continue,
    * or return truthy to end and return the current identifier.
    * If the lookup runs out of formats to try, it will return null.
+   *
    * @function createPackageIdentifier.lookup
    * @param {string} name - Name to check
    * @param {function(PackageIdentifier)} handler - Attempt to find package current format

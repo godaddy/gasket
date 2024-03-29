@@ -7,13 +7,6 @@ const jsExtension = /\.(js|cjs)$/i;
 
 const debug = require('diagnostics')('gasket:resolve:config');
 
-/**
- *
- * @param root
- * @param env
- * @param commandId
- * @param configFile
- */
 async function loadGasketConfigFile(root, env, commandId, configFile = 'gasket.config') {
   let gasketConfig = loadConfigFile(root, configFile);
   if (gasketConfig) {
@@ -25,11 +18,6 @@ async function loadGasketConfigFile(root, env, commandId, configFile = 'gasket.c
   }
 }
 
-/**
- *
- * @param root
- * @param configFile
- */
 function loadConfigFile(root, configFile) {
   const absolutePath = !path.isAbsolute(configFile) ? path.join(root, configFile) : configFile;
   const resolvedPath = tryResolve(absolutePath);
@@ -40,10 +28,6 @@ function loadConfigFile(root, configFile) {
   debug(`Failed to resolve Gasket config file ${configFile} from root ${root}`);
 }
 
-/**
- *
- * @param gasketConfig
- */
 async function addUserPlugins(gasketConfig) {
   const moduleNames = (await Promise.all([
     resolveUserPlugins(gasketConfig.root, 'plugins'),
@@ -62,6 +46,7 @@ async function addUserPlugins(gasketConfig) {
 
 /**
  * Resolves a given directory to valid `lifecycle` plugins.
+ *
  * @param {string} root - Directory we need to search.
  * @param {string} parts - path parts of the directory that contains the plugins.
  * @returns {string[]} found plugin files
@@ -90,6 +75,7 @@ async function resolveUserPlugins(root, ...parts) {
  *
  * Merge priority order being:
  * - loaded file config > preset configs > child preset configs
+ *
  * @param {Gasket} gasket - Gasket engine instance
  */
 function assignPresetConfig(gasket) {
