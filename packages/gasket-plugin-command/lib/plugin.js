@@ -1,17 +1,19 @@
-/// <reference types="@gasket/cli" />
-/// <reference types="@gasket/plugin-metadata" />
-
 const { Command } = require('@oclif/config');
 const { flags } = require('@oclif/command');
 const GasketCommand = require('./command');
 const { hoistBaseFlags } = require('./utils');
-const { name } = require('../package.json');
 
-// This plugin is completely refactored in a new version of Gasket, so types
-// will not match for the time being.
-const plugin = {
-  name,
+module.exports = {
+  name: require('../package').name,
   hooks: {
+    /**
+     * Gets commands from plugins and injects them to the oclif config.
+     *
+     * @param {Gasket} gasket - Gasket API
+     * @param {object} data - init data
+     * @param {object} data.oclifConfig - oclif configuration
+     * @async
+     */
     async initOclif(gasket, { oclifConfig }) {
       const commands = (await gasket.exec('getCommands', { GasketCommand, flags }))
         .reduce((all, cmds) => all.concat(cmds), [])
@@ -57,5 +59,3 @@ const plugin = {
   },
   GasketCommand
 };
-
-module.exports = plugin;
