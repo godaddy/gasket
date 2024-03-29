@@ -1,1 +1,22 @@
-{"compilerOptions":{"allowJs":true,"checkJs":true,"noEmit":true,"skipLibCheck":false,"resolveJsonModule":true,"esModuleInterop":true,"lib":["esnext","dom"],"types":["@types/jest"]},"exclude":["test","coverage"]}
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "lib": [
+      "esnext",
+      "dom"
+    ],
+    "types": [
+      "@types/jest"
+    ]
+  },
+  "exclude": [
+    "test",
+    "coverage",
+    "generator",
+  ]
+}

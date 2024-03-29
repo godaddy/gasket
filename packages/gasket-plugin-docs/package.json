@@ -14,7 +14,9 @@
     "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "posttest": "npm run lint",
+    "posttest": "npm run lint && npm run typecheck",
+    "typecheck": "tsc",
+    "typecheck:watch": "tsc --watch",
     "prepack": "npm run docs",
     "docs": "jsdoc2md --plugin @godaddy/dmd --files lib/*.js > docs/api.md"
   },

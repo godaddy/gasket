@@ -14,7 +14,9 @@
     "test:runner": "jest test/*.test.js",
     "test:watch": "npm run test:runner -- --watch",
     "test:coverage": "npm run test:runner -- --coverage --coverageReporters text",
-    "posttest": "npm run lint",
+    "posttest": "npm run lint && npm run typecheck",
+    "typecheck": "tsc",
+    "typecheck:watch": "tsc --watch",
     "report": "npm run test:runner -- --coverage --coverageReporters lcov"
   },
   "repository": {
