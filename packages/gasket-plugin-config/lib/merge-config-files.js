@@ -2,13 +2,6 @@ const path = require('path');
 const merge = require('lodash.merge');
 const { tryRequire } = require('@gasket/utils');
 
-
-/**
- * Loads configuration settings based on environment and merges them into a
- * single object.
- * @param {import("@gasket/engine").Gasket} gasket - Gasket instance.
- * @returns {object} Merged configuration object.
- */
 module.exports = function loadConfig(gasket) {
   const { root, env, configPath = 'config' } = gasket.config;
 

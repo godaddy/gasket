@@ -10,13 +10,13 @@ accessible via Redux.
 
 #### New apps
 
-```sh
+```
 gasket create <app-name> --plugins @gasket/plugin-config
 ```
 
 #### Existing apps
 
-```sh
+```
 npm i @gasket/plugin-config
 ```
 
@@ -36,7 +36,6 @@ module.exports = {
 
 There are two file structure methods available for defining config of different
 environments in apps.
-
 1. Multiple files with [Environment per file]
 2. Single file with [Environments inline]
 
@@ -54,7 +53,7 @@ module.exports = {
 
 Gasket first decides which _environment_ you're running in. By default, this
 comes from the `NODE_ENV` environment variable or the `--env` command-line
-argument which can be set from the `GASKET_ENV` environment variable.
+argument which can be set from the `GASKET_ENV` environment variable. 
 Environments can be sub-divided (say, for multiple data centers) through dotted
 identifiers. Example: `production.v1`.
 
@@ -150,9 +149,8 @@ module.exports = {
 
 If you need access to config values in client-side code, this can be done
 through your redux store. The config plugin looks for a `redux` property of your
-configuration in `app.config.js` and places it under a `config` property in your
-initial redux state. Example below can selected from `state.config.url` in
-client-side code
+configuration in `app.config.js` and places it under a `config` property in your initial redux
+state. Example below can selected from `state.config.url` in client-side code
 
 ```js
 module.exports = {
@@ -173,8 +171,7 @@ module.exports = {
 
 ### Config with Public config
 
-If you are not using Redux, but still need access to config values in
-client-side code, you can define a `public` property in your `app.config.js`.
+If you are not using Redux, but still need access to config values in client-side code, you can define a `public` property in your `app.config.js`.
 
 ```js
 module.exports = {
@@ -184,10 +181,7 @@ module.exports = {
   }
 };
 ```
-
-The config plugin will return these `public` properties to your browser, to be
-accessed by `@gasket/data`. They are available as properties on `.config` and
-used like so:
+The config plugin will return these `public` properties to your browser, to be accessed by `@gasket/data`. They are available as properties on `.config` and used like so:
 
 ```js
 import gasketData from '@gasket/data';
@@ -261,5 +255,4 @@ module.exports = {
 [Environment per file]:#environment-files
 [Environments inline]:#environments-inline
 
-[inline environment
-    overrides]:/packages/gasket-cli/docs/configuration.md#environments
+[inline environment overrides]:/packages/gasket-cli/docs/configuration.md#environments

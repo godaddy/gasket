@@ -1,11 +1,11 @@
-/// <reference types="@gasket/plugin-express" />
-
 const { ENV_CONFIG } = require('./constants');
 const merge = require('lodash.merge');
 
 /**
  * Add middleware to gather config details
- * @type {import('@gasket/engine').HookHandler<'middleware'>}
+ *
+ * @param {Gasket} gasket - The gasket API
+ * @returns {function} Express middleware to apply
  */
 function handler(gasket) {
   return async (req, res, next) => {
