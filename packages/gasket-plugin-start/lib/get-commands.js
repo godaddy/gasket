@@ -1,10 +1,9 @@
+/// <reference types="@gasket/plugin-command" />
+/// <reference types="@gasket/plugin-log" />
+
 /**
  * Get the build, start, and local commands
- *
- * @param {Gasket} gasket - Gasket
- * @param {GasketCommand} GasketCommand - Base Gasket command to extend
- * @param {Object} flags - oclif flags utility
- * @returns {GasketCommand[]} commands
+ * @type {import('@gasket/engine').HookHandler<'getCommands'>}
  */
 module.exports = function getCommands(gasket, { GasketCommand, flags }) {
 
@@ -12,6 +11,8 @@ module.exports = function getCommands(gasket, { GasketCommand, flags }) {
     async gasketRun() {
       await this.gasket.exec('build');
 
+      // @ts-ignore
+      // TEMP: ignoring as a temporary workaround until plugin-command is updated
       if (this.gasket.command.flags.exit) {
         this.gasket.logger.debug('force exit');
         // eslint-disable-next-line no-process-exit

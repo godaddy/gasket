@@ -1,8 +1,12 @@
+/// <reference types="@gasket/plugin-metadata" />
+
 const create = require('./create');
 const getCommands = require('./get-commands');
+const { name } = require('../package.json');
 
-module.exports = {
-  name: require('../package').name,
+/** @type {import('@gasket/engine').Plugin} */
+const plugin = {
+  name,
   hooks: {
     create,
     getCommands,
@@ -45,3 +49,5 @@ module.exports = {
     }
   }
 };
+
+module.exports = plugin;
