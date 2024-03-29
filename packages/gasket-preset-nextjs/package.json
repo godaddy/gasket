@@ -1,17 +1,12 @@
 {
   "name": "@gasket/preset-nextjs",
-  "version": "6.46.4",
+  "version": "6.46.5",
   "description": "Basic NextJS Framework",
   "main": "lib",
   "types": "lib/index.d.ts",
   "files": [
     "lib"
   ],
-  "scripts": {
-    "posttest": "npm run lint && npm run typecheck",
-    "typecheck": "tsc",
-    "typecheck:watch": "tsc --watch"
-  },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/godaddy/gasket.git"
@@ -25,7 +20,7 @@
     "url": "https://github.com/godaddy/gasket/issues"
   },
   "dependencies": {
-    "@gasket/plugin-express": "^6.46.4",
+    "@gasket/plugin-express": "^6.46.5",
     "@gasket/plugin-https": "^6.46.4",
     "@gasket/plugin-log": "^6.46.2",
     "@gasket/plugin-nextjs": "^6.46.4",
@@ -33,18 +28,6 @@
     "@gasket/plugin-webpack": "^6.46.2"
   },
   "devDependencies": {
-    "@gasket/plugin-start": "^6.46.2",
-    "eslint-plugin-jsdoc": "^48.2.1",
-    "typescript": "^5.4.2"
-  },
-  "eslintConfig": {
-    "extends": [
-      "plugin:jsdoc/recommended-typescript-flavor",
-      "plugin:jsdoc/recommended-typescript-flavor"
-    ],
-    "plugins": [
-      "jsdoc"
-    ],
-    "rules": {}
+    "@gasket/plugin-start": "^6.46.2"
   }
 }

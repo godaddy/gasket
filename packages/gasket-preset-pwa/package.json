@@ -8,11 +8,6 @@
     "docs",
     "lib"
   ],
-  "scripts": {
-    "posttest": "npm run lint && npm run typecheck",
-    "typecheck": "tsc",
-    "typecheck:watch": "tsc --watch"
-  },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/godaddy/gasket.git"
@@ -29,17 +24,5 @@
     "@gasket/plugin-manifest": "^6.46.2",
     "@gasket/plugin-service-worker": "^6.46.2",
     "@gasket/plugin-workbox": "^6.46.2"
-  },
-  "devDependencies": {
-    "typescript": "^5.4.2"
-  },
-  "eslintConfig": {
-    "extends": [
-      "plugin:jsdoc/recommended-typescript-flavor"
-    ],
-    "plugins": [
-      "jsdoc"
-    ],
-    "rules": {}
   }
 }
