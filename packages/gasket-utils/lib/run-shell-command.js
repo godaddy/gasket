@@ -1,5 +1,4 @@
-const concat = require('concat-stream');
-const spawn = require('cross-spawn');
+const { spawn } = require('child_process');
 
 /**
  * Promise friendly wrapper to running a shell command (eg: git, npm, ls)
@@ -51,13 +50,13 @@ function runShellCommand(cmd, argv, options = {}, debug = false) {
     let stderr;
     let stdout;
 
-    child.stderr.pipe(concat({ encoding: 'string' }, lines => {
-      stderr = lines;
-    }));
+    child.stderr.on('data', lines => {
+      stderr = lines.toString();
+    });
 
-    child.stdout.pipe(concat({ encoding: 'string' }, lines => {
-      stdout = lines;
-    }));
+    child.stdout.on('data', lines => {
+      stdout = lines.toString();
+    });
 
     if (debug) {
       child.stderr.pipe(process.stderr);
