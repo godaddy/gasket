@@ -16,10 +16,10 @@ IDE's built-in type checker.
 
 ## Setup
 
-1. Install `typescript` and `eslint-plugin-jsdoc` as dev dependencies:
+1. Install `typescript` as a dev dependency:
 
 ```sh
-npm i -D typescript eslint-plugin-jsdoc
+npm i -D typescript
 ```
 
 2. Update ESLint config in your `package.json`:
@@ -37,28 +37,10 @@ npm i -D typescript eslint-plugin-jsdoc
       "unicorn",
 +     "jsdoc"
     ],
-    "rules": {
-      "unicorn/filename-case": "error",
-+     "valid-jsdoc": "off",
-+     "spaced-comment": [
-+       "error",
-+       "always",
-+       {
-+         "markers": [
-+           "/"
-+         ]
-+       }
-+     ]
-    }
   }
 ```
 
-> There is currently an [open PR] on the `godaddy/javascript` repo to replace
-> `valid-jsdoc` with `eslint-config-jsdoc`, as well as add support for
-> typescript triple-slashes in js files. Once this PR is merged, the above
-> example will be updated to reflect that change.
-
-3. Add `tsconfig.json` to the root of your plugin:
+1. Add `tsconfig.json` to the root of your plugin:
 
 ```json
 // tsconfig.json
@@ -68,7 +50,7 @@ npm i -D typescript eslint-plugin-jsdoc
     "allowJs": true,
     "checkJs": true,
     "noEmit": true,
-    "skipLibCheck": false,
+    "skipLibCheck": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "lib": ["esnext", "dom"],
@@ -77,7 +59,8 @@ npm i -D typescript eslint-plugin-jsdoc
     ]
   },
   "exclude": [
-    "test"
+    "test",
+    "coverage"
   ]
 }
 ```
@@ -218,4 +201,3 @@ hooking:
 <!-- LINKS -->
 [typescriptlang
     docs]:https://www.typescriptlang.org/docs/handbook/triple-slash-directives.html
-[open PR]: https://github.com/godaddy/javascript/pull/577

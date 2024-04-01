@@ -1,7 +1,10 @@
-const Metrics = require('./metrics');
-const { name } = require('../package');
+/// <reference types="@gasket/plugin-log" />
 
-module.exports = {
+const Metrics = require('./metrics');
+const { name } = require('../package.json');
+
+/** @type {import('@gasket/engine').Plugin} */
+const plugin = {
   name,
   dependencies: ['@gasket/plugin-metadata'],
   hooks: {
@@ -46,3 +49,5 @@ module.exports = {
     }
   }
 };
+
+module.exports = plugin;

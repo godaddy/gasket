@@ -10,7 +10,6 @@ const projectRoot = path.resolve(__dirname, '..');
 
 /**
  * Dependency name and expected version range
- *
  * @type {Object.<string,string>}
  */
 const depVersions = {
@@ -68,8 +67,7 @@ const depVersions = {
 
 /**
  * Peer dependency name and expected version range
- *
- * @type {object.<string,string>}
+ * @type {Object.<string,string>}
  */
 const peerDepVersions = {
   'next': '>=10.2.0 <= 13.1.1',
@@ -82,7 +80,6 @@ const peerDepVersions = {
 
 /**
  * Expected order of the overall package
- *
  * @type {string[]}
  */
 const pkgOrder = [
@@ -116,7 +113,6 @@ const pkgOrder = [
 
 /**
  * Expected order of scripts
- *
  * @type {string[]}
  */
 const scriptsOrder = [
@@ -145,7 +141,6 @@ const scriptsOrder = [
 
 /**
  * Shortcut to stringfy and object in a readable way
- *
  * @param {object} json - Object to stringify very prettily
  * @returns {string} pretty
  */
@@ -155,9 +150,8 @@ const prettyPrint = (json) => JSON.stringify(json, null, 2) + '\n';
  * Builds a sort function from an array.
  * Items found in the array will be arranged as listed.
  * Otherwise, they will be sorted alphanumeric at the end.
- *
  * @param {Array} arr - Array of sorted keys
- * @returns {function} compare
+ * @returns {Function} compare
  */
 const orderedSort = (arr) => (a, b) => {
   let comparison = 0;
@@ -180,10 +174,9 @@ const orderedSort = (arr) => (a, b) => {
 
 /**
  * Takes and object and sorts its keys
- *
  * @param {object} obj - Object with keys to be ordered
  * @param {string} [attr] - name of object property to sort
- * @param {function} [compare] - optional sort function
+ * @param {Function} [compare] - optional sort function
  * @returns {object} sorted
  */
 function sortKeys(obj, attr, compare) {
@@ -206,7 +199,6 @@ function sortKeys(obj, attr, compare) {
 
 /**
  * Adjust versions of dependencies in package match the version expected
- *
  * @param {object} pkgJson - package.json contents
  * @param {string} attr - Either devDependencies or dependencies
  * @param {object} [versions] - Map of dependency to version
@@ -227,7 +219,6 @@ function alignDeps(pkgJson, attr, versions = {}) {
 
 /**
  * Set standard properties in packages
- *
  * @param {object} pkgJson - package.json contents
  */
 function fixedProperties(pkgJson) {
@@ -247,7 +238,6 @@ function fixedProperties(pkgJson) {
 
 /**
  * Checks for expected scripts and warns if missing
- *
  * @param {object} pkgJson - package.json contents
  */
 function checkScripts(pkgJson) {
@@ -264,7 +254,6 @@ function checkScripts(pkgJson) {
 
 /**
  * Checks if maintainers are set on a packages and warns if not
- *
  * @param {object} pkgJson - package.json contents
  */
 function checkMaintainers(pkgJson) {
@@ -277,7 +266,6 @@ function checkMaintainers(pkgJson) {
 
 /**
  * Read, fix up, and write out updated package.json file
- *
  * @param {string} pkgPath path to a package.json file
  * @returns {Promise} promise
  */
@@ -311,7 +299,6 @@ async function fixupPackage(pkgPath) {
 
 /**
  * Finds all the packages and fixes them up
- *
  * @returns {Promise} promise
  */
 async function main() {

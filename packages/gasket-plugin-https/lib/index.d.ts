@@ -13,33 +13,33 @@ type RequireAtLeastOne<T, Keys extends keyof T = keyof T> =
 
 declare module '@gasket/engine' {
   type BaseListenerConfig = {
-    port?: number,
-    host?: string,
-    timeout?: number,
-    handler?: Function
-  }
+    port?: number;
+    host?: string;
+    timeout?: number;
+    handler?: Function;
+  };
 
   type CertInput = string | Buffer;
 
   type CustomHttpsSettings = {
-    root?: string,
-    key: MaybeMultiple<CertInput>,
-    cert: MaybeMultiple<CertInput>,
-    ca?: MaybeMultiple<CertInput>,
-    ciphers?: MaybeMultiple<string>,
-    honorCipherOrder?: boolean
+    root?: string;
+    key: MaybeMultiple<CertInput>;
+    cert: MaybeMultiple<CertInput>;
+    ca?: MaybeMultiple<CertInput>;
+    ciphers?: MaybeMultiple<string>;
+    honorCipherOrder?: boolean;
   };
 
   type HttpsSettings =
-    & CustomHttpsSettings
-    & Omit<
+     CustomHttpsSettings &
+    Omit<
       SecureContextOptions,
       keyof CustomHttpsSettings | 'secureProtocol' | 'secureOptions'
     >;
 
   type Http2Settings =
-    & CustomHttpsSettings
-    & Omit<
+     CustomHttpsSettings &
+    Omit<
       SecureServerOptions,
       keyof CustomHttpsSettings | 'secureProtocol' | 'secureOptions'
     >;
@@ -85,38 +85,46 @@ declare module '@gasket/engine' {
   type DevProxyConfig = RequireAtLeastOne<BaseDevProxyConfig, 'target' | 'forward'>;
 
   interface ServerOptions {
-    hostname?: string,
-    http?: number | false | null | MaybeMultiple<BaseListenerConfig>,
-    https?: MaybeMultiple<BaseListenerConfig & HttpsSettings & {
-      sni?: Record<string, HttpsSettings>
-    }>,
-    http2?: MaybeMultiple<BaseListenerConfig & Http2Settings & {
-      sni?: Record<string, HttpsSettings>
-    }>,
-    handler?: Function
+    hostname?: string;
+    http?: number | false | null | MaybeMultiple<BaseListenerConfig>;
+    https?: MaybeMultiple<
+      BaseListenerConfig &
+        HttpsSettings & {
+          sni?: Record<string, HttpsSettings>;
+        }
+    >;
+    http2?: MaybeMultiple<
+      BaseListenerConfig &
+        Http2Settings & {
+          sni?: Record<string, HttpsSettings>;
+        }
+    >;
+    handler?: Function;
   }
 
   export interface GasketConfig extends ServerOptions {
-    terminus?: TerminusOptions
+    terminus?: TerminusOptions & { healthcheck?: string[] };
     devProxy?: DevProxyConfig
   }
 
   type CreatedServers = {
-    http?: MaybeMultiple<HttpServer>,
-    https?: MaybeMultiple<HttpsServer>,
-    http2?: MaybeMultiple<Http2Server>
-  }
+    http?: MaybeMultiple<HttpServer>;
+    https?: MaybeMultiple<HttpsServer>;
+    http2?: MaybeMultiple<Http2Server>;
+  };
 
   export interface HookExecTypes {
     devProxy(proxyConfig: DevProxyConfig): MaybeAsync<DevProxyConfig>,
-    createServers(serveropts: ServerOptions): MaybeAsync<ServerOptions>,
-    servers(servers: CreatedServers): MaybeAsync<void>,
-    terminus(opts: TerminusOptions): MaybeAsync<TerminusOptions>,
-    healthcheck(HealthcheckError: typeof HealthCheckError): MaybeAsync<void>,
+    createServers(serveropts: ServerOptions): MaybeAsync<ServerOptions>;
+    servers(servers: CreatedServers): MaybeAsync<void>;
+    terminus(
+      opts: TerminusOptions
+    ): MaybeAsync<TerminusOptions & { healthcheck?: string[] }>;
+    healthcheck(HealthcheckError: typeof HealthCheckError): MaybeAsync<void>;
 
-    onSignal(): MaybeAsync<void>,
-    beforeShutdown(): MaybeAsync<void>,
-    onSendFailureDuringShutdown(): MaybeAsync<void>,
-    onShutdown(): MaybeAsync<void>
+    onSignal(): MaybeAsync<void>;
+    beforeShutdown(): MaybeAsync<void>;
+    onSendFailureDuringShutdown(): MaybeAsync<void>;
+    onShutdown(): MaybeAsync<void>;
   }
 }
