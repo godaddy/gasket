@@ -1,8 +1,8 @@
+/// <reference types="@gasket/cli" />
+
 /**
  * Add scripts for commands to the package.json
- *
- * @param {Gasket} gasket - The gasket API.
- * @param {CreateContext} context - Create context
+ * @type {import('@gasket/engine').HookHandler<'create'>}
  */
 module.exports = function create(gasket, context) {
   const { pkg } = context;

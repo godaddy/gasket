@@ -1,13 +1,16 @@
+/// <reference types="@gasket/cli" />
+/// <reference types="@gasket/plugin-metadata" />
+
 const { devDependencies, name } = require('../package.json');
 
-module.exports = {
+/** @type {import('@gasket/engine').Plugin} */
+const plugin = {
   name,
   hooks: {
     create: {
       timing: {
         after: ['@gasket/plugin-nextjs']
       },
-
       handler: async function create(gasket, { files, pkg }) {
         const generatorDir = `${__dirname}/../generator`;
         const isReactProject = pkg.has('dependencies', 'react');
@@ -53,3 +56,5 @@ module.exports = {
     }
   }
 };
+
+module.exports = plugin;
