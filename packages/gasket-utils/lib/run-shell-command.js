@@ -1,4 +1,15 @@
 const { spawn } = require('child_process');
+const { Writable } = require('stream');
+const stderr = new Writable();
+const stdout = new Writable();
+const write = function (chunk, encoding, next) {
+  if (!this.data) this.data = '';
+  this.data += chunk;
+  next();
+};
+
+stdout._write = write;
+stderr._write = write;
 
 /**
  * Promise friendly wrapper to running a shell command (eg: git, npm, ls)
@@ -41,21 +52,18 @@ function runShellCommand(cmd, argv, options = {}, debug = false) {
   const { signal, ...opts } = options;
 
   if (signal && signal.aborted) {
-    return Promise.reject(Object.assign(new Error(`${ cmd } was aborted before spawn`), { argv, aborted: true }));
+    return Promise.reject(Object.assign(new Error(`${cmd} was aborted before spawn`), { argv, aborted: true }));
   }
 
   return new Promise((resolve, reject) => {
     const child = spawn(cmd, argv, opts);
 
-    let stderr;
-    let stdout;
-
     child.stderr.on('data', lines => {
-      stderr = lines.toString();
+      stderr.write(lines);
     });
 
     child.stdout.on('data', lines => {
-      stdout = lines.toString();
+      stdout.write(lines);
     });
 
     if (debug) {
@@ -73,16 +81,16 @@ function runShellCommand(cmd, argv, options = {}, debug = false) {
 
     child.on('close', code => {
       if (code !== 0) {
-        return reject(Object.assign(new Error(`${ cmd } exited with non-zero code`), {
+        return reject(Object.assign(new Error(`${cmd} exited with non-zero code`), {
           argv,
-          stdout,
-          stderr,
+          stdout: stdout.data,
+          stderr: stderr.data,
           aborted,
           code
         }));
       }
 
-      resolve({ stdout });
+      resolve({ stdout: stdout.data });
     });
   });
 }
