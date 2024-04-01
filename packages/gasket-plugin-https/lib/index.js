@@ -2,7 +2,6 @@
 /// <reference types="@gasket/plugin-metadata" />
 /// <reference types="@gasket/plugin-log" />
 
-/* eslint-disable max-statements */
 const { createTerminus, HealthCheckError } = require('@godaddy/terminus');
 const debug = require('diagnostics')('gasket:https');
 const create = require('create-servers');
@@ -28,13 +27,8 @@ function getPortFallback(env = '') {
  * @private
  */
 function portInUseError(errors) {
-  let error;
-  if (Array.isArray(errors)) {
-    error = errors[0];
-  }
-  return (
-    (error.http2 || error.https || error.http || {}).code === 'EADDRINUSE'
-  );
+  const error = Array.isArray(errors) ? errors[0] : errors;
+  return ((error.http2 || error.https || error.http || {}).code || '') === 'EADDRINUSE';
 }
 
 /**
@@ -72,7 +66,7 @@ async function start(gasket) {
   }
 
   /**
-   *
+   * Health check request handler
    */
   async function healthCheckRequested() {
     await gasket.exec('healthcheck', HealthCheckError);
@@ -111,6 +105,7 @@ async function start(gasket) {
     ...terminusDefaults
   };
 
+  // eslint-disable-next-line max-statements
   create(serverOpts, async function created(errors, servers) {
     if (errors) {
       let errorMessage;
