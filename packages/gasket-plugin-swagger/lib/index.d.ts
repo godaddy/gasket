@@ -22,3 +22,9 @@ declare module '@gasket/engine' {
     }
   }
 }
+
+declare module '@gasket/cli' {
+  export interface CreateContext {
+    hasSwaggerPlugin?: boolean;
+  }
+}

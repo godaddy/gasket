@@ -1,8 +1,12 @@
+/// <reference types="@gasket/plugin-metadata" />
+
 // const create = require('./create');
 // const commands = require('./commands');
+const { name } = require('../package.json');
 
-module.exports = {
-  name: require('../package').name,
+/** @type {import('@gasket/engine').Plugin} */
+const plugin = {
+  name,
   hooks: {
     // Comment hooks out for deprecation - TODO eval deletion
     // create,
@@ -46,3 +50,5 @@ module.exports = {
     }
   }
 };
+
+module.exports = plugin;

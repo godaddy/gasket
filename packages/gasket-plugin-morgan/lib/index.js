@@ -1,10 +1,11 @@
 const morgan = require('morgan');
 const split = require('split');
-const { name } = require('../package');
+const { name } = require('../package.json');
 
 // set log configuration in gasket.config.js, under `morgan` key
 // configuration options: http://expressjs.com/en/resources/middleware/morgan.html
-module.exports = {
+/** @type {import('@gasket/engine').Plugin} */
+const plugin = {
   name,
   hooks: {
     middleware: {
@@ -47,3 +48,5 @@ module.exports = {
     }
   }
 };
+
+module.exports = plugin;

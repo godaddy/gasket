@@ -1,14 +1,23 @@
+/// <reference types="@gasket/plugin-command" />
+/// <reference types="@gasket/plugin-start" />
+/// <reference types="@gasket/plugin-express" />
+/// <reference types="@gasket/plugin-fastify" />
+/// <reference types="@gasket/plugin-metadata" />
+/// <reference types="@gasket/plugin-log" />
+/// <reference types="@gasket/cli" />
+
+
 const path = require('path');
 const fs = require('fs');
 const { readFile, writeFile, access } = require('fs').promises;
 const swaggerJSDoc = require('swagger-jsdoc');
 const isYaml = /\.ya?ml$/;
+const { name } = require('../package.json');
 
 let __swaggerSpec;
 
 /**
  * Load the the Swagger spec, only once.
- *
  * @param {string} root - App root
  * @param {string} definitionFile - Path to file relative to root
  * @param {*} logger - gasket logger
@@ -33,16 +42,10 @@ async function loadSwaggerSpec(root, definitionFile, logger) {
   return __swaggerSpec;
 }
 
-module.exports = {
-  name: require('../package').name,
+/** @type {import('@gasket/engine').Plugin} */
+const plugin = {
+  name,
   hooks: {
-    /**
-     * Configure swagger plugin defaults
-     *
-     * @param {object} gasket - Gasket API
-     * @param {object} baseConfig - Config object to manipulate
-     * @returns {object} config
-     */
     configure(gasket, baseConfig) {
       const { swagger = {} } = baseConfig;
 
@@ -53,12 +56,6 @@ module.exports = {
       };
       return baseConfig;
     },
-    /**
-     * Builds the swagger spec from JSDocs if configured.
-     *
-     * @param {object} gasket - Gasket API
-     * @async
-     */
     async build(gasket) {
       const { swagger, root } = gasket.config;
       const { jsdoc, definitionFile } = swagger;
@@ -84,13 +81,6 @@ module.exports = {
         }
       }
     },
-    /**
-     * Serve the Swagger Docs UI.
-     *
-     * @param {object} gasket - Gasket API
-     * @param {object} app - Express app instance
-     * @async
-     */
     express: {
       timing: {
         before: ['@gasket/plugin-nextjs']
@@ -113,13 +103,6 @@ module.exports = {
         );
       }
     },
-    /**
-     * Serve the Swagger Docs UI.
-     *
-     * @param {object} gasket - Gasket API
-     * @param {object} app - Fastify app instance
-     * @async
-     */
     fastify: {
       timing: {
         before: ['@gasket/plugin-nextjs']
@@ -134,6 +117,7 @@ module.exports = {
           gasket.logger
         );
 
+        // @ts-ignore
         app.register(require('@fastify/swagger'), {
           prefix: apiDocsRoute,
           swagger: swaggerSpec,
@@ -141,13 +125,6 @@ module.exports = {
         });
       }
     },
-    /**
-     * Sets swagger plugin prop to true and adds swagger config to gasket.config
-     *
-     * @param {object} gasket - Gasket API
-     * @param {CreateContext} context - Create context
-     *
-     */
     create(gasket, context) {
       context.hasSwaggerPlugin = true;
       context.gasketConfig.add('swagger', {
@@ -204,3 +181,5 @@ module.exports = {
     }
   }
 };
+
+module.exports = plugin;
