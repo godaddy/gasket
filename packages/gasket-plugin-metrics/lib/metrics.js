@@ -55,6 +55,8 @@ class Metrics {
     const packagejson = this.metadata.app.package;
 
     const config = this.config;
+    // @ts-ignore
+    // TEMP: Temporarily ignoring until plugin-metadata types are updated
     const dependencies = packagejson.dependencies || {};
 
     const gasket = Object.keys(dependencies)
@@ -67,7 +69,11 @@ class Metrics {
       }, {});
 
     return {
+      // @ts-ignore
+    // TEMP: Temporarily ignoring until plugin-metadata types are updated
       name: packagejson.name,
+      // @ts-ignore
+      // TEMP: Temporarily ignoring until plugin-metadata types are updated
       version: packagejson.version,
       gasket,
       deps: Object.keys(gasket),
