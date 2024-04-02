@@ -1,16 +1,29 @@
 #!/usr/bin/env node
+require('./utils/setup');
+const pkg = require('../package.json');
+const { Command } = require('commander');
+const program = new Command();
+const CreateCommand = require('./commands/create');
 
-const { fork } = require('child_process');
-const path = require('path');
+const { processCommand, logo, warnIfOutdated } = require('./utils');
 
-const [, , ...args] = process.argv;
+// Create Gasket CLI
+const gasketBin = program
+  .name('gasket')
+  .description(pkg.description)
+  .option('--gasket-config [gasket-config-path]', 'Fully qualified Gasket config to load', 'gasket.config')
+  .version(pkg.version)
+  .addHelpText('beforeAll', logo);
 
-function main() {
-  return fork(
-    path.join(__dirname, '..', 'node_modules', '.bin', 'gasket'),
-    ['create', ...args],
-    { stdio: 'inherit', stdin: 'inherit', stderr: 'inherit' }
-  );
+
+async function main() {
+  const { command, hidden, isDefault } = processCommand(CreateCommand);
+  await warnIfOutdated(pkg.name, pkg.version);
+  gasketBin.addCommand(command, { hidden, isDefault });
+
+  process.argv.splice(2, 0, 'create');
+
+  return await gasketBin.parseAsync();
 }
 
 main();
