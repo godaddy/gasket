@@ -38,8 +38,6 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-utils",
   "dependencies": {
-    "concat-stream": "^2.0.0",
-    "cross-spawn": "^7.0.3",
     "diagnostics": "^2.0.2",
     "lodash.defaultsdeep": "^4.6.1"
   },
