@@ -170,17 +170,17 @@ describe('makeCreateContext', () => {
   });
 
   it('sets rawPresets to empty array if not defined', () => {
-    results = makeCreateContext(argv, { 'preset-path': ['../bogus/path'] });
+    results = makeCreateContext(argv, { presetPath: ['../bogus/path'] });
     expect(results.rawPresets).toEqual([]);
   });
 
   it('sets localPresets from flags', () => {
-    results = makeCreateContext(argv, { 'preset-path': ['../bogus/path'] });
+    results = makeCreateContext(argv, { presetPath: ['../bogus/path'] });
     expect(results.localPresets).toEqual(['../bogus/path']);
   });
 
   it('sets localPresets from flags with multiple entries', () => {
-    results = makeCreateContext(argv, { 'preset-path': ['../bogus/path', '../test/path'] });
+    results = makeCreateContext(argv, { presetPath: ['../bogus/path', '../test/path'] });
     expect(results.localPresets).toEqual(['../bogus/path', '../test/path']);
   });
 
@@ -205,7 +205,7 @@ describe('makeCreateContext', () => {
   });
 
   it('sets pkgLinks from flags', () => {
-    results = makeCreateContext(argv, { 'npm-link': ['@gasket/jest', 'gasket-plugin-some-user'], 'presets': ['godady'] });
+    results = makeCreateContext(argv, { npmLink: ['@gasket/jest', 'gasket-plugin-some-user'], presets: ['godady'] });
     expect(results.pkgLinks).toEqual(['@gasket/jest', 'gasket-plugin-some-user']);
   });
 
@@ -264,7 +264,7 @@ describe('makeCreateContext', () => {
   it('doesnt throw if preset path found', () => {
     let error;
     try {
-      results = makeCreateContext(argv, { 'preset-path': ['somePath'] });
+      results = makeCreateContext(argv, { presetPath: ['somePath'] });
     } catch (err) {
       error = err;
     }
