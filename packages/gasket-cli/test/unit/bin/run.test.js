@@ -5,30 +5,10 @@ const mockParseAsync = jest.fn();
 const mockInit = jest.fn();
 const mockProcessCommand = jest.fn();
 const mockAddCommand = jest.fn();
-const mockCreateCommand = {
-  id: 'create',
-  description: 'Create a new Gasket project',
-  args: [
-    {
-      name: 'appname',
-      description: 'Name of the Gasket application to create',
-      required: true
-    }
-  ],
-  options: [
-    {
-      name: 'presets',
-      short: 'p',
-      description: 'Initial Gasket preset(s) to use',
-      parse: jest.fn()
-    }
-  ],
-  action: jest.fn()
-};
+
 
 jest.mock('../../../lib/init', () => mockInit);
 jest.mock('../../../package.json', () => ({ description: 'mockDescription', version: 'mockVersion' }));
-jest.mock('../../../lib/commands/create', () => mockCreateCommand);
 jest.mock('../../../lib/utils', () => ({
   processCommand: mockProcessCommand.mockReturnValue('mockCommand'),
   warnIfOutdated: jest.fn()
@@ -50,9 +30,10 @@ jest.mock('commander', () => ({
 const { Command } = require('commander');
 
 describe('run', () => {
-
+  let consoleWarnSpy;
   beforeEach(() => {
     jest.replaceProperty(process, 'argv', ['node', 'gasket']);
+    consoleWarnSpy = jest.spyOn(console, 'warn');
   });
 
   afterEach(() => {
@@ -72,16 +53,10 @@ describe('run', () => {
     expect(mockVersionMethod).toHaveBeenCalledWith('mockVersion');
   });
 
-  it('adds create command', async () => {
-    await require('../../../bin/run');
-    expect(mockProcessCommand).toHaveBeenCalledWith(mockCreateCommand);
-    expect(mockAddCommand).toHaveBeenCalled();
-  });
-
   it('exits early for create command', async () => {
     jest.replaceProperty(process, 'argv', ['node', 'gasket', 'create']);
     await require('../../../bin/run');
-    expect(mockParseAsync).toHaveBeenCalled();
+    expect(consoleWarnSpy).toHaveBeenCalledWith('The create command has been removed. Use npx create-gasket-app instead.');
     expect(mockInit).not.toHaveBeenCalled();
   });
 
