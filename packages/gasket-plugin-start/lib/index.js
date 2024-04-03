@@ -1,11 +1,11 @@
 const create = require('./create');
-const getCommands = require('./get-commands');
+const commands = require('./commands');
 
 module.exports = {
   name: require('../package').name,
   hooks: {
     create,
-    getCommands,
+    commands,
     metadata(gasket, meta) {
       return {
         ...meta,

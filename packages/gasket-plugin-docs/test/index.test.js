@@ -14,7 +14,7 @@ describe('Plugin', function () {
     const expected = [
       'configure',
       'create',
-      'getCommands',
+      'commands',
       'metadata',
       'docsSetup'
     ];

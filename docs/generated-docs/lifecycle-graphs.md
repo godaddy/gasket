@@ -1,7 +1,7 @@
 ```mermaid
 graph LR;
-preboot -- execWaterfall --> appEnvConfig;
-middleware -- execWaterfall --> appRequestConfig;
+* -- exec --> commandOptions;
+* -- exec --> commands;
 express -- execWaterfall --> composeServiceWorker;
 init -- execWaterfall --> configure;
 gasket/cli --> create;
@@ -14,7 +14,7 @@ createServers -- exec --> errorMiddleware;
 createServers -- exec --> errorMiddleware;
 createServers -- exec --> express;
 createServers -- exec --> fastify;
-initOclif -- exec --> getCommands;
+preboot -- execWaterfall --> gasketData;
 *-cmd(*) -- exec --> init;
 middleware -- execWaterfall --> initReduxState;
 middleware -- exec --> initReduxStore;
@@ -34,6 +34,7 @@ express -- exec --> nextPreHandling;
 prompt --> postCreate;
 gasket/plugin-start -- exec --> preboot;
 create --> prompt;
+middleware -- execWaterfall --> responseData;
 start -- exec --> servers;
 express -- exec --> serviceWorkerCacheKey;
 preboot -- exec --> start;

@@ -1,4 +1,6 @@
 module.exports = {
   collectCoverageFrom: ['lib/**/*.js'],
-  testURL: 'http://localhost/'
+  testEnvironmentOptions: {
+    url: 'http://localhost/'
+  }
 };

@@ -19,7 +19,7 @@ describe('Metrics', function () {
     mockGasket = {
       command: {
         id: 'test-command',
-        flags: {
+        options: {
           record: true
         }
       },
@@ -115,7 +115,7 @@ describe('Metrics', function () {
     });
 
     afterEach(() => {
-      collectStub.mockClear();
+      jest.clearAllMocks();
     });
 
     it('Returns exactly what is collected', async function () {
@@ -128,7 +128,7 @@ describe('Metrics', function () {
     });
 
     it('does not collect if record disabled', async function () {
-      mockGasket.command.flags.record = false;
+      mockGasket.command.options.record = false;
       metrics = new Metrics(mockGasket);
       await metrics.report();
 

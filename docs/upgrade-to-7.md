@@ -93,34 +93,130 @@ Add setup script to create hook. [(#672)]
 
 ## Rename and Refactor @gasket/plugin-config as @gasket/plugin-response-data
 
-We have had a lot of confusion around the config plugin and it's purpose. As such, we are renaming and refocusing what the plugin does. That is, to allow environment specific data to be accessible for requests, with public data available with responses.
+We have had a lot of confusion around the config plugin and its purpose. As such, we are renaming and refocusing what the plugin does. That is, to allow environment-specific data to be accessible for requests, with public data available with responses.
 
 Instead of the generic 'config' name, we will term this gasketData which pairs well with the `@gasket/data` package - which is what makes this data accessible in browser code. We are dropping the `redux` property, aligning on `public` which will be added to the Redux state as `gasketData` for apps that choose to opt-in to Redux.
 
-The lifecycles have been renamed also.
+Existing apps will need to update their `gasket.config.js` to use the new plugin name.
+
+```diff
+// gasket.config.js
+
+module.exports = {
+  plugins: {
+    add: [
+-      '@gasket/plugin-config'
++      '@gasket/plugin-response-data'
+    ]
+  }
+}
+```
+
+The previous lifecycles in `@gasket/plugin-config` have been renamed.
+
+```diff
+- // /lifecycles/appEnvConfig
++ // /lifecycles/gasketData
+
+- // /lifecycles/appRequestConfig
++ // /lifecycles/responseData
+```
+
 - `gasketData` can be used to tune up the base object during app `init`.
 - `responseData` can be used to tune up the "public" data uniquely for each response.
+
+Environment file configuration has been updated to use `gasketData.dir` instead of `configPath`.
+
+```diff
+// gasket.config.js
+
+module.exports = {
+-  configPath: './src/config'
++  gasketData: {
++    dir: './src/gasket-data'
++  }
+};
+```
+
+The `app.config.js` file has been renamed to `gasket-data.config.js`
+
+```diff
+- <app-root-dir>/app.config.js
++ <app-root-dir>/gasket-data.config.js
+```
 
 [(#680)]
 
 ## Bring Your Own Logger
 
-Gasket's logging infrastructure comprises two main parts:
+Gasket's logging infrastructure was comprised of two main parts:
 
 1. `@gasket/plugin-log`: Manages lifecycle timing and executes the `logTransports` hook for adding extra transports to the logger configuration.
 2. `@gasket/log`: Implements logging using Diagnostics (Client-side) and Winston (Server-side).
 
-While these components work together to initialize `gasket.logger`, not all applications utilize them. Additionally, despite Winston's prevalence, we need to be aware of the numerous logging libraries in the ecosystem when adopting Gasket.
+While these components worked together to initialize `gasket.logger`, not all applications utilized them. Additionally, despite Winston's prevalence, we need to be aware of the numerous logging libraries in the ecosystem when adopting Gasket. The following updates aim to address these concerns:
 
 Updates:
+- Removed `@gasket/log`
+- Created a new `@gasket/plugin-logger` to replace `@gasket/plugin-log`
+- The new logger is included by default in Gasket apps
+- Created `@gasket/plugin-winston` to customize the default logger
+- Added a per-request logger with updateable metadata
+- Updated the default redux logger to use the per-request logger
+- Updated presets to use the winston logger
 
-- Create a new `@gasket/plugin-logger `to replace `@gasket/plugin-log`
-- Create `@gasket/plugin-winston` to customize the default logger
-- Include the new logger plugin by default
-- Add a per-request logger with updateable metadata
-- Update the default redux logger to use the per-request logger
-- Update presets to use the winston logger
+`@gasket/plugin-winston` is the new default logger for Gasket apps. Use this plugin in place of `@gasket/plugin-log` to customize the default logger.
 
+```diff
+// gasket.config.js
+
+module.exports = {
+  plugins: {
+    add: [
+-      '@gasket/plugin-log'
++      '@gasket/plugin-winston'
+    ]
+  }
+}
+```
+
+`@gasket/plugin-winston` does not support `log` when customizing the logger in `gasket.config.js`.
+
+```diff
+// gasket.config.js
+
+module.exports = {
+-  log: {
+-    prefix: 'my-app'
+-  },
+  winston: {
+    level: 'warning'
+  },
+```
+
+Existing Gasket apps will need to make changes to how they handle logging. Logging levels now follow `console` conventions. Loggers at minimum support the following levels:
+
+- `debug`
+- `error`
+- `info`
+- `warn`
+
+```diff
+// gasket.logger.warning changes
+- gasket.logger.warning
++ gasket.logger.warn
+
+// logger.log changes
+- logger.log
++ logger.info
+```
+
+The lifecycle method formerly known as `logTransports` is now `winstonTransports`.
+
+```diff
+- // /lifecycles/log-transports.js
++ // /lifecycles/winston-transports.js
+```
 [(#640)]
 
 ## Update Redux Store to Use gasketData
@@ -162,5 +258,3 @@ Additionally, `@gasket/plugin-nextjs` now generates a `_app.js` file with `getIn
 [(#640)]:https://github.com/godaddy/gasket/pull/640
 [(#680)]:https://github.com/godaddy/gasket/pull/680
 [(#693)]:https://github.com/godaddy/gasket/pull/693
-
-<!-- LINKS -->

@@ -16,9 +16,20 @@ npm i -global @gasket/cli
 
 ## Configuration
 
-When an app is created, a `gasket.config.js` file will be generated with the
-presets and plugins configured as determined with the create command. Within an
-app, the CLI will have access to other commands as enabled by plugins.
+The `configure` lifecycle executes for each Gasket command.
+
+Configuration for a Gasket session goes through a series of steps:
+
+1. Config file loaded by CLI
+   - Environment is set
+   - Overrides are applied
+   - Default plugins are added
+2. -_`init` lifecycle is executed_
+3. Plugins adjust config by hooking `configure` lifecycle
+
+When the CLI starts up, it attempts to load the `gasket.config` in its default
+expected location, or as specified with [command options]. Plugins then have the
+opportunity in the `configure` lifecycle.
 
 See the [Configuration Guide] for additional details.
 
@@ -33,28 +44,26 @@ commands are available, and `gasket help` to get more details on command.
 Use to create a new Gasket app.
 
 ```
-USAGE
-  $ gasket create APPNAME
+Usage: gasket create [options] <appname>
 
-ARGUMENTS
-  APPNAME  Name of the gasket application to create
+Create a new Gasket application
 
-OPTIONS
-  -p, --presets=presets              Initial gasket preset(s) to use.
-                                     Can be set as short name with version (e.g. --presets nextjs@^1.0.0)
-                                     Or other (multiple) custom presets (e.g. --presets
-                                     my-gasket-preset@1.0.0.beta-1,nextjs@^1.0.0)
+Arguments:
+  appname                              Name of the Gasket application to create
 
-  --package-manager=package-manager  Selects which package manager you would like to use during
-                                     installation. (e.g. --package-manager yarn)
-
-  --plugins=plugins                  Additional plugin(s) to install. Can be set as
-                                     multiple flags (e.g. --plugins @gasket/jest --plugins example@^1.0.0)
-                                     comma-separated values: --plugins=@gasket/jest,example^1.0.0
-  
-  --config={}                        JSON object that provides the values for any interactive prompts
-
-  --config-file                      path to a JSON file that provides the values for interactive prompts
+Options:
+  -p, --presets [presets]              Initial Gasket preset(s) to use.
+        Can be set as short name with version (e.g. --presets nextjs@^1.0.0)
+        Or other (multiple) custom presets (e.g. --presets my-gasket-preset@1.0.0.beta-1,nextjs@^1.0.0)
+  --plugins [plugins]                  Additional plugin(s) to install. Can be set as
+        multiple flags (e.g. --plugins jest --plugins zkconfig@^1.0.0)
+        comma-separated values: --plugins=jest,zkconfig^1.0.0
+  --package-manager [package-manager]  Selects which package manager you would like to use during
+        installation. (e.g. --package-manager yarn)
+  -r, --require [require]              Require module(s) before Gasket is initialized
+  --config [config]                    JSON object that provides the values for any interactive prompts
+  --config-file [config-file]          Path to a JSON file that provides the values for any interactive prompts
+  -h, --help                           display help for command
 ```
 
 #### Package Managers
@@ -89,17 +98,29 @@ own config.
 
 ### help command
 
-Display help for Gasket CLI and commands
+Display help for Gasket CLI and commands, also available with the `--help` option.
 
 ```
-USAGE
-  $ gasket help [COMMAND]
+Usage: gasket [options] [command]
 
-ARGUMENTS
-  COMMAND  command to show help for
+CLI for rapid application development with gasket
 
-OPTIONS
-  --all  see all commands in CLI
+Options:
+  --gasket-config [gasket-config-path]  Fully qualified Gasket config to load (default: "gasket.config")
+  -V, --version                         output the version number
+  -h, --help                            display help for command
+
+Commands:
+  create [options] <appname>            Create a new Gasket application
+  help [command]                        display help for command
+```
+
+### Command specific help
+
+Display expanded help output for a specific command.
+
+```
+gasket <cmd> --help
 ```
 
 ### --require module
@@ -261,7 +282,7 @@ The hook is passed the following parameters:
 
 # Tests
 
-Tests are written with `mocha`, `@oclif/test`, and `assume`. They can be run &
+Tests are written with `jest`. They can be run &
 debugged with `npm`:
 
 ```bash

@@ -74,3 +74,4 @@ packages/gasket-plugin-docs-graphs/test/fixtures/generated-docs
 packages/gasket-cli/test/fixtures/create/*
 !packages/gasket-cli/test/fixtures/create/.gitkeep
 packages/gasket-cli/oclif.manifest.json
+packages/gasket-cli/.cache

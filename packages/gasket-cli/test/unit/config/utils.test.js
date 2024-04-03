@@ -13,8 +13,8 @@ jest.mock('fs', () => ({
   }
 }));
 
-const utils = require('../../../src/config/utils');
-const defaultPlugins = require('../../../src/config/default-plugins');
+const utils = require('../../../lib/config/utils');
+const defaultPlugins = require('../../../lib/config/default-plugins');
 
 describe('config utils', () => {
   let flags, env, commandId;
@@ -86,27 +86,27 @@ describe('config utils', () => {
     });
 
     it('does not add defaults if user added', () => {
-      const results = utils.addDefaultPlugins({ plugins: { add: ['@gasket/plugin-command'] } });
+      const results = utils.addDefaultPlugins({ plugins: { add: ['@gasket/plugin-lifecycle'] } });
       expect(results.plugins.add.length).toEqual(defaultPlugins.length);
-      expect(results.plugins.add).toContain('@gasket/plugin-command');
+      expect(results.plugins.add).toContain('@gasket/plugin-lifecycle');
       expect(results.plugins.add).not.toContain(defaultPlugins[0]);
     });
 
     it('does not add defaults if user added (short)', () => {
-      const results = utils.addDefaultPlugins({ plugins: { add: ['@gasket/command'] } });
+      const results = utils.addDefaultPlugins({ plugins: { add: ['@gasket/lifecycle'] } });
       expect(results.plugins.add.length).toEqual(defaultPlugins.length);
-      expect(results.plugins.add).toContain('@gasket/command');
+      expect(results.plugins.add).toContain('@gasket/lifecycle');
       expect(results.plugins.add).not.toContain(defaultPlugins[0]);
     });
 
     it('does not add defaults if user removed', () => {
-      const results = utils.addDefaultPlugins({ plugins: { remove: ['@gasket/plugin-command'] } });
+      const results = utils.addDefaultPlugins({ plugins: { remove: ['@gasket/plugin-lifecycle'] } });
       expect(results.plugins.add.length).toBeLessThan(defaultPlugins.length);
       expect(results.plugins.add).not.toContain(defaultPlugins[0]);
     });
 
     it('does not add defaults if user removed (short)', () => {
-      const results = utils.addDefaultPlugins({ plugins: { remove: ['@gasket/command'] } });
+      const results = utils.addDefaultPlugins({ plugins: { remove: ['@gasket/lifecycle'] } });
       expect(results.plugins.add.length).toBeLessThan(defaultPlugins.length);
       expect(results.plugins.add.length).not.toContain(defaultPlugins[0]);
     });

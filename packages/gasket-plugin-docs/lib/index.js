@@ -1,6 +1,6 @@
 const create = require('./create');
 const configure = require('./configure');
-const getCommands = require('./get-commands');
+const commands = require('./commands');
 const metadata = require('./metadata');
 const docsSetup = require('./docs-setup');
 
@@ -9,7 +9,7 @@ module.exports = {
   hooks: {
     configure,
     create,
-    getCommands,
+    commands,
     metadata,
     docsSetup
   }

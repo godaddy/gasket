@@ -16,7 +16,7 @@ class Metrics {
     this.gitshizzle = new Git(config.root);
     this.config = config;
     this.cmd = command;
-    this.record = command.flags.record;
+    this.record = command.options.record;
     this.metadata = metadata;
   }
 

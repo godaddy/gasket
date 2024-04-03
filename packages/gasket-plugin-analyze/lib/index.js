@@ -1,6 +1,6 @@
 const create = require('./create');
 const webpackConfig = require('./webpack-config');
-const getCommands = require('./get-commands');
+const commands = require('./commands');
 /**
  * Gasket Analyzer Plugin
  *
@@ -10,7 +10,7 @@ module.exports = {
   name: require('../package').name,
   hooks: {
     webpackConfig,
-    getCommands,
+    commands,
     create,
     metadata(gasket, meta) {
       return {

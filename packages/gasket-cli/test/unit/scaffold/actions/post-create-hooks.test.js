@@ -1,9 +1,9 @@
 const mockEngineStub = jest.fn();
 const mockExecStub = jest.fn();
 
-jest.mock('../../../../src/scaffold/create-engine', () => mockEngineStub);
+jest.mock('../../../../lib/scaffold/create-engine', () => mockEngineStub);
 
-const postCreateHooks = require('../../../../src/scaffold/actions/post-create-hooks');
+const postCreateHooks = require('../../../../lib/scaffold/actions/post-create-hooks');
 
 describe('postCreateHooks', () => {
   let mockContext;
