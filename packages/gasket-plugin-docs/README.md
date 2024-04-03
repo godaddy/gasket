@@ -7,7 +7,7 @@ app's plugins, presets, and supporting modules.
 
 #### New apps
 
-```
+```sh
 gasket create <app-name> --plugins @gasket/plugin-docs
 ```
 
@@ -242,7 +242,6 @@ serve the content in a more viewable fashion for the user.
 [DocsSetup]: docs/api.md#DocsSetup
 [DocsConfig]: docs/api.md#DocsConfig
 [DocsConfigSet]: docs/api.md#DocsConfigSet
-[DocsTransform]: docs/api.md#DocsTransform
 [DocsTransformHandler]: docs/api.md#DocsTransformHandler
 
 [@gasket/plugin-metadata]: /packages/gasket-plugin-metadata/README.md

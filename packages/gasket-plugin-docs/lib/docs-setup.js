@@ -6,8 +6,7 @@ const {
 
 /**
  * Specify what files to copy and transform
- *
- * @returns {DocsSetup} docsSetup
+ * @type {import('@gasket/engine').HookHandler<'docsSetup'>}
  */
 module.exports = function docsSetup() {
   return {

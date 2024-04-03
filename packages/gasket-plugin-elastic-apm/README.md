@@ -6,13 +6,13 @@ Adds Elastic APM instrumentation to your application
 
 #### New apps
 
-```
+```sh
 gasket create <app-name> --plugins @gasket/plugin-elastic-apm
 ```
 
 #### Existing apps
 
-```
+```sh
 npm install @gasket/plugin-elastic-apm elastic-apm-node
 ```
 
@@ -47,8 +47,8 @@ will accomplish this. To configure the APM agent, set the environment variables
 described in the [configuration options documentation].
 
 In particular, the APM server URL (`ELASTIC_APM_SERVER_URL`) and secret token
-(`ELASTIC_APM_SECRET_TOKEN`) are both required configuration. If either
-of these are not present, the APM agent will be disabled.
+(`ELASTIC_APM_SECRET_TOKEN`) are both required configuration. If either of these
+are not present, the APM agent will be disabled.
 
 ### Plugin Configurations
 
@@ -79,7 +79,7 @@ you can do so in a custom setup script and require it instead.
 
 For example, add a `setup.js` script to the root of your app:
 
-```
+```js
 // setup.js
 require('elastic-apm-node').start({
   // any configuration options
@@ -103,7 +103,10 @@ hooks of your Gasket app, such as with the [init] or [middleware] lifecycles.
 
 ### apmTransaction
 
-Enables customizing an APM transaction. Hooks receive the current APM [Transaction](https://www.elastic.co/guide/en/apm/agent/nodejs/current/transaction-api.html) and details about the request. Hooks may be asynchronous. The request details are as follows:
+Enables customizing an APM transaction. Hooks receive the current APM
+[Transaction](https://www.elastic.co/guide/en/apm/agent/nodejs/current/transaction-api.html)
+and details about the request. Hooks may be asynchronous. The request details
+are as follows:
 
 | Property | Description |
 |----------|-------------|
@@ -120,11 +123,11 @@ module.exports = (gasket, transaction, { req, res }) => {
 
 ## How it works
 
-This plugin hooks the Gasket [preboot] lifecycle from [@gasket/plugin-start]
-and will set up additional filtering, such as for sensitive cookies. If the
+This plugin hooks the Gasket [preboot] lifecycle from [@gasket/plugin-start] and
+will set up additional filtering, such as for sensitive cookies. If the
 `preboot` hook finds that the APM agent has not yet been started using the
-recommended `--require elastic-apm-node/start`, it will start it here.
-However, you risk not bootstrapping necessary modules with a late start.
+recommended `--require elastic-apm-node/start`, it will start it here. However,
+you risk not bootstrapping necessary modules with a late start.
 
 ## License
 

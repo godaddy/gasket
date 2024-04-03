@@ -5,7 +5,7 @@ serves as a proxy for fetch implementations with server-side support.
 
 ## Installation
 
-```
+```sh
 npm i @gasket/fetch
 ```
 
@@ -43,8 +43,8 @@ const getSomething = async () => {
 
 ## Reference
 
-- https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
-- https://www.npmjs.com/package/node-fetch
+- <https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API>
+- <https://www.npmjs.com/package/node-fetch>
 
 ## License
 

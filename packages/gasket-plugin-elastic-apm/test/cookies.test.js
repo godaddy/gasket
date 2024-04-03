@@ -1,4 +1,4 @@
-const { filterSensitiveCookies, sensitiveCookies } = require('../lib/cookies');
+const { filterSensitiveCookies, getSensitiveCookies } = require('../lib/cookies');
 
 describe('filterSensitiveCookies', () => {
   it('is a thunk', () => {
@@ -36,11 +36,11 @@ describe('filterSensitiveCookies', () => {
 describe('sensitiveCookies', () => {
   it('returns config.elasticAPM.sensitiveCookies if present', () => {
     expect(
-      sensitiveCookies({ elasticAPM: { sensitiveCookies: ['foo', 'bar'] } })
+      getSensitiveCookies({ elasticAPM: { sensitiveCookies: ['foo', 'bar'] } })
     ).toStrictEqual(['foo', 'bar']);
   });
 
   it('returns an empty array by default', () => {
-    expect(sensitiveCookies({})).toStrictEqual([]);
+    expect(getSensitiveCookies({})).toStrictEqual([]);
   });
 });

@@ -1,3 +1,8 @@
+/// <reference types="@gasket/cli" />
+
+/**
+ * @type {import('@gasket/engine').HookHandler<'create'>}
+ */
 module.exports = function create(_gasket, { pkg }) {
   // Workaround for https://github.com/docsifyjs/docsify/issues/2345
   pkg.add('devDependencies', {

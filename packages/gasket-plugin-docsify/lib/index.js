@@ -1,8 +1,10 @@
 const create = require('./create');
 const docsView = require('./docs-view');
+const { name } = require('../package.json');
 
-module.exports = {
-  name: require('../package').name,
+/** @type {import('@gasket/engine').Plugin} */
+const plugin = {
+  name,
   hooks: {
     create,
     docsView,
@@ -46,3 +48,5 @@ module.exports = {
     }
   }
 };
+
+module.exports = plugin;

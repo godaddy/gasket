@@ -28,21 +28,21 @@ describe('The middleware hook', () => {
   it('does not include the middleware if apm is not started', async () => {
     delete gasket.apm;
 
-    const middleware = middlewareHook(gasket);
+    const middleware = await middlewareHook(gasket);
 
-    expect(middleware).toBeFalsy();
+    expect(middleware).toBeUndefined();
   });
 
   describe('middleware', () => {
-    let middleware;
+    let middlewareFunc;
 
     beforeEach(async () => {
-      [middleware] = middlewareHook(gasket);
-      middleware = promisify(middleware);
+      middlewareFunc = await middlewareHook(gasket);
+      middlewareFunc = promisify(middlewareFunc);
     });
 
     it('enables customization of transaction name and labels', async () => {
-      await middleware(req, res);
+      await middlewareFunc(req, res);
 
       expect(gasket.exec).toHaveBeenCalledWith(
         'apmTransaction',
@@ -54,13 +54,13 @@ describe('The middleware hook', () => {
     it('logs a warning if apm is not started', async () => {
       gasket.apm.isStarted = jest.fn().mockReturnValue(false);
 
-      await middleware(req, res);
+      await middlewareFunc(req, res);
       expect(gasket.exec).not.toHaveBeenCalled();
     });
 
     it('returns if currentTransaction is not defined', async () => {
       gasket.apm.currentTransaction = null;
-      await middleware(req, res);
+      await middlewareFunc(req, res);
       expect(gasket.exec).not.toHaveBeenCalled();
     });
   });

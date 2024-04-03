@@ -9,7 +9,6 @@ const isPreset = name => presetIdentifier.isValidFullName(name);
 /**
  * Recurse through an object or array, and transforms, by mutation,
  * any functions to be empty.
- *
  * @param {object|object[]} value - Item to consider
  * @returns {object|object[]} transformed result
  * @private
@@ -36,7 +35,6 @@ function sanitize(value) {
 
 /**
  * Add keys to from other object to the target if not present
- *
  * @param {object} target - Object to mutate
  * @param {object} other - Object to pull from
  * @private
@@ -51,7 +49,6 @@ function safeAssign(target, other) {
 
 /**
  * Load moduleData for app dependencies
- *
  * @param {Loader} loader - Loader instance
  * @param {AppData} app - Metadata for app
  * @param {ModuleData[]} modules - Metadata for modules
@@ -71,7 +68,6 @@ function loadAppModules(loader, app, modules) {
 
 /**
  * Load moduleData for any supporting modules that are declared by plugin
- *
  * @param {PluginData} pluginData - Metadata for a plugin
  * @param {Loader} loader - Loader instance
  * @private
@@ -86,7 +82,6 @@ function loadPluginModules(pluginData, loader) {
 
 /**
  * Flatten moduleData from plugin to top-level modules metadata
- *
  * @param {PluginData} pluginData - Metadata for a plugin
  * @param {ModuleData[]} modules - Metadata for modules
  * @private
@@ -106,7 +101,6 @@ function flattenPluginModules(pluginData, modules) {
 
 /**
  * Assign modified plugin data instances back to preset hierarchy to avoid faulty data
- *
  * @param {PluginData} pluginData - Metadata for a plugin
  * @param {ModuleData[]} presets - Metadata for presets
  * @private
@@ -114,7 +108,6 @@ function flattenPluginModules(pluginData, modules) {
 function fixupPresetHierarchy(pluginData, presets) {
   /**
    * Recursing fixer-upper
-   *
    * @param {PresetData} presetData - Preset to fixup
    */
   function fixup(presetData) {
@@ -130,7 +123,6 @@ function fixupPresetHierarchy(pluginData, presets) {
 
 /**
  * Expands metadata for presets from metadata property if set in preset module
- *
  * @param {ModuleData[]} presets - Presets to expand any metadata attributes for
  * @private
  */
@@ -151,7 +143,6 @@ function expandPresetMetadata(presets) {
 
 /**
  * Expands metadata for modules if gasket.metadata property defined in package.json
- *
  * @param {ModuleData[]} modules - Modules to expand
  * @private
  */

@@ -4,10 +4,7 @@ const generateIndex = require('./utils/generate-index');
 
 /**
  * Get the docs command
- *
- * @param {Gasket} gasket - Gasket
- * @param {GasketCommand} GasketCommand - Base Gasket command to extend
- * @returns {GasketCommand} command
+ * @type {import('@gasket/engine').HookHandler<'getCommands'>}
  */
 module.exports = function getCommands(gasket, { GasketCommand, flags }) {
 

@@ -13,8 +13,7 @@ const srcIndex = path.join(srcDir, 'index.html');
 
 /**
  * Generate the main index.html served by Docsify
- *
- * @param {Object} docsifyConfig - Config for docsify plugin
+ * @param {object} docsifyConfig - Config for docsify plugin
  * @param {DocsConfigSet} docsConfigSet -
  * @returns {Promise<string>} output file
  * @deprecated use @gasket/plugin-docusaurus

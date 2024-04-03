@@ -12,7 +12,6 @@ Name | Description
 [DocsTransform] | Transform content of doc files matching test pattern
 [DocsTransformHandler] | Handler to modify file contents for a DocsTransform
 
-
 ## DocsSetup
 
 Setup object to describe docs configuration for a module
@@ -26,7 +25,6 @@ Setup object to describe docs configuration for a module
 | \[files\] | `Array.<glob>` | Names and/or patterns of files to collect |
 | \[transforms\] | `Array.<DocsTransform>` | Transforms to apply to collected files |
 | \[modules\] | `Object.<string, DocsSetup>` | Setup object for supporting modules |
-
 
 ## DocsConfig
 
@@ -43,7 +41,6 @@ Base docs configuration
 | sourceRoot | `string` | Absolute path to the module's package |
 | targetRoot | `string` | Absolute path to output dir for the module |
 
-
 ## ModuleDocsConfig
 
 Docs configuration for a module
@@ -57,7 +54,6 @@ Docs configuration for a module
 | transforms | `Array.<DocsTransform>` | Local doc transforms |
 | metadata | `ModuleData` | Originating metadata for this module |
 
-
 ## DetailDocsConfig
 
 Docs configuration for members of a plugin
@@ -68,7 +64,6 @@ Docs configuration for members of a plugin
 | Name | Type | Description |
 | --- | --- | --- |
 | from | `string` | Name from the parent ModuleDocsConfig |
-
 
 ## LifecycleDocsConfig
 
@@ -82,7 +77,6 @@ Docs configuration with specifics for plugin lifecycles
 | method | `string` | Executing method from the engine |
 | \[parent\] | `string` | Lifecycle from which this one is invoked |
 | \[command\] | `string` | Command from which this lifecycle is invoked |
-
 
 ## DocsConfigSet
 
@@ -105,7 +99,6 @@ Set of docs configurations for the app
 | root | `string` | Absolute path to main package |
 | docsRoot | `string` | Absolute path to output directory |
 
-
 ## DocsTransform
 
 Transform content of doc files matching test pattern
@@ -118,7 +111,6 @@ Transform content of doc files matching test pattern
 | \[global\] | `boolean` | If true, will be applied to all files, otherwise to only files in module. |
 | test | `RegExp` | Expression to test against the full source filename |
 | handler | [`DocsTransformHandler`] | Function to modify matching files' contents |
-
 
 ## DocsTransformHandler
 
