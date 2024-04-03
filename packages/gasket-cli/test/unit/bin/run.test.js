@@ -57,6 +57,7 @@ describe('run', () => {
     jest.replaceProperty(process, 'argv', ['node', 'gasket', 'create']);
     await require('../../../bin/run');
     expect(consoleWarnSpy).toHaveBeenCalledWith('The create command has been removed. Use npx create-gasket-app instead.');
+    expect(mockParseAsync).not.toHaveBeenCalled();
     expect(mockInit).not.toHaveBeenCalled();
   });
 
