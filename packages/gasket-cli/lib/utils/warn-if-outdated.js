@@ -28,7 +28,11 @@ function isOlderThanSevenDays(currentTime, latestVersionUpdateTime) {
  * @returns {string} - latest version of the package
  */
 async function getLatestVersion(pkgName, currentTime, cache) {
-  if (!cache[LATEST_VERSION_UPDATE_TIME] || !cache[LATEST_VERSION] || isOlderThanSevenDays(currentTime, cache[LATEST_VERSION_UPDATE_TIME])) {
+  if (
+    !cache[LATEST_VERSION_UPDATE_TIME] ||
+    !cache[LATEST_VERSION] ||
+    isOlderThanSevenDays(currentTime, cache[LATEST_VERSION_UPDATE_TIME])
+  ) {
     try {
       const cmdResult = await runShellCommand('npm', ['view', pkgName, 'version'], {});
       if (cmdResult?.stdout) {

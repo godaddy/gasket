@@ -29,6 +29,7 @@ describe('runShellCommand', function () {
   });
 
   it('rejects with details object', async function () {
+
     try {
       await runShellCommand('node', ['./fixtures/test-script.js', failMode], { cwd });
     } catch (err) {
