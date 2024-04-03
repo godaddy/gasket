@@ -46,7 +46,7 @@ declare module '@gasket/engine' {
   }
 
   export default class GasketEngine {
-    constructor(config: GasketConfigFile, context?: { resolveFrom?: string });
+    constructor(config: GasketConfigDefinition, context?: { resolveFrom?: string });
     config: GasketConfig;
 
     exec<Id extends HookId>(
@@ -56,7 +56,7 @@ declare module '@gasket/engine' {
     execSync<Id extends HookId>(
       hook: Id,
       ...args: Parameters<HookExecTypes[Id]>
-    ): Promise<ResolvedType<ReturnType<HookExecTypes[Id]>>[]>;
+    ): ResolvedType<ReturnType<HookExecTypes[Id]>>[];
     execWaterfall<Id extends HookId>(
       hook: Id,
       ...args: Parameters<HookExecTypes[Id]>
@@ -101,7 +101,7 @@ declare module '@gasket/engine' {
     };
   };
 
-  export type GasketConfigFile = Omit<GasketConfig, 'root' | 'env' | 'command'> & Plugins & {
+  export type GasketConfigDefinition = Omit<GasketConfig, 'root' | 'env' | 'command'> & Plugins & {
     root?: string,
     env?: string,
 

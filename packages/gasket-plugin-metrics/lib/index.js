@@ -8,7 +8,7 @@ module.exports = {
       timing: {
         after: ['@gasket/plugin-metadata']
       },
-      handler: async function init(gasket) {
+      handler: function init(gasket) {
         const { logger = console } = gasket;
 
         const metrics = new Metrics(gasket);

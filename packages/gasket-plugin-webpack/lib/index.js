@@ -10,6 +10,13 @@ module.exports = {
         webpack: devDependencies.webpack
       });
     },
+    actions(gasket) {
+      return {
+        getWebpackConfig(config = {}, context = {}) {
+          return initWebpack(gasket, config, context);
+        }
+      };
+    },
     metadata(gasket, meta) {
       return {
         ...meta,
@@ -48,6 +55,5 @@ module.exports = {
         }]
       };
     }
-  },
-  initWebpack
+  }
 };

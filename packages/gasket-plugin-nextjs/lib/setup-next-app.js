@@ -30,7 +30,7 @@ async function setupNextApp(gasket) {
 
   const app = createNextApp({
     dev: devServer,
-    conf: await createConfig(gasket, devServer),
+    // conf: await createConfig(gasket, devServer),
     hostname,
     port
   });

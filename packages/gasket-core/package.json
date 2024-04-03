@@ -1,9 +1,9 @@
 {
-  "name": "@gasket/engine",
+  "name": "@gasket/core",
   "version": "6.45.2",
-  "description": "Plugin engine for gasket",
-  "main": "lib/engine.js",
-  "types": "lib/engine.d.ts",
+  "description": "Entry point to setting up Gasket instances",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "files": [
     "lib"
   ],
