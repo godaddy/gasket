@@ -4,6 +4,7 @@ const debug = require('diagnostics')('gasket:https');
 const create = require('create-servers');
 const one = require('one-time/async');
 const errs = require('errs');
+const proxy = require('http-proxy');
 
 /**
  * Provide port defaults
@@ -30,37 +31,17 @@ function portInUseError(errors) {
   return (errors.http2 || errors.https || errors.http || {}).code === 'EADDRINUSE';
 }
 
-function setupProxy(gasket, devProxy) {
+function startProxy(opts) {
+  const { protocol = 'http', hostname = 'localhost', port = 8080 } = opts;
+
   proxy.createServer({
-    xfwd: true,
-    ws: true,
-    target: {
-      host: 'localhost',
-      port: 3000
-    },
-    ssl: {
-      SNICallback: (hostname, cb) => {
-        const subDomain = hostname.substring(
-          hostname.indexOf('.') + 1,
-          hostname.length
-        );
-
-        let cert;
-        let key;
-
-        try {
-          cert = fs.readFileSync(`./.certs/_.${subDomain}.crt`, 'utf8');
-          key = fs.readFileSync(`./.certs/_.${subDomain}.key`, 'utf8');
-        } catch (e) {
-          console.error('Error reading cert or key:', e);
-        }
-
-        cb(null, tls.createSecureContext({ cert, key }));
-      }
-    },
+    ...opts
   }).on('error', (e) => {
     console.error('Request failed to proxy:', e);
-  }).listen(PORT);
+  }).listen(
+    port,
+    () => console.log(`Proxy server started: ${protocol}://${hostname}:${port}`)
+  );
 }
 
 /**
@@ -69,13 +50,9 @@ function setupProxy(gasket, devProxy) {
  * @param {Gasket} gasket Gasket instance
  * @public
  */
-async function start(gasket) {
+async function startServer(gasket) {
   const { hostname, http2, https, http, terminus, env, devProxy } = gasket.config;
   const { logger } = gasket;
-
-  if (devProxy) {
-    setupProxy(gasket, devProxy)
-  }
 
   // Retrieving server opts
   const configOpts = { hostname };
@@ -84,7 +61,12 @@ async function start(gasket) {
   if (https) configOpts.https = https;
   if (http2) configOpts.http2 = http2;
 
+  if (devProxy) {
+    return startProxy(devProxy);
+  }
+
   const serverOpts = await gasket.execWaterfall('createServers', configOpts);
+
   const { healthcheck, ...terminusDefaults } = await gasket.execWaterfall('terminus', {
     healthcheck: ['/healthcheck', '/healthcheck.html'],
     signals: ['SIGTERM'],
@@ -180,14 +162,15 @@ async function start(gasket) {
 module.exports = {
   name: require('../package').name,
   hooks: {
-    start,
     actions(gasket) {
       return {
         startServer: () => {
-          const opts = gasket.exec('serverOpts')
-          start(gasket, opts)
-        },
-        getProxy: () => { }
+          gasket.config = {
+            ...gasket.config,
+            ...gasket.execSync('serverOpts')
+          };
+          startServer(gasket);
+        }
       }
     },
     metadata(gasket, meta) {

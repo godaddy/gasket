@@ -43,6 +43,7 @@
     "create-servers": "^3.3.0",
     "diagnostics": "^2.0.2",
     "errs": "^0.3.2",
+    "http-proxy": "^1.18.1",
     "one-time": "^1.0.0"
   },
   "devDependencies": {
