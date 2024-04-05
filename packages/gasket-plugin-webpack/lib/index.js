@@ -12,7 +12,7 @@ module.exports = {
     },
     actions(gasket) {
       return {
-        getWebpackConfig(config = {}, context = {}) {
+        getWebpackConfig(config, context) {
           return initWebpack(gasket, config, context);
         }
       };

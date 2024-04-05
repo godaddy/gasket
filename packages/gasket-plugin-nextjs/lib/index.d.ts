@@ -2,12 +2,22 @@ import type { WebpackContext } from '@gasket/plugin-webpack';
 import type { IncomingMessage, ServerResponse } from 'http';
 import type { NextConfig } from 'next/dist/next-server/server/config-shared';
 import type NextServer from 'next/dist/next-server/server/next-server';
-import type { MaybeAsync } from '@gasket/engine';
 import type { Application } from 'express';
+
 
 export { NextConfig, NextServer };
 
+export type NextConfigFunction = (phase: string, context: {
+  defaultConfig: NextConfig,
+  isServer: boolean
+}) => Promise<NextConfig>;
+
 declare module '@gasket/engine' {
+
+  export interface GasketActions {
+    getNextConfig(config?: NextConfig | NextConfigFunction): (phase: string, context?: {}) => Promise<NextConfig>
+  }
+
   export interface GasketConfig {
     nextConfig?: Partial<NextConfig>
   }

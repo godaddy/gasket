@@ -7,10 +7,6 @@ describe('The execApplySync method', () => {
     }
   };
 
-  const mockConfig = {
-    some: 'config'
-  };
-
   const pluginA = {
     name: 'pluginA',
     hooks: {
@@ -44,19 +40,8 @@ describe('The execApplySync method', () => {
     hookBSpy = jest.spyOn(pluginB.hooks, 'eventA');
     hookCSpy = jest.spyOn(pluginC.hooks.eventA, 'handler');
 
-    const { Loader } = require('@gasket/resolve');
-    jest.spyOn(Loader.prototype, 'loadConfigured').mockImplementation(() => {
-      return {
-        plugins: [
-          { module: pluginA },
-          { module: pluginB },
-          { module: pluginC }
-        ]
-      };
-    });
-
     const PluginEngine = require('../lib/engine');
-    engine = new PluginEngine(mockConfig);
+    engine = new PluginEngine({ plugins: [pluginA, pluginB, pluginC] });
   });
 
   afterEach(() => {
@@ -69,9 +54,9 @@ describe('The execApplySync method', () => {
       return handler(new Wrapper(plugin));
     });
 
-    expect(hookASpy.mock.calls[0][0]).toHaveProperty('config', mockConfig);
-    expect(hookBSpy.mock.calls[0][0]).toHaveProperty('config', mockConfig);
-    expect(hookCSpy.mock.calls[0][0]).toHaveProperty('config', mockConfig);
+    expect(hookASpy).toHaveBeenCalledWith(engine, expect.any(Wrapper));
+    expect(hookBSpy).toHaveBeenCalledWith(engine, expect.any(Wrapper));
+    expect(hookCSpy).toHaveBeenCalledWith(engine, expect.any(Wrapper));
   });
 
   it('returns an Array of results', async () => {

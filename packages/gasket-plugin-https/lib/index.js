@@ -30,6 +30,39 @@ function portInUseError(errors) {
   return (errors.http2 || errors.https || errors.http || {}).code === 'EADDRINUSE';
 }
 
+function setupProxy(gasket, devProxy) {
+  proxy.createServer({
+    xfwd: true,
+    ws: true,
+    target: {
+      host: 'localhost',
+      port: 3000
+    },
+    ssl: {
+      SNICallback: (hostname, cb) => {
+        const subDomain = hostname.substring(
+          hostname.indexOf('.') + 1,
+          hostname.length
+        );
+
+        let cert;
+        let key;
+
+        try {
+          cert = fs.readFileSync(`./.certs/_.${subDomain}.crt`, 'utf8');
+          key = fs.readFileSync(`./.certs/_.${subDomain}.key`, 'utf8');
+        } catch (e) {
+          console.error('Error reading cert or key:', e);
+        }
+
+        cb(null, tls.createSecureContext({ cert, key }));
+      }
+    },
+  }).on('error', (e) => {
+    console.error('Request failed to proxy:', e);
+  }).listen(PORT);
+}
+
 /**
  * Start lifecycle of a gasket application
  *
@@ -37,8 +70,12 @@ function portInUseError(errors) {
  * @public
  */
 async function start(gasket) {
-  const { hostname, http2, https, http, terminus, env } = gasket.config;
+  const { hostname, http2, https, http, terminus, env, devProxy } = gasket.config;
   const { logger } = gasket;
+
+  if (devProxy) {
+    setupProxy(gasket, devProxy)
+  }
 
   // Retrieving server opts
   const configOpts = { hostname };
@@ -144,6 +181,15 @@ module.exports = {
   name: require('../package').name,
   hooks: {
     start,
+    actions(gasket) {
+      return {
+        startServer: () => {
+          const opts = gasket.exec('serverOpts')
+          start(gasket, opts)
+        },
+        getProxy: () => { }
+      }
+    },
     metadata(gasket, meta) {
       return {
         ...meta,

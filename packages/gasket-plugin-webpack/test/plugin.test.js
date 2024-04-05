@@ -14,6 +14,7 @@ describe('Plugin', () => {
   it('has expected hooks', () => {
     const expected = [
       'create',
+      'actions',
       'metadata'
     ];
 

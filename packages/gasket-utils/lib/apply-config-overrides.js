@@ -1,6 +1,4 @@
-const path = require('path');
 const defaultsDeep = require('lodash.defaultsdeep');
-const tryRequire = require('./try-require');
 
 const debug = require('diagnostics')('gasket:utils');
 
@@ -12,36 +10,24 @@ const debug = require('diagnostics')('gasket:utils');
  * @param {object} context - Context for applying overrides
  * @param {string} context.env - Name of environment
  * @param {string} [context.commandId] - Name of command
- * @param {string} [context.root] - Project root; required if using localeFile
- * @param {string} [context.localFile] - Optional file to load relative to gasket root
  * @returns {object} config
  */
-function applyConfigOverrides(config, { env = '', commandId, root, localFile }) {
+function applyConfigOverrides(config, { env = '', commandId }) {
   return defaultsDeep(
     {},
-    ...getPotentialConfigs({ config, env, commandId, root, localFile })
+    ...getPotentialConfigs({ config, env, commandId })
   );
 }
 
-function *getPotentialConfigs({ config, env, commandId, root, localFile }) {
-  // Separate environment-specific config from other config
+function *getPotentialConfigs({ config, env, commandId }) {
+  // Separate environment-specific config from another config
   const { environments = {}, commands = {}, ...baseConfig } = config;
   const isLocalEnv = env === 'local';
 
-  yield* getLocalOverrides(isLocalEnv, root, localFile);
   yield* getCommandOverrides(commands, commandId);
   yield* getSubEnvironmentOverrides(env, environments);
   yield* getDevOverrides(isLocalEnv, environments);
   yield baseConfig;
-}
-
-function *getLocalOverrides(isLocalEnv, root, localFile) {
-  // For git-ignorable changes, merge in optional `.local` file
-  const localOverrides = isLocalEnv && localFile && tryRequire(path.join(root, localFile));
-  if (localOverrides) {
-    debug('Including local config file for overrides', localFile);
-    yield localOverrides;
-  }
 }
 
 function *getCommandOverrides(commands, commandId) {

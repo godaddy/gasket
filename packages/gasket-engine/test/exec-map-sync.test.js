@@ -1,10 +1,6 @@
 describe('The execSync method', () => {
   let engine;
 
-  const mockConfig = {
-    some: 'config'
-  };
-
   beforeEach(() => {
     const pluginA = {
       name: 'pluginA',
@@ -24,18 +20,8 @@ describe('The execSync method', () => {
       }
     };
 
-    const { Loader } = require('@gasket/resolve');
-    jest.spyOn(Loader.prototype, 'loadConfigured').mockImplementation(() => {
-      return {
-        plugins: [
-          { module: pluginA },
-          { module: pluginB }
-        ]
-      };
-    });
-
     const PluginEngine = require('..');
-    engine = new PluginEngine(mockConfig);
+    engine = new PluginEngine({ plugins: [pluginA, pluginB] });
   });
 
   afterEach(() => {
@@ -45,7 +31,7 @@ describe('The execSync method', () => {
 
   it('returns an map of results', () => {
     const result = engine.execMapSync('eventA');
-    expect(result).toEqual({ 'gasket-plugin-pluginA': 1, 'gasket-plugin-pluginB': 2 });
+    expect(result).toEqual({ pluginA: 1, pluginB: 2 });
   });
 
   it('resolves to an empty array if nothing hooked the event', () => {
@@ -58,6 +44,6 @@ describe('The execSync method', () => {
 
     const result = execMapSync('eventA');
 
-    expect(result).toEqual({ 'gasket-plugin-pluginA': 1, 'gasket-plugin-pluginB': 2 });
+    expect(result).toEqual({ pluginA: 1, pluginB: 2 });
   });
 });

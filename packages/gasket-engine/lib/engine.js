@@ -3,14 +3,17 @@ const debug = require('debug')('gasket:engine');
 let dynamicNamingId = 0;
 
 class PluginEngine {
-  constructor(config) {
-    this.config = config || {};
+  constructor({ plugins }) {
+
+    if (!plugins || !Array.isArray(plugins) || !plugins.length) {
+      throw new Error('An array of plugins is required');
+    }
 
     this._hooks = {};
     this._plans = {};
     this._traceDepth = 0;
 
-    this._registerPlugins();
+    this._registerPlugins(plugins);
     this._registerHooks();
 
     // Allow methods to be called without context (to support destructuring)
@@ -24,8 +27,7 @@ class PluginEngine {
    * Resolves plugins
    * @private
    */
-  _registerPlugins() {
-    const { plugins } = this.config;
+  _registerPlugins(plugins) {
 
     // map the plugin name to module contents for easy lookup
     this._pluginMap = plugins
