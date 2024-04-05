@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 module.exports = (app) => {
   {{#if hasSwaggerPlugin}}
   /**
@@ -16,7 +15,7 @@ module.exports = (app) => {
   *           application/json
   */
   {{/if}}
-  app.get('/default', async (req, res, next) => {
+  app.get('/default', async (req, res) => {
     res.status(200).json({
       message: 'Welcome to your default route...'
     });
