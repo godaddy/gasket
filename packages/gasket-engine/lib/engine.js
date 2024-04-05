@@ -5,6 +5,10 @@ let dynamicNamingId = 0;
 class PluginEngine {
   constructor({ plugins }) {
 
+    if (!plugins || !Array.isArray(plugins) || !plugins.length) {
+      throw new Error('An array of plugins is required');
+    }
+
     this._hooks = {};
     this._plans = {};
     this._traceDepth = 0;
@@ -24,9 +28,6 @@ class PluginEngine {
    * @private
    */
   _registerPlugins(plugins) {
-    if (!plugins || !Array.isArray(plugins)) {
-      throw new Error('Config may have an array of plugins');
-    }
 
     // map the plugin name to module contents for easy lookup
     this._pluginMap = plugins

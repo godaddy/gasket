@@ -1,10 +1,6 @@
 describe('The execWaterfallSync method', () => {
   let engine, pluginA, pluginB;
 
-  const mockConfig = {
-    some: 'config'
-  };
-
   beforeEach(() => {
     pluginA = {
       name: 'pluginA',
@@ -26,18 +22,8 @@ describe('The execWaterfallSync method', () => {
       }
     };
 
-    const { Loader } = require('@gasket/resolve');
-    jest.spyOn(Loader.prototype, 'loadConfigured').mockImplementation(() => {
-      return {
-        plugins: [
-          { module: pluginA },
-          { module: pluginB }
-        ]
-      };
-    });
-
     const PluginEngine = require('../lib/engine');
-    engine = new PluginEngine(mockConfig);
+    engine = new PluginEngine({ plugins: [pluginA, pluginB] });
   });
 
   afterEach(() => {
