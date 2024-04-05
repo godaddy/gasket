@@ -1,5 +1,3 @@
-const { createConfig } = require('./config');
-
 /**
  * Provide port defaults
  *
@@ -15,7 +13,7 @@ function getPortFallback(env = '') {
  * Small helper function that creates nextjs app from the gasket
  * configuration.
  *
- * @param   {Gasket}  gasket                The gasket API.
+ * @param {Gasket} gasket - The gasket API.
  * @returns {NextServer} The Nextjs App
  * @private
  */
@@ -30,7 +28,6 @@ async function setupNextApp(gasket) {
 
   const app = createNextApp({
     dev: devServer,
-    // conf: await createConfig(gasket, devServer),
     hostname,
     port
   });

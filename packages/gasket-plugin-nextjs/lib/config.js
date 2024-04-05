@@ -1,3 +1,5 @@
+const defaultsDeep = require('lodash.defaultsdeep');
+
 /**
  * Bring forward configuration from intl plugin to config for next.
  *
@@ -46,10 +48,11 @@ function forwardIntlConfig(gasket, config) {
  * @private
  */
 function createConfig(gasket, includeWebpackConfig = true, nextConfig = {}) {
-  const config = {
-    poweredByHeader: false,
-    ...nextConfig
-  };
+  const config = defaultsDeep(
+    nextConfig,
+    (gasket.config?.nextConfig || {}),
+    { poweredByHeader: false }
+  );
 
   forwardIntlConfig(gasket, config);
 

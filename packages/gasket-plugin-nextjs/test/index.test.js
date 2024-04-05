@@ -47,6 +47,7 @@ describe('Plugin', function () {
 
   it('has expected hooks', () => {
     const expected = [
+      'actions',
       'apmTransaction',
       'build',
       'configure',
@@ -68,7 +69,7 @@ describe('Plugin', function () {
 });
 
 describe('configure hook', () => {
-  const configureHook = require('../lib/').hooks.configure.handler;
+  const configureHook = require('../lib/').hooks.configure;
 
   it('adds the sw webpackRegister callback', () => {
     const gasket = mockGasketApi();
@@ -646,7 +647,7 @@ function mockGasketApi() {
     command: {
       id: 'fake'
     },
-    execWaterfall: jest.fn((_, arg) => arg),
+    execWaterfallSync: jest.fn((_, arg) => arg),
     exec: jest.fn().mockResolvedValue({}),
     execSync: jest.fn().mockReturnValue([]),
     logger: {
