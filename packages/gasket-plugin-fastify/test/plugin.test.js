@@ -55,7 +55,7 @@ describe('createServers', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    mockMwPlugins =  [];
+    mockMwPlugins = [];
 
     lifecycles = {
       middleware: jest.fn().mockResolvedValue([]),
@@ -69,7 +69,7 @@ describe('createServers', () => {
       config: {},
       exec: jest.fn().mockImplementation((lifecycle, ...args) => lifecycles[lifecycle](args)),
       execApply: jest.fn(async function (lifecycle, fn) {
-        for (let i = 0; i <  mockMwPlugins.length; i++) {
+        for (let i = 0; i < mockMwPlugins.length; i++) {
           // eslint-disable-next-line  no-loop-func
           fn(mockMwPlugins[i], () => mockMwPlugins[i]);
         }
@@ -224,18 +224,18 @@ describe('createServers', () => {
   it('supports async middleware hooks', async () => {
     const middleware = Symbol();
     gasket = new GasketEngine({
-      plugins: {
-        add: [
-          plugin,
-          {
-            name: '@mock/gasket-plugin',
-            hooks: {
-              middleware: async () => middleware
-            }
+      plugins: [
+        plugin,
+        {
+          name: '@mock/gasket-plugin',
+          hooks: {
+            middleware: async () => middleware
           }
-        ]
-      }
+        }
+      ]
     });
+
+    gasket.config = {};
 
     await gasket.exec('createServers');
 
@@ -261,7 +261,8 @@ describe('createServers', () => {
     expect(app.use).toHaveBeenCalledTimes(3);
 
     app.use.mockClear();
-    lifecycles.errorMiddleware.mockResolvedValue([() => {}, null]);
+    lifecycles.errorMiddleware.mockResolvedValue([() => {
+    }, null]);
 
     await plugin.hooks.createServers(gasket, {});
     expect(app.use).toHaveBeenCalledTimes(4);

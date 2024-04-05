@@ -4,6 +4,17 @@ const PluginEngine = require('@gasket/engine');
 const plugin = require('../lib/');
 const proxy = require('./proxy');
 
+function setupEngine(root) {
+  const engine = new PluginEngine({
+    plugins: [plugin]
+  });
+  engine.config = {
+    root
+  };
+
+  return engine;
+}
+
 describe('Plugin', function () {
 
   it('is an object', () => {
@@ -28,12 +39,7 @@ describe('Plugin', function () {
   });
 
   it('registers the middleware lifecycle', async function () {
-    const engine = new PluginEngine({
-      root: path.join(__dirname, './fixtures/with-lifecycles'),
-      plugins: {
-        add: [plugin]
-      }
-    });
+    const engine = setupEngine(path.join(__dirname, './fixtures/with-lifecycles'));
 
     await engine.exec('init');
     let called = false;
@@ -50,12 +56,7 @@ describe('Plugin', function () {
   });
 
   it('allows for cjs file types', async function () {
-    const engine = new PluginEngine({
-      root: path.join(__dirname, './fixtures/with-cjs-lifecycles'),
-      plugins: {
-        add: [plugin]
-      }
-    });
+    const engine = setupEngine(path.join(__dirname, './fixtures/with-cjs-lifecycles'));
 
     await engine.exec('init');
     let called = false;
@@ -72,12 +73,7 @@ describe('Plugin', function () {
   });
 
   it('handles applications with no lifecycles directory', async () => {
-    const engine = new PluginEngine({
-      root: path.join(__dirname, './fixtures/without-lifecycles'),
-      plugins: {
-        add: [plugin]
-      }
-    });
+    const engine = setupEngine(path.join(__dirname, './fixtures/without-lifecycles'));
 
     await engine.exec('init');
     await engine.exec('middleware', 'testing');
@@ -85,12 +81,8 @@ describe('Plugin', function () {
 
   it('handles lifecycle files with timings specified', async () => {
     let called;
-    const engine = new PluginEngine({
-      root: path.join(__dirname, './fixtures/with-lifecycles'),
-      plugins: {
-        add: [plugin]
-      }
-    });
+    const engine = setupEngine(path.join(__dirname, './fixtures/with-lifecycles'));
+
     await engine.exec('init');
     proxy.once('withTiming', function (gasket, arg) {
       expect(gasket).toEqual(engine);
@@ -104,12 +96,7 @@ describe('Plugin', function () {
   });
 
   it('maps kebab-cased file names to camelCased event names', async () => {
-    const engine = new PluginEngine({
-      root: path.join(__dirname, './fixtures/kebab-cased'),
-      plugins: {
-        add: [plugin]
-      }
-    });
+    const engine = setupEngine(path.join(__dirname, './fixtures/kebab-cased'));
     await engine.exec('init');
 
     let called = false;
@@ -124,12 +111,7 @@ describe('Plugin', function () {
   });
 
   it('skips *.test.js and *.spec.js files', async () => {
-    const engine = new PluginEngine({
-      root: path.join(__dirname, './fixtures/with-tests'),
-      plugins: {
-        add: [plugin]
-      }
-    });
+    const engine = setupEngine(path.join(__dirname, './fixtures/with-tests'));
     await engine.exec('init');
 
     let called = false;
@@ -144,13 +126,9 @@ describe('Plugin', function () {
 
 
   it('handles lifecycle files with src folder', async () => {
-    const engine = new PluginEngine({
-      root: path.join(__dirname, './fixtures/with-src-lifecycles'),
-      plugins: {
-        add: [plugin]
-      }
-    });
+    const engine = setupEngine(path.join(__dirname, './fixtures/with-src-lifecycles'));
     await engine.exec('init');
+
     let called = false;
     proxy.once('middleware', function (gasket, app) {
       expect(gasket).toEqual(engine);
