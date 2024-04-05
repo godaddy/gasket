@@ -41,7 +41,7 @@ describe('The execApplySync method', () => {
     hookCSpy = jest.spyOn(pluginC.hooks.eventA, 'handler');
 
     const PluginEngine = require('../lib/engine');
-    engine = new PluginEngine({ plugins: [pluginA, pluginB, pluginC] });
+    engine = new PluginEngine([pluginA, pluginB, pluginC]);
   });
 
   afterEach(() => {

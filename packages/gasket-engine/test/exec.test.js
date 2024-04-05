@@ -80,7 +80,7 @@ describe('The exec method', () => {
     hookBSpy = jest.spyOn(pluginB.hooks, 'eventA');
 
     const PluginEngine = require('..');
-    engine = new PluginEngine({ plugins: [pluginA, pluginB] });
+    engine = new PluginEngine([pluginA, pluginB]);
   });
 
   afterEach(() => {

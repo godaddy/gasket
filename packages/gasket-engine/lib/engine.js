@@ -3,8 +3,7 @@ const debug = require('debug')('gasket:engine');
 let dynamicNamingId = 0;
 
 class PluginEngine {
-  constructor({ plugins }) {
-
+  constructor(plugins) {
     if (!plugins || !Array.isArray(plugins) || !plugins.length) {
       throw new Error('An array of plugins is required');
     }

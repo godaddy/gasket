@@ -21,7 +21,7 @@ describe('The execSync method', () => {
     };
 
     const PluginEngine = require('..');
-    engine = new PluginEngine({ plugins: [pluginA, pluginB] });
+    engine = new PluginEngine([pluginA, pluginB]);
   });
 
   afterEach(() => {

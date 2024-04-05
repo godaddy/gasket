@@ -12,7 +12,7 @@ function setupLoadedPlugins(withOrderingSpecs) {
 
 function setupEngine(plugins) {
   const PluginEngine = require('..');
-  return new PluginEngine({ plugins });
+  return new PluginEngine(plugins);
 }
 
 async function verify({ withOrderingSpecs, expectOrder, expectError }) {

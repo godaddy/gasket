@@ -17,7 +17,7 @@ describe('Plugin dependencies', () => {
   });
 
   function withPlugins(plugins) {
-    return new PluginEngine({ plugins });
+    return new PluginEngine(plugins);
   }
 
   it('validates dependencies are loaded', () => {

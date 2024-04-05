@@ -15,7 +15,7 @@ describe('The hook method', () => {
       };
 
     const PluginEngine = require('..');
-    engine = new PluginEngine({ plugins: [pluginA] });
+    engine = new PluginEngine([pluginA]);
   });
 
   afterEach(() => {

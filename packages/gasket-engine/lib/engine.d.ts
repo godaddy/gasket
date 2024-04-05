@@ -46,7 +46,7 @@ declare module '@gasket/engine' {
   }
 
   export default class GasketEngine {
-    constructor({ plugins }: { plugins: Array<Plugin>});
+    constructor(plugins: Array<Plugin>);
     config: GasketConfig;
 
     exec<Id extends HookId>(

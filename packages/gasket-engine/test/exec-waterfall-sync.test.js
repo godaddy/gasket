@@ -23,7 +23,7 @@ describe('The execWaterfallSync method', () => {
     };
 
     const PluginEngine = require('../lib/engine');
-    engine = new PluginEngine({ plugins: [pluginA, pluginB] });
+    engine = new PluginEngine([pluginA, pluginB]);
   });
 
   afterEach(() => {
