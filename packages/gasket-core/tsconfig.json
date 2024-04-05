@@ -8,6 +8,7 @@
     "esModuleInterop": true,
     "lib": ["esnext", "dom"],
     "types": [
+      "@types/node",
       "@types/jest"
     ]
   },

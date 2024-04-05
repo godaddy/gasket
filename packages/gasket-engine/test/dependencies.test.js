@@ -1,4 +1,4 @@
-const PluginEngine = require('..');
+const GasketEngine = require('..');
 
 const projectPlugin = {
   name: '@gasket/plugin-one',
@@ -17,7 +17,7 @@ describe('Plugin dependencies', () => {
   });
 
   function withPlugins(plugins) {
-    return new PluginEngine(plugins);
+    return new GasketEngine(plugins);
   }
 
   it('validates dependencies are loaded', () => {

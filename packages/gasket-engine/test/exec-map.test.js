@@ -34,8 +34,8 @@ describe('The execMap method', () => {
     hookBSpy = jest.spyOn(pluginB.hooks, 'eventA');
     hookCSpy = jest.spyOn(pluginC.hooks.eventA, 'handler');
 
-    const PluginEngine = require('..');
-    engine = new PluginEngine([pluginA, pluginB, pluginC]);
+    const GasketEngine = require('..');
+    engine = new GasketEngine([pluginA, pluginB, pluginC]);
   });
 
   afterEach(() => {

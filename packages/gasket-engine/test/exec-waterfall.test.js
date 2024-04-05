@@ -20,8 +20,8 @@ describe('The execWaterfall method', () => {
       }
     };
 
-    const PluginEngine = require('../lib/engine');
-    engine = new PluginEngine([pluginA, pluginB]);
+    const GasketEngine = require('../lib/engine');
+    engine = new GasketEngine([pluginA, pluginB]);
   });
 
   afterEach(() => {

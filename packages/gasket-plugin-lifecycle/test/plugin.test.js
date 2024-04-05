@@ -1,13 +1,11 @@
 /* eslint-disable jest/expect-expect */
 const path = require('path');
-const PluginEngine = require('@gasket/engine');
+const GasketEngine = require('@gasket/engine');
 const plugin = require('../lib/');
 const proxy = require('./proxy');
 
 function setupEngine(root) {
-  const engine = new PluginEngine({
-    plugins: [plugin]
-  });
+  const engine = new GasketEngine([plugin]);
   engine.config = {
     root
   };

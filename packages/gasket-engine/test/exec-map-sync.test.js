@@ -20,8 +20,8 @@ describe('The execSync method', () => {
       }
     };
 
-    const PluginEngine = require('..');
-    engine = new PluginEngine([pluginA, pluginB]);
+    const GasketEngine = require('..');
+    engine = new GasketEngine([pluginA, pluginB]);
   });
 
   afterEach(() => {

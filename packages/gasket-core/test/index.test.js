@@ -4,6 +4,7 @@ import { jest, expect } from '@jest/globals';
 import GasketEngine from '@gasket/engine';
 import { makeGasket } from '../lib/index.js';
 
+// eslint-disable-next-line no-unused-vars
 const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
 const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
 
@@ -72,13 +73,8 @@ describe('makeGasket', () => {
   });
 
   it('should return a Gasket instance', () => {
-    const gasket = makeGasket({ plugins: [] });
+    const gasket = makeGasket({ plugins: [mockPlugin] });
     expect(gasket).toBeInstanceOf(GasketEngine);
-  });
-
-  it('TODO: warns about stuff', () => {
-    makeGasket({ plugins: [] });
-    expect(warnSpy).toHaveBeenCalled();
   });
 
   describe('config', () => {

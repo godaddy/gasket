@@ -223,17 +223,15 @@ describe('createServers', () => {
 
   it('supports async middleware hooks', async () => {
     const middleware = Symbol();
-    gasket = new GasketEngine({
-      plugins: [
-        plugin,
-        {
-          name: '@mock/gasket-plugin',
-          hooks: {
-            middleware: async () => middleware
-          }
+    gasket = new GasketEngine([
+      plugin,
+      {
+        name: '@mock/gasket-plugin',
+        hooks: {
+          middleware: async () => middleware
         }
-      ]
-    });
+      }
+    ]);
 
     gasket.config = {};
 

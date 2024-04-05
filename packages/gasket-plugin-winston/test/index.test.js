@@ -10,9 +10,7 @@ describe('@gasket/plugin-winston', function () {
   let gasket;
 
   beforeEach(() => {
-    gasket = new GasketEngine({
-      plugins: [PluginLogger, plugin]
-    });
+    gasket = new GasketEngine([PluginLogger, plugin]);
     gasket.config = {};
   });
 

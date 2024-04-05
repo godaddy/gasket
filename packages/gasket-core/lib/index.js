@@ -1,7 +1,10 @@
+/* eslint-disable no-console, no-process-env */
+// @ts-check
+/// <reference types="./index" />
+
 import GasketEngine from '@gasket/engine';
 import { applyConfigOverrides } from '@gasket/utils';
 
-/* eslint-disable no-console, no-process-env */
 /**
  * Get the environment to use for the gasket instance.
  * Defaults to `development`.
@@ -40,7 +43,7 @@ function getEnvironment(
 
 /**
  * Register actions from plugins
- * @param {GasketEngine} instance - Gasket instance
+ * @param {Gasket} instance - Gasket instance
  */
 function registerActions(instance) {
   instance.actions = {};
@@ -72,7 +75,7 @@ export function makeGasket(gasketConfig) {
   config.env = env;
   config.root ??= process.cwd();
 
-  const instance = new GasketEngine({ plugins });
+  const instance = new GasketEngine(plugins);
   instance.config = instance.execWaterfallSync('configure', config);
 
   registerActions(instance);

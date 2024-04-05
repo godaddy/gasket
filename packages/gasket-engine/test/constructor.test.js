@@ -1,4 +1,4 @@
-const PluginEngine = require('..');
+const GasketEngine = require('..');
 
 const mockPlugin = {
   name: '@gasket/plugin-one',
@@ -8,15 +8,15 @@ const mockPlugin = {
 describe('constructor', () => {
 
   it('requires plugins', () => {
-    expect(() => new PluginEngine()).toThrow(/plugins/);
+    expect(() => new GasketEngine()).toThrow(/plugins/);
   });
 
   it('requires plugins to be an array', () => {
-    expect(() => new PluginEngine([])).toThrow(/plugins/);
+    expect(() => new GasketEngine([])).toThrow(/plugins/);
   });
 
   it('exposed expected methods', () => {
-    const engine = new PluginEngine([mockPlugin]);
+    const engine = new GasketEngine([mockPlugin]);
     ['exec', 'execWaterfall', 'execMap', 'execApply',
       'execSync', 'execWaterfallSync', 'execMapSync', 'execApplySync'].forEach(name => {
       expect(engine).toHaveProperty(name, expect.any(Function));
@@ -24,7 +24,7 @@ describe('constructor', () => {
   });
 
   it('maps plugin name to content', () => {
-    const engine = new PluginEngine([mockPlugin]);
+    const engine = new GasketEngine([mockPlugin]);
     expect(engine._pluginMap).toHaveProperty('@gasket/plugin-one', mockPlugin);
   });
 });

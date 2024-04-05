@@ -19,20 +19,20 @@ const PluginExample = {
 describe('@gasket/engine', () => {
   it('exposes the constructor interface', () => {
     // eslint-disable-next-line no-new
-    new Gasket({ plugins: [PluginExample] });
+    new Gasket([PluginExample]);
   });
 
   it('checks constructor arguments', () => {
     // eslint-disable-next-line no-new
-    new Gasket({
-      plugins: [PluginExample],
+    new Gasket(
+      [PluginExample],
       // @ts-expect-error
-      extra: true
-    });
+      'extra'
+    );
   });
 
   it('should infer the types of lifecycle parameters', async function () {
-    const gasket = new Gasket({ plugins: [PluginExample] });
+    const gasket = new Gasket([PluginExample]);
 
     await gasket.execApply('example', async function (plugin, handler) {
       handler('a string', 123, true);
@@ -57,7 +57,7 @@ describe('@gasket/engine', () => {
   });
 
   it('type checks the hook method', () => {
-    const engine = new Gasket({ plugins: [PluginExample] });
+    const engine = new Gasket([PluginExample]);
 
     // Valid
     engine.hook({
@@ -86,7 +86,7 @@ describe('@gasket/engine', () => {
   });
 
   it('exposes the running command on the Gasket interface', () => {
-    const engine = new Gasket({ plugins: [PluginExample] });
+    const engine = new Gasket([PluginExample]);
 
     // Valid
     engine.hook({
@@ -98,6 +98,19 @@ describe('@gasket/engine', () => {
   });
 
   it('allows environments to contain plugins', () => {
-    const config: GasketConfigDefinition = { environments: { dev: { plugins: { add: ['plugin-name'] } } } };
+    const config: GasketConfigDefinition = {
+      plugins: [PluginExample],
+      environments: {
+        dev: {
+          plugins: [
+            { name: 'dev-plugin', hooks: {} },
+            // @ts-expect-error
+            { /* missing name */ hooks: {} },
+            // @ts-expect-error
+            { name: 'missing-hooks' }
+          ]
+        }
+      }
+    };
   });
 });

@@ -11,8 +11,8 @@ function setupLoadedPlugins(withOrderingSpecs) {
 }
 
 function setupEngine(plugins) {
-  const PluginEngine = require('..');
-  return new PluginEngine(plugins);
+  const GasketEngine = require('..');
+  return new GasketEngine(plugins);
 }
 
 async function verify({ withOrderingSpecs, expectOrder, expectError }) {

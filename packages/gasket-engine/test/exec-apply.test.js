@@ -40,8 +40,8 @@ describe('The execApply method', () => {
     hookBSpy = jest.spyOn(pluginB.hooks, 'eventA');
     hookCSpy = jest.spyOn(pluginC.hooks.eventA, 'handler');
 
-    const PluginEngine = require('../lib/engine');
-    engine = new PluginEngine([pluginA, pluginB, pluginC]);
+    const GasketEngine = require('../lib/engine');
+    engine = new GasketEngine([pluginA, pluginB, pluginC]);
   });
 
   afterEach(() => {

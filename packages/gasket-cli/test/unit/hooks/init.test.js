@@ -4,10 +4,13 @@ const mockWarnStub = jest.fn();
 const mockErrorStub = jest.fn();
 const mockParseStub = jest.fn();
 const mockError = new Error('Bad things man.');
-const mockConfig = { mocked: true };
-const PluginEngine = require('@gasket/engine');
+const mockPlugin = { name: 'mockPlugin', hooks: { configure: jest.fn() } };
+const mockConfig = { mocked: true, plugins: [mockPlugin] };
+const GasketEngine = require('@gasket/engine');
 
-class MockCommand {}
+class MockCommand {
+}
+
 MockCommand.flags = {};
 
 jest.mock('@gasket/engine');
@@ -80,16 +83,12 @@ describe('init hook', () => {
 
   it('instantiates plugin engine with config', async () => {
     await initHook({ id: 'build', argv: [], config: {} });
-    expect(PluginEngine).toHaveBeenCalledWith(mockConfig, {
-      resolveFrom: '/path/to/app'
-    });
+    expect(GasketEngine).toHaveBeenCalledWith(mockConfig.plugins);
   });
 
   it('instantiates plugin engine resolveFrom root', async () => {
     await initHook({ id: 'build', argv: [], config: {} });
-    expect(PluginEngine).toHaveBeenCalledWith(mockConfig, {
-      resolveFrom: '/path/to/app'
-    });
+    expect(GasketEngine).toHaveBeenCalledWith(mockConfig.plugins);
   });
 
   it('assigns config from presets', async () => {
@@ -98,7 +97,7 @@ describe('init hook', () => {
   });
 
   it('executes initOclif gasket lifecycle', async () => {
-    const spy = jest.spyOn(PluginEngine.prototype, 'exec');
+    const spy = jest.spyOn(GasketEngine.prototype, 'exec');
     await initHook({ id: 'build', argv: [], config: {} });
     expect(spy).toHaveBeenCalledWith('initOclif', expect.any(Object));
   });
