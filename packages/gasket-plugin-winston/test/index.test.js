@@ -1,4 +1,5 @@
 const GasketEngine = require('@gasket/engine');
+const PluginLogger = require('@gasket/plugin-logger');
 const plugin = require('../lib/index');
 const { LEVEL, MESSAGE } = require('triple-beam');
 
@@ -10,10 +11,9 @@ describe('@gasket/plugin-winston', function () {
 
   beforeEach(() => {
     gasket = new GasketEngine({
-      plugins: {
-        add: ['@gasket/plugin-logger', plugin]
-      }
+      plugins: [PluginLogger, plugin]
     });
+    gasket.config = {};
   });
 
   afterEach(() => {
