@@ -1,16 +1,16 @@
-import { Gasket, GasketConfig, GasketConfigFile, Hook } from '@gasket/engine';
+import { Gasket, GasketConfig, GasketConfigDefinition, Hook } from '@gasket/engine';
 import '@gasket/plugin-response-data';
 
 describe('@gasket/plugin-response-data', () => {
 
   it('adds an optional configPath property to gasket config', () => {
-    const config: GasketConfigFile = {
+    const config: GasketConfigDefinition = {
       gasketDataDir: './custom/path'
     };
   });
 
   it('validates the configPath config property', () => {
-    const config: GasketConfigFile = {
+    const config: GasketConfigDefinition = {
       // @ts-expect-error
       configPath: 4
     };

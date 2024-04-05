@@ -20,7 +20,7 @@ async function initHook({ id, config: oclifConfig, argv }) {
 
   const { parse } = require('@oclif/parser');
   const { GasketCommand } = require('@gasket/plugin-command');
-  const { loadGasketConfigFile, assignPresetConfig } = require('@gasket/resolve');
+  const { loadGasketConfigDefinition, assignPresetConfig } = require('@gasket/resolve');
   const { getEnvironment, addDefaultPlugins } = require('../config/utils');
   const PluginEngine = require('@gasket/engine');
 
@@ -41,7 +41,7 @@ async function initHook({ id, config: oclifConfig, argv }) {
     process.env.GASKET_ROOT = root;
     process.env.GASKET_COMMAND = id;
 
-    let gasketConfig = await loadGasketConfigFile(root, env, id, config);
+    let gasketConfig = await loadGasketConfigDefinition(root, env, id, config);
     if (gasketConfig) {
       gasketConfig = addDefaultPlugins(gasketConfig);
 

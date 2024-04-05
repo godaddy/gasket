@@ -1,4 +1,4 @@
-import type { GasketConfigFile, MaybeAsync } from '@gasket/engine';
+import type { GasketConfigDefinition, MaybeAsync } from '@gasket/engine';
 import type { PackageManager } from '@gasket/utils';
 import type { Config } from '@oclif/config';
 
@@ -177,7 +177,7 @@ export interface CreateContext {
   // Added by `setup-gasket-config`
 
   /** gasket.config builder */
-  gasketConfig: ConfigBuilder<GasketConfigFile>;
+  gasketConfig: ConfigBuilder<GasketConfigDefinition>;
 
   // Added by `create-hooks`
 

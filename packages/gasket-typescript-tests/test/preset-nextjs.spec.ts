@@ -1,11 +1,11 @@
-import type { GasketConfigFile, Plugin } from '@gasket/engine';
+import type { GasketConfigDefinition, Plugin } from '@gasket/engine';
 import '@gasket/preset-nextjs';
 
 describe('@gasket/preset-nextjs', () => {
   const { log } = console;
 
   it('imports config type injections for all plugins', () => {
-    const config: GasketConfigFile = {
+    const config: GasketConfigDefinition = {
       http: 8080,
       compression: true,
       log: {

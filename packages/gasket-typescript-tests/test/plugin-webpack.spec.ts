@@ -1,17 +1,12 @@
-import { Gasket, GasketConfigFile, Hook } from '@gasket/engine';
+import { Gasket, GasketConfigDefinition, Hook } from '@gasket/engine';
 import '@gasket/plugin-webpack';
 import '@gasket/plugin-nextjs';
 
 describe('@gasket/plugin-webpack', () => {
   it('adds a webpack section to the Gasket config', () => {
-    const config: GasketConfigFile = {
+    const config: GasketConfigDefinition = {
       plugins: {
         add: ['@gasket/plugin-webpack']
-      },
-      webpack: {
-        performance: {
-          maxAssetSize: 20000
-        }
       }
     };
   });
@@ -20,15 +15,17 @@ describe('@gasket/plugin-webpack', () => {
     const hook: Hook<'webpackConfig'> = (
       gasket,
       config,
-      { isServer, webpack, webpackMerge }
+      { isServer, webpack }
     ) => isServer
       ? config
-      : webpackMerge.merge(config, {
+      : {
+        ...config,
         plugins: [
+          ...(config.plugins ?? []),
           new webpack.DefinePlugin({
             MEANING_OF_LIFE: 42
           })
         ]
-      });
+      };
   });
 });

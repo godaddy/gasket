@@ -13,7 +13,7 @@ MockCommand.flags = {};
 jest.mock('@gasket/engine');
 jest.mock('@gasket/plugin-command', () => ({ GasketCommand: MockCommand }));
 jest.mock('@gasket/resolve', () => ({
-  loadGasketConfigFile: mockGetGasketConfigStub,
+  loadGasketConfigDefinition: mockGetGasketConfigStub,
   assignPresetConfig: mockAssignPresetConfigStub
 }));
 jest.mock('@oclif/parser', () => ({ parse: mockParseStub }));

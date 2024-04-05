@@ -2,7 +2,7 @@
 //@ts-check
 ///<reference types="@gasket/preset-nextjs"/>
 
-/** @type {import('@gasket/engine').GasketConfigFile} */
+/** @type {import('@gasket/engine').GasketConfigDefinition} */
 const config = {
   plugins: {
     presets: ['@gasket/nextjs']

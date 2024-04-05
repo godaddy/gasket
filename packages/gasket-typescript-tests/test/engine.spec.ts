@@ -1,5 +1,5 @@
 import Gasket from '@gasket/engine';
-import type { GasketConfigFile, MaybeAsync, Plugin  } from '@gasket/engine';
+import type { GasketConfigDefinition, MaybeAsync, Plugin  } from '@gasket/engine';
 
 declare module '@gasket/engine' {
   interface HookExecTypes {
@@ -7,20 +7,32 @@ declare module '@gasket/engine' {
   }
 }
 
+const PluginExample = {
+  name: 'example-plugin',
+  hooks: {
+    example(gasket: Gasket, str: string, num: number, bool: boolean) {
+      return true;
+    }
+  }
+};
+
 describe('@gasket/engine', () => {
   it('exposes the constructor interface', () => {
     // eslint-disable-next-line no-new
-    new Gasket(
-      { root: __dirname, env: 'test' },
-      { resolveFrom: __dirname }
-    );
+    new Gasket({ plugins: [PluginExample] });
+  });
+
+  it('checks constructor arguments', () => {
+    // eslint-disable-next-line no-new
+    new Gasket({
+      plugins: [PluginExample],
+      // @ts-expect-error
+      extra: true
+    });
   });
 
   it('should infer the types of lifecycle parameters', async function () {
-    const gasket = new Gasket(
-      { root: __dirname, env: 'test' },
-      { resolveFrom: __dirname }
-    );
+    const gasket = new Gasket({ plugins: [PluginExample] });
 
     await gasket.execApply('example', async function (plugin, handler) {
       handler('a string', 123, true);
@@ -45,10 +57,7 @@ describe('@gasket/engine', () => {
   });
 
   it('type checks the hook method', () => {
-    const engine = new Gasket(
-      { root: __dirname, env: 'test' },
-      { resolveFrom: __dirname }
-    );
+    const engine = new Gasket({ plugins: [PluginExample] });
 
     // Valid
     engine.hook({
@@ -77,10 +86,7 @@ describe('@gasket/engine', () => {
   });
 
   it('exposes the running command on the Gasket interface', () => {
-    const engine = new Gasket(
-      { root: __dirname, env: 'test' },
-      { resolveFrom: __dirname }
-    );
+    const engine = new Gasket({ plugins: [PluginExample] });
 
     // Valid
     engine.hook({
@@ -92,6 +98,6 @@ describe('@gasket/engine', () => {
   });
 
   it('allows environments to contain plugins', () => {
-    const config: GasketConfigFile = { environments: { dev: { plugins: { add: ['plugin-name'] } } } };
+    const config: GasketConfigDefinition = { environments: { dev: { plugins: { add: ['plugin-name'] } } } };
   });
 });

@@ -1,10 +1,10 @@
-import { GasketConfigFile, Plugin } from '@gasket/engine';
+import { GasketConfigDefinition, Plugin } from '@gasket/engine';
 import { Request } from 'express';
 import '@gasket/plugin-service-worker';
 
 describe('@gasket/plugin-service-worker', () => {
   it('adds a serviceWorker section to the Gasket config', () => {
-    const config: GasketConfigFile = {
+    const config: GasketConfigDefinition = {
       serviceWorker: {
         url: '/docs/server-worker.js',
         cache: {

@@ -1,11 +1,11 @@
-import { GasketConfigFile, Hook, Gasket } from '@gasket/engine';
+import { GasketConfigDefinition, Hook, Gasket } from '@gasket/engine';
 import '@gasket/plugin-winston';
 
 const fakeTransport = (options: any) => void 0;
 
 describe('@gasket/plugin-winston', () => {
   it('adds a winston config section', () => {
-    const config: GasketConfigFile = {
+    const config: GasketConfigDefinition = {
       winston: {
         level: 'info',
         transports: [],
@@ -25,7 +25,7 @@ describe('@gasket/plugin-winston', () => {
   });
 
   it('throws an error on bogus winston options', () => {
-    const config: GasketConfigFile = {
+    const config: GasketConfigDefinition = {
       winston: {
         level: 'info',
         transports: [],

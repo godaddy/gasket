@@ -1,4 +1,4 @@
-import type { GasketConfigFile, Hook } from '@gasket/engine';
+import type { GasketConfigDefinition, Hook } from '@gasket/engine';
 import type { ClientRequest, ServerResponse } from 'http';
 import '@gasket/plugin-https';
 
@@ -6,13 +6,13 @@ describe('@gasket/plugin-https', () => {
   const { log } = console;
 
   it('adds an optional hostname config property', () => {
-    const config: GasketConfigFile = {
+    const config: GasketConfigDefinition = {
       hostname: 'example.com'
     };
   });
 
   it('adds an optional http config property', () => {
-    const config: GasketConfigFile = {
+    const config: GasketConfigDefinition = {
       http: 8080,
       environments: {
         local: {
@@ -23,7 +23,7 @@ describe('@gasket/plugin-https', () => {
   });
 
   it('adds an optional https config property', () => {
-    const config: GasketConfigFile = {
+    const config: GasketConfigDefinition = {
       environments: {
         local: {
           https: {
@@ -40,7 +40,7 @@ describe('@gasket/plugin-https', () => {
   });
 
   it('adds an optional http2 config property', () => {
-    const config: GasketConfigFile = {
+    const config: GasketConfigDefinition = {
       environments: {
         local: {
           http2: {
@@ -58,7 +58,7 @@ describe('@gasket/plugin-https', () => {
   });
 
   it('adds terminus config typings', () => {
-    const config: GasketConfigFile = {
+    const config: GasketConfigDefinition = {
       terminus: {
         healthChecks: {
           '/you-ok-over-there': async () => 'ok'

@@ -1,10 +1,10 @@
-import type { Gasket, GasketConfigFile, Hook } from '@gasket/engine';
+import type { Gasket, GasketConfigDefinition, Hook } from '@gasket/engine';
 import type { NextConfig, NextServer } from '@gasket/plugin-nextjs';
 import { Application } from 'express';
 
 describe('@gasket/plugin-nextjs', () => {
   it('adds a nextConfig section to Gasket config', () => {
-    const config: GasketConfigFile = {
+    const config: GasketConfigDefinition = {
       nextConfig: {
         poweredByHeader: false,
         useFileSystemPublicRoutes: false

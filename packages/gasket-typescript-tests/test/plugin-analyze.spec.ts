@@ -1,9 +1,9 @@
-import type { GasketConfigFile } from '@gasket/engine';
+import type { GasketConfigDefinition } from '@gasket/engine';
 import '@gasket/plugin-analyze';
 
 describe('@gasket/plugin-analyze', () => {
   it('adds bundleAnalyzerConfig to GasketConfig', () => {
-    const config: GasketConfigFile = {
+    const config: GasketConfigDefinition = {
       plugins: {
         add: ['@gasket/analyze']
       },

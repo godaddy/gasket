@@ -11,8 +11,7 @@ describe('@gasket/utils', function () {
       if (perform) {
         let result:GasketConfig;
         result = applyConfigOverrides(config, { env: 'test' });
-        result = applyConfigOverrides(config, { env: 'test', root: '/', commandId: 'test' });
-        result = applyConfigOverrides(config, { env: 'test', localFile: 'local.config.js' });
+        result = applyConfigOverrides(config, { env: 'test', commandId: 'test' });
 
         // @ts-expect-error
         result = applyConfigOverrides(config, { env: 'test', bogus: true });

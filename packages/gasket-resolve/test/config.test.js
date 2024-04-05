@@ -28,49 +28,49 @@ describe('config', () => {
     jest.restoreAllMocks();
   });
 
-  describe('loadGasketConfigFile', () => {
+  describe('loadGasketConfigDefinition', () => {
     it('returns config object', async () => {
-      const results = await utils.loadGasketConfigFile(root, env, commandId);
+      const results = await utils.loadGasketConfigDefinition(root, env, commandId);
       expect(results).toBeInstanceOf(Object);
       expect(results).toEqual(expect.objectContaining({ mockConfig: true }));
     });
 
     it('returns undefined if no config file found', async () => {
-      const results = await utils.loadGasketConfigFile(root, env, commandId, 'missing.gasket.config');
+      const results = await utils.loadGasketConfigDefinition(root, env, commandId, 'missing.gasket.config');
       expect(results).toBeUndefined();
     });
 
     it('throws for require errors', async () => {
-      await expect(utils.loadGasketConfigFile(root, env, commandId, 'bad.gasket.config'))
+      await expect(utils.loadGasketConfigDefinition(root, env, commandId, 'bad.gasket.config'))
         .rejects
         .toThrow(/Cannot find module 'some-fake-lib'/);
     });
 
     it('throws for malformed errors', async () => {
-      await expect(utils.loadGasketConfigFile(root, env, commandId, 'malformed.gasket.config'))
+      await expect(utils.loadGasketConfigDefinition(root, env, commandId, 'malformed.gasket.config'))
         .rejects
         .toThrow(/malformed is not defined/);
     });
 
     it('adds root from flags to config', async () => {
-      const results = await utils.loadGasketConfigFile(root, env, commandId);
+      const results = await utils.loadGasketConfigDefinition(root, env, commandId);
       expect(results).toHaveProperty('root', root);
     });
 
     it('supports custom config name', async () => {
-      const results = await utils.loadGasketConfigFile(root, env, commandId, 'custom.gasket.config');
+      const results = await utils.loadGasketConfigDefinition(root, env, commandId, 'custom.gasket.config');
       expect(results).toEqual(expect.objectContaining({ custom: true }));
     });
 
     it('supports custom config relative path', async () => {
-      const results = await utils.loadGasketConfigFile(root, env, commandId, './custom/gasket.config');
+      const results = await utils.loadGasketConfigDefinition(root, env, commandId, './custom/gasket.config');
       expect(results).toHaveProperty('root', root);
       expect(results).toEqual(expect.objectContaining({ custom: true }));
     });
 
     it('supports custom config absolute path', async () => {
       const configFile = path.join(root, 'custom', 'gasket.config.js');
-      const results = await utils.loadGasketConfigFile('/somewhere', env, commandId, configFile);
+      const results = await utils.loadGasketConfigDefinition('/somewhere', env, commandId, configFile);
       expect(results).toHaveProperty('root', '/somewhere');
       expect(results).toEqual(expect.objectContaining({ custom: true }));
     });
@@ -79,23 +79,23 @@ describe('config', () => {
     // that the arguments are being passed through as expected
     describe('overrides', function () {
       it('applies env overrides', async () => {
-        const baseResults = await utils.loadGasketConfigFile(root, env, commandId);
+        const baseResults = await utils.loadGasketConfigDefinition(root, env, commandId);
         expect(baseResults).toHaveProperty('example', 'base');
-        const overrideResults = await utils.loadGasketConfigFile(root, 'other-env', commandId);
+        const overrideResults = await utils.loadGasketConfigDefinition(root, 'other-env', commandId);
         expect(overrideResults).toHaveProperty('example', 'overridden from env');
       });
 
       it('applies command overrides', async () => {
-        const baseResults = await utils.loadGasketConfigFile(root, env, commandId);
+        const baseResults = await utils.loadGasketConfigDefinition(root, env, commandId);
         expect(baseResults).toHaveProperty('example', 'base');
-        const overrideResults = await utils.loadGasketConfigFile(root, env, 'other-cmd');
+        const overrideResults = await utils.loadGasketConfigDefinition(root, env, 'other-cmd');
         expect(overrideResults).toHaveProperty('example', 'overridden from cmd');
       });
     });
 
     it('adds user plugins', async () => {
       mockReadDir.mockResolvedValueOnce(['app-plugin.js']);
-      const results = await utils.loadGasketConfigFile(root, env, commandId);
+      const results = await utils.loadGasketConfigDefinition(root, env, commandId);
       expect(results.plugins.add).toContain(path.join(root, 'plugins', 'app-plugin.js'));
     });
   });

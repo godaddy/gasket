@@ -1,38 +1,38 @@
-import type { Gasket, GasketConfigFile, Hook } from '@gasket/engine';
+import type { Gasket, GasketConfigDefinition, Hook } from '@gasket/engine';
 import type { Application } from 'express';
 import '@gasket/plugin-express';
 
 describe('@gasket/plugin-express', () => {
   it('adds a compression config property', () => {
-    const config: GasketConfigFile = {
+    const config: GasketConfigDefinition = {
       compression: false
     };
   });
 
   it('adds an excludedRoutesRegex config property', () => {
-    const config: GasketConfigFile = {
+    const config: GasketConfigDefinition = {
       excludedRoutesRegex: /^(?!\/_next\/)/
     };
   });
 
   it('adds an middlewareInclusionRegex config property', () => {
-    const badConfig: GasketConfigFile = {
+    const badConfig: GasketConfigDefinition = {
       // @ts-expect-error
       middlewareInclusionRegex: '/api/*'
     };
 
-    const goodConfig: GasketConfigFile = {
+    const goodConfig: GasketConfigDefinition = {
       middlewareInclusionRegex: /^(?!\/_next\/)/
     };
   });
 
   it('adds an routes config property', () => {
-    const badConfig: GasketConfigFile = {
+    const badConfig: GasketConfigDefinition = {
       // @ts-expect-error
       routes: /^\/api\/\.*$/
     };
 
-    const goodConfig: GasketConfigFile = {
+    const goodConfig: GasketConfigDefinition = {
       routes: '/api/*.js'
     };
   });

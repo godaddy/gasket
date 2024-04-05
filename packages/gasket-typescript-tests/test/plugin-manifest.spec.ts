@@ -1,10 +1,10 @@
 import type { IncomingMessage, OutgoingMessage } from 'http';
-import type { Gasket, GasketConfigFile, Hook } from '@gasket/engine';
+import type { Gasket, GasketConfigDefinition, Hook } from '@gasket/engine';
 import type { Manifest } from '@gasket/plugin-manifest';
 
 describe('@gasket/plugin-manifest', () => {
   it('adds a manifest section to Gasket config', () => {
-    const config: GasketConfigFile = {
+    const config: GasketConfigDefinition = {
       manifest: {
         short_name: 'PWAwesome',
         name: 'Progressive Web Application',
@@ -13,7 +13,7 @@ describe('@gasket/plugin-manifest', () => {
       }
     };
 
-    const config2: GasketConfigFile = {
+    const config2: GasketConfigDefinition = {
       manifest: true
     };
   });
