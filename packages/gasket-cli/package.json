@@ -1,17 +1,16 @@
 {
   "name": "@gasket/cli",
-  "version": "6.45.2",
+  "version": "6.46.2",
   "description": "CLI for rapid application development with gasket",
-  "main": "src/index.js",
+  "main": "lib/index.js",
   "bin": {
-    "gasket": "./bin/boot"
+    "gasket": "./bin/boot.js"
   },
-  "types": "src/index.d.ts",
+  "types": "lib/index.d.ts",
   "files": [
-    "oclif.manifest.json",
     "docs",
     "bin",
-    "src"
+    "lib"
   ],
   "scripts": {
     "lint": "eslint .",
@@ -20,9 +19,6 @@
     "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest test/unit",
     "test:watch": "jest --watch test/unit",
     "posttest": "npm run lint",
-    "prepack": "npm run manifest",
-    "postpack": "rimraf oclif.manifest.json",
-    "manifest": "cross-env FAUX_ROOT='/path/to/your/app' oclif-dev manifest",
     "test:clean": "rimraf ./test/fixtures/create/myapp"
   },
   "repository": {
@@ -35,7 +31,6 @@
   "keywords": [
     "gasket",
     "cli",
-    "oclif",
     "dx"
   ],
   "author": "GoDaddy Operating Company, LLC",
@@ -50,7 +45,6 @@
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-cli",
   "dependencies": {
     "@gasket/engine": "^6.45.2",
-    "@gasket/plugin-command": "^6.45.2",
     "@gasket/plugin-git": "^6.45.2",
     "@gasket/plugin-lifecycle": "^6.45.2",
     "@gasket/plugin-logger": "^6.43.0",
@@ -58,17 +52,12 @@
     "@gasket/plugin-start": "^6.45.2",
     "@gasket/resolve": "^6.45.2",
     "@gasket/utils": "^6.45.2",
-    "@oclif/command": "^1.8.16",
-    "@oclif/config": "^1.18.2",
-    "@oclif/core": "^1.26.2",
-    "@oclif/parser": "^3.8.6",
-    "@oclif/plugin-help": "^5.2.20",
-    "@oclif/plugin-not-found": "^2.4.3",
-    "@oclif/plugin-warn-if-update-available": "^2.1.1",
+    "commander": "^12.0.0",
     "concat-stream": "^2.0.0",
     "cross-env": "^7.0.3",
     "cross-spawn": "^7.0.3",
     "deepmerge": "^4.3.1",
+    "dotenv": "^16.4.5",
     "getopts": "^2.3.0",
     "glob": "^8.1.0",
     "handlebars": "^4.7.8",
@@ -78,12 +67,10 @@
     "ora": "^3.4.0",
     "pump": "^3.0.0",
     "semver": "^7.5.4",
-    "tar-fs": "^2.1.1",
+    "tar-fs": "^2.0.0",
     "untildify": "^4.0.0"
   },
   "devDependencies": {
-    "@oclif/dev-cli": "^1.13.31",
-    "@oclif/test": "^2.5.6",
     "cross-env": "^7.0.3",
     "diagnostics": "^2.0.2",
     "eslint": "^8.56.0",
@@ -168,6 +155,36 @@
       ],
       "lifecycles": [
         {
+          "name": "commandOptions",
+          "method": "exec",
+          "description": "Allows plugins to add CLI options to Gasket",
+          "link": "README.md#commandsOptions",
+          "parent": "*"
+        },
+        {
+          "name": "commands",
+          "method": "exec",
+          "description": "Allows plugins to add CLI commands",
+          "link": "README.md#commands",
+          "parent": "*",
+          "after": "commandOptions"
+        },
+        {
+          "name": "init",
+          "method": "exec",
+          "description": "Signals the start of any Gasket command before it is run",
+          "link": "README.md#init",
+          "command": "*"
+        },
+        {
+          "name": "configure",
+          "method": "execWaterfall",
+          "description": "Allows plugins to adjust config before command is run",
+          "link": "README.md#configure",
+          "command": "*",
+          "after": "init"
+        },
+        {
           "name": "prompt",
           "description": "Gasket config for an app",
           "link": "README.md#prompt",
@@ -190,21 +207,5 @@
   },
   "engines": {
     "node": ">= 8.0.0"
-  },
-  "oclif": {
-    "commands": "./src/commands",
-    "bin": "gasket",
-    "plugins": [
-      "@oclif/plugin-help",
-      "@oclif/plugin-not-found",
-      "@oclif/plugin-warn-if-update-available"
-    ],
-    "hooks": {
-      "init": "./src/hooks/init"
-    },
-    "warn-if-update-available": {
-      "timeoutInDays": 7
-    },
-    "helpClass": "./src/utils/help"
   }
 }

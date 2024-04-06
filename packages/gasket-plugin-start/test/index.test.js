@@ -13,7 +13,7 @@ describe('Plugin', function () {
   it('has expected hooks', () => {
     const expected = [
       'create',
-      'getCommands',
+      'commands',
       'metadata'
     ];
 

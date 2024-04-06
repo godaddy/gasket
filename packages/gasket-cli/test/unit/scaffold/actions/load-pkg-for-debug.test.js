@@ -7,8 +7,8 @@ jest.mock('fs', () => ({
 }));
 
 const path = require('path');
-const ConfigBuilder = require('../../../../src/scaffold/config-builder');
-const loadPkg = require('../../../../src/scaffold/actions/load-pkg-for-debug');
+const ConfigBuilder = require('../../../../lib/scaffold/config-builder');
+const loadPkg = require('../../../../lib/scaffold/actions/load-pkg-for-debug');
 
 describe('load-pkg-for-debug', () => {
   let mockContext, mockPkg;

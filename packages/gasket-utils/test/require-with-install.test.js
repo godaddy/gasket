@@ -149,7 +149,12 @@ describe('requireWithInstall', function () {
 
       expect(Array.isArray(pkgList)).toEqual(true);
       expect(pkgList.length).toEqual(2);
-      expect(mockPackageManagerExecStub).toHaveBeenCalledWith('add', expect.arrayContaining(['my-package', '@scoped/package', '--dev']));
+      expect(mockPackageManagerExecStub).toHaveBeenCalledWith(
+        'add',
+        expect.arrayContaining(
+          ['my-package', '@scoped/package', '--dev']
+        )
+      );
     });
   });
 });

@@ -1,5 +1,5 @@
-const { runShellCommand } = require('../../packages/gasket-utils');
 const fs = require('fs');
+const { exec } = require('child_process');
 const path = require('path');
 const { promisify } = require('util');
 
@@ -16,7 +16,7 @@ const sourcePath = path.join(__dirname, '.docs', 'docs', 'README.md');
 const targetPath = path.join(projectRoot, 'README.md');
 
 async function main() {
-  await runShellCommand(cliBin, ['docs', '--no-view'], { cwd: __dirname });
+  await exec(['cd', __dirname, '&&', cliBin, 'docs', '--no-view'].join(' '));
 
   // copy over generated docs generated-docs
   const genSrc = path.join(__dirname, '.docs', 'docs', 'generated-docs');
