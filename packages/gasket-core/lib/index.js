@@ -44,9 +44,10 @@ function getEnvironment(
 /**
  * Register actions from plugins
  * @param {Gasket} instance - Gasket instance
+ * @returns {import('@gasket/engine').GasketActions} actions
  */
 function registerActions(instance) {
-  instance.actions = {};
+  const actions = {};
   const actionPluginMap = {};
 
   instance.execApplySync('actions', async (plugin, handler) => {
@@ -61,24 +62,31 @@ function registerActions(instance) {
           return;
         }
         actionPluginMap[actionName] = plugin.name;
-        instance.actions[actionName] = results[actionName];
+        actions[actionName] = results[actionName];
       });
     }
   });
+
+  return actions;
+}
+
+/** @type {import('@gasket/engine').Gasket} Gasket */
+class Gasket extends GasketEngine {
+  constructor(gasketConfig) {
+    const { plugins, ...config } = gasketConfig;
+    super(plugins);
+    this.command = null;
+    this.config = this.execWaterfallSync('configure', config);
+    this.actions = registerActions(this);
+  }
 }
 
 /** @type {import('.').makeGasket} makeGasket */
-export function makeGasket(gasketConfig) {
+export function makeGasket(gasketConfigDefinition) {
   const env = getEnvironment();
-
-  const { plugins, ...config } = applyConfigOverrides(gasketConfig, { env });
+  const config = applyConfigOverrides(gasketConfigDefinition, { env });
   config.env = env;
   config.root ??= process.cwd();
 
-  const instance = new GasketEngine(plugins);
-  instance.config = instance.execWaterfallSync('configure', config);
-
-  registerActions(instance);
-
-  return instance;
+  return new Gasket(config);
 }

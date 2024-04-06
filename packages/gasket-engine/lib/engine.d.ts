@@ -16,7 +16,7 @@ declare module '@gasket/engine' {
   };
 
   export type HookHandler<Id extends HookId> = (
-    gasket: GasketInstance,
+    gasket: Gasket,
     ...args: Parameters<HookExecTypes[Id]>
   ) => ReturnType<HookExecTypes[Id]>;
 
@@ -81,11 +81,11 @@ declare module '@gasket/engine' {
     }): void;
   }
 
-  export interface GasketInstance extends GasketEngine {
+  export interface Gasket extends GasketEngine {
     command: {
       id: string
     }
-    config: GasketConfig;
+    config: Omit<GasketConfig, 'plugins'>;
   }
 
   type PartialRecursive<T> =

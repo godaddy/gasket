@@ -1,5 +1,3 @@
-import { Gasket, GasketConfigDefinition } from '@gasket/engine';
-
 declare module '@gasket/engine' {
 
   export interface GasketActions {}
@@ -10,7 +8,10 @@ declare module '@gasket/engine' {
 
   export interface HookExecTypes {
     configure(config: GasketConfig): GasketConfig
+    actions(): GasketActions
   }
 }
+
+import { Gasket, GasketConfigDefinition } from '@gasket/engine';
 
 export function makeGasket(config: GasketConfigDefinition): Gasket
