@@ -5,6 +5,7 @@ describe('@gasket/plugin-response-data', () => {
 
   it('adds an optional configPath property to gasket config', () => {
     const config: GasketConfigDefinition = {
+      plugins: [{ name: 'example-plugin', hooks: {} }],
       gasketDataDir: './custom/path'
     };
   });

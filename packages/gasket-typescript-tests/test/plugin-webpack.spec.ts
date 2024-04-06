@@ -5,9 +5,7 @@ import '@gasket/plugin-nextjs';
 describe('@gasket/plugin-webpack', () => {
   it('adds a webpack section to the Gasket config', () => {
     const config: GasketConfigDefinition = {
-      plugins: {
-        add: ['@gasket/plugin-webpack']
-      }
+      plugins: [{ name: 'example-plugin', hooks: {} }]
     };
   });
 

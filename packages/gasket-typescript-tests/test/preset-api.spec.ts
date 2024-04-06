@@ -6,6 +6,7 @@ describe('@gasket/preset-api', () => {
 
   it('imports config type injections for all plugins', () => {
     const config: GasketConfigDefinition = {
+      plugins: [{ name: 'example-plugin', hooks: {} }],
       http: 8080,
       compression: true,
       swagger: {

@@ -17,3 +17,7 @@ declare module '@gasket/engine' {
     ): WebpackApi.Configuration;
   }
 }
+
+export const name = '@gasket/plugin-webpack'
+// TODO: does these need to be complete?
+export const hooks = {};

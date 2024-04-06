@@ -4,6 +4,7 @@ import '@gasket/plugin-workbox';
 describe('@gasket/plugin-workbox', () => {
   it('adds a workbox config section to Gasket', () => {
     const config: GasketConfigDefinition = {
+      plugins: [{ name: 'example-plugin', hooks: {} }],
       workbox: {
         config: {
           runtimeCaching: [{

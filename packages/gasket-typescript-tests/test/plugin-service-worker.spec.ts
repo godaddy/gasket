@@ -5,6 +5,7 @@ import '@gasket/plugin-service-worker';
 describe('@gasket/plugin-service-worker', () => {
   it('adds a serviceWorker section to the Gasket config', () => {
     const config: GasketConfigDefinition = {
+      plugins: [{ name: 'example-plugin', hooks: {} }],
       serviceWorker: {
         url: '/docs/server-worker.js',
         cache: {

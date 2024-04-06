@@ -1,11 +1,15 @@
 import { applyConfigOverrides, runShellCommand, tryRequire } from '@gasket/utils';
-import { GasketConfig } from '@gasket/engine';
+import { GasketConfig, GasketConfigDefinition } from '@gasket/engine';
 
 describe('@gasket/utils', function () {
   const perform = false;
 
   describe('applyConfigOverrides', function () {
-    const config: GasketConfig = { root: '/', env: 'debug' };
+    const config: GasketConfigDefinition = {
+      plugins: [{ name: 'example', hooks: {} }],
+      root: '/',
+      env: 'debug'
+    };
 
     it('has expected API', function () {
       if (perform) {

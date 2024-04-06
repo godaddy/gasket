@@ -4,6 +4,7 @@ import '@gasket/plugin-swagger';
 describe('@gasket/plugin-swagger', () => {
   it('adds a swagger config section to Gasket', () => {
     const config: GasketConfigDefinition = {
+      plugins: [{ name: 'example-plugin', hooks: {} }],
       swagger: {
         jsdoc: {
           definition: {

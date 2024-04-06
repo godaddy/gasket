@@ -6,6 +6,7 @@ import '@gasket/plugin-redux';
 describe('@gasket/plugin-redux', () => {
   it('adds a redux config property to Gasket', () => {
     const config: GasketConfigDefinition = {
+      plugins: [{ name: 'example-plugin', hooks: {} }],
       redux: {
         makeStore: './relative/path/to/customMakeStore.js',
         initState: {

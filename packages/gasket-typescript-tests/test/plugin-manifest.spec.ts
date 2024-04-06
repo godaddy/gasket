@@ -5,6 +5,7 @@ import type { Manifest } from '@gasket/plugin-manifest';
 describe('@gasket/plugin-manifest', () => {
   it('adds a manifest section to Gasket config', () => {
     const config: GasketConfigDefinition = {
+      plugins: [{ name: 'example-plugin', hooks: {} }],
       manifest: {
         short_name: 'PWAwesome',
         name: 'Progressive Web Application',
@@ -14,6 +15,7 @@ describe('@gasket/plugin-manifest', () => {
     };
 
     const config2: GasketConfigDefinition = {
+      plugins: [{ name: 'example-plugin', hooks: {} }],
       manifest: true
     };
   });
