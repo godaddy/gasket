@@ -2,6 +2,9 @@
 
 - Removed support for deprecated `next` config support ([#655])
 - With Redux, generate _app with example `getInitialAppProps` ([#693])
+ 
+- (fix) Handle malformed URL segments in Elastic APM transaction labeling
+- (fix) Omit query parameters when parsing next.js route labels
 
 ### 6.46.4
 
