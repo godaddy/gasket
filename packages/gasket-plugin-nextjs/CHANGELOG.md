@@ -1,5 +1,7 @@
 # `@gasket/plugin-nextjs`
 
+- (fix) Handle malformed URL segments in Elastic APM transaction labeling
+
 ### 6.46.4
 
 - Adjust JSDocs and TS types ([#695])
