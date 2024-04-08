@@ -1,6 +1,7 @@
 # `@gasket/plugin-nextjs`
 
 - (fix) Handle malformed URL segments in Elastic APM transaction labeling
+- (fix) Omit query parameters when parsing next.js route labels
 
 ### 6.46.4
 
