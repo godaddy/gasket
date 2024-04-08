@@ -1,6 +1,6 @@
 {
   "name": "@gasket/preset-api",
-  "version": "6.46.5",
+  "version": "6.46.7",
   "description": "Create Express-based API with Gasket",
   "main": "lib",
   "types": "lib/index.d.ts",
@@ -23,13 +23,13 @@
     "@gasket/plugin-config": "^6.46.2",
     "@gasket/plugin-docs": "^6.46.4",
     "@gasket/plugin-docsify": "^6.46.2",
-    "@gasket/plugin-express": "^6.46.5",
-    "@gasket/plugin-https": "^6.46.4",
+    "@gasket/plugin-express": "^6.46.7",
+    "@gasket/plugin-https": "^6.46.7",
     "@gasket/plugin-lint": "^6.46.2",
     "@gasket/plugin-log": "^6.46.2",
-    "@gasket/plugin-swagger": "^6.46.2"
+    "@gasket/plugin-swagger": "^6.46.7"
   },
   "devDependencies": {
-    "@gasket/plugin-start": "^6.46.2"
+    "@gasket/plugin-start": "^6.46.7"
   }
 }
