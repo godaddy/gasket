@@ -6,7 +6,7 @@ module.exports = async (_gasket, transaction, { req }) => {
 
   transaction.name = route.page;
 
-  const match = route.namedRegex.exec(req.url);
+  const match = route.namedRegex.exec(req.url.replace(/\?.*$/, ''));
   const groups = match && match.groups;
   if (!groups) {
     return;
@@ -14,7 +14,15 @@ module.exports = async (_gasket, transaction, { req }) => {
 
   transaction.addLabels(
     Object.fromEntries(
-      Object.entries(groups).map(([key, value]) => [key, decodeURIComponent(value)])
+      Object.entries(groups).map(([key, value]) => {
+        let decodedValue = value;
+        try {
+          decodedValue = decodeURIComponent(value);
+        } catch (e) {
+          // ignore
+        }
+        return [key, decodedValue];
+      })
     )
   );
 };
