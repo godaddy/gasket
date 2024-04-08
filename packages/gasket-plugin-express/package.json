@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-express",
-  "version": "6.46.5",
+  "version": "6.46.7",
   "description": "Adds express support to your application",
   "main": "lib",
   "types": "lib/index.d.ts",

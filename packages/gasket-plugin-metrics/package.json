@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-metrics",
-  "version": "6.46.2",
+  "version": "6.46.7",
   "description": "Collect metrics for gasket commands",
   "main": "lib",
   "types": "lib/index.d.ts",
