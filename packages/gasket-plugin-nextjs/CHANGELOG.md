@@ -3,8 +3,10 @@
 - Removed support for deprecated `next` config support ([#655])
 - With Redux, generate _app with example `getInitialAppProps` ([#693])
  
-- (fix) Handle malformed URL segments in Elastic APM transaction labeling
-- (fix) Omit query parameters when parsing next.js route labels
+### 6.46.7
+
+- (fix) Handle malformed URL segments in Elastic APM transaction labeling ([#724])
+- (fix) Omit query parameters when parsing next.js route labels ([#724])
 
 ### 6.46.4
 
@@ -265,3 +267,4 @@
 [#679]: https://github.com/godaddy/gasket/pull/679
 [#695]: https://github.com/godaddy/gasket/pull/695
 [#693]: https://github.com/godaddy/gasket/pull/693
+[#724]: https://github.com/godaddy/gasket/pull/724
