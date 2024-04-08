@@ -9,7 +9,7 @@ const { processCommand, logo, warnIfOutdated } = require('./utils');
 
 // Create Gasket CLI
 const gasketBin = program
-  .name('gasket')
+  .name('create-gasket-app')
   .description(pkg.description)
   .option('--gasket-config [gasket-config-path]', 'Fully qualified Gasket config to load', 'gasket.config')
   .version(pkg.version)
