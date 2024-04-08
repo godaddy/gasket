@@ -1,7 +1,9 @@
 # `@gasket/plugin-nextjs`
 
-- (fix) Handle malformed URL segments in Elastic APM transaction labeling
-- (fix) Omit query parameters when parsing next.js route labels
+### 6.46.7
+
+- (fix) Handle malformed URL segments in Elastic APM transaction labeling ([#724])
+- (fix) Omit query parameters when parsing next.js route labels ([#724])
 
 ### 6.46.4
 
@@ -260,3 +262,4 @@
 [#678]: https://github.com/godaddy/gasket/pull/678
 [#679]: https://github.com/godaddy/gasket/pull/679
 [#695]: https://github.com/godaddy/gasket/pull/695
+[#724]: https://github.com/godaddy/gasket/pull/724
