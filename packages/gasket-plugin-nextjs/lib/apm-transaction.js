@@ -6,7 +6,7 @@ module.exports = async (_gasket, transaction, { req }) => {
 
   transaction.name = route.page;
 
-  const match = route.namedRegex.exec(req.url);
+  const match = route.namedRegex.exec(req.url.replace(/\?.*$/, ''));
   const groups = match && match.groups;
   if (!groups) {
     return;
