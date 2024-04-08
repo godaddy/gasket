@@ -14,7 +14,15 @@ module.exports = async (_gasket, transaction, { req }) => {
 
   transaction.addLabels(
     Object.fromEntries(
-      Object.entries(groups).map(([key, value]) => [key, decodeURIComponent(value)])
+      Object.entries(groups).map(([key, value]) => {
+        let decodedValue = value;
+        try {
+          decodedValue = decodeURIComponent(value);
+        } catch (e) {
+          // ignore
+        }
+        return [key, decodedValue];
+      })
     )
   );
 };

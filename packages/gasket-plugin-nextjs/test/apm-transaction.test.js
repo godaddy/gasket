@@ -53,4 +53,18 @@ describe('The apmTransaction hook', () => {
 
     expect(transaction.addLabels).toHaveBeenCalledWith({ cohortId: 'Rad People' });
   });
+
+  it('handles URL segments that are not properly URL encoded', async () => {
+    const req = {
+      url: '/cohorts/TopTen%',
+      getNextRoute: async () => ({
+        page: '/cohorts/[cohortId]',
+        namedRegex: /^\/cohorts\/(?<cohortId>[^/]+)(?:\/)?$/
+      })
+    };
+
+    await apmTransaction({}, transaction, { req });
+
+    expect(transaction.addLabels).toHaveBeenCalledWith({ cohortId: 'TopTen%' });
+  });
 });
