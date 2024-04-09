@@ -1,7 +1,7 @@
 /* eslint-disable complexity, max-statements */
 const deepmerge = require('deepmerge');
 const semver = require('semver');
-const debug = require('diagnostics')('gasket:cli:package');
+const debug = require('diagnostics')('gasket:create-gasket-app:package');
 
 /**
  * Simple object check without bringing in a large
