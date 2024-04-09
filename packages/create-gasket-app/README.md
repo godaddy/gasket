@@ -71,7 +71,7 @@ npm_config_registry=https://custom-registry.com npx create-gasket-app -p @gasket
 
 #### Test Suites
 
-Code that is well-test and conforming to familiar styles helps the collaboration
+Code that is well-tested and conforms to familiar styles helps the collaboration
 process within teams and across organizations. Gasket apps come with some
 tooling options and configurations to assist in this important area.
 
