@@ -4,6 +4,7 @@ const debug = require('diagnostics')('gasket:https');
 const create = require('create-servers');
 const one = require('one-time/async');
 const errs = require('errs');
+const proxy = require('http-proxy');
 
 /**
  * Provide port defaults
@@ -31,23 +32,58 @@ function portInUseError(errors) {
 }
 
 /**
- * Start lifecycle of a gasket application
+ * Create a https proxy server for local development
+ * @param {Object} opts devProxy configuration
+ * @param {Object} logger Gasket logger
+ */
+function startProxy(opts, logger) {
+  const { protocol = 'http', hostname = 'localhost', port = 8080 } = opts;
+  proxy.createServer({
+    protocol,
+    hostname,
+    port,
+    ...opts
+  }).on('error', (e) => {
+    logger.error('Request failed to proxy:', e);
+  }).listen(
+    port,
+    () => logger.info(`Proxy server started: ${protocol}://${hostname}:${port}`)
+  );
+}
+
+/**
+ * Get server options from the gasket config
+ * @param {Gasket} gasket Gasket instance
+ * @returns {RawServerConfig} rawConfig
+ */
+function getRawServerConfig(gasket) {
+  const { hostname, http2, https, http, root } = gasket.config;
+  const rawConfig = {};
+  rawConfig.hostname = hostname;
+  rawConfig.root = root;
+  if (http) rawConfig.http = http;
+  if (https) rawConfig.https = https;
+  if (http2) rawConfig.http2 = http2;
+  return rawConfig;
+}
+
+/**
+ * Gasket action: startServer
  *
  * @param {Gasket} gasket Gasket instance
  * @public
  */
-async function start(gasket) {
-  const { hostname, http2, https, http, terminus, env } = gasket.config;
+async function startServer(gasket) {
+  const { terminus, env, devProxy } = gasket.config;
   const { logger } = gasket;
 
-  // Retrieving server opts
-  const configOpts = { hostname };
+  if (devProxy) {
+    const opts = await gasket.execWaterfall('devProxy', devProxy);
+    return startProxy(Object.assign(devProxy, opts), logger);
+  }
 
-  if (http) configOpts.http = http;
-  if (https) configOpts.https = https;
-  if (http2) configOpts.http2 = http2;
-
-  const serverOpts = await gasket.execWaterfall('createServers', configOpts);
+  const serverConfig = await gasket.execWaterfall('serverConfig', getRawServerConfig(gasket));
+  const serverOpts = await gasket.execWaterfall('createServers', serverConfig);
   const { healthcheck, ...terminusDefaults } = await gasket.execWaterfall('terminus', {
     healthcheck: ['/healthcheck', '/healthcheck.html'],
     signals: ['SIGTERM'],
@@ -143,11 +179,28 @@ async function start(gasket) {
 module.exports = {
   name: require('../package').name,
   hooks: {
-    start,
+    actions(gasket) {
+      return {
+        startServer: async () => await startServer(gasket)
+      };
+    },
     metadata(gasket, meta) {
       return {
         ...meta,
         lifecycles: [{
+          name: 'devProxy',
+          method: 'execWaterfall',
+          description: 'Setup the devProxy options',
+          link: 'README.md#devProxy',
+          parent: 'start'
+        }, {
+          name: 'serverConfig',
+          method: 'execWaterfall',
+          description: 'Setup the server configuration',
+          link: 'README.md#serverConfig',
+          parent: 'start'
+        },
+        {
           name: 'createServers',
           method: 'execWaterfall',
           description: 'Setup the `create-servers` options',

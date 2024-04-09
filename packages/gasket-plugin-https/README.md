@@ -82,7 +82,75 @@ module.exports = {
 };
 ```
 
+### Local Proxy Server
+
+Create a proxy server for local development. See full `http-proxy` options [here](https://www.npmjs.com/package/http-proxy#options).
+
+```diff
+// gasket.config.js
+module.exports = {
+  http: 80,
++  devProxy: {
++    hostname: 'my-host.com',
++    port: 443,
++    protocol: 'https',
++    xfwd: true,
++    ws: true,
++    target: {
++      host: 'localhost',
++      port: 80
++    }
++  }
+}
+```
+
 ## Lifecycles
+
+### devProxy
+
+Adjust and configure `devProxy` options for a proxy server during local development. This is useful if `https` is needed in local development. The options for `http-proxy` can be found [here](https://www.npmjs.com/package/http-proxy#options). The `devProxy` configuration must be defined in some capacity on the gasket config for this lifecycle to execute.
+
+```js
+/**
+ * Adding options to `devProxy` that are not defined in the gasket config
+ *
+ * @param {Gasket} gasket Gasket API.
+ * @param {Object} devProxyConfig The original config if defined in the gasket config
+ * @return {Object} devProxy config
+ */
+devProxy: async function devProxy(gasket, devProxyConfig) {
+  if (!devProxyConfig.protocol) devProxyConfig.protocol = 'https';
+  if (!devProxyConfig.hostname) devProxyConfig.hostname = 'local.gasket.dev-godaddy.com';
+  if (!devProxyConfig.port) devProxyConfig.port = 443;
+  if (!devProxyConfig.xfwd) devProxyConfig.xfwd = true;
+  if (!devProxyConfig.ws) devProxyConfig.ws = true;
+  return devProxyConfig;
+}
+
+```
+
+### serverConfig
+
+Allows for server options to be added before `createServers` is called. Example use-case would be adding `sni` configurations when using `https` for local development.
+
+```js
+/**
+ * Adding sni certs to https
+ *
+ * @param {Gasket} gasket Gasket API.
+ * @param {Object} rawConfig raw server config
+ * @returns {Object} rawConfig
+ */
+serverConfig:  async function serverConfig(gasket, rawConfig) {
+  rawConfig.https.sni = {
+    '*.my-domain.com': '/path/to/cert',
+    '*.my-other-domain.com': '/path/to/cert'
+  };
+
+  return rawConfig;
+}
+
+```
 
 ### createServers
 

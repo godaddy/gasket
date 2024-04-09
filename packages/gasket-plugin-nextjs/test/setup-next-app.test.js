@@ -14,6 +14,8 @@ describe('setupNextApp', () => {
 
   beforeEach(() => {
     module = getModule();
+    jest.clearAllMocks();
+    delete process.env.GASKET_DEV;
   });
 
   it('exports setupNextApp instance', function () {
@@ -28,20 +30,10 @@ describe('setupNextApp', () => {
   });
 
   describe('devServer mode', () => {
-    it('creates devServer when gasket command is local', async function () {
-      gasket = mockGasketApi();
-      gasket.command = 'local';
-      await module.setupNextApp(gasket);
-      expect(mockNext).toHaveBeenCalledWith({
-        dev: true,
-        hostname: 'localhost',
-        port: 3000
-      });
-    });
 
-    it('creates devServer when gasket command id is local', async function () {
+    it('creates devServer when GASKET_DEV is set', async function () {
       gasket = mockGasketApi();
-      gasket.command = { id: 'local' };
+      process.env.GASKET_DEV = '1';
       await module.setupNextApp(gasket);
       expect(mockNext).toHaveBeenCalledWith({
         dev: true,

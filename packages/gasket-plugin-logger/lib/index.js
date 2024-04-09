@@ -23,24 +23,28 @@ function verifyLoggerLevels(logger) {
 module.exports = {
   name,
   hooks: {
-    async init(gasket) {
-      const loggers = await gasket.exec('createLogger');
-      if (!loggers || loggers.length === 0) {
-        gasket.logger = {
-          debug: console.debug,
-          error: console.error,
-          info: console.info,
-          warn: console.warn,
-          child: (meta) => createChildLogger(this, meta)
-        };
-      } else if (loggers.length > 1) {
-        throw new Error(
-          'Multiple plugins are hooking createLogger. Only one logger is supported.'
-        );
-      } else {
-        verifyLoggerLevels(loggers[0]);
-        gasket.logger = loggers[0];
-      }
+    actions(gasket) {
+      return {
+        createLogger: async function () {
+          const loggers = await gasket.exec('createLogger');
+          if (!loggers || loggers.length === 0) {
+            gasket.logger = {
+              debug: console.debug,
+              error: console.error,
+              info: console.info,
+              warn: console.warn,
+              child: (meta) => createChildLogger(this, meta)
+            };
+          } else if (loggers.length > 1) {
+            throw new Error(
+              'Multiple plugins are hooking createLogger. Only one logger is supported.'
+            );
+          } else {
+            verifyLoggerLevels(loggers[0]);
+            gasket.logger = loggers[0];
+          }
+        }
+      };
     },
     async onSignal(gasket) {
       await gasket.logger?.close?.();

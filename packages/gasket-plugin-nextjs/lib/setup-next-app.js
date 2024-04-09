@@ -18,14 +18,13 @@ function getPortFallback(env = '') {
  * @private
  */
 async function setupNextApp(gasket) {
-  const { exec, command, config } = gasket;
+  const { exec, config } = gasket;
   const { hostname, http, https, http2, env } = config;
   const createNextApp = require('next');
-  const devServer = (command.id || command) === 'local';
+  const devServer = Boolean(process.env.GASKET_DEV); // TODO document GASKET_DEV
 
   const _http = http || https || http2;
   const port = (_http && _http.port) || _http || getPortFallback(env);
-
   const app = createNextApp({
     dev: devServer,
     hostname,
