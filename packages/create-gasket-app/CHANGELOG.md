@@ -30,7 +30,6 @@
 
 - Introducing `create-gasket-app` ([#167])
 
-
 [#167]: https://github.com/godaddy/gasket/pull/167
 [#171]: https://github.com/godaddy/gasket/pull/171
 [#247]: https://github.com/godaddy/gasket/pull/247

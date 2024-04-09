@@ -17,7 +17,7 @@
     "test:watch": "jest --watchAll",
     "test:coverage": "jest --coverage",
     "posttest": "npm run lint && npm run typecheck",
-    "typecheck:skip": "tsc",
+    "typecheck": "tsc",
     "typecheck:watch": "tsc --watch",
     "build": "babel src -d lib --delete-dir-on-start",
     "prepublishOnly": "npm run build"

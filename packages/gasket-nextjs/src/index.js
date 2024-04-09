@@ -3,27 +3,21 @@ import PropTypes from 'prop-types';
 import { Main, NextScript } from 'next/document';
 import htmlescape from 'htmlescape';
 
-/** @typedef {import('next/document').default} Document */
-
 /**
  * Renders a script tag with JSON gasketData
- * @param {object} props - Props
- * @param {import('@gasket/data').GasketData} props.data - Gasket data from
- * response
- * @returns {JSX.Element} script
+ * @type {import('./index').GasketDataScript}
  */
-export function GasketDataScript(props) {
-  const { data } = props;
+export const GasketDataScript = function ({ data }) {
   return (
     <script
-      id="GasketData"
-      type="application/json"
+      id='GasketData'
+      type='application/json'
       dangerouslySetInnerHTML={{
         __html: htmlescape(data)
       }}
     />
   );
-}
+};
 
 GasketDataScript.propTypes = {
   data: PropTypes.object
@@ -32,9 +26,7 @@ GasketDataScript.propTypes = {
 /**
  * Make a wrapper to extend the Next.js Document, injecting a script with the
  * `gasketData` from the response object.
- * @param {object} [options] - Configuration for wrapper
- * @param {number} [options.index] - Force script injection at particular index
- * @returns {function(Document)} wrapper
+ * @type {import('./index').withGasketData}
  */
 export function withGasketData(options = {}) {
   const { index = -1 } = options;
@@ -43,7 +35,7 @@ export function withGasketData(options = {}) {
    * To avoid polluting <head/>, we want to render our JSON in the <body/> but
    * before our other scripts so that it is available to query. In a basic
    * Next.js app, this is between the Main and NextScript tags.*
-   * @param {Array} bodyChildren - Children of body element
+   * @param {JSX.Element[]} bodyChildren - Children of body element
    * @returns {number} index
    * @private
    */
@@ -62,18 +54,13 @@ export function withGasketData(options = {}) {
     return lookups.reduce((acc, cur) => (acc !== -1 ? acc : cur()), index);
   }
 
-  /**
-   * Extend the Document
-   * @param {Document} Document - Next Document class to
-   * wrap
-   * @returns {Document} extended Document
-   */
-  return (Document) => {
-    return class GasketDocument extends Document {
+  return (DocumentClass) => {
+    return class GasketDocument extends DocumentClass {
+      /**  @type {import('./index').GasketDocumentGetInitialProps} */
       static async getInitialProps(ctx) {
         const { locals: { gasketData = {} } = {} } = ctx.res || {};
 
-        const initialProps = await Document.getInitialProps(ctx);
+        const initialProps = await DocumentClass.getInitialProps(ctx);
 
         return {
           ...initialProps,
@@ -86,14 +73,18 @@ export function withGasketData(options = {}) {
         const { gasketData } = this.props;
 
         const htmlChildren = React.Children.toArray(html.props.children);
+        // @ts-ignore
         const bodyIdx = htmlChildren.findIndex((t) => t.type === 'body');
         const body = htmlChildren[bodyIdx];
+        // @ts-ignore
         const bodyChildren = React.Children.toArray(body.props.children);
         bodyChildren.splice(
+          // @ts-ignore
           lookupIndex(bodyChildren),
           0,
-          <GasketDataScript data={gasketData} />
+          <GasketDataScript data={ gasketData } />
         );
+        // @ts-ignore
         htmlChildren[bodyIdx] = React.cloneElement(body, {}, ...bodyChildren);
 
         return React.cloneElement(html, {}, ...htmlChildren);

@@ -6,7 +6,7 @@ Enables code style linting to be configured for Gasket apps.
 
 This plugin should only be used during the create command for new apps.
 
-```
+```sh
 gasket create <app-name> --plugins @gasket/plugin-lint
 ```
 
@@ -27,6 +27,7 @@ the linting configuration.
 **Which code style do you want configured?**
 
 Choices are:
+
 - [GoDaddy]
 - [Standard]
 - [Airbnb]
@@ -136,7 +137,7 @@ module.exports = {
 };
 ```
 
-## Contribute!
+## Contribute
 
 If there is an important and widely used code style that you feel would be a
 good addition to the default choices of [Code Styles], reach out or submit a PR

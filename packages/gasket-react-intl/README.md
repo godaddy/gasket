@@ -17,7 +17,7 @@ manages locale files from [@gasket/plugin-intl].
 
 ## Installation
 
-```
+```sh
 npm i @gasket/react-intl
 ```
 

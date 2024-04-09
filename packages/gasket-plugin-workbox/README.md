@@ -15,13 +15,13 @@ every developer writes when working with service workers._
 
 #### New apps
 
-```
+```sh
 gasket create <app-name> --plugins @gasket/plugin-workbox
 ```
 
 #### Existing apps
 
-```
+```sh
 npm i @gasket/plugin-workbox
 ```
 
@@ -41,7 +41,8 @@ module.exports = {
 
 Set the Workbox options, in the `gasket.config.js` under `workbox`.
 
-- `outputDir` - (string) The path to the directory in which the Workbox libraries should be copied (default: `./build/workbox`)
+- `outputDir` - (string) The path to the directory in which the Workbox
+  libraries should be copied (default: `./build/workbox`)
 - `basePath` - (string) Change the default path to `/_workbox` endpoint by
   adding a path prefix here. (default: ''). Used for setting up CDN support for
   Workbox files.
@@ -120,7 +121,5 @@ the app. These can be set up to edge cache by setting the `basePath` option.
 [composeServiceWorker]:/packages/gasket-plugin-service-worker/README.md#composeserviceworker
 [@gasket/plugin-service-worker]:/packages/gasket-plugin-service-worker/README.md
 [Workbox]:https://github.com/GoogleChrome/workbox
-[Workbox precaching]:https://developers.google.com/web/tools/workbox/modules/workbox-precaching
-[background sync]:https://developers.google.com/web/updates/2015/12/background-sync
 [workbox-build]:https://developers.google.com/web/tools/workbox/modules/workbox-build
 [generateSWString]:https://developers.google.com/web/tools/workbox/modules/workbox-build#generateswstring_mode

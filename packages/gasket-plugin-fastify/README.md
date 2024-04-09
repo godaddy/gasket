@@ -6,13 +6,13 @@ Adds Fastify to your application.
 
 #### New apps
 
-```
+```sh
 gasket create <app-name> --plugins @gasket/plugin-fastify
 ```
 
 #### Existing apps
 
-```
+```sh
 npm i @gasket/plugin-fastify
 ```
 
@@ -35,7 +35,8 @@ All the configurations for the plugin are added under `fastify` in the config:
 - `compression`: true by default. Can be set to false if applying compression
   differently.
 - `excludedRoutesRegex`: Routes to be excluded based on a regex
-- `trustProxy`: Enable trust proxy option, [see Fastify documentation for possible values](https://fastify.dev/docs/latest/Reference/Server/#trustproxy)
+- `trustProxy`: Enable trust proxy option, [see Fastify documentation for
+  possible values](https://fastify.dev/docs/latest/Reference/Server/#trustproxy)
 
 #### Example configuration
 

@@ -14,8 +14,8 @@ const clientGasketData =
 export const withGasketDataProvider = () => (WrappedComponent) => {
   const Wrapper = ({ gasketData, ...props }) => {
     return (
-      <GasketDataProvider gasketData={gasketData}>
-        <WrappedComponent {...props} />
+      <GasketDataProvider gasketData={ gasketData }>
+        <WrappedComponent { ...props } />
       </GasketDataProvider>
     );
   };

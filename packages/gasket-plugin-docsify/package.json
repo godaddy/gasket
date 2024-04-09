@@ -15,7 +15,7 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "posttest": "npm run lint && npm run typecheck",
-    "typecheck:skip": "tsc",
+    "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"
   },
   "repository": {

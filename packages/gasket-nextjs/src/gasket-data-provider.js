@@ -13,7 +13,7 @@ export const GasketDataContext = React.createContext({});
  */
 export const GasketDataProvider = ({ gasketData, children }) => {
   return (
-    <GasketDataContext.Provider value={gasketData}>
+    <GasketDataContext.Provider value={ gasketData }>
       {children}
     </GasketDataContext.Provider>
   );
