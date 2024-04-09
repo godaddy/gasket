@@ -1,9 +1,15 @@
 import type { MaybeMultiple, MaybeAsync } from '@gasket/engine';
 import type { SecureContextOptions } from 'tls';
-import type { Server as HttpServer } from 'http';
-import type { Server as HttpsServer } from 'https';
+import type { Agent as HttpAgent, Server as HttpServer } from 'http';
+import type { Agent as HttpsAgent, Server as HttpsServer } from 'https';
 import type { SecureServerOptions, Http2Server } from 'http2';
 import type { TerminusOptions, HealthCheckError } from '@godaddy/terminus';
+
+type RequireAtLeastOne<T, Keys extends keyof T = keyof T> =
+  Pick<T, Exclude<keyof T, Keys>>
+  & {
+    [K in Keys]-?: Required<Pick<T, K>> & Partial<Pick<T, Exclude<Keys, K>>>
+  }[Keys];
 
 declare module '@gasket/engine' {
   type BaseListenerConfig = {
@@ -23,19 +29,59 @@ declare module '@gasket/engine' {
     honorCipherOrder?: boolean
   };
 
-  type HttpsSettings = 
+  type HttpsSettings =
     & CustomHttpsSettings
     & Omit<
       SecureContextOptions,
       keyof CustomHttpsSettings | 'secureProtocol' | 'secureOptions'
     >;
 
-  type Http2Settings = 
+  type Http2Settings =
     & CustomHttpsSettings
     & Omit<
       SecureServerOptions,
       keyof CustomHttpsSettings | 'secureProtocol' | 'secureOptions'
-    >;  
+    >;
+
+  interface BaseDevProxyConfig {
+    target?: {
+      host: string;
+      port: number;
+    };
+    forward?: {
+      host: string;
+      port: number;
+    };
+    agent?: HttpAgent | HttpsAgent;
+    ssl?: {
+      key: CertInput;
+      cert: CertInput;
+      SNICallback: (hostname: string, cb: (err: Error | null, ctx: SecureContextOptions) => void) => void;
+    };
+    ws?: boolean;
+    xfwd?: boolean;
+    secure?: boolean;
+    toProxy?: boolean;
+    prependPath?: boolean;
+    ignorePath?: boolean;
+    localAddress?: string;
+    changeOrigin?: boolean;
+    preserveHeaderKeyCase?: boolean;
+    auth?: string;
+    hostRewrite?: string;
+    autoRewrite?: boolean;
+    protocolRewrite?: string;
+    cookieDomainRewrite?: false | string | { [key: string]: string };
+    cookiePathRewrite?: false | string | { [key: string]: string };
+    headers?: Record<string, string>;
+    proxyTimeout?: number;
+    timeout?: number;
+    followRedirects?: boolean;
+    selfHandleResponse?: boolean;
+    buffer?: Buffer;
+  }
+
+  type DevProxConfig = RequireAtLeastOne<BaseDevProxyConfig, 'target' | 'forward'>;
 
   interface ServerOptions {
     hostname?: string,
@@ -50,6 +96,7 @@ declare module '@gasket/engine' {
 
   export interface GasketConfig extends ServerOptions {
     terminus?: TerminusOptions
+    devProxy?: DevProxConfig
   }
 
   type CreatedServers = {
@@ -59,6 +106,7 @@ declare module '@gasket/engine' {
   }
 
   export interface HookExecTypes {
+    devProxy(proxyConfig: DevProxConfig): MaybeAsync<DevProxConfig>,
     createServers(serveropts: ServerOptions): MaybeAsync<ServerOptions>,
     servers(servers: CreatedServers): MaybeAsync<void>,
     terminus(opts: TerminusOptions): MaybeAsync<TerminusOptions>,
