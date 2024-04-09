@@ -44,8 +44,8 @@ describe('generateFiles', () => {
     mockWriteFileStub.mockResolvedValue();
     mockMkdirpStub.mockResolvedValue();
     mockGlobStub.mockResolvedValue([
-      '/gasket-cli/test/fixtures/generator/file-a.md',
-      '/gasket-cli/test/fixtures/generator/file-b.md'
+      '/create-gasket-app/test/fixtures/generator/file-a.md',
+      '/create-gasket-app/test/fixtures/generator/file-b.md'
     ]);
 
     mockContext = {
@@ -82,9 +82,9 @@ describe('generateFiles', () => {
   it('reads expected source files', async () => {
     await generateFiles(mockContext);
     expect(mockReadFileStub)
-      .toHaveBeenCalledWith(expect.stringContaining('gasket-cli/test/fixtures/generator/file-a.md'), expect.any(Object));
+      .toHaveBeenCalledWith(expect.stringContaining('create-gasket-app/test/fixtures/generator/file-a.md'), expect.any(Object));
     expect(mockReadFileStub)
-      .toHaveBeenCalledWith(expect.stringContaining('gasket-cli/test/fixtures/generator/file-b.md'), expect.any(Object));
+      .toHaveBeenCalledWith(expect.stringContaining('create-gasket-app/test/fixtures/generator/file-b.md'), expect.any(Object));
   });
 
   it('writes expected target files', async () => {
@@ -228,7 +228,7 @@ describe('generateFiles', () => {
       const results = await generateFiles._getDescriptors(mockContext);
       expect(results[0]).toEqual(
         expect.objectContaining({
-          srcFile: expect.stringContaining('/gasket-cli/test/fixtures/generator/file-a.md')
+          srcFile: expect.stringContaining('/create-gasket-app/test/fixtures/generator/file-a.md')
         }));
     });
 
@@ -236,7 +236,7 @@ describe('generateFiles', () => {
       const results = await generateFiles._getDescriptors(mockContext);
       expect(results[0]).toEqual(
         expect.objectContaining({
-          pattern: expect.stringContaining('/gasket-cli/test/fixtures/generator/*'),
+          pattern: expect.stringContaining('/create-gasket-app/test/fixtures/generator/*'),
           base: expect.stringMatching(/.+fixtures\/generator$/)
         }));
     });
@@ -252,9 +252,9 @@ describe('generateFiles', () => {
       expect(results).toHaveLength(1);
       expect(results[0]).toEqual(
         expect.objectContaining({
-          pattern: expect.stringContaining('/gasket-cli/test/fixtures/generator/.*'),
+          pattern: expect.stringContaining('/create-gasket-app/test/fixtures/generator/.*'),
           base: expect.stringMatching(/.+fixtures\/generator$/),
-          srcFile: expect.stringContaining('/gasket-cli/test/fixtures/generator/.dot-file-a.md'),
+          srcFile: expect.stringContaining('/create-gasket-app/test/fixtures/generator/.dot-file-a.md'),
           targetFile: '/path/to/my-app/.dot-file-a.md',
           target: '.dot-file-a.md',
           from: '@gasket/plugin-hidden-example'
@@ -272,9 +272,9 @@ describe('generateFiles', () => {
       expect(results).toHaveLength(1);
       expect(results[0]).toEqual(
         expect.objectContaining({
-          pattern: expect.stringContaining('/gasket-cli/test/fixtures/generator/other/*'),
+          pattern: expect.stringContaining('/create-gasket-app/test/fixtures/generator/other/*'),
           base: expect.stringMatching(/.+fixtures\/generator\/other$/),
-          srcFile: expect.stringContaining('/gasket-cli/test/fixtures/generator/other/file-b.md.template'),
+          srcFile: expect.stringContaining('/create-gasket-app/test/fixtures/generator/other/file-b.md.template'),
           targetFile: '/path/to/my-app/file-b.md',
           target: 'file-b.md',
           from: '@gasket/plugin-template-example'
@@ -319,9 +319,9 @@ describe('generateFiles', () => {
       expect(results).toHaveLength(2);
       expect(results[0]).toEqual(
         expect.objectContaining({
-          pattern: expect.stringContaining('/gasket-cli/test/fixtures/generator/override/*'),
+          pattern: expect.stringContaining('/create-gasket-app/test/fixtures/generator/override/*'),
           base: expect.stringMatching(/.+fixtures\/generator\/override$/),
-          srcFile: expect.stringContaining('/gasket-cli/test/fixtures/generator/override/file-a.md'),
+          srcFile: expect.stringContaining('/create-gasket-app/test/fixtures/generator/override/file-a.md'),
           targetFile: '/path/to/my-app/file-a.md',
           target: 'file-a.md',
           from: '@gasket/plugin-override-example',
@@ -337,17 +337,17 @@ describe('generateFiles', () => {
       const results = generateFiles._assembleDescriptors(
         '/path/to/my-app',
         from,
-        '/gasket-cli/test/fixtures/rel/../generator/*',
+        '/create-gasket-app/test/fixtures/rel/../generator/*',
         [
-          '/gasket-cli/test/fixtures/generator/file-a.md',
-          '/gasket-cli/test/fixtures/generator/file-b.md'
+          '/create-gasket-app/test/fixtures/generator/file-a.md',
+          '/create-gasket-app/test/fixtures/generator/file-b.md'
         ]
       );
       expect(results[0]).toEqual(
         expect.objectContaining({
-          pattern: expect.stringContaining('/gasket-cli/test/fixtures/rel/../generator/*'),
+          pattern: expect.stringContaining('/create-gasket-app/test/fixtures/rel/../generator/*'),
           base: expect.stringMatching(/.+fixtures\/generator$/),
-          srcFile: expect.stringContaining('/gasket-cli/test/fixtures/generator/file-a.md'),
+          srcFile: expect.stringContaining('/create-gasket-app/test/fixtures/generator/file-a.md'),
           targetFile: '/path/to/my-app/file-a.md',
           target: 'file-a.md',
           from
@@ -362,26 +362,26 @@ describe('generateFiles', () => {
         // mixed slashes for testing
         'C:\\path\\to/my-app',
         from,
-        'C:/gasket-cli/test/fixtures/rel/../generator/*',
+        'C:/create-gasket-app/test/fixtures/rel/../generator/*',
         [
-          'C:\\gasket-cli\\test\\fixtures\\generator\\file-a.md',
+          'C:\\create-gasket-app\\test\\fixtures\\generator\\file-a.md',
           // glob may return with forward-slash
-          'C:/gasket-cli/test/fixtures/generator/file-b.md'
+          'C:/create-gasket-app/test/fixtures/generator/file-b.md'
         ]
       );
 
       expect(results[0]).toEqual(
         expect.objectContaining({
-          pattern: 'C:/gasket-cli/test/fixtures/rel/../generator/*',
-          base: expect.stringContaining('C:\\gasket-cli\\test\\fixtures\\generator'),
-          srcFile: expect.stringContaining('C:\\gasket-cli\\test\\fixtures\\generator\\file-a.md'),
+          pattern: 'C:/create-gasket-app/test/fixtures/rel/../generator/*',
+          base: expect.stringContaining('C:\\create-gasket-app\\test\\fixtures\\generator'),
+          srcFile: expect.stringContaining('C:\\create-gasket-app\\test\\fixtures\\generator\\file-a.md'),
           targetFile: 'C:\\path\\to\\my-app\\file-a.md',
           target: 'file-a.md',
           from
         }));
       expect(results[1]).toEqual(
         expect.objectContaining({
-          srcFile: expect.stringContaining('C:\\gasket-cli\\test\\fixtures\\generator\\file-b.md'),
+          srcFile: expect.stringContaining('C:\\create-gasket-app\\test\\fixtures\\generator\\file-b.md'),
           targetFile: 'C:\\path\\to\\my-app\\file-b.md',
           target: 'file-b.md',
           from

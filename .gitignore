@@ -75,3 +75,6 @@ packages/gasket-cli/test/fixtures/create/*
 !packages/gasket-cli/test/fixtures/create/.gitkeep
 packages/gasket-cli/oclif.manifest.json
 packages/gasket-cli/.cache
+packages/create-gasket-app/.cache
+packages/create-gasket-app/test/fixtures/create/*
+!packages/create-gasket-app/test/fixtures/create/.gitkeep
