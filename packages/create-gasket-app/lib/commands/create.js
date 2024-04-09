@@ -4,22 +4,22 @@ const chalk = require('chalk');
 const makeCreateContext = require('../scaffold/create-context');
 const dumpErrorContext = require('../scaffold/dump-error-context');
 const {
-  mkDir,
-  loadPreset,
+  applyPresetConfig,
   cliVersion,
+  createHooks,
+  generateFiles,
   globalPrompts,
-  setupPkg,
-  writePkg,
   installModules,
   linkModules,
   loadPkgForDebug,
-  promptHooks,
-  createHooks,
+  loadPreset,
+  mkDir,
   postCreateHooks,
-  generateFiles,
+  printReport,
+  promptHooks,
+  setupPkg,
   writeGasketConfig,
-  applyPresetConfig,
-  printReport
+  writePkg
 } = require('../scaffold/actions');
 
 /**
