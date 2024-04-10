@@ -4,8 +4,7 @@ require('../lib/utils/setup')();
 const pkg = require('../package.json');
 const { Command } = require('commander');
 const program = new Command();
-const CreateCommand = require('../lib/commands/create');
-const { processCommand, logo, warnIfOutdated } = require('../lib/utils');
+const { logo, warnIfOutdated } = require('../lib/utils');
 const init = require('../lib/init');
 
 // Create Gasket CLI
@@ -22,11 +21,13 @@ const gasketBin = program
 async function run() {
   const cmd = process.argv[2];
   const isFlag = cmd && cmd.charAt(0) === '-';
-  const { command, hidden, isDefault } = processCommand(CreateCommand);
   await warnIfOutdated(pkg.name, pkg.version);
-  gasketBin.addCommand(command, { hidden, isDefault });
 
-  if (cmd === 'create' || isFlag) return await gasketBin.parseAsync();
+  if (cmd === 'create') {
+    return console.warn('The create command has been removed. Use npx create-gasket-app instead.');
+  }
+
+  if (isFlag) return await gasketBin.parseAsync();
 
   await init({
     id: process.argv[2],

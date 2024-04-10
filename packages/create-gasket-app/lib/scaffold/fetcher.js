@@ -5,7 +5,7 @@ const tar = require('tar-fs');
 const zlib = require('zlib');
 const pump = require('pump');
 const mkdirp = require('mkdirp');
-const debug = require('diagnostics')('gasket:cli:fetcher');
+const debug = require('diagnostics')('gasket:create-gasket-app:fetcher');
 const { PackageManager } = require('@gasket/utils');
 
 /**

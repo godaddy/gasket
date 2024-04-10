@@ -1,5 +1,5 @@
 /* eslint-disable max-statements */
-const debug = require('diagnostics')('gasket:cli:generate-files');
+const debug = require('diagnostics')('gasket:create-gasket-app:generate-files');
 const fs = require('fs').promises;
 const { promisify } = require('util');
 const Handlebars = require('handlebars');

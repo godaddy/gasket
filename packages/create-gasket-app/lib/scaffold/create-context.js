@@ -142,7 +142,7 @@ module.exports = function makeCreateContext(argv = [], options = {}) {
     'config-file': configFile
   } = options;
 
-  // Flatten the array of array created by the plugins flag – it
+  // Flatten the array of array created by the plugins flag – it
   // supports both multiple instances as well as comma-separated lists.
   const rawPresets = presets.reduce(flatten, []);
   const localPresets = presetPath.reduce(flatten, []);
