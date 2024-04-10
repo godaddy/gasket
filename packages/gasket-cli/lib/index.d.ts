@@ -3,6 +3,7 @@ import type { PackageManager } from '@gasket/utils';
 import type { Command } from 'commander';
 
 /**
+ * https://godaddy-corp.atlassian.net/browse/PFX-572
  * TODO: Determine is these types should
  * be in create-gasket-app or gasket-cli
  */
