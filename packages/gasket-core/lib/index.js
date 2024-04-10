@@ -13,6 +13,7 @@ import { applyConfigOverrides } from '@gasket/utils';
 function getEnvironment(
   // flags, commandId, warn
 ) {
+  // TODO: enable if cli commands and flags are to be used with v7
   // if (flags.env) {
   //   debug('Environment was passed through command line flags', flags.env);
   //   return flags.env;
@@ -23,6 +24,7 @@ function getEnvironment(
     return GASKET_ENV;
   }
 
+  // TODO: enable if cli commands and flags are to be used with v7
   // // special snowflake case to match up `local` env with command unless set
   // if (commandId === 'local') {
   //   debug('Environment defaulting to `local` due to `local` command');
