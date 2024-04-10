@@ -2,6 +2,10 @@ import type { GasketConfigDefinition, MaybeAsync } from '@gasket/engine';
 import type { PackageManager } from '@gasket/utils';
 import type { Command } from 'commander';
 
+/**
+ * TODO: Determine is these types should
+ * be in create-gasket-app or gasket-cli
+ */
 export interface Config {
   /* Commander instance */
   bin: Command;
