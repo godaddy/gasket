@@ -1,9 +1,10 @@
-import { GasketConfigFile } from '@gasket/engine';
+import { GasketConfigDefinition } from '@gasket/engine';
 import '@gasket/plugin-docusaurus';
 
 describe('@gasket/plugin-docusaurus', () => {
   it('adds a docusaurus config section', () => {
-    const config: GasketConfigFile = {
+    const config: GasketConfigDefinition = {
+      plugins: [{ name: 'example-plugin', hooks: {} }],
       docusaurus: {
         rootDir: 'docs',
         docsDir: 'docs',

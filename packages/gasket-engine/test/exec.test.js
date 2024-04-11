@@ -5,10 +5,6 @@ async function pause(ms) {
 describe('The exec method', () => {
   let engine, hookASpy, hookBSpy;
 
-  const mockConfig = {
-    some: 'config'
-  };
-
   const pluginA = {
     name: 'pluginA',
     hooks: {
@@ -83,18 +79,8 @@ describe('The exec method', () => {
     hookASpy = jest.spyOn(pluginA.hooks, 'eventA');
     hookBSpy = jest.spyOn(pluginB.hooks, 'eventA');
 
-    const { Loader } = require('@gasket/resolve');
-    jest.spyOn(Loader.prototype, 'loadConfigured').mockImplementation(() => {
-      return {
-        plugins: [
-          { module: pluginA },
-          { module: pluginB }
-        ]
-      };
-    });
-
-    const PluginEngine = require('..');
-    engine = new PluginEngine(mockConfig);
+    const GasketEngine = require('..');
+    engine = new GasketEngine([pluginA, pluginB]);
   });
 
   afterEach(() => {
@@ -102,11 +88,11 @@ describe('The exec method', () => {
     jest.restoreAllMocks();
   });
 
-  it('passes the gasket config to each hook', async () => {
+  it('passes the gasket instance to each hook', async () => {
     await engine.exec('eventA');
 
-    expect(hookASpy.mock.calls[0][0]).toHaveProperty('config', mockConfig);
-    expect(hookBSpy.mock.calls[0][0]).toHaveProperty('config', mockConfig);
+    expect(hookASpy).toHaveBeenCalledWith(engine);
+    expect(hookBSpy).toHaveBeenCalledWith(engine);
   });
 
   it('awaits sync or async hooks and resolves an Array', async () => {

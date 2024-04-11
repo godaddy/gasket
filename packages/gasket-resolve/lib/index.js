@@ -2,7 +2,7 @@ const { Resolver } = require('./resolver');
 const { Loader } = require('./loader');
 const { pluginIdentifier, presetIdentifier } = require('./identifiers');
 const { projectIdentifier } = require('./package-identifier');
-const { loadGasketConfigFile, assignPresetConfig } = require('./config');
+const { loadGasketConfigDefinition, assignPresetConfig } = require('./config');
 const { flattenPresets } = require('./preset-utils');
 
 module.exports = {
@@ -11,7 +11,7 @@ module.exports = {
   pluginIdentifier,
   presetIdentifier,
   projectIdentifier,
-  loadGasketConfigFile,
+  loadGasketConfigDefinition,
   assignPresetConfig,
   flattenPresets
 };

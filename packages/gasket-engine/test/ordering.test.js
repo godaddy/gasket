@@ -1,27 +1,18 @@
 function setupLoadedPlugins(withOrderingSpecs) {
   return Object.entries(withOrderingSpecs).map(([name, timing]) => ({
-    module: {
-      name,
-      hooks: {
-        event: {
-          timing,
-          handler: () => name
-        }
+    name,
+    hooks: {
+      event: {
+        timing,
+        handler: () => name
       }
     }
   }));
 }
 
 function setupEngine(plugins) {
-  const { Loader } = require('@gasket/resolve');
-  jest.spyOn(Loader.prototype, 'loadConfigured').mockImplementation(() => {
-    return {
-      plugins
-    };
-  });
-
-  const PluginEngine = require('..');
-  return new PluginEngine({});
+  const GasketEngine = require('..');
+  return new GasketEngine(plugins);
 }
 
 async function verify({ withOrderingSpecs, expectOrder, expectError }) {
@@ -83,25 +74,6 @@ describe('Plugin hook ordering', () => {
         teste: null
       },
       expectOrder: ['testa', 'teste', 'testd', 'testb', 'testc']
-    });
-  });
-
-  it('normalizes plugins to be long name', () => {
-    return verify({
-      withOrderingSpecs: {
-        '@gasket/plugin-testa': null,
-        '@gasket/plugin-testb': null,
-        'gasket-plugin-testc': null,
-        'gasket-plugin-testd': { after: ['teste', '@gasket/testa'], before: ['@gasket/testb', 'testc'] },
-        'gasket-plugin-teste': null
-      },
-      expectOrder: [
-        '@gasket/plugin-testa',
-        'gasket-plugin-teste',
-        'gasket-plugin-testd',
-        '@gasket/plugin-testb',
-        'gasket-plugin-testc'
-      ]
     });
   });
 

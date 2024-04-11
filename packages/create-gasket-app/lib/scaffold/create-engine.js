@@ -1,5 +1,5 @@
 const path = require('path');
-const PluginEngine = require('@gasket/engine');
+const GasketEngine = require('@gasket/engine');
 const defaultPlugins = require('../config/default-plugins');
 
 module.exports  = async function createEngine({ dest, presets = [], plugins = [] }) {
@@ -13,7 +13,7 @@ module.exports  = async function createEngine({ dest, presets = [], plugins = []
     root: dest
   };
 
-  const engine = new PluginEngine(engineConfig, { resolveFrom });
+  const engine = new GasketEngine(engineConfig, { resolveFrom });
   engine.command = { id: 'create' };
   await engine.exec('init');
 

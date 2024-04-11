@@ -1,11 +1,12 @@
-import type { Gasket, GasketConfigFile, Plugin } from '@gasket/engine';
+import type { Gasket, GasketConfigDefinition, Plugin } from '@gasket/engine';
 import '@gasket/preset-api';
 
 describe('@gasket/preset-api', () => {
   const { log } = console;
 
   it('imports config type injections for all plugins', () => {
-    const config: GasketConfigFile = {
+    const config: GasketConfigDefinition = {
+      plugins: [{ name: 'example-plugin', hooks: {} }],
       http: 8080,
       compression: true,
       swagger: {

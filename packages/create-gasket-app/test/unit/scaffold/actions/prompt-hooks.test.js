@@ -116,7 +116,7 @@ describe('promptHooks', () => {
       expect(mockInstallStub).not.toHaveBeenCalled();
     });
 
-    it('re-instantiates PluginEngine with only newly added plugins', async () => {
+    it('re-instantiates GasketEngine with only newly added plugins', async () => {
       await mockAddPlugins('@gasket/plugin-jest@^1.2.3');
       expect(mockEngineStub).toHaveBeenCalledWith(expect.objectContaining({ plugins: ['@gasket/jest'] }));
     });

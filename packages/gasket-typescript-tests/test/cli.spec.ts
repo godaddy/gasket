@@ -20,7 +20,8 @@ describe('@gasket/cli', () => {
         'generator/**/*'
       );
 
-      gasketConfig.add('plugins', { add: ['@my/gasket-plugin'] });
+      // TODO: need to support statements with generating gasket config
+      // gasketConfig.add('plugins', { add: ['@my/gasket-plugin'] });
 
       await pkgManager.exec('echo', ['hello', 'world']);
     };

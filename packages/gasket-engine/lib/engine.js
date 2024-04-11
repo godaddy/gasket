@@ -1,19 +1,18 @@
 const debug = require('debug')('gasket:engine');
-const { Loader, pluginIdentifier } = require('@gasket/resolve');
 
 let dynamicNamingId = 0;
-const isModulePath = /^[/.]|^[a-zA-Z]:\\/;
 
-class PluginEngine {
-  constructor(config, { resolveFrom } = {}) {
-    this.config = config || {};
-    this.loader = new Loader({ resolveFrom });
+class GasketEngine {
+  constructor(plugins) {
+    if (!plugins || !Array.isArray(plugins) || !plugins.length) {
+      throw new Error('An array of plugins is required');
+    }
 
     this._hooks = {};
     this._plans = {};
     this._traceDepth = 0;
 
-    this._registerPlugins();
+    this._registerPlugins(plugins);
     this._registerHooks();
 
     // Allow methods to be called without context (to support destructuring)
@@ -27,21 +26,21 @@ class PluginEngine {
    * Resolves plugins
    * @private
    */
-  _registerPlugins() {
-    const { plugins } = this.loader.loadConfigured(this.config.plugins);
+  _registerPlugins(plugins) {
 
-    // map the plugin name to module content
-    // if loaded from a file path, prefer module.name
-    // otherwise, prefer package name and normalize to long name form
-    this._plugins = plugins
-      .reduce((acc, pluginInfo) => {
-        let keyName;
-        if (isModulePath.test(pluginInfo.name)) {
-          keyName = pluginInfo.module.name ? pluginIdentifier(pluginInfo.module.name).longName : pluginInfo.name;
-        } else {
-          keyName = pluginIdentifier(pluginInfo.name || pluginInfo.module.name).longName;
+    // map the plugin name to module contents for easy lookup
+    this._pluginMap = plugins
+      .reduce((acc, plugin) => {
+        // TODO: throw if plugin is not an object
+        const { name, hooks } = plugin;
+        if (!name) {
+          throw new Error('Plugin must have a name');
         }
-        acc[keyName] = pluginInfo.module;
+        if (!hooks) {
+          throw new Error(`Plugin (${name}) must have a hooks`);
+        }
+
+        acc[name] = plugin;
         return acc;
       }, {});
   }
@@ -52,15 +51,14 @@ class PluginEngine {
    */
   _registerHooks() {
     Object
-      .entries(this._plugins)
+      .entries(this._pluginMap)
       .forEach(([pluginName, plugin]) => {
         const { dependencies = [], hooks } = plugin;
 
         dependencies
-          .forEach(rawName => {
-            const name = pluginIdentifier(rawName).longName;
-            if (!(name in this._plugins)) {
-              throw new Error(`Missing dependency ${rawName} of plugin '${pluginName}'`);
+          .forEach(name => {
+            if (!(name in this._pluginMap)) {
+              throw new Error(`Missing dependency ${name} of plugin '${pluginName}'`);
             }
           });
 
@@ -100,17 +98,13 @@ class PluginEngine {
    */
   hook({ event, pluginName, timing, handler }) {
     const hookConfig = this._getHookConfig(event);
-    const { first, last, before, after } = timing || {};
-
-    // normalize to long name form
-    const beforeNorm = (before || []).map(rawName => pluginIdentifier(rawName).longName);
-    const afterNorm = (after || []).map(rawName => pluginIdentifier(rawName).longName);
+    const { first, last, before = [], after = [] } = timing || {};
 
     hookConfig.subscribers[pluginName || `dynamic-${dynamicNamingId++}`] = {
       ordering: {
         first: !!first,
-        before: beforeNorm,
-        after: afterNorm,
+        before,
+        after,
         last: !!last
       },
       callback: handler.bind(null, this)
@@ -361,7 +355,7 @@ class PluginEngine {
               .all(subscribers[plugin].ordering.after.map(dep => pluginTasks[dep]))
               .then(() => {
                 trace(plugin);
-                return fn(this._plugins[plugin], subscribers[plugin].callback);
+                return fn(this._pluginMap[plugin], subscribers[plugin].callback);
               });
             return pluginTasks[plugin];
           };
@@ -395,7 +389,7 @@ class PluginEngine {
         this._executeInOrder(hookConfig, plugin => {
           executionPlan.push(fn => {
             trace(plugin);
-            return fn(this._plugins[plugin], subscribers[plugin].callback);
+            return fn(this._pluginMap[plugin], subscribers[plugin].callback);
           });
         });
         return executionPlan;
@@ -526,4 +520,4 @@ class PluginEngine {
   }
 }
 
-module.exports = PluginEngine;
+module.exports = GasketEngine;
