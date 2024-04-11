@@ -74,13 +74,18 @@ class Gasket extends GasketEngine {
     config.env = env;
     config.root ??= process.cwd();
 
+    // start the engine
     super(config.plugins);
+
+    this.config = config;
     this.command = null;
-    this.config = this.execWaterfallSync('configure', config);
+    this.execSync('init');
     this.actions = registerActions(this);
+    this.config = this.execWaterfallSync('configure', config);
   }
 }
 
+// TODO: Add JSDoc types
 export function makeGasket(gasketConfigDefinition) {
   return new Gasket(gasketConfigDefinition);
 }

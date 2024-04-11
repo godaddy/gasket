@@ -11,8 +11,8 @@ custom logger: `@gasket/plugin-winston`.
 
 ### createLogger
 
-To implement a custom logger, hook the `createLogger` lifecycle. Your hook,
-which may be asynchronous, must return an object with this shape:
+To implement a custom logger, hook the `createLogger` lifecycle.
+Your hook must be synchronous and return an object with this shape:
 
 ```typescript
 type Logger = {

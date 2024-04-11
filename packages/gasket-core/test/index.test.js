@@ -77,7 +77,7 @@ describe('makeGasket', () => {
     expect(gasket).toBeInstanceOf(GasketEngine);
   });
 
-  describe('config', () => {
+  describe('config lifecycle', () => {
 
     it('applies env overrides', () => {
       process.env.GASKET_ENV = 'production';
@@ -130,9 +130,39 @@ describe('makeGasket', () => {
       expect(gasket.config).not.toEqual(inputConfig);
       expect(gasket.config).toHaveProperty('mockStage', 'configure hook');
     });
+
+    it('actions are available to configure', () => {
+      const mockAction = jest.fn();
+
+      makeGasket({
+        plugins: [
+          {
+            name: 'plugin-a',
+            hooks: {
+              configure(gasket, config) {
+                gasket.actions.mockAction();
+                return config;
+              }
+            }
+          },
+          {
+            name: 'plugin-b',
+            hooks: {
+              actions() {
+                return {
+                  mockAction
+                };
+              }
+            }
+          }
+        ]
+      });
+
+      expect(mockAction).toHaveBeenCalled();
+    });
   });
 
-  describe('actions', () => {
+  describe('actions lifecycle', () => {
     it('executes actions lifecycle', () => {
       const gasket = makeGasket(inputConfig);
       expect(mockPlugin.hooks.actions).toHaveBeenCalledWith(
@@ -173,6 +203,59 @@ describe('makeGasket', () => {
         "Action 'doSomething' from 'mockPlugin' was registered by 'firstMockPlugin'"
       );
       expect(doSomething()).toEqual('first in!!');
+    });
+  });
+
+  describe('init lifecycle', () => {
+
+
+    it('init attachments are available to actions and to configure', () => {
+      const mockAction = jest.fn();
+      const mockAttached = jest.fn();
+
+      makeGasket({
+        plugins: [
+          {
+            name: 'plugin-a',
+            hooks: {
+              configure(gasket, config) {
+                gasket.attached('from configure');
+                gasket.actions.mockAction();
+                return config;
+              }
+            }
+          },
+          {
+            name: 'plugin-b',
+            hooks: {
+              actions(gasket) {
+                gasket.attached('from actions');
+                mockAction.mockImplementation(() => {
+                  gasket.attached('from within action');
+                });
+
+                return {
+                  mockAction
+                };
+              }
+            }
+          },
+          {
+            name: 'plugin-c',
+            hooks: {
+              init(gasket) {
+                gasket.attached = mockAttached;
+              }
+            }
+          }
+        ]
+      });
+
+      expect(mockAction).toHaveBeenCalled();
+      expect(mockAttached).toHaveBeenCalledTimes(3);
+      expect(mockAttached).toHaveBeenCalledWith('from configure');
+      expect(mockAttached).toHaveBeenCalledWith('from actions');
+      expect(mockAttached).toHaveBeenCalledWith('from within action');
     });
   });
 });

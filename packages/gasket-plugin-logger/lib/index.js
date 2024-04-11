@@ -23,8 +23,9 @@ function verifyLoggerLevels(logger) {
 module.exports = {
   name,
   hooks: {
-    async init(gasket) {
-      const loggers = await gasket.exec('createLogger');
+    init(gasket) {
+      // eslint-disable-next-line no-sync
+      const loggers = gasket.execSync('createLogger');
       if (!loggers || loggers.length === 0) {
         gasket.logger = {
           debug: console.debug,
@@ -51,7 +52,7 @@ module.exports = {
         lifecycles: [
           {
             name: 'createLogger',
-            method: 'exec',
+            method: 'execSync',
             description: 'Custom logger creation',
             link: 'README.md#createLogger',
             parent: 'init'
