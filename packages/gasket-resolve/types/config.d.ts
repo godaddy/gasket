@@ -1,8 +1,8 @@
-import type { GasketConfigFile } from '@gasket/engine';
+import type { GasketConfigDefinition } from '@gasket/engine';
 
-export function loadGasketConfigFile(
+export function loadGasketConfigDefinition(
   root: string,
   env: string,
   commandId: string,
   configFile?: string
-): Promise<GasketConfigFile>
+): Promise<GasketConfigDefinition>

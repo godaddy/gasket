@@ -6,6 +6,7 @@ const { pluginIdentifier } = require('@gasket/resolve');
 const { setupNextApp, setupNextHandling } = require('./setup-next-app');
 const getNextRoute = require('./next-route');
 const apmTransaction = require('./apm-transaction');
+const configure = require('./configure');
 const metadata = require('./metadata');
 
 const isDefined = (o) => typeof o !== 'undefined';
@@ -14,29 +15,21 @@ module.exports = {
   dependencies: ['@gasket/plugin-webpack'],
   name,
   hooks: {
-    /**
-     * Set up configuration.
-     *
-     * If the service worker plugin, only the _app entry is configured to be
-     * injected with registration script.
-     *
-     * @param {Gasket} gasket - Gasket
-     * @param {Object} baseConfig - Base gasket config
-     * @returns {Object} config
-     */
-    configure: {
-      timing: {
-        first: true // Fixup next -> nextConfig early for reference by other plugins
-      },
-      handler: function configure(gasket, baseConfig = {}) {
-        const { nextConfig = {} } = baseConfig;
-
-        const serviceWorker = {
-          webpackRegister: (key) => /_app/.test(key),
-          ...(baseConfig.serviceWorker || {})
-        };
-        return { ...baseConfig, serviceWorker, nextConfig };
-      }
+    configure,
+    actions(gasket) {
+      return {
+        getNextConfig(nextConfig) {
+          return async function setupNextConfig(phase, { defaultConfig }) {
+            let baseConfig;
+            if (nextConfig instanceof Function) {
+              baseConfig = await nextConfig(phase, { defaultConfig });
+            } else {
+              baseConfig = nextConfig ?? {};
+            }
+            return createConfig(gasket, phase === 'phase-production-build', baseConfig);
+          };
+        }
+      };
     },
     async prompt(gasket, context, { prompt }) {
       if (!('addSitemap' in context)) {

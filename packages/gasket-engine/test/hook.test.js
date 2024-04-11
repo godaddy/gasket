@@ -1,10 +1,6 @@
 describe('The hook method', () => {
   let engine, dynamicHook;
 
-  const mockConfig = {
-    some: 'config'
-  };
-
   beforeEach(() => {
     dynamicHook = jest.fn();
 
@@ -18,17 +14,8 @@ describe('The hook method', () => {
         }
       };
 
-    const { Loader } = require('@gasket/resolve');
-    jest.spyOn(Loader.prototype, 'loadConfigured').mockImplementation(() => {
-      return {
-        plugins: [
-          { module: pluginA }
-        ]
-      };
-    });
-
-    const PluginEngine = require('..');
-    engine = new PluginEngine(mockConfig);
+    const GasketEngine = require('..');
+    engine = new GasketEngine([pluginA]);
   });
 
   afterEach(() => {

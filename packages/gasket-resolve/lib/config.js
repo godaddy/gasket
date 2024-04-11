@@ -7,7 +7,7 @@ const jsExtension = /\.(js|cjs)$/i;
 
 const debug = require('diagnostics')('gasket:resolve:config');
 
-async function loadGasketConfigFile(root, env, commandId, configFile = 'gasket.config') {
+async function loadGasketConfigDefinition(root, env, commandId, configFile = 'gasket.config') {
   let gasketConfig = loadConfigFile(root, configFile);
   if (gasketConfig) {
     gasketConfig.root = root;
@@ -86,7 +86,7 @@ function assignPresetConfig(gasket) {
 }
 
 module.exports = {
-  loadGasketConfigFile,
+  loadGasketConfigDefinition,
   assignPresetConfig,
   addUserPlugins
 };

@@ -1,10 +1,6 @@
 describe('The execSync method', () => {
   let engine;
 
-  const mockConfig = {
-    some: 'config'
-  };
-
   beforeEach(() => {
     const pluginA = {
       name: 'pluginA',
@@ -24,18 +20,8 @@ describe('The execSync method', () => {
       }
     };
 
-    const { Loader } = require('@gasket/resolve');
-    jest.spyOn(Loader.prototype, 'loadConfigured').mockImplementation(() => {
-      return {
-        plugins: [
-          { module: pluginA },
-          { module: pluginB }
-        ]
-      };
-    });
-
-    const PluginEngine = require('../lib/engine');
-    engine = new PluginEngine(mockConfig);
+    const GasketEngine = require('../lib/engine');
+    engine = new GasketEngine([pluginA, pluginB]);
   });
 
   afterEach(() => {

@@ -1,11 +1,12 @@
 import type { IncomingMessage, OutgoingMessage } from 'http';
-import type { Gasket, GasketConfigFile, Hook } from '@gasket/engine';
+import type { Gasket, GasketConfigDefinition, Hook } from '@gasket/engine';
 import type { Store } from 'redux';
 import '@gasket/plugin-redux';
 
 describe('@gasket/plugin-redux', () => {
   it('adds a redux config property to Gasket', () => {
-    const config: GasketConfigFile = {
+    const config: GasketConfigDefinition = {
+      plugins: [{ name: 'example-plugin', hooks: {} }],
       redux: {
         makeStore: './relative/path/to/customMakeStore.js',
         initState: {

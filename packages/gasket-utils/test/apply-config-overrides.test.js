@@ -6,7 +6,6 @@ describe('applyConfigOverrides', () => {
   beforeEach(() => {
     mockContext = {
       env: 'dev',
-      root: __dirname,
       commandId: 'start'
     };
     mockConfig = {
@@ -176,19 +175,6 @@ describe('applyConfigOverrides', () => {
       someService: {
         url: 'https://some-local-test.url/',
         requestRate: 9000
-      }
-    });
-  });
-
-  it('load locale override file for local env when set', () => {
-    mockContext.env = 'local';
-    mockContext.localFile = './fixtures/config.local';
-
-    results = applyConfigOverrides(mockConfig, mockContext);
-    expect(results).toEqual({
-      localsOnly: true,
-      someService: {
-        url: 'https://some-test.url/'
       }
     });
   });

@@ -1,9 +1,10 @@
-import type { GasketConfigFile, Plugin } from '@gasket/engine';
+import type { GasketConfigDefinition, Plugin } from '@gasket/engine';
 import '@gasket/plugin-workbox';
 
 describe('@gasket/plugin-workbox', () => {
   it('adds a workbox config section to Gasket', () => {
-    const config: GasketConfigFile = {
+    const config: GasketConfigDefinition = {
+      plugins: [{ name: 'example-plugin', hooks: {} }],
       workbox: {
         config: {
           runtimeCaching: [{

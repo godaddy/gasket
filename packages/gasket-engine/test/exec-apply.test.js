@@ -7,10 +7,6 @@ describe('The execApply method', () => {
     }
   };
 
-  const mockConfig = {
-    some: 'config'
-  };
-
   const pluginA = {
     name: 'pluginA',
     hooks: {
@@ -44,19 +40,8 @@ describe('The execApply method', () => {
     hookBSpy = jest.spyOn(pluginB.hooks, 'eventA');
     hookCSpy = jest.spyOn(pluginC.hooks.eventA, 'handler');
 
-    const { Loader } = require('@gasket/resolve');
-    jest.spyOn(Loader.prototype, 'loadConfigured').mockImplementation(() => {
-      return {
-        plugins: [
-          { module: pluginA },
-          { module: pluginB },
-          { module: pluginC }
-        ]
-      };
-    });
-
-    const PluginEngine = require('../lib/engine');
-    engine = new PluginEngine(mockConfig);
+    const GasketEngine = require('../lib/engine');
+    engine = new GasketEngine([pluginA, pluginB, pluginC]);
   });
 
   afterEach(() => {
@@ -64,14 +49,14 @@ describe('The execApply method', () => {
     jest.restoreAllMocks();
   });
 
-  it('passes the gasket config to each hook', async () => {
+  it('passes the gasket instance to each hook', async () => {
     await engine.execApply('eventA', async (plugin, handler) => {
       return handler(new Wrapper(plugin));
     });
 
-    expect(hookASpy.mock.calls[0][0]).toHaveProperty('config', mockConfig);
-    expect(hookBSpy.mock.calls[0][0]).toHaveProperty('config', mockConfig);
-    expect(hookCSpy.mock.calls[0][0]).toHaveProperty('config', mockConfig);
+    expect(hookASpy).toHaveBeenCalledWith(engine, expect.any(Wrapper));
+    expect(hookBSpy).toHaveBeenCalledWith(engine, expect.any(Wrapper));
+    expect(hookCSpy).toHaveBeenCalledWith(engine, expect.any(Wrapper));
   });
 
   it('awaits sync or async hooks and resolves an Array', async () => {

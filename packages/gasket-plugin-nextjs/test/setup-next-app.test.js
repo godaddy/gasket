@@ -27,12 +27,6 @@ describe('setupNextApp', () => {
     expect(gasket.exec).toHaveBeenCalledWith('next', nextHandler);
   });
 
-  it('does not derive a webpack config if not running a dev server', async () => {
-    await module.setupNextApp(gasket);
-    const nextOptions = mockNext.mock.calls[mockNext.mock.calls.length - 1][0];
-    expect(nextOptions.conf).not.toHaveProperty('webpack');
-  });
-
   describe('devServer mode', () => {
     it('creates devServer when gasket command is local', async function () {
       gasket = mockGasketApi();
@@ -40,7 +34,6 @@ describe('setupNextApp', () => {
       await module.setupNextApp(gasket);
       expect(mockNext).toHaveBeenCalledWith({
         dev: true,
-        conf: expect.any(Object),
         hostname: 'localhost',
         port: 3000
       });
@@ -52,7 +45,6 @@ describe('setupNextApp', () => {
       await module.setupNextApp(gasket);
       expect(mockNext).toHaveBeenCalledWith({
         dev: true,
-        conf: expect.any(Object),
         hostname: 'localhost',
         port: 3000
       });
@@ -63,7 +55,6 @@ describe('setupNextApp', () => {
       await module.setupNextApp(gasket);
       expect(mockNext).toHaveBeenCalledWith({
         dev: false,
-        conf: expect.any(Object),
         hostname: 'localhost',
         port: 3000
       });
@@ -76,7 +67,6 @@ describe('setupNextApp', () => {
       await module.setupNextApp(gasket);
       expect(mockNext).toHaveBeenCalledWith({
         dev: false,
-        conf: expect.any(Object),
         hostname: 'localhost',
         port: 80
       });
@@ -90,7 +80,6 @@ describe('setupNextApp', () => {
       await module.setupNextApp(gasket);
       expect(mockNext).toHaveBeenCalledWith({
         dev: false,
-        conf: expect.any(Object),
         hostname: 'localhost',
         port: 8080
       });

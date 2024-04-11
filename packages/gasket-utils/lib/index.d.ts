@@ -1,4 +1,4 @@
-import type { GasketConfig } from '@gasket/engine';
+import type { GasketConfig, GasketConfigDefinition } from '@gasket/engine';
 
 /**
  * Wrapper class for executing commands for a given package manager
@@ -49,15 +49,11 @@ export function tryRequire(path: string): object|null;
  * @param context - Context for applying overrides
  * @param context.env - Name of environment
  * @param [context.commandId] - Name of command
- * @param [context.root] - Project root; required if using localeFile
- * @param [context.localFile] - Optional file to load relative to gasket root
  * @returns config
  */
-export function applyConfigOverrides(config: GasketConfig, { env, commandId, root, localFile }: {
+export function applyConfigOverrides(config: GasketConfigDefinition, { env, commandId }: {
   env: string;
   commandId?: string;
-  root?: string;
-  localFile?: string;
 }): GasketConfig;
 
 /**

@@ -1,10 +1,6 @@
 describe('The execMap method', () => {
   let engine, hookASpy, hookBSpy, hookCSpy;
 
-  const mockConfig = {
-    some: 'config'
-  };
-
   const pluginA = {
     name: 'pluginA',
     hooks: {
@@ -38,19 +34,8 @@ describe('The execMap method', () => {
     hookBSpy = jest.spyOn(pluginB.hooks, 'eventA');
     hookCSpy = jest.spyOn(pluginC.hooks.eventA, 'handler');
 
-    const { Loader } = require('@gasket/resolve');
-    jest.spyOn(Loader.prototype, 'loadConfigured').mockImplementation(() => {
-      return {
-        plugins: [
-          { module: pluginA },
-          { module: pluginB },
-          { module: pluginC }
-        ]
-      };
-    });
-
-    const PluginEngine = require('..');
-    engine = new PluginEngine(mockConfig);
+    const GasketEngine = require('..');
+    engine = new GasketEngine([pluginA, pluginB, pluginC]);
   });
 
   afterEach(() => {
@@ -61,14 +46,14 @@ describe('The execMap method', () => {
   it('passes the gasket config to each hook', async () => {
     await engine.execMap('eventA');
 
-    expect(hookASpy.mock.calls[0][0]).toHaveProperty('config', mockConfig);
-    expect(hookBSpy.mock.calls[0][0]).toHaveProperty('config', mockConfig);
-    expect(hookCSpy.mock.calls[0][0]).toHaveProperty('config', mockConfig);
+    expect(hookASpy).toHaveBeenCalledWith(engine);
+    expect(hookBSpy).toHaveBeenCalledWith(engine);
+    expect(hookCSpy).toHaveBeenCalledWith(engine);
   });
 
   it('awaits sync or async hooks and resolves a map object', async () => {
     const result = await engine.execMap('eventA');
-    expect(result).toEqual({ 'gasket-plugin-pluginA': 1, 'gasket-plugin-pluginB': 2, 'gasket-plugin-pluginC': 3 });
+    expect(result).toEqual({ pluginA: 1, pluginB: 2, pluginC: 3 });
   });
 
   it('resolves to an empty object if nothing hooked the event', async () => {
@@ -81,6 +66,6 @@ describe('The execMap method', () => {
 
     const result = await execMap('eventA');
 
-    expect(result).toEqual({ 'gasket-plugin-pluginA': 1, 'gasket-plugin-pluginB': 2, 'gasket-plugin-pluginC': 3 });
+    expect(result).toEqual({ pluginA: 1, pluginB: 2, pluginC: 3 });
   });
 });

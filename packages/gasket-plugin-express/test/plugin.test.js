@@ -248,19 +248,17 @@ describe('createServers', () => {
 
   it('supports async middleware hooks', async () => {
     const middleware = Symbol();
-    gasket = new GasketEngine({
-      plugins: {
-        add: [
-          plugin,
-          {
-            name: '@mock/gasket-plugin',
-            hooks: {
-              middleware: async () => middleware
-            }
-          }
-        ]
+    gasket = new GasketEngine([
+      plugin,
+      {
+        name: '@mock/gasket-plugin',
+        hooks: {
+          middleware: async () => middleware
+        }
       }
-    });
+    ]);
+
+    gasket.config = {};
 
     await gasket.exec('createServers');
 
@@ -285,7 +283,8 @@ describe('createServers', () => {
   it('adds errorMiddleware from lifecycle (ignores falsy)', async () => {
     await plugin.hooks.createServers(gasket, {});
     expect(app.use).toHaveBeenCalledTimes(4);
-    lifecycles.errorMiddleware.mockResolvedValue([() => {}, null]);
+    lifecycles.errorMiddleware.mockResolvedValue([() => {
+    }, null]);
     app.use.mockClear();
     await plugin.hooks.createServers(gasket, {});
     expect(app.use).toHaveBeenCalledTimes(5);

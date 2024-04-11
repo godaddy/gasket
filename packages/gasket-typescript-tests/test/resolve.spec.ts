@@ -6,10 +6,10 @@ import {
   PluginInfo,
   PresetInfo,
   ModuleInfo,
-  loadGasketConfigFile,
+  loadGasketConfigDefinition,
   flattenPresets, assignPresetConfig
 } from '@gasket/resolve';
-import { Gasket, GasketConfigFile } from '@gasket/engine';
+import { Gasket, GasketConfigDefinition } from '@gasket/engine';
 
 describe('@gasket/resolve', () => {
   const perform = false;
@@ -161,9 +161,9 @@ describe('@gasket/resolve', () => {
     });
   });
 
-  describe('loadGasketConfigFile', function () {
+  describe('loadGasketConfigDefinition', function () {
     it('has expected signature', function () {
-      const config: Promise<GasketConfigFile> = loadGasketConfigFile('.', 'dev', 'build', 'gasket.config');
+      const config: Promise<GasketConfigDefinition> = loadGasketConfigDefinition('.', 'dev', 'build', 'gasket.config');
     });
   });
 

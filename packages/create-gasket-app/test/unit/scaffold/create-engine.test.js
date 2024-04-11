@@ -4,7 +4,7 @@ const path = require('path');
 const defaultPlugins = require('../../../lib/config/default-plugins');
 
 jest.mock('@gasket/engine', () => {
-  return class PluginEngine {
+  return class GasketEngine {
     constructor() {
       mockConstructorStub(...arguments);
     }
@@ -29,7 +29,7 @@ describe('createEngine', () => {
     jest.clearAllMocks();
   });
 
-  it('instantiates PluginEngine with preset from context in array', async () => {
+  it('instantiates GasketEngine with preset from context in array', async () => {
     await createEngine(mockOpts);
     expect(mockConstructorStub).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -39,7 +39,7 @@ describe('createEngine', () => {
     );
   });
 
-  it('instantiates PluginEngine if no preset in context', async () => {
+  it('instantiates GasketEngine if no preset in context', async () => {
     mockOpts = {
       dest: '/some/path/my-app'
     };
@@ -53,7 +53,7 @@ describe('createEngine', () => {
     );
   });
 
-  it('instantiates PluginEngine with built-in git-plugin', async () => {
+  it('instantiates GasketEngine with built-in git-plugin', async () => {
     await createEngine(mockOpts);
     expect(mockConstructorStub).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -65,7 +65,7 @@ describe('createEngine', () => {
     );
   });
 
-  it('instantiates PluginEngine with plugins from context', async () => {
+  it('instantiates GasketEngine with plugins from context', async () => {
     await createEngine(mockOpts);
     expect(mockConstructorStub).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -77,7 +77,7 @@ describe('createEngine', () => {
     );
   });
 
-  it('instantiates PluginEngine if no plugins in context', async () => {
+  it('instantiates GasketEngine if no plugins in context', async () => {
     mockOpts = {
       dest: '/some/path/my-app'
     };
@@ -93,7 +93,7 @@ describe('createEngine', () => {
     );
   });
 
-  it('instantiates PluginEngine with resolveFrom options', async () => {
+  it('instantiates GasketEngine with resolveFrom options', async () => {
     mockOpts = {
       dest: '/some/path/my-app'
     };

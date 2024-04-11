@@ -41,13 +41,13 @@ declare module '@gasket/engine' {
 
   // This is the config
   export interface GasketConfig {
-    root: string,
+    plugins: Array<Plugin>
+    root: string
     env: string
   }
 
   export default class GasketEngine {
-    constructor(config: GasketConfigFile, context?: { resolveFrom?: string });
-    config: GasketConfig;
+    constructor(plugins: Array<Plugin>);
 
     exec<Id extends HookId>(
       hook: Id,
@@ -56,7 +56,7 @@ declare module '@gasket/engine' {
     execSync<Id extends HookId>(
       hook: Id,
       ...args: Parameters<HookExecTypes[Id]>
-    ): Promise<ResolvedType<ReturnType<HookExecTypes[Id]>>[]>;
+    ): ResolvedType<ReturnType<HookExecTypes[Id]>>[];
     execWaterfall<Id extends HookId>(
       hook: Id,
       ...args: Parameters<HookExecTypes[Id]>
@@ -86,6 +86,7 @@ declare module '@gasket/engine' {
     command: {
       id: string
     }
+    config: GasketConfig;
   }
 
   type PartialRecursive<T> =
@@ -93,18 +94,9 @@ declare module '@gasket/engine' {
       ? { [K in keyof T]?: PartialRecursive<T[K]> } | undefined
       : T | undefined
 
-  type Plugins = {
-    plugins?: {
-      presets?: Array<string>;
-      add?: Array<string | Plugin>;
-      remove?: Array<string>;
-    };
-  };
-
-  export type GasketConfigFile = Omit<GasketConfig, 'root' | 'env' | 'command'> & Plugins & {
-    root?: string,
-    env?: string,
-
-    environments?: Record<string, PartialRecursive<GasketConfig & Plugins>>
+  export type GasketConfigDefinition = Omit<GasketConfig, 'root' | 'env' | 'command'> & {
+    root?: string
+    env?: string
+    environments?: Record<string, Partial<GasketConfigDefinition>>
   }
 }

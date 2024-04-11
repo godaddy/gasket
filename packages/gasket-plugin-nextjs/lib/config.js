@@ -1,4 +1,4 @@
-const { initWebpack } = require('@gasket/plugin-webpack');
+const defaultsDeep = require('lodash.defaultsdeep');
 
 /**
  * Bring forward configuration from intl plugin to config for next.
@@ -43,16 +43,16 @@ function forwardIntlConfig(gasket, config) {
  *
  * @param   {Gasket}  gasket                The gasket API.
  * @param   {Boolean} includeWebpackConfig  `true` to generate webpack config
- * @returns {Promise<Object>} The configuration data for Nextjs
+ * @param   {Object} [baseConfig]           Initial next config
+ * @returns {Object} The configuration data for Nextjs
  * @private
  */
-function createConfig(gasket, includeWebpackConfig = true) {
-  const { nextConfig = {} } = gasket.config;
-
-  const config = {
-    poweredByHeader: false,
-    ...nextConfig
-  };
+function createConfig(gasket, includeWebpackConfig = true, nextConfig = {}) {
+  const config = defaultsDeep(
+    nextConfig,
+    (gasket.config?.nextConfig || {}),
+    { poweredByHeader: false }
+  );
 
   forwardIntlConfig(gasket, config);
 
@@ -65,11 +65,12 @@ function createConfig(gasket, includeWebpackConfig = true) {
       if (typeof existingWebpack === 'function') {
         webpackConfig = existingWebpack(webpackConfig, data);
       }
-      return initWebpack(gasket, webpackConfig, data);
+      return gasket.actions.getWebpackConfig(webpackConfig, data);
     };
   }
 
-  return gasket.execWaterfall('nextConfig', config);
+  // eslint-disable-next-line no-sync
+  return gasket.execWaterfallSync('nextConfig', config);
 }
 
 module.exports = {
