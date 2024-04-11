@@ -40,8 +40,86 @@ array of the Gasket configuration.
 
 ## Lifecycles
 
-When a new Gasket is created, there are two lifecycles executed: [configure] and
-[actions].
+When a new Gasket is created, there are three lifecycles executed in the
+following order:
+1. [init]
+2. [actions]
+3. [configure]
+
+### init
+
+The `init` lifecycle allows the earliest entry to setting up a Gasket instance.
+It can be used for setting up an initial state.
+
+```js
+// gasket-plugin-example.mjs
+
+export const name = 'gasket-plugin-example';
+
+let _initializedTime;
+
+export const hooks = {
+  init(gasket) {
+    _initializedTime = Date.now();
+  }
+};
+```
+
+While it is possible to attach properties to the `gasket` instance, it is not
+recommended.
+If a plugin needs to make properties available to other plugins, it should
+register an action that can be executed to retrieve the value.
+
+```diff
+// gasket-plugin-example.mjs
+
+export const name = 'gasket-plugin-example';
+
+let _initializedTime;
+
+export const hooks = {
+  init(gasket) {
+-    gasket.initializedTime = Date.now();
++    _initializedTime = Date.now();
+  },
++  actions() {
++    return {
++      getInitializedTime() {
++        return _initializedTime;
++      }
++    }
++  },
+  configure(gasket) {
+-    const time = gasket.initializedTime;
++    const time = gasket.actions.getInitializedTime();
+  }
+};
+```
+
+### actions
+
+The `actions` lifecycle is the second lifecycle executed when a Gasket is created.
+This will let plugins register actions that can be fired by the application code
+where the Gasket is imported, or in other plugins.
+
+```js
+// gasket-plugin-example.mjs
+
+export const name = 'gasket-plugin-example';
+
+export const hooks = {
+  actions(gasket) {
+    return {
+      async getDoodads() {
+        if(gasket.config.example) {
+          const dodaads = await gasket.exec('dodaads');
+          return dodaads.flat()
+        }
+      }
+    }
+  }
+};
+```
 
 ### configure
 
@@ -62,30 +140,6 @@ export const hooks = {
       ...gasketConfig,
       example: true
     };
-  }
-};
-```
-
-### actions
-
-The `actions` lifecycle is the second lifecycle executed when a Gasket is created.
-This lets plugins register actions that can be fired by the application code.
-
-```js
-// gasket-plugin-example.mjs
-
-export const name = 'gasket-plugin-example';
-
-export const hooks = {
-  actions(gasket) {
-    return {
-      async getDoodads() {
-        if(gasket.config.example) {
-          const dodaads = await gasket.exec('dodaads');
-          return dodaads.flat()
-        }
-      }
-    }
   }
 };
 ```

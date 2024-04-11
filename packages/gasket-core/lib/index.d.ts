@@ -12,8 +12,9 @@ declare module '@gasket/engine' {
   }
 
   export interface HookExecTypes {
-    configure(config: GasketConfig): GasketConfig
+    init(): void
     actions(): GasketActions
+    configure(config: GasketConfig): GasketConfig
   }
 }
 
