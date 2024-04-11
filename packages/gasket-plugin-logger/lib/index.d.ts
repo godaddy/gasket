@@ -16,6 +16,6 @@ declare module '@gasket/engine' {
   }
 
   export interface HookExecTypes {
-    createLogger(): MaybeAsync<Logger>
+    createLogger(): Logger
   }
 }
