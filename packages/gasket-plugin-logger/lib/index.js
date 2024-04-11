@@ -23,8 +23,8 @@ function verifyLoggerLevels(logger) {
 module.exports = {
   name,
   hooks: {
-    async init(gasket) {
-      const loggers = await gasket.exec('createLogger');
+    init(gasket) {
+      const loggers = gasket.execSync('createLogger');
       if (!loggers || loggers.length === 0) {
         gasket.logger = {
           debug: console.debug,
