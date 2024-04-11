@@ -1,5 +1,4 @@
 /* eslint-disable no-console, no-process-env */
-// @ts-check
 /// <reference types="./index" />
 
 import GasketEngine from '@gasket/engine';
@@ -42,7 +41,7 @@ function getEnvironment(
 }
 /* eslint-enable no-console, no-process-env */
 
-
+// TODO: Add JSDoc types
 function registerActions(instance) {
   const actions = {};
   const actionPluginMap = {};
