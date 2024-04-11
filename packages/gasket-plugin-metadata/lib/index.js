@@ -12,6 +12,7 @@ const {
 module.exports = {
   name: require('../package').name,
   hooks: {
+    // TODO: convert to a getMetadata action
     async init(gasket) {
       const { loader, config } = gasket;
       const { root = process.cwd() } = config;
