@@ -11,12 +11,12 @@
       "dom"
     ],
     "types": [
-      "@types/jest",
-      "@types/node"
+      "@types/jest"
     ]
   },
   "exclude": [
     "test",
-    "coverage"
+    "coverage",
+    "generator"
   ]
 }

@@ -11,12 +11,15 @@
       "dom"
     ],
     "types": [
-      "@types/jest",
-      "@types/node"
+      "@types/jest"
     ]
   },
+  "include": [
+    "src"
+  ],
   "exclude": [
     "test",
-    "coverage"
+    "coverage",
+    "lib"
   ]
 }

@@ -11,8 +11,7 @@
       "dom"
     ],
     "types": [
-      "@types/jest",
-      "@types/node"
+      "@types/jest"
     ]
   },
   "exclude": [

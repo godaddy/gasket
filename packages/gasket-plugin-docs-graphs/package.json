@@ -2,7 +2,7 @@
   "name": "@gasket/plugin-docs-graphs",
   "version": "6.45.0",
   "description": "Generate mermaid graphs of an applications gasket lifecycles",
-  "main": "lib/index.js",
+  "main": "lib/plugin.js",
   "files": [
     "lib"
   ],
@@ -13,7 +13,7 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "posttest": "npm run lint && npm run typecheck",
-    "typecheck:skip": "tsc",
+    "typecheck": "tsc",
     "typecheck:watch": "tsc --watch",
     "report": "nyc report --reporter=lcov"
   },

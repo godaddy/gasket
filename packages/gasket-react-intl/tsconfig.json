@@ -12,11 +12,15 @@
     ],
     "types": [
       "@types/jest",
-      "@types/node"
+      "@types/node",
     ]
   },
+  "include": [
+    "src"
+  ],
   "exclude": [
     "test",
-    "coverage"
+    "coverage",
+    "lib"
   ]
 }

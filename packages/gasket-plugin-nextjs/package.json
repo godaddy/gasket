@@ -15,7 +15,9 @@
     "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "posttest": "npm run lint"
+    "posttest": "npm run lint && npm run typecheck",
+    "typecheck": "tsc",
+    "typecheck:watch": "tsc --watch"
   },
   "repository": {
     "type": "git",
@@ -40,7 +42,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-nextjs",
   "dependencies": {
-    "@gasket/plugin-webpack": "^6.46.2",
+    "@gasket/plugin-webpack": "^6.45.0",
     "@gasket/resolve": "^6.46.2",
     "fastify": "^4.25.2"
   },
@@ -52,7 +54,7 @@
     "babel-eslint": "^10.1.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
-    "eslint-config-godaddy": "^7.0.2",
+    "eslint-config-godaddy": "^7.1.0",
     "eslint-config-godaddy-react": "^9.0.1",
     "eslint-plugin-jest": "^27.6.3",
     "eslint-plugin-json": "^3.1.0",
@@ -63,7 +65,8 @@
     "next-redux-wrapper": "^8.0.0",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "typescript": "^5.4.2"
   },
   "peerDependencies": {
     "@gasket/plugin-webpack": "^6.45.0",
@@ -75,13 +78,15 @@
   "eslintConfig": {
     "extends": [
       "godaddy",
-      "plugin:jest/recommended"
+      "plugin:jest/recommended",
+      "plugin:jsdoc/recommended-typescript-flavor"
     ],
     "globals": {
       "expect": "readonly"
     },
     "plugins": [
-      "unicorn"
+      "unicorn",
+      "jsdoc"
     ],
     "rules": {
       "unicorn/filename-case": "error"
