@@ -52,7 +52,7 @@ module.exports = {
         lifecycles: [
           {
             name: 'createLogger',
-            method: 'exec',
+            method: 'execSync',
             description: 'Custom logger creation',
             link: 'README.md#createLogger',
             parent: 'init'
