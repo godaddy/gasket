@@ -31,6 +31,13 @@ application code.
 With a Gasket, you can fire **actions** that will trigger **lifecycles** hooked
 by plugins which encapsulate functionality allowing reuse across many applications.
 
+### Registered plugins
+
+A plugin is a module that exports a `name` and `hooks` object
+(See [Plugins Guide]).
+In your `gasket.mjs` file, you can import plugins and add them to the `plugins`
+array of the Gasket configuration.
+
 ## Lifecycles
 
 When a new Gasket is created, there are two lifecycles executed: [configure] and
@@ -40,7 +47,7 @@ When a new Gasket is created, there are two lifecycles executed: [configure] and
 
 The `configure` lifecycle is the first lifecycle executed when a Gasket is
 instantiated.
-This allows any registered plugin to adjust the configuration before further
+This allows any [registered plugins] to adjust the configuration before further
 lifecycles are executed.
 
 ```js
@@ -87,3 +94,6 @@ In this example, we register an action `getDoodads` that will only execute if th
 `example` configuration is set to `true`.
 It will then execute the `doodads` lifecycle, allowing any registered plugin to
 provide doodads.
+
+[registered plugins]: #registered-plugins
+[Plugins Guide]:/packages/gasket-cli/docs/plugins.md
