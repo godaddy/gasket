@@ -24,10 +24,7 @@ module.exports = {
   name,
   hooks: {
     init(gasket) {
-<<<<<<< HEAD
-=======
       // eslint-disable-next-line no-sync
->>>>>>> 90cfb36d22f061bd34fb9c1cacc0029173574ad9
       const loggers = gasket.execSync('createLogger');
       if (!loggers || loggers.length === 0) {
         gasket.logger = {

@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-/* eslint-disable no-console, no-sync, max-nested-callbacks */
-=======
 /* eslint-disable no-console, no-sync */
->>>>>>> 90cfb36d22f061bd34fb9c1cacc0029173574ad9
 const { name, hooks } = require('../lib'); // Update the path accordingly
 
 // Mock console methods
@@ -81,10 +77,7 @@ describe('@gasket/plugin-logger', () => {
         const fakeLogger2 = { error: jest.fn() };
         gasket.execSync.mockReturnValue([fakeLogger1, fakeLogger2]);
 
-<<<<<<< HEAD
-=======
         // eslint-disable-next-line max-nested-callbacks
->>>>>>> 90cfb36d22f061bd34fb9c1cacc0029173574ad9
         expect(() => hooks.init(gasket)).toThrow(
           'Multiple plugins are hooking createLogger. Only one logger is supported.'
         );
