@@ -108,7 +108,7 @@ describe('@gasket/plugin-logger', () => {
             lifecycles: expect.arrayContaining([
               expect.objectContaining({
                 name: 'createLogger',
-                method: 'exec',
+                method: 'execSync',
                 description: 'Custom logger creation',
                 link: 'README.md#createLogger',
                 parent: 'init'
