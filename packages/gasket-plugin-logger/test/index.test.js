@@ -2,10 +2,10 @@
 const { name, hooks } = require('../lib'); // Update the path accordingly
 
 // Mock console methods
-jest.spyOn(console, 'error').mockImplementation(() => { });
-jest.spyOn(console, 'warn').mockImplementation(() => { });
-jest.spyOn(console, 'info').mockImplementation(() => { });
-jest.spyOn(console, 'debug').mockImplementation(() => { });
+jest.spyOn(console, 'error').mockImplementation(() => {});
+jest.spyOn(console, 'warn').mockImplementation(() => {});
+jest.spyOn(console, 'info').mockImplementation(() => {});
+jest.spyOn(console, 'debug').mockImplementation(() => {});
 
 // Mock logger object
 const mockLogger = {
@@ -38,13 +38,16 @@ describe('@gasket/plugin-logger', () => {
       it('should set logger from the first plugin if only one logger is hooked', async () => {
         const fakeLogger = { ...mockLogger };
         gasket.exec.mockResolvedValue([fakeLogger]);
-        await hooks.actions(gasket).createLogger();
+
+        await hooks.init(gasket);
+
         expect(gasket.logger).toEqual(fakeLogger);
       });
 
       it('should set logger to default if no loggers are hooked', async () => {
         gasket.exec.mockResolvedValue([]);
-        await hooks.actions(gasket).createLogger();
+
+        await hooks.init(gasket);
 
         // Check default logger behavior
         const childLogger = gasket.logger.child({ key: 'value' });
@@ -74,9 +77,17 @@ describe('@gasket/plugin-logger', () => {
         const fakeLogger2 = { error: jest.fn() };
         gasket.exec.mockResolvedValue([fakeLogger1, fakeLogger2]);
 
-        await expect(hooks.actions(gasket).createLogger()).rejects.toThrow(
+        await expect(hooks.init(gasket)).rejects.toThrow(
           'Multiple plugins are hooking createLogger. Only one logger is supported.'
         );
+      });
+    });
+
+    describe('actions', () => {
+      it('should return getLogger action', () => {
+        const actions = hooks.actions(gasket);
+
+        expect(actions.getLogger()).toBe(gasket.logger);
       });
     });
 
