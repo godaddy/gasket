@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+/* eslint-disable no-console, no-sync, max-nested-callbacks */
 const { name, hooks } = require('../lib'); // Update the path accordingly
 
 // Mock console methods
@@ -29,7 +29,7 @@ describe('@gasket/plugin-logger', () => {
 
     beforeEach(() => {
       gasket = {
-        exec: jest.fn(),
+        execSync: jest.fn(),
         logger: null
       };
     });
@@ -37,7 +37,7 @@ describe('@gasket/plugin-logger', () => {
     describe('init', () => {
       it('should set logger from the first plugin if only one logger is hooked', async () => {
         const fakeLogger = { ...mockLogger };
-        gasket.exec.mockResolvedValue([fakeLogger]);
+        gasket.execSync.mockReturnValue([fakeLogger]);
 
         await hooks.init(gasket);
 
@@ -45,7 +45,7 @@ describe('@gasket/plugin-logger', () => {
       });
 
       it('should set logger to default if no loggers are hooked', async () => {
-        gasket.exec.mockResolvedValue([]);
+        gasket.execSync.mockReturnValue([]);
 
         await hooks.init(gasket);
 
@@ -72,12 +72,12 @@ describe('@gasket/plugin-logger', () => {
         });
       });
 
-      it('should throw an error if multiple loggers are hooked', async () => {
+      it('should throw an error if multiple loggers are hooked', () => {
         const fakeLogger1 = { error: jest.fn() };
         const fakeLogger2 = { error: jest.fn() };
-        gasket.exec.mockResolvedValue([fakeLogger1, fakeLogger2]);
+        gasket.execSync.mockReturnValue([fakeLogger1, fakeLogger2]);
 
-        await expect(hooks.init(gasket)).rejects.toThrow(
+        expect(() => hooks.init(gasket)).toThrow(
           'Multiple plugins are hooking createLogger. Only one logger is supported.'
         );
       });

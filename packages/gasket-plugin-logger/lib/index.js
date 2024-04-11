@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+/* eslint-disable no-console, no-sync */
 const { name } = require('../package.json');
 
 function createChildLogger(parent, metadata) {
