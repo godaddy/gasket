@@ -149,5 +149,8 @@ In this example, we register an action `getDoodads` that will only execute if th
 It will then execute the `doodads` lifecycle, allowing any registered plugin to
 provide doodads.
 
+[init]: #init 
+[actions]: #actions 
+[configure]: #configure 
 [registered plugins]: #registered-plugins
 [Plugins Guide]:/packages/gasket-cli/docs/plugins.md
