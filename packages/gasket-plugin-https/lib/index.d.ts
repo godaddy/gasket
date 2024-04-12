@@ -81,7 +81,7 @@ declare module '@gasket/engine' {
     buffer?: Buffer;
   }
 
-  type DevProxConfig = RequireAtLeastOne<BaseDevProxyConfig, 'target' | 'forward'>;
+  type DevProxyConfig = RequireAtLeastOne<BaseDevProxyConfig, 'target' | 'forward'>;
 
   interface ServerOptions {
     hostname?: string,
@@ -96,7 +96,7 @@ declare module '@gasket/engine' {
 
   export interface GasketConfig extends ServerOptions {
     terminus?: TerminusOptions
-    devProxy?: DevProxConfig
+    devProxy?: DevProxyConfig
   }
 
   type CreatedServers = {
@@ -106,7 +106,7 @@ declare module '@gasket/engine' {
   }
 
   export interface HookExecTypes {
-    devProxy(proxyConfig: DevProxConfig): MaybeAsync<DevProxConfig>,
+    devProxy(proxyConfig: DevProxyConfig): MaybeAsync<DevProxyConfig>,
     createServers(serveropts: ServerOptions): MaybeAsync<ServerOptions>,
     servers(servers: CreatedServers): MaybeAsync<void>,
     terminus(opts: TerminusOptions): MaybeAsync<TerminusOptions>,
