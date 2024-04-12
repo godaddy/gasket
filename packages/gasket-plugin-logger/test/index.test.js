@@ -72,7 +72,7 @@ describe('@gasket/plugin-logger', () => {
         });
       });
 
-      it('should throw an error if multiple loggers are hooked', async () => {
+      it('should throw an error if multiple loggers are hooked', () => {
         const fakeLogger1 = { error: jest.fn() };
         const fakeLogger2 = { error: jest.fn() };
         gasket.execSync.mockReturnValue([fakeLogger1, fakeLogger2]);
@@ -81,6 +81,14 @@ describe('@gasket/plugin-logger', () => {
         expect(() => hooks.init(gasket)).toThrow(
           'Multiple plugins are hooking createLogger. Only one logger is supported.'
         );
+      });
+    });
+
+    describe('actions', () => {
+      it('should return getLogger action', () => {
+        const actions = hooks.actions(gasket);
+
+        expect(actions.getLogger()).toBe(gasket.logger);
       });
     });
 

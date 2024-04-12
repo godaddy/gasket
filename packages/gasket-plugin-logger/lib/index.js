@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+/* eslint-disable no-console, no-sync */
 const { name } = require('../package.json');
 
 function createChildLogger(parent, metadata) {
@@ -42,6 +42,11 @@ module.exports = {
         verifyLoggerLevels(loggers[0]);
         gasket.logger = loggers[0];
       }
+    },
+    actions(gasket) {
+      return {
+        getLogger: () => gasket.logger
+      };
     },
     async onSignal(gasket) {
       await gasket.logger?.close?.();
