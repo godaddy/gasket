@@ -4,7 +4,7 @@ Plugin engine for Gasket. This is used internally by the Gasket CLI.
 
 ## What is a Plugin?
 
-A plugin a a module in the `gasket` ecosystem that provides a unit of
+A plugin is a module in the `gasket` ecosystem that provides a unit of
 functionality. Some plugins are core to the overall application, others
 optional.
 
@@ -108,46 +108,24 @@ Additionally, if an app specifies a plugin directly in the gasket.config using
 ## Direct Usage
 
 This package is used internally by the Gasket CLI, so you probably do not need
-to use this directly. If you do, instantiate an engine, passing in the
-`gasket.config.js` export.
+to use this directly. If you do, instantiate an engine by passing in plugins.
 
 ```js
-const PluginEngine = require('@gasket/engine');
-const gasketConfig = require('../gasket.config');
+import GasketEngine from '@gasket/engine';
+import MyPlugin from './my-plugin';
 
-const pluginEngine = new PluginEngine(gasketConfig, context);
+const engine = new GasketEngine([MyPlugin]);
 ```
 
 The plugin engine will parse the configuration, import the configured plugins,
 and register their hooks. The engine instance is the same
 [GasketAPI](#gasketapi) object passed to hook handlers.
 
-## PluginEngine `context`
-
-Execution of plugins through a `PluginEngine` instance is dependent on the
-`context` of that operation. Currently the `context` consists of:
-
-- `resolveFrom`: absolute path to prepend to any `moduleName` before attempting
-  resolution with `require`.
-
-e.g.
-
-```js
-const PluginEngine = require('@gasket/engine');
-
-const path = require('path');
-const resolveFrom = path.resolve('./someapp');
-const gasketConfig = require(path.join(resolveFrom, 'gasket.config'));
-
-const pluginEngine = new PluginEngine(gasketConfig, { resolveFrom });
-```
-
-The above will resolve all Plugins and Presets from within `./someapp` instead
-of resolving relative to the current directory.
-
 ## Tracing
 
-The Gasket engine uses the [`debug`](https://www.npmjs.com/package/debug) package to trace the plugin lifecycle. If you set the `DEBUG` environment variable to `gasket:engine` you'll see additional output in `stderr` indicating when things are invoked.
+The Gasket engine uses the [`debug`](https://www.npmjs.com/package/debug) package to trace the plugin lifecycle.
+If you set the `DEBUG` environment variable to `gasket:engine` you'll see
+additional output in `stderr` indicating when things are invoked.
 
 ## License
 

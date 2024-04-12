@@ -119,12 +119,11 @@ Adjust and configure `devProxy` options for a proxy server during local developm
  * @return {Object} devProxy config
  */
 devProxy: async function devProxy(gasket, devProxyConfig) {
-  if (!devProxyConfig.protocol) devProxyConfig.protocol = 'https';
-  if (!devProxyConfig.hostname) devProxyConfig.hostname = 'local.gasket.dev-godaddy.com';
-  if (!devProxyConfig.port) devProxyConfig.port = 443;
-  if (!devProxyConfig.xfwd) devProxyConfig.xfwd = true;
-  if (!devProxyConfig.ws) devProxyConfig.ws = true;
-  return devProxyConfig;
+  return {
+    ...devProxyConfig,
+    hostname: 'local.example.com',
+    port: 8443
+  }
 }
 
 ```

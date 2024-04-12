@@ -1,17 +1,21 @@
+import { Gasket, GasketConfigDefinition } from '@gasket/engine';
+
 declare module '@gasket/engine' {
 
   export interface GasketActions {}
 
+  export interface GasketConfig {}
+
   export interface Gasket {
+    new (config: GasketConfigDefinition): Gasket
     actions: GasketActions
   }
 
   export interface HookExecTypes {
-    configure(config: GasketConfig): GasketConfig
+    init(): void
     actions(): GasketActions
+    configure(config: GasketConfig): GasketConfig
   }
 }
-
-import { Gasket, GasketConfigDefinition } from '@gasket/engine';
 
 export function makeGasket(config: GasketConfigDefinition): Gasket

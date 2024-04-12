@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+/* eslint-disable no-console, no-sync */
 const { name } = require('../package.json');
 
 function createChildLogger(parent, metadata) {
@@ -23,27 +23,29 @@ function verifyLoggerLevels(logger) {
 module.exports = {
   name,
   hooks: {
+    init(gasket) {
+      // eslint-disable-next-line no-sync
+      const loggers = gasket.execSync('createLogger');
+      if (!loggers || loggers.length === 0) {
+        gasket.logger = {
+          debug: console.debug,
+          error: console.error,
+          info: console.info,
+          warn: console.warn,
+          child: (meta) => createChildLogger(this, meta)
+        };
+      } else if (loggers.length > 1) {
+        throw new Error(
+          'Multiple plugins are hooking createLogger. Only one logger is supported.'
+        );
+      } else {
+        verifyLoggerLevels(loggers[0]);
+        gasket.logger = loggers[0];
+      }
+    },
     actions(gasket) {
       return {
-        createLogger: async function () {
-          const loggers = await gasket.exec('createLogger');
-          if (!loggers || loggers.length === 0) {
-            gasket.logger = {
-              debug: console.debug,
-              error: console.error,
-              info: console.info,
-              warn: console.warn,
-              child: (meta) => createChildLogger(this, meta)
-            };
-          } else if (loggers.length > 1) {
-            throw new Error(
-              'Multiple plugins are hooking createLogger. Only one logger is supported.'
-            );
-          } else {
-            verifyLoggerLevels(loggers[0]);
-            gasket.logger = loggers[0];
-          }
-        }
+        getLogger: () => gasket.logger
       };
     },
     async onSignal(gasket) {
@@ -55,7 +57,7 @@ module.exports = {
         lifecycles: [
           {
             name: 'createLogger',
-            method: 'exec',
+            method: 'execSync',
             description: 'Custom logger creation',
             link: 'README.md#createLogger',
             parent: 'init'

@@ -1,5 +1,4 @@
 const { devDependencies } = require('../package');
-const { pluginIdentifier } = require('@gasket/resolve');
 
 /**
  * createAppFiles
@@ -23,14 +22,13 @@ function createAppFiles({ files, generatorDir }) {
 function createTestFiles({ files, generatorDir, testPlugin }) {
   const frameworks = ['jest', 'mocha', 'cypress'];
   frameworks.forEach((tester) => {
-    if (
-      testPlugin &&
-      pluginIdentifier(testPlugin).longName === `@gasket/plugin-${tester}`
-    ) {
+    const regex = new RegExp(`${tester}`);
+    if (regex.test(testPlugin)) {
       files.add(`${generatorDir}/${tester}/*`, `${generatorDir}/${tester}/**/*`);
     }
   });
 }
+
 
 /**
  * createNextFiles - Add next.config.js & server.mjs to files

@@ -1,5 +1,4 @@
 /* eslint-disable no-console, no-process-env */
-// @ts-check
 /// <reference types="./index" />
 
 import GasketEngine from '@gasket/engine';
@@ -13,6 +12,7 @@ import { applyConfigOverrides } from '@gasket/utils';
 function getEnvironment(
   // flags, commandId, warn
 ) {
+  // TODO: enable if cli commands and flags are to be used with v7
   // if (flags.env) {
   //   debug('Environment was passed through command line flags', flags.env);
   //   return flags.env;
@@ -23,6 +23,7 @@ function getEnvironment(
     return GASKET_ENV;
   }
 
+  // TODO: enable if cli commands and flags are to be used with v7
   // // special snowflake case to match up `local` env with command unless set
   // if (commandId === 'local') {
   //   debug('Environment defaulting to `local` due to `local` command');
@@ -40,12 +41,7 @@ function getEnvironment(
 }
 /* eslint-enable no-console, no-process-env */
 
-
-/**
- * Register actions from plugins
- * @param {Gasket} instance - Gasket instance
- * @returns {import('@gasket/engine').GasketActions} actions
- */
+// TODO: Add JSDoc types
 function registerActions(instance) {
   const actions = {};
   const actionPluginMap = {};
@@ -70,23 +66,26 @@ function registerActions(instance) {
   return actions;
 }
 
-/** @type {import('@gasket/engine').Gasket} Gasket */
+// TODO: Add JSDoc types
 class Gasket extends GasketEngine {
   constructor(gasketConfig) {
-    const { plugins, ...config } = gasketConfig;
-    super(plugins);
+    const env = getEnvironment();
+    const config = applyConfigOverrides(gasketConfig, { env });
+    config.env = env;
+    config.root ??= process.cwd();
+
+    // start the engine
+    super(config.plugins);
+
+    this.config = config;
     this.command = null;
-    this.config = this.execWaterfallSync('configure', config);
+    this.execSync('init');
     this.actions = registerActions(this);
+    this.config = this.execWaterfallSync('configure', config);
   }
 }
 
-/** @type {import('.').makeGasket} makeGasket */
+// TODO: Add JSDoc types
 export function makeGasket(gasketConfigDefinition) {
-  const env = getEnvironment();
-  const config = applyConfigOverrides(gasketConfigDefinition, { env });
-  config.env = env;
-  config.root ??= process.cwd();
-
-  return new Gasket(config);
+  return new Gasket(gasketConfigDefinition);
 }
