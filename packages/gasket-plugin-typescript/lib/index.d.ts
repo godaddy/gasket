@@ -1,5 +1,5 @@
 import { MaybeAsync } from '@gasket/engine';
-import { CreateContext } from '../../create-gasket-app/lib';
+import { CreateContext } from '@gasket/cli';
 
 declare module '@gasket/engine' {
   export interface HookExecTypes {
