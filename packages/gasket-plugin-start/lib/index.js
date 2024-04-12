@@ -1,11 +1,12 @@
-const create = require('./create');
-const commands = require('./commands');
+// const create = require('./create');
+// const commands = require('./commands');
 
 module.exports = {
   name: require('../package').name,
   hooks: {
-    create,
-    commands,
+    // Comment hooks out for deprecation - TODO eval deletion
+    // create,
+    // commands,
     metadata(gasket, meta) {
       return {
         ...meta,
