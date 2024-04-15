@@ -48,7 +48,8 @@
 
 ### 2.0.0
 
-- Refactored to prompt for code styles and allow custom ESLint or stylelint configs to be set. ([#98])
+- Refactored to prompt for code styles and allow custom ESLint or stylelint
+  configs to be set. ([#98])
   - Supported code styles: [GoDaddy], [Standard], [Airbnb]
 
 ### 1.7.3
@@ -92,7 +93,6 @@
 ### 1.0.0
 
 - Initial release.
-
 
 [GoDaddy]: README.md#godaddy
 [Standard]: README.md#standard

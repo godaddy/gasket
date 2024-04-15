@@ -352,7 +352,7 @@ describe('code styles', () => {
         context.stylelintConfig = 'stylelint-config-fake@^1.2.3';
         await codeStyle.create(context, utils);
 
-        expect(pkgAdd).toHaveBeenCalledWith('stylelintConfig', {
+        expect(pkgAdd).toHaveBeenCalledWith('stylelint', {
           extends: ['stylelint-config-fake']
         });
       });
