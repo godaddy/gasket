@@ -117,7 +117,6 @@ add a FluentD transport:
 
 ```js
 // gasket.config.js
-
 module.exports = {
   winston: {
     level: 'warning'
