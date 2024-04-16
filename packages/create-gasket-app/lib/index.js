@@ -1,11 +1,12 @@
 #!/usr/bin/env node
-require('./utils/setup');
+import { Command } from 'commander';
+import { processCommand, logo, warnIfOutdated } from './utils';
+import { createCommand } from './commands/create';
+
+const require = createRequire(import.meta.url);
 const pkg = require('../package.json');
 const { Command } = require('commander');
 const program = new Command();
-const CreateCommand = require('./commands/create');
-
-const { processCommand, logo, warnIfOutdated } = require('./utils');
 
 // Create Gasket CLI
 const gasketBin = program
@@ -17,7 +18,7 @@ const gasketBin = program
 
 
 async function main() {
-  const { command, hidden, isDefault } = processCommand(CreateCommand);
+  const { command, hidden, isDefault } = processCommand(createCommand);
   await warnIfOutdated(pkg.name, pkg.version);
   gasketBin.addCommand(command, { hidden, isDefault });
 

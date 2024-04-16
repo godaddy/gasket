@@ -1,20 +1,21 @@
-const path = require('path');
-const fs = require('fs');
-const { rename, unlink } = fs.promises;
-const tar = require('tar-fs');
-const zlib = require('zlib');
-const pump = require('pump');
-const mkdirp = require('mkdirp');
-const debug = require('diagnostics')('gasket:create-gasket-app:fetcher');
-const { PackageManager } = require('@gasket/utils');
+import path from 'path';
+import fs from 'fs';
+import { rename, unlink } from 'fs/promises';
+import tar from 'tar-fs';
+import zlib from 'zlib';
+import pump from 'pump';
+import mkdirp from 'mkdirp';
+import { default as diagnostics } from 'diagnostics';
+import os from 'os';
+const debug = diagnostics('gasket:cli:fetcher');
 
 /**
  * Simple helper class that can also be re-used in tests for similar
  * file I/O operations
  */
-const Fetcher = class Fetcher {
+export const Fetcher = class Fetcher {
   constructor(opts = {}) {
-    this.dir = path.join(opts.tmp || require('os').tmpdir(), this._id());
+    this.dir = path.join(opts.tmp || os.tmpdir(), this._id());
     debug('tmpdir', this.dir);
   }
 
@@ -73,11 +74,12 @@ const Fetcher = class Fetcher {
  * @type {PackageFetcher}
  * @public
  */
-module.exports = class PackageFetcher {
+export class PackageFetcher {
   constructor(opts = {}) {
     this.cwd = opts.cwd || process.cwd();
     this.packageName = opts.packageName;
     this.tmp = new Fetcher(opts);
+    this.npmconfig = opts.npmconfig;
     debug('init', this.packageName, this.tmp.dir);
   }
 
@@ -89,7 +91,7 @@ module.exports = class PackageFetcher {
    */
   async readPackage() {
     const dest = await this.clone();
-    return require(path.join(dest, 'package.json'));
+    return await import(path.join(dest, 'package.json'));
   }
 
   /**
@@ -142,6 +144,8 @@ module.exports = class PackageFetcher {
       '--prefer-online'
     ];
 
+    if (this.npmconfig) argv.push('--userconfig', this.npmconfig);
+
     const { stdout } = await PackageManager.spawnNpm(argv, {
       cwd: dir
     }).catch(err => {
@@ -187,8 +191,3 @@ module.exports = class PackageFetcher {
     return err => { console.log(msg, context, err); };
   }
 };
-
-//
-// Expose Fetcher onto the exports for re-use
-//
-module.exports.Fetcher = Fetcher;

@@ -1,8 +1,8 @@
-const { runShellCommand } = require('@gasket/utils');
-const semver = require('semver');
-const chalk = require('chalk');
-const { readFile, writeFile } = require('fs/promises');
-const path = require('path');
+import { runShellCommand } from '@gasket/utils';
+import semver from 'semver';
+import chalk from 'chalk';
+import { readFile, writeFile } from 'fs/promises';
+import path from 'path';
 
 const cachePath = path.join(__dirname, '..', '..', '.cache'); // Place at root of gasket-cli
 const LATEST_VERSION = 'latestVersion';
@@ -55,7 +55,7 @@ async function getLatestVersion(pkgName, currentTime, cache) {
  * @param {string} pkgName - package name
  * @param {string} currentVersion - current version of the package
  */
-module.exports = async function warnIfOutdated(pkgName, currentVersion) {
+export async function warnIfOutdated(pkgName, currentVersion) {
   const currentTime = new Date().getTime();
   let cache = {};
 

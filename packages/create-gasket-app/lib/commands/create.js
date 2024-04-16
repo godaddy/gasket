@@ -1,26 +1,133 @@
 /* eslint-disable max-statements */
-const ora = require('ora');
-const chalk = require('chalk');
-const makeCreateContext = require('../scaffold/create-context');
-const dumpErrorContext = require('../scaffold/dump-error-context');
-const {
-  applyPresetConfig,
-  cliVersion,
-  createHooks,
-  generateFiles,
-  globalPrompts,
-  installModules,
-  linkModules,
-  loadPkgForDebug,
-  loadPreset,
+import ora from 'ora';
+import chalk from 'chalk';
+import { makeCreateContext } from '../scaffold/create-context.js';
+import { dumpErrorContext } from '../scaffold/dump-error-context.js';
+import {
   mkDir,
-  postCreateHooks,
-  printReport,
-  promptHooks,
+  loadPreset,
+  cliVersion,
+  globalPrompts,
   setupPkg,
+  writePkg,
+  writePkgUpdate,
+  installModules,
+  installModulesUpdate,
+  linkModules,
+  linkModulesUpdate,
+  loadPkgForDebug,
+  promptHooks,
+  createHooks,
+  postCreateHooks,
+  generateFiles,
   writeGasketConfig,
-  writePkg
-} = require('../scaffold/actions');
+  applyPresetConfig,
+  printReport
+} from '../scaffold/actions/index.js';
+
+/* eslint-disable max-statements */
+import ora from 'ora';
+import chalk from 'chalk';
+import { makeCreateContext } from '../scaffold/create-context.js';
+import { dumpErrorContext } from '../scaffold/dump-error-context.js';
+import {
+  mkDir,
+  loadPreset,
+  cliVersion,
+  globalPrompts,
+  setupPkg,
+  writePkg,
+  writePkgUpdate,
+  installModules,
+  installModulesUpdate,
+  linkModules,
+  linkModulesUpdate,
+  loadPkgForDebug,
+  promptHooks,
+  createHooks,
+  postCreateHooks,
+  generateFiles,
+  writeGasketConfig,
+  applyPresetConfig,
+  printReport
+} from '../scaffold/actions/index.js';
+
+/**
+ * bootstrap - Bootstrap the application
+ * @param {CreateContext} context - Create context
+ */
+async function bootstrap(context) {
+  await loadPreset(context);
+  cliVersion(context);
+  applyPresetConfig(context);
+  await globalPrompts(context);
+  await mkDir(context);
+  await setupPkg(context);
+  await writePkg(context);
+  await installModules(context);
+  await linkModules(context);
+}
+
+/**
+ * generate - Generate the application
+ * @param {CreateContext} context - Create context
+ */
+async function generate(context) {
+  await promptHooks(context);
+  await createHooks(context);
+  await generateFiles(context);
+  await writeGasketConfig(context);
+  await writePkgUpdate(context);
+  await installModulesUpdate(context);
+  await linkModulesUpdate(context); // relink any that were messed up by re-install
+  await postCreateHooks(context);
+}
+
+/**
+ * createCommand action
+ * @param {string} appname Required cmd arg - name of the app to create
+ * @param {object} options cmd options
+ * @param {Command} command - the command instance
+ * @returns {Promise<void>} void
+ */
+async function run(appname, options, command) {
+  const argv = [appname];
+  const parsedFlags = options;
+  const { NoBootstrap, NoGenerate } = parsedFlags;
+
+  let context;
+  try {
+    context = makeCreateContext(argv, parsedFlags);
+  } catch (error) {
+    console.error(chalk.red(error) + '\n');
+    command.help();
+  }
+
+  try {
+    if (!NoBootstrap) {
+      await bootstrap(context);
+    } else {
+      ora('Bootstrap phase skipped.').warn();
+      if (!NoGenerate) {
+        await loadPkgForDebug(context);
+      }
+    }
+
+    if (!NoGenerate) {
+      await generate(context);
+    } else {
+      ora('Generate phase skipped.').warn();
+    }
+
+    printReport(context);
+
+  } catch (err) {
+    console.error(chalk.red('Exiting with errors.'));
+    dumpErrorContext(context, err);
+    throw err;
+  }
+}
+
 
 /**
  * Parses comma separated option input to array
@@ -30,7 +137,7 @@ const {
  */
 const commasToArray = input => input.split(',').map(name => name.trim());
 
-const createCommand = {
+export const createCommand = {
   id: 'create',
   description: 'Create a new Gasket application',
   args: [
@@ -40,6 +147,7 @@ const createCommand = {
       required: true
     }
   ],
+  action: run,
   options: [
     {
       name: 'presets',
@@ -113,80 +221,3 @@ const createCommand = {
     }
   ]
 };
-
-/**
- * bootstrap - Bootstrap the application
- * @param {CreateContext} context - Create context
- */
-async function bootstrapHandler(context) {
-  await loadPreset(context);
-  cliVersion(context);
-  applyPresetConfig(context);
-  await globalPrompts(context);
-  await mkDir(context);
-  await setupPkg(context);
-  await writePkg(context);
-  await installModules(context);
-  await linkModules(context);
-}
-
-/**
- * generate - Generate the application
- * @param {CreateContext} context - Create context
- */
-async function generateHandler(context) {
-  await promptHooks(context);
-  await createHooks(context);
-  await generateFiles(context);
-  await writeGasketConfig(context);
-  await writePkg.update(context);
-  await installModules.update(context);
-  await linkModules.update(context); // relink any that were messed up by re-install
-  await postCreateHooks(context);
-}
-
-/**
- * createCommand action
- * @param {string} appname Required cmd arg - name of the app to create
- * @param {object} options cmd options
- * @param {Command} command - the command instance
- * @returns {Promise<void>} void
- */
-createCommand.action = async function run(appname, options, command) {
-  const argv = [appname];
-  const { bootstrap = true, generate = true } = options;
-
-  let context;
-  try {
-    context = makeCreateContext(argv, options);
-  } catch (error) {
-    console.error(chalk.red(error) + '\n');
-    command.help();
-  }
-
-  try {
-    if (bootstrap) {
-      await bootstrapHandler(context);
-    } else {
-      ora('Bootstrap phase skipped.').warn();
-      if (generate) {
-        await loadPkgForDebug(context);
-      }
-    }
-
-    if (generate) {
-      await generateHandler(context);
-    } else {
-      ora('Generate phase skipped.').warn();
-    }
-
-    printReport(context);
-
-  } catch (err) {
-    console.error(chalk.red('Exiting with errors.'));
-    dumpErrorContext(context, err);
-    throw err;
-  }
-};
-
-module.exports = createCommand;

@@ -1,12 +1,12 @@
-const processCommand = require('./process-command');
-const processArgs = require('./process-args');
-const processOptions = require('./process-options');
-const createOption = require('./create-option');
-const logo = require('./logo');
-const warnIfOutdated = require('./warn-if-outdated');
+import { processCommand } from './process-command';
+import { processArgs } from './process-args';
+import { processOptions } from './process-options';
+import { createOption } from './create-option';
+import logo from './logo';
+import warnIfOutdated from './warn-if-outdated';
 
 
-module.exports = {
+export default {
   processCommand,
   processArgs,
   processOptions,
