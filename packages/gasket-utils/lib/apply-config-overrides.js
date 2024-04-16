@@ -1,49 +1,71 @@
 const path = require('path');
+// @ts-ignore
 const defaultsDeep = require('lodash.defaultsdeep');
 const tryRequire = require('./try-require');
 
+// @ts-ignore
 const debug = require('diagnostics')('gasket:utils');
 
 /**
  * Normalize the config by applying any overrides for environments, commands,
  * or local-only config file.
- *
- * @param {object} config - Target config to be normalized
- * @param {object} context - Context for applying overrides
- * @param {string} context.env - Name of environment
- * @param {string} [context.commandId] - Name of command
- * @param {string} [context.root] - Project root; required if using localeFile
- * @param {string} [context.localFile] - Optional file to load relative to gasket root
- * @returns {object} config
+ * @type {import('./index').applyConfigOverrides}
  */
-function applyConfigOverrides(config, { env = '', commandId, root, localFile }) {
+function applyConfigOverrides(
+  config,
+  { env = '', commandId, root, localFile }
+) {
   return defaultsDeep(
     {},
     ...getPotentialConfigs({ config, env, commandId, root, localFile })
   );
 }
 
+/**
+ * Generator function to yield potential configurations
+ * @type {import('./index').getPotentialConfigs}
+ */
 function *getPotentialConfigs({ config, env, commandId, root, localFile }) {
   // Separate environment-specific config from other config
+  // @ts-ignore
   const { environments = {}, commands = {}, ...baseConfig } = config;
   const isLocalEnv = env === 'local';
 
+  // @ts-ignore
   yield* getLocalOverrides(isLocalEnv, root, localFile);
+  // @ts-ignore
   yield* getCommandOverrides(commands, commandId);
+  // @ts-ignore
   yield* getSubEnvironmentOverrides(env, environments);
+  // @ts-ignore
   yield* getDevOverrides(isLocalEnv, environments);
+  // @ts-ignore
   yield baseConfig;
 }
 
+/**
+ * Generator function to yield local overrides
+ * @param {boolean} isLocalEnv - Is the environment local
+ * @param {string} root - Root directory
+ * @param {string} localFile - Local config file
+ * @yields {object} - Local overrides
+ */
 function *getLocalOverrides(isLocalEnv, root, localFile) {
   // For git-ignorable changes, merge in optional `.local` file
-  const localOverrides = isLocalEnv && localFile && tryRequire(path.join(root, localFile));
+  const localOverrides =
+    isLocalEnv && localFile && tryRequire(path.join(root, localFile));
   if (localOverrides) {
     debug('Including local config file for overrides', localFile);
     yield localOverrides;
   }
 }
 
+/**
+ * Generator function to yield command overrides
+ * @param {object} commands - Commands object
+ * @param {string} commandId - Command ID
+ * @yields {object} - Command overrides
+ */
 function *getCommandOverrides(commands, commandId) {
   const commandOverrides = commandId && commands[commandId];
   if (commandOverrides) {
@@ -52,6 +74,12 @@ function *getCommandOverrides(commands, commandId) {
   }
 }
 
+/**
+ * Generator function to yield sub-environment overrides
+ * @param {string} env - Environment
+ * @param {object} environments - Environments object
+ * @yields {object} - Sub-environment overrides
+ */
 function *getSubEnvironmentOverrides(env, environments) {
   const envParts = env.split('.');
 
@@ -67,12 +95,20 @@ function *getSubEnvironmentOverrides(env, environments) {
   }
 }
 
+/**
+ * Generator function to yield development overrides
+ * @param {boolean} isLocalEnv - Is the environment local
+ * @param {object} environments - Environments object
+ * @yields {object} - Development overrides
+ */
 function *getDevOverrides(isLocalEnv, environments) {
   // Special case for the local environment, which inherits from the
   // development environment
   const devEnv = isLocalEnv && (environments.development || environments.dev);
   if (devEnv) {
-    debug('Including dev/development override due to local environment inheritance');
+    debug(
+      'Including dev/development override due to local environment inheritance'
+    );
     yield devEnv;
   }
 }
