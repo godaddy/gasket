@@ -8,8 +8,8 @@ module.exports = async function promptHook(gasket, context, { prompt }) {
         message: 'Which server type would you like to use?',
         type: 'list',
         choices: [
-          { name: 'Next Server(CLI)', value: 'next-cli' },
-          { name: 'Custom Next Server', value: 'next-custom' }
+          { name: 'Next Server(CLI)', value: 'defaultServer' },
+          { name: 'Custom Next Server', value: 'customServer' }
         ]
       }
     ]);
@@ -22,7 +22,8 @@ module.exports = async function promptHook(gasket, context, { prompt }) {
       {
         name: 'addSitemap',
         message: 'Do you want to add a sitemap?',
-        type: 'confirm'
+        type: 'confirm',
+        default: false
       }
     ]);
 

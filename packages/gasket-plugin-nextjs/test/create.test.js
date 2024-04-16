@@ -126,26 +126,26 @@ describe('create hook', () => {
   });
 
   it('adds the appropriate npm scripts for next cli', async function () {
-    mockContext.nextServerType = 'next-cli';
+    mockContext.nextServerType = 'defaultServer';
     await plugin.hooks.create.handler({}, mockContext);
 
     expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts', {
       'build': 'next build',
       'start': 'next start',
-      'start:local': 'next start & GASKET_ENV=local node server.mjs',
-      'local': 'next dev & nodemon server.mjs'
+      'start:local': 'next start & GASKET_ENV=local node server.js',
+      'local': 'next dev & nodemon server.js'
     });
   });
 
   it('adds the appropriate npm scripts for next custom server', async function () {
-    mockContext.nextServerType = 'next-custom';
+    mockContext.nextServerType = 'customServer';
     await plugin.hooks.create.handler({}, mockContext);
 
     expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts', {
       'build': 'next build',
-      'start': 'next build && node server.mjs',
-      'start:local': 'next build && GASKET_ENV=local node server.mjs',
-      'local': 'GASKET_DEV=1 GASKET_ENV=local nodemon server.mjs'
+      'start': 'next build && node server.js',
+      'start:local': 'next build && GASKET_ENV=local node server.js',
+      'local': 'GASKET_DEV=1 GASKET_ENV=local nodemon server.js'
     });
   });
 });

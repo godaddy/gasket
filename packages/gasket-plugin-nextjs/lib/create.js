@@ -98,17 +98,17 @@ function addRedux({ files, pkg, generatorDir }) {
  */
 function addNpmScripts({ pkg, nextServerType }) {
   const scripts = {
-    'next-cli': {
+    defaultServer: {
       'build': 'next build',
       'start': 'next start',
-      'start:local': 'next start & GASKET_ENV=local node server.mjs',
-      'local': 'next dev & nodemon server.mjs'
+      'start:local': 'next start & GASKET_ENV=local node server.js',
+      'local': 'next dev & nodemon server.js'
     },
-    'next-custom': {
+    customServer: {
       'build': 'next build',
-      'start': 'next build && node server.mjs',
-      'start:local': 'next build && GASKET_ENV=local node server.mjs',
-      'local': 'GASKET_DEV=1 GASKET_ENV=local nodemon server.mjs'
+      'start': 'next build && node server.js',
+      'start:local': 'next build && GASKET_ENV=local node server.js',
+      'local': 'GASKET_DEV=1 GASKET_ENV=local nodemon server.js'
     }
   };
 
