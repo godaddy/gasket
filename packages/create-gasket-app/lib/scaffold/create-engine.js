@@ -1,5 +1,5 @@
 import path from 'path';
-import { PluginEngine } from '@gasket/engine';
+import PluginEngine from '@gasket/engine';
 import { defaultPlugins } from '../config/default-plugins.js';
 
 export async function createEngine({ dest, presets = [], plugins = [] }) {

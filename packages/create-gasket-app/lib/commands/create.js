@@ -25,33 +25,6 @@ import {
   printReport
 } from '../scaffold/actions/index.js';
 
-/* eslint-disable max-statements */
-import ora from 'ora';
-import chalk from 'chalk';
-import { makeCreateContext } from '../scaffold/create-context.js';
-import { dumpErrorContext } from '../scaffold/dump-error-context.js';
-import {
-  mkDir,
-  loadPreset,
-  cliVersion,
-  globalPrompts,
-  setupPkg,
-  writePkg,
-  writePkgUpdate,
-  installModules,
-  installModulesUpdate,
-  linkModules,
-  linkModulesUpdate,
-  loadPkgForDebug,
-  promptHooks,
-  createHooks,
-  postCreateHooks,
-  generateFiles,
-  writeGasketConfig,
-  applyPresetConfig,
-  printReport
-} from '../scaffold/actions/index.js';
-
 /**
  * bootstrap - Bootstrap the application
  * @param {CreateContext} context - Create context

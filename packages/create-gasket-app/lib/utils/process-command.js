@@ -1,8 +1,8 @@
 import { Command } from 'commander';
 const program = new Command();
-import { processArgs } from './process-args';
-import { processOptions } from './process-options';
-import { createOption } from './create-option';
+import { processArgs } from './process-args.js';
+import { processOptions } from './process-options.js';
+import { createOption } from './create-option.js';
 
 /**
  * isValidCommand - Validates the command configuration

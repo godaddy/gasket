@@ -1,6 +1,6 @@
-const action = require('../action-wrapper');
-const createEngine = require('../create-engine');
-const { runShellCommand } = require('@gasket/utils');
+import action from '../action-wrapper.js';
+import { createEngine } from '../create-engine.js';
+import { runShellCommand } from '@gasket/utils';
 
 /**
  * Executes the `postCreate` hook for all registered plugins.
@@ -26,8 +26,8 @@ async function postCreateHooks(context) {
    */
   const utils = { runScript };
 
-  const gasket = await createEngine({ dest, presets, plugins });
+  const gasket = await createEngine(plugins);
   await gasket.exec('postCreate', context, utils);
 }
 
-module.exports = action('Execute postCreate hooks', postCreateHooks);
+export default action('Execute postCreate hooks', postCreateHooks);

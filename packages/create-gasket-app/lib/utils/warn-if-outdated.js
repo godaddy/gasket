@@ -4,7 +4,7 @@ import chalk from 'chalk';
 import { readFile, writeFile } from 'fs/promises';
 import path from 'path';
 
-const cachePath = path.join(__dirname, '..', '..', '.cache'); // Place at root of gasket-cli
+const cachePath = path.join(import.meta.url, '..', '..', '.cache'); // Place at root of gasket-cli
 const LATEST_VERSION = 'latestVersion';
 const LATEST_VERSION_UPDATE_TIME = 'latestVersionUpdateTime';
 
