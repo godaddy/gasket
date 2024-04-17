@@ -105,6 +105,7 @@ const pkgOrder = [
   'homepage',
   'dependencies',
   'devDependencies',
+  'disabled_peerDependencies',
   'peerDependencies',
   'eslintConfig',
   'eslintIgnore',

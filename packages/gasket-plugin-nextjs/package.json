@@ -66,8 +66,10 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
+  "disabled_peerDependencies": {
+    "@gasket/plugin-webpack": "^7"
+  },
   "peerDependencies": {
-    "@gasket/plugin-webpack": "^6.45.2",
     "next": ">=10.2.0 <= 13.1.1 || ^14",
     "prop-types": "^15",
     "react": "^16 || ^17 || ^18",

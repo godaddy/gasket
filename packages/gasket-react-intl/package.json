@@ -79,8 +79,10 @@
     "react-intl": "^6.0.0",
     "react-redux": "^8.0.0"
   },
+  "disabled_peerDependencies": {
+    "@gasket/plugin-intl": "^7"
+  },
   "peerDependencies": {
-    "@gasket/plugin-intl": "^6.46.0",
     "prop-types": "^15",
     "react-intl": "<7.0.0"
   },
