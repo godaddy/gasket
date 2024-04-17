@@ -1,3 +1,4 @@
+// @ts-nocheck - TODO: we may remove this plugin after @gasket/cli refactor
 /**
  * Get the build, start, and local commands
  *

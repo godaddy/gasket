@@ -1,6 +1,7 @@
+/// <reference types="@gasket/core" />
 /// <reference types="@gasket/plugin-start" />
 /// <reference types="@gasket/plugin-metadata" />
-/// <reference types="@gasket/plugin-log" />
+/// <reference types="@gasket/plugin-logger" />
 
 const { createTerminus, HealthCheckError } = require('@godaddy/terminus');
 const debug = require('diagnostics')('gasket:https');
@@ -34,28 +35,26 @@ function portInUseError(errors) {
 
 /**
  * Create a https proxy server for local development
- * @param {Object} opts devProxy configuration
- * @param {Object} logger Gasket logger
+ * @param {import('@gasket/engine').DevProxyConfig} opts Gasket instance
+ * @param {import('@gasket/plugin-logger').Logger} logger Gasket logger
  */
 function startProxy(opts, logger) {
-  const { protocol = 'http', hostname = 'localhost', port = 8080 } = opts;
-  proxy.createServer({
-    protocol,
-    hostname,
-    port,
-    ...opts
-  }).on('error', (e) => {
+  const { protocol = 'http', hostname = 'localhost', port = 8080, ...proxyOpts } = opts;
+  proxy.createServer(
+    proxyOpts
+  ).on('error', (e) => {
     logger.error('Request failed to proxy:', e);
   }).listen(
-    port,
-    () => logger.info(`Proxy server started: ${protocol}://${hostname}:${port}`)
+    port
   );
+
+  logger.info(`Proxy server started: ${protocol}://${hostname}:${port}`);
 }
 
 /**
  * Get server options from the gasket config
- * @param {Gasket} gasket Gasket instance
- * @returns {RawServerConfig} rawConfig
+ * @param {import('@gasket/engine').Gasket} gasket Gasket instance
+ * @returns {import('@gasket/engine').ServerOptions} config
  */
 function getRawServerConfig(gasket) {
   const { hostname, http2, https, http, root } = gasket.config;
@@ -70,7 +69,8 @@ function getRawServerConfig(gasket) {
 
 /**
  * Gasket action: startServer
- * @param {import("@gasket/engine").Gasket} gasket Gasket instance
+ * @param {import('@gasket/engine').Gasket} gasket Gasket instance
+ * @returns {Promise<void>} promise
  * @public
  */
 async function startServer(gasket) {
@@ -208,19 +208,19 @@ const plugin = {
         lifecycles: [
           {
             name: 'devProxy',
-          method: 'execWaterfall',
-          description: 'Setup the devProxy options',
-          link: 'README.md#devProxy',
-          parent: 'start'
-        }, {
-          name: 'serverConfig',
-          method: 'execWaterfall',
-          description: 'Setup the server configuration',
-          link: 'README.md#serverConfig',
-          parent: 'start'
-        },
-        {
-          name: 'createServers',
+            method: 'execWaterfall',
+            description: 'Setup the devProxy options',
+            link: 'README.md#devProxy',
+            parent: 'start'
+          }, {
+            name: 'serverConfig',
+            method: 'execWaterfall',
+            description: 'Setup the server configuration',
+            link: 'README.md#serverConfig',
+            parent: 'start'
+          },
+          {
+            name: 'createServers',
             method: 'execWaterfall',
             description: 'Setup the `create-servers` options',
             link: 'README.md#createServers',

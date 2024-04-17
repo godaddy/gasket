@@ -1,6 +1,6 @@
+// @ts-nocheck - TODO remove after @gasket/cli refactor
 /**
  * Get the analyze command
- *
  * @param {Gasket} gasket - Gasket
  * @returns {GasketCommand} command
  */

@@ -5,7 +5,7 @@ const mockCreateTerminus = jest.fn();
 const mockDebugStub = jest.fn();
 const mockProxyCreateServer = jest.fn().mockReturnValue({
   on: jest.fn().mockReturnValue({
-    listen: jest.fn().mockImplementation((port, cb) => cb())
+    listen: jest.fn()
   })
 });
 
@@ -63,7 +63,6 @@ describe('startServer action', () => {
   });
 
   describe('devProxy', () => {
-    let devProxyWithDefaults;
     beforeEach(() => {
       gasketAPI.config = {
         devProxy: {
@@ -72,13 +71,6 @@ describe('startServer action', () => {
             port: 5000
           }
         }
-      };
-
-      devProxyWithDefaults = {
-        protocol: 'http',
-        hostname: 'localhost',
-        port: 8080,
-        ...gasketAPI.config.devProxy
       };
     });
 
@@ -89,15 +81,12 @@ describe('startServer action', () => {
 
     it('creates proxy server when configured', async () => {
       await plugin.hooks.actions(gasketAPI).startServer();
-      expect(mockProxyCreateServer).toHaveBeenCalledWith(devProxyWithDefaults);
+      expect(mockProxyCreateServer).toHaveBeenCalledWith(gasketAPI.config.devProxy);
     });
 
     it('sets default values for proxy server', async () => {
       await plugin.hooks.actions(gasketAPI).startServer();
       expect(mockProxyCreateServer).toHaveBeenCalledWith({
-        protocol: 'http',
-        hostname: 'localhost',
-        port: 8080,
         target: {
           host: 'localhost',
           port: 5000

@@ -12,6 +12,7 @@ const plugin = {
   name,
   hooks: {
     webpackConfig,
+    // @ts-ignore - TODO: remove ignore after @gasket/cli refactor
     commands,
     create,
     metadata(gasket, meta) {

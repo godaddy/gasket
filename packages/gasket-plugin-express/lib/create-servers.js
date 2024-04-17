@@ -1,6 +1,6 @@
 /* eslint-disable max-statements */
 /// <reference types="@gasket/plugin-https" />
-/// <reference types="@gasket/plugin-log" />
+/// <reference types="@gasket/plugin-logger" />
 
 const { promisify } = require('util');
 const debug = require('diagnostics')('gasket:express');
@@ -32,11 +32,19 @@ module.exports = async function createServers(gasket, serverOpts) {
 
   if (excludedRoutesRegex) {
     // eslint-disable-next-line no-console
-    const warn = logger ? logger.warning : console.warn;
+    const warn = logger ? logger.warn : console.warn;
     warn('DEPRECATED express config `excludedRoutesRegex` - use `middlewareInclusionRegex`');
   }
 
   const app = http2 ? require('http2-express-bridge')(express) : express();
+  const useForAllowedPaths = (...middleware) =>
+    middleware.forEach((mw) => {
+      if (excludedRoutesRegex) {
+        app.use(excludedRoutesRegex, mw);
+      } else {
+        app.use(mw);
+      }
+    });
 
   if (trustProxy) {
     app.set('trust proxy', trustProxy);
@@ -48,18 +56,35 @@ module.exports = async function createServers(gasket, serverOpts) {
        * This is a patch for the undocumented _implicitHeader used by the
        * compression middleware which is not present the http2 request object
        * @see: https://github.com/expressjs/compression/pull/128
-       * and also, by the the 'compiled' version in Next.js
+       * and also, by the 'compiled' version in Next.js
        * @see: https://github.com/vercel/next.js/issues/11669
        */
       function http2Patch(req, res, next) {
         // @ts-ignore
         if (!res._implicitHeader) {
-          // @ts-ignore
+        // @ts-ignore
           res._implicitHeader = () => res.writeHead(res.statusCode);
         }
         return next();
-      });
+      }
+    );
   }
+
+
+  // eslint-disable-next-line jsdoc/require-jsdoc
+  function attachLogEnhancer(req) {
+    req.logger.metadata = (metadata) => {
+      req.logger = req.logger.child(metadata);
+      attachLogEnhancer(req);
+    };
+  }
+
+  useForAllowedPaths((req, res, next) => {
+    req.logger = gasket.logger;
+    attachLogEnhancer(req);
+    next();
+  });
+  useForAllowedPaths(cookieParser());
 
   const middlewarePattern = middlewareInclusionRegex || excludedRoutesRegex;
   if (middlewarePattern) {

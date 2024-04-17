@@ -1,3 +1,4 @@
+// @ts-nocheck - TODO: Remove this comment when JSDoc types are added
 const codeStyles = require('./code-styles');
 const { makeGatherDevDeps, makeRunScriptStr, makeSafeRunScript } = require('./utils');
 

@@ -1,4 +1,4 @@
-/// <reference types="@gasket/cli" />
+/// <reference types="create-gasket-app" />
 
 /**
  * Add files & extend package.json for new apps.

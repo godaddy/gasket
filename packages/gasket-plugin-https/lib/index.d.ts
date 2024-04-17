@@ -3,7 +3,9 @@ import type { SecureContextOptions } from 'tls';
 import type { Agent as HttpAgent, Server as HttpServer } from 'http';
 import type { Agent as HttpsAgent, Server as HttpsServer } from 'https';
 import type { SecureServerOptions, Http2Server } from 'http2';
+import type { ServerOptions as ProxyServerOptions } from 'http-proxy';
 import type { TerminusOptions, HealthCheckError } from '@godaddy/terminus';
+
 
 type RequireAtLeastOne<T, Keys extends keyof T = keyof T> =
   Pick<T, Exclude<keyof T, Keys>>
@@ -44,45 +46,15 @@ declare module '@gasket/engine' {
       keyof CustomHttpsSettings | 'secureProtocol' | 'secureOptions'
     >;
 
-  interface BaseDevProxyConfig {
-    target?: {
-      host: string;
-      port: number;
-    };
-    forward?: {
-      host: string;
-      port: number;
-    };
-    agent?: HttpAgent | HttpsAgent;
-    ssl?: {
-      key: CertInput;
-      cert: CertInput;
-      SNICallback: (hostname: string, cb: (err: Error | null, ctx: SecureContextOptions) => void) => void;
-    };
-    ws?: boolean;
-    xfwd?: boolean;
-    secure?: boolean;
-    toProxy?: boolean;
-    prependPath?: boolean;
-    ignorePath?: boolean;
-    localAddress?: string;
-    changeOrigin?: boolean;
-    preserveHeaderKeyCase?: boolean;
-    auth?: string;
-    hostRewrite?: string;
-    autoRewrite?: boolean;
-    protocolRewrite?: string;
-    cookieDomainRewrite?: false | string | { [key: string]: string };
-    cookiePathRewrite?: false | string | { [key: string]: string };
-    headers?: Record<string, string>;
-    proxyTimeout?: number;
-    timeout?: number;
-    followRedirects?: boolean;
-    selfHandleResponse?: boolean;
-    buffer?: Buffer;
+  interface BaseDevProxyConfig extends ProxyServerOptions {
+    protocol?: string;
+    /** defaults to 'localhost' */
+    hostname?: string;
+    /** defaults to 8080 */
+    port?: number;
   }
 
-  type DevProxyConfig = RequireAtLeastOne<BaseDevProxyConfig, 'target' | 'forward'>;
+  export type DevProxyConfig = RequireAtLeastOne<BaseDevProxyConfig, 'target' | 'forward'>;
 
   interface ServerOptions {
     hostname?: string;
@@ -107,6 +79,10 @@ declare module '@gasket/engine' {
     devProxy?: DevProxyConfig
   }
 
+  export interface GasketActions {
+    startServer(): Promise<void>;
+  }
+
   type CreatedServers = {
     http?: MaybeMultiple<HttpServer>;
     https?: MaybeMultiple<HttpsServer>;
@@ -115,7 +91,8 @@ declare module '@gasket/engine' {
 
   export interface HookExecTypes {
     devProxy(proxyConfig: DevProxyConfig): MaybeAsync<DevProxyConfig>,
-    createServers(serveropts: ServerOptions): MaybeAsync<ServerOptions>;
+    serverConfig(serverConfig: Omit<ServerConfig, 'handler'>): MaybeAsync<ServerOptions>;
+    createServers(serverConfig: ServerOptions): MaybeAsync<ServerOptions>;
     servers(servers: CreatedServers): MaybeAsync<void>;
     terminus(
       opts: TerminusOptions
