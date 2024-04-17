@@ -56,8 +56,10 @@
     "jest": "^29.7.0",
     "typescript": "^5.4.4"
   },
+  "disabled_peerDependencies": {
+    "@gasket/plugin-logger": "^7"
+  },
   "peerDependencies": {
-    "@gasket/plugin-logger": "^6.46.0",
     "express": "^4.16.3"
   },
   "eslintConfig": {
