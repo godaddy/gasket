@@ -1,5 +1,4 @@
 /// <reference types="@gasket/plugin-metadata" />
-/// <reference types="@gasket/plugin-command" />
 
 const os = require('os');
 const Git = require('git-shizzle');

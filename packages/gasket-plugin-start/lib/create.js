@@ -1,4 +1,4 @@
-/// <reference types="@gasket/cli" />
+/// <reference types="create-gasket-app" />
 
 /**
  * Add scripts for commands to the package.json

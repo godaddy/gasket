@@ -13,7 +13,7 @@ module.exports = async function create(gasket, context) {
     express: devDependencies.express
   });
 
-  if (context.apiApp) {
+  if ('apiApp' in context && context.apiApp) {
     context.files.add(`${ generatorDir }/**/*`);
 
     context.gasketConfig.add('express', {

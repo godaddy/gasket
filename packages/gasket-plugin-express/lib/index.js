@@ -1,3 +1,4 @@
+/// <reference types="create-gasket-app" />
 /// <reference types="@gasket/plugin-metadata" />
 
 const { name } = require('../package.json');

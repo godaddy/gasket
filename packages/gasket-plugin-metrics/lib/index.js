@@ -1,4 +1,5 @@
-/// <reference types="@gasket/plugin-log" />
+/// <reference types="@gasket/core" />
+/// <reference types="@gasket/plugin-logger" />
 
 const Metrics = require('./metrics');
 const { name } = require('../package.json');
@@ -28,6 +29,7 @@ const plugin = {
     /**
      * Option that is applied to all commands at the `gasket` level
      */
+    // @ts-ignore - TODO: remove ignore after @gasket/cli refactor
     async commandOptions() {
       return {
         name: 'record',

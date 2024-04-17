@@ -10,7 +10,6 @@
  */
 
 const { callbackify } = require('util');
-const apm = require('elastic-apm-node');
 
 /**
  * Middleware for customizing transactions

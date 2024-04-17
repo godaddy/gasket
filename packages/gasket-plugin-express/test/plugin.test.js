@@ -1,3 +1,4 @@
+/* eslint-disable jsdoc/require-jsdoc */
 const path = require('path');
 const { setTimeout } = require('timers/promises');
 const GasketEngine = require('@gasket/engine');
@@ -41,7 +42,6 @@ describe('createServers', () => {
     mockMwPlugins = [];
 
     lifecycles = {
-      middleware: jest.fn().mockResolvedValue([]),
       errorMiddleware: jest.fn().mockResolvedValue([]),
       express: jest.fn().mockResolvedValue()
     };
@@ -105,7 +105,7 @@ describe('createServers', () => {
   });
 
   it('does not use empty middleware arrays', async function () {
-    lifecycles.middleware.mockResolvedValue([[]]);
+    mockMwPlugins = [{ name: 'middleware-1' }, []];
 
     await plugin.hooks.createServers(gasket, {});
 
@@ -337,21 +337,11 @@ describe('createServers', () => {
     expect(app.set).toHaveBeenCalledWith('trust proxy', '127.0.0.1');
   });
 
-  /**
-   *
-   * @param aSpy
-   * @param aPredicate
-   */
   function findCall(aSpy, aPredicate) {
     const callIdx = findCallIndex(aSpy, aPredicate);
     return callIdx === -1 ? null : aSpy.mock.calls[callIdx][0];
   }
 
-  /**
-   *
-   * @param aSpy
-   * @param aPredicate
-   */
   function findCallIndex(aSpy, aPredicate) {
     return aSpy.mock.calls.map((args) => aPredicate(...args)).indexOf(true);
   }
@@ -360,10 +350,6 @@ describe('createServers', () => {
 describe('create', () => {
   let mockContext;
 
-  /**
-   *
-   * @param assertFn
-   */
   function expectCreatedWith(assertFn) {
     return async function expectCreated() {
       await plugin.hooks.create({}, mockContext);

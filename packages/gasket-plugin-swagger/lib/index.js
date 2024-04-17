@@ -1,9 +1,10 @@
-/// <reference types="@gasket/plugin-command" />
+/// <reference types="@gasket/core" />
+/// <reference types="create-gasket-app" />
 /// <reference types="@gasket/plugin-start" />
 /// <reference types="@gasket/plugin-express" />
 /// <reference types="@gasket/plugin-fastify" />
 /// <reference types="@gasket/plugin-metadata" />
-/// <reference types="@gasket/plugin-log" />
+/// <reference types="@gasket/plugin-logger" />
 /// <reference types="@gasket/cli" />
 
 

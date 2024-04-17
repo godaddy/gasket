@@ -1,3 +1,4 @@
+// @ts-nocheck - TODO: Remove this comment when JSDoc types are added
 /* eslint-disable complexity,max-statements */
 const { eslintConfigIdentifier, stylelintConfigIdentifier } = require('./utils');
 const { devDependencies } = require('../package');
