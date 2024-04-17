@@ -35,6 +35,7 @@
   "devDependencies": {
     "@babel/core": "^7.23.7",
     "@testing-library/react": "^13.4.0",
+    "@types/jest": "^29.5.12",
     "cypress": "^13.6.6",
     "eslint": "^8.56.0",
     "eslint-config-godaddy": "^7.1.0",
@@ -43,7 +44,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "start-server-and-test": "^1.14.0",
-    "typescript": "^5.4.2"
+    "typescript": "^5.4.4"
   },
   "eslintConfig": {
     "extends": [

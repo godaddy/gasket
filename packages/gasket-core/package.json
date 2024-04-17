@@ -4,7 +4,6 @@
   "description": "Entry point to setting up Gasket instances",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
-  "type": "module",
   "files": [
     "lib"
   ],
@@ -46,6 +45,7 @@
   },
   "devDependencies": {
     "@jest/globals": "^29.7.0",
+    "@types/jest": "^29.5.12",
     "@types/node": "^20.12.5",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
@@ -74,5 +74,6 @@
   },
   "jest": {
     "testEnvironment": "node"
-  }
+  },
+  "type": "module"
 }

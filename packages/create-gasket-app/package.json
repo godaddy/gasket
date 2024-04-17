@@ -34,7 +34,7 @@
     "@gasket/engine": "^6.45.2",
     "@gasket/plugin-git": "^6.45.2",
     "@gasket/plugin-lifecycle": "^6.45.2",
-    "@gasket/plugin-logger": "^6.43.0",
+    "@gasket/plugin-logger": "^6.46.0",
     "@gasket/plugin-metadata": "^6.45.2",
     "@gasket/plugin-start": "^6.45.2",
     "@gasket/resolve": "^6.45.2",

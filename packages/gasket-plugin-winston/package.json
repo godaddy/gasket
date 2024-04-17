@@ -39,9 +39,9 @@
     "winston": "^3.11.0"
   },
   "devDependencies": {
-    "@gasket/cli": "^6.45.2",
+    "@gasket/cli": "^6.46.2",
     "@gasket/engine": "^6.45.2",
-    "@gasket/plugin-logger": "^6.0.0",
+    "@gasket/plugin-logger": "^6.46.0",
     "babel-eslint": "^10.1.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
@@ -53,7 +53,7 @@
     "triple-beam": "^1.4.1"
   },
   "peerDependencies": {
-    "@gasket/plugin-logger": "^6.0.0"
+    "@gasket/plugin-logger": "^6.46.0"
   },
   "eslintConfig": {
     "extends": [
