@@ -91,7 +91,7 @@ declare module '@gasket/engine' {
 
   export interface HookExecTypes {
     devProxy(proxyConfig: DevProxyConfig): MaybeAsync<DevProxyConfig>,
-    serverConfig(serverConfig: Omit<ServerConfig, 'handler'>): MaybeAsync<ServerOptions>;
+    serverConfig(serverConfig: Omit<ServerOptions, 'handler'>): MaybeAsync<ServerOptions>;
     createServers(serverConfig: ServerOptions): MaybeAsync<ServerOptions>;
     servers(servers: CreatedServers): MaybeAsync<void>;
     terminus(
