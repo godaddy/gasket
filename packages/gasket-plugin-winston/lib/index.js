@@ -44,7 +44,7 @@ module.exports = {
         lifecycles: [
           {
             name: 'winstonTransports',
-            method: 'exec',
+            method: 'execSync',
             description: 'Setup Winston log transports',
             link: 'README.md#winstonTransports',
             parent: 'createLogger'
