@@ -17,7 +17,7 @@ module.exports = async function create(gasket, context) {
     context.files.add(`${ generatorDir }/**/*`);
 
     context.gasketConfig.add('express', {
-      routes: './routes/*'
+      routes: []
     });
   }
 };

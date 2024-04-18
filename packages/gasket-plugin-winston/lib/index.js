@@ -9,7 +9,7 @@ module.exports = {
         winston: dependencies.winston
       });
     },
-    async createLogger(gasket) {
+    createLogger(gasket) {
       const { config } = gasket;
       const transportOrTransports = config.winston?.transports;
 
@@ -24,7 +24,8 @@ module.exports = {
         configTransports = [new transports.Console()];
       }
 
-      const pluginTransports = await gasket.exec('winstonTransports');
+      // eslint-disable-next-line no-sync
+      const pluginTransports = gasket.execSync('winstonTransports');
 
       return createLogger({
         ...config.winston,
@@ -43,7 +44,7 @@ module.exports = {
         lifecycles: [
           {
             name: 'winstonTransports',
-            method: 'exec',
+            method: 'execSync',
             description: 'Setup Winston log transports',
             link: 'README.md#winstonTransports',
             parent: 'createLogger'
