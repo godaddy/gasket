@@ -44,7 +44,7 @@ describe('@gasket/plugin-express', () => {
     const goodConfig: GasketConfigDefinition = {
       plugins: [{ name: 'example-plugin', hooks: {} }],
       express: {
-        routes: '/api/*.js'
+        routes: []
       }
     };
   });
