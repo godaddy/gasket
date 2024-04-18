@@ -1,11 +1,7 @@
 /* eslint-disable max-statements */
 /// <reference types="@gasket/plugin-https" />
 /// <reference types="@gasket/plugin-logger" />
-
-const { promisify } = require('util');
 const debug = require('diagnostics')('gasket:express');
-const glob = promisify(require('glob'));
-const path = require('path');
 
 /**
  * Create the Express instance and setup the lifecycle hooks.
@@ -18,6 +14,8 @@ module.exports = async function createServers(gasket, serverOpts) {
 
   const { config, logger } = gasket;
   const {
+    // May be needed later on
+    // eslint-disable-next-line no-unused-vars
     root,
     express: {
       routes,
@@ -131,9 +129,16 @@ module.exports = async function createServers(gasket, serverOpts) {
   await gasket.exec('express', app);
 
   if (routes) {
-    const files = await glob(`${ routes }.js`, { cwd: root });
-    for (const file of files) {
-      require(path.join(root, file))(app);
+    for (const route of routes) {
+      if (typeof route !== 'function') {
+        throw new Error('Route must be a function');
+      }
+
+      if (route.constructor.name === 'AsyncFunction') {
+        await route(app);
+      } else {
+        route(app);
+      }
     }
   }
 

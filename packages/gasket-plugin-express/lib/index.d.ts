@@ -9,7 +9,7 @@ declare module '@gasket/engine' {
       /** Filter for which request URLs invoke Gasket middleware */
       middlewareInclusionRegex?: RegExp;
       /** Glob pattern for source files setting up express routes */
-      routes?: string;
+      routes?: Array<MaybeAsync<(app: Application) => void>>;
       /** @deprecated */
       excludedRoutesRegex?: RegExp;
       trustProxy?: boolean | string | number | Function;

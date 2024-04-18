@@ -1,5 +1,4 @@
 /* eslint-disable jsdoc/require-jsdoc */
-const path = require('path');
 const { setTimeout } = require('timers/promises');
 const GasketEngine = require('@gasket/engine');
 const app = { use: jest.fn(), post: jest.fn(), set: jest.fn() };
@@ -93,6 +92,27 @@ describe('createServers', () => {
     expect(gasket.exec).toHaveBeenCalledWith('express', app);
   });
 
+  it('allows for an array of route functions', async function () {
+    const route = jest.fn();
+    gasket.config.express = { routes: [route] };
+    await plugin.hooks.createServers(gasket, {});
+    expect(route).toHaveBeenCalled();
+  });
+
+  it('allows for an array of route functions with async', async function () {
+    const route = jest.fn();
+    gasket.config.express = { routes: [async () => route()] };
+    await plugin.hooks.createServers(gasket, {});
+    expect(route).toHaveBeenCalled();
+  });
+
+  it('throws an error if a route is not a function', async function () {
+    gasket.config.express = { routes: [1] };
+    await expect(plugin.hooks.createServers(gasket, {})).rejects.toThrow(
+      'Route must be a function'
+    );
+  });
+
   it('executes the `errorMiddleware` lifecycle', async function () {
     await plugin.hooks.createServers(gasket, {});
     expect(gasket.exec).toHaveBeenCalledWith('errorMiddleware');
@@ -136,7 +156,7 @@ describe('createServers', () => {
       root: __dirname,
       express: {
         root: __dirname,
-        routes: path.join('fixtures', '*')
+        routes: []
       }
     });
     const errorMiddlewares = [jest.fn()];
