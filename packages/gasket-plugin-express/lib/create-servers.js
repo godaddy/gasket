@@ -14,9 +14,6 @@ module.exports = async function createServers(gasket, serverOpts) {
 
   const { config, logger } = gasket;
   const {
-    // May be needed later on
-    // eslint-disable-next-line no-unused-vars
-    root,
     express: {
       routes,
       excludedRoutesRegex,
