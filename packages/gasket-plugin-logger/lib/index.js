@@ -27,7 +27,10 @@ module.exports = {
       // eslint-disable-next-line no-sync
       const loggers = gasket.execSync('createLogger');
 
-      if (loggers && loggers.some((logger) => logger && logger instanceof Promise)) throw new Error('createLogger hooks must be synchronous');
+      if (loggers && loggers.some((logger) => logger && logger instanceof Promise)) {
+        throw new Error('createLogger hooks must be synchronous');
+      }
+
       if (!loggers || loggers.length === 0) {
         gasket.logger = {
           debug: console.debug,
