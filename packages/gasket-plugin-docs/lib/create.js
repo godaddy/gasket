@@ -1,4 +1,5 @@
 /// <reference types="@gasket/cli" />
+/// <reference types="@gasket/plugin-git" />
 
 const { DEFAULT_CONFIG } = require('./utils/constants');
 

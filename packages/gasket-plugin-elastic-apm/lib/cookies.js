@@ -1,25 +1,25 @@
 /**
  * Returns an array of cookie names which are considered sensitive because they
  * may contain session credential or PII
- * @param {import('@gasket/engine').GasketConfig} config The Gasket config
- * @returns {string[] | []} an array of cookie names
+ * @param {import('@gasket/engine').GasketConfig} config the Gasket config
+ * @returns {string[]} an array of cookie names
  */
-function getSensitiveCookies(config) {
-  const { elasticAPM } = config;
-  return elasticAPM?.sensitiveCookies ?? [];
-}
+const sensitiveCookies = (config) => {
+  if (
+    typeof config.elasticAPM === 'undefined' ||
+    typeof config.elasticAPM.sensitiveCookies === 'undefined'
+  ) {
+    return [];
+  }
+
+  return config.elasticAPM.sensitiveCookies;
+};
 
 /**
  * Redacts the contents of user-specified sensitive cookies
- * @param {import('@gasket/engine').GasketConfig} config The Gasket config
- * @returns {(payload: { [propName: string]: any }) => { [propName: string]: any
- * }} The modified APM payload
+ * @type {import('./index').filterSensitiveCookies}
  */
-function filterSensitiveCookies(config) {
-  /**
-   * @param {{ [propName: string]: any }} payload The APM payload
-   * @returns {{ [propName: string]: any }} The modified APM payload
-   */
+const filterSensitiveCookies = function (config) {
   return function (payload) {
     if (
       payload.context &&
@@ -29,7 +29,7 @@ function filterSensitiveCookies(config) {
     ) {
       let cookie = payload.context.request.headers.cookie;
 
-      getSensitiveCookies(config).forEach(function (sc) {
+      sensitiveCookies(config).forEach((sc) => {
         cookie = cookie.replace(
           new RegExp(sc + '=([^;]+)'),
           sc + '=[REDACTED]'
@@ -41,9 +41,9 @@ function filterSensitiveCookies(config) {
 
     return payload;
   };
-}
+};
 
 module.exports = {
   filterSensitiveCookies,
-  getSensitiveCookies
+  sensitiveCookies
 };

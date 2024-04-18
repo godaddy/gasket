@@ -27,10 +27,8 @@ async function processModule(moduleDocsConfig, docsConfigSet) {
       const target = path.join(targetRoot, filename);
       await mkdirp(path.dirname(target));
 
-      //
       // Process all files which meet transform any tests Currently on
       // supports/expects utf8 text files
-      //
       if (allTransforms.some((tx) => tx.test.test(source))) {
         let content = await readFile(source, 'utf8');
         content = allTransforms.reduce((acc, tx) => {
@@ -45,9 +43,8 @@ async function processModule(moduleDocsConfig, docsConfigSet) {
         }, content);
         return await writeFile(target, content);
       }
-      //
+
       // If file does not need transformed we just copy it
-      //
       await copyFile(source, target);
     })
   );

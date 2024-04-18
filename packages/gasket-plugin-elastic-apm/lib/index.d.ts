@@ -1,15 +1,17 @@
 import type { IncomingMessage, ServerResponse } from 'http';
-import type { Agent, AgentConfigOptions, Transaction } from 'elastic-apm-node';
-import type { MaybeAsync } from '@gasket/engine';
+import type { Agent, AgentConfigOptions, Transaction, Payload } from 'elastic-apm-node';
+import type { MaybeAsync, GasketConfig } from '@gasket/engine';
+import type { GasketData } from '@gasket/data';
 
-export interface ElasticApmConfig extends AgentConfigOptions {
-  /** List of cookie names to filter out */
-  sensitiveCookies?: Array<string>
+export function filterSensitiveCookies(config: GasketConfig): function(Payload): Payload;
+
+interface ExtendedAgentConfigOptions extends AgentConfigOptions {
+  sensitiveCookies?: Array<string>;
 }
 
 declare module '@gasket/engine' {
   export interface GasketConfig {
-    elasticAPM?: ElasticApmConfig
+    elasticAPM?: ExtendedAgentConfigOptions;
   }
 
   export interface Gasket {
@@ -20,9 +22,13 @@ declare module '@gasket/engine' {
     apmTransaction(
       transaction: Transaction,
       details: {
-        req: IncomingMessage,
-        res: ServerResponse
+        req: IncomingMessage;
+        res: ServerResponse & {
+          locals?: {
+            gasketData: GasketData;
+          };
+        };
       }
-    ): MaybeAsync<void>
+    ): MaybeAsync<void>;
   }
 }

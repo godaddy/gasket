@@ -1,6 +1,6 @@
 declare module '@gasket/data' {
-    export interface GasketData {}
+  export interface GasketData {}
 
-    const gasketData: GasketData;
-    export default gasketData;
+  const gasketData: GasketData;
+  export default gasketData;
 }

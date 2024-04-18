@@ -4,7 +4,7 @@ Helper package for accessing embedded Gasket Data in the browser.
 
 ## Installation
 
-```
+```sh
 npm i @gasket/data
 ```
 
