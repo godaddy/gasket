@@ -1,7 +1,12 @@
+/// <reference types="@gasket/plugin-logger" />
+/// <reference types="create-gasket-app" />
+/// <reference types="@gasket/plugin-metadata" />
+
 const { createLogger, format, transports } = require('winston');
 const { name, dependencies } = require('../package.json');
 
-module.exports = {
+/** @type {import('@gasket/engine').Plugin} */
+const plugin = {
   name,
   hooks: {
     async create(gasket, { pkg }) {
@@ -62,3 +67,5 @@ module.exports = {
     }
   }
 };
+
+module.exports = plugin;
