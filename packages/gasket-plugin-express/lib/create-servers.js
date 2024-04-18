@@ -130,12 +130,7 @@ module.exports = async function createServers(gasket, serverOpts) {
       if (typeof route !== 'function') {
         throw new Error('Route must be a function');
       }
-
-      if (route.constructor.name === 'AsyncFunction') {
-        await route(app);
-      } else {
-        route(app);
-      }
+      await route(app);
     }
   }
 
