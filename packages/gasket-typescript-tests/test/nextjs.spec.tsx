@@ -31,7 +31,7 @@ describe('gasket/nextjs', function () {
 
   describe('GasketDataScript', function () {
     it('has expected API', function () {
-      <GasketDataScript data={{}}/>;
+      <GasketDataScript data={{ config: {} }} />;
 
       <GasketDataScript data={{
         intl: {
@@ -48,7 +48,7 @@ describe('gasket/nextjs', function () {
   describe('GasketDataProvider', function () {
     it('has expected API', function () {
       if (perform) {
-        <GasketDataProvider gasketData={{}}>
+        <GasketDataProvider gasketData={{ config: {} }}>
           <div>Some children</div>
         </GasketDataProvider>;
 
