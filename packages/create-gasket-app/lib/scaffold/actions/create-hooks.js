@@ -1,7 +1,7 @@
-const createEngine = require('../create-engine');
-const action = require('../action-wrapper');
-const ConfigBuilder = require('../config-builder');
-const Files = require('../files');
+import { createEngine } from '../create-engine.js';
+import action from '../action-wrapper.js';
+import { ConfigBuilder } from '../config-builder.js';
+import { Files } from '../files.js';
 
 /**
  * Executes the `create` hook for all registered plugins.
@@ -17,10 +17,10 @@ async function createHooks(context) {
   const gasketConfig = ConfigBuilder.create({}, { orderBy: ['plugins'], warnings });
   Object.assign(context, { files, gasketConfig });
 
-  const gasket = await createEngine({ dest, presets, plugins });
+  const gasket = await createEngine(plugins);
   await gasket.execApply('create', async function applyCreate(plugin, handler) {
     await handler(context.runWith(plugin));
   });
 }
 
-module.exports = action('Execute create hooks', createHooks);
+export default action('Execute create hooks', createHooks);

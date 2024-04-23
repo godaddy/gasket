@@ -1,7 +1,7 @@
 /* eslint-disable max-len, max-statements */
-const fs = require('fs');
-const path = require('path');
-const { addPluginsToContext, readConfig } = require('../scaffold/utils');
+import fs from 'fs';
+import path from 'path';
+import { addPluginsToContext, ensureAbsolute, readConfig } from '../scaffold/utils.js';
 
 /**
  * The CreateRuntime represents a shallow proxy to a CreateContext
@@ -61,7 +61,7 @@ function flatten(acc, values) {
  *
  * @type {CreateContext}
  *
- * -- Added by command args and options
+ * -- Added by command args and flags
  *
  * @property {String} appName - Short name of the app
  * @property {String} cwd - Current work directory
@@ -70,9 +70,10 @@ function flatten(acc, values) {
  * @property {Boolean} extant - Whether or not target directory already exists
  * @property {[String]} localPresets - paths to the local presets packages
  * @property {PresetDesc[]} rawPresets - Raw preset desc from args. Can include version constraint. Added by load-preset if using localPresets.
- * @property {PluginDesc[]} rawPlugins - Raw plugin desc from options, prompts, etc. Can include constraints.
+ * @property {PluginDesc[]} rawPlugins - Raw plugin desc from flags, prompts, etc. Can include constraints.
  * @property {PluginName[]} plugins - Short names of plugins
  * @property {String[]} pkgLinks - Local packages that should be linked
+ * @property {String} npmconfig - Path to npmconfig file
  * @property {String[]} messages - non-error/warning messages to report
  * @property {String[]} warnings - warnings messages to report
  * @property {String[]} errors - error messages to report but do not exit process
@@ -112,7 +113,7 @@ function flatten(acc, values) {
  *
  * @property {Files} files - Use to add files and templates to generate
  */
-class CreateContext {
+export class CreateContext {
   constructor(initContext = {}) {
     Object.assign(this, initContext);
   }
@@ -126,23 +127,24 @@ class CreateContext {
  * Makes the initial context used through the create command flow.
  *
  * @param {String[]} argv - Commands args
- * @param {Object} options - Command options
+ * @param {Object} flags - Command flags
  * @returns {CreateContext} context
  */
-module.exports = function makeCreateContext(argv = [], options = {}) {
+export function makeCreateContext(argv = [], flags = {}) {
   const appName = argv[0] || 'templated-app';
   const {
+    npmconfig,
     plugins = [],
     presets = [],
-    npmLink = [],
-    presetPath = [],
-    packageManager,
+    'npm-link': npmLink = [],
+    'preset-path': presetPath = [],
+    'package-manager': packageManager,
     prompts,
     config,
     'config-file': configFile
-  } = options;
+  } = flags;
 
-  // Flatten the array of array created by the plugins flag – it
+  // Flatten the array of array created by the plugins flag – it
   // supports both multiple instances as well as comma-separated lists.
   const rawPresets = presets.reduce(flatten, []);
   const localPresets = presetPath.reduce(flatten, []);
@@ -165,6 +167,7 @@ module.exports = function makeCreateContext(argv = [], options = {}) {
     dest,
     relDest,
     extant,
+    npmconfig: npmconfig && ensureAbsolute(npmconfig),
     pkgLinks,
     localPresets,
     rawPresets,
@@ -190,4 +193,3 @@ module.exports = function makeCreateContext(argv = [], options = {}) {
   return context;
 };
 
-module.exports.CreateContext = CreateContext;

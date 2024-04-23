@@ -1,7 +1,7 @@
-module.exports = [
-  require('@gasket/plugin-lifecycle'),
-  require('@gasket/plugin-metadata'),
-  require('@gasket/plugin-start'),
-  require('@gasket/plugin-git'),
-  require('@gasket/plugin-logger')
+import pluginMetadata from '@gasket/plugin-metadata';
+import pluginGit from '@gasket/plugin-git';
+
+export const defaultPlugins = [
+  pluginMetadata,
+  pluginGit
 ];

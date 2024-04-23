@@ -1,9 +1,9 @@
 /* eslint-disable max-statements */
-const ora = require('ora');
-const chalk = require('chalk');
-const makeCreateContext = require('../scaffold/create-context');
-const dumpErrorContext = require('../scaffold/dump-error-context');
-const {
+import ora from 'ora';
+import chalk from 'chalk';
+import { makeCreateContext } from '../scaffold/create-context.js';
+import { dumpErrorContext } from '../scaffold/dump-error-context.js';
+import {
   applyPresetConfig,
   cliVersion,
   createHooks,
@@ -20,7 +20,7 @@ const {
   setupPkg,
   writeGasketConfig,
   writePkg
-} = require('../scaffold/actions');
+} from '../scaffold/actions/index.js';
 
 /**
  * Parses comma separated option input to array
@@ -189,4 +189,4 @@ createCommand.action = async function run(appname, options, command) {
   }
 };
 
-module.exports = createCommand;
+export { createCommand };
