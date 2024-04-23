@@ -1,7 +1,7 @@
-const path = require('path');
-const fs = require('fs').promises;
-const action = require('../action-wrapper');
-const ConfigBuilder = require('../config-builder');
+import path from 'path';
+import fs from 'fs/promises';
+import action from '../action-wrapper.js';
+import { ConfigBuilder } from '../config-builder.js';
 
 /**
  * Debug-only load existing app package.json for context.pkg
@@ -21,4 +21,4 @@ async function loadPkForDebug(context) {
   Object.assign(context, { pkg });
 }
 
-module.exports = action('Load package.json for debug. 🐲 Here be dragons!', loadPkForDebug);
+export default action('Load package.json for debug. 🐲 Here be dragons!', loadPkForDebug);

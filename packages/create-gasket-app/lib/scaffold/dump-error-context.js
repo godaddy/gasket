@@ -1,5 +1,5 @@
-const path = require('path');
-const fs = require('fs').promises;
+import path from 'path';
+import fs from 'fs/promises';
 
 /**
  * If an error occurs during create, dump the context for debugging.
@@ -9,7 +9,7 @@ const fs = require('fs').promises;
  * @param {Error} error - Exiting error
  * @returns {Promise<void>} promise
  */
-module.exports = async function dumpErrorContext(context, error) {
+export async function dumpErrorContext(context, error) {
   const { cwd } = context;
 
   try {
