@@ -79,7 +79,7 @@
     "react-dom": "^18.2.0",
     "react-intl": "^6.0.0",
     "react-redux": "^8.0.0",
-    "typescript": "^5.4.2"
+    "typescript": "~5.1.6"
   },
   "peerDependencies": {
     "@gasket/plugin-intl": "^6.0.0",
