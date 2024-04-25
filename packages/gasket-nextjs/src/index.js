@@ -5,7 +5,6 @@ import htmlescape from 'htmlescape';
 
 /**
  * Renders a script tag with JSON gasketData
- *
  * @param {object} props - Props
  * @param {GasketData} props.data - Gasket data from response
  * @returns {JSX.Element} script
@@ -28,7 +27,6 @@ GasketDataScript.propTypes = {
 /**
  * Make a wrapper to extend the Next.js Document, injecting a script with the
  * `gasketData` from the response object.
- *
  * @param {object} [options] - Configuration for wrapper
  * @param {number} [options.index] - Force script injection at particular index
  * @returns {function(Document)} wrapper
@@ -40,7 +38,6 @@ export function withGasketData(options = {}) {
    * To avoid polluting <head/>, we want to render our JSON in the <body/>
    * but before our other scripts so that it is available to query.
    * In a basic Next.js app, this is between the Main and NextScript tags.*
-   *
    * @param {Array} bodyChildren - Children of body element
    * @returns {number} index
    * @private
@@ -59,7 +56,6 @@ export function withGasketData(options = {}) {
 
   /**
    * Extend the Document
-   *
    * @param {Document} Document - Next Document class to wrap
    * @returns {Document} extended Document
    */

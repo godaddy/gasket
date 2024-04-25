@@ -43,7 +43,7 @@ const depVersions = {
 
   'babel-eslint': '^10.1.0',
   'eslint': '^8.56.0',
-  'eslint-config-godaddy': '^7.0.2',
+  'eslint-config-godaddy': '^7.1.0',
   'eslint-config-godaddy-react': '^9.0.1',
   'eslint-plugin-json': '^3.1.0',
   'eslint-plugin-jest': '^27.6.3',
@@ -62,7 +62,7 @@ const depVersions = {
   'serve-static': '^1.15.0',
   'cross-env': '^7.0.3',
 
-  'typescript': '^5.4.4'
+  'typescript': '^5.4.5'
 };
 
 /**
@@ -266,6 +266,84 @@ function checkMaintainers(pkgJson) {
 }
 
 /**
+ * Check if typecheck scripts are present and adds them if not
+ * @param pkgJson
+ */
+function checkTypecheckScripts(pkgJson) {
+  const { scripts } = pkgJson;
+  if (scripts.posttest && !scripts.typecheck) {
+    // Remove 'skip' once types have been completed in each package
+    pkgJson.scripts['typecheck:skip'] = 'tsc';
+    pkgJson.scripts['typecheck:watch'] = 'tsc --watch';
+  }
+}
+
+/**
+ * Check if eslintConfig is present and adds jsdoc recommended typescript flavor
+ * @param pkgJson
+ */
+function checkEslintConfig(pkgJson) {
+  const { eslintConfig } = pkgJson;
+  if (
+    eslintConfig &&
+    !eslintConfig.extends.includes('plugin:jsdoc/recommended-typescript-flavor')
+  ) {
+    pkgJson.eslintConfig.extends.push(
+      'plugin:jsdoc/recommended-typescript-flavor'
+    );
+  }
+
+  if (eslintConfig && !eslintConfig.plugins.includes('jsdoc')) {
+    pkgJson.eslintConfig.plugins.push('jsdoc');
+  }
+}
+
+/**
+ * Check if typescript is in devDependencies and adds it if not
+ * @param pkgJson
+ */
+function checkDevDeps(pkgJson) {
+  const { devDependencies } = pkgJson;
+  if (devDependencies && !devDependencies.typescript) {
+    pkgJson.devDependencies.typescript = depVersions.typescript;
+  }
+}
+
+/**
+ * Setup typescript scripts and dependencies
+ * @param pkgJson
+ */
+function setupTypes(pkgJson) {
+  const { name } = pkgJson;
+
+  const packagesToSkip = [
+    'create-gasket-app',
+    '@gasket/assets',
+    '@gasket/cli',
+    '@gasket/engine',
+    '@gasket/log',
+    '@gasket/plugin-command',
+    '@gasket/plugin-config',
+    '@gasket/plugin-docsify',
+    '@gasket/plugin-lifecycle',
+    '@gasket/plugin-log',
+    '@gasket/plugin-metadata',
+    '@gasket/preset-api',
+    '@gasket/preset-nextjs',
+    '@gasket/preset-pwa',
+    '@gasket/resolve',
+    '@gasket/typescript-tests',
+    '@gasket/repository'
+  ];
+
+  if (!packagesToSkip.includes(name)) {
+    checkTypecheckScripts(pkgJson);
+    checkEslintConfig(pkgJson);
+    checkDevDeps(pkgJson);
+  }
+}
+
+/**
  * Read, fix up, and write out updated package.json file
  * @param {string} pkgPath path to a package.json file
  * @returns {Promise} promise
@@ -280,7 +358,7 @@ async function fixupPackage(pkgPath) {
   }
 
   fixedProperties(pkgJson);
-
+  setupTypes(pkgJson);
   checkScripts(pkgJson);
   checkMaintainers(pkgJson);
 

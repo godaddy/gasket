@@ -27,7 +27,6 @@ class MyDocument extends Document {
 /**
  * Recursively searches through the rendered element tree for the first element
  * that matches the search type
- *
  * @param {object} renderedElement - The element that was rendered by the
  * component.
  * @param {string} searchType - The type of the element you're looking for.

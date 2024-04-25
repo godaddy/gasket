@@ -14,7 +14,9 @@
     "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
     "test:watch": "jest --watchAll",
     "test:coverage": "jest --coverage",
-    "posttest": "npm run lint"
+    "posttest": "npm run lint",
+    "typecheck:skip": "tsc",
+    "typecheck:watch": "tsc --watch"
   },
   "repository": {
     "type": "git",
@@ -43,7 +45,7 @@
     "acorn": "^8.11.3",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
-    "eslint-config-godaddy": "^7.0.2",
+    "eslint-config-godaddy": "^7.1.0",
     "eslint-plugin-jest": "^27.6.3",
     "eslint-plugin-json": "^3.1.0",
     "eslint-plugin-unicorn": "^44.0.0",
@@ -52,18 +54,21 @@
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.0",
     "redux": "^4.0.5",
+    "typescript": "^5.4.5",
     "webpack": "^5.89.0"
   },
   "eslintConfig": {
     "extends": [
       "godaddy",
-      "plugin:jest/recommended"
+      "plugin:jest/recommended",
+      "plugin:jsdoc/recommended-typescript-flavor"
     ],
     "globals": {
       "expect": "readonly"
     },
     "plugins": [
-      "unicorn"
+      "unicorn",
+      "jsdoc"
     ],
     "rules": {
       "unicorn/filename-case": "error"
