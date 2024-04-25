@@ -304,7 +304,7 @@ function checkEslintConfig(pkgJson) {
 function checkDevDeps(pkgJson) {
   const { devDependencies } = pkgJson;
   if (devDependencies && !devDependencies.typescript) {
-    pkgJson.devDependencies.typescript = '^5.4.2';
+    pkgJson.devDependencies.typescript = depVersions.typescript;
   }
 }
 
