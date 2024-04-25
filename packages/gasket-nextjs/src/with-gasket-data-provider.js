@@ -7,8 +7,7 @@ const clientGasketData = typeof window === 'object' ? require('@gasket/data') : 
 /**
  * Make an HOC that adds a provider for the GasketData.
  * This can be used to wrap a top level React, Next.js custom App component or Next.js custom Document component.
- *
- * @returns {function} wrapper
+ * @returns {Function} wrapper
  */
 export const withGasketDataProvider = () => (WrappedComponent) => {
 
