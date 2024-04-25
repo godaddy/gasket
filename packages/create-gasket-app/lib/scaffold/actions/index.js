@@ -8,6 +8,7 @@ import installModules, { installModulesUpdate } from './install-modules.js';
 import linkModules, { linkModulesUpdate } from './link-modules.js';
 import writeGasketConfig from './write-gasket-config.js';
 import loadPkgForDebug from './load-pkg-for-debug.js';
+import presetPromptHooks from './preset-prompt-hooks.js';
 import promptHooks from './prompt-hooks.js';
 import createHooks from './create-hooks.js';
 import generateFiles from './generate-files.js';
@@ -29,6 +30,7 @@ export {
   linkModulesUpdate,
   writeGasketConfig,
   loadPkgForDebug,
+  presetPromptHooks,
   promptHooks,
   createHooks,
   postCreateHooks,

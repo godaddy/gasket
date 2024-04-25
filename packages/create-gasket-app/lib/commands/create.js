@@ -16,11 +16,19 @@ import {
   mkDir,
   postCreateHooks,
   printReport,
+  presetPromptHooks,
   promptHooks,
   setupPkg,
   writeGasketConfig,
   writePkg
 } from '../scaffold/actions/index.js';
+import path from 'path';
+import os from 'os';
+import { mkdtemp, rm } from 'fs/promises';
+import { default as gasketUtils } from '@gasket/utils';
+import { makeGasket } from '@gasket/core';
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
 
 /**
  * Parses comma separated option input to array
@@ -114,36 +122,197 @@ const createCommand = {
   ]
 };
 
+async function wait(ms = 50) {
+  return new Promise(resolve => {
+    console.log('waiting...')
+    setTimeout(resolve, ms);
+  });
+}
+
+function evaluatePreset(preset) {
+  const parts = preset.split('@').filter(Boolean);
+  if (parts.length > 1) {
+    return {
+      name: `@${parts[0]}`,
+      version: parts[1]
+    };
+  } else if (parts.length === 1) {
+    return {
+      name: `@${parts[0]}`,
+      version: null
+    };
+  }
+
+  return preset;
+}
+
+createCommand.action = async function run(appname, options, command) {
+  // temp
+  process.env.GASKET_DEBUG_NPM = 'true';
+  // temp
+  const context = makeCreateContext([appname], options);
+  const {
+    presets = [],
+    presetPath = [],
+  } = options;
+
+  const tmpDir = await mkdtemp(path.join(os.tmpdir(), `gasket-create-${context.appName}`));
+  const modPath = path.join(tmpDir, 'node_modules');
+  console.log(tmpDir);
+  await globalPrompts(context);
+
+  const pkgManager = new gasketUtils.PackageManager({ packageManager: context.packageManager, dest: tmpDir });
+  const pkgVerb = pkgManager.isYarn ? 'add' : 'install';
+
+  const remotePresets = await Promise.all(presets.map(async preset => {
+    await pkgManager.exec(pkgVerb, [preset]);
+    const pkgFile = require(path.join(modPath, preset, 'package.json'));
+    const presetMod = await import(pkgFile.name, { from: modPath });
+
+    const dependencies = Object.entries(pkgFile.dependencies || {})
+      .filter(([name]) => name.startsWith('@gasket'))
+      .map(([name, version]) => ({ name, version }));
+
+    const plugins = await Promise.all(dependencies.map(async ({ name }) => {
+      const mod = await import(name, { from: modPath });
+      return mod.default || mod;
+    }));
+
+    return {
+      pkgFile,
+      dependencies,
+      plugins: [
+        presetMod.default || presetMod,
+        ...plugins
+      ]
+    }
+  }));
+
+  const localPresets = await Promise.all(presetPath.map(async localPreset => {
+    await pkgManager.exec(pkgVerb, [localPreset]);
+    const pkgFile = require(path.join(localPreset, 'package.json'));
+    const presetMod = await import(pkgFile.name, { from: modPath });
+
+    const dependencies = Object.entries(pkgFile.dependencies || {})
+      .filter(([name]) => name.startsWith('@gasket'))
+      .map(([name, version]) => ({ name, version }));
+
+    const plugins = await Promise.all(dependencies.map(async ({ name }) => {
+      const mod = await import(name, { from: modPath });
+      return mod.default || mod;
+    }));
+
+    return {
+      module: presetMod.default || presetMod,
+      pkgFile,
+      dependencies,
+      plugins
+    };
+  }));
+
+
+  const configuredPresets = await Promise.all([
+    ...remotePresets,
+    ...localPresets
+  ]);
+
+  const presetPlugins = configuredPresets.reduce((acc, p) => {
+    return [
+      ...acc,
+      p.module
+    ];
+  }, []);
+
+  const presetGasket = makeGasket({
+    plugins: presetPlugins
+  });
+
+  console.log(presetGasket);
+
+  await presetPromptHooks(presetGasket, context);
+  console.log(context);
+  const presetConfig = await presetGasket.execWaterfall('presetConfig', context);
+
+  console.log(configuredPresets)
+  console.log(configuredPresets[0].dependencies)
+  console.log(configuredPresets[0].plugins)
+  console.log(presetConfig);
+
+  // Check preset plugins vs the plugins from the presetConfig
+
+
+
+  //   await globalPrompts(context);
+  // presetPrompt
+  // presetConfig
+
+  // const gasketPlugins = makeGasket({
+  //   // plugins
+  // })
+
+  // promptHooks
+
+
+  // applyPresetConfig(context);
+  // await globalPrompts(context);
+  // await mkDir(context);
+  // await setupPkg(context);
+  // await writePkg(context);
+  // await installModules(context);
+  // await linkModules(context);
+  // await promptHooks(gasketPlugins, context);
+  //   await createHooks(context);
+  //   await generateFiles(context);
+  //   await writeGasketConfig(context);
+  //   await writePkg.update(context);
+  //   await installModules.update(context);
+  //   await linkModules.update(context); // relink any that were messed up by re-install
+  //   await postCreateHooks(context);
+
+
+  // download preset to os temp dir
+  // import preset to CGA
+  // makeGasket with preset
+  // exec presetPrompt
+  // exec presetConfig
+  // makeGasket with presetConfig
+  // exec prompt
+  // exec create
+
+  // console.log('Deleting tmp dir...')
+  // await rm(tmpDir, { recursive: true });
+}
+
 /**
  * bootstrap - Bootstrap the application
  * @param {CreateContext} context - Create context
  */
-async function bootstrapHandler(context) {
-  await loadPreset(context);
-  cliVersion(context);
-  applyPresetConfig(context);
-  await globalPrompts(context);
-  await mkDir(context);
-  await setupPkg(context);
-  await writePkg(context);
-  await installModules(context);
-  await linkModules(context);
-}
+// async function bootstrapHandler(context) {
+//   await loadPreset(context);
+//   cliVersion(context);
+//   applyPresetConfig(context);
+//   await globalPrompts(context);
+//   await mkDir(context);
+//   await setupPkg(context);
+//   await writePkg(context);
+//   await installModules(context);
+//   await linkModules(context);
+// }
 
 /**
  * generate - Generate the application
  * @param {CreateContext} context - Create context
  */
-async function generateHandler(context) {
-  await promptHooks(context);
-  await createHooks(context);
-  await generateFiles(context);
-  await writeGasketConfig(context);
-  await writePkg.update(context);
-  await installModules.update(context);
-  await linkModules.update(context); // relink any that were messed up by re-install
-  await postCreateHooks(context);
-}
+// async function generateHandler(context) {
+//   await promptHooks(context);
+//   await createHooks(context);
+//   await generateFiles(context);
+//   await writeGasketConfig(context);
+//   await writePkg.update(context);
+//   await installModules.update(context);
+//   await linkModules.update(context); // relink any that were messed up by re-install
+//   await postCreateHooks(context);
+// }
 
 /**
  * createCommand action
@@ -152,41 +321,113 @@ async function generateHandler(context) {
  * @param {Command} command - the command instance
  * @returns {Promise<void>} void
  */
-createCommand.action = async function run(appname, options, command) {
-  const argv = [appname];
-  const { bootstrap = true, generate = true } = options;
+// createCommand.action = async function run(appname, options, command) {
+//   const argv = [appname];
+//   const { bootstrap = true, generate = true } = options;
 
-  let context;
-  try {
-    context = makeCreateContext(argv, options);
-  } catch (error) {
-    console.error(chalk.red(error) + '\n');
-    command.help();
-  }
+//   let context;
+//   try {
+//     context = makeCreateContext(argv, options);
+//   } catch (error) {
+//     console.error(chalk.red(error) + '\n');
+//     command.help();
+//   }
 
-  try {
-    if (bootstrap) {
-      await bootstrapHandler(context);
-    } else {
-      ora('Bootstrap phase skipped.').warn();
-      if (generate) {
-        await loadPkgForDebug(context);
-      }
-    }
+//   try {
+//     if (bootstrap) {
+//       await bootstrapHandler(context);
+//     } else {
+//       ora('Bootstrap phase skipped.').warn();
+//       if (generate) {
+//         await loadPkgForDebug(context);
+//       }
+//     }
 
-    if (generate) {
-      await generateHandler(context);
-    } else {
-      ora('Generate phase skipped.').warn();
-    }
+//     if (generate) {
+//       await generateHandler(context);
+//     } else {
+//       ora('Generate phase skipped.').warn();
+//     }
 
-    printReport(context);
+//     printReport(context);
 
-  } catch (err) {
-    console.error(chalk.red('Exiting with errors.'));
-    dumpErrorContext(context, err);
-    throw err;
-  }
-};
+//   } catch (err) {
+//     console.error(chalk.red('Exiting with errors.'));
+//     dumpErrorContext(context, err);
+//     throw err;
+//   }
+// };
 
 export { createCommand };
+
+
+
+  // fire global prompts to inform pkgmanager
+
+  // const tmpDir = await mkdtemp(path.join(os.tmpdir(), `gasket-create-${context.appName}`));
+  // console.log(tmpDir);
+
+
+
+  // new PackageManager https://github.com/godaddy/gasket/blob/v7/packages/gasket-utils/lib/package-manager.js#L75
+  // const remotePresets = context.rawPresets.map(async preset => {
+  //   const { name: presetName, version: presetVersion } = evaluatePreset(preset)
+
+  //   // await runShellCommand('npm', ['i', `${presetName}@${presetVersion}`], { cwd: tmpDir }, true);
+  //   const modPath = path.join(tmpDir, 'node_modules');
+  //   const pkgFile = require(path.join(modPath, presetName, 'package.json'));
+  //   const presetMod = await import(presetName, { from: modPath });
+
+  //   const dependencies = Object.entries(pkgFile.dependencies || {})
+  //     .filter(([name]) => name.startsWith('@gasket'))
+  //     .map(([name, version]) => ({ name, version }));
+
+  //   const plugins = await Promise.all(dependencies.map(async ({ name }) => {
+  //     const mod = await import(name, { from: modPath });
+  //     return mod.default || mod;
+  //   }));
+
+  //   console.log(plugins)
+  //   return {
+  //     // module: await import(preset, { from: modPath }),
+  //     pkgFile,
+  //     dependencies,
+  //     plugins: [
+  //       presetMod.default || presetMod,
+  //       ...plugins
+  //     ]
+  //   }
+  // });
+
+  // const localPresets = context.localPresets.map(async localPreset => {
+  //   await runShellCommand('npm', ['i', localPreset], { cwd: tmpDir }, true);
+
+  //   const modPath = path.join(tmpDir, 'node_modules');
+  //   const pkgFile = require(path.join(localPreset, 'package.json'));
+  //   const presetMod = await import(pkgFile.name, { from: modPath });
+
+
+  //   const dependencies = Object.entries(pkgFile.dependencies || {})
+  //     .filter(([name]) => name.startsWith('@gasket'))
+  //     .map(([name, version]) => ({ name, version }));
+
+  //   const plugins = await Promise.all(dependencies.map(async ({ name }) => {
+  //     const mod = await import(name, { from: modPath });
+  //     return mod.default || mod;
+  //   }));
+
+  //   return {
+  //     // module: await import(preset, { from: modPath }),
+  //     pkgFile,
+  //     dependencies,
+  //     plugins: [
+  //       presetMod.default || presetMod,
+  //       ...plugins
+  //     ]
+  //   }
+  // });
+
+  // const presets = await Promise.all([
+  //   ...remotePresets,
+  //   ...localPresets
+  // ]);
