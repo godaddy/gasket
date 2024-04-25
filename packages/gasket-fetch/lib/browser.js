@@ -1,8 +1,12 @@
-// Wrapper to access window.fetch in case of polyfill or monkey patch
-function fetchWrapper(...args) {
-  return window.fetch(...args);
+/**
+ * Wrapper to access window.fetch in case of polyfill or monkey patch
+ * @type {import('./index').fetch}
+ */
+function fetchWrapper(input, init) {
+  return window.fetch(input, init);
 }
 
+// @ts-ignore - TS doesn't like adding properties to a function
 exports = fetchWrapper; // To import fetch from @gasket/fetch
 exports.default = fetchWrapper; // For TypeScript consumers without esModuleInterop.
 exports.Headers = window.Headers;

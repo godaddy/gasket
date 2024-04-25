@@ -20,7 +20,9 @@
     "test:coverage": "jest --coverage",
     "posttest": "npm run lint",
     "build": "babel src -d lib --delete-dir-on-start",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "typecheck:skip": "tsc",
+    "typecheck:watch": "tsc --watch"
   },
   "repository": {
     "type": "git",
@@ -76,7 +78,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-intl": "^6.0.0",
-    "react-redux": "^8.0.0"
+    "react-redux": "^8.0.0",
+    "typescript": "^5.4.5"
   },
   "peerDependencies": {
     "@gasket/plugin-intl": "^6.0.0",
@@ -86,10 +89,12 @@
   "eslintConfig": {
     "extends": [
       "godaddy-react",
-      "plugin:jest/recommended"
+      "plugin:jest/recommended",
+      "plugin:jsdoc/recommended-typescript-flavor"
     ],
     "plugins": [
-      "unicorn"
+      "unicorn",
+      "jsdoc"
     ],
     "rules": {
       "unicorn/filename-case": "error"
