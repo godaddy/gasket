@@ -5,7 +5,6 @@ export const GasketDataContext = React.createContext({});
 
 /**
  * Provider for the GasketData, adds context to child elements.
- *
  * @param {object} props - Props
  * @param {GasketData} props.gasketData - Object of GasketData
  * @param {JSX.Element} props.children - Element to add GasketData context too
@@ -23,4 +22,3 @@ GasketDataProvider.propTypes = {
   gasketData: PropTypes.object,
   children: PropTypes.node
 };
-
