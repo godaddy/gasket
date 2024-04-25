@@ -1,7 +1,7 @@
 import action from '../action-wrapper.js';
 import { ConfigBuilder } from '../config-builder.js';
 import { addPluginsToPkg, getPluginsWithVersions } from '../utils.js';
-import { PackageManager } from '@gasket/utils';
+import { default as gasketUtils } from '@gasket/utils';
 import { presetIdentifier } from '@gasket/resolve';
 
 /**
@@ -11,6 +11,8 @@ import { presetIdentifier } from '@gasket/resolve';
  * @returns {Promise} promise
  */
 async function setupPkg(context) {
+  // console.log(context);
+  // throw new Error('Not implemented');
   const { appName, appDescription, presetInfos = [], rawPlugins = [], cliVersionRequired, warnings } = context;
 
   const pkg = ConfigBuilder.createPackageJson({
@@ -33,7 +35,7 @@ async function setupPkg(context) {
     '@gasket/cli': cliVersionRequired
   }));
 
-  const pkgManager = new PackageManager(context);
+  const pkgManager = new gasketUtils.PackageManager(context);
   const pluginIds = await getPluginsWithVersions(rawPlugins, pkgManager);
   addPluginsToPkg(pluginIds, pkg);
 

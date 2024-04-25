@@ -1,6 +1,6 @@
 /* eslint-disable complexity, max-statements */
 import deepmerge from 'deepmerge';
-import semver from 'semver';
+import { default as semver } from 'semver';
 import { default as diagnostics } from 'diagnostics';
 const debug = diagnostics('gasket:cli:package');
 
@@ -190,19 +190,19 @@ export class ConfigBuilder {
         throw new Error(`${key} must be an object. Received ${value}`);
       }
 
-      if (Array.isArray(this.semverFields) && this.semverFields.includes(key)) {
-        if (!existing) this.fields[key] = {};
+      // if (Array.isArray(this.semverFields) && this.semverFields.includes(key)) {
+      //   if (!existing) this.fields[key] = {};
 
-        this.semanticMerge({
-          key,
-          value,
-          existing: this.fields[key],
-          name,
-          ...options
-        });
+      //   this.semanticMerge({
+      //     key,
+      //     value,
+      //     existing: this.fields[key],
+      //     name,
+      //     ...options
+      //   });
 
-        return;
-      }
+      //   return;
+      // }
 
       if (!existing) {
         this.fields[key] = Object.assign({}, value);

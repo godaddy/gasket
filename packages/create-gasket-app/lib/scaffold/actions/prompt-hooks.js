@@ -77,7 +77,7 @@ async function execPluginPrompts(context, plugins = [], presets = []) {
  * @param {CreateContext} context - Create context
  * @returns {Promise} promise
  */
-async function promptHooks(context) {
+async function promptHooks(gasket, context) {
   //
   // Because `execPluginPrompts` is recursively, we need to start it
   // with the processPlugins and presets from our initial context
