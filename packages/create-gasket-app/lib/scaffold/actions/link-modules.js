@@ -7,7 +7,7 @@ import action from '../action-wrapper.js';
  * @param {Spinner} spinner - Spinner
  * @returns {Promise} promise
  */
-async function linkModules(context, spinner) {
+async function linkModules(gasket, context, spinner) {
   const { pkgLinks, pkgManager } = context;
 
   if (pkgLinks && pkgLinks.length) {

@@ -53,10 +53,7 @@ const createAddPlugins = context => {
  * @returns {Promise} promise
  * @private
  */
-async function execPluginPrompts(context, plugins = [], presets = []) {
-  const { dest } = context;
-  const gasket = await createEngine({ dest, presets, plugins });
-
+async function execPluginPrompts(gasket, context, plugins = [], presets = []) {
   //
   // @see: https://github.com/SBoudrias/Inquirer.js/#inquirercreatepromptmodule---prompt-function
   //
@@ -82,8 +79,8 @@ async function promptHooks(gasket, context) {
   // Because `execPluginPrompts` is recursively, we need to start it
   // with the processPlugins and presets from our initial context
   //
-  const { presets, plugins } = context;
-  await execPluginPrompts(context, plugins, presets);
+  const { plugins } = context;
+  await execPluginPrompts(gasket, context, plugins);
 }
 
 export default action('Plugin prompts', promptHooks, { startSpinner: false });

@@ -62,6 +62,12 @@ export interface ConfigBuilder<Config> {
     value: Config[Key],
     options?: { force?: boolean }
   ): void;
+
+  // TODO Document
+  addPlugin(pluginImport: string, pluginName: string): void;
+  addImport(importName: string, importPath: string, isDefault?: boolean): ConfigBuilder;
+  useImport(configPath: string, importName: string): void;
+
 }
 
 export interface PackageJsonBuilder extends ConfigBuilder<PackageJson> {

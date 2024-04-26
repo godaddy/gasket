@@ -10,7 +10,7 @@ import { presetIdentifier } from '@gasket/resolve';
  * @param {CreateContext} context - Create context
  * @returns {Promise} promise
  */
-async function setupPkg(context) {
+async function setupPkg(gasket, context) {
   // console.log(context);
   // throw new Error('Not implemented');
   const { appName, appDescription, presetInfos = [], rawPlugins = [], cliVersionRequired, warnings } = context;
@@ -19,21 +19,21 @@ async function setupPkg(context) {
     name: appName,
     version: '0.0.0',
     description: appDescription,
-    // type: 'module' // commented out for now
+    type: context.typescript ? 'commonjs' : 'module'
   }, { warnings });
 
   // The preset package itself must be included in the dependencies
   // of the `pkg` to be bootstrapped.
-  pkg.add('dependencies', presetInfos.reduce((acc, presetInfo) => {
-    // Use rawName in case version or file path was set in cli args
-    // Otherwise fallback to resolved version
-    const { fullName, version } = presetIdentifier(presetInfo.rawName).withVersion(`^${presetInfo.version}`);
+  // pkg.add('dependencies', presetInfos.reduce((acc, presetInfo) => {
+  //   // Use rawName in case version or file path was set in cli args
+  //   // Otherwise fallback to resolved version
+  //   const { fullName, version } = presetIdentifier(presetInfo.rawName).withVersion(`^${presetInfo.version}`);
 
-    acc[fullName] = version;
-    return acc;
-  }, {
-    '@gasket/cli': cliVersionRequired
-  }));
+  //   acc[fullName] = version;
+  //   return acc;
+  // }, {
+  //   // '@gasket/cli': cliVersionRequired
+  // }));
 
   const pkgManager = new gasketUtils.PackageManager(context);
   const pluginIds = await getPluginsWithVersions(rawPlugins, pkgManager);

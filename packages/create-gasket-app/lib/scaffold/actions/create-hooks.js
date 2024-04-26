@@ -10,14 +10,13 @@ import { Files } from '../files.js';
  * @param {CreateContext} context - Create context
  * @returns {Promise} promise
  */
-async function createHooks(context) {
+async function createHooks(gasket, context) {
   const { dest, presets = [], plugins = [], warnings } = context;
 
   const files = new Files();
-  const gasketConfig = ConfigBuilder.create({}, { orderBy: ['plugins'], warnings });
+  const gasketConfig = ConfigBuilder.create({}, { orderBy: ['plugins'], warnings, plugins });
   Object.assign(context, { files, gasketConfig });
 
-  const gasket = await createEngine(plugins);
   await gasket.execApply('create', async function applyCreate(plugin, handler) {
     await handler(context.runWith(plugin));
   });

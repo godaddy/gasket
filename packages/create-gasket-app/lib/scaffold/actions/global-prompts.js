@@ -75,16 +75,17 @@ async function chooseTestPlugin(context, prompt) {
   const { presetInfos = [], plugins = [] } = context;
 
   // Flatten all plugins from presets and concat short names with cli plugins
-  const allPlugins = flattenPresets(presetInfos)
-    .map((presetInfo) => presetInfo.plugins || [])
-    .reduce((acc, arr) => acc.concat(arr), [])
-    .map((pluginInfo) => pluginIdentifier(pluginInfo.name).shortName)
-    .concat(plugins);
+  // const allPlugins = flattenPresets(presetInfos)
+  //   .map((presetInfo) => presetInfo.plugins || [])
+  //   .reduce((acc, arr) => acc.concat(arr), [])
+  //   .map((pluginInfo) => pluginIdentifier(pluginInfo.name).shortName)
+  //   .concat(plugins);
 
-  const knownTestPlugins = { mocha: '@gasket/mocha', jest: '@gasket/jest', cypress: '@gasket/cypress' };
+  const knownTestPlugins = { mocha: '@gasket/plugin-mocha', jest: '@gasket/plugin-jest', cypress: '@gasket/plugin-cypress' };
 
   if (!('testPlugin' in context)) {
-    let testPlugin = Object.values(knownTestPlugins).find((p) => allPlugins.includes(p));
+    // let testPlugin = Object.values(knownTestPlugins).find((p) => allPlugins.includes(p));
+    let testPlugin;
 
     if ('testSuite' in  context) {
       testPlugin = knownTestPlugins[context.testSuite];
@@ -98,16 +99,16 @@ async function chooseTestPlugin(context, prompt) {
           type: 'list',
           choices: [
             { name: 'none (not recommended)', value: 'none' },
-            { name: 'mocha + nyc + sinon + chai', value: '@gasket/mocha' },
-            { name: 'jest', value: '@gasket/jest' },
-            { name: 'cypress', value: '@gasket/cypress' }
+            { name: 'mocha + nyc + sinon + chai', value: '@gasket/plugin-mocha' },
+            { name: 'jest', value: '@gasket/plugin-jest' },
+            { name: 'cypress', value: '@gasket/plugin-cypress' }
           ]
         }
       ]));
     }
 
     if (testPlugin && testPlugin !== 'none') {
-      addPluginsToContext([testPlugin], context);
+      // addPluginsToContext([testPlugin], context);
       Object.assign(context, { testPlugin });
     }
   }
@@ -150,7 +151,7 @@ export const questions = [
  * @param {CreateContext} context - Create context
  * @returns {Promise} promise
  */
-async function globalPrompts(context) {
+async function globalPrompts(gasket, context) {
   const prompt = context.prompts ? inquirer.prompt : () => ({});
   for (var fn of questions) {
     await fn(context, prompt);
