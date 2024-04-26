@@ -38,12 +38,12 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-winston",
   "dependencies": {
+    "@gasket/plugin-logger": "^7.0.0-next.3",
     "winston": "^3.11.0"
   },
   "devDependencies": {
     "@gasket/cli": "^7.0.0-next.3",
     "@gasket/engine": "^7.0.0-next.3",
-    "@gasket/plugin-logger": "^7.0.0-next.3",
     "babel-eslint": "^10.1.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
