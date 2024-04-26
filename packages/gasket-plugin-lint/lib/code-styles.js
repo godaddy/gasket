@@ -1,21 +1,14 @@
 /* eslint-disable complexity,max-statements */
-const { eslintConfigIdentifier, stylelintConfigIdentifier } = require('./utils');
-const { devDependencies } = require('../package');
-
-/**
- *
- * @typedef {object} CodeStyle
- *
- * @property {string} name - Proper name to show in prompt. Do not set to keep from prompt choices
- * @property {function(context: CreateContext, utils: CodeStyleUtils)} create - Create steps for the code style
- * @property {boolean} [allowStylelint] - If should prompt for adding stylelint
- */
+const {
+  eslintConfigIdentifier,
+  stylelintConfigIdentifier
+} = require('./utils');
+const { devDependencies } = require('../package.json');
 
 /**
  * GoDaddy JavaScript Style
- * @see: https://github.com/godaddy/javascript
- *
- * @type {CodeStyle}
+ * @see https://github.com/godaddy/javascript
+ * @type {import('./index').CodeStyle}
  */
 const godaddy = {
   name: 'GoDaddy',
@@ -38,7 +31,10 @@ const godaddy = {
       configName = 'godaddy-flow';
     }
 
-    pkg.add('devDependencies', (await gatherDevDeps(`eslint-config-${configName}`)));
+    pkg.add(
+      'devDependencies',
+      await gatherDevDeps(`eslint-config-${configName}`)
+    );
     pkg.add('eslintConfig', { extends: [configName] });
 
     if (hasReactIntl) {
@@ -58,7 +54,7 @@ const godaddy = {
 
     if (addStylelint) {
       const stylelintName = 'stylelint-config-godaddy';
-      pkg.add('devDependencies', (await gatherDevDeps(stylelintName)));
+      pkg.add('devDependencies', await gatherDevDeps(stylelintName));
       pkg.add('stylelint', { extends: [stylelintName] });
     }
 
@@ -73,9 +69,8 @@ const godaddy = {
 
 /**
  * JavaScript Standard Style
- * @see: https://standardjs.com/
- *
- * @type {CodeStyle}
+ * @see https://standardjs.com/
+ * @type {import('./index').CodeStyle}
  */
 const standard = {
   name: 'Standard',
@@ -89,7 +84,10 @@ const standard = {
       gatherDevDeps('snazzy')
     ]);
 
-    pkg.add('devDependencies', devDeps.reduce((acc, cur) => ({ ...acc, ...cur }), {}));
+    pkg.add(
+      'devDependencies',
+      devDeps.reduce((acc, cur) => ({ ...acc, ...cur }), {})
+    );
 
     pkg.add('scripts', {
       'lint': 'standard | snazzy',
@@ -115,9 +113,8 @@ const standard = {
 
 /**
  * Airbnb JavaScript Style
- * @see: https://github.com/airbnb/javascript
- *
- * @type {CodeStyle}
+ * @see https://github.com/airbnb/javascript
+ * @type {import('./index').CodeStyle}
  */
 const airbnb = {
   name: 'Airbnb',
@@ -132,12 +129,15 @@ const airbnb = {
     let configName = 'airbnb-base';
     if (hasReact) configName = 'airbnb';
 
-    pkg.add('devDependencies', (await gatherDevDeps(`eslint-config-${configName}`)));
+    pkg.add(
+      'devDependencies',
+      await gatherDevDeps(`eslint-config-${configName}`)
+    );
     pkg.add('eslintConfig', { extends: [configName] });
 
     if (addStylelint) {
       const stylelintName = 'stylelint-config-airbnb';
-      pkg.add('devDependencies', (await gatherDevDeps(stylelintName)));
+      pkg.add('devDependencies', await gatherDevDeps(stylelintName));
       pkg.add('stylelint', { extends: [stylelintName] });
     }
 
@@ -152,8 +152,7 @@ const airbnb = {
 
 /**
  * Allows users to type in the name of an eslint config and stylelint config.
- *
- * @type {CodeStyle}
+ * @type {import('./index').CodeStyle}
  */
 const other = {
   name: 'other (input eslint config)',
@@ -166,7 +165,7 @@ const other = {
       const identifier = eslintConfigIdentifier(eslintConfig);
       const hasNext = pkg.has('dependencies', 'next');
 
-      pkg.add('devDependencies', (await gatherDevDeps(identifier.full)));
+      pkg.add('devDependencies', await gatherDevDeps(identifier.full));
       pkg.add('eslintConfig', { extends: [identifier.shortName] });
 
       if (hasNext) {
@@ -179,26 +178,24 @@ const other = {
 
     if (stylelintConfig) {
       const identifier = stylelintConfigIdentifier(stylelintConfig);
-      pkg.add('devDependencies', (await gatherDevDeps(identifier.full)));
-      pkg.add('stylelintConfig', { extends: [identifier.name] });
+      pkg.add('devDependencies', await gatherDevDeps(identifier.full));
+      pkg.add('stylelint', { extends: [identifier.name] });
     }
   }
 };
 
 /**
  * Create an app without any linting setup
- *
- * @type {CodeStyle}
+ * @type {import('./index').CodeStyle}
  */
 const none = {
   name: 'none (not recommended)'
 };
 
 /**
- * This does not show up as a prompt choice, but is common setup that runs
- * for all code styles choices (except, of course, none).
- *
- * @type {CodeStyle}
+ * This does not show up as a prompt choice, but is common setup that runs for
+ * all code styles choices (except, of course, none).
+ * @type {import('./index').CodeStyle}
  */
 const common = {
   // no name = no choice
@@ -209,9 +206,7 @@ const common = {
     const hasEslint = pkg.has('devDependencies', 'eslint');
     const hasStylelint = pkg.has('devDependencies', 'stylelint');
 
-    //
     // Handle common eslint configuration
-    //
     if (hasEslint) {
       if (!pkg.has('scripts', 'lint')) {
         pkg.add('scripts', {
@@ -226,10 +221,7 @@ const common = {
         pkg.add('eslintConfig', { env: { mocha: true } });
       }
 
-      pkg.add('eslintIgnore', [
-        'coverage/',
-        'build/'
-      ]);
+      pkg.add('eslintIgnore', ['coverage/', 'build/']);
 
       const hasNext = pkg.has('dependencies', 'next');
       const hasJSXA11y = pkg.has('devDependencies', 'eslint-plugin-jsx-a11y');
@@ -237,12 +229,11 @@ const common = {
       if (hasNext && hasJSXA11y) {
         pkg.add('eslintConfig', {
           rules: {
-            //
             // The following disables 'noHref' rule for `<a>` and adds other
             // checks for next/link and next-routes `<Link as= route=>`
-            //
             'jsx-a11y/anchor-is-valid': [
-              'error', {
+              'error',
+              {
                 components: ['Link'],
                 specialLink: ['route', 'as'],
                 aspects: ['invalidHref', 'preferButton']
@@ -260,9 +251,7 @@ const common = {
       }
     }
 
-    //
     // Handle common stylelint configuration
-    //
     if (hasStylelint) {
       if (!pkg.has('scripts', 'stylelint')) {
         pkg.add('scripts', {
@@ -274,7 +263,9 @@ const common = {
 
     if (!pkg.has('scripts', 'posttest')) {
       if (hasEslint && hasStylelint) {
-        pkg.add('scripts', { posttest: `${runScriptStr('lint')} && ${runScriptStr('stylelint')}` });
+        pkg.add('scripts', {
+          posttest: `${runScriptStr('lint')} && ${runScriptStr('stylelint')}`
+        });
       } else if (hasEslint) {
         pkg.add('scripts', { posttest: `${runScriptStr('lint')}` });
       } else if (hasStylelint) {
