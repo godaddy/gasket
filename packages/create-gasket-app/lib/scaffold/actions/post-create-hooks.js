@@ -8,7 +8,7 @@ import { runShellCommand } from '@gasket/utils';
  * @param {CreateContext} context - Create context
  * @returns {Promise} promise
  */
-async function postCreateHooks(context) {
+async function postCreateHooks(gasket, context) {
   const { dest, presets = [], plugins = [] } = context;
 
   /**
@@ -25,8 +25,6 @@ async function postCreateHooks(context) {
    * in future is easy.
    */
   const utils = { runScript };
-
-  const gasket = await createEngine(plugins);
   await gasket.exec('postCreate', context, utils);
 }
 

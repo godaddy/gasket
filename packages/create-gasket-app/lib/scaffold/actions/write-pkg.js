@@ -9,7 +9,7 @@ import action from '../action-wrapper.js';
  * @param {Boolean} update - Is an update step
  * @returns {Promise} promise
  */
-async function writePkg(context) {
+async function writePkg(gasket, context) {
   const { dest, pkg, generatedFiles } = context;
   const fileName = 'package.json';
   const filePath = path.join(dest, fileName);

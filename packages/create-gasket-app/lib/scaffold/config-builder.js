@@ -190,19 +190,19 @@ export class ConfigBuilder {
         throw new Error(`${key} must be an object. Received ${value}`);
       }
 
-      // if (Array.isArray(this.semverFields) && this.semverFields.includes(key)) {
-      //   if (!existing) this.fields[key] = {};
+      if (Array.isArray(this.semverFields) && this.semverFields.includes(key)) {
+        if (!existing) this.fields[key] = {};
 
-      //   this.semanticMerge({
-      //     key,
-      //     value,
-      //     existing: this.fields[key],
-      //     name,
-      //     ...options
-      //   });
+        this.semanticMerge({
+          key,
+          value,
+          existing: this.fields[key],
+          name,
+          ...options
+        });
 
-      //   return;
-      // }
+        return;
+      }
 
       if (!existing) {
         this.fields[key] = Object.assign({}, value);
@@ -225,6 +225,26 @@ export class ConfigBuilder {
     } else {
       this.fields[key] = value;
     }
+  }
+
+  /** TODO document */
+  addPlugin(pluginImport, pluginName) {
+    this.add('plugins', [`${pluginImport}`]);
+    this.add('pluginImports', { [pluginImport]: pluginName });
+  }
+
+  addImport(importName, importPath) {
+    this.add('imports', { [importName]: importPath });
+    return this;
+  }
+
+  addExpression(expression) {
+    this.add('expressions', [expression.trim()]);
+    return this;
+  }
+
+  injectValue(configKey, injectedValue) {
+    this.add('injectionAssignments', { [configKey]: injectedValue });
   }
 
   /**
