@@ -1,39 +1,78 @@
 import pluginExpress from '@gasket/plugin-express';
 import pluginTypescript from '@gasket/plugin-typescript';
 import pluginHttps from '@gasket/plugin-https';
-import pluginWinston from '@gasket/plugin-winston';
 import pluginDocs from '@gasket/plugin-docs';
 import pluginDocusaurus from '@gasket/plugin-docusaurus';
-import pluginResponeData from '@gasket/plugin-response-data';
+import pluginResponseData from '@gasket/plugin-response-data';
+import pluginWinston from '@gasket/plugin-winston';
+import pluginSwagger from '@gasket/plugin-swagger';
+// import pluginLint from '@gasket/plugin-lint';
+import { createRequire } from 'module';
+import { fileURLToPath } from 'url';
+const require = createRequire(import.meta.url);
+const { name, dependencies, devDependencies } = require('../package.json');
 
 export default {
-  name: '@gasket/preset-api',
+  name,
   hooks: {
     async presetPrompt(gasket, context, { prompt }) {
-      if (!('apiAppTest' in context)) {
-        const { apiAppTest } = await prompt([
+      context.apiApp = true;
+      if (!('typescript' in context)) {
+        const { typescript } = await prompt([
           {
-            name: 'apiAppTest',
-            message: 'What is your API app test?',
-            type: 'input',
-            default: 'A basic API'
+            name: 'typescript',
+            message: 'Do you want to use TypeScript?',
+            type: 'confirm',
+            default: false
           }
         ]);
 
-        Object.assign(context, { apiAppTest, apiApp: true, typescript: true });
+        Object.assign(context, { typescript });
       }
     },
     async presetConfig(gasket, context) {
+      let testPlugin;
+      if ('testPlugin' in context) {
+        testPlugin = await import(context.testPlugin);
+      }
+
       return {
         plugins: [
           pluginExpress,
           pluginHttps,
-          pluginWinston,
           pluginDocs,
           pluginDocusaurus,
-          pluginResponeData,
-          context.typescript ? pluginTypescript : null
+          pluginResponseData,
+          pluginWinston,
+          pluginSwagger,
+          // pluginLint,
+          context.typescript ? pluginTypescript : null,
+          testPlugin ? testPlugin.default || testPlugin : null
         ].filter(Boolean)
+      }
+    },
+    create(gasket, context) {
+      const { pkg, files } = context;
+      const __dirname = fileURLToPath(import.meta.url);
+      const generatorDir = `${__dirname}/../../generator`;
+
+      pkg.add('dependencies', {
+        '@gasket/engine': dependencies['@gasket/engine'],
+        '@gasket/core': dependencies['@gasket/core'],
+        '@gasket/utils': dependencies['@gasket/utils']
+      });
+
+      if (!context.typescript) {
+        files.add(`${generatorDir}/*`);
+
+        pkg.add('devDependencies', {
+          nodemon: devDependencies.nodemon
+        });
+
+        pkg.add('scripts', {
+          start: 'node server.js',
+          local: 'GASKET_ENV=local nodemon server.js',
+        });
       }
     }
   }
