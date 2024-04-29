@@ -27,24 +27,8 @@ module.exports = async function create(gasket, context) {
     context.files.add(`${generatorDir}/**/!(*.js)`);
     context.gasketConfig
       .addImport('routes', './routes')
-      .useImport('express.routes', 'routes');
+      .injectValue('express.routes', 'routes');
   } else {
-    // @ts-expect-error
-    context.gasketConfig.add('howdy', {
-      yippee: {
-        doo: {
-          dah: {
-            yay: 'hey'
-          }
-        }
-      }
-    });
-    context.gasketConfig
-      .addImport('{ howdy, hey, yo }', '@howdy/yippee/doo/dah/yay')
-      .addExpression('const dude = yo();')
-      .addExpression(`function aloha() { return 'aloha'; }`)
-      .injectValue('howdy.yippee.doo.dah.yay', '[ howdy, dude, hey, aloha() ]');
-
     context.files.add(`${generatorDir}/**/!(*.ts)`);
     context.gasketConfig
       .addImport('routes', './routes/index.js')
