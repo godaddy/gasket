@@ -173,7 +173,11 @@ export function makeCreateContext(argv = [], options = {}) {
     errors: [],
     nextSteps: [],
     generatedFiles: new Set(),
-    prompts
+    prompts,
+    presets: [],
+    presetConfig: {
+      plugins: []
+    }
   });
 
   readConfig(context, { config, configFile });
