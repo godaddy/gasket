@@ -1,5 +1,5 @@
 /* eslint-disable no-console, no-sync */
-const { name, version } = require('../package.json');
+const { name } = require('../package.json');
 
 function createChildLogger(parent, metadata) {
   return {
@@ -25,9 +25,6 @@ module.exports = {
   hooks: {
     create(gasket, context) {
       context.gasketConfig.addPlugin('pluginLogger', '@gasket/plugin-logger');
-      context.pkg.add('dependencies', {
-        [name]: version
-      });
     },
     init(gasket) {
       // eslint-disable-next-line no-sync
