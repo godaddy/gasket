@@ -1,8 +1,8 @@
 /* eslint-disable max-len, max-statements */
 import fs from 'fs';
 import path from 'path';
-import { addPluginsToContext, ensureAbsolute, readConfig } from '../scaffold/utils.js';
-
+import { readConfig } from '../scaffold/utils.js';
+// TODO - adjust doc blocks
 /**
  * The CreateRuntime represents a shallow proxy to a CreateContext
  * that automatically adds transactional information for providing
@@ -164,7 +164,6 @@ export function makeCreateContext(argv = [], options = {}) {
     dest,
     relDest,
     extant,
-    // npmconfig: npmconfig && ensureAbsolute(npmconfig),
     pkgLinks,
     localPresets,
     rawPresets,

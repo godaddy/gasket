@@ -23,6 +23,7 @@ import {
   writePkg
 } from '../scaffold/actions/index.js';
 
+// TODO - doc blocks and types
 /**
  * Parses comma separated option input to array
  *
