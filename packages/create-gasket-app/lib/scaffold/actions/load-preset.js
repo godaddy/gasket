@@ -1,83 +1,36 @@
 import path from 'path';
+import os from 'os';
 import action from '../action-wrapper.js';
-import { PackageFetcher } from '../fetcher.js';
-import { presetIdentifier, Loader } from '@gasket/resolve';
+import { default as gasketUtils } from '@gasket/utils';
+import { mkdtemp } from 'fs/promises';
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
 
-const loader = new Loader();
+async function loadPresets(gasket, context) {
+  const tmpDir = await mkdtemp(path.join(os.tmpdir(), `gasket-create-${context.appName}`));
+  context.tmpDir = tmpDir;
 
-/**
- * Fetches the preset packages and loads PresetInfos
- *
- * @param {[String]} rawPresets - Presets names
- * @param {String} cwd - Root path
- * @param {Object} npmconfig - Config
- * @param {String} from from
- * @returns {PresetInfo[]} loaded presetInfos
- * @private
- */
-async function remotePresets(rawPresets, cwd, npmconfig, from) {
-  if (!rawPresets) { return []; }
+  const modPath = path.join(tmpDir, 'node_modules');
+  const pkgManager = new gasketUtils.PackageManager({ packageManager: context.packageManager, dest: tmpDir });
+  const pkgVerb = pkgManager.isYarn ? 'add' : 'install';
 
-  const allRemotePresets = await Promise.all(rawPresets.map(async rawName => {
-    const packageName = presetIdentifier(rawName).full;
-    const fetcher = new PackageFetcher({ cwd, npmconfig, packageName });
-    const pkgPath = await fetcher.clone();
-
-    const presetInfo = await loader.loadPreset(pkgPath, { from: from, rawName }, { shallow: true });
-    const { name: presetName, dependencies } = presetInfo.package;
-    if (!dependencies) {
-      return presetInfo;
-    }
-
-    const presetDeps = Object.keys(dependencies).filter(k => presetIdentifier.isValidFullName(k));
-    const rawPresetsDeps = presetDeps.map(presetDep => `${presetDep}@${dependencies[presetDep]}`);
-
-    const presetInfoDeps = await remotePresets(rawPresetsDeps, cwd, npmconfig, presetName);
-    return {
-      ...presetInfo,
-      presets: presetInfoDeps
-    };
-  }));
-
-  return allRemotePresets;
-}
-
-/**
- * Loads PresetInfo from local preset package
- *
- * @param {CreateContext} context - Create context
- * @returns {PresetInfo[]} loaded presetInfos
- * @private
- */
-function localPreset(context) {
-  const { cwd, localPresets = [] } = context;
-  if (!localPresets) { return []; }
-
-  const presetInfos = [];
-  localPresets.forEach(async localPresetPath => {
-    const pkgPath = path.resolve(cwd, localPresetPath);
-    const presetInfo = await loader.loadPreset(pkgPath, { from: 'cli' }, { shallow: false });
-    presetInfo.rawName = `${presetInfo.package.name}@file:${pkgPath}`;
-    presetInfos.push(presetInfo);
+  const remotePresets = context.rawPresets.map(async preset => {
+    const parts = /@([0-9]\.|[0-9]).+/.test(preset) && preset.split('@').filter(Boolean);
+    const name = parts ? `@${parts[0]}` : preset;
+    const version = parts ? `@${parts[1]}` : '@latest';
+    await pkgManager.exec(pkgVerb, [`${name}${version}`]);
+    const mod = await import(name, { from: modPath });
+    return mod.default || mod;
   });
 
-  return presetInfos;
+  const localPresets = context.localPresets.map(async localPresetPath => {
+    await pkgManager.exec(pkgVerb, [localPresetPath]);
+    const pkgFile = require(path.join(localPresetPath, 'package.json'));
+    const mod = await import(pkgFile.name, { from: modPath });
+    return mod.default || mod;
+  });
+
+  context.presets = await Promise.all([...remotePresets, ...localPresets]);
 }
 
-/**
- * Downloads the target preset package and adds the package.json
- * contents and plugins dependencies to context.
- *
- * @param {CreateContext} context - Create context
- * @returns {Promise} promise
- */
-async function loadPreset(context) {
-  const { rawPresets = [], cwd, npmconfig } = context;
-  let presetInfos = await remotePresets(rawPresets, cwd, npmconfig, 'cli');
-  presetInfos = presetInfos.concat(localPreset(context));
-
-  const presets = presetInfos.map(p => presetIdentifier(p.rawName).shortName);
-  Object.assign(context, { presets, presetInfos });
-}
-
-export default action('Load presets', loadPreset);
+export default action('Load presets', loadPresets);

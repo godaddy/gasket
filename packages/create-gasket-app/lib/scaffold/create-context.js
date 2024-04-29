@@ -61,7 +61,7 @@ function flatten(acc, values) {
  *
  * @type {CreateContext}
  *
- * -- Added by command args and flags
+ * -- Added by command args and options
  *
  * @property {String} appName - Short name of the app
  * @property {String} cwd - Current work directory
@@ -70,7 +70,7 @@ function flatten(acc, values) {
  * @property {Boolean} extant - Whether or not target directory already exists
  * @property {[String]} localPresets - paths to the local presets packages
  * @property {PresetDesc[]} rawPresets - Raw preset desc from args. Can include version constraint. Added by load-preset if using localPresets.
- * @property {PluginDesc[]} rawPlugins - Raw plugin desc from flags, prompts, etc. Can include constraints.
+ * @property {PluginDesc[]} rawPlugins - Raw plugin desc from options, prompts, etc. Can include constraints.
  * @property {PluginName[]} plugins - Short names of plugins
  * @property {String[]} pkgLinks - Local packages that should be linked
  * @property {String} npmconfig - Path to npmconfig file
@@ -127,28 +127,25 @@ export class CreateContext {
  * Makes the initial context used through the create command flow.
  *
  * @param {String[]} argv - Commands args
- * @param {Object} flags - Command flags
+ * @param {Object} options - Command options
  * @returns {CreateContext} context
  */
-export function makeCreateContext(argv = [], flags = {}) {
+export function makeCreateContext(argv = [], options = {}) {
   const appName = argv[0] || 'templated-app';
   const {
-    // npmconfig,
-    // plugins = [],
-    // presets = [],
+    presets = [],
     npmLink = [],
-    // presetPath = [],
+    presetPath = [],
     packageManager,
     prompts,
     config,
     configFile
-  } = flags;
+  } = options;
 
   // Flatten the array of array created by the plugins flag – it
   // supports both multiple instances as well as comma-separated lists.
-  // const rawPresets = presets.reduce(flatten, []);
-  // const localPresets = presetPath.reduce(flatten, []);
-  // const rawPlugins = plugins.reduce(flatten, []);
+  const rawPresets = presets.reduce(flatten, []);
+  const localPresets = presetPath.reduce(flatten, []);
   const pkgLinks = npmLink.reduce(flatten, []);
   const cwd = process.cwd();
   const dest = path.join(cwd, appName);
@@ -169,8 +166,8 @@ export function makeCreateContext(argv = [], flags = {}) {
     extant,
     // npmconfig: npmconfig && ensureAbsolute(npmconfig),
     pkgLinks,
-    // localPresets,
-    // rawPresets,
+    localPresets,
+    rawPresets,
     messages: [],
     warnings: [],
     errors: [],
@@ -187,8 +184,6 @@ export function makeCreateContext(argv = [], flags = {}) {
   if (appName) {
     context.appName = appName;
   }
-
-  // addPluginsToContext(rawPlugins, context);
 
   return context;
 };
