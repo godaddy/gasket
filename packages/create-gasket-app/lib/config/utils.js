@@ -1,6 +1,4 @@
 import { default as diagnostics } from 'diagnostics';
-import { pluginIdentifier } from '@gasket/resolve';
-import { defaultPlugins } from './default-plugins.js';
 const debug = diagnostics('gasket:cli:config:utils');
 
 /**
@@ -31,29 +29,4 @@ export function getEnvironment(options, commandId, warn) {
 
   warn('No env specified, falling back to "development".');
   return 'development';
-}
-
-/**
- * Inject the default plugins into the loaded config
- *
- * @param {Object} gasketConfig - Gasket config
- * @returns {Object} updated config
- */
-export function addDefaultPlugins(gasketConfig) {
-  const pluginsConfig = gasketConfig.plugins || {};
-  const { add = [], remove = [] } = pluginsConfig;
-  const filteredNames = new Set(
-    add.concat(remove).map(p => {
-      const name = typeof p === 'string' ? p : p.name;
-      return pluginIdentifier(name).fullName;
-    })
-  );
-  const pluginsToAdd = defaultPlugins.filter(p => !filteredNames.has(pluginIdentifier(p.name).fullName));
-  return {
-    ...gasketConfig,
-    plugins: {
-      ...pluginsConfig,
-      add: (add).concat(pluginsToAdd)
-    }
-  };
 }

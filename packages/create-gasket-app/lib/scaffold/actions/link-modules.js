@@ -17,5 +17,3 @@ async function linkModules(gasket, context, spinner) {
 }
 
 export default action('Link node modules', linkModules, { startSpinner: false });
-
-export const linkModulesUpdate = action('Relink node modules', linkModules, { startSpinner: false });

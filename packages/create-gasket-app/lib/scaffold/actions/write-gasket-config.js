@@ -2,6 +2,7 @@ import { default as JSON5 } from 'json5';
 import path from 'path';
 import { writeFile } from 'fs/promises';
 import action from '../action-wrapper.js';
+
 // TODO - docs blocks, inline comments, types
 function writePluginImports(plugins) {
   return plugins.reduce((acc, cur, index) => {

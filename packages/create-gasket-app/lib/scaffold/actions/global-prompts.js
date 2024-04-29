@@ -1,9 +1,6 @@
 import inquirer from 'inquirer';
 import action from '../action-wrapper.js';
 
-import { pluginIdentifier, flattenPresets } from '@gasket/resolve';
-import { addPluginsToContext } from '../utils.js';
-
 /**
  * What is your app description?
  *
@@ -108,7 +105,6 @@ async function chooseTestPlugin(context, prompt) {
     }
 
     if (testPlugin && testPlugin !== 'none') {
-      // addPluginsToContext([testPlugin], context);
       Object.assign(context, { testPlugin });
     }
   }

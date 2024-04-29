@@ -4,7 +4,7 @@ import { default as semver } from 'semver';
 import { default as diagnostics } from 'diagnostics';
 const debug = diagnostics('gasket:cli:package');
 
-
+// TODO - evaluate methods for deletion, adjust doc blocks and types
 /**
  * Simple object check without bringing in a large
  * utility library.

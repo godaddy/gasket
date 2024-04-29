@@ -1,48 +1,6 @@
 import inquirer from 'inquirer';
 import action from '../action-wrapper.js';
-import { addPluginsToContext, addPluginsToPkg, getPluginsWithVersions } from '../utils.js';
-import { createEngine } from '../create-engine.js';
-
-/**
- * Create the `addPlugins` function with context
- *
- * @param {CreateContext} context - Create context
- * @returns {addPlugins} addPlugins
- */
-const createAddPlugins = context => {
-  /**
-   * Allows plugins to add plugins based on user input.
-   *
-   * @typedef {Function} addPlugins
-   *
-   * @param {...PluginDesc} pluginsToAdd - Additional plugins to add
-   * @returns {Promise} promise
-   */
-  return async function addPlugins(...pluginsToAdd) {
-    const { pkg, pkgLinks = [], pkgManager } = context;
-
-    addPluginsToContext(pluginsToAdd, context);
-    const pluginIds = await getPluginsWithVersions(pluginsToAdd, pkgManager);
-    addPluginsToPkg(pluginIds, pkg);
-
-    //
-    // Install new plugins if not already linked
-    //
-    const toInstall = pluginIds.filter(p => !pkgLinks.includes(p.fullName));
-    if (toInstall.length) {
-      await pkgManager.install(toInstall.map(p => p.full));
-      //
-      // relink because npm blows them away on installs...
-      //
-      if (pkgLinks.length) {
-        await pkgManager.link(pkgLinks);
-      }
-    }
-
-    await execPluginPrompts(context, pluginIds.map(p => p.shortName));
-  };
-};
-
+// TODO - adjust types
 /**
  * Initializes engine with provide preset and plugins
  * to execute their prompt lifecycle hooks.
@@ -53,14 +11,12 @@ const createAddPlugins = context => {
  * @returns {Promise} promise
  * @private
  */
-async function execPluginPrompts(gasket, context, plugins = [], presets = []) {
+async function execPluginPrompts(gasket, context) {
   //
   // @see: https://github.com/SBoudrias/Inquirer.js/#inquirercreatepromptmodule---prompt-function
   //
   const prompt = context.prompts ? inquirer.createPromptModule() : () => ({});
-  const addPlugins = createAddPlugins(context);
-
-  const nextContext = await gasket.execWaterfall('prompt', context, { prompt, addPlugins });
+  const nextContext = await gasket.execWaterfall('prompt', context, { prompt });
   //
   // Ensure the original context is transformed in case a prompt returns a new object
   //

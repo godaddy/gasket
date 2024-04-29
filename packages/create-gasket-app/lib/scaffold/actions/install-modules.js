@@ -12,7 +12,4 @@ async function installModules(gasket, context) {
   await pkgManager.install();
 }
 
-
 export default action('Install node modules', installModules);
-
-export const installModulesUpdate = action('Update node modules', installModules);
