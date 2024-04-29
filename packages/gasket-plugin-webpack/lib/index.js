@@ -5,8 +5,8 @@ module.exports = {
   name,
   hooks: {
     create(gasket, context) {
-      const { pkg } = context;
-      pkg.add('devDependencies', {
+      context.gasketConfig.addPlugin('pluginWebpack', name);
+      context.pkg.add('devDependencies', {
         webpack: devDependencies.webpack
       });
     },
