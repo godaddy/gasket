@@ -21,17 +21,17 @@ module.exports = async function create(gasket, context) {
     context.gasketConfig.add('express', {
       routes: []
     });
-  }
 
-  if ('typescript' in context && context.typescript) {
-    context.files.add(`${generatorDir}/**/!(*.js)`);
-    context.gasketConfig
-      .addImport('{ routes }', './routes')
-      .injectValue('express.routes', 'routes');
-  } else {
-    context.files.add(`${generatorDir}/**/!(*.ts)`);
-    context.gasketConfig
-      .addImport('{ routes }', './routes/index.js')
-      .injectValue('express.routes', 'routes');
+    if ('typescript' in context && context.typescript) {
+      context.files.add(`${generatorDir}/**/!(*.js)`);
+      context.gasketConfig
+        .addImport('{ routes }', './routes')
+        .injectValue('express.routes', 'routes');
+    } else {
+      context.files.add(`${generatorDir}/**/!(*.ts)`);
+      context.gasketConfig
+        .addImport('{ routes }', './routes/index.js')
+        .injectValue('express.routes', 'routes');
+    }
   }
 };
