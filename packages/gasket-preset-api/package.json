@@ -34,7 +34,6 @@
     "@gasket/utils": "^7.0.0-next.4"
   },
   "devDependencies": {
-    "@gasket/plugin-start": "^7.0.0-next.4",
     "nodemon": "^3.1.0"
   }
 }

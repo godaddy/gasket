@@ -56,18 +56,12 @@ export default {
       const __dirname = fileURLToPath(import.meta.url);
       const generatorDir = `${__dirname}/../../generator`;
 
-      pkg.add('dependencies', {
-        '@gasket/engine': dependencies['@gasket/engine'],
-        '@gasket/core': dependencies['@gasket/core'],
-        '@gasket/utils': dependencies['@gasket/utils']
-      });
+      pkg.add('dependencies', dependencies);
 
       if (!context.typescript) {
         files.add(`${generatorDir}/*`);
 
-        pkg.add('devDependencies', {
-          nodemon: devDependencies.nodemon
-        });
+        pkg.add('devDependencies', devDependencies);
 
         pkg.add('scripts', {
           start: 'node server.js',
