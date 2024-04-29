@@ -1,4 +1,4 @@
-const { devDependencies } = require('../package');
+const { name, devDependencies } = require('../package');
 
 /**
  * createAppFiles
@@ -115,6 +115,24 @@ function addNpmScripts({ pkg, nextServerType }) {
   pkg.add('scripts', scripts[nextServerType]);
 }
 
+function addConfig(context) {
+  context.gasketConfig.addPlugin('pluginNextjs', name);
+
+  if (context.nextDevProxy) {
+    context.gasketConfig.add('devProxy', {
+      protocol: 'http',
+      hostname: 'localhost',
+      port: 80,
+      xfwd: true,
+      ws: true,
+      target: {
+        host: 'localhost',
+        port: 3000
+      }
+    });
+  }
+}
+
 module.exports = {
   timing: {
     before: ['@gasket/plugin-intl'],
@@ -139,6 +157,7 @@ module.exports = {
     createNextFiles({ files, generatorDir });
     addDependencies({ pkg });
     addNpmScripts({ pkg, nextServerType: nextServerType });
+    addConfig(context);
     if (addSitemap) configureSitemap({ files, pkg, generatorDir });
     if (pkg.has('dependencies', '@gasket/redux')) addRedux({ files, pkg, generatorDir });
   }
