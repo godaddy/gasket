@@ -2,7 +2,7 @@ import { default as JSON5 } from 'json5';
 import path from 'path';
 import { writeFile } from 'fs/promises';
 import action from '../action-wrapper.js';
-
+// TODO - docs blocks, inline comments, types
 function writePluginImports(plugins) {
   return plugins.reduce((acc, cur, index) => {
     acc += `\t\t${cur}${index < plugins.length - 1 ? ',\n' : ''}`;
@@ -31,7 +31,7 @@ function createInjectionAssignments(config, assignments) {
 }
 
 function replaceInjectionAssignments(content, assignments) {
-  if (!assignments) return '';
+  if (!assignments) return content;
   Object.keys(assignments).forEach((key) => {
     content = content.replace(`\'${key}_INJECTION_ASSIGNMENT_REPLACE\'`, assignments[key]);
   });
