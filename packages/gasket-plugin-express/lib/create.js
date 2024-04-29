@@ -1,6 +1,6 @@
 /// <reference types="@gasket/cli" />
 
-const { name, version, devDependencies } = require('../package.json');
+const { name, devDependencies } = require('../package.json');
 
 /**
  * Add files & extend package.json for new apps.
@@ -13,7 +13,6 @@ module.exports = async function create(gasket, context) {
 
 
   context.pkg.add('dependencies', {
-    [name]: version,
     express: devDependencies.express
   });
 
