@@ -98,17 +98,21 @@ const createCommand = {
 
 createCommand.action = async function run(appname, options, command) {
   const context = makeCreateContext([appname], options);
+  const { rawPresets, localPresets } = context;
 
   try {
-    await loadPreset(null, context);
     await globalPrompts(null, context);
 
-    const presetGasket = makeGasket({
-      plugins: context.presets
-    });
+    if (rawPresets.length || localPresets.length) {
+      await loadPreset(null, context);
 
-    await presetPromptHooks(presetGasket, context);
-    await presetConfigHooks(presetGasket, context);
+      const presetGasket = makeGasket({
+        plugins: context.presets
+      });
+
+      await presetPromptHooks(presetGasket, context);
+      await presetConfigHooks(presetGasket, context);
+    }
 
     const pluginGasket = makeGasket({
       ...context.presetConfig,
@@ -125,7 +129,7 @@ createCommand.action = async function run(appname, options, command) {
     await installModules(null, context);
     await linkModules(null, context);
     await postCreateHooks(pluginGasket, context);
-    await rm(context.tmpDir, { recursive: true });
+    if (context.tmpDir) await rm(context.tmpDir, { recursive: true });
     printReport(context);
   } catch (err) {
     console.error(chalk.red('Exiting with errors.'));
