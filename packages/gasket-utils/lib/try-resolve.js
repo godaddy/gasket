@@ -1,7 +1,6 @@
 /**
  * Tries to require.resolve a module, but ignores if it is not found.
  * If not found, result will be null.
- *
  * @example
  * const { tryResolve } = require('@gasket/utils');
  *
@@ -15,19 +14,19 @@
 /**
  * Wrapped for testing purposes
  * @private
-* @param {string} modulePath - Module to import
-* @param {object} options - Paths to search for the module
-* @returns {string} module path
-*/
+ * @param {string} modulePath - Module to import
+ * @param {object} options - Paths to search for the module
+ * @returns {string} module path
+ */
 function resolve(modulePath, options) {
   return require.resolve(modulePath, options);
 }
 
 /**
-* @param {string} modulePath - Module to import
-* @param {object} options - Paths to search for the module
-* @returns {string} module path
-*/
+ * @param {string} modulePath - Module to import
+ * @param {object} options - Paths to search for the module
+ * @returns {string} module path
+ */
 function tryResolve(modulePath, options) {
   try {
     return resolve(modulePath, options);
