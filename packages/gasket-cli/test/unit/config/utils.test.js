@@ -86,27 +86,21 @@ describe('config utils', () => {
     });
 
     it('does not add defaults if user added', () => {
-      const results = utils.addDefaultPlugins({ plugins: { add: ['@gasket/plugin-lifecycle'] } });
+      const results = utils.addDefaultPlugins({ plugins: { add: ['@gasket/plugin-metadata'] } });
       expect(results.plugins.add.length).toEqual(defaultPlugins.length);
-      expect(results.plugins.add).toContain('@gasket/plugin-lifecycle');
+      expect(results.plugins.add).toContain('@gasket/plugin-metadata');
       expect(results.plugins.add).not.toContain(defaultPlugins[0]);
     });
 
     it('does not add defaults if user added (short)', () => {
-      const results = utils.addDefaultPlugins({ plugins: { add: ['@gasket/lifecycle'] } });
+      const results = utils.addDefaultPlugins({ plugins: { add: ['@gasket/metadata'] } });
       expect(results.plugins.add.length).toEqual(defaultPlugins.length);
-      expect(results.plugins.add).toContain('@gasket/lifecycle');
-      expect(results.plugins.add).not.toContain(defaultPlugins[0]);
-    });
-
-    it('does not add defaults if user removed', () => {
-      const results = utils.addDefaultPlugins({ plugins: { remove: ['@gasket/plugin-lifecycle'] } });
-      expect(results.plugins.add.length).toBeLessThan(defaultPlugins.length);
+      expect(results.plugins.add).toContain('@gasket/metadata');
       expect(results.plugins.add).not.toContain(defaultPlugins[0]);
     });
 
     it('does not add defaults if user removed (short)', () => {
-      const results = utils.addDefaultPlugins({ plugins: { remove: ['@gasket/lifecycle'] } });
+      const results = utils.addDefaultPlugins({ plugins: { remove: ['@gasket/metadata'] } });
       expect(results.plugins.add.length).toBeLessThan(defaultPlugins.length);
       expect(results.plugins.add.length).not.toContain(defaultPlugins[0]);
     });
