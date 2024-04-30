@@ -16,6 +16,7 @@ export default {
   hooks: {
     async presetPrompt(gasket, context, { prompt }) {
       context.apiApp = true;
+      // TODO - TS prompt could possibly be global
       if (!('typescript' in context)) {
         const { typescript } = await prompt([
           {
@@ -35,7 +36,7 @@ export default {
         testPlugin = await import(context.testPlugin);
       }
 
-      if ('typescript' in context) {
+      if (context.typescript) {
         typescriptPlugin = await import('@gasket/plugin-typescript');
       }
 

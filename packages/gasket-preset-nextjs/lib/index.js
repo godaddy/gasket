@@ -11,8 +11,31 @@ const { name, dependencies } = require('../package.json');
 export default {
   name,
   hooks: {
+    async presetPrompt(gasket, context, { prompt }) {
+      if (!('typescript' in context)) {
+        const { typescript } = await prompt([
+          {
+            name: 'typescript',
+            message: 'Do you want to use TypeScript?',
+            type: 'confirm',
+            default: false
+          }
+        ]);
+
+        Object.assign(context, { typescript });
+      }
+    },
     async presetConfig(gasket, context) {
-      context.nextApp = true;
+      let testPlugin, typescriptPlugin;
+
+      if ('testPlugin' in context) {
+        testPlugin = await import(context.testPlugin);
+      }
+
+      if (context.typescript) {
+        typescriptPlugin = await import('@gasket/plugin-typescript');
+      }
+
       return {
         plugins: [
           pluginWebpack,
@@ -20,8 +43,9 @@ export default {
           pluginHttps,
           pluginNext,
           pluginRedux,
-          pluginWinston
-        ]
+          pluginWinston,
+          typescriptPlugin ? typescriptPlugin.default || typescriptPlugin : null,
+        ].filter(Boolean)
       }
     },
     async create(gasket, { pkg }) {
