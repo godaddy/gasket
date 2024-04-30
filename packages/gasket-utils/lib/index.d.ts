@@ -2,8 +2,8 @@ import type { GasketConfig } from '@gasket/engine';
 
 declare module '@gasket/engine' {
   export interface GasketConfig {
-    environments: string;
-    commands: string;
+    environments?: string;
+    commands?: string;
   }
 }
 
