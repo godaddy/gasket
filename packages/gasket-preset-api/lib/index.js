@@ -1,5 +1,4 @@
 import pluginExpress from '@gasket/plugin-express';
-import pluginTypescript from '@gasket/plugin-typescript';
 import pluginHttps from '@gasket/plugin-https';
 import pluginDocs from '@gasket/plugin-docs';
 import pluginDocusaurus from '@gasket/plugin-docusaurus';
@@ -31,9 +30,13 @@ export default {
       }
     },
     async presetConfig(gasket, context) {
-      let testPlugin;
+      let testPlugin, typescriptPlugin;
       if ('testPlugin' in context) {
         testPlugin = await import(context.testPlugin);
+      }
+
+      if ('typescript' in context) {
+        typescriptPlugin = await import('@gasket/plugin-typescript');
       }
 
       return {
@@ -46,7 +49,7 @@ export default {
           pluginWinston,
           pluginSwagger,
           pluginLint,
-          context.typescript ? pluginTypescript : null,
+          typescriptPlugin ? typescriptPlugin.default || typescriptPlugin : null,
           testPlugin ? testPlugin.default || testPlugin : null
         ].filter(Boolean)
       }
