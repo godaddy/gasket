@@ -6,7 +6,7 @@ import pluginDocusaurus from '@gasket/plugin-docusaurus';
 import pluginResponseData from '@gasket/plugin-response-data';
 import pluginWinston from '@gasket/plugin-winston';
 import pluginSwagger from '@gasket/plugin-swagger';
-// import pluginLint from '@gasket/plugin-lint';
+import pluginLint from '@gasket/plugin-lint';
 import { createRequire } from 'module';
 import { fileURLToPath } from 'url';
 const require = createRequire(import.meta.url);
@@ -45,7 +45,7 @@ export default {
           pluginResponseData,
           pluginWinston,
           pluginSwagger,
-          // pluginLint,
+          pluginLint,
           context.typescript ? pluginTypescript : null,
           testPlugin ? testPlugin.default || testPlugin : null
         ].filter(Boolean)
