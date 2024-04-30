@@ -16,9 +16,9 @@ export interface PackageJson extends Dependencies {
   repository?:
     | string
     | {
-    type: 'git';
-    url: string;
-  };
+        type: 'git';
+        url: string;
+      };
   scripts?: Record<string, string>;
   optionalDependencies?: Record<string, string>;
 }
@@ -31,11 +31,9 @@ export interface ModuleInfo {
   version?: string;
 }
 
-export interface PresetInfo extends ModuleInfo {
-}
+export interface PresetInfo extends ModuleInfo {}
 
-export interface PluginInfo extends ModuleInfo {
-}
+export interface PluginInfo extends ModuleInfo {}
 
 export interface ConfigBuilder<Config> {
   /**
@@ -67,16 +65,16 @@ export interface ConfigBuilder<Config> {
 
 export interface PackageJsonBuilder extends ConfigBuilder<PackageJson> {
   /**
-   * Checks if a dependency has been already added
-   * @param  key - Dependency bucket
-   * @param  value - Dependency to search
-   * @returns True if the dependency exists on the bucket
+   * Checks if a property exists on the package.json fields.
+   * @param  key - Field to search
+   * @param  value - Value to search for
+   * @returns True if the property exists and matches the value
    */
-  has(key: keyof Dependencies, value: string): boolean;
+  has(key: keyof PackageJson, value: string): boolean;
 }
 
 export interface Files {
-  add(...args: string[]): void
+  add(...args: string[]): void;
 }
 
 export interface CreateContext {
@@ -195,8 +193,10 @@ declare module '@gasket/engine' {
     prompt(
       context: CreateContext,
       utils: {
-        prompt: (prompts: Array<Record<string, any>>) => Promise<Record<string,any>>,
-        addPlugins: (plugins: Array<string>) => Promise<void>
+        prompt: (
+          prompts: Array<Record<string, any>>
+        ) => Promise<Record<string, any>>;
+        addPlugins: (plugins: Array<string>) => Promise<void>;
       }
     ): MaybeAsync<CreateContext>;
 
@@ -205,7 +205,8 @@ declare module '@gasket/engine' {
     postCreate(
       context: CreateContext,
       utils: {
-        runScript: (script: string) => Promise<void>
-      }): MaybeAsync<void>;
+        runScript: (script: string) => Promise<void>;
+      }
+    ): MaybeAsync<void>;
   }
 }

@@ -10,14 +10,20 @@ const defaultConfig = {
   host: 'localhost'
 };
 
+/**
+ * Check if devDependencies are installed
+ */
 function checkDevDependencies() {
   const preset = tryRequire('@docusaurus/preset-classic');
   const core = tryRequire('@docusaurus/core/package.json');
   if (!preset || !core) {
-    throw new Error('Missing devDependencies. Please run `npm i -D @docusaurus/core @docusaurus/preset-classic`');
+    throw new Error(
+      'Missing devDependencies. Please run `npm i -D @docusaurus/core @docusaurus/preset-classic`'
+    );
   }
 }
 
+/** @type {import('@gasket/engine').HookHandler<'docsView'>} */
 module.exports = async function docsView(gasket) {
   checkDevDependencies();
   const { start } = require('@docusaurus/core/lib');
@@ -25,11 +31,20 @@ module.exports = async function docsView(gasket) {
   const { name } = gasket.metadata.app;
   const userConfig = gasket.config.docusaurus;
   const configFilePath = path.join(config.root, pluginConfigFile);
-  const docusaurusConfig = defaultsDeep({ config: configFilePath }, userConfig, defaultConfig);
+
+  /** @type {import('./index').DocusaurusConfig} */
+  const docusaurusConfig = defaultsDeep(
+    { config: configFilePath },
+    userConfig,
+    defaultConfig
+  );
   const { rootDir, docsDir } = docusaurusConfig;
 
   if (!existsSync(configFilePath)) {
-    const defaultDocusaurusConfig = await generateDefaultConfig({ name, path: docsDir });
+    const defaultDocusaurusConfig = await generateDefaultConfig({
+      name,
+      path: docsDir
+    });
 
     await writeFile(configFilePath, defaultDocusaurusConfig, 'utf-8');
   }

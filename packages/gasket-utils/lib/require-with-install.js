@@ -1,3 +1,5 @@
+/// <reference types="@gasket/plugin-log" />
+
 const fs = require('fs/promises');
 const path = require('path');
 const PackageManager = require('./package-manager');
@@ -8,7 +10,7 @@ const rePackage = /^(@[^/]+\/)?([^/]+)/;
  * Determine package manager
  * @private
  * @param {string} root Gasket root
- * @returns {string} Package manager cmd
+ * @returns {Promise<import('./index').PkgManager>} Package manager cmd
  */
 async function getPkgManager(root) {
   try {
@@ -33,23 +35,30 @@ async function getPkgManager(root) {
 
 /**
  * installDependency - install dependency
- * @param {string} dependency The dep/s needed
- * @param {Gasket} gasket Gasket instance
+ * @param {string | string[]} dependency The dep/s needed
+ * @param {import('@gasket/engine').Gasket} gasket Gasket instance
  */
 async function installDependency(dependency, gasket) {
   const { logger } = gasket;
   const { root } = gasket.config;
   const { pkgManager, cmd, flags, logMsg } = await getPkgManager(root);
-  const manager = new PackageManager({ packageManager: pkgManager, dest: root });
+  const manager = new PackageManager({
+    packageManager: pkgManager,
+    dest: root
+  });
 
   const msg = Array.isArray(dependency) ? dependency.toString() : dependency;
-  const args = Array.isArray(dependency) ? [...dependency, ...flags] : [dependency, ...flags];
+  const args = Array.isArray(dependency)
+    ? [...dependency, ...flags]
+    : [dependency, ...flags];
 
   logger.info(logMsg(msg));
   try {
     await manager.exec(cmd, args);
   } catch (err) {
-    logger.error(`requireWithInstall - Failed to install "${dependency}" using "${pkgManager}"`);
+    logger.error(
+      `requireWithInstall - Failed to install "${dependency}" using "${pkgManager}"`
+    );
     throw err;
   }
 }
@@ -57,9 +66,10 @@ async function installDependency(dependency, gasket) {
 /**
  * requireWithInstall - load devDependency request programmatically when needed
  * @param {string|string[]} dependency The require'ed dep/s needed
- * @param {Gasket} gasket Gasket instance
- * @returns {object|object[]} module or list of modules
+ * @param {import('@gasket/engine').Gasket} gasket Gasket instance
+ * @returns {Promise<string[]>} module or list of modules
  */
+// eslint-disable-next-line max-statements
 async function requireWithInstall(dependency, gasket) {
   const { root } = gasket.config;
   const resolveOptions = { paths: [root] };
