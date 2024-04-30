@@ -1,7 +1,11 @@
 import inquirer from 'inquirer';
 import action from '../action-wrapper.js';
 
-// TODO - doc blocks, types
+/**
+ * presetPromptHooks - exec `presetPrompt` hook
+ * @param {Gasket} gasket - Preset gasket instance
+ * @param {CreateContext} context - Create context
+ */
 async function presetPromptHooks(gasket, context) {
   const prompt = context.prompts ? inquirer.createPromptModule() : () => ({});
 

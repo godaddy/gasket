@@ -4,7 +4,7 @@ import { default as semver } from 'semver';
 import { default as diagnostics } from 'diagnostics';
 const debug = diagnostics('gasket:cli:package');
 
-// TODO - evaluate methods for deletion, adjust doc blocks and types
+// TODOfollowup - evaluate methods for deletion
 /**
  * Simple object check without bringing in a large
  * utility library.
@@ -227,22 +227,79 @@ export class ConfigBuilder {
     }
   }
 
-  /** TODO document */
+  /**
+   * addPlugin - Add plugin import to the gasket file and use the value in the plugins array
+   * @param {string} pluginImport - name of the import used as a value - `import pluginImport...`
+   * @param {string} pluginName - name of the plugin import/package - `from 'pluginName'`
+   * @example
+   * addPlugin('pluginA', '@gasket/plugin-a')
+   *
+   * // gasket.js
+   * import pluginA from '@gasket/plugin-a';
+   *
+   * export default makeGasket({
+   *  plugins: [
+   *    pluginA
+   *  ]
+   * });
+   */
   addPlugin(pluginImport, pluginName) {
     this.add('plugins', [`${pluginImport}`]);
     this.add('pluginImports', { [pluginImport]: pluginName });
   }
 
+  /**
+   * addImport - Add a non-plugin import to the gasket file
+   * @param {string} importName - name of the import used as a value - `import fs...`
+   * @param {string} importPath - path of the import - `from 'fs'`
+   * @returns {ConfigBuilder} - instance for chaining
+   * @example
+   * Can be default or named import
+   * addImport('{ readFileSync }', 'fs')
+   * addImport('fs', 'fs')
+   *
+   * // gasket.js
+   * import { readFileSync } from 'fs';
+   * import fs from 'fs';
+   */
   addImport(importName, importPath) {
     this.add('imports', { [importName]: importPath });
     return this;
   }
 
+  /**
+   * addExpression - add programmatic expression to the gasket file
+   * @param {string} expression - expression to add after imports
+   * @returns {ConfigBuilder} - instance for chaining
+   * @example
+   *
+   * .addImport('fs', 'fs')
+   * .addExpression('const file = fs.readFileSync(\'./file.txt\')')
+   *
+   * // gasket.js
+   * import fs from 'fs';
+   * const file = fs.readFileSync('./file.txt');
+   */
   addExpression(expression) {
     this.add('expressions', [expression.trim()]);
     return this;
   }
 
+  /**
+   * injectValue - Inject a value into the gasket config object
+   * @param {string} configKey - collapsed object path to inject value into - `express.config.routes`
+   * @param {string} injectedValue - string used as a value
+   * @example
+   * .addImport('{ routes }', './routes')
+   * .injectValue('express.routes', 'routes');
+   *
+   * // gasket.js
+   * export default makeGasket({
+   *  express: {
+   *    routes: routes
+   *  }
+   * });
+   */
   injectValue(configKey, injectedValue) {
     this.add('injectionAssignments', { [configKey]: injectedValue });
   }

@@ -6,8 +6,12 @@ import { mkdtemp } from 'fs/promises';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 
-// TODO - doc blocks, types
-async function loadPresets(gasket, context) {
+/**
+ * loadPresets - Load presets to temp directory
+ * @param {null} _ - no input
+ * @param {CreateContext} context - Create context
+ */
+async function loadPresets(_, context) {
   const tmpDir = await mkdtemp(path.join(os.tmpdir(), `gasket-create-${context.appName}`));
   context.tmpDir = tmpDir;
 

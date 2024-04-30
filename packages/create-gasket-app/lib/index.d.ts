@@ -63,11 +63,71 @@ export interface ConfigBuilder<Config> {
     options?: { force?: boolean }
   ): void;
 
-  // TODO Document
+  /**
+   * addPlugin - Add plugin import to the gasket file and use the value in the plugins array
+   * @param {string} pluginImport - name of the import used as a value - `import pluginImport...`
+   * @param {string} pluginName - name of the plugin import/package - `from 'pluginName'`
+   * @example
+   * addPlugin('pluginA', '@gasket/plugin-a')
+   *
+   * // gasket.js
+   * import pluginA from '@gasket/plugin-a';
+   *
+   * export default makeGasket({
+   *  plugins: [
+   *    pluginA
+   *  ]
+   * });
+   */
   addPlugin(pluginImport: string, pluginName: string): void;
-  addImport(importName: string, importPath: string, isDefault?: boolean): ConfigBuilder;
-  useImport(configPath: string, importName: string): void;
 
+  /**
+   * addImport - Add a non-plugin import to the gasket file
+   * @param {string} importName - name of the import used as a value - `import fs...`
+   * @param {string} importPath - path of the import - `from 'fs'`
+   * @returns {ConfigBuilder} - instance for chaining
+   * @example
+   * Can be default or named import
+   * addImport('{ readFileSync }', 'fs')
+   * addImport('fs', 'fs')
+   *
+   * // gasket.js
+   * import { readFileSync } from 'fs';
+   * import fs from 'fs';
+   */
+  addImport(importName: string, importPath: string): ConfigBuilder;
+
+  /**
+   * addExpression - add programmatic expression to the gasket file
+   * @param {string} expression - expression to add after imports
+   * @returns {ConfigBuilder} - instance for chaining
+   * @example
+   *
+   * .addImport('fs', 'fs')
+   * .addExpression('const file = fs.readFileSync(\'./file.txt\')')
+   *
+   * // gasket.js
+   * import fs from 'fs';
+   * const file = fs.readFileSync('./file.txt');
+   */
+  addExpression(expression: string): ConfigBuilder;
+
+  /**
+   * injectValue - Inject a value into the gasket config object
+   * @param {string} configKey - collapsed object path to inject value into - `express.config.routes`
+   * @param {string} injectedValue - string used as a value
+   * @example
+   * .addImport('{ routes }', './routes')
+   * .injectValue('express.routes', 'routes');
+   *
+   * // gasket.js
+   * export default makeGasket({
+   *  express: {
+   *    routes: routes
+   *  }
+   * });
+   */
+  injectValue(configKey: string, injectedValue: any): void;
 }
 
 export interface PackageJsonBuilder extends ConfigBuilder<PackageJson> {
@@ -107,12 +167,6 @@ export interface CreateContext {
    * load-preset if using localPresets. */
   rawPresets: Array<string>;
 
-  /** Raw plugin desc from flags, prompts, etc. Can include constraints. */
-  rawPlugins: Array<string>;
-
-  /** Short names of plugins */
-  plugins: Array<string>;
-
   /** Local packages that should be linked */
   pkgLinks: Array<string>;
 
@@ -130,6 +184,12 @@ export interface CreateContext {
 
   /** any generated files to show in report */
   generatedFiles: Set<string>;
+
+  /** Default empty array, populated by load-preset with actual imports */
+  presets: Array<any>;
+
+  /** Default to object w/empty plugins array to be populated by `presetConfig` hook */
+  presetConfig: GasketConfigDefinition;
 
   // Added by `global-prompts`
 
@@ -154,23 +214,6 @@ export interface CreateContext {
   /** Whether or not the user wants to override an extant directory */
   destOverride: boolean;
 
-  // Added by `load-preset`
-
-  /** Short name of presets */
-  presets: Array<string>;
-
-  /** Shallow load of presets with meta data */
-  presetInfos: Array<PresetInfo>;
-
-  // Added by `cli-version`
-
-  /** Version of current CLI used to issue `create` command */
-  cliVersion: string;
-
-  /** Version of CLI to install, either current or min compatible version
-   * required by preset(s) */
-  cliVersionRequired: string;
-
   // Added by `setup-pkg`
 
   /** package.json builder */
@@ -192,11 +235,12 @@ export interface CreateContext {
 
 declare module '@gasket/engine' {
   export interface HookExecTypes {
+    presetPrompt(context: CreateContext): Promise<void>;
+    presetConfig(context: CreateContext): Promise<void>;
     prompt(
       context: CreateContext,
       utils: {
         prompt: (prompts: Array<Record<string, any>>) => Promise<Record<string, any>>,
-        addPlugins: (plugins: Array<string>) => Promise<void>
       }
     ): MaybeAsync<CreateContext>;
 
