@@ -1,9 +1,6 @@
 const path = require('path');
-// @ts-ignore
 const defaultsDeep = require('lodash.defaultsdeep');
 const tryRequire = require('./try-require');
-
-// @ts-ignore
 const debug = require('diagnostics')('gasket:utils');
 
 /**
@@ -27,19 +24,13 @@ function applyConfigOverrides(
  */
 function *getPotentialConfigs({ config, env, commandId, root, localFile }) {
   // Separate environment-specific config from other config
-  // @ts-ignore
   const { environments = {}, commands = {}, ...baseConfig } = config;
   const isLocalEnv = env === 'local';
 
-  // @ts-ignore
   yield* getLocalOverrides(isLocalEnv, root, localFile);
-  // @ts-ignore
   yield* getCommandOverrides(commands, commandId);
-  // @ts-ignore
   yield* getSubEnvironmentOverrides(env, environments);
-  // @ts-ignore
   yield* getDevOverrides(isLocalEnv, environments);
-  // @ts-ignore
   yield baseConfig;
 }
 

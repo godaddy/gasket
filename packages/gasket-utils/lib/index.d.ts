@@ -1,5 +1,12 @@
 import type { GasketConfig } from '@gasket/engine';
 
+declare module '@gasket/engine' {
+  export interface GasketConfig {
+    environments: string;
+    commands: string;
+  }
+}
+
 interface PackageManagerOptions {
   /** Name of manager, either `npm` (default) or `yarn` */
   packageManager: string;
@@ -94,7 +101,7 @@ export function getPotentialConfigs(
   config: ConfigContext & {
     config: GasketConfig;
   }
-): string[];
+): Generator<any, any, any>;
 
 /**
  * Normalize the config by applying any environment or local overrides
