@@ -87,9 +87,9 @@ const createCommand = {
       conflicts: ['config']
     },
     {
-      name: 'prompts',
+      name: 'no-prompts',
       description: '(INTERNAL) Disable to skip the prompts',
-      default: true,
+      default: false,
       type: 'boolean',
       hidden: true
     }
