@@ -4,7 +4,7 @@ const stderr = new Writable();
 const stdout = new Writable();
 const write = function (chunk, encoding, next) {
   if (!this.data) this.data = '';
-  this.data += chunk;
+  this.data = chunk.toString();
   next();
 };
 
