@@ -1,8 +1,7 @@
 /**
  * Returns an array of cookie names which are considered sensitive because they
  * may contain session credential or PII
- *
- * @param {*} config the Gasket config object
+ * @param {import('@gasket/engine').GasketConfig} config the Gasket config
  * @returns {string[]} an array of cookie names
  */
 const sensitiveCookies = (config) => {
@@ -18,28 +17,30 @@ const sensitiveCookies = (config) => {
 
 /**
  * Redacts the contents of user-specified sensitive cookies
- *
- * @param {object} config The Gasket config
- * @param {object} payload The APM payload
- * @returns {object} a modified version of the incoming APM payload
+ * @type {import('./index').filterSensitiveCookies}
  */
-const filterSensitiveCookies = (config) => (payload) => {
-  if (
-    payload.context &&
-    payload.context.request &&
-    payload.context.request.headers &&
-    payload.context.request.headers.cookie
-  ) {
-    let cookie = payload.context.request.headers.cookie;
+const filterSensitiveCookies = function (config) {
+  return function (payload) {
+    if (
+      payload.context &&
+      payload.context.request &&
+      payload.context.request.headers &&
+      payload.context.request.headers.cookie
+    ) {
+      let cookie = payload.context.request.headers.cookie;
 
-    sensitiveCookies(config).forEach((sc) => {
-      cookie = cookie.replace(new RegExp(sc + '=([^;]+)'), sc + '=[REDACTED]');
-    });
+      sensitiveCookies(config).forEach((sc) => {
+        cookie = cookie.replace(
+          new RegExp(sc + '=([^;]+)'),
+          sc + '=[REDACTED]'
+        );
+      });
 
-    payload.context.request.headers.cookie = cookie;
-  }
+      payload.context.request.headers.cookie = cookie;
+    }
 
-  return payload;
+    return payload;
+  };
 };
 
 module.exports = {

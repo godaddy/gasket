@@ -16,6 +16,7 @@
   },
   "exclude": [
     "test",
-    "coverage"
+    "coverage",
+    "generator"
   ]
 }
