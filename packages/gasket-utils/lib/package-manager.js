@@ -75,12 +75,9 @@ class PackageManager {
       //
       // Remark: should we make this the default in ./npm?
       const argv = [
-        '--loglevel',
-        'info',
-        '--spin',
-        'false',
-        '--progress',
-        'false'
+        '--loglevel', 'info',
+        '--spin', 'false',
+        '--progress', 'false'
       ].concat(cmd, args);
 
       // Global npmrc configured through gasket flag
