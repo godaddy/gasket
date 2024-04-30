@@ -1,5 +1,5 @@
 const { name, devDependencies } = require('../package');
-
+// TODO - update docs types
 /**
  * createAppFiles
  * @property {Files} files - The Gasket Files API.
@@ -35,8 +35,9 @@ function createTestFiles({ files, generatorDir, testPlugin }) {
  * @property {Files} files - The Gasket Files API.
  * @property {generatorDir} - The directory of the generator.
  */
-function createNextFiles({ files, generatorDir }) {
-  files.add(`${generatorDir}/next/*`);
+function createNextFiles({ files, generatorDir, nextDevProxy }) {
+  const glob = nextDevProxy ? `${generatorDir}/next/*` : `${generatorDir}/next/*[!server].js`;
+  files.add(glob);
 }
 
 /**
@@ -61,7 +62,7 @@ function configureSitemap({ files, pkg, generatorDir }) {
  * addDependencies
  * @property {PackageJsonBuilder} pkg - The Gasket PackageJson API.
  */
-function addDependencies({ pkg }) {
+function addDependencies({ pkg, nextDevProxy }) {
   pkg.add('dependencies', {
     '@gasket/assets': devDependencies['@gasket/assets'],
     '@gasket/nextjs': devDependencies['@gasket/nextjs'],
@@ -71,9 +72,11 @@ function addDependencies({ pkg }) {
     'react-dom': devDependencies['react-dom']
   });
 
-  pkg.add('devDependencies', {
-    nodemon: devDependencies.nodemon
-  });
+  if (nextDevProxy) {
+    pkg.add('devDependencies', {
+      nodemon: devDependencies.nodemon
+    });
+  }
 }
 
 /**
@@ -96,13 +99,13 @@ function addRedux({ files, pkg, generatorDir }) {
  * @property {PackageJsonBuilder} pkg - The Gasket PackageJson API.
  * @property {nextServerType} - Selected server type from prompt
  */
-function addNpmScripts({ pkg, nextServerType }) {
+function addNpmScripts({ pkg, nextServerType, nextDevProxy }) {
   const scripts = {
     defaultServer: {
       'build': 'next build',
       'start': 'next start',
       'start:local': 'next start & GASKET_ENV=local node server.js',
-      'local': 'next dev & nodemon server.js'
+      'local': `next dev${nextDevProxy ? ' & nodemon server.js' : ''}`
     },
     customServer: {
       'build': 'next build',
@@ -149,14 +152,14 @@ module.exports = {
    * @public
    */
   handler: function create(gasket, context) {
-    const { files, pkg, testPlugin, addSitemap, nextServerType } = context;
+    const { files, pkg, testPlugin, addSitemap, nextServerType, nextDevProxy } = context;
     const generatorDir = `${__dirname}/../generator`;
 
     createAppFiles({ files, generatorDir });
     createTestFiles({ files, generatorDir, testPlugin });
-    createNextFiles({ files, generatorDir });
-    addDependencies({ pkg });
-    addNpmScripts({ pkg, nextServerType: nextServerType });
+    createNextFiles({ files, generatorDir, nextDevProxy });
+    addDependencies({ pkg, nextDevProxy });
+    addNpmScripts({ pkg, nextServerType: nextServerType, nextDevProxy });
     addConfig(context);
     if (addSitemap) configureSitemap({ files, pkg, generatorDir });
     if (pkg.has('dependencies', '@gasket/redux')) addRedux({ files, pkg, generatorDir });
