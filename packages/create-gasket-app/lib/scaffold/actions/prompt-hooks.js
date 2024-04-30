@@ -1,6 +1,6 @@
 import inquirer from 'inquirer';
 import action from '../action-wrapper.js';
-// TODO - adjust types
+
 /**
  * Initializes engine with provide preset and plugins
  * to execute their prompt lifecycle hooks.
@@ -25,7 +25,7 @@ async function execPluginPrompts(gasket, context) {
 
 /**
  * Executes the `prompt` hook for all registered plugins.
- * Adds `prompt` and `addPlugins` util functions for prompting features.
+ * Adds `prompt` util function for prompting features.
  *
  * @param {CreateContext} context - Create context
  * @returns {Promise} promise

@@ -23,7 +23,6 @@ import {
   writePkg
 } from '../scaffold/actions/index.js';
 
-// TODO - doc blocks and types
 /**
  * Parses comma separated option input to array
  *
@@ -97,6 +96,13 @@ const createCommand = {
   ]
 };
 
+/**
+ * createCommand action
+ * @param {string} appname Required cmd arg - name of the app to create
+ * @param {object} options cmd options
+ * @param {Command} command - the command instance
+ * @returns {Promise<void>} void
+ */
 createCommand.action = async function run(appname, options, command) {
   const context = makeCreateContext([appname], options);
   const { rawPresets, localPresets } = context;

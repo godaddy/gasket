@@ -16,7 +16,7 @@ export default {
   hooks: {
     async presetPrompt(gasket, context, { prompt }) {
       context.apiApp = true;
-      // TODO - TS prompt could possibly be global
+      // TODOfollowup - TS prompt could possibly be global
       if (!('typescript' in context)) {
         const { typescript } = await prompt([
           {

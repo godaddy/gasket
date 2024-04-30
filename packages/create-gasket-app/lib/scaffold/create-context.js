@@ -2,7 +2,7 @@
 import fs from 'fs';
 import path from 'path';
 import { readConfig } from '../scaffold/utils.js';
-// TODO - adjust doc blocks
+
 /**
  * The CreateRuntime represents a shallow proxy to a CreateContext
  * that automatically adds transactional information for providing
@@ -70,15 +70,14 @@ function flatten(acc, values) {
  * @property {Boolean} extant - Whether or not target directory already exists
  * @property {[String]} localPresets - paths to the local presets packages
  * @property {PresetDesc[]} rawPresets - Raw preset desc from args. Can include version constraint. Added by load-preset if using localPresets.
- * @property {PluginDesc[]} rawPlugins - Raw plugin desc from options, prompts, etc. Can include constraints.
- * @property {PluginName[]} plugins - Short names of plugins
  * @property {String[]} pkgLinks - Local packages that should be linked
- * @property {String} npmconfig - Path to npmconfig file
  * @property {String[]} messages - non-error/warning messages to report
  * @property {String[]} warnings - warnings messages to report
  * @property {String[]} errors - error messages to report but do not exit process
  * @property {String[]} nextSteps - any next steps to report for user
  * @property {Set<String>} generatedFiles - any generated files to show in report
+ * @property {any[]} presets - Default empty array, populated by load-preset with actual imports
+ * @property {Object} presetConfig - Default to object w/empty plugins array to be populated by `presetConfig` hook
  *
  * -- Added by `global-prompts`
  *
@@ -93,12 +92,7 @@ function flatten(acc, values) {
  * -- Added by `load-preset`
  *
  * @property {PresetName[]} presets - Short name of presets
- * @property {PresetInfo[]} presetInfos - Shallow load of presets with meta data
  *
- * -- Added by `cli-version`
- *
- * @property {string} cliVersion - Version of current CLI used to issue `create` command
- * @property {string} cliVersionRequired - Version of CLI to install, either current or min compatible version required by preset(s)
  *
  * -- Added by `setup-pkg`
  *

@@ -10,7 +10,7 @@ const { dim } = chalk;
 import action from '../action-wrapper.js';
 import * as syncGlob from 'glob';
 const glob = promisify(syncGlob.default);
-// TODO - look at deps
+// TODOfollowup - look at deps
 const flatten = (acc, values) => (acc || []).concat(values);
 const reSep = /[/\\]+/;
 const joinSep = pthArr => pthArr.join(path.sep);

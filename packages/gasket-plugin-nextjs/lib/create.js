@@ -1,5 +1,5 @@
 const { name, devDependencies } = require('../package');
-// TODO - update docs types
+
 /**
  * createAppFiles
  * @property {Files} files - The Gasket Files API.
@@ -34,8 +34,9 @@ function createTestFiles({ files, generatorDir, testPlugin }) {
  * createNextFiles - Add next.config.js & server.mjs to files
  * @property {Files} files - The Gasket Files API.
  * @property {generatorDir} - The directory of the generator.
+ * @property {nextDevProxy} - Selected dev proxy from prompt
+ * @property {typescript} - Selected typescript from prompt
  */
-// TODO - update doc block
 function createNextFiles({ files, generatorDir, nextDevProxy, typescript }) {
   let glob;
   if (typescript || !nextDevProxy) glob = `${generatorDir}/next/*[!server].js`;
@@ -101,8 +102,9 @@ function addRedux({ files, pkg, generatorDir }) {
  * addNpmScripts
  * @property {PackageJsonBuilder} pkg - The Gasket PackageJson API.
  * @property {nextServerType} - Selected server type from prompt
+ * @property {nextDevProxy} - Selected dev proxy from prompt
+ * @property {typescript} - Selected typescript from prompt
  */
-// TODO - update doc block
 function addNpmScripts({ pkg, nextServerType, nextDevProxy, typescript }) {
   const fileExtension = typescript ? 'ts' : 'js';
   const scripts = {
