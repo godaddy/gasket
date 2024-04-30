@@ -41,6 +41,7 @@
     "@gasket/utils": "^7.0.0-next.2",
     "commander": "^12.0.0",
     "deepmerge": "^4.3.1",
+    "glob": "^8.1.0",
     "handlebars": "^4.7.8",
     "inquirer": "6.5.2",
     "json5": "^2.2.3",

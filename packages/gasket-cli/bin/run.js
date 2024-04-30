@@ -4,7 +4,8 @@ require('../lib/utils/setup')();
 const pkg = require('../package.json');
 const { Command } = require('commander');
 const program = new Command();
-const { logo, warnIfOutdated } = require('../lib/utils');
+const { logo } = require('../lib/utils');
+const { warnIfOutdated } = require('@gasket/utils');
 const init = require('../lib/init');
 
 // Create Gasket CLI

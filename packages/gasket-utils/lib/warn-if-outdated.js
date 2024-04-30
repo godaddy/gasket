@@ -1,4 +1,4 @@
-const { runShellCommand } = require('@gasket/utils');
+const { runShellCommand }  = require('./index');
 const semver = require('semver');
 const chalk = require('chalk');
 const { readFile, writeFile } = require('fs/promises');

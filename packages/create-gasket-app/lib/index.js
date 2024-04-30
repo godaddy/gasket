@@ -5,7 +5,8 @@ const { Command } = require('commander');
 const program = new Command();
 const CreateCommand = require('./commands/create');
 
-const { processCommand, logo, warnIfOutdated } = require('./utils');
+const { processCommand, logo } = require('./utils');
+const { warnIfOutdated } = require('@gasket/utils');
 
 // Create Gasket CLI
 const gasketBin = program

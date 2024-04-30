@@ -3,7 +3,6 @@ const processArgs = require('./process-args');
 const processOptions = require('./process-options');
 const createOption = require('./create-option');
 const logo = require('./logo');
-const warnIfOutdated = require('./warn-if-outdated');
 
 
 module.exports = {
@@ -11,6 +10,5 @@ module.exports = {
   processArgs,
   processOptions,
   createOption,
-  logo,
-  warnIfOutdated
+  logo
 };
