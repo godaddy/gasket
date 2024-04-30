@@ -146,9 +146,9 @@ Available presets
 
 | Name                    | Version | Description                                |
 | ----------------------- | ------- | ------------------------------------------ |
-| [@gasket/preset-api]    | 6.46.7  | Create Express-based API with Gasket       |
-| [@gasket/preset-nextjs] | 6.46.7  | Basic NextJS Framework                     |
-| [@gasket/preset-pwa]    | 6.46.2  | Turn Gasket apps into Progressive Web Apps |
+| [@gasket/preset-api]    | 6.46.8  | Create Express-based API with Gasket       |
+| [@gasket/preset-nextjs] | 6.46.8  | Basic NextJS Framework                     |
+| [@gasket/preset-pwa]    | 6.46.8  | Turn Gasket apps into Progressive Web Apps |
 
 ## Plugins
 
