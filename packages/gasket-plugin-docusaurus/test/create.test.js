@@ -11,7 +11,14 @@ describe('createHook', () => {
   });
 
   it('adds devDependencies', async () => {
-    await create({}, { pkg: { add: addStub } });
+    const mockContext = {
+      pkg: {
+        add: addStub
+      },
+      gasketConfig: { addPlugin: jest.fn() }
+    };
+
+    await create({}, mockContext);
     expect(addStub).toHaveBeenCalledWith('devDependencies', expect.objectContaining({
       '@docusaurus/core': expect.any(String),
       '@docusaurus/preset-classic': expect.any(String)

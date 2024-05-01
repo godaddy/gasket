@@ -2,7 +2,10 @@ const { hooks: { create } } = require('../lib/index');
 
 describe('the create hook', () => {
   it('should add a gitignore entry for the .docs directory', () => {
-    const context = { gitignore: { add: jest.fn() } };
+    const context = {
+      gitignore: { add: jest.fn() },
+      gasketConfig: { addPlugin: jest.fn() }
+    };
 
     create({}, context);
 
@@ -10,7 +13,9 @@ describe('the create hook', () => {
   });
 
   it('should handle when no `gitignore` is present in the create context', () => {
-    const context = {};
+    const context = {
+      gasketConfig: { addPlugin: jest.fn() }
+    };
 
     expect(() => create({}, context)).not.toThrow(Error);
   });

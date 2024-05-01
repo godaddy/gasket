@@ -1,15 +1,18 @@
+/* eslint-disable max-params */
 const { spawn } = require('child_process');
 const { Writable } = require('stream');
 const stderr = new Writable();
 const stdout = new Writable();
+const writeConcat = function (chunk, encoding, next) {
+  if (!this.data) this.data = '';
+  this.data += chunk.toString();
+  next();
+};
 const write = function (chunk, encoding, next) {
   if (!this.data) this.data = '';
   this.data = chunk.toString();
   next();
 };
-
-stdout._write = write;
-stderr._write = write;
 
 /**
  * Promise friendly wrapper to running a shell command (eg: git, npm, ls)
@@ -48,8 +51,11 @@ stderr._write = write;
  * @returns {Promise} A promise represents if command succeeds or fails.
  * @public
  */
-function runShellCommand(cmd, argv, options = {}, debug = false) {
+function runShellCommand(cmd, argv, options = {}, debug = false, concatStdout = true) {
   const { signal, ...opts } = options;
+  const writeFn = concatStdout ? writeConcat : write;
+  stdout._write = writeFn;
+  stderr._write = writeFn;
 
   if (signal && signal.aborted) {
     return Promise.reject(Object.assign(new Error(`${cmd} was aborted before spawn`), { argv, aborted: true }));

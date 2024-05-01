@@ -14,7 +14,8 @@ describe('create hook', () => {
       },
       files: { add: jest.fn() },
       gasketConfig: {
-        add: jest.fn()
+        add: jest.fn(),
+        addPlugin: jest.fn()
       }
     };
   });
@@ -68,6 +69,7 @@ describe('create hook', () => {
   });
 
   it('adds appropriate devDependencies', async function () {
+    mockContext.nextDevProxy = true;
     await plugin.hooks.create.handler({}, mockContext);
     expect(mockContext.pkg.add).toHaveBeenCalledWith('devDependencies', {
       nodemon: devDependencies.nodemon
@@ -118,8 +120,8 @@ describe('create hook', () => {
   });
 
   it('adds next config & server files', async function () {
+    mockContext.nextDevProxy = true;
     await plugin.hooks.create.handler({}, mockContext);
-
     expect(mockContext.files.add).toHaveBeenCalledWith(
       `${root}/../generator/next/*`
     );
@@ -133,7 +135,7 @@ describe('create hook', () => {
       'build': 'next build',
       'start': 'next start',
       'start:local': 'next start & GASKET_ENV=local node server.js',
-      'local': 'next dev & nodemon server.js'
+      'local': 'next dev'
     });
   });
 
