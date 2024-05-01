@@ -1,8 +1,5 @@
-const path = require('path');
-
-const {
-  readConfig
-} = require('../../../lib/scaffold/utils');
+import { describe, it, expect } from '@jest/globals';
+import { readConfig } from '../../../lib/scaffold/utils.js';
 
 describe('Utils', () => {
   let mockContext;

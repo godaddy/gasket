@@ -1,5 +1,6 @@
 /* eslint no-unused-vars: 0 */
-const Files = require('../../../lib/scaffold/files');
+import { describe, it, expect } from '@jest/globals';
+import { Files } from '../../../lib/scaffold/files.js';
 
 
 describe('Files', () => {
