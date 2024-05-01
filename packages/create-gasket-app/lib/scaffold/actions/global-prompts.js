@@ -68,20 +68,9 @@ async function choosePackageManager(context, prompt) {
  * @returns {Promise} promise
  */
 async function chooseTestPlugin(context, prompt) {
-  // Combine user-provided plugins with preset-provided plugins.
-  const { presetInfos = [], plugins = [] } = context;
-
-  // Flatten all plugins from presets and concat short names with cli plugins
-  // const allPlugins = flattenPresets(presetInfos)
-  //   .map((presetInfo) => presetInfo.plugins || [])
-  //   .reduce((acc, arr) => acc.concat(arr), [])
-  //   .map((pluginInfo) => pluginIdentifier(pluginInfo.name).shortName)
-  //   .concat(plugins);
-
   const knownTestPlugins = { mocha: '@gasket/plugin-mocha', jest: '@gasket/plugin-jest', cypress: '@gasket/plugin-cypress' };
 
   if (!('testPlugin' in context)) {
-    // let testPlugin = Object.values(knownTestPlugins).find((p) => allPlugins.includes(p));
     let testPlugin;
 
     if ('testSuite' in  context) {

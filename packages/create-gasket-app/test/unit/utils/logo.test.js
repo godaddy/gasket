@@ -1,4 +1,4 @@
-const { logo } = require('../../../lib/utils');
+const { logo } = await import('../../../lib/utils/logo.js');
 
 describe('logo', () => {
 

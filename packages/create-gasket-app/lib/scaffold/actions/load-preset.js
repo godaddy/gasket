@@ -16,11 +16,14 @@ async function loadPresets(_, context) {
   context.tmpDir = tmpDir;
 
   const modPath = path.join(tmpDir, 'node_modules');
-  const pkgManager = new gasketUtils.PackageManager({ packageManager: context.packageManager, dest: tmpDir });
+  const pkgManager = new gasketUtils.PackageManager({
+    packageManager: context.packageManager,
+    dest: tmpDir
+  });
   const pkgVerb = pkgManager.isYarn ? 'add' : 'install';
 
   const remotePresets = context.rawPresets.map(async preset => {
-    const parts = /@([0-9]\.|[0-9]).+/.test(preset) && preset.split('@').filter(Boolean);
+    const parts = /@(\^[0-9]\.|[0-9]).+/.test(preset) && preset.split('@').filter(Boolean);
     const name = parts ? `@${parts[0]}` : preset;
     const version = parts ? `@${parts[1]}` : '@latest';
     await pkgManager.exec(pkgVerb, [`${name}${version}`]);

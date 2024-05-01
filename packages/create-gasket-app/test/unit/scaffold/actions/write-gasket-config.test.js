@@ -1,14 +1,15 @@
+import { jest } from '@jest/globals';
+import { error } from 'console';
+import { default as JSON5 } from 'json5';
+import path from 'path';
+
 const mockWriteStub = jest.fn();
 
-jest.mock('fs', () => ({
-  promises: {
-    writeFile: mockWriteStub
-  }
+jest.unstable_mockModule('fs/promises', () => ({
+  writeFile: mockWriteStub.mockResolvedValue()
 }));
-const writeGasketConfig = require('../../../../lib/scaffold/actions/write-gasket-config');
-const JSON5 = require('json5');
-const path = require('path');
-const ConfigBuilder = require('../../../../lib/scaffold/config-builder');
+const writeGasketConfig = (await import('../../../../lib/scaffold/actions/write-gasket-config')).default;
+const { ConfigBuilder } = await import('../../../../lib/scaffold/config-builder');
 
 describe('write-gasket-config', () => {
   let mockContext;
@@ -18,11 +19,10 @@ describe('write-gasket-config', () => {
       cwd: '/some/path',
       dest: '/some/path/my-app',
       gasketConfig: new ConfigBuilder({
-        plugins: {
-          presets: ['default']
-        }
+        plugins: [{ pluginBogus: '@gasket/plugin-bogus' }]
       }),
-      generatedFiles: new Set()
+      generatedFiles: new Set(),
+      errors: []
     };
   });
 
@@ -34,58 +34,85 @@ describe('write-gasket-config', () => {
     expect(writeGasketConfig).toHaveProperty('wrapped');
   });
 
-  it('writes the gasket.config.js file under destination', async () => {
-    mockWriteStub.mockResolvedValue();
-    await writeGasketConfig(mockContext);
-    expect(mockWriteStub).toHaveBeenCalledWith(path.join(mockContext.dest, 'gasket.config.js'), expect.any(String), 'utf8');
+  it('writes the gasket.js file under destination', async () => {
+    await writeGasketConfig(null, mockContext);
+    expect(mockWriteStub).toHaveBeenCalledWith(path.join(mockContext.dest, 'gasket.js'), expect.any(String), 'utf8');
   });
 
-  it('writes gasket.config.js with module.exports', async () => {
-    mockWriteStub.mockResolvedValue();
-    await writeGasketConfig(mockContext);
+  it('writes gasket.js with export default', async () => {
+    await writeGasketConfig(null, mockContext);
     const output = mockWriteStub.mock.calls[0][1];
-    expect(output).toContain('module.exports = ');
+    expect(output).toContain('export default');
   });
 
-  it('writes pretty JSON5 from gasketConfig', async () => {
-    mockWriteStub.mockResolvedValue();
-    await writeGasketConfig(mockContext);
+  it('writes @gasket/core import', async () => {
+    await writeGasketConfig(null, mockContext);
     const output = mockWriteStub.mock.calls[0][1];
-    const expected = JSON5.stringify(mockContext.gasketConfig, null, 2);
-    expect(output).toContain(expected + ';\n');
+    expect(output).toContain('import { makeGasket } from \'@gasket/core\';');
+  });
+
+  it('writes gasket.js with makeGasket', async () => {
+    await writeGasketConfig(null, mockContext);
+    const output = mockWriteStub.mock.calls[0][1];
+    expect(output).toContain('makeGasket(');
   });
 
   it('does not double-quote keys', async () => {
-    mockWriteStub.mockResolvedValue();
-    await writeGasketConfig(mockContext);
+    await writeGasketConfig(null, mockContext);
     const output = mockWriteStub.mock.calls[0][1];
-    expect(output).toContain('plugins: {');
-  });
-
-  it('Adds preset to config', async () => {
-    mockContext.presets = ['bogus-preset'];
-    mockWriteStub.mockResolvedValue();
-    await writeGasketConfig(mockContext);
-    const output = mockWriteStub.mock.calls[0][1];
-    expect(output).toContain('presets: [');
-    expect(output).toContain('\'bogus-preset\'');
-  });
-
-  it('Adds extra plugins to config', async () => {
-    mockContext.plugins = ['bogus-plugin', 'another-plugin'];
-    mockWriteStub.mockResolvedValue();
-    await writeGasketConfig(mockContext);
-    const output = mockWriteStub.mock.calls[0][1];
-    expect(output).toContain('add: [');
-    expect(output).toContain('\'bogus-plugin\'');
-    expect(output).toContain('\'another-plugin\'');
+    expect(output).toContain('plugins:');
   });
 
   it('outputs keys without quotes, strings with single-quotes', async () => {
     mockContext.gasketConfig.add("bogus", "double"); // eslint-disable-line quotes
-    mockWriteStub.mockResolvedValue();
-    await writeGasketConfig(mockContext);
+    await writeGasketConfig(null, mockContext);
     const output = mockWriteStub.mock.calls[0][1];
     expect(output).toContain('bogus: \'double\'');
+  });
+
+  it('writes plugin imports', async () => {
+    mockContext.gasketConfig.fields.plugins = ['pluginBogus', 'pluginBogus2'];
+    mockContext.gasketConfig.fields.pluginImports = {
+      pluginBogus: '@gasket/plugin-bogus',
+      pluginBogus2: '@gasket/plugin-bogus2'
+    };
+    await writeGasketConfig(null, mockContext);
+    const output = mockWriteStub.mock.calls[0][1];
+    expect(output).toContain('import pluginBogus from \'@gasket/plugin-bogus\';');
+    expect(output).toContain('import pluginBogus2 from \'@gasket/plugin-bogus2\';');
+    expect(output.match(/\[(\s.*)+\]/)[0]).toBe('[\n\t\tpluginBogus,\n\t\tpluginBogus2\n\t]')
+  });
+
+  it('writes non-plugin imports', async () => {
+    mockContext.gasketConfig.fields.imports = {
+      'bogus': '@bogus'
+    };
+    await writeGasketConfig(null, mockContext);
+    const output = mockWriteStub.mock.calls[0][1];
+    expect(output).toContain('import bogus from \'@bogus\';');
+  });
+
+  it('writes expressions', async () => {
+    mockContext.gasketConfig.fields.expressions = ['const bogus = 1;'];
+    await writeGasketConfig(null, mockContext);
+    const output = mockWriteStub.mock.calls[0][1];
+    expect(output).toContain('const bogus = 1;');
+  });
+
+  it('writes injection assignments', async () => {
+    mockContext.gasketConfig.fields.injectionAssignments = {
+      'bogus': 'bogus'
+    };
+    await writeGasketConfig(null, mockContext);
+    const output = mockWriteStub.mock.calls[0][1];
+    expect(output).toContain('bogus: bogus');
+  });
+
+  it('cleans up fields', async () => {
+    await writeGasketConfig(null, mockContext);
+    expect(mockContext.gasketConfig.fields.imports).toBeUndefined();
+    expect(mockContext.gasketConfig.fields.pluginImports).toBeUndefined();
+    expect(mockContext.gasketConfig.fields.expressions).toBeUndefined();
+    expect(mockContext.gasketConfig.fields.injectionAssignments).toBeUndefined();
   });
 });
