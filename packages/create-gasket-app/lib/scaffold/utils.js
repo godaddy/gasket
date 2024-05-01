@@ -1,4 +1,6 @@
 import path from 'path';
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
 
 /**
  * Parses JSON file or string to assign to context
