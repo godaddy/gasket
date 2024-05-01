@@ -89,7 +89,6 @@ const createCommand = {
     {
       name: 'no-prompts',
       description: '(INTERNAL) Disable to skip the prompts',
-      default: false,
       type: 'boolean',
       hidden: true
     }
@@ -137,7 +136,7 @@ createCommand.action = async function run(appname, options, command) {
     await linkModules(null, context);
     await postCreateHooks(pluginGasket, context);
     if (context.tmpDir) await rm(context.tmpDir, { recursive: true });
-    printReport(context);
+    printReport(null, context);
   } catch (err) {
     console.error(chalk.red('Exiting with errors.'));
     dumpErrorContext(context, err);

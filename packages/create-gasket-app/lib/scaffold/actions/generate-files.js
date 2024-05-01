@@ -164,7 +164,7 @@ async function performGenerate(context, descriptors) {
  * @param {Spinner} spinner - Spinner
  * @returns {Promise} promise
  */
-async function generateFiles(gasket, context, spinner) {
+async function generateFiles(_, context, spinner) {
   const { files } = context;
 
   if (!files.globSets.length) {

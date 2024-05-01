@@ -8,7 +8,7 @@ import { runShellCommand } from '@gasket/utils';
  * @returns {Promise} promise
  */
 async function postCreateHooks(gasket, context) {
-  const { dest, presets = [], plugins = [] } = context;
+  const { dest } = context;
 
   /**
    * Run an npm script in the context of the created application

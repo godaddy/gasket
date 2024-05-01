@@ -10,7 +10,7 @@ import { Files } from '../files.js';
  * @returns {Promise} promise
  */
 async function createHooks(gasket, context) {
-  const { dest, presets = [], plugins = [], warnings } = context;
+  const { plugins = [], warnings } = context;
 
   const files = new Files();
   const gasketConfig = ConfigBuilder.create({}, { orderBy: ['plugins'], warnings, plugins });
