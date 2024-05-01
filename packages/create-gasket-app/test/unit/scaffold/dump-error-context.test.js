@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 const mockWriteStub = jest.fn();
 const logStub = jest.spyOn(console, 'log');
 const errorStub = jest.spyOn(console, 'error');
@@ -8,8 +9,8 @@ jest.mock('fs', () => ({
   }
 }));
 
-const path = require('path');
-const dumpErrorContext = require('../../../lib/scaffold/dump-error-context');
+import path from 'path';
+const { dumpErrorContext } = await import('../../../lib/scaffold/dump-error-context.js');
 
 describe('dumpErrorContext', () => {
   let mockContext, mockError;

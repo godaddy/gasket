@@ -1,6 +1,6 @@
 /* eslint-disable max-statements */
-
-const ConfigBuilder = require('../../../lib/scaffold/config-builder');
+import { jest, describe, it, expect } from '@jest/globals';
+const { ConfigBuilder } = await import('../../../lib/scaffold/config-builder');
 
 const pluginOne = {
   name: 'gasket-plugin-one'

@@ -1,20 +1,21 @@
+import { jest } from '@jest/globals';
 const mockHandlerStub = jest.fn();
 const mockExecApplyStub = jest.fn();
-const mockCreateEngineStub = jest.fn();
 
-jest.mock('../../../../lib/scaffold/create-engine', () => mockCreateEngineStub);
-jest.mock('../../../../lib/scaffold/files', () => class Files {});
-const Files = require('../../../../lib/scaffold/files');
-const ConfigBuilder = require('../../../../lib/scaffold/config-builder');
-const createHooks = require('../../../../lib/scaffold/actions/create-hooks');
+jest.unstable_mockModule('../../../../lib/scaffold/files.js', () => ({ Files: class Files { }}));
+
+const { Files } = await import('../../../../lib/scaffold/files.js');
+const { ConfigBuilder } = await import('../../../../lib/scaffold/config-builder.js');
+const createHooks = (await import('../../../../lib/scaffold/actions/create-hooks.js')).default;
 
 describe('createHooks', () => {
-  let mockContext, mockPlugin;
+  let mockContext, mockPlugin, mockGasket;
 
   beforeEach(() => {
     mockHandlerStub.mockResolvedValue();
-    mockCreateEngineStub.mockReturnValue({ execApply: mockExecApplyStub });
-
+    mockGasket = {
+      execApply: mockExecApplyStub
+    }
     mockPlugin = { name: 'mockPlugin' };
     mockContext = {
       appName: 'my-app',
@@ -35,22 +36,22 @@ describe('createHooks', () => {
   });
 
   it('adds files to context', async () => {
-    await createHooks(mockContext);
+    await createHooks(mockGasket, mockContext);
     expect(mockContext.files).toBeInstanceOf(Files);
   });
 
   it('adds gasketConfig to context', async () => {
-    await createHooks(mockContext);
+    await createHooks(mockGasket, mockContext);
     expect(mockContext.gasketConfig).toBeInstanceOf(ConfigBuilder);
   });
 
   it('executes the create hook with applyCreate callback', async () => {
-    await createHooks(mockContext);
+    await createHooks(mockGasket, mockContext);
     expect(mockExecApplyStub).toHaveBeenCalledWith('create', expect.any(Function));
   });
 
   it('applyCreate callback executes handler with proxied plugin source', async () => {
-    await createHooks(mockContext);
+    await createHooks(mockGasket, mockContext);
     const callbackFn = mockExecApplyStub.mock.calls[0][1];
     await callbackFn(mockPlugin, mockHandlerStub);
     expect(mockContext.runWith).toHaveBeenCalledWith(mockPlugin);
