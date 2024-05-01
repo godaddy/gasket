@@ -32,6 +32,9 @@ describe('@gasket/plugin-winston', function () {
       const spy = {
         pkg: {
           add: jest.fn()
+        },
+        gasketConfig: {
+          addPlugin: jest.fn()
         }
       };
 

@@ -380,7 +380,8 @@ describe('create', () => {
   beforeEach(() => {
     mockContext = {
       pkg: { add: jest.fn() },
-      files: { add: jest.fn() }
+      files: { add: jest.fn() },
+      gasketConfig: { addPlugin: jest.fn() }
     };
   });
 

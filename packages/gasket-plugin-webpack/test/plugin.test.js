@@ -34,7 +34,8 @@ describe('create hook', () => {
       pkg: {
         add: jest.fn(),
         has: jest.fn()
-      }
+      },
+      gasketConfig: { addPlugin: jest.fn() }
     };
   });
 
