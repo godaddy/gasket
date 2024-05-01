@@ -1,12 +1,11 @@
+import { jest } from '@jest/globals';
 const mockMkdirStub = jest.fn();
 
-jest.mock('fs', () => ({
-  promises: {
-    mkdir: mockMkdirStub
-  }
+jest.unstable_mockModule('fs/promises', () => ({
+  mkdir: mockMkdirStub
 }));
 
-const mkDir = require('../../../../lib/scaffold/actions/mkdir');
+const mkDir = (await import('../../../../lib/scaffold/actions/mkdir')).default;
 
 describe('mkdir', () => {
   let mockContext;
@@ -32,19 +31,19 @@ describe('mkdir', () => {
 
   it('Makes a directory with context.dest', async () => {
     mockMkdirStub.mockResolvedValue();
-    await mkDir(mockContext);
+    await mkDir(null, mockContext);
     expect(mockMkdirStub).toHaveBeenCalledWith(mockContext.dest);
   });
 
   it('Rejects with message if directory was not allowed to be overwritten', async () => {
     await expect(async () => {
-      await mkDir({ ...mockContext, extant: true, destOverride: false });
+      await mkDir(null, { ...mockContext, extant: true, destOverride: false });
     }).rejects.toThrow('was not allowed to be overwritten');
   });
 
   it('Does not create a directory if allowed to override an existing one', async () => {
     mockMkdirStub.mockResolvedValue();
-    await mkDir({ ...mockContext, extant: true, destOverride: true });
+    await mkDir(null, { ...mockContext, extant: true, destOverride: true });
     expect(mockMkdirStub.called).toBeFalsy();
   });
 
@@ -52,7 +51,7 @@ describe('mkdir', () => {
     const mockError = { code: 'BOGUS' };
     mockMkdirStub.mockRejectedValue(mockError);
     await expect(async () => {
-      await mkDir(mockContext);
+      await mkDir(null, mockContext);
     }).rejects.toEqual(mockError);
   });
 });

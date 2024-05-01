@@ -6,7 +6,6 @@ import writePkg from './write-pkg.js';
 import installModules from './install-modules.js';
 import linkModules from './link-modules.js';
 import writeGasketConfig from './write-gasket-config.js';
-import loadPkgForDebug from './load-pkg-for-debug.js';
 import presetPromptHooks from './preset-prompt-hooks.js';
 import presetConfigHooks from './preset-config-hooks.js';
 import promptHooks from './prompt-hooks.js';
@@ -24,7 +23,6 @@ export {
   installModules,
   linkModules,
   writeGasketConfig,
-  loadPkgForDebug,
   presetPromptHooks,
   presetConfigHooks,
   promptHooks,

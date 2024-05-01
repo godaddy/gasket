@@ -1,8 +1,9 @@
+import { jest } from '@jest/globals';
+
 describe('printReport', () => {
-  let printReport;
   let mockContext, logStub;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     logStub = jest.spyOn(console, 'log');
 
     mockContext = {
@@ -18,7 +19,7 @@ describe('printReport', () => {
       nextSteps: []
     };
 
-    printReport = require('../../../../lib/scaffold/actions/print-report');
+    printReport = (await import('../../../../lib/scaffold/actions/print-report')).default;
   });
 
   afterEach(() => {
@@ -29,9 +30,11 @@ describe('printReport', () => {
     expect(printReport).toHaveProperty('wrapped');
   });
 
-  it('outputs banner', function () {
+  it('outputs banner', async function () {
     printReport(mockContext);
-    expect(logStub).toHaveBeenCalledWith(expect.stringContaining(require('../../../../lib/utils/logo')));
+    expect(logStub).toHaveBeenCalledWith(expect.stringContaining(
+      (await import('../../../../lib/utils/logo')).logo
+    ));
   });
 
   it('outputs warning and error count', function () {

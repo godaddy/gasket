@@ -1,14 +1,15 @@
+import { jest } from '@jest/globals';
+import { error } from 'console';
+import path from 'path';
+
 const mockWriteStub = jest.fn();
 
-jest.mock('fs', () => ({
-  promises: {
-    writeFile: mockWriteStub
-  }
+jest.unstable_mockModule('fs/promises', () => ({
+  writeFile: mockWriteStub
 }));
 
-const path = require('path');
-const ConfigBuilder = require('../../../../lib/scaffold/config-builder');
-const writePkg = require('../../../../lib/scaffold/actions/write-pkg');
+const { ConfigBuilder } = await import('../../../../lib/scaffold/config-builder.js');
+const writePkg = (await import('../../../../lib/scaffold/actions/write-pkg')).default;
 
 describe('write-pkg', () => {
   let mockContext;
@@ -35,13 +36,13 @@ describe('write-pkg', () => {
 
   it('writes the package.json file under destination', async () => {
     mockWriteStub.mockResolvedValue();
-    await writePkg(mockContext);
+    await writePkg(null, mockContext);
     expect(mockWriteStub).toHaveBeenCalledWith(path.join(mockContext.dest, 'package.json'), expect.any(String), 'utf8');
   });
 
   it('writes pretty JSON from pkg', async () => {
     mockWriteStub.mockResolvedValue();
-    await writePkg(mockContext);
+    await writePkg(null, mockContext);
     const expected = JSON.stringify(mockContext.pkg, null, 2);
     expect(mockWriteStub.mock.calls[0][1]).toEqual(expected);
   });

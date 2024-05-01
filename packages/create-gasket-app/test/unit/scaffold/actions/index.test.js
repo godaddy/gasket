@@ -1,23 +1,22 @@
 describe('index', () => {
-  it('exports expected actions', () => {
-    const actions = require('../../../../lib/scaffold/actions');
+  it('exports expected actions', async () => {
+    const actions = (await import('../../../../lib/scaffold/actions/index.js'));
 
     const expected = [
       'mkDir',
       'loadPreset',
-      'cliVersion',
       'globalPrompts',
       'setupPkg',
       'writePkg',
       'installModules',
       'linkModules',
       'writeGasketConfig',
-      'loadPkgForDebug',
+      'presetPromptHooks',
+      'presetConfigHooks',
       'promptHooks',
       'createHooks',
       'postCreateHooks',
       'generateFiles',
-      'applyPresetConfig',
       'printReport'
     ];
 

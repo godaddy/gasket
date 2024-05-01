@@ -1,5 +1,6 @@
+import { jest } from '@jest/globals';
 const linkStub = jest.fn();
-const linkModules = require('../../../../lib/scaffold/actions/link-modules');
+const linkModules = (await import('../../../../lib/scaffold/actions/link-modules')).default;
 
 describe('linkModules', () => {
   let mockContext;
@@ -18,12 +19,12 @@ describe('linkModules', () => {
 
   it('does not do linking if no pkgLinks in context', async () => {
     delete mockContext.pkgLinks;
-    await linkModules(mockContext);
+    await linkModules(null, mockContext);
     expect(linkStub).not.toHaveBeenCalled();
   });
 
   it('executes link with pkgLinks from context', async () => {
-    await linkModules(mockContext);
+    await linkModules(null, mockContext);
     expect(linkStub).toHaveBeenCalled();
     expect(linkStub.mock.calls[0][0]).toEqual(mockContext.pkgLinks);
   });
