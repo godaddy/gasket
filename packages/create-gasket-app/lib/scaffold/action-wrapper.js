@@ -32,4 +32,4 @@ export default function withSpinner(label, fn, { startSpinner = true } = {}) {
 
   wrapper.wrapped = fn;
   return wrapper;
-};
+}

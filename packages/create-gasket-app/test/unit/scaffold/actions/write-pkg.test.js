@@ -1,5 +1,4 @@
 import { jest } from '@jest/globals';
-import { error } from 'console';
 import path from 'path';
 
 const mockWriteStub = jest.fn();

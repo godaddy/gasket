@@ -27,4 +27,4 @@ export class Files {
   add({ globs, source }) {
     this.globSets.push({ globs, source });
   }
-};
+}

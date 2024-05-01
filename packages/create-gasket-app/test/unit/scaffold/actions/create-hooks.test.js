@@ -2,7 +2,7 @@ import { jest } from '@jest/globals';
 const mockHandlerStub = jest.fn();
 const mockExecApplyStub = jest.fn();
 
-jest.unstable_mockModule('../../../../lib/scaffold/files.js', () => ({ Files: class Files { }}));
+jest.unstable_mockModule('../../../../lib/scaffold/files.js', () => ({ Files: class Files { } }));
 
 const { Files } = await import('../../../../lib/scaffold/files.js');
 const { ConfigBuilder } = await import('../../../../lib/scaffold/config-builder.js');
@@ -15,7 +15,7 @@ describe('createHooks', () => {
     mockHandlerStub.mockResolvedValue();
     mockGasket = {
       execApply: mockExecApplyStub
-    }
+    };
     mockPlugin = { name: 'mockPlugin' };
     mockContext = {
       appName: 'my-app',

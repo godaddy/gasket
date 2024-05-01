@@ -63,7 +63,7 @@ function buildReport(context) {
 
  * @param {CreateContext} context - Create context
  */
-async function printReport(_, context) {;
+async function printReport(_, context) {
   const report = buildReport(context);
   const { warnings, errors } = context;
 

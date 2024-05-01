@@ -25,4 +25,4 @@ export async function dumpErrorContext(context, error) {
     //
     console.error(`Error writing error log: ${err}`);
   }
-};
+}

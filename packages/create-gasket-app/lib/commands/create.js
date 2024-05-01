@@ -1,4 +1,4 @@
-/* eslint-disable max-statements */
+/* eslint-disable max-statements, no-unused-vars */
 import chalk from 'chalk';
 import { makeCreateContext } from '../scaffold/create-context.js';
 import { dumpErrorContext } from '../scaffold/dump-error-context.js';
@@ -142,6 +142,6 @@ createCommand.action = async function run(appname, options, command) {
     dumpErrorContext(context, err);
     throw err;
   }
-}
+};
 
 export { createCommand };

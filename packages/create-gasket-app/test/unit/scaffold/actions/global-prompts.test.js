@@ -35,7 +35,6 @@ describe('globalPrompts', () => {
   });
 
   it('is decorated action', async () => {
-    console.log(globalPrompts)
     expect(globalPrompts).toHaveProperty('wrapped');
   });
 

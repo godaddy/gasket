@@ -15,7 +15,6 @@ async function loadPresets(_, context) {
   const tmpDir = await mkdtemp(path.join(os.tmpdir(), `gasket-create-${context.appName}`));
   context.tmpDir = tmpDir;
 
-  const modPath = path.join(tmpDir, 'node_modules');
   const pkgManager = new gasketUtils.PackageManager({
     packageManager: context.packageManager,
     dest: tmpDir
@@ -27,14 +26,15 @@ async function loadPresets(_, context) {
     const name = parts ? `@${parts[0]}` : preset;
     const version = parts ? `@${parts[1]}` : '@latest';
     await pkgManager.exec(pkgVerb, [`${name}${version}`]);
-    const mod = await import(name, { from: modPath });
+    // eslint-disable-next-line
+    const mod = await import(name);
     return mod.default || mod;
   });
 
   const localPresets = context.localPresets.map(async localPresetPath => {
     await pkgManager.exec(pkgVerb, [localPresetPath]);
     const pkgFile = require(path.join(localPresetPath, 'package.json'));
-    const mod = await import(pkgFile.name, { from: modPath });
+    const mod = await import(pkgFile.name);
     return mod.default || mod;
   });
 

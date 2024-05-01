@@ -183,5 +183,5 @@ export function makeCreateContext(argv = [], options = {}) {
   }
 
   return context;
-};
+}
 

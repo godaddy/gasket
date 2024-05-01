@@ -9,7 +9,6 @@ const mockGlobStub = jest.fn();
 let registerHelperSpy;
 
 jest.unstable_mockModule('fs/promises', () => {
-  const mod = jest.requireActual('fs/promises');
   return {
     default: {
       readFile: mockReadFileStub,
@@ -84,7 +83,6 @@ describe('generateFiles', () => {
 
   it('reads expected source files', async () => {
     await generateFiles(null, mockContext);
-    console.log(mockReadFileStub.mock.calls);
     expect(mockReadFileStub)
       .toHaveBeenCalledWith(expect.stringContaining('create-gasket-app/test/fixtures/generator/file-a.md'), expect.any(Object));
     expect(mockReadFileStub)

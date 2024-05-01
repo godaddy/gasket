@@ -12,7 +12,7 @@ const { ConfigBuilder } = await import('../../../../lib/scaffold/config-builder.
 const promptHooks = (await import('../../../../lib/scaffold/actions/prompt-hooks')).default;
 
 describe('promptHooks', () => {
-  let mockGasket, mockContext, pkgAddSpy;
+  let mockGasket, mockContext;
 
   beforeEach(() => {
     mockExecWaterfallStub.mockResolvedValue();
@@ -35,8 +35,6 @@ describe('promptHooks', () => {
       },
       prompts: true
     };
-
-    pkgAddSpy = jest.spyOn(mockContext.pkg, 'add');
   });
 
   afterEach(() => {
