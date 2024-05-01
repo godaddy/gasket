@@ -36,7 +36,7 @@ class PackageManager {
       ? 'npm.cmd'
       : 'npm';
 
-    return runShellCommand(npmBin, argv, spawnWith, !!process.env.GASKET_DEBUG_NPM, false);
+    return runShellCommand(npmBin, argv, spawnWith, !!process.env.GASKET_DEBUG_NPM);
   }
 
   /**
