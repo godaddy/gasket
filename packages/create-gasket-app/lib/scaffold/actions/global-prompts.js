@@ -136,7 +136,7 @@ export const questions = [
  * @param {CreateContext} context - Create context
  * @returns {Promise} promise
  */
-async function globalPrompts(gasket, context) {
+async function globalPrompts(_, context) {
   const prompt = context.prompts ? inquirer.prompt : () => ({});
   for (var fn of questions) {
     await fn(context, prompt);

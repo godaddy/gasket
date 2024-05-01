@@ -57,7 +57,7 @@ describe('promptHooks', () => {
     expect(mockExecWaterfallStub.mock.calls[0][2]).toHaveProperty('prompt', mockPromptStub);
   });
 
-  it('does not execute the plugin prompt hook with --no-prompts', async () => {
+  it('does not execute the plugin prompt hook with --no-prompts option', async () => {
     mockContext.prompts = false;
     await promptHooks(mockGasket, mockContext);
     expect(typeof mockExecWaterfallStub.mock.calls[0][2].prompt).toEqual('function');
