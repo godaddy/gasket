@@ -3,8 +3,10 @@ import semver from 'semver';
 import chalk from 'chalk';
 import { readFile, writeFile } from 'fs/promises';
 import path from 'path';
+import { fileURLToPath } from 'url';
+const __dirname = fileURLToPath(import.meta.url);
 
-const cachePath = path.join(import.meta.url, '..', '..', '.cache'); // Place at root of gasket-cli
+const cachePath = path.join(__dirname, '..', '..', '..', '.cache'); // Place at root of gasket-cli
 const LATEST_VERSION = 'latestVersion';
 const LATEST_VERSION_UPDATE_TIME = 'latestVersionUpdateTime';
 
@@ -73,4 +75,4 @@ export async function warnIfOutdated(pkgName, currentVersion) {
       ` ${chalk.yellow('›')}   Warning: ${pkgName} update available from ${chalk.green(latestVersion)} to ${chalk.green(currentVersion)}`
     );
   }
-};
+}

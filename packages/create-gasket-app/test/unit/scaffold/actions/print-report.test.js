@@ -1,5 +1,7 @@
 import { jest } from '@jest/globals';
 
+const  printReport = (await import('../../../../lib/scaffold/actions/print-report')).default;
+
 describe('printReport', () => {
   let mockContext, logStub;
 
@@ -18,8 +20,6 @@ describe('printReport', () => {
       errors: [],
       nextSteps: []
     };
-
-    printReport = (await import('../../../../lib/scaffold/actions/print-report')).default;
   });
 
   afterEach(() => {

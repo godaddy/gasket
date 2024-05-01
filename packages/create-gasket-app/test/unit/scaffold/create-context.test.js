@@ -1,4 +1,4 @@
-/* eslint-disable max-statements */
+/* eslint-disable max-statements, jest/no-conditional-expect */
 import { jest, describe, it, expect } from '@jest/globals';
 import path from 'path';
 const { CreateContext, makeCreateContext } = await import('../../../lib/scaffold/create-context');
@@ -72,7 +72,7 @@ describe('CreateRuntime', () => {
       expect(runtime.files).toEqual(files);
       expect(runtime.pkg).toEqual(pkg);
       expect(runtime.source).toEqual(source);
-    };
+    }
   });
 
   it('sets the source to be the plugin provided', () => {

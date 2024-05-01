@@ -19,7 +19,7 @@ const gasketBin = program
 
 async function main() {
   const { command, hidden, isDefault } = processCommand(createCommand);
-  // await warnIfOutdated(pkg.name, pkg.version);
+  await warnIfOutdated(pkg.name, pkg.version);
   gasketBin.addCommand(command, { hidden, isDefault });
 
   process.argv.splice(2, 0, 'create');

@@ -60,7 +60,6 @@ describe('dumpErrorContext', () => {
   it('outputs log file path to console', async () => {
     mockWriteStub.mockResolvedValue();
     await dumpErrorContext(mockContext, mockError);
-    console.log(logStub)
     expect(logStub).toHaveBeenCalledWith(expect.stringContaining(path.join(mockContext.cwd, 'gasket-create-error.log')));
   });
 

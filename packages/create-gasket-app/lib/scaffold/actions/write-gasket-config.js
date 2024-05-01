@@ -22,7 +22,7 @@ function writePluginImports(plugins) {
  */
 function writeImports(imports) {
   if (!imports) return '';
-  return `${Object.entries(imports).map(([importDef, path]) => `import ${importDef} from '${path}';`).join('\n')}\n`;
+  return `${Object.entries(imports).map(([importDef, importPath]) => `import ${importDef} from '${importPath}';`).join('\n')}\n`;
 }
 
 /**
@@ -55,7 +55,7 @@ function createInjectionAssignments(config, assignments) {
 function replaceInjectionAssignments(content, assignments) {
   if (!assignments) return content;
   Object.keys(assignments).forEach((key) => {
-    content = content.replace(`\'${key}_INJECTION_ASSIGNMENT_REPLACE\'`, assignments[key]);
+    content = content.replace(`'${key}_INJECTION_ASSIGNMENT_REPLACE'`, assignments[key]);
   });
 
   return content;

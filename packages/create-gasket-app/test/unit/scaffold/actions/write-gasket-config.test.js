@@ -1,6 +1,4 @@
 import { jest } from '@jest/globals';
-import { error } from 'console';
-import { default as JSON5 } from 'json5';
 import path from 'path';
 
 const mockWriteStub = jest.fn();
@@ -80,12 +78,12 @@ describe('write-gasket-config', () => {
     const output = mockWriteStub.mock.calls[0][1];
     expect(output).toContain('import pluginBogus from \'@gasket/plugin-bogus\';');
     expect(output).toContain('import pluginBogus2 from \'@gasket/plugin-bogus2\';');
-    expect(output.match(/\[(\s.*)+\]/)[0]).toBe('[\n\t\tpluginBogus,\n\t\tpluginBogus2\n\t]')
+    expect(output.match(/\[(\s.*)+\]/)[0]).toBe('[\n\t\tpluginBogus,\n\t\tpluginBogus2\n\t]');
   });
 
   it('writes non-plugin imports', async () => {
     mockContext.gasketConfig.fields.imports = {
-      'bogus': '@bogus'
+      bogus: '@bogus'
     };
     await writeGasketConfig(null, mockContext);
     const output = mockWriteStub.mock.calls[0][1];
@@ -101,7 +99,7 @@ describe('write-gasket-config', () => {
 
   it('writes injection assignments', async () => {
     mockContext.gasketConfig.fields.injectionAssignments = {
-      'bogus': 'bogus'
+      bogus: 'bogus'
     };
     await writeGasketConfig(null, mockContext);
     const output = mockWriteStub.mock.calls[0][1];

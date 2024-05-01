@@ -9,7 +9,7 @@ const mockCreateRequire = jest.fn();
 jest.mock('@gasket/utils', () => {
   return {
     PackageManager: class MockPackageManager {
-      constructor({packageManager, dest}) {
+      constructor({ packageManager, dest }) {
         this.packageManager = packageManager;
         this.dest = dest;
         this.isYarn = packageManager === 'yarn';
@@ -19,7 +19,7 @@ jest.mock('@gasket/utils', () => {
         mockExecStub(...arguments);
       }
     }
-  }
+  };
 });
 
 jest.unstable_mockModule('fs/promises', () => {
@@ -30,10 +30,10 @@ jest.unstable_mockModule('fs/promises', () => {
 
 jest.unstable_mockModule('module', () => ({
   createRequire: jest.fn(() => mockCreateRequire.mockReturnValue({
-    "name": "@gasket/test-preset",
-    "version": "1.2.3",
-    "dependencies": {
-      "bogus-plugin": "^4.5.6"
+    name: '@gasket/test-preset',
+    version: '1.2.3',
+    dependencies: {
+      'bogus-plugin': '^4.5.6'
     }
   }
   ))
@@ -59,7 +59,7 @@ describe('loadPreset', () => {
       rawPresets: ['@gasket/preset-bogus@^1.0.0'],
       localPresets: [],
       errors: [],
-      packageManager: 'npm',
+      packageManager: 'npm'
     };
   });
 
