@@ -1,18 +1,6 @@
 /* eslint-disable max-params */
 const { spawn } = require('child_process');
-const { Writable } = require('stream');
-const stderr = new Writable();
-const stdout = new Writable();
-const writeConcat = function (chunk, encoding, next) {
-  if (!this.data) this.data = '';
-  this.data += chunk.toString();
-  next();
-};
-const write = function (chunk, encoding, next) {
-  if (!this.data) this.data = '';
-  this.data = chunk.toString();
-  next();
-};
+const concat = require('concat-stream');
 
 /**
  * Promise friendly wrapper to running a shell command (eg: git, npm, ls)
@@ -51,11 +39,10 @@ const write = function (chunk, encoding, next) {
  * @returns {Promise} A promise represents if command succeeds or fails.
  * @public
  */
-function runShellCommand(cmd, argv, options = {}, debug = false, concatStdout = true) {
+function runShellCommand(cmd, argv, options = {}, debug = false) {
   const { signal, ...opts } = options;
-  const writeFn = concatStdout ? writeConcat : write;
-  stdout._write = writeFn;
-  stderr._write = writeFn;
+  let stderr;
+  let stdout;
 
   if (signal && signal.aborted) {
     return Promise.reject(Object.assign(new Error(`${cmd} was aborted before spawn`), { argv, aborted: true }));
@@ -64,13 +51,17 @@ function runShellCommand(cmd, argv, options = {}, debug = false, concatStdout = 
   return new Promise((resolve, reject) => {
     const child = spawn(cmd, argv, opts);
 
-    child.stderr.on('data', lines => {
-      stderr.write(lines);
-    });
+    child.stderr.pipe(
+      concat({ encoding: 'string' }, (lines) => {
+        stderr = lines;
+      })
+    );
 
-    child.stdout.on('data', lines => {
-      stdout.write(lines);
-    });
+    child.stdout.pipe(
+      concat({ encoding: 'string' }, (lines) => {
+        stdout = lines;
+      })
+    );
 
     if (debug) {
       child.stderr.pipe(process.stderr);
@@ -89,14 +80,14 @@ function runShellCommand(cmd, argv, options = {}, debug = false, concatStdout = 
       if (code !== 0) {
         return reject(Object.assign(new Error(`${cmd} exited with non-zero code`), {
           argv,
-          stdout: stdout.data,
-          stderr: stderr.data,
+          stdout,
+          stderr,
           aborted,
           code
         }));
       }
 
-      resolve({ stdout: stdout.data });
+      resolve({ stdout });
     });
   });
 }
