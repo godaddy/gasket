@@ -4,7 +4,6 @@ import { default as semver } from 'semver';
 import { default as diagnostics } from 'diagnostics';
 const debug = diagnostics('gasket:cli:package');
 
-// TODOfollowup - evaluate methods for deletion
 /**
  * Simple object check without bringing in a large
  * utility library.
