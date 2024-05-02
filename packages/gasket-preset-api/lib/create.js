@@ -10,6 +10,10 @@ export default function create(gasket, context) {
   const generatorDir = path.join(__dirname, '..', '..', 'generator');
 
   console.log('-------------------------');
+  console.log('__dirname', __dirname);
+  console.log('-------------------------');
+
+  console.log('-------------------------');
   console.log('context.typescript', context.typescript);
   console.log('-------------------------');
   if (!context.typescript) {
