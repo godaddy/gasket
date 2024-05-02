@@ -95,7 +95,7 @@ export interface ConfigBuilder<Config> {
    * import { readFileSync } from 'fs';
    * import fs from 'fs';
    */
-  addImport(importName: string, importPath: string): ConfigBuilder;
+  addImport(importName: string, importPath: string): ConfigBuilder<Config>;
 
   /**
    * addExpression - add programmatic expression to the gasket file
@@ -110,7 +110,7 @@ export interface ConfigBuilder<Config> {
    * import fs from 'fs';
    * const file = fs.readFileSync('./file.txt');
    */
-  addExpression(expression: string): ConfigBuilder;
+  addExpression(expression: string): ConfigBuilder<Config>;
 
   /**
    * injectValue - Inject a value into the gasket config object

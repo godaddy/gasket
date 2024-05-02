@@ -1,5 +1,10 @@
 # `@gasket/plugin-swagger`
 
+
+
+- Add plugin import to gasket file ([#736])
+- Add itself to the app package file
+
 ### 6.34.4
 
 - Upgrade eslint-plugin-unicorn v43 ([#436])
@@ -56,3 +61,4 @@
 [#442]: https://github.com/godaddy/gasket/pull/442
 [#459]: https://github.com/godaddy/gasket/pull/459
 [#460]: https://github.com/godaddy/gasket/pull/460
+[#736]: https://github.com/godaddy/gasket/pull/736
