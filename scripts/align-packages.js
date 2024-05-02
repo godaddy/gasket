@@ -327,6 +327,7 @@ function setupTypes(pkgJson) {
     '@gasket/plugin-lifecycle',
     '@gasket/plugin-log',
     '@gasket/plugin-metadata',
+    '@gasket/plugin-workbox', // Skip until v7 as workbox-build@4 has no types
     '@gasket/preset-api',
     '@gasket/preset-nextjs',
     '@gasket/preset-pwa',
