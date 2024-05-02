@@ -1,7 +1,7 @@
-import { jest } from '@jest/globals';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 import preset from '../lib/index.js';
+const { dependencies } = require('../package.json');
 
 describe('gasket-preset-pwa', () => {
 
@@ -14,19 +14,21 @@ describe('gasket-preset-pwa', () => {
   });
 
   it('has expected hooks', () => {
-    const expected = [
-      'create'
-    ];
+    const expected = [];
     expect(Object.keys(preset.hooks)).toEqual(expect.arrayContaining(expected));
   });
 
-  it('has expected create hook', () => {
-    expect(preset.hooks.create).toBeInstanceOf(Function);
-  });
+  it('has expected dependencies', () => {
+    const expected = [
+      '@gasket/plugin-jest',
+      '@gasket/plugin-lint',
+      '@gasket/plugin-manifest',
+      '@gasket/plugin-mocha',
+      '@gasket/plugin-service-worker',
+      '@gasket/plugin-typescript',
+      '@gasket/plugin-workbox'
+    ];
 
-  it('adds dependencies to package.json', async () => {
-    const pkg = { add: jest.fn() };
-    await preset.hooks.create({}, { pkg });
-    expect(pkg.add).toHaveBeenCalledWith('dependencies', expect.any(Object));
+    expect(Object.keys(dependencies)).toEqual(expect.arrayContaining(expected));
   });
 });

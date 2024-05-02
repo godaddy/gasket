@@ -2,7 +2,7 @@ import { jest } from '@jest/globals';
 import { createRequire } from 'module';
 import preset from '../lib/index.js';
 const require = createRequire(import.meta.url);
-const { dependencies, devDependencies } = require('../package.json');
+const { devDependencies } = require('../package.json');
 const mockPkgAdd = jest.fn();
 const mockFilesAdd = jest.fn();
 
@@ -27,11 +27,6 @@ describe('create', function () {
     jest.clearAllMocks();
   });
 
-  it('adds the expected dependencies', async function () {
-    await createHook({}, mockContext);
-    expect(mockPkgAdd).toHaveBeenCalledWith('dependencies', dependencies);
-  });
-
   it('adds the expected files', async function () {
     await createHook({}, mockContext);
     expect(mockFilesAdd).toHaveBeenCalledWith(expect.stringMatching(/generator\/\*$/));
@@ -39,7 +34,9 @@ describe('create', function () {
 
   it('adds the expected devDependencies', async function () {
     await createHook({}, mockContext);
-    expect(mockPkgAdd).toHaveBeenCalledWith('devDependencies', devDependencies);
+    expect(mockPkgAdd).toHaveBeenCalledWith('devDependencies', {
+      nodemon: devDependencies.nodemon
+    });
   });
 
   it('adds the expected scripts', async function () {
@@ -54,6 +51,5 @@ describe('create', function () {
     mockContext.typescript = true;
     await createHook({}, mockContext);
     expect(mockFilesAdd).not.toHaveBeenCalled();
-    expect(mockPkgAdd).toHaveBeenCalledTimes(1);
   });
 });

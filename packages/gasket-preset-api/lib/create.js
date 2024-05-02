@@ -1,7 +1,7 @@
 import { createRequire } from 'module';
 import { fileURLToPath } from 'url';
 const require = createRequire(import.meta.url);
-const { dependencies, devDependencies } = require('../package.json');
+const { devDependencies } = require('../package.json');
 
 export default function create(gasket, context) {
   const { pkg, files } = context;
@@ -12,7 +12,7 @@ export default function create(gasket, context) {
     files.add(`${generatorDir}/*`);
 
     pkg.add('devDependencies', {
-      'nodemon': devDependencies.nodemon,
+      nodemon: devDependencies.nodemon
     });
 
     pkg.add('scripts', {
