@@ -1,4 +1,4 @@
-const { name, devDependencies } = require('../package');
+const { name, version, devDependencies } = require('../package');
 
 /**
  * createAppFiles
@@ -125,11 +125,14 @@ function addNpmScripts({ pkg, nextServerType, nextDevProxy, typescript }) {
   pkg.add('scripts', scripts[nextServerType]);
 }
 
-function addConfig(context) {
-  context.gasketConfig.addPlugin('pluginNextjs', name);
+function addConfig({ pkg, gasketConfig, nextDevProxy }) {
+  gasketConfig.addPlugin('pluginNextjs', name);
+  pkg.add('dependencies', {
+    [name]: `^${version}`
+  });
 
-  if (context.nextDevProxy) {
-    context.gasketConfig.add('devProxy', {
+  if (nextDevProxy) {
+    gasketConfig.add('devProxy', {
       protocol: 'http',
       hostname: 'localhost',
       port: 80,

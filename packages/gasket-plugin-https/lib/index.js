@@ -9,7 +9,7 @@ const create = require('create-servers');
 const one = require('one-time/async');
 const errs = require('errs');
 const proxy = require('http-proxy');
-const { name } = require('../package.json');
+const { name, version } = require('../package.json');
 
 /**
  * Provide port defaults
@@ -201,8 +201,11 @@ const plugin = {
         startServer: async () => await startServer(gasket)
       };
     },
-    create: async function createHook(gasket, { gasketConfig }) {
+    create: async function createHook(gasket, { pkg, gasketConfig }) {
       gasketConfig.addPlugin('pluginHttps', name);
+      pkg.add('dependencies', {
+        [name]: `^${version}`
+      });
     },
     metadata(gasket, meta) {
       return {
