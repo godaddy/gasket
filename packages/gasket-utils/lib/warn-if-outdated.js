@@ -1,10 +1,10 @@
-const { runShellCommand }  = require('./index');
+const { runShellCommand } = require('./index');
 const semver = require('semver');
 const chalk = require('chalk');
 const { readFile, writeFile } = require('fs/promises');
 const path = require('path');
 
-const cachePath = path.join(__dirname, '..', '..', '.cache'); // Place at root of gasket-cli
+const cachePath = path.join(__dirname, '..', '.cache'); // Place at root of package
 const LATEST_VERSION = 'latestVersion';
 const LATEST_VERSION_UPDATE_TIME = 'latestVersionUpdateTime';
 
