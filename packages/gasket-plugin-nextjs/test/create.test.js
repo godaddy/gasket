@@ -1,5 +1,5 @@
 const path = require('path');
-const { devDependencies } = require('../package');
+const { name, version, devDependencies } = require('../package');
 
 describe('create hook', () => {
   let mockContext;
@@ -55,17 +55,31 @@ describe('create hook', () => {
     );
   });
 
+  it('adds itself to the dependencies', async function () {
+    await plugin.hooks.create.handler({}, mockContext);
+
+    expect(mockContext.pkg.add).toHaveBeenCalledWith('dependencies',
+      expect.objectContaining({ [name]: `^${version}` })
+    );
+  });
+
   it('adds appropriate dependencies', async function () {
     await plugin.hooks.create.handler({}, mockContext);
 
-    expect(mockContext.pkg.add).toHaveBeenCalledWith('dependencies', {
-      '@gasket/assets': devDependencies['@gasket/assets'],
-      '@gasket/nextjs': devDependencies['@gasket/nextjs'],
-      'next': devDependencies.next,
-      'prop-types': devDependencies['prop-types'],
-      'react': devDependencies.react,
-      'react-dom': devDependencies['react-dom']
-    });
+    expect(mockContext.pkg.add).toHaveBeenCalledWith('dependencies',
+      expect.objectContaining({
+        '@gasket/assets': devDependencies['@gasket/assets'],
+        '@gasket/nextjs': devDependencies['@gasket/nextjs'],
+        'next': devDependencies.next,
+        'prop-types': devDependencies['prop-types'],
+        'react': devDependencies.react,
+        'react-dom': devDependencies['react-dom']
+      }));
+  });
+
+  it('add plugin import to the gasket file', async function () {
+    await plugin.hooks.create.handler({}, mockContext);
+    expect(mockContext.gasketConfig.addPlugin).toHaveBeenCalledWith('pluginNextjs', name);
   });
 
   it('adds appropriate devDependencies', async function () {

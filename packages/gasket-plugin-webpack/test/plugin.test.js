@@ -1,5 +1,6 @@
 const plugin = require('../lib/index');
 const { devDependencies } = require('../package');
+const { name, version } = require('../package.json');
 
 describe('Plugin', () => {
 
@@ -39,11 +40,25 @@ describe('create hook', () => {
     };
   });
 
+  it('adds itself to the dependencies', async function () {
+    await plugin.hooks.create({}, mockContext);
+
+    expect(mockContext.pkg.add).toHaveBeenCalledWith('dependencies', {
+      [name]: `^${version}`
+    });
+  });
+
   it('adds appropriate devDependencies', async function () {
     await plugin.hooks.create({}, mockContext);
 
     expect(mockContext.pkg.add).toHaveBeenCalledWith('devDependencies', {
       webpack: devDependencies.webpack
     });
+  });
+
+  it('adds plugin import to the gasket file', async function () {
+    await plugin.hooks.create({}, mockContext);
+
+    expect(mockContext.gasketConfig.addPlugin).toHaveBeenCalledWith('pluginWebpack', name);
   });
 });
