@@ -1,10 +1,10 @@
 import { jest } from '@jest/globals';
 import { fileURLToPath } from 'url';
+import path from 'path';
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 const mockConstructorStub = jest.fn();
 const mockExecStub = jest.fn();
 const mockMkTemp = jest.fn();
-const mockCreateRequire = jest.fn();
 
 jest.mock('@gasket/utils', () => {
   return {
@@ -24,19 +24,17 @@ jest.mock('@gasket/utils', () => {
 
 jest.unstable_mockModule('fs/promises', () => {
   return {
-    mkdtemp: mockMkTemp.mockResolvedValue('/tmp/gasket-create-my-app')
+    mkdtemp: mockMkTemp.mockResolvedValue(path.join(__dirname, '..', '..', '..', '__mocks__'))
   };
 });
 
-jest.unstable_mockModule('module', () => ({
-  createRequire: jest.fn(() => mockCreateRequire.mockReturnValue({
-    name: '@gasket/test-preset',
-    version: '1.2.3',
-    dependencies: {
-      'bogus-plugin': '^4.5.6'
-    }
+jest.unstable_mockModule('path', () => ({
+  default: {
+    join: jest.fn().mockImplementation((...args) => {
+      const p = args.join('/');
+      return p.replace('/node_modules', '');
+    })
   }
-  ))
 }));
 
 const presetBogus = { name: '@gasket/bogus', hooks: {} };
@@ -46,9 +44,9 @@ const presetLocal = { name: '@gasket/test-preset', hooks: {} };
 jest.unstable_mockModule('@gasket/preset-bogus', () => (presetBogus));
 jest.unstable_mockModule('@gasket/preset-all-i-ever-wanted', () => (presetAllIEverWanted));
 jest.unstable_mockModule('@gasket/preset-some', () => (presetSome));
-jest.unstable_mockModule('@gasket/test-preset', () => (presetLocal));
+jest.unstable_mockModule('gasket-preset-local', () => (presetLocal));
 
-const loadPreset = (await import('../../../../lib/scaffold/actions/load-preset')).default;
+const loadPreset = (await import('../../../../lib/scaffold/actions/load-preset.js')).default;
 
 describe('loadPreset', () => {
   let mockContext;
@@ -61,6 +59,8 @@ describe('loadPreset', () => {
       errors: [],
       packageManager: 'npm'
     };
+
+    mockExecStub.mockResolvedValue();
   });
 
   afterEach(() => {
@@ -73,14 +73,14 @@ describe('loadPreset', () => {
 
   describe('remote and local packages', () => {
     beforeEach(() => {
-      mockContext.localPresets = ['../../../fixtures/local-preset'];
+      mockContext.localPresets = [`${__dirname}../../../__mocks__/gasket-preset-local`];
     });
 
     it('instantiates PackageManager with package name', async () => {
       await loadPreset(null, mockContext);
       expect(mockConstructorStub).toHaveBeenCalled();
       expect(mockConstructorStub.mock.calls[0][0]).toHaveProperty('packageManager', 'npm');
-      expect(mockConstructorStub.mock.calls[0][0]).toHaveProperty('dest', '/tmp/gasket-create-my-app');
+      expect(mockConstructorStub.mock.calls[0][0]).toHaveProperty('dest', `${path.join(__dirname, '..', '..', '..', '__mocks__')}`);
     });
 
     it('determines the correct pkg manager verb', async () => {
@@ -92,20 +92,33 @@ describe('loadPreset', () => {
 
     it('includes one of each other', async () => {
       await loadPreset(null, mockContext);
-      expect(mockContext).toHaveProperty('rawPresets', ['@gasket/preset-bogus@^1.0.0']);
-      expect(mockContext).toHaveProperty('localPresets', ['../../../fixtures/local-preset']);
+      expect(mockContext).toHaveProperty('rawPresets', [
+        '@gasket/preset-bogus@^1.0.0'
+      ]);
+      expect(mockContext).toHaveProperty('localPresets', [
+        `${__dirname}../../../__mocks__/gasket-preset-local`
+      ]);
       expect(mockContext.presets).toHaveLength(2);
     });
 
     it('includes multiple of remote and local packages', async () => {
       mockContext.rawPresets = ['@gasket/preset-bogus@^1.0.0', '@gasket/preset-all-i-ever-wanted@^2.0.0'];
-      mockContext.localPresets = ['../../../fixtures/local-preset', '../../../fixtures/local-preset'];
+      mockContext.localPresets = [
+        `${__dirname}../../../__mocks__/gasket-preset-local`,
+        `${__dirname}../../../__mocks__/gasket-preset-local`
+      ];
 
       await loadPreset(null, mockContext);
       expect(mockContext)
-        .toHaveProperty('rawPresets', ['@gasket/preset-bogus@^1.0.0', '@gasket/preset-all-i-ever-wanted@^2.0.0']);
+        .toHaveProperty('rawPresets', [
+          '@gasket/preset-bogus@^1.0.0',
+          '@gasket/preset-all-i-ever-wanted@^2.0.0'
+        ]);
       expect(mockContext)
-        .toHaveProperty('localPresets', ['../../../fixtures/local-preset', '../../../fixtures/local-preset']);
+        .toHaveProperty('localPresets', [
+          `${__dirname}../../../__mocks__/gasket-preset-local`,
+          `${__dirname}../../../__mocks__/gasket-preset-local`
+        ]);
       expect(mockContext.presets).toEqual([
         expect.objectContaining(presetBogus),
         expect.objectContaining(presetAllIEverWanted),
@@ -117,13 +130,22 @@ describe('loadPreset', () => {
 
     it('supports preset extensions', async () => {
       mockContext.rawPresets = ['@gasket/preset-bogus@^1.0.0', '@gasket/preset-all-i-ever-wanted@^2.0.0'];
-      mockContext.localPresets = ['../../../fixtures/gasket-preset-local', '../../../fixtures/gasket-preset-local'];
+      mockContext.localPresets = [
+        `${__dirname}../../../__mocks__/gasket-preset-local`,
+        `${__dirname}../../../__mocks__/gasket-preset-local`
+      ];
 
       await loadPreset(null, mockContext);
       expect(mockContext)
-        .toHaveProperty('rawPresets', ['@gasket/preset-bogus@^1.0.0', '@gasket/preset-all-i-ever-wanted@^2.0.0']);
+        .toHaveProperty('rawPresets', [
+          '@gasket/preset-bogus@^1.0.0',
+          '@gasket/preset-all-i-ever-wanted@^2.0.0'
+        ]);
       expect(mockContext)
-        .toHaveProperty('localPresets', ['../../../fixtures/gasket-preset-local', '../../../fixtures/gasket-preset-local']);
+        .toHaveProperty('localPresets', [
+          `${__dirname}../../../__mocks__/gasket-preset-local`,
+          `${__dirname}../../../__mocks__/gasket-preset-local`
+        ]);
       expect(mockContext.presets).toEqual([
         expect.objectContaining(presetBogus),
         expect.objectContaining(presetAllIEverWanted),
@@ -138,12 +160,15 @@ describe('loadPreset', () => {
 
     beforeEach(() => {
       mockContext.rawPresets = [];
-      mockContext.localPresets = ['../../../fixtures/gasket-preset-local'];
+      mockContext.localPresets = [`${__dirname}../../../__mocks__/gasket-preset-local`];
     });
 
 
     it('adds multiple local packages', async () => {
-      mockContext.localPresets = ['../../../fixtures/gasket-preset-local', '../../../fixtures/gasket-preset-local'];
+      mockContext.localPresets = [
+        `${__dirname}../../../__mocks__/gasket-preset-local`,
+        `${__dirname}../../../__mocks__/gasket-preset-local`
+      ];
 
       await loadPreset(null, mockContext);
       expect(mockContext.presets).toHaveLength(2);
@@ -151,6 +176,16 @@ describe('loadPreset', () => {
         expect.objectContaining(presetLocal),
         expect.objectContaining(presetLocal)
       ]);
+    });
+
+    it('throws error if local preset fails to install', async () => {
+      mockContext.rawPresets = [`${__dirname}../../../__mocks__/gasket-preset-local-bogus`];
+
+      await expect(async () => {
+        await loadPreset(null, mockContext);
+      }).rejects.toThrow(
+        'Failed to install preset /Users/mmason2/Development/os-gasket/packages/create-gasket-app/test/unit/scaffold/actions/../../../__mocks__/gasket-preset-local-bogus@latest'
+      );
     });
   });
 
@@ -166,11 +201,19 @@ describe('loadPreset', () => {
       await loadPreset(null, mockContext);
       expect(mockContext).toHaveProperty('rawPresets', ['@gasket/preset-bogus@^1.0.0']);
     });
+
+    it('throws error if remote preset fails to install', async () => {
+      mockContext.rawPresets = ['@gasket/preset-bogus-bogus@^1.0.0'];
+
+      await expect(async () => {
+        await loadPreset(null, mockContext);
+      }).rejects.toThrow('Failed to install preset @gasket/preset-bogus-bogus@^1.0.0');
+    });
   });
 
 
   it('supports multiple presets', async () => {
-    mockContext.rawPresets = ['@gasket/preset-bogus@^1.0.0', '@gasket/preset-all-i-ever-wanted@^2.0.0'];
+    mockContext.rawPresets = ['@gasket/preset-bogus@^1.0.0', '@gasket/preset-all-i-ever-wanted@^1.0.0'];
 
     await loadPreset(null, mockContext);
     expect(mockContext).toHaveProperty('presets', [
