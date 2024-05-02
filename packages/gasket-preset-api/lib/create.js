@@ -21,7 +21,7 @@ export default function create(gasket, context) {
   console.log('context.typescript', context.typescript);
   console.log('-------------------------');
   if (!context.typescript) {
-    files.add(`${generatorDir}/*`);
+    files.add(`${generatorDir}/*`, `${generatorDir}/**/*`);
     console.log('-------------------------');
     console.log('files', files);
     console.log('-------------------------');
