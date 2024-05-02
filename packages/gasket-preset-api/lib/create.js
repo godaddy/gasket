@@ -14,6 +14,10 @@ export default function create(gasket, context) {
   console.log('-------------------------');
 
   console.log('-------------------------');
+  console.log('generatorDir', generatorDir);
+  console.log('-------------------------');
+
+  console.log('-------------------------');
   console.log('context.typescript', context.typescript);
   console.log('-------------------------');
   if (!context.typescript) {
