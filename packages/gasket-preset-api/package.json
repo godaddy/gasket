@@ -1,6 +1,6 @@
 {
   "name": "@gasket/preset-api",
-  "version": "7.0.0-next.5",
+  "version": "7.0.0-next.6",
   "description": "Create Express-based API with Gasket",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -29,17 +29,17 @@
     "url": "https://github.com/godaddy/gasket/issues"
   },
   "dependencies": {
-    "@gasket/core": "^7.0.0-next.5",
-    "@gasket/engine": "^7.0.0-next.5",
-    "@gasket/plugin-docs": "^7.0.0-next.5",
-    "@gasket/plugin-docusaurus": "^7.0.0-next.5",
-    "@gasket/plugin-express": "^7.0.0-next.5",
-    "@gasket/plugin-https": "^7.0.0-next.5",
-    "@gasket/plugin-lint": "^7.0.0-next.5",
-    "@gasket/plugin-response-data": "^7.0.0-next.5",
-    "@gasket/plugin-swagger": "^7.0.0-next.5",
-    "@gasket/plugin-winston": "^7.0.0-next.5",
-    "@gasket/utils": "^7.0.0-next.5"
+    "@gasket/core": "^7.0.0-next.6",
+    "@gasket/engine": "^7.0.0-next.6",
+    "@gasket/plugin-docs": "^7.0.0-next.6",
+    "@gasket/plugin-docusaurus": "^7.0.0-next.6",
+    "@gasket/plugin-express": "^7.0.0-next.6",
+    "@gasket/plugin-https": "^7.0.0-next.6",
+    "@gasket/plugin-lint": "^7.0.0-next.6",
+    "@gasket/plugin-response-data": "^7.0.0-next.6",
+    "@gasket/plugin-swagger": "^7.0.0-next.6",
+    "@gasket/plugin-winston": "^7.0.0-next.6",
+    "@gasket/utils": "^7.0.0-next.6"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
