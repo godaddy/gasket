@@ -9,7 +9,7 @@ const { name, version, dependencies } = require('../package.json');
 const plugin = {
   name,
   hooks: {
-    async create(gasket, { pkg, gasketConfig}) {
+    async create(gasket, { pkg, gasketConfig }) {
       gasketConfig.addPlugin('pluginWinston', '@gasket/plugin-winston');
       pkg.add('dependencies', {
         [name]: `^${version}`,

@@ -70,6 +70,7 @@ function addDependencies({ pkg, nextDevProxy }) {
   pkg.add('dependencies', {
     '@gasket/assets': devDependencies['@gasket/assets'],
     '@gasket/nextjs': devDependencies['@gasket/nextjs'],
+    [name]: `^${version}`,
     'next': devDependencies.next,
     'prop-types': devDependencies['prop-types'],
     'react': devDependencies.react,
@@ -125,11 +126,8 @@ function addNpmScripts({ pkg, nextServerType, nextDevProxy, typescript }) {
   pkg.add('scripts', scripts[nextServerType]);
 }
 
-function addConfig({ pkg, gasketConfig, nextDevProxy }) {
+function addConfig({ gasketConfig, nextDevProxy }) {
   gasketConfig.addPlugin('pluginNextjs', name);
-  pkg.add('dependencies', {
-    [name]: `^${version}`
-  });
 
   if (nextDevProxy) {
     gasketConfig.add('devProxy', {

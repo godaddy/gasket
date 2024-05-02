@@ -1,6 +1,6 @@
 const { name, version, devDependencies } = require('../package.json');
 
-module.exports = async function create(gasket, { pkg, gasketConfig }) {
+module.exports = function create(gasket, { pkg, gasketConfig }) {
   gasketConfig.addPlugin('pluginDocusaurus', name);
   pkg.add('dependencies', {
     [name]: `^${version}`
