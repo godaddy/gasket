@@ -1,5 +1,5 @@
 /* eslint-disable max-statements */
-import { jest, describe, it, expect } from '@jest/globals';
+import { jest } from '@jest/globals';
 const { ConfigBuilder } = await import('../../../lib/scaffold/config-builder');
 
 const pluginOne = {

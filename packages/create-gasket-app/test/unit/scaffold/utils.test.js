@@ -1,4 +1,3 @@
-import { describe, it, expect } from '@jest/globals';
 import { readConfig } from '../../../lib/scaffold/utils.js';
 
 describe('Utils', () => {
