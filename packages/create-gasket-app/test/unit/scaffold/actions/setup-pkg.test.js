@@ -48,6 +48,13 @@ describe('setupPkg', () => {
     expect(mockContstructorStub.mock.calls[0][0].pkg.fields).toHaveProperty('description', mockContext.appDescription);
   });
 
+  it('adds core dependencies', async () => {
+    await setupPkg.wrapped(null, mockContext);
+    expect(mockContext.pkg.fields.dependencies).toHaveProperty('@gasket/core');
+    expect(mockContext.pkg.fields.dependencies).toHaveProperty('@gasket/engine');
+    expect(mockContext.pkg.fields.dependencies).toHaveProperty('@gasket/utils');
+  });
+
   it('instantiates PackageManager with context', async () => {
     await setupPkg.wrapped(null, mockContext);
     expect(mockContstructorStub).toHaveBeenCalledWith(mockContext);
