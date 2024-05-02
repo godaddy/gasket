@@ -1,6 +1,6 @@
 {
   "name": "create-gasket-app",
-  "version": "7.0.0-next.8",
+  "version": "7.0.0-next.9",
   "description": "starter pack for creating a gasket app",
   "main": "lib",
   "bin": {
@@ -32,11 +32,11 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/create-gasket-app",
   "dependencies": {
-    "@gasket/core": "^7.0.0-next.8",
-    "@gasket/engine": "^7.0.0-next.8",
-    "@gasket/plugin-git": "^7.0.0-next.8",
-    "@gasket/plugin-logger": "^7.0.0-next.8",
-    "@gasket/utils": "^7.0.0-next.8",
+    "@gasket/core": "^7.0.0-next.9",
+    "@gasket/engine": "^7.0.0-next.9",
+    "@gasket/plugin-git": "^7.0.0-next.9",
+    "@gasket/plugin-logger": "^7.0.0-next.9",
+    "@gasket/utils": "^7.0.0-next.9",
     "commander": "^12.0.0",
     "deepmerge": "^4.3.1",
     "glob": "^8.1.0",
