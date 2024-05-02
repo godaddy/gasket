@@ -1,6 +1,6 @@
 {
   "name": "@gasket/preset-nextjs",
-  "version": "7.0.0-next.6",
+  "version": "7.0.0-next.7",
   "description": "Basic NextJS Framework",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -29,15 +29,15 @@
     "url": "https://github.com/godaddy/gasket/issues"
   },
   "dependencies": {
-    "@gasket/core": "^7.0.0-next.6",
-    "@gasket/engine": "^7.0.0-next.6",
-    "@gasket/plugin-express": "^7.0.0-next.6",
-    "@gasket/plugin-https": "^7.0.0-next.6",
-    "@gasket/plugin-nextjs": "^7.0.0-next.6",
-    "@gasket/plugin-redux": "^7.0.0-next.6",
-    "@gasket/plugin-webpack": "^7.0.0-next.6",
-    "@gasket/plugin-winston": "^7.0.0-next.6",
-    "@gasket/utils": "^7.0.0-next.6"
+    "@gasket/core": "^7.0.0-next.7",
+    "@gasket/engine": "^7.0.0-next.7",
+    "@gasket/plugin-express": "^7.0.0-next.7",
+    "@gasket/plugin-https": "^7.0.0-next.7",
+    "@gasket/plugin-nextjs": "^7.0.0-next.7",
+    "@gasket/plugin-redux": "^7.0.0-next.7",
+    "@gasket/plugin-webpack": "^7.0.0-next.7",
+    "@gasket/plugin-winston": "^7.0.0-next.7",
+    "@gasket/utils": "^7.0.0-next.7"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
