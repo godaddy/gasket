@@ -1,4 +1,4 @@
-import type { GasketConfigDefinition, MaybeAsync } from '@gasket/engine';
+import type { GasketConfigDefinition, MaybeAsync, Plugin } from '@gasket/engine';
 import type { PackageManager } from '@gasket/utils';
 
 export interface Dependencies {
@@ -186,7 +186,7 @@ export interface CreateContext {
   generatedFiles: Set<string>;
 
   /** Default empty array, populated by load-preset with actual imports */
-  presets: Array<any>;
+  presets: Array<Plugin>;
 
   /** Default to object w/empty plugins array to be populated by `presetConfig` hook */
   presetConfig: GasketConfigDefinition;
@@ -236,7 +236,7 @@ export interface CreateContext {
 declare module '@gasket/engine' {
   export interface HookExecTypes {
     presetPrompt(context: CreateContext): Promise<void>;
-    presetConfig(context: CreateContext): Promise<void>;
+    presetConfig(context: CreateContext): Promise<CreateContext.presetConfig>;
     prompt(
       context: CreateContext,
       utils: {
