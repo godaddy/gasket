@@ -10,7 +10,7 @@ import action from '../action-wrapper.js';
  * @param {Spinner} spinner - Spinner
  * @returns {Promise} promise
  */
-async function mkDir(_, context, spinner) {
+async function mkDir({ context, spinner }) {
   const { dest, relDest, extant, destOverride } = context;
 
   // At this point, either the directory does not exist, or the user has

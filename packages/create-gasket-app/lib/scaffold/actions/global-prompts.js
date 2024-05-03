@@ -73,7 +73,7 @@ async function chooseTestPlugin(context, prompt) {
   if (!('testPlugin' in context)) {
     let testPlugin;
 
-    if ('testSuite' in  context) {
+    if ('testSuite' in context) {
       testPlugin = knownTestPlugins[context.testSuite];
     }
 
@@ -136,7 +136,7 @@ export const questions = [
  * @param {CreateContext} context - Create context
  * @returns {Promise} promise
  */
-async function globalPrompts(_, context) {
+async function globalPrompts({ context }) {
   const prompt = context.prompts ? inquirer.prompt : () => ({});
   for (var fn of questions) {
     await fn(context, prompt);

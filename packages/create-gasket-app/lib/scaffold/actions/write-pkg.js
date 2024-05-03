@@ -6,10 +6,9 @@ import action from '../action-wrapper.js';
  * Writes the contents of `pkg` to the app's package.json.
  *
  * @param {CreateContext} context - Create context
- * @param {Boolean} update - Is an update step
  * @returns {Promise} promise
  */
-async function writePkg(gasket, context) {
+async function writePkg({ context }) {
   const { dest, pkg, generatedFiles } = context;
   const fileName = 'package.json';
   const filePath = path.join(dest, fileName);
@@ -18,5 +17,3 @@ async function writePkg(gasket, context) {
 }
 
 export default action('Write package.json', writePkg);
-
-export const writePkgUpdate = action('Update package.json', writePkg);

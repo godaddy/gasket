@@ -19,12 +19,12 @@ describe('linkModules', () => {
 
   it('does not do linking if no pkgLinks in context', async () => {
     delete mockContext.pkgLinks;
-    await linkModules(null, mockContext);
+    await linkModules({ context: mockContext });
     expect(linkStub).not.toHaveBeenCalled();
   });
 
   it('executes link with pkgLinks from context', async () => {
-    await linkModules(null, mockContext);
+    await linkModules({ context: mockContext });
     expect(linkStub).toHaveBeenCalled();
     expect(linkStub.mock.calls[0][0]).toEqual(mockContext.pkgLinks);
   });

@@ -6,7 +6,7 @@ import action from '../action-wrapper.js';
  * @param {CreateContext} context - Create context
  * @returns {Promise} promise
  */
-async function installModules(_, context) {
+async function installModules({ context }) {
   const { pkgManager } = context;
 
   await pkgManager.install();

@@ -23,7 +23,7 @@ describe('presetConfigHooks', () => {
       warnings: []
     };
 
-    await presetConfigHooks(mockGasket, mockContext);
+    await presetConfigHooks({ gasket: mockGasket, context: mockContext });
     expect(mockExecWaterfallStub).toHaveBeenCalledWith('presetConfig', mockContext);
   });
 });

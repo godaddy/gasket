@@ -88,7 +88,7 @@ function cleanupFields(config) {
  * @param {CreateContext} context - Create context
  * @returns {Promise} promise
  */
-async function writeGasketConfig(gasket, context) {
+async function writeGasketConfig({ context }) {
   const { dest, gasketConfig, generatedFiles } = context;
   const fileName = context.typescript ? 'gasket.ts' : 'gasket.js';
   const filePath = path.join(dest, fileName);

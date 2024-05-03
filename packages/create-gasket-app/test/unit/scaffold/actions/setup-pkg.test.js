@@ -42,33 +42,33 @@ describe('setupPkg', () => {
   });
 
   it('instantiates PackageJson app name and description', async () => {
-    await setupPkg.wrapped(null, mockContext);
+    await setupPkg.wrapped({ context: mockContext });
     expect(mockContstructorStub).toHaveBeenCalled();
     expect(mockContstructorStub.mock.calls[0][0].pkg.fields).toHaveProperty('name', mockContext.appName);
     expect(mockContstructorStub.mock.calls[0][0].pkg.fields).toHaveProperty('description', mockContext.appDescription);
   });
 
   it('adds core dependencies', async () => {
-    await setupPkg.wrapped(null, mockContext);
+    await setupPkg.wrapped({ context: mockContext });
     expect(mockContext.pkg.fields.dependencies).toHaveProperty('@gasket/core');
     expect(mockContext.pkg.fields.dependencies).toHaveProperty('@gasket/engine');
     expect(mockContext.pkg.fields.dependencies).toHaveProperty('@gasket/utils');
   });
 
   it('instantiates PackageManager with context', async () => {
-    await setupPkg.wrapped(null, mockContext);
+    await setupPkg.wrapped({ context: mockContext });
     expect(mockContstructorStub).toHaveBeenCalledWith(mockContext);
   });
 
   it('adds pkg to context', async () => {
     expect(mockContext.pkg).toBeUndefined();
-    await setupPkg.wrapped(null, mockContext);
+    await setupPkg.wrapped({ context: mockContext });
     expect(mockContext.pkg).toBeInstanceOf(ConfigBuilder);
   });
 
   it('adds pkgManager to context', async () => {
     expect(mockContext.pkgManager).toBeUndefined();
-    await setupPkg.wrapped(null, mockContext);
+    await setupPkg.wrapped({ context: mockContext });
     expect(mockContext.pkgManager).toBeInstanceOf(MockPackageManager);
   });
 });

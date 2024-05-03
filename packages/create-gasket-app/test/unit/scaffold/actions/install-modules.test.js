@@ -17,7 +17,7 @@ describe('installModules', () => {
   });
 
   it('executes install', async () => {
-    await installModules(null, mockContext);
+    await installModules({ context: mockContext });
     expect(installStub).toHaveBeenCalled();
   });
 });

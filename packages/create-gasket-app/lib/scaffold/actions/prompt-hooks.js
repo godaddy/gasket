@@ -27,10 +27,11 @@ async function execPluginPrompts(gasket, context) {
  * Executes the `prompt` hook for all registered plugins.
  * Adds `prompt` util function for prompting features.
  *
+ * @param {GasketEngine} gasket - Gasket API
  * @param {CreateContext} context - Create context
  * @returns {Promise} promise
  */
-async function promptHooks(gasket, context) {
+async function promptHooks({ gasket, context }) {
   //
   // Because `execPluginPrompts` is recursively, we need to start it
   // with the processPlugins and presets from our initial context

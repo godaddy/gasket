@@ -6,7 +6,7 @@ import action from '../action-wrapper.js';
  * @param {Gasket} gasket - Preset gasket instance
  * @param {CreateContext} context - Create context
  */
-async function presetPromptHooks(gasket, context) {
+async function presetPromptHooks({ gasket, context }) {
   const prompt = context.prompts ? inquirer.createPromptModule() : () => ({});
 
   const nextContext = await gasket.execWaterfall('presetPrompt', context, { prompt });

@@ -107,17 +107,17 @@ createCommand.action = async function run(appname, options, command) {
   const { rawPresets, localPresets } = context;
 
   try {
-    await globalPrompts(null, context);
+    await globalPrompts({ context });
 
     if (rawPresets.length || localPresets.length) {
-      await loadPreset(null, context);
+      await loadPreset({ context });
 
       const presetGasket = makeGasket({
         plugins: context.presets
       });
 
-      await presetPromptHooks(presetGasket, context);
-      await presetConfigHooks(presetGasket, context);
+      await presetPromptHooks({ gasket: presetGasket, context });
+      await presetConfigHooks({ gasket: presetGasket, context });
     }
 
     const pluginGasket = makeGasket({
@@ -125,18 +125,18 @@ createCommand.action = async function run(appname, options, command) {
       plugins: context.presets.concat(context.presetConfig.plugins, defaultPlugins)
     });
 
-    await promptHooks(pluginGasket, context);
-    await mkDir(null, context);
-    await setupPkg(null, context);
-    await createHooks(pluginGasket, context);
-    await writePkg(null, context);
-    await generateFiles(null, context);
-    await writeGasketConfig(null, context);
-    await installModules(null, context);
-    await linkModules(null, context);
-    await postCreateHooks(pluginGasket, context);
+    await promptHooks({ gasket: pluginGasket, context });
+    await mkDir({ context });
+    await setupPkg({ context });
+    await createHooks({ gasket: pluginGasket, context });
+    await writePkg({ context });
+    await generateFiles({ context });
+    await writeGasketConfig({ context });
+    await installModules({ context });
+    await linkModules({ context });
+    await postCreateHooks({ gasket: pluginGasket, context });
     if (context.tmpDir) await rm(context.tmpDir, { recursive: true });
-    printReport(null, context);
+    printReport({ context });
   } catch (err) {
     console.error(chalk.red('Exiting with errors.'));
     dumpErrorContext(context, err);

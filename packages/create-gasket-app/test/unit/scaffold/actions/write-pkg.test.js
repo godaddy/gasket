@@ -35,13 +35,13 @@ describe('write-pkg', () => {
 
   it('writes the package.json file under destination', async () => {
     mockWriteStub.mockResolvedValue();
-    await writePkg(null, mockContext);
+    await writePkg({ context: mockContext });
     expect(mockWriteStub).toHaveBeenCalledWith(path.join(mockContext.dest, 'package.json'), expect.any(String), 'utf8');
   });
 
   it('writes pretty JSON from pkg', async () => {
     mockWriteStub.mockResolvedValue();
-    await writePkg(null, mockContext);
+    await writePkg({ context: mockContext });
     const expected = JSON.stringify(mockContext.pkg, null, 2);
     expect(mockWriteStub.mock.calls[0][1]).toEqual(expected);
   });

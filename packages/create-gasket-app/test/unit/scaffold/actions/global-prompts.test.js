@@ -40,7 +40,7 @@ describe('globalPrompts', () => {
 
   it('executes question functions with context', async () => {
     mockPromptStub.mockReturnValue({});
-    await globalPrompts(null, mockContext);
+    await globalPrompts({ context: mockContext });
 
     expect(mockPromptStub).toHaveBeenCalledTimes(3);
   });

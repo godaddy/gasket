@@ -33,37 +33,37 @@ describe('write-gasket-config', () => {
   });
 
   it('writes the gasket.js file under destination', async () => {
-    await writeGasketConfig(null, mockContext);
+    await writeGasketConfig({ context: mockContext });
     expect(mockWriteStub).toHaveBeenCalledWith(path.join(mockContext.dest, 'gasket.js'), expect.any(String), 'utf8');
   });
 
   it('writes gasket.js with export default', async () => {
-    await writeGasketConfig(null, mockContext);
+    await writeGasketConfig({ context: mockContext });
     const output = mockWriteStub.mock.calls[0][1];
     expect(output).toContain('export default');
   });
 
   it('writes @gasket/core import', async () => {
-    await writeGasketConfig(null, mockContext);
+    await writeGasketConfig({ context: mockContext });
     const output = mockWriteStub.mock.calls[0][1];
     expect(output).toContain('import { makeGasket } from \'@gasket/core\';');
   });
 
   it('writes gasket.js with makeGasket', async () => {
-    await writeGasketConfig(null, mockContext);
+    await writeGasketConfig({ context: mockContext });
     const output = mockWriteStub.mock.calls[0][1];
     expect(output).toContain('makeGasket(');
   });
 
   it('does not double-quote keys', async () => {
-    await writeGasketConfig(null, mockContext);
+    await writeGasketConfig({ context: mockContext });
     const output = mockWriteStub.mock.calls[0][1];
     expect(output).toContain('plugins:');
   });
 
   it('outputs keys without quotes, strings with single-quotes', async () => {
     mockContext.gasketConfig.add("bogus", "double"); // eslint-disable-line quotes
-    await writeGasketConfig(null, mockContext);
+    await writeGasketConfig({ context: mockContext });
     const output = mockWriteStub.mock.calls[0][1];
     expect(output).toContain('bogus: \'double\'');
   });
@@ -74,7 +74,7 @@ describe('write-gasket-config', () => {
       pluginBogus: '@gasket/plugin-bogus',
       pluginBogus2: '@gasket/plugin-bogus2'
     };
-    await writeGasketConfig(null, mockContext);
+    await writeGasketConfig({ context: mockContext });
     const output = mockWriteStub.mock.calls[0][1];
     expect(output).toContain('import pluginBogus from \'@gasket/plugin-bogus\';');
     expect(output).toContain('import pluginBogus2 from \'@gasket/plugin-bogus2\';');
@@ -85,14 +85,14 @@ describe('write-gasket-config', () => {
     mockContext.gasketConfig.fields.imports = {
       bogus: '@bogus'
     };
-    await writeGasketConfig(null, mockContext);
+    await writeGasketConfig({ context: mockContext });
     const output = mockWriteStub.mock.calls[0][1];
     expect(output).toContain('import bogus from \'@bogus\';');
   });
 
   it('writes expressions', async () => {
     mockContext.gasketConfig.fields.expressions = ['const bogus = 1;'];
-    await writeGasketConfig(null, mockContext);
+    await writeGasketConfig({ context: mockContext });
     const output = mockWriteStub.mock.calls[0][1];
     expect(output).toContain('const bogus = 1;');
   });
@@ -101,13 +101,13 @@ describe('write-gasket-config', () => {
     mockContext.gasketConfig.fields.injectionAssignments = {
       bogus: 'bogus'
     };
-    await writeGasketConfig(null, mockContext);
+    await writeGasketConfig({ context: mockContext });
     const output = mockWriteStub.mock.calls[0][1];
     expect(output).toContain('bogus: bogus');
   });
 
   it('cleans up fields', async () => {
-    await writeGasketConfig(null, mockContext);
+    await writeGasketConfig({ context: mockContext });
     expect(mockContext.gasketConfig.fields.imports).toBeUndefined();
     expect(mockContext.gasketConfig.fields.pluginImports).toBeUndefined();
     expect(mockContext.gasketConfig.fields.expressions).toBeUndefined();

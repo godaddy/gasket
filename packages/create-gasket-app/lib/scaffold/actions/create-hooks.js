@@ -6,10 +6,11 @@ import { Files } from '../files.js';
  * Executes the `create` hook for all registered plugins.
  * Adds `files` to context for plugins to add their files and templates.
  *
+ * @param {GasketEngine} gasket - Gasket API
  * @param {CreateContext} context - Create context
  * @returns {Promise} promise
  */
-async function createHooks(gasket, context) {
+async function createHooks({ gasket, context }) {
   const { plugins = [], warnings } = context;
 
   const files = new Files();

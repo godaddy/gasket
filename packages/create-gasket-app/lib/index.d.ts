@@ -1,4 +1,4 @@
-import type { GasketConfigDefinition, MaybeAsync, Plugin } from '@gasket/engine';
+import type { GasketConfigDefinition, MaybeAsync, Plugin, GasketEngine } from '@gasket/engine';
 import type { PackageManager } from '@gasket/utils';
 
 export interface Dependencies {
@@ -231,6 +231,12 @@ export interface CreateContext {
 
   /** Use to add files and templates to generate */
   files: Files;
+}
+
+export interface ActionWrapperParams {
+  gasket: GasketEngine;
+  context: CreateContext;
+  spinner?: any;
 }
 
 declare module '@gasket/engine' {

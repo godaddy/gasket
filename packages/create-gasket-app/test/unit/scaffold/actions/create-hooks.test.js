@@ -36,22 +36,22 @@ describe('createHooks', () => {
   });
 
   it('adds files to context', async () => {
-    await createHooks(mockGasket, mockContext);
+    await createHooks({ gasket: mockGasket, context: mockContext });
     expect(mockContext.files).toBeInstanceOf(Files);
   });
 
   it('adds gasketConfig to context', async () => {
-    await createHooks(mockGasket, mockContext);
+    await createHooks({ gasket: mockGasket, context: mockContext });
     expect(mockContext.gasketConfig).toBeInstanceOf(ConfigBuilder);
   });
 
   it('executes the create hook with applyCreate callback', async () => {
-    await createHooks(mockGasket, mockContext);
+    await createHooks({ gasket: mockGasket, context: mockContext });
     expect(mockExecApplyStub).toHaveBeenCalledWith('create', expect.any(Function));
   });
 
   it('applyCreate callback executes handler with proxied plugin source', async () => {
-    await createHooks(mockGasket, mockContext);
+    await createHooks({ gasket: mockGasket, context: mockContext });
     const callbackFn = mockExecApplyStub.mock.calls[0][1];
     await callbackFn(mockPlugin, mockHandlerStub);
     expect(mockContext.runWith).toHaveBeenCalledWith(mockPlugin);

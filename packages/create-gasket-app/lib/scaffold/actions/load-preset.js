@@ -8,10 +8,9 @@ const require = createRequire(import.meta.url);
 
 /**
  * loadPresets - Load presets to temp directory
- * @param {null} _ - no input
  * @param {CreateContext} context - Create context
  */
-async function loadPresets(_, context) {
+async function loadPresets({ context }) {
   const tmpDir = await mkdtemp(path.join(os.tmpdir(), `gasket-create-${context.appName}`));
   context.tmpDir = tmpDir;
 

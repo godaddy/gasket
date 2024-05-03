@@ -46,18 +46,18 @@ describe('promptHooks', () => {
   });
 
   it('executes the plugin prompt hook with context', async () => {
-    await promptHooks(mockGasket, mockContext);
+    await promptHooks({ gasket: mockGasket, context: mockContext });
     expect(mockExecWaterfallStub).toHaveBeenCalledWith('prompt', mockContext, expect.any(Object));
   });
 
   it('executes the plugin prompt hook with `prompt` util', async () => {
-    await promptHooks(mockGasket, mockContext);
+    await promptHooks({ gasket: mockGasket, context: mockContext });
     expect(mockExecWaterfallStub.mock.calls[0][2]).toHaveProperty('prompt', mockPromptStub);
   });
 
   it('does not execute the plugin prompt hook with --no-prompts option', async () => {
     mockContext.prompts = false;
-    await promptHooks(mockGasket, mockContext);
+    await promptHooks({ gasket: mockGasket, context: mockContext });
     expect(typeof mockExecWaterfallStub.mock.calls[0][2].prompt).toEqual('function');
     expect(mockExecWaterfallStub.mock.calls[0][2].prompt).not.toEqual(mockPromptStub);
   });

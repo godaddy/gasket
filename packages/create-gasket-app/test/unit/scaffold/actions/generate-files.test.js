@@ -77,12 +77,12 @@ describe('generateFiles', () => {
 
   it('early exit if not files', async () => {
     mockContext.files.globSets = [];
-    await generateFiles(null, mockContext);
+    await generateFiles({ context: mockContext });
     expect(glob).not.toHaveBeenCalled();
   });
 
   it('reads expected source files', async () => {
-    await generateFiles(null, mockContext);
+    await generateFiles({ context: mockContext });
     expect(mockReadFileStub)
       .toHaveBeenCalledWith(expect.stringContaining('create-gasket-app/test/fixtures/generator/file-a.md'), expect.any(Object));
     expect(mockReadFileStub)
@@ -90,14 +90,14 @@ describe('generateFiles', () => {
   });
 
   it('writes expected target files', async () => {
-    await generateFiles(null, mockContext);
+    await generateFiles({ context: mockContext });
     expect(mockWriteFileStub).toHaveBeenCalledWith('/path/to/my-app/file-a.md', expect.any(String), expect.any(Object));
     expect(mockWriteFileStub).toHaveBeenCalledWith('/path/to/my-app/file-b.md', expect.any(String), expect.any(Object));
   });
 
   it('handles template read errors', async () => {
     mockReadFileStub.mockRejectedValue(new Error('Bogus error occurred'));
-    await generateFiles(null, mockContext);
+    await generateFiles({ context: mockContext });
     expect(mockContext.errors).toHaveLength(2);
     expect(mockContext.errors[0]).toContain('Error reading template');
     expect(mockContext.errors[0]).toContain('file-a.md');
@@ -111,7 +111,7 @@ describe('generateFiles', () => {
     const err = new Error('Bogus error occurred');
     err.code = 'EISDIR';
     mockReadFileStub.mockRejectedValue(err);
-    await generateFiles(null, mockContext);
+    await generateFiles({ context: mockContext });
     expect(mockContext.warnings).toHaveLength(2);
     expect(mockContext.warnings).toContain('Directory matched as template file: /path/to/my-app/file-a.md');
     expect(mockContext.warnings).toContain('Directory matched as template file: /path/to/my-app/file-b.md');
@@ -119,13 +119,13 @@ describe('generateFiles', () => {
 
   it('handles dir create errors', async () => {
     mockMkdirpStub.mockRejectedValue(new Error('Bogus error occurred'));
-    await generateFiles(null, mockContext);
+    await generateFiles({ context: mockContext });
     expect(mockContext.errors).toContain('Error creating directory /path/to/my-app: Bogus error occurred');
   });
 
   it('handles file write errors', async () => {
     mockWriteFileStub.mockRejectedValue(new Error('Bogus error occurred'));
-    await generateFiles(null, mockContext);
+    await generateFiles({ context: mockContext });
     expect(mockContext.errors).toContain('Error writing /path/to/my-app/file-a.md: Bogus error occurred');
     expect(mockContext.errors).toContain('Error writing /path/to/my-app/file-b.md: Bogus error occurred');
   });
@@ -141,31 +141,31 @@ describe('generateFiles', () => {
       }
     }];
 
-    await generateFiles.wrapped(null, mockContext, { warn: warnStub });
+    await generateFiles.wrapped({ context: mockContext, spinner: { warn: warnStub } });
     expect(mockContext.warnings).toHaveLength(1);
     expect(warnStub).toHaveBeenCalled();
   });
 
   describe('handlebars', function () {
     it('adds a json helper to handlebars', async () => {
-      await generateFiles(null, mockContext);
+      await generateFiles({ context: mockContext });
       expect(registerHelperSpy).toHaveBeenNthCalledWith(1, 'json', expect.any(Function));
     });
 
     it('adds a jspretty helper to handlebars', async () => {
-      await generateFiles(null, mockContext);
+      await generateFiles({ context: mockContext });
       expect(registerHelperSpy).toHaveBeenNthCalledWith(2, 'jspretty', expect.any(Function));
     });
 
     it('template handles string replacement', async () => {
-      await generateFiles(null, mockContext);
+      await generateFiles({ context: mockContext });
       // get the correct args as calls may be unordered
       const args = mockWriteFileStub.mock.calls.find(call => call[0].includes('file-a.md'));
       expect(args[1]).toContain('The app name is my-app');
     });
 
     it('template handles replacement with helpers', async () => {
-      await generateFiles(null, mockContext);
+      await generateFiles({ context: mockContext });
       // get the correct args as calls may be unordered
       const args = mockWriteFileStub.mock.calls.find(call => call[0].includes('file-b.md'));
       expect(args[1]).toContain(`'source':{'name':'@gasket/plugin-example'}`);
@@ -178,7 +178,7 @@ describe('generateFiles', () => {
           name: '@gasket/plugin-missing-example'
         }
       }];
-      await generateFiles(null, mockContext);
+      await generateFiles({ context: mockContext });
       const args = mockWriteFileStub.mock.calls.find(call => call[0].includes('file-a.md'));
       // expect output file falls back to source content
       expect(args[1]).toContain(`The context does not have {{{ jspretty missing }}}`);

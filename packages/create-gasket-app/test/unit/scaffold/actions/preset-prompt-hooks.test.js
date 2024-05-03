@@ -24,7 +24,7 @@ describe('presetPromptHooks', () => {
       warnings: []
     };
 
-    await presetPromptHooks(mockGasket, mockContext);
+    await presetPromptHooks({ gasket: mockGasket, context: mockContext });
     expect(mockExecWaterfallStub).toHaveBeenCalledWith('presetPrompt', mockContext, { prompt: expect.any(Function) });
   });
 });

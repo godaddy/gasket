@@ -11,7 +11,7 @@ const { dependencies } = require('../../../package.json');
  * @param {CreateContext} context - Create context
  * @returns {Promise} promise
  */
-async function setupPkg(gasket, context) {
+async function setupPkg({ context }) {
   const { appName, appDescription, warnings } = context;
 
   const pkg = ConfigBuilder.createPackageJson({

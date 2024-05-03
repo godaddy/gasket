@@ -31,19 +31,19 @@ describe('mkdir', () => {
 
   it('Makes a directory with context.dest', async () => {
     mockMkdirStub.mockResolvedValue();
-    await mkDir(null, mockContext);
+    await mkDir({ context: mockContext });
     expect(mockMkdirStub).toHaveBeenCalledWith(mockContext.dest);
   });
 
   it('Rejects with message if directory was not allowed to be overwritten', async () => {
     await expect(async () => {
-      await mkDir(null, { ...mockContext, extant: true, destOverride: false });
+      await mkDir({ context: { ...mockContext, extant: true, destOverride: false } });
     }).rejects.toThrow('was not allowed to be overwritten');
   });
 
   it('Does not create a directory if allowed to override an existing one', async () => {
     mockMkdirStub.mockResolvedValue();
-    await mkDir(null, { ...mockContext, extant: true, destOverride: true });
+    await mkDir({ context: { ...mockContext, extant: true, destOverride: true } });
     expect(mockMkdirStub.called).toBeFalsy();
   });
 
@@ -51,7 +51,7 @@ describe('mkdir', () => {
     const mockError = { code: 'BOGUS' };
     mockMkdirStub.mockRejectedValue(mockError);
     await expect(async () => {
-      await mkDir(null, mockContext);
+      await mkDir({ context: mockContext });
     }).rejects.toEqual(mockError);
   });
 });
