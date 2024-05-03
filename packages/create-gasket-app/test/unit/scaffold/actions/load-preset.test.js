@@ -184,7 +184,7 @@ describe('loadPreset', () => {
       await expect(async () => {
         await loadPreset(null, mockContext);
       }).rejects.toThrow(
-        'Failed to install preset /Users/mmason2/Development/os-gasket/packages/create-gasket-app/test/unit/scaffold/actions/../../../__mocks__/gasket-preset-local-bogus@latest'
+        `Failed to install preset ${__dirname}../../../__mocks__/gasket-preset-local-bogus@latest`
       );
     });
   });
