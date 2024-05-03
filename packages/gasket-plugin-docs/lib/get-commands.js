@@ -4,18 +4,17 @@ const generateIndex = require('./utils/generate-index');
 
 /**
  * Get the docs command
- *
- * @param {Gasket} gasket - Gasket
- * @param {GasketCommand} GasketCommand - Base Gasket command to extend
- * @returns {GasketCommand} command
+ * @type {import('@gasket/engine').HookHandler<'getCommands'>}
  */
 module.exports = function getCommands(gasket, { GasketCommand, flags }) {
-
   class DocsCommand extends GasketCommand {
     async gasketRun() {
       const docsConfigSet = await buildDocsConfigSet(gasket);
+
       await collateFiles(docsConfigSet);
+
       let guides = await this.gasket.exec('docsGenerate', docsConfigSet);
+
       if (guides) {
         guides = guides.reduce((acc, cur) => {
           if (Array.isArray(cur)) {
@@ -28,8 +27,11 @@ module.exports = function getCommands(gasket, { GasketCommand, flags }) {
       } else {
         guides = [];
       }
+
       docsConfigSet.guides.unshift(...guides);
+
       await generateIndex(docsConfigSet);
+
       if (this.parsed.flags.view) {
         await this.gasket.exec('docsView', docsConfigSet);
       }

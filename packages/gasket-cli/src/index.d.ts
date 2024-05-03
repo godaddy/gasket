@@ -21,6 +21,7 @@ export interface PackageJson extends Dependencies {
       };
   scripts?: Record<string, string>;
   optionalDependencies?: Record<string, string>;
+  homepage?: string;
 }
 
 export interface ModuleInfo {
