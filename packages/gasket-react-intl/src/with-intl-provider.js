@@ -17,7 +17,12 @@ export function init(localesProps) {
   if (isBrowser) {
     // merge any data set on window with what comes from SSR or static page props
     const { messages: dataMessages = {}, status: dataStatus = {} } = clientData;
-    return extend(true, {}, { messages: dataMessages, status: dataStatus }, { messages, status });
+    return extend(
+      true,
+      {},
+      { messages: dataMessages, status: dataStatus },
+      { messages, status }
+    );
   }
 
   return { messages, status };
@@ -70,7 +75,7 @@ export default function withIntlProvider() {
    * @param {React.Component} Component - Component to wrap
    * @returns {React.Component} wrapped component
    */
-  return Component => {
+  return (Component) => {
     /**
      * Wrapper component which sets up providers and reducer hook
      *
@@ -80,7 +85,6 @@ export default function withIntlProvider() {
      * @returns {JSX.Element} element
      */
     function Wrapper(props = {}) {
-
       // Support for wrapping Next.js App with data from get server side and static props
       const { pageProps: { localesProps } = {} } = props; // eslint-disable-line react/prop-types
 
@@ -92,23 +96,29 @@ export default function withIntlProvider() {
         extend(true, state, localesProps);
       }
 
-      const locale = localesProps?.locale ||
-        getActiveLocale();
+      const locale = localesProps?.locale || getActiveLocale();
 
       const { status } = state;
       const messages = (state.messages || {})[locale];
       const contextValue = { locale, status, dispatch };
 
       return (
-        <GasketIntlContext.Provider value={ contextValue }>
-          <IntlProvider locale={ locale } key={ locale } messages={ messages } initialNow={ Date.now() }>
-            <Component { ...props } />
+        <GasketIntlContext.Provider value={contextValue}>
+          <IntlProvider
+            locale={locale}
+            key={locale}
+            messages={messages}
+            initialNow={Date.now()}
+          >
+            <Component {...props} />
           </IntlProvider>
         </GasketIntlContext.Provider>
       );
     }
 
-    Wrapper.displayName = `withIntlProvider(${ Component.displayName || Component.name || 'Component' })`;
+    Wrapper.displayName = `withIntlProvider(${
+      Component.displayName || Component.name || 'Component'
+    })`;
     hoistNonReactStatics(Wrapper, Component);
     return Wrapper;
   };

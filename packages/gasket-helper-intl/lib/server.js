@@ -4,15 +4,16 @@ const { LocaleUtils, LocaleStatus } = require('./index');
 
 /**
  * Server variant to load locale files from disk path
- * @extends { LocaleUtils }
- * @constructor
+ * @type {import('./index').LocaleServerUtils}
  */
-function LocaleServerUtils() {
-  LocaleUtils.apply(this, arguments);
+function LocaleServerUtils(config) {
+  LocaleUtils.apply(this, config);
 
   this.serverLoadData = (localePathPart, locale, localesDir, context = {}) => {
     if (Array.isArray(localePathPart)) {
-      const localesProps = localePathPart.map(p => this.serverLoadData(p, locale, localesDir, context));
+      const localesProps = localePathPart.map((p) =>
+        this.serverLoadData(p, locale, localesDir, context)
+      );
       return merge(...localesProps);
     }
 

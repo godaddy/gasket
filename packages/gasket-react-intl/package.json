@@ -18,7 +18,7 @@
     "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
     "test:watch": "jest --watchAll",
     "test:coverage": "jest --coverage",
-    "posttest": "npm run lint",
+    "posttest": "npm run lint && npm run typecheck",
     "build": "babel src -d lib --delete-dir-on-start",
     "prepublishOnly": "npm run build",
     "typecheck:skip": "tsc",

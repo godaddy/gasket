@@ -44,6 +44,7 @@ module.exports = async function createServers(gasket, serverOpts) {
   }
 
   const middlewares = [];
+
   await gasket.execApply('middleware', async (plugin, handler) => {
     const middleware = await handler(app);
     if (middleware) {

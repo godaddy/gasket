@@ -5,9 +5,8 @@ const debug = require('debug')('gasket:plugin:intl:serve');
 
 /**
  * Express/Fastify lifecycle to set up route for serving locales
- *
- * @param {Gasket} gasket - Gasket
- * @param {Object} app - Express/Fastify app
+ * @param {import("@gasket/engine").Gasket} gasket - Gasket
+ * @param {object} app - Express/Fastify app
  */
 module.exports = function serve(gasket, app) {
   const { localesDir, serveStatic, defaultPath } = getIntlConfig(gasket);

@@ -1,60 +1,79 @@
-import type { Store } from 'redux';
+import type { Store, Reducer } from 'redux';
+import type { IncomingMessage, OutgoingMessage } from 'http';
+import type { ThunkMiddleware } from 'redux-thunk';
+
+declare module 'http' {
+  interface IncomingMessage {
+    store?: Store;
+  }
+}
 
 /**
- * Wrapper for store create to create instance with SSR and to hydrate in browser.
- *
- * @typedef {function} makeStoreFn
- *
- * @param {Object.<string,*>} state - The initial redux state
- * @param {Object} options - Options
- * @param {Request} options.req - Request if SSR
- * @returns {Object} reduxStore
+ * Wrapper for store create to create instance with SSR and to hydrate in
+ * browser.
  */
-
 export type MakeStoreFn = {
-  (state: any, options: { req?: Request }): Store;
+  (
+    /** The initial redux state */
+    state: any,
+    options: {
+      logger?: Log;
+      req?: IncomingMessage;
+    }
+  ): Store;
 };
 
-/**
- * Set up redux store configuration and return a makeStore function
- *
- * @param {Object} options - Options for create store
- * @param {Object.<string,function>} options.reducers - Map of identifiers and reducers
- * @param {function} [options.rootReducer] - Entry reducer to run before combined reducers
- * @param {Object.<string,*>} [options.initialState] - Initial redux state
- * @param {function[]} [options.middleware] - Middleware
- * @param {function[]} [options.enhancers] - Any additional enhancers
- * @param {boolean} [options.logging] - logging is enabled by default. Passing false will disable logging completely.
- * @param {function} [options.thunkMiddleware] - Optionally provide an extra argument for thunks
- * @param {function} [postCreate] - Optional callback
- * @returns {MakeStoreFn} makeStore
- */
-export function configureMakeStore({
-  reducers,
-  rootReducer,
-  initialState,
-  middleware,
-  enhancers,
-  logging,
-  thunkMiddleware
-}?: {
-  reducers: {
-    [x: string]: (state: any, action: object) => any;
-  };
-  rootReducer?: (state: any, action: object) => any;
+export interface ConfigureMakeStoreOptions {
+  /** Map of identifiers and reducers */
+  reducers: Reducer[];
+  /** Entry reducer to run before combined reducers */
+  rootReducer?: Reducer;
   initialState?: {
     [x: string]: any;
   };
   middleware?: Function[];
   enhancers?: Function[];
+  /**
+   * Logging is enabled by default. Passing false will disable logging
+   * completely.
+   */
   logging?: boolean;
-  thunkMiddleware?: Function;
-}, postCreate?: Function): MakeStoreFn;
+  thunkMiddleware?: ThunkMiddleware;
+}
+
+/** Compose the reducer */
+export function prepareReducer(
+  /** Map of identifiers and reducers */
+  allReducers: Reducer[],
+  /** Entry reducer to run before combined reducers */
+  rootReducer?: Reducer
+): Reducer;
 
 /**
- * Helper to check for an existing store on context, otherwise make a new instance.
- *
- * @param {function} fallbackMakeStore - A makeStore function to create new stores
- * @returns {function(object): object} getOrCreateStore
+ * Set up redux store configuration and return a makeStore function
  */
-export function getOrCreateStore(fallbackMakeStore: Function): (arg0: object) => object;
+export function configureMakeStore(
+  options?: ConfigureMakeStoreOptions,
+  postCreate?: Function
+): MakeStoreFn;
+
+/**
+ * Helper to check for an existing store on context, otherwise make a new
+ * instance.
+ */
+export function getOrCreateStore(
+  /** A makeStore function to create new stores */
+  fallbackMakeStore: Function
+): (arg0: object) => object;
+
+/**
+ * Sometimes we want to use redux to set app state with utilizing actions or
+ * reducers, for consistency between browser and server rendering. As such, if
+ * keys in preloadedState do not have corresponding reducers, this will add
+ * placeholders.
+ */
+export function placeholderReducers(
+  reducers: Reducer[],
+  /** State to preload store with */
+  preloadedState: object
+): Reducer[] | object;

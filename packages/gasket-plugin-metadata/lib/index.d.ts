@@ -79,7 +79,7 @@ export interface DetailData {
 /** Metadata with specifics details for plugin lifecycles */
 export interface LifecycleData extends DetailData {
   /** Executing method from the engine */
-  method: string;
+  method?: string;
 
   /** Lifecycle from which this one is invoked */
   parent?: string;
@@ -87,13 +87,15 @@ export interface LifecycleData extends DetailData {
   /** Command from which this lifecycle is invoked */
   command?: string;
   after?: string;
+  from?: string;
+  deprecated?: boolean;
 }
 
 /** Metadata for plugin configuration properties */
 export interface ConfigurationsData extends DetailData {
   /** Configuration property type */
   type: string;
-  default?: string;
+  default?: string | string[] | boolean;
 }
 
 /** Collection data for modules configured for app */
