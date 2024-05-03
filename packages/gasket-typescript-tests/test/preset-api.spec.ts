@@ -1,5 +1,5 @@
 import type { Gasket, GasketConfigDefinition, Plugin } from '@gasket/engine';
-import * as api from '@gasket/preset-api';
+import preset from '@gasket/preset-api';
 
 describe('@gasket/preset-api', () => {
   const { log } = console;
