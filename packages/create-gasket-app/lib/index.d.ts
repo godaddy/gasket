@@ -127,7 +127,7 @@ export interface ConfigBuilder<Config> {
    *  }
    * });
    */
-  injectValue(configKey: string, injectedValue: any): void;
+  injectValue(configKey: string, injectedValue: string): void;
 }
 
 export interface PackageJsonBuilder extends ConfigBuilder<PackageJson> {
@@ -236,7 +236,7 @@ export interface CreateContext {
 declare module '@gasket/engine' {
   export interface HookExecTypes {
     presetPrompt(context: CreateContext): Promise<void>;
-    presetConfig(context: CreateContext): Promise<CreateContext.presetConfig>;
+    presetConfig(context: CreateContext): Promise<CreateContext['presetConfig']>;
     prompt(
       context: CreateContext,
       utils: {
