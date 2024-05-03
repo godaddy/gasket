@@ -72,8 +72,5 @@
       "no-sync": 0
     }
   },
-  "jest": {
-    "testEnvironment": "node"
-  },
   "type": "module"
 }
