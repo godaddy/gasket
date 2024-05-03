@@ -5,6 +5,12 @@ import pluginRedux from '@gasket/plugin-redux';
 import pluginWebpack from '@gasket/plugin-webpack';
 import pluginWinston from '@gasket/plugin-winston';
 
+/**
+ * presetConfig hook
+ * @param {Gasket} gasket - Gasket API
+ * @param {Create} context - Create context
+ * @returns {Promise<CreateContext.presetConfig>} config
+ */
 export default async function presetConfig(gasket, context) {
   let testPlugin, typescriptPlugin;
 

@@ -7,6 +7,12 @@ import pluginWinston from '@gasket/plugin-winston';
 import pluginSwagger from '@gasket/plugin-swagger';
 import pluginLint from '@gasket/plugin-lint';
 
+/**
+ * presetConfig hook
+ * @param {Gasket} gasket - Gasket API
+ * @param {Create} context - Create context
+ * @returns {Promise<CreateContext.presetConfig>} config
+ */
 export default async function presetConfig(gasket, context) {
   let testPlugin, typescriptPlugin;
   if ('testPlugin' in context) {
