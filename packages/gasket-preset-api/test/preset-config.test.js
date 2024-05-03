@@ -42,16 +42,20 @@ describe('presetConfig', () => {
   it('adds test plugin when provided', async () => {
     mockContext.testPlugin = '@gasket/plugin-jest';
     const config = await presetConfig({}, mockContext);
-    expect(config.plugins[8]).toEqual(
-      expect.objectContaining({ name: '@gasket/plugin-jest' })
+    expect(config.plugins).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ name: '@gasket/plugin-jest' })
+      ])
     );
   });
 
   it('adds typescript plugin when provided', async () => {
     mockContext.typescript = true;
     const config = await presetConfig({}, mockContext);
-    expect(config.plugins[8]).toEqual(
-      expect.objectContaining({ name: '@gasket/plugin-typescript' })
+    expect(config.plugins).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ name: '@gasket/plugin-typescript' })
+      ])
     );
   });
 });
