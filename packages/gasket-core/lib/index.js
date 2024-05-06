@@ -94,6 +94,11 @@ class Gasket extends GasketEngine {
  *
  * @param gasketConfigDefinition
  */
-export function makeGasket(gasketConfigDefinition) {
+function makeGasket(gasketConfigDefinition) {
   return new Gasket(gasketConfigDefinition);
+}
+
+export {
+  makeGasket,
+  GasketEngine
 }

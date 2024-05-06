@@ -1,4 +1,4 @@
-import GasketEngine from '../../lib/engine';
+import { GasketEngine } from '../../lib/index.js';
 
 describe('The execApplySync method', () => {
   let engine, hookASpy, hookBSpy, hookCSpy;

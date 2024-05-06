@@ -1,4 +1,4 @@
-import GasketEngine from '../../lib/engine';
+import { GasketEngine } from '../../lib/index.js';
 
 const projectPlugin = {
   name: '@gasket/plugin-one',
