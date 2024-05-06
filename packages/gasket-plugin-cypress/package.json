@@ -34,6 +34,7 @@
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-cypress",
   "devDependencies": {
     "@babel/core": "^7.23.7",
+    "@gasket/core": "^7.0.0-next.20",
     "@testing-library/react": "^13.4.0",
     "@types/jest": "^29.5.12",
     "cypress": "^13.6.6",
