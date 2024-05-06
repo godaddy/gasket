@@ -9,8 +9,9 @@ const { getIntlConfig } = require('./configure');
 const debug = require('debug')('gasket:plugin:intl:middleware');
 
 /**
- *
- * @param str
+ * Capitalize the first letter of a string.
+ * @param {string} str - String to capitalize
+ * @returns {string} capitalized string
  */
 function capitalize(str) {
   return str[0].toUpperCase() + str.substring(1).toLowerCase();
@@ -32,6 +33,7 @@ function formatLocale(language) {
     ...rest.map((o) => (o.length === 2 ? o.toUpperCase() : capitalize(o)))
   ].join('-');
 }
+
 /** @type {import('@gasket/engine').HookHandler<'middleware'>} */
 module.exports = function middlewareHook(gasket) {
   const {
@@ -51,6 +53,7 @@ module.exports = function middlewareHook(gasket) {
     basePath,
     debug: require('debug')('gasket:helper:intl')
   });
+
   if (preloadLocales) {
     debug(`Preloading locale files from ${localesParentDir}`);
     Object.keys(manifest.paths).forEach((localePath) => {
@@ -80,14 +83,8 @@ module.exports = function middlewareHook(gasket) {
     debug(`Locale after remapping: ${locale}`);
 
     /**
-     * Gasket data to render as global object for browser access
-     * @typedef {LocalesProps} GasketIntlData
-     * @property {string} [basePath] - Include base path if configured
-     */
-
-    /**
      * Get the Intl GasketData from res.locals
-     * @returns {GasketIntlData} intlData - Intl gasketData
+     * @returns {import('./index').GasketDataIntl} intlData - Intl gasketData
      */
     function getIntlData() {
       const { gasketData = {} } = res.locals;
@@ -97,7 +94,7 @@ module.exports = function middlewareHook(gasket) {
     /**
      * The gasketData object allows certain config data to be available for
      * rendering allowing access in the browser.
-     * @param {GasketIntlData} intlData - data to merge to gasketData
+     * @param {import('./index').GasketDataIntl} intlData - data to merge to gasketData
      */
     function mergeGasketData(intlData) {
       const { gasketData = {} } = res.locals;

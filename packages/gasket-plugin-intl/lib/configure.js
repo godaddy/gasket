@@ -1,3 +1,5 @@
+/// <reference types="@gasket/plugin-nextjs" />
+
 const path = require('path');
 
 const debug = require('debug')('gasket:plugin:intl:configure');
@@ -12,7 +14,7 @@ const isDefined = (o) => typeof o !== 'undefined';
 /**
  * Shortcut to get the gasket.config.intl object
  * @param {import("@gasket/engine").Gasket} gasket - Gasket API
- * @returns {IntlConfig} intlConfig
+ * @returns {import('./index').IntlConfig} intl config
  */
 function getIntlConfig(gasket) {
   const { intl = {} } = gasket.config || {};
@@ -24,8 +26,8 @@ function getIntlConfig(gasket) {
 /**
  * Destructure deprecated options as fallbacks and log warnings if used.
  * @param {import("@gasket/engine").Gasket} gasket - Gasket API
- * @param {object} intlConfig - User intl config
- * @returns {object} config
+ * @param {import('./index').IntlConfig} intlConfig - User intl config
+ * @returns {import('./index').IntlConfig} config
  */
 function deprecatedOptions(gasket, intlConfig) {
   const { logger } = gasket;
@@ -48,7 +50,7 @@ function deprecatedOptions(gasket, intlConfig) {
  */
 module.exports = function configure(gasket, config) {
   const { root } = config;
-  const intlConfig = { ...getIntlConfig({ config }) };
+  const intlConfig = { ...getIntlConfig(gasket) };
 
   const { languageMap, defaultLanguage, assetPrefix } = deprecatedOptions(
     gasket,
@@ -93,8 +95,6 @@ module.exports = function configure(gasket, config) {
     fullLocalesDir,
     manifestFilename
   );
-
-  /* eslint-enable no-process-env */
 
   const normalizedIntlConfig = {
     ...intlConfig,

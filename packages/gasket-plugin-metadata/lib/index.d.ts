@@ -95,7 +95,7 @@ export interface LifecycleData extends DetailData {
 export interface ConfigurationsData extends DetailData {
   /** Configuration property type */
   type: string;
-  default?: string | string[] | boolean;
+  default?: string | string[] | boolean | number;
 }
 
 /** Collection data for modules configured for app */

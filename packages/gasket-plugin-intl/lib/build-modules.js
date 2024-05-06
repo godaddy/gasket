@@ -1,6 +1,6 @@
 const fs = require('fs-extra');
 const path = require('path');
-const { getPackageDirs, saveJsonFile } = require('./fs-utils');
+const { getPackageDirs, saveJsonFile } = require('./utils/fs-utils');
 const { getIntlConfig } = require('./configure');
 
 const debug = require('debug')('gasket:plugin:intl:buildModules');
@@ -129,7 +129,7 @@ class BuildModules {
 
   /**
    * Processes directories
-   * @param {SrcPkgDir[]} srcPkgDirs - list of dirs to process
+   * @param {import('./index').SrcPkgDir[]} srcPkgDirs - list of dirs to process
    */
   async processDirs(srcPkgDirs) {
     for (const [pkgName, srcDir] of srcPkgDirs) {

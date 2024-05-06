@@ -2,6 +2,7 @@
 /// <reference types="@gasket/plugin-start" />
 /// <reference types="@gasket/plugin-webpack" />
 /// <reference types="@gasket/plugin-fastify" />
+/// <reference types="@gasket/plugin-metadata" />
 
 const path = require('path');
 const { name, devDependencies } = require('../package.json');

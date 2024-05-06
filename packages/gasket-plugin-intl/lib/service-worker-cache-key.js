@@ -1,6 +1,8 @@
+/// <reference types="@gasket/plugin-service-worker" />
+
 /**
  * Register a cache key function to get the language for a request
- * @returns {Promise<Function>} cache key function
+ * @type {import('@gasket/engine').HookHandler<'serviceWorkerCacheKey'>}
  */
 module.exports = async function serviceWorkerCacheKey() {
   return function getLocale(req, res) {
