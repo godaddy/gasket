@@ -52,7 +52,7 @@ declare module '@gasket/core' {
     env: string
   }
 
-  export default class GasketEngine {
+  export class GasketEngine {
     constructor(plugins: Array<Plugin>);
 
     exec<Id extends HookId>(

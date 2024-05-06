@@ -1,4 +1,4 @@
-import type { GasketConfigDefinition, MaybeAsync, Plugin, GasketEngine } from '@gasket/engine';
+import type { GasketConfigDefinition, MaybeAsync, Plugin, GasketEngine } from '@gasket/core';
 import type { PackageManager } from '@gasket/utils';
 
 export interface Dependencies {
@@ -239,7 +239,7 @@ export interface ActionWrapperParams {
   spinner?: any;
 }
 
-declare module '@gasket/engine' {
+declare module '@gasket/core' {
   export interface HookExecTypes {
     presetPrompt(context: CreateContext): Promise<void>;
     presetConfig(context: CreateContext): Promise<CreateContext['presetConfig']>;
