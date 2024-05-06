@@ -128,7 +128,6 @@ Available structure
 | ------------------ | ------------------------------------------------------ |
 | [.docs/]           | Output of the docs command                             |
 | [config/]          | App configuration using environment files              |
-| [lifecycles/]      | JavaScript files to hook lifecycles with matching name |
 | [pages/]           | NextJS routing                                         |
 | [plugins/]         | One-off plugins for apps                               |
 | [public/]          | NextJS static files                                    |
@@ -358,7 +357,6 @@ Available configuration options in the `gasket.config.js`
 [workbox]:/packages/gasket-plugin-workbox/README.md#workbox
 [.docs/]:/packages/gasket-plugin-docs/README.md#options
 [config/]:/packages/gasket-plugin-config/README.md
-[lifecycles/]:/packages/gasket-plugin-lifecycle/README.md
 [pages/]:https://nextjs.org/docs/routing/introduction
 [plugins/]:/packages/gasket-cli/docs/plugins.md#one-off-plugins
 [public/]:https://nextjs.org/docs/basic-features/static-file-serving

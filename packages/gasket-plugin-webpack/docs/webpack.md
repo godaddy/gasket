@@ -10,7 +10,7 @@ for [Gasket Next.js apps].
 
 ## webpackConfig
 
-Apps can also use [lifecycle files] to hook the [webpackConfig lifecycle] to
+Apps can also use custom app-level plugins to hook the [webpackConfig lifecycle] to
 provide additional custom config. The hook function should return the updated
 Webpack config object.
 
@@ -20,10 +20,10 @@ brittle, so handle with care. Also, the `webpack` instance is passed via context
 with the lifecycle, providing access to the [compatible Webpack plugins]
 of the version installed.
 
-### Via lifecycle files
+### Via custom app-level plugin
 
 ```js
-// lifecycles/webpack-config.js
+// my-custom-plugin/lifecycles/webpack-config.js
 const webpackMerge = require('webpack-merge');
 
 module.exports = function (gasket, webpackConfig) {
@@ -87,7 +87,6 @@ module.exports = {
 ```
 
 [configuration environments]:/packages/gasket-cli/docs/configuration.md#environments
-[lifecycle files]: /packages/gasket-plugin-lifecycle/README.md#usage
 [Gasket Webpack plugin]:/packages/gasket-plugin-webpack/README.md
 [webpackConfig lifecycle]:/packages/gasket-plugin-webpack/README.md#webpackconfig
 [Gasket Next.js apps]:/packages/gasket-plugin-nextjs/README.md
