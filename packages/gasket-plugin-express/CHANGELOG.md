@@ -1,5 +1,13 @@
 # `@gasket/plugin-express`
 
+
+
+- Plugin is `typescript` aware ([#736])
+- Add `index.ts` generator file
+- Add plugin import to gasket file
+- Add itself to the app package file
+- Add files and file imports based on the `typescript` context
+
 ### 6.46.5
 
 - Support the case of middleware hooks returning empty arrays ([#708])
@@ -7,7 +15,7 @@
 ### 6.46.4
 
 - Adjust JSDocs and TS types ([#695])
- 
+
 ### 6.46.0
 
 - Add native Gasket trust proxy support to Express config ([#675])
@@ -100,3 +108,4 @@
 [#675]: https://github.com/godaddy/gasket/pull/675
 [#695]: https://github.com/godaddy/gasket/pull/695
 [#708]: https://github.com/godaddy/gasket/pull/708
+[#736]: https://github.com/godaddy/gasket/pull/736

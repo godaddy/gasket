@@ -1,8 +1,17 @@
 # `@gasket/plugin-nextjs`
 
+
+
+- Add plugin import to gasket file ([#736])
+- Add itself to the app package file ([#736])
+- Add generator files `next.config.js` & `server.js` ([#736])
+- Add `nextDevProxy` prompt for proxy server to Next.js dev server ([#736])
+- Remove `@gasket/resolve` dependency ([#736])
+- Plugin is `typescript` aware
+- Add Prompt for `nextServerType`
 - Removed support for deprecated `next` config support ([#655])
 - With Redux, generate _app with example `getInitialAppProps` ([#693])
- 
+
 ### 6.46.7
 
 - (fix) Handle malformed URL segments in Elastic APM transaction labeling ([#724])
@@ -268,3 +277,4 @@
 [#695]: https://github.com/godaddy/gasket/pull/695
 [#693]: https://github.com/godaddy/gasket/pull/693
 [#724]: https://github.com/godaddy/gasket/pull/724
+[#736]: https://github.com/godaddy/gasket/pull/736

@@ -13,7 +13,7 @@ const fs = require('fs');
 const { readFile, writeFile, access } = require('fs').promises;
 const swaggerJSDoc = require('swagger-jsdoc');
 const isYaml = /\.ya?ml$/;
-const { name } = require('../package.json');
+const { name, version } = require('../package.json');
 
 let __swaggerSpec;
 
@@ -128,6 +128,12 @@ const plugin = {
     },
     create(gasket, context) {
       context.hasSwaggerPlugin = true;
+
+      context.pkg.add('dependencies', {
+        [name]: `^${version}`
+      });
+
+      context.gasketConfig.addPlugin('pluginSwagger', '@gasket/plugin-swagger');
       context.gasketConfig.add('swagger', {
         jsdoc: {
           definition: {

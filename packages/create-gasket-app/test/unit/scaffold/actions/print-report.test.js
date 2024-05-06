@@ -1,8 +1,11 @@
+import { jest } from '@jest/globals';
+
+const printReport = (await import('../../../../lib/scaffold/actions/print-report')).default;
+
 describe('printReport', () => {
-  let printReport;
   let mockContext, logStub;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     logStub = jest.spyOn(console, 'log');
 
     mockContext = {
@@ -17,8 +20,6 @@ describe('printReport', () => {
       errors: [],
       nextSteps: []
     };
-
-    printReport = require('../../../../lib/scaffold/actions/print-report');
   });
 
   afterEach(() => {
@@ -29,47 +30,49 @@ describe('printReport', () => {
     expect(printReport).toHaveProperty('wrapped');
   });
 
-  it('outputs banner', function () {
-    printReport(mockContext);
-    expect(logStub).toHaveBeenCalledWith(expect.stringContaining(require('../../../../lib/utils/logo')));
+  it('outputs banner', async function () {
+    printReport({ context: mockContext });
+    expect(logStub).toHaveBeenCalledWith(expect.stringContaining(
+      (await import('../../../../lib/utils/logo')).logo
+    ));
   });
 
   it('outputs warning and error count', function () {
-    printReport(mockContext);
+    printReport({ context: mockContext });
     expect(logStub).toHaveBeenNthCalledWith(1, expect.stringContaining('0 warnings'));
     expect(logStub).toHaveBeenNthCalledWith(1, expect.stringContaining('0 errors'));
 
     mockContext.warnings = ['one', 'two'];
     mockContext.errors = ['one'];
     logStub.mockClear();
-    printReport(mockContext);
+    printReport({ context: mockContext });
     expect(logStub).toHaveBeenNthCalledWith(1, expect.stringContaining('2 warnings'));
     expect(logStub).toHaveBeenNthCalledWith(1, expect.stringContaining('1 errors'));
 
   });
 
   it('outputs titles as Space Case', function () {
-    printReport(mockContext);
+    printReport({ context: mockContext });
     expect(logStub.mock.calls[2][0]).toContain('App Name');
     expect(logStub.mock.calls[5][0]).toContain('Output');
   });
 
   it('outputs content with indentation', function () {
-    printReport(mockContext);
+    printReport({ context: mockContext });
     expect(logStub).toHaveBeenCalledWith('  my-app');
     expect(logStub).toHaveBeenCalledWith('  /some/path/my-app');
   });
 
   it('outputs sections with content', function () {
     mockContext.warnings = ['one', 'two'];
-    printReport(mockContext);
+    printReport({ context: mockContext });
     expect(logStub.mock.calls[8][0]).toContain('Warnings');
     expect(logStub).toHaveBeenNthCalledWith(10, '  one');
     expect(logStub).toHaveBeenNthCalledWith(11, '  two');
   });
 
   it('does not output sections with no content', function () {
-    printReport(mockContext);
+    printReport({ context: mockContext });
     expect(logStub).not.toHaveBeenCalledWith('Warnings');
   });
 
@@ -77,7 +80,7 @@ describe('printReport', () => {
     mockContext.generatedFiles.add('zebra');
     mockContext.generatedFiles.add('apple');
     mockContext.generatedFiles.add('.secret');
-    printReport(mockContext);
+    printReport({ context: mockContext });
     const concatOutput = logStub.mock.calls.reduce((acc, cur) => acc + cur, '');
     expect(concatOutput).toContain('.secret  apple  zebra');
   });

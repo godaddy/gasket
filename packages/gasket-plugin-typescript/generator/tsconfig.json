@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "outDir": "./dist",
     "noImplicitAny": true,
     "target": "ES5",
     "lib": [
@@ -9,7 +10,6 @@
     "skipLibCheck": true,
     "strict": false,
     "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
     "incremental": true,
     "esModuleInterop": true,
     "module": "nodenext",
@@ -19,7 +19,8 @@
   },
   "include": [
     "routes",
-    "plugins"
+    "plugins",
+    "*.ts"
   ],
   "exclude": [
     "node_modules"

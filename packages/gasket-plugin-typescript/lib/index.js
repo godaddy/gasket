@@ -20,7 +20,7 @@ module.exports = {
       });
 
       files.add(
-        path.join(__dirname, 'generator', '*')
+        path.join(__dirname, '..', 'generator', '*')
       );
     }
   }

@@ -1,5 +1,5 @@
 import type { GasketConfigDefinition, Plugin } from '@gasket/engine';
-import '@gasket/preset-pwa';
+import preset from '@gasket/preset-pwa';
 
 describe('@gasket/preset-pwa', () => {
   it('imports config type injections for all plugins', () => {

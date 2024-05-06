@@ -1,14 +1,15 @@
-const mockEngineStub = jest.fn();
+import { jest } from '@jest/globals';
 const mockExecStub = jest.fn();
 
-jest.mock('../../../../lib/scaffold/create-engine', () => mockEngineStub);
-
-const postCreateHooks = require('../../../../lib/scaffold/actions/post-create-hooks');
+const postCreateHooks = (await import('../../../../lib/scaffold/actions/post-create-hooks')).default;
 
 describe('postCreateHooks', () => {
-  let mockContext;
+  let mockContext, mockGasket;
 
   beforeEach(() => {
+    mockGasket = {
+      exec: mockExecStub
+    };
     mockContext = {
       dest: '/some/path/my-app',
       presets: ['charcuterie-preset'],
@@ -16,7 +17,6 @@ describe('postCreateHooks', () => {
     };
 
     mockExecStub.mockResolvedValue();
-    mockEngineStub.mockReturnValue({ exec: mockExecStub });
   });
 
   it('is decorated action', async () => {
@@ -24,7 +24,7 @@ describe('postCreateHooks', () => {
   });
 
   it('executes the postCreate hook for plugins with context', async () => {
-    await postCreateHooks(mockContext);
+    await postCreateHooks({ gasket: mockGasket, context: mockContext });
     expect(mockExecStub).toHaveBeenCalledWith('postCreate', mockContext, { runScript: expect.any(Function) });
     expect(mockExecStub.mock.lastCall[2]).toHaveProperty('runScript');
   });

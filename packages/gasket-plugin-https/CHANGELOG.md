@@ -1,5 +1,11 @@
 # `@gasket/plugin-https`
 
+
+
+- Add plugin import to gasket file ([#736])
+- Add itself to the app package file
+- Add actions to hook exec types
+
 ### 6.46.4
 
 - Adjust JSDocs and TS types ([#695])
@@ -98,6 +104,7 @@
 [#460]: https://github.com/godaddy/gasket/pull/460
 [#634]: https://github.com/godaddy/gasket/pull/634
 [#695]: https://github.com/godaddy/gasket/pull/695
+[#736]: https://github.com/godaddy/gasket/pull/736
 
 [terminus]: https://github.com/godaddy/terminus
 [create-servers]: https://github.com/http-party/create-servers

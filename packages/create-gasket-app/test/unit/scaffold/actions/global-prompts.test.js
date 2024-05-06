@@ -1,8 +1,11 @@
+import { jest } from '@jest/globals';
 const mockPromptStub = jest.fn();
 
-jest.mock('inquirer', () => ({ prompt: mockPromptStub }));
+jest.unstable_mockModule('inquirer', () => ({ default: { prompt: mockPromptStub } }));
 
-const globalPrompts = require('../../../../lib/scaffold/actions/global-prompts');
+const globalPromptsImport = await import('../../../../lib/scaffold/actions/global-prompts.js');
+const globalPrompts = globalPromptsImport.default;
+const { questions } = globalPromptsImport;
 
 describe('globalPrompts', () => {
   let mockContext;
@@ -24,7 +27,7 @@ describe('globalPrompts', () => {
       choosePackageManager,
       chooseTestPlugin,
       allowExtantOverwriting
-    ] = globalPrompts.questions;
+    ] = questions;
   });
 
   afterEach(() => {
@@ -37,7 +40,7 @@ describe('globalPrompts', () => {
 
   it('executes question functions with context', async () => {
     mockPromptStub.mockReturnValue({});
-    await globalPrompts(mockContext);
+    await globalPrompts({ context: mockContext });
 
     expect(mockPromptStub).toHaveBeenCalledTimes(3);
   });
@@ -111,24 +114,6 @@ describe('globalPrompts', () => {
 
     it('does not prompt if testPlugin set in context', async () => {
       mockContext.testPlugin = 'bogus';
-      await chooseTestPlugin(mockContext, mockPromptStub);
-
-      expect(mockPromptStub).not.toHaveBeenCalled();
-    });
-
-    it('does not prompt if a known test plugin included in context plugins', async () => {
-      mockContext.plugins = ['@gasket/mocha'];
-      await chooseTestPlugin(mockContext, mockPromptStub);
-
-      expect(mockPromptStub).not.toHaveBeenCalled();
-    });
-
-    it('does not prompt if a known test plugin included by preset', async () => {
-      mockContext.presetInfos = [{
-        plugins: [
-          { name: '@gasket/jest' }
-        ]
-      }];
       await chooseTestPlugin(mockContext, mockPromptStub);
 
       expect(mockPromptStub).not.toHaveBeenCalled();
