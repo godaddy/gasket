@@ -1,3 +1,3 @@
-import gasket from 'gasket.ts';
+import gasket from './gasket';
 
 void gasket.actions.startServer();

@@ -1,5 +1,5 @@
 import type { GasketConfigDefinition, Plugin } from '@gasket/engine';
-import '@gasket/preset-nextjs';
+import preset from '@gasket/preset-nextjs';
 
 describe('@gasket/preset-nextjs', () => {
   const { log } = console;

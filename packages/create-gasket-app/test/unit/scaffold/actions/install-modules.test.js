@@ -1,5 +1,6 @@
+import { jest } from '@jest/globals';
 const installStub = jest.fn();
-const installModules = require('../../../../lib/scaffold/actions/install-modules');
+const installModules = (await import('../../../../lib/scaffold/actions/install-modules.js')).default;
 
 describe('installModules', () => {
   let mockContext;
@@ -16,7 +17,7 @@ describe('installModules', () => {
   });
 
   it('executes install', async () => {
-    await installModules(mockContext);
+    await installModules({ context: mockContext });
     expect(installStub).toHaveBeenCalled();
   });
 });

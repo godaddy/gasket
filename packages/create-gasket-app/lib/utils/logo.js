@@ -1,4 +1,4 @@
-const logo = `
+export const logo = `
           ▄▄▄▄████▀▀█▄
       ▄███▀▀▀▀▀▀▀█▄▄██
     ▄██▀   ▄▄▄▄▄   ▀██▌                  ▄▄▄
@@ -10,5 +10,3 @@ const logo = `
       ▀███▄▄▄▄▄▄▄█▀▀██
           ▀▀▀▀████▄▄█▀
 `;
-
-module.exports = logo;

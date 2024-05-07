@@ -16,6 +16,7 @@ jest.mock('cookie-parser', () => mockCookieParser);
 jest.mock('compression', () => mockCompression);
 
 const plugin = require('../lib/index');
+const { name, version } = require('../package');
 
 describe('Plugin', () => {
   it('is an object', () => {
@@ -380,16 +381,51 @@ describe('create', () => {
   beforeEach(() => {
     mockContext = {
       pkg: { add: jest.fn() },
-      files: { add: jest.fn() }
+      files: { add: jest.fn() },
+      gasketConfig: {
+        addPlugin: jest.fn(),
+        add: jest.fn(),
+        addImport: jest.fn().mockReturnThis(),
+        injectValue: jest.fn()
+      },
+      apiApp: true
     };
   });
+
+  it('adds itself to the dependencies',
+    expectCreatedWith(({ pkg }) => {
+      expect(pkg.add).toHaveBeenCalledWith('dependencies',
+        expect.objectContaining({
+          [name]: `^${version}`
+        }));
+    })
+  );
 
   it(
     'adds appropriate dependencies',
     expectCreatedWith(({ pkg }) => {
-      expect(pkg.add).toHaveBeenCalledWith('dependencies', {
-        express: '^4.18.2'
-      });
+      expect(pkg.add).toHaveBeenCalledWith('dependencies',
+        expect.objectContaining({
+          express: '^4.18.2'
+        }));
+    })
+  );
+
+  it('adds the appropriate files',
+    expectCreatedWith(({ files }) => {
+      expect(files.add).toHaveBeenCalledWith(expect.any(String));
+    })
+  );
+
+  it('adds the plugin import to the gasket file',
+    expectCreatedWith(({ gasketConfig }) => {
+      expect(gasketConfig.addPlugin).toHaveBeenCalledWith('pluginExpress', name);
+    })
+  );
+
+  it('add config to the gasket file',
+    expectCreatedWith(({ gasketConfig }) => {
+      expect(gasketConfig.add).toHaveBeenCalledWith('express', { routes: [] });
     })
   );
 });

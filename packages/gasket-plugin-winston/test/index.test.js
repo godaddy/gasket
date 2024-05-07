@@ -3,9 +3,10 @@ const GasketEngine = require('@gasket/engine');
 const PluginLogger = require('@gasket/plugin-logger');
 const plugin = require('../lib/index');
 const { LEVEL, MESSAGE } = require('triple-beam');
+const { name, version } = require('../package.json');
 
 // Mock console methods
-jest.spyOn(console, 'error').mockImplementation(() => {});
+jest.spyOn(console, 'error').mockImplementation(() => { });
 
 describe('@gasket/plugin-winston', function () {
   let gasket;
@@ -28,19 +29,41 @@ describe('@gasket/plugin-winston', function () {
   });
 
   describe('create hook', function () {
-    it('adds the expected dependencies', async function () {
-      const spy = {
+    let mockContext;
+
+    beforeEach(() => {
+      mockContext = {
         pkg: {
           add: jest.fn()
+        },
+        gasketConfig: {
+          addPlugin: jest.fn()
         }
       };
-
-      gasket.execSync('create', spy);
-
-      expect(spy.pkg.add).toHaveBeenCalledWith('dependencies', {
-        winston: require('../package').dependencies.winston
-      });
     });
+
+    it('adds itself to the dependencies', async function () {
+      gasket.execSync('create', mockContext);
+      expect(mockContext.pkg.add).toHaveBeenCalledWith('dependencies',
+        expect.objectContaining({
+          [name]: `^${version}`
+        }));
+    });
+
+    it('adds the expected dependencies', async function () {
+      gasket.execSync('create', mockContext);
+
+      expect(mockContext.pkg.add).toHaveBeenCalledWith('dependencies',
+        expect.objectContaining({
+          winston: require('../package').dependencies.winston
+        }));
+    });
+
+    it('adds plugin import to the gasket file', async function () {
+      gasket.execSync('create', mockContext);
+      expect(mockContext.gasketConfig.addPlugin).toHaveBeenCalledWith('pluginWinston', name);
+    });
+
   });
 
   describe('createLogger hook', function () {

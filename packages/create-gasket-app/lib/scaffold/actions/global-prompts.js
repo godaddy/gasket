@@ -1,7 +1,5 @@
-const inquirer = require('inquirer');
-const { pluginIdentifier, flattenPresets } = require('@gasket/resolve');
-const action = require('../action-wrapper');
-const { addPluginsToContext } = require('../utils');
+import inquirer from 'inquirer';
+import action from '../action-wrapper.js';
 
 /**
  * What is your app description?
@@ -70,22 +68,12 @@ async function choosePackageManager(context, prompt) {
  * @returns {Promise} promise
  */
 async function chooseTestPlugin(context, prompt) {
-  // Combine user-provided plugins with preset-provided plugins.
-  const { presetInfos = [], plugins = [] } = context;
-
-  // Flatten all plugins from presets and concat short names with cli plugins
-  const allPlugins = flattenPresets(presetInfos)
-    .map((presetInfo) => presetInfo.plugins || [])
-    .reduce((acc, arr) => acc.concat(arr), [])
-    .map((pluginInfo) => pluginIdentifier(pluginInfo.name).shortName)
-    .concat(plugins);
-
-  const knownTestPlugins = { mocha: '@gasket/mocha', jest: '@gasket/jest', cypress: '@gasket/cypress' };
+  const knownTestPlugins = { mocha: '@gasket/plugin-mocha', jest: '@gasket/plugin-jest', cypress: '@gasket/plugin-cypress' };
 
   if (!('testPlugin' in context)) {
-    let testPlugin = Object.values(knownTestPlugins).find((p) => allPlugins.includes(p));
+    let testPlugin;
 
-    if ('testSuite' in  context) {
+    if ('testSuite' in context) {
       testPlugin = knownTestPlugins[context.testSuite];
     }
 
@@ -97,16 +85,15 @@ async function chooseTestPlugin(context, prompt) {
           type: 'list',
           choices: [
             { name: 'none (not recommended)', value: 'none' },
-            { name: 'mocha + nyc + sinon + chai', value: '@gasket/mocha' },
-            { name: 'jest', value: '@gasket/jest' },
-            { name: 'cypress', value: '@gasket/cypress' }
+            { name: 'mocha + nyc + sinon + chai', value: '@gasket/plugin-mocha' },
+            { name: 'jest', value: '@gasket/plugin-jest' },
+            { name: 'cypress', value: '@gasket/plugin-cypress' }
           ]
         }
       ]));
     }
 
     if (testPlugin && testPlugin !== 'none') {
-      addPluginsToContext([testPlugin], context);
       Object.assign(context, { testPlugin });
     }
   }
@@ -136,7 +123,7 @@ async function allowExtantOverwriting(context, prompt) {
   }
 }
 
-const questions = [
+export const questions = [
   chooseAppDescription,
   choosePackageManager,
   chooseTestPlugin,
@@ -149,13 +136,11 @@ const questions = [
  * @param {CreateContext} context - Create context
  * @returns {Promise} promise
  */
-async function globalPrompts(context) {
+async function globalPrompts({ context }) {
   const prompt = context.prompts ? inquirer.prompt : () => ({});
   for (var fn of questions) {
     await fn(context, prompt);
   }
 }
 
-module.exports = action('Global prompts', globalPrompts, { startSpinner: false });
-
-module.exports.questions = questions;
+export default action('Global prompts', globalPrompts, { startSpinner: false });

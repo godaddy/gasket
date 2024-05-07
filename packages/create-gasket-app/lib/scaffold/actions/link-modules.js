@@ -1,4 +1,4 @@
-const action = require('../action-wrapper');
+import action from '../action-wrapper.js';
 
 /**
  * Links local packages using the selected package manager
@@ -7,7 +7,7 @@ const action = require('../action-wrapper');
  * @param {Spinner} spinner - Spinner
  * @returns {Promise} promise
  */
-async function linkModules(context, spinner) {
+async function linkModules({ context, spinner }) {
   const { pkgLinks, pkgManager } = context;
 
   if (pkgLinks && pkgLinks.length) {
@@ -16,6 +16,4 @@ async function linkModules(context, spinner) {
   }
 }
 
-module.exports = action('Link node modules', linkModules, { startSpinner: false });
-
-module.exports.update = action('Relink node modules', linkModules, { startSpinner: false });
+export default action('Link node modules', linkModules, { startSpinner: false });

@@ -1,4 +1,4 @@
-const { processArgs } = require('../../../lib/utils');
+import { processArgs } from '../../../lib/utils/index.js';
 
 describe('processArgs', () => {
   let mockArgs;

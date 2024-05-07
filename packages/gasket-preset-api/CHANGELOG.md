@@ -1,5 +1,14 @@
 # `@gasket/preset-api`
 
+
+
+- Convert to ESM ([#736])
+- Add generator files
+- Add `create` hook
+- Add preset hooks `presetPrompt` and `presetConfig`
+- Add tests
+- Update dependencies
+
 ### 6.44.6
 
 - revert docsify dep change ([#662])
@@ -25,3 +34,4 @@
 [#311]: https://github.com/godaddy/gasket/pull/311
 [#648]: https://github.com/godaddy/gasket/pull/648
 [#662]: https://github.com/godaddy/gasket/pull/662
+[#736]: https://github.com/godaddy/gasket/pull/736

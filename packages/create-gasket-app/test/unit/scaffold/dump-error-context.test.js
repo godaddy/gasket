@@ -1,15 +1,15 @@
+import { jest } from '@jest/globals';
+import path from 'path';
+
 const mockWriteStub = jest.fn();
 const logStub = jest.spyOn(console, 'log');
 const errorStub = jest.spyOn(console, 'error');
 
-jest.mock('fs', () => ({
-  promises: {
-    writeFile: mockWriteStub
-  }
+jest.unstable_mockModule('fs/promises', () => ({
+  writeFile: mockWriteStub
 }));
 
-const path = require('path');
-const dumpErrorContext = require('../../../lib/scaffold/dump-error-context');
+const { dumpErrorContext } = await import('../../../lib/scaffold/dump-error-context.js');
 
 describe('dumpErrorContext', () => {
   let mockContext, mockError;
@@ -60,7 +60,6 @@ describe('dumpErrorContext', () => {
   it('outputs log file path to console', async () => {
     mockWriteStub.mockResolvedValue();
     await dumpErrorContext(mockContext, mockError);
-
     expect(logStub).toHaveBeenCalledWith(expect.stringContaining(path.join(mockContext.cwd, 'gasket-create-error.log')));
   });
 

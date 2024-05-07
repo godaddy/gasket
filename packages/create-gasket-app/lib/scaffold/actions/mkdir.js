@@ -1,5 +1,5 @@
-const { mkdir } = require('fs').promises;
-const action = require('../action-wrapper');
+import { mkdir } from 'fs/promises';
+import action from '../action-wrapper.js';
 
 /**
  * Validates this instance can execute without common blockers:
@@ -10,7 +10,7 @@ const action = require('../action-wrapper');
  * @param {Spinner} spinner - Spinner
  * @returns {Promise} promise
  */
-async function mkDir(context, spinner) {
+async function mkDir({ context, spinner }) {
   const { dest, relDest, extant, destOverride } = context;
 
   // At this point, either the directory does not exist, or the user has
@@ -27,4 +27,4 @@ async function mkDir(context, spinner) {
   }
 }
 
-module.exports = action('Set up directory', mkDir);
+export default action('Set up directory', mkDir);

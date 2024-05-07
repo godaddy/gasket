@@ -1,6 +1,7 @@
 /* eslint-disable no-undefined */
-const { Command } = require('commander');
-const { processOptions, processCommand } = require('../../../lib/utils');
+import { jest } from '@jest/globals';
+import { Command } from 'commander';
+import { processOptions, processCommand } from '../../../lib/utils/index.js';
 
 describe('processOptions', () => {
 
