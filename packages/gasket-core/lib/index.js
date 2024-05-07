@@ -101,4 +101,4 @@ function makeGasket(gasketConfigDefinition) {
 export {
   makeGasket,
   GasketEngine
-}
+};
