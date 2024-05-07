@@ -9,7 +9,7 @@ declare module '@gasket/core' {
   export interface HookExecTypes {}
 
 
-  // export interface HookExecTypesBase {
+  // export interface HookExecTypes {
   //   init(): void
   //   actions(): GasketActions
   //   configure(config: GasketConfig): GasketConfig

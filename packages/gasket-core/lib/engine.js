@@ -269,7 +269,7 @@ class GasketEngine {
    * hook execute sequentially, with each result being passed as the first argument
    * to the next hook. It's like an asynchronous version of `Array.prototype.reduce`.
    * @param {string} event The event to execute
-   * @param {value} value Value to pass to initial hook
+   * @param {any} value Value to pass to initial hook
    * @param {...*} otherArgs Args for hooks
    * @returns {Promise} The result of the final executed hook.
    */
@@ -305,7 +305,7 @@ class GasketEngine {
    * Using synchronous methods limits flexibility, so it's encouraged to use async
    * methods whenever possible.
    * @param {string} event The event to execute
-   * @param {value} value Value to pass to initial hook
+   * @param {any} value Value to pass to initial hook
    * @param {...*} otherArgs Args for hooks
    * @returns {Promise} The result of the final executed hook.
    */
@@ -403,11 +403,11 @@ class GasketEngine {
   /**
    * Exec, but with a cache for plans by type
    * @private
+   * @param {object} options options
    * @param options.event
    * @param options.type
    * @param options.prepare
    * @param options.exec
-   * @param {object} options options
    * @returns {*} result
    */
   _execWithCachedPlan({ event, type, prepare, exec }) {
