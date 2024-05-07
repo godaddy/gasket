@@ -14,7 +14,7 @@ export type NextConfigFunction = (phase: string, context: {
   isServer: boolean
 }) => Promise<NextConfig>;
 
-declare module '@gasket/engine' {
+declare module '@gasket/core' {
 
   export interface GasketActions {
     getNextConfig(config?: NextConfig | NextConfigFunction): (phase: string, context?: {}) => Promise<NextConfig>

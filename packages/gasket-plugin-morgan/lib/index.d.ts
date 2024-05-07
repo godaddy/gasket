@@ -1,8 +1,8 @@
-import type { GasketConfig } from '@gasket/engine';
+import type { GasketConfig } from '@gasket/core';
 import type { IncomingMessage, ServerResponse } from 'http';
 import type { Options } from 'morgan';
 
-declare module '@gasket/engine' {
+declare module '@gasket/core' {
   export interface GasketConfig {
     morgan?: {
       format?: string;

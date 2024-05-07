@@ -1,6 +1,6 @@
 /* eslint-disable jest/expect-expect */
 const path = require('path');
-const GasketEngine = require('@gasket/engine');
+const { GasketEngine } = require('@gasket/core');
 const plugin = require('../lib/');
 const proxy = require('./proxy');
 

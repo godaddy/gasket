@@ -4,7 +4,7 @@ const { name } = require('../package.json');
 
 // set log configuration in gasket.config.js, under `morgan` key
 // configuration options: http://expressjs.com/en/resources/middleware/morgan.html
-/** @type {import('@gasket/engine').Plugin} */
+/** @type {import('@gasket/core').Plugin} */
 const plugin = {
   name,
   hooks: {

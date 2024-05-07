@@ -1,7 +1,7 @@
-import type { MaybeAsync } from '@gasket/engine';
+import type { MaybeAsync } from '@gasket/core';
 import type { IncomingMessage, OutgoingMessage } from 'http';
 
-declare module '@gasket/engine' {
+declare module '@gasket/core' {
   export interface GasketConfig {
     gasketDataDir?: string
   }

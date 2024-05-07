@@ -1,7 +1,7 @@
 import type { HappyFeet, HappyFeetOptions } from 'happy-feet';
-import type { MaybeAsync } from '@gasket/engine';
+import type { MaybeAsync } from '@gasket/core';
 
-declare module '@gasket/engine' {
+declare module '@gasket/core' {
     export interface GasketConfig {
         happyFeet: HappyFeetOptions
     }

@@ -40,7 +40,6 @@
     "@gasket/cli": "^7.0.0-next.20",
     "@gasket/core": "^7.0.0-next.20",
     "@gasket/data": "^7.0.0-next.20",
-    "@gasket/engine": "^7.0.0-next.20",
     "@gasket/fetch": "^7.0.0-next.20",
     "@gasket/helper-intl": "^7.0.0-next.20",
     "@gasket/nextjs": "^7.0.0-next.20",

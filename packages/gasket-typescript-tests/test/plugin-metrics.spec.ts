@@ -1,4 +1,4 @@
-import type { Gasket, Hook } from '@gasket/engine';
+import type { Gasket, Hook } from '@gasket/core';
 import type { Metrics } from '@gasket/plugin-metrics';
 
 describe('@gasket/plugin-metrics', () => {

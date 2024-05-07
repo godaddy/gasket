@@ -6,11 +6,14 @@ declare module '@gasket/core' {
   export interface GasketActions {}
 
   // To be extended by plugins
-  export interface HookExecTypes {
-    init(): void
-    actions(): GasketActions
-    configure(config: GasketConfig): GasketConfig
-  }
+  export interface HookExecTypes {}
+
+
+  // export interface HookExecTypesBase {
+  //   init(): void
+  //   actions(): GasketActions
+  //   configure(config: GasketConfig): GasketConfig
+  // }
 
   export type HookId = keyof HookExecTypes
 

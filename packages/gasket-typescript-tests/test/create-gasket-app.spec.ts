@@ -1,4 +1,4 @@
-import type { Gasket, Hook } from '@gasket/engine';
+import type { Gasket, Hook } from '@gasket/core';
 import { CreateContext } from 'create-gasket-app';
 
 describe('create-gasket-app', () => {

@@ -1,4 +1,4 @@
-import type { Gasket, Hook } from '@gasket/engine';
+import type { Gasket, Hook } from '@gasket/core';
 import type { PluginData } from '@gasket/plugin-metadata';
 import '@gasket/plugin-metadata';
 

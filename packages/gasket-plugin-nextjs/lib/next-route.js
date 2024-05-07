@@ -1,12 +1,12 @@
 /* eslint-disable spaced-comment */
 // @ts-check
-/// <reference types="@gasket/engine" />
+/// <reference types="@gasket/core" />
 
 const path = require('path');
 const fs = require('fs').promises;
 
 /**
- * @typedef {import("@gasket/engine").Gasket} Gasket
+ * @typedef {import("@gasket/core").Gasket} Gasket
  * @typedef {import("http").IncomingMessage}  Request
  */
 

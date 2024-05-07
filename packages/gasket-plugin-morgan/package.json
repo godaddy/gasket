@@ -44,7 +44,7 @@
     "split": "^1.0.1"
   },
   "devDependencies": {
-    "@gasket/engine": "^7.0.0-next.20",
+    "@gasket/core": "^7.0.0-next.20",
     "@types/jest": "^29.5.12",
     "@types/morgan": "^1.9.9",
     "cross-env": "^7.0.3",
