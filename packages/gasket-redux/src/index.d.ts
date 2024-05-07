@@ -25,9 +25,9 @@ export type MakeStoreFn = {
 
 export interface ConfigureMakeStoreOptions {
   /** Map of identifiers and reducers */
-  reducers: Reducer[];
+  reducers?: Object<string, Reducer>;
   /** Entry reducer to run before combined reducers */
-  rootReducer?: Reducer;
+  rootReducer: Reducer;
   initialState?: {
     [x: string]: any;
   };
@@ -73,7 +73,7 @@ export function getOrCreateStore(
  * placeholders.
  */
 export function placeholderReducers(
-  reducers: Reducer[],
+  reducers?: Object<string, Reducer>,
   /** State to preload store with */
-  preloadedState: object
-): Reducer[] | object;
+  preloadedState?: Object<string, any>
+): Object<string, Reducer>;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import { manifest } from './config';
 import { localeUtils, LocaleStatus } from './utils';
@@ -10,7 +11,6 @@ const { defaultLocale, defaultPath } = manifest;
  * Sets up and attaches the getInitialProps static method which preloads locale
  * files during SSR for Next.js pages. For browser routing, the locale files
  * will be fetched as normal.
- *
  * @param {React.ComponentType} Wrapper - The HOC
  * @param {LocalePathPart} localePathPart - Path containing locale files
  */
@@ -56,15 +56,14 @@ function attachGetInitialProps(Wrapper, localePathPart) {
 
 /**
  * Make an HOC that loads a locale file before rendering wrapped component
- *
  * @param {LocalePathPartOrThunk} localePathPart - Path containing locale files
  * @param {object} [options] - Options
- * @param {React.Component} [options.loading=null] - Custom component to show
+ * @param {React.Component} [options.loading] - Custom component to show
  * while loading
- * @param {boolean} [options.initialProps=false] - Preload locales during SSR
+ * @param {boolean} [options.initialProps] - Preload locales during SSR
  * with Next.js pages
- * @param {boolean} [options.forwardRef=false] - Forward refs
- * @returns {function} wrapper
+ * @param {boolean} [options.forwardRef] - Forward refs
+ * @returns {Function} wrapper
  */
 export default function withLocaleRequired(
   localePathPart = defaultPath,
@@ -81,7 +80,6 @@ export default function withLocaleRequired(
 
     /**
      * Wrapper component that returns based on locale file status
-     *
      * @param {object} props - Component props
      * @param {object} [props.forwardedRef] - Forwarded ref
      * @returns {JSX.Element} element
@@ -97,8 +95,13 @@ export default function withLocaleRequired(
         resolvedLocalePathPart ?? localePathPart
       );
       if (loadState === LocaleStatus.LOADING) return loading;
-      return <Component {...rest} ref={forwardedRef} />;
+      return <Component { ...rest } ref={ forwardedRef } />;
     }
+
+    Wrapper.propTypes = {
+      forwardedRef: PropTypes.bool,
+      localePathPart: PropTypes.oneOfType([PropTypes.string, PropTypes.func])
+    };
 
     hoistNonReactStatics(Wrapper, Component);
     Wrapper.displayName = `withLocaleRequired(${displayName})`;
@@ -109,7 +112,7 @@ export default function withLocaleRequired(
     // Forward ref through the HOC
     if (forwardRef) {
       Result = React.forwardRef((props, ref) => (
-        <Wrapper {...props} forwardedRef={ref} />
+        <Wrapper { ...props } forwardedRef={ ref } />
       ));
       hoistNonReactStatics(Result, Component);
       Result.displayName = `ForwardRef(withLocaleRequired/${displayName}))`;

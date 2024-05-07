@@ -1,9 +1,9 @@
 /* eslint-disable max-nested-callbacks */
 const fs = require('fs-extra');
-const { getPackageDirs, saveJsonFile } = require('../lib/fs-utils');
+const { getPackageDirs, saveJsonFile } = require('../lib/utils/fs-utils');
 const { BuildModules } = require('../lib/build-modules');
 
-jest.mock('../lib/fs-utils');
+jest.mock('../lib/utils/fs-utils');
 
 describe('buildModules', function () {
   const testSrcFilePath = '/path/to/src/myh-fake/locale/en-US.json';

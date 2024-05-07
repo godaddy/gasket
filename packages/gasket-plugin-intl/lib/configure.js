@@ -50,7 +50,8 @@ function deprecatedOptions(gasket, intlConfig) {
  */
 module.exports = function configure(gasket, config) {
   const { root } = config;
-  const intlConfig = { ...getIntlConfig(gasket) };
+  // @ts-ignore - temp fix until we can get types for gasket-plugin-intl
+  const intlConfig = { ...getIntlConfig({ config }) };
 
   const { languageMap, defaultLanguage, assetPrefix } = deprecatedOptions(
     gasket,

@@ -11,9 +11,7 @@ import placeholderReducers from './placeholder-reducers';
  * @type {import('./index').prepareReducer}
  */
 export function prepareReducer(allReducers, rootReducer) {
-  const combinedReducer = Object.keys(allReducers).length
-    ? combineReducers(allReducers)
-    : (f = {}) => f;
+  const combinedReducer = Object.keys(allReducers).length ? combineReducers(allReducers) : (f = {}) => f;
 
   if (rootReducer) {
     return (state, action) => {
@@ -35,14 +33,13 @@ export function prepareReducer(allReducers, rootReducer) {
  */
 export default function configureMakeStore(
   {
-    reducers,
+    reducers = {},
     rootReducer,
     initialState = {},
     middleware = [],
-    enhancers = [(f) => f],
-    logging = false,
-    thunkMiddleware = thunk
-  },
+    enhancers = [f => f],
+    logging = false, thunkMiddleware = thunk
+  } = {},
   postCreate
 ) {
   const baseMiddleware = [thunkMiddleware];
