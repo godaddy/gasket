@@ -1,3 +1,5 @@
+/** @typedef {import('../index').ModuleDocsConfig} ModuleDocsConfig */
+
 /**
  * Sort an array of names alphabetically.
  * @param {string} a - Name
@@ -74,8 +76,7 @@ function getModuleWeight(name) {
 
 /**
  * Sort an array of modules by name
- * @type {function(import('../index').ModuleDocsConfig[]):
- * import('../index').ModuleDocsConfig[]}
+ * @type {function(ModuleDocsConfig[]): ModuleDocsConfig[]}
  */
 const sortModules = sortByKey('name', makeWeightedCompare(getModuleWeight));
 
@@ -92,8 +93,7 @@ function getGuideWeight(name) {
 
 /**
  * Sort an array of guides by the module their from
- * @type {function(import('../index').ModuleDocsConfig[]):
- * import('../index').ModuleDocsConfig[]}
+ * @type {function(ModuleDocsConfig[]): ModuleDocsConfig[]}
  */
 const sortGuides = sortByKey('from', makeWeightedCompare(getGuideWeight));
 
