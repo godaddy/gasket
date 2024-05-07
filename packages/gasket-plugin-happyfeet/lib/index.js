@@ -1,5 +1,4 @@
 /// <reference types="@gasket/plugin-start" />
-// / <reference types="@gasket/plugin-https" />
 
 const happyFeet = require('happy-feet');
 const { name } = require('../package.json');
