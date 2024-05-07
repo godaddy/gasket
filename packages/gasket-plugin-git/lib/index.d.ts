@@ -4,7 +4,7 @@ declare module '@gasket/cli' {
   }
 }
 
-export declare type GitignoreContent = {
+export declare type GitIgnoreContent = {
   dependencies: Set<string>;
   testing: Set<string>;
   production: Set<string>;
