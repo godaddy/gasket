@@ -1,6 +1,7 @@
-const { bold } = require('chalk');
-const action = require('../action-wrapper');
-const asciiLogo = require('../../utils/logo');
+import pkg from 'chalk';
+const { bold } = pkg;
+import action from '../action-wrapper.js';
+import { logo } from '../../utils/index.js';
 
 /**
  * Logs a new line in the console
@@ -62,14 +63,14 @@ function buildReport(context) {
 
  * @param {CreateContext} context - Create context
  */
-function printReport(context) {
+async function printReport({ context }) {
   const report = buildReport(context);
   const { warnings, errors } = context;
 
   console.log(`✨Success!
-  
+
 Finished with ${warnings.length} warnings and ${errors.length} errors using
-` + asciiLogo);
+` + logo);
 
   Object.entries(report).forEach(([k, v]) => {
     if (!v || !v.length) return;
@@ -85,4 +86,4 @@ Finished with ${warnings.length} warnings and ${errors.length} errors using
   newline();
 }
 
-module.exports = action('Print report', printReport, { startSpinner: false });
+export default action('Print report', printReport, { startSpinner: false });

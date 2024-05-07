@@ -1,6 +1,6 @@
 module.exports = async function promptHook(gasket, context, { prompt }) {
   const newContext = { ...context };
-
+  // TODO - evaluate if these prompts should be moved to the preset
   if (!('nextServerType' in context)) {
     const { nextServerType } = await prompt([
       {
@@ -15,6 +15,22 @@ module.exports = async function promptHook(gasket, context, { prompt }) {
     ]);
 
     newContext.nextServerType = nextServerType;
+  }
+
+  if (
+    !('nextDevProxy' in context) &&
+    newContext.nextServerType === 'defaultServer'
+  ) {
+    const { nextDevProxy } = await prompt([
+      {
+        name: 'nextDevProxy',
+        message: 'Do you want to add a proxy for the Next.js dev server?',
+        type: 'confirm',
+        default: false
+      }
+    ]);
+
+    newContext.nextDevProxy = nextDevProxy;
   }
 
   if (!('addSitemap' in context)) {

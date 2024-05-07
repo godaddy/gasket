@@ -1,15 +1,6 @@
+/* eslint-disable max-params */
 const { spawn } = require('child_process');
-const { Writable } = require('stream');
-const stderr = new Writable();
-const stdout = new Writable();
-const write = function (chunk, encoding, next) {
-  if (!this.data) this.data = '';
-  this.data += chunk;
-  next();
-};
-
-stdout._write = write;
-stderr._write = write;
+const concat = require('concat-stream');
 
 /**
  * Promise friendly wrapper to running a shell command (eg: git, npm, ls)
@@ -50,6 +41,8 @@ stderr._write = write;
  */
 function runShellCommand(cmd, argv, options = {}, debug = false) {
   const { signal, ...opts } = options;
+  let stderr;
+  let stdout;
 
   if (signal && signal.aborted) {
     return Promise.reject(Object.assign(new Error(`${cmd} was aborted before spawn`), { argv, aborted: true }));
@@ -58,13 +51,17 @@ function runShellCommand(cmd, argv, options = {}, debug = false) {
   return new Promise((resolve, reject) => {
     const child = spawn(cmd, argv, opts);
 
-    child.stderr.on('data', lines => {
-      stderr.write(lines);
-    });
+    child.stderr.pipe(
+      concat({ encoding: 'string' }, (lines) => {
+        stderr = lines;
+      })
+    );
 
-    child.stdout.on('data', lines => {
-      stdout.write(lines);
-    });
+    child.stdout.pipe(
+      concat({ encoding: 'string' }, (lines) => {
+        stdout = lines;
+      })
+    );
 
     if (debug) {
       child.stderr.pipe(process.stderr);
@@ -83,14 +80,14 @@ function runShellCommand(cmd, argv, options = {}, debug = false) {
       if (code !== 0) {
         return reject(Object.assign(new Error(`${cmd} exited with non-zero code`), {
           argv,
-          stdout: stdout.data,
-          stderr: stderr.data,
+          stdout,
+          stderr,
           aborted,
           code
         }));
       }
 
-      resolve({ stdout: stdout.data });
+      resolve({ stdout });
     });
   });
 }

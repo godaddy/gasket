@@ -1,8 +1,6 @@
-const { Command } = require('commander');
+import { Command } from 'commander';
+import { processArgs, processOptions, createOption } from './index.js';
 const program = new Command();
-const processArgs = require('./process-args');
-const processOptions = require('./process-options');
-const createOption = require('./create-option');
 
 /**
  * isValidCommand - Validates the command configuration
@@ -25,7 +23,7 @@ function isValidCommand(command) {
  * @param {CLICommand} command The command configuration
  * @returns {ProccesedCLICommand} The command instance
  */
-function processCommand(command) {
+export function processCommand(command) {
   if (!isValidCommand(command)) throw new Error('Invalid command configuration');
   const { id, description, action, args, options, hidden = false, default: isDefault = false } = command;
   const cmd = program
@@ -48,5 +46,3 @@ function processCommand(command) {
 
   return { command: cmd, hidden, isDefault };
 }
-
-module.exports = processCommand;

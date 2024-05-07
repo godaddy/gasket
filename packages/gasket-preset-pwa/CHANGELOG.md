@@ -1,5 +1,12 @@
 # `@gasket/preset-pwa`
 
+
+
+- Convert to ESM ([#736])
+- Add preset hooks `presetPrompt` and `presetConfig`
+- Add tests
+- Update dependencies
+
 ### 6.10.0
 
 - TypeScript definitions for config & lifecycles ([#311])
@@ -12,4 +19,5 @@
 
 - Initial release.
 
-[#287]: https://github.com/godaddy/gasket/pull/311
+[#311]: https://github.com/godaddy/gasket/pull/311
+[#736]: https://github.com/godaddy/gasket/pull/736

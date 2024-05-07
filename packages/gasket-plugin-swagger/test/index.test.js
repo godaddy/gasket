@@ -33,6 +33,7 @@ jest.mock('/path/to/app/swagger.json', () => ({ data: true }), {
 });
 
 const fastify = require('fastify')({ logger: true });
+const { name, version } = require('../package.json');
 
 describe('Swagger Plugin', function () {
   let plugin;
@@ -304,9 +305,44 @@ describe('Swagger Plugin', function () {
 
     it('adds new routes to swagger paths', async function () {
       await plugin.hooks.fastify.handler(mockGasket, fastify);
-      fastify.get('/hello-world', () => {});
+      fastify.get('/hello-world', () => { });
       await fastify.ready();
       expect(fastify.swagger().paths).toHaveProperty('/hello-world');
+    });
+  });
+
+  describe('create hook', function () {
+    let mockContext;
+
+    beforeEach(() => {
+      mockContext = {
+        pkg: {
+          add: jest.fn()
+        },
+        gasketConfig: {
+          addPlugin: jest.fn(),
+          add: jest.fn()
+        }
+      };
+    });
+
+    it('adds itself to the dependencies', async function () {
+      await plugin.hooks.create({}, mockContext);
+      expect(mockContext.pkg.add).toHaveBeenCalledWith('dependencies',
+        expect.objectContaining({
+          [name]: `^${version}`
+        })
+      );
+    });
+
+    it('adds swagger plugin to gasket config', async function () {
+      await plugin.hooks.create({}, mockContext);
+      expect(mockContext.gasketConfig.addPlugin).toHaveBeenCalledWith('pluginSwagger', name);
+    });
+
+    it('adds swagger config to gasket config', async function () {
+      await plugin.hooks.create({}, mockContext);
+      expect(mockContext.gasketConfig.add).toHaveBeenCalledWith('swagger', expect.any(Object));
     });
   });
 });

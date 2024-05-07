@@ -1,5 +1,10 @@
-module.exports = {
-  require,
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+const { name } = require('../package.json');
+
+export default {
+  name,
+  hooks: {},
   metadata: {
     guides: [{
       name: 'Progressive Web Apps Guide',
