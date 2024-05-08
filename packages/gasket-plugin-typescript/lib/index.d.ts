@@ -1,4 +1,3 @@
-import { gasket } from 'gasket.ts';
 import { MaybeAsync } from '@gasket/engine';
 import { CreateContext } from 'create-gasket-app';
 
