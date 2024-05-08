@@ -6,10 +6,9 @@ const reComments = /\/\*.*(\n.+)*\*\//g;
 /**
  * Gathers Workbox config by executing the `workbox` lifecycle.
  * Generates service worker strings and appends to the service worker content.
- *
  * @param {Gasket} gasket - Gasket
- * @param {String} content - Service worker content
- * @param {Object} context - Service worker context
+ * @param {string} content - Service worker content
+ * @param {object} context - Service worker context
  * @returns {Promise<string>} content
  */
 module.exports = async function composeServiceWorker(gasket, content, context) {
