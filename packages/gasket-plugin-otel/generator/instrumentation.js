@@ -1,3 +1,4 @@
+/* eslint-disable no-console, no-process-env, no-process-exit */
 import 'dotenv/config';
 import { NodeSDK } from '@opentelemetry/sdk-node';
 import { getNodeAutoInstrumentations } from '@opentelemetry/auto-instrumentations-node';
@@ -24,26 +25,25 @@ if (
   !process.env.OTEL_EXPORTER_OTLP_ENDPOINT ||
   !process.env.OTEL_EXPORTER_OTLP_HEADERS
 ) {
-  console.error('Missing required environment variables. Ensure `OTEL_SERVICE_NAME`, `OTEL_EXPORTER_OTLP_ENDPOINT`, and `OTEL_EXPORTER_OTLP_HEADERS` are set.');
-  process.exit(1);
+  throw new Error('Missing required OTel environment variables');
 }
 
 const sdk = new NodeSDK({
   resource: new Resource({
     [SEMRESATTRS_SERVICE_NAME]: process.OTEL_SERVICE_NAME,
-    [SEMRESATTRS_DEPLOYMENT_ENVIRONMENT]: process.GASKET_ENV || process.NODE_ENV || 'development',
+    [SEMRESATTRS_DEPLOYMENT_ENVIRONMENT]: process.GASKET_ENV || process.NODE_ENV || 'production'
   }),
   // Metrics are currently not readable in ESS
   // https://www.elastic.co/guide/en/observability/current/apm-open-telemetry-known-limitations.html#apm-open-telemetry-metrics-limitations
   // metricReader: new PeriodicExportingMetricReader({
   //   exporter: new OTLPMetricExporter(),
-  //   exportIntervalMillis: 1000,
+  //   exportIntervalMillis: 1000, // interval tbd
   // }),
   logRecordProcessor: new SimpleLogRecordProcessor(new OTLPLogExporter()),
   traceExporter: new OTLPTraceExporter(),
   instrumentations: [getNodeAutoInstrumentations({
     '@opentelemetry/instrumentation-fs': { enabled: false }
-  })],
+  })]
 });
 
 sdk.start();

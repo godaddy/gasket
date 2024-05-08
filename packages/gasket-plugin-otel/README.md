@@ -20,7 +20,7 @@ OTEL_EXPORTER_OTLP_HEADERS="Authorization=Bearer <ess-secret>"
 OTEL_SERVICE_NAME=<service-name>
 ```
 
-Update `npm` scripts in your `package.json`:
+Update start script in your `package.json`:
 
 ```diff
 {
