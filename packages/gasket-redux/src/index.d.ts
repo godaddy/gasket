@@ -1,4 +1,4 @@
-import type { Store, Reducer } from 'redux';
+import type { Store, Reducer, Middleware } from 'redux';
 import type { IncomingMessage, OutgoingMessage } from 'http';
 import type { ThunkMiddleware } from 'redux-thunk';
 
@@ -27,11 +27,11 @@ export interface ConfigureMakeStoreOptions {
   /** Map of identifiers and reducers */
   reducers?: Object<string, Reducer>;
   /** Entry reducer to run before combined reducers */
-  rootReducer: Reducer;
+  rootReducer?: Reducer;
   initialState?: {
     [x: string]: any;
   };
-  middleware?: Function[];
+  middleware?: Middleware[];
   enhancers?: Function[];
   /**
    * Logging is enabled by default. Passing false will disable logging
@@ -44,7 +44,7 @@ export interface ConfigureMakeStoreOptions {
 /** Compose the reducer */
 export function prepareReducer(
   /** Map of identifiers and reducers */
-  allReducers: Reducer[],
+  allReducers: Record<string, Reducer>,
   /** Entry reducer to run before combined reducers */
   rootReducer?: Reducer
 ): Reducer;

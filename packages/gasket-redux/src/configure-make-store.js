@@ -11,7 +11,9 @@ import placeholderReducers from './placeholder-reducers';
  * @type {import('./index').prepareReducer}
  */
 export function prepareReducer(allReducers, rootReducer) {
-  const combinedReducer = Object.keys(allReducers).length ? combineReducers(allReducers) : (f = {}) => f;
+  const combinedReducer = Object.keys(allReducers).length
+    ? combineReducers(allReducers)
+    : (f = {}) => f;
 
   if (rootReducer) {
     return (state, action) => {
@@ -31,17 +33,17 @@ export function prepareReducer(allReducers, rootReducer) {
  * Set up redux store configuration and return a makeStore function
  * @type {import('./index').configureMakeStore}
  */
-export default function configureMakeStore(
-  {
+export default function configureMakeStore(makeStoreOptions = {}, postCreate) {
+  const {
+    thunkMiddleware = thunk,
+    middleware = [],
+    logging = false,
+    enhancers = [(f) => f],
     reducers = {},
     rootReducer,
-    initialState = {},
-    middleware = [],
-    enhancers = [f => f],
-    logging = false, thunkMiddleware = thunk
-  } = {},
-  postCreate
-) {
+    initialState = {}
+  } = makeStoreOptions;
+
   const baseMiddleware = [thunkMiddleware];
 
   /**
@@ -77,9 +79,10 @@ export default function configureMakeStore(
     const enhancer = composer(applyMiddleware(...allMiddleware), ...enhancers);
 
     const preloadedState = { ...initialState, ...state };
-    /** @type {import('redux').Reducer} */
+
+    /** @type {Record<string, import('redux').Reducer>} */
     const allReducers = {
-      ...reducers || {},
+      ...(reducers || {}),
       ...placeholderReducers(reducers, preloadedState)
     };
     const reducer = prepareReducer(allReducers, rootReducer);
