@@ -10,7 +10,7 @@ Gasket plugin for OpenTelemetry support.
 npm i @gasket/plugin-otel
 ```
 
-Add the [instrumentation](./generator/instrumentation.js) file to the root of your application.
+Copy the [instrumentation](./generator/instrumentation.js) file content to a new file root of your application.
 
 Configure OTel environment variables in your `.env` file:
 
