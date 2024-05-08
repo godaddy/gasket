@@ -1,0 +1,72 @@
+{
+  "name": "@gasket/plugin-otel",
+  "version": "6.45.2",
+  "description": "Gasket plugin for OpenTelemetry",
+  "main": "lib",
+  "types": "lib/index.d.ts",
+  "files": [
+    "generator",
+    "lib"
+  ],
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "npm run lint -- --fix",
+    "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "posttest": "npm run lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/godaddy/gasket.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "gasket",
+    "plugin",
+    "otel",
+    "opentelemetry"
+  ],
+  "author": "GoDaddy Operating Company, LLC",
+  "maintainers": [
+    "Michael Mason <mmason2@godaddy.com>"
+  ],
+  "bugs": {
+    "url": "https://github.com/godaddy/gasket/issues"
+  },
+  "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-otel",
+  "dependencies": {
+    "@opentelemetry/api": "^1.8.0",
+    "@opentelemetry/api-logs": "^0.51.1",
+    "@opentelemetry/auto-instrumentations-node": "^0.46.0",
+    "@opentelemetry/exporter-logs-otlp-grpc": "^0.51.1",
+    "@opentelemetry/exporter-metrics-otlp-grpc": "^0.51.1",
+    "@opentelemetry/sdk-logs": "^0.51.1",
+    "@opentelemetry/winston-transport": "^0.3.0",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "eslint": "^8.56.0",
+    "eslint-config-godaddy": "^7.0.2",
+    "eslint-plugin-jest": "^27.6.3",
+    "jest": "^29.7.0"
+  },
+  "eslintConfig": {
+    "extends": [
+      "godaddy",
+      "plugin:jest/recommended"
+    ],
+    "globals": {
+      "expect": "readonly"
+    },
+    "plugins": [
+      "unicorn"
+    ],
+    "rules": {
+      "unicorn/filename-case": "error"
+    }
+  }
+}
