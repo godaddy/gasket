@@ -1,5 +1,6 @@
 import type { Options } from 'swagger-jsdoc'
 import type { SwaggerUiOptions } from 'swagger-ui-express';
+import type { CoreHookExecTypes } from '@gasket/core';
 
 declare module '@gasket/core' {
   export interface GasketConfig {
@@ -21,6 +22,8 @@ declare module '@gasket/core' {
       ui?: SwaggerUiOptions
     }
   }
+
+  export interface  HookExecTypes extends CoreHookExecTypes {}
 }
 
 declare module 'create-gasket-app' {
