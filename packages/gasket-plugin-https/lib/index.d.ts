@@ -1,5 +1,5 @@
 import type { CreateContext } from 'create-gasket-app';
-import type { MaybeMultiple, MaybeAsync } from '@gasket/engine';
+import type { MaybeMultiple, MaybeAsync } from '@gasket/core';
 import type { SecureContextOptions } from 'tls';
 import type { Agent as HttpAgent, Server as HttpServer } from 'http';
 import type { Agent as HttpsAgent, Server as HttpsServer } from 'https';
