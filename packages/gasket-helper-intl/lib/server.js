@@ -4,7 +4,6 @@ const { LocaleUtils, LocaleStatus } = require('./index');
 
 /**
  * Server variant to load locale files from disk path
- * @type {import('./index').LocaleServerUtils}
  */
 function LocaleServerUtils() {
   LocaleUtils.apply(this, arguments);
@@ -17,6 +16,7 @@ function LocaleServerUtils() {
       return merge(...localesProps);
     }
 
+    // @ts-ignore - getLocalePath is a method on LocaleUtils
     const localeFile = this.getLocalePath(localePathPart, locale, context);
     const diskPath = path.join(localesDir, localeFile);
     let messages;

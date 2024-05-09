@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { manifest } from './config';
 import { LocaleStatus } from './utils';
@@ -14,7 +13,7 @@ export default function LocaleRequired(props) {
 
   if (loadState === LocaleStatus.LOADING) return loading;
 
-  return <>{children}</>;
+  return children;
 }
 
 LocaleRequired.propTypes = {

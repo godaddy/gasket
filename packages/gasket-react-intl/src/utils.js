@@ -8,12 +8,13 @@ export { LocaleStatus } from '@gasket/helper-intl';
 /**
  * Determines the active locale from either what was rendered for the page (preferred),
  * or what is set in navigator.languages for the browser.
- * @see: https://developer.mozilla.org/en-US/docs/Web/API/NavigatorLanguage/languages#Browser_compatibility
- * @returns {Locale} locale
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/NavigatorLanguage/languages#Browser_compatibility
+ * @returns {string} locale
  */
 export function getActiveLocale() {
   if (isBrowser) {
     return (
+      // @ts-ignore
       window.gasketIntlLocale ?? clientData.locale ?? navigator.languages[0]
     );
   }

@@ -15,6 +15,8 @@ export interface LocaleManifest {
   /** Available locale files to content hashes */
   paths: Record<LocalePath, string>;
   locales: Locale[];
+  /** Default lookup path to locale files */
+  defaultPath: string;
 }
 
 /**
@@ -77,7 +79,7 @@ export type Locale = Lang;
  * State of loaded locale files
  */
 export interface LocalesState {
-  messages: Record<string, string>;
+  messages: Record<Locale, Record<string, string>>;
   status: Record<LocalePath, LocaleStatus>;
 }
 

@@ -3,13 +3,15 @@ import { manifest } from './config';
 
 let localesParentDir;
 /**
- *
+ * Get the parent directory of the locales directory
+ * @returns {string} localesParentDir
  */
 export function getLocalesParentDir() {
   return (
     localesParentDir ||
     // eslint-disable-next-line no-process-env
     (localesParentDir = require('path').dirname(
+      // eslint-disable-next-line no-process-env
       process.env.GASKET_INTL_LOCALES_DIR
     ))
   );
@@ -17,8 +19,7 @@ export function getLocalesParentDir() {
 
 /**
  * Load locale file(s) for Next.js static pages
- * @param {LocalePathPart|LocalePathPart[]} localePathPart - Path(s) containing locale files
- * @returns {function({}): Promise<{props: {localesProps: LocalesProps}}>} pageProps
+ * @type {import('./index').intlGetStaticProps}
  */
 export function intlGetStaticProps(localePathPart = manifest.defaultPath) {
   return async (ctx) => {
@@ -29,7 +30,7 @@ export function intlGetStaticProps(localePathPart = manifest.defaultPath) {
       locale = ctx.params.locale;
     }
 
-    // eslint-disable-next-line no-process-env
+    /** @type {import('@gasket/helper-intl').LocalesProps} */
     const localesProps = localeUtils.serverLoadData(
       localePathPart,
       locale,
@@ -46,9 +47,8 @@ export function intlGetStaticProps(localePathPart = manifest.defaultPath) {
 }
 
 /**
- * Load locale file(s) for Next.js static pages
- * @param {LocalePathPart|LocalePathPart[]} localePathPart - Path(s) containing locale files
- * @returns {function({}): Promise<{props: {localesProps: LocalesProps}}>} pageProps
+ * Load locale file(s) for Next.js server-side rendered pages
+ * @type {import('./index').intlGetServerSideProps}
  */
 export function intlGetServerSideProps(localePathPart = manifest.defaultPath) {
   return async (ctx) => {
@@ -64,6 +64,8 @@ export function intlGetServerSideProps(localePathPart = manifest.defaultPath) {
     ) {
       locale = res.locals.gasketData.intl.locale;
     }
+
+    /** @type {import('@gasket/helper-intl').LocalesProps} */
     const localesProps = localeUtils.serverLoadData(
       localePathPart,
       locale,

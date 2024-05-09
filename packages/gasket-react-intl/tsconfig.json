@@ -17,6 +17,8 @@
   },
   "exclude": [
     "test",
-    "coverage"
+    "coverage",
+    "lib",
+    "next.js"
   ]
 }
