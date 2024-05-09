@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-elastic-apm",
-  "version": "6.46.5",
+  "version": "6.46.8",
   "description": "Adds Elastic APM instrumentation to your application",
   "main": "lib",
   "types": "lib/index.d.ts",
@@ -14,9 +14,9 @@
     "test:runner": "jest test/*.test.js",
     "test:watch": "npm run test:runner -- --watch",
     "test:coverage": "npm run test:runner -- --coverage --coverageReporters text",
-    "posttest": "npm run lint",
+    "posttest": "npm run lint && npm run typecheck",
     "report": "npm run test:runner -- --coverage --coverageReporters lcov",
-    "typecheck:skip": "tsc",
+    "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"
   },
   "repository": {
@@ -45,7 +45,7 @@
     "elastic-apm-node": "^3.50.0"
   },
   "devDependencies": {
-    "@gasket/engine": "^6.46.2",
+    "@gasket/engine": "^6.46.8",
     "eslint": "^8.56.0",
     "eslint-config-godaddy": "^7.1.0",
     "eslint-plugin-jest": "^27.6.3",

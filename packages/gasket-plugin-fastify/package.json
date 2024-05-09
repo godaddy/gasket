@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-fastify",
-  "version": "6.46.2",
+  "version": "6.46.8",
   "description": "Adds fastify support to your application",
   "main": "lib",
   "types": "lib/index.d.ts",
@@ -13,8 +13,8 @@
     "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "posttest": "npm run lint",
-    "typecheck:skip": "tsc",
+    "posttest": "npm run lint && npm run typecheck",
+    "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"
   },
   "repository": {
@@ -45,7 +45,7 @@
     "middie": "^5.4.0"
   },
   "devDependencies": {
-    "@gasket/engine": "^6.46.2",
+    "@gasket/engine": "^6.46.8",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
     "eslint-config-godaddy": "^7.1.0",

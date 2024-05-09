@@ -34,14 +34,12 @@ describe('Plugin', () => {
 
   it('exposes a configure lifecycle hook', () => {
     expect(typeof plugin.hooks).toStrictEqual('object');
-    expect(typeof plugin.hooks.configure).toStrictEqual('object');
-    expect(typeof plugin.hooks.configure.handler).toStrictEqual('function');
+    expect(typeof plugin.hooks.configure).toStrictEqual('function');
   });
 
   it('exposes a preboot lifecycle hook', () => {
     expect(typeof plugin.hooks).toStrictEqual('object');
-    expect(typeof plugin.hooks.preboot).toStrictEqual('object');
-    expect(typeof plugin.hooks.preboot.handler).toStrictEqual('function');
+    expect(typeof plugin.hooks.preboot).toStrictEqual('function');
   });
 
   it('hooks the middleware lifecycle', () => {
@@ -50,53 +48,60 @@ describe('Plugin', () => {
 
   it('skips start call if already started', async () => {
     mockAPM.isStarted.mockReturnValue(true);
-    await plugin.hooks.preboot.handler(mockGasket);
+    await plugin.hooks.preboot(mockGasket);
     expect(apm.start).not.toHaveBeenCalled();
   });
 
   it('adds apm filters', async () => {
     mockAPM.isStarted.mockReturnValue(true);
-    await plugin.hooks.preboot.handler(mockGasket);
+    await plugin.hooks.preboot(mockGasket);
     expect(apm.addFilter).toHaveBeenCalledTimes(1);
   });
 
   it('calls apm.start()', async () => {
-    mockGasket.config = await plugin.hooks.configure.handler(mockGasket, {
+    mockGasket.config = await plugin.hooks.configure(mockGasket, {
       ...mockGasket.config,
       elasticAPM: {
         secretToken: 'abcd',
         serverUrl: 'https://example.com'
       }
     });
-    await plugin.hooks.preboot.handler(mockGasket);
+    await plugin.hooks.preboot(mockGasket);
 
     expect(apm.start).toHaveBeenCalledTimes(1);
-    expect(apm.start).toHaveBeenCalledWith({ active: true, secretToken: 'abcd', serverUrl: 'https://example.com' });
+    expect(apm.start).toHaveBeenCalledWith({
+      active: true,
+      secretToken: 'abcd',
+      serverUrl: 'https://example.com'
+    });
   });
 
   it('skips preboot lifecycle if run locally', async () => {
     mockGasket.command = { id: 'local' };
-    await plugin.hooks.preboot.handler(mockGasket);
+    await plugin.hooks.preboot(mockGasket);
     expect(apm.start).not.toHaveBeenCalled();
   });
 
   it('disables the agent if one of serverUrl and secretToken are not defined', async () => {
-    mockGasket.config = await plugin.hooks.configure.handler(mockGasket, mockGasket.config);
-    await plugin.hooks.preboot.handler(mockGasket);
+    mockGasket.config = await plugin.hooks.configure(
+      mockGasket,
+      mockGasket.config
+    );
+    await plugin.hooks.preboot(mockGasket);
     expect(apm.start).toHaveBeenCalledWith({ active: false });
   });
 
   it('respects a user-defined "active" config value', async () => {
-    mockGasket.config = await plugin.hooks.configure.handler(mockGasket, {
+    mockGasket.config = await plugin.hooks.configure(mockGasket, {
       ...mockGasket.config,
       elasticAPM: { active: true }
     });
-    await plugin.hooks.preboot.handler(mockGasket);
+    await plugin.hooks.preboot(mockGasket);
     expect(apm.start).toHaveBeenCalledWith({ active: true });
   });
 
   it('warns if starting within preboot', async function () {
-    await plugin.hooks.preboot.handler(mockGasket);
+    await plugin.hooks.preboot(mockGasket);
     expect(apm.start).toHaveBeenCalledTimes(1);
     expect(mockGasket.logger.notice).toHaveBeenCalledWith(
       expect.stringContaining('DEPRECATED started Elastic APM agent late')
@@ -104,12 +109,12 @@ describe('Plugin', () => {
   });
 
   it('sets gasket.apm', async function () {
-    await plugin.hooks.preboot.handler(mockGasket);
+    await plugin.hooks.preboot(mockGasket);
     expect(mockGasket.apm).toEqual(apm);
   });
 
   it('warns if using deprecated gasket.config', async function () {
-    mockGasket.config = await plugin.hooks.configure.handler(mockGasket, {
+    mockGasket.config = await plugin.hooks.configure(mockGasket, {
       ...mockGasket.config,
       elasticAPM: {
         secretToken: 'abcd',
@@ -117,10 +122,14 @@ describe('Plugin', () => {
       }
     });
     expect(mockGasket.logger.notice).toHaveBeenCalledWith(
-      expect.stringMatching('DEPRECATED config `elasticAPM.serverUrl`. Use env var: ELASTIC_APM_SERVER_URL')
+      expect.stringMatching(
+        'DEPRECATED config `elasticAPM.serverUrl`. Use env var: ELASTIC_APM_SERVER_URL'
+      )
     );
     expect(mockGasket.logger.notice).toHaveBeenCalledWith(
-      expect.stringMatching('DEPRECATED config `elasticAPM.secretToken`. Use env var: ELASTIC_APM_SECRET_TOKEN')
+      expect.stringMatching(
+        'DEPRECATED config `elasticAPM.secretToken`. Use env var: ELASTIC_APM_SECRET_TOKEN'
+      )
     );
   });
 });
