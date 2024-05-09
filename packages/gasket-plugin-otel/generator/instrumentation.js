@@ -44,6 +44,9 @@ const sdk = new NodeSDK({
   logRecordProcessor: new SimpleLogRecordProcessor(new OTLPLogExporter()),
   traceExporter: new OTLPTraceExporter(),
   instrumentations: [getNodeAutoInstrumentations({
+    // Future support for both frameworks
+    // '@opentelemetry/instrumentation-express': { ignoreLayersType: ['middleware'] },
+    // '@opentelemetry/instrumentation-fastify': { ignoreLayersType: ['middleware'] },
     '@opentelemetry/instrumentation-fs': { enabled: false }
   })]
 });
