@@ -11,6 +11,7 @@ import { SimpleLogRecordProcessor } from '@opentelemetry/sdk-logs';
 import { DiagConsoleLogger, DiagLogLevel, diag } from '@opentelemetry/api';
 import {
   SEMRESATTRS_SERVICE_NAME,
+  SEMRESATTRS_SERVICE_VERSION,
   SEMRESATTRS_DEPLOYMENT_ENVIRONMENT
 } from '@opentelemetry/semantic-conventions';
 
@@ -31,6 +32,7 @@ if (
 const sdk = new NodeSDK({
   resource: new Resource({
     [SEMRESATTRS_SERVICE_NAME]: process.OTEL_SERVICE_NAME,
+    [SEMRESATTRS_SERVICE_VERSION]: process.OTEL_SERVICE_VERSION || '0.0.0',
     [SEMRESATTRS_DEPLOYMENT_ENVIRONMENT]: process.GASKET_ENV || process.NODE_ENV || 'production'
   }),
   // Metrics are currently not readable in ESS
