@@ -44,13 +44,6 @@ declare module '@types/express-serve-static-core' {
   }
 }
 
-// declare module 'fastify/types/request' {
-//   interface FastifyRequest {
-//     manifest?: Manifest;
-//     path?: string;
-//   }
-// }
-
 declare module 'http' {
   export interface IncomingMessage {
     manifest?: Manifest;
