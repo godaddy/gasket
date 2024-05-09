@@ -1,7 +1,8 @@
 const { name, dependencies } = require('../package.json');
 const path = require('path');
 
-module.exports = {
+/** @type {import('@gasket/engine').Plugin} */
+const plugin = {
   name,
   hooks: {
     create(gasket, { pkg, files }) {
@@ -13,3 +14,5 @@ module.exports = {
     }
   }
 };
+
+module.exports = plugin;
