@@ -14,11 +14,30 @@ describe('utils', () => {
 
   describe('makeGatherDevDeps', () => {
     let gatherDevDeps;
+    let mockData;
 
     beforeEach(() => {
+      mockData = {
+        version: '1.2.3',
+        devDependencies: { bogus: '10.9.7' },
+        peerDependencies: { bogus: '>=10' }
+      };
+
       context = {
         pkgManager: {
-          info: jest.fn().mockImplementation(args => ({ data: args.includes('version') ? '1.2.3' : { bogus: '10.9.7' } }))
+          info: jest.fn().mockImplementation(args => {
+            if (args[1] === 'version') {
+              return { data: mockData.version };
+            }
+
+            if (args[1] === 'peerDependencies') {
+              return { data: mockData.peerDependencies };
+            }
+
+            if (args[1] === 'devDependencies') {
+              return { data: mockData.devDependencies };
+            }
+          })
         }
       };
 
@@ -39,9 +58,23 @@ describe('utils', () => {
       expect(context.pkgManager.info).not.toHaveBeenCalledWith([expect.any(String), 'version']);
     });
 
+    it('looks up devDependencies of package at specific version', async () => {
+      await gatherDevDeps('@some/module@^2.3.4');
+      expect(context.pkgManager.info).toHaveBeenCalledWith(['@some/module@2.3.4', 'devDependencies']);
+    });
+
     it('looks up peerDependencies of package at specific version', async () => {
       await gatherDevDeps('@some/module@^2.3.4');
       expect(context.pkgManager.info).toHaveBeenCalledWith(['@some/module@2.3.4', 'peerDependencies']);
+    });
+
+    it('merges devDependencies and peerDependencies into object', async () => {
+      mockData.devDependencies = { bogus: '^9.0.0' };
+      const results = await gatherDevDeps('@some/module@^2.3.4');
+      expect(results).toEqual({
+        '@some/module': '^2.3.4',
+        'bogus': '^9.0.0'
+      });
     });
 
     it('returns object with dependencies including main package', async () => {
