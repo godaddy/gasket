@@ -3,6 +3,7 @@ const url = require('url');
 const { name } = require('../package');
 const { createConfig } = require('./config');
 const create = require('./create');
+const { webpackConfig } = require('./webpack-config');
 const prompt = require('./prompt');
 const { setupNextApp, setupNextHandling } = require('./setup-next-app');
 const getNextRoute = require('./next-route');
@@ -17,6 +18,7 @@ module.exports = {
   name,
   hooks: {
     configure,
+    webpackConfig,
     actions(gasket) {
       return {
         getNextConfig(nextConfig) {

@@ -55,6 +55,7 @@ describe('Plugin', function () {
       'metadata',
       'middleware',
       'prompt',
+      'webpackConfig',
       'workbox'
     ];
 
