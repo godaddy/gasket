@@ -25,11 +25,16 @@ class WebpackMetricsPlugin {
    *
    * Example format of data to emit:
    *
-   * { name: '@gasket/canary-app', event: 'webpack', data: { images: {
-   * totalSize: 101231, jpg: 101231 }, chunks: { totalSize: 128770, js: 128770
-   * }, runtime: { totalSize: 17671, js: 17671 }, css: { totalSize: 749, css:
-   * 749 }, pages: { totalSize: 782744, js: 782744 }, 'bundle.svgs': {
-   * totalSize: 10188, svgs: 10188 } }, time: 1559323660583 }
+   * { name: '@gasket/canary-app',
+   *    event: 'webpack',
+   *    data: {
+   *     images: { totalSize: 101231, jpg: 101231 },
+   *     chunks: { totalSize: 128770, js: 128770 },
+   *     runtime: { totalSize: 17671, js: 17671 },
+   *     css: { totalSize: 749, css: 749 },
+   *     pages: { totalSize: 782744, js: 782744 },
+   *     'bundle.svgs': { totalSize: 10188, svgs: 10188 } },
+   *   time: 1559323660583 }
    * @type {import('./index').apply}
    */
   apply(compiler) {

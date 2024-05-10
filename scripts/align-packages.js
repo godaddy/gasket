@@ -271,7 +271,7 @@ function checkMaintainers(pkgJson) {
 function checkTypecheckScripts(pkgJson) {
   const { scripts } = pkgJson;
   if (scripts.posttest && !scripts.typecheck) {
-    // Remove 'skip' once types have been completed in each package
+    // TODO: Remove 'skip' once types have been completed in each package
     pkgJson.scripts['typecheck:skip'] = 'tsc';
     pkgJson.scripts['typecheck:watch'] = 'tsc --watch';
   }

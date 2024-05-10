@@ -14,7 +14,7 @@ describe('configure', () => {
   });
 
   it('returns config with serviceWorker settings', async () => {
-    results = await configure(mockGasket);
+    results = await configure(mockGasket, {});
     expect(results).toHaveProperty('serviceWorker');
   });
 
@@ -24,7 +24,7 @@ describe('configure', () => {
   });
 
   it('sets defaults', async () => {
-    results = await configure(mockGasket);
+    results = await configure(mockGasket, {});
     expect(results.serviceWorker).toEqual({
       url: '/sw.js',
       scope: '/',

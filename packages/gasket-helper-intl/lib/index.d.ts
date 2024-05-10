@@ -79,8 +79,8 @@ export type Locale = Lang;
  * State of loaded locale files
  */
 export interface LocalesState {
-  messages: Record<Locale, Record<string, string>>;
-  status: Record<LocalePath, LocaleStatus>;
+  messages?: Record<Locale, Record<string, string>>;
+  status?: Record<LocalePath, LocaleStatus>;
 }
 
 /**

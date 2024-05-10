@@ -1,9 +1,11 @@
 import type { IncomingMessage, OutgoingMessage } from 'http';
 import type { MaybeAsync } from '@gasket/engine';
-import { LocalesProps } from '@gasket/helper-intl';
+import { LocalePathPart, LocalesProps } from '@gasket/helper-intl';
 
 interface CustomScanSettings {
+  /** Lookup dir for module files (default: `locales`) */
   localesDir?: string;
+  /** List of modules to ignore */
   excludes?: Array<string>;
 }
 
@@ -22,7 +24,9 @@ interface IntlConfig {
   localesDir?: string;
   manifestFilename?: string;
   serveStatic?: boolean | string;
-  /* default scan settings */
+  /* Enable locale files collation from node modules. Disabled by default,
+  enable by setting to an object with options below, or set to `true` to use the
+  default options. */
   modules?:
     | boolean
     | CustomScanSettings
@@ -64,7 +68,17 @@ declare module '@gasket/cli' {
   }
 }
 
-interface SrcPkgDir {
-  pkgName?: string;
-  srcDir?: string;
-}
+/** Tuple of package name and path */
+type SrcPkgDir = [string, string];
+
+async function getPackageDirs(
+  /** Path to parent directory */
+  parentDir: string,
+  /** List of full paths */
+  dirList?: SrcPkgDir[]
+): AsyncGenerator<SrcPkgDir>;
+
+function withLocaleRequired(
+  /** Path(s) containing locale files */
+  localePathPart: LocalePathPart | LocalePathPart[]
+): LocalesProps;

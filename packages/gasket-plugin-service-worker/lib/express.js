@@ -1,10 +1,10 @@
-const { getSWConfig } = require('./utils');
-const configureEndpoint = require('./configure-endpoint');
+/// <reference types="@gasket/plugin-express" />
+
+const { getSWConfig } = require('./utils/utils');
+const configureEndpoint = require('./utils/configure-endpoint');
 /**
  * Express lifecycle to add an endpoint to serve service worker script
- *
- * @param {Gasket} gasket - Gasket
- * @param {Express} app - App
+ * @type {import('@gasket/engine').HookHandler<'express'>}
  */
 module.exports = async function express(gasket, app) {
   const { staticOutput, url } = getSWConfig(gasket);

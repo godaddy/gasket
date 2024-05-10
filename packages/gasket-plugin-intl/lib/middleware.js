@@ -18,13 +18,41 @@ function capitalize(str) {
 }
 
 /**
+ * Get the preferred locale from the request headers.
+ * @type {import('./internal').getPreferredLocale}
+ */
+function getPreferredLocale(gasket, req, locales, defaultLocale) {
+  let preferredLocale = defaultLocale;
+  /** @type {string} */
+  const acceptLanguage = req.headers['accept-language'];
+
+  if (acceptLanguage) {
+    debug(`Received accept-language of ${acceptLanguage}`);
+    try {
+      // Get highest or highest from locales if configured
+      preferredLocale = formatLocale(accept.language(acceptLanguage, locales));
+      debug(`Using ${preferredLocale} as starting locale`);
+    } catch (error) {
+      gasket.logger.debug(
+        `Unable to parse accept-language header: ${error.message}`
+      );
+    }
+  } else {
+    debug(
+      `No accept-language header; starting with default ${preferredLocale}`
+    );
+  }
+
+  return preferredLocale;
+}
+
+/**
  * Ensure consistent locale format coming from accept-language header.
  * @example
  * - az-AZ
  * - az-Arab
  * - az-AZ-Latn
- * @param {string} language - Selected accept-language
- * @returns {string} locale
+ * @type {import('./internal').formatLocale}
  */
 function formatLocale(language) {
   const [lang, ...rest] = language ? language.split('-') : [];
@@ -109,8 +137,7 @@ module.exports = function middlewareHook(gasket) {
 
     /**
      * Load locale data and makes available from gasketData
-     * @param {LocalePathPart|LocalePathPart[]} localePathPart - Path(s) containing locale files
-     * @returns {LocalesProps} localesProps
+     * @type {import('./index').withLocaleRequired}
      */
     req.withLocaleRequired = function withLocaleRequired(
       localePathPart = manifest.defaultPath
@@ -144,33 +171,3 @@ module.exports = function middlewareHook(gasket) {
     next();
   };
 };
-
-/**
- *
- * @param gasket
- * @param req
- * @param locales
- * @param defaultLocale
- */
-function getPreferredLocale(gasket, req, locales, defaultLocale) {
-  let preferredLocale = defaultLocale;
-  const acceptLanguage = req.headers['accept-language'];
-  if (acceptLanguage) {
-    debug(`Received accept-language of ${acceptLanguage}`);
-    try {
-      // Get highest or highest from locales if configured
-      preferredLocale = formatLocale(accept.language(acceptLanguage, locales));
-      debug(`Using ${preferredLocale} as starting locale`);
-    } catch (error) {
-      gasket.logger.debug(
-        `Unable to parse accept-language header: ${error.message}`
-      );
-    }
-  } else {
-    debug(
-      `No accept-language header; starting with default ${preferredLocale}`
-    );
-  }
-
-  return preferredLocale;
-}

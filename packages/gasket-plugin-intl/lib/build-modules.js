@@ -25,6 +25,8 @@ class BuildModules {
       this._lookupModuleDirs = modules;
     }
 
+    // @ts-ignore - modules will be an object or array by this point in the
+    // lifecycles
     const { excludes, localesDir } = modules;
 
     this._logger = logger;
@@ -149,9 +151,10 @@ class BuildModules {
 
   /**
    * Find modules that have /locales folder to process
-   * @returns {SrcPkgDir[]} source package directories
+   * @returns {Promise<import('./index').SrcPkgDir[]>} source package directories
    */
   async discoverDirs() {
+    /** @type {import('./index').SrcPkgDir[]} */
     const results = [];
     for await (const [pkgName, dir] of getPackageDirs(this._nodeModulesDir)) {
       if (!this._excludes.includes(path.basename(dir))) {
@@ -174,7 +177,7 @@ class BuildModules {
 
   /**
    * Find modules with locale directories to process
-   * @returns {SrcPkgDir[]} source package directories
+   * @returns {Promise<import('./index').SrcPkgDir[]>} source package directories
    */
   async gatherModuleDirs() {
     if (this._lookupModuleDirs) {
@@ -210,6 +213,8 @@ class BuildModules {
         );
       });
 
+      /** @type {import('./index').SrcPkgDir[]} */
+      // @ts-ignore - force SrcPkgDir[] type
       const results = await Promise.all(promises);
       return results.filter(Boolean);
     }

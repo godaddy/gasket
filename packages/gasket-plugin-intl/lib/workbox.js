@@ -5,8 +5,9 @@ const urljoin = require('url-join');
 const { getIntlConfig } = require('./configure');
 
 /**
- *
- * @param localesPath
+ * Create a function to encode the locale urls
+ * @param {string} localesPath - path to the locale files
+ * @returns {function(*): {manifest: *}} encodeLocaleUrls
  */
 function makeEncodeLocaleUrls(localesPath) {
   const reModulePath = new RegExp(`(.*${localesPath}/)(.*)(/.*)`);
@@ -68,4 +69,5 @@ module.exports = async function workbox(gasket, config, context) {
   };
 };
 
+// @ts-ignore
 module.exports.makeEncodeLocaleUrls = makeEncodeLocaleUrls;

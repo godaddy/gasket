@@ -119,7 +119,7 @@ export async function buildDocsConfigSet(
 ): Promise<DocsConfigSet>;
 
 /** Look up all doc files for a module */
-export async function _findAllFiles(
+async function _findAllFiles(
   moduleData: ModuleData,
   docsSetup: DocsSetup,
   /** Main file */

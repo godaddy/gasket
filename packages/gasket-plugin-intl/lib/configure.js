@@ -18,7 +18,9 @@ const isDefined = (o) => typeof o !== 'undefined';
  */
 function getIntlConfig(gasket) {
   const { intl = {} } = gasket.config || {};
-  // handling default here is necessary for metadata which runs before configure hook
+
+  // handling default here is necessary for metadata which runs before configure
+  // hook
   intl.localesDir = intl.localesDir || path.join('public', 'locales');
   return intl;
 }
@@ -117,10 +119,12 @@ module.exports = function configure(gasket, config) {
    * @property {string} defaultPath - Path to endpoint with JSON files
    * @property {string} defaultLocale - Locale to fallback to when loading files
    * @property {object} localesMap - Mapping of locales to share files
-   * @property {string} localesDir - Path to on-disk directory where locale files exists
+   * @property {string} localesDir - Path to on-disk directory where locale
+   * files exists
    * @property {string} manifestFilename - Name of the manifest file
    * @property {boolean} preloadLocales - Preloads locale files if set to true
-   * @property {object} modules - Enable locale files collation from node modules
+   * @property {object} modules - Enable locale files collation from node
+   * modules
    * @property {string} modules.localesDir - Lookup dir for module files
    * @property {string[]} modules.excludes - List of modules to ignore
    */
@@ -130,4 +134,5 @@ module.exports = function configure(gasket, config) {
   };
 };
 
+// @ts-ignore
 module.exports.getIntlConfig = getIntlConfig;
