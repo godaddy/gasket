@@ -1,6 +1,6 @@
 /* eslint-disable max-statements */
 const debug = require('diagnostics')('gasket:cli:hooks:init');
-const { loadGasketConfigFile, assignPresetConfig } = require('@gasket/resolve');
+// const { loadGasketConfigDefinition, assignPresetConfig } = require('@gasket/resolve');
 const { getEnvironment, addDefaultPlugins } = require('./config/utils');
 const PluginEngine = require('@gasket/engine');
 const {
@@ -35,7 +35,7 @@ async function init({ id, config, argv }) {
     handleEnvVars({ env, root, id, gasketConfig: options.gasketConfig });
     debug('Detected gasket environment', env);
 
-    let configFile = await loadGasketConfigFile(root, env, id, options.gasketConfig);
+    let configFile = await loadGasketConfigDefinition(root, env, id, options.gasketConfig);
     if (configFile) {
       configFile = addDefaultPlugins(configFile);
 

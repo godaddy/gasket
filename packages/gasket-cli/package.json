@@ -50,7 +50,6 @@
     "@gasket/plugin-logger": "^7.0.0-next.21",
     "@gasket/plugin-metadata": "^7.0.0-next.21",
     "@gasket/plugin-start": "^7.0.0-next.21",
-    "@gasket/resolve": "^7.0.0-next.21",
     "@gasket/utils": "^7.0.0-next.21",
     "commander": "^12.0.0",
     "cross-env": "^7.0.3",

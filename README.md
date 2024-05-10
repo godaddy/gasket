@@ -206,7 +206,6 @@ Supporting modules
 | [@gasket/nextjs]                                            | 6.46.7  | Gasket integrations for Next.js apps                                                 |
 | [@gasket/react-intl]                                        | 6.46.7  | React component library to enable localization for gasket apps.                      |
 | [@gasket/redux]                                             | 6.46.0  | Gasket Redux Configuration                                                           |
-| [@gasket/resolve]                                           | 6.46.2  | Essential module resolution & configuration management for gasket plugins & presets. |
 | [@gasket/typescript-tests]                                  | 6.46.7  | Not a published package; hosts unit tests to verify TypeScript support               |
 | [@gasket/utils]                                             | 6.46.2  | Reusable utilities for Gasket internals                                              |
 | /Users/agerard/dev/ghec/godaddy/gasket/packages/gasket-core |         |                                                                                      |
@@ -413,7 +412,6 @@ Available configuration options in the `gasket.config.js`
 [@gasket/nextjs]:/packages/gasket-nextjs/README.md
 [@gasket/react-intl]:/packages/gasket-react-intl/README.md
 [@gasket/redux]:/packages/gasket-redux/README.md
-[@gasket/resolve]:/packages/gasket-resolve/README.md
 [@gasket/typescript-tests]:/packages/gasket-typescript-tests/README.md
 [@gasket/utils]:/packages/gasket-utils/README.md
 [create-gasket-app]:/packages/create-gasket-app/README.md
