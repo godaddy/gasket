@@ -33,10 +33,12 @@ function makeGatherDevDeps(context) {
 
     const full = `${parsedName}@${version.trim()}`;
     const peerDeps = (await pkgManager.info([full, 'peerDependencies'])).data;
+    const devDeps = (await pkgManager.info([full, 'devDependencies'])).data;
 
     return {
       [parsedName]: parsedVersion || `^${version}`,
-      ...(peerDeps || {})
+      ...(peerDeps || {}),
+      ...(devDeps || {})
     };
   };
 }
