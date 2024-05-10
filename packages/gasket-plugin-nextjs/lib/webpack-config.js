@@ -1,4 +1,4 @@
-const isGasketCore = /@gasket[/\\](core)/;
+const isGasketCore = /@gasket[/\\]core$/;
 
 /**
  * Function to validate that '@gasket/core' is not used in browser code.
@@ -37,11 +37,13 @@ function externalizeGasketCore(ctx, callback) {
  *
  * @param {Object} gasket - The gasket API.
  * @param {Object} webpackConfig - Initial Next.js webpack config
+ * @param {Object} context - Next.js build options
+ * @param {Object} context.isServer - Is this a server build?
  * @returns {Object} Partial webpack config with UXCore2 support.
  * @public
  */
-function webpackConfigHook(gasket, webpackConfig) {
-  if (webpackConfig.name === 'client') {
+function webpackConfigHook(gasket, webpackConfig, { isServer }) {
+  if (!isServer) {
     webpackConfig.externals.unshift(validateNoGasketCore);
   } else {
     webpackConfig.externals.unshift(externalizeGasketCore);

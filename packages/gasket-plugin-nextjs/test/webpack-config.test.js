@@ -1,7 +1,7 @@
 const { webpackConfig, validateNoGasketCore, externalizeGasketCore } = require('../lib/webpack-config.js');
 
 describe('webpackConfigHook', () => {
-  let mockGasket, mockWebpackConfig;
+  let mockGasket, mockWebpackConfig, mockContext;
 
   beforeEach(() => {
     mockGasket = {};
@@ -9,17 +9,17 @@ describe('webpackConfigHook', () => {
       name: '',
       externals: []
     };
+    mockContext = {};
   });
 
   it('adds validateNoGasketCore to externals for client', () => {
-    mockWebpackConfig.name = 'client';
-    const result = webpackConfig(mockGasket, mockWebpackConfig);
+    const result = webpackConfig(mockGasket, mockWebpackConfig, mockContext);
     expect(result.externals[0]).toBe(validateNoGasketCore);
   });
 
   it('adds externalizeGasketCore to externals for server', () => {
-    mockWebpackConfig.name = 'server';
-    const result = webpackConfig(mockGasket, mockWebpackConfig);
+    mockContext.isServer = true;
+    const result = webpackConfig(mockGasket, mockWebpackConfig, mockContext);
     expect(result.externals[0]).toBe(externalizeGasketCore);
   });
 });
@@ -53,6 +53,14 @@ describe('externalizeGasketCore', () => {
     mockCtx.request = 'other-package';
     externalizeGasketCore(mockCtx, mockCallback);
     expect(mockCallback).toHaveBeenCalledWith();
+  });
+
+  it('avoids closely name packages', () => {
+    mockCtx.request = '@gasket/core-utils';
+    mockCtx.dependencyType = 'esm';
+    externalizeGasketCore(mockCtx, mockCallback);
+    expect(mockCallback).toHaveBeenCalledWith();
+    expect(mockCallback).not.toHaveBeenCalledWith(null, 'module @gasket/core-utils');
   });
 });
 
