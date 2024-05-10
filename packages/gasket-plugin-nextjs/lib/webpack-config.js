@@ -1,5 +1,13 @@
 const isGasketCore = /@gasket[/\\](core)/;
 
+/**
+ * Function to validate that '@gasket/core' is not used in browser code.
+ * If '@gasket/core' is found in the module request, an error is thrown.
+ *
+ * @param {Object} ctx - The context object containing the request string.
+ * @param {Function} callback - The externals callback.
+ * @returns {void}
+ */
 function validateNoGasketCore(ctx, callback) {
   if (isGasketCore.test(ctx.request)) {
     return callback(new Error('@gasket/core should not be used in browser code.'));
@@ -12,9 +20,9 @@ function validateNoGasketCore(ctx, callback) {
  * We do this to enable GASKET_ENV to be picked up and passed to the plugins.
  * Otherwise, unique builds per environment would be required.
  *
- * @param ctx
- * @param callback
- * @returns {*}
+ * @param {Object} ctx - The context object containing the request string.
+ * @param {Function} callback - The externals callback.
+ * @returns {void|*}
  */
 function externalizeGasketCore(ctx, callback) {
   if (isGasketCore.test(ctx.request)) {
