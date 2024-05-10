@@ -1,4 +1,5 @@
 import type { MaybeAsync } from '@gasket/engine';
+import type { GasketDataIntl } from '@gasket/plugin-intl';
 import type { IncomingMessage, OutgoingMessage } from 'http';
 
 declare module '@gasket/engine' {
@@ -18,6 +19,7 @@ declare module '@gasket/engine' {
 
 declare module '@gasket/data' {
   export interface GasketData {
-    config?: object
+    config: { [key: string | number]: string | undefined };
+    intl?: GasketDataIntl;
   }
 }
