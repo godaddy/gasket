@@ -1,3 +1,8 @@
+/// <reference types="@gasket/core" />
+/// <reference types="@gasket/plugin-logger" />
+/// <reference types="@gasket/plugin-metadata" />
+/// <reference types="@gasket/plugin-express" />
+
 const morgan = require('morgan');
 const split = require('split');
 const { name } = require('../package.json');

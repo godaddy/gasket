@@ -1,4 +1,4 @@
-import type { GasketConfig, MaybeAsync, CoreHookExecTypes } from '@gasket/core';
+import type { GasketConfig, MaybeAsync } from '@gasket/core';
 
 export interface Metrics {
   name: string;
@@ -19,7 +19,7 @@ export interface Metrics {
 }
 
 declare module '@gasket/core' {
-  export interface HookExecTypes extends CoreHookExecTypes {
+  export interface HookExecTypes {
     metrics(metrics: Metrics): MaybeAsync<void>;
   }
 }

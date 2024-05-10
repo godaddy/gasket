@@ -6,10 +6,8 @@ declare module '@gasket/core' {
   export interface GasketActions {}
 
   // To be extended by plugins
-  export interface HookExecTypes {}
-
-
-  export interface CoreHookExecTypes {
+  export interface HookExecTypes {
+    // add makeGasket lifecycles
     init(): void
     actions(): GasketActions
     configure(config: GasketConfig): GasketConfig

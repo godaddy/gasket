@@ -1,3 +1,7 @@
+/// <reference types="@gasket/core" />
+/// <reference types="create-gasket-app" />
+/// <reference types="@gasket/plugin-metadata" />
+
 const { devDependencies, name } = require('../package.json');
 
 /** @type {import('@gasket/core').Plugin} */
