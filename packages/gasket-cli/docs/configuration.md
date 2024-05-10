@@ -148,11 +148,11 @@ module.exports = {
 Configuring your app code through the `gasket.config.js` file is not
 recommended. See the [config plugin] docs for more information on maintaining
 application configuration. If you must access the Gasket configuration, you can
-add a [lifecycle script][lifecycle plugin] to your application and access the
-Gasket configuration via the `gasket.config` property:
+create a custom app-level plugin and add a lifecycle hook to your application 
+and access the Gasket configuration via the `gasket.config` property:
 
 ```js
-// lifecycles/express.js
+// my-custom-app/lifecycles/express.js
 
 module.exports = (gasket, app) => {
   const gasketConfig = gasket.config;
@@ -189,5 +189,4 @@ configuration.
 
 [config plugin]: /packages/gasket-plugin-response-data/README.md
 [start plugin]: /packages/gasket-plugin-start/README.md
-[lifecycle plugin]: /packages/gasket-plugin-lifecycle/README.md
 [naming convention]: /packages/gasket-resolve/README.md
