@@ -10,11 +10,12 @@
   },
   "types": "lib/index.d.ts",
   "files": [
-    "lib"
+    "lib",
+    "cjs"
   ],
   "scripts": {
     "clean": "rimraf cjs",
-    "build": "npm run clean && swc lib -d cjs",
+    "build": "swc lib -d cjs --delete-dir-on-start --strip-leading-paths",
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict --experimental-vm-modules' jest",
