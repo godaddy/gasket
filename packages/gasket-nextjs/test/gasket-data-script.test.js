@@ -1,4 +1,4 @@
-import React from 'react';;
+import React from 'react';
 import { render, queryByAttribute } from '@testing-library/react';
 
 import { GasketDataScript } from '../src';
