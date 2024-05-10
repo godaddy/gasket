@@ -1,5 +1,9 @@
 # `@gasket/plugin-lint`
 
+
+
+- Adjust makeGatherDeps to add devDeps
+
 ### 6.45.2
 
 - Tune `devDeps` ([#670])
@@ -110,3 +114,4 @@
 [#460]: https://github.com/godaddy/gasket/pull/460
 [#482]: https://github.com/godaddy/gasket/pull/482
 [#670]: https://github.com/godaddy/gasket/pull/670
+[#747]: https://github.com/godaddy/gasket/pull/747
