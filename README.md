@@ -128,7 +128,6 @@ Available structure
 | ------------------ | ------------------------------------------------------ |
 | [.docs/]           | Output of the docs command                             |
 | [config/]          | App configuration using environment files              |
-| [lifecycles/]      | JavaScript files to hook lifecycles with matching name |
 | [pages/]           | NextJS routing                                         |
 | [plugins/]         | One-off plugins for apps                               |
 | [public/]          | NextJS static files                                    |
@@ -173,7 +172,6 @@ Available plugins
 | [@gasket/plugin-https]          | 6.46.7  | Create http/s servers with graceful termination                            |
 | [@gasket/plugin-intl]           | 6.46.7  | NodeJS script to build localization files.                                 |
 | [@gasket/plugin-jest]           | 6.46.7  | Integrated jest into your application.                                     |
-| [@gasket/plugin-lifecycle]      | 6.46.2  | Allows a gasket/ directory to be used for lifecycle hooks in applications. |
 | [@gasket/plugin-lint]           | 6.46.2  | Adds GoDaddy standard linting to your application                          |
 | [@gasket/plugin-log]            | 6.46.2  | Gasket log plugin                                                          |
 | [@gasket/plugin-manifest]       | 6.46.2  | The web app manifest for progressive Gasket applications                   |
@@ -358,7 +356,6 @@ Available configuration options in the `gasket.config.js`
 [workbox]:/packages/gasket-plugin-workbox/README.md#workbox
 [.docs/]:/packages/gasket-plugin-docs/README.md#options
 [config/]:/packages/gasket-plugin-config/README.md
-[lifecycles/]:/packages/gasket-plugin-lifecycle/README.md
 [pages/]:https://nextjs.org/docs/routing/introduction
 [plugins/]:/packages/gasket-cli/docs/plugins.md#one-off-plugins
 [public/]:https://nextjs.org/docs/basic-features/static-file-serving
@@ -387,7 +384,6 @@ Available configuration options in the `gasket.config.js`
 [@gasket/plugin-https]:/packages/gasket-plugin-https/README.md
 [@gasket/plugin-intl]:/packages/gasket-plugin-intl/README.md
 [@gasket/plugin-jest]:/packages/gasket-plugin-jest/README.md
-[@gasket/plugin-lifecycle]:/packages/gasket-plugin-lifecycle/README.md
 [@gasket/plugin-lint]:/packages/gasket-plugin-lint/README.md
 [@gasket/plugin-log]:/packages/gasket-plugin-log/README.md
 [@gasket/plugin-manifest]:/packages/gasket-plugin-manifest/README.md
