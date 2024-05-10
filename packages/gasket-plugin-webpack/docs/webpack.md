@@ -20,25 +20,6 @@ brittle, so handle with care. Also, the `webpack` instance is passed via context
 with the lifecycle, providing access to the [compatible Webpack plugins]
 of the version installed.
 
-### Via custom app-level plugin
-
-```js
-// my-custom-plugin/lifecycles/webpack-config.js
-const webpackMerge = require('webpack-merge');
-
-module.exports = function (gasket, webpackConfig) {
-  return webpackMerge.merge(webpackConfig,
-    {
-      resolve: {
-        alias: {
-          'fancy-module': './path/to/some/other/module'
-        }
-      }
-    }
-  )
-}
-```
-
 ### Via plugin hooks
 
 ```js
