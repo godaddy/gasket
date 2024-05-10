@@ -34,15 +34,11 @@ jest.mock('next/headers', () => {
   };
 });
 
-
-// const request = await import('../../lib/server/request.js').then((module) => module.request);
-
 describe('request', () => {
   let request;
 
   beforeAll(async () => {
     // must be dynamic to avoid hoisting static import to the top
-    // TODO: this can be moved to the file level once ESM is supported
     request = await import('../../src/server/request').then((module) => module.request);
   });
 
