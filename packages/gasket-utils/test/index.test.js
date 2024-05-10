@@ -7,8 +7,7 @@ describe('index', () => {
       'tryResolve',
       'applyConfigOverrides',
       'runShellCommand',
-      'PackageManager',
-      'requireWithInstall'
+      'PackageManager'
     ];
 
     expect(expected.every(k => k in utils)).toBe(true);
