@@ -1,5 +1,5 @@
 /* eslint no-unused-vars: 0 */
-const Files = require('../../../lib/scaffold/files');
+import { Files } from '../../../lib/scaffold/files.js';
 
 
 describe('Files', () => {

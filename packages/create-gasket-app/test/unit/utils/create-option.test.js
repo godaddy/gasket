@@ -1,4 +1,4 @@
-const { createOption } = require('../../../lib/utils');
+import { createOption } from '../../../lib/utils/index.js';
 
 describe('createOption', () => {
 

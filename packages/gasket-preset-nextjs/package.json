@@ -1,12 +1,21 @@
 {
   "name": "@gasket/preset-nextjs",
-  "version": "7.0.0-next.2",
+  "version": "7.0.0-next.21",
   "description": "Basic NextJS Framework",
-  "main": "lib",
+  "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
     "lib"
   ],
+  "type": "module",
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "npm run lint -- --fix",
+    "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict --experimental-vm-modules' jest",
+    "test:watch": "npm run test -- --watch",
+    "test:coverage": "jest --coverage",
+    "posttest": "npm run lint"
+  },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/godaddy/gasket.git"
@@ -20,14 +29,43 @@
     "url": "https://github.com/godaddy/gasket/issues"
   },
   "dependencies": {
-    "@gasket/plugin-express": "^7.0.0-next.2",
-    "@gasket/plugin-https": "^7.0.0-next.2",
-    "@gasket/plugin-nextjs": "^7.0.0-next.2",
-    "@gasket/plugin-redux": "^7.0.0-next.2",
-    "@gasket/plugin-webpack": "^7.0.0-next.2",
-    "@gasket/plugin-winston": "^7.0.0-next.2"
+    "@gasket/plugin-cypress": "^7.0.0-next.21",
+    "@gasket/plugin-express": "^7.0.0-next.21",
+    "@gasket/plugin-https": "^7.0.0-next.21",
+    "@gasket/plugin-jest": "^7.0.0-next.21",
+    "@gasket/plugin-lint": "^7.0.0-next.21",
+    "@gasket/plugin-mocha": "^7.0.0-next.21",
+    "@gasket/plugin-nextjs": "^7.0.0-next.21",
+    "@gasket/plugin-redux": "^7.0.0-next.21",
+    "@gasket/plugin-typescript": "^7.0.0-next.21",
+    "@gasket/plugin-webpack": "^7.0.0-next.21",
+    "@gasket/plugin-winston": "^7.0.0-next.21",
+    "@gasket/utils": "^7.0.0-next.21"
   },
   "devDependencies": {
-    "@gasket/plugin-start": "^7.0.0-next.2"
+    "cross-env": "^7.0.3",
+    "eslint": "^8.56.0",
+    "eslint-config-godaddy": "^7.0.2",
+    "eslint-plugin-jest": "^27.6.3",
+    "eslint-plugin-unicorn": "^44.0.0",
+    "jest": "^29.7.0"
+  },
+  "eslintConfig": {
+    "extends": [
+      "godaddy",
+      "plugin:jest/recommended"
+    ],
+    "plugins": [
+      "unicorn"
+    ],
+    "rules": {
+      "unicorn/filename-case": "error"
+    }
+  },
+  "eslintIgnore": [
+    "test/fixtures"
+  ],
+  "jest": {
+    "transform": {}
   }
 }

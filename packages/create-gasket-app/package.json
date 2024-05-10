@@ -1,6 +1,6 @@
 {
   "name": "create-gasket-app",
-  "version": "7.0.0-next.2",
+  "version": "7.0.0-next.21",
   "description": "starter pack for creating a gasket app",
   "main": "lib",
   "bin": {
@@ -9,11 +9,12 @@
   "files": [
     "lib"
   ],
+  "type": "module",
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
-    "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
-    "test:watch": "jest --watch",
+    "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict --experimental-vm-modules' jest",
+    "test:watch": "npm run test -- --watch",
     "test:coverage": "jest --coverage",
     "posttest": "npm run lint"
   },
@@ -31,14 +32,11 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/create-gasket-app",
   "dependencies": {
-    "@gasket/engine": "^7.0.0-next.2",
-    "@gasket/plugin-git": "^7.0.0-next.2",
-    "@gasket/plugin-lifecycle": "^7.0.0-next.2",
-    "@gasket/plugin-logger": "^7.0.0-next.2",
-    "@gasket/plugin-metadata": "^7.0.0-next.2",
-    "@gasket/plugin-start": "^7.0.0-next.2",
-    "@gasket/resolve": "^7.0.0-next.2",
-    "@gasket/utils": "^7.0.0-next.2",
+    "@gasket/core": "^7.0.0-next.21",
+    "@gasket/engine": "^7.0.0-next.21",
+    "@gasket/plugin-git": "^7.0.0-next.21",
+    "@gasket/plugin-logger": "^7.0.0-next.21",
+    "@gasket/utils": "^7.0.0-next.21",
     "commander": "^12.0.0",
     "deepmerge": "^4.3.1",
     "glob": "^8.1.0",
@@ -77,5 +75,8 @@
   },
   "eslintIgnore": [
     "test/fixtures"
-  ]
+  ],
+  "jest": {
+    "transform": {}
+  }
 }

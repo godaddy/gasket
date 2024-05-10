@@ -1,6 +1,6 @@
 /* eslint-disable max-statements, jest/no-conditional-expect */
-const { Command } = require('commander');
-const { processCommand } = require('../../../lib/utils');
+import { jest } from '@jest/globals';
+
 const mockDumpErrorContext = jest.fn();
 const consoleErrorStub = jest.spyOn(console, 'error').mockImplementation(() => { });
 const mockActionStubs = {
@@ -14,6 +14,8 @@ const mockActionStubs = {
   linkModules: jest.fn(),
   writeGasketConfig: jest.fn(),
   loadPkgForDebug: jest.fn(),
+  presetPromptHooks: jest.fn(),
+  presetConfigHooks: jest.fn(),
   promptHooks: jest.fn(),
   createHooks: jest.fn(),
   generateFiles: jest.fn(),
@@ -27,10 +29,18 @@ mockActionStubs.installModules.update = jest.fn();
 mockActionStubs.linkModules.update = jest.fn();
 
 jest.mock('ora', () => () => ({ warn: jest.fn() }));
-jest.mock('../../../lib/scaffold/dump-error-context', () => mockDumpErrorContext);
-jest.mock('../../../lib/scaffold/actions', () => mockActionStubs);
+jest.unstable_mockModule('../../../lib/scaffold/dump-error-context.js', () => ({
+  dumpErrorContext: mockDumpErrorContext
+}));
+jest.unstable_mockModule('../../../lib/scaffold/actions/index.js', () => mockActionStubs);
+jest.unstable_mockModule('@gasket/core', () => ({
+  makeGasket: jest.fn()
+}));
 
-const CreateCommand = require('../../../lib/commands/create');
+
+const CreateCommand = (await import('../../../lib/commands/create.js')).createCommand;
+const { Command } = await import('commander');
+const { processCommand } = await import('../../../lib/utils/index.js');
 
 describe('create', function () {
   let cmdOptions;
@@ -88,7 +98,7 @@ describe('create', function () {
     expect(cmdOptions.presets).toEqual(['nextjs', 'react']);
   });
 
-  it('executes expected bootstrap actions', async () => {
+  it('executes expected actions', async () => {
     await cmd.parseAsync(['node', 'gasket', 'create', 'myapp']);
     expect(mockActionStubs.loadPreset).toHaveBeenCalled();
     expect(mockActionStubs.globalPrompts).toHaveBeenCalled();
@@ -97,47 +107,13 @@ describe('create', function () {
     expect(mockActionStubs.writePkg).toHaveBeenCalled();
     expect(mockActionStubs.installModules).toHaveBeenCalled();
     expect(mockActionStubs.linkModules).toHaveBeenCalled();
-  });
-
-  it('skips bootstrap actions with --no-bootstrap', async () => {
-    await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--no-bootstrap', '--presets=nextjs']);
-    expect(cmdOptions.bootstrap).toBe(false);
-    expect(mockActionStubs.mkDir).not.toHaveBeenCalled();
-  });
-
-  it('executes loadPkgForDebug with --no-bootstrap', async () => {
-    await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--no-bootstrap', '--presets=nextjs']);
-    expect(cmdOptions.bootstrap).toBe(false);
-    expect(mockActionStubs.loadPkgForDebug).toHaveBeenCalled();
-  });
-
-  it('executes expected generate actions', async () => {
-    await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--presets=nextjs']);
+    expect(mockActionStubs.presetPromptHooks).toHaveBeenCalled();
+    expect(mockActionStubs.presetConfigHooks).toHaveBeenCalled();
     expect(mockActionStubs.promptHooks).toHaveBeenCalled();
     expect(mockActionStubs.createHooks).toHaveBeenCalled();
     expect(mockActionStubs.generateFiles).toHaveBeenCalled();
     expect(mockActionStubs.writeGasketConfig).toHaveBeenCalled();
-    expect(mockActionStubs.writePkg.update).toHaveBeenCalled();
-    expect(mockActionStubs.installModules.update).toHaveBeenCalled();
-    expect(mockActionStubs.linkModules.update).toHaveBeenCalled();
-  });
-
-  it('skips generate actions with --no-generate', async () => {
-    await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--no-generate', '--presets=nextjs']);
-    expect(cmdOptions.generate).toBe(false);
-    expect(mockActionStubs.promptHooks).not.toHaveBeenCalled();
-  });
-
-  it('does not execute loadPkgForDebug with --no-bootstrap --no-generate', async () => {
-    await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--no-bootstrap', '--no-generate', '--presets=nextjs']);
-    expect(cmdOptions.bootstrap).toBe(false);
-    expect(cmdOptions.generate).toBe(false);
-    expect(cmdOptions.presets).toEqual(['nextjs']);
-    expect(mockActionStubs.loadPkgForDebug).not.toHaveBeenCalled();
-  });
-
-  it('executes printReport', async () => {
-    await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--presets=nextjs']);
+    expect(mockActionStubs.postCreateHooks).toHaveBeenCalled();
     expect(mockActionStubs.printReport).toHaveBeenCalled();
   });
 

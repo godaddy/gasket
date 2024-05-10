@@ -1,7 +1,7 @@
 const path = require('path');
 const timing = { before: ['@gasket/plugin-docs'] };
 
-async function handler(gasket, config) {
+function handler(gasket, config) {
   const { docusaurus = {} } = config;
   const { rootDir = '.docs', docsDir = 'docs' } = docusaurus;
 

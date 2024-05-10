@@ -3,7 +3,7 @@
  *
  * @type {Files}
  */
-module.exports = class Files {
+export class Files {
   constructor() {
     this.globSets = [];
   }
@@ -27,4 +27,4 @@ module.exports = class Files {
   add({ globs, source }) {
     this.globSets.push({ globs, source });
   }
-};
+}

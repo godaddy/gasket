@@ -1,3 +1,4 @@
+import type { CreateContext } from 'create-gasket-app';
 import type { MaybeMultiple, MaybeAsync } from '@gasket/engine';
 import type { SecureContextOptions } from 'tls';
 import type { Agent as HttpAgent, Server as HttpServer } from 'http';
@@ -90,6 +91,8 @@ declare module '@gasket/engine' {
   };
 
   export interface HookExecTypes {
+    actions(): GasketActions;
+    create(context: CreateContext): Promise<void>;
     devProxy(proxyConfig: DevProxyConfig): MaybeAsync<DevProxyConfig>,
     serverConfig(serverConfig: Omit<ServerOptions, 'handler'>): MaybeAsync<ServerOptions>;
     createServers(serverConfig: ServerOptions): MaybeAsync<ServerOptions>;

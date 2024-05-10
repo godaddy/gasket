@@ -1,11 +1,14 @@
-const { name, devDependencies } = require('../package');
+const { name, version, devDependencies } = require('../package');
 const initWebpack = require('./init-webpack');
 
 module.exports = {
   name,
   hooks: {
-    create(gasket, context) {
-      const { pkg } = context;
+    create(gasket, { pkg, gasketConfig }) {
+      gasketConfig.addPlugin('pluginWebpack', name);
+      pkg.add('dependencies', {
+        [name]: `^${version}`
+      });
       pkg.add('devDependencies', {
         webpack: devDependencies.webpack
       });
