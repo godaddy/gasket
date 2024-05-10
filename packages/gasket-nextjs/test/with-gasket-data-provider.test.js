@@ -1,40 +1,47 @@
-import React from 'react';
+import { jest, expect } from '@jest/globals';
+import { createElement } from 'react';
 import { render } from '@testing-library/react';
+import { withGasketDataProvider } from '../lib/with-gasket-data-provider.js';
+
+// eslint-disable-next-line no-console
+const consoleError = console.error;
+// ignore known act() warnings
+jest.spyOn(console, 'error').mockImplementation((msg) => {
+  if (msg.includes('ReactDOMTestUtils.act')) return;
+  consoleError(msg);
+});
+
+const mockGasketData = jest.fn();
+jest.unstable_mockModule('@gasket/data', () => ({ default: mockGasketData }));
+
 
 describe('withGasketDataProvider', function () {
 
-  const setup = (mockData = {}) => {
-    jest.mock('@gasket/data', () => mockData);
-    const { withGasketDataProvider } = require('../src/with-gasket-data-provider');
-    return { withGasketDataProvider };
-  };
-
   afterEach(() => {
+    mockGasketData.mockReturnValue();
     jest.resetModules();
   });
 
   it('should render the component', () => {
-    const { withGasketDataProvider } = setup();
-    const HocComponent = withGasketDataProvider()(() => <div />);
-    const container = render(<HocComponent />);
+    const HocComponent = withGasketDataProvider()(() => createElement('div'));
+    const container = render(createElement(HocComponent));
 
     expect(container).toBeDefined();
   });
 
   it('should inject gasketData when client side', async () => {
-    const { withGasketDataProvider } = setup({ test: 'hello' });
-    const HocComponent = withGasketDataProvider()(({ children }) => <div>{children}</div>);
+    mockGasketData.mockReturnValue({ test: 'hello' });
+    const HocComponent = withGasketDataProvider()(({ children }) => createElement('div', null, children));
     const intPropsResponse = await HocComponent.getInitialProps({});
     expect(intPropsResponse).toEqual({ gasketData: { test: 'hello' } });
   });
 
 
   it('should inject gasketData when SSR', async () => {
-    const { withGasketDataProvider } = setup();
     const serverTestData = { test: 'hello world' };
 
     // eslint-disable-next-line react/prop-types
-    const Component = ({ children }) => <div>{children}</div>;
+    const Component = ({ children }) => createElement('div', null, children);
 
     const HocComponent = withGasketDataProvider()(Component);
     const intPropsResponse = await HocComponent.getInitialProps({ ctx: { res: { locals: { gasketData: serverTestData } } } });
@@ -44,13 +51,11 @@ describe('withGasketDataProvider', function () {
 
 
   it('should call wrappedComponents getInitialProps', async () => {
-    const { withGasketDataProvider } = setup();
-
     const serverTestData = { test: 'hello world' };
     const intProps = { called: true };
 
     // eslint-disable-next-line react/prop-types
-    const Component = ({ children }) => <div>{children}</div>;
+    const Component = ({ children }) => createElement('div', null, children);
     Component.getInitialProps = async () => (intProps);
 
     const HocComponent = withGasketDataProvider()(Component);
