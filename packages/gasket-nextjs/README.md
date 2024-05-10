@@ -12,6 +12,58 @@ Gasket integrations for Next.js apps. Provides several tools:
 npm i @gasket/nextjs
 ```
 
+## Functions
+
+### request
+
+Get a request-like object unique to the current request in server components.
+
+**Signature**
+
+- `request(query?: object): { headers: object, cookies: object, query?: object }`
+
+**Props**
+
+- `[query]` - (object) Optional query object
+
+Many GasketActions are designed to be unique to requests.
+When using ServerComponents with Next.js, the incoming request object is not
+fully accessible. This function provides a way to get a request-like object
+that can be used in ServerComponents.
+
+#### Example
+
+```js
+import { request } from '@gasket/nextjs/server';
+import gasket from '../gasket.mjs'
+
+export default async function MyPage() {
+  const req = request();
+  const something = await gasket.actions.getSomething(req);
+  
+  return <div>{ something.fancy }</div>;
+}
+```
+
+The `req` will contain an object with headers and cookies.
+
+If a query object is passed in, it will be added to the request object as well.
+For server components, dynamic routes params are available via props, and can
+be passed to the `request` function to make those path params available as the
+query.
+
+```js
+import { request } from '@gasket/nextjs/server';
+import gasket from '../gasket.mjs'
+
+export default async function MyDynamicRoutePage({ params }) {
+  const req = request(params);
+  const something = await gasket.actions.getSomething(req);
+  
+  return <div>{ something.fancy }</div>;
+}
+```
+
 ## Components
 
 ### withGasketData

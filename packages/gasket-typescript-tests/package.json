@@ -56,7 +56,6 @@
     "@gasket/plugin-https": "^7.0.0-next.21",
     "@gasket/plugin-intl": "^7.0.0-next.21",
     "@gasket/plugin-jest": "^7.0.0-next.21",
-    "@gasket/plugin-lifecycle": "^7.0.0-next.21",
     "@gasket/plugin-logger": "^7.0.0-next.21",
     "@gasket/plugin-manifest": "^7.0.0-next.21",
     "@gasket/plugin-metadata": "^7.0.0-next.21",
