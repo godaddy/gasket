@@ -6,6 +6,6 @@ declare module '@gasket/data' {
         intl?: GasketDataIntl;
     }
 
-    const gasketData: GasketData;
+    export function gasketData(): GasketData;
     export default gasketData;
 }
