@@ -1,4 +1,5 @@
 const plugin = require('../lib/plugin');
+const { name, version, devDependencies } = require('../package.json');
 
 describe('create', function () {
   let mockContext;
@@ -18,14 +19,34 @@ describe('create', function () {
       },
       files: {
         add: filesAddStub
+      },
+      gasketConfig: {
+        add: jest.fn(),
+        addPlugin: jest.fn()
       }
     };
   });
 
+  it('adds itself to the dependencies', async function () {
+    await plugin.hooks.create({}, mockContext);
+    expect(pkgAddStub).toHaveBeenCalledWith('dependencies',
+      expect.objectContaining({
+        [name]: `^${version}`
+      })
+    );
+  });
+
   it('adds the appropriate dependencies', async function () {
     await plugin.hooks.create({}, mockContext);
-    expect(pkgAddStub.mock.calls[0]).toEqual(['dependencies', {
-      '@gasket/data': require('../package.json').devDependencies['@gasket/data']
-    }]);
+    expect(pkgAddStub).toHaveBeenCalledWith('dependencies',
+      expect.objectContaining({
+        '@gasket/data': devDependencies['@gasket/data']
+      })
+    );
+  });
+
+  it('adds plugin import to the gasket file', async function () {
+    await plugin.hooks.create({}, mockContext);
+    expect(mockContext.gasketConfig.addPlugin).toHaveBeenCalledWith('pluginResponseData', name);
   });
 });

@@ -1,5 +1,5 @@
-const path = require('path');
-const fs = require('fs').promises;
+import path from 'path';
+import { writeFile } from 'fs/promises';
 
 /**
  * If an error occurs during create, dump the context for debugging.
@@ -9,7 +9,7 @@ const fs = require('fs').promises;
  * @param {Error} error - Exiting error
  * @returns {Promise<void>} promise
  */
-module.exports = async function dumpErrorContext(context, error) {
+export async function dumpErrorContext(context, error) {
   const { cwd } = context;
 
   try {
@@ -17,7 +17,7 @@ module.exports = async function dumpErrorContext(context, error) {
     const fileName = 'gasket-create-error.log';
 
     const filePath = path.join(cwd, fileName);
-    await fs.writeFile(filePath, JSON.stringify(report, null, 2), 'utf8');
+    await writeFile(filePath, JSON.stringify(report, null, 2), 'utf8');
     console.log(`Error log dumped to: ${filePath}`);
   } catch (err) {
     //
@@ -25,4 +25,4 @@ module.exports = async function dumpErrorContext(context, error) {
     //
     console.error(`Error writing error log: ${err}`);
   }
-};
+}

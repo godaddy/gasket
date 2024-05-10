@@ -1,5 +1,10 @@
 # `@gasket/plugin-docs`
 
+
+
+- Add plugin import to gasket file ([#736])
+- Add itself to the app package file
+
 ### 6.44.1
 
 - Add the default docs directory `.docs` to `.gitignore` on project creation. ([#644])
@@ -96,3 +101,4 @@
 [#460]: https://github.com/godaddy/gasket/pull/460
 [#504]: https://github.com/godaddy/gasket/pull/504
 [#644]: https://github.com/godaddy/gasket/pull/644
+[#736]: https://github.com/godaddy/gasket/pull/736

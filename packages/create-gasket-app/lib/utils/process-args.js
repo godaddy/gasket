@@ -16,7 +16,7 @@ function isValidArg(arg) {
  * @param {CLICommandArg[]} args Array of argument configurations
  * @returns {ProccesedCLICommandArg[]} Array of argument definitions
  */
-function processArgs(args) {
+export function processArgs(args) {
   if (!Array.isArray(args) || !args.every(isValidArg)) throw new Error('Invalid argument(s) configuration');
 
   return args.reduce((acc, arg) => {
@@ -35,5 +35,3 @@ function processArgs(args) {
 
   }, []);
 }
-
-module.exports = processArgs;

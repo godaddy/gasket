@@ -1,5 +1,10 @@
 # `@gasket/plugin-webpack`
 
+
+- Add plugin import to gasket file ([#736])
+- Add itself to the app package file
+
+
 ### 6.34.4
 
 - Upgrade eslint-plugin-unicorn v43 ([#436])
@@ -67,3 +72,4 @@
 [#376]: https://github.com/godaddy/gasket/pull/376
 [#436]: https://github.com/godaddy/gasket/pull/436
 [#442]: https://github.com/godaddy/gasket/pull/442
+[#736]: https://github.com/godaddy/gasket/pull/736

@@ -1,2 +1,2 @@
-import gasket from './gasket.mjs';
+import gasket from './gasket.js';
 export default gasket.actions.getNextConfig();

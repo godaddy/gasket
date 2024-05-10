@@ -1,5 +1,6 @@
-const { Command } = require('commander');
-const { processCommand } = require('../../../lib/utils');
+import { jest } from '@jest/globals';
+import { Command } from 'commander';
+import { processCommand } from '../../../lib/utils/index.js';
 
 describe('process-command', () => {
 
