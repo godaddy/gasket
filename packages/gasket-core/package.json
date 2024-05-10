@@ -3,10 +3,10 @@
   "version": "7.0.0-next.21",
   "description": "Entry point to setting up Gasket instances",
   "module": "lib/index.js",
-  "main": "cjs/lib/index.js",
+  "main": "cjs/index.js",
   "exports": {
     "import": "./lib/index.js",
-    "require": "./cjs/lib/index.js"
+    "require": "./cjs/index.js"
   },
   "types": "lib/index.d.ts",
   "files": [
