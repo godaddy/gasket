@@ -9,8 +9,8 @@ const rimraf = promisify(require('rimraf'));
 /**
  * Copies configured files for a module to the target output dir and applies any
  * transforms.
- * @param {import('../index').ModuleDocsConfig} moduleDocsConfig -
- * @param {import('../index').DocsConfigSet} docsConfigSet - Configurations for
+ * @param {import('../internal').ModuleDocsConfig} moduleDocsConfig -
+ * @param {import('../internal').DocsConfigSet} docsConfigSet - Configurations for
  * collating docs
  * @returns {Promise} promise
  * @private
@@ -52,7 +52,7 @@ async function processModule(moduleDocsConfig, docsConfigSet) {
 
 /**
  * Collect and combine doc files in proper order.
- * @param {import('../index').DocsConfigSet} docsConfigSet - Configurations for
+ * @param {import('../internal').DocsConfigSet} docsConfigSet - Configurations for
  * collating docs
  * @returns {Promise} promise
  */

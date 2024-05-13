@@ -9,7 +9,7 @@ const defaults = DocsConfigSetBuilder.docsSetupDefault;
  * Searches for the pluginData from metadata for a given plugin.
  * If the plugin does not have a name, a unique match by hooks is attempted,
  * otherwise a console warning is issued.
- * @type {import('../index').findPluginData}
+ * @type {import('../internal').findPluginData}
  */
 function findPluginData(plugin, pluginsDatas, logger) {
   const { name } = plugin;
@@ -64,7 +64,7 @@ function findPluginData(plugin, pluginsDatas, logger) {
  * - metadata for plugins without docsSetup hook
  * - metadata for modules not processed with plugins
  * - metadata for presets
- * @type {import('../index').buildDocsConfigSet}
+ * @type {import('../internal').buildDocsConfigSet}
  */
 async function buildDocsConfigSet(gasket) {
   const { metadata, logger } = gasket;

@@ -9,7 +9,7 @@ const matchUrlLink =
 
 /**
  * Creates transform to modify links in markdown files
- * @type {import('../index').LinkTransform}
+ * @type {import('../internal').LinkTransform}
  */
 const makeLinkTransform = (callback) => (content) => {
   return content.replace(matchLink, (match, p1, p2, p3) => {
@@ -19,7 +19,7 @@ const makeLinkTransform = (callback) => (content) => {
 
 /**
  * Updates gasket monorepo /packages/* links to be URLs to repo.
- * @type {import('../index').DocsTransform}
+ * @type {import('../internal').DocsTransform}
  */
 const txGasketPackageLinks = {
   global: true,
@@ -41,12 +41,12 @@ const txGasketPackageLinks = {
 /**
  * Updates all gasket URL links to be relative to the collated docs if the
  * target package has a docsConfig.
- * @type {import('../index').DocsTransform}
+ * @type {import('../internal').DocsTransform}
  */
 const txGasketUrlLinks = {
   global: true,
   test: isMarkdown,
-  /** @type {import('../index').DocsTransformHandler} */
+  /** @type {import('../internal').DocsTransformHandler} */
   handler: function txGasketUrlLinks(
     content,
     { filename, docsConfig, docsConfigSet }
@@ -84,7 +84,7 @@ const txGasketUrlLinks = {
 /**
  * Updates any absolute links in collated packages to be relative to the
  * markdown file itself.
- * @type {import('../index').DocsTransform}
+ * @type {import('../internal').DocsTransform}
  */
 const txAbsoluteLinks = {
   global: true,

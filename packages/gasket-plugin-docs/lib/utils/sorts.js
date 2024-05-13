@@ -1,4 +1,4 @@
-/** @typedef {import('../index').ModuleDocsConfig} ModuleDocsConfig */
+/** @typedef {import('../internal').ModuleDocsConfig} ModuleDocsConfig */
 
 /**
  * Sort an array of names alphabetically.
@@ -117,8 +117,8 @@ function getStructureWeight(name) {
 
 /**
  * Sort an array of structures by name
- * @type {function(import('../index').DetailDocsConfig[]):
- * import('../index').DetailDocsConfig[]}
+ * @type {function(import('../internal').DetailDocsConfig[]):
+ * import('../internal').DetailDocsConfig[]}
  */
 const sortStructures = sortByKey(
   'name',
@@ -127,15 +127,15 @@ const sortStructures = sortByKey(
 
 /**
  * Sort an array of commands by name
- * @type {function(import('../index').DetailDocsConfig[]):
- * import('../index').DetailDocsConfig[]}
+ * @type {function(import('../internal').DetailDocsConfig[]):
+ * import('../internal').DetailDocsConfig[]}
  */
 const sortCommands = sortByKey('name', alphaCompare);
 
 /**
  * Sort an array of lifeycles by name
- * @type {function(import('../index').DetailDocsConfig[]):
- * import('../index').DetailDocsConfig[]}
+ * @type {function(import('../internal').DetailDocsConfig[]):
+ * import('../internal').DetailDocsConfig[]}
  */
 // TODO (kinetifex): eventually sort by parent and order when doing graphing
 // work
@@ -143,8 +143,8 @@ const sortLifecycles = sortByKey('name', alphaCompare);
 
 /**
  * Sort an array of configurations by name
- * @type {function(import('../index').DetailDocsConfig[]):
- * import('../index').DetailDocsConfig[]}
+ * @type {function(import('../internal').DetailDocsConfig[]):
+ * import('../internal').DetailDocsConfig[]}
  */
 const sortConfigurations = sortByKey('name', alphaCompare);
 

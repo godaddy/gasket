@@ -8,7 +8,7 @@ const isUrl = /^(https?:)?\/\//;
 
 /**
  * Generates the index README.md
- * @param {import('../index').DocsConfigSet} docsConfigSet - Docs generation
+ * @param {import('../internal').DocsConfigSet} docsConfigSet - Docs generation
  * configs
  * @returns {string} filename
  */
@@ -128,7 +128,7 @@ function generateContent(docsConfigSet) {
 
 /**
  * Generates the index README.md
- * @param {import('../index').DocsConfigSet} docsConfigSet - Docs generation
+ * @param {import('../internal').DocsConfigSet} docsConfigSet - Docs generation
  * configs
  * @returns {Promise<string>} filename
  */
