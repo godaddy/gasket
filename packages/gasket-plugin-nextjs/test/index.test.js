@@ -11,14 +11,14 @@ const fastifyApp = {
   all: jest.fn()
 };
 
-const nextHandler = {
+const nextServer = {
   prepare: jest.fn().mockResolvedValue(),
   getRequestHandler: jest.fn().mockResolvedValue({}),
   buildId: '1234',
   name: 'testapp'
 };
 
-const mockSetupNextAppStub = jest.fn(() => nextHandler);
+const mockSetupNextAppStub = jest.fn(() => nextServer);
 
 jest.mock('../lib/setup-next-app', () => {
   const mod = jest.requireActual('../lib/setup-next-app');
@@ -175,7 +175,7 @@ describe('express hook', () => {
     await hook(gasket, expressApp, false);
 
     expect(gasket.exec).toHaveBeenCalledWith('nextExpress', {
-      next: nextHandler,
+      next: nextServer,
       express: expressApp
     });
   });
@@ -194,7 +194,7 @@ describe('express hook', () => {
     expect(gasket.exec).toHaveBeenCalledWith('nextPreHandling', {
       req: mockReq,
       res: mockRes,
-      nextServer: nextHandler
+      nextServer
     });
   });
 
@@ -269,7 +269,7 @@ describe('fastify hook', () => {
     await hook(gasket, fastifyApp, false);
 
     expect(gasket.exec).toHaveBeenCalledWith('nextFastify', {
-      next: nextHandler,
+      next: nextServer,
       fastify: fastifyApp
     });
   });
@@ -294,7 +294,7 @@ describe('fastify hook', () => {
     expect(gasket.exec).toHaveBeenCalledWith('nextPreHandling', {
       req: mockReq,
       res: mockRes,
-      nextServer: nextHandler
+      nextServer
     });
   });
 });
