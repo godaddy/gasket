@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-nextjs",
-  "version": "6.46.8",
+  "version": "6.47.0",
   "description": "Adds Next support to your application",
   "main": "lib",
   "types": "lib/index.d.ts",
@@ -50,7 +50,7 @@
     "@babel/preset-react": "^7.23.3",
     "@gasket/assets": "^6.46.8",
     "@gasket/engine": "^6.46.8",
-    "@gasket/nextjs": "^6.46.8",
+    "@gasket/nextjs": "^6.47.0",
     "babel-eslint": "^10.1.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
