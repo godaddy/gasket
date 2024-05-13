@@ -1,5 +1,9 @@
 # `@gasket/plugin-nextjs`
 
+### 6.47.0
+
+- Check if headers sent from lifecycle ([#750]
+
 ### 6.46.7
 
 - (fix) Handle malformed URL segments in Elastic APM transaction labeling ([#724])
@@ -263,3 +267,4 @@
 [#679]: https://github.com/godaddy/gasket/pull/679
 [#695]: https://github.com/godaddy/gasket/pull/695
 [#724]: https://github.com/godaddy/gasket/pull/724
+[#750]: https://github.com/godaddy/gasket/pull/750
