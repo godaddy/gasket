@@ -1,5 +1,4 @@
 import type { MaybeAsync } from '@gasket/engine';
-import { Gasket } from '@gasket/engine';
 import type { IncomingMessage, OutgoingMessage, ServerResponse } from 'http';
 
 export type Manifest = {
@@ -8,16 +7,6 @@ export type Manifest = {
   path?: string;
   staticOutput?: string | boolean;
 };
-
-export function gatherManifestData(
-  gasket: Gasket,
-  context: {
-    req?: IncomingMessage & {
-      originalUrl?: string;
-    };
-    res?: OutgoingMessage;
-  }
-): MaybeAsync<Manifest>;
 
 export async function manifestMiddleware(
   req: IncomingMessage,

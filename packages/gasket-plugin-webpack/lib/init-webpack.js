@@ -2,7 +2,7 @@
 
 /**
  * Sets up a context object with special getters
- * @type {import('./index').setupContext}
+ * @type {import('./internal').setupContext}
  */
 function setupContext(gasket, context, name) {
   return {

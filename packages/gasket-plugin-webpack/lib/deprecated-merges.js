@@ -1,7 +1,7 @@
 /**
  * Deprecated merging behavior
  * TODO: Remove in next major release
- * @type {import('./index').deprecatedMerges}
+ * @type {import('./internal').deprecatedMerges}
  */
 module.exports = function deprecatedMerges(gasket, initConfig, context) {
   const { logger, execApplySync, config } = gasket;

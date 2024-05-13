@@ -11,7 +11,7 @@ class WebpackMetricsPlugin {
 
   /**
    * Helper function to call the metrics lifecycle
-   * @type {import('./index').handleMetrics}
+   * @type {import('./internal').handleMetrics}
    */
   async handleMetrics(metrics) {
     // TODO (crobbins): better expose gasket logging utilities to plugins to
@@ -35,7 +35,7 @@ class WebpackMetricsPlugin {
    *     pages: { totalSize: 782744, js: 782744 },
    *     'bundle.svgs': { totalSize: 10188, svgs: 10188 } },
    *   time: 1559323660583 }
-   * @type {import('./index').apply}
+   * @type {import('./internal').apply}
    */
   apply(compiler) {
     const { target, context } = compiler.options;

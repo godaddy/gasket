@@ -1,7 +1,7 @@
 import type { GasketConfig, HookExecTypes } from '@gasket/engine';
 import { Gasket } from '@gasket/engine';
 import type WebpackApi from 'webpack';
-import type { Configuration, Compiler } from 'webpack';
+import type { Configuration } from 'webpack';
 import type WebpackChain from 'webpack-chain';
 
 export interface WebpackContext {
@@ -9,6 +9,13 @@ export interface WebpackContext {
   /** @deprecated use require('webpack-merge') */
   webpackMerge: any;
   isServer?: boolean;
+}
+
+export interface WebpackMetrics {
+  name: string;
+  event: string;
+  data: object;
+  time: number;
 }
 
 declare module '@gasket/engine' {
@@ -37,37 +44,3 @@ declare module '@gasket/plugin-webpack' {
     context: any
   ): Configuration;
 }
-
-/** Sets up a context object with special getters */
-export function setupContext(
-  gasket: Gasket,
-  /** Additional context-specific information */
-  context: any,
-  name: string
-): any;
-
-export function deprecatedMerges(
-  gasket: Gasket,
-  /** Initial webpack config */
-  initConfig: Configuration,
-  /** Additional context-specific information */
-  context: object
-): Configuration;
-
-export interface WebpackMetrics {
-  name: string;
-  event: string;
-  data: object;
-  time: number;
-}
-
-export async function handleMetrics(
-  /** Metrics data gathered from plugin */
-  metrics: WebpackMetrics
-): Promise<void>;
-
-/**
- * This plugin will calculate the sizes of the directories from the webpack
- * bundle sent to the browser and call the metrics lifecycle with the data.
- */
-export function apply(compiler: Compiler): void;

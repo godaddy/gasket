@@ -14,7 +14,7 @@ function getPortFallback(env = '') {
 
 /**
  * Small helper function that creates nextjs app from the gasket configuration.
- * @type {import('../index').setupNextApp}
+ * @type {import('../internal').setupNextApp}
  */
 async function setupNextApp(gasket) {
   const { command, config } = gasket;
@@ -44,7 +44,7 @@ async function setupNextApp(gasket) {
 
 /**
  * Sets up the next.js request handler to be called after all other middleware
- * @type {import('../index').setupNextServer}
+ * @type {import('../internal').setupNextServer}
  */
 function setupNextHandling(nextServer, serverApp, gasket) {
   const nextHandler = nextServer.getRequestHandler();

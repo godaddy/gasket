@@ -131,7 +131,7 @@ class BuildModules {
 
   /**
    * Processes directories
-   * @param {import('./index').SrcPkgDir[]} srcPkgDirs - list of dirs to process
+   * @param {import('./internal').SrcPkgDir[]} srcPkgDirs - list of dirs to process
    */
   async processDirs(srcPkgDirs) {
     for (const [pkgName, srcDir] of srcPkgDirs) {
@@ -151,10 +151,10 @@ class BuildModules {
 
   /**
    * Find modules that have /locales folder to process
-   * @returns {Promise<import('./index').SrcPkgDir[]>} source package directories
+   * @returns {Promise<import('./internal').SrcPkgDir[]>} source package directories
    */
   async discoverDirs() {
-    /** @type {import('./index').SrcPkgDir[]} */
+    /** @type {import('./internal').SrcPkgDir[]} */
     const results = [];
     for await (const [pkgName, dir] of getPackageDirs(this._nodeModulesDir)) {
       if (!this._excludes.includes(path.basename(dir))) {
@@ -177,7 +177,7 @@ class BuildModules {
 
   /**
    * Find modules with locale directories to process
-   * @returns {Promise<import('./index').SrcPkgDir[]>} source package directories
+   * @returns {Promise<import('./internal').SrcPkgDir[]>} source package directories
    */
   async gatherModuleDirs() {
     if (this._lookupModuleDirs) {
@@ -213,7 +213,7 @@ class BuildModules {
         );
       });
 
-      /** @type {import('./index').SrcPkgDir[]} */
+      /** @type {import('./internal').SrcPkgDir[]} */
       // @ts-ignore - force SrcPkgDir[] type
       const results = await Promise.all(promises);
       return results.filter(Boolean);

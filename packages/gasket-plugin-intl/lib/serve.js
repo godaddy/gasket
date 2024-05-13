@@ -1,3 +1,5 @@
+/// <reference types="@gasket/plugin-fastify" />
+
 const { getIntlConfig } = require('./configure');
 const serveStaticMw = require('serve-static');
 

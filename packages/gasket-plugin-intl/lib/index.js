@@ -1,11 +1,6 @@
-/// <reference types="@gasket/cli" />
-/// <reference types="@gasket/plugin-start" />
-/// <reference types="@gasket/plugin-webpack" />
-/// <reference types="@gasket/plugin-fastify" />
 /// <reference types="@gasket/plugin-metadata" />
 
-const path = require('path');
-const { name, devDependencies } = require('../package.json');
+const { name } = require('../package.json');
 const configure = require('./configure');
 const init = require('./init');
 const middleware = require('./middleware');
@@ -13,9 +8,11 @@ const serve = require('./serve');
 const serviceWorkerCacheKey = require('./service-worker-cache-key');
 const apmTransaction = require('./apm-transaction');
 const workbox = require('./workbox');
-const buildManifest = require('./build-manifest');
-const buildModules = require('./build-modules');
+
 const { getIntlConfig } = require('./configure');
+const create = require('./create');
+const build = require('./build');
+const webpackConfig = require('./webpack-config');
 
 /** @type {import('@gasket/engine').Plugin} */
 const plugin = {
@@ -24,56 +21,12 @@ const plugin = {
   hooks: {
     init,
     configure,
-    async create(gasket, context) {
-      const { files, pkg } = context;
-      const rootDir = path.join(__dirname, '..');
-      const isReactProject = pkg.has('dependencies', 'react');
-
-      files.add(`${rootDir}/generator/*`, `${rootDir}/generator/**/*`);
-
-      if (isReactProject) {
-        pkg.add('dependencies', {
-          '@gasket/react-intl': devDependencies['@gasket/react-intl'],
-          'react-intl': devDependencies['react-intl']
-        });
-
-        context.hasGasketIntl = true;
-      }
-    },
-    build: {
-      timing: {
-        first: true
-      },
-      handler: async function build(gasket) {
-        const intlConfig = getIntlConfig(gasket);
-        if (intlConfig.modules) {
-          await buildModules(gasket);
-        }
-        await buildManifest(gasket);
-      }
-    },
-    webpackConfig(gasket, webpackConfig, { webpack, isServer }) {
-      return {
-        ...webpackConfig,
-        plugins: [
-          ...(webpackConfig.plugins || []),
-          new webpack.EnvironmentPlugin(
-            [
-              isServer ? 'GASKET_INTL_LOCALES_DIR' : null,
-              'GASKET_INTL_MANIFEST_FILE'
-            ].filter(Boolean)
-          )
-        ].filter(Boolean)
-      };
-    },
+    create,
+    build,
+    webpackConfig,
     express: serve,
     fastify: serve,
-    middleware: {
-      timing: {
-        before: ['@gasket/plugin-elastic-apm']
-      },
-      handler: middleware
-    },
+    middleware,
     apmTransaction,
     workbox,
     serviceWorkerCacheKey,

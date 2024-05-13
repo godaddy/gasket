@@ -63,7 +63,7 @@ function formatLocale(language) {
 }
 
 /** @type {import('@gasket/engine').HookHandler<'middleware'>} */
-module.exports = function middlewareHook(gasket) {
+function middlewareHook(gasket) {
   const {
     defaultLocale,
     basePath,
@@ -137,7 +137,7 @@ module.exports = function middlewareHook(gasket) {
 
     /**
      * Load locale data and makes available from gasketData
-     * @type {import('./index').withLocaleRequired}
+     * @type {import('./internal').withLocaleRequired}
      */
     req.withLocaleRequired = function withLocaleRequired(
       localePathPart = manifest.defaultPath
@@ -170,4 +170,11 @@ module.exports = function middlewareHook(gasket) {
 
     next();
   };
+}
+
+module.exports = {
+  timing: {
+    before: ['@gasket/plugin-elastic-apm']
+  },
+  handler: middlewareHook
 };

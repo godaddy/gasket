@@ -3,7 +3,7 @@
  */
 module.exports = class Gitignore {
   constructor() {
-    /** @type {import('./index').GitIgnoreContent} */
+    /** @type {import('./internal').GitIgnoreContent} */
     this._content = {
       dependencies: new Set(['node_modules']),
       testing: new Set(['coverage', 'reports']),

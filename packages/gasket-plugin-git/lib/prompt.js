@@ -2,7 +2,7 @@ const Gitignore = require('./gitignore');
 
 /**
  * Formats gitignore content
- * @param {import('./index').GitIgnoreContent} content - gitignore content
+ * @param {import('./internal').GitIgnoreContent} content - gitignore content
  * @returns {string} formatted gitignore content
  */
 function serialize(content) {

@@ -17,7 +17,7 @@ async function packageName(targetDir) {
 
 /**
  * Find all directories under target dir, recursively
- * @type {import('../index').getPackageDirs}
+ * @type {import('../internal').getPackageDirs}
  */
 async function *getPackageDirs(parentDir, dirList = []) {
   const files = await fs.readdir(parentDir);

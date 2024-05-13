@@ -15,10 +15,7 @@ describe('@gasket/plugin-morgan', () => {
   });
 
   it('has expected hooks', () => {
-    const expected = [
-      'middleware',
-      'metadata'
-    ];
+    const expected = ['middleware', 'metadata'];
 
     expect(Plugin).toHaveProperty('hooks');
 
@@ -28,46 +25,43 @@ describe('@gasket/plugin-morgan', () => {
   });
 
   describe('.middleware', () => {
+    it('runs on the middleware lifecycle event', function () {
+      expect(typeof Plugin.hooks.middleware).toBe('function');
+      expect(Plugin.hooks.middleware).toHaveLength(1);
+    });
 
-    describe('.handler', () => {
+    it('returns a morgan middleware', () => {
+      const loggerMock = { info: jest.fn() };
 
-      it('runs on the middleware lifecycle event', function () {
-        expect(typeof Plugin.hooks.middleware.handler).toBe('function');
-        expect(Plugin.hooks.middleware.handler).toHaveLength(1);
-      });
+      const gasketMock = {
+        config: {
+          morgan: { format: 'tiny', options: {} }
+        },
+        logger: loggerMock
+      };
 
-      it('returns a morgan middleware', () => {
-        const loggerMock = { info: jest.fn() };
+      const returnValue = Plugin.hooks.middleware(gasketMock);
+      expect(Array.isArray(returnValue)).toBe(true);
+      expect(typeof returnValue[0]).toBe('function');
+      expect(returnValue[0]).toHaveLength(3);
+    });
 
-        const gasketMock = {
-          config: {
-            morgan: { format: 'tiny', options: {} }
-          },
-          logger: loggerMock
-        };
+    it('logs requests using gasket logger', () => {
+      const loggerMock = { info: jest.fn() };
+      const reqMock = { method: 'GET', url: '/foobar' };
+      const resMock = {};
 
-        const returnValue = Plugin.hooks.middleware.handler(gasketMock);
-        expect(Array.isArray(returnValue)).toBe(true);
-        expect(typeof returnValue[0]).toBe('function');
-        expect(returnValue[0]).toHaveLength(3);
-      });
+      const gasketMock = {
+        config: {
+          morgan: { format: ':method :url', options: { immediate: true } }
+        },
+        logger: loggerMock
+      };
 
-      it('logs requests using gasket logger', () => {
-        const loggerMock = { info: jest.fn() };
-        const reqMock = { method: 'GET', url: '/foobar' };
-        const resMock = {};
-
-        const gasketMock = {
-          config: {
-            morgan: { format: ':method :url', options: { immediate: true } }
-          },
-          logger: loggerMock
-        };
-
-        const [morganMiddleware] = Plugin.hooks.middleware.handler(gasketMock);
-        morganMiddleware(reqMock, resMock, function next() { // eslint-disable-line max-nested-callbacks
-          expect(loggerMock.info).toHaveBeenCalledWith('GET /foobar');
-        });
+      const [morganMiddleware] = Plugin.hooks.middleware(gasketMock);
+      morganMiddleware(reqMock, resMock, function next() {
+        // eslint-disable-line max-nested-callbacks
+        expect(loggerMock.info).toHaveBeenCalledWith('GET /foobar');
       });
     });
   });
