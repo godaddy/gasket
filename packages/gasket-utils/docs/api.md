@@ -10,8 +10,6 @@ Name | Description
 Name | Description
 ------ | -----------
 [applyConfigOverrides(config, context)] | Normalize the config by applying any overrides for environments, commands, or local-only config file.
-[installDependency(dependency, gasket)] | installDependency - install dependency
-[requireWithInstall(dependency, gasket)] | requireWithInstall - load devDependency request programmatically when needed
 [runShellCommand(cmd, \[argv\], \[options\], \[debug\])] | Promise friendly wrapper to running a shell command (eg: git, npm, ls) which passes back any { stdout, stderr } to the error thrown.
 [tryRequire(path)] | Tries to require a module, but ignores if it is not found. If not found, result will be null.
 [tryResolve(modulePath, options)] | 
@@ -146,33 +144,6 @@ or local-only config file.
 | context | `object` | Context for applying overrides |
 | context.env | `string` | Name of environment |
 | \[context.commandId\] | `string` | Name of command |
-| \[context.root\] | `string` | Project root; required if using localeFile |
-| \[context.localFile\] | `string` | Optional file to load relative to gasket root |
-
-
-## installDependency(dependency, gasket)
-
-installDependency - install dependency
-
-**Kind**: global function  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| dependency | `string` | The dep/s needed |
-| gasket | `Gasket` | Gasket instance |
-
-
-## requireWithInstall(dependency, gasket)
-
-requireWithInstall - load devDependency request programmatically when needed
-
-**Kind**: global function  
-**Returns**: `object` ⎮ `Array.<object>` - module or list of modules  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| dependency | `string` \| `Array.<string>` | The require'ed dep/s needed |
-| gasket | `Gasket` | Gasket instance |
 
 
 ## runShellCommand(cmd, \[argv\], \[options\], \[debug\])
@@ -258,8 +229,6 @@ const { tryRequire } = require('@gasket/utils');
 [PackageManager]:#packagemanager
 [`PackageManager`]:#new-packagemanageroptions
 [applyConfigOverrides(config, context)]:#applyconfigoverridesconfig-context
-[installDependency(dependency, gasket)]:#installdependencydependency-gasket
-[requireWithInstall(dependency, gasket)]:#requirewithinstalldependency-gasket
 [runShellCommand(cmd, \[argv\], \[options\], \[debug\])]:#runshellcommandcmd-argv-options-debug
 [tryRequire(path)]:#tryrequirepath
 [tryResolve(modulePath, options)]:#tryresolvemodulepath-options
