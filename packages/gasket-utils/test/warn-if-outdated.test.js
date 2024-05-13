@@ -1,5 +1,5 @@
 /* eslint-disable no-control-regex */
-const { runShellCommand } = require('../lib/index');
+const runShellCommand = require('../lib/run-shell-command');
 const warnIfOutdated  = require('../lib/warn-if-outdated');
 const { readFile } = require('fs/promises');
 
@@ -22,9 +22,7 @@ function stripAnsi(str) {
   return str.replace(ansiRegex, '');
 }
 
-jest.mock('../lib/index', () => ({
-  runShellCommand: jest.fn()
-}));
+jest.mock('../lib/run-shell-command', () => jest.fn());
 
 jest.mock('fs/promises', () => ({
   readFile: jest.fn(),
