@@ -1,6 +1,6 @@
 /* eslint-disable no-control-regex */
-const { runShellCommand } = require('@gasket/utils');
-const { warnIfOutdated } = require('../../../lib/utils');
+const { runShellCommand } = require('../lib/index');
+const warnIfOutdated  = require('../lib/warn-if-outdated');
 const { readFile } = require('fs/promises');
 
 const currentTime = 1711147722892;
@@ -22,7 +22,7 @@ function stripAnsi(str) {
   return str.replace(ansiRegex, '');
 }
 
-jest.mock('@gasket/utils', () => ({
+jest.mock('../lib/index', () => ({
   runShellCommand: jest.fn()
 }));
 

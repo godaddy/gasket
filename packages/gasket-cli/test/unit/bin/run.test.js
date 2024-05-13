@@ -10,7 +10,9 @@ const mockAddCommand = jest.fn();
 jest.mock('../../../lib/init', () => mockInit);
 jest.mock('../../../package.json', () => ({ description: 'mockDescription', version: 'mockVersion' }));
 jest.mock('../../../lib/utils', () => ({
-  processCommand: mockProcessCommand.mockReturnValue('mockCommand'),
+  processCommand: mockProcessCommand.mockReturnValue('mockCommand')
+}));
+jest.mock('@gasket/utils', () => ({
   warnIfOutdated: jest.fn()
 }));
 jest.mock('commander', () => ({
