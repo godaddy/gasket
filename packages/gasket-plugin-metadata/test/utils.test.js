@@ -122,14 +122,6 @@ describe('Utils', () => {
       expect(mockModules[0]).toHaveProperty('range', '^1.2.3');
       expect(mockModules[0]).toHaveProperty('from', 'my-app');
     });
-
-    it('ignores plugins and presets', () => {
-      mockApp.package.dependencies['@gasket/plugin-mock'] = '1.2.3';
-      mockApp.package.dependencies['@gasket/mock-preset'] = '3.2.1';
-      loadAppModules(mockLoader, mockApp, mockModules);
-      expect(mockModules.length).toBeLessThan(Object.keys(mockApp.package.dependencies).length);
-      expect(mockModules).toHaveLength(1);
-    });
   });
 
   describe('loadPluginModules', () => {

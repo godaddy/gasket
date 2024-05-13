@@ -1,10 +1,5 @@
 const isFunction = require('lodash.isfunction');
 const isObject = require('lodash.isobject');
-const { pluginIdentifier, presetIdentifier } = require('@gasket/resolve');
-
-// Shortcuts
-const isPlugin = name => pluginIdentifier.isValidFullName(name);
-const isPreset = name => presetIdentifier.isValidFullName(name);
 
 /**
  * Recurse through an object or array, and transforms, by mutation,
@@ -60,7 +55,6 @@ function safeAssign(target, other) {
 function loadAppModules(loader, app, modules) {
   app.modules = app.modules || [];
   Object.keys(app.package.dependencies)
-    .filter(name => !isPlugin(name) && !isPreset(name))
     .forEach(name => {
       const range = app.package.dependencies[name];
       const moduleData = loader.getModuleInfo(null, name, { from: app.name, range });
