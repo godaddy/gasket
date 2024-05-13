@@ -1,4 +1,4 @@
-import { GasketConfigDefinition, Hook, Gasket } from '@gasket/engine';
+import { GasketConfigDefinition, Hook, Gasket } from '@gasket/core';
 import '@gasket/plugin-winston';
 
 const fakeTransport = (options: any) => void 0;

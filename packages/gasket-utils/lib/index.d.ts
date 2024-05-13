@@ -1,4 +1,4 @@
-import type { GasketConfig, GasketConfigDefinition, MaybeAsync } from '@gasket/engine';
+import type { GasketConfig, GasketConfigDefinition, MaybeAsync } from '@gasket/core';
 
 /**
  * Wrapper class for executing commands for a given package manager

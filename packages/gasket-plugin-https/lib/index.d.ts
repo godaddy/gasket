@@ -1,5 +1,5 @@
 import type { CreateContext } from 'create-gasket-app';
-import type { MaybeMultiple, MaybeAsync } from '@gasket/engine';
+import type { MaybeMultiple, MaybeAsync } from '@gasket/core';
 import type { SecureContextOptions } from 'tls';
 import type { Agent as HttpAgent, Server as HttpServer } from 'http';
 import type { Agent as HttpsAgent, Server as HttpsServer } from 'https';
@@ -14,7 +14,7 @@ type RequireAtLeastOne<T, Keys extends keyof T = keyof T> =
     [K in Keys]-?: Required<Pick<T, K>> & Partial<Pick<T, Exclude<Keys, K>>>
   }[Keys];
 
-declare module '@gasket/engine' {
+declare module '@gasket/core' {
   type BaseListenerConfig = {
     port?: number;
     host?: string;

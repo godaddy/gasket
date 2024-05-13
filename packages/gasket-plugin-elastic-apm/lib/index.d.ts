@@ -1,8 +1,8 @@
 import type { IncomingMessage, ServerResponse } from 'http';
 import type { AgentConfigOptions, Transaction } from 'elastic-apm-node';
-import type { MaybeAsync } from '@gasket/engine';
+import type { MaybeAsync } from '@gasket/core';
 
-declare module '@gasket/engine' {
+declare module '@gasket/core' {
   export interface GasketConfig {
     elasticAPM?: AgentConfigOptions & {
       sensitiveCookies?: Array<string>

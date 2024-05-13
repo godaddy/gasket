@@ -8,7 +8,6 @@ describe('index', () => {
       'applyConfigOverrides',
       'runShellCommand',
       'PackageManager',
-      'requireWithInstall',
       'warnIfOutdated'
     ];
 

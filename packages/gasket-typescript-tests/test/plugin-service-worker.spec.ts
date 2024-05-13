@@ -1,4 +1,4 @@
-import { GasketConfigDefinition, Plugin } from '@gasket/engine';
+import { GasketConfigDefinition, Plugin } from '@gasket/core';
 import { Request } from 'express';
 import '@gasket/plugin-service-worker';
 

@@ -1,4 +1,4 @@
-import { GasketConfigDefinition } from '@gasket/engine';
+import { GasketConfigDefinition } from '@gasket/core';
 import '@gasket/plugin-swagger';
 
 describe('@gasket/plugin-swagger', () => {

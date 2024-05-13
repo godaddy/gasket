@@ -1,7 +1,7 @@
-import type { MaybeAsync, MaybeMultiple } from '@gasket/engine';
+import type { MaybeAsync, MaybeMultiple } from '@gasket/core';
 import type { Application, ErrorRequestHandler, Handler } from 'express';
 
-declare module '@gasket/engine' {
+declare module '@gasket/core' {
   export interface GasketConfig {
     express?: {
       /** Whether responses are compressed (true by default) */

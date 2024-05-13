@@ -8,7 +8,7 @@ const debug = require('diagnostics')('gasket:cli:metrics');
 class Metrics {
   /**
    * Instantiate metrics object tracker
-   * @param {import('@gasket/engine').Gasket} gasket Gasket API
+   * @param {import('@gasket/core').Gasket} gasket Gasket API
    */
   constructor(gasket) {
     const { command, config, metadata } = gasket;

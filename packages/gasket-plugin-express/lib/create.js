@@ -4,7 +4,7 @@ const { name, version, devDependencies } = require('../package.json');
 
 /**
  * Add files & extend package.json for new apps.
- * @type {import('@gasket/engine').HookHandler<'create'>}
+ * @type {import('@gasket/core').HookHandler<'create'>}
  */
 module.exports = async function create(gasket, context) {
   const generatorDir = `${__dirname}/../generator`;
