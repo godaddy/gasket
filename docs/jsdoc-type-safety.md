@@ -93,13 +93,13 @@ options.
 
 ### Plugin Type
 
-All root plugin definition files need to be decorated with the `@gasket/engine`
+All root plugin definition files need to be decorated with the `@gasket/core`
 `Plugin` type.
 
 ```js
 // index.js
 
-/** @type {import('@gasket/engine').Plugin} */
+/** @type {import('@gasket/core').Plugin} */
 const plugin = {
   name,
   hooks: {
@@ -114,12 +114,12 @@ module.exports = plugin;
 ### `HookHandler`
 
 If you are using individual lifecycle files, you will need to decorate each with
-the specific `@gasket/engine` `HookHandler` type and description.
+the specific `@gasket/core` `HookHandler` type and description.
 
 ```js
 /**
  * Add files & extend package.json for new apps.
- * @type {import('@gasket/engine').HookHandler<'create'>}
+ * @type {import('@gasket/core').HookHandler<'create'>}
  */
 module.exports = function create(gasket, context) {
   ...
@@ -153,7 +153,7 @@ await gasket.exec('express', app);
 ```ts
 // types.d.ts
 
-declare module '@gasket/engine' {
+declare module '@gasket/core' {
   export interface HookExecTypes {
       express(app: Application): MaybeAsync<void>;
       ...
@@ -180,7 +180,7 @@ module.exports = function loadConfig(gasket) {
 ```ts
 // types.d.ts
 
-declare module '@gasket/engine' {
+declare module '@gasket/core' {
   export interface GasketConfig {
     configPath?: string
   }

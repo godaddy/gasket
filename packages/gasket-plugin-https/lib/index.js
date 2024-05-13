@@ -34,7 +34,7 @@ function portInUseError(errors) {
 
 /**
  * Create a https proxy server for local development
- * @param {import('@gasket/engine').DevProxyConfig} opts Gasket instance
+ * @param {import('@gasket/core').DevProxyConfig} opts Gasket instance
  * @param {import('@gasket/plugin-logger').Logger} logger Gasket logger
  */
 function startProxy(opts, logger) {
@@ -52,8 +52,8 @@ function startProxy(opts, logger) {
 
 /**
  * Get server options from the gasket config
- * @param {import('@gasket/engine').Gasket} gasket Gasket instance
- * @returns {import('@gasket/engine').ServerOptions} config
+ * @param {import('@gasket/core').Gasket} gasket Gasket instance
+ * @returns {import('@gasket/core').ServerOptions} config
  */
 function getRawServerConfig(gasket) {
   const { hostname, http2, https, http, root } = gasket.config;
@@ -68,7 +68,7 @@ function getRawServerConfig(gasket) {
 
 /**
  * Gasket action: startServer
- * @param {import('@gasket/engine').Gasket} gasket Gasket instance
+ * @param {import('@gasket/core').Gasket} gasket Gasket instance
  * @returns {Promise<void>} promise
  * @public
  */
@@ -192,7 +192,7 @@ async function startServer(gasket) {
   });
 }
 
-/** @type {import('@gasket/engine').Plugin} */
+/** @type {import('@gasket/core').Plugin} */
 const plugin = {
   name,
   hooks: {

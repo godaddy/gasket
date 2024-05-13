@@ -1,4 +1,4 @@
-declare module '@gasket/engine' {
+declare module '@gasket/core' {
   export interface GasketConfig {
     docusaurus?: {
       rootDir?: string,

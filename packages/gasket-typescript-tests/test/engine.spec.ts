@@ -1,7 +1,7 @@
-import Gasket from '@gasket/engine';
-import type { GasketConfigDefinition, MaybeAsync, Plugin  } from '@gasket/engine';
+import { GasketEngine as Gasket } from '@gasket/core';
+import type { GasketConfigDefinition, MaybeAsync, Plugin  } from '@gasket/core';
 
-declare module '@gasket/engine' {
+declare module '@gasket/core' {
   interface HookExecTypes {
     example(str: string, num: number, bool: boolean): MaybeAsync<boolean>
   }
@@ -16,7 +16,7 @@ const PluginExample = {
   }
 };
 
-describe('@gasket/engine', () => {
+describe('@gasket/core', () => {
   it('exposes the constructor interface', () => {
     // eslint-disable-next-line no-new
     new Gasket([PluginExample]);

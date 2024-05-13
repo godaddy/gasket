@@ -1,7 +1,7 @@
-import type { MaybeAsync, MaybeMultiple } from '@gasket/engine';
+import type { MaybeAsync, MaybeMultiple } from '@gasket/core';
 import type { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
 
-declare module '@gasket/engine' {
+declare module '@gasket/core' {
   export interface GasketConfig {
     compression?: boolean,
     excludedRoutesRegex?: RegExp

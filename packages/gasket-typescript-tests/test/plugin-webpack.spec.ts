@@ -1,4 +1,4 @@
-import { Gasket, GasketConfigDefinition, Hook } from '@gasket/engine';
+import { Gasket, GasketConfigDefinition, Hook } from '@gasket/core';
 import '@gasket/plugin-webpack';
 import '@gasket/plugin-nextjs';
 

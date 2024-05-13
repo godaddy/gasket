@@ -1,7 +1,7 @@
 /* eslint-disable no-console, no-process-env */
 /// <reference types="./index" />
 
-import GasketEngine from '@gasket/engine';
+import GasketEngine from './engine';
 import { applyConfigOverrides } from '@gasket/utils';
 
 /**
@@ -42,6 +42,10 @@ function getEnvironment(
 /* eslint-enable no-console, no-process-env */
 
 // TODO: Add JSDoc types
+/**
+ *
+ * @param instance
+ */
 function registerActions(instance) {
   const actions = {};
   const actionPluginMap = {};
@@ -86,6 +90,15 @@ class Gasket extends GasketEngine {
 }
 
 // TODO: Add JSDoc types
-export function makeGasket(gasketConfigDefinition) {
+/**
+ *
+ * @param gasketConfigDefinition
+ */
+function makeGasket(gasketConfigDefinition) {
   return new Gasket(gasketConfigDefinition);
 }
+
+export {
+  makeGasket,
+  GasketEngine
+};

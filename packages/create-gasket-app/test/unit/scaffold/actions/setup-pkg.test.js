@@ -51,7 +51,6 @@ describe('setupPkg', () => {
   it('adds core dependencies', async () => {
     await setupPkg.wrapped({ context: mockContext });
     expect(mockContext.pkg.fields.dependencies).toHaveProperty('@gasket/core');
-    expect(mockContext.pkg.fields.dependencies).toHaveProperty('@gasket/engine');
     expect(mockContext.pkg.fields.dependencies).toHaveProperty('@gasket/utils');
   });
 

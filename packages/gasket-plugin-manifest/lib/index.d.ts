@@ -1,4 +1,4 @@
-import type { MaybeAsync } from '@gasket/engine';
+import type { MaybeAsync } from '@gasket/core';
 import type { IncomingMessage, OutgoingMessage } from 'http'
 
 export type Manifest = {
@@ -8,7 +8,7 @@ export type Manifest = {
   staticOutput: string
 }
 
-declare module '@gasket/engine' {
+declare module '@gasket/core' {
   export interface GasketConfig {
     manifest?: boolean | Partial<Manifest>
   }

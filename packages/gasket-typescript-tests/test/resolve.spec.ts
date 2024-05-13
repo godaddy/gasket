@@ -9,7 +9,7 @@ import {
   loadGasketConfigDefinition,
   flattenPresets, assignPresetConfig
 } from '@gasket/resolve';
-import { Gasket, GasketConfigDefinition } from '@gasket/engine';
+import { Gasket, GasketConfigDefinition } from '@gasket/core';
 
 describe('@gasket/resolve', () => {
   const perform = false;

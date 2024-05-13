@@ -1,4 +1,4 @@
-import type { GasketConfigDefinition, Plugin } from '@gasket/engine';
+import type { GasketConfigDefinition, Plugin } from '@gasket/core';
 import preset from '@gasket/preset-pwa';
 
 describe('@gasket/preset-pwa', () => {

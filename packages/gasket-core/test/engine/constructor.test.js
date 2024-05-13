@@ -1,4 +1,4 @@
-const GasketEngine = require('..');
+import { GasketEngine } from '../../lib/index.js';
 
 const mockPlugin = {
   name: '@gasket/plugin-one',
