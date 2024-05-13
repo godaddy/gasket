@@ -1,6 +1,6 @@
 {
   "name": "@gasket/nextjs",
-  "version": "6.46.8",
+  "version": "6.47.0",
   "description": "Gasket integrations for Next.js apps",
   "main": "lib",
   "browser": "lib",
@@ -43,7 +43,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-nextjs",
   "dependencies": {
-    "@gasket/data": "^6.46.8",
+    "@gasket/data": "^6.47.0",
     "htmlescape": "^1.1.1"
   },
   "devDependencies": {
