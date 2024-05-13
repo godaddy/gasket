@@ -1,4 +1,4 @@
-const GasketEngine = require('..');
+import { GasketEngine } from '../../lib/index.js';
 
 const projectPlugin = {
   name: '@gasket/plugin-one',
@@ -16,6 +16,10 @@ describe('Plugin dependencies', () => {
     };
   });
 
+  /**
+   *
+   * @param plugins
+   */
   function withPlugins(plugins) {
     return new GasketEngine(plugins);
   }

@@ -5,7 +5,7 @@ const debug = require('diagnostics')('gasket:express');
 
 /**
  * Create the Express instance and setup the lifecycle hooks.
- * @type {import('@gasket/engine').HookHandler<'createServers'>}
+ * @type {import('@gasket/core').HookHandler<'createServers'>}
  */
 module.exports = async function createServers(gasket, serverOpts) {
   const express = require('express');

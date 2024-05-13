@@ -4,7 +4,7 @@
 /// <reference types="../../gasket-plugin-nextjs" />
 
 /**
- * @typedef {import('@gasket/engine').Gasket} Gasket
+ * @typedef {import('@gasket/core').Gasket} Gasket
  * @typedef {import('http').IncomingMessage}  Request
  * @typedef {import('http').ServerResponse}   Response
  */

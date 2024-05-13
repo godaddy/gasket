@@ -1,4 +1,6 @@
-describe('The execApplySync method', () => {
+import { GasketEngine } from '../../lib/index.js';
+
+describe('The execApply method', () => {
   let engine, hookASpy, hookBSpy, hookCSpy;
 
   const Wrapper = class Wrapper {
@@ -11,7 +13,7 @@ describe('The execApplySync method', () => {
     name: 'pluginA',
     hooks: {
       eventA(eng, arg, lit) {
-        return { arg, lit };
+        return Promise.resolve({ arg, lit });
       }
     }
   };
@@ -40,7 +42,6 @@ describe('The execApplySync method', () => {
     hookBSpy = jest.spyOn(pluginB.hooks, 'eventA');
     hookCSpy = jest.spyOn(pluginC.hooks.eventA, 'handler');
 
-    const GasketEngine = require('../lib/engine');
     engine = new GasketEngine([pluginA, pluginB, pluginC]);
   });
 
@@ -49,8 +50,8 @@ describe('The execApplySync method', () => {
     jest.restoreAllMocks();
   });
 
-  it('passes the gasket config to each hook', async () => {
-    await engine.execApply('eventA', (plugin, handler) => {
+  it('passes the gasket instance to each hook', async () => {
+    await engine.execApply('eventA', async (plugin, handler) => {
       return handler(new Wrapper(plugin));
     });
 
@@ -59,8 +60,8 @@ describe('The execApplySync method', () => {
     expect(hookCSpy).toHaveBeenCalledWith(engine, expect.any(Wrapper));
   });
 
-  it('returns an Array of results', async () => {
-    const result = engine.execApplySync('eventA', (plugin, handler) => {
+  it('awaits sync or async hooks and resolves an Array', async () => {
+    const result = await engine.execApply('eventA', async (plugin, handler) => {
       return handler(new Wrapper(plugin));
     });
 
@@ -71,7 +72,7 @@ describe('The execApplySync method', () => {
   });
 
   it('accepts thunks and literal argument values when resolving an Array', async () => {
-    const result = engine.execApplySync('eventA', (plugin, handler) => {
+    const result = await engine.execApply('eventA', async (plugin, handler) => {
       return handler(new Wrapper(plugin), 'literal');
     });
 
@@ -83,7 +84,7 @@ describe('The execApplySync method', () => {
   });
 
   it('resolves to an empty array if nothing hooked the event', async () => {
-    const result = engine.execApplySync('eventB', (plugin, handler) => {
+    const result = await engine.execApply('eventB', async (plugin, handler) => {
       return handler(new Wrapper(plugin));
     });
 
@@ -91,9 +92,9 @@ describe('The execApplySync method', () => {
   });
 
   it('works when invoked without a context', async () => {
-    const { execApplySync } = engine;
+    const { execApply } = engine;
 
-    const result = execApplySync('eventA', (plugin, handler) => {
+    const result = await execApply('eventA', async (plugin, handler) => {
       return handler(new Wrapper(plugin));
     });
 
@@ -107,8 +108,8 @@ describe('The execApplySync method', () => {
     const stub1 = jest.fn().mockImplementation((plugin, handler) => handler());
     const stub2 = jest.fn().mockImplementation((plugin, handler) => handler());
 
-    engine.execApplySync('eventA', stub1);
-    engine.execApplySync('eventA', stub2);
+    await engine.execApply('eventA', stub1);
+    await engine.execApply('eventA', stub2);
 
     expect(stub1).toHaveBeenCalledTimes(3);
     expect(stub2).toHaveBeenCalledTimes(3);

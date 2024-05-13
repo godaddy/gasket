@@ -1,4 +1,4 @@
-import type { GasketConfigDefinition } from '@gasket/engine';
+import type { GasketConfigDefinition } from '@gasket/core';
 
 export function loadGasketConfigDefinition(
   root: string,

@@ -1,8 +1,8 @@
 import type { IncomingMessage, OutgoingMessage } from 'http';
-import type { MaybeAsync } from '@gasket/engine';
+import type { MaybeAsync } from '@gasket/core';
 import { LocalesProps } from '@gasket/helper-intl';
 
-declare module '@gasket/engine' {
+declare module '@gasket/core' {
   export interface GasketConfig {
     intl?: {
       basePath?: string,

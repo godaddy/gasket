@@ -1,4 +1,4 @@
-import { Gasket, GasketConfig, GasketConfigDefinition, Hook } from '@gasket/engine';
+import { Gasket, GasketConfig, GasketConfigDefinition, Hook } from '@gasket/core';
 import '@gasket/plugin-response-data';
 
 describe('@gasket/plugin-response-data', () => {

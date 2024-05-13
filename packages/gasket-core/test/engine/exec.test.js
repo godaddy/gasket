@@ -1,3 +1,9 @@
+import { GasketEngine } from '../../lib/index.js';
+
+/**
+ *
+ * @param ms
+ */
 async function pause(ms) {
   await new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -79,7 +85,6 @@ describe('The exec method', () => {
     hookASpy = jest.spyOn(pluginA.hooks, 'eventA');
     hookBSpy = jest.spyOn(pluginB.hooks, 'eventA');
 
-    const GasketEngine = require('..');
     engine = new GasketEngine([pluginA, pluginB]);
   });
 

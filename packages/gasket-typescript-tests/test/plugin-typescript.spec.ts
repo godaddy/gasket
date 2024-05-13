@@ -1,4 +1,4 @@
-import { Gasket, Hook } from '@gasket/engine';
+import { Gasket, Hook } from '@gasket/core';
 import '@gasket/plugin-typescript';
 
 describe('@gasket/plugin-typescript', () => {

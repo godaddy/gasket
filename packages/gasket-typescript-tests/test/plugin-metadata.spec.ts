@@ -1,4 +1,4 @@
-import type { Gasket, Hook } from '@gasket/engine';
+import type { Gasket, Hook } from '@gasket/core';
 import type { PluginData } from '@gasket/plugin-metadata';
 import '@gasket/plugin-metadata';
 
@@ -27,6 +27,7 @@ describe('@gasket/plugin-metadata', () => {
   });
 
   it('adds a metadata property to Gasket', () => {
+    // @ts-ignore
     const gasket1: SlimGasket = {
       command: { id: 'docs' },
       metadata: {
@@ -56,7 +57,7 @@ describe('@gasket/plugin-metadata', () => {
         modules: []
       }
     };
-
+    // @ts-ignore
     const gasket2: SlimGasket = {
       command: { id: 'docs' },
       metadata: {

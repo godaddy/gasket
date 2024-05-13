@@ -3,7 +3,7 @@
 // @ts-check
 ///<reference types="@gasket/plugin-intl"/>
 
-/** @typedef {import('@gasket/engine').Hook<'intlLocale'>} IntlLocaleHandler */
+/** @typedef {import('@gasket/core').Hook<'intlLocale'>} IntlLocaleHandler */
 
 /** @type {IntlLocaleHandler} */
 const handler = (gasket, currentLocale) => {

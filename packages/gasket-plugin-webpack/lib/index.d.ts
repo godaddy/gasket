@@ -1,11 +1,11 @@
-import type { GasketConfig, HookExecTypes } from '@gasket/engine';
+import type { GasketConfig, HookExecTypes } from '@gasket/core';
 import type WebpackApi from 'webpack';
 
 export interface WebpackContext {
   webpack: typeof WebpackApi
 }
 
-declare module '@gasket/engine' {
+declare module '@gasket/core' {
   export interface GasketActions {
     getWebpackConfig(config: WebpackApi.Configuration, context: WebpackContext): WebpackApi.Configuration
   }

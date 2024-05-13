@@ -6,7 +6,7 @@ const mockPackage = {
   name: 'mock-app',
   version: '7.8.9',
   dependencies: {
-    '@gasket/engine': '1.2.3',
+    '@gasket/core': '1.2.3',
     '@gasket/plugin-example': '2.3.4',
     '@gasket/example-preset': '3.4.5'
   }
@@ -73,7 +73,7 @@ describe('Metrics', function () {
 
       expect(data.name).toEqual(mockPackage.name);
       expect(data.version).toEqual(mockPackage.version);
-      expect(data.gasket).toHaveProperty('@gasket/engine');
+      expect(data.gasket).toHaveProperty('@gasket/core');
     });
 
     it('includes system data', async function () {
@@ -103,7 +103,7 @@ describe('Metrics', function () {
     it('include the gasket dependencies in a list', async function () {
       const { deps } = await metrics.collect();
       expect(deps.length).toBeGreaterThan(2);
-      expect(deps).toContain('@gasket/engine');
+      expect(deps).toContain('@gasket/core');
     });
   });
 

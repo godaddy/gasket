@@ -1,4 +1,4 @@
-import type { Gasket, GasketConfigDefinition, Hook } from '@gasket/engine';
+import type { Gasket, GasketConfigDefinition, Hook } from '@gasket/core';
 import type { Application } from 'express';
 import '@gasket/plugin-express';
 

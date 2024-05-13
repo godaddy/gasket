@@ -5,7 +5,7 @@
 const { createLogger, format, transports } = require('winston');
 const { name, version, dependencies } = require('../package.json');
 
-/** @type {import('@gasket/engine').Plugin} */
+/** @type {import('@gasket/core').Plugin} */
 const plugin = {
   name,
   hooks: {

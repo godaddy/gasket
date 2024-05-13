@@ -3,7 +3,7 @@
 
 import PluginWebpack from '@gasket/plugin-webpack';
 
-/** @type {import('@gasket/engine').GasketConfigDefinition} */
+/** @type {import('@gasket/core').GasketConfigDefinition} */
 const config = {
   plugins: [PluginWebpack],
   compression: 'garbage',
