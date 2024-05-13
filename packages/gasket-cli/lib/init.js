@@ -29,6 +29,8 @@ async function init({ id, config, argv }) {
     // Set environment variables for gasket
     handleEnvVars({ env, root, id, gasketConfig: options.gasketConfig });
     debug('Detected gasket environment', env);
+
+    // TODO: investigate an alternate CLI init
   } catch (err) {
     console.error(err, { exit: 1 });
   }
