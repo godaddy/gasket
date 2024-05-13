@@ -1,3 +1,5 @@
+import { GasketEngine } from '../../lib/index.js';
+
 describe('The execSync method', () => {
   let engine;
 
@@ -20,7 +22,6 @@ describe('The execSync method', () => {
       }
     };
 
-    const GasketEngine = require('..');
     engine = new GasketEngine([pluginA, pluginB]);
   });
 
@@ -29,21 +30,21 @@ describe('The execSync method', () => {
     jest.restoreAllMocks();
   });
 
-  it('returns an map of results', () => {
-    const result = engine.execMapSync('eventA');
-    expect(result).toEqual({ pluginA: 1, pluginB: 2 });
+  it('returns an Array of results', () => {
+    const result = engine.execSync('eventA');
+    expect(result).toEqual([1, 2]);
   });
 
   it('resolves to an empty array if nothing hooked the event', () => {
-    const result = engine.execMapSync('eventB');
-    expect(result).toEqual({});
+    const result = engine.execSync('eventB');
+    expect(result).toEqual([]);
   });
 
   it('works when invoked without a context', () => {
-    const { execMapSync } = engine;
+    const { execSync } = engine;
 
-    const result = execMapSync('eventA');
+    const result = execSync('eventA');
 
-    expect(result).toEqual({ pluginA: 1, pluginB: 2 });
+    expect(result).toEqual([1, 2]);
   });
 });

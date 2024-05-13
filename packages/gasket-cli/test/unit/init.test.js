@@ -5,24 +5,26 @@ const mockConfig = { mocked: true };
 const mockExecStub = jest.fn();
 const mockExecWaterfallStub = jest.fn();
 
-jest.mock('@gasket/engine');
+jest.mock('@gasket/core');
 jest.mock('../../lib/config/utils', () => ({
   ...jest.requireActual('../../lib/config/utils'),
   addDefaultPlugins: jest.fn().mockReturnValue(mockConfig)
 }));
-jest.mock('@gasket/engine', () => {
-  return class PluginEngine {
-    constructor() {
-      mockConstructorStub(...arguments);
-      this.config = mockConfig;
-    }
-    async exec() {
-      return mockExecStub(...arguments);
-    }
+jest.mock('@gasket/core', () => {
+  return {
+    GasketEngine: (class PluginEngine {
+      constructor() {
+        mockConstructorStub(...arguments);
+        this.config = mockConfig;
+      }
+      async exec() {
+        return mockExecStub(...arguments);
+      }
 
-    async execWaterfall() {
-      return mockExecWaterfallStub(...arguments);
-    }
+      async execWaterfall() {
+        return mockExecWaterfallStub(...arguments);
+      }
+    })
   };
 });
 

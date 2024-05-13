@@ -1,9 +1,9 @@
 import type { IncomingMessage, OutgoingMessage } from 'http';
 import type { Options } from 'lru-cache';
 import type { MinifyOptions } from 'uglify-js';
-import type { MaybeAsync, MaybeMultiple } from '@gasket/engine';
+import type { MaybeAsync, MaybeMultiple } from '@gasket/core';
 
-declare module '@gasket/engine' {
+declare module '@gasket/core' {
   export interface GasketConfig {
     serviceWorker?: {
       /** Name the service worker file. Default is /sw.js */

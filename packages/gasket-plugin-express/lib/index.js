@@ -5,7 +5,7 @@ const { name } = require('../package.json');
 const create = require('./create');
 const createServers = require('./create-servers');
 
-/** @type {import('@gasket/engine').Plugin} */
+/** @type {import('@gasket/core').Plugin} */
 const plugin = {
   name,
   hooks: {

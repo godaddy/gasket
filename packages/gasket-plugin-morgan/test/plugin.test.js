@@ -22,8 +22,8 @@ describe('@gasket/plugin-morgan', () => {
   describe('.middleware', () => {
     describe('.handler', () => {
       it('runs on the middleware lifecycle event', function () {
-        expect(typeof Plugin.hooks.middleware.handler).toBe('function');
-        expect(Plugin.hooks.middleware.handler).toHaveLength(1);
+        expect(typeof Plugin.hooks.middleware).toBe('function');
+        expect(Plugin.hooks.middleware).toHaveLength(1);
       });
 
       it('returns a morgan middleware', () => {
@@ -36,7 +36,7 @@ describe('@gasket/plugin-morgan', () => {
           logger: loggerMock
         };
 
-        const returnValue = Plugin.hooks.middleware.handler(gasketMock);
+        const returnValue = Plugin.hooks.middleware(gasketMock);
         expect(Array.isArray(returnValue)).toBe(true);
         expect(typeof returnValue[0]).toBe('function');
         expect(returnValue[0]).toHaveLength(3);
@@ -54,7 +54,7 @@ describe('@gasket/plugin-morgan', () => {
           logger: loggerMock
         };
 
-        const [morganMiddleware] = Plugin.hooks.middleware.handler(gasketMock);
+        const [morganMiddleware] = Plugin.hooks.middleware(gasketMock);
         // eslint-disable-next-line max-nested-callbacks
         morganMiddleware(reqMock, resMock, function next() {
           expect(loggerMock.info).toHaveBeenCalledWith('GET /foobar');

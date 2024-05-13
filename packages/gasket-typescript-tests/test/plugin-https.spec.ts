@@ -1,4 +1,4 @@
-import type { GasketConfigDefinition, Hook } from '@gasket/engine';
+import type { GasketConfigDefinition, Hook } from '@gasket/core';
 import type { ClientRequest, ServerResponse } from 'http';
 import '@gasket/plugin-https';
 

@@ -33,7 +33,6 @@
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/create-gasket-app",
   "dependencies": {
     "@gasket/core": "^7.0.0-next.21",
-    "@gasket/engine": "^7.0.0-next.21",
     "@gasket/plugin-git": "^7.0.0-next.21",
     "@gasket/plugin-logger": "^7.0.0-next.21",
     "@gasket/utils": "^7.0.0-next.21",

@@ -1,5 +1,6 @@
 # `@gasket/utils`
 
+- Removed `requireWithInstall` to encourage import patterns with ESM
 - Removed support for deprecated `--npmconfig` flag ([#647])
 
 ### 6.41.0

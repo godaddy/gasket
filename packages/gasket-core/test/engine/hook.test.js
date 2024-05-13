@@ -1,3 +1,5 @@
+import { GasketEngine } from '../../lib/index.js';
+
 describe('The hook method', () => {
   let engine, dynamicHook;
 
@@ -14,7 +16,6 @@ describe('The hook method', () => {
         }
       };
 
-    const GasketEngine = require('..');
     engine = new GasketEngine([pluginA]);
   });
 

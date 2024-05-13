@@ -13,7 +13,7 @@
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "pretest": "npm run typecheck",
-    "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict --experimental-vm-modules' jest",
+    "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
     "posttest": "npm run lint",
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"
@@ -40,7 +40,6 @@
     "@gasket/cli": "^7.0.0-next.21",
     "@gasket/core": "^7.0.0-next.21",
     "@gasket/data": "^7.0.0-next.21",
-    "@gasket/engine": "^7.0.0-next.21",
     "@gasket/fetch": "^7.0.0-next.21",
     "@gasket/helper-intl": "^7.0.0-next.21",
     "@gasket/nextjs": "^7.0.0-next.21",
