@@ -1,12 +1,10 @@
-import { default as gasketUtils } from '@gasket/utils';
-import semver from 'semver';
-import chalk from 'chalk';
-import { readFile, writeFile } from 'fs/promises';
-import path from 'path';
-import { fileURLToPath } from 'url';
-const __dirname = fileURLToPath(import.meta.url);
+const { runShellCommand } = require('./index');
+const semver = require('semver');
+const chalk = require('chalk');
+const { readFile, writeFile } = require('fs/promises');
+const path = require('path');
 
-const cachePath = path.join(__dirname, '..', '..', '..', '.cache'); // Place at root of gasket-cli
+const cachePath = path.join(__dirname, '..', '.cache'); // Place at root of package
 const LATEST_VERSION = 'latestVersion';
 const LATEST_VERSION_UPDATE_TIME = 'latestVersionUpdateTime';
 
@@ -36,7 +34,7 @@ async function getLatestVersion(pkgName, currentTime, cache) {
     isOlderThanSevenDays(currentTime, cache[LATEST_VERSION_UPDATE_TIME])
   ) {
     try {
-      const cmdResult = await gasketUtils.runShellCommand('npm', ['view', pkgName, 'version'], {});
+      const cmdResult = await runShellCommand('npm', ['view', pkgName, 'version'], {});
       if (cmdResult?.stdout) {
         const latestVersion = cmdResult.stdout.trim();
         cache[LATEST_VERSION_UPDATE_TIME] = currentTime;
@@ -57,7 +55,7 @@ async function getLatestVersion(pkgName, currentTime, cache) {
  * @param {string} pkgName - package name
  * @param {string} currentVersion - current version of the package
  */
-export async function warnIfOutdated(pkgName, currentVersion) {
+module.exports = async function warnIfOutdated(pkgName, currentVersion) {
   const currentTime = new Date().getTime();
   let cache = {};
 
@@ -75,4 +73,4 @@ export async function warnIfOutdated(pkgName, currentVersion) {
       ` ${chalk.yellow('›')}   Warning: ${pkgName} update available from ${chalk.green(latestVersion)} to ${chalk.green(currentVersion)}`
     );
   }
-}
+};
