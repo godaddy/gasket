@@ -1,8 +1,7 @@
 const {
   makeGatherDevDeps,
   makeRunScriptStr,
-  makeSafeRunScript,
-  eslintConfigIdentifier
+  makeSafeRunScript
 } = require('../lib/utils');
 
 describe('utils', () => {
@@ -133,14 +132,6 @@ describe('utils', () => {
       await safeRunScript('existing');
       expect(runScript).toHaveBeenCalled();
       expect(context.warnings).toHaveLength(0);
-    });
-  });
-
-  describe('eslintConfigIdentifier', () => {
-    it('does stuff', () => {
-      const config = eslintConfigIdentifier('@scope');
-
-      expect(config.longName).toEqual('@scope/eslint-config');
     });
   });
 });
