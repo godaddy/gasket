@@ -2,7 +2,8 @@
 import { Command } from 'commander';
 import { createRequire } from 'module';
 import { createCommand } from './commands/create.js';
-import { processCommand, logo, warnIfOutdated } from './utils/index.js';
+import { processCommand, logo } from './utils/index.js';
+import { warnIfOutdated } from '@gasket/utils';
 
 const require = createRequire(import.meta.url);
 const pkg = require('../package.json');

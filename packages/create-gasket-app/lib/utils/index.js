@@ -3,4 +3,3 @@ export { processArgs } from './process-args.js';
 export { processOptions } from './process-options.js';
 export { createOption } from './create-option.js';
 export { logo } from './logo.js';
-export { warnIfOutdated } from './warn-if-outdated.js';
