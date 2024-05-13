@@ -1,4 +1,4 @@
-import type { GasketConfig, GasketConfigDefinition } from '@gasket/core';
+import type { GasketConfig, GasketConfigDefinition, MaybeAsync } from '@gasket/core';
 
 /**
  * Wrapper class for executing commands for a given package manager
@@ -95,3 +95,6 @@ export function applyConfigOverrides(config: GasketConfigDefinition, { env, comm
 export function runShellCommand(cmd: string, argv?: string[], options?: {
   signal?: object;
 }, debug?: boolean): Promise<{ stdout: string }>;
+
+
+export function warnIfOutdated(pkgName: string, currentVersion: string): MaybeAsync<void>;
