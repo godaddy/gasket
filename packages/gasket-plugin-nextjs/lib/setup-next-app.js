@@ -54,7 +54,9 @@ function setupNextHandling(nextServer, serverApp, gasket) {
   serverApp.all('*', async (req, res, next) => {
     try {
       await gasket.exec('nextPreHandling', { req, res, nextServer });
-      nextHandler(req, res);
+      if (!res.headersSent) {
+        nextHandler(req, res);
+      }
     } catch (err) {
       return next(err);
     }
