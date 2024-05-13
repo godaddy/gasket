@@ -1,6 +1,8 @@
 const isFunction = require('lodash.isfunction');
 const isObject = require('lodash.isobject');
 
+const rePluginPresets = /@gasket.+(plugin|preset)/;
+
 /**
  * Recurse through an object or array, and transforms, by mutation,
  * any functions to be empty.
@@ -55,6 +57,7 @@ function safeAssign(target, other) {
 function loadAppModules(loader, app, modules) {
   app.modules = app.modules || [];
   Object.keys(app.package.dependencies)
+    .filter(name => !rePluginPresets.test(name))
     .forEach(name => {
       const range = app.package.dependencies[name];
       const moduleData = loader.getModuleInfo(null, name, { from: app.name, range });
