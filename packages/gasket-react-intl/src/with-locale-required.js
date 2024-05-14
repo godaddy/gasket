@@ -27,7 +27,6 @@ function attachGetInitialProps(Wrapper, localePathPart) {
       // While this can be resolved by serverLoadData, we will do it here and
       // return in it in props to avoid having to re-resolve during hydrate
       // under different context
-      // @ts-ignore - temporary until we fix types in @gasket/helper-intl
       resolvedLocalePathPart = localeUtils.resolveLocalePathPart(
         localePathPart,
         ctx
@@ -37,7 +36,6 @@ function attachGetInitialProps(Wrapper, localePathPart) {
     if (res && res.locals && res.locals.gasketData) {
       const { locale = defaultLocale } = res.locals.gasketData.intl || {};
       const localesParentDir = require('path').dirname(res.locals.localesDir);
-      // @ts-ignore - temporary until we fix types in @gasket/helper-intl
       localesProps = localeUtils.serverLoadData(
         resolvedLocalePathPart ?? localePathPart,
         locale,
