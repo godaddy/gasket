@@ -71,7 +71,7 @@ module.exports = {
   createContext: {
     appDescription: "In a word? .......chaos",
     packageManager: "npm",
-    testPlugin: "none",
+    testPlugins: ["jest"],
     destOverride: false
   }
 }
@@ -85,8 +85,8 @@ these overridable prompts:
   - Application desciption placed into `package.json.description`
 - `packageManager` - `String`
   - Package Manager, typically either `npm` or `yarn`
-- `testPlugin` - `String`
-  - What test suite you would like to setup, either `mocha`, `jest`, or none
+- `testPlugin` - `Array<String>`
+  - What test suites you would like to setup, either `mocha`, `jest`, or `cypress`
 - `destOverride` - `Boolean`
   - Whether or not to override the contents of a directory bearing the same name
 

@@ -17,18 +17,22 @@ function createAppFiles({ files, generatorDir }) {
  * createTestFiles
  * @property {Files} files - The Gasket Files API.
  * @property {generatorDir} - The directory of the generator.
- * @property {testPlugin} - Selected test plugin from prompt
+ * @property {testPlugins} - Array of selected test plugins
  */
-function createTestFiles({ files, generatorDir, testPlugin }) {
+function createTestFiles({ files, generatorDir, testPlugins }) {
+  if (!testPlugins || testPlugins.length === 0) return;
+
   const frameworks = ['jest', 'mocha', 'cypress'];
-  frameworks.forEach((tester) => {
-    const regex = new RegExp(`${tester}`);
-    if (regex.test(testPlugin)) {
-      files.add(`${generatorDir}/${tester}/*`, `${generatorDir}/${tester}/**/*`);
+  const frameworksRegex = new RegExp(frameworks.join('|'));
+
+  testPlugins.forEach((testPlugin) => {
+    const match = frameworksRegex.exec(testPlugin);
+    if (match) {
+      const matchedFramework = match[0];
+      files.add(`${generatorDir}/${matchedFramework}/*`, `${generatorDir}/${matchedFramework}/**/*`);
     }
   });
 }
-
 
 /**
  * createNextFiles - Add next.config.js & server.mjs to files
@@ -162,7 +166,7 @@ module.exports = {
   handler: function create(gasket, context) {
     const {
       files,
-      pkg, testPlugin,
+      pkg, testPlugins,
       addSitemap,
       nextServerType,
       nextDevProxy,
@@ -171,7 +175,7 @@ module.exports = {
     const generatorDir = `${__dirname}/../generator`;
 
     createAppFiles({ files, generatorDir });
-    createTestFiles({ files, generatorDir, testPlugin });
+    createTestFiles({ files, generatorDir, testPlugins });
     createNextFiles({ files, generatorDir, nextDevProxy, typescript });
     addDependencies({ pkg, nextDevProxy });
     addNpmScripts({ pkg, nextServerType, nextDevProxy, typescript });

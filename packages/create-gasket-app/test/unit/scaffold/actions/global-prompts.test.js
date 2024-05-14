@@ -9,7 +9,7 @@ const { questions } = globalPromptsImport;
 
 describe('globalPrompts', () => {
   let mockContext;
-  let chooseAppDescription, choosePackageManager, chooseTestPlugin, allowExtantOverwriting;
+  let chooseAppDescription, choosePackageManager, chooseTestPlugins, allowExtantOverwriting;
 
   beforeEach(() => {
     mockContext = {
@@ -25,7 +25,7 @@ describe('globalPrompts', () => {
     [
       chooseAppDescription,
       choosePackageManager,
-      chooseTestPlugin,
+      chooseTestPlugins,
       allowExtantOverwriting
     ] = questions;
   });
@@ -42,7 +42,7 @@ describe('globalPrompts', () => {
     mockPromptStub.mockReturnValue({});
     await globalPrompts({ context: mockContext });
 
-    expect(mockPromptStub).toHaveBeenCalledTimes(3);
+    expect(mockPromptStub).toHaveBeenCalledTimes(4);
   });
 
   describe('packageManager', () => {
@@ -113,34 +113,36 @@ describe('globalPrompts', () => {
   describe('testPlugin', () => {
 
     it('does not prompt if testPlugin set in context', async () => {
-      mockContext.testPlugin = 'bogus';
-      await chooseTestPlugin(mockContext, mockPromptStub);
+      mockContext.testPlugins = ['bogus'];
+      await chooseTestPlugins(mockContext, mockPromptStub);
 
       expect(mockPromptStub).not.toHaveBeenCalled();
     });
 
-    it('prompts if testPlugin not set in context', async () => {
-      mockPromptStub.mockReturnValue({ testPlugin: 'bogus-plugin' });
-      await chooseTestPlugin(mockContext, mockPromptStub);
+    it('prompts if testPlugins not set in context', async () => {
+      await chooseTestPlugins(mockContext, mockPromptStub);
 
       expect(mockPromptStub).toHaveBeenCalled();
       expect(mockPromptStub.mock.calls[0][0][0]).toHaveProperty('name', 'testPlugin');
+      expect(mockPromptStub.mock.calls[1][0][0]).toHaveProperty('name', 'testPlugin');
     });
 
     it('prompts if a known test plugin not included in context plugins', async () => {
-      mockContext.plugins = ['gasket-plugin-unknown-test'];
-      mockPromptStub.mockReturnValue({ testPlugin: 'bogus' });
-      await chooseTestPlugin(mockContext, mockPromptStub);
+      await chooseTestPlugins(mockContext, mockPromptStub);
       expect(mockPromptStub).toHaveBeenCalled();
+
       expect(mockPromptStub.mock.calls[0][0][0]).toHaveProperty('name', 'testPlugin');
+      expect(mockPromptStub.mock.calls[1][0][0]).toHaveProperty('name', 'testPlugin');
     });
 
     it('sets testPlugin in context', async () => {
       delete mockContext.testPlugin;
-      mockPromptStub.mockReturnValue({ testPlugin: 'bogus' });
-      await chooseTestPlugin(mockContext, mockPromptStub);
+      mockPromptStub
+        .mockReturnValueOnce({ testPlugin: 'firstValue' })
+        .mockReturnValueOnce({ testPlugin: 'secondValue' });
+      await chooseTestPlugins(mockContext, mockPromptStub);
 
-      expect(mockContext).toHaveProperty('testPlugin', 'bogus');
+      expect(mockContext).toHaveProperty('testPlugins', ['firstValue', 'secondValue']);
     });
   });
 
