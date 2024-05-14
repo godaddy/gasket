@@ -2,7 +2,7 @@
 const debug = require('diagnostics')('gasket:cli:hooks:init');
 const { loadGasketConfigFile, assignPresetConfig } = require('@gasket/resolve');
 const { getEnvironment, addDefaultPlugins } = require('./config/utils');
-const PluginEngine = require('@gasket/engine');
+const { GasketEngine: PluginEngine } = require('@gasket/core');
 const {
   processOptions,
   processCommand,

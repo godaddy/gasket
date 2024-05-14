@@ -1,14 +1,12 @@
 /* eslint-disable no-process-env */
 
-import { jest, expect } from '@jest/globals';
-import GasketEngine from '@gasket/engine';
-import { makeGasket } from '../lib/index.js';
+import { makeGasket, GasketEngine } from '../lib/index.js';
 
 // eslint-disable-next-line no-unused-vars
 const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
 const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
 
-/** @type {import('@gasket/engine').Plugin} */
+/** @type {import('../lib/index').Plugin} */
 const mockPlugin = {
   name: 'mockPlugin',
   hooks: {
@@ -29,7 +27,7 @@ const mockPlugin = {
   }
 };
 
-/** @type {import('@gasket/engine').Plugin} */
+/** @type {import('../lib/index').Plugin} */
 const mockProdPlugin = {
   name: 'mockProdPlugin',
   hooks: {

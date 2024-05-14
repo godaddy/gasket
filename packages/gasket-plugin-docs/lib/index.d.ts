@@ -1,4 +1,4 @@
-import type { MaybeAsync } from '@gasket/engine';
+import type { MaybeAsync } from '@gasket/core';
 import type { ModuleData } from '@gasket/plugin-metadata';
 
 export interface DocsSetupModulesConfig {
@@ -67,7 +67,7 @@ export interface DocsConfigSet {
   docsRoot: string
 }
 
-declare module '@gasket/engine' {
+declare module '@gasket/core' {
   export interface GasketConfig {
     docs?: {
       outputDir?: string

@@ -1,9 +1,11 @@
-import type { Gasket, Hook } from '@gasket/engine';
+import type { Gasket, Hook } from '@gasket/core';
 import { CreateContext } from 'create-gasket-app';
 
 describe('create-gasket-app', () => {
   it('defines the create lifecycle', () => {
+    // @ts-ignore
     const hook: Hook<'create'> = (gasket: Gasket, context: CreateContext): void => { };
+    // @ts-ignore
     const asyncHook: Hook<'create'> = async (gasket: Gasket, context: CreateContext): Promise<void> => { };
   });
 

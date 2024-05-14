@@ -1,4 +1,6 @@
-const debug = require('debug')('gasket:engine');
+import debugPkg from 'debug';
+
+const debug = debugPkg('gasket:engine');
 
 let dynamicNamingId = 0;
 
@@ -24,6 +26,7 @@ class GasketEngine {
 
   /**
    * Resolves plugins
+   * @param plugins
    * @private
    */
   _registerPlugins(plugins) {
@@ -81,13 +84,13 @@ class GasketEngine {
 
   /**
    * Injects additional lifecycle hooks at runtime.
-   * @param {Object} options options object
+   * @param {object} options options object
    * @param {string} options.event The name of the event to hook. This is the
    *    same thing as the property name in the `hooks` of a plugin definition.
-   * @param {function} options.handler The function to call when the event
+   * @param {Function} options.handler The function to call when the event
    *    occurs. The function should take the same form as the `hooks` callbacks
    *    in a plugin definition.
-   * @param {Object} [options.timing] Ordering constraints for when the hook will
+   * @param {object} [options.timing] Ordering constraints for when the hook will
    *    execute. Same as the optional `timing` property in plugin hooks.
    * @param {string}  [options.pluginName] Defaults to an auto-generated name.
    *    Only supply this if you need other hooks to be able to order themselves
@@ -117,7 +120,6 @@ class GasketEngine {
    * Enables a plugin to introduce new lifecycle events. When
    * calling `exec`, await the `Promise` it returns to wait for the hooks of other
    * plugins to finish.
-   *
    * @param {string} event The event to execute
    * @param {...*} args Args for hooks
    * @returns {Promise<Array>} An array of the data returned by the hooks, in
@@ -192,7 +194,7 @@ class GasketEngine {
    * present in the map.
    * @param {string} event The event to execute
    * @param {...*} args Args for hooks
-   * @returns {Promise<Object>} An object map with each key being the name of
+   * @returns {Promise<object>} An object map with each key being the name of
    *    the plugin and each value the result from the hook
    */
   execMap(event, ...args) {
@@ -235,7 +237,7 @@ class GasketEngine {
    * Like `execMap`, only all hooks must execute synchronously
    * @param {string} event The event to execute
    * @param {...*} args Args for hooks
-   * @returns {Promise<Object>} An object map with each key being the name of
+   * @returns {Promise<object>} An object map with each key being the name of
    *    the plugin and each value the result from the hook
    */
   execMapSync(event, ...args) {
@@ -267,8 +269,8 @@ class GasketEngine {
    * hook execute sequentially, with each result being passed as the first argument
    * to the next hook. It's like an asynchronous version of `Array.prototype.reduce`.
    * @param {string} event The event to execute
-   * @param {value} value Value to pass to initial hook
-   * @param {...*} args Args for hooks
+   * @param {any} value Value to pass to initial hook
+   * @param {...*} otherArgs Args for hooks
    * @returns {Promise} The result of the final executed hook.
    */
   execWaterfall(event, value, ...otherArgs) {
@@ -303,8 +305,8 @@ class GasketEngine {
    * Using synchronous methods limits flexibility, so it's encouraged to use async
    * methods whenever possible.
    * @param {string} event The event to execute
-   * @param {value} value Value to pass to initial hook
-   * @param {...*} args Args for hooks
+   * @param {any} value Value to pass to initial hook
+   * @param {...*} otherArgs Args for hooks
    * @returns {Promise} The result of the final executed hook.
    */
   execWaterfallSync(event, value, ...otherArgs) {
@@ -336,8 +338,7 @@ class GasketEngine {
    * yourself with explicit arguments. These arguments can be dynamic based on
    * the plugin itself.
    * @param {string} event The event to execute
-   * @param {function} applyFn Function to apply
-   * @param {...*} args Args for hooks
+   * @param {Function} applyFn Function to apply
    * @returns {Promise<Array>} An array of the data returned by the hooks, in
    *    the order executed
    */
@@ -374,8 +375,7 @@ class GasketEngine {
   /**
    * Like `execApply`, only all hooks must execute synchronously.
    * @param {string} event The event to execute
-   * @param {function} applyFn Function to apply
-   * @param {...*} args Args for hooks
+   * @param {Function} applyFn Function to apply
    * @returns {Promise<Array>} An array of the data returned by the hooks, in
    *    the order executed
    */
@@ -403,7 +403,11 @@ class GasketEngine {
   /**
    * Exec, but with a cache for plans by type
    * @private
-   * @param {Object} options options
+   * @param {object} options options
+   * @param options.event
+   * @param options.type
+   * @param options.prepare
+   * @param options.exec
    * @returns {*} result
    */
   _execWithCachedPlan({ event, type, prepare, exec }) {
@@ -520,4 +524,4 @@ class GasketEngine {
   }
 }
 
-module.exports = GasketEngine;
+export default GasketEngine;

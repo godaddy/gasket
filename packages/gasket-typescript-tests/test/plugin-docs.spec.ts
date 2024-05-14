@@ -1,4 +1,4 @@
-import type { GasketConfigDefinition, Hook } from '@gasket/engine';
+import type { GasketConfigDefinition, Hook } from '@gasket/core';
 import '@gasket/plugin-docs';
 
 describe('@gasket/plugin-docs', () => {

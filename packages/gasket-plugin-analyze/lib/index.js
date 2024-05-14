@@ -6,7 +6,7 @@ const commands = require('./commands');
 const { name } = require('../package.json');
 /**
  * Gasket Analyzer Plugin
- * @type {import('@gasket/engine').Plugin}
+ * @type {import('@gasket/core').Plugin}
  */
 const plugin = {
   name,

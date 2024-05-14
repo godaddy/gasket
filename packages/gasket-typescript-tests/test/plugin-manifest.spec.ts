@@ -1,5 +1,5 @@
 import type { IncomingMessage, OutgoingMessage } from 'http';
-import type { Gasket, GasketConfigDefinition, Hook } from '@gasket/engine';
+import type { Gasket, GasketConfigDefinition, Hook } from '@gasket/core';
 import type { Manifest } from '@gasket/plugin-manifest';
 
 describe('@gasket/plugin-manifest', () => {

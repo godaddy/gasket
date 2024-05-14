@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "downlevelIteration": true,
     "allowJs": true,
     "checkJs": true,
     "noEmit": true,
@@ -14,6 +15,7 @@
   },
   "exclude": [
     "test",
-    "coverage"
+    "coverage",
+    "cjs"
   ]
 }

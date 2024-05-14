@@ -1,4 +1,4 @@
-import type { GasketConfigDefinition } from '@gasket/engine';
+import type { GasketConfigDefinition } from '@gasket/core';
 import '@gasket/plugin-analyze';
 
 describe('@gasket/plugin-analyze', () => {

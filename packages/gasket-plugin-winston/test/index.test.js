@@ -1,5 +1,5 @@
 /* eslint-disable no-sync */
-const GasketEngine = require('@gasket/engine');
+const { GasketEngine } = require('@gasket/core');
 const PluginLogger = require('@gasket/plugin-logger');
 const plugin = require('../lib/index');
 const { LEVEL, MESSAGE } = require('triple-beam');

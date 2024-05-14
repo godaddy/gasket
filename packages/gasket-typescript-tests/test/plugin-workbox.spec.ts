@@ -1,4 +1,4 @@
-import type { GasketConfigDefinition, Plugin } from '@gasket/engine';
+import type { GasketConfigDefinition, Plugin } from '@gasket/core';
 import '@gasket/plugin-workbox';
 
 describe('@gasket/plugin-workbox', () => {

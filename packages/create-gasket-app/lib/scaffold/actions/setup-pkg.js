@@ -24,7 +24,6 @@ async function setupPkg({ context }) {
   // Add critical dependencies
   pkg.add('dependencies', {
     '@gasket/core': dependencies['@gasket/core'],
-    '@gasket/engine': dependencies['@gasket/engine'],
     '@gasket/utils': dependencies['@gasket/utils']
   });
 

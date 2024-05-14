@@ -1,5 +1,5 @@
 import { applyConfigOverrides, runShellCommand, tryRequire } from '@gasket/utils';
-import { GasketConfig, GasketConfigDefinition } from '@gasket/engine';
+import { GasketConfig, GasketConfigDefinition } from '@gasket/core';
 
 describe('@gasket/utils', function () {
   const perform = false;

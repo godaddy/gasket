@@ -1,4 +1,4 @@
-import type { MaybeAsync } from '@gasket/engine';
+import type { MaybeAsync } from '@gasket/core';
 import type { Command } from 'commander';
 
 /**
@@ -107,7 +107,7 @@ export interface GasketCommandOption {
   required: boolean;
 }
 
-declare module '@gasket/engine' {
+declare module '@gasket/core' {
   export interface HookExecTypes {
     commandOptions(config: Config): MaybeAsync<Array<GasketOptionDefinition> | GasketOptionDefinition>;
 

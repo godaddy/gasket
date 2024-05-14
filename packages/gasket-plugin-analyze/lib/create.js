@@ -2,7 +2,7 @@
 
 /**
  * Add files & extend package.json for new apps.
- * @type {import('@gasket/engine').HookHandler<'create'>}
+ * @type {import('@gasket/core').HookHandler<'create'>}
  */
 module.exports = function create(gasket, context) {
   const { pkg } = context;

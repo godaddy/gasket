@@ -43,7 +43,7 @@ async function loadSwaggerSpec(root, definitionFile, logger) {
   return __swaggerSpec;
 }
 
-/** @type {import('@gasket/engine').Plugin} */
+/** @type {import('@gasket/core').Plugin} */
 const plugin = {
   name,
   hooks: {

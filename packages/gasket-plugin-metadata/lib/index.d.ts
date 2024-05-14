@@ -1,4 +1,4 @@
-import type { MaybeAsync } from '@gasket/engine';
+import type { MaybeAsync } from '@gasket/core';
 
 export interface ModuleData<Module = any> {
   /** Name of preset */
@@ -107,7 +107,7 @@ export interface Metadata {
   modules: Array<ModuleData>
 }
 
-declare module '@gasket/engine' {
+declare module '@gasket/core' {
   export interface HookExecTypes {
     metadata(origData: PluginData): MaybeAsync<PluginData>
   }
