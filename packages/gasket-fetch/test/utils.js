@@ -9,7 +9,6 @@ const API = {
 
 /**
  * Assert fetch API compliant classes.
- *
  * @param {Function} Request constructor for Request class.
  * @param {Function} Headers constructor for Headers class.
  * @param {Function} Response constructor for Response class.
@@ -34,7 +33,6 @@ function assertExports(Request, Headers, Response) {
 
 /**
  * Assert fetch API executing GET request.
- *
  * @async
  * @param {Function} fetch implementation of fetch.
  * @returns {Function} runnable test descriptor.
@@ -55,7 +53,6 @@ function assertGet(fetch) {
 
 /**
  * Assert fetch API executing POST request.
- *
  * @async
  * @param {Function} fetch implementation of fetch.
  * @returns {Function} runnable test descriptor.
@@ -91,7 +88,6 @@ function assertPost(fetch) {
 
 /**
  * Assert AbortController aborting fetch requests.
- *
  * @async
  * @param {Function} fetch implementation of fetch.
  * @param {Function} AbortController constructor for aborting fetch request.

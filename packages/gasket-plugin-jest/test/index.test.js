@@ -3,6 +3,10 @@ const plugin = require('../lib/index.js');
 const config = require('../generator/jest.config.js');
 
 describe('Plugin', function () {
+  /**
+   * Create a new project
+   * @returns {Promise<object>} project
+   */
   async function create() {
     const pkg = {};
 
@@ -19,6 +23,10 @@ describe('Plugin', function () {
     return { pkg };
   }
 
+  /**
+   * Create a new React project
+   * @returns {Promise<object>} project
+   */
   async function createReact() {
     const files = [];
     const pkg = {

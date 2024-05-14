@@ -4,9 +4,7 @@ const generateIndex = require('./utils/generate-index');
 
 /**
  * Get the docs command
- *
- * @param {Gasket} gasket - Gasket
- * @returns {GasketCommand} command
+ * @type {import('@gasket/engine').HookHandler<'commands'>}
  */
 module.exports = function commands(gasket) {
   return {
@@ -21,7 +19,9 @@ module.exports = function commands(gasket) {
     ],
     action: async function ({ view }) {
       const docsConfigSet = await buildDocsConfigSet(gasket);
+
       await collateFiles(docsConfigSet);
+
       let guides = await gasket.exec('docsGenerate', docsConfigSet);
       if (guides) {
         guides = guides.reduce((acc, cur) => {
@@ -35,8 +35,11 @@ module.exports = function commands(gasket) {
       } else {
         guides = [];
       }
+
       docsConfigSet.guides.unshift(...guides);
+
       await generateIndex(docsConfigSet);
+
       if (view) {
         await gasket.exec('docsView', docsConfigSet);
       }

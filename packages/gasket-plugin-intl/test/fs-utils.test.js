@@ -1,6 +1,6 @@
 const fs = require('fs-extra');
 const path = require('path');
-const { packageName, getPackageDirs, saveJsonFile } = require('../lib/fs-utils');
+const { packageName, getPackageDirs, saveJsonFile } = require('../lib/utils/fs-utils');
 
 const GeneratorFunction = Object.getPrototypeOf(
   async function *() {}

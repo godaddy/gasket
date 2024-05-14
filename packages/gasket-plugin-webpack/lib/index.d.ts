@@ -1,8 +1,19 @@
 import type { GasketConfig, HookExecTypes } from '@gasket/core';
+import { Gasket } from '@gasket/engine';
 import type WebpackApi from 'webpack';
+import type { Configuration } from 'webpack';
+import type WebpackChain from 'webpack-chain';
 
 export interface WebpackContext {
-  webpack: typeof WebpackApi
+  webpack: typeof WebpackApi;
+  isServer?: boolean;
+}
+
+export interface WebpackMetrics {
+  name: string;
+  event: string;
+  data: object;
+  time: number;
 }
 
 declare module '@gasket/core' {
@@ -12,12 +23,9 @@ declare module '@gasket/core' {
 
   export interface HookExecTypes {
     webpackConfig(
-      config: WebpackApi.Configuration,
+      config: Configuration,
       context: WebpackContext
-    ): WebpackApi.Configuration;
+    ): Configuration;
+    metrics(metrics: WebpackMetrics): Promise<void>;
   }
 }
-
-export const name = '@gasket/plugin-webpack'
-// TODO: does these need to be complete?
-export const hooks = {};

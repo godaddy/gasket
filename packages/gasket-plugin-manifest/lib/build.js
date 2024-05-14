@@ -1,3 +1,6 @@
+/// <reference types="@gasket/plugin-start" />
+/// <reference types="@gasket/plugin-log" />
+
 const path = require('path');
 const { writeFile } = require('fs').promises;
 const mkdirp = require('mkdirp');
@@ -5,20 +8,19 @@ const { gatherManifestData } = require('./utils');
 
 /**
  * Write a static web manifest file
- *
- * @param {Gasket} gasket - Gasket
- * @async
+ * @type {import('@gasket/engine').HookHandler<'build'>}
  */
-async function build(gasket) {
+module.exports =async function build(gasket) {
   const {
     logger,
     config: { root, manifest }
+
   } = gasket;
-  if (!manifest || !manifest.staticOutput) return;
 
-  const gatheredManifest = await gatherManifestData(gasket, {});
+  if (manifest && typeof manifest.staticOutput === 'string') {
+    const gatheredManifest = await gatherManifestData(gasket, {});
 
-  await mkdirp(manifest.staticOutput.toString().replace('manifest.json', ''));
+    await mkdirp(manifest.staticOutput.toString().replace('manifest.json', ''));
 
   await writeFile(
     manifest.staticOutput,
@@ -26,17 +28,12 @@ async function build(gasket) {
     'utf-8'
   );
 
-  logger.info(
+    logger.info(
     `build:web-manifest: Wrote web manifest file (${path.relative(
       root,
       manifest.staticOutput
-    )}).`
-  );
-}
-
-/**
- * Build lifecycle to write a static web manifest file
- *
- * @param {Gasket} gasket - Gasket
- */
-module.exports = build;
+    
+      )}).`
+    );
+  }
+};

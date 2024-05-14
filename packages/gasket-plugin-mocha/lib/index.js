@@ -20,18 +20,14 @@ const plugin = {
         const isNextProject = pkg.has('dependencies', 'next');
 
         pkg.add('devDependencies', {
-          //
           // Base assertion dependencies.
-          //
           'mocha': '^10.0.0',
           'nyc': '^15.1.0',
           'sinon': '^14.0.0',
           'chai': '^4.2.0',
           'setup-env': '^2.0.0',
 
-          //
           // To ensure that the mocha tests can run with import scripts
-          //
           '@babel/register': devDependencies['@babel/register'],
           '@babel/core': devDependencies['@babel/core']
         });
@@ -43,9 +39,7 @@ const plugin = {
           );
 
           pkg.add('devDependencies', {
-            //
             // All dependencies to correctly configure React Testing Library
-            //
             'jsdom': devDependencies.jsdom,
             '@testing-library/react': devDependencies['@testing-library/react'],
             'global-jsdom': devDependencies['global-jsdom']

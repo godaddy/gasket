@@ -105,8 +105,7 @@ describe('withIntlProvider', function () {
     it('initializes state with empty objects', function () {
       const result = init({});
       expect(result).toEqual({
-        messages: {},
-        status: {}
+        messages: {}
       });
     });
 
