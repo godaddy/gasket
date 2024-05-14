@@ -143,6 +143,7 @@ function addConfig({ gasketConfig, nextDevProxy }) {
     });
   }
 }
+}
 
 module.exports = {
   timing: {
@@ -151,18 +152,13 @@ module.exports = {
   },
   /**
    * Add files & extend package.json for new apps.
-   *
-   * @param {Gasket} gasket - The Gasket API.
-   * @param {CreateContext} context - Create context
-   * @param {Files} context.files - The Gasket Files API.
-   * @param {PackageJson} context.pkg - The Gasket PackageJson API.
-   * @param {PluginName} context.testPlugin - The name of included test plugins.
-   * @public
+   * @type {import('@gasket/engine').HookHandler<'create'>}
    */
   handler: function create(gasket, context) {
     const {
       files,
-      pkg, testPlugin,
+      pkg,
+      testPlugin,
       addSitemap,
       nextServerType,
       nextDevProxy,

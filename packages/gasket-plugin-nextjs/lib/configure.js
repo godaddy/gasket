@@ -1,14 +1,9 @@
+/// <reference types="@gasket/plugin-command" />
+/// <reference types="@gasket/plugin-log" />
+/// <reference types="@gasket/plugin-service-worker" />
 
-/**
- * Set up configuration.
- *
- * If the service worker plugin, only the _app entry is configured to be
- * injected with registration script.
- *
- * @param {Gasket} gasket - Gasket
- * @param {Object} baseConfig - Base gasket config
- * @returns {Object} config
- */
+
+/** @type {import('@gasket/engine').HookHandler<'configure'>} */
 function configure(gasket, baseConfig = {}) {
   const { nextConfig = {} } = baseConfig;
 

@@ -11,11 +11,14 @@
       "dom"
     ],
     "types": [
-      "@types/jest"
+      "@types/jest",
+      "@types/node",
     ]
   },
   "exclude": [
     "test",
-    "coverage"
+    "coverage",
+    "lib",
+    "next.js"
   ]
 }

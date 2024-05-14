@@ -1,5 +1,5 @@
-const utils = require('../lib/utils');
-jest.mock('../lib/utils');
+const utils = require('../lib/utils/utils');
+jest.mock('../lib/utils/utils');
 const middleware = require('../lib/middleware');
 
 const mockRegisterScript = 'mock script';

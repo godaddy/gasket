@@ -21,3 +21,9 @@ declare module '@gasket/core' {
     ): MaybeAsync<void>
   }
 }
+
+export async function reduxMiddleware(
+  req: IncomingMessage,
+  res: OutgoingMessage,
+  next: (err?: any) => void
+): Promise<void>;

@@ -20,8 +20,8 @@ const nextServer = {
 
 const mockSetupNextAppStub = jest.fn(() => nextServer);
 
-jest.mock('../lib/setup-next-app', () => {
-  const mod = jest.requireActual('../lib/setup-next-app');
+jest.mock('../lib/utils/setup-next-app', () => {
+  const mod = jest.requireActual('../lib/utils/setup-next-app');
   return {
     setupNextApp: mockSetupNextAppStub,
     setupNextHandling: mod.setupNextHandling
@@ -302,7 +302,7 @@ describe('build hook', () => {
     mockCreateConfigStub = jest.fn();
     mockBuilderStub = jest.fn();
 
-    jest.mock('../lib/config', () => ({
+    jest.mock('../lib/utils/config', () => ({
       createConfig: mockCreateConfigStub
     }));
 
@@ -487,6 +487,11 @@ describe('workbox hook', () => {
   });
 });
 
+
+/**
+ * Mock Gasket API
+ * @returns {object} gasketAPI
+ */
 function mockGasketApi() {
   return {
     command: {

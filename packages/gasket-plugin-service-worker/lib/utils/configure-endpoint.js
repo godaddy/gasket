@@ -3,9 +3,7 @@ const { getCacheKeys, getComposedContent, getSWConfig } = require('./utils');
 
 /**
  * Configures the endpoint with the gasket config
- *
- * @param {Gasket} gasket - Gasket
- * @returns {Function} endpoint
+ * @type {import('../index').configureEndpoint}
  */
 module.exports = async function configureEndpoint(gasket) {
   const { logger } = gasket;
@@ -14,6 +12,7 @@ module.exports = async function configureEndpoint(gasket) {
   const cache = new LRU(cacheConfig);
   const cacheKeys = await getCacheKeys(gasket);
 
+  /** @type {import('../index').sw} */
   return async function sw(req, res) {
     const cacheKey = cacheKeys.reduce((acc, fn) => acc + fn(req, res), '_');
 

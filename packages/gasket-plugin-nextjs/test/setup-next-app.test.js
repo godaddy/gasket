@@ -7,7 +7,7 @@ const mockNext = jest.fn().mockReturnValue(nextHandler);
 
 jest.mock('next', () => mockNext);
 
-const getModule = () => require('../lib/setup-next-app');
+const getModule = () => require('../lib/utils/setup-next-app');
 
 describe('setupNextApp', () => {
   let gasket, module;
@@ -138,6 +138,10 @@ describe('setupNextHandling', () => {
   });
 });
 
+/**
+ * Mock gasket API
+ * @returns {object} gasket API
+ */
 function mockGasketApi() {
   return {
     command: {

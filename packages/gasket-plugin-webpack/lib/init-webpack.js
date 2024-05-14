@@ -1,8 +1,8 @@
+/// <reference types="@gasket/plugin-log" />
+
 /**
  * Sets up a context object with special getters
- *
- * @param {object} context - Additional context-specific information
- * @returns {object} context
+ * @type {import('./internal').setupContext}
  */
 function setupContext(context) {
   return {
@@ -15,10 +15,7 @@ function setupContext(context) {
 
 /**
  * Creates the webpack config
- * @param {Gasket} gasket - The Gasket API
- * @param {object} initConfig - Initial webpack config
- * @param {object} context - Additional context-specific information
- * @returns {object} Final webpack config
+ * @type {import('@gasket/plugin-webpack').initWebpack}
  */
 module.exports = function initWebpack(gasket, initConfig, context) {
   const WebpackMetricsPlugin = require('./webpack-metrics-plugin');

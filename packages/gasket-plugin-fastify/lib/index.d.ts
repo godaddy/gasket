@@ -1,6 +1,6 @@
 import type { MaybeAsync, MaybeMultiple } from '@gasket/core';
 import type {
-  FastifyInstance,
+  Fastify,
   FastifyRequest,
   FastifyReply,
   FastifyServerOptions
@@ -31,11 +31,7 @@ declare module '@gasket/core' {
    * Handler function type - The middie middleware is added for express
    * compatibility
    */
-  type Handler = (
-    req: FastifyRequest,
-    res: FastifyReply,
-    next: (error?: Error) => void
-  ) => void;
+  type Handler = (req: any, res: any, next: (error?: Error) => void) => void;
 
   /** Error handler function type */
   type ErrorHandler = (
@@ -47,9 +43,9 @@ declare module '@gasket/core' {
 
   export interface HookExecTypes {
     middleware(
-      fastify: FastifyInstance
+      fastify: Fastify
     ): MaybeAsync<MaybeMultiple<Handler> & { paths?: (string | RegExp)[] }>;
-    fastify(fastify: FastifyInstance): MaybeAsync<void>;
+    fastify(fastify: Fastify): MaybeAsync<void>;
     errorMiddleware(): MaybeAsync<MaybeMultiple<ErrorHandler>>;
   }
 }

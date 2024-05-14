@@ -3,9 +3,8 @@ const { getOutputDir } = require('./utils');
 
 /**
  * Express lifecycle to set up route for serving workbox libraries
- *
  * @param {Gasket} gasket - Gasket
- * @param {Object} app - Fastify app
+ * @param {object} app - Fastify app
  */
 module.exports = function fastify(gasket, app) {
   const outputDir = getOutputDir(gasket);
