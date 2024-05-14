@@ -132,9 +132,6 @@ describe('setupNextHandling', () => {
   });
 });
 
-/**
- *
- */
 function mockGasketApi() {
   return {
     command: {

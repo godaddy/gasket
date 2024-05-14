@@ -654,9 +654,7 @@ describe('workbox hook', () => {
   });
 });
 
-/**
- *
- */
+
 function mockGasketApi() {
   return {
     command: {

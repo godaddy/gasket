@@ -241,9 +241,6 @@ describe('createConfig', () => {
   });
 });
 
-/**
- *
- */
 function mockGasketApi() {
   return {
     execWaterfall: jest.fn((_, config) => config),
