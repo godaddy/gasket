@@ -290,6 +290,12 @@ describe('createServers', () => {
     });
   });
 
+  /**
+   * Find the first call in a spy that matches a predicate
+   * @param aSpy
+   * @param aPredicate
+   * @returns {any}
+   */
   function findCall(aSpy, aPredicate) {
     const callIdx = aSpy.mock.calls.map(args => aPredicate(...args)).indexOf(true);
     return callIdx === -1 ? null : aSpy.mock.calls[callIdx][0];
@@ -299,6 +305,11 @@ describe('createServers', () => {
 describe('create', () => {
   let mockContext;
 
+  /**
+   * Factory to create an async expect function
+   * @param assertFn
+   * @returns {function(): Promise<void>}
+   */
   function expectCreatedWith(assertFn) {
     return async function expectCreated() {
       await plugin.hooks.create({}, mockContext);

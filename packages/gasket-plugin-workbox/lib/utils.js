@@ -5,8 +5,7 @@ const isDefined = o => typeof o !== 'undefined';
 
 /**
  * Workbox defaults
- *
- * @type {Object}
+ * @type {object}
  */
 const defaultConfig = {
   outputDir: './build/workbox',
@@ -18,9 +17,8 @@ const defaultConfig = {
 
 /**
  * Get the workbox config from gasket.config with defaults
- *
  * @param {Gasket} gasket - Gasket
- * @returns {Object} config
+ * @returns {object} config
  */
 function getWorkboxConfig(gasket) {
   const { workbox: workboxConfig = {} } = gasket.config;
@@ -29,7 +27,6 @@ function getWorkboxConfig(gasket) {
 
 /**
  * Get the build output dir from project root and configured outputDir
- *
  * @param {Gasket} gasket - Gasket
  * @returns {string} path
  */
@@ -42,7 +39,6 @@ function getOutputDir(gasket) {
 /**
  * Get the base path from workbox, or root basePath config.
  * If found in both, the workbox config will be used.
- *
  * @param {Gasket} gasket - Gasket
  * @returns {string} prefix
  */

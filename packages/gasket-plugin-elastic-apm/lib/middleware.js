@@ -25,7 +25,7 @@ async function customizeTransaction(gasket, req, res) {
  * Add middleware to gather config details
  * @type {import('@gasket/engine').HookHandler<'middleware'>}
  */
-module.exports = (gasket) => {
+module.exports = function middleware(gasket) {
   return (
     gasket.apm &&
     async function apmTransactionMiddleware(req, res, next) {

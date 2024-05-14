@@ -7,7 +7,7 @@ const mockError = new Error('Bad things man.');
 const mockConfig = { mocked: true };
 const PluginEngine = require('@gasket/engine');
 
-class MockCommand { };
+class MockCommand { }
 MockCommand.flags = {};
 
 jest.mock('@gasket/engine');

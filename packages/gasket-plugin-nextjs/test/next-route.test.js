@@ -15,7 +15,7 @@ describe('req.getNextRoute()', () => {
 
     req = { path: '/', url: '/' };
 
-    getNextRoute = require('../lib/next-route');
+    getNextRoute = require('../lib/utils/next-route');
   });
 
   afterEach(() => {

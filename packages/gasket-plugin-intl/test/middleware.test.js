@@ -1,6 +1,6 @@
 /* eslint-disable require-atomic-updates, max-statements */
 const path = require('path');
-const middlewareHook = require('../lib/middleware');
+const middlewareHook = require('../lib/middleware').handler;
 
 describe('middleware', function () {
   let mockGasket;

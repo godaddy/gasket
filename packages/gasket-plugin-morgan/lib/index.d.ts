@@ -10,11 +10,3 @@ declare module '@gasket/engine' {
     };
   }
 }
-
-export declare const dependencies: string[];
-
-export declare namespace hooks {
-    namespace middleware {
-        function handler(gasket: GasketConfig): ((req: IncomingMessage, res: ServerResponse, next: (err?: Error) => void) => void)[];
-    }
-}

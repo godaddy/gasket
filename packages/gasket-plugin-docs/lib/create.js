@@ -1,5 +1,9 @@
-const { defaultConfig } = require('./configure');
+/// <reference types="@gasket/cli" />
+/// <reference types="@gasket/plugin-git" />
 
-module.exports = function create(_gasket, { gitignore }) {
-  gitignore?.add(defaultConfig.outputDir, 'Documentation');
+const { DEFAULT_CONFIG } = require('./utils/constants');
+
+/** @type {import('@gasket/engine').HookHandler<'create'>} */
+module.exports = function create(gasket, { gitignore }) {
+  gitignore?.add(DEFAULT_CONFIG.outputDir, 'Documentation');
 };

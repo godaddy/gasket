@@ -25,7 +25,9 @@ declare module '@gasket/engine' {
         req: IncomingMessage;
         res: ServerResponse & {
           locals?: {
-            gasketData: GasketData;
+            gasketData: GasketData & {
+              locale?: string;
+            };
           };
         };
       }

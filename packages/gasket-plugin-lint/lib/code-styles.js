@@ -8,7 +8,7 @@ const { devDependencies } = require('../package.json');
 /**
  * GoDaddy JavaScript Style
  * @see https://github.com/godaddy/javascript
- * @type {import('./index').CodeStyle}
+ * @type {import('./internal').CodeStyle}
  */
 const godaddy = {
   name: 'GoDaddy',
@@ -70,7 +70,7 @@ const godaddy = {
 /**
  * JavaScript Standard Style
  * @see https://standardjs.com/
- * @type {import('./index').CodeStyle}
+ * @type {import('./internal').CodeStyle}
  */
 const standard = {
   name: 'Standard',
@@ -114,7 +114,7 @@ const standard = {
 /**
  * Airbnb JavaScript Style
  * @see https://github.com/airbnb/javascript
- * @type {import('./index').CodeStyle}
+ * @type {import('./internal').CodeStyle}
  */
 const airbnb = {
   name: 'Airbnb',
@@ -152,7 +152,7 @@ const airbnb = {
 
 /**
  * Allows users to type in the name of an eslint config and stylelint config.
- * @type {import('./index').CodeStyle}
+ * @type {import('./internal').CodeStyle}
  */
 const other = {
   name: 'other (input eslint config)',
@@ -186,7 +186,7 @@ const other = {
 
 /**
  * Create an app without any linting setup
- * @type {import('./index').CodeStyle}
+ * @type {import('./internal').CodeStyle}
  */
 const none = {
   name: 'none (not recommended)'
@@ -195,7 +195,7 @@ const none = {
 /**
  * This does not show up as a prompt choice, but is common setup that runs for
  * all code styles choices (except, of course, none).
- * @type {import('./index').CodeStyle}
+ * @type {import('./internal').CodeStyle}
  */
 const common = {
   // no name = no choice

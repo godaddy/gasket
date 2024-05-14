@@ -1,6 +1,6 @@
 /* eslint-disable no-sync */
 const Engine = require('@gasket/engine');
-const { createConfig } = require('../lib/config');
+const { createConfig } = require('../lib/utils/config');
 
 const baseWebpackConfig = {
   plugins: [],
@@ -241,6 +241,10 @@ describe('createConfig', () => {
   });
 });
 
+/**
+ * Mock Gasket API
+ * @returns {object} gasket API
+ */
 function mockGasketApi() {
   return {
     execWaterfall: jest.fn((_, config) => config),
@@ -262,8 +266,7 @@ function mockGasketApi() {
 /**
  * Helper function to easily add plugins to a plugin engine instance
  * so we can test the execution of lifecycle events.
- *
- * @param {Object} config Configuration for the plugin engine.
+ * @param {object} config Configuration for the plugin engine.
  * @param {Array} plugins The plugins that need to be added.
  * @returns {PluginEngine} The plugin Engine.
  * @private
