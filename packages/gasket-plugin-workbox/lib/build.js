@@ -3,7 +3,6 @@ const { getOutputDir } = require('./utils');
 
 /**
  * Build lifecycle to copy workbox libraries for serving
- *
  * @param {Gasket} gasket - Gasket
  * @returns {Promise} promise
  */

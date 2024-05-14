@@ -10,7 +10,7 @@ export interface Dependencies {
 
 export interface PackageJson extends Dependencies {
   name: string;
-  version: string;
+  version?: string;
   description?: string;
   license?: string;
   repository?:
@@ -21,6 +21,7 @@ export interface PackageJson extends Dependencies {
       };
   scripts?: Record<string, string>;
   optionalDependencies?: Record<string, string>;
+  homepage?: string;
 }
 
 export interface ModuleInfo {

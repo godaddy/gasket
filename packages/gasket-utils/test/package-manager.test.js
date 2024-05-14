@@ -7,6 +7,11 @@ describe('packageManager', function () {
   let PackageManager;
   let runner;
 
+  /**
+   * Create a package manager instance
+   * @param run - run shell command
+   * @returns {PackageManager}
+   */
   function manager(run) {
     mockShellStub.mockImplementation(run);
     return require('../lib/package-manager');

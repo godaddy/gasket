@@ -1,6 +1,6 @@
 const fs = require('fs-extra');
 const path = require('path');
-const { getPackageDirs, saveJsonFile } = require('./fs-utils');
+const { getPackageDirs, saveJsonFile } = require('./utils/fs-utils');
 const { getIntlConfig } = require('./configure');
 
 const debug = require('debug')('gasket:plugin:intl:buildModules');
@@ -10,11 +10,13 @@ const rePkgParts = /^(?<name>(?:@[\w-]+\/)?[\w-]+)(?<dir>\/[\w-]+)?$/;
 class BuildModules {
   /**
    * Instantiate a builder to gather locale files
-   *
-   * @param {Gasket} gasket - Gasket API
+   * @param {import("@gasket/engine").Gasket} gasket - Gasket API
    */
   constructor(gasket) {
-    const { logger, config: { root } } = gasket;
+    const {
+      logger,
+      config: { root }
+    } = gasket;
     const intlConfig = getIntlConfig(gasket);
 
     const { modules } = intlConfig;
@@ -23,6 +25,8 @@ class BuildModules {
       this._lookupModuleDirs = modules;
     }
 
+    // @ts-ignore - modules will be an object or array by this point in the
+    // lifecycles
     const { excludes, localesDir } = modules;
 
     this._logger = logger;
@@ -35,7 +39,6 @@ class BuildModules {
   /**
    * Given a source folder, this function minifies all the files in that folder
    * and sets a unique hash for each file and saves in the target location
-   *
    * @param {string} srcDir - Source directory path
    * @param {string} tgtDir - Target directory path
    * @returns {Promise} promise
@@ -45,7 +48,7 @@ class BuildModules {
 
     const fileNames = await fs.readdir(srcDir);
 
-    const promises = fileNames.map(async fileName => {
+    const promises = fileNames.map(async (fileName) => {
       const srcFile = path.join(srcDir, fileName);
       const tgtFile = path.join(tgtDir, fileName);
       if (path.extname(srcFile) === '.json') {
@@ -57,7 +60,6 @@ class BuildModules {
 
   /**
    * Copies the source file to proper target location
-   *
    * @param {string} src - full path to source file
    * @param {string} tgt - target folder location
    * @returns {Promise} - resolves once the file is saved
@@ -73,7 +75,6 @@ class BuildModules {
 
   /**
    * Processes locale files from source to target build directory
-   *
    * @param {string} srcDir - Source locale directory
    * @param {string} tgtDir - Target locale directory
    * @param {string[]} fileNames - Names of the locale files
@@ -82,7 +83,7 @@ class BuildModules {
   processFiles(srcDir, tgtDir, fileNames) {
     debug(`Processing files in ${srcDir} to target ${tgtDir}`);
 
-    const promises = fileNames.map(async fileName => {
+    const promises = fileNames.map(async (fileName) => {
       const srcFile = path.join(srcDir, fileName);
       const tgtFile = path.join(tgtDir, fileName);
 
@@ -97,7 +98,6 @@ class BuildModules {
 
   /**
    * Reads the source directory and returns the package name e.g. @gasket/next
-   *
    * @param {string} srcDir - Source directory path
    * @returns {string} package name
    */
@@ -116,9 +116,8 @@ class BuildModules {
 
   /**
    * Reads the package.json and returns the package name e.g. @gasket/next
-   *
    * @param {string} srcDir - Source directory path (a locales directory)
-   * @returns {string} package name
+   * @returns {Promise<string>} package name
    */
   async getPackageName(srcDir) {
     const pkgDir = path.dirname(srcDir);
@@ -132,8 +131,7 @@ class BuildModules {
 
   /**
    * Processes directories
-   *
-   * @param {SrcPkgDir[]} srcPkgDirs - list of dirs to process
+   * @param {import('./internal').SrcPkgDir[]} srcPkgDirs - list of dirs to process
    */
   async processDirs(srcPkgDirs) {
     for (const [pkgName, srcDir] of srcPkgDirs) {
@@ -153,14 +151,16 @@ class BuildModules {
 
   /**
    * Find modules that have /locales folder to process
-   *
-   * @returns {SrcPkgDir[]} source package directories
+   * @returns {Promise<import('./internal').SrcPkgDir[]>} source package directories
    */
   async discoverDirs() {
+    /** @type {import('./internal').SrcPkgDir[]} */
     const results = [];
     for await (const [pkgName, dir] of getPackageDirs(this._nodeModulesDir)) {
       if (!this._excludes.includes(path.basename(dir))) {
-        const buildDir = path.resolve(path.join(dir, ...this._lookupDir.split('/')));
+        const buildDir = path.resolve(
+          path.join(dir, ...this._lookupDir.split('/'))
+        );
         try {
           const stat = await fs.lstat(buildDir);
           if (stat.isDirectory()) {
@@ -177,18 +177,18 @@ class BuildModules {
 
   /**
    * Find modules with locale directories to process
-   *
-   * @returns {SrcPkgDir[]} source package directories
+   * @returns {Promise<import('./internal').SrcPkgDir[]>} source package directories
    */
   async gatherModuleDirs() {
     if (this._lookupModuleDirs) {
-      const promises = this._lookupModuleDirs.map(async lookupDir => {
-
+      const promises = this._lookupModuleDirs.map(async (lookupDir) => {
         const match = lookupDir.match(rePkgParts);
         const pkgName = match?.groups?.name;
 
         if (!pkgName) {
-          this._logger.warning(`build:locales: malformed module name: ${lookupDir}`);
+          this._logger.warning(
+            `build:locales: malformed module name: ${lookupDir}`
+          );
           return;
         }
 
@@ -208,9 +208,13 @@ class BuildModules {
           // skip
         }
 
-        this._logger.warning(`build:locales: locales directory not found for: ${lookupDir}`);
+        this._logger.warning(
+          `build:locales: locales directory not found for: ${lookupDir}`
+        );
       });
 
+      /** @type {import('./internal').SrcPkgDir[]} */
+      // @ts-ignore - force SrcPkgDir[] type
       const results = await Promise.all(promises);
       return results.filter(Boolean);
     }
@@ -231,8 +235,7 @@ class BuildModules {
 
 /**
  * Discovers locale files under node modules with and copies them to output dir.
- *
- * @param {Gasket} gasket - Gasket API
+ * @param {import("@gasket/engine").Gasket} gasket - Gasket API
  */
 module.exports = async function buildModules(gasket) {
   const builder = new BuildModules(gasket);

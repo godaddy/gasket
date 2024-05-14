@@ -1,6 +1,6 @@
 const mockMinify = require('uglify-js');
-const { getComposedContent } = require('../lib/utils');
-const { getCacheKeys, getSWConfig, loadRegisterScript } = require('../lib/utils');
+const { getComposedContent } = require('../lib/utils/utils');
+const { getCacheKeys, getSWConfig, loadRegisterScript } = require('../lib/utils/utils');
 
 describe('utils', () => {
   describe('getCacheKeys', () => {

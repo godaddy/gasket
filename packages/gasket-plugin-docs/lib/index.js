@@ -3,9 +3,11 @@ const configure = require('./configure');
 const getCommands = require('./get-commands');
 const metadata = require('./metadata');
 const docsSetup = require('./docs-setup');
+const { name } = require('../package.json');
 
-module.exports = {
-  name: require('../package').name,
+/** @type {import('@gasket/engine').Plugin} */
+const plugin = {
+  name,
   hooks: {
     configure,
     create,
@@ -14,3 +16,5 @@ module.exports = {
     docsSetup
   }
 };
+
+module.exports = plugin;
