@@ -5,10 +5,9 @@ const {
 
 /**
  * Configure lifecycle to set up SW config with defaults
- *
  * @param {Gasket} gasket - Gasket
- * @param {Object} config - Base gasket config
- * @returns {Promise<Object>} config
+ * @param {object} config - Base gasket config
+ * @returns {Promise<object>} config
  */
 module.exports = async function configure(gasket, config) {
   const { logger } = gasket;

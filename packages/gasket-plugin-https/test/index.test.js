@@ -39,6 +39,10 @@ describe('Plugin', () => {
 describe('start hook', () => {
   let gasketAPI, handler;
 
+  /**
+   * Start the plugin
+   * @returns {Promise<void>}
+   */
   async function start() {
     return plugin.hooks.start(gasketAPI);
   }

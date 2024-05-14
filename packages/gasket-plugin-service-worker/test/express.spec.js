@@ -41,6 +41,10 @@ describe('express', () => {
     cacheKeyB = jest.fn(() => 'B');
   });
 
+  /**
+   * Get the endpoint handler
+   * @returns {Promise<Function>} handler
+   */
   async function getEndpoint() {
     await express(mockGasket, mockApp);
     return mockApp.get.mock.calls[0][1];

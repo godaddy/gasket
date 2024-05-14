@@ -132,6 +132,10 @@ describe('setupNextHandling', () => {
   });
 });
 
+/**
+ * Mock gasket API
+ * @returns {object} gasket API
+ */
 function mockGasketApi() {
   return {
     command: {

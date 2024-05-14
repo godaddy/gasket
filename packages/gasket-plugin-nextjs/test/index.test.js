@@ -655,6 +655,10 @@ describe('workbox hook', () => {
 });
 
 
+/**
+ * Mock Gasket API
+ * @returns {object} gasketAPI
+ */
 function mockGasketApi() {
   return {
     command: {

@@ -41,6 +41,10 @@ describe('fastify', () => {
     cacheKeyB = jest.fn(() => 'B');
   });
 
+  /**
+   * Get the endpoint handler
+   * @returns {Promise<Function>} handler
+   */
   async function getEndpoint() {
     await fastify(mockGasket, mockApp);
     return mockApp.get.mock.calls[0][1];
