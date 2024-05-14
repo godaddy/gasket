@@ -1,7 +1,7 @@
 /* eslint-disable no-console, no-process-env */
 /// <reference types="./index" />
 
-import GasketEngine from './engine';
+import GasketEngine from './engine.js';
 import { applyConfigOverrides } from '@gasket/utils';
 
 /**

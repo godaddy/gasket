@@ -27,14 +27,6 @@ module.exports = {
 }
 ```
 
-### Short names
-
-Items in these arrays are module names. Gasket supports shorthand naming;
-`'@gasket/mocha'` expands to `@gasket/plugin-mocha` in the `add` and `remove`
-arrays. For `presets`, `@gasket/nextjs` expands to `@gasket/preset-nextjs`.
-
-See the [naming convention] for more details.
-
 ## Environments
 
 The configuration system supports the concept of
@@ -189,4 +181,3 @@ configuration.
 
 [config plugin]: /packages/gasket-plugin-response-data/README.md
 [start plugin]: /packages/gasket-plugin-start/README.md
-[naming convention]: /packages/gasket-resolve/README.md
