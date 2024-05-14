@@ -1,14 +1,14 @@
 {
   "name": "generate-docs-index",
   "private": true,
-  "version": "7.0.0-next.21",
+  "version": "7.0.0-next.22",
   "description": "Generate the overview index",
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix"
   },
   "dependencies": {
-    "@gasket/cli": "^7.0.0-next.21"
+    "@gasket/cli": "^7.0.0-next.22"
   },
   "devDependencies": {
     "copy-dir": "^1.3.0",
