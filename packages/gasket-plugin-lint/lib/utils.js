@@ -1,9 +1,5 @@
 // @ts-nocheck - TODO: Remove this comment when JSDoc types are added
 const semver = require('semver');
-const { projectIdentifier } = require('@gasket/resolve');
-const eslintConfigIdentifier = projectIdentifier('eslint', 'config');
-const stylelintConfigIdentifier = projectIdentifier('stylelint', 'config');
-
 const reName = /^(@?[\w/-]+)@?(.*)/;
 
 /**
@@ -103,7 +99,5 @@ function makeSafeRunScript(context, runScript) {
 module.exports = {
   makeGatherDevDeps,
   makeRunScriptStr,
-  makeSafeRunScript,
-  eslintConfigIdentifier,
-  stylelintConfigIdentifier
+  makeSafeRunScript
 };
