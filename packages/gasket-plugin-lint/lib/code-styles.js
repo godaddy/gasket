@@ -1,6 +1,5 @@
 // @ts-nocheck - TODO: Remove this comment when JSDoc types are added
 /* eslint-disable complexity,max-statements */
-const { eslintConfigIdentifier, stylelintConfigIdentifier } = require('./utils');
 const { devDependencies } = require('../package');
 
 /**
@@ -164,11 +163,10 @@ const other = {
     const { gatherDevDeps } = utils;
 
     if (eslintConfig) {
-      const identifier = eslintConfigIdentifier(eslintConfig);
       const hasNext = pkg.has('dependencies', 'next');
 
-      pkg.add('devDependencies', (await gatherDevDeps(identifier.full)));
-      pkg.add('eslintConfig', { extends: [identifier.shortName] });
+      pkg.add('devDependencies', (await gatherDevDeps(eslintConfig)));
+      pkg.add('eslintConfig', { extends: [eslintConfig] });
 
       if (hasNext) {
         pkg.add('devDependencies', {
@@ -179,9 +177,8 @@ const other = {
     }
 
     if (stylelintConfig) {
-      const identifier = stylelintConfigIdentifier(stylelintConfig);
-      pkg.add('devDependencies', (await gatherDevDeps(identifier.full)));
-      pkg.add('stylelintConfig', { extends: [identifier.name] });
+      pkg.add('devDependencies', (await gatherDevDeps(stylelintConfig)));
+      pkg.add('stylelintConfig', { extends: [stylelintConfig] });
     }
   }
 };

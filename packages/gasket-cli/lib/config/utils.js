@@ -1,4 +1,3 @@
-const { pluginIdentifier } = require('@gasket/resolve');
 const defaultPlugins = require('./default-plugins');
 
 const debug = require('diagnostics')('gasket:cli:config:utils');
@@ -45,10 +44,10 @@ function addDefaultPlugins(gasketConfig) {
   const filteredNames = new Set(
     add.concat(remove).map(p => {
       const name = typeof p === 'string' ? p : p.name;
-      return pluginIdentifier(name).fullName;
+      return name;
     })
   );
-  const pluginsToAdd = defaultPlugins.filter(p => !filteredNames.has(pluginIdentifier(p.name).fullName));
+  const pluginsToAdd = defaultPlugins.filter(p => !filteredNames.has(p.name));
   return {
     ...gasketConfig,
     plugins: {
