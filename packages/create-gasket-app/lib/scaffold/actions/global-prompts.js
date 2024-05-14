@@ -79,7 +79,8 @@ async function chooseTestPlugins(context, prompt) {
   if (!('testPlugins' in context)) {
     for (const type of testTypes) {
       if (type + 'TestSuite' in context) {
-        testPlugins.push(knownTestPlugins[type][context[type + 'TestSuite']]);
+        const testSuite = knownTestPlugins[type][context[type + 'TestSuite']];
+        if (testSuite) testPlugins.push(testSuite);
       } else {
         const plugin = await promptForTestPlugin(
           prompt,

@@ -276,5 +276,4 @@ describe('makeCreateContext', () => {
     results = makeCreateContext(argv, { prompts: false });
     expect(results.prompts).toBeFalsy();
   });
-
 });

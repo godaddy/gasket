@@ -144,6 +144,28 @@ describe('globalPrompts', () => {
 
       expect(mockContext).toHaveProperty('testPlugins', ['firstValue', 'secondValue']);
     });
+
+    it('does not prompt if unitTestSuite and integrationTestSuite is defined in context', async () => {
+      mockContext.unitTestSuite = 'jest';
+      mockContext.integrationTestSuite = 'cypress';
+      await chooseTestPlugins(mockContext, mockPromptStub);
+
+      expect(mockPromptStub).not.toHaveBeenCalled();
+    });
+
+    it('prompts once if unitTestSuite is defined in context', async () => {
+      mockContext.unitTestSuite = 'jest';
+      await chooseTestPlugins(mockContext, mockPromptStub);
+
+      expect(mockPromptStub).toHaveBeenCalledTimes(1);
+    });
+
+    it('prompts once if integrationTestSuite is defined in context', async () => {
+      mockContext.integrationTestSuite = 'cypress';
+      await chooseTestPlugins(mockContext, mockPromptStub);
+
+      expect(mockPromptStub).toHaveBeenCalledTimes(1);
+    });
   });
 
   describe('allowExtantOverwriting', () => {
