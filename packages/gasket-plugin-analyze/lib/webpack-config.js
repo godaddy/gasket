@@ -1,4 +1,4 @@
-/// <reference types="@gasket/plugin-nextjs" />
+/// <reference types="@gasket/plugin-webpack" />
 
 /**
  * Add the analyzer webpack plugin if analyze flag has been set

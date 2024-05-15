@@ -1,4 +1,4 @@
-/// <reference types="@gasket/plugin-log" />
+/// <reference types="@gasket/plugin-logger" />
 
 const DocsConfigSetBuilder = require('./config-set-builder');
 const defaults = DocsConfigSetBuilder.docsSetupDefault;

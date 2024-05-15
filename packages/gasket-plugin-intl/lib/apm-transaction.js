@@ -2,7 +2,7 @@
 
 const debug = require('debug')('gasket:plugin:intl:apmTransaction');
 
-/** @type {import('@gasket/engine').HookHandler<'apmTransaction'>} */
+/** @type {import('@gasket/core').HookHandler<'apmTransaction'>} */
 module.exports = function apmTransaction(_gasket, transaction, { res }) {
   const { locale } = res.locals.gasketData ?? {};
 

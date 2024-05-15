@@ -69,7 +69,7 @@ const getDocsSetupFromPkg = (moduleData) =>
  */
 class DocsConfigSetBuilder {
   /**
-   * @param {import("@gasket/engine").Gasket} gasket - Gasket API
+   * @param {import("@gasket/core").Gasket} gasket - Gasket API
    */
   constructor(gasket) {
     this._plugins = [];

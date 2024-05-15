@@ -6,7 +6,7 @@ const isDefined = (o) => typeof o !== 'undefined';
 
 /**
  * Workbox config partial to add Next.js static assets to precache
- * @type {import('@gasket/engine').HookHandler<'workbox'>}
+ * @type {import('@gasket/core').HookHandler<'workbox'>}
  */
 module.exports = function workbox(gasket) {
   const { nextConfig = {}, basePath: rootBasePath } = gasket.config;

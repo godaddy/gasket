@@ -13,7 +13,7 @@ const isDefined = (o) => typeof o !== 'undefined';
 
 /**
  * Shortcut to get the gasket.config.intl object
- * @param {import("@gasket/engine").Gasket} gasket - Gasket API
+ * @param {import("@gasket/core").Gasket} gasket - Gasket API
  * @returns {import('./index').IntlConfig} intl config
  */
 function getIntlConfig(gasket) {
@@ -28,7 +28,7 @@ function getIntlConfig(gasket) {
 /**
  * Sets up the Intl config for the Gasket session and add process env variables
  * to access to certain config results where gasket.config is not accessible.
- * @type {import('@gasket/engine').HookHandler<'configure'>}
+ * @type {import('@gasket/core').HookHandler<'configure'>}
  */
 module.exports = function configure(gasket, config) {
   const { root } = config;

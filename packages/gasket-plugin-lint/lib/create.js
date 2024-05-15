@@ -4,7 +4,7 @@ const { makeGatherDevDeps, makeRunScriptStr } = require('./utils');
 /**
  * Create lifecycle hook which executes _last_ in order to be able to
  * inspect what has been added to the package.json by other plugins.ß
- * @type {import('@gasket/engine').HookHandler<'create'>}
+ * @type {import('@gasket/core').HookHandler<'create'>}
  */
 async function create(gasket, context) {
   const { codeStyle, eslintConfig, stylelintConfig } = context;

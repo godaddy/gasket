@@ -1,7 +1,3 @@
-/// <reference types="@gasket/plugin-command" />
-
-const isDefined = (o) => typeof o !== 'undefined';
-
 /**
  * Determines if the Elastic APM agent has sufficient config to be active
  * @param {import('./index').ExtendedAgentConfigOptions} config Apm agent config
@@ -27,22 +23,9 @@ const isActive = (config, env) => {
   return false;
 };
 
-/** @type {import('@gasket/engine').HookHandler<'configure'>} */
+/** @type {import('@gasket/core').HookHandler<'configure'>} */
 module.exports = async function configure(gasket, config) {
-  const { logger } = gasket;
   config.elasticAPM = config.elasticAPM || {};
-
-  const { serverUrl, secretToken } = config.elasticAPM;
-  if (isDefined(serverUrl)) {
-    logger.notice(
-      'DEPRECATED config `elasticAPM.serverUrl`. Use env var: ELASTIC_APM_SERVER_URL'
-    );
-  }
-  if (isDefined(secretToken)) {
-    logger.notice(
-      'DEPRECATED config `elasticAPM.secretToken`. Use env var: ELASTIC_APM_SECRET_TOKEN'
-    );
-  }
 
   // eslint-disable-next-line no-process-env
   config.elasticAPM.active = isActive(config.elasticAPM, process.env);

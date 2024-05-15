@@ -1,4 +1,4 @@
-import { Gasket } from '@gasket/engine';
+import { Gasket } from '@gasket/core';
 
 /** Get the preferred locale from the request headers. */
 function getPreferredLocale(

@@ -7,7 +7,7 @@ const debug = require('debug')('gasket:plugin:intl:serve');
 
 /**
  * Express/Fastify lifecycle to set up route for serving locales
- * @param {import("@gasket/engine").Gasket} gasket - Gasket
+ * @param {import("@gasket/core").Gasket} gasket - Gasket
  * @param {object} app - Express/Fastify app
  */
 module.exports = function serve(gasket, app) {

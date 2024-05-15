@@ -22,7 +22,7 @@ function serialize(content) {
 /**
  * Instantiates new Gitignore instance, adds get method to content using the
  * serialize function, adds gitignore to context
- * @param {import("@gasket/cli").CreateContext} context - Create context
+ * @param {import("create-gasket-app").CreateContext} context - Create context
  */
 function instantiateGitignore(context) {
   const gitignore = new Gitignore();
@@ -40,7 +40,7 @@ function instantiateGitignore(context) {
 
 /**
  * Prompt for git settings during gasket create
- * @type {import('@gasket/engine').HookHandler<'prompt'>}
+ * @type {import('@gasket/core').HookHandler<'prompt'>}
  */
 module.exports = async function promptHook(gasket, context, { prompt }) {
   if (!('gitInit' in context)) {

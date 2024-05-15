@@ -1,8 +1,8 @@
-/// <reference types="@gasket/cli" />
+/// <reference types="create-gasket-app" />
 
 const { devDependencies } = require('../package.json');
 
-/** @type {import('@gasket/engine').HookHandler<'create'>} */
+/** @type {import('@gasket/core').HookHandler<'create'>} */
 module.exports = async function create(gasket, context) {
   const { pkg, files } = context;
   const generatorDir = `${__dirname}/../generator`;

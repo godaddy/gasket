@@ -47,7 +47,7 @@ class ReduxReducers {
  * We do not actually prompt from here, but rather use this lifecycles to make
  * sure the ReduxReducers instances is available on context during the create
  * lifecycle.
- * @type {import('@gasket/engine').HookHandler<'prompt'>}
+ * @type {import('@gasket/core').HookHandler<'prompt'>}
  */
 module.exports = function prompt(gasket, context) {
   const reduxReducers = new ReduxReducers();

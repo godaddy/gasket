@@ -1,11 +1,11 @@
-/// <reference types="@gasket/cli" />
+/// <reference types="create-gasket-app" />
 
 const semver = require('semver');
 const reName = /^(@?[\w/-]+)@?(.*)/;
 
 /**
  * Makes a function to look up package dependencies the current create context
- * @param {import('@gasket/cli').CreateContext} context - Create context
+ * @param {import('create-gasket-app').CreateContext} context - Create context
  * @returns {function(string): Promise<Record<string, string>>} gatherDevDeps
  */
 function makeGatherDevDeps(context) {
@@ -42,7 +42,7 @@ function makeGatherDevDeps(context) {
 /**
  * Makes a function to generate a package script string under the current create
  * context
- * @param {import("@gasket/cli").CreateContext} context - Create context
+ * @param {import("create-gasket-app").CreateContext} context - Create context
  * @returns {function(string): string} runScriptStr
  */
 function makeRunScriptStr(context) {
@@ -68,7 +68,7 @@ function makeRunScriptStr(context) {
 
 /**
  * Makes a function to run scripts safely under the current create context
- * @param {import("@gasket/cli").CreateContext} context - Create context
+ * @param {import("create-gasket-app").CreateContext} context - Create context
  * @param {Function} runScript - Script runner util
  * @returns {Function} safeRunScript
  */

@@ -4,7 +4,7 @@ const path = require('path');
 
 const { createConfig } = require('./utils/config');
 
-/** @type {import('@gasket/engine').HookHandler<'build'>} */
+/** @type {import('@gasket/core').HookHandler<'build'>} */
 module.exports = async function build(gasket) {
   const { command } = gasket;
 
@@ -13,5 +13,6 @@ module.exports = async function build(gasket) {
 
   const builder = require('next/dist/build').default;
 
+  // @ts-ignore - TODO - this lifecycle hook expected to be removed
   return await builder(path.resolve('.'), await createConfig(gasket, true));
 };

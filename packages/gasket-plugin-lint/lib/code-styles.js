@@ -1,4 +1,3 @@
-// @ts-nocheck - TODO: Remove this comment when JSDoc types are added
 /* eslint-disable complexity,max-statements */
 const { devDependencies } = require('../package.json');
 

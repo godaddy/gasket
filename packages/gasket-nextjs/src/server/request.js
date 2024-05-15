@@ -19,6 +19,7 @@ export function request(query) {
           acc[name] = value;
           return acc;
         }, {}),
+      // @ts-ignore - TODO: entries is not available on Headers here for some reason..
       headers: Object.fromEntries(headerStore.entries())
     };
 

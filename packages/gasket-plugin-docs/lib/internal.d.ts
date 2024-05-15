@@ -1,4 +1,4 @@
-import type { Plugin } from '@gasket/engine';
+import type { Plugin } from '@gasket/core';
 import type { PackageJson } from '@gasket/cli';
 import type {
   ModuleData,

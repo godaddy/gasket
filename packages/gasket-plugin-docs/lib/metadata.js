@@ -1,6 +1,6 @@
 /**
  * Attach additional metadata to pluginData
- * @type {import('@gasket/engine').HookHandler<'metadata'>}
+ * @type {import('@gasket/core').HookHandler<'metadata'>}
  */
 module.exports = function metadata(gasket, meta) {
   const { outputDir } =

@@ -13,12 +13,13 @@ export interface StylelintConfig {
   extends?: string[];
 }
 
+
 export interface StandardConfig {
   env?: string[];
   ignore?: string[];
 }
 
-declare module '@gasket/cli' {
+declare module 'create-gasket-app' {
   export interface CreateContext {
     codeStyle?: string;
     eslintConfig?: string;

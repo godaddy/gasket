@@ -1,8 +1,9 @@
 /// <reference types="@gasket/plugin-intl" />
+/// <reference types="@gasket/plugin-logger" />
 
 /**
  * Bring forward configuration from intl plugin to config for next.
- * @param {import("@gasket/engine").Gasket} gasket - The gasket API
+ * @param {import("@gasket/core").Gasket} gasket - The gasket API
  * @param {object} config - Configuration to pass to Nextjs
  * @private
  */
@@ -40,7 +41,7 @@ function forwardIntlConfig(gasket, config) {
 /**
  * Small helper function that creates nextjs configuration from the gasket
  * configuration.
- * @param {import("@gasket/engine").Gasket}  gasket The gasket API.
+ * @param {import("@gasket/core").Gasket}  gasket The gasket API.
  * @param {boolean} includeWebpackConfig `true` to generate webpack config
  * @param   {object} [nextConfig]           Initial next config
  * @returns {Promise<object>} The configuration data for Nextjs

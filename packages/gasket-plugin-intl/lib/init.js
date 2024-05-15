@@ -1,4 +1,4 @@
-/// <reference types="@gasket/plugin-command" />
+/// <reference types="@gasket/cli" />
 
 const debug = require('debug')('gasket:plugin:intl:init');
 
@@ -9,7 +9,7 @@ const debug = require('debug')('gasket:plugin:intl:init');
  *
  * For Node >= 14, full-icu is supported, so we avoid the polyfill
  * @see https://formatjs.io/docs/guides/runtime-requirements/#nodejs
- * @type {import('@gasket/engine').HookHandler<'init'>}
+ * @type {import('@gasket/core').HookHandler<'init'>}
  */
 module.exports = function init() {
   const semver = require('semver');

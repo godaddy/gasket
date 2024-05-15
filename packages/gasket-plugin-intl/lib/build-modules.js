@@ -10,7 +10,7 @@ const rePkgParts = /^(?<name>(?:@[\w-]+\/)?[\w-]+)(?<dir>\/[\w-]+)?$/;
 class BuildModules {
   /**
    * Instantiate a builder to gather locale files
-   * @param {import("@gasket/engine").Gasket} gasket - Gasket API
+   * @param {import("@gasket/core").Gasket} gasket - Gasket API
    */
   constructor(gasket) {
     const {
@@ -235,7 +235,7 @@ class BuildModules {
 
 /**
  * Discovers locale files under node modules with and copies them to output dir.
- * @param {import("@gasket/engine").Gasket} gasket - Gasket API
+ * @param {import("@gasket/core").Gasket} gasket - Gasket API
  */
 module.exports = async function buildModules(gasket) {
   const builder = new BuildModules(gasket);

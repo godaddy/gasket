@@ -1,4 +1,4 @@
-/// <reference types="@gasket/plugin-command" />
+/// <reference types="@gasket/cli" />
 
 const deepmerge = require('deepmerge');
 const path = require('path');
@@ -7,7 +7,7 @@ const baseConfig = require('./base-config');
 
 /**
  * Configure lifecycle to set up manifest with defaults
- * @type {import('@gasket/engine').HookHandler<'configure'>}
+ * @type {import('@gasket/core').HookHandler<'configure'>}
  */
 module.exports = function configure(gasket, config) {
   const { config: { root } } = gasket;

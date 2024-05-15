@@ -1,10 +1,10 @@
-/// <reference types="@gasket/cli" />
+/// <reference types="create-gasket-app" />
 /// <reference types="@gasket/plugin-metadata" />
 
 const { name, version, devDependencies } = require('../package.json');
 const initWebpack = require('./init-webpack');
 
-/** @type {import('@gasket/engine').Plugin} */
+/** @type {import('@gasket/core').Plugin} */
 const plugin = {
   name,
   hooks: {

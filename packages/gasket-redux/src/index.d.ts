@@ -17,7 +17,7 @@ export type MakeStoreFn = {
     /** The initial redux state */
     state: any,
     options: {
-      logger?: Log;
+      logger?: Console | Logger;
       req?: IncomingMessage;
     }
   ): Store;

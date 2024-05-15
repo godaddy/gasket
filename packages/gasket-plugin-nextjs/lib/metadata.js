@@ -1,6 +1,6 @@
 /// <reference types="@gasket/plugin-metadata" />
 
-/** @type {import('@gasket/engine').HookHandler<'metadata'>} */
+/** @type {import('@gasket/core').HookHandler<'metadata'>} */
 module.exports = function metadataHook(gasket, meta) {
   const { metadata } = gasket;
 

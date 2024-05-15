@@ -1,10 +1,9 @@
-import type { WebpackContext } from '@gasket/plugin-webpack';
 import type { IncomingMessage, ServerResponse } from 'http';
 import type { NextConfig } from 'next/dist/next-server/server/config-shared';
 import type NextServer from 'next/dist/next-server/server/next-server';
 import type { Application } from 'express';
 import type { Fastify } from 'fastify';
-import { Gasket } from '@gasket/engine';
+import type { Gasket } from '@gasket/core';
 
 
 export { NextConfig, NextServer };
@@ -17,7 +16,7 @@ export type NextConfigFunction = (phase: string, context: {
 declare module '@gasket/core' {
 
   export interface GasketActions {
-    getNextConfig(config?: NextConfig | NextConfigFunction): (phase: string, context?: {}) => Promise<NextConfig>
+    getNextConfig?: (config?: NextConfig | NextConfigFunction) => (phase: string, context?: { defaultConfig?: any }) => Promise<NextConfig>
   }
 
   export interface GasketConfig {
@@ -41,12 +40,10 @@ declare module '@gasket/core' {
       next: NextServer;
       express: Application;
     }): MaybeAsync<void>;
-    nextPreHandling(params: {
-      nextServer: NextServer;
-      context: {
-        req: IncomingMessage,
-        res: ServerResponse
-      }
+    nextPreHandling(context: {
+      nextServer: NextServer,
+      req: IncomingMessage,
+      res: ServerResponse
     }): MaybeAsync<void>;
     nextFastify(params: {
       next: NextServer;
@@ -73,9 +70,12 @@ declare module 'http' {
   }
 }
 
-declare module '@gasket/cli' {
+declare module 'create-gasket-app' {
   export interface CreateContext {
     addSitemap?: boolean;
+    nextServerType: 'defaultServer' | 'customServer';
+    nextDevProxy: boolean;
+    typescript: boolean;
   }
 }
 
@@ -92,4 +92,9 @@ declare module '@gasket/plugin-nextjs' {
   }> {
     return Promise.resolve(null);
   }
+}
+
+export default {
+  name: '@gasket/plugin-nextjs',
+  hooks: {}
 }

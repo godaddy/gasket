@@ -14,7 +14,7 @@ const create = require('./create');
 const build = require('./build');
 const webpackConfig = require('./webpack-config');
 
-/** @type {import('@gasket/engine').Plugin} */
+/** @type {import('@gasket/core').Plugin} */
 const plugin = {
   name,
   hooks: {

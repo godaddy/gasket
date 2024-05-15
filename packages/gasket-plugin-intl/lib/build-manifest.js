@@ -1,4 +1,4 @@
-/// <reference types="@gasket/plugin-log" />
+/// <reference types="@gasket/plugin-logger" />
 
 const path = require('path');
 const fs = require('fs').promises;
@@ -15,7 +15,7 @@ const debug = require('debug')('gasket:plugin:intl:buildManifest');
  * Constructs a manifest of locale file paths and settings which can be loaded
  * or bundled by the client. Locale paths have content hashes associated with
  * them which can be used for cache busting.
- * @param {import("@gasket/engine").Gasket} gasket - Gasket API
+ * @param {import("@gasket/core").Gasket} gasket - Gasket API
  * @async
  */
 module.exports = async function buildManifest(gasket) {

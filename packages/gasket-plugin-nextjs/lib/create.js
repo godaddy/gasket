@@ -1,4 +1,4 @@
-const { name, version, devDependencies } = require('../package');
+const { name, version, devDependencies } = require('../package.json');
 
 /**
  * createAppFiles
@@ -126,7 +126,8 @@ function addNpmScripts({ pkg, nextServerType, nextDevProxy, typescript }) {
   pkg.add('scripts', scripts[nextServerType]);
 }
 
-function addConfig({ gasketConfig, nextDevProxy }) {
+function addConfig(createContext) {
+  const { gasketConfig, nextDevProxy } = createContext;
   gasketConfig.addPlugin('pluginNextjs', name);
 
   if (nextDevProxy) {
@@ -143,7 +144,7 @@ function addConfig({ gasketConfig, nextDevProxy }) {
     });
   }
 }
-}
+
 
 module.exports = {
   timing: {
@@ -152,7 +153,7 @@ module.exports = {
   },
   /**
    * Add files & extend package.json for new apps.
-   * @type {import('@gasket/engine').HookHandler<'create'>}
+   * @type {import('@gasket/core').HookHandler<'create'>}
    */
   handler: function create(gasket, context) {
     const {
@@ -174,5 +175,7 @@ module.exports = {
     addConfig(context);
     if (addSitemap) configureSitemap({ files, pkg, generatorDir });
     if (pkg.has('dependencies', '@gasket/redux')) addRedux({ files, pkg, generatorDir });
+    // TODO - remove with typecheck solution
+    return;
   }
 };

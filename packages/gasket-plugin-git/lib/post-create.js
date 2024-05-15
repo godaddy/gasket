@@ -10,7 +10,7 @@ module.exports = {
   timing: {
     last: true
   },
-  /** @type {import('@gasket/engine').HookHandler<'postCreate'>} */
+  /** @type {import('@gasket/core').HookHandler<'postCreate'>} */
   handler: async function postCreateHook(gasket, context) {
     const { gitInit, dest: cwd } = context;
 

@@ -1,7 +1,5 @@
 /// <reference types="@gasket/plugin-https" />
 
-const { createConfig } = require('./config');
-
 /**
  * Provide port defaults
  * @param {string} env env property from gasket config
@@ -17,7 +15,7 @@ function getPortFallback(env = '') {
  * @type {import('../internal').setupNextApp}
  */
 async function setupNextApp(gasket) {
-  const { exec, config } = gasket;
+  const { config } = gasket;
   const { hostname, http, https, http2, env } = config;
   const createNextApp = require('next');
   const devServer = Boolean(process.env.GASKET_DEV); // TODO document GASKET_DEV

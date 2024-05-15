@@ -5,7 +5,7 @@ const configureEndpoint = require('./utils/configure-endpoint');
 
 /**
  * Fastify lifecycle to add an endpoint to serve service worker script
- * @type {import('@gasket/engine').HookHandler<'fastify'>}
+ * @type {import('@gasket/core').HookHandler<'fastify'>}
  */
 module.exports = async function fastify(gasket, app) {
   const { staticOutput, url } = getSWConfig(gasket);

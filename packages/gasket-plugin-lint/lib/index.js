@@ -1,4 +1,4 @@
-/// <reference types="@gasket/cli" />
+/// <reference types="create-gasket-app" />
 
 const { makeSafeRunScript } = require('./utils');
 const prompt = require('./prompt');
@@ -6,7 +6,7 @@ const create = require('./create');
 
 const { name } = require('../package.json');
 
-/** @type {import('@gasket/engine').Plugin} */
+/** @type {import('@gasket/core').Plugin} */
 const plugin = {
   name,
   hooks: {

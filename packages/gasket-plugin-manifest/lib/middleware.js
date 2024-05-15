@@ -6,7 +6,7 @@ const { gatherManifestData } = require('./utils');
 
 /**
  * Add some middleware to gather manifest details for certain endpoints
- * @type {import('@gasket/engine').HookHandler<'middleware'>}
+ * @type {import('@gasket/core').HookHandler<'middleware'>}
  */
 function handler(gasket) {
   const {

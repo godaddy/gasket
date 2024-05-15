@@ -2,7 +2,7 @@
 
 /**
  * Middleware for customizing transactions
- * @param {import('@gasket/engine').Gasket} gasket - The Gasket engine
+ * @param {import('@gasket/core').Gasket} gasket - The Gasket engine
  * @param {import('http').IncomingMessage} req - The HTTP request being handled
  * @param {import('http').ServerResponse} res - The server response
  */
@@ -23,7 +23,7 @@ async function customizeTransaction(gasket, req, res) {
 
 /**
  * Add middleware to gather config details
- * @type {import('@gasket/engine').HookHandler<'middleware'>}
+ * @type {import('@gasket/core').HookHandler<'middleware'>}
  */
 module.exports = function middleware(gasket) {
   return (

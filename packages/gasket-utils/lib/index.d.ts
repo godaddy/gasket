@@ -1,12 +1,5 @@
 import type { GasketConfig, GasketConfigDefinition, MaybeAsync } from '@gasket/core';
 
-declare module '@gasket/engine' {
-  export interface GasketConfig {
-    environments?: string;
-    commands?: string;
-  }
-}
-
 interface PackageManagerOptions {
   /** Name of manager, either `npm` (default) or `yarn` */
   packageManager: string;
@@ -98,6 +91,12 @@ export interface Signal {
   aborted?: boolean;
   addEventListener(type: 'abort', listener: () => void): void;
 }
+
+export function getPotentialConfigs(
+  config: ConfigContext & {
+    config: GasketConfigDefinition;
+  }
+): Generator<any, any, any>;
 
 /**
  * Promise friendly wrapper to running a shell command (eg: git, npm, ls) which

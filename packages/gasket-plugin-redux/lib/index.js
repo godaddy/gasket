@@ -1,3 +1,4 @@
+/// <reference types="create-gasket-app" />
 /// <reference types="@gasket/plugin-metadata" />
 
 const path = require('path');
@@ -12,7 +13,7 @@ const webpackConfig = require('./webpack-config');
  * Gasket Redux Plugin
  *
  * Adds middleware to the express server with webpack configuration
- * @type {import('@gasket/engine').Plugin}
+ * @type {import('@gasket/core').Plugin}
  */
 const plugin = {
   name,

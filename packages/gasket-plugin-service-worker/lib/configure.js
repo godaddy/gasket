@@ -1,4 +1,4 @@
-/// <reference types="@gasket/plugin-command" />
+/// <reference types="@gasket/cli" />
 
 const path = require('path');
 const merge = require('deepmerge');
@@ -25,7 +25,7 @@ const defaultConfig = {
 
 /**
  * Configure lifecycle to set up SW config with defaults
- * @type {import('@gasket/engine').HookHandler<'configure'>}
+ * @type {import('@gasket/core').HookHandler<'configure'>}
  */
 module.exports = function configure(gasket, config) {
   const serviceWorker = merge(defaultConfig, getSWConfig({ config }));

@@ -1,5 +1,3 @@
-/// <reference types="@gasket/plugin-log" />
-
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
@@ -43,8 +41,6 @@ export default function configureMakeStore(makeStoreOptions = {}, postCreate) {
     initialState = {}
   } = makeStoreOptions;
 
-  const baseMiddleware = [thunkMiddleware];
-
   /**
    * Wrapper for store create to create instance with SSR and to hydrate in
    * browser.
@@ -59,7 +55,9 @@ export default function configureMakeStore(makeStoreOptions = {}, postCreate) {
       return req.store;
     }
 
-    const allMiddleware = [...baseMiddleware, ...middleware];
+    /** @type {import('redux').Middleware[]} */
+    // @ts-ignore - ThunkMiddleware is not playing nicely with Redux Middleware type checks
+    const allMiddleware = [thunkMiddleware, ...middleware];
 
     if (logging) {
       allMiddleware.push(
@@ -72,7 +70,8 @@ export default function configureMakeStore(makeStoreOptions = {}, postCreate) {
 
     const composer =
       (typeof window !== 'undefined' &&
-       // @ts-ignore - redux devtools extension window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
+        // @ts-ignore - redux devtools extension
+        window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
       compose;
     const enhancer = composer(applyMiddleware(...allMiddleware), ...enhancers);
 

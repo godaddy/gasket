@@ -1,9 +1,9 @@
 /// <reference types="@gasket/plugin-start" />
-/// <reference types="@gasket/plugin-log" />
+/// <reference types="@gasket/plugin-logger" />
 
 const { filterSensitiveCookies } = require('./cookies');
 
-/** @type {import('@gasket/engine').HookHandler<'preboot'>} */
+/** @type {import('@gasket/core').HookHandler<'preboot'>} */
 module.exports = async function preboot(gasket) {
   const { config, logger, command } = gasket;
 
@@ -18,11 +18,8 @@ module.exports = async function preboot(gasket) {
   }));
 
   if (!apm.isStarted()) {
-    apm.start({
-      ...config.elasticAPM
-    });
-    logger.notice(
-      'DEPRECATED started Elastic APM agent late. Use `--require elastic-apm-node/start`'
+    logger.warn(
+      'Elastic APM agent is not started. Use `--require ./setup.js`'
     );
   }
 

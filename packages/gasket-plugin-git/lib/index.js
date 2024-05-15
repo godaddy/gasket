@@ -3,7 +3,7 @@ const create = require('./create');
 const postCreate = require('./post-create');
 const { name } = require('../package.json');
 
-/** @type {import('@gasket/engine').Plugin} */
+/** @type {import('@gasket/core').Plugin} */
 const plugin = {
   name,
   hooks: {
