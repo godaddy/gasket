@@ -1,4 +1,4 @@
-import type { CreateContext } from '@gasket/cli';
+import type { CreateContext } from 'create-gasket-app';
 
 export interface Utils {
   gatherDevDeps(pkgName: string): Promise<Record<string, string>>;

@@ -1,6 +1,6 @@
 const codeStyles = require('./code-styles');
 
-/** @type {import('@gasket/engine').HookHandler<'prompt'>} */
+/** @type {import('@gasket/core').HookHandler<'prompt'>} */
 module.exports = async function promptHook(gasket, context, { prompt }) {
   // Assume prompts are not needed if some lint configuration found in context
   if (

@@ -3,7 +3,7 @@ const nonNextRoute = /^(?!\/_next\/)/;
 
 /**
  * Middleware lifecycle to return middleware layer
- * @type {import('@gasket/engine').HookHandler<'middleware'>}
+ * @type {import('@gasket/core').HookHandler<'middleware'>}
  */
 module.exports = function middleware(gasket) {
   const { serviceWorker: config } = gasket.config;

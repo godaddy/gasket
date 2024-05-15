@@ -1,5 +1,5 @@
 /// <reference types="@gasket/plugin-https" />
-/// <reference types="@gasket/plugin-log" />
+/// <reference types="@gasket/plugin-logger" />
 
 const fastify = require('fastify');
 const middie = require('middie');
@@ -11,7 +11,7 @@ const debug = require('diagnostics')('gasket:fastify');
  * Create the Fastify instance and setup the lifecycle hooks.
  * Fastify is compatible with express middleware out of the box, so we can
  * use the same middleware lifecycles.
- * @type {import('@gasket/engine').HookHandler<'createServers'>}
+ * @type {import('@gasket/core').HookHandler<'createServers'>}
  */
 // eslint-disable-next-line max-statements
 module.exports = async function createServers(gasket, serverOpts) {

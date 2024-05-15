@@ -1,4 +1,4 @@
-/// <reference types="@gasket/core" />
+/// <reference types="@gasket/plugin-logger" />
 
 const path = require('path');
 
@@ -13,7 +13,7 @@ let cachedRoutes;
 
 /**
  * Loads the NextJS routes manifest
- * @param {import('@gasket/engine').Gasket} gasket - Gasket API
+ * @param {import('@gasket/core').Gasket} gasket - Gasket API
  * @returns {Promise<*>} routes
  */
 async function loadRoutes(gasket) {

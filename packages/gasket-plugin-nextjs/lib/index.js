@@ -1,8 +1,8 @@
 const { name } = require('../package.json');
 const apmTransaction = require('./apm-transaction');
-const configure = require('./configure');
 const metadata = require('./metadata');
 const configure = require('./configure');
+const { createConfig } = require('./utils/config');
 const prompt = require('./prompt');
 const create = require('./create');
 const { webpackConfig } = require('./webpack-config');
@@ -12,7 +12,7 @@ const fastify = require('./fastify');
 const build = require('./build');
 const workbox = require('./workbox');
 
-/** @type {import('@gasket/engine').Plugin} */
+/** @type {import('@gasket/core').Plugin} */
 const plugin = {
   dependencies: ['@gasket/plugin-webpack'],
   name,

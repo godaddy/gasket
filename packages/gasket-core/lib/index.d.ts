@@ -1,4 +1,5 @@
-import type { Configuration } from 'webpack';
+import { GasketConfig } from '@gasket/core';
+
 declare module '@gasket/core' {
   export type MaybeMultiple<T> = T | Array<T>;
   export type MaybeAsync<T> = T | Promise<T>;
@@ -110,6 +111,7 @@ declare module '@gasket/core' {
     root?: string
     env?: string
     environments?: Record<string, Partial<GasketConfigDefinition>>
+    commands?: Record<string, Partial<GasketConfigDefinition>>
   }
 }
 

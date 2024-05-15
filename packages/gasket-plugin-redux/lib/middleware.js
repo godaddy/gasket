@@ -1,9 +1,10 @@
 /* eslint require-atomic-updates: warn */
 /// <reference types="@gasket/plugin-express" />
+/// <reference types="@gasket/plugin-logger" />
 
 /**
  * Configure middleware
- * @type {import('@gasket/engine').HookHandler<'middleware'>}
+ * @type {import('@gasket/core').HookHandler<'middleware'>}
  */
 module.exports = function middlewareHook(gasket) {
   const { redux: reduxConfig = {} } = gasket.config;
@@ -33,7 +34,7 @@ module.exports = function middlewareHook(gasket) {
     );
 
     const store = makeStore(initState, {
-      logger: reduxConfig.logger || req.logger,
+      logger: reduxConfig.logger || gasket.logger,
       req
     });
 

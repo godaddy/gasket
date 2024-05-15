@@ -4,7 +4,7 @@ module.exports = {
   timing: {
     last: true
   },
-  /** @type {import('@gasket/engine').HookHandler<'express'>} */
+  /** @type {import('@gasket/core').HookHandler<'express'>} */
   handler: async function express(gasket, expressApp) {
     const { exec } = gasket;
 

@@ -6,7 +6,7 @@ module.exports = {
   timing: {
     last: true
   },
-  /** @type {import('@gasket/engine').HookHandler<'fastify'>} */
+  /** @type {import('@gasket/core').HookHandler<'fastify'>} */
   handler: async function fastify(gasket, fastifyApp) {
     const app = await setupNextApp(gasket);
 

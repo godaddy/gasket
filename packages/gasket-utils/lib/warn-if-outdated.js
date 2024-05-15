@@ -25,7 +25,7 @@ function isOlderThanSevenDays(currentTime, latestVersionUpdateTime) {
  * @param {string} pkgName - package name
  * @param {number} currentTime - current time in milliseconds
  * @param {object} cache - cache object
- * @returns {string} - latest version of the package
+ * @returns {Promise<string>} - latest version of the package
  */
 async function getLatestVersion(pkgName, currentTime, cache) {
   if (
@@ -43,6 +43,7 @@ async function getLatestVersion(pkgName, currentTime, cache) {
         return latestVersion;
       }
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error('Error fetching latest version:', error);
     }
   } else {
@@ -69,8 +70,10 @@ module.exports = async function warnIfOutdated(pkgName, currentVersion) {
   const latestVersion = await getLatestVersion(pkgName, currentTime, cache);
 
   if (typeof latestVersion === 'string' && semver.gt(latestVersion, currentVersion)) {
+    // eslint-disable-next-line no-console
     console.warn(
-      ` ${chalk.yellow('›')}   Warning: ${pkgName} update available from ${chalk.green(latestVersion)} to ${chalk.green(currentVersion)}`
+      ` ${chalk.yellow('›')}   ` +
+      `Warning: ${pkgName} update available from ${chalk.green(latestVersion)} to ${chalk.green(currentVersion)}`
     );
   }
 };

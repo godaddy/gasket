@@ -1,14 +1,14 @@
-/// <reference types="@gasket/plugin-command" />
-
 const path = require('path');
 const fs = require('fs');
 
 /**
  * Fixup makeStore path to be absolute, allowing relative paths in gasket.config
- * @type {import('@gasket/engine').HookHandler<'configure'>}
+ * @type {import('@gasket/core').HookHandler<'configure'>}
  */
-module.exports = function configure(gasket, baseConfig) {
+module.exports = function configure(gasket, baseConfig, extra) {
   const { root, redux: reduxConfig = {} } = baseConfig;
+
+  console.log('extra', extra);
 
   let makeStorePath = reduxConfig.makeStore;
   if (makeStorePath) {

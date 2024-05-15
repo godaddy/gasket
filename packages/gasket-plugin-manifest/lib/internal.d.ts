@@ -1,4 +1,4 @@
-import { Gasket } from '@gasket/engine';
+import { Gasket } from '@gasket/core';
 
 export function gatherManifestData(
   gasket: Gasket,

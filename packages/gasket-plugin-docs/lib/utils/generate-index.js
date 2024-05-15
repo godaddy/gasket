@@ -119,9 +119,9 @@ function generateContent(docsConfigSet) {
   );
 
   addContent('<!-- LINKS -->');
-  for (const [name, link] of refMap) {
-    addLine(`[${name}]:${link}`);
-  }
+  refMap.forEach(function (value, key) {
+    addLine('[' + key + ']:' + value);
+  });
 
   return content;
 }

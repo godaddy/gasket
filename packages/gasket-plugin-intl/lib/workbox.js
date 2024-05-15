@@ -34,7 +34,7 @@ function makeEncodeLocaleUrls(localesPath) {
 /**
  * Workbox config partial to add locale files to precache for request-based
  * service workers.
- * @type {import('@gasket/engine').HookHandler<'workbox'>}
+ * @type {import('@gasket/core').HookHandler<'workbox'>}
  */
 module.exports = async function workbox(gasket, config, context) {
   const { root } = gasket.config;

@@ -1,6 +1,6 @@
 /// <reference types="@gasket/plugin-webpack" />
 
-/** @type {import('@gasket/engine').HookHandler<'webpackConfig'>} */
+/** @type {import('@gasket/core').HookHandler<'webpackConfig'>} */
 module.exports = function webpackConfigHook(
   gasket,
   webpackConfig,

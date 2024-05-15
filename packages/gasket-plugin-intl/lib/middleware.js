@@ -1,4 +1,5 @@
 /// <reference types="@gasket/plugin-express" />
+/// <reference types="@gasket/plugin-logger" />
 
 const path = require('path');
 const merge = require('lodash.merge');
@@ -62,7 +63,7 @@ function formatLocale(language) {
   ].join('-');
 }
 
-/** @type {import('@gasket/engine').HookHandler<'middleware'>} */
+/** @type {import('@gasket/core').HookHandler<'middleware'>} */
 function middlewareHook(gasket) {
   const {
     defaultLocale,

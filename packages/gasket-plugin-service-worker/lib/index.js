@@ -8,7 +8,7 @@ const webpackConfig = require('./webpack-config');
 const fastify = require('./fastify');
 const { name } = require('../package.json');
 
-/** @type {import('@gasket/engine').Plugin} */
+/** @type {import('@gasket/core').Plugin} */
 const plugin = {
   name,
   hooks: {

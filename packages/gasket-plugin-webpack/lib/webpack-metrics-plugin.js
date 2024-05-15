@@ -5,7 +5,7 @@ const path = require('path');
  */
 class WebpackMetricsPlugin {
   constructor(opts) {
-    /** @type {import('@gasket/engine').Gasket} */
+    /** @type {import('@gasket/core').Gasket} */
     this.gasket = opts.gasket;
   }
 

@@ -23,7 +23,7 @@ function checkDevDependencies() {
   }
 }
 
-/** @type {import('@gasket/engine').HookHandler<'docsView'>} */
+/** @type {import('@gasket/core').HookHandler<'docsView'>} */
 module.exports = async function docsView(gasket) {
   checkDevDependencies();
   const { start } = require('@docusaurus/core/lib');

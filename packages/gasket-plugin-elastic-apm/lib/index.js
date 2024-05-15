@@ -1,4 +1,4 @@
-/// <reference types="@gasket/cli" />
+/// <reference types="create-gasket-app" />
 /// <reference types="@gasket/plugin-metadata" />
 
 const middleware = require('./middleware');
@@ -6,7 +6,7 @@ const preboot = require('./preboot');
 const configure = require('./configure');
 const { devDependencies, name } = require('../package.json');
 
-/** @type {import('@gasket/engine').Plugin} */
+/** @type {import('@gasket/core').Plugin} */
 const plugin = {
   name,
   hooks: {
@@ -20,8 +20,7 @@ const plugin = {
         const generatorDir = `${__dirname}/../generator`;
 
         pkg.add('dependencies', {
-          'elastic-apm-node': devDependencies['elastic-apm-node'],
-          'dotenv': devDependencies.dotenv
+          'elastic-apm-node': devDependencies['elastic-apm-node']
         });
         pkg.add('scripts', {
           start: 'gasket start --require ./setup.js'

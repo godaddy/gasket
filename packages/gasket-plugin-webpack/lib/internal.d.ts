@@ -1,5 +1,5 @@
 import type { Compiler, Configuration } from 'webpack';
-import { Gasket } from '@gasket/engine';
+import { Gasket } from '@gasket/core';
 import type { WebpackMetrics } from '@gasket/plugin-webpack';
 
 export async function handleMetrics(
@@ -15,13 +15,11 @@ export function apply(compiler: Compiler): void;
 
 /** Sets up a context object with special getters */
 export function setupContext(
-  gasket: Gasket,
-  /** Additional context-specific information */
-  context: any,
-  name: string
+  context: any
 ): any;
 
-export function deprecatedMerges(
+/** Sets up the initial webpack configuration */
+export function initWebpack(
   gasket: Gasket,
   /** Initial webpack config */
   initConfig: Configuration,

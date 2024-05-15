@@ -1,4 +1,6 @@
-/** @type {import('@gasket/engine').HookHandler<'webpackConfig'>} */
+/// <reference types="@gasket/plugin-webpack" />
+
+/** @type {import('@gasket/core').HookHandler<'webpackConfig'>} */
 module.exports = function webpackConfig(gasket, config, { webpack, isServer }) {
   return {
     ...config,

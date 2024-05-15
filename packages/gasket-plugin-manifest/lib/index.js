@@ -1,3 +1,4 @@
+/// <reference types="@gasket/plugin-express" />
 /// <reference types="@gasket/plugin-fastify" />
 /// <reference types="@gasket/plugin-metadata" />
 
@@ -7,7 +8,7 @@ const serve = require('./serve');
 const middleware = require('./middleware');
 const { name } = require('../package.json');
 
-/** @type {import('@gasket/engine').Plugin} */
+/** @type {import('@gasket/core').Plugin} */
 const plugin = {
   name,
   hooks: {

@@ -1,10 +1,12 @@
+/// <reference types="@gasket/cli" />
+
 const buildDocsConfigSet = require('./utils/build-config-set');
 const collateFiles = require('./utils/collate-files');
 const generateIndex = require('./utils/generate-index');
 
 /**
  * Get the docs command
- * @type {import('@gasket/engine').HookHandler<'commands'>}
+ * @type {import('@gasket/core').HookHandler<'commands'>}
  */
 module.exports = function commands(gasket) {
   return {

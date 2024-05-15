@@ -1,5 +1,5 @@
 /// <reference types="@gasket/plugin-start" />
-/// <reference types="@gasket/plugin-log" />
+/// <reference types="@gasket/plugin-logger" />
 
 const path = require('path');
 const { writeFile } = require('fs').promises;
@@ -8,7 +8,7 @@ const { getComposedContent, getSWConfig } = require('./utils/utils');
 
 /**
  * Write a static service worker file
- * @type {import('@gasket/engine').HookHandler<'build'>}
+ * @type {import('@gasket/core').HookHandler<'build'>}
  */
 async function handler(gasket) {
   const {
@@ -23,10 +23,10 @@ async function handler(gasket) {
     await mkdirp(path.dirname(staticOutput));
     await writeFile(staticOutput, composedContent, 'utf-8');
     logger.info(
-    `build:service-worker: Wrote service worker file (${path.relative(
-      root,
-      staticOutput
-    )}).`
+      `build:service-worker: Wrote service worker file (${path.relative(
+        root,
+        staticOutput
+      )}).`
     );
   }
 

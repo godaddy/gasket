@@ -40,6 +40,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-utils",
   "dependencies": {
+    "chalk": "^4.1.2",
     "concat-stream": "^2.0.0",
     "diagnostics": "^2.0.2",
     "lodash.defaultsdeep": "^4.6.1",

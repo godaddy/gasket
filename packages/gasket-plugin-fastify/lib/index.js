@@ -4,7 +4,7 @@
 const { peerDependencies, name } = require('../package.json');
 const createServers = require('./create-servers');
 
-/** @type {import('@gasket/engine').Plugin} */
+/** @type {import('@gasket/core').Plugin} */
 const plugin = {
   name,
   hooks: {
@@ -15,7 +15,7 @@ const plugin = {
         fastify: peerDependencies.fastify
       });
 
-      if (context.apiApp) {
+      if ('apiApp' in context && context.apiApp) {
         context.files.add(`${generatorDir}/**/*`);
 
         context.gasketConfig.add('fastify', {

@@ -6,7 +6,7 @@ module.exports = {
   timing: {
     before: ['@gasket/plugin-elastic-apm']
   },
-  /** @type {import('@gasket/engine').HookHandler<'middleware'>} */
+  /** @type {import('@gasket/core').HookHandler<'middleware'>} */
   handler: (gasket) => [
     (req, _res, next) => {
       req.getNextRoute = () => getNextRoute(gasket, req);

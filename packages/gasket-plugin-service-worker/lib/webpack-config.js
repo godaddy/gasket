@@ -4,7 +4,7 @@ const { getSWConfig } = require('./utils/utils');
 
 /**
  * Add the analyzer webpack plugin if analyze flag has been set
- * @type {import('@gasket/engine').HookHandler<'webpackConfig'>}
+ * @type {import('@gasket/core').HookHandler<'webpackConfig'>}
  */
 module.exports = function webpackConfigHook(gasket, webpackConfig, data) {
   const { command } = gasket;

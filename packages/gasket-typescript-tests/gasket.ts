@@ -1,11 +1,10 @@
 /* eslint-disable spaced-comment */
-//@ts-check
+import type { GasketConfigDefinition } from '@gasket/core';
 
 import PluginWebpack from '@gasket/plugin-webpack';
 import PluginNextjs from '@gasket/plugin-nextjs';
 
-/** @type {import('@gasket/core').GasketConfigDefinition} */
-const config = {
+const config: GasketConfigDefinition = {
   plugins: [
     PluginWebpack,
     PluginNextjs

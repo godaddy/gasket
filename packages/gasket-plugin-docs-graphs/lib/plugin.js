@@ -5,7 +5,7 @@ const path = require('path');
 const fs = require('fs');
 const write = fs.promises.writeFile;
 
-/** @type {import('@gasket/engine').Plugin} */
+/** @type {import('@gasket/core').Plugin} */
 const plugin = {
   name: require('../package.json').name,
   hooks: {
