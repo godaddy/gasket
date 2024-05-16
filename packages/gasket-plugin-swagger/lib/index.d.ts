@@ -28,3 +28,8 @@ declare module 'create-gasket-app' {
     hasSwaggerPlugin?: boolean;
   }
 }
+
+export default {
+  name: '@gasket/plugin-swagger',
+  hooks: {}
+};

@@ -3,6 +3,7 @@
   "version": "7.0.0-next.23",
   "description": "A gasket plugin to enable happyfeet healthchecks",
   "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "directories": {
     "lib": "lib"
   },

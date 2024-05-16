@@ -7,7 +7,7 @@ const { name } = require('../package.json');
 const plugin = {
   name,
   hooks: {
-    // @ts-ignore - TODO - replace attachment with GasketActions
+    // @ts-ignore - TODO - replace attachment with GasketActions - do not attach to gasket instance
     preboot: async function preboot(gasket) {
       const happyConfig = gasket.config.happyFeet || {};
       gasket.happyFeet = happyFeet(happyConfig);

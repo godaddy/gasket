@@ -2,7 +2,7 @@
   "name": "@gasket/plugin-logger",
   "version": "7.0.0-next.23",
   "description": "Gasket plugin for logging",
-  "main": "lib",
+  "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
     "lib"

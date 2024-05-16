@@ -1,6 +1,6 @@
 const path = require('path');
 const { readFile: read } = require('fs').promises;
-const plugin = require('../lib/plugin.js');
+const plugin = require('../lib');
 const hook = plugin.hooks.docsGenerate;
 
 describe('docs graph plugin', function () {

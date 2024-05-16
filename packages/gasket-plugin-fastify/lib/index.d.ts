@@ -56,3 +56,8 @@ declare module 'create-gasket-app' {
     apiApp?: boolean;
   }
 }
+
+export default {
+  name: '@gasket/plugin-fastify',
+  hooks: {}
+};

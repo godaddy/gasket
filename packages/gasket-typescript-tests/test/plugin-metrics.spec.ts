@@ -5,8 +5,8 @@ describe('@gasket/plugin-metrics', () => {
   const { log } = console;
 
   it('adds a metrics lifecycle', () => {
-    const hook: Hook<'metrics'> = async (gasket: Gasket, data: Metrics) => {
-      log(data);
+    const hook: Hook<'metrics'> = async (gasket: Gasket, metrics: Metrics) => {
+      log(metrics);
     };
   });
 });

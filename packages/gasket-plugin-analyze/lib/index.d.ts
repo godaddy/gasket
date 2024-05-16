@@ -8,3 +8,8 @@ declare module '@gasket/core' {
     }
   }
 }
+
+export default {
+  name: '@gasket/plugin-analyze',
+  hooks: {}
+}

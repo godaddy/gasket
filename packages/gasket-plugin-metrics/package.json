@@ -2,7 +2,7 @@
   "name": "@gasket/plugin-metrics",
   "version": "7.0.0-next.23",
   "description": "Collect metrics for gasket commands",
-  "main": "lib",
+  "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
     "lib"

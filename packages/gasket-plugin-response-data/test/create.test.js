@@ -1,4 +1,4 @@
-const plugin = require('../lib/plugin');
+const plugin = require('../lib/index');
 const { name, version, devDependencies } = require('../package.json');
 
 describe('create', function () {

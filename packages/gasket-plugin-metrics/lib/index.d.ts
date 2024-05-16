@@ -23,3 +23,8 @@ declare module '@gasket/core' {
     metrics(metrics: Metrics): MaybeAsync<void>;
   }
 }
+
+export default {
+  name: '@gasket/plugin-metrics',
+  hooks: {}
+};

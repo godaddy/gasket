@@ -6,7 +6,7 @@ const fs = require('fs');
 const write = fs.promises.writeFile;
 
 /** @type {import('@gasket/core').Plugin} */
-const plugin = {
+const index = {
   name: require('../package.json').name,
   hooks: {
     async docsGenerate(gasket, docsConfigSet) {
@@ -67,4 +67,4 @@ const plugin = {
   }
 };
 
-module.exports = plugin;
+module.exports = index;

@@ -108,3 +108,8 @@ declare module '@gasket/core' {
     onShutdown(): MaybeAsync<void>;
   }
 }
+
+export default {
+  name: '@gasket/plugin-https',
+  hooks: {}
+};
