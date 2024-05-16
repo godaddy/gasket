@@ -5,8 +5,6 @@ interface PackageManagerOptions {
   packageManager: string;
   /** Target directory where `node_module` should exist */
   dest: string;
-  /** @deprecated Path to userconfig */
-  npmconfig?: string;
 }
 
 /**
@@ -19,8 +17,6 @@ export interface PackageManager {
   manager: string;
   /** Target directory where `node_module` should exist */
   dest: string;
-  /** @deprecated Path to userconfig */
-  npmconfig: string;
 
   /**
    * Executes npm in the application directory `this.dest`. This installation
