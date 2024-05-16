@@ -1,14 +1,15 @@
-const defaultsDeep = require('lodash.defaultsdeep');
+/// <reference types="@gasket/plugin-intl" />
+/// <reference types="@gasket/plugin-logger" />
 
 /**
  * Bring forward configuration from intl plugin to config for next.
- *
- * @param {Gasket} gasket - The gasket API
+ * @param {import("@gasket/core").Gasket} gasket - The gasket API
  * @param {object} config - Configuration to pass to Nextjs
  * @private
  */
 function forwardIntlConfig(gasket, config) {
   const { logger } = gasket;
+
   const { intl: intlConfig = {} } = gasket.config;
 
   if (intlConfig.nextRouting === false) {
@@ -40,27 +41,25 @@ function forwardIntlConfig(gasket, config) {
 /**
  * Small helper function that creates nextjs configuration from the gasket
  * configuration.
- *
- * @param   {Gasket}  gasket                The gasket API.
- * @param   {Boolean} includeWebpackConfig  `true` to generate webpack config
- * @param   {Object} [baseConfig]           Initial next config
- * @returns {Object} The configuration data for Nextjs
+ * @param {import("@gasket/core").Gasket}  gasket The gasket API.
+ * @param {boolean} includeWebpackConfig `true` to generate webpack config
+ * @param   {object} [nextConfig]           Initial next config
+ * @returns {Promise<object>} The configuration data for Nextjs
  * @private
  */
 function createConfig(gasket, includeWebpackConfig = true, nextConfig = {}) {
-  const config = defaultsDeep(
-    nextConfig,
-    (gasket.config?.nextConfig || {}),
-    { poweredByHeader: false }
-  );
+  const config = {
+    poweredByHeader: false,
+    ...(gasket.config?.nextConfig || {}),
+    ...nextConfig
+  };
 
   forwardIntlConfig(gasket, config);
 
   if (includeWebpackConfig) {
     const { webpack: existingWebpack } = config;
-    //
+
     // Add webpack property to nextConfig and wrap existing
-    //
     config.webpack = function webpack(webpackConfig, data) {
       if (typeof existingWebpack === 'function') {
         webpackConfig = existingWebpack(webpackConfig, data);

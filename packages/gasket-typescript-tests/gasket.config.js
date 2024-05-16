@@ -2,10 +2,14 @@
 //@ts-check
 
 import PluginWebpack from '@gasket/plugin-webpack';
+import PluginNextjs from '@gasket/plugin-nextjs';
 
 /** @type {import('@gasket/core').GasketConfigDefinition} */
 const config = {
-  plugins: [PluginWebpack],
+  plugins: [
+    PluginWebpack,
+    PluginNextjs
+  ],
   compression: 'garbage',
   http: 8080,
   intl: {

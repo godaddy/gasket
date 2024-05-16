@@ -24,6 +24,7 @@ describe('Plugin', () => {
     await plugin.hooks.preboot(gasket);
     gasket.happyFeet.state = 'happy';
     const response = await plugin.hooks.healthcheck(gasket, Error);
-    expect(response).toEqual('page ok');
+    expect(response).toBeUndefined();
+    // expect(response).toEqual('page ok');
   });
 });

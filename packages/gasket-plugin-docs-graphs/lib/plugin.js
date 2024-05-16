@@ -1,9 +1,12 @@
+/// <reference types="@gasket/plugin-docs" />
+
 /* eslint no-sync: 0 */
 const path = require('path');
 const fs = require('fs');
 const write = fs.promises.writeFile;
 
-module.exports = {
+/** @type {import('@gasket/core').Plugin} */
+const plugin = {
   name: require('../package.json').name,
   hooks: {
     async docsGenerate(gasket, docsConfigSet) {
@@ -13,29 +16,39 @@ module.exports = {
       const cmds = new Set();
 
       let graph = 'graph LR;\n';
-      docsConfigSet.lifecycles.forEach(lifecycle => {
+
+      docsConfigSet.lifecycles.forEach((lifecycle) => {
         const name = lifecycle.deprecated
           ? `${lifecycle.name}["${lifecycle.name} (deprecated)"]`
           : lifecycle.name;
-        const from = lifecycle.parent || lifecycle.after || lifecycle.command || lifecycle.from;
-        let styling = i => i;
+
+        const from =
+          lifecycle.parent ||
+          lifecycle.after ||
+          lifecycle.command ||
+          lifecycle.from;
+
+        let styling = (i) => i;
+
         if (from === lifecycle.command) {
-          styling = i => {
+          styling = (i) => {
             cmds.add(i);
             return `${from}-cmd(${from})`;
           };
         }
         const arrow = lifecycle.method ? `-- ${lifecycle.method} -->` : '-->';
+
         if (name !== from) {
           graph += `${styling(from)} ${arrow} ${name};\n`;
         }
       });
 
       graph = graph.replace(/@/g, '');
-      const commandStyles = Array
-        .from(cmds)
-        .map(c => `style ${c}-cmd fill: red;`)
+
+      const commandStyles = Array.from(cmds)
+        .map((c) => `style ${c}-cmd fill: red;`)
         .join('\n');
+
       const content = '```mermaid\n' + graph + commandStyles + '\n```';
 
       if (!fs.existsSync(targetRoot)) {
@@ -53,3 +66,5 @@ module.exports = {
     }
   }
 };
+
+module.exports = plugin;

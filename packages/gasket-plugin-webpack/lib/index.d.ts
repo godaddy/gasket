@@ -1,23 +1,34 @@
-import type { GasketConfig, HookExecTypes } from '@gasket/core';
 import type WebpackApi from 'webpack';
+import type { Configuration } from 'webpack';
 
 export interface WebpackContext {
-  webpack: typeof WebpackApi
+  webpack: typeof WebpackApi;
+  isServer?: boolean;
+}
+
+export interface WebpackMetrics {
+  name: string;
+  event: string;
+  data: object;
+  time: number;
 }
 
 declare module '@gasket/core' {
   export interface GasketActions {
-    getWebpackConfig(config: WebpackApi.Configuration, context: WebpackContext): WebpackApi.Configuration
+    getWebpackConfig?: (config: WebpackApi.Configuration, context: WebpackContext) => WebpackApi.Configuration
   }
 
   export interface HookExecTypes {
     webpackConfig(
-      config: WebpackApi.Configuration,
+      config: Configuration,
       context: WebpackContext
-    ): WebpackApi.Configuration;
+    ): Configuration;
+    metrics(metrics: WebpackMetrics): Promise<void>;
   }
 }
 
-export const name = '@gasket/plugin-webpack'
-// TODO: does these need to be complete?
-export const hooks = {};
+// satisfies plugin imports
+export default {
+  name: '@gasket/plugin-webpack',
+  hooks: {}
+}

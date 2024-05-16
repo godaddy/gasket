@@ -41,14 +41,12 @@ describe('Plugin', () => {
 
   it('exposes a configure lifecycle hook', () => {
     expect(typeof plugin.hooks).toStrictEqual('object');
-    expect(typeof plugin.hooks.configure).toStrictEqual('object');
-    expect(typeof plugin.hooks.configure.handler).toStrictEqual('function');
+    expect(typeof plugin.hooks.configure).toStrictEqual('function');
   });
 
   it('exposes a preboot lifecycle hook', () => {
     expect(typeof plugin.hooks).toStrictEqual('object');
-    expect(typeof plugin.hooks.preboot).toStrictEqual('object');
-    expect(typeof plugin.hooks.preboot.handler).toStrictEqual('function');
+    expect(typeof plugin.hooks.preboot).toStrictEqual('function');
   });
 
   it('hooks the middleware lifecycle', () => {
@@ -57,18 +55,18 @@ describe('Plugin', () => {
 
   it('skips start call if already started', async () => {
     mockAPM.isStarted.mockReturnValue(true);
-    await plugin.hooks.preboot.handler(mockGasket);
+    await plugin.hooks.preboot(mockGasket);
     expect(apm.start).not.toHaveBeenCalled();
   });
 
   it('skips preboot lifecycle if run locally', async () => {
     mockGasket.command = { id: 'local' };
-    await plugin.hooks.preboot.handler(mockGasket);
+    await plugin.hooks.preboot(mockGasket);
     expect(apm.start).not.toHaveBeenCalled();
   });
 
   it('does not start within preboot', async function () {
-    await plugin.hooks.preboot.handler(mockGasket);
+    await plugin.hooks.preboot(mockGasket);
     expect(apm.start).toHaveBeenCalledTimes(0);
     expect(mockGasket.logger.warn).toHaveBeenCalledWith(
       expect.stringContaining(
@@ -79,7 +77,7 @@ describe('Plugin', () => {
 
   it('adds apm filters', async () => {
     mockAPM.isStarted.mockReturnValue(true);
-    await plugin.hooks.preboot.handler(mockGasket);
+    await plugin.hooks.preboot(mockGasket);
     expect(apm.addFilter).toHaveBeenCalledTimes(1);
   });
 
@@ -88,30 +86,30 @@ describe('Plugin', () => {
     delete process.env.ELASTIC_APM_SECRET_TOKEN;
     process.env.ELASTIC_APM_ACTIVE = true;
 
-    mockGasket.config = await plugin.hooks.configure.handler(mockGasket, {
+    mockGasket.config = await plugin.hooks.configure(mockGasket, {
       ...mockGasket.config,
       elasticAPM: { active: true }
     });
-    await plugin.hooks.preboot.handler(mockGasket);
+    await plugin.hooks.preboot(mockGasket);
     expect(mockGasket.config.elasticAPM).toEqual({ active: true });
   });
 
   it('is not active if missing ELASTIC_APM_SERVER_URL env var', async () => {
     delete process.env.ELASTIC_APM_SERVER_URL;
-    mockGasket.config = await plugin.hooks.configure.handler(mockGasket, {
+    mockGasket.config = await plugin.hooks.configure(mockGasket, {
       ...mockGasket.config
     });
 
-    await plugin.hooks.preboot.handler(mockGasket);
+    await plugin.hooks.preboot(mockGasket);
     expect(mockGasket.config.elasticAPM).toEqual({ active: false });
   });
 
   it('is not active if missing ELASTIC_APM_SECRET_TOKEN env var', async () => {
     delete process.env.ELASTIC_APM_SECRET_TOKEN;
-    mockGasket.config = await plugin.hooks.configure.handler(mockGasket, {
+    mockGasket.config = await plugin.hooks.configure(mockGasket, {
       ...mockGasket.config
     });
-    await plugin.hooks.preboot.handler(mockGasket);
+    await plugin.hooks.preboot(mockGasket);
     expect(mockGasket.config.elasticAPM).toEqual({ active: false });
   });
 
@@ -120,10 +118,10 @@ describe('Plugin', () => {
     delete process.env.ELASTIC_APM_SECRET_TOKEN;
     process.env.ELASTIC_APM_ACTIVE = true;
 
-    mockGasket.config = await plugin.hooks.configure.handler(mockGasket, {
+    mockGasket.config = await plugin.hooks.configure(mockGasket, {
       ...mockGasket.config
     });
-    await plugin.hooks.preboot.handler(mockGasket);
+    await plugin.hooks.preboot(mockGasket);
     expect(mockGasket.config.elasticAPM).toEqual({ active: true });
   });
 });

@@ -1,5 +1,8 @@
+/// <reference types="create-gasket-app" />
+
 const { name, version, devDependencies } = require('../package.json');
 
+/** @type {import('@gasket/core').HookHandler<'create'>} */
 module.exports = function create(gasket, { pkg, gasketConfig }) {
   gasketConfig.addPlugin('pluginDocusaurus', name);
   pkg.add('dependencies', {

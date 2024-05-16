@@ -71,6 +71,7 @@ module.exports = {
   }
 }
 ```
+
 You will also need to include a link to your `manifest.json` file on your static html pages:
 
 ```html

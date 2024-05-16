@@ -1,6 +1,8 @@
+/// <reference types="@gasket/cli" />
+
 const path = require('path');
 const merge = require('deepmerge');
-const { getSWConfig } = require('./utils');
+const { getSWConfig } = require('./utils/utils');
 
 /**
  * Service worker defaults
@@ -23,13 +25,9 @@ const defaultConfig = {
 
 /**
  * Configure lifecycle to set up SW config with defaults
- *
- * @param {Gasket} gasket - Gasket
- * @param {Object} config - Base gasket config
- * @returns {Object} config
+ * @type {import('@gasket/core').HookHandler<'configure'>}
  */
-module.exports = function configure(gasket, config = {}) {
-  const { config: { root } } = gasket;
+module.exports = function configure(gasket, config) {
   const serviceWorker = merge(defaultConfig, getSWConfig({ config }));
   let { staticOutput } = serviceWorker;
 
@@ -38,7 +36,7 @@ module.exports = function configure(gasket, config = {}) {
     staticOutput = 'public/sw.js';
   }
   if (staticOutput) {
-    staticOutput = path.join(root, staticOutput);
+    staticOutput = path.join(gasket.config.root, staticOutput);
   }
 
   serviceWorker.staticOutput = staticOutput;

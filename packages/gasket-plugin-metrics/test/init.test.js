@@ -15,6 +15,11 @@ jest.mock('../lib/metrics', () => MockMetrics);
 
 const initHook = require('../lib/index').hooks.init;
 
+/**
+ * Initialize the handler
+ * @param mockGasket - Mock Gasket object
+ * @returns {Promise<void>}
+ */
 async function initHandler(mockGasket) {
   await initHook.handler(mockGasket);
   // because we don't wait the metric call to avoid blocking

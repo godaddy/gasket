@@ -2,7 +2,8 @@
   "name": "create-gasket-app",
   "version": "7.0.0-next.23",
   "description": "starter pack for creating a gasket app",
-  "main": "lib",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "bin": {
     "create-gasket-app": "./lib/index.js"
   },
@@ -54,7 +55,7 @@
     "diagnostics": "^2.0.2",
     "dotenv": "^16.4.5",
     "eslint": "^8.56.0",
-    "eslint-config-godaddy": "^7.0.2",
+    "eslint-config-godaddy": "^7.1.0",
     "eslint-plugin-jest": "^27.6.3",
     "eslint-plugin-json": "^3.1.0",
     "eslint-plugin-unicorn": "^44.0.0",

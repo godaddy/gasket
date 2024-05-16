@@ -1,7 +1,5 @@
 # `@gasket/plugin-nextjs`
 
-
-
 - Add plugin import to gasket file ([#736])
 - Add itself to the app package file ([#736])
 - Add generator files `next.config.js` & `server.js` ([#736])
@@ -11,6 +9,10 @@
 - Add Prompt for `nextServerType`
 - Removed support for deprecated `next` config support ([#655])
 - With Redux, generate _app with example `getInitialAppProps` ([#693])
+
+### 6.47.0
+
+- Check if headers sent from lifecycle ([#750])
 
 ### 6.46.7
 
@@ -278,3 +280,4 @@
 [#693]: https://github.com/godaddy/gasket/pull/693
 [#724]: https://github.com/godaddy/gasket/pull/724
 [#736]: https://github.com/godaddy/gasket/pull/736
+[#750]: https://github.com/godaddy/gasket/pull/750

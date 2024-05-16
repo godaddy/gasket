@@ -1,14 +1,15 @@
-const { getSWConfig } = require('./utils');
-const configureEndpoint = require('./configure-endpoint');
+/// <reference types="@gasket/plugin-fastify" />
+
+const { getSWConfig } = require('./utils/utils');
+const configureEndpoint = require('./utils/configure-endpoint');
 
 /**
  * Fastify lifecycle to add an endpoint to serve service worker script
- *
- * @param {Gasket} gasket - Gasket
- * @param {Fastify} app - App
+ * @type {import('@gasket/core').HookHandler<'fastify'>}
  */
 module.exports = async function fastify(gasket, app) {
   const { staticOutput, url } = getSWConfig(gasket);
+
   if (staticOutput) return;
   app.get(url, await configureEndpoint(gasket));
 };
