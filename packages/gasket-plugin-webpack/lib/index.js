@@ -36,23 +36,6 @@ const plugin = {
         ],
         lifecycles: [
           {
-            name: 'webpackChain',
-            deprecated: true,
-            method: 'execApplySync',
-            description: 'Setup webpack config by chaining',
-            link: 'README.md#webpackChain',
-            parent: 'initWebpack'
-          },
-          {
-            name: 'webpack',
-            deprecated: true,
-            method: 'execApplySync',
-            description: 'Modify webpack config with partials or by mutating',
-            link: 'README.md#webpack',
-            parent: 'initWebpack',
-            after: 'webpackChain'
-          },
-          {
             name: 'webpackConfig',
             method: 'execApplySync',
             description:

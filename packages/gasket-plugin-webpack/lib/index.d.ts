@@ -23,7 +23,6 @@ declare module '@gasket/core' {
       config: Configuration,
       context: WebpackContext
     ): Configuration;
-    metrics(metrics: WebpackMetrics): Promise<void>;
   }
 }
 
