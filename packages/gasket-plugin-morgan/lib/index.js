@@ -1,11 +1,7 @@
-/// <reference types="@gasket/core" />
-/// <reference types="@gasket/plugin-logger" />
 /// <reference types="@gasket/plugin-metadata" />
-/// <reference types="@gasket/plugin-express" />
 
-const morgan = require('morgan');
-const split = require('split');
 const { name } = require('../package.json');
+const middleware = require('./middleware');
 
 // set log configuration in gasket.config.js, under `morgan` key
 // configuration options: http://expressjs.com/en/resources/middleware/morgan.html
@@ -13,16 +9,7 @@ const { name } = require('../package.json');
 const plugin = {
   name,
   hooks: {
-    middleware(gasket) {
-      const { logger, config } = gasket;
-      const { morgan: { format = 'tiny', options = {} } = {} } = config;
-
-      const stream = split().on('data', (line) => logger.info(line));
-
-      const morganMiddleware = morgan(format, { ...options, stream });
-
-      return [morganMiddleware];
-    },
+    middleware,
     metadata(gasket, meta) {
       return {
         ...meta,

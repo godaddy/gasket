@@ -61,15 +61,15 @@ describe('Middleware', () => {
       expect(customMakeStore).toHaveBeenCalled();
     });
 
-    it('passes the request logger by default', async () => {
+    it('passes the gasket logger by default', async () => {
       gasket.config.redux = { makeStore: '../__mocks__/custom-make-store.js' };
-      req.logger = { info: jest.fn() };
+      gasket.logger = { info: jest.fn() };
 
       middleware = configureMiddleware(gasket);
       await middleware(req, res, next);
 
       expect(customMakeStore).toHaveBeenCalledWith(expect.any(Object), expect.objectContaining({
-        logger: req.logger
+        logger: gasket.logger
       }));
     });
 

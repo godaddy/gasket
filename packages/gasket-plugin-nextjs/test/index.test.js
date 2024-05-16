@@ -11,17 +11,17 @@ const fastifyApp = {
   all: jest.fn()
 };
 
-const nextHandler = {
+const nextServer = {
   prepare: jest.fn().mockResolvedValue(),
   getRequestHandler: jest.fn().mockResolvedValue({}),
   buildId: '1234',
   name: 'testapp'
 };
 
-const mockSetupNextAppStub = jest.fn(() => nextHandler);
+const mockSetupNextAppStub = jest.fn(() => nextServer);
 
-jest.mock('../lib/setup-next-app', () => {
-  const mod = jest.requireActual('../lib/setup-next-app');
+jest.mock('../lib/utils/setup-next-app', () => {
+  const mod = jest.requireActual('../lib/utils/setup-next-app');
   return {
     setupNextApp: mockSetupNextAppStub,
     setupNextHandling: mod.setupNextHandling
@@ -167,7 +167,7 @@ describe('express hook', () => {
     await hook(gasket, expressApp, false);
 
     expect(gasket.exec).toHaveBeenCalledWith('nextExpress', {
-      next: nextHandler,
+      next: nextServer,
       express: expressApp
     });
   });
@@ -187,7 +187,7 @@ describe('express hook', () => {
     expect(gasket.exec).toHaveBeenCalledWith('nextPreHandling', {
       req: mockReq,
       res: mockRes,
-      nextServer: nextHandler
+      nextServer
     });
   });
 });
@@ -264,7 +264,7 @@ describe('fastify hook', () => {
     await hook(gasket, fastifyApp, false);
 
     expect(gasket.exec).toHaveBeenCalledWith('nextFastify', {
-      next: nextHandler,
+      next: nextServer,
       fastify: fastifyApp
     });
   });
@@ -290,7 +290,7 @@ describe('fastify hook', () => {
     expect(gasket.exec).toHaveBeenCalledWith('nextPreHandling', {
       req: mockReq,
       res: mockRes,
-      nextServer: nextHandler
+      nextServer
     });
   });
 });
@@ -302,7 +302,7 @@ describe('build hook', () => {
     mockCreateConfigStub = jest.fn();
     mockBuilderStub = jest.fn();
 
-    jest.mock('../lib/config', () => ({
+    jest.mock('../lib/utils/config', () => ({
       createConfig: mockCreateConfigStub
     }));
 
@@ -487,6 +487,11 @@ describe('workbox hook', () => {
   });
 });
 
+
+/**
+ * Mock Gasket API
+ * @returns {object} gasketAPI
+ */
 function mockGasketApi() {
   return {
     command: {

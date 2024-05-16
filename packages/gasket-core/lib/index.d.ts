@@ -1,3 +1,5 @@
+import { GasketConfig } from '@gasket/core';
+
 declare module '@gasket/core' {
   export type MaybeMultiple<T> = T | Array<T>;
   export type MaybeAsync<T> = T | Promise<T>;
@@ -13,7 +15,7 @@ declare module '@gasket/core' {
     configure(config: GasketConfig): GasketConfig
   }
 
-  export type HookId = keyof HookExecTypes
+  export type HookId = keyof HookExecTypes;
 
   export type HookTimings = {
     before?: Array<string>;
@@ -48,9 +50,9 @@ declare module '@gasket/core' {
 
   // This is the config
   export interface GasketConfig {
-    plugins: Array<Plugin>
-    root: string
-    env: string
+    plugins: Array<Plugin>;
+    root: string;
+    env: string;
   }
 
   export class GasketEngine {
@@ -74,7 +76,10 @@ declare module '@gasket/core' {
     ): ReturnType<HookExecTypes[Id]>;
     execApply<Id extends HookId, Return = void>(
       hook: Id,
-      callback: (plugin: Plugin, handler: ApplyHookHandler<Id>) => Promise<Return>
+      callback: (
+        plugin: Plugin,
+        handler: ApplyHookHandler<Id>
+      ) => Promise<Return>
     ): Promise<Return[]>;
     execApplySync<Id extends HookId, Return = void>(
       hook: Id,
@@ -82,31 +87,31 @@ declare module '@gasket/core' {
     ): Return[];
 
     hook<Id extends HookId>(opts: {
-      event: Id,
-      pluginName?: string,
-      timing?: HookTimings,
-      handler: HookHandler<Id>
+      event: Id;
+      pluginName?: string;
+      timing?: HookTimings;
+      handler: HookHandler<Id>;
     }): void;
   }
 
   export interface Gasket extends GasketEngine {
     command: {
-      id: string
-    }
+      id: string;
+    };
     config: GasketConfig;
     new (config: GasketConfigDefinition): Gasket
     actions: GasketActions
   }
 
-  type PartialRecursive<T> =
-    T extends Object
-      ? { [K in keyof T]?: PartialRecursive<T[K]> } | undefined
-      : T | undefined
+  type PartialRecursive<T> = T extends Object
+    ? { [K in keyof T]?: PartialRecursive<T[K]> } | undefined
+    : T | undefined;
 
   export type GasketConfigDefinition = Omit<GasketConfig, 'root' | 'env' | 'command'> & {
     root?: string
     env?: string
     environments?: Record<string, Partial<GasketConfigDefinition>>
+    commands?: Record<string, Partial<GasketConfigDefinition>>
   }
 }
 

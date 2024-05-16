@@ -18,9 +18,11 @@
     "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
     "test:watch": "jest --watchAll",
     "test:coverage": "jest --coverage",
-    "posttest": "npm run lint",
+    "posttest": "npm run lint && npm run typecheck",
     "build": "babel src -d lib --delete-dir-on-start",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "typecheck": "tsc",
+    "typecheck:watch": "tsc --watch"
   },
   "repository": {
     "type": "git",
@@ -77,7 +79,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-intl": "^6.0.0",
-    "react-redux": "^8.0.0"
+    "react-redux": "^8.0.0",
+    "typescript": "^5.4.5"
   },
   "disabled_peerDependencies": {
     "@gasket/plugin-intl": "^7"
@@ -89,10 +92,12 @@
   "eslintConfig": {
     "extends": [
       "godaddy-react",
-      "plugin:jest/recommended"
+      "plugin:jest/recommended",
+      "plugin:jsdoc/recommended-typescript-flavor"
     ],
     "plugins": [
-      "unicorn"
+      "unicorn",
+      "jsdoc"
     ],
     "rules": {
       "unicorn/filename-case": "error"

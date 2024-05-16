@@ -1,5 +1,9 @@
-module.exports = async (_gasket, transaction, { req }) => {
+/// <reference types="@gasket/plugin-elastic-apm" />
+
+/** @type {import('@gasket/core').HookHandler<'apmTransaction'>} */
+module.exports = async function apmTransaction(gasket, transaction, { req }) {
   const route = await req.getNextRoute();
+
   if (!route) {
     return;
   }
@@ -8,6 +12,7 @@ module.exports = async (_gasket, transaction, { req }) => {
 
   const match = route.namedRegex.exec(req.url.replace(/\?.*$/, ''));
   const groups = match && match.groups;
+
   if (!groups) {
     return;
   }

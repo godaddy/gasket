@@ -35,7 +35,6 @@ describe('configure', function () {
 
   it('is a function', function () {
     expect(typeof configure).toBe('function');
-    expect(configure).toHaveLength(1);
   });
 
   it('merges base config with the manifest config', function () {

@@ -1,3 +1,5 @@
+/// <reference types="@gasket/plugin-nextjs" />
+
 const path = require('path');
 
 const debug = require('debug')('gasket:plugin:intl:configure');
@@ -11,13 +13,14 @@ const isDefined = (o) => typeof o !== 'undefined';
 
 /**
  * Shortcut to get the gasket.config.intl object
- *
- * @param {Gasket} gasket - Gasket API
- * @returns {IntlConfig} intlConfig
+ * @param {import("@gasket/core").Gasket} gasket - Gasket API
+ * @returns {import('./index').IntlConfig} intl config
  */
 function getIntlConfig(gasket) {
   const { intl = {} } = gasket.config || {};
-  // handling default here is necessary for metadata which runs before configure hook
+
+  // handling default here is necessary for metadata which runs before configure
+  // hook
   intl.localesDir = intl.localesDir || path.join('public', 'locales');
   return intl;
 }
@@ -25,13 +28,11 @@ function getIntlConfig(gasket) {
 /**
  * Sets up the Intl config for the Gasket session and add process env variables
  * to access to certain config results where gasket.config is not accessible.
- *
- * @param {Gasket} gasket - Gasket API
- * @param {object} config - Incoming config
- * @returns {{intl: IntlConfig}} config
+ * @type {import('@gasket/core').HookHandler<'configure'>}
  */
-module.exports = function configureHook(gasket, config) {
+module.exports = function configure(gasket, config) {
   const { root } = config;
+  // @ts-ignore - temp fix until we can get types for gasket-plugin-intl
   const intlConfig = { ...getIntlConfig({ config }) };
 
   const { nextConfig = {} } = config;
@@ -90,15 +91,16 @@ module.exports = function configureHook(gasket, config) {
 
   /**
    * @typedef {object} IntlConfig
-   *
    * @property {string} basePath - Base URL where locale files are served
    * @property {string} defaultPath - Path to endpoint with JSON files
    * @property {string} defaultLocale - Locale to fallback to when loading files
    * @property {object} localesMap - Mapping of locales to share files
-   * @property {string} localesDir - Path to on-disk directory where locale files exists
+   * @property {string} localesDir - Path to on-disk directory where locale
+   * files exists
    * @property {string} manifestFilename - Name of the manifest file
    * @property {boolean} preloadLocales - Preloads locale files if set to true
-   * @property {object} modules - Enable locale files collation from node modules
+   * @property {object} modules - Enable locale files collation from node
+   * modules
    * @property {string} modules.localesDir - Lookup dir for module files
    * @property {string[]} modules.excludes - List of modules to ignore
    */
@@ -108,4 +110,5 @@ module.exports = function configureHook(gasket, config) {
   };
 };
 
+// @ts-ignore
 module.exports.getIntlConfig = getIntlConfig;
