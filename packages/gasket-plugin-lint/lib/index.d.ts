@@ -34,3 +34,8 @@ declare module 'create-gasket-app' {
     standard?: StandardConfig;
   }
 }
+
+export default {
+  name: '@gasket/plugin-lint',
+  hooks: {}
+};

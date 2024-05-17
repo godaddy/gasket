@@ -28,3 +28,8 @@ declare module '@gasket/core' {
     ): MaybeAsync<PartialRecursive<GenerateSWConfig>>;
   }
 }
+
+export default {
+  name: '@gasket/plugin-workbox',
+  hooks: {}
+};

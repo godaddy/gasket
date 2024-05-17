@@ -5,3 +5,8 @@ declare module 'create-gasket-app' {
     gitignore?: Gitignore;
   }
 }
+
+export default {
+  name: '@gasket/plugin-git',
+  hooks: {}
+};

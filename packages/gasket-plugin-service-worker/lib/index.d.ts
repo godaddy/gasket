@@ -77,9 +77,7 @@ declare module 'express' {
   }
 }
 
-async function sw(req: Request, res: Response): Promise<void>;
-
-export async function configureEndpoint(gasket: Gasket): sw;
+export async function configureEndpoint(gasket: Gasket): (req: Request, res: Response) => Promise<void>;
 
 export async function serviceWorkerMiddleware(
   req: Request & {
@@ -103,3 +101,8 @@ export async function getComposedContent(
 ): string;
 
 export async function loadRegisterScript(config: ServiceWorkerConfig): string;
+
+export default {
+  name: '@gasket/plugin-service-worker',
+  hooks: {}
+};

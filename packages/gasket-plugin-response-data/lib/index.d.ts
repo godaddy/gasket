@@ -14,3 +14,8 @@ declare module '@gasket/core' {
     ): MaybeAsync<object>
   }
 }
+
+export default {
+  name: '@gasket/plugin-response-data',
+  hooks: {}
+};

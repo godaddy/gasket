@@ -2,7 +2,7 @@
   "name": "@gasket/plugin-docs",
   "version": "7.0.0-next.25",
   "description": "Centralize doc files from plugins and modules",
-  "main": "lib",
+  "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
     "lib",

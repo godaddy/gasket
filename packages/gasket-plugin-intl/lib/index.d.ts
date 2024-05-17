@@ -16,7 +16,7 @@ interface CustomScanSettings {
   excludes?: Array<string>;
 }
 
-interface IntlConfig {
+export interface IntlConfig {
   basePath?: string;
   defaultPath?: string;
   defaultLocale?: string;
@@ -68,3 +68,8 @@ declare module 'create-gasket-app' {
     hasGasketIntl?: boolean;
   }
 }
+
+export default {
+  name: '@gasket/plugin-intl',
+  hooks: {}
+};

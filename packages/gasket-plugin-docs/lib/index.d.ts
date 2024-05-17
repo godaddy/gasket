@@ -29,3 +29,8 @@ declare module '@gasket/plugin-metadata' {
     targetRoot?: string;
   }
 }
+
+export default {
+  name: '@gasket/plugin-docs',
+  hooks: {}
+};

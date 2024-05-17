@@ -39,3 +39,9 @@ declare module 'http' {
     path?: string;
   }
 }
+
+export default {
+  name: '@gasket/plugin-manifest',
+  hooks: {}
+};
+

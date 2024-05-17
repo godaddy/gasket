@@ -1,5 +1,5 @@
 const path = require('path');
-const plugin = require('../lib/plugin');
+const plugin = require('../lib/index');
 const { gasketDataMap } = require('../lib/data-map');
 
 describe('Plugin', () => {

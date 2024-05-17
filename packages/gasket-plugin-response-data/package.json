@@ -2,8 +2,8 @@
   "name": "@gasket/plugin-response-data",
   "version": "7.0.0-next.25",
   "description": "Supports application-specific (non-Gasket) configuration",
-  "main": "lib/plugin.js",
-  "types": "lib/plugin.d.ts",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "files": [
     "lib"
   ],
