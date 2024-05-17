@@ -47,8 +47,6 @@ export default {
 };
 ```
 
-### Command Configuration
-
 Commands can be configured with options(flags), arugments, defaults, and parsing functions. The type definitions for the command configuration are also available.
 
 #### Arguments
