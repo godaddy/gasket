@@ -2,7 +2,6 @@ import type { MaybeAsync, GasketConfig } from '@gasket/core';
 import type { PluginData } from '@gasket/plugin-metadata';
 import type { Command } from 'commander';
 
-// TODO: create internal type file
 export interface GasketCommandDefinition {
   /* Command id/name */
   id: string;
@@ -81,15 +80,6 @@ export interface GasketOptionDefinition {
 
   /* Default option value */
   default?: any;
-}
-
-export interface GasketCommandOption {
-  options: Array<string>;
-  conflicts: Array<string>;
-  hidden: boolean;
-  defaultValue: any | undefined;
-  parse: (value: string) => any | undefined;
-  required: boolean;
 }
 
 export function processCommand(command: GasketCommandDefinition): GasketCommand;
