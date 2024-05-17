@@ -38,7 +38,7 @@ describe('presetConfig', () => {
   });
 
   it('adds test plugin when provided', async () => {
-    mockContext.testPlugin = '@gasket/plugin-jest';
+    mockContext.testPlugins = ['@gasket/plugin-jest'];
     const config = await presetConfig({}, mockContext);
     expect(config.plugins).toEqual(
       expect.arrayContaining([
