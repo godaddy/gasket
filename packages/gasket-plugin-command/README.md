@@ -197,11 +197,42 @@ node ./gasket.js test-plugin-cmd 3 --groceryList "apple,banana,orange,grape"
 
 #### Example with JSDoc Types
 
-Utilize JSDoc types to provide type checking and documentation for the command arguments and options.
+The `CommandsHook` type is available for type checking your hook's arguments and options.
 
 ```js
-/* @type {import('@gasket/plugin-command').CommandsHook} */
-commands() {}
+export default {
+  name: 'test-plugin',
+  hooks: {
+    /* @type {import('@gasket/plugin-command').CommandsHook} */
+    commands(gasket) {
+      return {
+        id: 'test-plugin-cmd',
+        description: 'Test plugin',
+        args: [
+          {
+            name: 'numberOfItems',
+            description: 'Retrieve a number of items from an array',
+            required: true // error if message argument is not provided
+          }
+        ],
+        options: [
+          {
+            name: 'groceryList',
+            description: 'List of grocery items',
+            required: true,
+            type: 'string',
+            parse: (value) => value.split(',') // split string to an array
+          }
+        ],
+        // args are spread and options are passed as an object
+        action: async (numberOfItems, { groceryList }) => {
+          const items = groceryList.slice(0, numberOfItems);
+          console.log('test-plugin', items);
+        }
+      }
+    }
+  }
+};
 ```
 
 <!-- Links -->
