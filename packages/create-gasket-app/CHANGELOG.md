@@ -2,6 +2,7 @@
 
 
 - Modified global test prompt to ask for unit and integration tests ([#752])
+- Force `GASKET_ENV` to create
 - Add preset lifecycles `presetPrompt` and `presetConfig` ([#736])
 - ESM refactor, package is now type module
 - Gasket apps default to `type: module`
