@@ -82,6 +82,16 @@ export interface GasketOptionDefinition {
   default?: any;
 }
 
+/* Processed Option */
+export interface GasketCommandOption {
+  options: Array<string>;
+  conflicts: Array<string>;
+  hidden: boolean;
+  defaultValue: any | undefined;
+  parse: (value: string) => any | undefined;
+  required: boolean;
+}
+
 export function processCommand(command: GasketCommandDefinition): GasketCommand;
 
 declare module '@gasket/core' {
