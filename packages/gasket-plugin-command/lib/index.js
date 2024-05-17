@@ -7,6 +7,20 @@ const { name } = require('../package.json');
 export default {
   name,
   hooks: {
-    configure
+    configure,
+    metadata(gasket, meta) {
+      return {
+        ...meta,
+        lifecycles: [
+          {
+            name: 'commands',
+            method: 'execSync',
+            description: 'Add custom commands to the CLI',
+            link: 'README.md#commands',
+            parent: 'configure'
+          }
+        ]
+      };
+    }
   }
 };
