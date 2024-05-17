@@ -1,4 +1,4 @@
-import type { MaybeAsync, GasketConfig } from '@gasket/core';
+import type { MaybeAsync, GasketConfig, Hook } from '@gasket/core';
 import type { PluginData } from '@gasket/plugin-metadata';
 import type { Command } from 'commander';
 
@@ -91,6 +91,8 @@ export interface GasketCommandOption {
   parse: (value: string) => any | undefined;
   required: boolean;
 }
+
+export type CommandHook = Hook<'commands'>;
 
 export function processCommand(command: GasketCommandDefinition): GasketCommand;
 

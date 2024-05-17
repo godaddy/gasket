@@ -195,5 +195,14 @@ node ./gasket.js test-plugin-cmd 3 --groceryList "apple,banana,orange,grape"
 # result: test-plugin [ 'apple', 'banana', 'orange' ]
 ```
 
+## Example with JSDoc Types
+
+Utilize JSDoc types to provide type checking and documentation for the command arguments and options.
+
+```js
+/* @type {import('@gasket/plugin-command').CommandHook} */
+commands() {}
+```
+
 <!-- Links -->
 [Commander.js]: https://github.com/tj/commander.js?tab=readme-ov-file#commanderjs
