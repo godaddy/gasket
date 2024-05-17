@@ -61,42 +61,54 @@ async function choosePackageManager(context, prompt) {
 }
 
 /**
- * Choose your unit test suite
+ * Choose your unit test suite and integration test suite
  *
  * @param {CreateContext} context - Create context
  * @param {function} prompt - function to prompt user
  * @returns {Promise} promise
  */
-async function chooseTestPlugin(context, prompt) {
-  const knownTestPlugins = { mocha: '@gasket/plugin-mocha', jest: '@gasket/plugin-jest', cypress: '@gasket/plugin-cypress' };
+async function chooseTestPlugins(context, prompt) {
+  const knownTestPlugins = {
+    unit: { mocha: '@gasket/plugin-mocha', jest: '@gasket/plugin-jest' },
+    integration: { cypress: '@gasket/plugin-cypress' }
+  };
 
-  if (!('testPlugin' in context)) {
-    let testPlugin;
+  const testTypes = ['unit', 'integration'];
+  const testPlugins = [];
 
-    if ('testSuite' in context) {
-      testPlugin = knownTestPlugins[context.testSuite];
+  if (!('testPlugins' in context)) {
+    for (const type of testTypes) {
+      if (type + 'TestSuite' in context) {
+        const testSuite = knownTestPlugins[type][context[type + 'TestSuite']];
+        if (testSuite) testPlugins.push(testSuite);
+      } else {
+        const plugin = await promptForTestPlugin(
+          prompt,
+          `Choose your ${type} test suite`,
+          Object.entries(knownTestPlugins[type]).map(([name, value]) => ({ name, value }))
+        );
+
+        if (plugin) testPlugins.push(plugin);
+      }
     }
 
-    if (!testPlugin) {
-      ({ testPlugin } = await prompt([
-        {
-          name: 'testPlugin',
-          message: 'Choose your unit test suite',
-          type: 'list',
-          choices: [
-            { name: 'none (not recommended)', value: 'none' },
-            { name: 'mocha + nyc + sinon + chai', value: '@gasket/plugin-mocha' },
-            { name: 'jest', value: '@gasket/plugin-jest' },
-            { name: 'cypress', value: '@gasket/plugin-cypress' }
-          ]
-        }
-      ]));
-    }
-
-    if (testPlugin && testPlugin !== 'none') {
-      Object.assign(context, { testPlugin });
+    if (testPlugins.length > 0) {
+      Object.assign(context, { testPlugins });
     }
   }
+}
+
+async function promptForTestPlugin(prompt, message, choices) {
+  const { testPlugin } = await prompt([
+    {
+      name: 'testPlugin',
+      message,
+      type: 'list',
+      choices: [{ name: 'none', value: 'none' }, ...choices]
+    }
+  ]);
+
+  return testPlugin !== 'none' ? testPlugin : null;
 }
 
 /**
@@ -126,7 +138,7 @@ async function allowExtantOverwriting(context, prompt) {
 export const questions = [
   chooseAppDescription,
   choosePackageManager,
-  chooseTestPlugin,
+  chooseTestPlugins,
   allowExtantOverwriting
 ];
 

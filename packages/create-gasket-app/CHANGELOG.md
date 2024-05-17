@@ -1,7 +1,7 @@
 # `create-gasket-app`
 
 
-
+- Modified global test prompt to ask for unit and integration tests ([#752])
 - Add preset lifecycles `presetPrompt` and `presetConfig` ([#736])
 - ESM refactor, package is now type module
 - Gasket apps default to `type: module`
@@ -60,3 +60,4 @@
 [#460]: https://github.com/godaddy/gasket/pull/460
 [#712]: https://github.com/godaddy/gasket/pull/712
 [#736]: https://github.com/godaddy/gasket/pull/736
+[#752]: https://github.com/godaddy/gasket/pull/752

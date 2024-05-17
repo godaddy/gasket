@@ -198,8 +198,8 @@ export interface CreateContext {
   /** Should a git repo be initialized and first commit */
   gitInit: boolean;
 
-  /** Name of the plugin for unit tests */
-  testPlugin: string;
+  /** Names of the plugins that add unit and integration tests */
+  testPlugins: Array<string>;
 
   /** Which package manager to use (Default: 'npm') */
   packageManager: string;

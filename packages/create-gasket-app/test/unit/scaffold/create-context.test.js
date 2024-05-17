@@ -258,15 +258,16 @@ describe('makeCreateContext', () => {
   it('assigns values from configFile flag to context', () => {
     flags = { configFile: './test/unit/commands/test-ci-config.json' };
     results = makeCreateContext(argv, flags);
-    expect(results.testSuite).toEqual('jest');
+    expect(results.unitTestSuite).toEqual('jest');
+    expect(results.integrationTestSuite).toEqual('cypress');
     expect(results.appDescription).toEqual('A basic gasket app');
     expect(results.packageManager).toEqual('npm');
   });
 
   it('assigns values from config flag to context', () => {
-    flags = { config: '{"description":"A test app","package":"npm","testSuite":"fake"}' };
+    flags = { config: '{"description":"A test app","package":"npm","unitTestSuite":"fake"}' };
     results = makeCreateContext(argv, flags);
-    expect(results.testSuite).toEqual('fake');
+    expect(results.unitTestSuite).toEqual('fake');
     expect(results.description).toEqual('A test app');
     expect(results.package).toEqual('npm');
   });
@@ -275,5 +276,4 @@ describe('makeCreateContext', () => {
     results = makeCreateContext(argv, { prompts: false });
     expect(results.prompts).toBeFalsy();
   });
-
 });
