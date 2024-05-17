@@ -1,4 +1,5 @@
 import type { MaybeAsync, GasketConfig } from '@gasket/core';
+import type { PluginData } from '@gasket/plugin-metadata';
 import type { Command } from 'commander';
 
 // TODO: create internal type file
@@ -98,6 +99,8 @@ declare module '@gasket/core' {
   export interface HookExecTypes {
 
     configure(config: GasketConfig): void;
+
+    metadata(origData: PluginData): MaybeAsync<PluginData>;
 
     commands(): GasketCommandDefinition;
   }
