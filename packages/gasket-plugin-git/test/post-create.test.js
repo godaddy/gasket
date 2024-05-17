@@ -13,7 +13,8 @@ describe('postCreate', () => {
     mockContext = {
       appName: 'my-app',
       dest: '/some/path/my-app',
-      gitInit: true
+      gitInit: true,
+      warnings: []
     };
   });
 
@@ -81,5 +82,23 @@ describe('postCreate', () => {
       expect.arrayContaining(['commit', '-m']),
       expect.any(Object)
     );
+  });
+
+  it('adds warning if main branch exists', async () => {
+    const error = new Error('fatal: a branch named \'main\' already exists');
+    error.stderr = 'fatal: a branch named \'main\' already exists';
+    mockRunStub.mockRejectedValue(error);
+
+    await postCreate.handler({}, mockContext);
+    expect(mockContext.warnings).toEqual(['A branch named \'main\' already exists']);
+  });
+
+  it('adds error to warnings', async () => {
+    const error = new Error('some other error');
+    error.stderr = 'some other error';
+    mockRunStub.mockRejectedValue(error);
+
+    await postCreate.handler({}, mockContext);
+    expect(mockContext.warnings).toEqual(['some other error']);
   });
 });
