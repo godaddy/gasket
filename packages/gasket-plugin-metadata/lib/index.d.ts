@@ -1,118 +1,124 @@
 import type { MaybeAsync } from '@gasket/core';
+import type { PackageJson } from '@gasket/cli';
 
 export interface ModuleData<Module = any> {
   /** Name of preset */
-  name: string,
+  name: string;
 
   /** Actual module content */
-  module: Module,
+  module: Module;
 
   /** Package.json contents */
-  package?: object,
+  package?: PackageJson;
 
   /** Resolved version */
-  version?: string,
+  version?: string;
 
   /** Path to the root of package */
-  path?: string,
+  path?: string;
 
   /** Name of module which requires this module */
-  from?: string,
+  from?: string;
 
   /** Range by which this module was required */
-  range?: string,
+  range?: string;
 
   /** Path to a doc file or URL */
-  link?: string
+  link?: string;
+  description?: string;
 }
 
 /** App module with meta data */
 export interface AppData extends ModuleData {
   /** Description of modules supporting this plugin */
-  modules?: Array<DetailData>
+  modules?: Array<DetailData>;
 }
 
 /** Plugin module with meta data */
 export interface PluginData extends ModuleData {
   /** Commands enabled by this plugin */
-  commands?: Array<DetailData>,
+  commands?: Array<DetailData>;
 
   /** App files and directories used by plugin */
-  structures?: Array<DetailData>,
+  structures?: Array<DetailData>;
 
   /** Configuration options for gasket.config.js */
-  configurations?: Array<ConfigurationsData>
+  configurations?: Array<ConfigurationsData>;
 
   /** Description of lifecycles invoked by plugin */
-  lifecycles?: Array<LifecycleData>,
+  lifecycles?: Array<LifecycleData>;
 
   /** Description of modules supporting this plugin */
-  modules?: Array<string | DetailData>,
-  
+  modules?: Array<string | DetailData>;
+
   /** Description of guides for this plugin */
-  guides?: Array<DetailData>
+  guides?: Array<DetailData>;
 }
 
 /** Preset module with meta data */
 export interface PresetData extends ModuleData {
   /** Presets that this preset extends */
-  presets?: Array<PresetData>,
+  presets?: Array<PresetData>;
 
   /** Plugins this preset uses */
-  plugins: Array<PluginData>,
+  plugins: Array<PluginData>;
 }
 
 /** Metadata for details of a plugin */
 export interface DetailData {
   /** Name of the the module or element */
-  name: string,
+  name: string;
 
   /** Description of the module or element */
-  description?: string,
+  description?: string;
 
   /** Path to a doc file or URL */
-  link?: string
+  link?: string;
 }
 
 /** Metadata with specifics details for plugin lifecycles */
 export interface LifecycleData extends DetailData {
   /** Executing method from the engine */
-  method: string,
+  method?: string;
 
   /** Lifecycle from which this one is invoked */
-  parent?: string,
+  parent?: string;
 
   /** Command from which this lifecycle is invoked */
-  command?: string
+  command?: string;
+  after?: string;
+  from?: string;
+  deprecated?: boolean;
 }
 
 /** Metadata for plugin configuration properties */
 export interface ConfigurationsData extends DetailData {
   /** Configuration property type */
-  type: string
+  type: string;
+  default?: string | string[] | boolean | number;
 }
 
 /** Collection data for modules configured for app */
 export interface Metadata {
   /** App and main package data */
-  app: AppData,
+  app: AppData;
 
   /** Preset data with dependency hierarchy */
-  presets: Array<PresetData>,
+  presets: Array<PresetData>;
 
   /** Flat list of registered plugin data */
-  plugins: Array<PluginData>,
+  plugins: Array<PluginData>;
 
   /** Supporting module data */
-  modules: Array<ModuleData>
+  modules: Array<ModuleData>;
 }
 
 declare module '@gasket/core' {
   export interface HookExecTypes {
-    metadata(origData: PluginData): MaybeAsync<PluginData>
+    metadata(origData: PluginData): MaybeAsync<PluginData>;
   }
 
   export interface Gasket {
-    metadata: Metadata
+    metadata: Metadata;
   }
 }

@@ -1,6 +1,8 @@
+/// <reference types="@gasket/plugin-https" />
+
 import type { GasketConfigDefinition, Hook } from '@gasket/core';
 import type { ClientRequest, ServerResponse } from 'http';
-import '@gasket/plugin-https';
+// import '@gasket/plugin-https';
 
 describe('@gasket/plugin-https', () => {
   const { log } = console;

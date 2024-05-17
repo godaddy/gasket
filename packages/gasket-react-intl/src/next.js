@@ -2,21 +2,27 @@ import { localeUtils } from './utils';
 import { manifest } from './config';
 
 let localesParentDir;
+/**
+ * Get the parent directory of the locales directory
+ * @returns {string} localesParentDir
+ */
 export function getLocalesParentDir() {
-  return localesParentDir || (
+  return (
+    localesParentDir ||
     // eslint-disable-next-line no-process-env
-    localesParentDir = require('path').dirname(process.env.GASKET_INTL_LOCALES_DIR)
+    (localesParentDir = require('path').dirname(
+      // eslint-disable-next-line no-process-env
+      process.env.GASKET_INTL_LOCALES_DIR
+    ))
   );
 }
 
 /**
  * Load locale file(s) for Next.js static pages
- *
- * @param {LocalePathPart|LocalePathPart[]} localePathPart - Path(s) containing locale files
- * @returns {function({}): Promise<{props: {localesProps: LocalesProps}}>} pageProps
+ * @type {import('./index').intlGetStaticProps}
  */
 export function intlGetStaticProps(localePathPart = manifest.defaultPath) {
-  return async ctx => {
+  return async (ctx) => {
     // provide by next i18n
     let { locale } = ctx;
     // otherwise, check for locale in path params
@@ -24,8 +30,13 @@ export function intlGetStaticProps(localePathPart = manifest.defaultPath) {
       locale = ctx.params.locale;
     }
 
-    // eslint-disable-next-line no-process-env
-    const localesProps = localeUtils.serverLoadData(localePathPart, locale, getLocalesParentDir(), ctx);
+    /** @type {import('@gasket/helper-intl').LocalesProps} */
+    const localesProps = localeUtils.serverLoadData(
+      localePathPart,
+      locale,
+      getLocalesParentDir(),
+      ctx
+    );
 
     return {
       props: {
@@ -36,21 +47,31 @@ export function intlGetStaticProps(localePathPart = manifest.defaultPath) {
 }
 
 /**
- * Load locale file(s) for Next.js static pages
- *
- * @param {LocalePathPart|LocalePathPart[]} localePathPart - Path(s) containing locale files
- * @returns {function({}): Promise<{props: {localesProps: LocalesProps}}>} pageProps
+ * Load locale file(s) for Next.js server-side rendered pages
+ * @type {import('./index').intlGetServerSideProps}
  */
 export function intlGetServerSideProps(localePathPart = manifest.defaultPath) {
-  return async ctx => {
+  return async (ctx) => {
     const { res } = ctx;
     // provide by next i18n
     let { locale } = ctx;
     // otherwise, check gasketData
-    if (!locale && res.locals && res.locals.gasketData && res.locals.gasketData.intl) {
+    if (
+      !locale &&
+      res.locals &&
+      res.locals.gasketData &&
+      res.locals.gasketData.intl
+    ) {
       locale = res.locals.gasketData.intl.locale;
     }
-    const localesProps = localeUtils.serverLoadData(localePathPart, locale, getLocalesParentDir(), ctx);
+
+    /** @type {import('@gasket/helper-intl').LocalesProps} */
+    const localesProps = localeUtils.serverLoadData(
+      localePathPart,
+      locale,
+      getLocalesParentDir(),
+      ctx
+    );
 
     return {
       props: {

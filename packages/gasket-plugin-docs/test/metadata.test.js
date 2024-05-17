@@ -1,5 +1,5 @@
 const metadata = require('../lib/metadata');
-const { defaultConfig } = require('../lib/configure');
+const { DEFAULT_CONFIG } = require('../lib/utils/constants');
 
 describe('metadata', () => {
   const mockGasket = {
@@ -50,7 +50,10 @@ describe('metadata', () => {
   it('includes structures with configured outputDir', () => {
     const results = metadata(mockGasket, mockMeta);
     expect(results.structures).toHaveLength(1);
-    expect(results.structures[0]).toHaveProperty('name', mockGasket.config.docs.outputDir + '/');
+    expect(results.structures[0]).toHaveProperty(
+      'name',
+      mockGasket.config.docs.outputDir + '/'
+    );
     expect(results.structures[0]).toHaveProperty('description');
   });
 
@@ -58,6 +61,9 @@ describe('metadata', () => {
     delete mockGasket.config.docs;
     const results = metadata(mockGasket, mockMeta);
     expect(results).toBeInstanceOf(Object);
-    expect(results.structures[0]).toHaveProperty('name', defaultConfig.outputDir + '/');
+    expect(results.structures[0]).toHaveProperty(
+      'name',
+      DEFAULT_CONFIG.outputDir + '/'
+    );
   });
 });

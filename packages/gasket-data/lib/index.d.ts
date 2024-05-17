@@ -1,6 +1,9 @@
+import type { GasketDataIntl } from '@gasket/plugin-intl';
+
 declare module '@gasket/data' {
     export interface GasketData {
-        [key: string]: any;
+        config?: { [key: string | number]: string | undefined };
+        intl?: GasketDataIntl;
     }
 
     const gasketData: GasketData;

@@ -1,8 +1,12 @@
+/// <reference types="@gasket/cli" />
+/// <reference types="@gasket/plugin-git" />
 const { name, version } = require('../package.json');
-const { defaultConfig } = require('./configure');
 
-module.exports = function create(_gasket, { pkg, gasketConfig, gitignore }) {
-  gitignore?.add(defaultConfig.outputDir, 'Documentation');
+const { DEFAULT_CONFIG } = require('./utils/constants');
+
+/** @type {import('@gasket/core').HookHandler<'create'>} */
+module.exports = function create(gasket, { pkg, gasketConfig, gitignore }) {
+  gitignore?.add(DEFAULT_CONFIG.outputDir, 'Documentation');
   gasketConfig.addPlugin('pluginDocs', name);
   pkg.add('dependencies', {
     [name]: `^${version}`
