@@ -200,7 +200,7 @@ node ./gasket.js test-plugin-cmd 3 --groceryList "apple,banana,orange,grape"
 Utilize JSDoc types to provide type checking and documentation for the command arguments and options.
 
 ```js
-/* @type {import('@gasket/plugin-command').CommandHook} */
+/* @type {import('@gasket/plugin-command').CommandsHook} */
 commands() {}
 ```
 

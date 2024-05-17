@@ -92,7 +92,7 @@ export interface GasketCommandOption {
   required: boolean;
 }
 
-export type CommandHook = Hook<'commands'>;
+export type CommandsHook = Hook<'commands'>;
 
 export function processCommand(command: GasketCommandDefinition): GasketCommand;
 
