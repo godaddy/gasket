@@ -6,7 +6,6 @@ import { Option } from 'commander';
  * @returns {import('commander').Option} option
  */
 export function createOption(definition) {
-  // @ts-expect-error
   const option = new Option(...definition.options);
   const { defaultValue, conflicts, parse, hidden, required } = definition;
 

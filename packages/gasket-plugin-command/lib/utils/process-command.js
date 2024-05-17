@@ -34,7 +34,6 @@ export function processCommand(command) {
 
   if (args) {
     const cmdArgs = processArgs(args);
-    // @ts-expect-error
     cmdArgs.forEach(arg => cmd.argument(...arg));
   }
 

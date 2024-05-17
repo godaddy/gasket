@@ -1,6 +1,6 @@
 import type { MaybeAsync, GasketConfig, Hook } from '@gasket/core';
 import type { PluginData } from '@gasket/plugin-metadata';
-import type { Command } from 'commander';
+import type { Command, Option } from 'commander';
 
 export interface GasketCommandDefinition {
   /* Command id/name */
@@ -51,7 +51,7 @@ export type GasketArgDefinition = {
   default?: any;
 };
 
-export type GasketCommandArg = Array<string | boolean>;
+export type GasketCommandArg = Parameters<Command['argument']>
 
 export interface GasketOptionDefinition {
   /* Long option name */
@@ -84,7 +84,7 @@ export interface GasketOptionDefinition {
 
 /* Processed Option */
 export interface GasketCommandOption {
-  options: Array<string>;
+  options: ConstructorParameters<typeof Option>;
   conflicts: Array<string>;
   hidden: boolean;
   defaultValue: any | undefined;
