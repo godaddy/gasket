@@ -49,7 +49,7 @@ export default {
 
 Commands can be configured with options(flags), arugments, defaults, and parsing functions. The type definitions for the command configuration are also available.
 
-#### Arguments
+#### Example with arguments
 
 Add arguments to the command by adding an `args` array in the command definition.
 
@@ -95,7 +95,7 @@ node ./gasket.js test-plugin-cmd "Hello, World!" "Optional message"
 # result: test-plugin:optional Optional message
 ```
 
-#### Options
+#### Example with options
 
 Add options to the command by adding an `options` array in the command definition.
 
@@ -149,7 +149,7 @@ node ./gasket.js test-plugin-cmd --message "Hello, World!" --optional-message "O
 # result: test-plugin:optional Optional message
 ```
 
-#### Parsing Options
+#### Example with parsing function
 
 Add a `parse` function to the option to parse the value before it is passed to the action function.
 
