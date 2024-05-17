@@ -15,21 +15,22 @@ module.exports = {
     const { gitInit, dest: cwd } = context;
 
     if (gitInit) {
-      // Init a git repo
-      await runShellCommand('git', ['init'], { cwd });
+      try {
+        // Init a git repo
+        await runShellCommand('git', ['init'], { cwd });
 
-      // Use `main` branch
-      await runShellCommand('git', ['checkout', '-b', 'main'], { cwd });
+        // Use `main` branch
+        await runShellCommand('git', ['checkout', '-b', 'main'], { cwd });
 
-      // Add all files
-      await runShellCommand('git', ['add', '.'], { cwd });
+        // Add all files
+        await runShellCommand('git', ['add', '.'], { cwd });
 
-      // Create a commit
-      await runShellCommand(
-        'git',
-        ['commit', '-m', ':tada: Created new repository with gasket create'],
-        { cwd }
-      );
+        // Create a commit
+        await runShellCommand('git', ['commit', '-m', ':tada: Created new repository with gasket create'], { cwd });
+      } catch (err) {
+        const exists = err.stderr.includes('fatal: a branch named \'main\' already exists');
+        context.warnings.push(exists ? 'A branch named \'main\' already exists' : err.stderr);
+      }
     }
   }
 };

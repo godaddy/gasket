@@ -1,5 +1,8 @@
 # `@gasket/plugin-git`
 
+
+- Catch errors & log warning from initializing a git repo that already exists
+
 ### 6.40.0
 
 - Use `main` as default branch ([#598])
