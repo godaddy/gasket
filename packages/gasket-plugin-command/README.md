@@ -47,7 +47,7 @@ export default {
 };
 ```
 
-Commands can be configured with options(flags), arugments, defaults, and parsing functions. The type definitions for the command configuration are also available.
+Commands can be configured with options (flags), arguments, defaults, and parsing functions. The type definitions for the command configuration are also available.
 
 #### Example with arguments
 
