@@ -14,9 +14,7 @@ class WebpackMetricsPlugin {
    * @type {import('./internal').handleMetrics}
    */
   async handleMetrics(metrics) {
-    // TODO (crobbins): better expose gasket logging utilities to plugins to
-    // logging these errors more obvious to future plugin authors.
-    this.gasket.exec('metrics', metrics);
+    this.gasket.logger.debug('webpack metrics: ' + JSON.stringify(metrics, null, 2));
   }
 
   /**
@@ -83,7 +81,6 @@ class WebpackMetricsPlugin {
         time: Date.now()
       };
 
-      // TODO (crobbins): better expose gasket logging utilities to plugins to
       // logging these errors more obvious to future plugin authors.
       this.handleMetrics(metrics).catch(() => {});
     });

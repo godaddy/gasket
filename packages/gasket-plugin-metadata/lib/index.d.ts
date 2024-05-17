@@ -119,6 +119,12 @@ declare module '@gasket/core' {
   }
 
   export interface Gasket {
-    metadata: Metadata;
+    // TODO: do not attach to Gasket - switch to actions
+    metadata?: Metadata;
   }
 }
+
+export default {
+  name: '@gasket/plugin-metadata',
+  hooks: {}
+};

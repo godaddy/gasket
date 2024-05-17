@@ -78,3 +78,8 @@ export async function reduxMiddleware(
   res: OutgoingMessage,
   next: (err?: any) => void
 ): Promise<void>;
+
+export default {
+  name: '@gasket/plugin-redux',
+  hooks: {}
+};

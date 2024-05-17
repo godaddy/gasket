@@ -5,7 +5,7 @@ import type { GasketData } from '@gasket/data';
 
 export function filterSensitiveCookies(config: GasketConfig): function(Payload): Payload;
 
-interface ExtendedAgentConfigOptions extends AgentConfigOptions {
+export interface ExtendedAgentConfigOptions extends AgentConfigOptions {
   sensitiveCookies?: Array<string>;
 }
 
@@ -34,3 +34,8 @@ declare module '@gasket/core' {
     ): MaybeAsync<void>;
   }
 }
+
+export default {
+  name: '@gasket/plugin-elastic-apm',
+  hooks: {}
+};

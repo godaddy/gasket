@@ -2,7 +2,7 @@
   "name": "@gasket/plugin-fastify",
   "version": "7.0.0-next.25",
   "description": "Adds fastify support to your application",
-  "main": "lib",
+  "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
     "lib"

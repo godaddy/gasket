@@ -12,7 +12,6 @@ module.exports = async function configureEndpoint(gasket) {
   const cache = new LRU(cacheConfig);
   const cacheKeys = await getCacheKeys(gasket);
 
-  /** @type {import('../index').sw} */
   return async function sw(req, res) {
     const cacheKey = cacheKeys.reduce((acc, fn) => acc + fn(req, res), '_');
 

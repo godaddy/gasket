@@ -16,3 +16,8 @@ export interface DocusaurusConfig {
   port?: string;
   host?: string;
 }
+
+export default {
+  name: '@gasket/plugin-docusaurus',
+  hooks: {}
+};
