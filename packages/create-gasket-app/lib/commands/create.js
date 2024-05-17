@@ -103,6 +103,7 @@ const createCommand = {
  * @returns {Promise<void>} void
  */
 createCommand.action = async function run(appname, options, command) {
+  process.env.GASKET_ENV = 'create';
   const context = makeCreateContext([appname], options);
   const { rawPresets, localPresets } = context;
 
