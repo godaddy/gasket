@@ -9,7 +9,6 @@ const { webpackConfig } = require('./webpack-config');
 const middleware = require('./middleware');
 const express = require('./express');
 const fastify = require('./fastify');
-const build = require('./build');
 const workbox = require('./workbox');
 
 /** @type {import('@gasket/core').Plugin} */
@@ -40,7 +39,6 @@ const plugin = {
     express,
     fastify,
     apmTransaction,
-    build,
     workbox,
     metadata
   }

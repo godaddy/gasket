@@ -47,7 +47,6 @@ describe('Plugin', function () {
     const expected = [
       'actions',
       'apmTransaction',
-      'build',
       'configure',
       'create',
       'express',
@@ -292,44 +291,6 @@ describe('fastify hook', () => {
       res: mockRes,
       nextServer
     });
-  });
-});
-
-describe('build hook', () => {
-  let mockCreateConfigStub, mockBuilderStub;
-
-  const getMockedBuildHook = () => {
-    mockCreateConfigStub = jest.fn();
-    mockBuilderStub = jest.fn();
-
-    jest.mock('../lib/utils/config', () => ({
-      createConfig: mockCreateConfigStub
-    }));
-
-    jest.mock('next/dist/build', () => ({
-      default: mockBuilderStub
-    }));
-
-    return require('../lib/').hooks.build;
-  };
-
-  it('does not build for local command', async () => {
-    const buildHook = getMockedBuildHook();
-    await buildHook({ command: { id: 'local' } });
-    expect(mockBuilderStub).not.toHaveBeenCalled();
-  });
-
-  it('uses current next build', async () => {
-    const gasket = mockGasketApi();
-    const buildHook = getMockedBuildHook();
-    await buildHook({ ...gasket, command: { id: 'build' } });
-    expect(mockBuilderStub).toHaveBeenCalled();
-  });
-
-  it('supports older gasket.command format', async () => {
-    const buildHook = getMockedBuildHook();
-    await buildHook({ command: 'local' });
-    expect(mockBuilderStub).not.toHaveBeenCalled();
   });
 });
 
