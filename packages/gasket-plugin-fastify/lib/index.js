@@ -1,4 +1,4 @@
-/// <reference types="@gasket/cli" />
+/// <reference types="@gasket/core" />
 /// <reference types="@gasket/plugin-metadata" />
 
 const { peerDependencies, name } = require('../package.json');
