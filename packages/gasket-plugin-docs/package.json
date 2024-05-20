@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-docs",
-  "version": "7.0.0-next.26",
+  "version": "7.0.0-next.27",
   "description": "Centralize doc files from plugins and modules",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -49,8 +49,8 @@
     "rimraf": "^3.0.2"
   },
   "devDependencies": {
-    "@gasket/core": "^7.0.0-next.26",
-    "@gasket/plugin-metadata": "^7.0.0-next.26",
+    "@gasket/core": "^7.0.0-next.27",
+    "@gasket/plugin-metadata": "^7.0.0-next.27",
     "@godaddy/dmd": "^1.0.4",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
