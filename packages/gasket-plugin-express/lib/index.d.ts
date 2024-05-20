@@ -1,6 +1,8 @@
 import type { MaybeAsync, MaybeMultiple } from '@gasket/core';
 import type { Application, ErrorRequestHandler, Handler } from 'express';
 
+export type AppRoutes = Array<MaybeAsync<(app: Application) => void>>;
+
 declare module '@gasket/core' {
   export interface GasketConfig {
     express?: {
