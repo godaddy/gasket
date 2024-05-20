@@ -8,12 +8,8 @@
     "lib"
   ],
   "exports": {
-    ".": {
-      "require": "./lib/index.js"
-    },
-    "./server": {
-      "require": "./lib/server.js"
-    }
+    ".": "./lib/index.js",
+    "./server": "./lib/server/index.js"
   },
   "scripts": {
     "lint": "eslint .",
