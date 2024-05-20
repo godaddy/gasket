@@ -1,6 +1,6 @@
 {
   "name": "@gasket/react-intl",
-  "version": "7.0.0-next.25",
+  "version": "7.0.0-next.26",
   "description": "React component library to enable localization for gasket apps.",
   "main": "lib",
   "browser": "lib",
@@ -46,9 +46,9 @@
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-react-intl",
   "dependencies": {
     "@babel/runtime": "^7.23.8",
-    "@gasket/data": "^7.0.0-next.25",
-    "@gasket/fetch": "^7.0.0-next.25",
-    "@gasket/helper-intl": "^7.0.0-next.25",
+    "@gasket/data": "^7.0.0-next.26",
+    "@gasket/fetch": "^7.0.0-next.26",
+    "@gasket/helper-intl": "^7.0.0-next.26",
     "hoist-non-react-statics": "^3.3.2",
     "just-extend": "^6.2.0"
   },
