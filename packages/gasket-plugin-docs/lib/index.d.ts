@@ -1,4 +1,5 @@
-import type { MaybeAsync, Plugin } from '@gasket/core';
+import type { MaybeAsync, Plugin, GasketConfig } from '@gasket/core';
+import type { GasketCommandDefinition } from '@gasket/plugin-command';
 
 import type {
   DocsConfigSet,
@@ -14,6 +15,10 @@ declare module '@gasket/core' {
   }
 
   export interface HookExecTypes {
+    configure(config: GasketConfig): GasketConfig
+
+    commands(): GasketCommandDefinition;
+
     docsSetup(args: { defaults: DocsSetup }): MaybeAsync<DocsSetup>;
 
     docsView(docs: DocsConfigSet): MaybeAsync<void>;
