@@ -43,7 +43,7 @@
     "@gasket/helper-intl": "^7.0.0-next.26",
     "@gasket/nextjs": "^7.0.0-next.26",
     "@gasket/plugin-analyze": "^7.0.0-next.26",
-    "@gasket/plugin-command": "^7.1.1-canary.1",
+    "@gasket/plugin-command": "^7.0.0-next.26",
     "@gasket/plugin-cypress": "^7.0.0-next.26",
     "@gasket/plugin-docs": "^7.0.0-next.26",
     "@gasket/plugin-docs-graphs": "^7.0.0-next.26",
