@@ -42,6 +42,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-docs",
   "dependencies": {
+    "@gasket/plugin-command": "^7.0.0-next.25",
     "glob": "^8.1.0",
     "lodash.defaultsdeep": "^4.6.1",
     "markdown-table": "^1.1.3",
