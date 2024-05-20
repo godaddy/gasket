@@ -14,7 +14,6 @@ describe('utils - sorts', () => {
         '@user/aaa',
         '@user/gasket-preset-a',
         'gasket-plugin-a',
-        '@gasket/cli',
         '@user/gasket-plugin-a',
         '@gasket/plugin-b',
         'aaa',
@@ -28,7 +27,6 @@ describe('utils - sorts', () => {
         '@gasket/plugin-a',
         '@gasket/plugin-b',
         '@gasket/aaa',
-        '@gasket/cli',
         '@user/gasket-preset-a',
         '@user/gasket-plugin-a',
         '@user/gasket-plugin-b',
@@ -59,7 +57,6 @@ describe('utils - sorts', () => {
         '@user/aaa',
         '@user/gasket-preset-a',
         'gasket-plugin-a',
-        '@gasket/cli',
         '@user/gasket-plugin-a',
         '@gasket/plugin-b',
         'aaa',
@@ -69,7 +66,6 @@ describe('utils - sorts', () => {
       ];
 
       const expected = [
-        '@gasket/cli',
         '@gasket/preset-a',
         '@gasket/plugin-a',
         '@gasket/plugin-b',
