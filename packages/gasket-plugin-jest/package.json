@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-jest",
-  "version": "7.0.0-next.25",
+  "version": "7.0.0-next.26",
   "description": "Integrated jest into your application.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
