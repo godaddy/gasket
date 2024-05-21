@@ -1,6 +1,5 @@
 # `@gasket/preset-nextjs`
 
-- Added prompt to make redux optional ([#762])
 - Convert to ESM ([#736])
 - Add preset hooks `presetPrompt` and `presetConfig`
 - Add tests
