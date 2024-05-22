@@ -1,6 +1,6 @@
 {
   "name": "@gasket/redux",
-  "version": "7.0.0-next.27",
+  "version": "7.0.0-next.28",
   "description": "Gasket Redux Configuration",
   "main": "lib",
   "browser": "lib",
