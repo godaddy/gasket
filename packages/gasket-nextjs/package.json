@@ -8,8 +8,14 @@
     "lib"
   ],
   "exports": {
-    ".": "./lib/index.js",
-    "./server": "./lib/server/index.js"
+    ".": {
+      "default": "./lib/index.js",
+      "types": "./src/index.d.ts"
+    },
+    "./server": {
+      "default": "./lib/server/index.js",
+      "types": "./src/server/index.d.ts"
+    }
   },
   "scripts": {
     "lint": "eslint .",
