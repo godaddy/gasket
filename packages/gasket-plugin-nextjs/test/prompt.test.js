@@ -52,7 +52,6 @@ describe('prompt hook', () => {
   it('does not run prompt if prompts are in context', async () => {
     context.addSitemap = false;
     context.nextServerType = false;
-    context.useRedux = false;
     const result = await promptHook(gasket, context, { prompt });
     expect(result).toHaveProperty('addSitemap', false);
     expect(prompt).not.toHaveBeenCalled();
