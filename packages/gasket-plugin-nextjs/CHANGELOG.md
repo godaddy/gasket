@@ -1,6 +1,6 @@
 # `@gasket/plugin-nextjs`
 
-- Added prompt to make redux optional ([#762])
+- Added redux optional flag ([#762])
 - Add plugin import to gasket file ([#736])
 - Add itself to the app package file ([#736])
 - Add generator files `next.config.js` & `server.js` ([#736])

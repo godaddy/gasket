@@ -49,25 +49,44 @@ class ReduxReducers {
  * lifecycle.
  * @type {import('@gasket/core').HookHandler<'prompt'>}
  */
-module.exports = function prompt(gasket, context) {
-  const reduxReducers = new ReduxReducers();
-
-  // These getters are used in the handlebars template and cannot be on the
-  // prototype @see:
-  // https://handlebarsjs.com/api-reference/runtime-options.html#options-to-control-prototype-access
-  Object.defineProperties(reduxReducers, {
-    entries: {
-      get() {
-        const indent = '  ';
-        return indent + this._entries.join(',\n' + indent);
+module.exports = async function promptHook(gasket, context, { prompt }) {
+  if (!('useRedux' in context)) {
+    const { useRedux } = await prompt([
+      {
+        name: 'useRedux',
+        message: 'Do you want to use Redux?',
+        type: 'confirm',
+        default: false
       }
-    },
-    imports: {
-      get() {
-        return this._imports.join('\n');
-      }
-    }
-  });
+    ]);
 
-  return { ...context, reduxReducers };
+    context.useRedux = useRedux;
+  }
+
+
+  if (context.useRedux) {
+    const reduxReducers = new ReduxReducers();
+
+    // These getters are used in the handlebars template and cannot be on the
+    // prototype @see:
+    // https://handlebarsjs.com/api-reference/runtime-options.html#options-to-control-prototype-access
+    Object.defineProperties(reduxReducers, {
+      entries: {
+        get() {
+          const indent = '  ';
+          return indent + this._entries.join(',\n' + indent);
+        }
+      },
+      imports: {
+        get() {
+          return this._imports.join('\n');
+        }
+      }
+    });
+
+    context.reduxReducers = reduxReducers;
+  }
+
+
+  return context;
 };
