@@ -53,9 +53,8 @@ describe('gasket-plugin-typescript', () => {
     it('adds devDependencies to package.json', () => {
       plugin.hooks.create({}, mockContext);
       expect(mockContext.pkg.add).toHaveBeenCalledWith('devDependencies', {
-        '@tsconfig/node20': devDependencies['@tsconfig/node20'],
-        'tsx': devDependencies.tsx,
-        'typescript': devDependencies.typescript
+        tsx: devDependencies.tsx,
+        typescript: devDependencies.typescript
       });
     });
 
