@@ -319,7 +319,6 @@ function setupTypes(pkgJson) {
   const packagesToSkip = [
     'create-gasket-app',
     '@gasket/assets',
-    '@gasket/cli',
     '@gasket/engine',
     '@gasket/log',
     '@gasket/plugin-command',

@@ -6,7 +6,7 @@ const { readFile } = require('fs/promises');
 const currentTime = 1711147722892;
 const eightDaysBeforeCurrentTime = 1710456522892;
 const oneDayBeforeCurrentTime = 1711061322892;
-const pkgName = '@gasket/cli';
+const pkgName = '@gasket/core';
 const currentVersion = '1.1.0';
 const latestVersion = '1.2.0';
 
@@ -51,7 +51,7 @@ describe('warnIfOutdated', function () {
       await warnIfOutdated(pkgName, currentVersion);
       const strippedAnsiWarnLog = stripAnsi(consoleWarnSpy.mock.calls[0][0]);
 
-      expect(strippedAnsiWarnLog.includes('@gasket/cli update available from 1.2.0 to 1.1.0')).toBe(true);
+      expect(strippedAnsiWarnLog.includes('@gasket/core update available from 1.2.0 to 1.1.0')).toBe(true);
     });
 
     it('does not log a warning if not outdated', async function () {
@@ -78,7 +78,7 @@ describe('warnIfOutdated', function () {
       await warnIfOutdated(pkgName, currentVersion);
       const strippedAnsiWarnLog = stripAnsi(consoleWarnSpy.mock.calls[0][0]);
 
-      expect(strippedAnsiWarnLog.includes('@gasket/cli update available from 1.2.0 to 1.1.0')).toBe(true);
+      expect(strippedAnsiWarnLog.includes('@gasket/core update available from 1.2.0 to 1.1.0')).toBe(true);
     });
 
     it('does not log a warning if the cache version is not outdated', async function () {
@@ -96,7 +96,7 @@ describe('warnIfOutdated', function () {
       await warnIfOutdated(pkgName, currentVersion);
       const strippedAnsiWarnLog = stripAnsi(consoleWarnSpy.mock.calls[0][0]);
 
-      expect(strippedAnsiWarnLog.includes('@gasket/cli update available from 1.2.0 to 1.1.0')).toBe(true);
+      expect(strippedAnsiWarnLog.includes('@gasket/core update available from 1.2.0 to 1.1.0')).toBe(true);
       expect(runShellCommand).toHaveBeenCalledWith('npm', ['view', pkgName, 'version'], {});
     });
 
@@ -107,7 +107,7 @@ describe('warnIfOutdated', function () {
       await warnIfOutdated(pkgName, currentVersion);
       const strippedAnsiWarnLog = stripAnsi(consoleWarnSpy.mock.calls[0][0]);
 
-      expect(strippedAnsiWarnLog.includes('@gasket/cli update available from 1.2.0 to 1.1.0')).toBe(true);
+      expect(strippedAnsiWarnLog.includes('@gasket/core update available from 1.2.0 to 1.1.0')).toBe(true);
       expect(runShellCommand).toHaveBeenCalledWith('npm', ['view', pkgName, 'version'], {});
     });
 
@@ -118,7 +118,7 @@ describe('warnIfOutdated', function () {
       await warnIfOutdated(pkgName, currentVersion);
       const strippedAnsiWarnLog = stripAnsi(consoleWarnSpy.mock.calls[0][0]);
 
-      expect(strippedAnsiWarnLog.includes('@gasket/cli update available from 1.2.0 to 1.1.0')).toBe(true);
+      expect(strippedAnsiWarnLog.includes('@gasket/core update available from 1.2.0 to 1.1.0')).toBe(true);
       expect(runShellCommand).toHaveBeenCalledWith('npm', ['view', pkgName, 'version'], {});
     });
   });

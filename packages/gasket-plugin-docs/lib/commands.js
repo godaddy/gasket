@@ -1,4 +1,4 @@
-/// <reference types="@gasket/cli" />
+/// <reference types="@gasket/core" />
 
 const buildDocsConfigSet = require('./utils/build-config-set');
 const collateFiles = require('./utils/collate-files');

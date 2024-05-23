@@ -1,4 +1,4 @@
-/// <reference types="@gasket/cli" />
+/// <reference types="@gasket/core" />
 
 const { runShellCommand } = require('@gasket/utils');
 
