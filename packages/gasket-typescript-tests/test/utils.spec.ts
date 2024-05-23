@@ -1,4 +1,4 @@
-import { applyConfigOverrides, runShellCommand, tryRequire } from '@gasket/utils';
+import { applyConfigOverrides, runShellCommand } from '@gasket/utils';
 import { GasketConfig, GasketConfigDefinition } from '@gasket/core';
 
 describe('@gasket/utils', function () {
@@ -32,14 +32,6 @@ describe('@gasket/utils', function () {
         results = runShellCommand('cmd');
         results = runShellCommand('cmd', ['--flag']);
         results = runShellCommand('cmd', [], { signal: new AbortController().signal });
-      }
-    });
-  });
-
-  describe('tryRequire', function () {
-    it('has expected API', function () {
-      if (perform) {
-        const results: object | null = tryRequire('path/to/module');
       }
     });
   });

@@ -53,20 +53,6 @@ export interface PackageManager {
   info(args?: Array<string>): Promise<{ data: any; stdout: string }>;
 }
 
-/**
- * Tries to require a module, but ignores if it is not found. If not found,
- * result will be null.
- * @example
- * const { tryRequire } = require('@gasket/utils');
- *
- *  let someConfig = tryRequire('../might/be/a/path/to/some/file');
- *
- *  if(!someConfig) {
- *   someConfig = require('./default-config')
- * }
- */
-export function tryRequire(path: string): object | null;
-
 interface ConfigContext {
   /** Name of environment */
   env: string;

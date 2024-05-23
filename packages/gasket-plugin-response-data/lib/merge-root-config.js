@@ -1,6 +1,6 @@
 const defaultsDeep = require('lodash.defaultsdeep');
 const path = require('path');
-const { tryRequire, applyConfigOverrides } = require('@gasket/utils');
+const { applyConfigOverrides } = require('@gasket/utils');
 
 /**
  * Loads the root ./app.config.js if it exists and applies env overrides.
@@ -12,7 +12,16 @@ const { tryRequire, applyConfigOverrides } = require('@gasket/utils');
  */
 module.exports = function mergeRootConfig(gasket, appConfig = {}) {
   const { command: { id: commandId }, config: { env, root } } = gasket;
-  const config = tryRequire(path.join(gasket.config.root, './gasket-data.config'));
+  let config;
+
+  try {
+    config = require(path.join(gasket.config.root, './gasket-data.config'));
+  } catch (err) {
+    if (err.code !== 'MODULE_NOT_FOUND') {
+      throw err;
+    }
+  }
+
   if (config) {
     return applyConfigOverrides(
       defaultsDeep({}, appConfig, config),
