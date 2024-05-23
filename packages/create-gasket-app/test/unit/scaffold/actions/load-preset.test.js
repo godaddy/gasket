@@ -10,9 +10,8 @@ jest.mock('@gasket/utils', () => {
   return {
     PackageManager: class MockPackageManager {
       constructor({ packageManager, dest }) {
-        this.packageManager = packageManager;
+        this.manager = packageManager;
         this.dest = dest;
-        this.isYarn = packageManager === 'yarn';
         mockConstructorStub(...arguments);
       }
       async exec() {
