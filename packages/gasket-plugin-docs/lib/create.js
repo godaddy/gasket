@@ -1,4 +1,4 @@
-/// <reference types="@gasket/cli" />
+/// <reference types="@gasket/core" />
 /// <reference types="@gasket/plugin-git" />
 const { name, version } = require('../package.json');
 

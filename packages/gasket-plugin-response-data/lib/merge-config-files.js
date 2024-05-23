@@ -1,6 +1,5 @@
 const path = require('path');
 const merge = require('lodash.merge');
-const { tryRequire } = require('@gasket/utils');
 
 module.exports = function loadConfig(gasket) {
   const { root, env, gasketDataDir = 'gasket-data' } = gasket.config;
@@ -25,6 +24,15 @@ module.exports = function loadConfig(gasket) {
   const configDir = path.resolve(root, gasketDataDir);
 
   return configChain.reduce((result, name) => {
-    return merge(result, tryRequire(path.resolve(configDir, name)));
+    let config;
+    try {
+      config = require(path.resolve(configDir, name));
+    } catch (err) {
+      if (err.code !== 'MODULE_NOT_FOUND') {
+        throw err;
+      }
+    }
+
+    return merge(result, config);
   }, {});
 };

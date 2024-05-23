@@ -3,8 +3,6 @@ describe('index', () => {
     const utils = require('../lib');
 
     const expected = [
-      'tryRequire',
-      'tryResolve',
       'applyConfigOverrides',
       'runShellCommand',
       'PackageManager',

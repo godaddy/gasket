@@ -1,4 +1,4 @@
-/// <reference types="@gasket/cli" />
+/// <reference types="@gasket/core" />
 
 const deepmerge = require('deepmerge');
 const path = require('path');
