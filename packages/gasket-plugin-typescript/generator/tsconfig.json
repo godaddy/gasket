@@ -1,28 +1,31 @@
 {
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": [
+    "@tsconfig/node20/tsconfig.json"
+  ],
   "compilerOptions": {
-    "outDir": "./dist",
-    "noImplicitAny": true,
-    "target": "ES5",
+    "skipLibCheck": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "target": "ESNext",
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "outDir": "dist",
     "lib": [
       "esnext"
     ],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": false,
-    "forceConsistentCasingInFileNames": true,
-    "incremental": true,
-    "esModuleInterop": true,
-    "module": "nodenext",
-    "moduleResolution": "NodeNext",
-    "resolveJsonModule": true,
-    "isolatedModules": true
+    "types": [
+      "node"
+    ],
+    "baseUrl": "./"
   },
-  "include": [
-    "routes",
-    "plugins",
-    "*.ts"
-  ],
   "exclude": [
     "node_modules"
+  ],
+  "include": [
+    "./routes",
+    "./plugins",
+    "server.ts",
+    "gasket.ts"
   ]
 }

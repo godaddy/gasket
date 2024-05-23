@@ -1,3 +1,4 @@
-import gasket from './gasket';
+import gasket from './gasket.js';
 
-void gasket.actions.startServer();
+if (gasket.actions.startServer)
+  void gasket.actions.startServer();
