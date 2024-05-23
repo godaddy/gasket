@@ -1,6 +1,6 @@
 {
   "name": "@gasket/nextjs",
-  "version": "7.0.0-next.27",
+  "version": "7.0.0-next.29",
   "description": "Gasket integrations for Next.js apps",
   "types": "src/index.d.ts",
   "files": [
@@ -8,8 +8,14 @@
     "lib"
   ],
   "exports": {
-    ".": "./lib/index.js",
-    "./server": "./lib/server/index.js"
+    ".": {
+      "types": "./src/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./server": {
+      "types": "./src/server/index.d.ts",
+      "default": "./lib/server/index.js"
+    }
   },
   "scripts": {
     "lint": "eslint .",
@@ -44,7 +50,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-nextjs",
   "dependencies": {
-    "@gasket/data": "^7.0.0-next.27",
+    "@gasket/data": "^7.0.0-next.29",
     "htmlescape": "^1.1.1"
   },
   "devDependencies": {
