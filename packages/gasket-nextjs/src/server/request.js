@@ -2,11 +2,7 @@ import { cookies, headers } from 'next/headers';
 
 const reqCache = new Map();
 
-/**
- * Get a request-like object unique to the current request in server components.
- * @param {Object} [query] - Optional query parameters to include in the request
- * @returns {Request} - Request-like object
- */
+/** @type {import('.').request} */
 export function request(query) {
   const headerStore = headers();
 

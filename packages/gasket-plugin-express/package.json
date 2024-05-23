@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-express",
-  "version": "7.0.0-next.27",
+  "version": "7.0.0-next.29",
   "description": "Adds express support to your application",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -50,7 +50,7 @@
     "http2-express-bridge": "^1.0.7"
   },
   "devDependencies": {
-    "@gasket/core": "^7.0.0-next.27",
+    "@gasket/core": "^7.0.0-next.29",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
     "eslint-config-godaddy": "^7.1.0",
