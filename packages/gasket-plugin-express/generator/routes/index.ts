@@ -1,4 +1,4 @@
-import { AppRoutes } from './../../lib/index.d';
+import { AppRoutes } from '@gasket/plugin-express';
 import type { Application, Request, Response } from 'express';
 
 export const routes: AppRoutes = [
