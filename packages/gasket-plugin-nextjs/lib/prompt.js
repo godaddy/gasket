@@ -49,18 +49,5 @@ module.exports = async function promptHook(gasket, context, { prompt }) {
     newContext.addSitemap = addSitemap;
   }
 
-  if (!('useRedux' in context)) {
-    const { useRedux } = await prompt([
-      {
-        name: 'useRedux',
-        message: 'Do you want to use Redux?',
-        type: 'confirm',
-        default: false
-      }
-    ]);
-
-    newContext.useRedux = useRedux;
-  }
-
   return newContext;
 };
