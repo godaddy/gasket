@@ -5,7 +5,7 @@
 /// <reference types="@gasket/plugin-fastify" />
 /// <reference types="@gasket/plugin-metadata" />
 /// <reference types="@gasket/plugin-logger" />
-/// <reference types="@gasket/cli" />
+/// <reference types="@gasket/core" />
 
 
 const path = require('path');

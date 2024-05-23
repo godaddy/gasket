@@ -100,10 +100,6 @@ declare module '@gasket/core' {
 
   export interface HookExecTypes {
 
-    configure(config: GasketConfig): void;
-
-    metadata(origData: PluginData): MaybeAsync<PluginData>;
-
     commands(): GasketCommandDefinition;
   }
 }

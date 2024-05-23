@@ -64,7 +64,7 @@ module.exports = {
           parent: 'init'
         }],
         modules: [
-          '@gasket/cli'
+          '@gasket/core'
         ]
       };
     }

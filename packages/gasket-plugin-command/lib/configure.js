@@ -15,4 +15,6 @@ export default function configure(gasket, config) {
 
     gasketBin.parse();
   }
+
+  return config;
 }
