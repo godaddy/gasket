@@ -18,7 +18,7 @@ async function setupPkg({ context }) {
     name: appName,
     version: '0.0.0',
     description: appDescription,
-    type: context.typescript ? 'commonjs' : 'module'
+    type: 'module'
   }, { warnings });
 
   // Add critical dependencies

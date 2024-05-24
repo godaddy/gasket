@@ -1,5 +1,3 @@
-import { GasketConfig } from '@gasket/core';
-
 declare module '@gasket/core' {
   export type MaybeMultiple<T> = T | Array<T>;
   export type MaybeAsync<T> = T | Promise<T>;
