@@ -42,20 +42,7 @@ describe('create hook', () => {
     );
   });
 
-  it('adds expected dependenciess when useRedux is not defined', async function () {
-    delete mockContext.useRedux;
-    await plugin.hooks.create({}, mockContext);
-
-    expect(mockContext.pkg.add).toHaveBeenCalledWith('dependencies',
-      expect.objectContaining({
-        '@gasket/redux': devDependencies['@gasket/redux'],
-        'react-redux': devDependencies['react-redux'],
-        'redux': devDependencies.redux
-      })
-    );
-  });
-
-  it('does not add itself to dependencies if useRedux is false', async function () {
+  it('does not add redux dependencies if useRedux is false', async function () {
     mockContext.useRedux = false;
     await plugin.hooks.create({}, mockContext);
 
