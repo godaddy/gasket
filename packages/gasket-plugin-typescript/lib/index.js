@@ -8,9 +8,8 @@ module.exports = {
       const { pkg, files } = context;
 
       pkg.add('devDependencies', {
-        '@tsconfig/node20': devDependencies['@tsconfig/node20'],
-        'tsx': devDependencies.tsx,
-        'typescript': devDependencies.typescript
+        tsx: devDependencies.tsx,
+        typescript: devDependencies.typescript
       });
 
       pkg.add('scripts', {
