@@ -76,6 +76,7 @@ declare module 'create-gasket-app' {
     nextServerType: 'defaultServer' | 'customServer';
     nextDevProxy: boolean;
     typescript: boolean;
+    useRedux: boolean;
   }
 }
 
