@@ -91,11 +91,7 @@ describe('create hook', () => {
   });
 
   it('adds the appropriate globs for redux', async function () {
-    mockContext.pkg.has = jest
-      .fn()
-      .mockImplementation(
-        (o, f) => o === 'dependencies' && f === '@gasket/redux'
-      );
+    mockContext.useRedux = true;
     await plugin.hooks.create.handler({}, mockContext);
 
     expect(mockContext.files.add).toHaveBeenCalledWith(
@@ -105,17 +101,27 @@ describe('create hook', () => {
   });
 
   it('adds appropriate dependencies for redux', async function () {
-    mockContext.pkg.has = jest
-      .fn()
-      .mockImplementation(
-        (o, f) => o === 'dependencies' && f === '@gasket/redux'
-      );
+    mockContext.useRedux = true;
     await plugin.hooks.create.handler({}, mockContext);
 
     expect(mockContext.pkg.add).toHaveBeenCalledWith('dependencies', {
       'next-redux-wrapper': devDependencies['next-redux-wrapper'],
       'lodash.merge': devDependencies['lodash.merge']
     });
+  });
+
+  it('does not add dependencies or globs for redux', async function () {
+    mockContext.useRedux = false;
+    await plugin.hooks.create.handler({}, mockContext);
+
+    expect(mockContext.pkg.add).not.toHaveBeenCalledWith('dependencies', {
+      'next-redux-wrapper': devDependencies['next-redux-wrapper'],
+      'lodash.merge': devDependencies['lodash.merge']
+    });
+    expect(mockContext.files.add).not.toHaveBeenCalledWith(
+      `${root}/../generator/redux/*`,
+      `${root}/../generator/redux/**/*`
+    );
   });
 
   it('adds appropriate dependencies for sitemap', async function () {

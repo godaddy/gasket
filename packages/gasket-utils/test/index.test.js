@@ -6,7 +6,8 @@ describe('index', () => {
       'applyConfigOverrides',
       'runShellCommand',
       'PackageManager',
-      'warnIfOutdated'
+      'warnIfOutdated',
+      'getPackageLatestVersion'
     ];
 
     expect(expected.every(k => k in utils)).toBe(true);

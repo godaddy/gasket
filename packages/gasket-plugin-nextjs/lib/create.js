@@ -167,7 +167,8 @@ module.exports = {
       addSitemap,
       nextServerType,
       nextDevProxy,
-      typescript
+      typescript,
+      useRedux
     } = context;
     const generatorDir = `${__dirname}/../generator`;
 
@@ -178,7 +179,7 @@ module.exports = {
     addNpmScripts({ pkg, nextServerType, nextDevProxy, typescript });
     addConfig(context);
     if (addSitemap) configureSitemap({ files, pkg, generatorDir });
-    if (pkg.has('dependencies', '@gasket/redux')) addRedux({ files, pkg, generatorDir });
+    if (useRedux) addRedux({ files, pkg, generatorDir });
     // TODO - remove with typecheck solution
     return;
   }
