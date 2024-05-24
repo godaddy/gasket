@@ -1,6 +1,6 @@
 {
   "name": "@gasket/preset-pwa",
-  "version": "7.0.0-next.29",
+  "version": "7.0.0-next.30",
   "description": "Turn Gasket apps into Progressive Web Apps",
   "main": "lib",
   "types": "lib/index.d.ts",
@@ -30,13 +30,13 @@
     "url": "https://github.com/godaddy/gasket/issues"
   },
   "dependencies": {
-    "@gasket/plugin-jest": "^7.0.0-next.29",
-    "@gasket/plugin-lint": "^7.0.0-next.29",
-    "@gasket/plugin-manifest": "^7.0.0-next.29",
-    "@gasket/plugin-mocha": "^7.0.0-next.29",
-    "@gasket/plugin-service-worker": "^7.0.0-next.29",
-    "@gasket/plugin-typescript": "^7.0.0-next.29",
-    "@gasket/plugin-workbox": "^7.0.0-next.29"
+    "@gasket/plugin-jest": "^7.0.0-next.30",
+    "@gasket/plugin-lint": "^7.0.0-next.30",
+    "@gasket/plugin-manifest": "^7.0.0-next.30",
+    "@gasket/plugin-mocha": "^7.0.0-next.30",
+    "@gasket/plugin-service-worker": "^7.0.0-next.30",
+    "@gasket/plugin-typescript": "^7.0.0-next.30",
+    "@gasket/plugin-workbox": "^7.0.0-next.30"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
