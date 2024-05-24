@@ -48,6 +48,7 @@ describe('Plugin', () => {
     it('adds the expected dependencies', async function () {
       const { devDependencies } = require('../package');
       const spy = {
+        useRedux: true,
         pkg: { add: jest.fn() },
         files: { add: jest.fn() }
       };
@@ -62,6 +63,7 @@ describe('Plugin', () => {
 
     it('adds the expected files', async function () {
       const spy = {
+        useRedux: true,
         pkg: { add: jest.fn() },
         files: { add: jest.fn() }
       };

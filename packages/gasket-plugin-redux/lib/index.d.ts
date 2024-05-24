@@ -48,6 +48,7 @@ declare module 'create-gasket-app' {
   export interface CreateContext {
     hasGasketRedux?: boolean;
     reduxReducers?: ReduxReducers;
+    useRedux?: boolean;
   }
 }
 
