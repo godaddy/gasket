@@ -153,3 +153,5 @@ export interface ConfigContext {
 
 
 export function warnIfOutdated(pkgName: string, currentVersion: string): MaybeAsync<void>;
+
+export function getPackageLatestVersion(pkgName: string, options?: object): Promise<string>;
