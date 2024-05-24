@@ -1,5 +1,7 @@
 import { Command } from 'commander';
-import { processArgs, processOptions, createOption } from './index.js';
+import { processArgs } from './process-args.js';
+import { processOptions } from './process-options.js';
+import { createOption } from './create-option.js';
 const program = new Command();
 
 /**
