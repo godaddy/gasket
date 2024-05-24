@@ -15,7 +15,7 @@ module.exports = {
       pkg.add('scripts', {
         build: 'tsc',
         start: 'node dist/server.js',
-        local: 'tsx watch server.ts'
+        local: 'GASKET_ENV=local tsx watch server.ts'
       });
 
       files.add(
