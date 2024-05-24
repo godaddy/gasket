@@ -1,10 +1,8 @@
 const runShellCommand = require('./run-shell-command');
 
 /**
- *
- * @param {string} pkgName - package name
- * @param {object} options - options object
- * @returns {Promise<string>} - latest version of the package
+ * Get the latest version of a package from npm
+ * @type {import('./index').getPackageLatestVersion}
  */
 module.exports = async function getPackageLatestVersion(pkgName, options = {}) {
   const cmdResult = await runShellCommand('npm', ['view', pkgName, 'version'], options);

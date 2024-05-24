@@ -97,7 +97,6 @@ describe('warnIfOutdated', function () {
       getPackageLatestVersion.mockResolvedValueOnce(latestVersion);
 
       await warnIfOutdated(pkgName, currentVersion);
-      console.log('consoleWarnSpy.mock.calls[0][0]', consoleWarnSpy.mock.calls[0][0])
       const strippedAnsiWarnLog = stripAnsi(consoleWarnSpy.mock.calls[0][0]);
 
       expect(strippedAnsiWarnLog.includes('@gasket/core update available from 1.2.0 to 1.1.0')).toBe(true);
