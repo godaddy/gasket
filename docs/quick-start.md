@@ -5,14 +5,14 @@
 To get started, you will need to install the `gasket` command.
 
 ```bash
-npm i -g @gasket/cli
+npm i -g create-gasket-app
 ```
 
-Now you can create gasket apps with the `gasket create` command and the preset
+Now you can create gasket apps with the `create-gasket-app` command and the preset
 you would like to use. In this example we will create a Next.js app.
 
 ```bash
-gasket create your-app-name --presets @gasket/preset-nextjs
+create-gasket-app --presets @gasket/preset-nextjs
 ```
 
 This will create a new directory with the name of your app.
@@ -26,27 +26,15 @@ cd ./your-app-name
 From here, you can start your app in local development mode:
 
 ```bash
-gasket local
+npm run local
 ```
 
 Otherwise you can build and start your app directly:
 
 ```bash
-gasket build
-gasket start --env local
+npm run build
+npm run start --env local
 ```
-
-You can use `gasket help` to see what other commands are available in your app.
-
-For new apps, it is recommended to add additional plugins during `gasket create`
-which may not be in the preset. For example, if you want the `gasket docs`
-command in the app, you could specify the additional plugins as:
-
-```bash
-gasket create your-app-name --presets @gasket/nextjs --plugins @gasket/docs,@gasket/docusaurus
-```
-
-Notice also, that you can use [short-hand names] for presets and plugins here.
 
 ## Config
 
@@ -57,29 +45,30 @@ First, install the necessary node modules:
 npm i @gasket/plugin-docs @gasket/plugin-docusaurus
 ```
 
-Then, in the app's `gasket.config.js`, add the plugins:
+Then, in the app's `gasket.js`, add the plugins:
 
 ```diff
-module.exports = {
-  plugins: {
-    presets: [
-      '@gasket/nextjs',
-+    ],
-+    add: [
-+      '@gasket/docs',
-+      '@gasket/docusaurus'
-    ]
-  }
-};
+import { makeGasket } from '@gasket/core';
++import pluginDocs from '@gasket/plugin-docs';
++import pluginDocusaurus from '@gasket/plugin-docusaurus';
+
+export default makeGasket({
+  plugins: [
+    // other plugins
++    pluginDocs,
++    pluginDocusaurus
+  ]
+});
 ```
 
 Now, when you run the docs command, a site will open in your default browser
-with docs for what is configured in your app.
+with docs for what is configured in your app. See the [@gasket/plugin-command] documentation for more information about Gasket commands.
 
 ```bash
-gasket docs
+node gasket.js docs
 ```
 
 <!-- LINKS -->
 
-[short-hand names]:/packages/gasket-resolve/README.md#naming-convention
+
+[@gasket/plugin-command]: ./packages/gasket-plugin-command/README.md

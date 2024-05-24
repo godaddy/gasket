@@ -42,8 +42,7 @@
     "winston": "^3.11.0"
   },
   "devDependencies": {
-    "@gasket/cli": "^7.0.0-next.29",
-    "@gasket/core": "^7.0.0-next.29",
+    "@gasket/core": "^7.0.0-next.26",
     "babel-eslint": "^10.1.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",

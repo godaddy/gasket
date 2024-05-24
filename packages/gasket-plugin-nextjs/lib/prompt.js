@@ -1,4 +1,4 @@
-/// <reference types="@gasket/cli" />
+/// <reference types="@gasket/core" />
 
 /** @type {import('@gasket/core').HookHandler<'prompt'>} */
 module.exports = async function promptHook(gasket, context, { prompt }) {

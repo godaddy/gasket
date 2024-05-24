@@ -1,4 +1,4 @@
-/// <reference types="@gasket/cli" />
+/// <reference types="@gasket/core" />
 
 const debug = require('debug')('gasket:plugin:intl:init');
 

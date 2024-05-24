@@ -1,4 +1,4 @@
-/// <reference types="@gasket/cli" />
+/// <reference types="@gasket/core" />
 /// <reference types="@gasket/plugin-docs" />
 /// <reference types="@gasket/plugin-logger" />
 
