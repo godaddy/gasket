@@ -63,7 +63,7 @@ describe('gasket-plugin-typescript', () => {
       expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts', {
         build: 'tsc',
         start: 'node dist/server.js',
-        local: 'tsx watch server.ts'
+        local: 'GASKET_ENV=local tsx watch server.ts'
       });
     });
 
