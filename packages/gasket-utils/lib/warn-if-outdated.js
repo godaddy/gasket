@@ -1,8 +1,8 @@
-const runShellCommand = require('./run-shell-command');
 const semver = require('semver');
 const chalk = require('chalk');
 const { readFile, writeFile } = require('fs/promises');
 const path = require('path');
+const getPackageLatestVersion = require('./get-package-latest-version');
 
 const cachePath = path.join(__dirname, '..', '.cache'); // Place at root of package
 const LATEST_VERSION = 'latestVersion';
@@ -34,14 +34,11 @@ async function getLatestVersion(pkgName, currentTime, cache) {
     isOlderThanSevenDays(currentTime, cache[LATEST_VERSION_UPDATE_TIME])
   ) {
     try {
-      const cmdResult = await runShellCommand('npm', ['view', pkgName, 'version'], {});
-      if (cmdResult?.stdout) {
-        const latestVersion = cmdResult.stdout.trim();
-        cache[LATEST_VERSION_UPDATE_TIME] = currentTime;
-        cache[LATEST_VERSION] = latestVersion;
-        await writeFile(cachePath, JSON.stringify(cache));
-        return latestVersion;
-      }
+      const latestVersion = await getPackageLatestVersion(pkgName, {});
+      cache[LATEST_VERSION_UPDATE_TIME] = currentTime;
+      cache[LATEST_VERSION] = latestVersion;
+      await writeFile(cachePath, JSON.stringify(cache));
+      return latestVersion;
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error('Error fetching latest version:', error);
