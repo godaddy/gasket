@@ -19,3 +19,8 @@ declare module '@gasket/core' {
     createLogger(): Logger
   }
 }
+
+export default {
+  name: '@gasket/plugin-logger',
+  hooks: {}
+};

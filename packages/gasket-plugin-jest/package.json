@@ -1,8 +1,9 @@
 {
   "name": "@gasket/plugin-jest",
-  "version": "7.0.0-next.23",
+  "version": "7.0.0-next.27",
   "description": "Integrated jest into your application.",
-  "main": "lib",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "files": [
     "generator",
     "lib"
@@ -57,7 +58,7 @@
     "next": "^14.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "typescript": "^5.4.4"
+    "typescript": "^5.4.5"
   },
   "eslintConfig": {
     "extends": [

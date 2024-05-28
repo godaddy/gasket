@@ -8,7 +8,7 @@ describe('@gasket/plugin-docusaurus', () => {
       docusaurus: {
         rootDir: 'docs',
         docsDir: 'docs',
-        port: 3000,
+        port: '3000',
         host: 'localhost'
       }
     };

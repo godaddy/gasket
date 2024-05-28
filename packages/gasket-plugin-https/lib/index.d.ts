@@ -81,7 +81,7 @@ declare module '@gasket/core' {
   }
 
   export interface GasketActions {
-    startServer(): Promise<void>;
+    startServer?: () => Promise<void>;
   }
 
   type CreatedServers = {
@@ -108,3 +108,8 @@ declare module '@gasket/core' {
     onShutdown(): MaybeAsync<void>;
   }
 }
+
+export default {
+  name: '@gasket/plugin-https',
+  hooks: {}
+};

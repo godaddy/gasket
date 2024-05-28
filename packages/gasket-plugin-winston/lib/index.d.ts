@@ -9,3 +9,8 @@ declare module '@gasket/core' {
     winstonTransports(): MaybeAsync<LoggerOptions.transports>;
   }
 }
+
+export default {
+  name: '@gasket/plugin-winston',
+  hooks: {}
+};

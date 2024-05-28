@@ -1,0 +1,12 @@
+import type { Gitignore } from './internal';
+
+declare module 'create-gasket-app' {
+  export interface CreateContext {
+    gitignore?: Gitignore;
+  }
+}
+
+export default {
+  name: '@gasket/plugin-git',
+  hooks: {}
+};

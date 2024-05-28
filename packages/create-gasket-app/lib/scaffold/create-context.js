@@ -83,7 +83,7 @@ function flatten(acc, values) {
  *
  * @property {String} appDescription - Description of app
  * @property {Boolean} gitInit - Should a git repo be initialized and first commit
- * @property {String} testPlugin - Name of the plugin for unit tests
+ * @property {String} testPlugins - Array of testing plugins
  * @property {String} packageManager - Which package manager to use (Default: 'npm')
  * @property {String} installCmd - Derived install command (Default: 'npm install')
  * @property {String} localCmd - Derived local run command (Default: 'npx gasket local')

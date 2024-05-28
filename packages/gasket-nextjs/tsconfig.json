@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "allowJs": true,
+    "checkJs": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "lib": [
+      "esnext",
+      "dom"
+    ],
+    "types": [
+      "@types/jest"
+    ]
+  },
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "test",
+    "coverage",
+    "lib"
+  ]
+}

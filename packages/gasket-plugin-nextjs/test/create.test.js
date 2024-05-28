@@ -36,7 +36,7 @@ describe('create hook', () => {
   });
 
   it('adds the appropriate globs for mocha', async function () {
-    mockContext.testPlugin = '@gasket/mocha';
+    mockContext.testPlugins = ['@gasket/mocha'];
     await plugin.hooks.create.handler({}, mockContext);
 
     expect(mockContext.files.add).toHaveBeenCalledWith(
@@ -46,7 +46,7 @@ describe('create hook', () => {
   });
 
   it('adds the appropriate globs for jest', async function () {
-    mockContext.testPlugin = '@gasket/jest';
+    mockContext.testPlugins = ['@gasket/jest'];
     await plugin.hooks.create.handler({}, mockContext);
 
     expect(mockContext.files.add).toHaveBeenCalledWith(

@@ -1,5 +1,5 @@
 /* eslint-disable no-sync */
-const { createConfig } = require('../lib/config');
+const { createConfig } = require('../lib/utils/config');
 
 const baseWebpackConfig = {
   plugins: [],
@@ -234,6 +234,10 @@ describe('createConfig', () => {
   });
 });
 
+/**
+ * Mock Gasket API
+ * @returns {object} gasket API
+ */
 function mockGasketApi() {
   return {
     actions: {

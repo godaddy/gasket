@@ -3,7 +3,9 @@ jest.mock('/path/to/directory/package.json', () => ({ name: 'appName' }), { virt
 const WebpackMetricsPlugin = require('../lib/webpack-metrics-plugin');
 
 const gasket = {
-  exec: jest.fn(),
+  logger: {
+    debug: jest.fn()
+  },
   config: {
     manifest: { name: 'foo' }
   }
@@ -16,7 +18,7 @@ describe('webpack metrics plugin', function () {
     jest.clearAllMocks();
   });
 
-  it('initiates metric lifecycle with correct data format', function () {
+  it('logs metric details', function () {
 
     const tap = jest.fn().mockImplementation((_, fn) => fn({
       assets: {
@@ -40,12 +42,9 @@ describe('webpack metrics plugin', function () {
       metrics: jest.fn()
     });
 
-    expect(gasket.exec).toHaveBeenCalledWith('metrics', expect.objectContaining({
-      name: 'appName',
-      event: 'webpack',
-      data: expect.any(Object),
-      time: expect.any(Number)
-    }));
+    expect(gasket.logger.debug).toHaveBeenCalledWith(expect.stringContaining('webpack metrics:'));
+    expect(gasket.logger.debug).toHaveBeenCalledWith(expect.stringContaining('"name": "appName"'));
+    expect(gasket.logger.debug).toHaveBeenCalledWith(expect.stringContaining('"event": "webpack"'));
   });
 
   it('plugins executes expected webpack hook', function () {
@@ -95,6 +94,6 @@ describe('webpack metrics plugin', function () {
       }
     });
 
-    expect(gasket.exec.mock.calls).toHaveLength(1);
+    expect(gasket.logger.debug).toHaveBeenCalledTimes(1);
   });
 });

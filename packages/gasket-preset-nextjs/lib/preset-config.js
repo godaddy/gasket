@@ -12,10 +12,14 @@ import pluginWinston from '@gasket/plugin-winston';
  * @returns {Promise<CreateContext.presetConfig>} config
  */
 export default async function presetConfig(gasket, context) {
-  let testPlugin, typescriptPlugin;
+  let typescriptPlugin;
+  let testPlugins = [];
 
-  if ('testPlugin' in context) {
-    testPlugin = await import(context.testPlugin);
+  if ('testPlugins' in context && context.testPlugins.length > 0) {
+    await Promise.all(context.testPlugins.map(async (testPlugin) => {
+      const plugin = await import(testPlugin);
+      testPlugins.push(plugin ? plugin.default || plugin : null);
+    }));
   }
 
   if (context.typescript) {
@@ -31,7 +35,7 @@ export default async function presetConfig(gasket, context) {
       pluginRedux,
       pluginWinston,
       typescriptPlugin ? typescriptPlugin.default || typescriptPlugin : null,
-      testPlugin ? testPlugin.default || testPlugin : null
+      ...testPlugins
     ].filter(Boolean)
   };
 }

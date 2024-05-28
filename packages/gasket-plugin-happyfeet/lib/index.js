@@ -1,4 +1,4 @@
-/// <reference types="@gasket/plugin-start" />
+/// <reference types="@gasket/plugin-https" />
 
 const happyFeet = require('happy-feet');
 const { name } = require('../package.json');
@@ -7,6 +7,7 @@ const { name } = require('../package.json');
 const plugin = {
   name,
   hooks: {
+    // @ts-ignore - TODO - replace attachment with GasketActions - do not attach to gasket instance
     preboot: async function preboot(gasket) {
       const happyConfig = gasket.config.happyFeet || {};
       gasket.happyFeet = happyFeet(happyConfig);
@@ -17,7 +18,6 @@ const plugin = {
         // flag pod to be removed from LB
         throw new HealthCheckError(`Happy Feet entered an unhappy state`);
       }
-      return 'page ok';
     }
   }
 };

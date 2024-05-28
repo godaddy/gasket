@@ -27,8 +27,13 @@ declare module '@gasket/core' {
   }
 }
 
-declare module '@gasket/cli' {
+declare module 'create-gasket-app' {
   export interface CreateContext {
     apiApp?: boolean;
   }
 }
+
+export default {
+  name: '@gasket/plugin-express',
+  hooks: {}
+};

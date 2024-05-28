@@ -1,8 +1,8 @@
 {
   "name": "@gasket/plugin-metadata",
-  "version": "7.0.0-next.23",
+  "version": "7.0.0-next.27",
   "description": "Adds metadata to gasket lifecycles",
-  "main": "lib",
+  "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
     "docs",
@@ -15,7 +15,7 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "posttest": "npm run lint",
-    "prepack": "npm run docs",
+    "prepack:skip": "npm run docs",
     "docs": "jsdoc2md --plugin @godaddy/dmd --files lib/*.js > docs/api.md"
   },
   "repository": {
@@ -46,11 +46,11 @@
     "lodash.isobject": "^3.0.2"
   },
   "devDependencies": {
-    "@gasket/core": "^7.0.0-next.23",
+    "@gasket/core": "^7.0.0-next.27",
     "@godaddy/dmd": "^1.0.4",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
-    "eslint-config-godaddy": "^7.0.2",
+    "eslint-config-godaddy": "^7.1.0",
     "eslint-plugin-jest": "^27.6.3",
     "eslint-plugin-json": "^3.1.0",
     "eslint-plugin-unicorn": "^44.0.0",

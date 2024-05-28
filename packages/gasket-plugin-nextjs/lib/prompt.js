@@ -1,3 +1,6 @@
+/// <reference types="@gasket/cli" />
+
+/** @type {import('@gasket/core').HookHandler<'prompt'>} */
 module.exports = async function promptHook(gasket, context, { prompt }) {
   const newContext = { ...context };
   // TODO - evaluate if these prompts should be moved to the preset

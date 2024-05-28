@@ -9,3 +9,8 @@ declare module '@gasket/core' {
     };
   }
 }
+
+export default {
+  name: '@gasket/plugin-morgan',
+  hooks: {}
+};

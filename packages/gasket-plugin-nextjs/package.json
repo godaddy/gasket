@@ -1,8 +1,8 @@
 {
   "name": "@gasket/plugin-nextjs",
-  "version": "7.0.0-next.23",
+  "version": "7.0.0-next.27",
   "description": "Adds Next support to your application",
-  "main": "lib",
+  "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
     "generator",
@@ -13,9 +13,11 @@
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage",
-    "posttest": "npm run lint"
+    "test:watch": "npm run test -- --watch",
+    "test:coverage": "npm run test -- --coverage",
+    "posttest": "npm run lint && npm run typecheck",
+    "typecheck": "tsc",
+    "typecheck:watch": "tsc --watch"
   },
   "repository": {
     "type": "git",
@@ -40,18 +42,18 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-nextjs",
   "dependencies": {
-    "@gasket/plugin-webpack": "^7.0.0-next.23",
+    "@gasket/plugin-webpack": "^7.0.0-next.27",
     "fastify": "^4.26.2"
   },
   "devDependencies": {
     "@babel/preset-react": "^7.23.3",
-    "@gasket/assets": "^7.0.0-next.23",
-    "@gasket/core": "^7.0.0-next.23",
-    "@gasket/nextjs": "^7.0.0-next.23",
+    "@gasket/assets": "^7.0.0-next.27",
+    "@gasket/core": "^7.0.0-next.27",
+    "@gasket/nextjs": "^7.0.0-next.27",
     "babel-eslint": "^10.1.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
-    "eslint-config-godaddy": "^7.0.2",
+    "eslint-config-godaddy": "^7.1.0",
     "eslint-config-godaddy-react": "^9.0.1",
     "eslint-plugin-jest": "^27.6.3",
     "eslint-plugin-json": "^3.1.0",
@@ -63,7 +65,8 @@
     "nodemon": "^3.1.0",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "typescript": "^5.4.5"
   },
   "disabled_peerDependencies": {
     "@gasket/plugin-webpack": "^7"
@@ -77,13 +80,15 @@
   "eslintConfig": {
     "extends": [
       "godaddy",
-      "plugin:jest/recommended"
+      "plugin:jest/recommended",
+      "plugin:jsdoc/recommended-typescript-flavor"
     ],
     "globals": {
       "expect": "readonly"
     },
     "plugins": [
-      "unicorn"
+      "unicorn",
+      "jsdoc"
     ],
     "rules": {
       "unicorn/filename-case": "error"

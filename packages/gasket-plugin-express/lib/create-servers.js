@@ -82,36 +82,36 @@ module.exports = async function createServers(gasket, serverOpts) {
     app.use(compression());
   }
 
-  // const middlewares = [];
-  // await gasket.execApply('middleware', async (plugin, handler) => {
-  //   const middleware = await handler(app);
+  const middlewares = [];
+  await gasket.execApply('middleware', async (plugin, handler) => {
+    const middleware = await handler(app);
 
-  //   if (middleware && (!Array.isArray(middleware) || middleware.length)) {
-  //     if (middlewareConfig) {
-  //       const pluginName = plugin && plugin.name ? plugin.name : '';
-  //       const mwConfig = middlewareConfig.find(mw => mw.plugin === pluginName);
-  //       if (mwConfig) {
-  //         middleware.paths = mwConfig.paths;
-  //         if (middlewarePattern) {
-  //           middleware.paths.push(middlewarePattern);
-  //         }
-  //       }
-  //     }
-  //     middlewares.push(middleware);
-  //   }
-  // });
+    if (middleware && (!Array.isArray(middleware) || middleware.length)) {
+      if (middlewareConfig) {
+        const pluginName = plugin && plugin.name ? plugin.name : '';
+        const mwConfig = middlewareConfig.find(mw => mw.plugin === pluginName);
+        if (mwConfig) {
+          middleware.paths = mwConfig.paths;
+          if (middlewarePattern) {
+            middleware.paths.push(middlewarePattern);
+          }
+        }
+      }
+      middlewares.push(middleware);
+    }
+  });
 
-  // debug('applied %s middleware layers to express', middlewares.length);
-  // middlewares.forEach((layer) => {
-  //   const { paths } = layer;
-  //   if (paths) {
-  //     app.use(paths, layer);
-  //   } else if (middlewarePattern) {
-  //     app.use(middlewarePattern, layer);
-  //   } else {
-  //     app.use(layer);
-  //   }
-  // });
+  debug('applied %s middleware layers to express', middlewares.length);
+  middlewares.forEach((layer) => {
+    const { paths } = layer;
+    if (paths) {
+      app.use(paths, layer);
+    } else if (middlewarePattern) {
+      app.use(middlewarePattern, layer);
+    } else {
+      app.use(layer);
+    }
+  });
 
   await gasket.exec('express', app);
 

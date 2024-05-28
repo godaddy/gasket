@@ -11,17 +11,17 @@ const fastifyApp = {
   all: jest.fn()
 };
 
-const nextHandler = {
+const nextServer = {
   prepare: jest.fn().mockResolvedValue(),
   getRequestHandler: jest.fn().mockResolvedValue({}),
   buildId: '1234',
   name: 'testapp'
 };
 
-const mockSetupNextAppStub = jest.fn(() => nextHandler);
+const mockSetupNextAppStub = jest.fn(() => nextServer);
 
-jest.mock('../lib/setup-next-app', () => {
-  const mod = jest.requireActual('../lib/setup-next-app');
+jest.mock('../lib/utils/setup-next-app', () => {
+  const mod = jest.requireActual('../lib/utils/setup-next-app');
   return {
     setupNextApp: mockSetupNextAppStub,
     setupNextHandling: mod.setupNextHandling
@@ -47,7 +47,6 @@ describe('Plugin', function () {
     const expected = [
       'actions',
       'apmTransaction',
-      'build',
       'configure',
       'create',
       'express',
@@ -167,7 +166,7 @@ describe('express hook', () => {
     await hook(gasket, expressApp, false);
 
     expect(gasket.exec).toHaveBeenCalledWith('nextExpress', {
-      next: nextHandler,
+      next: nextServer,
       express: expressApp
     });
   });
@@ -187,7 +186,7 @@ describe('express hook', () => {
     expect(gasket.exec).toHaveBeenCalledWith('nextPreHandling', {
       req: mockReq,
       res: mockRes,
-      nextServer: nextHandler
+      nextServer
     });
   });
 });
@@ -264,7 +263,7 @@ describe('fastify hook', () => {
     await hook(gasket, fastifyApp, false);
 
     expect(gasket.exec).toHaveBeenCalledWith('nextFastify', {
-      next: nextHandler,
+      next: nextServer,
       fastify: fastifyApp
     });
   });
@@ -290,46 +289,8 @@ describe('fastify hook', () => {
     expect(gasket.exec).toHaveBeenCalledWith('nextPreHandling', {
       req: mockReq,
       res: mockRes,
-      nextServer: nextHandler
+      nextServer
     });
-  });
-});
-
-describe('build hook', () => {
-  let mockCreateConfigStub, mockBuilderStub;
-
-  const getMockedBuildHook = () => {
-    mockCreateConfigStub = jest.fn();
-    mockBuilderStub = jest.fn();
-
-    jest.mock('../lib/config', () => ({
-      createConfig: mockCreateConfigStub
-    }));
-
-    jest.mock('next/dist/build', () => ({
-      default: mockBuilderStub
-    }));
-
-    return require('../lib/').hooks.build;
-  };
-
-  it('does not build for local command', async () => {
-    const buildHook = getMockedBuildHook();
-    await buildHook({ command: { id: 'local' } });
-    expect(mockBuilderStub).not.toHaveBeenCalled();
-  });
-
-  it('uses current next build', async () => {
-    const gasket = mockGasketApi();
-    const buildHook = getMockedBuildHook();
-    await buildHook({ ...gasket, command: { id: 'build' } });
-    expect(mockBuilderStub).toHaveBeenCalled();
-  });
-
-  it('supports older gasket.command format', async () => {
-    const buildHook = getMockedBuildHook();
-    await buildHook({ command: 'local' });
-    expect(mockBuilderStub).not.toHaveBeenCalled();
   });
 });
 
@@ -487,6 +448,11 @@ describe('workbox hook', () => {
   });
 });
 
+
+/**
+ * Mock Gasket API
+ * @returns {object} gasketAPI
+ */
 function mockGasketApi() {
   return {
     command: {

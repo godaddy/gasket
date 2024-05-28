@@ -3,6 +3,10 @@ const plugin = require('../lib');
 describe('Plugin', () => {
   let spyFunc, filesAddStub;
 
+  /**
+   * Create a new project
+   * @returns {Promise<object>} project
+   */
   async function create() {
     const pkg = {};
     filesAddStub = jest.fn();
@@ -22,6 +26,10 @@ describe('Plugin', () => {
     return { pkg };
   }
 
+  /**
+   * Create a new React project
+   * @returns {Promise<object>} project
+   */
   async function createReact() {
     const pkg = {
       dependencies: {

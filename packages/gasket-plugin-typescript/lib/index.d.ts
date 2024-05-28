@@ -7,3 +7,8 @@ declare module '@gasket/core' {
     create(context: CreateContext): MaybeAsync<void>;
   }
 }
+
+export default {
+  name: '@gasket/plugin-typescript',
+  hooks: {}
+};

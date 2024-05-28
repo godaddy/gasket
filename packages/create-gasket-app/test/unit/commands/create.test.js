@@ -58,6 +58,11 @@ describe('create', function () {
     jest.clearAllMocks();
   });
 
+  it('should force GASKE_ENV to create', async () => {
+    await cmd.parseAsync(['node', 'gasket', 'create', 'myapp']);
+    expect(process.env.GASKET_ENV).toEqual('create');
+  });
+
   it('should have expected args', () => {
     const args = cmd.commands[0]._args;
     expect(CreateCommand.args.length).toEqual(args.length);

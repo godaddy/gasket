@@ -7,3 +7,8 @@ declare module '@gasket/core' {
     start(): MaybeAsync<void>
   }
 }
+
+export default {
+  name: '@gasket/plugin-start',
+  hooks: {}
+};

@@ -1,4 +1,4 @@
-const { name, version, devDependencies } = require('../package');
+const { name, version, devDependencies } = require('../package.json');
 
 /**
  * createAppFiles
@@ -17,18 +17,22 @@ function createAppFiles({ files, generatorDir }) {
  * createTestFiles
  * @property {Files} files - The Gasket Files API.
  * @property {generatorDir} - The directory of the generator.
- * @property {testPlugin} - Selected test plugin from prompt
+ * @property {testPlugins} - Array of selected test plugins
  */
-function createTestFiles({ files, generatorDir, testPlugin }) {
+function createTestFiles({ files, generatorDir, testPlugins }) {
+  if (!testPlugins || testPlugins.length === 0) return;
+
   const frameworks = ['jest', 'mocha', 'cypress'];
-  frameworks.forEach((tester) => {
-    const regex = new RegExp(`${tester}`);
-    if (regex.test(testPlugin)) {
-      files.add(`${generatorDir}/${tester}/*`, `${generatorDir}/${tester}/**/*`);
+  const frameworksRegex = new RegExp(frameworks.join('|'));
+
+  testPlugins.forEach((testPlugin) => {
+    const match = frameworksRegex.exec(testPlugin);
+    if (match) {
+      const matchedFramework = match[0];
+      files.add(`${generatorDir}/${matchedFramework}/*`, `${generatorDir}/${matchedFramework}/**/*`);
     }
   });
 }
-
 
 /**
  * createNextFiles - Add next.config.js & server.mjs to files
@@ -126,7 +130,8 @@ function addNpmScripts({ pkg, nextServerType, nextDevProxy, typescript }) {
   pkg.add('scripts', scripts[nextServerType]);
 }
 
-function addConfig({ gasketConfig, nextDevProxy }) {
+function addConfig(createContext) {
+  const { gasketConfig, nextDevProxy } = createContext;
   gasketConfig.addPlugin('pluginNextjs', name);
 
   if (nextDevProxy) {
@@ -144,6 +149,7 @@ function addConfig({ gasketConfig, nextDevProxy }) {
   }
 }
 
+
 module.exports = {
   timing: {
     before: ['@gasket/plugin-intl'],
@@ -151,18 +157,13 @@ module.exports = {
   },
   /**
    * Add files & extend package.json for new apps.
-   *
-   * @param {Gasket} gasket - The Gasket API.
-   * @param {CreateContext} context - Create context
-   * @param {Files} context.files - The Gasket Files API.
-   * @param {PackageJson} context.pkg - The Gasket PackageJson API.
-   * @param {PluginName} context.testPlugin - The name of included test plugins.
-   * @public
+   * @type {import('@gasket/core').HookHandler<'create'>}
    */
   handler: function create(gasket, context) {
     const {
       files,
-      pkg, testPlugin,
+      pkg,
+      testPlugins,
       addSitemap,
       nextServerType,
       nextDevProxy,
@@ -171,12 +172,14 @@ module.exports = {
     const generatorDir = `${__dirname}/../generator`;
 
     createAppFiles({ files, generatorDir });
-    createTestFiles({ files, generatorDir, testPlugin });
+    createTestFiles({ files, generatorDir, testPlugins });
     createNextFiles({ files, generatorDir, nextDevProxy, typescript });
     addDependencies({ pkg, nextDevProxy });
     addNpmScripts({ pkg, nextServerType, nextDevProxy, typescript });
     addConfig(context);
     if (addSitemap) configureSitemap({ files, pkg, generatorDir });
     if (pkg.has('dependencies', '@gasket/redux')) addRedux({ files, pkg, generatorDir });
+    // TODO - remove with typecheck solution
+    return;
   }
 };

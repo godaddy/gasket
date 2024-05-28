@@ -20,7 +20,7 @@
     "generate-docs-index": "node scripts/generate-docs-index",
     "postinstall": "npm run build",
     "publish:canary": "lerna publish --preid canary --dist-tag canary",
-    "publish:next": "lerna publish --preid next --dist-tag next --force-publish",
+    "publish:next": "lerna publish prerelease --preid next --dist-tag next --force-publish",
     "test:package": "lerna run test --stream --scope $*",
     "typecheck:all": "lerna run typecheck --stream"
   },
@@ -55,7 +55,8 @@
     "nx": "^15.0.13",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "rimraf": "^3.0.2"
+    "rimraf": "^3.0.2",
+    "typescript": "^5.4.5"
   },
   "eslintConfig": {
     "extends": [
