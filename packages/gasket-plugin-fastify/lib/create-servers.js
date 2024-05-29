@@ -1,11 +1,6 @@
 /// <reference types="@gasket/plugin-https" />
 /// <reference types="@gasket/plugin-logger" />
 
-const fastify = require('fastify');
-const cookieParser = require('cookie-parser');
-const compression = require('compression');
-const debug = require('diagnostics')('gasket:fastify');
-
 /**
  * Create the Fastify instance and setup the lifecycle hooks.
  * Fastify is compatible with express middleware out of the box, so we can
@@ -14,6 +9,11 @@ const debug = require('diagnostics')('gasket:fastify');
  */
 // eslint-disable-next-line max-statements
 module.exports = async function createServers(gasket, serverOpts) {
+
+  const fastify = require('fastify');
+  const cookieParser = require('cookie-parser');
+  const compression = require('compression');
+  const debug = require('diagnostics')('gasket:fastify');
   const { config, logger } = gasket;
   const {
     fastify: {
@@ -44,7 +44,8 @@ module.exports = async function createServers(gasket, serverOpts) {
     app.use(excludedRoutesRegex, cookieParser());
   } else {
     app.use(cookieParser());
-  
+  }
+
   if (compressionConfig) {
     app.use(compression());
   }
@@ -104,4 +105,4 @@ module.exports = async function createServers(gasket, serverOpts) {
       app.server.emit('request', ...args);
     }
   };
-};
+}
