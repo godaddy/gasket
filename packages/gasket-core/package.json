@@ -1,6 +1,6 @@
 {
   "name": "@gasket/core",
-  "version": "7.0.0-next.30",
+  "version": "7.0.0-next.31",
   "description": "Entry point to setting up Gasket instances",
   "exports": {
     ".": {
