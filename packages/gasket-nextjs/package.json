@@ -27,8 +27,6 @@
     "test:watch": "npm run test -- --watch",
     "test:coverage": "npm run test -- --coverage",
     "posttest": "npm run lint && npm run typecheck",
-    "build": "babel src -d lib --delete-dir-on-start",
-    "prepublishOnly": "npm run build",
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"
   },
