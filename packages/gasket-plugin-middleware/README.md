@@ -1,4 +1,4 @@
-# @gasket/plugin-server
+# @gasket/plugin-middleware
 
 A helper plugin to handle common server engine setups for routing and
 executing lifecycles. 

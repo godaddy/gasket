@@ -1,5 +1,5 @@
 {
-  "name": "@gasket/plugin-server",
+  "name": "@gasket/plugin-middleware",
   "version": "1.0.0",
   "description": "Handles common server engine setups for routing and executing lifecycles.",
   "main": "lib",
