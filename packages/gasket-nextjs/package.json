@@ -2,19 +2,21 @@
   "name": "@gasket/nextjs",
   "version": "7.0.0-next.31",
   "description": "Gasket integrations for Next.js apps",
-  "main": "lib/index.js",
   "type": "module",
-  "types": "lib/index.d.ts",
   "files": [
     "lib"
   ],
   "exports": {
     ".": {
-      "types": "./src/index.d.ts",
+      "types": "./lib/index.d.ts",
       "default": "./lib/index.js"
     },
+    "./document": {
+      "types": "./lib/document/index.d.ts",
+      "default": "./lib/document/index.js"
+    },
     "./server": {
-      "types": "./src/server/index.d.ts",
+      "types": "./lib/server/index.d.ts",
       "default": "./lib/server/index.js"
     }
   },

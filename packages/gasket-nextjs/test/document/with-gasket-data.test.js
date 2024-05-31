@@ -1,15 +1,14 @@
 import { jest, expect } from '@jest/globals';
 import { createElement } from 'react';
-import { withGasketData } from '../lib/index.js';
+import { withGasketData } from '../../lib/document/index.js';
 import NextDocument from 'next/document';
-// TODO: why?
+
 const Document = NextDocument.default || NextDocument;
 
-
-function Html(props) { return createElement('html', { ...props }); }
-function Main(props) { return createElement('main', { ...props }); }
-function Head(props) { return createElement('head', { ...props }); }
-function NextScript(props) { return createElement('script', { 'data-testid': 'next-script', ...props }); }
+const Html = (props) => createElement('html', { ...props });
+const Main = (props) => createElement('main', { ...props });
+const Head = (props) => createElement('head', { ...props });
+const NextScript = (props) => createElement('script', { 'data-testid': 'next-script', ...props });
 
 
 class MyDocument extends Document {
@@ -72,9 +71,14 @@ function getElementReference(renderedElement, searchType) {
 }
 
 describe('withGasketData', function () {
-  let WrappedDocument, mockProps, mockContext;
+  let WrappedDocument, mockGasket, mockProps, mockContext;
 
   beforeEach(function () {
+    mockGasket = {
+      actions: {
+        getPublicGasketData: jest.fn().mockReturnValue({})
+      }
+    };
     mockProps = {
       gasketData: {
         bogus: true
@@ -88,14 +92,14 @@ describe('withGasketData', function () {
   describe('#getInitialProps', function () {
     it('executes parent method', async function () {
       const spy = jest.spyOn(MyDocument, 'getInitialProps');
-      WrappedDocument = withGasketData()(MyDocument);
+      WrappedDocument = withGasketData(mockGasket)(MyDocument);
 
       await WrappedDocument.getInitialProps(mockContext);
       expect(spy).toHaveBeenCalledWith(mockContext);
     });
 
     it('adds gasketData to initial props', async function () {
-      WrappedDocument = withGasketData()(MyDocument);
+      WrappedDocument = withGasketData(mockGasket)(MyDocument);
 
       const results = await WrappedDocument.getInitialProps(mockContext);
       expect(results).toHaveProperty('gasketData');
@@ -106,21 +110,19 @@ describe('withGasketData', function () {
     });
 
     it('gasketData is empty object if no response data', async function () {
-      WrappedDocument = withGasketData()(MyDocument);
+      WrappedDocument = withGasketData(mockGasket)(MyDocument);
 
       const results = await WrappedDocument.getInitialProps(mockContext);
       expect(results.gasketData).toEqual({});
     });
 
-    it('gasketData is from res.locals', async function () {
-      WrappedDocument = withGasketData()(MyDocument);
-      mockContext.res = {
-        locals: {
-          gasketData: { bogus: true }
-        }
-      };
+    it('gasketData is from action', async function () {
+      mockGasket.actions.getPublicGasketData = jest.fn().mockReturnValue({ bogus: true });
 
+      WrappedDocument = withGasketData(mockGasket)(MyDocument);
       const results = await WrappedDocument.getInitialProps(mockContext);
+
+      expect(mockGasket.actions.getPublicGasketData).toHaveBeenCalled();
       expect(results.gasketData).toEqual({ bogus: true });
     });
   });
@@ -130,7 +132,7 @@ describe('withGasketData', function () {
     // component, so we are manually traversing the WrappedDocument's render
     // output. This is not ideal and should be replaced with a better solution.
     it('in document body', function () {
-      WrappedDocument = withGasketData()(Document);
+      WrappedDocument = withGasketData(mockGasket)(Document);
       const element = new WrappedDocument();
       element.props = mockProps;
       const html = element.render();
@@ -141,7 +143,7 @@ describe('withGasketData', function () {
     });
 
     it('in custom document body', function () {
-      WrappedDocument = withGasketData()(MyDocument);
+      WrappedDocument = withGasketData(mockGasket)(MyDocument);
       const element = new WrappedDocument();
       element.props = mockProps;
       const html = element.render();
@@ -152,7 +154,7 @@ describe('withGasketData', function () {
     });
 
     it('retains all original content', function () {
-      WrappedDocument = withGasketData()(MyDocument);
+      WrappedDocument = withGasketData(mockGasket)(MyDocument);
       const element = new WrappedDocument();
       element.props = mockProps;
       const html = element.render();
@@ -173,7 +175,7 @@ describe('withGasketData', function () {
     });
 
     it('between Main and NextScript', function () {
-      WrappedDocument = withGasketData()(MyDocument);
+      WrappedDocument = withGasketData(mockGasket)(MyDocument);
       const element = new WrappedDocument();
       element.props = mockProps;
       const body = getElementReference(element.render(), 'body');
@@ -207,7 +209,7 @@ describe('withGasketData', function () {
         }
       }
 
-      WrappedDocument = withGasketData()(MyDocumentWithScript);
+      WrappedDocument = withGasketData(mockGasket)(MyDocumentWithScript);
       const element = new WrappedDocument();
       element.props = mockProps;
       const body = getElementReference(element.render(), 'body');
@@ -245,7 +247,7 @@ describe('withGasketData', function () {
         }
       }
 
-      WrappedDocument = withGasketData()(MyDocumentWithScript);
+      WrappedDocument = withGasketData(mockGasket)(MyDocumentWithScript);
       const element = new WrappedDocument();
       element.props = mockProps;
       const body = getElementReference(element.render(), 'body');
@@ -280,7 +282,7 @@ describe('withGasketData', function () {
         }
       }
 
-      WrappedDocument = withGasketData({ index: 4 })(MyDocumentWithScript);
+      WrappedDocument = withGasketData(mockGasket, { index: 4 })(MyDocumentWithScript);
       const element = new WrappedDocument();
       element.props = mockProps;
       const body = getElementReference(element.render(), 'body');
@@ -295,6 +297,7 @@ describe('withGasketData', function () {
     });
 
     it('works with functional components', function () {
+      // eslint-disable-next-line jsdoc/require-jsdoc
       function MyFunctionDocument() {
         return (
           createElement(Html, null,
@@ -308,7 +311,7 @@ describe('withGasketData', function () {
         );
       }
 
-      WrappedDocument = withGasketData()(MyFunctionDocument);
+      WrappedDocument = withGasketData(mockGasket)(MyFunctionDocument);
       // eslint-disable-next-line new-cap
       const wrapped = WrappedDocument(mockProps);
       const body = wrapped.props.children[1];

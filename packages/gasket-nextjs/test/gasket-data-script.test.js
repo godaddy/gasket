@@ -1,10 +1,10 @@
 import { expect } from '@jest/globals';
 import { createElement } from 'react';
 import { render, queryByAttribute } from '@testing-library/react';
-import { GasketDataScript } from '../lib/index.js';
+import { GasketDataScript } from '../lib/gasket-data-script.js';
 
-import { mockConsoleError } from './helpers.js';
-mockConsoleError();
+// import { mockConsoleError } from './helpers.js';
+// mockConsoleError();
 
 const getById = queryByAttribute.bind(null, 'id');
 
