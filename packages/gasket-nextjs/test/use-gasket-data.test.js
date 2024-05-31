@@ -1,7 +1,11 @@
-import React from 'react';
+import { jest, expect } from '@jest/globals';
+import { createElement } from 'react';
 import { render } from '@testing-library/react';
-import { useGasketData } from '../src';
-import { GasketDataProvider } from '../src/gasket-data-provider';
+import { useGasketData } from '../lib/index.js';
+import { GasketDataProvider } from '../lib/gasket-data-provider.js';
+
+import { mockConsoleError } from './helpers.js';
+mockConsoleError();
 
 /**
  * need to use @testing-library to properly test hooks
@@ -15,16 +19,16 @@ describe('useGasketData', function () {
     const MockConsumer = () => {
       const { greeting } = useGasketData();
 
-      return <div>{ greeting }</div>;
+      return createElement('div', null, greeting);
     };
 
     const MockApp = () => (
-      <GasketDataProvider gasketData={ testData }>
-        <MockConsumer onGotData={ observeData }/>
-      </GasketDataProvider>
+      createElement(GasketDataProvider, { gasketData: testData },
+        createElement(MockConsumer, { onGotData: observeData })
+      )
     );
 
-    const content = render(<MockApp/>);
+    const content = render(createElement(MockApp));
 
     expect(content.baseElement.textContent).toEqual(testData.greeting);
   });

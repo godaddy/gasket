@@ -1,9 +1,6 @@
-import React from 'react';
+import { createElement } from 'react';
 import { GasketDataProvider } from './gasket-data-provider';
 import PropTypes from 'prop-types';
-
-const clientGasketData =
-  typeof window === 'object' ? require('@gasket/data') : {};
 
 /**
  * Make an HOC that adds a provider for the GasketData. This can be used to wrap
@@ -14,18 +11,22 @@ const clientGasketData =
 export const withGasketDataProvider = () => (WrappedComponent) => {
   const Wrapper = ({ gasketData, ...props }) => {
     return (
-      <GasketDataProvider gasketData={ gasketData }>
-        <WrappedComponent { ...props } />
-      </GasketDataProvider>
+      createElement(GasketDataProvider, { gasketData },
+        createElement(WrappedComponent, props)
+      )
     );
   };
 
   Wrapper.getInitialProps = async (data) => {
-    const initialProps = WrappedComponent.getInitialProps
-      ? await WrappedComponent.getInitialProps(data)
-      : {};
-    const ssrGasketData =
-      data?.ctx?.res?.locals?.gasketData || data?.res?.locals?.gasketData || {};
+    const initialProps = WrappedComponent.getInitialProps ? await WrappedComponent.getInitialProps(data) : {};
+    // TODO: convert to GasketActions
+    const ssrGasketData = data?.ctx?.res?.locals?.gasketData || data?.res?.locals?.gasketData || {};
+    let clientGasketData = {}
+    if (typeof window !== 'undefined') {
+      clientGasketData = await import('@gasket/data').then(mod => {
+        return mod.gasketData()
+      });
+    }
 
     return {
       ...initialProps,

@@ -38,7 +38,7 @@ describe('request', () => {
 
   beforeAll(async () => {
     // must be dynamic to avoid hoisting static import to the top
-    request = await import('../../src/server/request').then((module) => module.request);
+    request = await import('../../lib/server/request').then((module) => module.request);
   });
 
   beforeEach(() => {

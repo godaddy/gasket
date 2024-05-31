@@ -108,12 +108,16 @@ export function intlGetServerSideProps(
   ctx: NextServerContext
 ) => Promise<{ props: { localesProps: LocalesProps } }>;
 
+export type IntlGasketData = LocalesProps & {
+  /** Path to where locale files exist */
+  basePath?: string;
+  messages?: Record<string, string>;
+  status?: Record<string, string>;
+};
+
 declare module '@gasket/data' {
   export interface GasketData {
-    intl?: LocalesProps & {
-      /** Path to where locale files exist */
-      basePath?: string;
-    };
+    intl?: IntlGasketData
   }
 }
 

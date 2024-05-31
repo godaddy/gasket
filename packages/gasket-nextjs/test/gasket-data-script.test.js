@@ -1,13 +1,16 @@
-import React from 'react';
+import { expect } from '@jest/globals';
+import { createElement } from 'react';
 import { render, queryByAttribute } from '@testing-library/react';
+import { GasketDataScript } from '../lib/gasket-data-script.js';
 
-import { GasketDataScript } from '../src';
+// import { mockConsoleError } from './helpers.js';
+// mockConsoleError();
 
 const getById = queryByAttribute.bind(null, 'id');
 
 describe('<GasketDataScript/>', function () {
   it('renders GasketDataScript', function () {
-    const dom = render(<GasketDataScript { ...{ data: { bogus: true } } } />);
+    const dom = render(createElement(GasketDataScript, { ...{ data: { bogus: true } } }));
     const gasketDataScript = getById(dom.container, 'GasketData');
 
     expect(gasketDataScript).toBeDefined();
