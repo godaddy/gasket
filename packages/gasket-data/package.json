@@ -5,7 +5,7 @@
   "exports": {
     ".": {
       "import": "./lib/index.js",
-      "require": "./cjs/index.js",
+      "require": "./cjs/index.cjs",
       "types": "./lib/index.d.ts"
     }
   },
@@ -24,7 +24,7 @@
     "posttest": "npm run lint && npm run typecheck",
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch",
-    "build": "swc lib -d cjs --delete-dir-on-start --strip-leading-paths",
+    "build": "swc lib -d cjs --delete-dir-on-start --strip-leading-paths --out-file-extension cjs",
     "prepublishOnly": "npm run build"
   },
   "repository": {
