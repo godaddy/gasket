@@ -33,18 +33,18 @@ describe('GasketData', function () {
     expect(results).toEqual({ fake: 'results' });
   });
 
-  it('returns undefined if no element found', async function () {
+  it('returns {} if no element found', async function () {
     getElementByIdStub.mockReturnValueOnce();
     const gasketData = await importFunction();
     const results = gasketData();
-    expect(results).toBeUndefined();
+    expect(results).toEqual({});
   });
 
-  it('returns empty string if no script content', async function () {
+  it('returns {} if no script content', async function () {
     getElementByIdStub.mockReturnValueOnce({ textContent: '' });
     const gasketData = await importFunction();
     const results = gasketData();
-    expect(results).toEqual('');
+    expect(results).toEqual({});
   });
 
   it('returns undefined and logs error if no document (server)', async function () {
