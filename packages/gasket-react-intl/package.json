@@ -3,8 +3,6 @@
   "version": "7.0.0-next.32",
   "description": "React component library to enable localization for gasket apps.",
   "main": "lib",
-  "browser": "lib",
-  "module": "src",
   "types": "src/index.d.ts",
   "files": [
     "lib",
