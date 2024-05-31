@@ -2,11 +2,18 @@
   "name": "@gasket/data",
   "version": "7.0.0-next.31",
   "description": "Helper package for accessing embedded Gasket Data in the browser",
-  "main": "lib/index.js",
+  "exports": {
+    ".": {
+      "import": "./lib/index.js",
+      "require": "./cjs/index.js",
+      "types": "./lib/index.d.ts"
+    }
+  },
   "types": "lib/index.d.ts",
   "type": "module",
   "files": [
-    "lib"
+    "lib",
+    "cjs"
   ],
   "scripts": {
     "lint": "eslint .",
@@ -16,7 +23,9 @@
     "test:coverage": "npm run test -- --coverage",
     "posttest": "npm run lint && npm run typecheck",
     "typecheck": "tsc",
-    "typecheck:watch": "tsc --watch"
+    "typecheck:watch": "tsc --watch",
+    "build": "swc lib -d cjs --delete-dir-on-start --strip-leading-paths",
+    "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -41,6 +50,8 @@
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-data",
   "devDependencies": {
     "@jest/globals": "^29.7.0",
+    "@swc/cli": "^0.3.12",
+    "@swc/core": "^1.5.3",
     "@types/jest": "^29.5.12",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
@@ -53,6 +64,9 @@
     "typescript": "^5.4.5"
   },
   "eslintConfig": {
+    "ignorePatterns": [
+      "cjs/"
+    ],
     "extends": [
       "godaddy",
       "plugin:jest/recommended",

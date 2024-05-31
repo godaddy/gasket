@@ -24,7 +24,7 @@ export const withGasketDataProvider = () => (WrappedComponent) => {
     let clientGasketData = {}
     if (typeof window !== 'undefined') {
       clientGasketData = await import('@gasket/data').then(mod => {
-        return mod.default()
+        return mod.gasketData()
       });
     }
 
