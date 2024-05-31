@@ -2,7 +2,7 @@
 
 Gasket integrations for Next.js apps. Provides several tools:
 
-- withGasketData: Injects Gasket Data added during lifecycle onto rendered html
+- withGasketData: Injects Gasket Data added during lifecycle into Document
 - withGasketDataProvider: Provides context access to Gasket Data
 - useGasketData: Allows access to Gasket Data from hook
 
@@ -87,9 +87,10 @@ This is the simplest and most common setup:
 ```jsx
 // pages/_document.js
 import Document from 'next/document';
-import {withGasketData} from '@gasket/nextjs';
+import { withGasketData } from '@gasket/nextjs/document';
+import gasket from '../gasket.js';
 
-export default withGasketData()(Document);
+export default withGasketData(gasket)(Document);
 ```
 
 By default this will inject the script in the `<body/>` after the Next.js
@@ -105,7 +106,8 @@ script at a particular child index of the `<body/>`. To do so, you can set the
 ```jsx
 // pages/_document.js
 import Document, {Html, Head, Main, NextScript} from 'next/document'
-import { withGasketData } from '@gasket/nextjs';
+import { withGasketData } from '@gasket/nextjs/document';
+import gasket from '../gasket.js';
 
 class MyDocument extends Document {
     static async getInitialProps(ctx) {
@@ -127,7 +129,7 @@ class MyDocument extends Document {
     }
 }
 
-export default withGasketData({index: 2})(MyDocument);
+export default withGasketData(gasket, {index: 2})(MyDocument);
 ```
 
 In this example, the `gasketData` script will be injected after the custom

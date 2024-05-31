@@ -11,6 +11,7 @@
       "dom"
     ],
     "types": [
+      "@gasket/data",
       "@types/jest",
       "@types/node",
     ]

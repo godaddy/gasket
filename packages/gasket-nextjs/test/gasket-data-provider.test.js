@@ -1,12 +1,15 @@
-import React from 'react';
+import { expect } from '@jest/globals';
+import { createElement } from 'react';
 import { render, screen } from '@testing-library/react';
+import { GasketDataProvider } from '../lib/gasket-data-provider.js';
 
-import { GasketDataProvider } from '../src/gasket-data-provider';
+import { mockConsoleError } from './helpers.js';
+mockConsoleError();
+
 
 describe('GasketDataProvider', function () {
-
   it('should render the component', () => {
-    render(<GasketDataProvider gasketData={{ test: 'test' }}>hello</GasketDataProvider>);
+    render(createElement(GasketDataProvider, { gasketData: { test: 'test' } }, 'hello'));
     expect(screen.getByText('hello')).toBeDefined();
   });
 });

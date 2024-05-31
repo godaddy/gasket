@@ -5,6 +5,7 @@ describe('package.json', function () {
   it('has expected exports', () => {
     const expected = [
       '.',
+      './document',
       './server'
     ];
 

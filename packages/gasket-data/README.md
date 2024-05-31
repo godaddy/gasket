@@ -22,9 +22,9 @@ For example, if the following data is rendered...
 ...then it would be accessible as:
 
 ```js
-import gasketData from '@gasket/data';
+import { gasketData } from '@gasket/data';
 
-console.log(gasketData.something); // interesting
+console.log(gasketData().something); // interesting
 ```
 
 Note that `@gasket/data` is only expected to be used in the browser, and not in
