@@ -12,7 +12,7 @@ jest.spyOn(console, 'error').mockImplementation((msg) => {
 });
 
 const mockGasketData = jest.fn();
-jest.unstable_mockModule('@gasket/data', () => ({ default: mockGasketData }));
+jest.unstable_mockModule('@gasket/data', () => ({ gasketData: mockGasketData }));
 
 
 describe('withGasketDataProvider', function () {
