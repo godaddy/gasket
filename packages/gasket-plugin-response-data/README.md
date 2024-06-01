@@ -1,10 +1,12 @@
 # @gasket/plugin-response-data
 
-Add support for attaching environment specific data to responses.
+Add support for environment and request specific data such as settings and
+configurations.
 
-This plugin assembles data from environment-specific file(s) which is then
-usable by server code from the response object and can be accessed in browser
-code via GasketData or Redux.
+Many times, applications need to have different configurations based on
+environments.
+This plugin simplifies the process of managing this data and also provides
+hooks for gather user or request-specific data.
 
 ## Installation
 
@@ -20,114 +22,64 @@ gasket create <app-name> --plugins @gasket/plugin-response-data
 npm i @gasket/plugin-response-data
 ```
 
-Modify `plugins` section of your `gasket.config.js`:
+Modify `plugins` section of your `gasket.js`:
 
 ```diff
-module.exports = {
-  plugins: {
-    add: [
-+      '@gasket/plugin-response-data'
-    ]
-  }
-}
+import { makeGasket } from '@gasket/core';
++import pluginLogger from '@gasket/plugin-logger';
++import pluginData from '@gasket/plugin-data';
+
++ import gasketData from './gasket.data.js';
+
+export default makeGasket({
+  plugins: [
+    pluginLogger,
++    pluginData
+  ],
++  data: gasketData
+})
 ```
+Also add a `gasket.data.js` file to the root of your project, import and assign
+it to the `data` property of the Gasket config.
 
-## Usage
+## Configuration
 
-There are two file structure methods available for defining config of different
-environments in apps.
+While you can declare `data` definition directly in your `makeGasket` config,
+it is recommended to use a separate `gasket.data.js` file by convention.
+This can also be a `.ts` file if the project is using TypeScript.
 
-1. Multiple files with [Environment per file]
-2. Single file with [Environments inline]
-
-### Environment files
-
-By default, this plugin imports files from your `/gasket-data` directory to
-assemble your application's response data. You can change this directory with
-the `gasketData.dir` option in your `gasket.config.js`:
+This definition file allows you to set up [inline environment overrides] to
+adjust things like API URLs and settings based on the runtime environment.
 
 ```js
-module.exports = {
-  gasketData: {
-    dir: './src/gasket-data'
+// gasket.data.js
+export default {
+  environments: {
+    local: {
+      api: 'http://localhost:3000'
+    },
+    test: {
+      api: 'https://test-api.example.com'
+    },
+    prod: {
+      api: 'https://api.example.com'
+    }
   }
 };
 ```
 
-Gasket first decides which _environment_ you're running in. By default, this
-comes from the `NODE_ENV` environment variable or the `--env` command-line
-argument which can be set from the `GASKET_ENV` environment variable.
-Environments can be subdivided (say, for multiple data centers) through dotted
-identifiers. Example: `production.v1`.
+## Actions
 
-Once this environment identifier is determined, files are imported based on the
-identifier and deep merged together. Files must be CommonJS `.js` modules or
-`.json` files with the name of your environment. You may optionally have a
-`base.js[on]` file shared across all environments. Given the example environment
-`production.v1`, the following files may be merged together:
+### getGasketData
 
-```
-production.v1.js
-production.js
-base.js
-```
+This action is used to retrieve the current configuration data. It can be used
+in any lifecycle hook or server-side code.
 
-If you run your application via `gasket local` or explicitly set your
-environment to `local`, there's additional merging behavior:
+### getPublicGasketData
 
-```
-local.overrides.js
-local.js
-development.js (or dev.js)
-base.js
-```
-
-The optional `local.overrides.js` is something that can be on individual
-workstations and ignored in your `.gitignore`. Depending on if you're naming
-your development environment `dev` or `development`, that will automatically be
-merged with your `local` configuration.
-
-### Environments inline
-
-Additionally, you can optionally add an `gasket-data.config.js` file to the
-root of your app's directory, alongside the `gasket.config.js`. This file
-allows you to set up [inline environment overrides], as opposed to in separate
-files, following the same rules as the `gasket.config.js`.
-
-If you happen to set up both `./gasket-data` and `gasket-data.config.js`,
-the configurations will be merged with `./gasket-data` taking priority.
-The `.json` extension is also supported for this file.
-
-To support easy local development, you can use an `gasket-data.config.local.js`
-which will merge in your own local configuration for development. This file
-should not be committed, and specified in `.gitignore`.
-
-### Server Access
-
-The plugin attaches the configuration from your config files to a `gasketData`
-property of the Response object.
-
-#### Example with Middleware
-
-Custom Express middleware (provided you ensure that your middleware runs _after_
-the config plugin). For example, in `/lifecycles/middleware.js`:
-
-```js
-module.exports = {
-  timing: {
-    after: ['@gasket/gasket-data']
-  },
-  handler(gasket) {
-    return (req, res, next) => {
-      if (res.gasketData.featureFlags.betaSite) {
-        res.redirect(res.gasketData.betaSiteURL);
-      } else {
-        next();
-      }
-    }
-  }
-}
-```
+This action is used to retrieve the public configuration data particular to a
+request.
+It is referred to as "public" meaning it is safe to expose to the client.
 
 #### Example with Next.js
 
@@ -135,12 +87,13 @@ If you are developing a front end with Next.js, config is accessible to
 server-side rendering via `getInitialProps`:
 
 ```jsx
-import * as React from 'react';
+import gasket from '../gasket.js';
 
-PageComponent.getInitialProps = function({ isServer, res }) {
+PageComponent.getInitialProps = async function({ isServer, req }) {
   if (isServer) {
+    const publicData = await gasket.actions.getPublicGasketData(req);
     return {
-      flags: res.gasketData.featureFlags
+      flags: publicData.featureFlags
     };
   }
   // ...
@@ -150,7 +103,7 @@ PageComponent.getInitialProps = function({ isServer, res }) {
 ### Browser Access
 
 If you need access to config values in client-side code, this can be done
-by defining a `public` property in your `gasket-data.config.js`.
+by defining a `public` property in your `gasket.data.js`.
 
 ```js
 module.exports = {
@@ -161,43 +114,16 @@ module.exports = {
 };
 ```
 
-TODO - how to add to html
-
-The plugin will return these `public` properties to your browser, to be
-accessed by `@gasket/data`. They are available like so:
-
-```js
-import gasketData from '@gasket/data';
-
-console.log(gasketData.test1); // config value 1 here
-```
+From there we recommend looking at [withGasketData] HOC from the
+`@gasket/nextjs` package which will use the [getPublicGasketData] action to get
+the `public` data and render it to script tag for browser access.
 
 ### Browser Access with Redux
 
-If you need access to config values in client-side code, this can be done
-through your redux store. The config plugin looks for a `public` property of
-your configuration in `gasket-data.config.js` and places it under a `gasketData`
-property in your initial public state.
-
-```js
-module.exports = {
-  environments: {
-    dev: {
-      public: {
-        url: 'https://your-dev-service-endpoint.com'
-      }
-    },
-    test: {
-      public: {
-        url: 'https://your-test-service-endpoint.com'
-      }
-    }
-  }
-};
-```
-
-In this example, url can be selected from `state.gasketData.url` with Redux
-in the browser.
+Another way to access to data values in client-side code is through redux state.
+This plugin looks for a `public` property of your configuration in
+`gasket.data.js` and places it under a `gasketData` property in your initial
+public state by hooking the [initReduxState] lifecycle.
 
 ## Lifecycles
 
@@ -225,22 +151,22 @@ module.exports = {
 }
 ```
 
-### responseData
+### publicGasketData
 
-On each request, the `responseData` event is fired, enabling plugins to
-inject configuration derived from the request being processed. It is passed the
-gasket API, the public gasketData, and a context with the request & response.
-Again, hooks should return a new object instead of mutating an existing object.
-This is _especially_ vital in the case of this event to avoid cross-request
-information leaks.
+When the `getPublicGasketData` action used for request-specific data,
+the `publicGasketData` lifecycle is fired, enabling plugins to inject
+data related the request being processed. It is passed the
+gasket API, the public gasketData, and a context with the request.
+
 Sample:
 
 ```js
 const getFeatureFlags = require('./feature-flags');
 
-module.exports = {
+export default {
+  name: 'gasket-plugin-example',
   hooks: {
-    async responseData(gasket, publicGasketData, { req, res }) {
+    async publicGasketData(gasket, publicData, { req }) {
       const featureFlags = await getFeatureFlags({
         shopperId: req.user.shopperId,
         locale: req.cookies.market,
@@ -248,7 +174,7 @@ module.exports = {
       });
 
       return {
-        ...publicGasketData,
+        ...publicData,
         featureFlags
       };
     }
@@ -262,7 +188,10 @@ module.exports = {
 
 <!-- LINKS -->
 
-[Environment per file]:#environment-files
-[Environments inline]:#environments-inline
+[getPublicGasketData]: #getpublicgasketdata
 
+[withGasketData]: /packages/gasket-nextjs/README.md#withgasketdata
+[initReduxState]: /packages/gasket-plugin-redux/README.md#initreduxstate
+
+<!-- TODO - recover configuration doc -->
 [inline environment overrides]:/packages/gasket-cli/docs/configuration.md#environments
