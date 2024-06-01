@@ -1,17 +1,36 @@
-import type { MaybeAsync } from '@gasket/core';
-import type { IncomingMessage, OutgoingMessage } from 'http';
+import { MaybeAsync } from '@gasket/core';
+import type { OutgoingMessage } from 'http';
+
+
+export interface PublicGasketData extends Record<string, any> {
+}
+
+export interface GasketData extends Record<string, any> {
+  public?: PublicGasketData
+}
+
+export type GasketDataDefinition = GasketData & {
+  environments?: Record<string, Partial<GasketDataDefinition>>
+  commands?: Record<string, Partial<GasketDataDefinition>>
+}
 
 declare module '@gasket/core' {
   export interface GasketConfig {
-    gasketDataDir?: string
+    data?: GasketDataDefinition
+  }
+
+  export interface GasketActions {
+    getGasketData(): Promise<GasketData>
+    getPublicGasketData(req: GasketRequest): Promise<PublicGasketData>
   }
 
   export interface HookExecTypes {
-    gasketData(config: object): MaybeAsync<object>,
-    responseData(
-      config: object,
-      context: { req: IncomingMessage, res: OutgoingMessage }
-    ): MaybeAsync<object>
+    gasketData(data: GasketData): MaybeAsync<GasketData>,
+
+    publicGasketData(
+      publicData: PublicGasketData,
+      context: { req: GasketRequest, res?: OutgoingMessage }
+    ): MaybeAsync<PublicGasketData>
   }
 }
 
