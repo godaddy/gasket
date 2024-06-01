@@ -1,4 +1,4 @@
-import type { GasketConfig, GasketConfigDefinition, MaybeAsync } from '@gasket/core';
+import type { MaybeAsync } from '@gasket/core';
 
 interface PackageManagerOptions {
   /** Name of manager, either `npm` (default) or `yarn` */
@@ -61,13 +61,21 @@ interface ConfigContext {
   /** Project root; required if using localeFile */
 }
 
+interface ConfigDefinition extends Record<string, any> {
+  environments?: Record<string, Partial<ConfigDefinition>>
+  commands?: Record<string, Partial<ConfigDefinition>>
+  [key: string]: any
+}
+
+type ConfigOutput = Omit<ConfigDefinition, 'environments' | 'commands'>
+
 /**
  * Normalize the config by applying any overrides for environments, commands, or local-only config file.
  */
 export function applyConfigOverrides(
-  config: GasketConfigDefinition,
+  config: ConfigDefinition,
   configContext: ConfigContext
-): GasketConfig;
+): ConfigOutput;
 
 export interface Signal {
   aborted?: boolean;
@@ -75,9 +83,8 @@ export interface Signal {
 }
 
 export function getPotentialConfigs(
-  config: ConfigContext & {
-    config: GasketConfigDefinition;
-  }
+  config: ConfigDefinition,
+  configContext: ConfigContext
 ): Generator<any, any, any>;
 
 /**

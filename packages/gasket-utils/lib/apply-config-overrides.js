@@ -12,7 +12,7 @@ function applyConfigOverrides(
 ) {
   return defaultsDeep(
     {},
-    ...getPotentialConfigs({ config, env, commandId })
+    ...getPotentialConfigs(config, { env, commandId })
   );
 }
 
@@ -20,7 +20,7 @@ function applyConfigOverrides(
  * Generator function to yield potential configurations
  * @type {import('./index').getPotentialConfigs}
  */
-function *getPotentialConfigs({ config, env, commandId }) {
+function *getPotentialConfigs(config, { env, commandId }) {
   // Separate environment-specific config from another config
   const { environments = {}, commands = {}, ...baseConfig } = config;
   const isLocalEnv = env === 'local';
