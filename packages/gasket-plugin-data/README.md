@@ -1,4 +1,4 @@
-# @gasket/plugin-response-data
+# @gasket/plugin-data
 
 Add support for environment and request specific data such as settings and
 configurations.
@@ -13,13 +13,13 @@ hooks for gather user or request-specific data.
 #### New apps
 
 ```
-gasket create <app-name> --plugins @gasket/plugin-response-data
+gasket create <app-name> --plugins @gasket/plugin-data
 ```
 
 #### Existing apps
 
 ```
-npm i @gasket/plugin-response-data
+npm i @gasket/plugin-data
 ```
 
 Modify `plugins` section of your `gasket.js`:

@@ -1,5 +1,5 @@
 {
-  "name": "@gasket/plugin-response-data",
+  "name": "@gasket/plugin-data",
   "version": "7.0.0-next.33",
   "description": "Supports application-specific settings and configurations",
   "main": "lib/index.js",
@@ -39,7 +39,7 @@
   "bugs": {
     "url": "https://github.com/godaddy/gasket/issues"
   },
-  "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-response-data",
+  "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-data",
   "dependencies": {
     "@gasket/utils": "^7.0.0-next.33",
     "lodash.merge": "^4.6.2"

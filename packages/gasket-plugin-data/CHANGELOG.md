@@ -1,4 +1,4 @@
-# `@gasket/plugin-response-data`
+# `@gasket/plugin-data`
 
 
 
