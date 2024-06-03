@@ -51,7 +51,6 @@ const config: GasketConfigDefinition = {
     pluginLogger,
     pluginManifest,
     pluginMetadata,
-    pluginMetrics,
     pluginMocha,
     pluginMorgan,
     pluginNextjs,
