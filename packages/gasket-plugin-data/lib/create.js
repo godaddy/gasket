@@ -17,6 +17,9 @@ async function create(gasket, { pkg, files, gasketConfig }) {
   );
 
   gasketConfig
+    .addPlugin('pluginData', name);
+
+  gasketConfig
     .addImport('gasketData', './gasket.data.js')
     .injectValue('data', 'gasketData');
 }

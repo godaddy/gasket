@@ -22,6 +22,7 @@ describe('create', function () {
       },
       gasketConfig: {
         add: jest.fn(),
+        addPlugin: jest.fn(),
         addImport: jest.fn().mockReturnThis(),
         injectValue: jest.fn()
       }
@@ -51,6 +52,11 @@ describe('create', function () {
     expect(filesAddStub).toHaveBeenCalledWith(
       expect.stringContaining('../generator/*')
     );
+  });
+
+  it('adds plugin import to the gasket file', async function () {
+    await plugin.hooks.create({}, mockContext);
+    expect(mockContext.gasketConfig.addPlugin).toHaveBeenCalledWith('pluginData', '@gasket/plugin-data');
   });
 
   it('adds data file import to the gasket file', async function () {
