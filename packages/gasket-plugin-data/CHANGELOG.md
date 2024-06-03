@@ -4,6 +4,9 @@
 
 - Add plugin import to gasket file ([#736])
 - Add itself to the app package file
+- Added `getGasketData` and `getPublicGasketData` actions ([#773])
+- Lifecycles are now `gasketData` and `publicGasketData`
+- No magic file imports
 
 ### 6.45.2
 
@@ -69,3 +72,4 @@
 [#460]: https://github.com/godaddy/gasket/pull/460
 [#670]: https://github.com/godaddy/gasket/pull/670
 [#736]: https://github.com/godaddy/gasket/pull/736
+[#773]: https://github.com/godaddy/gasket/pull/773
