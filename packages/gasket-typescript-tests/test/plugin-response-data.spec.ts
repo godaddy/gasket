@@ -1,19 +1,29 @@
-import { Gasket, GasketConfig, GasketConfigDefinition, Hook } from '@gasket/core';
-import '@gasket/plugin-response-data';
+import { Gasket, GasketConfigDefinition, Hook } from '@gasket/core';
+import '@gasket/plugin-data';
 
-describe('@gasket/plugin-response-data', () => {
+describe('@gasket/plugin-data', () => {
 
-  it('adds an optional configPath property to gasket config', () => {
+  it('adds an optional data property to gasket config', () => {
     const config: GasketConfigDefinition = {
       plugins: [{ name: 'example-plugin', hooks: {} }],
-      gasketDataDir: './custom/path'
+      data: {
+        some: 'data',
+        public: {
+          some: 'public'
+        },
+        environments: {
+          production: {
+            some: 'override'
+          }
+        }
+      }
     };
   });
 
-  it('validates the configPath config property', () => {
+  it('validates the data config property', () => {
     const config: GasketConfigDefinition = {
       // @ts-expect-error
-      configPath: 4
+      data: 'should be an object'
     };
   });
 
@@ -25,7 +35,7 @@ describe('@gasket/plugin-response-data', () => {
   });
 
   it('defines the responseData lifecycle', () => {
-    const hook: Hook<'responseData'> = (gasket, config, { req, res }) => ({
+    const hook: Hook<'publicGasketData'> = (gasket, config, { req }) => ({
       ...config,
       serviceName: req.headers.host
     });

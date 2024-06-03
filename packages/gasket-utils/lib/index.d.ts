@@ -72,10 +72,10 @@ type ConfigOutput = Omit<ConfigDefinition, 'environments' | 'commands'>
 /**
  * Normalize the config by applying any overrides for environments, commands, or local-only config file.
  */
-export function applyConfigOverrides(
-  config: ConfigDefinition,
+export function applyConfigOverrides<Def extends ConfigDefinition, Out extends ConfigOutput>(
+  config: Def,
   configContext: ConfigContext
-): ConfigOutput;
+): Out;
 
 export interface Signal {
   aborted?: boolean;
