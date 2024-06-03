@@ -1,3 +1,5 @@
+/// <reference types="@gasket/plugin-data" />
+
 import { Children, cloneElement, createElement } from 'react';
 import { Main, NextScript } from 'next/document';
 import { GasketDataScript } from '../gasket-data-script.js';
@@ -72,8 +74,7 @@ export function withGasketData(
   return Document => {
 
     async function getInitialProps(ctx) {
-      // @ts-ignore -- TODO: Uncomment this when action is implemented
-      const gasketData = gasket.actions.getPublicGasketData?.(ctx.req) ?? {};
+      const gasketData = await gasket.actions.getPublicGasketData?.(ctx.req) ?? {};
 
       return {
         ...(await Document.getInitialProps(ctx)),

@@ -5,10 +5,8 @@ const fs = require('fs');
  * Fixup makeStore path to be absolute, allowing relative paths in gasket.config
  * @type {import('@gasket/core').HookHandler<'configure'>}
  */
-module.exports = function configure(gasket, baseConfig, extra) {
+module.exports = function configure(gasket, baseConfig) {
   const { root, redux: reduxConfig = {} } = baseConfig;
-
-  console.log('extra', extra);
 
   let makeStorePath = reduxConfig.makeStore;
   if (makeStorePath) {

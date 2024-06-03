@@ -23,7 +23,7 @@ import pluginMocha from '@gasket/plugin-mocha';
 import pluginMorgan from '@gasket/plugin-morgan';
 import pluginNextjs from '@gasket/plugin-nextjs';
 import pluginRedux from '@gasket/plugin-redux';
-import pluginResponseData from '@gasket/plugin-response-data';
+import pluginResponseData from '@gasket/plugin-data';
 import pluginServiceWorker from '@gasket/plugin-service-worker';
 import pluginStart from '@gasket/plugin-start';
 import pluginSwagger from '@gasket/plugin-swagger';
