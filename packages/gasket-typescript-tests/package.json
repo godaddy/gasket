@@ -59,7 +59,6 @@
     "@gasket/plugin-logger": "^7.0.0-next.33",
     "@gasket/plugin-manifest": "^7.0.0-next.33",
     "@gasket/plugin-metadata": "^7.0.0-next.33",
-    "@gasket/plugin-metrics": "^7.0.0-next.33",
     "@gasket/plugin-mocha": "^7.0.0-next.33",
     "@gasket/plugin-morgan": "^7.0.0-next.33",
     "@gasket/plugin-nextjs": "^7.0.0-next.33",
