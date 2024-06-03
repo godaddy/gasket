@@ -189,7 +189,6 @@ export default {
 <!-- LINKS -->
 
 [getPublicGasketData]: #getpublicgasketdata
-
 [withGasketData]: /packages/gasket-nextjs/README.md#withgasketdata
 [initReduxState]: /packages/gasket-plugin-redux/README.md#initreduxstate
 

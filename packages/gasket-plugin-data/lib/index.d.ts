@@ -29,7 +29,7 @@ declare module '@gasket/core' {
 
     publicGasketData(
       publicData: PublicGasketData,
-      context: { req: GasketRequest, res?: OutgoingMessage }
+      context: { req: GasketRequest }
     ): MaybeAsync<PublicGasketData>
   }
 }

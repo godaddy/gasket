@@ -22,7 +22,8 @@ describe('create', function () {
       },
       gasketConfig: {
         add: jest.fn(),
-        addPlugin: jest.fn()
+        addImport: jest.fn().mockReturnThis(),
+        injectValue: jest.fn()
       }
     };
   });
@@ -45,8 +46,20 @@ describe('create', function () {
     );
   });
 
-  it('adds plugin import to the gasket file', async function () {
+  it('adds generator files', async function () {
     await plugin.hooks.create({}, mockContext);
-    expect(mockContext.gasketConfig.addPlugin).toHaveBeenCalledWith('pluginResponseData', name);
+    expect(filesAddStub).toHaveBeenCalledWith(
+      expect.stringContaining('../generator/*')
+    );
+  });
+
+  it('adds data file import to the gasket file', async function () {
+    await plugin.hooks.create({}, mockContext);
+    expect(mockContext.gasketConfig.addImport).toHaveBeenCalledWith('gasketData', './gasket.data.js');
+  });
+
+  it('adds data var to the gasket config', async function () {
+    await plugin.hooks.create({}, mockContext);
+    expect(mockContext.gasketConfig.injectValue).toHaveBeenCalledWith('data', 'gasketData');
   });
 });

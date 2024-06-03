@@ -2,29 +2,35 @@
 
 const deepClone = json => JSON.parse(JSON.stringify(json));
 
-let _gasketData;
+const baseDataMap = new WeakMap();
+const adjustedDataMap = new WeakMap();
 const reqMap = new WeakMap();
 
 /**
- * type {import('@gasket/core').HookHandler<'actions'>}
+ * @type {import('@gasket/core').HookHandler<'actions'>}
  */
 function actions(gasket) {
   return {
     async getGasketData() {
-      if (!_gasketData) {
-        _gasketData = await gasket.execWaterfall('gasketData', deepClone(gasket.config.data ?? {}));
+      if (!adjustedDataMap.has(gasket)) {
+        const baseData = baseDataMap.get(gasket) ?? {};
+        const adjustedData = await gasket.execWaterfall('gasketData', deepClone(baseData));
 
-        if (!_gasketData) {
+        if (!adjustedData) {
           throw new Error(
             'No gasketData - likely a gasketData lifecycle hook did not properly return data.'
           );
         }
+
+        adjustedDataMap.set(gasket, adjustedData);
+        baseDataMap.delete(gasket);
       }
-      return _gasketData;
+
+      return adjustedDataMap.get(gasket);
     },
     async getPublicGasketData(req) {
       if (!reqMap.has(req)) {
-        const basePublicData = (await gasket.actions.getGasketData()).public;
+        const basePublicData = (await gasket.actions.getGasketData()).public ?? {};
 
         const userPublicData = await gasket.execWaterfall(
           'publicGasketData',
@@ -46,4 +52,7 @@ function actions(gasket) {
   };
 }
 
-module.exports = actions;
+module.exports = {
+  baseDataMap,
+  actions
+};
