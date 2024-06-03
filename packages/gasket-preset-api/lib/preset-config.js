@@ -2,7 +2,7 @@ import pluginExpress from '@gasket/plugin-express';
 import pluginHttps from '@gasket/plugin-https';
 import pluginDocs from '@gasket/plugin-docs';
 import pluginDocusaurus from '@gasket/plugin-docusaurus';
-import pluginResponseData from '@gasket/plugin-response-data';
+import pluginData from '@gasket/plugin-data';
 import pluginWinston from '@gasket/plugin-winston';
 import pluginSwagger from '@gasket/plugin-swagger';
 import pluginLint from '@gasket/plugin-lint';
@@ -34,7 +34,7 @@ export default async function presetConfig(gasket, context) {
       pluginHttps,
       pluginDocs,
       pluginDocusaurus,
-      pluginResponseData,
+      pluginData,
       pluginWinston,
       pluginSwagger,
       pluginLint,
