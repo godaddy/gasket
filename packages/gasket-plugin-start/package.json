@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-start",
-  "version": "7.0.0-next.33",
+  "version": "7.0.0-next.34",
   "description": "Adds commands for building and starting Gasket apps",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -42,7 +42,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-start",
   "devDependencies": {
-    "@gasket/core": "^7.0.0-next.33",
+    "@gasket/core": "^7.0.0-next.34",
     "@types/jest": "^29.5.12",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
