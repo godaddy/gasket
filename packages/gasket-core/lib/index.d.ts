@@ -39,7 +39,17 @@ declare module '@gasket/core' {
   export type Hook<Id extends HookId> = HookWithTimings<Id> | HookHandler<Id>;
 
   export type Plugin = {
+
+    /* Package file name */
     name: string;
+
+    /* Package file version */
+    version: string;
+
+    /* Package file description */
+    description: string;
+
+
     dependencies?: Array<string>;
     hooks: {
       [K in HookId]?: Hook<K>;
