@@ -63,19 +63,4 @@ describe('fastify', () => {
     expect(res.locals).toEqual({});
     expect(next).toHaveBeenCalled();
   });
-
-  it('applies the cookie parser', () => {
-
-  });
-
-  /**
-   * Find the first call in a spy that matches a predicate
-   * @param aSpy
-   * @param aPredicate
-   * @returns {any}
-   */
-  function findCall(aSpy, aPredicate) {
-    const callIdx = aSpy.mock.calls.map(args => aPredicate(...args)).indexOf(true);
-    return callIdx === -1 ? null : aSpy.mock.calls[callIdx][0];
-  }
 });
