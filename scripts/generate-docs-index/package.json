@@ -1,7 +1,7 @@
 {
   "name": "generate-docs-index",
   "private": true,
-  "version": "6.47.0",
+  "version": "7.0.1-canary.0",
   "description": "Generate the overview index",
   "dependencies": {
     "@gasket/cli": "^6.47.0"
