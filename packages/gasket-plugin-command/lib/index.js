@@ -9,6 +9,9 @@ export default {
   version,
   description,
   hooks: {
+    create(gasket, { gasketConfig }) {
+      gasketConfig.addPlugin('pluginCommand', name);
+    },
     configure,
     metadata(gasket, meta) {
       return {
