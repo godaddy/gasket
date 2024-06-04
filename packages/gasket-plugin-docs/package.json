@@ -51,6 +51,7 @@
   },
   "devDependencies": {
     "@gasket/core": "^7.0.0-next.33",
+    "@gasket/plugin-command": "^7.0.0-next.33",
     "@gasket/plugin-metadata": "^7.0.0-next.33",
     "@godaddy/dmd": "^1.0.4",
     "cross-env": "^7.0.3",
