@@ -1,13 +1,14 @@
-import cookieParser from 'cookie-parser';
-import compression from 'compression';
-import diagnostics from 'diagnostics';
+const cookieParser = require('cookie-parser');
+const compression = require('compression');
+const diagnostics = require('diagnostics');
 
 const debug = diagnostics('gasket:middleware');
 
 /**
- *
+ * Applies the cookie parser based on the middleware pattern.
+ * @type {import('./internal').applyCookieParser}
  */
-export function applyCookieParser(app, middlewarePattern) {
+function applyCookieParser(app, middlewarePattern) {
   if (middlewarePattern) {
     app.use(middlewarePattern, cookieParser());
   } else {
@@ -16,20 +17,20 @@ export function applyCookieParser(app, middlewarePattern) {
 }
 
 /**
- *
+ * Applies compression to the application if a compression config is present.
+ * @type {import('./internal').applyCompression}
  */
-export function applyCompression(app, compressionConfig) {
+function applyCompression(app, compressionConfig) {
   if (compressionConfig) {
     app.use(compression());
   }
 }
 
-
 /**
- * Setup the middleware lifecycle hook
- * 
+ * Executes the middleware lifecycle for the application
+ * @type {import('./internal').executeMiddlewareLifecycle}
  */
-export async function executeMiddlewareLifecycle(gasket, app, middlewarePattern) {
+async function executeMiddlewareLifecycle(gasket, app, middlewarePattern) {
   const { config } = gasket;
   const {
     middleware: middlewareConfig
@@ -67,4 +68,8 @@ export async function executeMiddlewareLifecycle(gasket, app, middlewarePattern)
   });
 }
 
-
+module.exports = {
+  applyCookieParser,
+  applyCompression,
+  executeMiddlewareLifecycle
+};

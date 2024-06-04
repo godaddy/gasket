@@ -1,12 +1,11 @@
 # @gasket/plugin-middleware
 
-A helper plugin to handle common server engine setups for routing and
-executing lifecycles. 
+An optional plugin when used applies middleware to express or fastify. 
 
 
 ## Configuration
 
-All the configurations for a server setup are added under `express` or `fastify` in the config:
+All the configurations for middleware setup are added under `express` or `fastify` in the config:
 
 - `compression`: true by default. Can be set to false if applying compression
   differently.
