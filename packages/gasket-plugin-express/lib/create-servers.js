@@ -30,8 +30,8 @@ module.exports = async function createServers(gasket, serverOpts) {
     }
   }
 
-  // const postRenderingStacks = (await gasket.exec('errorMiddleware')).filter(Boolean);
-  // postRenderingStacks.forEach((stack) => app.use(stack));
+  const postRenderingStacks = (await gasket.exec('errorMiddleware')).filter(Boolean);
+  postRenderingStacks.forEach((stack) => app.use(stack));
 
   return {
     ...serverOpts,
