@@ -57,6 +57,7 @@ function generateContent(docsConfigSet) {
       linkFallbacks = false
     } = {}
   ) => {
+    console.log(sectionTitle, docs)
     if (!docs || !docs.length) return;
 
     addContent(`## ${sectionTitle}`);
