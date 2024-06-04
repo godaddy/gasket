@@ -1,4 +1,5 @@
-import type { MaybeAsync, Plugin } from '@gasket/core';
+import type { MaybeAsync, Plugin, GasketConfig } from '@gasket/core';
+import type { GasketCommandDefinition } from '@gasket/plugin-command';
 
 import type {
   DocsConfigSet,

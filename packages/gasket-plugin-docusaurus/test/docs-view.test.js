@@ -2,7 +2,8 @@ const path = require('path');
 const mockStartStub = jest.fn();
 const mockWriteFileStub = jest.fn();
 const mockExistsStub = jest.fn();
-const mockTryRequireStub = jest.fn();
+const mockPresetClassic = jest.fn();
+const mockCorePackage = jest.fn();
 
 jest.mock('fs', () => {
   const mod = jest.requireActual('fs');
@@ -19,9 +20,8 @@ jest.mock('@docusaurus/core/lib', () => ({
   start: mockStartStub
 }));
 
-jest.mock('@gasket/utils', () => ({
-  tryRequire: mockTryRequireStub
-}));
+jest.mock('@docusaurus/preset-classic', () => mockPresetClassic());
+jest.mock('@docusaurus/core/package.json', () => mockCorePackage());
 
 const pluginConfigFile = 'docusaurus.config.js';
 const docsView = require('../lib/docs-view');
@@ -31,7 +31,7 @@ describe('docsView', () => {
   let mockGasket;
 
   beforeEach(() => {
-    mockTryRequireStub.mockReturnValue(true);
+    jest.resetModules();
     mockGasket = {
       metadata: {
         app: {
@@ -81,9 +81,8 @@ describe('docsView', () => {
   });
 
   it('throw on missing devDependencies', async function () {
-    mockTryRequireStub.mockReturnValue(false);
-    expect(mockTryRequireStub).toHaveBeenCalledWith('@docusaurus/preset-classic');
-    expect(mockTryRequireStub).toHaveBeenCalledWith('@docusaurus/core/package.json');
+    mockPresetClassic.mockImplementationOnce(() => { throw new Error('ModuleNotFoundError'); });
+    mockCorePackage.mockImplementationOnce(() => { throw new Error('ModuleNotFoundError'); });
     await expect(async () => await docsView(mockGasket)).rejects.toThrow();
   });
 });

@@ -8,15 +8,14 @@ module.exports = {
       const { pkg, files } = context;
 
       pkg.add('devDependencies', {
-        'nodemon': devDependencies.nodemon,
-        'ts-node': devDependencies['ts-node'],
-        'typescript': devDependencies.typescript
+        tsx: devDependencies.tsx,
+        typescript: devDependencies.typescript
       });
 
       pkg.add('scripts', {
         build: 'tsc',
         start: 'node dist/server.js',
-        local: 'nodemon server.ts'
+        local: 'GASKET_ENV=local tsx watch server.ts'
       });
 
       files.add(

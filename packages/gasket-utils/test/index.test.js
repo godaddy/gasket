@@ -3,12 +3,11 @@ describe('index', () => {
     const utils = require('../lib');
 
     const expected = [
-      'tryRequire',
-      'tryResolve',
       'applyConfigOverrides',
       'runShellCommand',
       'PackageManager',
-      'warnIfOutdated'
+      'warnIfOutdated',
+      'getPackageLatestVersion'
     ];
 
     expect(expected.every(k => k in utils)).toBe(true);

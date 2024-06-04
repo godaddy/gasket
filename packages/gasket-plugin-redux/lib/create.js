@@ -4,6 +4,8 @@ const { devDependencies } = require('../package.json');
 
 /** @type {import('@gasket/core').HookHandler<'create'>} */
 module.exports = async function create(gasket, context) {
+  if (context.useRedux !== true) return;
+
   const { pkg, files } = context;
   const generatorDir = `${__dirname}/../generator`;
 

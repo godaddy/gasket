@@ -1,6 +1,5 @@
-/**
- * @jest-environment node
- */
+// eslint-disable-next-line jsdoc/check-tag-names
+/** @jest-environment node */
 
 import { jest } from '@jest/globals';
 
@@ -39,7 +38,7 @@ describe('request', () => {
 
   beforeAll(async () => {
     // must be dynamic to avoid hoisting static import to the top
-    request = await import('../../src/server/request').then((module) => module.request);
+    request = await import('../../lib/server/request').then((module) => module.request);
   });
 
   beforeEach(() => {

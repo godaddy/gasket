@@ -1,4 +1,4 @@
-/// <reference types="@gasket/cli" />
+/// <reference types="@gasket/core" />
 
 const { name, version, devDependencies } = require('../package.json');
 
@@ -24,14 +24,12 @@ module.exports = async function create(gasket, context) {
 
     if ('typescript' in context && context.typescript) {
       context.files.add(`${generatorDir}/**/!(*.js)`);
-      context.gasketConfig
-        .addImport('{ routes }', './routes')
-        .injectValue('express.routes', 'routes');
     } else {
       context.files.add(`${generatorDir}/**/!(*.ts)`);
-      context.gasketConfig
-        .addImport('{ routes }', './routes/index.js')
-        .injectValue('express.routes', 'routes');
     }
+
+    context.gasketConfig
+      .addImport('{ routes }', './routes/index.js')
+      .injectValue('express.routes', 'routes');
   }
 };

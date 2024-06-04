@@ -1,5 +1,5 @@
 import type { Plugin } from '@gasket/core';
-import type { PackageJson } from '@gasket/cli';
+import type { PackageJson } from 'create-gasket-app';
 import type {
   ModuleData,
   PluginData,

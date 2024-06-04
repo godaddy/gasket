@@ -1,4 +1,4 @@
-import type { GasketConfig, GasketConfigDefinition, MaybeAsync } from '@gasket/core';
+import type { MaybeAsync } from '@gasket/core';
 
 interface PackageManagerOptions {
   /** Name of manager, either `npm` (default) or `yarn` */
@@ -53,20 +53,6 @@ export interface PackageManager {
   info(args?: Array<string>): Promise<{ data: any; stdout: string }>;
 }
 
-/**
- * Tries to require a module, but ignores if it is not found. If not found,
- * result will be null.
- * @example
- * const { tryRequire } = require('@gasket/utils');
- *
- *  let someConfig = tryRequire('../might/be/a/path/to/some/file');
- *
- *  if(!someConfig) {
- *   someConfig = require('./default-config')
- * }
- */
-export function tryRequire(path: string): object | null;
-
 interface ConfigContext {
   /** Name of environment */
   env: string;
@@ -75,13 +61,21 @@ interface ConfigContext {
   /** Project root; required if using localeFile */
 }
 
+interface ConfigDefinition extends Record<string, any> {
+  environments?: Record<string, Partial<ConfigDefinition>>
+  commands?: Record<string, Partial<ConfigDefinition>>
+  [key: string]: any
+}
+
+type ConfigOutput = Omit<ConfigDefinition, 'environments' | 'commands'>
+
 /**
  * Normalize the config by applying any overrides for environments, commands, or local-only config file.
  */
-export function applyConfigOverrides(
-  config: GasketConfigDefinition,
+export function applyConfigOverrides<Def extends ConfigDefinition, Out extends ConfigOutput>(
+  config: Def,
   configContext: ConfigContext
-): GasketConfig;
+): Out;
 
 export interface Signal {
   aborted?: boolean;
@@ -89,9 +83,8 @@ export interface Signal {
 }
 
 export function getPotentialConfigs(
-  config: ConfigContext & {
-    config: GasketConfigDefinition;
-  }
+  config: ConfigDefinition,
+  configContext: ConfigContext
 ): Generator<any, any, any>;
 
 /**
@@ -167,3 +160,5 @@ export interface ConfigContext {
 
 
 export function warnIfOutdated(pkgName: string, currentVersion: string): MaybeAsync<void>;
+
+export function getPackageLatestVersion(pkgName: string, options?: object): Promise<string>;

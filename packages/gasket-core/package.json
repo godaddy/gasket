@@ -1,6 +1,6 @@
 {
   "name": "@gasket/core",
-  "version": "7.0.0-next.27",
+  "version": "7.0.0-next.34",
   "description": "Entry point to setting up Gasket instances",
   "exports": {
     ".": {
@@ -23,7 +23,8 @@
     "test:coverage": "npm run test -- --coverage",
     "posttest": "npm run lint && npm run typecheck",
     "typecheck": "tsc",
-    "typecheck:watch": "tsc --watch"
+    "typecheck:watch": "tsc --watch",
+    "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",

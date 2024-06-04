@@ -1,5 +1,3 @@
-import { GasketConfig } from '@gasket/core';
-
 declare module '@gasket/core' {
   export type MaybeMultiple<T> = T | Array<T>;
   export type MaybeAsync<T> = T | Promise<T>;
@@ -11,7 +9,7 @@ declare module '@gasket/core' {
   export interface HookExecTypes {
     // add makeGasket lifecycles
     init(): void
-    actions(): GasketActions
+    actions(): Partial<GasketActions>
     configure(config: GasketConfig): GasketConfig
   }
 
@@ -113,6 +111,16 @@ declare module '@gasket/core' {
     environments?: Record<string, Partial<GasketConfigDefinition>>
     commands?: Record<string, Partial<GasketConfigDefinition>>
   }
+
+  /**
+   * Expected request shape for GasketActions
+   */
+  export interface GasketRequest {
+    cookies: Record<string, string>;
+    headers: Record<string, string>;
+    query?: Record<string, string>;
+  }
+
+  export function makeGasket(config: GasketConfigDefinition): Gasket
 }
 
-export function makeGasket(config: GasketConfigDefinition): Gasket

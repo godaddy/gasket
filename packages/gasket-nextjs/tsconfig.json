@@ -16,11 +16,10 @@
     ]
   },
   "include": [
-    "src"
+    "lib"
   ],
   "exclude": [
     "test",
-    "coverage",
-    "lib"
+    "coverage"
   ]
 }

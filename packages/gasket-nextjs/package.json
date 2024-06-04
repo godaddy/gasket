@@ -1,25 +1,32 @@
 {
   "name": "@gasket/nextjs",
-  "version": "7.0.0-next.27",
+  "version": "7.0.0-next.34",
   "description": "Gasket integrations for Next.js apps",
-  "types": "src/index.d.ts",
+  "type": "module",
   "files": [
-    "src",
     "lib"
   ],
   "exports": {
-    ".": "./lib/index.js",
-    "./server": "./lib/server/index.js"
+    ".": {
+      "types": "./lib/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./document": {
+      "types": "./lib/document/index.d.ts",
+      "default": "./lib/document/index.js"
+    },
+    "./server": {
+      "types": "./lib/server/index.d.ts",
+      "default": "./lib/server/index.js"
+    }
   },
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
-    "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
-    "test:watch": "jest --watchAll",
-    "test:coverage": "jest --coverage",
+    "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict --experimental-vm-modules' jest",
+    "test:watch": "npm run test -- --watch",
+    "test:coverage": "npm run test -- --coverage",
     "posttest": "npm run lint && npm run typecheck",
-    "build": "babel src -d lib --delete-dir-on-start",
-    "prepublishOnly": "npm run build",
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"
   },
@@ -44,14 +51,11 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-nextjs",
   "dependencies": {
-    "@gasket/data": "^7.0.0-next.27",
+    "@gasket/data": "^7.0.0-next.34",
     "htmlescape": "^1.1.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.23.4",
-    "@babel/core": "^7.23.7",
-    "@babel/eslint-parser": "^7.23.3",
-    "@babel/register": "^7.23.7",
+    "@jest/globals": "^29.7.0",
     "@testing-library/react": "^13.4.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
@@ -91,12 +95,8 @@
   "eslintIgnore": [
     "lib"
   ],
-  "babel": {
-    "presets": [
-      "next/babel"
-    ]
-  },
   "jest": {
-    "testEnvironment": "jsdom"
+    "testEnvironment": "jsdom",
+    "transform": {}
   }
 }
