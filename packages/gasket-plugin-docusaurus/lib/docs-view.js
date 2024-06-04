@@ -28,7 +28,9 @@ module.exports = async function docsView(gasket) {
   checkDevDependencies();
   const { start } = require('@docusaurus/core/lib');
   const { config } = gasket;
-  const { name } = gasket.metadata.app;
+  // @ts-expect-error
+  const { app: { name }} = await gasket.actions.getMetadata(gasket);
+  console.log(name);
   const userConfig = gasket.config.docusaurus;
   const configFilePath = path.join(config.root, pluginConfigFile);
 
