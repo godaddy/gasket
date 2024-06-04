@@ -1,6 +1,6 @@
 {
   "name": "@gasket/preset-api",
-  "version": "7.0.1-canary.0",
+  "version": "7.0.1-canary.1",
   "description": "Create Express-based API with Gasket",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -31,7 +31,7 @@
   },
   "dependencies": {
     "@gasket/plugin-cypress": "^7.0.1-canary.0",
-    "@gasket/plugin-docs": "^7.0.1-canary.0",
+    "@gasket/plugin-docs": "^7.0.1-canary.1",
     "@gasket/plugin-docusaurus": "^7.0.1-canary.0",
     "@gasket/plugin-express": "^7.0.1-canary.0",
     "@gasket/plugin-https": "^7.0.1-canary.0",
