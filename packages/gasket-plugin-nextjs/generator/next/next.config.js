@@ -1,4 +1,2 @@
 import gasket from './gasket.js';
-export default gasket.actions.getNextConfig({
-  transpilePackages: ['@gasket/nextjs']
-});
+export default gasket.actions.getNextConfig();
