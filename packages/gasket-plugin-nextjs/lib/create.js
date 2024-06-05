@@ -13,7 +13,7 @@ function createAppFiles({ files, generatorDir, useAppRouter }) {
   );
 
   const appStructure = useAppRouter ? 'app-router' : 'pages-router';
-  
+
   files.add(
     `${generatorDir}/app/${appStructure}/.*`,
     `${generatorDir}/app/${appStructure}/*`,

@@ -8,7 +8,7 @@ const logoStyle = { width: '250px', height: '250px' };
 export const metadata = {
   title: 'Home',
   description: 'A basic gasket app',
-  charset: 'UTF-8',
+  charset: 'UTF-8'
 };
 
 export default function Page() {
@@ -20,4 +20,4 @@ export default function Page() {
       <p><a href='https://gasket.dev'>Learn Gasket</a></p>
     </div>
   );
-};
+}
