@@ -176,7 +176,6 @@ Available plugins
 | [@gasket/plugin-log]            | 6.46.2  | Gasket log plugin                                                          |
 | [@gasket/plugin-manifest]       | 6.46.2  | The web app manifest for progressive Gasket applications                   |
 | [@gasket/plugin-metadata]       | 6.46.4  | Adds metadata to gasket lifecycles                                         |
-| [@gasket/plugin-metrics]        | 6.46.7  | Collect metrics for gasket commands                                        |
 | [@gasket/plugin-mocha]          | 6.46.7  | Integrates mocha based testing in to your Gasket application               |
 | [@gasket/plugin-morgan]         | 6.46.7  | Adds morgan request logger to your app                                     |
 | [@gasket/plugin-nextjs]         | 6.46.7  | Adds Next support to your application                                      |
@@ -388,7 +387,6 @@ Available configuration options in the `gasket.config.js`
 [@gasket/plugin-log]:/packages/gasket-plugin-log/README.md
 [@gasket/plugin-manifest]:/packages/gasket-plugin-manifest/README.md
 [@gasket/plugin-metadata]:/packages/gasket-plugin-metadata/README.md
-[@gasket/plugin-metrics]:/packages/gasket-plugin-metrics/README.md
 [@gasket/plugin-mocha]:/packages/gasket-plugin-mocha/README.md
 [@gasket/plugin-morgan]:/packages/gasket-plugin-morgan/README.md
 [@gasket/plugin-nextjs]:/packages/gasket-plugin-nextjs/README.md

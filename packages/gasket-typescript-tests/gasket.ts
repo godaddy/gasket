@@ -18,7 +18,6 @@ import pluginLint from '@gasket/plugin-lint';
 import pluginLogger from '@gasket/plugin-logger';
 import pluginManifest from '@gasket/plugin-manifest';
 import pluginMetadata from '@gasket/plugin-metadata';
-import pluginMetrics from '@gasket/plugin-metrics';
 import pluginMocha from '@gasket/plugin-mocha';
 import pluginMorgan from '@gasket/plugin-morgan';
 import pluginNextjs from '@gasket/plugin-nextjs';
@@ -52,7 +51,6 @@ const config: GasketConfigDefinition = {
     pluginLogger,
     pluginManifest,
     pluginMetadata,
-    pluginMetrics,
     pluginMocha,
     pluginMorgan,
     pluginNextjs,
