@@ -106,7 +106,7 @@
   },
   "eslintIgnore": [
     "generator/redux/redux/store.js",
-    "generator/app/pages/_app.js",
+    "generator/app/pages-router/pages/_app.js",
     "*.d.ts"
   ],
   "babel": {
