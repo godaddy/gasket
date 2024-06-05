@@ -1,2 +1,2 @@
-export * from './use-gasket-data';
-export * from './with-gasket-data-provider';
+export * from './use-gasket-data.js';
+export * from './with-gasket-data-provider.js';
