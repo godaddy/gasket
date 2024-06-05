@@ -1,5 +1,9 @@
 # `@gasket/nextjs`
 
+
+
+- Add file extensions to imports, fix package exports conflict ([#778])
+
 ### 6.45.2
 
 - Refactor tests to Jest, update test scripts, add `cross-env`, remove obsolete `devDeps` ([#670])
@@ -63,3 +67,4 @@
 [#603]: https://github.com/godaddy/gasket/pull/603
 [#614]: https://github.com/godaddy/gasket/pull/614
 [#670]: https://github.com/godaddy/gasket/pull/670
+[#778]: https://github.com/godaddy/gasket/pull/778
