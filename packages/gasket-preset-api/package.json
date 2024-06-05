@@ -1,6 +1,6 @@
 {
   "name": "@gasket/preset-api",
-  "version": "7.0.0-next.34",
+  "version": "7.0.1-canary.10",
   "description": "Create Express-based API with Gasket",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -30,18 +30,18 @@
     "url": "https://github.com/godaddy/gasket/issues"
   },
   "dependencies": {
-    "@gasket/plugin-cypress": "^7.0.0-next.34",
-    "@gasket/plugin-data": "^7.0.0-next.34",
-    "@gasket/plugin-docs": "^7.0.0-next.34",
-    "@gasket/plugin-docusaurus": "^7.0.0-next.34",
-    "@gasket/plugin-express": "^7.0.0-next.34",
-    "@gasket/plugin-https": "^7.0.0-next.34",
-    "@gasket/plugin-jest": "^7.0.0-next.34",
-    "@gasket/plugin-lint": "^7.0.0-next.34",
-    "@gasket/plugin-mocha": "^7.0.0-next.34",
-    "@gasket/plugin-swagger": "^7.0.0-next.34",
-    "@gasket/plugin-typescript": "^7.0.0-next.34",
-    "@gasket/plugin-winston": "^7.0.0-next.34"
+    "@gasket/plugin-cypress": "^7.0.1-canary.10",
+    "@gasket/plugin-data": "^7.0.1-canary.10",
+    "@gasket/plugin-docs": "^7.0.1-canary.10",
+    "@gasket/plugin-docusaurus": "^7.0.1-canary.10",
+    "@gasket/plugin-express": "^7.0.1-canary.10",
+    "@gasket/plugin-https": "^7.0.1-canary.10",
+    "@gasket/plugin-jest": "^7.0.1-canary.10",
+    "@gasket/plugin-lint": "^7.0.1-canary.10",
+    "@gasket/plugin-mocha": "^7.0.1-canary.10",
+    "@gasket/plugin-swagger": "^7.0.1-canary.10",
+    "@gasket/plugin-typescript": "^7.0.1-canary.10",
+    "@gasket/plugin-winston": "^7.0.1-canary.10"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",

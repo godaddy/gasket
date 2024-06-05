@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-command",
-  "version": "7.0.0-next.34",
+  "version": "7.0.1-canary.10",
   "description": "Plugin to enable other plugins to inject new gasket commands",
   "types": "lib/index.d.ts",
   "files": [
@@ -49,7 +49,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-command",
   "dependencies": {
-    "@gasket/core": "^7.0.0-next.34",
+    "@gasket/core": "^7.0.1-canary.10",
     "commander": "^12.0.0"
   },
   "devDependencies": {
