@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-docs-graphs",
-  "version": "7.0.1-canary.11",
+  "version": "7.0.1-canary.12",
   "description": "Generate mermaid graphs of an applications gasket lifecycles",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

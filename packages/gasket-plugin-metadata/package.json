@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-metadata",
-  "version": "7.0.1-canary.11",
+  "version": "7.0.1-canary.12",
   "description": "Adds metadata to gasket lifecycles",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -46,7 +46,7 @@
     "lodash.isobject": "^3.0.2"
   },
   "devDependencies": {
-    "@gasket/core": "^7.0.1-canary.11",
+    "@gasket/core": "^7.0.1-canary.12",
     "@godaddy/dmd": "^1.0.4",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
