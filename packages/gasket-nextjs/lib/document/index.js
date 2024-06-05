@@ -1,8 +1,8 @@
 /// <reference types="@gasket/plugin-data" />
 
 import { Children, cloneElement, createElement } from 'react';
-import { Main, NextScript } from 'next/document.js';
-import { GasketDataScript } from '../gasket-data-script.js';
+import { Main, NextScript } from 'next/document';
+import { GasketDataScript } from '../gasket-data-script';
 
 const reClass = /^class\s/;
 
