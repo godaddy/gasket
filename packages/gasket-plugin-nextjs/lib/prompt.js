@@ -3,8 +3,23 @@
 /** @type {import('@gasket/core').HookHandler<'prompt'>} */
 module.exports = async function promptHook(gasket, context, { prompt }) {
   const newContext = { ...context };
+
+  if (!('useAppRouter' in context)) {
+    const { useAppRouter } = await prompt([
+      {
+        name: 'useAppRouter',
+        message: 'Do you want to use the App Router? (experimental)',
+        type: 'confirm',
+        default: false
+      }
+    ]);
+
+    newContext.useAppRouter = useAppRouter;
+    newContext.nextServerType = 'defaultServer';
+  }
+
   // TODO - evaluate if these prompts should be moved to the preset
-  if (!('nextServerType' in context)) {
+  if (!('nextServerType' in context) && !newContext.useAppRouter) {
     const { nextServerType } = await prompt([
       {
         name: 'nextServerType',
