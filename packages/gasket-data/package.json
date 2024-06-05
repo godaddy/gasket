@@ -1,6 +1,6 @@
 {
   "name": "@gasket/data",
-  "version": "7.0.0-next.34",
+  "version": "7.0.1-canary.10",
   "description": "Helper package for accessing embedded Gasket Data in the browser",
   "exports": {
     ".": {
