@@ -1,7 +1,7 @@
 {
   "name": "@gasket/typescript-tests",
   "private": true,
-  "version": "7.2.0-canary.1",
+  "version": "7.2.0-canary.2",
   "description": "Not a published package; hosts unit tests to verify TypeScript support",
   "files": [
     "lib"
@@ -41,7 +41,7 @@
     "@gasket/data": "^7.2.0-canary.1",
     "@gasket/fetch": "^7.2.0-canary.1",
     "@gasket/helper-intl": "^7.2.0-canary.1",
-    "@gasket/nextjs": "^7.2.0-canary.1",
+    "@gasket/nextjs": "^7.2.0-canary.2",
     "@gasket/plugin-analyze": "^7.2.0-canary.1",
     "@gasket/plugin-command": "^7.2.0-canary.1",
     "@gasket/plugin-cypress": "^7.2.0-canary.1",
@@ -63,7 +63,7 @@
     "@gasket/plugin-metrics": "^7.2.0-canary.1",
     "@gasket/plugin-mocha": "^7.2.0-canary.1",
     "@gasket/plugin-morgan": "^7.2.0-canary.1",
-    "@gasket/plugin-nextjs": "^7.2.0-canary.1",
+    "@gasket/plugin-nextjs": "^7.2.0-canary.2",
     "@gasket/plugin-redux": "^7.2.0-canary.1",
     "@gasket/plugin-service-worker": "^7.2.0-canary.1",
     "@gasket/plugin-start": "^7.2.0-canary.1",
@@ -73,7 +73,7 @@
     "@gasket/plugin-winston": "^7.2.0-canary.1",
     "@gasket/plugin-workbox": "^7.2.0-canary.1",
     "@gasket/preset-api": "^7.2.0-canary.1",
-    "@gasket/preset-nextjs": "^7.2.0-canary.1",
+    "@gasket/preset-nextjs": "^7.2.0-canary.2",
     "@gasket/preset-pwa": "^7.2.0-canary.1",
     "@gasket/react-intl": "^7.2.0-canary.1",
     "@gasket/redux": "^7.2.0-canary.1",
