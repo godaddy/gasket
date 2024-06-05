@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-elastic-apm",
-  "version": "7.0.0-next.34",
+  "version": "7.0.0--canary-1.0",
   "description": "Adds Elastic APM instrumentation to your application",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -42,7 +42,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-elastic-apm",
   "devDependencies": {
-    "@gasket/core": "^7.0.0-next.34",
+    "@gasket/core": "^7.0.0--canary-1.0",
     "elastic-apm-node": "^4.4.1",
     "eslint": "^8.56.0",
     "eslint-config-godaddy": "^7.1.0",
