@@ -1,6 +1,6 @@
 {
   "name": "@gasket/utils",
-  "version": "7.0.0-7.0.1-canary.11.0",
+  "version": "7.0.1-canary.11",
   "description": "Reusable utilities for Gasket internals",
   "main": "lib",
   "types": "lib/index.d.ts",
@@ -47,7 +47,7 @@
     "semver": "^7.6.0"
   },
   "devDependencies": {
-    "@gasket/core": "^7.0.0-7.0.1-canary.11.0",
+    "@gasket/core": "^7.0.1-canary.11",
     "@godaddy/dmd": "^1.0.4",
     "abort-controller": "^3.0.0",
     "cross-env": "^7.0.3",
