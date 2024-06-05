@@ -1,5 +1,6 @@
 # `@gasket/plugin-nextjs`
 
+- Fix logic for `server.js` generation to include `customServer` ([#778])
 - Update generated `_document.js` ([#778])
 - Added redux optional flag ([#762])
 - Add plugin import to gasket file ([#736])
