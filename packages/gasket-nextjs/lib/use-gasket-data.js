@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { GasketDataContext } from './gasket-data-provider.js';
+import { GasketDataContext } from './gasket-data-provider';
 
 /**
  * React that fetches GasketData in elements context and returns it
