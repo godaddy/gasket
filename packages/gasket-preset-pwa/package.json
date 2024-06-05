@@ -1,6 +1,6 @@
 {
   "name": "@gasket/preset-pwa",
-  "version": "7.0.1-canary.11",
+  "version": "7.0.1-canary.12",
   "description": "Turn Gasket apps into Progressive Web Apps",
   "main": "lib",
   "types": "lib/index.d.ts",
@@ -30,13 +30,13 @@
     "url": "https://github.com/godaddy/gasket/issues"
   },
   "dependencies": {
-    "@gasket/plugin-jest": "^7.0.1-canary.11",
-    "@gasket/plugin-lint": "^7.0.1-canary.11",
-    "@gasket/plugin-manifest": "^7.0.1-canary.11",
-    "@gasket/plugin-mocha": "^7.0.1-canary.11",
-    "@gasket/plugin-service-worker": "^7.0.1-canary.11",
-    "@gasket/plugin-typescript": "^7.0.1-canary.11",
-    "@gasket/plugin-workbox": "^7.0.1-canary.11"
+    "@gasket/plugin-jest": "^7.0.1-canary.12",
+    "@gasket/plugin-lint": "^7.0.1-canary.12",
+    "@gasket/plugin-manifest": "^7.0.1-canary.12",
+    "@gasket/plugin-mocha": "^7.0.1-canary.12",
+    "@gasket/plugin-service-worker": "^7.0.1-canary.12",
+    "@gasket/plugin-typescript": "^7.0.1-canary.12",
+    "@gasket/plugin-workbox": "^7.0.1-canary.12"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
