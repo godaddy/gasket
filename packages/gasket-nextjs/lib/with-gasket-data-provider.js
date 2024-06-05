@@ -1,5 +1,5 @@
 import { createElement } from 'react';
-import { GasketDataProvider } from './gasket-data-provider';
+import { GasketDataProvider } from './gasket-data-provider.js';
 import PropTypes from 'prop-types';
 
 /**
