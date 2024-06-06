@@ -22,6 +22,7 @@ const { ERROR, LOADED, LOADING } = LocaleStatus;
 // helper to wait for async actions
 const pause = ms => new Promise((resolve) => setTimeout(resolve, ms));
 
+// eslint-disable-next-line max-statements
 describe('useLocaleRequired', function () {
   let mockConfig, mockContext, dispatchMock;
 
@@ -113,6 +114,53 @@ describe('useLocaleRequired', function () {
       { type: 'error', payload: { file: '/locales/en.json' } }
     );
     expect(console.error).toHaveBeenCalledWith('Bad things man!');
+  });
+
+  it('accepts an array of locale paths, and fetches each path provided', () => {
+    const results = useLocaleRequired(['/locales', '/custom/locales', 'modules/module/locales']);
+    expect(results).toEqual(LOADING);
+    expect(fetch).toHaveBeenCalled();
+    expect(fetch).toHaveBeenCalledWith('/locales/en.json');
+    expect(fetch).toHaveBeenCalledWith('/custom/locales/en.json');
+    expect(fetch).toHaveBeenCalledWith('/modules/module/locales/en.json');
+  });
+
+  it('returns ERROR if any of the calls fail', () => {
+    mockContext.status['/locales/en.json'] = LOADED;
+    mockContext.status['/custom/locales/en.json'] = ERROR;
+    mockContext.status['/modules/module/locales/en.json'] = LOADING;
+
+    const result = useLocaleRequired(['/locales', '/custom/locales', 'modules/module/locales']);
+    expect(result).toEqual(ERROR);
+  });
+
+  it('returns LOADING if any of the calls are in progress and none have failed', () => {
+    mockContext.status['/locales/en.json'] = LOADED;
+    mockContext.status['/custom/locales/en.json'] = LOADED;
+    mockContext.status['/modules/module/locales/en.json'] = LOADING;
+
+    const result = useLocaleRequired(['/locales', '/custom/locales', 'modules/module/locales']);
+    expect(result).toEqual(LOADING);
+  });
+
+  it('returns LOADED if all calls succeed', () => {
+    mockContext.status['/locales/en.json'] = LOADED;
+    mockContext.status['/custom/locales/en.json'] = LOADED;
+    mockContext.status['/modules/module/locales/en.json'] = LOADED;
+
+    const result = useLocaleRequired(['/locales', '/custom/locales', 'modules/module/locales']);
+    expect(result).toEqual(LOADED);
+  });
+
+  it('handle array containing thunks', function () {
+    const mockThunk = jest.fn().mockReturnValue('/custom/locales');
+
+    const results = useLocaleRequired(['/locales', mockThunk, 'modules/module/locales']);
+    expect(results).toEqual(LOADING);
+    expect(fetch).toHaveBeenCalled();
+    expect(fetch).toHaveBeenCalledWith('/locales/en.json');
+    expect(fetch).toHaveBeenCalledWith('/custom/locales/en.json');
+    expect(fetch).toHaveBeenCalledWith('/modules/module/locales/en.json');
   });
 
   describe('SSR', function () {
