@@ -41,9 +41,12 @@ function createTestFiles({ files, generatorDir, testPlugins }) {
  * @property {nextDevProxy} - Selected dev proxy from prompt
  * @property {typescript} - Selected typescript from prompt
  */
-function createNextFiles({ files, generatorDir, nextDevProxy, typescript }) {
+function createNextFiles({ files, generatorDir, nextDevProxy, typescript, nextServerType }) {
   let glob;
-  if (typescript || !nextDevProxy) glob = `${generatorDir}/next/*[!server].js`;
+  if (
+    typescript ||
+    (!nextDevProxy && nextServerType === 'defaultServer')
+  ) glob = `${generatorDir}/next/*[!server].js`;
   else glob = `${generatorDir}/next/*`;
   files.add(glob);
 }
@@ -70,7 +73,7 @@ function configureSitemap({ files, pkg, generatorDir }) {
  * addDependencies
  * @property {PackageJsonBuilder} pkg - The Gasket PackageJson API.
  */
-function addDependencies({ pkg, nextDevProxy }) {
+function addDependencies({ pkg }) {
   pkg.add('dependencies', {
     '@gasket/assets': devDependencies['@gasket/assets'],
     '@gasket/nextjs': devDependencies['@gasket/nextjs'],
@@ -81,11 +84,9 @@ function addDependencies({ pkg, nextDevProxy }) {
     'react-dom': devDependencies['react-dom']
   });
 
-  if (nextDevProxy) {
-    pkg.add('devDependencies', {
-      nodemon: devDependencies.nodemon
-    });
-  }
+  pkg.add('devDependencies', {
+    nodemon: devDependencies.nodemon
+  });
 }
 
 /**
@@ -174,8 +175,8 @@ module.exports = {
 
     createAppFiles({ files, generatorDir });
     createTestFiles({ files, generatorDir, testPlugins });
-    createNextFiles({ files, generatorDir, nextDevProxy, typescript });
-    addDependencies({ pkg, nextDevProxy });
+    createNextFiles({ files, generatorDir, nextDevProxy, typescript, nextServerType });
+    addDependencies({ pkg });
     addNpmScripts({ pkg, nextServerType, nextDevProxy, typescript });
     addConfig(context);
     if (addSitemap) configureSitemap({ files, pkg, generatorDir });
