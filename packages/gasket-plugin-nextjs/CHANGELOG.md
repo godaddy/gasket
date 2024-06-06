@@ -1,5 +1,7 @@
 # `@gasket/plugin-nextjs`
 
+- Fix logic for `server.js` generation to include `customServer` ([#778])
+- Update generated `_document.js` ([#778])
 - Added redux optional flag ([#762])
 - Add plugin import to gasket file ([#736])
 - Add itself to the app package file ([#736])
@@ -283,3 +285,4 @@
 [#736]: https://github.com/godaddy/gasket/pull/736
 [#750]: https://github.com/godaddy/gasket/pull/750
 [#762]: https://github.com/godaddy/gasket/pull/762
+[#778]: https://github.com/godaddy/gasket/pull/778
