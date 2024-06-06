@@ -7,16 +7,12 @@ const { name, version, devDependencies } = require('../package.json');
  */
 function createAppFiles({ files, generatorDir, useAppRouter }) {
   files.add(
-    `${generatorDir}/app/common/.*`,
-    `${generatorDir}/app/common/*`,
-    `${generatorDir}/app/common/**/*`
+    `${generatorDir}/app/shared/**/*`
   );
 
   const appStructure = useAppRouter ? 'app-router' : 'pages-router';
 
   files.add(
-    `${generatorDir}/app/${appStructure}/.*`,
-    `${generatorDir}/app/${appStructure}/*`,
     `${generatorDir}/app/${appStructure}/**/*`
   );
 }

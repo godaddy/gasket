@@ -32,13 +32,9 @@ describe('create hook', () => {
     const second = mockContext.files.add.mock.calls[1];
 
     expect(first).toEqual([
-      `${root}/../generator/app/common/.*`,
-      `${root}/../generator/app/common/*`,
-      `${root}/../generator/app/common/**/*`
+      `${root}/../generator/app/shared/**/*`
     ]);
     expect(second).toEqual([
-      `${root}/../generator/app/pages-router/.*`,
-      `${root}/../generator/app/pages-router/*`,
       `${root}/../generator/app/pages-router/**/*`
     ]);
   });
@@ -51,13 +47,9 @@ describe('create hook', () => {
     const second = mockContext.files.add.mock.calls[1];
 
     expect(first).toEqual([
-      `${root}/../generator/app/common/.*`,
-      `${root}/../generator/app/common/*`,
-      `${root}/../generator/app/common/**/*`
+      `${root}/../generator/app/shared/**/*`
     ]);
     expect(second).toEqual([
-      `${root}/../generator/app/app-router/.*`,
-      `${root}/../generator/app/app-router/*`,
       `${root}/../generator/app/app-router/**/*`
     ]);
   });
