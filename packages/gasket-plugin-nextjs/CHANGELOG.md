@@ -1,5 +1,6 @@
 # `@gasket/plugin-nextjs`
 
+- Added useAppRouter optional flag ([#777])
 - Added redux optional flag ([#762])
 - Add plugin import to gasket file ([#736])
 - Add itself to the app package file ([#736])
@@ -283,3 +284,4 @@
 [#736]: https://github.com/godaddy/gasket/pull/736
 [#750]: https://github.com/godaddy/gasket/pull/750
 [#762]: https://github.com/godaddy/gasket/pull/762
+[#777]: https://github.com/godaddy/gasket/pull/777
