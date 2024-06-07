@@ -1,4 +1,5 @@
 const path = require('path');
+const { name, version, description } = require('../package');
 const { readFile: read } = require('fs').promises;
 const plugin = require('../lib');
 const hook = plugin.hooks.docsGenerate;
@@ -11,8 +12,11 @@ describe('docs graph plugin', function () {
       lifecycles: []
     };
   });
-  it('is named properly', function () {
-    expect(plugin.name).toMatch('@gasket/plugin-docs-graphs');
+
+  it('has expected properties', () => {
+    expect(plugin).toHaveProperty('name', name);
+    expect(plugin).toHaveProperty('version', version);
+    expect(plugin).toHaveProperty('description', description);
   });
 
   it('hooks the docsGenerate lifecycle', function () {

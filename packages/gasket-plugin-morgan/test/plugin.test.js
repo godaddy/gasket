@@ -1,12 +1,15 @@
 const Plugin = require('../lib/index');
+const { name, version, description } = require('../package');
 
 describe('@gasket/plugin-morgan', () => {
   it('is an object', () => {
     expect(typeof Plugin).toBe('object');
   });
 
-  it('has expected name', () => {
-    expect(Plugin).toHaveProperty('name', '@gasket/plugin-morgan');
+  it('has expected properties', () => {
+    expect(plugin).toHaveProperty('name', name);
+    expect(plugin).toHaveProperty('version', version);
+    expect(plugin).toHaveProperty('description', description);
   });
 
   it('has expected hooks', () => {
