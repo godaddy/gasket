@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 export default function RootLayout({ children }) {
   return (
-    <html lang='en'>
+    <html>
       <body>{children}</body>
     </html>
   );
