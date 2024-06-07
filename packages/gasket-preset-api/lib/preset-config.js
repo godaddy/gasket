@@ -1,4 +1,3 @@
-import pluginExpress from '@gasket/plugin-express';
 import pluginHttps from '@gasket/plugin-https';
 import pluginDocs from '@gasket/plugin-docs';
 import pluginDocusaurus from '@gasket/plugin-docusaurus';
@@ -6,6 +5,8 @@ import pluginData from '@gasket/plugin-data';
 import pluginWinston from '@gasket/plugin-winston';
 import pluginSwagger from '@gasket/plugin-swagger';
 import pluginLint from '@gasket/plugin-lint';
+import pluginExpress from '@gasket/plugin-express';
+import pluginFastify from '@gasket/plugin-fastify';
 
 /**
  * presetConfig hook
@@ -30,14 +31,14 @@ export default async function presetConfig(gasket, context) {
 
   return {
     plugins: [
-      pluginExpress,
       pluginHttps,
       pluginDocs,
       pluginDocusaurus,
-      pluginData,
       pluginWinston,
       pluginSwagger,
       pluginLint,
+      context.server === 'express' && pluginExpress,
+      context.server === 'fastify' && pluginFastify,
       typescriptPlugin ? typescriptPlugin.default || typescriptPlugin : null,
       ...testPlugins
     ].filter(Boolean)

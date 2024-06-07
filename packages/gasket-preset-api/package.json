@@ -35,6 +35,7 @@
     "@gasket/plugin-docs": "^7.0.0-next.34",
     "@gasket/plugin-docusaurus": "^7.0.0-next.34",
     "@gasket/plugin-express": "^7.0.0-next.34",
+    "@gasket/plugin-fastify": "^7.0.0-next.34",
     "@gasket/plugin-https": "^7.0.0-next.34",
     "@gasket/plugin-jest": "^7.0.0-next.34",
     "@gasket/plugin-lint": "^7.0.0-next.34",
