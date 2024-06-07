@@ -9,7 +9,7 @@ const {
   version,
   description,
   devDependencies
- } = require('../package.json');
+} = require('../package.json');
 
 /** @type {import('@gasket/core').Plugin} */
 const plugin = {
