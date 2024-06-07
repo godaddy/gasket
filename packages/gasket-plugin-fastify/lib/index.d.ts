@@ -1,10 +1,12 @@
 import type { MaybeAsync, MaybeMultiple } from '@gasket/core';
 import type {
-  Fastify,
+  FastifyInstance,
   FastifyRequest,
   FastifyReply,
   FastifyServerOptions
 } from 'fastify';
+
+export type AppRoutes = Array<MaybeAsync<(app: FastifyInstance) => void>>;
 
 declare module '@gasket/core' {
   export interface GasketConfig {
@@ -16,7 +18,7 @@ declare module '@gasket/core' {
       /** Trust proxy configuration */
       trustProxy?: FastifyServerOptions['trustProxy'];
       /** Glob pattern for source files setting up fastify routes */
-      routes?: string;
+      routes?: Array<MaybeAsync<(app: FastifyInstance) => void>>;
     };
     /** Middleware configuration */
     middleware?: {

@@ -20,6 +20,7 @@ module.exports = async function createServers(gasket, serverOpts) {
   const trustProxy = config.fastify?.trustProxy ?? false;
   const excludedRoutesRegex =
     config.fastify && config.fastify.excludedRoutesRegex;
+  const routes = config.fastify && config.fastify.routes;
   // @ts-ignore
   const app = fastify({ logger, trustProxy });
 
@@ -78,6 +79,15 @@ module.exports = async function createServers(gasket, serverOpts) {
 
   // allow consuming apps to directly append options to their server
   await gasket.exec('fastify', app);
+
+  if (routes) {
+    for (const route of routes) {
+      if (typeof route !== 'function') {
+        throw new Error('Route must be a function');
+      }
+      await route(app);
+    }
+  }
 
   const postRenderingStacks = (await gasket.exec('errorMiddleware')).filter(
     Boolean
