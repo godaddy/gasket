@@ -40,6 +40,8 @@ declare module '@gasket/core' {
 
   export type Plugin = {
     name: string;
+    version: string;
+    description: string;
     dependencies?: Array<string>;
     hooks: {
       [K in HookId]?: Hook<K>;
