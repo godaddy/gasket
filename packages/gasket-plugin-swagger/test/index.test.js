@@ -49,7 +49,7 @@ describe('Swagger Plugin', function () {
 
   it('is an object', function () {
     expect(typeof plugin).toBe('object');
-    expect(Object.keys(plugin)).toHaveLength(2);
+    expect(Object.keys(plugin)).toHaveLength(4);
   });
 
   it('has expected properties', () => {
