@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-command",
-  "version": "6.47.0",
+  "version": "6.47.1",
   "description": "Plugin to enable other plugins to inject new gasket commands",
   "main": "lib/plugin.js",
   "types": "lib/plugin.d.ts",
@@ -16,7 +16,7 @@
     "test:coverage": "jest --coverage",
     "posttest": "npm run lint",
     "prepack": "npm run docs",
-    "docs": "jsdoc2md --plugin @godaddy/dmd --files lib/*.js > docs/api.md"
+    "disabled_docs": "jsdoc2md --plugin @godaddy/dmd --files lib/*.js > docs/api.md"
   },
   "repository": {
     "type": "git",
@@ -41,10 +41,10 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-command",
   "dependencies": {
-    "@gasket/utils": "^6.47.0"
+    "@gasket/utils": "^6.47.1"
   },
   "devDependencies": {
-    "@gasket/engine": "^6.46.8",
+    "@gasket/engine": "^6.47.1",
     "@godaddy/dmd": "^1.0.4",
     "@oclif/command": "^1.8.16",
     "@oclif/config": "^1.18.2",

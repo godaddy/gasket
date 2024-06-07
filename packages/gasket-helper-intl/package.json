@@ -1,6 +1,6 @@
 {
   "name": "@gasket/helper-intl",
-  "version": "6.46.8",
+  "version": "6.47.1",
   "description": "Internal helpers used by loaders to resolve locale file paths",
   "main": "lib/server.js",
   "browser": "lib/index.js",
@@ -17,7 +17,7 @@
     "test:coverage": "jest --coverage",
     "posttest": "npm run lint && npm run typecheck",
     "prepack": "npm run docs",
-    "docs": "jsdoc2md --plugin @godaddy/dmd --files lib/index.js > docs/api.md",
+    "disabled_docs": "jsdoc2md --plugin @godaddy/dmd --files lib/index.js > docs/api.md",
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"
   },
