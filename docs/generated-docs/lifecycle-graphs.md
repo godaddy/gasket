@@ -8,7 +8,7 @@ gasket/cli --> create;
 init -- exec --> createLogger;
 start -- execWaterfall --> createServers;
 docsSetup -- exec --> docsGenerate;
-docs-cmd(docs) --> docsSetup;
+docs-cmd(docs) -- execApply --> docsSetup;
 docsSetup -- exec --> docsView;
 createServers -- exec --> errorMiddleware;
 createServers -- exec --> errorMiddleware;
@@ -39,10 +39,16 @@ start -- exec --> servers;
 express -- exec --> serviceWorkerCacheKey;
 preboot -- exec --> start;
 start -- execWaterfall --> terminus;
+<<<<<<< HEAD
 initWebpack -- execSync --> webpack["webpack (deprecated)"];
 initWebpack -- execSync --> webpackChain["webpackChain (deprecated)"];
 initWebpack -- execWaterfallSync --> webpackConfig;
 createLogger -- exec --> winstonTransports;
+=======
+initWebpack -- execApplySync --> webpack["webpack (deprecated)"];
+initWebpack -- execApplySync --> webpackChain["webpackChain (deprecated)"];
+initWebpack -- execApplySync --> webpackConfig;
+>>>>>>> 6d4c70e3 (disable prepack doc scripts)
 composeServiceWorker -- exec --> workbox;
 style docs-cmd fill: red;
 style *-cmd fill: red;
