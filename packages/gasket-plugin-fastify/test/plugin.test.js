@@ -1,6 +1,6 @@
+/* eslint-disable jsdoc/require-jsdoc */
 const middie = require('middie');
 const { GasketEngine } = require('@gasket/core');
-const version = require('../package.json').peerDependencies.fastify;
 
 const app = {
   ready: jest.fn(),
@@ -23,6 +23,7 @@ jest.mock('cookie-parser', () => mockCookieParser);
 jest.mock('compression', () => mockCompression);
 
 const plugin = require('../lib/index');
+const { name, version } = require('../package');
 
 describe('Plugin', function () {
 
@@ -289,26 +290,19 @@ describe('createServers', () => {
     });
   });
 
-  /**
-   * Find the first call in a spy that matches a predicate
-   * @param aSpy
-   * @param aPredicate
-   * @returns {any}
-   */
   function findCall(aSpy, aPredicate) {
-    const callIdx = aSpy.mock.calls.map(args => aPredicate(...args)).indexOf(true);
+    const callIdx = findCallIndex(aSpy, aPredicate);
     return callIdx === -1 ? null : aSpy.mock.calls[callIdx][0];
+  }
+
+  function findCallIndex(aSpy, aPredicate) {
+    return aSpy.mock.calls.map((args) => aPredicate(...args)).indexOf(true);
   }
 });
 
 describe('create', () => {
   let mockContext;
 
-  /**
-   * Factory to create an async expect function
-   * @param assertFn
-   * @returns {function(): Promise<void>}
-   */
   function expectCreatedWith(assertFn) {
     return async function expectCreated() {
       await plugin.hooks.create({}, mockContext);
@@ -319,13 +313,51 @@ describe('create', () => {
   beforeEach(() => {
     mockContext = {
       pkg: { add: jest.fn() },
-      files: { add: jest.fn() }
+      files: { add: jest.fn() },
+      gasketConfig: {
+        addPlugin: jest.fn(),
+        add: jest.fn(),
+        addImport: jest.fn().mockReturnThis(),
+        injectValue: jest.fn()
+      },
+      apiApp: true
     };
   });
 
-  it('adds appropriate dependencies', expectCreatedWith(({ pkg }) => {
-    expect(pkg.add).toHaveBeenCalledWith('dependencies', {
-      fastify: version
-    });
-  }));
+  it('adds itself to the dependencies',
+    expectCreatedWith(({ pkg }) => {
+      expect(pkg.add).toHaveBeenCalledWith('dependencies',
+        expect.objectContaining({
+          [name]: `^${version}`
+        }));
+    })
+  );
+
+  it(
+    'adds appropriate dependencies',
+    expectCreatedWith(({ pkg }) => {
+      expect(pkg.add).toHaveBeenCalledWith('dependencies',
+        expect.objectContaining({
+          fastify: '^3.3.0'
+        }));
+    })
+  );
+
+  it('adds the appropriate files',
+    expectCreatedWith(({ files }) => {
+      expect(files.add).toHaveBeenCalledWith(expect.any(String));
+    })
+  );
+
+  it('adds the plugin import to the gasket file',
+    expectCreatedWith(({ gasketConfig }) => {
+      expect(gasketConfig.addPlugin).toHaveBeenCalledWith('pluginFastify', name);
+    })
+  );
+
+  it('add config to the gasket file',
+    expectCreatedWith(({ gasketConfig }) => {
+      expect(gasketConfig.add).toHaveBeenCalledWith('fastify', { routes: [] });
+    })
+  );
 });
