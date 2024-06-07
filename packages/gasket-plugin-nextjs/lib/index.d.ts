@@ -97,5 +97,7 @@ declare module '@gasket/plugin-nextjs' {
 
 export default {
   name: '@gasket/plugin-nextjs',
+  version: '',
+  description: '',
   hooks: {}
 }

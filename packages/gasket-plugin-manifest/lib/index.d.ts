@@ -42,6 +42,8 @@ declare module 'http' {
 
 export default {
   name: '@gasket/plugin-manifest',
+  version: '',
+  description: '',
   hooks: {}
 };
 

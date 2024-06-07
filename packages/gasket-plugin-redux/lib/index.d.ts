@@ -82,5 +82,7 @@ export async function reduxMiddleware(
 
 export default {
   name: '@gasket/plugin-redux',
+  version: '',
+  description: '',
   hooks: {}
 };

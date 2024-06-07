@@ -6,7 +6,7 @@ describe('@gasket/utils', function () {
 
   describe('applyConfigOverrides', function () {
     const config: GasketConfigDefinition = {
-      plugins: [{ name: 'example', hooks: {} }],
+      plugins: [{ name: 'example', version: '', description: '', hooks: {} }],
       root: '/',
       env: 'debug'
     };
