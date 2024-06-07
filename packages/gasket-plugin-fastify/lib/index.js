@@ -1,12 +1,19 @@
 /// <reference types="@gasket/core" />
 /// <reference types="@gasket/plugin-metadata" />
 
-const { peerDependencies, name } = require('../package.json');
+const {
+  name,
+  version,
+  description,
+  peerDependencies
+} = require('../package.json');
 const createServers = require('./create-servers');
 
 /** @type {import('@gasket/core').Plugin} */
 const plugin = {
   name,
+  version,
+  description,
   hooks: {
     create: async function create(gasket, context) {
       const generatorDir = `${__dirname}/../generator`;

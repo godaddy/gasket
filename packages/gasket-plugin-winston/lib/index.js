@@ -3,11 +3,18 @@
 /// <reference types="@gasket/plugin-metadata" />
 
 const { createLogger, format, transports } = require('winston');
-const { name, version, dependencies } = require('../package.json');
+const {
+  name,
+  version,
+  description,
+  dependencies
+} = require('../package.json');
 
 /** @type {import('@gasket/core').Plugin} */
 const plugin = {
   name,
+  version,
+  description,
   hooks: {
     async create(gasket, { pkg, gasketConfig }) {
       gasketConfig.addPlugin('pluginWinston', '@gasket/plugin-winston');
