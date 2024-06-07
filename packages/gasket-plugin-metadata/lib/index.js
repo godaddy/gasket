@@ -1,3 +1,4 @@
+const { name, version, description } = require('../package');
 const cloneDeep = require('lodash.clonedeep');
 const {
   sanitize,
@@ -10,7 +11,9 @@ const {
 } = require('./utils');
 
 module.exports = {
-  name: require('../package').name,
+  name,
+  version,
+  description,
   hooks: {
     // TODO: convert to a getMetadata action
     async init(gasket) {
