@@ -9,7 +9,7 @@ export default {
   version,
   description,
   hooks: {
-    create(gasket, { pkg, gasketConfig}) {
+    create(gasket, { pkg, gasketConfig }) {
       gasketConfig.addPlugin('pluginCommand', name);
       pkg.add('dependencies', {
         [name]: `^${version}`

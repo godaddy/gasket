@@ -1,5 +1,10 @@
 const plugin = require('../lib/index');
-const { name, devDependencies } = require('../package.json');
+const {
+  name,
+  version,
+  description,
+  devDependencies
+} = require('../package.json');
 
 describe('gasket-plugin-typescript', () => {
 
@@ -8,9 +13,10 @@ describe('gasket-plugin-typescript', () => {
       expect(plugin).toBeInstanceOf(Object);
     });
 
-    it('should have a name', () => {
-      expect(plugin).toHaveProperty('name');
-      expect(plugin.name).toEqual(name);
+    it('should have expected properties', () => {
+      expect(plugin).toHaveProperty('name', name);
+      expect(plugin).toHaveProperty('version', version);
+      expect(plugin).toHaveProperty('description', description);
     });
 
     it('should have hooks', () => {

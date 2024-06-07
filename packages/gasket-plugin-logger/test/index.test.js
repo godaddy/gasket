@@ -1,5 +1,6 @@
 /* eslint-disable no-console, no-sync */
 const { name, hooks } = require('../lib'); // Update the path accordingly
+const { name, version, description } = require('../package');
 
 // Mock console methods
 jest.spyOn(console, 'error').mockImplementation(() => {});
@@ -17,10 +18,11 @@ const mockLogger = {
 };
 
 describe('@gasket/plugin-logger', () => {
-  describe('Name property', () => {
-    it('should have a name property from package.json', () => {
-      expect(name).toBeDefined();
-      expect(name).toEqual(require('../package.json').name);
+  describe('Plugin properties', () => {
+    it('should have properties from package.json', () => {
+      expect(plugin).toHaveProperty('name', name);
+      expect(plugin).toHaveProperty('version', version);
+      expect(plugin).toHaveProperty('description', description);
     });
   });
 
