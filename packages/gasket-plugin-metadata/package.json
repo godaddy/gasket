@@ -15,8 +15,8 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "posttest": "npm run lint",
-    "prepack:skip": "npm run docs",
-    "docs": "jsdoc2md --plugin @godaddy/dmd --files lib/*.js > docs/api.md"
+    "disabled_prepack": "npm run docs",
+    "disabled_docs": "jsdoc2md --plugin @godaddy/dmd --files lib/*.js > docs/api.md"
   },
   "repository": {
     "type": "git",

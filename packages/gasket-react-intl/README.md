@@ -56,8 +56,8 @@ wrapped component will be rendered.
 
 **Props**
 
-- `localesPath` - (string|function) Path to endpoint with JSON files or
-  [thunk] that returns one. See more about [locales path] in the plugin docs.
+- `localesPath` - (string|function|Array(string|function)) Path to endpoint with JSON files or
+  [thunk] that returns one. Also supports an array of either. See more about [locales path] in the plugin docs.
 - `[options]` - (object) Optional configuration
   - `loading` - (string|node) Content to render while loading, otherwise null.
   - `initialProps` - (boolean) Enable `getInitialProps` to load locale files
@@ -99,8 +99,8 @@ content until a [split locales] file loads.
 
 **Props**
 
-- `localesPath` - (string|function) Path to endpoint with JSON files or
-  [thunk] that returns one. See more about [locales path] in the plugin docs.
+- `localesPath` - (string|function|Array(string|function)) Path to endpoint with JSON files or
+  [thunk] that returns one. Also supports an array of either. See more about [locales path] in the plugin docs.
 - `loading` - (string|node) Content to render while loading, otherwise null.
 
 ```jsx
@@ -134,8 +134,8 @@ hook will return the current loading status of the locale file.
 
 **Props**
 
-- `localesPath` - (string|function) Path to endpoint with JSON files or
-  [thunk] that returns one. See more about [locales path] in the plugin docs.
+- `localesPath` - (string|function|Array(string|function)) Path to endpoint with JSON files or
+  [thunk] that returns one. Also supports an array of either. See more about [locales path] in the plugin docs.
 
 ```jsx
 import { useLocaleRequired, LocaleStatus } from '@gasket/react-intl';
