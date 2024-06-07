@@ -2,10 +2,13 @@ import { createRequire } from 'module';
 import presetPrompt from './preset-prompt.js';
 import presetConfig from './preset-config.js';
 const require = createRequire(import.meta.url);
-const { name } = require('../package.json');
+const { name, version, description } = require('../package.json');
 
+// TODO: need to create types for "preset" plugins
 export default {
   name,
+  version,
+  description,
   hooks: {
     presetPrompt,
     presetConfig

@@ -13,7 +13,7 @@ const fs = require('fs');
 const { readFile, writeFile, access } = require('fs').promises;
 const swaggerJSDoc = require('swagger-jsdoc');
 const isYaml = /\.ya?ml$/;
-const { name, version } = require('../package.json');
+const { name, version, description } = require('../package.json');
 
 let __swaggerSpec;
 
@@ -46,6 +46,8 @@ async function loadSwaggerSpec(root, definitionFile, logger) {
 /** @type {import('@gasket/core').Plugin} */
 const plugin = {
   name,
+  version,
+  description,
   hooks: {
     configure(gasket, baseConfig) {
       const { swagger = {} } = baseConfig;

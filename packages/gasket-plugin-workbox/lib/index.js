@@ -3,9 +3,12 @@ const build = require('./build');
 const express = require('./express');
 const fastify = require('./fastify');
 const composeServiceWorker = require('./compose-service-worker');
+const { name, version, description } = require('../package.json');
 
 module.exports = {
-  name: require('../package').name,
+  name,
+  version,
+  description,
   hooks: {
     configure,
     build,

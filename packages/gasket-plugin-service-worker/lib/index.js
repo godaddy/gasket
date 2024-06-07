@@ -6,11 +6,13 @@ const middleware = require('./middleware');
 const express = require('./express');
 const webpackConfig = require('./webpack-config');
 const fastify = require('./fastify');
-const { name } = require('../package.json');
+const { name, version, description } = require('../package.json');
 
 /** @type {import('@gasket/core').Plugin} */
 const plugin = {
   name,
+  version,
+  description,
   hooks: {
     configure,
     build,
