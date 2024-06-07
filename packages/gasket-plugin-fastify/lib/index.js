@@ -1,28 +1,15 @@
 /// <reference types="@gasket/core" />
 /// <reference types="@gasket/plugin-metadata" />
 
-const { peerDependencies, name } = require('../package.json');
+const { name } = require('../package.json');
+const create = require('./create');
 const createServers = require('./create-servers');
 
 /** @type {import('@gasket/core').Plugin} */
 const plugin = {
   name,
   hooks: {
-    create: async function create(gasket, context) {
-      const generatorDir = `${__dirname}/../generator`;
-
-      context.pkg.add('dependencies', {
-        fastify: peerDependencies.fastify
-      });
-
-      if ('apiApp' in context && context.apiApp) {
-        context.files.add(`${generatorDir}/**/*`);
-
-        context.gasketConfig.add('fastify', {
-          routes: './routes/*'
-        });
-      }
-    },
+    create,
     createServers,
     metadata(gasket, meta) {
       return {
