@@ -38,7 +38,7 @@ export type LocaleRequiredWrapper = (props: {
  */
 export function withLocaleRequired<Props>(
   /** Path containing locale files */
-  localePathPart?: LocalePathPartOrThunk,
+  localePathPart?: LocalePathPartOrThunk | LocalePathPartOrThunk[],
   options?: {
     /** Custom component to show while loading */
     loading?: React.ReactNode;
@@ -50,7 +50,7 @@ export function withLocaleRequired<Props>(
 
 export interface LocaleRequiredProps {
   /** Path containing locale files */
-  localesPath: LocalePathPartOrThunk;
+  localesPath: LocalePathPartOrThunk | LocalePathPartOrThunk[];
   /** Custom component to show while loading */
   loading?: React.ReactNode;
 }
@@ -67,7 +67,7 @@ export function LocaleRequired(
  */
 export function useLocaleRequired(
   /** Path containing locale files */
-  localePathPart: LocalePathPartOrThunk
+  localePathPart: LocalePathPartOrThunk | LocalePathPartOrThunk[]
 ): LocaleStatus;
 
 interface NextStaticContext extends Record<string, any> {
@@ -148,7 +148,7 @@ export function attachGetInitialProps(
     };
   },
   /** Path containing locale files */
-  localePathPart: LocalePathPartOrThunk
+  localePathPart: LocalePathPartOrThunk | LocalePathPartOrThunk[],
 ): void;
 
 export async function attachedGetInitialProps(
