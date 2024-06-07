@@ -5,6 +5,7 @@
 const { name } = require('../package.json');
 
 /** @type {import('@gasket/core').Plugin} */
+// @ts-expect-error - to be removed
 const plugin = {
   name,
   hooks: {
