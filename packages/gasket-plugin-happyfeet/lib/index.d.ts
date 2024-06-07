@@ -12,5 +12,7 @@ declare module '@gasket/core' {
 
 export default {
   name: '@gasket/plugin-happyfeet',
+  version: '',
+  description: '',
   hooks: {}
 };

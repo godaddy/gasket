@@ -5,7 +5,7 @@ import '@gasket/plugin-express';
 describe('@gasket/plugin-express', () => {
   it('adds a compression config property', () => {
     const config: GasketConfigDefinition = {
-      plugins: [{ name: 'example-plugin', hooks: {} }],
+      plugins: [{ name: 'example-plugin', version: '', description: '', hooks: {} }],
       express: {
         compression: false
       }
@@ -14,7 +14,7 @@ describe('@gasket/plugin-express', () => {
 
   it('adds an excludedRoutesRegex config property', () => {
     const config: GasketConfigDefinition = {
-      plugins: [{ name: 'example-plugin', hooks: {} }],
+      plugins: [{ name: 'example-plugin', version: '', description: '', hooks: {} }],
       express: {
         excludedRoutesRegex: /^(?!\/_next\/)/
       }
@@ -28,7 +28,7 @@ describe('@gasket/plugin-express', () => {
     };
 
     const goodConfig: GasketConfigDefinition = {
-      plugins: [{ name: 'example-plugin', hooks: {} }],
+      plugins: [{ name: 'example-plugin', version: '', description: '', hooks: {} }],
       express: {
         middlewareInclusionRegex: /^(?!\/_next\/)/
       }
@@ -42,7 +42,7 @@ describe('@gasket/plugin-express', () => {
     };
 
     const goodConfig: GasketConfigDefinition = {
-      plugins: [{ name: 'example-plugin', hooks: {} }],
+      plugins: [{ name: 'example-plugin', version: '', description: '', hooks: {} }],
       express: {
         routes: []
       }

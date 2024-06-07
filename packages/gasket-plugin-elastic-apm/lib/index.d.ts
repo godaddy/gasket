@@ -37,5 +37,7 @@ declare module '@gasket/core' {
 
 export default {
   name: '@gasket/plugin-elastic-apm',
+  version: '',
+  description: '',
   hooks: {}
 };
