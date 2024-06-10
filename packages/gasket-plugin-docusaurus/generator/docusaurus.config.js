@@ -20,5 +20,18 @@ module.exports = {
         blog: false
       })
     ]
+  ],
+  plugins: [
+    () => ({
+      name: 'resolve-webpack-hotreload-error',
+      // eslint-disable-next-line no-unused-vars
+      configureWebpack(config, isServer, utils) {
+        return {
+          devServer: {
+            hot: false
+          }
+        };
+      }
+    })
   ]
 };
