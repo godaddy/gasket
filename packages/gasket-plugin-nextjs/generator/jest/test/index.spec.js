@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { IndexPage } from '../pages/index';
+import { IndexPage } from '../components/index-page';
 import { expect } from '@jest/globals';
 
 describe('IndexPage', () => {

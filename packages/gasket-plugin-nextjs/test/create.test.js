@@ -25,14 +25,33 @@ describe('create hook', () => {
     expect(plugin.hooks.create.timing.after).toEqual(['@gasket/plugin-redux']);
   });
 
-  it('adds the appropriate globs', async function () {
+  it('adds the appropriate globs for pages router', async function () {
     await plugin.hooks.create.handler({}, mockContext);
 
-    expect(mockContext.files.add).toHaveBeenCalledWith(
-      `${root}/../generator/app/.*`,
-      `${root}/../generator/app/*`,
-      `${root}/../generator/app/**/*`
-    );
+    const first = mockContext.files.add.mock.calls[0];
+    const second = mockContext.files.add.mock.calls[1];
+
+    expect(first).toEqual([
+      `${root}/../generator/app/shared/**/*`
+    ]);
+    expect(second).toEqual([
+      `${root}/../generator/app/pages-router/**/*`
+    ]);
+  });
+
+  it('adds the appropriate globs for app router', async function () {
+    mockContext.useAppRouter = true;
+    await plugin.hooks.create.handler({}, mockContext);
+
+    const first = mockContext.files.add.mock.calls[0];
+    const second = mockContext.files.add.mock.calls[1];
+
+    expect(first).toEqual([
+      `${root}/../generator/app/shared/**/*`
+    ]);
+    expect(second).toEqual([
+      `${root}/../generator/app/app-router/**/*`
+    ]);
   });
 
   it('adds the appropriate globs for mocha', async function () {
