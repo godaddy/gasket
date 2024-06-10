@@ -16,12 +16,13 @@ function getAppInfo(gasket) {
       name: pkg.name
     };
   } catch (err) {
-    console.log(`Error loadings app metadata: ${err.message}`);
+    console.error(`Error loading app metadata: ${err.message}`);
   }
 
   return app;
 }
 
+/** @type {import('gasket/core').HookHandler<'actions'>} */
 module.exports = function actions(gasket) {
   return {
     getMetadata: async function getMetadata() {
@@ -36,15 +37,14 @@ module.exports = function actions(gasket) {
         plugins.push(pluginData);
 
         if (pluginData.modules) {
-          pluginData.path = path.dirname(path.join(require.resolve(pluginData.name), '..'));
-          const data = pluginData.modules.map(m => {
-            return { ...m, path: path.dirname(path.join(require.resolve(m.name), '..')) }
+          const moduleData = pluginData.modules.map(m => {
+            return { ...m, path: path.dirname(path.join(require.resolve(m.name), '..')) };
           });
-          modules.push(...data);
+          modules.push(...moduleData);
         }
       });
 
       return { app, plugins, modules, presets };
     }
-  }
-}
+  };
+};
