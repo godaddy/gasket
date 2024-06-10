@@ -1,7 +1,8 @@
 const create = require('./create');
 const actions = require('./actions');
-const { name, version, description } = require('../package');
+const { name, version, description } = require('../package.json');
 
+/** @type {import('@gasket/core').Plugin} */
 module.exports = {
   name,
   version,
