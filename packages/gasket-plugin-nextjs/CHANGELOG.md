@@ -1,5 +1,6 @@
 # `@gasket/plugin-nextjs`
 
+- Added useAppRouter optional flag ([#777])
 - Fix logic for `server.js` generation to include `customServer` ([#778])
 - Update generated `_document.js` ([#778])
 - Added redux optional flag ([#762])
@@ -285,4 +286,5 @@
 [#736]: https://github.com/godaddy/gasket/pull/736
 [#750]: https://github.com/godaddy/gasket/pull/750
 [#762]: https://github.com/godaddy/gasket/pull/762
+[#777]: https://github.com/godaddy/gasket/pull/777
 [#778]: https://github.com/godaddy/gasket/pull/778
