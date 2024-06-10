@@ -45,7 +45,7 @@ function findPluginData(plugin, pluginsDatas, logger) {
     }
   } else {
     const results = pluginsDatas.find(
-      (p) => p.module.name === name || p.name === name
+      (p) => p.name === name
     );
 
     if (!results) {
@@ -67,7 +67,8 @@ function findPluginData(plugin, pluginsDatas, logger) {
  * @type {import('../internal').buildDocsConfigSet}
  */
 async function buildDocsConfigSet(gasket) {
-  const { metadata, logger } = gasket;
+  const { logger } = gasket;
+  const metadata = await gasket.actions.getMetadata(gasket);
   const { app: appData } = metadata;
   const builder = new DocsConfigSetBuilder(gasket);
 
