@@ -1,6 +1,6 @@
 /* eslint-disable no-console, no-sync */
 const plugin = require('../lib'); // Update the path accordingly
-const { name, version, description } = require('../package.json');
+const { name, version, description } = require('../package');
 
 // Mock console methods
 jest.spyOn(console, 'error').mockImplementation(() => {});

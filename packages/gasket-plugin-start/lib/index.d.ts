@@ -10,5 +10,7 @@ declare module '@gasket/core' {
 
 export default {
   name: '@gasket/plugin-start',
+  version: '',
+  description: '',
   hooks: {}
 };

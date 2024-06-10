@@ -9,14 +9,14 @@ describe('@gasket/plugin-https', () => {
 
   it('adds an optional hostname config property', () => {
     const config: GasketConfigDefinition = {
-      plugins: [{ name: 'example-plugin', hooks: {} }],
+      plugins: [{ name: 'example-plugin', version: '', description: '', hooks: {} }],
       hostname: 'example.com'
     };
   });
 
   it('adds an optional http config property', () => {
     const config: GasketConfigDefinition = {
-      plugins: [{ name: 'example-plugin', hooks: {} }],
+      plugins: [{ name: 'example-plugin', version: '', description: '', hooks: {} }],
       http: 8080,
       environments: {
         local: {
@@ -28,7 +28,7 @@ describe('@gasket/plugin-https', () => {
 
   it('adds an optional https config property', () => {
     const config: GasketConfigDefinition = {
-      plugins: [{ name: 'example-plugin', hooks: {} }],
+      plugins: [{ name: 'example-plugin', version: '', description: '', hooks: {} }],
       environments: {
         local: {
           https: {
@@ -46,7 +46,7 @@ describe('@gasket/plugin-https', () => {
 
   it('adds an optional http2 config property', () => {
     const config: GasketConfigDefinition = {
-      plugins: [{ name: 'example-plugin', hooks: {} }],
+      plugins: [{ name: 'example-plugin', version: '', description: '', hooks: {} }],
       environments: {
         local: {
           http2: {
@@ -65,7 +65,7 @@ describe('@gasket/plugin-https', () => {
 
   it('adds terminus config typings', () => {
     const config: GasketConfigDefinition = {
-      plugins: [{ name: 'example-plugin', hooks: {} }],
+      plugins: [{ name: 'example-plugin', version: '', description: '', hooks: {} }],
       terminus: {
         healthChecks: {
           '/you-ok-over-there': async () => 'ok'
