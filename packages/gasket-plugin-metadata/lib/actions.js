@@ -22,7 +22,7 @@ function getAppInfo(gasket) {
   return app;
 }
 
-/** @type {import('gasket/core').HookHandler<'actions'>} */
+/** @type {import('@gasket/core').HookHandler<'actions'>} */
 module.exports = function actions(gasket) {
   return {
     getMetadata: async function getMetadata() {
