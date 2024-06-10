@@ -6,7 +6,7 @@ const fakeTransport = (options: any) => void 0;
 describe('@gasket/plugin-winston', () => {
   it('adds a winston config section', () => {
     const config: GasketConfigDefinition = {
-      plugins: [{ name: 'example-plugin', hooks: {} }],
+      plugins: [{ name: 'example-plugin', version: '', description: '', hooks: {} }],
       winston: {
         level: 'info',
         transports: [],

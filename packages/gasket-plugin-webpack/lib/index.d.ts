@@ -28,5 +28,7 @@ declare module '@gasket/core' {
 
 export default {
   name: '@gasket/plugin-webpack',
+  version: '',
+  description: '',
   hooks: {}
 }

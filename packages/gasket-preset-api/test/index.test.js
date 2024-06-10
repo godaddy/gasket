@@ -15,9 +15,9 @@ describe('gasket-preset-api', () => {
   });
 
   it('has expected properties', () => {
-    expect(plugin).toHaveProperty('name', name);
-    expect(plugin).toHaveProperty('version', version);
-    expect(plugin).toHaveProperty('description', description);
+    expect(preset).toHaveProperty('name', name);
+    expect(preset).toHaveProperty('version', version);
+    expect(preset).toHaveProperty('description', description);
   });
 
   it('has expected hooks', () => {

@@ -104,5 +104,7 @@ export async function loadRegisterScript(config: ServiceWorkerConfig): string;
 
 export default {
   name: '@gasket/plugin-service-worker',
+  version: '',
+  description: '',
   hooks: {}
 };

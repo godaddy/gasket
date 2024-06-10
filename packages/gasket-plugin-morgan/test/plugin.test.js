@@ -7,9 +7,9 @@ describe('@gasket/plugin-morgan', () => {
   });
 
   it('has expected properties', () => {
-    expect(plugin).toHaveProperty('name', name);
-    expect(plugin).toHaveProperty('version', version);
-    expect(plugin).toHaveProperty('description', description);
+    expect(Plugin).toHaveProperty('name', name);
+    expect(Plugin).toHaveProperty('version', version);
+    expect(Plugin).toHaveProperty('description', description);
   });
 
   it('has expected hooks', () => {
