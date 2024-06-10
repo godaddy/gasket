@@ -17,7 +17,8 @@ function findPluginData(plugin, pluginsDatas, logger) {
   if (!name) {
     const expectedHooks = Object.keys(plugin.hooks);
     const results = pluginsDatas.filter((pluginData) => {
-      const actual = Object.keys(pluginData.module.hooks);
+      // @ts-expect-error - TODO: fix this
+      const actual = Object.keys(pluginData.hooks);
 
       return (
         expectedHooks.length === actual.length &&
