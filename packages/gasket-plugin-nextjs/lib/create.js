@@ -5,11 +5,15 @@ const { name, version, devDependencies } = require('../package.json');
  * @property {Files} files - The Gasket Files API.
  * @property {generatorDir} - The directory of the generator.
  */
-function createAppFiles({ files, generatorDir }) {
+function createAppFiles({ files, generatorDir, useAppRouter }) {
   files.add(
-    `${generatorDir}/app/.*`,
-    `${generatorDir}/app/*`,
-    `${generatorDir}/app/**/*`
+    `${generatorDir}/app/shared/**/*`
+  );
+
+  const appStructure = useAppRouter ? 'app-router' : 'pages-router';
+
+  files.add(
+    `${generatorDir}/app/${appStructure}/**/*`
   );
 }
 
@@ -169,11 +173,12 @@ module.exports = {
       nextServerType,
       nextDevProxy,
       typescript,
-      useRedux
+      useRedux,
+      useAppRouter
     } = context;
     const generatorDir = `${__dirname}/../generator`;
 
-    createAppFiles({ files, generatorDir });
+    createAppFiles({ files, generatorDir, useAppRouter });
     createTestFiles({ files, generatorDir, testPlugins });
     createNextFiles({ files, generatorDir, nextDevProxy, typescript, nextServerType });
     addDependencies({ pkg });
