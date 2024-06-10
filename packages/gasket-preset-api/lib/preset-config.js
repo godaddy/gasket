@@ -13,7 +13,7 @@ import pluginLint from '@gasket/plugin-lint';
  */
 export default async function presetConfig(gasket, context) {
   let typescriptPlugin;
-  let testPlugins = [];
+  const testPlugins = [];
 
   if ('testPlugins' in context && context.testPlugins.length > 0) {
     await Promise.all(context.testPlugins.map(async (testPlugin) => {
