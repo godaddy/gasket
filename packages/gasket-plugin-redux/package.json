@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-redux",
-  "version": "7.0.0-next.34",
+  "version": "7.3.0-canary.0",
   "description": "Gasket Redux Setup",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -40,7 +40,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-redux",
   "devDependencies": {
-    "@gasket/core": "^7.0.0-next.34",
+    "@gasket/core": "^7.3.0-canary.0",
     "@gasket/redux": "^7.0.0-next.34",
     "acorn": "^8.11.3",
     "cross-env": "^7.0.3",
