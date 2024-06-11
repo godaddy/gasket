@@ -108,5 +108,7 @@ declare module '@gasket/core' {
 
 export default {
   name: '@gasket/plugin-https',
+  version: '',
+  description: '',
   hooks: {}
 };

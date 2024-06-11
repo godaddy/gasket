@@ -1,5 +1,5 @@
 /* eslint-disable no-console, no-sync */
-const { name, version } = require('../package.json');
+const { name, version, description } = require('../package.json');
 
 function createChildLogger(parent, metadata) {
   return {
@@ -22,6 +22,8 @@ function verifyLoggerLevels(logger) {
 
 module.exports = {
   name,
+  version,
+  description,
   hooks: {
     create(gasket, { pkg, gasketConfig }) {
       gasketConfig.addPlugin('pluginLogger', '@gasket/plugin-logger');

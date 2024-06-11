@@ -1,11 +1,13 @@
 /// <reference types="@gasket/plugin-https" />
 
 const happyFeet = require('happy-feet');
-const { name } = require('../package.json');
+const { name, version, description } = require('../package.json');
 
 /** @type {import('@gasket/core').Plugin} */
 const plugin = {
   name,
+  version,
+  description,
   hooks: {
     // @ts-ignore - TODO - replace attachment with GasketActions - do not attach to gasket instance
     preboot: async function preboot(gasket) {

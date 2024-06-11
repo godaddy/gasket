@@ -2,11 +2,18 @@
 /// <reference types="create-gasket-app" />
 /// <reference types="@gasket/plugin-metadata" />
 
-const { devDependencies, name } = require('../package.json');
+const {
+  name,
+  version,
+  description,
+  devDependencies
+} = require('../package.json');
 
 /** @type {import('@gasket/core').Plugin} */
 const plugin = {
   name,
+  version,
+  description,
   hooks: {
     create: {
       timing: {
@@ -15,7 +22,7 @@ const plugin = {
       },
       handler: async function create(gasket, { files, pkg, packageManager = 'npm' }) {
         const runCmd = packageManager === 'npm' ? `npm run` : packageManager;
-        const generatorDir = `${ __dirname }/../generator`;
+        const generatorDir = `${__dirname}/../generator`;
         const isReactProject = pkg.has('dependencies', 'react');
         const isNextProject = pkg.has('dependencies', 'next');
 

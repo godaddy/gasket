@@ -9,6 +9,8 @@ declare module '@gasket/core' {
 
 const PluginExample = {
   name: 'example-plugin',
+  version: '',
+  description: '',
   hooks: {
     example(gasket: Gasket, str: string, num: number, bool: boolean) {
       return true;
@@ -47,6 +49,8 @@ describe('@gasket/core', () => {
   it('defines the structure of a Gasket plugin', () => {
     const myPlugin: Plugin = {
       name: 'my-plugin',
+      version: '',
+      description: '',
       dependencies: ['foo', 'bar'],
       hooks: {
         example(gasket, a, b, c) {
@@ -103,7 +107,7 @@ describe('@gasket/core', () => {
       environments: {
         dev: {
           plugins: [
-            { name: 'dev-plugin', hooks: {} },
+            { name: 'dev-plugin', version: '', description: '', hooks: {} },
             // @ts-expect-error
             { /* missing name */ hooks: {} },
             // @ts-expect-error

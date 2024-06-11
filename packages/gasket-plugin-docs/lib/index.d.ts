@@ -33,5 +33,7 @@ declare module '@gasket/plugin-metadata' {
 
 export default {
   name: '@gasket/plugin-docs',
+  version: '',
+  description: '',
   hooks: {}
 };

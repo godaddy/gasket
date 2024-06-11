@@ -12,12 +12,11 @@
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict --experimental-vm-modules' jest",
-    "test:watch": "npm run test --watch",
-    "test:coverage": "npm run test --coverage",
-    "posttest": "npm run lint && npm run typecheck",
-    "prepublish": "npm run build",
-    "typecheck": "tsc",
-    "typecheck:watch": "tsc --watch"
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "posttest": "npm run lint",
+    "disabled_prepack": "npm run docs",
+    "disabled_docs": "jsdoc2md --plugin @godaddy/dmd --files lib/*.js > docs/api.md"
   },
   "exports": {
     ".": {

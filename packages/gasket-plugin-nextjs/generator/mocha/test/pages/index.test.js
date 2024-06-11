@@ -4,7 +4,7 @@ import { describe, it } from 'mocha';
 import { expect } from 'chai';
 import React from 'react';
 
-import { IndexPage } from '../../pages/index';
+import { IndexPage } from '../../components/index-page';
 import messages from '../../public/locales/en-US.json';
 
 //

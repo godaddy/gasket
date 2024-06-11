@@ -15,15 +15,17 @@ jest.mock('cookie-parser', () => mockCookieParser);
 jest.mock('compression', () => mockCompression);
 
 const plugin = require('../lib/index');
-const { name, version } = require('../package');
+const { name, version, description } = require('../package');
 
 describe('Plugin', () => {
   it('is an object', () => {
     expect(plugin).toBeInstanceOf(Object);
   });
 
-  it('has expected name', () => {
-    expect(plugin.name).toBe(require('../package').name);
+  it('has expected properties', () => {
+    expect(plugin).toHaveProperty('name', name);
+    expect(plugin).toHaveProperty('version', version);
+    expect(plugin).toHaveProperty('description', description);
   });
 
   it('has expected hooks', () => {

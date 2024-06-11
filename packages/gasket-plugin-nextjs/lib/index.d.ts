@@ -77,6 +77,7 @@ declare module 'create-gasket-app' {
     nextDevProxy: boolean;
     typescript: boolean;
     useRedux: boolean;
+    useAppRouter: boolean;
   }
 }
 
@@ -97,5 +98,7 @@ declare module '@gasket/plugin-nextjs' {
 
 export default {
   name: '@gasket/plugin-nextjs',
+  version: '',
+  description: '',
   hooks: {}
 }
