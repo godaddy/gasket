@@ -56,7 +56,7 @@ async function executeMiddlewareLifecycle(gasket, app, middlewarePattern) {
   });
 
   debug('applied %s middleware layers', middlewares.length);
-  middlewares.forEach((layer) => {
+  middlewares.forEach(async (layer) => {
     const { paths } = layer;
     if (paths) {
       app.use(paths, layer);

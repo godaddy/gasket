@@ -13,7 +13,6 @@ const compressionMiddleware = jest.fn();
 const mockCookieParser = jest.fn().mockReturnValue(cookieParserMiddleware);
 const mockCompression = jest.fn().mockReturnValue(compressionMiddleware);
 
-
 jest.mock('cookie-parser', () => mockCookieParser);
 jest.mock('compression', () => mockCompression);
 
@@ -78,90 +77,50 @@ describe('utils', function () {
       );
       expect(compressionUsage).toBeNull();
     });
+  });
 
-    describe('executeMiddlewareLifecycle', function () {
-      let gasket, mockMwPlugins, middlewarePattern;
-      const sandbox = jest.fn();
-      beforeEach(() => {
-        mockMwPlugins = [];
+  describe('executeMiddlewareLifecycle', function () {
+    let gasket, mockMwPlugins, middlewarePattern, lifecycles;
+    const sandbox = jest.fn();
+    beforeEach(() => {
+      mockMwPlugins = [];
 
-        gasket = {
-          middleware: {},
-          logger: {
-            warn: jest.fn()
-          },
-          config: {},
-          execApply: sandbox.mockImplementation(async function (lifecycle, fn) {
-            for (let i = 0; i < mockMwPlugins.length; i++) {
-              // eslint-disable-next-line  no-loop-func
-              fn(mockMwPlugins[i], () => mockMwPlugins[i]);
-            }
-            return jest.fn();
-          })
-        };
+      lifecycles = {
+        middleware: jest.fn().mockResolvedValue([])
+      };
 
-        jest.clearAllMocks();
-      });
+      gasket = {
+        middleware: {},
+        logger: {
+          warn: jest.fn()
+        },
+        config: {},
+        exec: jest.fn().mockImplementation((lifecycle, ...args) => lifecycles[lifecycle](args)),
+        execApply: sandbox.mockImplementation(async function (lifecycle, fn) {
+          for (let i = 0; i < mockMwPlugins.length; i++) {
+            // eslint-disable-next-line  no-loop-func
+            fn(mockMwPlugins[i], () => mockMwPlugins[i]);
+          }
+          return jest.fn();
+        })
+      };
 
-      it('executes the `middleware` lifecycle', async function () {
-        executeMiddlewareLifecycle(gasket, app, middlewarePattern);
-        expect(gasket.execApply).toHaveBeenCalledWith(
-          'middleware',
-          expect.any(Function)
-        );
-      });
+      jest.clearAllMocks();
+    });
 
-      it('does not use empty middleware arrays', async function () {
-        mockMwPlugins = [{ name: 'middleware-1' }, []];
-        executeMiddlewareLifecycle(gasket, app, middlewarePattern);
+    it('executes the `middleware` lifecycle', async function () {
+      executeMiddlewareLifecycle(gasket, app, middlewarePattern);
+      expect(gasket.execApply).toHaveBeenCalledWith(
+        'middleware',
+        expect.any(Function)
+      );
+    });
 
-        expect(app.use).not.toHaveBeenCalledWith([]);
-      });
+    it('does not use empty middleware arrays', async function () {
+      mockMwPlugins = [{ name: 'middleware-1' }, []];
+      executeMiddlewareLifecycle(gasket, app, middlewarePattern);
 
-      // it('adds middleware from lifecycle (ignores falsy)', async () => {
-      //   executeMiddlewareLifecycle(gasket, app, middlewarePattern);
-      //   expect(app.use).toHaveBeenCalledTimes(4);
-
-      //   app.use.mockClear();
-      //   mockMwPlugins = [{ name: 'middlware-1' }, null];
-
-      //   executeMiddlewareLifecycle(gasket, app, middlewarePattern);
-      //   expect(app.use).toHaveBeenCalledTimes(5);
-      // });
-
-      // it('supports async middleware hooks', async () => {
-      //   const middleware = Symbol();
-      //   gasket = new GasketEngine([
-      //     plugin,
-      //     {
-      //       name: '@mock/gasket-plugin',
-      //       hooks: {
-      //         middleware: async () => middleware
-      //       }
-      //     }
-      //   ]);
-
-      //   gasket.config = {};
-
-      //   await gasket.exec('createServers');
-
-      //   const middlewares = app.use.mock.calls.flat();
-      //   expect(middlewares).toContain(middleware);
-      // });
-
-      // it('middleware paths in the config are used', async () => {
-      //   const paths = ['/home'];
-      //   gasket.config.middleware = [
-      //     {
-      //       plugin: 'middlware-1',
-      //       paths
-      //     }
-      //   ];
-      //   mockMwPlugins = [{ name: 'middlware-1' }];
-      //   await plugin.hooks.createServers(gasket, {});
-
-      //   expect(app.use.mock.calls[4]).toContain(paths);
-      // });
+      expect(app.use).not.toHaveBeenCalledWith([]);
     });
   });
 
