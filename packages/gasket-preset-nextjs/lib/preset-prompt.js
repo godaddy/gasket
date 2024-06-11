@@ -18,4 +18,21 @@ export default async function presetPrompt(gasket, context, { prompt }) {
 
     Object.assign(context, { typescript });
   }
+
+  if (!('server' in context)) {
+    const { server } = await prompt([
+      {
+        name: 'server',
+        message: 'Which server type would you like to use?',
+        type: 'list',
+        choices: [
+          { name: 'Custom Next Server', value: 'customServer' },
+          { name: 'Fastify', value: 'fastify' },
+          { name: 'Express', value: 'express' }
+        ]
+      }
+    ]);
+
+    Object.assign(context, { server });
+  }
 }

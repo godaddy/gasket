@@ -1,4 +1,5 @@
 import pluginExpress from '@gasket/plugin-express';
+import pluginFastify from '@gasket/plugin-fastify';
 import pluginHttps from '@gasket/plugin-https';
 import pluginNext from '@gasket/plugin-nextjs';
 import pluginRedux from '@gasket/plugin-redux';
@@ -29,7 +30,8 @@ export default async function presetConfig(gasket, context) {
   return {
     plugins: [
       pluginWebpack,
-      pluginExpress,
+      context.server === 'express' && pluginExpress,
+      context.server === 'fastify' && pluginFastify,
       pluginHttps,
       pluginNext,
       pluginRedux,
