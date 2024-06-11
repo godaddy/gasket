@@ -5,7 +5,7 @@ describe('@gasket/plugin-data', () => {
 
   it('adds an optional data property to gasket config', () => {
     const config: GasketConfigDefinition = {
-      plugins: [{ name: 'example-plugin', hooks: {} }],
+      plugins: [{ name: 'example-plugin', version: '', description: '', hooks: {} }],
       data: {
         some: 'data',
         public: {

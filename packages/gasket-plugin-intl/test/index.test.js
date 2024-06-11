@@ -1,12 +1,15 @@
 const plugin = require('../lib');
+const { name, version, description } = require('../package');
 
 describe('Plugin', function () {
   it('is an object', function () {
     expect(plugin).toBeInstanceOf(Object);
   });
 
-  it('has expected name', function () {
-    expect(plugin).toHaveProperty('name', require('../package.json').name);
+  it('has expected properties', () => {
+    expect(plugin).toHaveProperty('name', name);
+    expect(plugin).toHaveProperty('version', version);
+    expect(plugin).toHaveProperty('description', description);
   });
 
   it('has expected hooks', function () {

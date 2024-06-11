@@ -2,11 +2,13 @@ const create = require('./create');
 const docsView = require('./docs-view');
 const configure = require('./configure');
 
-const { name } = require('../package.json');
+const { name, version, description } = require('../package.json');
 
 /** @type {import('@gasket/core').Plugin} */
 const plugin = {
   name,
+  version,
+  description,
   hooks: {
     create,
     configure,

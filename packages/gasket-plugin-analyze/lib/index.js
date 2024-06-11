@@ -3,13 +3,15 @@
 const create = require('./create');
 const webpackConfig = require('./webpack-config');
 const commands = require('./commands');
-const { name } = require('../package.json');
+const { name, version, description } = require('../package.json');
 /**
  * Gasket Analyzer Plugin
  * @type {import('@gasket/core').Plugin}
  */
 const plugin = {
   name,
+  version,
+  description,
   hooks: {
     webpackConfig,
     // @ts-ignore - TODO: remove ignore after @gasket/cli refactor

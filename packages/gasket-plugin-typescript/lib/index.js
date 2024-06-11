@@ -1,8 +1,18 @@
-const { name, devDependencies } = require('../package.json');
+/// <reference types="@gasket/core" />
+
+const {
+  name,
+  version,
+  description,
+  devDependencies
+} = require('../package.json');
 const path = require('path');
 
+/** @type {import('@gasket/core').Plugin} */
 module.exports = {
   name,
+  version,
+  description,
   hooks: {
     create(gasket, context) {
       const { pkg, files } = context;

@@ -36,5 +36,7 @@ declare module '@gasket/core' {
 
 export default {
   name: '@gasket/plugin-data',
+  version: '',
+  description: '',
   hooks: {}
 };

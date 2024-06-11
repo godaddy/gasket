@@ -13,6 +13,7 @@ const mockAPM = {
 jest.mock('elastic-apm-node', () => mockAPM);
 const apm = require('elastic-apm-node');
 const plugin = require('../lib/index');
+const { name, version, description } = require('../package');
 
 describe('Plugin', () => {
   let mockGasket;
@@ -37,6 +38,12 @@ describe('Plugin', () => {
     delete process.env.ELASTIC_APM_SERVER_URL;
     delete process.env.ELASTIC_APM_SECRET_TOKEN;
     delete process.env.ELASTIC_APM_ACTIVE;
+  });
+
+  it('has expected properties', () => {
+    expect(plugin).toHaveProperty('name', name);
+    expect(plugin).toHaveProperty('version', version);
+    expect(plugin).toHaveProperty('description', description);
   });
 
   it('exposes a configure lifecycle hook', () => {

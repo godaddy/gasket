@@ -1,6 +1,6 @@
 /// <reference types="@gasket/plugin-metadata" />
 
-const { name } = require('../package.json');
+const { name, version, description } = require('../package.json');
 const middleware = require('./middleware');
 
 // set log configuration in gasket.config.js, under `morgan` key
@@ -8,6 +8,8 @@ const middleware = require('./middleware');
 /** @type {import('@gasket/core').Plugin} */
 const plugin = {
   name,
+  version,
+  description,
   hooks: {
     middleware,
     metadata(gasket, meta) {

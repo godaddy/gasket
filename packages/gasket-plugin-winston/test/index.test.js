@@ -3,7 +3,7 @@ const { GasketEngine } = require('@gasket/core');
 const PluginLogger = require('@gasket/plugin-logger');
 const plugin = require('../lib/index');
 const { LEVEL, MESSAGE } = require('triple-beam');
-const { name, version } = require('../package.json');
+const { name, version, description } = require('../package');
 
 // Mock console methods
 jest.spyOn(console, 'error').mockImplementation(() => { });
@@ -24,8 +24,10 @@ describe('@gasket/plugin-winston', function () {
     expect(typeof plugin).toBe('object');
   });
 
-  it('has the expected name', () => {
-    expect(plugin).toHaveProperty('name', require('../package').name);
+  it('has expected properties', () => {
+    expect(plugin).toHaveProperty('name', name);
+    expect(plugin).toHaveProperty('version', version);
+    expect(plugin).toHaveProperty('description', description);
   });
 
   describe('create hook', function () {

@@ -1,6 +1,7 @@
 const self = require('../package.json');
 const plugin = require('../lib/index.js');
 const config = require('../generator/cypress.config.js');
+const { name, version, description } = require('../package');
 
 describe('Plugin', function () {
   /**
@@ -66,8 +67,10 @@ describe('Plugin', function () {
     expect(plugin).toBeInstanceOf(Object);
   });
 
-  it('has expected name', function () {
-    expect(plugin).toHaveProperty('name', require('../package').name);
+  it('has expected properties', function () {
+    expect(plugin).toHaveProperty('name', name);
+    expect(plugin).toHaveProperty('version', version);
+    expect(plugin).toHaveProperty('description', description);
   });
 
   it('has expected hooks', function () {
