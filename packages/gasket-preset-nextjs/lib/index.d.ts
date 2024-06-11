@@ -5,3 +5,10 @@ import '@gasket/plugin-redux';
 import '@gasket/plugin-start';
 import '@gasket/plugin-webpack';
 import '@gasket/plugin-winston';
+
+
+declare module 'create-gasket-app' {
+  export interface CreateContext {
+    server: 'express' | 'fastify' | 'customServer';
+  }
+}

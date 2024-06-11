@@ -18,6 +18,7 @@ module.exports = async function promptHook(gasket, context, { prompt }) {
   }
 
   if (newContext.useAppRouter) {
+    if (context.server) newContext.nextServerType = 'customServer';
     newContext.nextServerType = 'defaultServer';
   }
 
