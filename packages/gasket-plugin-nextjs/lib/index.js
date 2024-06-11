@@ -1,4 +1,4 @@
-const { name } = require('../package.json');
+const { name, version, description } = require('../package.json');
 const apmTransaction = require('./apm-transaction');
 const metadata = require('./metadata');
 const configure = require('./configure');
@@ -15,6 +15,8 @@ const workbox = require('./workbox');
 const plugin = {
   dependencies: ['@gasket/plugin-webpack'],
   name,
+  version,
+  description,
   hooks: {
     configure,
     webpackConfig,

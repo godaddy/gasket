@@ -1,7 +1,12 @@
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 import preset from '../lib/index.js';
-const { dependencies } = require('../package.json');
+const {
+  name,
+  version,
+  description,
+  dependencies
+} = require('../package.json');
 
 describe('gasket-preset-api', () => {
 
@@ -9,8 +14,10 @@ describe('gasket-preset-api', () => {
     expect(typeof preset).toBe('object');
   });
 
-  it('has the expected name', () => {
-    expect(preset).toHaveProperty('name', require('../package').name);
+  it('has expected properties', () => {
+    expect(preset).toHaveProperty('name', name);
+    expect(preset).toHaveProperty('version', version);
+    expect(preset).toHaveProperty('description', description);
   });
 
   it('has expected hooks', () => {

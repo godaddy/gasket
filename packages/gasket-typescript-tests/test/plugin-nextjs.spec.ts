@@ -5,7 +5,7 @@ import { Application } from 'express';
 describe('@gasket/plugin-nextjs', () => {
   it('adds a nextConfig section to Gasket config', () => {
     const config: GasketConfigDefinition = {
-      plugins: [{ name: 'example-plugin', hooks: {} }],
+      plugins: [{ name: 'example-plugin', version: '', description: '', hooks: {} }],
       nextConfig: {
         poweredByHeader: false,
         useFileSystemPublicRoutes: false

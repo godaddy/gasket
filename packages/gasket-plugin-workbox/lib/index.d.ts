@@ -31,5 +31,7 @@ declare module '@gasket/core' {
 
 export default {
   name: '@gasket/plugin-workbox',
+  version: '',
+  description: '',
   hooks: {}
 };

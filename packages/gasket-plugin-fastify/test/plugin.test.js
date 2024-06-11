@@ -1,6 +1,5 @@
 const middie = require('middie');
 const { GasketEngine } = require('@gasket/core');
-const version = require('../package.json').peerDependencies.fastify;
 
 const app = {
   ready: jest.fn(),
@@ -23,6 +22,7 @@ jest.mock('cookie-parser', () => mockCookieParser);
 jest.mock('compression', () => mockCompression);
 
 const plugin = require('../lib/index');
+const { name, version, description, peerDependencies } = require('../package');
 
 describe('Plugin', function () {
 
@@ -30,8 +30,10 @@ describe('Plugin', function () {
     expect(typeof plugin).toBe('object');
   });
 
-  it('has expected name', () => {
-    expect(plugin).toHaveProperty('name', require('../package').name);
+  it('has expected properties', () => {
+    expect(plugin).toHaveProperty('name', name);
+    expect(plugin).toHaveProperty('version', version);
+    expect(plugin).toHaveProperty('description', description);
   });
 
   it('has expected hooks', () => {
@@ -325,7 +327,7 @@ describe('create', () => {
 
   it('adds appropriate dependencies', expectCreatedWith(({ pkg }) => {
     expect(pkg.add).toHaveBeenCalledWith('dependencies', {
-      fastify: version
+      fastify: peerDependencies.fastify
     });
   }));
 });

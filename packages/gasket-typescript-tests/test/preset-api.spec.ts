@@ -6,7 +6,7 @@ describe('@gasket/preset-api', () => {
 
   it('imports config type injections for all plugins', () => {
     const config: GasketConfigDefinition = {
-      plugins: [{ name: 'example-plugin', hooks: {} }],
+      plugins: [{ name: 'example-plugin', version: '', description: '', hooks: {} }],
       http: 8080,
       express: {
         compression: true
@@ -22,6 +22,8 @@ describe('@gasket/preset-api', () => {
   it('imports lifecycles for all plugins', () => {
     const plugin: Plugin = {
       name: 'dummy-plugin',
+      version: '',
+      description: '',
       hooks: {
         preboot() {
           log('Preparing...');

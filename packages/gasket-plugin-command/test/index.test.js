@@ -1,4 +1,7 @@
 import plugin from '../lib/index.js';
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+const { name, version, description } = require('../package.json');
 
 describe('@gasket/plugin-command', () => {
 
@@ -6,8 +9,10 @@ describe('@gasket/plugin-command', () => {
     expect(plugin).toEqual(expect.any(Object));
   });
 
-  it('should have a name', () => {
-    expect(plugin.name).toEqual('@gasket/plugin-command');
+  it('should have properties', () => {
+    expect(plugin).toHaveProperty('name', name);
+    expect(plugin).toHaveProperty('version', version);
+    expect(plugin).toHaveProperty('description', description);
   });
 
   it('should have a configure hook', () => {

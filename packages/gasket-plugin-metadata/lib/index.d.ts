@@ -126,5 +126,7 @@ declare module '@gasket/core' {
 
 export default {
   name: '@gasket/plugin-metadata',
+  version: '',
+  description: '',
   hooks: {}
 };

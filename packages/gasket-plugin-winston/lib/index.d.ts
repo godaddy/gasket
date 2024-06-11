@@ -12,5 +12,7 @@ declare module '@gasket/core' {
 
 export default {
   name: '@gasket/plugin-winston',
+  version: '',
+  description: '',
   hooks: {}
 };

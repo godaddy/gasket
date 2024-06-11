@@ -37,5 +37,7 @@ declare module 'create-gasket-app' {
 
 export default {
   name: '@gasket/plugin-lint',
+  version: '',
+  description: '',
   hooks: {}
 };

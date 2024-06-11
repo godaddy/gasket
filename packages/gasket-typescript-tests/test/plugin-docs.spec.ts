@@ -4,7 +4,7 @@ import '@gasket/plugin-docs';
 describe('@gasket/plugin-docs', () => {
   it('defines the config for the plugin', () => {
     const config: GasketConfigDefinition = {
-      plugins: [{ name: 'example-plugin', hooks: {} }],
+      plugins: [{ name: 'example-plugin', version: '', description: '', hooks: {} }],
       docs: {
         outputDir: './out/docs'
       }

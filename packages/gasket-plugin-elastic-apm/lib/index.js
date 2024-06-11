@@ -4,11 +4,18 @@
 const middleware = require('./middleware');
 const preboot = require('./preboot');
 const configure = require('./configure');
-const { devDependencies, name } = require('../package.json');
+const {
+  name,
+  version,
+  description,
+  devDependencies
+} = require('../package.json');
 
 /** @type {import('@gasket/core').Plugin} */
 const plugin = {
   name,
+  version,
+  description,
   hooks: {
     configure,
     preboot,
