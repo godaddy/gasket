@@ -24,11 +24,22 @@ describe('presetPrompt', () => {
   it('does not prompt if context.typescript exists', async () => {
     mockContext.typescript = true;
     await presetPrompt({}, mockContext, mockPrompt);
-    expect(mockPrompt.prompt).not.toHaveBeenCalled();
+    const first = mockPrompt.prompt.mock.calls[0][0][0];
+    expect(mockPrompt.prompt).toHaveBeenCalledTimes(1);
+    expect(first.name).toEqual('server');
   });
 
   it('prompts for typescript', async () => {
     await presetPrompt({}, mockContext, mockPrompt);
+    const first = mockPrompt.prompt.mock.calls[0][0][0];
     expect(mockPrompt.prompt).toHaveBeenCalled();
+    expect(first.name).toEqual('typescript');
+  });
+
+  it('prompts for server', async () => {
+    await presetPrompt({}, mockContext, mockPrompt);
+    const second = mockPrompt.prompt.mock.calls[1][0][0];
+    expect(mockPrompt.prompt).toHaveBeenCalledTimes(2);
+    expect(second.name).toEqual('server');
   });
 });

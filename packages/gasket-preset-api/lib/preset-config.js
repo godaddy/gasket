@@ -34,6 +34,7 @@ export default async function presetConfig(gasket, context) {
       pluginHttps,
       pluginDocs,
       pluginDocusaurus,
+      pluginData,
       pluginWinston,
       pluginSwagger,
       pluginLint,

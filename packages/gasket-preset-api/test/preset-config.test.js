@@ -27,7 +27,53 @@ describe('presetConfig', () => {
   it('has expected plugins in order', async () => {
     const config = await presetConfig({}, mockContext);
     const expected = [
-      expect.objectContaining({ name: '@gasket/plugin-express' }),
+      expect.objectContaining({ name: '@gasket/plugin-https' }),
+      expect.objectContaining({ name: '@gasket/plugin-docs' }),
+      expect.objectContaining({ name: '@gasket/plugin-docusaurus' }),
+      expect.objectContaining({ name: '@gasket/plugin-data' }),
+      expect.objectContaining({ name: '@gasket/plugin-winston' }),
+      expect.objectContaining({ name: '@gasket/plugin-swagger' }),
+      expect.objectContaining({ name: '@gasket/plugin-lint' })
+    ];
+    expect(config.plugins).toEqual(expected);
+  });
+
+  it('adds express plugin when selected', async () => {
+    mockContext.server = 'express';
+    const config = await presetConfig({}, mockContext);
+    const expected = [
+      expect.objectContaining({ name: '@gasket/plugin-https' }),
+      expect.objectContaining({ name: '@gasket/plugin-docs' }),
+      expect.objectContaining({ name: '@gasket/plugin-docusaurus' }),
+      expect.objectContaining({ name: '@gasket/plugin-data' }),
+      expect.objectContaining({ name: '@gasket/plugin-winston' }),
+      expect.objectContaining({ name: '@gasket/plugin-swagger' }),
+      expect.objectContaining({ name: '@gasket/plugin-lint' }),
+      expect.objectContaining({ name: '@gasket/plugin-express' })
+    ];
+    expect(config.plugins).toEqual(expected);
+  });
+
+  it('adds fastify plugin when selected', async () => {
+    mockContext.server = 'fastify';
+    const config = await presetConfig({}, mockContext);
+    const expected = [
+      expect.objectContaining({ name: '@gasket/plugin-https' }),
+      expect.objectContaining({ name: '@gasket/plugin-docs' }),
+      expect.objectContaining({ name: '@gasket/plugin-docusaurus' }),
+      expect.objectContaining({ name: '@gasket/plugin-data' }),
+      expect.objectContaining({ name: '@gasket/plugin-winston' }),
+      expect.objectContaining({ name: '@gasket/plugin-swagger' }),
+      expect.objectContaining({ name: '@gasket/plugin-lint' }),
+      expect.objectContaining({ name: '@gasket/plugin-fastify' })
+    ];
+    expect(config.plugins).toEqual(expected);
+  });
+
+  it('adds does not add a plugin when custom server is selected', async () => {
+    mockContext.server = 'customServer';
+    const config = await presetConfig({}, mockContext);
+    const expected = [
       expect.objectContaining({ name: '@gasket/plugin-https' }),
       expect.objectContaining({ name: '@gasket/plugin-docs' }),
       expect.objectContaining({ name: '@gasket/plugin-docusaurus' }),
