@@ -10,9 +10,6 @@ const projectRoot = path.resolve(__dirname, '..', '..', '..');
 export default {
   name: 'config-plugin',
   hooks: {
-    async metadata(gasket, meta) {
-      return meta;
-    },
     docsSetup: () => ({}),
     // Add repo-level docs in to the top of the guides section
     docsGenerate: {

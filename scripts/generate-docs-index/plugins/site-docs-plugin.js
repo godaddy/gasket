@@ -66,9 +66,6 @@ const txFrontMatter = {
 export default {
   name: 'site-docs-plugin',
   hooks: {
-    async metadata(gasket, meta) {
-      return meta;
-    },
     docsSetup: {
       timing: {
         after: ['@gasket/plugin-docs']
