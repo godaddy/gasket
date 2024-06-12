@@ -1,28 +1,18 @@
 /* eslint-disable no-console, no-sync */
-
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const projectRoot = path.resolve(__dirname, '..', '..', '..');
-const packagesDir = path.join(projectRoot, 'packages');
+// const packagesDir = path.join(projectRoot, 'packages');
 
-async function metadata(gasket, data) {
-  const modules = fs.readdirSync(packagesDir, { withFileTypes: true })
-    .filter(dirent => dirent.isDirectory() &&
-      !dirent.name.startsWith('gasket-plugin-') && !dirent.name.startsWith('gasket-preset-')
-    )
-    .map(dirent => path.join(packagesDir, dirent.name));
-
-  return {
-    ...data,
-    modules
-  };
-}
-
-
-module.exports = {
+export default {
+  name: 'config-plugin',
   hooks: {
-    metadata,
+    async metadata(gasket, meta) {
+      return meta;
+    },
     docsSetup: () => ({}),
     // Add repo-level docs in to the top of the guides section
     docsGenerate: {
