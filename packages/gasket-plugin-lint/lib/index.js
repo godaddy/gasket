@@ -14,6 +14,10 @@ const plugin = {
   hooks: {
     prompt,
     create,
+    // @ts-expect-error - TODO: fix this
+    async metadata(gasket, meta) {
+      return meta;
+    },
     async postCreate(gasket, context, { runScript }) {
       const safeRunScript = makeSafeRunScript(context, runScript);
       await safeRunScript('lint:fix');
