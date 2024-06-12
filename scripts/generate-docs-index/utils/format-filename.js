@@ -7,4 +7,4 @@ export default function formatFilename(filename) {
   filename = `${filename.charAt(0).toUpperCase()}${filename.slice(1)}`;
   filename = filename.split('-').map(word => `${word.charAt(0).toUpperCase()}${word.slice(1)}`).join(' ');
   return filename.replace('.md', '');
-};
+}

@@ -1,12 +1,4 @@
 /* eslint-disable no-console, no-sync */
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-const projectRoot = path.resolve(__dirname, '..', '..', '..');
-// const packagesDir = path.join(projectRoot, 'packages');
-
 export default {
   name: 'config-plugin',
   hooks: {
@@ -29,7 +21,8 @@ export default {
             description: 'Steps necessary to upgrade major versions',
             link: '/docs/upgrades.md',
             targetRoot: docsConfigSet.docsRoot
-          }];
+          }
+        ];
       }
     }
   }

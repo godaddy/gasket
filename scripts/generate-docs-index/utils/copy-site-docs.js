@@ -131,4 +131,4 @@ export default async function copySiteDocs(projectRoot) {
   await copyCreateGasketApp(projectRoot);
   await copyLifecyleGraph(targetRoot);
   await copyRootDocs(projectRoot, targetRoot);
-};
+}

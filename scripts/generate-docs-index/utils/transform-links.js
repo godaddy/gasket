@@ -15,4 +15,4 @@ export default function transformLinks(content) {
     .replace(/#([a-z]+[A-Z].*)/g, (_, match) => '#' + match.toLowerCase())
     .replace('./docs/', '/docs/');
   return content;
-};
+}
