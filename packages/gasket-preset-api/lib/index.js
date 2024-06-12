@@ -13,9 +13,6 @@ export default {
   hooks: {
     presetPrompt,
     presetConfig,
-    create,
-    metadata(gasket, meta) {
-      return meta;
-    }
+    create
   }
 };
