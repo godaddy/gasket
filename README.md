@@ -43,7 +43,6 @@ Help and explanations docs
 | [Quick Start Guide]           | Get up and running on Gasket                           |
 | [Upgrades Guide]              | Steps necessary to upgrade major versions              |
 | [Lifecycle Flowchart]         | A flowchart detailing how lifecycles are interrelated. |
-| [Progressive Web Apps Guide]  | Making Progressive Web Apps (PWA) with Gasket          |
 | [Express Setup Guide]         | Adding middleware and routes for Express               |
 | [Next.js Routing Guide]       | Basic and advance routing for Next.js                  |
 | [Next.js Deployment Guide]    | Steps to deploy a Next.js Gasket app                   |
@@ -146,10 +145,13 @@ Available plugins
 | [@gasket/plugin-cypress]        | 7.0.0-next.34 | Integrates Cypress based testing into your Gasket application |
 | [@gasket/plugin-data]           | 7.0.0-next.34 | Supports application-specific settings and configurations     |
 | [@gasket/plugin-docs]           | 7.0.0-next.34 | Centralize doc files from plugins and modules                 |
+| [@gasket/plugin-docs-graphs]    | 7.0.0-next.34 | Generate mermaid graphs of an applications gasket lifecycles  |
 | [@gasket/plugin-docusaurus]     | 7.0.0-next.34 | Gasket plugin for docusaurus                                  |
 | [@gasket/plugin-elastic-apm]    | 7.0.0-next.34 | Adds Elastic APM instrumentation to your application          |
 | [@gasket/plugin-express]        | 7.0.0-next.34 | Adds express support to your application                      |
 | [@gasket/plugin-fastify]        | 7.0.0-next.34 | Adds fastify support to your application                      |
+| [@gasket/plugin-git]            | 7.0.0-next.34 | Adds git support to your application                          |
+| [@gasket/plugin-happyfeet]      | 7.0.0-next.34 | A gasket plugin to enable happyfeet healthchecks              |
 | [@gasket/plugin-https]          | 7.0.0-next.34 | Create http/s servers with graceful termination               |
 | [@gasket/plugin-intl]           | 7.0.0-next.34 | NodeJS script to build localization files.                    |
 | [@gasket/plugin-jest]           | 7.0.0-next.34 | Integrated jest into your application.                        |
@@ -164,11 +166,12 @@ Available plugins
 | [@gasket/plugin-service-worker] | 7.0.0-next.34 | Gasket Service Worker Plugin                                  |
 | [@gasket/plugin-start]          |               |                                                               |
 | [@gasket/plugin-swagger]        | 7.0.0-next.34 | Generate and serve swagger docs                               |
+| [@gasket/plugin-typescript]     | 7.0.0-next.34 | Gasket plugin for TypeScript support                          |
 | [@gasket/plugin-webpack]        | 7.0.0-next.34 | Adds webpack support to your application                      |
 | [@gasket/plugin-winston]        | 7.0.0-next.34 | Gasket logger based on Winston                                |
 | [@gasket/plugin-workbox]        | 7.0.0-next.34 | Gasket Workbox Plugin                                         |
-| config-plugin                   |               |                                                               |
-| site-docs-plugin                |               |                                                               |
+
+
 
 ## Modules
 
@@ -260,7 +263,6 @@ Available configuration options in the `gasket.config.js`
 [Quick Start Guide]:docs/quick-start.md
 [Upgrades Guide]:docs/upgrades.md
 [Lifecycle Flowchart]:/docs/generated-docs/lifecycle-graphs.md
-[Progressive Web Apps Guide]:/packages/gasket-preset-pwa/docs/pwa-support.md
 [Express Setup Guide]:/packages/gasket-plugin-express/docs/setup.md
 [Next.js Routing Guide]:/packages/gasket-plugin-nextjs/docs/routing.md
 [Next.js Deployment Guide]:/packages/gasket-plugin-nextjs/docs/deployment.md
@@ -326,10 +328,13 @@ Available configuration options in the `gasket.config.js`
 [@gasket/plugin-cypress]:/packages/gasket-plugin-cypress/README.md
 [@gasket/plugin-data]:/packages/gasket-plugin-data/README.md
 [@gasket/plugin-docs]:/packages/gasket-plugin-docs/README.md
+[@gasket/plugin-docs-graphs]:/packages/gasket-plugin-docs-graphs/README.md
 [@gasket/plugin-docusaurus]:/packages/gasket-plugin-docusaurus/README.md
 [@gasket/plugin-elastic-apm]:/packages/gasket-plugin-elastic-apm/README.md
 [@gasket/plugin-express]:/packages/gasket-plugin-express/README.md
 [@gasket/plugin-fastify]:/packages/gasket-plugin-fastify/README.md
+[@gasket/plugin-git]:/packages/gasket-plugin-git/README.md
+[@gasket/plugin-happyfeet]:/packages/gasket-plugin-happyfeet/README.md
 [@gasket/plugin-https]:/packages/gasket-plugin-https/README.md
 [@gasket/plugin-intl]:/packages/gasket-plugin-intl/README.md
 [@gasket/plugin-jest]:/packages/gasket-plugin-jest/README.md
@@ -344,6 +349,7 @@ Available configuration options in the `gasket.config.js`
 [@gasket/plugin-service-worker]:/packages/gasket-plugin-service-worker/README.md
 [@gasket/plugin-start]:/packages/gasket-plugin-start/README.md
 [@gasket/plugin-swagger]:/packages/gasket-plugin-swagger/README.md
+[@gasket/plugin-typescript]:/packages/gasket-plugin-typescript/README.md
 [@gasket/plugin-webpack]:/packages/gasket-plugin-webpack/README.md
 [@gasket/plugin-winston]:/packages/gasket-plugin-winston/README.md
 [@gasket/plugin-workbox]:/packages/gasket-plugin-workbox/README.md
