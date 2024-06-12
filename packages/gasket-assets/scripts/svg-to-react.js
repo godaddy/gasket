@@ -84,6 +84,7 @@ async function main() {
 const logo = require('./gasket-logo');
 module.exports = { emblem, logo };
 `, 'utf8');
+  console.log('wrote index.js');
 
   console.log('-------');
   console.log(`Processed ${successCount}/${files.length} files.`);
