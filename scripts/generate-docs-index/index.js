@@ -33,6 +33,7 @@ async function main() {
     .replace(/Dependencies and supporting/, 'Supporting')
     .replace(/.+:app\/README.md\n/, '')
     .replace(/.+plugins\/config-plugin.+\n/, '')
+    .replace(/\| (config-plugin|site-docs-plugin)+.*/g, '')
     // removed a single test/ dir, duplicate from generating both mocha and jest
     .replace(/.+test\/.+\n/, '')
     .replace(':generated-docs/', ':/docs/generated-docs/')
