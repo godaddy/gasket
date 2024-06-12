@@ -1,8 +1,8 @@
 /// <reference types="@gasket/plugin-metadata" />
 
 /** @type {import('@gasket/core').HookHandler<'metadata'>} */
-module.exports = function metadataHook(gasket, meta) {
-  const { metadata } = gasket;
+module.exports = async function metadataHook(gasket, meta) {
+  const metadata = await gasket.actions.getMetadata();
 
   const hasExpress = Boolean(
     metadata.plugins.find(

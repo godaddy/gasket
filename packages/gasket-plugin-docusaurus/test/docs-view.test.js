@@ -46,6 +46,9 @@ describe('docsView', () => {
           rootDir: 'some-root',
           docsDir: 'sub-dir'
         }
+      },
+      actions: {
+        getMetadata: jest.fn(() => ({ app: { name: 'App name' } }))
       }
     };
   });

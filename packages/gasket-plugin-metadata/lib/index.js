@@ -1,62 +1,17 @@
-const { name, version, description } = require('../package');
-const cloneDeep = require('lodash.clonedeep');
-const {
-  sanitize,
-  loadAppModules,
-  loadPluginModules,
-  flattenPluginModules,
-  fixupPresetHierarchy,
-  expandPresetMetadata,
-  expandPackageMetadata
-} = require('./utils');
+const create = require('./create');
+const actions = require('./actions');
+const { name, version, description } = require('../package.json');
 
+/** @type {import('@gasket/core').Plugin} */
 module.exports = {
   name,
   version,
   description,
   hooks: {
-    // TODO: convert to a getMetadata action
-    async init(gasket) {
-      const { loader, config } = gasket;
-      const { root = process.cwd() } = config;
-      const loaded = loader.loadConfigured(config.plugins);
-      const { presets, plugins } = sanitize(cloneDeep(loaded));
-      const app = loader.getModuleInfo(null, root);
-      const modules = [];
-
-      /**
-       * @type {Metadata}
-       */
-      gasket.metadata = {
-        app,
-        presets,
-        plugins,
-        modules
-      };
-
-      loadAppModules(loader, app, modules);
-      expandPresetMetadata(presets);
-      expandPackageMetadata([app]);
-      expandPackageMetadata(plugins);
-
-      //
-      // Allow plugins to tune their own metadata via lifecycle
-      //
-      await gasket.execApply('metadata', async ({ name }, handler) => {
-        const idx = plugins.findIndex(p => p.module.name === name || p.name === name);
-        const pluginData = await handler(plugins[idx]);
-
-        loadPluginModules(pluginData, loader);
-        flattenPluginModules(pluginData, modules);
-        fixupPresetHierarchy(pluginData, presets);
-
-        // eslint-disable-next-line require-atomic-updates
-        plugins[idx] = pluginData;
-      });
-
-      expandPackageMetadata(modules);
-    },
+    create,
+    actions,
     metadata(gasket, meta) {
+      const mod = require('@gasket/core/package.json');
       return {
         ...meta,
         lifecycles: [{
@@ -67,7 +22,12 @@ module.exports = {
           parent: 'init'
         }],
         modules: [
-          '@gasket/core'
+          {
+            name: mod.name,
+            version: mod.version,
+            description: mod.description,
+            link: 'README.md'
+          }
         ]
       };
     }
