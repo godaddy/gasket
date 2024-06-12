@@ -3,6 +3,7 @@
 const buildDocsConfigSet = require('./utils/build-config-set');
 const collateFiles = require('./utils/collate-files');
 const generateIndex = require('./utils/generate-index');
+const createPackageFile = require('./utils/create-package-file');
 
 /**
  * Get the docs command
@@ -41,6 +42,7 @@ module.exports = function commands(gasket) {
       docsConfigSet.guides.unshift(...guides);
 
       await generateIndex(docsConfigSet);
+      await createPackageFile(docsConfigSet);
 
       if (view) {
         await gasket.exec('docsView', docsConfigSet);

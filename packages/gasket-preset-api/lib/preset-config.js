@@ -1,7 +1,5 @@
 import pluginExpress from '@gasket/plugin-express';
 import pluginHttps from '@gasket/plugin-https';
-import pluginDocs from '@gasket/plugin-docs';
-import pluginDocusaurus from '@gasket/plugin-docusaurus';
 import pluginData from '@gasket/plugin-data';
 import pluginWinston from '@gasket/plugin-winston';
 import pluginSwagger from '@gasket/plugin-swagger';
@@ -15,7 +13,7 @@ import pluginLint from '@gasket/plugin-lint';
  */
 export default async function presetConfig(gasket, context) {
   let typescriptPlugin;
-  let testPlugins = [];
+  const testPlugins = [];
 
   if ('testPlugins' in context && context.testPlugins.length > 0) {
     await Promise.all(context.testPlugins.map(async (testPlugin) => {
@@ -32,8 +30,6 @@ export default async function presetConfig(gasket, context) {
     plugins: [
       pluginExpress,
       pluginHttps,
-      pluginDocs,
-      pluginDocusaurus,
       pluginData,
       pluginWinston,
       pluginSwagger,
