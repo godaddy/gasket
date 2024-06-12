@@ -11,6 +11,9 @@ export default {
   description,
   hooks: {
     presetPrompt,
-    presetConfig
+    presetConfig,
+    metadata(gasket, meta) {
+      return meta;
+    }
   }
 };
