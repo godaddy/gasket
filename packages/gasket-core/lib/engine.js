@@ -43,6 +43,11 @@ class GasketEngine {
           throw new Error(`Plugin (${name}) must have a hooks`);
         }
 
+        // Add base metadata hook if not present
+        if (!plugin.hooks.metadata) {
+          plugin.hooks.metadata = async (_, metadata) => metadata;
+        }
+
         acc[name] = plugin;
         return acc;
       }, {});
