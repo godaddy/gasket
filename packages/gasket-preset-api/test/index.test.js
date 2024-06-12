@@ -32,8 +32,6 @@ describe('gasket-preset-api', () => {
   it('has expected dependencies', () => {
     const expected = [
       '@gasket/plugin-cypress',
-      '@gasket/plugin-docs',
-      '@gasket/plugin-docusaurus',
       '@gasket/plugin-express',
       '@gasket/plugin-https',
       '@gasket/plugin-jest',

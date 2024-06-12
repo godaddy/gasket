@@ -38,7 +38,7 @@ async function loadPresets({ context }) {
       const mod = await import(`${modPath}/${name}/${pkgFile.main}`);
       return mod.default || mod;
     } catch (err) {
-      throw new Error(`Failed to install preset ${name}${version}`);
+      throw new Error(`Failed to install preset ${name}${version}: ${err.message}`);
     }
   });
 

@@ -1,6 +1,4 @@
 import '@gasket/plugin-data';
-import '@gasket/plugin-docs';
-import '@gasket/plugin-docusaurus';
 import '@gasket/plugin-express';
 import '@gasket/plugin-https';
 import '@gasket/plugin-lint';
