@@ -80,7 +80,7 @@ async function main() {
   await Promise.all(promises);
 
   await fs.writeFile(path.join(outputDir, 'index.js'),
-  `const emblem = require('./gasket-emblem');
+    `const emblem = require('./gasket-emblem');
 const logo = require('./gasket-logo');
 module.exports = { emblem, logo };
 `, 'utf8');

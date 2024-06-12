@@ -75,5 +75,5 @@ export default function addFrontMatter(content, filename) {
     transformedContent: `---\n${data}\n---\n${imports}\n${content}`,
     file: `${path.parse(filename).name}.${imports ? 'mdx' : 'md'}`
   };
-};
+}
 

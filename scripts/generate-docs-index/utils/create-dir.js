@@ -13,4 +13,4 @@ export default async function createDir(targetRoot, dir) {
   } catch (err) {
     await mkdir(tpath, { recursive: true });
   }
-};
+}
