@@ -11,12 +11,14 @@ declare module '@gasket/core' {
     fastify?: {
       /** Enable compression */
       compression?: boolean;
-      /** Regular expression for excluded routes */
+      /** Filter for which request URLs invoke Gasket middleware */
+      middlewareInclusionRegex?: RegExp;
+      /** @deprecated */
       excludedRoutesRegex?: RegExp;
       /** Trust proxy configuration */
       trustProxy?: FastifyServerOptions['trustProxy'];
       /** Glob pattern for source files setting up fastify routes */
-      routes?: string;
+      routes?: Array<MaybeAsync<(app: Fastify) => void>>;
     };
     /** Middleware configuration */
     middleware?: {
