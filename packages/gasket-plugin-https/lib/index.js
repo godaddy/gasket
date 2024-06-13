@@ -1,5 +1,4 @@
 /// <reference types="@gasket/core" />
-/// <reference types="@gasket/plugin-start" />
 /// <reference types="@gasket/plugin-metadata" />
 /// <reference types="@gasket/plugin-logger" />
 
