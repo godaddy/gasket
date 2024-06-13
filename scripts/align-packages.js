@@ -37,7 +37,7 @@ const depVersions = {
   'react-intl': '^6.0.0',
   'prop-types': '^15.8.1',
   'redux': '^4.0.5',
-  'next': '13.1.1',
+  'next': '^14.0.0',
   'next-redux-wrapper': '^8.0.0',
   'jsdom': '^20.0.0',
 
@@ -70,7 +70,7 @@ const depVersions = {
  * @type {Object.<string,string>}
  */
 const peerDepVersions = {
-  'next': '>=10.2.0 <= 13.1.1',
+  'next': '>=10.2.0 <= 13.1.1 || ^14',
   'prop-types': '^15',
   'react': '^16 || ^17 || ^18',
   'react-dom': '^16 || ^17 || ^18',
@@ -105,6 +105,7 @@ const pkgOrder = [
   'homepage',
   'dependencies',
   'devDependencies',
+  'disabled_peerDependencies',
   'peerDependencies',
   'eslintConfig',
   'eslintIgnore',
@@ -318,7 +319,6 @@ function setupTypes(pkgJson) {
   const packagesToSkip = [
     'create-gasket-app',
     '@gasket/assets',
-    '@gasket/cli',
     '@gasket/engine',
     '@gasket/log',
     '@gasket/plugin-command',
