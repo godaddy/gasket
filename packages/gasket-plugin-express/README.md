@@ -60,29 +60,6 @@ module.exports = {
 }
 ```
 
-### Middleware paths
-
-The `gasket.config.js` can contain a `middleware` property, which is an array of
-objects that map plugins to route or path patterns, allowing apps to tune which
-middleware are triggered for which requests.
-
-```js
-  middleware: [
-    {
-      plugin:'gasket-plugin-example', // Name of the Gasket plugin
-      paths: ['/api']
-    },
-    {
-      plugin:'@some/gasket-plugin-example',
-      paths: [/\/default/]
-    },
-    {
-      plugin: '@another/gasket-plugin-example',
-      paths: ['/proxy', /\/home/]
-    }
-  ]
-```
-
 ## Logging
 
 This plugin attaches a `logger` object to the request object. This object has a `metadata` method that allows you to attach details to any log entry related to the request. For example, you can add the user ID to each log entry. When logging within the context of a request, use the `req.logger` object instead of the global `gasket.logger` so that contextual information is included in the log entry. Here is an example of how to attach metadata to  `req.logger` object and how to use it:
@@ -100,30 +77,6 @@ function someOtherMiddleware(req, res, next) {
 ```
 
 ## Lifecycles
-
-### middleware
-
-Executed when the `express` server has been created, it will apply all returned
-functions as middleware.
-
-```js
-module.exports = {
-  hooks: {
-    /**
-    * Add Express middleware
-    *
-    * @param {Gasket} gasket The Gasket API
-    * @param {Express} app - Express app instance
-    * @returns {function|function[]} middleware(s)
-    */
-    middleware: function (gasket, app) {
-      return require('x-xss-protection')();
-    }
-  }
-}
-```
-
-You may also return an `Array` to inject more than one middleware.
 
 ### express
 
