@@ -26,7 +26,7 @@ const plugin = {
         context.files.add(`${generatorDir}/**/*`);
 
         context.gasketConfig.add('fastify', {
-          routes: './routes/*'
+          routes: []
         });
       }
     },
