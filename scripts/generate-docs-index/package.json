@@ -1,11 +1,15 @@
 {
   "name": "generate-docs-index",
   "private": true,
-  "version": "6.47.1",
+  "version": "7.0.0-next.34",
   "description": "Generate the overview index",
   "type": "module",
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "npm run lint -- --fix"
+  },
   "dependencies": {
-    "@gasket/cli": "^6.47.1"
+    "@gasket/core": "^7.0.0-next.34"
   },
   "devDependencies": {
     "eslint": "^8.56.0",
