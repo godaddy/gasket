@@ -154,16 +154,6 @@ describe('createServers', () => {
     expect(errorIndex).toEqual(app.use.mock.calls.length - 1);
   });
 
-  // it('adds errorMiddleware from lifecycle (ignores falsy)', async () => {
-  //   await plugin.hooks.createServers(gasket, {});
-  //   expect(app.use).toHaveBeenCalledTimes(4);
-  //   lifecycles.errorMiddleware.mockResolvedValue([() => {
-  //   }, null]);
-  //   app.use.mockClear();
-  //   await plugin.hooks.createServers(gasket, {});
-  //   expect(app.use).toHaveBeenCalledTimes(5);
-  // });
-
   function findCall(aSpy, aPredicate) {
     const callIdx = findCallIndex(aSpy, aPredicate);
     return callIdx === -1 ? null : aSpy.mock.calls[callIdx][0];
