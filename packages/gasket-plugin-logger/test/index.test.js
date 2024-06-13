@@ -1,5 +1,6 @@
 /* eslint-disable no-console, no-sync */
-const { name, hooks } = require('../lib'); // Update the path accordingly
+const plugin = require('../lib'); // Update the path accordingly
+const { name, version, description } = require('../package');
 
 // Mock console methods
 jest.spyOn(console, 'error').mockImplementation(() => {});
@@ -17,14 +18,15 @@ const mockLogger = {
 };
 
 describe('@gasket/plugin-logger', () => {
-  describe('Name property', () => {
-    it('should have a name property from package.json', () => {
-      expect(name).toBeDefined();
-      expect(name).toEqual(require('../package.json').name);
+  describe('Plugin properties', () => {
+    it('should have properties from package.json', () => {
+      expect(plugin).toHaveProperty('name', name);
+      expect(plugin).toHaveProperty('version', version);
+      expect(plugin).toHaveProperty('description', description);
     });
   });
 
-  describe('Hooks', () => {
+  describe('plugin.hooks', () => {
     let gasket;
 
     beforeEach(() => {
@@ -39,7 +41,7 @@ describe('@gasket/plugin-logger', () => {
         const fakeLogger = { ...mockLogger };
         gasket.execSync.mockReturnValue([fakeLogger]);
 
-        hooks.init(gasket);
+        plugin.hooks.init(gasket);
 
         expect(gasket.logger).toEqual(fakeLogger);
       });
@@ -47,7 +49,7 @@ describe('@gasket/plugin-logger', () => {
       it('should set logger to default if no loggers are hooked', async () => {
         gasket.execSync.mockReturnValue([]);
 
-        hooks.init(gasket);
+        plugin.hooks.init(gasket);
 
         // Check default logger behavior
         const childLogger = gasket.logger.child({ key: 'value' });
@@ -78,7 +80,7 @@ describe('@gasket/plugin-logger', () => {
         gasket.execSync.mockReturnValue([fakeLogger1, fakeLogger2]);
 
         // eslint-disable-next-line max-nested-callbacks
-        expect(() => hooks.init(gasket)).toThrow(
+        expect(() => plugin.hooks.init(gasket)).toThrow(
           'Multiple plugins are hooking createLogger. Only one logger is supported.'
         );
       });
@@ -86,7 +88,7 @@ describe('@gasket/plugin-logger', () => {
 
     describe('actions', () => {
       it('should return getLogger action', () => {
-        const actions = hooks.actions(gasket);
+        const actions = plugin.hooks.actions(gasket);
 
         expect(actions.getLogger()).toBe(gasket.logger);
       });
@@ -97,19 +99,19 @@ describe('@gasket/plugin-logger', () => {
         const fakeLogger = { close: jest.fn() };
         gasket.logger = fakeLogger;
 
-        await hooks.onSignal(gasket);
+        await plugin.hooks.onSignal(gasket);
 
         expect(fakeLogger.close).toHaveBeenCalled();
       });
 
       it('should not throw error if logger is not available', async () => {
-        await expect(hooks.onSignal(gasket)).resolves.not.toThrow();
+        await expect(plugin.hooks.onSignal(gasket)).resolves.not.toThrow();
       });
     });
 
     describe('metadata', () => {
       it('should return metadata with lifecycle information', () => {
-        const meta = hooks.metadata(gasket, { otherData: 'example' });
+        const meta = plugin.hooks.metadata(gasket, { otherData: 'example' });
 
         expect(meta).toEqual(
           expect.objectContaining({

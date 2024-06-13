@@ -2,7 +2,7 @@
 /// <reference types="@gasket/plugin-metadata" />
 
 const path = require('path');
-const { name } = require('../package.json');
+const { name, version, description } = require('../package.json');
 const configure = require('./configure');
 const prompt = require('./prompt');
 const middleware = require('./middleware');
@@ -17,6 +17,8 @@ const webpackConfig = require('./webpack-config');
  */
 const plugin = {
   name,
+  version,
+  description,
   hooks: {
     configure,
     prompt,

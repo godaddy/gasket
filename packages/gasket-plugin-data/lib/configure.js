@@ -5,8 +5,8 @@ const { baseDataMap } = require('./actions');
  * @type {import('@gasket/core').HookHandler<'configure'>}
  */
 function configure(gasket, baseConfig) {
-  const { command: { id: commandId }, config: { env, root } } = gasket;
-
+  const { command, config: { env, root } } = gasket;
+  const commandId = command && command.id;
   if ('data' in baseConfig) {
     const data = applyConfigOverrides(
       baseConfig.data,

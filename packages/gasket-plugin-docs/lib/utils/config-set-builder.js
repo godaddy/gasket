@@ -300,6 +300,7 @@ class DocsConfigSetBuilder {
     // fall back to defaults.
     docsSetup =
       docsSetup ||
+      // @ts-expect-error: TODO: fix this
       (presetData.module && presetData.module.docsSetup) ||
       getDocsSetupFromPkg(presetData) ||
       docsSetupDefault;

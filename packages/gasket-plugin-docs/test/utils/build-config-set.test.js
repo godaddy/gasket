@@ -62,64 +62,66 @@ const makeGasket = () => ({
       outputDir: '.docs'
     }
   },
-  metadata: {
-    app: {
-      name: 'my-app'
-    },
-    plugins: [{
-      name: 'example-plugin',
-      module: {
-        name: 'example-plugin',
-        hooks: {
-          one: f => f
+  actions: {
+    getMetadata: jest.fn(() => ({
+      app: {
+        name: 'my-app'
+      },
+      plugins: [
+        {
+          name: 'example-plugin',
+          hooks: {
+            one: f => f
+          }
+        },
+        {
+          name: '@some/unnamed-plugin',
+          hooks: {
+            one: f => f,
+            two: f => f
+          }
+        },
+        {
+          name: '@another/unnamed-plugin',
+          hooks: {
+            one: f => f,
+            two: f => f
+          }
+
+        },
+        {
+
+          name: 'app-plugin',
+          hooks: {
+            one: f => f,
+            two: f => f,
+            three: f => f
+          }
         }
-      }
-    }, {
-      name: '@some/unnamed-plugin',
-      module: {
-        // nameless plugin
-        hooks: {
-          one: f => f,
-          two: f => f
+      ],
+      presets: [
+        {
+          name: 'example-preset'
         }
-      }
-    }, {
-      name: '@another/unnamed-plugin',
-      module: {
-        // nameless plugin
-        hooks: {
-          one: f => f,
-          two: f => f
+      ],
+      modules: [
+        {
+          name: 'example-module'
         }
-      }
-    }, {
-      name: '/path/to/app/plugins/app-plugin',
-      module: {
-        name: 'app-plugin',
-        hooks: {
-          one: f => f,
-          two: f => f,
-          three: f => f
-        }
-      }
-    }],
-    presets: [{
-      name: 'example-preset'
-    }],
-    modules: [{
-      name: 'example-module'
-    }]
+      ]
+    }))
   }
 });
 
 describe('utils - buildConfigSet', () => {
-  let mockGasket;
+  let mockGasket, metadata;
   let docsSetupCallback, mockHandler, mockDocsSetup;
 
   beforeEach(async () => {
     jest.resetAllMocks();
 
     mockGasket = makeGasket();
+    metadata = await mockGasket.actions.getMetadata(mockGasket);
 
     await buildConfigSet(mockGasket);
 
@@ -138,19 +140,19 @@ describe('utils - buildConfigSet', () => {
   });
 
   it('adds app', async () => {
-    expect(addAppStub).toHaveBeenCalledWith(mockGasket.metadata.app);
+    expect(addAppStub).toHaveBeenCalledWith(metadata.app);
   });
 
   it('adds plugins from metadata', async () => {
-    expect(addPluginsStub).toHaveBeenCalledWith(mockGasket.metadata.plugins);
+    expect(JSON.stringify(addPluginsStub.mock.calls[0][0])).toEqual(JSON.stringify(metadata.plugins));
   });
 
   it('adds presets from metadata', async () => {
-    expect(addPresetsStub).toHaveBeenCalledWith(mockGasket.metadata.presets);
+    expect(addPresetsStub).toHaveBeenCalledWith(metadata.presets);
   });
 
   it('adds modules from metadata', async () => {
-    expect(addModulesStub).toHaveBeenCalledWith(mockGasket.metadata.modules);
+    expect(addModulesStub).toHaveBeenCalledWith(metadata.modules);
   });
 
   it('returns docsConfigSet from builder', async () => {
@@ -178,22 +180,26 @@ describe('utils - buildConfigSet', () => {
 
     it('adds app if if plugin is null (from ./lifecycles file)', async () => {
       await docsSetupCallback(null, mockHandler);
-      expect(addAppStub).toHaveBeenCalledWith(mockGasket.metadata.app, mockDocsSetup);
+      expect(addAppStub).toHaveBeenCalledWith(metadata.app, mockDocsSetup);
     });
 
     it('does not add app if no null plugin (from ./lifecycles file)', async () => {
       await docsSetupCallback({ name: 'example-plugin' }, mockHandler);
-      expect(addAppStub).not.toHaveBeenCalledWith(mockGasket.metadata.app, mockDocsSetup);
+      expect(addAppStub).not.toHaveBeenCalledWith(metadata.app, mockDocsSetup);
     });
 
     it('adds plugin with associated metadata (by name)', async () => {
       await docsSetupCallback({ name: 'example-plugin' }, mockHandler);
-      expect(addPluginStub).toHaveBeenCalledWith(mockGasket.metadata.plugins[0], mockDocsSetup);
+      expect(JSON.stringify(addPluginStub.mock.calls[0][0]))
+        .toEqual(JSON.stringify(metadata.plugins[0]));
+      expect(addPluginStub.mock.calls[0][1]).toEqual(mockDocsSetup);
     });
 
     it('adds plugin with associated metadata (by hooks)', async () => {
       await docsSetupCallback({ hooks: { one: f => f } }, mockHandler);
-      expect(addPluginStub).toHaveBeenCalledWith(mockGasket.metadata.plugins[0], mockDocsSetup);
+      expect(JSON.stringify(addPluginStub.mock.calls[0][0]))
+        .toEqual(JSON.stringify(metadata.plugins[0]));
+      expect(addPluginStub.mock.calls[0][1]).toEqual(mockDocsSetup);
     });
 
     it('does not add plugin if null', async () => {
@@ -211,7 +217,7 @@ describe('utils - buildConfigSet', () => {
     let mockPluginDatas;
 
     beforeEach(() => {
-      mockPluginDatas = mockGasket.metadata.plugins;
+      mockPluginDatas = metadata.plugins;
     });
 
     it('returns found pluginData from plugin name', () => {

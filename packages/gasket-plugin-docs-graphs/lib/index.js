@@ -4,10 +4,13 @@
 const path = require('path');
 const fs = require('fs');
 const write = fs.promises.writeFile;
+const { name, version, description } = require('../package.json');
 
 /** @type {import('@gasket/core').Plugin} */
 const plugin = {
-  name: require('../package.json').name,
+  name,
+  version,
+  description,
   hooks: {
     async docsGenerate(gasket, docsConfigSet) {
       const { docsRoot } = docsConfigSet;
