@@ -40,7 +40,6 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-lint",
   "dependencies": {
-    "@gasket/resolve": "^7.0.0-next.21",
     "semver": "^7.5.4"
   },
   "devDependencies": {

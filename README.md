@@ -177,17 +177,16 @@ Available plugins
 
 Supporting modules
 
-| Name                  | Version       | Description                                                                          |
-| --------------------- | ------------- | ------------------------------------------------------------------------------------ |
-| [@gasket/assets]      | 7.0.0-next.34 | Gasket assets                                                                        |
-| [@gasket/core]        | 7.0.0-next.34 | Entry point to setting up Gasket instances                                           |
-| [@gasket/data]        | 7.0.0-next.34 | Helper package for accessing embedded Gasket Data in the browser                     |
-| [@gasket/helper-intl] | 7.0.0-next.34 | Internal helpers used by loaders to resolve locale file paths                        |
-| [@gasket/nextjs]      | 7.0.0-next.34 | Gasket integrations for Next.js apps                                                 |
-| [@gasket/react-intl]  | 7.0.0-next.34 | React component library to enable localization for gasket apps.                      |
-| [@gasket/redux]       | 7.0.0-next.34 | Gasket Redux Configuration                                                           |
-| [@gasket/resolve]     | 6.47.1        | Essential module resolution & configuration management for gasket plugins & presets. |
-| [@gasket/utils]       | 7.0.0-next.34 | Reusable utilities for Gasket internals                                              |
+| Name                  | Version       | Description                                                      |
+| --------------------- | ------------- | ---------------------------------------------------------------- |
+| [@gasket/assets]      | 7.0.0-next.34 | Gasket assets                                                    |
+| [@gasket/core]        | 7.0.0-next.34 | Entry point to setting up Gasket instances                       |
+| [@gasket/data]        | 7.0.0-next.34 | Helper package for accessing embedded Gasket Data in the browser |
+| [@gasket/helper-intl] | 7.0.0-next.34 | Internal helpers used by loaders to resolve locale file paths    |
+| [@gasket/nextjs]      | 7.0.0-next.34 | Gasket integrations for Next.js apps                             |
+| [@gasket/react-intl]  | 7.0.0-next.34 | React component library to enable localization for gasket apps.  |
+| [@gasket/redux]       | 7.0.0-next.34 | Gasket Redux Configuration                                       |
+| [@gasket/utils]       | 7.0.0-next.34 | Reusable utilities for Gasket internals                          |
 
 ## Configurations
 
@@ -360,7 +359,6 @@ Available configuration options in the `gasket.config.js`
 [@gasket/nextjs]:/packages/gasket-nextjs/README.md
 [@gasket/react-intl]:/packages/gasket-react-intl/README.md
 [@gasket/redux]:/packages/gasket-redux/README.md
-[@gasket/resolve]:/packages/gasket-resolve/README.md
 [@gasket/utils]:/packages/gasket-utils/README.md
 [bundleAnalyzerConfig]:/packages/gasket-plugin-analyze/README.md#configuration
 [6]:/packages/gasket-plugin-docs/README.md#configuration
