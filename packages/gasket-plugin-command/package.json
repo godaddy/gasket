@@ -14,9 +14,7 @@
     "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict --experimental-vm-modules' jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "posttest": "npm run lint",
-    "disabled_prepack": "npm run docs",
-    "disabled_docs": "jsdoc2md --plugin @godaddy/dmd --files lib/*.js > docs/api.md"
+    "posttest": "npm run lint"
   },
   "exports": {
     ".": {
