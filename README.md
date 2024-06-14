@@ -138,38 +138,39 @@ Available presets
 
 Available plugins
 
-| Name                            | Version       | Description                                                   |
-| ------------------------------- | ------------- | ------------------------------------------------------------- |
-| [@gasket/plugin-analyze]        | 7.0.0-next.34 | Gasket Analyzer Plugin                                        |
-| [@gasket/plugin-command]        | 7.0.0-next.34 | Plugin to enable other plugins to inject new gasket commands  |
-| [@gasket/plugin-cypress]        | 7.0.0-next.34 | Integrates Cypress based testing into your Gasket application |
-| [@gasket/plugin-data]           | 7.0.0-next.34 | Supports application-specific settings and configurations     |
-| [@gasket/plugin-docs]           | 7.0.0-next.34 | Centralize doc files from plugins and modules                 |
-| [@gasket/plugin-docs-graphs]    | 7.0.0-next.34 | Generate mermaid graphs of an applications gasket lifecycles  |
-| [@gasket/plugin-docusaurus]     | 7.0.0-next.34 | Gasket plugin for docusaurus                                  |
-| [@gasket/plugin-elastic-apm]    | 7.0.0-next.34 | Adds Elastic APM instrumentation to your application          |
-| [@gasket/plugin-express]        | 7.0.0-next.34 | Adds express support to your application                      |
-| [@gasket/plugin-fastify]        | 7.0.0-next.34 | Adds fastify support to your application                      |
-| [@gasket/plugin-git]            | 7.0.0-next.34 | Adds git support to your application                          |
-| [@gasket/plugin-happyfeet]      | 7.0.0-next.34 | A gasket plugin to enable happyfeet healthchecks              |
-| [@gasket/plugin-https]          | 7.0.0-next.34 | Create http/s servers with graceful termination               |
-| [@gasket/plugin-intl]           | 7.0.0-next.34 | NodeJS script to build localization files.                    |
-| [@gasket/plugin-jest]           | 7.0.0-next.34 | Integrated jest into your application.                        |
-| [@gasket/plugin-lint]           | 7.0.0-next.34 | Adds GoDaddy standard linting to your application             |
-| [@gasket/plugin-logger]         | 7.0.0-next.34 | Gasket plugin for logging                                     |
-| [@gasket/plugin-manifest]       | 7.0.0-next.34 | The web app manifest for progressive Gasket applications      |
-| [@gasket/plugin-metadata]       | 7.0.0-next.34 | Adds metadata to gasket lifecycles                            |
-| [@gasket/plugin-mocha]          | 7.0.0-next.34 | Integrates mocha based testing in to your Gasket application  |
-| [@gasket/plugin-morgan]         | 7.0.0-next.34 | Adds morgan request logger to your app                        |
-| [@gasket/plugin-nextjs]         | 7.0.0-next.34 | Adds Next support to your application                         |
-| [@gasket/plugin-redux]          | 7.0.0-next.34 | Gasket Redux Setup                                            |
-| [@gasket/plugin-service-worker] | 7.0.0-next.34 | Gasket Service Worker Plugin                                  |
-| [@gasket/plugin-start]          |               |                                                               |
-| [@gasket/plugin-swagger]        | 7.0.0-next.34 | Generate and serve swagger docs                               |
-| [@gasket/plugin-typescript]     | 7.0.0-next.34 | Gasket plugin for TypeScript support                          |
-| [@gasket/plugin-webpack]        | 7.0.0-next.34 | Adds webpack support to your application                      |
-| [@gasket/plugin-winston]        | 7.0.0-next.34 | Gasket logger based on Winston                                |
-| [@gasket/plugin-workbox]        | 7.0.0-next.34 | Gasket Workbox Plugin                                         |
+| Name                            | Version       | Description                                                               |
+| ------------------------------- | ------------- | ------------------------------------------------------------------------- |
+| [@gasket/plugin-analyze]        | 7.0.0-next.34 | Gasket Analyzer Plugin                                                    |
+| [@gasket/plugin-command]        | 7.0.0-next.34 | Plugin to enable other plugins to inject new gasket commands              |
+| [@gasket/plugin-cypress]        | 7.0.0-next.34 | Integrates Cypress based testing into your Gasket application             |
+| [@gasket/plugin-data]           | 7.0.0-next.34 | Supports application-specific settings and configurations                 |
+| [@gasket/plugin-docs]           | 7.0.0-next.34 | Centralize doc files from plugins and modules                             |
+| [@gasket/plugin-docs-graphs]    | 7.0.0-next.34 | Generate mermaid graphs of an applications gasket lifecycles              |
+| [@gasket/plugin-docusaurus]     | 7.0.0-next.34 | Gasket plugin for docusaurus                                              |
+| [@gasket/plugin-elastic-apm]    | 7.0.0-next.34 | Adds Elastic APM instrumentation to your application                      |
+| [@gasket/plugin-express]        | 7.0.0-next.34 | Adds express support to your application                                  |
+| [@gasket/plugin-fastify]        | 7.0.0-next.34 | Adds fastify support to your application                                  |
+| [@gasket/plugin-git]            | 7.0.0-next.34 | Adds git support to your application                                      |
+| [@gasket/plugin-happyfeet]      | 7.0.0-next.34 | A gasket plugin to enable happyfeet healthchecks                          |
+| [@gasket/plugin-https]          | 7.0.0-next.34 | Create http/s servers with graceful termination                           |
+| [@gasket/plugin-intl]           | 7.0.0-next.34 | NodeJS script to build localization files.                                |
+| [@gasket/plugin-jest]           | 7.0.0-next.34 | Integrated jest into your application.                                    |
+| [@gasket/plugin-lint]           | 7.0.0-next.34 | Adds GoDaddy standard linting to your application                         |
+| [@gasket/plugin-logger]         | 7.0.0-next.34 | Gasket plugin for logging                                                 |
+| [@gasket/plugin-manifest]       | 7.0.0-next.34 | The web app manifest for progressive Gasket applications                  |
+| [@gasket/plugin-metadata]       | 7.0.0-next.34 | Adds metadata to gasket lifecycles                                        |
+| [@gasket/plugin-middleware]     | 1.0.0         | Handles common server engine setups for routing and executing lifecycles. |
+| [@gasket/plugin-mocha]          | 7.0.0-next.34 | Integrates mocha based testing in to your Gasket application              |
+| [@gasket/plugin-morgan]         | 7.0.0-next.34 | Adds morgan request logger to your app                                    |
+| [@gasket/plugin-nextjs]         | 7.0.0-next.34 | Adds Next support to your application                                     |
+| [@gasket/plugin-redux]          | 7.0.0-next.34 | Gasket Redux Setup                                                        |
+| [@gasket/plugin-service-worker] | 7.0.0-next.34 | Gasket Service Worker Plugin                                              |
+| [@gasket/plugin-start]          |               |                                                                           |
+| [@gasket/plugin-swagger]        | 7.0.0-next.34 | Generate and serve swagger docs                                           |
+| [@gasket/plugin-typescript]     | 7.0.0-next.34 | Gasket plugin for TypeScript support                                      |
+| [@gasket/plugin-webpack]        | 7.0.0-next.34 | Adds webpack support to your application                                  |
+| [@gasket/plugin-winston]        | 7.0.0-next.34 | Gasket logger based on Winston                                            |
+| [@gasket/plugin-workbox]        | 7.0.0-next.34 | Gasket Workbox Plugin                                                     |
 
 
 
@@ -341,6 +342,7 @@ Available configuration options in the `gasket.config.js`
 [@gasket/plugin-logger]:/packages/gasket-plugin-logger/README.md
 [@gasket/plugin-manifest]:/packages/gasket-plugin-manifest/README.md
 [@gasket/plugin-metadata]:/packages/gasket-plugin-metadata/README.md
+[@gasket/plugin-middleware]:/packages/gasket-plugin-middleware/README.md
 [@gasket/plugin-mocha]:/packages/gasket-plugin-mocha/README.md
 [@gasket/plugin-morgan]:/packages/gasket-plugin-morgan/README.md
 [@gasket/plugin-nextjs]:/packages/gasket-plugin-nextjs/README.md
