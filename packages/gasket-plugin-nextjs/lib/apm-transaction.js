@@ -2,7 +2,7 @@
 
 /** @type {import('@gasket/core').HookHandler<'apmTransaction'>} */
 module.exports = async function apmTransaction(gasket, transaction, { req }) {
-  const route = await req.getNextRoute();
+  const route = await gasket.actions.getNextRoute(req);
 
   if (!route) {
     return;
