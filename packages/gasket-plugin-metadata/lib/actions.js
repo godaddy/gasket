@@ -1,6 +1,7 @@
 const path = require('path');
 const isModulePath = /^[/.]|^[a-zA-Z]:\\|node_modules/;
-const isGasketModule = /^@gasket\/(?!plugin)(?!preset)[a-zA-Z0-9].*/;
+const isGasketModule = /^@gasket\/(?!plugin)(?!preset).+/;
+const isGodaddyModule = /^@godaddy\/gasket-(?!plugin)(?!preset).+/;
 
 function getAppInfo(gasket) {
   const { config: { root } } = gasket;
@@ -33,9 +34,9 @@ module.exports = function actions(gasket) {
       const modules = {};
 
       await gasket.execApply('metadata', async (data, handler) => {
-        const isGasketPreset = data.name.startsWith('@gasket/preset-');
-        const isGasketPlugin = data.name.startsWith('@gasket/plugin-');
-        const isGasketPackage = isGasketModule.test(data.name) || isGasketPlugin || isGasketPreset;
+        const isPreset = data.name.startsWith('@gasket/preset-') || data.name.startsWith('@godaddy/gasket-preset-');
+        const isPlugin = data.name.startsWith('@gasket/plugin-') || data.name.startsWith('@godaddy/gasket-plugin-');
+        const isGasketPackage = isGasketModule.test(data.name) || isPlugin || isPreset;
 
         if (!isGasketPackage) {
           const pluginData = await handler(data);
@@ -46,13 +47,16 @@ module.exports = function actions(gasket) {
           pluginData.path = path.dirname(path.join(require.resolve(pluginData.name), '..'));
           const { dependencies, devDependencies } = require(path.join(pluginData.path, 'package.json'));
 
-          if (isGasketPreset)
+          if (isPreset)
             presets.push(pluginData);
           else
             plugins.push(pluginData);
 
           for (const name of Object.keys({ ...dependencies, ...devDependencies })) {
-            if (!isGasketModule.test(name)) continue;
+            if (
+              !isGasketModule.test(name) ||
+              !isGodaddyModule.test(name)
+            ) continue;
             const mod = require(path.join(name, 'package.json'));
             modules[name] = {
               name: mod.name,
