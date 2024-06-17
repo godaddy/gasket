@@ -18,23 +18,20 @@ const plugin = {
   description,
   hooks: {
     configure,
+    // @ts-expect-error - TODO: will be cleaned up in the apm tune up ticket
+    // https://godaddy-corp.atlassian.net/browse/PFX-628
     preboot,
-    create: {
-      timing: {
-        after: ['@gasket/plugin-start']
-      },
-      handler(gasket, { pkg, files }) {
-        const generatorDir = `${__dirname}/../generator`;
+    create(gasket, { pkg, files }) {
+      const generatorDir = `${__dirname}/../generator`;
 
-        pkg.add('dependencies', {
-          'elastic-apm-node': devDependencies['elastic-apm-node']
-        });
-        pkg.add('scripts', {
-          start: 'gasket start --require ./setup.js'
-        });
+      pkg.add('dependencies', {
+        'elastic-apm-node': devDependencies['elastic-apm-node']
+      });
+      pkg.add('scripts', {
+        start: 'gasket start --require ./setup.js'
+      });
 
-        files.add(`${generatorDir}/*`);
-      }
+      files.add(`${generatorDir}/*`);
     },
     middleware,
     metadata(gasket, meta) {

@@ -2,7 +2,7 @@
   "name": "@gasket/assets",
   "version": "7.0.0-next.34",
   "description": "Gasket assets",
-  "main": "react",
+  "main": "react/index.js",
   "files": [
     "react",
     "svgs"

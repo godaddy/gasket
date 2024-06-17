@@ -38,12 +38,6 @@
     "url": "https://github.com/godaddy/gasket/issues"
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-fastify",
-  "dependencies": {
-    "compression": "^1.7.4",
-    "cookie-parser": "^1.4.6",
-    "diagnostics": "^2.0.2",
-    "middie": "^5.4.0"
-  },
   "devDependencies": {
     "@gasket/core": "^7.0.0-next.34",
     "cross-env": "^7.0.3",

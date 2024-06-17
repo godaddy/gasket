@@ -1,8 +1,9 @@
-/// <reference types="@gasket/plugin-start" />
 /// <reference types="@gasket/plugin-logger" />
 
 const { filterSensitiveCookies } = require('./cookies');
 
+// @ts-expect-error - TODO: will be cleaned up in the apm tune up ticket
+// https://godaddy-corp.atlassian.net/browse/PFX-628
 /** @type {import('@gasket/core').HookHandler<'preboot'>} */
 module.exports = async function preboot(gasket) {
   const { config, logger, command } = gasket;
