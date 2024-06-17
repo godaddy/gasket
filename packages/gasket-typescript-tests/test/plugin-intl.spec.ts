@@ -1,5 +1,5 @@
 import type { IncomingMessage, OutgoingMessage } from 'http';
-import type { Gasket, GasketConfigDefinition, Hook } from '@gasket/core';
+import type { Gasket, GasketConfigDefinition, Hook, GasketRequest } from '@gasket/core';
 import '@gasket/plugin-intl';
 
 describe('@gasket/plugin-intl', () => {
@@ -57,7 +57,7 @@ describe('@gasket/plugin-intl', () => {
     const hook: Hook<'intlLocale'> = (
       gasket: Gasket,
       locale: string,
-      { req, res }: { req: IncomingMessage, res: OutgoingMessage }
+      { req }: { req: GasketRequest }
     ) => {
       return 'fr-FR';
     };
@@ -68,7 +68,7 @@ describe('@gasket/plugin-intl', () => {
     const hook: Hook<'intlLocale'> = (
       gasket: Gasket,
       locale: string,
-      { req, res }: { req: IncomingMessage, res: OutgoingMessage }
+      { req }: { req: GasketRequest }
     ) => {
       return 3;
     };
