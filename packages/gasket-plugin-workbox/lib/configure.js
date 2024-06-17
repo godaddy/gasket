@@ -7,9 +7,9 @@ const {
  * Configure lifecycle to set up SW config with defaults
  * @param {Gasket} gasket - Gasket
  * @param {object} config - Base gasket config
- * @returns {Promise<object>} config
+ * @returns {object} config
  */
-module.exports = async function configure(gasket, config) {
+module.exports = function configure(gasket, config) {
   const workbox = getWorkboxConfig({ config });
   const basePath = getBasePath({ config });
 

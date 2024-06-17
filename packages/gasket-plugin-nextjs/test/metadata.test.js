@@ -1,5 +1,3 @@
-const mockGetMetadata = jest.fn();
-
 const metadata = require('../lib/metadata');
 
 describe('metadata', function () {
@@ -7,10 +5,16 @@ describe('metadata', function () {
 
   beforeEach(async function () {
     mockGasket = {
-      actions: {
-        getMetadata: mockGetMetadata.mockResolvedValue({ plugins: [] })
+      config: {
+        plugins: [
+          { name: '@gasket/plugin-express' }
+        ]
       }
     };
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
   it('outputs expected categories', async function () {
@@ -28,11 +32,6 @@ describe('metadata', function () {
   });
 
   it('includes express lifecycles for express plugin', async function () {
-    mockGetMetadata.mockResolvedValueOnce({
-      plugins: [{
-        name: '@gasket/plugin-express'
-      }]
-    });
     const meta = await metadata(mockGasket, {});
     const expressLifecycles = meta.lifecycles.filter(data => data.description.includes('Express'));
     expect(expressLifecycles).toHaveLength(2);
@@ -44,11 +43,7 @@ describe('metadata', function () {
   });
 
   it('includes fastify lifecycles for fastify plugin', async function () {
-    mockGetMetadata.mockResolvedValueOnce({
-      plugins: [{
-        name: '@gasket/plugin-fastify'
-      }]
-    });
+    mockGasket.config.plugins = [{ name: '@gasket/plugin-fastify' }];
     const meta = await metadata(mockGasket, {});
     const fastifyLifecycles = meta.lifecycles.filter(data => data.description.includes('Fastify'));
     expect(fastifyLifecycles).toHaveLength(2);
@@ -60,13 +55,7 @@ describe('metadata', function () {
   });
 
   it('includes express AND fastify lifecycles for both plugin', async function () {
-    mockGetMetadata.mockResolvedValueOnce({
-      plugins: [{
-        name: '@gasket/plugin-express'
-      }, {
-        name: '@gasket/plugin-fastify'
-      }]
-    });
+    mockGasket.config.plugins.push({ name: '@gasket/plugin-fastify' });
     const meta = await metadata(mockGasket, {});
 
     // Express

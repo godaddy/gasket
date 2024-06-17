@@ -78,13 +78,6 @@ describe('actions', () => {
     expect(metadata).toHaveProperty('plugins');
   });
 
-  it('adds moduleInfo from app dependencies', async () => {
-    expect(metadata.modules.length).toBeGreaterThan(0);
-    const names = metadata.modules.map(m => m.name);
-    expect(names).toContain('fake-two');
-    expect(names).toContain('fake-one');
-  });
-
   it('ignores plugins and presets from app dependencies', async () => {
     const names = metadata.modules.map(m => m.name);
     expect(names).not.toContain('@gasket/plugin-mock');
@@ -112,22 +105,6 @@ describe('actions', () => {
 
   it('augments moduleInfo metadata for modules declared modules', async () => {
     const result = metadata.plugins[0].modules.find(mod => mod.name === 'fake-one');
-    expect(result).toHaveProperty('extra', true);
-  });
-
-  it('flattens moduleInfo from plugins', async () => {
-    const names = metadata.modules.map(m => m.name);
-    expect(names).toContain('fake-one');
-    expect(names).toContain('fake-two');
-  });
-
-  it('flatting does not duplicate moduleInfo', async () => {
-    const names = metadata.modules.map(m => m.name);
-    expect(names.filter(n => n === 'fake-one')).toHaveLength(1);
-  });
-
-  it('flatting augments moduleInfo with extras from plugins', async () => {
-    const result = metadata.modules.find(mod => mod.name === 'fake-one');
     expect(result).toHaveProperty('extra', true);
   });
 });

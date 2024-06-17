@@ -1,0 +1,20 @@
+agerard:
+  name: Andrew Gerard
+  title: Senior Engineer
+  url: https://github.com/kinetifex
+  image_url: /img/authors/kinetifex.png
+  bio: Andrew is an engineer at Godaddy. He is passionate about open source and the web.
+
+kbader:
+  name: Kawika Bader
+  title: Senior Engineer
+  url: https://github.com/kbader-godaddy
+  image_url: /img/authors/kawikabader.jpg
+  bio: Kawika is a senior engineer at Godaddy. He is passionate about open source and the web.
+
+kquerna:
+  name: Kirsten Querna
+  title: Senior Product Manager
+  url: https://github.com/kquerna-godaddy
+  image_url: /img/authors/kquerna.png
+  bio: Kirsten is a senior product manager at Godaddy. She is passionate about open source and the web.
