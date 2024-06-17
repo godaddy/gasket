@@ -119,10 +119,9 @@ function addNpmScripts({ pkg, nextServerType, nextDevProxy, typescript }) {
   const fileExtension = typescript ? 'ts' : 'js';
   const scripts = {
     defaultServer: {
-      'build': 'next build',
-      'start': 'next start',
-      'start:local': `next start & GASKET_ENV=local node server.${fileExtension}`,
-      'local': `next dev${nextDevProxy ? ` & nodemon server.${fileExtension}` : ''}`
+      build: 'next build',
+      start: 'next start',
+      local: `next dev${nextDevProxy ? ` & nodemon server.${fileExtension}` : ''}`
     },
     customServer: {
       'build': 'next build',
@@ -131,6 +130,10 @@ function addNpmScripts({ pkg, nextServerType, nextDevProxy, typescript }) {
       'local': `GASKET_DEV=1 GASKET_ENV=local nodemon server.${fileExtension}`
     }
   };
+
+  if (nextDevProxy && nextServerType === 'defaultServer') {
+    scripts.defaultServer['start:local'] = `next start & GASKET_ENV=local node server.${fileExtension}`;
+  }
 
   pkg.add('scripts', scripts[nextServerType]);
 }
@@ -153,7 +156,6 @@ function addConfig(createContext) {
     });
   }
 }
-
 
 module.exports = {
   timing: {
