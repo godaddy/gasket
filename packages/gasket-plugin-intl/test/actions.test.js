@@ -46,18 +46,18 @@ describe('actions', () => {
       };
     });
 
-    it('should return the message from the messages object', async () => {
-      const result = await actions(mockGasket).getIntlMessage(mockGasketDataIntl, mockMessageId, mockDefaultMessage);
+    it('should return the message from the messages object', () => {
+      const result = actions(mockGasket).getIntlMessage(mockGasketDataIntl, mockMessageId, mockDefaultMessage);
       expect(result).toBe(mockMessages['en-CA']['test.message']);
     });
 
-    it('should return the default message if the message is not found', async () => {
-      const result = await actions(mockGasket).getIntlMessage(mockGasketDataIntl, 'not.found', mockDefaultMessage);
+    it('should return the default message if the message is not found', () => {
+      const result = actions(mockGasket).getIntlMessage(mockGasketDataIntl, 'not.found', mockDefaultMessage);
       expect(result).toBe(mockDefaultMessage);
     });
 
-    it('should return the message id if no default message is provided', async () => {
-      const result = await actions(mockGasket).getIntlMessage(mockGasketDataIntl, 'not.found');
+    it('should return the message id if no default message is provided', () => {
+      const result = actions(mockGasket).getIntlMessage(mockGasketDataIntl, 'not.found');
       expect(result).toBe('not.found');
     });
   });
