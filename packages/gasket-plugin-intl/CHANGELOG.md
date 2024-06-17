@@ -1,5 +1,7 @@
 # `@gasket/plugin-intl`
 
+- Add gasket actions ([#791])
+
 ### 6.46.4
 
 - Fix for missing manifest paths ([#701])
@@ -236,3 +238,4 @@
 [#676]: https://github.com/godaddy/gasket/pull/676
 [#696]: https://github.com/godaddy/gasket/pull/696
 [#701]: https://github.com/godaddy/gasket/pull/701
+[#791]: https://github.com/godaddy/gasket/pull/791
