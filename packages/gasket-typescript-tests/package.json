@@ -65,7 +65,6 @@
     "@gasket/plugin-nextjs": "^7.0.0-next.34",
     "@gasket/plugin-redux": "^7.0.0-next.34",
     "@gasket/plugin-service-worker": "^7.0.0-next.34",
-    "@gasket/plugin-start": "^7.0.0-next.34",
     "@gasket/plugin-swagger": "^7.0.0-next.34",
     "@gasket/plugin-typescript": "^7.0.0-next.34",
     "@gasket/plugin-webpack": "^7.0.0-next.34",
