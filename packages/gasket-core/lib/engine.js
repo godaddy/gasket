@@ -34,13 +34,21 @@ class GasketEngine {
     // map the plugin name to module contents for easy lookup
     this._pluginMap = plugins
       .reduce((acc, plugin) => {
-        // TODO: throw if plugin is not an object
+        if (typeof plugin !== 'object' || Array.isArray(plugin)) {
+          throw new Error(`Plugin ${plugin.name} must be an object`);
+        }
+
         const { name, hooks } = plugin;
         if (!name) {
           throw new Error('Plugin must have a name');
         }
         if (!hooks) {
           throw new Error(`Plugin (${name}) must have a hooks`);
+        }
+
+        // Add base metadata hook if not present
+        if (!plugin.hooks.metadata) {
+          plugin.hooks.metadata = async (_, metadata) => metadata;
         }
 
         acc[name] = plugin;

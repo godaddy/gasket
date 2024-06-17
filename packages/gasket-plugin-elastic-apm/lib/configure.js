@@ -24,7 +24,7 @@ const isActive = (config, env) => {
 };
 
 /** @type {import('@gasket/core').HookHandler<'configure'>} */
-module.exports = async function configure(gasket, config) {
+module.exports = function configure(gasket, config) {
   config.elasticAPM = config.elasticAPM || {};
 
   // eslint-disable-next-line no-process-env
