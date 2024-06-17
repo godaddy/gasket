@@ -308,6 +308,32 @@ module.exports = function expressHook(gasket, app) {
 }
 ```
 
+## Actions
+
+### getIntlLocale
+
+This action invokes the `intlLocale` lifecycle hook to determine the user's locale. 
+
+parameters:
+- `req` - (object) Request object
+
+```js
+const intlLocale = actions.gasket.getIntlLocale(req);
+```
+
+### getIntlMessage
+
+This action is used to retrieve a locale message for a given id. It takes 
+
+parameters:
+- `gasketDataIntl` - (object) IntlGasketData
+- `id` - (string) Message id
+- `defaultMessage` (optional) - (string) Default message to return if the id is not found
+
+```js
+const intlMessage = actions.gasket.getIntlMessage(gasketData.intl 'my.message.id', 'default message');
+```
+
 ## Lifecycles
 
 ### intlLocale
