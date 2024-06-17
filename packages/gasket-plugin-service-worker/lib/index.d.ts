@@ -1,5 +1,6 @@
 import type { IncomingMessage, OutgoingMessage, ServerResponse } from 'http';
 import type { Request, Response } from 'express';
+import type { FastifyRequest, FastifyReply } from 'fastify';
 import type { Options } from 'lru-cache';
 import type { MinifyOptions } from 'uglify-js';
 import type { MaybeAsync, MaybeMultiple } from '@gasket/core';
@@ -77,7 +78,7 @@ declare module 'express' {
   }
 }
 
-export async function configureEndpoint(gasket: Gasket): (req: Request, res: Response) => Promise<void>;
+export async function configureEndpoint(gasket: Gasket): (req: Request | FastifyRequest, res: Response | FastifyReply) => Promise<void>;
 
 export async function serviceWorkerMiddleware(
   req: Request & {
@@ -93,7 +94,7 @@ export function getSWConfig(gasket: Gasket): ServiceWorkerConfig;
 /** Gathers thunks to key caches of composed sw scripts, based on req */
 export async function getCacheKeys(
   gasket: Gasket
-): Promise<Array<(req: Request, res: Response) => string>>;
+): Promise<Array<(req: Request | FastifyRequest, res: Response | FastifyReply) => string>>;
 
 export async function getComposedContent(
   gasket: Gasket,
