@@ -22,7 +22,8 @@
     ".": {
       "import": "./lib/index.js",
       "require": "./cjs/index.js"
-    }
+    },
+    "./package.json": "./package.json"
   },
   "type": "module",
   "repository": {
