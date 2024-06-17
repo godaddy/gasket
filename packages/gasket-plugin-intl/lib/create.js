@@ -1,15 +1,21 @@
 /// <reference types="create-gasket-app" />
 
 const path = require('path');
-const { devDependencies } = require('../package.json');
+const { devDependencies, name, version } = require('../package.json');
 
 /** @type {import('@gasket/core').HookHandler<'create'>} */
 module.exports = async function create(gasket, context) {
-  const { files, pkg } = context;
+  const { files, pkg, gasketConfig } = context;
   const rootDir = path.join(__dirname, '..');
   const isReactProject = pkg.has('dependencies', 'react');
 
   files.add(`${rootDir}/generator/*`, `${rootDir}/generator/**/*`);
+
+  gasketConfig.addPlugin('pluginIntl', name);
+
+  pkg.add('dependencies', {
+    [name]: `^${version}`
+  });
 
   if (isReactProject) {
     pkg.add('dependencies', {
