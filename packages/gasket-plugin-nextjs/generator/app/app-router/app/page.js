@@ -6,4 +6,4 @@ export const metadata = {
   charset: 'UTF-8'
 };
 
-export default IndexPage
+export default IndexPage;

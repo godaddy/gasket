@@ -17,6 +17,12 @@ declare module '@gasket/core' {
 
   export interface GasketActions {
     getNextConfig?: (config?: NextConfig | NextConfigFunction) => (phase: string, context?: { defaultConfig?: any }) => Promise<NextConfig>
+    getNextRoute?: (req: IncomingMessage) => Promise<null | {
+      page: string;
+      regex: RegExp;
+      routeKeys: Record<string, string>;
+      namedRegex: RegExp;
+    }>;
   }
 
   export interface GasketConfig {
@@ -60,12 +66,6 @@ declare module '@gasket/plugin-webpack' {
 
 declare module 'http' {
   export interface IncomingMessage {
-    getNextRoute(): Promise<null | {
-      page: string;
-      regex: RegExp;
-      routeKeys: Record<string, string>;
-      namedRegex: RegExp;
-    }>;
     path?: string;
   }
 }
