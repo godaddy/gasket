@@ -66,6 +66,9 @@ export interface DetailData {
   /** Name of the the module or element */
   name: string;
 
+  /** Version of the module */
+  version?: string;
+
   /** Description of the module or element */
   description?: string;
 

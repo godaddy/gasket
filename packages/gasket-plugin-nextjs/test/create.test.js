@@ -171,11 +171,22 @@ describe('create hook', () => {
     await plugin.hooks.create.handler({}, mockContext);
 
     expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts', {
-      'build': 'next build',
-      'start': 'next start',
-      'start:local': 'next start & GASKET_ENV=local node server.js',
-      'local': 'next dev'
+      build: 'next build',
+      start: 'next start',
+      local: 'next dev'
     });
+  });
+
+  it('adds start:local script for next cli w/devProxy', async function () {
+    mockContext.nextServerType = 'defaultServer';
+    mockContext.nextDevProxy = true;
+    await plugin.hooks.create.handler({}, mockContext);
+
+    expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts',
+      expect.objectContaining({
+        'start:local': 'next start & GASKET_ENV=local node server.js'
+      })
+    );
   });
 
   it('adds the appropriate npm scripts for next custom server', async function () {

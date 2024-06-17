@@ -14,6 +14,8 @@ const plugin = {
   version,
   description,
   hooks: {
+    // @ts-expect-error - TODO: will be cleaned up in the manifest tune up ticket
+    // https://godaddy-corp.atlassian.net/browse/PFX-654
     build,
     configure,
     express: serve,

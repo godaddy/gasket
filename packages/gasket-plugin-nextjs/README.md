@@ -33,7 +33,7 @@ module.exports = {
 
 ## Adding a Sitemap
 
-When creating a new application with this plugin, you will be prompted with a question in the CLI asking if you would like to add a [sitemap] to your application. 
+When creating a new application with this plugin, you will be prompted with a question in the CLI asking if you would like to add a [sitemap] to your application.
 
 Answering yes to this question will install `next-sitemap` as a dependency, generate a next-sitemap.config.js file, and add a `sitemap` npm script to your package.json. `next-sitemap` is an npm package that generates sitemaps and a robots.txt file for Next.js applications. Learn more by reading the [next-sitemap docs].
 
@@ -233,7 +233,7 @@ module.exports = {
 
 ## Utilities
 
-This plugin adds a middleware which attaches a `getNextRoute` function to the request object. It is intended for use in server contexts where you need to know how a request will route to a next.js page. This async function returns null if the manifest could not be parsed or if the requested URL does not match a route. If a match _is_ found, an object with these properties is returned:
+This plugin hooks the `actions` lifecycle creates a `getNextRoute` action. It is intended for use in server contexts where you need to know how a request will route to a next.js page. This async function returns null if the manifest could not be parsed or if the requested URL does not match a route. If a match _is_ found, an object with these properties is returned:
 
 | Property | Type | Description |
 |----------|------|-------------|
@@ -249,7 +249,7 @@ async function someMiddleware(req, res, next) {
     const { groups } = req.url.match(route.namedRegex);
     console.log(`Matched ${route.page} with parameters`, groups);
   }
-  
+
   next();
 }
 ```

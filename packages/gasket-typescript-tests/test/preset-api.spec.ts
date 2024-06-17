@@ -25,6 +25,8 @@ describe('@gasket/preset-api', () => {
       version: '',
       description: '',
       hooks: {
+        // @ts-expect-error - TODO clean up in tune up ticket
+        // https://godaddy-corp.atlassian.net/browse/PFX-654
         preboot() {
           log('Preparing...');
         },

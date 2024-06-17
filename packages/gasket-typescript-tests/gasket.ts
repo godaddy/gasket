@@ -24,7 +24,6 @@ import pluginNextjs from '@gasket/plugin-nextjs';
 import pluginRedux from '@gasket/plugin-redux';
 import pluginResponseData from '@gasket/plugin-data';
 import pluginServiceWorker from '@gasket/plugin-service-worker';
-import pluginStart from '@gasket/plugin-start';
 import pluginSwagger from '@gasket/plugin-swagger';
 import pluginTypescript from '@gasket/plugin-typescript';
 import pluginWebpack from '@gasket/plugin-webpack';
@@ -57,7 +56,6 @@ const config: GasketConfigDefinition = {
     pluginRedux,
     pluginResponseData,
     pluginServiceWorker,
-    pluginStart,
     pluginSwagger,
     pluginTypescript,
     pluginWebpack,

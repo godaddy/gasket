@@ -7,12 +7,5 @@ export default {
   name,
   version,
   description,
-  hooks: {},
-  metadata: {
-    guides: [{
-      name: 'Progressive Web Apps Guide',
-      description: 'Making Progressive Web Apps (PWA) with Gasket',
-      link: 'docs/pwa-support.md'
-    }]
-  }
+  hooks: {}
 };
