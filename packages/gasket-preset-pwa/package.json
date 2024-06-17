@@ -2,7 +2,7 @@
   "name": "@gasket/preset-pwa",
   "version": "7.0.0-next.34",
   "description": "Turn Gasket apps into Progressive Web Apps",
-  "main": "lib",
+  "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
     "docs",
