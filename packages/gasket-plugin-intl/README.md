@@ -323,7 +323,7 @@ const intlLocale = actions.gasket.getIntlLocale(req);
 
 ### getIntlMessage
 
-This action is used to retrieve a locale message for a given id. It takes 
+This action is used to retrieve a locale message for a given id.
 
 parameters:
 - `gasketDataIntl` - (object) IntlGasketData
