@@ -1,4 +1,5 @@
 const plugin = require('../');
+const { name, version, description } = require('../package');
 
 describe('Plugin', () => {
 
@@ -6,8 +7,10 @@ describe('Plugin', () => {
     expect(typeof plugin).toEqual('object');
   });
 
-  it('has expected name', () => {
-    expect(plugin.name).toBe(require('../package').name);
+  it('has expected properties', () => {
+    expect(plugin).toHaveProperty('name', name);
+    expect(plugin).toHaveProperty('version', version);
+    expect(plugin).toHaveProperty('description', description);
   });
 
   it('has expected hooks', () => {

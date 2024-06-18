@@ -1,13 +1,14 @@
 {
   "name": "@gasket/core",
-  "version": "7.0.0-next.34",
+  "version": "7.0.0-next.37",
   "description": "Entry point to setting up Gasket instances",
   "exports": {
     ".": {
       "import": "./lib/index.js",
       "require": "./cjs/index.js",
       "types": "./lib/index.d.ts"
-    }
+    },
+    "./package.json": "./package.json"
   },
   "types": "lib/index.d.ts",
   "files": [

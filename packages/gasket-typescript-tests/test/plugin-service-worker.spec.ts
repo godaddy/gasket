@@ -5,7 +5,7 @@ import '@gasket/plugin-service-worker';
 describe('@gasket/plugin-service-worker', () => {
   it('adds a serviceWorker section to the Gasket config', () => {
     const config: GasketConfigDefinition = {
-      plugins: [{ name: 'example-plugin', hooks: {} }],
+      plugins: [{ name: 'example-plugin', version: '', description: '', hooks: {} }],
       serviceWorker: {
         url: '/docs/server-worker.js',
         cache: {
@@ -22,6 +22,8 @@ describe('@gasket/plugin-service-worker', () => {
   it('adds a composeServiceWorker lifecycle', () => {
     const plugin: Plugin = {
       name: 'some-plugin',
+      version: '',
+      description: '',
       hooks: {
         composeServiceWorker: function (gasket, content, context) {
           return content.concat(`
@@ -41,6 +43,8 @@ describe('@gasket/plugin-service-worker', () => {
   it('adds a serviceWorkerCacheKey lifecycle', () => {
     const plugin: Plugin = {
       name: 'some-plugin',
+      version: '',
+      description: '',
       hooks: {
         serviceWorkerCacheKey: () => (req, res) => (req as Request).cookies.market || 'en-US'
       }

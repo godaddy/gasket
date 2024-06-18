@@ -1,13 +1,14 @@
 {
   "name": "@gasket/data",
-  "version": "7.0.0-next.34",
+  "version": "7.0.0-next.37",
   "description": "Helper package for accessing embedded Gasket Data in the browser",
   "exports": {
     ".": {
       "import": "./lib/index.js",
       "require": "./cjs/index.cjs",
       "types": "./lib/index.d.ts"
-    }
+    },
+    "./package.json": "./package.json"
   },
   "types": "lib/index.d.ts",
   "type": "module",

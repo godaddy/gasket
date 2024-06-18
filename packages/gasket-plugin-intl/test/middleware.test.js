@@ -1,13 +1,15 @@
 /* eslint-disable require-atomic-updates, max-statements */
 const path = require('path');
 const middlewareHook = require('../lib/middleware').handler;
+const actions = require('../lib/actions');
+const { getIntlMessage } = actions();
 
 describe('middleware', function () {
-  let mockGasket;
+  let mockGasket, getIntlLocaleStub;
 
   beforeEach(function () {
+    getIntlLocaleStub = jest.fn().mockResolvedValue('fr-FR');
     mockGasket = {
-      execWaterfall: jest.fn().mockImplementation((lifecycle, locale) => Promise.resolve(locale)),
       config: {
         intl: {
           defaultLocale: 'en-US',
@@ -18,8 +20,9 @@ describe('middleware', function () {
           manifestFilename: 'mock-manifest.json'
         }
       },
-      logger: {
-        debug: jest.fn()
+      actions: {
+        getIntlLocale: getIntlLocaleStub,
+        getIntlMessage: getIntlMessage
       }
     };
   });
@@ -48,49 +51,9 @@ describe('middleware', function () {
       next = jest.fn();
     });
 
-    it('preloadLocales is true', async function () {
-      mockGasket.config.intl.preloadLocales = true;
-      layer = middlewareHook(mockGasket);
-      await layer(req, res, next);
-      expect(mockGasket.execWaterfall).toHaveBeenCalledWith('intlLocale', 'fr-FR', { req, res });
-    });
-
     it('executes expected lifecycle', async function () {
       await layer(req, res, next);
-      expect(mockGasket.execWaterfall).toHaveBeenCalledWith('intlLocale', 'fr-FR', { req, res });
-    });
-
-    it('passes first accepted from supported locales', async function () {
-      mockGasket.config.intl.locales = ['de'];
-
-      layer = middlewareHook(mockGasket);
-      req.headers['accept-language'] = 'fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7, *;q=0.5';
-      await layer(req, res, next);
-      expect(mockGasket.execWaterfall).toHaveBeenCalledWith('intlLocale', 'de', { req, res });
-    });
-
-    it('passes first accept-language header', async function () {
-      req.headers['accept-language'] = 'fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7, *;q=0.5';
-      await layer(req, res, next);
-      expect(mockGasket.execWaterfall).toHaveBeenCalledWith('intlLocale', 'fr-CH', { req, res });
-    });
-
-    it('formats accept-language to lower-UPPER', async function () {
-      req.headers['accept-language'] = 'fr-fr';
-      await layer(req, res, next);
-      expect(mockGasket.execWaterfall).toHaveBeenCalledWith('intlLocale', 'fr-FR', { req, res });
-    });
-
-    it('formats accept-language to lo-UP-Capitals', async function () {
-      req.headers['accept-language'] = 'az-az-latn';
-      await layer(req, res, next);
-      expect(mockGasket.execWaterfall).toHaveBeenCalledWith('intlLocale', 'az-AZ-Latn', { req, res });
-    });
-
-    it('passes defaultLocale if no accept-language header', async function () {
-      delete req.headers['accept-language'];
-      await layer(req, res, next);
-      expect(mockGasket.execWaterfall).toHaveBeenCalledWith('intlLocale', 'en-US', { req, res });
+      expect(getIntlLocaleStub).toHaveBeenCalledWith(req);
     });
 
     it('attaches gasketData to res.locals', async function () {
@@ -101,12 +64,12 @@ describe('middleware', function () {
 
     it('gasketData has mapped locale if configured', async function () {
       // not mapped example
-      req.headers['accept-language'] = 'fr-CA';
+      mockGasket.actions.getIntlLocale.mockResolvedValue('fr-CA');
       await layer(req, res, next);
       expect(res.locals.gasketData).toEqual({ intl: { locale: 'fr-CA' } });
 
       // mapped example
-      req.headers['accept-language'] = 'fr-CH';
+      mockGasket.actions.getIntlLocale.mockResolvedValue('fr-CH');
       await layer(req, res, next);
       expect(res.locals.gasketData).toEqual({ intl: { locale: 'fr-FR' } });
     });
@@ -127,31 +90,6 @@ describe('middleware', function () {
       layer = middlewareHook(mockGasket);
       await layer(req, res, next);
       expect(res.locals).toHaveProperty('localesDir', mockGasket.config.intl.localesDir);
-    });
-
-    describe('when accept-language header is malformed', function () {
-
-      beforeEach(function () {
-        req.headers['accept-language'] = 'fr-CH;+malformed';
-      });
-
-      it('logs a debug message', async function () {
-        await layer(req, res, next);
-        expect(mockGasket.logger.debug).toHaveBeenCalled();
-      });
-
-      it('passes defaultLocale with supported locales', async function () {
-        mockGasket.config.intl.locales = ['de'];
-        layer = middlewareHook(mockGasket);
-        await layer(req, res, next);
-        expect(mockGasket.execWaterfall).toHaveBeenCalledWith('intlLocale', 'en-US', { req, res });
-      });
-
-      it('passes defaultLocale without supported locales', async function () {
-        layer = middlewareHook(mockGasket);
-        await layer(req, res, next);
-        expect(mockGasket.execWaterfall).toHaveBeenCalledWith('intlLocale', 'en-US', { req, res });
-      });
     });
 
     describe('req.withLocaleRequired', function () {

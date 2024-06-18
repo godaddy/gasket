@@ -1,12 +1,13 @@
-const { name } = require('../package.json');
+/// <reference types="@gasket/plugin-express" />
+
+const { name, version, description } = require('../package.json');
 const apmTransaction = require('./apm-transaction');
 const metadata = require('./metadata');
 const configure = require('./configure');
-const { createConfig } = require('./utils/config');
+const actions = require('./actions');
 const prompt = require('./prompt');
 const create = require('./create');
 const { webpackConfig } = require('./webpack-config');
-const middleware = require('./middleware');
 const express = require('./express');
 const fastify = require('./fastify');
 const workbox = require('./workbox');
@@ -15,27 +16,14 @@ const workbox = require('./workbox');
 const plugin = {
   dependencies: ['@gasket/plugin-webpack'],
   name,
+  version,
+  description,
   hooks: {
     configure,
     webpackConfig,
-    actions(gasket) {
-      return {
-        getNextConfig(nextConfig) {
-          return async function setupNextConfig(phase, { defaultConfig }) {
-            let baseConfig;
-            if (nextConfig instanceof Function) {
-              baseConfig = await nextConfig(phase, { defaultConfig });
-            } else {
-              baseConfig = nextConfig ?? {};
-            }
-            return createConfig(gasket, phase === 'phase-production-build', baseConfig);
-          };
-        }
-      };
-    },
+    actions,
     prompt,
     create,
-    middleware,
     express,
     fastify,
     apmTransaction,

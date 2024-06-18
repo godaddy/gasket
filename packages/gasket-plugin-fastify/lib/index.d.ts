@@ -13,7 +13,9 @@ declare module '@gasket/core' {
     fastify?: {
       /** Enable compression */
       compression?: boolean;
-      /** Regular expression for excluded routes */
+      /** Filter for which request URLs invoke Gasket middleware */
+      middlewareInclusionRegex?: RegExp;
+      /** @deprecated */
       excludedRoutesRegex?: RegExp;
       /** Trust proxy configuration */
       trustProxy?: FastifyServerOptions['trustProxy'];
@@ -47,7 +49,7 @@ declare module '@gasket/core' {
     middleware(
       fastify: Fastify
     ): MaybeAsync<MaybeMultiple<Handler> & { paths?: (string | RegExp)[] }>;
-    fastify(fastify: Fastify): MaybeAsync<void>;
+    fastify(fastify: FastifyInstance): MaybeAsync<void>;
     errorMiddleware(): MaybeAsync<MaybeMultiple<ErrorHandler>>;
   }
 }
@@ -61,5 +63,7 @@ declare module 'create-gasket-app' {
 
 export default {
   name: '@gasket/plugin-fastify',
+  version: '',
+  description: '',
   hooks: {}
 };

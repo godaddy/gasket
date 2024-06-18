@@ -6,13 +6,17 @@ const middleware = require('./middleware');
 const express = require('./express');
 const webpackConfig = require('./webpack-config');
 const fastify = require('./fastify');
-const { name } = require('../package.json');
+const { name, version, description } = require('../package.json');
 
 /** @type {import('@gasket/core').Plugin} */
 const plugin = {
   name,
+  version,
+  description,
   hooks: {
     configure,
+    // @ts-expect-error TODO: will be cleaned up in tune up ticket
+    // https://godaddy-corp.atlassian.net/browse/PFX-654
     build,
     middleware,
     express,

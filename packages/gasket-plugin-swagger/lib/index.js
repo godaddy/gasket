@@ -1,6 +1,5 @@
 /// <reference types="@gasket/core" />
 /// <reference types="create-gasket-app" />
-/// <reference types="@gasket/plugin-start" />
 /// <reference types="@gasket/plugin-express" />
 /// <reference types="@gasket/plugin-fastify" />
 /// <reference types="@gasket/plugin-metadata" />
@@ -13,7 +12,7 @@ const fs = require('fs');
 const { readFile, writeFile, access } = require('fs').promises;
 const swaggerJSDoc = require('swagger-jsdoc');
 const isYaml = /\.ya?ml$/;
-const { name, version } = require('../package.json');
+const { name, version, description } = require('../package.json');
 
 let __swaggerSpec;
 
@@ -46,6 +45,8 @@ async function loadSwaggerSpec(root, definitionFile, logger) {
 /** @type {import('@gasket/core').Plugin} */
 const plugin = {
   name,
+  version,
+  description,
   hooks: {
     configure(gasket, baseConfig) {
       const { swagger = {} } = baseConfig;
@@ -57,6 +58,8 @@ const plugin = {
       };
       return baseConfig;
     },
+    // @ts-expect-error - TODO: will be cleaned up in tune up ticket
+    // https://godaddy-corp.atlassian.net/browse/PFX-654
     async build(gasket) {
       const { swagger, root } = gasket.config;
       const { jsdoc, definitionFile } = swagger;

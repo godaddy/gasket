@@ -6,12 +6,16 @@ const build = require('./build');
 const configure = require('./configure');
 const serve = require('./serve');
 const middleware = require('./middleware');
-const { name } = require('../package.json');
+const { name, version, description } = require('../package.json');
 
 /** @type {import('@gasket/core').Plugin} */
 const plugin = {
   name,
+  version,
+  description,
   hooks: {
+    // @ts-expect-error - TODO: will be cleaned up in the manifest tune up ticket
+    // https://godaddy-corp.atlassian.net/browse/PFX-654
     build,
     configure,
     express: serve,

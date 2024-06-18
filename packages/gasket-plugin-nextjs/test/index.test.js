@@ -7,7 +7,7 @@ const expressApp = {
 
 const fastifyApp = {
   decorate: jest.fn(),
-  register: jest.fn(),
+  addHook: jest.fn(),
   all: jest.fn()
 };
 
@@ -31,6 +31,7 @@ jest.mock('../lib/utils/setup-next-app', () => {
 const fastify = require('fastify')({
   logger: true
 });
+const { name, version, description } = require('../package');
 
 describe('Plugin', function () {
   const plugin = require('../lib/');
@@ -39,8 +40,10 @@ describe('Plugin', function () {
     expect(typeof plugin).toBe('object');
   });
 
-  it('has expected name', () => {
-    expect(plugin).toHaveProperty('name', require('../package').name);
+  it('has expected properties', () => {
+    expect(plugin).toHaveProperty('name', name);
+    expect(plugin).toHaveProperty('version', version);
+    expect(plugin).toHaveProperty('description', description);
   });
 
   it('has expected hooks', () => {
@@ -52,7 +55,6 @@ describe('Plugin', function () {
       'express',
       'fastify',
       'metadata',
-      'middleware',
       'prompt',
       'webpackConfig',
       'workbox'
@@ -211,8 +213,8 @@ describe('fastify hook', () => {
     const gasket = mockGasketApi();
     await hook(gasket, fastifyApp, false);
 
-    expect(fastifyApp.register).toHaveBeenCalledWith(expect.any(Function));
-    const fn = fastifyApp.register.mock.calls[0][0];
+    expect(fastifyApp.addHook).toHaveBeenCalledWith('onResponse', expect.any(Function));
+    const fn = fastifyApp.addHook.mock.calls[0][1];
     expect(fn.name).toEqual('setNextLocale');
   });
 
@@ -220,7 +222,7 @@ describe('fastify hook', () => {
     const gasket = mockGasketApi();
     await hook(gasket, fastifyApp, false);
 
-    const fn = fastifyApp.register.mock.calls[0][0];
+    const fn = fastifyApp.addHook.mock.calls[0][1];
 
     const mockReq = { headers: {} };
     const mockRes = { locals: { gasketData: { intl: { locale: 'fr-FR' } } } };
@@ -233,7 +235,7 @@ describe('fastify hook', () => {
     const gasket = mockGasketApi();
     await hook(gasket, fastifyApp, false);
 
-    const fn = fastifyApp.register.mock.calls[0][0];
+    const fn = fastifyApp.addHook.mock.calls[0][1];
 
     const mockReq = { headers: { cookie: 'bogus=data' } };
     const mockRes = { locals: { gasketData: { intl: { locale: 'fr-FR' } } } };
@@ -249,7 +251,7 @@ describe('fastify hook', () => {
     const gasket = mockGasketApi();
     await hook(gasket, fastifyApp, false);
 
-    const fn = fastifyApp.register.mock.calls[0][0];
+    const fn = fastifyApp.addHook.mock.calls[0][1];
 
     const mockReq = { headers: {} };
     const mockRes = { locals: { gasketData: {} } };

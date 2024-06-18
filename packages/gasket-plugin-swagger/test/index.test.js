@@ -33,7 +33,7 @@ jest.mock('/path/to/app/swagger.json', () => ({ data: true }), {
 });
 
 const fastify = require('fastify')({ logger: true });
-const { name, version } = require('../package.json');
+const { name, version, description } = require('../package');
 
 describe('Swagger Plugin', function () {
   let plugin;
@@ -49,11 +49,13 @@ describe('Swagger Plugin', function () {
 
   it('is an object', function () {
     expect(typeof plugin).toBe('object');
-    expect(Object.keys(plugin)).toHaveLength(2);
+    expect(Object.keys(plugin)).toHaveLength(4);
   });
 
-  it('has expected name', function () {
-    expect(plugin).toHaveProperty('name', '@gasket/plugin-swagger');
+  it('has expected properties', () => {
+    expect(plugin).toHaveProperty('name', name);
+    expect(plugin).toHaveProperty('version', version);
+    expect(plugin).toHaveProperty('description', description);
   });
 
   it('has expected hooks', function () {

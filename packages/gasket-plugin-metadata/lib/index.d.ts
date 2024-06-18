@@ -5,9 +5,6 @@ export interface ModuleData<Module = any> {
   /** Name of preset */
   name: string;
 
-  /** Actual module content */
-  module: Module;
-
   /** Package.json contents */
   package?: PackageJson;
 
@@ -49,7 +46,7 @@ export interface PluginData extends ModuleData {
   lifecycles?: Array<LifecycleData>;
 
   /** Description of modules supporting this plugin */
-  modules?: Array<string | DetailData>;
+  modules?: Array<DetailData>;
 
   /** Description of guides for this plugin */
   guides?: Array<DetailData>;
@@ -68,6 +65,9 @@ export interface PresetData extends ModuleData {
 export interface DetailData {
   /** Name of the the module or element */
   name: string;
+
+  /** Version of the module */
+  version?: string;
 
   /** Description of the module or element */
   description?: string;
@@ -118,13 +118,14 @@ declare module '@gasket/core' {
     metadata(origData: PluginData): MaybeAsync<PluginData>;
   }
 
-  export interface Gasket {
-    // TODO: do not attach to Gasket - switch to actions
-    metadata?: Metadata;
+  export interface GasketActions {
+    async getMetadata(): Promise<Metadata>;
   }
 }
 
 export default {
   name: '@gasket/plugin-metadata',
+  version: '',
+  description: '',
   hooks: {}
 };

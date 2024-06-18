@@ -1,4 +1,4 @@
-const { name } = require('../package.json');
+const { name, version, description } = require('../package.json');
 const create = require('./create');
 const configure = require('./configure');
 const { actions } = require('./actions');
@@ -11,6 +11,8 @@ const metadata = require('./metadata');
  */
 module.exports = {
   name,
+  version,
+  description,
   hooks: {
     create,
     configure,

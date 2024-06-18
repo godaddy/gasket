@@ -6,7 +6,8 @@ describe('package.json', function () {
     const expected = [
       '.',
       './document',
-      './server'
+      './server',
+      './package.json'
     ];
 
     expect(Object.keys(packageJson.exports)).toEqual(expected);

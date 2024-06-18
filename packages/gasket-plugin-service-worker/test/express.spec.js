@@ -31,7 +31,7 @@ describe('express', () => {
     };
     mockReq = {};
     mockRes = {
-      set: jest.fn(),
+      type: jest.fn(),
       send: jest.fn()
     };
     mockCache.mockClear();
@@ -82,7 +82,7 @@ describe('express', () => {
     it('sets response header content-type', async () => {
       const endpoint = await getEndpoint();
       await endpoint(mockReq, mockRes);
-      expect(mockRes.set).toHaveBeenCalledWith('Content-Type', 'application/javascript');
+      expect(mockRes.type).toHaveBeenCalledWith('application/javascript');
     });
 
     it('sends the compose service worker response', async () => {

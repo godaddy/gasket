@@ -1,5 +1,4 @@
 /// <reference types="@gasket/core" />
-/// <reference types="@gasket/plugin-start" />
 /// <reference types="@gasket/plugin-metadata" />
 /// <reference types="@gasket/plugin-logger" />
 
@@ -9,7 +8,7 @@ const create = require('create-servers');
 const one = require('one-time/async');
 const errs = require('errs');
 const proxy = require('http-proxy');
-const { name, version } = require('../package.json');
+const { name, version, description } = require('../package.json');
 
 /**
  * Provide port defaults
@@ -195,6 +194,8 @@ async function startServer(gasket) {
 /** @type {import('@gasket/core').Plugin} */
 const plugin = {
   name,
+  version,
+  description,
   hooks: {
     actions(gasket) {
       return {

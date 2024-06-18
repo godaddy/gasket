@@ -1,6 +1,10 @@
 const plugin = require('../lib/index');
-const { devDependencies } = require('../package');
-const { name, version } = require('../package.json');
+const {
+  name,
+  version,
+  description,
+  devDependencies
+} = require('../package');
 
 describe('Plugin', () => {
 
@@ -8,8 +12,10 @@ describe('Plugin', () => {
     expect(typeof plugin).toBe('object');
   });
 
-  it('has expected name', () => {
-    expect(plugin).toHaveProperty('name', require('../package').name);
+  it('has expected properties', () => {
+    expect(plugin).toHaveProperty('name', name);
+    expect(plugin).toHaveProperty('version', version);
+    expect(plugin).toHaveProperty('description', description);
   });
 
   it('has expected hooks', () => {

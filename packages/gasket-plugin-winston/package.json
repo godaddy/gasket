@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-winston",
-  "version": "7.0.0-next.34",
+  "version": "7.0.0-next.37",
   "description": "Gasket logger based on Winston",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -38,11 +38,11 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-winston",
   "dependencies": {
-    "@gasket/plugin-logger": "^7.0.0-next.34",
+    "@gasket/plugin-logger": "^7.0.0-next.37",
     "winston": "^3.11.0"
   },
   "devDependencies": {
-    "@gasket/core": "^7.0.0-next.34",
+    "@gasket/core": "^7.0.0-next.37",
     "babel-eslint": "^10.1.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",

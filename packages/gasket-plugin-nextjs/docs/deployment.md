@@ -128,3 +128,20 @@ Follow the [Docker deployment guide] to see a sample `Dockerfile`.
 
 [config]: /packages/gasket-cli/docs/configuration.md
 [Docker deployment guide]: docker-deployment.md
+
+## Gotchas
+
+### Cache directory
+
+The Gasket CLI is built upon `@oclif` and uses some plugins that need access to
+read/write to a cache directory. Based on the [oclif docs], this is configured
+to the following defaults:
+ - macOS: `~/Library/Caches/@gasket/cli`
+ - Unix: `~/.cache/@gasket/cli`
+ - Windows: `%LOCALAPPDATA%\@gasket\cli`
+
+For some deployment environments, this may need to be adjusted from the
+defaults. To override where the cache directory is for your deployment, you can
+set the `GASKET_CACHE_DIR` env variable, such as in the `Dockerfile`.
+
+[oclif docs]: https://oclif.io/docs/config

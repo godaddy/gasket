@@ -2,16 +2,15 @@
 
 /** @type {import('@gasket/core').HookHandler<'metadata'>} */
 module.exports = function metadataHook(gasket, meta) {
-  const { metadata } = gasket;
-
+  const { config: { plugins } } = gasket;
   const hasExpress = Boolean(
-    metadata.plugins.find(
+    plugins.find(
       (pluginData) => pluginData.name === '@gasket/plugin-express'
     )
   );
 
   const hasFastify = Boolean(
-    metadata.plugins.find(
+    plugins.find(
       (pluginData) => pluginData.name === '@gasket/plugin-fastify'
     )
   );

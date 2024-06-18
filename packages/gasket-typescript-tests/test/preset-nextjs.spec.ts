@@ -7,7 +7,7 @@ describe('@gasket/preset-nextjs', () => {
   it('imports config type injections for all plugins', () => {
     const config: GasketConfigDefinition = {
       plugins: [
-        { name: 'example-plugin', hooks: {} }
+        { name: 'example-plugin', version: '', description: '', hooks: {} }
       ],
       http: 8080,
       express: {
@@ -24,7 +24,11 @@ describe('@gasket/preset-nextjs', () => {
   it('imports lifecycles for all plugins', () => {
     const plugin: Plugin = {
       name: 'dummy-plugin',
+      version: '',
+      description: '',
       hooks: {
+        // @ts-expect-error - TODO clean up in tune up ticket
+        // https://godaddy-corp.atlassian.net/browse/PFX-654
         preboot() {
           log('Preparing...');
         },

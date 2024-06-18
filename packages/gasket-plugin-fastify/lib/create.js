@@ -23,12 +23,8 @@ module.exports = async function create(gasket, context) {
 
     if ('typescript' in context && context.typescript) {
       context.files.add(`${generatorDir}/**/!(*.js)`);
-      context.gasketConfig
-        .addImport('{ routes }', './routes/index.ts');
     } else {
       context.files.add(`${generatorDir}/**/!(*.ts)`);
-      context.gasketConfig
-        .addImport('{ routes }', './routes/index.js');
     }
 
     context.gasketConfig
