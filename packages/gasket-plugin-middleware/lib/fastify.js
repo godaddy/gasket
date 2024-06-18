@@ -1,6 +1,5 @@
 /// <reference types="@gasket/plugin-fastify" />
 
-const middie = require('middie');
 const { applyCompression, applyCookieParser, executeMiddlewareLifecycle } = require('./utils');
 
 /**
@@ -18,10 +17,10 @@ module.exports = async function fastify(gasket, app) {
   } = config;
 
   // Enable middleware for fastify@3
-  await app.register(middie);
+  await app.register(require('@fastify/express'));
 
   // Add express-like `res.locals` object attaching data
-  app.use(function attachLocals(req, res, next) {
+  app.addHook('preHandler', function attachLocals(req, res, next) {
     res.locals = {};
     next();
   });

@@ -18,8 +18,11 @@ module.exports = {
 
     await gasket.exec('nextFastify', { next: app, fastify: fastifyApp });
 
-    fastifyApp.register(function setNextLocale(req, res, next) {
+    // TODO: Evaluate fix for this in Fastify4
+    fastifyApp.addHook('onResponse', function setNextLocale(req, res, next) {
+      // @ts-ignore
       if (res.locals && res.locals.gasketData && res.locals.gasketData.intl) {
+        // @ts-ignore
         const { locale } = res.locals.gasketData.intl;
 
         if (locale) {
