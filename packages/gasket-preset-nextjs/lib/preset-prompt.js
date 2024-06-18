@@ -64,7 +64,7 @@ function prompts(context, prompt) {
       const { server } = await prompt([
         {
           name: 'server',
-          message: 'Which server type would you like to use?',
+          message: 'Which server framework would you like to use?',
           type: 'list',
           choices: [
             { name: 'Express', value: 'express' },
