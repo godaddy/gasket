@@ -24,10 +24,11 @@
   },
   "homepage": "https://github.com/godaddy/gasket#readme",
   "dependencies": {
+    "@fastify/express": "^3.0.0",
+    "@fastify/middie": "^8.3.1",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.6",
-    "diagnostics": "^2.0.2",
-    "middie": "^5.4.0"
+    "diagnostics": "^2.0.2"
   },
   "devDependencies": {
     "eslint": "^8.56.0",
