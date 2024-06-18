@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-git",
-  "version": "7.0.0-next.35",
+  "version": "7.0.0-next.36",
   "description": "Adds git support to your application",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -40,7 +40,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-git",
   "dependencies": {
-    "@gasket/utils": "^7.0.0-next.35"
+    "@gasket/utils": "^7.0.0-next.36"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
