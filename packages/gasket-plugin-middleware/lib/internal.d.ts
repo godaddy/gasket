@@ -1,6 +1,6 @@
 import { Gasket } from '@gasket/core';
 import type { Application as ExpressApp } from 'express';
-import type { Fastify as FastifyApp } from 'fastify';
+import type { FastifyInstance as FastifyApp } from 'fastify';
 
 export function applyCookieParser(
   app: ExpressApp | FastifyApp,

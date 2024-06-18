@@ -1,4 +1,4 @@
-const middie = require('middie');
+const middie = require('@fastify/express');
 
 const app = {
   ready: jest.fn(),
@@ -6,7 +6,8 @@ const app = {
     emit: jest.fn()
   },
   register: jest.fn(),
-  use: jest.fn()
+  use: jest.fn(),
+  addHook: jest.fn()
 };
 
 const mockFastify = jest.fn().mockReturnValue(app);
@@ -52,7 +53,7 @@ describe('fastify', () => {
   it('adds middleware to attach res.locals', async () => {
     await fastify(gasket, app);
 
-    const middleware = app.use.mock.calls[0][0];
+    const middleware = app.addHook.mock.calls[0][1];
     expect(middleware.name).toEqual('attachLocals');
 
     const res = {};

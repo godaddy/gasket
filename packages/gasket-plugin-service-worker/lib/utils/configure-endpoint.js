@@ -24,7 +24,7 @@ module.exports = async function configureEndpoint(gasket) {
       cache.set(cacheKey, composedContent);
     }
 
-    res.set('Content-Type', 'application/javascript');
+    res.type('application/javascript');
     res.send(composedContent);
   };
 };

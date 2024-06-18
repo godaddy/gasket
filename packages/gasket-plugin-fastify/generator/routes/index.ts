@@ -1,5 +1,12 @@
-export const routes = [
-  (app) => {
+import type { AppRoutes } from '@gasket/plugin-fastify';
+import type {
+  FastifyInstance,
+  FastifyRequest,
+  FastifyReply
+} from 'fastify';
+
+export const routes: AppRoutes = [
+  (app: FastifyInstance): void => {
     {{#if hasSwaggerPlugin}}
     /**
     * @swagger
@@ -16,10 +23,10 @@ export const routes = [
     *           application/json
     */
     {{/if}}
-    app.get('/default', async (req, res) => {
+    app.get('/default', async (req: FastifyRequest, res: FastifyReply) => {
       if (res.statusCode === 200) {
         res.send({ message: 'Welcome to your default route...' });
       }
     });
-  } 
-]
+  }
+];
