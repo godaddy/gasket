@@ -5,7 +5,6 @@ const apmTransaction = require('./apm-transaction');
 const metadata = require('./metadata');
 const configure = require('./configure');
 const actions = require('./actions');
-const prompt = require('./prompt');
 const create = require('./create');
 const { webpackConfig } = require('./webpack-config');
 const express = require('./express');
@@ -22,7 +21,6 @@ const plugin = {
     configure,
     webpackConfig,
     actions,
-    prompt,
     create,
     express,
     fastify,
