@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-middleware",
-  "version": "1.0.0",
+  "version": "7.0.0-canary-pfx-649.0",
   "description": "Handles common server engine setups for routing and executing lifecycles.",
   "main": "lib",
   "scripts": {
