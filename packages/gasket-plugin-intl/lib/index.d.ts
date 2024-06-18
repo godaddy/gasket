@@ -1,5 +1,5 @@
 import type { IncomingMessage, OutgoingMessage } from 'http';
-import type { MaybeAsync } from '@gasket/core';
+import type { MaybeAsync, GasketRequest } from '@gasket/core';
 import { LocalePathPart, LocalesProps } from '@gasket/helper-intl';
 
 interface CustomScanSettings {
@@ -44,10 +44,15 @@ declare module '@gasket/core' {
     intl?: IntlConfig;
   }
 
+  export interface GasketActions {
+    getIntlLocale: (req: GasketRequest) => MaybeAsync<string>;
+    getIntlMessage: (gasketDataIntl: IntlGasketData, messageId: string, defaultMessage?: string) => string;
+  }
+
   export interface HookExecTypes {
     intlLocale(
       locale: string,
-      context: { req: IncomingMessage; res: OutgoingMessage }
+      context: { req: GasketRequest }
     ): MaybeAsync<string>;
   }
 }
