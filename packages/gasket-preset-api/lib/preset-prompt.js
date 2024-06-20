@@ -28,7 +28,6 @@ export default async function presetPrompt(gasket, context, { prompt }) {
         message: 'Which server type would you like to use?',
         type: 'list',
         choices: [
-          { name: 'Custom Next Server', value: 'customServer' },
           { name: 'Fastify', value: 'fastify' },
           { name: 'Express', value: 'express' }
         ]
