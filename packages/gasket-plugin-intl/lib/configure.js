@@ -66,15 +66,16 @@ module.exports = function configure(gasket, config) {
   /* eslint-disable no-process-env */
 
   // Allows @gasket/react-intl/next to perform server side loading
-  process.env.GASKET_INTL_LOCALES_DIR = fullLocalesDir;
+  Object.assign(process.env, {
+    GASKET_INTL_LOCALES_DIR: fullLocalesDir,
+  });
 
   // Allows @gasket/react-intl to access manifest, and is bundled for browser
-  process.env.GASKET_INTL_MANIFEST_FILE = path.join(
-    fullLocalesDir,
-    manifestFilename
-  );
-  /* eslint-enable no-process-env */
+  Object.assign(process.env, {
+    GASKET_INTL_MANIFEST_FILE: path.join(fullLocalesDir, manifestFilename)
+  });
 
+  /* eslint-enable no-process-env */
   const normalizedIntlConfig = {
     ...intlConfig,
     basePath,

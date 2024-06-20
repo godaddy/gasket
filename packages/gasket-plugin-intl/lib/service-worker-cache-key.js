@@ -4,10 +4,9 @@
  * Register a cache key function to get the language for a request
  * @type {import('@gasket/core').HookHandler<'serviceWorkerCacheKey'>}
  */
-module.exports = async function serviceWorkerCacheKey() {
-  return function getLocale(req, res) {
-    const { locals: { gasketData: { intl: { locale } = {} } = {} } = {} } = res;
-
-    return locale;
+module.exports = async function serviceWorkerCacheKey(gasket, req) {
+  const gasketData = await gasket.actions.getPublicGasketData(req);
+  return function getLocale() {
+    return gasketData?.intl?.locale;
   };
 };
