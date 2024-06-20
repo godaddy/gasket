@@ -13,13 +13,13 @@ const { defaultLocale, defaultPath } = manifest;
  * will be fetched as normal.
  * @type {import('./index').attachGetInitialProps}
  */
-function attachGetInitialProps(Wrapper, localePathPart) {
+function attachGetInitialProps(gasket, Wrapper, localePathPart) {
   const { WrappedComponent } = Wrapper;
 
   /** @type {import('./index').attachedGetInitialProps} */
   // @ts-ignore - attaches getInitialProps to Wrapper
   Wrapper.getInitialProps = async (ctx) => {
-    const { res } = ctx;
+    const { req } = ctx;
     let localesProps;
 
     let resolvedLocalePathPart;
@@ -33,9 +33,11 @@ function attachGetInitialProps(Wrapper, localePathPart) {
       );
     }
 
-    if (res && res.locals && res.locals.gasketData) {
-      const { locale = defaultLocale } = res.locals.gasketData.intl || {};
-      const localesParentDir = require('path').dirname(res.locals.localesDir);
+    const gasketData = await gasket.actions.getPublicGasketData(req);
+
+    if (gasketData) {
+      const { locale = defaultLocale } = gasketData.intl || {};
+      const localesParentDir = require('path').dirname(gasketData.localesDir);
       localesProps = localeUtils.serverLoadData(
         resolvedLocalePathPart ?? localePathPart,
         locale,
@@ -60,6 +62,7 @@ function attachGetInitialProps(Wrapper, localePathPart) {
  * @type {import('./index').withLocaleRequired}
  */
 export default function withLocaleRequired(
+  gasket,
   localePathPart = defaultPath,
   options = {}
 ) {
@@ -102,7 +105,7 @@ export default function withLocaleRequired(
     // Forward ref through the HOC
     if (!forwardRef) {
       if (initialProps || 'getInitialProps' in Component) {
-        attachGetInitialProps(Wrapper, localePathPart);
+        attachGetInitialProps(gasket, Wrapper, localePathPart);
       }
 
       return Wrapper;
@@ -118,7 +121,7 @@ export default function withLocaleRequired(
     Result.WrappedComponent = Component;
 
     if (initialProps || 'getInitialProps' in Component) {
-      attachGetInitialProps(Result, localePathPart);
+      attachGetInitialProps(gasket, Result, localePathPart);
     }
 
     return Result;
