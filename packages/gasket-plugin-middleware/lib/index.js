@@ -8,6 +8,12 @@ const plugin = {
   version,
   description,
   hooks: {
+    create(gasket, { pkg, gasketConfig }) {
+      gasketConfig.addPlugin('pluginMiddleware', name);
+      pkg.add('dependencies', {
+        [name]: `^${version}`
+      });
+    },
     express,
     fastify
   }
