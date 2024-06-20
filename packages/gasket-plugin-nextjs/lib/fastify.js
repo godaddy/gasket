@@ -19,11 +19,12 @@ module.exports = {
     await gasket.exec('nextFastify', { next: app, fastify: fastifyApp });
 
     // TODO: Evaluate fix for this in Fastify4
-    fastifyApp.addHook('onResponse', function setNextLocale(req, res, next) {
+    fastifyApp.addHook('onResponse', async function setNextLocale(req, res, next) {
+      const gasketData = await gasket.actions.getPublicGasketData(req);
       // @ts-ignore
-      if (res.locals && res.locals.gasketData && res.locals.gasketData.intl) {
+      if (gasketData && gasketData.intl) {
         // @ts-ignore
-        const { locale } = res.locals.gasketData.intl;
+        const { locale } = gasketData.intl;
 
         if (locale) {
           req.headers.cookie =
