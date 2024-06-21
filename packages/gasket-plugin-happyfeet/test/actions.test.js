@@ -1,4 +1,9 @@
 const actions = require('../lib/actions');
+jest.mock('happy-feet', () => () => ({
+  state: jest.fn(),
+  STATE: { UNHAPPY: 'unhappy' }
+}));
+
 
 describe('actions', () => {
   it('should return an object', () => {
@@ -14,13 +19,15 @@ describe('actions', () => {
     let happyConfig, mockGasket;
 
     beforeEach(() => {
-      mockGasket = {};
+      mockGasket = {
+        config: {}
+      };
     });
 
     it('should return a happyFeet instance', () => {
       const result = actions(mockGasket).getHappyFeet(happyConfig);
-
-      expect(result).toBe('');
+      expect(typeof result).toBe('object');
+      expect(result.state).toBe('HAPPY');
     });
   });
 });

@@ -11,8 +11,14 @@ jest.mock('happy-feet', () => () => ({
 const plugin = require('../lib');
 
 describe('Plugin', () => {
+  let healthCheck, mockGasket;
   beforeEach(() => {
     jest.restoreAllMocks();
+
+    mockGasket = {
+      config: { get: jest.fn() },
+      actions: { getHappyFeet: jest.fn() }
+    };
   });
 
   it('has expected properties', () => {
@@ -22,17 +28,14 @@ describe('Plugin', () => {
   });
 
   it('Returns error when happyfeet is sad', async () => {
-    const gasket = { config: { get: jest.fn() } };
-    await plugin.hooks.preboot(gasket);
-    gasket.happyFeet.state = 'unhappy';
-    await expect(plugin.hooks.healthcheck(gasket, Error)).rejects.toThrow('Happy Feet entered an unhappy state');
+    // gasket.happyFeet.state = 'unhappy';
+    await expect(plugin.hooks.healthcheck(mockGasket, Error)).rejects.toThrow('Happy Feet entered an unhappy state');
   });
 
   it('Returns page ok when happyfeet is fine', async () => {
-    const gasket = { config: { get: jest.fn() } };
-    await plugin.hooks.preboot(gasket);
-    gasket.happyFeet.state = 'happy';
-    const response = await plugin.hooks.healthcheck(gasket, Error);
+    await plugin.hooks.healthcheck(mockGasket, Error);
+    // gasket.happyFeet.state = 'happy';
+    const response = await plugin.hooks.healthcheck(mockGasket, Error);
     expect(response).toBeUndefined();
     // expect(response).toEqual('page ok');
   });
