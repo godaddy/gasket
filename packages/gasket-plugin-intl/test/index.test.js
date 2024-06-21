@@ -14,6 +14,7 @@ describe('Plugin', function () {
 
   it('has expected hooks', function () {
     const expected = [
+      'actions',
       'apmTransaction',
       'build',
       'configure',

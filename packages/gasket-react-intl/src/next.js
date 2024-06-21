@@ -1,3 +1,5 @@
+/// <reference types="@gasket/plugin-data" />
+
 import { localeUtils } from './utils';
 import { manifest } from './config';
 
@@ -58,7 +60,7 @@ export function intlGetServerSideProps(gasket, localePathPart = manifest.default
     // otherwise, check gasketData
     if (!locale && gasket) {
       const gasketData = await gasket.actions.getPublicGasketData(req);
-      locale = gasketData.intl.locale;
+      locale = gasketData?.intl?.locale;
     }
 
     /** @type {import('@gasket/helper-intl').LocalesProps} */

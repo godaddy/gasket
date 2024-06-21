@@ -1,4 +1,5 @@
 /// <reference types="@gasket/plugin-workbox" />
+/// <reference types="@gasket/plugin-data" />
 
 const path = require('path');
 const urljoin = require('url-join');
@@ -40,6 +41,7 @@ module.exports = async function workbox(gasket, config, context) {
   const { root } = gasket.config;
   const { basePath = '', defaultPath, localesDir } = getIntlConfig(gasket);
   const { req } = context;
+  // @ts-expect-error - TODO: fix typings for GasketRequest
   const gasketData = await gasket.actions.getPublicGasketData(req);
   // since we cannot determine a users' locale at build time, exit early
   if (

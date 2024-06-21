@@ -1,3 +1,4 @@
+/// <reference types="@gasket/plugin-data" />
 /// <reference types="@gasket/plugin-fastify" />
 
 const { setupNextApp, setupNextHandling } = require('./utils/setup-next-app');
@@ -19,7 +20,8 @@ module.exports = {
     await gasket.exec('nextFastify', { next: app, fastify: fastifyApp });
 
     // TODO: Evaluate fix for this in Fastify4
-    fastifyApp.addHook('onResponse', async function setNextLocale(req, res, next) {
+    fastifyApp.addHook('onResponse', async function setNextLocale(req) {
+      // @ts-expect-error - TODO: look at updating GasketRequest type
       const gasketData = await gasket.actions.getPublicGasketData(req);
       // @ts-ignore
       if (gasketData && gasketData.intl) {
@@ -31,7 +33,6 @@ module.exports = {
             (req.headers.cookie || '') + `;NEXT_LOCALE=${locale}`;
         }
       }
-      next();
     });
 
     setupNextHandling(app, fastifyApp, gasket);

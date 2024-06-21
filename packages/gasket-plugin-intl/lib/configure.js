@@ -67,7 +67,7 @@ module.exports = function configure(gasket, config) {
 
   // Allows @gasket/react-intl/next to perform server side loading
   Object.assign(process.env, {
-    GASKET_INTL_LOCALES_DIR: fullLocalesDir,
+    GASKET_INTL_LOCALES_DIR: fullLocalesDir
   });
 
   // Allows @gasket/react-intl to access manifest, and is bundled for browser

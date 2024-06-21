@@ -117,6 +117,7 @@ describe('withGasketData', function () {
     });
 
     it('gasketData is from action', async function () {
+      mockContext.req = {};
       mockGasket.actions.getPublicGasketData = jest.fn().mockReturnValue({ bogus: true });
 
       WrappedDocument = withGasketData(mockGasket)(MyDocument);

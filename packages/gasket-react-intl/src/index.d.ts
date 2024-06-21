@@ -1,3 +1,4 @@
+import { Gasket } from '@gasket/core';
 import React, { PropsWithChildren } from 'react';
 import {
   LocalePathPartOrThunk,
@@ -37,6 +38,7 @@ export type LocaleRequiredWrapper = (props: {
  * Make an HOC that loads a locale file before rendering wrapped component
  */
 export function withLocaleRequired<Props>(
+  gasket: Gasket,
   /** Path containing locale files */
   localePathPart?: LocalePathPartOrThunk | LocalePathPartOrThunk[],
   options?: {
@@ -102,6 +104,7 @@ export function intlGetStaticProps(
 
 /** Load locale file(s) for Next.js server-side rendered pages */
 export function intlGetServerSideProps(
+  gasket: Gasket,
   /** Path(s) containing locale files */
   localePathPart?: LocalePathPartOrThunk | LocalePathPartOrThunk[]
 ): (
@@ -146,6 +149,7 @@ export function reducer(
 
 export function attachGetInitialProps(
   /** The HOC */
+  gasket: Gasket,
   Wrapper: React.ComponentType<any> & {
     WrappedComponent?: React.ComponentType<any> & {
       getInitialProps?: (ctx: NextInitialContext) => Promise<void>;
