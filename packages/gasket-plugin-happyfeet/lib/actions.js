@@ -2,17 +2,15 @@ const happyFeet = require('happy-feet');
 
 /** @type {import('@gasket/core').HookHandler<'actions'>} */
 module.exports = function actions(gasket) {
+  let happyInstance;
   return {
     getHappyFeet(happyConfig) {
-      const config = gasket.config.happyFeet || happyConfig || {};
-      return happyFeet(config);
+      if (!happyInstance) {
+        const config = gasket.config.happyFeet || happyConfig || {};
+        happyInstance = happyFeet(config);
+      }
+
+      return happyInstance;
     }
   };
 };
-
-
-// // @ts-ignore - TODO - replace attachment with GasketActions - do not attach to gasket instance
-// preboot: async function preboot(gasket) {
-//   const happyConfig = gasket.config.happyFeet || {};
-//   gasket.happyFeet = happyFeet(happyConfig);
-// },

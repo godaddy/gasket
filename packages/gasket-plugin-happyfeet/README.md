@@ -50,6 +50,10 @@ module.exports = {
 
 [Happy Feet](https://github.com/asilvas/happy-feet#usage) for gasket has no default configuration.
 
+## Actions
+
+### setupHappyFeet
+
 
 ## Usage
 
