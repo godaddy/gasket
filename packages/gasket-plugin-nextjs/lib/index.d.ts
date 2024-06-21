@@ -78,7 +78,7 @@ declare module 'create-gasket-app' {
     typescript: boolean;
     useRedux: boolean;
     useAppRouter: boolean;
-    server: 'express' | 'fastify' | 'customServer';
+    server: 'express' | 'fastify';
   }
 }
 
