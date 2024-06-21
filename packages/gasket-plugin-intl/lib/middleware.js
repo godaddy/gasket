@@ -48,7 +48,7 @@ function middlewareHook(gasket) {
      * @returns {import('./index').GasketDataIntl} intlData - Intl gasketData
      */
     function getIntlData() {
-      const { gasketData = {} } = res.locals;
+      const { gasketData = {} } = res.locals; // TODO: https://godaddy-corp.atlassian.net/browse/PFX-625
       return gasketData.intl || {};
     }
 
@@ -58,7 +58,7 @@ function middlewareHook(gasket) {
      * @param {import('./index').GasketDataIntl} intlData - data to merge to gasketData
      */
     function mergeGasketData(intlData) {
-      const { gasketData = {} } = res.locals;
+      const { gasketData = {} } = res.locals; // TODO: https://godaddy-corp.atlassian.net/browse/PFX-625
       const intl = merge({}, getIntlData(), intlData);
       res.locals.gasketData = { ...gasketData, intl };
     }
@@ -72,6 +72,7 @@ function middlewareHook(gasket) {
      * Load locale data and makes available from gasketData
      * @type {import('./internal').withLocaleRequired}
      */
+    // TODO: https://godaddy-corp.atlassian.net/browse/PFX-625
     req.withLocaleRequired = function withLocaleRequired(
       localePathPart = manifest.defaultPath
     ) {
@@ -91,12 +92,13 @@ function middlewareHook(gasket) {
      * @param {string} [defaultMessage] - Fallback message if no id found or loaded
      * @returns {string} message
      */
+    // TODO: https://godaddy-corp.atlassian.net/browse/PFX-625
     req.selectLocaleMessage = function selectLocaleMessage(id, defaultMessage) {
       const localeProps = getIntlData();
       return gasket.actions.getIntlMessage(localeProps, id, defaultMessage);
     };
 
-    res.locals.localesDir = localesDir;
+    res.locals.localesDir = localesDir; // TODO: https://godaddy-corp.atlassian.net/browse/PFX-625
 
     next();
   };
