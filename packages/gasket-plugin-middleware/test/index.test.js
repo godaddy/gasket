@@ -11,6 +11,7 @@ describe('Plugin', function () {
 
   it('has expected hooks', function () {
     const expected = [
+      'create',
       'express',
       'fastify'
     ];

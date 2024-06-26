@@ -1,3 +1,5 @@
+/// <reference types="@gasket/plugin-data" />
+
 import { localeUtils } from './utils';
 import { manifest } from './config';
 
@@ -50,19 +52,15 @@ export function intlGetStaticProps(localePathPart = manifest.defaultPath) {
  * Load locale file(s) for Next.js server-side rendered pages
  * @type {import('./index').intlGetServerSideProps}
  */
-export function intlGetServerSideProps(localePathPart = manifest.defaultPath) {
+export function intlGetServerSideProps(gasket, localePathPart = manifest.defaultPath) {
   return async (ctx) => {
-    const { res } = ctx;
+    const { req } = ctx;
     // provide by next i18n
     let { locale } = ctx;
     // otherwise, check gasketData
-    if (
-      !locale &&
-      res.locals &&
-      res.locals.gasketData &&
-      res.locals.gasketData.intl
-    ) {
-      locale = res.locals.gasketData.intl.locale;
+    if (!locale && gasket) {
+      const gasketData = await gasket.actions.getPublicGasketData(req);
+      locale = gasketData?.intl?.locale;
     }
 
     /** @type {import('@gasket/helper-intl').LocalesProps} */
