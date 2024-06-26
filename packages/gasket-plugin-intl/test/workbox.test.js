@@ -6,6 +6,9 @@ describe('workbox', function () {
 
   beforeEach(function () {
     mockGasket = {
+      actions: {
+        getPublicGasketData: jest.fn().mockResolvedValue({ intl: { locale: 'en-US' } })
+      },
       config: {
         root: '/path/to/root',
         intl: {
@@ -38,6 +41,7 @@ describe('workbox', function () {
   });
 
   it('returns empty partial for static service workers', async function () {
+    mockGasket.actions.getPublicGasketData.mockResolvedValueOnce({});
     result = await workbox(mockGasket, mockConfig, {});
 
     expect(result).toBeInstanceOf(Object);

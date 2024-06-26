@@ -1,10 +1,18 @@
 const serviceWorkerCacheKey = require('../lib/service-worker-cache-key');
 
 describe('serviceWorkerCacheKey', function () {
-  let result;
+  let result, mockGasket;
+
+  beforeEach(() => {
+    mockGasket = {
+      actions: {
+        getPublicGasketData: jest.fn().mockResolvedValue({ intl: { locale: 'en-US' } })
+      }
+    };
+  });
 
   it('returns getLocale as cache key function', async function () {
-    result = await serviceWorkerCacheKey();
+    result = await serviceWorkerCacheKey(mockGasket);
 
     expect(result).toBeInstanceOf(Function);
     expect(result.name).toEqual('getLocale');
@@ -19,7 +27,7 @@ describe('serviceWorkerCacheKey', function () {
       }
     };
 
-    const getLocale = await serviceWorkerCacheKey();
+    const getLocale = await serviceWorkerCacheKey(mockGasket);
 
     result = getLocale(req, res);
     expect(result).toEqual(expectedLocale);
@@ -29,7 +37,7 @@ describe('serviceWorkerCacheKey', function () {
     const req = {};
     const res = { locals: {} };
 
-    const getLocale = await serviceWorkerCacheKey();
+    const getLocale = await serviceWorkerCacheKey(mockGasket);
     expect(() => getLocale(req, res)).not.toThrow();
   });
 });

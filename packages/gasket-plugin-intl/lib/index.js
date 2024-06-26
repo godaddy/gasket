@@ -1,6 +1,7 @@
 /// <reference types="@gasket/plugin-metadata" />
 
 const { name, version, description } = require('../package.json');
+const actions = require('./actions');
 const configure = require('./configure');
 const init = require('./init');
 const middleware = require('./middleware');
@@ -20,6 +21,7 @@ const plugin = {
   version,
   description,
   hooks: {
+    actions,
     init,
     configure,
     create,
