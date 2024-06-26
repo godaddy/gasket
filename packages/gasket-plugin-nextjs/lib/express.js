@@ -21,17 +21,20 @@ module.exports = {
     // to let NextJS know that it has already been detected. We can do this by
     // forcing the `NEXT_LOCALE` cookie:
     // https://github.com/vercel/Next.js/blob/canary/docs/advanced-features/i18n-routing.md#leveraging-the-next_locale-cookie
-    expressApp.use(async function setNextLocale(req) {
+    expressApp.use(function setNextLocale(req, res, next) {
       // @ts-expect-error - TODO: look at updating GasketRequest type
-      const gasketData = await gasket.actions.getPublicGasketData(req);
-      if (gasketData && gasketData.intl) {
-        const { locale } = gasketData.intl;
+      gasket.actions.getPublicGasketData(req).then(gasketData => {
+        if (gasketData && gasketData.intl) {
+          const { locale } = gasketData.intl;
 
-        if (locale) {
-          req.headers.cookie =
-            (req.headers.cookie || '') + `;NEXT_LOCALE=${locale}`;
+          if (locale) {
+            req.headers.cookie =
+              (req.headers.cookie || '') + `;NEXT_LOCALE=${locale}`;
+          }
+
         }
-      }
+        next();
+      })
     });
 
     // Now that express has been setup, and users have been able to interact
