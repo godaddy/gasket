@@ -34,6 +34,27 @@ class PackageManager {
   }
 
   /**
+   * Executes the appropriate npm binary with the verbatim `argv` and
+   * `spawnWith` options provided. Passes appropriate debug flag for
+   * npm based on process.env.
+   * @param {string[]} argv Precise CLI arguments to pass to `npm`.
+   * @param {object} spawnWith Options for child_process.spawn.
+   * @returns {Promise} promise
+   * @public
+   */
+  static spawnPnpm(argv, spawnWith) {
+    // TODO: confirm pnpm binary name on windows
+    const pnpmBin = process.platform === 'win32' ? 'pnpm.cmd' : 'pnpm';
+
+    return runShellCommand(
+      pnpmBin,
+      argv,
+      spawnWith,
+      !!process.env.GASKET_DEBUG_NPM
+    );
+  }
+
+  /**
    * Executes the appropriate yarn binary with the verbatim `argv` and
    * `spawnWith` options provided. Passes appropriate debug flag for
    * npm based on process.env.
@@ -83,6 +104,15 @@ class PackageManager {
         cwd: this.dest,
         env
       });
+    } else if (this.manager === 'pnpm') {
+      const argv = [
+        '--reporter', 'append-only'
+      ].concat(cmd, args);
+
+      return await PackageManager.spawnPnpm(argv, {
+        cwd: this.dest,
+        env
+      });
     } else if (this.manager === 'yarn') {
       const argv = [cmd].concat(args);
 
@@ -115,6 +145,11 @@ class PackageManager {
    * @public
    */
   async install(args = []) {
+    // --legacy-peer-deps is not supported by pnpm
+    if (this.manager === 'pnpm') {
+      return this.exec('install', args);
+    }
+
     // Installing with --legacy-peer-deps flag to accommodate npm7, specifically
     // requiring different versions of react
     return this.exec('install', [...args, '--legacy-peer-deps']);
@@ -129,7 +164,7 @@ class PackageManager {
   async info(args = []) {
     const { stdout } = await this.exec('info', [...args, '--json']);
     // normalize stdout results of yarn and npm before parsing
-    let normalized = this.manager === 'npm' ? `{ "data": ${stdout} }` : stdout;
+    let normalized = this.manager.includes('npm') ? `{ "data": ${stdout} }` : stdout;
     normalized = stdout ? normalized : '{}';
 
     const { data } = JSON.parse(normalized);
