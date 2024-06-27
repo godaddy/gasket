@@ -136,6 +136,10 @@ const plugin = {
         [name]: `^${version}`
       });
 
+      context.pkg.add('scripts', {
+        prebuild: "node gasket.js build"
+      });
+
       context.gasketConfig.addPlugin('pluginSwagger', '@gasket/plugin-swagger');
       context.gasketConfig.add('swagger', {
         jsdoc: {
