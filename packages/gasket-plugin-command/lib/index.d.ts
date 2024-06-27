@@ -103,3 +103,10 @@ declare module '@gasket/core' {
     commands(): GasketCommandDefinition;
   }
 }
+
+export default {
+  name: '@gasket/plugin-command',
+  version: '',
+  description: '',
+  hooks: {}
+};
