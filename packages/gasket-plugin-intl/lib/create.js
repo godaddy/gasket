@@ -17,7 +17,7 @@ module.exports = async function create(gasket, context) {
   });
 
   pkg.add('scripts', {
-    prebuild: "node gasket.js build"
+    prebuild: 'node gasket.js build'
   });
 
   if (isReactProject) {
