@@ -105,9 +105,7 @@ class PackageManager {
         env
       });
     } else if (this.manager === 'pnpm') {
-      const argv = [
-        '--reporter', 'append-only'
-      ].concat(cmd, args);
+      const argv = [cmd].concat(args);
 
       return await PackageManager.spawnPnpm(argv, {
         cwd: this.dest,
