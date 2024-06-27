@@ -8,7 +8,6 @@ module.exports = async function create(gasket, context) {
   const { files, pkg, gasketConfig } = context;
   const rootDir = path.join(__dirname, '..');
   const isReactProject = pkg.has('dependencies', 'react');
-  console.log(pkg);
   files.add(`${rootDir}/generator/*`, `${rootDir}/generator/**/*`);
 
   gasketConfig.addPlugin('pluginIntl', name);
