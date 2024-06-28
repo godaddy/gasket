@@ -1,3 +1,4 @@
+/// <reference types="@gasket/plugin-command" />
 /// <reference types="@gasket/plugin-metadata" />
 
 const { name, version, description } = require('../package.json');
@@ -25,8 +26,6 @@ const plugin = {
     init,
     configure,
     create,
-    // @ts-expect-error TODO: will be cleaned up in tune up ticket
-    // https://godaddy-corp.atlassian.net/browse/PFX-654
     build,
     webpackConfig,
     express: serve,
