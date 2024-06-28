@@ -221,4 +221,15 @@ describe('loadPreset', () => {
     ]);
     expect(mockContext.presets).toHaveLength(2);
   });
+
+  it('support preset with tags', async () => {
+    mockContext.rawPresets = ['@gasket/preset-bogus@canary', '@gasket/preset-all-i-ever-wanted@next'];
+
+    await loadPreset({ context: mockContext });
+    expect(mockContext).toHaveProperty('presets', [
+      expect.objectContaining(presetBogus),
+      expect.objectContaining(presetAllIEverWanted)
+    ]);
+    expect(mockContext.presets).toHaveLength(2);
+  });
 });

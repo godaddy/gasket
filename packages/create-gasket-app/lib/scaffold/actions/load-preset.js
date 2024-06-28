@@ -5,7 +5,7 @@ import { default as gasketUtils } from '@gasket/utils';
 import { mkdtemp } from 'fs/promises';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
-const hasVersion = /@(\^[0-9]\.|[0-9]).+/;
+const hasVersionOrTag = /@([\^~]?\d+\.\d+\.\d+(?:-[\d\w.-]+)?|[\^~]?\d+\.\d+\.\d+|[a-zA-Z]+)$/;
 
 /**
  * loadPresets - Load presets to temp directory
@@ -23,7 +23,7 @@ async function loadPresets({ context }) {
   const pkgVerb = pkgManager.manager === 'npm' ? 'install' : 'add';
 
   const remotePresets = context.rawPresets.map(async preset => {
-    const parts = hasVersion.test(preset) && preset.split('@').filter(Boolean);
+    const parts = hasVersionOrTag.test(preset) && preset.split('@').filter(Boolean);
     const name = parts ? `@${parts[0]}` : preset;
     const version = parts ? `@${parts[1]}` : '@latest';
 
