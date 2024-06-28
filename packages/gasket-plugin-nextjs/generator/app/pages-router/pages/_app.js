@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { withIntlProvider } from '@gasket/react-intl';
 {{/if}}
 {{#if hasGasketRedux}}
-const { nextRedux } = require('../redux/store');
+import { nextRedux } from '../redux/store';
 {{/if}}
 
 // Simple functional App component which can be wrapped

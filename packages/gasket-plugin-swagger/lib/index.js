@@ -5,6 +5,7 @@
 /// <reference types="@gasket/plugin-metadata" />
 /// <reference types="@gasket/plugin-logger" />
 /// <reference types="@gasket/core" />
+/// <reference types="@gasket/plugin-command" />
 
 
 const path = require('path');
@@ -58,8 +59,6 @@ const plugin = {
       };
       return baseConfig;
     },
-    // @ts-expect-error - TODO: will be cleaned up in tune up ticket
-    // https://godaddy-corp.atlassian.net/browse/PFX-654
     async build(gasket) {
       const { swagger, root } = gasket.config;
       const { jsdoc, definitionFile } = swagger;
@@ -134,6 +133,10 @@ const plugin = {
 
       context.pkg.add('dependencies', {
         [name]: `^${version}`
+      });
+
+      context.pkg.add('scripts', {
+        prebuild: 'node gasket.js build'
       });
 
       context.gasketConfig.addPlugin('pluginSwagger', '@gasket/plugin-swagger');
