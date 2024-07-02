@@ -35,10 +35,10 @@ const plugin = {
         }
 
         pkg.add('scripts', {
-          "start:local": "next start",
+          'start:local': 'next start',
           'cypress': 'cypress open',
           'cypress:headless': 'cypress run',
-          "e2e": "start-server-and-test start:local http://localhost:3000 cypress",
+          'e2e': 'start-server-and-test start:local http://localhost:3000 cypress',
           'e2e:headless':
             'start-server-and-test start:local http://localhost:3000 cypress:headless'
         });

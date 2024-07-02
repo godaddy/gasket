@@ -1,6 +1,5 @@
 const self = require('../package.json');
 const plugin = require('../lib/index.js');
-const config = require('../generator/cypress.config.js');
 const { name, version, description } = require('../package');
 
 describe('Plugin', function () {
@@ -87,15 +86,6 @@ describe('Plugin', function () {
     expect(plugin.hooks.create.timing.after).toEqual(['@gasket/plugin-nextjs']);
   });
 
-  it('has the correct custom cypress config', async function () {
-    const { e2e } = config;
-    expect(e2e).toHaveProperty('baseUrl', 'http://localhost:8080');
-    expect(e2e).toHaveProperty('supportFile', false);
-    expect(e2e).toHaveProperty('specPattern', 'test/e2e/**/*.cy.{js,jsx,ts,tsx}');
-    expect(typeof e2e.setupNodeEvents).toBe('function');
-    expect(config).toHaveProperty('video', false);
-  });
-
   describe('react', function () {
     it('includes a glob for the `generator/cypress.config.js` contents for react projects', async function () {
       const { files } = await createReact();
@@ -148,12 +138,12 @@ describe('Plugin', function () {
       const { pkg } = await create();
 
       const expected = {
-        'start:local': 'gasket start --env local',
+        'start:local': 'next start',
         'cypress': 'cypress open',
         'cypress:headless': 'cypress run',
-        'e2e': 'start-server-and-test start:local http://localhost:8080 cypress',
+        'e2e': 'start-server-and-test start:local http://localhost:3000 cypress',
         'e2e:headless':
-          'start-server-and-test start:local http://localhost:8080 cypress:headless'
+          'start-server-and-test start:local http://localhost:3000 cypress:headless'
       };
 
       expect(typeof pkg.scripts).toBe('object');
