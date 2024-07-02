@@ -1,18 +1,19 @@
 // eslint-disable-next-line no-unused-vars
-const happyFeet = require('happy-feet');
 const { name, version, description } = require('../package');
-
-jest.mock('happy-feet', () => () => ({
-  state: jest.fn(),
-  STATE: { UNHAPPY: 'unhappy' }
-}));
-
 
 const plugin = require('../lib');
 
 describe('Plugin', () => {
+  let mockGasket, mockError;
   beforeEach(() => {
     jest.restoreAllMocks();
+
+    mockGasket = {
+      config: { get: jest.fn() },
+      actions: { getHappyFeet: jest.fn() }
+    };
+
+    mockError = jest.fn();
   });
 
   it('has expected properties', () => {
@@ -21,19 +22,20 @@ describe('Plugin', () => {
     expect(plugin).toHaveProperty('description', description);
   });
 
+  it('calls getHappyFeet action', async () => {
+    await plugin.hooks.healthcheck(mockGasket, mockError);
+    expect(mockGasket.actions.getHappyFeet).toHaveBeenCalled();
+    expect(mockError).not.toHaveBeenCalled();
+  });
+
   it('Returns error when happyfeet is sad', async () => {
-    const gasket = { config: { get: jest.fn() } };
-    await plugin.hooks.preboot(gasket);
-    gasket.happyFeet.state = 'unhappy';
-    await expect(plugin.hooks.healthcheck(gasket, Error)).rejects.toThrow('Happy Feet entered an unhappy state');
+    mockGasket.actions.getHappyFeet.mockReturnValueOnce(({ state: 'unhappy', STATE: { UNHAPPY: 'unhappy' } }));
+    await expect(plugin.hooks.healthcheck(mockGasket, Error)).rejects.toThrow('Happy Feet entered an unhappy state');
   });
 
   it('Returns page ok when happyfeet is fine', async () => {
-    const gasket = { config: { get: jest.fn() } };
-    await plugin.hooks.preboot(gasket);
-    gasket.happyFeet.state = 'happy';
-    const response = await plugin.hooks.healthcheck(gasket, Error);
-    expect(response).toBeUndefined();
-    // expect(response).toEqual('page ok');
+    mockGasket.actions.getHappyFeet.mockReturnValueOnce(({ state: 'happy', STATE: { UNHAPPY: 'unhappy' } }));
+    await plugin.hooks.healthcheck(mockGasket, mockError);
+    expect(mockError).not.toHaveBeenCalled();
   });
 });

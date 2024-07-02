@@ -74,7 +74,7 @@ export function withGasketData(
   return Document => {
 
     async function getInitialProps(ctx) {
-      const gasketData = await gasket.actions.getPublicGasketData?.(ctx.req) ?? {};
+      const gasketData = ctx.req ? await gasket.actions.getPublicGasketData(ctx.req) : {};
 
       return {
         ...(await Document.getInitialProps(ctx)),

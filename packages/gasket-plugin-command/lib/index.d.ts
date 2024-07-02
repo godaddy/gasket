@@ -99,7 +99,14 @@ export function processCommand(command: GasketCommandDefinition): GasketCommand;
 declare module '@gasket/core' {
 
   export interface HookExecTypes {
-
+    build(): any;
     commands(): GasketCommandDefinition;
   }
 }
+
+export default {
+  name: '@gasket/plugin-command',
+  version: '',
+  description: '',
+  hooks: {}
+};

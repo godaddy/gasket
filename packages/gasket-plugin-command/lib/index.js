@@ -1,4 +1,6 @@
+import create from './create.js';
 import configure from './configure.js';
+import commands from './commands.js';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 const { name, version, description } = require('../package.json');
@@ -9,13 +11,9 @@ export default {
   version,
   description,
   hooks: {
-    create(gasket, { pkg, gasketConfig }) {
-      gasketConfig.addPlugin('pluginCommand', name);
-      pkg.add('dependencies', {
-        [name]: `^${version}`
-      });
-    },
+    create,
     configure,
+    commands,
     metadata(gasket, meta) {
       return {
         ...meta,

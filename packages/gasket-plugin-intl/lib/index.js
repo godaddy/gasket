@@ -1,6 +1,8 @@
+/// <reference types="@gasket/plugin-command" />
 /// <reference types="@gasket/plugin-metadata" />
 
 const { name, version, description } = require('../package.json');
+const actions = require('./actions');
 const configure = require('./configure');
 const init = require('./init');
 const middleware = require('./middleware');
@@ -20,11 +22,10 @@ const plugin = {
   version,
   description,
   hooks: {
+    actions,
     init,
     configure,
     create,
-    // @ts-expect-error TODO: will be cleaned up in tune up ticket
-    // https://godaddy-corp.atlassian.net/browse/PFX-654
     build,
     webpackConfig,
     express: serve,

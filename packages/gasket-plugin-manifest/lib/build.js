@@ -1,7 +1,5 @@
-// @ts-nocheck TODO: cleanup in tune up ticket
-// https://godaddy-corp.atlassian.net/browse/PFX-654
+/// <reference types="@gasket/plugin-command" />
 /// <reference types="@gasket/plugin-logger" />
-
 
 const path = require('path');
 const { writeFile } = require('fs').promises;
