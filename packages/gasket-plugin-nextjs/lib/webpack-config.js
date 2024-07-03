@@ -36,6 +36,14 @@ function externalizeGasketCore(ctx, callback) {
 function webpackConfigHook(gasket, webpackConfig, { isServer }) {
   if (Array.isArray(webpackConfig.externals)) {
     if (!isServer) {
+      if ('filename' in gasket.config) {
+        webpackConfig.resolve ??= {};
+        webpackConfig.resolve.alias ??= {};
+        webpackConfig.resolve.alias[gasket.config.filename] = false;
+      } else {
+        gasket.logger.warn('Gasket `filename` was not configured in makeGasket');
+      }
+
       webpackConfig.externals.unshift(validateNoGasketCore);
     } else {
       webpackConfig.externals.unshift(externalizeGasketCore);
@@ -48,7 +56,8 @@ function webpackConfigHook(gasket, webpackConfig, { isServer }) {
       //   })
       // );
     }
-    // TODO: throw or something if externals is NOT an array
+  } else {
+    throw new Error('Expected webpackConfig.externals to be an array');
   }
 
   return webpackConfig;

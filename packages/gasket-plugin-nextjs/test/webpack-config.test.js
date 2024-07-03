@@ -1,15 +1,42 @@
 const { webpackConfig, validateNoGasketCore, externalizeGasketCore } = require('../lib/webpack-config.js');
 
+const mockFilename = '/path/to/gasket.js';
+
 describe('webpackConfigHook', () => {
   let mockGasket, mockWebpackConfig, mockContext;
 
   beforeEach(() => {
-    mockGasket = {};
+    mockGasket = {
+      config: {
+        filename: mockFilename
+      },
+      logger: {
+        warn: jest.fn()
+      }
+    };
     mockWebpackConfig = {
       name: '',
       externals: []
     };
     mockContext = {};
+  });
+
+  it('throws if externals is not an array', () => {
+    mockWebpackConfig.externals = 'externals';
+
+    expect(() => webpackConfig(mockGasket, mockWebpackConfig, mockContext))
+      .toThrow('Expected webpackConfig.externals to be an array');
+  });
+
+  it('adds empty alias for gasket file in client', () => {
+    const result = webpackConfig(mockGasket, mockWebpackConfig, mockContext);
+    expect(result.resolve.alias).toEqual(expect.objectContaining({ [mockFilename]: false }));
+  });
+
+  it('warns if filename not configured', () => {
+    delete mockGasket.config.filename;
+    webpackConfig(mockGasket, mockWebpackConfig, mockContext);
+    expect(mockGasket.logger.warn).toHaveBeenCalledWith('Gasket `filename` was not configured in makeGasket');
   });
 
   it('adds validateNoGasketCore to externals for client', () => {
