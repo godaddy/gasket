@@ -50,10 +50,11 @@ declare module '@gasket/core' {
 
   // This is the config
   export interface GasketConfig {
-    filename?: string;
     plugins: Array<Plugin>;
     root: string;
     env: string;
+    /** Path to the gasket instance file. Can be set to `import.meta.filename` **/
+    filename?: string;
   }
 
   export class GasketEngine {
