@@ -31,11 +31,11 @@ function getEnvironment(
 
   const { NODE_ENV } = process.env;
   if (NODE_ENV) {
-    console.warn(`No env specified, falling back to NODE_ENV: "${NODE_ENV}".`);
+    console.warn(`No GASKET_ENV specified, falling back to NODE_ENV: "${NODE_ENV}".`);
     return NODE_ENV;
   }
 
-  console.warn('No env specified, falling back to "development".');
+  console.warn('No GASKET_ENV specified, falling back to "development".');
   return 'development';
 }
 /* eslint-enable no-console, no-process-env */
