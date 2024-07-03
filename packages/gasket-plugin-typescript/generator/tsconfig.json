@@ -6,6 +6,7 @@
     "target": "ESNext",
     "isolatedModules": true,
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "outDir": "dist",
     "lib": [
       "esnext"
