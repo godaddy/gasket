@@ -1,5 +1,6 @@
 # `@gasket/plugin-nextjs`
 
+- Exclude gaskets from client bundling ([#806])
 - Convert cjs sitemap config to esm ([#798])
 - Added useAppRouter optional flag ([#777])
 - Convert store.js to esm ([#799])
@@ -292,4 +293,5 @@
 [#778]: https://github.com/godaddy/gasket/pull/778
 [#798]: https://github.com/godaddy/gasket/pull/798
 [#799]: https://github.com/godaddy/gasket/pull/799
+[#806]: https://github.com/godaddy/gasket/pull/806
 

@@ -40,8 +40,8 @@ declare module '@gasket/core' {
 
   export type Plugin = {
     name: string;
-    version: string;
-    description: string;
+    version?: string;
+    description?: string;
     dependencies?: Array<string>;
     hooks: {
       [K in HookId]?: Hook<K>;
@@ -53,6 +53,8 @@ declare module '@gasket/core' {
     plugins: Array<Plugin>;
     root: string;
     env: string;
+    /** Path to the gasket instance file. Can be set to `import.meta.filename` **/
+    filename?: string;
   }
 
   export class GasketEngine {
