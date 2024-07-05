@@ -104,6 +104,10 @@ describe('express hook', () => {
     hook = plugin.hooks.express.handler;
   });
 
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('timing configured last', async function () {
     const gasket = mockGasketApi();
     await hook(gasket, expressApp, false);
@@ -123,19 +127,21 @@ describe('express hook', () => {
 
   it('middleware sets NEXT_LOCALE cookie from gasketData', async function () {
     const gasket = mockGasketApi();
+    gasket.actions.getPublicGasketData.mockResolvedValueOnce({ intl: { locale: 'fr-FR' } });
     await hook(gasket, expressApp, false);
 
     const fn = expressApp.use.mock.calls[0][0];
 
     const mockReq = { headers: {} };
-    const mockRes = { locals: { gasketData: { intl: { locale: 'fr-FR' } } } };
+    const mockRes = {};
     const mockNext = jest.fn();
-    fn(mockReq, mockRes, mockNext);
+    await fn(mockReq, mockRes, mockNext);
     expect(mockReq.headers).toHaveProperty('cookie', ';NEXT_LOCALE=fr-FR');
   });
 
   it('middleware adds NEXT_LOCALE to existing cookie', async function () {
     const gasket = mockGasketApi();
+    gasket.actions.getPublicGasketData.mockResolvedValue({ intl: { locale: 'fr-FR' } });
     await hook(gasket, expressApp, false);
 
     const fn = expressApp.use.mock.calls[0][0];
@@ -143,7 +149,6 @@ describe('express hook', () => {
     const mockRes = { locals: { gasketData: { intl: { locale: 'fr-FR' } } } };
     const mockNext = jest.fn();
     await fn(mockReq, mockRes, mockNext);
-
     expect(mockReq.headers).toHaveProperty(
       'cookie',
       'bogus=data;NEXT_LOCALE=fr-FR'
@@ -201,6 +206,10 @@ describe('fastify hook', () => {
     hook = plugin.hooks.fastify.handler;
   });
 
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('timing configured last', async function () {
     const gasket = mockGasketApi();
     await hook(gasket, fastifyApp, false);
@@ -220,27 +229,27 @@ describe('fastify hook', () => {
 
   it('middleware sets NEXT_LOCALE cookie from gasketData', async function () {
     const gasket = mockGasketApi();
+    gasket.actions.getPublicGasketData.mockResolvedValueOnce({ intl: { locale: 'fr-FR' } });
     await hook(gasket, fastifyApp, false);
 
     const fn = fastifyApp.addHook.mock.calls[0][1];
 
     const mockReq = { headers: {} };
-    const mockRes = { locals: { gasketData: { intl: { locale: 'fr-FR' } } } };
-    const mockNext = jest.fn();
-    fn(mockReq, mockRes, mockNext);
+    const mockRes = {};
+    await fn(mockReq, mockRes);
     expect(mockReq.headers).toHaveProperty('cookie', ';NEXT_LOCALE=fr-FR');
   });
 
   it('middleware adds NEXT_LOCALE to existing cookie', async function () {
     const gasket = mockGasketApi();
+    gasket.actions.getPublicGasketData.mockResolvedValueOnce({ intl: { locale: 'fr-FR' } });
     await hook(gasket, fastifyApp, false);
 
     const fn = fastifyApp.addHook.mock.calls[0][1];
 
     const mockReq = { headers: { cookie: 'bogus=data' } };
     const mockRes = { locals: { gasketData: { intl: { locale: 'fr-FR' } } } };
-    const mockNext = jest.fn();
-    fn(mockReq, mockRes, mockNext);
+    await fn(mockReq, mockRes);
     expect(mockReq.headers).toHaveProperty(
       'cookie',
       'bogus=data;NEXT_LOCALE=fr-FR'
@@ -459,6 +468,10 @@ function mockGasketApi() {
   return {
     command: {
       id: 'fake'
+    },
+    actions: {
+      getPublicGasketData: jest.fn().mockResolvedValue({}),
+      getIntlLocale: jest.fn().mockResolvedValue('en-US')
     },
     execWaterfallSync: jest.fn((_, arg) => arg),
     exec: jest.fn().mockResolvedValue({}),

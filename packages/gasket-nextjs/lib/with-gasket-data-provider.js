@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
  * component.
  * @returns {Function} wrapper
  */
-export const withGasketDataProvider = () => (WrappedComponent) => {
+export const withGasketDataProvider = (gasket) => (WrappedComponent) => {
   const Wrapper = ({ gasketData, ...props }) => {
     return (
       createElement(GasketDataProvider, { gasketData },
@@ -19,8 +19,8 @@ export const withGasketDataProvider = () => (WrappedComponent) => {
 
   Wrapper.getInitialProps = async (data) => {
     const initialProps = WrappedComponent.getInitialProps ? await WrappedComponent.getInitialProps(data) : {};
-    // TODO: convert to GasketActions
-    const ssrGasketData = data?.ctx?.res?.locals?.gasketData || data?.res?.locals?.gasketData || {};
+    const req = data?.ctx?.req || data?.req;
+    const ssrGasketData = await gasket.actions.getPublicGasketData(req) || {};
     let clientGasketData = {}
     if (typeof window !== 'undefined') {
       clientGasketData = await import('@gasket/data').then(mod => {

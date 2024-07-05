@@ -55,6 +55,7 @@ module.exports = async function express(gasket, app) {
   if (trustProxy) {
     app.set('trust proxy', trustProxy);
   }
+  // TODO: https://godaddy-corp.atlassian.net/browse/PFX-658
   // eslint-disable-next-line jsdoc/require-jsdoc
   function attachLogEnhancer(req) {
     req.logger.metadata = (metadata) => {
@@ -68,6 +69,8 @@ module.exports = async function express(gasket, app) {
     attachLogEnhancer(req);
     next();
   });
+  // TODO: https://godaddy-corp.atlassian.net/browse/PFX-658
+
   useForAllowedPaths(cookieParser());
 
   applyCookieParser(app, middlewarePattern);

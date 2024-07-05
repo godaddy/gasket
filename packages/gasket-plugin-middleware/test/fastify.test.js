@@ -49,19 +49,4 @@ describe('fastify', () => {
 
     expect(app.register).toHaveBeenCalledWith(middie);
   });
-
-  it('adds middleware to attach res.locals', async () => {
-    await fastify(gasket, app);
-
-    const middleware = app.addHook.mock.calls[0][1];
-    expect(middleware.name).toEqual('attachLocals');
-
-    const res = {};
-    const next = jest.fn();
-    middleware({}, res, next);
-
-    expect(res).toHaveProperty('locals');
-    expect(res.locals).toEqual({});
-    expect(next).toHaveBeenCalled();
-  });
 });

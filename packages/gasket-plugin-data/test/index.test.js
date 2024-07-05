@@ -17,7 +17,6 @@ describe('Plugin', () => {
       'create',
       'configure',
       'actions',
-      'middleware',
       'initReduxState',
       'metadata'
     ];

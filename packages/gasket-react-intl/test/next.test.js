@@ -2,19 +2,20 @@
 import { jest } from '@jest/globals';
 
 describe('Next.js functions', function () {
-  let next, res;
+  let next, res, mockGasket;
 
   beforeEach(function () {
-    jest.spyOn(console, 'error').mockImplementation(() => {});
-    res = {
-      locals: {
-        gasketData: {
+    mockGasket = {
+      actions: {
+        getPublicGasketData: jest.fn().mockResolvedValue({
           intl: {
             locale: 'en-US'
           }
-        }
+        })
       }
     };
+    jest.spyOn(console, 'error').mockImplementation(() => {});
+    res = {};
     next = require('../src/next');
   });
 
@@ -137,7 +138,7 @@ describe('Next.js functions', function () {
     });
 
     it('returns localesProps for default path', async function () {
-      const results = await next.intlGetServerSideProps('/locales')({ res });
+      const results = await next.intlGetServerSideProps(mockGasket, '/locales')({ res });
       expect(results).toEqual({
         props: {
           localesProps: {
@@ -150,7 +151,7 @@ describe('Next.js functions', function () {
     });
 
     it('returns localesProps for other path part', async function () {
-      const results = await next.intlGetServerSideProps('/locales/extra')({ res });
+      const results = await next.intlGetServerSideProps(mockGasket, '/locales/extra')({ res });
       expect(results).toEqual({
         props: {
           localesProps: {
@@ -166,7 +167,7 @@ describe('Next.js functions', function () {
       const mockContext = { res, extra: true };
       const mockThunk = jest.fn().mockImplementation((context) => context.extra ? '/locales/extra' : '/locales');
 
-      const results = await next.intlGetServerSideProps(mockThunk)(mockContext);
+      const results = await next.intlGetServerSideProps(mockGasket, mockThunk)(mockContext);
       expect(mockThunk).toHaveBeenCalledWith(mockContext);
       expect(results).toEqual({
         props: {
@@ -180,7 +181,7 @@ describe('Next.js functions', function () {
     });
 
     it('returns localesProps for multiple locale path parts', async function () {
-      const results = await next.intlGetServerSideProps(['/locales', '/locales/extra'])({ res });
+      const results = await next.intlGetServerSideProps(mockGasket, ['/locales', '/locales/extra'])({ res });
       expect(results).toEqual({
         props: {
           localesProps: {
@@ -197,7 +198,7 @@ describe('Next.js functions', function () {
 
     it('returns localesProps with error for missing path', async function () {
       const consoleSpy = jest.spyOn(console, 'error');
-      const results = await next.intlGetServerSideProps('/locales/missing')({ res });
+      const results = await next.intlGetServerSideProps(mockGasket, '/locales/missing')({ res });
       expect(results).toEqual({
         props: {
           localesProps: {
@@ -212,8 +213,12 @@ describe('Next.js functions', function () {
     });
 
     it('returns localesProps for default if locale missing', async function () {
-      res.locals.gasketData.intl.locale = 'fr-CA';
-      const results = await next.intlGetServerSideProps('/locales')({ res });
+      mockGasket.actions.getPublicGasketData = jest.fn().mockResolvedValue({
+        intl: {
+          locale: 'fr-CA'
+        }
+      });
+      const results = await next.intlGetServerSideProps(mockGasket, '/locales')({ res });
       expect(results).toEqual({
         props: {
           localesProps: {
@@ -226,7 +231,7 @@ describe('Next.js functions', function () {
     });
 
     it('uses locale on context from builtin i18n routing', async function () {
-      const results = await next.intlGetServerSideProps('/locales')({ locale: 'fr-CA', res });
+      const results = await next.intlGetServerSideProps(mockGasket, '/locales')({ locale: 'fr-CA', res });
       expect(results).toEqual({
         props: {
           localesProps: {
