@@ -2,6 +2,7 @@
 
 Gasket integrations for Next.js apps. Provides several tools:
 
+- request: Access a request-like object in server components
 - withGasketData: Injects Gasket Data added during lifecycle into Document
 - withGasketDataProvider: Provides context access to Gasket Data
 - useGasketData: Allows access to Gasket Data from hook
@@ -17,6 +18,7 @@ npm i @gasket/nextjs
 ### request
 
 Get a request-like object unique to the current request in server components.
+This uses the Next.js `cookies()` and `headers()` [dynamic functions]. 
 
 **Signature**
 
@@ -209,4 +211,5 @@ The `useGasketData` will provided access to the gasket data within the context o
 [@gasket/data]: /packages/gasket-data/README.md
 
 [custom Document]: https://nextjs.org/docs/advanced-features/custom-document
+[dynamic functions]: https://nextjs.org/docs/app/building-your-application/rendering/server-components#dynamic-functions
 
