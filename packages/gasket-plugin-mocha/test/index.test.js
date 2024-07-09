@@ -130,9 +130,10 @@ describe('Plugin', () => {
   describe('dependencies - react', function () {
     it('includes a glob for generator contents', async function () {
       await createReact();
-      const [firstCall, secondCall] = filesAddStub.mock.calls[0];
+      const [firstCall, secondCall, thirdCall] = filesAddStub.mock.calls[0];
       expect(firstCall).toEqual(expect.stringContaining('/../generator/*'));
-      expect(secondCall).toEqual(expect.stringContaining('/../generator/**/*'));
+      expect(secondCall).toEqual(expect.stringContaining('/../generator/.*'));
+      expect(thirdCall).toEqual(expect.stringContaining('/../generator/**/*'));
     });
 
     [

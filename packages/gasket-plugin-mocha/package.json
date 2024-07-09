@@ -46,6 +46,7 @@
     "@babel/preset-env": "^7.23.8",
     "@babel/preset-react": "^7.23.3",
     "@babel/register": "^7.23.7",
+    "@node-loader/babel": "^2.1.0",
     "@testing-library/react": "^13.4.0",
     "@types/jest": "^29.5.12",
     "babel-eslint": "^10.1.0",
