@@ -24,7 +24,6 @@ const plugin = {
         const runCmd = packageManager === 'npm' ? `npm run` : packageManager;
         const generatorDir = `${__dirname}/../generator`;
         const isReactProject = pkg.has('dependencies', 'react');
-        const isNextProject = pkg.has('dependencies', 'next');
 
         pkg.add('devDependencies', {
           // Base assertion dependencies.
@@ -42,6 +41,7 @@ const plugin = {
         if (isReactProject) {
           files.add(
             `${generatorDir}/*`,
+            `${generatorDir}/.*`,
             `${generatorDir}/**/*`
           );
 
@@ -49,18 +49,19 @@ const plugin = {
             // All dependencies to correctly configure React Testing Library
             'jsdom': devDependencies.jsdom,
             '@testing-library/react': devDependencies['@testing-library/react'],
-            'global-jsdom': devDependencies['global-jsdom']
+            'global-jsdom': devDependencies['global-jsdom'],
+            '@node-loader/babel': devDependencies['@node-loader/babel']
           });
 
           pkg.add('scripts', {
             // eslint-disable-next-line max-len
-            'test:runner': `mocha -r global-jsdom/register -r setup-env ${isNextProject ? '-r ./test/setup.js' : ''} --recursive "test/**/*.*(test|spec).js"`,
-            'test:watch': `${runCmd} test:runner -- --watch -r ./test/mocha-watch-cleanup-after-each.js`
+            'test:runner': `mocha -r global-jsdom/register -r setup-env --loader=@node-loader/babel --recursive "test/**/*.*(test|spec).js"`,
+            'test:watch': `${runCmd} test:runner -- --watch --parallel -r ./test/mocha-watch-cleanup-after-each.js`
           });
         } else {
           pkg.add('scripts', {
             'test:runner': 'mocha -r setup-env --recursive "test/**/*.*(test|spec).js"',
-            'test:watch': `${runCmd} test:runner -- --watch`
+            'test:watch': `${runCmd} test:runner -- --watch --parallel`
           });
         }
 

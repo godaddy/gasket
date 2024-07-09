@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
 {{#unless useAppRouter}}
-import Head from '../components/head';
+import Head from '../components/head.js';
 {{/unless}}
-import GasketEmblem from '@gasket/assets/react/gasket-emblem';
+import GasketEmblem from '@gasket/assets/react/gasket-emblem.js';
 
 const pageStyle = { textAlign: 'center' };
 const logoStyle = { width: '250px', height: '250px' };

@@ -1,6 +1,6 @@
-const { cleanup } = require('@testing-library/react');
+import { cleanup } from '@testing-library/react';
 
-exports.mochaHooks = {
+export const mochaHooks = {
   afterEach() {
     cleanup();
   }

@@ -1,11 +1,9 @@
 import { render, screen } from '@testing-library/react';
-import { IntlProvider } from 'react-intl';
 import { describe, it } from 'mocha';
 import { expect } from 'chai';
 import React from 'react';
 
-import { IndexPage } from '../../components/index-page';
-import messages from '../../public/locales/en-US.json';
+import { IndexPage } from '../../components/index-page.js';
 
 //
 // The following test utilities are also available:
@@ -16,11 +14,8 @@ import messages from '../../public/locales/en-US.json';
 describe('IndexPage', () => {
   it('renders page', () => {
     render(
-      <IntlProvider locale='en-US' messages={ messages }>
-        <IndexPage />
-      </IntlProvider>
+      <IndexPage />
     );
-
     expect(screen.getByText('Welcome to Gasket!')).to.be.ok;
   });
 });

@@ -1,4 +1,4 @@
-const nextJest = require('next/jest');
+import nextJest from 'next/jest.js';
 const pathToApp = 'pages';
 const createJestConfig = nextJest(pathToApp);
 
@@ -10,4 +10,4 @@ const customJestConfig = {
   }
 };
 
-module.exports = createJestConfig(customJestConfig);
+export default createJestConfig(customJestConfig);
