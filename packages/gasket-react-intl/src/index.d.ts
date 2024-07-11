@@ -3,7 +3,8 @@ import {
   LocalePathPartOrThunk,
   LocaleStatus,
   LocalesProps,
-  LocalesState
+  LocalesState,
+  LocalePath
 } from '@gasket/helper-intl';
 import type { GasketData } from '@gasket/data';
 import type { IncomingMessage, ServerResponse } from 'http';
@@ -119,7 +120,7 @@ declare module '@gasket/data' {
 
 export interface GasketIntlContext {
   locale: string;
-  status?: LocaleStatus;
+  status?: Record<LocalePath, LocaleStatus>;
   dispatch?: React.Dispatch<{
     type: string;
     payload: {};
