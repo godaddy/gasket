@@ -90,7 +90,6 @@ describe('Plugin', () => {
 
   describe('dependencies', function () {
     [
-      '@babel/register',
       '@babel/core',
       'mocha',
       'sinon',
@@ -132,7 +131,7 @@ describe('Plugin', () => {
       await createReact();
       const [firstCall, secondCall, thirdCall] = filesAddStub.mock.calls[0];
       expect(firstCall).toEqual(expect.stringContaining('/../generator/*'));
-      expect(secondCall).toEqual(expect.stringContaining('/../generator/.*'));
+      expect(secondCall).toEqual(expect.stringContaining('/../generator/**/.*'));
       expect(thirdCall).toEqual(expect.stringContaining('/../generator/**/*'));
     });
 
