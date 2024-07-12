@@ -1,10 +1,15 @@
 // Forked from https://github.com/node-loader/node-loader-babel
-import babel from '@babel/core';
-import path from 'path';
-import urlModule from 'url';
+const babel = require('@babel/core');
+const path = require('path');
+const urlModule = require('url');
 
+// @ts-ignore
 const { loadOptionsAsync, transformAsync } = babel;
 
+/**
+ *
+ * @param filename
+ */
 function isBabelConfigFile(filename) {
   const basename = path.basename(filename);
   return (
@@ -22,7 +27,11 @@ function isBabelConfigFile(filename) {
 // It cannot compile wasm/json
 const supportedModuleFormats = ['module', 'commonjs'];
 
-export async function load(url, context, defaultLoad) {
+/**
+ * Custom loader for Node.js that allows you to compile all files with babel before they are executed in Node.
+ * @type {import('./index.js').load}
+ */
+async function load(url, context, defaultLoad) {
   if (useLoader(url)) {
     if (url.endsWith('.ts') || url.endsWith('.tsx')) {
       // defaultLoad throws ERR_UNKNOWN_FILE_EXTENSION unless we tell it a module format
@@ -41,6 +50,7 @@ export async function load(url, context, defaultLoad) {
     }
 
     const filename = urlModule.fileURLToPath(url);
+
     // Babel config files can themselves be ES modules,
     // but we cannot transform those since doing so would cause an infinite loop.
     if (isBabelConfigFile(filename)) {
@@ -51,6 +61,7 @@ export async function load(url, context, defaultLoad) {
     }
 
     const options = await loadOptionsAsync({
+      // @ts-ignore
       sourceType: format || 'module',
       root: `${process.cwd()}/test/`,
       rootMode: 'root',
@@ -70,6 +81,12 @@ export async function load(url, context, defaultLoad) {
   return defaultLoad(url, context, defaultLoad);
 }
 
+/**
+ *
+ * @param url
+ */
 function useLoader(url) {
   return !/node_modules/.test(url) && !/node:/.test(url);
 }
+
+module.exports = { load };

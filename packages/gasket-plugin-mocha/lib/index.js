@@ -20,7 +20,7 @@ const plugin = {
         last: true,
         before: ['@gasket/plugin-lint']
       },
-      handler: async function create(gasket, { files, pkg, packageManager = 'npm' }) {
+      handler: async function create(gasket, { files, pkg, gasketConfig, packageManager = 'npm' }) {
         const runCmd = packageManager === 'npm' ? `npm run` : packageManager;
         const generatorDir = `${__dirname}/../generator`;
         const isReactProject = pkg.has('dependencies', 'react');
@@ -38,6 +38,8 @@ const plugin = {
         });
 
         if (isReactProject) {
+          gasketConfig.addPlugin('pluginMocha', name);
+
           files.add(
             `${generatorDir}/*`,
             `${generatorDir}/**/.*`,
@@ -48,7 +50,8 @@ const plugin = {
             // All dependencies to correctly configure React Testing Library
             'jsdom': devDependencies.jsdom,
             '@testing-library/react': devDependencies['@testing-library/react'],
-            'global-jsdom': devDependencies['global-jsdom']
+            'global-jsdom': devDependencies['global-jsdom'],
+            [name]: `^${version}`
           });
 
           pkg.add('scripts', {

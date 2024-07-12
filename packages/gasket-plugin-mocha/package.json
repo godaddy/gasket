@@ -18,6 +18,17 @@
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"
   },
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./node-loader-babel": {
+      "types": "./lib/node-loader-babel/index.d.ts",
+      "default": "./lib/node-loader-babel/index.js"
+    },
+    "./package.json": "./package.json"
+  },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/godaddy/gasket.git"
