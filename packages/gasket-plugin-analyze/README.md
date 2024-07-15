@@ -62,7 +62,7 @@ module.exports = {
 
 ### analyze
 
-The npm script `analyze` will execute the following `GASKET_ENV=local ANALYZE=1 next build`.
+The npm script `analyze` will execute the following `GASKET_ENV=local ANALYZE=true next build`.
 
 Only when _this_ script is run, will the plugin add [webpack-bundle-analyzer]
 to the webpack config. By default, generated reports are output to a `reports`

@@ -12,6 +12,6 @@ module.exports = function create(gasket, { pkg, gasketConfig }) {
   });
 
   pkg.add('scripts', {
-    analyze: 'GASKET_ENV=local ANALYZE=1 next build'
+    analyze: 'GASKET_ENV=local ANALYZE=true next build'
   });
 };
