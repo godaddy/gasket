@@ -1,5 +1,7 @@
 # `@gasket/plugin-analyze`
 
+- Remove the custom command and replace it with an npm script that sets an environment variable ([#810])
+
 ### 6.46.4
 
 - Adjust JSDocs and TS types ([#695])
@@ -73,3 +75,4 @@
 [#457]: https://github.com/godaddy/gasket/pull/457
 [#670]: https://github.com/godaddy/gasket/pull/670
 [#695]: https://github.com/godaddy/gasket/pull/695
+[#810]: https://github.com/godaddy/gasket/pull/810
