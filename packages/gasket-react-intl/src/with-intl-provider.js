@@ -12,7 +12,7 @@ import { getActiveLocale, LocaleStatus } from './utils';
  * @type {import('./index').init}
  */
 export function init(localesProps) {
-  const { messages = {}, status } = localesProps;
+  const { messages = {}, status = {} } = localesProps;
 
   if (isBrowser) {
     // merge any data set on window with what comes from SSR or static page
