@@ -1,12 +1,18 @@
 const create = require('../lib/create');
+const { name, version } = require('../package.json');
 
 describe('create', () => {
 
-  it('adds the analyze script', async () => {
+  it('adds the analyze script and adds the plugin', async () => {
     const add = jest.fn();
-    await create({}, { pkg: { add } });
-    expect(add).toHaveBeenCalledWith('scripts', {
-      analyze: 'gasket analyze'
-    });
+    const addPlugin = jest.fn();
+    await create({}, { pkg: { add }, gasketConfig: { addPlugin } });
+    expect(add.mock.calls[0]).toEqual(['devDependencies', {
+      [name]: `^${version}`
+    }]);
+    expect(add.mock.calls[1]).toEqual(['scripts', {
+      analyze: 'GASKET_ENV=local ANALYZE=1 next build'
+    }]);
+    expect(addPlugin.mock.calls[0]).toEqual(['pluginAnalyze', name]);
   });
 });
