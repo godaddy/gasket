@@ -188,7 +188,5 @@ module.exports = {
     addConfig(context);
     if (addSitemap) configureSitemap({ files, pkg, generatorDir });
     if (useRedux) addRedux({ files, pkg, generatorDir });
-    // TODO - remove with typecheck solution
-    return;
   }
 };
