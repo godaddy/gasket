@@ -1,5 +1,9 @@
 # `@gasket/react-intl`
 
+### 6.47.2
+
+- Fix locale files loading multiple times ([#808])
+
 ### 6.47.1
 
 - Accept an array as localesPath in useLocaleRequired, withLocaleRequired, and LocaleRequired ([#779])
@@ -201,3 +205,4 @@
 [#670]: https://github.com/godaddy/gasket/pull/670
 [#696]: https://github.com/godaddy/gasket/pull/696
 [#779]: https://github.com/godaddy/gasket/pull/779
+[#808]: https://github.com/godaddy/gasket/pull/808
