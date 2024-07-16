@@ -7,6 +7,7 @@ export interface EslintConfig {
   };
   env?: Record<string, boolean>;
   rules?: Record<string, any>;
+  parser?: string;
 }
 
 export interface StylelintConfig {
@@ -25,6 +26,7 @@ declare module 'create-gasket-app' {
     eslintConfig?: string;
     stylelintConfig?: string;
     addStylelint?: boolean;
+    typescript?: boolean;
   }
 
   export interface PackageJson {

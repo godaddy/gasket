@@ -194,7 +194,7 @@ const none = {
 const common = {
   // no name = no choice
   create: async (context, utils) => {
-    const { pkg } = context;
+    const { pkg, typescript } = context;
     const { runScriptStr } = utils;
 
     const hasEslint = pkg.has('devDependencies', 'eslint');
@@ -204,8 +204,18 @@ const common = {
     if (hasEslint) {
       if (!pkg.has('scripts', 'lint')) {
         pkg.add('scripts', {
-          'lint': 'eslint --ext .js,.jsx,.cjs .',
+          'lint': `eslint --ext .js,.jsx,.cjs${typescript ? ',.ts,.tsx' : ''} .`,
           'lint:fix': runScriptStr('lint -- --fix')
+        });
+      }
+
+      if (typescript) {
+        pkg.add('devDependencies', {
+          '@typescript-eslint/parser': devDependencies['@typescript-eslint/parser']
+        });
+
+        pkg.add('eslintConfig', {
+          parser: '@typescript-eslint/parser'
         });
       }
 
