@@ -13,7 +13,6 @@ import pluginLint from '@gasket/plugin-lint';
 export default async function presetConfig(gasket, context) {
   let typescriptPlugin;
   const testPlugins = [];
-  // TODO: test canary publish without fastify dependency
   const frameworkPlugin = context.server === 'express'
     ? await import('@gasket/plugin-express')
     : await import('@gasket/plugin-fastify');
