@@ -203,8 +203,10 @@ const common = {
     // Handle common eslint configuration
     if (hasEslint) {
       if (!pkg.has('scripts', 'lint')) {
+        const exts = `.js,.jsx,.cjs${typescript ? ',.ts,.tsx' : ''}`;
+
         pkg.add('scripts', {
-          'lint': `eslint --ext .js,.jsx,.cjs${typescript ? ',.ts,.tsx' : ''} .`,
+          'lint': `eslint --ext ${exts} .`,
           'lint:fix': runScriptStr('lint -- --fix')
         });
       }
