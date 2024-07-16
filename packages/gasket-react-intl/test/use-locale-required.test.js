@@ -50,6 +50,7 @@ describe('useLocaleRequired', function () {
     const results = useLocaleRequired('/locales');
     expect(results).toEqual(LOADING);
     expect(fetch).toHaveBeenCalled();
+    expect(fetch).toHaveBeenCalledTimes(1);
     expect(fetch).toHaveBeenCalledWith('/locales/en.json');
   });
 
@@ -121,6 +122,7 @@ describe('useLocaleRequired', function () {
       const results = useLocaleRequired(['/locales', '/custom/locales', 'modules/module/locales']);
       expect(results).toEqual(LOADING);
       expect(fetch).toHaveBeenCalled();
+      expect(fetch).toHaveBeenCalledTimes(3);
       expect(fetch).toHaveBeenCalledWith('/locales/en.json');
       expect(fetch).toHaveBeenCalledWith('/custom/locales/en.json');
       expect(fetch).toHaveBeenCalledWith('/modules/module/locales/en.json');
