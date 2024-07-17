@@ -43,6 +43,7 @@
     "semver": "^7.5.4"
   },
   "devDependencies": {
+    "@typescript-eslint/parser": "^7.16.1",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
     "eslint-config-godaddy": "^7.1.0",
