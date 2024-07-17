@@ -10,12 +10,10 @@ describe('webpackConfig', () => {
 
   beforeEach(() => {
     mockGasket = {
-      command: {
-        id: 'analyze'
-      },
       config: {}
     };
     mockWebpackConfig = { plugins: [] };
+    process.env.ANALYZE = 'true';
   });
 
   it('returns updated webpack config object', () => {
@@ -31,8 +29,8 @@ describe('webpackConfig', () => {
     expect(expectedPlugin).toBeInstanceOf(BundleAnalyzerPlugin);
   });
 
-  it('does not add BundleAnalyzerPlugin if not analyze command', () => {
-    mockGasket.command.id = 'bogus';
+  it('does not add BundleAnalyzerPlugin if not analyze script', () => {
+    process.env.ANALYZE = 'bogus';
     results = webpack(mockGasket, mockWebpackConfig, mockNextData);
     expect(results).toBe(mockWebpackConfig);
   });
