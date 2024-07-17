@@ -1,4 +1,3 @@
-import pluginExpress from '@gasket/plugin-express';
 import pluginHttps from '@gasket/plugin-https';
 import pluginNext from '@gasket/plugin-nextjs';
 import pluginRedux from '@gasket/plugin-redux';
@@ -14,6 +13,9 @@ import pluginWinston from '@gasket/plugin-winston';
 export default async function presetConfig(gasket, context) {
   let typescriptPlugin;
   const testPlugins = [];
+  const frameworkPlugin = context.server === 'express'
+    ? await import('@gasket/plugin-express')
+    : await import('@gasket/plugin-fastify');
 
   if ('testPlugins' in context && context.testPlugins.length > 0) {
     await Promise.all(context.testPlugins.map(async (testPlugin) => {
@@ -29,11 +31,11 @@ export default async function presetConfig(gasket, context) {
   return {
     plugins: [
       pluginWebpack,
-      pluginExpress,
       pluginHttps,
       pluginNext,
       pluginRedux,
       pluginWinston,
+      frameworkPlugin.default || frameworkPlugin,
       typescriptPlugin ? typescriptPlugin.default || typescriptPlugin : null,
       ...testPlugins
     ].filter(Boolean)
