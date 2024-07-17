@@ -106,7 +106,7 @@ async function writeGasketConfig({ context }) {
   createInjectionAssignments(gasketConfig.fields, assignments);
   cleanupFields(gasketConfig);
 
-  const pluginImports = `[\n${writePluginImports(plugins)}\n\t]`;
+  const pluginImports = `[\n${writePluginImports(plugins)}\n]`;
   contents += `\nexport default makeGasket(${JSON5.stringify(gasketConfig.fields, null, 2)});\n`;
   contents = contents.replace('\'FILENAME_REPLACE\'', 'import.meta.filename');
   contents = contents.replace('\'PLUGIN_REPLACE\'', pluginImports);

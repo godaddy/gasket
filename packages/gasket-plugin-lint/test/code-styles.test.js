@@ -381,6 +381,29 @@ describe('code styles', () => {
       expect(utils.runScriptStr).toHaveBeenCalledWith('lint -- --fix');
     });
 
+    it('adds lint scripts support for .ts, .tsx', async () => {
+      context.typescript = true;
+      pkgHas.mockImplementation((_, name) => ['eslint'].includes(name));
+      await codeStyle.create(context, utils);
+
+      expect(pkgAdd).toHaveBeenCalledWith('scripts', {
+        'lint': 'eslint --ext .js,.jsx,.cjs,.ts,.tsx .',
+        'lint:fix': expect.any(String)
+      });
+
+      expect(utils.runScriptStr).toHaveBeenCalledWith('lint -- --fix');
+    });
+
+    it('adds typescript eslint parser', async () => {
+      context.typescript = true;
+      pkgHas.mockImplementation((_, name) => ['eslint'].includes(name));
+      await codeStyle.create(context, utils);
+
+      expect(pkgAdd).toHaveBeenCalledWith('devDependencies', {
+        '@typescript-eslint/parser': devDependencies['@typescript-eslint/parser']
+      });
+    });
+
     it('does not add lint scripts if already set', async () => {
       pkgHas.mockImplementation((_, name) => ['eslint', 'lint'].includes(name));
       await codeStyle.create(context, utils);
