@@ -58,17 +58,17 @@ module.exports = {
 }
 ```
 
-## Commands
+## NPM script
 
-### analyze command
+### analyze
 
-The command `gasket analyze` will execute the `build` lifecycle.
+The npm script `analyze` will execute the following `GASKET_ENV=local ANALYZE=true next build`.
 
-Only when _this_ command is run, will the plugin add [webpack-bundle-analyzer]
+Only when _this_ script is run, will the plugin add [webpack-bundle-analyzer]
 to the webpack config. By default, generated reports are output to a `reports`
 dir at the root of the project.
 
-If using a UI framework such as Next.js which runs webpack for for both browser
+The script runs webpack for for both browser
 and server-side rendering, two reports will be outputted:
 - `reports/browser-bundles.html`
 - `reports/server-bundles.html`

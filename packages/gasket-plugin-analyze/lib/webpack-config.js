@@ -6,12 +6,11 @@
  */
 module.exports = function webpackConfigHook(gasket, webpackConfig, context) {
   const {
-    command,
     config: { bundleAnalyzerConfig: userConfig = {} }
   } = gasket;
 
-  // Only analyze add analyzer plugin for the analyze command
-  if (command.id === 'analyze') {
+  // Only analyze add analyzer plugin for the analyze script
+  if (process.env.ANALYZE === 'true') {
     const merge = require('deepmerge');
     const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
