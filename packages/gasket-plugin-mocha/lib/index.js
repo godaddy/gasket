@@ -20,7 +20,7 @@ const plugin = {
         last: true,
         before: ['@gasket/plugin-lint']
       },
-      handler: async function create(gasket, { files, pkg, packageManager = 'npm' }) {
+      handler: async function create(gasket, { files, pkg, gasketConfig, packageManager = 'npm' }) {
         const runCmd = packageManager === 'npm' ? `npm run` : packageManager;
         const generatorDir = `${__dirname}/../generator`;
         const isReactProject = pkg.has('dependencies', 'react');
@@ -34,14 +34,15 @@ const plugin = {
           'setup-env': '^2.0.0',
 
           // To ensure that the mocha tests can run with import scripts
-          '@babel/register': devDependencies['@babel/register'],
           '@babel/core': devDependencies['@babel/core']
         });
 
         if (isReactProject) {
+          gasketConfig.addPlugin('pluginMocha', name);
+
           files.add(
             `${generatorDir}/*`,
-            `${generatorDir}/.*`,
+            `${generatorDir}/**/.*`,
             `${generatorDir}/**/*`
           );
 
@@ -50,12 +51,12 @@ const plugin = {
             'jsdom': devDependencies.jsdom,
             '@testing-library/react': devDependencies['@testing-library/react'],
             'global-jsdom': devDependencies['global-jsdom'],
-            '@node-loader/babel': devDependencies['@node-loader/babel']
+            [name]: `^${version}`
           });
 
           pkg.add('scripts', {
             // eslint-disable-next-line max-len
-            'test:runner': `mocha -r global-jsdom/register -r setup-env --loader=@node-loader/babel --recursive "test/**/*.*(test|spec).js"`,
+            'test:runner': `mocha -r global-jsdom/register -r setup-env -r ./test/register-loader.js --recursive "test/**/*.*(test|spec).js"`,
             'test:watch': `${runCmd} test:runner -- --watch --parallel -r ./test/mocha-watch-cleanup-after-each.js`
           });
         } else {

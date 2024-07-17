@@ -1,5 +1,7 @@
 # `@gasket/plugin-mocha`
 
+- Added custom node loader for compiling JSX ([#807])
+
 ### 6.38.1
 
 - Fix created mocha dependencies ([#553])
@@ -89,3 +91,4 @@
 [#460]: https://github.com/godaddy/gasket/pull/460
 [#463]: https://github.com/godaddy/gasket/pull/463
 [#553]: https://github.com/godaddy/gasket/pull/553
+[#807]: https://github.com/godaddy/gasket/pull/807

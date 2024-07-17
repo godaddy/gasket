@@ -18,6 +18,17 @@
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"
   },
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./node-loader-babel": {
+      "types": "./lib/node-loader-babel/index.d.ts",
+      "default": "./lib/node-loader-babel/index.js"
+    },
+    "./package.json": "./package.json"
+  },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/godaddy/gasket.git"
@@ -45,8 +56,6 @@
     "@babel/plugin-transform-runtime": "^7.23.7",
     "@babel/preset-env": "^7.23.8",
     "@babel/preset-react": "^7.23.3",
-    "@babel/register": "^7.23.7",
-    "@node-loader/babel": "^2.1.0",
     "@testing-library/react": "^13.4.0",
     "@types/jest": "^29.5.12",
     "babel-eslint": "^10.1.0",

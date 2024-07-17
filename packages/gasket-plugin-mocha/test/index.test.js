@@ -2,7 +2,7 @@ const plugin = require('../lib');
 const { name, version, description } = require('../package');
 
 describe('Plugin', () => {
-  let spyFunc, filesAddStub;
+  let spyFunc, filesAddStub, addPluginStub;
 
   /**
    * Create a new project
@@ -37,6 +37,7 @@ describe('Plugin', () => {
         react: '1.0.0'
       }
     };
+    addPluginStub = jest.fn();
 
     await plugin.hooks.create.handler({}, {
       files: {
@@ -49,6 +50,9 @@ describe('Plugin', () => {
         has: (key, value) => {
           return !!pkg[key] && !!pkg[key][value];
         }
+      },
+      gasketConfig: {
+        addPlugin: addPluginStub
       }
     });
 
@@ -90,7 +94,6 @@ describe('Plugin', () => {
 
   describe('dependencies', function () {
     [
-      '@babel/register',
       '@babel/core',
       'mocha',
       'sinon',
@@ -130,9 +133,10 @@ describe('Plugin', () => {
   describe('dependencies - react', function () {
     it('includes a glob for generator contents', async function () {
       await createReact();
+      expect(addPluginStub).toHaveBeenCalled();
       const [firstCall, secondCall, thirdCall] = filesAddStub.mock.calls[0];
       expect(firstCall).toEqual(expect.stringContaining('/../generator/*'));
-      expect(secondCall).toEqual(expect.stringContaining('/../generator/.*'));
+      expect(secondCall).toEqual(expect.stringContaining('/../generator/**/.*'));
       expect(thirdCall).toEqual(expect.stringContaining('/../generator/**/*'));
     });
 
