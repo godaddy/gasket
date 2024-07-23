@@ -1,68 +1,42 @@
-import { LocaleUtils } from '@gasket/helper-intl';
-import * as utils from '../src/utils';
+import { ensureArray, needsToLoad } from '../src/utils';
 
-jest.mock('../src/config', () => ({
-  isBrowser: false,
-  clientData: {},
-  manifest: require('./fixtures/mock-manifest.json')
-}));
-
-describe('utils', function () {
-  let mockConfig;
-
-  beforeEach(function () {
-    mockConfig = require('../src/config');
-  });
-
-  afterEach(function () {
-    jest.restoreAllMocks();
-    delete global.window.gasketIntlLocale;
-    delete global.navigator.languages;
-  });
-
-  it('exports localeUtils instance', function () {
-    expect(utils).toHaveProperty('localeUtils');
-    expect(utils.localeUtils).toBeInstanceOf(LocaleUtils);
-  });
-
-  describe('getActiveLocale', function () {
-    it('returns defaultLocale from manifest', function () {
-      const results = utils.getActiveLocale();
-      expect(results).toEqual(mockConfig.manifest.defaultLocale);
+describe('utils', () => {
+  describe('ensureArray', () => {
+    it('should return an array', () => {
+      expect(ensureArray('single')).toEqual(['single']);
     });
 
-    it('returns locale from window property', function () {
-      mockConfig.isBrowser = true;
-      mockConfig.clientData.locale = 'fr';
-      global.window.gasketIntlLocale = 'de';
-      Object.defineProperty(global.navigator, 'languages', {
-        value: ['jp'],
-        configurable: true
-      });
-      const results = utils.getActiveLocale();
-      expect(results).toEqual('de');
+    it('should return existing array', () => {
+      const arr = ['single', 'double'];
+      expect(ensureArray(arr)).toEqual(['single', 'double']);
     });
 
-    it('returns locale from clientData', function () {
-      mockConfig.isBrowser = true;
-      mockConfig.clientData.locale = 'fr';
-      Object.defineProperty(global.navigator, 'languages', {
-        value: ['jp'],
-        configurable: true
-      });
-      const results = utils.getActiveLocale();
-      expect(results).toEqual('fr');
+    it('strips nullish entries', () => {
+      // eslint-disable-next-line no-undefined
+      const arr = ['single', undefined, null, 'double'];
+      expect(ensureArray(arr)).toEqual(['single', 'double']);
+    });
+  });
+
+  describe('needsToLoad', () => {
+    it('should return true for not handled', () => {
+      expect(needsToLoad('notHandled')).toBe(true);
     });
 
-    it('returns locale from first navigator.languages', function () {
-      mockConfig.isBrowser = true;
-      mockConfig.clientData.locale = null;
-      Object.defineProperty(global.navigator, 'languages', {
-        value: ['jp'],
-        configurable: true
-      });
-      const results = utils.getActiveLocale();
-      expect(results).toEqual('jp');
+    it('should return true for not loaded', () => {
+      expect(needsToLoad('notLoaded')).toBe(true);
+    });
+
+    it('should return false for loading', () => {
+      expect(needsToLoad('loading')).toBe(false);
+    });
+
+    it('should return false for error', () => {
+      expect(needsToLoad('error')).toBe(false);
+    });
+
+    it('should return false for loaded', () => {
+      expect(needsToLoad('loaded')).toBe(false);
     });
   });
 });

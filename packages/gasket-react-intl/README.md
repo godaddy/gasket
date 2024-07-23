@@ -138,14 +138,14 @@ hook will return the current loading status of the locale file.
   [thunk] that returns one. Also supports an array of either. See more about [locales path] in the plugin docs.
 
 ```jsx
-import { useLocaleRequired, LocaleStatus } from '@gasket/react-intl';
+import { useLocaleRequired, LocaleFileStatus } from '@gasket/react-intl';
 import { FormattedMessage } from 'react-intl';
 
 export default function MyComponent(props) {
   const loadState = useLocaleRequired('/locales/custom');
   
-  if (loadState === LocaleStatus.LOADING) return 'Fetching translations.';
-  if (loadState === LocaleStatus.ERROR) return 'Could not translate.';
+  if (loadState === LocaleFileStatus.LOADING) return 'Fetching translations.';
+  if (loadState === LocaleFileStatus.ERROR) return 'Could not translate.';
 
   return <p><FormattedMessage id='custom_welcome'/></p>;
 }

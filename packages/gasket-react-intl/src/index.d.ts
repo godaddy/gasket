@@ -1,164 +1,83 @@
-import React, { PropsWithChildren } from 'react';
+import React, { ComponentType, FunctionComponent, PropsWithChildren } from 'react';
 import {
-  LocalePathPartOrThunk,
-  LocaleStatus,
-  LocalesProps,
-  LocalesState,
-  LocalePath
+  LocaleFilePath,
+  LocaleFileStatus,
+  IntlManager,
+  Messages
 } from '@gasket/helper-intl';
-import type { GasketData } from '@gasket/data';
-import type { IncomingMessage, ServerResponse } from 'http';
 
-export { LocaleStatus };
+export { LocaleFileStatus };
 
-/** Wrapper component which sets up providers and reducer hook */
-export type IntlProviderWrapper = (props: {
-  /** Component props from a Next.js page */
-  pageProps?: {
-    /** Initial state from a Next.js page */
-    localesProps?: LocalesProps;
-  };
-}) => React.ReactNode<Props>;
-
-/**
- * Make an HOC that adds a provider to managing locale files as well as the
- * react-intl Provider. This can be used to wrap a top level React or a Next.js
- * custom App component.
- */
-export function withIntlProvider<Props>(): (
-  Component: React.ComponentType<Props>
-) => IntlProviderWrapper<Props>;
-
-export type LocaleRequiredWrapper = (props: {
-  forwardedRef?: React.Ref<any>;
-  localePathPart?: LocalePathPartOrThunk;
-}) => React.ReactNode<Props>;
-
-/**
- * Make an HOC that loads a locale file before rendering wrapped component
- */
-export function withLocaleRequired<Props>(
+export interface LocaleFileRequiredProps {
   /** Path containing locale files */
-  localePathPart?: LocalePathPartOrThunk | LocalePathPartOrThunk[],
-  options?: {
-    /** Custom component to show while loading */
-    loading?: React.ReactNode;
-    /** Preload locales during SSR with Next.js pages */
-    initialProps?: boolean;
-    forwardRef?: boolean;
-  }
-): (Component: React.ComponentType<Props>) => LocaleRequiredWrapper<Props>;
-
-export interface LocaleRequiredProps {
-  /** Path containing locale files */
-  localesPath: LocalePathPartOrThunk | LocalePathPartOrThunk[];
+  localeFilePath: LocaleFilePath | LocaleFilePath[];
   /** Custom component to show while loading */
   loading?: React.ReactNode;
+  /** @deprecated use localeFilePath */
 }
 
 /**
  * Component that loads a locale file before rendering children
  */
-export function LocaleRequired(
-  props: PropsWithChildren<LocaleRequiredProps>
-): React.ReactNode;
+export type LocaleFileRequired = FunctionComponent<PropsWithChildren<LocaleFileRequiredProps>>;
+
+export interface LocaleFileRequiredHOCProps extends LocaleFileRequiredProps {
+  forwardedRef?: boolean
+}
+
+export type LocaleFileRequiredHOC = FunctionComponent<LocaleFileRequiredHOCProps>;
+
+/**
+ * Make an HOC that loads a locale file before rendering wrapped component
+ */
+export function withLocaleFileRequired(
+  /** Path containing locale files */
+  ...localeFilePath: LocaleFilePath[],
+  options?: {
+    /** Custom component to show while loading */
+    loading?: React.ReactNode;
+    forwardRef?: boolean;
+  }
+): (
+  Component: React.ComponentType<any>
+) => LocaleFileRequiredHOC;
+
+
 
 /**
  * React that fetches a locale file and returns loading status
  */
-export function useLocaleRequired(
+export function useLocaleFile(
   /** Path containing locale files */
-  localePathPart: LocalePathPartOrThunk | LocalePathPartOrThunk[]
-): LocaleStatus;
+  ...localeFilePath: LocaleFilePath[]
+): LocaleFileStatus;
 
-interface NextStaticContext extends Record<string, any> {
-  locale?: string;
-  params: Record<string, string>;
-}
+export function useMessages(): Messages;
 
-interface NextServerContext extends NextStaticContext {
-  res: ServerResponse<IncomingMessage> & {
-    locals: {
-      gasketData: GasketData;
-    };
-  };
-}
 
-interface NextInitialContext extends NextStaticContext {
-  res?: ServerResponse<IncomingMessage> & {
-    locals: {
-      gasketData: GasketData;
-      localesDir: string;
-    };
-  };
-}
-
-/** Load locale file(s) for Next.js static pages */
-export function intlGetStaticProps(
-  /** Path(s) containing locale files */
-  localePathPart?: LocalePathPartOrThunk | LocalePathPartOrThunk[]
-): (
-  ctx: NextStaticContext
-) => Promise<{ props: { localesProps: LocalesProps } }>;
-
-/** Load locale file(s) for Next.js server-side rendered pages */
-export function intlGetServerSideProps(
-  /** Path(s) containing locale files */
-  localePathPart?: LocalePathPartOrThunk | LocalePathPartOrThunk[]
-): (
-  ctx: NextServerContext
-) => Promise<{ props: { localesProps: LocalesProps } }>;
-
-export type IntlGasketData = LocalesProps & {
-  /** Path to where locale files exist */
-  basePath?: string;
-  messages?: Record<string, string>;
-  status?: Record<string, string>;
-};
-
-declare module '@gasket/data' {
-  export interface GasketData {
-    intl?: IntlGasketData
-  }
-}
-
-export interface GasketIntlContext {
+export interface ProviderProps {
   locale: string;
-  status?: Record<LocalePath, LocaleStatus>;
-  dispatch?: React.Dispatch<{
-    type: string;
-    payload: {};
-  }>;
+  forwardedRef?: React.Ref<any>;
 }
 
-/** Merges any initial state from render with that from page props */
-export function init(localesProps: LocalesProps): LocalesState;
+export interface MessagesProps {
+  locale: string;
+  messages: Record<string, any>;
+}
 
-/** Reducer for managing locale file loading status and messages */
-export function reducer(
-  /** Incoming State */
-  state: LocalesState,
-  /** State change action */
-  action: {
-    type: string;
-    payload: Record<string, any>;
-  }
-): LocalesState;
+export type IntlContextLoad = (...localeFilePaths: LocaleFilePath[]) => void;
+export type IntlContextStatus = (...localeFilePaths: LocaleFilePath[]) => LocaleFileStatus;
+export interface GasketIntlContext {
+  load: IntlContextLoad;
+  getStatus: IntlContextStatus;
+  messages: Messages;
+}
 
-export function attachGetInitialProps(
-  /** The HOC */
-  Wrapper: React.ComponentType<any> & {
-    WrappedComponent?: React.ComponentType<any> & {
-      getInitialProps?: (ctx: NextInitialContext) => Promise<void>;
-    };
-  },
-  /** Path containing locale files */
-  localePathPart: LocalePathPartOrThunk | LocalePathPartOrThunk[],
-): void;
+export type IntlProviderHOC = FunctionComponent<PropsWithChildren<ProviderProps>>;
 
-export async function attachedGetInitialProps(
-  ctx: NextInitialContext
-): Promise<{
-  localePathPart?: LocalePathPartOrThunk;
-  localesProps?: LocalesProps;
-}>;
+export function withMessagesProvider(
+  intlManager: IntlManager,
+  options: { statics?: LocaleFilePath[] }
+): (
+  Component: React.ComponentType<MessagesProps>
+) => IntlProviderHOC;

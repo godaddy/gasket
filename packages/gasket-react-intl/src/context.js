@@ -1,10 +1,10 @@
 import React from 'react';
-import { manifest } from './config';
 
-/** @type {import('./index').GasketIntlContext} */
+/** @type {import('.').GasketIntlContext} */
 const defaultContext = {
-  locale: manifest.defaultLocale,
-  status: {}
+  getStatus: () => 'not-loaded',
+  load: () => {},
+  messages: {}
 };
 
 export const GasketIntlContext = React.createContext(defaultContext);
