@@ -1,5 +1,6 @@
 # `@gasket/plugin-nextjs`
 
+- Add gasketData layout for app router ([#814])
 - Exclude gaskets from client bundling ([#806])
 - Convert cjs sitemap config to esm ([#798])
 - Added useAppRouter optional flag ([#777])
@@ -294,4 +295,5 @@
 [#798]: https://github.com/godaddy/gasket/pull/798
 [#799]: https://github.com/godaddy/gasket/pull/799
 [#806]: https://github.com/godaddy/gasket/pull/806
+[#814]: https://github.com/godaddy/gasket/pull/814
 
