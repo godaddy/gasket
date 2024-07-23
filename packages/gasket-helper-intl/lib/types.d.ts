@@ -53,7 +53,9 @@ export interface LocaleManifestConfig {
   /** Mapping of locales to supported locales */
   localesMap?: Record<Locale, Locale>;
   /** Default lookup path to locale files */
-  defaultLocaleFilePath: string;
+  defaultLocaleFilePath: LocaleFilePath;
+  /** Array of paths to locale files for static/ssr rendering */
+  staticLocaleFilePaths?: LocaleFilePath[];
 }
 
 /**
@@ -90,7 +92,7 @@ export type IntlManager_constructor = (manifest: LocaleManifest) => void;
  * On the server, this will prepare all locales files
  * so that they are ready for SSR
  *
- * In the browser, this will prepare all preloaded messages
+ * In the browser, this will prepare all loaded messages
  * rendered to the document.
  *
  * This is called automatically by the constructor.
@@ -116,11 +118,11 @@ export type IntlManager_handleLocale = (locale: Locale) => LocaleHandler;
 
 export type LocaleHandler_constructor = (manager: IntlManager, locale: Locale) => void;
 export type LocaleHandler_getLocaleFileKey = (localeFilePath: LocaleFilePath) => LocaleFileKey;
-export type LocaleHandler_preload = (...localeFilePaths: LocaleFilePath[]) => Promise;
+export type LocaleHandler_loadStatics = (...localeFilePaths: LocaleFilePath[]) => Promise;
 export type LocaleHandler_load = (...localeFilePaths: LocaleFilePath[]) => Promise;
 export type LocaleHandler_getStatus = (...localeFilePath: LocaleFilePath[]) => LocaStatus;
 export type LocaleHandler_getAllMessages = () => LocaleMessages;
-export type LocaleHandler_getPreloadRegister = () => MessagesRegister;
+export type LocaleHandler_getStaticsRegister = () => MessagesRegister;
 
 //
 // -- CLASSES --
@@ -138,6 +140,7 @@ export class IntlManager {
   constructor(manifest: LocaleManifest)
 
   get defaultLocaleFilePath(): LocaleFilePath
+  get staticLocaleFilePaths(): LocaleFilePath[]
 
   private init: IntlManager_init
   resolveLocale: IntlManager_resolveLocale
@@ -154,20 +157,20 @@ export class IntlManager {
  */
 export class LocaleHandler {
   private handledKeys: LocaleFileKey[]
-  private preloadKeys: LocaleFileKey[]
+  private loadKeys: LocaleFileKey[]
   private handledDirty: boolean
-  private preloadDirty: boolean
+  private loadDirty: boolean
   private messages: Messages
-  private preloadRegister: MessagesRegister
+  private staticsRegister: MessagesRegister
 
   constructor(manager: IntlManager, locale: Locale)
 
   private getLocaleFileKey: LocaleHandler_getLocaleFileKey
-  preload: LocaleHandler_preload
+  loadStatics: LocaleHandler_loadStatics
   load: LocaleHandler_load
   getStatus: LocaleHandler_getStatus
   getAllMessages: LocaleHandler_getAllMessages
-  getPreloadRegister: LocaleHandler_getPreloadRegister
+  getStaticsRegister: LocaleHandler_getStaticsRegister
 }
 
 export function makeIntlManager(manifest: LocaleManifest): IntlManager

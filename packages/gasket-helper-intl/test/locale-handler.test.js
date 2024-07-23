@@ -129,14 +129,14 @@ describe('LocaleHandler', () => {
     });
   });
 
-  describe('.preload', () => {
+  describe('.loadStatics', () => {
     it('preloads single path', async () => {
       const handler = new LocaleHandler(manager, 'en-US');
-      await handler.preload('locales');
+      await handler.loadStatics('locales');
 
       expect(managerLoadSpy).toHaveBeenCalledTimes(1);
       expect(managerLoadSpy).toHaveBeenCalledWith('locales/en-US');
-      expect(handler.preloadKeys).toEqual(['locales/en-US']);
+      expect(handler.staticKeys).toEqual(['locales/en-US']);
 
       const status = handler.getStatus('locales');
       expect(status).toEqual(LocaleFileStatus.loaded);
@@ -144,11 +144,11 @@ describe('LocaleHandler', () => {
 
     it('preloads default path', async () => {
       const handler = new LocaleHandler(manager, 'en-US');
-      await handler.preload();
+      await handler.loadStatics();
 
       expect(managerLoadSpy).toHaveBeenCalledTimes(1);
       expect(managerLoadSpy).toHaveBeenCalledWith('locales/en-US');
-      expect(handler.preloadKeys).toEqual(['locales/en-US']);
+      expect(handler.staticKeys).toEqual(['locales/en-US']);
 
       const status = handler.getStatus(manager.defaultLocaleFilePath);
       expect(status).toEqual(LocaleFileStatus.loaded);
@@ -156,21 +156,21 @@ describe('LocaleHandler', () => {
 
     it('preloads multiple paths', () => {
       const handler = new LocaleHandler(manager, 'en-US');
-      handler.preload('locales', 'locales/nested', 'locales/:locale/grouped');
+      handler.loadStatics('locales', 'locales/nested', 'locales/:locale/grouped');
 
       expect(managerLoadSpy).toHaveBeenCalledTimes(3);
       expect(managerLoadSpy).toHaveBeenCalledWith('locales/en-US');
       expect(managerLoadSpy).toHaveBeenCalledWith('locales/nested/en-US');
       expect(managerLoadSpy).toHaveBeenCalledWith('locales/en-US/grouped');
-      expect(handler.preloadKeys).toEqual(['locales/en-US', 'locales/nested/en-US', 'locales/en-US/grouped']);
+      expect(handler.staticKeys).toEqual(['locales/en-US', 'locales/nested/en-US', 'locales/en-US/grouped']);
     });
 
     it('marks localeFileKeys as handled and preloaded', () => {
       const handler = new LocaleHandler(manager, 'en-US');
-      handler.preload('locales', 'locales/nested', 'locales/:locale/grouped');
+      handler.loadStatics('locales', 'locales/nested', 'locales/:locale/grouped');
 
       expect(handler.handledKeys).toEqual(['locales/en-US', 'locales/nested/en-US', 'locales/en-US/grouped']);
-      expect(handler.preloadKeys).toEqual(['locales/en-US', 'locales/nested/en-US', 'locales/en-US/grouped']);
+      expect(handler.staticKeys).toEqual(['locales/en-US', 'locales/nested/en-US', 'locales/en-US/grouped']);
     });
   });
 
@@ -418,7 +418,7 @@ describe('LocaleHandler', () => {
   });
 
   // TODO HERE
-  describe('.getPreloadRegister', () => {
+  describe('.getStaticsRegister', () => {
     beforeEach(() => {
       mockManifest.imports['locales/nested/en-US'] = jest.fn(() => Promise.resolve({
         default:
@@ -435,9 +435,9 @@ describe('LocaleHandler', () => {
 
     it('returns all register', async () => {
       const handler = new LocaleHandler(manager, 'en-US');
-      await handler.preload();
+      await handler.loadStatics();
 
-      const register = handler.getPreloadRegister();
+      const register = handler.getStaticsRegister();
 
       expect(register).toEqual({
         'locales/en-US': {
@@ -448,9 +448,9 @@ describe('LocaleHandler', () => {
 
     it('returns all register for locale', async () => {
       const handler = new LocaleHandler(manager, 'fr-FR');
-      await handler.preload();
+      await handler.loadStatics();
 
-      const register = handler.getPreloadRegister();
+      const register = handler.getStaticsRegister();
 
       expect(register).toEqual({
         'locales/fr-FR': {
@@ -461,9 +461,9 @@ describe('LocaleHandler', () => {
 
     it('returns register for only preload keys', async () => {
       const handler = new LocaleHandler(manager, 'en-US');
-      await handler.preload();
+      await handler.loadStatics();
 
-      let register = handler.getPreloadRegister();
+      let register = handler.getStaticsRegister();
 
       expect(register).toEqual({
         'locales/en-US': {
@@ -471,9 +471,9 @@ describe('LocaleHandler', () => {
         }
       });
 
-      await handler.preload('locales/nested');
+      await handler.loadStatics('locales/nested');
 
-      register = handler.getPreloadRegister();
+      register = handler.getStaticsRegister();
 
       expect(register).toEqual({
         'locales/en-US': {
@@ -487,15 +487,15 @@ describe('LocaleHandler', () => {
 
     it('returns same register instance when not dirty', async () => {
       const handler = new LocaleHandler(manager, 'en-US');
-      await handler.preload();
+      await handler.loadStatics();
 
-      const register = handler.getPreloadRegister();
-      const register2 = handler.getPreloadRegister();
+      const register = handler.getStaticsRegister();
+      const register2 = handler.getStaticsRegister();
 
       expect(register).toBe(register2);
 
-      await handler.preload('locales/nested');
-      const register3 = handler.getPreloadRegister();
+      await handler.loadStatics('locales/nested');
+      const register3 = handler.getStaticsRegister();
 
       expect(register).not.toBe(register3);
     });

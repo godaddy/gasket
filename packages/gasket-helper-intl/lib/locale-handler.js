@@ -27,11 +27,11 @@ export class LocaleHandler {
   /** @type {import('./types').LocaleFileKey[] } */
   handledKeys = [];
   /** @type {import('./types').LocaleFileKey[] } */
-  preloadKeys = [];
+  staticKeys = [];
   /** @type {import('./types').MessagesRegister } */
-  preloadRegister;
+  staticsRegister;
   handledDirty = true;
-  preloadDirty = true;
+  staticsDirty = true;
 
   /** @type {import('./types').LocaleHandler_constructor } */
   constructor(manager, locale) {
@@ -73,9 +73,9 @@ export class LocaleHandler {
 
   /** @type {import('./types').LocaleHandler_getStatus} */
   getStatus(...localeFilePaths) {
-    const list = safePaths(localeFilePaths, this.manager.defaultLocaleFilePath);
+    const paths = safePaths(localeFilePaths, this.manager.defaultLocaleFilePath);
 
-    const statuses = list.map((localeFilePath) => {
+    const statuses = paths.map((localeFilePath) => {
       const localeFileKey = this.getLocaleFileKey(localeFilePath);
       if (!this.handledKeys.includes(localeFileKey)) {
         return LocaleFileStatus.notHandled;
@@ -87,19 +87,19 @@ export class LocaleHandler {
     return lowestStatus(statuses);
   }
 
-  /** @type {import('./types').LocaleHandler_preload} */
-  async preload(...localeFilePaths) {
-    const list = safePaths(localeFilePaths, this.manager.defaultLocaleFilePath);
+  /** @type {import('./types').LocaleHandler_loadStatics} */
+  async loadStatics(...localeFilePaths) {
+    const paths = safePaths(localeFilePaths, this.manager.defaultLocaleFilePath);
 
-    list.map((localeFilePath) => {
+    paths.map((localeFilePath) => {
       const localeFileKey = this.getLocaleFileKey(localeFilePath);
-      if (!this.preloadKeys.includes(localeFileKey)) {
-        this.preloadDirty = true;
-        this.preloadKeys.push(localeFileKey);
+      if (!this.staticKeys.includes(localeFileKey)) {
+        this.staticsDirty = true;
+        this.staticKeys.push(localeFileKey);
       }
     });
 
-    return this.load(...list);
+    return this.load(...paths);
   }
 
   /** @type {import('./types').LocaleHandler_getAllMessages} */
@@ -113,14 +113,14 @@ export class LocaleHandler {
     return this.messages;
   }
 
-  /** @type {import('./types').LocaleHandler_getPreloadRegister} */
-  getPreloadRegister() {
-    if (this.preloadDirty) {
-      this.preloadRegister = this.preloadKeys.reduce((acc, localeFileKey) => {
+  /** @type {import('./types').LocaleHandler_getStaticsRegister} */
+  getStaticsRegister() {
+    if (this.staticsDirty) {
+      this.staticsRegister = this.staticKeys.reduce((acc, localeFileKey) => {
         return { ...acc, [localeFileKey]: this.manager.getMessages(localeFileKey) };
       }, {});
-      this.preloadDirty = false;
+      this.staticsDirty = false;
     }
-    return this.preloadRegister;
+    return this.staticsRegister;
   }
 }
