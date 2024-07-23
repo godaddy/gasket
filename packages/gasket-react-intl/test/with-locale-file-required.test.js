@@ -13,9 +13,7 @@ jest.unstable_mockModule('../src/use-locale-file.js', () => {
   };
 });
 
-/**
- *
- */
+// eslint-disable-next-line jsdoc/require-jsdoc
 function MockComponent() {
   return createElement('div', {}, 'MockComponent');
 }

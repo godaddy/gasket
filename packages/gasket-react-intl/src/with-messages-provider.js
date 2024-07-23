@@ -1,34 +1,7 @@
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import htmlescape from 'htmlescape';
 import { createElement, useState } from 'react';
-import { GasketIntlContext } from './context.js';
-import { needsToLoad } from './utils.js';
-
-// TODO: test this
-function makeContext(localeHandler, messages, setMessages) {
-
-  /** @type {import('.').IntlContextLoad} */
-  function load(...localeFilePaths) {
-    const status = localeHandler.getStatus(...localeFilePaths);
-
-    if (needsToLoad(status)) {
-      void localeHandler.load(...localeFilePaths).then(() => {
-        setMessages(localeHandler.getAllMessages());
-      });
-    }
-  }
-
-  /** @type {import('.').IntlContextStatus} */
-  function getStatus(...localeFilePaths) {
-    return localeHandler.getStatus(...localeFilePaths);
-  }
-
-  return {
-    getStatus,
-    load,
-    messages
-  };
-}
+import { GasketIntlContext, makeContext } from './context.js';
 
 /** @type {import('.').withMessagesProvider} */
 export function withMessagesProvider(

@@ -38,7 +38,6 @@ export default function withLocaleFileRequired(
       );
     }
 
-    // @ts-ignore - hoistNonReactStatics types are not playing nice...
     hoistNonReactStatics(HOC, Component);
     HOC.displayName = `withLocaleFileRequired(${displayName})`;
     HOC.WrappedComponent = Component;
@@ -48,15 +47,14 @@ export default function withLocaleFileRequired(
       return HOC;
     }
 
-    const Result = React.forwardRef((props, ref) =>
-      // @ts-ignore
+    const ForwardHOC = React.forwardRef((props, ref) =>
       createElement(HOC, { ...props, forwardedRef: ref })
     );
-    hoistNonReactStatics(Result, Component);
-    Result.displayName = `ForwardRef(withLocaleFileRequired/${displayName}))`;
-    // @ts-ignore
-    Result.WrappedComponent = Component;
+    hoistNonReactStatics(ForwardHOC, Component);
+    ForwardHOC.displayName = `ForwardRef(withLocaleFileRequired/${displayName}))`;
+    // @ts-ignore - add WrappedComponent to forwardRef result
+    ForwardHOC.WrappedComponent = Component;
 
-    return Result;
+    return ForwardHOC;
   };
 }
