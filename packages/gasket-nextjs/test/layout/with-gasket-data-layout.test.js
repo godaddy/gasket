@@ -1,15 +1,18 @@
-import { withGasketDataLayout } from '../../lib/layout/with-gasket-data-layout.js';
 import { jest, expect } from '@jest/globals';
 import { createElement, Children } from 'react';
 
-jest.mock('../../lib/server', () => ({
-  request: jest.fn(() => Promise.resolve({ data: 'mocked data' }))
+jest.unstable_mockModule('../../lib/server/request.js', () => ({
+  request: jest.fn().mockReturnValue({})
 }));
 
 describe('withGasketDataLayout', () => {
-  let mockGasket, mockPublicGasketData, mockLayout;
+  let mockGasket, mockPublicGasketData, mockLayout, layout;
 
-  beforeEach(() => {
+  beforeAll(async () => {
+    layout = (await import('../../lib/layout/with-gasket-data-layout.js'));
+  });
+
+  beforeEach(async () => {
     mockPublicGasketData = { foo: 'bar' };
     mockGasket = {
       actions: {
@@ -42,12 +45,12 @@ describe('withGasketDataLayout', () => {
   });
 
   it('should return a function', () => {
-    const enhancedLayout = withGasketDataLayout(mockGasket, mockLayout);
+    const enhancedLayout = layout.withGasketDataLayout(mockGasket, mockLayout);
     expect(typeof enhancedLayout).toBe('function');
   });
 
   it('should inject Gasket data into the body children', async () => {
-    const enhancedLayout = withGasketDataLayout(mockGasket, mockLayout);
+    const enhancedLayout = layout.withGasketDataLayout(mockGasket, mockLayout);
     const result = await enhancedLayout();
     const body = result.props.children[1];
     const bodyChildren = body.props.children;
@@ -58,7 +61,7 @@ describe('withGasketDataLayout', () => {
 
   it('should inject gasketData script into the body at a particular index', async () => {
     const mockIndex = 2;
-    const enhancedLayout = withGasketDataLayout(mockGasket, mockLayout, { index: mockIndex });
+    const enhancedLayout = layout.withGasketDataLayout(mockGasket, mockLayout, { index: mockIndex });
     const result = await enhancedLayout();
     const body = result.props.children[1];
     const bodyChildren = body.props.children;
