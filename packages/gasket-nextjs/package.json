@@ -19,6 +19,10 @@
       "types": "./lib/server/index.d.ts",
       "default": "./lib/server/index.js"
     },
+    "./layout": {
+      "types": "./lib/server/index.d.ts",
+      "default": "./lib/server/index.js"
+    },
     "./package.json": "./package.json"
   },
   "scripts": {
