@@ -5,16 +5,12 @@ const { name, version, description } = require('../package.json');
 const actions = require('./actions');
 const configure = require('./configure');
 const init = require('./init');
-const middleware = require('./middleware');
-const serve = require('./serve');
 const serviceWorkerCacheKey = require('./service-worker-cache-key');
 const apmTransaction = require('./apm-transaction');
-const workbox = require('./workbox');
 
 const { getIntlConfig } = require('./configure');
 const create = require('./create');
 const build = require('./build');
-const webpackConfig = require('./webpack-config');
 
 /** @type {import('@gasket/core').Plugin} */
 const plugin = {
@@ -27,12 +23,7 @@ const plugin = {
     configure,
     create,
     build,
-    webpackConfig,
-    express: serve,
-    fastify: serve,
-    middleware,
     apmTransaction,
-    workbox,
     serviceWorkerCacheKey,
     metadata(gasket, meta) {
       const { localesDir } = getIntlConfig(gasket);
@@ -62,22 +53,10 @@ const plugin = {
             type: 'object'
           },
           {
-            name: 'intl.basePath',
+            name: 'intl.defaultLocaleFilePath',
             link: 'README.md#configuration',
-            description: 'Base URL where locale files are served',
-            type: 'string'
-          },
-          {
-            name: 'intl.defaultPath',
-            link: 'README.md#configuration',
-            description: 'Path to endpoint with JSON files',
-            default: '/locales',
-            type: 'string'
-          },
-          {
-            name: 'intl.localesPath',
-            link: 'README.md#locals-path',
-            description: 'URL endpoint where static JSON files are available',
+            description: 'Lookup path to locale files',
+            default: 'locales',
             type: 'string'
           },
           {
@@ -107,18 +86,11 @@ const plugin = {
             default: './public/locales'
           },
           {
-            name: 'intl.manifestFilename',
+            name: 'intl.managerFilename',
             link: 'README.md#configuration',
-            description: 'Change the name of the manifest file',
+            description: 'Change the name of the IntlManager file',
             type: 'string',
-            default: 'locales-manifest.json'
-          },
-          {
-            name: 'intl.serveStatic',
-            link: 'README.md#configuration',
-            description: 'Enables ability to serve static locale files',
-            type: 'boolean | string',
-            default: 'locales-manifest.json'
+            default: 'intl.js'
           },
           {
             name: 'intl.modules',

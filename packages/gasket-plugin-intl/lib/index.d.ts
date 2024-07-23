@@ -1,6 +1,5 @@
-import type { IncomingMessage, OutgoingMessage } from 'http';
 import type { MaybeAsync, GasketRequest } from '@gasket/core';
-import { LocalePathPart, LocalesProps } from '@gasket/helper-intl';
+import { IntlManager } from '@gasket/helper-intl';
 
 interface CustomScanSettings {
   /** Lookup dir for module files (default: `locales`) */
@@ -17,26 +16,19 @@ interface CustomScanSettings {
 }
 
 export interface IntlConfig {
-  basePath?: string;
-  defaultPath?: string;
+  defaultLocaleFilePath?: string;
   defaultLocale?: string;
   locales?: Array<string>;
   localesMap?: Record<string, string>;
   localesDir?: string;
-  manifestFilename?: string;
-  serveStatic?: boolean | string;
-  /* Enable locale files collation from node modules. Disabled by default,
-  enable by setting to an object with options below, or set to `true` to use the
-  default options. */
+  managerFilename?: string;
   modules?:
     | boolean
     | CustomScanSettings
     /* specific packages w/ optional subdirectories */
     | string[];
   nextRouting?: boolean;
-  /** Preloads the locale files from the manifest at startup,
-   allowing a faster first response. */
-  preloadLocales?: boolean;
+  manager?: IntlManager;
 }
 
 declare module '@gasket/core' {
@@ -46,7 +38,11 @@ declare module '@gasket/core' {
 
   export interface GasketActions {
     getIntlLocale: (req: GasketRequest) => MaybeAsync<string>;
-    getIntlMessage: (gasketDataIntl: IntlGasketData, messageId: string, defaultMessage?: string) => string;
+    /**
+     * Provides access to the Intl manager instance to plugins.
+     * Especially useful for plugins that are still CJS.
+     */
+    getIntlManager: () => IntlManager;
   }
 
   export interface HookExecTypes {
@@ -54,17 +50,6 @@ declare module '@gasket/core' {
       locale: string,
       context: { req: GasketRequest }
     ): MaybeAsync<string>;
-  }
-}
-
-export interface GasketDataIntl extends LocalesProps {
-  /** Include base path if configured */
-  basePath?: string;
-}
-
-declare module '@gasket/data' {
-  export interface GasketData {
-    intl?: GasketDataIntl;
   }
 }
 

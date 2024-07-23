@@ -19,13 +19,11 @@ module.exports = function actions(gasket) {
 
       return reqMap.get(req);
     },
-    getIntlMessage(gasketDataIntl, messageId, defaultMessage) {
-      const localeProps = gasketDataIntl || {};
-      const messages =
-        (localeProps.messages && localeProps.messages[localeProps.locale]) ||
-        {};
-
-      return messages[messageId] || defaultMessage || messageId;
+    getIntlManager() {
+      if (!gasket.config.intl.manager) {
+        throw new Error('IntlManager not configured (gasket.config.intl.manager)');
+      }
+      return gasket.config.intl.manager;
     }
   };
 };

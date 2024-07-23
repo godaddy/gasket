@@ -29,15 +29,14 @@ describe('buildManifest', function () {
       },
       config: {
         intl: {
-          basePath: '',
-          defaultPath: '/locales',
+          defaultLocaleFilePath: 'locales',
           defaultLocale: 'en-US',
           locales: ['en-US', 'fr-FR', 'fr-CH'],
           localesMap: {
             'fr-CH': 'fr-FR'
           },
           localesDir: path.join(__dirname, 'fixtures', 'locales'),
-          manifestFilename: 'mock-manifest.json'
+          managerFilename: 'intl.js'
         }
       }
     };
@@ -49,14 +48,14 @@ describe('buildManifest', function () {
     });
   });
 
-  const getOutput = () => JSON.parse(mockWriteFileStub.mock.calls[0][1]);
+  const getOutput = () => mockWriteFileStub.mock.calls[0][1];
 
   it('writes a json file in the locales dir', async function () {
     const expected = path.join(
       __dirname,
       'fixtures',
       'locales',
-      'mock-manifest.json'
+      'intl.js'
     );
     await buildManifest(mockGasket);
     expect(mockWriteFileStub).toHaveBeenCalled();
@@ -84,38 +83,60 @@ describe('buildManifest', function () {
   it('includes expected properties in output', async function () {
     await buildManifest(mockGasket);
     const output = getOutput();
-    const keys = Object.keys(output);
-    expect(keys).toEqual([
-      'basePath',
-      'defaultPath',
+    [
+      'defaultLocaleFilePath',
       'defaultLocale',
       'locales',
       'localesMap',
-      'paths'
-    ]);
-  });
-
-  it('associates content hashes to locale path', async function () {
-    await buildManifest(mockGasket);
-    const output = getOutput();
-    expect(output.paths['locales/en-US.json']).toEqual('10decbe');
-    expect(output.paths['locales/extra/en-US.json']).toEqual('ff5a352');
-  });
-
-  it('does not include any existing manifest in paths', async function () {
-    await buildManifest(mockGasket);
-    const output = getOutput();
-    expect(output.paths['mock-manifest.json']).toBeFalsy();
-  });
-
-  it('includes expected files in paths', async function () {
-    await buildManifest(mockGasket);
-    const output = getOutput();
-    expect(output.paths).toEqual({
-      'locales/en-US.json': '10decbe',
-      'locales/extra/en-US.json': 'ff5a352',
-      'locales/extra/fr-FR.json': '2155926',
-      'locales/fr-FR.json': '21047f1'
+      'imports'
+    ].forEach(key => {
+      expect(output).toContain(key);
     });
+  });
+
+  it('includes manifest const', async () => {
+    await buildManifest(mockGasket);
+    const expected = 'const manifest = {';
+    expect(getOutput()).toContain(expected);
+  });
+
+  it('includes makeIntlManager setup', async () => {
+    await buildManifest(mockGasket);
+    const output = getOutput();
+    expect(output).toContain(`import { makeIntlManager } from '@gasket/helper-intl';`);
+    expect(output).toContain(`export default makeIntlManager(manifest);`);
+  });
+
+  it('associates locale file keys to imports', async function () {
+    await buildManifest(mockGasket);
+    const output = getOutput();
+    expect(output).toContain(
+      `'locales/en-US': () => import('./locales/en-US.json').then(m => m.default)`
+    );
+    expect(output).toContain(
+      `'locales/fr-FR': () => import('./locales/fr-FR.json').then(m => m.default)`
+    );
+  });
+
+  it('associates nested locale file keys to imports', async function () {
+    await buildManifest(mockGasket);
+    const output = getOutput();
+    expect(output).toContain(
+      `'locales/extra/en-US': () => import('./locales/extra/en-US.json').then(m => m.default)`
+    );
+    expect(output).toContain(
+      `'locales/extra/fr-FR': () => import('./locales/extra/fr-FR.json').then(m => m.default)`
+    );
+  });
+
+  it('associates grouped locale file keys to imports', async function () {
+    await buildManifest(mockGasket);
+    const output = getOutput();
+    expect(output).toContain(
+      `'locales/en-US/grouped': () => import('./locales/en-US/grouped.json').then(m => m.default)`
+    );
+    expect(output).toContain(
+      `'locales/fr-FR/grouped': () => import('./locales/fr-FR/grouped.json').then(m => m.default)`
+    );
   });
 });
