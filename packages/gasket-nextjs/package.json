@@ -15,11 +15,11 @@
       "types": "./lib/document/index.d.ts",
       "default": "./lib/document/index.js"
     },
-    "./server": {
-      "types": "./lib/server/index.d.ts",
-      "default": "./lib/server/index.js"
-    },
     "./layout": {
+      "types": "./lib/layout/index.d.ts",
+      "default": "./lib/layout/index.js"
+    },
+    "./server": {
       "types": "./lib/server/index.d.ts",
       "default": "./lib/server/index.js"
     },
@@ -103,5 +103,6 @@
   "jest": {
     "testEnvironment": "jsdom",
     "transform": {}
-  }
+  },
+  "gitHead": "d96c86a52f608ea702f9b91a5a72f3b19389877c"
 }
