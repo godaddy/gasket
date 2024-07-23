@@ -6,8 +6,8 @@ describe('package.json', function () {
     const expected = [
       '.',
       './document',
-      './server',
       './layout',
+      './server',
       './package.json'
     ];
 
