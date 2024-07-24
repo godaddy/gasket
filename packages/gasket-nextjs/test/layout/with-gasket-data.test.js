@@ -45,7 +45,7 @@ describe('withGasketData', () => {
   });
 
   it('should return a function', () => {
-    const enhancedLayout = layout.withGasketData(mockGasket, mockLayout);
+    const enhancedLayout = layout.withGasketData(mockGasket);
     expect(typeof enhancedLayout).toBe('function');
   });
 
