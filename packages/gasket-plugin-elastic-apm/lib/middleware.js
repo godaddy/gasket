@@ -1,12 +1,12 @@
 /// <reference types="@gasket/plugin-express" />
+/// <reference types="@gasket/plugin-data" />
 
 /**
  * Middleware for customizing transactions
  * @param {import('@gasket/core').Gasket} gasket - The Gasket engine
- * @param {import('http').IncomingMessage} req - The HTTP request being handled
- * @param {import('http').ServerResponse} res - The server response
+ * @param {import('@gasket/core').GasketRequest} req - The HTTP request being handled
  */
-async function customizeTransaction(gasket, req, res) {
+async function customizeTransaction(gasket, req) {
   const apm = gasket.apm;
 
   if (!apm?.isStarted()) {
@@ -18,7 +18,7 @@ async function customizeTransaction(gasket, req, res) {
     return;
   }
 
-  await gasket.exec('apmTransaction', transaction, { req, res });
+  await gasket.exec('apmTransaction', transaction, { req });
 }
 
 /**
@@ -30,7 +30,7 @@ module.exports = function middleware(gasket) {
     gasket.apm &&
     async function apmTransactionMiddleware(req, res, next) {
       try {
-        customizeTransaction(gasket, req, res);
+        customizeTransaction(gasket, req);
       } catch (error) {
         return next(error);
       }

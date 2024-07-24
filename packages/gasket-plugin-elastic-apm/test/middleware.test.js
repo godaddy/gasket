@@ -47,7 +47,7 @@ describe('The middleware hook', () => {
       expect(gasket.exec).toHaveBeenCalledWith(
         'apmTransaction',
         gasket.apm.currentTransaction,
-        { req, res }
+        { req }
       );
     });
 
