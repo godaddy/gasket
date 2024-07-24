@@ -1,3 +1,5 @@
+import { IncomingMessage } from 'node:http'
+
 declare module '@gasket/core' {
   export type MaybeMultiple<T> = T | Array<T>;
   export type MaybeAsync<T> = T | Promise<T>;
@@ -119,11 +121,11 @@ declare module '@gasket/core' {
   /**
    * Expected request shape for GasketActions
    */
-  export interface GasketRequest {
+  export type GasketRequest = {
     cookies: Record<string, string>;
     headers: Record<string, string>;
     query?: Record<string, string>;
-  }
+  } | IncomingMessage;
 
   export function makeGasket(config: GasketConfigDefinition): Gasket
 }
