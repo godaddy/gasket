@@ -1,10 +1,9 @@
 /// <reference types="@gasket/plugin-express" />
-/// <reference types="@gasket/plugin-data" />
 
 /**
  * Middleware for customizing transactions
  * @param {import('@gasket/core').Gasket} gasket - The Gasket engine
- * @param {import('@gasket/core').GasketRequest} req - The HTTP request being handled
+ * @param {import('http').IncomingMessage} req - The HTTP request being handled
  */
 async function customizeTransaction(gasket, req) {
   const apm = gasket.apm;

@@ -3,6 +3,7 @@ import type { AgentConfigOptions, Transaction, Payload } from 'elastic-apm-node'
 import type { MaybeAsync, GasketConfig } from '@gasket/core';
 import type { GasketData } from '@gasket/data';
 import type { GasketRequest } from '@gasket/core';
+import type { Request } from 'express';
 
 export function filterSensitiveCookies(config: GasketConfig): function(Payload): Payload;
 
@@ -21,7 +22,7 @@ declare module '@gasket/core' {
 
   export interface GasketActions {
     async getApmTransaction(
-      req: GasketRequest
+      req: IncomingMessage | Request
     ): Promise<Transaction | void>
   }
 
@@ -29,7 +30,7 @@ declare module '@gasket/core' {
     apmTransaction(
       transaction: Transaction,
       context: {
-        req: GasketRequest;
+        req: IncomingMessage | Request;
       }
     ): MaybeAsync<void>;
   }

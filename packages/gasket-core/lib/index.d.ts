@@ -125,7 +125,7 @@ declare module '@gasket/core' {
     cookies: Record<string, string>;
     headers: Record<string, string>;
     query?: Record<string, string>;
-  } | IncomingMessage;
+  };
 
   export function makeGasket(config: GasketConfigDefinition): Gasket
 }
