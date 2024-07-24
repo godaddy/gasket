@@ -25,7 +25,7 @@ describe('withGasketData', () => {
     const Head = (props) => createElement('head', { ...props });
     const NextScript = (props) => createElement('script', { 'data-testid': 'next-script', ...props });
 
-// eslint-disable-next-line jsdoc/require-jsdoc
+    // eslint-disable-next-line jsdoc/require-jsdoc
     function createMockElements() {
       return (
         createElement(Html, null,
