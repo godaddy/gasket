@@ -103,6 +103,5 @@
   "jest": {
     "testEnvironment": "jsdom",
     "transform": {}
-  },
-  "gitHead": "d96c86a52f608ea702f9b91a5a72f3b19389877c"
+  }
 }
