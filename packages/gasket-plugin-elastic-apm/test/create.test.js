@@ -1,11 +1,9 @@
-const plugin = require('../lib/index');
-const { create } = plugin.hooks;
+const create = require('../lib/create');
 
 describe('create lifecycle', function () {
 
-  it('plugin exposes a create lifecycle hook', () => {
-    expect(typeof plugin.hooks).toStrictEqual('object');
-    expect(typeof plugin.hooks.create).toStrictEqual('function');
+  it('is a function', () => {
+    expect(typeof create).toStrictEqual('function');
   });
 
   it('adds the start script with --require', async () => {
