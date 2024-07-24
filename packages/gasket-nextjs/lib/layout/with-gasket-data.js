@@ -21,8 +21,8 @@ function lookupIndex(bodyChildren, index = -1) {
 }
 
 /**
- * Make a wrapper to extend the Next.js Document, injecting a script with the
- * `gasketData` from the response object.
+ * Make a wrapper to around the Root Layout, injecting a script with the
+ * `gasketData`.
  *
  * @type {import('.').withGasketData}
  */
