@@ -5,11 +5,11 @@ jest.unstable_mockModule('../../lib/server/request.js', () => ({
   request: jest.fn().mockReturnValue({})
 }));
 
-describe('withGasketDataLayout', () => {
+describe('withGasketData', () => {
   let mockGasket, mockPublicGasketData, mockLayout, layout;
 
   beforeAll(async () => {
-    layout = (await import('../../lib/layout/with-gasket-data-layout.js'));
+    layout = (await import('../../lib/layout/with-gasket-data.js'));
   });
 
   beforeEach(async () => {
@@ -28,7 +28,7 @@ describe('withGasketDataLayout', () => {
     /**
      *
      */
-    function createMockJsx() {
+    function createMockElements() {
       return (
         createElement(Html, null,
           createElement(Head, null),
@@ -41,16 +41,16 @@ describe('withGasketDataLayout', () => {
       );
     }
 
-    mockLayout = createMockJsx;
+    mockLayout = createMockElements;
   });
 
   it('should return a function', () => {
-    const enhancedLayout = layout.withGasketDataLayout(mockGasket, mockLayout);
+    const enhancedLayout = layout.withGasketData(mockGasket, mockLayout);
     expect(typeof enhancedLayout).toBe('function');
   });
 
   it('should inject Gasket data into the body children', async () => {
-    const enhancedLayout = layout.withGasketDataLayout(mockGasket, mockLayout);
+    const enhancedLayout = layout.withGasketData(mockGasket)(mockLayout);
     const result = await enhancedLayout();
     const body = result.props.children[1];
     const bodyChildren = body.props.children;
@@ -61,7 +61,7 @@ describe('withGasketDataLayout', () => {
 
   it('should inject gasketData script into the body at a particular index', async () => {
     const mockIndex = 2;
-    const enhancedLayout = layout.withGasketDataLayout(mockGasket, mockLayout, { index: mockIndex });
+    const enhancedLayout = layout.withGasketData(mockGasket, { index: mockIndex })(mockLayout);
     const result = await enhancedLayout();
     const body = result.props.children[1];
     const bodyChildren = body.props.children;

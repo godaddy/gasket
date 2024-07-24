@@ -24,11 +24,11 @@ function lookupIndex(bodyChildren, index = -1) {
  * Make a wrapper to extend the Next.js Document, injecting a script with the
  * `gasketData` from the response object.
  *
- * @type {import('.').withGasketDataLayout}
+ * @type {import('.').withGasketData}
  */
-export function withGasketDataLayout(gasket, layout, options = { index: -1 }) {
+export function withGasketData(gasket, options = { index: -1 }) {
   const { index } = options;
-  return async props => {
+  return layout => async props => {
     const req = request();
     const gasketData = req ? await gasket.actions.getPublicGasketData?.(req) ?? {} : {};
     const html = layout({ ...props });

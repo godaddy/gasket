@@ -5,8 +5,9 @@ type LayoutOptions = {
   index: number;
 }
 
-export function withGasketDataLayout(
+type Layout = (props: PropsWithChildren<any>) => ReactElement;
+
+export function withGasketData(
   gasket: Gasket,
-  layout: (props: PropsWithChildren<any>) => ReactElement,
   options: LayoutOptions
-): (props: PropsWithChildren<any>) => Promise<ReactElement>
+): (layout: Layout) => (props: PropsWithChildren<any>) => Promise<ReactElement>

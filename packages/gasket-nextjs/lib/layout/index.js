@@ -1,1 +1,1 @@
-export { withGasketDataLayout } from './with-gasket-data-layout.js';
+export { withGasketData } from './with-gasket-data.js';

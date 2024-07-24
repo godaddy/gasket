@@ -2,7 +2,7 @@ import { expect } from '@jest/globals';
 import { createElement, Children } from 'react';
 import { injectGasketData } from '../lib/inject-gasket-data.js';
 
-describe('withGasketData', function () {
+describe('injectGasketData', function () {
   let mockGasketData, mockHtml;
 
   beforeEach(function () {
@@ -15,7 +15,7 @@ describe('withGasketData', function () {
     /**
      *
      */
-    function createMockJsx() {
+    function createMockElements() {
       return (
         createElement(Html, null,
           createElement(Head, null),
@@ -30,7 +30,7 @@ describe('withGasketData', function () {
 
 
     mockGasketData = { foo: 'bar' };
-    mockHtml = createMockJsx();
+    mockHtml = createMockElements();
   });
 
   it('should inject gasketData script into the body', function () {

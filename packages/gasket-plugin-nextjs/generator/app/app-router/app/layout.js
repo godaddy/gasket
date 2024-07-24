@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import gasket from '../gasket.js';
-import { withGasketDataLayout } from '@gasket/nextjs/layout'
+import { withGasketData } from '@gasket/nextjs/layout'
 
 function RootLayout({ children }) {
   return (
@@ -11,7 +11,7 @@ function RootLayout({ children }) {
   );
 }
 
-export default withGasketDataLayout(gasket, RootLayout)
+export default withGasketData(gasket)(RootLayout);
 
 RootLayout.propTypes = {
   children: PropTypes.node
