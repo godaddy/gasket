@@ -25,8 +25,10 @@ async function customizeTransaction(gasket, req) {
  * @type {import('@gasket/core').HookHandler<'middleware'>}
  */
 module.exports = function middleware(gasket) {
+  // eslint-disable-next-line no-undefined
+  const isStarted = apm.isStarted() || undefined;
   return (
-    apm &&
+    isStarted &&
     async function apmTransactionMiddleware(req, res, next) {
       try {
         customizeTransaction(gasket, req);
