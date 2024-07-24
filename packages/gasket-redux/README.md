@@ -72,10 +72,10 @@ in NodeJS for SSR.
 ```js
 // ./store.js
 
-const { configureMakeStore } = require('@gasket/redux');
-const reducers = require('./reducers'); // apps reducers
+import { configureMakeStore } from '@gasket/redux';
+import reducers from './reducers'; // apps reducers
 
-module.exports = configureMakeStore({ reducers });
+export default configureMakeStore({ reducers });
 ```
 
 #### Example: initial state
@@ -131,13 +131,13 @@ Next in the gasket.config.js, set the `redux.makeStore` field to the file. This
 will start up the app using the custom configuration.
 
 ```js
-// gasket.config.js
+// gasket.mjs
 
-module.exports = {
+export default makeGasket({
   redux: {
     makeStore: './lib/make-store.js'
   }
-};
+});
 ```
 
 #### Example: passing custom thunk middleware
