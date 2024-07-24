@@ -1,13 +1,13 @@
 /// <reference types="@gasket/plugin-express" />
 
+const apm = require('elastic-apm-node');
+
 /**
  * Middleware for customizing transactions
  * @param {import('@gasket/core').Gasket} gasket - The Gasket engine
  * @param {import('http').IncomingMessage} req - The HTTP request being handled
  */
 async function customizeTransaction(gasket, req) {
-  const apm = gasket.apm;
-
   if (!apm?.isStarted()) {
     return;
   }
@@ -26,7 +26,7 @@ async function customizeTransaction(gasket, req) {
  */
 module.exports = function middleware(gasket) {
   return (
-    gasket.apm &&
+    apm &&
     async function apmTransactionMiddleware(req, res, next) {
       try {
         customizeTransaction(gasket, req);
