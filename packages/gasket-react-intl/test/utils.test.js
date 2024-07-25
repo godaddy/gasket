@@ -1,4 +1,4 @@
-import { ensureArray, needsToLoad } from '../src/utils';
+import { ensureArray, needsToLoad } from '../lib/utils';
 
 describe('utils', () => {
   describe('ensureArray', () => {

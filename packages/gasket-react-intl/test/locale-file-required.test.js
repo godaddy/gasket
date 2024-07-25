@@ -5,7 +5,7 @@ import { LocaleFileStatus } from '@gasket/helper-intl';
 
 const useLocaleFile = jest.fn();
 
-jest.unstable_mockModule('../src/use-locale-file.js', () => {
+jest.unstable_mockModule('../lib/use-locale-file.js', () => {
   return {
     default: useLocaleFile
   };
@@ -15,7 +15,7 @@ describe('LocaleFileRequired', function () {
   let LocaleFileRequired, wrapper;
 
   beforeEach(async () => {
-    LocaleFileRequired = (await import('../src/locale-file-required.js')).default;
+    LocaleFileRequired = (await import('../lib/locale-file-required.js')).default;
   });
 
   const doMount = (props) => {

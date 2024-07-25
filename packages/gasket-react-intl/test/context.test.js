@@ -1,6 +1,6 @@
 import { LocaleFileStatus } from '@gasket/helper-intl';
 import { jest } from '@jest/globals';
-import { makeContext } from '../src/context.js';
+import { makeContext } from '../lib/context.js';
 
 describe('makeContext', () => {
   let localeHandler, messages, setMessages;

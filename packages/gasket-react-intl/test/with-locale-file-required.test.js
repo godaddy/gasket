@@ -7,7 +7,7 @@ const useLocaleFile = jest.fn();
 
 const componentType = (component) => component.$$typeof;
 
-jest.unstable_mockModule('../src/use-locale-file.js', () => {
+jest.unstable_mockModule('../lib/use-locale-file.js', () => {
   return {
     default: useLocaleFile
   };
@@ -22,7 +22,7 @@ describe('withLocaleFileRequired', function () {
   let withLocaleFileRequired, wrapper;
 
   beforeEach(async () => {
-    withLocaleFileRequired = (await import('../src/with-locale-file-required.js')).default;
+    withLocaleFileRequired = (await import('../lib/with-locale-file-required.js')).default;
   });
 
   const doMount = (paths, props) => {

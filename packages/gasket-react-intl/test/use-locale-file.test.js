@@ -22,7 +22,7 @@ describe('useMessages', () => {
   beforeEach(async () => {
     mockContext.getStatus.mockReturnValue(LocaleFileStatus.loaded);
 
-    useMessages = (await import('../src/use-messages.js')).default;
+    useMessages = (await import('../lib/use-messages.js')).default;
   });
 
   afterEach(() => {

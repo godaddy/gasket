@@ -19,7 +19,7 @@ describe('withMessagesProvider', () => {
   let withMessagesProvider, mockIntlManager, mockLocaleHandler;
 
   beforeEach(async () => {
-    const mod = await import('../src/with-messages-provider.js');
+    const mod = await import('../lib/with-messages-provider.js');
     withMessagesProvider = mod.withMessagesProvider;
 
     mockLocaleHandler = {

@@ -1,3 +1,5 @@
+'use client';
+
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import htmlescape from 'htmlescape';
 import { createElement, useState } from 'react';

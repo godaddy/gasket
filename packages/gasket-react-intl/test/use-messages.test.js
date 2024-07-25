@@ -20,7 +20,7 @@ describe('useLocaleFile', () => {
   beforeEach(async () => {
     mockContext.getStatus.mockReturnValue(LocaleFileStatus.loaded);
 
-    useLocaleFile = (await import('../src/use-locale-file.js')).default;
+    useLocaleFile = (await import('../lib/use-locale-file.js')).default;
   });
 
   afterEach(() => {
