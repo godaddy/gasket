@@ -1,9 +1,19 @@
 const actions = require('../lib/actions');
+const mockIsStarted = jest.fn();
+
+jest.mock('elastic-apm-node', () => ({
+  isStarted: mockIsStarted,
+  currentTransaction: {
+    name: 'GET /cohorts/:cohortId'
+  }
+}));
 
 describe('actions', () => {
-  let mockGasket;
+  let mockGasket, apm;
 
   beforeEach(() => {
+    apm = require('elastic-apm-node');
+    mockIsStarted.mockReturnValue(true);
     mockGasket = {
       exec: jest.fn()
     };
@@ -22,21 +32,20 @@ describe('actions', () => {
   });
 
   it('returns undefined if APM is not started', async () => {
-    mockGasket.apm = { isStarted: jest.fn().mockReturnValue(false) };
-    const result = await actions(mockGasket).getApmTransaction();
-    expect(result).toBeUndefined();
-  });
-
-  it('returns undefined if no transaction', async () => {
-    mockGasket.apm = { isStarted: jest.fn().mockReturnValue(true), currentTransaction: null };
+    mockIsStarted.mockReturnValue(false);
     const result = await actions(mockGasket).getApmTransaction();
     expect(result).toBeUndefined();
   });
 
   it('executes the apmTransaction hook', async () => {
-    const transaction = {};
-    mockGasket.apm = { isStarted: jest.fn().mockReturnValue(true), currentTransaction: transaction };
     await actions(mockGasket).getApmTransaction({});
-    expect(mockGasket.exec).toHaveBeenCalledWith('apmTransaction', transaction, { req: {} });
+    expect(mockGasket.exec).toHaveBeenCalledWith('apmTransaction', apm.currentTransaction, { req: {} });
+  });
+
+  it('returns undefined if no transaction', async () => {
+    // eslint-disable-next-line no-undefined
+    apm.currentTransaction = undefined;
+    const result = await actions(mockGasket).getApmTransaction();
+    expect(result).toBeUndefined();
   });
 });

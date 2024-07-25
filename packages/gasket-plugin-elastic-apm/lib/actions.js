@@ -2,7 +2,7 @@
 module.exports = function actions(gasket) {
   return {
     async getApmTransaction(req) {
-      const apm = gasket.apm;
+      const apm = require('elastic-apm-node');
 
       if (!apm?.isStarted()) {
         return;

@@ -1,13 +1,12 @@
 /// <reference types="@gasket/plugin-express" />
 
-const apm = require('elastic-apm-node');
-
 /**
  * Middleware for customizing transactions
  * @param {import('@gasket/core').Gasket} gasket - The Gasket engine
  * @param {import('http').IncomingMessage} req - The HTTP request being handled
  */
 async function customizeTransaction(gasket, req) {
+  const apm = require('elastic-apm-node');
   if (!apm?.isStarted()) {
     return;
   }
@@ -25,6 +24,7 @@ async function customizeTransaction(gasket, req) {
  * @type {import('@gasket/core').HookHandler<'middleware'>}
  */
 module.exports = function middleware(gasket) {
+  const apm = require('elastic-apm-node');
   // eslint-disable-next-line no-undefined
   const isStarted = apm.isStarted() || undefined;
   return (
