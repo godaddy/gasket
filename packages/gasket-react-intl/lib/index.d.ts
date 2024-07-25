@@ -32,7 +32,7 @@ export type LocaleFileRequiredHOC = FunctionComponent<LocaleFileRequiredHOCProps
  */
 export function withLocaleFileRequired(
   /** Path containing locale files */
-  localeFilePath: LocaleFilePath[],
+  localeFilePath: LocaleFilePath | LocaleFilePath[],
   options?: {
     /** Custom component to show while loading */
     loading?: ReactNode;
@@ -78,6 +78,7 @@ export type IntlProviderHOC = FunctionComponent<PropsWithChildren<ProviderProps>
 export function withMessagesProvider(
   intlManager: IntlManager,
   options?: {
+    /** experimental: render additional static locale files */
     staticLocaleFilePaths?: LocaleFilePath[]
   }
 ): (

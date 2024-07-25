@@ -7,7 +7,7 @@ import LocaleFileRequired from './locale-file-required.js';
  * @type {import('.').withLocaleFileRequired}
  */
 export default function withLocaleFileRequired(
-  localeFilePaths,
+  localeFilePath,
   options = {}
 ) {
   const { loading = null, forwardRef = false } = options;
@@ -27,7 +27,7 @@ export default function withLocaleFileRequired(
       return createElement(
         LocaleFileRequired,
         {
-          localeFilePath: localeFilePaths,
+          localeFilePath,
           loading
         },
         createElement(

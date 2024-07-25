@@ -83,7 +83,7 @@ const plugin = {
             link: 'README.md#configuration',
             description: 'Path to on-disk directory where locale files exists',
             type: 'string',
-            default: './public/locales'
+            default: './locales'
           },
           {
             name: 'intl.managerFilename',
