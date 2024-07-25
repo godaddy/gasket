@@ -68,6 +68,54 @@ describe('IntlManager', () => {
     });
   });
 
+  describe('.managedLocales', () => {
+    it('returns available locales', () => {
+      manager = new IntlManager(mockManifest);
+      expect(manager.managedLocales).toEqual(mockManifest.locales);
+    });
+
+    it('includes mapped locales', () => {
+      mockManifest.localesMap = {
+        'fr-CA': 'fr-FR'
+      };
+      manager = new IntlManager(mockManifest);
+      expect(manager.managedLocales).toEqual([...mockManifest.locales, 'fr-CA']);
+    });
+  });
+
+  describe('.locales', () => {
+    it('returns configured locales', () => {
+      manager = new IntlManager(mockManifest);
+      expect(manager.locales).toEqual(mockManifest.locales);
+    });
+  });
+
+  describe('.defaultLocaleFilePath', () => {
+    it('returns configured', () => {
+      mockManifest.defaultLocaleFilePath = 'locales';
+      manager = new IntlManager(mockManifest);
+      expect(manager.defaultLocaleFilePath).toEqual('locales');
+    });
+
+    it('returns undefined if not configured', () => {
+      manager = new IntlManager(mockManifest);
+      expect(manager.defaultLocaleFilePath).toBeUndefined();
+    });
+  });
+
+  describe('.staticLocaleFilePaths', () => {
+    it('returns configured', () => {
+      mockManifest.staticLocaleFilePaths = ['locales'];
+      manager = new IntlManager(mockManifest);
+      expect(manager.staticLocaleFilePaths).toEqual(['locales']);
+    });
+
+    it('returns empty array if not configured', () => {
+      manager = new IntlManager(mockManifest);
+      expect(manager.staticLocaleFilePaths).toEqual([]);
+    });
+  });
+
   describe('.resolveLocale', () => {
 
     it('resolves locale when supported', () => {

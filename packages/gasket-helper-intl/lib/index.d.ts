@@ -11,5 +11,8 @@ export {
   MessagesRegister,
   LocaleFilePath,
   IntlManager,
-  LocaleHandler
+  LocaleHandler,
+  LocaleManifest,
+  LocaleManifestConfig,
+  Messages
 } from './types';

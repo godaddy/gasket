@@ -19,12 +19,21 @@ export class IntlManager {
   /** @type {import('./types').IntlManager_constructor } */
   constructor(manifest) {
     this.manifest = manifest;
+    this.managedLocales = [...this.locales, ...Object.keys(this.manifest.localesMap ?? {})];
 
     this.init();
   }
 
+  get locales() {
+    return this.manifest.locales;
+  }
+
   get defaultLocaleFilePath() {
     return this.manifest.defaultLocaleFilePath;
+  }
+
+  get staticLocaleFilePaths() {
+    return this.manifest.staticLocaleFilePaths ?? [];
   }
 
   /** @type {import('./types').IntlManager_resolveLocale } */

@@ -28,6 +28,7 @@ describe('buildManifest', function () {
         error: jest.fn()
       },
       config: {
+        root: 'app-root',
         intl: {
           defaultLocaleFilePath: 'locales',
           defaultLocale: 'en-US',
@@ -43,6 +44,8 @@ describe('buildManifest', function () {
   });
 
   afterEach(function () {
+    jest.clearAllMocks();
+
     mockWriteFileStub.mockResolvedValue((...args) => {
       args[args.length - 1](null, true);
     });
@@ -50,12 +53,22 @@ describe('buildManifest', function () {
 
   const getOutput = () => mockWriteFileStub.mock.calls[0][1];
 
-  it('writes a json file in the locales dir', async function () {
+  it('writes a manager js file in the root dir', async function () {
     const expected = path.join(
-      __dirname,
-      'fixtures',
-      'locales',
+      'app-root',
       'intl.js'
+    );
+    await buildManifest(mockGasket);
+    expect(mockWriteFileStub).toHaveBeenCalled();
+    expect(mockWriteFileStub.mock.calls[0][0]).toEqual(expected);
+  });
+
+  it('writes a different named manager js file to target dir', async function () {
+    mockGasket.config.intl.managerFilename = 'custom/intl-manager.js';
+    const expected = path.join(
+      'app-root',
+      'custom',
+      'intl-manager.js'
     );
     await buildManifest(mockGasket);
     expect(mockWriteFileStub).toHaveBeenCalled();
@@ -68,7 +81,7 @@ describe('buildManifest', function () {
       await buildManifest(mockGasket);
     }).rejects.toThrow('Bad things man');
     expect(mockGasket.logger.error).toHaveBeenCalledWith(
-      'build:locales: Unable to write locales manifest.'
+      'build:locales: Unable to write intl manager (intl.js).'
     );
   });
 
@@ -111,10 +124,10 @@ describe('buildManifest', function () {
     await buildManifest(mockGasket);
     const output = getOutput();
     expect(output).toContain(
-      `'locales/en-US': () => import('./locales/en-US.json').then(m => m.default)`
+      `'locales/en-US': () => import('./locales/en-US.json')`
     );
     expect(output).toContain(
-      `'locales/fr-FR': () => import('./locales/fr-FR.json').then(m => m.default)`
+      `'locales/fr-FR': () => import('./locales/fr-FR.json')`
     );
   });
 
@@ -122,10 +135,10 @@ describe('buildManifest', function () {
     await buildManifest(mockGasket);
     const output = getOutput();
     expect(output).toContain(
-      `'locales/extra/en-US': () => import('./locales/extra/en-US.json').then(m => m.default)`
+      `'locales/extra/en-US': () => import('./locales/extra/en-US.json')`
     );
     expect(output).toContain(
-      `'locales/extra/fr-FR': () => import('./locales/extra/fr-FR.json').then(m => m.default)`
+      `'locales/extra/fr-FR': () => import('./locales/extra/fr-FR.json')`
     );
   });
 
@@ -133,10 +146,10 @@ describe('buildManifest', function () {
     await buildManifest(mockGasket);
     const output = getOutput();
     expect(output).toContain(
-      `'locales/en-US/grouped': () => import('./locales/en-US/grouped.json').then(m => m.default)`
+      `'locales/en-US/grouped': () => import('./locales/en-US/grouped.json')`
     );
     expect(output).toContain(
-      `'locales/fr-FR/grouped': () => import('./locales/fr-FR/grouped.json').then(m => m.default)`
+      `'locales/fr-FR/grouped': () => import('./locales/fr-FR/grouped.json')`
     );
   });
 });

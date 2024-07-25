@@ -15,11 +15,7 @@ const moduleDefaults = {
  * @returns {import('./index').IntlConfig} intl config
  */
 function getIntlConfig(gasket) {
-  const { intl = {} } = gasket.config || {};
-
-  // handling default here is necessary for metadata which runs before configure hook
-  intl.localesDir ??= 'locales';
-  return intl;
+  return gasket.config.intl;
 }
 
 /**
@@ -34,14 +30,34 @@ module.exports = function configure(gasket, config) {
 
   // get user defined config and apply defaults
   const {
-    defaultLocaleFilePath = 'locales',
-    defaultLocale = 'en',
+    locales,
     localesMap = {},
-    localesDir,
+    defaultLocaleFilePath = 'locales',
+    localesDir = 'locales',
     managerFilename = 'intl.js'
   } = intlConfig;
 
+  let {
+    defaultLocale,
+    staticLocaleFilePaths
+  } = intlConfig;
+
   const fullLocalesDir = path.join(root, localesDir);
+
+  if (!locales || !locales.length) {
+    throw new Error('Gasket config required for intl.locales');
+  }
+
+  if (!defaultLocale) {
+    defaultLocale = locales[0];
+    gasket.logger.debug(`intl.defaultLocale not configured, defaulting to first intl.locales (${defaultLocale})`);
+  }
+
+  if (!staticLocaleFilePaths) {
+    staticLocaleFilePaths = [defaultLocaleFilePath];
+    gasket.logger.debug(`intl.staticLocaleFilePaths not configured, defaulting to ([${staticLocaleFilePaths.join(', ')}])`);
+  }
+
 
   let { modules = false } = intlConfig;
   if (modules && !Array.isArray(modules)) {
@@ -51,9 +67,11 @@ module.exports = function configure(gasket, config) {
 
   const normalizedIntlConfig = {
     ...intlConfig,
-    defaultLocaleFilePath,
     defaultLocale,
+    locales,
     localesMap,
+    defaultLocaleFilePath,
+    staticLocaleFilePaths,
     localesDir: fullLocalesDir,
     managerFilename,
     modules

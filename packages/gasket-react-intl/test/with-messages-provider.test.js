@@ -57,9 +57,6 @@ describe('withMessagesProvider', () => {
 
   describe('#render', () => {
     const locale = 'fr-FR';
-    beforeEach(() => {
-
-    });
 
     it('renders wrapped component', () => {
       const HOC = withMessagesProvider(mockIntlManager)(MockComponent);
@@ -73,17 +70,16 @@ describe('withMessagesProvider', () => {
       expect(mockIntlManager.handleLocale).toHaveBeenCalledWith(locale);
     });
 
-    it('calls handler.loadStatics with defaults', () => {
+    it('does not call handler.loadStatics if no extra paths configured', () => {
       const HOC = withMessagesProvider(mockIntlManager)(MockComponent);
       render(createElement(HOC, { locale }));
-      expect(mockLocaleHandler.loadStatics)
-        .toHaveBeenCalledWith(mockIntlManager.defaultLocaleFilePath);
+      expect(mockLocaleHandler.loadStatics).not.toHaveBeenCalled();
     });
 
     it('calls handler.loadStatics with statics from options', () => {
       const HOC = withMessagesProvider(
         mockIntlManager,
-        { statics: ['locales', 'locales/nested'] }
+        { staticLocaleFilePaths: ['locales', 'locales/nested'] }
       )(MockComponent);
       render(createElement(HOC, { locale }));
       expect(mockLocaleHandler.loadStatics)

@@ -10,7 +10,7 @@ export function withMessagesProvider(
   intlManager,
   options
 ) {
-  const { statics = [intlManager.defaultLocaleFilePath] } = options ?? {};
+  const { staticLocaleFilePaths } = options ?? {};
 
   return function wrapper(Component) {
     const displayName = Component.displayName || Component.name || 'Component';
@@ -24,9 +24,9 @@ export function withMessagesProvider(
       const { locale, ...rest } = props;
       const localeHandler = intlManager.handleLocale(locale);
 
-      if (
-        statics?.length > 0) {
-        void localeHandler.loadStatics(...statics);
+      // load any additional staticLocaleFilePaths
+      if (staticLocaleFilePaths?.length > 0) {
+        void localeHandler.loadStatics(...staticLocaleFilePaths);
       }
 
       const [messages, setMessages] = useState(localeHandler.getAllMessages());

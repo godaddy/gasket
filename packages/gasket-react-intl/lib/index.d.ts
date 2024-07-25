@@ -1,4 +1,4 @@
-import React, { ComponentType, FunctionComponent, PropsWithChildren } from 'react';
+import { ComponentType, FunctionComponent, PropsWithChildren, ReactNode, Ref } from 'react';
 import {
   LocaleFilePath,
   LocaleFileStatus,
@@ -12,7 +12,7 @@ export interface LocaleFileRequiredProps {
   /** Path containing locale files */
   localeFilePath: LocaleFilePath | LocaleFilePath[];
   /** Custom component to show while loading */
-  loading?: React.ReactNode;
+  loading?: ReactNode;
   /** @deprecated use localeFilePath */
 }
 
@@ -32,14 +32,14 @@ export type LocaleFileRequiredHOC = FunctionComponent<LocaleFileRequiredHOCProps
  */
 export function withLocaleFileRequired(
   /** Path containing locale files */
-  ...localeFilePath: LocaleFilePath[],
+  localeFilePath: LocaleFilePath[],
   options?: {
     /** Custom component to show while loading */
-    loading?: React.ReactNode;
+    loading?: ReactNode;
     forwardRef?: boolean;
   }
 ): (
-  Component: React.ComponentType<any>
+  Component: ComponentType<any>
 ) => LocaleFileRequiredHOC;
 
 
@@ -50,14 +50,14 @@ export function withLocaleFileRequired(
 export function useLocaleFile(
   /** Path containing locale files */
   ...localeFilePath: LocaleFilePath[]
-): LocaleFileStatus;
+): typeof LocaleFileStatus;
 
 export function useMessages(): Messages;
 
 
 export interface ProviderProps {
   locale: string;
-  forwardedRef?: React.Ref<any>;
+  forwardedRef?: Ref<any>;
 }
 
 export interface MessagesProps {
@@ -66,7 +66,7 @@ export interface MessagesProps {
 }
 
 export type IntlContextLoad = (...localeFilePaths: LocaleFilePath[]) => void;
-export type IntlContextStatus = (...localeFilePaths: LocaleFilePath[]) => LocaleFileStatus;
+export type IntlContextStatus = (...localeFilePaths: LocaleFilePath[]) => typeof LocaleFileStatus;
 export interface GasketIntlContext {
   load: IntlContextLoad;
   getStatus: IntlContextStatus;
@@ -77,7 +77,9 @@ export type IntlProviderHOC = FunctionComponent<PropsWithChildren<ProviderProps>
 
 export function withMessagesProvider(
   intlManager: IntlManager,
-  options: { statics?: LocaleFilePath[] }
+  options?: {
+    staticLocaleFilePaths?: LocaleFilePath[]
+  }
 ): (
-  Component: React.ComponentType<MessagesProps>
+  Component: ComponentType<MessagesProps>
 ) => IntlProviderHOC;

@@ -38,6 +38,7 @@ export class LocaleHandler {
     this.manager = manager;
     this.locale = locale;
     this.resolvedLocale = this.manager.resolveLocale(locale);
+    this.init();
   }
 
   /** @type {import('./types').LocaleHandler_getLocaleFileKey} */
@@ -85,6 +86,21 @@ export class LocaleHandler {
     });
 
     return lowestStatus(statuses);
+  }
+
+  /** @type {import('./types').LocaleHandler_init} */
+  init() {
+    const paths = this.manager.staticLocaleFilePaths;
+
+    paths.map((localeFilePath) => {
+      const localeFileKey = this.getLocaleFileKey(localeFilePath);
+      if (!this.staticKeys.includes(localeFileKey)) {
+        this.staticsDirty = true;
+        this.staticKeys.push(localeFileKey);
+        this.handledDirty = true;
+        this.handledKeys.push(localeFileKey);
+      }
+    });
   }
 
   /** @type {import('./types').LocaleHandler_loadStatics} */

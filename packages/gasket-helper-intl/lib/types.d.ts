@@ -47,13 +47,13 @@ export type PromiseRegister = Record<LocaleFileKey, Promise>
  */
 export interface LocaleManifestConfig {
   /** Locale to fallback to when loading files */
-  defaultLocale: Locale;
+  defaultLocale?: Locale;
   /** Array of supported locales */
   locales: Locale[];
   /** Mapping of locales to supported locales */
   localesMap?: Record<Locale, Locale>;
   /** Default lookup path to locale files */
-  defaultLocaleFilePath: LocaleFilePath;
+  defaultLocaleFilePath?: LocaleFilePath;
   /** Array of paths to locale files for static/ssr rendering */
   staticLocaleFilePaths?: LocaleFilePath[];
 }
@@ -117,6 +117,8 @@ export type IntlManager_getStatus = (localeFileKey: LocaleFileKey) => LocaleFile
 export type IntlManager_handleLocale = (locale: Locale) => LocaleHandler;
 
 export type LocaleHandler_constructor = (manager: IntlManager, locale: Locale) => void;
+export type LocaleHandler_init = () => void;
+
 export type LocaleHandler_getLocaleFileKey = (localeFilePath: LocaleFilePath) => LocaleFileKey;
 export type LocaleHandler_loadStatics = (...localeFilePaths: LocaleFilePath[]) => Promise;
 export type LocaleHandler_load = (...localeFilePaths: LocaleFilePath[]) => Promise;
@@ -139,6 +141,8 @@ export class IntlManager {
 
   constructor(manifest: LocaleManifest)
 
+  managedLocales: Locale[]
+  get locales(): Locales[]
   get defaultLocaleFilePath(): LocaleFilePath
   get staticLocaleFilePaths(): LocaleFilePath[]
 

@@ -1,5 +1,7 @@
 import type { MaybeAsync, GasketRequest } from '@gasket/core';
+import type { IncomingMessage } from 'http';
 import { IntlManager } from '@gasket/helper-intl';
+import { LocaleManifestConfig } from '@gasket/helper-intl';
 
 interface CustomScanSettings {
   /** Lookup dir for module files (default: `locales`) */
@@ -15,11 +17,7 @@ interface CustomScanSettings {
   excludes?: Array<string>;
 }
 
-export interface IntlConfig {
-  defaultLocaleFilePath?: string;
-  defaultLocale?: string;
-  locales?: Array<string>;
-  localesMap?: Record<string, string>;
+export interface IntlConfig extends LocaleManifestConfig {
   localesDir?: string;
   managerFilename?: string;
   modules?:
@@ -37,7 +35,7 @@ declare module '@gasket/core' {
   }
 
   export interface GasketActions {
-    getIntlLocale: (req: GasketRequest) => MaybeAsync<string>;
+    getIntlLocale: (req: GasketRequest) => string;
     /**
      * Provides access to the Intl manager instance to plugins.
      * Especially useful for plugins that are still CJS.

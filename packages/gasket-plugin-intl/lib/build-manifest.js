@@ -14,15 +14,16 @@ const debug = require('debug')('gasket:plugin:intl:buildManifest');
  * Constructs a manifest of locale file paths and settings which can be loaded
  * or bundled by the client. Locale paths have content hashes associated with
  * them which can be used for cache busting.
- * @param {import("@gasket/core").Gasket} gasket - Gasket API
+ * @param {import('@gasket/core').Gasket} gasket - Gasket API
  * @async
  */
 module.exports = async function buildManifest(gasket) {
   const { logger } = gasket;
   const { localesDir, managerFilename } = getIntlConfig(gasket);
-  const tgtFile = path.join(localesDir, managerFilename);
+  const tgtFile = path.join(gasket.config.root, ...managerFilename.split('/'));
   const {
     defaultLocaleFilePath,
+    staticLocaleFilePaths,
     defaultLocale,
     locales,
     localesMap
@@ -45,7 +46,7 @@ module.exports = async function buildManifest(gasket) {
       const keyName = importName
         .replace(/\.json$/, '')
         .replace('./', '');
-      return { [keyName]: `%() => import('${importName}').then(m => m.default)%` };
+      return { [keyName]: `%() => import('${importName}')%` };
     })
   ).reduce((a, c) => ({ ...a, ...c }), {});
 
@@ -54,6 +55,7 @@ module.exports = async function buildManifest(gasket) {
    */
   const manifest = {
     '%defaultLocaleFilePath%': defaultLocaleFilePath,
+    '%staticLocaleFilePaths%': staticLocaleFilePaths,
     '%defaultLocale%': defaultLocale,
     '%locales%': locales,
     '%localesMap%': localesMap,
@@ -72,11 +74,13 @@ const manifest = ${manifestStr};
 export default makeIntlManager(manifest);
 `;
 
+  const tgtRelative = path.relative(gasket.config.root, tgtFile);
+
   try {
     await fs.writeFile(tgtFile, content, 'utf-8');
-    logger.info('build:locales: Wrote locales manifest.');
+    logger.info(`build:locales: Wrote intl manager ${tgtRelative}.`);
   } catch (err) {
-    logger.error('build:locales: Unable to write locales manifest.');
+    logger.error(`build:locales: Unable to write intl manager (${tgtRelative}).`);
     throw err;
   }
 };

@@ -10,16 +10,16 @@
 function forwardIntlConfig(gasket, config) {
   const { logger } = gasket;
 
-  const { intl: intlConfig = {} } = gasket.config;
+  const { intl: intlConfig } = gasket.config;
 
-  if (intlConfig.nextRouting === false) {
+  if (intlConfig?.nextRouting === false) {
     return;
   }
 
   // make a copy of i18n for mutating
   const i18n = { ...(config.i18n || {}) };
 
-  if (intlConfig.locales) {
+  if (intlConfig?.locales) {
     if (i18n.locales) {
       logger.warn(
         'Gasket config has both `intl.locales` (preferred) and `nextConfig.i18n.locales`'
