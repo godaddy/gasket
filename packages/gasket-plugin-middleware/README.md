@@ -1,7 +1,26 @@
 # @gasket/plugin-middleware
 
-An optional plugin when used applies middleware to express or fastify. 
+An optional plugin when used applies middleware to express or fastify.
 
+## Installation
+
+```
+npm i @gasket/plugin-middleware
+```
+
+Update your `gasket` file plugin configuration:
+
+```diff
+// gasket.js
+
++ import pluginMiddleware from '@gasket/plugin-middleware';
+
+export default makeGasket({
+  plugins: [
++   pluginMiddleware
+  ]
+})
+```
 
 ## Configuration
 
@@ -17,9 +36,10 @@ All the configurations for middleware setup are added under `express` or `fastif
 ### Example Express configuration
 
 ```js
-module.exports = {
+export default makeGasket({
   plugins: {
-    add: ['@gasket/plugin-express', '@gasket/plugin-middleware']
+    pluginMiddleware,
+    pluginExpress
   },
   express: {
     compression: false,
@@ -27,15 +47,16 @@ module.exports = {
     middlewareInclusionRegex: /^(?!\/_next\/)/,
     trustProxy: true
   }
-}
+})
 ```
 
 ### Example Fastify configuration
 
 ```js
-module.exports = {
+export default makeGasket({
   plugins: {
-    add: ['@gasket/fastify', '@gasket/plugin-middleware']
+    pluginMiddleware,
+    pluginFastify
   },
   fastify: {
     compression: false,
@@ -43,12 +64,12 @@ module.exports = {
     middlewareInclusionRegex: /^(?!\/_next\/)/,
     trustProxy: true
   }
-}
+})
 ```
 
 ## Middleware paths
 
-The `gasket.config.js` can contain a `middleware` property, which is an array of
+The `gasket.js` can contain a `middleware` property, which is an array of
 objects that map plugins to route or path patterns, allowing apps to tune which
 middleware are triggered for which requests.
 

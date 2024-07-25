@@ -13,33 +13,27 @@ every developer writes when working with service workers._
 
 ## Installation
 
-#### New apps
-
-```
-gasket create <app-name> --plugins @gasket/plugin-workbox
-```
-
-#### Existing apps
-
 ```
 npm i @gasket/plugin-workbox
 ```
 
-Modify `plugins` section of your `gasket.config.js`:
+Update your `gasket` file plugin configuration:
 
 ```diff
-module.exports = {
-  plugins: {
-    add: [
-+      '@gasket/plugin-workbox'
-    ]
-  }
-}
+// gasket.js
+
++ import pluginWorkbox from '@gasket/plugin-workbox';
+
+export default makeGasket({
+  plugins: [
++   pluginWorkbox
+  ]
+})
 ```
 
 ## Configuration
 
-Set the Workbox options, in the `gasket.config.js` under `workbox`.
+Set the Workbox options, in the `gasket.js` under `workbox`.
 
 - `outputDir` - (string) The path to the directory in which the Workbox libraries should be copied (default: `./build/workbox`)
 - `basePath` - (string) Change the default path to `/_workbox` endpoint by
@@ -51,8 +45,8 @@ Set the Workbox options, in the `gasket.config.js` under `workbox`.
 #### Example config
 
 ```js
-// gasket.config
-module.exports = {
+// gasket.js
+export default makeGasket({
   workbox: {
     config: {
       runtimeCaching: [{
@@ -61,7 +55,7 @@ module.exports = {
       }]
     }
   }
-}
+})
 ```
 
 ## Lifecycles

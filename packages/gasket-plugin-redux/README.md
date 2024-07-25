@@ -4,30 +4,22 @@ Gasket plugin to setup redux store available to express middleware.
 
 ## Installation
 
-#### New apps
-
-***Recommended***
-
-```sh
-gasket create <app-name> --plugins @gasket/plugin-redux
+```
+npm i @gasket/plugin-redux
 ```
 
-#### Existing apps
-
-```sh
-npm i @gasket/plugin-redux @gasket/redux redux
-```
-
-Modify `plugins` section of your `gasket.config.js`:
+Update your `gasket` file plugin configuration:
 
 ```diff
-module.exports = {
-  plugins: {
-    add: [
-+      '@gasket/plugin-redux'
-    ]
-  }
-}
+// gasket.js
+
++ import pluginRedux from '@gasket/plugin-redux';
+
+export default makeGasket({
+  plugins: [
++   pluginRedux
+  ]
+})
 ```
 
 ## Configuration
@@ -53,9 +45,9 @@ App developers can choose to use different file location setting the
 #### Example config
 
 ```js
-// gasket.config.js
+// gasket.js
 
-module.exports = {
+export default makeGasket({
   redux: {
     makeStore: './relative/path/to/customMakeStore.js',
     initState: {
@@ -78,7 +70,7 @@ module.exports = {
       }
     }
   }
-}
+})
 ```
 
 ```js

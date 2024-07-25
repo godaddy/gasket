@@ -4,7 +4,6 @@ Gasket plugin for TypeScript support.
 
 ## Installation
 
-#### Existing apps
 
 ```shell
 npm i @gasket/plugin-typescript

@@ -7,6 +7,26 @@ Gasket applications.
 At this time, there is only one plugin which implements a
 custom logger: `@gasket/plugin-winston`.
 
+## Installation
+
+```
+npm i @gasket/plugin-logger
+```
+
+Update your `gasket` file plugin configuration:
+
+```diff
+// gasket.js
+
++ import pluginLogger from '@gasket/plugin-logger';
+
+export default makeGasket({
+  plugins: [
++   pluginLogger
+  ]
+})
+```
+
 ## Lifecycles
 
 ### createLogger

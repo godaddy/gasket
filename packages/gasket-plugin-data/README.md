@@ -13,16 +13,25 @@ hooks for gather user or request-specific data.
 #### New apps
 
 ```
-gasket create <app-name> --plugins @gasket/plugin-data
-```
-
-#### Existing apps
-
-```
 npm i @gasket/plugin-data
 ```
 
-Modify `plugins` section of your `gasket.js`:
+Update your `gasket` file plugin configuration:
+
+```diff
+// gasket.js
+
++ import pluginData from '@gasket/plugin-data';
+
+ export default makeGasket({
+  plugins: [
++   pluginData
+  ]
+})
+```
+
+Also, add a `gasket.data.js` file to the root of your project, import and assign
+it to the `data` property of the Gasket config.
 
 ```diff
 import { makeGasket } from '@gasket/core';
@@ -39,8 +48,6 @@ export default makeGasket({
 +  data: gasketData
 })
 ```
-Also add a `gasket.data.js` file to the root of your project, import and assign
-it to the `data` property of the Gasket config.
 
 ## Configuration
 

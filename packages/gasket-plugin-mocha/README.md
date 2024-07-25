@@ -8,7 +8,21 @@ Gasket application.
 This plugin should only be used during the create command for new apps.
 
 ```
-gasket create <app-name> --plugins @gasket/plugin-mocha
+npm i @gasket/plugin-mocha
+```
+
+Update your `gasket` file plugin configuration:
+
+```diff
+// gasket.js
+
++ import pluginMocha from '@gasket/plugin-mocha';
+
+export default makeGasket({
+  plugins: [
++   pluginMocha
+  ]
+})
 ```
 
 ## Usage

@@ -5,10 +5,22 @@ application.
 
 ## Installation
 
-This plugin should only be used during the create command for new apps.
-
 ```
-gasket create <app-name> --plugins @gasket/plugin-jest
+npm i @gasket/plugin-jest
+```
+
+Update your `gasket` file plugin configuration:
+
+```diff
+// gasket.js
+
++ import pluginJest from '@gasket/plugin-jest';
+
+export default makeGasket({
+  plugins: [
++   pluginJest
+  ]
+})
 ```
 
 ## Usage

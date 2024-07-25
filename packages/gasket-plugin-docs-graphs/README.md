@@ -8,25 +8,21 @@ of a given application's lifecycles.
 #### New apps
 
 ```
-gasket create <app-name> --plugins @gasket/plugin-docs,@gasket/plugin-docs-graph
-```
-
-#### Existing apps
-
-```sh
 npm i @gasket/plugin-docs-graphs
 ```
 
-Modify `plugins` section of your `gasket.config.js`:
+Update your `gasket` file plugin configuration:
 
 ```diff
-module.exports = {
-  plugins: {
-    add: [
-+      '@gasket/plugin-docs-graphs'
-    ]
-  }
-}
+// gasket.js
+
++ import pluginDocsGraphs from '@gasket/plugin-docs-graphs';
+
+ export default makeGasket({
+  plugins: [
++   pluginDocsGraphs
+  ]
+})
 ```
 
 [`mermaid`]: https://mermaid-js.github.io/mermaid/#/

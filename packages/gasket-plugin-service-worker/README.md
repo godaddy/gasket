@@ -6,35 +6,29 @@ background syncing.
 
 ## Installation
 
-#### New apps
-
-```
-gasket create <app-name> --plugins @gasket/plugin-service-worker
-```
-
-#### Existing apps
-
 ```
 npm i @gasket/plugin-service-worker
 ```
 
-Modify `plugins` section of your `gasket.config.js`:
+Update your `gasket` file plugin configuration:
 
 ```diff
-module.exports = {
-  plugins: {
-    add: [
-+      '@gasket/plugin-service-worker'
-    ]
-  }
-}
+// gasket.js
+
++ import pluginServiceWorker from '@gasket/plugin-service-worker';
+
+export default makeGasket({
+  plugins: [
++   pluginServiceWorker
+  ]
+})
 ```
 
 ## Configuration
 
 ### Options
 
-To be set in under `serviceWorker` in the `gasket.config.js`.
+To be set in under `serviceWorker` in the `gasket.js`.
 
 - `url` - (string) Name of the service worker file. Default is `/sw.js`
 - `scope` - (string) From where to intercept requests. Default is `/`
@@ -71,9 +65,9 @@ primary domain. For the service worker to be installed and properly scoped, the
 following settings would be needed:
 
 ```js
-// gasket.config.js
+// gasket.js
 
-module.exports = {
+export default makeGasket({
   serviceWorker: {
     url: '/docs/sw.js',
     scope: '/docs',
@@ -81,7 +75,7 @@ module.exports = {
       ie8: true
     }
   }
-}
+})
 ```
 
 ## Lifecycles
@@ -196,13 +190,13 @@ injected. This can also be set to a lookup function that takes in an entry name
 and returns a boolean whether it should be injected or not.
 
 ```js
-// gasket.config.js
+// gasket.js
 
-module.exports = {
+export default makeGasket({
   serviceWorker: {
     webpackRegister: key => key === 'main'
   }
-}
+})
 ```
 
 If you do not want the registration script injected by Webpack, you can set

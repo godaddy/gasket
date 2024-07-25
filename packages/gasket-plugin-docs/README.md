@@ -5,33 +5,27 @@ app's plugins, presets, and supporting modules.
 
 ## Installation
 
-#### New apps
-
-```
-gasket create <app-name> --plugins @gasket/plugin-docs
-```
-
-#### Existing apps
-
 ```
 npm i @gasket/plugin-docs
 ```
 
-Modify `plugins` section of your `gasket.config.js`:
+Update your `gasket` file plugin configuration:
 
 ```diff
-module.exports = {
-  plugins: {
-    add: [
-+      '@gasket/plugin-docs'
-    ]
-  }
-}
+// gasket.js
+
++ import pluginDocs from '@gasket/plugin-docs';
+
+ export default makeGasket({
+  plugins: [
++   pluginDocs
+  ]
+})
 ```
 
 ## Configuration
 
-To be set in under `docs` in the `gasket.config.js`.
+To be set in under `docs` in the `gasket.js`.
 
 - `outputDir` - (string) Name of the directory, relative to the app's package,
   where doc files will be collected to. Default is `.docs`.

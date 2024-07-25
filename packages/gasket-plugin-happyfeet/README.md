@@ -4,37 +4,31 @@ Integrates with [happy-feet](https://github.com/asilvas/happy-feet#usage) to add
 
 ## Installation
 
-#### New apps
-
-```
-gasket create <app-name> --plugins @gasket/plugin-happyfeet
-```
-
-#### Existing apps
-
 ```
 npm i @gasket/plugin-happyfeet
 ```
 
-Modify the `plugins` section of your `gasket.config.js`:
+Update your `gasket` file plugin configuration:
 
 ```diff
-module.exports = {
-  plugins: {
-    add: [
-+      '@gasket/plugin-happyfeet'
-    ]
-  }
-}
+// gasket.js
+
++ import pluginHappyfeet from '@gasket/plugin-happyfeet';
+
+export default makeGasket({
+  plugins: [
++   pluginHappyfeet
+  ]
+})
 ```
 
 ## Configuration
 
-You can specify the various [happy-feet](https://github.com/asilvas/happy-feet#usage) config options in `gasket.config.js`.
+You can specify the various [happy-feet](https://github.com/asilvas/happy-feet#usage) config options in `gasket.js`.
 
 ```js
-// gasket.config.js
-module.exports = {
+// gasket.js
+export default makeGasket({
    happyFeet: {
     // https://github.com/asilvas/happy-feet#usage
     escalationSoftLimitMin: 20, // 20s
@@ -45,7 +39,7 @@ module.exports = {
     rssHardLimit: 1.8 * 1024 * 1024 * 1024, // ~1.9GB
     logOnUnhappy: true
   }
-};
+});
 ```
 
 [Happy Feet](https://github.com/asilvas/happy-feet#usage) for gasket has no default configuration.
@@ -62,8 +56,8 @@ or pass the config object directly to the action.
 #### gasketConfig example
 
 ```js
-// gasket.config.js
-module.exports = {
+// gasket.js
+export default makeGasket({
    happyFeet: {
     // https://github.com/asilvas/happy-feet#usage
     escalationSoftLimitMin: 20, // 20s
@@ -74,7 +68,7 @@ module.exports = {
     rssHardLimit: 1.8 * 1024 * 1024 * 1024, // ~1.9GB
     logOnUnhappy: true
   }
-};
+});
 ```
 
 ```js

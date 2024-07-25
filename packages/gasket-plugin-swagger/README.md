@@ -6,30 +6,22 @@ docs with Fastify.
 
 ## Installation
 
-#### New apps
-
-***Recommended***
-
-```
-gasket create <app-name> --plugins @gasket/plugin-swagger
-```
-
-#### Existing apps
-
 ```
 npm i @gasket/plugin-swagger
 ```
 
-Modify `plugins` section of your `gasket.config.js`:
+Update your `gasket` file plugin configuration:
 
 ```diff
-module.exports = {
-  plugins: {
-    add: [
-+      '@gasket/plugin-swagger'
-    ]
-  }
-}
+// gasket.js
+
++ import pluginSwagger from '@gasket/plugin-swagger';
+
+export default makeGasket({
+  plugins: [
++   pluginSwagger
+  ]
+})
 ```
 
 ## Configuration
@@ -46,14 +38,14 @@ module.exports = {
 
 #### Example from JSDocs
 
-By specifying the `swagger.jsdocs` options in the `gasket.config.js`, the
+By specifying the `swagger.jsdocs` options in the `gasket.js`, the
 Swagger definition file will be generated with `gasket build`. It can be output
 to either a JSON (default) or YAML file.
 
 ```js
-// gasket.config.js
+// gasket.js
 
-module.exports = {
+export default makeGasket({
   swagger: {
     jsdoc: {
       definition: {
@@ -68,7 +60,7 @@ module.exports = {
     definitionFile: 'swagger.json', // Default
     apiDocs: '/api-docs'            // Default
   }
-}
+})
 ```
 
 #### Example from YAML
@@ -77,13 +69,13 @@ In this example, the Swagger spec will not be generated, but rather demonstrates
 how it can be hand-crafted via YAML file.
 
 ```js
-// gasket.config.js
+// gasket.js
 
-module.exports = {
+export default makeGasket({
   swagger: {
     definitionFile: 'swagger.yaml'
   }
-}
+})
 ```
 
 ## License
