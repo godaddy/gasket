@@ -19,7 +19,7 @@ export default makeGasket({
   plugins: [
 +   pluginRedux
   ]
-})
+});
 ```
 
 ## Configuration
@@ -70,7 +70,7 @@ export default makeGasket({
       }
     }
   }
-})
+});
 ```
 
 ```js

@@ -24,7 +24,7 @@ export default makeGasket({
   plugins: [
 +   pluginExpress
   ]
-})
+});
 ```
 
 ## Configuration
@@ -51,7 +51,7 @@ export default makeGasket({
     middlewareInclusionRegex: /^(?!\/_next\/)/,
     trustProxy: true
   }
-})
+});
 ```
 
 ## Logging

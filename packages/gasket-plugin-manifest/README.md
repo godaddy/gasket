@@ -24,7 +24,7 @@ export default makeGasket({
   plugins: [
 +   pluginManifest
   ]
-})
+});
 ```
 
 ## Configuration
@@ -40,7 +40,7 @@ export default makeGasket({
     short_name: 'PWAwesome',
     name: 'Progressive Web Application'
   }
-})
+});
 ```
 
 If you want to serve `manifest.json` from a custom path, the plugin can be
@@ -53,7 +53,7 @@ export default makeGasket({
     // other options
     path: '/custom/path/manifest.json' // default: /manifest.json
   }
-})
+});
 ```
 
 If you want to generate a `manifest.json` file at build time for use with a static app, the plugin can be configured with the `staticOutput` option:
@@ -65,7 +65,7 @@ export default makeGasket({
     // other options
     staticOutput: '/custom/path/manifest.json'
   }
-})
+});
 ```
 
 You will also need to include a link to your `manifest.json` file on your static html pages:

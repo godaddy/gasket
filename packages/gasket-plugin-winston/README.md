@@ -19,7 +19,7 @@ export default makeGasket({
   plugins: [
 +   pluginWinston
   ]
-})
+});
 ```
 
 ## Configuration
@@ -97,7 +97,7 @@ export default makeGasket({
       })
     ]
   }
-})
+});
 ```
 
 ## Lifecycles

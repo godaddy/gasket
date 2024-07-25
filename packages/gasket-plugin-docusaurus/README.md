@@ -16,12 +16,12 @@ Update your `gasket` file plugin configuration:
 + import pluginDocusarus from '@gasket/plugin-docusaurus';
 + import pluginDocs from '@gasket/plugin-docs';
 
- export default makeGasket({
+export default makeGasket({
   plugins: [
 +   pluginDocs
 +   pluginDocusarus
   ]
-})
+});
 ```
 
 Now, when you run `npx gasket docs` in your app, a nice Docusaurus website will be

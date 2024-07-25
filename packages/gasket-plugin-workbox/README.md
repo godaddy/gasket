@@ -28,7 +28,7 @@ export default makeGasket({
   plugins: [
 +   pluginWorkbox
   ]
-})
+});
 ```
 
 ## Configuration
@@ -55,7 +55,7 @@ export default makeGasket({
       }]
     }
   }
-})
+});
 ```
 
 ## Lifecycles

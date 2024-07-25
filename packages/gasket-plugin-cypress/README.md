@@ -4,23 +4,7 @@ Creates a `cypress` based testing environment for your Gasket application.
 
 ## Installation
 
-```
-npm i @gasket/plugin-cypress
-```
-
-Update your `gasket` file plugin configuration:
-
-```diff
-// gasket.js
-
-+ import pluginCypress from '@gasket/plugin-cypress';
-
- export default makeGasket({
-  plugins: [
-+   'pluginCypress'
-  ]
-})
-```
+This plugin is only used by presets for `create-gasket-app` and is not installed for apps.
 
 ## Usage
 

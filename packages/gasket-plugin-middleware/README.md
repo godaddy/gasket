@@ -19,7 +19,7 @@ export default makeGasket({
   plugins: [
 +   pluginMiddleware
   ]
-})
+});
 ```
 
 ## Configuration
@@ -47,7 +47,7 @@ export default makeGasket({
     middlewareInclusionRegex: /^(?!\/_next\/)/,
     trustProxy: true
   }
-})
+});
 ```
 
 ### Example Fastify configuration
@@ -64,7 +64,7 @@ export default makeGasket({
     middlewareInclusionRegex: /^(?!\/_next\/)/,
     trustProxy: true
   }
-})
+});
 ```
 
 ## Middleware paths

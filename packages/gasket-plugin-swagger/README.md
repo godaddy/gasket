@@ -21,7 +21,7 @@ export default makeGasket({
   plugins: [
 +   pluginSwagger
   ]
-})
+});
 ```
 
 ## Configuration
@@ -60,7 +60,7 @@ export default makeGasket({
     definitionFile: 'swagger.json', // Default
     apiDocs: '/api-docs'            // Default
   }
-})
+});
 ```
 
 #### Example from YAML
@@ -75,7 +75,7 @@ export default makeGasket({
   swagger: {
     definitionFile: 'swagger.yaml'
   }
-})
+});
 ```
 
 ## License

@@ -20,7 +20,7 @@ export default makeGasket({
   plugins: [
 +   pluginAnalyze
   ]
-})
+});
 ```
 
 ## Configuration
@@ -38,9 +38,9 @@ outputs the reports to a `reports` dir at the root of the project.
 #### Example
 
 ```js
-// gasket.mjs
+// gasket.js
 
- export default makeGasket({
+export default makeGasket({
   bundleAnalyzerConfig: {
     browser: {
       defaultSizes: 'gzip'
@@ -49,7 +49,7 @@ outputs the reports to a `reports` dir at the root of the project.
       openAnalyzer: false
     }
   }
-})
+});
 ```
 
 ## NPM script

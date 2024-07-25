@@ -17,9 +17,9 @@ Update your `gasket` file plugin configuration:
 
 export default makeGasket({
   plugins: [
-+   pluginHappyfeet
++   pluginHappyFeet
   ]
-})
+});
 ```
 
 ## Configuration

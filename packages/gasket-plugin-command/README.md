@@ -21,7 +21,7 @@ export default makeGasket({
     // other plugins
 +    pluginCommand
   ]
-})
+});
 ```
 
 ## Lifecycles

@@ -27,7 +27,7 @@ Update your `gasket` file plugin configuration:
   plugins: [
 +   pluginData
   ]
-})
+});
 ```
 
 Also, add a `gasket.data.js` file to the root of your project, import and assign
@@ -46,7 +46,7 @@ export default makeGasket({
 +    pluginData
   ],
 +  data: gasketData
-})
+});
 ```
 
 ## Configuration

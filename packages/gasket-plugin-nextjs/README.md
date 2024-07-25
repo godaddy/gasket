@@ -19,7 +19,7 @@ export default makeGasket({
   plugins: [
 +   pluginNextjs
   ]
-})
+});
 ```
 
 ## Adding a Sitemap
@@ -70,7 +70,7 @@ export default makeGasket({
       /* config options here */
     })
   )
-};
+});
 ```
 
 ### Internationalized Routing
@@ -108,7 +108,7 @@ export default makeGasket({
     ],
     }
   }
-})
+});
 ```
 
 Also note when using [@gasket/plugin-intl] to determine the locale, that the

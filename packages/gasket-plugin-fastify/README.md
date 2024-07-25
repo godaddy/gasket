@@ -17,11 +17,11 @@ Update your `gasket` file plugin configuration:
 
 + import pluginFastify from '@gasket/plugin-fastify';
 
- export default makeGasket({
+export default makeGasket({
   plugins: [
 +   pluginFastify
   ]
-})
+});
 ```
 
 ## Configuration
@@ -45,7 +45,7 @@ export default makeGasket({
     excludedRoutesRegex: /^(?!\/_next\/)/,
     trustProxy: true
   }
-})
+});
 ```
 
 ## Lifecycles

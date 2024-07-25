@@ -5,25 +5,7 @@ Gasket application.
 
 ## Installation
 
-This plugin should only be used during the create command for new apps.
-
-```
-npm i @gasket/plugin-mocha
-```
-
-Update your `gasket` file plugin configuration:
-
-```diff
-// gasket.js
-
-+ import pluginMocha from '@gasket/plugin-mocha';
-
-export default makeGasket({
-  plugins: [
-+   pluginMocha
-  ]
-})
-```
+This plugin is only used by presets for `create-gasket-app` and is not installed for apps.
 
 ## Usage
 

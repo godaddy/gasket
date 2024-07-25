@@ -20,7 +20,7 @@ export default makeGasket({
   plugins: [
 +   pluginHttps
   ]
-})
+});
 ```
 
 ## Configuration
@@ -95,7 +95,7 @@ export default makeGasket({
 +      port: 80
 +    }
 +  }
-})
+});
 ```
 
 ## Lifecycles

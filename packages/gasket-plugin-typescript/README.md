@@ -4,24 +4,7 @@ Gasket plugin for TypeScript support.
 
 ## Installation
 
-
-```shell
-npm i @gasket/plugin-typescript
-```
-
-Modify `plugins` section of your `gasket.config.js`:
-
-```diff
-// gasket.js
-import { makeGasket } from '@gasket/core';
-import pluginTypeScript from '@gasket/plugin-typescript';
-
-export const gasket = makeGasket({
-  plugins: [
-+    pluginTypeScript
-  ]
-})
-```
+This plugin is only used by presets for `create-gasket-app` and is not installed for apps.
 
 ## Typescript & ESM
 

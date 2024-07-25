@@ -5,8 +5,6 @@ of a given application's lifecycles.
 
 ## Installation
 
-#### New apps
-
 ```
 npm i @gasket/plugin-docs-graphs
 ```
@@ -22,7 +20,7 @@ Update your `gasket` file plugin configuration:
   plugins: [
 +   pluginDocsGraphs
   ]
-})
+});
 ```
 
 [`mermaid`]: https://mermaid-js.github.io/mermaid/#/

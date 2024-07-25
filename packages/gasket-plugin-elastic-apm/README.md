@@ -15,11 +15,11 @@ Update your `gasket` file plugin configuration:
 
 + import pluginElasticApm from '@gasket/plugin-elastic-apm';
 
- export default makeGasket({
+export default makeGasket({
   plugins: [
 +   pluginElasticApm
   ]
-})
+});
 ```
 
 Add a `--require` flag to a `package.json` start script:
@@ -74,7 +74,7 @@ stored in Elasticsearch. Specify a list of cookie names to redact in
 `gasket.js`:
 
 ```js
- export default makeGasket({
+export default makeGasket({
   elasticAPM: {
     sensitiveCookies: ['my_jwt', 'userFullName']
   }

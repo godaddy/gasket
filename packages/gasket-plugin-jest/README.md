@@ -5,23 +5,7 @@ application.
 
 ## Installation
 
-```
-npm i @gasket/plugin-jest
-```
-
-Update your `gasket` file plugin configuration:
-
-```diff
-// gasket.js
-
-+ import pluginJest from '@gasket/plugin-jest';
-
-export default makeGasket({
-  plugins: [
-+   pluginJest
-  ]
-})
-```
+This plugin is only used by presets for `create-gasket-app` and is not installed for apps.
 
 ## Usage
 

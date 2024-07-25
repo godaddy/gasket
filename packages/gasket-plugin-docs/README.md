@@ -20,7 +20,7 @@ Update your `gasket` file plugin configuration:
   plugins: [
 +   pluginDocs
   ]
-})
+});
 ```
 
 ## Configuration

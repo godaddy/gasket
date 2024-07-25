@@ -19,7 +19,7 @@ export default makeGasket({
   plugins: [
 +   pluginWebpack
   ]
-})
+});
 ```
 
 ## Configuration
@@ -33,7 +33,7 @@ export default makeGasket({
   plugins: {
     pluginWebpack
   }
-})
+});
 ```
 
 If your app was previously using the `webpack` property in the

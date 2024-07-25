@@ -25,7 +25,7 @@ export default makeGasket({
   plugins: [
 +   pluginMorgan
   ]
-})
+});
 ```
 
 ## Configuration
@@ -50,7 +50,7 @@ export default makeGasket({
     format: 'tiny',
     options: {}
   }
-})
+});
 ```
 
 ## How it works

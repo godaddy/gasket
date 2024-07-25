@@ -131,7 +131,7 @@ Next in the gasket.config.js, set the `redux.makeStore` field to the file. This
 will start up the app using the custom configuration.
 
 ```js
-// gasket.mjs
+// gasket.js
 
 export default makeGasket({
   redux: {
@@ -156,7 +156,7 @@ const thunk = require('redux-thunk');
 const myExtraArg = {};
 const thunkMiddleware = thunk.withExtraArgument(myExtraArg);
 
-module.exports = configureMakeStore({ reducers, thunkMiddleware })
+module.exports = configureMakeStore({ reducers, thunkMiddleware });
 ```
 
 ## License

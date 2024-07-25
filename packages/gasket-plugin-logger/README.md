@@ -9,23 +9,7 @@ custom logger: `@gasket/plugin-winston`.
 
 ## Installation
 
-```
-npm i @gasket/plugin-logger
-```
-
-Update your `gasket` file plugin configuration:
-
-```diff
-// gasket.js
-
-+ import pluginLogger from '@gasket/plugin-logger';
-
-export default makeGasket({
-  plugins: [
-+   pluginLogger
-  ]
-})
-```
+This plugin is only used by presets for `create-gasket-app` and is not installed for apps.
 
 ## Lifecycles
 

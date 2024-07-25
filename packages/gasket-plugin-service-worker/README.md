@@ -21,7 +21,7 @@ export default makeGasket({
   plugins: [
 +   pluginServiceWorker
   ]
-})
+});
 ```
 
 ## Configuration
@@ -75,7 +75,7 @@ export default makeGasket({
       ie8: true
     }
   }
-})
+});
 ```
 
 ## Lifecycles
@@ -196,7 +196,7 @@ export default makeGasket({
   serviceWorker: {
     webpackRegister: key => key === 'main'
   }
-})
+});
 ```
 
 If you do not want the registration script injected by Webpack, you can set
