@@ -1,6 +1,8 @@
 import type { Store, Reducer, Middleware } from 'redux';
 import type { IncomingMessage, OutgoingMessage } from 'http';
 import type { ThunkMiddleware } from 'redux-thunk';
+import type { GetDefaultMiddleware } from '@reduxjs/toolkit/dist/getDefaultMiddleware';
+import type { GetDefaultEnhancers } from '@reduxjs/toolkit/dist/getDefaultEnhancers';
 
 declare module 'http' {
   interface IncomingMessage {
@@ -41,6 +43,15 @@ export interface ConfigureMakeStoreOptions {
   thunkMiddleware?: ThunkMiddleware;
 }
 
+export interface ConfigureAppRouterStoreOptions {
+  customMiddleware?: GetDefaultMiddleware;
+  /** Map of identifiers and reducers */
+  reducers?: Object<string, Reducer>;
+  /** Entry reducer to run before combined reducers */
+  middleware?: Middleware[];
+  enhancers?: Function[];
+}
+
 /** Compose the reducer */
 export function prepareReducer(
   /** Map of identifiers and reducers */
@@ -56,6 +67,15 @@ export function configureMakeStore(
   options?: ConfigureMakeStoreOptions,
   postCreate?: Function
 ): MakeStoreFn;
+
+
+/**
+ * Set up redux store configuration and return a makeStore function
+ */
+export function configureAppRouterStore(
+  options?: ConfigureAppRouterStoreOptions,
+): MakeStoreFn;
+
 
 /**
  * Helper to check for an existing store on context, otherwise make a new
