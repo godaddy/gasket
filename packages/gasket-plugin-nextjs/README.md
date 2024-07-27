@@ -123,7 +123,8 @@ Executed when the `next` server has been created. It will receive a reference to
 the created `next` instance.
 
 ```js
-module.exports = {
+export default {
+  name: 'sample-plugin',
   hooks: {
     /**
      * Modify the Next app instance
@@ -144,7 +145,8 @@ to the `next` config. This will allow you to modify the `next` config before the
 `next` server is created.
 
 ```js
-module.exports = {
+export default {
+  name: 'sample-plugin',
   hooks: {
     /**
      * Modify the Next config
@@ -168,7 +170,8 @@ Provides access to both `next` and `express` instances which allows
 `next.render` calls in express-based routes.
 
 ```js
-module.exports = {
+export default {
+  name: 'sample-plugin',
   hooks: {
     nextExpress: function (gasket, { next, express }) {
       express.post('/contact-form', (req, res) => {
@@ -189,7 +192,8 @@ Provides access to both `next` and `fastify` instances which allows
 `next.render` calls in express-based routes.
 
 ```js
-module.exports = {
+export default {
+  name: 'sample-plugin',
   hooks: {
     nextFastify: function (gasket, { next, fastify }) {
       fastify.post('/contact-form', (req, res) => {
@@ -209,17 +213,18 @@ module.exports = {
 Enables execution of custom logic just prior to an HTTP request being handed to next.js for processing. Hooks receive the request, response, and next server (not to be confused with the next function used by express-like middleware):
 
 ```js
-module.exports = {
-    hooks: {
-        async nextPreHandling(gasket, {
-            req,
-            res,
-            nextServer
-        }) {
-            await doPreRenderingLogic(req, res);
-        }
-    }
-}
+export default {
+  name: 'sample-plugin',
+  hooks: {
+      async nextPreHandling(gasket, {
+          req,
+          res,
+          nextServer
+      }) {
+          await doPreRenderingLogic(req, res);
+      }
+  }
+};
 ```
 
 ## Utilities

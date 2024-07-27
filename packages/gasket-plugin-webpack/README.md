@@ -50,7 +50,7 @@ plugins that need to gather Webpack configuration.
 Use this to initialize the Webpack lifecycles in a consuming plugin.
 
 ```js
-const { initWebpack } = require('@gasket/plugin-webpack');
+import { initWebpack } from '@gasket/plugin-webpack';
 
 /**
 * Creates the webpack config
@@ -86,21 +86,26 @@ instead of using the instance on context which will be removed in a future
 version.
 
 ```js
-const webpackMerge = require('webpack-merge');
+import webpackMerge from 'webpack-merge';
 
-function webpackConfigHook( gasket, config, context) {
-  const { isServer, webpack } = context;
+export default {
+  name: 'sample-plugin',
+  hookes: {
+    webpackConfig: function webpackConfigHook( gasket, config, context) {
+    const { isServer, webpack } = context;
   
-  return isServer
-    ? config
-    : webpackMerge.merge(config, {
-      plugins: [
-        new webpack.DefinePlugin({
-          MEANING_OF_LIFE: 42
-        })
-      ]
-    });
-}
+    return isServer
+      ? config
+      : webpackMerge.merge(config, {
+        plugins: [
+          new webpack.DefinePlugin({
+            MEANING_OF_LIFE: 42
+          })
+        ]
+      });
+    }
+  }
+};
 ```
 
 ### webpackChain
@@ -154,16 +159,21 @@ export default makeGasket({
 to using the webpackConfig lifecycle to merge any custom Webpack config:
 
 ```javascript
-// lifecycles/webpack-config.js
-const webpackMerge = require('webpack-merge');
+// sample-plugin.js
+import webpackMerge from 'webpack-merge';
 
-module.exports = function (gasket, webpackConfig, context) {
-  return webpackMerge.merge(webpackConfig, {
-    performance: {
-      maxAssetSize: 20000
+export default {
+  name: 'sample-plugin',
+  hooks: {
+    webpackConfig: function (gasket, webpackConfig, context) {
+      return webpackMerge.merge(webpackConfig, {
+        performance: {
+          maxAssetSize: 20000
+        }
+      })
     }
-  })
-}
+  }
+};
 ```
 
 This gives apps the freedom to use whatever [merge strategies] makes sense

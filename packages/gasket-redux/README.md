@@ -107,14 +107,14 @@ module.exports = configureMakeStore({ initialState, reducers });
 ```js
 // ./lib/make-store.js
 
-const sagaMiddleWare = require('redux-saga').default();
-const { configureMakeStore } = require('@gasket/redux');
-const reducers = require('../reducers');
-const rootSaga = require('../sagas');
+import sagaMiddleWare from 'redux-saga'.default();
+import { configureMakeStore } from '@gasket/redux';
+import reducers from '../reducers';
+import rootSaga from '../sagas';
 
 const middleware = [sagaMiddleWare];
 
-module.exports = configureMakeStore({ reducers, middleware }, store => {
+export default configureMakeStore({ reducers, middleware }, store => {
   // The method below is only needed if you are utilizing
   // next-redux-saga wrapper for handling sagas in `getInitialProps`
   // store.runSagaTask = (saga) => {
@@ -149,14 +149,14 @@ passing `thunkMiddleware`. A common use case for this is to use the
 ```js
 // ./store.js
 
-const { configureMakeStore } = require('@gasket/redux');
-const reducers = require('./reducers');
-const thunk = require('redux-thunk');
+import { configureMakeStore } from '@gasket/redux';
+import reducers from './reducers';
+import thunk from 'redux-thunk';
 
 const myExtraArg = {};
 const thunkMiddleware = thunk.withExtraArgument(myExtraArg);
 
-module.exports = configureMakeStore({ reducers, thunkMiddleware });
+export default configureMakeStore({ reducers, thunkMiddleware });
 ```
 
 ## License

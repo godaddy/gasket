@@ -76,10 +76,10 @@ export default makeGasket({
 ```js
 // customMakeStore.js
 
-const { configureMakeStore } = require('@gasket/redux');
-const reducers = require('./reducers'); // app's reducers
+import { configureMakeStore } from '@gasket/redux';
+import reducers from './reducers'; // app's reducers
 
-module.exports = configureMakeStore({ reducers });
+export default configureMakeStore({ reducers });
 ```
 
 ## Usage
@@ -113,8 +113,8 @@ a Promise that resolves to a new initial state. Example plugin:
 ```js
 const getExperiments = require('./get-experiments');
 
-module.exports = {
-  id: 'gasket-plugin-example',
+export default {
+  name: 'gasket-plugin-example',
   hooks: {
     initReduxState(gasket, state, { req, res }) {
       return {
@@ -143,10 +143,10 @@ the initial state or fire off actions to populate the store. Asynchronous
 actions should return a Promise. Example plugin:
 
 ```js
-const getExperiments = require('./get-experiments-action');
+import getExperiments from './get-experiments-action';
 
-module.exports = {
-  id: 'gasket-plugin-example',
+export default {
+  name: 'gasket-plugin-example',
   hooks: {
     initReduxStore(gasket, store, { req, res }) {
       store.dispatch(getExperiments(req));
@@ -177,8 +177,8 @@ to the store template. The store.js file is generated with as CommonJS
 exports and so the import statements should be in CommonJS format.
 
 ```js
-module.exports = {
-  id: 'gasket-plugin-example',
+export default {
+  name: 'gasket-plugin-example',
   hooks: {
     create(gasket, createContext) {
       const { reduxReducers } = createContext;
@@ -202,9 +202,9 @@ With these imports and entries added, the resulting store file should
 resemble:
 
 ```js
-const { configureMakeStore } = require('@gasket/redux');
-const manyExampleReducer = require('@example/reducers');
-const { singleExampleReducer } = require('@example/components');
+import { configureMakeStore } from '@gasket/redux';
+import manyExampleReducer from '@example/reducers';
+import { singleExampleReducer } from '@example/components';
 
 const reducers = {
   ...manyExampleReducer,
@@ -213,7 +213,7 @@ const reducers = {
 
 const makeStore = configureMakeStore({ reducers });
 
-module.exports = makeStore;
+export default makeStore;
 ```
 
 ### Accessing the store file

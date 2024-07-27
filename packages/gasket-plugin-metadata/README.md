@@ -22,7 +22,7 @@ metadata.
 
 ```js
 // gasket-plugin-example.js
-module.exports = {
+export default {
   name: 'example',
   hooks: {
     /**
@@ -125,9 +125,9 @@ installed module, and put is some conditional logic.
 
 ```js
 // gasket-plugin-example.js
-const semver = require('semver')
+import semver from 'semver';
 
-module.exports = {
+export default {
   name: 'example',
   hooks: {
     // Because metadata is collected during the init lifecycle, we must 

@@ -80,15 +80,9 @@ base airbnb config will be used.
 
 ## Presets
 
-To add this plugin to a preset, simply install it as a dependency.
-
-```bash
-npm i @gasket/plugin-lint
-```
-
 Presets can also pre-determine the code style to use. This is useful for teams
 to avoid prompts and enforce a particular code style setup. This can be done in
-the module for the preset, under a `createContext` property.
+the module for the preset, in the `presetPrompt` hook.
 
 ### Options
 
@@ -106,25 +100,20 @@ For example, say we have some team that wants to always use [Airbnb] style and
 with stylelint for their apps:
 
 ```js
-// @some/gasket-preset-team-one.js
-module.exports = {
-  require,
-  createContext: {
-    codeStyle: 'airbnb',
-    addStylelint: true
-  }
+// presetPrompt.js
+
+export default async function presetPrompt(gasket, context, { prompt }) {
+  context.codeStyle = 'airbnb';
+  context.addStylelint = true;
 };
 ```
 
 Or, say we have another team with an internal [ESLint] config
 
 ```js
-// @some/gasket-preset-team-two.js
-module.exports = {
-  require,
-  createContext: {
-    eslintConfig: '@another/eslint-config'
-  }
+// presetPrompt.js
+export default async function presetPrompt(gasket, context, { prompt }) {
+  context.eslintConfig = '@another/eslint-config';
 };
 ```
 

@@ -100,38 +100,40 @@ The `prompt` lifecycle is fired using [execWaterfall] and hooks should return a
 modified `context` object.
 
 ```js
-module.exports = {
-  id: 'gasket-plugin-pizza',
-  hooks: {
-    async prompt(gasket, context, { prompt, addPlugins }) {
-      const answers = await prompt([
-        {
-          name: 'pizzaSize',
-          message: 'Choose a pizza size:',
-          type: 'list',
-          choices: ['small', 'medium', 'large']
-        },
-        {
-          name: 'pizzaSauce',
-          message: 'Choose a pizza sauce:',
-          type: 'list',
-          choices: ['red', 'white']
-        },
-        {
-          name: 'wantSoda',
-          message: 'Do you want a soda?',
-          type: 'confirm'
-        }
-      ]);
+//  gasket-plugin-pizza.js
 
-      if (answers.wantSoda === true) {
-        await addPlugins('gasket-plugin-soda@^2.0.0')
+const name = 'gasket-plugin-pizza';
+const hooks = {
+  async prompt(gasket, context, { prompt, addPlugins }) {
+    const answers = await prompt([
+      {
+        name: 'pizzaSize',
+        message: 'Choose a pizza size:',
+        type: 'list',
+        choices: ['small', 'medium', 'large']
+      },
+      {
+        name: 'pizzaSauce',
+        message: 'Choose a pizza sauce:',
+        type: 'list',
+        choices: ['red', 'white']
+      },
+      {
+        name: 'wantSoda',
+        message: 'Do you want a soda?',
+        type: 'confirm'
       }
+    ]);
 
-      return { ...context, ...answers };
+    if (answers.wantSoda === true) {
+      await addPlugins('gasket-plugin-soda@^2.0.0')
     }
+
+    return { ...context, ...answers };
   }
 };
+
+export default { name, hooks };
 ```
 
 The hook is passed the following parameters:
@@ -156,29 +158,31 @@ package.json or register files and templates to be generated.
 The `create` lifecycle is fired using [exec].
 
 ```js
-const path = require('path');
+//  gasket-plugin-pizza.js
 
-module.exports = {
-  id: 'gasket-plugin-pizza',
-  hooks: {
-    async create(gasket, context) {
-      const { pkg, files } = context; // utils from context
-      const { pizzaSize, pizzaSauce } = context; // data provided by prompt
+import path from 'path';
 
-      files.add(
-        path.join(__dirname, 'generator', 'ingredients', pizzaSauce)
-      );
+const name = 'gasket-plugin-pizza';
+const hooks= {
+  async create(gasket, context) {
+    const { pkg, files } = context; // utils from context
+    const { pizzaSize, pizzaSauce } = context; // data provided by prompt
 
-      pkg.add('devDependencies', {
-        'pizza-oven': '^1.0.0'
-      });
+    files.add(
+      path.join(__dirname, 'generator', 'ingredients', pizzaSauce)
+    );
 
-      pkg.add('scripts', {
-        bake: `pizza-oven --size ${ pizzaSize }`
-      });
-    }
+    pkg.add('devDependencies', {
+      'pizza-oven': '^1.0.0'
+    });
+
+    pkg.add('scripts', {
+      bake: `pizza-oven --size ${ pizzaSize }`
+    });
   }
 };
+
+export default { name, hooks };
 ```
 
 The hook is passed the following parameters:
@@ -206,9 +210,10 @@ generated. This is useful to use in conjunction with any scripts added in the
 The `postCreate` lifecycle is fired by [exec]:
 
 ```js
-module.exports = {
-  id: 'totally-a-good-idea',
-  hooks: {
+// totally-a-good-idea.js
+
+const name = 'totally-a-good-idea';
+const hooks = {
     async create(gasket, context) {
       const { pkg } = context;
 
@@ -221,6 +226,8 @@ module.exports = {
     }
   }
 };
+
+export default { name, hooks };
 ```
 
 The hook is passed the following parameters:
