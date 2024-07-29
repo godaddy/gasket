@@ -2,18 +2,10 @@
 
 Framework for building API's using Gasket.
 
-## Usage
-
-This preset requires v5 of the `@gasket/cli`:
-
-```bash
-npm i -g @gasket/cli@^5.0.0
-```
-
 ## Installation
 
 ```bash
-gasket create <app-name> --presets @gasket/preset-api
+npx create-gasket-app <app-name> --presets @gasket/preset-api
 ```
 
 ## Docs

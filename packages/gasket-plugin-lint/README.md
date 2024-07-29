@@ -4,15 +4,7 @@ Enables code style linting to be configured for Gasket apps.
 
 ## Installation
 
-This plugin should only be used during the create command for new apps.
-
-```
-gasket create <app-name> --plugins @gasket/plugin-lint
-```
-
-Ideally, and for the most part, this plugin should already be included with
-primary presets, so that the `--plugins` flag is not needed. See the [Presets]
-section below to learn how preconfigure a code style.
+This plugin is only used by presets for `create-gasket-app` and is not installed for apps.
 
 ## Usage
 

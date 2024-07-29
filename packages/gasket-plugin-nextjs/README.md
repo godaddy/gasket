@@ -4,31 +4,22 @@ This plugin adds Next.js to your application.
 
 ## Installation
 
-#### New apps
-
-**_Recommended_**
-
 ```
-gasket create <app-name> --plugins @gasket/plugin-nextjs
+npm i @gasket/plugin-nextjs
 ```
 
-#### Existing apps
-
-```
-npm i @gasket/plugin-nextjs next react react-dom
-```
-
-Modify `plugins` section of your `gasket.config.js`:
+Update your `gasket` file plugin configuration:
 
 ```diff
-// gasket.config.js
-module.exports = {
-  plugins: {
-    add: [
-+      '@gasket/plugin-nextjs'
-    ]
-  }
-}
+// gasket.js
+
++ import pluginNextjs from '@gasket/plugin-nextjs';
+
+export default makeGasket({
+  plugins: [
++   pluginNextjs
+  ]
+});
 ```
 
 ## Adding a Sitemap
@@ -53,33 +44,33 @@ Gasket [webpack plugin].
 #### Example configuration
 
 ```js
-module.exports = {
-  plugins: {
-    add: ['@gasket/nextjs']
-  },
+export default makeGasket({
+  plugins: [
+    pluginNextjs
+  ]
   nextConfig: {
     poweredByHeader: false,
     useFileSystemPublicRoutes: false
   }
-};
+});
 ```
 
 #### Example with plugins
 
 ```js
-const withSass = require('@zeit/next-sass');
-const withCss = require('@zeit/next-css');
+import withSass from '@zeit/next-sass';
+import withCss from '@zeit/next-css';
 
-module.exports = {
-  plugins: {
-    add: ['nextjs']
-  },
+export default makeGasket({
+  plugins: [
+    pluginNextjs
+  ]
   nextConfig: withCss(
     withSass({
       /* config options here */
     })
   )
-};
+});
 ```
 
 ### Internationalized Routing
@@ -91,8 +82,8 @@ used by the Gasket Intl plugin, and also passed along with the Next config for
 i18n routing.
 
 ```diff
-// gasket.config.js
-module.exports = {
+// gasket.js
+export default makeGasket({
   intl: {
 +    defaultLocale: 'en-US',
 +    locales: ['en-US', 'fr', 'nl-NL']
@@ -117,7 +108,7 @@ module.exports = {
     ],
     }
   }
-}
+});
 ```
 
 Also note when using [@gasket/plugin-intl] to determine the locale, that the
