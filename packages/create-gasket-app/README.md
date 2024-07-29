@@ -163,7 +163,7 @@ The `create` lifecycle is fired using [exec].
 import path from 'path';
 
 const name = 'gasket-plugin-pizza';
-const hooks= {
+const hooks = {
   async create(gasket, context) {
     const { pkg, files } = context; // utils from context
     const { pizzaSize, pizzaSauce } = context; // data provided by prompt
