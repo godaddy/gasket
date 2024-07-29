@@ -8,7 +8,7 @@ module.exports = function create(gasket, { pkg, files, gasketConfig }) {
 
   pkg.add('dependencies', {
     [name]: `^${version}`,
-    'dotenv': devDependencies['dotenv'],
+    'dotenv': devDependencies.dotenv,
     'elastic-apm-node': devDependencies['elastic-apm-node']
   });
 

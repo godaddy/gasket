@@ -35,8 +35,8 @@ describe('create lifecycle', function () {
     await create({}, mockContext);
     expect(mockContext.pkg.add).toHaveBeenCalledWith('dependencies', {
       [name]: `^${version}`,
-      'dotenv': devDependencies['dotenv'],
-      'elastic-apm-node': devDependencies['elastic-apm-node'],
+      'dotenv': devDependencies.dotenv,
+      'elastic-apm-node': devDependencies['elastic-apm-node']
     });
   });
 
