@@ -20,9 +20,6 @@ create-gasket-app --presets @gasket/preset-nextjs
 
 When prompted, make sure to select yes to using the App Router architecture.
 
-![App Router Prompt](./static/app-router-prompt.png)
-
-
 ### Install `react-redux` and `@reduxjs/toolkit` in your Gasket app
 
 ```bash
