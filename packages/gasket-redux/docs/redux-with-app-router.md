@@ -58,7 +58,7 @@ export const makeStore = () => {
 }
 ```
 
-If you have an existing Redux setup that you would like to replicate, please refer to the Redux Toolkit docs on [configureStore]. This documentation includes some helpful ways to migrate to modern redux patterns. There is also a detailed example using Middlewre and Persistance for reference.
+If you have an existing Redux setup that you would like to replicate, please refer to the Redux Toolkit docs on [configureStore]. This documentation includes some helpful ways to migrate to modern redux patterns. There is also a detailed example using Middleware and Persistance for reference.
 
 We will also need to establish some hooks in the `hooks.js` file. This is especially helpful
 when using TypeScript to avoid circular dependencies.
@@ -76,7 +76,7 @@ export const useAppStore = useStore.withTypes();
 
 ### Create a Provider Wrapper
 
-This provider will use the `makeStore` function defined in the `store.js` file. The provider will create the store and share it with the children components. We will add the Provider component to the app directory. Your file structure shoudl now look something like the following.
+This provider will use the `makeStore` function defined in the `store.js` file. The provider will create the store and share it with the children components. We will add the Provider component to the app directory. Your file structure should now look something like the following.
 
 ```
 /app
