@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { GasketIntlContext } from './context';
+import { GasketIntlContext } from './context.js';
 
 /**
  * React hook that dispatches locale file load and returns status

@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { GasketIntlContext } from './context';
+import { GasketIntlContext } from './context.js';
 import { ensureArray, needsToLoad } from './utils.js';
 
 /**
