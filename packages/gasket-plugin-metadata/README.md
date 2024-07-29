@@ -69,22 +69,8 @@ export default {
 ## Usage
 
 Beside the lifecycles available to plugins, metadata can also be described for
-preset and modules.
+modules.
 
-### Presets
-
-Presets can describe additional metadata. This is done by defining a `metadata`
-property object on the module, which will get expanded to the [PresetData].
-
-```js
-// gasket-preset-example.js
-module.exports = {
-  require,
-  metadata: {
-    extra: 'information'
-  }
-}
-```
 
 ### Modules
 

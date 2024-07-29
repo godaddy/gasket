@@ -111,7 +111,7 @@ state can hook this event and return a modified version of the initial state or
 a Promise that resolves to a new initial state. Example plugin:
 
 ```js
-const getExperiments = require('./get-experiments');
+import getExperiments from './get-experiments';
 
 export default {
   name: 'gasket-plugin-example',

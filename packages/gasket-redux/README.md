@@ -88,8 +88,8 @@ in your store.
 ```diff
 // ./store.js
 
-const { configureMakeStore } = require('@gasket/redux');
-const myReducers = require('./reducers'); // apps reducers
+import { configureMakeStore } from '@gasket/redux';
+import myReducers './reducers'; // apps reducers
 
 const reducers = {
   ...myReducers,
@@ -98,7 +98,7 @@ const reducers = {
 
 const initialState = { custom: 'example' };
 
-module.exports = configureMakeStore({ initialState, reducers });
+export default configureMakeStore({ initialState, reducers });
 ```
 
 
