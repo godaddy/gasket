@@ -7,6 +7,10 @@ Gasket applications.
 At this time, there is only one plugin which implements a
 custom logger: `@gasket/plugin-winston`.
 
+## Installation
+
+This plugin is only used by presets for `create-gasket-app` and is not installed for apps.
+
 ## Lifecycles
 
 ### createLogger

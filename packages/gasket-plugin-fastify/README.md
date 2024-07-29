@@ -7,25 +7,21 @@ Adds Fastify to your application.
 #### New apps
 
 ```
-gasket create <app-name> --plugins @gasket/plugin-fastify
-```
-
-#### Existing apps
-
-```
 npm i @gasket/plugin-fastify
 ```
 
-Modify `plugins` section of your `gasket.config.js`:
+Update your `gasket` file plugin configuration:
 
 ```diff
-module.exports = {
-  plugins: {
-    add: [
-+      '@gasket/plugin-fastify'
-    ]
-  }
-}
+// gasket.js
+
++ import pluginFastify from '@gasket/plugin-fastify';
+
+export default makeGasket({
+  plugins: [
++   pluginFastify
+  ]
+});
 ```
 
 ## Configuration
@@ -39,17 +35,17 @@ All the configurations for the plugin are added under `fastify` in the config:
 #### Example configuration
 
 ```js
-module.exports = {
-  plugins: {
-    add: ['@gasket/fastify']
-  },
+export default makeGasket({
+  plugins: [
+    pluginFastify
+  ],
   fastify: {
     compression: false,
     routes: 'api/*.js',
     excludedRoutesRegex: /^(?!\/_next\/)/,
     trustProxy: true
   }
-}
+});
 ```
 
 ## Lifecycles
