@@ -156,7 +156,7 @@ import thunk from 'redux-thunk';
 const myExtraArg = {};
 const thunkMiddleware = thunk.withExtraArgument(myExtraArg);
 
-export default configureMakeStore({ reducers, thunkMiddleware });
+module.exports = configureMakeStore({ reducers, thunkMiddleware });
 ```
 
 ## License

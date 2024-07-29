@@ -134,6 +134,22 @@ export default makeGasket({
 });
 ```
 
+```js
+// /lifecycles/log-transports.js
+
+const fluent = require('fluent-logger');
+const FluentTransport = fluent.support.winstonTransport();
+
+/**
+ * Define additional log transports for your application
+ * @param {Gasket} gasket The gasket API
+ * @return {Transport|Transport[]} winston Transports to consume
+ */
+function winstonTransportsHook(gasket) {
+  return new FluentTransport('mytag', gasket.config.fluentd);
+};
+```
+
 ## Test
 
 If you are contributing to this plugin, use the following to run the tests:
