@@ -1,4 +1,10 @@
-import { ComponentType, FunctionComponent, PropsWithChildren, ReactNode, Ref } from 'react';
+import {
+  ComponentType,
+  FunctionComponent,
+  PropsWithChildren,
+  ReactNode,
+  Ref
+} from 'react';
 import {
   LocaleFilePath,
   LocaleFileStatus,
@@ -7,6 +13,8 @@ import {
 } from '@gasket/helper-intl';
 
 export { LocaleFileStatus };
+
+export { GasketIntlContext } from './types';
 
 export interface LocaleFileRequiredProps {
   /** Path containing locale files */
@@ -42,8 +50,6 @@ export function withLocaleFileRequired(
   Component: ComponentType<any>
 ) => LocaleFileRequiredHOC;
 
-
-
 /**
  * React that fetches a locale file and returns loading status
  */
@@ -54,7 +60,6 @@ export function useLocaleFile(
 
 export function useMessages(): Messages;
 
-
 export interface ProviderProps {
   locale: string;
   forwardedRef?: Ref<any>;
@@ -63,14 +68,6 @@ export interface ProviderProps {
 export interface MessagesProps {
   locale: string;
   messages: Record<string, any>;
-}
-
-export type IntlContextLoad = (...localeFilePaths: LocaleFilePath[]) => void;
-export type IntlContextStatus = (...localeFilePaths: LocaleFilePath[]) => typeof LocaleFileStatus;
-export interface GasketIntlContext {
-  load: IntlContextLoad;
-  getStatus: IntlContextStatus;
-  messages: Messages;
 }
 
 export type IntlProviderHOC = FunctionComponent<PropsWithChildren<ProviderProps>>;

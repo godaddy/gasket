@@ -1,7 +1,7 @@
 import React from 'react';
 import { needsToLoad } from './utils.js';
 
-/** @type {import('.').GasketIntlContext} */
+/** @type {import('./types').GasketIntlContext} */
 const defaultContext = {
   getStatus: () => 'not-loaded',
   load: () => {},
@@ -13,7 +13,7 @@ export const GasketIntlContext = React.createContext(defaultContext);
 /** @type {import('./types').makeContext} */
 export function makeContext(localeHandler, messages, setMessages) {
 
-  /** @type {import('.').IntlContextLoad} */
+  /** @type {import('./types').IntlContext_load} */
   function load(...localeFilePaths) {
     const status = localeHandler.getStatus(...localeFilePaths);
 
@@ -24,7 +24,7 @@ export function makeContext(localeHandler, messages, setMessages) {
     }
   }
 
-  /** @type {import('.').IntlContextStatus} */
+  /** @type {import('./types').IntlContext_status} */
   function getStatus(...localeFilePaths) {
     return localeHandler.getStatus(...localeFilePaths);
   }

@@ -1,9 +1,17 @@
-import { LocaleFileStatus, LocaleHandler, Messages } from '@gasket/helper-intl';
-import { GasketIntlContext } from './index';
+import { LocaleFilePath, LocaleFileStatus, LocaleHandler, Messages } from '@gasket/helper-intl';
 
 export function ensureArray(maybeArray: any): any[];
 
-export function needsToLoad(status: LocaleFileStatus): boolean;
+export function needsToLoad(status: typeof LocaleFileStatus): boolean;
+
+export type IntlContext_load = (...localeFilePaths: LocaleFilePath[]) => void;
+export type IntlContext_status = (...localeFilePaths: LocaleFilePath[]) => typeof LocaleFileStatus;
+
+export interface GasketIntlContext {
+  load: IntlContext_load;
+  getStatus: IntlContext_status;
+  messages: Messages;
+}
 
 export function makeContext(
   localeHandler: LocaleHandler,
