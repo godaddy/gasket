@@ -106,9 +106,6 @@ export default({
 })
 ```
 
-
-
-
 ## @gasket/gasket-plugin-cypress
 
 Update Cypress version to 12.3.0. [(#660)]
@@ -316,4 +313,3 @@ Additionally, `@gasket/plugin-nextjs` now generates a `_app.js` file with `getIn
 [middleware paths]:https://github.com/godaddy/gasket/blob/main/packages/gasket-plugin-express/README.md#middleware-paths
 [streaming]: https://nextjs.org/docs/app/building-your-application/routing/loading-ui-and-streaming
 [App Router]: https://nextjs.org/docs/app/building-your-application/routing
-```
