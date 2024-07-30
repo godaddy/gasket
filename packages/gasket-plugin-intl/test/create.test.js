@@ -8,12 +8,14 @@ describe('create', function () {
   let pkgAddStub;
   let filesAddStub;
   let addPluginStub;
+  let addStub;
 
   beforeEach(function () {
     pkgHasStub = jest.fn().mockReturnValue(true);
     pkgAddStub = jest.fn();
     filesAddStub = jest.fn();
     addPluginStub = jest.fn();
+    addStub = jest.fn();
 
     mockContext = {
       pkg: {
@@ -24,7 +26,8 @@ describe('create', function () {
         add: filesAddStub
       },
       gasketConfig: {
-        addPlugin: addPluginStub
+        addPlugin: addPluginStub,
+        add: addStub
       }
     };
   });
@@ -66,6 +69,13 @@ describe('create', function () {
     await plugin.hooks.create({}, mockContext);
     expect(pkgAddStub).toHaveBeenCalledWith('scripts', {
       prebuild: 'node gasket.js build'
+    });
+  });
+
+  it('adds the default intl.locales config', async function () {
+    await plugin.hooks.create({}, mockContext);
+    expect(addStub).toHaveBeenCalledWith('intl', {
+      locales: ['en-US']
     });
   });
 });
