@@ -263,7 +263,7 @@ Update plugin strings to be plugin import statements in `gasket.js`. All plugins
 
 + export default makeGasket({
 +   plugins: [
-+	    pluginNextjs
++     pluginNextjs
 +   ],
 +   filename: import.meta.filename,
 + });
