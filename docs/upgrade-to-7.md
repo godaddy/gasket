@@ -250,11 +250,11 @@ Update plugin strings to be plugin import statements in `gasket.js`. All plugins
 ```diff
 // gasket.config.js
 - module.exports = {
--  plugins: {
--    presets: [
--      '@gasket/plugin-nextjs',
--    ],
--  },
+-   plugins: {
+-     presets: [
+-       '@gasket/plugin-nextjs',
+-     ],
+-   },
 - };
 
 // gasket.js
@@ -262,10 +262,10 @@ Update plugin strings to be plugin import statements in `gasket.js`. All plugins
 + import pluginNextjs from '@gasket/plugin-nextjs';
 
 + export default makeGasket({
-+  plugins: [
-+		pluginNextjs
-+	],
-+  filename: import.meta.filename,
++   plugins: [
++	    pluginNextjs
++	  ],
++   filename: import.meta.filename,
 + });
 ```
 
