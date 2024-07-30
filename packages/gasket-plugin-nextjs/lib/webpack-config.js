@@ -33,7 +33,7 @@ function externalizeGasketCore(ctx, callback) {
 }
 
 /** @type {import('@gasket/core').HookHandler<'webpackConfig'>} */
-function webpackConfigHook(gasket, webpackConfig, { isServer }) {
+function webpackConfigHook(gasket, webpackConfig, { webpack, isServer }) {
   if (Array.isArray(webpackConfig.externals)) {
     if (!isServer) {
       if ('filename' in gasket.config) {
@@ -45,20 +45,16 @@ function webpackConfigHook(gasket, webpackConfig, { isServer }) {
       }
 
       webpackConfig.externals.unshift(validateNoGasketCore);
-    } else {
-      webpackConfig.externals.unshift(externalizeGasketCore);
-
-      // TODO: If we find a reason NOT to externalized the core package,
-      //  then we must set the GASKET_ENV which requires builds per environment.
-      // webpackConfig.plugins.push(
-      //   new webpack.EnvironmentPlugin({
-      //     GASKET_ENV: gasket.config.env
-      //   })
-      // );
     }
   } else {
     throw new Error('Expected webpackConfig.externals to be an array');
   }
+
+  webpackConfig.plugins.push(
+    new webpack.EnvironmentPlugin({
+      GASKET_ENV: gasket.config.env
+    })
+  );
 
   return webpackConfig;
 }

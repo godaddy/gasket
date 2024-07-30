@@ -3,7 +3,7 @@
 
 /**
  * Bring forward configuration from intl plugin to config for next.
- * @param {import("@gasket/core").Gasket} gasket - The gasket API
+ * @param {import('@gasket/core').Gasket} gasket - The gasket API
  * @param {object} config - Configuration to pass to Nextjs
  * @private
  */
@@ -41,13 +41,12 @@ function forwardIntlConfig(gasket, config) {
 /**
  * Small helper function that creates nextjs configuration from the gasket
  * configuration.
- * @param {import("@gasket/core").Gasket}  gasket The gasket API.
- * @param {boolean} includeWebpackConfig `true` to generate webpack config
+ * @param {import('@gasket/core').Gasket}  gasket The gasket API.
  * @param   {object} [nextConfig]           Initial next config
  * @returns {Promise<object>} The configuration data for Nextjs
  * @private
  */
-function createConfig(gasket, includeWebpackConfig = true, nextConfig = {}) {
+function createConfig(gasket, nextConfig = {}) {
   const config = {
     poweredByHeader: false,
     ...(gasket.config?.nextConfig || {}),
@@ -56,17 +55,15 @@ function createConfig(gasket, includeWebpackConfig = true, nextConfig = {}) {
 
   forwardIntlConfig(gasket, config);
 
-  if (includeWebpackConfig) {
-    const { webpack: existingWebpack } = config;
+  const { webpack: existingWebpack } = config;
 
-    // Add webpack property to nextConfig and wrap existing
-    config.webpack = function webpack(webpackConfig, data) {
-      if (typeof existingWebpack === 'function') {
-        webpackConfig = existingWebpack(webpackConfig, data);
-      }
-      return gasket.actions.getWebpackConfig(webpackConfig, data);
-    };
-  }
+  // Add webpack property to nextConfig and wrap existing
+  config.webpack = function webpack(webpackConfig, data) {
+    if (typeof existingWebpack === 'function') {
+      webpackConfig = existingWebpack(webpackConfig, data);
+    }
+    return gasket.actions.getWebpackConfig(webpackConfig, data);
+  };
 
   // eslint-disable-next-line no-sync
   return gasket.execWaterfallSync('nextConfig', config);
