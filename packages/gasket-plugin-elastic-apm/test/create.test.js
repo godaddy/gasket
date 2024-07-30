@@ -45,13 +45,13 @@ describe('create lifecycle', function () {
     const result = mockContext.pkg.extend((current) => {
       return {
         scripts: {
-          start: `node --import ./setup.js & ${current.scripts.start}`
+          start: `NODE_OPTIONS='--import ./setup.js' ${current.scripts.start}`
         }
       };
     });
     await create({}, mockContext);
     expect(mockContext.pkg.extend).toHaveBeenCalledWith(expect.any(Function));
-    expect(result).toEqual({ scripts: { start: 'node --import ./setup.js & node server.js' } });
+    expect(result).toEqual({ scripts: { start: 'NODE_OPTIONS=\'--import ./setup.js\' node server.js' } });
   });
 
   it('adds the generator files', async () => {
