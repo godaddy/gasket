@@ -15,7 +15,7 @@ module.exports = function create(gasket, { pkg, files, gasketConfig }) {
   pkg.extend((current) => {
     return {
       scripts: {
-        start: `node --import ./setup.js & ${current.scripts.start}`
+        start: `NODE_OPTIONS=--import=./setup.js ${current.scripts.start}`
       }
     };
   });
