@@ -12,7 +12,7 @@ module.exports = function actions(gasket) {
         } else {
           baseConfig = nextConfig ?? {};
         }
-        return createConfig(gasket, phase === 'phase-production-build', baseConfig);
+        return createConfig(gasket, baseConfig);
       };
     },
     async getNextRoute(req) {
