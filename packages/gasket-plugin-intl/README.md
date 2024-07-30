@@ -25,7 +25,6 @@ export default makeGasket({
 })
 ```
 
-
 ## Configuration
 
 To be set under `intl` in the `gasket.js`. No configuration is
