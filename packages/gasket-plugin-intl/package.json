@@ -46,11 +46,7 @@
     "fs-extra": "^10.0.0",
     "glob": "^8.1.0",
     "intl": "^1.2.5",
-    "loader-utils": "^3.2.1",
-    "lodash.merge": "^4.6.2",
-    "semver": "^7.5.4",
-    "serve-static": "^1.15.0",
-    "url-join": "^4.0.0"
+    "semver": "^7.5.4"
   },
   "devDependencies": {
     "@gasket/core": "^7.0.0-next.42",
