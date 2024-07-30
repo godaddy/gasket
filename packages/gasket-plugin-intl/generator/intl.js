@@ -1,5 +1,5 @@
 /* -- GENERATED FILE - DO NOT EDIT -- */
-import { makeIntlManager } from '@gasket/helper-intl';
+import { makeIntlManager } from '@gasket/intl';
 
 const manifest = {
   defaultLocaleFilePath: 'locales',
