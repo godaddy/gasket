@@ -4,30 +4,24 @@ Use [Docusaurus] to serve a website view of the collated docs from [@gasket/plug
 
 ## Installation
 
-#### New apps
-
-```
-gasket create <app-name> --plugins @gasket/plugin-docs,@gasket/plugin-docusaurus
-```
-#### Existing apps
-
 ```
 npm i @gasket/plugin-docs @gasket/plugin-docusaurus
 ```
 
-Modify `plugins` section of your `gasket.js`:
+Update your `gasket` file plugin configuration:
 
 ```diff
-import { makeGasket } from '@gasket/core';
+// gasket.js
+
++ import pluginDocusarus from '@gasket/plugin-docusaurus';
 + import pluginDocs from '@gasket/plugin-docs';
-+ import pluginDocusaurus from '@gasket/plugin-docusaurus';
 
 export default makeGasket({
   plugins: [
-+    pluginDocs,
-+    pluginDocusaurus
++   pluginDocs
++   pluginDocusarus
   ]
-})
+});
 ```
 
 Now, when you run `npx gasket docs` in your app, a nice Docusaurus website will be
@@ -36,7 +30,7 @@ launched in your browser.
 
 ## Configuration
 
-To be set under `docusaurus` in the `gasket.config.js`.
+To be set under `docusaurus` in the `gasket.js`.
 
 - `rootDir` - (string) Root Docusaurus directory. Default is `.docs`.
 - `docsDir` - (string) Sub-directory for the generated markdown from the docs plugin. Default is `docs`.
@@ -45,16 +39,16 @@ To be set under `docusaurus` in the `gasket.config.js`.
 
 #### Example
 ```js
-// gasket.config.js
+// gasket.js
 
-module.exports = {
+ export default makeGasket({
   docusaurus: {
     rootDir: 'my-site-documents',
     docsDir: 'markdown',
     port: 8000,
     host: 'custom-host'
   }
-};
+});
 
 // structure
 gasket-app/ // app root

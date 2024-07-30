@@ -4,29 +4,22 @@ Adds Elastic APM instrumentation to your application
 
 ## Installation
 
-#### New apps
-
 ```
-gasket create <app-name> --plugins @gasket/plugin-elastic-apm
+npm i @gasket/plugin-elastic-apm
 ```
 
-#### Existing apps
-
-```
-npm install @gasket/plugin-elastic-apm elastic-apm-node
-```
-
-Modify `plugins` section of your `gasket.js`:
+Update your `gasket` file plugin configuration:
 
 ```diff
-import { makeGasket } from '@gasket/core';
+// gasket.js
+
 + import pluginElasticApm from '@gasket/plugin-elastic-apm';
 
 export default makeGasket({
   plugins: [
-+    pluginElasticApm
++   pluginElasticApm
   ]
-})
+});
 ```
 
 Add a `--require` flag to a `package.json` start script:
@@ -78,14 +71,14 @@ configured under `elasticAPM` in the `gasket.config.js`.
 If your application’s users send session credentials or any other sensitive
 information in their cookies, you may wish to filter them out before they are
 stored in Elasticsearch. Specify a list of cookie names to redact in
-`gasket.config.js`:
+`gasket.js`:
 
 ```js
-module.exports = {
+export default makeGasket({
   elasticAPM: {
     sensitiveCookies: ['my_jwt', 'userFullName']
   }
-};
+});
 ```
 
 #### Custom Filtering Sensitive Fields

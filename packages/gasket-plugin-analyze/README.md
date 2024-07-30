@@ -5,29 +5,22 @@ Gasket plugin for building analysis reports of webpack bundles using
 
 ## Installation
 
-#### New apps
-
-```
-gasket create <app-name> --plugins @gasket/plugin-analyze
-```
-
-#### Existing apps
-
 ```
 npm i @gasket/plugin-analyze
 ```
 
-Modify `plugins` section of your `gasket.config.js`:
+Update your `gasket` file plugin configuration:
 
 ```diff
-import { makeGasket } from '@gasket/core';
+// gasket.js
+
 + import pluginAnalyze from '@gasket/plugin-analyze';
 
 export default makeGasket({
   plugins: [
-+    pluginAnalyze 
++   pluginAnalyze
   ]
-})
+});
 ```
 
 ## Configuration
@@ -45,9 +38,9 @@ outputs the reports to a `reports` dir at the root of the project.
 #### Example
 
 ```js
-// gasket.config.js
+// gasket.js
 
-module.exports = {
+export default makeGasket({
   bundleAnalyzerConfig: {
     browser: {
       defaultSizes: 'gzip'
@@ -56,7 +49,7 @@ module.exports = {
       openAnalyzer: false
     }
   }
-}
+});
 ```
 
 ## NPM script

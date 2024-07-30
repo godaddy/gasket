@@ -4,35 +4,28 @@ Adds the `morgan` request logger to your application.
 
 [Morgan] is an HTTP request logger middleware for node.js.
 
-## Installation
-
 ### Requirements
 
 - [@gasket/plugin-express] or [@gasket/plugin-fastify]
 
-### New apps
-
-```
-gasket create <app-name> --plugins @gasket/plugin-morgan
-```
-
-### Existing apps
+## Installation
 
 ```
 npm i @gasket/plugin-morgan
 ```
 
-Modify `plugins` section of your `gasket.js`:
+Update your `gasket` file plugin configuration:
 
 ```diff
-import { makeGasket } from '@gasket/core';
+// gasket.js
+
 + import pluginMorgan from '@gasket/plugin-morgan';
 
 export default makeGasket({
   plugins: [
-+    pluginMorgan
++   pluginMorgan
   ]
-})
+});
 ```
 
 ## Configuration
@@ -49,17 +42,15 @@ See more format and options on [Morgan middleware page][Morgan].
 Defaults:
 
 ```js
-module.exports = {
+export default makeGasket({
   plugins: {
-    add: [
-      '@gasket/plugin-morgan'
-    ]
+    pluginMorgan
   },
   morgan: {
     format: 'tiny',
     options: {}
   }
-}
+});
 ```
 
 ## How it works

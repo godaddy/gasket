@@ -10,18 +10,18 @@ CLI. Executes the `commands` lifecycle in the `configure` hook of the
 npm i @gasket/plugin-command
 ```
 
-Update your `gasket.js` plugin configuration:
+Update your `gasket` file plugin configuration:
 
 ```diff
 import { makeGasket } from '@gasket/core';
-import pluginCommand from '@gasket/plugin-command';
++ import pluginCommand from '@gasket/plugin-command';
 
 export default makeGasket({
   plugins: [
     // other plugins
 +    pluginCommand
   ]
-})
+});
 ```
 
 ## Lifecycles

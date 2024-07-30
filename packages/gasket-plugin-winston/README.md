@@ -4,37 +4,30 @@ Set up a [winston] logger instance for the Gasket logger.
 
 ## Installation
 
-#### New apps
-
-```shell
-gasket create <app-name> --plugins @gasket/plugin-winston
 ```
-
-#### Existing apps
-
-```shell
 npm i @gasket/plugin-winston
 ```
 
-Modify `plugins` section of your `gasket.js`:
+Update your `gasket` file plugin configuration:
 
 ```diff
-import { makeGasket } from '@gasket/core';
+// gasket.js
+
 + import pluginWinston from '@gasket/plugin-winston';
 
 export default makeGasket({
   plugins: [
-+    pluginWinston
++   pluginWinston
   ]
-})
+});
 ```
 
 ## Configuration
 
-To customize the logger, add a `winston` object to your `gasket.config.js`. The properties of this object override the default logging configuration supplied by Gasket.
+To customize the logger, add a `winston` object to your `gasket.js`. The properties of this object override the default logging configuration supplied by Gasket.
 
 ```js
-module.exports = {
+export default makeGasket({
   winston: {
     level: 'warning'
   },
@@ -46,7 +39,7 @@ module.exports = {
       }
     }
   }
-};
+});
 ```
 
 ### Options
@@ -87,12 +80,12 @@ The [winston documentation] enumerates which properties can be configured. To su
 `Console` transports are set by default. Loggers provided by `winston` are
 highly customizable using [Transports].
 
-**`gasket.config.js`**
+**`gasket.js`**
 
 ```js
-const { transports } = require('winston');
+import { transports } from 'winston';
 
-module.exports = {
+export default makeGasket({
   winston: {
     level: 'warning',
     transports: [
@@ -104,7 +97,7 @@ module.exports = {
       })
     ]
   }
-}
+});
 ```
 
 ## Lifecycles
@@ -117,8 +110,8 @@ the logger. Here's an example gasket config and a hook that uses that config to
 add a FluentD transport:
 
 ```js
-// gasket.config.js
-module.exports = {
+// gasket.js
+export default makeGasket({
   winston: {
     level: 'warning'
   },
@@ -138,7 +131,7 @@ module.exports = {
       }
     }
   }
-};
+});
 ```
 
 ```js

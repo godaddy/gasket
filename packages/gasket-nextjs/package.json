@@ -15,6 +15,10 @@
       "types": "./lib/document/index.d.ts",
       "default": "./lib/document/index.js"
     },
+    "./layout": {
+      "types": "./lib/layout/index.d.ts",
+      "default": "./lib/layout/index.js"
+    },
     "./server": {
       "types": "./lib/server/index.d.ts",
       "default": "./lib/server/index.js"

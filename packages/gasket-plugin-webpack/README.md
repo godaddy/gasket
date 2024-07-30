@@ -4,47 +4,40 @@ Adds Webpack support to your application.
 
 ## Installation
 
-#### New apps
-
 ```
-gasket create <app-name> --plugins @gasket/plugin-webpack
+npm i @gasket/plugin-webpack
 ```
 
-#### Existing apps
-
-```
-npm i @gasket/plugin-webpack webpack
-```
-
-Modify `plugins` section of your `gasket.js`:
+Update your `gasket` file plugin configuration:
 
 ```diff
-import { makeGasket } from '@gasket/core';
+// gasket.js
+
 + import pluginWebpack from '@gasket/plugin-webpack';
 
 export default makeGasket({
   plugins: [
-+    pluginWebpack
++   pluginWebpack
   ]
-})
+});
 ```
 
 ## Configuration
 
-The Webpack plugin is configured using the `gasket.config.js` file.
+The Webpack plugin is configured using the `gasket.js` file.
 
-First, add it to the `plugins` section of your `gasket.config.js`:
+First, add it to the `plugins` section of your `gasket.js`:
 
 ```js
-module.exports = {
+export default makeGasket({
   plugins: {
-    add: ['@gasket/plugin-webpack']
+    pluginWebpack
   }
-}
+});
 ```
 
 If your app was previously using the `webpack` property in the
-`gasket.config.js`, then you should take steps [migrating to webpackConfig]
+`gasket.js`, then you should take steps [migrating to webpackConfig]
 lifecycle.  
 
 ## API
@@ -134,7 +127,7 @@ first argument. It can be used to add additional configurations to Webpack.
 
 ### From Gasket config
 
-If your app previously added Webpack configuration in the `gasket.config.js`,
+If your app previously added Webpack configuration in the `gasket.js`,
 this feature is deprecated and you should migrate to using
 the [`webpackConfig`](#webpackConfig) lifecycle.
 
@@ -142,20 +135,20 @@ For background, the `webpack` config is merged using an old deprecated "smart"
 method from [webpack-merge]. It is now recommended for apps and plugins to
 handle any merge strategies themselves in the `webpackConfig` lifecycle.
 
-So move from this setting `webpack` in the `gasket.config`:
+So move from this setting `webpack` in the `gasket.js`:
 
 ```diff
-// gasket.config.js
-module.exports = {
+// gasket.js
+export default makeGasket({
   plugins: {
-    add: ['@gasket/plugin-webpack']
+    pluginWebpack
   },
 -  webpack: {
 -    performance: {
 -      maxAssetSize: 20000
 -    }
 -  }
-};
+});
 ```
 
 to using the webpackConfig lifecycle to merge any custom Webpack config:

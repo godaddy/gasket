@@ -1,7 +1,7 @@
 # `@gasket/nextjs`
 
 
-
+- Add gasketData layout for app router ([#814])
 - Add file extensions to imports, fix package exports conflict ([#778])
 
 ### 6.45.2
@@ -68,3 +68,4 @@
 [#614]: https://github.com/godaddy/gasket/pull/614
 [#670]: https://github.com/godaddy/gasket/pull/670
 [#778]: https://github.com/godaddy/gasket/pull/778
+[#814]: https://github.com/godaddy/gasket/pull/814

@@ -9,29 +9,22 @@ Adds Express to your application.
 
 ## Installation
 
-#### New apps
-
-```
-gasket create <app-name> --plugins @gasket/plugin-express
-```
-
-#### Existing apps
-
 ```
 npm i @gasket/plugin-express
 ```
 
-Modify `plugins` section of your `gasket.js`:
+Update your `gasket` file plugin configuration:
 
 ```diff
-import { makeGasket } from '@gasket/core';
+// gasket.js
+
 + import pluginExpress from '@gasket/plugin-express';
 
 export default makeGasket({
   plugins: [
-+    pluginExpress
++   pluginExpress
   ]
-})
+});
 ```
 
 ## Configuration
@@ -48,17 +41,17 @@ All the configurations for the plugin are added under `express` in the config:
 #### Example configuration
 
 ```js
-module.exports = {
-  plugins: {
-    add: ['@gasket/express']
-  },
+export default makeGasket({
+  plugins: [
+    pluginExpress
+  ],
   express: {
     compression: false,
     routes: 'api/*.js',
     middlewareInclusionRegex: /^(?!\/_next\/)/,
     trustProxy: true
   }
-}
+});
 ```
 
 ## Logging
