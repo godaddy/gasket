@@ -104,7 +104,7 @@ modified `context` object.
 
 const name = 'gasket-plugin-pizza';
 const hooks = {
-  async prompt(gasket, context, { prompt, addPlugins }) {
+  async prompt(gasket, context, { prompt }) {
     const answers = await prompt([
       {
         name: 'pizzaSize',
@@ -124,10 +124,6 @@ const hooks = {
         type: 'confirm'
       }
     ]);
-
-    if (answers.wantSoda === true) {
-      await addPlugins('gasket-plugin-soda@^2.0.0')
-    }
 
     return { ...context, ...answers };
   }

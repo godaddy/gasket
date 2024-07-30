@@ -100,7 +100,7 @@ For example, say we have some team that wants to always use [Airbnb] style and
 with stylelint for their apps:
 
 ```js
-// presetPrompt.js
+// preset-prompt.js
 
 export default async function presetPrompt(gasket, context, { prompt }) {
   context.codeStyle = 'airbnb';
@@ -111,7 +111,7 @@ export default async function presetPrompt(gasket, context, { prompt }) {
 Or, say we have another team with an internal [ESLint] config
 
 ```js
-// presetPrompt.js
+// preset-prompt.js
 export default async function presetPrompt(gasket, context, { prompt }) {
   context.eslintConfig = '@another/eslint-config';
 };
