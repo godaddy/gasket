@@ -22,7 +22,7 @@ metadata.
 
 ```js
 // gasket-plugin-example.js
-module.exports = {
+export default {
   name: 'example',
   hooks: {
     /**
@@ -69,22 +69,8 @@ module.exports = {
 ## Usage
 
 Beside the lifecycles available to plugins, metadata can also be described for
-preset and modules.
+modules.
 
-### Presets
-
-Presets can describe additional metadata. This is done by defining a `metadata`
-property object on the module, which will get expanded to the [PresetData].
-
-```js
-// gasket-preset-example.js
-module.exports = {
-  require,
-  metadata: {
-    extra: 'information'
-  }
-}
-```
 
 ### Modules
 
@@ -125,9 +111,9 @@ installed module, and put is some conditional logic.
 
 ```js
 // gasket-plugin-example.js
-const semver = require('semver')
+import semver from 'semver';
 
-module.exports = {
+export default {
   name: 'example',
   hooks: {
     // Because metadata is collected during the init lifecycle, we must 

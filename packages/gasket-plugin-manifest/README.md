@@ -86,7 +86,7 @@ matches either `manifest.json` or the service worker script (which is `sw.js` by
 default).
 
 ```js
-// lifecyles/manifest.js
+// sample-plugin.js
 
 /**
  * Generate a manifest.json that will be deeply merged into the existing ones.
@@ -98,17 +98,21 @@ default).
  * @param  {Request} req Incoming HTTP Request
  * @return {Promise<Object>} updated manifest
  */
-module.exports = async function (gasket, manifest, { req }) {
-  const whitelisted = await checkAgainstRemoteWhitelist(req.ip);
-  return {
-    ...manifest,
-    orientation: gasket.config.orientation,
-    theme_color: (req.secure && whitelisted) ? '#00ff00' : '#ff0000'
-  };
+export default {
+  name: 'sample-plugin',
+  hooks: {
+    manifest: async function (gasket, manifest, { req }) {
+    const whitelisted = await checkAgainstRemoteWhitelist(req.ip);
+    return {
+      ...manifest,
+      orientation: gasket.config.orientation,
+      theme_color: (req.secure && whitelisted) ? '#00ff00' : '#ff0000'
+    };
+  }
 }
 ```
 
-It is important to note that conflicting objects from `gasket.config.js` and a
+It is important to note that conflicting objects from `gasket.js` and a
 `manifest` hook will be resolved by using the data from the *hook*.
 
 Once the `manifest.json` has been resolved, it is suggested that consumers of
@@ -116,7 +120,7 @@ this plugin take advantage of the `workbox` hook. For example: here we cache any
 icons that the application might use at runtime:
 
 ```js
-// lifecycles/workbox.js
+// sample-plugin.js
 
 /**
  * Returns a config partial which will be merged
@@ -125,16 +129,20 @@ icons that the application might use at runtime:
  * @param {Request} req incoming HTTP request
  * @returns {Object} config which will be deeply merged
  */
-module.exports = function (gasket, config, req) {
-  const { icons = [] } = req.manifest;
+export default {
+  name: 'sample-plugin',
+  hooks: {
+    workbox: function (gasket, config, req) {
+      const { icons = [] } = req.manifest;
 
-  return {
-    runtimeCaching: icons.map(icon => ({
-      urlPattern: icon.src,
-      handler: 'staleWhileRevalidate'
-    }))
+    return {
+      runtimeCaching: icons.map(icon => ({
+        urlPattern: icon.src,
+        handler: 'staleWhileRevalidate'
+      }))
+    };
   };
-};
+}
 ```
 
 ## License
