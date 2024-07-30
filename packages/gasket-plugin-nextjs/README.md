@@ -18,17 +18,17 @@ gasket create <app-name> --plugins @gasket/plugin-nextjs
 npm i @gasket/plugin-nextjs next react react-dom
 ```
 
-Modify `plugins` section of your `gasket.config.js`:
+Modify `plugins` section of your `gasket.js`:
 
 ```diff
-// gasket.config.js
-module.exports = {
-  plugins: {
-    add: [
-+      '@gasket/plugin-nextjs'
-    ]
-  }
-}
+import { makeGasket } from '@gasket/core';
++ import pluginNextjs from '@gasket/plugin-nextjs';
+
+export default makeGasket({
+  plugins: [
++    pluginNextjs
+  ]
+})
 ```
 
 ## Adding a Sitemap

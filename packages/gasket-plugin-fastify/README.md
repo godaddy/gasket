@@ -16,16 +16,17 @@ gasket create <app-name> --plugins @gasket/plugin-fastify
 npm i @gasket/plugin-fastify
 ```
 
-Modify `plugins` section of your `gasket.config.js`:
+Modify `plugins` section of your `gasket.js`:
 
 ```diff
-module.exports = {
-  plugins: {
-    add: [
-+      '@gasket/plugin-fastify'
-    ]
-  }
-}
+import { makeGasket } from '@gasket/core';
++ import pluginFastify from '@gasket/plugin-fastify';
+
+export default makeGasket({
+  plugins: [
++    pluginFastify
+  ]
+})
 ```
 
 ## Configuration

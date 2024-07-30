@@ -16,16 +16,17 @@ gasket create <app-name> --plugins @gasket/plugin-elastic-apm
 npm install @gasket/plugin-elastic-apm elastic-apm-node
 ```
 
-Modify `plugins` section of your `gasket.config.js`:
+Modify `plugins` section of your `gasket.js`:
 
 ```diff
-module.exports = {
-  plugins: {
-    add: [
-+      '@gasket/plugin-elastic-apm'
-    ]
-  }
-}
+import { makeGasket } from '@gasket/core';
++ import pluginElasticApm from '@gasket/plugin-elastic-apm';
+
+export default makeGasket({
+  plugins: [
++    pluginElasticApm
+  ]
+})
 ```
 
 Add a `--require` flag to a `package.json` start script:

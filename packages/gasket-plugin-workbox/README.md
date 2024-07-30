@@ -25,16 +25,17 @@ gasket create <app-name> --plugins @gasket/plugin-workbox
 npm i @gasket/plugin-workbox
 ```
 
-Modify `plugins` section of your `gasket.config.js`:
+Modify `plugins` section of your `gasket.js`:
 
 ```diff
-module.exports = {
-  plugins: {
-    add: [
-+      '@gasket/plugin-workbox'
-    ]
-  }
-}
+import { makeGasket } from '@gasket/core';
++ import pluginWorkbox from '@gasket/plugin-workbox';
+
+export default makeGasket({
+  plugins: [
++    pluginWorkbox
+  ]
+})
 ```
 
 ## Configuration

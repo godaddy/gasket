@@ -17,16 +17,17 @@ gasket create <app-name> --plugins @gasket/plugin-https
 npm i @gasket/plugin-https
 ```
 
-Modify `plugins` section of your `gasket.config.js`:
+Modify `plugins` section of your `gasket.js`:
 
 ```diff
-module.exports = {
-  plugins: {
-    add: [
-+      '@gasket/plugin-https'
-    ]
-  }
-}
+import { makeGasket } from '@gasket/core';
++ import pluginHttps from '@gasket/plugin-https';
+
+export default makeGasket({
+  plugins: [
++    pluginHttps
+  ]
+})
 ```
 
 ## Configuration

@@ -16,16 +16,17 @@ gasket create <app-name> --plugins @gasket/plugin-happyfeet
 npm i @gasket/plugin-happyfeet
 ```
 
-Modify the `plugins` section of your `gasket.config.js`:
+Modify the `plugins` section of your `gasket.js`:
 
 ```diff
-module.exports = {
-  plugins: {
-    add: [
-+      '@gasket/plugin-happyfeet'
-    ]
-  }
-}
+import { makeGasket } from '@gasket/core';
++ import pluginHappyFeet from '@gasket/plugin-happyfeet';
+
+export default makeGasket({
+  plugins: [
++    pluginHappyFeet
+  ]
+})
 ```
 
 ## Configuration

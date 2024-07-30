@@ -20,16 +20,17 @@ gasket create <app-name> --plugins @gasket/plugin-swagger
 npm i @gasket/plugin-swagger
 ```
 
-Modify `plugins` section of your `gasket.config.js`:
+Modify `plugins` section of your `gasket.js`:
 
 ```diff
-module.exports = {
-  plugins: {
-    add: [
-+      '@gasket/plugin-swagger'
-    ]
-  }
-}
+import { makeGasket } from '@gasket/core';
++ import pluginSwagger from '@gasket/plugin-swagger';
+
+export default makeGasket({
+  plugins: [
++    pluginSwagger
+  ]
+})
 ```
 
 ## Configuration

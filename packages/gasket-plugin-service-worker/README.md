@@ -18,16 +18,17 @@ gasket create <app-name> --plugins @gasket/plugin-service-worker
 npm i @gasket/plugin-service-worker
 ```
 
-Modify `plugins` section of your `gasket.config.js`:
+Modify `plugins` section of your `gasket.js`:
 
 ```diff
-module.exports = {
-  plugins: {
-    add: [
-+      '@gasket/plugin-service-worker'
-    ]
-  }
-}
+import { makeGasket } from '@gasket/core';
++ import pluginServiceWorker from '@gasket/plugin-service-worker';
+
+export default makeGasket({
+  plugins: [
++    pluginServiceWorker
+  ]
+})
 ```
 
 ## Configuration

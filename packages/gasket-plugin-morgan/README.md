@@ -22,16 +22,17 @@ gasket create <app-name> --plugins @gasket/plugin-morgan
 npm i @gasket/plugin-morgan
 ```
 
-Modify `plugins` section of your `gasket.config.js`:
+Modify `plugins` section of your `gasket.js`:
 
 ```diff
-module.exports = {
-  plugins: {
-    add: [
-+     '@gasket/plugin-morgan'
-    ]
-  }
-}
+import { makeGasket } from '@gasket/core';
++ import pluginMorgan from '@gasket/plugin-morgan';
+
+export default makeGasket({
+  plugins: [
++    pluginMorgan
+  ]
+})
 ```
 
 ## Configuration

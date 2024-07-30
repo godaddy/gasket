@@ -20,13 +20,14 @@ npm i @gasket/plugin-analyze
 Modify `plugins` section of your `gasket.config.js`:
 
 ```diff
-module.exports = {
-  plugins: {
-    add: [
-+      '@gasket/plugin-analyze'
-    ]
-  }
-}
+import { makeGasket } from '@gasket/core';
++ import pluginAnalyze from '@gasket/plugin-analyze';
+
+export default makeGasket({
+  plugins: [
++    pluginAnalyze 
+  ]
+})
 ```
 
 ## Configuration

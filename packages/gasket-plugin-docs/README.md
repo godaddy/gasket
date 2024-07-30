@@ -17,16 +17,17 @@ gasket create <app-name> --plugins @gasket/plugin-docs
 npm i @gasket/plugin-docs
 ```
 
-Modify `plugins` section of your `gasket.config.js`:
+Modify `plugins` section of your `gasket.js`:
 
 ```diff
-module.exports = {
-  plugins: {
-    add: [
-+      '@gasket/plugin-docs'
-    ]
-  }
-}
+import { makeGasket } from '@gasket/core';
++ import pluginDocs from '@gasket/plugin-docs';
+
+export default makeGasket({
+  plugins: [
++    pluginDocs
+  ]
+})
 ```
 
 ## Configuration

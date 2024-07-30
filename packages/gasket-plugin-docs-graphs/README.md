@@ -20,13 +20,14 @@ npm i @gasket/plugin-docs-graphs
 Modify `plugins` section of your `gasket.config.js`:
 
 ```diff
-module.exports = {
-  plugins: {
-    add: [
-+      '@gasket/plugin-docs-graphs'
-    ]
-  }
-}
+import { makeGasket } from '@gasket/core';
++ import pluginDocsGraphs from '@gasket/plugin-docs-graphs';
+
+export default makeGasket({
+  plugins: [
++    pluginDocsGraphs
+  ]
+})
 ```
 
 [`mermaid`]: https://mermaid-js.github.io/mermaid/#/

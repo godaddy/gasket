@@ -18,16 +18,17 @@ gasket create <app-name> --plugins @gasket/plugin-redux
 npm i @gasket/plugin-redux @gasket/redux redux
 ```
 
-Modify `plugins` section of your `gasket.config.js`:
+Modify `plugins` section of your `gasket.js`:
 
 ```diff
-module.exports = {
-  plugins: {
-    add: [
-+      '@gasket/plugin-redux'
-    ]
-  }
-}
+import { makeGasket } from '@gasket/core';
++ import pluginRedux from '@gasket/plugin-redux';
+
+export default makeGasket({
+  plugins: [
++    pluginRedux
+  ]
+})
 ```
 
 ## Configuration

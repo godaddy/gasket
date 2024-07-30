@@ -21,16 +21,17 @@ gasket create <app-name> --plugins @gasket/plugin-express
 npm i @gasket/plugin-express
 ```
 
-Modify `plugins` section of your `gasket.config.js`:
+Modify `plugins` section of your `gasket.js`:
 
 ```diff
-module.exports = {
-  plugins: {
-    add: [
-+      '@gasket/plugin-express'
-    ]
-  }
-}
+import { makeGasket } from '@gasket/core';
++ import pluginExpress from '@gasket/plugin-express';
+
+export default makeGasket({
+  plugins: [
++    pluginExpress
+  ]
+})
 ```
 
 ## Configuration

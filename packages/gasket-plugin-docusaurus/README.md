@@ -15,17 +15,19 @@ gasket create <app-name> --plugins @gasket/plugin-docs,@gasket/plugin-docusaurus
 npm i @gasket/plugin-docs @gasket/plugin-docusaurus
 ```
 
-Modify `plugins` section of your `gasket.config.js`:
+Modify `plugins` section of your `gasket.js`:
 
 ```diff
-module.exports = {
-  plugins: {
-    add: [
-+      '@gasket/plugin-docs',
-+      '@gasket/plugin-docusaurus'
-    ]
-  }
-}
+import { makeGasket } from '@gasket/core';
++ import pluginDocs from '@gasket/plugin-docs';
++ import pluginDocusaurus from '@gasket/plugin-docusaurus';
+
+export default makeGasket({
+  plugins: [
++    pluginDocs,
++    pluginDocusaurus
+  ]
+})
 ```
 
 Now, when you run `npx gasket docs` in your app, a nice Docusaurus website will be

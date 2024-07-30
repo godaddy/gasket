@@ -19,16 +19,17 @@ gasket create <app-name> --plugins @gasket/plugin-manifest
 npm i @gasket/plugin-manifest
 ```
 
-Modify `plugins` section of your `gasket.config.js`:
+Modify `plugins` section of your `gasket.js`:
 
 ```diff
-module.exports = {
-  plugins: {
-    add: [
-+      '@gasket/plugin-manifest'
-    ]
-  }
-}
+import { makeGasket } from '@gasket/core';
++ import pluginManifest from '@gasket/plugin-manifest';
+
+export default makeGasket({
+  plugins: [
++    pluginManifest
+  ]
+})
 ```
 
 ## Configuration

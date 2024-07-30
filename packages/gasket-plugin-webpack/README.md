@@ -16,16 +16,17 @@ gasket create <app-name> --plugins @gasket/plugin-webpack
 npm i @gasket/plugin-webpack webpack
 ```
 
-Modify `plugins` section of your `gasket.config.js`:
+Modify `plugins` section of your `gasket.js`:
 
 ```diff
-module.exports = {
-  plugins: {
-    add: [
-+      '@gasket/plugin-webpack'
-    ]
-  }
-}
+import { makeGasket } from '@gasket/core';
++ import pluginWebpack from '@gasket/plugin-webpack';
+
+export default makeGasket({
+  plugins: [
++    pluginWebpack
+  ]
+})
 ```
 
 ## Configuration
