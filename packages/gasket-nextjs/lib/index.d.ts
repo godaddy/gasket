@@ -1,5 +1,5 @@
 import type { GasketData } from '@gasket/data';
-import type { ComponentType, FunctionComponent, PropsWithChildren } from 'react';
+import type { ComponentType, FunctionComponent, PropsWithChildren, ReactElement } from 'react';
 
 type SubstitutableHOC<T> = <C extends ComponentType<T>>(component: C) => C;
 
@@ -26,3 +26,13 @@ export const GasketDataProvider: FunctionComponent<
  */
 export function withGasketDataProvider(): SubstitutableHOC<{}>;
 
+
+/**
+ * Injects GasketData into html React element
+ */
+export function injectGasketData(
+  html: ReactElement, 
+  gasketData: GasketData, 
+  lookupIndex: (bodyChildren: ReactElement[], insertIndex: number) => number, 
+  insertIndex?: number
+): ReactElement;

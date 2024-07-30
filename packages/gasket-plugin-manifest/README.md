@@ -10,25 +10,21 @@ when paired with `@gasket/plugin-workbox` and `@gasket/plugin-service-worker`.
 #### New apps
 
 ```
-gasket create <app-name> --plugins @gasket/plugin-manifest
-```
-
-#### Existing apps
-
-```
 npm i @gasket/plugin-manifest
 ```
 
-Modify `plugins` section of your `gasket.config.js`:
+Update your `gasket` file plugin configuration:
 
 ```diff
-module.exports = {
-  plugins: {
-    add: [
-+      '@gasket/plugin-manifest'
-    ]
-  }
-}
+// gasket.js
+
++ import pluginManifest from '@gasket/plugin-manifest';
+
+export default makeGasket({
+  plugins: [
++   pluginManifest
+  ]
+});
 ```
 
 ## Configuration
@@ -38,38 +34,38 @@ this plugin have 2 options in augmenting this object. The first is through
 `gasket.config.js`:
 
 ```js
-// gasket.config.js
-module.exports = {
+// gasket.js
+export default makeGasket({
   manifest: {
     short_name: 'PWAwesome',
     name: 'Progressive Web Application'
   }
-}
+});
 ```
 
 If you want to serve `manifest.json` from a custom path, the plugin can be
 configured as follows.
 
 ```js
-// gasket.config.js
-module.exports = {
+// gasket.js
+export default makeGasket({
   manifest: {
     // other options
     path: '/custom/path/manifest.json' // default: /manifest.json
   }
-}
+});
 ```
 
 If you want to generate a `manifest.json` file at build time for use with a static app, the plugin can be configured with the `staticOutput` option:
 
 ```js
-// gasket.config.js
-module.exports = {
+// gasket.js
+export default makeGasket({
   manifest: {
     // other options
     staticOutput: '/custom/path/manifest.json'
   }
-}
+});
 ```
 
 You will also need to include a link to your `manifest.json` file on your static html pages:
