@@ -243,6 +243,33 @@ Additionally, `@gasket/plugin-nextjs` now generates a `_app.js` file with `getIn
 
 [(#693)]
 
+## Plugin Imports
+
+Update plugin strings to be plugin import statements in `gasket.js`. All plugins now need to be imported and used in the `makeGasket` function.
+
+```diff
+// gasket.config.js
+- module.exports = {
+-   plugins: {
+-     presets: [
+-       '@gasket/plugin-nextjs',
+-     ],
+-   },
+- };
+
+// gasket.js
++ import { makeGasket } from '@gasket/core';
++ import pluginNextjs from '@gasket/plugin-nextjs';
+
++ export default makeGasket({
++   plugins: [
++     pluginNextjs
++   ],
++   filename: import.meta.filename,
++ });
+```
+
+
 <!-- PRs -->
 [(#647)]:https://github.com/godaddy/gasket/pull/647
 [(#661)]:https://github.com/godaddy/gasket/pull/661
