@@ -12,8 +12,12 @@ module.exports = function create(gasket, { pkg, files, gasketConfig }) {
     'elastic-apm-node': devDependencies['elastic-apm-node']
   });
 
-  pkg.add('scripts', {
-    start: 'gasket start --require ./setup.js'
+  pkg.extend((current) => {
+    return {
+      scripts: {
+        start: `node --import ./setup.js & ${current.scripts.start}`
+      }
+    };
   });
 
   files.add(`${generatorDir}/*`);

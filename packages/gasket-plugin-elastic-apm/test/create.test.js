@@ -7,7 +7,8 @@ describe('create lifecycle', function () {
   beforeEach(() => {
     mockContext = {
       pkg: {
-        add: jest.fn()
+        add: jest.fn(),
+        extend: jest.fn().mockImplementation((fn) => fn({ scripts: { start: 'node server.js' } }))
       },
       files: {
         add: jest.fn()
@@ -40,11 +41,17 @@ describe('create lifecycle', function () {
     });
   });
 
-  it('adds the start script with --require', async () => {
-    await create({}, mockContext);
-    expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts', {
-      start: 'gasket start --require ./setup.js'
+  it('adds the start script with --import', async () => {
+    const result = mockContext.pkg.extend((current) => {
+      return {
+        scripts: {
+          start: `node --import ./setup.js & ${current.scripts.start}`
+        }
+      };
     });
+    await create({}, mockContext);
+    expect(mockContext.pkg.extend).toHaveBeenCalledWith(expect.any(Function));
+    expect(result).toEqual({ scripts: { start: 'node --import ./setup.js & node server.js' } });
   });
 
   it('adds the generator files', async () => {
