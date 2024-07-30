@@ -11,19 +11,24 @@ normally need JSON parsing included.
 To work around this simply include it in the handler for the `middleware`
 hook. e.g.
 
-**`/lifecycles/middleware.js`**
+**`example-plugin-middleware.js`**
 ```js
-const bodyParser = require('body-parser');
+import bodyParser from 'body-parser';
 
 /**
  * Introduce new middleware layers to the stack.
  *
  * @param {Gasket} gasket Reference to the gasket instance
  */
-module.exports = function middleware(gasket) {
-  return bodyParser.json(/* 
-    Valid options. See:
-    https://github.com/expressjs/body-parser#bodyparserjsonoptions
-  */);
+export default {
+  name: 'example-plugin-middleware',
+  hooks: {
+    middleware(gasket) {
+      return bodyParser.json(/* 
+        Valid options. See:
+        https://github.com/expressjs/body-parser#bodyparserjsonoptions
+      */);
+    }
+  }
 };
 ```

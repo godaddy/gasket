@@ -67,7 +67,8 @@ precache files, set runtime cache rules, etc. Hooks should return an object
 partial which will be deeply merged.
 
 ```js
-module.exports = {
+export default {
+  name: 'sample-plugin',
   hooks: {
     workbox: function (gasket, config, context) {
       // `config` is the initial workbox config

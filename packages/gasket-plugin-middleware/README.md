@@ -98,7 +98,8 @@ Executed when the `fastify` or `express` server has been created, it will apply 
 functions as middleware.
 
 ```js
-module.exports = {
+export default {
+  name: 'sample-plugin',
   hooks: {
     /**
     * Add Fastify middleware

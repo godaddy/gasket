@@ -66,7 +66,7 @@ The `defaults` are an available option to reference.
  * @typedef {import('@gasket/plugin-docs').DocsSetup} DocsSetup
  */
 
-module.exports = {
+export default {
   name: 'example',
   hooks: {
     /**
@@ -152,9 +152,9 @@ Allows a plugin to provide a view of the docs for the user.
 #### Example viewer
 
 ```js
-const view = require('example-markdown-viewer');
+import view from 'example-markdown-viewer';
 
-module.exports = {
+export default {
   name: 'example',
   hooks: {
     async docsView(gasket, docsConfigSet) {
@@ -176,9 +176,11 @@ Allows a plugin to add documentation that has to be programmatically generated.
 #### An example graph
 
 ```js
-const { writeFile } = require('fs').promises;;
+import { promises as fsPromises } from 'fs';
 
-module.exports = {
+const { writeFile } = fsPromises;
+
+export default {
   name: 'questions',
   hooks: {
     async docsGenerate(gasket, docsConfigSet) {
@@ -205,8 +207,8 @@ for the preset.
 
 ```js
 // gasket-preset-example.js
-module.exports = {
-  require,
+export default {
+  name: 'gasket-preset-example',
   docsSetup: {
     link: 'OTHER.md#go-here',
     files: ['more-docs/**/*.*'],

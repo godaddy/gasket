@@ -8,12 +8,12 @@
 npm install @gasket/core
 ```
 
-Add a `gasket.mjs` file to the root of your project.
+Add a `gasket.js` file to the root of your project.
 This can be a `.js` extension if your package.json has the `type` field set to `module`.
 It is also possible to use with a `.ts` extension if you have TypeScript configured.
 
 ```js
-// gasket.mjs
+// gasket.js
 import { makeGasket } from '@gasket/core';
 import LoggerPlugin from '@gasket/plugin-logger';
 import MyPlugin from './my-plugin';
@@ -26,7 +26,7 @@ export default makeGasket({
 });
 ```
 
-You can now import the Gasket instance from your `gasket.mjs` file into your
+You can now import the Gasket instance from your `gasket.js` file into your
 application code.
 With a Gasket, you can fire **actions** that will trigger **lifecycles** hooked
 by plugins which encapsulate functionality allowing reuse across many applications.
@@ -35,7 +35,7 @@ by plugins which encapsulate functionality allowing reuse across many applicatio
 
 A plugin is a module that exports a `name` and `hooks` object
 (See [Plugins Guide]).
-In your `gasket.mjs` file, you can import plugins and add them to the `plugins`
+In your `gasket.js` file, you can import plugins and add them to the `plugins`
 array of the Gasket configuration.
 
 ## Lifecycles
@@ -52,17 +52,19 @@ The `init` lifecycle allows the earliest entry to setting up a Gasket instance.
 It can be used for setting up an initial state.
 
 ```js
-// gasket-plugin-example.mjs
+// gasket-plugin-example.js
 
-export const name = 'gasket-plugin-example';
+const name = 'gasket-plugin-example';
 
 let _initializedTime;
 
-export const hooks = {
+const hooks = {
   init(gasket) {
     _initializedTime = Date.now();
   }
 };
+
+export default { name, hooks };
 ```
 
 While it is possible to attach properties to the `gasket` instance, it is not
@@ -71,13 +73,13 @@ If a plugin needs to make properties available to other plugins, it should
 register an action that can be executed to retrieve the value.
 
 ```diff
-// gasket-plugin-example.mjs
+// gasket-plugin-example.js
 
-export const name = 'gasket-plugin-example';
+const name = 'gasket-plugin-example';
 
 let _initializedTime;
 
-export const hooks = {
+const hooks = {
   init(gasket) {
 -    gasket.initializedTime = Date.now();
 +    _initializedTime = Date.now();
@@ -94,6 +96,8 @@ export const hooks = {
 +    const time = gasket.actions.getInitializedTime();
   }
 };
+
+export default { name, hooks };
 ```
 
 ### actions
@@ -103,11 +107,11 @@ This will let plugins register actions that can be fired by the application code
 where the Gasket is imported, or in other plugins.
 
 ```js
-// gasket-plugin-example.mjs
+// gasket-plugin-example.js
 
-export const name = 'gasket-plugin-example';
+const name = 'gasket-plugin-example';
 
-export const hooks = {
+const hooks = {
   actions(gasket) {
     return {
       async getDoodads() {
@@ -119,6 +123,8 @@ export const hooks = {
     }
   }
 };
+
+export default { name, hooks };
 ```
 
 ### configure
@@ -129,11 +135,11 @@ This allows any [registered plugins] to adjust the configuration before further
 lifecycles are executed.
 
 ```js
-// gasket-plugin-example.mjs
+// gasket-plugin-example.js
 
-export const name = 'gasket-plugin-example';
+const name = 'gasket-plugin-example';
 
-export const hooks = {
+const hooks = {
   configure(gasket, gasketConfig) {
     // Modify the configuration
     return {
@@ -142,6 +148,8 @@ export const hooks = {
     };
   }
 };
+
+export default { name, hooks };
 ```
 
 In this example, we register an action `getDoodads` that will only execute if the

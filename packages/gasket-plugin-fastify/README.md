@@ -56,7 +56,8 @@ Executed **after** the `middleware` event for when you need full control over
 the `fastify` instance.
 
 ```js
-module.exports = {
+export default {
+  name: 'sample-plugin',
   hooks: {
     /**
     * Update Fastify app instance
@@ -68,7 +69,7 @@ module.exports = {
     fastify: async function (gasket, fastify) {
     }
   }
-}
+};
 ```
 
 ### errorMiddleware
@@ -77,7 +78,8 @@ Executed after the `fastify` event. All middleware functions returned from this
 hook will be applied to Fastify.
 
 ```js
-module.exports = {
+export default {
+  name: 'sample-plugin',
   hooks: {
     /**
     * Add Fastify error middlewares
@@ -88,7 +90,7 @@ module.exports = {
     errorMiddleware: function (gasket) {
     }
   }
-}
+};
 ```
 
 ## How it works
