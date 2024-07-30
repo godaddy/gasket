@@ -1,26 +1,27 @@
-/* eslint-disable max-statements */
-const ora = require('ora');
-const chalk = require('chalk');
-const makeCreateContext = require('../scaffold/create-context');
-const dumpErrorContext = require('../scaffold/dump-error-context');
-const {
-  applyPresetConfig,
-  cliVersion,
+/* eslint-disable max-statements, no-unused-vars */
+import chalk from 'chalk';
+import { makeCreateContext } from '../scaffold/create-context.js';
+import { dumpErrorContext } from '../scaffold/dump-error-context.js';
+import { rm } from 'fs/promises';
+import { makeGasket } from '@gasket/core';
+import { defaultPlugins } from '../config/default-plugins.js';
+import {
   createHooks,
   generateFiles,
   globalPrompts,
   installModules,
   linkModules,
-  loadPkgForDebug,
   loadPreset,
   mkDir,
   postCreateHooks,
   printReport,
+  presetPromptHooks,
+  presetConfigHooks,
   promptHooks,
   setupPkg,
   writeGasketConfig,
   writePkg
-} = require('../scaffold/actions');
+} from '../scaffold/actions/index.js';
 
 /**
  * Parses comma separated option input to array
@@ -50,13 +51,6 @@ const createCommand = {
       parse: commasToArray
     },
     {
-      name: 'plugins',
-      description: `Additional plugin(s) to install. Can be set as
-      multiple flags (e.g. --plugins jest --plugins zkconfig@^1.0.0)
-      comma-separated values: --plugins=jest,zkconfig^1.0.0`,
-      parse: commasToArray
-    },
-    {
       name: 'package-manager',
       description: `Selects which package manager you would like to use during
       installation. (e.g. --package-manager yarn)`
@@ -66,18 +60,6 @@ const createCommand = {
       short: 'r',
       description: 'Require module(s) before Gasket is initialized',
       parse: commasToArray
-    },
-    {
-      name: 'no-bootstrap',
-      description: '(INTERNAL) If provided, skip the bootstrap phase',
-      type: 'boolean',
-      hidden: true
-    },
-    {
-      name: 'no-generate',
-      description: '(INTERNAL) If provided, skip the generate phase',
-      type: 'boolean',
-      hidden: true
     },
     {
       name: 'npm-link',
@@ -105,45 +87,13 @@ const createCommand = {
       conflicts: ['config']
     },
     {
-      name: 'prompts',
+      name: 'no-prompts',
       description: '(INTERNAL) Disable to skip the prompts',
-      default: true,
       type: 'boolean',
       hidden: true
     }
   ]
 };
-
-/**
- * bootstrap - Bootstrap the application
- * @param {CreateContext} context - Create context
- */
-async function bootstrapHandler(context) {
-  await loadPreset(context);
-  cliVersion(context);
-  applyPresetConfig(context);
-  await globalPrompts(context);
-  await mkDir(context);
-  await setupPkg(context);
-  await writePkg(context);
-  await installModules(context);
-  await linkModules(context);
-}
-
-/**
- * generate - Generate the application
- * @param {CreateContext} context - Create context
- */
-async function generateHandler(context) {
-  await promptHooks(context);
-  await createHooks(context);
-  await generateFiles(context);
-  await writeGasketConfig(context);
-  await writePkg.update(context);
-  await installModules.update(context);
-  await linkModules.update(context); // relink any that were messed up by re-install
-  await postCreateHooks(context);
-}
 
 /**
  * createCommand action
@@ -153,35 +103,41 @@ async function generateHandler(context) {
  * @returns {Promise<void>} void
  */
 createCommand.action = async function run(appname, options, command) {
-  const argv = [appname];
-  const { bootstrap = true, generate = true } = options;
-
-  let context;
-  try {
-    context = makeCreateContext(argv, options);
-  } catch (error) {
-    console.error(chalk.red(error) + '\n');
-    command.help();
-  }
+  process.env.GASKET_ENV = 'create';
+  const context = makeCreateContext([appname], options);
+  const { rawPresets, localPresets } = context;
 
   try {
-    if (bootstrap) {
-      await bootstrapHandler(context);
-    } else {
-      ora('Bootstrap phase skipped.').warn();
-      if (generate) {
-        await loadPkgForDebug(context);
-      }
+    await globalPrompts({ context });
+
+    if (rawPresets.length || localPresets.length) {
+      await loadPreset({ context });
+
+      const presetGasket = makeGasket({
+        plugins: context.presets
+      });
+
+      await presetPromptHooks({ gasket: presetGasket, context });
+      await presetConfigHooks({ gasket: presetGasket, context });
     }
 
-    if (generate) {
-      await generateHandler(context);
-    } else {
-      ora('Generate phase skipped.').warn();
-    }
+    const pluginGasket = makeGasket({
+      ...context.presetConfig,
+      plugins: context.presets.concat(context.presetConfig.plugins, defaultPlugins)
+    });
 
-    printReport(context);
-
+    await promptHooks({ gasket: pluginGasket, context });
+    await mkDir({ context });
+    await setupPkg({ context });
+    await createHooks({ gasket: pluginGasket, context });
+    await writePkg({ context });
+    await generateFiles({ context });
+    await writeGasketConfig({ context });
+    await installModules({ context });
+    await linkModules({ context });
+    await postCreateHooks({ gasket: pluginGasket, context });
+    if (context.tmpDir) await rm(context.tmpDir, { recursive: true });
+    printReport({ context });
   } catch (err) {
     console.error(chalk.red('Exiting with errors.'));
     dumpErrorContext(context, err);
@@ -189,4 +145,4 @@ createCommand.action = async function run(appname, options, command) {
   }
 };
 
-module.exports = createCommand;
+export { createCommand };

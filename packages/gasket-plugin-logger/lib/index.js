@@ -1,5 +1,5 @@
-/* eslint-disable no-console */
-const { name } = require('../package.json');
+/* eslint-disable no-console, no-sync */
+const { name, version, description } = require('../package.json');
 
 function createChildLogger(parent, metadata) {
   return {
@@ -24,9 +24,23 @@ function verifyLoggerLevels(logger) {
 
 module.exports = {
   name,
+  version,
+  description,
   hooks: {
-    async init(gasket) {
-      const loggers = await gasket.exec('createLogger');
+    create(gasket, { pkg, gasketConfig }) {
+      gasketConfig.addPlugin('pluginLogger', '@gasket/plugin-logger');
+      pkg.add('dependencies', {
+        [name]: `^${version}`
+      });
+    },
+    init(gasket) {
+      // eslint-disable-next-line no-sync
+      const loggers = gasket.execSync('createLogger');
+
+      if (loggers && loggers.some((logger) => logger && logger instanceof Promise)) {
+        throw new Error('createLogger hooks must be synchronous');
+      }
+
       if (!loggers || loggers.length === 0) {
         gasket.logger = {
           debug: console.debug,
@@ -46,6 +60,11 @@ module.exports = {
         gasket.logger = loggers[0];
       }
     },
+    actions(gasket) {
+      return {
+        getLogger: () => gasket.logger
+      };
+    },
     async onSignal(gasket) {
       await gasket.logger?.close?.();
     },
@@ -55,7 +74,7 @@ module.exports = {
         lifecycles: [
           {
             name: 'createLogger',
-            method: 'exec',
+            method: 'execSync',
             description: 'Custom logger creation',
             link: 'README.md#createLogger',
             parent: 'init'

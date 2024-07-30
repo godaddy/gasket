@@ -2,7 +2,8 @@
 
 Gasket integrations for Next.js apps. Provides several tools:
 
-- withGasketData: Injects Gasket Data added during lifecycle onto rendered html
+- request: Access a request-like object in server components
+- withGasketData: Injects Gasket Data added during lifecycle into Document
 - withGasketDataProvider: Provides context access to Gasket Data
 - useGasketData: Allows access to Gasket Data from hook
 
@@ -10,6 +11,59 @@ Gasket integrations for Next.js apps. Provides several tools:
 
 ```
 npm i @gasket/nextjs
+```
+
+## Functions
+
+### request
+
+Get a request-like object unique to the current request in server components.
+This uses the Next.js `cookies()` and `headers()` [dynamic functions]. 
+
+**Signature**
+
+- `request(query?: object): { headers: object, cookies: object, query?: object }`
+
+**Props**
+
+- `[query]` - (object) Optional query object
+
+Many GasketActions are designed to be unique to requests.
+When using ServerComponents with Next.js, the incoming request object is not
+fully accessible. This function provides a way to get a request-like object
+that can be used in ServerComponents.
+
+#### Example
+
+```js
+import { request } from '@gasket/nextjs/server';
+import gasket from '../gasket.mjs'
+
+export default async function MyPage() {
+  const req = request();
+  const something = await gasket.actions.getSomething(req);
+  
+  return <div>{ something.fancy }</div>;
+}
+```
+
+The `req` will contain an object with headers and cookies.
+
+If a query object is passed in, it will be added to the request object as well.
+For server components, dynamic routes params are available via props, and can
+be passed to the `request` function to make those path params available as the
+query.
+
+```js
+import { request } from '@gasket/nextjs/server';
+import gasket from '../gasket.mjs'
+
+export default async function MyDynamicRoutePage({ params }) {
+  const req = request(params);
+  const something = await gasket.actions.getSomething(req);
+  
+  return <div>{ something.fancy }</div>;
+}
 ```
 
 ## Components
@@ -35,9 +89,10 @@ This is the simplest and most common setup:
 ```jsx
 // pages/_document.js
 import Document from 'next/document';
-import {withGasketData} from '@gasket/nextjs';
+import { withGasketData } from '@gasket/nextjs/document';
+import gasket from '../gasket.js';
 
-export default withGasketData()(Document);
+export default withGasketData(gasket)(Document);
 ```
 
 By default this will inject the script in the `<body/>` after the Next.js
@@ -53,7 +108,8 @@ script at a particular child index of the `<body/>`. To do so, you can set the
 ```jsx
 // pages/_document.js
 import Document, {Html, Head, Main, NextScript} from 'next/document'
-import { withGasketData } from '@gasket/nextjs';
+import { withGasketData } from '@gasket/nextjs/document';
+import gasket from '../gasket.js';
 
 class MyDocument extends Document {
     static async getInitialProps(ctx) {
@@ -75,7 +131,7 @@ class MyDocument extends Document {
     }
 }
 
-export default withGasketData({index: 2})(MyDocument);
+export default withGasketData(gasket, {index: 2})(MyDocument);
 ```
 
 In this example, the `gasketData` script will be injected after the custom
@@ -155,4 +211,5 @@ The `useGasketData` will provided access to the gasket data within the context o
 [@gasket/data]: /packages/gasket-data/README.md
 
 [custom Document]: https://nextjs.org/docs/advanced-features/custom-document
+[dynamic functions]: https://nextjs.org/docs/app/building-your-application/rendering/server-components#dynamic-functions
 

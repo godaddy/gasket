@@ -1,13 +1,23 @@
-const { devDependencies, name } = require('../package.json');
+/// <reference types="create-gasket-app" />
+/// <reference types="@gasket/plugin-metadata" />
 
-module.exports = {
+const {
   name,
+  version,
+  description,
+  devDependencies
+} = require('../package.json');
+
+/** @type {import('@gasket/core').Plugin} */
+const plugin = {
+  name,
+  version,
+  description,
   hooks: {
     create: {
       timing: {
         after: ['@gasket/plugin-nextjs']
       },
-
       handler: async function create(gasket, { files, pkg }) {
         const generatorDir = `${__dirname}/../generator`;
         const isReactProject = pkg.has('dependencies', 'react');
@@ -25,12 +35,12 @@ module.exports = {
         }
 
         pkg.add('scripts', {
-          'start:local': 'gasket start --env local',
+          'start:local': 'next start',
           'cypress': 'cypress open',
           'cypress:headless': 'cypress run',
-          'e2e': 'start-server-and-test start:local http://localhost:8080 cypress',
+          'e2e': 'start-server-and-test start:local http://localhost:3000 cypress',
           'e2e:headless':
-            'start-server-and-test start:local http://localhost:8080 cypress:headless'
+            'start-server-and-test start:local http://localhost:3000 cypress:headless'
         });
       }
     },
@@ -53,3 +63,5 @@ module.exports = {
     }
   }
 };
+
+module.exports = plugin;

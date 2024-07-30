@@ -1,5 +1,7 @@
 # `@gasket/utils`
 
+- Added getPackageLastestVersion util function ([#768])
+- Removed `requireWithInstall` to encourage import patterns with ESM
 - Removed support for deprecated `--npmconfig` flag ([#647])
 
 ### 6.41.0
@@ -84,3 +86,4 @@
 [#496]: https://github.com/godaddy/gasket/pull/496
 [#607]: https://github.com/godaddy/gasket/pull/607
 [#647]: https://github.com/godaddy/gasket/pull/647
+[#768]: https://github.com/godaddy/gasket/pull/768

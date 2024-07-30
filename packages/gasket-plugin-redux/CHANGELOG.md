@@ -1,5 +1,6 @@
 # `@gasket/plugin-redux`
 
+- Added flag to disable redux store generation ([#762])
 - Use per-request logger
 - Remove dependency on `@gasket/plugin-log`
 
@@ -86,3 +87,4 @@
 [#436]: https://github.com/godaddy/gasket/pull/436
 [#457]: https://github.com/godaddy/gasket/pull/457
 [#670]: https://github.com/godaddy/gasket/pull/670
+[#762]: https://github.com/godaddy/gasket/pull/762

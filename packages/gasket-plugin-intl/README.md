@@ -1,58 +1,49 @@
 # @gasket/plugin-intl
 
-This primary responsibility of this plugin is to build a manifest of locale
-settings for loader packages to load locale paths.
+This primary responsibility of this plugin is to build the intl manager script.
 
 ## Installation
-
-#### New apps
-
-```
-gasket create <app-name> --plugins @gasket/plugin-intl
-```
-
-#### Existing apps
 
 ```
 npm i @gasket/plugin-intl
 ```
 
-Modify `plugins` section of your `gasket.config.js`:
+Modify `plugins` section of your `gasket.js`:
 
 ```diff
-module.exports = {
-  plugins: {
-    add: [
-+      '@gasket/plugin-intl'
-    ]
+// gasket.js
+import { makeGasket } from '@gasket/core';
++ import pluginIntl from '@gasket/plugin-intl';
+
+export default makeGasket({
+  plugins: [
++    pluginIntl
+  ],
+  intl: {
+    locales: ['en-US', 'fr-FR']
   }
-}
+})
 ```
 
 ## Configuration
 
-To be set under `intl` in the `gasket.config.js`. No configuration is
+To be set under `intl` in the `gasket.js`. No configuration is
 required. However, these options exist to customize an app's setup.
 
 ### Options
 
-- `basePath` - (string) Base URL where locale files are served
-- `defaultPath` - (string) Path to endpoint with JSON files (default:
-  `/locales`). See [Locales Path] section.
-- `defaultLocale` - (string) Locale to fallback to when loading files (default:
-  `en`)
 - `locales` - (string[]) Ordered list of accepted locales. If set, the preferred
   locale will be resolved based on the request `accept-language` header.
+- `defaultLocale` - (string) Locale to fallback to when loading files. Defaults
+  to the first `locales` entry if not set.
 - `localesMap` - (object) Mapping of locales to share files. See [Locales Map]
   section.
 - `localesDir` - (string) Path to on-disk directory where locale files exists
-  (default: `./public/locales`)
-- `manifestFilename` - (string) Change the name of the manifest file (default:
-  `locales-manifest.json`)
-- `serveStatic` - (boolean|string) Enables ability to serve static locale files.
-  If set to `true`, the app will use the `defaultPath` as the static endpoint
-  path. This option can also be set to a string, to be used as the static
-  endpoint path.
+  (default: `./locales`)
+- `defaultLocaleFilePath` - (string) Lookup path for locale files (default:
+  `locales`). See [Locales Path] section.
+- `managerFilename` - (string) Change the name of the manager file
+  (default: `intl.js`)
 - `modules` - (boolean|object|string[]) Enable locale files collation from node modules.
   Disabled by default, enable by setting to an object with options below, or set
   to `true` to use the default options. See [Module Locales] section.
@@ -60,47 +51,38 @@ required. However, these options exist to customize an app's setup.
   - `excludes` - (string[]) List of modules to ignore
 - `nextRouting` - (boolean) Enable [Next.js Routing] when used with
   [@gasket/plugin-nextjs]. (default: true)
-- `preloadLocales` (boolean) - Preloads the locale files from the manifest at startup,
-  allowing a faster first response.
 
 #### Example config
 
 ```js
-// gasket.config.js
+// gasket.js
 
-module.exports = {
+export default makeGasket({
   intl: {
     defaultLocale: 'fr-FR',
     locales: ['fr-FR', 'en-US', 'zh-TW', 'zh-CN', 'zh-HK', 'zh-SG'],
     localesMap: {
       'zh-HK': 'zh-TW',
       'zh-SG': 'zh-CN'
-    },
-    preloadLocales: true
+    }
   }
-}
+});
 ```
 
 ## Usage
 
-Loader packages, such as [@gasket/react-intl] for React and Next.js apps, can
-utilize settings from the [locales manifest] for loading locale files. Also, for
-apps with a server element, request based settings can be made available with
-the response via [Gasket data].
+The plugin will generate an `intl.js` file that can be used to manage locale
+files for an app.
+For details on how the intl manager can be used, see the
+[@gasket/helper-intl] package.
 
-For the most part, app developers should not need to interface directly with
-these setting objects, but rather understand how loaders use them to resolve
-locale paths for structuring their locale files and constructing their apps.
-This is what will be described in the next few sections.
+### Locale File Path
 
-### Locales Path
+A `localeFilePath` represents be the target where static JSON files exist.
+An app or component can use this path to resolve the correct file to
+load for a given locale.
 
-A `localesPath` should be the URL endpoint where static JSON files are
-available. An app or component can use this path to resolve the correct file to
-load for a given locale. The `localesPath` in the manifest is the default, but
-loaders can allow custom ones to be set.
-
-For example, lets say we are serving the following locale files:
+For example, let's say we are serving the following locale files:
 
 ```
 locales
@@ -108,19 +90,19 @@ locales
 └── fr.json
 ```
 
-With this structure, the `localesPath` should be `/locales`. When loading
-messages for the `en` locale, the resolved path would be `/locales/en.json`.
+With this structure, the `localeFilePath` should be `locales`. When loading
+messages for the `en` locale, the resolved file would be `locales/en.json`.
 
 When a component or function then needs to fetch translations for a given
-locale, say `en`, it will take the `localesPath`, and append the locale name
-with `.json` extension.
+locale, say `en`, it will take the `localeFilePath`, and append the locale
+name with `.json` extension.
 
-### Split Locales
+### Dynamic Locale Files
 
-JSON locale files can be split up and loaded as needed to tune an app's
-performance. For example, say you have a heavy component with lots of translated
-text. This heavy component is not used on the main page, so we can download
-those translations later to improve our initial page load.
+Messages can be split across locale files and loaded dynamically as needed to
+tune an app's performance. For example, say you have a heavy component with
+many translated messages. This heavy component is not used on the main page,
+so we can download those translations later to improve our initial page load.
 
 ```
 locales
@@ -131,15 +113,15 @@ locales
     └── fr.json
 ```
 
-We would then set the `localesPath` to `/locales/heavy-component`. When loading
-messages for the `en` locale, the resolved path would be
-`/locales/heavy-component/en.json`.
+We would then set the `localeFilePath` to `locales/heavy-component`.
+When loading messages for the `en` locale, the resolved file would be
+`locales/heavy-component/en.json`.
 
 ### Template Paths
 
 As an alternative to the above `<group>/<locale>.json` structural format, an app
 could also organize files by `<locale>/<group>.json`. In this case, the
-`localesPath` must be specified with `locale` as a path param.
+`localeFilePath` must be specified with `locale` as a path param.
 
 For example, let us say we are serving the following locale files:
 
@@ -153,7 +135,7 @@ locales
     └── heavy-component.json
 ```
 
-We would then set the `localesPath` to `/locales/:locale/heavy-component.json`.
+We would then set the `localeFilePath` to `locales/:locale/heavy-component`.
 
 Now, when a component or function then needs to load translations for a given
 locale, say `en`, it will substitute it in for the `:locale` param in the path.
@@ -197,14 +179,15 @@ configure [Next.js Internationalized Routing].
 You can opt-out of this behavior by setting `nextRouting` to false.
 
 ```js
-// gasket.config.js
-module.exports = {
+// gasket.js
+
+export default makeGasket({
   intl: {
     defaultLocale: 'fr-FR',
     locales: ['fr-FR', 'en-US', 'zh-TW', 'zh-CN', 'zh-HK', 'zh-SG'],
     nextRouting: false
   }
-}
+});
 ```
 
 ### Locales Map
@@ -213,15 +196,17 @@ Locales can be directly mapped to other locales which an app has known files
 for.
 
 ```js
-// gasket.config.js
-module.exports = {
+// gasket.js
+
+export default makeGasket({
   intl: {
+    locales: ['en-US', 'zh-TW', 'zh-CN'],
     localesMap: {
       'zh-HK': 'zh-TW',
       'zh-SG': 'zh-CN'
     }
   }
-}
+});
 ```
 
 Using this example, if a customer's language is set to `zh-HK`, then the
@@ -242,70 +227,25 @@ Because the locales manifest JSON file is generated each build, you may want to
 configure your SCM to ignore committing this file, such as with a `.gitignore`
 entry.
 
-## Gasket Data
+## Actions
 
-Request based settings are available from the response object at
-`res.locals.gasketData.intl`. For apps that support server-rendering, the
-`res.locals.gasketData` object can be rendered as a [global window object] to
-make the `intl` settings further available to loader packages in the browser.
+### getIntlLocale
 
-For instance, this could be used to customize the `locale` for a user, by
-implementing a custom Gasket plugin using the [intlLocale lifecycle].
+This action invokes the `intlLocale` lifecycle hook to determine the user's locale. 
 
-### withLocaleRequired
-
-**Signature**
-
-- `req.withLocaleRequired(localesPath)`
-
-This loader method is attached to the request object which allows locale paths
-to be loaded on the server. The loaded locale props will added into Gasket data
-at `res.locals.gasketData.intl`, which can be pre-rendered into a
-[GasketData script tag] to avoid an extra request.
+parameters:
+- `req` - (object) Request object
 
 ```js
-// lifecycles/middleware.js
-
-module.exports = function middlewareHook(gasket) {
-  return function middleware(req, res, next) {
-    req.withLocaleRequired('/locales');
-    next();
-  }
-}
+const intlLocale = actions.gasket.getIntlLocale(req);
 ```
 
-For Next.js apps, prefer to use one of the loader approaches provided by
-[@gasket/react-intl/next].
+### getIntlManager
 
-### selectLocaleMessage
-
-**Signature**
-
-- `req.selectLocaleMessage(id, [defaultMessage])`
-
-If you have cases where you need locale messages loaded for non HTML documents,
-such as for as translated API responses, as a convenience, you can use this
-method to select a loaded message for the request locale.
+This action is used to access the intl manager by other plugins.
 
 ```js
-// lifecycles/express.js
-
-module.exports = function expressHook(gasket, app) {
-    app.post('/api/v1/something', async function (req, res) {
-      // first, load messages for the request locale at the locale path
-      req.withLocaleRequired('/locales/api');
-      
-      const ok = doSomething();
-      
-      // send a translated response message based on results
-      if (ok) {
-        res.send(req.selectLocaleMessage('success'));
-      } else {
-        // Provide a default message incase a locale file as a missing id
-        res.status(500).send(req.selectLocaleMessage('exception', 'Bad things man'));
-      }
-  });
-}
+const intlManager = actions.gasket.getIntlManager();
 ```
 
 ## Lifecycles
@@ -356,12 +296,12 @@ module.exports = {
 
 There are several strategies for managing locale files for an app. By default,
 the plugin assumes they will be static files committed to the app's under a
-`./public/locales` directory and served under a `/locales` path. This directory
+`./public/locales` directory and served under a `locales` path. This directory
 can be changed with the `localesDir` config option, and the default path
-configured with `localesPath`.
+configured with `localeFilePath`.
 
 Another practice is to locale files under different npm modules. By enabling the
-`intl.modules` option in the `gasket.config.js`, when the app builds, the plugin
+`intl.modules` option in the `gasket.js`, when the app builds, the plugin
 looks for packages with a `./locales` sub-directory in the node modules. Each
 locale file is then copied to a `modules` directory under the directory
 configured for `localesDir` (i.e. `./public/locales/modules`). This allows these
@@ -372,7 +312,7 @@ multiple apps. This packages has common locale JSON files under a `./locales`
 directory at the root of the package (`my-shared-pkg/locales`). These will be
 copied to your static locales directory
 (`./public/locales/modules/my-shared-pkg/*.json`). You can then set the
-[locales path] with your loader (`/locales/modules/my-shared-pkg`).
+[locale file path] with your loader (`locales/modules/my-shared-pkg`).
 
 Because the `modules` directory is generated with each build, you may want to
 configure your SCM to ignore committing this file, such as with a `.gitignore`
@@ -383,36 +323,37 @@ entry.
 Finds all node_modules with a `./locales` subdirectory.
 
 ```js
-// gasket.config.js
+// gasket.js
 
-module.exports = {
+export default makeGasket({
   intl: {
+    // Enable module files
     modules: true
   }
-}
+});
 ```
 
 Find all node_modules with a `./i18n` subdirectory, excluding `my-shared-pkg`.
 
 ```js
-// gasket.config.js
+// gasket.js
 
-module.exports = {
+export default makeGasket({
   intl: {
     modules: {
         localesDir: 'i18n',
         excludes: ['my-shared-pkg']
     }
   }
-}
+});
 ```
 
 Find all packages listed and their `./locales` dir or specified subdirectory.
 
 ```js
-// gasket.config.js
+// gasket.js
 
-module.exports = {
+export default makeGasket({
   intl: {
     modules: [
       'my-shared-pkg',
@@ -420,7 +361,7 @@ module.exports = {
       'my-other-shared-pkg/with/custom/locales-dir'
     ]
   }
-}
+});
 ```
 
 ## Debugging
@@ -439,7 +380,7 @@ Once enabled, look for messages under the namespace `gasket:plugin:intl` and `ga
 
 <!-- LINKS -->
 
-[locales path]:#locales-path
+[locale file path]:#locale-file-path
 [locales map]:#locales-map
 [locales manifest]:#locales-manifest
 [module locales]:#module-files
@@ -449,7 +390,6 @@ Once enabled, look for messages under the namespace `gasket:plugin:intl` and `ga
 
 [@gasket/react-intl]: /packages/gasket-react-intl/README.md
 [@gasket/plugin-nextjs]: /packages/gasket-plugin-nextjs/README.md
-[@gasket/react-intl/next]: /packages/gasket-react-intl/README.md#nextjs
 [GasketData script tag]: /packages/gasket-data/README.md
 [Next.js Internationalized Routing]: https://nextjs.org/docs/advanced-features/i18n-routing
 

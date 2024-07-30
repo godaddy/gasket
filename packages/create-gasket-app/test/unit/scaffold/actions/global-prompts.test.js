@@ -1,12 +1,15 @@
+import { jest } from '@jest/globals';
 const mockPromptStub = jest.fn();
 
-jest.mock('inquirer', () => ({ prompt: mockPromptStub }));
+jest.unstable_mockModule('inquirer', () => ({ default: { prompt: mockPromptStub } }));
 
-const globalPrompts = require('../../../../lib/scaffold/actions/global-prompts');
+const globalPromptsImport = await import('../../../../lib/scaffold/actions/global-prompts.js');
+const globalPrompts = globalPromptsImport.default;
+const { questions } = globalPromptsImport;
 
 describe('globalPrompts', () => {
   let mockContext;
-  let chooseAppDescription, choosePackageManager, chooseTestPlugin, allowExtantOverwriting;
+  let chooseAppDescription, choosePackageManager, chooseTestPlugins, allowExtantOverwriting;
 
   beforeEach(() => {
     mockContext = {
@@ -22,9 +25,9 @@ describe('globalPrompts', () => {
     [
       chooseAppDescription,
       choosePackageManager,
-      chooseTestPlugin,
+      chooseTestPlugins,
       allowExtantOverwriting
-    ] = globalPrompts.questions;
+    ] = questions;
   });
 
   afterEach(() => {
@@ -37,9 +40,9 @@ describe('globalPrompts', () => {
 
   it('executes question functions with context', async () => {
     mockPromptStub.mockReturnValue({});
-    await globalPrompts(mockContext);
+    await globalPrompts({ context: mockContext });
 
-    expect(mockPromptStub).toHaveBeenCalledTimes(3);
+    expect(mockPromptStub).toHaveBeenCalledTimes(4);
   });
 
   describe('packageManager', () => {
@@ -110,52 +113,58 @@ describe('globalPrompts', () => {
   describe('testPlugin', () => {
 
     it('does not prompt if testPlugin set in context', async () => {
-      mockContext.testPlugin = 'bogus';
-      await chooseTestPlugin(mockContext, mockPromptStub);
+      mockContext.testPlugins = ['bogus'];
+      await chooseTestPlugins(mockContext, mockPromptStub);
 
       expect(mockPromptStub).not.toHaveBeenCalled();
     });
 
-    it('does not prompt if a known test plugin included in context plugins', async () => {
-      mockContext.plugins = ['@gasket/mocha'];
-      await chooseTestPlugin(mockContext, mockPromptStub);
-
-      expect(mockPromptStub).not.toHaveBeenCalled();
-    });
-
-    it('does not prompt if a known test plugin included by preset', async () => {
-      mockContext.presetInfos = [{
-        plugins: [
-          { name: '@gasket/jest' }
-        ]
-      }];
-      await chooseTestPlugin(mockContext, mockPromptStub);
-
-      expect(mockPromptStub).not.toHaveBeenCalled();
-    });
-
-    it('prompts if testPlugin not set in context', async () => {
-      mockPromptStub.mockReturnValue({ testPlugin: 'bogus-plugin' });
-      await chooseTestPlugin(mockContext, mockPromptStub);
+    it('prompts if testPlugins not set in context', async () => {
+      await chooseTestPlugins(mockContext, mockPromptStub);
 
       expect(mockPromptStub).toHaveBeenCalled();
       expect(mockPromptStub.mock.calls[0][0][0]).toHaveProperty('name', 'testPlugin');
+      expect(mockPromptStub.mock.calls[1][0][0]).toHaveProperty('name', 'testPlugin');
     });
 
     it('prompts if a known test plugin not included in context plugins', async () => {
-      mockContext.plugins = ['gasket-plugin-unknown-test'];
-      mockPromptStub.mockReturnValue({ testPlugin: 'bogus' });
-      await chooseTestPlugin(mockContext, mockPromptStub);
+      await chooseTestPlugins(mockContext, mockPromptStub);
       expect(mockPromptStub).toHaveBeenCalled();
+
       expect(mockPromptStub.mock.calls[0][0][0]).toHaveProperty('name', 'testPlugin');
+      expect(mockPromptStub.mock.calls[1][0][0]).toHaveProperty('name', 'testPlugin');
     });
 
     it('sets testPlugin in context', async () => {
       delete mockContext.testPlugin;
-      mockPromptStub.mockReturnValue({ testPlugin: 'bogus' });
-      await chooseTestPlugin(mockContext, mockPromptStub);
+      mockPromptStub
+        .mockReturnValueOnce({ testPlugin: 'firstValue' })
+        .mockReturnValueOnce({ testPlugin: 'secondValue' });
+      await chooseTestPlugins(mockContext, mockPromptStub);
 
-      expect(mockContext).toHaveProperty('testPlugin', 'bogus');
+      expect(mockContext).toHaveProperty('testPlugins', ['firstValue', 'secondValue']);
+    });
+
+    it('does not prompt if unitTestSuite and integrationTestSuite is defined in context', async () => {
+      mockContext.unitTestSuite = 'jest';
+      mockContext.integrationTestSuite = 'cypress';
+      await chooseTestPlugins(mockContext, mockPromptStub);
+
+      expect(mockPromptStub).not.toHaveBeenCalled();
+    });
+
+    it('prompts once if unitTestSuite is defined in context', async () => {
+      mockContext.unitTestSuite = 'jest';
+      await chooseTestPlugins(mockContext, mockPromptStub);
+
+      expect(mockPromptStub).toHaveBeenCalledTimes(1);
+    });
+
+    it('prompts once if integrationTestSuite is defined in context', async () => {
+      mockContext.integrationTestSuite = 'cypress';
+      await chooseTestPlugins(mockContext, mockPromptStub);
+
+      expect(mockPromptStub).toHaveBeenCalledTimes(1);
     });
   });
 

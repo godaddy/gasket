@@ -1,18 +1,18 @@
 const prompt = require('./prompt');
 const create = require('./create');
 const postCreate = require('./post-create');
+const { name, version, description } = require('../package.json');
 
-/**
- * The git gasket plugin.
- *
- * @type {Object}
- * @public
- */
-module.exports = {
-  name: require('../package').name,
+/** @type {import('@gasket/core').Plugin} */
+const plugin = {
+  name,
+  version,
+  description,
   hooks: {
     prompt,
     create,
     postCreate
   }
 };
+
+module.exports = plugin;

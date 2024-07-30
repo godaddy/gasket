@@ -1,7 +1,19 @@
-const { devDependencies, name } = require('../package.json');
+/// <reference types="@gasket/core" />
+/// <reference types="create-gasket-app" />
+/// <reference types="@gasket/plugin-metadata" />
 
-module.exports = {
+const {
   name,
+  version,
+  description,
+  devDependencies
+} = require('../package.json');
+
+/** @type {import('@gasket/core').Plugin} */
+const plugin = {
+  name,
+  version,
+  description,
   hooks: {
     create: {
       timing: {
@@ -9,7 +21,7 @@ module.exports = {
         before: ['@gasket/plugin-lint']
       },
       handler: async function create(gasket, { files, pkg }) {
-        const generatorDir = `${ __dirname }/../generator`;
+        const generatorDir = `${__dirname}/../generator`;
         const isReactProject = pkg.has('dependencies', 'react');
 
         pkg.add('devDependencies', {
@@ -51,3 +63,6 @@ module.exports = {
     }
   }
 };
+
+module.exports = plugin;
+

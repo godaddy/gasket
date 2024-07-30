@@ -1,10 +1,25 @@
-declare module '@gasket/engine' {
+declare module '@gasket/core' {
   export interface GasketConfig {
-    docusaurus?: {
-      rootDir?: string,
-      docsDir?: string,
-      port?: number,
-      host?: string
-    }
+    docusaurus?: DocusaurusConfig;
   }
 }
+
+export interface BaseConfig {
+  /** Preset name */
+  name: string;
+  path: string;
+}
+
+export interface DocusaurusConfig {
+  rootDir?: string;
+  docsDir?: string;
+  port?: string;
+  host?: string;
+}
+
+export default {
+  name: '@gasket/plugin-docusaurus',
+  version: '',
+  description: '',
+  hooks: {}
+};

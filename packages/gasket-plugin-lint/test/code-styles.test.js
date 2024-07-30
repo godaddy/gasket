@@ -260,20 +260,6 @@ describe('code styles', () => {
         expect(utils.gatherDevDeps).toHaveBeenCalledWith('eslint-config-fake');
       });
 
-      it('gathers dependencies for short name with version', async () => {
-        context.eslintConfig = 'fake@^1.2.3';
-        await codeStyle.create(context, utils);
-
-        expect(utils.gatherDevDeps).toHaveBeenCalledWith('eslint-config-fake@^1.2.3');
-      });
-
-      it('gathers dependencies for scope-only short names', async () => {
-        context.eslintConfig = '@fake@^1.2.3';
-        await codeStyle.create(context, utils);
-
-        expect(utils.gatherDevDeps).toHaveBeenCalledWith('@fake/eslint-config@^1.2.3');
-      });
-
       it('add gathered devDependencies', async () => {
         context.eslintConfig = 'eslint-config-fake';
         await codeStyle.create(context, utils);
@@ -281,24 +267,6 @@ describe('code styles', () => {
         expect(pkgAdd).toHaveBeenCalledWith('devDependencies', expect.objectContaining({
           'eslint-config-fake': expect.any(String)
         }));
-      });
-
-      it('adds eslint config as short name', async () => {
-        context.eslintConfig = 'eslint-config-fake@^1.2.3';
-        await codeStyle.create(context, utils);
-
-        expect(pkgAdd).toHaveBeenCalledWith('eslintConfig', {
-          extends: ['fake']
-        });
-      });
-
-      it('adds eslint config with scope-only short name', async () => {
-        context.eslintConfig = '@fake/eslint-config@^1.2.3';
-        await codeStyle.create(context, utils);
-
-        expect(pkgAdd).toHaveBeenCalledWith('eslintConfig', {
-          extends: ['@fake']
-        });
       });
 
       it('adds eslint-config-next if next present', async () => {
@@ -352,8 +320,8 @@ describe('code styles', () => {
         context.stylelintConfig = 'stylelint-config-fake@^1.2.3';
         await codeStyle.create(context, utils);
 
-        expect(pkgAdd).toHaveBeenCalledWith('stylelintConfig', {
-          extends: ['stylelint-config-fake']
+        expect(pkgAdd).toHaveBeenCalledWith('stylelint', {
+          extends: ['stylelint-config-fake@^1.2.3']
         });
       });
 
@@ -411,6 +379,29 @@ describe('code styles', () => {
       });
 
       expect(utils.runScriptStr).toHaveBeenCalledWith('lint -- --fix');
+    });
+
+    it('adds lint scripts support for .ts, .tsx', async () => {
+      context.typescript = true;
+      pkgHas.mockImplementation((_, name) => ['eslint'].includes(name));
+      await codeStyle.create(context, utils);
+
+      expect(pkgAdd).toHaveBeenCalledWith('scripts', {
+        'lint': 'eslint --ext .js,.jsx,.cjs,.ts,.tsx .',
+        'lint:fix': expect.any(String)
+      });
+
+      expect(utils.runScriptStr).toHaveBeenCalledWith('lint -- --fix');
+    });
+
+    it('adds typescript eslint parser', async () => {
+      context.typescript = true;
+      pkgHas.mockImplementation((_, name) => ['eslint'].includes(name));
+      await codeStyle.create(context, utils);
+
+      expect(pkgAdd).toHaveBeenCalledWith('devDependencies', {
+        '@typescript-eslint/parser': devDependencies['@typescript-eslint/parser']
+      });
     });
 
     it('does not add lint scripts if already set', async () => {

@@ -22,14 +22,19 @@ For example, if the following data is rendered...
 ...then it would be accessible as:
 
 ```js
-import gasketData from '@gasket/data';
+import { gasketData } from '@gasket/data';
 
-console.log(gasketData.something); // interesting
+console.log(gasketData().something); // interesting
 ```
+
+Note that `@gasket/data` is only expected to be used in the browser, and not in
+server-side code.
 
 ### Adding Data
 
-To add to the data exposed in `@gasket/data`, you can write to the HTTP response object's `locals.gasketData` property. For example when using the [middleware lifecycle] in a plugin:
+To add to the data exposed in `@gasket/data`, you can write to the HTTP response
+object's `locals.gasketData` property.
+For example, when using the [middleware lifecycle] in a plugin:
 
 ```js
 module.exports = {
@@ -45,7 +50,9 @@ module.exports = {
 };
 ```
 
-The results of `res.locals.gasketData` should then be rendering in a script as described above. Similarly, this can be done in an application lifecycle script:
+The results of `res.locals.gasketData` should then be rendering in a script
+as described above.
+Similarly, this can be done in an application lifecycle script:
 
 ```js
 // /lifecycles/middleware.js

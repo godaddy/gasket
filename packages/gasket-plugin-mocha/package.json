@@ -1,8 +1,9 @@
 {
   "name": "@gasket/plugin-mocha",
-  "version": "6.45.0",
+  "version": "7.0.0-next.44",
   "description": "Integrates mocha based testing in to your Gasket application",
-  "main": "lib",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "files": [
     "generator",
     "lib"
@@ -13,7 +14,20 @@
     "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "posttest": "npm run lint"
+    "posttest": "npm run lint && npm run typecheck",
+    "typecheck": "tsc",
+    "typecheck:watch": "tsc --watch"
+  },
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./node-loader-babel": {
+      "types": "./lib/node-loader-babel/index.d.ts",
+      "default": "./lib/node-loader-babel/index.js"
+    },
+    "./package.json": "./package.json"
   },
   "repository": {
     "type": "git",
@@ -42,26 +56,29 @@
     "@babel/plugin-transform-runtime": "^7.23.7",
     "@babel/preset-env": "^7.23.8",
     "@babel/preset-react": "^7.23.3",
-    "@babel/register": "^7.23.7",
     "@testing-library/react": "^13.4.0",
+    "@types/jest": "^29.5.12",
     "babel-eslint": "^10.1.0",
     "eslint": "^8.56.0",
-    "eslint-config-godaddy": "^7.0.2",
+    "eslint-config-godaddy": "^7.1.0",
     "eslint-plugin-json": "^3.1.0",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-unicorn": "^44.0.0",
     "global-jsdom": "^8.4.0",
     "jsdom": "^20.0.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "typescript": "^5.4.5"
   },
   "eslintConfig": {
     "extends": [
       "godaddy",
-      "plugin:jest/recommended"
+      "plugin:jest/recommended",
+      "plugin:jsdoc/recommended-typescript-flavor"
     ],
     "plugins": [
-      "unicorn"
+      "unicorn",
+      "jsdoc"
     ],
     "rules": {
       "unicorn/filename-case": "error",

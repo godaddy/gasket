@@ -1,39 +1,51 @@
-import type { Gasket, GasketConfigFile, Hook } from '@gasket/engine';
+import type { Gasket, GasketConfigDefinition, Hook } from '@gasket/core';
 import type { Application } from 'express';
 import '@gasket/plugin-express';
 
 describe('@gasket/plugin-express', () => {
   it('adds a compression config property', () => {
-    const config: GasketConfigFile = {
-      compression: false
+    const config: GasketConfigDefinition = {
+      plugins: [{ name: 'example-plugin', version: '', description: '', hooks: {} }],
+      express: {
+        compression: false
+      }
     };
   });
 
   it('adds an excludedRoutesRegex config property', () => {
-    const config: GasketConfigFile = {
-      excludedRoutesRegex: /^(?!\/_next\/)/
+    const config: GasketConfigDefinition = {
+      plugins: [{ name: 'example-plugin', version: '', description: '', hooks: {} }],
+      express: {
+        excludedRoutesRegex: /^(?!\/_next\/)/
+      }
     };
   });
 
   it('adds an middlewareInclusionRegex config property', () => {
-    const badConfig: GasketConfigFile = {
+    const badConfig: GasketConfigDefinition = {
       // @ts-expect-error
       middlewareInclusionRegex: '/api/*'
     };
 
-    const goodConfig: GasketConfigFile = {
-      middlewareInclusionRegex: /^(?!\/_next\/)/
+    const goodConfig: GasketConfigDefinition = {
+      plugins: [{ name: 'example-plugin', version: '', description: '', hooks: {} }],
+      express: {
+        middlewareInclusionRegex: /^(?!\/_next\/)/
+      }
     };
   });
 
   it('adds an routes config property', () => {
-    const badConfig: GasketConfigFile = {
+    const badConfig: GasketConfigDefinition = {
       // @ts-expect-error
       routes: /^\/api\/\.*$/
     };
 
-    const goodConfig: GasketConfigFile = {
-      routes: '/api/*.js'
+    const goodConfig: GasketConfigDefinition = {
+      plugins: [{ name: 'example-plugin', version: '', description: '', hooks: {} }],
+      express: {
+        routes: []
+      }
     };
   });
 
@@ -57,7 +69,7 @@ describe('@gasket/plugin-express', () => {
   });
 
   it('declares the errorMiddleware lifecycle', () => {
-    const hook: Hook<'errorMiddleware'> = (gasket: Gasket, app) => [
+    const hook: Hook<'errorMiddleware'> = (gasket: Gasket) => [
       (err, req, res, next) => {
         // eslint-disable-next-line no-console
         console.error(err);

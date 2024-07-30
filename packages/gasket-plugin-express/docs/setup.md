@@ -18,11 +18,12 @@ is passed the typical `gasket` object as with any hook, and the `express`
 instance:
 
 ```js
-const someMiddleware = require('some-middleware');
-const anotherMiddleware = require('another-middleware');
+import someMiddleware from 'some-middleware';
+import anotherMiddleware from 'another-middleware';
 
 // Sample plugin
-module.exports = {
+export default {
+  name: 'sample-plugin',
   hooks: {
     middleware(gasket, app) {
       return [
@@ -41,7 +42,8 @@ the app object directly, like attaching route handlers:
 
 ```js
 // Sample plugin
-module.exports = {
+export default {
+  name: 'sample-plugin',
   hooks: {
     express(gasket, app) {
       app.param('id', require('./form-id-handler'));
@@ -57,12 +59,13 @@ Finally, plugins can hook the `errorMiddleware` lifecycle and return additional
 middleware(s), typically for [error handling].
 
 ```js
-const errorLoggingClient = require('some-error-logger');
+import errorLoggingClient from 'some-error-logger';
 
 // Sample plugin
-module.exports = {
+export default {
+  name: 'sample-plugin'
   hooks: {
-    errorMiddleware(gasket, app) {
+    errorMiddleware(gasket) {
       return async (err, req, res, next) => {
         try {
           await errorLoggingClient.logError(err, req);
@@ -84,9 +87,9 @@ engine. For example, if you need your middleware to access the server-side redux
 store created by [@gasket/plugin-redux], you can do something like this:
 
 ```js
-const getFeatureFlags = require('./get-feature-flags');
+import  getFeatureFlags from './get-feature-flags.js';
 
-module.exports = {
+export default {
   dependencies: ['@gasket/redux'],
   hooks: {
     middleware: {
@@ -118,7 +121,7 @@ module.exports = {
 ## Middleware paths
 
 You can configure which paths middleware will run on by adding the middleware
-configuration array to your local `gasket.config.js`. The array is made up of
+configuration array to your `gasket.js`. The array is made up of
 objects with the name of the middleware (Gasket plugin name) you want to
 configure and an array of path patterns representing the paths to match for this
 middleware. Pattern matching entries in the array can come in the form of path
@@ -126,6 +129,7 @@ strings, path pattern strings, and/or regular expressions. Pattern matching
 logic follows Express's [app.use pattern matching].
 
 ```js
+export default makeGasket({
   middleware: [
     {
       plugin:'gasket-plugin-example', // Name of the Gasket plugin
@@ -140,6 +144,7 @@ logic follows Express's [app.use pattern matching].
       paths: ['/proxy', /\/home/]
     }
   ]
+});
 ```
 
 <!-- LINKS -->

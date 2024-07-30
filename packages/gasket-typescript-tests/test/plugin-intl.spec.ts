@@ -1,10 +1,11 @@
 import type { IncomingMessage, OutgoingMessage } from 'http';
-import type { Gasket, GasketConfigFile, Hook } from '@gasket/engine';
+import type { Gasket, GasketConfigDefinition, Hook, GasketRequest } from '@gasket/core';
 import '@gasket/plugin-intl';
 
 describe('@gasket/plugin-intl', () => {
   it('adds intl config to Gasket', () => {
-    const config: GasketConfigFile = {
+    const config: GasketConfigDefinition = {
+      plugins: [{ name: 'example-plugin', version: '', description: '', hooks: {} }],
       intl: {
         defaultLocale: 'fr-FR',
         locales: ['fr-FR', 'en-US', 'zh-TW', 'zh-CN', 'zh-HK', 'zh-SG'],
@@ -16,15 +17,29 @@ describe('@gasket/plugin-intl', () => {
     };
   });
 
-  it('module configurations', () => {
-    const config: GasketConfigFile = {
+  it('validated expected props', () => {
+    const config: GasketConfigDefinition = {
+      plugins: [{ name: 'example-plugin', version: '', description: '', hooks: {} }],
+      // @ts-expect-error - requires locales
       intl: {
         modules: true
       }
     };
+  });
 
-    const config2: GasketConfigFile = {
+  it('module configurations', () => {
+    const config: GasketConfigDefinition = {
+      plugins: [{ name: 'example-plugin', version: '', description: '', hooks: {} }],
       intl: {
+        locales: ['en-US', 'fr-FR'],
+        modules: true
+      }
+    };
+
+    const config2: GasketConfigDefinition = {
+      plugins: [{ name: 'example-plugin', version: '', description: '', hooks: {} }],
+      intl: {
+        locales: ['en-US', 'fr-FR'],
         modules: {
           localesDir: 'locales',
           excludes: ['test']
@@ -32,8 +47,10 @@ describe('@gasket/plugin-intl', () => {
       }
     };
 
-    const config3: GasketConfigFile = {
+    const config3: GasketConfigDefinition = {
+      plugins: [{ name: 'example-plugin', version: '', description: '', hooks: {} }],
       intl: {
+        locales: ['en-US', 'fr-FR'],
         modules: [
           '@site/shared-pkg',
           '@site/other-pkg/i18n'
@@ -41,7 +58,7 @@ describe('@gasket/plugin-intl', () => {
       }
     };
 
-    const badConfig: GasketConfigFile = {
+    const badConfig: GasketConfigDefinition = {
       intl: {
         // @ts-expect-error
         modules: 12345
@@ -53,7 +70,7 @@ describe('@gasket/plugin-intl', () => {
     const hook: Hook<'intlLocale'> = (
       gasket: Gasket,
       locale: string,
-      { req, res }: { req: IncomingMessage, res: OutgoingMessage }
+      { req }: { req: GasketRequest }
     ) => {
       return 'fr-FR';
     };
@@ -64,7 +81,7 @@ describe('@gasket/plugin-intl', () => {
     const hook: Hook<'intlLocale'> = (
       gasket: Gasket,
       locale: string,
-      { req, res }: { req: IncomingMessage, res: OutgoingMessage }
+      { req }: { req: GasketRequest }
     ) => {
       return 3;
     };

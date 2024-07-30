@@ -5,33 +5,27 @@ app's plugins, presets, and supporting modules.
 
 ## Installation
 
-#### New apps
-
-```
-gasket create <app-name> --plugins @gasket/plugin-docs
-```
-
-#### Existing apps
-
 ```
 npm i @gasket/plugin-docs
 ```
 
-Modify `plugins` section of your `gasket.config.js`:
+Update your `gasket` file plugin configuration:
 
 ```diff
-module.exports = {
-  plugins: {
-    add: [
-+      '@gasket/plugin-docs'
-    ]
-  }
-}
+// gasket.js
+
++ import pluginDocs from '@gasket/plugin-docs';
+
+ export default makeGasket({
+  plugins: [
++   pluginDocs
+  ]
+});
 ```
 
 ## Configuration
 
-To be set in under `docs` in the `gasket.config.js`.
+To be set in under `docs` in the `gasket.js`.
 
 - `outputDir` - (string) Name of the directory, relative to the app's package,
   where doc files will be collected to. Default is `.docs`.
@@ -72,7 +66,7 @@ The `defaults` are an available option to reference.
  * @typedef {import('@gasket/plugin-docs').DocsSetup} DocsSetup
  */
 
-module.exports = {
+export default {
   name: 'example',
   hooks: {
     /**
@@ -158,9 +152,9 @@ Allows a plugin to provide a view of the docs for the user.
 #### Example viewer
 
 ```js
-const view = require('example-markdown-viewer');
+import view from 'example-markdown-viewer';
 
-module.exports = {
+export default {
   name: 'example',
   hooks: {
     async docsView(gasket, docsConfigSet) {
@@ -182,9 +176,11 @@ Allows a plugin to add documentation that has to be programmatically generated.
 #### An example graph
 
 ```js
-const { writeFile } = require('fs').promises;;
+import { promises as fsPromises } from 'fs';
 
-module.exports = {
+const { writeFile } = fsPromises;
+
+export default {
   name: 'questions',
   hooks: {
     async docsGenerate(gasket, docsConfigSet) {
@@ -211,8 +207,8 @@ for the preset.
 
 ```js
 // gasket-preset-example.js
-module.exports = {
-  require,
+export default {
+  name: 'gasket-preset-example',
   docsSetup: {
     link: 'OTHER.md#go-here',
     files: ['more-docs/**/*.*'],

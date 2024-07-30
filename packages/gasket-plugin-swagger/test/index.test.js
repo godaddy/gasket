@@ -33,6 +33,7 @@ jest.mock('/path/to/app/swagger.json', () => ({ data: true }), {
 });
 
 const fastify = require('fastify')({ logger: true });
+const { name, version, description } = require('../package');
 
 describe('Swagger Plugin', function () {
   let plugin;
@@ -48,11 +49,13 @@ describe('Swagger Plugin', function () {
 
   it('is an object', function () {
     expect(typeof plugin).toBe('object');
-    expect(Object.keys(plugin)).toHaveLength(2);
+    expect(Object.keys(plugin)).toHaveLength(4);
   });
 
-  it('has expected name', function () {
-    expect(plugin).toHaveProperty('name', '@gasket/plugin-swagger');
+  it('has expected properties', () => {
+    expect(plugin).toHaveProperty('name', name);
+    expect(plugin).toHaveProperty('version', version);
+    expect(plugin).toHaveProperty('description', description);
   });
 
   it('has expected hooks', function () {
@@ -307,14 +310,53 @@ describe('Swagger Plugin', function () {
 
     it('adds new routes to swagger paths', async function () {
       await plugin.hooks.fastify.handler(mockGasket, fastify);
-      fastify.register((instance, opts, done) => {
-        // eslint-disable-next-line max-nested-callbacks
-        instance.get('/hello-world', (_, reply) => { reply.send('hello'); });
-        done();
-      });
-      fastify.get('/hello-world', () => {});
+      fastify.get('/hello-world', () => { });
       await fastify.ready();
       // expect(fastify.swagger().paths).toHaveProperty('/hello-world');
+    });
+  });
+
+  describe('create hook', function () {
+    let mockContext;
+
+    beforeEach(() => {
+      mockContext = {
+        pkg: {
+          add: jest.fn()
+        },
+        gasketConfig: {
+          addPlugin: jest.fn(),
+          add: jest.fn()
+        }
+      };
+    });
+
+    it('adds itself to the dependencies', async function () {
+      await plugin.hooks.create({}, mockContext);
+      expect(mockContext.pkg.add).toHaveBeenCalledWith('dependencies',
+        expect.objectContaining({
+          [name]: `^${version}`
+        })
+      );
+    });
+
+    it('adds prebuild script', async function () {
+      await plugin.hooks.create({}, mockContext);
+      expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts',
+        expect.objectContaining({
+          prebuild: 'node gasket.js build'
+        })
+      );
+    });
+
+    it('adds swagger plugin to gasket config', async function () {
+      await plugin.hooks.create({}, mockContext);
+      expect(mockContext.gasketConfig.addPlugin).toHaveBeenCalledWith('pluginSwagger', name);
+    });
+
+    it('adds swagger config to gasket config', async function () {
+      await plugin.hooks.create({}, mockContext);
+      expect(mockContext.gasketConfig.add).toHaveBeenCalledWith('swagger', expect.any(Object));
     });
   });
 });

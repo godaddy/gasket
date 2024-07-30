@@ -2,18 +2,10 @@
 
 Framework for building API's using Gasket.
 
-## Usage
-
-This preset requires v5 of the `@gasket/cli`:
-
-```bash
-npm i -g @gasket/cli@^5.0.0
-```
-
 ## Installation
 
 ```bash
-gasket create <app-name> --presets @gasket/preset-api
+npx create-gasket-app <app-name> --presets @gasket/preset-api
 ```
 
 ## Docs
@@ -22,7 +14,7 @@ To see complete the list of plugins configured in your app, and what commands, l
 
 ## Plugins
 
-- [@gasket/plugin-response-data](/packages/gasket-plugin-response-data/README.md)
+- [@gasket/plugin-data](/packages/gasket-plugin-data/README.md)
 - [@gasket/plugin-swagger](/packages/gasket-plugin-swagger/README.md)
 - [@gasket/plugin-docs](/packages/gasket-plugin-docs/README.md)
 - [@gasket/plugin-docusaurus](/packages/gasket-plugin-docusaurus/README.md)

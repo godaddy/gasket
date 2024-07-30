@@ -9,28 +9,22 @@ Adds Express to your application.
 
 ## Installation
 
-#### New apps
-
-```
-gasket create <app-name> --plugins @gasket/plugin-express
-```
-
-#### Existing apps
-
 ```
 npm i @gasket/plugin-express
 ```
 
-Modify `plugins` section of your `gasket.config.js`:
+Update your `gasket` file plugin configuration:
 
 ```diff
-module.exports = {
-  plugins: {
-    add: [
-+      '@gasket/plugin-express'
-    ]
-  }
-}
+// gasket.js
+
++ import pluginExpress from '@gasket/plugin-express';
+
+export default makeGasket({
+  plugins: [
++   pluginExpress
+  ]
+});
 ```
 
 ## Configuration
@@ -47,40 +41,17 @@ All the configurations for the plugin are added under `express` in the config:
 #### Example configuration
 
 ```js
-module.exports = {
-  plugins: {
-    add: ['@gasket/express']
-  },
+export default makeGasket({
+  plugins: [
+    pluginExpress
+  ],
   express: {
     compression: false,
     routes: 'api/*.js',
     middlewareInclusionRegex: /^(?!\/_next\/)/,
     trustProxy: true
   }
-}
-```
-
-### Middleware paths
-
-The `gasket.config.js` can contain a `middleware` property, which is an array of
-objects that map plugins to route or path patterns, allowing apps to tune which
-middleware are triggered for which requests.
-
-```js
-  middleware: [
-    {
-      plugin:'gasket-plugin-example', // Name of the Gasket plugin
-      paths: ['/api']
-    },
-    {
-      plugin:'@some/gasket-plugin-example',
-      paths: [/\/default/]
-    },
-    {
-      plugin: '@another/gasket-plugin-example',
-      paths: ['/proxy', /\/home/]
-    }
-  ]
+});
 ```
 
 ## Logging
@@ -101,37 +72,14 @@ function someOtherMiddleware(req, res, next) {
 
 ## Lifecycles
 
-### middleware
-
-Executed when the `express` server has been created, it will apply all returned
-functions as middleware.
-
-```js
-module.exports = {
-  hooks: {
-    /**
-    * Add Express middleware
-    *
-    * @param {Gasket} gasket The Gasket API
-    * @param {Express} app - Express app instance
-    * @returns {function|function[]} middleware(s)
-    */
-    middleware: function (gasket, app) {
-      return require('x-xss-protection')();
-    }
-  }
-}
-```
-
-You may also return an `Array` to inject more than one middleware.
-
 ### express
 
 Executed **after** the `middleware` event for when you need full control over
 the `express` instance.
 
 ```js
-module.exports = {
+export default {
+  name: 'sample-plugin',
   hooks: {
     /**
     * Update Express app instance
@@ -143,7 +91,7 @@ module.exports = {
     express: async function (gasket, express) {
     }
   }
-}
+};
 ```
 
 ### errorMiddleware
@@ -152,7 +100,8 @@ Executed after the `express` event. All middleware functions returned from this
 hook will be applied to Express.
 
 ```js
-module.exports = {
+export default {
+  name: 'sample-plugin',
   hooks: {
     /**
     * Add Express error middlewares
@@ -163,7 +112,7 @@ module.exports = {
     errorMiddleware: function (gasket) {
     }
   }
-}
+};
 ```
 
 ## How it works

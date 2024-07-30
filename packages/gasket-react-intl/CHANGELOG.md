@@ -1,5 +1,13 @@
 # `@gasket/react-intl`
 
+### 6.47.1
+
+- Accept an array as localesPath in useLocaleRequired, withLocaleRequired, and LocaleRequired ([#779])
+
+### 6.46.3
+
+- Move next-specific utility function to avoid inclusion for browser bundles ([#696])
+
 ### 6.45.2
 
 - Tune `devDeps`, update test script ([#670])
@@ -37,7 +45,7 @@
 
 ### 6.26.1
 
-- Fix typo for `LocaleStatus` in sample code ([#384])
+- Fix typo for `LocaleFileStatus` in sample code ([#384])
 
 ### 6.26.0
 
@@ -191,3 +199,5 @@
 [#459]: https://github.com/godaddy/gasket/pull/459
 [#523]: https://github.com/godaddy/gasket/pull/523
 [#670]: https://github.com/godaddy/gasket/pull/670
+[#696]: https://github.com/godaddy/gasket/pull/696
+[#779]: https://github.com/godaddy/gasket/pull/779

@@ -10,25 +10,21 @@ when paired with `@gasket/plugin-workbox` and `@gasket/plugin-service-worker`.
 #### New apps
 
 ```
-gasket create <app-name> --plugins @gasket/plugin-manifest
-```
-
-#### Existing apps
-
-```
 npm i @gasket/plugin-manifest
 ```
 
-Modify `plugins` section of your `gasket.config.js`:
+Update your `gasket` file plugin configuration:
 
 ```diff
-module.exports = {
-  plugins: {
-    add: [
-+      '@gasket/plugin-manifest'
-    ]
-  }
-}
+// gasket.js
+
++ import pluginManifest from '@gasket/plugin-manifest';
+
+export default makeGasket({
+  plugins: [
++   pluginManifest
+  ]
+});
 ```
 
 ## Configuration
@@ -38,39 +34,40 @@ this plugin have 2 options in augmenting this object. The first is through
 `gasket.config.js`:
 
 ```js
-// gasket.config.js
-module.exports = {
+// gasket.js
+export default makeGasket({
   manifest: {
     short_name: 'PWAwesome',
     name: 'Progressive Web Application'
   }
-}
+});
 ```
 
 If you want to serve `manifest.json` from a custom path, the plugin can be
 configured as follows.
 
 ```js
-// gasket.config.js
-module.exports = {
+// gasket.js
+export default makeGasket({
   manifest: {
     // other options
     path: '/custom/path/manifest.json' // default: /manifest.json
   }
-}
+});
 ```
 
 If you want to generate a `manifest.json` file at build time for use with a static app, the plugin can be configured with the `staticOutput` option:
 
 ```js
-// gasket.config.js
-module.exports = {
+// gasket.js
+export default makeGasket({
   manifest: {
     // other options
     staticOutput: '/custom/path/manifest.json'
   }
-}
+});
 ```
+
 You will also need to include a link to your `manifest.json` file on your static html pages:
 
 ```html
@@ -89,7 +86,7 @@ matches either `manifest.json` or the service worker script (which is `sw.js` by
 default).
 
 ```js
-// lifecyles/manifest.js
+// sample-plugin.js
 
 /**
  * Generate a manifest.json that will be deeply merged into the existing ones.
@@ -101,17 +98,21 @@ default).
  * @param  {Request} req Incoming HTTP Request
  * @return {Promise<Object>} updated manifest
  */
-module.exports = async function (gasket, manifest, { req }) {
-  const whitelisted = await checkAgainstRemoteWhitelist(req.ip);
-  return {
-    ...manifest,
-    orientation: gasket.config.orientation,
-    theme_color: (req.secure && whitelisted) ? '#00ff00' : '#ff0000'
-  };
+export default {
+  name: 'sample-plugin',
+  hooks: {
+    manifest: async function (gasket, manifest, { req }) {
+    const whitelisted = await checkAgainstRemoteWhitelist(req.ip);
+    return {
+      ...manifest,
+      orientation: gasket.config.orientation,
+      theme_color: (req.secure && whitelisted) ? '#00ff00' : '#ff0000'
+    };
+  }
 }
 ```
 
-It is important to note that conflicting objects from `gasket.config.js` and a
+It is important to note that conflicting objects from `gasket.js` and a
 `manifest` hook will be resolved by using the data from the *hook*.
 
 Once the `manifest.json` has been resolved, it is suggested that consumers of
@@ -119,7 +120,7 @@ this plugin take advantage of the `workbox` hook. For example: here we cache any
 icons that the application might use at runtime:
 
 ```js
-// lifecycles/workbox.js
+// sample-plugin.js
 
 /**
  * Returns a config partial which will be merged
@@ -128,16 +129,20 @@ icons that the application might use at runtime:
  * @param {Request} req incoming HTTP request
  * @returns {Object} config which will be deeply merged
  */
-module.exports = function (gasket, config, req) {
-  const { icons = [] } = req.manifest;
+export default {
+  name: 'sample-plugin',
+  hooks: {
+    workbox: function (gasket, config, req) {
+      const { icons = [] } = req.manifest;
 
-  return {
-    runtimeCaching: icons.map(icon => ({
-      urlPattern: icon.src,
-      handler: 'staleWhileRevalidate'
-    }))
+    return {
+      runtimeCaching: icons.map(icon => ({
+        urlPattern: icon.src,
+        handler: 'staleWhileRevalidate'
+      }))
+    };
   };
-};
+}
 ```
 
 ## License

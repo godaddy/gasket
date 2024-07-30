@@ -1,8 +1,19 @@
-// @gasket/plugin-express
-module.exports = function metadata(gasket, meta) {
-  const { metadata } = gasket;
-  const hasExpress = Boolean(metadata.plugins.find(pluginData => pluginData.name === '@gasket/plugin-express'));
-  const hasFastify = Boolean(metadata.plugins.find(pluginData => pluginData.name === '@gasket/plugin-fastify'));
+/// <reference types="@gasket/plugin-metadata" />
+
+/** @type {import('@gasket/core').HookHandler<'metadata'>} */
+module.exports = function metadataHook(gasket, meta) {
+  const { config: { plugins } } = gasket;
+  const hasExpress = Boolean(
+    plugins.find(
+      (pluginData) => pluginData.name === '@gasket/plugin-express'
+    )
+  );
+
+  const hasFastify = Boolean(
+    plugins.find(
+      (pluginData) => pluginData.name === '@gasket/plugin-fastify'
+    )
+  );
 
   const data = {
     ...meta,
@@ -56,7 +67,8 @@ module.exports = function metadata(gasket, meta) {
       {
         name: 'nextConfig',
         link: 'README.md#configuration',
-        description: 'Everything that can be configured in `next.config.js` can be added here.',
+        description:
+          'Everything that can be configured in `next.config.js` can be added here.',
         type: 'object'
       }
     ]
@@ -67,7 +79,8 @@ module.exports = function metadata(gasket, meta) {
       {
         name: 'next',
         method: 'exec',
-        description: 'Update the Next.js app instance before preparing for Express',
+        description:
+          'Update the Next.js app instance before preparing for Express',
         link: 'README.md#next',
         parent: 'express',
         after: 'nextConfig'
@@ -88,7 +101,8 @@ module.exports = function metadata(gasket, meta) {
       {
         name: 'next',
         method: 'exec',
-        description: 'Update the Next.js app instance before preparing for Fastify',
+        description:
+          'Update the Next.js app instance before preparing for Fastify',
         link: 'README.md#next',
         parent: 'fastify',
         after: 'nextConfig'

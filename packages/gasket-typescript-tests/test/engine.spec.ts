@@ -1,26 +1,40 @@
-import Gasket from '@gasket/engine';
-import type { GasketConfigFile, MaybeAsync, Plugin  } from '@gasket/engine';
+import { GasketEngine as Gasket } from '@gasket/core';
+import type { GasketConfigDefinition, MaybeAsync, Plugin  } from '@gasket/core';
 
-declare module '@gasket/engine' {
+declare module '@gasket/core' {
   interface HookExecTypes {
     example(str: string, num: number, bool: boolean): MaybeAsync<boolean>
   }
 }
 
-describe('@gasket/engine', () => {
+const PluginExample = {
+  name: 'example-plugin',
+  version: '',
+  description: '',
+  hooks: {
+    example(gasket: Gasket, str: string, num: number, bool: boolean) {
+      return true;
+    }
+  }
+};
+
+describe('@gasket/core', () => {
   it('exposes the constructor interface', () => {
     // eslint-disable-next-line no-new
+    new Gasket([PluginExample]);
+  });
+
+  it('checks constructor arguments', () => {
+    // eslint-disable-next-line no-new
     new Gasket(
-      { root: __dirname, env: 'test' },
-      { resolveFrom: __dirname }
+      [PluginExample],
+      // @ts-expect-error
+      'extra'
     );
   });
 
   it('should infer the types of lifecycle parameters', async function () {
-    const gasket = new Gasket(
-      { root: __dirname, env: 'test' },
-      { resolveFrom: __dirname }
-    );
+    const gasket = new Gasket([PluginExample]);
 
     await gasket.execApply('example', async function (plugin, handler) {
       handler('a string', 123, true);
@@ -35,6 +49,8 @@ describe('@gasket/engine', () => {
   it('defines the structure of a Gasket plugin', () => {
     const myPlugin: Plugin = {
       name: 'my-plugin',
+      version: '',
+      description: '',
       dependencies: ['foo', 'bar'],
       hooks: {
         example(gasket, a, b, c) {
@@ -45,10 +61,7 @@ describe('@gasket/engine', () => {
   });
 
   it('type checks the hook method', () => {
-    const engine = new Gasket(
-      { root: __dirname, env: 'test' },
-      { resolveFrom: __dirname }
-    );
+    const engine = new Gasket([PluginExample]);
 
     // Valid
     engine.hook({
@@ -77,10 +90,7 @@ describe('@gasket/engine', () => {
   });
 
   it('exposes the running command on the Gasket interface', () => {
-    const engine = new Gasket(
-      { root: __dirname, env: 'test' },
-      { resolveFrom: __dirname }
-    );
+    const engine = new Gasket([PluginExample]);
 
     // Valid
     engine.hook({
@@ -92,6 +102,19 @@ describe('@gasket/engine', () => {
   });
 
   it('allows environments to contain plugins', () => {
-    const config: GasketConfigFile = { environments: { dev: { plugins: { add: ['plugin-name'] } } } };
+    const config: GasketConfigDefinition = {
+      plugins: [PluginExample],
+      environments: {
+        dev: {
+          plugins: [
+            { name: 'dev-plugin', version: '', description: '', hooks: {} },
+            // @ts-expect-error
+            { /* missing name */ hooks: {} },
+            // @ts-expect-error
+            { name: 'missing-hooks' }
+          ]
+        }
+      }
+    };
   });
 });

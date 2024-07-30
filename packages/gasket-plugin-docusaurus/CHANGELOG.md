@@ -1,5 +1,11 @@
 # `@gasket/plugin-docusaurus`
 
+
+
+- Add plugin import to gasket file ([#736])
+- Add itself to the app package file
+- `configure` hook now synchronous
+
 ### 6.46.0
 
 - Adjust path on tryRequire to handle dep check ([#674])
@@ -54,3 +60,4 @@
 [#658]: https://github.com/godaddy/gasket/pull/658
 [#670]: https://github.com/godaddy/gasket/pull/670
 [#674]: https://github.com/godaddy/gasket/pull/674
+[#736]: https://github.com/godaddy/gasket/pull/736

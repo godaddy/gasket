@@ -1,49 +1,65 @@
-import type { IncomingMessage, OutgoingMessage } from 'http';
-import type { MaybeAsync } from '@gasket/engine';
-import { LocalesProps } from '@gasket/helper-intl';
+import type { MaybeAsync, GasketRequest } from '@gasket/core';
+import type { IncomingMessage } from 'http';
+import { IntlManager } from '@gasket/helper-intl';
+import { LocaleManifestConfig } from '@gasket/helper-intl';
 
-declare module '@gasket/engine' {
+interface CustomScanSettings {
+  /** Lookup dir for module files (default: `locales`) */
+  localesDir?: string;
+  /** List of modules to ignore */
+  excludes?: Array<string>;
+}
+
+interface CustomScanSettings {
+  /** Lookup dir for module files (default: `locales`) */
+  localesDir?: string;
+  /** List of modules to ignore */
+  excludes?: Array<string>;
+}
+
+export interface IntlConfig extends LocaleManifestConfig {
+  localesDir?: string;
+  managerFilename?: string;
+  modules?:
+    | boolean
+    | CustomScanSettings
+    /* specific packages w/ optional subdirectories */
+    | string[];
+  nextRouting?: boolean;
+  manager?: IntlManager;
+}
+
+declare module '@gasket/core' {
   export interface GasketConfig {
-    intl?: {
-      basePath?: string,
-      defaultPath?: string,
-      defaultLocale?: string,
-      locales?: Array<string>,
-      localesMap?: Record<string, string>,
-      localesDir?: string,
-      manifestFilename?: string,
-      serveStatic?: boolean | string,
-      modules?:
-        /* default scan settings */
-        boolean |
-        /* custom scan settings */
-        {
-          localesDir?: string,
-          excludes?: Array<string>
-        } |
-        /* specific packages w/ optional subdirectories */
-        string[],
-      nextRouting?: boolean
-    }
+    intl?: IntlConfig;
+  }
+
+  export interface GasketActions {
+    getIntlLocale: (req: GasketRequest) => string;
+    /**
+     * Provides access to the Intl manager instance to plugins.
+     * Especially useful for plugins that are still CJS.
+     */
+    getIntlManager: () => IntlManager;
   }
 
   export interface HookExecTypes {
     intlLocale(
       locale: string,
-      context: { req: IncomingMessage, res: OutgoingMessage }
-    ): MaybeAsync<string>
+      context: { req: GasketRequest }
+    ): MaybeAsync<string>;
   }
 }
 
-export interface GasketDataIntl extends LocalesProps {
-  /**
-   * Include base path if configured
-   */
-  basePath?: string
-}
-
-declare module '@gasket/data' {
-  export interface GasketData {
-    intl?: GasketDataIntl
+declare module 'create-gasket-app' {
+  export interface CreateContext {
+    hasGasketIntl?: boolean;
   }
 }
+
+export default {
+  name: '@gasket/plugin-intl',
+  version: '',
+  description: '',
+  hooks: {}
+};

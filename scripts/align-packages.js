@@ -10,7 +10,6 @@ const projectRoot = path.resolve(__dirname, '..');
 
 /**
  * Dependency name and expected version range
- *
  * @type {Object.<string,string>}
  */
 const depVersions = {
@@ -38,13 +37,13 @@ const depVersions = {
   'react-intl': '^6.0.0',
   'prop-types': '^15.8.1',
   'redux': '^4.0.5',
-  'next': '13.1.1',
+  'next': '^14.0.0',
   'next-redux-wrapper': '^8.0.0',
   'jsdom': '^20.0.0',
 
   'babel-eslint': '^10.1.0',
   'eslint': '^8.56.0',
-  'eslint-config-godaddy': '^7.0.2',
+  'eslint-config-godaddy': '^7.1.0',
   'eslint-config-godaddy-react': '^9.0.1',
   'eslint-plugin-json': '^3.1.0',
   'eslint-plugin-jest': '^27.6.3',
@@ -61,16 +60,17 @@ const depVersions = {
   'lodash.defaultsdeep': '^4.6.1',
   'webpack': '^5.89.0',
   'serve-static': '^1.15.0',
-  'cross-env': '^7.0.3'
+  'cross-env': '^7.0.3',
+
+  'typescript': '^5.4.5'
 };
 
 /**
  * Peer dependency name and expected version range
- *
- * @type {object.<string,string>}
+ * @type {Object.<string,string>}
  */
 const peerDepVersions = {
-  'next': '>=10.2.0 <= 13.1.1',
+  'next': '>=10.2.0 <= 13.1.1 || ^14',
   'prop-types': '^15',
   'react': '^16 || ^17 || ^18',
   'react-dom': '^16 || ^17 || ^18',
@@ -80,7 +80,6 @@ const peerDepVersions = {
 
 /**
  * Expected order of the overall package
- *
  * @type {string[]}
  */
 const pkgOrder = [
@@ -106,6 +105,7 @@ const pkgOrder = [
   'homepage',
   'dependencies',
   'devDependencies',
+  'disabled_peerDependencies',
   'peerDependencies',
   'eslintConfig',
   'eslintIgnore',
@@ -114,7 +114,6 @@ const pkgOrder = [
 
 /**
  * Expected order of scripts
- *
  * @type {string[]}
  */
 const scriptsOrder = [
@@ -143,7 +142,6 @@ const scriptsOrder = [
 
 /**
  * Shortcut to stringfy and object in a readable way
- *
  * @param {object} json - Object to stringify very prettily
  * @returns {string} pretty
  */
@@ -153,9 +151,8 @@ const prettyPrint = (json) => JSON.stringify(json, null, 2) + '\n';
  * Builds a sort function from an array.
  * Items found in the array will be arranged as listed.
  * Otherwise, they will be sorted alphanumeric at the end.
- *
  * @param {Array} arr - Array of sorted keys
- * @returns {function} compare
+ * @returns {Function} compare
  */
 const orderedSort = (arr) => (a, b) => {
   let comparison = 0;
@@ -178,10 +175,9 @@ const orderedSort = (arr) => (a, b) => {
 
 /**
  * Takes and object and sorts its keys
- *
  * @param {object} obj - Object with keys to be ordered
  * @param {string} [attr] - name of object property to sort
- * @param {function} [compare] - optional sort function
+ * @param {Function} [compare] - optional sort function
  * @returns {object} sorted
  */
 function sortKeys(obj, attr, compare) {
@@ -204,7 +200,6 @@ function sortKeys(obj, attr, compare) {
 
 /**
  * Adjust versions of dependencies in package match the version expected
- *
  * @param {object} pkgJson - package.json contents
  * @param {string} attr - Either devDependencies or dependencies
  * @param {object} [versions] - Map of dependency to version
@@ -225,7 +220,6 @@ function alignDeps(pkgJson, attr, versions = {}) {
 
 /**
  * Set standard properties in packages
- *
  * @param {object} pkgJson - package.json contents
  */
 function fixedProperties(pkgJson) {
@@ -245,7 +239,6 @@ function fixedProperties(pkgJson) {
 
 /**
  * Checks for expected scripts and warns if missing
- *
  * @param {object} pkgJson - package.json contents
  */
 function checkScripts(pkgJson) {
@@ -262,7 +255,6 @@ function checkScripts(pkgJson) {
 
 /**
  * Checks if maintainers are set on a packages and warns if not
- *
  * @param {object} pkgJson - package.json contents
  */
 function checkMaintainers(pkgJson) {
@@ -274,8 +266,84 @@ function checkMaintainers(pkgJson) {
 }
 
 /**
+ * Check if typecheck scripts are present and adds them if not
+ * @param pkgJson
+ */
+function checkTypecheckScripts(pkgJson) {
+  const { scripts } = pkgJson;
+  if (scripts.posttest && !scripts.typecheck) {
+    // TODO: Remove 'skip' once types have been completed in each package
+    pkgJson.scripts['typecheck:skip'] = 'tsc';
+    pkgJson.scripts['typecheck:watch'] = 'tsc --watch';
+  }
+}
+
+/**
+ * Check if eslintConfig is present and adds jsdoc recommended typescript flavor
+ * @param pkgJson
+ */
+function checkEslintConfig(pkgJson) {
+  const { eslintConfig } = pkgJson;
+  if (
+    eslintConfig &&
+    !eslintConfig.extends.includes('plugin:jsdoc/recommended-typescript-flavor')
+  ) {
+    pkgJson.eslintConfig.extends.push(
+      'plugin:jsdoc/recommended-typescript-flavor'
+    );
+  }
+
+  if (eslintConfig && !eslintConfig.plugins.includes('jsdoc')) {
+    pkgJson.eslintConfig.plugins.push('jsdoc');
+  }
+}
+
+/**
+ * Check if typescript is in devDependencies and adds it if not
+ * @param pkgJson
+ */
+function checkDevDeps(pkgJson) {
+  const { devDependencies } = pkgJson;
+  if (devDependencies && !devDependencies.typescript) {
+    pkgJson.devDependencies.typescript = depVersions.typescript;
+  }
+}
+
+/**
+ * Setup typescript scripts and dependencies
+ * @param pkgJson
+ */
+function setupTypes(pkgJson) {
+  const { name } = pkgJson;
+
+  const packagesToSkip = [
+    'create-gasket-app',
+    '@gasket/assets',
+    '@gasket/engine',
+    '@gasket/log',
+    '@gasket/plugin-command',
+    '@gasket/plugin-config',
+    '@gasket/plugin-docsify',
+    '@gasket/plugin-lifecycle',
+    '@gasket/plugin-log',
+    '@gasket/plugin-metadata',
+    '@gasket/plugin-workbox', // Skip until v7 as workbox-build@4 has no types
+    '@gasket/preset-api',
+    '@gasket/preset-nextjs',
+    '@gasket/resolve',
+    '@gasket/typescript-tests',
+    '@gasket/repository'
+  ];
+
+  if (!packagesToSkip.includes(name)) {
+    checkTypecheckScripts(pkgJson);
+    checkEslintConfig(pkgJson);
+    checkDevDeps(pkgJson);
+  }
+}
+
+/**
  * Read, fix up, and write out updated package.json file
- *
  * @param {string} pkgPath path to a package.json file
  * @returns {Promise} promise
  */
@@ -289,7 +357,7 @@ async function fixupPackage(pkgPath) {
   }
 
   fixedProperties(pkgJson);
-
+  setupTypes(pkgJson);
   checkScripts(pkgJson);
   checkMaintainers(pkgJson);
 
@@ -309,7 +377,6 @@ async function fixupPackage(pkgPath) {
 
 /**
  * Finds all the packages and fixes them up
- *
  * @returns {Promise} promise
  */
 async function main() {

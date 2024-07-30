@@ -1,15 +1,29 @@
-const { createLogger, format, transports, config: winstonConfig } = require('winston');
-const { name, dependencies } = require('../package.json');
+/// <reference types="@gasket/plugin-logger" />
+/// <reference types="create-gasket-app" />
+/// <reference types="@gasket/plugin-metadata" />
 
-module.exports = {
+const { createLogger, format, transports } = require('winston');
+const {
   name,
+  version,
+  description,
+  dependencies
+} = require('../package.json');
+
+/** @type {import('@gasket/core').Plugin} */
+const plugin = {
+  name,
+  version,
+  description,
   hooks: {
-    async create(gasket, { pkg }) {
+    async create(gasket, { pkg, gasketConfig }) {
+      gasketConfig.addPlugin('pluginWinston', '@gasket/plugin-winston');
       pkg.add('dependencies', {
+        [name]: `^${version}`,
         winston: dependencies.winston
       });
     },
-    async createLogger(gasket) {
+    createLogger(gasket) {
       const { config } = gasket;
       const transportOrTransports = config.winston?.transports;
 
@@ -24,7 +38,8 @@ module.exports = {
         configTransports = [new transports.Console()];
       }
 
-      const pluginTransports = await gasket.exec('winstonTransports');
+      // eslint-disable-next-line no-sync
+      const pluginTransports = gasket.execSync('winstonTransports');
 
       return createLogger({
         ...config.winston,
@@ -44,7 +59,7 @@ module.exports = {
         lifecycles: [
           {
             name: 'winstonTransports',
-            method: 'exec',
+            method: 'execSync',
             description: 'Setup Winston log transports',
             link: 'README.md#winstonTransports',
             parent: 'createLogger'
@@ -62,3 +77,5 @@ module.exports = {
     }
   }
 };
+
+module.exports = plugin;

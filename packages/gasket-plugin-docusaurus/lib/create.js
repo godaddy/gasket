@@ -1,6 +1,13 @@
-const { devDependencies } = require('../package.json');
+/// <reference types="create-gasket-app" />
 
-module.exports = async function create(gasket, { pkg }) {
+const { name, version, devDependencies } = require('../package.json');
+
+/** @type {import('@gasket/core').HookHandler<'create'>} */
+module.exports = function create(gasket, { pkg, gasketConfig }) {
+  gasketConfig.addPlugin('pluginDocusaurus', name);
+  pkg.add('dependencies', {
+    [name]: `^${version}`
+  });
   pkg.add('devDependencies', {
     '@docusaurus/core': devDependencies['@docusaurus/core'],
     '@docusaurus/preset-classic': devDependencies['@docusaurus/preset-classic'],

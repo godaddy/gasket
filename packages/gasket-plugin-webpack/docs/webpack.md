@@ -10,7 +10,7 @@ for [Gasket Next.js apps].
 
 ## webpackConfig
 
-Apps can also use [lifecycle files] to hook the [webpackConfig lifecycle] to
+Apps can also use custom app-level plugins to hook the [webpackConfig lifecycle] to
 provide additional custom config. The hook function should return the updated
 Webpack config object.
 
@@ -20,33 +20,14 @@ brittle, so handle with care. Also, the `webpack` instance is passed via context
 with the lifecycle, providing access to the [compatible Webpack plugins]
 of the version installed.
 
-### Via lifecycle files
-
-```js
-// lifecycles/webpack-config.js
-const webpackMerge = require('webpack-merge');
-
-module.exports = function (gasket, webpackConfig) {
-  return webpackMerge.merge(webpackConfig,
-    {
-      resolve: {
-        alias: {
-          'fancy-module': './path/to/some/other/module'
-        }
-      }
-    }
-  )
-}
-```
-
 ### Via plugin hooks
 
 ```js
 // gasket-plugin-example.js
-const externalPlugin = require('some-external-plugin-installed');
-const anotherExternalPlugin = require('i-love-webpack');
+import externalPlugin from 'some-external-plugin-installed';
+import anotherExternalPlugin from 'i-love-webpack';
 
-module.exports = {
+export default {
   name: 'example',
   hooks: {
     webpackConfig(gasket, webpackConfig, { webpack }) {
@@ -76,18 +57,17 @@ the [gasket.config.nextConfig] property be helpful.
 ### Via config property
 
 ```js
-// gasket.config.js
-const withPreact = require('next-plugin-preact');
+// gasket.js
+import withPreact from 'next-plugin-preact';
 
-module.exports = {
+export default makeGasket({
   nextConfig: withPreact({
     /* regular next.js config options here */
   })
-}
+});
 ```
 
 [configuration environments]:/packages/gasket-cli/docs/configuration.md#environments
-[lifecycle files]: /packages/gasket-plugin-lifecycle/README.md#usage
 [Gasket Webpack plugin]:/packages/gasket-plugin-webpack/README.md
 [webpackConfig lifecycle]:/packages/gasket-plugin-webpack/README.md#webpackconfig
 [Gasket Next.js apps]:/packages/gasket-plugin-nextjs/README.md

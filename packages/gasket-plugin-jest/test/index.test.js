@@ -1,8 +1,12 @@
 const self = require('../package.json');
 const plugin = require('../lib/index.js');
-const config = require('../generator/jest.config.js');
+const { name, version, description } = require('../package');
 
 describe('Plugin', function () {
+  /**
+   * Create a new project
+   * @returns {Promise<object>} project
+   */
   async function create() {
     const pkg = {};
 
@@ -19,6 +23,10 @@ describe('Plugin', function () {
     return { pkg };
   }
 
+  /**
+   * Create a new React project
+   * @returns {Promise<object>} project
+   */
   async function createReact() {
     const files = [];
     const pkg = {
@@ -52,8 +60,10 @@ describe('Plugin', function () {
     expect(plugin).toBeInstanceOf(Object);
   });
 
-  it('has expected name', function ()  {
-    expect(plugin).toHaveProperty('name', require('../package').name);
+  it('has expected properties', () => {
+    expect(plugin).toHaveProperty('name', name);
+    expect(plugin).toHaveProperty('version', version);
+    expect(plugin).toHaveProperty('description', description);
   });
 
   it('has expected hooks', function ()  {
@@ -72,14 +82,6 @@ describe('Plugin', function () {
   it('has the correct create hook timings', function () {
     expect(plugin.hooks.create.timing.last).toBe(true);
     expect(plugin.hooks.create.timing.before).toEqual(['@gasket/plugin-lint']);
-  });
-
-  it('has the correct custom jest config', async function () {
-    const customJestConfig = await config();
-
-    expect(customJestConfig).toHaveProperty('testEnvironment', 'jest-environment-jsdom');
-    expect(customJestConfig).toHaveProperty('collectCoverageFrom', ['**/*.js']);
-    expect(customJestConfig).toHaveProperty('testEnvironmentOptions', { url: 'http://localhost/' });
   });
 
   describe('react', function () {

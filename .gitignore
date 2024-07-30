@@ -68,8 +68,6 @@ typings/
 # package-specific generated files
 packages/gasket-redux/lib
 packages/gasket-assets/react
-packages/gasket-nextjs/lib
-packages/gasket-react-intl/lib
 packages/gasket-plugin-docs-graphs/test/fixtures/generated-docs
 packages/gasket-cli/test/fixtures/create/*
 !packages/gasket-cli/test/fixtures/create/.gitkeep
@@ -78,3 +76,4 @@ packages/gasket-cli/.cache
 packages/create-gasket-app/.cache
 packages/create-gasket-app/test/fixtures/create/*
 !packages/create-gasket-app/test/fixtures/create/.gitkeep
+packages/gasket-core/cjs

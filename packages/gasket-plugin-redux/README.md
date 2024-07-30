@@ -4,30 +4,22 @@ Gasket plugin to setup redux store available to express middleware.
 
 ## Installation
 
-#### New apps
-
-***Recommended***
-
-```sh
-gasket create <app-name> --plugins @gasket/plugin-redux
+```
+npm i @gasket/plugin-redux
 ```
 
-#### Existing apps
-
-```sh
-npm i @gasket/plugin-redux @gasket/redux redux
-```
-
-Modify `plugins` section of your `gasket.config.js`:
+Update your `gasket` file plugin configuration:
 
 ```diff
-module.exports = {
-  plugins: {
-    add: [
-+      '@gasket/plugin-redux'
-    ]
-  }
-}
+// gasket.js
+
++ import pluginRedux from '@gasket/plugin-redux';
+
+export default makeGasket({
+  plugins: [
++   pluginRedux
+  ]
+});
 ```
 
 ## Configuration
@@ -53,9 +45,9 @@ App developers can choose to use different file location setting the
 #### Example config
 
 ```js
-// gasket.config.js
+// gasket.js
 
-module.exports = {
+export default makeGasket({
   redux: {
     makeStore: './relative/path/to/customMakeStore.js',
     initState: {
@@ -78,16 +70,16 @@ module.exports = {
       }
     }
   }
-}
+});
 ```
 
 ```js
 // customMakeStore.js
 
-const { configureMakeStore } = require('@gasket/redux');
-const reducers = require('./reducers'); // app's reducers
+import { configureMakeStore } from '@gasket/redux';
+import reducers from './reducers'; // app's reducers
 
-module.exports = configureMakeStore({ reducers });
+export default configureMakeStore({ reducers });
 ```
 
 ## Usage
@@ -119,10 +111,10 @@ state can hook this event and return a modified version of the initial state or
 a Promise that resolves to a new initial state. Example plugin:
 
 ```js
-const getExperiments = require('./get-experiments');
+import getExperiments from './get-experiments';
 
-module.exports = {
-  id: 'gasket-plugin-example',
+export default {
+  name: 'gasket-plugin-example',
   hooks: {
     initReduxState(gasket, state, { req, res }) {
       return {
@@ -151,10 +143,10 @@ the initial state or fire off actions to populate the store. Asynchronous
 actions should return a Promise. Example plugin:
 
 ```js
-const getExperiments = require('./get-experiments-action');
+import getExperiments from './get-experiments-action';
 
-module.exports = {
-  id: 'gasket-plugin-example',
+export default {
+  name: 'gasket-plugin-example',
   hooks: {
     initReduxStore(gasket, store, { req, res }) {
       store.dispatch(getExperiments(req));
@@ -185,8 +177,8 @@ to the store template. The store.js file is generated with as CommonJS
 exports and so the import statements should be in CommonJS format.
 
 ```js
-module.exports = {
-  id: 'gasket-plugin-example',
+export default {
+  name: 'gasket-plugin-example',
   hooks: {
     create(gasket, createContext) {
       const { reduxReducers } = createContext;
@@ -210,9 +202,9 @@ With these imports and entries added, the resulting store file should
 resemble:
 
 ```js
-const { configureMakeStore } = require('@gasket/redux');
-const manyExampleReducer = require('@example/reducers');
-const { singleExampleReducer } = require('@example/components');
+import { configureMakeStore } from '@gasket/redux';
+import manyExampleReducer from '@example/reducers';
+import { singleExampleReducer } from '@example/components';
 
 const reducers = {
   ...manyExampleReducer,
@@ -221,7 +213,7 @@ const reducers = {
 
 const makeStore = configureMakeStore({ reducers });
 
-module.exports = makeStore;
+export default makeStore;
 ```
 
 ### Accessing the store file

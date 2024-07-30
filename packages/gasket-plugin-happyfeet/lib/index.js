@@ -1,19 +1,23 @@
-const happyFeet = require('happy-feet');
+/// <reference types="@gasket/plugin-https" />
 
-module.exports = {
-  name: require('../package').name,
+const { name, version, description } = require('../package.json');
+const actions = require('./actions');
+
+/** @type {import('@gasket/core').Plugin} */
+const plugin = {
+  name,
+  version,
+  description,
   hooks: {
-    preboot: async function preboot(gasket) {
-      const happyConfig = gasket.config.happyFeet || {};
-      gasket.happyFeet = happyFeet(happyConfig);
-    },
+    actions,
     healthcheck: async function healthcheck(gasket, HealthCheckError) {
-      const happy = gasket.happyFeet;
-      if (happy.state === happy.STATE.UNHAPPY) {
+      const happy = gasket.actions.getHappyFeet();
+      if (happy && happy.state === happy.STATE.UNHAPPY) {
         // flag pod to be removed from LB
         throw new HealthCheckError(`Happy Feet entered an unhappy state`);
       }
-      return 'page ok';
     }
   }
 };
+
+module.exports = plugin;

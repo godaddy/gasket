@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const plugin = require('../lib/index');
+const { name, version, description } = require('../package');
 
 const rootPath = process.cwd();
 const mockReduxConfig = { makeStore: './path/to/some-file.js' };
@@ -19,8 +20,10 @@ describe('Plugin', () => {
     expect(plugin).toBeInstanceOf(Object);
   });
 
-  it('has expected name', () => {
-    expect(plugin).toHaveProperty('name', require('../package').name);
+  it('has expected properties', () => {
+    expect(plugin).toHaveProperty('name', name);
+    expect(plugin).toHaveProperty('version', version);
+    expect(plugin).toHaveProperty('description', description);
   });
 
   it('has expected hooks', () => {
@@ -48,6 +51,7 @@ describe('Plugin', () => {
     it('adds the expected dependencies', async function () {
       const { devDependencies } = require('../package');
       const spy = {
+        useRedux: true,
         pkg: { add: jest.fn() },
         files: { add: jest.fn() }
       };
@@ -62,6 +66,7 @@ describe('Plugin', () => {
 
     it('adds the expected files', async function () {
       const spy = {
+        useRedux: true,
         pkg: { add: jest.fn() },
         files: { add: jest.fn() }
       };

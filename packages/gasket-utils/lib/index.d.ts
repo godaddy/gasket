@@ -1,12 +1,26 @@
-import type { GasketConfig } from '@gasket/engine';
+import type { MaybeAsync } from '@gasket/core';
+
+interface PackageManagerOptions {
+  /** Name of manager, either `npm` (default) or `yarn` */
+  packageManager: string;
+  /** Target directory where `node_module` should exist */
+  dest: string;
+}
 
 /**
  * Wrapper class for executing commands for a given package manager
  */
 export interface PackageManager {
+  constructor(options: PackageManagerOptions): void;
+
+  /** Name of manager, either `npm` (default) or `yarn` */
+  manager: string;
+  /** Target directory where `node_module` should exist */
+  dest: string;
+
   /**
-   * Executes npm in the application directory `this.dest`.
-   * This installation can be run multiple times.
+   * Executes npm in the application directory `this.dest`. This installation
+   * can be run multiple times.
    *
    * @param cmd The command that needs to be executed.
    * @param args Additional CLI arguments to pass to `npm`.
@@ -21,13 +35,13 @@ export interface PackageManager {
   link(packages?: Array<string>): Promise<void>;
 
   /**
-   * Executes npm install in the application directory `this.dest`.
-   * This installation can be run multiple times.
+   * Executes npm install in the application directory `this.dest`. This
+   * installation can be run multiple times.
    *
    * @param args Additional CLI arguments to pass to `npm`.
    * @public
    */
-  install(args?: Array<string>): Promise<void>
+  install(args?: Array<string>): Promise<void>;
 
   /**
    * Executes yarn or npm info, and returns parsed JSON data results.
@@ -36,37 +50,50 @@ export interface PackageManager {
    * @returns stdout and data
    * @public
    */
-  info(args?: Array<string>): Promise<{ data: any, stdout: string }>;
+  info(args?: Array<string>): Promise<{ data: any; stdout: string }>;
 }
 
-export function tryRequire(path: string): object|null;
-
-/**
- * Normalize the config by applying any overrides for environments, commands,
- * or local-only config file.
- *
- * @param config - Target config to be normalized
- * @param context - Context for applying overrides
- * @param context.env - Name of environment
- * @param [context.commandId] - Name of command
- * @param [context.root] - Project root; required if using localeFile
- * @param [context.localFile] - Optional file to load relative to gasket root
- * @returns config
- */
-export function applyConfigOverrides(config: GasketConfig, { env, commandId, root, localFile }: {
+interface ConfigContext {
+  /** Name of environment */
   env: string;
+  /** Name of command */
   commandId?: string;
-  root?: string;
-  localFile?: string;
-}): GasketConfig;
+  /** Project root; required if using localeFile */
+}
+
+interface ConfigDefinition extends Record<string, any> {
+  environments?: Record<string, Partial<ConfigDefinition>>
+  commands?: Record<string, Partial<ConfigDefinition>>
+  [key: string]: any
+}
+
+type ConfigOutput = Omit<ConfigDefinition, 'environments' | 'commands'>
 
 /**
- * Promise friendly wrapper to running a shell command (eg: git, npm, ls)
- * which passes back any { stdout, stderr } to the error thrown.
+ * Normalize the config by applying any overrides for environments, commands, or local-only config file.
+ */
+export function applyConfigOverrides<Def extends ConfigDefinition, Out extends ConfigOutput>(
+  config: Def,
+  configContext: ConfigContext
+): Out;
+
+export interface Signal {
+  aborted?: boolean;
+  addEventListener(type: 'abort', listener: () => void): void;
+}
+
+export function getPotentialConfigs(
+  config: ConfigDefinition,
+  configContext: ConfigContext
+): Generator<any, any, any>;
+
+/**
+ * Promise friendly wrapper to running a shell command (eg: git, npm, ls) which
+ * passes back any { stdout, stderr } to the error thrown.
  *
  * Options can be passed to the underlying spawn. An additional `signal` option
- * can be passed to use AbortController, allowing processes to be killed when
- * no longer needed.
+ * can be passed to use AbortController, allowing processes to be killed when no
+ * longer needed.
  *
  * @example
  * const { runShellCommand } = require('@gasket/utils');
@@ -88,14 +115,50 @@ export function applyConfigOverrides(config: GasketConfig, { env, commandId, roo
  *   await runShellCommand('long-process', ['something'], { signal: controller.signal });
  *   clearTimeout(id);
  * }
- *
- * @param cmd - Binary that is run
- * @param [argv] - Arguments passed to npm binary through spawn.
- * @param [options] options passed to npm binary through spawn
- * @param [options.signal] AbortControl signal allowing process to be canceled
- * @param [debug] When present pipes std{out,err} to process.*
- * @returns results
  */
-export function runShellCommand(cmd: string, argv?: string[], options?: {
-  signal?: object;
-}, debug?: boolean): Promise<{ stdout: string }>;
+export function runShellCommand(
+  /** Binary that is run */
+  cmd: string,
+  /** Arguments passed to npm binary through spawn. */
+  argv?: string[],
+  /** Options passed to npm binary through spawn */
+  options?: {
+    /** AbortControl signal allowing process to be canceled */
+    signal?: Signal;
+    /** Path to the target app (Default: cwd/appName) */
+    cwd?: string;
+  },
+  /** When present pipes std{out,err} to process.* */
+  debug?: boolean
+): Promise<{ stdout: string }>;
+
+export interface PkgManager {
+  pkgManager: string;
+  cmd: string;
+  flags: string[];
+  logMsg: (msg: string) => string;
+}
+
+export interface TargetConfig {
+  environments: string;
+}
+
+export interface environments {
+  dev;
+}
+
+export interface ConfigContext {
+  /** Name of environment */
+  env: string;
+  /** Name of command */
+  commandId?: string;
+  /** Project root; required if using localeFile */
+  root?: string;
+  /** Optional file to load relative to gasket root */
+  localFile?: string;
+}
+
+
+export function warnIfOutdated(pkgName: string, currentVersion: string): MaybeAsync<void>;
+
+export function getPackageLatestVersion(pkgName: string, options?: object): Promise<string>;

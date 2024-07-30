@@ -1,19 +1,19 @@
-const GasketEngine = require('@gasket/engine');
+/* eslint-disable no-sync */
+const { GasketEngine } = require('@gasket/core');
+const PluginLogger = require('@gasket/plugin-logger');
 const plugin = require('../lib/index');
 const { LEVEL, MESSAGE } = require('triple-beam');
+const { name, version, description } = require('../package');
 
 // Mock console methods
-jest.spyOn(console, 'error').mockImplementation(() => {});
+jest.spyOn(console, 'error').mockImplementation(() => { });
 
 describe('@gasket/plugin-winston', function () {
   let gasket;
 
   beforeEach(() => {
-    gasket = new GasketEngine({
-      plugins: {
-        add: ['@gasket/plugin-logger', plugin]
-      }
-    });
+    gasket = new GasketEngine([PluginLogger, plugin]);
+    gasket.config = {};
   });
 
   afterEach(() => {
@@ -24,29 +24,53 @@ describe('@gasket/plugin-winston', function () {
     expect(typeof plugin).toBe('object');
   });
 
-  it('has the expected name', () => {
-    expect(plugin).toHaveProperty('name', require('../package').name);
+  it('has expected properties', () => {
+    expect(plugin).toHaveProperty('name', name);
+    expect(plugin).toHaveProperty('version', version);
+    expect(plugin).toHaveProperty('description', description);
   });
 
   describe('create hook', function () {
-    it('adds the expected dependencies', async function () {
-      const spy = {
+    let mockContext;
+
+    beforeEach(() => {
+      mockContext = {
         pkg: {
           add: jest.fn()
+        },
+        gasketConfig: {
+          addPlugin: jest.fn()
         }
       };
-
-      await gasket.exec('create', spy);
-
-      expect(spy.pkg.add).toHaveBeenCalledWith('dependencies', {
-        winston: require('../package').dependencies.winston
-      });
     });
+
+    it('adds itself to the dependencies', async function () {
+      gasket.execSync('create', mockContext);
+      expect(mockContext.pkg.add).toHaveBeenCalledWith('dependencies',
+        expect.objectContaining({
+          [name]: `^${version}`
+        }));
+    });
+
+    it('adds the expected dependencies', async function () {
+      gasket.execSync('create', mockContext);
+
+      expect(mockContext.pkg.add).toHaveBeenCalledWith('dependencies',
+        expect.objectContaining({
+          winston: require('../package').dependencies.winston
+        }));
+    });
+
+    it('adds plugin import to the gasket file', async function () {
+      gasket.execSync('create', mockContext);
+      expect(mockContext.gasketConfig.addPlugin).toHaveBeenCalledWith('pluginWinston', name);
+    });
+
   });
 
   describe('createLogger hook', function () {
-    it('creates a logger', async function () {
-      const [logger] = await gasket.exec('createLogger');
+    it('creates a logger', function () {
+      const [logger] = gasket.execSync('createLogger');
 
       expect(logger).toBeDefined();
       expect(logger).not.toEqual(null);
@@ -54,13 +78,13 @@ describe('@gasket/plugin-winston', function () {
       expect(logger).toHaveProperty('error');
     });
 
-    it('uses the console as the default transport', async function () {
+    it('uses the console as the default transport', function () {
       const consoleSpy = jest
         // eslint-disable-next-line no-console
         .spyOn(console._stdout, 'write')
         .mockImplementation();
       try {
-        const [logger] = await gasket.exec('createLogger');
+        const [logger] = gasket.execSync('createLogger');
 
         logger.error('test');
 
@@ -92,9 +116,9 @@ describe('@gasket/plugin-winston', function () {
         };
       });
 
-      it('can be injected individually via hook', async function () {
+      it('can be injected individually via hook', function () {
         gasket.hook({ event: 'winstonTransports', handler: () => transport1 });
-        const [logger] = await gasket.exec('createLogger');
+        const [logger] = gasket.execSync('createLogger');
 
         logger.error('test');
 
@@ -114,10 +138,10 @@ describe('@gasket/plugin-winston', function () {
         );
       });
 
-      it('can be injected individually via config', async function () {
+      it('can be injected individually via config', function () {
         gasket.config.winston = { transports: transport1 };
 
-        const [logger] = await gasket.exec('createLogger');
+        const [logger] = gasket.execSync('createLogger');
         logger.error('test');
 
         expect(transport1.log).toHaveBeenCalledWith(
@@ -133,12 +157,12 @@ describe('@gasket/plugin-winston', function () {
         );
       });
 
-      it('can be injected via hook', async function () {
+      it('can be injected via hook', function () {
         gasket.hook({
           event: 'winstonTransports',
           handler: () => [transport1, transport2]
         });
-        const [logger] = await gasket.exec('createLogger');
+        const [logger] = gasket.execSync('createLogger');
 
         logger.error('test');
 
@@ -157,9 +181,9 @@ describe('@gasket/plugin-winston', function () {
         });
       });
 
-      it('can be injected via config', async function () {
+      it('can be injected via config', function () {
         gasket.config.winston = { transports: [transport1, transport2] };
-        const [logger] = await gasket.exec('createLogger');
+        const [logger] = gasket.execSync('createLogger');
 
         logger.error('test');
 
@@ -191,7 +215,7 @@ describe('@gasket/plugin-winston', function () {
         expect.arrayContaining([
           {
             name: 'winstonTransports',
-            method: 'exec',
+            method: 'execSync',
             description: 'Setup Winston log transports',
             link: 'README.md#winstonTransports',
             parent: 'createLogger'

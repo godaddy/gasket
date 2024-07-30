@@ -3,12 +3,9 @@ const fs = require('fs');
 
 /**
  * Fixup makeStore path to be absolute, allowing relative paths in gasket.config
- *
- * @param {object} gasket - The gasket API.
- * @param {object} baseConfig -
- * @returns {Object} reduxConfig - updated gasket.config.redux object.
+ * @type {import('@gasket/core').HookHandler<'configure'>}
  */
-module.exports = function configureHook(gasket, baseConfig) {
+module.exports = function configure(gasket, baseConfig) {
   const { root, redux: reduxConfig = {} } = baseConfig;
 
   let makeStorePath = reduxConfig.makeStore;
@@ -20,7 +17,7 @@ module.exports = function configureHook(gasket, baseConfig) {
       path.resolve(root, 'store.js')
     ];
     // eslint-disable-next-line no-sync
-    makeStorePath = possible.find(p => fs.existsSync(p));
+    makeStorePath = possible.find((p) => fs.existsSync(p));
   }
 
   if (makeStorePath) {

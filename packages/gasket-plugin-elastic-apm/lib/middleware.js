@@ -1,25 +1,18 @@
-/* eslint-disable spaced-comment */
-// @ts-check
-/// <reference types="./index" />
-/// <reference types="../../gasket-plugin-nextjs" />
-
-/**
- * @typedef {import('@gasket/engine').Gasket} Gasket
- * @typedef {import('http').IncomingMessage}  Request
- * @typedef {import('http').ServerResponse}   Response
- */
-
-const { callbackify } = require('util');
-const apm = require('elastic-apm-node');
+/// <reference types="@gasket/plugin-express" />
 
 /**
  * Middleware for customizing transactions
- *
- * @param {Gasket}    gasket  The Gasket engine
- * @param {Request}   req     The HTTP request being handled
- * @param {Response}  res     The server response
+ * @param {import('@gasket/core').Gasket} gasket - The Gasket engine
+ * @param {import('http').IncomingMessage} req - The HTTP request being handled
+ * @param {import('http').ServerResponse} res - The server response
  */
 async function customizeTransaction(gasket, req, res) {
+  const apm = gasket.apm;
+
+  if (!apm?.isStarted()) {
+    return;
+  }
+
   const transaction = apm.currentTransaction;
   if (!transaction) {
     return;
@@ -28,6 +21,20 @@ async function customizeTransaction(gasket, req, res) {
   await gasket.exec('apmTransaction', transaction, { req, res });
 }
 
-module.exports = (gasket) => [
-  callbackify(async (req, res) => customizeTransaction(gasket, req, res))
-];
+/**
+ * Add middleware to gather config details
+ * @type {import('@gasket/core').HookHandler<'middleware'>}
+ */
+module.exports = function middleware(gasket) {
+  return (
+    gasket.apm &&
+    async function apmTransactionMiddleware(req, res, next) {
+      try {
+        customizeTransaction(gasket, req, res);
+      } catch (error) {
+        return next(error);
+      }
+      next();
+    }
+  );
+};

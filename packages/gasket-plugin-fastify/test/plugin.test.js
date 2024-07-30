@@ -1,7 +1,4 @@
-const middie = require('@fastify/middie');
-const GasketEngine = require('@gasket/engine');
-const version = require('../package.json').peerDependencies.fastify;
-
+/* eslint-disable jsdoc/require-jsdoc */
 const app = {
   ready: jest.fn(),
   server: {
@@ -23,6 +20,7 @@ jest.mock('cookie-parser', () => mockCookieParser);
 jest.mock('compression', () => mockCompression);
 
 const plugin = require('../lib/index');
+const { name, version, description } = require('../package');
 
 describe('Plugin', function () {
 
@@ -30,8 +28,10 @@ describe('Plugin', function () {
     expect(typeof plugin).toBe('object');
   });
 
-  it('has expected name', () => {
-    expect(plugin).toHaveProperty('name', require('../package').name);
+  it('has expected properties', () => {
+    expect(plugin).toHaveProperty('name', name);
+    expect(plugin).toHaveProperty('version', version);
+    expect(plugin).toHaveProperty('description', description);
   });
 
   it('has expected hooks', () => {
@@ -55,7 +55,7 @@ describe('createServers', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    mockMwPlugins =  [];
+    mockMwPlugins = [];
 
     lifecycles = {
       middleware: jest.fn().mockResolvedValue([]),
@@ -69,7 +69,7 @@ describe('createServers', () => {
       config: {},
       exec: jest.fn().mockImplementation((lifecycle, ...args) => lifecycles[lifecycle](args)),
       execApply: jest.fn(async function (lifecycle, fn) {
-        for (let i = 0; i <  mockMwPlugins.length; i++) {
+        for (let i = 0; i < mockMwPlugins.length; i++) {
           // eslint-disable-next-line  no-loop-func
           fn(mockMwPlugins[i], () => mockMwPlugins[i]);
         }
@@ -95,11 +95,6 @@ describe('createServers', () => {
     expect(mockFastify).toHaveBeenCalledWith({ logger: gasket.logger, trustProxy: false });
   });
 
-  it('executes the `middleware` lifecycle', async function () {
-    await plugin.hooks.createServers(gasket, {});
-    expect(gasket.execApply).toHaveBeenCalledWith('middleware', expect.any(Function));
-  });
-
   it('executes the `fastify` lifecycle', async function () {
     await plugin.hooks.createServers(gasket, {});
     expect(gasket.exec).toHaveBeenCalledWith('fastify', app);
@@ -108,12 +103,6 @@ describe('createServers', () => {
   it('executes the `errorMiddleware` lifecycle', async function () {
     await plugin.hooks.createServers(gasket, {});
     expect(gasket.exec).toHaveBeenCalledWith('errorMiddleware');
-  });
-
-  it('executes the `middleware` lifecycle before the `fastify` lifecycle', async function () {
-    await plugin.hooks.createServers(gasket, {});
-    expect(gasket.execApply.mock.calls[0]).toContain('middleware');
-    expect(gasket.exec.mock.calls[0]).toContain('fastify', app);
   });
 
   it('executes the `errorMiddleware` lifecycle after the `fastify` lifecycle', async function () {
@@ -132,139 +121,6 @@ describe('createServers', () => {
       app.use,
       (mw) => mw === errorMiddlewares[0]);
     expect(errorMiddleware).not.toBeNull();
-  });
-
-  it('registers the middie middleware plugin', async () => {
-    await plugin.hooks.createServers(gasket, {});
-
-    expect(app.register).toHaveBeenCalledWith(middie);
-  });
-
-  it('adds middleware to attach res.locals', async () => {
-    await plugin.hooks.createServers(gasket, {});
-
-    const middleware = app.use.mock.calls[0][0];
-    expect(middleware.name).toEqual('attachLocals');
-
-    const res = {};
-    const next = jest.fn();
-    middleware({}, res, next);
-
-    expect(res).toHaveProperty('locals');
-    expect(res.locals).toEqual({});
-    expect(next).toHaveBeenCalled();
-  });
-
-  it('adds the cookie-parser middleware before plugin middleware', async () => {
-    await plugin.hooks.createServers(gasket, {});
-
-    const cookieParserUsage = findCall(
-      app.use,
-      (mw) => mw === cookieParserMiddleware);
-    expect(cookieParserUsage).not.toBeNull();
-
-    // invocationCallOrder can be used to determine relative call ordering
-    expect(mockCookieParser.mock.invocationCallOrder[0]).toBeLessThan(gasket.exec.mock.invocationCallOrder[0]);
-    expect(mockCookieParser.mock.invocationCallOrder[0]).toBeLessThan(gasket.execApply.mock.invocationCallOrder[0]);
-  });
-
-  it('adds the cookie-parser middleware with a excluded path', async () => {
-    gasket.config.fastify = { excludedRoutesRegex: /^(?!\/_next\/)/ };
-    await plugin.hooks.createServers(gasket, {});
-
-    const cookieParserUsage = findCall(
-      app.use,
-      (path, mw) => mw === cookieParserMiddleware);
-    expect(cookieParserUsage).not.toBeNull();
-  });
-
-  it('adds the compression middleware by default', async () => {
-    await plugin.hooks.createServers(gasket, {});
-
-    const compressionUsage = findCall(
-      app.use,
-      mw => mw === compressionMiddleware);
-    expect(compressionUsage).not.toBeNull();
-  });
-
-  it('adds the compression middleware when enabled from gasket config', async () => {
-    gasket.config.fastify = { compression: true };
-    await plugin.hooks.createServers(gasket, {});
-
-    const compressionUsage = findCall(
-      app.use,
-      mw => mw === compressionMiddleware);
-    expect(compressionUsage).not.toBeNull();
-  });
-
-  it('does not add the compression middleware when disabled from gasket config', async () => {
-    gasket.config.fastify = { compression: false };
-    await plugin.hooks.createServers(gasket, {});
-
-    const compressionUsage = findCall(
-      app.use,
-      mw => mw === compressionMiddleware);
-    expect(compressionUsage).toBeNull();
-  });
-
-  it('adds middleware from lifecycle (ignores falsy)', async () => {
-    await plugin.hooks.createServers(gasket, {});
-    expect(app.use).toHaveBeenCalledTimes(3);
-
-    app.use.mockClear();
-    mockMwPlugins = [
-      { name: 'middlware-1' },
-      null
-    ];
-
-    await plugin.hooks.createServers(gasket, {});
-    expect(app.use).toHaveBeenCalledTimes(4);
-  });
-
-  it('supports async middleware hooks', async () => {
-    const middleware = Symbol();
-    gasket = new GasketEngine({
-      plugins: {
-        add: [
-          plugin,
-          {
-            name: '@mock/gasket-plugin',
-            hooks: {
-              middleware: async () => middleware
-            }
-          }
-        ]
-      }
-    });
-
-    await gasket.exec('createServers');
-
-    const middlewares = app.use.mock.calls.flat();
-    expect(middlewares).toContain(middleware);
-  });
-
-  it('middleware paths in the config are used', async () => {
-    const paths = ['/home'];
-    gasket.config.middleware = [{
-      plugin: 'middlware-1',
-      paths
-    }];
-    mockMwPlugins = [
-      { name: 'middlware-1' }
-    ];
-    await plugin.hooks.createServers(gasket, {});
-    expect(app.use.mock.calls[app.use.mock.calls.length - 1]).toContain(paths);
-  });
-
-  it('adds errorMiddleware from lifecycle (ignores falsy)', async () => {
-    await plugin.hooks.createServers(gasket, {});
-    expect(app.use).toHaveBeenCalledTimes(3);
-
-    app.use.mockClear();
-    lifecycles.errorMiddleware.mockResolvedValue([() => {}, null]);
-
-    await plugin.hooks.createServers(gasket, {});
-    expect(app.use).toHaveBeenCalledTimes(4);
   });
 
   it('does not enable trust proxy by default', async () => {
@@ -291,8 +147,12 @@ describe('createServers', () => {
   });
 
   function findCall(aSpy, aPredicate) {
-    const callIdx = aSpy.mock.calls.map(args => aPredicate(...args)).indexOf(true);
+    const callIdx = findCallIndex(aSpy, aPredicate);
     return callIdx === -1 ? null : aSpy.mock.calls[callIdx][0];
+  }
+
+  function findCallIndex(aSpy, aPredicate) {
+    return aSpy.mock.calls.map((args) => aPredicate(...args)).indexOf(true);
   }
 });
 
@@ -309,13 +169,51 @@ describe('create', () => {
   beforeEach(() => {
     mockContext = {
       pkg: { add: jest.fn() },
-      files: { add: jest.fn() }
+      files: { add: jest.fn() },
+      gasketConfig: {
+        addPlugin: jest.fn(),
+        add: jest.fn(),
+        addImport: jest.fn().mockReturnThis(),
+        injectValue: jest.fn()
+      },
+      apiApp: true
     };
   });
 
-  it('adds appropriate dependencies', expectCreatedWith(({ pkg }) => {
-    expect(pkg.add).toHaveBeenCalledWith('dependencies', {
-      fastify: version
-    });
-  }));
+  it('adds itself to the dependencies',
+    expectCreatedWith(({ pkg }) => {
+      expect(pkg.add).toHaveBeenCalledWith('dependencies',
+        expect.objectContaining({
+          [name]: `^${version}`
+        }));
+    })
+  );
+
+  it(
+    'adds appropriate dependencies',
+    expectCreatedWith(({ pkg }) => {
+      expect(pkg.add).toHaveBeenCalledWith('dependencies',
+        expect.objectContaining({
+          fastify: '^3.3.0'
+        }));
+    })
+  );
+
+  it('adds the appropriate files',
+    expectCreatedWith(({ files }) => {
+      expect(files.add).toHaveBeenCalledWith(expect.any(String));
+    })
+  );
+
+  it('adds the plugin import to the gasket file',
+    expectCreatedWith(({ gasketConfig }) => {
+      expect(gasketConfig.addPlugin).toHaveBeenCalledWith('pluginFastify', name);
+    })
+  );
+
+  it('add config to the gasket file',
+    expectCreatedWith(({ gasketConfig }) => {
+      expect(gasketConfig.add).toHaveBeenCalledWith('fastify', { routes: [] });
+    })
+  );
 });

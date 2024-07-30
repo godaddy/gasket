@@ -1,5 +1,6 @@
-/* eslint-disable no-console */
-const { name, hooks } = require('../lib'); // Update the path accordingly
+/* eslint-disable no-console, no-sync */
+const plugin = require('../lib'); // Update the path accordingly
+const { name, version, description } = require('../package');
 
 // Mock console methods
 jest.spyOn(console, 'error').mockImplementation(() => {});
@@ -20,19 +21,20 @@ const mockLogger = {
 };
 
 describe('@gasket/plugin-logger', () => {
-  describe('Name property', () => {
-    it('should have a name property from package.json', () => {
-      expect(name).toBeDefined();
-      expect(name).toEqual(require('../package.json').name);
+  describe('Plugin properties', () => {
+    it('should have properties from package.json', () => {
+      expect(plugin).toHaveProperty('name', name);
+      expect(plugin).toHaveProperty('version', version);
+      expect(plugin).toHaveProperty('description', description);
     });
   });
 
-  describe('Hooks', () => {
+  describe('plugin.hooks', () => {
     let gasket;
 
     beforeEach(() => {
       gasket = {
-        exec: jest.fn(),
+        execSync: jest.fn(),
         logger: null
       };
     });
@@ -40,18 +42,18 @@ describe('@gasket/plugin-logger', () => {
     describe('init', () => {
       it('should set logger from the first plugin if only one logger is hooked', async () => {
         const fakeLogger = { ...mockLogger };
-        gasket.exec.mockResolvedValue([fakeLogger]);
+        gasket.execSync.mockReturnValue([fakeLogger]);
 
-        await hooks.init(gasket);
+        plugin.hooks.init(gasket);
 
         expect(gasket.logger).toEqual(fakeLogger);
       });
 
       // eslint-disable-next-line max-statements
       it('should set logger to default if no loggers are hooked', async () => {
-        gasket.exec.mockResolvedValue([]);
+        gasket.execSync.mockReturnValue([]);
 
-        await hooks.init(gasket);
+        plugin.hooks.init(gasket);
 
         // Check default logger behavior
         const childLogger = gasket.logger.child({ key: 'value' });
@@ -81,14 +83,23 @@ describe('@gasket/plugin-logger', () => {
         });
       });
 
-      it('should throw an error if multiple loggers are hooked', async () => {
+      it('should throw an error if multiple loggers are hooked', () => {
         const fakeLogger1 = { error: jest.fn() };
         const fakeLogger2 = { error: jest.fn() };
-        gasket.exec.mockResolvedValue([fakeLogger1, fakeLogger2]);
+        gasket.execSync.mockReturnValue([fakeLogger1, fakeLogger2]);
 
-        await expect(hooks.init(gasket)).rejects.toThrow(
+        // eslint-disable-next-line max-nested-callbacks
+        expect(() => plugin.hooks.init(gasket)).toThrow(
           'Multiple plugins are hooking createLogger. Only one logger is supported.'
         );
+      });
+    });
+
+    describe('actions', () => {
+      it('should return getLogger action', () => {
+        const actions = plugin.hooks.actions(gasket);
+
+        expect(actions.getLogger()).toBe(gasket.logger);
       });
     });
 
@@ -97,26 +108,26 @@ describe('@gasket/plugin-logger', () => {
         const fakeLogger = { close: jest.fn() };
         gasket.logger = fakeLogger;
 
-        await hooks.onSignal(gasket);
+        await plugin.hooks.onSignal(gasket);
 
         expect(fakeLogger.close).toHaveBeenCalled();
       });
 
       it('should not throw error if logger is not available', async () => {
-        await expect(hooks.onSignal(gasket)).resolves.not.toThrow();
+        await expect(plugin.hooks.onSignal(gasket)).resolves.not.toThrow();
       });
     });
 
     describe('metadata', () => {
       it('should return metadata with lifecycle information', () => {
-        const meta = hooks.metadata(gasket, { otherData: 'example' });
+        const meta = plugin.hooks.metadata(gasket, { otherData: 'example' });
 
         expect(meta).toEqual(
           expect.objectContaining({
             lifecycles: expect.arrayContaining([
               expect.objectContaining({
                 name: 'createLogger',
-                method: 'exec',
+                method: 'execSync',
                 description: 'Custom logger creation',
                 link: 'README.md#createLogger',
                 parent: 'init'

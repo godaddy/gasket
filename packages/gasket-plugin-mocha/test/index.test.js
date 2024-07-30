@@ -1,8 +1,13 @@
 const plugin = require('../lib');
+const { name, version, description } = require('../package');
 
 describe('Plugin', () => {
-  let spyFunc, filesAddStub;
+  let spyFunc, filesAddStub, addPluginStub;
 
+  /**
+   * Create a new project
+   * @returns {Promise<object>} project
+   */
   async function create() {
     const pkg = {};
     filesAddStub = jest.fn();
@@ -22,12 +27,17 @@ describe('Plugin', () => {
     return { pkg };
   }
 
+  /**
+   * Create a new React project
+   * @returns {Promise<object>} project
+   */
   async function createReact() {
     const pkg = {
       dependencies: {
         react: '1.0.0'
       }
     };
+    addPluginStub = jest.fn();
 
     await plugin.hooks.create.handler({}, {
       files: {
@@ -40,6 +50,9 @@ describe('Plugin', () => {
         has: (key, value) => {
           return !!pkg[key] && !!pkg[key][value];
         }
+      },
+      gasketConfig: {
+        addPlugin: addPluginStub
       }
     });
 
@@ -55,8 +68,10 @@ describe('Plugin', () => {
     expect(typeof plugin).toBe('object');
   });
 
-  it('has expected name', () => {
-    expect(plugin).toHaveProperty('name', require('../package').name);
+  it('has expected properties', () => {
+    expect(plugin).toHaveProperty('name', name);
+    expect(plugin).toHaveProperty('version', version);
+    expect(plugin).toHaveProperty('description', description);
   });
 
   it('has expected hooks', () => {
@@ -79,7 +94,6 @@ describe('Plugin', () => {
 
   describe('dependencies', function () {
     [
-      '@babel/register',
       '@babel/core',
       'mocha',
       'sinon',
@@ -119,9 +133,11 @@ describe('Plugin', () => {
   describe('dependencies - react', function () {
     it('includes a glob for generator contents', async function () {
       await createReact();
-      const [firstCall, secondCall] = filesAddStub.mock.calls[0];
+      expect(addPluginStub).toHaveBeenCalled();
+      const [firstCall, secondCall, thirdCall] = filesAddStub.mock.calls[0];
       expect(firstCall).toEqual(expect.stringContaining('/../generator/*'));
-      expect(secondCall).toEqual(expect.stringContaining('/../generator/**/*'));
+      expect(secondCall).toEqual(expect.stringContaining('/../generator/**/.*'));
+      expect(thirdCall).toEqual(expect.stringContaining('/../generator/**/*'));
     });
 
     [

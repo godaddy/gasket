@@ -1,5 +1,17 @@
 # `@gasket/plugin-elastic-apm`
 
+### 6.46.5
+
+- Fix bug with express middleware injection when APM is not available ([#708])
+
+### 6.46.4
+
+- Fix to handle case when APM is not available ([#697])
+
+### 6.46.2
+
+- Ensure consistent apm instance ([#692])
+
 ### 6.45.2
 
 - Remove `eslint-plugin-mocha` ([#670])
@@ -45,3 +57,6 @@
 [#436]: https://github.com/godaddy/gasket/pull/436
 [#457]: https://github.com/godaddy/gasket/pull/457
 [#670]: https://github.com/godaddy/gasket/pull/670
+[#692]: https://github.com/godaddy/gasket/pull/692
+[#697]: https://github.com/godaddy/gasket/pull/697
+[#708]: https://github.com/godaddy/gasket/pull/708

@@ -1,13 +1,16 @@
-import type { Gasket, GasketConfigFile, Plugin } from '@gasket/engine';
-import '@gasket/preset-api';
+import type { Gasket, GasketConfigDefinition, Plugin } from '@gasket/core';
+import preset from '@gasket/preset-api';
 
 describe('@gasket/preset-api', () => {
   const { log } = console;
 
   it('imports config type injections for all plugins', () => {
-    const config: GasketConfigFile = {
+    const config: GasketConfigDefinition = {
+      plugins: [{ name: 'example-plugin', version: '', description: '', hooks: {} }],
       http: 8080,
-      compression: true,
+      express: {
+        compression: true
+      },
       swagger: {
         ui: {
           isExplorer: true
@@ -19,7 +22,11 @@ describe('@gasket/preset-api', () => {
   it('imports lifecycles for all plugins', () => {
     const plugin: Plugin = {
       name: 'dummy-plugin',
+      version: '',
+      description: '',
       hooks: {
+        // @ts-expect-error - TODO clean up in tune up ticket
+        // https://godaddy-corp.atlassian.net/browse/PFX-628
         preboot() {
           log('Preparing...');
         },

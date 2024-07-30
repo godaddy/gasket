@@ -1,21 +1,34 @@
-import type { GasketConfig, HookExecTypes } from '@gasket/engine';
 import type WebpackApi from 'webpack';
+import type { Configuration } from 'webpack';
 
 export interface WebpackContext {
-  webpack: typeof WebpackApi,
-  /** @deprecated use require('webpack-merge') */
-  webpackMerge: any
+  webpack: typeof WebpackApi;
+  isServer?: boolean;
 }
 
-declare module '@gasket/engine' {
-  export interface GasketConfig {
-    webpack?: any
+export interface WebpackMetrics {
+  name: string;
+  event: string;
+  data: object;
+  time: number;
+}
+
+declare module '@gasket/core' {
+  export interface GasketActions {
+    getWebpackConfig?: (config: WebpackApi.Configuration, context: WebpackContext) => WebpackApi.Configuration
   }
 
   export interface HookExecTypes {
     webpackConfig(
-      config: WebpackApi.Configuration,
+      config: Configuration,
       context: WebpackContext
-    ): WebpackApi.Configuration;
+    ): Configuration;
   }
+}
+
+export default {
+  name: '@gasket/plugin-webpack',
+  version: '',
+  description: '',
+  hooks: {}
 }

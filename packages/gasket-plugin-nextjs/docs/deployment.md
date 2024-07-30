@@ -32,10 +32,10 @@ done by setting the `assetPrefix` to the host/path of the CDN server.
 You want to make sure that you only set the `assetPrefix` for production
 environments so that when you are developing your application all assets are
 still hosted on the application server. You can do this by setting environment
-specific configuration in your `gasket.config.js`:
+specific configuration in your `gasket.js`:
 
 ```js
-{
+export default makeGasket({
   environments: {
     production: {
       nextConfig: {
@@ -43,7 +43,7 @@ specific configuration in your `gasket.config.js`:
       }
     }
   }
-}
+});
 ```
 
 ## Install production only dependencies
@@ -65,18 +65,18 @@ the libraries to only include the code that is needed for production:
 NODE_ENV=production npm run build
 ```
 
-## The `gasket.config.js` contains environment specific configuration
+## The `gasket.js` contains environment specific configuration
 
 There are values in the configuration that you might want to adjust when you
 deploy to production, for example the hostname of your application, the
 port number you deploy on, or even HTTPS options if that is not terminated
 at a load balancer level.
 
-Update your `gasket.config.js` file to include an `environments` object with
+Update your `gasket.js` file to include an `environments` object with
 configuration values for the environments you deploy on:
 
 ```js
-{
+export default makeGasket({
   environments: {
     production: {
       hostname: '<appname>.your-url.com',
@@ -87,7 +87,7 @@ configuration values for the environments you deploy on:
       //
     }
   }
-}
+});
 ```
 
 See the [configuration][config] guide for more detailed information.
@@ -106,7 +106,7 @@ Ensure that the following files are included when you deploy your application:
 - `package.json` *Scripts and dependencies for your project*
 - `package-lock.json` *Automatically generated file about the installed dependencies*
 - `.babelrc` *Config file for babel*
-- `gasket.config.js` *Config file for Gasket*
+- `gasket.js` *Config file for Gasket*
 - `store.js` *Scripts for creating a redux store and/or attaching a reducer*
 
 ## Deployment checklist
@@ -118,7 +118,7 @@ Ensure that the following files are included when you deploy your application:
 - [ ] All dependencies that are used are correctly licensed.
 - [ ] `NODE_ENV=production npm run build` is ran
 - [ ] SSL certificates are setup and correctly configured in `gasket.config`
-- [ ] `gasket.config.js` contains `environment.production` with prod settings
+- [ ] `gasket.js` contains `environment.production` with prod settings
 - [ ] Bumped the version in `package.json`, following the semver standard
 
 ## Sample `Dockerfile`
@@ -128,3 +128,20 @@ Follow the [Docker deployment guide] to see a sample `Dockerfile`.
 
 [config]: /packages/gasket-cli/docs/configuration.md
 [Docker deployment guide]: docker-deployment.md
+
+## Gotchas
+
+### Cache directory
+
+The Gasket CLI is built upon `@oclif` and uses some plugins that need access to
+read/write to a cache directory. Based on the [oclif docs], this is configured
+to the following defaults:
+ - macOS: `~/Library/Caches/@gasket/cli`
+ - Unix: `~/.cache/@gasket/cli`
+ - Windows: `%LOCALAPPDATA%\@gasket\cli`
+
+For some deployment environments, this may need to be adjusted from the
+defaults. To override where the cache directory is for your deployment, you can
+set the `GASKET_CACHE_DIR` env variable, such as in the `Dockerfile`.
+
+[oclif docs]: https://oclif.io/docs/config

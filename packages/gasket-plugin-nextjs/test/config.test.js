@@ -1,6 +1,5 @@
 /* eslint-disable no-sync */
-const Engine = require('@gasket/engine');
-const { createConfig } = require('../lib/config');
+const { createConfig } = require('../lib/utils/config');
 
 const baseWebpackConfig = {
   plugins: [],
@@ -15,6 +14,7 @@ const baseWebpackConfig = {
   }
 };
 
+// eslint-disable-next-line max-statements
 describe('createConfig', () => {
   let result, gasket, data;
 
@@ -28,7 +28,7 @@ describe('createConfig', () => {
 
   it('executes the `nextConfig` lifecycle', async function () {
     result = await createConfig(gasket);
-    expect(gasket.execWaterfall).toHaveBeenCalledWith(
+    expect(gasket.execWaterfallSync).toHaveBeenCalledWith(
       'nextConfig',
       expect.any(Object)
     );
@@ -46,10 +46,38 @@ describe('createConfig', () => {
 
   it('includes `nextConfig` from gasket.config', async () => {
     gasket.config.nextConfig = {
-      customConfig: true
+      customConfig: 'from gasket.config'
     };
     result = await createConfig(gasket);
-    expect(result).toHaveProperty('customConfig', true);
+    expect(result).toHaveProperty('customConfig', 'from gasket.config');
+  });
+
+  it('includes `nextConfig` from arguments', async () => {
+    const custom = {
+      customConfig: 'from arguments'
+    };
+    result = await createConfig(gasket, custom);
+    expect(result).toHaveProperty('customConfig', 'from arguments');
+  });
+
+  it('`nextConfig` arguments > gasket.config > defaults', async () => {
+    // -- defaults
+    result = await createConfig(gasket);
+    expect(result).toHaveProperty('poweredByHeader', false);
+
+    // -- gasket.config
+    gasket.config.nextConfig = {
+      poweredByHeader: 'from gasket.config'
+    };
+    result = await createConfig(gasket);
+    expect(result).toHaveProperty('poweredByHeader', 'from gasket.config');
+
+    // -- arguments
+    const custom = {
+      poweredByHeader: 'from arguments'
+    };
+    result = await createConfig(gasket, custom);
+    expect(result).toHaveProperty('poweredByHeader', 'from arguments');
   });
 
   it('intl config options forwarded', async () => {
@@ -172,13 +200,11 @@ describe('createConfig', () => {
       config = await createConfig(gasket);
     });
 
-    it('executes webpack plugin hook', () => {
-      result = config.webpack(webpackConfig, data);
-      // TODO: should not test this deep into webpack plugin
-      expect(gasket.execWaterfallSync).toHaveBeenCalledWith(
-        'webpackConfig',
-        expect.any(Object),
-        expect.any(Object)
+    it('executes webpack plugin action', () => {
+      config.webpack(webpackConfig, data);
+      expect(gasket.actions.getWebpackConfig).toHaveBeenCalledWith(
+        webpackConfig,
+        data
       );
     });
 
@@ -195,50 +221,12 @@ describe('createConfig', () => {
       expect(result).toHaveProperty('bogus', 'BOGUS');
     });
 
-    it('merges the return values from `webpack` into a single webpack config', async function () {
-      const engine = lifecycle(
-        {},
-        {
-          webpackConfig: function (gasketAPI) {
-            expect(gasketAPI).toEqual(engine);
-
-            return {
-              resolve: {
-                alias: {
-                  '@gasket/example': __filename
-                }
-              }
-            };
-          }
-        }
-      );
-
-      const nextConfig = await createConfig(engine);
-      const resultConfig = nextConfig.webpack(
-        {
-          plugins: [],
-          output: {},
-          module: {
-            rules: []
-          },
-          optimization: {
-            splitChunks: {
-              cacheGroups: {}
-            },
-            minimize: false
-          }
-        },
-        { isServer: false, defaultLoaders: {}, dev: true, config: nextConfig }
-      );
-
-      expect(resultConfig.resolve.alias['@gasket/example']).toEqual(__filename);
-    });
-
     describe('built-ins', () => {
       it('configures SASS loader', () => {
         result = config.webpack(webpackConfig, data);
 
         expect(
+          // eslint-disable-next-line max-nested-callbacks
           result.module.rules.some((rule) => rule.test.test('bogus.scss'))
         ).toBeFalsy();
       });
@@ -246,8 +234,15 @@ describe('createConfig', () => {
   });
 });
 
+/**
+ * Mock Gasket API
+ * @returns {object} gasket API
+ */
 function mockGasketApi() {
   return {
+    actions: {
+      getWebpackConfig: jest.fn().mockImplementation((config) => config)
+    },
     execWaterfall: jest.fn((_, config) => config),
     execWaterfallSync: jest.fn((_, config) => config),
     exec: jest.fn().mockResolvedValue({}),
@@ -262,47 +257,4 @@ function mockGasketApi() {
     },
     next: {}
   };
-}
-
-/**
- * Helper function to easily add plugins to a plugin engine instance
- * so we can test the execution of lifecycle events.
- *
- * @param {Object} config Configuration for the plugin engine.
- * @param {Array} plugins The plugins that need to be added.
- * @returns {PluginEngine} The plugin Engine.
- * @private
- */
-function lifecycle(config = {}, ...plugins) {
-  plugins = plugins.map(function (hooks, i) {
-    if (hooks.hooks) return hooks;
-
-    return {
-      name: `test-${i}`,
-      hooks
-    };
-  });
-
-  const engine = new Engine({
-    root: '/path/to/app',
-    plugins: {
-      add: [
-        require('../lib/index'),
-        require('@gasket/plugin-webpack'),
-        ...plugins
-      ].filter(Boolean)
-    },
-    nextConfig: {},
-    http: {
-      port: 8111
-    },
-
-    ...config
-  });
-
-  engine.logger = {
-    warn: jest.fn()
-  };
-
-  return engine;
 }

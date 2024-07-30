@@ -1,78 +1,5 @@
-import type { GasketConfigFile, MaybeAsync } from '@gasket/engine';
+import type { GasketConfigDefinition, MaybeAsync, Plugin, GasketEngine } from '@gasket/core';
 import type { PackageManager } from '@gasket/utils';
-import type { Command } from 'commander';
-
-export interface Config {
-  /* create-gasket-app Options */
-  options: Record<string, any>;
-  [key: string]: any;
-}
-
-export interface GasketCommand {
-  command: Command;
-  hidden: boolean;
-  isDefault: boolean;
-}
-
-// Default cannot be used when required is true
-export type GasketArgDefinition = {
-  /* Argument name */
-  name: string;
-
-  /* Argument description */
-  description: string;
-
-  /* Is the argument required */
-  required?: true;
-
-  /* Default value for the argument - never if required is true*/
-  default?: never;
-} | {
-  name: string;
-  description: string;
-  required?: false;
-  default?: any;
-};
-
-export type GasketCommandArg = Array<string | boolean>;
-
-export interface GasketOptionDefinition {
-  /* Long option name */
-  name: string;
-
-  /* Option description */
-  description: string;
-
-  /* Is the option required */
-  required?: boolean;
-
-  /* Short option name */
-  short?: string;
-
-  /* Function to parse the option value */
-  parse?: (value: string) => any;
-
-  /* Default is always string - boolean changes the format of the option */
-  type?: 'string' | 'boolean';
-
-  /* list of option names that cannot be used together */
-  conflicts?: Array<string>;
-
-  /* Hide from command help output */
-  hidden?: boolean;
-
-  /* Default option value */
-  default?: any;
-}
-
-export interface GasketCommandOption {
-  options: Array<string>;
-  conflicts: Array<string>;
-  hidden: boolean;
-  defaultValue: any | undefined;
-  parse: (value: string) => any | undefined;
-  required: boolean;
-}
 
 export interface Dependencies {
   dependencies?: Record<string, string>;
@@ -82,17 +9,18 @@ export interface Dependencies {
 
 export interface PackageJson extends Dependencies {
   name: string;
-  version: string;
+  version?: string;
   description?: string;
   license?: string;
   repository?:
   | string
   | {
-    type: 'git';
-    url: string;
-  };
+        type: 'git';
+        url: string;
+      };
   scripts?: Record<string, string>;
   optionalDependencies?: Record<string, string>;
+  homepage?: string;
 }
 
 export interface ModuleInfo {
@@ -103,11 +31,9 @@ export interface ModuleInfo {
   version?: string;
 }
 
-export interface PresetInfo extends ModuleInfo {
-}
+export interface PresetInfo extends ModuleInfo {}
 
-export interface PluginInfo extends ModuleInfo {
-}
+export interface PluginInfo extends ModuleInfo {}
 
 export interface ConfigBuilder<Config> {
   /**
@@ -135,20 +61,86 @@ export interface ConfigBuilder<Config> {
     value: Config[Key],
     options?: { force?: boolean }
   ): void;
+
+  /**
+   * addPlugin - Add plugin import to the gasket file and use the value in the plugins array
+   * @param {string} pluginImport - name of the import used as a value - `import pluginImport...`
+   * @param {string} pluginName - name of the plugin import/package - `from 'pluginName'`
+   * @example
+   * addPlugin('pluginA', '@gasket/plugin-a')
+   *
+   * // gasket.js
+   * import pluginA from '@gasket/plugin-a';
+   *
+   * export default makeGasket({
+   *  plugins: [
+   *    pluginA
+   *  ]
+   * });
+   */
+  addPlugin(pluginImport: string, pluginName: string): void;
+
+  /**
+   * addImport - Add a non-plugin import to the gasket file
+   * @param {string} importName - name of the import used as a value - `import fs...`
+   * @param {string} importPath - path of the import - `from 'fs'`
+   * @returns {ConfigBuilder} - instance for chaining
+   * @example
+   * Can be default or named import
+   * addImport('{ readFileSync }', 'fs')
+   * addImport('fs', 'fs')
+   *
+   * // gasket.js
+   * import { readFileSync } from 'fs';
+   * import fs from 'fs';
+   */
+  addImport(importName: string, importPath: string): ConfigBuilder<Config>;
+
+  /**
+   * addExpression - add programmatic expression to the gasket file
+   * @param {string} expression - expression to add after imports
+   * @returns {ConfigBuilder} - instance for chaining
+   * @example
+   *
+   * .addImport('fs', 'fs')
+   * .addExpression('const file = fs.readFileSync(\'./file.txt\')')
+   *
+   * // gasket.js
+   * import fs from 'fs';
+   * const file = fs.readFileSync('./file.txt');
+   */
+  addExpression(expression: string): ConfigBuilder<Config>;
+
+  /**
+   * injectValue - Inject a value into the gasket config object
+   * @param {string} configKey - collapsed object path to inject value into - `express.config.routes`
+   * @param {string} injectedValue - string used as a value
+   * @example
+   * .addImport('{ routes }', './routes')
+   * .injectValue('express.routes', 'routes');
+   *
+   * // gasket.js
+   * export default makeGasket({
+   *  express: {
+   *    routes: routes
+   *  }
+   * });
+   */
+  injectValue(configKey: string, injectedValue: string): void;
 }
 
 export interface PackageJsonBuilder extends ConfigBuilder<PackageJson> {
   /**
-   * Checks if a dependency has been already added
-   * @param  key - Dependency bucket
-   * @param  value - Dependency to search
-   * @returns True if the dependency exists on the bucket
+   * Checks if a property exists on the package.json fields.
+   * @param  key - Field to search
+   * @param  value - Value to search for
+   * @returns True if the property exists and matches the value
    */
-  has(key: keyof Dependencies, value: string): boolean;
+  has(key: keyof PackageJson, value: string): boolean;
 }
 
 export interface Files {
-  add(...args: string[]): void
+  add(...args: string[]): void;
 }
 
 export interface CreateContext {
@@ -174,12 +166,6 @@ export interface CreateContext {
    * load-preset if using localPresets. */
   rawPresets: Array<string>;
 
-  /** Raw plugin desc from flags, prompts, etc. Can include constraints. */
-  rawPlugins: Array<string>;
-
-  /** Short names of plugins */
-  plugins: Array<string>;
-
   /** Local packages that should be linked */
   pkgLinks: Array<string>;
 
@@ -198,6 +184,12 @@ export interface CreateContext {
   /** any generated files to show in report */
   generatedFiles: Set<string>;
 
+  /** Default empty array, populated by load-preset with actual imports */
+  presets: Array<Plugin>;
+
+  /** Default to object w/empty plugins array to be populated by `presetConfig` hook */
+  presetConfig: GasketConfigDefinition;
+
   // Added by `global-prompts`
 
   /** Description of app */
@@ -206,8 +198,8 @@ export interface CreateContext {
   /** Should a git repo be initialized and first commit */
   gitInit: boolean;
 
-  /** Name of the plugin for unit tests */
-  testPlugin: string;
+  /** Names of the plugins that add unit and integration tests */
+  testPlugins: Array<string>;
 
   /** Which package manager to use (Default: 'npm') */
   packageManager: string;
@@ -221,23 +213,6 @@ export interface CreateContext {
   /** Whether or not the user wants to override an extant directory */
   destOverride: boolean;
 
-  // Added by `load-preset`
-
-  /** Short name of presets */
-  presets: Array<string>;
-
-  /** Shallow load of presets with meta data */
-  presetInfos: Array<PresetInfo>;
-
-  // Added by `cli-version`
-
-  /** Version of current CLI used to issue `create` command */
-  cliVersion: string;
-
-  /** Version of CLI to install, either current or min compatible version
-   * required by preset(s) */
-  cliVersionRequired: string;
-
   // Added by `setup-pkg`
 
   /** package.json builder */
@@ -249,7 +224,7 @@ export interface CreateContext {
   // Added by `setup-gasket-config`
 
   /** gasket.config builder */
-  gasketConfig: ConfigBuilder<GasketConfigFile>;
+  gasketConfig: ConfigBuilder<GasketConfigDefinition>;
 
   // Added by `create-hooks`
 
@@ -257,13 +232,23 @@ export interface CreateContext {
   files: Files;
 }
 
-declare module '@gasket/engine' {
+export interface ActionWrapperParams {
+  gasket: GasketEngine;
+  context: CreateContext;
+  spinner?: any;
+}
+
+declare module '@gasket/core' {
   export interface HookExecTypes {
+    presetPrompt(context: CreateContext): Promise<void>;
+    presetConfig(context: CreateContext): Promise<CreateContext['presetConfig']>;
     prompt(
       context: CreateContext,
       utils: {
-        prompt: (prompts: Array<Record<string, any>>) => Promise<Record<string, any>>,
-        addPlugins: (plugins: Array<string>) => Promise<void>
+        prompt: (
+          prompts: Array<Record<string, any>>
+        ) => Promise<Record<string, any>>;
+        addPlugins: (plugins: Array<string>) => Promise<void>;
       }
     ): MaybeAsync<CreateContext>;
 
@@ -272,7 +257,8 @@ declare module '@gasket/engine' {
     postCreate(
       context: CreateContext,
       utils: {
-        runScript: (script: string) => Promise<void>
-      }): MaybeAsync<void>;
+        runScript: (script: string) => Promise<void>;
+      }
+    ): MaybeAsync<void>;
   }
 }

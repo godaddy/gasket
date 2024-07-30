@@ -7,32 +7,31 @@ const expressApp = {
 
 const fastifyApp = {
   decorate: jest.fn(),
-  register: jest.fn(),
+  addHook: jest.fn(),
   all: jest.fn()
 };
 
-const nextHandler = {
+const nextServer = {
   prepare: jest.fn().mockResolvedValue(),
   getRequestHandler: jest.fn().mockResolvedValue({}),
   buildId: '1234',
   name: 'testapp'
 };
 
-const mockSetupNextAppStub = jest.fn(() => nextHandler);
+const mockSetupNextAppStub = jest.fn(() => nextServer);
 
-jest.mock('../lib/setup-next-app', () => {
-  const mod = jest.requireActual('../lib/setup-next-app');
+jest.mock('../lib/utils/setup-next-app', () => {
+  const mod = jest.requireActual('../lib/utils/setup-next-app');
   return {
     setupNextApp: mockSetupNextAppStub,
     setupNextHandling: mod.setupNextHandling
   };
 });
 
-const path = require('path');
-const { devDependencies } = require('../package');
 const fastify = require('fastify')({
   logger: true
 });
+const { name, version, description } = require('../package');
 
 describe('Plugin', function () {
   const plugin = require('../lib/');
@@ -41,21 +40,23 @@ describe('Plugin', function () {
     expect(typeof plugin).toBe('object');
   });
 
-  it('has expected name', () => {
-    expect(plugin).toHaveProperty('name', require('../package').name);
+  it('has expected properties', () => {
+    expect(plugin).toHaveProperty('name', name);
+    expect(plugin).toHaveProperty('version', version);
+    expect(plugin).toHaveProperty('description', description);
   });
 
   it('has expected hooks', () => {
     const expected = [
+      'actions',
       'apmTransaction',
-      'build',
       'configure',
       'create',
       'express',
       'fastify',
       'metadata',
-      'middleware',
       'prompt',
+      'webpackConfig',
       'workbox'
     ];
 
@@ -68,7 +69,7 @@ describe('Plugin', function () {
 });
 
 describe('configure hook', () => {
-  const configureHook = require('../lib/').hooks.configure.handler;
+  const configureHook = require('../lib/').hooks.configure;
 
   it('adds the sw webpackRegister callback', () => {
     const gasket = mockGasketApi();
@@ -167,7 +168,7 @@ describe('express hook', () => {
     await hook(gasket, expressApp, false);
 
     expect(gasket.exec).toHaveBeenCalledWith('nextExpress', {
-      next: nextHandler,
+      next: nextServer,
       express: expressApp
     });
   });
@@ -187,7 +188,7 @@ describe('express hook', () => {
     expect(gasket.exec).toHaveBeenCalledWith('nextPreHandling', {
       req: mockReq,
       res: mockRes,
-      nextServer: nextHandler
+      nextServer
     });
   });
 });
@@ -212,8 +213,8 @@ describe('fastify hook', () => {
     const gasket = mockGasketApi();
     await hook(gasket, fastifyApp, false);
 
-    expect(fastifyApp.register).toHaveBeenCalledWith(expect.any(Function));
-    const fn = fastifyApp.register.mock.calls[0][0];
+    expect(fastifyApp.addHook).toHaveBeenCalledWith('onResponse', expect.any(Function));
+    const fn = fastifyApp.addHook.mock.calls[0][1];
     expect(fn.name).toEqual('setNextLocale');
   });
 
@@ -221,7 +222,7 @@ describe('fastify hook', () => {
     const gasket = mockGasketApi();
     await hook(gasket, fastifyApp, false);
 
-    const fn = fastifyApp.register.mock.calls[0][0];
+    const fn = fastifyApp.addHook.mock.calls[0][1];
 
     const mockReq = { headers: {} };
     const mockRes = { locals: { gasketData: { intl: { locale: 'fr-FR' } } } };
@@ -234,7 +235,7 @@ describe('fastify hook', () => {
     const gasket = mockGasketApi();
     await hook(gasket, fastifyApp, false);
 
-    const fn = fastifyApp.register.mock.calls[0][0];
+    const fn = fastifyApp.addHook.mock.calls[0][1];
 
     const mockReq = { headers: { cookie: 'bogus=data' } };
     const mockRes = { locals: { gasketData: { intl: { locale: 'fr-FR' } } } };
@@ -250,7 +251,7 @@ describe('fastify hook', () => {
     const gasket = mockGasketApi();
     await hook(gasket, fastifyApp, false);
 
-    const fn = fastifyApp.register.mock.calls[0][0];
+    const fn = fastifyApp.addHook.mock.calls[0][1];
 
     const mockReq = { headers: {} };
     const mockRes = { locals: { gasketData: {} } };
@@ -264,7 +265,7 @@ describe('fastify hook', () => {
     await hook(gasket, fastifyApp, false);
 
     expect(gasket.exec).toHaveBeenCalledWith('nextFastify', {
-      next: nextHandler,
+      next: nextServer,
       fastify: fastifyApp
     });
   });
@@ -291,200 +292,8 @@ describe('fastify hook', () => {
     expect(gasket.exec).toHaveBeenCalledWith('nextPreHandling', {
       req: mockReq,
       res: mockRes,
-      nextServer: nextHandler
+      nextServer
     });
-  });
-});
-
-describe('prompt hook', () => {
-  let gasket, context, prompt, mockAnswers;
-  const plugin = require('../lib/');
-  const promptHook = plugin.hooks.prompt;
-
-  beforeEach(() => {
-    gasket = {};
-    context = {};
-    mockAnswers = { addSitemap: true };
-    prompt = jest.fn().mockImplementation(() => mockAnswers);
-  });
-
-  it('prompts', async () => {
-    await promptHook(gasket, context, { prompt });
-    expect(prompt).toHaveBeenCalled();
-  });
-
-  it('servers the expected prompt question', async () => {
-    await promptHook(gasket, context, { prompt });
-    const question = prompt.mock.calls[0][0][0];
-    expect(question.name).toEqual('addSitemap');
-    expect(question.message).toEqual('Do you want to add a sitemap?');
-    expect(question.type).toEqual('confirm');
-  });
-
-  it('sets addSitemap to true', async () => {
-    const result = await promptHook(gasket, context, { prompt });
-    expect(result.addSitemap).toEqual(true);
-  });
-
-  it('sets addSitemap to false', async () => {
-    mockAnswers = { addSitemap: false };
-    const result = await promptHook(gasket, context, { prompt });
-    expect(result.addSitemap).toEqual(false);
-  });
-
-  it('does not run prompt if addSitemap is in context', async () => {
-    context.addSitemap = false;
-    const result = await promptHook(gasket, context, { prompt });
-    expect(result).toHaveProperty('addSitemap', false);
-    expect(prompt).not.toHaveBeenCalled();
-  });
-});
-
-describe('create hook', () => {
-  let mockContext;
-  const plugin = require('../lib/');
-  const root = path.join(__dirname, '..', 'lib');
-
-  beforeEach(() => {
-    mockContext = {
-      pkg: {
-        add: jest.fn(),
-        has: jest.fn()
-      },
-      files: { add: jest.fn() },
-      gasketConfig: {
-        add: jest.fn()
-      }
-    };
-  });
-
-  it('has expected timings', async function () {
-    expect(plugin.hooks.create.timing.before).toEqual(['@gasket/plugin-intl']);
-    expect(plugin.hooks.create.timing.after).toEqual(['@gasket/plugin-redux']);
-  });
-
-  it('adds the appropriate globs', async function () {
-    await plugin.hooks.create.handler({}, mockContext);
-
-    expect(mockContext.files.add).toHaveBeenCalledWith(
-      `${root}/../generator/app/.*`,
-      `${root}/../generator/app/*`,
-      `${root}/../generator/app/**/*`
-    );
-  });
-
-  it('adds the appropriate globs for mocha', async function () {
-    mockContext.testPlugin = '@gasket/mocha';
-    await plugin.hooks.create.handler({}, mockContext);
-
-    expect(mockContext.files.add).toHaveBeenCalledWith(
-      `${root}/../generator/mocha/*`,
-      `${root}/../generator/mocha/**/*`
-    );
-  });
-
-  it('adds the appropriate globs for jest', async function () {
-    mockContext.testPlugin = '@gasket/jest';
-    await plugin.hooks.create.handler({}, mockContext);
-
-    expect(mockContext.files.add).toHaveBeenCalledWith(
-      `${root}/../generator/jest/*`,
-      `${root}/../generator/jest/**/*`
-    );
-  });
-
-  it('adds appropriate dependencies', async function () {
-    await plugin.hooks.create.handler({}, mockContext);
-
-    expect(mockContext.pkg.add).toHaveBeenCalledWith('dependencies', {
-      '@gasket/assets': devDependencies['@gasket/assets'],
-      '@gasket/nextjs': devDependencies['@gasket/nextjs'],
-      'next': devDependencies.next,
-      'prop-types': devDependencies['prop-types'],
-      'react': devDependencies.react,
-      'react-dom': devDependencies['react-dom']
-    });
-  });
-
-  it('adds the appropriate globs for redux', async function () {
-    mockContext.pkg.has = jest
-      .fn()
-      .mockImplementation(
-        (o, f) => o === 'dependencies' && f === '@gasket/redux'
-      );
-    await plugin.hooks.create.handler({}, mockContext);
-
-    expect(mockContext.files.add).toHaveBeenCalledWith(
-      `${root}/../generator/redux/*`,
-      `${root}/../generator/redux/**/*`
-    );
-  });
-
-  it('adds appropriate dependencies for redux', async function () {
-    mockContext.pkg.has = jest
-      .fn()
-      .mockImplementation(
-        (o, f) => o === 'dependencies' && f === '@gasket/redux'
-      );
-    await plugin.hooks.create.handler({}, mockContext);
-
-    expect(mockContext.pkg.add).toHaveBeenCalledWith('dependencies', {
-      'next-redux-wrapper': devDependencies['next-redux-wrapper'],
-      'lodash.merge': devDependencies['lodash.merge']
-    });
-  });
-
-  it('adds appropriate dependencies for sitemap', async function () {
-    mockContext.addSitemap = true;
-    await plugin.hooks.create.handler({}, mockContext);
-
-    expect(mockContext.files.add).toHaveBeenCalledWith(
-      `${root}/../generator/sitemap/*`
-    );
-    expect(mockContext.pkg.add).toHaveBeenCalledWith('dependencies', {
-      'next-sitemap': '^3.1.29'
-    });
-    expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts', {
-      sitemap: 'next-sitemap'
-    });
-  });
-});
-
-describe('build hook', () => {
-  let mockCreateConfigStub, mockBuilderStub;
-
-  const getMockedBuildHook = () => {
-    mockCreateConfigStub = jest.fn();
-    mockBuilderStub = jest.fn();
-
-    jest.mock('../lib/config', () => ({
-      createConfig: mockCreateConfigStub
-    }));
-
-    jest.mock('next/dist/build', () => ({
-      default: mockBuilderStub
-    }));
-
-    return require('../lib/').hooks.build;
-  };
-
-  it('does not build for local command', async () => {
-    const buildHook = getMockedBuildHook();
-    await buildHook({ command: { id: 'local' } });
-    expect(mockBuilderStub).not.toHaveBeenCalled();
-  });
-
-  it('uses current next build', async () => {
-    const gasket = mockGasketApi();
-    const buildHook = getMockedBuildHook();
-    await buildHook({ ...gasket, command: { id: 'build' } });
-    expect(mockBuilderStub).toHaveBeenCalled();
-  });
-
-  it('supports older gasket.command format', async () => {
-    const buildHook = getMockedBuildHook();
-    await buildHook({ command: 'local' });
-    expect(mockBuilderStub).not.toHaveBeenCalled();
   });
 });
 
@@ -642,12 +451,17 @@ describe('workbox hook', () => {
   });
 });
 
+
+/**
+ * Mock Gasket API
+ * @returns {object} gasketAPI
+ */
 function mockGasketApi() {
   return {
     command: {
       id: 'fake'
     },
-    execWaterfall: jest.fn((_, arg) => arg),
+    execWaterfallSync: jest.fn((_, arg) => arg),
     exec: jest.fn().mockResolvedValue({}),
     execSync: jest.fn().mockReturnValue([]),
     logger: {

@@ -72,10 +72,10 @@ in NodeJS for SSR.
 ```js
 // ./store.js
 
-const { configureMakeStore } = require('@gasket/redux');
-const reducers = require('./reducers'); // apps reducers
+import { configureMakeStore } from '@gasket/redux';
+import reducers from './reducers'; // apps reducers
 
-module.exports = configureMakeStore({ reducers });
+export default configureMakeStore({ reducers });
 ```
 
 #### Example: initial state
@@ -88,8 +88,8 @@ in your store.
 ```diff
 // ./store.js
 
-const { configureMakeStore } = require('@gasket/redux');
-const myReducers = require('./reducers'); // apps reducers
+import { configureMakeStore } from '@gasket/redux';
+import myReducers './reducers'; // apps reducers
 
 const reducers = {
   ...myReducers,
@@ -98,7 +98,7 @@ const reducers = {
 
 const initialState = { custom: 'example' };
 
-module.exports = configureMakeStore({ initialState, reducers });
+export default configureMakeStore({ initialState, reducers });
 ```
 
 
@@ -107,14 +107,14 @@ module.exports = configureMakeStore({ initialState, reducers });
 ```js
 // ./lib/make-store.js
 
-const sagaMiddleWare = require('redux-saga').default();
-const { configureMakeStore } = require('@gasket/redux');
-const reducers = require('../reducers');
-const rootSaga = require('../sagas');
+import sagaMiddleWare from 'redux-saga'.default();
+import { configureMakeStore } from '@gasket/redux';
+import reducers from '../reducers';
+import rootSaga from '../sagas';
 
 const middleware = [sagaMiddleWare];
 
-module.exports = configureMakeStore({ reducers, middleware }, store => {
+export default configureMakeStore({ reducers, middleware }, store => {
   // The method below is only needed if you are utilizing
   // next-redux-saga wrapper for handling sagas in `getInitialProps`
   // store.runSagaTask = (saga) => {
@@ -131,13 +131,13 @@ Next in the gasket.config.js, set the `redux.makeStore` field to the file. This
 will start up the app using the custom configuration.
 
 ```js
-// gasket.config.js
+// gasket.js
 
-module.exports = {
+export default makeGasket({
   redux: {
     makeStore: './lib/make-store.js'
   }
-};
+});
 ```
 
 #### Example: passing custom thunk middleware
@@ -149,14 +149,14 @@ passing `thunkMiddleware`. A common use case for this is to use the
 ```js
 // ./store.js
 
-const { configureMakeStore } = require('@gasket/redux');
-const reducers = require('./reducers');
-const thunk = require('redux-thunk');
+import { configureMakeStore } from '@gasket/redux';
+import reducers from './reducers';
+import thunk from 'redux-thunk';
 
 const myExtraArg = {};
 const thunkMiddleware = thunk.withExtraArgument(myExtraArg);
 
-module.exports = configureMakeStore({ reducers, thunkMiddleware })
+module.exports = configureMakeStore({ reducers, thunkMiddleware });
 ```
 
 ## License

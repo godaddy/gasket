@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "lib": [
+      "esnext",
+      "dom"
+    ],
+    "types": [
+      "@gasket/data",
+      "@types/jest",
+      "@types/node",
+    ]
+  },
+  "exclude": [
+    "test",
+    "coverage",
+    "lib",
+    "next.js"
+  ]
+}

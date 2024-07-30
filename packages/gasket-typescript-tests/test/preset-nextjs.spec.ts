@@ -1,13 +1,18 @@
-import type { GasketConfigFile, Plugin } from '@gasket/engine';
-import '@gasket/preset-nextjs';
+import type { GasketConfigDefinition, Plugin } from '@gasket/core';
+import preset from '@gasket/preset-nextjs';
 
 describe('@gasket/preset-nextjs', () => {
   const { log } = console;
 
   it('imports config type injections for all plugins', () => {
-    const config: GasketConfigFile = {
+    const config: GasketConfigDefinition = {
+      plugins: [
+        { name: 'example-plugin', version: '', description: '', hooks: {} }
+      ],
       http: 8080,
-      compression: true,
+      express: {
+        compression: true
+      },
       nextConfig: {
         future: {
           webpack5: true
@@ -19,7 +24,11 @@ describe('@gasket/preset-nextjs', () => {
   it('imports lifecycles for all plugins', () => {
     const plugin: Plugin = {
       name: 'dummy-plugin',
+      version: '',
+      description: '',
       hooks: {
+        // @ts-expect-error - TODO clean up in tune up ticket
+        // https://godaddy-corp.atlassian.net/browse/PFX-628
         preboot() {
           log('Preparing...');
         },

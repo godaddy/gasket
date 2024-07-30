@@ -31,7 +31,7 @@ describe('fastify', () => {
     };
     mockReq = {};
     mockRes = {
-      set: jest.fn(),
+      type: jest.fn(),
       send: jest.fn()
     };
     mockCache.mockClear();
@@ -41,6 +41,10 @@ describe('fastify', () => {
     cacheKeyB = jest.fn(() => 'B');
   });
 
+  /**
+   * Get the endpoint handler
+   * @returns {Promise<Function>} handler
+   */
   async function getEndpoint() {
     await fastify(mockGasket, mockApp);
     return mockApp.get.mock.calls[0][1];
@@ -77,7 +81,7 @@ describe('fastify', () => {
     it('sets response header content-type', async () => {
       const endpoint = await getEndpoint();
       await endpoint(mockReq, mockRes);
-      expect(mockRes.set).toHaveBeenCalledWith('Content-Type', 'application/javascript');
+      expect(mockRes.type).toHaveBeenCalledWith('application/javascript');
     });
 
     it('sends the compose service worker response', async () => {

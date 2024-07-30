@@ -7,25 +7,21 @@ Adds Fastify to your application.
 #### New apps
 
 ```
-gasket create <app-name> --plugins @gasket/plugin-fastify
-```
-
-#### Existing apps
-
-```
 npm i @gasket/plugin-fastify
 ```
 
-Modify `plugins` section of your `gasket.config.js`:
+Update your `gasket` file plugin configuration:
 
 ```diff
-module.exports = {
-  plugins: {
-    add: [
-+      '@gasket/plugin-fastify'
-    ]
-  }
-}
+// gasket.js
+
++ import pluginFastify from '@gasket/plugin-fastify';
+
+export default makeGasket({
+  plugins: [
++   pluginFastify
+  ]
+});
 ```
 
 ## Configuration
@@ -34,72 +30,25 @@ All the configurations for the plugin are added under `fastify` in the config:
 
 - `compression`: true by default. Can be set to false if applying compression
   differently.
-- `excludedRoutesRegex`: Routes to be excluded based on a regex
 - `trustProxy`: Enable trust proxy option, [see Fastify documentation for possible values](https://fastify.dev/docs/latest/Reference/Server/#trustproxy)
 
 #### Example configuration
 
 ```js
-module.exports = {
-  plugins: {
-    add: ['@gasket/fastify']
-  },
+export default makeGasket({
+  plugins: [
+    pluginFastify
+  ],
   fastify: {
     compression: false,
+    routes: 'api/*.js',
     excludedRoutesRegex: /^(?!\/_next\/)/,
     trustProxy: true
   }
-}
-```
-
-### Middleware paths
-
-The `gasket.config.js` can contain a `middleware` property, which is an array of
-objects that map plugins to route or path patterns, allowing apps to tune which
-middleware are triggered for which requests.
-
-```js
-  middleware: [
-    {
-      plugin:'gasket-plugin-example', // Name of the Gasket plugin
-      paths: ['/api']
-    },
-    {
-      plugin:'@some/gasket-plugin-example',
-      paths: [/\/default/]
-    },
-    {
-      plugin: '@another/gasket-plugin-example',
-      paths: ['/proxy', /\/home/]
-    }
-  ]
+});
 ```
 
 ## Lifecycles
-
-### middleware
-
-Executed when the `fastify` server has been created, it will apply all returned
-functions as middleware.
-
-```js
-module.exports = {
-  hooks: {
-    /**
-    * Add Fastify middleware
-    *
-    * @param {Gasket} gasket The Gasket API
-    * @param {Fastify} app - Fastify app instance
-    * @returns {function|function[]} middleware(s)
-    */
-    middleware: function (gasket, app) {
-      return require('x-xss-protection')();
-    }
-  }
-}
-```
-
-You may also return an `Array` to inject more than one middleware.
 
 ### fastify
 
@@ -107,7 +56,8 @@ Executed **after** the `middleware` event for when you need full control over
 the `fastify` instance.
 
 ```js
-module.exports = {
+export default {
+  name: 'sample-plugin',
   hooks: {
     /**
     * Update Fastify app instance
@@ -119,7 +69,7 @@ module.exports = {
     fastify: async function (gasket, fastify) {
     }
   }
-}
+};
 ```
 
 ### errorMiddleware
@@ -128,7 +78,8 @@ Executed after the `fastify` event. All middleware functions returned from this
 hook will be applied to Fastify.
 
 ```js
-module.exports = {
+export default {
+  name: 'sample-plugin',
   hooks: {
     /**
     * Add Fastify error middlewares
@@ -139,7 +90,7 @@ module.exports = {
     errorMiddleware: function (gasket) {
     }
   }
-}
+};
 ```
 
 ## How it works

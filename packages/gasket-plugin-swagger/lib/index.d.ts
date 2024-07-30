@@ -1,7 +1,7 @@
 import type { Options } from 'swagger-jsdoc'
 import type { SwaggerUiOptions } from 'swagger-ui-express';
 
-declare module '@gasket/engine' {
+declare module '@gasket/core' {
   export interface GasketConfig {
     swagger?: {
       /** Target swagger spec file, either json or yaml. (Default:
@@ -22,3 +22,16 @@ declare module '@gasket/engine' {
     }
   }
 }
+
+declare module 'create-gasket-app' {
+  export interface CreateContext {
+    hasSwaggerPlugin?: boolean;
+  }
+}
+
+export default {
+  name: '@gasket/plugin-swagger',
+  version: '',
+  description: '',
+  hooks: {}
+};

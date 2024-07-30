@@ -1,7 +1,40 @@
 # `@gasket/plugin-nextjs`
 
+- Add gasketData layout for app router ([#814])
+- Exclude gaskets from client bundling ([#806])
+- Convert cjs sitemap config to esm ([#798])
+- Added useAppRouter optional flag ([#777])
+- Convert store.js to esm ([#799])
+- Fix logic for `server.js` generation to include `customServer` ([#778])
+- Update generated `_document.js` ([#778])
+- Added redux optional flag ([#762])
+- Add plugin import to gasket file ([#736])
+- Add itself to the app package file ([#736])
+- Add generator files `next.config.js` & `server.js` ([#736])
+- Add `nextDevProxy` prompt for proxy server to Next.js dev server ([#736])
+- Remove `@gasket/resolve` dependency ([#736])
+- Plugin is `typescript` aware
+- Add Prompt for `nextServerType`
 - Removed support for deprecated `next` config support ([#655])
 - With Redux, generate _app with example `getInitialAppProps` ([#693])
+
+### 6.47.0
+
+- Check if headers sent from lifecycle ([#750])
+
+### 6.46.7
+
+- (fix) Handle malformed URL segments in Elastic APM transaction labeling ([#724])
+- (fix) Omit query parameters when parsing next.js route labels ([#724])
+
+### 6.46.4
+
+- Adjust JSDocs and TS types ([#695])
+
+### 6.46.1
+
+- Adjust generated page tests for initial flexibility ([#678])
+- Use `req.path` instead of `req.url` in path matching in `getNextRoute` ([#679])
 
 ### 6.45.2
 
@@ -249,4 +282,18 @@
 [#614]: https://github.com/godaddy/gasket/pull/614
 [#655]: https://github.com/godaddy/gasket/pull/655
 [#670]: https://github.com/godaddy/gasket/pull/670
+[#678]: https://github.com/godaddy/gasket/pull/678
+[#679]: https://github.com/godaddy/gasket/pull/679
+[#695]: https://github.com/godaddy/gasket/pull/695
 [#693]: https://github.com/godaddy/gasket/pull/693
+[#724]: https://github.com/godaddy/gasket/pull/724
+[#736]: https://github.com/godaddy/gasket/pull/736
+[#750]: https://github.com/godaddy/gasket/pull/750
+[#762]: https://github.com/godaddy/gasket/pull/762
+[#777]: https://github.com/godaddy/gasket/pull/777
+[#778]: https://github.com/godaddy/gasket/pull/778
+[#798]: https://github.com/godaddy/gasket/pull/798
+[#799]: https://github.com/godaddy/gasket/pull/799
+[#806]: https://github.com/godaddy/gasket/pull/806
+[#814]: https://github.com/godaddy/gasket/pull/814
+

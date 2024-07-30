@@ -179,6 +179,14 @@ describe('Utils - generateIndex', () => {
 
     describe('Sections', () => {
 
+      /**
+       * Check a section of the generated content
+       * @param name
+       * @param title
+       * @param includeVersion
+       * @param additionalHeaders
+       * @returns {void}
+       */
       function checkSection(name, title, includeVersion, additionalHeaders = []) {
         const fullContent = generateContent(fullDocsConfigSet);
 

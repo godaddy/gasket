@@ -1,9 +1,10 @@
-import type { GasketConfigFile, Hook } from '@gasket/engine';
+import type { GasketConfigDefinition, Hook } from '@gasket/core';
 import '@gasket/plugin-docs';
 
 describe('@gasket/plugin-docs', () => {
   it('defines the config for the plugin', () => {
-    const config: GasketConfigFile = {
+    const config: GasketConfigDefinition = {
+      plugins: [{ name: 'example-plugin', version: '', description: '', hooks: {} }],
       docs: {
         outputDir: './out/docs'
       }
@@ -11,7 +12,7 @@ describe('@gasket/plugin-docs', () => {
   });
 
   it('validates config values', () => {
-    const config: GasketConfigFile = {
+    const config: GasketConfigDefinition = {
       docs: {
         // @ts-expect-error
         outputDir: 3

@@ -1,76 +1,37 @@
-const { filterSensitiveCookies } = require('./cookies');
+/// <reference types="create-gasket-app" />
+/// <reference types="@gasket/plugin-metadata" />
+
 const middleware = require('./middleware');
-const { devDependencies } = require('../package.json');
+const preboot = require('./preboot');
+const configure = require('./configure');
+const {
+  name,
+  version,
+  description,
+  devDependencies
+} = require('../package.json');
 
-/**
- * Determines if the Elastic APM agent has sufficient config to be active
- * @param {object} config gasket config
- * @param {object<string,any>} env environment variables
- * @returns {boolean} A combined config object
- */
-const isActive = (config, env) => {
-  const { active } = config;
-
-  if (active || env.ELASTIC_APM_ACTIVE) {
-    return true;
-  }
-
-  if (env.ELASTIC_APM_SERVER_URL && env.ELASTIC_APM_SECRET_TOKEN) {
-    return true;
-  }
-
-  return false;
-};
-
-module.exports = {
+/** @type {import('@gasket/core').Plugin} */
+const plugin = {
+  name,
+  version,
+  description,
   hooks: {
-    configure: {
-      handler: async (gasket, config) => {
-        config.elasticAPM = config.elasticAPM || {};
+    configure,
+    // @ts-expect-error - TODO: will be cleaned up in the apm tune up ticket
+    // https://godaddy-corp.atlassian.net/browse/PFX-628
+    preboot,
+    create(gasket, { pkg, files }) {
+      const generatorDir = `${__dirname}/../generator`;
 
-        // eslint-disable-next-line no-process-env
-        config.elasticAPM.active = isActive(config.elasticAPM, process.env);
+      pkg.add('dependencies', {
+        'elastic-apm-node': devDependencies['elastic-apm-node']
+      });
+      pkg.add('scripts', {
+        start: 'gasket start --require ./setup.js'
+      });
 
-        return { ...config };
-      }
-    },
-    preboot: {
-      handler: async (gasket) => {
-        const { config, logger, command } = gasket;
-
-        if (command && command.id === 'local') return;
-
-        // prefer app-level dependency in case of duplicates
-        const apm = require(require.resolve('elastic-apm-node', {
-          paths: [config.root, __dirname]
-        }));
-
-        if (!apm.isStarted()) {
-          logger.warn(
-            'Elastic APM agent is not started. Use `--require ./setup.js`'
-          );
-        }
-
-        apm.addFilter(filterSensitiveCookies(config));
-      }
-    },
-    create: {
-      timing: {
-        after: ['@gasket/plugin-start']
-      },
-      handler(gasket, { pkg, files }) {
-        const generatorDir = `${__dirname}/../generator`;
-
-        pkg.add('dependencies', {
-          'elastic-apm-node': devDependencies['elastic-apm-node'],
-          'dotenv': devDependencies.dotenv
-        });
-        pkg.add('scripts', {
-          start: 'gasket start --require ./setup.js'
-        });
-
-        files.add(`${generatorDir}/*`);
-      }
+      files.add(`${generatorDir}/*`);
     },
     middleware,
     metadata(gasket, meta) {
@@ -104,3 +65,5 @@ module.exports = {
     }
   }
 };
+
+module.exports = plugin;

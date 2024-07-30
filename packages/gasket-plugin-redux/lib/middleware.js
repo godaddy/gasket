@@ -1,10 +1,10 @@
 /* eslint require-atomic-updates: warn */
+/// <reference types="@gasket/plugin-express" />
+/// <reference types="@gasket/plugin-logger" />
 
 /**
  * Configure middleware
- *
- * @param {Object} gasket - The Gasket API
- * @returns {Function} middleware
+ * @type {import('@gasket/core').HookHandler<'middleware'>}
  */
 module.exports = function middlewareHook(gasket) {
   const { redux: reduxConfig = {} } = gasket.config;
@@ -14,17 +14,16 @@ module.exports = function middlewareHook(gasket) {
       'Could not find redux store file. Add a store.js file or configure redux.makeStore in gasket.config.js.'
     );
   }
+
+  /** @type {import('@gasket/redux').MakeStoreFn} */
   const makeStore = require(reduxConfig.makeStore);
 
   /**
    * Middleware to attach the redux store to the req object for use in other
    * middleware
-   *
-   * @param {Request} req - Request
-   * @param {Response} res - Response
-   * @param {Function} next - Callback
+   * @type {import('./index').reduxMiddleware}
    */
-  async function middleware(req, res, next) {
+  return async function middleware(req, res, next) {
     const initState = await gasket.execWaterfall(
       'initReduxState',
       reduxConfig.initState || {},
@@ -35,16 +34,15 @@ module.exports = function middlewareHook(gasket) {
     );
 
     const store = makeStore(initState, {
-      logger: reduxConfig.logger || req.logger,
+      logger: reduxConfig.logger || gasket.logger,
       req
     });
 
     await gasket.exec('initReduxStore', store, { req, res });
 
+    // eslint-disable-next-line require-atomic-updates
     req.store = store;
 
     if (!res.headersSent) return next();
-  }
-
-  return middleware;
+  };
 };

@@ -1,20 +1,43 @@
 import type { IncomingMessage, ServerResponse } from 'http';
-import type { AgentConfigOptions, Transaction } from 'elastic-apm-node';
+import type { AgentConfigOptions, Transaction, Payload } from 'elastic-apm-node';
+import type { MaybeAsync, GasketConfig } from '@gasket/core';
+import type { GasketData } from '@gasket/data';
 
-declare module '@gasket/engine' {
+export function filterSensitiveCookies(config: GasketConfig): function(Payload): Payload;
+
+export interface ExtendedAgentConfigOptions extends AgentConfigOptions {
+  sensitiveCookies?: Array<string>;
+}
+
+declare module '@gasket/core' {
   export interface GasketConfig {
-    elasticAPM?: AgentConfigOptions & {
-      sensitiveCookies?: Array<string>
-    },
+    elasticAPM?: ExtendedAgentConfigOptions;
   }
-  
+
+  export interface Gasket {
+    apm?: Agent;
+  }
+
   export interface HookExecTypes {
     apmTransaction(
       transaction: Transaction,
       details: {
-        req: IncomingMessage,
-        res: ServerResponse
+        req: IncomingMessage;
+        res: ServerResponse & {
+          locals?: {
+            gasketData: GasketData & {
+              locale?: string;
+            };
+          };
+        };
       }
-    ): MaybeAsync<void>
+    ): MaybeAsync<void>;
   }
 }
+
+export default {
+  name: '@gasket/plugin-elastic-apm',
+  version: '',
+  description: '',
+  hooks: {}
+};

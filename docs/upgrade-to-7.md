@@ -91,7 +91,7 @@ If your app or plugins hooks these lifecycles you may need to adjust them.
 
 Add setup script to create hook. [(#672)]
 
-## Rename and Refactor @gasket/plugin-config as @gasket/plugin-response-data
+## Rename and Refactor @gasket/plugin-config as @gasket/plugin-data
 
 We have had a lot of confusion around the config plugin and its purpose. As such, we are renaming and refocusing what the plugin does. That is, to allow environment-specific data to be accessible for requests, with public data available with responses.
 
@@ -106,7 +106,7 @@ module.exports = {
   plugins: {
     add: [
 -      '@gasket/plugin-config'
-+      '@gasket/plugin-response-data'
++      '@gasket/plugin-data'
     ]
   }
 }
@@ -242,6 +242,33 @@ Additionally, `@gasket/plugin-nextjs` now generates a `_app.js` file with `getIn
 ```
 
 [(#693)]
+
+## Plugin Imports
+
+Update plugin strings to be plugin import statements in `gasket.js`. All plugins now need to be imported and used in the `makeGasket` function.
+
+```diff
+// gasket.config.js
+- module.exports = {
+-   plugins: {
+-     presets: [
+-       '@gasket/plugin-nextjs',
+-     ],
+-   },
+- };
+
+// gasket.js
++ import { makeGasket } from '@gasket/core';
++ import pluginNextjs from '@gasket/plugin-nextjs';
+
++ export default makeGasket({
++   plugins: [
++     pluginNextjs
++   ],
++   filename: import.meta.filename,
++ });
+```
+
 
 <!-- PRs -->
 [(#647)]:https://github.com/godaddy/gasket/pull/647

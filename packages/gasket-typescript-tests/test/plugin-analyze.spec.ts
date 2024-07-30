@@ -1,13 +1,10 @@
-import type { GasketConfigFile } from '@gasket/engine';
+import type { GasketConfigDefinition } from '@gasket/core';
 import '@gasket/plugin-analyze';
 
 describe('@gasket/plugin-analyze', () => {
   it('adds bundleAnalyzerConfig to GasketConfig', () => {
-    const config: GasketConfigFile = {
-      plugins: {
-        add: ['@gasket/analyze']
-      },
-
+    const config: GasketConfigDefinition = {
+      plugins: [{ name: 'example-plugin', version: '', description: '', hooks: {} }],
       bundleAnalyzerConfig: {
         browser: {
           // @ts-expect-error

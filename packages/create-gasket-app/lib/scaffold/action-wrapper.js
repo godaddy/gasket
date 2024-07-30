@@ -1,4 +1,4 @@
-const ora = require('ora');
+import ora from 'ora';
 
 /**
  * Decorate a create action with spinner.
@@ -10,19 +10,20 @@ const ora = require('ora');
  * @param {Boolean} startSpinner - Should the spinner start
  * @returns {Function} decorated action
  */
-module.exports = function withSpinner(label, fn, { startSpinner = true } = {}) {
-
+export default function withSpinner(label, fn, { startSpinner = true } = {}) {
   /**
    * Decorated function
    *
-   * @param {CreateContext} context - Create context
+   * @param {ActionWrapperParams} params - ActionWrapperParams
+   * @param {GasketEngine} params.gasket - Gasket config
+   * @param {CreateContext} params.context - Create context
    * @returns {Promise} promise
    */
-  async function wrapper(context) {
+  async function wrapper({ gasket = {}, context }) {
     const spinner = ora(label);
     if (startSpinner) spinner.start();
     try {
-      await fn(context, spinner);
+      await fn({ gasket, context, spinner });
       if (spinner.isSpinning) spinner.succeed();
     } catch (err) {
       spinner.fail();
@@ -33,4 +34,4 @@ module.exports = function withSpinner(label, fn, { startSpinner = true } = {}) {
 
   wrapper.wrapped = fn;
   return wrapper;
-};
+}

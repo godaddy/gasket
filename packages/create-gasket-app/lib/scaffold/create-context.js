@@ -1,7 +1,7 @@
 /* eslint-disable max-len, max-statements */
-const fs = require('fs');
-const path = require('path');
-const { addPluginsToContext, readConfig } = require('../scaffold/utils');
+import fs from 'fs';
+import path from 'path';
+import { readConfig } from '../scaffold/utils.js';
 
 /**
  * The CreateRuntime represents a shallow proxy to a CreateContext
@@ -70,20 +70,20 @@ function flatten(acc, values) {
  * @property {Boolean} extant - Whether or not target directory already exists
  * @property {[String]} localPresets - paths to the local presets packages
  * @property {PresetDesc[]} rawPresets - Raw preset desc from args. Can include version constraint. Added by load-preset if using localPresets.
- * @property {PluginDesc[]} rawPlugins - Raw plugin desc from options, prompts, etc. Can include constraints.
- * @property {PluginName[]} plugins - Short names of plugins
  * @property {String[]} pkgLinks - Local packages that should be linked
  * @property {String[]} messages - non-error/warning messages to report
  * @property {String[]} warnings - warnings messages to report
  * @property {String[]} errors - error messages to report but do not exit process
  * @property {String[]} nextSteps - any next steps to report for user
  * @property {Set<String>} generatedFiles - any generated files to show in report
+ * @property {any[]} presets - Default empty array, populated by load-preset with actual imports
+ * @property {Object} presetConfig - Default to object w/empty plugins array to be populated by `presetConfig` hook
  *
  * -- Added by `global-prompts`
  *
  * @property {String} appDescription - Description of app
  * @property {Boolean} gitInit - Should a git repo be initialized and first commit
- * @property {String} testPlugin - Name of the plugin for unit tests
+ * @property {String} testPlugins - Array of testing plugins
  * @property {String} packageManager - Which package manager to use (Default: 'npm')
  * @property {String} installCmd - Derived install command (Default: 'npm install')
  * @property {String} localCmd - Derived local run command (Default: 'npx gasket local')
@@ -92,12 +92,7 @@ function flatten(acc, values) {
  * -- Added by `load-preset`
  *
  * @property {PresetName[]} presets - Short name of presets
- * @property {PresetInfo[]} presetInfos - Shallow load of presets with meta data
  *
- * -- Added by `cli-version`
- *
- * @property {string} cliVersion - Version of current CLI used to issue `create` command
- * @property {string} cliVersionRequired - Version of CLI to install, either current or min compatible version required by preset(s)
  *
  * -- Added by `setup-pkg`
  *
@@ -112,7 +107,7 @@ function flatten(acc, values) {
  *
  * @property {Files} files - Use to add files and templates to generate
  */
-class CreateContext {
+export class CreateContext {
   constructor(initContext = {}) {
     Object.assign(this, initContext);
   }
@@ -129,24 +124,22 @@ class CreateContext {
  * @param {Object} options - Command options
  * @returns {CreateContext} context
  */
-module.exports = function makeCreateContext(argv = [], options = {}) {
+export function makeCreateContext(argv = [], options = {}) {
   const appName = argv[0] || 'templated-app';
   const {
-    plugins = [],
     presets = [],
     npmLink = [],
     presetPath = [],
     packageManager,
     prompts,
     config,
-    'config-file': configFile
+    configFile
   } = options;
 
-  // Flatten the array of array created by the plugins flag – it
+  // Flatten the array of array created by the plugins flag – it
   // supports both multiple instances as well as comma-separated lists.
   const rawPresets = presets.reduce(flatten, []);
   const localPresets = presetPath.reduce(flatten, []);
-  const rawPlugins = plugins.reduce(flatten, []);
   const pkgLinks = npmLink.reduce(flatten, []);
   const cwd = process.cwd();
   const dest = path.join(cwd, appName);
@@ -173,7 +166,11 @@ module.exports = function makeCreateContext(argv = [], options = {}) {
     errors: [],
     nextSteps: [],
     generatedFiles: new Set(),
-    prompts
+    prompts,
+    presets: [],
+    presetConfig: {
+      plugins: []
+    }
   });
 
   readConfig(context, { config, configFile });
@@ -185,9 +182,6 @@ module.exports = function makeCreateContext(argv = [], options = {}) {
     context.appName = appName;
   }
 
-  addPluginsToContext(rawPlugins, context);
-
   return context;
-};
+}
 
-module.exports.CreateContext = CreateContext;

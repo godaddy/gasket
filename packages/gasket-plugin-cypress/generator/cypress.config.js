@@ -1,11 +1,12 @@
 /* eslint-disable no-unused-vars */
-const { defineConfig } = require('cypress');
+import { defineConfig } from 'cypress';
 
-module.exports = defineConfig({
+export default defineConfig({
   video: false,
   e2e: {
+    // eslint-disable-next-line no-unused-vars
     setupNodeEvents(on, config) {},
-    baseUrl: 'http://localhost:8080',
+    baseUrl: 'http://localhost:3000',
     supportFile: false,
     specPattern: 'test/e2e/**/*.cy.{js,jsx,ts,tsx}'
   }

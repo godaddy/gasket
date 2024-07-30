@@ -1,18 +1,21 @@
-import { applyConfigOverrides, runShellCommand, tryRequire } from '@gasket/utils';
-import { GasketConfig } from '@gasket/engine';
+import { applyConfigOverrides, runShellCommand } from '@gasket/utils';
+import { GasketConfig, GasketConfigDefinition } from '@gasket/core';
 
 describe('@gasket/utils', function () {
   const perform = false;
 
   describe('applyConfigOverrides', function () {
-    const config: GasketConfig = { root: '/', env: 'debug' };
+    const config: GasketConfigDefinition = {
+      plugins: [{ name: 'example', version: '', description: '', hooks: {} }],
+      root: '/',
+      env: 'debug'
+    };
 
     it('has expected API', function () {
       if (perform) {
         let result:GasketConfig;
         result = applyConfigOverrides(config, { env: 'test' });
-        result = applyConfigOverrides(config, { env: 'test', root: '/', commandId: 'test' });
-        result = applyConfigOverrides(config, { env: 'test', localFile: 'local.config.js' });
+        result = applyConfigOverrides(config, { env: 'test', commandId: 'test' });
 
         // @ts-expect-error
         result = applyConfigOverrides(config, { env: 'test', bogus: true });
@@ -29,14 +32,6 @@ describe('@gasket/utils', function () {
         results = runShellCommand('cmd');
         results = runShellCommand('cmd', ['--flag']);
         results = runShellCommand('cmd', [], { signal: new AbortController().signal });
-      }
-    });
-  });
-
-  describe('tryRequire', function () {
-    it('has expected API', function () {
-      if (perform) {
-        const results: object | null = tryRequire('path/to/module');
       }
     });
   });

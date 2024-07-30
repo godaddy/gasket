@@ -1,8 +1,7 @@
-import type { GasketConfig } from '@gasket/engine';
 import type { IncomingMessage, ServerResponse } from 'http';
 import type { Options } from 'morgan';
 
-declare module '@gasket/engine' {
+declare module '@gasket/core' {
   export interface GasketConfig {
     morgan?: {
       format?: string;
@@ -11,10 +10,9 @@ declare module '@gasket/engine' {
   }
 }
 
-export declare const dependencies: string[];
-
-export declare namespace hooks {
-    namespace middleware {
-        function handler(gasket: GasketConfig): ((req: IncomingMessage, res: ServerResponse, next: (err?: Error) => void) => void)[];
-    }
-}
+export default {
+  name: '@gasket/plugin-morgan',
+  version: '',
+  description: '',
+  hooks: {}
+};

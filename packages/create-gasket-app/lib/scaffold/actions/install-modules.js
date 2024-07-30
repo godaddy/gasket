@@ -1,4 +1,4 @@
-const action = require('../action-wrapper');
+import action from '../action-wrapper.js';
 
 /**
  * Installs node_modules using the selected package manager
@@ -6,13 +6,10 @@ const action = require('../action-wrapper');
  * @param {CreateContext} context - Create context
  * @returns {Promise} promise
  */
-async function installModules(context) {
+async function installModules({ context }) {
   const { pkgManager } = context;
 
   await pkgManager.install();
 }
 
-
-module.exports = action('Install node modules', installModules);
-
-module.exports.update = action('Update node modules', installModules);
+export default action('Install node modules', installModules);

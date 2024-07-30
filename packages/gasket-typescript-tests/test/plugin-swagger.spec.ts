@@ -1,9 +1,10 @@
-import { GasketConfigFile } from '@gasket/engine';
+import { GasketConfigDefinition } from '@gasket/core';
 import '@gasket/plugin-swagger';
 
 describe('@gasket/plugin-swagger', () => {
   it('adds a swagger config section to Gasket', () => {
-    const config: GasketConfigFile = {
+    const config: GasketConfigDefinition = {
+      plugins: [{ name: 'example-plugin', version: '', description: '', hooks: {} }],
       swagger: {
         jsdoc: {
           definition: {

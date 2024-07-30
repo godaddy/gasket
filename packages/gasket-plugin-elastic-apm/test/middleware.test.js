@@ -1,20 +1,19 @@
 const { promisify } = require('util');
-const apm = require('elastic-apm-node');
 const middlewareHook = require('../lib/middleware');
-
-jest.mock('elastic-apm-node', () => ({
-  currentTransaction: {
-    name: 'transaction name',
-    addLabels: jest.fn()
-  }
-}));
 
 describe('The middleware hook', () => {
   let gasket, req, res;
 
   beforeEach(() => {
     gasket = {
-      exec: jest.fn(() => Promise.resolve())
+      exec: jest.fn(() => Promise.resolve()),
+      apm: {
+        isStarted: jest.fn().mockReturnValue(true),
+        currentTransaction: {
+          name: 'transaction name',
+          addLabels: jest.fn()
+        }
+      }
     };
     req = {
       url: '/cohorts/Rad%20Dudes'
@@ -22,22 +21,47 @@ describe('The middleware hook', () => {
     res = {};
   });
 
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('does not include the middleware if apm is not started', async () => {
+    delete gasket.apm;
+
+    const middleware = await middlewareHook(gasket);
+
+    expect(middleware).toBeUndefined();
+  });
+
   describe('middleware', () => {
-    let middleware;
+    let middlewareFunc;
 
     beforeEach(async () => {
-      [middleware] = middlewareHook(gasket);
-      middleware = promisify(middleware);
+      middlewareFunc = await middlewareHook(gasket);
+      middlewareFunc = promisify(middlewareFunc);
     });
 
     it('enables customization of transaction name and labels', async () => {
-      await middleware(req, res);
+      await middlewareFunc(req, res);
 
       expect(gasket.exec).toHaveBeenCalledWith(
         'apmTransaction',
-        apm.currentTransaction,
+        gasket.apm.currentTransaction,
         { req, res }
       );
+    });
+
+    it('logs a warning if apm is not started', async () => {
+      gasket.apm.isStarted = jest.fn().mockReturnValue(false);
+
+      await middlewareFunc(req, res);
+      expect(gasket.exec).not.toHaveBeenCalled();
+    });
+
+    it('returns if currentTransaction is not defined', async () => {
+      gasket.apm.currentTransaction = null;
+      await middlewareFunc(req, res);
+      expect(gasket.exec).not.toHaveBeenCalled();
     });
   });
 });
