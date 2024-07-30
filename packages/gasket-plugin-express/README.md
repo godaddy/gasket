@@ -78,7 +78,8 @@ Executed **after** the `middleware` event for when you need full control over
 the `express` instance.
 
 ```js
-module.exports = {
+export default {
+  name: 'sample-plugin',
   hooks: {
     /**
     * Update Express app instance
@@ -90,7 +91,7 @@ module.exports = {
     express: async function (gasket, express) {
     }
   }
-}
+};
 ```
 
 ### errorMiddleware
@@ -99,7 +100,8 @@ Executed after the `express` event. All middleware functions returned from this
 hook will be applied to Express.
 
 ```js
-module.exports = {
+export default {
+  name: 'sample-plugin',
   hooks: {
     /**
     * Add Express error middlewares
@@ -110,7 +112,7 @@ module.exports = {
     errorMiddleware: function (gasket) {
     }
   }
-}
+};
 ```
 
 ## How it works

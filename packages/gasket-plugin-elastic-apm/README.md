@@ -125,10 +125,15 @@ request details are as follows:
 | `res`    | The HTTP response or framework-specific wrapper around it |
 
 ```javascript
-// /lifecycles/apm-transaction.js
+// example-plugin.js
 
-module.exports = (gasket, transaction, { req, res }) => {
-  transaction.setLabel('language', req.headers['accept-language']);
+export default {
+  name: 'example-plugin',
+  hooks: {
+    apmTransaction(gasket, transaction, { req, res }) => {
+      transaction.setLabel('language', req.headers['accept-language']);
+    }
+  }
 }
 ```
 

@@ -1,4 +1,5 @@
 const { webpackConfig, validateNoGasketCore, externalizeGasketCore } = require('../lib/webpack-config.js');
+const webpack = require('webpack');
 
 const mockFilename = '/path/to/gasket.js';
 
@@ -16,9 +17,16 @@ describe('webpackConfigHook', () => {
     };
     mockWebpackConfig = {
       name: '',
-      externals: []
+      externals: [],
+      plugins: []
     };
-    mockContext = {};
+    mockContext = {
+      webpack
+    };
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
   it('throws if externals is not an array', () => {
@@ -44,10 +52,16 @@ describe('webpackConfigHook', () => {
     expect(result.externals[0]).toBe(validateNoGasketCore);
   });
 
-  it('adds externalizeGasketCore to externals for server', () => {
+  it('adds GASKET_ENV env plugin', () => {
     mockContext.isServer = true;
+    mockGasket.config.env = 'fake-env';
+
     const result = webpackConfig(mockGasket, mockWebpackConfig, mockContext);
-    expect(result.externals[0]).toBe(externalizeGasketCore);
+    const plugin = result.plugins[0];
+    expect(plugin).toBeInstanceOf(webpack.EnvironmentPlugin);
+    expect(plugin).toEqual(expect.objectContaining({
+      defaultValues: { GASKET_ENV: 'fake-env' }
+    }));
   });
 });
 

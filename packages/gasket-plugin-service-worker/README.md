@@ -91,7 +91,8 @@ This example adds a simple listener for push notifications to the service worker
 content.
 
 ```js
-module.exports = {
+export default {
+  name: 'sample-plugin',
   hooks: {
     composeServiceWorker: function (gasket, content, context) {
       return content.concat(`
@@ -105,7 +106,7 @@ self.addEventListener('push', (event) => {
 `)
     }
   }
-}
+};
 ```
 
 #### Example loaded script
@@ -114,10 +115,13 @@ In this example, we use the market id from the request to read in a partial
 service worker and add it to the content.
 
 ```js
-const { readFile } = require('fs').promises;
-const path = require('path');
+import { promises as fsPromises } from 'fs';
 
-module.exports = {
+const { writeFile } = fsPromises;;
+import path from 'path';
+
+export default {
+  name: 'sample-plugin',
   hooks: {
     composeServiceWorker: async function (gasket, content, context) {
       const { req, res } = context;
@@ -147,7 +151,8 @@ gathers functions which accept Request as an argument and return a string value.
 This example returns a function that picks off a variable from cookies.
 
 ```js
-module.exports = {
+export default {
+  name: 'sample-plugin',
   hooks: {
     serviceWorkerCacheKey: function (gasket) {
       return function marketCacheKey(req, res) {
@@ -163,7 +168,8 @@ module.exports = {
 Same example, written differently.
 
 ```js
-module.exports = {
+export default {
+  name: 'sample-plugin',
   hooks: {
     serviceWorkerCacheKey: () => (req, res) => req.cookies.market || 'en-US'
   }
