@@ -208,7 +208,8 @@ receive those events.
  * @returns {Object} The configuration.
  * @public
  */
-module.exports = {
+export default {
+  name: 'sample-plugin',
   hooks: {
     terminus: async function (gasket, terminus) {
       console.log(terminus); // { ... terminus options ... }
@@ -226,7 +227,8 @@ This lifecycle allows you to assert if everything in your server is still
 working as intended. A thrown error is considered a failed checked.
 
 ```js
-module.exports = {
+export default {
+  name: 'sample-plugin',
   hooks: {
     healthcheck: async function healthcheck(gasket, HealthCheckError) {
       await checkDatabaseConnection();
@@ -245,7 +247,8 @@ Triggered when terminus about to send a 503 Error to the healthcheck route but
 server is currently shutting down.
 
 ```js
-module.exports = {
+export default {
+  name: 'sample-plugin',
   hooks: {
     onSendFailureDuringShutdown: async function onSendFailureDuringShutdown(gasket) {
       gasket.logger.info('healthcheck failed but we are already shutting down');
@@ -261,7 +264,8 @@ the server. This is the first function that is called and allows you to clean up
 your server before it's stopped.
 
 ```js
-module.exports = {
+export default {
+  name: 'sample-plugin',
   hooks: {
     beforeShutdown: async function beforeShutdown(gasket) {
       gasket.logger.info('the server is about to shut down');
@@ -276,7 +280,8 @@ Triggered when the server is stopped. Allowing you to clean up everything you
 need before your `node` process is shutting down.
 
 ```js
-module.exports = {
+export default {
+  name: 'sample-plugin',
   hooks: {
     onSignal: async function onSignal(gasket) {
       await stopDatabaseConnect();
@@ -292,7 +297,8 @@ Triggered when the `onSignal` lifecycle has completed, right before the `node`
 process is killed.
 
 ```js
-module.exports = {
+export default {
+  name: 'sample-plugin',
   hooks: {
     onShutdown: async function onShutdown(gasket) {
       gasket.logger.info('Closing server');

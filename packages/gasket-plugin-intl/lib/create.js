@@ -22,6 +22,7 @@ module.exports = async function create(gasket, context) {
 
   if (isReactProject) {
     pkg.add('dependencies', {
+      '@gasket/helper-intl': devDependencies['@gasket/helper-intl'],
       '@gasket/react-intl': devDependencies['@gasket/react-intl'],
       'react-intl': devDependencies['react-intl']
     });

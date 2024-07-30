@@ -8,7 +8,7 @@ const {
 
 describe('prompt hook', () => {
   let gasket, context, mockPrompt, mockAnswers;
-  const promptHook = prompt
+  const promptHook = prompt;
 
   beforeEach(() => {
     gasket = {};
@@ -133,5 +133,5 @@ describe('prompt hook', () => {
         }
       ]);
     });
-  })
+  });
 });

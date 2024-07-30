@@ -1,24 +1,20 @@
 {
   "name": "@gasket/react-intl",
-  "version": "7.0.0-next.42",
+  "version": "7.0.0-next.44",
   "description": "React component library to enable localization for gasket apps.",
-  "main": "lib",
-  "types": "src/index.d.ts",
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "files": [
-    "lib",
-    "src",
-    "types",
-    "next.js"
+    "lib"
   ],
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
-    "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
-    "test:watch": "jest --watchAll",
-    "test:coverage": "jest --coverage",
+    "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict --experimental-vm-modules' jest",
+    "test:watch": "npm run test -- --watch",
+    "test:coverage": "npm run test -- --coverage",
     "posttest": "npm run lint && npm run typecheck",
-    "build": "babel src -d lib --delete-dir-on-start",
-    "prepublishOnly": "npm run build",
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"
   },
@@ -43,25 +39,15 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-react-intl",
   "dependencies": {
-    "@babel/runtime": "^7.23.8",
-    "@gasket/data": "^7.0.0-next.42",
-    "@gasket/fetch": "^7.0.0-next.42",
-    "@gasket/helper-intl": "^7.0.0-next.42",
+    "@gasket/data": "^7.0.0-next.44",
+    "@gasket/fetch": "^7.0.0-next.44",
+    "@gasket/helper-intl": "^7.0.0-next.44",
     "hoist-non-react-statics": "^3.3.2",
+    "htmlescape": "^1.1.1",
     "just-extend": "^6.2.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.23.4",
-    "@babel/core": "^7.23.7",
-    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
-    "@babel/plugin-transform-runtime": "^7.23.7",
-    "@babel/preset-env": "^7.23.8",
-    "@babel/preset-react": "^7.23.3",
-    "@babel/register": "^7.23.7",
     "@testing-library/react": "^13.4.0",
-    "babel-core": "^7.0.0-bridge.0",
-    "babel-eslint": "^10.1.0",
-    "babel-plugin-root-import": "^6.6.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
     "eslint-config-godaddy-react": "^9.0.1",
@@ -73,7 +59,6 @@
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
     "jsdom": "^20.0.0",
-    "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-intl": "^6.0.0",
@@ -84,7 +69,6 @@
     "@gasket/plugin-intl": "^7"
   },
   "peerDependencies": {
-    "prop-types": "^15",
     "react-intl": "<7.0.0"
   },
   "eslintConfig": {
@@ -100,23 +84,5 @@
     "rules": {
       "unicorn/filename-case": "error"
     }
-  },
-  "eslintIgnore": [
-    "lib"
-  ],
-  "babel": {
-    "presets": [
-      "@babel/preset-env",
-      "@babel/preset-react"
-    ],
-    "plugins": [
-      "@babel/plugin-proposal-object-rest-spread",
-      [
-        "@babel/plugin-transform-runtime",
-        {
-          "regenerator": true
-        }
-      ]
-    ]
   }
 }

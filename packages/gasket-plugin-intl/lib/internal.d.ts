@@ -1,9 +1,10 @@
 import { Gasket, GasketRequest } from '@gasket/core';
+import { IncomingMessage } from 'http';
 
 /** Get the preferred locale from the request headers. */
 function getLocaleFromHeaders(
   gasket: Gasket,
-  req: GasketRequest,
+  req: GasketRequest | IncomingMessage,
   locales: string[],
   defaultLocale: string
 ): string;
@@ -11,7 +12,7 @@ function getLocaleFromHeaders(
 /** Get the preferred locale from the request headers. */
 function getPreferredLocale(
   gasket: Gasket,
-  req: GasketRequest
+  req: GasketRequest | IncomingMessage,
 ): string;
 
 function formatLocale(

@@ -56,7 +56,7 @@ describe('createConfig', () => {
     const custom = {
       customConfig: 'from arguments'
     };
-    result = await createConfig(gasket, false, custom);
+    result = await createConfig(gasket, custom);
     expect(result).toHaveProperty('customConfig', 'from arguments');
   });
 
@@ -76,7 +76,7 @@ describe('createConfig', () => {
     const custom = {
       poweredByHeader: 'from arguments'
     };
-    result = await createConfig(gasket, false, custom);
+    result = await createConfig(gasket, custom);
     expect(result).toHaveProperty('poweredByHeader', 'from arguments');
   });
 
