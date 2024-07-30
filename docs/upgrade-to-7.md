@@ -77,13 +77,13 @@ The `req` object can be used as a Gasket Action argument to give access to heade
 When retrieving a variable called `myValue` in middleware, you might have done something like this:
 
 ```js
-const gasketData = res.locals.myValue;
+const myValue = res.locals.myValue;
 ```
 
 Going forward, the recommended way to access `myValue` would be through a Gasket Action like this:
 
 ```js
-const gasketData = gasket.actions.getMyValue(req);
+const myValue = gasket.actions.getMyValue(req);
 ```
 
 The Gasket Action is defined as a hook in the plugin:
