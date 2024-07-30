@@ -1,6 +1,4 @@
 import { MaybeAsync } from '@gasket/core';
-import type { OutgoingMessage } from 'http';
-
 
 export interface PublicGasketData extends Record<string, any> {
 }

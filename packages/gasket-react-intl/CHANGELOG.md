@@ -45,7 +45,7 @@
 
 ### 6.26.1
 
-- Fix typo for `LocaleStatus` in sample code ([#384])
+- Fix typo for `LocaleFileStatus` in sample code ([#384])
 
 ### 6.26.0
 

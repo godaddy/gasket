@@ -6,9 +6,10 @@ const reqMap = new WeakMap();
  */
 module.exports = function actions(gasket) {
   return {
-    async getIntlLocale(req) {
+    getIntlLocale(req) {
       if (!reqMap.has(req)) {
-        const intlLocale = await gasket.execWaterfall(
+        // eslint-disable-next-line no-sync
+        const intlLocale = gasket.execWaterfallSync(
           'intlLocale',
           getPreferredLocale(gasket, req),
           { req }
@@ -19,13 +20,11 @@ module.exports = function actions(gasket) {
 
       return reqMap.get(req);
     },
-    getIntlMessage(gasketDataIntl, messageId, defaultMessage) {
-      const localeProps = gasketDataIntl || {};
-      const messages =
-        (localeProps.messages && localeProps.messages[localeProps.locale]) ||
-        {};
-
-      return messages[messageId] || defaultMessage || messageId;
+    getIntlManager() {
+      if (!gasket.config.intl.manager) {
+        throw new Error('IntlManager not configured (gasket.config.intl.manager)');
+      }
+      return gasket.config.intl.manager;
     }
   };
 };
