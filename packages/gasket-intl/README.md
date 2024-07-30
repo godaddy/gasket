@@ -1,7 +1,6 @@
 # @gasket/intl
 
-Internal helper package used by loaders to resolve locale file paths based on
-settings provided by [@gasket/plugin-intl].
+Provides internationalization managers for translation files and locale handling.
 
 ## Installation
 

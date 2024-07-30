@@ -1,7 +1,7 @@
 {
   "name": "@gasket/intl",
   "version": "7.0.0-next.44",
-  "description": "Internal helpers used by loaders to resolve locale file paths",
+  "description": "Internationalization managers for translation files and locale handling.",
   "type": "module",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -27,7 +27,6 @@
   },
   "keywords": [
     "gasket",
-    "helper",
     "intl"
   ],
   "author": "GoDaddy Operating Company, LLC",
@@ -38,7 +37,7 @@
   "bugs": {
     "url": "https://github.com/godaddy/gasket/issues"
   },
-  "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-helper-intl",
+  "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-intl",
   "devDependencies": {
     "@jest/globals": "^29.7.0",
     "cross-env": "^7.0.3",
