@@ -37,8 +37,7 @@ module.exports = function actions(gasket) {
       await gasket.execApply('metadata', async (data, handler) => {
         const isPreset = isGasketPreset.test(data.name);
         const isPlugin = isGasketPlugin.test(data.name);
-        const isModule = isGasketModule.test(data.name);
-        const isGasketPackage = isModule || isPlugin || isPreset;
+        const isGasketPackage = isPlugin || isPreset;
 
         if (!isGasketPackage) {
           const pluginData = await handler(data);
@@ -55,6 +54,7 @@ module.exports = function actions(gasket) {
             plugins.push(pluginData);
 
           for (const name of Object.keys({ ...dependencies, ...devDependencies })) {
+            const isModule = isGasketModule.test(name);
             if (!isModule) continue;
             const mod = require(path.join(name, 'package.json'));
             modules[name] = {
