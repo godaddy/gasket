@@ -13,16 +13,25 @@ hooks for gather user or request-specific data.
 #### New apps
 
 ```
-gasket create <app-name> --plugins @gasket/plugin-data
-```
-
-#### Existing apps
-
-```
 npm i @gasket/plugin-data
 ```
 
-Modify `plugins` section of your `gasket.js`:
+Update your `gasket` file plugin configuration:
+
+```diff
+// gasket.js
+
++ import pluginData from '@gasket/plugin-data';
+
+ export default makeGasket({
+  plugins: [
++   pluginData
+  ]
+});
+```
+
+Also, add a `gasket.data.js` file to the root of your project, import and assign
+it to the `data` property of the Gasket config.
 
 ```diff
 import { makeGasket } from '@gasket/core';
@@ -37,10 +46,8 @@ export default makeGasket({
 +    pluginData
   ],
 +  data: gasketData
-})
+});
 ```
-Also add a `gasket.data.js` file to the root of your project, import and assign
-it to the `data` property of the Gasket config.
 
 ## Configuration
 
@@ -106,7 +113,7 @@ If you need access to config values in client-side code, this can be done
 by defining a `public` property in your `gasket.data.js`.
 
 ```js
-module.exports = {
+export default {
   public: {
     test1: 'config value 1 here',
     test2: 'config value 2 here'
@@ -135,9 +142,10 @@ a new configuration object with injected modifications. This event will occur
 once during startup, and hooks may be asynchronous. Sample:
 
 ```js
-const fetchRemoteConfig = require('./remote-config');
+import fetchRemoteConfig from './remote-config.js';
 
-module.exports = {
+export default {
+  name: 'sample-plugin',
   hooks: {
     async gasketData(gasket, gasketData) {
       const remoteCfg = await fetchRemoteConfig();
@@ -161,7 +169,7 @@ gasket API, the public gasketData, and a context with the request.
 Sample:
 
 ```js
-const getFeatureFlags = require('./feature-flags');
+import getFeatureFlags from './feature-flags.js';
 
 export default {
   name: 'gasket-plugin-example',

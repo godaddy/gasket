@@ -69,7 +69,7 @@ async function promptSitemap(context, prompt) {
 }
 
 /** @type {import('@gasket/core').HookHandler<'prompt'>} */
-async function prompt(gasket, context, { prompt }) {
+async function promptAll(gasket, context, { prompt }) {
   await promptAppRouter(context, prompt);
   await promptNextServerType(context, prompt);
   await promptNextDevProxy(context, prompt);
@@ -79,7 +79,7 @@ async function prompt(gasket, context, { prompt }) {
 }
 
 module.exports = {
-  prompt,
+  prompt: promptAll,
   promptAppRouter,
   promptNextServerType,
   promptNextDevProxy,

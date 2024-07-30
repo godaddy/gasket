@@ -4,46 +4,40 @@ Adds Webpack support to your application.
 
 ## Installation
 
-#### New apps
-
 ```
-gasket create <app-name> --plugins @gasket/plugin-webpack
+npm i @gasket/plugin-webpack
 ```
 
-#### Existing apps
-
-```
-npm i @gasket/plugin-webpack webpack
-```
-
-Modify `plugins` section of your `gasket.config.js`:
+Update your `gasket` file plugin configuration:
 
 ```diff
-module.exports = {
-  plugins: {
-    add: [
-+      '@gasket/plugin-webpack'
-    ]
-  }
-}
+// gasket.js
+
++ import pluginWebpack from '@gasket/plugin-webpack';
+
+export default makeGasket({
+  plugins: [
++   pluginWebpack
+  ]
+});
 ```
 
 ## Configuration
 
-The Webpack plugin is configured using the `gasket.config.js` file.
+The Webpack plugin is configured using the `gasket.js` file.
 
-First, add it to the `plugins` section of your `gasket.config.js`:
+First, add it to the `plugins` section of your `gasket.js`:
 
 ```js
-module.exports = {
+export default makeGasket({
   plugins: {
-    add: ['@gasket/plugin-webpack']
+    pluginWebpack
   }
-}
+});
 ```
 
 If your app was previously using the `webpack` property in the
-`gasket.config.js`, then you should take steps [migrating to webpackConfig]
+`gasket.js`, then you should take steps [migrating to webpackConfig]
 lifecycle.  
 
 ## API
@@ -56,7 +50,7 @@ plugins that need to gather Webpack configuration.
 Use this to initialize the Webpack lifecycles in a consuming plugin.
 
 ```js
-const { initWebpack } = require('@gasket/plugin-webpack');
+import { initWebpack } from '@gasket/plugin-webpack';
 
 /**
 * Creates the webpack config
@@ -92,21 +86,26 @@ instead of using the instance on context which will be removed in a future
 version.
 
 ```js
-const webpackMerge = require('webpack-merge');
+import webpackMerge from 'webpack-merge';
 
-function webpackConfigHook( gasket, config, context) {
-  const { isServer, webpack } = context;
+export default {
+  name: 'sample-plugin',
+  hookes: {
+    webpackConfig: function webpackConfigHook( gasket, config, context) {
+    const { isServer, webpack } = context;
   
-  return isServer
-    ? config
-    : webpackMerge.merge(config, {
-      plugins: [
-        new webpack.DefinePlugin({
-          MEANING_OF_LIFE: 42
-        })
-      ]
-    });
-}
+    return isServer
+      ? config
+      : webpackMerge.merge(config, {
+        plugins: [
+          new webpack.DefinePlugin({
+            MEANING_OF_LIFE: 42
+          })
+        ]
+      });
+    }
+  }
+};
 ```
 
 ### webpackChain
@@ -133,7 +132,7 @@ first argument. It can be used to add additional configurations to Webpack.
 
 ### From Gasket config
 
-If your app previously added Webpack configuration in the `gasket.config.js`,
+If your app previously added Webpack configuration in the `gasket.js`,
 this feature is deprecated and you should migrate to using
 the [`webpackConfig`](#webpackConfig) lifecycle.
 
@@ -141,35 +140,40 @@ For background, the `webpack` config is merged using an old deprecated "smart"
 method from [webpack-merge]. It is now recommended for apps and plugins to
 handle any merge strategies themselves in the `webpackConfig` lifecycle.
 
-So move from this setting `webpack` in the `gasket.config`:
+So move from this setting `webpack` in the `gasket.js`:
 
 ```diff
-// gasket.config.js
-module.exports = {
+// gasket.js
+export default makeGasket({
   plugins: {
-    add: ['@gasket/plugin-webpack']
+    pluginWebpack
   },
 -  webpack: {
 -    performance: {
 -      maxAssetSize: 20000
 -    }
 -  }
-};
+});
 ```
 
 to using the webpackConfig lifecycle to merge any custom Webpack config:
 
 ```javascript
-// lifecycles/webpack-config.js
-const webpackMerge = require('webpack-merge');
+// sample-plugin.js
+import webpackMerge from 'webpack-merge';
 
-module.exports = function (gasket, webpackConfig, context) {
-  return webpackMerge.merge(webpackConfig, {
-    performance: {
-      maxAssetSize: 20000
+export default {
+  name: 'sample-plugin',
+  hooks: {
+    webpackConfig: function (gasket, webpackConfig, context) {
+      return webpackMerge.merge(webpackConfig, {
+        performance: {
+          maxAssetSize: 20000
+        }
+      })
     }
-  })
-}
+  }
+};
 ```
 
 This gives apps the freedom to use whatever [merge strategies] makes sense

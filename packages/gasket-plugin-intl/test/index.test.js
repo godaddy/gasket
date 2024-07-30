@@ -19,14 +19,9 @@ describe('Plugin', function () {
       'build',
       'configure',
       'create',
-      'express',
-      'fastify',
       'init',
       'metadata',
-      'middleware',
-      'serviceWorkerCacheKey',
-      'webpackConfig',
-      'workbox'
+      'serviceWorkerCacheKey'
     ];
 
     expect(plugin).toHaveProperty('hooks');

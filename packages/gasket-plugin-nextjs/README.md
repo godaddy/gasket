@@ -4,31 +4,22 @@ This plugin adds Next.js to your application.
 
 ## Installation
 
-#### New apps
-
-**_Recommended_**
-
 ```
-gasket create <app-name> --plugins @gasket/plugin-nextjs
+npm i @gasket/plugin-nextjs
 ```
 
-#### Existing apps
-
-```
-npm i @gasket/plugin-nextjs next react react-dom
-```
-
-Modify `plugins` section of your `gasket.config.js`:
+Update your `gasket` file plugin configuration:
 
 ```diff
-// gasket.config.js
-module.exports = {
-  plugins: {
-    add: [
-+      '@gasket/plugin-nextjs'
-    ]
-  }
-}
+// gasket.js
+
++ import pluginNextjs from '@gasket/plugin-nextjs';
+
+export default makeGasket({
+  plugins: [
++   pluginNextjs
+  ]
+});
 ```
 
 ## Adding a Sitemap
@@ -53,33 +44,33 @@ Gasket [webpack plugin].
 #### Example configuration
 
 ```js
-module.exports = {
-  plugins: {
-    add: ['@gasket/nextjs']
-  },
+export default makeGasket({
+  plugins: [
+    pluginNextjs
+  ]
   nextConfig: {
     poweredByHeader: false,
     useFileSystemPublicRoutes: false
   }
-};
+});
 ```
 
 #### Example with plugins
 
 ```js
-const withSass = require('@zeit/next-sass');
-const withCss = require('@zeit/next-css');
+import withSass from '@zeit/next-sass';
+import withCss from '@zeit/next-css';
 
-module.exports = {
-  plugins: {
-    add: ['nextjs']
-  },
+export default makeGasket({
+  plugins: [
+    pluginNextjs
+  ]
   nextConfig: withCss(
     withSass({
       /* config options here */
     })
   )
-};
+});
 ```
 
 ### Internationalized Routing
@@ -91,8 +82,8 @@ used by the Gasket Intl plugin, and also passed along with the Next config for
 i18n routing.
 
 ```diff
-// gasket.config.js
-module.exports = {
+// gasket.js
+export default makeGasket({
   intl: {
 +    defaultLocale: 'en-US',
 +    locales: ['en-US', 'fr', 'nl-NL']
@@ -117,7 +108,7 @@ module.exports = {
     ],
     }
   }
-}
+});
 ```
 
 Also note when using [@gasket/plugin-intl] to determine the locale, that the
@@ -132,7 +123,8 @@ Executed when the `next` server has been created. It will receive a reference to
 the created `next` instance.
 
 ```js
-module.exports = {
+export default {
+  name: 'sample-plugin',
   hooks: {
     /**
      * Modify the Next app instance
@@ -153,7 +145,8 @@ to the `next` config. This will allow you to modify the `next` config before the
 `next` server is created.
 
 ```js
-module.exports = {
+export default {
+  name: 'sample-plugin',
   hooks: {
     /**
      * Modify the Next config
@@ -177,7 +170,8 @@ Provides access to both `next` and `express` instances which allows
 `next.render` calls in express-based routes.
 
 ```js
-module.exports = {
+export default {
+  name: 'sample-plugin',
   hooks: {
     nextExpress: function (gasket, { next, express }) {
       express.post('/contact-form', (req, res) => {
@@ -198,7 +192,8 @@ Provides access to both `next` and `fastify` instances which allows
 `next.render` calls in express-based routes.
 
 ```js
-module.exports = {
+export default {
+  name: 'sample-plugin',
   hooks: {
     nextFastify: function (gasket, { next, fastify }) {
       fastify.post('/contact-form', (req, res) => {
@@ -218,17 +213,18 @@ module.exports = {
 Enables execution of custom logic just prior to an HTTP request being handed to next.js for processing. Hooks receive the request, response, and next server (not to be confused with the next function used by express-like middleware):
 
 ```js
-module.exports = {
-    hooks: {
-        async nextPreHandling(gasket, {
-            req,
-            res,
-            nextServer
-        }) {
-            await doPreRenderingLogic(req, res);
-        }
-    }
-}
+export default {
+  name: 'sample-plugin',
+  hooks: {
+      async nextPreHandling(gasket, {
+          req,
+          res,
+          nextServer
+      }) {
+          await doPreRenderingLogic(req, res);
+      }
+  }
+};
 ```
 
 ## Utilities

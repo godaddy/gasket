@@ -5,7 +5,7 @@ Framework for building Next.js apps using Gasket.
 ## Installation
 
 ```
-gasket create <app-name> --presets @gasket/preset-nextjs
+npx create-gasket-app <app-name> --presets @gasket/preset-nextjs
 ```
 
 ## Plugins
