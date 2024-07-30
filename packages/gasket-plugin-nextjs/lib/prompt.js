@@ -14,7 +14,7 @@ async function promptAppRouter(context, prompt) {
 
   const ctx = useAppRouter ? { useAppRouter, nextServerType: 'defaultServer' } : { useAppRouter };
   Object.assign(context, ctx);
-};
+}
 
 /** @type {import('./index').promptNextServerType} */
 async function promptNextServerType(context, prompt) {
@@ -34,7 +34,7 @@ async function promptNextServerType(context, prompt) {
   ]);
 
   Object.assign(context, { nextServerType });
-};
+}
 
 /** @type {import('./index').promptNextDevProxy} */
 async function promptNextDevProxy(context, prompt) {
@@ -51,7 +51,7 @@ async function promptNextDevProxy(context, prompt) {
   ]);
 
   Object.assign(context, { nextDevProxy });
-};
+}
 
 /** @type {import('./index').promptSitemap} */
 async function promptSitemap(context, prompt) {
@@ -66,20 +66,20 @@ async function promptSitemap(context, prompt) {
   ]);
 
   Object.assign(context, { addSitemap });
-};
+}
 
 /** @type {import('@gasket/core').HookHandler<'prompt'>} */
-async function prompt(gasket, context, { prompt }) {
+async function promptAll(gasket, context, { prompt }) {
   await promptAppRouter(context, prompt);
   await promptNextServerType(context, prompt);
   await promptNextDevProxy(context, prompt);
   await promptSitemap(context, prompt);
 
   return context;
-};
+}
 
 module.exports = {
-  prompt,
+  prompt: promptAll,
   promptAppRouter,
   promptNextServerType,
   promptNextDevProxy,
