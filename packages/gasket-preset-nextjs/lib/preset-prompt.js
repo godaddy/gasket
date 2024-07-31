@@ -10,7 +10,6 @@ import typescriptPrompts from '@gasket/plugin-typescript/prompts';
  */
 export default async function presetPrompt(gasket, context, { prompt }) {
   await typescriptPrompts.promptTypescript(context, prompt);
-  await nextJsPrompts.promptAppRouter(context, prompt);
   await nextJsPrompts.promptNextServerType(context, prompt);
   await nextJsPrompts.promptNextDevProxy(context, prompt);
 
@@ -18,7 +17,7 @@ export default async function presetPrompt(gasket, context, { prompt }) {
     const { server } = await prompt([
       {
         name: 'server',
-        message: 'Which server framework would you like to use?',
+        message: 'Which custom server framework would you like to use?',
         type: 'list',
         choices: [
           { name: 'Express', value: 'express' },
