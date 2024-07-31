@@ -1,8 +1,11 @@
 /* eslint-disable no-process-env */
-require('dotenv').config();
+import dotenv from 'dotenv';
+import apm from 'elastic-apm-node';
+
+dotenv.config();
 
 // Elastic APM setup
-require('elastic-apm-node').start({
+apm.start({
   serviceName: 'my-service-name',
   captureHeaders: false,
   secretToken: process.env.ELASTIC_APM_SECRET_TOKEN,

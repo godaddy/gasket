@@ -1,3 +1,4 @@
+// @ts-nocheck - handled by other PR
 /// <reference types="@gasket/plugin-elastic-apm" />
 
 const debug = require('debug')('gasket:plugin:intl:apmTransaction');
