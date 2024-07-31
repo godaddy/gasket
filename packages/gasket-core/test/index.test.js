@@ -75,6 +75,19 @@ describe('makeGasket', () => {
     expect(gasket).toBeInstanceOf(GasketEngine);
   });
 
+  it('defaults env to local', () => {
+    const gasket = makeGasket({ plugins: [mockPlugin] });
+    expect(gasket.config.env).toEqual('local');
+    expect(console.warn).toHaveBeenCalledWith('No GASKET_ENV env variable set; defaulting to "local".');
+  });
+
+  it('sets env GASKET_ENV', () => {
+    process.env.GASKET_ENV = 'production';
+    const gasket = makeGasket({ plugins: [mockPlugin] });
+    expect(gasket.config.env).toEqual('production');
+    expect(console.warn).not.toHaveBeenCalled();
+  });
+
   it('prunes nullish and/or empty plugins', () => {
     const nullishPlugin = null;
     const emptyPlugin = {};
@@ -208,8 +221,8 @@ describe('makeGasket', () => {
       const gasket = makeGasket(inputConfig);
       const { doSomething, doAnotherThing } = gasket.actions;
 
-      expect(doSomething()).toEqual('the environment is test');
-      expect(doAnotherThing()).toEqual('the environment is test');
+      expect(doSomething()).toEqual('the environment is local');
+      expect(doAnotherThing()).toEqual('the environment is local');
     });
 
     it('warns on duplicate action names', () => {
