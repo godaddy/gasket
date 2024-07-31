@@ -28,6 +28,11 @@ module.exports = function initWebpack(gasket, initConfig, context) {
     ].filter(Boolean)
   };
 
+  baseConfig.resolve ??= {};
+  baseConfig.resolve.alias ??= {};
+  // @ts-ignore -- ensure webpack does not bundle itself
+  baseConfig.resolve.alias.webpack = false;
+
   // eslint-disable-next-line no-sync
   return gasket.execWaterfallSync('webpackConfig', baseConfig, setupContext(context));
 };

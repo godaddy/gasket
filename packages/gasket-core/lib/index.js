@@ -77,6 +77,11 @@ class Gasket extends GasketEngine {
     config.env = env;
     config.root ??= process.cwd();
 
+    // prune nullish and/or empty plugins
+    config.plugins = config.plugins
+      .filter(Boolean)
+      .filter(plugin => Boolean(plugin.name) || Boolean(plugin.hooks));
+
     // start the engine
     super(config.plugins);
 
