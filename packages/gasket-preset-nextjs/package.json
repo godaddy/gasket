@@ -1,6 +1,6 @@
 {
   "name": "@gasket/preset-nextjs",
-  "version": "7.0.0-next.44",
+  "version": "7.0.0-next.45",
   "description": "Basic NextJS Framework",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -29,20 +29,20 @@
     "url": "https://github.com/godaddy/gasket/issues"
   },
   "dependencies": {
-    "@gasket/plugin-cypress": "^7.0.0-next.44",
-    "@gasket/plugin-express": "^7.0.0-next.44",
-    "@gasket/plugin-fastify": "^7.0.0-next.44",
-    "@gasket/plugin-https": "^7.0.0-next.44",
-    "@gasket/plugin-intl": "^7.0.0-next.44",
-    "@gasket/plugin-jest": "^7.0.0-next.44",
-    "@gasket/plugin-lint": "^7.0.0-next.44",
-    "@gasket/plugin-mocha": "^7.0.0-next.44",
-    "@gasket/plugin-nextjs": "^7.0.0-next.44",
-    "@gasket/plugin-redux": "^7.0.0-next.44",
-    "@gasket/plugin-typescript": "^7.0.0-next.44",
-    "@gasket/plugin-webpack": "^7.0.0-next.44",
-    "@gasket/plugin-winston": "^7.0.0-next.44",
-    "@gasket/utils": "^7.0.0-next.44"
+    "@gasket/plugin-cypress": "^7.0.0-next.45",
+    "@gasket/plugin-express": "^7.0.0-next.45",
+    "@gasket/plugin-fastify": "^7.0.0-next.45",
+    "@gasket/plugin-https": "^7.0.0-next.45",
+    "@gasket/plugin-intl": "^7.0.0-next.45",
+    "@gasket/plugin-jest": "^7.0.0-next.45",
+    "@gasket/plugin-lint": "^7.0.0-next.45",
+    "@gasket/plugin-mocha": "^7.0.0-next.45",
+    "@gasket/plugin-nextjs": "^7.0.0-next.45",
+    "@gasket/plugin-redux": "^7.0.0-next.45",
+    "@gasket/plugin-typescript": "^7.0.0-next.45",
+    "@gasket/plugin-webpack": "^7.0.0-next.45",
+    "@gasket/plugin-winston": "^7.0.0-next.45",
+    "@gasket/utils": "^7.0.0-next.45"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
