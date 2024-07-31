@@ -32,6 +32,14 @@ describe('init webpack', function () {
     expect(results.plugins[0].constructor.name).toBe('WebpackMetricsPlugin');
   });
 
+  it('aliases out webpack', function () {
+    const results = initWebpack(mockGasket, mockConfig, mockContext);
+    expect(results).toHaveProperty('resolve.alias');
+    expect(results.resolve.alias).toEqual({
+      webpack: false
+    });
+  });
+
   it('executes webpackConfig lifecycle', function () {
     initWebpack(mockGasket, mockConfig, mockContext);
     expect(mockGasket.execWaterfallSync).toHaveBeenCalledWith(
