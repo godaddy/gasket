@@ -1,5 +1,6 @@
 import pluginHttps from '@gasket/plugin-https';
 import pluginNext from '@gasket/plugin-nextjs';
+import pluginIntl from '@gasket/plugin-intl';
 import pluginRedux from '@gasket/plugin-redux';
 import pluginWebpack from '@gasket/plugin-webpack';
 import pluginWinston from '@gasket/plugin-winston';
@@ -33,6 +34,7 @@ export default async function presetConfig(gasket, context) {
       pluginWebpack,
       pluginHttps,
       pluginNext,
+      pluginIntl,
       pluginRedux,
       pluginWinston,
       frameworkPlugin.default || frameworkPlugin,

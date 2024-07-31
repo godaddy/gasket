@@ -8,12 +8,14 @@ describe('create', function () {
   let pkgAddStub;
   let filesAddStub;
   let addPluginStub;
+  let addStub;
 
   beforeEach(function () {
     pkgHasStub = jest.fn().mockReturnValue(true);
     pkgAddStub = jest.fn();
     filesAddStub = jest.fn();
     addPluginStub = jest.fn();
+    addStub = jest.fn();
 
     mockContext = {
       pkg: {
@@ -24,7 +26,8 @@ describe('create', function () {
         add: filesAddStub
       },
       gasketConfig: {
-        addPlugin: addPluginStub
+        addPlugin: addPluginStub,
+        add: addStub
       }
     };
   });
@@ -57,6 +60,7 @@ describe('create', function () {
       [name]: devDependencies['@gasket/react-intl']
     }]);
     expect(pkgAddStub.mock.calls[2]).toEqual(['dependencies', {
+      '@gasket/helper-intl': devDependencies['@gasket/helper-intl'],
       '@gasket/react-intl': devDependencies['@gasket/react-intl'],
       'react-intl': devDependencies['react-intl']
     }]);
@@ -67,5 +71,20 @@ describe('create', function () {
     expect(pkgAddStub).toHaveBeenCalledWith('scripts', {
       prebuild: 'node gasket.js build'
     });
+  });
+
+  it('adds the default intl.locales config', async function () {
+    await plugin.hooks.create({}, mockContext);
+    expect(addStub).toHaveBeenCalledWith('intl', {
+      locales: ['en-US']
+    });
+  });
+
+  it('does nothing if hasGasketIntl is false', async function () {
+    mockContext.hasGasketIntl = false;
+    await plugin.hooks.create({}, mockContext);
+    expect(pkgAddStub).not.toHaveBeenCalled();
+    expect(filesAddStub).not.toHaveBeenCalled();
+    expect(addStub).not.toHaveBeenCalled();
   });
 });
