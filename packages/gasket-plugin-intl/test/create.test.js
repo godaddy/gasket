@@ -79,4 +79,12 @@ describe('create', function () {
       locales: ['en-US']
     });
   });
+
+  it('does nothing if hasGasketIntl is false', async function () {
+    mockContext.hasGasketIntl = false;
+    await plugin.hooks.create({}, mockContext);
+    expect(pkgAddStub).not.toHaveBeenCalled();
+    expect(filesAddStub).not.toHaveBeenCalled();
+    expect(addStub).not.toHaveBeenCalled();
+  });
 });
