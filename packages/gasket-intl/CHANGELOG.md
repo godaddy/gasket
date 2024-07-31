@@ -1,4 +1,4 @@
-# `@gasket/helper-intl`
+# `@gasket/intl`
 
 ### 6.46.4
 

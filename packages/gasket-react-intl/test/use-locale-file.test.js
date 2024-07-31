@@ -1,5 +1,5 @@
 import { jest } from '@jest/globals';
-import { LocaleFileStatus } from '@gasket/helper-intl';
+import { LocaleFileStatus } from '@gasket/intl';
 
 const mockContext = {
   getStatus: jest.fn(),

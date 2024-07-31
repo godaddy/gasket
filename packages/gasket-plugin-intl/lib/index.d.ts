@@ -1,7 +1,7 @@
 import type { MaybeAsync, GasketRequest } from '@gasket/core';
 import type { IncomingMessage } from 'http';
-import { IntlManager } from '@gasket/helper-intl';
-import { LocaleManifestConfig } from '@gasket/helper-intl';
+import { IntlManager } from '@gasket/intl';
+import { LocaleManifestConfig } from '@gasket/intl';
 
 interface CustomScanSettings {
   /** Lookup dir for module files (default: `locales`) */

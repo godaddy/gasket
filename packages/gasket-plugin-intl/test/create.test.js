@@ -60,7 +60,7 @@ describe('create', function () {
       [name]: devDependencies['@gasket/react-intl']
     }]);
     expect(pkgAddStub.mock.calls[2]).toEqual(['dependencies', {
-      '@gasket/helper-intl': devDependencies['@gasket/helper-intl'],
+      '@gasket/intl': devDependencies['@gasket/intl'],
       '@gasket/react-intl': devDependencies['@gasket/react-intl'],
       'react-intl': devDependencies['react-intl']
     }]);
