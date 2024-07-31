@@ -1,4 +1,4 @@
-import { LocaleFileStatus } from '@gasket/helper-intl';
+import { LocaleFileStatus } from '@gasket/intl';
 
 /** @type {import('./types').ensureArray} */
 export function ensureArray(value) {

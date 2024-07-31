@@ -10,7 +10,7 @@ import {
   LocaleFileStatus,
   IntlManager,
   Messages
-} from '@gasket/helper-intl';
+} from '@gasket/intl';
 
 export { LocaleFileStatus };
 

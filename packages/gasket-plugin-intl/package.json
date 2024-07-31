@@ -49,7 +49,7 @@
   },
   "devDependencies": {
     "@gasket/core": "^7.0.0-next.44",
-    "@gasket/helper-intl": "^7.0.0-next.44",
+    "@gasket/intl": "^7.0.0-next.44",
     "@gasket/react-intl": "^7.0.0-next.44",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
