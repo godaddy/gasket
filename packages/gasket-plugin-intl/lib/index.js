@@ -10,6 +10,7 @@ const apmTransaction = require('./apm-transaction');
 
 const { getIntlConfig } = require('./configure');
 const create = require('./create');
+const prompt = require('./prompt');
 const build = require('./build');
 
 /** @type {import('@gasket/core').Plugin} */
@@ -22,6 +23,7 @@ const plugin = {
     init,
     configure,
     create,
+    prompt,
     build,
     apmTransaction,
     serviceWorkerCacheKey,
