@@ -28,6 +28,9 @@ module.exports = function initWebpack(gasket, initConfig, context) {
     ].filter(Boolean)
   };
 
+  baseConfig.resolve ??= {};
+  baseConfig.resolve.alias ??= {};
+
   // eslint-disable-next-line no-sync
   return gasket.execWaterfallSync('webpackConfig', baseConfig, setupContext(context));
 };
