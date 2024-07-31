@@ -27,6 +27,7 @@ describe('Plugin', function () {
     const expected = [
       'create',
       'actions',
+      'webpackConfig',
       'metadata'
     ];
 

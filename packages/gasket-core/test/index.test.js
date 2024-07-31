@@ -75,6 +75,35 @@ describe('makeGasket', () => {
     expect(gasket).toBeInstanceOf(GasketEngine);
   });
 
+  it('prunes nullish and/or empty plugins', () => {
+    const nullishPlugin = null;
+    const emptyPlugin = {};
+    const dummyPlugin = { name: 'dummy', hooks: {} };
+
+    const initConfig = {
+      plugins: [mockPlugin, nullishPlugin, emptyPlugin, dummyPlugin]
+    };
+
+    const gasket = makeGasket(initConfig);
+
+    expect(gasket.config.plugins).toHaveLength(2);
+    expect(gasket.config.plugins[0]).toHaveProperty('name', 'mockPlugin');
+    expect(gasket.config.plugins[1]).toHaveProperty('name', 'dummy');
+  });
+
+  it('does not otherwise prune faulty plugins', () => {
+    const nullishPlugin = null;
+    const emptyPlugin = {};
+    const dummyPlugin = { name: 'dummy', hooks: {} };
+    const faultyPlugin = { name: 'faulty' };
+
+    const initConfig = {
+      plugins: [mockPlugin, nullishPlugin, emptyPlugin, dummyPlugin, faultyPlugin]
+    };
+
+    expect(() => makeGasket(initConfig)).toThrow(/must have a hooks/);
+  });
+
   describe('config lifecycle', () => {
 
     it('applies env overrides', () => {
