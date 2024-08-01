@@ -43,8 +43,8 @@ const depVersions = {
 
   'babel-eslint': '^10.1.0',
   'eslint': '^8.56.0',
-  'eslint-config-godaddy': '^7.1.0',
-  'eslint-config-godaddy-react': '^9.0.1',
+  'eslint-config-godaddy': '^7.1.1',
+  'eslint-config-godaddy-react': '^9.1.0',
   'eslint-plugin-json': '^3.1.0',
   'eslint-plugin-jest': '^27.6.3',
   'eslint-plugin-mocha': '^10.2.0',

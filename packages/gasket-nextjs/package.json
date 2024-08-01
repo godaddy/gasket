@@ -64,7 +64,7 @@
     "@testing-library/react": "^13.4.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
-    "eslint-config-godaddy-react": "^9.0.1",
+    "eslint-config-godaddy-react": "^9.1.0",
     "eslint-plugin-jest": "^27.6.3",
     "eslint-plugin-json": "^3.1.0",
     "eslint-plugin-jsx-a11y": "^6.8.0",
