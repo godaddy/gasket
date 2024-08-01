@@ -19,6 +19,7 @@ describe('Plugin', function () {
       'build',
       'configure',
       'create',
+      'prompt',
       'init',
       'metadata',
       'serviceWorkerCacheKey'

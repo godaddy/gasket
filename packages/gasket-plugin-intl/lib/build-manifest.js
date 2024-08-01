@@ -67,7 +67,7 @@ module.exports = async function buildManifest(gasket) {
   manifestStr = manifestStr.replace(/"/g, `'`);
 
   const content = `/* -- GENERATED FILE - DO NOT EDIT -- */
-import { makeIntlManager } from '@gasket/helper-intl';
+import { makeIntlManager } from '@gasket/intl';
 
 const manifest = ${manifestStr};
 

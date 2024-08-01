@@ -1,5 +1,6 @@
 import pluginHttps from '@gasket/plugin-https';
 import pluginNext from '@gasket/plugin-nextjs';
+import pluginIntl from '@gasket/plugin-intl';
 import pluginRedux from '@gasket/plugin-redux';
 import pluginWebpack from '@gasket/plugin-webpack';
 import pluginWinston from '@gasket/plugin-winston';
@@ -12,32 +13,38 @@ import pluginWinston from '@gasket/plugin-winston';
  */
 export default async function presetConfig(gasket, context) {
   let typescriptPlugin;
-  const testPlugins = [];
-  const frameworkPlugin = context.server === 'express'
-    ? await import('@gasket/plugin-express')
-    : await import('@gasket/plugin-fastify');
+
+  const plugins = [
+    pluginHttps,
+    pluginNext,
+    pluginIntl,
+    pluginWebpack,
+    pluginRedux,
+    pluginWinston
+  ];
+
+  if ('server' in context) {
+    const frameworkPlugin = context.server === 'express'
+      ? await import('@gasket/plugin-express')
+      : await import('@gasket/plugin-fastify');
+
+    plugins.push(frameworkPlugin.default || frameworkPlugin);
+  }
 
   if ('testPlugins' in context && context.testPlugins.length > 0) {
     await Promise.all(context.testPlugins.map(async (testPlugin) => {
       const plugin = await import(testPlugin);
-      testPlugins.push(plugin ? plugin.default || plugin : null);
+      plugins.push(plugin ? plugin.default || plugin : null);
     }));
   }
 
   if (context.typescript) {
     typescriptPlugin = await import('@gasket/plugin-typescript');
+
+    plugins.push(typescriptPlugin.default || typescriptPlugin);
   }
 
   return {
-    plugins: [
-      pluginWebpack,
-      pluginHttps,
-      pluginNext,
-      pluginRedux,
-      pluginWinston,
-      frameworkPlugin.default || frameworkPlugin,
-      typescriptPlugin ? typescriptPlugin.default || typescriptPlugin : null,
-      ...testPlugins
-    ].filter(Boolean)
+    plugins: plugins.filter(Boolean)
   };
 }

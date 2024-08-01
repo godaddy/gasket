@@ -116,7 +116,7 @@ describe('buildManifest', function () {
   it('includes makeIntlManager setup', async () => {
     await buildManifest(mockGasket);
     const output = getOutput();
-    expect(output).toContain(`import { makeIntlManager } from '@gasket/helper-intl';`);
+    expect(output).toContain(`import { makeIntlManager } from '@gasket/intl';`);
     expect(output).toContain(`export default makeIntlManager(manifest);`);
   });
 

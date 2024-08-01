@@ -1,7 +1,7 @@
 import { jest } from '@jest/globals';
 import React, { createElement } from 'react';
 import { render } from '@testing-library/react';
-import { LocaleFileStatus } from '@gasket/helper-intl';
+import { LocaleFileStatus } from '@gasket/intl';
 
 const useLocaleFile = jest.fn();
 

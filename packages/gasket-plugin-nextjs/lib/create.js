@@ -49,7 +49,7 @@ function createNextFiles({ files, generatorDir, nextDevProxy, typescript, nextSe
   let glob;
   if (
     typescript ||
-    (!nextDevProxy && nextServerType === 'defaultServer')
+    (!nextDevProxy && nextServerType !== 'customServer')
   ) glob = `${generatorDir}/next/*[!server].js`;
   else glob = `${generatorDir}/next/*`;
   files.add(glob);
@@ -71,7 +71,6 @@ function configureSitemap({ files, pkg, generatorDir }) {
     sitemap: 'next-sitemap'
   });
 }
-
 
 /**
  * addDependencies
@@ -118,24 +117,22 @@ function addRedux({ files, pkg, generatorDir }) {
 function addNpmScripts({ pkg, nextServerType, nextDevProxy, typescript }) {
   const fileExtension = typescript ? 'ts' : 'js';
   const scripts = {
-    defaultServer: {
-      build: 'next build',
-      start: 'next start',
-      local: `next dev${nextDevProxy ? ` & nodemon server.${fileExtension}` : ''}`
-    },
-    customServer: {
-      'build': 'next build',
-      'start': `next build && node server.${fileExtension}`,
-      'start:local': `next build && GASKET_ENV=local node server.${fileExtension}`,
-      'local': `GASKET_DEV=1 GASKET_ENV=local nodemon server.${fileExtension}`
-    }
+    build: 'next build',
+    start: 'next start',
+    local: 'next dev',
+    preview: 'npm run build && npm run start'
   };
 
-  if (nextDevProxy && nextServerType === 'defaultServer') {
-    scripts.defaultServer['start:local'] = `next start & GASKET_ENV=local node server.${fileExtension}`;
+  if (nextServerType === 'customServer') {
+    scripts.start = `node server.${fileExtension}`;
+    scripts.local = `GASKET_DEV=1 nodemon server.${fileExtension}`;
+  } else if (nextDevProxy) {
+    scripts.local = `${scripts.local} & nodemon server.${fileExtension}`;
+    scripts['start:local'] = `${scripts.start} & node server.${fileExtension}`;
+    scripts.preview = `${scripts.preview} & node server.${fileExtension}`;
   }
 
-  pkg.add('scripts', scripts[nextServerType]);
+  pkg.add('scripts', scripts);
 }
 
 function addConfig(createContext) {

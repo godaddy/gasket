@@ -1,6 +1,5 @@
 const {
   prompt,
-  promptAppRouter,
   promptNextServerType,
   promptNextDevProxy,
   promptSitemap
@@ -28,22 +27,18 @@ describe('prompt hook', () => {
 
   it('serves the expected prompt question', async () => {
     await promptHook(gasket, context, { prompt: mockPrompt });
-    const first = mockPrompt.mock.calls[0][0][0];
-    const second = mockPrompt.mock.calls[1][0][0];
-    const third = mockPrompt.mock.calls[2][0][0];
-    const fourth = mockPrompt.mock.calls[3][0][0];
-    expect(first.name).toEqual('useAppRouter');
-    expect(first.message).toEqual('Do you want to use the App Router? (experimental)');
-    expect(first.type).toEqual('confirm');
-    expect(second.name).toEqual('nextServerType');
-    expect(second.message).toEqual('Which server type would you like to use?');
-    expect(second.type).toEqual('list');
-    expect(third.name).toEqual('nextDevProxy');
-    expect(third.message).toEqual('Do you want to add a proxy for the Next.js dev server?');
-    expect(third.type).toEqual('confirm');
-    expect(fourth.name).toEqual('addSitemap');
-    expect(fourth.message).toEqual('Do you want to add a sitemap?');
-    expect(fourth.type).toEqual('confirm');
+    const askNextServer = mockPrompt.mock.calls[0][0][0];
+    const askDevServer = mockPrompt.mock.calls[1][0][0];
+    const askSitemap = mockPrompt.mock.calls[2][0][0];
+    expect(askNextServer.name).toEqual('nextServerType');
+    expect(askNextServer.message).toEqual('Which server type would you like to use?');
+    expect(askNextServer.type).toEqual('list');
+    expect(askDevServer.name).toEqual('nextDevProxy');
+    expect(askDevServer.message).toEqual('Do you want to add a proxy for the Next.js dev server?');
+    expect(askDevServer.type).toEqual('confirm');
+    expect(askSitemap.name).toEqual('addSitemap');
+    expect(askSitemap.message).toEqual('Do you want to add a sitemap?');
+    expect(askSitemap.type).toEqual('confirm');
   });
 
   it('sets nextServerType to next-cli', async () => {
@@ -51,10 +46,10 @@ describe('prompt hook', () => {
     expect(result.nextServerType).toEqual('next-cli');
   });
 
-  it('sets nextServerType to next-custom', async () => {
-    mockAnswers = { nextServerType: 'next-custom' };
+  it('sets nextServerType to customServer', async () => {
+    mockAnswers = { nextServerType: 'customServer' };
     const result = await promptHook(gasket, context, { prompt: mockPrompt });
-    expect(result.nextServerType).toEqual('next-custom');
+    expect(result.nextServerType).toEqual('customServer');
   });
 
   it('sets addSitemap to true', async () => {
@@ -69,7 +64,7 @@ describe('prompt hook', () => {
   });
 
   it('sets useAppRouter to true', async () => {
-    mockAnswers = { useAppRouter: true };
+    mockAnswers = { nextServerType: 'appRouter' };
     const result = await promptHook(gasket, context, { prompt: mockPrompt });
     expect(result.useAppRouter).toEqual(true);
   });
@@ -85,15 +80,6 @@ describe('prompt hook', () => {
   });
 
   describe('prompt exports', () => {
-    it('promptAppRouter', async () => {
-      await promptAppRouter(context, mockPrompt);
-      expect(mockPrompt).toHaveBeenCalledWith([{
-        name: 'useAppRouter',
-        message: 'Do you want to use the App Router? (experimental)',
-        type: 'confirm',
-        default: false
-      }]);
-    });
 
     it('promptNextServerType', async () => {
       await promptNextServerType(context, mockPrompt);
@@ -103,8 +89,9 @@ describe('prompt hook', () => {
           message: 'Which server type would you like to use?',
           type: 'list',
           choices: [
-            { name: 'Next Server(CLI)', value: 'defaultServer' },
-            { name: 'Custom Next Server', value: 'customServer' }
+            { name: 'App Router', value: 'appRouter' },
+            { name: 'Page Router', value: 'pageRouter' },
+            { name: 'Page Router w/ Custom Server', value: 'customServer' }
           ]
         }
       ]);

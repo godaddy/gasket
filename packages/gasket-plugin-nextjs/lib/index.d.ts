@@ -74,7 +74,7 @@ declare module 'http' {
 declare module 'create-gasket-app' {
   export interface CreateContext {
     addSitemap?: boolean;
-    nextServerType: 'defaultServer' | 'customServer';
+    nextServerType: 'appRouter' | 'pageRouter' | 'customServer';
     nextDevProxy: boolean;
     typescript: boolean;
     useRedux: boolean;

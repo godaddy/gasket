@@ -166,38 +166,39 @@ describe('create hook', () => {
     );
   });
 
-  it('adds the appropriate npm scripts for next cli', async function () {
-    mockContext.nextServerType = 'defaultServer';
+  it('adds the appropriate npm scripts for Next.js default server', async function () {
+    mockContext.nextServerType = 'appRouter';
     await plugin.hooks.create.handler({}, mockContext);
 
     expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts', {
       build: 'next build',
       start: 'next start',
-      local: 'next dev'
+      local: 'next dev',
+      preview: 'npm run build && npm run start'
     });
   });
 
-  it('adds start:local script for next cli w/devProxy', async function () {
-    mockContext.nextServerType = 'defaultServer';
+  it('adds start:local script for Next.js default server w/devProxy', async function () {
+    mockContext.nextServerType = 'appRouter';
     mockContext.nextDevProxy = true;
     await plugin.hooks.create.handler({}, mockContext);
 
     expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts',
       expect.objectContaining({
-        'start:local': 'next start & GASKET_ENV=local node server.js'
+        'start:local': 'next start & node server.js'
       })
     );
   });
 
-  it('adds the appropriate npm scripts for next custom server', async function () {
+  it('adds the appropriate npm scripts for custom server', async function () {
     mockContext.nextServerType = 'customServer';
     await plugin.hooks.create.handler({}, mockContext);
 
     expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts', {
-      'build': 'next build',
-      'start': 'next build && node server.js',
-      'start:local': 'next build && GASKET_ENV=local node server.js',
-      'local': 'GASKET_DEV=1 GASKET_ENV=local nodemon server.js'
+      build: 'next build',
+      start: 'node server.js',
+      preview: 'npm run build && npm run start',
+      local: 'GASKET_DEV=1 nodemon server.js'
     });
   });
 });
