@@ -20,7 +20,6 @@ export function withMessagesProvider(
       // TODO (PFX-689): explore a localeFileKey callback here which
       //  would be passed to the handler allowing tuning a localeFileKey
       //  based on outside conditions such as query params.
-      // eslint-disable-next-line react/prop-types
       const { locale, ...rest } = props;
       const localeHandler = intlManager.handleLocale(locale);
 

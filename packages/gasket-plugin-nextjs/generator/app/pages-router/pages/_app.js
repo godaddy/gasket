@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 {{#if hasGasketIntl}}
 {{/if}}
 {{#if hasGasketRedux}}
@@ -33,11 +32,6 @@ function App({ Component, pageProps }) {
   {{/if}}
   );
 }
-
-App.propTypes = {
-  Component: PropTypes.elementType,
-  pageProps: PropTypes.object
-};
 
 {{#if hasGasketRedux}}
 // Make the store available to the Pages via getInitialProps

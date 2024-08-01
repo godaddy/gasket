@@ -40,7 +40,6 @@ describe('withGasketDataProvider', function () {
   it('should inject gasketData when SSR', async () => {
     const serverTestData = { test: 'hello world' };
 
-    // eslint-disable-next-line react/prop-types
     const Component = ({ children }) => createElement('div', null, children);
 
     const HocComponent = withGasketDataProvider()(Component);
@@ -54,7 +53,6 @@ describe('withGasketDataProvider', function () {
     const serverTestData = { test: 'hello world' };
     const intProps = { called: true };
 
-    // eslint-disable-next-line react/prop-types
     const Component = ({ children }) => createElement('div', null, children);
     Component.getInitialProps = async () => (intProps);
 

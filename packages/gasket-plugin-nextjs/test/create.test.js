@@ -90,7 +90,6 @@ describe('create hook', () => {
         '@gasket/assets': devDependencies['@gasket/assets'],
         '@gasket/nextjs': devDependencies['@gasket/nextjs'],
         'next': devDependencies.next,
-        'prop-types': devDependencies['prop-types'],
         'react': devDependencies.react,
         'react-dom': devDependencies['react-dom']
       }));
