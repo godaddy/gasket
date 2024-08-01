@@ -57,17 +57,7 @@ export default {
 
 You can set `create-gasket-app` context values ahead of time in your preset so that
 the associated prompts are never asked. To do so, in a preset's `preset-prompt.js`, set
-the values on the `context` object with the properties you want to define. For example,
-in the following `gasket create` prompt, 4 questions are asked at the beginning.
-
-```
-$ gasket create example --presets gasket-preset-example
-✔ Load presets
-? What is your app description?
-? Which packager would you like to use?
-? Choose your unit test suite
-? Override contents of example? (y/n) y
-```
+the values on the `context` object with the properties you want to define.
 
 You can enumerate pre-defined answers to these questions in your preset so that
 users do not have to answer these questions every time in the `preset-prompt.js`.
@@ -75,15 +65,9 @@ users do not have to answer these questions every time in the `preset-prompt.js`
 ```js
 // preset-prompt.js
 export default async function presetPrompt(gasket, context, { prompt }) {
-  context.appDescription: "In a word? .......chaos",
-  context.packageManager: "npm",
-  context.testPlugin: "none",
-  context.destOverride: false
+  context.example = "value";
 }
 ```
-
-These particular keys come from inspecting the prompts shipped internally by
-`create-gasket-app`.
 
 If you want to override further context, you can inspect any plugin with a
 `prompt` lifecycle. For example, this plugin implements a `datastore` prompt:
@@ -117,4 +101,4 @@ export default async function presetPrompt(gasket, context, { prompt }) {
 ```
 
 [babel presets]: https://babeljs.io/docs/en/presets
-[naming conventions]: /packages/gasket-resolve/README.md
+[naming conventions]: /docs/plugins.md#naming-convention

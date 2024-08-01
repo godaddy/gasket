@@ -5,7 +5,7 @@ file in the root of your application.
 
 ## Presets and Plugins
 
-To configure plugins an app, update the `plugins` array in
+To configure plugins in an app, update the `plugins` array in
 `gasket.js` with imported gasket plugin packages.
 
 ```js
@@ -109,7 +109,7 @@ export default { name, hooks };
 
 // app-code.js
 
-import { gasket } from './gasket';
+import gasket from './gasket';
 
 console.log(gasket.config);
 ```
