@@ -5,38 +5,17 @@ import { applyConfigOverrides } from '@gasket/utils';
 
 /**
  * Get the environment to use for the gasket instance.
- * Defaults to `development`.
+ * Defaults to `local`.
  * @returns {string} env
  */
-function getEnvironment(
-  // flags, commandId, warn
-) {
-  // TODO: enable if cli commands and flags are to be used with v7
-  // if (flags.env) {
-  //   debug('Environment was passed through command line flags', flags.env);
-  //   return flags.env;
-  // }
-
+function getEnvironment() {
   const { GASKET_ENV } = process.env;
   if (GASKET_ENV) {
     return GASKET_ENV;
   }
 
-  // TODO: enable if cli commands and flags are to be used with v7
-  // // special snowflake case to match up `local` env with command unless set
-  // if (commandId === 'local') {
-  //   debug('Environment defaulting to `local` due to `local` command');
-  //   return 'local';
-  // }
-
-  const { NODE_ENV } = process.env;
-  if (NODE_ENV) {
-    console.warn(`No GASKET_ENV specified, falling back to NODE_ENV: "${NODE_ENV}".`);
-    return NODE_ENV;
-  }
-
-  console.warn('No GASKET_ENV specified, falling back to "development".');
-  return 'development';
+  console.warn(`No GASKET_ENV env variable set; defaulting to "local".`);
+  return 'local';
 }
 /* eslint-enable no-console, no-process-env */
 
