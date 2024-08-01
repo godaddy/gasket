@@ -87,12 +87,13 @@ const pkgOrder = [
   'private',
   'version',
   'description',
+  'type',
+  'bin',
   'main',
   'browser',
-  'module',
-  'bin',
   'types',
   'files',
+  'exports',
   'directories',
   'scripts',
   'repository',
@@ -132,6 +133,8 @@ const scriptsOrder = [
   'test:client',
   'test:server',
   'posttest',
+  'typecheck',
+  'typecheck:watch',
   'build',
   'build:watch',
   'prepack',
@@ -360,6 +363,10 @@ async function fixupPackage(pkgPath) {
   setupTypes(pkgJson);
   checkScripts(pkgJson);
   checkMaintainers(pkgJson);
+
+  if (pkgJson.module) {
+    throw new Error('module field is deprecated. Use exports instead.');
+  }
 
   pkgJson = sortKeys(pkgJson, null, orderedSort(pkgOrder));
   pkgJson = sortKeys(pkgJson, 'scripts', orderedSort(scriptsOrder));

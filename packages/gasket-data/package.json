@@ -2,6 +2,12 @@
   "name": "@gasket/data",
   "version": "7.0.0-next.45",
   "description": "Helper package for accessing embedded Gasket Data in the browser",
+  "type": "module",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib",
+    "cjs"
+  ],
   "exports": {
     ".": {
       "import": "./lib/index.js",
@@ -10,12 +16,6 @@
     },
     "./package.json": "./package.json"
   },
-  "types": "lib/index.d.ts",
-  "type": "module",
-  "files": [
-    "lib",
-    "cjs"
-  ],
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",

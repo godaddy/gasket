@@ -2,15 +2,15 @@
   "name": "create-gasket-app",
   "version": "7.0.0-next.45",
   "description": "starter pack for creating a gasket app",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "type": "module",
   "bin": {
     "create-gasket-app": "./lib/index.js"
   },
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "files": [
     "lib"
   ],
-  "type": "module",
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",

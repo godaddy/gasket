@@ -2,6 +2,12 @@
   "name": "@gasket/core",
   "version": "7.0.0-next.45",
   "description": "Entry point to setting up Gasket instances",
+  "type": "module",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib",
+    "cjs"
+  ],
   "exports": {
     ".": {
       "import": "./lib/index.js",
@@ -10,13 +16,7 @@
     },
     "./package.json": "./package.json"
   },
-  "types": "lib/index.d.ts",
-  "files": [
-    "lib",
-    "cjs"
-  ],
   "scripts": {
-    "build": "swc lib -d cjs --delete-dir-on-start --strip-leading-paths",
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict --experimental-vm-modules' jest",
@@ -25,6 +25,7 @@
     "posttest": "npm run lint && npm run typecheck",
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch",
+    "build": "swc lib -d cjs --delete-dir-on-start --strip-leading-paths",
     "prepublishOnly": "npm run build"
   },
   "repository": {
@@ -86,6 +87,5 @@
       "no-undefined": 0,
       "no-sync": 0
     }
-  },
-  "type": "module"
+  }
 }

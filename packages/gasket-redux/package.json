@@ -15,10 +15,10 @@
     "test:watch": "jest --watchAll",
     "test:coverage": "jest --coverage",
     "posttest": "npm run lint && npm run typecheck",
-    "build": "babel src -d lib --ignore \"**/*.spec.js\" --delete-dir-on-start",
-    "prepublishOnly": "npm run build",
     "typecheck": "tsc",
-    "typecheck:watch": "tsc --watch"
+    "typecheck:watch": "tsc --watch",
+    "build": "babel src -d lib --ignore \"**/*.spec.js\" --delete-dir-on-start",
+    "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",

@@ -2,17 +2,17 @@
   "name": "@gasket/plugin-nextjs",
   "version": "7.0.0-next.45",
   "description": "Adds Next support to your application",
-  "exports": {
-    ".": "./lib/index.js",
-    "./prompts": "./lib/prompt.js",
-    "./package.json": "./package.json"
-  },
   "types": "lib/index.d.ts",
   "files": [
     "generator",
     "docs",
     "lib"
   ],
+  "exports": {
+    ".": "./lib/index.js",
+    "./prompts": "./lib/prompt.js",
+    "./package.json": "./package.json"
+  },
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",

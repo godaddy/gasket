@@ -14,7 +14,6 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "posttest": "npm run lint && npm run typecheck",
-    "report": "nyc report --reporter=lcov",
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"
   },

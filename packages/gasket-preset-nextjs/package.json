@@ -2,12 +2,12 @@
   "name": "@gasket/preset-nextjs",
   "version": "7.0.0-next.45",
   "description": "Basic NextJS Framework",
+  "type": "module",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
     "lib"
   ],
-  "type": "module",
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",

@@ -15,7 +15,6 @@
     "test:watch": "npm run test:runner -- --watch",
     "test:coverage": "npm run test:runner -- --coverage --coverageReporters text",
     "posttest": "npm run lint && npm run typecheck",
-    "report": "npm run test:runner -- --coverage --coverageReporters lcov",
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"
   },
