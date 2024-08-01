@@ -82,7 +82,6 @@ function addDependencies({ pkg }) {
     '@gasket/nextjs': devDependencies['@gasket/nextjs'],
     [name]: `^${version}`,
     'next': devDependencies.next,
-    'prop-types': devDependencies['prop-types'],
     'react': devDependencies.react,
     'react-dom': devDependencies['react-dom']
   });
