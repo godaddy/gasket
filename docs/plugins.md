@@ -1,13 +1,12 @@
 # Authoring Plugins
 
-A published plugin must be its own installable `npm` module, following the
-plugin [naming convention]. You may also create [one-off plugins] for an app.
+A published plugin must be its own installable `npm`. You may also create [one-off plugins] for an app.
 
 A plugin's main export has the following shape:
 
 ```js
 export default {
-  name: 'awesome',
+  name: 'gasket-plugin-awesome',
   dependencies: [/* list of plugin names */],
   hooks: {
     hookA(gasket) {
@@ -31,9 +30,15 @@ a prerequisite. The `hooks` map has a key for every event the plugin handles,
 with the values being either the function itself or an object specifying
 `timing` options and the `handler`.
 
-## Naming convention
+## Recommended naming convention
 
-Plugins and presets should adhere to the project-type prefixed naming convention. This formatting allows user plugins to be referenced with short names and will help avoid collisions. This convention also mimics those by other projects such a `@babel` and `@oclif`
+It is recommended that the `name` property in plugins and presets adhere to the project-type prefixed naming convention.
+
+When naming a plugin, prefix it with `gasket-plugin-` and when naming a preset, prefix it with `gasket-preset-`. This will help you easily identify the type of package you are installing.
+
+For example, if you were to create a plugin called `foo` you would name it `gasket-plugin-foo`. If you were to create a preset called `bar` you would name it `gasket-preset-bar`.
+
+If your project uses [scoped pacakges], the scope name would be added to the front of the plugin or preset name followed by a `/`. For example, if the plugin and preset names from above were included in a project with a scope of `@test` the names would be `@test/gasket-plugin-foo` and `@test/gasket-preset-bar`.
 
 ## Hooks
 
@@ -45,20 +50,21 @@ a `Promise`.
 If multiple plugins hook the same event, they'll run in parallel if async or in
 arbitrary order if synchronous. If a plugin wants to specify more specific
 sequencing, the hook should be an object with a timing property and handler
-function instead of a plain function. For example, this plugin contains an
-`init` hook that specifically runs *after* the `metadata` plugin:
+function instead of a plain function. For example, this plugin contains a
+`create` hook that specifically runs *after* the `@gasket/plugin-nextjs` plugin:
 
 ```js
 export default {
-  name: 'will-run-after-metadata',
+  name: 'will-run-after-nextjs-plugin',
   hooks: {
-    init: {
+    create: {
       timing: {
-        after: [ 'metadata' ]
+        after: ['@gasket/plugin-nextjs']
       },
-      handler: async function initHook(gasket) {
-        const { config } = gasket;
-        console.log(config.name);
+      handler: async function create(gasket, { pkg }) {
+        pkg.add('dependencies', {
+          'will-run-after-nextjs-plugin': '^1.1.1'
+        });
       }
     }
   }
@@ -97,67 +103,48 @@ functions available on a `Gasket` object [here].
 ## Testing
 
 Because Gasket plugins are just Objects of functions, it's fairly trivial to
-test them. For example, let's say we have this plugin which hooks the `start`
+test them. For example, let's say we have this plugin which hooks the `create`
 lifecycle.
 
 ```js
 export default {
-  name: 'detective',
+  name: 'gasket-plugin-example',
+  description: 'An example plugin',
+  version: '1.1.1',
   hooks: {
-    start: async function gatherClues(gasket) {
-      const { logger, exec } = gasket;
-      const clues = await Promise.all([
-        exec('motive'),
-        exec('alibi')
-      ]);
-
-      logger.info(clues);
-    },
-    motive: function () {
-      return 'That subtle off-white coloring';
-    },
-    alibi: function () {
-      return 'Was returning some video tapes';
+    create: {
+      timing: {
+        after: ['@gasket/plugin-nextjs']
+      },
+      handler: async function create(gasket, { pkg }) {
+        pkg.add('dependencies', {
+          'will-run-after-nextjs-plugin': '^1.1.1'
+        });
+      }
     }
   }
 }
 ```
 
-Here are some basic tests, assuming we're using the `mocha` test framework.
+Here are some basic tests, assuming we're using the `jest` test framework.
 
 ```js
 import plugin from '/path/to/plugin';
-import assume from 'assume';
-import { stub }  from 'sinon';
 
-describe('detective plugin', function () {
+describe('example plugin', function () {
   it('hooks the correct lifecycles', function() {
     const hooks = plugin.hooks;
-    assume(Object.keys(hooks)).equals(['init', 'motive', 'alibi']);
+    expect(Object.keys(hooks)).equals(['create']);
   });
 
-  it('provides a motive lifecycle', function () {
-    const name = plugin.hooks.motive();
-    assume(name).contains('subtle');
+  it('has the correct create hook timings', function () {
+    expect(plugin.hooks.create.timing.after).toEqual(['@gasket/plugin-nextjs']);
   });
 
-  it('executes the lifecyles for each clue', async function () {
-    const execStub = stub();
-    const logSub = stub();
-    const gasket = {
-      exec: execStub,
-      logger: {
-        info: logStub
-      }
-    };
-
-    await plugin.hooks.start(gasket);
-
-    assume(execStub.calledTwice).to.be.true();
-    assume(execStub.calledWith('motive')).to.be.true();
-    assume(execStub.calledWith('alibi')).to.be.true();
-
-    assume(logStub.calledOnce).to.be.true();
+  it('has expected properties', function () {
+    expect(plugin).toHaveProperty('name', plugin.name);
+    expect(plugin).toHaveProperty('version', plugin.version);
+    expect(plugin).toHaveProperty('description', plugin.description);
   });
 });
 ```
@@ -201,8 +188,7 @@ documentation for the `detective` plugin.
 ## One-off plugins
 
 While it is encouraged to build plugins as separate packages, the ability to
-create one-off plugins in an app is available. This gives you access to tie into lifecycles, set timings, or even
-add your own hooks.
+create one-off plugins in an app is available. This gives you access to tie into lifecycles, set timings, or even add your own hooks.
 
 These types of app-level plugins allow you to experiment quickly, before deciding
 what is best for reuse across apps. If you find yourself duplicating app-level
@@ -212,4 +198,4 @@ versioned, published, and imported to your different apps.
 [one-off plugins]:#one-off-plugins
 [here]:/packages/gasket-core/docs/gasket-engine.md
 [@gasket/plugin-docs]:/packages/gasket-plugin-docs/README.md
-[naming convention]: #naming-convention
+[scoped pacakges]: https://docs.npmjs.com/about-scopes

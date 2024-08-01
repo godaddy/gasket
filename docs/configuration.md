@@ -121,18 +121,18 @@ console.log(gasket.config);
 If a config plugin does not yet exist for your configuration platform, writing
 one is straightforward. For Gasket-level configuration, hook the `configure`
 event. Your hook will be passed a config object, and you'll return an augmented
-config object or a Promise containing one for async config.
+config object.
 
 ```js
 // theoretical.js plugin
 export default {
   name: 'theoretical',
   hooks: {
-    async configure(gasket, baseConfig) {
-      const remoteConfig = await theoreticalClient.getConfig(baseConfig.theoretical.url);
+    configure(gasket, baseConfig) {
+      const additonalConfig = addAdditionalConfig();
       return {
         ...baseConfig,
-        ...remoteConfig
+        ...additonalConfig
       };
     }
   }
