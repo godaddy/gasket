@@ -1,6 +1,5 @@
 import { jest } from '@jest/globals';
 
-const mockAppRouterPrompt = jest.fn();
 const mockNextServerTypePrompt = jest.fn();
 const mockNextDevProxyPrompt = jest.fn();
 const mockTypescriptPrompt = jest.fn();
@@ -8,10 +7,6 @@ const mockTypescriptPrompt = jest.fn();
 jest.mock('@gasket/plugin-nextjs/prompts', () => {
   const mod = jest.requireActual('@gasket/plugin-nextjs/prompts');
   return {
-    promptAppRouter: async (context, prompt) => {
-      mod.promptAppRouter(context, prompt);
-      mockAppRouterPrompt(context, prompt);
-    },
     promptNextServerType: async (context, prompt) => {
       mod.promptNextServerType(context, prompt);
       mockNextServerTypePrompt(context, prompt);
@@ -56,12 +51,6 @@ describe('presetPrompt', () => {
     expect(mockPrompt.prompt).toHaveBeenCalled();
   });
 
-  it('prompts for app router', async () => {
-    await presetPrompt({}, mockContext, mockPrompt);
-    expect(mockAppRouterPrompt).toHaveBeenCalled();
-    expect(mockPrompt.prompt).toHaveBeenCalled();
-  });
-
   it('prompts for next server type', async () => {
     await presetPrompt({}, mockContext, mockPrompt);
     expect(mockNextServerTypePrompt).toHaveBeenCalled();
@@ -80,7 +69,7 @@ describe('presetPrompt', () => {
     expect(mockPrompt.prompt).toHaveBeenCalledWith([
       {
         name: 'server',
-        message: 'Which server framework would you like to use?',
+        message: 'Which custom server framework would you like to use?',
         type: 'list',
         choices: [
           { name: 'Express', value: 'express' },
