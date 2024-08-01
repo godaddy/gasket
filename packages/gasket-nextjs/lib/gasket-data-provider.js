@@ -1,5 +1,4 @@
 import { createElement, createContext } from 'react';
-import PropTypes from 'prop-types';
 
 export const GasketDataContext = createContext({});
 
@@ -10,9 +9,4 @@ export const GasketDataContext = createContext({});
  */
 export const GasketDataProvider = ({ gasketData, children }) => {
   return createElement(GasketDataContext.Provider, { value: gasketData }, children);
-};
-
-GasketDataProvider.propTypes = {
-  gasketData: PropTypes.object,
-  children: PropTypes.node
 };

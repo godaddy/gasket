@@ -1,8 +1,8 @@
 import IndexPage from '../components/index-page';
 
 export const metadata = {
-  title: 'Home',
-  description: 'A basic gasket app',
+  title: '{{{appName}}}',
+  description: '{{{appDescription}}}',
   charset: 'UTF-8'
 };
 

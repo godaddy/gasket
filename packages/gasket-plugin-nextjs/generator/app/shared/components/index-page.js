@@ -11,7 +11,7 @@ const logoStyle = { width: '250px', height: '250px' };
 export const IndexPage = () => (
   <div style={ pageStyle }>
     {{#unless useAppRouter}}
-    <Head title='Home'/>
+    <Head title='{{{appName}}}' description='{{{appDescription}}}'/>
     {{/unless}}
     <GasketEmblem style={ logoStyle }/>
     <h1>Welcome to Gasket!</h1>
