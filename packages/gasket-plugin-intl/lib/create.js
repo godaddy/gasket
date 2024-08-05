@@ -11,7 +11,8 @@ module.exports = async function create(gasket, context) {
   const rootDir = path.join(__dirname, '..');
   const isReactProject = pkg.has('dependencies', 'react');
   const glob = context.typescript ? '*.ts' : '*.js';
-  files.add(`${rootDir}/generator/${glob}`, `${rootDir}/generator/**`);
+  console.log('hasGasketIntl')
+  files.add(`${rootDir}/generator/${glob}`, `${rootDir}/generator/**/*.json`);
 
   gasketConfig.addPlugin('pluginIntl', name);
 
