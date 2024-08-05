@@ -143,4 +143,18 @@ describe('buildManifest', function () {
       `'locales/fr-FR/grouped': () => import('./locales/fr-FR/grouped.json')`
     );
   });
+
+  it('.ts files include manifest types', async () => {
+    mockGasket.config.intl.managerFilename = 'intl.ts';
+    await buildManifest(mockGasket);
+    const expected = 'const manifest: LocaleManifest = {';
+    expect(getOutput()).toContain(expected);
+  });
+
+  it('.ts files include type imports', async () => {
+    mockGasket.config.intl.managerFilename = 'intl.ts';
+    await buildManifest(mockGasket);
+    const expected = `import type { LocaleManifest } from '@gasket/intl';`;
+    expect(getOutput()).toContain(expected);
+  });
 });

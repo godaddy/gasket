@@ -70,13 +70,20 @@ module.exports = async function buildManifest(gasket, options = {}) {
   manifestStr = manifestStr.replace(/("%|%")/g, '');
   manifestStr = manifestStr.replace(/"/g, `'`);
 
-  const content = `/* -- GENERATED FILE - DO NOT EDIT -- */
-import { makeIntlManager } from '@gasket/intl';
+  const ts = managerFilename.endsWith('.ts');
 
-const manifest = ${manifestStr};
+  const lines = [];
+  lines.push('/* -- GENERATED FILE - DO NOT EDIT -- */');
+  lines.push(`import { makeIntlManager } from '@gasket/intl';`);
+  if (ts) lines.push(`import type { LocaleManifest } from '@gasket/intl';`);
+  lines.push('');
+  if (ts) lines.push(`const manifest: LocaleManifest = ${manifestStr};`);
+  else lines.push(`const manifest = ${manifestStr};`);
+  lines.push('');
+  lines.push(`export default makeIntlManager(manifest);`);
+  lines.push('');
 
-export default makeIntlManager(manifest);
-`;
+  const content = lines.join('\n');
 
   const tgtRelative = path.relative(tgtRoot, tgtFile);
 
