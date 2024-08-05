@@ -2,40 +2,30 @@
 
 ## Background
 
-Much like [babel presets], Gasket presets allow common plugins to be grouped and
-loaded together. They serve 2 purposes: to serve as codified sets of plugins,
-and to facilitate rapid creation of Gasket application.
+Presets are used to provide configuration and prompting to facilitate app generation using `create-gasket-app`.
 
 At GoDaddy, we have presets specifically tailored with internal sets of plugins,
 making maintaining standards around authentication, style, analytics, and more
 significantly easier.
 
-See the [naming conventions] for how to best name a preset, ensuring that
-Gasket's plugin engine properly resolves it.
+See the [recommended naming conventions] for how to best name a preset.
+
+## Create a Gasket app using presets
+
+To create a new Gasket app using a preset, use the `--preset` flag with `create-gasket-app`:
+
+```sh
+npx create-gasket-app <app-name> --presets <@your/gasket-preset-example>
+```
 
 ## Composition
 
-The anatomy of a preset is very simple. In its most basic form, it should have
-an index JavaScript file, which can just export an empty object, and a
-`package.json` file with dependencies of Gasket plugins.
+The anatomy of a preset is very similar to a [plugin]. Presets take `name`, `version`, `description`, and `hooks` properties.  
 
-For example, a `package.json` file may look like:
-
-```json
-{
-  "name": "gasket-preset-snl",
-  "main": "index.js",
-  "dependencies": {
-    "plugin-television": "^1.0.0",
-    "plugin-live": "^1.0.0",
-    "plugin-comedy": "^1.0.0"
-  }
-}
-```
-
-With an `index.js` as:
+One major difference is that presets can use two preset-specific hooks: `presetPrompt` and `presetConfig`.
 
 ```js
+// my-preset/index.js
 import { createRequire } from 'module';
 import presetPrompt from './preset-prompt.js';
 import presetConfig from './preset-config.js';
@@ -53,52 +43,148 @@ export default {
 };
 ```
 
-### Predefined create context
+### presetPrompt hook
 
-You can set `create-gasket-app` context values ahead of time in your preset so that
-the associated prompts are never asked. To do so, in a preset's `preset-prompt.js`, set
-the values on the `context` object with the properties you want to define.
+The `presetPrompt` hook prompts users for any additional information not provided by the preset's plugins. It also allows you to predefine values used by plugins in the `prompt` or `create` hooks.
 
-You can enumerate pre-defined answers to these questions in your preset so that
-users do not have to answer these questions every time in the `preset-prompt.js`.
+This hook is invoked before the `presetConfig` hook and before all other plugin hooks that are included with the preset.
+
+The `presetPrompt` hook is an async function that takes three arguments: `gasket`, `context`, and `utils` object containing a `prompt` function.
 
 ```js
-// preset-prompt.js
+/**
+ * presetPrompt hook
+ * @param {Gasket} gasket - Gasket API
+ * @param {Create} context - Create context
+ * @param {Object} utils - Prompt utils
+ * @param {Function} utils.prompt - Inquirer prompt
+ */
 export default async function presetPrompt(gasket, context, { prompt }) {
-  context.example = "value";
+  // Add additonal configuration or prompts
 }
 ```
 
-If you want to override further context, you can inspect any plugin with a
-`prompt` lifecycle. For example, this plugin implements a `datastore` prompt:
+You can add values to the context object to be used by other plugins.
 
 ```js
-// datastore-plugin/prompt-lifecycle.js
-module.exports = async function promptHook(gasket, context, { prompt }) {
-  if (!('datastore' in context)) {
-    const { datastore } = await prompt([
-      {
-        name: 'datastore',
-        message: 'What is the URL for your datastore?',
-        type: 'input'
-      }]);
+// vegan-preset/prompt-preset.js
 
-    return { ...context, datastore };
+export default async function presetPrompt(gasket, context, { prompt }) {
+  context.sandwhichMeat = 'none'; // Predefined value to be used in sandwhich-plugin
+}
+
+// sandwhich-plugin/prompt.js
+
+export async function promptMeat(gasket, context) {
+  // Will not prompt for meat if predefined in context
+  if !('sandwhichMeat' in context){
+    // Prompt for sandwich meat
+  }
+}
+
+async function prompt(gasket, context) {
+  await promptMeat(gasket, context);
+  // Prompt for other sandwich ingredients
+}
+```
+
+Additional prompts can be added by using the `prompt` function provided in the `utils` object. Prompts can also be imported from other plugins if you want to change the order in which those prompts are asked.
+
+```js
+// vegan-preset/prompt-preset.js
+
+import sandwhichPrompts from 'sandwhich-plugin/prompts';
+
+export default async function presetPrompt(gasket, context, { prompt }) {
+  await sandwhichPrompts.promptBreadType(context, prompt);
+  await sandwhichPrompts.promptVeggies(context, prompt);
+
+  if (!('sandwhichCheeseType' in context)) {
+    const { sandwhichCheeseType } = await prompt([
+      {
+        name: 'sandwhichCheeseType',
+        message: 'Do you want cheese?',
+        type: 'list',
+        choices: [
+          { name: 'Vegan Cheese 1', value: 'v-1' },
+          { name: 'Vegan Cheese 2', value: 'v-2' },
+          { name: 'No Cheese', value: 'none' }
+        ]
+      }
+    ]);
+
+    Object.assign(context, { sandwhichCheeseType });
+  }
+}
+```
+
+### presetConfig hook
+
+The `presetConfig` is used to add all plugins that will be used in your gasket app and it also gives you the option to add configuration to the `gasket` object.
+
+This hook is called after the `presetPrompt` hook and before all other plugin hooks in the preset.
+
+The `presetConfig` hook is an async function that takes two arguments: `gasket` and `context`. The `context` object contains all the values that were set in the `presetPrompt` hook.
+
+```js
+/**
+ * presetConfig hook
+ * @param {Gasket} gasket - Gasket API
+ * @param {Create} context - Create context
+ * @returns {Promise<CreateContext.presetConfig>} config
+ */
+export default async function presetConfig(gasket, context) {
+  // Add plugins and configuration
+}
+```
+
+To enable Gasket to utilize the hooks in your plugins, ensure that all plugins are included in the plugins array within the returned `presetConfig` object.
+
+Any properties you add to the `presetConfig` object will be added to the `gasket` object in your generated `gasket.js` file.
+
+```js
+// my-preset/preset-config.js
+
+import pluginFoo from '@gasket/plugin-foo';
+import pluginBar from '@gasket/plugin-bar';
+
+export default async function presetConfig(gasket, context) {
+  const myConfigObject = {
+    my: 'value'
   }
 
-  return context;
+  return {
+    additonalPropery: myConfigObject,
+    plugins: [
+      pluginFoo
+      pluginBar
+    ]
+  };
 }
+
+// Generated gasket.js file
+
+import pluginFoo from '@gasket/plugin-foo';
+import pluginBar from '@gasket/plugin-bar';
+
+export default makeGasket({
+  plugins: [
+    pluginFoo,
+    pluginBar
+  ],
+  additonalPropery: {
+    my: 'value'
+  }
+});
 ```
 
-This prompt can be entirely skipped by providing the `datastore` key in a
-preset's `createContext`:
+### Adding configuration through the command line
 
-```js
-// preset-datastore/preset-prompt.js
-export default async function presetPrompt(gasket, context, { prompt }) {
-  context.datastore: 'https://store-of-my-data.com'
-}
+You can also add configuration to the `context` object through the command line by using `create-gasket-app` with the `--config` flag, followed by a stringified object containing the values you wish to add.
+
+```sh
+npx create-gasket-app <app-name> --presets <@your/gasket-preset-example> --config "{\"my\": \"value\"}"
 ```
 
-[babel presets]: https://babeljs.io/docs/en/presets
-[naming conventions]: /docs/plugins.md#naming-convention
+[recommended naming conventions]: /docs/plugins.md#recommended-naming-convention
+[plugin]: /docs/plugins.md
