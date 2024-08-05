@@ -1,4 +1,6 @@
 import { createElement } from 'react';
+import hoistNonReactStatics from 'hoist-non-react-statics';
+import { resolveGasketData } from '@gasket/data';
 import { GasketDataProvider } from './gasket-data-provider.js';
 
 /**
@@ -7,31 +9,36 @@ import { GasketDataProvider } from './gasket-data-provider.js';
  * component.
  * @returns {Function} wrapper
  */
-export const withGasketDataProvider = () => (WrappedComponent) => {
-  const Wrapper = ({ gasketData, ...props }) => {
-    return (
-      createElement(GasketDataProvider, { gasketData },
-        createElement(WrappedComponent, props)
-      )
-    );
-  };
+export function withGasketDataProvider(gasket) {
 
-  Wrapper.getInitialProps = async (data) => {
-    const initialProps = WrappedComponent.getInitialProps ? await WrappedComponent.getInitialProps(data) : {};
-    // TODO: convert to GasketActions
-    const ssrGasketData = data?.ctx?.res?.locals?.gasketData || data?.res?.locals?.gasketData || {};
-    let clientGasketData = {}
-    if (typeof window !== 'undefined') {
-      clientGasketData = await import('@gasket/data').then(mod => {
-        return mod.gasketData()
-      });
+  return function wrapper(Component) {
+    const displayName = Component.displayName || Component.name || 'Component';
+
+    function HOC({ gasketData, ...props }) {
+      return (
+        createElement(GasketDataProvider, { gasketData },
+          createElement(Component, props)
+        )
+      );
     }
 
-    return {
-      ...initialProps,
-      gasketData: { ...ssrGasketData, ...clientGasketData }
-    };
-  };
+    hoistNonReactStatics(HOC, Component);
 
-  return Wrapper;
-};
+    HOC.getInitialProps = async function getInitialProps(ctx) {
+      // support app or page context
+      const req = ctx.ctx?.req ?? ctx.req;
+      const gasketData = await resolveGasketData(gasket, req);
+      const initialProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {};
+
+      return {
+        ...initialProps,
+        gasketData
+      };
+    };
+
+    HOC.displayName = `withGasketDataProvider(${displayName})`;
+    HOC.WrappedComponent = Component;
+
+    return HOC;
+  }
+}
