@@ -28,7 +28,7 @@ describe('buildManifest', function () {
         error: jest.fn()
       },
       config: {
-        root: 'app-root',
+        root: path.join(__dirname, 'fixtures'),
         intl: {
           defaultLocaleFilePath: 'locales',
           defaultLocale: 'en-US',
@@ -36,7 +36,7 @@ describe('buildManifest', function () {
           localesMap: {
             'fr-CH': 'fr-FR'
           },
-          localesDir: path.join(__dirname, 'fixtures', 'locales'),
+          localesDir: path.join('locales'),
           managerFilename: 'intl.js'
         }
       }
@@ -54,25 +54,16 @@ describe('buildManifest', function () {
   const getOutput = () => mockWriteFileStub.mock.calls[0][1];
 
   it('writes a manager js file in the root dir', async function () {
-    const expected = path.join(
-      'app-root',
-      'intl.js'
-    );
     await buildManifest(mockGasket);
     expect(mockWriteFileStub).toHaveBeenCalled();
-    expect(mockWriteFileStub.mock.calls[0][0]).toEqual(expected);
+    expect(mockWriteFileStub.mock.calls[0][0]).toContain(path.join('fixtures', 'intl.js'));
   });
 
   it('writes a different named manager js file to target dir', async function () {
     mockGasket.config.intl.managerFilename = 'custom/intl-manager.js';
-    const expected = path.join(
-      'app-root',
-      'custom',
-      'intl-manager.js'
-    );
     await buildManifest(mockGasket);
     expect(mockWriteFileStub).toHaveBeenCalled();
-    expect(mockWriteFileStub.mock.calls[0][0]).toEqual(expected);
+    expect(mockWriteFileStub.mock.calls[0][0]).toContain(path.join('fixtures', 'custom', 'intl-manager.js'));
   });
 
   it('logs error if failed to write manifest', async function () {

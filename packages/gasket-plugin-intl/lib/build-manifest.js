@@ -15,12 +15,16 @@ const debug = require('debug')('gasket:plugin:intl:buildManifest');
  * or bundled by the client. Locale paths have content hashes associated with
  * them which can be used for cache busting.
  * @param {import('@gasket/core').Gasket} gasket - Gasket API
+ * @param options
  * @async
  */
-module.exports = async function buildManifest(gasket) {
+module.exports = async function buildManifest(gasket, options = {}) {
   const { logger } = gasket;
+  const tgtRoot = options.root || gasket.config.root;
   const { localesDir, managerFilename } = getIntlConfig(gasket);
-  const tgtFile = path.join(gasket.config.root, ...managerFilename.split('/'));
+  const tgtLocalesDir = path.join(tgtRoot, localesDir);
+
+  const tgtFile = path.join(tgtRoot, ...managerFilename.split('/'));
   const {
     defaultLocaleFilePath,
     staticLocaleFilePaths,
@@ -31,7 +35,7 @@ module.exports = async function buildManifest(gasket) {
 
   // find all the .json files except the manifest
   debug(`Building manifest ${tgtFile} from JSON files in ${localesDir}`);
-  const files = (await glob('**/*.json', { cwd: localesDir })).filter(
+  const files = (await glob('**/*.json', { cwd: tgtLocalesDir })).filter(
     (f) => f !== managerFilename
   );
 
@@ -74,11 +78,13 @@ const manifest = ${manifestStr};
 export default makeIntlManager(manifest);
 `;
 
-  const tgtRelative = path.relative(gasket.config.root, tgtFile);
+  const tgtRelative = path.relative(tgtRoot, tgtFile);
 
   try {
     await fs.writeFile(tgtFile, content, 'utf-8');
-    logger.info(`build:locales: Wrote intl manager ${tgtRelative}.`);
+    if (options.silent !== true) {
+      logger.info(`build:locales: Wrote intl manager ${tgtRelative}.`);
+    }
   } catch (err) {
     logger.error(`build:locales: Unable to write intl manager (${tgtRelative}).`);
     throw err;
