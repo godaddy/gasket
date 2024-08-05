@@ -3,10 +3,9 @@
 const {
   name,
   version,
-  description,
-  devDependencies
+  description
 } = require('../package.json');
-const path = require('path');
+const create = require('./create');
 
 /** @type {import('@gasket/core').Plugin} */
 module.exports = {
@@ -14,23 +13,6 @@ module.exports = {
   version,
   description,
   hooks: {
-    create(gasket, context) {
-      const { pkg, files } = context;
-
-      pkg.add('devDependencies', {
-        tsx: devDependencies.tsx,
-        typescript: devDependencies.typescript
-      });
-
-      pkg.add('scripts', {
-        build: 'tsc',
-        start: 'node dist/server.js',
-        local: 'GASKET_ENV=local tsx watch server.ts'
-      });
-
-      files.add(
-        path.join(__dirname, '..', 'generator', '*')
-      );
-    }
+    create
   }
 };
