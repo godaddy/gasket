@@ -92,7 +92,7 @@ describe('code styles', () => {
       expect(pkgAdd).toHaveBeenCalledWith('eslintConfig', {
         extends: ['plugin:@godaddy/react-intl/recommended'],
         settings: {
-          localeFiles: ['public/locales/en-US.json']
+          localeFiles: ['locales/en-US.json']
         }
       });
     });
