@@ -9,7 +9,7 @@ import { nextRedux } from '../redux/store';
 import { useRouter } from 'next/router';
 import { IntlProvider } from 'react-intl';
 import { withMessagesProvider } from '@gasket/react-intl';
-import intlManager from '../intl.js';
+import intlManager from '../intl';
 {{/if}}
 
 {{#if hasGasketIntl}}
