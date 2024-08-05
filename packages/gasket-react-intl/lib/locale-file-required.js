@@ -1,4 +1,4 @@
-import { LocaleFileStatus } from '@gasket/helper-intl';
+import { LocaleFileStatus } from '@gasket/intl';
 import { ensureArray } from './utils.js';
 import useLocaleFile from './use-locale-file.js';
 

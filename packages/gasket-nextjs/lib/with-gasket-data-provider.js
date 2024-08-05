@@ -1,6 +1,5 @@
 import { createElement } from 'react';
 import { GasketDataProvider } from './gasket-data-provider.js';
-import PropTypes from 'prop-types';
 
 /**
  * Make an HOC that adds a provider for the GasketData. This can be used to wrap
@@ -32,10 +31,6 @@ export const withGasketDataProvider = () => (WrappedComponent) => {
       ...initialProps,
       gasketData: { ...ssrGasketData, ...clientGasketData }
     };
-  };
-
-  Wrapper.propTypes = {
-    gasketData: PropTypes.object
   };
 
   return Wrapper;

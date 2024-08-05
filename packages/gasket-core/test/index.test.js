@@ -75,6 +75,48 @@ describe('makeGasket', () => {
     expect(gasket).toBeInstanceOf(GasketEngine);
   });
 
+  it('defaults env to local', () => {
+    const gasket = makeGasket({ plugins: [mockPlugin] });
+    expect(gasket.config.env).toEqual('local');
+    expect(console.warn).toHaveBeenCalledWith('No GASKET_ENV env variable set; defaulting to "local".');
+  });
+
+  it('sets env GASKET_ENV', () => {
+    process.env.GASKET_ENV = 'production';
+    const gasket = makeGasket({ plugins: [mockPlugin] });
+    expect(gasket.config.env).toEqual('production');
+    expect(console.warn).not.toHaveBeenCalled();
+  });
+
+  it('prunes nullish and/or empty plugins', () => {
+    const nullishPlugin = null;
+    const emptyPlugin = {};
+    const dummyPlugin = { name: 'dummy', hooks: {} };
+
+    const initConfig = {
+      plugins: [mockPlugin, nullishPlugin, emptyPlugin, dummyPlugin]
+    };
+
+    const gasket = makeGasket(initConfig);
+
+    expect(gasket.config.plugins).toHaveLength(2);
+    expect(gasket.config.plugins[0]).toHaveProperty('name', 'mockPlugin');
+    expect(gasket.config.plugins[1]).toHaveProperty('name', 'dummy');
+  });
+
+  it('does not otherwise prune faulty plugins', () => {
+    const nullishPlugin = null;
+    const emptyPlugin = {};
+    const dummyPlugin = { name: 'dummy', hooks: {} };
+    const faultyPlugin = { name: 'faulty' };
+
+    const initConfig = {
+      plugins: [mockPlugin, nullishPlugin, emptyPlugin, dummyPlugin, faultyPlugin]
+    };
+
+    expect(() => makeGasket(initConfig)).toThrow(/must have a hooks/);
+  });
+
   describe('config lifecycle', () => {
 
     it('applies env overrides', () => {
@@ -179,8 +221,8 @@ describe('makeGasket', () => {
       const gasket = makeGasket(inputConfig);
       const { doSomething, doAnotherThing } = gasket.actions;
 
-      expect(doSomething()).toEqual('the environment is test');
-      expect(doAnotherThing()).toEqual('the environment is test');
+      expect(doSomething()).toEqual('the environment is local');
+      expect(doAnotherThing()).toEqual('the environment is local');
     });
 
     it('warns on duplicate action names', () => {

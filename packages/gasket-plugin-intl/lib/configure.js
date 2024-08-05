@@ -30,7 +30,6 @@ module.exports = function configure(gasket, config) {
 
   // get user defined config and apply defaults
   const {
-    locales,
     localesMap = {},
     defaultLocaleFilePath = 'locales',
     localesDir = 'locales',
@@ -38,6 +37,7 @@ module.exports = function configure(gasket, config) {
   } = intlConfig;
 
   let {
+    locales,
     defaultLocale,
     staticLocaleFilePaths
   } = intlConfig;
@@ -45,7 +45,8 @@ module.exports = function configure(gasket, config) {
   const fullLocalesDir = path.join(root, localesDir);
 
   if (!locales || !locales.length) {
-    throw new Error('Gasket config required for intl.locales');
+    locales = ['en-US'];
+    gasket.logger.debug(`intl.locales not configured, defaulting to ['en-US']`);
   }
 
   if (!defaultLocale) {
@@ -55,7 +56,7 @@ module.exports = function configure(gasket, config) {
 
   if (!staticLocaleFilePaths) {
     staticLocaleFilePaths = [defaultLocaleFilePath];
-    gasket.logger.debug(`intl.staticLocaleFilePaths not configured, defaulting to ([${staticLocaleFilePaths.join(', ')}])`);
+    gasket.logger.debug(`intl.staticLocaleFilePaths not configured, defaulting to [${staticLocaleFilePaths.join(', ')}]`);
   }
 
 

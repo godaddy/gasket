@@ -1,22 +1,37 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 {{#if hasGasketIntl}}
-import { withIntlProvider } from '@gasket/react-intl';
 {{/if}}
 {{#if hasGasketRedux}}
 import { nextRedux } from '../redux/store';
+{{/if}}
+{{#if hasGasketIntl}}
+import { useRouter } from 'next/router';
+import { IntlProvider } from 'react-intl';
+import { withMessagesProvider } from '@gasket/react-intl';
+import intlManager from '../intl.js';
+{{/if}}
+
+{{#if hasGasketIntl}}
+const IntlMessagesProvider = withMessagesProvider(intlManager)(IntlProvider);
 {{/if}}
 
 // Simple functional App component which can be wrapped
 // https://nextjs.org/docs/pages/building-your-application/routing/custom-app
 function App({ Component, pageProps }) {
-  return <Component { ...pageProps } />;
-}
+  {{#if hasGasketIntl}}
+  const router = useRouter();
+  {{/if}}
 
-App.propTypes = {
-  Component: PropTypes.elementType,
-  pageProps: PropTypes.object
-};
+  return (
+  {{#if hasGasketIntl}}
+  <IntlMessagesProvider locale={router.locale}>
+  {{/if}}
+    <Component { ...pageProps } />
+  {{#if hasGasketIntl}}
+  </IntlMessagesProvider>
+  {{/if}}
+  );
+}
 
 {{#if hasGasketRedux}}
 // Make the store available to the Pages via getInitialProps
@@ -34,9 +49,6 @@ App.getInitialProps = nextRedux.getInitialAppProps(
 
 // Wrap the app with higher-order components
 export default [
-  {{#if hasGasketIntl}}
-  withIntlProvider(),
-  {{/if}}
   {{#if hasGasketRedux}}
   nextRedux.withRedux,
   {{/if}}

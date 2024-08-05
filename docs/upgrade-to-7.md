@@ -56,6 +56,56 @@ Remove deprecated support for `languageMap`, `defaultLanguage`, `assetPrefix` co
 
 [(#668)]
 
+## Migrating away from req/res attachments
+
+Using the `req` and `res` objects for adding attachments and accessing data has been a common pattern in Gasket applications. This pattern is being deprecated in favor of using the new Gasket Actions API introduced in v7.
+
+### Motivation
+
+Middleware in Gasket apps runs for every request, regardless of whether it is used or not. We added support for [middleware paths] to help reduce this, but it is still not ideal and requires the developer to manage something that should be optimized already by the plugin.
+
+As a caveat of the middleware pattern, when the `req` and `res` objects are decorated with various added properties, it is not always easy to know what is available and when.
+
+In addition to issues with middleware, we need to move away from reliance on `req` and `res` objects to fully utilize Nextjs 14 features such as [App Router] and [streaming].
+
+The Gasket Actions API provides a more structured way to access and modify data in Gasket applications. This API is designed to be more consistent and easier to use than the previous pattern of adding attachments to `req` and `res` objects.
+
+The `req` object can be used as a Gasket Action argument to give access to headers, cookies, queries, or to be used as a `WeakMap` key for repeated calls.
+
+### Example
+
+When retrieving a variable called `myValue` in middleware, you might have done something like this:
+
+```js
+const myValue = res.locals.myValue;
+```
+
+Going forward, the recommended way to access `myValue` would be through a Gasket Action like this:
+
+```js
+const myValue = gasket.actions.getMyValue(req);
+```
+
+The Gasket Action is defined as a hook in the plugin:
+
+```js
+// plugin-example.js
+
+export default({
+  name: 'plugin-example',
+  hooks: {
+    actions: function actions(gasket) {
+      return {
+        async getMyValue(req) {
+          // Returns myValue
+          // Use the req argument to access headers, cookies, queries, etc.
+        };
+      }
+    }
+  }
+})
+```
+
 ## @gasket/gasket-plugin-cypress
 
 Update Cypress version to 12.3.0. [(#660)]
@@ -285,3 +335,8 @@ Update plugin strings to be plugin import statements in `gasket.js`. All plugins
 [(#640)]:https://github.com/godaddy/gasket/pull/640
 [(#680)]:https://github.com/godaddy/gasket/pull/680
 [(#693)]:https://github.com/godaddy/gasket/pull/693
+
+<!-- Links -->
+[middleware paths]:https://github.com/godaddy/gasket/blob/main/packages/gasket-plugin-express/README.md#middleware-paths
+[streaming]: https://nextjs.org/docs/app/building-your-application/routing/loading-ui-and-streaming
+[App Router]: https://nextjs.org/docs/app/building-your-application/routing

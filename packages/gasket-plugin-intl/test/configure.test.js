@@ -30,11 +30,6 @@ describe('configure', function () {
     expect(typeof results).toBe('object');
   });
 
-  it('throws if intl.locales not configured', function () {
-    expect(() => configure(mockGasket, { root }))
-      .toThrow(/Gasket config required for intl.locales/);
-  });
-
   it('merges user config with defaults', function () {
     mockGasket.config.intl.user = 'stuff';
     const results = configure(mockGasket, mockGasket.config);
@@ -76,6 +71,18 @@ describe('configure', function () {
     delete mockGasket.config.intl.defaultLocaleFilePath;
     const results2 = configure(mockGasket, mockGasket.config);
     expect(results2.intl.defaultLocaleFilePath).toEqual('locales');
+  });
+
+  it('configures locales if not set', () => {
+    const results = configure(mockGasket, mockGasket.config);
+    expect(results.intl.locales).toEqual(['en-US', 'fr-FR', 'ar-AE']);
+
+    delete mockGasket.config.intl.locales;
+    const results2 = configure(mockGasket, mockGasket.config);
+    expect(results2.intl.locales).toEqual(['en-US']);
+
+    expect(mockGasket.logger.debug)
+      .toHaveBeenCalledWith(expect.stringContaining('intl.locales not configured'));
   });
 
   it('configures defaultLocale if not set', () => {

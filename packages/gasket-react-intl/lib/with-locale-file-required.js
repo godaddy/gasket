@@ -19,7 +19,6 @@ export default function withLocaleFileRequired(
     /** @type {import('.').LocaleFileRequiredHOC} */
     function HOC(props) {
       const {
-        // eslint-disable-next-line react/prop-types
         forwardedRef,
         ...rest
       } = props;

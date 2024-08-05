@@ -74,7 +74,7 @@ export default makeGasket({
 The plugin will generate an `intl.js` file that can be used to manage locale
 files for an app.
 For details on how the intl manager can be used, see the
-[@gasket/helper-intl] package.
+[@gasket/intl] package.
 
 ### Locale File Path
 
@@ -372,7 +372,7 @@ If you are experiencing difficulties seeing with locale files not working as exp
 DEBUG=gasket:* npx gasket local
 ```
 
-Once enabled, look for messages under the namespace `gasket:plugin:intl` and `gasket:helper:intl` for a detailed accounting on what's happening behind the scenes.
+Once enabled, look for messages under the namespace `gasket:plugin:intl` and `gasket:intl` for a detailed accounting on what's happening behind the scenes.
 
 ## License
 
@@ -388,6 +388,7 @@ Once enabled, look for messages under the namespace `gasket:plugin:intl` and `ga
 [intlLocale lifecycle]:#intllocale
 [Next.js Routing]:#nextjs-routing
 
+[@gasket/intl]: /packages/gasket-intl/README.md
 [@gasket/react-intl]: /packages/gasket-react-intl/README.md
 [@gasket/plugin-nextjs]: /packages/gasket-plugin-nextjs/README.md
 [GasketData script tag]: /packages/gasket-data/README.md

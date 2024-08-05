@@ -1,6 +1,6 @@
 {
   "name": "@gasket/nextjs",
-  "version": "7.0.0-next.44",
+  "version": "7.0.0-next.47",
   "description": "Gasket integrations for Next.js apps",
   "type": "module",
   "files": [
@@ -56,7 +56,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-nextjs",
   "dependencies": {
-    "@gasket/data": "^7.0.0-next.44",
+    "@gasket/data": "^7.0.0-next.47",
     "htmlescape": "^1.1.1"
   },
   "devDependencies": {
@@ -64,23 +64,21 @@
     "@testing-library/react": "^13.4.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
-    "eslint-config-godaddy-react": "^9.0.1",
-    "eslint-plugin-jest": "^27.6.3",
+    "eslint-config-godaddy-react": "^9.1.0",
+    "eslint-plugin-jest": "^28.6.0",
     "eslint-plugin-json": "^3.1.0",
     "eslint-plugin-jsx-a11y": "^6.8.0",
-    "eslint-plugin-react": "^7.33.2",
-    "eslint-plugin-unicorn": "^44.0.0",
+    "eslint-plugin-react": "^7.35.0",
+    "eslint-plugin-unicorn": "^55.0.0",
     "jest": "^29.7.0",
     "jsdom": "^20.0.0",
     "next": "^14.0.0",
-    "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "typescript": "^5.4.5"
   },
   "peerDependencies": {
     "next": ">=10.2.0 <= 13.1.1 || ^14",
-    "prop-types": "^15",
     "react": "^16 || ^17 || ^18"
   },
   "eslintConfig": {

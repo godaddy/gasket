@@ -1,39 +1,28 @@
 /// <reference types="@gasket/core" />
 
-/** @type {import('./index').promptAppRouter} */
-async function promptAppRouter(context, prompt) {
-  if ('useAppRouter' in context) return;
-  const { useAppRouter } = await prompt([
-    {
-      name: 'useAppRouter',
-      message: 'Do you want to use the App Router? (experimental)',
-      type: 'confirm',
-      default: false
-    }
-  ]);
-
-  const ctx = useAppRouter ? { useAppRouter, nextServerType: 'defaultServer' } : { useAppRouter };
-  Object.assign(context, ctx);
-}
-
 /** @type {import('./index').promptNextServerType} */
 async function promptNextServerType(context, prompt) {
-  if ('nextServerType' in context) return;
-  const { useAppRouter } = context;
-  if (useAppRouter) return;
-  const { nextServerType } = await prompt([
-    {
-      name: 'nextServerType',
-      message: 'Which server type would you like to use?',
-      type: 'list',
-      choices: [
-        { name: 'Next Server(CLI)', value: 'defaultServer' },
-        { name: 'Custom Next Server', value: 'customServer' }
-      ]
-    }
-  ]);
+  if (!('nextServerType' in context)) {
+    const { nextServerType } = await prompt([
+      {
+        name: 'nextServerType',
+        message: 'Which server type would you like to use?',
+        type: 'list',
+        choices: [
+          { name: 'App Router', value: 'appRouter' },
+          { name: 'Page Router', value: 'pageRouter' },
+          { name: 'Page Router w/ Custom Server', value: 'customServer' }
+        ]
+      }
+    ]);
 
-  Object.assign(context, { nextServerType });
+    Object.assign(context, { nextServerType });
+  }
+
+  if (context.nextServerType === 'appRouter') {
+    // used for templating
+    Object.assign(context, { useAppRouter: true });
+  }
 }
 
 /** @type {import('./index').promptNextDevProxy} */
@@ -70,7 +59,6 @@ async function promptSitemap(context, prompt) {
 
 /** @type {import('@gasket/core').HookHandler<'prompt'>} */
 async function promptAll(gasket, context, { prompt }) {
-  await promptAppRouter(context, prompt);
   await promptNextServerType(context, prompt);
   await promptNextDevProxy(context, prompt);
   await promptSitemap(context, prompt);
@@ -80,7 +68,6 @@ async function promptAll(gasket, context, { prompt }) {
 
 module.exports = {
   prompt: promptAll,
-  promptAppRouter,
   promptNextServerType,
   promptNextDevProxy,
   promptSitemap

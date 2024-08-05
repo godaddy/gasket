@@ -18,6 +18,7 @@ describe('Plugin', () => {
       'create',
       'configure',
       'docsView',
+      'webpackConfig',
       'metadata'
     ];
     expect(Object.keys(plugin.hooks)).toEqual(expected);

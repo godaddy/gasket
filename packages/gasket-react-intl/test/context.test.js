@@ -1,4 +1,4 @@
-import { LocaleFileStatus } from '@gasket/helper-intl';
+import { LocaleFileStatus } from '@gasket/intl';
 import { jest } from '@jest/globals';
 import { makeContext } from '../lib/context.js';
 

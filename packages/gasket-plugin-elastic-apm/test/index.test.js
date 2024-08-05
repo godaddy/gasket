@@ -11,23 +11,13 @@ const mockAPM = {
 };
 
 jest.mock('elastic-apm-node', () => mockAPM);
-const apm = require('elastic-apm-node');
 const plugin = require('../lib/index');
 const { name, version, description } = require('../package');
 
 describe('Plugin', () => {
-  let mockGasket;
 
   beforeEach(function () {
     mockAPM.isStarted.mockReset();
-    mockGasket = {
-      logger: {
-        warn: jest.fn()
-      },
-      config: {
-        root: '/some/path'
-      }
-    };
     process.env.ELASTIC_APM_SERVER_URL = 'FAKE_ELASTIC_APM_URL';
     process.env.ELASTIC_APM_SECRET_TOKEN = 'TOKEN_1234';
   });
@@ -46,89 +36,15 @@ describe('Plugin', () => {
     expect(plugin).toHaveProperty('description', description);
   });
 
-  it('exposes a configure lifecycle hook', () => {
-    expect(typeof plugin.hooks).toStrictEqual('object');
-    expect(typeof plugin.hooks.configure).toStrictEqual('function');
-  });
+  it('has expected hooks', () => {
+    const expected = [
+      'actions',
+      'configure',
+      'create',
+      'middleware',
+      'metadata'
+    ];
 
-  it('exposes a preboot lifecycle hook', () => {
-    expect(typeof plugin.hooks).toStrictEqual('object');
-    expect(typeof plugin.hooks.preboot).toStrictEqual('function');
-  });
-
-  it('hooks the middleware lifecycle', () => {
-    expect(plugin.hooks).toHaveProperty('middleware');
-  });
-
-  it('skips start call if already started', async () => {
-    mockAPM.isStarted.mockReturnValue(true);
-    await plugin.hooks.preboot(mockGasket);
-    expect(apm.start).not.toHaveBeenCalled();
-  });
-
-  it('skips preboot lifecycle if run locally', async () => {
-    mockGasket.command = { id: 'local' };
-    await plugin.hooks.preboot(mockGasket);
-    expect(apm.start).not.toHaveBeenCalled();
-  });
-
-  it('does not start within preboot', async function () {
-    await plugin.hooks.preboot(mockGasket);
-    expect(apm.start).toHaveBeenCalledTimes(0);
-    expect(mockGasket.logger.warn).toHaveBeenCalledWith(
-      expect.stringContaining(
-        'Elastic APM agent is not started. Use `--require ./setup.js`'
-      )
-    );
-  });
-
-  it('adds apm filters', async () => {
-    mockAPM.isStarted.mockReturnValue(true);
-    await plugin.hooks.preboot(mockGasket);
-    expect(apm.addFilter).toHaveBeenCalledTimes(1);
-  });
-
-  it('respects a user-defined "active" config value', async () => {
-    delete process.env.ELASTIC_APM_SECRET_TOKEN;
-    delete process.env.ELASTIC_APM_SECRET_TOKEN;
-    process.env.ELASTIC_APM_ACTIVE = true;
-
-    mockGasket.config = await plugin.hooks.configure(mockGasket, {
-      ...mockGasket.config,
-      elasticAPM: { active: true }
-    });
-    await plugin.hooks.preboot(mockGasket);
-    expect(mockGasket.config.elasticAPM).toEqual({ active: true });
-  });
-
-  it('is not active if missing ELASTIC_APM_SERVER_URL env var', async () => {
-    delete process.env.ELASTIC_APM_SERVER_URL;
-    mockGasket.config = await plugin.hooks.configure(mockGasket, {
-      ...mockGasket.config
-    });
-
-    await plugin.hooks.preboot(mockGasket);
-    expect(mockGasket.config.elasticAPM).toEqual({ active: false });
-  });
-
-  it('is not active if missing ELASTIC_APM_SECRET_TOKEN env var', async () => {
-    delete process.env.ELASTIC_APM_SECRET_TOKEN;
-    mockGasket.config = await plugin.hooks.configure(mockGasket, {
-      ...mockGasket.config
-    });
-    await plugin.hooks.preboot(mockGasket);
-    expect(mockGasket.config.elasticAPM).toEqual({ active: false });
-  });
-
-  it('respects a user-defined "ELASTIC_APM_ACTIVE" env var', async () => {
-    delete process.env.ELASTIC_APM_SECRET_TOKEN;
-    delete process.env.ELASTIC_APM_SECRET_TOKEN;
-    process.env.ELASTIC_APM_ACTIVE = true;
-
-    mockGasket.config = await plugin.hooks.configure(mockGasket, {
-      ...mockGasket.config
-    });
-    await plugin.hooks.preboot(mockGasket);
-    expect(mockGasket.config.elasticAPM).toEqual({ active: true });
+    expect(Object.keys(plugin.hooks)).toEqual(expected);
   });
 });
