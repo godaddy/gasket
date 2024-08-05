@@ -5,14 +5,13 @@ const { devDependencies, name, version } = require('../package.json');
 
 /** @type {import('@gasket/core').HookHandler<'create'>} */
 module.exports = async function create(gasket, context) {
-  if (context.hasGasketIntl === false) {
-    return;
-  }
+  if (context.hasGasketIntl === false) return;
 
   const { files, pkg, gasketConfig } = context;
   const rootDir = path.join(__dirname, '..');
   const isReactProject = pkg.has('dependencies', 'react');
-  files.add(`${rootDir}/generator/*`, `${rootDir}/generator/**/*`);
+  const glob = context.typescript ? '*.ts' : '*.js)';
+  files.add(`${rootDir}/generator/${glob}`, `${rootDir}/generator/**`);
 
   gasketConfig.addPlugin('pluginIntl', name);
 
@@ -22,10 +21,6 @@ module.exports = async function create(gasket, context) {
 
   pkg.add('dependencies', {
     [name]: `^${version}`
-  });
-
-  pkg.add('scripts', {
-    prebuild: 'node gasket.js build'
   });
 
   if (isReactProject) {
