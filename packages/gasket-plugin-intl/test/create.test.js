@@ -76,7 +76,7 @@ describe('create', function () {
   it('adds the default intl.locales config', async function () {
     await plugin.hooks.create({}, mockContext);
     expect(addStub).toHaveBeenCalledWith('intl', {
-      locales: ['en-US']
+      locales: ['en-US', 'fr-FR']
     });
   });
 

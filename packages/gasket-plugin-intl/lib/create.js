@@ -17,7 +17,7 @@ module.exports = async function create(gasket, context) {
   gasketConfig.addPlugin('pluginIntl', name);
 
   gasketConfig.add('intl', {
-    locales: ['en-US']
+    locales: ['en-US', 'fr-FR']
   });
 
   pkg.add('dependencies', {
