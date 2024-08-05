@@ -11,7 +11,7 @@ export const metadata = {
 const pageStyle = { textAlign: 'center' };
 const logoStyle = { width: '250px', height: '250px' };
 
-export const IndexPage = () => (
+const IndexPage = () => (
   <div style={ pageStyle }>
     <GasketEmblem style={ logoStyle }/>
     <h1>Welcome to Gasket!</h1>

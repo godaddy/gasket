@@ -6,7 +6,7 @@ import GasketEmblem from '@gasket/assets/react/gasket-emblem.js';
 const pageStyle = { textAlign: 'center' };
 const logoStyle = { width: '250px', height: '250px' };
 
-export const IndexPage = () => (
+const IndexPage = () => (
   <div style={ pageStyle }>
     <Head title='{{{appName}}}' description='{{{appDescription}}}'/>
     <GasketEmblem style={ logoStyle }/>
