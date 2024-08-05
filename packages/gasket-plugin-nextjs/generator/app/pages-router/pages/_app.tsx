@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { ComponentType } from 'react';
+import type { MessagesProps } from '@gasket/react-intl';
 {{#if hasGasketIntl}}
 {{/if}}
 {{#if hasGasketRedux}}
@@ -12,8 +13,7 @@ import intlManager from '../intl.js';
 {{/if}}
 
 {{#if hasGasketIntl}}
-// @ts-expect-error - TODO: fix types
-const IntlMessagesProvider = withMessagesProvider(intlManager)(IntlProvider);
+const IntlMessagesProvider = withMessagesProvider(intlManager)(IntlProvider as ComponentType<MessagesProps>);
 {{/if}}
 
 // Simple functional App component which can be wrapped
