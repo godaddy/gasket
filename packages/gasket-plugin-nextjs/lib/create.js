@@ -12,7 +12,7 @@ function createAppFiles({ files, generatorDir, useAppRouter, typescript }) {
     `${generatorDir}/app/shared/**/*`
   );
 
-  const globIgnore = typescript ? '!(*.js)' : '!(*.ts|*.tsx)';
+  const globIgnore = typescript ? '!(*.js|.jsx)' : '!(*.ts|*.tsx)';
   const appStructure = useAppRouter ? 'app-router' : 'pages-router';
 
   files.add(
@@ -54,10 +54,10 @@ function createNextFiles({ files, generatorDir, nextDevProxy, typescript, nextSe
   // TS only next.config.cjs
   if (typescript) {
     glob = `${generatorDir}/next/*.cjs`;
-  // if no proxy and using defaultServer, add next.config.js
+    // if no proxy and using defaultServer, add next.config.js
   } else if (!nextDevProxy && nextServerType !== 'customServer') {
     glob = `${generatorDir}/next/*(next.config).js`;
-  // if proxy or customServer, add server.js & next.config.js
+    // if proxy or customServer, add server.js & next.config.js
   } else {
     glob = `${generatorDir}/next/*.js`;
   }
@@ -147,8 +147,12 @@ function addNpmScripts({ pkg, nextServerType, nextDevProxy, typescript, hasGaske
   };
 
   if (nextServerType === 'customServer') {
-    scripts.start = `node dist/server.js`;
-    scripts.build = `tsc -p ./tsconfig.server.json && next build`;
+    scripts.start = typescript ?
+      `node dist/server.js` :
+      `node server.js`;
+    scripts.build = typescript ?
+      `tsc -p ./tsconfig.server.json && next build` :
+      `next build`;
     scripts.local = `GASKET_DEV=1 ${watcher} server.${fileExtension}`;
   } else if (nextDevProxy) {
     scripts.local = `${scripts.local} & ${watcher} server.${fileExtension}`;
@@ -159,7 +163,7 @@ function addNpmScripts({ pkg, nextServerType, nextDevProxy, typescript, hasGaske
   pkg.add('scripts', scripts);
 }
 
-function addConfig({ gasketConfig, nextDevProxy } ) {
+function addConfig({ gasketConfig, nextDevProxy }) {
   gasketConfig.addPlugin('pluginNextjs', name);
 
   if (nextDevProxy) {

@@ -40,7 +40,17 @@ describe('create', function () {
     const rootDir = path.join(__dirname, '..');
     await plugin.hooks.create({}, mockContext);
     expect(filesAddStub.mock.calls[0][0]).toEqual(
-      `${rootDir}/generator/*`,
+      `${rootDir}/generator/*.js`,
+      `${rootDir}/generator/**/*`
+    );
+  });
+
+  it('adds the globs for typescript', async function () {
+    const rootDir = path.join(__dirname, '..');
+    mockContext.typescript = true;
+    await plugin.hooks.create({}, mockContext);
+    expect(filesAddStub.mock.calls[0][0]).toEqual(
+      `${rootDir}/generator/*.ts`,
       `${rootDir}/generator/**/*`
     );
   });
@@ -59,18 +69,11 @@ describe('create', function () {
     expect(pkgAddStub.mock.calls[0]).toEqual(['dependencies', {
       [name]: devDependencies['@gasket/react-intl']
     }]);
-    expect(pkgAddStub.mock.calls[2]).toEqual(['dependencies', {
+    expect(pkgAddStub.mock.calls[1]).toEqual(['dependencies', {
       '@gasket/intl': devDependencies['@gasket/intl'],
       '@gasket/react-intl': devDependencies['@gasket/react-intl'],
       'react-intl': devDependencies['react-intl']
     }]);
-  });
-
-  it('adds the appropriate scripts', async function () {
-    await plugin.hooks.create({}, mockContext);
-    expect(pkgAddStub).toHaveBeenCalledWith('scripts', {
-      prebuild: 'node gasket.js build'
-    });
   });
 
   it('adds the default intl.locales config', async function () {

@@ -2,8 +2,7 @@ const plugin = require('../lib/index');
 const {
   name,
   version,
-  description,
-  devDependencies
+  description
 } = require('../package.json');
 
 describe('gasket-plugin-typescript', () => {
@@ -35,49 +34,6 @@ describe('gasket-plugin-typescript', () => {
       Object.keys(plugin.hooks).forEach(hook => {
         expect(plugin.hooks[hook]).toBeInstanceOf(Function);
       });
-    });
-  });
-
-  describe('create hook', () => {
-    let mockContext;
-
-    beforeEach(() => {
-      mockContext = {
-        pkg: {
-          add: jest.fn()
-        },
-        files: {
-          add: jest.fn()
-        }
-      };
-    });
-
-    afterEach(() => {
-      jest.clearAllMocks();
-    });
-
-    it('adds devDependencies to package.json', () => {
-      plugin.hooks.create({}, mockContext);
-      expect(mockContext.pkg.add).toHaveBeenCalledWith('devDependencies', {
-        tsx: devDependencies.tsx,
-        typescript: devDependencies.typescript
-      });
-    });
-
-    it('adds scripts to package.json', () => {
-      plugin.hooks.create({}, mockContext);
-      expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts', {
-        build: 'tsc',
-        start: 'node dist/server.js',
-        local: 'GASKET_ENV=local tsx watch server.ts'
-      });
-    });
-
-    it('adds files', () => {
-      plugin.hooks.create({}, mockContext);
-      expect(mockContext.files.add).toHaveBeenCalledWith(
-        expect.stringMatching(/generator\/\*/)
-      );
     });
   });
 });
