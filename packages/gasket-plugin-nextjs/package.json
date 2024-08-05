@@ -51,6 +51,7 @@
   },
   "devDependencies": {
     "@babel/preset-react": "^7.23.3",
+    "@babel/register": "^7.24.6",
     "@gasket/assets": "^7.0.0-next.47",
     "@gasket/core": "^7.0.0-next.47",
     "@gasket/nextjs": "^7.0.0-next.47",
