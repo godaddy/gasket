@@ -51,6 +51,14 @@ declare module '@gasket/core' {
   }
 }
 
+declare module '@gasket/data' {
+  export interface GasketData {
+    intl?: {
+      locale: string;
+    };
+  }
+}
+
 declare module 'create-gasket-app' {
   export interface CreateContext {
     hasGasketIntl?: boolean;
