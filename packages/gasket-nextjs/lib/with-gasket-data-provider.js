@@ -3,14 +3,10 @@ import hoistNonReactStatics from 'hoist-non-react-statics';
 import { resolveGasketData } from '@gasket/data';
 import { GasketDataProvider } from './gasket-data-provider.js';
 
-/**
- * Make an HOC that adds a provider for the GasketData. This can be used to wrap
- * a top level React, Next.js custom App component or Next.js custom Document
- * component.
- * @returns {Function} wrapper
- */
+/** @type {import('.').withGasketDataProvider} */
 export function withGasketDataProvider(gasket) {
 
+  // @ts-ignore
   return function wrapper(Component) {
     const displayName = Component.displayName || Component.name || 'Component';
 
