@@ -2,21 +2,13 @@
   "compilerOptions": {
     "allowJs": true,
     "checkJs": true,
+    "downlevelIteration": true,
     "noEmit": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "lib": [
-      "esnext",
-      "dom"
-    ],
-    "types": [
-      "@types/jest",
-      "@types/node"
-    ]
+    "lib": ["esnext", "dom"],
+    "types": ["@types/jest", "@types/node"]
   },
-  "exclude": [
-    "test",
-    "coverage"
-  ]
+  "exclude": ["test", "coverage"]
 }

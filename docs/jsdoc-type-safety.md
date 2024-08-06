@@ -49,6 +49,7 @@ npm i -D typescript
   "compilerOptions": {
     "allowJs": true,
     "checkJs": true,
+    "downlevelIteration": true,
     "noEmit": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
