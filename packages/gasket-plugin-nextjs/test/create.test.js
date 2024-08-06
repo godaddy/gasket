@@ -1,9 +1,9 @@
 const path = require('path');
 const { name, version, devDependencies } = require('../package');
+const create = require('../lib/create');
 
 describe('create hook', () => {
   let mockContext;
-  const plugin = require('../lib/');
   const root = path.join(__dirname, '..', 'lib');
 
   beforeEach(() => {
@@ -20,184 +20,327 @@ describe('create hook', () => {
     };
   });
 
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('has expected timings', async function () {
-    expect(plugin.hooks.create.timing.before).toEqual(['@gasket/plugin-intl']);
-    expect(plugin.hooks.create.timing.after).toEqual(['@gasket/plugin-redux']);
+    expect(create.timing.before).toEqual(['@gasket/plugin-intl']);
+    expect(create.timing.after).toEqual(['@gasket/plugin-redux']);
   });
 
-  it('adds the appropriate globs for pages router', async function () {
-    await plugin.hooks.create.handler({}, mockContext);
-
-    const first = mockContext.files.add.mock.calls[0];
-    const second = mockContext.files.add.mock.calls[1];
-
-    expect(first).toEqual([
-      `${root}/../generator/app/shared/**/*`
-    ]);
-    expect(second).toEqual([
-      `${root}/../generator/app/pages-router/**/*`
-    ]);
+  it('has handler function', async function () {
+    expect(create.handler).toBeInstanceOf(Function);
   });
 
-  it('adds the appropriate globs for app router', async function () {
-    mockContext.useAppRouter = true;
-    await plugin.hooks.create.handler({}, mockContext);
+  describe('createAppFiles', () => {
 
-    const first = mockContext.files.add.mock.calls[0];
-    const second = mockContext.files.add.mock.calls[1];
+    it('adds shared files', async function () {
+      await create.handler({}, mockContext);
+      expect(mockContext.files.add).toHaveBeenCalledWith(
+        `${root}/../generator/app/shared/**/*`
+      );
+    });
 
-    expect(first).toEqual([
-      `${root}/../generator/app/shared/**/*`
-    ]);
-    expect(second).toEqual([
-      `${root}/../generator/app/app-router/**/*`
-    ]);
+    it('adds pages router files', async function () {
+      await create.handler({}, mockContext);
+      expect(mockContext.files.add).toHaveBeenCalledWith(
+        `${root}/../generator/app/pages-router/**/!(*.ts|*.tsx)`
+      );
+    });
+
+    it('adds app router files', async function () {
+      mockContext.useAppRouter = true;
+      await create.handler({}, mockContext);
+      expect(mockContext.files.add).toHaveBeenCalledWith(
+        `${root}/../generator/app/app-router/**/!(*.ts|*.tsx)`
+      );
+    });
+
+    it('handles TypeScript', async function () {
+      mockContext.typescript = true;
+      await create.handler({}, mockContext);
+      expect(mockContext.files.add).toHaveBeenCalledWith(
+        `${root}/../generator/app/pages-router/**/!(*.js|.jsx)`
+      );
+    });
   });
 
-  it('adds the appropriate globs for mocha', async function () {
-    mockContext.testPlugins = ['@gasket/mocha'];
-    await plugin.hooks.create.handler({}, mockContext);
+  describe('createTestFiles', () => {
 
-    expect(mockContext.files.add).toHaveBeenCalledWith(
-      `${root}/../generator/mocha/*`,
-      `${root}/../generator/mocha/**/*`
-    );
+    it('adds mocha files', async function () {
+      mockContext.testPlugins = ['@gasket/mocha'];
+      await create.handler({}, mockContext);
+      expect(mockContext.files.add).toHaveBeenCalledWith(
+        `${root}/../generator/mocha/*`,
+        `${root}/../generator/mocha/**/*`
+      );
+    });
+
+    it('adds jest files', async function () {
+      mockContext.testPlugins = ['@gasket/jest'];
+      await create.handler({}, mockContext);
+      expect(mockContext.files.add).toHaveBeenCalledWith(
+        `${root}/../generator/jest/*`,
+        `${root}/../generator/jest/**/*`
+      );
+    });
+
+    it('adds cypress files', async function () {
+      mockContext.testPlugins = ['@gasket/cypress'];
+      await create.handler({}, mockContext);
+      expect(mockContext.files.add).toHaveBeenCalledWith(
+        `${root}/../generator/cypress/*`,
+        `${root}/../generator/cypress/**/*`
+      );
+    });
   });
 
-  it('adds the appropriate globs for jest', async function () {
-    mockContext.testPlugins = ['@gasket/jest'];
-    await plugin.hooks.create.handler({}, mockContext);
+  describe('createNextFiles', () => {
 
-    expect(mockContext.files.add).toHaveBeenCalledWith(
-      `${root}/../generator/jest/*`,
-      `${root}/../generator/jest/**/*`
-    );
+    it('adds next.config.js', async function () {
+      await create.handler({}, mockContext);
+      expect(mockContext.files.add).toHaveBeenCalledWith(
+        `${root}/../generator/next/*(next.config).js`
+      );
+    });
+
+    it('adds server.js', async function () {
+      mockContext.nextDevProxy = true;
+      await create.handler({}, mockContext);
+      expect(mockContext.files.add).toHaveBeenCalledWith(
+        `${root}/../generator/next/*.js`
+      );
+    });
+
+    it('adds next.config.cjs for TypeScript', async function () {
+      mockContext.typescript = true;
+      await create.handler({}, mockContext);
+      expect(mockContext.files.add).toHaveBeenCalledWith(
+        `${root}/../generator/next/*.cjs`
+      );
+    });
   });
 
-  it('adds itself to the dependencies', async function () {
-    await plugin.hooks.create.handler({}, mockContext);
+  describe('addRedux', () => {
 
-    expect(mockContext.pkg.add).toHaveBeenCalledWith('dependencies',
-      expect.objectContaining({ [name]: `^${version}` })
-    );
+    it('adds redux files', async function () {
+      mockContext.useRedux = true;
+      await create.handler({}, mockContext);
+      expect(mockContext.files.add).toHaveBeenCalledWith(
+        `${root}/../generator/redux/*`,
+        `${root}/../generator/redux/**/*`
+      );
+    });
+
+    it('adds redux dependencies', async function () {
+      mockContext.useRedux = true;
+      await create.handler({}, mockContext);
+      expect(mockContext.pkg.add).toHaveBeenCalledWith('dependencies', {
+        'next-redux-wrapper': devDependencies['next-redux-wrapper'],
+        'lodash.merge': devDependencies['lodash.merge']
+      });
+    });
+
+    it('does not add redux files or dependencies', async function () {
+      mockContext.useRedux = false;
+      await create.handler({}, mockContext);
+      expect(mockContext.pkg.add).not.toHaveBeenCalledWith('dependencies', {
+        'next-redux-wrapper': devDependencies['next-redux-wrapper'],
+        'lodash.merge': devDependencies['lodash.merge']
+      });
+      expect(mockContext.files.add).not.toHaveBeenCalledWith(
+        `${root}/../generator/redux/*`,
+        `${root}/../generator/redux/**/*`
+      );
+    });
   });
 
-  it('adds appropriate dependencies', async function () {
-    await plugin.hooks.create.handler({}, mockContext);
+  describe('configureSitemap', () => {
 
-    expect(mockContext.pkg.add).toHaveBeenCalledWith('dependencies',
-      expect.objectContaining({
+    it('adds sitemap files', async function () {
+      mockContext.addSitemap = true;
+      await create.handler({}, mockContext);
+      expect(mockContext.files.add).toHaveBeenCalledWith(
+        `${root}/../generator/sitemap/*`
+      );
+    });
+
+    it('adds sitemap dependencies', async function () {
+      mockContext.addSitemap = true;
+      await create.handler({}, mockContext);
+      expect(mockContext.pkg.add).toHaveBeenCalledWith('dependencies', {
+        'next-sitemap': '^3.1.29'
+      });
+    });
+
+    it('adds sitemap script', async function () {
+      mockContext.addSitemap = true;
+      await create.handler({}, mockContext);
+      expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts', {
+        sitemap: 'next-sitemap'
+      });
+    });
+  });
+
+  describe('addDependencies', () => {
+
+    it('adds itself to the dependencies', async function () {
+      await create.handler({}, mockContext);
+
+      expect(mockContext.pkg.add).toHaveBeenCalledWith('dependencies',
+        expect.objectContaining({ [name]: `^${version}` })
+      );
+    });
+
+    it('adds dependencies', async function () {
+      await create.handler({}, mockContext);
+      expect(mockContext.pkg.add).toHaveBeenCalledWith('dependencies', {
         '@gasket/assets': devDependencies['@gasket/assets'],
         '@gasket/nextjs': devDependencies['@gasket/nextjs'],
+        [name]: `^${version}`,
         'next': devDependencies.next,
         'react': devDependencies.react,
         'react-dom': devDependencies['react-dom']
-      }));
-  });
+      });
+    });
 
-  it('add plugin import to the gasket file', async function () {
-    await plugin.hooks.create.handler({}, mockContext);
-    expect(mockContext.gasketConfig.addPlugin).toHaveBeenCalledWith('pluginNextjs', name);
-  });
+    it('adds babel-register for TypeScript', async function () {
+      mockContext.typescript = true;
+      await create.handler({}, mockContext);
+      expect(mockContext.pkg.add).toHaveBeenCalledWith('dependencies', {
+        '@babel/register': devDependencies['@babel/register'],
+        '@gasket/assets': devDependencies['@gasket/assets'],
+        '@gasket/nextjs': devDependencies['@gasket/nextjs'],
+        [name]: `^${version}`,
+        'next': devDependencies.next,
+        'react': devDependencies.react,
+        'react-dom': devDependencies['react-dom']
+      });
+    });
 
-  it('adds appropriate devDependencies', async function () {
-    mockContext.nextDevProxy = true;
-    await plugin.hooks.create.handler({}, mockContext);
-    expect(mockContext.pkg.add).toHaveBeenCalledWith('devDependencies', {
-      nodemon: devDependencies.nodemon
+    it('adds nodemon for dev', async function () {
+      mockContext.typescript = false;
+      await create.handler({}, mockContext);
+      expect(mockContext.pkg.add).toHaveBeenCalledWith('devDependencies', {
+        nodemon: devDependencies.nodemon
+      });
     });
   });
 
-  it('adds the appropriate globs for redux', async function () {
-    mockContext.useRedux = true;
-    await plugin.hooks.create.handler({}, mockContext);
+  describe('addNpmScripts', () => {
 
-    expect(mockContext.files.add).toHaveBeenCalledWith(
-      `${root}/../generator/redux/*`,
-      `${root}/../generator/redux/**/*`
-    );
-  });
+    it('adds default scripts', async function () {
+      await create.handler({}, mockContext);
+      expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts', {
+        build: 'next build',
+        start: 'next start',
+        local: 'next dev',
+        preview: 'npm run build && npm run start'
+      });
+    });
 
-  it('adds appropriate dependencies for redux', async function () {
-    mockContext.useRedux = true;
-    await plugin.hooks.create.handler({}, mockContext);
+    it('adds prebuild script for gasket-intl', async function () {
+      mockContext.hasGasketIntl = true;
+      await create.handler({}, mockContext);
+      expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts', {
+        build: 'next build',
+        start: 'next start',
+        local: 'next dev',
+        preview: 'npm run build && npm run start',
+        prebuild: 'node gasket.js build'
+      });
+    });
 
-    expect(mockContext.pkg.add).toHaveBeenCalledWith('dependencies', {
-      'next-redux-wrapper': devDependencies['next-redux-wrapper'],
-      'lodash.merge': devDependencies['lodash.merge']
+    it('adjust scripts for custom server', async function () {
+      mockContext.nextServerType = 'customServer';
+      await create.handler({}, mockContext);
+      expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts', {
+        build: 'next build',
+        start: 'node server.js',
+        preview: 'npm run build && npm run start',
+        local: 'GASKET_DEV=1 nodemon server.js'
+      });
+    });
+
+    it('adjusts scripts for devProxy', async function () {
+      mockContext.nextServerType = 'appRouter';
+      mockContext.nextDevProxy = true;
+      await create.handler({}, mockContext);
+      expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts', {
+        'local': 'next dev & nodemon server.js',
+        'start:local': 'next start & node server.js',
+        'preview': 'npm run build && npm run start & node server.js',
+        'build': 'next build',
+        'start': 'next start'
+      });
+    });
+
+    it('adjusts scripts for typescript', async function () {
+      mockContext.typescript = true;
+      mockContext.hasGasketIntl = true;
+      await create.handler({}, mockContext);
+      expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts', {
+        build: 'next build',
+        start: 'next start',
+        local: 'next dev',
+        preview: 'npm run build && npm run start',
+        prebuild: 'tsx gasket.ts build'
+      });
+    });
+
+    it('adjusts scripts for custom server & typescript', async function () {
+      mockContext.nextServerType = 'customServer';
+      mockContext.typescript = true;
+      mockContext.hasGasketIntl = true;
+      await create.handler({}, mockContext);
+      expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts', {
+        build: 'tsc -p ./tsconfig.server.json && next build',
+        start: 'node dist/server.js',
+        preview: 'npm run build && npm run start',
+        local: 'GASKET_DEV=1 tsx watch server.ts',
+        prebuild: 'tsx gasket.ts build'
+      });
+    });
+
+    it('adjusts scripts for devProxy & typescript', async function () {
+      mockContext.nextServerType = 'appRouter';
+      mockContext.nextDevProxy = true;
+      mockContext.typescript = true;
+      mockContext.hasGasketIntl = true;
+      await create.handler({}, mockContext);
+      expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts', {
+        'local': 'next dev & tsx watch server.ts',
+        'start:local': 'next start & tsx server.ts',
+        'preview': 'npm run build && npm run start & tsx server.ts',
+        'build': 'next build',
+        'start': 'next start',
+        'prebuild': 'tsx gasket.ts build'
+      });
     });
   });
 
-  it('does not add dependencies or globs for redux', async function () {
-    mockContext.useRedux = false;
-    await plugin.hooks.create.handler({}, mockContext);
+  describe('addConfig', () => {
 
-    expect(mockContext.pkg.add).not.toHaveBeenCalledWith('dependencies', {
-      'next-redux-wrapper': devDependencies['next-redux-wrapper'],
-      'lodash.merge': devDependencies['lodash.merge']
+    it('adds plugin import', async function () {
+      await create.handler({}, mockContext);
+      expect(mockContext.gasketConfig.addPlugin).toHaveBeenCalledWith('pluginNextjs', name);
     });
-    expect(mockContext.files.add).not.toHaveBeenCalledWith(
-      `${root}/../generator/redux/*`,
-      `${root}/../generator/redux/**/*`
-    );
-  });
 
-  it('adds appropriate dependencies for sitemap', async function () {
-    mockContext.addSitemap = true;
-    await plugin.hooks.create.handler({}, mockContext);
-
-    expect(mockContext.files.add).toHaveBeenCalledWith(
-      `${root}/../generator/sitemap/*`
-    );
-    expect(mockContext.pkg.add).toHaveBeenCalledWith('dependencies', {
-      'next-sitemap': '^3.1.29'
-    });
-    expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts', {
-      sitemap: 'next-sitemap'
-    });
-  });
-
-  it('adds next config & server files', async function () {
-    mockContext.nextDevProxy = true;
-    await plugin.hooks.create.handler({}, mockContext);
-    expect(mockContext.files.add).toHaveBeenCalledWith(
-      `${root}/../generator/next/*`
-    );
-  });
-
-  it('adds the appropriate npm scripts for Next.js default server', async function () {
-    mockContext.nextServerType = 'appRouter';
-    await plugin.hooks.create.handler({}, mockContext);
-
-    expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts', {
-      build: 'next build',
-      start: 'next start',
-      local: 'next dev',
-      preview: 'npm run build && npm run start'
-    });
-  });
-
-  it('adds start:local script for Next.js default server w/devProxy', async function () {
-    mockContext.nextServerType = 'appRouter';
-    mockContext.nextDevProxy = true;
-    await plugin.hooks.create.handler({}, mockContext);
-
-    expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts',
-      expect.objectContaining({
-        'start:local': 'next start & node server.js'
-      })
-    );
-  });
-
-  it('adds the appropriate npm scripts for custom server', async function () {
-    mockContext.nextServerType = 'customServer';
-    await plugin.hooks.create.handler({}, mockContext);
-
-    expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts', {
-      build: 'next build',
-      start: 'node server.js',
-      preview: 'npm run build && npm run start',
-      local: 'GASKET_DEV=1 nodemon server.js'
+    it('adds devProxy config', async function () {
+      mockContext.nextDevProxy = true;
+      await create.handler({}, mockContext);
+      expect(mockContext.gasketConfig.add).toHaveBeenCalledWith('devProxy', {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: 80,
+        xfwd: true,
+        ws: true,
+        target: {
+          host: 'localhost',
+          port: 3000
+        }
+      });
     });
   });
 });

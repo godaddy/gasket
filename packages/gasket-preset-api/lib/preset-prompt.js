@@ -26,5 +26,7 @@ export default async function presetPrompt(gasket, context, { prompt }) {
     ]);
 
     Object.assign(context, { server });
+
+    return context;
   }
 }

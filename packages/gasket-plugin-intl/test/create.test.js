@@ -46,7 +46,7 @@ describe('create', function () {
   it('adds the appropriate globs', async function () {
     const rootDir = path.join(__dirname, '..');
     await plugin.hooks.create(mockGasket, mockContext);
-    expect(filesAddStub.mock.calls[0][0]).toEqual(
+    expect(filesAddStub).toHaveBeenCalledWith(
       `${rootDir}/generator/*`,
       `${rootDir}/generator/**/*`
     );
@@ -66,18 +66,11 @@ describe('create', function () {
     expect(pkgAddStub.mock.calls[0]).toEqual(['dependencies', {
       [name]: devDependencies['@gasket/react-intl']
     }]);
-    expect(pkgAddStub.mock.calls[2]).toEqual(['dependencies', {
+    expect(pkgAddStub.mock.calls[1]).toEqual(['dependencies', {
       '@gasket/intl': devDependencies['@gasket/intl'],
       '@gasket/react-intl': devDependencies['@gasket/react-intl'],
       'react-intl': devDependencies['react-intl']
     }]);
-  });
-
-  it('adds the appropriate scripts', async function () {
-    await plugin.hooks.create(mockGasket, mockContext);
-    expect(pkgAddStub).toHaveBeenCalledWith('scripts', {
-      prebuild: 'node gasket.js build'
-    });
   });
 
   it('adds the default intl.locales config', async function () {

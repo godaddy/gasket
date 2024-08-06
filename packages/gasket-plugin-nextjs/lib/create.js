@@ -3,17 +3,20 @@ const { name, version, devDependencies } = require('../package.json');
 /**
  * createAppFiles
  * @property {Files} files - The Gasket Files API.
- * @property {generatorDir} - The directory of the generator.
+ * @property {string} generatorDir - The directory of the generator.
+ * @property {boolean} useAppRouter - Selected app router from prompt
+ * @property {boolean} typescript - Selected typescript from prompt
  */
-function createAppFiles({ files, generatorDir, useAppRouter }) {
+function createAppFiles({ files, generatorDir, useAppRouter, typescript }) {
   files.add(
     `${generatorDir}/app/shared/**/*`
   );
 
+  const globIgnore = typescript ? '!(*.js|.jsx)' : '!(*.ts|*.tsx)';
   const appStructure = useAppRouter ? 'app-router' : 'pages-router';
 
   files.add(
-    `${generatorDir}/app/${appStructure}/**/*`
+    `${generatorDir}/app/${appStructure}/**/${globIgnore}`
   );
 }
 
@@ -47,11 +50,18 @@ function createTestFiles({ files, generatorDir, testPlugins }) {
  */
 function createNextFiles({ files, generatorDir, nextDevProxy, typescript, nextServerType }) {
   let glob;
-  if (
-    typescript ||
-    (!nextDevProxy && nextServerType !== 'customServer')
-  ) glob = `${generatorDir}/next/*[!server].js`;
-  else glob = `${generatorDir}/next/*`;
+
+  // TS only next.config.cjs
+  if (typescript) {
+    glob = `${generatorDir}/next/*.cjs`;
+    // if no proxy and using defaultServer, add next.config.js
+  } else if (!nextDevProxy && nextServerType !== 'customServer') {
+    glob = `${generatorDir}/next/*(next.config).js`;
+    // if proxy or customServer, add server.js & next.config.js
+  } else {
+    glob = `${generatorDir}/next/*.js`;
+  }
+
   files.add(glob);
 }
 
@@ -75,9 +85,14 @@ function configureSitemap({ files, pkg, generatorDir }) {
 /**
  * addDependencies
  * @property {PackageJsonBuilder} pkg - The Gasket PackageJson API.
+ * @property {boolean} typescript - Selected typescript from prompt
  */
-function addDependencies({ pkg }) {
+function addDependencies({ pkg, typescript }) {
+  // Dep to transpile TS files at runtime
+  const babelRegisterDep = typescript ? { '@babel/register': devDependencies['@babel/register'] } : {};
+
   pkg.add('dependencies', {
+    ...babelRegisterDep,
     '@gasket/assets': devDependencies['@gasket/assets'],
     '@gasket/nextjs': devDependencies['@gasket/nextjs'],
     [name]: `^${version}`,
@@ -86,9 +101,12 @@ function addDependencies({ pkg }) {
     'react-dom': devDependencies['react-dom']
   });
 
-  pkg.add('devDependencies', {
-    nodemon: devDependencies.nodemon
-  });
+  // Add nodemon for dev if not using TS
+  if (typescript === false) {
+    pkg.add('devDependencies', {
+      nodemon: devDependencies.nodemon
+    });
+  }
 }
 
 /**
@@ -109,33 +127,43 @@ function addRedux({ files, pkg, generatorDir }) {
 /**
  * addNpmScripts
  * @property {PackageJsonBuilder} pkg - The Gasket PackageJson API.
- * @property {nextServerType} - Selected server type from prompt
- * @property {nextDevProxy} - Selected dev proxy from prompt
- * @property {typescript} - Selected typescript from prompt
+ * @property {string} nextServerType - Selected server type from prompt
+ * @property {boolean} nextDevProxy - Selected dev proxy from prompt
+ * @property {boolean} typescript - Selected typescript from prompt
+ * @property {boolean} hasGasketIntl - Selected gasket-intl from prompt
  */
-function addNpmScripts({ pkg, nextServerType, nextDevProxy, typescript }) {
+function addNpmScripts({ pkg, nextServerType, nextDevProxy, typescript, hasGasketIntl }) {
   const fileExtension = typescript ? 'ts' : 'js';
+  const bin = typescript ? 'tsx' : 'node';
+  const watcher = typescript ? 'tsx watch' : 'nodemon';
+  const prebuild = hasGasketIntl ? { prebuild: `${bin} gasket.${fileExtension} build` } : {};
+
   const scripts = {
     build: 'next build',
     start: 'next start',
     local: 'next dev',
-    preview: 'npm run build && npm run start'
+    preview: 'npm run build && npm run start',
+    ...prebuild
   };
 
   if (nextServerType === 'customServer') {
-    scripts.start = `node server.${fileExtension}`;
-    scripts.local = `GASKET_DEV=1 nodemon server.${fileExtension}`;
+    scripts.start = typescript ?
+      `node dist/server.js` :
+      `node server.js`;
+    scripts.build = typescript ?
+      `tsc -p ./tsconfig.server.json && next build` :
+      `next build`;
+    scripts.local = `GASKET_DEV=1 ${watcher} server.${fileExtension}`;
   } else if (nextDevProxy) {
-    scripts.local = `${scripts.local} & nodemon server.${fileExtension}`;
-    scripts['start:local'] = `${scripts.start} & node server.${fileExtension}`;
-    scripts.preview = `${scripts.preview} & node server.${fileExtension}`;
+    scripts.local = `${scripts.local} & ${watcher} server.${fileExtension}`;
+    scripts['start:local'] = `${scripts.start} & ${bin} server.${fileExtension}`;
+    scripts.preview = `${scripts.preview} & ${bin} server.${fileExtension}`;
   }
 
   pkg.add('scripts', scripts);
 }
 
-function addConfig(createContext) {
-  const { gasketConfig, nextDevProxy } = createContext;
+function addConfig({ gasketConfig, nextDevProxy }) {
   gasketConfig.addPlugin('pluginNextjs', name);
 
   if (nextDevProxy) {
@@ -172,15 +200,16 @@ module.exports = {
       nextDevProxy,
       typescript,
       useRedux,
-      useAppRouter
+      useAppRouter,
+      hasGasketIntl
     } = context;
     const generatorDir = `${__dirname}/../generator`;
 
-    createAppFiles({ files, generatorDir, useAppRouter });
+    createAppFiles({ files, generatorDir, useAppRouter, typescript });
     createTestFiles({ files, generatorDir, testPlugins });
     createNextFiles({ files, generatorDir, nextDevProxy, typescript, nextServerType });
-    addDependencies({ pkg });
-    addNpmScripts({ pkg, nextServerType, nextDevProxy, typescript });
+    addDependencies({ pkg, typescript });
+    addNpmScripts({ pkg, nextServerType, nextDevProxy, typescript, hasGasketIntl });
     addConfig(context);
     if (addSitemap) configureSitemap({ files, pkg, generatorDir });
     if (useRedux) addRedux({ files, pkg, generatorDir });
