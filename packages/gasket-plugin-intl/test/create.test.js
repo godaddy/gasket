@@ -47,18 +47,8 @@ describe('create', function () {
     const rootDir = path.join(__dirname, '..');
     await plugin.hooks.create(mockGasket, mockContext);
     expect(filesAddStub).toHaveBeenCalledWith(
-      `${rootDir}/generator/*.js`,
-      `${rootDir}/generator/**/*.json`
-    );
-  });
-
-  it('adds the globs for typescript', async function () {
-    const rootDir = path.join(__dirname, '..');
-    mockContext.typescript = true;
-    await plugin.hooks.create(mockGasket, mockContext);
-    expect(filesAddStub).toHaveBeenCalledWith(
-      `${rootDir}/generator/*.ts`,
-      `${rootDir}/generator/**/*.json`
+      `${rootDir}/generator/*`,
+      `${rootDir}/generator/**/*`
     );
   });
 
