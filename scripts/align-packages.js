@@ -34,7 +34,7 @@ const depVersions = {
 
   'react': '^18.2.0',
   'react-dom': '^18.2.0',
-  'react-intl': '^6.0.0',
+  'react-intl': '^6.6.8',
   'prop-types': '^15.8.1',
   'redux': '^4.0.5',
   'next': '^14.0.0',
@@ -70,11 +70,9 @@ const depVersions = {
  * @type {Object.<string,string>}
  */
 const peerDepVersions = {
-  'next': '>=10.2.0 <= 13.1.1 || ^14',
-  'prop-types': '^15',
-  'react': '^16 || ^17 || ^18',
-  'react-dom': '^16 || ^17 || ^18',
-  'react-intl': '<7.0.0',
+  'next': '^14',
+  'react': '^18',
+  'react-dom': '^18',
   'redux': '^3.7.2 || ^4.0.1'
 };
 

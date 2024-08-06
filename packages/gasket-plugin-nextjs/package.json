@@ -75,9 +75,9 @@
     "@gasket/plugin-webpack": "^7"
   },
   "peerDependencies": {
-    "next": ">=10.2.0 <= 13.1.1 || ^14",
-    "react": "^16 || ^17 || ^18",
-    "react-dom": "^16 || ^17 || ^18"
+    "next": "^14",
+    "react": "^18",
+    "react-dom": "^18"
   },
   "eslintConfig": {
     "extends": [
