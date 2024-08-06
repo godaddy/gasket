@@ -5,6 +5,7 @@
     "moduleResolution": "NodeNext",
     "allowJs": true,
     "checkJs": true,
+    "downlevelIteration": true,
     "noEmit": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
