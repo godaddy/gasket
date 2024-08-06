@@ -85,10 +85,9 @@ configuration is augmented with the `prod` environment settings, then the
 ```
 
 The last step is making sure that Gasket is told which environment it is running
-in when starting up. There are three ways of doing this. The first would be to
-set the `GASKET_ENV` environment variable. Alternatively, you can
-programmatically set an `env` property at the top level of your configuration,
-enabling you to use any arbitrary environment derivation logic.
+in when starting up. To do so, set the `GASKET_ENV` environment variable.
+Alternatively, you can programmatically set an `env` property at the top level
+of your configuration, enabling you to use any arbitrary environment derivation logic.
 
 ## Accessing Gasket configuration in your application
 
