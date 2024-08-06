@@ -8,7 +8,7 @@ export async function resolveGasketData(gasket, req) {
   if (typeof document !== 'undefined') {
     data = gasketData();
   } else {
-    data = gasket.actions.getPublicGasketData(req);
+    data = await gasket.actions.getPublicGasketData(req);
   }
 
   return data;
