@@ -9,5 +9,5 @@ type Layout = (props: PropsWithChildren<any>) => MaybeAsync<ReactElement>;
 
 export function withGasketData(
   gasket: Gasket,
-  options: LayoutOptions
+  options?: LayoutOptions
 ): (layout: Layout) => (props: PropsWithChildren<any>) => Promise<ReactElement>

@@ -35,10 +35,6 @@ module.exports = async function create(gasket, createContext) {
     [name]: `^${version}`
   });
 
-  pkg.add('scripts', {
-    prebuild: 'node gasket.js build'
-  });
-
   if (isReactProject) {
     pkg.add('dependencies', {
       '@gasket/intl': devDependencies['@gasket/intl'],

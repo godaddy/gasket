@@ -84,7 +84,7 @@ describe('write-gasket-config', () => {
     const output = mockWriteStub.mock.calls[0][1];
     expect(output).toContain('import pluginBogus from \'@gasket/plugin-bogus\';');
     expect(output).toContain('import pluginBogus2 from \'@gasket/plugin-bogus2\';');
-    expect(output.match(/\[(\s.*)+\]/)[0]).toBe('[\n\t\tpluginBogus,\n\t\tpluginBogus2\n]');
+    expect(output.match(/\[(\s.*)+\]/)[0]).toBe('[\n\t\tpluginBogus,\n\t\tpluginBogus2\n\xa0\xa0]');
   });
 
   it('writes non-plugin imports', async () => {
