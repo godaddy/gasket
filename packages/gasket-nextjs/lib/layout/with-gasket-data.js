@@ -31,7 +31,7 @@ export function withGasketData(gasket, options = { index: -1 }) {
   return layout => async props => {
     const req = request();
     const gasketData = req ? await gasket.actions.getPublicGasketData?.(req) ?? {} : {};
-    const html = layout({ ...props });
+    const html = await layout({ ...props });
     return injectGasketData(html, gasketData, lookupIndex, index);
   }
 }
