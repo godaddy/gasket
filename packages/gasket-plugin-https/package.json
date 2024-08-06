@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-https",
-  "version": "7.0.0-next.47",
+  "version": "7.0.0-next.48",
   "description": "Create http/s servers with graceful termination",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -49,7 +49,7 @@
     "one-time": "^1.0.0"
   },
   "devDependencies": {
-    "@gasket/core": "^7.0.0-next.47",
+    "@gasket/core": "^7.0.0-next.48",
     "@types/jest": "^29.5.12",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
