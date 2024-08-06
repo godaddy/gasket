@@ -10,6 +10,7 @@
 // eslint-disable-next-line max-statements
 module.exports = async function createServers(gasket, serverOpts) {
   const fastify = require('fastify');
+
   const { config, logger } = gasket;
   const {
     fastify: {

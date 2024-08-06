@@ -47,9 +47,9 @@ declare module '@gasket/core' {
 
   export interface HookExecTypes {
     middleware(
-      fastify: Fastify
+      app: FastifyInstance
     ): MaybeAsync<MaybeMultiple<Handler> & { paths?: (string | RegExp)[] }>;
-    fastify(fastify: FastifyInstance): MaybeAsync<void>;
+    fastify(app: FastifyInstance): MaybeAsync<void>;
     errorMiddleware(): MaybeAsync<MaybeMultiple<ErrorHandler>>;
   }
 }
