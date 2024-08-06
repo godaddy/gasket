@@ -77,7 +77,6 @@ declare module 'create-gasket-app' {
     nextServerType: 'appRouter' | 'pageRouter' | 'customServer';
     nextDevProxy: boolean;
     typescript: boolean;
-    useRedux: boolean;
     useAppRouter: boolean;
   }
 }

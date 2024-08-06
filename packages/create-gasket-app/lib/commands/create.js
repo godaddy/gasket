@@ -111,6 +111,7 @@ createCommand.action = async function run(appname, options, command) {
     await globalPrompts({ context });
 
     if (rawPresets.length || localPresets.length) {
+
       await loadPreset({ context });
 
       const presetGasket = makeGasket({
