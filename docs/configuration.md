@@ -109,7 +109,7 @@ export default { name, hooks };
 
 // app-code.js
 
-import gasket from './gasket';
+import gasket from './gasket.js';
 
 console.log(gasket.config);
 ```
