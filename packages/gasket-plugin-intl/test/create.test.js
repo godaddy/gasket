@@ -3,6 +3,7 @@ const plugin = require('../lib/index');
 const { devDependencies, name } = require('../package.json');
 
 describe('create', function () {
+  let mockGasket;
   let mockContext;
   let pkgHasStub;
   let pkgAddStub;
@@ -16,6 +17,12 @@ describe('create', function () {
     filesAddStub = jest.fn();
     addPluginStub = jest.fn();
     addStub = jest.fn();
+
+    mockGasket = {
+      config: {
+        intl: {}
+      }
+    };
 
     mockContext = {
       pkg: {
@@ -38,7 +45,7 @@ describe('create', function () {
 
   it('adds the appropriate globs', async function () {
     const rootDir = path.join(__dirname, '..');
-    await plugin.hooks.create({}, mockContext);
+    await plugin.hooks.create(mockGasket, mockContext);
     expect(filesAddStub.mock.calls[0][0]).toEqual(
       `${rootDir}/generator/*`,
       `${rootDir}/generator/**/*`
@@ -55,7 +62,7 @@ describe('create', function () {
   });
 
   it('adds the appropriate dependencies', async function () {
-    await plugin.hooks.create({}, mockContext);
+    await plugin.hooks.create(mockGasket, mockContext);
     expect(pkgAddStub.mock.calls[0]).toEqual(['dependencies', {
       [name]: devDependencies['@gasket/react-intl']
     }]);
@@ -67,24 +74,46 @@ describe('create', function () {
   });
 
   it('adds the appropriate scripts', async function () {
-    await plugin.hooks.create({}, mockContext);
+    await plugin.hooks.create(mockGasket, mockContext);
     expect(pkgAddStub).toHaveBeenCalledWith('scripts', {
       prebuild: 'node gasket.js build'
     });
   });
 
   it('adds the default intl.locales config', async function () {
-    await plugin.hooks.create({}, mockContext);
+    await plugin.hooks.create(mockGasket, mockContext);
     expect(addStub).toHaveBeenCalledWith('intl', {
-      locales: ['en-US']
+      locales: ['en-US', 'fr-FR']
     });
   });
 
   it('does nothing if hasGasketIntl is false', async function () {
     mockContext.hasGasketIntl = false;
-    await plugin.hooks.create({}, mockContext);
+    await plugin.hooks.create(mockGasket, mockContext);
     expect(pkgAddStub).not.toHaveBeenCalled();
     expect(filesAddStub).not.toHaveBeenCalled();
     expect(addStub).not.toHaveBeenCalled();
+  });
+
+  it('adjusts config for typescript', async function () {
+    mockContext.typescript = true;
+    await plugin.hooks.create(mockGasket, mockContext);
+    expect(addStub).toHaveBeenCalledWith('intl', {
+      locales: ['en-US', 'fr-FR'],
+      managerFilename: 'intl.ts'
+    });
+  });
+
+  it('adjusts current config generating intl file', async function () {
+    expect(mockGasket.config.intl.locales).toBeUndefined();
+    expect(mockGasket.config.intl.managerFilename).toBeUndefined();
+
+    await plugin.hooks.create(mockGasket, mockContext);
+    expect(mockGasket.config.intl.locales).toEqual(['en-US', 'fr-FR']);
+    expect(mockGasket.config.intl.managerFilename).toEqual('intl.js');
+
+    mockContext.typescript = true;
+    await plugin.hooks.create(mockGasket, mockContext);
+    expect(mockGasket.config.intl.managerFilename).toEqual('intl.ts');
   });
 });

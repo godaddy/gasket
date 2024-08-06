@@ -10,6 +10,7 @@ const apmTransaction = require('./apm-transaction');
 
 const { getIntlConfig } = require('./configure');
 const create = require('./create');
+const postCreate = require('./post-create');
 const prompt = require('./prompt');
 const build = require('./build');
 
@@ -23,6 +24,7 @@ const plugin = {
     init,
     configure,
     create,
+    postCreate,
     prompt,
     build,
     apmTransaction,
