@@ -2,6 +2,7 @@
 
 import { resolveGasketData } from '@gasket/data';
 
+/** @type {import('.').withLocaleInitialProps} */
 export function withLocaleInitialProps(gasket) {
   return function wrapper(Component) {
     const originalGetInitialProps = Component.getInitialProps;
