@@ -1,11 +1,11 @@
 import { PropsWithChildren, ReactElement } from 'react';
-import type { Gasket } from '@gasket/core';
+import type { Gasket, MaybeAsync } from '@gasket/core';
 
 type LayoutOptions = {
   index: number;
 }
 
-type Layout = (props: PropsWithChildren<any>) => ReactElement;
+type Layout = (props: PropsWithChildren<any>) => MaybeAsync<ReactElement>;
 
 export function withGasketData(
   gasket: Gasket,
