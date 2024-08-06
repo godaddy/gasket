@@ -35,7 +35,7 @@ declare module '@gasket/core' {
   }
 
   export interface GasketActions {
-    getIntlLocale: (req: GasketRequest) => string;
+    getIntlLocale: (req: GasketRequest) => MaybeAsync<string>;
     /**
      * Provides access to the Intl manager instance to plugins.
      * Especially useful for plugins that are still CJS.
@@ -48,6 +48,14 @@ declare module '@gasket/core' {
       locale: string,
       context: { req: GasketRequest }
     ): MaybeAsync<string>;
+  }
+}
+
+declare module '@gasket/data' {
+  export interface GasketData {
+    intl?: {
+      locale: string;
+    };
   }
 }
 

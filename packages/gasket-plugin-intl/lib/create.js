@@ -4,20 +4,33 @@ const path = require('path');
 const { devDependencies, name, version } = require('../package.json');
 
 /** @type {import('@gasket/core').HookHandler<'create'>} */
-module.exports = async function create(gasket, context) {
-  if (context.hasGasketIntl === false) return;
+module.exports = async function create(gasket, createContext) {
+  if (createContext.hasGasketIntl === false) {
+    return;
+  }
 
-  const { files, pkg, gasketConfig } = context;
+  // adjust config
+  gasket.config.intl.locales = ['en-US', 'fr-FR'];
+  gasket.config.intl.managerFilename = 'intl.js';
+  if (createContext.typescript) gasket.config.intl.managerFilename = 'intl.ts';
+
+  const { files, pkg, gasketConfig } = createContext;
   const rootDir = path.join(__dirname, '..');
   const isReactProject = pkg.has('dependencies', 'react');
-  const glob = context.typescript ? '*.ts' : '*.js';
+  const glob = createContext.typescript ? '*.ts' : '*.js';
   files.add(`${rootDir}/generator/${glob}`, `${rootDir}/generator/**/*.json`);
 
   gasketConfig.addPlugin('pluginIntl', name);
 
-  gasketConfig.add('intl', {
-    locales: ['en-US']
-  });
+  const initialConfig = {
+    locales: gasket.config.intl.locales
+  };
+
+  if (createContext.typescript) {
+    initialConfig.managerFilename = gasket.config.intl.managerFilename;
+  }
+
+  gasketConfig.add('intl', initialConfig);
 
   pkg.add('dependencies', {
     [name]: `^${version}`

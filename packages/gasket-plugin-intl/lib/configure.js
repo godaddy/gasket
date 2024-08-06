@@ -73,7 +73,8 @@ module.exports = function configure(gasket, config) {
     localesMap,
     defaultLocaleFilePath,
     staticLocaleFilePaths,
-    localesDir: fullLocalesDir,
+    localesDir,
+    fullLocalesDir,
     managerFilename,
     modules
   };
