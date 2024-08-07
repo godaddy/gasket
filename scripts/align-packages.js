@@ -38,7 +38,6 @@ const depVersions = {
   'prop-types': '^15.8.1',
   'redux': '^4.0.5',
   'next': '^14.0.0',
-  'next-redux-wrapper': '^8.0.0',
   'jsdom': '^20.0.0',
 
   'babel-eslint': '^10.1.0',

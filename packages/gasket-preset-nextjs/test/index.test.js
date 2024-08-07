@@ -37,7 +37,6 @@ describe('gasket-preset-nextjs', () => {
       '@gasket/plugin-lint',
       '@gasket/plugin-mocha',
       '@gasket/plugin-nextjs',
-      '@gasket/plugin-redux',
       '@gasket/plugin-typescript',
       '@gasket/plugin-webpack',
       '@gasket/plugin-winston',

@@ -24,15 +24,15 @@ export default makeGasket({
 
 ## Configuration
 
-Gasket apps will need to have a `store.js` file either in a `./redux` directory
-or at the root of the project. New apps created with this plugin will
-automatically have this file generated.
+This plugin is only compatible with Gasket apps that use the [pages router] in Next.js with a [custom server].
+
+Gasket apps will need to have a `store.js` file either in a `./redux` directory or at the root of the project.
 
 The store.js file should export a makeStore function. Use `configureMakeStore`
 from [@gasket/redux] to simplify this setup.
 
 App developers can choose to use different file location setting the
-`redux.makeStore` option in their gasket.config.js. See option details below.
+`redux.makeStore` option in their gasket.js file. See option details below.
 
 ### Options
 
@@ -172,9 +172,7 @@ If you have a plugin which installs a package with reducers, you can
 include those in the generated store.js during the **create** command.
 
 In the `create` lifecycle hook of your plugin, you can access
-`reduxReducers` to add import and entry statements while will be injected
-to the store template. The store.js file is generated with as CommonJS
-exports and so the import statements should be in CommonJS format.
+`reduxReducers` to add import and entry statements while will be injected to the store template.
 
 ```js
 export default {
@@ -240,5 +238,7 @@ will be replaced by the [EnvironmentPlugin].
 
 <!-- LINKS -->
 
+[pages router]:https://nextjs.org/docs/pages
+[custom server]:https://nextjs.org/docs/pages/building-your-application/configuring/custom-server
 [@gasket/redux]:/packages/gasket-redux/README.md#gasketredux
 [EnvironmentPlugin]:https://webpack.js.org/plugins/environment-plugin/

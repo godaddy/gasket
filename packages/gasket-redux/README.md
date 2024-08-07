@@ -56,16 +56,15 @@ will make a new instance. Context can include a `store` property directly or on
 
 ## Usage
 
-Gasket apps ship with a default a redux configuration which includes the
-redux-thunk middleware. This should be sufficient for most app needs, however
-the `configureMakeStore` can be used to do any additional configuration. The
-most common use case is to add reducers as the app level.
+This package is only compatible with Gasket apps that use the [pages router] in Next.js with a [custom server].
+
+Gasket apps no longer ship with a default redux configuration which includes the
+redux-thunk middleware. The `configureMakeStore` can be used to do any configuration. The
+most common use case is to add reducers at the app level.
 
 By default, custom store configurations can be placed in a `store.js` at the
 root of your app or in a `./redux` dir. If you wish for it to reside elsewhere,
-direct the `redux.makeStore` property to it in your app's gasket.config.js.
-Custom make store files should use CommonJS imports since they will be executed
-in NodeJS for SSR.
+direct the `redux.makeStore` property to it in your app's `gasket.js` file.
 
 #### Example: adding reducers
 
@@ -127,8 +126,7 @@ export default configureMakeStore({ reducers, middleware }, store => {
 });
 ```
 
-Next in the gasket.config.js, set the `redux.makeStore` field to the file. This
-will start up the app using the custom configuration.
+Next in the gasket.js, set the `redux.makeStore` field to the file. This will start up the app using the custom configuration.
 
 ```js
 // gasket.js
@@ -156,7 +154,7 @@ import thunk from 'redux-thunk';
 const myExtraArg = {};
 const thunkMiddleware = thunk.withExtraArgument(myExtraArg);
 
-module.exports = configureMakeStore({ reducers, thunkMiddleware });
+export default configureMakeStore({ reducers, thunkMiddleware });
 ```
 
 ## License
@@ -165,5 +163,7 @@ module.exports = configureMakeStore({ reducers, thunkMiddleware });
 
 <!-- LINKS -->
 
+[pages router]:https://nextjs.org/docs/pages
+[custom server]:https://nextjs.org/docs/pages/
 [combined]: https://redux.js.org/api/combinereducers
 [@gasket/data]: /packages/gasket-data/README.md

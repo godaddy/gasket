@@ -1,6 +1,6 @@
 const path = require('path');
 const plugin = require('../lib/index');
-const { devDependencies, name } = require('../package.json');
+const { devDependencies, name, version } = require('../package.json');
 
 describe('create', function () {
   let mockGasket;
@@ -64,7 +64,7 @@ describe('create', function () {
   it('adds the appropriate dependencies', async function () {
     await plugin.hooks.create(mockGasket, mockContext);
     expect(pkgAddStub.mock.calls[0]).toEqual(['dependencies', {
-      [name]: devDependencies['@gasket/react-intl']
+      [name]: `^${version}`
     }]);
     expect(pkgAddStub.mock.calls[1]).toEqual(['dependencies', {
       '@gasket/intl': devDependencies['@gasket/intl'],

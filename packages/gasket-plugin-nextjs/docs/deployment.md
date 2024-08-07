@@ -107,7 +107,6 @@ Ensure that the following files are included when you deploy your application:
 - `package-lock.json` *Automatically generated file about the installed dependencies*
 - `.babelrc` *Config file for babel*
 - `gasket.js` *Config file for Gasket*
-- `store.js` *Scripts for creating a redux store and/or attaching a reducer*
 
 ## Deployment checklist
 
