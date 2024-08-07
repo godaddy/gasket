@@ -376,9 +376,12 @@ export class ConfigBuilder {
         return;
       }
 
+      // If a prerelease version, strip the range prefix
+      const version = ver.includes('-') ? ver.replace(/^[\^~]/, '') : ver;
+
       const blameId = `${key}.${dep}`;
       if (!prev) {
-        existing[dep] = ver;
+        existing[dep] = version;
         setBlame(blameId);
         return;
       }
@@ -386,7 +389,7 @@ export class ConfigBuilder {
       const blamed = this.blame.get(blameId);
       const forced = this.force.has(blameId);
 
-      if (prev === ver) {
+      if (prev === version) {
         if (forced) return;
         if (force) {
           setBlame(blameId);
@@ -398,21 +401,21 @@ export class ConfigBuilder {
 
       const prevName = blamed.join(', ');
       if (!forced) {
-        const newer = force ? ver : this.tryGetNewerRange(prev, ver);
-        const overridden = newer === ver;
+        const newer = force ? version : this.tryGetNewerRange(prev, version);
+        const overridden = newer === version;
         if (overridden) {
-          existing[dep] = ver;
+          existing[dep] = version;
           setBlame(blameId);
         }
       }
 
-      if (!semver.validRange(prev) || !semver.validRange(ver) || !semver.intersects(prev, ver)) {
+      if (!semver.validRange(prev) || !semver.validRange(version) || !semver.intersects(prev, version)) {
         let forceMsg = force ? '(forced)' : '';
         forceMsg = forced && force ? '(cannot be forced)' : forceMsg;
         this.warn(`
   Conflicting versions for ${dep} in "${key}":
     - ${prev} provided by ${prevName} ${forced && '(forced)' || ''}
-    - ${ver} provided by ${name} ${forceMsg}
+    - ${version} provided by ${name} ${forceMsg}
     Using ${existing[dep]}, but this may cause unexpected behavior.
 `);
       }
