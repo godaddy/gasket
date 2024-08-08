@@ -10,6 +10,7 @@
 // eslint-disable-next-line max-statements
 module.exports = async function createServers(gasket, serverOpts) {
   const fastify = require('fastify');
+
   const { config, logger } = gasket;
   const {
     fastify: {
@@ -35,6 +36,7 @@ module.exports = async function createServers(gasket, serverOpts) {
   }
 
   const postRenderingStacks = (await gasket.exec('errorMiddleware')).filter(Boolean);
+  // @ts-ignore
   postRenderingStacks.forEach((stack) => app.use(stack));
 
   return {
