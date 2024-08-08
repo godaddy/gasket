@@ -20,7 +20,8 @@ describe('create hook', () => {
     jest.clearAllMocks();
   });
 
-  it('adds devDependencies to package.json', () => {
+  it('adds devDependencies to package.json for api apps', () => {
+    mockContext.apiApp = true;
     create({}, mockContext);
     expect(mockContext.pkg.add).toHaveBeenCalledWith('devDependencies', {
       tsx: devDependencies.tsx,
@@ -28,11 +29,21 @@ describe('create hook', () => {
     });
   });
 
+  it('adds dependencies to package.json for next apps', () => {
+    create({}, mockContext);
+    expect(mockContext.pkg.add).toHaveBeenCalledWith('dependencies', {
+      tsx: devDependencies.tsx,
+      typescript: devDependencies.typescript
+    });
+  });
+
+
   describe('apiApp', () => {
     it('adds scripts to package.json', () => {
       mockContext.apiApp = true;
       create({}, mockContext);
       expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts', {
+        prebuild: 'tsx gasket.ts build',
         build: 'tsc',
         start: 'node dist/server.js',
         local: 'GASKET_ENV=local tsx watch server.ts'
@@ -54,6 +65,7 @@ describe('create hook', () => {
     });
 
     it('adds files for defaultServer w/o dev proxy', () => {
+      mockContext.nextDevProxy = false
       create({}, mockContext);
       expect(mockContext.files.add).toHaveBeenCalledWith(expect.stringMatching(/generator\/next\/\*\(tsconfig\).json$/));
     });
