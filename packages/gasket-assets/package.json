@@ -1,6 +1,6 @@
 {
   "name": "@gasket/assets",
-  "version": "7.0.0-next.47",
+  "version": "7.0.0-next.51",
   "description": "Gasket assets",
   "main": "react/index.js",
   "files": [

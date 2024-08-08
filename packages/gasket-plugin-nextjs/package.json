@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-nextjs",
-  "version": "7.0.0-next.47",
+  "version": "7.0.0-next.51",
   "description": "Adds Next support to your application",
   "types": "lib/index.d.ts",
   "files": [
@@ -46,14 +46,15 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-nextjs",
   "dependencies": {
-    "@gasket/plugin-webpack": "^7.0.0-next.47",
+    "@gasket/plugin-webpack": "7.0.0-next.51",
     "fastify": "^4.28.1"
   },
   "devDependencies": {
     "@babel/preset-react": "^7.23.3",
-    "@gasket/assets": "^7.0.0-next.47",
-    "@gasket/core": "^7.0.0-next.47",
-    "@gasket/nextjs": "^7.0.0-next.47",
+    "@babel/register": "^7.24.6",
+    "@gasket/assets": "7.0.0-next.51",
+    "@gasket/core": "7.0.0-next.51",
+    "@gasket/nextjs": "7.0.0-next.51",
     "babel-eslint": "^10.1.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
@@ -75,9 +76,9 @@
     "@gasket/plugin-webpack": "^7"
   },
   "peerDependencies": {
-    "next": ">=10.2.0 <= 13.1.1 || ^14",
-    "react": "^16 || ^17 || ^18",
-    "react-dom": "^16 || ^17 || ^18"
+    "next": "^14",
+    "react": "^18",
+    "react-dom": "^18"
   },
   "eslintConfig": {
     "extends": [

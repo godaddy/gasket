@@ -19,7 +19,9 @@ describe('Plugin', function () {
       'build',
       'configure',
       'create',
+      'postCreate',
       'prompt',
+      'publicGasketData',
       'init',
       'metadata',
       'serviceWorkerCacheKey'

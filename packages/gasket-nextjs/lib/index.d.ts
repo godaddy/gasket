@@ -1,7 +1,12 @@
 import type { GasketData } from '@gasket/data';
+import type { Gasket } from '@gasket/core';
 import type { ComponentType, FunctionComponent, PropsWithChildren, ReactElement } from 'react';
 
-type SubstitutableHOC<T> = <C extends ComponentType<T>>(component: C) => C;
+ComponentWithInitialProps<T> = ComponentType<T> & Partial<{
+  getInitialProps: (ctx: NextPageContext) => Promise<any>
+}>;
+
+type SubstitutableHOC<T> = <C extends ComponentWithInitialProps<T>>(component: C) => C;
 
 /** Renders a script tag with JSON gasketData */
 export const GasketDataScript: FunctionComponent<{
@@ -20,19 +25,23 @@ export const GasketDataProvider: FunctionComponent<
 >;
 
 /**
- * Make an HOC that adds a provider for the GasketData. This can be used to wrap
- * a top level React, Next.js custom App component or Next.js custom
- * NextDocument component.
+ * Make an HOC that adds a provider for the GasketData.
+ * This can be used to wrap a Next.js App or Page component.
  */
-export function withGasketDataProvider(): SubstitutableHOC<{}>;
+export function withGasketDataProvider(gasket: Gasket): SubstitutableHOC<{}>;
 
+/**
+ * Make an HOC that attach getInitialProps to inject the intl locale.
+ * This can be used to wrap a Next.js App or Page component.
+ */
+export function withLocaleInitialProps(gasket: Gasket): SubstitutableHOC<{}>;
 
 /**
  * Injects GasketData into html React element
  */
 export function injectGasketData(
-  html: ReactElement, 
-  gasketData: GasketData, 
-  lookupIndex: (bodyChildren: ReactElement[], insertIndex: number) => number, 
+  html: ReactElement,
+  gasketData: GasketData,
+  lookupIndex: (bodyChildren: ReactElement[], insertIndex: number) => number,
   insertIndex?: number
 ): ReactElement;

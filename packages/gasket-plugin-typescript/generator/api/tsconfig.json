@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "skipLibCheck": true,
-    "module": "ESNext",
-    "moduleResolution": "bundler",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "target": "ESNext",
     "isolatedModules": true,
     "esModuleInterop": true,
@@ -14,14 +14,16 @@
     "types": [
       "node"
     ],
-    "baseUrl": "./"
+    "baseUrl": "./",
+    "allowJs": true,
+    "strict": false,
+    "incremental": true,
+    "resolveJsonModule": true
   },
   "exclude": [
     "node_modules"
   ],
   "include": [
-    "./routes",
-    "./plugins",
     "server.ts",
     "gasket.ts"
   ]

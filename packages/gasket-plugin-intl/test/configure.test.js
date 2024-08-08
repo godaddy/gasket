@@ -40,7 +40,8 @@ describe('configure', function () {
       locales: ['en-US', 'fr-FR', 'ar-AE'],
       defaultLocale: 'en-US',
       localesMap: {},
-      localesDir: '/path/to/root/locales',
+      localesDir: 'locales',
+      fullLocalesDir: '/path/to/root/locales',
       managerFilename: 'intl.js',
       modules: false
     });
@@ -57,7 +58,8 @@ describe('configure', function () {
       locales: ['en-US', 'fr-FR', 'ar-AE'],
       defaultLocale: 'fr-FR',
       localesMap: {},
-      localesDir: '/path/to/root/locales',
+      localesDir: 'locales',
+      fullLocalesDir: '/path/to/root/locales',
       managerFilename: 'intl.js',
       modules: false
     });

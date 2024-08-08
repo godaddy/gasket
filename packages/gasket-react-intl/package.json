@@ -1,6 +1,6 @@
 {
   "name": "@gasket/react-intl",
-  "version": "7.0.0-next.47",
+  "version": "7.0.0-next.51",
   "description": "React component library to enable localization for gasket apps.",
   "type": "module",
   "main": "lib/index.js",
@@ -39,9 +39,9 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-react-intl",
   "dependencies": {
-    "@gasket/data": "^7.0.0-next.47",
-    "@gasket/fetch": "^7.0.0-next.47",
-    "@gasket/intl": "^7.0.0-next.47",
+    "@gasket/data": "7.0.0-next.51",
+    "@gasket/fetch": "7.0.0-next.51",
+    "@gasket/intl": "7.0.0-next.51",
     "hoist-non-react-statics": "^3.3.2",
     "htmlescape": "^1.1.1",
     "just-extend": "^6.2.0"
@@ -62,15 +62,12 @@
     "jsdom": "^20.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-intl": "^6.0.0",
+    "react-intl": "^6.6.8",
     "react-redux": "^8.0.0",
     "typescript": "^5.4.5"
   },
   "disabled_peerDependencies": {
     "@gasket/plugin-intl": "^7"
-  },
-  "peerDependencies": {
-    "react-intl": "<7.0.0"
   },
   "eslintConfig": {
     "extends": [

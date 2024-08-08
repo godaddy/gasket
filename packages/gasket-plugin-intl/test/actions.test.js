@@ -14,7 +14,7 @@ describe('actions', () => {
       }
     };
     mockGasket = {
-      execWaterfallSync: jest.fn().mockImplementation((lifecycle, content) => content),
+      execWaterfall: jest.fn().mockImplementation((lifecycle, content) => content),
       config: {
         intl: {
           manager: mockIntlManager,
@@ -31,7 +31,7 @@ describe('actions', () => {
   describe('getIntlLocale', () => {
     it('executes expected lifecycle', async function () {
       await actions(mockGasket).getIntlLocale(req);
-      expect(mockGasket.execWaterfallSync).toHaveBeenCalledWith('intlLocale', mockLocale, { req });
+      expect(mockGasket.execWaterfall).toHaveBeenCalledWith('intlLocale', mockLocale, { req });
     });
 
     it('should return the locale from the request map if it exists', async () => {

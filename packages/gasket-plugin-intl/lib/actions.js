@@ -6,10 +6,9 @@ const reqMap = new WeakMap();
  */
 module.exports = function actions(gasket) {
   return {
-    getIntlLocale(req) {
+    async getIntlLocale(req) {
       if (!reqMap.has(req)) {
-        // eslint-disable-next-line no-sync
-        const intlLocale = gasket.execWaterfallSync(
+        const intlLocale = gasket.execWaterfall(
           'intlLocale',
           getPreferredLocale(gasket, req),
           { req }

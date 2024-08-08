@@ -237,7 +237,7 @@ parameters:
 - `req` - (object) Request object
 
 ```js
-const intlLocale = actions.gasket.getIntlLocale(req);
+const intlLocale = await actions.gasket.getIntlLocale(req);
 ```
 
 ### getIntlManager

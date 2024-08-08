@@ -7,9 +7,11 @@ const configure = require('./configure');
 const init = require('./init');
 const serviceWorkerCacheKey = require('./service-worker-cache-key');
 const apmTransaction = require('./apm-transaction');
+const publicGasketData = require('./public-gasket-data');
 
 const { getIntlConfig } = require('./configure');
 const create = require('./create');
+const postCreate = require('./post-create');
 const prompt = require('./prompt');
 const build = require('./build');
 
@@ -23,9 +25,11 @@ const plugin = {
     init,
     configure,
     create,
+    postCreate,
     prompt,
     build,
     apmTransaction,
+    publicGasketData,
     serviceWorkerCacheKey,
     metadata(gasket, meta) {
       const { localesDir } = getIntlConfig(gasket);
