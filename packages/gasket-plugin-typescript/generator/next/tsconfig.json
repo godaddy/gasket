@@ -21,7 +21,12 @@
     "noEmit": true,
     "incremental": true,
     "resolveJsonModule": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
   "exclude": [
     "node_modules"
@@ -30,6 +35,7 @@
     "./routes",
     "./plugins",
     "*.ts",
-    "**/*.tsx"
+    "**/*.tsx",
+    ".next/types/**/*.ts"
   ]
 }
