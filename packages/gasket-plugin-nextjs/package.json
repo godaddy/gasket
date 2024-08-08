@@ -47,7 +47,7 @@
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-nextjs",
   "dependencies": {
     "@gasket/plugin-webpack": "^7.0.0-next.47",
-    "fastify": "^4.26.2"
+    "fastify": "^4.28.1"
   },
   "devDependencies": {
     "@babel/preset-react": "^7.23.3",
