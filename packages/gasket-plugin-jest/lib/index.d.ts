@@ -1,5 +1,5 @@
 
-export default {
+export = {
   name: '@gasket/plugin-jest',
   version: '',
   description: '',

@@ -61,7 +61,7 @@ declare module 'create-gasket-app' {
   }
 }
 
-export default {
+export = {
   name: '@gasket/plugin-fastify',
   version: '',
   description: '',

@@ -40,7 +40,7 @@ declare module 'http' {
   }
 }
 
-export default {
+export = {
   name: '@gasket/plugin-manifest',
   version: '',
   description: '',

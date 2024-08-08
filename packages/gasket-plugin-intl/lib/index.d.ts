@@ -65,7 +65,7 @@ declare module 'create-gasket-app' {
   }
 }
 
-export default {
+export = {
   name: '@gasket/plugin-intl',
   version: '',
   description: '',

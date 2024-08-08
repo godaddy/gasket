@@ -1,4 +1,4 @@
-export default {
+export = {
   name: '@gasket/plugin-cypress',
   version: '',
   description: '',

@@ -103,7 +103,7 @@ export async function getComposedContent(
 
 export async function loadRegisterScript(config: ServiceWorkerConfig): string;
 
-export default {
+export = {
   name: '@gasket/plugin-service-worker',
   version: '',
   description: '',

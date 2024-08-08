@@ -35,7 +35,7 @@ declare module 'create-gasket-app' {
   }
 }
 
-export default {
+export = {
   name: '@gasket/plugin-express',
   version: '',
   description: '',

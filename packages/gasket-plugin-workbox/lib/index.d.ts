@@ -29,7 +29,7 @@ declare module '@gasket/core' {
   }
 }
 
-export default {
+export = {
   name: '@gasket/plugin-workbox',
   version: '',
   description: '',

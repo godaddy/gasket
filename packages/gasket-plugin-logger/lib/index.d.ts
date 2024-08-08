@@ -20,7 +20,7 @@ declare module '@gasket/core' {
   }
 }
 
-export default {
+export = {
   name: '@gasket/plugin-logger',
   version: '',
   description: '',
