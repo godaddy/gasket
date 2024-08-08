@@ -1,6 +1,8 @@
 import debugPkg from 'debug';
 
 const debug = debugPkg('gasket:engine');
+const reSync = /sync$/i;
+const icon = (type) => reSync.test(type) ? '◆' : '◇';
 
 let dynamicNamingId = 0;
 
@@ -12,7 +14,7 @@ class GasketEngine {
 
     this._hooks = {};
     this._plans = {};
-    this._traceDepth = 0;
+    this._traceStack = [];
 
     this._registerPlugins(plugins);
     this._registerHooks();
@@ -419,9 +421,15 @@ class GasketEngine {
    * @returns {*} result
    */
   _execWithCachedPlan({ event, type, prepare, exec }) {
-    debug(`${'  '.repeat(this._traceDepth++)}${type} ${event}`);
-    const traceDepth = this._traceDepth;
-    const trace = plugin => debug(`${'  '.repeat(traceDepth)}${plugin}:${event}`);
+    const eventName = `${type}(${event})`;
+    if (this._traceStack.includes(eventName)) {
+      throw new Error(`Recursive lifecycle detected: ${[...this._traceStack, eventName].join(' -> ')}`);
+    }
+    this._traceStack.push(eventName);
+
+    const traceDepth = this._traceStack.length;
+    debug(`${'  '.repeat(traceDepth - 1)}${icon(type)} ${eventName}`);
+    const trace = plugin => debug(`${'  '.repeat(traceDepth)}↪ ${plugin}:${event}`);
 
     const hookConfig = this._getHookConfig(event);
     const plansByType = this._plans[event] || (
@@ -432,10 +440,12 @@ class GasketEngine {
     );
     const result = exec(plan);
     if (typeof result?.finally === 'function') {
-      return result.finally(() => this._traceDepth--);
+      return result.finally(() => {
+        this._traceStack.pop();
+      });
     }
 
-    this._traceDepth--;
+    this._traceStack.pop();
     return result;
   }
 
