@@ -1,7 +1,9 @@
 import type { FastifyReply } from "fastify";
 
-export default {
+export = {
   name: '@gasket/plugin-middleware',
+  version: '',
+  description: '',
   hooks: {}
 };
 

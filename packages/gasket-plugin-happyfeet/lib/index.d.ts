@@ -10,7 +10,7 @@ declare module '@gasket/core' {
   }
 }
 
-export default {
+export = {
   name: '@gasket/plugin-happyfeet',
   version: '',
   description: '',

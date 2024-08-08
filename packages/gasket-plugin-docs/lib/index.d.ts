@@ -31,7 +31,7 @@ declare module '@gasket/plugin-metadata' {
   }
 }
 
-export default {
+export = {
   name: '@gasket/plugin-docs',
   version: '',
   description: '',

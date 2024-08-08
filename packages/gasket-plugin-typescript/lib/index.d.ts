@@ -7,7 +7,7 @@ declare module '@gasket/plugin-typescript' {
   ): Promise<undefined>
 }
 
-export default {
+export = {
   name: '@gasket/plugin-typescript',
   version: '',
   description: '',

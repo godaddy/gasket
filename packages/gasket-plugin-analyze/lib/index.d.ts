@@ -9,7 +9,7 @@ declare module '@gasket/core' {
   }
 }
 
-export default {
+export = {
   name: '@gasket/plugin-analyze',
   version: '',
   description: '',

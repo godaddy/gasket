@@ -17,7 +17,7 @@ export interface DocusaurusConfig {
   host?: string;
 }
 
-export default {
+export = {
   name: '@gasket/plugin-docusaurus',
   version: '',
   description: '',

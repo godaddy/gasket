@@ -127,7 +127,7 @@ declare module '@gasket/plugin-nextjs' {
 
 }
 
-export default {
+export = {
   name: '@gasket/plugin-nextjs',
   version: '',
   description: '',

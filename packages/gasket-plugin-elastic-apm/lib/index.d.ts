@@ -36,7 +36,7 @@ declare module '@gasket/core' {
   }
 }
 
-export default {
+export = {
   name: '@gasket/plugin-elastic-apm',
   version: '',
   description: '',
