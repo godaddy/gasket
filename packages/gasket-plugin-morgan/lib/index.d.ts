@@ -1,3 +1,4 @@
+import type { Plugin } from '@gasket/core';
 import type { IncomingMessage, ServerResponse } from 'http';
 import type { Options } from 'morgan';
 
@@ -10,9 +11,9 @@ declare module '@gasket/core' {
   }
 }
 
-export default {
+const plugin: Plugin = {
   name: '@gasket/plugin-morgan',
-  version: '',
-  description: '',
   hooks: {}
 };
+
+export = plugin;
