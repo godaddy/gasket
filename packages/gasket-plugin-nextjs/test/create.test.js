@@ -112,11 +112,11 @@ describe('create hook', () => {
       );
     });
 
-    it('adds next.config.cjs for TypeScript', async function () {
+    it('adds specific files for TypeScript', async function () {
       mockContext.typescript = true;
       await create.handler({}, mockContext);
       expect(mockContext.files.add).toHaveBeenCalledWith(
-        `${root}/../generator/next/*.cjs`
+        `${root}/../generator/next/typescript/*`
       );
     });
   });
