@@ -51,9 +51,9 @@ function createTestFiles({ files, generatorDir, testPlugins }) {
 function createNextFiles({ files, generatorDir, nextDevProxy, typescript, nextServerType }) {
   let glob;
 
-  // TS only next.config.cjs
+  // TS specific next.config.js
   if (typescript) {
-    glob = `${generatorDir}/next/*.cjs`;
+    glob = `${generatorDir}/next/typescript/*`;
     // if no proxy and using defaultServer, add next.config.js
   } else if (!nextDevProxy && nextServerType !== 'customServer') {
     glob = `${generatorDir}/next/*(next.config).js`;
@@ -88,11 +88,7 @@ function configureSitemap({ files, pkg, generatorDir }) {
  * @property {boolean} typescript - Selected typescript from prompt
  */
 function addDependencies({ pkg, typescript }) {
-  // Dep to transpile TS files at runtime
-  const babelRegisterDep = typescript ? { '@babel/register': devDependencies['@babel/register'] } : {};
-
   pkg.add('dependencies', {
-    ...babelRegisterDep,
     '@gasket/assets': devDependencies['@gasket/assets'],
     '@gasket/nextjs': devDependencies['@gasket/nextjs'],
     [name]: `^${version}`,

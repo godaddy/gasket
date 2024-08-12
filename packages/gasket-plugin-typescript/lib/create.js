@@ -10,9 +10,10 @@ module.exports = function create(gasket, context) {
     nextServerType,
     apiApp
   } = context;
+  const depType = apiApp ? 'devDependencies' : 'dependencies';
 
   // Shared dependencies
-  pkg.add('devDependencies', {
+  pkg.add(depType, {
     tsx: devDependencies.tsx,
     typescript: devDependencies.typescript
   });
@@ -20,6 +21,7 @@ module.exports = function create(gasket, context) {
   // Scripts & files for API apps
   if (apiApp) {
     pkg.add('scripts', {
+      prebuild: 'tsx gasket.ts build',
       build: 'tsc',
       start: 'node dist/server.js',
       local: 'GASKET_ENV=local tsx watch server.ts'
@@ -39,7 +41,7 @@ module.exports = function create(gasket, context) {
   }
 
   // Files for defaultServer w/o dev proxy
-  if (!nextDevProxy && nextServerType !== 'customServer') {
+  if (nextDevProxy === false && nextServerType !== 'customServer') {
     files.add(`${generatorDir}/next/*(tsconfig).json`);
   }
-}
+};
