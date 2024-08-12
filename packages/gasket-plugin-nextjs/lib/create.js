@@ -106,21 +106,6 @@ function addDependencies({ pkg, typescript }) {
 }
 
 /**
- * addRedux
- * @property {Files} files - The Gasket Files API.
- * @property {PackageJsonBuilder} pkg - The Gasket PackageJson API.
- * @property {generatorDir} - The directory of the generator.
- */
-function addRedux({ files, pkg, generatorDir }) {
-  pkg.add('dependencies', {
-    'next-redux-wrapper': devDependencies['next-redux-wrapper'],
-    'lodash.merge': devDependencies['lodash.merge']
-  });
-
-  files.add(`${generatorDir}/redux/*`, `${generatorDir}/redux/**/*`);
-}
-
-/**
  * addNpmScripts
  * @property {PackageJsonBuilder} pkg - The Gasket PackageJson API.
  * @property {string} nextServerType - Selected server type from prompt
@@ -179,8 +164,7 @@ function addConfig({ gasketConfig, nextDevProxy }) {
 
 module.exports = {
   timing: {
-    before: ['@gasket/plugin-intl'],
-    after: ['@gasket/plugin-redux']
+    before: ['@gasket/plugin-intl']
   },
   /**
    * Add files & extend package.json for new apps.
@@ -195,7 +179,6 @@ module.exports = {
       nextServerType,
       nextDevProxy,
       typescript,
-      useRedux,
       useAppRouter,
       hasGasketIntl
     } = context;
@@ -208,6 +191,5 @@ module.exports = {
     addNpmScripts({ pkg, nextServerType, nextDevProxy, typescript, hasGasketIntl });
     addConfig(context);
     if (addSitemap) configureSitemap({ files, pkg, generatorDir });
-    if (useRedux) addRedux({ files, pkg, generatorDir });
   }
 };
