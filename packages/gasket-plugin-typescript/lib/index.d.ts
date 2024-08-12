@@ -1,4 +1,10 @@
+import type { CreateContext } from 'create-gasket-app';
+
 declare module '@gasket/plugin-typescript' {
+  export const name = '@gasket/plugin-typescript';
+  export const hooks = {};
+
+  /* Externalize TS prompts for preset */
   export async function promptTypescript(
     context: CreateContext,
     prompt: (
@@ -6,10 +12,3 @@ declare module '@gasket/plugin-typescript' {
     ) => Promise<Record<string, any>>
   ): Promise<undefined>
 }
-
-export default {
-  name: '@gasket/plugin-typescript',
-  version: '',
-  description: '',
-  hooks: {}
-};

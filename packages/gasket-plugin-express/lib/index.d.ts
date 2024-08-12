@@ -1,4 +1,4 @@
-import type { MaybeAsync, MaybeMultiple } from '@gasket/core';
+import type { MaybeAsync, MaybeMultiple, Plugin } from '@gasket/core';
 import type { Application, ErrorRequestHandler, Handler } from 'express';
 
 export type AppRoutes = Array<MaybeAsync<(app: Application) => void>>;
@@ -35,9 +35,9 @@ declare module 'create-gasket-app' {
   }
 }
 
-export default {
+const plugin: Plugin = {
   name: '@gasket/plugin-express',
-  version: '',
-  description: '',
   hooks: {}
 };
+
+export = plugin;

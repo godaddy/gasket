@@ -1,3 +1,4 @@
+import type { Plugin } from '@gasket/core';
 import type { HappyFeet, HappyFeetOptions } from 'happy-feet';
 
 declare module '@gasket/core' {
@@ -10,9 +11,9 @@ declare module '@gasket/core' {
   }
 }
 
-export default {
+const plugin: Plugin = {
   name: '@gasket/plugin-happyfeet',
-  version: '',
-  description: '',
   hooks: {}
 };
+
+export = plugin;
