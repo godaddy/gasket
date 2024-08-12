@@ -3,7 +3,7 @@ import type { Request, Response } from 'express';
 import type { FastifyRequest, FastifyReply } from 'fastify';
 import type { Options } from 'lru-cache';
 import type { MinifyOptions } from 'uglify-js';
-import type { MaybeAsync, MaybeMultiple } from '@gasket/core';
+import type { MaybeAsync, MaybeMultiple, Plugin } from '@gasket/core';
 
 export interface ServiceWorkerConfig {
   /** Name the service worker file. Default is /sw.js */
@@ -103,9 +103,9 @@ export async function getComposedContent(
 
 export async function loadRegisterScript(config: ServiceWorkerConfig): string;
 
-export = {
+const plugin: Plugin = {
   name: '@gasket/plugin-service-worker',
-  version: '',
-  description: '',
   hooks: {}
 };
+
+export = plugin;

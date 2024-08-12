@@ -1,3 +1,4 @@
+import type { Plugin } from '@gasket/core';
 import type WebpackApi from 'webpack';
 import type { Configuration } from 'webpack';
 
@@ -26,9 +27,9 @@ declare module '@gasket/core' {
   }
 }
 
-export = {
+const plugin: Plugin = {
   name: '@gasket/plugin-webpack',
-  version: '',
-  description: '',
   hooks: {}
-}
+};
+
+export = plugin;

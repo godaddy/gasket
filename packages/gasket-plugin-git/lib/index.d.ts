@@ -1,3 +1,4 @@
+import type { Plugin } from '@gasket/core';
 import type { Gitignore } from './internal';
 
 declare module 'create-gasket-app' {
@@ -6,9 +7,9 @@ declare module 'create-gasket-app' {
   }
 }
 
-export = {
+const plugin: Plugin = {
   name: '@gasket/plugin-git',
-  version: '',
-  description: '',
   hooks: {}
 };
+
+export = plugin;

@@ -1,4 +1,4 @@
-import type { MaybeAsync } from '@gasket/core';
+import type { MaybeAsync, Plugin } from '@gasket/core';
 import type { PackageJson } from 'create-gasket-app';
 
 export interface ModuleData<Module = any> {
@@ -123,9 +123,9 @@ declare module '@gasket/core' {
   }
 }
 
-export = {
+const plugin: Plugin = {
   name: '@gasket/plugin-metadata',
-  version: '',
-  description: '',
   hooks: {}
 };
+
+export = plugin;

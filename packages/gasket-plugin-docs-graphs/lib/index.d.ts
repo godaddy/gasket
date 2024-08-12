@@ -1,6 +1,8 @@
-export = {
+import type { Plugin } from '@gasket/core';
+
+const plugin: Plugin = {
   name: '@gasket/plugin-docs-graphs',
-  version: '',
-  description: '',
   hooks: {}
 };
+
+export = plugin;

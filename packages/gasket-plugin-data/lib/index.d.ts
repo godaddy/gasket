@@ -1,4 +1,4 @@
-import { MaybeAsync } from '@gasket/core';
+import { MaybeAsync, Plugin } from '@gasket/core';
 
 export interface PublicGasketData extends Record<string, any> {
 }
@@ -32,9 +32,9 @@ declare module '@gasket/core' {
   }
 }
 
-export = {
+const plugin: Plugin = {
   name: '@gasket/plugin-data',
-  version: '',
-  description: '',
   hooks: {}
 };
+
+export = plugin;

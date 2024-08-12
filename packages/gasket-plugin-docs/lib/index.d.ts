@@ -31,9 +31,9 @@ declare module '@gasket/plugin-metadata' {
   }
 }
 
-export = {
+const plugin: Plugin = {
   name: '@gasket/plugin-docs',
-  version: '',
-  description: '',
   hooks: {}
 };
+
+export = plugin;

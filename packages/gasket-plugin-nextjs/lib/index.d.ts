@@ -6,7 +6,6 @@ import type { Fastify } from 'fastify';
 import type { Gasket } from '@gasket/core';
 import type { CreateContext } from 'create-gasket-app';
 
-
 export { NextConfig, NextServer };
 
 export type NextConfigFunction = (phase: string, context: {
@@ -82,53 +81,49 @@ declare module 'create-gasket-app' {
   }
 }
 
-/** Gets the NextJS route matching the request */
-export async function getNextRoute(
-  gasket: Gasket,
-  req: IncomingMessage
-): Promise<null | {
-  page: string;
-  regex: RegExp;
-  routeKeys: Record<string, string>;
-  namedRegex: RegExp;
-}> {
-  return Promise.resolve(null);
-}
+declare module '@gasket/plugin-nextjs' {
+  export const name = '@gasket/plugin-nextjs';
+  export const hooks = {};
 
-/* Exported prompts */
-export async function promptAppRouter(
-  context: CreateContext,
-  prompt: (
-    prompts: Array<Record<string, any>>
-  ) => Promise<Record<string, any>>
-): Promise<undefined>
+  /** Gets the NextJS route matching the request */
+  export async function getNextRoute(
+    gasket: Gasket,
+    req: IncomingMessage
+  ): Promise<null | {
+    page: string;
+    regex: RegExp;
+    routeKeys: Record<string, string>;
+    namedRegex: RegExp;
+  }> {
+    return Promise.resolve(null);
+  }
 
-export async function promptNextServerType(
-  context: CreateContext,
-  prompt: (
-    prompts: Array<Record<string, any>>
-  ) => Promise<Record<string, any>>
-): Promise<undefined>
+  /* Exported prompts */
+  export async function promptAppRouter(
+    context: CreateContext,
+    prompt: (
+      prompts: Array<Record<string, any>>
+    ) => Promise<Record<string, any>>
+  ): Promise<undefined>
 
-export async function promptNextDevProxy(
-  context: CreateContext,
-  prompt: (
-    prompts: Array<Record<string, any>>
-  ) => Promise<Record<string, any>>
-): Promise<undefined>
+  export async function promptNextServerType(
+    context: CreateContext,
+    prompt: (
+      prompts: Array<Record<string, any>>
+    ) => Promise<Record<string, any>>
+  ): Promise<undefined>
 
-export async function promptSitemap(
-  context: CreateContext,
-  prompt: (
-    prompts: Array<Record<string, any>>
-  ) => Promise<Record<string, any>>
-): Promise<undefined>
+  export async function promptNextDevProxy(
+    context: CreateContext,
+    prompt: (
+      prompts: Array<Record<string, any>>
+    ) => Promise<Record<string, any>>
+  ): Promise<undefined>
 
-declare module '@gasket/plugin-nextjs' { }
-
-export = {
-  name: '@gasket/plugin-nextjs',
-  version: '',
-  description: '',
-  hooks: {}
+  export async function promptSitemap(
+    context: CreateContext,
+    prompt: (
+      prompts: Array<Record<string, any>>
+    ) => Promise<Record<string, any>>
+  ): Promise<undefined>
 }

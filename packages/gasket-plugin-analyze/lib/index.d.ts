@@ -1,3 +1,4 @@
+import type { Plugin } from '@gasket/core';
 import type { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
 declare module '@gasket/core' {
@@ -9,9 +10,9 @@ declare module '@gasket/core' {
   }
 }
 
-export = {
+const plugin: Plugin = {
   name: '@gasket/plugin-analyze',
-  version: '',
-  description: '',
   hooks: {}
-}
+};
+
+export = plugin;

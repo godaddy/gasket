@@ -1,6 +1,6 @@
 import type { IncomingMessage, OutgoingMessage } from 'http';
 import type { Store } from 'redux';
-import type { MaybeAsync } from '@gasket/core';
+import type { MaybeAsync, Plugin } from '@gasket/core';
 import { Logger } from '@gasket/plugin-logger';
 
 /**
@@ -80,9 +80,9 @@ export async function reduxMiddleware(
   next: (err?: any) => void
 ): Promise<void>;
 
-export = {
+const plugin: Plugin = {
   name: '@gasket/plugin-redux',
-  version: '',
-  description: '',
   hooks: {}
 };
+
+export = plugin;

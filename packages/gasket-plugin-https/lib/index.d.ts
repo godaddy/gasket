@@ -1,4 +1,4 @@
-import type { MaybeMultiple, MaybeAsync } from '@gasket/core';
+import type { MaybeMultiple, MaybeAsync, Plugin } from '@gasket/core';
 import type { SecureContextOptions } from 'tls';
 import type { Agent as HttpAgent, Server as HttpServer } from 'http';
 import type { Agent as HttpsAgent, Server as HttpsServer } from 'https';
@@ -106,9 +106,9 @@ declare module '@gasket/core' {
   }
 }
 
-export = {
+const plugin: Plugin = {
   name: '@gasket/plugin-https',
-  version: '',
-  description: '',
   hooks: {}
 };
+
+export = plugin;
