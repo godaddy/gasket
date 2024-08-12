@@ -5,6 +5,7 @@ const mockYamlSafeLoadStub = jest.fn().mockResolvedValue({ data: true });
 const mockSwaggerJSDocStub = jest.fn();
 const mockOKStub = jest.fn();
 const mockAccessStub = jest.fn().mockResolvedValue();
+const mockBuildSwaggerDefinition = jest.fn();
 
 jest.mock('fs', () => ({
   constants: {
@@ -16,6 +17,7 @@ jest.mock('fs', () => ({
     access: mockAccessStub
   }
 }));
+jest.mock('../lib/build-swagger-definition', () => mockBuildSwaggerDefinition);
 jest.mock('swagger-jsdoc', () => mockSwaggerJSDocStub);
 jest.mock('js-yaml', () => ({
   safeDump: mockYamlSafeDumpStub,
@@ -65,6 +67,7 @@ describe('Swagger Plugin', function () {
       'express',
       'fastify',
       'create',
+      'postCreate',
       'metadata'
     ];
 
@@ -113,59 +116,12 @@ describe('Swagger Plugin', function () {
     let mockGasket;
 
     beforeEach(function () {
-      mockGasket = {
-        logger: {
-          info: jest.fn(),
-          warn: jest.fn()
-        },
-        config: {
-          root: '/path/to/app',
-          swagger: {
-            definitionFile: 'swagger.json',
-            jsdoc: {
-              definition: {
-                openapi: '3.0.0'
-              },
-              apis: ['fake.js']
-            }
-          }
-        }
-      };
+      mockGasket = {};
     });
 
     it('sets up swagger spec', async function () {
       await plugin.hooks.build(mockGasket);
-      expect(mockSwaggerJSDocStub).toHaveBeenCalled();
-    });
-
-    it('writes spec file', async function () {
-      mockSwaggerJSDocStub.mockReturnValue({ data: true });
-      await plugin.hooks.build(mockGasket);
-      expect(mockWriteFileStub).toHaveBeenCalledWith(
-        '/path/to/app/swagger.json',
-        expect.any(String),
-        'utf8'
-      );
-    });
-
-    it('json content for .json definition files', async function () {
-      mockSwaggerJSDocStub.mockReturnValue({ data: true });
-      await plugin.hooks.build(mockGasket);
-      expect(mockWriteFileStub.mock.calls[0][1]).toContain('"data": true');
-    });
-
-    it('yaml content for .yaml definition files', async function () {
-      mockSwaggerJSDocStub.mockReturnValue({ data: true });
-      mockGasket.config.swagger.definitionFile = 'swagger.yaml';
-      mockYamlSafeDumpStub.mockReturnValue('- data: true');
-      await plugin.hooks.build(mockGasket);
-      expect(mockWriteFileStub.mock.calls[0][1]).toContain('- data: true');
-    });
-
-    it('does not setup swagger spec if not configured', async function () {
-      delete mockGasket.config.swagger.jsdoc;
-      await plugin.hooks.build(mockGasket);
-      expect(mockSwaggerJSDocStub).not.toHaveBeenCalled();
+      expect(mockBuildSwaggerDefinition).toHaveBeenCalled();
     });
   });
 

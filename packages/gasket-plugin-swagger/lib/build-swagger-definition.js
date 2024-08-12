@@ -3,11 +3,12 @@ const swaggerJSDoc = require('swagger-jsdoc');
 const isYaml = /\.ya?ml$/;
 const { writeFile } = require('fs').promises;
 
+/** @type {import('.').buildSwaggerDefinition} */
 module.exports = async function buildSwaggerDefinition(gasket, options) {
-  const root = options.root || gasket.config.root;
-  const swagger = options.swagger || gasket.config.swagger;
+  const root = options?.root || gasket.config.root;
+  const swagger = options?.swagger || gasket.config.swagger;
   const { jsdoc, definitionFile = 'swagger.json' } = swagger;
-  debugger;
+
   if (jsdoc) {
     const target = path.join(root, definitionFile);
     const swaggerSpec = swaggerJSDoc(jsdoc);
