@@ -5,7 +5,7 @@ jest.unstable_mockModule('debug', () => ({
   default: () => mockDebug
 }));
 
-const { GasketEngine }  = await import('../../lib/index.js');
+const { GasketEngine }  = await import('../../lib/engine.js');
 
 describe('recursion', () => {
   let engine, pluginA, pluginB, pluginNested, pluginDirect, pluginDeep;
@@ -13,7 +13,7 @@ describe('recursion', () => {
 
   const setupEngine = (...plugins) => {
     engine = new GasketEngine(plugins);
-    waterfallSpy = jest.spyOn(engine, '_execWaterfall');
+    waterfallSpy = jest.spyOn(engine._nucleus, 'execWaterfall');
     return engine;
   };
 
@@ -83,8 +83,7 @@ describe('recursion', () => {
   });
 
   afterEach(() => {
-    jest.resetModules();
-    jest.restoreAllMocks();
+    jest.clearAllMocks();
   });
 
   it('allows sequential varying lifecycles', async () => {
@@ -140,8 +139,6 @@ describe('recursion', () => {
 
     await expect(async () => engine.execWaterfall('eventA', 5))
       .rejects.toThrow();
-
-    console.log('mockDebug.mock.calls', mockDebug.mock.calls);
 
     expect(mockDebug.mock.calls).toEqual([
       ['[0]  ◇ execWaterfall(eventA)'],

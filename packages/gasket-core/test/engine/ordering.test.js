@@ -1,4 +1,4 @@
-import { GasketEngine } from '../../lib/index.js';
+import { GasketEngine } from '../../lib/engine.js';
 
 /**
  *

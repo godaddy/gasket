@@ -1,4 +1,11 @@
-import { GasketEngine } from '../../lib/index.js';
+import { jest } from '@jest/globals';
+
+const mockDebug = jest.fn();
+jest.unstable_mockModule('debug', () => ({
+  default: () => mockDebug
+}));
+
+const { GasketEngine, GasketEngineDriver }  = await import('../../lib/engine.js');
 
 describe('The execWaterfall method', () => {
   let engine, pluginA, pluginB;
@@ -26,49 +33,11 @@ describe('The execWaterfall method', () => {
   });
 
   afterEach(() => {
-    jest.resetModules();
-    jest.restoreAllMocks();
+    jest.clearAllMocks();
   });
 
   it('sequentially transforms a value', async () => {
     const result = await engine.execWaterfall('eventA', 5);
-    expect(result).toEqual(39);
-  });
-
-  it('supports additional arguments', async () => {
-    const otherArg = { some: 'thing' };
-
-    const result = await engine.execWaterfall('eventA', 5, otherArg);
-
-    expect(pluginA.hooks.eventA).toHaveBeenCalledWith(engine, 5, otherArg);
-    expect(pluginB.hooks.eventA).toHaveBeenCalledWith(engine, 35, otherArg);
-    expect(result).toEqual(39);
-  });
-
-  it('works with a driver', async () => {
-    const otherArg = { some: 'thing' };
-
-    // const driver = {
-    //   id: 134,
-    //   trace: {
-    //     _plugin: plugin => console.log('plugin', plugin),
-    //     _lifecycle: (type, event) => console.log('eventName', type, event)
-    //   },
-    //   execWaterfall(event, value, ...args) {
-    //     return engine.execWaterfall(event, value, ...args);
-    //   }
-    // };
-
-    const spy = jest.spyOn(engine, '_execWaterfall');
-
-    // const result = await engine.withDriver().execWaterfall('eventA', 5, otherArg);
-    const driver = engine.withProxyDriver();
-
-    const result = await driver.execWaterfall('eventA', 5, otherArg);
-    expect(spy).toHaveBeenCalledWith(driver, 'eventA', 5, otherArg);
-
-    // expect(pluginA.hooks.eventA).toHaveBeenCalledWith(engine, 5, otherArg);
-    // expect(pluginB.hooks.eventA).toHaveBeenCalledWith(engine, 35, otherArg);
     expect(result).toEqual(39);
   });
 
@@ -78,5 +47,42 @@ describe('The execWaterfall method', () => {
     const result = await execWaterfall('eventA', 5);
 
     expect(result).toEqual(39);
+  });
+
+  it('invokes hooks with driver', async () => {
+    const result = await engine.execWaterfall('eventA', 5);
+
+    expect(pluginA.hooks.eventA).toHaveBeenCalledWith(expect.any(GasketEngineDriver), 5);
+    expect(result).toEqual(39);
+  });
+
+  it('driver passed through', async () => {
+    const spy = jest.spyOn(engine._nucleus, 'execWaterfall');
+    const driver = engine.withDriver();
+
+    const result = await driver.execWaterfall('eventA', 5);
+    expect(spy).toHaveBeenCalledWith(driver, 'eventA', 5);
+    expect(result).toEqual(39);
+  });
+
+  it('supports additional arguments', async () => {
+    const otherArg = { some: 'thing' };
+
+    const driver = engine.withDriver();
+    const result = await driver.execWaterfall('eventA', 5, otherArg);
+
+    expect(pluginA.hooks.eventA).toHaveBeenCalledWith(driver, 5, otherArg);
+    expect(pluginB.hooks.eventA).toHaveBeenCalledWith(driver, 35, otherArg);
+    expect(result).toEqual(39);
+  });
+
+  it('has expected trace output', async () => {
+    await engine.execWaterfall('eventA', 5);
+
+    expect(mockDebug.mock.calls).toEqual([
+      ['[0]  ◇ execWaterfall(eventA)'],
+      ['[0]  ↪ pluginA:eventA'],
+      ['[0]  ↪ pluginB:eventA']
+    ]);
   });
 });

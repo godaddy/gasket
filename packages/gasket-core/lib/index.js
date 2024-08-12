@@ -1,6 +1,6 @@
 /* eslint-disable no-console, no-process-env */
 
-import GasketEngine from './engine.js';
+import { GasketEngine } from './engine.js';
 import { applyConfigOverrides } from '@gasket/utils';
 
 /**
@@ -82,6 +82,5 @@ function makeGasket(gasketConfigDefinition) {
 }
 
 export {
-  makeGasket,
-  GasketEngine
+  makeGasket
 };

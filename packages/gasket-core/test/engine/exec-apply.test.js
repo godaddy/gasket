@@ -1,7 +1,15 @@
-import { GasketEngine } from '../../lib/index.js';
+import { jest } from '@jest/globals';
+
+const mockDebug = jest.fn();
+jest.unstable_mockModule('debug', () => ({
+  default: () => mockDebug
+}));
+
+const { GasketEngine, GasketEngineDriver }  = await import('../../lib/engine.js');
+
 
 describe('The execApply method', () => {
-  let engine, hookASpy, hookBSpy, hookCSpy;
+  let engine, hookASpy, hookBSpy, hookCSpy, mockApply;
 
   const Wrapper = class Wrapper {
     constructor(plugin) {
@@ -38,6 +46,9 @@ describe('The execApply method', () => {
   };
 
   beforeEach(() => {
+    mockApply = async (plugin, handler) => {
+      return handler(new Wrapper(plugin));
+    };
     hookASpy = jest.spyOn(pluginA.hooks, 'eventA');
     hookBSpy = jest.spyOn(pluginB.hooks, 'eventA');
     hookCSpy = jest.spyOn(pluginC.hooks.eventA, 'handler');
@@ -46,18 +57,30 @@ describe('The execApply method', () => {
   });
 
   afterEach(() => {
-    jest.resetModules();
-    jest.restoreAllMocks();
+    jest.clearAllMocks();
   });
 
-  it('passes the gasket instance to each hook', async () => {
+  it('invokes hooks with driver', async () => {
     await engine.execApply('eventA', async (plugin, handler) => {
       return handler(new Wrapper(plugin));
     });
 
-    expect(hookASpy).toHaveBeenCalledWith(engine, expect.any(Wrapper));
-    expect(hookBSpy).toHaveBeenCalledWith(engine, expect.any(Wrapper));
-    expect(hookCSpy).toHaveBeenCalledWith(engine, expect.any(Wrapper));
+    expect(hookASpy).toHaveBeenCalledWith(expect.any(GasketEngineDriver), expect.any(Wrapper));
+    expect(hookBSpy).toHaveBeenCalledWith(expect.any(GasketEngineDriver), expect.any(Wrapper));
+    expect(hookCSpy).toHaveBeenCalledWith(expect.any(GasketEngineDriver), expect.any(Wrapper));
+  });
+
+  it('driver passed through', async () => {
+    const spy = jest.spyOn(engine._nucleus, 'execApply');
+    const driver = engine.withDriver();
+
+    async function applyHandler(plugin, handler) {
+      return handler(new Wrapper(plugin));
+    }
+
+    await driver.execApply('eventA', applyHandler);
+
+    expect(spy).toHaveBeenCalledWith(driver, 'eventA', applyHandler);
   });
 
   it('awaits sync or async hooks and resolves an Array', async () => {
@@ -113,5 +136,20 @@ describe('The execApply method', () => {
 
     expect(stub1).toHaveBeenCalledTimes(3);
     expect(stub2).toHaveBeenCalledTimes(3);
+  });
+
+  it('has expected trace output', async () => {
+    async function applyHandler(plugin, handler) {
+      return handler(new Wrapper(plugin));
+    }
+
+    await engine.execApply('eventA', applyHandler);
+
+    expect(mockDebug.mock.calls).toEqual([
+      ['[0]  ◇ execApply(eventA)'],
+      ['[0]  ↪ pluginA:eventA'],
+      ['[0]  ↪ pluginB:eventA'],
+      ['[0]  ↪ pluginC:eventA']
+    ]);
   });
 });

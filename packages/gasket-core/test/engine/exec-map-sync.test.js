@@ -1,24 +1,32 @@
-import { GasketEngine } from '../../lib/index.js';
+import { jest } from '@jest/globals';
+
+const mockDebug = jest.fn();
+jest.unstable_mockModule('debug', () => ({
+  default: () => mockDebug
+}));
+
+const { GasketEngine, GasketEngineDriver }  = await import('../../lib/engine.js');
+
 
 describe('The execSync method', () => {
-  let engine;
+  let engine, pluginA, pluginB;
 
   beforeEach(() => {
-    const pluginA = {
+    pluginA = {
       name: 'pluginA',
       hooks: {
-        eventA() {
+        eventA: jest.fn(() => {
           return 1;
-        }
+        })
       }
     };
 
-    const pluginB = {
+    pluginB = {
       name: 'pluginB',
       hooks: {
-        eventA() {
+        eventA: jest.fn(() => {
           return 2;
-        }
+        })
       }
     };
 
@@ -26,8 +34,7 @@ describe('The execSync method', () => {
   });
 
   afterEach(() => {
-    jest.resetModules();
-    jest.restoreAllMocks();
+    jest.clearAllMocks();
   });
 
   it('returns an map of results', () => {
@@ -46,5 +53,30 @@ describe('The execSync method', () => {
     const result = execMapSync('eventA');
 
     expect(result).toEqual({ pluginA: 1, pluginB: 2 });
+  });
+
+  it('invokes hooks with driver', () => {
+    engine.execMapSync('eventA');
+
+    expect(pluginA.hooks.eventA).toHaveBeenCalledWith(expect.any(GasketEngineDriver));
+  });
+
+  it('driver passed through', () => {
+    const spy = jest.spyOn(engine._nucleus, 'execMapSync');
+    const driver = engine.withDriver();
+    const result = driver.execMapSync('eventA');
+
+    expect(spy).toHaveBeenCalledWith(driver, 'eventA');
+    expect(result).toEqual({ pluginA: 1, pluginB: 2 });
+  });
+
+  it('has expected trace output', () => {
+    engine.execMapSync('eventA', 5);
+
+    expect(mockDebug.mock.calls).toEqual([
+      ['[0]  ◆ execMapSync(eventA)'],
+      ['[0]  ↪ pluginA:eventA'],
+      ['[0]  ↪ pluginB:eventA']
+    ]);
   });
 });

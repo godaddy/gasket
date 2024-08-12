@@ -1,4 +1,4 @@
-import { GasketEngine } from '../../lib/index.js';
+import { GasketEngine } from '../../lib/engine.js';
 
 describe('The hook method', () => {
   let engine, dynamicHook;

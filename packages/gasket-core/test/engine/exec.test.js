@@ -1,4 +1,11 @@
-import { GasketEngine } from '../../lib/index.js';
+import { jest } from '@jest/globals';
+
+const mockDebug = jest.fn();
+jest.unstable_mockModule('debug', () => ({
+  default: () => mockDebug
+}));
+
+const { GasketEngine, GasketEngineDriver }  = await import('../../lib/engine.js');
 
 /**
  *
@@ -89,15 +96,7 @@ describe('The exec method', () => {
   });
 
   afterEach(() => {
-    jest.resetModules();
-    jest.restoreAllMocks();
-  });
-
-  it('passes the gasket instance to each hook', async () => {
-    await engine.exec('eventA');
-
-    expect(hookASpy).toHaveBeenCalledWith(engine);
-    expect(hookBSpy).toHaveBeenCalledWith(engine);
+    jest.clearAllMocks();
   });
 
   it('awaits sync or async hooks and resolves an Array', async () => {
@@ -115,6 +114,21 @@ describe('The exec method', () => {
 
     const result = await exec('eventA');
 
+    expect(result).toEqual([1, 2]);
+  });
+
+  it('invokes hooks with driver', async () => {
+    await engine.exec('eventA');
+
+    expect(hookASpy).toHaveBeenCalledWith(expect.any(GasketEngineDriver));
+  });
+
+  it('driver passed through', async () => {
+    const spy = jest.spyOn(engine._nucleus, 'exec');
+    const driver = engine.withDriver();
+
+    const result = await driver.exec('eventA');
+    expect(spy).toHaveBeenCalledWith(driver, 'eventA');
     expect(result).toEqual([1, 2]);
   });
 
@@ -151,5 +165,15 @@ describe('The exec method', () => {
 
     const [resultsB, resultsA] = result;
     expect(resultsA.start).toBeGreaterThanOrEqual(resultsB.end);
+  });
+
+  it('has expected trace output', async () => {
+    await engine.exec('eventA');
+
+    expect(mockDebug.mock.calls).toEqual([
+      ['[0]  ◇ exec(eventA)'],
+      ['[0]  ↪ pluginA:eventA'],
+      ['[0]  ↪ pluginB:eventA']
+    ]);
   });
 });

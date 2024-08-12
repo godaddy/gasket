@@ -6,68 +6,14 @@ const icon = (type) => reSync.test(type) ? '◆' : '◇';
 
 let dynamicNamingId = 0;
 
-const methodNames = [
-  'exec', 'execWaterfall', 'execMap', 'execApply',
-  'execSync', 'execWaterfallSync', 'execMapSync', 'execApplySync'
+const lifecycleMethods = [
+  'exec', 'execSync',
+  'execWaterfall', 'execWaterfallSync',
+  'execMap', 'execMapSync',
+  'execApply', 'execApplySync'
 ];
 
-class GasketEngineDriver {
-  constructor(engine, id) {
-    this._id = id;
-    this._engine = engine;
-
-    this.traceStack = [];
-    this.trace = {
-      startHook: (pluginName, event) => {
-        debug(`[${id}]${'  '.repeat(this.traceStack.length)}↪ ${pluginName}:${event}`);
-      },
-      startLifecycle: (type, event) => {
-        const name = `${type}(${event})`;
-        if (this.traceStack.includes(name)) {
-          throw new Error(`Recursive lifecycle detected: ${[...this.traceStack, name].join(' -> ')}`);
-        }
-        this.traceStack.push(name);
-
-        const ico = icon(type);
-        debug(`[${id}]${'  '.repeat(this.traceStack.length)}${ico} ${name}`);
-      },
-      endLifecycle: (type, event) => {
-        const name = `${type}(${event})`;
-        this.traceStack.splice(this.traceStack.indexOf(name), 1);
-      }
-    };
-
-    methodNames.forEach(name => {
-      const method = this._engine[`_${name}`];
-      if (method) {
-        this[name] = this._engine[`_${name}`].bind(this._engine, this);
-      } else {
-        // TODO: finish wrappers
-        console.warn('no method', name);
-      }
-    });
-  }
-}
-
-/**
- *
- * @param engine
- * @param id
- */
-function makeDriver(engine, id) {
-  const driver = new GasketEngineDriver(engine, id);
-  const proxy = new Proxy(driver, {
-    get(target, prop) {
-      if (prop in target) {
-        return target[prop];
-      }
-      return engine[prop];
-    }
-  });
-  return proxy;
-}
-
-class GasketEngine {
+class GasketNucleus {
   constructor(plugins) {
     if (!plugins || !Array.isArray(plugins) || !plugins.length) {
       throw new Error('An array of plugins is required');
@@ -75,20 +21,14 @@ class GasketEngine {
 
     this._hooks = {};
     this._plans = {};
-    this._traceStack = [];
-    this._nextDriverId = 0;
 
     this._registerPlugins(plugins);
     this._registerHooks();
 
     // Allow methods to be called without context (to support destructuring)
-    methodNames.forEach(method => {
+    lifecycleMethods.forEach(method => {
       this[method] = this[method].bind(this);
     });
-  }
-
-  withDriver() {
-    return makeDriver(this, this._nextDriverId++);
   }
 
   _registerPlugins(plugins) {
@@ -180,10 +120,9 @@ class GasketEngine {
         after,
         last: !!last
       },
-      invoke: (driver, ...args) => {
-        return handler(driver ?? this, ...args);
-      },
-      callback: handler.bind(null, this)
+      invoke: (tracer, ...args) => {
+        return handler(tracer, ...args);
+      }
     };
 
     delete this._plans[event];
@@ -193,14 +132,15 @@ class GasketEngine {
    * Enables a plugin to introduce new lifecycle events. When
    * calling `exec`, await the `Promise` it returns to wait for the hooks of other
    * plugins to finish.
+   * @param tracer
    * @param {string} event The event to execute
    * @param {...*} args Args for hooks
    * @returns {Promise<Array>} An array of the data returned by the hooks, in
    *    the order executed
    */
-  _exec(driver, event, ...args) {
+  exec(tracer, event, ...args) {
     return this._execWithCachedPlan({
-      driver,
+      tracer,
       event,
       type: 'exec',
       prepare: (hookConfig) => {
@@ -208,12 +148,12 @@ class GasketEngine {
         const executionPlan = [];
         const pluginThunks = {};
         this._executeInOrder(hookConfig, plugin => {
-          pluginThunks[plugin] = (passedDriver, pluginTasks, ...passedArgs) => {
+          pluginThunks[plugin] = (passedTracer, pluginTasks, ...passedArgs) => {
             pluginTasks[plugin] = Promise
               .all(subscribers[plugin].ordering.after.map(dep => pluginTasks[dep]))
               .then(() => {
-                passedDriver.trace.startHook(plugin, event);
-                return subscribers[plugin].invoke(passedDriver, ...passedArgs);
+                passedTracer.trace.startHook(plugin, event);
+                return subscribers[plugin].invoke(passedTracer, ...passedArgs);
               });
             return pluginTasks[plugin];
           };
@@ -224,13 +164,9 @@ class GasketEngine {
       },
       exec: executionPlan => {
         const pluginTasks = {};
-        return Promise.all(executionPlan.map(fn => fn(driver, pluginTasks, ...args)));
+        return Promise.all(executionPlan.map(fn => fn(tracer, pluginTasks, ...args)));
       }
     });
-  }
-
-  exec(event, ...args) {
-    return this.withDriver().exec(event, ...args);
   }
 
   /**
@@ -238,29 +174,31 @@ class GasketEngine {
    * The synchronous result is an Array of the hook return values. Using synchronous
    * methods limits flexibility, so it's encouraged to use async methods whenever
    * possible.
+   * @param tracer
    * @param {string} event The event to execute
    * @param {...*} args Args for hooks
    * @returns {Promise<Array>} An array of the data returned by the hooks, in
    *    the order executed
    */
-  execSync(event, ...args) {
+  execSync(tracer, event, ...args) {
     return this._execWithCachedPlan({
+      tracer,
       event,
       type: 'execSync',
-      prepare: (hookConfig, trace) => {
+      prepare: (hookConfig) => {
         const subscribers = hookConfig.subscribers;
         const executionPlan = [];
         this._executeInOrder(hookConfig, plugin => {
-          executionPlan.push((...execArgs) => {
-            trace(plugin);
-            return subscribers[plugin].callback(...execArgs);
+          executionPlan.push((passedTracer, ...execArgs) => {
+            passedTracer.trace.startHook(plugin, event);
+            return subscribers[plugin].invoke(passedTracer, ...execArgs);
           });
         });
 
         return executionPlan;
       },
       exec: executionPlan => {
-        return executionPlan.map(fn => fn(...args));
+        return executionPlan.map(fn => fn(tracer, ...args));
       }
     });
   }
@@ -275,20 +213,21 @@ class GasketEngine {
    * @returns {Promise<object>} An object map with each key being the name of
    *    the plugin and each value the result from the hook
    */
-  execMap(event, ...args) {
+  execMap(tracer, event, ...args) {
     return this._execWithCachedPlan({
+      tracer,
       event,
       type: 'execMap',
-      prepare: (hookConfig, trace) => {
+      prepare: (hookConfig) => {
         const subscribers = hookConfig.subscribers;
         const executionPlan = {};
         this._executeInOrder(hookConfig, plugin => {
-          executionPlan[plugin] = (pluginTasks, ...passedArgs) => {
+          executionPlan[plugin] = (passedTracer, pluginTasks, ...passedArgs) => {
             pluginTasks[plugin] = Promise
               .all(subscribers[plugin].ordering.after.map(dep => pluginTasks[dep]))
               .then(() => {
-                trace(plugin);
-                return subscribers[plugin].callback(...passedArgs);
+                passedTracer.trace.startHook(plugin, event);
+                return subscribers[plugin].invoke(passedTracer, ...passedArgs);
               });
             return pluginTasks[plugin];
           };
@@ -303,7 +242,7 @@ class GasketEngine {
           Object
             .entries(executionPlan)
             .map(async ([plugin, thunk]) => {
-              resultMap[plugin] = await thunk(pluginTasks, ...args);
+              resultMap[plugin] = await thunk(tracer, pluginTasks, ...args);
             })
         );
         return resultMap;
@@ -318,17 +257,18 @@ class GasketEngine {
    * @returns {Promise<object>} An object map with each key being the name of
    *    the plugin and each value the result from the hook
    */
-  execMapSync(event, ...args) {
+  execMapSync(tracer, event, ...args) {
     return this._execWithCachedPlan({
+      tracer,
       event,
       type: 'execMapSync',
-      prepare: (hookConfig, trace) => {
+      prepare: (hookConfig) => {
         const subscribers = hookConfig.subscribers;
         const executionPlan = [];
         this._executeInOrder(hookConfig, plugin => {
-          executionPlan.push((resultMap, ...passedArgs) => {
-            trace(plugin);
-            resultMap[plugin] = subscribers[plugin].callback(...passedArgs);
+          executionPlan.push((passedTracer, resultMap, ...passedArgs) => {
+            passedTracer.trace.startHook(plugin, event);
+            resultMap[plugin] = subscribers[plugin].invoke(passedTracer, ...passedArgs);
           });
         });
 
@@ -336,36 +276,8 @@ class GasketEngine {
       },
       exec(executionPlan) {
         const resultMap = {};
-        executionPlan.forEach(thunk => thunk(resultMap, ...args));
+        executionPlan.forEach(thunk => thunk(tracer, resultMap, ...args));
         return resultMap;
-      }
-    });
-  }
-
-  _execWaterfall(driver, event, value, ...otherArgs) {
-    const type = 'execWaterfall';
-    return this._execWithCachedPlan({
-      driver,
-      event,
-      type,
-      prepare: (hookConfig) => {
-        const subscribers = hookConfig.subscribers;
-
-        return (passedDriver, passedValue, ...args) => {
-          let result = Promise.resolve(passedValue);
-
-          this._executeInOrder(hookConfig, plugin => {
-            result = result.then((nextValue) => {
-              passedDriver.trace.startHook(plugin, event);
-              return subscribers[plugin].invoke(passedDriver, nextValue, ...args);
-            });
-          });
-
-          return result;
-        };
-      },
-      exec: (executionPlan) => {
-        return executionPlan(driver, value, ...otherArgs);
       }
     });
   }
@@ -374,14 +286,38 @@ class GasketEngine {
    * Like `exec`, only it allows you to have each
    * hook execute sequentially, with each result being passed as the first argument
    * to the next hook. It's like an asynchronous version of `Array.prototype.reduce`.
-   * @param driver
+   * @param tracer
    * @param {string} event The event to execute
    * @param {any} value Value to pass to initial hook
    * @param {...*} otherArgs Args for hooks
    * @returns {Promise} The result of the final executed hook.
    */
-  execWaterfall(event, value, ...otherArgs) {
-    return this.withDriver().execWaterfall(event, value, ...otherArgs);
+  execWaterfall(tracer, event, value, ...otherArgs) {
+    const type = 'execWaterfall';
+    return this._execWithCachedPlan({
+      tracer,
+      event,
+      type,
+      prepare: (hookConfig) => {
+        const subscribers = hookConfig.subscribers;
+
+        return (passedTracer, passedValue, ...args) => {
+          let result = Promise.resolve(passedValue);
+
+          this._executeInOrder(hookConfig, plugin => {
+            result = result.then((nextValue) => {
+              passedTracer.trace.startHook(plugin, event);
+              return subscribers[plugin].invoke(passedTracer, nextValue, ...args);
+            });
+          });
+
+          return result;
+        };
+      },
+      exec: (executionPlan) => {
+        return executionPlan(tracer, value, ...otherArgs);
+      }
+    });
   }
 
   /**
@@ -389,31 +325,33 @@ class GasketEngine {
    * execute synchronously. The final value is returned synchronously from this call.
    * Using synchronous methods limits flexibility, so it's encouraged to use async
    * methods whenever possible.
+   * @param tracer
    * @param {string} event The event to execute
    * @param {any} value Value to pass to initial hook
    * @param {...*} otherArgs Args for hooks
    * @returns {Promise} The result of the final executed hook.
    */
-  execWaterfallSync(event, value, ...otherArgs) {
+  execWaterfallSync(tracer, event, value, ...otherArgs) {
     return this._execWithCachedPlan({
+      tracer,
       event,
       type: 'execWaterfallSync',
-      prepare: (hookConfig, trace) => {
+      prepare: (hookConfig) => {
         const subscribers = hookConfig.subscribers;
 
-        return (passedValue, ...args) => {
+        return (passedTracer, passedValue, ...args) => {
           let result = passedValue;
 
           this._executeInOrder(hookConfig, plugin => {
-            trace(plugin);
-            result = subscribers[plugin].callback(result, ...args);
+            passedTracer.trace.startHook(plugin, event);
+            result = subscribers[plugin].invoke(tracer, result, ...args);
           });
 
           return result;
         };
       },
       exec: executionPlan => {
-        return executionPlan(value, ...otherArgs);
+        return executionPlan(tracer, value, ...otherArgs);
       }
     });
   }
@@ -427,21 +365,23 @@ class GasketEngine {
    * @returns {Promise<Array>} An array of the data returned by the hooks, in
    *    the order executed
    */
-  execApply(event, applyFn) {
+  execApply(tracer, event, applyFn) {
     return this._execWithCachedPlan({
+      tracer,
       event,
       type: 'execApply',
-      prepare: (hookConfig, trace) => {
+      prepare: (hookConfig) => {
         const subscribers = hookConfig.subscribers;
         const executionPlan = [];
         const pluginThunks = {};
         this._executeInOrder(hookConfig, plugin => {
-          pluginThunks[plugin] = (fn, pluginTasks) => {
+          pluginThunks[plugin] = (passedTracer, passedApplyFn, pluginTasks) => {
+            const callback = (...args) => subscribers[plugin].invoke(passedTracer, ...args);
             pluginTasks[plugin] = Promise
               .all(subscribers[plugin].ordering.after.map(dep => pluginTasks[dep]))
               .then(() => {
-                trace(plugin);
-                return fn(this._pluginMap[plugin], subscribers[plugin].callback);
+                passedTracer.trace.startHook(plugin, event);
+                return passedApplyFn(this._pluginMap[plugin], callback);
               });
             return pluginTasks[plugin];
           };
@@ -452,7 +392,7 @@ class GasketEngine {
       },
       exec: executionPlan => {
         const pluginTasks = {};
-        return Promise.all(executionPlan.map(fn => fn(applyFn, pluginTasks)));
+        return Promise.all(executionPlan.map(fn => fn(tracer, applyFn, pluginTasks)));
       }
     });
   }
@@ -464,23 +404,25 @@ class GasketEngine {
    * @returns {Promise<Array>} An array of the data returned by the hooks, in
    *    the order executed
    */
-  execApplySync(event, applyFn) {
+  execApplySync(tracer, event, applyFn) {
     return this._execWithCachedPlan({
+      tracer,
       event,
       type: 'execApplySync',
-      prepare: (hookConfig, trace) => {
+      prepare: (hookConfig) => {
         const subscribers = hookConfig.subscribers;
         const executionPlan = [];
-        this._executeInOrder(hookConfig, plugin => {
-          executionPlan.push(fn => {
-            trace(plugin);
-            return fn(this._pluginMap[plugin], subscribers[plugin].callback);
+        this._executeInOrder(hookConfig, (plugin) => {
+          executionPlan.push((passedTracer, passApplyFn) => {
+            const callback = (...args) => subscribers[plugin].invoke(passedTracer, ...args);
+            passedTracer.trace.startHook(plugin, event);
+            return passApplyFn(this._pluginMap[plugin], callback);
           });
         });
         return executionPlan;
       },
       exec: executionPlan => {
-        return executionPlan.map(fn => fn(applyFn));
+        return executionPlan.map(fn => fn(tracer, applyFn));
       }
     });
   }
@@ -489,14 +431,14 @@ class GasketEngine {
    * Exec, but with a cache for plans by type
    * @private
    * @param {object} options options
-   * @param [options.driver]
+   * @param [options.tracer]
    * @param options.event
    * @param options.type
    * @param options.prepare
    * @param options.exec
    * @returns {*} result
    */
-  _execWithCachedPlan({ driver, event, type, prepare, exec }) {
+  _execWithCachedPlan({ tracer, event, type, prepare, exec }) {
     const hookConfig = this._getHookConfig(event);
     const plansByType = this._plans[event] || (
       this._plans[event] = {}
@@ -505,15 +447,15 @@ class GasketEngine {
       plansByType[type] = prepare(hookConfig)
     );
 
-    driver.trace.startLifecycle(type, event);
+    tracer.trace.startLifecycle(type, event);
     const result = exec(plan);
     if (typeof result?.finally === 'function') {
       return result.finally(() => {
-        driver.trace.endLifecycle(type, event);
+        tracer.trace.endLifecycle(type, event);
       });
     }
 
-    driver.trace.endLifecycle(type, event);
+    tracer.trace.endLifecycle(type, event);
     return result;
   }
 
@@ -610,4 +552,102 @@ class GasketEngine {
   }
 }
 
-export default GasketEngine;
+export class GasketEngine {
+  constructor(plugins) {
+    this._nextTracerId = 0;
+    this._nucleus = new GasketNucleus(plugins);
+
+    // Allow methods to be called without context (to support destructuring)
+    lifecycleMethods.forEach(method => {
+      this[method] = this[method].bind(this);
+    });
+
+    this.hook = this._nucleus.hook.bind(this._nucleus);
+  }
+
+  withDriver() {
+    return makeDriverProxy(this, this._nextTracerId++);
+  }
+
+  exec(event, ...args) {
+    return this.withDriver().exec(event, ...args);
+  }
+
+  execSync(event, ...args) {
+    return this.withDriver().execSync(event, ...args);
+  }
+
+  execMap(event, ...args) {
+    return this.withDriver().execMap(event, ...args);
+  }
+
+  execMapSync(event, ...args) {
+    return this.withDriver().execMapSync(event, ...args);
+  }
+
+  execWaterfall(event, value, ...otherArgs) {
+    return this.withDriver().execWaterfall(event, value, ...otherArgs);
+  }
+
+  execWaterfallSync(event, value, ...otherArgs) {
+    return this.withDriver().execWaterfallSync(event, value, ...otherArgs);
+  }
+
+  execApply(event, applyFn) {
+    return this.withDriver().execApply(event, applyFn);
+  }
+
+  execApplySync(event, applyFn) {
+    return this.withDriver().execApplySync(event, applyFn);
+  }
+}
+
+export class GasketEngineDriver {
+  constructor(engine, id) {
+
+    this.traceStack = [];
+    this.trace = {
+      startHook: (pluginName, event) => {
+        debug(`[${id}]${'  '.repeat(this.traceStack.length)}↪ ${pluginName}:${event}`);
+      },
+      startLifecycle: (type, event) => {
+        const name = `${type}(${event})`;
+        if (this.traceStack.includes(name)) {
+          throw new Error(`Recursive lifecycle detected: ${[...this.traceStack, name].join(' -> ')}`);
+        }
+        this.traceStack.push(name);
+
+        const ico = icon(type);
+        debug(`[${id}]${'  '.repeat(this.traceStack.length)}${ico} ${name}`);
+      },
+      endLifecycle: (type, event) => {
+        const name = `${type}(${event})`;
+        this.traceStack.splice(this.traceStack.lastIndexOf(name), 1);
+      }
+    };
+
+    lifecycleMethods.forEach(name => {
+      this[name] = engine._nucleus[name].bind(engine._nucleus, this);
+    });
+
+    this.hook = engine.hook;
+  }
+}
+
+/**
+ *
+ * @param engine
+ * @param id
+ */
+function makeDriverProxy(engine, id) {
+  const driver = new GasketEngineDriver(engine, id);
+  const proxy = new Proxy(driver, {
+    get(target, prop) {
+      if (prop in target) {
+        return target[prop];
+      }
+      return engine[prop];
+    }
+  });
+  return proxy;
+}
