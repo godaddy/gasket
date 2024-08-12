@@ -45,6 +45,33 @@ describe('The execWaterfall method', () => {
     expect(result).toEqual(39);
   });
 
+  it('works with a driver', async () => {
+    const otherArg = { some: 'thing' };
+
+    // const driver = {
+    //   id: 134,
+    //   trace: {
+    //     _plugin: plugin => console.log('plugin', plugin),
+    //     _lifecycle: (type, event) => console.log('eventName', type, event)
+    //   },
+    //   execWaterfall(event, value, ...args) {
+    //     return engine.execWaterfall(event, value, ...args);
+    //   }
+    // };
+
+    const spy = jest.spyOn(engine, '_execWaterfall');
+
+    // const result = await engine.withDriver().execWaterfall('eventA', 5, otherArg);
+    const driver = engine.withProxyDriver();
+
+    const result = await driver.execWaterfall('eventA', 5, otherArg);
+    expect(spy).toHaveBeenCalledWith(driver, 'eventA', 5, otherArg);
+
+    // expect(pluginA.hooks.eventA).toHaveBeenCalledWith(engine, 5, otherArg);
+    // expect(pluginB.hooks.eventA).toHaveBeenCalledWith(engine, 35, otherArg);
+    expect(result).toEqual(39);
+  });
+
   it('works when invoked without a context', async () => {
     const { execWaterfall } = engine;
 

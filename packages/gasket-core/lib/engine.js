@@ -6,6 +6,67 @@ const icon = (type) => reSync.test(type) ? '◆' : '◇';
 
 let dynamicNamingId = 0;
 
+const methodNames = [
+  'exec', 'execWaterfall', 'execMap', 'execApply',
+  'execSync', 'execWaterfallSync', 'execMapSync', 'execApplySync'
+];
+
+class GasketEngineDriver {
+  constructor(engine, id) {
+    this._id = id;
+    this._engine = engine;
+
+    this.traceStack = [];
+    this.trace = {
+      startHook: (pluginName, event) => {
+        debug(`[${id}]${'  '.repeat(this.traceStack.length)}↪ ${pluginName}:${event}`);
+      },
+      startLifecycle: (type, event) => {
+        const name = `${type}(${event})`;
+        if (this.traceStack.includes(name)) {
+          throw new Error(`Recursive lifecycle detected: ${[...this.traceStack, name].join(' -> ')}`);
+        }
+        this.traceStack.push(name);
+
+        const ico = icon(type);
+        debug(`[${id}]${'  '.repeat(this.traceStack.length)}${ico} ${name}`);
+      },
+      endLifecycle: (type, event) => {
+        const name = `${type}(${event})`;
+        this.traceStack.splice(this.traceStack.indexOf(name), 1);
+      }
+    };
+
+    methodNames.forEach(name => {
+      const method = this._engine[`_${name}`];
+      if (method) {
+        this[name] = this._engine[`_${name}`].bind(this._engine, this);
+      } else {
+        // TODO: finish wrappers
+        console.warn('no method', name);
+      }
+    });
+  }
+}
+
+/**
+ *
+ * @param engine
+ * @param id
+ */
+function makeDriver(engine, id) {
+  const driver = new GasketEngineDriver(engine, id);
+  const proxy = new Proxy(driver, {
+    get(target, prop) {
+      if (prop in target) {
+        return target[prop];
+      }
+      return engine[prop];
+    }
+  });
+  return proxy;
+}
+
 class GasketEngine {
   constructor(plugins) {
     if (!plugins || !Array.isArray(plugins) || !plugins.length) {
@@ -15,22 +76,21 @@ class GasketEngine {
     this._hooks = {};
     this._plans = {};
     this._traceStack = [];
+    this._nextDriverId = 0;
 
     this._registerPlugins(plugins);
     this._registerHooks();
 
     // Allow methods to be called without context (to support destructuring)
-    [
-      'exec', 'execWaterfall', 'execMap', 'execApply',
-      'execSync', 'execWaterfallSync', 'execMapSync', 'execApplySync'
-    ].forEach(method => { this[method] = this[method].bind(this); });
+    methodNames.forEach(method => {
+      this[method] = this[method].bind(this);
+    });
   }
 
-  /**
-   * Resolves plugins
-   * @param plugins
-   * @private
-   */
+  withDriver() {
+    return makeDriver(this, this._nextDriverId++);
+  }
+
   _registerPlugins(plugins) {
 
     // map the plugin name to module contents for easy lookup
@@ -120,6 +180,9 @@ class GasketEngine {
         after,
         last: !!last
       },
+      invoke: (driver, ...args) => {
+        return handler(driver ?? this, ...args);
+      },
       callback: handler.bind(null, this)
     };
 
@@ -135,21 +198,22 @@ class GasketEngine {
    * @returns {Promise<Array>} An array of the data returned by the hooks, in
    *    the order executed
    */
-  exec(event, ...args) {
+  _exec(driver, event, ...args) {
     return this._execWithCachedPlan({
+      driver,
       event,
       type: 'exec',
-      prepare: (hookConfig, trace) => {
+      prepare: (hookConfig) => {
         const subscribers = hookConfig.subscribers;
         const executionPlan = [];
         const pluginThunks = {};
         this._executeInOrder(hookConfig, plugin => {
-          pluginThunks[plugin] = (pluginTasks, ...passedArgs) => {
+          pluginThunks[plugin] = (passedDriver, pluginTasks, ...passedArgs) => {
             pluginTasks[plugin] = Promise
               .all(subscribers[plugin].ordering.after.map(dep => pluginTasks[dep]))
               .then(() => {
-                trace(plugin);
-                return subscribers[plugin].callback(...passedArgs);
+                passedDriver.trace.startHook(plugin, event);
+                return subscribers[plugin].invoke(passedDriver, ...passedArgs);
               });
             return pluginTasks[plugin];
           };
@@ -160,9 +224,13 @@ class GasketEngine {
       },
       exec: executionPlan => {
         const pluginTasks = {};
-        return Promise.all(executionPlan.map(fn => fn(pluginTasks, ...args)));
+        return Promise.all(executionPlan.map(fn => fn(driver, pluginTasks, ...args)));
       }
     });
+  }
+
+  exec(event, ...args) {
+    return this.withDriver().exec(event, ...args);
   }
 
   /**
@@ -274,39 +342,46 @@ class GasketEngine {
     });
   }
 
-  /**
-   * Like `exec`, only it allows you to have each
-   * hook execute sequentially, with each result being passed as the first argument
-   * to the next hook. It's like an asynchronous version of `Array.prototype.reduce`.
-   * @param {string} event The event to execute
-   * @param {any} value Value to pass to initial hook
-   * @param {...*} otherArgs Args for hooks
-   * @returns {Promise} The result of the final executed hook.
-   */
-  execWaterfall(event, value, ...otherArgs) {
+  _execWaterfall(driver, event, value, ...otherArgs) {
+    const type = 'execWaterfall';
     return this._execWithCachedPlan({
+      driver,
       event,
-      type: 'execWaterfall',
-      prepare: (hookConfig, trace) => {
+      type,
+      prepare: (hookConfig) => {
         const subscribers = hookConfig.subscribers;
 
-        return (passedValue, ...args) => {
+        return (passedDriver, passedValue, ...args) => {
           let result = Promise.resolve(passedValue);
 
           this._executeInOrder(hookConfig, plugin => {
             result = result.then((nextValue) => {
-              trace(plugin);
-              return subscribers[plugin].callback(nextValue, ...args);
+              passedDriver.trace.startHook(plugin, event);
+              return subscribers[plugin].invoke(passedDriver, nextValue, ...args);
             });
           });
 
           return result;
         };
       },
-      exec: executionPlan => {
-        return executionPlan(value, ...otherArgs);
+      exec: (executionPlan) => {
+        return executionPlan(driver, value, ...otherArgs);
       }
     });
+  }
+
+  /**
+   * Like `exec`, only it allows you to have each
+   * hook execute sequentially, with each result being passed as the first argument
+   * to the next hook. It's like an asynchronous version of `Array.prototype.reduce`.
+   * @param driver
+   * @param {string} event The event to execute
+   * @param {any} value Value to pass to initial hook
+   * @param {...*} otherArgs Args for hooks
+   * @returns {Promise} The result of the final executed hook.
+   */
+  execWaterfall(event, value, ...otherArgs) {
+    return this.withDriver().execWaterfall(event, value, ...otherArgs);
   }
 
   /**
@@ -414,38 +489,31 @@ class GasketEngine {
    * Exec, but with a cache for plans by type
    * @private
    * @param {object} options options
+   * @param [options.driver]
    * @param options.event
    * @param options.type
    * @param options.prepare
    * @param options.exec
    * @returns {*} result
    */
-  _execWithCachedPlan({ event, type, prepare, exec }) {
-    const eventName = `${type}(${event})`;
-    if (this._traceStack.includes(eventName)) {
-      throw new Error(`Recursive lifecycle detected: ${[...this._traceStack, eventName].join(' -> ')}`);
-    }
-    this._traceStack.push(eventName);
-
-    const traceDepth = this._traceStack.length;
-    debug(`${'  '.repeat(traceDepth - 1)}${icon(type)} ${eventName}`);
-    const trace = plugin => debug(`${'  '.repeat(traceDepth)}↪ ${plugin}:${event}`);
-
+  _execWithCachedPlan({ driver, event, type, prepare, exec }) {
     const hookConfig = this._getHookConfig(event);
     const plansByType = this._plans[event] || (
       this._plans[event] = {}
     );
     const plan = plansByType[type] || (
-      plansByType[type] = prepare(hookConfig, trace)
+      plansByType[type] = prepare(hookConfig)
     );
+
+    driver.trace.startLifecycle(type, event);
     const result = exec(plan);
     if (typeof result?.finally === 'function') {
       return result.finally(() => {
-        this._traceStack.pop();
+        driver.trace.endLifecycle(type, event);
       });
     }
 
-    this._traceStack.pop();
+    driver.trace.endLifecycle(type, event);
     return result;
   }
 

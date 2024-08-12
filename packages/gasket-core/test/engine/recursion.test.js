@@ -13,7 +13,7 @@ describe('recursion', () => {
 
   const setupEngine = (...plugins) => {
     engine = new GasketEngine(plugins);
-    waterfallSpy = jest.spyOn(engine, 'execWaterfall');
+    waterfallSpy = jest.spyOn(engine, '_execWaterfall');
     return engine;
   };
 
@@ -121,22 +121,38 @@ describe('recursion', () => {
     expect(waterfallSpy).toHaveBeenCalledTimes(4);
   });
 
-  it('has expected traces', async () => {
+  it('allows multiple lifecycle chains', async () => {
+    setupEngine(pluginA);
+    engine.config = { some: 'config' };
+
+    const promise1 = engine.execWaterfall('eventA', 1);
+    const promise2 = engine.execWaterfall('eventA', 2);
+
+    const [results1, results2] = await Promise.all([promise1, promise2]);
+
+    expect(results1).toEqual(7);
+    expect(results2).toEqual(14);
+    expect(waterfallSpy).toHaveBeenCalledTimes(2);
+  });
+
+  it('has expected trace output', async () => {
     setupEngine(pluginA, pluginDeep);
 
     await expect(async () => engine.execWaterfall('eventA', 5))
       .rejects.toThrow();
 
+    console.log('mockDebug.mock.calls', mockDebug.mock.calls);
+
     expect(mockDebug.mock.calls).toEqual([
-      ['◇ execWaterfall(eventA)'],
-      ['  ↪ pluginA:eventA'],
-      ['  ↪ pluginE:eventA'],
-      ['  ◇ execWaterfall(eventB)'],
-      ['    ↪ pluginE:eventB'],
-      ['    ◇ exec(eventC)'],
-      ['      ↪ pluginE:eventC'],
-      ['      ◇ execWaterfall(eventD)'],
-      ['        ↪ pluginE:eventD']
+      ['[0]  ◇ execWaterfall(eventA)'],
+      ['[0]  ↪ pluginA:eventA'],
+      ['[0]  ↪ pluginE:eventA'],
+      ['[0]    ◇ execWaterfall(eventB)'],
+      ['[0]    ↪ pluginE:eventB'],
+      ['[0]      ◇ exec(eventC)'],
+      ['[0]      ↪ pluginE:eventC'],
+      ['[0]        ◇ execWaterfall(eventD)'],
+      ['[0]        ↪ pluginE:eventD']
     ]);
   });
 });
