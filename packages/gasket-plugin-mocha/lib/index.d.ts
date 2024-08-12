@@ -1,7 +1,8 @@
+import type { Plugin } from '@gasket/core';
 
-export default {
+const plugin: Plugin = {
   name: '@gasket/plugin-mocha',
-  version: '',
-  description: '',
   hooks: {}
 };
+
+export = plugin;
