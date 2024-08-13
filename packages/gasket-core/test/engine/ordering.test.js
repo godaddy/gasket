@@ -1,4 +1,4 @@
-import { GasketEngine } from '../../lib/engine.js';
+const { Gasket }  = await import('../../lib/gasket.js');
 
 /**
  *
@@ -21,7 +21,7 @@ function setupLoadedPlugins(withOrderingSpecs) {
  * @param plugins
  */
 function setupEngine(plugins) {
-  return new GasketEngine(plugins);
+  return new Gasket({ plugins });
 }
 
 /**

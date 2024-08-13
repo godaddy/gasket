@@ -5,7 +5,8 @@ jest.unstable_mockModule('debug', () => ({
   default: () => mockDebug
 }));
 
-const { GasketEngine, GasketEngineDriver } = await import('../../lib/engine.js');
+const { GasketProxy }  = await import('../../lib/proxy.js');
+const { Gasket }  = await import('../../lib/gasket.js');
 
 const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {
 });
@@ -13,7 +14,7 @@ const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {
 const pause = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 describe('actions', () => {
-  let engine, pluginA, pluginB;
+  let gasket, pluginA, pluginB;
 
   beforeEach(() => {
     pluginA = {
@@ -57,7 +58,8 @@ describe('actions', () => {
       }
     };
 
-    engine = new GasketEngine([pluginA, pluginB]);
+    gasket = new Gasket({ plugins: [pluginA, pluginB] });
+    mockDebug.mockClear();
   });
 
   afterEach(() => {
@@ -65,52 +67,52 @@ describe('actions', () => {
   });
 
   it('actions are registered', async () => {
-    expect(engine.actions).toBeDefined();
-    expect(engine.actions.getActionsCount).toEqual(expect.any(Function));
-    expect(engine.actions.getEventA).toEqual(expect.any(Function));
+    expect(gasket.actions).toBeDefined();
+    expect(gasket.actions.getActionsCount).toEqual(expect.any(Function));
+    expect(gasket.actions.getEventA).toEqual(expect.any(Function));
   });
 
   it('sequentially transforms a value',  () => {
-    const result = engine.actions.getActionsCount();
+    const result = gasket.actions.getActionsCount();
     expect(result).toEqual(4);
   });
 
   it('works when invoked without a context', () => {
-    const { getActionsCount } = engine.actions;
+    const { getActionsCount } = gasket.actions;
     const result = getActionsCount();
     expect(result).toEqual(4);
   });
 
   it('invokes hooks with driver', async () => {
-    const result = await engine.actions.getEventA(5);
-    expect(pluginA.hooks.eventA).toHaveBeenCalledWith(expect.any(GasketEngineDriver), 5);
+    const result = await gasket.actions.getEventA(5);
+    expect(pluginA.hooks.eventA).toHaveBeenCalledWith(expect.any(GasketProxy), 5);
     expect(result).toEqual(109);
   });
 
   it('driver passed through', async () => {
-    const spy = jest.spyOn(engine._nucleus, 'execWaterfall');
-    const driver = engine.withDriver();
+    const spy = jest.spyOn(gasket.engine, 'execWaterfall');
+    const proxy = gasket.asProxy();
 
-    const result = await driver.actions.getEventA(5);
-    expect(spy).toHaveBeenCalledWith(driver, 'eventA', 5);
+    const result = await proxy.actions.getEventA(5);
+    expect(spy).toHaveBeenCalledWith(proxy, 'eventA', 5);
     expect(result).toEqual(109);
   });
 
   it('has expected trace output', async () => {
-    await engine.actions.getEventA(5);
+    await gasket.actions.getEventA(5);
 
     expect(mockDebug.mock.calls).toEqual([
-      ['[0]  ⚡︎ getEventA'],
-      ['[0]    ◇ execWaterfall(eventA)'],
-      ['[0]    ↪ pluginA:eventA'],
-      ['[0]    ↪ pluginB:eventA']
+      ['[2]  ⚡︎ getEventA'],
+      ['[2]    ◇ execWaterfall(eventA)'],
+      ['[2]    ↪ pluginA:eventA'],
+      ['[2]    ↪ pluginB:eventA']
     ]);
   });
 
   it('allows multiple lifecycle chains', async () => {
-    const spy = jest.spyOn(engine._nucleus, 'execWaterfall');
-    const promise1 = engine.actions.getEventA(1);
-    const promise2 = engine.actions.getEventA(2);
+    const spy = jest.spyOn(gasket.engine, 'execWaterfall');
+    const promise1 = gasket.actions.getEventA(1);
+    const promise2 = gasket.actions.getEventA(2);
 
     const [results1, results2] = await Promise.all([promise1, promise2]);
 
@@ -119,19 +121,19 @@ describe('actions', () => {
     expect(spy).toHaveBeenCalledTimes(2);
 
     expect(mockDebug.mock.calls).toEqual([
-      ['[0]  ⚡︎ getEventA'],
-      ['[1]  ⚡︎ getEventA'],
-      ['[0]    ◇ execWaterfall(eventA)'],
-      ['[0]    ↪ pluginA:eventA'],
-      ['[0]    ↪ pluginB:eventA'],
-      ['[1]    ◇ execWaterfall(eventA)'],
-      ['[1]    ↪ pluginA:eventA'],
-      ['[1]    ↪ pluginB:eventA']
+      ['[2]  ⚡︎ getEventA'],
+      ['[3]  ⚡︎ getEventA'],
+      ['[2]    ◇ execWaterfall(eventA)'],
+      ['[2]    ↪ pluginA:eventA'],
+      ['[2]    ↪ pluginB:eventA'],
+      ['[3]    ◇ execWaterfall(eventA)'],
+      ['[3]    ↪ pluginA:eventA'],
+      ['[3]    ↪ pluginB:eventA']
     ]);
   });
 
   it('actions can call other actions', async () => {
-    const results = await engine.actions.getEvents(5);
+    const results = await gasket.actions.getEvents(5);
 
     expect(results).toEqual({ a: 109, b: 1005 });
     expect(pluginA.actions.getEventA).toHaveBeenCalled();
@@ -142,13 +144,13 @@ describe('actions', () => {
     pluginB.actions = {
       getActionsCount: jest.fn().mockReturnValue('override?')
     };
-    engine = new GasketEngine([pluginA, pluginB]);
+    gasket = new Gasket({ plugins: [pluginA, pluginB] });
 
     expect(errorSpy).toHaveBeenCalledWith(
       'Action \'getActionsCount\' from \'pluginB\' was registered by \'pluginA\''
     );
 
-    const { getActionsCount } = engine.actions;
+    const { getActionsCount } = gasket.actions;
     expect(getActionsCount()).toEqual(4);
 
     expect(pluginA.actions.getActionsCount).toHaveBeenCalled();

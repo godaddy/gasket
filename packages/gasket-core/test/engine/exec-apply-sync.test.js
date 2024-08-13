@@ -5,10 +5,11 @@ jest.unstable_mockModule('debug', () => ({
   default: () => mockDebug
 }));
 
-const { GasketEngine, GasketEngineDriver }  = await import('../../lib/engine.js');
+const { GasketProxy }  = await import('../../lib/proxy.js');
+const { Gasket }  = await import('../../lib/gasket.js');
 
 describe('The execApplySync method', () => {
-  let engine, hookASpy, hookBSpy, hookCSpy;
+  let gasket, hookASpy, hookBSpy, hookCSpy;
 
   const Wrapper = class Wrapper {
     constructor(plugin) {
@@ -44,6 +45,11 @@ describe('The execApplySync method', () => {
     }
   };
 
+  /**
+   *
+   * @param plugin
+   * @param handler
+   */
   function mockApplyHandler(plugin, handler) {
     return handler(new Wrapper(plugin));
   }
@@ -53,7 +59,7 @@ describe('The execApplySync method', () => {
     hookBSpy = jest.spyOn(pluginB.hooks, 'eventA');
     hookCSpy = jest.spyOn(pluginC.hooks.eventA, 'handler');
 
-    engine = new GasketEngine([pluginA, pluginB, pluginC]);
+    gasket = new Gasket({ plugins: [pluginA, pluginB, pluginC] });
   });
 
   afterEach(() => {
@@ -61,45 +67,45 @@ describe('The execApplySync method', () => {
   });
 
   it('invokes hooks with driver', () => {
-    engine.execApplySync('eventA', mockApplyHandler);
+    gasket.execApplySync('eventA', mockApplyHandler);
 
-    expect(hookASpy).toHaveBeenCalledWith(expect.any(GasketEngineDriver), expect.any(Wrapper));
-    expect(hookBSpy).toHaveBeenCalledWith(expect.any(GasketEngineDriver), expect.any(Wrapper));
-    expect(hookCSpy).toHaveBeenCalledWith(expect.any(GasketEngineDriver), expect.any(Wrapper));
+    expect(hookASpy).toHaveBeenCalledWith(expect.any(GasketProxy), expect.any(Wrapper));
+    expect(hookBSpy).toHaveBeenCalledWith(expect.any(GasketProxy), expect.any(Wrapper));
+    expect(hookCSpy).toHaveBeenCalledWith(expect.any(GasketProxy), expect.any(Wrapper));
   });
 
   it('driver passed through', () => {
-    const spy = jest.spyOn(engine._nucleus, 'execApplySync');
-    const driver = engine.withDriver();
+    const spy = jest.spyOn(gasket.engine, 'execApplySync');
+    const proxy = gasket.asProxy();
 
-    driver.execApplySync('eventA', mockApplyHandler);
+    proxy.execApplySync('eventA', mockApplyHandler);
 
-    expect(spy).toHaveBeenCalledWith(driver, 'eventA', mockApplyHandler);
+    expect(spy).toHaveBeenCalledWith(proxy, 'eventA', mockApplyHandler);
   });
 
   it('returns an Array of results', () => {
-    const result = engine.execApplySync('eventA', mockApplyHandler);
+    const result = gasket.execApplySync('eventA', mockApplyHandler);
 
     expect(result).toHaveLength(3);
-    expect(result[0].arg.plugin).toEqual(pluginA);
-    expect(result[1].plugin).toEqual(pluginB);
-    expect(result[2].plugin).toEqual(pluginC);
+    expect(result[0].arg.plugin).toMatchObject(pluginA);
+    expect(result[1].plugin).toMatchObject(pluginB);
+    expect(result[2].plugin).toMatchObject(pluginC);
   });
 
   it('accepts thunks and literal argument values when resolving an Array', () => {
-    const result = engine.execApplySync('eventA', (plugin, handler) => {
+    const result = gasket.execApplySync('eventA', (plugin, handler) => {
       return handler(new Wrapper(plugin), 'literal');
     });
 
     expect(result).toHaveLength(3);
-    expect(result[0].arg.plugin).toEqual(pluginA);
+    expect(result[0].arg.plugin).toMatchObject(pluginA);
     expect(result[0].lit).toEqual('literal');
-    expect(result[1].plugin).toEqual(pluginB);
-    expect(result[2].plugin).toEqual(pluginC);
+    expect(result[1].plugin).toMatchObject(pluginB);
+    expect(result[2].plugin).toMatchObject(pluginC);
   });
 
   it('resolves to an empty array if nothing hooked the event', () => {
-    const result = engine.execApplySync('eventB', (plugin, handler) => {
+    const result = gasket.execApplySync('eventB', (plugin, handler) => {
       return handler(new Wrapper(plugin));
     });
 
@@ -107,37 +113,38 @@ describe('The execApplySync method', () => {
   });
 
   it('works when invoked without a context', () => {
-    const { execApplySync } = engine;
+    const { execApplySync } = gasket;
 
     const result = execApplySync('eventA', (plugin, handler) => {
       return handler(new Wrapper(plugin));
     });
 
     expect(result).toHaveLength(3);
-    expect(result[0].arg.plugin).toEqual(pluginA);
-    expect(result[1].plugin).toEqual(pluginB);
-    expect(result[2].plugin).toEqual(pluginC);
+    expect(result[0].arg.plugin).toMatchObject(pluginA);
+    expect(result[1].plugin).toMatchObject(pluginB);
+    expect(result[2].plugin).toMatchObject(pluginC);
   });
 
   it('can be executed with differing callbacks', () => {
     const stub1 = jest.fn().mockImplementation((plugin, handler) => handler());
     const stub2 = jest.fn().mockImplementation((plugin, handler) => handler());
 
-    engine.execApplySync('eventA', stub1);
-    engine.execApplySync('eventA', stub2);
+    gasket.execApplySync('eventA', stub1);
+    gasket.execApplySync('eventA', stub2);
 
     expect(stub1).toHaveBeenCalledTimes(3);
     expect(stub2).toHaveBeenCalledTimes(3);
   });
 
   it('has expected trace output', () => {
-    engine.execApplySync('eventA', mockApplyHandler);
+    mockDebug.mockClear();
+    gasket.execApplySync('eventA', mockApplyHandler);
 
     expect(mockDebug.mock.calls).toEqual([
-      ['[0]  ◆ execApplySync(eventA)'],
-      ['[0]  ↪ pluginA:eventA'],
-      ['[0]  ↪ pluginB:eventA'],
-      ['[0]  ↪ pluginC:eventA']
+      ['[2]  ◆ execApplySync(eventA)'],
+      ['[2]  ↪ pluginA:eventA'],
+      ['[2]  ↪ pluginB:eventA'],
+      ['[2]  ↪ pluginC:eventA']
     ]);
   });
 });

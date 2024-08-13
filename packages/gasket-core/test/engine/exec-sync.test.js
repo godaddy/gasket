@@ -5,11 +5,11 @@ jest.unstable_mockModule('debug', () => ({
   default: () => mockDebug
 }));
 
-const { GasketEngine, GasketEngineDriver }  = await import('../../lib/engine.js');
-
+const { GasketProxy }  = await import('../../lib/proxy.js');
+const { Gasket }  = await import('../../lib/gasket.js');
 
 describe('The execSync method', () => {
-  let engine, pluginA, pluginB;
+  let gasket, pluginA, pluginB;
 
   beforeEach(() => {
     pluginA = {
@@ -30,7 +30,7 @@ describe('The execSync method', () => {
       }
     };
 
-    engine = new GasketEngine([pluginA, pluginB]);
+    gasket = new Gasket({ plugins: [pluginA, pluginB] });
   });
 
   afterEach(() => {
@@ -38,17 +38,17 @@ describe('The execSync method', () => {
   });
 
   it('returns an Array of results', () => {
-    const result = engine.execSync('eventA', 0);
+    const result = gasket.execSync('eventA', 0);
     expect(result).toEqual([1, 2]);
   });
 
   it('resolves to an empty array if nothing hooked the event', () => {
-    const result = engine.execSync('eventB', 0);
+    const result = gasket.execSync('eventB', 0);
     expect(result).toEqual([]);
   });
 
   it('works when invoked without a context', () => {
-    const { execSync } = engine;
+    const { execSync } = gasket;
 
     const result = execSync('eventA', 0);
 
@@ -56,27 +56,28 @@ describe('The execSync method', () => {
   });
 
   it('invokes hooks with driver', () => {
-    engine.execSync('eventA', 5);
+    gasket.execSync('eventA', 5);
 
-    expect(pluginA.hooks.eventA).toHaveBeenCalledWith(expect.any(GasketEngineDriver), 5);
+    expect(pluginA.hooks.eventA).toHaveBeenCalledWith(expect.any(GasketProxy), 5);
   });
 
   it('driver passed through', () => {
-    const spy = jest.spyOn(engine._nucleus, 'execSync');
-    const driver = engine.withDriver();
-    const result = driver.execSync('eventA', 5);
+    const spy = jest.spyOn(gasket.engine, 'execSync');
+    const proxy = gasket.asProxy();
+    const result = proxy.execSync('eventA', 5);
 
-    expect(spy).toHaveBeenCalledWith(driver, 'eventA', 5);
+    expect(spy).toHaveBeenCalledWith(proxy, 'eventA', 5);
     expect(result).toEqual([6, 7]);
   });
 
   it('has expected trace output', () => {
-    engine.execSync('eventA', 5);
+    mockDebug.mockClear();
+    gasket.execSync('eventA', 5);
 
     expect(mockDebug.mock.calls).toEqual([
-      ['[0]  ◆ execSync(eventA)'],
-      ['[0]  ↪ pluginA:eventA'],
-      ['[0]  ↪ pluginB:eventA']
+      ['[2]  ◆ execSync(eventA)'],
+      ['[2]  ↪ pluginA:eventA'],
+      ['[2]  ↪ pluginB:eventA']
     ]);
   });
 });

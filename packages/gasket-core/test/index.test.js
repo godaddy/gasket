@@ -1,7 +1,9 @@
 /* eslint-disable no-process-env */
 
 import { makeGasket } from '../lib/index.js';
-import { GasketEngine, GasketEngineDriver } from '../lib/engine.js';
+
+const { GasketProxy }  = await import('../lib/proxy.js');
+const { Gasket }  = await import('../lib/gasket.js');
 
 // eslint-disable-next-line no-unused-vars
 const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {
@@ -75,7 +77,7 @@ describe.skip('makeGasket', () => {
 
   it('should return a Gasket instance', () => {
     const gasket = makeGasket({ plugins: [mockPlugin] });
-    expect(gasket).toBeInstanceOf(GasketEngine);
+    expect(gasket).toBeInstanceOf(Gasket);
   });
 
   it('defaults env to local', () => {
@@ -135,7 +137,7 @@ describe.skip('makeGasket', () => {
 
       // verify that env overrides are applied before lifecycle
       expect(mockPlugin.hooks.configure).toHaveBeenCalledWith(
-        expect.any(GasketEngineDriver),
+        expect.any(GasketProxy),
         expect.objectContaining({
           mode: 'prod',
           mockStage: 'input'
@@ -161,7 +163,7 @@ describe.skip('makeGasket', () => {
     it('executes configure lifecycle', () => {
       makeGasket(inputConfig);
       expect(mockPlugin.hooks.configure).toHaveBeenCalledWith(
-        expect.any(GasketEngineDriver),
+        expect.any(GasketProxy),
         expect.objectContaining({
           mockStage: 'input'
         })
@@ -209,7 +211,7 @@ describe.skip('makeGasket', () => {
     it('executes actions lifecycle', () => {
       makeGasket(inputConfig);
       expect(mockPlugin.hooks.actions).toHaveBeenCalledWith(
-        expect.any(GasketEngineDriver)
+        expect.any(GasketProxy)
       );
     });
 

@@ -1,4 +1,4 @@
-import { GasketEngine } from '../../lib/engine.js';
+const { GasketEngine }  = await import('../../lib/engine.js');
 
 const mockPlugin = {
   name: '@gasket/plugin-one',
@@ -25,13 +25,13 @@ describe('constructor', () => {
 
   it('exposed expected additional methods', () => {
     const engine = new GasketEngine([mockPlugin]);
-    ['withDriver', 'hook'].forEach(name => {
+    ['hook'].forEach(name => {
       expect(engine).toHaveProperty(name, expect.any(Function));
     });
   });
 
   it('maps plugin name to content', () => {
     const engine = new GasketEngine([mockPlugin]);
-    expect(engine._nucleus._pluginMap).toHaveProperty('@gasket/plugin-one', mockPlugin);
+    expect(engine._pluginMap).toHaveProperty('@gasket/plugin-one', mockPlugin);
   });
 });
