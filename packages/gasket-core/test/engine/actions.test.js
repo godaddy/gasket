@@ -118,7 +118,6 @@ describe('actions', () => {
     expect(results2).toEqual(106);
     expect(spy).toHaveBeenCalledTimes(2);
 
-
     expect(mockDebug.mock.calls).toEqual([
       ['[0]  ⚡︎ getEventA'],
       ['[1]  ⚡︎ getEventA'],

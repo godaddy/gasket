@@ -163,7 +163,6 @@ class GasketNucleus {
    */
   exec(tracer, event, ...args) {
     return this._execWithCachedPlan({
-      tracer,
       event,
       type: 'exec',
       prepare: (hookConfig) => {
@@ -175,7 +174,7 @@ class GasketNucleus {
             pluginTasks[plugin] = Promise
               .all(subscribers[plugin].ordering.after.map(dep => pluginTasks[dep]))
               .then(() => {
-                passedTracer.trace.startHook(plugin, event);
+                passedTracer.traceHookStart?.(plugin, event);
                 return subscribers[plugin].invoke(passedTracer, ...passedArgs);
               });
             return pluginTasks[plugin];
@@ -205,7 +204,6 @@ class GasketNucleus {
    */
   execSync(tracer, event, ...args) {
     return this._execWithCachedPlan({
-      tracer,
       event,
       type: 'execSync',
       prepare: (hookConfig) => {
@@ -213,7 +211,7 @@ class GasketNucleus {
         const executionPlan = [];
         this._executeInOrder(hookConfig, plugin => {
           executionPlan.push((passedTracer, ...execArgs) => {
-            passedTracer.trace.startHook(plugin, event);
+            passedTracer.traceHookStart?.(plugin, event);
             return subscribers[plugin].invoke(passedTracer, ...execArgs);
           });
         });
@@ -231,6 +229,7 @@ class GasketNucleus {
    * object map with each key being the name of the plugin and each value the
    * result from the hook. Only the plugins that hooked the event will have keys
    * present in the map.
+   * @param tracer
    * @param {string} event The event to execute
    * @param {...*} args Args for hooks
    * @returns {Promise<object>} An object map with each key being the name of
@@ -238,7 +237,6 @@ class GasketNucleus {
    */
   execMap(tracer, event, ...args) {
     return this._execWithCachedPlan({
-      tracer,
       event,
       type: 'execMap',
       prepare: (hookConfig) => {
@@ -249,7 +247,7 @@ class GasketNucleus {
             pluginTasks[plugin] = Promise
               .all(subscribers[plugin].ordering.after.map(dep => pluginTasks[dep]))
               .then(() => {
-                passedTracer.trace.startHook(plugin, event);
+                passedTracer.traceHookStart?.(plugin, event);
                 return subscribers[plugin].invoke(passedTracer, ...passedArgs);
               });
             return pluginTasks[plugin];
@@ -275,6 +273,7 @@ class GasketNucleus {
 
   /**
    * Like `execMap`, only all hooks must execute synchronously
+   * @param tracer
    * @param {string} event The event to execute
    * @param {...*} args Args for hooks
    * @returns {Promise<object>} An object map with each key being the name of
@@ -282,7 +281,6 @@ class GasketNucleus {
    */
   execMapSync(tracer, event, ...args) {
     return this._execWithCachedPlan({
-      tracer,
       event,
       type: 'execMapSync',
       prepare: (hookConfig) => {
@@ -290,7 +288,7 @@ class GasketNucleus {
         const executionPlan = [];
         this._executeInOrder(hookConfig, plugin => {
           executionPlan.push((passedTracer, resultMap, ...passedArgs) => {
-            passedTracer.trace.startHook(plugin, event);
+            passedTracer.traceHookStart?.(plugin, event);
             resultMap[plugin] = subscribers[plugin].invoke(passedTracer, ...passedArgs);
           });
         });
@@ -318,7 +316,6 @@ class GasketNucleus {
   execWaterfall(tracer, event, value, ...otherArgs) {
     const type = 'execWaterfall';
     return this._execWithCachedPlan({
-      tracer,
       event,
       type,
       prepare: (hookConfig) => {
@@ -329,7 +326,7 @@ class GasketNucleus {
 
           this._executeInOrder(hookConfig, plugin => {
             result = result.then((nextValue) => {
-              passedTracer.trace.startHook(plugin, event);
+              passedTracer.traceHookStart?.(plugin, event);
               return subscribers[plugin].invoke(passedTracer, nextValue, ...args);
             });
           });
@@ -356,7 +353,6 @@ class GasketNucleus {
    */
   execWaterfallSync(tracer, event, value, ...otherArgs) {
     return this._execWithCachedPlan({
-      tracer,
       event,
       type: 'execWaterfallSync',
       prepare: (hookConfig) => {
@@ -366,7 +362,7 @@ class GasketNucleus {
           let result = passedValue;
 
           this._executeInOrder(hookConfig, plugin => {
-            passedTracer.trace.startHook(plugin, event);
+            passedTracer.traceHookStart?.(plugin, event);
             result = subscribers[plugin].invoke(tracer, result, ...args);
           });
 
@@ -383,6 +379,7 @@ class GasketNucleus {
    * Method execution is ordered like `exec`, but you must invoke the handler
    * yourself with explicit arguments. These arguments can be dynamic based on
    * the plugin itself.
+   * @param tracer
    * @param {string} event The event to execute
    * @param {Function} applyFn Function to apply
    * @returns {Promise<Array>} An array of the data returned by the hooks, in
@@ -390,7 +387,6 @@ class GasketNucleus {
    */
   execApply(tracer, event, applyFn) {
     return this._execWithCachedPlan({
-      tracer,
       event,
       type: 'execApply',
       prepare: (hookConfig) => {
@@ -403,7 +399,7 @@ class GasketNucleus {
             pluginTasks[plugin] = Promise
               .all(subscribers[plugin].ordering.after.map(dep => pluginTasks[dep]))
               .then(() => {
-                passedTracer.trace.startHook(plugin, event);
+                passedTracer.traceHookStart?.(plugin, event);
                 return passedApplyFn(this._pluginMap[plugin], callback);
               });
             return pluginTasks[plugin];
@@ -422,6 +418,7 @@ class GasketNucleus {
 
   /**
    * Like `execApply`, only all hooks must execute synchronously.
+   * @param tracer
    * @param {string} event The event to execute
    * @param {Function} applyFn Function to apply
    * @returns {Promise<Array>} An array of the data returned by the hooks, in
@@ -429,7 +426,6 @@ class GasketNucleus {
    */
   execApplySync(tracer, event, applyFn) {
     return this._execWithCachedPlan({
-      tracer,
       event,
       type: 'execApplySync',
       prepare: (hookConfig) => {
@@ -438,7 +434,7 @@ class GasketNucleus {
         this._executeInOrder(hookConfig, (plugin) => {
           executionPlan.push((passedTracer, passApplyFn) => {
             const callback = (...args) => subscribers[plugin].invoke(passedTracer, ...args);
-            passedTracer.trace.startHook(plugin, event);
+            passedTracer.traceHookStart?.(plugin, event);
             return passApplyFn(this._pluginMap[plugin], callback);
           });
         });
@@ -461,7 +457,7 @@ class GasketNucleus {
    * @param options.exec
    * @returns {*} result
    */
-  _execWithCachedPlan({ tracer, event, type, prepare, exec }) {
+  _execWithCachedPlan({ event, type, prepare, exec }) {
     const hookConfig = this._getHookConfig(event);
     const plansByType = this._plans[event] || (
       this._plans[event] = {}
@@ -470,16 +466,7 @@ class GasketNucleus {
       plansByType[type] = prepare(hookConfig)
     );
 
-    tracer.trace.startLifecycle(type, event);
-    const result = exec(plan);
-    if (typeof result?.finally === 'function') {
-      return result.finally(() => {
-        tracer.trace.endLifecycle(type, event);
-      });
-    }
-
-    tracer.trace.endLifecycle(type, event);
-    return result;
+    return exec(plan);
   }
 
   /**
@@ -632,53 +619,75 @@ export class GasketEngine {
 export class GasketEngineDriver {
   constructor(engine, id) {
 
-    this.traceStack = [];
-    this.trace = {
-      startHook: (pluginName, event) => {
-        debug(`[${id}]${'  '.repeat(this.traceStack.length)}↪ ${pluginName}:${event}`);
-      },
-      startLifecycle: (type, event) => {
-        const name = `${type}(${event})`;
-        if (this.traceStack.includes(name)) {
-          throw new Error(`Recursive lifecycle detected: ${[...this.traceStack, name].join(' -> ')}`);
-        }
-        this.traceStack.push(name);
+    const traceStack = [];
 
-        const ico = icon(type);
-        debug(`[${id}]${'  '.repeat(this.traceStack.length)}${ico} ${name}`);
-      },
-      endLifecycle: (type, event) => {
-        const name = `${type}(${event})`;
-        this.traceStack.splice(this.traceStack.lastIndexOf(name), 1);
-      },
-      startAction: (name) => {
-        this.traceStack.push(name);
-        debug(`[${id}]${'  '.repeat(this.traceStack.length)}⚡︎ ${name}`);
-      },
-      endAction: (name) => {
-        this.traceStack.splice(this.traceStack.lastIndexOf(name), 1);
-      }
+    // this.trace = {
+    const traceHookStart = (pluginName, event) => {
+      debug(`[${id}]${'  '.repeat(traceStack.length)}↪ ${pluginName}:${event}`);
     };
 
-    lifecycleMethods.forEach(name => {
-      this[name] = engine._nucleus[name].bind(engine._nucleus, this);
-    });
+    const traceLifecycleStart = (type, event) => {
+      const name = `${type}(${event})`;
+      if (traceStack.includes(name)) {
+        throw new Error(`Recursive lifecycle detected: ${[...traceStack, name].join(' -> ')}`);
+      }
+      traceStack.push(name);
+
+      const ico = icon(type);
+      debug(`[${id}]${'  '.repeat(traceStack.length)}${ico} ${name}`);
+    };
+
+    const traceLifecycleEnd = (type, event) => {
+      const name = `${type}(${event})`;
+      // debug(`[${id}]${'  '.repeat(traceStack.length)}x ${name}`);
+    };
+
+    const traceActionStart = (name) => {
+      traceStack.push(name);
+      debug(`[${id}]${'  '.repeat(traceStack.length)}⚡︎ ${name}`);
+    };
+
+    const traceActionEnd = (name) => {
+      // debug(`[${id}]${'  '.repeat(traceStack.length)}x ${name}`);
+    };
+
+    const withTrace = (fn, traceStart, traceEnd, traceName) => {
+      return (...args) => {
+        const name = traceName(args[0]);
+        traceStart(name);
+        const result = fn(this, ...args);
+        if (typeof result?.finally === 'function') {
+          return result.finally(() => {
+            traceEnd(name);
+          });
+        }
+        traceEnd(name);
+        return result;
+      };
+    };
+
+    this.traceHookStart = traceHookStart;
 
     this.hook = engine.hook;
 
+    lifecycleMethods.forEach(name => {
+      const fn = engine._nucleus[name];
+      this[name] = withTrace(
+        fn,
+        (event) => traceLifecycleStart(name, event),
+        (event) => traceLifecycleEnd(name, event),
+        (...args) => args[0]
+      );
+    });
+
     this.actions = Object.entries(engine._nucleus.actions)
       .reduce((acc, [name, fn]) => {
-        acc[name] = (...args) => {
-          this.trace.startAction(name);
-          const result = fn(this, ...args);
-          if (typeof result?.finally === 'function') {
-            return result.finally(() => {
-              this.trace.endAction(name);
-            });
-          }
-          this.trace.endAction(name);
-          return result;
-        };
+        acc[name] = withTrace(
+          fn,
+          traceActionStart,
+          traceActionEnd,
+          () => name
+        );
         return acc;
       }, {});
   }
