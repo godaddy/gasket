@@ -1,3 +1,4 @@
+import type { Plugin } from '@gasket/core';
 import type { Options } from 'swagger-jsdoc'
 import type { SwaggerUiOptions } from 'swagger-ui-express';
 import type { FastifySwaggerUiConfigOptions, FastifySwaggerUiOptions } from '@fastify/swagger-ui';
@@ -34,9 +35,9 @@ declare module 'create-gasket-app' {
   }
 }
 
-export default {
+const plugin: Plugin = {
   name: '@gasket/plugin-swagger',
-  version: '',
-  description: '',
   hooks: {}
 };
+
+export = plugin;

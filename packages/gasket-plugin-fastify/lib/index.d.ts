@@ -1,4 +1,4 @@
-import type { MaybeAsync, MaybeMultiple } from '@gasket/core';
+import type { MaybeAsync, MaybeMultiple, Plugin } from '@gasket/core';
 import type {
   FastifyInstance,
   FastifyRequest,
@@ -62,9 +62,9 @@ declare module 'create-gasket-app' {
   }
 }
 
-export default {
+const plugin: Plugin = {
   name: '@gasket/plugin-fastify',
-  version: '',
-  description: '',
   hooks: {}
 };
+
+export = plugin;

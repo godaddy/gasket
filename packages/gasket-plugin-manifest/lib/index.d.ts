@@ -1,4 +1,4 @@
-import type { MaybeAsync } from '@gasket/core';
+import type { MaybeAsync, Plugin } from '@gasket/core';
 import type { IncomingMessage, OutgoingMessage, ServerResponse } from 'http';
 
 export type Manifest = {
@@ -40,10 +40,9 @@ declare module 'http' {
   }
 }
 
-export default {
+const plugin: Plugin = {
   name: '@gasket/plugin-manifest',
-  version: '',
-  description: '',
   hooks: {}
 };
 
+export = plugin;

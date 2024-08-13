@@ -1,4 +1,4 @@
-import type { MaybeAsync, GasketRequest } from '@gasket/core';
+import type { MaybeAsync, GasketRequest, Plugin } from '@gasket/core';
 import type { IncomingMessage } from 'http';
 import { IntlManager } from '@gasket/intl';
 import { LocaleManifestConfig } from '@gasket/intl';
@@ -65,9 +65,9 @@ declare module 'create-gasket-app' {
   }
 }
 
-export default {
+const plugin: Plugin = {
   name: '@gasket/plugin-intl',
-  version: '',
-  description: '',
   hooks: {}
 };
+
+export = plugin;
