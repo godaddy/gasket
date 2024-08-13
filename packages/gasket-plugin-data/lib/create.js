@@ -21,12 +21,14 @@ async function create(gasket, {
   const generatorDir = `${__dirname}/../generator`;
   const glob = typescript ? '*.ts' : '*.js';
   files.add(
-    `${generatorDir}/${glob}`,
+    `${generatorDir}/${glob}`
   );
 
   gasketConfig
     .addPlugin('pluginData', name);
 
+  // Default server TS use .ts
+  // Custom Server or API App use .js
   const importFile = typescript &&
     nextServerType !== 'customServer' &&
     !apiApp

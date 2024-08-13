@@ -109,7 +109,7 @@ async function performGenerate(context, descriptors) {
   handlebars.registerHelper('jspretty', (data) => {
     return JSON.stringify(data).replace(/"/g, '\'');
   });
-  handlebars.registerHelper('eq', (a, b) => a == b)
+  handlebars.registerHelper('eq', (a, b) => a === b)
 
   debug('descriptors', JSON.stringify(descriptors, null, 2));
 
