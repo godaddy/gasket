@@ -1,5 +1,6 @@
 import type { Options } from 'swagger-jsdoc'
 import type { SwaggerUiOptions } from 'swagger-ui-express';
+import type { FastifySwaggerUiConfigOptions, FastifySwaggerUiOptions } from '@fastify/swagger-ui';
 
 declare module '@gasket/core' {
   export interface GasketConfig {
@@ -16,9 +17,13 @@ declare module '@gasket/core' {
        * supported. */
       jsdoc?: Options,
 
-      /** Optional custom UI options. See swagger-ui-express options for what is
+      /** Optional custom UI options (Express Only). See swagger-ui-express options for what is
        * supported. */
       ui?: SwaggerUiOptions
+
+      /** Optional custom UI options (Fastify Only). See @fastify/swagger-ui options for what is
+       * supported. */
+      uiOptions?: FastifySwaggerUiOptions
     }
   }
 }

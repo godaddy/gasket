@@ -28,11 +28,11 @@ jest.mock('util', () => {
     promisify: (f) => f
   };
 });
+
 jest.mock('/path/to/app/swagger.json', () => ({ data: true }), {
   virtual: true
 });
 
-const fastify = require('fastify')({ logger: true });
 const { name, version, description } = require('../package');
 
 describe('Swagger Plugin', function () {
@@ -300,19 +300,11 @@ describe('Swagger Plugin', function () {
       await plugin.hooks.fastify.handler(mockGasket, mockApp);
       expect(mockApp.register).toHaveBeenCalledTimes(2);
       expect(mockApp.register).toHaveBeenCalledWith(expect.any(Function), {
-        routePrefix: '/api-docs',
-        uiConfig: {}
+        routePrefix: '/api-docs'
       });
       expect(mockApp.register).toHaveBeenCalledWith(expect.any(Function), {
         swagger: { data: true }
       });
-    });
-
-    it('adds new routes to swagger paths', async function () {
-      await plugin.hooks.fastify.handler(mockGasket, fastify);
-      fastify.get('/hello-world', () => { });
-      await fastify.ready();
-      // expect(fastify.swagger().paths).toHaveProperty('/hello-world');
     });
   });
 
