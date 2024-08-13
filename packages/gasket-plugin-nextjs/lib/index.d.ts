@@ -11,13 +11,13 @@ export { NextConfig, NextServer };
 
 export type NextConfigFunction = (phase: string, context: {
   defaultConfig: NextConfig,
-  isServer: boolean
+  isServer?: boolean
 }) => Promise<NextConfig>;
 
 declare module '@gasket/core' {
 
   export interface GasketActions {
-    getNextConfig?: (config?: NextConfig | NextConfigFunction) => (phase: string, context?: { defaultConfig?: any }) => Promise<NextConfig>
+    getNextConfig?: (config?: NextConfig | NextConfigFunction) => (phase: string, context?: { defaultConfig?: NextConfig }) => Promise<NextConfig>
     getNextRoute?: (req: IncomingMessage) => Promise<null | {
       page: string;
       regex: RegExp;

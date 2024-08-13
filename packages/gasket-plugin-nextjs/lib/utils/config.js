@@ -42,8 +42,8 @@ function forwardIntlConfig(gasket, config) {
  * Small helper function that creates nextjs configuration from the gasket
  * configuration.
  * @param {import('@gasket/core').Gasket}  gasket The gasket API.
- * @param   {object} [nextConfig]           Initial next config
- * @returns {Promise<object>} The configuration data for Nextjs
+ * @param {import('next').NextConfig} nextConfig The nextjs configuration.
+ * @returns {import('@gasket/core').MaybeAsync<import('next').NextConfig>} configuration data for nextjs.
  * @private
  */
 function createConfig(gasket, nextConfig = {}) {
