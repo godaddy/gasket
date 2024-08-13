@@ -24,6 +24,7 @@ class GasketNucleus {
 
     this._registerPlugins(plugins);
     this._registerHooks();
+    this._registerActions();
 
     // Allow methods to be called without context (to support destructuring)
     lifecycleMethods.forEach(method => {
@@ -90,6 +91,28 @@ class GasketNucleus {
             });
           });
       });
+  }
+
+  _registerActions() {
+    this.actions = {};
+    const actionPluginMap = {};
+
+    Object.entries(this._pluginMap).forEach(([pluginName, plugin]) => {
+      const { actions } = plugin;
+      if (actions) {
+        Object.keys(actions).forEach(actionName => {
+          if (actionPluginMap[actionName]) {
+            // eslint-disable-next-line no-console
+            console.error(
+              `Action '${actionName}' from '${pluginName}' was registered by '${actionPluginMap[actionName]}'`
+            );
+            return;
+          }
+          actionPluginMap[actionName] = plugin.name;
+          this.actions[actionName] = actions[actionName];
+        });
+      }
+    });
   }
 
   /**
@@ -569,6 +592,10 @@ export class GasketEngine {
     return makeDriverProxy(this, this._nextTracerId++);
   }
 
+  get actions() {
+    return this.withDriver().actions;
+  }
+
   exec(event, ...args) {
     return this.withDriver().exec(event, ...args);
   }
@@ -623,6 +650,13 @@ export class GasketEngineDriver {
       endLifecycle: (type, event) => {
         const name = `${type}(${event})`;
         this.traceStack.splice(this.traceStack.lastIndexOf(name), 1);
+      },
+      startAction: (name) => {
+        this.traceStack.push(name);
+        debug(`[${id}]${'  '.repeat(this.traceStack.length)}⚡︎ ${name}`);
+      },
+      endAction: (name) => {
+        this.traceStack.splice(this.traceStack.lastIndexOf(name), 1);
       }
     };
 
@@ -631,6 +665,22 @@ export class GasketEngineDriver {
     });
 
     this.hook = engine.hook;
+
+    this.actions = Object.entries(engine._nucleus.actions)
+      .reduce((acc, [name, fn]) => {
+        acc[name] = (...args) => {
+          this.trace.startAction(name);
+          const result = fn(this, ...args);
+          if (typeof result?.finally === 'function') {
+            return result.finally(() => {
+              this.trace.endAction(name);
+            });
+          }
+          this.trace.endAction(name);
+          return result;
+        };
+        return acc;
+      }, {});
   }
 }
 

@@ -5,6 +5,14 @@ declare module '@gasket/core' {
 
   export interface GasketActions {}
 
+  export type ActionId = keyof ActionExecTypes;
+
+  export type ActionHandler<Id extends ActionId> = (
+    gasket: Gasket,
+    ...args: Parameters<GasketActions[Id]>
+  ) => ReturnType<GasketActions[Id]>;
+
+
   // To be extended by plugins
   export interface HookExecTypes {
     // add makeGasket lifecycles
@@ -38,6 +46,8 @@ declare module '@gasket/core' {
 
   export type Hook<Id extends HookId> = HookWithTimings<Id> | HookHandler<Id>;
 
+
+
   export type Plugin = {
     name: string;
     version?: string;
@@ -45,6 +55,9 @@ declare module '@gasket/core' {
     dependencies?: Array<string>;
     hooks: {
       [K in HookId]?: Hook<K>;
+    };
+    actions: {
+      [K in ActionId]?: ActionHandler<K>;
     };
   };
 
@@ -59,6 +72,8 @@ declare module '@gasket/core' {
 
   export class GasketEngine {
     constructor(plugins: Array<Plugin>);
+
+    actions: GasketActions
 
     exec<Id extends HookId>(
       hook: Id,
@@ -102,7 +117,6 @@ declare module '@gasket/core' {
     };
     config: GasketConfig;
     new (config: GasketConfigDefinition): Gasket
-    actions: GasketActions
   }
 
   type PartialRecursive<T> = T extends Object

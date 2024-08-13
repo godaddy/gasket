@@ -67,7 +67,7 @@ class Gasket extends GasketEngine {
     this.config = config;
     this.command = null;
     this.execSync('init');
-    this.actions = registerActions(this);
+    // this.actions = registerActions(this);
     this.config = this.execWaterfallSync('configure', config);
   }
 }
