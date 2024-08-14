@@ -95,7 +95,7 @@ export function getSWConfig(gasket: Gasket): ServiceWorkerConfig;
 /** Gathers thunks to key caches of composed sw scripts, based on req */
 export async function getCacheKeys(
   gasket: Gasket
-): Promise<Array<(req: Request, res: Response) => string>>;
+): Promise<Array<(req: Request | FastifyRequest, res: Response | FastifyReply) => string>>;
 
 export async function getComposedContent(
   gasket: Gasket,
