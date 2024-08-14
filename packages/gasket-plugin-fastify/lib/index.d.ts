@@ -1,4 +1,5 @@
 import type { MaybeAsync, MaybeMultiple, Plugin } from '@gasket/core';
+import { Logger } from '@gasket/plugin-logger';
 import type {
   FastifyInstance,
   FastifyRequest,
@@ -54,6 +55,15 @@ declare module '@gasket/core' {
     errorMiddleware(): MaybeAsync<MaybeMultiple<ErrorHandler>>;
   }
 }
+
+type FastifyLogger = Logger & {
+  trace?: () => MaybeAsync<any>,
+  fatal?: () => MaybeAsync<any>
+}
+
+export function alignLogger(
+  logger: Logger
+): FastifyLogger
 
 declare module 'create-gasket-app' {
   export interface CreateContext {
