@@ -1,9 +1,10 @@
 import type { IncomingMessage, OutgoingMessage, ServerResponse } from 'http';
 import type { Request, Response } from 'express';
-import type { FastifyRequest, FastifyReply } from 'fastify';
+import type { FastifyRequest, FastifyReply, RouteHandlerMethod } from 'fastify';
 import type { Options } from 'lru-cache';
 import type { MinifyOptions } from 'uglify-js';
 import type { MaybeAsync, MaybeMultiple, Plugin } from '@gasket/core';
+import type { Http2SecureServer, Http2ServerRequest, Http2ServerResponse } from 'http2';
 
 export interface ServiceWorkerConfig {
   /** Name the service worker file. Default is /sw.js */
@@ -78,7 +79,7 @@ declare module 'express' {
   }
 }
 
-export async function configureEndpoint(gasket: Gasket): (req: Request | FastifyRequest, res: Response | FastifyReply) => Promise<void>;
+export async function configureEndpoint(gasket: Gasket): RouteHandlerMethod<Http2SecureServer, Http2ServerRequest, Http2ServerResponse> | Application<Record<string, any>>;
 
 export async function serviceWorkerMiddleware(
   req: Request & {
@@ -94,7 +95,7 @@ export function getSWConfig(gasket: Gasket): ServiceWorkerConfig;
 /** Gathers thunks to key caches of composed sw scripts, based on req */
 export async function getCacheKeys(
   gasket: Gasket
-): Promise<Array<(req: Request | FastifyRequest, res: Response | FastifyReply) => string>>;
+): Promise<Array<(req: Request, res: Response) => string>>;
 
 export async function getComposedContent(
   gasket: Gasket,
