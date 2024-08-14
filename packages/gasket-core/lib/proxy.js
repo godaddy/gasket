@@ -81,7 +81,6 @@ export class GasketProxy {
     //   });
 
     this.hook = gasket.engine.hook.bind(gasket.engine);
-    this.attach = gasket.attach;
 
     lifecycleMethods.forEach(name => {
       const lifecycleFn = gasket.engine[name];
@@ -117,6 +116,14 @@ export function makeProxy(gasket, id) {
         return target[prop];
       }
       return gasket[prop];
+    },
+    set(target, prop, newValue) {
+      if (prop in target) {
+        return false;
+      }
+      // TODO: Do we want to restrict attaching to gaskets?
+      gasket[prop] = newValue;
+      return true;
     }
   });
   return proxy;

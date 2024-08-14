@@ -1,9 +1,7 @@
 /* eslint-disable no-process-env */
 
-import { makeGasket } from '../lib/index.js';
-
 const { GasketProxy }  = await import('../lib/proxy.js');
-const { Gasket }  = await import('../lib/gasket.js');
+const { Gasket, makeGasket }  = await import('../lib/gasket.js');
 
 // eslint-disable-next-line no-unused-vars
 const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {

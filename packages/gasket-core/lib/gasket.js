@@ -71,3 +71,12 @@ export class Gasket {
     return this.asProxy().actions;
   }
 }
+
+// TODO: Add JSDoc types
+/**
+ *
+ * @param gasketConfigDefinition
+ */
+export function makeGasket(gasketConfigDefinition) {
+  return new Gasket(gasketConfigDefinition);
+}
