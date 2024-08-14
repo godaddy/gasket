@@ -2,7 +2,7 @@
 
 Gasket Actions provide a pattern for accessing and setting data on demand in gasket applications.
 
-This pattern, introduced in Gasket's v7 release, provides a more flexible and reliable method for accessing and setting data in a Gasket application, reducing the need to rely on `req`/`res` objects and middleware.
+This pattern, introduced in Gasket's v7 release, provides a more flexible and reliable method for accessing and setting data in a Gasket application, reducing the need to rely on decorating `req`/`res` objects and middleware.
 
 For more details on why we are moving away from relying on `req`/`res` objects, please refer to the [v7 upgrade guide].
 
@@ -51,7 +51,7 @@ import gasket from './gasket';
 gasket.actions.myFirstAction();
 ```
 
-Every action has access to the gasket object which can be utilized for various purposes such as accessing the `gasket.config`, calling a lifecycle, or even calling other actions.
+Every action has access to the `gasket` instance which can be utilized for various purposes such as accessing the `gasket.config`, calling a lifecycle, or even calling other actions.
 
 ```js
 function moreActions(gasket) {
@@ -80,10 +80,9 @@ Actions can be used to get a singleton instance that can be accessed throughout 
 function actions(gasket) {
   let singleton;
   return {
-    getSingleton(config) {
+    getSingleton() {
       if (!singleton) {
         singleton = {
-          ...config,
           doSomething() {
             console.log('Doing something');
           }
@@ -95,7 +94,7 @@ function actions(gasket) {
 };
 
 // Application code
-const singleton = gasket.actions.getSingleton({});
+const singleton = gasket.actions.getSingleton();
 singleton.doSomething();
 ```
 
@@ -124,7 +123,7 @@ if(auth.isAuthenticated) {
 
 ### Replacing middleware with Actions
 
-Let's say we have an application that has middleware that gets user data, all posts from a user, and all comments from a user. 
+Let's say we have an application that has middleware that gets user data, all posts from a user, and all comments from a user.
 
 Each middleware eventually attaches their respective data to the `req` object so other middleware can access this data down the middleware chain.
 
@@ -192,7 +191,7 @@ const comments = await gasket.actions.getUserComments(req);
 
 Since the fetched user data is stored in a `WeakMap`, it only needs to be fetched once, despite the `getUserData` action being called once in our app code and again in each of the subsequent actions.
 
-Once the request is complete, the data stored in the `WeakMap` will be cleared and can be ready to set data for the next request.
+Once the request is complete, the data stored in the `WeakMap` will be cleared and will be ready to set data for the next request.
 
 ### Improvements over middleware
 
