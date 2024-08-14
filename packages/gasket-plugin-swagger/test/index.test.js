@@ -293,11 +293,11 @@ describe('Swagger Plugin', function () {
       );
     });
 
-    it('adds prebuild script', async function () {
+    it('adds build script', async function () {
       await plugin.hooks.create({}, mockContext);
       expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts',
         expect.objectContaining({
-          prebuild: 'node gasket.js build'
+          build: 'node gasket.js build'
         })
       );
     });
