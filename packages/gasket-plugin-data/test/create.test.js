@@ -50,7 +50,15 @@ describe('create', function () {
   it('adds generator files', async function () {
     await plugin.hooks.create({}, mockContext);
     expect(filesAddStub).toHaveBeenCalledWith(
-      expect.stringContaining('../generator/*')
+      expect.stringContaining('../generator/*.js')
+    );
+  });
+
+  it('adds TS generator files', async function () {
+    mockContext.typescript = true;
+    await plugin.hooks.create({}, mockContext);
+    expect(filesAddStub).toHaveBeenCalledWith(
+      expect.stringContaining('../generator/*.ts')
     );
   });
 
@@ -62,6 +70,12 @@ describe('create', function () {
   it('adds data file import to the gasket file', async function () {
     await plugin.hooks.create({}, mockContext);
     expect(mockContext.gasketConfig.addImport).toHaveBeenCalledWith('gasketData', './gasket.data.js');
+  });
+
+  it('adds TS data file import to the gasket file', async function () {
+    mockContext.typescript = true;
+    await plugin.hooks.create({}, mockContext);
+    expect(mockContext.gasketConfig.addImport).toHaveBeenCalledWith('gasketData', './gasket.data.ts');
   });
 
   it('adds data var to the gasket config', async function () {
