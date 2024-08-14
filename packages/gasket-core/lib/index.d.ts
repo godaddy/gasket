@@ -56,7 +56,7 @@ declare module '@gasket/core' {
     hooks: {
       [K in HookId]?: Hook<K>;
     };
-    actions: {
+    actions?: {
       [K in ActionId]?: ActionHandler<K>;
     };
   };
