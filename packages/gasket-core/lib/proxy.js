@@ -5,45 +5,56 @@ const debug = debugPkg('gasket:engine');
 const reSync = /sync$/i;
 const icon = (type) => reSync.test(type) ? '◆' : '◇';
 
+class Tracers {
+  constructor(id) {
+    this.traceStack = [];
+    this.id = id;
+  }
+
+  traceHookStart = (pluginName, event) => {
+    const { id, traceStack } = this;
+    debug(`[${id}]${'  '.repeat(traceStack.length)}↪ ${pluginName}:${event}`);
+  };
+
+  traceLifecycleStart = (type, event) => {
+    const name = `${type}(${event})`;
+    const { id, traceStack } = this;
+
+    if (traceStack.includes(name)) {
+      throw new Error(`Recursive lifecycle detected: ${[...traceStack, name].join(' -> ')}`);
+    }
+    traceStack.push(name);
+
+    const ico = icon(type);
+    debug(`[${id}]${'  '.repeat(traceStack.length)}${ico} ${name}`);
+  };
+
+  // TODO: not implemented
+  // eslint-disable-next-line no-unused-vars
+  traceLifecycleEnd = (type, event) => {
+    // const name = `${type}(${event})`;
+    // debug(`[${id}]${'  '.repeat(traceStack.length)}x ${name}`);
+  };
+
+  traceActionStart = (name) => {
+    const { id, traceStack } = this;
+
+    traceStack.push(name);
+    debug(`[${id}]${'  '.repeat(traceStack.length)}⚡︎ ${name}`);
+  };
+
+  // TODO: not implemented
+  // eslint-disable-next-line no-unused-vars
+  traceActionEnd = (name) => {
+    // debug(`[${id}]${'  '.repeat(traceStack.length)}x ${name}`);
+  };
+}
+
 export class GasketProxy {
   constructor(gasket, id) {
     this.id = id;
 
-    const traceStack = [];
-
-    // this.trace = {
-    const traceHookStart = (pluginName, event) => {
-      debug(`[${id}]${'  '.repeat(traceStack.length)}↪ ${pluginName}:${event}`);
-    };
-
-    const traceLifecycleStart = (type, event) => {
-      const name = `${type}(${event})`;
-      if (traceStack.includes(name)) {
-        throw new Error(`Recursive lifecycle detected: ${[...traceStack, name].join(' -> ')}`);
-      }
-      traceStack.push(name);
-
-      const ico = icon(type);
-      debug(`[${id}]${'  '.repeat(traceStack.length)}${ico} ${name}`);
-    };
-
-    // TODO: not implemented
-    // eslint-disable-next-line no-unused-vars
-    const traceLifecycleEnd = (type, event) => {
-      // const name = `${type}(${event})`;
-      // debug(`[${id}]${'  '.repeat(traceStack.length)}x ${name}`);
-    };
-
-    const traceActionStart = (name) => {
-      traceStack.push(name);
-      debug(`[${id}]${'  '.repeat(traceStack.length)}⚡︎ ${name}`);
-    };
-
-    // TODO: not implemented
-    // eslint-disable-next-line no-unused-vars
-    const traceActionEnd = (name) => {
-      // debug(`[${id}]${'  '.repeat(traceStack.length)}x ${name}`);
-    };
+    const tracers = new Tracers(id);
 
     const withTrace = (fn, traceStart, traceEnd) => {
       return (...args) => {
@@ -59,13 +70,15 @@ export class GasketProxy {
       };
     };
 
-    this.traceHookStart = traceHookStart;
+    this.traceHookStart = tracers.traceHookStart;
 
     // console.log('KEYS', Object.keys(gasket).filter(key => !lifecycleMethods.includes(key)));
 
-    Object.keys(gasket).forEach(key => {
-      this[key] = gasket[key];
-    });
+    // Object.keys(gasket)
+    //   .filter(key => !lifecycleMethods.includes(key))
+    //   .forEach(key => {
+    //     this[key] = gasket[key];
+    //   });
 
     this.hook = gasket.engine.hook.bind(gasket.engine);
     this.attach = gasket.attach;
@@ -74,8 +87,8 @@ export class GasketProxy {
       const lifecycleFn = gasket.engine[name];
       this[name] = withTrace(
         lifecycleFn,
-        (event) => traceLifecycleStart(name, event),
-        (event) => traceLifecycleEnd(name, event)
+        (event) => tracers.traceLifecycleStart(name, event),
+        (event) => tracers.traceLifecycleEnd(name, event)
       );
     });
 
@@ -83,8 +96,8 @@ export class GasketProxy {
       .reduce((acc, [name, actionFn]) => {
         acc[name] = withTrace(
           actionFn,
-          () => traceActionStart(name),
-          () => traceActionEnd(name)
+          () => tracers.traceActionStart(name),
+          () => tracers.traceActionEnd(name)
         );
         return acc;
       }, {});

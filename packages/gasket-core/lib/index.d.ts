@@ -5,7 +5,7 @@ declare module '@gasket/core' {
 
   export interface GasketActions {}
 
-  export type ActionId = keyof ActionExecTypes;
+  export type ActionId = keyof GasketActions;
 
   export type ActionHandler<Id extends ActionId> = (
     gasket: Gasket,

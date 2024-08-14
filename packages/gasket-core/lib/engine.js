@@ -357,7 +357,7 @@ export class GasketEngine {
 
           this._executeInOrder(hookConfig, plugin => {
             passedGasket.traceHookStart?.(plugin, event);
-            result = subscribers[plugin].invoke(gasket, result, ...args);
+            result = subscribers[plugin].invoke(passedGasket, result, ...args);
           });
 
           return result;

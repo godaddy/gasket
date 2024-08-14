@@ -41,7 +41,7 @@ export class Gasket {
     // track proxy increments by gasket - mostly for testing
     this._nextProxyId = 0;
 
-    // bind lifecycle methods to start with a proxy
+    // bind engine methods to run through a proxy
     lifecycleMethods.forEach(method => {
       this[method] = (...args) => {
         return this.asProxy()[method](...args);
