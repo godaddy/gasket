@@ -61,15 +61,12 @@ describe('@gasket/plugin-logger', () => {
         childLogger.warn('warn message');
         childLogger.info('info message');
         childLogger.debug('debug message');
-        childLogger.fatal('fatal message');
-        childLogger.trace('trace message');
 
         // Ensure console methods were called
         expect(console.error).toHaveBeenCalled();
         expect(console.warn).toHaveBeenCalled();
         expect(console.info).toHaveBeenCalled();
         expect(console.debug).toHaveBeenCalled();
-        expect(console.trace).toHaveBeenCalled();
 
         // Ensure logger is set to default
         expect(gasket.logger).toEqual({
@@ -77,8 +74,6 @@ describe('@gasket/plugin-logger', () => {
           warn: console.warn,
           info: console.info,
           debug: console.debug,
-          fatal: console.error,
-          trace: console.trace,
           child: expect.any(Function)
         });
       });

@@ -8,14 +8,12 @@ function createChildLogger(parent, metadata) {
     error: (...args) => console.error(...args, metadata),
     info: (...args) => console.info(...args, metadata),
     warn: (...args) => console.warn(...args, metadata),
-    fatal: (...args) => console.error(...args, metadata),
-    trace: (...args) => console.trace(...args, metadata),
     child: (meta) => createChildLogger(this, { ...metadata, ...meta })
   };
 }
 
 function verifyLoggerLevels(logger) {
-  ['debug', 'error', 'info', 'warn', 'child', 'fatal', 'trace'].forEach((level) => {
+  ['debug', 'error', 'info', 'warn', 'child'].forEach((level) => {
     if (typeof logger[level] !== 'function') {
       throw new Error(`Logger is missing required level: ${level}`);
     }
@@ -47,8 +45,6 @@ module.exports = {
           error: console.error,
           info: console.info,
           warn: console.warn,
-          fatal: console.error,
-          trace: console.trace,
           child: (meta) => createChildLogger(this, meta)
         };
       } else if (loggers.length > 1) {
