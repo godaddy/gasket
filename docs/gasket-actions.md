@@ -130,16 +130,16 @@ Each middleware eventually attaches their respective data to the `req` object so
 
 ```js
 // UserData middleware
-req.userdata = await getUserData()
+req.userdata = await getUserData();
 
 // Posts middleware
-req.posts = await getPosts(req.userdata)
+req.posts = await getPosts(req.userdata);
 
 // Comments middleware
-req.comments = await getComments(req.userdata) 
+req.comments = await getComments(req.userdata);
 ```
 
-The middleware in this example can be replaced with actions that can be called on demand.
+The middleware in this example can be replaced with actions that can be called on demand and in any order because each action can be responsible for its own data.
 
 ```js
 // getUserData action defined in user-plugin
@@ -156,9 +156,9 @@ async function getUserData(req) {
 // getUserPosts action defined in posts-plugin
 const reqMap = new WeakMap();
 
-async function getUserPosts(req, userData) {
+async function getUserPosts(req) {
   if(!reqMap.has(req)) {
-    const userData = await gasket.actions.getUserAction(req);
+    const userData = await gasket.actions.getUserData(req);
     const posts = await fetchUserPosts(userData); // fetch posts
     reqMap.set(req, posts); 
   }
@@ -171,7 +171,7 @@ const reqMap = new WeakMap();
 
 async function getUserComments(req) {
   if(!reqMap.has(req)) {
-    const userData = await gasket.actions.getUserAction(req);
+    const userData = await gasket.actions.getUserData(req);
     const comments = await fetchUserComments(userData); // fetch comments
     reqMap.set(req, comments); 
   }
@@ -190,14 +190,14 @@ const posts = await gasket.actions.getUserPosts(req);
 const comments = await gasket.actions.getUserComments(req);
 ```
 
-Since fetched user data is stored in a `WeakMap`, it only needs to be fetched once, despite the `getUserData` action being called once in our app code and again in each of the subsequent actions.
+Since the fetched user data is stored in a `WeakMap`, it only needs to be fetched once, despite the `getUserData` action being called once in our app code and again in each of the subsequent actions.
 
-Once the request is complete, the data stored in the `WeakMap` will be cleared and can be ready to be set for the next request.
+Once the request is complete, the data stored in the `WeakMap` will be cleared and can be ready to set data for the next request.
 
 ### Improvements over middleware
 
 Instead of serially wiring up `req.userData` for almost every request,
-whether it is used or not, we can use `gasket.actions` to wire up details on demand, which execute additional actions and lifecycles as needed.
+whether it is used or not, we can use `gasket.actions` to wire up details on demand, which can execute additional actions and lifecycles as needed.
 
 Actions can support different arguments, but in these examples, the `req` is required, not to be decorated, but used as a unique lookup key.
 It is also much easier to follow the flow of the code when debugging.
