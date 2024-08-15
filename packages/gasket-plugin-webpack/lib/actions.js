@@ -17,7 +17,7 @@ function setupContext(context) {
  * Creates the webpack config
  * @type {import('./internal').initWebpack}
  */
-module.exports = function initWebpack(gasket, initConfig, context) {
+function getWebpackConfig(gasket, initConfig, context) {
   const WebpackMetricsPlugin = require('./webpack-metrics-plugin');
 
   const baseConfig = {
@@ -35,4 +35,8 @@ module.exports = function initWebpack(gasket, initConfig, context) {
 
   // eslint-disable-next-line no-sync
   return gasket.execWaterfallSync('webpackConfig', baseConfig, setupContext(context));
+}
+
+module.exports = {
+  getWebpackConfig
 };

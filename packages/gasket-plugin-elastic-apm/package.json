@@ -10,10 +10,9 @@
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
-    "test": "npm run test:runner",
-    "test:runner": "jest test/*.test.js",
-    "test:watch": "npm run test:runner -- --watch",
-    "test:coverage": "npm run test:runner -- --coverage --coverageReporters text",
+    "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
+    "test:watch": "npm run test -- --watch",
+    "test:coverage": "npm run test -- --coverage",
     "posttest": "npm run lint && npm run typecheck",
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"

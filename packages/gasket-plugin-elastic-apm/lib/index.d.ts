@@ -1,8 +1,6 @@
-import type { IncomingMessage, ServerResponse } from 'http';
-import type { AgentConfigOptions, Transaction, Payload } from 'elastic-apm-node';
+import type { IncomingMessage } from 'http';
+import type { AgentConfigOptions, Transaction, Payload, Agent } from 'elastic-apm-node';
 import type { MaybeAsync, GasketConfig } from '@gasket/core';
-import type { GasketData } from '@gasket/data';
-import type { GasketRequest } from '@gasket/core';
 import type { Request } from 'express';
 
 export function filterSensitiveCookies(config: GasketConfig): function(Payload): Payload;

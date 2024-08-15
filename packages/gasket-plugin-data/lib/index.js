@@ -13,10 +13,10 @@ module.exports = {
   name,
   version,
   description,
+  actions,
   hooks: {
     create,
     configure,
-    actions,
     middleware,
     initReduxState,
     metadata

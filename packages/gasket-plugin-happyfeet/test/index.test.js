@@ -20,6 +20,8 @@ describe('Plugin', () => {
     expect(plugin).toHaveProperty('name', name);
     expect(plugin).toHaveProperty('version', version);
     expect(plugin).toHaveProperty('description', description);
+    expect(plugin).toHaveProperty('actions');
+    expect(plugin).toHaveProperty('hooks');
   });
 
   it('calls getHappyFeet action', async () => {

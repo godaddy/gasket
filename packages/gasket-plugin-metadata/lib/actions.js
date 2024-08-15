@@ -19,56 +19,57 @@ function getAppInfo(gasket) {
       name: pkg.name
     };
   } catch (err) {
+    // eslint-disable-next-line no-console
     console.error(`Error loading app metadata: ${err.message}`);
   }
 
   return app;
 }
 
-/** @type {import('@gasket/core').HookHandler<'actions'>} */
-module.exports = function actions(gasket) {
-  return {
-    getMetadata: async function getMetadata() {
-      const app = getAppInfo(gasket);
-      const plugins = [];
-      const presets = [];
-      const modules = {};
+/** @type {import('@gasket/core').ActionHandler<'getMetadata'>} */
+async function getMetadata(gasket) {
+  const app = getAppInfo(gasket);
+  const plugins = [];
+  const presets = [];
+  const modules = {};
 
-      await gasket.execApply('metadata', async (data, handler) => {
-        const isPreset = isGasketPreset.test(data.name);
-        const isPlugin = isGasketPlugin.test(data.name);
-        const isGasketPackage = isPlugin || isPreset;
+  await gasket.execApply('metadata', async (data, handler) => {
+    const isPreset = isGasketPreset.test(data.name);
+    const isPlugin = isGasketPlugin.test(data.name);
+    const isGasketPackage = isPlugin || isPreset;
 
-        if (!isGasketPackage) {
-          const pluginData = await handler(data);
-          pluginData.path = path.join(app.path, 'plugins');
-          plugins.push(pluginData);
-        } else {
-          const pluginData = await handler(data);
-          pluginData.path = path.dirname(path.join(require.resolve(pluginData.name), '..'));
-          const { dependencies, devDependencies } = require(path.join(pluginData.path, 'package.json'));
+    if (!isGasketPackage) {
+      const pluginData = await handler(data);
+      pluginData.path = path.join(app.path, 'plugins');
+      plugins.push(pluginData);
+    } else {
+      const pluginData = await handler(data);
+      pluginData.path = path.dirname(path.join(require.resolve(pluginData.name), '..'));
+      const { dependencies, devDependencies } = require(path.join(pluginData.path, 'package.json'));
 
-          if (isPreset)
-            presets.push(pluginData);
-          else
-            plugins.push(pluginData);
+      if (isPreset)
+        presets.push(pluginData);
+      else
+        plugins.push(pluginData);
 
-          for (const name of Object.keys({ ...dependencies, ...devDependencies })) {
-            const isModule = isGasketModule.test(name);
-            if (!isModule) continue;
-            const mod = require(path.join(name, 'package.json'));
-            modules[name] = {
-              name: mod.name,
-              version: mod.version,
-              description: mod.description,
-              link: 'README.md',
-              path: path.dirname(path.join(require.resolve(name), '..'))
-            };
-          }
-        }
-      });
-
-      return { app, plugins, modules: Object.values(modules), presets };
+      for (const name of Object.keys({ ...dependencies, ...devDependencies })) {
+        const isModule = isGasketModule.test(name);
+        if (!isModule) continue;
+        const mod = require(path.join(name, 'package.json'));
+        modules[name] = {
+          name: mod.name,
+          version: mod.version,
+          description: mod.description,
+          link: 'README.md',
+          path: path.dirname(path.join(require.resolve(name), '..'))
+        };
+      }
     }
-  };
+  });
+
+  return { app, plugins, modules: Object.values(modules), presets };
+}
+
+module.exports = {
+  getMetadata
 };

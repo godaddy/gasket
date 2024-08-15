@@ -25,30 +25,30 @@ describe('actions', () => {
   });
 
   it('should return an object', () => {
-    expect(actions()).toBeInstanceOf(Object);
+    expect(actions).toBeInstanceOf(Object);
   });
 
   describe('getIntlLocale', () => {
     it('executes expected lifecycle', async function () {
-      await actions(mockGasket).getIntlLocale(req);
+      await actions.getIntlLocale(mockGasket, req);
       expect(mockGasket.execWaterfall).toHaveBeenCalledWith('intlLocale', mockLocale, { req });
     });
 
     it('should return the locale from the request map if it exists', async () => {
-      const result = await actions(mockGasket).getIntlLocale(req);
+      const result = await actions.getIntlLocale(mockGasket, req);
       expect(result).toBe(mockLocale);
     });
   });
 
   describe('getIntlManager', () => {
     it('should return the configured manager', () => {
-      const result = actions(mockGasket).getIntlManager();
+      const result = actions.getIntlManager(mockGasket);
       expect(result).toBe(mockIntlManager);
     });
 
     it('should throw if manager not configured', () => {
       delete mockGasket.config.intl.manager;
-      expect(() => actions(mockGasket).getIntlManager())
+      expect(() => actions.getIntlManager(mockGasket))
         .toThrow('IntlManager not configured (gasket.config.intl.manager)');
     });
   });
