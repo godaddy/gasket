@@ -1,9 +1,9 @@
 import create from './create.js';
 import configure from './configure.js';
 import commands from './commands.js';
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
-const { name, version, description } = require('../package.json');
+
+const { default: pkg } = await import('../package.json', { assert: { type: 'json' } });
+const { name, version, description } = pkg;
 
 /** @type {import('@gasket/core').Plugin} */
 export default {
