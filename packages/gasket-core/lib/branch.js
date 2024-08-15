@@ -5,8 +5,8 @@ const reSync = /sync$/i;
 const icon = (type) => reSync.test(type) ? '◆' : '◇';
 
 class GasketTracer {
-  constructor(branchId) {
-    this.traceStack = [];
+  constructor(parent, branchId) {
+    this.traceStack = [...(parent?.traceStack ?? [])];
 
     const _debug = debugPkg(`gasket:branch:${branchId}`);
     this.trace = (message) => {
@@ -32,18 +32,18 @@ class GasketTracer {
     this.trace(`${ico} ${name}`);
   };
 
-  // TODO: not implemented
-  // eslint-disable-next-line no-unused-vars
-  traceLifecycleEnd = (type, event) => {
-    // const name = `${type}(${event})`;
-    // this.trace(`x ${name}`);
-  };
-
   traceActionStart = (name) => {
     const { traceStack } = this;
 
     traceStack.push(name);
     this.trace(`★ ${name}`);
+  };
+
+  // TODO: not implemented
+  // eslint-disable-next-line no-unused-vars
+  traceLifecycleEnd = (type, event) => {
+    // const name = `${type}(${event})`;
+    // this.trace(`x ${name}`);
   };
 
   // TODO: not implemented
@@ -60,7 +60,7 @@ export class GasketBranch {
     const parentId = parent.branchId ?? 'root';
     this.branchId = GasketBranch._nextBranchId++;
 
-    const tracer = new GasketTracer(this.branchId);
+    const tracer = this._tracer = new GasketTracer(parent._tracer, this.branchId);
     tracer.trace(`⋌ ${parentId}`);
 
     this.proxy = new Proxy(this, {
