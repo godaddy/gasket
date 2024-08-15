@@ -11,7 +11,7 @@ describe('recursion', () => {
   let gasket, pluginA, pluginB, pluginNested, pluginDirect, pluginDeep;
   let waterfallSpy;
 
-  const setupEngine = (...plugins) => {
+  const setupGasket = (...plugins) => {
     gasket = new Gasket({ plugins });
     waterfallSpy = jest.spyOn(gasket.engine, 'execWaterfall');
     return gasket;
@@ -79,7 +79,7 @@ describe('recursion', () => {
       }
     };
 
-    setupEngine(pluginA, pluginB);
+    setupGasket(pluginA, pluginB);
   });
 
   afterEach(() => {
@@ -93,7 +93,7 @@ describe('recursion', () => {
   });
 
   it('throws on direct recursive lifecycle', async () => {
-    setupEngine(pluginA, pluginDirect);
+    setupGasket(pluginA, pluginDirect);
 
     await expect(async () => gasket.execWaterfall('eventA', 5))
       .rejects.toThrow('execWaterfall(eventA) -> execWaterfall(eventA)');
@@ -101,7 +101,7 @@ describe('recursion', () => {
   });
 
   it('throws on nested recursive lifecycle', async () => {
-    setupEngine(pluginA, pluginNested);
+    setupGasket(pluginA, pluginNested);
 
     await expect(async () => gasket.execWaterfall('eventA', 5))
       .rejects.toThrow('execWaterfall(eventA) -> execWaterfall(eventB) -> execWaterfall(eventA)');
@@ -109,7 +109,7 @@ describe('recursion', () => {
   });
 
   it('throws on deeply nested recursive lifecycle', async () => {
-    setupEngine(pluginA, pluginDeep);
+    setupGasket(pluginA, pluginDeep);
 
     await expect(async () => gasket.execWaterfall('eventA', 5))
       .rejects.toThrow('execWaterfall(eventA) -> execWaterfall(eventB) -> ' +
@@ -118,7 +118,7 @@ describe('recursion', () => {
   });
 
   it('allows multiple lifecycle chains', async () => {
-    setupEngine(pluginA);
+    setupGasket(pluginA);
     gasket.config = { some: 'config' };
 
     const promise1 = gasket.execWaterfall('eventA', 1);
@@ -132,22 +132,23 @@ describe('recursion', () => {
   });
 
   it('has expected trace output', async () => {
-    setupEngine(pluginA, pluginDeep);
+    setupGasket(pluginA, pluginDeep);
 
     mockDebug.mockClear();
     await expect(async () => gasket.execWaterfall('eventA', 5))
       .rejects.toThrow();
 
     expect(mockDebug.mock.calls).toEqual([
-      ['[2]  ◇ execWaterfall(eventA)'],
-      ['[2]  ↪ pluginA:eventA'],
-      ['[2]  ↪ pluginE:eventA'],
-      ['[2]    ◇ execWaterfall(eventB)'],
-      ['[2]    ↪ pluginE:eventB'],
-      ['[2]      ◇ exec(eventC)'],
-      ['[2]      ↪ pluginE:eventC'],
-      ['[2]        ◇ execWaterfall(eventD)'],
-      ['[2]        ↪ pluginE:eventD']
+      ['⋌ root'],
+      ['  ◇ execWaterfall(eventA)'],
+      ['  ↪ pluginA:eventA'],
+      ['  ↪ pluginE:eventA'],
+      ['    ◇ execWaterfall(eventB)'],
+      ['    ↪ pluginE:eventB'],
+      ['      ◇ exec(eventC)'],
+      ['      ↪ pluginE:eventC'],
+      ['        ◇ execWaterfall(eventD)'],
+      ['        ↪ pluginE:eventD']
     ]);
   });
 });

@@ -5,7 +5,7 @@ jest.unstable_mockModule('debug', () => ({
   default: () => mockDebug
 }));
 
-const { GasketProxy }  = await import('../../lib/proxy.js');
+const { GasketBranch }  = await import('../../lib/branch.js');
 const { Gasket }  = await import('../../lib/gasket.js');
 
 const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {
@@ -85,16 +85,16 @@ describe('actions', () => {
 
   it('invokes hooks with driver', async () => {
     const result = await gasket.actions.getEventA(5);
-    expect(pluginA.hooks.eventA).toHaveBeenCalledWith(expect.any(GasketProxy), 5);
+    expect(pluginA.hooks.eventA).toHaveBeenCalledWith(expect.any(GasketBranch), 5);
     expect(result).toEqual(109);
   });
 
   it('driver passed through', async () => {
     const spy = jest.spyOn(gasket.engine, 'execWaterfall');
-    const proxy = gasket.asProxy();
+    const branch = gasket.branch();
 
-    const result = await proxy.actions.getEventA(5);
-    expect(spy).toHaveBeenCalledWith(proxy, 'eventA', 5);
+    const result = await branch.actions.getEventA(5);
+    expect(spy).toHaveBeenCalledWith(branch, 'eventA', 5);
     expect(result).toEqual(109);
   });
 
@@ -102,10 +102,11 @@ describe('actions', () => {
     await gasket.actions.getEventA(5);
 
     expect(mockDebug.mock.calls).toEqual([
-      ['[2]  ⚡︎ getEventA'],
-      ['[2]    ◇ execWaterfall(eventA)'],
-      ['[2]    ↪ pluginA:eventA'],
-      ['[2]    ↪ pluginB:eventA']
+      ['⋌ root'],
+      ['  ★ getEventA'],
+      ['    ◇ execWaterfall(eventA)'],
+      ['    ↪ pluginA:eventA'],
+      ['    ↪ pluginB:eventA']
     ]);
   });
 
@@ -120,16 +121,20 @@ describe('actions', () => {
     expect(results2).toEqual(106);
     expect(spy).toHaveBeenCalledTimes(2);
 
-    expect(mockDebug.mock.calls).toEqual([
-      ['[2]  ⚡︎ getEventA'],
-      ['[3]  ⚡︎ getEventA'],
-      ['[2]    ◇ execWaterfall(eventA)'],
-      ['[2]    ↪ pluginA:eventA'],
-      ['[2]    ↪ pluginB:eventA'],
-      ['[3]    ◇ execWaterfall(eventA)'],
-      ['[3]    ↪ pluginA:eventA'],
-      ['[3]    ↪ pluginB:eventA']
-    ]);
+    expect(mockDebug.mock.calls).toEqual(
+      [
+        ['⋌ root'],
+        ['  ★ getEventA'],
+        ['⋌ root'],
+        ['  ★ getEventA'],
+        ['    ◇ execWaterfall(eventA)'],
+        ['    ↪ pluginA:eventA'],
+        ['    ↪ pluginB:eventA'],
+        ['    ◇ execWaterfall(eventA)'],
+        ['    ↪ pluginA:eventA'],
+        ['    ↪ pluginB:eventA']
+      ]
+    );
   });
 
   it('actions can call other actions', async () => {

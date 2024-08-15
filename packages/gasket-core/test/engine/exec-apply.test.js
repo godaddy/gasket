@@ -5,7 +5,7 @@ jest.unstable_mockModule('debug', () => ({
   default: () => mockDebug
 }));
 
-const { GasketProxy }  = await import('../../lib/proxy.js');
+const { GasketBranch }  = await import('../../lib/branch.js');
 const { Gasket }  = await import('../../lib/gasket.js');
 
 describe('The execApply method', () => {
@@ -62,14 +62,14 @@ describe('The execApply method', () => {
       return handler(new Wrapper(plugin));
     });
 
-    expect(hookASpy).toHaveBeenCalledWith(expect.any(GasketProxy), expect.any(Wrapper));
-    expect(hookBSpy).toHaveBeenCalledWith(expect.any(GasketProxy), expect.any(Wrapper));
-    expect(hookCSpy).toHaveBeenCalledWith(expect.any(GasketProxy), expect.any(Wrapper));
+    expect(hookASpy).toHaveBeenCalledWith(expect.any(GasketBranch), expect.any(Wrapper));
+    expect(hookBSpy).toHaveBeenCalledWith(expect.any(GasketBranch), expect.any(Wrapper));
+    expect(hookCSpy).toHaveBeenCalledWith(expect.any(GasketBranch), expect.any(Wrapper));
   });
 
   it('driver passed through', async () => {
     const spy = jest.spyOn(gasket.engine, 'execApply');
-    const proxy = gasket.asProxy();
+    const branch = gasket.branch();
 
     /**
      *
@@ -80,9 +80,9 @@ describe('The execApply method', () => {
       return handler(new Wrapper(plugin));
     }
 
-    await proxy.execApply('eventA', applyHandler);
+    await branch.execApply('eventA', applyHandler);
 
-    expect(spy).toHaveBeenCalledWith(proxy, 'eventA', applyHandler);
+    expect(spy).toHaveBeenCalledWith(branch, 'eventA', applyHandler);
   });
 
   it('awaits sync or async hooks and resolves an Array', async () => {
@@ -155,10 +155,11 @@ describe('The execApply method', () => {
     await gasket.execApply('eventA', applyHandler);
 
     expect(mockDebug.mock.calls).toEqual([
-      ['[2]  ◇ execApply(eventA)'],
-      ['[2]  ↪ pluginA:eventA'],
-      ['[2]  ↪ pluginB:eventA'],
-      ['[2]  ↪ pluginC:eventA']
+      ['⋌ root'],
+      ['  ◇ execApply(eventA)'],
+      ['  ↪ pluginA:eventA'],
+      ['  ↪ pluginB:eventA'],
+      ['  ↪ pluginC:eventA']
     ]);
   });
 });

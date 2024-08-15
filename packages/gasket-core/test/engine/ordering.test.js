@@ -20,7 +20,7 @@ function setupLoadedPlugins(withOrderingSpecs) {
  *
  * @param plugins
  */
-function setupEngine(plugins) {
+function setupGasket(plugins) {
   return new Gasket({ plugins });
 }
 
@@ -33,10 +33,10 @@ function setupEngine(plugins) {
  */
 async function verify({ withOrderingSpecs, expectOrder, expectError }) {
   const plugins = setupLoadedPlugins(withOrderingSpecs);
-  const engine = setupEngine(plugins);
+  const gasket = setupGasket(plugins);
 
   try {
-    const results = await engine.exec('event');
+    const results = await gasket.exec('event');
     expect(results).toEqual(expectOrder);
   } catch (err) {
     if (!expectError) {

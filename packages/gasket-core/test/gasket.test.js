@@ -1,7 +1,7 @@
 /* eslint-disable no-process-env */
 
-const { GasketProxy }  = await import('../lib/proxy.js');
-const { Gasket, makeGasket }  = await import('../lib/gasket.js');
+const { GasketBranch } = await import('../lib/branch.js');
+const { Gasket, makeGasket } = await import('../lib/gasket.js');
 
 // eslint-disable-next-line no-unused-vars
 const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {
@@ -12,19 +12,15 @@ const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {
 /** @type {import('../lib/index').Plugin} */
 const mockPlugin = {
   name: 'mockPlugin',
+  actions: {
+    doSomething: jest.fn((gasket) => 'the environment is ' + gasket.config.env),
+    doAnotherThing: jest.fn((gasket) => 'the environment is ' + gasket.config.env)
+  },
   hooks: {
     configure: jest.fn().mockImplementation((gasket, config) => {
       return {
         ...config,
         mockStage: 'configure hook'
-      };
-    }),
-    actions: jest.fn().mockImplementation((gasket) => {
-      return {
-        doSomething: () => 'the environment is ' + gasket.config.env,
-        doAnotherThing() {
-          return 'the environment is ' + gasket.config.env;
-        }
       };
     })
   }
@@ -43,7 +39,7 @@ const mockProdPlugin = {
   }
 };
 
-describe.skip('makeGasket', () => {
+describe('makeGasket', () => {
   let inputConfig;
 
   beforeEach(() => {
@@ -135,7 +131,7 @@ describe.skip('makeGasket', () => {
 
       // verify that env overrides are applied before lifecycle
       expect(mockPlugin.hooks.configure).toHaveBeenCalledWith(
-        expect.any(GasketProxy),
+        expect.any(GasketBranch),
         expect.objectContaining({
           mode: 'prod',
           mockStage: 'input'
@@ -161,7 +157,7 @@ describe.skip('makeGasket', () => {
     it('executes configure lifecycle', () => {
       makeGasket(inputConfig);
       expect(mockPlugin.hooks.configure).toHaveBeenCalledWith(
-        expect.any(GasketProxy),
+        expect.any(GasketBranch),
         expect.objectContaining({
           mockStage: 'input'
         })
@@ -190,13 +186,10 @@ describe.skip('makeGasket', () => {
           },
           {
             name: 'plugin-b',
-            hooks: {
-              actions() {
-                return {
-                  mockAction
-                };
-              }
-            }
+            actions: {
+              mockAction
+            },
+            hooks: {}
           }
         ]
       });
@@ -205,14 +198,7 @@ describe.skip('makeGasket', () => {
     });
   });
 
-  describe('actions lifecycle', () => {
-    it('executes actions lifecycle', () => {
-      makeGasket(inputConfig);
-      expect(mockPlugin.hooks.actions).toHaveBeenCalledWith(
-        expect.any(GasketProxy)
-      );
-    });
-
+  describe('actions', () => {
     it('attaches actions to instance', () => {
       const gasket = makeGasket(inputConfig);
       expect(gasket.actions).toEqual(expect.objectContaining({
@@ -231,13 +217,10 @@ describe.skip('makeGasket', () => {
     it('warns on duplicate action names', () => {
       inputConfig.plugins.unshift({
         name: 'firstMockPlugin',
-        hooks: {
-          actions: jest.fn().mockImplementation(() => {
-            return {
-              doSomething: () => 'first in!!'
-            };
-          })
-        }
+        actions: {
+          doSomething: () => 'first in!!'
+        },
+        hooks: {}
       });
       const gasket = makeGasket(inputConfig);
       const { doSomething } = gasket.actions;
@@ -249,7 +232,7 @@ describe.skip('makeGasket', () => {
     });
   });
 
-  it('attachments are only available on current driver', () => {
+  it('attachments to other branches', () => {
     const mockAttached = jest.fn();
 
     makeGasket({
@@ -257,8 +240,18 @@ describe.skip('makeGasket', () => {
         {
           name: 'plugin-a',
           hooks: {
+            init: {
+              timing: {
+                before: ['plugin-b']
+              },
+              handler: (gasket) => {
+                // BEFORE plugin-b init
+                expect(gasket).not.toHaveProperty('attached');
+              }
+            },
             configure(gasket, config) {
-              expect(gasket).not.toHaveProperty('attached');
+              // AFTER plugin-b init
+              expect(gasket.attached).toBe(mockAttached);
               return config;
             }
           }
@@ -279,6 +272,7 @@ describe.skip('makeGasket', () => {
                 after: ['plugin-b']
               },
               handler: (gasket) => {
+                // AFTER plugin-b init
                 expect(gasket.attached).toBe(mockAttached);
                 gasket.attached('from plugin-c init');
               }

@@ -2,7 +2,7 @@
 
 import { GasketEngine, lifecycleMethods } from './engine.js';
 import { applyConfigOverrides } from '@gasket/utils';
-import { makeProxy } from './proxy.js';
+import { makeBranch } from './branch.js';
 
 /**
  * Get the environment to use for the gasket instance.
@@ -38,13 +38,10 @@ export class Gasket {
     // start the engine
     this.engine = new GasketEngine(config.plugins);
 
-    // track proxy increments by gasket - mostly for testing
-    this._nextProxyId = 0;
-
     // bind engine methods to run through a proxy
     lifecycleMethods.forEach(method => {
       this[method] = (...args) => {
-        return this.asProxy()[method](...args);
+        return this.branch()[method](...args);
       };
     });
 
@@ -57,18 +54,21 @@ export class Gasket {
     this.execSync('init');
     // @ts-ignore
     this.config = this.execWaterfallSync('configure', config);
+    // @ts-ignore
+    this.exec('ready');
   }
 
   attach = (propName, propValue) => {
     this[propName] = propValue;
   };
 
-  asProxy = () => {
-    return makeProxy(this, this._nextProxyId++);
-  };
+  branch() {
+    // console.log('root branch');
+    return makeBranch(this);
+  }
 
   get actions() {
-    return this.asProxy().actions;
+    return this.branch().actions;
   }
 }
 

@@ -5,7 +5,7 @@ jest.unstable_mockModule('debug', () => ({
   default: () => mockDebug
 }));
 
-const { GasketProxy }  = await import('../../lib/proxy.js');
+const { GasketBranch }  = await import('../../lib/branch.js');
 const { Gasket }  = await import('../../lib/gasket.js');
 
 describe('The execSync method', () => {
@@ -58,15 +58,15 @@ describe('The execSync method', () => {
   it('invokes hooks with driver', () => {
     gasket.execSync('eventA', 5);
 
-    expect(pluginA.hooks.eventA).toHaveBeenCalledWith(expect.any(GasketProxy), 5);
+    expect(pluginA.hooks.eventA).toHaveBeenCalledWith(expect.any(GasketBranch), 5);
   });
 
   it('driver passed through', () => {
     const spy = jest.spyOn(gasket.engine, 'execSync');
-    const proxy = gasket.asProxy();
-    const result = proxy.execSync('eventA', 5);
+    const branch = gasket.branch();
+    const result = branch.execSync('eventA', 5);
 
-    expect(spy).toHaveBeenCalledWith(proxy, 'eventA', 5);
+    expect(spy).toHaveBeenCalledWith(branch, 'eventA', 5);
     expect(result).toEqual([6, 7]);
   });
 
@@ -75,9 +75,10 @@ describe('The execSync method', () => {
     gasket.execSync('eventA', 5);
 
     expect(mockDebug.mock.calls).toEqual([
-      ['[2]  ◆ execSync(eventA)'],
-      ['[2]  ↪ pluginA:eventA'],
-      ['[2]  ↪ pluginB:eventA']
+      ['⋌ root'],
+      ['  ◆ execSync(eventA)'],
+      ['  ↪ pluginA:eventA'],
+      ['  ↪ pluginB:eventA']
     ]);
   });
 });

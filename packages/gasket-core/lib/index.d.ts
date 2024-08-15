@@ -17,8 +17,8 @@ declare module '@gasket/core' {
   export interface HookExecTypes {
     // add makeGasket lifecycles
     init(): void
-    actions(): Partial<GasketActions>
     configure(config: GasketConfig): GasketConfig
+    ready(): MaybeAsync<void>
   }
 
   export type HookId = keyof HookExecTypes;

@@ -5,7 +5,7 @@ jest.unstable_mockModule('debug', () => ({
   default: () => mockDebug
 }));
 
-const { GasketProxy }  = await import('../../lib/proxy.js');
+const { GasketBranch }  = await import('../../lib/branch.js');
 const { Gasket }  = await import('../../lib/gasket.js');
 
 describe('The execApplySync method', () => {
@@ -69,18 +69,18 @@ describe('The execApplySync method', () => {
   it('invokes hooks with driver', () => {
     gasket.execApplySync('eventA', mockApplyHandler);
 
-    expect(hookASpy).toHaveBeenCalledWith(expect.any(GasketProxy), expect.any(Wrapper));
-    expect(hookBSpy).toHaveBeenCalledWith(expect.any(GasketProxy), expect.any(Wrapper));
-    expect(hookCSpy).toHaveBeenCalledWith(expect.any(GasketProxy), expect.any(Wrapper));
+    expect(hookASpy).toHaveBeenCalledWith(expect.any(GasketBranch), expect.any(Wrapper));
+    expect(hookBSpy).toHaveBeenCalledWith(expect.any(GasketBranch), expect.any(Wrapper));
+    expect(hookCSpy).toHaveBeenCalledWith(expect.any(GasketBranch), expect.any(Wrapper));
   });
 
   it('driver passed through', () => {
     const spy = jest.spyOn(gasket.engine, 'execApplySync');
-    const proxy = gasket.asProxy();
+    const branch = gasket.branch();
 
-    proxy.execApplySync('eventA', mockApplyHandler);
+    branch.execApplySync('eventA', mockApplyHandler);
 
-    expect(spy).toHaveBeenCalledWith(proxy, 'eventA', mockApplyHandler);
+    expect(spy).toHaveBeenCalledWith(branch, 'eventA', mockApplyHandler);
   });
 
   it('returns an Array of results', () => {
@@ -141,10 +141,11 @@ describe('The execApplySync method', () => {
     gasket.execApplySync('eventA', mockApplyHandler);
 
     expect(mockDebug.mock.calls).toEqual([
-      ['[2]  ◆ execApplySync(eventA)'],
-      ['[2]  ↪ pluginA:eventA'],
-      ['[2]  ↪ pluginB:eventA'],
-      ['[2]  ↪ pluginC:eventA']
+      ['⋌ root'],
+      ['  ◆ execApplySync(eventA)'],
+      ['  ↪ pluginA:eventA'],
+      ['  ↪ pluginB:eventA'],
+      ['  ↪ pluginC:eventA']
     ]);
   });
 });
