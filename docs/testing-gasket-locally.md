@@ -18,13 +18,14 @@ Two options for testing your plugin locally are to point a local app's dependenc
 
 ### Point dependencies to local plugin
 
-To test a Gasket plugin locally, you can modify the plugin dependency in a local Gasket app’s `package.json` to point to the absolute path of the local plugin you want to test. After updating the path, run npm install to refresh the `node_modules` directory with the local version.
+To test a Gasket plugin locally, you can modify the plugin dependency in a local Gasket app’s `package.json` to point to the absolute path of the local plugin you want to test. After updating the path, run `npm install` to refresh the `node_modules` directory with the local version.
 
-```json
+```diff
 // package.json
 {
   "dependencies": {
-    "@gasket/plugin-example": "file:/absolute/path/to/gasket/packages/gasket-plugin-example"
+-    "@gasket/plugin-example": "^1.0.0"
++    "@gasket/plugin-example": "file:/absolute/path/to/gasket/packages/gasket-plugin-example"
   }
 }
 ```
