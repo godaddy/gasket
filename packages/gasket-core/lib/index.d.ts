@@ -112,12 +112,17 @@ declare module '@gasket/core' {
   }
 
   export interface Gasket extends GasketEngine {
+    constructor(config: GasketConfigDefinition);
+
     command: {
       id: string;
     };
     config: GasketConfig;
     new (config: GasketConfigDefinition): Gasket
+    branch(): GasketBranch
   }
+
+  export interface GasketBranch extends Gasket {}
 
   type PartialRecursive<T> = T extends Object
     ? { [K in keyof T]?: PartialRecursive<T[K]> } | undefined

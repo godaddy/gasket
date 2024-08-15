@@ -1,4 +1,4 @@
-import { GasketEngine as Gasket } from '@gasket/core';
+import { Gasket, makeGasket } from '@gasket/core';
 import type { GasketConfigDefinition, MaybeAsync, Plugin  } from '@gasket/core';
 
 declare module '@gasket/core' {
@@ -21,20 +21,19 @@ const PluginExample = {
 describe('@gasket/core', () => {
   it('exposes the constructor interface', () => {
     // eslint-disable-next-line no-new
-    new Gasket([PluginExample]);
+    makeGasket({ plugins: [PluginExample] });
   });
 
   it('checks constructor arguments', () => {
     // eslint-disable-next-line no-new
-    new Gasket(
-      [PluginExample],
-      // @ts-expect-error
-      'extra'
-    );
+    makeGasket({
+      plugins: [PluginExample]
+    // @ts-expect-error
+    }, 'extra');
   });
 
   it('should infer the types of lifecycle parameters', async function () {
-    const gasket = new Gasket([PluginExample]);
+    const gasket = makeGasket({ plugins: [PluginExample] });
 
     await gasket.execApply('example', async function (plugin, handler) {
       handler('a string', 123, true);
@@ -61,42 +60,42 @@ describe('@gasket/core', () => {
   });
 
   it('type checks the hook method', () => {
-    const engine = new Gasket([PluginExample]);
+    const gasket = makeGasket({ plugins: [PluginExample] });
 
     // Valid
-    engine.hook({
+    gasket.hook({
       event: 'example',
-      handler(gasket, str, num, bool) {
+      handler(_gasket, str, num, bool) {
         return true;
       }
     });
 
     // Unknown event type
-    engine.hook({
+    gasket.hook({
       // @ts-expect-error
       event: 'unknown',
       // @ts-expect-error
-      handler: (gasket) => {}
+      handler: (_gasket) => {}
     });
 
     // Invalid return type
-    engine.hook({
+    gasket.hook({
       event: 'example',
       // @ts-expect-error
-      handler(gasket, str, num, bool) {
+      handler(_gasket, str, num, bool) {
         return 'invalid';
       }
     });
   });
 
   it('exposes the running command on the Gasket interface', () => {
-    const engine = new Gasket([PluginExample]);
+    const gasket = makeGasket({ plugins: [PluginExample] });
 
     // Valid
-    engine.hook({
+    gasket.hook({
       event: 'example',
-      handler(gasket) {
-        return gasket.command.id === 'start';
+      handler(_gasket) {
+        return _gasket.command.id === 'start';
       }
     });
   });

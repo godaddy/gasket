@@ -13,10 +13,7 @@ function setupContext(context) {
   };
 }
 
-/**
- * Creates the webpack config
- * @type {import('./internal').initWebpack}
- */
+/** @type {import('@gasket/core').ActionHandler<'getWebpackConfig'>} */
 function getWebpackConfig(gasket, initConfig, context) {
   const WebpackMetricsPlugin = require('./webpack-metrics-plugin');
 
