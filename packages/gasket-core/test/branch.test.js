@@ -9,7 +9,6 @@ jest.unstable_mockModule('debug', () => ({
 const { GasketBranch } = await import('../lib/branch.js');
 const { Gasket } = await import('../lib/gasket.js');
 
-
 describe('GasketBranch', () => {
   let gasket, pluginA, pluginB;
 

@@ -58,12 +58,7 @@ export class Gasket {
     this.exec('ready');
   }
 
-  attach = (propName, propValue) => {
-    this[propName] = propValue;
-  };
-
   branch() {
-    // console.log('root branch');
     return makeBranch(this);
   }
 
