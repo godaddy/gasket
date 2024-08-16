@@ -19,33 +19,29 @@ describe('actions', () => {
     };
   });
 
-  it('is a function', () => {
-    expect(typeof actions).toStrictEqual('function');
-  });
-
-  it('returns an object', () => {
-    expect(typeof actions(mockGasket)).toStrictEqual('object');
+  it('is an object', () => {
+    expect(typeof actions).toStrictEqual('object');
   });
 
   it('defines getApmTransaction', () => {
-    expect(actions(mockGasket).getApmTransaction).toBeDefined();
+    expect(actions.getApmTransaction).toBeDefined();
   });
 
   it('returns undefined if APM is not started', async () => {
     mockIsStarted.mockReturnValue(false);
-    const result = await actions(mockGasket).getApmTransaction();
+    const result = await actions.getApmTransaction(mockGasket);
     expect(result).toBeUndefined();
   });
 
   it('executes the apmTransaction hook', async () => {
-    await actions(mockGasket).getApmTransaction({});
+    await actions.getApmTransaction(mockGasket, {});
     expect(mockGasket.exec).toHaveBeenCalledWith('apmTransaction', apm.currentTransaction, { req: {} });
   });
 
   it('returns undefined if no transaction', async () => {
     // eslint-disable-next-line no-undefined
     apm.currentTransaction = undefined;
-    const result = await actions(mockGasket).getApmTransaction();
+    const result = await actions.getApmTransaction(mockGasket);
     expect(result).toBeUndefined();
   });
 });

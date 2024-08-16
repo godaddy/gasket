@@ -1,5 +1,5 @@
 /* eslint-disable no-sync */
-const { GasketEngine } = require('@gasket/core');
+const { Gasket } = require('@gasket/core');
 const PluginLogger = require('@gasket/plugin-logger');
 const plugin = require('../lib/index');
 const { LEVEL, MESSAGE } = require('triple-beam');
@@ -12,7 +12,7 @@ describe('@gasket/plugin-winston', function () {
   let gasket;
 
   beforeEach(() => {
-    gasket = new GasketEngine([PluginLogger, plugin]);
+    gasket = new Gasket({ plugins: [PluginLogger, plugin] });
     gasket.config = {};
   });
 

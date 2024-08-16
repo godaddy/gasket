@@ -16,42 +16,42 @@ jest.unstable_mockModule('../lib/cli.js', () => {
   };
 });
 
-const configure = (await import('../lib/configure.js')).default;
+const ready = (await import('../lib/ready.js')).default;
 
-describe('configureHook', () => {
+describe('ready', () => {
   let mockGasket;
 
   beforeEach(() => {
     jest.clearAllMocks();
     mockGasket = {
-      execSync: jest.fn().mockReturnValue([{ id: 'test', description: 'test', action: jest.fn() }])
+      exec: jest.fn().mockReturnValue([{ id: 'test', description: 'test', action: jest.fn() }])
     };
   });
 
   it('should be a function', () => {
-    expect(configure).toEqual(expect.any(Function));
+    expect(ready).toEqual(expect.any(Function));
   });
 
-  it('should not execSync commands if not a gasket command', () => {
-    configure(mockGasket);
-    expect(mockGasket.execSync).not.toHaveBeenCalled();
+  it('should not exec commands if not a gasket command', () => {
+    ready(mockGasket);
+    expect(mockGasket.exec).not.toHaveBeenCalled();
   });
 
   it('should execute on gasket command', () => {
     process.argv = ['node', '/path/to/gasket.js'];
-    configure(mockGasket);
-    expect(mockGasket.execSync).toHaveBeenCalled();
+    ready(mockGasket);
+    expect(mockGasket.exec).toHaveBeenCalled();
   });
 
-  it('should add commands to gasketBin', () => {
+  it('should add commands to gasketBin', async () => {
     process.argv = ['node', '/path/to/gasket.js'];
-    configure(mockGasket);
+    await ready(mockGasket);
     expect(mockAddCommand).toHaveBeenCalled();
   });
 
-  it('should parse commands', () => {
+  it('should parse commands', async () => {
     process.argv = ['node', '/path/to/gasket.js'];
-    configure(mockGasket);
+    await ready(mockGasket);
     expect(mockParse).toHaveBeenCalled();
   });
 });

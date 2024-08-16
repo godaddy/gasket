@@ -10,9 +10,10 @@
 
 const path = require('path');
 const fs = require('fs');
-const { readFile, writeFile, access } = require('fs').promises;
-const swaggerJSDoc = require('swagger-jsdoc');
+const { readFile, access } = require('fs').promises;
 const isYaml = /\.ya?ml$/;
+const buildSwaggerDefinition = require('./build-swagger-definition');
+const postCreate = require('./post-create');
 const { name, version, description } = require('../package.json');
 
 let __swaggerSpec;
@@ -60,29 +61,7 @@ const plugin = {
       return baseConfig;
     },
     async build(gasket) {
-      const { swagger, root } = gasket.config;
-      const { jsdoc, definitionFile } = swagger;
-
-      if (jsdoc) {
-        const target = path.join(root, definitionFile);
-        const swaggerSpec = swaggerJSDoc(jsdoc);
-
-        if (!swaggerSpec) {
-          gasket.logger.warn(
-            `No JSDocs for Swagger were found in files (${jsdoc.apis}). Definition file not generated...`
-          );
-        } else {
-          let content;
-          if (isYaml.test(definitionFile)) {
-            content = require('js-yaml').safeDump(swaggerSpec);
-          } else {
-            content = JSON.stringify(swaggerSpec, null, 2);
-          }
-
-          await writeFile(target, content, 'utf8');
-          gasket.logger.info(`Wrote: ${definitionFile}`);
-        }
-      }
+      await buildSwaggerDefinition(gasket, {});
     },
     express: {
       timing: {
@@ -154,6 +133,7 @@ const plugin = {
         }
       });
     },
+    postCreate,
     metadata(gasket, meta) {
       return {
         ...meta,

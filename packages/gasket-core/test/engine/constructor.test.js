@@ -1,4 +1,4 @@
-import { GasketEngine } from '../../lib/index.js';
+const { GasketEngine }  = await import('../../lib/engine.js');
 
 const mockPlugin = {
   name: '@gasket/plugin-one',
@@ -15,10 +15,17 @@ describe('constructor', () => {
     expect(() => new GasketEngine([])).toThrow(/plugins/);
   });
 
-  it('exposed expected methods', () => {
+  it('exposed expected lifecycle methods', () => {
     const engine = new GasketEngine([mockPlugin]);
     ['exec', 'execWaterfall', 'execMap', 'execApply',
       'execSync', 'execWaterfallSync', 'execMapSync', 'execApplySync'].forEach(name => {
+      expect(engine).toHaveProperty(name, expect.any(Function));
+    });
+  });
+
+  it('exposed expected additional methods', () => {
+    const engine = new GasketEngine([mockPlugin]);
+    ['hook'].forEach(name => {
       expect(engine).toHaveProperty(name, expect.any(Function));
     });
   });
