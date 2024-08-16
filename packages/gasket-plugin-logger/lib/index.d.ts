@@ -1,14 +1,13 @@
-import type { MaybeAsync } from '@gasket/core';
+import type { MaybeAsync, Plugin } from '@gasket/core';
 
+export type LogLevel = 'error' | 'warn' | 'info' | 'debug';
 
-  export type LogLevel = 'error' | 'warn' | 'info' | 'debug';
+type LogMethods = Record<LogLevel, (...args: any[]) => void>;
 
-  type LogMethods = Record<LogLevel, (...args: any[]) => void>;
-
-  export type Logger = LogMethods & {
-    close?: () => MaybeAsync<any>;
-    child: (meta: Record<string, any>) => Logger;
-  };
+export type Logger = LogMethods & {
+  close?: () => MaybeAsync<any>;
+  child: (meta: Record<string, any>) => Logger;
+};
 
 declare module '@gasket/core' {
   interface Gasket {
@@ -20,9 +19,9 @@ declare module '@gasket/core' {
   }
 }
 
-export default {
+const plugin: Plugin = {
   name: '@gasket/plugin-logger',
-  version: '',
-  description: '',
   hooks: {}
 };
+
+export = plugin;

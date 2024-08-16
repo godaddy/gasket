@@ -51,9 +51,9 @@ function createTestFiles({ files, generatorDir, testPlugins }) {
 function createNextFiles({ files, generatorDir, nextDevProxy, typescript, nextServerType }) {
   let glob;
 
-  // TS only next.config.cjs
+  // TS specific next.config.js
   if (typescript) {
-    glob = `${generatorDir}/next/*.cjs`;
+    glob = `${generatorDir}/next/typescript/*`;
     // if no proxy and using defaultServer, add next.config.js
   } else if (!nextDevProxy && nextServerType !== 'customServer') {
     glob = `${generatorDir}/next/*(next.config).js`;
@@ -88,11 +88,7 @@ function configureSitemap({ files, pkg, generatorDir }) {
  * @property {boolean} typescript - Selected typescript from prompt
  */
 function addDependencies({ pkg, typescript }) {
-  // Dep to transpile TS files at runtime
-  const babelRegisterDep = typescript ? { '@babel/register': devDependencies['@babel/register'] } : {};
-
   pkg.add('dependencies', {
-    ...babelRegisterDep,
     '@gasket/assets': devDependencies['@gasket/assets'],
     '@gasket/nextjs': devDependencies['@gasket/nextjs'],
     [name]: `^${version}`,
@@ -107,21 +103,6 @@ function addDependencies({ pkg, typescript }) {
       nodemon: devDependencies.nodemon
     });
   }
-}
-
-/**
- * addRedux
- * @property {Files} files - The Gasket Files API.
- * @property {PackageJsonBuilder} pkg - The Gasket PackageJson API.
- * @property {generatorDir} - The directory of the generator.
- */
-function addRedux({ files, pkg, generatorDir }) {
-  pkg.add('dependencies', {
-    'next-redux-wrapper': devDependencies['next-redux-wrapper'],
-    'lodash.merge': devDependencies['lodash.merge']
-  });
-
-  files.add(`${generatorDir}/redux/*`, `${generatorDir}/redux/**/*`);
 }
 
 /**
@@ -183,8 +164,7 @@ function addConfig({ gasketConfig, nextDevProxy }) {
 
 module.exports = {
   timing: {
-    before: ['@gasket/plugin-intl'],
-    after: ['@gasket/plugin-redux']
+    before: ['@gasket/plugin-intl']
   },
   /**
    * Add files & extend package.json for new apps.
@@ -199,7 +179,6 @@ module.exports = {
       nextServerType,
       nextDevProxy,
       typescript,
-      useRedux,
       useAppRouter,
       hasGasketIntl
     } = context;
@@ -212,6 +191,5 @@ module.exports = {
     addNpmScripts({ pkg, nextServerType, nextDevProxy, typescript, hasGasketIntl });
     addConfig(context);
     if (addSitemap) configureSitemap({ files, pkg, generatorDir });
-    if (useRedux) addRedux({ files, pkg, generatorDir });
   }
 };

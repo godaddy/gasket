@@ -26,7 +26,6 @@ describe('create hook', () => {
 
   it('has expected timings', async function () {
     expect(create.timing.before).toEqual(['@gasket/plugin-intl']);
-    expect(create.timing.after).toEqual(['@gasket/plugin-redux']);
   });
 
   it('has handler function', async function () {
@@ -113,45 +112,11 @@ describe('create hook', () => {
       );
     });
 
-    it('adds next.config.cjs for TypeScript', async function () {
+    it('adds specific files for TypeScript', async function () {
       mockContext.typescript = true;
       await create.handler({}, mockContext);
       expect(mockContext.files.add).toHaveBeenCalledWith(
-        `${root}/../generator/next/*.cjs`
-      );
-    });
-  });
-
-  describe('addRedux', () => {
-
-    it('adds redux files', async function () {
-      mockContext.useRedux = true;
-      await create.handler({}, mockContext);
-      expect(mockContext.files.add).toHaveBeenCalledWith(
-        `${root}/../generator/redux/*`,
-        `${root}/../generator/redux/**/*`
-      );
-    });
-
-    it('adds redux dependencies', async function () {
-      mockContext.useRedux = true;
-      await create.handler({}, mockContext);
-      expect(mockContext.pkg.add).toHaveBeenCalledWith('dependencies', {
-        'next-redux-wrapper': devDependencies['next-redux-wrapper'],
-        'lodash.merge': devDependencies['lodash.merge']
-      });
-    });
-
-    it('does not add redux files or dependencies', async function () {
-      mockContext.useRedux = false;
-      await create.handler({}, mockContext);
-      expect(mockContext.pkg.add).not.toHaveBeenCalledWith('dependencies', {
-        'next-redux-wrapper': devDependencies['next-redux-wrapper'],
-        'lodash.merge': devDependencies['lodash.merge']
-      });
-      expect(mockContext.files.add).not.toHaveBeenCalledWith(
-        `${root}/../generator/redux/*`,
-        `${root}/../generator/redux/**/*`
+        `${root}/../generator/next/typescript/*`
       );
     });
   });

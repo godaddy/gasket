@@ -1,6 +1,6 @@
 import type { IncomingMessage } from 'http';
 import type { AgentConfigOptions, Transaction, Payload, Agent } from 'elastic-apm-node';
-import type { MaybeAsync, GasketConfig } from '@gasket/core';
+import type { MaybeAsync, GasketConfig, Plugin } from '@gasket/core';
 import type { Request } from 'express';
 
 export function filterSensitiveCookies(config: GasketConfig): function(Payload): Payload;
@@ -34,9 +34,9 @@ declare module '@gasket/core' {
   }
 }
 
-export default {
+const plugin: Plugin = {
   name: '@gasket/plugin-elastic-apm',
-  version: '',
-  description: '',
   hooks: {}
 };
+
+export = plugin;

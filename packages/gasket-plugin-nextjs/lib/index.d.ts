@@ -6,7 +6,6 @@ import type { Fastify } from 'fastify';
 import type { Gasket } from '@gasket/core';
 import type { CreateContext } from 'create-gasket-app';
 
-
 export { NextConfig, NextServer };
 
 export type NextConfigFunction = (phase: string, context: {
@@ -77,12 +76,14 @@ declare module 'create-gasket-app' {
     nextServerType: 'appRouter' | 'pageRouter' | 'customServer';
     nextDevProxy: boolean;
     typescript: boolean;
-    useRedux: boolean;
     useAppRouter: boolean;
   }
 }
 
 declare module '@gasket/plugin-nextjs' {
+  export const name = '@gasket/plugin-nextjs';
+  export const hooks = {};
+
   /** Gets the NextJS route matching the request */
   export async function getNextRoute(
     gasket: Gasket,
@@ -124,12 +125,4 @@ declare module '@gasket/plugin-nextjs' {
       prompts: Array<Record<string, any>>
     ) => Promise<Record<string, any>>
   ): Promise<undefined>
-
-}
-
-export default {
-  name: '@gasket/plugin-nextjs',
-  version: '',
-  description: '',
-  hooks: {}
 }

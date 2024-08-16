@@ -1,4 +1,4 @@
-import { MaybeAsync } from '@gasket/core';
+import { MaybeAsync, Plugin } from '@gasket/core';
 
 export interface PublicGasketData extends Record<string, any> {
 }
@@ -32,9 +32,17 @@ declare module '@gasket/core' {
   }
 }
 
-export default {
+declare module 'create-gasket-app' {
+  export interface CreateContext {
+    typescript: boolean;
+    nextServerType: 'appRouter' | 'pageRouter' | 'customServer';
+    apiApp: boolean;
+  }
+}
+
+const plugin: Plugin = {
   name: '@gasket/plugin-data',
-  version: '',
-  description: '',
   hooks: {}
 };
+
+export = plugin;
