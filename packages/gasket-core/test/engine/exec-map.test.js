@@ -1,7 +1,15 @@
-import { GasketEngine } from '../../lib/index.js';
+import { jest } from '@jest/globals';
+
+const mockDebug = jest.fn();
+jest.unstable_mockModule('debug', () => ({
+  default: () => mockDebug
+}));
+
+const { GasketBranch }  = await import('../../lib/branch.js');
+const { Gasket }  = await import('../../lib/gasket.js');
 
 describe('The execMap method', () => {
-  let engine, hookASpy, hookBSpy, hookCSpy;
+  let gasket, hookASpy, hookBSpy, hookCSpy;
 
   const pluginA = {
     name: 'pluginA',
@@ -36,37 +44,58 @@ describe('The execMap method', () => {
     hookBSpy = jest.spyOn(pluginB.hooks, 'eventA');
     hookCSpy = jest.spyOn(pluginC.hooks.eventA, 'handler');
 
-    engine = new GasketEngine([pluginA, pluginB, pluginC]);
+    gasket = new Gasket({ plugins: [pluginA, pluginB, pluginC] });
   });
 
   afterEach(() => {
-    jest.resetModules();
-    jest.restoreAllMocks();
+    jest.clearAllMocks();
   });
 
-  it('passes the gasket config to each hook', async () => {
-    await engine.execMap('eventA');
+  it('invokes hooks with driver', async () => {
+    await gasket.execMap('eventA');
 
-    expect(hookASpy).toHaveBeenCalledWith(engine);
-    expect(hookBSpy).toHaveBeenCalledWith(engine);
-    expect(hookCSpy).toHaveBeenCalledWith(engine);
+    expect(hookASpy).toHaveBeenCalledWith(expect.any(GasketBranch));
+    expect(hookBSpy).toHaveBeenCalledWith(expect.any(GasketBranch));
+    expect(hookCSpy).toHaveBeenCalledWith(expect.any(GasketBranch));
+  });
+
+  it('driver passed through', async () => {
+    const spy = jest.spyOn(gasket.engine, 'execMap');
+    const branch = gasket.branch();
+
+    const result = await branch.execMap('eventA');
+    expect(spy).toHaveBeenCalledWith(branch, 'eventA');
+    expect(result).toEqual({ pluginA: 1, pluginB: 2, pluginC: 3 });
   });
 
   it('awaits sync or async hooks and resolves a map object', async () => {
-    const result = await engine.execMap('eventA');
+    const result = await gasket.execMap('eventA');
     expect(result).toEqual({ pluginA: 1, pluginB: 2, pluginC: 3 });
   });
 
   it('resolves to an empty object if nothing hooked the event', async () => {
-    const result = await engine.execMap('eventB');
+    const result = await gasket.execMap('eventB');
     expect(result).toEqual({});
   });
 
   it('works when invoked without a context', async () => {
-    const { execMap } = engine;
+    const { execMap } = gasket;
 
     const result = await execMap('eventA');
 
     expect(result).toEqual({ pluginA: 1, pluginB: 2, pluginC: 3 });
+  });
+
+  it('has expected trace output', async () => {
+    mockDebug.mockClear();
+    await gasket.execMap('eventA');
+
+    expect(mockDebug.mock.calls).toEqual([
+      ['⋌ root'],
+      ['  ◇ execMap(eventA)'],
+      ['  ↪ pluginA:eventA'],
+      ['  ↪ pluginB:eventA'],
+      ['  ↪ pluginC:eventA']
+    ]);
   });
 });

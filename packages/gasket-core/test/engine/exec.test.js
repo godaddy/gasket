@@ -1,4 +1,12 @@
-import { GasketEngine } from '../../lib/index.js';
+import { jest } from '@jest/globals';
+
+const mockDebug = jest.fn();
+jest.unstable_mockModule('debug', () => ({
+  default: () => mockDebug
+}));
+
+const { GasketBranch }  = await import('../../lib/branch.js');
+const { Gasket }  = await import('../../lib/gasket.js');
 
 /**
  *
@@ -9,7 +17,7 @@ async function pause(ms) {
 }
 
 describe('The exec method', () => {
-  let engine, hookASpy, hookBSpy;
+  let gasket, hookASpy;
 
   const pluginA = {
     name: 'pluginA',
@@ -83,54 +91,60 @@ describe('The exec method', () => {
 
   beforeEach(() => {
     hookASpy = jest.spyOn(pluginA.hooks, 'eventA');
-    hookBSpy = jest.spyOn(pluginB.hooks, 'eventA');
 
-    engine = new GasketEngine([pluginA, pluginB]);
+    gasket = new Gasket({ plugins: [pluginA, pluginB] });
   });
 
   afterEach(() => {
-    jest.resetModules();
-    jest.restoreAllMocks();
-  });
-
-  it('passes the gasket instance to each hook', async () => {
-    await engine.exec('eventA');
-
-    expect(hookASpy).toHaveBeenCalledWith(engine);
-    expect(hookBSpy).toHaveBeenCalledWith(engine);
+    jest.clearAllMocks();
   });
 
   it('awaits sync or async hooks and resolves an Array', async () => {
-    const result = await engine.exec('eventA');
+    const result = await gasket.exec('eventA');
     expect(result).toEqual([1, 2]);
   });
 
   it('resolves to an empty array if nothing hooked the event', async () => {
-    const result = await engine.exec('eventMissing');
+    const result = await gasket.exec('eventMissing');
     expect(result).toEqual([]);
   });
 
   it('works when invoked without a context', async () => {
-    const { exec } = engine;
+    const { exec } = gasket;
 
     const result = await exec('eventA');
 
     expect(result).toEqual([1, 2]);
   });
 
+  it('invokes hooks with driver', async () => {
+    await gasket.exec('eventA');
+
+    expect(hookASpy).toHaveBeenCalledWith(expect.any(GasketBranch));
+  });
+
+  it('driver passed through', async () => {
+    const spy = jest.spyOn(gasket.engine, 'exec');
+    const branch = gasket.branch();
+
+    const result = await branch.exec('eventA');
+    expect(spy).toHaveBeenCalledWith(branch, 'eventA');
+    expect(result).toEqual([1, 2]);
+  });
+
   it('does not cause unhandled rejections on thrown errors', async () => {
-    engine.hook({
+    gasket.hook({
       event: 'mock',
       async handler() {
         throw new Error('I am rejecting you');
       }
     });
 
-    await expect(engine.exec('mock')).rejects.toThrow(Error);
+    await expect(gasket.exec('mock')).rejects.toThrow(Error);
   });
 
   it('should await if ordered', async () => {
-    const result = await engine.exec('eventB');
+    const result = await gasket.exec('eventB');
 
     expect(result).toEqual([
       expect.objectContaining({ value: 'B' }),
@@ -142,7 +156,7 @@ describe('The exec method', () => {
   });
 
   it('should await if ordered within first grouping', async () => {
-    const result = await engine.exec('eventC');
+    const result = await gasket.exec('eventC');
 
     expect(result).toEqual([
       expect.objectContaining({ value: 'B' }),
@@ -151,5 +165,17 @@ describe('The exec method', () => {
 
     const [resultsB, resultsA] = result;
     expect(resultsA.start).toBeGreaterThanOrEqual(resultsB.end);
+  });
+
+  it('has expected trace output', async () => {
+    mockDebug.mockClear();
+    await gasket.exec('eventA');
+
+    expect(mockDebug.mock.calls).toEqual([
+      ['⋌ root'],
+      ['  ◇ exec(eventA)'],
+      ['  ↪ pluginA:eventA'],
+      ['  ↪ pluginB:eventA']
+    ]);
   });
 });

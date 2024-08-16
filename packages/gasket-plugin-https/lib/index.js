@@ -196,12 +196,10 @@ const plugin = {
   name,
   version,
   description,
+  actions: {
+    startServer
+  },
   hooks: {
-    actions(gasket) {
-      return {
-        startServer: async () => await startServer(gasket)
-      };
-    },
     create: async function createHook(gasket, { pkg, gasketConfig }) {
       gasketConfig.addPlugin('pluginHttps', name);
       pkg.add('dependencies', {

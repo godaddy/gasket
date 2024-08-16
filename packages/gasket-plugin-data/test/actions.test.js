@@ -1,37 +1,39 @@
 const { actions, baseDataMap } = require('../lib/actions');
 
-describe('actions hook', () => {
+describe('actions', () => {
   let gasket;
 
   beforeEach(() => {
     gasket = {
-      execWaterfall: jest.fn().mockImplementation((event, config) => config)
+      execWaterfall: jest.fn().mockImplementation((event, config) => config),
+      actions
     };
   });
 
-  it('returns expected actions', () => {
-    const results = actions(gasket);
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
 
+  it('returns expected actions', () => {
     const expected = [
       'getGasketData',
       'getPublicGasketData'
     ];
 
-    expect(Object.keys(results)).toEqual(expected);
+    expect(Object.keys(actions)).toEqual(expected);
   });
 
   describe('getGasketData', () => {
     let getGasketData;
 
     beforeEach(() => {
-      gasket.actions = actions(gasket);
       getGasketData = gasket.actions.getGasketData;
     });
 
     it('returns base data', async () => {
       baseDataMap.set(gasket, { some: 'data' });
 
-      const results = await getGasketData();
+      const results = await getGasketData(gasket);
       expect(results).toEqual({ some: 'data' });
     });
 
@@ -39,7 +41,7 @@ describe('actions hook', () => {
       baseDataMap.set(gasket, { some: 'data' });
       gasket.execWaterfall.mockResolvedValue({ some: 'adjusted' });
 
-      const results = await getGasketData();
+      const results = await getGasketData(gasket);
 
       expect(gasket.execWaterfall).toHaveBeenCalledWith('gasketData', { some: 'data' });
       expect(results).toEqual({ some: 'adjusted' });
@@ -48,10 +50,10 @@ describe('actions hook', () => {
     it('only executes gasketData fixup once', async () => {
       baseDataMap.set(gasket, { some: 'data' });
 
-      const results1 = await getGasketData();
+      const results1 = await getGasketData(gasket);
       expect(gasket.execWaterfall).toHaveBeenCalledTimes(1);
 
-      const results2 = await getGasketData();
+      const results2 = await getGasketData(gasket);
       expect(gasket.execWaterfall).toHaveBeenCalledTimes(1);
 
       expect(results1).toBe(results2);
@@ -62,7 +64,7 @@ describe('actions hook', () => {
 
       gasket.execWaterfall.mockResolvedValue();
 
-      await expect(() => getGasketData())
+      await expect(() => getGasketData(gasket))
         .rejects.toThrow('No gasketData - likely a gasketData lifecycle hook did not properly return data.');
     });
 
@@ -70,7 +72,7 @@ describe('actions hook', () => {
       baseDataMap.set(gasket, { some: 'data' });
 
       expect(baseDataMap.has(gasket)).toBe(true);
-      await getGasketData();
+      await getGasketData(gasket);
       expect(baseDataMap.has(gasket)).not.toBe(true);
     });
   });
@@ -79,7 +81,6 @@ describe('actions hook', () => {
     let getGasketData, getPublicGasketData, req;
 
     beforeEach(() => {
-      gasket.actions = actions(gasket);
       getGasketData = jest.spyOn(gasket.actions, 'getGasketData').mockResolvedValue({ some: 'data' });
       getPublicGasketData = gasket.actions.getPublicGasketData;
       req = { mock: 'request' };
@@ -88,7 +89,7 @@ describe('actions hook', () => {
     it('returns public from gasketData', async () => {
       getGasketData.mockResolvedValue({ public: { some: 'data' } });
 
-      const results = await getPublicGasketData(req);
+      const results = await getPublicGasketData(gasket, req);
       expect(getGasketData).toHaveBeenCalled();
       expect(results).toEqual({ some: 'data' });
     });
@@ -96,7 +97,7 @@ describe('actions hook', () => {
     it('returns empty object if no gasketData.public', async () => {
       getGasketData.mockResolvedValue({ private: 'stuff' });
 
-      const results = await getPublicGasketData(req);
+      const results = await getPublicGasketData(gasket, req);
       expect(getGasketData).toHaveBeenCalled();
       expect(results).toEqual({});
     });
@@ -104,7 +105,7 @@ describe('actions hook', () => {
     it('does not include non-public data', async () => {
       getGasketData.mockResolvedValue({ public: { some: 'data' }, private: 'stuff' });
 
-      const results = await getPublicGasketData(req);
+      const results = await getPublicGasketData(gasket, req);
       expect(results).toEqual({ some: 'data' });
     });
 
@@ -112,7 +113,7 @@ describe('actions hook', () => {
       getGasketData.mockResolvedValue({ public: { some: 'data' } });
       gasket.execWaterfall.mockResolvedValue({ some: 'adjusted' });
 
-      const results = await getPublicGasketData(req);
+      const results = await getPublicGasketData(gasket, req);
 
       expect(gasket.execWaterfall).toHaveBeenCalledWith('publicGasketData', { some: 'data' }, { req });
       expect(results).toEqual({ some: 'adjusted' });
@@ -122,25 +123,25 @@ describe('actions hook', () => {
       getGasketData.mockResolvedValue({ public: { some: 'data' } });
       gasket.execWaterfall.mockResolvedValue();
 
-      await expect(() => getPublicGasketData(req))
+      await expect(() => getPublicGasketData(gasket, req))
         .rejects.toThrow('No public gasketData - likely a publicGasketData lifecycle hook did not properly return data.');
     });
 
     it('only executes publicGasketData fixup once per request', async () => {
       baseDataMap.set(gasket, { some: 'data' });
 
-      const results1 = await getPublicGasketData(req);
+      const results1 = await getPublicGasketData(gasket, req);
       expect(getGasketData).toHaveBeenCalledTimes(1);
       expect(gasket.execWaterfall).toHaveBeenCalledTimes(1);
 
-      const results2 = await getPublicGasketData(req);
+      const results2 = await getPublicGasketData(gasket, req);
       expect(getGasketData).toHaveBeenCalledTimes(1);
       expect(gasket.execWaterfall).toHaveBeenCalledTimes(1);
 
       expect(results1).toBe(results2);
 
       const newReq = {};
-      const results3 = await getPublicGasketData(newReq);
+      const results3 = await getPublicGasketData(gasket, newReq);
       expect(getGasketData).toHaveBeenCalledTimes(2);
       expect(gasket.execWaterfall).toHaveBeenCalledTimes(2);
 

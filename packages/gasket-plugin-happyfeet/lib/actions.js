@@ -1,15 +1,21 @@
 const happyFeet = require('happy-feet');
 
-/** @type {import('@gasket/core').HookHandler<'actions'>} */
-module.exports = function actions(gasket) {
-  let happy;
-  return {
-    getHappyFeet(happyConfig) {
-      if (!happy) {
-        const config = gasket.config.happyFeet || happyConfig || {};
-        happy = happyFeet(config);
-      }
-      return happy;
-    }
-  };
+let happy;
+
+/** @type {import('@gasket/core').ActionHandler<'getHappyFeet'>} */
+function getHappyFeet(gasket, happyConfig) {
+  if (!happy) {
+    const config = gasket.config.happyFeet || happyConfig || {};
+    happy = happyFeet(config);
+  }
+  return happy;
+}
+
+module.exports = {
+  actions: {
+    getHappyFeet
+  },
+  testReset: () => {
+    happy = null;
+  }
 };

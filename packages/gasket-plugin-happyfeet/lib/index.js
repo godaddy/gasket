@@ -1,15 +1,15 @@
 /// <reference types="@gasket/plugin-https" />
 
 const { name, version, description } = require('../package.json');
-const actions = require('./actions');
+const { actions } = require('./actions');
 
 /** @type {import('@gasket/core').Plugin} */
 const plugin = {
   name,
   version,
   description,
+  actions,
   hooks: {
-    actions,
     healthcheck: async function healthcheck(gasket, HealthCheckError) {
       const happy = gasket.actions.getHappyFeet();
       if (happy && happy.state === happy.STATE.UNHAPPY) {
