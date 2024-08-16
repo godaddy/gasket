@@ -1,5 +1,5 @@
 import create from './create.js';
-import configure from './configure.js';
+import ready from './ready.js';
 import commands from './commands.js';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
@@ -12,7 +12,7 @@ export default {
   description,
   hooks: {
     create,
-    configure,
+    ready,
     commands,
     metadata(gasket, meta) {
       return {
@@ -23,7 +23,7 @@ export default {
             method: 'execSync',
             description: 'Add custom commands to the CLI',
             link: 'README.md#commands',
-            parent: 'configure'
+            parent: 'ready'
           }
         ]
       };
