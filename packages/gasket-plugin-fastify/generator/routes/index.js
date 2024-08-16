@@ -1,6 +1,6 @@
 export const routes = [
   (app) => {
-    {{#if hasSwaggerPlugin}}
+    {{#if useSwagger}}
     /**
     * @swagger
     *

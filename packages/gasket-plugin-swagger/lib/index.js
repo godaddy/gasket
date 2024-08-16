@@ -129,7 +129,7 @@ const plugin = {
       }
     },
     create(gasket, context) {
-      context.hasSwaggerPlugin = true;
+      context.useSwagger = true;
 
       context.pkg.add('dependencies', {
         [name]: `^${version}`
