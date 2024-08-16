@@ -1,11 +1,7 @@
 /* eslint-disable no-console */
-const logLevels = {
-  debug: console.debug,
-  error: console.error,
-  info: console.info,
-  warn: console.warn,
-  fatal: console.error,
-  trace: console.debug
+const fallbackMap = {
+  fatal: 'error',
+  trace: 'debug'
 };
 
 /**
@@ -15,9 +11,9 @@ const logLevels = {
  */
 function alignLogger(logger) {
   const fastifyLogger = logger;
-  ['fatal', 'trace', 'debug', 'error', 'warn', 'info'].map(level => {
+  ['fatal', 'trace'].map(level => {
     if (!logger[level]) {
-      fastifyLogger[level] = logLevels[level];
+      fastifyLogger[level] = logger[fallbackMap[level]];
     }
   });
 
