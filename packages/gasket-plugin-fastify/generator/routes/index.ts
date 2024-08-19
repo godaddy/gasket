@@ -7,7 +7,7 @@ import type {
 
 export const routes: AppRoutes = [
   (app: FastifyInstance): void => {
-    {{#if hasSwaggerPlugin}}
+    {{#if useSwagger}}
     /**
     * @swagger
     *
