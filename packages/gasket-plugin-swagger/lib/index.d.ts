@@ -1,6 +1,7 @@
 import type { Plugin } from '@gasket/core';
 import type { Options } from 'swagger-jsdoc'
 import type { SwaggerUiOptions } from 'swagger-ui-express';
+import type { FastifySwaggerUiOptions } from '@fastify/swagger-ui';
 
 type SwaggerOptions = {
   /** Target swagger spec file, either json or yaml. (Default:
@@ -18,6 +19,10 @@ type SwaggerOptions = {
   /** Optional custom UI options. See swagger-ui-express options for what is
    * supported. */
   ui?: SwaggerUiOptions
+
+  /** Optional custom UI options (Fastify Only). See @fastify/swagger-ui options for what is
+       * supported. */
+  uiOptions?: FastifySwaggerUiOptions
 }
 
 declare module '@gasket/core' {
@@ -35,7 +40,7 @@ export function buildSwaggerDefinition(gasket: Gasket, options?: BsdOptions) : P
 
 declare module 'create-gasket-app' {
   export interface CreateContext {
-    hasSwaggerPlugin?: boolean;
+    useSwagger?: boolean;
   }
 }
 
@@ -45,3 +50,11 @@ const plugin: Plugin = {
 };
 
 export = plugin;
+
+/* Externalize Swagger prompts for preset */
+export async function promptSwagger(
+  context: CreateContext,
+  prompt: (
+    prompts: Array<Record<string, any>>
+  ) => Promise<Record<string, any>>
+): Promise<undefined>

@@ -34,7 +34,8 @@ export default makeGasket({
     JSDocs in the configured files. See the [swagger-jsdocs] options for what is
     supported.
   - **`ui`** - (object) Optional custom UI options. See
-    [swagger-ui-express] / [fastify-swagger] options for what is supported.
+    [swagger-ui-express] options for what is supported.
+  - **`uiConfig`** - (object) Optional custom UI options. Only for use with Fastify. See [@fastify/swagger-ui] options for what is supported.
 
 #### Example from JSDocs
 
@@ -84,5 +85,5 @@ export default makeGasket({
 
 <!-- LINK -->
 [swagger-ui-express]: https://github.com/scottie1984/swagger-ui-express
-[fasitfy-swagger]: https://github.com/fastify/fastify-swagger
+[@fastify/swagger-ui]: https://github.com/fastify/fastify-swagger-ui
 [swagger-jsdocs]: https://github.com/Surnet/swagger-jsdoc/blob/master/docs/GETTING-STARTED.md

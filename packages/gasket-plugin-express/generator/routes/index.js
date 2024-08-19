@@ -1,6 +1,6 @@
 export const routes = [
   (gasket, app) => {
-    {{#if hasSwaggerPlugin}}
+    {{#if useSwagger}}
     /**
     * @swagger
     *
