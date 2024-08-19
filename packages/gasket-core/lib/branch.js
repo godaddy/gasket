@@ -35,6 +35,9 @@ class GasketTracer {
   traceActionStart = (name) => {
     const { traceStack } = this;
 
+    if (traceStack.includes(name)) {
+      throw new Error(`Recursive action detected: ${[...traceStack, name].join(' -> ')}`);
+    }
     traceStack.push(name);
     this.trace(`★ ${name}`);
   };
