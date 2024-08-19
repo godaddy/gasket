@@ -18,10 +18,10 @@ const plugin = {
   name,
   version,
   description,
+  actions,
   hooks: {
     configure,
     webpackConfig,
-    actions,
     prompt,
     create,
     express,

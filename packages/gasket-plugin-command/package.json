@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-command",
-  "version": "7.0.0-next.53",
+  "version": "7.0.0-next.56",
   "description": "Plugin to enable other plugins to inject new gasket commands",
   "type": "module",
   "types": "lib/index.d.ts",
@@ -19,8 +19,8 @@
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict --experimental-vm-modules' jest",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage",
+    "test:watch": "npm run test -- --watch",
+    "test:coverage": "npm run test -- --coverage",
     "posttest": "npm run lint",
     "build": "swc lib -d cjs --delete-dir-on-start --strip-leading-paths"
   },
@@ -47,7 +47,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-command",
   "dependencies": {
-    "@gasket/core": "7.0.0-next.53",
+    "@gasket/core": "7.0.0-next.56",
     "commander": "^12.0.0"
   },
   "devDependencies": {

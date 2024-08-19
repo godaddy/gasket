@@ -7,13 +7,14 @@ const {
   description,
   devDependencies
 } = require('../package.json');
-const initWebpack = require('./init-webpack');
+const actions = require('./actions');
 
 /** @type {import('@gasket/core').Plugin} */
 const plugin = {
   name,
   version,
   description,
+  actions,
   hooks: {
     create(gasket, { pkg, gasketConfig }) {
       gasketConfig.addPlugin('pluginWebpack', name);
@@ -23,13 +24,6 @@ const plugin = {
       pkg.add('devDependencies', {
         webpack: devDependencies.webpack
       });
-    },
-    actions(gasket) {
-      return {
-        getWebpackConfig(config, context) {
-          return initWebpack(gasket, config, context);
-        }
-      };
     },
     metadata(gasket, meta) {
       return {

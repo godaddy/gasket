@@ -13,14 +13,15 @@ describe('@gasket/plugin-command', () => {
     expect(plugin).toHaveProperty('name', name);
     expect(plugin).toHaveProperty('version', version);
     expect(plugin).toHaveProperty('description', description);
+    expect(plugin).toHaveProperty('hooks');
   });
 
-  it('should have a configure hook', () => {
-    expect(plugin.hooks.configure).toEqual(expect.any(Function));
+  it('should have a ready hook', () => {
+    expect(plugin.hooks.ready).toEqual(expect.any(Function));
   });
 
   it('should have expected hooks', () => {
-    const expected = ['configure'];
+    const expected = ['ready'];
     expect(Object.keys(plugin.hooks)).toEqual(expect.arrayContaining(expected));
   });
 });
