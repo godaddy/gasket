@@ -92,6 +92,14 @@ describe('GasketBranch', () => {
     expect(branch.config).toBe(gasket.config);
   });
 
+  it('can access root', () => {
+    const root = gasket.branch().root();
+    expect(root).toBe(gasket);
+
+    const deepRoot = gasket.branch().branch().branch().root();
+    expect(deepRoot).toBe(gasket);
+  });
+
   it('can attach arbitrary properties', () => {
     const branch = gasket.branch();
     const branch2 = gasket.branch();
