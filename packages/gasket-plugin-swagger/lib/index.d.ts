@@ -1,6 +1,7 @@
 import type { Plugin } from '@gasket/core';
 import type { Options } from 'swagger-jsdoc'
 import type { SwaggerUiOptions } from 'swagger-ui-express';
+import type { FastifySwaggerUiOptions } from '@fastify/swagger-ui';
 
 type SwaggerOptions = {
   /** Target swagger spec file, either json or yaml. (Default:
@@ -18,6 +19,10 @@ type SwaggerOptions = {
   /** Optional custom UI options. See swagger-ui-express options for what is
    * supported. */
   ui?: SwaggerUiOptions
+
+  /** Optional custom UI options (Fastify Only). See @fastify/swagger-ui options for what is
+       * supported. */
+  uiOptions?: FastifySwaggerUiOptions
 }
 
 declare module '@gasket/core' {
