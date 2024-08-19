@@ -1,4 +1,4 @@
-const plugin = require('../');
+const actions = require('../lib/actions');
 const mockPlugin = {
   name: 'mock',
   hooks: {
@@ -38,28 +38,26 @@ describe('actions', () => {
       }
     };
 
-    const { getMetadata } = plugin.hooks.actions(gasket);
-    metadata = await getMetadata();
+    const { getMetadata } = actions;
+    metadata = await getMetadata(gasket);
   });
 
   it('returns an actions object', () => {
-    const actions = plugin.hooks.actions(gasket);
     expect(typeof actions).toBe('object');
   });
 
   it('has a getMetadata function', () => {
-    const actions = plugin.hooks.actions(gasket);
     expect(typeof actions.getMetadata).toBe('function');
   });
 
   it('calls execApply metadata lifecycle', async () => {
     jest.spyOn(require, 'resolve').mockResolvedValueOnce();
-    await plugin.hooks.actions(gasket).getMetadata();
+    await actions.getMetadata(gasket);
     expect(applyStub).toHaveBeenCalled();
   });
 
   it('returns metadata object', async () => {
-    const result = await plugin.hooks.actions(gasket).getMetadata();
+    const result = await actions.getMetadata(gasket);
     expect(result).toHaveProperty('app');
     expect(result).toHaveProperty('plugins');
     expect(result).toHaveProperty('modules');

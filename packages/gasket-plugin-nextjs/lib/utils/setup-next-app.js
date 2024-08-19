@@ -45,10 +45,11 @@ async function setupNextApp(gasket) {
  */
 function setupNextHandling(nextServer, serverApp, gasket) {
   const nextHandler = nextServer.getRequestHandler();
+  const gasketRoot = gasket.root();
 
   serverApp.all('*', async (req, res, next) => {
     try {
-      await gasket.exec('nextPreHandling', { req, res, nextServer });
+      await gasketRoot.exec('nextPreHandling', { req, res, nextServer });
       if (!res.headersSent) {
         nextHandler(req, res);
       }

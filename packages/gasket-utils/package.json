@@ -1,6 +1,6 @@
 {
   "name": "@gasket/utils",
-  "version": "7.0.0-next.54",
+  "version": "7.0.0-next.56",
   "description": "Reusable utilities for Gasket internals",
   "main": "lib",
   "types": "lib/index.d.ts",
@@ -45,7 +45,7 @@
     "semver": "^7.5.4"
   },
   "devDependencies": {
-    "@gasket/core": "7.0.0-next.54",
+    "@gasket/core": "7.0.0-next.56",
     "@godaddy/dmd": "^1.0.4",
     "abort-controller": "^3.0.0",
     "cross-env": "^7.0.3",

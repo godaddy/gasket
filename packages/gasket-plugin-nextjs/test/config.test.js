@@ -243,6 +243,7 @@ function mockGasketApi() {
     actions: {
       getWebpackConfig: jest.fn().mockImplementation((config) => config)
     },
+    branch: jest.fn().mockReturnThis(),
     execWaterfall: jest.fn((_, config) => config),
     execWaterfallSync: jest.fn((_, config) => config),
     exec: jest.fn().mockResolvedValue({}),

@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-winston",
-  "version": "7.0.0-next.54",
+  "version": "7.0.0-next.56",
   "description": "Gasket logger based on Winston",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -12,8 +12,8 @@
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage",
+    "test:watch": "npm run test -- --watch",
+    "test:coverage": "npm run test -- --coverage",
     "posttest": "npm run lint && npm run typecheck",
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"
@@ -38,11 +38,11 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-winston",
   "dependencies": {
-    "@gasket/plugin-logger": "7.0.0-next.54",
+    "@gasket/plugin-logger": "7.0.0-next.56",
     "winston": "^3.11.0"
   },
   "devDependencies": {
-    "@gasket/core": "7.0.0-next.54",
+    "@gasket/core": "7.0.0-next.56",
     "babel-eslint": "^10.1.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
