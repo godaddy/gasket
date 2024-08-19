@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-elastic-apm",
-  "version": "7.0.0-next.54",
+  "version": "7.0.0-next.55",
   "description": "Adds Elastic APM instrumentation to your application",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -10,10 +10,9 @@
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
-    "test": "npm run test:runner",
-    "test:runner": "jest test/*.test.js",
-    "test:watch": "npm run test:runner -- --watch",
-    "test:coverage": "npm run test:runner -- --coverage --coverageReporters text",
+    "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
+    "test:watch": "npm run test -- --watch",
+    "test:coverage": "npm run test -- --coverage",
     "posttest": "npm run lint && npm run typecheck",
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"
@@ -41,7 +40,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-elastic-apm",
   "devDependencies": {
-    "@gasket/core": "7.0.0-next.54",
+    "@gasket/core": "7.0.0-next.55",
     "dotenv": "^16.4.5",
     "elastic-apm-node": "^4.4.1",
     "eslint": "^8.56.0",

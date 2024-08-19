@@ -20,8 +20,8 @@ const plugin = {
   name,
   version,
   description,
+  actions,
   hooks: {
-    actions,
     init,
     configure,
     create,

@@ -98,6 +98,10 @@ export function processCommand(command: GasketCommandDefinition): GasketCommand;
 
 declare module '@gasket/core' {
 
+  export interface GasketActions {
+    performCommand(): any;
+  }
+
   export interface HookExecTypes {
     build(): any;
     commands(): GasketCommandDefinition;

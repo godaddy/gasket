@@ -44,11 +44,12 @@ describe('Plugin', function () {
     expect(plugin).toHaveProperty('name', name);
     expect(plugin).toHaveProperty('version', version);
     expect(plugin).toHaveProperty('description', description);
+    expect(plugin).toHaveProperty('actions');
+    expect(plugin).toHaveProperty('hooks');
   });
 
   it('has expected hooks', () => {
     const expected = [
-      'actions',
       'apmTransaction',
       'configure',
       'create',
