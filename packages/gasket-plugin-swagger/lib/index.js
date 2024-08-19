@@ -91,7 +91,7 @@ const plugin = {
       },
       handler: async function fastify(gasket, app) {
         const { swagger, root } = gasket.config;
-        const { ui = {}, apiDocsRoute, definitionFile } = swagger;
+        const { uiOptions = {}, apiDocsRoute = '/api-docs', definitionFile } = swagger;
 
         const swaggerSpec = await loadSwaggerSpec(
           root,
@@ -99,11 +99,13 @@ const plugin = {
           gasket.logger
         );
 
-        // @ts-ignore
-        app.register(require('@fastify/swagger'), {
-          prefix: apiDocsRoute,
-          swagger: swaggerSpec,
-          uiConfig: ui
+        await app.register(require('@fastify/swagger'), {
+          swagger: swaggerSpec
+        });
+
+        await app.register(require('@fastify/swagger-ui'), {
+          routePrefix: apiDocsRoute,
+          ...uiOptions
         });
       }
     },
