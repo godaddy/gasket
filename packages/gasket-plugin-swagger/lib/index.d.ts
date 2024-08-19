@@ -40,7 +40,7 @@ export function buildSwaggerDefinition(gasket: Gasket, options?: BsdOptions) : P
 
 declare module 'create-gasket-app' {
   export interface CreateContext {
-    hasSwaggerPlugin?: boolean;
+    useSwagger?: boolean;
   }
 }
 
@@ -50,3 +50,11 @@ const plugin: Plugin = {
 };
 
 export = plugin;
+
+/* Externalize Swagger prompts for preset */
+export async function promptSwagger(
+  context: CreateContext,
+  prompt: (
+    prompts: Array<Record<string, any>>
+  ) => Promise<Record<string, any>>
+): Promise<undefined>

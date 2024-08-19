@@ -1,4 +1,5 @@
 import typescriptPrompts from '@gasket/plugin-typescript/prompts';
+import swaggerPrompts from '@gasket/plugin-swagger/prompts';
 
 /**
  * presetPrompt hook
@@ -11,6 +12,7 @@ export default async function presetPrompt(gasket, context, { prompt }) {
   context.apiApp = true;
 
   await typescriptPrompts.promptTypescript(context, prompt);
+  await swaggerPrompts.promptSwagger(context, prompt);
 
   if (!('server' in context)) {
     const { server } = await prompt([
