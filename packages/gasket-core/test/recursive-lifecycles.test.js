@@ -5,7 +5,7 @@ jest.unstable_mockModule('debug', () => ({
   default: () => mockDebug
 }));
 
-const { Gasket } = await import('../../lib/gasket.js');
+const { Gasket } = await import('../lib/gasket.js');
 
 describe('recursion', () => {
   let gasket, pluginA, pluginB, pluginNested, pluginDirect, pluginDeep, pluginBranched;
