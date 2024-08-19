@@ -398,7 +398,7 @@ export default  {
         // Arguments are spread into the action function
         action: async (arg1, arg2) => {
           console.log('custom arg:', arg1);
-          console.log('custom arg 2', arg2);
+          console.log('custom arg 2:', arg2);
         }
       }
     }
@@ -423,6 +423,19 @@ export default makeGasket({
 });
 ```
 
+Once the command is defined, you can now execute the command.
+
+```bash
+node ./gasket.js my-custom-cmd "Hello, World!"
+# result: custom arg: Hello, World!
+
+# Optional message
+node ./gasket.js my-custom-cmd "Hello, World!" "Optional message"
+# result: custom arg: Hello, World!
+# result: custom arg 2: Optional message
+```
+
+Refer to the [@gasket/plugin-command] README for additional information on customizing commands.
 
 
 <!-- PRs -->
@@ -445,3 +458,5 @@ export default makeGasket({
 [middleware paths]:https://github.com/godaddy/gasket/blob/main/packages/gasket-plugin-express/README.md#middleware-paths
 [streaming]: https://nextjs.org/docs/app/building-your-application/routing/loading-ui-and-streaming
 [App Router]: https://nextjs.org/docs/app/building-your-application/routing
+[@gasket/plugin-command]: ../packages/gasket-plugin-command/README.md
+
