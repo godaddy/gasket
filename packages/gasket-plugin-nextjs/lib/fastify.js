@@ -8,15 +8,15 @@ module.exports = {
   },
   /** @type {import('@gasket/core').HookHandler<'fastify'>} */
   handler: async function fastify(gasket, fastifyApp) {
+    const { exec } = gasket;
+
     const app = await setupNextApp(gasket);
 
-    fastifyApp.decorate(['buildId', app.name].filter(Boolean).join('/'), {
-      getter() {
-        return app.buildId;
-      }
-    });
+    fastifyApp.decorate(
+      ['buildId', app.name].filter(Boolean).join('/'), app.buildId
+    );
 
-    await gasket.exec('nextFastify', { next: app, fastify: fastifyApp });
+    await exec('nextFastify', { next: app, fastify: fastifyApp });
 
     // TODO: Evaluate fix for this in Fastify4
     fastifyApp.addHook('onResponse', function setNextLocale(req, res, next) {

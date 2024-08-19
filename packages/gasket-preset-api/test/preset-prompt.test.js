@@ -12,6 +12,18 @@ jest.mock('@gasket/plugin-typescript/prompts', () => {
   };
 });
 
+const mockSwaggerPrompt = jest.fn();
+
+jest.mock('@gasket/plugin-swagger/prompts', () => {
+  const mod = jest.requireActual('@gasket/plugin-swagger/prompts');
+  return {
+    promptSwagger: async (context, prompt) => {
+      mod.promptSwagger(context, prompt);
+      mockSwaggerPrompt(context, prompt);
+    }
+  };
+});
+
 const preset = await import('../lib/index.js');
 
 describe('presetPrompt', () => {
@@ -49,6 +61,11 @@ describe('presetPrompt', () => {
   it('prompts for typescript', async () => {
     await presetPrompt({}, mockContext, mockPrompt);
     expect(mockTypescriptPrompt).toHaveBeenCalled();
+  });
+
+  it('prompts for swagger', async () => {
+    await presetPrompt({}, mockContext, mockPrompt);
+    expect(mockSwaggerPrompt).toHaveBeenCalled();
   });
 
   it('prompts for server framework', async () => {
