@@ -91,13 +91,15 @@ describe('createServers', () => {
     gasket.config.express = { routes: [route] };
     await plugin.hooks.createServers(gasket, {});
     expect(route).toHaveBeenCalled();
+    expect(route).toHaveBeenCalledWith(gasket, app);
   });
 
   it('allows for an array of route functions with async', async function () {
     const route = jest.fn();
-    gasket.config.express = { routes: [async () => route()] };
+    gasket.config.express = { routes: [async (g, a) => route(g, a)] };
     await plugin.hooks.createServers(gasket, {});
     expect(route).toHaveBeenCalled();
+    expect(route).toHaveBeenCalledWith(gasket, app);
   });
 
   it('throws an error if a route is not a function', async function () {

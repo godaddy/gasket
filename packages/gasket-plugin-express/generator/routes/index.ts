@@ -1,8 +1,9 @@
+import type { Gasket } from '@gasket/core';
 import type { AppRoutes } from '@gasket/plugin-express';
 import type { Application, Request, Response } from 'express';
 
 export const routes: AppRoutes = [
-  (app: Application): void => {
+  (gasket: Gasket, app: Application): void => {
     {{#if hasSwaggerPlugin}}
     /**
     * @swagger

@@ -1,4 +1,4 @@
-import type { MaybeAsync, MaybeMultiple, Plugin } from '@gasket/core';
+import type { Gasket, MaybeAsync, MaybeMultiple, Plugin } from '@gasket/core';
 import type { Application, ErrorRequestHandler, Handler } from 'express';
 
 export type AppRoutes = Array<MaybeAsync<(app: Application) => void>>;
@@ -11,7 +11,7 @@ declare module '@gasket/core' {
       /** Filter for which request URLs invoke Gasket middleware */
       middlewareInclusionRegex?: RegExp;
       /** Glob pattern for source files setting up express routes */
-      routes?: Array<MaybeAsync<(app: Application) => void>>;
+      routes?: Array<MaybeAsync<(gasket: Gasket, app: Application) => void>>;
       /** @deprecated */
       excludedRoutesRegex?: RegExp;
       trustProxy?: boolean | string | number | Function;
