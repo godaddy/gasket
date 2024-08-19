@@ -118,6 +118,7 @@ declare module '@gasket/core' {
     config: GasketConfig;
     new (config: GasketConfigDefinition): Gasket
     branch(): GasketBranch
+    root(): Gasket
   }
 
   export interface GasketBranch extends Gasket {}
