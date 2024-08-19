@@ -1,6 +1,6 @@
 # Gasket Actions
 
-Gasket Actions provide a pattern for accessing and setting data on demand in gasket applications.
+Gasket Actions provide a pattern for accessing and setting data on demand in Gasket applications.
 
 This pattern, introduced in Gasket's v7 release, provides a more flexible and reliable method for accessing and setting data in a Gasket application, reducing the need to rely on decorating `req`/`res` objects and middleware.
 
@@ -8,34 +8,44 @@ For more details on why we are moving away from relying on `req`/`res` objects, 
 
 ## Authoring Actions
 
-Actions are registered through the [actions hook] in a Gasket plugin.
+Actions are registered through the `actions` property on a Gasket plugin.
 
-The `actions` hook is called with the gasket instance as an argument and returns an object where each key will be registered as a particular action.
+```diff
+import myActions from './my-actions';
 
-The names of the actions must be unique. Multiple actions with the same name will throw an error.
+export default {
+    name: 'my-plugin',
++   actions: myActions,
+    hooks: {
+        // gasket hooks
+    }
+};
+```
+
+The `actions` property expects to receive an object where each key is expected to be a function that will be registered as a particular action.
+
+Action names must be unique across the entire Gasket application. If multiple actions share the same name, even if defined in different plugins, an error will occur.
+
+The first argument of an action is always the `gasket` instance.
 
 Actions can be synchronous or asynchronous and can take a variable number of arguments.
 
 ```js
-const myActions = function actions(gasket) {
-  return {
-    myFirstAction() {
-      // do something
-    },
-    async anAsyncAction() {
-      // do something async
-    },
-    anActionWithArguments(arg1, arg2) {
-      // do something with the arguments
-    }
+const myActions = {
+  myFirstAction(gasket) {
+    // do something
+  },
+  async anAsyncAction(gasket) {
+    // do something async
+  },
+  anActionWithArguments(gasket, arg1, arg2) {
+    // do something with the arguments
   }
 };
 
 const plugin = {
-  name: 'pluing-with-actions',
-  hooks: {
-    actions: myActions
-  }
+  name: 'plugin-with-actions',
+  actions: myActions
 };
 
 export default plugin;
@@ -43,7 +53,20 @@ export default plugin;
 
 Once registered, actions can be called within the application code and can be used in other gasket plugins.
 
-Actions are accessible on the `gasket` instance through the `actions` property. The `gasket` instance, defined in your `gasket.js` file, can be imported into your application code and used to call actions if you are calling actions outside of a gasket hook or lifecycle.
+Actions are accessible on the `gasket` instance through the `actions` property. This is the same instance that is provided in gasket hooks and gasket lifecycles.
+
+```js
+export default {
+  name: 'gasket-plugin-example',
+  hooks: {
+    hookExample(gasket) {
+      gasket.actions.myFirstAction();
+    },
+  }
+};
+```
+
+If you are calling actions outside of a gasket hook or lifecycle, the `gasket` instance, defined in your `gasket.js` file, can be imported into your application code and used to call actions.
 
 ```js
 import gasket from './gasket';
@@ -54,17 +77,15 @@ gasket.actions.myFirstAction();
 Every action has access to the `gasket` instance which can be utilized for various purposes such as accessing the `gasket.config`, calling a lifecycle, or even calling other actions.
 
 ```js
-function moreActions(gasket) {
-  return {
-    logGasketConfig() {
-      console.log('Gasket Config:', gasket.config);
-    },
-    executeLifecycle() {
-      gasket.exec('myLifecycle');
-    },
-    callAnotherAction() {
-      gasket.actions.myFirstAction();
-    }
+const actions = {
+  logGasketConfig(gasket) {
+    console.log('Gasket Config:', gasket.config);
+  },
+  executeLifecycle(gasket) {
+    gasket.exec('myLifecycle');
+  },
+  callAnotherAction(gasket) {
+    gasket.actions.myFirstAction();
   }
 }
 ```
@@ -77,20 +98,19 @@ Actions can be used to get a singleton instance that can be accessed throughout 
 
 ```js
 // Action code
-function actions(gasket) {
-  let singleton;
-  return {
-    getSingleton() {
-      if (!singleton) {
-        singleton = {
-          doSomething() {
-            console.log('Doing something');
-          }
-        };
-      }
-      return singleton;
+let singleton;
+
+const actions = {
+  getSingleton() {
+    if (!singleton) {
+      singleton = {
+        doSomething() {
+          // do something
+        }
+      };
     }
-  };
+    return singleton;
+  }
 };
 
 // Application code
@@ -104,12 +124,10 @@ Actions can be used to get data on demand. This can be useful when data needs to
 
 ```js
 // Action code
-function actions(gasket) {
-  return {
-    async getAuth() {
-      // return auth data
-    }
-  };
+const actions = {
+  async getAuth(gasket) {
+    // return auth data
+  }
 };
 
 // Application code
@@ -144,7 +162,7 @@ The middleware in this example can be replaced with actions that can be called o
 // getUserData action defined in user-plugin
 const reqMap = new WeakMap();
 
-async function getUserData(req) {
+async function getUserData(gasket, req) {
   if(!reqMap.has(req)) {
     const userData = await fetchUserData(req); // fetch user data
     reqMap.set(req, userData); 
@@ -155,7 +173,7 @@ async function getUserData(req) {
 // getUserPosts action defined in posts-plugin
 const reqMap = new WeakMap();
 
-async function getUserPosts(req) {
+async function getUserPosts(gasket, req) {
   if(!reqMap.has(req)) {
     const userData = await gasket.actions.getUserData(req);
     const posts = await fetchUserPosts(userData); // fetch posts
@@ -168,7 +186,7 @@ async function getUserPosts(req) {
 // getUserComments action defined in comments-plugin
 const reqMap = new WeakMap();
 
-async function getUserComments(req) {
+async function getUserComments(gasket, req) {
   if(!reqMap.has(req)) {
     const userData = await gasket.actions.getUserData(req);
     const comments = await fetchUserComments(userData); // fetch comments
@@ -203,5 +221,4 @@ It is also much easier to follow the flow of the code when debugging.
 
 By avoiding decorating `req` with properties, we can avoid some of the pitfalls encountered with what Express expects and what Fastify expects, and more easily open the door for other server frameworks to use Gasket.
 
-[actions hook]: /packages/gasket-core/README.md#actions
 [v7 upgrade guide]: /docs/upgrade-to-7.md#migrating-away-from-reqres-attachments
