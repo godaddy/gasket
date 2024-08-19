@@ -46,6 +46,8 @@ export class Gasket {
     });
 
     this.hook = this.engine.hook.bind(this.engine);
+    // allow branches to reach back to the root
+    this.root = () => this;
 
     this.config = config;
     this.command = null;
