@@ -3,7 +3,7 @@ import type { Application, Request, Response } from 'express';
 
 export const routes: AppRoutes = [
   (app: Application): void => {
-    {{#if hasSwaggerPlugin}}
+    {{#if useSwagger}}
     /**
     * @swagger
     *
