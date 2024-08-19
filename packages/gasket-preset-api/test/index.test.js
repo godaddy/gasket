@@ -37,7 +37,6 @@ describe('gasket-preset-api', () => {
       '@gasket/plugin-jest',
       '@gasket/plugin-lint',
       '@gasket/plugin-mocha',
-      '@gasket/plugin-data',
       '@gasket/plugin-typescript',
       '@gasket/plugin-swagger',
       '@gasket/plugin-winston'

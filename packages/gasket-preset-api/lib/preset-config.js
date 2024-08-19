@@ -1,5 +1,4 @@
 import pluginHttps from '@gasket/plugin-https';
-import pluginData from '@gasket/plugin-data';
 import pluginWinston from '@gasket/plugin-winston';
 import pluginLint from '@gasket/plugin-lint';
 
@@ -12,7 +11,6 @@ import pluginLint from '@gasket/plugin-lint';
 export default async function presetConfig(gasket, context) {
   const plugins = [
     pluginHttps,
-    pluginData,
     pluginWinston,
     pluginLint
   ];
