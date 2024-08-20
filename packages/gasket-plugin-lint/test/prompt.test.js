@@ -80,6 +80,16 @@ describe('prompt hook', function () {
     expect(question.when({ codeStyle: 'standard' })).not.toBe(true);
   });
 
+  it('addStylelint question is not shown when apiApp is true', async () => {
+    await promptHook(gasket, context, { prompt });
+    context.apiApp = true;
+    const question = prompt.mock.calls[0][0][2];
+    expect(question.name).toEqual('addStylelint');
+    expect(question.when({ codeStyle: 'other' })).toBe(false);
+    expect(question.when({ codeStyle: 'godaddy' })).toBe(false);
+    expect(question.when({ codeStyle: 'standard' })).toBe(false);
+  });
+
   it('stylelintConfig question shown when codeStyle is `other`', async () => {
     await promptHook(gasket, context, { prompt });
     const question = prompt.mock.calls[0][0][3];
