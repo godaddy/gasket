@@ -13,4 +13,4 @@ module.exports = async function promptHook(gasket, context, { prompt }) {
   }
 
   return context;
-}
+};
