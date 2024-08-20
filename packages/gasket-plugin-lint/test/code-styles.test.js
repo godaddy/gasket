@@ -120,6 +120,18 @@ describe('code styles', () => {
         extends: ['stylelint-config-godaddy']
       }));
     });
+
+    it('does not add stylelint if api app', async () => {
+      context.apiApp = true;
+      await codeStyle.create(context, utils);
+
+      expect(pkgAdd).not.toHaveBeenCalledWith('devDependencies', expect.objectContaining({
+        'stylelint-config-godaddy': expect.any(String)
+      }));
+      expect(pkgAdd).not.toHaveBeenCalledWith('stylelint', expect.objectContaining({
+        extends: ['stylelint-config-godaddy']
+      }));
+    });
   });
 
   describe('airbnb', () => {
