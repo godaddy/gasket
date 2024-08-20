@@ -319,6 +319,124 @@ Update plugin strings to be plugin import statements in `gasket.js`. All plugins
 + });
 ```
 
+## Custom Commands
+
+Update custom commands to be plugin imports in `gasket.js`. All commands need to be imported and used in the `makeGasket` function.
+
+To create a custom command, you first need to install `@gasket/plugin-command`.
+
+```
+npm i @gasket/plugin-command
+```
+
+Once installed, import and add it to your list of plugins in `gasket.js`.
+
+```diff
+// gasket.js
+import { makeGasket } from '@gasket/core';
++ import pluginCommand from '@gasket/plugin-command';
+
+export default makeGasket({
+  plugins: [
++    pluginCommand
+  ],
+  filename: import.meta.filename,
+});
+```
+
+Custom commands can be defined in line in the list of plugins.
+
+```diff
+// gasket.js
+import { makeGasket } from '@gasket/core';
+import pluginCommand from '@gasket/plugin-command';
+
+export default makeGasket({
+  plugins: [
+    pluginCommand,
++    {
++      name: 'my-custom-plugin',
++      hooks: {
++        commands(gasket) {
++          return {
++            id: 'my-custom-cmd',
++            description: 'Custom command plugin',
++            args: [],
++            action: async () => {
++            }
++          }
++        }
++      }
++    }
+  ],
+  filename: import.meta.filename,
+});
+```
+
+Another option for defining custom commands is to create a separate file.
+
+```js
+// my-custom-plugin.js
+export default  {
+  name: 'my-custom-plugin',
+  hooks: {
+    commands(gasket) {
+      return {
+        id: 'my-custom-cmd',
+        description: 'Custom command plugin',
+        args: [
+          {
+            name: 'arg1',
+            description: 'Message to display',
+            required: true // error if arg1 argument is not provided
+          },
+          {
+            name: 'arg2',
+            description: 'Optional message to display'
+          }
+        ],
+        // Arguments are spread into the action function
+        action: async (arg1, arg2) => {
+          console.log('custom arg:', arg1);
+          console.log('custom arg 2:', arg2);
+        }
+      }
+    }
+  }
+};
+```
+
+Once this custom command is defined, import the file and use it in the `makeGasket` function.
+
+```diff
+// gasket.js
+import { makeGasket } from '@gasket/core';
+import pluginCommand from '@gasket/plugin-command';
+import customPluginCommand from './my-custom-plugin.js`;
+
+export default makeGasket({
+  plugins: [
+    pluginNextjs,
++    customPluginCommand
+  ],
+  filename: import.meta.filename,
+});
+```
+
+Once the command is defined, you can now execute the command.
+
+```bash
+node ./gasket.js my-custom-cmd "Hello, World!"
+# result: custom arg: Hello, World!
+
+# Optional message
+node ./gasket.js my-custom-cmd "Hello, World!" "Optional message"
+# result: custom arg: Hello, World!
+# result: custom arg 2: Optional message
+```
+
+Refer to the [@gasket/plugin-command] README for additional information on customizing commands.
+
 
 <!-- PRs -->
 [(#647)]:https://github.com/godaddy/gasket/pull/647
@@ -340,3 +458,5 @@ Update plugin strings to be plugin import statements in `gasket.js`. All plugins
 [middleware paths]:https://github.com/godaddy/gasket/blob/main/packages/gasket-plugin-express/README.md#middleware-paths
 [streaming]: https://nextjs.org/docs/app/building-your-application/routing/loading-ui-and-streaming
 [App Router]: https://nextjs.org/docs/app/building-your-application/routing
+[@gasket/plugin-command]: ../packages/gasket-plugin-command/README.md
+
