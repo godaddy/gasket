@@ -19,8 +19,13 @@ describe('build', function () {
 
     mockContext = {
       dest: '/path/to/dest',
-      generatedFiles: new Set()
+      generatedFiles: new Set(),
+      hasGasketIntl: true
     };
+  });
+
+  afterEach(function () {
+    jest.clearAllMocks();
   });
 
   it('builds manifest file', async function () {
@@ -36,5 +41,12 @@ describe('build', function () {
   it('adds manager filename to generated files', async function () {
     await postCreateHook(mockGasket, mockContext);
     expect(mockContext.generatedFiles.has(mockGasket.config.intl.managerFilename)).toBe(true);
+  });
+
+  it('skips if not to be included', async function () {
+    mockContext.hasGasketIntl = false;
+
+    await postCreateHook(mockGasket, mockContext);
+    expect(mockBuildManifest).not.toHaveBeenCalled();
   });
 });

@@ -106,8 +106,7 @@
     ]
   },
   "eslintIgnore": [
-    "generator/app/pages-router/pages/_app.js",
-    "generator/app/shared/components/index-page.js",
+    "generator",
     "*.d.ts"
   ],
   "babel": {
