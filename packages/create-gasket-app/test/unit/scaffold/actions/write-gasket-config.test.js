@@ -81,12 +81,6 @@ describe('write-gasket-config', () => {
     expect(output).toContain('plugins:');
   });
 
-  it('writes filename', async () => {
-    await writeGasketConfig({ context: mockContext });
-    const output = mockWriteStub.mock.calls[0][1];
-    expect(output).toContain('filename: import.meta.filename');
-  });
-
   it('outputs keys without quotes, strings with single-quotes', async () => {
     mockContext.gasketConfig.add("bogus", "double"); // eslint-disable-line quotes
     await writeGasketConfig({ context: mockContext });

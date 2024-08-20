@@ -1,5 +1,6 @@
 /// <reference types="@gasket/plugin-webpack" />
 
+const tryResolve = require('./utils/try-resolve.js');
 const isGasketCore = /@gasket[/\\]core$/;
 
 /**
@@ -10,6 +11,7 @@ const isGasketCore = /@gasket[/\\]core$/;
  * @returns {void}
  */
 function validateNoGasketCore(ctx, callback) {
+  // console.log(ctx.request);
   if (isGasketCore.test(ctx.request)) {
     return callback(new Error('@gasket/core should not be used in browser code.'));
   }
@@ -34,15 +36,24 @@ function externalizeGasketCore(ctx, callback) {
 
 /** @type {import('@gasket/core').HookHandler<'webpackConfig'>} */
 function webpackConfigHook(gasket, webpackConfig, { webpack, isServer }) {
+
+  webpackConfig.resolve ??= {};
+  webpackConfig.resolve.alias ??= {};
+
+  const exclude = (moduleName) => {
+    const resolved = tryResolve(moduleName, [gasket.config.root]);
+    if (resolved) {
+      webpackConfig.resolve.alias[resolved] = false;
+    }
+  };
+
   if (Array.isArray(webpackConfig.externals)) {
     if (!isServer) {
-      if ('filename' in gasket.config) {
-        webpackConfig.resolve ??= {};
-        webpackConfig.resolve.alias ??= {};
-        webpackConfig.resolve.alias[gasket.config.filename] = false;
-      } else {
-        gasket.logger.warn('Gasket `filename` was not configured in makeGasket');
-      }
+      exclude('./gasket.js');
+      exclude('./src/gasket.js');
+      exclude('./gasket.ts');
+      exclude('./src/gasket.ts');
+      exclude('./dist/gasket.js');
 
       webpackConfig.externals.unshift(validateNoGasketCore);
     }
