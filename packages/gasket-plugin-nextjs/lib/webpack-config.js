@@ -11,7 +11,6 @@ const isGasketCore = /@gasket[/\\]core$/;
  * @returns {void}
  */
 function validateNoGasketCore(ctx, callback) {
-  // console.log(ctx.request);
   if (isGasketCore.test(ctx.request)) {
     return callback(new Error('@gasket/core should not be used in browser code.'));
   }
