@@ -6,6 +6,7 @@ describe('the create hook', () => {
 
   beforeEach(() => {
     mockContext = {
+      useDocs: true,
       pkg: {
         add: jest.fn()
       },
@@ -16,6 +17,13 @@ describe('the create hook', () => {
         add: jest.fn()
       }
     };
+  });
+
+  it('does nothing if useDocs is false', () => {
+    create({}, { ...mockContext, useDocs: false });
+    expect(mockContext.pkg.add).not.toHaveBeenCalled();
+    expect(mockContext.gasketConfig.addPlugin).not.toHaveBeenCalled();
+    expect(mockContext.gitignore.add).not.toHaveBeenCalled();
   });
 
   it('adds itself to the dependencies', () => {
@@ -38,5 +46,21 @@ describe('the create hook', () => {
 
   it('should handle when no `gitignore` is present in the create context', () => {
     expect(() => create({}, mockContext)).not.toThrow(Error);
+  });
+
+  it('should add a docs script', () => {
+    create({}, mockContext);
+
+    expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts', {
+      docs: 'node gasket.js docs'
+    });
+  });
+
+  it('should add a docs script for typescript', () => {
+    create({}, { ...mockContext, typescript: true });
+
+    expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts', {
+      docs: 'tsx gasket.ts docs'
+    });
   });
 });

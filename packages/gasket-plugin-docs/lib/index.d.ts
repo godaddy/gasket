@@ -7,6 +7,13 @@ import type {
   DetailDocsConfig
 } from './internal';
 
+declare module 'create-gasket-app' {
+  export interface CreateContext {
+    useDocs?: boolean;
+    typescript?: boolean;
+  }
+}
+
 declare module '@gasket/core' {
   export interface GasketConfig {
     docs?: {
