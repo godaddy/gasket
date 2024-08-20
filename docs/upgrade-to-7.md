@@ -93,14 +93,10 @@ The Gasket Action is defined as a hook in the plugin:
 
 export default({
   name: 'plugin-example',
-  hooks: {
-    actions: function actions(gasket) {
-      return {
-        async getMyValue(req) {
-          // Returns myValue
-          // Use the req argument to access headers, cookies, queries, etc.
-        };
-      }
+  actions: {
+    async getMyValue(gasket, req) {
+      // Returns myValue
+      // Use the req argument to access headers, cookies, queries, etc.
     }
   }
 })
