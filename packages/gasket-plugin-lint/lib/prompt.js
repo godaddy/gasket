@@ -1,3 +1,5 @@
+/// <reference types="@gasket/plugin-express" />
+
 const codeStyles = require('./code-styles');
 
 /** @type {import('@gasket/core').HookHandler<'prompt'>} */
@@ -32,7 +34,7 @@ module.exports = async function promptHook(gasket, context, { prompt }) {
       name: 'addStylelint',
       message: 'Do you want stylelint configured?',
       type: 'confirm',
-      when: (answers) => codeStyles[answers.codeStyle].allowStylelint
+      when: (answers) => !context.apiApp && codeStyles[answers.codeStyle].allowStylelint
     },
     {
       type: 'input',
