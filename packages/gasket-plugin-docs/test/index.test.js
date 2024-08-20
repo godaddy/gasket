@@ -18,6 +18,7 @@ describe('Plugin', function () {
       'create',
       'commands',
       'metadata',
+      'prompt',
       'docsSetup',
       'webpackConfig'
     ];
