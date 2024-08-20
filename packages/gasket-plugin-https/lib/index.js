@@ -103,7 +103,7 @@ async function startServer(gasket) {
    * Health check request handler
    */
   async function healthCheckRequested() {
-    await gasket.exec('healthcheck', HealthCheckError);
+    await gasket.root().exec('healthcheck', HealthCheckError);
   }
 
   //

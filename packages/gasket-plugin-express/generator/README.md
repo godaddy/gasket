@@ -12,7 +12,7 @@ npm run local
 
 ## Definitions
 
-The API routes should be defined in the `/routes` directory. Use `@swagger` JSDocs
+Use `@swagger` JSDocs
 to automatically generate the [swagger.json] spec file. Visit [swagger-jsdoc]
 for examples.
 
