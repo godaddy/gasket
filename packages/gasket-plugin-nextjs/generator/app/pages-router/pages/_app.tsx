@@ -1,6 +1,4 @@
-import React, { ComponentType } from 'react';
-import type { MessagesProps } from '@gasket/react-intl';
-
+import React from 'react';
 {{#if hasGasketIntl}}
 import { useRouter } from 'next/router';
 import { IntlProvider } from 'react-intl';
@@ -9,7 +7,7 @@ import intlManager from '../intl';
 {{/if}}
 
 {{#if hasGasketIntl}}
-const IntlMessagesProvider = withMessagesProvider(intlManager)(IntlProvider as ComponentType<MessagesProps>);
+const IntlMessagesProvider = withMessagesProvider(intlManager)(IntlProvider);
 {{/if}}
 
 // Simple functional App component which can be wrapped
