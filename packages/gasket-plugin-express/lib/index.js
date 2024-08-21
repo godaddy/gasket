@@ -20,7 +20,7 @@ const plugin = {
       app ??= http2 ? require('http2-express-bridge')(express) : express();
 
       return app;
-    },
+    }
   },
   hooks: {
     create,
