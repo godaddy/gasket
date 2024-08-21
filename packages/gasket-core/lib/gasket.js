@@ -65,6 +65,7 @@ export class Gasket {
   }
 
   get actions() {
+    // @ts-ignore -- actions from proxy
     return this.branch().actions;
   }
 }

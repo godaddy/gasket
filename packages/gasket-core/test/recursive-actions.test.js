@@ -171,15 +171,13 @@ describe('recursion', () => {
     expect(waterfallSpy).toHaveBeenCalledTimes(3);
   });
 
-  it('throws on multiple actions in a branch', async () => {
+  it('does not throw on multiple actions in a branch', async () => {
     setupGasket(pluginA);
     gasket.config = { some: 'config' };
 
     const branch = gasket.branch();
-    branch.actions.startA(1);
-
-    await expect(async () => branch.actions.startA(2))
-      .rejects.toThrow('startA -> execWaterfall(eventA) -> startA');
+    await branch.actions.startA(1);
+    await branch.actions.startA(2);
 
     expect(waterfallSpy).toHaveBeenCalled();
   });
@@ -189,9 +187,9 @@ describe('recursion', () => {
     gasket.config = { some: 'config' };
 
     const branch = gasket.branch();
-    const promise1 = branch.branch().actions.startA(1);
-    const promise2 = branch.branch().actions.startA(2);
-    const promise3 = branch.branch().actions.startA(3);
+    const promise1 = branch.actions.startA(1);
+    const promise2 = branch.actions.startA(2);
+    const promise3 = branch.actions.startA(3);
 
     const [
       results1,
@@ -226,7 +224,8 @@ describe('recursion', () => {
       ['            ↪ pluginDeep:eventC'],
       ['              ★ startD'],
       ['                ◇ execWaterfall(eventD)'],
-      ['                ↪ pluginDeep:eventD']
+      ['                ↪ pluginDeep:eventD'],
+      ['                  ★ startA']
     ]);
   });
 });

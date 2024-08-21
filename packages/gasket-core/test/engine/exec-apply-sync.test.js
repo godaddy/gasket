@@ -5,7 +5,7 @@ jest.unstable_mockModule('debug', () => ({
   default: () => mockDebug
 }));
 
-const { GasketBranch }  = await import('../../lib/branch.js');
+const { GasketIsolate }  = await import('../../lib/branch.js');
 const { Gasket }  = await import('../../lib/gasket.js');
 
 describe('The execApplySync method', () => {
@@ -66,21 +66,21 @@ describe('The execApplySync method', () => {
     jest.clearAllMocks();
   });
 
-  it('invokes hooks with driver', () => {
+  it('invokes hooks with isolate', () => {
     gasket.execApplySync('eventA', mockApplyHandler);
 
-    expect(hookASpy).toHaveBeenCalledWith(expect.any(GasketBranch), expect.any(Wrapper));
-    expect(hookBSpy).toHaveBeenCalledWith(expect.any(GasketBranch), expect.any(Wrapper));
-    expect(hookCSpy).toHaveBeenCalledWith(expect.any(GasketBranch), expect.any(Wrapper));
+    expect(hookASpy).toHaveBeenCalledWith(expect.any(GasketIsolate), expect.any(Wrapper));
+    expect(hookBSpy).toHaveBeenCalledWith(expect.any(GasketIsolate), expect.any(Wrapper));
+    expect(hookCSpy).toHaveBeenCalledWith(expect.any(GasketIsolate), expect.any(Wrapper));
   });
 
-  it('driver passed through', () => {
+  it('branch isolate passed through', () => {
     const spy = jest.spyOn(gasket.engine, 'execApplySync');
     const branch = gasket.branch();
 
     branch.execApplySync('eventA', mockApplyHandler);
 
-    expect(spy).toHaveBeenCalledWith(branch, 'eventA', mockApplyHandler);
+    expect(spy).toHaveBeenCalledWith(expect.isolateOf(branch), 'eventA', mockApplyHandler);
   });
 
   it('returns an Array of results', () => {

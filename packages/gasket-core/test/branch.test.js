@@ -6,10 +6,10 @@ jest.unstable_mockModule('debug', () => ({
   default: () => mockDebug
 }));
 
-const { GasketBranch } = await import('../lib/branch.js');
+const { GasketIsolate } = await import('../lib/branch.js');
 const { Gasket } = await import('../lib/gasket.js');
 
-describe('GasketBranch', () => {
+describe('GasketIsolate', () => {
   let gasket, pluginA, pluginB;
 
   beforeEach(() => {
@@ -45,12 +45,12 @@ describe('GasketBranch', () => {
 
   afterEach(() => {
     jest.clearAllMocks();
-    GasketBranch._nextBranchId = 0;
+    GasketIsolate._nextBranchId = 0;
   });
 
   it('can get a branch from a gasket', () => {
     const branch = gasket.branch();
-    expect(branch).toBeInstanceOf(GasketBranch);
+    expect(branch).toBeInstanceOf(GasketIsolate);
 
     expect(mockDebug.mock.calls).toEqual([
       ['⋌ root']
@@ -62,7 +62,7 @@ describe('GasketBranch', () => {
     const subBranch = branch.branch();
     const subBranch2 = subBranch.branch();
     const subBranch3 = subBranch2.branch();
-    expect(subBranch3).toBeInstanceOf(GasketBranch);
+    expect(subBranch3).toBeInstanceOf(GasketIsolate);
 
     expect(mockDebug.mock.calls).toEqual([
       ['⋌ root'],

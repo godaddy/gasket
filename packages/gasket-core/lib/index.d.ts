@@ -115,11 +115,11 @@ declare module '@gasket/core' {
     };
     config: GasketConfig;
     new (config: GasketConfigDefinition): Gasket
-    branch(): GasketBranch
+    branch(): GasketIsolate
     root(): Gasket
   }
 
-  export interface GasketBranch extends Gasket {}
+  export interface GasketIsolate extends Gasket {}
 
   type PartialRecursive<T> = T extends Object
     ? { [K in keyof T]?: PartialRecursive<T[K]> } | undefined

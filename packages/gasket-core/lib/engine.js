@@ -1,11 +1,11 @@
 let dynamicNamingId = 0;
 
-export const lifecycleMethods = [
+export const lifecycleMethods = new Set([
   'exec', 'execSync',
   'execWaterfall', 'execWaterfallSync',
   'execMap', 'execMapSync',
   'execApply', 'execApplySync'
-];
+]);
 
 export class GasketEngine {
   constructor(plugins) {

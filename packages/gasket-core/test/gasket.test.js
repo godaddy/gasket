@@ -1,6 +1,6 @@
 /* eslint-disable no-process-env */
 
-const { GasketBranch } = await import('../lib/branch.js');
+const { GasketIsolate } = await import('../lib/branch.js');
 const { Gasket, makeGasket } = await import('../lib/gasket.js');
 
 // eslint-disable-next-line no-unused-vars
@@ -131,7 +131,7 @@ describe('makeGasket', () => {
 
       // verify that env overrides are applied before lifecycle
       expect(mockPlugin.hooks.configure).toHaveBeenCalledWith(
-        expect.any(GasketBranch),
+        expect.any(GasketIsolate),
         expect.objectContaining({
           mode: 'prod',
           mockStage: 'input'
@@ -157,7 +157,7 @@ describe('makeGasket', () => {
     it('executes configure lifecycle', () => {
       makeGasket(inputConfig);
       expect(mockPlugin.hooks.configure).toHaveBeenCalledWith(
-        expect.any(GasketBranch),
+        expect.any(GasketIsolate),
         expect.objectContaining({
           mockStage: 'input'
         })
