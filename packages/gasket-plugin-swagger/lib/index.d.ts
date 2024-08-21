@@ -41,6 +41,7 @@ export function buildSwaggerDefinition(gasket: Gasket, options?: BsdOptions) : P
 declare module 'create-gasket-app' {
   export interface CreateContext {
     useSwagger?: boolean;
+    typescript?: boolean;
   }
 }
 
