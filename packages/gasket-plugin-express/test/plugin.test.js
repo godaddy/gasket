@@ -201,8 +201,15 @@ describe('create', () => {
       expect(gasketConfig.addPlugin).toHaveBeenCalledWith('pluginExpress', name);
     })
   );
-});
 
-// TODO:
-// test App is not set multiple times or reset
-// generate files for typescript toggle
+  it('respects the typescript flag', async () => {
+    mockContext.typescript = false;
+    expectCreatedWith(({ files }) => {
+      expect(files.add).toHaveBeenCalledWith(expect.stringContaining('.js'));
+    });
+    mockContext.typescript = true;
+    expectCreatedWith(({ files }) => {
+      expect(files.add).toHaveBeenCalledWith(expect.stringContaining('.ts'));
+    });
+  });
+});
