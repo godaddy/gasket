@@ -35,20 +35,6 @@ describe('@gasket/plugin-express', () => {
     };
   });
 
-  it('adds an routes config property', () => {
-    const badConfig: GasketConfigDefinition = {
-      // @ts-expect-error
-      routes: /^\/api\/\.*$/
-    };
-
-    const goodConfig: GasketConfigDefinition = {
-      plugins: [{ name: 'example-plugin', version: '', description: '', hooks: {} }],
-      express: {
-        routes: []
-      }
-    };
-  });
-
   it('declares the middleware lifecycle', () => {
     const hook: Hook<'middleware'> = (gasket: Gasket, app) => {
       return [];

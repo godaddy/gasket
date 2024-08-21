@@ -63,7 +63,8 @@
     }
   },
   "eslintIgnore": [
-    "test/fixtures"
+    "test/fixtures",
+    "generator"
   ],
   "jest": {
     "transform": {}
