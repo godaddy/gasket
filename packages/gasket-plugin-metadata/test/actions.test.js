@@ -1,4 +1,3 @@
-const actions = require('../lib/actions');
 const mockPlugin = {
   name: 'mock',
   hooks: {
@@ -19,9 +18,12 @@ describe('actions', () => {
   let gasket,
     applyStub,
     handlerStub,
-    metadata;
+    metadata,
+    actions;
 
   beforeEach(async function () {
+    delete require.cache[require.resolve('../lib/actions')];
+    actions = require('../lib/actions');
     applyStub = jest.fn();
     handlerStub = jest.fn();
 
@@ -42,6 +44,11 @@ describe('actions', () => {
     metadata = await getMetadata(gasket);
   });
 
+  afterEach(() => {
+    jest.clearAllMocks();
+    jest.resetModules();
+  });
+
   it('returns an actions object', () => {
     expect(typeof actions).toBe('object');
   });
@@ -54,6 +61,13 @@ describe('actions', () => {
     jest.spyOn(require, 'resolve').mockResolvedValueOnce();
     await actions.getMetadata(gasket);
     expect(applyStub).toHaveBeenCalled();
+  });
+
+  it('memoizes metadata & calls lifecycle once', async () => {
+    jest.spyOn(require, 'resolve').mockResolvedValueOnce();
+    await actions.getMetadata(gasket);
+    await actions.getMetadata(gasket);
+    expect(applyStub).toHaveBeenCalledTimes(1);
   });
 
   it('returns metadata object', async () => {
