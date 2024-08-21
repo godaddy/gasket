@@ -35,7 +35,6 @@ All the configurations for the plugin are added under `express` in the config:
   differently.
 - `excludedRoutesRegex`: (deprecated) renamed to more correct `middlewareInclusionRegex`.
 - `middlewareInclusionRegex`: RegExp filter to apply toward request URLs to determine when Gasket middleware will run. You can use negative lookahead patterns to exclude routes like static resource paths.
-- `routes`: [Glob pattern](https://github.com/isaacs/node-glob#glob-primer) for source files exporting route-defining functions. These functions will be passed the express `app` object, and therein they can attach handlers and middleware.
 - 'trustProxy': Enable trust proxy option, [see Express documentation on Express behind proxies](https://expressjs.com/en/guide/behind-proxies.html)
 
 #### Example configuration
@@ -47,7 +46,6 @@ export default makeGasket({
   ],
   express: {
     compression: false,
-    routes: 'api/*.js',
     middlewareInclusionRegex: /^(?!\/_next\/)/,
     trustProxy: true
   }

@@ -4,12 +4,24 @@
 const { name, version, description } = require('../package.json');
 const create = require('./create');
 const createServers = require('./create-servers');
+const express = require('express');
+
+// Memoize the Express app instance
+let app;
 
 /** @type {import('@gasket/core').Plugin} */
 const plugin = {
   name,
   version,
   description,
+  actions: {
+    getExpressApp(gasket) {
+      const { http2 } = gasket.config;
+      app ??= http2 ? require('http2-express-bridge')(express) : express();
+
+      return app;
+    }
+  },
   hooks: {
     create,
     createServers,
@@ -59,11 +71,6 @@ const plugin = {
           description: 'Automatic compression',
           type: 'boolean',
           default: true
-        }, {
-          name: 'express.routes',
-          link: 'README.md#configuration',
-          description: 'Glob pattern for route setup code',
-          type: 'string'
         }, {
           name: 'express.excludedRoutesRegex',
           link: 'README.md#configuration',
