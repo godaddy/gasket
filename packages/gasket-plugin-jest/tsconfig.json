@@ -1,13 +1,12 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "moduleResolution": "node",
     "allowJs": true,
     "checkJs": true,
     "noEmit": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
+    "downlevelIteration": true,
     "lib": [
       "esnext",
       "dom"

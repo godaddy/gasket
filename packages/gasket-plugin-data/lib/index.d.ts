@@ -19,7 +19,7 @@ declare module '@gasket/core' {
 
   export interface GasketActions {
     getGasketData(): Promise<GasketData>
-    getPublicGasketData(req: GasketRequest): Promise<PublicGasketData>
+    getPublicGasketData(req: GasketRequest | IncomingMessage): Promise<PublicGasketData>
   }
 
   export interface HookExecTypes {
