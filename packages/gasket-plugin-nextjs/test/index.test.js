@@ -472,6 +472,6 @@ function mockGasketApi() {
       nextConfig: {}, // user specified next.js config
       root: '/app/path'
     },
-    root: jest.fn().mockReturnThis()
+    traceRoot: jest.fn().mockReturnThis()
   };
 }

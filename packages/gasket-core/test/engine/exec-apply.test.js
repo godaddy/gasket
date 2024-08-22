@@ -5,7 +5,7 @@ jest.unstable_mockModule('debug', () => ({
   default: () => mockDebug
 }));
 
-const { GasketBranch }  = await import('../../lib/branch.js');
+const { GasketTrace }  = await import('../../lib/trace.js');
 const { Gasket }  = await import('../../lib/gasket.js');
 
 describe('The execApply method', () => {
@@ -57,32 +57,27 @@ describe('The execApply method', () => {
     jest.clearAllMocks();
   });
 
-  it('invokes hooks with driver', async () => {
+  it('invokes hooks with isolate', async () => {
     await gasket.execApply('eventA', async (plugin, handler) => {
       return handler(new Wrapper(plugin));
     });
 
-    expect(hookASpy).toHaveBeenCalledWith(expect.any(GasketBranch), expect.any(Wrapper));
-    expect(hookBSpy).toHaveBeenCalledWith(expect.any(GasketBranch), expect.any(Wrapper));
-    expect(hookCSpy).toHaveBeenCalledWith(expect.any(GasketBranch), expect.any(Wrapper));
+    expect(hookASpy).toHaveBeenCalledWith(expect.any(GasketTrace), expect.any(Wrapper));
+    expect(hookBSpy).toHaveBeenCalledWith(expect.any(GasketTrace), expect.any(Wrapper));
+    expect(hookCSpy).toHaveBeenCalledWith(expect.any(GasketTrace), expect.any(Wrapper));
   });
 
-  it('driver passed through', async () => {
+  it('branch isolate passed through', async () => {
     const spy = jest.spyOn(gasket.engine, 'execApply');
-    const branch = gasket.branch();
+    const branch = gasket.traceBranch();
 
-    /**
-     *
-     * @param plugin
-     * @param handler
-     */
     async function applyHandler(plugin, handler) {
       return handler(new Wrapper(plugin));
     }
 
     await branch.execApply('eventA', applyHandler);
 
-    expect(spy).toHaveBeenCalledWith(branch, 'eventA', applyHandler);
+    expect(spy).toHaveBeenCalledWith(expect.traceProxyOf(branch), 'eventA', applyHandler);
   });
 
   it('awaits sync or async hooks and resolves an Array', async () => {
@@ -143,11 +138,6 @@ describe('The execApply method', () => {
   it('has expected trace output', async () => {
     mockDebug.mockClear();
 
-    /**
-     *
-     * @param plugin
-     * @param handler
-     */
     async function applyHandler(plugin, handler) {
       return handler(new Wrapper(plugin));
     }

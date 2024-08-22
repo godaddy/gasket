@@ -62,7 +62,7 @@ function createConfig(gasket, nextConfig = {}) {
     if (typeof existingWebpack === 'function') {
       webpackConfig = existingWebpack(webpackConfig, data);
     }
-    return gasket.branch().actions.getWebpackConfig(webpackConfig, data);
+    return gasket.actions.getWebpackConfig(webpackConfig, data);
   };
 
   // eslint-disable-next-line no-sync

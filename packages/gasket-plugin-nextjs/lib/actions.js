@@ -10,7 +10,7 @@ function getNextConfig(gasket, nextConfig) {
     } else {
       baseConfig = nextConfig ?? {};
     }
-    return createConfig(gasket.branch(), baseConfig);
+    return createConfig(gasket, baseConfig);
   };
 }
 
