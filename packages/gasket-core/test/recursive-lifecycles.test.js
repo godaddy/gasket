@@ -53,10 +53,10 @@ describe('recursion', () => {
       name: 'pluginNested',
       hooks: {
         eventA: jest.fn(async (_gasket, value) => {
-          return await (_gasket.branch().execWaterfall('eventB', value)) + 100;
+          return await (_gasket.traceBranch().execWaterfall('eventB', value)) + 100;
         }),
         eventB: jest.fn(async (_gasket, value) => {
-          return await (_gasket.branch().execWaterfall('eventA', value)) + 200;
+          return await (_gasket.traceBranch().execWaterfall('eventA', value)) + 200;
         })
       }
     };
@@ -157,27 +157,35 @@ describe('recursion', () => {
     expect(waterfallSpy).toHaveBeenCalledTimes(3);
   });
 
-  it('throws on multiple lifecycles in a branch', async () => {
-    setupGasket(pluginA);
-    gasket.config = { some: 'config' };
-
-    const branch = gasket.branch();
-    branch.execWaterfall('eventA', 1);
-
-    await expect(async () => branch.execWaterfall('eventA', 2))
-      .rejects.toThrow('execWaterfall(eventA) -> execWaterfall(eventA)');
-
-    expect(waterfallSpy).toHaveBeenCalled();
-  });
-
   it('allows multiple lifecycle chains from subbranches', async () => {
     setupGasket(pluginA);
     gasket.config = { some: 'config' };
 
-    const branch = gasket.branch();
-    const promise1 = branch.branch().execWaterfall('eventA', 1);
-    const promise2 = branch.branch().execWaterfall('eventA', 2);
-    const promise3 = branch.branch().execWaterfall('eventA', 3);
+    const branch = gasket.traceBranch();
+    const promise1 = branch.traceBranch().execWaterfall('eventA', 1);
+    const promise2 = branch.traceBranch().execWaterfall('eventA', 2);
+    const promise3 = branch.traceBranch().execWaterfall('eventA', 3);
+
+    const [
+      results1,
+      results2,
+      results3
+    ] = await Promise.all([promise1, promise2, promise3]);
+
+    expect(results1).toEqual(7);
+    expect(results2).toEqual(14);
+    expect(results3).toEqual(21);
+    expect(waterfallSpy).toHaveBeenCalledTimes(3);
+  });
+
+  it('allows multiple lifecycle executes from a branch', async () => {
+    setupGasket(pluginA);
+    gasket.config = { some: 'config' };
+
+    const branch = gasket.traceBranch();
+    const promise1 = branch.execWaterfall('eventA', 1);
+    const promise2 = branch.execWaterfall('eventA', 2);
+    const promise3 = branch.execWaterfall('eventA', 3);
 
     const [
       results1,

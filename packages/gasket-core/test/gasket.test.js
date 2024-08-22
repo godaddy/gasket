@@ -1,6 +1,6 @@
 /* eslint-disable no-process-env */
 
-const { GasketBranch } = await import('../lib/branch.js');
+const { GasketTrace } = await import('../lib/trace.js');
 const { Gasket, makeGasket } = await import('../lib/gasket.js');
 
 // eslint-disable-next-line no-unused-vars
@@ -77,14 +77,14 @@ describe('makeGasket', () => {
   it('defaults env to local', () => {
     const gasket = makeGasket({ plugins: [mockPlugin] });
     expect(gasket.config.env).toEqual('local');
-    expect(console.warn).toHaveBeenCalledWith('No GASKET_ENV env variable set; defaulting to "local".');
+    expect(warnSpy).toHaveBeenCalledWith('No GASKET_ENV env variable set; defaulting to "local".');
   });
 
   it('sets env GASKET_ENV', () => {
     process.env.GASKET_ENV = 'production';
     const gasket = makeGasket({ plugins: [mockPlugin] });
     expect(gasket.config.env).toEqual('production');
-    expect(console.warn).not.toHaveBeenCalled();
+    expect(warnSpy).not.toHaveBeenCalled();
   });
 
   it('prunes nullish and/or empty plugins', () => {
@@ -131,7 +131,7 @@ describe('makeGasket', () => {
 
       // verify that env overrides are applied before lifecycle
       expect(mockPlugin.hooks.configure).toHaveBeenCalledWith(
-        expect.any(GasketBranch),
+        expect.any(GasketTrace),
         expect.objectContaining({
           mode: 'prod',
           mockStage: 'input'
@@ -157,7 +157,7 @@ describe('makeGasket', () => {
     it('executes configure lifecycle', () => {
       makeGasket(inputConfig);
       expect(mockPlugin.hooks.configure).toHaveBeenCalledWith(
-        expect.any(GasketBranch),
+        expect.any(GasketTrace),
         expect.objectContaining({
           mockStage: 'input'
         })

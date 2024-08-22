@@ -59,9 +59,7 @@ describe('startServer action', () => {
     gasketAPI = {
       execWaterfall: jest.fn().mockImplementation((arg1, arg2) => Promise.resolve(arg2)),
       exec: mockExec,
-      root: () => ({
-        exec: mockExec
-      }),
+      traceRoot: jest.fn().mockReturnThis(),
       config: {},
       logger: {
         info: jest.fn(),

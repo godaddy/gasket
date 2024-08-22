@@ -2,7 +2,7 @@
 
 import { GasketEngine, lifecycleMethods } from './engine.js';
 import { applyConfigOverrides } from '@gasket/utils';
-import { makeBranch } from './branch.js';
+import { makeTraceBranch } from './trace.js';
 
 /**
  * Get the environment to use for the gasket instance.
@@ -21,12 +21,17 @@ function getEnvironment() {
 
 /* eslint-enable no-console, no-process-env */
 
-// TODO: Add JSDoc types
+/**
+ * The Gasket class is the main entry point for the Gasket API.
+ */
 export class Gasket {
 
-  constructor(gasketConfig) {
+  /**
+   * @param {import('@gasket/core').GasketConfigDefinition} configDef - Gasket configuration
+   */
+  constructor(configDef) {
     const env = getEnvironment();
-    const config = applyConfigOverrides(gasketConfig, { env });
+    const config = applyConfigOverrides(configDef, { env });
     config.env = env;
     config.root ??= process.cwd();
 
@@ -41,7 +46,7 @@ export class Gasket {
     // bind engine methods to run through a proxy
     lifecycleMethods.forEach(method => {
       this[method] = (...args) => {
-        return this.branch()[method](...args);
+        return this.traceBranch()[method](...args);
       };
     });
 
@@ -60,20 +65,25 @@ export class Gasket {
     this.exec('ready');
   }
 
-  branch() {
-    return makeBranch(this);
+  traceBranch() {
+    return makeTraceBranch(this);
+  }
+
+  traceRoot() {
+    return this;
   }
 
   get actions() {
-    return this.branch().actions;
+    // @ts-ignore -- actions from proxy
+    return this.traceBranch().actions;
   }
 }
 
-// TODO: Add JSDoc types
 /**
- *
- * @param gasketConfigDefinition
+ * Make a new Gasket instance.
+ * @param {import('@gasket/core').GasketConfigDefinition} configDef - Gasket configuration
+ * @returns {Gasket} gasket instance
  */
-export function makeGasket(gasketConfigDefinition) {
-  return new Gasket(gasketConfigDefinition);
+export function makeGasket(configDef) {
+  return new Gasket(configDef);
 }
