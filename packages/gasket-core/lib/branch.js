@@ -2,6 +2,12 @@ import debugPkg from 'debug';
 import { lifecycleMethods } from './engine.js';
 import { Gasket } from './gasket.js';
 
+/**
+ * Lookup map for lifecycles method names.
+ * Using object[key] is fastest
+ * @see https://jsben.ch/pm4cd
+ * @type {{[p: string]: boolean}}
+ */
 const lifecycles = Object.fromEntries(lifecycleMethods.map(method => [method, true]));
 
 const reSync = /sync$/i;
