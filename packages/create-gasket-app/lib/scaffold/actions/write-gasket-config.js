@@ -89,16 +89,16 @@ function cleanupFields(config) {
  * @returns {Promise} promise
  */
 async function writeGasketConfig({ context }) {
-  const { dest, gasketConfig, generatedFiles } = context;
-  const fileName = context.typescript ? 'gasket.ts' : 'gasket.js';
+  const { dest, gasketConfig, generatedFiles, typescript } = context;
+  const fileName = typescript ? 'gasket.ts' : 'gasket.js';
   const filePath = path.join(dest, fileName);
   const plugins = gasketConfig.fields.plugins;
   const assignments = gasketConfig.fields.injectionAssignments || null;
   const expressions = gasketConfig.fields.expressions || null;
   gasketConfig.fields.plugins = 'PLUGIN_REPLACE';
-  gasketConfig.fields.filename = 'FILENAME_REPLACE';
 
   let contents = '';
+  if (typescript) contents += `import type { GasketConfigDefinition } from '@gasket/core';\n`;
   contents += `import { makeGasket } from '@gasket/core';\n`;
   contents += writeImports(gasketConfig.fields.pluginImports);
   contents += writeImports(gasketConfig.fields.imports);
@@ -106,9 +106,9 @@ async function writeGasketConfig({ context }) {
   createInjectionAssignments(gasketConfig.fields, assignments);
   cleanupFields(gasketConfig);
 
-  const pluginImports = `[\n${writePluginImports(plugins)}\n\xa0\xa0]`;
-  contents += `\nexport default makeGasket(${JSON5.stringify(gasketConfig.fields, null, 2)});\n`;
-  contents = contents.replace('\'FILENAME_REPLACE\'', 'import.meta.filename');
+  const pluginImports = `[\n${writePluginImports(plugins)}\n  ]`;
+  const typeCoercion = typescript ? ' as GasketConfigDefinition' : '';
+  contents += `\nexport default makeGasket(${JSON5.stringify(gasketConfig.fields, null, 2)}${typeCoercion});\n`;
   contents = contents.replace('\'PLUGIN_REPLACE\'', pluginImports);
   contents = replaceInjectionAssignments(contents, assignments);
 

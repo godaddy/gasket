@@ -18,6 +18,7 @@ describe('Plugin', () => {
       'create',
       'configure',
       'docsView',
+      'prompt',
       'webpackConfig',
       'metadata'
     ];

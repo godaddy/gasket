@@ -260,11 +260,12 @@ describe('create hook', () => {
       mockContext.hasGasketIntl = true;
       await create.handler({}, mockContext);
       expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts', {
-        build: 'tsc -p ./tsconfig.server.json && next build',
-        start: 'node dist/server.js',
-        preview: 'npm run build && npm run start',
-        local: 'GASKET_DEV=1 tsx watch server.ts',
-        prebuild: 'tsx gasket.ts build'
+        'build:tsc': 'tsc -p ./tsconfig.server.json',
+        'build': 'npm run build:tsc && next build',
+        'start': 'node dist/server.js',
+        'preview': 'npm run build && npm run start',
+        'local': 'npm run build:tsc && GASKET_DEV=1 tsx watch server.ts',
+        'prebuild': 'tsx gasket.ts build'
       });
     });
 

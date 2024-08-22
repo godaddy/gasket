@@ -43,7 +43,8 @@ describe('create', function () {
     await createHook({}, mockContext);
     expect(mockPkgAdd).toHaveBeenCalledWith('scripts', {
       start: 'node server.js',
-      local: 'GASKET_ENV=local nodemon server.js'
+      local: 'GASKET_ENV=local nodemon server.js',
+      preview: 'npm run build && npm run start'
     });
   });
 

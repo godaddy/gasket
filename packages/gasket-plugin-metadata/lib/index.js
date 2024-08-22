@@ -8,9 +8,9 @@ module.exports = {
   name,
   version,
   description,
+  actions,
   hooks: {
     create,
-    actions,
     webpackConfig,
     metadata(gasket, meta) {
       const mod = require('@gasket/core/package.json');

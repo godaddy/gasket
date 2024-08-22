@@ -1,7 +1,7 @@
 # `@gasket/plugin-swagger`
 
 
-
+- Add prompt for use in presets ([#850])
 - Add plugin import to gasket file ([#736])
 - Add itself to the app package file
 
@@ -62,3 +62,4 @@
 [#459]: https://github.com/godaddy/gasket/pull/459
 [#460]: https://github.com/godaddy/gasket/pull/460
 [#736]: https://github.com/godaddy/gasket/pull/736
+[#850]: https://github.com/godaddy/gasket/pull/850

@@ -31,7 +31,8 @@ describe('createHook', () => {
     expect(mockContext.pkg.add).toHaveBeenCalledWith('devDependencies', {
       '@docusaurus/core': devDependencies['@docusaurus/core'],
       '@docusaurus/preset-classic': devDependencies['@docusaurus/preset-classic'],
-      'react': devDependencies.react
+      'react': devDependencies.react,
+      'react-dom': devDependencies['react-dom']
     });
   });
 

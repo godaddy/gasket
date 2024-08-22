@@ -79,5 +79,5 @@ export function withMessagesProvider(
     staticLocaleFilePaths?: LocaleFilePath[]
   }
 ): (
-  Component: ComponentType<MessagesProps>
+  Component: ComponentType<Partial<MessagesProps>>
 ) => IntlProviderHOC;

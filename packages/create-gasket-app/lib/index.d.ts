@@ -37,6 +37,11 @@ export interface PluginInfo extends ModuleInfo {}
 
 export interface ConfigBuilder<Config> {
   /**
+   * fields object 
+   */
+  fields: { [key: string]: any };
+
+  /**
    * Adds all `[key, value]` pairs in the `fields` provided.
    * @param fields - Object to merge. Can be a function that accepts the current fields and object to merge.
    */

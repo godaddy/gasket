@@ -103,7 +103,7 @@ async function startServer(gasket) {
    * Health check request handler
    */
   async function healthCheckRequested() {
-    await gasket.exec('healthcheck', HealthCheckError);
+    await gasket.root().exec('healthcheck', HealthCheckError);
   }
 
   //
@@ -196,12 +196,10 @@ const plugin = {
   name,
   version,
   description,
+  actions: {
+    startServer
+  },
   hooks: {
-    actions(gasket) {
-      return {
-        startServer: async () => await startServer(gasket)
-      };
-    },
     create: async function createHook(gasket, { pkg, gasketConfig }) {
       gasketConfig.addPlugin('pluginHttps', name);
       pkg.add('dependencies', {

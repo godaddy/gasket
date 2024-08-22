@@ -37,6 +37,26 @@ describe('write-gasket-config', () => {
     expect(mockWriteStub).toHaveBeenCalledWith(path.join(mockContext.dest, 'gasket.js'), expect.any(String), 'utf8');
   });
 
+  it('writes the gasket.ts file under destination', async () => {
+    mockContext.typescript = true;
+    await writeGasketConfig({ context: mockContext });
+    expect(mockWriteStub).toHaveBeenCalledWith(path.join(mockContext.dest, 'gasket.ts'), expect.any(String), 'utf8');
+  });
+
+  it('writes type import for typescript', async () => {
+    mockContext.typescript = true;
+    await writeGasketConfig({ context: mockContext });
+    const output = mockWriteStub.mock.calls[0][1];
+    expect(output).toContain('import type { GasketConfigDefinition } from \'@gasket/core\';');
+  });
+
+  it('implements type coercion for typescript', async () => {
+    mockContext.typescript = true;
+    await writeGasketConfig({ context: mockContext });
+    const output = mockWriteStub.mock.calls[0][1];
+    expect(output).toContain(' as GasketConfigDefinition');
+  });
+
   it('writes gasket.js with export default', async () => {
     await writeGasketConfig({ context: mockContext });
     const output = mockWriteStub.mock.calls[0][1];
@@ -61,12 +81,6 @@ describe('write-gasket-config', () => {
     expect(output).toContain('plugins:');
   });
 
-  it('writes filename', async () => {
-    await writeGasketConfig({ context: mockContext });
-    const output = mockWriteStub.mock.calls[0][1];
-    expect(output).toContain('filename: import.meta.filename');
-  });
-
   it('outputs keys without quotes, strings with single-quotes', async () => {
     mockContext.gasketConfig.add("bogus", "double"); // eslint-disable-line quotes
     await writeGasketConfig({ context: mockContext });
@@ -84,7 +98,7 @@ describe('write-gasket-config', () => {
     const output = mockWriteStub.mock.calls[0][1];
     expect(output).toContain('import pluginBogus from \'@gasket/plugin-bogus\';');
     expect(output).toContain('import pluginBogus2 from \'@gasket/plugin-bogus2\';');
-    expect(output.match(/\[(\s.*)+\]/)[0]).toBe('[\n\t\tpluginBogus,\n\t\tpluginBogus2\n\xa0\xa0]');
+    expect(output.match(/\[(\s.*)+\]/)[0]).toBe('[\n\t\tpluginBogus,\n\t\tpluginBogus2\n  ]');
   });
 
   it('writes non-plugin imports', async () => {

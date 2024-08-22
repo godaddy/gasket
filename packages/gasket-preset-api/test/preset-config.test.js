@@ -28,9 +28,7 @@ describe('presetConfig', () => {
     const config = await presetConfig({}, mockContext);
     const expected = [
       expect.objectContaining({ name: '@gasket/plugin-https' }),
-      expect.objectContaining({ name: '@gasket/plugin-data' }),
       expect.objectContaining({ name: '@gasket/plugin-winston' }),
-      expect.objectContaining({ name: '@gasket/plugin-swagger' }),
       expect.objectContaining({ name: '@gasket/plugin-lint' })
     ];
     expect(config.plugins).toEqual(expect.arrayContaining(expected));

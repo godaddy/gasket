@@ -5,6 +5,7 @@ const mockYamlSafeLoadStub = jest.fn().mockResolvedValue({ data: true });
 const mockSwaggerJSDocStub = jest.fn();
 const mockOKStub = jest.fn();
 const mockAccessStub = jest.fn().mockResolvedValue();
+const mockBuildSwaggerDefinition = jest.fn();
 
 jest.mock('fs', () => ({
   constants: {
@@ -16,6 +17,7 @@ jest.mock('fs', () => ({
     access: mockAccessStub
   }
 }));
+jest.mock('../lib/build-swagger-definition', () => mockBuildSwaggerDefinition);
 jest.mock('swagger-jsdoc', () => mockSwaggerJSDocStub);
 jest.mock('js-yaml', () => ({
   safeDump: mockYamlSafeDumpStub,
@@ -28,11 +30,11 @@ jest.mock('util', () => {
     promisify: (f) => f
   };
 });
+
 jest.mock('/path/to/app/swagger.json', () => ({ data: true }), {
   virtual: true
 });
 
-const fastify = require('fastify')({ logger: true });
 const { name, version, description } = require('../package');
 
 describe('Swagger Plugin', function () {
@@ -65,6 +67,7 @@ describe('Swagger Plugin', function () {
       'express',
       'fastify',
       'create',
+      'postCreate',
       'metadata'
     ];
 
@@ -113,59 +116,12 @@ describe('Swagger Plugin', function () {
     let mockGasket;
 
     beforeEach(function () {
-      mockGasket = {
-        logger: {
-          info: jest.fn(),
-          warn: jest.fn()
-        },
-        config: {
-          root: '/path/to/app',
-          swagger: {
-            definitionFile: 'swagger.json',
-            jsdoc: {
-              definition: {
-                openapi: '3.0.0'
-              },
-              apis: ['fake.js']
-            }
-          }
-        }
-      };
+      mockGasket = {};
     });
 
     it('sets up swagger spec', async function () {
       await plugin.hooks.build(mockGasket);
-      expect(mockSwaggerJSDocStub).toHaveBeenCalled();
-    });
-
-    it('writes spec file', async function () {
-      mockSwaggerJSDocStub.mockReturnValue({ data: true });
-      await plugin.hooks.build(mockGasket);
-      expect(mockWriteFileStub).toHaveBeenCalledWith(
-        '/path/to/app/swagger.json',
-        expect.any(String),
-        'utf8'
-      );
-    });
-
-    it('json content for .json definition files', async function () {
-      mockSwaggerJSDocStub.mockReturnValue({ data: true });
-      await plugin.hooks.build(mockGasket);
-      expect(mockWriteFileStub.mock.calls[0][1]).toContain('"data": true');
-    });
-
-    it('yaml content for .yaml definition files', async function () {
-      mockSwaggerJSDocStub.mockReturnValue({ data: true });
-      mockGasket.config.swagger.definitionFile = 'swagger.yaml';
-      mockYamlSafeDumpStub.mockReturnValue('- data: true');
-      await plugin.hooks.build(mockGasket);
-      expect(mockWriteFileStub.mock.calls[0][1]).toContain('- data: true');
-    });
-
-    it('does not setup swagger spec if not configured', async function () {
-      delete mockGasket.config.swagger.jsdoc;
-      await plugin.hooks.build(mockGasket);
-      expect(mockSwaggerJSDocStub).not.toHaveBeenCalled();
+      expect(mockBuildSwaggerDefinition).toHaveBeenCalled();
     });
   });
 
@@ -298,18 +254,13 @@ describe('Swagger Plugin', function () {
 
     it('sets the api docs route', async function () {
       await plugin.hooks.fastify.handler(mockGasket, mockApp);
+      expect(mockApp.register).toHaveBeenCalledTimes(2);
       expect(mockApp.register).toHaveBeenCalledWith(expect.any(Function), {
-        prefix: '/api-docs',
-        swagger: { data: true },
-        uiConfig: {}
+        routePrefix: '/api-docs'
       });
-    });
-
-    it('adds new routes to swagger paths', async function () {
-      await plugin.hooks.fastify.handler(mockGasket, fastify);
-      fastify.get('/hello-world', () => { });
-      await fastify.ready();
-      expect(fastify.swagger().paths).toHaveProperty('/hello-world');
+      expect(mockApp.register).toHaveBeenCalledWith(expect.any(Function), {
+        swagger: { data: true }
+      });
     });
   });
 
@@ -337,11 +288,21 @@ describe('Swagger Plugin', function () {
       );
     });
 
-    it('adds prebuild script', async function () {
+    it('adds build script', async function () {
       await plugin.hooks.create({}, mockContext);
       expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts',
         expect.objectContaining({
-          prebuild: 'node gasket.js build'
+          build: 'node gasket.js build'
+        })
+      );
+    });
+
+    it('does not add build script if typescript', async function () {
+      mockContext.typescript = true;
+      await plugin.hooks.create({}, mockContext);
+      expect(mockContext.pkg.add).not.toHaveBeenCalledWith('scripts',
+        expect.objectContaining({
+          build: 'node gasket.js build'
         })
       );
     });

@@ -3,16 +3,19 @@ const mockHappyFeet = jest.fn();
 
 jest.mock('happy-feet', () => mockHappyFeet);
 
-const actions = require('../lib/actions');
+const { actions, testReset } = require('../lib/actions');
 
 describe('actions', () => {
+  afterEach(() => {
+    testReset();
+  });
+
   it('should return an object', () => {
-    expect(actions()).toBeInstanceOf(Object);
+    expect(actions).toBeInstanceOf(Object);
   });
 
   it('has expected actions', () => {
-    const results = actions({});
-    expect(results).toHaveProperty('getHappyFeet');
+    expect(actions).toHaveProperty('getHappyFeet');
   });
 
   describe('getHappyFeet', () => {
@@ -30,7 +33,7 @@ describe('actions', () => {
     });
 
     it('should return a happyFeet instance', () => {
-      const result = actions(mockGasket).getHappyFeet();
+      const result = actions.getHappyFeet(mockGasket);
       expect(mockHappyFeet).toHaveBeenCalledTimes(1);
       expect(result.state).toBe('HAPPY');
     });
@@ -40,14 +43,14 @@ describe('actions', () => {
         foo: 'bar'
       };
       happyConfig = { bar: 'foo' };
-      actions(mockGasket).getHappyFeet(happyConfig);
+      actions.getHappyFeet(mockGasket, happyConfig);
       expect(mockHappyFeet).toHaveBeenCalledTimes(1);
       expect(mockHappyFeet).toHaveBeenCalledWith({ foo: 'bar' });
     });
 
     it('should call the happyFeet function with happyConfig', () => {
       happyConfig = { bar: 'foo' };
-      actions(mockGasket).getHappyFeet(happyConfig);
+      actions.getHappyFeet(mockGasket, happyConfig);
       expect(mockHappyFeet).toHaveBeenCalledTimes(1);
       expect(mockHappyFeet).toHaveBeenCalledWith({ bar: 'foo' });
     });
