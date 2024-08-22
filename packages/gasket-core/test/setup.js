@@ -5,7 +5,7 @@ global.expect = expect;
 // eslint-disable-next-line no-process-env
 process.env.GASKET_ENV = 'test';
 
-function isolateOf(actual, branch) {
+function traceProxyOf(actual, branch) {
   if (
     actual !== branch &&
     actual.constructor === branch.constructor &&
@@ -30,5 +30,5 @@ function isolateOf(actual, branch) {
 }
 
 expect.extend({
-  isolateOf
+  traceProxyOf
 });

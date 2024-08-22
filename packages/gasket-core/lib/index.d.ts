@@ -1,11 +1,3 @@
-import { Gasket } from './gasket';
-import { GasketIsolate } from './branch';
-
-type isolateLifecycle<T> = (source: GasketIsolate, name: string, fn: HookHandler<T>) => HookHandler<T>
-type isolateAction<T> = (source: GasketIsolate, name: string, fn: ActionHandler<T>) => ActionHandler<T>
-type interceptActions = (source: GasketIsolate, actions: GasketActions) => GasketActions
-type makeBranch = (source: Gasket | GasketIsolate) => GasketIsolate
-
 declare module '@gasket/core' {
   export type MaybeMultiple<T> = T | Array<T>;
   export type MaybeAsync<T> = T | Promise<T>;
@@ -123,11 +115,11 @@ declare module '@gasket/core' {
     };
     config: GasketConfig;
     new (config: GasketConfigDefinition): Gasket
-    branch(): GasketIsolate
-    root(): Gasket
+    traceBranch(): GasketTrace
+    traceRoot(): Gasket
   }
 
-  export interface GasketIsolate extends Gasket {}
+  export type GasketTrace = Proxy<Gasket>;
 
   type PartialRecursive<T> = T extends Object
     ? { [K in keyof T]?: PartialRecursive<T[K]> } | undefined

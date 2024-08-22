@@ -46,7 +46,7 @@ export class Gasket {
     // bind engine methods to run through a proxy
     lifecycleMethods.forEach(method => {
       this[method] = (...args) => {
-        return this.branch()[method](...args);
+        return this.traceBranch()[method](...args);
       };
     });
 
@@ -65,13 +65,17 @@ export class Gasket {
     this.exec('ready');
   }
 
-  branch() {
+  traceBranch() {
     return makeBranch(this);
+  }
+
+  traceRoot() {
+    return this;
   }
 
   get actions() {
     // @ts-ignore -- actions from proxy
-    return this.branch().actions;
+    return this.traceBranch().actions;
   }
 }
 

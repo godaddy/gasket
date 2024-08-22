@@ -5,7 +5,7 @@ jest.unstable_mockModule('debug', () => ({
   default: () => mockDebug
 }));
 
-const { GasketIsolate }  = await import('../../lib/branch.js');
+const { GasketTrace }  = await import('../../lib/branch.js');
 const { Gasket }  = await import('../../lib/gasket.js');
 
 async function pause(ms) {
@@ -116,15 +116,15 @@ describe('The exec method', () => {
   it('invokes hooks with isolate', async () => {
     await gasket.exec('eventA');
 
-    expect(hookASpy).toHaveBeenCalledWith(expect.any(GasketIsolate));
+    expect(hookASpy).toHaveBeenCalledWith(expect.any(GasketTrace));
   });
 
   it('branch isolate passed through', async () => {
     const spy = jest.spyOn(gasket.engine, 'exec');
-    const branch = gasket.branch();
+    const branch = gasket.traceBranch();
 
     const result = await branch.exec('eventA');
-    expect(spy).toHaveBeenCalledWith(expect.isolateOf(branch), 'eventA');
+    expect(spy).toHaveBeenCalledWith(expect.traceProxyOf(branch), 'eventA');
     expect(result).toEqual([1, 2]);
   });
 

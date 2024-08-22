@@ -53,10 +53,10 @@ describe('recursion', () => {
       name: 'pluginNested',
       hooks: {
         eventA: jest.fn(async (_gasket, value) => {
-          return await (_gasket.branch().execWaterfall('eventB', value)) + 100;
+          return await (_gasket.traceBranch().execWaterfall('eventB', value)) + 100;
         }),
         eventB: jest.fn(async (_gasket, value) => {
-          return await (_gasket.branch().execWaterfall('eventA', value)) + 200;
+          return await (_gasket.traceBranch().execWaterfall('eventA', value)) + 200;
         })
       }
     };
@@ -161,10 +161,10 @@ describe('recursion', () => {
     setupGasket(pluginA);
     gasket.config = { some: 'config' };
 
-    const branch = gasket.branch();
-    const promise1 = branch.branch().execWaterfall('eventA', 1);
-    const promise2 = branch.branch().execWaterfall('eventA', 2);
-    const promise3 = branch.branch().execWaterfall('eventA', 3);
+    const branch = gasket.traceBranch();
+    const promise1 = branch.traceBranch().execWaterfall('eventA', 1);
+    const promise2 = branch.traceBranch().execWaterfall('eventA', 2);
+    const promise3 = branch.traceBranch().execWaterfall('eventA', 3);
 
     const [
       results1,
@@ -182,7 +182,7 @@ describe('recursion', () => {
     setupGasket(pluginA);
     gasket.config = { some: 'config' };
 
-    const branch = gasket.branch();
+    const branch = gasket.traceBranch();
     const promise1 = branch.execWaterfall('eventA', 1);
     const promise2 = branch.execWaterfall('eventA', 2);
     const promise3 = branch.execWaterfall('eventA', 3);

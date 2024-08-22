@@ -6,10 +6,10 @@ jest.unstable_mockModule('debug', () => ({
   default: () => mockDebug
 }));
 
-const { GasketIsolate } = await import('../lib/branch.js');
+const { GasketTrace } = await import('../lib/branch.js');
 const { Gasket } = await import('../lib/gasket.js');
 
-describe('GasketIsolate', () => {
+describe('GasketTrace', () => {
   let gasket, pluginA, pluginB;
 
   beforeEach(() => {
@@ -45,12 +45,12 @@ describe('GasketIsolate', () => {
 
   afterEach(() => {
     jest.clearAllMocks();
-    GasketIsolate._nextBranchId = 0;
+    GasketTrace._nextBranchId = 0;
   });
 
   it('can get a branch from a gasket', () => {
-    const branch = gasket.branch();
-    expect(branch).toBeInstanceOf(GasketIsolate);
+    const branch = gasket.traceBranch();
+    expect(branch).toBeInstanceOf(GasketTrace);
 
     expect(mockDebug.mock.calls).toEqual([
       ['⋌ root']
@@ -58,11 +58,11 @@ describe('GasketIsolate', () => {
   });
 
   it('can get a branch from a branch', () => {
-    const branch = gasket.branch();
-    const subBranch = branch.branch();
-    const subBranch2 = subBranch.branch();
-    const subBranch3 = subBranch2.branch();
-    expect(subBranch3).toBeInstanceOf(GasketIsolate);
+    const branch = gasket.traceBranch();
+    const subBranch = branch.traceBranch();
+    const subBranch2 = subBranch.traceBranch();
+    const subBranch3 = subBranch2.traceBranch();
+    expect(subBranch3).toBeInstanceOf(GasketTrace);
 
     expect(mockDebug.mock.calls).toEqual([
       ['⋌ root'],
@@ -73,14 +73,14 @@ describe('GasketIsolate', () => {
   });
 
   it('can access lifecycles', () => {
-    const branch = gasket.branch();
+    const branch = gasket.traceBranch();
     lifecycleMethods.forEach(method => {
       expect(branch[method]).toBeInstanceOf(Function);
     });
   });
 
   it('can access actions', () => {
-    const branch = gasket.branch();
+    const branch = gasket.traceBranch();
     expect(branch.actions).toEqual({
       getActionsCount: expect.any(Function),
       getEventA: expect.any(Function)
@@ -88,21 +88,26 @@ describe('GasketIsolate', () => {
   });
 
   it('can access config', () => {
-    const branch = gasket.branch();
+    const branch = gasket.traceBranch();
     expect(branch.config).toBe(gasket.config);
   });
 
-  it('can access root', () => {
-    const root = gasket.branch().root();
+  it('can access root from a branch', () => {
+    const root = gasket.traceBranch().traceRoot();
     expect(root).toBe(gasket);
 
-    const deepRoot = gasket.branch().branch().branch().root();
+    const deepRoot = gasket.traceBranch().traceBranch().traceBranch().traceRoot();
     expect(deepRoot).toBe(gasket);
   });
 
+  it('Gasket implements traceRoot', () => {
+    const root = gasket.traceRoot();
+    expect(root).toBe(gasket);
+  });
+
   it('can attach arbitrary properties', () => {
-    const branch = gasket.branch();
-    const branch2 = gasket.branch();
+    const branch = gasket.traceBranch();
+    const branch2 = gasket.traceBranch();
 
     // attaching in a branch affects the original
     branch.extra = true;
@@ -115,6 +120,6 @@ describe('GasketIsolate', () => {
     expect(branch2.extra).toBe(true);
 
     // accessible in subbranch
-    expect(branch2.branch().extra).toBe(true);
+    expect(branch2.traceBranch().extra).toBe(true);
   });
 });

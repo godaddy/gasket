@@ -1,5 +1,8 @@
 import debugPkg from 'debug';
 import { lifecycleMethods } from './engine.js';
+import { Gasket } from './gasket.js';
+
+const lifecycles = Object.fromEntries(lifecycleMethods.map(method => [method, true]));
 
 const reSync = /sync$/i;
 const icon = (type) => reSync.test(type) ? '◆' : '◇';
@@ -53,8 +56,8 @@ class IsolateTracer {
   };
 }
 
-/** @type {import('@gasket/core').GasketIsolate} */
-export class GasketIsolate {
+/** @type {import('@gasket/core').GasketTrace} */
+export class GasketTrace {
   static _nextBranchId = 0;
 
   constructor(parent, newBranchId = null) {
@@ -70,7 +73,7 @@ export class GasketIsolate {
     const self = this;
     this._proxy = new Proxy(this, {
       get(target, prop) {
-        if (typeof prop === 'string' && lifecycleMethods.has(prop)) {
+        if (typeof prop === 'string' && lifecycles[prop] === true) {
           return isolateLifecycle(self, prop, parent.engine[prop]);
         }
         if (prop === 'actions') {
@@ -93,9 +96,14 @@ export class GasketIsolate {
 
     this.traceHookStart = tracer.traceHookStart;
     this.trace = tracer.trace;
+
+    this.traceRoot = () => {
+      if (parent instanceof Gasket) return parent;
+      return parent.traceRoot();
+    };
   }
 
-  branch = () => {
+  traceBranch = () => {
     return makeBranch(this._proxy);
   };
 }
@@ -104,10 +112,10 @@ export class GasketIsolate {
  * Wrap a lifecycle function to trace start and end.
  * An isolate passed to the lifecycle function to allow
  * for further branching.
- * @type {import('.').isolateLifecycle<any>}
+ * @type {import('./internal').isolateLifecycle<any>}
  */
 function isolateLifecycle(source, name, fn) {
-  const isolate = new GasketIsolate(source._proxy);
+  const isolate = new GasketTrace(source._proxy);
 
   return (...args) => {
     const [event] = args;
@@ -131,10 +139,10 @@ function isolateLifecycle(source, name, fn) {
  * Wrap an action function to trace start and end.
  * An isolate passed to the action function to allow
  * for further branching.
- * @type {import('.').isolateAction<any>}
+ * @type {import('./internal').isolateAction<any>}
  */
 function isolateAction(source, name, fn) {
-  const isolate = new GasketIsolate(source._proxy);
+  const isolate = new GasketTrace(source._proxy);
 
   return (...args) => {
     isolate._tracer.traceActionStart(name);
@@ -153,14 +161,10 @@ function isolateAction(source, name, fn) {
   };
 }
 
-//
-// Create a proxy of actions to intercept the functions
-// and return an isolated version
-//
 /**
  * Create a proxy of actions to intercept the functions
  * and return an isolated version.
- * @type {import('.').interceptActions}
+ * @type {import('./internal').interceptActions}
  */
 function interceptActions(source, actions) {
   return new Proxy(actions, {
@@ -175,10 +179,10 @@ function interceptActions(source, actions) {
 
 /**
  *
- * @type {import('.').makeBranch}
+ * @type {import('./internal').makeBranch}
  */
 export function makeBranch(gasket) {
-  const instance = new GasketIsolate(gasket, GasketIsolate._nextBranchId++);
+  const instance = new GasketTrace(gasket, GasketTrace._nextBranchId++);
   // return instance;
   return instance._proxy;
 }

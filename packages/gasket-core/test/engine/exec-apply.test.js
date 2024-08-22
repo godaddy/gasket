@@ -5,7 +5,7 @@ jest.unstable_mockModule('debug', () => ({
   default: () => mockDebug
 }));
 
-const { GasketIsolate }  = await import('../../lib/branch.js');
+const { GasketTrace }  = await import('../../lib/branch.js');
 const { Gasket }  = await import('../../lib/gasket.js');
 
 describe('The execApply method', () => {
@@ -62,14 +62,14 @@ describe('The execApply method', () => {
       return handler(new Wrapper(plugin));
     });
 
-    expect(hookASpy).toHaveBeenCalledWith(expect.any(GasketIsolate), expect.any(Wrapper));
-    expect(hookBSpy).toHaveBeenCalledWith(expect.any(GasketIsolate), expect.any(Wrapper));
-    expect(hookCSpy).toHaveBeenCalledWith(expect.any(GasketIsolate), expect.any(Wrapper));
+    expect(hookASpy).toHaveBeenCalledWith(expect.any(GasketTrace), expect.any(Wrapper));
+    expect(hookBSpy).toHaveBeenCalledWith(expect.any(GasketTrace), expect.any(Wrapper));
+    expect(hookCSpy).toHaveBeenCalledWith(expect.any(GasketTrace), expect.any(Wrapper));
   });
 
   it('branch isolate passed through', async () => {
     const spy = jest.spyOn(gasket.engine, 'execApply');
-    const branch = gasket.branch();
+    const branch = gasket.traceBranch();
 
     async function applyHandler(plugin, handler) {
       return handler(new Wrapper(plugin));
@@ -77,7 +77,7 @@ describe('The execApply method', () => {
 
     await branch.execApply('eventA', applyHandler);
 
-    expect(spy).toHaveBeenCalledWith(expect.isolateOf(branch), 'eventA', applyHandler);
+    expect(spy).toHaveBeenCalledWith(expect.traceProxyOf(branch), 'eventA', applyHandler);
   });
 
   it('awaits sync or async hooks and resolves an Array', async () => {
