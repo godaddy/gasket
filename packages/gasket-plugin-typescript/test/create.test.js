@@ -7,6 +7,9 @@ describe('create hook', () => {
   beforeEach(() => {
     mockContext = {
       apiApp: false,
+      gitignore: {
+        add: jest.fn()
+      },
       pkg: {
         add: jest.fn()
       },
@@ -55,6 +58,12 @@ describe('create hook', () => {
       create({}, mockContext);
       expect(mockContext.files.add).toHaveBeenCalledWith(expect.stringMatching(/generator\/api\/\*$/), expect.stringMatching(/generator\/shared\/\*$/));
     });
+
+    it('adds gitignore for API apps', () => {
+      mockContext.apiApp = true;
+      create({}, mockContext);
+      expect(mockContext.gitignore.add).toHaveBeenCalledWith('dist', 'TypeScript build output');
+    });
   });
 
   describe('nextServerType', () => {
@@ -68,6 +77,12 @@ describe('create hook', () => {
       mockContext.nextDevProxy = false
       create({}, mockContext);
       expect(mockContext.files.add).toHaveBeenCalledWith(expect.stringMatching(/generator\/next\/\*\(tsconfig\).json$/));
+    });
+
+    it('adds gitignore for customServer', () => {
+      mockContext.nextServerType = 'customServer';
+      create({}, mockContext);
+      expect(mockContext.gitignore.add).toHaveBeenCalledWith('dist', 'TypeScript build output');
     });
   });
 
