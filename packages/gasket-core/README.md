@@ -157,8 +157,86 @@ In this example, we register an action `getDoodads` that will only execute if th
 It will then execute the `doodads` lifecycle, allowing any registered plugin to
 provide doodads.
 
+## Debugging
+
+Gasket makes use of the [debug] module to provide various debug outputs. Gasket
+packages and plugins use the `gasket` namespace.
+
+```shell
+DEBUG=gasket:* npm run start
+```
+
+### Tracing
+
+You can narrow down to see the action and lifecycle execution order in the
+console output under the `gasket:trace` namespace.
+
+```shell
+DEBUG=gasket:trace* npm run start
+```
+
+![trace-example.png](docs/trace-example.png)
+
+The following symbols to indicate the step and type of execution:
+
+- `⋌` New Trace Branch
+- `★` Action Start
+- `◆` Synchronous Lifecycle Start
+- `◇` Asynchronous Lifecycle Start
+- `↪` Plugin lifecycle Hook
+
+When ever the app or a plugin executes a lifecycle or an action, it will be
+passed a traceable proxy object, which can be used to follow the execution
+path of the application.
+Any action or lifecycle that is executed from the root `gasket` object will
+start a new trace "branch".
+New branches can be created by calling `gasket.traceBranch()` to help debug
+certain lifecycle flows.
+
+Additionally, it is possible to start fresh traces by calling
+`gasket.traceRoot()`.
+This method should will exit the current branch's trace history
+and start a fresh.
+Use this sparingly only for situations such as tracing handling for new requests.
+
+## Recursion Protection
+
+Gasket uses the trace history to catch and prevent infinite recursion.
+If a lifecycle is executed more than once in the same trace history,
+it will throw an error and halt the execution.
+
+While it is ok to execute the same action at various steps in an event chain,
+you must avoid calling the same **lifecycle** from within itself.
+Memoization can help avoid this issue, and using `req` as a key can help for
+request-specific memoization, which is also a good performance optimization.
+
+```js
+// gasket-plugin-example.js
+
+const reqMap = new WeakMap();
+
+const name = 'gasket-plugin-example';
+const actions = {
+  async getDoodads(gasket, req) {
+    if(!reqMap.has(req)) {
+      const doodads = await gasket.exec('doodads', req);
+      reqMap.set(req, doodads);
+    }
+    return reqMap.get(req);
+  }
+};
+const hooks = {
+  // ...
+};
+
+export default { name, actions, hooks };
+```
+
+
 [init]: #init 
 [actions]: #actions 
 [configure]: #configure 
 [registered plugins]: #registered-plugins
 [Plugins Guide]:/packages/gasket-cli/docs/plugins.md
+
+[debug]:https://github.com/debug-js/debug
