@@ -64,6 +64,12 @@ describe('create hook', () => {
       create({}, mockContext);
       expect(mockContext.gitignore.add).toHaveBeenCalledWith('dist', 'TypeScript build output');
     });
+
+    it('adds to eslintIgnore for API apps', () => {
+      mockContext.apiApp = true;
+      create({}, mockContext);
+      expect(mockContext.pkg.add).toHaveBeenCalledWith('eslintIgnore', ['dist']);
+    });
   });
 
   describe('nextServerType', () => {
@@ -83,6 +89,12 @@ describe('create hook', () => {
       mockContext.nextServerType = 'customServer';
       create({}, mockContext);
       expect(mockContext.gitignore.add).toHaveBeenCalledWith('dist', 'TypeScript build output');
+    });
+
+    it('adds to eslintIgnore for customServer', () => {
+      mockContext.nextServerType = 'customServer';
+      create({}, mockContext);
+      expect(mockContext.pkg.add).toHaveBeenCalledWith('eslintIgnore', ['dist']);
     });
   });
 
