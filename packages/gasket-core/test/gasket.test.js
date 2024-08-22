@@ -77,14 +77,14 @@ describe('makeGasket', () => {
   it('defaults env to local', () => {
     const gasket = makeGasket({ plugins: [mockPlugin] });
     expect(gasket.config.env).toEqual('local');
-    expect(console.warn).toHaveBeenCalledWith('No GASKET_ENV env variable set; defaulting to "local".');
+    expect(warnSpy).toHaveBeenCalledWith('No GASKET_ENV env variable set; defaulting to "local".');
   });
 
   it('sets env GASKET_ENV', () => {
     process.env.GASKET_ENV = 'production';
     const gasket = makeGasket({ plugins: [mockPlugin] });
     expect(gasket.config.env).toEqual('production');
-    expect(console.warn).not.toHaveBeenCalled();
+    expect(warnSpy).not.toHaveBeenCalled();
   });
 
   it('prunes nullish and/or empty plugins', () => {

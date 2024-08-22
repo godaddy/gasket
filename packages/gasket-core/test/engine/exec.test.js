@@ -8,10 +8,6 @@ jest.unstable_mockModule('debug', () => ({
 const { GasketIsolate }  = await import('../../lib/branch.js');
 const { Gasket }  = await import('../../lib/gasket.js');
 
-/**
- *
- * @param ms
- */
 async function pause(ms) {
   await new Promise(resolve => setTimeout(resolve, ms));
 }

@@ -149,7 +149,7 @@ export class GasketEngine {
    * Enables a plugin to introduce new lifecycle events. When
    * calling `exec`, await the `Promise` it returns to wait for the hooks of other
    * plugins to finish.
-   * @param gasket
+   * @param {import("@gasket/core").Gasket} gasket - The gasket instance
    * @param {string} event The event to execute
    * @param {...*} args Args for hooks
    * @returns {Promise<Array>} An array of the data returned by the hooks, in
@@ -190,7 +190,7 @@ export class GasketEngine {
    * The synchronous result is an Array of the hook return values. Using synchronous
    * methods limits flexibility, so it's encouraged to use async methods whenever
    * possible.
-   * @param gasket
+   * @param {import("@gasket/core").Gasket} gasket - The gasket instance
    * @param {string} event The event to execute
    * @param {...*} args Args for hooks
    * @returns {Promise<Array>} An array of the data returned by the hooks, in
@@ -223,7 +223,7 @@ export class GasketEngine {
    * object map with each key being the name of the plugin and each value the
    * result from the hook. Only the plugins that hooked the event will have keys
    * present in the map.
-   * @param gasket
+   * @param {import("@gasket/core").Gasket} gasket - The gasket instance
    * @param {string} event The event to execute
    * @param {...*} args Args for hooks
    * @returns {Promise<object>} An object map with each key being the name of
@@ -267,7 +267,7 @@ export class GasketEngine {
 
   /**
    * Like `execMap`, only all hooks must execute synchronously
-   * @param gasket
+   * @param {import("@gasket/core").Gasket} gasket - The gasket instance
    * @param {string} event The event to execute
    * @param {...*} args Args for hooks
    * @returns {Promise<object>} An object map with each key being the name of
@@ -301,7 +301,7 @@ export class GasketEngine {
    * Like `exec`, only it allows you to have each
    * hook execute sequentially, with each result being passed as the first argument
    * to the next hook. It's like an asynchronous version of `Array.prototype.reduce`.
-   * @param gasket
+   * @param {import("@gasket/core").Gasket} gasket - The gasket instance
    * @param {string} event The event to execute
    * @param {any} value Value to pass to initial hook
    * @param {...*} otherArgs Args for hooks
@@ -339,7 +339,7 @@ export class GasketEngine {
    * execute synchronously. The final value is returned synchronously from this call.
    * Using synchronous methods limits flexibility, so it's encouraged to use async
    * methods whenever possible.
-   * @param gasket
+   * @param {import("@gasket/core").Gasket} gasket - The gasket instance
    * @param {string} event The event to execute
    * @param {any} value Value to pass to initial hook
    * @param {...*} otherArgs Args for hooks
@@ -373,7 +373,7 @@ export class GasketEngine {
    * Method execution is ordered like `exec`, but you must invoke the handler
    * yourself with explicit arguments. These arguments can be dynamic based on
    * the plugin itself.
-   * @param gasket
+   * @param {import("@gasket/core").Gasket} gasket - The gasket instance
    * @param {string} event The event to execute
    * @param {Function} applyFn Function to apply
    * @returns {Promise<Array>} An array of the data returned by the hooks, in
@@ -412,7 +412,7 @@ export class GasketEngine {
 
   /**
    * Like `execApply`, only all hooks must execute synchronously.
-   * @param gasket
+   * @param {import("@gasket/core").Gasket} gasket - The gasket instance
    * @param {string} event The event to execute
    * @param {Function} applyFn Function to apply
    * @returns {Promise<Array>} An array of the data returned by the hooks, in
@@ -444,11 +444,10 @@ export class GasketEngine {
    * Exec, but with a cache for plans by type
    * @private
    * @param {object} options options
-   * @param [options.gasket]
-   * @param options.event
-   * @param options.type
-   * @param options.prepare
-   * @param options.exec
+   * @param {string} options.event - The event to execute
+   * @param {string} options.type - The type of execution
+   * @param {Function} options.prepare - Prepare function
+   * @param {Function} options.exec - Execution function
    * @returns {*} result
    */
   _execWithCachedPlan({ event, type, prepare, exec }) {

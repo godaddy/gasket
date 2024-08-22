@@ -14,7 +14,7 @@ const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {
 const pause = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 describe('actions', () => {
-  let gasket, pluginA, pluginB;
+  let mockGasket, pluginA, pluginB;
 
   beforeEach(() => {
     pluginA = {
@@ -58,7 +58,7 @@ describe('actions', () => {
       }
     };
 
-    gasket = new Gasket({ plugins: [pluginA, pluginB] });
+    mockGasket = new Gasket({ plugins: [pluginA, pluginB] });
     mockDebug.mockClear();
   });
 
@@ -67,31 +67,31 @@ describe('actions', () => {
   });
 
   it('actions are registered', async () => {
-    expect(gasket.actions).toBeDefined();
-    expect(gasket.actions.getActionsCount).toEqual(expect.any(Function));
-    expect(gasket.actions.getEventA).toEqual(expect.any(Function));
+    expect(mockGasket.actions).toBeDefined();
+    expect(mockGasket.actions.getActionsCount).toEqual(expect.any(Function));
+    expect(mockGasket.actions.getEventA).toEqual(expect.any(Function));
   });
 
   it('sequentially transforms a value',  () => {
-    const result = gasket.actions.getActionsCount();
+    const result = mockGasket.actions.getActionsCount();
     expect(result).toEqual(4);
   });
 
   it('works when invoked without a context', () => {
-    const { getActionsCount } = gasket.actions;
+    const { getActionsCount } = mockGasket.actions;
     const result = getActionsCount();
     expect(result).toEqual(4);
   });
 
   it('invokes hooks with isolate', async () => {
-    const result = await gasket.actions.getEventA(5);
+    const result = await mockGasket.actions.getEventA(5);
     expect(pluginA.hooks.eventA).toHaveBeenCalledWith(expect.any(GasketIsolate), 5);
     expect(result).toEqual(109);
   });
 
   it('branch isolate passed through', async () => {
-    const spy = jest.spyOn(gasket.engine, 'execWaterfall');
-    const branch = gasket.branch();
+    const spy = jest.spyOn(mockGasket.engine, 'execWaterfall');
+    const branch = mockGasket.branch();
 
     const result = await branch.actions.getEventA(5);
     expect(spy).toHaveBeenCalledWith(expect.isolateOf(branch), 'eventA', 5);
@@ -99,7 +99,7 @@ describe('actions', () => {
   });
 
   it('has expected trace output', async () => {
-    await gasket.actions.getEventA(5);
+    await mockGasket.actions.getEventA(5);
 
     expect(mockDebug.mock.calls).toEqual([
       ['⋌ root'],
@@ -111,9 +111,9 @@ describe('actions', () => {
   });
 
   it('allows multiple lifecycle chains', async () => {
-    const spy = jest.spyOn(gasket.engine, 'execWaterfall');
-    const promise1 = gasket.actions.getEventA(1);
-    const promise2 = gasket.actions.getEventA(2);
+    const spy = jest.spyOn(mockGasket.engine, 'execWaterfall');
+    const promise1 = mockGasket.actions.getEventA(1);
+    const promise2 = mockGasket.actions.getEventA(2);
 
     const [results1, results2] = await Promise.all([promise1, promise2]);
 
@@ -138,7 +138,7 @@ describe('actions', () => {
   });
 
   it('actions can call other actions', async () => {
-    const results = await gasket.actions.getEvents(5);
+    const results = await mockGasket.actions.getEvents(5);
 
     expect(results).toEqual({ a: 109, b: 1005 });
     expect(pluginA.actions.getEventA).toHaveBeenCalled();
@@ -149,13 +149,13 @@ describe('actions', () => {
     pluginB.actions = {
       getActionsCount: jest.fn().mockReturnValue('override?')
     };
-    gasket = new Gasket({ plugins: [pluginA, pluginB] });
+    mockGasket = new Gasket({ plugins: [pluginA, pluginB] });
 
     expect(errorSpy).toHaveBeenCalledWith(
       'Action \'getActionsCount\' from \'pluginB\' was registered by \'pluginA\''
     );
 
-    const { getActionsCount } = gasket.actions;
+    const { getActionsCount } = mockGasket.actions;
     expect(getActionsCount()).toEqual(4);
 
     expect(pluginA.actions.getActionsCount).toHaveBeenCalled();

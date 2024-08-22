@@ -9,7 +9,7 @@ const { GasketIsolate }  = await import('../../lib/branch.js');
 const { Gasket }  = await import('../../lib/gasket.js');
 
 describe('The execWaterfallSync method', () => {
-  let gasket, pluginA, pluginB;
+  let mockGasket, pluginA, pluginB;
 
   beforeEach(() => {
     pluginA = {
@@ -32,7 +32,7 @@ describe('The execWaterfallSync method', () => {
       }
     };
 
-    gasket = new Gasket({ plugins: [pluginA, pluginB] });
+    mockGasket = new Gasket({ plugins: [pluginA, pluginB] });
   });
 
   afterEach(() => {
@@ -40,12 +40,12 @@ describe('The execWaterfallSync method', () => {
   });
 
   it('sequentially transforms a value', () => {
-    const result = gasket.execWaterfallSync('eventA', 5);
+    const result = mockGasket.execWaterfallSync('eventA', 5);
     expect(result).toEqual(39);
   });
 
   it('works when invoked without a context', () => {
-    const { execWaterfallSync } = gasket;
+    const { execWaterfallSync } = mockGasket;
 
     const result = execWaterfallSync('eventA', 5);
 
@@ -53,14 +53,14 @@ describe('The execWaterfallSync method', () => {
   });
 
   it('invokes hooks with isolate', () => {
-    gasket.execWaterfallSync('eventA', 5);
+    mockGasket.execWaterfallSync('eventA', 5);
 
     expect(pluginA.hooks.eventA).toHaveBeenCalledWith(expect.any(GasketIsolate), 5);
   });
 
   it('branch isolate passed through', () => {
-    const spy = jest.spyOn(gasket.engine, 'execWaterfallSync');
-    const branch = gasket.branch();
+    const spy = jest.spyOn(mockGasket.engine, 'execWaterfallSync');
+    const branch = mockGasket.branch();
     const result = branch.execWaterfallSync('eventA', 5);
 
     expect(spy).toHaveBeenCalledWith(expect.isolateOf(branch), 'eventA', 5);
@@ -70,7 +70,7 @@ describe('The execWaterfallSync method', () => {
   it('supports additional arguments', () => {
     const otherArg = { some: 'thing' };
 
-    const branch = gasket.branch();
+    const branch = mockGasket.branch();
     const result = branch.execWaterfallSync('eventA', 5, otherArg);
 
     expect(pluginA.hooks.eventA).toHaveBeenCalledWith(expect.isolateOf(branch), 5, otherArg);
@@ -81,7 +81,7 @@ describe('The execWaterfallSync method', () => {
   it('has expected trace output', () => {
     mockDebug.mockClear();
 
-    gasket.execWaterfallSync('eventA', 5);
+    mockGasket.execWaterfallSync('eventA', 5);
 
     expect(mockDebug.mock.calls).toEqual([
       ['⋌ root'],
@@ -92,7 +92,7 @@ describe('The execWaterfallSync method', () => {
   });
 
   it('handles the return of nullish values', () => {
-    const { execWaterfallSync } = gasket;
+    const { execWaterfallSync } = mockGasket;
 
     const result = execWaterfallSync('eventB', null);
 

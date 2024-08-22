@@ -1,3 +1,11 @@
+import { Gasket } from './gasket';
+import { GasketIsolate } from './branch';
+
+type isolateLifecycle<T> = (source: GasketIsolate, name: string, fn: HookHandler<T>) => HookHandler<T>
+type isolateAction<T> = (source: GasketIsolate, name: string, fn: ActionHandler<T>) => ActionHandler<T>
+type interceptActions = (source: GasketIsolate, actions: GasketActions) => GasketActions
+type makeBranch = (source: Gasket | GasketIsolate) => GasketIsolate
+
 declare module '@gasket/core' {
   export type MaybeMultiple<T> = T | Array<T>;
   export type MaybeAsync<T> = T | Promise<T>;
@@ -143,4 +151,3 @@ declare module '@gasket/core' {
 
   export function makeGasket(config: GasketConfigDefinition): Gasket
 }
-

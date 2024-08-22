@@ -21,12 +21,17 @@ function getEnvironment() {
 
 /* eslint-enable no-console, no-process-env */
 
-// TODO: Add JSDoc types
+/**
+ * The Gasket class is the main entry point for the Gasket API.
+ */
 export class Gasket {
 
-  constructor(gasketConfig) {
+  /**
+   * @param {import('@gasket/core').GasketConfigDefinition} configDef - Gasket configuration
+   */
+  constructor(configDef) {
     const env = getEnvironment();
-    const config = applyConfigOverrides(gasketConfig, { env });
+    const config = applyConfigOverrides(configDef, { env });
     config.env = env;
     config.root ??= process.cwd();
 
@@ -70,11 +75,11 @@ export class Gasket {
   }
 }
 
-// TODO: Add JSDoc types
 /**
- *
- * @param gasketConfigDefinition
+ * Make a new Gasket instance.
+ * @param {import('@gasket/core').GasketConfigDefinition} configDef - Gasket configuration
+ * @returns {Gasket} gasket instance
  */
-export function makeGasket(gasketConfigDefinition) {
-  return new Gasket(gasketConfigDefinition);
+export function makeGasket(configDef) {
+  return new Gasket(configDef);
 }

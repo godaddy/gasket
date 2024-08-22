@@ -8,6 +8,7 @@ jest.unstable_mockModule('debug', () => ({
 const { GasketIsolate }  = await import('../../lib/branch.js');
 const { Gasket }  = await import('../../lib/gasket.js');
 
+// eslint-disable-next-line max-statements
 describe('The execApplySync method', () => {
   let gasket, hookASpy, hookBSpy, hookCSpy;
 
@@ -45,11 +46,6 @@ describe('The execApplySync method', () => {
     }
   };
 
-  /**
-   *
-   * @param plugin
-   * @param handler
-   */
   function mockApplyHandler(plugin, handler) {
     return handler(new Wrapper(plugin));
   }

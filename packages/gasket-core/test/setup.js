@@ -2,13 +2,9 @@ import { jest, expect } from '@jest/globals';
 
 global.jest = jest;
 global.expect = expect;
+// eslint-disable-next-line no-process-env
 process.env.GASKET_ENV = 'test';
 
-/**
- *
- * @param actual
- * @param branch
- */
 function isolateOf(actual, branch) {
   if (
     actual !== branch &&

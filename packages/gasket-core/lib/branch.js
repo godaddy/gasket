@@ -68,7 +68,7 @@ export class GasketIsolate {
     }
 
     const self = this;
-    this.proxy = new Proxy(this, {
+    this._proxy = new Proxy(this, {
       get(target, prop) {
         if (typeof prop === 'string' && lifecycleMethods.has(prop)) {
           return isolateLifecycle(self, prop, parent.engine[prop]);
@@ -96,28 +96,27 @@ export class GasketIsolate {
   }
 
   branch = () => {
-    return makeBranch(this.proxy);
+    return makeBranch(this._proxy);
   };
 }
 
-//
-// Wrap a lifecycle function to trace start and end.
-// An isolate passed to the lifecycle function to allow
-// for further branching.
-//
 /**
- *
- * @param source
- * @param name
- * @param fn
+ * Wrap a lifecycle function to trace start and end.
+ * An isolate passed to the lifecycle function to allow
+ * for further branching.
+ * @type {import('.').isolateLifecycle<any>}
  */
 function isolateLifecycle(source, name, fn) {
-  const isolate = new GasketIsolate(source.proxy);
+  const isolate = new GasketIsolate(source._proxy);
 
   return (...args) => {
     const [event] = args;
     isolate._tracer.traceLifecycleStart(name, event);
-    const result = fn(isolate.proxy, ...args);
+    const result = fn(
+      // @ts-expect-error - isolate is a Gasket proxy
+      isolate._proxy,
+      ...args
+    );
     if (typeof result?.finally === 'function') {
       return result.finally(() => {
         isolate._tracer.traceLifecycleEnd(name, event);
@@ -128,23 +127,22 @@ function isolateLifecycle(source, name, fn) {
   };
 }
 
-//
-// Wrap an action function to trace start and end.
-// An isolate passed to the action function to allow
-// for further branching.
-//
 /**
- *
- * @param source
- * @param name
- * @param fn
+ * Wrap an action function to trace start and end.
+ * An isolate passed to the action function to allow
+ * for further branching.
+ * @type {import('.').isolateAction<any>}
  */
 function isolateAction(source, name, fn) {
-  const isolate = new GasketIsolate(source.proxy);
+  const isolate = new GasketIsolate(source._proxy);
 
   return (...args) => {
     isolate._tracer.traceActionStart(name);
-    const result = fn(isolate.proxy, ...args);
+    const result = fn(
+      // @ts-expect-error - isolate is a Gasket proxy
+      isolate._proxy,
+      ...args
+    );
     if (typeof result?.finally === 'function') {
       return result.finally(() => {
         isolate._tracer.traceActionEnd(name);
@@ -160,14 +158,14 @@ function isolateAction(source, name, fn) {
 // and return an isolated version
 //
 /**
- *
- * @param source
- * @param actions
+ * Create a proxy of actions to intercept the functions
+ * and return an isolated version.
+ * @type {import('.').interceptActions}
  */
 function interceptActions(source, actions) {
   return new Proxy(actions, {
     get(target, prop) {
-      if (prop in target) {
+      if (prop in target && typeof prop === 'string') {
         return isolateAction(source, prop, target[prop]);
       }
       return actions[prop];
@@ -177,10 +175,10 @@ function interceptActions(source, actions) {
 
 /**
  *
- * @param gasket
+ * @type {import('.').makeBranch}
  */
 export function makeBranch(gasket) {
   const instance = new GasketIsolate(gasket, GasketIsolate._nextBranchId++);
   // return instance;
-  return instance.proxy;
+  return instance._proxy;
 }
