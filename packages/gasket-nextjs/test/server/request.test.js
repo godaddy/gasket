@@ -93,4 +93,10 @@ describe('request', () => {
     const results = request();
     expect(results).not.toHaveProperty('query');
   });
+
+  it('allows query to be URLSearchParams', () => {
+    const query = new URLSearchParams({ query1: 'value1', query2: 'value2' });
+    const results = request(query);
+    expect(results).toEqual(expect.objectContaining({ query: { query1: 'value1', query2: 'value2' } }));
+  });
 });
