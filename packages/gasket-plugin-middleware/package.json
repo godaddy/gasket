@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-middleware",
-  "version": "7.0.0-next.58",
+  "version": "7.0.0-next.59",
   "description": "Handles common server engine setups for routing and executing lifecycles.",
   "main": "lib",
   "scripts": {
