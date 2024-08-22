@@ -9,6 +9,8 @@ const mockProxyCreateServer = jest.fn().mockReturnValue({
   })
 });
 
+const mockExec = jest.fn();
+
 jest.mock('create-servers', () => mockCreateServersModule);
 jest.mock('diagnostics', () => () => mockDebugStub);
 jest.mock('@godaddy/terminus', () => ({
@@ -56,7 +58,10 @@ describe('startServer action', () => {
     jest.clearAllMocks();
     gasketAPI = {
       execWaterfall: jest.fn().mockImplementation((arg1, arg2) => Promise.resolve(arg2)),
-      exec: jest.fn(),
+      exec: mockExec,
+      root: () => ({
+        exec: mockExec
+      }),
       config: {},
       logger: {
         info: jest.fn(),
@@ -378,7 +383,7 @@ describe('startServer action', () => {
         const lifecycle = mockCreateTerminus.mock.calls[0][1][type];
         await lifecycle();
 
-        expect(gasketAPI.exec.mock.calls[gasketAPI.exec.mock.calls.length - 1][0]).toEqual(type);
+        expect(mockExec.mock.calls[mockExec.mock.calls.length - 1][0]).toEqual(type);
       });
     });
 
@@ -387,8 +392,7 @@ describe('startServer action', () => {
       const lifecycle = mockCreateTerminus.mock.calls[0][1].healthChecks['/healthcheck'];
       await lifecycle();
 
-      expect(gasketAPI.exec.mock.calls[gasketAPI.exec.mock.calls.length - 1][0]).toEqual('healthcheck');
-      expect(gasketAPI.exec.mock.calls[gasketAPI.exec.mock.calls.length - 1][1]).toEqual(mockHealthCheckError);
+      expect(mockExec).toHaveBeenCalledWith('healthcheck', mockHealthCheckError);
     });
 
     it('calls the healthcheck lifecycle for healthcheck.html route', async () => {
@@ -396,8 +400,7 @@ describe('startServer action', () => {
       const lifecycle = mockCreateTerminus.mock.calls[0][1].healthChecks['/healthcheck.html'];
       await lifecycle();
 
-      expect(gasketAPI.exec.mock.calls[gasketAPI.exec.mock.calls.length - 1][0]).toEqual('healthcheck');
-      expect(gasketAPI.exec.mock.calls[gasketAPI.exec.mock.calls.length - 1][1]).toEqual(mockHealthCheckError);
+      expect(mockExec).toHaveBeenCalledWith('healthcheck', mockHealthCheckError);
     });
   });
 });

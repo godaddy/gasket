@@ -116,9 +116,12 @@ const plugin = {
         [name]: `^${version}`
       });
 
-      context.pkg.add('scripts', {
-        build: 'node gasket.js build'
-      });
+      // Only write build scripts if not TypeScript
+      if (!context.typescript) {
+        context.pkg.add('scripts', {
+          build: 'node gasket.js build'
+        });
+      }
 
       context.gasketConfig.addPlugin('pluginSwagger', '@gasket/plugin-swagger');
       context.gasketConfig.add('swagger', {

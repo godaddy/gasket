@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-docusaurus",
-  "version": "7.0.0-next.57",
+  "version": "7.0.0-next.58",
   "description": "Gasket plugin for docusaurus",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -46,7 +46,7 @@
   "devDependencies": {
     "@docusaurus/core": "^3.4.0",
     "@docusaurus/preset-classic": "^3.4.0",
-    "@gasket/core": "7.0.0-next.57",
+    "@gasket/core": "7.0.0-next.58",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
     "eslint-config-godaddy": "^7.1.1",
@@ -55,6 +55,7 @@
     "eslint-plugin-unicorn": "^55.0.0",
     "jest": "^29.7.0",
     "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "search-insights": "^2.13.0",
     "typescript": "^5.4.5"
   },

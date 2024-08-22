@@ -20,7 +20,9 @@ export function request(query) {
     };
 
     if (query) {
-      req.query = query;
+      req.query = query instanceof URLSearchParams
+        ? Object.fromEntries(query)
+        : query
     }
 
     reqCache.set(headerStore, req);

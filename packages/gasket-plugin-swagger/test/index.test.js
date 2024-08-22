@@ -297,6 +297,16 @@ describe('Swagger Plugin', function () {
       );
     });
 
+    it('does not add build script if typescript', async function () {
+      mockContext.typescript = true;
+      await plugin.hooks.create({}, mockContext);
+      expect(mockContext.pkg.add).not.toHaveBeenCalledWith('scripts',
+        expect.objectContaining({
+          build: 'node gasket.js build'
+        })
+      );
+    });
+
     it('adds swagger plugin to gasket config', async function () {
       await plugin.hooks.create({}, mockContext);
       expect(mockContext.gasketConfig.addPlugin).toHaveBeenCalledWith('pluginSwagger', name);

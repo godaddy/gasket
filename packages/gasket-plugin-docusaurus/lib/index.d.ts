@@ -1,5 +1,11 @@
 import type { Plugin } from '@gasket/core';
 
+declare module 'create-gasket-app' {
+  export interface CreateContext {
+    useDocusaurus?: boolean;
+  }
+}
+
 declare module '@gasket/core' {
   export interface GasketConfig {
     docusaurus?: DocusaurusConfig;
