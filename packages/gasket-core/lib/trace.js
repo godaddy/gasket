@@ -13,11 +13,11 @@ const lifecycles = Object.fromEntries(lifecycleMethods.map(method => [method, tr
 const reSync = /sync$/i;
 const icon = (type) => reSync.test(type) ? '◆' : '◇';
 
-class IsolateTracer {
+class Tracer {
   constructor(parent, branchId) {
     // make a stack copy for each isolate to avoid contamination
     this.traceStack = [...(parent?.traceStack ?? [])];
-    const _debug = debugPkg(`gasket:branch:${branchId}`);
+    const _debug = debugPkg(`gasket:trace:${branchId}`);
     this.trace = (message) => {
       const indent = '  '.repeat(this.traceStack.length);
       _debug(`${indent}${message}`);
@@ -70,7 +70,7 @@ export class GasketTrace {
     this.branchId = newBranchId ?? parent.branchId;
     this.engine = parent.engine;
 
-    const tracer = this._tracer = new IsolateTracer(parent._tracer, this.branchId);
+    const tracer = this._tracer = new Tracer(parent._tracer, this.branchId);
     if (newBranchId) {
       const parentId = parent.branchId ?? 'root';
       tracer.trace(`⋌ ${parentId}`);
@@ -110,66 +110,66 @@ export class GasketTrace {
   }
 
   traceBranch = () => {
-    return makeBranch(this._proxy);
+    return makeTraceBranch(this._proxy);
   };
 }
 
 /**
  * Wrap a lifecycle function to trace start and end.
- * An isolate passed to the lifecycle function to allow
- * for further branching.
+ * A GasketTrace instance is passed to the lifecycle function
+ * to allow for tracing and further branching.
  * @type {import('./internal').isolateLifecycle<any>}
  */
 function isolateLifecycle(source, name, fn) {
-  const isolate = new GasketTrace(source._proxy);
+  const instance = new GasketTrace(source._proxy);
 
   return (...args) => {
     const [event] = args;
-    isolate._tracer.traceLifecycleStart(name, event);
+    instance._tracer.traceLifecycleStart(name, event);
     const result = fn(
       // @ts-expect-error - isolate is a Gasket proxy
-      isolate._proxy,
+      instance._proxy,
       ...args
     );
     if (typeof result?.finally === 'function') {
       return result.finally(() => {
-        isolate._tracer.traceLifecycleEnd(name, event);
+        instance._tracer.traceLifecycleEnd(name, event);
       });
     }
-    isolate._tracer.traceLifecycleEnd(name, event);
+    instance._tracer.traceLifecycleEnd(name, event);
     return result;
   };
 }
 
 /**
  * Wrap an action function to trace start and end.
- * An isolate passed to the action function to allow
- * for further branching.
+ * A GasketTrace instance is passed to the action function
+ * to allow for tracing and further branching.
  * @type {import('./internal').isolateAction<any>}
  */
 function isolateAction(source, name, fn) {
-  const isolate = new GasketTrace(source._proxy);
+  const instance = new GasketTrace(source._proxy);
 
   return (...args) => {
-    isolate._tracer.traceActionStart(name);
+    instance._tracer.traceActionStart(name);
     const result = fn(
       // @ts-expect-error - isolate is a Gasket proxy
-      isolate._proxy,
+      instance._proxy,
       ...args
     );
     if (typeof result?.finally === 'function') {
       return result.finally(() => {
-        isolate._tracer.traceActionEnd(name);
+        instance._tracer.traceActionEnd(name);
       });
     }
-    isolate._tracer.traceActionEnd(name);
+    instance._tracer.traceActionEnd(name);
     return result;
   };
 }
 
 /**
  * Create a proxy of actions to intercept the functions
- * and return an isolated version.
+ * and return a traceable version.
  * @type {import('./internal').interceptActions}
  */
 function interceptActions(source, actions) {
@@ -184,10 +184,10 @@ function interceptActions(source, actions) {
 }
 
 /**
- *
- * @type {import('./internal').makeBranch}
+ * Create a new GasketTrace instance from a Gasket.
+ * @type {import('./internal').makeTraceBranch}
  */
-export function makeBranch(gasket) {
+export function makeTraceBranch(gasket) {
   const instance = new GasketTrace(gasket, GasketTrace._nextBranchId++);
   // return instance;
   return instance._proxy;

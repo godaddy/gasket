@@ -6,7 +6,7 @@ jest.unstable_mockModule('debug', () => ({
   default: () => mockDebug
 }));
 
-const { GasketTrace } = await import('../lib/branch.js');
+const { GasketTrace } = await import('../lib/trace.js');
 const { Gasket } = await import('../lib/gasket.js');
 
 describe('GasketTrace', () => {

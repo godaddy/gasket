@@ -2,7 +2,7 @@
 
 import { GasketEngine, lifecycleMethods } from './engine.js';
 import { applyConfigOverrides } from '@gasket/utils';
-import { makeBranch } from './branch.js';
+import { makeTraceBranch } from './trace.js';
 
 /**
  * Get the environment to use for the gasket instance.
@@ -66,7 +66,7 @@ export class Gasket {
   }
 
   traceBranch() {
-    return makeBranch(this);
+    return makeTraceBranch(this);
   }
 
   traceRoot() {
