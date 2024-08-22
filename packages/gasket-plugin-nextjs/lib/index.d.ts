@@ -1,6 +1,6 @@
 import type { IncomingMessage, ServerResponse } from 'http';
-import type { NextConfig } from 'next/dist/next-server/server/config-shared';
-import type NextServer from 'next/dist/next-server/server/next-server';
+import type { NextConfig } from 'next';
+import type { NextServer } from 'next/dist/server/next';
 import type { Application } from 'express';
 import type { Fastify } from 'fastify';
 import type { Gasket } from '@gasket/core';
@@ -10,13 +10,13 @@ export { NextConfig, NextServer };
 
 export type NextConfigFunction = (phase: string, context: {
   defaultConfig: NextConfig,
-  isServer: boolean
+  isServer?: boolean
 }) => Promise<NextConfig>;
 
 declare module '@gasket/core' {
 
   export interface GasketActions {
-    getNextConfig?: (config?: NextConfig | NextConfigFunction) => (phase: string, context?: { defaultConfig?: any }) => Promise<NextConfig>
+    getNextConfig?: (config?: NextConfig | NextConfigFunction) => (phase: string, context?: { defaultConfig?: NextConfig }) => Promise<NextConfig>
     getNextRoute?: (req: IncomingMessage) => Promise<null | {
       page: string;
       regex: RegExp;
