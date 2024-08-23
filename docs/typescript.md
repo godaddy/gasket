@@ -10,7 +10,7 @@ Because Gasket is a plugin framework, plugins themselves are responsible for aug
 
 In Gasket, you can now write your `gasket.js` configuration file as `gasket.ts` using TypeScript. This allows for full type-checking and validation directly within your TypeScript environment.
 
-The `@gasket/core` package supplies a `GasketConfigFile` type that validates the contents of your Gasket config file. When you import all your plugins into `gasket.ts`, TypeScript can fully validate the configuration.
+The `@gasket/core` package supplies a `GasketConfigDefinition` type that validates the contents of your Gasket config file. When you import all your plugins into `gasket.ts`, TypeScript can fully validate the configuration.
 
 Here's an example:
 
