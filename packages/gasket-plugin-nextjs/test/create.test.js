@@ -34,13 +34,6 @@ describe('create hook', () => {
 
   describe('createAppFiles', () => {
 
-    it('adds shared files', async function () {
-      await create.handler({}, mockContext);
-      expect(mockContext.files.add).toHaveBeenCalledWith(
-        `${root}/../generator/app/shared/**/*`
-      );
-    });
-
     it('adds pages router files', async function () {
       await create.handler({}, mockContext);
       expect(mockContext.files.add).toHaveBeenCalledWith(

@@ -8,10 +8,6 @@ const { name, version, devDependencies } = require('../package.json');
  * @property {boolean} typescript - Selected typescript from prompt
  */
 function createAppFiles({ files, generatorDir, useAppRouter, typescript }) {
-  files.add(
-    `${generatorDir}/app/shared/**/*`
-  );
-
   const globIgnore = typescript ? '!(*.js|.jsx)' : '!(*.ts|*.tsx)';
   const appStructure = useAppRouter ? 'app-router' : 'pages-router';
 
