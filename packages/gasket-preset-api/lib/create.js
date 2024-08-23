@@ -13,9 +13,10 @@ export default function create(gasket, context) {
   const { pkg, files } = context;
   const __dirname = fileURLToPath(import.meta.url);
   const generatorDir = path.join(__dirname, '..', '..', 'generator');
+  files.add(`${generatorDir}/*.md`);
 
   if (!context.typescript) {
-    files.add(`${generatorDir}/*`);
+    files.add(`${generatorDir}/*.js`);
 
     pkg.add('devDependencies', {
       nodemon: devDependencies.nodemon
