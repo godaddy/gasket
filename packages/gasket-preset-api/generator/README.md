@@ -13,7 +13,7 @@ This API is built with {{{server}}}.js framework and [Gasket](https://gasket.dev
 To start the API locally, run:
 
 ```bash
-npm run local
+{{{packageManager}}} run local
 ```
 
 ### Debugging
@@ -21,14 +21,14 @@ npm run local
 To start the API locally with debugging enabled, run:
 
 ```bash
-DEBUG=* npm run local
+DEBUG=* {{{packageManager}}} run local
 ```
 
 Extended filtering of the debug output can be achieved by adding to the `DEBUG` environment variable:
 
 ```bash
-DEBUG=gasket:* npm run local // gasket operations only
-DEBUG={{{server}}}:* npm run local // {{{server}}} operations only
+DEBUG=gasket:* {{{packageManager}}} run local // gasket operations only
+DEBUG={{{server}}}:* {{{packageManager}}} run local // {{{server}}} operations only
 ```
 
 {{#if useDocs}}
@@ -37,7 +37,7 @@ DEBUG={{{server}}}:* npm run local // {{{server}}} operations only
 Generated docs will be placed in the `.docs` directory. To generate markdown documentation for the API, run:
 
 ```bash
-npm run docs
+{{{packageManager}}} run docs
 ```
 
 {{#if useDocusaurus}}
@@ -51,19 +51,19 @@ When using [Docusaurus], generated docs will be available at `http://localhost:3
 This API is built with TypeScript. To compile the TypeScript code, run:
 
 ```bash
-npm run build
+{{{packageManager}}} run build
 ```
 
 Use the `start` script to run the compiled code:
 
 ```bash
-npm start
+{{{packageManager}}} start
 ```
 
 Run `build` and `start` together:
 
 ```bash
-npm run preview
+{{{packageManager}}} run preview
 ```
 
 Compiled code will be placed in the `dist` directory. For local development, the [tsx] runtime is used and the watcher will be started automatically when running the `local` script.
