@@ -6,7 +6,7 @@ The Gasket team is dedicated to improving productivity for TypeScript users. Her
 
 Because Gasket is a plugin framework, plugins themselves are responsible for augmenting the core Gasket interfaces. This means that the type declarations for the plugins must be "discovered" in your TypeScript codebase. You can ensure this by referencing or importing your presets or plugins. The sample code snippets below show these imports, but if you can centralize the imports in one area of your codebase, you can avoid duplication and ensure that TypeScript is aware of all the plugins.
 
-## Writing and Validating Gasket Configuration
+## Validating Gasket Configuration
 
 In Gasket, you can now write your `gasket.js` configuration file as `gasket.ts` using TypeScript. This allows for full type-checking and validation directly within your TypeScript environment.
 
@@ -16,7 +16,6 @@ Here's an example:
 
 ```typescript
 // gasket.ts
-import type { GasketConfigDefinition } from '@gasket/core';
 import { makeGasket } from '@gasket/core';
 import pluginA from '@gasket/plugin-a';
 import pluginB from '@gasket/plugin-b';
@@ -27,7 +26,7 @@ export default makeGasket({
     pluginB
   ]
   // additional config
-} as GasketConfigDefinition);
+});
 ```
 
 ## Validating Lifecycle Hooks

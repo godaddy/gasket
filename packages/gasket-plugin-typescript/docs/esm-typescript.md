@@ -9,18 +9,21 @@ The introduction of ECMAScript Modules (ESM) in JavaScript has standardized how 
 In ESM, explicit file extensions are required when importing modules. This is a departure from CommonJS, where file extensions were often inferred, especially in TypeScript projects. For example, in ESM:
 
 ```js
+// example.js
 import { myFunction } from './myModule.js';
 ```
 
 In contrast, in TypeScript (when using CommonJS):
 
 ```ts
+// example.ts
 import { myFunction } from './myModule';
 ```
 
 When switching to ESM, TypeScript does not automatically append file extensions, leading to runtime errors if the correct files are not found. To comply with ESM's requirements, developers must include the file extensions explicitly:
 
 ```ts
+// example.ts
 import { myFunction } from './myModule.js';
 ```
 
