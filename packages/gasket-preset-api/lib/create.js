@@ -4,11 +4,7 @@ import { fileURLToPath } from 'url';
 const require = createRequire(import.meta.url);
 const { devDependencies } = require('../package.json');
 
-/**
- * createHook
- * @param {Gasket} gasket - Gasket API
- * @param {Create} context - Create context
- */
+/** @type {import('@gasket/core').HookHandler<'create'>} */
 export default function create(gasket, context) {
   const { pkg, files } = context;
   const __dirname = fileURLToPath(import.meta.url);
