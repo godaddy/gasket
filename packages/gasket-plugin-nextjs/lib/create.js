@@ -4,16 +4,15 @@ const { name, version, devDependencies } = require('../package.json');
  * createAppFiles
  * @property {Files} files - The Gasket Files API.
  * @property {string} generatorDir - The directory of the generator.
- * @property {boolean} useAppRouter - Selected app router from prompt
+ * @property {string} appStructure - Structure of the app
  * @property {boolean} typescript - Selected typescript from prompt
  */
-function createAppFiles({ files, generatorDir, useAppRouter, typescript }) {
+function createAppFiles({ files, generatorDir, appStructure, typescript }) {
   files.add(
     `${generatorDir}/app/shared/**/*`
   );
 
   const globIgnore = typescript ? '!(*.js|.jsx)' : '!(*.ts|*.tsx)';
-  const appStructure = useAppRouter ? 'app-router' : 'pages-router';
 
   files.add(
     `${generatorDir}/app/${appStructure}/**/${globIgnore}`
@@ -26,17 +25,23 @@ function createAppFiles({ files, generatorDir, useAppRouter, typescript }) {
  * @property {generatorDir} - The directory of the generator.
  * @property {testPlugins} - Array of selected test plugins
  */
-function createTestFiles({ files, generatorDir, testPlugins }) {
+function createTestFiles({ files, generatorDir, testPlugins, appStructure, typescript }) {
   if (!testPlugins || testPlugins.length === 0) return;
-
-  const frameworks = ['jest', 'mocha', 'cypress'];
+  const unit = ['jest', 'mocha'];
+  const integration = ['cypress'];
+  const frameworks = [...unit, ...integration];
   const frameworksRegex = new RegExp(frameworks.join('|'));
+  const globIgnore = typescript ? '!(*.js|*.jsx)' : '!(*.ts|*.tsx)';
 
   testPlugins.forEach((testPlugin) => {
     const match = frameworksRegex.exec(testPlugin);
     if (match) {
       const matchedFramework = match[0];
-      files.add(`${generatorDir}/${matchedFramework}/*`, `${generatorDir}/${matchedFramework}/**/*`);
+      if (unit.includes(matchedFramework)) {
+        files.add(`${generatorDir}/${matchedFramework}/${appStructure}/*`, `${generatorDir}/${matchedFramework}/${appStructure}/**/${globIgnore}`);
+      } else {
+        files.add(`${generatorDir}/${matchedFramework}/*`, `${generatorDir}/${matchedFramework}/**/*`);
+      }
     }
   });
 }
@@ -186,9 +191,10 @@ module.exports = {
       hasGasketIntl
     } = context;
     const generatorDir = `${__dirname}/../generator`;
+    const appStructure = useAppRouter ? 'app-router' : 'pages-router';
 
-    createAppFiles({ files, generatorDir, useAppRouter, typescript });
-    createTestFiles({ files, generatorDir, testPlugins });
+    createAppFiles({ files, generatorDir, appStructure, typescript });
+    createTestFiles({ files, generatorDir, testPlugins, appStructure, typescript });
     createNextFiles({ files, generatorDir, nextDevProxy, typescript, nextServerType });
     addDependencies({ pkg, typescript });
     addNpmScripts({ pkg, nextServerType, nextDevProxy, typescript, hasGasketIntl });

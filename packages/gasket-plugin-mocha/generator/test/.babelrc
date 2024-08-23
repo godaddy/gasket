@@ -1,5 +1,9 @@
 {
   "presets": [
-    "@babel/preset-react"
+    "@babel/preset-react",
+    {{#if typescript}}
+    "@babel/preset-typescript"
+    {{/if}}
+
   ]
 }
