@@ -30,7 +30,7 @@ Update your `gasket` file plugin configuration:
 });
 ```
 
-Also, add a `gasket.data.js` file to the root of your project, import and assign
+Also, add a `gasket-data.js` file to the root of your project, import and assign
 it to the `data` property of the Gasket config.
 
 ```diff
@@ -38,7 +38,7 @@ import { makeGasket } from '@gasket/core';
 +import pluginLogger from '@gasket/plugin-logger';
 +import pluginData from '@gasket/plugin-data';
 
-+ import gasketData from './gasket.data.js';
++ import gasketData from './gasket-data.js';
 
 export default makeGasket({
   plugins: [
@@ -52,14 +52,14 @@ export default makeGasket({
 ## Configuration
 
 While you can declare `data` definition directly in your `makeGasket` config,
-it is recommended to use a separate `gasket.data.js` file by convention.
+it is recommended to use a separate `gasket-data.js` file by convention.
 This can also be a `.ts` file if the project is using TypeScript.
 
 This definition file allows you to set up [inline environment overrides] to
 adjust things like API URLs and settings based on the runtime environment.
 
 ```js
-// gasket.data.js
+// gasket-data.js
 export default {
   environments: {
     local: {
@@ -110,7 +110,7 @@ PageComponent.getInitialProps = async function({ isServer, req }) {
 ### Browser Access
 
 If you need access to config values in client-side code, this can be done
-by defining a `public` property in your `gasket.data.js`.
+by defining a `public` property in your `gasket-data.js`.
 
 ```js
 export default {
@@ -129,7 +129,7 @@ the `public` data and render it to script tag for browser access.
 
 Another way to access to data values in client-side code is through redux state.
 This plugin looks for a `public` property of your configuration in
-`gasket.data.js` and places it under a `gasketData` property in your initial
+`gasket-data.js` and places it under a `gasketData` property in your initial
 public state by hooking the [initReduxState] lifecycle.
 
 ## Lifecycles
