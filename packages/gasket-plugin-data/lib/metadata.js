@@ -20,7 +20,7 @@ function metadata(gasket, meta) {
     ],
     structures: [
       {
-        name: 'gasket.data.js',
+        name: 'gasket-data.js',
         description: 'App configuration with environment overrides',
         link: 'README.md'
       }
