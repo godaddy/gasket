@@ -5,11 +5,11 @@ jest.unstable_mockModule('debug', () => ({
   default: () => mockDebug
 }));
 
-const { GasketBranch }  = await import('../../lib/branch.js');
-const { Gasket }  = await import('../../lib/gasket.js');
+const { GasketTrace } = await import('../../lib/trace.js');
+const { Gasket } = await import('../../lib/gasket.js');
 
 describe('The execWaterfall method', () => {
-  let gasket, pluginA, pluginB;
+  let mockGasket, pluginA, pluginB;
 
   beforeEach(() => {
     pluginA = {
@@ -30,7 +30,7 @@ describe('The execWaterfall method', () => {
       }
     };
 
-    gasket = new Gasket({ plugins: [pluginA, pluginB] });
+    mockGasket = new Gasket({ plugins: [pluginA, pluginB] });
   });
 
   afterEach(() => {
@@ -38,48 +38,48 @@ describe('The execWaterfall method', () => {
   });
 
   it('sequentially transforms a value', async () => {
-    const result = await gasket.execWaterfall('eventA', 5);
+    const result = await mockGasket.execWaterfall('eventA', 5);
     expect(result).toEqual(39);
   });
 
   it('works when invoked without a context', async () => {
-    const { execWaterfall } = gasket;
+    const { execWaterfall } = mockGasket;
 
     const result = await execWaterfall('eventA', 5);
 
     expect(result).toEqual(39);
   });
 
-  it('invokes hooks with driver', async () => {
-    const result = await gasket.execWaterfall('eventA', 5);
+  it('invokes hooks with isolate', async () => {
+    const result = await mockGasket.execWaterfall('eventA', 5);
 
-    expect(pluginA.hooks.eventA).toHaveBeenCalledWith(expect.any(GasketBranch), 5);
+    expect(pluginA.hooks.eventA).toHaveBeenCalledWith(expect.any(GasketTrace), 5);
     expect(result).toEqual(39);
   });
 
-  it('driver passed through', async () => {
-    const spy = jest.spyOn(gasket.engine, 'execWaterfall');
-    const branch = gasket.branch();
+  it('branch isolate passed through', async () => {
+    const spy = jest.spyOn(mockGasket.engine, 'execWaterfall');
+    const branch = mockGasket.traceBranch();
 
     const result = await branch.execWaterfall('eventA', 5);
-    expect(spy).toHaveBeenCalledWith(branch, 'eventA', 5);
+    expect(spy).toHaveBeenCalledWith(expect.traceProxyOf(branch), 'eventA', 5);
     expect(result).toEqual(39);
   });
 
   it('supports additional arguments', async () => {
     const otherArg = { some: 'thing' };
 
-    const branch = gasket.branch();
+    const branch = mockGasket.traceBranch();
     const result = await branch.execWaterfall('eventA', 5, otherArg);
 
-    expect(pluginA.hooks.eventA).toHaveBeenCalledWith(branch, 5, otherArg);
-    expect(pluginB.hooks.eventA).toHaveBeenCalledWith(branch, 35, otherArg);
+    expect(pluginA.hooks.eventA).toHaveBeenCalledWith(expect.traceProxyOf(branch), 5, otherArg);
+    expect(pluginB.hooks.eventA).toHaveBeenCalledWith(expect.traceProxyOf(branch), 35, otherArg);
     expect(result).toEqual(39);
   });
 
   it('has expected trace output', async () => {
     mockDebug.mockClear();
-    await gasket.execWaterfall('eventA', 5);
+    await mockGasket.execWaterfall('eventA', 5);
 
     expect(mockDebug.mock.calls).toEqual([
       ['⋌ root'],

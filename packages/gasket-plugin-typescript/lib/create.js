@@ -8,7 +8,8 @@ module.exports = function create(gasket, context) {
     files,
     nextDevProxy,
     nextServerType,
-    apiApp
+    apiApp,
+    gitignore
   } = context;
   const depType = apiApp ? 'devDependencies' : 'dependencies';
 
@@ -28,11 +29,15 @@ module.exports = function create(gasket, context) {
     });
 
     files.add(`${generatorDir}/api/*`, `${generatorDir}/shared/*`);
+    gitignore?.add('dist', 'TypeScript build output');
+    pkg.add('eslintIgnore', ['dist']);
   }
 
   // Files for customServer
   if (nextServerType === 'customServer') {
     files.add(`${generatorDir}/next/*`, `${generatorDir}/shared/*`);
+    gitignore?.add('dist', 'TypeScript build output');
+    pkg.add('eslintIgnore', ['dist']);
   }
 
   // Files for dev proxy w/o customServer

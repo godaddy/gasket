@@ -1,6 +1,6 @@
 {
   "name": "@gasket/core",
-  "version": "7.0.0-next.57",
+  "version": "7.0.0-next.60",
   "description": "Entry point to setting up Gasket instances",
   "type": "module",
   "types": "lib/index.d.ts",
@@ -86,6 +86,16 @@
       "unicorn/filename-case": "error",
       "no-undefined": 0,
       "no-sync": 0
-    }
+    },
+    "overrides": [
+      {
+        "files": [
+          "test/**/*.js"
+        ],
+        "rules": {
+          "jsdoc/require-jsdoc": "off"
+        }
+      }
+    ]
   }
 }

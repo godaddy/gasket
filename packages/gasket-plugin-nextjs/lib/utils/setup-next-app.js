@@ -45,7 +45,7 @@ async function setupNextApp(gasket) {
  */
 function setupNextHandling(nextServer, serverApp, gasket) {
   const nextHandler = nextServer.getRequestHandler();
-  const gasketRoot = gasket.root();
+  const gasketRoot = gasket.traceRoot();
 
   serverApp.all('*', async (req, res, next) => {
     try {

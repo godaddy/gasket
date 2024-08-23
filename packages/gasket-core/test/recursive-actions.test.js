@@ -67,10 +67,10 @@ describe('recursion', () => {
       name: 'pluginNested',
       hooks: {
         eventA: jest.fn(async (_gasket, value) => {
-          return await (_gasket.branch().actions.startB(value)) + 100;
+          return await (_gasket.traceBranch().actions.startB(value)) + 100;
         }),
         eventB: jest.fn(async (_gasket, value) => {
-          return await (_gasket.branch().actions.startA(value)) + 200;
+          return await (_gasket.traceBranch().actions.startA(value)) + 200;
         })
       }
     };
@@ -171,15 +171,13 @@ describe('recursion', () => {
     expect(waterfallSpy).toHaveBeenCalledTimes(3);
   });
 
-  it('throws on multiple actions in a branch', async () => {
+  it('does not throw on multiple actions in a branch', async () => {
     setupGasket(pluginA);
     gasket.config = { some: 'config' };
 
-    const branch = gasket.branch();
-    branch.actions.startA(1);
-
-    await expect(async () => branch.actions.startA(2))
-      .rejects.toThrow('startA -> execWaterfall(eventA) -> startA');
+    const branch = gasket.traceBranch();
+    await branch.actions.startA(1);
+    await branch.actions.startA(2);
 
     expect(waterfallSpy).toHaveBeenCalled();
   });
@@ -188,10 +186,10 @@ describe('recursion', () => {
     setupGasket(pluginA);
     gasket.config = { some: 'config' };
 
-    const branch = gasket.branch();
-    const promise1 = branch.branch().actions.startA(1);
-    const promise2 = branch.branch().actions.startA(2);
-    const promise3 = branch.branch().actions.startA(3);
+    const branch = gasket.traceBranch();
+    const promise1 = branch.actions.startA(1);
+    const promise2 = branch.actions.startA(2);
+    const promise3 = branch.actions.startA(3);
 
     const [
       results1,
@@ -226,7 +224,8 @@ describe('recursion', () => {
       ['            ↪ pluginDeep:eventC'],
       ['              ★ startD'],
       ['                ◇ execWaterfall(eventD)'],
-      ['                ↪ pluginDeep:eventD']
+      ['                ↪ pluginDeep:eventD'],
+      ['                  ★ startA']
     ]);
   });
 });
