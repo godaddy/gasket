@@ -88,11 +88,11 @@
         2,
         6
       ]
-    },
-    "eslintIgnore": [
-      "generator"
-    ]
+    }
   },
+  "eslintIgnore": [
+    "generator"
+  ],
   "babel": {
     "presets": [
       "@babel/preset-env",

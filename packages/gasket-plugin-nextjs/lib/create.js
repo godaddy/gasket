@@ -24,6 +24,8 @@ function createAppFiles({ files, generatorDir, appStructure, typescript }) {
  * @property {Files} files - The Gasket Files API.
  * @property {generatorDir} - The directory of the generator.
  * @property {testPlugins} - Array of selected test plugins
+ * @property {appStructure} - Structure of the app
+ * @property {typescript} - Selected typescript from prompt
  */
 function createTestFiles({ files, generatorDir, testPlugins, appStructure, typescript }) {
   if (!testPlugins || testPlugins.length === 0) return;
