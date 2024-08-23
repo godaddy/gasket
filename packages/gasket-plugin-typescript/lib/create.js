@@ -24,6 +24,7 @@ module.exports = function create(gasket, context) {
     pkg.add('scripts', {
       prebuild: 'tsx gasket.ts build',
       build: 'tsc',
+      preview: 'npm run build && npm run start',
       start: 'node dist/server.js',
       local: 'GASKET_ENV=local tsx watch server.ts'
     });
