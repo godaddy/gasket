@@ -274,6 +274,9 @@ describe('Swagger Plugin', function () {
         },
         gasketConfig: {
           addPlugin: jest.fn(),
+          addImport: jest.fn(() => mockContext.gasketConfig),
+          addExpression: jest.fn(() => mockContext.gasketConfig),
+          injectValue: jest.fn(() => mockContext.gasketConfig),
           add: jest.fn()
         }
       };
@@ -305,6 +308,14 @@ describe('Swagger Plugin', function () {
           build: 'node gasket.js build'
         })
       );
+    });
+
+    it('calls code to dyanmically add version to the swagger config', async function () {
+      await plugin.hooks.create({}, mockContext);
+      expect(mockContext.gasketConfig.addImport).toHaveBeenCalledWith('{ createRequire }', 'module');
+      expect(mockContext.gasketConfig.addExpression).toHaveBeenCalledWith('const require = createRequire(import.meta.url);');
+      expect(mockContext.gasketConfig.addExpression).toHaveBeenCalledWith("const { version } = require('./package.json')");
+      expect(mockContext.gasketConfig.injectValue).toHaveBeenCalledWith('swagger.jsdoc.definition.info.version', 'version');
     });
 
     it('adds swagger plugin to gasket config', async function () {

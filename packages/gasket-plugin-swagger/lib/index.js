@@ -123,13 +123,19 @@ const plugin = {
         });
       }
 
+      context.gasketConfig
+        .addImport('{ createRequire }', 'module')
+        .addExpression('const require = createRequire(import.meta.url);')
+        .addExpression("const { version } = require('./package.json')")
+        .injectValue('swagger.jsdoc.definition.info.version', 'version');
+
       context.gasketConfig.addPlugin('pluginSwagger', '@gasket/plugin-swagger');
       context.gasketConfig.add('swagger', {
         jsdoc: {
           definition: {
             info: {
               title: context.appName,
-              version: '1.0.0'
+              version: '0.0.0'
             }
           },
           apis: ['./routes/*']

@@ -6,21 +6,18 @@ jest.mock('../lib/build-swagger-definition.js', ()  => jest.fn());
 describe('postCreateHook', function () {
   let mockGasket, mockCreateContext;
   beforeEach(() => {
-    mockGasket = {
-      config: {
-        swagger: {
-          jsdoc: {
-            apis: ['fake.js']
-          }
-        }
-      }
-    };
+    mockGasket =  {};
     mockCreateContext = {
       dest: '/path/to/app',
       gasketConfig: {
         fields: {
           swagger: {
             jsdoc: {
+              definition: {
+                info: {
+                  version: 'mock'
+                }
+              },
               apis: ['fake.js', './another-api.js']
             }
           }
@@ -35,6 +32,11 @@ describe('postCreateHook', function () {
       root: '/path/to/app',
       swagger: {
         jsdoc: {
+          definition: {
+            info: {
+              version: '0.0.0'
+            }
+          },
           apis: ['/path/to/app/fake.js', '/path/to/app/another-api.js']
         }
       }
