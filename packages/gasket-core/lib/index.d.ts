@@ -59,6 +59,8 @@ declare module '@gasket/core' {
     };
   };
 
+  export type Preset = Omit<Plugin, 'actions'>;
+
   // This is the config
   export interface GasketConfig {
     plugins: Array<Plugin>;
