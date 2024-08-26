@@ -88,12 +88,7 @@ describe('@gasket/plugin-winston', function () {
 
         logger.error('test');
 
-        expect(consoleSpy).toHaveBeenCalledWith(
-          JSON.stringify({
-            level: 'error',
-            message: 'test'
-          }) + '\n'
-        );
+        expect(consoleSpy).toHaveBeenCalledWith('error: test\n');
       } finally {
         consoleSpy.mockRestore();
       }
@@ -129,10 +124,7 @@ describe('@gasket/plugin-winston', function () {
             level: 'error',
             message: 'test',
             [LEVEL]: 'error',
-            [MESSAGE]: JSON.stringify({
-              level: 'error',
-              message: 'test'
-            })
+            [MESSAGE]: 'error: test'
           },
           expect.any(Function)
         );
@@ -151,7 +143,7 @@ describe('@gasket/plugin-winston', function () {
             level: 'error',
             message: 'test',
             [LEVEL]: 'error',
-            [MESSAGE]: JSON.stringify({ level: 'error', message: 'test' })
+            [MESSAGE]: 'error: test'
           },
           expect.any(Function)
         );
@@ -174,7 +166,7 @@ describe('@gasket/plugin-winston', function () {
               level: 'error',
               message: 'test',
               [LEVEL]: 'error',
-              [MESSAGE]: JSON.stringify({ level: 'error', message: 'test' })
+              [MESSAGE]: 'error: test'
             },
             expect.any(Function)
           );
@@ -195,7 +187,7 @@ describe('@gasket/plugin-winston', function () {
               level: 'error',
               message: 'test',
               [LEVEL]: 'error',
-              [MESSAGE]: JSON.stringify({ level: 'error', message: 'test' })
+              [MESSAGE]: 'error: test'
             },
             expect.any(Function)
           );
