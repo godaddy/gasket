@@ -28,15 +28,17 @@ async function create(gasket, {
     .addPlugin('pluginData', name);
 
   // Default server TS use .ts
-  // Custom Server or API App use .js
-  const importFile = typescript &&
-    nextServerType !== 'customServer' &&
-    !apiApp
-    ? 'gasket.data.ts'
-    : 'gasket.data.js';
+  // Non-TS & API TS/JS use .js
+  // Custom Server TS use alias
+  let importFile = './gasket-data.js';
+  if (typescript && nextServerType === 'customServer') {
+    importFile = '@/gasket-data'; // TS path alias
+  } else if (typescript && nextServerType !== 'customServer' && !apiApp) {
+    importFile = './gasket-data.ts';
+  }
 
   gasketConfig
-    .addImport('gasketData', `./${importFile}`)
+    .addImport('gasketData', `${importFile}`)
     .injectValue('data', 'gasketData');
 }
 
