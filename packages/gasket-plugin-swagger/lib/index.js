@@ -135,6 +135,12 @@ const plugin = {
           apis: ['./routes/*']
         }
       });
+
+      context.readme
+        .subHeading('Definitions')
+        .content('Use `@swagger` JSDocs to automatically generate the [swagger.json] spec file. Visit [swagger-jsdoc] for examples.')
+        .link('swagger-jsdoc', 'https://github.com/Surnet/swagger-jsdoc/')
+        .link('swagger.json', '/swagger.json')
     },
     postCreate,
     metadata(gasket, meta) {

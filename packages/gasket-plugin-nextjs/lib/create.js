@@ -4,16 +4,30 @@ const { name, version, devDependencies } = require('../package.json');
  * createAppFiles
  * @property {Files} files - The Gasket Files API.
  * @property {string} generatorDir - The directory of the generator.
+ * @property {string} nextServerType - Selected server type from prompt
  * @property {boolean} useAppRouter - Selected app router from prompt
  * @property {boolean} typescript - Selected typescript from prompt
+ * @property {Readme} readme - The Gasket Readme API.
  */
-function createAppFiles({ files, generatorDir, useAppRouter, typescript }) {
+async function createAppFiles({
+  files,
+  generatorDir,
+  nextServerType,
+  useAppRouter,
+  typescript,
+  readme
+}) {
   const globIgnore = typescript ? '!(*.js|.jsx)' : '!(*.ts|*.tsx)';
   const appStructure = useAppRouter ? 'app-router' : 'pages-router';
 
   files.add(
     `${generatorDir}/app/${appStructure}/**/${globIgnore}`
   );
+
+  await readme.markdownFile(`${generatorDir}/markdown/${appStructure}.md`);
+  if (nextServerType === 'customServer') {
+    await readme.markdownFile(`${generatorDir}/markdown/custom-server.md`);
+  }
 }
 
 /**
@@ -169,10 +183,11 @@ module.exports = {
    * Add files & extend package.json for new apps.
    * @type {import('@gasket/core').HookHandler<'create'>}
    */
-  handler: function create(gasket, context) {
+  handler: async function create(gasket, context) {
     const {
       files,
       pkg,
+      readme,
       testPlugins,
       addSitemap,
       nextServerType,
@@ -183,7 +198,7 @@ module.exports = {
     } = context;
     const generatorDir = `${__dirname}/../generator`;
 
-    createAppFiles({ files, generatorDir, useAppRouter, typescript });
+    await createAppFiles({ files, generatorDir, nextServerType, useAppRouter, typescript, readme });
     createTestFiles({ files, generatorDir, testPlugins });
     createNextFiles({ files, generatorDir, nextDevProxy, typescript, nextServerType });
     addDependencies({ pkg, typescript });
