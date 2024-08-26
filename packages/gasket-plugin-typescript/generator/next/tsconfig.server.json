@@ -15,6 +15,10 @@
       "node"
     ],
     "baseUrl": "./",
+    "paths": {
+      "@/gasket-data": ["gasket-data.js"],
+      "@/plugins/*": ["plugins/*.js"]
+    },
     "allowJs": true,
     "strict": false,
     "incremental": true,
@@ -24,7 +28,9 @@
     "node_modules"
   ],
   "include": [
+    "./plugins",
     "server.ts",
-    "gasket.ts"
+    "gasket.ts",
+    "gasket-data.ts"
   ]
 }

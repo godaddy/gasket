@@ -4,19 +4,30 @@ const { name, version, devDependencies } = require('../package.json');
  * createAppFiles
  * @property {Files} files - The Gasket Files API.
  * @property {string} generatorDir - The directory of the generator.
+ * @property {string} nextServerType - Selected server type from prompt
  * @property {string} appStructure - Structure of the app
  * @property {boolean} typescript - Selected typescript from prompt
+ * @property {Readme} readme - The Gasket Readme API.
  */
-function createAppFiles({ files, generatorDir, appStructure, typescript }) {
-  files.add(
-    `${generatorDir}/app/shared/**/*`
-  );
 
+async function createAppFiles({
+  files,
+  generatorDir,
+  nextServerType,
+  appStructure,
+  typescript,
+  readme
+}) {
   const globIgnore = typescript ? '!(*.js|.jsx)' : '!(*.ts|*.tsx)';
 
   files.add(
     `${generatorDir}/app/${appStructure}/**/${globIgnore}`
   );
+
+  await readme.markdownFile(`${generatorDir}/markdown/${appStructure}.md`);
+  if (nextServerType === 'customServer') {
+    await readme.markdownFile(`${generatorDir}/markdown/custom-server.md`);
+  }
 }
 
 /**
@@ -180,10 +191,11 @@ module.exports = {
    * Add files & extend package.json for new apps.
    * @type {import('@gasket/core').HookHandler<'create'>}
    */
-  handler: function create(gasket, context) {
+  handler: async function create(gasket, context) {
     const {
       files,
       pkg,
+      readme,
       testPlugins,
       addSitemap,
       nextServerType,
@@ -195,7 +207,7 @@ module.exports = {
     const generatorDir = `${__dirname}/../generator`;
     const appStructure = useAppRouter ? 'app-router' : 'pages-router';
 
-    createAppFiles({ files, generatorDir, appStructure, typescript });
+    await createAppFiles({ files, generatorDir, nextServerType, appStructure, typescript, readme });
     createTestFiles({ files, generatorDir, testPlugins, appStructure, typescript });
     createNextFiles({ files, generatorDir, nextDevProxy, typescript, nextServerType });
     addDependencies({ pkg, typescript });
