@@ -1,7 +1,7 @@
 const path = require('path');
 const { devDependencies } = require('../package.json');
 
-module.exports = function create(gasket, context) {
+module.exports = async function create(gasket, context) {
   const generatorDir = path.join(__dirname, '..', 'generator');
   const {
     pkg,
@@ -9,7 +9,8 @@ module.exports = function create(gasket, context) {
     nextDevProxy,
     nextServerType,
     apiApp,
-    gitignore
+    gitignore,
+    readme
   } = context;
   const depType = apiApp ? 'devDependencies' : 'dependencies';
 
@@ -19,11 +20,18 @@ module.exports = function create(gasket, context) {
     typescript: devDependencies.typescript
   });
 
+  // Shared add TS links
+  readme
+    .link('tsx', 'https://tsx.is/')
+    .link('@gasket/plugin-typescript', 'https://gasket.dev/docs/plugins/plugin-typescript/')
+    .link('Gasket TypeScript', 'https://gasket.dev/docs/typescript/');
+
   // Scripts & files for API apps
   if (apiApp) {
     pkg.add('scripts', {
       prebuild: 'tsx gasket.ts build',
       build: 'tsc',
+      preview: 'npm run build && npm run start',
       start: 'node dist/server.js',
       local: 'GASKET_ENV=local tsx watch server.ts'
     });
@@ -31,6 +39,7 @@ module.exports = function create(gasket, context) {
     files.add(`${generatorDir}/api/*`, `${generatorDir}/shared/*`);
     gitignore?.add('dist', 'TypeScript build output');
     pkg.add('eslintIgnore', ['dist']);
+    await readme.markdownFile(path.join(generatorDir, 'markdown/README.md'));
   }
 
   // Files for customServer

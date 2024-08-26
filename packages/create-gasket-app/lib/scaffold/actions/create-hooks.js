@@ -1,6 +1,7 @@
 import action from '../action-wrapper.js';
 import { ConfigBuilder } from '../config-builder.js';
 import { Files } from '../files.js';
+import Readme from '../readme.js';
 
 /**
  * Executes the `create` hook for all registered plugins.
@@ -14,8 +15,9 @@ async function createHooks({ gasket, context }) {
   const { plugins = [], warnings } = context;
 
   const files = new Files();
+  const readme = new Readme();
   const gasketConfig = ConfigBuilder.create({}, { orderBy: ['plugins'], warnings, plugins });
-  Object.assign(context, { files, gasketConfig });
+  Object.assign(context, { files, readme, gasketConfig });
 
   await gasket.execApply('create', async function applyCreate(plugin, handler) {
     await handler(context.runWith(plugin));

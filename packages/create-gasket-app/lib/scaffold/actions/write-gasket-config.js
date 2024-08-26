@@ -98,7 +98,6 @@ async function writeGasketConfig({ context }) {
   gasketConfig.fields.plugins = 'PLUGIN_REPLACE';
 
   let contents = '';
-  if (typescript) contents += `import type { GasketConfigDefinition } from '@gasket/core';\n`;
   contents += `import { makeGasket } from '@gasket/core';\n`;
   contents += writeImports(gasketConfig.fields.pluginImports);
   contents += writeImports(gasketConfig.fields.imports);
@@ -107,8 +106,7 @@ async function writeGasketConfig({ context }) {
   cleanupFields(gasketConfig);
 
   const pluginImports = `[\n${writePluginImports(plugins)}\n  ]`;
-  const typeCoercion = typescript ? ' as GasketConfigDefinition' : '';
-  contents += `\nexport default makeGasket(${JSON5.stringify(gasketConfig.fields, null, 2)}${typeCoercion});\n`;
+  contents += `\nexport default makeGasket(${JSON5.stringify(gasketConfig.fields, null, 2)});\n`;
   contents = contents.replace('\'PLUGIN_REPLACE\'', pluginImports);
   contents = replaceInjectionAssignments(contents, assignments);
 
