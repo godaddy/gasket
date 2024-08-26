@@ -12,6 +12,9 @@ describe('create hook', () => {
         add: jest.fn(),
         has: jest.fn()
       },
+      readme: {
+        markdownFile: jest.fn()
+      },
       files: { add: jest.fn() },
       gasketConfig: {
         add: jest.fn(),
@@ -34,13 +37,6 @@ describe('create hook', () => {
 
   describe('createAppFiles', () => {
 
-    it('adds shared files', async function () {
-      await create.handler({}, mockContext);
-      expect(mockContext.files.add).toHaveBeenCalledWith(
-        `${root}/../generator/app/shared/**/*`
-      );
-    });
-
     it('adds pages router files', async function () {
       await create.handler({}, mockContext);
       expect(mockContext.files.add).toHaveBeenCalledWith(
@@ -61,6 +57,29 @@ describe('create hook', () => {
       await create.handler({}, mockContext);
       expect(mockContext.files.add).toHaveBeenCalledWith(
         `${root}/../generator/app/pages-router/**/!(*.js|.jsx)`
+      );
+    });
+
+    it('adds partial markdown file for app-router', async function () {
+      mockContext.useAppRouter = true;
+      await create.handler({}, mockContext);
+      expect(mockContext.readme.markdownFile).toHaveBeenCalledWith(
+        `${root}/../generator/markdown/app-router.md`
+      );
+    });
+
+    it('adds partial markdown file for page-router', async function () {
+      await create.handler({}, mockContext);
+      expect(mockContext.readme.markdownFile).toHaveBeenCalledWith(
+        `${root}/../generator/markdown/pages-router.md`
+      );
+    });
+
+    it('adds partial markdown file for custom server', async function () {
+      mockContext.nextServerType = 'customServer';
+      await create.handler({}, mockContext);
+      expect(mockContext.readme.markdownFile).toHaveBeenCalledWith(
+        `${root}/../generator/markdown/custom-server.md`
       );
     });
   });

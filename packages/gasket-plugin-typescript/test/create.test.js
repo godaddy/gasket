@@ -13,6 +13,10 @@ describe('create hook', () => {
       pkg: {
         add: jest.fn()
       },
+      readme: {
+        link: jest.fn().mockReturnThis(),
+        markdownFile: jest.fn().mockReturnThis()
+      },
       files: {
         add: jest.fn()
       }
@@ -40,6 +44,12 @@ describe('create hook', () => {
     });
   });
 
+  it('adds links for all apps', () => {
+    create({}, mockContext);
+    expect(mockContext.readme.link).toHaveBeenCalledWith('tsx', 'https://tsx.is/');
+    expect(mockContext.readme.link).toHaveBeenCalledWith('@gasket/plugin-typescript', 'https://gasket.dev/docs/plugins/plugin-typescript/');
+    expect(mockContext.readme.link).toHaveBeenCalledWith('Gasket TypeScript', 'https://gasket.dev/docs/typescript/');
+  });
 
   describe('apiApp', () => {
     it('adds scripts to package.json', () => {
@@ -48,6 +58,7 @@ describe('create hook', () => {
       expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts', {
         prebuild: 'tsx gasket.ts build',
         build: 'tsc',
+        preview: 'npm run build && npm run start',
         start: 'node dist/server.js',
         local: 'GASKET_ENV=local tsx watch server.ts'
       });
@@ -70,6 +81,12 @@ describe('create hook', () => {
       create({}, mockContext);
       expect(mockContext.pkg.add).toHaveBeenCalledWith('eslintIgnore', ['dist']);
     });
+
+    it('adds markdown partial for API apps', () => {
+      mockContext.apiApp = true;
+      create({}, mockContext);
+      expect(mockContext.readme.markdownFile).toHaveBeenCalledWith(expect.stringMatching(/generator\/markdown\/README.md$/));
+    });
   });
 
   describe('nextServerType', () => {
@@ -80,7 +97,7 @@ describe('create hook', () => {
     });
 
     it('adds files for defaultServer w/o dev proxy', () => {
-      mockContext.nextDevProxy = false
+      mockContext.nextDevProxy = false;
       create({}, mockContext);
       expect(mockContext.files.add).toHaveBeenCalledWith(expect.stringMatching(/generator\/next\/\*\(tsconfig\).json$/));
     });
