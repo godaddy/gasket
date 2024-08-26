@@ -3,6 +3,12 @@ import gasket from '../gasket.js';
 
 const app = gasket.actions.getExpressApp();
 
+export const defaultHandler = async (req: Request, res: Response) => {
+  res.status(200).json({
+    message: 'Welcome to your default route...'
+  });
+}
+
 {{#if useSwagger}}
 /**
 * @swagger
@@ -19,8 +25,4 @@ const app = gasket.actions.getExpressApp();
 *           application/json
 */
 {{/if}}
-app.get('/default', async (req: Request, res: Response) => {
-  res.status(200).json({
-    message: 'Welcome to your default route...'
-  });
-});
+app.get('/default', defaultHandler);
