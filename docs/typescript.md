@@ -2,89 +2,69 @@
 
 The Gasket team is dedicated to improving productivity for TypeScript users. Here are various tips to make TypeScript integration go smoothly.
 
-## Ensuring visibility of plugin extensions
+## Ensuring Visibility of Plugin Extensions
 
-Because Gasket itself is just a plugin framework, plugins themselves are responsible for augmenting the core Gasket interfaces. This means that the type declarations for the plugins have to be "discovered" in your TypeScript code base. This can be done by ensuring you reference or import your presets or plugins. The sample code snippets below show these imports, but if you can ensure TypeScript knows about all of the plugins from one centralized area of code then you can avoid duplication.
+Because Gasket is a plugin framework, plugins themselves are responsible for augmenting the core Gasket interfaces. This means that the type declarations for the plugins must be "discovered" in your TypeScript codebase. You can ensure this by referencing or importing your presets or plugins. The sample code snippets below show these imports, but if you can centralize the imports in one area of your codebase, you can avoid duplication and ensure that TypeScript is aware of all the plugins.
 
-## Validating gasket.config.js
+## Validating Gasket Configuration
 
-The `@gasket/engine` package supplies a `GasketConfigFile` type that, once you've also imported all your plugins, validates the contents of your gasket config file.
+In Gasket, you can now write your `gasket.js` configuration file as `gasket.ts` using TypeScript. This allows for full type-checking and validation directly within your TypeScript environment.
 
-The `gasket.config.js` file cannot be written in TypeScript, but you can configure TypeScript to check JS files or use a `@ts-check` comment along with JSDoc type annotations. Due to JSDoc type checking limitations, you may have to separate the config declaration and your export:
+The `@gasket/core` package supplies a `GasketConfigDefinition` type that validates the contents of your Gasket config file. When you import all your plugins into `gasket.ts`, TypeScript can fully validate the configuration.
 
-```javascript
-//@ts-check
-///<reference types="@gasket/preset-nextjs"/>
-
-/** @type {import('@gasket/engine').GasketConfigFile} */
-const config = {
-  plugins: {
-    presets: ['@gasket/nextjs']
-  },
-  compression: true,
-  http: 8080,
-  intl: {
-    defaultLocale: 'en-GB'
-  }
-};
-
-module.exports = config;
-```
-
-## Validating lifecycle scripts
-
-The `@gasket/engine` package supplies a `Hook` type that can be used to validate lifecycle scripts and plugin hooks. It takes a string type parameter for the name of the lifecycle.
+Here's an example:
 
 ```typescript
-import { Hook } from '@gasket/engine';
-import '@gasket/plugin-intl';
+// gasket.ts
+import { makeGasket } from '@gasket/core';
+import pluginA from '@gasket/plugin-a';
+import pluginB from '@gasket/plugin-b';
 
-const intlLocaleHandler: Hook<'intlLocale'> = (gasket, locale, { req, res }) => {
-  // return 3; - does not pass validation
-  return getLocaleFromHost(req.headers.host);
-}
+export default makeGasket({
+  plugins: [
+    pluginA,
+    pluginB
+  ]
+  // additional config
+});
 ```
 
-Gasket does not currently allow you to author `/lifecycles/*` files in TypeScript. To add type checking to these scripts you must either write them in TypeScript and make sure they get compiled to JavaScript or use JSDoc comments to enable checking. Because of JSDoc limitations with generics syntax, writing in JavaScript requires a workaround using a separate `@typedef` declaration.
+## Validating Lifecycle Hooks
 
-```javascript
-// @ts-check
-///<reference types="@gasket/plugin-intl"/>
+The `@gasket/core` package supplies a `HookHandler` type that can be used to validate lifecycle hooks in plugins. It takes a string type parameter for the name of the lifecycle, ensuring that your hooks conform to the expected signature.
 
-/** 
- * @typedef {import('@gasket/engine').Hook<'intlLocale'>} IntlLocaleHandler
- */
+```typescript
+import type { HookHandler } from '@gasket/core';
 
-/** @type {IntlLocaleHandler} */
-const handler = (gasket, currentLocale, { req, res }) => {
-  // return 3; - does not pass validation
+const intlLocaleHandler: HookHandler<'initLocale'> = (gasket, locale, { req, res }) => {
   return getLocaleFromHost(req.headers.host);
 };
 
-module.exports = handler;
+export default intlLocaleHandler;
 ```
 
-## Authoring plugins
+With TypeScript, these plugin hooks can be directly authored in `.ts` files using the ESM syntax, allowing for smooth integration and type checking.
 
-The `@gasket/engine` package exports a `Plugin` type which can be used to validate your plugin definitions. If your plugin is introducing more config properties and lifecycles you should also extend the `GasketConfig` and `HookExecTypes` interfaces. Look for useful helper types in `@gasket/engine` as well.
+## Authoring Plugins
+
+The `@gasket/core` package exports a `Plugin` type which can be used to validate your plugin definitions. If your plugin introduces additional configuration properties or lifecycles, you should extend the `GasketConfig` and `HookExecTypes` interfaces. Useful helper types can also be found in `@gasket/core`.
 
 ```typescript
+// my-plugin.ts
 import type {
   Plugin, GasketConfig, HookExecTypes, MaybeAsync
-} from '@gasket/engine';
-
-// Ensure TypeScript knows about the lifecycles you're hooking
-import '@gasket/plugin-express';
+} from '@gasket/core';
 
 const plugin: Plugin = {
-  name: "my-plugin",
+  name: 'my-plugin',
   hooks: {
     middleware(gasket, express) {
       return [
         async (req, res, next) => {
-          const headerValue = await gasket.execWaterfall(
+          const customHeader = await gasket.execWaterfall(
             'customHeader',
-            gasket.config.customHeader);
+            gasket.config.customHeader
+          );
 
           if (customHeader) {
             res.set('x-silly-header', customHeader);
@@ -99,7 +79,7 @@ const plugin: Plugin = {
 
 declare module '@gasket/engine' {
   export interface GasketConfig {
-    customHeader?: string
+    customHeader?: string;
   }
 
   export interface HookExecTypes {
@@ -107,5 +87,9 @@ declare module '@gasket/engine' {
   }
 }
 
-export = plugin;
+export default plugin;
 ```
+
+## Conclusion
+
+With Gasket, TypeScript users can now take full advantage of TypeScript’s type-checking capabilities by writing their `gasket.ts` configuration files and plugins in TypeScript using ESM syntax. This enhances the developer experience, ensuring that configurations and plugins are validated throughout the development process.

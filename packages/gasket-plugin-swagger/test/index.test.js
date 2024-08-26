@@ -272,6 +272,11 @@ describe('Swagger Plugin', function () {
         pkg: {
           add: jest.fn()
         },
+        readme: {
+          subHeading: jest.fn().mockReturnThis(),
+          content: jest.fn().mockReturnThis(),
+          link: jest.fn().mockReturnThis()
+        },
         gasketConfig: {
           addPlugin: jest.fn(),
           add: jest.fn()
@@ -315,6 +320,18 @@ describe('Swagger Plugin', function () {
     it('adds swagger config to gasket config', async function () {
       await plugin.hooks.create({}, mockContext);
       expect(mockContext.gasketConfig.add).toHaveBeenCalledWith('swagger', expect.any(Object));
+    });
+
+    it('adds to the readme', async function () {
+      await plugin.hooks.create({}, mockContext);
+      expect(mockContext.readme.link)
+        .toHaveBeenCalledWith('swagger-jsdoc', 'https://github.com/Surnet/swagger-jsdoc/');
+      expect(mockContext.readme.link)
+        .toHaveBeenCalledWith('swagger.json', '/swagger.json');
+      expect(mockContext.readme.content).toHaveBeenCalledWith(
+        'Use `@swagger` JSDocs to automatically generate the [swagger.json] spec file. Visit [swagger-jsdoc] for examples.'
+      );
+      expect(mockContext.readme.subHeading).toHaveBeenCalledWith('Definitions');
     });
   });
 });

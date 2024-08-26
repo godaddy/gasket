@@ -20,10 +20,17 @@ const plugin = {
         last: true,
         before: ['@gasket/plugin-lint']
       },
-      handler: async function create(gasket, { files, pkg, gasketConfig, packageManager = 'npm' }) {
+      handler: async function create(gasket, { files, pkg, gasketConfig, packageManager = 'npm', typescript }) {
         const runCmd = packageManager === 'npm' ? `npm run` : packageManager;
         const generatorDir = `${__dirname}/../generator`;
         const isReactProject = pkg.has('dependencies', 'react');
+        const fileExtension = typescript ? 'ts' : 'js';
+
+        if (typescript) {
+          pkg.add('devDependencies', {
+            '@babel/preset-typescript': devDependencies['@babel/preset-typescript']
+          })
+        }
 
         pkg.add('devDependencies', {
           // Base assertion dependencies.
@@ -56,12 +63,12 @@ const plugin = {
 
           pkg.add('scripts', {
             // eslint-disable-next-line max-len
-            'test:runner': `mocha -r global-jsdom/register -r setup-env -r ./test/register-loader.js --recursive "test/**/*.*(test|spec).js"`,
+            'test:runner': `mocha -r global-jsdom/register -r setup-env -r ./test/register-loader.js --recursive "test/**/*.{test,spec}.{${fileExtension},${fileExtension}x}"`,
             'test:watch': `${runCmd} test:runner -- --watch --parallel -r ./test/mocha-watch-cleanup-after-each.js`
           });
         } else {
           pkg.add('scripts', {
-            'test:runner': 'mocha -r setup-env --recursive "test/**/*.*(test|spec).js"',
+            'test:runner': `mocha -r setup-env --recursive "test/**/*.*(test|spec).${fileExtension}"`,
             'test:watch': `${runCmd} test:runner -- --watch --parallel`
           });
         }

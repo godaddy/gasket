@@ -170,7 +170,8 @@ export function makeCreateContext(argv = [], options = {}) {
     presets: [],
     presetConfig: {
       plugins: []
-    }
+    },
+    readme: []
   });
 
   readConfig(context, { config, configFile });

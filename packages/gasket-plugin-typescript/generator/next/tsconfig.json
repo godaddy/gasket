@@ -18,6 +18,8 @@
     "baseUrl": ".",
     "paths": {
       "@/gasket": ["./dist/gasket.js"],
+      "@/gasket-data": ["./dist/gasket.data.js"],
+      "@/plugins/*": ["./dist/plugins/*.js"],
     },
     "allowJs": true,
     "strict": false,
