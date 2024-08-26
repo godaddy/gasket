@@ -48,7 +48,7 @@ const plugin = {
         ),
         format:
           config.winston?.format ??
-          format.combine(format.splat(), format.json()),
+          format.combine(format.colorize(), format.simple()),
         levels: Object.assign({ fatal: 0, warn: 4, trace: 7 }, winstonConfig.syslog.levels),
         exitOnError: true
       });
