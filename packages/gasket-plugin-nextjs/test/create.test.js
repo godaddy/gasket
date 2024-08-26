@@ -90,8 +90,8 @@ describe('create hook', () => {
       mockContext.testPlugins = ['@gasket/mocha'];
       await create.handler({}, mockContext);
       expect(mockContext.files.add).toHaveBeenCalledWith(
-        `${root}/../generator/mocha/*`,
-        `${root}/../generator/mocha/**/*`
+        `${root}/../generator/mocha/pages-router/*`,
+        `${root}/../generator/mocha/pages-router/**/!(*.ts|*.tsx)`
       );
     });
 
@@ -99,8 +99,8 @@ describe('create hook', () => {
       mockContext.testPlugins = ['@gasket/jest'];
       await create.handler({}, mockContext);
       expect(mockContext.files.add).toHaveBeenCalledWith(
-        `${root}/../generator/jest/*`,
-        `${root}/../generator/jest/**/*`
+        `${root}/../generator/jest/pages-router/*`,
+        `${root}/../generator/jest/pages-router/**/!(*.ts|*.tsx)`
       );
     });
 
@@ -110,6 +110,35 @@ describe('create hook', () => {
       expect(mockContext.files.add).toHaveBeenCalledWith(
         `${root}/../generator/cypress/*`,
         `${root}/../generator/cypress/**/*`
+      );
+    });
+
+    it('adds ts extenstion files', async function () {
+      mockContext.typescript = true;
+      mockContext.testPlugins = ['@gasket/jest'];
+      await create.handler({}, mockContext);
+      expect(mockContext.files.add).toHaveBeenCalledWith(
+        `${root}/../generator/jest/pages-router/*`,
+        `${root}/../generator/jest/pages-router/**/!(*.js|*.jsx)`
+      );
+    });
+
+    it('adds no files for no test plugins', async function () {
+      mockContext.testPlugins = [];
+      await create.handler({}, mockContext);
+      expect(mockContext.files.add).not.toHaveBeenCalledWith(
+        `${root}/../generator/jest/pages-router/*`,
+        `${root}/../generator/jest/pages-router/**/!(*.js|*.jsx)`
+      );
+    });
+
+    it('adds files for app-router', async function () {
+      mockContext.useAppRouter = true;
+      mockContext.testPlugins = ['@gasket/jest'];
+      await create.handler({}, mockContext);
+      expect(mockContext.files.add).toHaveBeenCalledWith(
+        `${root}/../generator/jest/app-router/*`,
+        `${root}/../generator/jest/app-router/**/!(*.ts|*.tsx)`
       );
     });
   });
