@@ -43,6 +43,20 @@ describe('write-gasket-config', () => {
     expect(mockWriteStub).toHaveBeenCalledWith(path.join(mockContext.dest, 'gasket.ts'), expect.any(String), 'utf8');
   });
 
+  it('writes type import for typescript', async () => {
+    mockContext.typescript = true;
+    await writeGasketConfig({ context: mockContext });
+    const output = mockWriteStub.mock.calls[0][1];
+    expect(output).toContain('import type { GasketConfigDefinition } from \'@gasket/core\';');
+  });
+
+  it('implements type coercion for typescript', async () => {
+    mockContext.typescript = true;
+    await writeGasketConfig({ context: mockContext });
+    const output = mockWriteStub.mock.calls[0][1];
+    expect(output).toContain(' as GasketConfigDefinition');
+  });
+
   it('writes gasket.js with export default', async () => {
     await writeGasketConfig({ context: mockContext });
     const output = mockWriteStub.mock.calls[0][1];
