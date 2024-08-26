@@ -16,19 +16,8 @@ module.exports = async function create(gasket, context) {
     fastify: devDependencies.fastify
   });
 
-  if ('apiApp' in context && context.apiApp) {
-    context.gasketConfig.add('fastify', {
-      routes: []
-    });
-
-    if ('typescript' in context && context.typescript) {
-      context.files.add(`${generatorDir}/**/!(*.js)`);
-    } else {
-      context.files.add(`${generatorDir}/**/!(*.ts)`);
-    }
-
-    context.gasketConfig
-      .addImport('{ routes }', './routes/index.js')
-      .injectValue('fastify.routes', 'routes');
+  if (context.apiApp) {
+    const glob = context.typescript ? '**/*.ts' : '**/*.js';
+    context.files.add(`${generatorDir}/${glob}`);
   }
 };

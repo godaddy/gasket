@@ -8,12 +8,22 @@ const {
 } = require('../package.json');
 const create = require('./create');
 const createServers = require('./create-servers');
+const fastify = require('fastify');
+const { alignLogger } = require('./utils'); 
 
 /** @type {import('@gasket/core').Plugin} */
 const plugin = {
   name,
   version,
   description,
+  actions: {
+    getFastifyApp(gasket) {
+      const { http2, fastify: { trustProxy = false} } = gasket.config;
+      const fastifyLogger = alignLogger(gasket.logger);
+
+      return fastify({ logger: fastifyLogger, trustProxy, http2 });
+    }
+  },
   hooks: {
     create,
     createServers,
