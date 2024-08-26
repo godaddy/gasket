@@ -37,7 +37,7 @@ DEBUG={{{server}}}:* {{{packageManager}}} run local // {{{server}}} operations o
 {{{markdownCompile this}}}
 {{/each}}
 <!-- LINKS -->
-
+[EcmaScript Modules]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules
 {{#each readme.links}}
 {{{this}}}
 {{/each}}
