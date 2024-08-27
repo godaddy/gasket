@@ -35,16 +35,14 @@ module.exports = async function express(gasket, app) {
   if (http2) {
     app.use(
       /*
-          * This is a patch for the undocumented _implicitHeader used by the
-          * compression middleware which is not present the http2 request object
-          * @see: https://github.com/expressjs/compression/pull/128
-          * and also, by the 'compiled' version in Next.js
-          * @see: https://github.com/vercel/next.js/issues/11669
-          */
+       * This is a patch for the undocumented _implicitHeader used by the
+       * compression middleware which is not present the http2 request object
+       * @see: https://github.com/expressjs/compression/pull/128
+       * and also, by the 'compiled' version in Next.js
+       * @see: https://github.com/vercel/next.js/issues/11669
+       */
       function http2Patch(req, res, next) {
-        // @ts-ignore
         if (!res._implicitHeader) {
-          // @ts-ignore
           res._implicitHeader = () => res.writeHead(res.statusCode);
         }
         return next();
@@ -55,7 +53,11 @@ module.exports = async function express(gasket, app) {
   if (trustProxy) {
     app.set('trust proxy', trustProxy);
   }
-  // eslint-disable-next-line jsdoc/require-jsdoc
+
+  /**
+   * Attaches a metadata function to the logger that allows for chaining
+   * @type {import('@gasket/plugin-middleware').Internal.attachLogEnhancer}
+   */
   function attachLogEnhancer(req) {
     req.logger.metadata = (metadata) => {
       req.logger = req.logger.child(metadata);
@@ -74,5 +76,4 @@ module.exports = async function express(gasket, app) {
   applyCompression(app, compressionConfig);
 
   executeMiddlewareLifecycle(gasket, app, middlewarePattern);
-
 };

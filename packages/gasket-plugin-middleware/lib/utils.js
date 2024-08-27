@@ -6,7 +6,7 @@ const debug = diagnostics('gasket:middleware');
 
 /**
  * Applies the cookie parser based on the middleware pattern.
- * @type {import('./internal').applyCookieParser}
+ * @type {import('@gasket/plugin-middleware').Internal.applyCookieParser}
  */
 function applyCookieParser(app, middlewarePattern) {
   if (middlewarePattern) {
@@ -18,7 +18,7 @@ function applyCookieParser(app, middlewarePattern) {
 
 /**
  * Applies compression to the application if a compression config is present.
- * @type {import('./internal').applyCompression}
+ * @type {import('@gasket/plugin-middleware').Internal.applyCompression}
  */
 function applyCompression(app, compressionConfig) {
   if (compressionConfig) {
@@ -28,7 +28,7 @@ function applyCompression(app, compressionConfig) {
 
 /**
  * Executes the middleware lifecycle for the application
- * @type {import('./internal').executeMiddlewareLifecycle}
+ * @type {import('@gasket/plugin-middleware').Internal.executeMiddlewareLifecycle}
  */
 async function executeMiddlewareLifecycle(gasket, app, middlewarePattern) {
   const { config } = gasket;
@@ -38,6 +38,7 @@ async function executeMiddlewareLifecycle(gasket, app, middlewarePattern) {
 
   const middlewares = [];
   await gasket.execApply('middleware', async (plugin, handler) => {
+    // @ts-ignore - TS is unable to infer that app can be either an Express application or a Fastify instance
     const middleware = await handler(app);
 
     if (middleware && (!Array.isArray(middleware) || middleware.length)) {

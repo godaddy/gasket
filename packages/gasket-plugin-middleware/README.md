@@ -1,14 +1,17 @@
 # @gasket/plugin-middleware
 
-An optional plugin when used applies middleware to express or fastify.
+The `@gasket/plugin-middleware` plugin provides an easy way to apply middleware
+to Express or Fastify.
 
 ## Installation
 
-```
+To install the plugin, run:
+
+```sh
 npm i @gasket/plugin-middleware
 ```
 
-Update your `gasket` file plugin configuration:
+Then, update your `gasket.js` configuration file to include the plugin:
 
 ```diff
 // gasket.js
@@ -24,18 +27,30 @@ export default makeGasket({
 
 ## Configuration
 
-All the configurations for middleware setup are added under `express` or `fastify` in the config:
+You can configure the middleware settings under either the `express` or
+`fastify` sections in your `gasket.js` file, depending on which framework you are
+using.
 
-- `compression`: true by default. Can be set to false if applying compression
-  differently.
-- `excludedRoutesRegex`: (deprecated) renamed to more correct `middlewareInclusionRegex`.
-- `middlewareInclusionRegex`: RegExp filter to apply toward request URLs to determine when Gasket middleware will run. You can use negative lookahead patterns to exclude routes like static resource paths.
-- `trustProxy`: Enable trust proxy option, [Fastify trust proxy documentation] or [Express trust proxy documentation]
-- `routes`: for source files exporting route-defining functions. These functions will be passed the fastify `app` object, and therein they can attach handlers and middleware.
+### Configuration Options
 
-### Example Express configuration
+- `compression` (default: `true`): Enable or disable response compression. Set
+  to `false` if compression is handled elsewhere.
+- `excludedRoutesRegex`: (deprecated) Use `middlewareInclusionRegex` instead.
+- `middlewareInclusionRegex`: A regular expression to filter request URLs and
+  determine when Gasket middleware should run. You can use this to exclude
+  routes like static resource paths.
+- `trustProxy`: Enable the "trust proxy" option. Refer to the [Fastify trust
+  proxy documentation] or the [Express trust proxy documentation] for more
+  details.
+- `routes`: A path or glob pattern pointing to files that export route-defining
+  functions. These functions receive the `app` object (Fastify or Express) to
+  attach handlers and middleware.
+
+### Example Configuration for Express
 
 ```js
+// gasket.js
+
 export default makeGasket({
   plugins: {
     pluginMiddleware,
@@ -50,9 +65,11 @@ export default makeGasket({
 });
 ```
 
-### Example Fastify configuration
+### Example Configuration for Fastify
 
 ```js
+// gasket.js
+
 export default makeGasket({
   plugins: {
     pluginMiddleware,
@@ -69,18 +86,23 @@ export default makeGasket({
 
 ## Middleware paths
 
-The `gasket.js` can contain a `middleware` property, which is an array of
-objects that map plugins to route or path patterns, allowing apps to tune which
-middleware are triggered for which requests.
+You can define middleware paths in your `gasket.js` file using the `middleware`
+property. This property is an array of objects that map plugins to specific
+route or path patterns, allowing you to control which middleware is triggered
+for specific requests.
 
 ```js
+// gasket.js
+
+export default makeGasket({
+  ...
   middleware: [
     {
-      plugin:'gasket-plugin-example', // Name of the Gasket plugin
+      plugin: 'gasket-plugin-example', // Name of the Gasket plugin
       paths: ['/api']
     },
     {
-      plugin:'@some/gasket-plugin-example',
+      plugin: '@some/gasket-plugin-example',
       paths: [/\/default/]
     },
     {
@@ -88,14 +110,17 @@ middleware are triggered for which requests.
       paths: ['/proxy', /\/home/]
     }
   ]
+  ...
+});
+
 ```
 
 ## Lifecycles
 
-### middleware
+### `middleware`
 
-Executed when the `fastify` or `express` server has been created, it will apply all returned
-functions as middleware.
+The `middleware` lifecycle is executed when the Fastify or Express server is
+created. It applies all returned functions as middleware.
 
 ```js
 export default {
@@ -115,7 +140,8 @@ export default {
 }
 ```
 
-You may also return an `Array` to inject more than one middleware.
+You can also return an array if you need to inject multiple middleware
+functions.
 
 <!-- LINKS -->
 
