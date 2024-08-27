@@ -40,7 +40,9 @@ const plugin = {
 
       // eslint-disable-next-line no-sync
       const pluginTransports = gasket.execSync('winstonTransports');
-      const defaultFormat = gasket.config.env.startsWith('local') ? format.simple() : format.combine(format.splat());
+      const defaultFormat = gasket.config.env.startsWith('local') ?
+        format.simple() :
+        format.combine(format.splat(), format.json());
 
       return createLogger({
         ...config.winston,
