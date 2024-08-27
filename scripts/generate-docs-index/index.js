@@ -4,19 +4,17 @@ import wait from './utils/wait.js';
 import { readFile, writeFile, cp } from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
-// import { createRequire } from 'module';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const startTag = '<!-- START GENERATED -->';
 const endTag = '<!-- END GENERATED -->';
 
 const projectRoot = path.resolve(__dirname, '..', '..');
-// const cliBin = path.join(projectRoot, 'packages', 'gasket-cli', 'bin', 'run');
 const sourcePath = path.join(__dirname, '.docs', 'docs', 'README.md');
 const targetPath = path.join(projectRoot, 'README.md');
 
 async function main() {
-  await runShellCommand('node', ['gasket.js', 'docs', '--no-view'], { cwd: __dirname });
+  await runShellCommand('node', ['./gasket.js', 'docs', '--no-view'], { cwd: __dirname });
 
   // copy over generated docs generated-docs
   const genSrc = path.join(__dirname, '.docs', 'docs', 'generated-docs');
