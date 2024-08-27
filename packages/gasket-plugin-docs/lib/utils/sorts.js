@@ -133,6 +133,13 @@ const sortStructures = sortByKey(
 const sortCommands = sortByKey('name', alphaCompare);
 
 /**
+ * Sort an array of actions by name
+ * @type {function(import('../internal').DetailDocsConfig[]):
+ * import('../internal').DetailDocsConfig[]}
+ */
+const sortActions = sortByKey('name', alphaCompare);
+
+/**
  * Sort an array of lifeycles by name
  * @type {function(import('../internal').DetailDocsConfig[]):
  * import('../internal').DetailDocsConfig[]}
@@ -153,6 +160,7 @@ module.exports = {
   sortGuides,
   sortStructures,
   sortCommands,
+  sortActions,
   sortLifecycles,
   sortConfigurations
 };

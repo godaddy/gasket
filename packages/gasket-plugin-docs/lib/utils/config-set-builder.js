@@ -5,6 +5,7 @@ const {
   sortModules,
   sortStructures,
   sortCommands,
+  sortActions,
   sortLifecycles,
   sortGuides,
   sortConfigurations
@@ -23,6 +24,9 @@ const detailDocsHelpers = {
   },
   commands: {
     sort: sortCommands
+  },
+  actions: {
+    sort: sortActions
   },
   structures: {
     sort: sortStructures
@@ -111,8 +115,9 @@ class DocsConfigSetBuilder {
 
     // Add files for detail meta types docs
     detailDocsTypes.forEach((metaType) => {
-      if (metaType in moduleData) {
-        moduleData[metaType].forEach((o) => {
+      const { metadata = {} } = moduleData;
+      if (metaType in metadata) {
+        metadata[metaType].forEach((o) => {
           tryAdd(o.link);
         });
       }
@@ -186,7 +191,7 @@ class DocsConfigSetBuilder {
       ...overrides,
       transforms,
       files,
-      metadata: moduleData
+      metadata: moduleData.metadata || {}
     };
   }
 
@@ -250,14 +255,14 @@ class DocsConfigSetBuilder {
    * @type {import('../internal').addPlugin}
    */
   async addPlugin(pluginData, docsSetup) {
-    if (this._plugins.find((p) => p.metadata === pluginData)) return;
+    if (this._plugins.find((p) => p.metadata === pluginData.metadata)) return;
 
     // If docsSetup is passed, stick with it. Or, see if gasket.docsSetup in
     // package.json. Finally, fall back to defaults.
     docsSetup =
       docsSetup || getDocsSetupFromPkg(pluginData) || docsSetupDefault;
-
-    let { name, path: sourceRoot } = pluginData;
+    let name = pluginData.name;
+    let { path: sourceRoot } = pluginData.metadata;
     let targetRoot = path.join(this._docsRoot, 'plugins', ...name.split('/'));
 
     if (isAppPlugin.test(pluginData.name)) {
@@ -293,21 +298,22 @@ class DocsConfigSetBuilder {
    * @type {import('../internal').addPreset}
    */
   async addPreset(presetData, docsSetup) {
-    if (this._presets.find((p) => p.metadata === presetData)) return;
+    if (this._presets.find((p) => p.metadata === presetData.metadata)) return;
 
     // If docsSetup is passed, stick with it. Otherwise, look up a docsSetup
     // defined by preset. Or, see if gasket.docsSetup in package.json. Finally,
     // fall back to defaults.
     docsSetup =
       docsSetup ||
-      // @ts-expect-error: TODO: fix this
+      // @ts-expect-error: TODO: https://godaddy-corp.atlassian.net/browse/PFX-650
       (presetData.module && presetData.module.docsSetup) ||
       getDocsSetupFromPkg(presetData) ||
       docsSetupDefault;
 
     const { name } = presetData;
     const targetRoot = path.join(this._docsRoot, 'presets', ...name.split('/'));
-    const docConfig = await this._buildDocsConfig(presetData, docsSetup, {
+    // @ts-expect-error: TODO: https://godaddy-corp.atlassian.net/browse/PFX-650
+    const docConfig = await this._buildDocsConfig(presetData.metadata, docsSetup, {
       targetRoot
     });
 
