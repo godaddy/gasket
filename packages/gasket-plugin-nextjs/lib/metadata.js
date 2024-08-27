@@ -29,6 +29,13 @@ module.exports = function metadataHook(gasket, meta) {
         link: 'docs/deployment.md'
       }
     ],
+    actions: [
+      {
+        name: 'getNextConfig',
+        description: 'Get the Next.js config',
+        link: 'README.md'
+      }
+    ],
     lifecycles: [
       {
         name: 'nextConfig',
