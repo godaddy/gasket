@@ -22,7 +22,7 @@ const plugin = {
         before: ['@gasket/plugin-lint']
       },
       handler: async function create(gasket, context) {
-        const {files, pkg} = context;
+        const {files, pkg, typescript, apiApp} = context;
         const generatorDir = `${__dirname}/../generator`;
         const isReactProject = pkg.has('dependencies', 'react');
 
@@ -43,15 +43,30 @@ const plugin = {
           });
         }
 
-        if (context.apiApp) {
-          pkg.add('devDependencies', {
-            'cross-env': devDependencies['cross-env']
-          });
-          pkg.add('scripts', {
-            "test": "cross-env GASKET_ENV=test NODE_OPTIONS='--unhandled-rejections=strict --experimental-vm-modules' jest",
-            "test:watch": "npm run test -- --watch",
-            "test:coverage": "npm run test -- --coverage",
-          });
+        // TODO: refactor
+        if (apiApp) {
+          if (typescript) {
+            pkg.add('devDependencies', {
+              '@types/jest': devDependencies['@types/jest'],
+              'ts-jest': devDependencies['ts-jest'],
+              'ts-node': devDependencies['ts-node']
+            });
+
+            pkg.add('scripts', {
+              'test': 'GASKET_ENV=test jest',
+              'test:watch': 'jest --watchAll',
+              'test:coverage': 'jest --coverage'
+            });
+          } else {
+            pkg.add('devDependencies', {
+              'cross-env': devDependencies['cross-env']
+            });
+            pkg.add('scripts', {
+              "test": "cross-env GASKET_ENV=test NODE_OPTIONS='--unhandled-rejections=strict --experimental-vm-modules' jest",
+              "test:watch": "npm run test -- --watch",
+              "test:coverage": "npm run test -- --coverage",
+            });
+          }
         } else {
           pkg.add('scripts', {
             'test': 'jest',

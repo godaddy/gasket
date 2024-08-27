@@ -7,18 +7,25 @@ const { name, version, devDependencies } = require('../package.json');
  * @property {Files} files - The Gasket Files API.
  * @property {generatorDir} - The directory of the generator.
  * @property {testPlugins} - Array of selected test plugins
+ * @property {typescript} - Selected typescript from prompt
  */
-function createTestFiles({ files, generatorDir, testPlugins }) {
+function createTestFiles({ files, generatorDir, testPlugins, typescript }) {
   if (!testPlugins || testPlugins.length === 0) return;
-
-  const frameworks = ['jest', 'mocha', 'cypress'];
+  const unit = ['jest', 'mocha'];
+  const integration = ['cypress'];
+  const frameworks = [...unit, ...integration];
   const frameworksRegex = new RegExp(frameworks.join('|'));
+  const globIgnore = typescript ? '!(*.js|*.jsx)' : '!(*.ts|*.tsx)';
 
   testPlugins.forEach((testPlugin) => {
     const match = frameworksRegex.exec(testPlugin);
     if (match) {
       const matchedFramework = match[0];
-      files.add(`${generatorDir}/${matchedFramework}/*`, `${generatorDir}/${matchedFramework}/**/*`);
+      if (unit.includes(matchedFramework)) {
+        files.add(`${generatorDir}/${matchedFramework}/*/${globIgnore}`, `${generatorDir}/${matchedFramework}/**/${globIgnore}`);
+      } else {
+        files.add(`${generatorDir}/${matchedFramework}/*`, `${generatorDir}/${matchedFramework}/**/*`);
+      }
     }
   });
 }
@@ -46,9 +53,10 @@ module.exports = async function create(gasket, context) {
   });
 
   if (apiApp) {
-    const glob = typescript ? '**/*!(.js)': '**/*!(.ts)';
-    files.add(`${generatorDir}/app/${glob}`);
+    // TODO: refeactor to share generatorDir
+    const globIgnore = typescript ? '!(*.js|.jsx)' : '!(*.ts|*.tsx)';
+    files.add(`${generatorDir}/app/**/${globIgnore}`);
 
-    createTestFiles({ files, generatorDir, testPlugins });
+    createTestFiles({ files, generatorDir, testPlugins, typescript });
   }
 };
