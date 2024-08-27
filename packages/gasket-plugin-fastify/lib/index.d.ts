@@ -59,11 +59,6 @@ declare module '@gasket/core' {
   }
 }
 
-// type FastifyLogger = Logger & {
-//   trace?: () => MaybeAsync<any>,
-//   fatal?: () => MaybeAsync<any>
-// }
-
 export function alignLogger(
   logger: Logger
 ): FastifyBaseLogger
