@@ -216,4 +216,69 @@ describe('create', () => {
       expect(gasketConfig.add).toHaveBeenCalledWith('fastify', { routes: [] });
     })
   );
+
+  describe('createTestFiles', () => {
+    let mockTestPlugins;
+    beforeEach(() => {
+      mockTestPlugins = [];
+
+      mockContext.testPlugins = mockTestPlugins;
+      mockContext.typescript = false;
+    });
+
+    afterEach(() => {
+      delete mockContext.testPlugins;
+    });
+
+    it('adds mocha files', async function () {
+      mockContext.testPlugins = ['@gasket/mocha'];
+      await expectCreatedWith(({ files }) => {
+        expect(files.add).toHaveBeenCalledWith(
+          expect.stringContaining(`/generator/mocha/*/!(*.ts)`),
+          expect.stringContaining(`/generator/mocha/**/!(*.ts)`)
+        );
+      })();
+    });
+
+    it('adds jest files', async function () {
+      mockContext.testPlugins = ['@gasket/jest'];
+      await expectCreatedWith(({ files }) => {
+        expect(files.add).toHaveBeenCalledWith(
+          expect.stringContaining(`/generator/jest/*/!(*.ts)`),
+          expect.stringContaining(`/generator/jest/**/!(*.ts)`)
+        );
+      })();
+    });
+
+    it('adds cypress files', async function () {
+      mockContext.testPlugins = ['@gasket/cypress'];
+      await expectCreatedWith(({ files }) => {
+        expect(files.add).toHaveBeenCalledWith(
+          expect.stringContaining(`/generator/cypress/*`),
+          expect.stringContaining(`/generator/cypress/**/*`)
+        );
+      })();
+    });
+
+    it('adds ts extenstion files', async function () {
+      mockContext.typescript = true;
+      mockContext.testPlugins = ['@gasket/jest'];
+      await expectCreatedWith(({ files }) => {
+        expect(files.add).toHaveBeenCalledWith(
+          expect.stringContaining(`/generator/jest/*/!(*.js)`),
+          expect.stringContaining(`/generator/jest/**/!(*.js)`)
+        );
+      })();
+    });
+
+    it('adds no files for no test plugins', async function () {
+      mockContext.testPlugins = [];
+      await expectCreatedWith(({ files }) => {
+        expect(files.add).not.toHaveBeenCalledWith(
+          expect.stringContaining(`/generator/jest/*/!(*.js)`),
+          expect.stringContaining(`/generator/jest/**/!(*.js)`)
+        );
+      })();
+    });
+  });
 });

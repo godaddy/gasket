@@ -7,7 +7,7 @@ const { name, version, devDependencies } = require('../package.json');
  * @property {Files} files - The Gasket Files API.
  * @property {generatorDir} - The directory of the generator.
  * @property {testPlugins} - Array of selected test plugins
- * @property {globIgnore} - Selected typescript from prompt
+ * @property {globIgnore} - Extension pattern to ignore
  */
 function createTestFiles({ files, generatorDir, testPlugins, globIgnore }) {
   if (!testPlugins || testPlugins.length === 0) return;
