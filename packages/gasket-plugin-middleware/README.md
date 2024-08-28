@@ -117,7 +117,7 @@ export default makeGasket({
 
 ## Lifecycles
 
-### `middleware`
+### middleware
 
 The `middleware` lifecycle is executed when the Fastify or Express server is
 created. It applies all returned functions as middleware.

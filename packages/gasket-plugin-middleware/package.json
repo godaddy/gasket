@@ -57,6 +57,18 @@
     ],
     "rules": {
       "unicorn/filename-case": "error"
-    }
+    },
+    "overrides": [
+      {
+        "files": [
+          "test/**/*.js"
+        ],
+        "rules": {
+          "jsdoc/require-param-description": "off",
+          "jsdoc/require-param-type": "off",
+          "jsdoc/require-returns-description": "off"
+        }
+      }
+    ]
   }
 }

@@ -56,7 +56,7 @@ module.exports = async function express(gasket, app) {
 
   /**
    * Attaches a metadata function to the logger that allows for chaining
-   * @type {import('@gasket/plugin-middleware').Internal.attachLogEnhancer}
+   * @type {import('./internal').attachLogEnhancer}
    */
   function attachLogEnhancer(req) {
     req.logger.metadata = (metadata) => {

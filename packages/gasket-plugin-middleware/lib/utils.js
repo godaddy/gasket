@@ -6,7 +6,7 @@ const debug = diagnostics('gasket:middleware');
 
 /**
  * Applies the cookie parser based on the middleware pattern.
- * @type {import('@gasket/plugin-middleware').Internal.applyCookieParser}
+ * @type {import('./internal').applyCookieParser}
  */
 function applyCookieParser(app, middlewarePattern) {
   if (middlewarePattern) {
@@ -18,7 +18,7 @@ function applyCookieParser(app, middlewarePattern) {
 
 /**
  * Applies compression to the application if a compression config is present.
- * @type {import('@gasket/plugin-middleware').Internal.applyCompression}
+ * @type {import('./internal').applyCompression}
  */
 function applyCompression(app, compressionConfig) {
   if (compressionConfig) {
@@ -28,7 +28,7 @@ function applyCompression(app, compressionConfig) {
 
 /**
  * Executes the middleware lifecycle for the application
- * @type {import('@gasket/plugin-middleware').Internal.executeMiddlewareLifecycle}
+ * @type {import('./internal').executeMiddlewareLifecycle}
  */
 async function executeMiddlewareLifecycle(gasket, app, middlewarePattern) {
   const { config } = gasket;
