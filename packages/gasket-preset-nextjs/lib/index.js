@@ -5,7 +5,7 @@ import create from './create.js';
 const require = createRequire(import.meta.url);
 const { name, version, description } = require('../package.json');
 
-// TODO: need to create types for "preset" plugins
+/** @type {import('@gasket/core').Preset} */
 export default {
   name,
   version,
