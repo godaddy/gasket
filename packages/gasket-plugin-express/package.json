@@ -90,5 +90,8 @@
   },
   "eslintIgnore": [
     "generator"
-  ]
+  ],
+  "jest": {
+    "rootDir": "test"
+  }
 }
