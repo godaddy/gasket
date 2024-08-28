@@ -168,7 +168,7 @@ class DocsConfigSetBuilder {
         (moduleData.package && moduleData.package.description)
     } = moduleData;
 
-    const { sourceRoot = moduleData.path } = overrides;
+    const { sourceRoot = moduleData.metadata.path } = overrides;
 
     // Get only the local transforms
     const transforms = this._segregateTransforms(docsSetup.transforms || []);
@@ -312,8 +312,7 @@ class DocsConfigSetBuilder {
 
     const { name } = presetData;
     const targetRoot = path.join(this._docsRoot, 'presets', ...name.split('/'));
-    // @ts-expect-error: TODO: https://godaddy-corp.atlassian.net/browse/PFX-650
-    const docConfig = await this._buildDocsConfig(presetData.metadata, docsSetup, {
+    const docConfig = await this._buildDocsConfig(presetData, docsSetup, {
       targetRoot
     });
 
@@ -333,7 +332,7 @@ class DocsConfigSetBuilder {
    * @type {import('../internal').addModule}
    */
   async addModule(moduleData, docsSetup) {
-    if (this._modules.find((p) => p.metadata === moduleData)) return;
+    if (this._modules.find((p) => p.metadata === moduleData.metadata)) return;
 
     // If docsSetup is passed, stick with it. Otherwise, look up a docsSetup
     // added by plugins. Or, see if gasket.docsSetup in package.json. Finally,

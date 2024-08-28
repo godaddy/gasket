@@ -14,10 +14,13 @@ function getAppInfo(gasket) {
     const pkgPath = require.resolve(tryPath, { paths: [root] });
     const pkg = require(pkgPath);
     app = {
-      path: path.dirname(pkgPath),
       package: pkg,
       version: pkg.version,
-      name: pkg.name
+      name: pkg.name,
+      metadata: {
+        name: pkg.name,
+        path: path.dirname(pkgPath)
+      }
     };
   } catch (err) {
     // eslint-disable-next-line no-console
@@ -45,7 +48,7 @@ async function getMetadata(gasket) {
       };
 
       if (!isGasketPackage) {
-        pluginData.metadata.path = path.join(app.path, 'plugins');
+        pluginData.metadata.path = path.join(app.metadata.path, 'plugins');
         plugins.push(pluginData);
       } else {
         pluginData.metadata.path = path.dirname(path.join(require.resolve(pluginData.name), '..'));
@@ -64,8 +67,10 @@ async function getMetadata(gasket) {
             name: mod.name,
             version: mod.version,
             description: mod.description,
-            link: 'README.md',
-            path: path.dirname(path.join(require.resolve(name), '..'))
+            metadata: {
+              link: 'README.md',
+              path: path.dirname(path.join(require.resolve(name), '..'))
+            }
           };
         }
       }

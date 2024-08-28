@@ -141,10 +141,10 @@ Available structure
 
 Available presets
 
-| Name                    | Version | Description |
-| ----------------------- | ------- | ----------- |
-| [@gasket/preset-api]    |         |             |
-| [@gasket/preset-nextjs] |         |             |
+| Name                    | Version       | Description                          |
+| ----------------------- | ------------- | ------------------------------------ |
+| [@gasket/preset-api]    | 7.0.0-next.60 | Create Express-based API with Gasket |
+| [@gasket/preset-nextjs] | 7.0.0-next.60 | Basic NextJS Framework               |
 
 ## Plugins
 
