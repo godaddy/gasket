@@ -60,6 +60,8 @@ declare module '@gasket/core' {
     metadata?: Record<string, any>;
   };
 
+  export type Preset = Omit<Plugin, 'actions'>;
+
   // This is the config
   export interface GasketConfig {
     plugins: Array<Plugin>;
