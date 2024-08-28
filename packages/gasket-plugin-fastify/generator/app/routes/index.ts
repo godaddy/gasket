@@ -5,6 +5,12 @@ import type {
   FastifyReply
 } from 'fastify';
 
+export const defaultHandler = async (req: FastifyRequest, res: FastifyReply) => {
+  if (res.statusCode === 200) {
+    res.send({ message: 'Welcome to your default route...' });
+  }
+};
+
 export const routes: AppRoutes = [
   (app: FastifyInstance): void => {
     {{#if useSwagger}}
@@ -23,10 +29,6 @@ export const routes: AppRoutes = [
     *           application/json
     */
     {{/if}}
-    app.get('/default', async (req: FastifyRequest, res: FastifyReply) => {
-      if (res.statusCode === 200) {
-        res.send({ message: 'Welcome to your default route...' });
-      }
-    });
+    app.get('/default', defaultHandler);
   }
 ];

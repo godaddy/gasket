@@ -1,3 +1,9 @@
+export const defaultHandler = async (req, res) => {
+  if (res.statusCode === 200) {
+    res.send({ message: 'Welcome to your default route...' });
+  }
+};
+
 export const routes = [
   (app) => {
     {{#if useSwagger}}
@@ -16,10 +22,6 @@ export const routes = [
     *           application/json
     */
     {{/if}}
-    app.get('/default', async (req, res) => {
-      if (res.statusCode === 200) {
-        res.send({ message: 'Welcome to your default route...' });
-      }
-    });
+    app.get('/default', defaultHandler);
   } 
 ]

@@ -69,6 +69,7 @@ declare module 'create-gasket-app' {
   export interface CreateContext {
     /** Flag indicating if API app is enabled */
     apiApp?: boolean;
+    typescript?: boolean;
   }
 }
 
