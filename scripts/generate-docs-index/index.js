@@ -14,7 +14,7 @@ const sourcePath = path.join(__dirname, '.docs', 'docs', 'README.md');
 const targetPath = path.join(projectRoot, 'README.md');
 
 async function main() {
-  await runShellCommand('node', ['./gasket.js', 'docs', '--no-view'], { cwd: __dirname });
+  await runShellCommand('node', ['gasket.js', 'docs', '--no-view'], { cwd: __dirname });
 
   // copy over generated docs generated-docs
   const genSrc = path.join(__dirname, '.docs', 'docs', 'generated-docs');
