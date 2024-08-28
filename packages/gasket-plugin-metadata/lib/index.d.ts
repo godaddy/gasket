@@ -34,7 +34,7 @@ export interface AppData extends ModuleData {
 }
 
 /** Plugin module with meta data */
-export interface IPluginData extends ModuleData {
+export interface PluginData extends ModuleData {
   /** Commands enabled by this plugin */
   commands?: Array<DetailData>;
 
@@ -56,8 +56,6 @@ export interface IPluginData extends ModuleData {
   /** Description of guides for this plugin */
   guides?: Array<DetailData>;
 }
-
-export type PluginData = IPluginData;
 
 /** Preset module with meta data */
 export interface PresetData extends ModuleData {
