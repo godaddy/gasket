@@ -83,7 +83,7 @@ const plugin = {
               `${generatorDir}/api-app/typescript/**/*`
             );
             pkg.add('scripts', {
-              'test:runner': `mocha -r ./__tests__/register-loader.js -r '__tests__/mocha-setup.js' --recursive "__tests__/**/*.*(test|spec).${fileExtension}"`,
+              'test:runner': `mocha -r ./test/register-loader.js -r 'test/mocha-setup.js' --recursive "test/**/*.*(test|spec).${fileExtension}"`,
               'test:watch': `${runCmd} test:runner -- --watch --parallel`
             });
 
@@ -93,7 +93,7 @@ const plugin = {
             });
           } else {
             pkg.add('scripts', {
-              'test:runner': `mocha -r setup-env --recursive "__tests__/**/*.*(test|spec).${fileExtension}"`,
+              'test:runner': `mocha -r setup-env --recursive "test/**/*.*(test|spec).${fileExtension}"`,
               'test:watch': `${runCmd} test:runner -- --watch --parallel`
             });
           }

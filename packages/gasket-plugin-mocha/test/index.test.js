@@ -201,7 +201,7 @@ describe('Plugin', () => {
       const { pkg } = await create(mockContext);
 
       expect(pkg.scripts['test:runner']).toEqual(
-        `mocha -r setup-env --recursive "__tests__/**/*.*(test|spec).js"`
+        `mocha -r setup-env --recursive "test/**/*.*(test|spec).js"`
       );
     });
 
