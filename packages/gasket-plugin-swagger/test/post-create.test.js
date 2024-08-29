@@ -15,7 +15,7 @@ describe('postCreateHook', function () {
             jsdoc: {
               definition: {
                 info: {
-                  version: 'mock'
+                  version: '0.0.0'
                 }
               },
               apis: ['fake.js', './another-api.js']
