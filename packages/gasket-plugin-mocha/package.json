@@ -103,5 +103,8 @@
     "plugins": [
       "@babel/transform-runtime"
     ]
+  },
+  "jest": {
+    "rootDir": "test"
   }
 }

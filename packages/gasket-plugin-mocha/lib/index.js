@@ -34,11 +34,11 @@ const plugin = {
         const generatorDir = `${__dirname}/../generator`;
         const isReactProject = pkg.has('dependencies', 'react');
         const fileExtension = typescript ? 'ts' : 'js';
-        // TODO: refactor
+
         if (typescript) {
           pkg.add('devDependencies', {
             '@babel/preset-typescript': devDependencies['@babel/preset-typescript']
-          })
+          });
         }
 
         pkg.add('devDependencies', {
@@ -57,9 +57,9 @@ const plugin = {
           gasketConfig.addPlugin('pluginMocha', name);
 
           files.add(
-            `${generatorDir}/react-project/*`,
-            `${generatorDir}/react-project/**/.*`,
-            `${generatorDir}/react-project/**/*`
+            `${generatorDir}/react-app/*`,
+            `${generatorDir}/react-app/**/.*`,
+            `${generatorDir}/react-app/**/*`
           );
 
           pkg.add('devDependencies', {
@@ -75,7 +75,7 @@ const plugin = {
             'test:runner': `mocha -r global-jsdom/register -r setup-env -r ./test/register-loader.js --recursive "test/**/*.{test,spec}.{${fileExtension},${fileExtension}x}"`,
             'test:watch': `${runCmd} test:runner -- --watch --parallel -r ./test/mocha-watch-cleanup-after-each.js`
           });
-        } else if(apiApp) {
+        } else if (apiApp) {
           if (typescript) {
             files.add(
               `${generatorDir}/api-app/typescript/*`,
