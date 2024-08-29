@@ -22,7 +22,7 @@ const plugin = {
         before: ['@gasket/plugin-lint']
       },
       handler: async function create(gasket, context) {
-        const {files, pkg, typescript, apiApp} = context;
+        const { files, pkg, typescript, apiApp } = context;
         const generatorDir = `${__dirname}/../generator`;
         const isReactProject = pkg.has('dependencies', 'react');
 
@@ -41,10 +41,7 @@ const plugin = {
             '@testing-library/jest-dom': devDependencies['@testing-library/jest-dom'],
             'jest-environment-jsdom': devDependencies['jest-environment-jsdom']
           });
-        }
-
-        // TODO: refactor
-        if (apiApp) {
+        } else if (apiApp) {
           if (typescript) {
             pkg.add('devDependencies', {
               '@types/jest': devDependencies['@types/jest'],
@@ -62,9 +59,9 @@ const plugin = {
               'cross-env': devDependencies['cross-env']
             });
             pkg.add('scripts', {
-              "test": "cross-env GASKET_ENV=test NODE_OPTIONS='--unhandled-rejections=strict --experimental-vm-modules' jest",
-              "test:watch": "npm run test -- --watch",
-              "test:coverage": "npm run test -- --coverage",
+              'test': "cross-env GASKET_ENV=test NODE_OPTIONS='--unhandled-rejections=strict --experimental-vm-modules' jest",
+              'test:watch': 'npm run test -- --watch',
+              'test:coverage': 'npm run test -- --coverage'
             });
           }
         } else {
@@ -74,12 +71,6 @@ const plugin = {
             'test:coverage': 'jest --coverage'
           });
         }
-        // TODO: refactor
-        // pkg.add('scripts', {
-        //   'test': 'jest',
-        //   'test:watch': 'jest --watchAll',
-        //   'test:coverage': 'jest --coverage'
-        // });
       }
     },
     metadata(gasket, meta) {

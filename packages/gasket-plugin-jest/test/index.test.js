@@ -1,13 +1,14 @@
 const self = require('../package.json');
 const plugin = require('../lib/index.js');
-const { name, version, description } = require('../package');
+const { name, version, description, devDependencies } = require('../package');
 
 describe('Plugin', function () {
   /**
    * Create a new project
+   * @param rest
    * @returns {Promise<object>} project
    */
-  async function create() {
+  async function create(rest = {}) {
     const pkg = {};
 
     await plugin.hooks.create.handler({}, {
@@ -17,7 +18,8 @@ describe('Plugin', function () {
           pkg[key] = { ...pkg[key], ...value };
         },
         has: (key, value) => !!pkg[key] && !!pkg[key][value]
-      }
+      },
+      ...rest
     });
 
     return { pkg };
@@ -150,6 +152,41 @@ describe('Plugin', function () {
       const { pkg } = await create();
 
       expect(pkg.scripts.test).toEqual('jest');
+    });
+  });
+
+  describe('apiApp', function () {
+    let mockContext;
+    beforeEach(() => {
+      mockContext = {
+        typescript: false,
+        apiApp: true
+      };
+    });
+
+    it('sets up an API app', async function () {
+      const { pkg } = await create(mockContext);
+
+      expect(pkg.devDependencies['cross-env']).toEqual(devDependencies['cross-env']);
+      expect(pkg.scripts).toEqual({
+        'test': "cross-env GASKET_ENV=test NODE_OPTIONS='--unhandled-rejections=strict --experimental-vm-modules' jest",
+        'test:watch': 'npm run test -- --watch',
+        'test:coverage': 'npm run test -- --coverage'
+      });
+    });
+
+    it('sets up an apiApp with typescript', async function () {
+      mockContext.typescript = true;
+      const { pkg } = await create(mockContext);
+
+      expect(pkg.devDependencies['@types/jest']).toEqual(devDependencies['@types/jest']);
+      expect(pkg.devDependencies['ts-jest']).toEqual(devDependencies['ts-jest']);
+      expect(pkg.devDependencies['ts-node']).toEqual(devDependencies['ts-node']);
+      expect(pkg.scripts).toEqual({
+        'test': 'GASKET_ENV=test jest',
+        'test:watch': 'jest --watchAll',
+        'test:coverage': 'jest --coverage'
+      });
     });
   });
 });
