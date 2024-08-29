@@ -50,7 +50,7 @@ const plugin = {
             });
 
             pkg.add('scripts', {
-              'test': 'GASKET_ENV=test jest',
+              'test': 'jest',
               'test:watch': 'jest --watchAll',
               'test:coverage': 'jest --coverage'
             });
@@ -59,7 +59,7 @@ const plugin = {
               'cross-env': devDependencies['cross-env']
             });
             pkg.add('scripts', {
-              'test': "cross-env GASKET_ENV=test NODE_OPTIONS='--unhandled-rejections=strict --experimental-vm-modules' jest",
+              'test': "cross-env NODE_OPTIONS='--unhandled-rejections=strict --experimental-vm-modules' jest",
               'test:watch': 'npm run test -- --watch',
               'test:coverage': 'npm run test -- --coverage'
             });

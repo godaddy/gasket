@@ -1,4 +1,5 @@
 import { defaultHandler } from '../routes';
+import { jest } from '@jest/globals';
 
 describe('Routes', () => {
   let mockRequest, mockResponse;

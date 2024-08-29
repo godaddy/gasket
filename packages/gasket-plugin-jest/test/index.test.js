@@ -169,7 +169,7 @@ describe('Plugin', function () {
 
       expect(pkg.devDependencies['cross-env']).toEqual(devDependencies['cross-env']);
       expect(pkg.scripts).toEqual({
-        'test': "cross-env GASKET_ENV=test NODE_OPTIONS='--unhandled-rejections=strict --experimental-vm-modules' jest",
+        'test': "cross-env NODE_OPTIONS='--unhandled-rejections=strict --experimental-vm-modules' jest",
         'test:watch': 'npm run test -- --watch',
         'test:coverage': 'npm run test -- --coverage'
       });
@@ -183,7 +183,7 @@ describe('Plugin', function () {
       expect(pkg.devDependencies['ts-jest']).toEqual(devDependencies['ts-jest']);
       expect(pkg.devDependencies['ts-node']).toEqual(devDependencies['ts-node']);
       expect(pkg.scripts).toEqual({
-        'test': 'GASKET_ENV=test jest',
+        'test': 'jest',
         'test:watch': 'jest --watchAll',
         'test:coverage': 'jest --coverage'
       });
