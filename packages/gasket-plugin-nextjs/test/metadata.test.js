@@ -20,6 +20,7 @@ describe('metadata', function () {
   it('outputs expected categories', async function () {
     const meta = await metadata(mockGasket, {});
     const expected = [
+      'actions',
       'guides',
       'lifecycles',
       'structures',
