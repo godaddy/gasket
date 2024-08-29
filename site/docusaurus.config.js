@@ -63,6 +63,11 @@ module.exports = {
             position: 'left',
           },
           {
+            to: '/docs/#actions',
+            label: 'Actions',
+            position: 'left',
+          },
+          {
             to: '/docs/modules',
             label: 'Modules',
             position: 'left',

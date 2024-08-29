@@ -5,6 +5,7 @@ const {
   sortModules,
   sortStructures,
   sortCommands,
+  sortActions,
   sortLifecycles,
   sortGuides,
   sortConfigurations
@@ -23,6 +24,9 @@ const detailDocsHelpers = {
   },
   commands: {
     sort: sortCommands
+  },
+  actions: {
+    sort: sortActions
   },
   structures: {
     sort: sortStructures
@@ -111,8 +115,9 @@ class DocsConfigSetBuilder {
 
     // Add files for detail meta types docs
     detailDocsTypes.forEach((metaType) => {
-      if (metaType in moduleData) {
-        moduleData[metaType].forEach((o) => {
+      const { metadata = {} } = moduleData;
+      if (metaType in metadata) {
+        metadata[metaType].forEach((o) => {
           tryAdd(o.link);
         });
       }
@@ -163,7 +168,7 @@ class DocsConfigSetBuilder {
         (moduleData.package && moduleData.package.description)
     } = moduleData;
 
-    const { sourceRoot = moduleData.path } = overrides;
+    const { sourceRoot = moduleData.metadata.path } = overrides;
 
     // Get only the local transforms
     const transforms = this._segregateTransforms(docsSetup.transforms || []);
@@ -186,7 +191,7 @@ class DocsConfigSetBuilder {
       ...overrides,
       transforms,
       files,
-      metadata: moduleData
+      metadata: moduleData.metadata || {}
     };
   }
 
@@ -250,14 +255,14 @@ class DocsConfigSetBuilder {
    * @type {import('../internal').addPlugin}
    */
   async addPlugin(pluginData, docsSetup) {
-    if (this._plugins.find((p) => p.metadata === pluginData)) return;
+    if (this._plugins.find((p) => p.metadata === pluginData.metadata)) return;
 
     // If docsSetup is passed, stick with it. Or, see if gasket.docsSetup in
     // package.json. Finally, fall back to defaults.
     docsSetup =
       docsSetup || getDocsSetupFromPkg(pluginData) || docsSetupDefault;
-
-    let { name, path: sourceRoot } = pluginData;
+    let name = pluginData.name;
+    let { path: sourceRoot } = pluginData.metadata;
     let targetRoot = path.join(this._docsRoot, 'plugins', ...name.split('/'));
 
     if (isAppPlugin.test(pluginData.name)) {
@@ -293,14 +298,13 @@ class DocsConfigSetBuilder {
    * @type {import('../internal').addPreset}
    */
   async addPreset(presetData, docsSetup) {
-    if (this._presets.find((p) => p.metadata === presetData)) return;
+    if (this._presets.find((p) => p.metadata === presetData.metadata)) return;
 
     // If docsSetup is passed, stick with it. Otherwise, look up a docsSetup
     // defined by preset. Or, see if gasket.docsSetup in package.json. Finally,
     // fall back to defaults.
     docsSetup =
       docsSetup ||
-      // @ts-expect-error: TODO: fix this
       (presetData.module && presetData.module.docsSetup) ||
       getDocsSetupFromPkg(presetData) ||
       docsSetupDefault;
@@ -327,7 +331,7 @@ class DocsConfigSetBuilder {
    * @type {import('../internal').addModule}
    */
   async addModule(moduleData, docsSetup) {
-    if (this._modules.find((p) => p.metadata === moduleData)) return;
+    if (this._modules.find((p) => p.metadata === moduleData.metadata)) return;
 
     // If docsSetup is passed, stick with it. Otherwise, look up a docsSetup
     // added by plugins. Or, see if gasket.docsSetup in package.json. Finally,
