@@ -14,10 +14,13 @@ function getAppInfo(gasket) {
     const pkgPath = require.resolve(tryPath, { paths: [root] });
     const pkg = require(pkgPath);
     app = {
-      path: path.dirname(pkgPath),
       package: pkg,
       version: pkg.version,
-      name: pkg.name
+      name: pkg.name,
+      metadata: {
+        name: pkg.name,
+        path: path.dirname(pkgPath)
+      }
     };
   } catch (err) {
     // eslint-disable-next-line no-console
@@ -35,19 +38,21 @@ async function getMetadata(gasket) {
     const presets = [];
     const modules = {};
 
-    await gasket.execApply('metadata', async (data, handler) => {
-      const isPreset = isGasketPreset.test(data.name);
-      const isPlugin = isGasketPlugin.test(data.name);
+    await gasket.execApply('metadata', async (plugin, handler) => {
+      const isPreset = isGasketPreset.test(plugin.name);
+      const isPlugin = isGasketPlugin.test(plugin.name);
       const isGasketPackage = isPlugin || isPreset;
+      const pluginData = {
+        ...plugin,
+        metadata: (await handler({ name: plugin.name }))
+      };
 
       if (!isGasketPackage) {
-        const pluginData = await handler(data);
-        pluginData.path = path.join(app.path, 'plugins');
+        pluginData.metadata.path = path.join(app.metadata.path, 'plugins');
         plugins.push(pluginData);
       } else {
-        const pluginData = await handler(data);
-        pluginData.path = path.dirname(path.join(require.resolve(pluginData.name), '..'));
-        const { dependencies, devDependencies } = require(path.join(pluginData.path, 'package.json'));
+        pluginData.metadata.path = path.dirname(path.join(require.resolve(pluginData.name), '..'));
+        const { dependencies, devDependencies } = require(path.join(pluginData.metadata.path, 'package.json'));
 
         if (isPreset)
           presets.push(pluginData);
@@ -62,8 +67,10 @@ async function getMetadata(gasket) {
             name: mod.name,
             version: mod.version,
             description: mod.description,
-            link: 'README.md',
-            path: path.dirname(path.join(require.resolve(name), '..'))
+            metadata: {
+              link: 'README.md',
+              path: path.dirname(path.join(require.resolve(name), '..'))
+            }
           };
         }
       }

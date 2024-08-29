@@ -17,6 +17,18 @@ module.exports = function metadataHook(gasket, meta) {
 
   const data = {
     ...meta,
+    actions: [
+      {
+        name: 'getNextConfig',
+        description: 'Get the Next.js config',
+        link: 'README.md'
+      },
+      {
+        name: 'getNextRoute',
+        description: 'Get the Next.js route',
+        link: 'README.md'
+      }
+    ],
     guides: [
       {
         name: 'Next.js Routing Guide',

@@ -56,7 +56,7 @@ files that exist under a docs directory. Additionally, if any metadata defines
 
 The `docsSetup` lifecycle allows plugin developers to tune the docsConfig that
 is compile for their plugin. Files or file globs can be set, and links changed
-as needed. Any lifecycle hooks should return a [DocsSetup] object.
+as needed. Any lifecycle hooks should return a `docsSetup` object.
 The `defaults` are an available option to reference.
 
 #### Example setup
@@ -117,7 +117,7 @@ should be able affect all collected docs, the global property should be set to
 true.
 
 Additional data is available to handlers to help with transformations which can
-be read about in the [DocsTransformHandler] API.
+be read about in the `docsTransformHandler` API.
 
 #### Modules
 
@@ -202,7 +202,7 @@ export default {
 ### Presets
 
 Presets can also set up custom docs. This is done by defining a `docsSetup`
-property object on the module, which will be used to establish the [DocsConfig]
+property object on the module, which will be used to establish the `docsConfig`
 for the preset.
 
 ```js
@@ -219,8 +219,8 @@ export default {
 ## How it works
 
 The docs command will gather info about plugins and modules from their
-[metadata] and [docsSetup], and will assemble a [docsConfig] for each. These
-configs are are organized by type in a [docsConfigSet], which is then used to
+[metadata] and `docsSetup`, and will assemble a `docsConfig` for each. These
+configs are are organized by type in a `docsConfigSet`, which is then used to
 copy files to the outputDir, and perform any [transforms] as needed. An index is
 generated in markdown from docsConfigSet which serves as the entry in the doc
 files. If a plugin is installed that hooks the [docsView] lifecycle, it can
@@ -234,16 +234,8 @@ serve the content in a more viewable fashion for the user.
 
 [transforms]: #transforms
 [docsView]: #docsview
-
-[DocsSetup]: docs/api.md#DocsSetup
-[DocsConfig]: docs/api.md#DocsConfig
-[DocsConfigSet]: docs/api.md#DocsConfigSet
-[DocsTransform]: docs/api.md#DocsTransform
-[DocsTransformHandler]: docs/api.md#DocsTransformHandler
-
 [@gasket/plugin-metadata]: /packages/gasket-plugin-metadata/README.md
 [@gasket/plugin-docusaurus]: /packages/gasket-plugin-docusaurus/README.md
 [metadata]: /packages/gasket-plugin-metadata/README.md
-
 [rustdoc]:https://doc.rust-lang.org/rustdoc/
 [RegExp]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions

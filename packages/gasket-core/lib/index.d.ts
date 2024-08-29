@@ -57,6 +57,7 @@ declare module '@gasket/core' {
     actions?: {
       [K in ActionId]?: ActionHandler<K>;
     };
+    metadata?: Record<string, any>;
   };
 
   export type Preset = Omit<Plugin, 'actions'>;
