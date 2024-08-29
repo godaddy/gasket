@@ -209,6 +209,13 @@ const plugin = {
     metadata(gasket, meta) {
       return {
         ...meta,
+        actions: [
+          {
+            name: 'startServer',
+            description: 'Start the server',
+            link: 'README.md'
+          }
+        ],
         lifecycles: [
           {
             name: 'devProxy',

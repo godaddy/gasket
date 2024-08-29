@@ -35,6 +35,18 @@ const plugin = {
       const { localesDir } = getIntlConfig(gasket);
       return {
         ...meta,
+        actions: [
+          {
+            name: 'getIntlLocale',
+            description: 'Get the current locale',
+            link: 'README.md'
+          },
+          {
+            name: 'getIntlManager',
+            description: 'Get the IntlManager instance',
+            link: 'README.md'
+          }
+        ],
         lifecycles: [
           {
             name: 'intlLocale',
