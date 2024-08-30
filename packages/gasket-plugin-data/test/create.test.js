@@ -78,11 +78,11 @@ describe('create', function () {
     expect(mockContext.gasketConfig.addImport).toHaveBeenCalledWith('gasketData', './gasket-data.ts');
   });
 
-  it('adds tsconfig alias for typescript w/Custom Server', async function () {
+  it('adds .js import for customServer', async function () {
     mockContext.typescript = true;
     mockContext.nextServerType = 'customServer';
     await plugin.hooks.create({}, mockContext);
-    expect(mockContext.gasketConfig.addImport).toHaveBeenCalledWith('gasketData', '@/gasket-data');
+    expect(mockContext.gasketConfig.addImport).toHaveBeenCalledWith('gasketData', './gasket-data.js');
   });
 
   it('adds data var to the gasket config', async function () {
