@@ -1,3 +1,6 @@
+import gasket from '../gasket.js';
+
+const app = gasket.actions.getFastifyApp();
 {{#if useSwagger}}
 /**
 * @swagger
