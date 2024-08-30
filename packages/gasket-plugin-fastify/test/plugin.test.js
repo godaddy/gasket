@@ -171,10 +171,7 @@ describe('create', () => {
       pkg: { add: jest.fn() },
       files: { add: jest.fn() },
       gasketConfig: {
-        addPlugin: jest.fn(),
-        add: jest.fn(),
-        addImport: jest.fn().mockReturnThis(),
-        injectValue: jest.fn()
+        addPlugin: jest.fn()
       },
       apiApp: true
     };
@@ -208,12 +205,6 @@ describe('create', () => {
   it('adds the plugin import to the gasket file',
     expectCreatedWith(({ gasketConfig }) => {
       expect(gasketConfig.addPlugin).toHaveBeenCalledWith('pluginFastify', name);
-    })
-  );
-
-  it('add config to the gasket file',
-    expectCreatedWith(({ gasketConfig }) => {
-      expect(gasketConfig.add).toHaveBeenCalledWith('fastify', { routes: [] });
     })
   );
 });
