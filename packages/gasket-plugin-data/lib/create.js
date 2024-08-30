@@ -28,12 +28,9 @@ async function create(gasket, {
     .addPlugin('pluginData', name);
 
   // Default server TS use .ts
-  // Non-TS & API TS/JS use .js
-  // Custom Server TS use alias
+  // Else use .js
   let importFile = './gasket-data.js';
-  if (typescript && nextServerType === 'customServer') {
-    importFile = '@/gasket-data'; // TS path alias
-  } else if (typescript && nextServerType !== 'customServer' && !apiApp) {
+  if (typescript && nextServerType !== 'customServer' && !apiApp) {
     importFile = './gasket-data.ts';
   }
 
