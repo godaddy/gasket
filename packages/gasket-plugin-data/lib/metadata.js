@@ -4,6 +4,18 @@
 function metadata(gasket, meta) {
   return {
     ...meta,
+    actions: [
+      {
+        name: 'getGasketData',
+        description: 'Get the Gasket data',
+        link: 'README.md'
+      },
+      {
+        name: 'getPublicGasketData',
+        description: 'Get the public Gasket data',
+        link: 'README.md'
+      }
+    ],
     lifecycles: [
       {
         name: 'gasketData',

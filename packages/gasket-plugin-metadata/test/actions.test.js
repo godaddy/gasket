@@ -106,17 +106,17 @@ describe('actions', () => {
   });
 
   it('augments the metadata with data from the lifecycle hooks', async function () {
-    expect(metadata.plugins[0]).toHaveProperty('modified', true);
+    expect(metadata.plugins[0].metadata).toHaveProperty('modified', true);
   });
 
   it('loads moduleInfo for modules declared in plugin metadata', async () => {
-    const names = metadata.plugins[0].modules.map(m => m.name);
+    const names = metadata.plugins[0].metadata.modules.map(m => m.name);
     expect(names).toContain('fake-one');
     expect(names).toContain('fake-two');
   });
 
   it('augments moduleInfo metadata for modules declared modules', async () => {
-    const result = metadata.plugins[0].modules.find(mod => mod.name === 'fake-one');
+    const result = metadata.plugins[0].metadata.modules.find(mod => mod.name === 'fake-one');
     expect(result).toHaveProperty('extra', true);
   });
 });

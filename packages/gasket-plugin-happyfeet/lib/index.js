@@ -16,6 +16,18 @@ const plugin = {
         // flag pod to be removed from LB
         throw new HealthCheckError(`Happy Feet entered an unhappy state`);
       }
+    },
+    metadata(gasket, meta) {
+      return {
+        ...meta,
+        actions: [
+          {
+            name: 'getHappyFeet',
+            description: 'Get the Happy Feet instance',
+            link: 'README.md'
+          }
+        ]
+      }
     }
   }
 };

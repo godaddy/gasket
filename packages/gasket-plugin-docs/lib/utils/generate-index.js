@@ -60,18 +60,30 @@ function generateContent(docsConfigSet) {
     if (!docs || !docs.length) return;
 
     addContent(`## ${sectionTitle}`);
+
     addContent(sectionDesc);
+
+    const headers = includeVersion
+      ? ['Name', 'Version', 'Description'].concat(additionalHeaders)
+      : ['Name', 'Description'].concat(additionalHeaders);
     addTable([
-      includeVersion
-        ? ['Name', 'Version', 'Description'].concat(additionalHeaders)
-        : ['Name', 'Description'].concat(additionalHeaders),
+      headers,
       ...docs.map((moduleDoc) => {
         const additionalHeaderValues = additionalHeaders.map(
           (h) => moduleDoc[h.toLowerCase()]
         );
-        const { name, description, link, version, targetRoot, deprecated } =
-          moduleDoc;
+
+        const {
+          name,
+          description,
+          link,
+          version,
+          targetRoot,
+          deprecated
+        } = moduleDoc;
+
         let itemName = deprecated ? `${name} (deprecated)` : name;
+
         if (link || linkFallbacks) {
           const ref = uniqueRef(itemName);
           itemName = ref === name ? `[${itemName}]` : `[${itemName}][${ref}]`;
@@ -91,15 +103,23 @@ function generateContent(docsConfigSet) {
   addSection('Guides', 'Help and explanations docs', docsConfigSet.guides, {
     includeVersion: false
   });
+
   addSection('Commands', 'Available commands', docsConfigSet.commands, {
     includeVersion: false
   });
+
+  addSection('Actions', 'Available actions', docsConfigSet.actions, {
+    includeVersion: false
+  });
+
   addSection('Lifecycles', 'Available lifecycles', docsConfigSet.lifecycles, {
     includeVersion: false
   });
+
   addSection('Structures', 'Available structure', docsConfigSet.structures, {
     includeVersion: false
   });
+
   addSection('Presets', 'All configured presets', docsConfigSet.presets);
   addSection('Plugins', 'All configured plugins', docsConfigSet.plugins);
   addSection(

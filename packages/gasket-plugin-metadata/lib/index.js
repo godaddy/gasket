@@ -16,6 +16,13 @@ module.exports = {
       const mod = require('@gasket/core/package.json');
       return {
         ...meta,
+        actions: [
+          {
+            name: 'getMetadata',
+            description: 'Get the metadata for the plugins & modules',
+            link: 'README.md'
+          }
+        ],
         lifecycles: [{
           name: 'metadata',
           method: 'execApply',
