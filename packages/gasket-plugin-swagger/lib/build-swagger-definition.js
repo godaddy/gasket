@@ -11,6 +11,8 @@ module.exports = async function buildSwaggerDefinition(gasket, options) {
 
   if (jsdoc) {
     const target = path.join(root, definitionFile);
+    const { version } = require(path.join(root, 'package.json'));
+    jsdoc.definition.info.version = version;
     const swaggerSpec = swaggerJSDoc(jsdoc);
 
     if (!swaggerSpec) {

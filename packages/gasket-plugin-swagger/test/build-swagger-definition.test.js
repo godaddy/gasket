@@ -12,7 +12,7 @@ jest.mock('fs', () => ({
 }));
 
 jest.mock('swagger-jsdoc', () => {
-  return jest.fn();
+  return jest.fn(() => ({}));
 });
 
 const mockSafeDump = jest.fn();
@@ -31,6 +31,14 @@ jest.mock('/path/to/app/swagger.json', () => ({ data: true }), {
   virtual: true
 });
 
+jest.mock('/path/to/app/package.json', () => ({
+  version: '1.0.0'
+}), { virtual: true });
+
+jest.mock('path/to/root/from/options/package.json', () => ({
+  version: '1.0.0'
+}), { virtual: true });
+
 describe('build-swagger-definition', function () {
   let mockGasket;
 
@@ -46,7 +54,10 @@ describe('build-swagger-definition', function () {
           definitionFile: 'swagger.json',
           jsdoc: {
             definition: {
-              openapi: '3.0.0'
+              openapi: '3.0.0',
+              info: {
+                version: 'mock'
+              }
             },
             apis: ['fake.js']
           }
@@ -63,6 +74,11 @@ describe('build-swagger-definition', function () {
   it('sets up swagger spec', async function () {
     await buildSwaggerDefinition(mockGasket);
     expect(swaggerJSDoc).toHaveBeenCalled();
+  });
+
+  it('sets the version to be the package.json version', async function () {
+    await buildSwaggerDefinition(mockGasket);
+    expect(mockGasket.config.swagger.jsdoc.definition.info.version).toEqual('1.0.0');
   });
 
   it('writes spec file', async function () {
@@ -102,7 +118,10 @@ describe('build-swagger-definition', function () {
         definitionFile: 'swagger-options.json',
         jsdoc: {
           definition: {
-            openapi: '3.0.0-options'
+            openapi: '3.0.0-options',
+            info: {
+              version: 'mock-options'
+            }
           },
           apis: ['fake-options.js']
         }
