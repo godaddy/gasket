@@ -112,12 +112,13 @@ declare module '@gasket/core' {
 
   export interface Gasket extends GasketEngine {
     constructor(config: GasketConfigDefinition);
+    new (config: GasketConfigDefinition): Gasket
 
     command: {
       id: string;
     };
     config: GasketConfig;
-    new (config: GasketConfigDefinition): Gasket
+    symbol: Symbol;
     traceBranch(): GasketTrace
     traceRoot(): Gasket
   }

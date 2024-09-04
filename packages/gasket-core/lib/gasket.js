@@ -51,11 +51,11 @@ export class Gasket {
     });
 
     this.hook = this.engine.hook.bind(this.engine);
-    // allow branches to reach back to the root
-    this.root = () => this;
-
     this.config = config;
     this.command = null;
+
+    // Can be used as a key to identify a gasket instance
+    this.symbol = Symbol('gasket');
 
     // @ts-ignore
     this.execSync('init');

@@ -74,6 +74,14 @@ describe('makeGasket', () => {
     expect(gasket).toBeInstanceOf(Gasket);
   });
 
+  it('exposes a symbol which can be used for keying in traces', () => {
+    const gasket = makeGasket({ plugins: [mockPlugin] });
+    expect(gasket.symbol).toEqual(expect.any(Symbol));
+
+    expect(gasket.symbol).toBe(gasket.traceBranch().symbol);
+    expect(gasket.symbol).toBe(gasket.traceBranch().traceBranch().symbol);
+  });
+
   it('defaults env to local', () => {
     const gasket = makeGasket({ plugins: [mockPlugin] });
     expect(gasket.config.env).toEqual('local');
