@@ -129,7 +129,7 @@ const plugin = {
           definition: {
             info: {
               title: context.appName,
-              version: '1.0.0'
+              version: '0.0.0'
             }
           },
           apis: ['./routes/*']
