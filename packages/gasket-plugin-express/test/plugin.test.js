@@ -48,6 +48,9 @@ describe('createServers', () => {
     };
 
     gasket = {
+      actions: {
+        getExpressApp: jest.fn().mockReturnValue(app)
+      },
       middleware: {},
       logger: {
         warn: jest.fn()
@@ -76,6 +79,7 @@ describe('createServers', () => {
   });
 
   it('returns the handler as http2 bridge app', async function () {
+    gasket.actions.getExpressApp.mockReturnValueOnce(bridgedApp);
     gasket.config.http2 = 8080;
     const result = await plugin.hooks.createServers(gasket);
     expect(result).toEqual({ handler: bridgedApp });
@@ -84,27 +88,6 @@ describe('createServers', () => {
   it('executes the `express` lifecycle', async function () {
     await plugin.hooks.createServers(gasket, {});
     expect(gasket.exec).toHaveBeenCalledWith('express', app);
-  });
-
-  it('allows for an array of route functions', async function () {
-    const route = jest.fn();
-    gasket.config.express = { routes: [route] };
-    await plugin.hooks.createServers(gasket, {});
-    expect(route).toHaveBeenCalled();
-  });
-
-  it('allows for an array of route functions with async', async function () {
-    const route = jest.fn();
-    gasket.config.express = { routes: [async () => route()] };
-    await plugin.hooks.createServers(gasket, {});
-    expect(route).toHaveBeenCalled();
-  });
-
-  it('throws an error if a route is not a function', async function () {
-    gasket.config.express = { routes: [1] };
-    await expect(plugin.hooks.createServers(gasket, {})).rejects.toThrow(
-      'Route must be a function'
-    );
   });
 
   it('executes the `errorMiddleware` lifecycle', async function () {
@@ -219,9 +202,14 @@ describe('create', () => {
     })
   );
 
-  it('add config to the gasket file',
-    expectCreatedWith(({ gasketConfig }) => {
-      expect(gasketConfig.add).toHaveBeenCalledWith('express', { routes: [] });
-    })
-  );
+  it('respects the typescript flag', async () => {
+    mockContext.typescript = false;
+    expectCreatedWith(({ files }) => {
+      expect(files.add).toHaveBeenCalledWith(expect.stringContaining('.js'));
+    });
+    mockContext.typescript = true;
+    expectCreatedWith(({ files }) => {
+      expect(files.add).toHaveBeenCalledWith(expect.stringContaining('.ts'));
+    });
+  });
 });

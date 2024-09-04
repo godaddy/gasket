@@ -1,14 +1,14 @@
 /// <reference types="create-gasket-app" />
 /// <reference types="@gasket/plugin-metadata" />
 
+const actions = require('./actions');
+const create = require('./create');
 const middleware = require('./middleware');
-const preboot = require('./preboot');
 const configure = require('./configure');
 const {
   name,
   version,
-  description,
-  devDependencies
+  description
 } = require('../package.json');
 
 /** @type {import('@gasket/core').Plugin} */
@@ -16,27 +16,21 @@ const plugin = {
   name,
   version,
   description,
+  actions,
   hooks: {
     configure,
-    // @ts-expect-error - TODO: will be cleaned up in the apm tune up ticket
-    // https://godaddy-corp.atlassian.net/browse/PFX-628
-    preboot,
-    create(gasket, { pkg, files }) {
-      const generatorDir = `${__dirname}/../generator`;
-
-      pkg.add('dependencies', {
-        'elastic-apm-node': devDependencies['elastic-apm-node']
-      });
-      pkg.add('scripts', {
-        start: 'gasket start --require ./setup.js'
-      });
-
-      files.add(`${generatorDir}/*`);
-    },
+    create,
     middleware,
     metadata(gasket, meta) {
       return {
         ...meta,
+        actions: [
+          {
+            name: 'getApmTransaction',
+            description: 'Get the APM transaction data',
+            link: 'README.md'
+          }
+        ],
         configurations: [
           {
             name: 'elasticAPM',

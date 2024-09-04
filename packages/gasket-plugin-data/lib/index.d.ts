@@ -1,6 +1,4 @@
-import { MaybeAsync } from '@gasket/core';
-import type { OutgoingMessage } from 'http';
-
+import { MaybeAsync, Plugin } from '@gasket/core';
 
 export interface PublicGasketData extends Record<string, any> {
 }
@@ -21,7 +19,7 @@ declare module '@gasket/core' {
 
   export interface GasketActions {
     getGasketData(): Promise<GasketData>
-    getPublicGasketData(req: GasketRequest): Promise<PublicGasketData>
+    getPublicGasketData(req: GasketRequest | IncomingMessage): Promise<PublicGasketData>
   }
 
   export interface HookExecTypes {
@@ -34,9 +32,17 @@ declare module '@gasket/core' {
   }
 }
 
-export default {
+declare module 'create-gasket-app' {
+  export interface CreateContext {
+    typescript: boolean;
+    nextServerType: 'appRouter' | 'pageRouter' | 'customServer';
+    apiApp: boolean;
+  }
+}
+
+const plugin: Plugin = {
   name: '@gasket/plugin-data',
-  version: '',
-  description: '',
   hooks: {}
 };
+
+export = plugin;

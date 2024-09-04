@@ -5,43 +5,52 @@ const { name, version, description } = require('../package.json');
 const actions = require('./actions');
 const configure = require('./configure');
 const init = require('./init');
-const middleware = require('./middleware');
-const serve = require('./serve');
 const serviceWorkerCacheKey = require('./service-worker-cache-key');
 const apmTransaction = require('./apm-transaction');
-const workbox = require('./workbox');
+const publicGasketData = require('./public-gasket-data');
 
 const { getIntlConfig } = require('./configure');
 const create = require('./create');
+const postCreate = require('./post-create');
+const prompt = require('./prompt');
 const build = require('./build');
-const webpackConfig = require('./webpack-config');
 
 /** @type {import('@gasket/core').Plugin} */
 const plugin = {
   name,
   version,
   description,
+  actions,
   hooks: {
-    actions,
     init,
     configure,
     create,
+    postCreate,
+    prompt,
     build,
-    webpackConfig,
-    express: serve,
-    fastify: serve,
-    middleware,
     apmTransaction,
-    workbox,
+    publicGasketData,
     serviceWorkerCacheKey,
     metadata(gasket, meta) {
       const { localesDir } = getIntlConfig(gasket);
       return {
         ...meta,
+        actions: [
+          {
+            name: 'getIntlLocale',
+            description: 'Get the current locale',
+            link: 'README.md'
+          },
+          {
+            name: 'getIntlManager',
+            description: 'Get the IntlManager instance',
+            link: 'README.md'
+          }
+        ],
         lifecycles: [
           {
             name: 'intlLocale',
-            method: 'execWaterfall',
+            method: 'execWaterfallSync',
             description: 'Set the language for which locale files to load',
             link: 'README.md#intlLocale',
             parent: 'middleware'
@@ -62,22 +71,10 @@ const plugin = {
             type: 'object'
           },
           {
-            name: 'intl.basePath',
+            name: 'intl.defaultLocaleFilePath',
             link: 'README.md#configuration',
-            description: 'Base URL where locale files are served',
-            type: 'string'
-          },
-          {
-            name: 'intl.defaultPath',
-            link: 'README.md#configuration',
-            description: 'Path to endpoint with JSON files',
-            default: '/locales',
-            type: 'string'
-          },
-          {
-            name: 'intl.localesPath',
-            link: 'README.md#locals-path',
-            description: 'URL endpoint where static JSON files are available',
+            description: 'Lookup path to locale files',
+            default: 'locales',
             type: 'string'
           },
           {
@@ -104,21 +101,14 @@ const plugin = {
             link: 'README.md#configuration',
             description: 'Path to on-disk directory where locale files exists',
             type: 'string',
-            default: './public/locales'
+            default: './locales'
           },
           {
-            name: 'intl.manifestFilename',
+            name: 'intl.managerFilename',
             link: 'README.md#configuration',
-            description: 'Change the name of the manifest file',
+            description: 'Change the name of the IntlManager file',
             type: 'string',
-            default: 'locales-manifest.json'
-          },
-          {
-            name: 'intl.serveStatic',
-            link: 'README.md#configuration',
-            description: 'Enables ability to serve static locale files',
-            type: 'boolean | string',
-            default: 'locales-manifest.json'
+            default: 'intl.js'
           },
           {
             name: 'intl.modules',

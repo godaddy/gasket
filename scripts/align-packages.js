@@ -34,22 +34,21 @@ const depVersions = {
 
   'react': '^18.2.0',
   'react-dom': '^18.2.0',
-  'react-intl': '^6.0.0',
+  'react-intl': '^6.6.8',
   'prop-types': '^15.8.1',
   'redux': '^4.0.5',
   'next': '^14.0.0',
-  'next-redux-wrapper': '^8.0.0',
   'jsdom': '^20.0.0',
 
   'babel-eslint': '^10.1.0',
   'eslint': '^8.56.0',
-  'eslint-config-godaddy': '^7.1.0',
-  'eslint-config-godaddy-react': '^9.0.1',
+  'eslint-config-godaddy': '^7.1.1',
+  'eslint-config-godaddy-react': '^9.1.0',
   'eslint-plugin-json': '^3.1.0',
-  'eslint-plugin-jest': '^27.6.3',
-  'eslint-plugin-mocha': '^10.2.0',
-  'eslint-plugin-react': '^7.33.2',
-  'eslint-plugin-unicorn': '^44.0.0',
+  'eslint-plugin-jest': '^28.6.0',
+  'eslint-plugin-mocha': '^10.5.0',
+  'eslint-plugin-react': '^7.35.0',
+  'eslint-plugin-unicorn': '^55.0.0',
 
   'deepmerge': '^4.3.1',
   'diagnostics': '^2.0.2',
@@ -70,11 +69,9 @@ const depVersions = {
  * @type {Object.<string,string>}
  */
 const peerDepVersions = {
-  'next': '>=10.2.0 <= 13.1.1 || ^14',
-  'prop-types': '^15',
-  'react': '^16 || ^17 || ^18',
-  'react-dom': '^16 || ^17 || ^18',
-  'react-intl': '<7.0.0',
+  'next': '^14',
+  'react': '^18',
+  'react-dom': '^18',
   'redux': '^3.7.2 || ^4.0.1'
 };
 
@@ -87,12 +84,13 @@ const pkgOrder = [
   'private',
   'version',
   'description',
+  'type',
+  'bin',
   'main',
   'browser',
-  'module',
-  'bin',
   'types',
   'files',
+  'exports',
   'directories',
   'scripts',
   'repository',
@@ -132,6 +130,8 @@ const scriptsOrder = [
   'test:client',
   'test:server',
   'posttest',
+  'typecheck',
+  'typecheck:watch',
   'build',
   'build:watch',
   'prepack',
@@ -330,7 +330,6 @@ function setupTypes(pkgJson) {
     '@gasket/plugin-workbox', // Skip until v7 as workbox-build@4 has no types
     '@gasket/preset-api',
     '@gasket/preset-nextjs',
-    '@gasket/preset-pwa',
     '@gasket/resolve',
     '@gasket/typescript-tests',
     '@gasket/repository'
@@ -361,6 +360,10 @@ async function fixupPackage(pkgPath) {
   setupTypes(pkgJson);
   checkScripts(pkgJson);
   checkMaintainers(pkgJson);
+
+  if (pkgJson.module) {
+    throw new Error('module field is deprecated. Use exports instead.');
+  }
 
   pkgJson = sortKeys(pkgJson, null, orderedSort(pkgOrder));
   pkgJson = sortKeys(pkgJson, 'scripts', orderedSort(scriptsOrder));

@@ -1,3 +1,4 @@
+import type { Plugin } from '@gasket/core';
 import type { CreateContext } from 'create-gasket-app';
 
 export interface EslintConfig {
@@ -7,6 +8,7 @@ export interface EslintConfig {
   };
   env?: Record<string, boolean>;
   rules?: Record<string, any>;
+  parser?: string;
 }
 
 export interface StylelintConfig {
@@ -25,6 +27,7 @@ declare module 'create-gasket-app' {
     eslintConfig?: string;
     stylelintConfig?: string;
     addStylelint?: boolean;
+    typescript?: boolean;
   }
 
   export interface PackageJson {
@@ -35,9 +38,9 @@ declare module 'create-gasket-app' {
   }
 }
 
-export default {
+const plugin: Plugin = {
   name: '@gasket/plugin-lint',
-  version: '',
-  description: '',
   hooks: {}
 };
+
+export = plugin;

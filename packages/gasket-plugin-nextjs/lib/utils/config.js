@@ -3,23 +3,23 @@
 
 /**
  * Bring forward configuration from intl plugin to config for next.
- * @param {import("@gasket/core").Gasket} gasket - The gasket API
+ * @param {import('@gasket/core').Gasket} gasket - The gasket API
  * @param {object} config - Configuration to pass to Nextjs
  * @private
  */
 function forwardIntlConfig(gasket, config) {
   const { logger } = gasket;
 
-  const { intl: intlConfig = {} } = gasket.config;
+  const { intl: intlConfig } = gasket.config;
 
-  if (intlConfig.nextRouting === false) {
+  if (intlConfig?.nextRouting === false) {
     return;
   }
 
   // make a copy of i18n for mutating
   const i18n = { ...(config.i18n || {}) };
 
-  if (intlConfig.locales) {
+  if (intlConfig?.locales) {
     if (i18n.locales) {
       logger.warn(
         'Gasket config has both `intl.locales` (preferred) and `nextConfig.i18n.locales`'
@@ -41,13 +41,12 @@ function forwardIntlConfig(gasket, config) {
 /**
  * Small helper function that creates nextjs configuration from the gasket
  * configuration.
- * @param {import("@gasket/core").Gasket}  gasket The gasket API.
- * @param {boolean} includeWebpackConfig `true` to generate webpack config
- * @param   {object} [nextConfig]           Initial next config
- * @returns {Promise<object>} The configuration data for Nextjs
+ * @param {import('@gasket/core').Gasket}  gasket The gasket API.
+ * @param {import('next').NextConfig} nextConfig The nextjs configuration.
+ * @returns {import('@gasket/core').MaybeAsync<import('next').NextConfig>} configuration data for nextjs.
  * @private
  */
-function createConfig(gasket, includeWebpackConfig = true, nextConfig = {}) {
+function createConfig(gasket, nextConfig = {}) {
   const config = {
     poweredByHeader: false,
     ...(gasket.config?.nextConfig || {}),
@@ -56,17 +55,15 @@ function createConfig(gasket, includeWebpackConfig = true, nextConfig = {}) {
 
   forwardIntlConfig(gasket, config);
 
-  if (includeWebpackConfig) {
-    const { webpack: existingWebpack } = config;
+  const { webpack: existingWebpack } = config;
 
-    // Add webpack property to nextConfig and wrap existing
-    config.webpack = function webpack(webpackConfig, data) {
-      if (typeof existingWebpack === 'function') {
-        webpackConfig = existingWebpack(webpackConfig, data);
-      }
-      return gasket.actions.getWebpackConfig(webpackConfig, data);
-    };
-  }
+  // Add webpack property to nextConfig and wrap existing
+  config.webpack = function webpack(webpackConfig, data) {
+    if (typeof existingWebpack === 'function') {
+      webpackConfig = existingWebpack(webpackConfig, data);
+    }
+    return gasket.actions.getWebpackConfig(webpackConfig, data);
+  };
 
   // eslint-disable-next-line no-sync
   return gasket.execWaterfallSync('nextConfig', config);

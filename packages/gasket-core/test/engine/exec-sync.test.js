@@ -1,50 +1,84 @@
-import { GasketEngine } from '../../lib/index.js';
+import { jest } from '@jest/globals';
+
+const mockDebug = jest.fn();
+jest.unstable_mockModule('debug', () => ({
+  default: () => mockDebug
+}));
+
+const { GasketTrace }  = await import('../../lib/trace.js');
+const { Gasket }  = await import('../../lib/gasket.js');
 
 describe('The execSync method', () => {
-  let engine;
+  let mockGasket, pluginA, pluginB;
 
   beforeEach(() => {
-    const pluginA = {
+    pluginA = {
       name: 'pluginA',
       hooks: {
-        eventA() {
-          return 1;
-        }
+        eventA: jest.fn((gasket, value) => {
+          return value + 1;
+        })
       }
     };
 
-    const pluginB = {
+    pluginB = {
       name: 'pluginB',
       hooks: {
-        eventA() {
-          return 2;
-        }
+        eventA: jest.fn((gasket, value) => {
+          return value + 2;
+        })
       }
     };
 
-    engine = new GasketEngine([pluginA, pluginB]);
+    mockGasket = new Gasket({ plugins: [pluginA, pluginB] });
   });
 
   afterEach(() => {
-    jest.resetModules();
-    jest.restoreAllMocks();
+    jest.clearAllMocks();
   });
 
   it('returns an Array of results', () => {
-    const result = engine.execSync('eventA');
+    const result = mockGasket.execSync('eventA', 0);
     expect(result).toEqual([1, 2]);
   });
 
   it('resolves to an empty array if nothing hooked the event', () => {
-    const result = engine.execSync('eventB');
+    const result = mockGasket.execSync('eventB', 0);
     expect(result).toEqual([]);
   });
 
   it('works when invoked without a context', () => {
-    const { execSync } = engine;
+    const { execSync } = mockGasket;
 
-    const result = execSync('eventA');
+    const result = execSync('eventA', 0);
 
     expect(result).toEqual([1, 2]);
+  });
+
+  it('invokes hooks with isolate', () => {
+    mockGasket.execSync('eventA', 5);
+
+    expect(pluginA.hooks.eventA).toHaveBeenCalledWith(expect.any(GasketTrace), 5);
+  });
+
+  it('branch isolate passed through', () => {
+    const spy = jest.spyOn(mockGasket.engine, 'execSync');
+    const branch = mockGasket.traceBranch();
+    const result = branch.execSync('eventA', 5);
+
+    expect(spy).toHaveBeenCalledWith(expect.traceProxyOf(branch), 'eventA', 5);
+    expect(result).toEqual([6, 7]);
+  });
+
+  it('has expected trace output', () => {
+    mockDebug.mockClear();
+    mockGasket.execSync('eventA', 5);
+
+    expect(mockDebug.mock.calls).toEqual([
+      ['⋌ root'],
+      ['  ◆ execSync(eventA)'],
+      ['  ↪ pluginA:eventA'],
+      ['  ↪ pluginB:eventA']
+    ]);
   });
 });

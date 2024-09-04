@@ -1,10 +1,13 @@
-import debugPkg from 'debug';
-
-const debug = debugPkg('gasket:engine');
-
 let dynamicNamingId = 0;
 
-class GasketEngine {
+export const lifecycleMethods = [
+  'exec', 'execSync',
+  'execWaterfall', 'execWaterfallSync',
+  'execMap', 'execMapSync',
+  'execApply', 'execApplySync'
+];
+
+export class GasketEngine {
   constructor(plugins) {
     if (!plugins || !Array.isArray(plugins) || !plugins.length) {
       throw new Error('An array of plugins is required');
@@ -12,23 +15,17 @@ class GasketEngine {
 
     this._hooks = {};
     this._plans = {};
-    this._traceDepth = 0;
 
     this._registerPlugins(plugins);
     this._registerHooks();
+    this._registerActions();
 
     // Allow methods to be called without context (to support destructuring)
-    [
-      'exec', 'execWaterfall', 'execMap', 'execApply',
-      'execSync', 'execWaterfallSync', 'execMapSync', 'execApplySync'
-    ].forEach(method => { this[method] = this[method].bind(this); });
+    lifecycleMethods.forEach(method => {
+      this[method] = this[method].bind(this);
+    });
   }
 
-  /**
-   * Resolves plugins
-   * @param plugins
-   * @private
-   */
   _registerPlugins(plugins) {
 
     // map the plugin name to module contents for easy lookup
@@ -90,6 +87,28 @@ class GasketEngine {
       });
   }
 
+  _registerActions() {
+    this.actions = {};
+    const actionPluginMap = {};
+
+    Object.entries(this._pluginMap).forEach(([pluginName, plugin]) => {
+      const { actions } = plugin;
+      if (actions) {
+        Object.keys(actions).forEach(actionName => {
+          if (actionPluginMap[actionName]) {
+            // eslint-disable-next-line no-console
+            console.error(
+              `Action '${actionName}' from '${pluginName}' was registered by '${actionPluginMap[actionName]}'`
+            );
+            return;
+          }
+          actionPluginMap[actionName] = plugin.name;
+          this.actions[actionName] = actions[actionName];
+        });
+      }
+    });
+  }
+
   /**
    * Injects additional lifecycle hooks at runtime.
    * @param {object} options options object
@@ -118,7 +137,9 @@ class GasketEngine {
         after,
         last: !!last
       },
-      callback: handler.bind(null, this)
+      invoke: (gasket, ...args) => {
+        return handler(gasket, ...args);
+      }
     };
 
     delete this._plans[event];
@@ -128,26 +149,27 @@ class GasketEngine {
    * Enables a plugin to introduce new lifecycle events. When
    * calling `exec`, await the `Promise` it returns to wait for the hooks of other
    * plugins to finish.
+   * @param {import("@gasket/core").Gasket} gasket - The gasket instance
    * @param {string} event The event to execute
    * @param {...*} args Args for hooks
    * @returns {Promise<Array>} An array of the data returned by the hooks, in
    *    the order executed
    */
-  exec(event, ...args) {
+  exec(gasket, event, ...args) {
     return this._execWithCachedPlan({
       event,
       type: 'exec',
-      prepare: (hookConfig, trace) => {
+      prepare: (hookConfig) => {
         const subscribers = hookConfig.subscribers;
         const executionPlan = [];
         const pluginThunks = {};
         this._executeInOrder(hookConfig, plugin => {
-          pluginThunks[plugin] = (pluginTasks, ...passedArgs) => {
+          pluginThunks[plugin] = (passedGasket, pluginTasks, ...passedArgs) => {
             pluginTasks[plugin] = Promise
               .all(subscribers[plugin].ordering.after.map(dep => pluginTasks[dep]))
               .then(() => {
-                trace(plugin);
-                return subscribers[plugin].callback(...passedArgs);
+                passedGasket.traceHookStart?.(plugin, event);
+                return subscribers[plugin].invoke(passedGasket, ...passedArgs);
               });
             return pluginTasks[plugin];
           };
@@ -158,7 +180,7 @@ class GasketEngine {
       },
       exec: executionPlan => {
         const pluginTasks = {};
-        return Promise.all(executionPlan.map(fn => fn(pluginTasks, ...args)));
+        return Promise.all(executionPlan.map(fn => fn(gasket, pluginTasks, ...args)));
       }
     });
   }
@@ -168,29 +190,30 @@ class GasketEngine {
    * The synchronous result is an Array of the hook return values. Using synchronous
    * methods limits flexibility, so it's encouraged to use async methods whenever
    * possible.
+   * @param {import("@gasket/core").Gasket} gasket - The gasket instance
    * @param {string} event The event to execute
    * @param {...*} args Args for hooks
    * @returns {Promise<Array>} An array of the data returned by the hooks, in
    *    the order executed
    */
-  execSync(event, ...args) {
+  execSync(gasket, event, ...args) {
     return this._execWithCachedPlan({
       event,
       type: 'execSync',
-      prepare: (hookConfig, trace) => {
+      prepare: (hookConfig) => {
         const subscribers = hookConfig.subscribers;
         const executionPlan = [];
         this._executeInOrder(hookConfig, plugin => {
-          executionPlan.push((...execArgs) => {
-            trace(plugin);
-            return subscribers[plugin].callback(...execArgs);
+          executionPlan.push((passedGasket, ...execArgs) => {
+            passedGasket.traceHookStart?.(plugin, event);
+            return subscribers[plugin].invoke(passedGasket, ...execArgs);
           });
         });
 
         return executionPlan;
       },
       exec: executionPlan => {
-        return executionPlan.map(fn => fn(...args));
+        return executionPlan.map(fn => fn(gasket, ...args));
       }
     });
   }
@@ -200,25 +223,26 @@ class GasketEngine {
    * object map with each key being the name of the plugin and each value the
    * result from the hook. Only the plugins that hooked the event will have keys
    * present in the map.
+   * @param {import("@gasket/core").Gasket} gasket - The gasket instance
    * @param {string} event The event to execute
    * @param {...*} args Args for hooks
    * @returns {Promise<object>} An object map with each key being the name of
    *    the plugin and each value the result from the hook
    */
-  execMap(event, ...args) {
+  execMap(gasket, event, ...args) {
     return this._execWithCachedPlan({
       event,
       type: 'execMap',
-      prepare: (hookConfig, trace) => {
+      prepare: (hookConfig) => {
         const subscribers = hookConfig.subscribers;
         const executionPlan = {};
         this._executeInOrder(hookConfig, plugin => {
-          executionPlan[plugin] = (pluginTasks, ...passedArgs) => {
+          executionPlan[plugin] = (passedGasket, pluginTasks, ...passedArgs) => {
             pluginTasks[plugin] = Promise
               .all(subscribers[plugin].ordering.after.map(dep => pluginTasks[dep]))
               .then(() => {
-                trace(plugin);
-                return subscribers[plugin].callback(...passedArgs);
+                passedGasket.traceHookStart?.(plugin, event);
+                return subscribers[plugin].invoke(passedGasket, ...passedArgs);
               });
             return pluginTasks[plugin];
           };
@@ -233,7 +257,7 @@ class GasketEngine {
           Object
             .entries(executionPlan)
             .map(async ([plugin, thunk]) => {
-              resultMap[plugin] = await thunk(pluginTasks, ...args);
+              resultMap[plugin] = await thunk(gasket, pluginTasks, ...args);
             })
         );
         return resultMap;
@@ -243,22 +267,23 @@ class GasketEngine {
 
   /**
    * Like `execMap`, only all hooks must execute synchronously
+   * @param {import("@gasket/core").Gasket} gasket - The gasket instance
    * @param {string} event The event to execute
    * @param {...*} args Args for hooks
    * @returns {Promise<object>} An object map with each key being the name of
    *    the plugin and each value the result from the hook
    */
-  execMapSync(event, ...args) {
+  execMapSync(gasket, event, ...args) {
     return this._execWithCachedPlan({
       event,
       type: 'execMapSync',
-      prepare: (hookConfig, trace) => {
+      prepare: (hookConfig) => {
         const subscribers = hookConfig.subscribers;
         const executionPlan = [];
         this._executeInOrder(hookConfig, plugin => {
-          executionPlan.push((resultMap, ...passedArgs) => {
-            trace(plugin);
-            resultMap[plugin] = subscribers[plugin].callback(...passedArgs);
+          executionPlan.push((passedGasket, resultMap, ...passedArgs) => {
+            passedGasket.traceHookStart?.(plugin, event);
+            resultMap[plugin] = subscribers[plugin].invoke(passedGasket, ...passedArgs);
           });
         });
 
@@ -266,7 +291,7 @@ class GasketEngine {
       },
       exec(executionPlan) {
         const resultMap = {};
-        executionPlan.forEach(thunk => thunk(resultMap, ...args));
+        executionPlan.forEach(thunk => thunk(gasket, resultMap, ...args));
         return resultMap;
       }
     });
@@ -276,33 +301,35 @@ class GasketEngine {
    * Like `exec`, only it allows you to have each
    * hook execute sequentially, with each result being passed as the first argument
    * to the next hook. It's like an asynchronous version of `Array.prototype.reduce`.
+   * @param {import("@gasket/core").Gasket} gasket - The gasket instance
    * @param {string} event The event to execute
    * @param {any} value Value to pass to initial hook
    * @param {...*} otherArgs Args for hooks
    * @returns {Promise} The result of the final executed hook.
    */
-  execWaterfall(event, value, ...otherArgs) {
+  execWaterfall(gasket, event, value, ...otherArgs) {
+    const type = 'execWaterfall';
     return this._execWithCachedPlan({
       event,
-      type: 'execWaterfall',
-      prepare: (hookConfig, trace) => {
+      type,
+      prepare: (hookConfig) => {
         const subscribers = hookConfig.subscribers;
 
-        return (passedValue, ...args) => {
+        return (passedGasket, passedValue, ...args) => {
           let result = Promise.resolve(passedValue);
 
           this._executeInOrder(hookConfig, plugin => {
             result = result.then((nextValue) => {
-              trace(plugin);
-              return subscribers[plugin].callback(nextValue, ...args);
+              passedGasket.traceHookStart?.(plugin, event);
+              return subscribers[plugin].invoke(passedGasket, nextValue, ...args);
             });
           });
 
           return result;
         };
       },
-      exec: executionPlan => {
-        return executionPlan(value, ...otherArgs);
+      exec: (executionPlan) => {
+        return executionPlan(gasket, value, ...otherArgs);
       }
     });
   }
@@ -312,31 +339,32 @@ class GasketEngine {
    * execute synchronously. The final value is returned synchronously from this call.
    * Using synchronous methods limits flexibility, so it's encouraged to use async
    * methods whenever possible.
+   * @param {import("@gasket/core").Gasket} gasket - The gasket instance
    * @param {string} event The event to execute
    * @param {any} value Value to pass to initial hook
    * @param {...*} otherArgs Args for hooks
    * @returns {Promise} The result of the final executed hook.
    */
-  execWaterfallSync(event, value, ...otherArgs) {
+  execWaterfallSync(gasket, event, value, ...otherArgs) {
     return this._execWithCachedPlan({
       event,
       type: 'execWaterfallSync',
-      prepare: (hookConfig, trace) => {
+      prepare: (hookConfig) => {
         const subscribers = hookConfig.subscribers;
 
-        return (passedValue, ...args) => {
+        return (passedGasket, passedValue, ...args) => {
           let result = passedValue;
 
           this._executeInOrder(hookConfig, plugin => {
-            trace(plugin);
-            result = subscribers[plugin].callback(result, ...args);
+            passedGasket.traceHookStart?.(plugin, event);
+            result = subscribers[plugin].invoke(passedGasket, result, ...args);
           });
 
           return result;
         };
       },
       exec: executionPlan => {
-        return executionPlan(value, ...otherArgs);
+        return executionPlan(gasket, value, ...otherArgs);
       }
     });
   }
@@ -345,26 +373,28 @@ class GasketEngine {
    * Method execution is ordered like `exec`, but you must invoke the handler
    * yourself with explicit arguments. These arguments can be dynamic based on
    * the plugin itself.
+   * @param {import("@gasket/core").Gasket} gasket - The gasket instance
    * @param {string} event The event to execute
    * @param {Function} applyFn Function to apply
    * @returns {Promise<Array>} An array of the data returned by the hooks, in
    *    the order executed
    */
-  execApply(event, applyFn) {
+  execApply(gasket, event, applyFn) {
     return this._execWithCachedPlan({
       event,
       type: 'execApply',
-      prepare: (hookConfig, trace) => {
+      prepare: (hookConfig) => {
         const subscribers = hookConfig.subscribers;
         const executionPlan = [];
         const pluginThunks = {};
         this._executeInOrder(hookConfig, plugin => {
-          pluginThunks[plugin] = (fn, pluginTasks) => {
+          pluginThunks[plugin] = (passedGasket, passedApplyFn, pluginTasks) => {
+            const callback = (...args) => subscribers[plugin].invoke(passedGasket, ...args);
             pluginTasks[plugin] = Promise
               .all(subscribers[plugin].ordering.after.map(dep => pluginTasks[dep]))
               .then(() => {
-                trace(plugin);
-                return fn(this._pluginMap[plugin], subscribers[plugin].callback);
+                passedGasket.traceHookStart?.(plugin, event);
+                return passedApplyFn(this._pluginMap[plugin], callback);
               });
             return pluginTasks[plugin];
           };
@@ -375,35 +405,37 @@ class GasketEngine {
       },
       exec: executionPlan => {
         const pluginTasks = {};
-        return Promise.all(executionPlan.map(fn => fn(applyFn, pluginTasks)));
+        return Promise.all(executionPlan.map(fn => fn(gasket, applyFn, pluginTasks)));
       }
     });
   }
 
   /**
    * Like `execApply`, only all hooks must execute synchronously.
+   * @param {import("@gasket/core").Gasket} gasket - The gasket instance
    * @param {string} event The event to execute
    * @param {Function} applyFn Function to apply
    * @returns {Promise<Array>} An array of the data returned by the hooks, in
    *    the order executed
    */
-  execApplySync(event, applyFn) {
+  execApplySync(gasket, event, applyFn) {
     return this._execWithCachedPlan({
       event,
       type: 'execApplySync',
-      prepare: (hookConfig, trace) => {
+      prepare: (hookConfig) => {
         const subscribers = hookConfig.subscribers;
         const executionPlan = [];
-        this._executeInOrder(hookConfig, plugin => {
-          executionPlan.push(fn => {
-            trace(plugin);
-            return fn(this._pluginMap[plugin], subscribers[plugin].callback);
+        this._executeInOrder(hookConfig, (plugin) => {
+          executionPlan.push((passedGasket, passApplyFn) => {
+            const callback = (...args) => subscribers[plugin].invoke(passedGasket, ...args);
+            passedGasket.traceHookStart?.(plugin, event);
+            return passApplyFn(this._pluginMap[plugin], callback);
           });
         });
         return executionPlan;
       },
       exec: executionPlan => {
-        return executionPlan.map(fn => fn(applyFn));
+        return executionPlan.map(fn => fn(gasket, applyFn));
       }
     });
   }
@@ -412,31 +444,22 @@ class GasketEngine {
    * Exec, but with a cache for plans by type
    * @private
    * @param {object} options options
-   * @param options.event
-   * @param options.type
-   * @param options.prepare
-   * @param options.exec
+   * @param {string} options.event - The event to execute
+   * @param {string} options.type - The type of execution
+   * @param {Function} options.prepare - Prepare function
+   * @param {Function} options.exec - Execution function
    * @returns {*} result
    */
   _execWithCachedPlan({ event, type, prepare, exec }) {
-    debug(`${'  '.repeat(this._traceDepth++)}${type} ${event}`);
-    const traceDepth = this._traceDepth;
-    const trace = plugin => debug(`${'  '.repeat(traceDepth)}${plugin}:${event}`);
-
     const hookConfig = this._getHookConfig(event);
     const plansByType = this._plans[event] || (
       this._plans[event] = {}
     );
     const plan = plansByType[type] || (
-      plansByType[type] = prepare(hookConfig, trace)
+      plansByType[type] = prepare(hookConfig)
     );
-    const result = exec(plan);
-    if (typeof result?.finally === 'function') {
-      return result.finally(() => this._traceDepth--);
-    }
 
-    this._traceDepth--;
-    return result;
+    return exec(plan);
   }
 
   /**
@@ -531,5 +554,3 @@ class GasketEngine {
     });
   }
 }
-
-export default GasketEngine;

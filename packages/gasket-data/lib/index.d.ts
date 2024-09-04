@@ -1,3 +1,6 @@
+import type { Gasket, GasketRequest } from '@gasket/core';
+import type { IncomingMessage } from 'http';
+
 declare module '@gasket/data' {
   export interface GasketData {
     config?: { [key: string | number]: string | undefined };
@@ -12,4 +15,4 @@ declare module '@gasket/data' {
  */
 export function gasketData(): GasketData;
 
-export default gasketData;
+export function resolveGasketData(gasket: Gasket, req: GasketRequest | IncomingMessage ): Promise<GasketData>;

@@ -56,26 +56,25 @@ will make a new instance. Context can include a `store` property directly or on
 
 ## Usage
 
-Gasket apps ship with a default a redux configuration which includes the
-redux-thunk middleware. This should be sufficient for most app needs, however
-the `configureMakeStore` can be used to do any additional configuration. The
-most common use case is to add reducers as the app level.
+This package is only compatible with Gasket apps that use the [pages router] in Next.js with a [custom server].
+
+Gasket apps no longer ship with a default redux configuration which includes the
+redux-thunk middleware. The `configureMakeStore` can be used to do any configuration. The
+most common use case is to add reducers at the app level.
 
 By default, custom store configurations can be placed in a `store.js` at the
 root of your app or in a `./redux` dir. If you wish for it to reside elsewhere,
-direct the `redux.makeStore` property to it in your app's gasket.config.js.
-Custom make store files should use CommonJS imports since they will be executed
-in NodeJS for SSR.
+direct the `redux.makeStore` property to it in your app's `gasket.js` file.
 
 #### Example: adding reducers
 
 ```js
 // ./store.js
 
-const { configureMakeStore } = require('@gasket/redux');
-const reducers = require('./reducers'); // apps reducers
+import { configureMakeStore } from '@gasket/redux';
+import reducers from './reducers'; // apps reducers
 
-module.exports = configureMakeStore({ reducers });
+export default configureMakeStore({ reducers });
 ```
 
 #### Example: initial state
@@ -88,8 +87,8 @@ in your store.
 ```diff
 // ./store.js
 
-const { configureMakeStore } = require('@gasket/redux');
-const myReducers = require('./reducers'); // apps reducers
+import { configureMakeStore } from '@gasket/redux';
+import myReducers './reducers'; // apps reducers
 
 const reducers = {
   ...myReducers,
@@ -98,7 +97,7 @@ const reducers = {
 
 const initialState = { custom: 'example' };
 
-module.exports = configureMakeStore({ initialState, reducers });
+export default configureMakeStore({ initialState, reducers });
 ```
 
 
@@ -107,14 +106,14 @@ module.exports = configureMakeStore({ initialState, reducers });
 ```js
 // ./lib/make-store.js
 
-const sagaMiddleWare = require('redux-saga').default();
-const { configureMakeStore } = require('@gasket/redux');
-const reducers = require('../reducers');
-const rootSaga = require('../sagas');
+import sagaMiddleWare from 'redux-saga'.default();
+import { configureMakeStore } from '@gasket/redux';
+import reducers from '../reducers';
+import rootSaga from '../sagas';
 
 const middleware = [sagaMiddleWare];
 
-module.exports = configureMakeStore({ reducers, middleware }, store => {
+export default configureMakeStore({ reducers, middleware }, store => {
   // The method below is only needed if you are utilizing
   // next-redux-saga wrapper for handling sagas in `getInitialProps`
   // store.runSagaTask = (saga) => {
@@ -127,17 +126,16 @@ module.exports = configureMakeStore({ reducers, middleware }, store => {
 });
 ```
 
-Next in the gasket.config.js, set the `redux.makeStore` field to the file. This
-will start up the app using the custom configuration.
+Next in the gasket.js, set the `redux.makeStore` field to the file. This will start up the app using the custom configuration.
 
 ```js
-// gasket.config.js
+// gasket.js
 
-module.exports = {
+export default makeGasket({
   redux: {
     makeStore: './lib/make-store.js'
   }
-};
+});
 ```
 
 #### Example: passing custom thunk middleware
@@ -149,14 +147,14 @@ passing `thunkMiddleware`. A common use case for this is to use the
 ```js
 // ./store.js
 
-const { configureMakeStore } = require('@gasket/redux');
-const reducers = require('./reducers');
-const thunk = require('redux-thunk');
+import { configureMakeStore } from '@gasket/redux';
+import reducers from './reducers';
+import thunk from 'redux-thunk';
 
 const myExtraArg = {};
 const thunkMiddleware = thunk.withExtraArgument(myExtraArg);
 
-module.exports = configureMakeStore({ reducers, thunkMiddleware })
+export default configureMakeStore({ reducers, thunkMiddleware });
 ```
 
 ## License
@@ -165,5 +163,7 @@ module.exports = configureMakeStore({ reducers, thunkMiddleware })
 
 <!-- LINKS -->
 
+[pages router]:https://nextjs.org/docs/pages
+[custom server]:https://nextjs.org/docs/pages/
 [combined]: https://redux.js.org/api/combinereducers
 [@gasket/data]: /packages/gasket-data/README.md

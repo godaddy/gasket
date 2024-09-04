@@ -1,3 +1,4 @@
+import type { Plugin } from '@gasket/core';
 import type WebpackApi from 'webpack';
 import type { Configuration } from 'webpack';
 
@@ -15,7 +16,7 @@ export interface WebpackMetrics {
 
 declare module '@gasket/core' {
   export interface GasketActions {
-    getWebpackConfig?: (config: WebpackApi.Configuration, context: WebpackContext) => WebpackApi.Configuration
+    getWebpackConfig: (config: Configuration, context: WebpackContext) => Configuration
   }
 
   export interface HookExecTypes {
@@ -26,9 +27,9 @@ declare module '@gasket/core' {
   }
 }
 
-export default {
+const plugin: Plugin = {
   name: '@gasket/plugin-webpack',
-  version: '',
-  description: '',
   hooks: {}
-}
+};
+
+export = plugin;

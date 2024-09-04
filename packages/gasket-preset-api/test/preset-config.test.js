@@ -27,14 +27,11 @@ describe('presetConfig', () => {
   it('has expected plugins in order', async () => {
     const config = await presetConfig({}, mockContext);
     const expected = [
-      expect.objectContaining({ name: '@gasket/plugin-express' }),
       expect.objectContaining({ name: '@gasket/plugin-https' }),
-      expect.objectContaining({ name: '@gasket/plugin-data' }),
       expect.objectContaining({ name: '@gasket/plugin-winston' }),
-      expect.objectContaining({ name: '@gasket/plugin-swagger' }),
       expect.objectContaining({ name: '@gasket/plugin-lint' })
     ];
-    expect(config.plugins).toEqual(expected);
+    expect(config.plugins).toEqual(expect.arrayContaining(expected));
   });
 
   it('adds test plugin when provided', async () => {
@@ -55,5 +52,27 @@ describe('presetConfig', () => {
         expect.objectContaining({ name: '@gasket/plugin-typescript' })
       ])
     );
+  });
+
+  describe('adds server framework plugin', () => {
+    it('express', async () => {
+      mockContext.server = 'express';
+      const config = await presetConfig({}, mockContext);
+      expect(config.plugins).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({ name: '@gasket/plugin-express' })
+        ])
+      );
+    });
+
+    it('fastify', async () => {
+      mockContext.server = 'fastify';
+      const config = await presetConfig({}, mockContext);
+      expect(config.plugins).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({ name: '@gasket/plugin-fastify' })
+        ])
+      );
+    });
   });
 });

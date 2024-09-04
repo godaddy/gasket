@@ -5,28 +5,22 @@ Gasket plugin for building analysis reports of webpack bundles using
 
 ## Installation
 
-#### New apps
-
-```
-gasket create <app-name> --plugins @gasket/plugin-analyze
-```
-
-#### Existing apps
-
 ```
 npm i @gasket/plugin-analyze
 ```
 
-Modify `plugins` section of your `gasket.config.js`:
+Update your `gasket` file plugin configuration:
 
 ```diff
-module.exports = {
-  plugins: {
-    add: [
-+      '@gasket/plugin-analyze'
-    ]
-  }
-}
+// gasket.js
+
++ import pluginAnalyze from '@gasket/plugin-analyze';
+
+export default makeGasket({
+  plugins: [
++   pluginAnalyze
+  ]
+});
 ```
 
 ## Configuration
@@ -44,9 +38,9 @@ outputs the reports to a `reports` dir at the root of the project.
 #### Example
 
 ```js
-// gasket.config.js
+// gasket.js
 
-module.exports = {
+export default makeGasket({
   bundleAnalyzerConfig: {
     browser: {
       defaultSizes: 'gzip'
@@ -55,20 +49,20 @@ module.exports = {
       openAnalyzer: false
     }
   }
-}
+});
 ```
 
-## Commands
+## NPM script
 
-### analyze command
+### analyze
 
-The command `gasket analyze` will execute the `build` lifecycle.
+The npm script `analyze` will execute the following `GASKET_ENV=local ANALYZE=true next build`.
 
-Only when _this_ command is run, will the plugin add [webpack-bundle-analyzer]
+Only when _this_ script is run, will the plugin add [webpack-bundle-analyzer]
 to the webpack config. By default, generated reports are output to a `reports`
 dir at the root of the project.
 
-If using a UI framework such as Next.js which runs webpack for for both browser
+The script runs webpack for for both browser
 and server-side rendering, two reports will be outputted:
 - `reports/browser-bundles.html`
 - `reports/server-bundles.html`

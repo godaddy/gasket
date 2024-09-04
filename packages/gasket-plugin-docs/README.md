@@ -5,33 +5,27 @@ app's plugins, presets, and supporting modules.
 
 ## Installation
 
-#### New apps
-
-```
-gasket create <app-name> --plugins @gasket/plugin-docs
-```
-
-#### Existing apps
-
 ```
 npm i @gasket/plugin-docs
 ```
 
-Modify `plugins` section of your `gasket.config.js`:
+Update your `gasket` file plugin configuration:
 
 ```diff
-module.exports = {
-  plugins: {
-    add: [
-+      '@gasket/plugin-docs'
-    ]
-  }
-}
+// gasket.js
+
++ import pluginDocs from '@gasket/plugin-docs';
+
+ export default makeGasket({
+  plugins: [
++   pluginDocs
+  ]
+});
 ```
 
 ## Configuration
 
-To be set in under `docs` in the `gasket.config.js`.
+To be set in under `docs` in the `gasket.js`.
 
 - `outputDir` - (string) Name of the directory, relative to the app's package,
   where doc files will be collected to. Default is `.docs`.
@@ -62,7 +56,7 @@ files that exist under a docs directory. Additionally, if any metadata defines
 
 The `docsSetup` lifecycle allows plugin developers to tune the docsConfig that
 is compile for their plugin. Files or file globs can be set, and links changed
-as needed. Any lifecycle hooks should return a [DocsSetup] object.
+as needed. Any lifecycle hooks should return a `docsSetup` object.
 The `defaults` are an available option to reference.
 
 #### Example setup
@@ -72,7 +66,7 @@ The `defaults` are an available option to reference.
  * @typedef {import('@gasket/plugin-docs').DocsSetup} DocsSetup
  */
 
-module.exports = {
+export default {
   name: 'example',
   hooks: {
     /**
@@ -123,7 +117,7 @@ should be able affect all collected docs, the global property should be set to
 true.
 
 Additional data is available to handlers to help with transformations which can
-be read about in the [DocsTransformHandler] API.
+be read about in the `docsTransformHandler` API.
 
 #### Modules
 
@@ -158,9 +152,9 @@ Allows a plugin to provide a view of the docs for the user.
 #### Example viewer
 
 ```js
-const view = require('example-markdown-viewer');
+import view from 'example-markdown-viewer';
 
-module.exports = {
+export default {
   name: 'example',
   hooks: {
     async docsView(gasket, docsConfigSet) {
@@ -182,9 +176,11 @@ Allows a plugin to add documentation that has to be programmatically generated.
 #### An example graph
 
 ```js
-const { writeFile } = require('fs').promises;;
+import { promises as fsPromises } from 'fs';
 
-module.exports = {
+const { writeFile } = fsPromises;
+
+export default {
   name: 'questions',
   hooks: {
     async docsGenerate(gasket, docsConfigSet) {
@@ -206,13 +202,13 @@ module.exports = {
 ### Presets
 
 Presets can also set up custom docs. This is done by defining a `docsSetup`
-property object on the module, which will be used to establish the [DocsConfig]
+property object on the module, which will be used to establish the `docsConfig`
 for the preset.
 
 ```js
 // gasket-preset-example.js
-module.exports = {
-  require,
+export default {
+  name: 'gasket-preset-example',
   docsSetup: {
     link: 'OTHER.md#go-here',
     files: ['more-docs/**/*.*'],
@@ -223,8 +219,8 @@ module.exports = {
 ## How it works
 
 The docs command will gather info about plugins and modules from their
-[metadata] and [docsSetup], and will assemble a [docsConfig] for each. These
-configs are are organized by type in a [docsConfigSet], which is then used to
+[metadata] and `docsSetup`, and will assemble a `docsConfig` for each. These
+configs are are organized by type in a `docsConfigSet`, which is then used to
 copy files to the outputDir, and perform any [transforms] as needed. An index is
 generated in markdown from docsConfigSet which serves as the entry in the doc
 files. If a plugin is installed that hooks the [docsView] lifecycle, it can
@@ -238,16 +234,8 @@ serve the content in a more viewable fashion for the user.
 
 [transforms]: #transforms
 [docsView]: #docsview
-
-[DocsSetup]: docs/api.md#DocsSetup
-[DocsConfig]: docs/api.md#DocsConfig
-[DocsConfigSet]: docs/api.md#DocsConfigSet
-[DocsTransform]: docs/api.md#DocsTransform
-[DocsTransformHandler]: docs/api.md#DocsTransformHandler
-
 [@gasket/plugin-metadata]: /packages/gasket-plugin-metadata/README.md
 [@gasket/plugin-docusaurus]: /packages/gasket-plugin-docusaurus/README.md
 [metadata]: /packages/gasket-plugin-metadata/README.md
-
 [rustdoc]:https://doc.rust-lang.org/rustdoc/
 [RegExp]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions

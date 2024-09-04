@@ -28,39 +28,42 @@ describe('buildManifest', function () {
         error: jest.fn()
       },
       config: {
+        root: path.join(__dirname, 'fixtures'),
         intl: {
-          basePath: '',
-          defaultPath: '/locales',
+          defaultLocaleFilePath: 'locales',
           defaultLocale: 'en-US',
           locales: ['en-US', 'fr-FR', 'fr-CH'],
           localesMap: {
             'fr-CH': 'fr-FR'
           },
-          localesDir: path.join(__dirname, 'fixtures', 'locales'),
-          manifestFilename: 'mock-manifest.json'
+          localesDir: path.join('locales'),
+          managerFilename: 'intl.js'
         }
       }
     };
   });
 
   afterEach(function () {
+    jest.clearAllMocks();
+
     mockWriteFileStub.mockResolvedValue((...args) => {
       args[args.length - 1](null, true);
     });
   });
 
-  const getOutput = () => JSON.parse(mockWriteFileStub.mock.calls[0][1]);
+  const getOutput = () => mockWriteFileStub.mock.calls[0][1];
 
-  it('writes a json file in the locales dir', async function () {
-    const expected = path.join(
-      __dirname,
-      'fixtures',
-      'locales',
-      'mock-manifest.json'
-    );
+  it('writes a manager js file in the root dir', async function () {
     await buildManifest(mockGasket);
     expect(mockWriteFileStub).toHaveBeenCalled();
-    expect(mockWriteFileStub.mock.calls[0][0]).toEqual(expected);
+    expect(mockWriteFileStub.mock.calls[0][0]).toContain(path.join('fixtures', 'intl.js'));
+  });
+
+  it('writes a different named manager js file to target dir', async function () {
+    mockGasket.config.intl.managerFilename = 'custom/intl-manager.js';
+    await buildManifest(mockGasket);
+    expect(mockWriteFileStub).toHaveBeenCalled();
+    expect(mockWriteFileStub.mock.calls[0][0]).toContain(path.join('fixtures', 'custom', 'intl-manager.js'));
   });
 
   it('logs error if failed to write manifest', async function () {
@@ -69,7 +72,7 @@ describe('buildManifest', function () {
       await buildManifest(mockGasket);
     }).rejects.toThrow('Bad things man');
     expect(mockGasket.logger.error).toHaveBeenCalledWith(
-      'build:locales: Unable to write locales manifest.'
+      'build:locales: Unable to write intl manager (intl.js).'
     );
   });
 
@@ -84,38 +87,74 @@ describe('buildManifest', function () {
   it('includes expected properties in output', async function () {
     await buildManifest(mockGasket);
     const output = getOutput();
-    const keys = Object.keys(output);
-    expect(keys).toEqual([
-      'basePath',
-      'defaultPath',
+    [
+      'defaultLocaleFilePath',
       'defaultLocale',
       'locales',
       'localesMap',
-      'paths'
-    ]);
-  });
-
-  it('associates content hashes to locale path', async function () {
-    await buildManifest(mockGasket);
-    const output = getOutput();
-    expect(output.paths['locales/en-US.json']).toEqual('10decbe');
-    expect(output.paths['locales/extra/en-US.json']).toEqual('ff5a352');
-  });
-
-  it('does not include any existing manifest in paths', async function () {
-    await buildManifest(mockGasket);
-    const output = getOutput();
-    expect(output.paths['mock-manifest.json']).toBeFalsy();
-  });
-
-  it('includes expected files in paths', async function () {
-    await buildManifest(mockGasket);
-    const output = getOutput();
-    expect(output.paths).toEqual({
-      'locales/en-US.json': '10decbe',
-      'locales/extra/en-US.json': 'ff5a352',
-      'locales/extra/fr-FR.json': '2155926',
-      'locales/fr-FR.json': '21047f1'
+      'imports'
+    ].forEach(key => {
+      expect(output).toContain(key);
     });
+  });
+
+  it('includes manifest const', async () => {
+    await buildManifest(mockGasket);
+    const expected = 'const manifest = {';
+    expect(getOutput()).toContain(expected);
+  });
+
+  it('includes makeIntlManager setup', async () => {
+    await buildManifest(mockGasket);
+    const output = getOutput();
+    expect(output).toContain(`import { makeIntlManager } from '@gasket/intl';`);
+    expect(output).toContain(`export default makeIntlManager(manifest);`);
+  });
+
+  it('associates locale file keys to imports', async function () {
+    await buildManifest(mockGasket);
+    const output = getOutput();
+    expect(output).toContain(
+      `'locales/en-US': () => import('./locales/en-US.json')`
+    );
+    expect(output).toContain(
+      `'locales/fr-FR': () => import('./locales/fr-FR.json')`
+    );
+  });
+
+  it('associates nested locale file keys to imports', async function () {
+    await buildManifest(mockGasket);
+    const output = getOutput();
+    expect(output).toContain(
+      `'locales/extra/en-US': () => import('./locales/extra/en-US.json')`
+    );
+    expect(output).toContain(
+      `'locales/extra/fr-FR': () => import('./locales/extra/fr-FR.json')`
+    );
+  });
+
+  it('associates grouped locale file keys to imports', async function () {
+    await buildManifest(mockGasket);
+    const output = getOutput();
+    expect(output).toContain(
+      `'locales/en-US/grouped': () => import('./locales/en-US/grouped.json')`
+    );
+    expect(output).toContain(
+      `'locales/fr-FR/grouped': () => import('./locales/fr-FR/grouped.json')`
+    );
+  });
+
+  it('.ts files include manifest types', async () => {
+    mockGasket.config.intl.managerFilename = 'intl.ts';
+    await buildManifest(mockGasket);
+    const expected = 'const manifest: LocaleManifest = {';
+    expect(getOutput()).toContain(expected);
+  });
+
+  it('.ts files include type imports', async () => {
+    mockGasket.config.intl.managerFilename = 'intl.ts';
+    await buildManifest(mockGasket);
+    const expected = `import type { LocaleManifest } from '@gasket/intl';`;
+    expect(getOutput()).toContain(expected);
   });
 });

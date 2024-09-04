@@ -2,61 +2,66 @@ const plugin = require('../lib');
 const { name, version, description } = require('../package');
 
 describe('Plugin', () => {
-  let spyFunc, filesAddStub;
+  let spyFunc, filesAddStub, addPluginStub, create, createReact;
 
-  /**
-   * Create a new project
-   * @returns {Promise<object>} project
-   */
-  async function create() {
-    const pkg = {};
+  beforeEach(async function () {
     filesAddStub = jest.fn();
+    /**
+     * Create a new project
+     * @returns {Promise<object>} project
+     */
+    create = async function (context = {}) {
+      const pkg = {};
 
-    await plugin.hooks.create.handler({}, {
-      files: {
-        add: filesAddStub
-      },
-      pkg: {
-        add: (key, value) => {
-          pkg[key] = value;
+      await plugin.hooks.create.handler({}, {
+        files: {
+          add: filesAddStub
         },
-        has: (key, value) => !!pkg[key] && !!pkg[key][value]
-      }
-    });
-
-    return { pkg };
-  }
-
-  /**
-   * Create a new React project
-   * @returns {Promise<object>} project
-   */
-  async function createReact() {
-    const pkg = {
-      dependencies: {
-        react: '1.0.0'
-      }
-    };
-
-    await plugin.hooks.create.handler({}, {
-      files: {
-        add: filesAddStub
-      },
-      pkg: {
-        add: (key, value) => {
-          pkg[key] = value;
+        pkg: {
+          add: (key, value) => {
+            pkg[key] = { ...pkg[key], ...value }
+          },
+          has: (key, value) => !!pkg[key] && !!pkg[key][value]
         },
-        has: (key, value) => {
-          return !!pkg[key] && !!pkg[key][value];
+        ...context
+      });
+
+      return { pkg };
+    }
+
+    /**
+     * Create a new React project
+     * @returns {Promise<object>} project
+     */
+    createReact = async function (context = {}) {
+      const pkg = {
+        dependencies: {
+          react: '1.0.0'
         }
-      }
-    });
+      };
+      addPluginStub = jest.fn();
 
-    return { pkg };
-  }
+      await plugin.hooks.create.handler({}, {
+        files: {
+          add: filesAddStub
+        },
+        pkg: {
+          add: (key, value) => {
+            pkg[key] = { ...pkg[key], ...value }
+          },
+          has: (key, value) => {
+            return !!pkg[key] && !!pkg[key][value];
+          }
+        },
+        gasketConfig: {
+          addPlugin: addPluginStub
+        },
+        ...context
+      });
 
-  beforeAll(async function () {
-    await create();
+      return { pkg };
+    }
+
     spyFunc = jest.fn();
   });
 
@@ -88,9 +93,30 @@ describe('Plugin', () => {
     expect(plugin.hooks.create.timing.before).toEqual(['@gasket/plugin-lint']);
   });
 
+  describe('typescript', function () {
+    it('adds typescript to the devDependencies', async function () {
+      const { pkg } = await create({ typescript: true });
+      expect(pkg.devDependencies).toHaveProperty('@babel/preset-typescript');
+    });
+
+    it('does not add typescript to the devDependencies', async function () {
+      const { pkg } = await create({ typescript: false });
+      expect(pkg.devDependencies).not.toHaveProperty('@babel/preset-typescript');
+    });
+
+    it('sets ts file extension for the test:runner script for a react project', async function () {
+      const { pkg } = await createReact({ typescript: true });
+      expect(pkg.scripts['test:runner']).toContain('test/**/*.{test,spec}.{ts,tsx}');
+    });
+
+    it('sets ts file extension for the test:runner script', async function () {
+      const { pkg } = await create({ typescript: true });
+      expect(pkg.scripts['test:runner']).toContain('test/**/*.*(test|spec).ts');
+    });
+  });
+
   describe('dependencies', function () {
     [
-      '@babel/register',
       '@babel/core',
       'mocha',
       'sinon',
@@ -130,9 +156,11 @@ describe('Plugin', () => {
   describe('dependencies - react', function () {
     it('includes a glob for generator contents', async function () {
       await createReact();
-      const [firstCall, secondCall] = filesAddStub.mock.calls[0];
+      expect(addPluginStub).toHaveBeenCalled();
+      const [firstCall, secondCall, thirdCall] = filesAddStub.mock.calls[0];
       expect(firstCall).toEqual(expect.stringContaining('/../generator/*'));
-      expect(secondCall).toEqual(expect.stringContaining('/../generator/**/*'));
+      expect(secondCall).toEqual(expect.stringContaining('/../generator/**/.*'));
+      expect(thirdCall).toEqual(expect.stringContaining('/../generator/**/*'));
     });
 
     [

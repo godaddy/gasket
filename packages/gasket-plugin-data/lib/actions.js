@@ -6,53 +6,53 @@ const baseDataMap = new WeakMap();
 const adjustedDataMap = new WeakMap();
 const reqMap = new WeakMap();
 
-/**
- * @type {import('@gasket/core').HookHandler<'actions'>}
- */
-function actions(gasket) {
-  return {
-    async getGasketData() {
-      if (!adjustedDataMap.has(gasket)) {
-        const baseData = baseDataMap.get(gasket) ?? {};
-        const adjustedData = await gasket.execWaterfall('gasketData', deepClone(baseData));
+/** @type {import('@gasket/core').ActionHandler<'getGasketData'>} */
+async function getGasketData(gasket) {
+  const key = gasket.symbol;
+  if (!adjustedDataMap.has(key)) {
+    const baseData = baseDataMap.get(key) ?? {};
+    const adjustedData = await gasket.execWaterfall('gasketData', deepClone(baseData));
 
-        if (!adjustedData) {
-          throw new Error(
-            'No gasketData - likely a gasketData lifecycle hook did not properly return data.'
-          );
-        }
-
-        adjustedDataMap.set(gasket, adjustedData);
-        baseDataMap.delete(gasket);
-      }
-
-      return adjustedDataMap.get(gasket);
-    },
-    async getPublicGasketData(req) {
-      if (!reqMap.has(req)) {
-        const basePublicData = (await gasket.actions.getGasketData()).public ?? {};
-
-        const userPublicData = await gasket.execWaterfall(
-          'publicGasketData',
-          deepClone(basePublicData),
-          { req }
-        );
-
-        if (!userPublicData) {
-          throw new Error(
-            'No public gasketData - likely a publicGasketData lifecycle hook did not properly return data.'
-          );
-        }
-
-        reqMap.set(req, userPublicData);
-      }
-
-      return reqMap.get(req);
+    if (!adjustedData) {
+      throw new Error(
+        'No gasketData - likely a gasketData lifecycle hook did not properly return data.'
+      );
     }
-  };
+
+    adjustedDataMap.set(key, adjustedData);
+    baseDataMap.delete(key);
+  }
+
+  return adjustedDataMap.get(key);
+}
+
+/** @type {import('@gasket/core').ActionHandler<'getPublicGasketData'>} */
+async function getPublicGasketData(gasket, req) {
+  if (!reqMap.has(req)) {
+    const basePublicData = (await gasket.actions.getGasketData()).public ?? {};
+
+    const userPublicData = await gasket.execWaterfall(
+      'publicGasketData',
+      deepClone(basePublicData),
+      { req }
+    );
+
+    if (!userPublicData) {
+      throw new Error(
+        'No public gasketData - likely a publicGasketData lifecycle hook did not properly return data.'
+      );
+    }
+
+    reqMap.set(req, userPublicData);
+  }
+
+  return reqMap.get(req);
 }
 
 module.exports = {
   baseDataMap,
-  actions
+  actions: {
+    getGasketData,
+    getPublicGasketData
+  }
 };

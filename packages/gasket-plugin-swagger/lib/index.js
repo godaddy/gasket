@@ -10,9 +10,10 @@
 
 const path = require('path');
 const fs = require('fs');
-const { readFile, writeFile, access } = require('fs').promises;
-const swaggerJSDoc = require('swagger-jsdoc');
+const { readFile, access } = require('fs').promises;
 const isYaml = /\.ya?ml$/;
+const buildSwaggerDefinition = require('./build-swagger-definition');
+const postCreate = require('./post-create');
 const { name, version, description } = require('../package.json');
 
 let __swaggerSpec;
@@ -60,29 +61,7 @@ const plugin = {
       return baseConfig;
     },
     async build(gasket) {
-      const { swagger, root } = gasket.config;
-      const { jsdoc, definitionFile } = swagger;
-
-      if (jsdoc) {
-        const target = path.join(root, definitionFile);
-        const swaggerSpec = swaggerJSDoc(jsdoc);
-
-        if (!swaggerSpec) {
-          gasket.logger.warn(
-            `No JSDocs for Swagger were found in files (${jsdoc.apis}). Definition file not generated...`
-          );
-        } else {
-          let content;
-          if (isYaml.test(definitionFile)) {
-            content = require('js-yaml').safeDump(swaggerSpec);
-          } else {
-            content = JSON.stringify(swaggerSpec, null, 2);
-          }
-
-          await writeFile(target, content, 'utf8');
-          gasket.logger.info(`Wrote: ${definitionFile}`);
-        }
-      }
+      await buildSwaggerDefinition(gasket, {});
     },
     express: {
       timing: {
@@ -112,7 +91,7 @@ const plugin = {
       },
       handler: async function fastify(gasket, app) {
         const { swagger, root } = gasket.config;
-        const { ui = {}, apiDocsRoute, definitionFile } = swagger;
+        const { uiOptions = {}, apiDocsRoute = '/api-docs', definitionFile } = swagger;
 
         const swaggerSpec = await loadSwaggerSpec(
           root,
@@ -120,24 +99,29 @@ const plugin = {
           gasket.logger
         );
 
-        // @ts-ignore
-        app.register(require('@fastify/swagger'), {
-          prefix: apiDocsRoute,
-          swagger: swaggerSpec,
-          uiConfig: ui
+        await app.register(require('@fastify/swagger'), {
+          swagger: swaggerSpec
+        });
+
+        await app.register(require('@fastify/swagger-ui'), {
+          routePrefix: apiDocsRoute,
+          ...uiOptions
         });
       }
     },
     create(gasket, context) {
-      context.hasSwaggerPlugin = true;
+      context.useSwagger = true;
 
       context.pkg.add('dependencies', {
         [name]: `^${version}`
       });
 
-      context.pkg.add('scripts', {
-        prebuild: 'node gasket.js build'
-      });
+      // Only write build scripts if not TypeScript
+      if (!context.typescript) {
+        context.pkg.add('scripts', {
+          build: 'node gasket.js build'
+        });
+      }
 
       context.gasketConfig.addPlugin('pluginSwagger', '@gasket/plugin-swagger');
       context.gasketConfig.add('swagger', {
@@ -145,13 +129,20 @@ const plugin = {
           definition: {
             info: {
               title: context.appName,
-              version: '1.0.0'
+              version: '0.0.0'
             }
           },
           apis: ['./routes/*']
         }
       });
+
+      context.readme
+        .subHeading('Definitions')
+        .content('Use `@swagger` JSDocs to automatically generate the [swagger.json] spec file. Visit [swagger-jsdoc] for examples.')
+        .link('swagger-jsdoc', 'https://github.com/Surnet/swagger-jsdoc/')
+        .link('swagger.json', '/swagger.json');
     },
+    postCreate,
     metadata(gasket, meta) {
       return {
         ...meta,

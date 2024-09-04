@@ -5,12 +5,20 @@ declare module '@gasket/core' {
 
   export interface GasketActions {}
 
+  export type ActionId = keyof GasketActions;
+
+  export type ActionHandler<Id extends ActionId> = (
+    gasket: Gasket,
+    ...args: Parameters<GasketActions[Id]>
+  ) => ReturnType<GasketActions[Id]>;
+
+
   // To be extended by plugins
   export interface HookExecTypes {
     // add makeGasket lifecycles
     init(): void
-    actions(): Partial<GasketActions>
     configure(config: GasketConfig): GasketConfig
+    ready(): MaybeAsync<void>
   }
 
   export type HookId = keyof HookExecTypes;
@@ -40,13 +48,19 @@ declare module '@gasket/core' {
 
   export type Plugin = {
     name: string;
-    version: string;
-    description: string;
+    version?: string;
+    description?: string;
     dependencies?: Array<string>;
     hooks: {
       [K in HookId]?: Hook<K>;
     };
+    actions?: {
+      [K in ActionId]?: ActionHandler<K>;
+    };
+    metadata?: Record<string, any>;
   };
+
+  export type Preset = Omit<Plugin, 'actions'>;
 
   // This is the config
   export interface GasketConfig {
@@ -57,6 +71,8 @@ declare module '@gasket/core' {
 
   export class GasketEngine {
     constructor(plugins: Array<Plugin>);
+
+    actions: GasketActions
 
     exec<Id extends HookId>(
       hook: Id,
@@ -95,13 +111,19 @@ declare module '@gasket/core' {
   }
 
   export interface Gasket extends GasketEngine {
+    constructor(config: GasketConfigDefinition);
+    new (config: GasketConfigDefinition): Gasket
+
     command: {
       id: string;
     };
     config: GasketConfig;
-    new (config: GasketConfigDefinition): Gasket
-    actions: GasketActions
+    symbol: Symbol;
+    traceBranch(): GasketTrace
+    traceRoot(): Gasket
   }
+
+  export type GasketTrace = Proxy<Gasket>;
 
   type PartialRecursive<T> = T extends Object
     ? { [K in keyof T]?: PartialRecursive<T[K]> } | undefined
@@ -125,4 +147,3 @@ declare module '@gasket/core' {
 
   export function makeGasket(config: GasketConfigDefinition): Gasket
 }
-

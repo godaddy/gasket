@@ -1,7 +1,7 @@
-import { GasketEngine } from '../../lib/index.js';
+import { Gasket } from '../../lib/gasket.js';
 
 describe('The hook method', () => {
-  let engine, dynamicHook;
+  let mockGasket, dynamicHook;
 
   beforeEach(() => {
     dynamicHook = jest.fn();
@@ -10,13 +10,13 @@ describe('The hook method', () => {
       {
         name: 'pluginA',
         hooks: {
-          init(gasket) {
+          another(gasket) {
             gasket.hook({ event: 'foo', handler: dynamicHook });
           }
         }
       };
 
-    engine = new GasketEngine([pluginA]);
+    mockGasket = new Gasket({ plugins: [pluginA] });
   });
 
   afterEach(() => {
@@ -24,21 +24,21 @@ describe('The hook method', () => {
   });
 
   it('injects lifecycle event hooks into a Gasket instance', async () => {
-    await engine.exec('init');
+    await mockGasket.exec('another');
 
-    await engine.exec('foo');
+    await mockGasket.exec('foo');
 
     expect(dynamicHook).toHaveBeenCalled();
   });
 
   it('clears cached execution plans', async () => {
-    await engine.exec('foo'); // Execution plan will be cached
+    await mockGasket.exec('foo'); // Execution plan will be cached
     expect(dynamicHook).not.toHaveBeenCalled();
 
-    await engine.exec('init'); // This injects a new `foo` handler
+    await mockGasket.exec('another'); // This injects a new `foo` handler
 
     // Cached execution plan from first invoke shouldn't be used any longer.
-    await engine.exec('foo');
+    await mockGasket.exec('foo');
     expect(dynamicHook).toHaveBeenCalled();
   });
 });

@@ -56,6 +56,52 @@ Remove deprecated support for `languageMap`, `defaultLanguage`, `assetPrefix` co
 
 [(#668)]
 
+## Migrating away from req/res attachments
+
+Using the `req` and `res` objects for adding attachments and accessing data has been a common pattern in Gasket applications. This pattern is being deprecated in favor of using the new Gasket Actions API introduced in v7.
+
+### Motivation
+
+Middleware in Gasket apps runs for every request, regardless of whether it is used or not. We added support for [middleware paths] to help reduce this, but it is still not ideal and requires the developer to manage something that should be optimized already by the plugin.
+
+As a caveat of the middleware pattern, when the `req` and `res` objects are decorated with various added properties, it is not always easy to know what is available and when.
+
+In addition to issues with middleware, we need to move away from reliance on `req` and `res` objects to fully utilize Nextjs 14 features such as [App Router] and [streaming].
+
+The Gasket Actions API provides a more structured way to access and modify data in Gasket applications. This API is designed to be more consistent and easier to use than the previous pattern of adding attachments to `req` and `res` objects.
+
+The `req` object can be used as a Gasket Action argument to give access to headers, cookies, queries, or to be used as a `WeakMap` key for repeated calls.
+
+### Example
+
+When retrieving a variable called `myValue` in middleware, you might have done something like this:
+
+```js
+const myValue = res.locals.myValue;
+```
+
+Going forward, the recommended way to access `myValue` would be through a Gasket Action like this:
+
+```js
+const myValue = gasket.actions.getMyValue(req);
+```
+
+The Gasket Action is defined as a hook in the plugin:
+
+```js
+// plugin-example.js
+
+export default({
+  name: 'plugin-example',
+  actions: {
+    async getMyValue(gasket, req) {
+      // Returns myValue
+      // Use the req argument to access headers, cookies, queries, etc.
+    }
+  }
+})
+```
+
 ## @gasket/gasket-plugin-cypress
 
 Update Cypress version to 12.3.0. [(#660)]
@@ -243,6 +289,151 @@ Additionally, `@gasket/plugin-nextjs` now generates a `_app.js` file with `getIn
 
 [(#693)]
 
+## Plugin Imports
+
+Update plugin strings to be plugin import statements in `gasket.js`. All plugins now need to be imported and used in the `makeGasket` function.
+
+```diff
+// gasket.config.js
+- module.exports = {
+-   plugins: {
+-     presets: [
+-       '@gasket/plugin-nextjs',
+-     ],
+-   },
+- };
+
+// gasket.js
++ import { makeGasket } from '@gasket/core';
++ import pluginNextjs from '@gasket/plugin-nextjs';
+
++ export default makeGasket({
++   plugins: [
++     pluginNextjs
++   ],
++   filename: import.meta.filename,
++ });
+```
+
+## Custom Commands
+
+Update custom commands to be plugin imports in `gasket.js`. All commands need to be imported and used in the `makeGasket` function.
+
+To create a custom command, you first need to install `@gasket/plugin-command`.
+
+```
+npm i @gasket/plugin-command
+```
+
+Once installed, import and add it to your list of plugins in `gasket.js`.
+
+```diff
+// gasket.js
+import { makeGasket } from '@gasket/core';
++ import pluginCommand from '@gasket/plugin-command';
+
+export default makeGasket({
+  plugins: [
++    pluginCommand
+  ],
+  filename: import.meta.filename,
+});
+```
+
+Custom commands can be defined in line in the list of plugins.
+
+```diff
+// gasket.js
+import { makeGasket } from '@gasket/core';
+import pluginCommand from '@gasket/plugin-command';
+
+export default makeGasket({
+  plugins: [
+    pluginCommand,
++    {
++      name: 'my-custom-plugin',
++      hooks: {
++        commands(gasket) {
++          return {
++            id: 'my-custom-cmd',
++            description: 'Custom command plugin',
++            args: [],
++            action: async () => {
++            }
++          }
++        }
++      }
++    }
+  ],
+  filename: import.meta.filename,
+});
+```
+
+Another option for defining custom commands is to create a separate file.
+
+```js
+// my-custom-plugin.js
+export default  {
+  name: 'my-custom-plugin',
+  hooks: {
+    commands(gasket) {
+      return {
+        id: 'my-custom-cmd',
+        description: 'Custom command plugin',
+        args: [
+          {
+            name: 'arg1',
+            description: 'Message to display',
+            required: true // error if arg1 argument is not provided
+          },
+          {
+            name: 'arg2',
+            description: 'Optional message to display'
+          }
+        ],
+        // Arguments are spread into the action function
+        action: async (arg1, arg2) => {
+          console.log('custom arg:', arg1);
+          console.log('custom arg 2:', arg2);
+        }
+      }
+    }
+  }
+};
+```
+
+Once this custom command is defined, import the file and use it in the `makeGasket` function.
+
+```diff
+// gasket.js
+import { makeGasket } from '@gasket/core';
+import pluginCommand from '@gasket/plugin-command';
+import customPluginCommand from './my-custom-plugin.js`;
+
+export default makeGasket({
+  plugins: [
+    pluginNextjs,
++    customPluginCommand
+  ],
+  filename: import.meta.filename,
+});
+```
+
+Once the command is defined, you can now execute the command.
+
+```bash
+node ./gasket.js my-custom-cmd "Hello, World!"
+# result: custom arg: Hello, World!
+
+# Optional message
+node ./gasket.js my-custom-cmd "Hello, World!" "Optional message"
+# result: custom arg: Hello, World!
+# result: custom arg 2: Optional message
+```
+
+Refer to the [@gasket/plugin-command] README for additional information on customizing commands.
+
+
 <!-- PRs -->
 [(#647)]:https://github.com/godaddy/gasket/pull/647
 [(#661)]:https://github.com/godaddy/gasket/pull/661
@@ -258,3 +449,10 @@ Additionally, `@gasket/plugin-nextjs` now generates a `_app.js` file with `getIn
 [(#640)]:https://github.com/godaddy/gasket/pull/640
 [(#680)]:https://github.com/godaddy/gasket/pull/680
 [(#693)]:https://github.com/godaddy/gasket/pull/693
+
+<!-- Links -->
+[middleware paths]:https://github.com/godaddy/gasket/blob/main/packages/gasket-plugin-express/README.md#middleware-paths
+[streaming]: https://nextjs.org/docs/app/building-your-application/routing/loading-ui-and-streaming
+[App Router]: https://nextjs.org/docs/app/building-your-application/routing
+[@gasket/plugin-command]: ../packages/gasket-plugin-command/README.md
+

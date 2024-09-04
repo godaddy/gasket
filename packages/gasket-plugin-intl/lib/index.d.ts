@@ -1,6 +1,7 @@
-import type { IncomingMessage, OutgoingMessage } from 'http';
-import type { MaybeAsync, GasketRequest } from '@gasket/core';
-import { LocalePathPart, LocalesProps } from '@gasket/helper-intl';
+import type { MaybeAsync, GasketRequest, Plugin } from '@gasket/core';
+import type { IncomingMessage } from 'http';
+import { IntlManager } from '@gasket/intl';
+import { LocaleManifestConfig } from '@gasket/intl';
 
 interface CustomScanSettings {
   /** Lookup dir for module files (default: `locales`) */
@@ -16,27 +17,16 @@ interface CustomScanSettings {
   excludes?: Array<string>;
 }
 
-export interface IntlConfig {
-  basePath?: string;
-  defaultPath?: string;
-  defaultLocale?: string;
-  locales?: Array<string>;
-  localesMap?: Record<string, string>;
+export interface IntlConfig extends LocaleManifestConfig {
   localesDir?: string;
-  manifestFilename?: string;
-  serveStatic?: boolean | string;
-  /* Enable locale files collation from node modules. Disabled by default,
-  enable by setting to an object with options below, or set to `true` to use the
-  default options. */
+  managerFilename?: string;
   modules?:
     | boolean
     | CustomScanSettings
     /* specific packages w/ optional subdirectories */
     | string[];
   nextRouting?: boolean;
-  /** Preloads the locale files from the manifest at startup,
-   allowing a faster first response. */
-  preloadLocales?: boolean;
+  manager?: IntlManager;
 }
 
 declare module '@gasket/core' {
@@ -46,7 +36,11 @@ declare module '@gasket/core' {
 
   export interface GasketActions {
     getIntlLocale: (req: GasketRequest) => MaybeAsync<string>;
-    getIntlMessage: (gasketDataIntl: IntlGasketData, messageId: string, defaultMessage?: string) => string;
+    /**
+     * Provides access to the Intl manager instance to plugins.
+     * Especially useful for plugins that are still CJS.
+     */
+    getIntlManager: () => IntlManager;
   }
 
   export interface HookExecTypes {
@@ -57,14 +51,11 @@ declare module '@gasket/core' {
   }
 }
 
-export interface GasketDataIntl extends LocalesProps {
-  /** Include base path if configured */
-  basePath?: string;
-}
-
 declare module '@gasket/data' {
   export interface GasketData {
-    intl?: GasketDataIntl;
+    intl?: {
+      locale: string;
+    };
   }
 }
 
@@ -74,9 +65,9 @@ declare module 'create-gasket-app' {
   }
 }
 
-export default {
+const plugin: Plugin = {
   name: '@gasket/plugin-intl',
-  version: '',
-  description: '',
   hooks: {}
 };
+
+export = plugin;

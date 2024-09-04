@@ -67,6 +67,13 @@ module.exports = {
     metadata(gasket, meta) {
       return {
         ...meta,
+        actions: [
+          {
+            name: 'getLogger',
+            description: 'Get the logger instance',
+            link: 'README.md'
+          }
+        ],
         lifecycles: [
           {
             name: 'createLogger',

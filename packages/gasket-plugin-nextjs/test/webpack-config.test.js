@@ -1,15 +1,48 @@
 const { webpackConfig, validateNoGasketCore, externalizeGasketCore } = require('../lib/webpack-config.js');
+const webpack = require('webpack');
+
+jest.mock('../lib/utils/try-resolve.js');
+const tryResolve = require('../lib/utils/try-resolve.js');
+
+const mockFilename = '/path/to/app/gasket.js';
 
 describe('webpackConfigHook', () => {
   let mockGasket, mockWebpackConfig, mockContext;
 
   beforeEach(() => {
-    mockGasket = {};
+    mockGasket = {
+      config: {
+        root: '/path/to/app'
+      },
+      logger: {
+        warn: jest.fn()
+      }
+    };
     mockWebpackConfig = {
       name: '',
-      externals: []
+      externals: [],
+      plugins: []
     };
-    mockContext = {};
+    mockContext = {
+      webpack
+    };
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('throws if externals is not an array', () => {
+    mockWebpackConfig.externals = 'externals';
+
+    expect(() => webpackConfig(mockGasket, mockWebpackConfig, mockContext))
+      .toThrow('Expected webpackConfig.externals to be an array');
+  });
+
+  it('adds empty alias for gasket file in client', () => {
+    tryResolve.mockReturnValue(mockFilename);
+    const result = webpackConfig(mockGasket, mockWebpackConfig, mockContext);
+    expect(result.resolve.alias).toEqual(expect.objectContaining({ [mockFilename]: false }));
   });
 
   it('adds validateNoGasketCore to externals for client', () => {
@@ -17,10 +50,16 @@ describe('webpackConfigHook', () => {
     expect(result.externals[0]).toBe(validateNoGasketCore);
   });
 
-  it('adds externalizeGasketCore to externals for server', () => {
+  it('adds GASKET_ENV env plugin', () => {
     mockContext.isServer = true;
+    mockGasket.config.env = 'fake-env';
+
     const result = webpackConfig(mockGasket, mockWebpackConfig, mockContext);
-    expect(result.externals[0]).toBe(externalizeGasketCore);
+    const plugin = result.plugins[0];
+    expect(plugin).toBeInstanceOf(webpack.EnvironmentPlugin);
+    expect(plugin).toEqual(expect.objectContaining({
+      defaultValues: { GASKET_ENV: 'fake-env' }
+    }));
   });
 });
 

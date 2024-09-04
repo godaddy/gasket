@@ -2,7 +2,7 @@
 /// <reference types="create-gasket-app" />
 /// <reference types="@gasket/plugin-metadata" />
 
-const { createLogger, format, transports } = require('winston');
+const { createLogger, format, transports, config: winstonConfig } = require('winston');
 const {
   name,
   version,
@@ -40,15 +40,17 @@ const plugin = {
 
       // eslint-disable-next-line no-sync
       const pluginTransports = gasket.execSync('winstonTransports');
+      const defaultFormat = gasket.config.env.startsWith('local') ?
+        format.simple() :
+        format.combine(format.splat(), format.json());
 
       return createLogger({
         ...config.winston,
         transports: configTransports.concat(
           pluginTransports.flat().filter(Boolean)
         ),
-        format:
-          config.winston?.format ??
-          format.combine(format.splat(), format.json()),
+        format: config.winston?.format ?? defaultFormat,
+        levels: Object.assign({ fatal: 0, warn: 4, trace: 7 }, winstonConfig.syslog.levels),
         exitOnError: true
       });
     },

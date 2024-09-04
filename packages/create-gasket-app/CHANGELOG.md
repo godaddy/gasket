@@ -1,6 +1,6 @@
 # `create-gasket-app`
 
-
+- Exclude gaskets from client bundling ([#806])
 - Modified global test prompt to ask for unit and integration tests ([#752])
 - Force `GASKET_ENV` to create
 - Add preset lifecycles `presetPrompt` and `presetConfig` ([#736])
@@ -62,3 +62,4 @@
 [#712]: https://github.com/godaddy/gasket/pull/712
 [#736]: https://github.com/godaddy/gasket/pull/736
 [#752]: https://github.com/godaddy/gasket/pull/752
+[#806]: https://github.com/godaddy/gasket/pull/806

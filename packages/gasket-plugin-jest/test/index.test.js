@@ -1,6 +1,5 @@
 const self = require('../package.json');
 const plugin = require('../lib/index.js');
-const config = require('../generator/jest.config.js');
 const { name, version, description } = require('../package');
 
 describe('Plugin', function () {
@@ -83,14 +82,6 @@ describe('Plugin', function () {
   it('has the correct create hook timings', function () {
     expect(plugin.hooks.create.timing.last).toBe(true);
     expect(plugin.hooks.create.timing.before).toEqual(['@gasket/plugin-lint']);
-  });
-
-  it('has the correct custom jest config', async function () {
-    const customJestConfig = await config();
-
-    expect(customJestConfig).toHaveProperty('testEnvironment', 'jest-environment-jsdom');
-    expect(customJestConfig).toHaveProperty('collectCoverageFrom', ['**/*.js']);
-    expect(customJestConfig).toHaveProperty('testEnvironmentOptions', { url: 'http://localhost/' });
   });
 
   describe('react', function () {

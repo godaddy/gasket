@@ -1,17 +1,17 @@
-import type { MaybeAsync, MaybeMultiple } from '@gasket/core';
+import { gasket } from '@/gasket';
+import type { MaybeAsync, MaybeMultiple, Plugin } from '@gasket/core';
 import type { Application, ErrorRequestHandler, Handler } from 'express';
 
-export type AppRoutes = Array<MaybeAsync<(app: Application) => void>>;
-
 declare module '@gasket/core' {
+  export interface GasketActions {
+    getExpressApp(): Application;
+  }
   export interface GasketConfig {
     express?: {
       /** Whether responses are compressed (true by default) */
       compression?: boolean;
       /** Filter for which request URLs invoke Gasket middleware */
       middlewareInclusionRegex?: RegExp;
-      /** Glob pattern for source files setting up express routes */
-      routes?: Array<MaybeAsync<(app: Application) => void>>;
       /** @deprecated */
       excludedRoutesRegex?: RegExp;
       trustProxy?: boolean | string | number | Function;
@@ -32,12 +32,13 @@ declare module '@gasket/core' {
 declare module 'create-gasket-app' {
   export interface CreateContext {
     apiApp?: boolean;
+    typescript?: boolean;
   }
 }
 
-export default {
+const plugin: Plugin = {
   name: '@gasket/plugin-express',
-  version: '',
-  description: '',
   hooks: {}
 };
+
+export = plugin;

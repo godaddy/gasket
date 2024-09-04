@@ -37,6 +37,11 @@ export interface PluginInfo extends ModuleInfo {}
 
 export interface ConfigBuilder<Config> {
   /**
+   * fields object
+   */
+  fields: { [key: string]: any };
+
+  /**
    * Adds all `[key, value]` pairs in the `fields` provided.
    * @param fields - Object to merge. Can be a function that accepts the current fields and object to merge.
    */
@@ -143,6 +148,35 @@ export interface Files {
   add(...args: string[]): void;
 }
 
+export interface Readme {
+  /** Markdown content to be injected into the app readme */
+  markdown: string[];
+
+  /** Links to be added to the footer */
+  links: string[];
+
+  /** Add a markdown heading */
+  heading(content: string, level?: number): Readme;
+
+  /** Add a markdown sub-heading */
+  subHeading(content: string): Readme;
+
+  /** Add markdown content */
+  content(markdown: string);
+
+  /** Add a markdown list */
+  list(items: string[]): Readme;
+
+  /** Add a markdown link - printed in footer */
+  link(content: string, href: string): Readme;
+
+  /** Add a markdown code block */
+  codeBlock(content: string, syntax?: string): Readme;
+
+  /** Add markdown file */
+  markdownFile(path: string): Promise<Readme>;
+}
+
 export interface CreateContext {
   /** Short name of the app */
   appName: string;
@@ -230,6 +264,9 @@ export interface CreateContext {
 
   /** Use to add files and templates to generate */
   files: Files;
+
+  /** Use to add content to the README.md */
+  readme: Readme;
 }
 
 export interface ActionWrapperParams {

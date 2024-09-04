@@ -1,71 +1,74 @@
 /// <reference types="@gasket/core" />
 
-/** @type {import('@gasket/core').HookHandler<'prompt'>} */
-module.exports = async function promptHook(gasket, context, { prompt }) {
-  const newContext = { ...context };
-
-  if (!('useAppRouter' in context)) {
-    const { useAppRouter } = await prompt([
-      {
-        name: 'useAppRouter',
-        message: 'Do you want to use the App Router? (experimental)',
-        type: 'confirm',
-        default: false
-      }
-    ]);
-
-    newContext.useAppRouter = useAppRouter;
-  }
-
-  if (newContext.useAppRouter) {
-    newContext.nextServerType = 'defaultServer';
-  }
-
-  // TODO - evaluate if these prompts should be moved to the preset
-  if (!('nextServerType' in context) && !newContext.useAppRouter) {
+/** @type {import('./index').promptNextServerType} */
+async function promptNextServerType(context, prompt) {
+  if (!('nextServerType' in context)) {
     const { nextServerType } = await prompt([
       {
         name: 'nextServerType',
         message: 'Which server type would you like to use?',
         type: 'list',
         choices: [
-          { name: 'Next Server(CLI)', value: 'defaultServer' },
-          { name: 'Custom Next Server', value: 'customServer' }
+          { name: 'App Router', value: 'appRouter' },
+          { name: 'Page Router', value: 'pageRouter' },
+          { name: 'Page Router w/ Custom Server', value: 'customServer' }
         ]
       }
     ]);
 
-    newContext.nextServerType = nextServerType;
+    Object.assign(context, { nextServerType });
   }
 
-  if (
-    !('nextDevProxy' in context) &&
-    newContext.nextServerType === 'defaultServer'
-  ) {
-    const { nextDevProxy } = await prompt([
-      {
-        name: 'nextDevProxy',
-        message: 'Do you want to add a proxy for the Next.js dev server?',
-        type: 'confirm',
-        default: false
-      }
-    ]);
-
-    newContext.nextDevProxy = nextDevProxy;
+  if (context.nextServerType === 'appRouter') {
+    // used for templating
+    Object.assign(context, { useAppRouter: true });
   }
+}
 
-  if (!('addSitemap' in context)) {
-    const { addSitemap } = await prompt([
-      {
-        name: 'addSitemap',
-        message: 'Do you want to add a sitemap?',
-        type: 'confirm',
-        default: false
-      }
-    ]);
+/** @type {import('./index').promptNextDevProxy} */
+async function promptNextDevProxy(context, prompt) {
+  if ('nextDevProxy' in context) return;
+  const { nextServerType } = context;
+  if (nextServerType === 'customServer') return;
+  const { nextDevProxy } = await prompt([
+    {
+      name: 'nextDevProxy',
+      message: 'Do you want to add a proxy for the Next.js dev server?',
+      type: 'confirm',
+      default: false
+    }
+  ]);
 
-    newContext.addSitemap = addSitemap;
-  }
+  Object.assign(context, { nextDevProxy });
+}
 
-  return newContext;
+/** @type {import('./index').promptSitemap} */
+async function promptSitemap(context, prompt) {
+  if ('addSitemap' in context) return;
+  const { addSitemap } = await prompt([
+    {
+      name: 'addSitemap',
+      message: 'Do you want to add a sitemap?',
+      type: 'confirm',
+      default: false
+    }
+  ]);
+
+  Object.assign(context, { addSitemap });
+}
+
+/** @type {import('@gasket/core').HookHandler<'prompt'>} */
+async function promptAll(gasket, context, { prompt }) {
+  await promptNextServerType(context, prompt);
+  await promptNextDevProxy(context, prompt);
+  await promptSitemap(context, prompt);
+
+  return context;
+}
+
+module.exports = {
+  prompt: promptAll,
+  promptNextServerType,
+  promptNextDevProxy,
+  promptSitemap
 };

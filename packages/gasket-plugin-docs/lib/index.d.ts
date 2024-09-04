@@ -7,6 +7,13 @@ import type {
   DetailDocsConfig
 } from './internal';
 
+declare module 'create-gasket-app' {
+  export interface CreateContext {
+    useDocs?: boolean;
+    typescript?: boolean;
+  }
+}
+
 declare module '@gasket/core' {
   export interface GasketConfig {
     docs?: {
@@ -31,9 +38,9 @@ declare module '@gasket/plugin-metadata' {
   }
 }
 
-export default {
+const plugin: Plugin = {
   name: '@gasket/plugin-docs',
-  version: '',
-  description: '',
   hooks: {}
 };
+
+export = plugin;

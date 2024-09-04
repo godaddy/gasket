@@ -5,11 +5,7 @@ application.
 
 ## Installation
 
-This plugin should only be used during the create command for new apps.
-
-```
-gasket create <app-name> --plugins @gasket/plugin-jest
-```
+This plugin is only used by presets for `create-gasket-app` and is not installed for apps.
 
 ## Usage
 

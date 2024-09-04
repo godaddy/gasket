@@ -1,19 +1,28 @@
 const path = require('path');
 const plugin = require('../lib/index');
-const { devDependencies, name } = require('../package.json');
+const { devDependencies, name, version } = require('../package.json');
 
 describe('create', function () {
+  let mockGasket;
   let mockContext;
   let pkgHasStub;
   let pkgAddStub;
   let filesAddStub;
   let addPluginStub;
+  let addStub;
 
   beforeEach(function () {
     pkgHasStub = jest.fn().mockReturnValue(true);
     pkgAddStub = jest.fn();
     filesAddStub = jest.fn();
     addPluginStub = jest.fn();
+    addStub = jest.fn();
+
+    mockGasket = {
+      config: {
+        intl: {}
+      }
+    };
 
     mockContext = {
       pkg: {
@@ -24,7 +33,8 @@ describe('create', function () {
         add: filesAddStub
       },
       gasketConfig: {
-        addPlugin: addPluginStub
+        addPlugin: addPluginStub,
+        add: addStub
       }
     };
   });
@@ -35,8 +45,8 @@ describe('create', function () {
 
   it('adds the appropriate globs', async function () {
     const rootDir = path.join(__dirname, '..');
-    await plugin.hooks.create({}, mockContext);
-    expect(filesAddStub.mock.calls[0][0]).toEqual(
+    await plugin.hooks.create(mockGasket, mockContext);
+    expect(filesAddStub).toHaveBeenCalledWith(
       `${rootDir}/generator/*`,
       `${rootDir}/generator/**/*`
     );
@@ -52,20 +62,51 @@ describe('create', function () {
   });
 
   it('adds the appropriate dependencies', async function () {
-    await plugin.hooks.create({}, mockContext);
+    await plugin.hooks.create(mockGasket, mockContext);
     expect(pkgAddStub.mock.calls[0]).toEqual(['dependencies', {
-      [name]: devDependencies['@gasket/react-intl']
+      [name]: `^${version}`
     }]);
-    expect(pkgAddStub.mock.calls[2]).toEqual(['dependencies', {
+    expect(pkgAddStub.mock.calls[1]).toEqual(['dependencies', {
+      '@gasket/intl': devDependencies['@gasket/intl'],
       '@gasket/react-intl': devDependencies['@gasket/react-intl'],
       'react-intl': devDependencies['react-intl']
     }]);
   });
 
-  it('adds the appropriate scripts', async function () {
-    await plugin.hooks.create({}, mockContext);
-    expect(pkgAddStub).toHaveBeenCalledWith('scripts', {
-      prebuild: 'node gasket.js build'
+  it('adds the default intl.locales config', async function () {
+    await plugin.hooks.create(mockGasket, mockContext);
+    expect(addStub).toHaveBeenCalledWith('intl', {
+      locales: ['en-US', 'fr-FR']
     });
+  });
+
+  it('does nothing if hasGasketIntl is false', async function () {
+    mockContext.hasGasketIntl = false;
+    await plugin.hooks.create(mockGasket, mockContext);
+    expect(pkgAddStub).not.toHaveBeenCalled();
+    expect(filesAddStub).not.toHaveBeenCalled();
+    expect(addStub).not.toHaveBeenCalled();
+  });
+
+  it('adjusts config for typescript', async function () {
+    mockContext.typescript = true;
+    await plugin.hooks.create(mockGasket, mockContext);
+    expect(addStub).toHaveBeenCalledWith('intl', {
+      locales: ['en-US', 'fr-FR'],
+      managerFilename: 'intl.ts'
+    });
+  });
+
+  it('adjusts current config generating intl file', async function () {
+    expect(mockGasket.config.intl.locales).toBeUndefined();
+    expect(mockGasket.config.intl.managerFilename).toBeUndefined();
+
+    await plugin.hooks.create(mockGasket, mockContext);
+    expect(mockGasket.config.intl.locales).toEqual(['en-US', 'fr-FR']);
+    expect(mockGasket.config.intl.managerFilename).toEqual('intl.js');
+
+    mockContext.typescript = true;
+    await plugin.hooks.create(mockGasket, mockContext);
+    expect(mockGasket.config.intl.managerFilename).toEqual('intl.ts');
   });
 });

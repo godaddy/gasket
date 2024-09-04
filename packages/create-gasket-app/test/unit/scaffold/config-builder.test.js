@@ -217,6 +217,21 @@ describe('ConfigBuilder', () => {
       expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('Using ^2.0.0, but'));
     });
 
+    it('[semver] strips range prefix from prerelease versions', () => {
+      pkg.add('dependencies', {
+        'patch-pkg': '~2.0.0',
+        'minor-pkg': '^2.0.0',
+        'beta-pkg': '^2.0.0-beta.1',
+        'canary-pkg': '~2.0.0-canary.0'
+      });
+      expect(pkg.fields.dependencies).toEqual({
+        'patch-pkg': '~2.0.0',
+        'minor-pkg': '^2.0.0',
+        'beta-pkg': '2.0.0-beta.1',
+        'canary-pkg': '2.0.0-canary.0'
+      });
+    });
+
     it('[array] adds new fields', () => {
       pkg.add('keys', ['some-key']);
 

@@ -1,10 +1,12 @@
-import type { MaybeAsync, MaybeMultiple } from '@gasket/core';
+import type { MaybeAsync, MaybeMultiple, Plugin } from '@gasket/core';
+import { Logger } from '@gasket/plugin-logger';
 import type {
   FastifyInstance,
   FastifyRequest,
   FastifyReply,
   FastifyServerOptions
 } from 'fastify';
+import { Http2SecureServer, Http2ServerRequest, Http2ServerResponse } from 'http2'
 
 export type AppRoutes = Array<MaybeAsync<(app: FastifyInstance) => void>>;
 
@@ -20,7 +22,7 @@ declare module '@gasket/core' {
       /** Trust proxy configuration */
       trustProxy?: FastifyServerOptions['trustProxy'];
       /** Glob pattern for source files setting up fastify routes */
-      routes?: Array<MaybeAsync<(app: FastifyInstance) => void>>;
+      routes?: Array<MaybeAsync<(app: FastifyInstance<Http2SecureServer, Http2ServerRequest, Http2ServerResponse>) => void>>;
     };
     /** Middleware configuration */
     middleware?: {
@@ -47,23 +49,33 @@ declare module '@gasket/core' {
 
   export interface HookExecTypes {
     middleware(
-      fastify: Fastify
+      app: FastifyInstance<Http2SecureServer, Http2ServerRequest, Http2ServerResponse>
     ): MaybeAsync<MaybeMultiple<Handler> & { paths?: (string | RegExp)[] }>;
-    fastify(fastify: FastifyInstance): MaybeAsync<void>;
+    fastify(app: FastifyInstance<Http2SecureServer, Http2ServerRequest, Http2ServerResponse>): MaybeAsync<void>;
     errorMiddleware(): MaybeAsync<MaybeMultiple<ErrorHandler>>;
   }
 }
+
+type FastifyLogger = Logger & {
+  trace?: () => MaybeAsync<any>,
+  fatal?: () => MaybeAsync<any>
+}
+
+export function alignLogger(
+  logger: Logger
+): FastifyLogger
 
 declare module 'create-gasket-app' {
   export interface CreateContext {
     /** Flag indicating if API app is enabled */
     apiApp?: boolean;
+    typescript?: boolean;
   }
 }
 
-export default {
+const plugin: Plugin = {
   name: '@gasket/plugin-fastify',
-  version: '',
-  description: '',
   hooks: {}
 };
+
+export = plugin;

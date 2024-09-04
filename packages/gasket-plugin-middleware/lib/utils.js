@@ -38,6 +38,7 @@ async function executeMiddlewareLifecycle(gasket, app, middlewarePattern) {
 
   const middlewares = [];
   await gasket.execApply('middleware', async (plugin, handler) => {
+    // @ts-ignore - TS is unable to infer that app can be either an Express application or a Fastify instance
     const middleware = await handler(app);
 
     if (middleware && (!Array.isArray(middleware) || middleware.length)) {

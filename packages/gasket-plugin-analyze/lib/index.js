@@ -2,7 +2,6 @@
 
 const create = require('./create');
 const webpackConfig = require('./webpack-config');
-const commands = require('./commands');
 const { name, version, description } = require('../package.json');
 /**
  * Gasket Analyzer Plugin
@@ -14,19 +13,10 @@ const plugin = {
   description,
   hooks: {
     webpackConfig,
-    // @ts-ignore - TODO: remove ignore after @gasket/cli refactor
-    commands,
     create,
     metadata(gasket, meta) {
       return {
         ...meta,
-        commands: [
-          {
-            name: 'analyze',
-            description: 'Generate analysis report of webpack bundles',
-            link: 'README.md#commands'
-          }
-        ],
         configurations: [
           {
             name: 'bundleAnalyzerConfig',

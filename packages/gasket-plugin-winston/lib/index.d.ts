@@ -1,4 +1,12 @@
-import type { LoggerOptions } from 'winston';
+import type { LoggerOptions, LeveledLogMethod } from 'winston';
+
+declare module 'winston' {
+  export interface Logger {
+    fatal: LeveledLogMethod,
+    warn: LeveledLogMethod,
+    trace: LeveledLogMethod
+  }
+}
 
 declare module '@gasket/core' {
   export interface GasketConfig {
@@ -10,7 +18,7 @@ declare module '@gasket/core' {
   }
 }
 
-export default {
+export = {
   name: '@gasket/plugin-winston',
   version: '',
   description: '',

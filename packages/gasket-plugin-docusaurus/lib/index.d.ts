@@ -1,3 +1,11 @@
+import type { Plugin } from '@gasket/core';
+
+declare module 'create-gasket-app' {
+  export interface CreateContext {
+    useDocusaurus?: boolean;
+  }
+}
+
 declare module '@gasket/core' {
   export interface GasketConfig {
     docusaurus?: DocusaurusConfig;
@@ -17,9 +25,9 @@ export interface DocusaurusConfig {
   host?: string;
 }
 
-export default {
+const plugin: Plugin = {
   name: '@gasket/plugin-docusaurus',
-  version: '',
-  description: '',
   hooks: {}
 };
+
+export = plugin;

@@ -1,4 +1,4 @@
-const { configureMakeStore } = require('@gasket/redux');
+import { configureMakeStore } from '@gasket/redux';
 {{{reduxReducers.imports}}}
 
 const reducers = {
@@ -7,4 +7,4 @@ const reducers = {
 
 const makeStore = configureMakeStore({ reducers });
 
-module.exports = makeStore;
+export default makeStore;

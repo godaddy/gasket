@@ -1,18 +1,21 @@
+/// <reference types="@gasket/plugin-metadata" />
+
+import type { Plugin } from '@gasket/core';
 import type { HappyFeet, HappyFeetOptions } from 'happy-feet';
 
 declare module '@gasket/core' {
   export interface GasketConfig {
     happyFeet?: HappyFeetOptions;
   }
-  export interface Gasket {
-    // TODO: do not attach to gasket instance
-    happyFeet?: HappyFeet;
+
+  export interface GasketActions {
+    getHappyFeet?: (happyConfig?: HappyFeetOptions) => HappyFeet;
   }
 }
 
-export default {
+const plugin: Plugin = {
   name: '@gasket/plugin-happyfeet',
-  version: '',
-  description: '',
   hooks: {}
 };
+
+export = plugin;

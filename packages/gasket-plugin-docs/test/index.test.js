@@ -18,7 +18,9 @@ describe('Plugin', function () {
       'create',
       'commands',
       'metadata',
-      'docsSetup'
+      'prompt',
+      'docsSetup',
+      'webpackConfig'
     ];
 
     expect(plugin).toHaveProperty('hooks');

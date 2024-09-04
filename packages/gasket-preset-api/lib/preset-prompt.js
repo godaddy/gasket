@@ -1,3 +1,6 @@
+import typescriptPrompts from '@gasket/plugin-typescript/prompts';
+import swaggerPrompts from '@gasket/plugin-swagger/prompts';
+
 /**
  * presetPrompt hook
  * @param {Gasket} gasket - Gasket API
@@ -8,16 +11,24 @@
 export default async function presetPrompt(gasket, context, { prompt }) {
   context.apiApp = true;
 
-  if (!('typescript' in context)) {
-    const { typescript } = await prompt([
+  await typescriptPrompts.promptTypescript(context, prompt);
+  await swaggerPrompts.promptSwagger(context, prompt);
+
+  if (!('server' in context)) {
+    const { server } = await prompt([
       {
-        name: 'typescript',
-        message: 'Do you want to use TypeScript?',
-        type: 'confirm',
-        default: false
+        name: 'server',
+        message: 'Which server framework would you like to use?',
+        type: 'list',
+        choices: [
+          { name: 'Express', value: 'express' },
+          { name: 'Fastify', value: 'fastify' }
+        ]
       }
     ]);
 
-    Object.assign(context, { typescript });
+    Object.assign(context, { server });
+
+    return context;
   }
 }

@@ -5,38 +5,32 @@ A plugin that creates `http`, `https` and/or `http2` servers based on the given
 
 ## Installation
 
-#### New apps
-
-```
-gasket create <app-name> --plugins @gasket/plugin-https
-```
-
-#### Existing apps
-
 ```
 npm i @gasket/plugin-https
 ```
 
-Modify `plugins` section of your `gasket.config.js`:
+Update your `gasket` file plugin configuration:
 
 ```diff
-module.exports = {
-  plugins: {
-    add: [
-+      '@gasket/plugin-https'
-    ]
-  }
-}
+// gasket.js
+
++ import pluginHttps from '@gasket/plugin-https';
+
+export default makeGasket({
+  plugins: [
++   pluginHttps
+  ]
+});
 ```
 
 ## Configuration
 
 You can specify what port to open up on, or what certificates to use via
-`gasket.config.js`.
+`gasket.js`.
 
 ```js
-// gasket.config.js
-module.exports = {
+// gasket.js
+export default makeGasket({
   hostname: 'example.com',
   http: 80,
   https: {
@@ -49,7 +43,7 @@ module.exports = {
   terminus: {
     healthcheck: ['/healthcheck', '/healthcheck.html']
   }
-};
+});
 ```
 
 [Terminus] is configured with the following defaults:
@@ -67,8 +61,8 @@ You can configure both HTTPS and HTTP/2 on the same socket with
 [ALPN negotiation].
 
 ```diff
-// gasket.config.js
-module.exports = {
+// gasket.js
+export default makeGasket({
   http: 80,
 -  https: {
 +  http2: {
@@ -79,7 +73,7 @@ module.exports = {
     ca: 'your-ca.pem' // Can be an Array of CAs,
 +    allowHTTP1: true
   }
-};
+});
 ```
 
 ### Local Proxy Server
@@ -87,8 +81,8 @@ module.exports = {
 Create a proxy server for local development. See full `http-proxy` options [here](https://www.npmjs.com/package/http-proxy#options).
 
 ```diff
-// gasket.config.js
-module.exports = {
+// gasket.js
+export default makeGasket({
   http: 80,
 +  devProxy: {
 +    hostname: 'my-host.com',
@@ -101,7 +95,7 @@ module.exports = {
 +      port: 80
 +    }
 +  }
-}
+});
 ```
 
 ## Lifecycles
@@ -153,7 +147,7 @@ serverConfig:  async function serverConfig(gasket, rawConfig) {
 
 ### createServers
 
-Executed in order to retrieve the server options and the handler. Prefer to configure HTTP and port information in the `gasket.config.js` or
+Executed in order to retrieve the server options and the handler. Prefer to configure HTTP and port information in the `gasket.js` or
 `configure` lifecycle.
 
 ```js
@@ -214,7 +208,8 @@ receive those events.
  * @returns {Object} The configuration.
  * @public
  */
-module.exports = {
+export default {
+  name: 'sample-plugin',
   hooks: {
     terminus: async function (gasket, terminus) {
       console.log(terminus); // { ... terminus options ... }
@@ -232,7 +227,8 @@ This lifecycle allows you to assert if everything in your server is still
 working as intended. A thrown error is considered a failed checked.
 
 ```js
-module.exports = {
+export default {
+  name: 'sample-plugin',
   hooks: {
     healthcheck: async function healthcheck(gasket, HealthCheckError) {
       await checkDatabaseConnection();
@@ -251,7 +247,8 @@ Triggered when terminus about to send a 503 Error to the healthcheck route but
 server is currently shutting down.
 
 ```js
-module.exports = {
+export default {
+  name: 'sample-plugin',
   hooks: {
     onSendFailureDuringShutdown: async function onSendFailureDuringShutdown(gasket) {
       gasket.logger.info('healthcheck failed but we are already shutting down');
@@ -267,7 +264,8 @@ the server. This is the first function that is called and allows you to clean up
 your server before it's stopped.
 
 ```js
-module.exports = {
+export default {
+  name: 'sample-plugin',
   hooks: {
     beforeShutdown: async function beforeShutdown(gasket) {
       gasket.logger.info('the server is about to shut down');
@@ -282,7 +280,8 @@ Triggered when the server is stopped. Allowing you to clean up everything you
 need before your `node` process is shutting down.
 
 ```js
-module.exports = {
+export default {
+  name: 'sample-plugin',
   hooks: {
     onSignal: async function onSignal(gasket) {
       await stopDatabaseConnect();
@@ -298,7 +297,8 @@ Triggered when the `onSignal` lifecycle has completed, right before the `node`
 process is killed.
 
 ```js
-module.exports = {
+export default {
+  name: 'sample-plugin',
   hooks: {
     onShutdown: async function onShutdown(gasket) {
       gasket.logger.info('Closing server');

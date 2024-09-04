@@ -17,6 +17,18 @@ module.exports = function metadataHook(gasket, meta) {
 
   const data = {
     ...meta,
+    actions: [
+      {
+        name: 'getNextConfig',
+        description: 'Get the Next.js config',
+        link: 'README.md'
+      },
+      {
+        name: 'getNextRoute',
+        description: 'Get the Next.js route',
+        link: 'README.md'
+      }
+    ],
     guides: [
       {
         name: 'Next.js Routing Guide',
@@ -27,11 +39,6 @@ module.exports = function metadataHook(gasket, meta) {
         name: 'Next.js Deployment Guide',
         description: 'Steps to deploy a Next.js Gasket app',
         link: 'docs/deployment.md'
-      },
-      {
-        name: 'Next.js Redux Guide',
-        description: 'Using Redux with Next.js Gasket apps',
-        link: 'docs/redux.md'
       }
     ],
     lifecycles: [

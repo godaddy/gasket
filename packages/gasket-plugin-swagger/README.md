@@ -6,30 +6,22 @@ docs with Fastify.
 
 ## Installation
 
-#### New apps
-
-***Recommended***
-
-```
-gasket create <app-name> --plugins @gasket/plugin-swagger
-```
-
-#### Existing apps
-
 ```
 npm i @gasket/plugin-swagger
 ```
 
-Modify `plugins` section of your `gasket.config.js`:
+Update your `gasket` file plugin configuration:
 
 ```diff
-module.exports = {
-  plugins: {
-    add: [
-+      '@gasket/plugin-swagger'
-    ]
-  }
-}
+// gasket.js
+
++ import pluginSwagger from '@gasket/plugin-swagger';
+
+export default makeGasket({
+  plugins: [
++   pluginSwagger
+  ]
+});
 ```
 
 ## Configuration
@@ -42,18 +34,19 @@ module.exports = {
     JSDocs in the configured files. See the [swagger-jsdocs] options for what is
     supported.
   - **`ui`** - (object) Optional custom UI options. See
-    [swagger-ui-express] / [fastify-swagger] options for what is supported.
+    [swagger-ui-express] options for what is supported.
+  - **`uiConfig`** - (object) Optional custom UI options. Only for use with Fastify. See [@fastify/swagger-ui] options for what is supported.
 
 #### Example from JSDocs
 
-By specifying the `swagger.jsdocs` options in the `gasket.config.js`, the
+By specifying the `swagger.jsdocs` options in the `gasket.js`, the
 Swagger definition file will be generated with `gasket build`. It can be output
 to either a JSON (default) or YAML file.
 
 ```js
-// gasket.config.js
+// gasket.js
 
-module.exports = {
+export default makeGasket({
   swagger: {
     jsdoc: {
       definition: {
@@ -68,7 +61,7 @@ module.exports = {
     definitionFile: 'swagger.json', // Default
     apiDocs: '/api-docs'            // Default
   }
-}
+});
 ```
 
 #### Example from YAML
@@ -77,13 +70,13 @@ In this example, the Swagger spec will not be generated, but rather demonstrates
 how it can be hand-crafted via YAML file.
 
 ```js
-// gasket.config.js
+// gasket.js
 
-module.exports = {
+export default makeGasket({
   swagger: {
     definitionFile: 'swagger.yaml'
   }
-}
+});
 ```
 
 ## License
@@ -92,5 +85,5 @@ module.exports = {
 
 <!-- LINK -->
 [swagger-ui-express]: https://github.com/scottie1984/swagger-ui-express
-[fasitfy-swagger]: https://github.com/fastify/fastify-swagger
+[@fastify/swagger-ui]: https://github.com/fastify/fastify-swagger-ui
 [swagger-jsdocs]: https://github.com/Surnet/swagger-jsdoc/blob/master/docs/GETTING-STARTED.md

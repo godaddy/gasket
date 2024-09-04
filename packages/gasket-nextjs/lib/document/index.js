@@ -1,41 +1,13 @@
 /// <reference types="@gasket/plugin-data" />
 
-import { Children, cloneElement, createElement } from 'react';
 import { Main, NextScript } from 'next/document.js';  // Conflicts with package.json exports - extensions required
-import { GasketDataScript } from '../gasket-data-script.js';
+import { injectGasketData } from '../inject-gasket-data.js';
 
 const reClass = /^class\s/;
 
 /** @type {import('./internal.js').isDocumentClass} */
 function isDocumentClass(maybeClass) {
   return typeof maybeClass === 'function' && reClass.test(Function.prototype.toString.call(maybeClass));
-}
-
-/** @type {import('./internal.js').selectBody} */
-function selectBody(children) {
-
-  const bodyIdx = children.findIndex(t =>
-    // @ts-ignore -- undefined type expected unless present
-    t.type === 'body'
-  );
-
-  /** @type {import('react').ReactElement} body element */
-  // @ts-ignore -- we already determined this was an element with type 'body' check
-  const body = children[bodyIdx];
-
-  return [body, bodyIdx];
-}
-
-function injectGasketData(html, gasketData, insertIndex = -1) {
-  const htmlChildren = Children.toArray(html.props.children);
-
-  const [body, bodyIdx] = selectBody(htmlChildren);
-  const bodyChildren = Children.toArray(body.props.children);
-
-  bodyChildren.splice(lookupIndex(bodyChildren, insertIndex), 0, createElement(GasketDataScript, { data: gasketData }));
-  htmlChildren[bodyIdx] = cloneElement(body, {}, ...bodyChildren);
-
-  return cloneElement(html, {}, ...htmlChildren);
 }
 
 /**
@@ -74,7 +46,7 @@ export function withGasketData(
   return Document => {
 
     async function getInitialProps(ctx) {
-      const gasketData = ctx.req ? await gasket.actions.getPublicGasketData(ctx.req) : {};
+      const gasketData = ctx.req ? await gasket.actions.getPublicGasketData?.(ctx.req) ?? {} : {};
 
       return {
         ...(await Document.getInitialProps(ctx)),
@@ -93,7 +65,7 @@ export function withGasketData(
           const html = super.render();
           const { gasketData } = this.props;
 
-          return injectGasketData(html, gasketData, index);
+          return injectGasketData(html, gasketData, lookupIndex, index);
         }
       };
     }
@@ -102,7 +74,7 @@ export function withGasketData(
       const html = Document(props);
       const { gasketData } = props;
 
-      return injectGasketData(html, gasketData, index);
+      return injectGasketData(html, gasketData, lookupIndex, index);
     }
 
     WrappedDocument.getInitialProps = getInitialProps;

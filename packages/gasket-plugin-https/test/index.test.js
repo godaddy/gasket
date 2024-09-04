@@ -9,6 +9,8 @@ const mockProxyCreateServer = jest.fn().mockReturnValue({
   })
 });
 
+const mockExec = jest.fn();
+
 jest.mock('create-servers', () => mockCreateServersModule);
 jest.mock('diagnostics', () => () => mockDebugStub);
 jest.mock('@godaddy/terminus', () => ({
@@ -31,11 +33,12 @@ describe('Plugin', () => {
     expect(plugin).toHaveProperty('name', name);
     expect(plugin).toHaveProperty('version', version);
     expect(plugin).toHaveProperty('description', description);
+    expect(plugin).toHaveProperty('actions');
+    expect(plugin).toHaveProperty('hooks');
   });
 
   it('has expected hooks', () => {
     const expected = [
-      'actions',
       'create',
       'metadata'
     ];
@@ -55,7 +58,8 @@ describe('startServer action', () => {
     jest.clearAllMocks();
     gasketAPI = {
       execWaterfall: jest.fn().mockImplementation((arg1, arg2) => Promise.resolve(arg2)),
-      exec: jest.fn(),
+      exec: mockExec,
+      traceRoot: jest.fn().mockReturnThis(),
       config: {},
       logger: {
         info: jest.fn(),
@@ -79,17 +83,17 @@ describe('startServer action', () => {
     });
 
     it('lifecycle is called', async () => {
-      await plugin.hooks.actions(gasketAPI).startServer();
+      await plugin.actions.startServer(gasketAPI);
       expect(gasketAPI.execWaterfall).toHaveBeenCalledWith('devProxy', gasketAPI.config.devProxy);
     });
 
     it('creates proxy server when configured', async () => {
-      await plugin.hooks.actions(gasketAPI).startServer();
+      await plugin.actions.startServer(gasketAPI);
       expect(mockProxyCreateServer).toHaveBeenCalledWith(gasketAPI.config.devProxy);
     });
 
     it('sets default values for proxy server', async () => {
-      await plugin.hooks.actions(gasketAPI).startServer();
+      await plugin.actions.startServer(gasketAPI);
       expect(mockProxyCreateServer).toHaveBeenCalledWith({
         target: {
           host: 'localhost',
@@ -100,7 +104,7 @@ describe('startServer action', () => {
 
     it('does not create proxy server when not configured', async () => {
       gasketAPI.config = {};
-      await plugin.hooks.actions(gasketAPI).startServer();
+      await plugin.actions.startServer(gasketAPI);
       expect(gasketAPI.execWaterfall).not.toHaveBeenCalledWith('devProxy');
       expect(mockProxyCreateServer).not.toHaveBeenCalled();
     });
@@ -113,7 +117,7 @@ describe('startServer action', () => {
       https: { port: 3000 }
     };
 
-    await plugin.hooks.actions(gasketAPI).startServer();
+    await plugin.actions.startServer(gasketAPI);
     const createServerOpts = mockCreateServersModule.mock.calls[mockCreateServersModule.mock.calls.length - 1][0];
     expect(createServerOpts).not.toHaveProperty('http');
     expect(createServerOpts).toHaveProperty('https');
@@ -127,7 +131,7 @@ describe('startServer action', () => {
       https: null
     };
 
-    await plugin.hooks.actions(gasketAPI).startServer();
+    await plugin.actions.startServer(gasketAPI);
 
     const createServerOpts = mockCreateServersModule.mock.calls[mockCreateServersModule.mock.calls.length - 1][0];
     expect(createServerOpts).toHaveProperty('http');
@@ -141,7 +145,7 @@ describe('startServer action', () => {
       http2: 8080
     };
 
-    await plugin.hooks.actions(gasketAPI).startServer();
+    await plugin.actions.startServer(gasketAPI);
 
     const createServerOpts = mockCreateServersModule.mock.calls[mockCreateServersModule.mock.calls.length - 1][0];
     expect(createServerOpts).not.toHaveProperty('http');
@@ -152,7 +156,7 @@ describe('startServer action', () => {
   it('defaults HTTP server to port 80 if neither `http` or `https` or `http2`', async () => {
     gasketAPI.config = {};
 
-    await plugin.hooks.actions(gasketAPI).startServer();
+    await plugin.actions.startServer(gasketAPI);
 
     const createServerOpts = mockCreateServersModule.mock.calls[mockCreateServersModule.mock.calls.length - 1][0];
     expect(createServerOpts).toHaveProperty('http', 80);
@@ -164,7 +168,7 @@ describe('startServer action', () => {
       env: 'local'
     };
 
-    await plugin.hooks.actions(gasketAPI).startServer();
+    await plugin.actions.startServer(gasketAPI);
 
     const createServerOpts = mockCreateServersModule.mock.calls[mockCreateServersModule.mock.calls.length - 1][0];
     expect(createServerOpts).toHaveProperty('http', 8080);
@@ -177,7 +181,7 @@ describe('startServer action', () => {
       http: 1234
     };
 
-    await plugin.hooks.actions(gasketAPI).startServer();
+    await plugin.actions.startServer(gasketAPI);
 
     const createServerOpts = mockCreateServersModule.mock.calls[mockCreateServersModule.mock.calls.length - 1][0];
     expect(createServerOpts).toHaveProperty('http', 1234);
@@ -195,7 +199,7 @@ describe('startServer action', () => {
         http: 8080
       };
 
-      await plugin.hooks.actions(gasketAPI).startServer();
+      await plugin.actions.startServer(gasketAPI);
       const logMessages = gasketAPI.logger.info.mock.calls.flat().map(message => message);
 
       expect(logMessages[0]).toMatch(/http:\/\/local\.gasket\.godaddy\.com:8080\//);
@@ -207,7 +211,7 @@ describe('startServer action', () => {
         https: { port: 8443 }
       };
 
-      await plugin.hooks.actions(gasketAPI).startServer();
+      await plugin.actions.startServer(gasketAPI);
 
       const logMessages = gasketAPI.logger.info.mock.calls.flat().map(message => message);
       expect(logMessages[0]).toMatch(/https:\/\/myapp\.godaddy\.com:8443\//);
@@ -219,7 +223,7 @@ describe('startServer action', () => {
         http2: { port: 8443 }
       };
 
-      await plugin.hooks.actions(gasketAPI).startServer();
+      await plugin.actions.startServer(gasketAPI);
 
       const logMessages = gasketAPI.logger.info.mock.calls.flat().map(message => message);
       expect(logMessages[0]).toMatch(/https:\/\/myapp\.godaddy\.com:8443\//);
@@ -231,7 +235,7 @@ describe('startServer action', () => {
         https: { port: 3000 }
       };
 
-      await plugin.hooks.actions(gasketAPI).startServer();
+      await plugin.actions.startServer(gasketAPI);
 
       const logMessages = gasketAPI.logger.info.mock.calls.flat().map(message => message);
       expect(logMessages[0]).toMatch(/https:\/\/local\.gasket\.godaddy\.com:3000\//);
@@ -245,7 +249,7 @@ describe('startServer action', () => {
 
       gasketAPI.execWaterfall.mockImplementation(() => Promise.resolve({ hostname: 'bogus.com', http: 9000 }));
 
-      await plugin.hooks.actions(gasketAPI).startServer();
+      await plugin.actions.startServer(gasketAPI);
 
       const logMessages = gasketAPI.logger.info.mock.calls[0].flat().map(message => message);
       expect(logMessages[0]).toMatch(/http:\/\/bogus\.com:9000\//);
@@ -267,7 +271,7 @@ describe('startServer action', () => {
       );
     });
 
-    await plugin.hooks.actions(gasketAPI).startServer();
+    await plugin.actions.startServer(gasketAPI);
 
     const expected = 'Failed to start the web servers: Cert file not found';
     expect(gasketAPI.logger.error).toHaveBeenCalledWith(expected);
@@ -285,7 +289,7 @@ describe('startServer action', () => {
     ));
 
 
-    await plugin.hooks.actions(gasketAPI).startServer();
+    await plugin.actions.startServer(gasketAPI);
 
     const expected = 'Port is already in use';
     expect(gasketAPI.logger.error).toHaveBeenCalledWith(expect.stringContaining(expected));
@@ -302,7 +306,7 @@ describe('startServer action', () => {
       })
     ));
 
-    await plugin.hooks.actions(gasketAPI).startServer();
+    await plugin.actions.startServer(gasketAPI);
 
     expect(mockDebugStub.mock.calls[0][0].message).toMatch('Port is already in use');
     expect(mockDebugStub.mock.calls[0][1].https.code).toEqual('EADDRINUSE');
@@ -317,7 +321,7 @@ describe('startServer action', () => {
       })
     ));
 
-    await plugin.hooks.actions(gasketAPI).startServer();
+    await plugin.actions.startServer(gasketAPI);
 
     expect(mockDebugStub.mock.calls[0][0].message).toMatch('Port is already in use');
     expect(mockDebugStub.mock.calls[0][1].http2.code).toEqual('EADDRINUSE');
@@ -332,7 +336,7 @@ describe('startServer action', () => {
     });
 
     it('passes each created server to terminus', async () => {
-      await plugin.hooks.actions(gasketAPI).startServer();
+      await plugin.actions.startServer(gasketAPI);
 
       expect(mockCreateTerminus).toHaveBeenCalledTimes(1);
       expect(mockCreateTerminus.mock.calls[0][0]).toEqual(aServer);
@@ -341,7 +345,7 @@ describe('startServer action', () => {
     it('supports multiple servers as object', async () => {
       mockCreateServersModule.mockImplementation((_, fn) => fn(null, { https: aServer, http: aServer }));
 
-      await plugin.hooks.actions(gasketAPI).startServer();
+      await plugin.actions.startServer(gasketAPI);
       expect(mockCreateTerminus).toHaveBeenCalledTimes(2);
       expect(mockCreateTerminus.mock.calls[0][0]).toEqual(aServer);
     });
@@ -349,13 +353,13 @@ describe('startServer action', () => {
     it('supports multiple servers under object properties', async () => {
       mockCreateServersModule.mockImplementation((_, fn) => fn(null, { https: [aServer, aServer], http: [aServer, aServer] }));
 
-      await plugin.hooks.actions(gasketAPI).startServer();
+      await plugin.actions.startServer(gasketAPI);
       expect(mockCreateTerminus).toHaveBeenCalledTimes(4);
       expect(mockCreateTerminus.mock.calls[0][0]).toEqual(aServer);
     });
 
     it('calls terminus with the options', async () => {
-      await plugin.hooks.actions(gasketAPI).startServer();
+      await plugin.actions.startServer(gasketAPI);
       const config = mockCreateTerminus.mock.calls[0][1];
 
       expect(config.signals).toContain('SIGTERM');
@@ -373,30 +377,28 @@ describe('startServer action', () => {
 
     ['onSendFailureDuringShutdown', 'beforeShutdown', 'onSignal', 'onShutdown'].forEach((type) => {
       it(`calls the ${type} lifecycle`, async () => {
-        await plugin.hooks.actions(gasketAPI).startServer();
+        await plugin.actions.startServer(gasketAPI);
         const lifecycle = mockCreateTerminus.mock.calls[0][1][type];
         await lifecycle();
 
-        expect(gasketAPI.exec.mock.calls[gasketAPI.exec.mock.calls.length - 1][0]).toEqual(type);
+        expect(mockExec.mock.calls[mockExec.mock.calls.length - 1][0]).toEqual(type);
       });
     });
 
     it('calls the healthcheck lifecycle', async () => {
-      await plugin.hooks.actions(gasketAPI).startServer();
+      await plugin.actions.startServer(gasketAPI);
       const lifecycle = mockCreateTerminus.mock.calls[0][1].healthChecks['/healthcheck'];
       await lifecycle();
 
-      expect(gasketAPI.exec.mock.calls[gasketAPI.exec.mock.calls.length - 1][0]).toEqual('healthcheck');
-      expect(gasketAPI.exec.mock.calls[gasketAPI.exec.mock.calls.length - 1][1]).toEqual(mockHealthCheckError);
+      expect(mockExec).toHaveBeenCalledWith('healthcheck', mockHealthCheckError);
     });
 
     it('calls the healthcheck lifecycle for healthcheck.html route', async () => {
-      await plugin.hooks.actions(gasketAPI).startServer();
+      await plugin.actions.startServer(gasketAPI);
       const lifecycle = mockCreateTerminus.mock.calls[0][1].healthChecks['/healthcheck.html'];
       await lifecycle();
 
-      expect(gasketAPI.exec.mock.calls[gasketAPI.exec.mock.calls.length - 1][0]).toEqual('healthcheck');
-      expect(gasketAPI.exec.mock.calls[gasketAPI.exec.mock.calls.length - 1][1]).toEqual(mockHealthCheckError);
+      expect(mockExec).toHaveBeenCalledWith('healthcheck', mockHealthCheckError);
     });
   });
 });

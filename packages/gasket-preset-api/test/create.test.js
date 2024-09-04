@@ -27,9 +27,18 @@ describe('create', function () {
     jest.clearAllMocks();
   });
 
-  it('adds the expected files', async function () {
+  it('adds the expected md files', async function () {
     await createHook({}, mockContext);
-    expect(mockFilesAdd).toHaveBeenCalledWith(expect.stringMatching(/generator\/\*$/));
+    expect(mockFilesAdd).toHaveBeenCalledWith(
+      expect.stringMatching(/generator\/\*\.md$/)
+    );
+  });
+
+  it('adds the expected js files', async function () {
+    await createHook({}, mockContext);
+    expect(mockFilesAdd).toHaveBeenCalledWith(
+      expect.stringMatching(/generator\/\*\.js$/)
+    );
   });
 
   it('adds the expected devDependencies', async function () {
@@ -43,13 +52,16 @@ describe('create', function () {
     await createHook({}, mockContext);
     expect(mockPkgAdd).toHaveBeenCalledWith('scripts', {
       start: 'node server.js',
-      local: 'GASKET_ENV=local nodemon server.js'
+      local: 'GASKET_ENV=local nodemon server.js',
+      preview: 'npm run build && npm run start'
     });
   });
 
-  it('does not add files if typescript is true', async function () {
+  it('does not add js files if typescript is true', async function () {
     mockContext.typescript = true;
     await createHook({}, mockContext);
-    expect(mockFilesAdd).not.toHaveBeenCalled();
+    expect(mockFilesAdd).not.toHaveBeenCalledWith(
+      expect.stringMatching(/generator\/\*\.js$/)
+    );
   });
 });

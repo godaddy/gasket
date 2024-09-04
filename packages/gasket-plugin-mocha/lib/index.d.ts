@@ -1,7 +1,15 @@
+import type { Plugin } from '@gasket/core';
 
-export default {
+const plugin: Plugin = {
   name: '@gasket/plugin-mocha',
-  version: '',
-  description: '',
   hooks: {}
 };
+
+declare module 'create-gasket-app' {
+  export interface CreateContext {
+    /** Flag indicating if typescript is enabled */
+    typescript?: boolean;
+  }
+}
+
+export = plugin;

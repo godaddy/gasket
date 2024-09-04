@@ -26,8 +26,8 @@ describe('@gasket/plugin-metadata', () => {
   });
 
   it('adds getMetadata action to Gasket', async () => {
-    const hook: Hook<'actions'> = (gasket: Gasket): Partial<GasketActions> => ({
+    const actions: Partial<GasketActions> = {
       getMetadata: async () => ({} as Metadata)
-    });
+    };
   });
 });

@@ -1,8 +1,5 @@
-import pluginExpress from '@gasket/plugin-express';
 import pluginHttps from '@gasket/plugin-https';
-import pluginData from '@gasket/plugin-data';
 import pluginWinston from '@gasket/plugin-winston';
-import pluginSwagger from '@gasket/plugin-swagger';
 import pluginLint from '@gasket/plugin-lint';
 
 /**
@@ -12,30 +9,36 @@ import pluginLint from '@gasket/plugin-lint';
  * @returns {Promise<CreateContext.presetConfig>} config
  */
 export default async function presetConfig(gasket, context) {
-  let typescriptPlugin;
-  const testPlugins = [];
+  const plugins = [
+    pluginHttps,
+    pluginWinston,
+    pluginLint
+  ];
+
+  const frameworkPlugin = context.server === 'express'
+    ? await import('@gasket/plugin-express')
+    : await import('@gasket/plugin-fastify');
+
+  plugins.push(frameworkPlugin.default || frameworkPlugin);
 
   if ('testPlugins' in context && context.testPlugins.length > 0) {
     await Promise.all(context.testPlugins.map(async (testPlugin) => {
       const plugin = await import(testPlugin);
-      testPlugins.push(plugin ? plugin.default || plugin : null);
+      plugins.push(plugin ? plugin.default || plugin : null);
     }));
   }
 
   if (context.typescript) {
-    typescriptPlugin = await import('@gasket/plugin-typescript');
+    const typescriptPlugin = await import('@gasket/plugin-typescript');
+    plugins.push(typescriptPlugin.default || typescriptPlugin);
+  }
+
+  if (context.useSwagger) {
+    const swaggerPlugin = await import('@gasket/plugin-swagger');
+    plugins.push(swaggerPlugin.default || swaggerPlugin);
   }
 
   return {
-    plugins: [
-      pluginExpress,
-      pluginHttps,
-      pluginData,
-      pluginWinston,
-      pluginSwagger,
-      pluginLint,
-      typescriptPlugin ? typescriptPlugin.default || typescriptPlugin : null,
-      ...testPlugins
-    ].filter(Boolean)
+    plugins: plugins.filter(Boolean)
   };
 }

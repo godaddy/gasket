@@ -17,10 +17,21 @@ describe('@gasket/plugin-intl', () => {
     };
   });
 
+  it('validated expected props', () => {
+    const config: GasketConfigDefinition = {
+      plugins: [{ name: 'example-plugin', version: '', description: '', hooks: {} }],
+      // @ts-expect-error - requires locales
+      intl: {
+        modules: true
+      }
+    };
+  });
+
   it('module configurations', () => {
     const config: GasketConfigDefinition = {
       plugins: [{ name: 'example-plugin', version: '', description: '', hooks: {} }],
       intl: {
+        locales: ['en-US', 'fr-FR'],
         modules: true
       }
     };
@@ -28,6 +39,7 @@ describe('@gasket/plugin-intl', () => {
     const config2: GasketConfigDefinition = {
       plugins: [{ name: 'example-plugin', version: '', description: '', hooks: {} }],
       intl: {
+        locales: ['en-US', 'fr-FR'],
         modules: {
           localesDir: 'locales',
           excludes: ['test']
@@ -38,6 +50,7 @@ describe('@gasket/plugin-intl', () => {
     const config3: GasketConfigDefinition = {
       plugins: [{ name: 'example-plugin', version: '', description: '', hooks: {} }],
       intl: {
+        locales: ['en-US', 'fr-FR'],
         modules: [
           '@site/shared-pkg',
           '@site/other-pkg/i18n'

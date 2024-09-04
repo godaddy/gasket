@@ -56,7 +56,7 @@ describe('createConfig', () => {
     const custom = {
       customConfig: 'from arguments'
     };
-    result = await createConfig(gasket, false, custom);
+    result = await createConfig(gasket, custom);
     expect(result).toHaveProperty('customConfig', 'from arguments');
   });
 
@@ -76,7 +76,7 @@ describe('createConfig', () => {
     const custom = {
       poweredByHeader: 'from arguments'
     };
-    result = await createConfig(gasket, false, custom);
+    result = await createConfig(gasket, custom);
     expect(result).toHaveProperty('poweredByHeader', 'from arguments');
   });
 
@@ -243,6 +243,7 @@ function mockGasketApi() {
     actions: {
       getWebpackConfig: jest.fn().mockImplementation((config) => config)
     },
+    branch: jest.fn().mockReturnThis(),
     execWaterfall: jest.fn((_, config) => config),
     execWaterfallSync: jest.fn((_, config) => config),
     exec: jest.fn().mockResolvedValue({}),

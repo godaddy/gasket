@@ -32,15 +32,15 @@ describe('utils - DocsConfigSetBuilder', () => {
   describe('.addApp', () => {
 
     it('adds docConfig', async () => {
-      const mockAppInfo = {};
+      const mockAppInfo = { metadata: { path: '/some/path' } };
       expect(instance._app).not.toBeTruthy();
       await instance.addApp(mockAppInfo);
       expect(instance._app).toBeTruthy();
     });
 
     it('does not re-add docConfig', async () => {
-      await instance.addApp({ name: 'app-one' });
-      await instance.addApp({ name: 'app-two' });
+      await instance.addApp({ name: 'app-one', metadata: { path: '/some/path' } });
+      await instance.addApp({ name: 'app-two', metadata: { path: '/some/path' } });
       expect(buildDocsConfigSpy).toHaveBeenCalledTimes(1);
       expect(buildDocsConfigSpy).toHaveBeenCalledWith(
         expect.objectContaining({ name: 'app-one' }),
@@ -52,7 +52,7 @@ describe('utils - DocsConfigSetBuilder', () => {
 
     it('uses custom docsSetup', async () => {
       const docsSetup = { custom: true };
-      const moduleData = { name: 'app-one' };
+      const moduleData = { name: 'app-one', metadata: { path: '/some/path' } };
       await instance.addApp(moduleData, docsSetup);
       expect(buildDocsConfigSpy).toHaveBeenCalledWith(
         expect.objectContaining(moduleData),
@@ -63,7 +63,11 @@ describe('utils - DocsConfigSetBuilder', () => {
 
     it('finds docsSetup from package.json', async () => {
       const docsSetup = { custom: true };
-      const moduleData = { name: 'app-one', package: { gasket: { docsSetup } } };
+      const moduleData = {
+        name: 'app-one',
+        package: { gasket: { docsSetup } },
+        metadata: { path: '/some/path' }
+      };
       await instance.addApp(moduleData);
       expect(buildDocsConfigSpy).toHaveBeenCalledWith(
         expect.objectContaining(moduleData),
@@ -73,7 +77,7 @@ describe('utils - DocsConfigSetBuilder', () => {
     });
 
     it('uses default docsSetup if not passed', async () => {
-      const moduleData = { name: 'app-one' };
+      const moduleData = { name: 'app-one', metadata: { path: '/some/path' } };
       await instance.addApp(moduleData);
       expect(buildDocsConfigSpy).toHaveBeenCalledWith(
         expect.objectContaining(moduleData),
@@ -83,7 +87,7 @@ describe('utils - DocsConfigSetBuilder', () => {
     });
 
     it('adds targetRoot to overrides', async () => {
-      const moduleData = { name: 'app-one' };
+      const moduleData = { name: 'app-one', metadata: { path: '/some/path' } };
       await instance.addApp(moduleData);
       expect(buildDocsConfigSpy).toHaveBeenCalledWith(
         expect.objectContaining(moduleData),
@@ -97,12 +101,12 @@ describe('utils - DocsConfigSetBuilder', () => {
 
     it('adds docConfig', async () => {
       expect(instance._plugins).toHaveLength(0);
-      await instance.addPlugin({ name: 'example-plugin' });
+      await instance.addPlugin({ name: 'example-plugin', metadata: { path: '/some/path' } });
       expect(instance._plugins).toHaveLength(1);
     });
 
     it('does not re-add docConfig', async () => {
-      const mockInfo = { name: 'example-plugin' };
+      const mockInfo = { name: 'example-plugin', metadata: { path: '/some/path' } };
       await instance.addPlugin(mockInfo);
       await instance.addPlugin(mockInfo);
       expect(buildDocsConfigSpy).toHaveBeenCalledTimes(1);
@@ -110,27 +114,27 @@ describe('utils - DocsConfigSetBuilder', () => {
     });
 
     it('uses default docsSetup if not passed', async () => {
-      const mockInfo = { name: 'example-plugin' };
+      const mockInfo = { name: 'example-plugin', metadata: { path: '/some/path' } };
       await instance.addPlugin(mockInfo);
       expect(buildDocsConfigSpy).toHaveBeenCalledWith(mockInfo, DocsConfigSetBuilder.docsSetupDefault, expect.any(Object));
     });
 
     it('accepts custom docsSetup', async () => {
       const mockDocSetup = { link: 'BOGUS.md' };
-      const mockInfo = { name: 'example-plugin' };
+      const mockInfo = { name: 'example-plugin', metadata: { path: '/some/path' } };
       await instance.addPlugin(mockInfo, mockDocSetup);
       expect(buildDocsConfigSpy).toHaveBeenCalledWith(mockInfo, mockDocSetup, expect.any(Object));
     });
 
     it('finds docsSetup from package.json', async () => {
       const docsSetup = { custom: true };
-      const mockInfo = { name: 'example-plugin', package: { gasket: { docsSetup } } };
+      const mockInfo = { name: 'example-plugin', package: { gasket: { docsSetup } }, metadata: { path: '/some/path' } };
       await instance.addPlugin(mockInfo);
       expect(buildDocsConfigSpy).toHaveBeenLastCalledWith(mockInfo, docsSetup, expect.any(Object));
     });
 
     it('adds targetRoot to overrides', async () => {
-      const mockInfo = { name: '@some/example-plugin' };
+      const mockInfo = { name: '@some/example-plugin', metadata: { path: '/some/path' } };
       await instance.addPlugin(mockInfo);
       expect(buildDocsConfigSpy).toHaveBeenCalledWith(
         mockInfo,
@@ -144,7 +148,7 @@ describe('utils - DocsConfigSetBuilder', () => {
     it('add docsSetup for modules', async () => {
       const mockDocSetup = { link: 'BOGUS.md', modules: { fake: { link: 'BOGUS.md' } } };
       const spy = jest.spyOn(instance, '_addModuleDocsSetup');
-      await instance.addPlugin({ name: 'example-plugin' }, mockDocSetup);
+      await instance.addPlugin({ name: 'example-plugin', metadata: { path: '/some/path' } }, mockDocSetup);
       expect(spy).toHaveBeenCalledWith(
         expect.objectContaining({ fake: { link: 'BOGUS.md' } })
       );
@@ -152,7 +156,7 @@ describe('utils - DocsConfigSetBuilder', () => {
 
     it('does not pass docsSetup for modules to builder', async () => {
       const mockDocSetup = { link: 'BOGUS.md', modules: { fake: { link: 'BOGUS.md' } } };
-      const mockInfo = { name: 'example-plugin' };
+      const mockInfo = { name: 'example-plugin', metadata: { path: '/some/path' } };
       await instance.addPlugin(mockInfo, mockDocSetup);
       expect(buildDocsConfigSpy).not.toHaveBeenCalledWith(mockInfo, mockDocSetup);
       expect(buildDocsConfigSpy).toHaveBeenCalledWith(
@@ -165,7 +169,7 @@ describe('utils - DocsConfigSetBuilder', () => {
     describe('app plugins', () => {
 
       it('targetRoot shared with app', async () => {
-        const mockInfo = { name: '/path/to/app/plugins/example-plugin' };
+        const mockInfo = { name: '/path/to/app/plugins/example-plugin', metadata: { path: '/some/path' } };
         await instance.addPlugin(mockInfo);
         expect(buildDocsConfigSpy).toHaveBeenCalledWith(
           mockInfo,
@@ -177,7 +181,7 @@ describe('utils - DocsConfigSetBuilder', () => {
       });
 
       it('adds sourceRoot of app package to overrides', async () => {
-        const mockInfo = { name: '/path/to/app/plugins/example-plugin' };
+        const mockInfo = { name: '/path/to/app/plugins/example-plugin', metadata: { path: '/some/path' } };
         await instance.addPlugin(mockInfo);
         expect(buildDocsConfigSpy).toHaveBeenCalledWith(
           mockInfo,
@@ -189,7 +193,7 @@ describe('utils - DocsConfigSetBuilder', () => {
       });
 
       it('adds nice name to overrides', async () => {
-        const mockInfo = { name: '/path/to/app/plugins/example-plugin' };
+        const mockInfo = { name: '/path/to/app/plugins/example-plugin', metadata: { path: '/some/path' } };
         await instance.addPlugin(mockInfo);
         expect(buildDocsConfigSpy).toHaveBeenCalledWith(
           mockInfo,
@@ -206,24 +210,35 @@ describe('utils - DocsConfigSetBuilder', () => {
 
     it('adds multiple plugins', async () => {
       await instance.addPlugins([
-        { name: 'example-plugin' },
-        { name: '@two/example-plugin' },
-        { name: '@three/example-plugin' }
+        { name: 'example-plugin', metadata: { path: '/some/path' } },
+        { name: '@two/example-plugin', metadata: { path: '/some/path' } },
+        { name: '@three/example-plugin', metadata: { path: '/some/path' } }
       ]);
       expect(instance._plugins).toHaveLength(3);
     });
   });
 
   describe('.addPreset', () => {
+    let preset;
+
+    beforeEach(() => {
+      preset = {
+        name: 'example-preset',
+        metadata: {
+          name: 'example-preset',
+          path: '/some/path'
+        }
+      };
+    });
 
     it('adds docConfig', async () => {
       expect(instance._presets).toHaveLength(0);
-      await instance.addPreset({ name: 'example-preset' });
+      await instance.addPreset(preset);
       expect(instance._presets).toHaveLength(1);
     });
 
     it('does not re-add docConfig', async () => {
-      const mockInfo = { name: 'example-preset' };
+      const mockInfo = preset;
       await instance.addPreset(mockInfo);
       await instance.addPreset(mockInfo);
       expect(buildDocsConfigSpy).toHaveBeenCalledTimes(1);
@@ -231,7 +246,7 @@ describe('utils - DocsConfigSetBuilder', () => {
     });
 
     it('uses default docsSetup if not set', async () => {
-      await instance.addPreset({ name: 'example-preset' });
+      await instance.addPreset(preset);
       expect(buildDocsConfigSpy).toHaveBeenCalledWith(
         expect.any(Object),
         DocsConfigSetBuilder.docsSetupDefault,
@@ -241,7 +256,7 @@ describe('utils - DocsConfigSetBuilder', () => {
 
     it('accepts custom docsSetup', async () => {
       const mockDocSetup = { link: 'BOGUS.md' };
-      await instance.addPreset({ name: 'example-preset' }, mockDocSetup);
+      await instance.addPreset(preset, mockDocSetup);
       expect(buildDocsConfigSpy).toHaveBeenCalledWith(
         expect.any(Object),
         mockDocSetup,
@@ -251,7 +266,7 @@ describe('utils - DocsConfigSetBuilder', () => {
 
     it('finds docsSetup from package.json', async () => {
       const docsSetup = { custom: true };
-      await instance.addPreset({ name: 'example-preset', package: { gasket: { docsSetup } } });
+      await instance.addPreset({ name: 'example-preset', metadata: { path: '/some/path' }, package: { gasket: { docsSetup } } });
       expect(buildDocsConfigSpy).toHaveBeenCalledWith(
         expect.any(Object),
         docsSetup,
@@ -261,7 +276,7 @@ describe('utils - DocsConfigSetBuilder', () => {
 
     it('uses preset-defined docsSetup', async () => {
       const presetDocSetup = { link: 'BOGUS.md' };
-      await instance.addPreset({ name: 'example-preset', module: { docsSetup: presetDocSetup } });
+      await instance.addPreset({ name: 'example-preset', metadata: { path: '/some/path' }, module: { docsSetup: presetDocSetup } });
       expect(buildDocsConfigSpy).toHaveBeenCalledWith(
         expect.any(Object),
         presetDocSetup,
@@ -272,7 +287,7 @@ describe('utils - DocsConfigSetBuilder', () => {
     it('prefers custom docsSetup over preset-defined', async () => {
       const mockDocSetup = { link: 'BOGUS.md' };
       const presetDocSetup = { link: 'OTHER.md' };
-      await instance.addPreset({ name: 'example-preset', module: { docsSetup: presetDocSetup } }, mockDocSetup);
+      await instance.addPreset({ name: 'example-preset', metadata: { path: '/some/path' }, module: { docsSetup: presetDocSetup } }, mockDocSetup);
       expect(buildDocsConfigSpy).not.toHaveBeenCalledWith(expect.any(Object), presetDocSetup);
       expect(buildDocsConfigSpy).toHaveBeenCalledWith(
         expect.any(Object),
@@ -282,7 +297,7 @@ describe('utils - DocsConfigSetBuilder', () => {
     });
 
     it('adds targetRoot to overrides', async () => {
-      await instance.addPreset({ name: '@some/example-preset' });
+      await instance.addPreset({ name: '@some/example-preset', metadata: { path: '/some/path' } });
       expect(buildDocsConfigSpy).toHaveBeenCalledWith(
         expect.any(Object),
         expect.any(Object),
@@ -297,9 +312,9 @@ describe('utils - DocsConfigSetBuilder', () => {
 
     it('adds multiple presets', async () => {
       await instance.addPresets([
-        { name: 'example-preset' },
-        { name: '@two/example-preset' },
-        { name: '@three/example-preset' }
+        { name: 'example-preset', metadata: { path: '/some/path' } },
+        { name: '@two/example-preset', metadata: { path: '/some/path' } },
+        { name: '@three/example-preset', metadata: { path: '/some/path' } }
       ]);
       expect(instance._presets).toHaveLength(3);
     });
@@ -309,12 +324,12 @@ describe('utils - DocsConfigSetBuilder', () => {
 
     it('adds docConfig', async () => {
       expect(instance._modules).toHaveLength(0);
-      await instance.addModule({ name: 'example-module' });
+      await instance.addModule({ name: 'example-module', metadata: { path: '/some/path' } });
       expect(instance._modules).toHaveLength(1);
     });
 
     it('does not re-add docConfig', async () => {
-      const mockInfo = { name: 'example-module' };
+      const mockInfo = { name: 'example-module', metadata: { path: '/some/path' } };
       await instance.addModule(mockInfo);
       await instance.addModule(mockInfo);
       expect(buildDocsConfigSpy).toHaveBeenCalledTimes(1);
@@ -326,7 +341,7 @@ describe('utils - DocsConfigSetBuilder', () => {
     });
 
     it('does NOT use default docsSetup if not passed', async () => {
-      await instance.addModule({ name: 'example-module' });
+      await instance.addModule({ name: 'example-module', metadata: { path: '/some/path' } });
       expect(buildDocsConfigSpy).not.toHaveBeenCalledWith(expect.any(Object), DocsConfigSetBuilder.docsSetupDefault);
       expect(buildDocsConfigSpy).toHaveBeenCalledWith(
         expect.any(Object),
@@ -338,7 +353,7 @@ describe('utils - DocsConfigSetBuilder', () => {
     it('uses docsSetup if added by plugins', async () => {
       const mockSetup = { link: 'BOGUS.md' };
       instance._addModuleDocsSetup({ 'example-module': mockSetup });
-      await instance.addModule({ name: 'example-module' });
+      await instance.addModule({ name: 'example-module', metadata: { path: '/some/path' } });
       expect(buildDocsConfigSpy).toHaveBeenCalledWith(
         expect.any(Object),
         mockSetup,
@@ -347,7 +362,7 @@ describe('utils - DocsConfigSetBuilder', () => {
     });
 
     it('uses default docsSetup if not set for @gasket modules', async () => {
-      await instance.addModule({ name: '@gasket/example' });
+      await instance.addModule({ name: '@gasket/example', metadata: { path: '/some/path' } });
       expect(buildDocsConfigSpy).toHaveBeenCalledWith(
         expect.any(Object),
         DocsConfigSetBuilder.docsSetupDefault,
@@ -357,7 +372,7 @@ describe('utils - DocsConfigSetBuilder', () => {
 
     it('accepts custom docsSetup', async () => {
       const mockDocSetup = { link: 'BOGUS.md' };
-      await instance.addModule({ name: 'example-module' }, mockDocSetup);
+      await instance.addModule({ name: 'example-module', metadata: { path: '/some/path' } }, mockDocSetup);
       expect(buildDocsConfigSpy).toHaveBeenCalledWith(
         expect.any(Object),
         mockDocSetup,
@@ -367,7 +382,7 @@ describe('utils - DocsConfigSetBuilder', () => {
 
     it('finds docsSetup from package.json', async () => {
       const docsSetup = { custom: true };
-      await instance.addModule({ name: 'example-module', package: { gasket: { docsSetup } } });
+      await instance.addModule({ name: 'example-module', package: { gasket: { docsSetup } }, metadata: { path: '/some/path' } });
       expect(buildDocsConfigSpy).toHaveBeenCalledWith(
         expect.any(Object),
         docsSetup,
@@ -376,7 +391,7 @@ describe('utils - DocsConfigSetBuilder', () => {
     });
 
     it('adds targetRoot to overrides', async () => {
-      await instance.addModule({ name: '@some/example-module' });
+      await instance.addModule({ name: '@some/example-module', metadata: { path: '/some/path' } });
       expect(buildDocsConfigSpy).toHaveBeenCalledWith(
         expect.any(Object),
         expect.any(Object),
@@ -391,9 +406,9 @@ describe('utils - DocsConfigSetBuilder', () => {
 
     it('adds multiple modules', async () => {
       await instance.addModules([
-        { name: 'example-module' },
-        { name: '@two/example-module' },
-        { name: '@three/example-module' }
+        { name: 'example-module', metadata: { path: '/some/path' } },
+        { name: '@two/example-module', metadata: { path: '/some/path' } },
+        { name: '@three/example-module', metadata: { path: '/some/path' } }
       ]);
       expect(instance._modules).toHaveLength(3);
     });
@@ -414,6 +429,7 @@ describe('utils - DocsConfigSetBuilder', () => {
         'structures',
         'lifecycles',
         'guides',
+        'actions',
         'commands',
         'configurations'
       ];
@@ -428,18 +444,22 @@ describe('utils - DocsConfigSetBuilder', () => {
     beforeEach(async () => {
       await instance.addPlugins([{
         name: 'example-plugin',
-        path: '/path/to/node_modules/example-plugin',
-        commands: [{ name: 'example-command' }],
-        structures: [{ name: 'example-structure' }],
-        lifecycles: [{ name: 'example-lifecycle' }],
-        configurations: [{ name: 'example-gasket-config' }]
+        metadata: {
+          path: '/path/to/node_modules/example-plugin',
+          commands: [{ name: 'example-command' }],
+          structures: [{ name: 'example-structure' }],
+          lifecycles: [{ name: 'example-lifecycle' }],
+          configurations: [{ name: 'example-gasket-config' }]
+        }
       }, {
         name: '@some/example-plugin',
-        path: '/path/to/node_modules/@some/example-plugin',
-        commands: [{ name: 'some-example-command' }],
-        structures: [{ name: 'some-example-structure' }],
-        lifecycles: [{ name: 'some-example-lifecycle' }],
-        configurations: [{ name: 'some-example-gasket-config' }]
+        metadata: {
+          path: '/path/to/node_modules/@some/example-plugin',
+          commands: [{ name: 'some-example-command' }],
+          structures: [{ name: 'some-example-structure' }],
+          lifecycles: [{ name: 'some-example-lifecycle' }],
+          configurations: [{ name: 'some-example-gasket-config' }]
+        }
       }]);
     });
 
@@ -474,7 +494,7 @@ describe('utils - DocsConfigSetBuilder', () => {
   describe('._buildDocsConfig', () => {
 
     it('returns an object with expected properties', async () => {
-      const mockInfo = {};
+      const mockInfo = { metadata: {} };
       const results = await instance._buildDocsConfig(mockInfo);
 
       const expected = [
@@ -496,7 +516,7 @@ describe('utils - DocsConfigSetBuilder', () => {
     it('"link" and "description" selection priority = overrides > moduleInfo > docsSetup > package', async () => {
       const overrides = { link: 'ONE', description: 'ONE' };
       const mockSetup = { link: 'THREE', description: 'THREE' };
-      const mockInfo = { package: { homepage: 'FOUR', description: 'FOUR' }, path: 'path/to/app' };
+      const mockInfo = { package: { homepage: 'FOUR', description: 'FOUR' }, metadata: { path: 'path/to/app' } };
       const fullMockInfo = { link: 'TWO', description: 'TWO', ...mockInfo };
 
       let results = await instance._buildDocsConfig(fullMockInfo, mockSetup, overrides);
@@ -517,15 +537,15 @@ describe('utils - DocsConfigSetBuilder', () => {
     });
 
     it('file "link" is set to null if no matching file added', async () => {
-      const mockInfo = { package: {}, path: null };
+      const mockInfo = { package: {}, path: null, metadata: {} };
 
       const results = await instance._buildDocsConfig(mockInfo);
       expect(results).toHaveProperty('link', null);
     });
 
     it('"name" and "sourceRoot" selection priority = overrides > moduleInfo', async () => {
-      const mockInfo = { name: 'example-plugin', path: '/path/to/example-plugin' };
-      const overrides = { name: 'different', sourceRoot: '/different/path' };
+      const mockInfo = { name: 'example-plugin', metadata: { path: '/path/to/example-plugin' } };
+      const overrides = { name: 'different', sourceRoot: '/different/path', metadata: { path: '/different/path' } };
 
       let results = await instance._buildDocsConfig(mockInfo);
       expect(results).toHaveProperty('name', 'example-plugin');
@@ -537,7 +557,7 @@ describe('utils - DocsConfigSetBuilder', () => {
     });
 
     it('only returns local transforms', async () => {
-      const mockInfo = {};
+      const mockInfo = { metadata: { path: '/some/path' } };
       const mockSetup = { transforms: [{ global: true }, {}] };
 
       const results = await instance._buildDocsConfig(mockInfo, mockSetup);
@@ -646,15 +666,17 @@ describe('utils - DocsConfigSetBuilder', () => {
 
     it('includes files from from sub type links', async () => {
       const mockInfo = {
-        lifecycles: [{
-          link: 'LIFECYCLES.md'
-        }],
-        commands: [{
-          link: 'docs/COMMANDS.md'
-        }],
-        structures: [{
-          link: 'STRUCTURES.md#with-hash'
-        }]
+        metadata: {
+          lifecycles: [{
+            link: 'LIFECYCLES.md'
+          }],
+          commands: [{
+            link: 'docs/COMMANDS.md'
+          }],
+          structures: [{
+            link: 'STRUCTURES.md#with-hash'
+          }]
+        }
       };
       const results = await instance._findAllFiles(mockInfo, {}, null, mockSourceRoot);
       expect(results).toContain('LIFECYCLES.md');

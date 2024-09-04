@@ -20,6 +20,13 @@ const plugin = {
     metadata(gasket, meta) {
       return {
         ...meta,
+        actions: [
+          {
+            name: 'getFastifyApp',
+            description: 'Get the Fastify app instance',
+            link: 'README.md'
+          }
+        ],
         lifecycles: [
           {
             name: 'middleware',

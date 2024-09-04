@@ -1,4 +1,4 @@
-import type { MaybeAsync } from '@gasket/core';
+import type { MaybeAsync, Plugin } from '@gasket/core';
 import type { PackageJson } from 'create-gasket-app';
 
 export interface ModuleData<Module = any> {
@@ -23,6 +23,8 @@ export interface ModuleData<Module = any> {
   /** Path to a doc file or URL */
   link?: string;
   description?: string;
+
+  metadata?: Record<string, any>;
 }
 
 /** App module with meta data */
@@ -35,6 +37,9 @@ export interface AppData extends ModuleData {
 export interface PluginData extends ModuleData {
   /** Commands enabled by this plugin */
   commands?: Array<DetailData>;
+
+  /** Actions enabled by this plugin */
+  actions?: Array<DetailData>;
 
   /** App files and directories used by plugin */
   structures?: Array<DetailData>;
@@ -123,9 +128,9 @@ declare module '@gasket/core' {
   }
 }
 
-export default {
+const plugin: Plugin = {
   name: '@gasket/plugin-metadata',
-  version: '',
-  description: '',
   hooks: {}
 };
+
+export = plugin;

@@ -24,10 +24,10 @@ of the version installed.
 
 ```js
 // gasket-plugin-example.js
-const externalPlugin = require('some-external-plugin-installed');
-const anotherExternalPlugin = require('i-love-webpack');
+import externalPlugin from 'some-external-plugin-installed';
+import anotherExternalPlugin from 'i-love-webpack';
 
-module.exports = {
+export default {
   name: 'example',
   hooks: {
     webpackConfig(gasket, webpackConfig, { webpack }) {
@@ -57,14 +57,14 @@ the [gasket.config.nextConfig] property be helpful.
 ### Via config property
 
 ```js
-// gasket.config.js
-const withPreact = require('next-plugin-preact');
+// gasket.js
+import withPreact from 'next-plugin-preact';
 
-module.exports = {
+export default makeGasket({
   nextConfig: withPreact({
     /* regular next.js config options here */
   })
-}
+});
 ```
 
 [configuration environments]:/packages/gasket-cli/docs/configuration.md#environments

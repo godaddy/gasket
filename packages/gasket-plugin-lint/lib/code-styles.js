@@ -43,7 +43,7 @@ const godaddy = {
       pkg.add('eslintConfig', {
         extends: ['plugin:@godaddy/react-intl/recommended'],
         settings: {
-          localeFiles: ['public/locales/en-US.json']
+          localeFiles: ['locales/en-US.json']
         }
       });
     }
@@ -194,7 +194,7 @@ const none = {
 const common = {
   // no name = no choice
   create: async (context, utils) => {
-    const { pkg } = context;
+    const { pkg, typescript } = context;
     const { runScriptStr } = utils;
 
     const hasEslint = pkg.has('devDependencies', 'eslint');
@@ -203,9 +203,21 @@ const common = {
     // Handle common eslint configuration
     if (hasEslint) {
       if (!pkg.has('scripts', 'lint')) {
+        const exts = `.js,.jsx,.cjs${typescript ? ',.ts,.tsx' : ''}`;
+
         pkg.add('scripts', {
-          'lint': 'eslint --ext .js,.jsx,.cjs .',
+          'lint': `eslint --ext ${exts} .`,
           'lint:fix': runScriptStr('lint -- --fix')
+        });
+      }
+
+      if (typescript) {
+        pkg.add('devDependencies', {
+          '@typescript-eslint/parser': devDependencies['@typescript-eslint/parser']
+        });
+
+        pkg.add('eslintConfig', {
+          parser: '@typescript-eslint/parser'
         });
       }
 

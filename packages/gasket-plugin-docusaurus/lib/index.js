@@ -1,6 +1,8 @@
 const create = require('./create');
 const docsView = require('./docs-view');
 const configure = require('./configure');
+const prompt = require('./prompt');
+const webpackConfig = require('./webpack-config');
 
 const { name, version, description } = require('../package.json');
 
@@ -13,6 +15,8 @@ const plugin = {
     create,
     configure,
     docsView,
+    prompt,
+    webpackConfig,
     metadata(gasket, meta) {
       return {
         ...meta,

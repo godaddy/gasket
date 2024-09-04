@@ -1,22 +1,22 @@
 import type { IncomingMessage, ServerResponse } from 'http';
-import type { NextConfig } from 'next/dist/next-server/server/config-shared';
-import type NextServer from 'next/dist/next-server/server/next-server';
+import type { NextConfig } from 'next';
+import type { NextServer } from 'next/dist/server/next';
 import type { Application } from 'express';
 import type { Fastify } from 'fastify';
 import type { Gasket } from '@gasket/core';
-
+import type { CreateContext } from 'create-gasket-app';
 
 export { NextConfig, NextServer };
 
 export type NextConfigFunction = (phase: string, context: {
   defaultConfig: NextConfig,
-  isServer: boolean
+  isServer?: boolean
 }) => Promise<NextConfig>;
 
 declare module '@gasket/core' {
 
   export interface GasketActions {
-    getNextConfig?: (config?: NextConfig | NextConfigFunction) => (phase: string, context?: { defaultConfig?: any }) => Promise<NextConfig>
+    getNextConfig?: (config?: NextConfig | NextConfigFunction) => (phase: string, context?: { defaultConfig?: NextConfig }) => Promise<NextConfig>
     getNextRoute?: (req: IncomingMessage) => Promise<null | {
       page: string;
       regex: RegExp;
@@ -73,15 +73,17 @@ declare module 'http' {
 declare module 'create-gasket-app' {
   export interface CreateContext {
     addSitemap?: boolean;
-    nextServerType: 'defaultServer' | 'customServer';
+    nextServerType: 'appRouter' | 'pageRouter' | 'customServer';
     nextDevProxy: boolean;
     typescript: boolean;
-    useRedux: boolean;
     useAppRouter: boolean;
   }
 }
 
 declare module '@gasket/plugin-nextjs' {
+  export const name = '@gasket/plugin-nextjs';
+  export const hooks = {};
+
   /** Gets the NextJS route matching the request */
   export async function getNextRoute(
     gasket: Gasket,
@@ -94,11 +96,33 @@ declare module '@gasket/plugin-nextjs' {
   }> {
     return Promise.resolve(null);
   }
-}
 
-export default {
-  name: '@gasket/plugin-nextjs',
-  version: '',
-  description: '',
-  hooks: {}
+  /* Exported prompts */
+  export async function promptAppRouter(
+    context: CreateContext,
+    prompt: (
+      prompts: Array<Record<string, any>>
+    ) => Promise<Record<string, any>>
+  ): Promise<undefined>
+
+  export async function promptNextServerType(
+    context: CreateContext,
+    prompt: (
+      prompts: Array<Record<string, any>>
+    ) => Promise<Record<string, any>>
+  ): Promise<undefined>
+
+  export async function promptNextDevProxy(
+    context: CreateContext,
+    prompt: (
+      prompts: Array<Record<string, any>>
+    ) => Promise<Record<string, any>>
+  ): Promise<undefined>
+
+  export async function promptSitemap(
+    context: CreateContext,
+    prompt: (
+      prompts: Array<Record<string, any>>
+    ) => Promise<Record<string, any>>
+  ): Promise<undefined>
 }

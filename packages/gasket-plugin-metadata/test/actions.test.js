@@ -1,4 +1,3 @@
-const plugin = require('../');
 const mockPlugin = {
   name: 'mock',
   hooks: {
@@ -19,9 +18,12 @@ describe('actions', () => {
   let gasket,
     applyStub,
     handlerStub,
-    metadata;
+    metadata,
+    actions;
 
   beforeEach(async function () {
+    delete require.cache[require.resolve('../lib/actions')];
+    actions = require('../lib/actions');
     applyStub = jest.fn();
     handlerStub = jest.fn();
 
@@ -38,28 +40,38 @@ describe('actions', () => {
       }
     };
 
-    const { getMetadata } = plugin.hooks.actions(gasket);
-    metadata = await getMetadata();
+    const { getMetadata } = actions;
+    metadata = await getMetadata(gasket);
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+    jest.resetModules();
   });
 
   it('returns an actions object', () => {
-    const actions = plugin.hooks.actions(gasket);
     expect(typeof actions).toBe('object');
   });
 
   it('has a getMetadata function', () => {
-    const actions = plugin.hooks.actions(gasket);
     expect(typeof actions.getMetadata).toBe('function');
   });
 
   it('calls execApply metadata lifecycle', async () => {
     jest.spyOn(require, 'resolve').mockResolvedValueOnce();
-    await plugin.hooks.actions(gasket).getMetadata();
+    await actions.getMetadata(gasket);
     expect(applyStub).toHaveBeenCalled();
   });
 
+  it('memoizes metadata & calls lifecycle once', async () => {
+    jest.spyOn(require, 'resolve').mockResolvedValueOnce();
+    await actions.getMetadata(gasket);
+    await actions.getMetadata(gasket);
+    expect(applyStub).toHaveBeenCalledTimes(1);
+  });
+
   it('returns metadata object', async () => {
-    const result = await plugin.hooks.actions(gasket).getMetadata();
+    const result = await actions.getMetadata(gasket);
     expect(result).toHaveProperty('app');
     expect(result).toHaveProperty('plugins');
     expect(result).toHaveProperty('modules');
@@ -94,17 +106,17 @@ describe('actions', () => {
   });
 
   it('augments the metadata with data from the lifecycle hooks', async function () {
-    expect(metadata.plugins[0]).toHaveProperty('modified', true);
+    expect(metadata.plugins[0].metadata).toHaveProperty('modified', true);
   });
 
   it('loads moduleInfo for modules declared in plugin metadata', async () => {
-    const names = metadata.plugins[0].modules.map(m => m.name);
+    const names = metadata.plugins[0].metadata.modules.map(m => m.name);
     expect(names).toContain('fake-one');
     expect(names).toContain('fake-two');
   });
 
   it('augments moduleInfo metadata for modules declared modules', async () => {
-    const result = metadata.plugins[0].modules.find(mod => mod.name === 'fake-one');
+    const result = metadata.plugins[0].metadata.modules.find(mod => mod.name === 'fake-one');
     expect(result).toHaveProperty('extra', true);
   });
 });

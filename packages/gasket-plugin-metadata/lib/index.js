@@ -1,5 +1,6 @@
 const create = require('./create');
 const actions = require('./actions');
+const webpackConfig = require('./webpack-config');
 const { name, version, description } = require('../package.json');
 
 /** @type {import('@gasket/core').Plugin} */
@@ -7,13 +8,21 @@ module.exports = {
   name,
   version,
   description,
+  actions,
   hooks: {
     create,
-    actions,
+    webpackConfig,
     metadata(gasket, meta) {
       const mod = require('@gasket/core/package.json');
       return {
         ...meta,
+        actions: [
+          {
+            name: 'getMetadata',
+            description: 'Get the metadata for the plugins & modules',
+            link: 'README.md'
+          }
+        ],
         lifecycles: [{
           name: 'metadata',
           method: 'execApply',

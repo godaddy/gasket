@@ -6,35 +6,29 @@ background syncing.
 
 ## Installation
 
-#### New apps
-
-```
-gasket create <app-name> --plugins @gasket/plugin-service-worker
-```
-
-#### Existing apps
-
 ```
 npm i @gasket/plugin-service-worker
 ```
 
-Modify `plugins` section of your `gasket.config.js`:
+Update your `gasket` file plugin configuration:
 
 ```diff
-module.exports = {
-  plugins: {
-    add: [
-+      '@gasket/plugin-service-worker'
-    ]
-  }
-}
+// gasket.js
+
++ import pluginServiceWorker from '@gasket/plugin-service-worker';
+
+export default makeGasket({
+  plugins: [
++   pluginServiceWorker
+  ]
+});
 ```
 
 ## Configuration
 
 ### Options
 
-To be set in under `serviceWorker` in the `gasket.config.js`.
+To be set in under `serviceWorker` in the `gasket.js`.
 
 - `url` - (string) Name of the service worker file. Default is `/sw.js`
 - `scope` - (string) From where to intercept requests. Default is `/`
@@ -71,9 +65,9 @@ primary domain. For the service worker to be installed and properly scoped, the
 following settings would be needed:
 
 ```js
-// gasket.config.js
+// gasket.js
 
-module.exports = {
+export default makeGasket({
   serviceWorker: {
     url: '/docs/sw.js',
     scope: '/docs',
@@ -81,7 +75,7 @@ module.exports = {
       ie8: true
     }
   }
-}
+});
 ```
 
 ## Lifecycles
@@ -97,7 +91,8 @@ This example adds a simple listener for push notifications to the service worker
 content.
 
 ```js
-module.exports = {
+export default {
+  name: 'sample-plugin',
   hooks: {
     composeServiceWorker: function (gasket, content, context) {
       return content.concat(`
@@ -111,7 +106,7 @@ self.addEventListener('push', (event) => {
 `)
     }
   }
-}
+};
 ```
 
 #### Example loaded script
@@ -120,10 +115,13 @@ In this example, we use the market id from the request to read in a partial
 service worker and add it to the content.
 
 ```js
-const { readFile } = require('fs').promises;
-const path = require('path');
+import { promises as fsPromises } from 'fs';
 
-module.exports = {
+const { writeFile } = fsPromises;;
+import path from 'path';
+
+export default {
+  name: 'sample-plugin',
   hooks: {
     composeServiceWorker: async function (gasket, content, context) {
       const { req, res } = context;
@@ -153,7 +151,8 @@ gathers functions which accept Request as an argument and return a string value.
 This example returns a function that picks off a variable from cookies.
 
 ```js
-module.exports = {
+export default {
+  name: 'sample-plugin',
   hooks: {
     serviceWorkerCacheKey: function (gasket) {
       return function marketCacheKey(req, res) {
@@ -169,7 +168,8 @@ module.exports = {
 Same example, written differently.
 
 ```js
-module.exports = {
+export default {
+  name: 'sample-plugin',
   hooks: {
     serviceWorkerCacheKey: () => (req, res) => req.cookies.market || 'en-US'
   }
@@ -196,13 +196,13 @@ injected. This can also be set to a lookup function that takes in an entry name
 and returns a boolean whether it should be injected or not.
 
 ```js
-// gasket.config.js
+// gasket.js
 
-module.exports = {
+export default makeGasket({
   serviceWorker: {
     webpackRegister: key => key === 'main'
   }
-}
+});
 ```
 
 If you do not want the registration script injected by Webpack, you can set

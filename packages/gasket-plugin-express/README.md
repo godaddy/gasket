@@ -9,28 +9,22 @@ Adds Express to your application.
 
 ## Installation
 
-#### New apps
-
-```
-gasket create <app-name> --plugins @gasket/plugin-express
-```
-
-#### Existing apps
-
 ```
 npm i @gasket/plugin-express
 ```
 
-Modify `plugins` section of your `gasket.config.js`:
+Update your `gasket` file plugin configuration:
 
 ```diff
-module.exports = {
-  plugins: {
-    add: [
-+      '@gasket/plugin-express'
-    ]
-  }
-}
+// gasket.js
+
++ import pluginExpress from '@gasket/plugin-express';
+
+export default makeGasket({
+  plugins: [
++   pluginExpress
+  ]
+});
 ```
 
 ## Configuration
@@ -41,23 +35,21 @@ All the configurations for the plugin are added under `express` in the config:
   differently.
 - `excludedRoutesRegex`: (deprecated) renamed to more correct `middlewareInclusionRegex`.
 - `middlewareInclusionRegex`: RegExp filter to apply toward request URLs to determine when Gasket middleware will run. You can use negative lookahead patterns to exclude routes like static resource paths.
-- `routes`: [Glob pattern](https://github.com/isaacs/node-glob#glob-primer) for source files exporting route-defining functions. These functions will be passed the express `app` object, and therein they can attach handlers and middleware.
 - 'trustProxy': Enable trust proxy option, [see Express documentation on Express behind proxies](https://expressjs.com/en/guide/behind-proxies.html)
 
 #### Example configuration
 
 ```js
-module.exports = {
-  plugins: {
-    add: ['@gasket/express']
-  },
+export default makeGasket({
+  plugins: [
+    pluginExpress
+  ],
   express: {
     compression: false,
-    routes: 'api/*.js',
     middlewareInclusionRegex: /^(?!\/_next\/)/,
     trustProxy: true
   }
-}
+});
 ```
 
 ## Logging
@@ -84,7 +76,8 @@ Executed **after** the `middleware` event for when you need full control over
 the `express` instance.
 
 ```js
-module.exports = {
+export default {
+  name: 'sample-plugin',
   hooks: {
     /**
     * Update Express app instance
@@ -96,7 +89,7 @@ module.exports = {
     express: async function (gasket, express) {
     }
   }
-}
+};
 ```
 
 ### errorMiddleware
@@ -105,7 +98,8 @@ Executed after the `express` event. All middleware functions returned from this
 hook will be applied to Express.
 
 ```js
-module.exports = {
+export default {
+  name: 'sample-plugin',
   hooks: {
     /**
     * Add Express error middlewares
@@ -116,7 +110,7 @@ module.exports = {
     errorMiddleware: function (gasket) {
     }
   }
-}
+};
 ```
 
 ## How it works

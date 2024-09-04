@@ -1,5 +1,5 @@
 /* eslint-disable no-sync */
-const { GasketEngine } = require('@gasket/core');
+const { Gasket } = require('@gasket/core');
 const PluginLogger = require('@gasket/plugin-logger');
 const plugin = require('../lib/index');
 const { LEVEL, MESSAGE } = require('triple-beam');
@@ -12,8 +12,8 @@ describe('@gasket/plugin-winston', function () {
   let gasket;
 
   beforeEach(() => {
-    gasket = new GasketEngine([PluginLogger, plugin]);
-    gasket.config = {};
+    gasket = new Gasket({ plugins: [PluginLogger, plugin] });
+    gasket.config = { env: 'local' };
   });
 
   afterEach(() => {
@@ -88,6 +88,23 @@ describe('@gasket/plugin-winston', function () {
 
         logger.error('test');
 
+        expect(consoleSpy).toHaveBeenCalledWith('error: test\n');
+      } finally {
+        consoleSpy.mockRestore();
+      }
+    });
+
+    it('defaults to json format when env is not local', function () {
+      gasket.config.env = 'prod';
+      const consoleSpy = jest
+        // eslint-disable-next-line no-console
+        .spyOn(console._stdout, 'write')
+        .mockImplementation();
+      try {
+        const [logger] = gasket.execSync('createLogger');
+
+        logger.error('test');
+
         expect(consoleSpy).toHaveBeenCalledWith(
           JSON.stringify({
             level: 'error',
@@ -129,10 +146,7 @@ describe('@gasket/plugin-winston', function () {
             level: 'error',
             message: 'test',
             [LEVEL]: 'error',
-            [MESSAGE]: JSON.stringify({
-              level: 'error',
-              message: 'test'
-            })
+            [MESSAGE]: 'error: test'
           },
           expect.any(Function)
         );
@@ -151,7 +165,7 @@ describe('@gasket/plugin-winston', function () {
             level: 'error',
             message: 'test',
             [LEVEL]: 'error',
-            [MESSAGE]: JSON.stringify({ level: 'error', message: 'test' })
+            [MESSAGE]: 'error: test'
           },
           expect.any(Function)
         );
@@ -174,7 +188,7 @@ describe('@gasket/plugin-winston', function () {
               level: 'error',
               message: 'test',
               [LEVEL]: 'error',
-              [MESSAGE]: JSON.stringify({ level: 'error', message: 'test' })
+              [MESSAGE]: 'error: test'
             },
             expect.any(Function)
           );
@@ -195,7 +209,7 @@ describe('@gasket/plugin-winston', function () {
               level: 'error',
               message: 'test',
               [LEVEL]: 'error',
-              [MESSAGE]: JSON.stringify({ level: 'error', message: 'test' })
+              [MESSAGE]: 'error: test'
             },
             expect.any(Function)
           );

@@ -1,5 +1,6 @@
 /// <reference types="@gasket/plugin-webpack" />
 
+const tryResolve = require('./utils/try-resolve.js');
 const isGasketCore = /@gasket[/\\]core$/;
 
 /**
@@ -33,23 +34,37 @@ function externalizeGasketCore(ctx, callback) {
 }
 
 /** @type {import('@gasket/core').HookHandler<'webpackConfig'>} */
-function webpackConfigHook(gasket, webpackConfig, { isServer }) {
+function webpackConfigHook(gasket, webpackConfig, { webpack, isServer }) {
+
+  webpackConfig.resolve ??= {};
+  webpackConfig.resolve.alias ??= {};
+
+  const exclude = (moduleName) => {
+    const resolved = tryResolve(moduleName, [gasket.config.root]);
+    if (resolved) {
+      webpackConfig.resolve.alias[resolved] = false;
+    }
+  };
+
   if (Array.isArray(webpackConfig.externals)) {
     if (!isServer) {
-      webpackConfig.externals.unshift(validateNoGasketCore);
-    } else {
-      webpackConfig.externals.unshift(externalizeGasketCore);
+      exclude('./gasket.js');
+      exclude('./src/gasket.js');
+      exclude('./gasket.ts');
+      exclude('./src/gasket.ts');
+      exclude('./dist/gasket.js');
 
-      // TODO: If we find a reason NOT to externalized the core package,
-      //  then we must set the GASKET_ENV which requires builds per environment.
-      // webpackConfig.plugins.push(
-      //   new webpack.EnvironmentPlugin({
-      //     GASKET_ENV: gasket.config.env
-      //   })
-      // );
+      webpackConfig.externals.unshift(validateNoGasketCore);
     }
-    // TODO: throw or something if externals is NOT an array
+  } else {
+    throw new Error('Expected webpackConfig.externals to be an array');
   }
+
+  webpackConfig.plugins.push(
+    new webpack.EnvironmentPlugin({
+      GASKET_ENV: gasket.config.env
+    })
+  );
 
   return webpackConfig;
 }

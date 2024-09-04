@@ -159,6 +159,7 @@ function mockGasketApi() {
       root: '/app/path',
       http: 3000,
       hostname: 'localhost'
-    }
+    },
+    traceRoot: jest.fn().mockReturnThis()
   };
 }
