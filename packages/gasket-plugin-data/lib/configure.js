@@ -13,7 +13,7 @@ function configure(gasket, baseConfig) {
       { env, commandId, root }
     );
 
-    baseDataMap.set(gasket, data);
+    baseDataMap.set(gasket.symbol, data);
 
     //
     // remove definition from config

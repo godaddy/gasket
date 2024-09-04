@@ -10,6 +10,7 @@ describe('configure hook', () => {
   let gasket, config;
   beforeEach(() => {
     gasket = {
+      symbol: Symbol('gasket'),
       command: {
         id: 'commandId'
       },
@@ -38,7 +39,7 @@ describe('configure hook', () => {
   it('stores data in action map', () => {
     configure(gasket, config);
 
-    expect(baseDataMap.set).toHaveBeenCalledWith(gasket, { some: 'data' });
+    expect(baseDataMap.set).toHaveBeenCalledWith(gasket.symbol, { some: 'data' });
   });
 
   it('stored data has overrides applied', () => {
@@ -53,6 +54,6 @@ describe('configure hook', () => {
 
     configure(gasket, config);
 
-    expect(baseDataMap.set).toHaveBeenCalledWith(gasket, { some: 'override' });
+    expect(baseDataMap.set).toHaveBeenCalledWith(gasket.symbol, { some: 'override' });
   });
 });
