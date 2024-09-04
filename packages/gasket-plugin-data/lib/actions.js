@@ -8,8 +8,9 @@ const reqMap = new WeakMap();
 
 /** @type {import('@gasket/core').ActionHandler<'getGasketData'>} */
 async function getGasketData(gasket) {
-  if (!adjustedDataMap.has(gasket)) {
-    const baseData = baseDataMap.get(gasket) ?? {};
+  const key = gasket.symbol;
+  if (!adjustedDataMap.has(key)) {
+    const baseData = baseDataMap.get(key) ?? {};
     const adjustedData = await gasket.execWaterfall('gasketData', deepClone(baseData));
 
     if (!adjustedData) {
@@ -18,11 +19,11 @@ async function getGasketData(gasket) {
       );
     }
 
-    adjustedDataMap.set(gasket, adjustedData);
-    baseDataMap.delete(gasket);
+    adjustedDataMap.set(key, adjustedData);
+    baseDataMap.delete(key);
   }
 
-  return adjustedDataMap.get(gasket);
+  return adjustedDataMap.get(key);
 }
 
 /** @type {import('@gasket/core').ActionHandler<'getPublicGasketData'>} */
