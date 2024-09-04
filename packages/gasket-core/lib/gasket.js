@@ -57,6 +57,9 @@ export class Gasket {
     this.config = config;
     this.command = null;
 
+    // Can be used as a key to identify a gasket instance
+    this.symbol = Symbol('gasket');
+
     // @ts-ignore
     this.execSync('init');
     // @ts-ignore
