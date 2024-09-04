@@ -37,7 +37,6 @@ module.exports = async function create(gasket, context) {
   const {
     files,
     typescript,
-    apiApp,
     testPlugins,
     pkg,
     gasketConfig
@@ -51,18 +50,10 @@ module.exports = async function create(gasket, context) {
     fastify: devDependencies.fastify
   });
 
-  if (apiApp) {
-    gasketConfig.add('fastify', {
-      routes: []
-    });
-
+  if ('apiApp' in context && context.apiApp) {
     const globIgnore = typescript ? '!(*.js)' : '!(*.ts)';
     files.add(`${generatorDir}/app/**/${globIgnore}`)
 
     createTestFiles({ files, generatorDir, testPlugins, globIgnore });
-
-    gasketConfig
-      .addImport('{ routes }', './routes/index.js')
-      .injectValue('fastify.routes', 'routes');
   }
 };

@@ -4,24 +4,20 @@ export const defaultHandler = async (req, res) => {
   }
 };
 
-export const routes = [
-  (app) => {
-    {{#if useSwagger}}
-    /**
-    * @swagger
-    *
-    * /default:
-    *   get:
-    *     summary: "Get default route"
-    *     produces:
-    *       - "application/json"
-    *     responses:
-    *       "200":
-    *         description: "Returns welcome message."
-    *         content:
-    *           application/json
-    */
-    {{/if}}
-    app.get('/default', defaultHandler);
-  } 
-]
+{{#if useSwagger}}
+/**
+* @swagger
+*
+* /default:
+*   get:
+*     summary: "Get default route"
+*     produces:
+*       - "application/json"
+*     responses:
+*       "200":
+*         description: "Returns welcome message."
+*         content:
+*           application/json
+*/
+{{/if}}
+app.get('/default', app.get('/default', defaultHandler));
