@@ -11,7 +11,8 @@ module.exports = function create(gasket, {
   gasketConfig,
   gitignore,
   typescript,
-  useDocs
+  useDocs,
+  readme
 }) {
   if (!useDocs) return;
   gitignore?.add(DEFAULT_CONFIG.outputDir, 'Documentation');
@@ -26,4 +27,8 @@ module.exports = function create(gasket, {
   pkg.add('scripts', {
     docs: docsScript
   });
+
+  readme.subHeading('Documentation')
+    .content('Generated docs will be placed in the `.docs` directory. To generate markdown documentation for the API, run:')
+    .codeBlock('{{{packageManager}}} run docs', 'bash');
 };

@@ -10,6 +10,11 @@ describe('the create hook', () => {
       pkg: {
         add: jest.fn()
       },
+      readme: {
+        subHeading: jest.fn().mockReturnThis(),
+        content: jest.fn().mockReturnThis(),
+        codeBlock: jest.fn().mockReturnThis()
+      },
       gasketConfig: {
         addPlugin: jest.fn()
       },
@@ -62,5 +67,12 @@ describe('the create hook', () => {
     expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts', {
       docs: 'tsx gasket.ts docs'
     });
+  });
+
+  it('should add a README section', () => {
+    create({}, mockContext);
+    expect(mockContext.readme.subHeading).toHaveBeenCalledWith('Documentation');
+    expect(mockContext.readme.content).toHaveBeenCalledWith('Generated docs will be placed in the `.docs` directory. To generate markdown documentation for the API, run:');
+    expect(mockContext.readme.codeBlock).toHaveBeenCalledWith('{{{packageManager}}} run docs', 'bash');
   });
 });

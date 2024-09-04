@@ -30,10 +30,6 @@ const presetDirs = await Promise.all(packageDirs
   }));
 
 export default makeGasket({
-  plugins: presetDirs.concat([configPlugin, siteDocsPlugin], pluginDirs),
-  intl: {
-    locales: ['en-US'],
-    defaultLocale: 'en-US'
-  }
+  plugins: presetDirs.concat([configPlugin, siteDocsPlugin], pluginDirs)
 });
 

@@ -68,6 +68,14 @@ with docs for what is configured in your app. See the [@gasket/plugin-command] d
 node gasket.js docs
 ```
 
+## ESM
+
+Newly created Gasket apps will use ESM and `type: module`. This means that you will need to use `.js` extensions in your imports. For example:
+
+```js
+import { myFunction } from './myModule.js';
+```
+
 <!-- LINKS -->
 
 
