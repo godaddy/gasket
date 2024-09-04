@@ -92,9 +92,9 @@ describe('@gasket/plugin-logger', () => {
 
     describe('actions', () => {
       it('should return getLogger action', () => {
-        const actions = plugin.hooks.actions(gasket);
+        const actions = plugin.actions;
 
-        expect(actions.getLogger()).toBe(gasket.logger);
+        expect(actions.getLogger(gasket)).toBe(gasket.logger);
       });
     });
 

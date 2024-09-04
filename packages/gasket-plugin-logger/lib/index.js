@@ -24,6 +24,9 @@ module.exports = {
   name,
   version,
   description,
+  actions: {
+    getLogger: gasket => gasket.logger
+  },
   hooks: {
     create(gasket, { pkg, gasketConfig }) {
       gasketConfig.addPlugin('pluginLogger', '@gasket/plugin-logger');
@@ -55,11 +58,6 @@ module.exports = {
         verifyLoggerLevels(loggers[0]);
         gasket.logger = loggers[0];
       }
-    },
-    actions(gasket) {
-      return {
-        getLogger: () => gasket.logger
-      };
     },
     async onSignal(gasket) {
       await gasket.logger?.close?.();
