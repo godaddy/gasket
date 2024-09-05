@@ -20,7 +20,7 @@ async function loadPresets({ context }) {
     packageManager: context.packageManager,
     dest: tmpDir
   });
-  const pkgVerb = pkgManager.manager === 'yarn' ? 'add' : 'install';
+  const pkgVerb = pkgManager.manager === 'npm' ? 'install' : 'add';
 
   const remotePresets = context.rawPresets.map(async preset => {
     const parts = hasVersionOrTag.test(preset) && preset.split('@').filter(Boolean);
