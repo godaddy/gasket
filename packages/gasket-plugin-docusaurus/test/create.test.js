@@ -37,7 +37,8 @@ describe('createHook', () => {
       '@docusaurus/core': devDependencies['@docusaurus/core'],
       '@docusaurus/preset-classic': devDependencies['@docusaurus/preset-classic'],
       'react': devDependencies.react,
-      'react-dom': devDependencies['react-dom']
+      'react-dom': devDependencies['react-dom'],
+      'ajv': devDependencies.ajv
     });
   });
 
