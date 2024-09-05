@@ -10,7 +10,8 @@ module.exports = async function create(gasket, context) {
     nextServerType,
     apiApp,
     gitignore,
-    readme
+    readme,
+    testPlugins
   } = context;
   const depType = apiApp ? 'devDependencies' : 'dependencies';
 
@@ -35,6 +36,10 @@ module.exports = async function create(gasket, context) {
       start: 'node dist/server.js',
       local: 'GASKET_ENV=local tsx watch server.ts'
     });
+
+    if (testPlugins?.length && testPlugins.includes('@gasket/plugin-jest')) {
+      context.addJestTSType = true;
+    }
 
     files.add(`${generatorDir}/api/*`, `${generatorDir}/shared/*`);
     gitignore?.add('dist', 'TypeScript build output');

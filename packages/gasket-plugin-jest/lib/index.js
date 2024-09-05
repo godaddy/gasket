@@ -1,6 +1,7 @@
 /// <reference types="@gasket/core" />
 /// <reference types="create-gasket-app" />
 /// <reference types="@gasket/plugin-metadata" />
+/// <reference types="@gasket/plugin-express" />
 
 const {
   name,
@@ -20,7 +21,8 @@ const plugin = {
         last: true,
         before: ['@gasket/plugin-lint']
       },
-      handler: async function create(gasket, { files, pkg }) {
+      handler: async function create(gasket, context) {
+        const { files, pkg, typescript, apiApp } = context;
         const generatorDir = `${__dirname}/../generator`;
         const isReactProject = pkg.has('dependencies', 'react');
 
@@ -39,13 +41,36 @@ const plugin = {
             '@testing-library/jest-dom': devDependencies['@testing-library/jest-dom'],
             'jest-environment-jsdom': devDependencies['jest-environment-jsdom']
           });
-        }
+        } else if (apiApp) {
+          if (typescript) {
+            pkg.add('devDependencies', {
+              '@types/jest': devDependencies['@types/jest'],
+              'ts-jest': devDependencies['ts-jest'],
+              'ts-node': devDependencies['ts-node']
+            });
 
-        pkg.add('scripts', {
-          'test': 'jest',
-          'test:watch': 'jest --watchAll',
-          'test:coverage': 'jest --coverage'
-        });
+            pkg.add('scripts', {
+              'test': 'jest',
+              'test:watch': 'jest --watchAll',
+              'test:coverage': 'jest --coverage'
+            });
+          } else {
+            pkg.add('devDependencies', {
+              'cross-env': devDependencies['cross-env']
+            });
+            pkg.add('scripts', {
+              'test': "cross-env NODE_OPTIONS='--unhandled-rejections=strict --experimental-vm-modules' jest",
+              'test:watch': 'npm run test -- --watch',
+              'test:coverage': 'npm run test -- --coverage'
+            });
+          }
+        } else {
+          pkg.add('scripts', {
+            'test': 'jest',
+            'test:watch': 'jest --watchAll',
+            'test:coverage': 'jest --coverage'
+          });
+        }
       }
     },
     metadata(gasket, meta) {
