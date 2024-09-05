@@ -5,7 +5,7 @@ Gasket plugin for building analysis reports of webpack bundles using
 
 ## Installation
 
-```
+```bash
 npm i @gasket/plugin-analyze
 ```
 
@@ -25,17 +25,23 @@ export default makeGasket({
 
 ## Configuration
 
-- **`bundleAnalyzerConfig`** - (object) The base gasket.config object.
-  - **`browser`** - (object) See [plugin options]
-  - **`server`** - (object) See [plugin options]
+- **`bundleAnalyzerConfig`** - (object) Configuration options for the Webpack
+  bundle analyzer. Define settings for both browser and server bundles.
+  - **`browser`** - (object) Options specific to the client-side bundle
+    analysis. See [plugin options].
+  - **`server`** - (object) Options specific to the server-side bundle analysis.
+    See [plugin options].
 
-This plugin utilizes [webpack-bundle-analyzer] and as such, all of it's
-[plugin options] are available for tuning for both both `browser` and `server`
-analysis reports. Do so by setting the `bundleAnalyzerConfig` property in the
-gasket.config.js. The analyze plugin defaults `analyzeMode` to `static`, and
-outputs the reports to a `reports` dir at the root of the project.
+This plugin uses [webpack-bundle-analyzer] and as such, all of its [plugin
+options] are available for tuning both `browser` and `server` analysis reports.
+These options are defined in the `bundleAnalyzerConfig` object in your
+`gasket.config.js`.
 
-#### Example
+By default, the `analyzeMode` is set to `static`, meaning the analysis reports
+are generated as HTML files, and the reports are output to a `reports` directory
+at the root of the project.
+
+### Example
 
 ```js
 // gasket.js
@@ -43,32 +49,60 @@ outputs the reports to a `reports` dir at the root of the project.
 export default makeGasket({
   bundleAnalyzerConfig: {
     browser: {
-      defaultSizes: 'gzip'
+      defaultSizes: 'gzip' // Analyze the gzipped sizes of the bundles
     },
     server: {
-      openAnalyzer: false
+      openAnalyzer: false // Do not automatically open the report in the browser
     }
   }
 });
 ```
 
+### Default Configuration
+
+If no `bundleAnalyzerConfig` is provided, the plugin defaults to generating both
+browser and server reports in the `reports` directory:
+
+- Browser reports: `reports/browser-bundles.html`
+- Server reports: `reports/server-bundles.html`
+
+These paths can be customized in `bundleAnalyzerConfig` under `reportFilename`
+for each type of bundle (browser and server).
+
 ## NPM script
 
 ### analyze
 
-The npm script `analyze` will execute the following `GASKET_ENV=local ANALYZE=true next build`.
+The npm script `analyze` will execute the following:
 
-Only when _this_ script is run, will the plugin add [webpack-bundle-analyzer]
-to the webpack config. By default, generated reports are output to a `reports`
-dir at the root of the project.
+```bash
+GASKET_ENV=local ANALYZE=true next build
+```
 
-The script runs webpack for for both browser
-and server-side rendering, two reports will be outputted:
+When this script is run, the `@gasket/plugin-analyse` will add the
+[webpack-bundle-analyzer] to the webpack config.
+
+Reports for both browser and server-side rendering will be generated, with the
+following output:
+
 - `reports/browser-bundles.html`
 - `reports/server-bundles.html`
 
-The **browser** report will be the most critical for analysis in order to make
-sure an app is bundled in a way that is most optimal for users to download.
+Only when `ANALYZE=true` is set in the environment, will the analyzer plugin be
+added to Webpack, ensuring that the bundle analyzer is used specifically for
+this analysis task.
+
+#### Example Usage
+
+To run the analyzer:
+
+```bash
+npm run analyze
+```
+
+The **browser** report will be most critical for analyzing bundle size
+optimizations, ensuring that the app is optimized for download efficiency from
+the user's perspective.
 
 ## License
 
@@ -77,4 +111,5 @@ sure an app is bundled in a way that is most optimal for users to download.
 <!-- LINKS -->
 
 [webpack-bundle-analyzer]:https://github.com/webpack-contrib/webpack-bundle-analyzer
-[plugin options]:https://github.com/webpack-contrib/webpack-bundle-analyzer#options-for-plugin
+[plugin
+    options]:https://github.com/webpack-contrib/webpack-bundle-analyzer#options-for-plugin
