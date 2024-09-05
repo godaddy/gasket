@@ -1,7 +1,8 @@
-import type { Request, Response } from 'express';
-import gasket from '../gasket.js';
-
-const app = gasket.actions.getExpressApp();
+export const defaultHandler = async (req, res) => {
+  if (res.statusCode === 200) {
+    res.send({ message: 'Welcome to your default route...' });
+  }
+};
 
 {{#if useSwagger}}
 /**
@@ -19,8 +20,4 @@ const app = gasket.actions.getExpressApp();
 *           application/json
 */
 {{/if}}
-app.get('/default', async (req: Request, res: Response) => {
-  res.status(200).json({
-    message: 'Welcome to your default route...'
-  });
-});
+app.get('/default', app.get('/default', defaultHandler));
