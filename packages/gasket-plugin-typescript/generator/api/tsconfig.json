@@ -12,6 +12,9 @@
       "esnext"
     ],
     "types": [
+      {{#if addJestTSType}}
+      "jest",
+      {{/if}}
       "node"
     ],
     "baseUrl": "./",
