@@ -24,6 +24,13 @@ const plugin = {
     metadata(gasket, meta) {
       return {
         ...meta,
+        actions: [
+          {
+            name: 'getApmTransaction',
+            description: 'Get the APM transaction data',
+            link: 'README.md'
+          }
+        ],
         configurations: [
           {
             name: 'elasticAPM',

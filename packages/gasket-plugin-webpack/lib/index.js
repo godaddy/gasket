@@ -28,6 +28,13 @@ const plugin = {
     metadata(gasket, meta) {
       return {
         ...meta,
+        actions: [
+          {
+            name: 'getWebpackConfig',
+            description: 'Get the webpack config',
+            link: 'README.md'
+          }
+        ],
         guides: [
           {
             name: 'Webpack Configuration Guide',

@@ -28,6 +28,13 @@ const plugin = {
     metadata(gasket, meta) {
       return {
         ...meta,
+        actions: [
+          {
+            name: 'getExpressApp',
+            description: 'Get the Express app instance',
+            link: 'README.md'
+          }
+        ],
         guides: [
           {
             name: 'Express Setup Guide',

@@ -5,6 +5,7 @@ describe('actions', () => {
 
   beforeEach(() => {
     gasket = {
+      symbol: Symbol('gasket'),
       execWaterfall: jest.fn().mockImplementation((event, config) => config),
       actions
     };
@@ -31,14 +32,14 @@ describe('actions', () => {
     });
 
     it('returns base data', async () => {
-      baseDataMap.set(gasket, { some: 'data' });
+      baseDataMap.set(gasket.symbol, { some: 'data' });
 
       const results = await getGasketData(gasket);
       expect(results).toEqual({ some: 'data' });
     });
 
     it('returns adjusted data by gasketData lifecycle', async () => {
-      baseDataMap.set(gasket, { some: 'data' });
+      baseDataMap.set(gasket.symbol, { some: 'data' });
       gasket.execWaterfall.mockResolvedValue({ some: 'adjusted' });
 
       const results = await getGasketData(gasket);
@@ -48,7 +49,7 @@ describe('actions', () => {
     });
 
     it('only executes gasketData fixup once', async () => {
-      baseDataMap.set(gasket, { some: 'data' });
+      baseDataMap.set(gasket.symbol, { some: 'data' });
 
       const results1 = await getGasketData(gasket);
       expect(gasket.execWaterfall).toHaveBeenCalledTimes(1);
@@ -60,7 +61,7 @@ describe('actions', () => {
     });
 
     it('throws if undefined lifecycle result', async () => {
-      baseDataMap.set(gasket, { some: 'data' });
+      baseDataMap.set(gasket.symbol, { some: 'data' });
 
       gasket.execWaterfall.mockResolvedValue();
 
@@ -69,11 +70,11 @@ describe('actions', () => {
     });
 
     it('clears baseDataMap once adjusted', async () => {
-      baseDataMap.set(gasket, { some: 'data' });
+      baseDataMap.set(gasket.symbol, { some: 'data' });
 
-      expect(baseDataMap.has(gasket)).toBe(true);
+      expect(baseDataMap.has(gasket.symbol)).toBe(true);
       await getGasketData(gasket);
-      expect(baseDataMap.has(gasket)).not.toBe(true);
+      expect(baseDataMap.has(gasket.symbol)).not.toBe(true);
     });
   });
 
@@ -128,7 +129,7 @@ describe('actions', () => {
     });
 
     it('only executes publicGasketData fixup once per request', async () => {
-      baseDataMap.set(gasket, { some: 'data' });
+      baseDataMap.set(gasket.symbol, { some: 'data' });
 
       const results1 = await getPublicGasketData(gasket, req);
       expect(getGasketData).toHaveBeenCalledTimes(1);

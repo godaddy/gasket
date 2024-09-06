@@ -15,10 +15,6 @@
       "node"
     ],
     "baseUrl": "./",
-    "paths": {
-      "@/gasket-data": ["gasket-data.js"],
-      "@/plugins/*": ["plugins/*.js"]
-    },
     "allowJs": true,
     "strict": false,
     "incremental": true,

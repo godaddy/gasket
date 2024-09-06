@@ -1,6 +1,7 @@
 /// <reference types="@gasket/core" />
 /// <reference types="create-gasket-app" />
 /// <reference types="@gasket/plugin-metadata" />
+/// <reference types="@gasket/plugin-express" />
 
 const {
   name,
@@ -20,7 +21,15 @@ const plugin = {
         last: true,
         before: ['@gasket/plugin-lint']
       },
-      handler: async function create(gasket, { files, pkg, gasketConfig, packageManager = 'npm', typescript }) {
+      handler: async function create(gasket, context) {
+        const {
+          files,
+          pkg,
+          gasketConfig,
+          packageManager = 'npm',
+          typescript,
+          apiApp
+        } = context;
         const runCmd = packageManager === 'npm' ? `npm run` : packageManager;
         const generatorDir = `${__dirname}/../generator`;
         const isReactProject = pkg.has('dependencies', 'react');
@@ -29,7 +38,7 @@ const plugin = {
         if (typescript) {
           pkg.add('devDependencies', {
             '@babel/preset-typescript': devDependencies['@babel/preset-typescript']
-          })
+          });
         }
 
         pkg.add('devDependencies', {
@@ -48,9 +57,9 @@ const plugin = {
           gasketConfig.addPlugin('pluginMocha', name);
 
           files.add(
-            `${generatorDir}/*`,
-            `${generatorDir}/**/.*`,
-            `${generatorDir}/**/*`
+            `${generatorDir}/react-app/*`,
+            `${generatorDir}/react-app/**/.*`,
+            `${generatorDir}/react-app/**/*`
           );
 
           pkg.add('devDependencies', {
@@ -66,6 +75,28 @@ const plugin = {
             'test:runner': `mocha -r global-jsdom/register -r setup-env -r ./test/register-loader.js --recursive "test/**/*.{test,spec}.{${fileExtension},${fileExtension}x}"`,
             'test:watch': `${runCmd} test:runner -- --watch --parallel -r ./test/mocha-watch-cleanup-after-each.js`
           });
+        } else if (apiApp) {
+          if (typescript) {
+            files.add(
+              `${generatorDir}/api-app/typescript/*`,
+              `${generatorDir}/api-app/typescript/**/.*`,
+              `${generatorDir}/api-app/typescript/**/*`
+            );
+            pkg.add('scripts', {
+              'test:runner': `mocha -r ./test/register-loader.js -r 'test/mocha-setup.js' --recursive "test/**/*.*(test|spec).${fileExtension}"`,
+              'test:watch': `${runCmd} test:runner -- --watch --parallel`
+            });
+
+            pkg.add('devDependencies', {
+              'ts-node': devDependencies['ts-node'],
+              '@types/mocha': devDependencies['@types/mocha']
+            });
+          } else {
+            pkg.add('scripts', {
+              'test:runner': `mocha -r setup-env --recursive "test/**/*.*(test|spec).${fileExtension}"`,
+              'test:watch': `${runCmd} test:runner -- --watch --parallel`
+            });
+          }
         } else {
           pkg.add('scripts', {
             'test:runner': `mocha -r setup-env --recursive "test/**/*.*(test|spec).${fileExtension}"`,

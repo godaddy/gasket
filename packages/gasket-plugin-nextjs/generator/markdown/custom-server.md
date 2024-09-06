@@ -12,7 +12,6 @@ This Gasket app uses TypeScript with Next.js and a [Custom Server] for enhanced 
 In Gasket apps that use TypeScript with Next.js [Page Router] and [Custom Server], it’s essential to configure TypeScript aliases to import Gasket TypeScript files correctly. The use-cases are as follows:
 
 - `tsconfig.json` - Aliases for importing root-level Gasket files into application code.
-- `tsconfig.server.json` - Aliases for importing Gasket TypeScript files into other Gasket TypeScript files.
 
 Here is an example TypeScript plugin:
 
@@ -43,29 +42,8 @@ Import the TypeScript plugin in the `gasket.ts` using the `.js` extension:
 import { makeGasket } from '@gasket/core';
 import myCoolPlugin from './plugins/my-cool-plugin.js';
 ```
-This also does not work due to the compiled `.js` files from the `tsc` process being in the `dist` directory.
 
-The current workaround is to use TypeScript aliases in the `tsconfig.server.json` file to import root-level Gasket files into the application code. The TypeScript aliases are configured as follows:
-
-```json
-// tsconfig.server.json
-{
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@/plugins/*": ["plugins/*.js"]
-    }
-  }
-}
-```
-
-```ts
-// gasket.ts
-import { makeGasket } from '@gasket/core';
-import myCoolPlugin from '@/plugins/my-cool-plugin';
-```
-
-This allows the initial build step(before the Next.js build) to complete successfully.
+This workaround allows TypeScript to resolve the `.ts` file to the `.js` file at runtime. The relative paths in the compiled `.js` files resolve correctly.
 
 An example of importing a Gasket TypeScript file into Next.js application code:
 
@@ -82,5 +60,5 @@ export default function Home() {
 }
 ```
 
-If any additional configuration or plugins files are added to the Gasket app, ensure that they are correctly imported and configured in `tsconfig.json` or `tsconfig.server.json` to maintain type safety and compatibility with the Next.js TypeScript build.
+For `.ts` Gasket files that need to be used in NextJS application code, be sure to configure the appropriate TypeScript aliases in the `tsconfig.json` file.
 {{/if}}

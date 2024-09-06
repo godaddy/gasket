@@ -57,7 +57,10 @@ declare module '@gasket/core' {
     actions?: {
       [K in ActionId]?: ActionHandler<K>;
     };
+    metadata?: Record<string, any>;
   };
+
+  export type Preset = Omit<Plugin, 'actions'>;
 
   // This is the config
   export interface GasketConfig {
@@ -109,12 +112,13 @@ declare module '@gasket/core' {
 
   export interface Gasket extends GasketEngine {
     constructor(config: GasketConfigDefinition);
+    new (config: GasketConfigDefinition): Gasket
 
     command: {
       id: string;
     };
     config: GasketConfig;
-    new (config: GasketConfigDefinition): Gasket
+    symbol: Symbol;
     traceBranch(): GasketTrace
     traceRoot(): Gasket
   }

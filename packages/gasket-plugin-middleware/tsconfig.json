@@ -14,9 +14,7 @@
       "@types/jest"
     ]
   },
-  "exclude": [
-    "test",
-    "coverage",
-    "generator"
+  "include": [
+    "lib"
   ]
 }

@@ -1,3 +1,5 @@
+/// <reference types="@gasket/plugin-metadata" />
+
 import type { Plugin } from '@gasket/core';
 import type { HappyFeet, HappyFeetOptions } from 'happy-feet';
 

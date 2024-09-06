@@ -1,8 +1,9 @@
 {
   "name": "@gasket/plugin-middleware",
-  "version": "7.0.0-next.60",
+  "version": "7.0.0-next.63",
   "description": "Handles common server engine setups for routing and executing lifecycles.",
   "main": "lib",
+  "types": "lib/index.d.ts",
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
@@ -33,6 +34,8 @@
     "diagnostics": "^2.0.2"
   },
   "devDependencies": {
+    "@types/compression": "^1.7.5",
+    "@types/cookie-parser": "^1.4.7",
     "eslint": "^8.56.0",
     "eslint-config-godaddy": "^7.1.1",
     "eslint-plugin-jest": "^28.6.0",
@@ -54,6 +57,18 @@
     ],
     "rules": {
       "unicorn/filename-case": "error"
-    }
+    },
+    "overrides": [
+      {
+        "files": [
+          "test/**/*.js"
+        ],
+        "rules": {
+          "jsdoc/require-param-description": "off",
+          "jsdoc/require-param-type": "off",
+          "jsdoc/require-returns-description": "off"
+        }
+      }
+    ]
   }
 }
