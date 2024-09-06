@@ -37,6 +37,9 @@ DEBUG={{{server}}}:* {{{localCmd}}} // {{{server}}} operations only
 {{{markdownCompile this}}}
 {{/each}}
 <!-- LINKS -->
+[App Router]: https://nextjs.org/docs/app
+[Page Router]: https://nextjs.org/docs/pages
+[Custom Server]: https://nextjs.org/docs/pages/building-your-application/configuring/custom-server
 [EcmaScript Modules]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules
 {{#each readme.links}}
 {{{this}}}
