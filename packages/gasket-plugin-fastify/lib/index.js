@@ -10,7 +10,6 @@ const create = require('./create');
 const createServers = require('./create-servers');
 const fastify = require('fastify');
 const { alignLogger } = require('./utils');
-const fs = require('fs');
 
 /** @type {import('@gasket/core').Plugin} */
 const plugin = {
@@ -19,12 +18,11 @@ const plugin = {
   description,
   actions: {
     getFastifyApp(gasket) {
-      const { fastify: { trustProxy = false } } = gasket.config;
+      const { fastify: { trustProxy = false }, http2, https } = gasket.config;
       const fastifyLogger = alignLogger(gasket.logger);
 
-      const httpMethods = { https: gasket.config.https, http2: gasket.config.http2 };
-
-      return fastify({ logger: fastifyLogger, trustProxy, ...httpMethods });
+      // @ts-ignore
+      return fastify({ logger: fastifyLogger, trustProxy, https, http2 });
     }
   },
   hooks: {
