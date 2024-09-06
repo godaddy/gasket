@@ -37,8 +37,8 @@ describe('fastify', () => {
     mockCache.mockClear();
     mockMinify.mockClear();
 
-    cacheKeyA = jest.fn(() => 'A');
-    cacheKeyB = jest.fn(() => 'B');
+    cacheKeyA = jest.fn().mockResolvedValue('A');
+    cacheKeyB = jest.fn().mockResolvedValue('B');
   });
 
   /**
@@ -102,7 +102,7 @@ describe('fastify', () => {
       mockCacheKeys.push(cacheKeyA, cacheKeyB);
       const endpoint = await getEndpoint();
       await endpoint(mockReq, mockRes);
-      expect(mockCache.getStub).toHaveBeenCalledWith('_AB');
+      expect(mockCache.getStub).toHaveBeenCalledWith('A_B');
     });
 
     it('set new cached content with generated key', async () => {
@@ -110,7 +110,7 @@ describe('fastify', () => {
       const endpoint = await getEndpoint();
       await endpoint(mockReq, mockRes);
       expect(mockCache.setStub).toHaveBeenCalledWith(
-        '_AB',
+        'A_B',
         expect.stringContaining('use strict')
       );
     });
