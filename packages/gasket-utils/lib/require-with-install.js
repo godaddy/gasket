@@ -85,7 +85,9 @@ async function requireWithInstall(dependency, gasket) {
     return require(resolve(dependency, resolveOptions));
   }
 
+  /** @type {number[]} */
   const idxListToResolve = [];
+  /** @type {string[]} */
   const pkgListToResolve = [];
   const resolvedDependencyList = dependency.reduce((all, item, index) => {
     const modulePath = tryResolve(item, resolveOptions);
