@@ -4,12 +4,16 @@ export type LogLevel = 'error' | 'warn' | 'info' | 'debug';
 
 type LogMethods = Record<LogLevel, (...args: any[]) => void>;
 
-export type Logger = LogMethods & {
-  close?: () => MaybeAsync<any>;
-  child: (meta: Record<string, any>) => Logger;
-};
+declare module '@gasket/plugin-logger' {
+  export interface Logger extends LogMethods {
+    close?: () => MaybeAsync<any>;
+    child: (meta: Record<string, any>) => Logger;
+  }
+}
 
 declare module '@gasket/core' {
+  import { Logger } from '@gasket/plugin-logger';
+
   interface Gasket {
     logger: Logger;
   }

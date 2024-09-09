@@ -57,6 +57,7 @@ declare module '@gasket/core' {
   export type DevProxyConfig = RequireAtLeastOne<BaseDevProxyConfig, 'target' | 'forward'>;
 
   interface ServerOptions {
+    root: string;
     hostname?: string;
     http?: number | false | null | MaybeMultiple<BaseListenerConfig>;
     https?: MaybeMultiple<
