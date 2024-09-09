@@ -60,7 +60,7 @@ declare module '@gasket/core' {
     ): MaybeAsync<string>;
 
     serviceWorkerCacheKey(): MaybeAsync<
-      (req: Request, res: Response) => string
+      (req: Request, res: Response) => MaybeAsync<string>
     >;
   }
 }

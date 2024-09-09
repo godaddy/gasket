@@ -177,96 +177,98 @@ export interface Readme {
   markdownFile(path: string): Promise<Readme>;
 }
 
-export interface CreateContext {
-  /** Short name of the app */
-  appName: string;
+declare module 'create-gasket-app' {
+  export interface CreateContext {
+    /** Short name of the app */
+    appName: string;
 
-  /** Current work directory */
-  cwd: string;
+    /** Current work directory */
+    cwd: string;
 
-  /** Path to the target app (Default: cwd/appName) */
-  dest: string;
+    /** Path to the target app (Default: cwd/appName) */
+    dest: string;
 
-  /** Relative path to the target app */
-  relDest: string;
+    /** Relative path to the target app */
+    relDest: string;
 
-  /** Whether or not target directory already exists */
-  extant: boolean;
+    /** Whether or not target directory already exists */
+    extant: boolean;
 
-  /** paths to the local presets packages */
-  localPresets: Array<string>;
+    /** paths to the local presets packages */
+    localPresets: Array<string>;
 
-  /** Raw preset desc from args. Can include version constraint. Added by
-   * load-preset if using localPresets. */
-  rawPresets: Array<string>;
+    /** Raw preset desc from args. Can include version constraint. Added by
+     * load-preset if using localPresets. */
+    rawPresets: Array<string>;
 
-  /** Local packages that should be linked */
-  pkgLinks: Array<string>;
+    /** Local packages that should be linked */
+    pkgLinks: Array<string>;
 
-  /** non-error/warning messages to report */
-  messages: Array<string>;
+    /** non-error/warning messages to report */
+    messages: Array<string>;
 
-  /** warnings messages to report */
-  warnings: Array<string>;
+    /** warnings messages to report */
+    warnings: Array<string>;
 
-  /** error messages to report but do not exit process */
-  errors: Array<string>;
+    /** error messages to report but do not exit process */
+    errors: Array<string>;
 
-  /** any next steps to report for user */
-  nextSteps: Array<string>;
+    /** any next steps to report for user */
+    nextSteps: Array<string>;
 
-  /** any generated files to show in report */
-  generatedFiles: Set<string>;
+    /** any generated files to show in report */
+    generatedFiles: Set<string>;
 
-  /** Default empty array, populated by load-preset with actual imports */
-  presets: Array<Plugin>;
+    /** Default empty array, populated by load-preset with actual imports */
+    presets: Array<Plugin>;
 
-  /** Default to object w/empty plugins array to be populated by `presetConfig` hook */
-  presetConfig: GasketConfigDefinition;
+    /** Default to object w/empty plugins array to be populated by `presetConfig` hook */
+    presetConfig: GasketConfigDefinition;
 
-  // Added by `global-prompts`
+    // Added by `global-prompts`
 
-  /** Description of app */
-  appDescription: string;
+    /** Description of app */
+    appDescription: string;
 
-  /** Should a git repo be initialized and first commit */
-  gitInit: boolean;
+    /** Should a git repo be initialized and first commit */
+    gitInit: boolean;
 
-  /** Names of the plugins that add unit and integration tests */
-  testPlugins: Array<string>;
+    /** Names of the plugins that add unit and integration tests */
+    testPlugins: Array<string>;
 
-  /** Which package manager to use (Default: 'npm') */
-  packageManager: string;
+    /** Which package manager to use (Default: 'npm') */
+    packageManager: string;
 
-  /** Derived install command (Default: 'npm install') */
-  installCmd: string;
+    /** Derived install command (Default: 'npm install') */
+    installCmd: string;
 
-  /** Derived local run command (Default: 'npx gasket local') */
-  localCmd: string;
+    /** Derived local run command (Default: 'npx gasket local') */
+    localCmd: string;
 
-  /** Whether or not the user wants to override an extant directory */
-  destOverride: boolean;
+    /** Whether or not the user wants to override an extant directory */
+    destOverride: boolean;
 
-  // Added by `setup-pkg`
+    // Added by `setup-pkg`
 
-  /** package.json builder */
-  pkg: PackageJsonBuilder;
+    /** package.json builder */
+    pkg: PackageJsonBuilder;
 
-  /** manager to execute npm or yarn commands */
-  pkgManager: PackageManager;
+    /** manager to execute npm or yarn commands */
+    pkgManager: PackageManager;
 
-  // Added by `setup-gasket-config`
+    // Added by `setup-gasket-config`
 
-  /** gasket.config builder */
-  gasketConfig: ConfigBuilder<GasketConfigDefinition>;
+    /** gasket.config builder */
+    gasketConfig: ConfigBuilder<GasketConfigDefinition>;
 
-  // Added by `create-hooks`
+    // Added by `create-hooks`
 
-  /** Use to add files and templates to generate */
-  files: Files;
+    /** Use to add files and templates to generate */
+    files: Files;
 
-  /** Use to add content to the README.md */
-  readme: Readme;
+    /** Use to add content to the README.md */
+    readme: Readme;
+  }
 }
 
 export interface ActionWrapperParams {
@@ -276,6 +278,8 @@ export interface ActionWrapperParams {
 }
 
 declare module '@gasket/core' {
+  import { CreateContext } from 'create-gasket-app';
+
   export interface HookExecTypes {
     presetPrompt(context: CreateContext): Promise<void>;
     presetConfig(context: CreateContext): Promise<CreateContext['presetConfig']>;
