@@ -15,7 +15,7 @@ To start the app locally, run:
 ```bash
 cd {{{appName}}}
 {{{installCmd}}}
-{{{packageManager}}} run local
+{{{localCmd}}}
 ```
 
 ### Debugging
@@ -23,14 +23,14 @@ cd {{{appName}}}
 To start the API locally with debugging enabled, run:
 
 ```bash
-DEBUG=* {{{packageManager}}} run local
+DEBUG=* {{{localCmd}}}
 ```
 
 Extended filtering of the debug output can be achieved by adding to the `DEBUG` environment variable:
 
 ```bash
-DEBUG=gasket:* {{{packageManager}}} run local // gasket operations only
-DEBUG={{{server}}}:* {{{packageManager}}} run local // {{{server}}} operations only
+DEBUG=gasket:* {{{localCmd}}} // gasket operations only
+DEBUG={{{server}}}:* {{{localCmd}}} // {{{server}}} operations only
 ```
 
 {{#each readme.markdown}}

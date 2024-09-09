@@ -46,13 +46,7 @@ async function choosePackageManager(context, prompt) {
 
   const installCmd = context.installCmd || `${packageManager} install`;
 
-  const runners = {
-    npm: 'npx',
-    yarn: 'yarn',
-    pnpm: 'pnpm exec'
-  };
-
-  const localCmd = context.localCmd || `${runners[packageManager]} gasket local`;
+  const localCmd = context.localCmd || `${packageManager} run local`;
 
   Object.assign(context, {
     packageManager,
