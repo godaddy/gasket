@@ -261,7 +261,7 @@ const common = {
     if (hasStylelint) {
       if (!pkg.has('scripts', 'stylelint')) {
         pkg.add('scripts', {
-          'stylelint': 'stylelint "**/*.scss"',
+          'stylelint': 'stylelint "**/*.(css|scss)"',
           'stylelint:fix': runScriptStr('stylelint -- --fix')
         });
       }
