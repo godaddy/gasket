@@ -52,7 +52,7 @@ module.exports = async function create(gasket, context) {
 
   if ('apiApp' in context && context.apiApp) {
     const globIgnore = typescript ? '!(*.js)' : '!(*.ts)';
-    files.add(`${generatorDir}/app/**/${globIgnore}`)
+    files.add(`${generatorDir}/app/**/${globIgnore}`);
 
     createTestFiles({ files, generatorDir, testPlugins, globIgnore });
   }

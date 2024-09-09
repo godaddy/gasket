@@ -4,13 +4,18 @@ import type {
   FastifyInstance,
   FastifyRequest,
   FastifyReply,
-  FastifyServerOptions
+  FastifyServerOptions,
+  FastifyBaseLogger
 } from 'fastify';
 import { Http2SecureServer, Http2ServerRequest, Http2ServerResponse } from 'http2'
 
 export type AppRoutes = Array<MaybeAsync<(app: FastifyInstance) => void>>;
 
 declare module '@gasket/core' {
+  export interface GasketActions {
+    getFastifyApp(): FastifyInstance<Http2SecureServer, Http2ServerRequest, Http2ServerResponse>;
+  }
+
   export interface GasketConfig {
     fastify?: {
       /** Enable compression */
@@ -21,8 +26,6 @@ declare module '@gasket/core' {
       excludedRoutesRegex?: RegExp;
       /** Trust proxy configuration */
       trustProxy?: FastifyServerOptions['trustProxy'];
-      /** Glob pattern for source files setting up fastify routes */
-      routes?: Array<MaybeAsync<(app: FastifyInstance<Http2SecureServer, Http2ServerRequest, Http2ServerResponse>) => void>>;
     };
     /** Middleware configuration */
     middleware?: {
@@ -56,14 +59,9 @@ declare module '@gasket/core' {
   }
 }
 
-type FastifyLogger = Logger & {
-  trace?: () => MaybeAsync<any>,
-  fatal?: () => MaybeAsync<any>
-}
-
 export function alignLogger(
   logger: Logger
-): FastifyLogger
+): FastifyBaseLogger
 
 declare module 'create-gasket-app' {
   export interface CreateContext {
