@@ -1,3 +1,7 @@
+import gasket from '../gasket.js';
+
+const app = gasket.actions.getFastifyApp();
+
 export const defaultHandler = async (req, res) => {
   if (res.statusCode === 200) {
     res.send({ message: 'Welcome to your default route...' });
@@ -20,4 +24,5 @@ export const defaultHandler = async (req, res) => {
 *           application/json
 */
 {{/if}}
-app.get('/default', app.get('/default', defaultHandler));
+app.get('/default',  defaultHandler);
+
