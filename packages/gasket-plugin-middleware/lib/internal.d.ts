@@ -5,7 +5,13 @@ import type {
   Http2ServerRequest,
   Http2ServerResponse
 } from 'http2';
-import type { FastifyInstance } from 'fastify';
+import type { IncomingMessage, ServerResponse } from 'http';
+import type {
+  FastifyInstance,
+  FastifyTypeProviderDefault,
+  FastifyBaseLogger,
+  RawServerDefault
+ } from 'fastify';
 import type { Gasket } from '@gasket/engine';
 
 /** Type alias for Fastify application with HTTP/2 support */
@@ -13,7 +19,7 @@ type FastifyApp<
   Server = Http2SecureServer,
   Request = Http2ServerRequest,
   Response = Http2ServerResponse
-> = FastifyInstance<Server, Request, Response>;
+> = FastifyInstance<RawServerDefault, IncomingMessage, ServerResponse<IncomingMessage>, FastifyBaseLogger, FastifyTypeProviderDefault>;;
 
 declare module 'express' {
   interface Request {
