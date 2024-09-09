@@ -49,6 +49,57 @@ describe('Plugin', function () {
   });
 });
 
+describe('actions', () => {
+  let gasket;
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    jest.resetModules();
+    gasket = {
+      middleware: {},
+      logger: {},
+      config: {}
+    };
+  });
+
+  it('should return app from getFastifyApp action', () => {
+    const actions = plugin.actions;
+    expect(actions.getFastifyApp(gasket)).toBe(app);
+  });
+
+  it('does not enable trust proxy by default', async () => {
+    const pluginInstance = require('../lib/index');
+    await pluginInstance.actions.getFastifyApp(gasket);
+    expect(mockFastify).toHaveBeenCalledWith({ logger: gasket.logger, trustProxy: false });
+  });
+
+  it('does enable trust proxy by if set to true', async () => {
+    gasket.config.fastify = { trustProxy: true };
+    const pluginInstance = require('../lib/index');
+    await pluginInstance.actions.getFastifyApp(gasket);
+
+    expect(mockFastify).toHaveBeenCalledWith({ logger: gasket.logger, trustProxy: true });
+  });
+
+  it('does enable trust proxy by if set to string', async () => {
+    gasket.config.fastify = { trustProxy: '127.0.0.1' };
+    const pluginInstance = require('../lib/index');
+    await pluginInstance.actions.getFastifyApp(gasket);
+
+    expect(mockFastify).toHaveBeenCalledWith({
+      logger: gasket.logger,
+      trustProxy: '127.0.0.1'
+    });
+  });
+
+  it('adds log plugin as logger to fastify', async function () {
+    const pluginInstance = require('../lib/index');
+    await pluginInstance.actions.getFastifyApp(gasket);
+
+    expect(mockFastify).toHaveBeenCalledWith({ logger: gasket.logger, trustProxy: false });
+  });
+});
+
 // eslint-disable-next-line max-statements
 describe('createServers', () => {
   let gasket, lifecycles, mockMwPlugins;
@@ -64,9 +115,14 @@ describe('createServers', () => {
     };
 
     gasket = {
+      actions: {
+        getFastifyApp: jest.fn().mockReturnValue(app)
+      },
       middleware: {},
       logger: {},
-      config: {},
+      config: {
+        fastify: {}
+      },
       exec: jest.fn().mockImplementation((lifecycle, ...args) => lifecycles[lifecycle](args)),
       execApply: jest.fn(async function (lifecycle, fn) {
         for (let i = 0; i < mockMwPlugins.length; i++) {
@@ -89,11 +145,6 @@ describe('createServers', () => {
     expect(app.server.emit).toHaveBeenCalledWith('request', request);
   });
 
-  it('adds log plugin as logger to fastify', async function () {
-    await plugin.hooks.createServers(gasket, {});
-
-    expect(mockFastify).toHaveBeenCalledWith({ logger: gasket.logger, trustProxy: false });
-  });
 
   it('executes the `fastify` lifecycle', async function () {
     await plugin.hooks.createServers(gasket, {});
@@ -123,28 +174,6 @@ describe('createServers', () => {
     expect(errorMiddleware).not.toBeNull();
   });
 
-  it('does not enable trust proxy by default', async () => {
-    await plugin.hooks.createServers(gasket, {});
-
-    expect(mockFastify).toHaveBeenCalledWith({ logger: gasket.logger, trustProxy: false });
-  });
-
-  it('does enable trust proxy by if set to true', async () => {
-    gasket.config.fastify = { trustProxy: true };
-    await plugin.hooks.createServers(gasket, {});
-
-    expect(mockFastify).toHaveBeenCalledWith({ logger: gasket.logger, trustProxy: true });
-  });
-
-  it('does enable trust proxy by if set to string', async () => {
-    gasket.config.fastify = { trustProxy: '127.0.0.1' };
-    await plugin.hooks.createServers(gasket, {});
-
-    expect(mockFastify).toHaveBeenCalledWith({
-      logger: gasket.logger,
-      trustProxy: '127.0.0.1'
-    });
-  });
 
   function findCall(aSpy, aPredicate) {
     const callIdx = findCallIndex(aSpy, aPredicate);

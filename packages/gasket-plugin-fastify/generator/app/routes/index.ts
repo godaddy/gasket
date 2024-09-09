@@ -1,7 +1,7 @@
-import type {
-  FastifyRequest,
-  FastifyReply
-} from 'fastify';
+import type { FastifyRequest, FastifyReply } from 'fastify';
+import gasket from '../gasket.js';
+
+const app = gasket.actions.getFastifyApp();
 
 export const defaultHandler = async (req: FastifyRequest, res: FastifyReply) => {
   if (res.statusCode === 200) {
@@ -26,3 +26,4 @@ export const defaultHandler = async (req: FastifyRequest, res: FastifyReply) => 
 */
 {{/if}}
 app.get('/default', defaultHandler);
+
