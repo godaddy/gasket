@@ -55,9 +55,9 @@ declare module '@gasket/core' {
 
   export interface HookExecTypes {
     middleware(
-      app: FastifyInstance<Http2SecureServer, Http2ServerRequest, Http2ServerResponse>
+      app: FastifyInstance<RawServerDefault, IncomingMessage, ServerResponse<IncomingMessage>, FastifyBaseLogger, FastifyTypeProviderDefault>
     ): MaybeAsync<MaybeMultiple<Handler> & { paths?: (string | RegExp)[] }>;
-    fastify(app: FastifyInstance<Http2SecureServer, Http2ServerRequest, Http2ServerResponse>): MaybeAsync<void>;
+    fastify(app: FastifyInstance<RawServerDefault, IncomingMessage, ServerResponse<IncomingMessage>, FastifyBaseLogger, FastifyTypeProviderDefault>): MaybeAsync<void>;
     errorMiddleware(): MaybeAsync<MaybeMultiple<ErrorHandler>>;
   }
 }
