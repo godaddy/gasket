@@ -4,13 +4,21 @@ import type {
   FastifyInstance,
   FastifyRequest,
   FastifyReply,
-  FastifyServerOptions
+  FastifyServerOptions,
+  FastifyBaseLogger,
+  FastifyTypeProviderDefault,
+  RawServerDefault
 } from 'fastify';
-import { Http2SecureServer, Http2ServerRequest, Http2ServerResponse } from 'http2'
+import { Http2SecureServer, Http2ServerRequest, Http2ServerResponse } from 'http2';
+import { IncomingMessage, ServerResponse } from 'http';
 
 export type AppRoutes = Array<MaybeAsync<(app: FastifyInstance) => void>>;
 
 declare module '@gasket/core' {
+  export interface GasketActions {
+    getFastifyApp(): FastifyInstance<RawServerDefault, IncomingMessage, ServerResponse<IncomingMessage>, FastifyBaseLogger, FastifyTypeProviderDefault>;
+  }
+
   export interface GasketConfig {
     fastify?: {
       /** Enable compression */
@@ -21,8 +29,6 @@ declare module '@gasket/core' {
       excludedRoutesRegex?: RegExp;
       /** Trust proxy configuration */
       trustProxy?: FastifyServerOptions['trustProxy'];
-      /** Glob pattern for source files setting up fastify routes */
-      routes?: Array<MaybeAsync<(app: FastifyInstance<Http2SecureServer, Http2ServerRequest, Http2ServerResponse>) => void>>;
     };
     /** Middleware configuration */
     middleware?: {
@@ -49,21 +55,16 @@ declare module '@gasket/core' {
 
   export interface HookExecTypes {
     middleware(
-      app: FastifyInstance<Http2SecureServer, Http2ServerRequest, Http2ServerResponse>
+      app: FastifyInstance<RawServerDefault, IncomingMessage, ServerResponse<IncomingMessage>, FastifyBaseLogger, FastifyTypeProviderDefault>
     ): MaybeAsync<MaybeMultiple<Handler> & { paths?: (string | RegExp)[] }>;
-    fastify(app: FastifyInstance<Http2SecureServer, Http2ServerRequest, Http2ServerResponse>): MaybeAsync<void>;
+    fastify(app: FastifyInstance<RawServerDefault, IncomingMessage, ServerResponse<IncomingMessage>, FastifyBaseLogger, FastifyTypeProviderDefault>): MaybeAsync<void>;
     errorMiddleware(): MaybeAsync<MaybeMultiple<ErrorHandler>>;
   }
 }
 
-type FastifyLogger = Logger & {
-  trace?: () => MaybeAsync<any>,
-  fatal?: () => MaybeAsync<any>
-}
-
 export function alignLogger(
   logger: Logger
-): FastifyLogger
+): FastifyBaseLogger
 
 declare module 'create-gasket-app' {
   export interface CreateContext {

@@ -39,19 +39,14 @@ async function choosePackageManager(context, prompt) {
           name: 'packageManager',
           message: 'Which packager would you like to use?',
           type: 'list',
-          choices: [{ name: 'npm' }, { name: 'yarn' }]
+          choices: [{ name: 'npm' }, { name: 'pnpm' }, { name: 'yarn' }]
         }
       ])
     ).packageManager;
 
   const installCmd = context.installCmd || `${packageManager} install`;
 
-  const runners = {
-    npm: 'npx',
-    yarn: 'yarn'
-  };
-
-  const localCmd = context.localCmd || `${runners[packageManager]} gasket local`;
+  const localCmd = context.localCmd || `${packageManager} run local`;
 
   Object.assign(context, {
     packageManager,

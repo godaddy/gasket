@@ -13,7 +13,8 @@ module.exports = async function configureEndpoint(gasket) {
   const cacheKeys = await getCacheKeys(gasket);
 
   return async function sw(req, res) {
-    const cacheKey = cacheKeys.reduce((acc, fn) => acc + fn(req, res), '_');
+    const cacheParts = await Promise.all(cacheKeys.map((fn) => fn(req, res)));
+    const cacheKey = cacheParts.join('_');
 
     let composedContent = cache.get(cacheKey);
     if (!composedContent) {

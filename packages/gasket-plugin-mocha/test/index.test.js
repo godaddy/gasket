@@ -8,6 +8,7 @@ describe('Plugin', () => {
     filesAddStub = jest.fn();
     /**
      * Create a new project
+     * @param context
      * @returns {Promise<object>} project
      */
     create = async function (context = {}) {
@@ -19,7 +20,7 @@ describe('Plugin', () => {
         },
         pkg: {
           add: (key, value) => {
-            pkg[key] = { ...pkg[key], ...value }
+            pkg[key] = { ...pkg[key], ...value };
           },
           has: (key, value) => !!pkg[key] && !!pkg[key][value]
         },
@@ -27,10 +28,11 @@ describe('Plugin', () => {
       });
 
       return { pkg };
-    }
+    };
 
     /**
      * Create a new React project
+     * @param context
      * @returns {Promise<object>} project
      */
     createReact = async function (context = {}) {
@@ -47,7 +49,7 @@ describe('Plugin', () => {
         },
         pkg: {
           add: (key, value) => {
-            pkg[key] = { ...pkg[key], ...value }
+            pkg[key] = { ...pkg[key], ...value };
           },
           has: (key, value) => {
             return !!pkg[key] && !!pkg[key][value];
@@ -60,7 +62,7 @@ describe('Plugin', () => {
       });
 
       return { pkg };
-    }
+    };
 
     spyFunc = jest.fn();
   });
@@ -158,9 +160,9 @@ describe('Plugin', () => {
       await createReact();
       expect(addPluginStub).toHaveBeenCalled();
       const [firstCall, secondCall, thirdCall] = filesAddStub.mock.calls[0];
-      expect(firstCall).toEqual(expect.stringContaining('/../generator/*'));
-      expect(secondCall).toEqual(expect.stringContaining('/../generator/**/.*'));
-      expect(thirdCall).toEqual(expect.stringContaining('/../generator/**/*'));
+      expect(firstCall).toEqual(expect.stringContaining('/../generator/react-app/*'));
+      expect(secondCall).toEqual(expect.stringContaining('/../generator/react-app/**/.*'));
+      expect(thirdCall).toEqual(expect.stringContaining('/../generator/react-app/**/*'));
     });
 
     [
@@ -183,6 +185,34 @@ describe('Plugin', () => {
         expect(pkg.devDependencies).toHaveProperty(key);
         expect(pkg.devDependencies[key]).toEqual(pkg.devDependencies[key]);
       });
+    });
+  });
+
+  describe('apiApp', function () {
+    let mockContext;
+    beforeEach(() => {
+      mockContext = {
+        typescript: false,
+        apiApp: true
+      };
+    });
+
+    it('sets up an apiApp test:runner script', async function () {
+      const { pkg } = await create(mockContext);
+
+      expect(pkg.scripts['test:runner']).toEqual(
+        `mocha -r setup-env --recursive "test/**/*.*(test|spec).js"`
+      );
+    });
+
+    it('sets up an apiApp with typescript', async function () {
+      mockContext.typescript = true;
+      await create(mockContext);
+      expect(addPluginStub).toHaveBeenCalled();
+      const [firstCall, secondCall, thirdCall] = filesAddStub.mock.calls[0];
+      expect(firstCall).toEqual(expect.stringContaining('/../generator/api-app/typescript/*'));
+      expect(secondCall).toEqual(expect.stringContaining('/../generator/api-app/typescript/**/.*'));
+      expect(thirdCall).toEqual(expect.stringContaining('/../generator/api-app/typescript/**/*'));
     });
   });
 
