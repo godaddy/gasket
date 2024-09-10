@@ -41,6 +41,12 @@ const plugin = {
             '@testing-library/jest-dom': devDependencies['@testing-library/jest-dom'],
             'jest-environment-jsdom': devDependencies['jest-environment-jsdom']
           });
+
+          pkg.add('scripts', {
+            'test': 'jest',
+            'test:watch': 'jest --watchAll',
+            'test:coverage': 'jest --coverage'
+          });
         } else if (apiApp) {
           if (typescript) {
             pkg.add('devDependencies', {
