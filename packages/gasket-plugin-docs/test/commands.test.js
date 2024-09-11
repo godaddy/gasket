@@ -2,7 +2,6 @@ const commands = require('../lib/commands');
 const buildDocsConfigSet = require('../lib/utils/build-config-set');
 const collateFiles = require('../lib/utils/collate-files');
 const generateIndex = require('../lib/utils/generate-index');
-const createPackageFile = require('../lib/utils/create-package-file');
 
 const mockGasket = {
   exec: jest.fn(),
@@ -19,7 +18,6 @@ const mockDocsConfigSet = {
 jest.mock('../lib/utils/build-config-set', () => jest.fn(() => Promise.resolve(mockDocsConfigSet)));
 jest.mock('../lib/utils/collate-files');
 jest.mock('../lib/utils/generate-index');
-jest.mock('../lib/utils/create-package-file');
 
 describe('commands', () => {
 
@@ -58,11 +56,6 @@ describe('commands', () => {
     it('generates index', async () => {
       await DocsCommand.action({ view: true });
       expect(generateIndex).toHaveBeenCalledWith(mockDocsConfigSet);
-    });
-
-    it('creates package file', async () => {
-      await DocsCommand.action({ view: true });
-      expect(createPackageFile).toHaveBeenCalledWith(mockDocsConfigSet);
     });
 
     it('executes docsView lifecycle', async () => {
