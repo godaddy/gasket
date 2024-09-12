@@ -1,7 +1,7 @@
 /// <reference types="@gasket/plugin-webpack" />
 
 /**
- * Add the analyzer webpack plugin if analyze flag has been set
+ * Adds the Webpack Bundle Analyzer plugin if the analyze flag is set.
  * @type {import('@gasket/core').HookHandler<'webpackConfig'>}
  */
 module.exports = function webpackConfigHook(gasket, webpackConfig, context) {
@@ -9,23 +9,24 @@ module.exports = function webpackConfigHook(gasket, webpackConfig, context) {
     config: { bundleAnalyzerConfig: userConfig = {} }
   } = gasket;
 
-  // Only analyze add analyzer plugin for the analyze script
+  // Only add the analyzer plugin if ANALYZE flag is true
   if (process.env.ANALYZE === 'true') {
     const merge = require('deepmerge');
     const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+    const defaultConfig = require('./default-config');
 
     const { isServer } = context;
-    const bundleAnalyzerConfig = merge(require('./default-config'), userConfig);
-    const { browser, server } = bundleAnalyzerConfig;
+    const bundleAnalyzerConfig = merge(defaultConfig, userConfig);
+    const analyzerOptions = isServer
+      ? bundleAnalyzerConfig.server
+      : bundleAnalyzerConfig.browser;
 
     // return webpack config partial
     return {
       ...webpackConfig,
       plugins: [
         ...(webpackConfig.plugins || []),
-        new BundleAnalyzerPlugin({
-          ...(isServer ? server : browser)
-        })
+        new BundleAnalyzerPlugin(analyzerOptions)
       ]
     };
   }
