@@ -108,7 +108,8 @@ module.exports = async function createServers(gasket, serverOpts) {
   if (routes) {
     const files = await glob(`${ routes }.js`, { cwd: root });
     for (const file of files) {
-      require(path.join(root, file))(app);
+      const route = require(path.join(root, file));
+      (route.default || route)(app);
     }
   }
 
