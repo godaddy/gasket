@@ -187,11 +187,16 @@ describe('create', () => {
     })
   );
 
-  it('adds the appropriate files',
-    expectCreatedWith(({ files }) => {
-      expect(files.add).toHaveBeenCalledWith(expect.any(String));
-    })
-  );
+  it('adds the appropriate files', async () => {
+    await plugin.hooks.create({}, mockContext);
+    expect(mockContext.files.add).toHaveBeenCalledWith(expect.any(String));
+  });
+
+  it('ignores route files if disabled', async () => {
+    mockContext.addApiRoutes = false;
+    await plugin.hooks.create({}, mockContext);
+    expect(mockContext.files.add).not.toHaveBeenCalled();
+  });
 
   it('adds the plugin import to the gasket file',
     expectCreatedWith(({ gasketConfig }) => {
