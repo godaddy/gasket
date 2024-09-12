@@ -10,6 +10,16 @@ const defaultConfig = {
 };
 
 /**
+ * Drops a package.json file in the docs root so that Docusaurus
+ * does not complain about type: module if in the root package.json.
+ * @param {string} docsRoot - The docs root directory
+ */
+async function createPackageFile(docsRoot) {
+  const target = path.join(docsRoot, 'package.json');
+  await writeFile(target, JSON.stringify({}), 'utf-8');
+}
+
+/**
  * Check if devDependencies are installed
  */
 function checkDevDependencies() {
@@ -46,6 +56,7 @@ module.exports = async function docsView(gasket) {
       path: docsDir
     });
 
+    await createPackageFile(path.join(config.root, docusaurusConfig.rootDir));
     await writeFile(configFilePath, defaultDocusaurusConfig, 'utf-8');
   }
 
