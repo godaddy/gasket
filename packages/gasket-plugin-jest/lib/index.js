@@ -30,7 +30,7 @@ const plugin = {
           jest: devDependencies.jest
         });
 
-        if (isReactProject) {
+        if (isReactProject && !apiApp) {
           files.add(
             `${generatorDir}/*`,
             `${generatorDir}/**/*`

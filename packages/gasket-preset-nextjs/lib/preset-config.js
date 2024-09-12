@@ -3,6 +3,7 @@ import pluginNext from '@gasket/plugin-nextjs';
 import pluginIntl from '@gasket/plugin-intl';
 import pluginWebpack from '@gasket/plugin-webpack';
 import pluginWinston from '@gasket/plugin-winston';
+import pluginLint from '@gasket/plugin-lint';
 
 /**
  * presetConfig hook
@@ -18,7 +19,8 @@ export default async function presetConfig(gasket, context) {
     pluginNext,
     pluginIntl,
     pluginWebpack,
-    pluginWinston
+    pluginWinston,
+    pluginLint
   ];
 
   if ('server' in context) {
