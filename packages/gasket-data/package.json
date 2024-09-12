@@ -1,6 +1,6 @@
 {
   "name": "@gasket/data",
-  "version": "7.0.0-next.65",
+  "version": "7.0.0-next.66",
   "description": "Helper package for accessing embedded Gasket Data in the browser",
   "type": "module",
   "types": "lib/index.d.ts",
