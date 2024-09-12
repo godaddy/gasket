@@ -143,8 +143,8 @@ Available presets
 
 | Name                    | Version       | Description                          |
 | ----------------------- | ------------- | ------------------------------------ |
-| [@gasket/preset-api]    | 7.0.0-next.60 | Create Express-based API with Gasket |
-| [@gasket/preset-nextjs] | 7.0.0-next.60 | Basic NextJS Framework               |
+| [@gasket/preset-api]    | 7.0.0-next.66 | Create Express-based API with Gasket |
+| [@gasket/preset-nextjs] | 7.0.0-next.66 | Basic NextJS Framework               |
 
 ## Plugins
 
@@ -152,36 +152,36 @@ Available plugins
 
 | Name                            | Version       | Description                                                               |
 | ------------------------------- | ------------- | ------------------------------------------------------------------------- |
-| [@gasket/plugin-analyze]        | 7.0.0-next.60 | Gasket Analyzer Plugin                                                    |
-| [@gasket/plugin-command]        | 7.0.0-next.60 | Plugin to enable other plugins to inject new gasket commands              |
-| [@gasket/plugin-cypress]        | 7.0.0-next.60 | Integrates Cypress based testing into your Gasket application             |
-| [@gasket/plugin-data]           | 7.0.0-next.60 | Supports application-specific settings and configurations                 |
-| [@gasket/plugin-docs]           | 7.0.0-next.60 | Centralize doc files from plugins and modules                             |
-| [@gasket/plugin-docs-graphs]    | 7.0.0-next.60 | Generate mermaid graphs of an applications gasket lifecycles              |
-| [@gasket/plugin-docusaurus]     | 7.0.0-next.60 | Gasket plugin for docusaurus                                              |
-| [@gasket/plugin-elastic-apm]    | 7.0.0-next.60 | Adds Elastic APM instrumentation to your application                      |
-| [@gasket/plugin-express]        | 7.0.0-next.60 | Adds express support to your application                                  |
-| [@gasket/plugin-fastify]        | 7.0.0-next.60 | Adds fastify support to your application                                  |
-| [@gasket/plugin-git]            | 7.0.0-next.60 | Adds git support to your application                                      |
-| [@gasket/plugin-happyfeet]      | 7.0.0-next.60 | A gasket plugin to enable happyfeet healthchecks                          |
-| [@gasket/plugin-https]          | 7.0.0-next.60 | Create http/s servers with graceful termination                           |
-| [@gasket/plugin-intl]           | 7.0.0-next.60 | NodeJS script to build localization files.                                |
-| [@gasket/plugin-jest]           | 7.0.0-next.60 | Integrated jest into your application.                                    |
-| [@gasket/plugin-lint]           | 7.0.0-next.60 | Adds GoDaddy standard linting to your application                         |
-| [@gasket/plugin-logger]         | 7.0.0-next.60 | Gasket plugin for logging                                                 |
-| [@gasket/plugin-manifest]       | 7.0.0-next.60 | The web app manifest for progressive Gasket applications                  |
-| [@gasket/plugin-metadata]       | 7.0.0-next.60 | Adds metadata to gasket lifecycles                                        |
-| [@gasket/plugin-middleware]     | 7.0.0-next.60 | Handles common server engine setups for routing and executing lifecycles. |
-| [@gasket/plugin-mocha]          | 7.0.0-next.60 | Integrates mocha based testing in to your Gasket application              |
-| [@gasket/plugin-morgan]         | 7.0.0-next.60 | Adds morgan request logger to your app                                    |
-| [@gasket/plugin-nextjs]         | 7.0.0-next.60 | Adds Next support to your application                                     |
-| [@gasket/plugin-redux]          | 7.0.0-next.60 | Gasket Redux Setup                                                        |
-| [@gasket/plugin-service-worker] | 7.0.0-next.60 | Gasket Service Worker Plugin                                              |
-| [@gasket/plugin-swagger]        | 7.0.0-next.60 | Generate and serve swagger docs                                           |
-| [@gasket/plugin-typescript]     | 7.0.0-next.60 | Gasket plugin for TypeScript support                                      |
-| [@gasket/plugin-webpack]        | 7.0.0-next.60 | Adds webpack support to your application                                  |
-| [@gasket/plugin-winston]        | 7.0.0-next.60 | Gasket logger based on Winston                                            |
-| [@gasket/plugin-workbox]        | 7.0.0-next.60 | Gasket Workbox Plugin                                                     |
+| [@gasket/plugin-analyze]        | 7.0.0-next.66 | Gasket Analyzer Plugin                                                    |
+| [@gasket/plugin-command]        | 7.0.0-next.66 | Plugin to enable other plugins to inject new gasket commands              |
+| [@gasket/plugin-cypress]        | 7.0.0-next.66 | Integrates Cypress based testing into your Gasket application             |
+| [@gasket/plugin-data]           | 7.0.0-next.66 | Supports application-specific settings and configurations                 |
+| [@gasket/plugin-docs]           | 7.0.0-next.66 | Centralize doc files from plugins and modules                             |
+| [@gasket/plugin-docs-graphs]    | 7.0.0-next.66 | Generate mermaid graphs of an applications gasket lifecycles              |
+| [@gasket/plugin-docusaurus]     | 7.0.0-next.66 | Gasket plugin for docusaurus                                              |
+| [@gasket/plugin-elastic-apm]    | 7.0.0-next.66 | Adds Elastic APM instrumentation to your application                      |
+| [@gasket/plugin-express]        | 7.0.0-next.66 | Adds express support to your application                                  |
+| [@gasket/plugin-fastify]        | 7.0.0-next.66 | Adds fastify support to your application                                  |
+| [@gasket/plugin-git]            | 7.0.0-next.66 | Adds git support to your application                                      |
+| [@gasket/plugin-happyfeet]      | 7.0.0-next.66 | A gasket plugin to enable happyfeet healthchecks                          |
+| [@gasket/plugin-https]          | 7.0.0-next.66 | Create http/s servers with graceful termination                           |
+| [@gasket/plugin-intl]           | 7.0.0-next.66 | NodeJS script to build localization files.                                |
+| [@gasket/plugin-jest]           | 7.0.0-next.66 | Integrated jest into your application.                                    |
+| [@gasket/plugin-lint]           | 7.0.0-next.66 | Adds GoDaddy standard linting to your application                         |
+| [@gasket/plugin-logger]         | 7.0.0-next.66 | Gasket plugin for logging                                                 |
+| [@gasket/plugin-manifest]       | 7.0.0-next.66 | The web app manifest for progressive Gasket applications                  |
+| [@gasket/plugin-metadata]       | 7.0.0-next.66 | Adds metadata to gasket lifecycles                                        |
+| [@gasket/plugin-middleware]     | 7.0.0-next.66 | Handles common server engine setups for routing and executing lifecycles. |
+| [@gasket/plugin-mocha]          | 7.0.0-next.66 | Integrates mocha based testing in to your Gasket application              |
+| [@gasket/plugin-morgan]         | 7.0.0-next.66 | Adds morgan request logger to your app                                    |
+| [@gasket/plugin-nextjs]         | 7.0.0-next.66 | Adds Next support to your application                                     |
+| [@gasket/plugin-redux]          | 7.0.0-next.66 | Gasket Redux Setup                                                        |
+| [@gasket/plugin-service-worker] | 7.0.0-next.66 | Gasket Service Worker Plugin                                              |
+| [@gasket/plugin-swagger]        | 7.0.0-next.66 | Generate and serve swagger docs                                           |
+| [@gasket/plugin-typescript]     | 7.0.0-next.66 | Gasket plugin for TypeScript support                                      |
+| [@gasket/plugin-webpack]        | 7.0.0-next.66 | Adds webpack support to your application                                  |
+| [@gasket/plugin-winston]        | 7.0.0-next.66 | Gasket logger based on Winston                                            |
+| [@gasket/plugin-workbox]        | 7.0.0-next.66 | Gasket Workbox Plugin                                                     |
 
 
 
@@ -191,14 +191,14 @@ Supporting modules
 
 | Name                 | Version       | Description                                                              |
 | -------------------- | ------------- | ------------------------------------------------------------------------ |
-| [@gasket/assets]     | 7.0.0-next.60 | Gasket assets                                                            |
-| [@gasket/core]       | 7.0.0-next.60 | Entry point to setting up Gasket instances                               |
-| [@gasket/data]       | 7.0.0-next.60 | Helper package for accessing embedded Gasket Data in the browser         |
-| [@gasket/intl]       | 7.0.0-next.60 | Internationalization managers for translation files and locale handling. |
-| [@gasket/nextjs]     | 7.0.0-next.60 | Gasket integrations for Next.js apps                                     |
-| [@gasket/react-intl] | 7.0.0-next.60 | React component library to enable localization for gasket apps.          |
-| [@gasket/redux]      | 7.0.0-next.60 | Gasket Redux Configuration                                               |
-| [@gasket/utils]      | 7.0.0-next.60 | Reusable utilities for Gasket internals                                  |
+| [@gasket/assets]     | 7.0.0-next.66 | Gasket assets                                                            |
+| [@gasket/core]       | 7.0.0-next.66 | Entry point to setting up Gasket instances                               |
+| [@gasket/data]       | 7.0.0-next.66 | Helper package for accessing embedded Gasket Data in the browser         |
+| [@gasket/intl]       | 7.0.0-next.66 | Internationalization managers for translation files and locale handling. |
+| [@gasket/nextjs]     | 7.0.0-next.66 | Gasket integrations for Next.js apps                                     |
+| [@gasket/react-intl] | 7.0.0-next.66 | React component library to enable localization for gasket apps.          |
+| [@gasket/redux]      | 7.0.0-next.66 | Gasket Redux Configuration                                               |
+| [@gasket/utils]      | 7.0.0-next.66 | Reusable utilities for Gasket internals                                  |
 
 ## Configurations
 
