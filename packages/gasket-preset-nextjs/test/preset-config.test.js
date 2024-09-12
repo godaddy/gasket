@@ -30,7 +30,8 @@ describe('presetConfig', () => {
       expect.objectContaining({ name: '@gasket/plugin-webpack' }),
       expect.objectContaining({ name: '@gasket/plugin-https' }),
       expect.objectContaining({ name: '@gasket/plugin-nextjs' }),
-      expect.objectContaining({ name: '@gasket/plugin-winston' })
+      expect.objectContaining({ name: '@gasket/plugin-winston' }),
+      expect.objectContaining({ name: '@gasket/plugin-lint' })
     ];
     expect(config.plugins).toEqual(expect.arrayContaining(expected));
   });
