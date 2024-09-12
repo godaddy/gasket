@@ -8,6 +8,8 @@ const {
   devDependencies
 } = require('../package.json');
 
+const LOCAL_SERVER_URL = 'http://localhost:3000';
+
 /** @type {import('@gasket/core').Plugin} */
 const plugin = {
   name,
@@ -18,7 +20,7 @@ const plugin = {
       timing: {
         after: ['@gasket/plugin-nextjs']
       },
-      handler: async function create(gasket, { files, pkg }) {
+      handler: function create(gasket, { files, pkg }) {
         const generatorDir = `${__dirname}/../generator`;
         const isReactProject = pkg.has('dependencies', 'react');
 
@@ -38,16 +40,15 @@ const plugin = {
           'start:local': 'next start',
           'cypress': 'cypress open',
           'cypress:headless': 'cypress run',
-          'e2e': 'start-server-and-test start:local http://localhost:3000 cypress',
+          'e2e': `start-server-and-test start:local ${LOCAL_SERVER_URL} cypress`,
           'e2e:headless':
-            'start-server-and-test start:local http://localhost:3000 cypress:headless'
+            `start-server-and-test start:local ${LOCAL_SERVER_URL} cypress:headless`
         });
       }
     },
     metadata(gasket, meta) {
       return {
         ...meta,
-
         structures: [
           {
             name: 'test/',

@@ -1,23 +1,48 @@
 # @gasket/plugin-cypress
 
-Creates a `cypress` based testing environment for your Gasket application.
+Creates a Cypress-based testing environment for your Gasket application.
 
 ## Installation
 
-This plugin is only used by presets for `create-gasket-app` and is not installed for apps.
+This plugin is only used by presets for `create-gasket-app` and is not
+installed manually for applications. It is automatically included when using
+specific presets.
 
 ## Usage
 
-When you create a new gasket application that is configured with the `cypress`
-plugin it will prepare it with a `cypress` based testing environment. It will add
-the following `scripts` to the `package.json`:
+When you create a new Gasket application that includes the
+`@gasket/plugin-cypress`, it configures a Cypress-based testing environment. It
+will automatically add the following `scripts` to your `package.json`:
 
-NOTE: before running `npm run cypress` or `npm run cypress:headless`, you should first start the server in a separate tab. Before starting the server for the first time, you must run `gasket build`/`npm run build` in order for things to work properly.
+- `npm run cypress`: Opens the Cypress Test Runner using the default
+  configuration values from `cypress.config.js`. It runs all tests specified in
+  the **test** folder.
+- `npm run cypress:headless`: Runs all Cypress tests to completion in headless
+  mode. The tests should be located in the **test** folder, or in the folder
+  defined by `integrationFolder` in the `cypress.config.js` configuration.
+- `npm run e2e`: Starts the Next.js production server (`next start`) and opens
+  the Cypress Test Runner for end-to-end testing. The server runs at
+  `http://localhost:3000` by default.
+- `npm run e2e:headless`: Similar to `npm run e2e`, but runs the Cypress tests
+  to completion in headless mode.
 
-- `npm run cypress`, opens the Cypress Test Runner and uses the default configuration values from `cypress.config.js`, which uses all tests specified in the **tests** folder
-- `npm run cypress:headless` runs all cypress tests to completion. the cypress tests must be located in the **test** folder or whatever folder value is set for `integrationFolder` in the `cypress.config.js` config
-- `npm run e2e` starts the Next.js production server in conjunction with opening the Cypress Test Runner
-- `npm run e2e:headless` Same as `npm run e2e`, but runs the cypress tests to completion in the command line
+### Important Notes
+
+- Before running `npm run cypress` or `npm run cypress:headless`, make sure the
+  server is running in a separate terminal tab. You can start the server by
+  running `npm run start:local` or `next start`.
+- Before starting the server for the first time, you must run `gasket build` or
+  `npm run build` to ensure that all necessary assets are built and available
+  for testing.
+
+## Additional Configuration
+
+The plugin automatically detects if your project is a React-based application
+and adjusts its setup accordingly:
+
+- For React projects, it adds additional dependencies like
+  `start-server-and-test` for easier server and test management.
+- Test files and configuration files will be added under a generator directory.
 
 ## License
 
