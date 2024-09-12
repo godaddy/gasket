@@ -7,6 +7,7 @@ const { name, version } = require('../package.json');
  */
 module.exports = function create(gasket, { pkg, gasketConfig }) {
   gasketConfig.addPlugin('pluginAnalyze', name);
+
   pkg.add('devDependencies', {
     [name]: `^${version}`
   });
