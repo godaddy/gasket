@@ -53,6 +53,10 @@ describe('docsView', () => {
     };
   });
 
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
+
   it('check if docusaurus.config.js exists', async function () {
     await docsView(mockGasket);
     expect(mockExistsStub).toHaveBeenCalled();
@@ -87,5 +91,12 @@ describe('docsView', () => {
     mockPresetClassic.mockImplementationOnce(() => { throw new Error('ModuleNotFoundError'); });
     mockCorePackage.mockImplementationOnce(() => { throw new Error('ModuleNotFoundError'); });
     await expect(async () => await docsView(mockGasket)).rejects.toThrow();
+  });
+
+  it('creates empty package.json', async () => {
+    const { root, docusaurus } = mockGasket.config;
+    await docsView(mockGasket);
+
+    expect(mockWriteFileStub).toHaveBeenCalledWith(path.join(root, docusaurus.rootDir, 'package.json'), '{}', 'utf-8');
   });
 });
