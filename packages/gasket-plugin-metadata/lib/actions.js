@@ -5,6 +5,17 @@ const isGasketPreset = /(gasket-preset)|(@gasket\/preset-)/;
 const isGasketPlugin = /(gasket-plugin)|(@gasket\/plugin-)/;
 let _metadata;
 
+function tryRequire(path) {
+  try {
+    return require(path);
+  } catch (err) {
+    if (err.code === 'MODULE_NOT_FOUND') {
+      return null;
+    }
+    throw err;
+  }
+}
+
 function getAppInfo(gasket) {
   const { config: { root } } = gasket;
   const tryPath = isModulePath.test(root) ? path.join(root, 'package.json') : `${root}/package.json`;
@@ -54,24 +65,31 @@ async function getMetadata(gasket) {
         pluginData.metadata.path = path.dirname(path.join(require.resolve(pluginData.name), '..'));
         const { dependencies, devDependencies } = require(path.join(pluginData.metadata.path, 'package.json'));
 
-        if (isPreset)
+        if (isPreset) {
           presets.push(pluginData);
-        else
+        } else {
           plugins.push(pluginData);
+        }
 
         for (const name of Object.keys({ ...dependencies, ...devDependencies })) {
           const isModule = isGasketModule.test(name);
           if (!isModule) continue;
-          const mod = require(path.join(name, 'package.json'));
-          modules[name] = {
-            name: mod.name,
-            version: mod.version,
-            description: mod.description,
-            metadata: {
-              link: 'README.md',
-              path: path.dirname(path.join(require.resolve(name), '..'))
-            }
-          };
+
+          //
+          // get gasket module details if installed
+          //
+          const mod = tryRequire(path.join(name, 'package.json'));
+          if (mod) {
+            modules[name] = {
+              name: mod.name,
+              version: mod.version,
+              description: mod.description,
+              metadata: {
+                link: 'README.md',
+                path: path.dirname(path.join(require.resolve(name), '..'))
+              }
+            };
+          }
         }
       }
     });
