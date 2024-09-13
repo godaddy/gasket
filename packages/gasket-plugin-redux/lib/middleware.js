@@ -11,7 +11,7 @@ module.exports = function middlewareHook(gasket) {
 
   if (!reduxConfig.makeStore) {
     throw new Error(
-      'Could not find redux store file. Add a store.js file or configure redux.makeStore in gasket.config.js.'
+      'Could not find redux store file. Add a store.js file or configure redux.makeStore in gasket.js.'
     );
   }
 
