@@ -44,7 +44,7 @@ export interface PluginData extends ModuleData {
   /** App files and directories used by plugin */
   structures?: Array<DetailData>;
 
-  /** Configuration options for gasket.config.js */
+  /** Configuration options for gasket.js */
   configurations?: Array<ConfigurationsData>;
 
   /** Description of lifecycles invoked by plugin */

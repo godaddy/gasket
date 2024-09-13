@@ -59,7 +59,7 @@
   - Serving `manifest.json`
   - Adding a `link` to the document `<head>`
   - Adding a new `manifest` lifecycle hook
-  - Accepting `Manifest` setup in `gasket.config.js`
+  - Accepting `Manifest` setup in `gasket.js`
 
 
 [#218]: https://github.com/godaddy/gasket/pull/218

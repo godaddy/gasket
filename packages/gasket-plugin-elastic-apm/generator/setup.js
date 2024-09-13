@@ -1,8 +1,6 @@
 /* eslint-disable no-process-env */
-import dotenv from 'dotenv';
+import 'dotenv/config';
 import apm from 'elastic-apm-node';
-
-dotenv.config();
 
 // Elastic APM setup
 apm.start({

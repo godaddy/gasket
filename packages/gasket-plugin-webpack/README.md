@@ -38,7 +38,7 @@ export default makeGasket({
 
 If your app was previously using the `webpack` property in the
 `gasket.js`, then you should take steps [migrating to webpackConfig]
-lifecycle.  
+lifecycle.
 
 ## API
 
@@ -93,7 +93,7 @@ export default {
   hookes: {
     webpackConfig: function webpackConfigHook( gasket, config, context) {
     const { isServer, webpack } = context;
-  
+
     return isServer
       ? config
       : webpackMerge.merge(config, {
@@ -116,7 +116,7 @@ Executed before the `webpack` lifecycle, allows you to easily create the initial
 Webpack configuration using a chaining syntax that is provided by the
 `webpack-chain` library. The resulting configuration is then merged with:
 
-- WebPack configuration that is specified in the `gasket.config.js` as `webpack`
+- WebPack configuration that is specified in the `gasket.js` as `webpack`
   object.
 
 The result of this will be passed into the `webpack` hook as base configuration.
