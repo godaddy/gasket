@@ -79,7 +79,7 @@ The npm script `analyze` will execute the following:
 GASKET_ENV=local ANALYZE=true next build
 ```
 
-When this script is run, the `@gasket/plugin-analyse` will add the
+When this script is run, the `@gasket/plugin-analyze` will add the
 [webpack-bundle-analyzer] to the webpack config.
 
 Reports for both browser and server-side rendering will be generated, with the

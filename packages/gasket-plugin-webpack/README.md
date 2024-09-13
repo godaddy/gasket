@@ -90,7 +90,7 @@ import webpackMerge from 'webpack-merge';
 
 export default {
   name: 'sample-plugin',
-  hookes: {
+  hooks: {
     webpackConfig: function webpackConfigHook( gasket, config, context) {
     const { isServer, webpack } = context;
   

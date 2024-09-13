@@ -13,13 +13,13 @@ Update your `gasket` file plugin configuration:
 ```diff
 // gasket.js
 
-+ import pluginDocusarus from '@gasket/plugin-docusaurus';
++ import pluginDocusaurus from '@gasket/plugin-docusaurus';
 + import pluginDocs from '@gasket/plugin-docs';
 
 export default makeGasket({
   plugins: [
 +   pluginDocs
-+   pluginDocusarus
++   pluginDocusaurus
   ]
 });
 ```
