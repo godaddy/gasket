@@ -32,28 +32,7 @@ server-side code.
 
 ### Adding Data
 
-To add to the data exposed in `@gasket/data`, you can write to the HTTP response
-object's `locals.gasketData` property.
-For example, when using the [middleware lifecycle] in a plugin:
-
-```js
-export default {
-  name: 'example-plugin',
-  hooks: {
-    middleware(gasket, app) {
-      return (req, res, next) => {
-        res.locals.gasketData = res.locals.gasketData || {};
-        res.locals.gasketData.example = { fake: 'data' };
-        next();
-      }
-    }
-  }
-};
-```
-
-The results of `res.locals.gasketData` should then be rendering in a script
-as described above.
-Similarly, this can be done in an application lifecycle script:
+To add to the data exposed in `@gasket/data`, see the [@gasket/plugin-data] documentation and the [publicGasketData] lifecycle.
 
 ## License
 
@@ -63,3 +42,5 @@ Similarly, this can be done in an application lifecycle script:
 
 [middleware lifecycle]:/packages/gasket-plugin-express/README.md#middleware
 [script tag]:https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script
+[@gasket/plugin-data]:/packages/gasket-plugin-data/README.md
+[publicGasketData]:/packages/gasket-plugin-data#publicgasketdata
