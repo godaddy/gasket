@@ -50,24 +50,24 @@ is configured and `gitInit` is true, either by preset config or prompt.
 #### Example adding gitignore
 
 ```js
-module.exports = {
-  id: 'gasket-plugin-example',
+export default {
+  name: 'gasket-plugin-example',
   hooks: {
     create(gasket, createContext) {
       const { gitignore } = createContext;
 
       // See if `gitignore` is on the create context
-      if(gitignore) {        
+      if(gitignore) {
         // ignore a single file
         gitignore.add('file-to-be-ignored.js');
-        
+
         // ignore wildcard rules
         gitignore.add('*.tmp');
-        
+
         // ignore multiple files and/or directories
         gitignore.add(['file1.js', 'dir2/']);
-        
-        // add an ignore under a category 
+
+        // add an ignore under a category
         gitignore.add('node_modules', 'dependencies');
       }
     }

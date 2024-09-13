@@ -22,14 +22,14 @@ export default makeGasket({
 });
 ```
 
-Add a `--require` flag to a `package.json` start script:
+Add `NODE_OPTIONS=--import=./setup.js` to the `package.json` start script:
 
 ```diff
   "scripts": {
-    "build": "gasket build",
--   "start": "gasket start",
-+   "start": "gasket start --require ./setup.js",
-    "local": "gasket local"
+    "build": "next build",
+-   "start": "next start",
++   "start": "NODE_OPTIONS=--import=./setup.js next start",
+    "local": "next dev"
   }
 ```
 
@@ -37,13 +37,16 @@ Add a `setup.js` script to the root of your app
 
 ```
 // setup.js
-require('dotenv').config();
+import dotenv from 'dotenv/config';
+import apm from 'elastic-apm-node';
 
-require('elastic-apm-node').start({
+// Elastic APM setup
+apm.start({
   serviceName: 'my-service-name',
+  captureHeaders: false,
   secretToken: process.env.ELASTIC_APM_SECRET_TOKEN,
   serverUrl: process.env.ELASTIC_APM_SERVER_URL
-  // any additional configurations options
+  // additional configuration options
 });
 ```
 
@@ -62,7 +65,7 @@ are not present, the APM agent will be disabled.
 ### Plugin Configurations
 
 The Gasket plugin provides some additional setup helpers. These can be
-configured under `elasticAPM` in the `gasket.config.js`.
+configured under `elasticAPM` in the `gasket.js`.
 
 - **`sensitiveCookies`** - (string[]) A list of sensitive cookies to filter
 

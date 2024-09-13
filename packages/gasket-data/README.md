@@ -37,12 +37,13 @@ object's `locals.gasketData` property.
 For example, when using the [middleware lifecycle] in a plugin:
 
 ```js
-module.exports = {
+export default {
+  name: 'example-plugin',
   hooks: {
     middleware(gasket, app) {
       return (req, res, next) => {
         res.locals.gasketData = res.locals.gasketData || {};
-        res.locals.gasketData.example = { fake: 'data' }; 
+        res.locals.gasketData.example = { fake: 'data' };
         next();
       }
     }
@@ -53,17 +54,6 @@ module.exports = {
 The results of `res.locals.gasketData` should then be rendering in a script
 as described above.
 Similarly, this can be done in an application lifecycle script:
-
-```js
-// /lifecycles/middleware.js
-
-module.exports = (gasket, app) => [
-  (req, res, next) => {
-    res.locals.gasketData ??= {};
-    res.locals.gasketData.example = gasket.config.somethingWeWantToExpose;
-  }
-];
-```
 
 ## License
 

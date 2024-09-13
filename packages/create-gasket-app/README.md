@@ -1,6 +1,6 @@
 # create-gasket-app
 
-Starter Pack for creating Gasket apps. 
+Starter Pack for creating Gasket apps.
 
 ### Get Started Immediately
 
@@ -43,9 +43,6 @@ Options:
   -p, --presets [presets]              Initial Gasket preset(s) to use.
         Can be set as short name with version (e.g. --presets nextjs@^1.0.0)
         Or other (multiple) custom presets (e.g. --presets my-gasket-preset@1.0.0.beta-1,nextjs@^1.0.0)
-  --plugins [plugins]                  Additional plugin(s) to install. Can be set as
-        multiple flags (e.g. --plugins jest --plugins zkconfig@^1.0.0)
-        comma-separated values: --plugins=jest,zkconfig^1.0.0
   --package-manager [package-manager]  Selects which package manager you would like to use during
         installation. (e.g. --package-manager yarn)
   -r, --require [require]              Require module(s) before Gasket is initialized
@@ -189,7 +186,7 @@ The hook is passed the following parameters:
 | `context`              | The CreateContext with data from flags, prompts, etc |
 | `context.pkg`          | Commonly used in create to add to package.json       |
 | `context.file`         | Commonly used to add files and templates for the app |
-| `context.gasketConfig` | Used to add config to the generated gasket.config.js |
+| `context.gasketConfig` | Used to add config to the generated gasket.js |
 | `context.messages`     | non-error/warning messages to report                 |
 | `context.warnings`     | warnings messages to report                          |
 | `context.errors`       | error messages to report but do not exit process     |

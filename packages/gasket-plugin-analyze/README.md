@@ -35,7 +35,7 @@ export default makeGasket({
 This plugin uses [webpack-bundle-analyzer] and as such, all of its [plugin
 options] are available for tuning both `browser` and `server` analysis reports.
 These options are defined in the `bundleAnalyzerConfig` object in your
-`gasket.config.js`.
+`gasket.js`.
 
 By default, the `analyzeMode` is set to `static`, meaning the analysis reports
 are generated as HTML files, and the reports are output to a `reports` directory

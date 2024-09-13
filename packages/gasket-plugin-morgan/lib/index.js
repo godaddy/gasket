@@ -3,7 +3,7 @@
 const { name, version, description } = require('../package.json');
 const middleware = require('./middleware');
 
-// set log configuration in gasket.config.js, under `morgan` key
+// set log configuration in gasket.js, under `morgan` key
 // configuration options: http://expressjs.com/en/resources/middleware/morgan.html
 /** @type {import('@gasket/core').Plugin} */
 const plugin = {

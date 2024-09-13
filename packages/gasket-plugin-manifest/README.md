@@ -31,7 +31,7 @@ export default makeGasket({
 
 By default, this plugin will serve `{}` as your `manifest.json`. Consumers of
 this plugin have 2 options in augmenting this object. The first is through
-`gasket.config.js`:
+`gasket.js`:
 
 ```js
 // gasket.js

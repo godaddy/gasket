@@ -1,7 +1,7 @@
 # @gasket/plugin-swagger
 
 Gasket plugin for working with Swagger specs, and uses [swagger-ui-express] to
-serve Swagger UI docs with Express and uses [fastify-swagger] to serve Swagger UI 
+serve Swagger UI docs with Express and uses [fastify-swagger] to serve Swagger UI
 docs with Fastify.
 
 ## Installation
@@ -40,7 +40,7 @@ export default makeGasket({
 #### Example from JSDocs
 
 By specifying the `swagger.jsdocs` options in the `gasket.js`, the
-Swagger definition file will be generated with `gasket build`. It can be output
+Swagger definition file will be generated with `npm run build`. It can be output
 to either a JSON (default) or YAML file.
 
 ```js

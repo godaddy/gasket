@@ -178,7 +178,7 @@ are provided directly from the [create-servers] callback.
  * @param {object} servers - http and/or https servers
  * @return {Promise<object>} updated manifest
  */
-module.exports = async function serversHook(gasket, servers) {
+export default async function serversHook(gasket, servers) {
   const cert = servers.https.cert;
 
   console.log('Started https server with cert:');

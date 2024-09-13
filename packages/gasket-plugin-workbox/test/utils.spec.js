@@ -14,7 +14,7 @@ describe('getWorkboxConfig', () => {
     expect(results).toEqual(utils.defaultConfig);
   });
 
-  it('returns config from gasket.config.js', () => {
+  it('returns config from gasket.js', () => {
     const results = utils.getWorkboxConfig(setupGasket({}));
     expect(results).toEqual({ ...utils.defaultConfig });
   });
