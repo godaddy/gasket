@@ -127,10 +127,10 @@ export default {
   name: 'theoretical',
   hooks: {
     configure(gasket, baseConfig) {
-      const additonalConfig = addAdditionalConfig();
+      const additionalConfig = addAdditionalConfig();
       return {
         ...baseConfig,
-        ...additonalConfig
+        ...additionalConfig
       };
     }
   }
