@@ -108,7 +108,7 @@ const plugin = {
   }
 };
 
-module.exports = plugin;
+export default plugin;
 ```
 
 ### `HookHandler`
@@ -121,7 +121,7 @@ the specific `@gasket/core` `HookHandler` type and description.
  * Add files & extend package.json for new apps.
  * @type {import('@gasket/core').HookHandler<'create'>}
  */
-module.exports = function create(gasket, context) {
+export default function create(gasket, context) {
   ...
 }
 ```
@@ -163,13 +163,13 @@ declare module '@gasket/core' {
 
 ### `GasketConfig` Interface
 
-If your plugin adds additional config properties to the `gasket.config.js`, be
+If your plugin adds additional config properties to the `gasket.js`, be
 sure to define those in the `.d.ts` file.
 
 ```js
 // example.js
 
-module.exports = function loadConfig(gasket) {
+export default function loadConfig(gasket) {
   const { root, configPath = 'config' } = gasket.config;
 
   const configDir = path.resolve(root, configPath);

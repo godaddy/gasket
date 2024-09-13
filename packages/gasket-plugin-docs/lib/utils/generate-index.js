@@ -129,7 +129,7 @@ function generateContent(docsConfigSet) {
   );
   addSection(
     'Configurations',
-    'Available configuration options in the `gasket.config.js`',
+    'Available configuration options in the `gasket.js`',
     docsConfigSet.configurations,
     {
       includeVersion: false,

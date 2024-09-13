@@ -231,7 +231,7 @@ entry.
 
 ### getIntlLocale
 
-This action invokes the `intlLocale` lifecycle hook to determine the user's locale. 
+This action invokes the `intlLocale` lifecycle hook to determine the user's locale.
 
 parameters:
 - `req` - (object) Request object
@@ -271,7 +271,8 @@ apps with a server element, not for static sites.
 #### Example usage
 
 ```js
-module.exports = {
+export default {
+  name: 'my-intl-plugin',
   hooks: {
     intlLocale: async function intlLocaleHook(gasket, locale, { req, res }) {
       const { env } = gasket.config;
@@ -369,7 +370,7 @@ export default makeGasket({
 If you are experiencing difficulties seeing with locale files not working as expected, it can be helpful to enable debug logging for your gasket server via the `DEBUG` environment variable under the namespace `gasket`:
 
 ```shell
-DEBUG=gasket:* npx gasket local
+DEBUG=gasket:* npm run local
 ```
 
 Once enabled, look for messages under the namespace `gasket:plugin:intl` and `gasket:intl` for a detailed accounting on what's happening behind the scenes.

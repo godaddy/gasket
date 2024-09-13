@@ -31,10 +31,10 @@ Answering yes to this question will install `next-sitemap` as a dependency, gene
 ## Configuration
 
 - Instead of adding a dedicated `next.config.js`, the `nextConfig` property
-  within `gasket.config.js` is used. Everything you can configure in the
+  within `gasket.js` is used. Everything you can configure in the
   [next.config] can be added here.
 
-It is also possible for apps to config Next.js using the `gasket.config.js`
+It is also possible for apps to config Next.js using the `gasket.js`
 file. To do so, specify a `nextConfig` object property in the same form as what
 you would set for [custom configurations][next.config] or using Next.js plugins.
 

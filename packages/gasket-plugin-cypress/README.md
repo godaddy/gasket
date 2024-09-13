@@ -31,7 +31,7 @@ will automatically add the following `scripts` to your `package.json`:
 - Before running `npm run cypress` or `npm run cypress:headless`, make sure the
   server is running in a separate terminal tab. You can start the server by
   running `npm run start:local` or `next start`.
-- Before starting the server for the first time, you must run `gasket build` or
+- Before starting the server for the first time, you must run
   `npm run build` to ensure that all necessary assets are built and available
   for testing.
 
