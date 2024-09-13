@@ -106,7 +106,7 @@ export default({
 
 Update Cypress version to 12.3.0. [(#660)]
 
-## Set Docusaraus as The Default Docs Generator
+## Set Docusaurus as The Default Docs Generator
 
 Replace `docsify` with `docusaurus` for gasket docs. [(#673)]
 
@@ -207,7 +207,7 @@ Updates:
 - Created a new `@gasket/plugin-logger` to replace `@gasket/plugin-log`
 - The new logger is included by default in Gasket apps
 - Created `@gasket/plugin-winston` to customize the default logger
-- Added a per-request logger with updateable metadata
+- Added a per-request logger with updatable metadata
 - Updated the default redux logger to use the per-request logger
 - Updated presets to use the winston logger
 

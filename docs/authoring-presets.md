@@ -60,7 +60,7 @@ The `presetPrompt` hook is an async function that takes three arguments: `gasket
  * @param {Function} utils.prompt - Inquirer prompt
  */
 export default async function presetPrompt(gasket, context, { prompt }) {
-  // Add additonal configuration or prompts
+  // Add additional configuration or prompts
 }
 ```
 
@@ -70,14 +70,14 @@ You can add values to the context object to be used by other plugins.
 // vegan-preset/prompt-preset.js
 
 export default async function presetPrompt(gasket, context, { prompt }) {
-  context.sandwhichMeat = 'none'; // Predefined value to be used in sandwhich-plugin
+  context.sandwichMeat = 'none'; // Predefined value to be used in sandwich-plugin
 }
 
-// sandwhich-plugin/prompt.js
+// sandwich-plugin/prompt.js
 
 export async function promptMeat(gasket, context) {
   // Will not prompt for meat if predefined in context
-  if !('sandwhichMeat' in context){
+  if !('sandwichMeat' in context){
     // Prompt for sandwich meat
   }
 }
@@ -93,16 +93,16 @@ Additional prompts can be added by using the `prompt` function provided in the `
 ```js
 // vegan-preset/prompt-preset.js
 
-import sandwhichPrompts from 'sandwhich-plugin/prompts';
+import sandwichPrompts from 'sandwich-plugin/prompts';
 
 export default async function presetPrompt(gasket, context, { prompt }) {
-  await sandwhichPrompts.promptBreadType(context, prompt);
-  await sandwhichPrompts.promptVeggies(context, prompt);
+  await sandwichPrompts.promptBreadType(context, prompt);
+  await sandwichPrompts.promptVeggies(context, prompt);
 
-  if (!('sandwhichCheeseType' in context)) {
-    const { sandwhichCheeseType } = await prompt([
+  if (!('sandwichCheeseType' in context)) {
+    const { sandwichCheeseType } = await prompt([
       {
-        name: 'sandwhichCheeseType',
+        name: 'sandwichCheeseType',
         message: 'Do you want cheese?',
         type: 'list',
         choices: [
@@ -113,7 +113,7 @@ export default async function presetPrompt(gasket, context, { prompt }) {
       }
     ]);
 
-    Object.assign(context, { sandwhichCheeseType });
+    Object.assign(context, { sandwichCheeseType });
   }
 }
 ```
@@ -154,7 +154,7 @@ export default async function presetConfig(gasket, context) {
   }
 
   return {
-    additonalPropery: myConfigObject,
+    additionalProperty: myConfigObject,
     plugins: [
       pluginFoo
       pluginBar
@@ -172,7 +172,7 @@ export default makeGasket({
     pluginFoo,
     pluginBar
   ],
-  additonalPropery: {
+  additionalProperty: {
     my: 'value'
   }
 });

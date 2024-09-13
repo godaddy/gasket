@@ -101,7 +101,7 @@ with the following properties:
 ## Direct Usage
 
 The `GasketEngine` is used internally by the `makeGasket` function, so you probably do not need
-to use this directly. If you do, instantiate an engine, by passing in an array of pluigns.
+to use this directly. If you do, instantiate an engine, by passing in an array of plugins.
 
 ```js
 import { GasketEngine } from '@gasket/core';
