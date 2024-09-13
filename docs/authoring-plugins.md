@@ -38,7 +38,7 @@ When naming a plugin, prefix it with `gasket-plugin-` and when naming a preset, 
 
 For example, if you were to create a plugin called `foo` you would name it `gasket-plugin-foo`. If you were to create a preset called `bar` you would name it `gasket-preset-bar`.
 
-If your project uses [scoped pacakges], the scope name would be added to the front of the plugin or preset name followed by a `/`. For example, if the plugin and preset names from above were included in a project with a scope of `@test` the names would be `@test/gasket-plugin-foo` and `@test/gasket-preset-bar`.
+If your project uses [scoped packages], the scope name would be added to the front of the plugin or preset name followed by a `/`. For example, if the plugin and preset names from above were included in a project with a scope of `@test` the names would be `@test/gasket-plugin-foo` and `@test/gasket-preset-bar`.
 
 ## Hooks
 
@@ -198,4 +198,4 @@ versioned, published, and imported to your different apps.
 [one-off plugins]:#one-off-plugins
 [here]:/packages/gasket-core/docs/gasket-engine.md
 [@gasket/plugin-docs]:/packages/gasket-plugin-docs/README.md
-[scoped pacakges]: https://docs.npmjs.com/about-scopes
+[scoped packages]: https://docs.npmjs.com/about-scopes
