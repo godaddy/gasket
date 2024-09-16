@@ -144,7 +144,7 @@ export const questions = [
  * @returns {Promise} promise
  */
 async function globalPrompts({ context }) {
-  const prompt = context.prompts ? inquirer.prompt : () => ({});
+  const prompt = context.prompts ? inquirer.createPromptModule() : () => ({});
   for (var fn of questions) {
     await fn(context, prompt);
   }

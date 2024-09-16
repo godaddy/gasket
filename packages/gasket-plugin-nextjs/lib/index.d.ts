@@ -4,7 +4,7 @@ import type { NextServer } from 'next/dist/server/next';
 import type { Application } from 'express';
 import type { Fastify } from 'fastify';
 import type { Gasket } from '@gasket/core';
-import type { CreateContext } from 'create-gasket-app';
+import type { CreateContext, CreatePrompt } from 'create-gasket-app';
 
 export { NextConfig, NextServer };
 
@@ -100,29 +100,21 @@ declare module '@gasket/plugin-nextjs' {
   /* Exported prompts */
   export async function promptAppRouter(
     context: CreateContext,
-    prompt: (
-      prompts: Array<Record<string, any>>
-    ) => Promise<Record<string, any>>
+    prompt: CreatePrompt
   ): Promise<undefined>
 
   export async function promptNextServerType(
     context: CreateContext,
-    prompt: (
-      prompts: Array<Record<string, any>>
-    ) => Promise<Record<string, any>>
+    prompt: CreatePrompt
   ): Promise<undefined>
 
   export async function promptNextDevProxy(
     context: CreateContext,
-    prompt: (
-      prompts: Array<Record<string, any>>
-    ) => Promise<Record<string, any>>
+    prompt: CreatePrompt
   ): Promise<undefined>
 
   export async function promptSitemap(
     context: CreateContext,
-    prompt: (
-      prompts: Array<Record<string, any>>
-    ) => Promise<Record<string, any>>
+    prompt: CreatePrompt
   ): Promise<undefined>
 }
