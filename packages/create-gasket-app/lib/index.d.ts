@@ -178,7 +178,7 @@ export interface Readme {
   markdownFile(path: string): Promise<Readme>;
 }
 
-export type GasketPrompt = PromptModule;
+export type CreatePrompt = PromptModule;
 
 declare module 'create-gasket-app' {
   export interface CreateContext {
@@ -286,14 +286,14 @@ declare module '@gasket/core' {
     presetPrompt(
       context: CreateContext,
       utils: {
-        prompt: PromptModule;
+        prompt: CreatePrompt;
       }
     ): Promise<void>;
     presetConfig(context: CreateContext): Promise<CreateContext['presetConfig']>;
     prompt(
       context: CreateContext,
       utils: {
-        prompt: PromptModule;
+        prompt: CreatePrompt;
       }
     ): MaybeAsync<CreateContext>;
 
