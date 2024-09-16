@@ -2,6 +2,7 @@ import type { Plugin } from '@gasket/core';
 import type { Options } from 'swagger-jsdoc'
 import type { SwaggerUiOptions } from 'swagger-ui-express';
 import type { FastifySwaggerUiOptions } from '@fastify/swagger-ui';
+import type { CreatePrompt } from 'create-gasket-app';
 
 type SwaggerOptions = {
   /** Target swagger spec file, either json or yaml. (Default:
@@ -55,7 +56,5 @@ export = plugin;
 /* Externalize Swagger prompts for preset */
 export async function promptSwagger(
   context: CreateContext,
-  prompt: (
-    prompts: Array<Record<string, any>>
-  ) => Promise<Record<string, any>>
+  prompt: CreatePrompt
 ): Promise<undefined>
