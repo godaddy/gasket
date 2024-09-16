@@ -1,5 +1,6 @@
 import type { GasketConfigDefinition, MaybeAsync, Plugin, GasketEngine } from '@gasket/core';
 import type { PackageManager } from '@gasket/utils';
+import type { PromptModule } from 'inquirer';
 
 export interface Dependencies {
   dependencies?: Record<string, string>;
@@ -177,6 +178,8 @@ export interface Readme {
   markdownFile(path: string): Promise<Readme>;
 }
 
+export type GasketPrompt = PromptModule;
+
 declare module 'create-gasket-app' {
   export interface CreateContext {
     /** Short name of the app */
@@ -283,18 +286,14 @@ declare module '@gasket/core' {
     presetPrompt(
       context: CreateContext,
       utils: {
-        prompt: (
-          prompts: Array<Record<string, any>>
-        ) => Promise<Record<string, any>>;
+        prompt: PromptModule;
       }
     ): Promise<void>;
     presetConfig(context: CreateContext): Promise<CreateContext['presetConfig']>;
     prompt(
       context: CreateContext,
       utils: {
-        prompt: (
-          prompts: Array<Record<string, any>>
-        ) => Promise<Record<string, any>>;
+        prompt: PromptModule;
       }
     ): MaybeAsync<CreateContext>;
 
