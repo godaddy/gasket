@@ -15,9 +15,9 @@ export interface PackageJson extends Dependencies {
   repository?:
   | string
   | {
-        type: 'git';
-        url: string;
-      };
+    type: 'git';
+    url: string;
+  };
   scripts?: Record<string, string>;
   optionalDependencies?: Record<string, string>;
   homepage?: string;
@@ -31,9 +31,9 @@ export interface ModuleInfo {
   version?: string;
 }
 
-export interface PresetInfo extends ModuleInfo {}
+export interface PresetInfo extends ModuleInfo { }
 
-export interface PluginInfo extends ModuleInfo {}
+export interface PluginInfo extends ModuleInfo { }
 
 export interface ConfigBuilder<Config> {
   /**
@@ -278,10 +278,16 @@ export interface ActionWrapperParams {
 }
 
 declare module '@gasket/core' {
-  import { CreateContext } from 'create-gasket-app';
 
   export interface HookExecTypes {
-    presetPrompt(context: CreateContext): Promise<void>;
+    presetPrompt(
+      context: CreateContext,
+      utils: {
+        prompt: (
+          prompts: Array<Record<string, any>>
+        ) => Promise<Record<string, any>>;
+      }
+    ): Promise<void>;
     presetConfig(context: CreateContext): Promise<CreateContext['presetConfig']>;
     prompt(
       context: CreateContext,
@@ -289,7 +295,6 @@ declare module '@gasket/core' {
         prompt: (
           prompts: Array<Record<string, any>>
         ) => Promise<Record<string, any>>;
-        addPlugins: (plugins: Array<string>) => Promise<void>;
       }
     ): MaybeAsync<CreateContext>;
 
