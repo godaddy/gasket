@@ -85,11 +85,11 @@ declare module '@gasket/core' {
     execWaterfall<Id extends HookId>(
       hook: Id,
       ...args: Parameters<HookExecTypes[Id]>
-    ): ReturnType<HookExecTypes[Id]>;
+    ): Promise<ResolvedType<ReturnType<HookExecTypes[Id]>>>;
     execWaterfallSync<Id extends HookId>(
       hook: Id,
       ...args: Parameters<HookExecTypes[Id]>
-    ): ReturnType<HookExecTypes[Id]>;
+    ): ResolvedType<ReturnType<HookExecTypes[Id]>>;
     execApply<Id extends HookId, Return = void>(
       hook: Id,
       callback: (
