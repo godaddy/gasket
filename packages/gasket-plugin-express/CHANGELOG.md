@@ -1,5 +1,9 @@
 # `@gasket/plugin-express`
 
+### 6.47.3
+
+- Handle route modules with default exports ([#892])
+
 ### 6.46.5
 
 - Support the case of middleware hooks returning empty arrays ([#708])
@@ -101,3 +105,4 @@
 [#675]: https://github.com/godaddy/gasket/pull/675
 [#695]: https://github.com/godaddy/gasket/pull/695
 [#708]: https://github.com/godaddy/gasket/pull/708
+[#892]: https://github.com/godaddy/gasket/pull/892
