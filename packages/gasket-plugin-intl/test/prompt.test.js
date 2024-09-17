@@ -29,4 +29,11 @@ describe('promptHook', () => {
     expect(prompt).not.toHaveBeenCalled();
     expect(result.hasGasketIntl).toEqual(mockCreateContext.hasGasketIntl);
   });
+
+  it('does not prompt if useAppRouter is true', async () => {
+    mockCreateContext.useAppRouter = true;
+    const result = await promptHook(mockGasket, mockCreateContext, { prompt });
+    expect(prompt).not.toHaveBeenCalled();
+    expect(result.hasGasketIntl).toEqual(mockCreateContext.hasGasketIntl);
+  });
 });
