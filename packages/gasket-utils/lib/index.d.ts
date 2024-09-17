@@ -1,8 +1,7 @@
-import type { GasketConfig } from '@gasket/engine';
+import type { GasketConfig, GasketConfigFile } from '@gasket/engine';
 
 declare module '@gasket/engine' {
   export interface GasketConfig {
-    environments?: string;
     commands?: string;
   }
 }
@@ -99,7 +98,7 @@ export function applyConfigOverrides(
 
 export function getPotentialConfigs(
   config: ConfigContext & {
-    config: GasketConfig;
+    config: GasketConfigFile;
   }
 ): Generator<any, any, any>;
 
