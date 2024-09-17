@@ -277,29 +277,23 @@ export interface ActionWrapperParams {
   spinner?: any;
 }
 
+export interface PromptUtils {
+  prompt(prompts: Array<Record<string, any>>): Promise<Record<string, any>>;
+  addPlugins(plugins: Array<string>): Promise<void>;
+}
+
+export interface PostCreatetUtils {
+  runScript: (script: string) => Promise<void>;
+}
+
 declare module '@gasket/core' {
   import { CreateContext } from 'create-gasket-app';
 
   export interface HookExecTypes {
-    presetPrompt(context: CreateContext): Promise<void>;
+    presetPrompt(context: CreateContext, utils: PromptUtils): Promise<void>;
     presetConfig(context: CreateContext): Promise<CreateContext['presetConfig']>;
-    prompt(
-      context: CreateContext,
-      utils: {
-        prompt: (
-          prompts: Array<Record<string, any>>
-        ) => Promise<Record<string, any>>;
-        addPlugins: (plugins: Array<string>) => Promise<void>;
-      }
-    ): MaybeAsync<CreateContext>;
-
+    prompt(context: CreateContext, utils: PromptUtils): MaybeAsync<CreateContext>;
     create(context: CreateContext): MaybeAsync<void>;
-
-    postCreate(
-      context: CreateContext,
-      utils: {
-        runScript: (script: string) => Promise<void>;
-      }
-    ): MaybeAsync<void>;
+    postCreate(context: CreateContext, utils: PostCreatetUtils): MaybeAsync<void>;
   }
 }
