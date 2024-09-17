@@ -11,11 +11,8 @@ Major upgrades usually require special attention as sometimes code changes in
 your apps and plugins may be required. The following guides are sequential and
 will help make the necessary changes when upgrading to latest.
 
-- [Upgrade to v6]
-
-> TIP: The first open source release of Gasket was at v5 in order to align all
-> packages on the same major version. As a result, there is no v4 of
-> `@gasket/cli`, hence no upgrade steps required.
+- [Upgrade to v7] - _Active_
+- [Upgrade to v6] - _LTS_
 
 ## Minor and Patch Upgrades
 
@@ -41,8 +38,8 @@ npm-check -u --latest
 Select all packages with `@gasket/*` prefix.
 
 > TIP: Take your time with upgrades. Don't try to upgrade everything at once
-> which can make debugging difficult if something goes wrong. Instead work in
-> sets, For example start with Gasket packages, test things out and commit
+> which can make debugging difficult if something goes wrong. Instead, work in
+> sets, For example, start with Gasket packages, test things out and commit
 > change, then move on to React related packages, then test packages, etc.
 
 For yarn apps:
@@ -55,6 +52,7 @@ yarn upgrade-interactive --latest
 
 <!-- LINKS -->
 
+[upgrade to v7]: upgrade-to-7.md
 [upgrade to v6]: upgrade-to-6.md
 [npm-check]: https://github.com/dylang/npm-check#npm-check
 [upgrade-interactive]: https://yarnpkg.com/lang/en/docs/cli/upgrade-interactive/
