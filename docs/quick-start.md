@@ -10,8 +10,7 @@ npm i -g create-gasket-app
 npx create-gasket-app
 ```
 
-Now you can create gasket apps with the `create-gasket-app` command, the `appname` and the preset
-you would like to use. In this example we will create a Next.js app. The `appname` is the only required argument.
+Now you can create gasket apps with the `create-gasket-app` command, the `appname` and the preset you would like to use. In this example we will create a Next.js app. The `appname` is the only required argument.
 
 ```bash
 npx create-gasket-app <app-name> --presets @gasket/preset-nextjs
