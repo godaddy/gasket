@@ -320,6 +320,12 @@ const PageComponent = props => <h1><FormattedMessage id='welcome'/></h1>
 + export default withLocaleFileRequired('/locales/extra')(Component);
 ```
 
+The [@gasket/intl] package should be added as an app dependency.
+
+```shell
+npm install @gasket/intl
+```
+
 The new `intlManager` pattern enables locale files
 to be bundled as Webpack chunks.
 As such, it is no longer necessary to store these under the public directory of
@@ -327,7 +333,7 @@ a Next.js or serve then with an Express endpoint.
 The locale files can exist anywhere, though a top-level `/locales` directory is
 recommended as a convention.
 
-See [@godaddy/gasket-plugin-intl] for more details and other changes.
+See [@gasket/plugin-intl] for more details and other changes.
 
 ## Update Redux Store to Use gasketData
 
@@ -510,7 +516,8 @@ Refer to the [@gasket/plugin-command] README for additional information on custo
 [streaming]: https://nextjs.org/docs/app/building-your-application/routing/loading-ui-and-streaming
 [App Router]: https://nextjs.org/docs/app/building-your-application/routing
 [@gasket/plugin-command]: ../packages/gasket-plugin-command/README.md
-[@gasket/gasket-plugin-intl]: ../packages/gasket-plugin-intl/README.md
+[@gasket/plugin-intl]: ../packages/gasket-plugin-intl/README.md
+[@gasket/intl]: ../packages/gasket-intl/README.md
 [@gasket/react-intl]: ../packages/gasket-react-intl/README.md
 [@gasket/plugin-data]: ../packages/gasket-plugin-data/README.md
 [@gasket/data]: ../packages/gasket-data/README.md
