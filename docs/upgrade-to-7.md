@@ -20,41 +20,46 @@ demonstrate what to look for:
 }
 ```
 
-## Code Removal
+## Removed packages
 
 ### @gasket/gasket-cli
 
-Removed support for deprecated `--npmconfig` flag. [(#647)]
+### @gasket/gasket-plugin-docsify
+
+Removed in [#681].
+Instead, use [@gasket/gasket-plugin-docusaurus] for local documentation.
+
+### @gasket/gasket-plugin-config
+
+Refactored as [@gasket/gasket-plugin-data] with several interface changes.
+
+## Removed deprecated features
 
 ### @gasket/plugin-workbox
 
-Remove deprecated `assetPrefix` config support. Use `basePath` instead [(#661)]
+Remove deprecated `assetPrefix` config support. Use `basePath` instead ([#661])
 
 ### @gasket/plugin-nextjs
 
-Remove deprecated `next` config support. Use `nextConfig` instead[(#655)]
+Remove deprecated `next` config support. Use `nextConfig` instead ([#655])
 
 ### @gasket/gasket-utils
 
-Remove deprecated `applyEnvironmentOverrides`. [(#649)]
+Remove deprecated `applyEnvironmentOverrides` ([#649])
 
 ### @gasket/plugin-intl
 
-Remove deprecated support for `languageMap`, `defaultLanguage`, `assetPrefix` config options. [(#666)]
+Remove deprecated support for `languageMap`, `defaultLanguage`, `assetPrefix` config options. ([#666])
 
 ### @gasket/plugin-webpack
 
-- Remove deprecated lifecycles.
+- Remove deprecated lifecycles. ([#665])
 - Remove `webpackMerge` util.
-
-[(#665)]
 
 ### @gasket/plugin-elastic-apm
 
-- Remove deprecated config support.
+- Remove deprecated config support. ([#668])
 - Do not start in preboot, log warning if not started.
-
-[(#668)]
 
 ## Migrating away from req/res attachments
 
@@ -102,17 +107,14 @@ export default({
 })
 ```
 
-## @gasket/gasket-plugin-cypress
-
-Update Cypress version to 12.3.0. [(#660)]
-
 ## Set Docusaurus as The Default Docs Generator
 
-Replace `docsify` with `docusaurus` for gasket docs. [(#673)]
+Replace `docsify` with `docusaurus` for gasket docs. ([#673])
 
 ## Align Lifecycles to use Context Object in Params
 
-We had some lifecycles that did not conform to the context object pattern we have in place for many other lifecycles.
+We had some lifecycles
+that did not conform to the context object pattern we have in place for many other lifecycles. ([#669])
 
 The reason for utilizing this context object is to enable the execution of these lifecycle methods under two distinct scenarios:
 
@@ -124,8 +126,6 @@ Affected lifecycles:
 - `initReduxState`
 - `nextPreHandling` `.d.ts` type file
 
-[(#669)]
-
 If your app or plugins hooks these lifecycles you may need to adjust them.
 
 ```diff
@@ -135,7 +135,7 @@ If your app or plugins hooks these lifecycles you may need to adjust them.
 
 ## @gasket/plugin-elastic-apm
 
-Add setup script to create hook. [(#672)]
+Add setup script to create hook. ([#672])
 
 ## Rename and Refactor @gasket/plugin-config as @gasket/plugin-data
 
@@ -190,8 +190,6 @@ The `app.config.js` file has been renamed to `gasket-data.config.js`
 - <app-root-dir>/app.config.js
 + <app-root-dir>/gasket-data.config.js
 ```
-
-[(#680)]
 
 ## Bring Your Own Logger
 
@@ -263,11 +261,11 @@ The lifecycle method formerly known as `logTransports` is now `winstonTransports
 - // /lifecycles/log-transports.js
 + // /lifecycles/winston-transports.js
 ```
-[(#640)]
+[#640]
 
 ## Update Redux Store to Use gasketData
 
-Update the placeholder reducer for the initial Redux state with `gasketData`.
+Update the placeholder reducer for the initial Redux state with `gasketData`. ([#693])
 
 ![alt text](images/redux-with-gasket-data.png)
 
@@ -286,8 +284,6 @@ Additionally, `@gasket/plugin-nextjs` now generates a `_app.js` file with `getIn
 +  }
 + );
 ```
-
-[(#693)]
 
 ## Plugin Imports
 
@@ -435,24 +431,26 @@ Refer to the [@gasket/plugin-command] README for additional information on custo
 
 
 <!-- PRs -->
-[(#647)]:https://github.com/godaddy/gasket/pull/647
-[(#661)]:https://github.com/godaddy/gasket/pull/661
-[(#660)]:https://github.com/godaddy/gasket/pull/660
-[(#655)]:https://github.com/godaddy/gasket/pull/655
-[(#649)]:https://github.com/godaddy/gasket/pull/649
-[(#666)]:https://github.com/godaddy/gasket/pull/666
-[(#665)]:https://github.com/godaddy/gasket/pull/665
-[(#668)]:https://github.com/godaddy/gasket/pull/668
-[(#669)]:https://github.com/godaddy/gasket/pull/669
-[(#673)]:https://github.com/godaddy/gasket/pull/673
-[(#672)]:https://github.com/godaddy/gasket/pull/672
-[(#640)]:https://github.com/godaddy/gasket/pull/640
-[(#680)]:https://github.com/godaddy/gasket/pull/680
-[(#693)]:https://github.com/godaddy/gasket/pull/693
+[#647]:https://github.com/godaddy/gasket/pull/647
+[#661]:https://github.com/godaddy/gasket/pull/661
+[#660]:https://github.com/godaddy/gasket/pull/660
+[#655]:https://github.com/godaddy/gasket/pull/655
+[#649]:https://github.com/godaddy/gasket/pull/649
+[#666]:https://github.com/godaddy/gasket/pull/666
+[#665]:https://github.com/godaddy/gasket/pull/665
+[#668]:https://github.com/godaddy/gasket/pull/668
+[#669]:https://github.com/godaddy/gasket/pull/669
+[#673]:https://github.com/godaddy/gasket/pull/673
+[#672]:https://github.com/godaddy/gasket/pull/672
+[#640]:https://github.com/godaddy/gasket/pull/640
+[#680]:https://github.com/godaddy/gasket/pull/680
+[#681]:https://github.com/godaddy/gasket/pull/681
+[#693]:https://github.com/godaddy/gasket/pull/693
 
 <!-- Links -->
 [middleware paths]:https://github.com/godaddy/gasket/blob/main/packages/gasket-plugin-express/README.md#middleware-paths
 [streaming]: https://nextjs.org/docs/app/building-your-application/routing/loading-ui-and-streaming
 [App Router]: https://nextjs.org/docs/app/building-your-application/routing
 [@gasket/plugin-command]: ../packages/gasket-plugin-command/README.md
-
+[@gasket/gasket-plugin-data]: ../packages/gasket-plugin-data/README.md
+[@gasket/gasket-plugin-docusaurus]: ../packages/gasket-plugin-docusaurus/README.md
