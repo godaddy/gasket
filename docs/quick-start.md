@@ -2,17 +2,19 @@
 
 ## Create
 
-To get started, you will need to install the `gasket` command.
+To get started, you will need to install the `create-gasket-app` package or use a package runner such as `npx` or `yarn exec`.
 
 ```bash
 npm i -g create-gasket-app
+# OR
+npx create-gasket-app
 ```
 
-Now you can create gasket apps with the `create-gasket-app` command and the preset
-you would like to use. In this example we will create a Next.js app.
+Now you can create gasket apps with the `create-gasket-app` command, the `appname` and the preset
+you would like to use. In this example we will create a Next.js app. The `appname` is the only required argument.
 
 ```bash
-create-gasket-app --presets @gasket/preset-nextjs
+npx create-gasket-app <app-name> --presets @gasket/preset-nextjs
 ```
 
 This will create a new directory with the name of your app.
@@ -33,7 +35,7 @@ Otherwise you can build and start your app directly:
 
 ```bash
 npm run build
-npm run start --env local
+GASKET_ENV=local npm run start
 ```
 
 ## Config
