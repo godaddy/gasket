@@ -284,7 +284,7 @@ export interface PromptUtils {
   prompt: CreatePrompt;
 }
 
-export interface PostCreatetUtils {
+export interface PostCreateUtils {
   runScript: (script: string) => Promise<void>;
 }
 
@@ -294,6 +294,6 @@ declare module '@gasket/core' {
     presetConfig(context: CreateContext): Promise<CreateContext['presetConfig']>;
     prompt(context: CreateContext, utils: PromptUtils): MaybeAsync<CreateContext>;
     create(context: CreateContext): MaybeAsync<void>;
-    postCreate(context: CreateContext, utils: PostCreatetUtils): MaybeAsync<void>;
+    postCreate(context: CreateContext, utils: PostCreateUtils): MaybeAsync<void>;
   }
 }
