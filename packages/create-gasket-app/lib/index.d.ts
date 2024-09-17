@@ -1,5 +1,6 @@
 import type { GasketConfigDefinition, MaybeAsync, Plugin, GasketEngine } from '@gasket/core';
 import type { PackageManager } from '@gasket/utils';
+import type { PromptModule } from 'inquirer';
 
 export interface Dependencies {
   dependencies?: Record<string, string>;
@@ -15,9 +16,9 @@ export interface PackageJson extends Dependencies {
   repository?:
   | string
   | {
-        type: 'git';
-        url: string;
-      };
+    type: 'git';
+    url: string;
+  };
   scripts?: Record<string, string>;
   optionalDependencies?: Record<string, string>;
   homepage?: string;
@@ -31,9 +32,9 @@ export interface ModuleInfo {
   version?: string;
 }
 
-export interface PresetInfo extends ModuleInfo {}
+export interface PresetInfo extends ModuleInfo { }
 
-export interface PluginInfo extends ModuleInfo {}
+export interface PluginInfo extends ModuleInfo { }
 
 export interface ConfigBuilder<Config> {
   /**
@@ -177,6 +178,8 @@ export interface Readme {
   markdownFile(path: string): Promise<Readme>;
 }
 
+export type CreatePrompt = PromptModule;
+
 declare module 'create-gasket-app' {
   export interface CreateContext {
     /** Short name of the app */
@@ -278,8 +281,7 @@ export interface ActionWrapperParams {
 }
 
 export interface PromptUtils {
-  prompt(prompts: Array<Record<string, any>>): Promise<Record<string, any>>;
-  addPlugins(plugins: Array<string>): Promise<void>;
+  prompt: CreatePrompt;
 }
 
 export interface PostCreatetUtils {
@@ -287,8 +289,6 @@ export interface PostCreatetUtils {
 }
 
 declare module '@gasket/core' {
-  import { CreateContext } from 'create-gasket-app';
-
   export interface HookExecTypes {
     presetPrompt(context: CreateContext, utils: PromptUtils): Promise<void>;
     presetConfig(context: CreateContext): Promise<CreateContext['presetConfig']>;

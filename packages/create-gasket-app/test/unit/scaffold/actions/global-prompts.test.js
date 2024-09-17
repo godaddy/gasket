@@ -1,7 +1,11 @@
 import { jest } from '@jest/globals';
 const mockPromptStub = jest.fn();
 
-jest.unstable_mockModule('inquirer', () => ({ default: { prompt: mockPromptStub } }));
+jest.unstable_mockModule('inquirer', () => ({
+  default: {
+    createPromptModule() { return mockPromptStub; }
+  }
+}));
 
 const globalPromptsImport = await import('../../../../lib/scaffold/actions/global-prompts.js');
 const globalPrompts = globalPromptsImport.default;
