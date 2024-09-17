@@ -293,7 +293,7 @@ The above example shows how to use the `withMessagesProvider` HOC to wrap the
 `IntlProvider` from `react-intl`, however, note that it can now be swapped out
 with another other provider now.
 
-See [@godaddy/gasket-plugin-intl] for more details and other changes.
+See [@gasket/react-intl] for more details and other changes.
 
 ## Intl Manager
 
@@ -301,8 +301,11 @@ As pointed out in the previous section, the `intlManager` is a new concept that
 is required to be passed to the `withMessagesProvider` HOC. This manager is
 responsible for loading and managing the translations for the app.
 
-Translations are loaded at startup, and works well for rendering static pages
-without resorting to `getInitialProps` or other Next.js props methods.
+Locale files that are registered as statics are loaded at app startup and are
+available for SSR.
+Other locale files can be loaded on-demand in the browser.
+No longer is `getInitialProps` or other Next.js props methods required.
+
 As such, some of the component options have changed, and we adjusted some naming
 for clarification.
 
@@ -317,7 +320,14 @@ const PageComponent = props => <h1><FormattedMessage id='welcome'/></h1>
 + export default withLocaleFileRequired('/locales/extra')(Component);
 ```
 
-See [@gasket/react-intl] for more details and other changes.
+The new `intlManager` pattern enables locale files
+to be bundled as Webpack chunks.
+As such, it is no longer necessary to store these under the public directory of
+a Next.js or serve then with an Express endpoint.
+The locale files can exist anywhere, though a top-level `/locales` directory is
+recommended as a convention.
+
+See [@godaddy/gasket-plugin-intl] for more details and other changes.
 
 ## Update Redux Store to Use gasketData
 
