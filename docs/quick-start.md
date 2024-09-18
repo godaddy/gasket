@@ -2,7 +2,7 @@
 
 ## Create
 
-To get started, you will need to install the `create-gasket-app` package or use a package runner such as `npx` or `yarn exec`.
+To get started creating a new app, use a package runner with `create-gasket-app`:
 
 ```bash
 npx create-gasket-app --help
