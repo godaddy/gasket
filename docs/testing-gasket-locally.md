@@ -12,6 +12,15 @@ npx create-gasket-app test-app --preset-path=/absolute/path/gasket/packages/gask
 
 This command will create a new Gasket app using your local preset. You can then test your changes by running the app and verifying that your changes work as expected.
 
+## Testing local preset changes with installed plugins
+
+Another way to test a preset locally, but with plugins installed from npm,
+is to use the `--presets` flag while specifying the [local paths].
+
+```sh
+npx create-gasket-app test-app --presets=gasket-preset-example@file:/absolute/path/gasket/packages/gasket-preset-example
+```
+
 ## Testing plugin changes locally
 
 Two options for testing your plugin locally are to point a local app's dependencies a the local plugin or to use `npm link`.
@@ -48,3 +57,4 @@ When testing a preset locally, you might encounter an issue where the local vers
 
 
 [testing plugin changes locally]: #testing-plugin-changes-locally
+[local paths]: https://docs.npmjs.com/cli/v10/configuring-npm/package-json#local-paths

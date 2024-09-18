@@ -222,7 +222,7 @@ describe('loadPreset', () => {
     expect(mockContext.presets).toHaveLength(2);
   });
 
-  it('support preset with tags', async () => {
+  it('supports preset with tags', async () => {
     mockContext.rawPresets = ['@gasket/preset-bogus@canary', '@gasket/preset-all-i-ever-wanted@next'];
 
     await loadPreset({ context: mockContext });
@@ -231,5 +231,19 @@ describe('loadPreset', () => {
       expect.objectContaining(presetAllIEverWanted)
     ]);
     expect(mockContext.presets).toHaveLength(2);
+  });
+
+  it('supports preset with file version', async () => {
+    const filePath = path.resolve(__dirname, '..', '..', '..', '__mocks__', '@gasket', 'preset-bogus');
+
+    mockContext.rawPresets = [
+      `@gasket/preset-bogus@file:${filePath}`
+    ];
+
+    await loadPreset({ context: mockContext });
+    expect(mockContext).toHaveProperty('presets', [
+      expect.objectContaining(presetBogus)
+    ]);
+    expect(mockContext.presets).toHaveLength(1);
   });
 });

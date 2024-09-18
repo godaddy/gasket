@@ -5,7 +5,7 @@ import { default as gasketUtils } from '@gasket/utils';
 import { mkdtemp } from 'fs/promises';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
-const hasVersionOrTag = /@([\^~]?\d+\.\d+\.\d+(?:-[\d\w.-]+)?|[\^~]?\d+\.\d+\.\d+|[a-zA-Z]+)$/;
+const hasVersionOrTag = /@([\^~]?\d+\.\d+\.\d+(?:-[\d\w.-]+)?|[\^~]?\d+\.\d+\.\d+|[a-zA-Z]+|file:.+)$/;
 
 /**
  * loadPresets - Load presets to temp directory
