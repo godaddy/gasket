@@ -5,9 +5,9 @@
 To get started, you will need to install the `create-gasket-app` package or use a package runner such as `npx` or `yarn exec`.
 
 ```bash
-npm i -g create-gasket-app
+npx create-gasket-app --help
 # OR
-npx create-gasket-app
+yarn create gasket-app --help
 ```
 
 Now you can create gasket apps with the `create-gasket-app` command, the `appname` and the preset you would like to use. In this example we will create a Next.js app. The `appname` is the only required argument.
