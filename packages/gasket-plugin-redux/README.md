@@ -2,6 +2,9 @@
 
 Gasket plugin to setup redux store available to express middleware.
 
+⚠️ _This plugin is only compatible with Gasket apps that use the [pages router]
+in Next.js with a [custom server] and is intended to be deprecated._
+
 ## Installation
 
 ```
@@ -24,9 +27,8 @@ export default makeGasket({
 
 ## Configuration
 
-This plugin is only compatible with Gasket apps that use the [pages router] in Next.js with a [custom server].
-
-Gasket apps will need to have a `store.js` file either in a `./redux` directory or at the root of the project.
+Gasket apps will need to have a `store.js` file either which can be imported
+to the `gasket.js`.
 
 The store.js file should export a makeStore function. Use `configureMakeStore`
 from [@gasket/redux] to simplify this setup.
