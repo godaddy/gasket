@@ -186,6 +186,4 @@ available from `gasket.metadata.modules`.
 
 [@gasket/plugin-docs]: /packages/gasket-plugin-docs/README.md
 
-[@gasket/resolve]: /packages/gasket-resolve/README.md
-
 [init lifecycle]: /packages/gasket-plugin-command/README.md#init
