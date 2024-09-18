@@ -55,6 +55,7 @@
     "untildify": "^4.0.0"
   },
   "devDependencies": {
+    "@types/inquirer": "^9.0.7",
     "cross-env": "^7.0.3",
     "diagnostics": "^2.0.2",
     "dotenv": "^16.4.5",
