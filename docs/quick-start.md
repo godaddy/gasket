@@ -10,7 +10,7 @@ npx create-gasket-app --help
 yarn create gasket-app --help
 ```
 
-Now you can create gasket apps with the `create-gasket-app` command, the `appname` and the preset you would like to use. In this example we will create a Next.js app. The `appname` is the only required argument.
+In this example we will create a Next.js app by specifying the app name along with the preset `@gasket/preset-nextjs`:
 
 ```bash
 npx create-gasket-app <app-name> --presets @gasket/preset-nextjs
