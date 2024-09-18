@@ -1,6 +1,10 @@
-# Upgrade to v6
+# Upgrade to v6 (LTS)
 
 This guide will take you through updating `@gasket/*` packages to `6.x`.
+
+> TIP: The first open source release of Gasket was at v5 in order to align all
+> packages on the same major version. As a result, there is no v4 of
+> `@gasket/cli`, hence no upgrade steps required.
 
 ## Update Dependency Versions
 
