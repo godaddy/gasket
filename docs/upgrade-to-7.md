@@ -139,57 +139,49 @@ Add setup script to create hook. ([#672])
 
 ## Rename and Refactor @gasket/plugin-config as @gasket/plugin-data
 
-We have had a lot of confusion around the config plugin and its purpose. As such, we are renaming and refocusing what the plugin does. That is, to allow environment-specific data to be accessible for requests, with public data available with responses.
+We have had a lot of confusion around the config plugin and its purpose.
+As such, we are renaming and refocusing what the plugin does.
+That is, to allow environment-specific data to be accessible for requests,
+with public data available with responses.
 
-Instead of the generic 'config' name, we will term this gasketData which pairs well with the `@gasket/data` package - which is what makes this data accessible in browser code. We are dropping the `redux` property, aligning on `public` which will be added to the Redux state as `gasketData` for apps that choose to opt-in to Redux.
+Instead of the generic 'config' name, we will term this 'gasketData' which pairs
+well with the `@gasket/data` package - which is what makes this data accessible
+in browser code.
 
-Existing apps will need to update their `gasket.config.js` to use the new plugin name.
+Existing apps will need to update their Gasket config to use the new plugin name.
 
-```diff
-// gasket.config.js
+```js
+// gasket.js
+import { makeGasket } from '@gasket/core';
+import pluginData from '@gasket/plugin-data';
+import gasketData from './gasket-data.js';
 
-module.exports = {
-  plugins: {
-    add: [
--      '@gasket/plugin-config'
-+      '@gasket/plugin-data'
-    ]
-  }
-}
+export default makeGasket({
+  plugins: [
+    pluginData
+  ],
+  gasketData
+});
 ```
 
-The previous lifecycles in `@gasket/plugin-config` have been renamed.
+Individual environment files are no longer supported.
+Instead, you may specify environment-specific data in the `gasketData` object.
+Additionally, we are dropping the `redux` property, aligning on `public`.
 
-```diff
-- // /lifecycles/appEnvConfig
-+ // /lifecycles/gasketData
-
-- // /lifecycles/appRequestConfig
-+ // /lifecycles/responseData
-```
-
-- `gasketData` can be used to tune up the base object during app `init`.
-- `responseData` can be used to tune up the "public" data uniquely for each response.
-
-Environment file configuration has been updated to use `gasketData.dir` instead of `configPath`.
-
-```diff
-// gasket.config.js
-
-module.exports = {
--  configPath: './src/config'
-+  gasketData: {
-+    dir: './src/gasket-data'
-+  }
-};
-```
-
-The `app.config.js` file has been renamed to `gasket-data.config.js`
+If coming from an `app.config.js` you will want to change the name to `gasket-data.js`
 
 ```diff
 - <app-root-dir>/app.config.js
-+ <app-root-dir>/gasket-data.config.js
++ <app-root-dir>/gasket-data.js
 ```
+
+If you add lifecycle hooks for modifying the config data before, 
+you will need to update the hook name to `gasketData` and adjust the signature.
+
+`appEnvConfig` -> `gasketData`
+`appRequestConfig` -> `publicGasketData`
+
+See the [@gasket/gasket-plugin-data] docs for more details.
 
 ## Bring Your Own Logger
 
@@ -454,3 +446,4 @@ Refer to the [@gasket/plugin-command] README for additional information on custo
 [@gasket/plugin-command]: ../packages/gasket-plugin-command/README.md
 [@gasket/gasket-plugin-data]: ../packages/gasket-plugin-data/README.md
 [@gasket/gasket-plugin-docusaurus]: ../packages/gasket-plugin-docusaurus/README.md
+[@gasket/gasket-plugin-data]: ../packages/gasket-plugin-data/README.md
