@@ -376,14 +376,14 @@ Additionally, we are dropping the `redux` property, aligning on `public`.
 export default {
   environments: {
     dev: {
--      redux: {
--      public: {
+-     redux: {
++     public: {
         someUrl: 'https://your-dev-service-endpoint.com'
       }
     },
     test: {
--      redux: {
-+      public: {
+-     redux: {
++     public: {
         someUrl: 'https://your-test-service-endpoint.com'
       }
     }
@@ -394,8 +394,8 @@ export default {
 If you add lifecycle hooks for modifying the config data before, 
 you will need to update the hook name to `gasketData` and adjust the signature.
 
-`appEnvConfig` -> `gasketData`
-`appRequestConfig` -> `publicGasketData`
+- `appEnvConfig` -> `gasketData`
+- `appRequestConfig` -> `publicGasketData`
 
 See the [@gasket/plugin-data] docs for more details.
 
