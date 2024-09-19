@@ -261,21 +261,13 @@ Update the placeholder reducer for the initial Redux state with `gasketData`. ([
 
 ![alt text](images/redux-with-gasket-data.png)
 
-Additionally, `@gasket/plugin-nextjs` now generates a `_app.js` file with `getInitialAppProps` for Next.js apps that use Redux. This change allows the developer to more easily verify Redux piping is working as expected and to make adjustments as needed.
+However, if you are using the `@gasket/plugin-redux` plugin to surface
+config-like data to the browser, we recommend switch to GasketData, using the
+[@gasket/plugin-data] plugin with [@gasket/data] instead.
+The GasketData approach is leaner and works with the Next.js App Router and
+Page Router using its built-in server.
 
 ```diff
-// _app.js
-
-+ App.getInitialProps = nextRedux.getInitialAppProps(
-+  (store) => async (appContext) => {
-+    const { Component, ctx } = appContext;
-+    const pageProps = Component.getInitialProps ? await Component.getInitialProps({ ... ctx, store }) : {};
-+    return {
-+      pageProps
-+    };
-+  }
-+ );
-```
 
 ## Plugin Imports
 
@@ -444,6 +436,8 @@ Refer to the [@gasket/plugin-command] README for additional information on custo
 [streaming]: https://nextjs.org/docs/app/building-your-application/routing/loading-ui-and-streaming
 [App Router]: https://nextjs.org/docs/app/building-your-application/routing
 [@gasket/plugin-command]: ../packages/gasket-plugin-command/README.md
+[@gasket/plugin-data]: ../packages/gasket-plugin-data/README.md
+[@gasket/data]: ../packages/gasket-data/README.md
 [@gasket/gasket-plugin-data]: ../packages/gasket-plugin-data/README.md
 [@gasket/gasket-plugin-docusaurus]: ../packages/gasket-plugin-docusaurus/README.md
 [@gasket/gasket-plugin-data]: ../packages/gasket-plugin-data/README.md
