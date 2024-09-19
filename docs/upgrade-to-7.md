@@ -2,9 +2,30 @@
 
 This guide will take you through updating `@gasket/*` packages to `7.x`.
 
+## Table of Contents
+
+- [Update Dependency Versions](#update-dependency-versions)
+- [Switch to makeGasket](#switch-to-makegasket)
+  - [Switch to ESM (Optional)](#switch-to-esm-optional)
+  - [Update Plugin Imports](#update-plugin-imports)
+  - [Update Command Scripts](#update-command-scripts)
+  - [Update Next Scripts](#update-next-scripts)
+- [Switch to GasketActions](#switch-to-gasketactions)
+- [Update configurations](#update-configurations)
+- [Switch to Docusaurus](#switch-to-docusaurus)
+- [Update Lifecycles Contexts](#update-lifecycles-contexts)
+- [Update ElasticAPM Start](#update-elasticapm-start)
+- [Switch to GasketData](#switch-to-gasketdata)
+- [Switch Redux to GasketData](#switch-redux-to-gasketdata)
+- [Switch to @gasket/plugin-logger](#switch-to-gasketplugin-logger)
+- [Update Intl](#update-intl)
+  - [Bring your Own Intl Provider](#bring-your-own-intl-provider)
+  - [Switch to Intl Manager](#switch-to-intl-manager)
+- [Update Custom Commands](#update-custom-commands)
+
 ## Update Dependency Versions
 
-Update all `@gasket/` scoped packages to the v7 major version.
+Update all `@gasket` scoped packages to the v7 major version.
 
 This is not an exhaustive list, but rather a sampling of dependencies to
 demonstrate what to look for:
@@ -20,78 +41,178 @@ demonstrate what to look for:
 }
 ```
 
-## Removed packages
+## Switch to makeGasket
 
-### @gasket/gasket-cli
+Gasket no longer comes with a CLI.
+Instead, you can use the `makeGasket` function from `@gasket/core` to create a
+Gasket instance which can be used throughout your app.
 
-### @gasket/gasket-plugin-docsify
+```diff
+"dependencies": {
+-    "@gasket/cli": "^6.0.2",
++    "@gasket/core": "^7.0.0",
+}
+```
 
-Removed in [#681].
-Instead, use [@gasket/gasket-plugin-docusaurus] for local documentation.
+Next you need to update your gasket.config.js file to use the `makeGasket` function.
+We recommend renaming this file to `gasket.js` for clarity, since it's more than
+just config.
 
-### @gasket/gasket-plugin-config
+### Switch to ESM (Optional)
 
-Refactored as [@gasket/gasket-plugin-data] with several interface changes.
+Gasket works well with ESM if you're ready to make that move.
+Most of the documentation will be in ESM format, but you can still choose to
+use CommonJS, or TypeScript.
 
-## Removed deprecated features
+If you wish to make that move with this upgrade, you can set the `type` field in
+your `package.json` to `module`.
 
-### @gasket/plugin-workbox
+```diff
+{
++  "type": "module"
+}
+```
 
-Remove deprecated `assetPrefix` config support. Use `basePath` instead ([#661])
+This will treat all your `.js` files as ESM files.
+If you are not ready, you can keep your files defaulted as CommonJS, and
+switch individual files to ESM by using the `.mjs` extension (i.e. `gasket.mjs`)
 
-### @gasket/plugin-nextjs
+### Update Plugin Imports
 
-Remove deprecated `next` config support. Use `nextConfig` instead ([#655])
+Before, plugins were configured by their names as strings.
+Now, plugins should be imported and configured in the `makeGasket` function.
 
-### @gasket/gasket-utils
+```diff
+// gasket.config.js
+- module.exports = {
+-   plugins: {
+-     presets: [
+-       '@gasket/plugin-nextjs',
+-     ],
+-   },
+- };
 
-Remove deprecated `applyEnvironmentOverrides` ([#649])
+// gasket.js
++ import { makeGasket } from '@gasket/core';
++ import pluginNextjs from '@gasket/plugin-nextjs';
 
-### @gasket/plugin-intl
++ export default makeGasket({
++   plugins: [
++     pluginNextjs
++   ]
++ });
+```
 
-Remove deprecated support for `languageMap`, `defaultLanguage`, `assetPrefix` config options. ([#666])
+### Update Command Scripts
 
-### @gasket/plugin-webpack
+If your app used GasketCommands such as `docs`, `analyze`, or other custom ones,
+you can still invoke them by executing the `gasket.js`:
 
-- Remove deprecated lifecycles. ([#665])
-- Remove `webpackMerge` util.
+```diff
+  "scripts": {
+-    "docs": "gasket docs",
++    "docs": "node ./gasket.js docs",
+```
 
-### @gasket/plugin-elastic-apm
+### Update Next Scripts
 
-- Remove deprecated config support. ([#668])
-- Do not start in preboot, log warning if not started.
+Additionally, you can use framework CLIs or other to run your Gasket-enabled
+app.
 
-## Migrating away from req/res attachments
+For Next.js webapps, update your package.json scripts to use the Next CLI:
 
-Using the `req` and `res` objects for adding attachments and accessing data has been a common pattern in Gasket applications. This pattern is being deprecated in favor of using the new Gasket Actions API introduced in v7.
+```diff
+  "scripts": {
+-    "build": "gasket build",
++    "build": "next build",
+```
+
+The prior version of Gasket used a custom server with Next.js. You can now use
+the built-in server with Next.js, however to simplify the upgrade process, you
+can continue with a custom server.
+
+First, add a server.js file to your project root:
+
+```js
+import gasket from './gasket.js';
+gasket.actions.startServer();
+```
+
+Notice we are importing our new `gasket.js` file and accessing a GasketAction
+(more on that later).
+
+Next, update your package.json scripts to use our new custom server entry:
+
+```diff
+"scripts": {
+-  "local": "gasket local",
++  "local": "GASKET_DEV=1 nodemon server.js",
+-  "start": "gasket start",
++  "start": "node server.js",
+```
+
+> You don't have to use nodemon, but it's a good choice for development.
+> Also note that specifying `GASKET_DEV=1` will enable the development mode
+> so you get HMR and other development features from Next.js.
+
+If you were using CLI flags for setting the environment, since there is no CLI
+you can use environment variables instead.
+
+```diff
+"scripts": {
+-  "start:local": "gasket start --env=local",
++  "start:local": "GASKET_ENV=local node server.js",
+```
+
+The default environment will be `local`, but be sure to update your CICD scripts
+with the environment variable pattern if flags are currently being used.
+
+## Switch to GasketActions
+
+Using the `req` and `res` objects for adding attachments and accessing data has
+been a common pattern in Gasket applications. This pattern is being deprecated
+in favor of using the new GasketActions API introduced in v7.
 
 ### Motivation
 
-Middleware in Gasket apps runs for every request, regardless of whether it is used or not. We added support for [middleware paths] to help reduce this, but it is still not ideal and requires the developer to manage something that should be optimized already by the plugin.
+Middleware in Gasket apps runs for every request, regardless of whether it is
+used or not. We added support for [middleware paths] to help reduce this,
+but it is still not ideal and requires the developer to manage something that
+should be optimized already by the plugin.
 
-As a caveat of the middleware pattern, when the `req` and `res` objects are decorated with various added properties, it is not always easy to know what is available and when.
+As a caveat of the middleware pattern, when the `req` and `res` objects are
+decorated with various added properties, it is not always easy to know what is
+available and when.
 
-In addition to issues with middleware, we need to move away from reliance on `req` and `res` objects to fully utilize Nextjs 14 features such as [App Router] and [streaming].
+In addition to issues with middleware, we need to move away from reliance on
+`req` and `res` objects to fully utilize Nextjs 14 features such as
+[App Router] and [streaming].
 
-The Gasket Actions API provides a more structured way to access and modify data in Gasket applications. This API is designed to be more consistent and easier to use than the previous pattern of adding attachments to `req` and `res` objects.
+The GasketActions API provides a more structured way to access and modify data
+in Gasket applications. This API is designed to be more consistent and easier
+to use than the previous pattern of adding attachments to `req` and `res` objects.
 
-The `req` object can be used as a Gasket Action argument to give access to headers, cookies, queries, or to be used as a `WeakMap` key for repeated calls.
+The `req` object can be used as a GasketAction argument to give access to
+headers, cookies, queries, or to be used as a `WeakMap` key for repeated calls.
 
 ### Example
 
-When retrieving a variable called `myValue` in middleware, you might have done something like this:
+When retrieving a request-based variable called `myValue` in middleware,
+you might have done something like this:
 
 ```js
 const myValue = res.locals.myValue;
 ```
 
-Going forward, the recommended way to access `myValue` would be through a Gasket Action like this:
+Going forward, the recommended way to access `myValue` would be through a
+GasketAction like this:
 
 ```js
 const myValue = gasket.actions.getMyValue(req);
 ```
 
-The Gasket Action is defined as a hook in the plugin:
+GasketActions are registered by plugins. To create a new GasketAction, you can
+use the `actions` key in your plugin definition.
 
 ```js
 // plugin-example.js
@@ -107,16 +228,62 @@ export default({
 })
 ```
 
-## Set Docusaurus as The Default Docs Generator
+## Update configurations
 
-Replace `docsify` with `docusaurus` for gasket docs. ([#673])
+**[@gasket/plugin-workbox]**
 
-## Align Lifecycles to use Context Object in Params
+- Remove deprecated `assetPrefix` config support. Use `basePath` instead.
 
-We had some lifecycles
-that did not conform to the context object pattern we have in place for many other lifecycles. ([#669])
+**[@gasket/plugin-nextjs]**
 
-The reason for utilizing this context object is to enable the execution of these lifecycle methods under two distinct scenarios:
+- Remove deprecated `next` config support. Use `nextConfig` instead.
+
+**[@gasket/plugin-intl]**
+
+- Remove deprecated `languageMap`, `defaultLanguage`, and `assetPrefix`.
+  Use `localeMap`, `defaultLocale`, and `basePath` instead.
+
+**[@gasket/plugin-webpack]**
+
+- Remove deprecated lifecycles.
+- Remove `webpackMerge` util.
+
+**[@gasket/plugin-elastic-apm]**
+
+- Remove deprecated `serverUrl`, `secretToken` config support.
+- Do not start in preboot, log warning if not started.
+
+**[@gasket/utils]**
+
+- Remove deprecated function `applyEnvironmentOverrides`.
+
+## Switch to Docusaurus
+
+We no longer support `docsify` for plugin for viewing local gasket docs.
+Instead, use [@gasket/plugin-docusaurus] for local documentation.
+
+```js
+// gasket.js
+import { makeGasket } from '@gasket/core';
+
+import pluginDocs from '@gasket/plugin-docs';
+import pluginDocusaurus from '@gasket/plugin-docusaurus';
+
+export default makeGasket({
+  plugins: [
+    pluginDocs,
+    pluginDocusaurus
+  ]
+});
+```
+
+## Update Lifecycles Contexts
+
+We had some lifecycles that did not conform to the context object pattern we
+have in place for many other lifecycles.
+
+The reason for utilizing this context object is to enable the execution of these
+lifecycle methods under two distinct scenarios:
 
 1. During build time, when there is no request object available.
 2. During run time, when the request object becomes available.
@@ -133,15 +300,27 @@ If your app or plugins hooks these lifecycles you may need to adjust them.
 + async initReduxState(gasket, config, { req, res }) {
 ```
 
-## @gasket/plugin-elastic-apm
+## Update ElasticAPM Start
 
-Add setup script to create hook. ([#672])
+With the Gasket CLI going away, we need to update how we start the ElasticAPM
+agent.
+We recommend using the `NODE_OPTIONS` environment variable to import
+(or require) a setup script.
 
-## Rename and Refactor @gasket/plugin-config as @gasket/plugin-data
+```diff
+  "scripts": {
+-   "start": "gasket start --require elastic-apm-node/start",
++   "start": "NODE_OPTIONS=--import=./setup.js next start",
+  }
+```
+
+See [@gasket/plugin-elastic-apm] for more details about the setup script.
+
+## Switch to GasketData
 
 We have had a lot of confusion around the config plugin and its purpose.
-As such, we are renaming and refocusing what the plugin does.
-That is, to allow environment-specific data to be accessible for requests,
+As such, we are renaming and refocusing what the plugin does,
+which is to allow environment-specific data to be accessible for requests,
 with public data available with responses.
 
 Instead of the generic 'config' name, we will term this 'gasketData' which pairs
@@ -164,15 +343,52 @@ export default makeGasket({
 });
 ```
 
-Individual environment files are no longer supported.
-Instead, you may specify environment-specific data in the `gasketData` object.
-Additionally, we are dropping the `redux` property, aligning on `public`.
-
-If coming from an `app.config.js` you will want to change the name to `gasket-data.js`
+If you have an `app.config.js` you will want to change the name to `gasket-data.js`
 
 ```diff
 - <app-root-dir>/app.config.js
 + <app-root-dir>/gasket-data.js
+```
+
+Individual environment files are no longer supported out of the box.
+You can still use this structure by importing environment-specific to the
+`gasket-data.js` file and exporting them as environment properties.
+
+```js
+// gasket-data.js
+import dev from './config/dev.js';
+import test from './config/test.js';
+import prod from './config/prod.js';
+
+export default {
+  environments: {
+    dev,
+    test,
+    prod
+  }
+};
+```
+
+Additionally, we are dropping the `redux` property, aligning on `public`.
+
+```diff
+// gasket-data.js
+export default {
+  environments: {
+    dev: {
+-      redux: {
+-      public: {
+        someUrl: 'https://your-dev-service-endpoint.com'
+      }
+    },
+    test: {
+-      redux: {
++      public: {
+        someUrl: 'https://your-test-service-endpoint.com'
+      }
+    }
+  }
+}
 ```
 
 If you add lifecycle hooks for modifying the config data before, 
@@ -181,56 +397,84 @@ you will need to update the hook name to `gasketData` and adjust the signature.
 `appEnvConfig` -> `gasketData`
 `appRequestConfig` -> `publicGasketData`
 
-See the [@gasket/gasket-plugin-data] docs for more details.
+See the [@gasket/plugin-data] docs for more details.
 
-## Bring Your Own Logger
+## Switch Redux to GasketData
+
+If you are using the [@gasket/plugin-redux] to surface
+config-like data to the browser, we recommend switch to GasketData, using the
+[@gasket/plugin-data] plugin with [@gasket/data] instead.
+The GasketData approach is leaner and works with the Next.js App Router and
+Page Router using its built-in server.
+
+`@gasket/plugin-redux` is not supported for Next.js built-in server apps. 
+
+If you have other reasons to stick with Redux, you can still use it
+Next.js Page Router using a custom server. However,
+you will need to change the store property from `config` -> `gasketData`,
+corresponding with the other guidance in the [Switch to GasketData] section.
+
+![alt text](images/redux-with-gasket-data.png)
+
+## Switch to @gasket/plugin-logger
 
 Gasket's logging infrastructure was comprised of two main parts:
 
-1. `@gasket/plugin-log`: Manages lifecycle timing and executes the `logTransports` hook for adding extra transports to the logger configuration.
+1. `@gasket/plugin-log`: Manages lifecycle timing and executes the `logTransports`
+   hook for adding extra transports to the logger configuration.
 2. `@gasket/log`: Implements logging using Diagnostics (Client-side) and Winston (Server-side).
 
-While these components worked together to initialize `gasket.logger`, not all applications utilized them. Additionally, despite Winston's prevalence, we need to be aware of the numerous logging libraries in the ecosystem when adopting Gasket. The following updates aim to address these concerns:
+While these components worked together to initialize `gasket.logger`, not all
+applications utilized them. Additionally, despite Winston's prevalence, we need
+to be aware of the numerous logging libraries in the ecosystem when adopting Gasket.
+The following updates aim to address these concerns:
 
 Updates:
 - Removed `@gasket/log`
-- Created a new `@gasket/plugin-logger` to replace `@gasket/plugin-log`
-- The new logger is included by default in Gasket apps
-- Created `@gasket/plugin-winston` to customize the default logger
+- Created new [@gasket/plugin-logger] to replace `@gasket/plugin-log`
+- Created new [@gasket/plugin-winston] to customize the default logger
 - Added a per-request logger with updatable metadata
-- Updated the default redux logger to use the per-request logger
 - Updated presets to use the winston logger
 
-`@gasket/plugin-winston` is the new default logger for Gasket apps. Use this plugin in place of `@gasket/plugin-log` to customize the default logger.
+To upgrade your app, first adjust the dependencies in your `package.json`.
+
+```diff
+"dependencies": {
+-  "@gasket/plugin-log": "^6.0.2",
+-  "@gasket/log": "^6.0.2",
++  "@gasket/plugin-logger": "^7.0.0",
++  "@gasket/plugin-winston": "^7.0.0",
+```
+
+Next, update your `gasket.js` file to use the new plugins.
+This examples demonstrates how to migrate from an old `gasket.config.js`.
 
 ```diff
 // gasket.config.js
+- module.exports = {
+-   plugins: {
+-     presets: [
+-       '@gasket/plugin-log',
+-     ],
+-   },
+- };
 
-module.exports = {
-  plugins: {
-    add: [
--      '@gasket/plugin-log'
-+      '@gasket/plugin-winston'
-    ]
-  }
-}
+// gasket.js
++ import { makeGasket } from '@gasket/core';
++ import pluginLogger from '@gasket/plugin-logger';
++ import pluginWinston from '@gasket/plugin-winston';
+
++ export default makeGasket({
++   plugins: [
++     pluginLogger,
++     pluginWinston
++   ]
++ });
 ```
 
-`@gasket/plugin-winston` does not support `log` when customizing the logger in `gasket.config.js`.
-
-```diff
-// gasket.config.js
-
-module.exports = {
--  log: {
--    prefix: 'my-app'
--  },
-  winston: {
-    level: 'warning'
-  },
-```
-
-Existing Gasket apps will need to make changes to how they handle logging. Logging levels now follow `console` conventions. Loggers at minimum support the following levels:
+Existing Gasket apps will need to make changes to how they handle logging.
+Logging levels now follow `console` conventions.
+Loggers at minimum support the following levels:
 
 - `debug`
 - `error`
@@ -253,12 +497,16 @@ The lifecycle method formerly known as `logTransports` is now `winstonTransports
 - // /lifecycles/log-transports.js
 + // /lifecycles/winston-transports.js
 ```
-[#640]
 
-## Bring Your Own Intl Provider
+See the [@gasket/plugin-logger] docs for more details, as well as the
+[@gasket/plugin-winston] docs for customizing the logger.
 
-The `@gasket/react-intl` package is convenience wrapper for connecting
-`@gasket/plugin-intl` features to a Next.js/React app, and which and had a hard
+## Update Intl
+
+### Bring your Own Intl Provider
+
+The [@gasket/react-intl] package is convenience wrapper for connecting
+[@gasket/plugin-intl] features to a Next.js/React app, and which and had a hard
 dependency on the `react-intl` package.
 
 In our new version, users have more flexibility to choose their own intl provider.
@@ -295,7 +543,7 @@ with another other provider now.
 
 See [@gasket/react-intl] for more details and other changes.
 
-## Intl Manager
+### Switch to Intl Manager
 
 As pointed out in the previous section, the `intlManager` is a new concept that
 is required to be passed to the `withMessagesProvider` HOC. This manager is
@@ -335,51 +583,12 @@ recommended as a convention.
 
 See [@gasket/plugin-intl] for more details and other changes.
 
-## Update Redux Store to Use gasketData
+## Update Custom Commands
 
-Update the placeholder reducer for the initial Redux state with `gasketData`. ([#693])
+Update custom commands to be plugin imports in `gasket.js`.
+All commands need to be imported and used in the `makeGasket` function.
 
-![alt text](images/redux-with-gasket-data.png)
-
-However, if you are using the `@gasket/plugin-redux` plugin to surface
-config-like data to the browser, we recommend switch to GasketData, using the
-[@gasket/plugin-data] plugin with [@gasket/data] instead.
-The GasketData approach is leaner and works with the Next.js App Router and
-Page Router using its built-in server.
-
-```diff
-
-## Plugin Imports
-
-Update plugin strings to be plugin import statements in `gasket.js`. All plugins now need to be imported and used in the `makeGasket` function.
-
-```diff
-// gasket.config.js
-- module.exports = {
--   plugins: {
--     presets: [
--       '@gasket/plugin-nextjs',
--     ],
--   },
-- };
-
-// gasket.js
-+ import { makeGasket } from '@gasket/core';
-+ import pluginNextjs from '@gasket/plugin-nextjs';
-
-+ export default makeGasket({
-+   plugins: [
-+     pluginNextjs
-+   ],
-+   filename: import.meta.filename,
-+ });
-```
-
-## Custom Commands
-
-Update custom commands to be plugin imports in `gasket.js`. All commands need to be imported and used in the `makeGasket` function.
-
-To create a custom command, you first need to install `@gasket/plugin-command`.
+To create a custom command, you first need to install [@gasket/plugin-command].
 
 ```
 npm i @gasket/plugin-command
@@ -395,8 +604,7 @@ import { makeGasket } from '@gasket/core';
 export default makeGasket({
   plugins: [
 +    pluginCommand
-  ],
-  filename: import.meta.filename,
+  ]
 });
 ```
 
@@ -424,8 +632,7 @@ export default makeGasket({
 +        }
 +      }
 +    }
-  ],
-  filename: import.meta.filename,
+  ]
 });
 ```
 
@@ -462,7 +669,8 @@ export default  {
 };
 ```
 
-Once this custom command is defined, import the file and use it in the `makeGasket` function.
+Once this custom command is defined, import the file and use it in the
+`makeGasket` function.
 
 ```diff
 // gasket.js
@@ -474,12 +682,11 @@ export default makeGasket({
   plugins: [
     pluginNextjs,
 +    customPluginCommand
-  ],
-  filename: import.meta.filename,
+  ]
 });
 ```
 
-Once the command is defined, you can now execute the command.
+It can now be executed by `node` with the `gasket.js` file.
 
 ```bash
 node ./gasket.js my-custom-cmd "Hello, World!"
@@ -491,36 +698,32 @@ node ./gasket.js my-custom-cmd "Hello, World!" "Optional message"
 # result: custom arg 2: Optional message
 ```
 
-Refer to the [@gasket/plugin-command] README for additional information on customizing commands.
+See the [@gasket/plugin-command] docs for more details.
 
-
-<!-- PRs -->
-[#647]:https://github.com/godaddy/gasket/pull/647
-[#661]:https://github.com/godaddy/gasket/pull/661
-[#660]:https://github.com/godaddy/gasket/pull/660
-[#655]:https://github.com/godaddy/gasket/pull/655
-[#649]:https://github.com/godaddy/gasket/pull/649
-[#666]:https://github.com/godaddy/gasket/pull/666
-[#665]:https://github.com/godaddy/gasket/pull/665
-[#668]:https://github.com/godaddy/gasket/pull/668
-[#669]:https://github.com/godaddy/gasket/pull/669
-[#673]:https://github.com/godaddy/gasket/pull/673
-[#672]:https://github.com/godaddy/gasket/pull/672
-[#640]:https://github.com/godaddy/gasket/pull/640
-[#680]:https://github.com/godaddy/gasket/pull/680
-[#681]:https://github.com/godaddy/gasket/pull/681
-[#693]:https://github.com/godaddy/gasket/pull/693
 
 <!-- Links -->
 [middleware paths]:https://github.com/godaddy/gasket/blob/main/packages/gasket-plugin-express/README.md#middleware-paths
 [streaming]: https://nextjs.org/docs/app/building-your-application/routing/loading-ui-and-streaming
 [App Router]: https://nextjs.org/docs/app/building-your-application/routing
+
+<!-- Packages -->
 [@gasket/plugin-command]: ../packages/gasket-plugin-command/README.md
 [@gasket/plugin-intl]: ../packages/gasket-plugin-intl/README.md
 [@gasket/intl]: ../packages/gasket-intl/README.md
 [@gasket/react-intl]: ../packages/gasket-react-intl/README.md
 [@gasket/plugin-data]: ../packages/gasket-plugin-data/README.md
 [@gasket/data]: ../packages/gasket-data/README.md
-[@gasket/gasket-plugin-data]: ../packages/gasket-plugin-data/README.md
-[@gasket/gasket-plugin-docusaurus]: ../packages/gasket-plugin-docusaurus/README.md
-[@gasket/gasket-plugin-data]: ../packages/gasket-plugin-data/README.md
+[@gasket/plugin-data]: ../packages/gasket-plugin-data/README.md
+[@gasket/plugin-docusaurus]: ../packages/gasket-plugin-docusaurus/README.md
+[@gasket/plugin-data]: ../packages/gasket-plugin-data/README.md
+[@gasket/plugin-workbox]: ../packages/gasket-plugin-workbox/README.md
+[@gasket/plugin-nextjs]: ../packages/gasket-plugin-nextjs/README.md
+[@gasket/plugin-redux]: ../packages/gasket-plugin-redux/README.md
+[@gasket/plugin-logger]: ../packages/gasket-plugin-logger/README.md
+[@gasket/plugin-intl]: ../packages/gasket-plugin-intl/README.md
+[@gasket/plugin-webpack]: ../packages/gasket-plugin-webpack/README.md
+[@gasket/plugin-elastic-apm]: ../packages/gasket-plugin-elastic-apm/README.md
+[@gasket/utils]: ../packages/gasket-utils/README.md
+
+<!-- Anchors -->
+[Switch to GasketData]: #switch-to-gasketdata
