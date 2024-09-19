@@ -34,7 +34,7 @@ Otherwise you can build and start your app directly:
 
 ```bash
 npm run build
-GASKET_ENV=local npm run start
+npm run start
 ```
 
 ## Config
