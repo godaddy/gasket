@@ -255,6 +255,86 @@ The lifecycle method formerly known as `logTransports` is now `winstonTransports
 ```
 [#640]
 
+## Bring Your Own Intl Provider
+
+The `@gasket/react-intl` package is convenience wrapper for connecting
+`@gasket/plugin-intl` features to a Next.js/React app, and which and had a hard
+dependency on the `react-intl` package.
+
+In our new version, users have more flexibility to choose their own intl provider.
+While `react-intl` is still a good choice, it is no longer a hard dependency.
+Another change is instead of magic webpack and process.env setups for importing
+a generated manifest of translations, an explicit import of a generated `intl.js`
+file necessary.
+
+```diff
+// pages/_app.js
+- import { withIntlProvider } from '@gasket/react-intl';
++ import { withMessagesProvider } from '@gasket/react-intl';
++ import { useRouter } from 'next/router';
++ import { IntlProvider } from 'react-intl';
++ import intlManager from '../path/to/intl.js';
+
+- const App = props => <div>{props.children}</div>
+- export default withIntlProvider()(App);
+
++ const IntlMessagesProvider = withMessagesProvider(intlManager)(IntlProvider);
++ export default function App({ Component, pageProps }) {
++   const router = useRouter();
++   return (
++     <IntlMessagesProvider locale={router.locale}>
++       <Component {...pageProps} />
++     </IntlMessagesProvider>
++   );
++ }
+```
+
+The above example shows how to use the `withMessagesProvider` HOC to wrap the
+`IntlProvider` from `react-intl`, however, note that it can now be swapped out
+with another other provider now.
+
+See [@gasket/react-intl] for more details and other changes.
+
+## Intl Manager
+
+As pointed out in the previous section, the `intlManager` is a new concept that
+is required to be passed to the `withMessagesProvider` HOC. This manager is
+responsible for loading and managing the translations for the app.
+
+Locale files that are registered as statics are loaded at app startup and are
+available for SSR.
+Other locale files can be loaded on-demand in the browser.
+No longer is `getInitialProps` or other Next.js props methods required.
+
+As such, some of the component options have changed, and we adjusted some naming
+for clarification.
+
+```diff
+- import { withLocaleRequired } from '@gasket/react-intl';
++ import { withLocaleFileRequired } from '@gasket/react-intl';
+import { FormattedMessage } from 'react-intl';
+
+const PageComponent = props => <h1><FormattedMessage id='welcome'/></h1>
+
+- export default withLocaleRequired('/locales/extra', { initialProps: true })(Component);
++ export default withLocaleFileRequired('/locales/extra')(Component);
+```
+
+The [@gasket/intl] package should be added as an app dependency.
+
+```shell
+npm install @gasket/intl
+```
+
+The new `intlManager` pattern enables locale files
+to be bundled as Webpack chunks.
+As such, it is no longer necessary to store these under the public directory of
+a Next.js or serve then with an Express endpoint.
+The locale files can exist anywhere, though a top-level `/locales` directory is
+recommended as a convention.
+
+See [@gasket/plugin-intl] for more details and other changes.
+
 ## Update Redux Store to Use gasketData
 
 Update the placeholder reducer for the initial Redux state with `gasketData`. ([#693])
@@ -436,6 +516,9 @@ Refer to the [@gasket/plugin-command] README for additional information on custo
 [streaming]: https://nextjs.org/docs/app/building-your-application/routing/loading-ui-and-streaming
 [App Router]: https://nextjs.org/docs/app/building-your-application/routing
 [@gasket/plugin-command]: ../packages/gasket-plugin-command/README.md
+[@gasket/plugin-intl]: ../packages/gasket-plugin-intl/README.md
+[@gasket/intl]: ../packages/gasket-intl/README.md
+[@gasket/react-intl]: ../packages/gasket-react-intl/README.md
 [@gasket/plugin-data]: ../packages/gasket-plugin-data/README.md
 [@gasket/data]: ../packages/gasket-data/README.md
 [@gasket/gasket-plugin-data]: ../packages/gasket-plugin-data/README.md
