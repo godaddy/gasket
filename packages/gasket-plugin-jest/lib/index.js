@@ -56,9 +56,9 @@ const plugin = {
             });
 
             pkg.add('scripts', {
-              'test': 'jest',
-              'test:watch': 'jest --watchAll',
-              'test:coverage': 'jest --coverage'
+              'test': 'TS_NODE_PROJECT=./tsconfig.test.json jest',
+              'test:watch': 'npm run test -- --watchAll',
+              'test:coverage': 'npm run test -- --coverage'
             });
           } else {
             pkg.add('devDependencies', {
