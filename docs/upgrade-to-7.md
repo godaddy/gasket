@@ -493,6 +493,93 @@ node ./gasket.js my-custom-cmd "Hello, World!" "Optional message"
 
 Refer to the [@gasket/plugin-command] README for additional information on customizing commands.
 
+## Remove Magic Directories for Custom Plugins and Lifecycles
+
+### Custom Plugins
+
+Previously, custom plugins defined in the `/plugins` directory did not require any additional configuration. This is no longer
+supported in `v7`. Instead, all plugins will need to be explicitly imported to `gasket.js`.
+
+For example, if the plugins folder of your application looks something like the following:
+```
+/pages
+/plugins
+  custom-plugin.js
+  second-custom-plugin.js
+gasket.js
+```
+
+The two plugins will be imported to `gasket.js` and added to the list of plugins in `makeGasket`.
+
+```diff
+// gasket.js
+import { makeGasket } from '@gasket/core';
++ import customPlugin from './plugins/custom-plugin.js';
++ import secondCustomPlugin from './plugins/second-custom-plugin.js';
+
+export default makeGasket({
+  plugins: [
++    customPlugin,
++    secondCustomPlugin
+  ],
+  filename: import.meta.filename,
+});
+```
+
+### Lifecycles
+
+Support for lifecycle magic directories has also been removed in `v7`. Now lifecycles need to be defined
+and hooked in a plugin. One way of doing this is to create a new plugin, import the lifecycles as hooks,
+and then import the plugin to `gasket.js`.
+
+```js
+// /lifecycles/[lifecycle].js
+export function lifecycleHook(gasket) {
+  gasket.logger.info('Created lifecycle: ', lifecycle);
+};
+```
+
+```diff
+// /plugins/lifecycles-plugin.js
++ import lifecycle from '../lifecycles/[lifecycle]';
+
+export default {
+  name: 'lifecycles-plugin',
+  hooks: {
++    lifecycle
+  }
+};
+```
+
+```diff
+// gasket.js
+import { makeGasket } from '@gasket/core';
++ import lifecyclesPlugin from './plugins/lifecycles-plugin.js';
+
+export default makeGasket({
+  plugins: [
++    lifecyclesPlugin
+  ],
+  filename: import.meta.filename,
+});
+```
+
+Alternatively, you can hook the lifecycle directly in the plugin and then import
+the plugin to `gasket.js`.
+
+```diff
+// /plugins/lifecycles-plugin.js
+
+export default {
+  name: 'lifecycles-plugin',
+  hooks: {
++    lifecycle: async function(gasket) {
++      gasket.logger.info('Created lifecycle: ', lifecycle);
++    }
+  }
+};
+```
+
 
 <!-- PRs -->
 [#647]:https://github.com/godaddy/gasket/pull/647
