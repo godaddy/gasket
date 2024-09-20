@@ -259,7 +259,7 @@ export default({
 
 ## Switch to Docusaurus
 
-We no longer support `docsify` for plugin for viewing local gasket docs.
+We no longer support `docsify` as a plugin for viewing local Gasket docs.
 Instead, use [@gasket/plugin-docusaurus] for local documentation.
 
 ```js
