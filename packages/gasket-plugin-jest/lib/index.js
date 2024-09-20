@@ -57,8 +57,8 @@ const plugin = {
 
             pkg.add('scripts', {
               'test': 'TS_NODE_PROJECT=./tsconfig.test.json jest',
-              'test:watch': 'TS_NODE_PROJECT=./tsconfig.test.json jest --watchAll',
-              'test:coverage': 'TS_NODE_PROJECT=./tsconfig.test.json jest --coverage'
+              'test:watch': 'npm run test -- --watchAll',
+              'test:coverage': 'npm run test -- --coverage'
             });
           } else {
             pkg.add('devDependencies', {
