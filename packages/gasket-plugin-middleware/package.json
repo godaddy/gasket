@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-middleware",
-  "version": "7.0.0-next.67",
+  "version": "7.0.0-next.68",
   "description": "Handles common server engine setups for routing and executing lifecycles.",
   "main": "lib",
   "types": "lib/index.d.ts",
