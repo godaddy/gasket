@@ -1,7 +1,7 @@
-import { type JestConfigWithTsJest } from 'ts-jest';
+import type { JestConfigWithTsJest } from 'ts-jest';
 
 const config: JestConfigWithTsJest = {
-  preset: 'ts-jest',
+  preset: 'ts-jest/presets/default-esm',
   testEnvironment: 'node',
   injectGlobals: true,
   moduleDirectories: ['node_modules', '<rootDir>'],
