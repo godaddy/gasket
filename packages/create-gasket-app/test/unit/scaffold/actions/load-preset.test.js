@@ -36,10 +36,14 @@ jest.unstable_mockModule('path', () => ({
   }
 }));
 
-const presetBogus = { name: '@gasket/bogus', hooks: {} };
-const presetAllIEverWanted = { name: '@gasket/all-i-ever-wanted', hooks: {} };
-const presetSome = { name: '@gasket/some', hooks: {} };
+const presetDefaults = { default: { name: '@gasket/preset-default-export', hooks: {} } };
+const presetDoubleDefaults = { default: { default: { name: '@gasket/preset-double-default-export', hooks: {} } } };
+const presetBogus = { name: '@gasket/preset-bogus', hooks: {} };
+const presetAllIEverWanted = { name: '@gasket/preset-all-i-ever-wanted', hooks: {} };
+const presetSome = { name: '@gasket/preset-some', hooks: {} };
 const presetLocal = { name: '@gasket/test-preset', hooks: {} };
+jest.unstable_mockModule('@gasket/preset-default-exports', () => (presetDefaults));
+jest.unstable_mockModule('@gasket/preset-double-default-exports', () => (presetDoubleDefaults));
 jest.unstable_mockModule('@gasket/preset-bogus', () => (presetBogus));
 jest.unstable_mockModule('@gasket/preset-all-i-ever-wanted', () => (presetAllIEverWanted));
 jest.unstable_mockModule('@gasket/preset-some', () => (presetSome));
@@ -222,7 +226,7 @@ describe('loadPreset', () => {
     expect(mockContext.presets).toHaveLength(2);
   });
 
-  it('support preset with tags', async () => {
+  it('supports preset with tags', async () => {
     mockContext.rawPresets = ['@gasket/preset-bogus@canary', '@gasket/preset-all-i-ever-wanted@next'];
 
     await loadPreset({ context: mockContext });
@@ -231,5 +235,35 @@ describe('loadPreset', () => {
       expect.objectContaining(presetAllIEverWanted)
     ]);
     expect(mockContext.presets).toHaveLength(2);
+  });
+
+  it('supports preset default exports', async () => {
+    mockContext.rawPresets = [
+      // common with ESM presets
+      '@gasket/preset-default-exports',
+      // happens with TS -> CJS transpile presets
+      '@gasket/preset-double-default-exports'
+    ];
+
+    await loadPreset({ context: mockContext });
+    expect(mockContext).toHaveProperty('presets', [
+      expect.objectContaining(presetDefaults.default),
+      expect.objectContaining(presetDoubleDefaults.default.default)
+    ]);
+    expect(mockContext.presets).toHaveLength(2);
+  });
+
+  it('supports preset with file version', async () => {
+    const filePath = path.resolve(__dirname, '..', '..', '..', '__mocks__', '@gasket', 'preset-bogus');
+
+    mockContext.rawPresets = [
+      `@gasket/preset-bogus@file:${filePath}`
+    ];
+
+    await loadPreset({ context: mockContext });
+    expect(mockContext).toHaveProperty('presets', [
+      expect.objectContaining(presetBogus)
+    ]);
+    expect(mockContext.presets).toHaveLength(1);
   });
 });

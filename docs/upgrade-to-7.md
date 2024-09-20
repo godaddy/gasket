@@ -139,57 +139,49 @@ Add setup script to create hook. ([#672])
 
 ## Rename and Refactor @gasket/plugin-config as @gasket/plugin-data
 
-We have had a lot of confusion around the config plugin and its purpose. As such, we are renaming and refocusing what the plugin does. That is, to allow environment-specific data to be accessible for requests, with public data available with responses.
+We have had a lot of confusion around the config plugin and its purpose.
+As such, we are renaming and refocusing what the plugin does.
+That is, to allow environment-specific data to be accessible for requests,
+with public data available with responses.
 
-Instead of the generic 'config' name, we will term this gasketData which pairs well with the `@gasket/data` package - which is what makes this data accessible in browser code. We are dropping the `redux` property, aligning on `public` which will be added to the Redux state as `gasketData` for apps that choose to opt-in to Redux.
+Instead of the generic 'config' name, we will term this 'gasketData' which pairs
+well with the `@gasket/data` package - which is what makes this data accessible
+in browser code.
 
-Existing apps will need to update their `gasket.config.js` to use the new plugin name.
+Existing apps will need to update their Gasket config to use the new plugin name.
 
-```diff
-// gasket.config.js
+```js
+// gasket.js
+import { makeGasket } from '@gasket/core';
+import pluginData from '@gasket/plugin-data';
+import gasketData from './gasket-data.js';
 
-module.exports = {
-  plugins: {
-    add: [
--      '@gasket/plugin-config'
-+      '@gasket/plugin-data'
-    ]
-  }
-}
+export default makeGasket({
+  plugins: [
+    pluginData
+  ],
+  gasketData
+});
 ```
 
-The previous lifecycles in `@gasket/plugin-config` have been renamed.
+Individual environment files are no longer supported.
+Instead, you may specify environment-specific data in the `gasketData` object.
+Additionally, we are dropping the `redux` property, aligning on `public`.
 
-```diff
-- // /lifecycles/appEnvConfig
-+ // /lifecycles/gasketData
-
-- // /lifecycles/appRequestConfig
-+ // /lifecycles/responseData
-```
-
-- `gasketData` can be used to tune up the base object during app `init`.
-- `responseData` can be used to tune up the "public" data uniquely for each response.
-
-Environment file configuration has been updated to use `gasketData.dir` instead of `configPath`.
-
-```diff
-// gasket.config.js
-
-module.exports = {
--  configPath: './src/config'
-+  gasketData: {
-+    dir: './src/gasket-data'
-+  }
-};
-```
-
-The `app.config.js` file has been renamed to `gasket-data.config.js`
+If coming from an `app.config.js` you will want to change the name to `gasket-data.js`
 
 ```diff
 - <app-root-dir>/app.config.js
-+ <app-root-dir>/gasket-data.config.js
++ <app-root-dir>/gasket-data.js
 ```
+
+If you add lifecycle hooks for modifying the config data before, 
+you will need to update the hook name to `gasketData` and adjust the signature.
+
+`appEnvConfig` -> `gasketData`
+`appRequestConfig` -> `publicGasketData`
+
+See the [@gasket/gasket-plugin-data] docs for more details.
 
 ## Bring Your Own Logger
 
@@ -263,27 +255,99 @@ The lifecycle method formerly known as `logTransports` is now `winstonTransports
 ```
 [#640]
 
+## Bring Your Own Intl Provider
+
+The `@gasket/react-intl` package is convenience wrapper for connecting
+`@gasket/plugin-intl` features to a Next.js/React app, and which and had a hard
+dependency on the `react-intl` package.
+
+In our new version, users have more flexibility to choose their own intl provider.
+While `react-intl` is still a good choice, it is no longer a hard dependency.
+Another change is instead of magic webpack and process.env setups for importing
+a generated manifest of translations, an explicit import of a generated `intl.js`
+file necessary.
+
+```diff
+// pages/_app.js
+- import { withIntlProvider } from '@gasket/react-intl';
++ import { withMessagesProvider } from '@gasket/react-intl';
++ import { useRouter } from 'next/router';
++ import { IntlProvider } from 'react-intl';
++ import intlManager from '../path/to/intl.js';
+
+- const App = props => <div>{props.children}</div>
+- export default withIntlProvider()(App);
+
++ const IntlMessagesProvider = withMessagesProvider(intlManager)(IntlProvider);
++ export default function App({ Component, pageProps }) {
++   const router = useRouter();
++   return (
++     <IntlMessagesProvider locale={router.locale}>
++       <Component {...pageProps} />
++     </IntlMessagesProvider>
++   );
++ }
+```
+
+The above example shows how to use the `withMessagesProvider` HOC to wrap the
+`IntlProvider` from `react-intl`, however, note that it can now be swapped out
+with another other provider now.
+
+See [@gasket/react-intl] for more details and other changes.
+
+## Intl Manager
+
+As pointed out in the previous section, the `intlManager` is a new concept that
+is required to be passed to the `withMessagesProvider` HOC. This manager is
+responsible for loading and managing the translations for the app.
+
+Locale files that are registered as statics are loaded at app startup and are
+available for SSR.
+Other locale files can be loaded on-demand in the browser.
+No longer is `getInitialProps` or other Next.js props methods required.
+
+As such, some of the component options have changed, and we adjusted some naming
+for clarification.
+
+```diff
+- import { withLocaleRequired } from '@gasket/react-intl';
++ import { withLocaleFileRequired } from '@gasket/react-intl';
+import { FormattedMessage } from 'react-intl';
+
+const PageComponent = props => <h1><FormattedMessage id='welcome'/></h1>
+
+- export default withLocaleRequired('/locales/extra', { initialProps: true })(Component);
++ export default withLocaleFileRequired('/locales/extra')(Component);
+```
+
+The [@gasket/intl] package should be added as an app dependency.
+
+```shell
+npm install @gasket/intl
+```
+
+The new `intlManager` pattern enables locale files
+to be bundled as Webpack chunks.
+As such, it is no longer necessary to store these under the public directory of
+a Next.js or serve then with an Express endpoint.
+The locale files can exist anywhere, though a top-level `/locales` directory is
+recommended as a convention.
+
+See [@gasket/plugin-intl] for more details and other changes.
+
 ## Update Redux Store to Use gasketData
 
 Update the placeholder reducer for the initial Redux state with `gasketData`. ([#693])
 
 ![alt text](images/redux-with-gasket-data.png)
 
-Additionally, `@gasket/plugin-nextjs` now generates a `_app.js` file with `getInitialAppProps` for Next.js apps that use Redux. This change allows the developer to more easily verify Redux piping is working as expected and to make adjustments as needed.
+However, if you are using the `@gasket/plugin-redux` plugin to surface
+config-like data to the browser, we recommend switch to GasketData, using the
+[@gasket/plugin-data] plugin with [@gasket/data] instead.
+The GasketData approach is leaner and works with the Next.js App Router and
+Page Router using its built-in server.
 
 ```diff
-// _app.js
-
-+ App.getInitialProps = nextRedux.getInitialAppProps(
-+  (store) => async (appContext) => {
-+    const { Component, ctx } = appContext;
-+    const pageProps = Component.getInitialProps ? await Component.getInitialProps({ ... ctx, store }) : {};
-+    return {
-+      pageProps
-+    };
-+  }
-+ );
-```
 
 ## Plugin Imports
 
@@ -539,5 +603,11 @@ export default {
 [streaming]: https://nextjs.org/docs/app/building-your-application/routing/loading-ui-and-streaming
 [App Router]: https://nextjs.org/docs/app/building-your-application/routing
 [@gasket/plugin-command]: ../packages/gasket-plugin-command/README.md
+[@gasket/plugin-intl]: ../packages/gasket-plugin-intl/README.md
+[@gasket/intl]: ../packages/gasket-intl/README.md
+[@gasket/react-intl]: ../packages/gasket-react-intl/README.md
+[@gasket/plugin-data]: ../packages/gasket-plugin-data/README.md
+[@gasket/data]: ../packages/gasket-data/README.md
 [@gasket/gasket-plugin-data]: ../packages/gasket-plugin-data/README.md
 [@gasket/gasket-plugin-docusaurus]: ../packages/gasket-plugin-docusaurus/README.md
+[@gasket/gasket-plugin-data]: ../packages/gasket-plugin-data/README.md

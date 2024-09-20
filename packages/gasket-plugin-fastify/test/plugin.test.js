@@ -259,8 +259,8 @@ describe('create', () => {
       mockContext.testPlugins = ['@gasket/mocha'];
       await expectCreatedWith(({ files }) => {
         expect(files.add).toHaveBeenCalledWith(
-          expect.stringContaining(`/generator/mocha/*/!(*.ts)`),
-          expect.stringContaining(`/generator/mocha/**/!(*.ts)`)
+          expect.stringContaining(`/generator/mocha/*/!(*.ts|*.json)`),
+          expect.stringContaining(`/generator/mocha/**/!(*.ts|*.json)`)
         );
       })();
     });
@@ -269,8 +269,8 @@ describe('create', () => {
       mockContext.testPlugins = ['@gasket/jest'];
       await expectCreatedWith(({ files }) => {
         expect(files.add).toHaveBeenCalledWith(
-          expect.stringContaining(`/generator/jest/*/!(*.ts)`),
-          expect.stringContaining(`/generator/jest/**/!(*.ts)`)
+          expect.stringContaining(`/generator/jest/*/!(*.ts|*.json)`),
+          expect.stringContaining(`/generator/jest/**/!(*.ts|*.json)`)
         );
       })();
     });
