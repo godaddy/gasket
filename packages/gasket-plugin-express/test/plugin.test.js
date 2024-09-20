@@ -207,7 +207,7 @@ describe('create', () => {
   it('respects the typescript flag', async () => {
     mockContext.typescript = false;
     await expectCreatedWith(({ files }) => {
-      expect(files.add).toHaveBeenCalledWith(expect.stringContaining('../generator/app/**/!(*.ts)'));
+      expect(files.add).toHaveBeenCalledWith(expect.stringContaining('../generator/app/**/!(*.ts|*.json)'));
     })();
     mockContext.typescript = true;
     await expectCreatedWith(({ files }) => {
@@ -232,8 +232,8 @@ describe('create', () => {
       mockContext.testPlugins = ['@gasket/mocha'];
       await expectCreatedWith(({ files }) => {
         expect(files.add).toHaveBeenCalledWith(
-          expect.stringContaining(`/generator/mocha/*/!(*.ts)`),
-          expect.stringContaining(`/generator/mocha/**/!(*.ts)`)
+          expect.stringContaining(`/generator/mocha/*/!(*.ts|*.json)`),
+          expect.stringContaining(`/generator/mocha/**/!(*.ts|*.json)`)
         );
       })();
     });
@@ -242,8 +242,8 @@ describe('create', () => {
       mockContext.testPlugins = ['@gasket/jest'];
       await expectCreatedWith(({ files }) => {
         expect(files.add).toHaveBeenCalledWith(
-          expect.stringContaining(`/generator/jest/*/!(*.ts)`),
-          expect.stringContaining(`/generator/jest/**/!(*.ts)`)
+          expect.stringContaining(`/generator/jest/*/!(*.ts|*.json)`),
+          expect.stringContaining(`/generator/jest/**/!(*.ts|*.json)`)
         );
       })();
     });

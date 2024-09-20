@@ -183,9 +183,9 @@ describe('Plugin', function () {
       expect(pkg.devDependencies['ts-jest']).toEqual(devDependencies['ts-jest']);
       expect(pkg.devDependencies['ts-node']).toEqual(devDependencies['ts-node']);
       expect(pkg.scripts).toEqual({
-        'test': 'jest',
-        'test:watch': 'jest --watchAll',
-        'test:coverage': 'jest --coverage'
+        'test': 'TS_NODE_PROJECT=./tsconfig.test.json jest',
+        'test:watch': 'TS_NODE_PROJECT=./tsconfig.test.json jest --watchAll',
+        'test:coverage': 'TS_NODE_PROJECT=./tsconfig.test.json jest --coverage'
       });
     });
   });
