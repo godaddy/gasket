@@ -22,6 +22,8 @@ This guide will take you through updating `@gasket/*` packages to `7.x`.
   - [Bring your Own Intl Provider](#bring-your-own-intl-provider)
   - [Switch to Intl Manager](#switch-to-intl-manager)
 - [Update Custom Commands](#update-custom-commands)
+- [Update App Plugins](#update-app-plugins)
+- [Update App Lifecycles](#update-app-lifecycles)
 
 ## Update Dependency Versions
 
@@ -700,12 +702,12 @@ node ./gasket.js my-custom-cmd "Hello, World!" "Optional message"
 
 See the [@gasket/plugin-command] docs for more details.
 
-## Remove Magic Directories for Custom Plugins and Lifecycles
+## Update App Plugins
 
-### Custom Plugins
-
-Previously, custom plugins defined in the `/plugins` directory did not require any additional configuration. This is no longer
-supported in `v7`. Instead, all plugins will need to be explicitly imported to `gasket.js`.
+Previously, custom plugins defined in the `/plugins` directory did not require
+any additional configuration.
+This is no longer supported in `v7`.
+Instead, all plugins will need to be explicitly imported to `gasket.js`.
 
 For example, if the plugins folder of your application looks something like the following:
 ```
@@ -733,10 +735,11 @@ export default makeGasket({
 });
 ```
 
-### Lifecycles
+## Update App Lifecycles
 
-Support for lifecycle magic directories has also been removed in `v7`. Now lifecycles need to be defined
-and hooked in a plugin. One way of doing this is to create a new plugin, import the lifecycles as hooks,
+Support for lifecycle magic directories has also been removed in `v7`.
+Now lifecycles need to be defined and hooked in a plugin.
+One way of doing this is to create a new plugin, import the lifecycles as hooks,
 and then import the plugin to `gasket.js`.
 
 ```js
