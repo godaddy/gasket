@@ -31,9 +31,6 @@
     "plugin"
   ],
   "author": "GoDaddy Operating Company, LLC",
-  "maintainers": [
-    "Keith Bartholomew <kbartholomew@godaddy.com>"
-  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/godaddy/gasket/issues"

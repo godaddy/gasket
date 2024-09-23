@@ -37,10 +37,6 @@
     "command"
   ],
   "author": "GoDaddy Operating Company, LLC",
-  "maintainers": [
-    "Jacob Page <jpage@godaddy.com>",
-    "Michael Mason <mmason2@godaddy.com>"
-  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/godaddy/gasket/issues"
