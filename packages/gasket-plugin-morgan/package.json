@@ -57,7 +57,7 @@
     "@gasket/plugin-logger": "^7"
   },
   "peerDependencies": {
-    "express": "^4.16.3"
+    "express": "^4.21.0"
   },
   "eslintConfig": {
     "extends": [
