@@ -30,6 +30,7 @@
   "bugs": {
     "url": "https://github.com/godaddy/gasket/issues"
   },
+  "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-happyfeet",
   "dependencies": {
     "happy-feet": "^2.2.0"
   },

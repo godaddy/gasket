@@ -254,14 +254,28 @@ function checkScripts(pkgJson) {
 }
 
 /**
- * Checks if maintainers are set on a packages and warns if not
+ * Clears maintainers from package.json
  * @param {object} pkgJson - package.json contents
  */
 function checkMaintainers(pkgJson) {
-  const { name, maintainers } = pkgJson;
+  delete pkgJson.maintainers;
+}
 
-  if (!maintainers) {
-    console.warn(`${name} does not have maintainers.`);
+/**
+ * Ensure homepage matches package location in repo
+ * @param {object} pkgJson - package.json contents
+ */
+function checkHomepage(pkgJson) {
+  const { name, homepage } = pkgJson;
+
+  if (name === '@gasket/repository') {
+    return;
+  }
+
+  const pkgName = name.replace('@gasket/', 'gasket-');
+
+  if (!homepage || !homepage.endsWith(pkgName)) {
+    pkgJson.homepage = `https://github.com/godaddy/gasket/tree/main/packages/${pkgName}`;
   }
 }
 
@@ -360,6 +374,7 @@ async function fixupPackage(pkgPath) {
   setupTypes(pkgJson);
   checkScripts(pkgJson);
   checkMaintainers(pkgJson);
+  checkHomepage(pkgJson);
 
   if (pkgJson.module) {
     throw new Error('module field is deprecated. Use exports instead.');

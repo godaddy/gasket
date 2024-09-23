@@ -31,10 +31,6 @@
     "config"
   ],
   "author": "GoDaddy Operating Company, LLC",
-  "maintainers": [
-    "Jacob Page <jpage@godaddy.com>",
-    "Andrew Gerard <agerard@godaddy.com>"
-  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/godaddy/gasket/issues"
