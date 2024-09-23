@@ -16,9 +16,7 @@ class PackageManager {
    * Executes the appropriate npm binary with the verbatim `argv` and
    * `spawnWith` options provided. Passes appropriate debug flag for
    * npm based on process.env.
-   * @param {string[]} argv Precise CLI arguments to pass to `npm`.
-   * @param {object} spawnWith Options for child_process.spawn.
-   * @returns {Promise} promise
+   * @type {import('@gasket/utils').PackageManager_spawnNpm}
    * @public
    */
   static spawnNpm(argv, spawnWith) {
@@ -38,9 +36,7 @@ class PackageManager {
    * Executes the appropriate yarn binary with the verbatim `argv` and
    * `spawnWith` options provided. Passes appropriate debug flag for
    * npm based on process.env.
-   * @param {string[]} argv Precise CLI arguments to pass to `npm`.
-   * @param {object} spawnWith Options for child_process.spawn.
-   * @returns {Promise} promise
+   * @type {import('@gasket/utils').PackageManager_spawnYarn}
    * @public
    */
   static spawnYarn(argv, spawnWith) {
@@ -61,9 +57,7 @@ class PackageManager {
   /**
    * Executes npm in the application directory `this.dest`.
    * This installation can be run multiple times.
-   * @param {string} cmd The command that needs to be executed.
-   * @param {string[]} args Additional CLI arguments to pass to `npm`.
-   * @returns {Promise} promise
+   * @type {import('@gasket/utils').PackageManager_exec}
    * @public
    */
   async exec(cmd, args = []) {
@@ -111,8 +105,7 @@ class PackageManager {
 
   /**
    * Executes npm link in the application directory `this.dest`.
-   * @param {string[]} packages Explicit `npm` packages to link locally.
-   * @returns {Promise} promise
+   * @type {import('@gasket/utils').PackageManager_link}
    * @public
    */
   async link(packages = []) {
@@ -122,8 +115,7 @@ class PackageManager {
   /**
    * Executes npm install in the application directory `this.dest`.
    * This installation can be run multiple times.
-   * @param {string[]} args Additional CLI arguments to pass to `npm`.
-   * @returns {Promise} promise
+   * @type {import('@gasket/utils').PackageManager_install}
    * @public
    */
   async install(args = []) {
@@ -134,8 +126,7 @@ class PackageManager {
 
   /**
    * Executes yarn or npm info, and returns parsed JSON data results.
-   * @param {string[]} args Additional CLI arguments to pass to `npm`.
-   * @returns {Promise<object>} stdout and data
+   * @type {import('@gasket/utils').PackageManager_info}
    * @public
    */
   async info(args = []) {
