@@ -48,6 +48,9 @@
   "devDependencies": {
     "@gasket/engine": "^6.47.1",
     "@godaddy/dmd": "^1.0.4",
+    "@types/concat-stream": "^2.0.3",
+    "@types/cross-spawn": "^6.0.6",
+    "@types/lodash.defaultsdeep": "^4.6.9",
     "abort-controller": "^3.0.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
@@ -71,7 +74,19 @@
     ],
     "rules": {
       "unicorn/filename-case": "error"
-    }
+    },
+    "overrides": [
+      {
+        "files": [
+          "test/**/*.js"
+        ],
+        "rules": {
+          "jsdoc/require-jsdoc": "off",
+          "jsdoc/require-param-type": "off",
+          "jsdoc/require-returns-description": "off"
+        }
+      }
+    ]
   },
   "eslintIgnore": [
     "test/fixtures"

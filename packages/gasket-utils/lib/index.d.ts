@@ -1,8 +1,7 @@
-import type { GasketConfig } from '@gasket/engine';
+import type { GasketConfig, GasketConfigFile } from '@gasket/engine';
 
 declare module '@gasket/engine' {
   export interface GasketConfig {
-    environments?: string;
     commands?: string;
   }
 }
@@ -99,7 +98,7 @@ export function applyConfigOverrides(
 
 export function getPotentialConfigs(
   config: ConfigContext & {
-    config: GasketConfig;
+    config: GasketConfigFile;
   }
 ): Generator<any, any, any>;
 
@@ -192,4 +191,52 @@ export interface ConfigContext {
   root?: string;
   /** Optional file to load relative to gasket root */
   localFile?: string;
+}
+
+declare module '@gasket/utils' {
+  /**
+   * Executes the appropriate npm binary with the verbatim `argv` and
+   * `spawnWith` options provided. Passes appropriate debug flag for
+   * npm based on process.env.
+   */
+  function PackageManager_spawnNpm(
+    /** Precise CLI arguments to pass to `npm`. */
+    argv: string[],
+    /** Options for child_process.spawn. */
+    spawnWith: SpawnOpts
+  ): Promise<{ stdout: string }>;
+
+  /**
+   * Executes the appropriate yarn binary with the verbatim `argv` and
+   * `spawnWith` options provided. Passes appropriate debug flag for
+   * npm based on process.env.
+   */
+  function PackageManager_spawnYarn(
+    /** Precise CLI arguments to pass to `npm`. */
+    argv: string[],
+    /** Options for child_process.spawn. */
+    spawnWith: SpawnOpts
+  ): Promise<{ stdout: string }>;
+
+  function PackageManager_exec(
+    /** The command that needs to be executed. */
+    cmd: string,
+    /** Additional CLI arguments to pass to `npm`. */
+    args: string[]
+  ): Promise<{ stdout: string }>;
+
+  function PackageManager_link(
+    /** Explicit `npm` packages to link locally. */
+    packages: string[]
+  ): Promise<{ stdout: string }>;
+
+  function PackageManager_install(
+    /** Additional CLI arguments to pass to `npm`. */
+    args: string[]
+  ): Promise<{ stdout: string }>;
+
+  function PackageManager_info(
+    /** Additional CLI arguments to pass to `npm`. */
+    args: string[]
+  ): Promise<{ data: any; stdout: string }>;
 }

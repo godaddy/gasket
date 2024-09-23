@@ -17,7 +17,9 @@ function runShellCommand(cmd, argv, options = {}, debug = false) {
   return new Promise((resolve, reject) => {
     const child = spawn(cmd, argv, opts);
 
+    /** @type {string} */
     let stderr;
+    /** @type {string} */
     let stdout;
 
     child.stderr.pipe(
