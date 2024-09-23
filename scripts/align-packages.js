@@ -274,7 +274,7 @@ function checkHomepage(pkgJson) {
 
   const pkgName = name.replace('@gasket/', 'gasket-');
 
-  if(!homepage || !homepage.endsWith(pkgName)) {
+  if (!homepage || !homepage.endsWith(pkgName)) {
     pkgJson.homepage = `https://github.com/godaddy/gasket/tree/main/packages/${pkgName}`;
   }
 }
