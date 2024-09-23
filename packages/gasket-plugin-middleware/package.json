@@ -26,7 +26,7 @@
   "bugs": {
     "url": "https://github.com/godaddy/gasket/issues"
   },
-  "homepage": "https://github.com/godaddy/gasket#readme",
+  "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-middleware",
   "dependencies": {
     "@fastify/express": "^3.0.0",
     "compression": "^1.7.4",
