@@ -60,7 +60,7 @@ describe('create hook', () => {
         build: 'tsc',
         preview: 'npm run build && npm run start',
         start: 'node dist/server.js',
-        local: 'GASKET_ENV=local tsx watch server.ts'
+        local: 'tsx watch server.ts'
       });
     });
 
