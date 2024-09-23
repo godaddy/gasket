@@ -158,6 +158,53 @@ export interface ConfigContext {
   localFile?: string;
 }
 
+declare module '@gasket/utils' {
+  /**
+   * Executes the appropriate npm binary with the verbatim `argv` and
+   * `spawnWith` options provided. Passes appropriate debug flag for
+   * npm based on process.env.
+   */
+  function PackageManager_spawnNpm(
+    /** Precise CLI arguments to pass to `npm`. */
+    argv: string[],
+    /** Options for child_process.spawn. */
+    spawnWith: SpawnOpts
+  ): Promise<{ stdout: string }>;
+
+  /**
+   * Executes the appropriate yarn binary with the verbatim `argv` and
+   * `spawnWith` options provided. Passes appropriate debug flag for
+   * npm based on process.env.
+   */
+  function PackageManager_spawnYarn(
+    /** Precise CLI arguments to pass to `npm`. */
+    argv: string[],
+    /** Options for child_process.spawn. */
+    spawnWith: SpawnOpts
+  ): Promise<{ stdout: string }>;
+
+  function PackageManager_exec(
+    /** The command that needs to be executed. */
+    cmd: string,
+    /** Additional CLI arguments to pass to `npm`. */
+    args: string[]
+  ): Promise<{ stdout: string }>;
+
+  function PackageManager_link(
+    /** Explicit `npm` packages to link locally. */
+    packages: string[]
+  ): Promise<{ stdout: string }>;
+
+  function PackageManager_install(
+    /** Additional CLI arguments to pass to `npm`. */
+    args: string[]
+  ): Promise<{ stdout: string }>;
+
+  function PackageManager_info(
+    /** Additional CLI arguments to pass to `npm`. */
+    args: string[]
+  ): Promise<{ data: any; stdout: string }>;
+}
 
 export function warnIfOutdated(pkgName: string, currentVersion: string): MaybeAsync<void>;
 
