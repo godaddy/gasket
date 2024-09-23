@@ -76,7 +76,7 @@ for each type of bundle (browser and server).
 The npm script `analyze` will execute the following:
 
 ```bash
-GASKET_ENV=local ANALYZE=true next build
+ANALYZE=true next build
 ```
 
 When this script is run, the `@gasket/plugin-analyse` will add the

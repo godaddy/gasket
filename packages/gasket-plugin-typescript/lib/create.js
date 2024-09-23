@@ -34,7 +34,7 @@ module.exports = async function create(gasket, context) {
       build: 'tsc',
       preview: 'npm run build && npm run start',
       start: 'node dist/server.js',
-      local: 'GASKET_ENV=local tsx watch server.ts'
+      local: 'tsx watch server.ts'
     });
 
     if (testPlugins?.length && testPlugins.includes('@gasket/plugin-jest')) {
