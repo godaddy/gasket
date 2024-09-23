@@ -8,12 +8,12 @@ function metadata(gasket, meta) {
       {
         name: 'getGasketData',
         description: 'Get the Gasket data',
-        link: 'README.md'
+        link: 'README.md#getGasketData'
       },
       {
         name: 'getPublicGasketData',
         description: 'Get the public Gasket data',
-        link: 'README.md'
+        link: 'README.md#getPublicGasketData'
       }
     ],
     lifecycles: [

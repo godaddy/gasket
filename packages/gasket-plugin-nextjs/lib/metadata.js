@@ -21,12 +21,12 @@ module.exports = function metadataHook(gasket, meta) {
       {
         name: 'getNextConfig',
         description: 'Get the Next.js config',
-        link: 'README.md'
+        link: 'README.md#getNextConfig'
       },
       {
         name: 'getNextRoute',
         description: 'Get the Next.js route',
-        link: 'README.md'
+        link: 'README.md#getNextRoute'
       }
     ],
     guides: [

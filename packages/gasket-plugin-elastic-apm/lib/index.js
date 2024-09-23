@@ -28,7 +28,7 @@ const plugin = {
           {
             name: 'getApmTransaction',
             description: 'Get the APM transaction data',
-            link: 'README.md'
+            link: 'README.md#getApmTransaction'
           }
         ],
         configurations: [
