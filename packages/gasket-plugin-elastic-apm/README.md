@@ -114,6 +114,35 @@ According to the [Elastic APM docs], the _Elastic APM agent for Node.js is a
 singleton_. This means that you can require and configure singleton in various
 hooks of your Gasket app, such as with the [init] or [middleware] lifecycles.
 
+## Actions
+
+### getApmTransaction
+
+Use the `getApmTransaction` action to access and decorate the current APM
+transaction. This action is available in any lifecycle hook or server-side code.
+
+```js
+// example-plugin.js
+
+export default {
+  name: 'example-plugin',
+  hooks: {
+    express(gasket, app) {
+      app.use(async (req, res, next) => {
+        const transaction = await gasket.actions.getApmTransaction(req);
+        const locale = await gasket.actions.getIntlLocale(req);
+        transaction.setLabel('locale', locale);
+      });
+    }
+  }
+}
+```
+
+In the above example, we are hooking the express lifecycle to add middleware
+to decorate the transaction.
+Calling `getApmTransaction` will also allow other plugins to decorate the
+transaction by hooking the `apmTransaction` lifecycle discussed next.
+
 ## Lifecycles
 
 ### apmTransaction
@@ -142,11 +171,8 @@ export default {
 
 ## How it works
 
-This plugin hooks the Gasket [preboot] lifecycle from [@gasket/plugin-start] and
-will set up additional filtering, such as for sensitive cookies. If the
-`preboot` hook finds that the APM agent has not yet been started using the
-recommended `--require elastic-apm-node/start`, it will start it here. However,
-you risk not bootstrapping necessary modules with a late start.
+This plugin hooks the Gasket [configure] lifecycle to set additional filtering,
+such as for sensitive cookies.
 
 ## License
 
