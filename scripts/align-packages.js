@@ -254,15 +254,11 @@ function checkScripts(pkgJson) {
 }
 
 /**
- * Checks if maintainers are set on a packages and warns if not
+ * Clears maintainers from package.json
  * @param {object} pkgJson - package.json contents
  */
 function checkMaintainers(pkgJson) {
-  const { name, maintainers } = pkgJson;
-
-  if (!maintainers) {
-    console.warn(`${name} does not have maintainers.`);
-  }
+  delete pkgJson.maintainers;
 }
 
 /**
