@@ -39,7 +39,7 @@
   "bugs": {
     "url": "https://github.com/godaddy/gasket/issues"
   },
-  "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-winston",
+  "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-typescript",
   "devDependencies": {
     "@types/jest": "^29.5.12",
     "@types/node": "^20.12.5",
