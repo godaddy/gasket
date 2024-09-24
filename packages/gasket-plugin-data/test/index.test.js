@@ -18,7 +18,6 @@ describe('Plugin', () => {
     const expected = [
       'create',
       'configure',
-      'middleware',
       'initReduxState',
       'metadata'
     ];

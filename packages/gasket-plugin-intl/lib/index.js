@@ -39,12 +39,12 @@ const plugin = {
           {
             name: 'getIntlLocale',
             description: 'Get the current locale',
-            link: 'README.md'
+            link: 'README.md#getIntlLocale'
           },
           {
             name: 'getIntlManager',
             description: 'Get the IntlManager instance',
-            link: 'README.md'
+            link: 'README.md#getIntlManager'
           }
         ],
         lifecycles: [

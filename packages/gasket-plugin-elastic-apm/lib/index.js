@@ -3,7 +3,6 @@
 
 const actions = require('./actions');
 const create = require('./create');
-const middleware = require('./middleware');
 const configure = require('./configure');
 const {
   name,
@@ -20,7 +19,6 @@ const plugin = {
   hooks: {
     configure,
     create,
-    middleware,
     metadata(gasket, meta) {
       return {
         ...meta,
@@ -28,7 +26,7 @@ const plugin = {
           {
             name: 'getApmTransaction',
             description: 'Get the APM transaction data',
-            link: 'README.md'
+            link: 'README.md#getApmTransaction'
           }
         ],
         configurations: [

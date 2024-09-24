@@ -20,7 +20,7 @@ module.exports = {
           {
             name: 'getMetadata',
             description: 'Get the metadata for the plugins & modules',
-            link: 'README.md'
+            link: 'README.md#getMetadata'
           }
         ],
         lifecycles: [{

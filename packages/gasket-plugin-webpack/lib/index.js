@@ -32,7 +32,7 @@ const plugin = {
           {
             name: 'getWebpackConfig',
             description: 'Get the webpack config',
-            link: 'README.md'
+            link: 'README.md#getWebpackConfig'
           }
         ],
         guides: [

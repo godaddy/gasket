@@ -69,7 +69,7 @@ module.exports = {
           {
             name: 'getLogger',
             description: 'Get the logger instance',
-            link: 'README.md'
+            link: 'README.md#getLogger'
           }
         ],
         lifecycles: [
