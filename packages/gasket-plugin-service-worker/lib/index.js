@@ -2,7 +2,7 @@
 
 const configure = require('./configure');
 const build = require('./build');
-const middleware = require('./middleware');
+const actions = require('./actions');
 const express = require('./express');
 const webpackConfig = require('./webpack-config');
 const fastify = require('./fastify');
@@ -13,16 +13,23 @@ const plugin = {
   name,
   version,
   description,
+  actions,
   hooks: {
     configure,
     build,
-    middleware,
     express,
     fastify,
     webpackConfig,
     metadata(gasket, meta) {
       return {
         ...meta,
+        actions: [
+          {
+            name: 'getSWRegisterScript',
+            description: 'Get the service worker registration script',
+            link: 'README.md#getSWRegisterScript'
+          }
+        ],
         lifecycles: [
           {
             name: 'composeServiceWorker',

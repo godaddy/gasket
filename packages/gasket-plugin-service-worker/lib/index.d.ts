@@ -1,5 +1,5 @@
 import type { IncomingMessage, OutgoingMessage, ServerResponse } from 'http';
-import type { Request, Response } from 'express';
+import type { Application, Request, Response } from 'express';
 import type { FastifyRequest, FastifyReply, RouteHandlerMethod } from 'fastify';
 import type { Options } from 'lru-cache';
 import type { MinifyOptions } from 'uglify-js';
@@ -49,6 +49,11 @@ export interface ServiceWorkerConfig {
 }
 
 declare module '@gasket/core' {
+
+  export interface GasketActions {
+    getSWRegisterScript(): MaybeAsync<string>;
+  }
+
   export interface GasketConfig {
     serviceWorker?: ServiceWorkerConfig;
   }
