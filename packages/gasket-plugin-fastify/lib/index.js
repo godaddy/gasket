@@ -40,7 +40,7 @@ const plugin = {
           {
             name: 'getFastifyApp',
             description: 'Get the Fastify app instance',
-            link: 'README.md'
+            link: 'README.md#getFastifyApp'
           }
         ],
         lifecycles: [
