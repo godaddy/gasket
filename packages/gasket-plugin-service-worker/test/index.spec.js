@@ -10,13 +10,13 @@ describe('Plugin', () => {
     expect(plugin).toHaveProperty('name', name);
     expect(plugin).toHaveProperty('version', version);
     expect(plugin).toHaveProperty('description', description);
+    expect(plugin).toHaveProperty('actions', expect.any(Object));
   });
 
   it('has expected hooks', () => {
     const expected = [
       'configure',
       'build',
-      'middleware',
       'express',
       'fastify',
       'webpackConfig',

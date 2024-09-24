@@ -53,7 +53,6 @@ To be set in under `serviceWorker` in the `gasket.js`.
   an alternate output location. This disables request-based service workers.
   Default is `false`.
 
-
 #### Example
 
 The defaults option for this plugin should be sufficient. However, they can be
@@ -76,6 +75,30 @@ export default makeGasket({
     }
   }
 });
+```
+
+## Actions
+
+### getSWRegisterScript
+
+This action returns the service worker registration script. This can be used to
+inject the script into the HTML of your app.
+
+```js
+import gasket from 'gasket';
+
+export default async function RootLayout({ children }) {
+  const swRegisterScript = await gasket.actions.getSWRegisterScript();
+  
+  return (
+    <html lang="en">
+      <body>
+        <main>{children}</main>
+        { swRegisterScript }
+      </body>
+    </html>
+  )
+}
 ```
 
 ## Lifecycles
@@ -211,7 +234,7 @@ If you do not want the registration script injected by Webpack, you can set
 ### Request
 
 The alternative way to set up the registration script is to access the script
-off of the Request object when rendering your pages (`req.swRegisterScript`).
+when rendering your pages using the [getSWRegisterScript] action.
 You can use this when rendering the index.html for your app, or other server
 side rendering.
 
