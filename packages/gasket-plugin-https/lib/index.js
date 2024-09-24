@@ -213,7 +213,7 @@ const plugin = {
           {
             name: 'startServer',
             description: 'Start the server',
-            link: 'README.md'
+            link: 'README.md#startServer'
           }
         ],
         lifecycles: [

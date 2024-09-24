@@ -42,7 +42,6 @@ describe('Plugin', () => {
     const expected = [
       'configure',
       'create',
-      'middleware',
       'metadata'
     ];
 
