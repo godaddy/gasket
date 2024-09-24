@@ -32,7 +32,7 @@ const plugin = {
           {
             name: 'getExpressApp',
             description: 'Get the Express app instance',
-            link: 'README.md'
+            link: 'README.md#getExpressApp'
           }
         ],
         guides: [

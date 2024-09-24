@@ -24,7 +24,7 @@ const plugin = {
           {
             name: 'getHappyFeet',
             description: 'Get the Happy Feet instance',
-            link: 'README.md'
+            link: 'README.md#getHappyFeet'
           }
         ]
       }
