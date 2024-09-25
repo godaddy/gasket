@@ -21,6 +21,12 @@ export default {
             description: 'Steps necessary to upgrade major versions',
             link: '/docs/upgrades.md',
             targetRoot: docsConfigSet.docsRoot
+          },
+          {
+            name: 'Gasket Actions Guide',
+            description: 'How to use access data and invoke lifecycles',
+            link: '/docs/gasket-actions.md',
+            targetRoot: docsConfigSet.docsRoot
           }
         ];
       }

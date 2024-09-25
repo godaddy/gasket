@@ -14,10 +14,10 @@ const frontMatterConfig = {
   'quick-start.md': {
     sidebar_position: 2
   },
-  'lifecycle-graphs.md': {
+  'create-gasket-app.md': {
     sidebar_position: 3
   },
-  'create-gasket-app.md': {
+  'gasket-actions.md': {
     sidebar_position: 4
   },
   'typescript.md': {
@@ -27,6 +27,9 @@ const frontMatterConfig = {
     sidebar_position: 6
   },
   'upgrade-to-6.md': {
+    unlisted: true
+  },
+  'upgrade-to-7.md': {
     sidebar_position: 7
   },
   'CONTRIBUTING.md': {
@@ -62,6 +65,7 @@ export default function addFrontMatter(content, filename) {
   const frontMatter = {
     title: `''`, // empty title to remove redundant title
     hide_title: true,
+    unlisted: frontMatterConfig[filename]?.unlisted || false, // ability to hide from sidebar
     sidebar_label: frontMatterConfig[filename]?.label || `${formatFilename(filename)}`,
     sidebar_position: frontMatterConfig[filename]?.sidebar_position || 50
   };
