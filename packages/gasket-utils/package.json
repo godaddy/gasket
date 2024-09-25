@@ -1,6 +1,6 @@
 {
   "name": "@gasket/utils",
-  "version": "7.0.0-next.68",
+  "version": "7.0.0-next.69",
   "description": "Reusable utilities for Gasket internals",
   "main": "lib",
   "types": "lib/index.d.ts",
@@ -42,7 +42,7 @@
     "semver": "^7.5.4"
   },
   "devDependencies": {
-    "@gasket/core": "7.0.0-next.68",
+    "@gasket/core": "7.0.0-next.69",
     "@godaddy/dmd": "^1.0.4",
     "@types/concat-stream": "^2.0.3",
     "@types/cross-spawn": "^6.0.6",
