@@ -17,6 +17,12 @@ Framework Maker for JavaScript Applications
 
 </section>
 
+## Version 7
+
+_If you are looking for Version 6 docs, see the [LTS branch]._
+
+---
+
 Gasket helps developers make frameworks to power their apps. There are several
 presets and plugins available with which to make frameworks and construct apps.
 The various commands, lifecycles, and structures are all enabled by different
@@ -448,3 +454,4 @@ Gasket is [MIT licensed](./LICENSE.md).
 [contributors]: https://github.com/godaddy/gasket/graphs/contributors
 [tweet-badge]: https://img.shields.io/twitter/url?url=https%3A%2F%2Ftwitter.com%2Fgasketjs?style=flat-square
 [tweet]: https://twitter.com/intent/tweet?text=Check%20out%20gasket!%20https://github.com/godaddy/gasket%20%F0%9F%91%8D
+[LTS branch]: https://github.com/godaddy/gasket/blob/lts/README.md
