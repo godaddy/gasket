@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-docs",
-  "version": "7.0.0-next.68",
+  "version": "7.0.0-next.69",
   "description": "Centralize doc files from plugins and modules",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -36,7 +36,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-docs",
   "dependencies": {
-    "@gasket/plugin-command": "7.0.0-next.68",
+    "@gasket/plugin-command": "7.0.0-next.69",
     "glob": "^8.1.0",
     "lodash.defaultsdeep": "^4.6.1",
     "markdown-table": "^1.1.3",
@@ -44,8 +44,8 @@
     "rimraf": "^3.0.2"
   },
   "devDependencies": {
-    "@gasket/core": "7.0.0-next.68",
-    "@gasket/plugin-metadata": "7.0.0-next.68",
+    "@gasket/core": "7.0.0-next.69",
+    "@gasket/plugin-metadata": "7.0.0-next.69",
     "@godaddy/dmd": "^1.0.4",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
