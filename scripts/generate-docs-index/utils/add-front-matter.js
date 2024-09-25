@@ -14,10 +14,10 @@ const frontMatterConfig = {
   'quick-start.md': {
     sidebar_position: 2
   },
-  'lifecycle-graphs.md': {
+  'create-gasket-app.md': {
     sidebar_position: 3
   },
-  'create-gasket-app.md': {
+  'gasket-actions.md': {
     sidebar_position: 4
   },
   'typescript.md': {
@@ -27,7 +27,9 @@ const frontMatterConfig = {
     sidebar_position: 6
   },
   'upgrade-to-6.md': {
-    unlisted: true,
+    unlisted: true
+  },
+  'upgrade-to-7.md': {
     sidebar_position: 7
   },
   'CONTRIBUTING.md': {
