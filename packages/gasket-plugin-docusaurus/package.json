@@ -57,7 +57,7 @@
     "search-insights": "^2.13.0",
     "typescript": "^5.4.5"
   },
-  "disabled_peerDependencies": {
+  "peerDependencies": {
     "@gasket/plugin-logger": "^7"
   },
   "eslintConfig": {
