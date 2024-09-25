@@ -38,6 +38,7 @@ export class Gasket {
     // prune nullish and/or empty plugins
     config.plugins = config.plugins
       .filter(Boolean)
+      .map(plugin => plugin.default || plugin) // quality for cjs apps
       .filter(plugin => Boolean(plugin.name) || Boolean(plugin.hooks));
 
     // start the engine
