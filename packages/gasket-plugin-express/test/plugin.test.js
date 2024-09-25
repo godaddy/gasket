@@ -1,5 +1,6 @@
 /* eslint-disable jsdoc/require-jsdoc */
 const { setTimeout } = require('timers/promises');
+const { devDependencies } = require('../package.json');
 const app = { use: jest.fn(), post: jest.fn(), set: jest.fn() };
 const mockExpress = jest.fn().mockReturnValue(app);
 const bridgedApp = { use: jest.fn() };
@@ -182,7 +183,7 @@ describe('create', () => {
     expectCreatedWith(({ pkg }) => {
       expect(pkg.add).toHaveBeenCalledWith('dependencies',
         expect.objectContaining({
-          express: '^4.18.2'
+          express: devDependencies.express
         }));
     })
   );

@@ -5,7 +5,9 @@ const concat = require('concat-stream');
 /** @type {import('./index').runShellCommand} */
 function runShellCommand(cmd, argv, options = {}, debug = false) {
   const { signal, ...opts } = options;
+  /** @type {string} */
   let stderr;
+  /** @type {string} */
   let stdout;
 
   if (signal && signal.aborted) {

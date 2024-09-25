@@ -1,4 +1,5 @@
 const defaultsDeep = require('lodash.defaultsdeep');
+// @ts-ignore - diagnostics lib does not have a types declaration file
 const debug = require('diagnostics')('gasket:utils');
 
 /**
@@ -31,6 +32,10 @@ function *getPotentialConfigs(config, { env, commandId }) {
   yield baseConfig;
 }
 
+/**
+ * Generator function to yield command overrides
+ * @type {import('./internal').getCommandOverrides}
+ */
 function *getCommandOverrides(commands, commandId) {
   const commandOverrides = commandId && commands[commandId];
   if (commandOverrides) {
@@ -41,9 +46,7 @@ function *getCommandOverrides(commands, commandId) {
 
 /**
  * Generator function to yield sub-environment overrides
- * @param {string} env - Environment
- * @param {object} environments - Environments object
- * @yields {object} - Sub-environment overrides
+ * @type {import('./internal').getSubEnvironmentOverrides}
  */
 function *getSubEnvironmentOverrides(env, environments) {
   const envParts = env.split('.');
@@ -62,9 +65,7 @@ function *getSubEnvironmentOverrides(env, environments) {
 
 /**
  * Generator function to yield development overrides
- * @param {boolean} isLocalEnv - Is the environment local
- * @param {object} environments - Environments object
- * @yields {object} - Development overrides
+ * @type {import('./internal').getDevOverrides}
  */
 function *getDevOverrides(isLocalEnv, environments) {
   // Special case for the local environment, which inherits from the

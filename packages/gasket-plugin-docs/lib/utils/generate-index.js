@@ -35,6 +35,7 @@ function generateContent(docsConfigSet) {
     addLine();
   };
   const addTable = (elems) => {
+    // @ts-ignore
     addContent(mdTable(elems));
   };
   const formatLink = (link, targetRoot) =>
