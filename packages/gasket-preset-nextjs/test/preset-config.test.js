@@ -58,21 +58,11 @@ describe('presetConfig', () => {
 
   describe('adds server framework plugin', () => {
     it('express', async () => {
-      mockContext.server = 'express';
+      mockContext.nextServerType = 'customServer';
       const config = await presetConfig({}, mockContext);
       expect(config.plugins).toEqual(
         expect.arrayContaining([
           expect.objectContaining({ name: '@gasket/plugin-express' })
-        ])
-      );
-    });
-
-    it('fastify', async () => {
-      mockContext.server = 'fastify';
-      const config = await presetConfig({}, mockContext);
-      expect(config.plugins).toEqual(
-        expect.arrayContaining([
-          expect.objectContaining({ name: '@gasket/plugin-fastify' })
         ])
       );
     });
