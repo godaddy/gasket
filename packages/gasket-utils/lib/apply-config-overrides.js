@@ -1,5 +1,4 @@
 const defaultsDeep = require('lodash.defaultsdeep');
-const tryRequire = require('./try-require');
 // @ts-ignore - diagnostics lib does not have a types declaration file
 const debug = require('diagnostics')('gasket:utils');
 
