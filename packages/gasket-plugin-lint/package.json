@@ -37,7 +37,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-lint",
   "dependencies": {
-    "semver": "^7.5.4"
+    "semver": "^7.6.3"
   },
   "devDependencies": {
     "@typescript-eslint/parser": "^7.16.1",

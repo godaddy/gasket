@@ -22,14 +22,6 @@ const depVersions = {
   '@babel/preset-env': '^7.23.8',
   '@babel/preset-react': '^7.23.3',
 
-  'assume': '^2.3.0',
-  'sinon': '^14.0.0',
-  'assume-sinon': '^1.1.0',
-  'mocha': '^10.2.0',
-  'chai': '^4.2.0',
-  'nyc': '^15.1.0',
-  'proxyquire': '^2.1.3',
-
   'jest': '^29.7.0',
 
   'react': '^18.2.0',
@@ -55,11 +47,12 @@ const depVersions = {
   'handlebars': '^4.7.8',
   'rimraf': '^3.0.2',
   'glob': '^8.1.0',
-  'semver': '^7.5.4',
+  'semver': '^7.6.3',
   'lodash.defaultsdeep': '^4.6.1',
-  'webpack': '^5.89.0',
-  'serve-static': '^1.15.0',
+  'webpack': '^5.94.0',
+  'serve-static': '^1.16.2',
   'cross-env': '^7.0.3',
+  'express': '^4.21.0',
 
   'typescript': '^5.4.5'
 };
