@@ -63,7 +63,7 @@
     "react-redux": "^8.0.0",
     "typescript": "^5.4.5"
   },
-  "disabled_peerDependencies": {
+  "peerDependencies": {
     "@gasket/plugin-intl": "^7"
   },
   "eslintConfig": {
