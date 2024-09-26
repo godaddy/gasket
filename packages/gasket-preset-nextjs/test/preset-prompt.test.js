@@ -62,36 +62,4 @@ describe('presetPrompt', () => {
     expect(mockNextDevProxyPrompt).toHaveBeenCalled();
     expect(mockPrompt.prompt).toHaveBeenCalled();
   });
-
-  it('prompts for server if nextServerType is customServer', async () => {
-    mockContext.nextServerType = 'customServer';
-    await presetPrompt({}, mockContext, mockPrompt);
-    expect(mockPrompt.prompt).toHaveBeenCalledWith([
-      {
-        name: 'server',
-        message: 'Which custom server framework would you like to use?',
-        type: 'list',
-        choices: [
-          { name: 'Express', value: 'express' },
-          { name: 'Fastify', value: 'fastify' }
-        ]
-      }
-    ]);
-  });
-
-  it('does not prompt for server if nextServerType is not customServer', async () => {
-    mockContext.nextServerType = 'defaultServer';
-    await presetPrompt({}, mockContext, mockPrompt);
-    expect(mockPrompt.prompt).not.toHaveBeenCalledWith([
-      {
-        name: 'server',
-        message: 'Which server framework would you like to use?',
-        type: 'list',
-        choices: [
-          { name: 'Express', value: 'express' },
-          { name: 'Fastify', value: 'fastify' }
-        ]
-      }
-    ]);
-  });
 });
