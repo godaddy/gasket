@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-docusaurus",
-  "version": "7.0.0",
+  "version": "7.0.1",
   "description": "Gasket plugin for docusaurus",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -43,7 +43,7 @@
   "devDependencies": {
     "@docusaurus/core": "^3.4.0",
     "@docusaurus/preset-classic": "^3.4.0",
-    "@gasket/core": "7.0.0",
+    "@gasket/core": "^7.0.1",
     "ajv": "^8.17.1",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
