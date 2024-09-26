@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-metrics",
-  "version": "6.47.1",
+  "version": "6.47.5",
   "description": "Collect metrics for gasket commands",
   "main": "lib",
   "types": "lib/index.d.ts",
@@ -43,7 +43,7 @@
     "git-url-parse": "^13.1.0"
   },
   "devDependencies": {
-    "@gasket/engine": "^6.47.1",
+    "@gasket/engine": "^6.47.5",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
     "eslint-config-godaddy": "^7.1.0",

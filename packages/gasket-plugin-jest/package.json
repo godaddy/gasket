@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-jest",
-  "version": "6.46.8",
+  "version": "6.47.5",
   "description": "Integrated jest into your application.",
   "main": "lib",
   "files": [

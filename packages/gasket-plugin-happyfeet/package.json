@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-happyfeet",
-  "version": "6.47.1",
+  "version": "6.47.5",
   "description": "A gasket plugin to enable happyfeet healthchecks",
   "main": "lib/index.js",
   "directories": {
