@@ -27,6 +27,7 @@
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch",
     "build": "swc lib -d cjs --delete-dir-on-start --strip-leading-paths",
+    "postbuild": "node -e \"require('fs').writeFileSync('cjs/package.json', '{}')\"",
     "prepublishOnly": "npm run build"
   },
   "repository": {
