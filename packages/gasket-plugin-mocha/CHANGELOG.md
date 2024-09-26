@@ -1,5 +1,8 @@
 # `@gasket/plugin-mocha`
 
+### 7.0.0
+
+- See [Version 7 Upgrade Guide] for overall changes
 - Added custom node loader for compiling JSX ([#807])
 
 ### 6.38.1
@@ -77,6 +80,7 @@
 - Initial release.
 
 
+[Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
 [#114]: https://github.com/godaddy/gasket/pull/114
 [#182]: https://github.com/godaddy/gasket/pull/182
 [#216]: https://github.com/godaddy/gasket/pull/216

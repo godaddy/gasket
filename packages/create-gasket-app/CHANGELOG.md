@@ -1,5 +1,8 @@
 # `create-gasket-app`
 
+### 7.0.0
+
+- See [Version 7 Upgrade Guide] for overall changes
 - Exclude gaskets from client bundling ([#806])
 - Modified global test prompt to ask for unit and integration tests ([#752])
 - Force `GASKET_ENV` to create
@@ -52,6 +55,7 @@
 - Introducing `create-gasket-app` ([#167])
 
 
+[Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
 [#167]: https://github.com/godaddy/gasket/pull/167
 [#171]: https://github.com/godaddy/gasket/pull/171
 [#247]: https://github.com/godaddy/gasket/pull/247

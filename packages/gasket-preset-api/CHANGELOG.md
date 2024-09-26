@@ -1,7 +1,8 @@
 # `@gasket/preset-api`
 
+### 7.0.0
 
-
+- See [Version 7 Upgrade Guide] for overall changes
 - Convert to ESM ([#736])
 - Add generator files
 - Add `create` hook
@@ -29,6 +30,8 @@
 
 - Created and integrated Gasket API Preset ([#181])
 
+
+[Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
 [#181]: https://github.com/godaddy/gasket/pull/181
 [#243]: https://github.com/godaddy/gasket/pull/243
 [#311]: https://github.com/godaddy/gasket/pull/311

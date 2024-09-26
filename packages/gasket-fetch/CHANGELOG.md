@@ -1,5 +1,9 @@
 # `@gasket/fetch`
 
+### 7.0.0
+
+- See [Version 7 Upgrade Guide] for overall changes
+
 ### 6.45.2
 
 - Remove `setup-env` ([#670])
@@ -43,6 +47,7 @@
 - Initial release.
 
 
+[Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
 [#164]: https://github.com/godaddy/gasket/pull/164
 [#176]: https://github.com/godaddy/gasket/pull/176
 [#372]: https://github.com/godaddy/gasket/pull/372

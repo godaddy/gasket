@@ -1,6 +1,8 @@
 # `@gasket/nextjs`
 
+### 7.0.0
 
+- See [Version 7 Upgrade Guide] for overall changes
 - Add gasketData layout for app router ([#814])
 - Add file extensions to imports, fix package exports conflict ([#778])
 
@@ -54,6 +56,8 @@
 
 - Initial release
 
+
+[Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
 [#262]: https://github.com/godaddy/gasket/pull/262
 [#285]: https://github.com/godaddy/gasket/pull/285
 [#298]: https://github.com/godaddy/gasket/pull/298

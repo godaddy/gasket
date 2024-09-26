@@ -1,5 +1,8 @@
 # `@gasket/plugin-redux`
 
+### 7.0.0
+
+- See [Version 7 Upgrade Guide] for overall changes
 - Added flag to disable redux store generation ([#762])
 - Use per-request logger
 - Remove dependency on `@gasket/plugin-log`
@@ -77,8 +80,8 @@
 
 - Initial release.
 
-<!-- LINKS -->
 
+[Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
 [#173]: https://github.com/godaddy/gasket/pull/173
 [#243]: https://github.com/godaddy/gasket/pull/243
 [#311]: https://github.com/godaddy/gasket/pull/311

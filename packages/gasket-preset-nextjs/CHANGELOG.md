@@ -1,5 +1,8 @@
 # `@gasket/preset-nextjs`
 
+### 7.0.0
+
+- See [Version 7 Upgrade Guide] for overall changes
 - Convert to ESM ([#736])
 - Add preset hooks `presetPrompt` and `presetConfig`
 - Add tests
@@ -21,6 +24,8 @@
 
 - Initial release.
 
+
+[Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
 [#311]: https://github.com/godaddy/gasket/pull/311
 [#736]: https://github.com/godaddy/gasket/pull/736
 [#762]: https://github.com/godaddy/gasket/pull/762

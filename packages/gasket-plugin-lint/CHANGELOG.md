@@ -1,5 +1,9 @@
 # `@gasket/plugin-lint`
 
+### 7.0.0
+
+- See [Version 7 Upgrade Guide] for overall changes
+
 ### 6.45.2
 
 - Tune `devDeps` ([#670])
@@ -94,6 +98,7 @@
 - Initial release.
 
 
+[Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
 [GoDaddy]: README.md#godaddy
 [Standard]: README.md#standard
 [Airbnb]: README.md#airbnb

@@ -1,7 +1,8 @@
 # `@gasket/plugin-data`
 
+### 7.0.0
 
-
+- See [Version 7 Upgrade Guide] for overall changes
 - Add plugin import to gasket file ([#736])
 - Add itself to the app package file
 - Added `getGasketData` and `getPublicGasketData` actions ([#773])
@@ -62,8 +63,8 @@
 
 - Initial implementation.
 
-<!-- LINKS -->
 
+[Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
 [#231]: https://github.com/godaddy/gasket/pull/231
 [#311]: https://github.com/godaddy/gasket/pull/311
 [#348]: https://github.com/godaddy/gasket/pull/348

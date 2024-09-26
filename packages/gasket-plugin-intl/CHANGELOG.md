@@ -1,5 +1,8 @@
 # `@gasket/plugin-intl`
 
+### 7.0.0
+
+- See [Version 7 Upgrade Guide] for overall changes
 - Add gasket actions ([#791])
 
 ### 6.46.4
@@ -197,8 +200,8 @@
 
 - Initial release.
 
-<!-- LINK -->
 
+[Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
 [#144]: https://github.com/godaddy/gasket/pull/144
 [#166]: https://github.com/godaddy/gasket/pull/166
 [#175]: https://github.com/godaddy/gasket/pull/175

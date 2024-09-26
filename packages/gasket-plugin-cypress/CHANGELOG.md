@@ -1,5 +1,8 @@
 # @gasket/plugin-cypress
 
+### 7.0.0
+
+- See [Version 7 Upgrade Guide] for overall changes
 - Upgrade Cypress to v13 ([#660])
 
 ### 6.45.2
@@ -19,6 +22,7 @@
 - Initial release. ([#357])
 
 
+[Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
 [#357]: https://github.com/godaddy/gasket/pull/357
 [#436]: https://github.com/godaddy/gasket/pull/436
 [#541]: https://github.com/godaddy/gasket/pull/541
