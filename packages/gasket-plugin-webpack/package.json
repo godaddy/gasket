@@ -36,10 +36,6 @@
     "url": "https://github.com/godaddy/gasket/issues"
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-webpack",
-  "dependencies": {
-    "webpack-chain": "^6.0.0",
-    "webpack-merge": "^4.2.1"
-  },
   "devDependencies": {
     "@gasket/core": "7.0.0-next.70",
     "cross-env": "^7.0.3",
