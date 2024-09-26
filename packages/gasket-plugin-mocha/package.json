@@ -17,6 +17,10 @@
       "types": "./lib/node-loader-babel/index.d.ts",
       "default": "./lib/node-loader-babel/index.js"
     },
+    "./node-loader-styles": {
+      "types": "./lib/node-loader-styles/index.d.ts",
+      "default": "./lib/node-loader-styles/index.js"
+    },
     "./package.json": "./package.json"
   },
   "scripts": {
