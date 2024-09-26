@@ -1,5 +1,8 @@
 # `@gasket/redux`
 
+### 7.0.0
+
+- See [Version 7 Upgrade Guide] for overall changes
 - Update placeholder reducer from `config` -> `gasketData` ([#693])
 
 ### 6.45.2
@@ -82,6 +85,7 @@
 - Upgraded to latest `@gasket/*` packages that received the same update.
 
 
+[Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
 [#80]: https://github.com/godaddy/gasket/pull/80
 [#173]: https://github.com/godaddy/gasket/pull/173
 [#247]: https://github.com/godaddy/gasket/pull/247

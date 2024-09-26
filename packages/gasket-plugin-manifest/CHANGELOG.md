@@ -1,5 +1,9 @@
 # `@gasket/plugin-manifest`
 
+### 7.0.0
+
+- See [Version 7 Upgrade Guide] for overall changes
+
 ### 6.34.4
 
 - Upgrade eslint-plugin-unicorn v43 ([#436])
@@ -62,6 +66,7 @@
   - Accepting `Manifest` setup in `gasket.js`
 
 
+[Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
 [#218]: https://github.com/godaddy/gasket/pull/218
 [#244]: https://github.com/godaddy/gasket/pull/244
 [#247]: https://github.com/godaddy/gasket/pull/247

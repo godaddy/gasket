@@ -1,5 +1,8 @@
 # `@gasket/plugin-command`
 
+### 7.0.0
+
+- See [Version 7 Upgrade Guide] for overall changes
 - Update package with version 7 custom commands implementation
 
 ### 6.38.3
@@ -79,6 +82,7 @@
 - Initial release
 
 
+[Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
 [#52]: https://github.com/godaddy/gasket/pull/52
 [#74]: https://github.com/godaddy/gasket/pull/74
 [#94]: https://github.com/godaddy/gasket/pull/94

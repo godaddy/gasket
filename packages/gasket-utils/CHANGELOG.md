@@ -1,5 +1,8 @@
 # `@gasket/utils`
 
+### 7.0.0
+
+- See [Version 7 Upgrade Guide] for overall changes
 - Added getPackageLastestVersion util function ([#768])
 - Removed `requireWithInstall` to encourage import patterns with ESM
 - Removed support for deprecated `--npmconfig` flag ([#647])
@@ -75,6 +78,7 @@
   - `applyEnvironmentOverrides`
 
 
+[Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
 [#143]: https://github.com/godaddy/gasket/pull/143
 [#247]: https://github.com/godaddy/gasket/pull/247
 [#275]: https://github.com/godaddy/gasket/pull/275

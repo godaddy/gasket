@@ -1,7 +1,8 @@
 # `@gasket/plugin-express`
 
+### 7.0.0
 
-
+- See [Version 7 Upgrade Guide] for overall changes
 - Plugin is `typescript` aware ([#736])
 - Add `index.ts` generator file
 - Add plugin import to gasket file
@@ -91,6 +92,8 @@
 - Separate express plugins from core
 - Initial release.
 
+
+[Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
 [#23]: https://github.com/godaddy/gasket/pull/23
 [#181]: https://github.com/godaddy/gasket/pull/181
 [#247]: https://github.com/godaddy/gasket/pull/247

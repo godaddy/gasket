@@ -1,6 +1,8 @@
 # `@gasket/plugin-webpack`
 
+### 7.0.0
 
+- See [Version 7 Upgrade Guide] for overall changes
 - Add plugin import to gasket file ([#736])
 - Add itself to the app package file
 
@@ -63,6 +65,7 @@
 - Initial release.
 
 
+[Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
 [#221]: https://github.com/godaddy/gasket/pull/221
 [#247]: https://github.com/godaddy/gasket/pull/247
 [#252]: https://github.com/godaddy/gasket/pull/252

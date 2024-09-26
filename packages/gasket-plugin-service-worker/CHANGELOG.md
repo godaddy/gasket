@@ -1,5 +1,9 @@
 # `@gasket/plugin-service-worker`
 
+### 7.0.0
+
+- See [Version 7 Upgrade Guide] for overall changes
+
 ### 6.45.2
 
 - Tune `devDeps`, update test script ([#670])
@@ -62,6 +66,8 @@
 - Initial implementation.
 - Support for caching sw content
 
+
+[Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
 [#95]:https://github.com/godaddy/gasket/pull/95
 [#158]: https://github.com/godaddy/gasket/pull/158
 [#217]: https://github.com/godaddy/gasket/pull/217

@@ -1,7 +1,8 @@
 # `@gasket/plugin-docusaurus`
 
+### 7.0.0
 
-
+- See [Version 7 Upgrade Guide] for overall changes
 - Add plugin import to gasket file ([#736])
 - Add itself to the app package file
 - `configure` hook now synchronous
@@ -47,8 +48,8 @@
 
 - Initial release ([#362])
 
-<!-- Links -->
 
+[Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
 [#362]: https://github.com/godaddy/gasket/pull/362
 [#364]: https://github.com/godaddy/gasket/pull/364
 [#367]: https://github.com/godaddy/gasket/pull/367

@@ -1,6 +1,8 @@
 # `@gasket/plugin-git`
 
+### 7.0.0
 
+- See [Version 7 Upgrade Guide] for overall changes
 - Catch errors & log warning from initializing a git repo that already exists
 
 ### 6.40.0
@@ -39,6 +41,7 @@
 - Initial release.
 
 
+[Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
 [#247]: https://github.com/godaddy/gasket/pull/247
 [#344]: https://github.com/godaddy/gasket/pull/344
 [#436]: https://github.com/godaddy/gasket/pull/436

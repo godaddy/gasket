@@ -1,5 +1,9 @@
 # `@gasket/plugin-fastify`
 
+### 7.0.0
+
+- See [Version 7 Upgrade Guide] for overall changes
+
 ### 6.46.0
 
 - Add native Gasket trust proxy support to Express config ([#675])
@@ -52,6 +56,7 @@ Enable middleware support ([#172])
 - [#88] Initial release.
 
 
+[Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
 [#88]: https://github.com/godaddy/gasket/pull/88
 [#172]: https://github.com/godaddy/gasket/pull/172
 [#250]: https://github.com/godaddy/gasket/pull/250

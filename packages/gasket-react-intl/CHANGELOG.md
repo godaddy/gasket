@@ -1,5 +1,9 @@
 # `@gasket/react-intl`
 
+### 7.0.0
+
+- See [Version 7 Upgrade Guide] for overall changes
+
 ### 6.47.1
 
 - Accept an array as localesPath in useLocaleRequired, withLocaleRequired, and LocaleRequired ([#779])
@@ -169,8 +173,10 @@
 
 - Switch to Reduxful
 
+
 [Next.js i18n routing]: https://nextjs.org/docs/advanced-features/i18n-routing
 
+[Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
 [#166]: https://github.com/godaddy/gasket/pull/166
 [#175]: https://github.com/godaddy/gasket/pull/175
 [#180]: https://github.com/godaddy/gasket/pull/180

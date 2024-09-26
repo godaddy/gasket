@@ -1,5 +1,8 @@
 # `@gasket/plugin-workbox`
 
+### 7.0.0
+
+- See [Version 7 Upgrade Guide] for overall changes
 - Removed deprecated assetPrefix config support ([#661])
 
 ### 6.45.2
@@ -58,6 +61,7 @@
  Initial implementation.
 
 
+[Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
 [#95]:https://github.com/godaddy/gasket/pull/95
 [#166]: https://github.com/godaddy/gasket/pull/166
 [#212]: https://github.com/godaddy/gasket/pull/212
