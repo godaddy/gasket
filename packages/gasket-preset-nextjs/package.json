@@ -1,6 +1,6 @@
 {
   "name": "@gasket/preset-nextjs",
-  "version": "7.0.0-next.70",
+  "version": "7.0.0",
   "description": "Basic NextJS Framework",
   "type": "module",
   "main": "lib/index.js",
@@ -31,18 +31,18 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-preset-nextjs",
   "dependencies": {
-    "@gasket/plugin-cypress": "7.0.0-next.70",
-    "@gasket/plugin-express": "7.0.0-next.70",
-    "@gasket/plugin-https": "7.0.0-next.70",
-    "@gasket/plugin-intl": "7.0.0-next.70",
-    "@gasket/plugin-jest": "7.0.0-next.70",
-    "@gasket/plugin-lint": "7.0.0-next.70",
-    "@gasket/plugin-mocha": "7.0.0-next.70",
-    "@gasket/plugin-nextjs": "7.0.0-next.70",
-    "@gasket/plugin-typescript": "7.0.0-next.70",
-    "@gasket/plugin-webpack": "7.0.0-next.70",
-    "@gasket/plugin-winston": "7.0.0-next.70",
-    "@gasket/utils": "7.0.0-next.70"
+    "@gasket/plugin-cypress": "7.0.0",
+    "@gasket/plugin-express": "7.0.0",
+    "@gasket/plugin-https": "7.0.0",
+    "@gasket/plugin-intl": "7.0.0",
+    "@gasket/plugin-jest": "7.0.0",
+    "@gasket/plugin-lint": "7.0.0",
+    "@gasket/plugin-mocha": "7.0.0",
+    "@gasket/plugin-nextjs": "7.0.0",
+    "@gasket/plugin-typescript": "7.0.0",
+    "@gasket/plugin-webpack": "7.0.0",
+    "@gasket/plugin-winston": "7.0.0",
+    "@gasket/utils": "7.0.0"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
