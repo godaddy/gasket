@@ -53,7 +53,7 @@ describe('create', function () {
     expect(mockPkgAdd).toHaveBeenCalledWith('scripts', {
       start: 'node server.js',
       local: 'nodemon server.js',
-      preview: 'npm run build && npm run start'
+      preview: 'npm run start'
     });
   });
 

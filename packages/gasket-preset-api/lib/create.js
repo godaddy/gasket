@@ -21,7 +21,7 @@ export default function create(gasket, context) {
     pkg.add('scripts', {
       start: 'node server.js',
       local: 'nodemon server.js',
-      preview: 'npm run build && npm run start'
+      preview: 'npm run start'
     });
   }
 }

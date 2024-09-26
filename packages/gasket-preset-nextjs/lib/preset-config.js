@@ -23,10 +23,9 @@ export default async function presetConfig(gasket, context) {
     pluginLint
   ];
 
-  if ('server' in context) {
-    const frameworkPlugin = context.server === 'express'
-      ? await import('@gasket/plugin-express')
-      : await import('@gasket/plugin-fastify');
+
+  if (context.nextServerType === 'customServer') {
+    const frameworkPlugin = await import('@gasket/plugin-express');
 
     plugins.push(frameworkPlugin.default || frameworkPlugin);
   }
