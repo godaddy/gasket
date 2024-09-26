@@ -1,5 +1,9 @@
 # `@gasket/plugin-docs-graph`
 
+### 7.0.0
+
+- See [Version 7 Upgrade Guide] for overall changes
+
 ### 6.34.4
 
 - Upgrade eslint-plugin-unicorn v43 ([#436])
@@ -30,6 +34,7 @@
 - Initial implementation
 
 
+[Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
 [#247]: https://github.com/godaddy/gasket/pull/247
 [#319]: https://github.com/godaddy/gasket/pull/319
 [#376]: https://github.com/godaddy/gasket/pull/376

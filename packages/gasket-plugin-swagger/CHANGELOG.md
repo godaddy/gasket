@@ -1,6 +1,8 @@
 # `@gasket/plugin-swagger`
 
+### 7.0.0
 
+- See [Version 7 Upgrade Guide] for overall changes
 - Add prompt for use in presets ([#850])
 - Add plugin import to gasket file ([#736])
 - Add itself to the app package file
@@ -49,6 +51,7 @@
 - Initial release. ([#177])
 
 
+[Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
 [#177]: https://github.com/godaddy/gasket/pull/177
 [#181]: https://github.com/godaddy/gasket/pull/181
 [#186]: https://github.com/godaddy/gasket/pull/186

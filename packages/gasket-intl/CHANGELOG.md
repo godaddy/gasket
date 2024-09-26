@@ -1,5 +1,9 @@
 # `@gasket/intl`
 
+### 7.0.0
+
+- See [Version 7 Upgrade Guide] for overall changes
+
 ### 6.46.4
 
 - Fix for missing manifest paths ([#701])
@@ -48,8 +52,8 @@
 
 - Initial release
 
-<!-- LINKS -->
 
+[Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
 [#256]: https://github.com/godaddy/gasket/pull/256
 [#268]: https://github.com/godaddy/gasket/pull/268
 [#276]: https://github.com/godaddy/gasket/pull/276

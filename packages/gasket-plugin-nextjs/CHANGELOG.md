@@ -1,5 +1,8 @@
 # `@gasket/plugin-nextjs`
 
+### 7.0.0
+
+- See [Version 7 Upgrade Guide] for overall changes
 - Add gasketData layout for app router ([#814])
 - Exclude gaskets from client bundling ([#806])
 - Convert cjs sitemap config to esm ([#798])
@@ -225,10 +228,10 @@
 - Separate next plugins from core
 - Initial release.
 
-<!-- LINKS -->
 
 [next-redux-wrapper]: https://github.com/kirill-konshin/next-redux-wrapper
 
+[Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
 [#23]: https://github.com/godaddy/gasket/pull/23
 [#32]: https://github.com/godaddy/gasket/pull/32
 [#33]: https://github.com/godaddy/gasket/pull/33

@@ -1,5 +1,9 @@
 # `@gasket/plugin-metadata`
 
+### 7.0.0
+
+- See [Version 7 Upgrade Guide] for overall changes
+
 ### 6.46.4
 
 - Adjust JSDocs and TS types ([#695])
@@ -61,6 +65,7 @@
   - Implements the `metadata` lifecycle
 
 
+[Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
 [#51]: https://github.com/godaddy/gasket/pull/51
 [#64]: https://github.com/godaddy/gasket/pull/64
 [#141]: https://github.com/godaddy/gasket/pull/141

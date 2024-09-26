@@ -1,5 +1,9 @@
 # `@gasket/data`
 
+### 7.0.0
+
+- See [Version 7 Upgrade Guide] for overall changes
+
 ### 6.45.2
 
 - Remove `setup-env`, adjust test watcher script ([#670])
@@ -23,6 +27,7 @@
 - Initial release
 
 
+[Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
 [#436]: https://github.com/godaddy/gasket/pull/436
 [#442]: https://github.com/godaddy/gasket/pull/442
 [#459]: https://github.com/godaddy/gasket/pull/459

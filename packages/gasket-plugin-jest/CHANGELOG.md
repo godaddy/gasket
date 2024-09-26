@@ -1,5 +1,9 @@
 # `@gasket/plugin-jest`
 
+### 7.0.0
+
+- See [Version 7 Upgrade Guide] for overall changes
+
 ### 6.45.2
 
 - Tune `devDeps` ([#670])
@@ -63,6 +67,7 @@
 - Initial release.
 
 
+[Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
 [#98]: https://github.com/godaddy/gasket/pull/98
 [#114]: https://github.com/godaddy/gasket/pull/114
 [#216]: https://github.com/godaddy/gasket/pull/216

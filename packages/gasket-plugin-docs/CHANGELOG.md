@@ -1,7 +1,8 @@
 # `@gasket/plugin-docs`
 
+### 7.0.0
 
-
+- See [Version 7 Upgrade Guide] for overall changes
 - Add plugin import to gasket file ([#736])
 - Add itself to the app package file
 
@@ -82,6 +83,7 @@
 - Initial release
 
 
+[Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
 [#82]:https://github.com/godaddy/gasket/pull/82
 [#139]:https://github.com/godaddy/gasket/pull/139
 [#141]: https://github.com/godaddy/gasket/pull/141

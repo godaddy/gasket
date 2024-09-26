@@ -1,5 +1,8 @@
 # `@gasket/plugin-analyze`
 
+### 7.0.0
+
+- See [Version 7 Upgrade Guide] for overall changes
 - Remove the custom command and replace it with an npm script that sets an environment variable ([#810])
 
 ### 6.46.4
@@ -65,6 +68,7 @@
 - Initial release.
 
 
+[Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
 [#74]: https://github.com/godaddy/gasket/pull/74
 [#161]: https://github.com/godaddy/gasket/pull/161
 [#247]: https://github.com/godaddy/gasket/pull/247

@@ -1,7 +1,8 @@
 # `@gasket/plugin-https`
 
+### 7.0.0
 
-
+- See [Version 7 Upgrade Guide] for overall changes
 - Add plugin import to gasket file ([#736])
 - Add itself to the app package file
 - Add actions to hook exec types
@@ -85,6 +86,8 @@
 - [#23] Dismantling core-plugin
 - [#7]: Initialize the `https-plugin`
 
+
+[Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
 [#7]: https://github.com/godaddy/gasket/pull/7
 [#23]: https://github.com/godaddy/gasket/pull/23
 [#79]: https://github.com/godaddy/gasket/pull/79
