@@ -46,8 +46,7 @@ const plugin = {
           {
             name: 'webpackConfig',
             method: 'execApplySync',
-            description:
-              'Transform the webpack config, with the help of webpack-merge',
+            description: 'Transform the Webpack config',
             link: 'README.md#webpackConfig',
             parent: 'initWebpack',
             after: 'webpack'
