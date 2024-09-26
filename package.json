@@ -20,6 +20,7 @@
     "generate-docs-index": "node scripts/generate-docs-index",
     "postinstall": "npm run build",
     "publish:canary": "lerna publish --preid canary --dist-tag canary",
+    "publish:lts": "lerna publish --preid lts --dist-tag lts",
     "test:package": "lerna run test --stream --scope $*",
     "typecheck:all": "lerna run typecheck --stream"
   },
