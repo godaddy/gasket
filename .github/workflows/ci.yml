@@ -7,7 +7,7 @@ on:
   push:
     branches:
       - 'main'
-      - 'v7'
+      - 'lts'
 
 jobs:
   ci:
