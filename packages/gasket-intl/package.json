@@ -1,6 +1,6 @@
 {
   "name": "@gasket/intl",
-  "version": "7.0.0-next.69",
+  "version": "7.0.0-next.70",
   "description": "Internationalization managers for translation files and locale handling.",
   "type": "module",
   "main": "lib/index.js",
