@@ -23,7 +23,8 @@
     "test:coverage": "npm run test -- --coverage",
     "posttest": "npm run lint",
     "build": "swc lib -d cjs --delete-dir-on-start --strip-leading-paths",
-    "postbuild": "node -e \"require('fs').writeFileSync('cjs/package.json', '{}')\""
+    "postbuild": "node -e \"require('fs').writeFileSync('cjs/package.json', '{}')\"",
+    "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",
