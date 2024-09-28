@@ -1,5 +1,9 @@
 # `create-gasket-app`
 
+### 7.0.2
+
+- Add packageJson `type` type ([#936])
+
 ### 7.0.0
 
 - See [Version 7 Upgrade Guide] for overall changes
@@ -67,3 +71,4 @@
 [#736]: https://github.com/godaddy/gasket/pull/736
 [#752]: https://github.com/godaddy/gasket/pull/752
 [#806]: https://github.com/godaddy/gasket/pull/806
+[#936]: https://github.com/godaddy/gasket/pull/936
