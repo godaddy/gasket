@@ -13,6 +13,7 @@ export interface PackageJson extends Dependencies {
   version?: string;
   description?: string;
   license?: string;
+  type?: 'commonjs' | 'module';
   repository?:
   | string
   | {
