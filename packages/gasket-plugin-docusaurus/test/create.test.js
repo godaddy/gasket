@@ -6,6 +6,7 @@ describe('createHook', () => {
 
   beforeEach(() => {
     mockContext = {
+      useDocs: true,
       pkg: {
         add: jest.fn()
       },
@@ -31,6 +32,12 @@ describe('createHook', () => {
     });
   });
 
+  it('does not add itself to the dependencies if useDocs is false', async () => {
+    mockContext.useDocs = false;
+    await create({}, mockContext);
+    expect(mockContext.pkg.add).not.toHaveBeenCalled();
+  });
+
   it('adds devDependencies', async () => {
     await create({}, mockContext);
     expect(mockContext.pkg.add).toHaveBeenCalledWith('devDependencies', {
@@ -38,7 +45,9 @@ describe('createHook', () => {
       '@docusaurus/preset-classic': devDependencies['@docusaurus/preset-classic'],
       'react': devDependencies.react,
       'react-dom': devDependencies['react-dom'],
-      'ajv': devDependencies.ajv
+      'ajv': devDependencies.ajv,
+      'typescript': devDependencies.typescript,
+      'search-insights': devDependencies['search-insights']
     });
   });
 

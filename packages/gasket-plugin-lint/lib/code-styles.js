@@ -56,7 +56,8 @@ const godaddy = {
 
     if (hasNext) {
       pkg.add('devDependencies', {
-        'eslint-config-next': devDependencies['eslint-config-next']
+        'eslint-config-next': devDependencies['eslint-config-next'],
+        'typescript': devDependencies.typescript
       });
       pkg.add('eslintConfig', { extends: ['next'] });
     }

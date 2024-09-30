@@ -3,7 +3,9 @@
 const { name, version, devDependencies } = require('../package.json');
 
 /** @type {import('@gasket/core').HookHandler<'create'>} */
-module.exports = function create(gasket, { pkg, gasketConfig, readme }) {
+module.exports = function create(gasket, { pkg, gasketConfig, readme, useDocs }) {
+  if (!useDocs) return;
+
   gasketConfig.addPlugin('pluginDocusaurus', name);
 
   pkg.add('dependencies', {
@@ -15,7 +17,9 @@ module.exports = function create(gasket, { pkg, gasketConfig, readme }) {
     '@docusaurus/preset-classic': devDependencies['@docusaurus/preset-classic'],
     'react': devDependencies.react,
     'react-dom': devDependencies['react-dom'],
-    'ajv': devDependencies.ajv
+    'ajv': devDependencies.ajv,
+    'typescript': devDependencies.typescript,
+    'search-insights': devDependencies['search-insights']
   });
 
   readme
