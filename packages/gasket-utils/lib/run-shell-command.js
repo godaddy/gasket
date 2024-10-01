@@ -20,6 +20,7 @@ function runShellCommand(cmd, argv, options = {}, debug = false) {
   }
 
   return new Promise((resolve, reject) => {
+    console.log('-----------------------------\nRun Shell Command!!!\n', process.env, '\n', argv, '\n', opts, '\n-----------------------------');
     const child = spawn(cmd, argv, opts);
 
     child.stderr.pipe(
