@@ -1,6 +1,6 @@
 {
   "name": "@gasket/utils",
-  "version": "7.0.1",
+  "version": "7.0.3-canary.0",
   "description": "Reusable utilities for Gasket internals",
   "main": "lib",
   "types": "lib/index.d.ts",

@@ -1,6 +1,6 @@
 {
   "name": "@gasket/preset-nextjs",
-  "version": "7.0.1",
+  "version": "7.0.3-canary.0",
   "description": "Basic NextJS Framework",
   "type": "module",
   "main": "lib/index.js",
@@ -42,7 +42,7 @@
     "@gasket/plugin-typescript": "^7.0.1",
     "@gasket/plugin-webpack": "^7.0.1",
     "@gasket/plugin-winston": "^7.0.1",
-    "@gasket/utils": "^7.0.1"
+    "@gasket/utils": "^7.0.3-canary.0"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
