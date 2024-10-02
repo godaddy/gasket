@@ -102,7 +102,8 @@ describe('code styles', () => {
       await codeStyle.create(context, utils);
 
       expect(pkgAdd).toHaveBeenCalledWith('devDependencies', {
-        'eslint-config-next': devDependencies['eslint-config-next']
+        'eslint-config-next': devDependencies['eslint-config-next'],
+        'typescript': devDependencies.typescript
       });
       expect(pkgAdd).toHaveBeenCalledWith('eslintConfig', {
         extends: ['next']
