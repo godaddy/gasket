@@ -143,8 +143,8 @@ export function makeCreateContext(argv = [], options = {}) {
   const pkgLinks = npmLink.reduce(flatten, []);
   const cwd = process.cwd();
   const dest = path.join(cwd, appName);
-  console.log(cwd);
-  console.log(dest);
+  console.log('CWD: ', cwd);
+  console.log('DEST: ', dest);
   const relDest = `.${path.sep}${path.relative(cwd, dest)}`;
   // eslint-disable-next-line no-sync
   const extant = fs.existsSync(dest);
