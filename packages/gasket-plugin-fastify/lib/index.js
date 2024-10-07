@@ -25,7 +25,7 @@ const plugin = {
       const fastifyLogger = alignLogger(gasket.logger);
 
       // @ts-ignore
-      app ??= fastify({ logger: fastifyLogger, trustProxy, https, http2 });
+      app ??= fastify({ logger: fastifyLogger, trustProxy, https, http2, disableRequestLogging: true });
 
       return app;
     }
