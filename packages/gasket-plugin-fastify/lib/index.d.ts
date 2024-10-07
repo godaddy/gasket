@@ -29,6 +29,7 @@ declare module '@gasket/core' {
       excludedRoutesRegex?: RegExp;
       /** Trust proxy configuration */
       trustProxy?: FastifyServerOptions['trustProxy'];
+      disableRequestLogging?: boolean;
     };
     /** Middleware configuration */
     middleware?: {

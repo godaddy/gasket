@@ -101,6 +101,27 @@ describe('actions', () => {
     });
   });
 
+  it('defaults to true for disableRequestLogging', async () => {
+    const pluginInstance = require('../lib/index');
+    await pluginInstance.actions.getFastifyApp(gasket);
+    expect(mockFastify).toHaveBeenCalledWith({
+      logger: gasket.logger,
+      trustProxy: false,
+      disableRequestLogging: true
+    });
+  });
+
+  it('allows request logging if disableRequestLogging is set to false', async () => {
+    gasket.config.fastify = { disableRequestLogging: false };
+    const pluginInstance = require('../lib/index');
+    await pluginInstance.actions.getFastifyApp(gasket);
+    expect(mockFastify).toHaveBeenCalledWith({
+      logger: gasket.logger,
+      trustProxy: false,
+      disableRequestLogging: false
+    });
+  });
+
   it('adds log plugin as logger to fastify', async function () {
     const pluginInstance = require('../lib/index');
     await pluginInstance.actions.getFastifyApp(gasket);

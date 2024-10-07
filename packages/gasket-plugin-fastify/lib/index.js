@@ -21,11 +21,11 @@ const plugin = {
   actions: {
     getFastifyApp(gasket) {
       const { fastify: fastifyConfig = {}, http2, https } = gasket.config;
-      const { trustProxy = false } = fastifyConfig;
+      const { trustProxy = false, disableRequestLogging = true } = fastifyConfig;
       const fastifyLogger = alignLogger(gasket.logger);
 
       // @ts-ignore
-      app ??= fastify({ logger: fastifyLogger, trustProxy, https, http2, disableRequestLogging: true });
+      app ??= fastify({ logger: fastifyLogger, trustProxy, https, http2, disableRequestLogging });
 
       return app;
     }
