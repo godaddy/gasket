@@ -1,66 +1,36 @@
 const self = require('../package.json');
 const plugin = require('../lib/index.js');
 const { name, version, description } = require('../package');
+const createHook = plugin.hooks.create.handler;
 
 describe('Plugin', function () {
-  /**
-   * Create a new project
-   * @returns {Promise<object>} project
-   */
-  async function create() {
-    const pkg = {};
-
-    await plugin.hooks.create.handler(
-      {},
-      {
-        pkg: {
-          add: (key, value) => {
-            pkg[key] = pkg[key] || {};
-            pkg[key] = { ...pkg[key], ...value };
-          },
-          has: (key, value) => !!pkg[key] && !!pkg[key][value]
-        }
-      }
-    );
-
-    return { pkg };
-  }
-
-  /**
-   * Create a new React project
-   * @returns {Promise<object>} project
-   */
-  async function createReact() {
-    const files = [];
-    const pkg = {
-      dependencies: {
-        react: '1.0.0'
-      }
+  let gasket, createContext;
+  let ctxPkg, ctxFiles;
+  const addReact = () => {
+    ctxPkg.dependencies = {
+      react: '1.0.0'
     };
+  };
 
-    await plugin.hooks.create.handler(
-      {},
-      {
-        pkg: {
-          add: (key, value) => {
-            pkg[key] = pkg[key] || {};
-            pkg[key] = { ...pkg[key], ...value };
-          },
-          has: (key, value) => !!pkg[key] && !!pkg[key][value]
+  beforeEach(() => {
+    ctxPkg = {};
+    ctxFiles = [];
+    gasket = {};
+    createContext = {
+      pkg: {
+        add: (key, value) => {
+          ctxPkg[key] = ctxPkg[key] ?? {};
+          ctxPkg[key] = { ...ctxPkg[key], ...value };
         },
-        files: {
-          add: (...args) => {
-            files.push(...args);
-          }
+        has: (key, value) => !!ctxPkg[key] && !!ctxPkg[key][value]
+      },
+      files: {
+        add: (...args) => {
+          ctxFiles.push(...args);
         }
       }
-    );
-
-    return {
-      files,
-      pkg
     };
-  }
+  });
 
   it('is an object', function () {
     expect(plugin).toBeInstanceOf(Object);
@@ -88,57 +58,79 @@ describe('Plugin', function () {
 
   describe('react', function () {
     it('includes a glob for the `generator/cypress.config.js` contents for react projects', async function () {
-      const { files } = await createReact();
+      addReact();
+      await createHook(gasket, createContext);
 
-      expect(files[0]).toContain('/../generator/*');
-      expect(files[1]).toContain('/../generator/**/*');
+      expect(ctxFiles[0]).toContain('/../generator/*');
+      expect(ctxFiles[1]).toContain('/../generator/**/*');
     });
   });
 
   describe('adds react specific dependencies', function () {
     ['cypress', 'start-server-and-test'].forEach((name) => {
       it(`adds "${name}" in the devDependencies`, async function () {
-        const { pkg } = await createReact();
+        addReact();
+        await createHook(gasket, createContext);
 
-        expect(pkg.devDependencies).toHaveProperty(name);
+        expect(ctxPkg.devDependencies).toHaveProperty(name);
       });
     });
 
     it('depends on the same versions', async function () {
-      const { pkg } = await createReact();
+      addReact();
+      await createHook(gasket, createContext);
 
-      expect(typeof pkg.devDependencies).toBe('object');
-      Object.keys(pkg.devDependencies).forEach((key) => {
+      expect(typeof ctxPkg.devDependencies).toBe('object');
+      Object.keys(ctxPkg.devDependencies).forEach((key) => {
         expect(self.devDependencies).toHaveProperty(key);
-        expect(self.devDependencies[key]).toEqual(pkg.devDependencies[key]);
+        expect(self.devDependencies[key]).toEqual(ctxPkg.devDependencies[key]);
       });
     });
   });
 
   describe('dependencies', function () {
     it('adds "cypress" in the devDependencies', async function () {
-      const { pkg } = await create();
+      await createHook(gasket, createContext);
 
-      expect(pkg.devDependencies).toHaveProperty('cypress');
+      expect(ctxPkg.devDependencies).toHaveProperty('cypress');
     });
 
     it('depends on the same versions', async function () {
-      const { pkg } = await create();
+      await createHook(gasket, createContext);
 
-      expect(typeof pkg.devDependencies).toBe('object');
-      Object.keys(pkg.devDependencies).forEach((key) => {
+      expect(typeof ctxPkg.devDependencies).toBe('object');
+      Object.keys(ctxPkg.devDependencies).forEach((key) => {
         expect(self.devDependencies).toHaveProperty(key);
-        expect(self.devDependencies[key]).toEqual(pkg.devDependencies[key]);
+        expect(self.devDependencies[key]).toEqual(ctxPkg.devDependencies[key]);
       });
     });
   });
 
   describe('scripts', function () {
-    it('uses the same scrips in our package.json', async function () {
-      const { pkg } = await create();
+    it('add expected scripts', async function () {
+      await createHook(gasket, createContext);
 
       const expected = {
-        'start:local': 'next start',
+        'cypress': 'cypress open',
+        'cypress:headless': 'cypress run',
+        'e2e': 'start-server-and-test start http://localhost:3000 cypress',
+        'e2e:headless':
+          'start-server-and-test start http://localhost:3000 cypress:headless'
+      };
+
+      expect(typeof ctxPkg.scripts).toBe('object');
+      Object.keys(ctxPkg.scripts).forEach((key) => {
+        expect(expected).toHaveProperty(key);
+        expect(expected[key]).toEqual(ctxPkg.scripts[key]);
+      });
+    });
+
+    it('use start:local script if set', async function () {
+      ctxPkg.scripts = { 'start:local': 'GASKET_ENV=local next start' };
+      await createHook(gasket, createContext);
+
+      const expected = {
+        'start:local': 'GASKET_ENV=local next start',
         'cypress': 'cypress open',
         'cypress:headless': 'cypress run',
         'e2e': 'start-server-and-test start:local http://localhost:3000 cypress',
@@ -146,10 +138,10 @@ describe('Plugin', function () {
           'start-server-and-test start:local http://localhost:3000 cypress:headless'
       };
 
-      expect(typeof pkg.scripts).toBe('object');
-      Object.keys(pkg.scripts).forEach((key) => {
+      expect(typeof ctxPkg.scripts).toBe('object');
+      Object.keys(ctxPkg.scripts).forEach((key) => {
         expect(expected).toHaveProperty(key);
-        expect(expected[key]).toEqual(pkg.scripts[key]);
+        expect(expected[key]).toEqual(ctxPkg.scripts[key]);
       });
     });
   });
