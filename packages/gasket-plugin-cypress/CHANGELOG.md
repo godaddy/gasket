@@ -1,5 +1,9 @@
 # @gasket/plugin-cypress
 
+### 7.0.3
+
+- Fix to use start:local only if set ([#941])
+
 ### 7.0.0
 
 - See [Version 7 Upgrade Guide] for overall changes
@@ -28,3 +32,4 @@
 [#541]: https://github.com/godaddy/gasket/pull/541
 [#660]: https://github.com/godaddy/gasket/pull/660
 [#670]: https://github.com/godaddy/gasket/pull/670
+[#941]: https://github.com/godaddy/gasket/pull/941
