@@ -17,7 +17,9 @@
     "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict --experimental-vm-modules' jest",
     "test:watch": "npm run test -- --watch",
     "test:coverage": "jest --coverage",
-    "posttest": "npm run lint"
+    "typecheck": "tsc",
+    "typecheck:watch": "tsc --watch",
+    "posttest": "npm run lint && npm run typecheck"
   },
   "repository": {
     "type": "git",
@@ -69,10 +71,12 @@
   "eslintConfig": {
     "extends": [
       "godaddy",
-      "plugin:jest/recommended"
+      "plugin:jest/recommended",
+      "plugin:jsdoc/recommended-typescript-flavor"
     ],
     "plugins": [
-      "unicorn"
+      "unicorn",
+      "jsdoc"
     ],
     "rules": {
       "unicorn/filename-case": "error"
