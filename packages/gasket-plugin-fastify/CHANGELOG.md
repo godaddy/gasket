@@ -1,5 +1,9 @@
 # `@gasket/plugin-fastify`
 
+### 7.0.3
+
+- Fix `[object Object]` logs in Fastify api apps ([#940])
+
 ### 7.0.0
 
 - See [Version 7 Upgrade Guide] for overall changes
@@ -69,3 +73,4 @@ Enable middleware support ([#172])
 [#555]: https://github.com/godaddy/gasket/pull/555
 [#613]: https://github.com/godaddy/gasket/pull/613
 [#675]: https://github.com/godaddy/gasket/pull/675
+[#940]: https://github.com/godaddy/gasket/pull/940
