@@ -21,6 +21,7 @@ This guide will take you through updating `@gasket/*` packages to `7.x`.
 - [Update Intl](#update-intl)
   - [Bring your Own Intl Provider](#bring-your-own-intl-provider)
   - [Switch to Intl Manager](#switch-to-intl-manager)
+  - [Move locale files (Optional)](#move-locale-files-optional)
 - [Update Custom Commands](#update-custom-commands)
 - [Update App Plugins](#update-app-plugins)
 - [Update App Lifecycles](#update-app-lifecycles)
@@ -505,6 +506,15 @@ See the [@gasket/plugin-logger] docs for more details, as well as the
 
 ## Update Intl
 
+Previous versions of Gasket generated a `locale-manifest.json` file which was 
+loaded behind the scene.
+In this version, Gasket generates a `intl.js` file which is explicitly imported.
+This allows for better transparency and simplifies bundling as it exports a
+`intlManager` which handles loading and resolving locale files and can be
+bundled with Webpack.
+
+The next sections demonstrate how to use the `intl.js` import.
+
 ### Bring your Own Intl Provider
 
 The [@gasket/react-intl] package is convenience wrapper for connecting
@@ -513,9 +523,6 @@ dependency on the `react-intl` package.
 
 In our new version, users have more flexibility to choose their own intl provider.
 While `react-intl` is still a good choice, it is no longer a hard dependency.
-Another change is instead of magic webpack and process.env setups for importing
-a generated manifest of translations, an explicit import of a generated `intl.js`
-file necessary.
 
 ```diff
 // pages/_app.js
@@ -584,6 +591,35 @@ The locale files can exist anywhere, though a top-level `/locales` directory is
 recommended as a convention.
 
 See [@gasket/plugin-intl] for more details and other changes.
+
+### Move locale files (Optional)
+
+Because the `intl.js` is imported and can be bundle with Webpack,
+it is no longer necessary to serve locale files as static files.
+As such, for Next.js, these can be moved out of the `./public` directory.
+
+```diff
+- /public/locales/en-US.json
++ /locales/en-US.json
+```
+
+When this is done, you will also want to update eslint configs if using
+`@godaddy/eslint-plugin-react-intl` to point to the new location for your source
+files:
+
+```diff
+  "eslintConfig": {
+    "extends": [
+      "plugin:@godaddy/react-intl/recommended"
+    ],
+    "settings": {
+      "localeFiles": [
+-        "public/locales/en-US.json"
++        "locales/en-US.json"
+      ]
+    }
+  }
+```
 
 ## Update Custom Commands
 
