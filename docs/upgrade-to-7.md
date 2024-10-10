@@ -9,7 +9,8 @@ This guide will take you through updating `@gasket/*` packages to `7.x`.
   - [Switch to ESM (Optional)](#switch-to-esm-optional)
   - [Update Plugin Imports](#update-plugin-imports)
   - [Update Command Scripts](#update-command-scripts)
-  - [Update Next Scripts](#update-next-scripts)
+  - [Update Next.js Scripts](#update-nextjs-scripts)
+- [Update Next.js](#update-nextjs)
 - [Switch to GasketActions](#switch-to-gasketactions)
 - [Update configurations](#update-configurations)
 - [Switch to Docusaurus](#switch-to-docusaurus)
@@ -117,12 +118,12 @@ you can still invoke them by executing the `gasket.js`:
 +    "docs": "node ./gasket.js docs",
 ```
 
-### Update Next Scripts
+### Update Next.js Scripts
 
 Additionally, you can use framework CLIs or other to run your Gasket-enabled
 app.
 
-For Next.js webapps, update your package.json scripts to use the Next CLI:
+For Next.js webapps, update your package.json scripts to use the Next.js CLI:
 
 ```diff
   "scripts": {
@@ -169,6 +170,22 @@ you can use environment variables instead.
 
 The default environment will be `local`, but be sure to update your CICD scripts
 with the environment variable pattern if flags are currently being used.
+
+## Update Next.js
+
+Gasket now supports Next.js 14 and changes have been made to support its features.
+While some older versions may work, we recommend updating to the latest version
+of Next.js.
+
+```diff
+"dependencies": {
+-    "next": "^12.3.4",
++    "next": "^14.0.0",
+}
+```
+
+You can reference the [Next.js 14] and [Next.js 13] Upgrade Guides as needed
+for more details.
 
 ## Switch to GasketActions
 
@@ -831,6 +848,8 @@ export default {
 [middleware paths]:https://github.com/godaddy/gasket/blob/main/packages/gasket-plugin-express/README.md#middleware-paths
 [streaming]: https://nextjs.org/docs/app/building-your-application/routing/loading-ui-and-streaming
 [App Router]: https://nextjs.org/docs/app/building-your-application/routing
+[Next.js 14]: https://nextjs.org/docs/pages/building-your-application/upgrading/version-14
+[Next.js 13]: https://nextjs.org/docs/pages/building-your-application/upgrading/version-13
 
 <!-- Packages -->
 [@gasket/plugin-command]: ../packages/gasket-plugin-command/README.md
