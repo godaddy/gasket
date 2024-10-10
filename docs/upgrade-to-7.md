@@ -9,7 +9,8 @@ This guide will take you through updating `@gasket/*` packages to `7.x`.
   - [Switch to ESM (Optional)](#switch-to-esm-optional)
   - [Update Plugin Imports](#update-plugin-imports)
   - [Update Command Scripts](#update-command-scripts)
-  - [Update Next Scripts](#update-next-scripts)
+  - [Update Next.js Scripts](#update-nextjs-scripts)
+- [Update Next.js](#update-nextjs)
 - [Switch to GasketActions](#switch-to-gasketactions)
 - [Update configurations](#update-configurations)
 - [Switch to Docusaurus](#switch-to-docusaurus)
@@ -21,6 +22,7 @@ This guide will take you through updating `@gasket/*` packages to `7.x`.
 - [Update Intl](#update-intl)
   - [Bring your Own Intl Provider](#bring-your-own-intl-provider)
   - [Switch to Intl Manager](#switch-to-intl-manager)
+  - [Move locale files (Optional)](#move-locale-files-optional)
 - [Update Custom Commands](#update-custom-commands)
 - [Update App Plugins](#update-app-plugins)
 - [Update App Lifecycles](#update-app-lifecycles)
@@ -116,12 +118,12 @@ you can still invoke them by executing the `gasket.js`:
 +    "docs": "node ./gasket.js docs",
 ```
 
-### Update Next Scripts
+### Update Next.js Scripts
 
 Additionally, you can use framework CLIs or other to run your Gasket-enabled
 app.
 
-For Next.js webapps, update your package.json scripts to use the Next CLI:
+For Next.js webapps, update your package.json scripts to use the Next.js CLI:
 
 ```diff
   "scripts": {
@@ -168,6 +170,22 @@ you can use environment variables instead.
 
 The default environment will be `local`, but be sure to update your CICD scripts
 with the environment variable pattern if flags are currently being used.
+
+## Update Next.js
+
+Gasket now supports Next.js 14 and changes have been made to support its features.
+While some older versions may work, we recommend updating to the latest version
+of Next.js.
+
+```diff
+"dependencies": {
+-    "next": "^12.3.4",
++    "next": "^14.0.0",
+}
+```
+
+You can reference the [Next.js 14] and [Next.js 13] Upgrade Guides as needed
+for more details.
 
 ## Switch to GasketActions
 
@@ -505,6 +523,15 @@ See the [@gasket/plugin-logger] docs for more details, as well as the
 
 ## Update Intl
 
+Previous versions of Gasket generated a `locale-manifest.json` file which was 
+loaded behind the scene.
+In this version, Gasket generates a `intl.js` file which is explicitly imported.
+This allows for better transparency and simplifies bundling as it exports a
+`intlManager` which handles loading and resolving locale files and can be
+bundled with Webpack.
+
+The next sections demonstrate how to use the `intl.js` import.
+
 ### Bring your Own Intl Provider
 
 The [@gasket/react-intl] package is convenience wrapper for connecting
@@ -513,9 +540,6 @@ dependency on the `react-intl` package.
 
 In our new version, users have more flexibility to choose their own intl provider.
 While `react-intl` is still a good choice, it is no longer a hard dependency.
-Another change is instead of magic webpack and process.env setups for importing
-a generated manifest of translations, an explicit import of a generated `intl.js`
-file necessary.
 
 ```diff
 // pages/_app.js
@@ -584,6 +608,35 @@ The locale files can exist anywhere, though a top-level `/locales` directory is
 recommended as a convention.
 
 See [@gasket/plugin-intl] for more details and other changes.
+
+### Move locale files (Optional)
+
+Because the `intl.js` is imported and can be bundle with Webpack,
+it is no longer necessary to serve locale files as static files.
+As such, for Next.js, these can be moved out of the `./public` directory.
+
+```diff
+- /public/locales/en-US.json
++ /locales/en-US.json
+```
+
+When this is done, you will also want to update eslint configs if using
+`@godaddy/eslint-plugin-react-intl` to point to the new location for your source
+files:
+
+```diff
+  "eslintConfig": {
+    "extends": [
+      "plugin:@godaddy/react-intl/recommended"
+    ],
+    "settings": {
+      "localeFiles": [
+-        "public/locales/en-US.json"
++        "locales/en-US.json"
+      ]
+    }
+  }
+```
 
 ## Update Custom Commands
 
@@ -795,6 +848,8 @@ export default {
 [middleware paths]:https://github.com/godaddy/gasket/blob/main/packages/gasket-plugin-express/README.md#middleware-paths
 [streaming]: https://nextjs.org/docs/app/building-your-application/routing/loading-ui-and-streaming
 [App Router]: https://nextjs.org/docs/app/building-your-application/routing
+[Next.js 14]: https://nextjs.org/docs/pages/building-your-application/upgrading/version-14
+[Next.js 13]: https://nextjs.org/docs/pages/building-your-application/upgrading/version-13
 
 <!-- Packages -->
 [@gasket/plugin-command]: ../packages/gasket-plugin-command/README.md
