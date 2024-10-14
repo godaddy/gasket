@@ -59,8 +59,7 @@ Get the Fastify app instance.
 const app = actions.gasket.getFastifyApp();
 ```
 
-Only a single Fastify instance is created for per Gasket, ensuring anyplace you
-may need to access the app, you'll have the same instance.
+Each Gasket creates a single shared Fastify instance, ensuring consistent access to the same app instance wherever it's needed.
 
 ## Lifecycles
 
