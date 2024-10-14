@@ -176,33 +176,35 @@ interface Files {
   add(params: { globs: string[], source: object }): void;
 }
 
-export interface Readme {
+export class Readme {
   /** Markdown content to be injected into the app readme */
   markdown: string[];
 
   /** Links to be added to the footer */
   links: string[];
 
+  addNewLine(): this;
+
   /** Add a markdown heading */
-  heading(content: string, level?: number): Readme;
+  heading(content: string, level?: number): this;
 
   /** Add a markdown sub-heading */
-  subHeading(content: string): Readme;
+  subHeading(content: string): this;
 
   /** Add markdown content */
   content(markdown: string);
 
   /** Add a markdown list */
-  list(items: string[]): Readme;
+  list(items: string[]): this;
 
   /** Add a markdown link - printed in footer */
-  link(content: string, href: string): Readme;
+  link(content: string, href: string): this;
 
   /** Add a markdown code block */
-  codeBlock(content: string, syntax?: string): Readme;
+  codeBlock(content: string, syntax?: string): this;
 
   /** Add markdown file */
-  markdownFile(path: string): Promise<Readme>;
+  markdownFile(path: string): Promise<this>;
 }
 
 export type CreatePrompt = PromptModule;
@@ -219,10 +221,10 @@ export interface CreateContextOptions {
 
 export function makeCreateContext(argv?: string[], options?: CreateContextOptions): CreateContext;
 
-export function makeCreateRuntime(context: CreateContext, source: Plugin): CreateContext;
+export function makeCreateRuntime(context: CreateContext, source: Plugin): Proxy<CreateContext>;
 
 declare module 'create-gasket-app' {
-  export declare class CreateContext {
+  export class CreateContext {
     /** Short name of the app */
     appName?: string;
 
@@ -262,6 +264,9 @@ declare module 'create-gasket-app' {
 
     /** any generated files to show in report */
     generatedFiles?: Set<string>;
+
+    /** (INTERNAL) false to skip the prompts */
+    prompts?: boolean;
 
     /** Default empty array, populated by load-preset with actual imports */
     presets?: Array<Plugin>;
@@ -317,7 +322,7 @@ declare module 'create-gasket-app' {
     readme?: Readme;
     
     constructor(initContext?: Partial<T>);
-    runWith(plugin: Plugin): CreateContext;
+    runWith(plugin: Plugin): Proxy<CreateContext>;
   }
 }
 

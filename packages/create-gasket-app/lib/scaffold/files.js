@@ -1,11 +1,6 @@
 /**
-  * @typedef {import('../index.d.ts').Files} IFiles
- */
-
-/**
  * Utility for plugins to add files and templates for generating
- * @class
- * @implements {IFiles}
+ * @type {import('../index').Files} 
  */
 export class Files {
   constructor() {

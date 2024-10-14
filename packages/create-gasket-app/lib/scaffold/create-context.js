@@ -58,11 +58,7 @@ function flatten(acc, values) {
   return acc.concat(values);
 }
 
-/**
- * Class representing the CreateContext.
- * @class
- * @implements {CreateContextClass}
- */
+/** @type {CreateContextClass} */
 export class CreateContext {
   constructor(initContext = {}) {
     Object.assign(this, initContext);
