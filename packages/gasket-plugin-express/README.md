@@ -62,8 +62,7 @@ Get the Express app instance.
 const app = actions.gasket.getExpressApp();
 ```
 
-Only a single Express instance is created for per Gasket, ensuring anyplace you
-may need to access the app, you'll have the same instance.
+Each Gasket creates a single shared Express instance, ensuring consistent access to the same app instance wherever it's needed.
 
 ## Lifecycles
 
