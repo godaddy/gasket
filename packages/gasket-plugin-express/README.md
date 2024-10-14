@@ -54,7 +54,16 @@ export default makeGasket({
 
 ## Actions
 
+### getExpressApp
 
+Get the Express app instance.
+
+```js
+const app = actions.gasket.getExpressApp();
+```
+
+Only a single Express instance is created for per Gasket, ensuring anyplace you
+may need to access the app, you'll have the same instance.
 
 ## Lifecycles
 
