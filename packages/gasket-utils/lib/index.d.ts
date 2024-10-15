@@ -2,7 +2,7 @@ import type { MaybeAsync } from '@gasket/core';
 
 interface PackageManagerOptions {
   /** Name of manager, either `npm` (default) or `yarn` */
-  packageManager: string;
+  packageManager?: string;
   /** Target directory where `node_module` should exist */
   dest: string;
 }

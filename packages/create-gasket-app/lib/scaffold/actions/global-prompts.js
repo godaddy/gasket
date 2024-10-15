@@ -100,7 +100,7 @@ async function promptForTestPlugin(prompt, message, choices) {
       choices: [{ name: 'none', value: 'none' }, ...choices]
     }
   ]);
-  debugger;
+
   return testPlugin !== 'none' ? testPlugin : null;
 }
 
@@ -139,9 +139,8 @@ export const questions = [
  * @type {import('../../internal').globalPrompts}
  */
 async function globalPrompts({ context }) {
-  if (!context.prompts) return;
-  const prompt = inquirer.createPromptModule();
-  debugger;
+  const prompt = context.prompts ? inquirer.createPromptModule() : () => ({});
+
   for (var fn of questions) {
     await fn(context, prompt);
   }

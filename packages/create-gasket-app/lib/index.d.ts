@@ -157,7 +157,7 @@ interface Files {
   /**
    * Array of glob sets, each containing an array of globs and a source object.
    */
-  globSets: Array<{ globs: string[], source: object }>;
+  globSets: Array<{ globs: string[], source: Plugin }>;
 
   /**
    * Return array of globs.
@@ -207,7 +207,11 @@ export class Readme {
   markdownFile(path: string): Promise<this>;
 }
 
-export type CreatePrompt = PromptModule;
+type NoopPromptObject = {
+  [key: string]: any;
+};
+type NoopPromptFunction = () => NoopPromptObject;
+export type CreatePrompt = PromptModule | NoopPromptFunction;
 
 export interface CreateContextOptions {
   presets?: string[];

@@ -4,9 +4,7 @@ import { runShellCommand } from '@gasket/utils';
 /**
  * Executes the `postCreate` hook for all registered plugins.
  *
- * @param {GasketEngine} gasket - Gasket API
- * @param {CreateContext} context - Create context
- * @returns {Promise} promise
+ * @type {import('../../internal').postCreateHooks}
  */
 async function postCreateHooks({ gasket, context }) {
   const { dest } = context;
