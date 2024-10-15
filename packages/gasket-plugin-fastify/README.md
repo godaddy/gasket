@@ -49,6 +49,18 @@ export default makeGasket({
 });
 ```
 
+## Actions
+
+### getFastifyApp
+
+Get the Fastify app instance.
+
+```js
+const app = actions.gasket.getFastifyApp();
+```
+
+Each Gasket creates a single shared Fastify instance, ensuring consistent access to the same app instance wherever it's needed.
+
 ## Lifecycles
 
 ### fastify

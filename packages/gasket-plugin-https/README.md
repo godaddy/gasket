@@ -98,11 +98,29 @@ export default makeGasket({
 });
 ```
 
+## Actions
+
+### startServer
+
+This action kicks off the machinery to get your Gasket app running.
+Typically placed in a `server.js` file, it can be executed with `node` or your preferred runner.
+
+```js
+import gasket from './gasket.js';
+gasket.actions.startServer();
+```
+
+This action will execute several of the lifecycles mentioned next, allowing apps
+and plugins to further set the server up.
+
 ## Lifecycles
 
 ### devProxy
 
-Adjust and configure `devProxy` options for a proxy server during local development. This is useful if `https` is needed in local development. The options for `http-proxy` can be found [here](https://www.npmjs.com/package/http-proxy#options). The `devProxy` configuration must be defined in some capacity on the gasket config for this lifecycle to execute.
+Adjust and configure `devProxy` options for a proxy server during local development.
+This is useful if `https` is needed in local development.
+The options for `http-proxy` can be found [here](https://www.npmjs.com/package/http-proxy#options).
+The `devProxy` configuration must be defined in some capacity on the gasket config for this lifecycle to execute.
 
 ```js
 /**
@@ -119,12 +137,12 @@ devProxy: async function devProxy(gasket, devProxyConfig) {
     port: 8443
   }
 }
-
 ```
 
 ### serverConfig
 
-Allows for server options to be added before `createServers` is called. Example use-case would be adding `sni` configurations when using `https` for local development.
+Allows for server options to be added before `createServers` is called.
+Example use-case would be adding `sni` configurations when using `https` for local development.
 
 ```js
 /**
@@ -142,7 +160,6 @@ serverConfig:  async function serverConfig(gasket, rawConfig) {
 
   return rawConfig;
 }
-
 ```
 
 ### createServers
