@@ -1,6 +1,6 @@
 ### Page Router
 
-This Gasket app uses Next.js 14 with the Page Router, which relies on the traditional file-based routing within the pages directory. The integration with Next.js 14 leverages features like server-side rendering and static optimization, providing a streamlined development process and ensuring the app remains efficient and scalable.
+This Gasket app uses Next.js 14 with [Page Router] which relies on the traditional file-based routing within the pages directory. The integration with Next.js 14 leverages features like server-side rendering and static optimization, providing a streamlined development process and ensuring the app remains efficient and scalable.
 
 {{#if nextDevProxy}}
 ### Development Proxy
