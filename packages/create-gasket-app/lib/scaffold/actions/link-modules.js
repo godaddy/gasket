@@ -3,9 +3,7 @@ import action from '../action-wrapper.js';
 /**
  * Links local packages using the selected package manager
  *
- * @param {CreateContext} context - Create context
- * @param {Spinner} spinner - Spinner
- * @returns {Promise} promise
+ * @type {import('../../internal').linkModules}
  */
 async function linkModules({ context, spinner }) {
   const { pkgLinks, pkgManager } = context;

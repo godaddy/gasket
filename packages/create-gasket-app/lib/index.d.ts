@@ -25,6 +25,44 @@ export interface PackageJson extends Dependencies {
   homepage?: string;
 }
 
+export function commasToArray(value: string): string[];
+
+
+interface CommandArgument {
+  name: string;
+  description?: string;
+  required?: boolean;
+  default?: any;
+}
+
+interface CommandOption {
+  name: string;
+  description: string;
+  required?: boolean;
+  short?: string;
+  parse?: (value: string) => any;
+  type?: string;
+  conflicts?: string | string[];
+  hidden?: boolean;
+  default?: any;
+}
+
+export function createCommandAction(
+  appname: string,
+  options: CreateCommandOptions,
+  command: Command 
+): Promise<void>;
+
+export interface CreateCommand {
+  id: string;
+  description: string;
+  args: CommandArgument[];
+  action?: createGasketAction;
+  options: CommandOption[];
+  hidden?: boolean;
+  default?: boolean;
+}
+
 export interface ModuleInfo {
   name: string;
   module: any;
@@ -46,9 +84,11 @@ export interface ConfigBuilder<Config> {
   /**
    * Adds all `[key, value]` pairs in the `fields` provided.
    * @param fields - Object to merge. Can be a function that accepts the current fields and object to merge.
+   * @param source - Plugin to blame if conflicts arise from this operation.
    */
   extend(
-    fields: Partial<Config> | ((current: Config) => Partial<Config>)
+    fields: Partial<Config> | ((current: Config) => Partial<Config>),
+    source: Plugin
   ): void;
 
   /**
@@ -57,15 +97,17 @@ export interface ConfigBuilder<Config> {
    *
    * @param key - Field in package.json to add or extend.
    * @param value - Target value to set for key provided.
+   * @param source - Plugin to blame if conflicts arise from this operation.
    * @param [options] - Optional arguments for add behavior
    * @param [options.force] - Should the semver version override other attempts
    *
    * Adapted from @vue/cli under MIT License:
    * https://github.com/vuejs/vue-cli/blob/f09722c/packages/%40vue/cli/lib/GeneratorAPI.js#L117-L150
    */
-  add<Key extends keyof Config>(
+  add<Key extends keyof Config & string>(
     key: Key,
     value: Config[Key],
+    source: Plugin,
     options?: { force?: boolean }
   ): void;
 
@@ -146,132 +188,183 @@ export interface PackageJsonBuilder extends ConfigBuilder<PackageJson> {
   has(key: keyof PackageJson, value: string): boolean;
 }
 
-export interface Files {
-  add(...args: string[]): void;
+/**
+ * Interface for the Files class.
+ */
+interface Files {
+  /**
+   * Array of glob sets, each containing an array of globs and a source object.
+   */
+  globSets: Array<{ globs: string[], source: Plugin }>;
+
+  /**
+   * Return array of globs.
+   * @deprecated
+   * @returns {string[]} `globby` compatible patterns.
+   */
+  readonly globs: string[];
+
+  /**
+   * Adds the specified `globby` compatible patterns, `globs`,
+   * into the set of all sources for this set of files.
+   * @param {Object} params - Object containing `globs` and `source`.
+   * @param {string[]} params.globs - `globby` compatible patterns.
+   * @param {Object} params.source - Plugin to blame if conflicts arise from this operation.
+   */
+  add(params: { globs: string[], source: object }): void;
 }
 
-export interface Readme {
+export class Readme {
   /** Markdown content to be injected into the app readme */
   markdown: string[];
 
   /** Links to be added to the footer */
   links: string[];
 
+  addNewLine(): this;
+
   /** Add a markdown heading */
-  heading(content: string, level?: number): Readme;
+  heading(content: string, level?: number): this;
 
   /** Add a markdown sub-heading */
-  subHeading(content: string): Readme;
+  subHeading(content: string): this;
 
   /** Add markdown content */
   content(markdown: string);
 
   /** Add a markdown list */
-  list(items: string[]): Readme;
+  list(items: string[]): this;
 
   /** Add a markdown link - printed in footer */
-  link(content: string, href: string): Readme;
+  link(content: string, href: string): this;
 
   /** Add a markdown code block */
-  codeBlock(content: string, syntax?: string): Readme;
+  codeBlock(content: string, syntax?: string): this;
 
   /** Add markdown file */
-  markdownFile(path: string): Promise<Readme>;
+  markdownFile(path: string): Promise<this>;
 }
 
-export type CreatePrompt = PromptModule;
+type NoopPromptObject = {
+  [key: string]: any;
+};
+type NoopPromptFunction = () => NoopPromptObject;
+export type CreatePrompt = PromptModule | NoopPromptFunction;
+
+export interface CreateCommandOptions {
+  presets?: string[];
+  npmLink?: string[];
+  presetPath?: string[];
+  packageManager?: string;
+  prompts?: boolean;
+  config?: string;
+  configFile?: string;
+}
+
+export function makeCreateContext(argv?: string[], options?: CreateCommandOptions): CreateContext;
+
+export function makeCreateRuntime(context: CreateContext, source: Plugin): Proxy<CreateContext>;
 
 declare module 'create-gasket-app' {
-  export interface CreateContext {
+  export class CreateContext {
     /** Short name of the app */
-    appName: string;
+    appName?: string;
 
     /** Current work directory */
-    cwd: string;
+    cwd?: string;
 
     /** Path to the target app (Default: cwd/appName) */
-    dest: string;
+    dest?: string;
 
     /** Relative path to the target app */
-    relDest: string;
+    relDest?: string;
 
     /** Whether or not target directory already exists */
-    extant: boolean;
+    extant?: boolean;
 
     /** paths to the local presets packages */
-    localPresets: Array<string>;
+    localPresets?: Array<string>;
 
     /** Raw preset desc from args. Can include version constraint. Added by
      * load-preset if using localPresets. */
-    rawPresets: Array<string>;
+    rawPresets?: Array<string>;
 
     /** Local packages that should be linked */
-    pkgLinks: Array<string>;
+    pkgLinks?: Array<string>;
 
     /** non-error/warning messages to report */
-    messages: Array<string>;
+    messages?: Array<string>;
 
     /** warnings messages to report */
-    warnings: Array<string>;
+    warnings?: Array<string>;
 
     /** error messages to report but do not exit process */
-    errors: Array<string>;
+    errors?: Array<string>;
 
     /** any next steps to report for user */
-    nextSteps: Array<string>;
+    nextSteps?: Array<string>;
 
     /** any generated files to show in report */
-    generatedFiles: Set<string>;
+    generatedFiles?: Set<string>;
+
+    /** (INTERNAL) false to skip the prompts */
+    prompts?: boolean;
 
     /** Default empty array, populated by load-preset with actual imports */
-    presets: Array<Plugin>;
+    presets?: Array<Plugin>;
+
+    /** temporary directory */
+    tmpDir?: string;
 
     /** Default to object w/empty plugins array to be populated by `presetConfig` hook */
-    presetConfig: GasketConfigDefinition;
+    presetConfig?: GasketConfigDefinition;
 
     // Added by `global-prompts`
 
     /** Description of app */
-    appDescription: string;
+    appDescription?: string;
 
     /** Should a git repo be initialized and first commit */
-    gitInit: boolean;
+    gitInit?: boolean;
 
     /** Names of the plugins that add unit and integration tests */
-    testPlugins: Array<string>;
+    testPlugins?: Array<string>;
 
     /** Which package manager to use (Default: 'npm') */
-    packageManager: string;
+    packageManager?: string;
 
     /** Derived install command (Default: 'npm install') */
-    installCmd: string;
+    installCmd?: string;
 
     /** Derived local run command (Default: 'npx gasket local') */
-    localCmd: string;
+    localCmd?: string;
 
     /** Whether or not the user wants to override an extant directory */
-    destOverride: boolean;
+    destOverride?: boolean;
 
     // Added by `setup-pkg`
 
     /** package.json builder */
-    pkg: PackageJsonBuilder;
+    pkg?: PackageJsonBuilder;
 
     /** manager to execute npm or yarn commands */
-    pkgManager: PackageManager;
+    pkgManager?: PackageManager;
 
     // Added by `setup-gasket-config`
 
     /** gasket.config builder */
-    gasketConfig: ConfigBuilder<GasketConfigDefinition>;
+    gasketConfig?: ConfigBuilder<GasketConfigDefinition>;
 
     // Added by `create-hooks`
 
     /** Use to add files and templates to generate */
-    files: Files;
+    files?: Files;
 
     /** Use to add content to the README.md */
-    readme: Readme;
+    readme?: Readme;
+    
+    constructor(initContext?: Partial<T>);
+    runWith(plugin: Plugin): Proxy<CreateContext>;
   }
 }
 

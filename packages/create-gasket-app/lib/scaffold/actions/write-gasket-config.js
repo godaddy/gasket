@@ -5,8 +5,7 @@ import action from '../action-wrapper.js';
 
 /**
  * writePluginImports - Write string imports as value(s)
- * @param {string[]} plugins - Array of plugin import names
- * @returns {string} - Array of plugin imports as string
+ * @type {import('../../internal').writePluginImports}
  */
 function writePluginImports(plugins) {
   return plugins.reduce((acc, cur, index) => {
@@ -17,8 +16,7 @@ function writePluginImports(plugins) {
 
 /**
  * writeImports - Write imports to file using key value pairs
- * @param {{[pluginImport: string]: string}[]} imports - Array of key value pairs for imports
- * @returns {string} - import declarations as string
+ * @type {import('../../internal').writeImports}
  */
 function writeImports(imports) {
   if (!imports) return '';
@@ -27,9 +25,7 @@ function writeImports(imports) {
 
 /**
  * createInjectionAssignments - replace object path with a temp string value
- * @param {GasketConfigDefinition} config - gasket config object
- * @param {{ [configKey]: string }} assignments - key value pairs of config keys to replace
- * @returns {string} - string if assignments is falsy
+ * @type {import('../../internal').createInjectionAssignments}
  */
 function createInjectionAssignments(config, assignments) {
   if (!assignments) return '';
@@ -48,9 +44,7 @@ function createInjectionAssignments(config, assignments) {
 
 /**
  * replaceInjectionAssignments - replace temp string value with actual value
- * @param {string} content
- * @param {{ [configKey]: string }} assignments - key value pairs of config keys to replace
- * @returns {string} - content with replaced values
+ * @type {import('../../internal').replaceInjectionAssignments}
  */
 function replaceInjectionAssignments(content, assignments) {
   if (!assignments) return content;
@@ -63,8 +57,7 @@ function replaceInjectionAssignments(content, assignments) {
 
 /**
  * writeExpressions - Write expressions to file
- * @param {string} expressions - programmatic expressions as string
- * @returns {string} - expressions as string
+ * @type {import('../../internal').writeExpressions}
  */
 function writeExpressions(expressions) {
   if (!expressions) return '';
@@ -73,7 +66,7 @@ function writeExpressions(expressions) {
 
 /**
  * cleanupFields - Remove fields from config object
- * @param {GasketConfigDefinition} config - gasket config object
+ * @type {import('../../internal').cleanupFields}
  */
 function cleanupFields(config) {
   delete config.fields.imports;
@@ -85,8 +78,7 @@ function cleanupFields(config) {
 /**
  * Writes the contents of `pkg` to the app's package.json.
  *
- * @param {CreateContext} context - Create context
- * @returns {Promise} promise
+ * @type {import('../../internal').writeGasketConfig}
  */
 async function writeGasketConfig({ context }) {
   const { dest, gasketConfig, generatedFiles, typescript } = context;

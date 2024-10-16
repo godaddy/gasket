@@ -6,9 +6,7 @@ import action from '../action-wrapper.js';
  *   - Target destination on disk is available. Validate by acquiring
  *     a lock through `mkdir`.
  *
- * @param {CreateContext} context - Create context
- * @param {Spinner} spinner - Spinner
- * @returns {Promise} promise
+ * @type {import('../../internal').mkDir}
  */
 async function mkDir({ context, spinner }) {
   const { dest, relDest, extant, destOverride } = context;

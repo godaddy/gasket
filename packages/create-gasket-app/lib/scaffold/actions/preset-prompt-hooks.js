@@ -3,8 +3,7 @@ import action from '../action-wrapper.js';
 
 /**
  * presetPromptHooks - exec `presetPrompt` hook
- * @param {Gasket} gasket - Preset gasket instance
- * @param {CreateContext} context - Create context
+ * @type {import('../../internal').presetPromptHooks}
  */
 async function presetPromptHooks({ gasket, context }) {
   const prompt = context.prompts ? inquirer.createPromptModule() : () => ({});

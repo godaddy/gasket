@@ -2,7 +2,7 @@ import type { MaybeAsync } from '@gasket/core';
 
 interface PackageManagerOptions {
   /** Name of manager, either `npm` (default) or `yarn` */
-  packageManager: string;
+  packageManager?: string;
   /** Target directory where `node_module` should exist */
   dest: string;
 }
@@ -10,7 +10,7 @@ interface PackageManagerOptions {
 /**
  * Wrapper class for executing commands for a given package manager
  */
-export interface PackageManager {
+export class PackageManager {
   constructor(options: PackageManagerOptions): void;
 
   /** Name of manager, either `npm` (default) or `yarn` */
