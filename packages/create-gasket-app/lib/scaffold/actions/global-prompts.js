@@ -39,7 +39,11 @@ async function choosePackageManager(context, prompt) {
           name: 'packageManager',
           message: 'Which packager would you like to use?',
           type: 'list',
-          choices: [{ name: 'npm' }, { name: 'pnpm' }, { name: 'yarn' }]
+          choices: [
+            { name: 'npm' },
+            { name: 'pnpm' },
+            { name: 'yarn' }
+          ]
         }
       ])
     ).packageManager;
@@ -64,8 +68,13 @@ async function choosePackageManager(context, prompt) {
  */
 async function chooseTestPlugins(context, prompt) {
   const knownTestPlugins = {
-    unit: { mocha: '@gasket/plugin-mocha', jest: '@gasket/plugin-jest' },
-    integration: { cypress: '@gasket/plugin-cypress' }
+    unit: {
+      jest: '@gasket/plugin-jest',
+      mocha: '@gasket/plugin-mocha'
+    },
+    integration: {
+      cypress: '@gasket/plugin-cypress'
+    }
   };
 
   const testTypes = ['unit', 'integration'];

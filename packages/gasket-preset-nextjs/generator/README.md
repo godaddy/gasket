@@ -4,7 +4,7 @@
 
 ## Overview
 
-This application is built with [Gasket](https://gasket.dev/) and [Next.js](https://nextjs.org/). This application utilizes [EcmaScript Modules] and requires Node.js v20 or higher.
+This application is built with [Gasket] and [Next.js] utilizing [EcmaScript Modules] and requires Node.js v20 or higher.
 
 ## Getting Started
 
@@ -37,9 +37,8 @@ DEBUG={{{server}}}:* {{{localCmd}}} // {{{server}}} operations only
 {{{markdownCompile this}}}
 {{/each}}
 <!-- LINKS -->
-[App Router]: https://nextjs.org/docs/app
-[Page Router]: https://nextjs.org/docs/pages
-[Custom Server]: https://nextjs.org/docs/pages/building-your-application/configuring/custom-server
+[Gasket]: https://gasket.dev
+[Next.js]: https://nextjs.org
 [EcmaScript Modules]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules
 {{#each readme.links}}
 {{{this}}}
