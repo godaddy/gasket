@@ -7,7 +7,6 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "moduleResolution": "bundler",
-    "noImplicitAny": true,
     "module": "esnext",
     "lib": [
       "esnext",

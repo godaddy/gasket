@@ -41,7 +41,6 @@ function buildReport(context) {
 
   const generatedFiles = Array.from(generatedFilesSet);
   generatedFiles.sort();
-  debugger;
   return {
     appName,
     output: dest,

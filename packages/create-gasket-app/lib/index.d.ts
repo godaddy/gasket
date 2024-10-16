@@ -25,6 +25,44 @@ export interface PackageJson extends Dependencies {
   homepage?: string;
 }
 
+export function commasToArray(value: string): string[];
+
+
+interface CommandArgument {
+  name: string;
+  description?: string;
+  required?: boolean;
+  default?: any;
+}
+
+interface CommandOption {
+  name: string;
+  description: string;
+  required?: boolean;
+  short?: string;
+  parse?: (value: string) => any;
+  type?: string;
+  conflicts?: string | string[];
+  hidden?: boolean;
+  default?: any;
+}
+
+export function createCommandAction(
+  appname: string,
+  options: CreateCommandOptions,
+  command: Command 
+): Promise<void>;
+
+export interface CreateCommand {
+  id: string;
+  description: string;
+  args: CommandArgument[];
+  action?: createGasketAction;
+  options: CommandOption[];
+  hidden?: boolean;
+  default?: boolean;
+}
+
 export interface ModuleInfo {
   name: string;
   module: any;
@@ -50,7 +88,7 @@ export interface ConfigBuilder<Config> {
    */
   extend(
     fields: Partial<Config> | ((current: Config) => Partial<Config>),
-    source: Object
+    source: Plugin
   ): void;
 
   /**
@@ -69,7 +107,7 @@ export interface ConfigBuilder<Config> {
   add<Key extends keyof Config & string>(
     key: Key,
     value: Config[Key],
-    source: object,
+    source: Plugin,
     options?: { force?: boolean }
   ): void;
 
@@ -213,7 +251,7 @@ type NoopPromptObject = {
 type NoopPromptFunction = () => NoopPromptObject;
 export type CreatePrompt = PromptModule | NoopPromptFunction;
 
-export interface CreateContextOptions {
+export interface CreateCommandOptions {
   presets?: string[];
   npmLink?: string[];
   presetPath?: string[];
@@ -223,7 +261,7 @@ export interface CreateContextOptions {
   configFile?: string;
 }
 
-export function makeCreateContext(argv?: string[], options?: CreateContextOptions): CreateContext;
+export function makeCreateContext(argv?: string[], options?: CreateCommandOptions): CreateContext;
 
 export function makeCreateRuntime(context: CreateContext, source: Plugin): Proxy<CreateContext>;
 

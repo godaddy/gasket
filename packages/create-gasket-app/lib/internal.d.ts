@@ -1,7 +1,15 @@
 import { Gasket } from '@gasket/core';
-import type { CreateContext, CreatePrompt, ConfigBuilder } from './index';
+import type {
+  CreateContext,
+  CreatePrompt,
+  ConfigBuilder,
+  CreateCommand,
+  CommandArgument,
+  CommandOption
+} from './index';
 import type { GasketEngine } from '@gasket/core';
 import ora = require('ora');
+import type { Command, Option } from 'commander';
 
 /** scaffold */
 
@@ -94,3 +102,24 @@ export function buildReport(context: CreateContext): {
   errors?: string[];
   nextSteps?: string[];
 }
+
+/** utils */
+
+export function processCommand(command: CreateCommand): { command: Command, hidden: boolean, isDefault: boolean };
+export function isValidCommand(command: CreateCommand): boolean;
+
+export function processArgs(args: CommandArgument[]): [string, string?, any?][];
+export function isValidArg(arg: CommandArgument): boolean;
+
+interface OptionDefinition { 
+  options: [string, string];
+  conflicts: CommandOption['conflicts'];
+  hidden: CommandOption['hidden'];
+  required: CommandOption['required'];
+  defaultValue: CommandOption['default'];
+  parse: CommandOption['parse']
+};
+export function isValidOption(option: CommandOption): boolean;
+export function processOptions(options: CommandOption[]): OptionDefinition[]
+
+export function createOption(definition: OptionDefinition): Option
