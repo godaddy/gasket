@@ -89,9 +89,9 @@ describe('prompt hook', () => {
           message: 'Which server type would you like to use?',
           type: 'list',
           choices: [
-            { name: 'App Router', value: 'appRouter' },
+            { name: 'Page Router w/ Custom Server', value: 'customServer' },
             { name: 'Page Router', value: 'pageRouter' },
-            { name: 'Page Router w/ Custom Server', value: 'customServer' }
+            { name: 'App Router', value: 'appRouter' }
           ]
         }
       ]);

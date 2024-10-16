@@ -1,6 +1,6 @@
 ### Custom Server
 
-This Gasket app uses Next.js 14 with [Page Router] and a [Custom Server] implementation. The Custom Server allows for more control over the server environment, enabling advanced features like custom routing, middleware, and server-side rendering. This integration enhances development by providing a flexible and scalable solution for building web applications.
+This Gasket app uses Next.js 14 Page Router with a [Custom Server] implementation. The Custom Server allows for more control over the server environment, enabling advanced features like custom routing, middleware, and server-side rendering. This integration enhances development by providing a flexible and scalable solution for building web applications.
 
 {{#if typescript}}
 ### TypeScript & Custom Server
@@ -18,7 +18,7 @@ Here is an example TypeScript plugin:
 ```ts
 // plugins/my-cool-plugin.ts
 export default {
-  name: 'my-cool-plugin'
+  name: 'my-cool-plugin',
   hooks: {
     // hooks
   }
