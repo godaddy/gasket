@@ -13,9 +13,12 @@ describe('create hook', () => {
         has: jest.fn()
       },
       readme: {
-        markdownFile: jest.fn()
+        markdownFile: jest.fn(),
+        link: jest.fn()
       },
-      files: { add: jest.fn() },
+      files: {
+        add: jest.fn()
+      },
       gasketConfig: {
         add: jest.fn(),
         addPlugin: jest.fn()
@@ -40,12 +43,12 @@ describe('create hook', () => {
     it('adds pages router files', async function () {
       await create.handler({}, mockContext);
       expect(mockContext.files.add).toHaveBeenCalledWith(
-        `${root}/../generator/app/pages-router/**/!(*.ts|*.tsx)`
+        `${root}/../generator/app/page-router/**/!(*.ts|*.tsx)`
       );
     });
 
     it('adds app router files', async function () {
-      mockContext.useAppRouter = true;
+      mockContext.nextServerType = 'appRouter';
       await create.handler({}, mockContext);
       expect(mockContext.files.add).toHaveBeenCalledWith(
         `${root}/../generator/app/app-router/**/!(*.ts|*.tsx)`
@@ -56,23 +59,25 @@ describe('create hook', () => {
       mockContext.typescript = true;
       await create.handler({}, mockContext);
       expect(mockContext.files.add).toHaveBeenCalledWith(
-        `${root}/../generator/app/pages-router/**/!(*.js|.jsx)`
+        `${root}/../generator/app/page-router/**/!(*.js|.jsx)`
       );
     });
 
     it('adds partial markdown file for app-router', async function () {
-      mockContext.useAppRouter = true;
+      mockContext.nextServerType = 'appRouter';
       await create.handler({}, mockContext);
       expect(mockContext.readme.markdownFile).toHaveBeenCalledWith(
         `${root}/../generator/markdown/app-router.md`
       );
+      expect(mockContext.readme.link).toHaveBeenCalledWith('App Router', expect.any(String));
     });
 
     it('adds partial markdown file for page-router', async function () {
       await create.handler({}, mockContext);
       expect(mockContext.readme.markdownFile).toHaveBeenCalledWith(
-        `${root}/../generator/markdown/pages-router.md`
+        `${root}/../generator/markdown/page-router.md`
       );
+      expect(mockContext.readme.link).toHaveBeenCalledWith('Page Router', expect.any(String));
     });
 
     it('adds partial markdown file for custom server', async function () {
@@ -81,6 +86,9 @@ describe('create hook', () => {
       expect(mockContext.readme.markdownFile).toHaveBeenCalledWith(
         `${root}/../generator/markdown/custom-server.md`
       );
+
+      expect(mockContext.readme.link).toHaveBeenCalledWith('Custom Server', expect.any(String));
+      expect(mockContext.readme.link).toHaveBeenCalledWith('Page Router', expect.any(String));
     });
   });
 
@@ -90,8 +98,8 @@ describe('create hook', () => {
       mockContext.testPlugins = ['@gasket/mocha'];
       await create.handler({}, mockContext);
       expect(mockContext.files.add).toHaveBeenCalledWith(
-        `${root}/../generator/mocha/pages-router/*`,
-        `${root}/../generator/mocha/pages-router/**/!(*.ts|*.tsx)`
+        `${root}/../generator/mocha/page-router/*`,
+        `${root}/../generator/mocha/page-router/**/!(*.ts|*.tsx)`
       );
     });
 
@@ -99,8 +107,8 @@ describe('create hook', () => {
       mockContext.testPlugins = ['@gasket/jest'];
       await create.handler({}, mockContext);
       expect(mockContext.files.add).toHaveBeenCalledWith(
-        `${root}/../generator/jest/pages-router/*`,
-        `${root}/../generator/jest/pages-router/**/!(*.ts|*.tsx)`
+        `${root}/../generator/jest/page-router/*`,
+        `${root}/../generator/jest/page-router/**/!(*.ts|*.tsx)`
       );
     });
 
@@ -113,13 +121,13 @@ describe('create hook', () => {
       );
     });
 
-    it('adds ts extenstion files', async function () {
+    it('adds ts extension files', async function () {
       mockContext.typescript = true;
       mockContext.testPlugins = ['@gasket/jest'];
       await create.handler({}, mockContext);
       expect(mockContext.files.add).toHaveBeenCalledWith(
-        `${root}/../generator/jest/pages-router/*`,
-        `${root}/../generator/jest/pages-router/**/!(*.js|*.jsx)`
+        `${root}/../generator/jest/page-router/*`,
+        `${root}/../generator/jest/page-router/**/!(*.js|*.jsx)`
       );
     });
 
@@ -127,13 +135,13 @@ describe('create hook', () => {
       mockContext.testPlugins = [];
       await create.handler({}, mockContext);
       expect(mockContext.files.add).not.toHaveBeenCalledWith(
-        `${root}/../generator/jest/pages-router/*`,
-        `${root}/../generator/jest/pages-router/**/!(*.js|*.jsx)`
+        `${root}/../generator/jest/page-router/*`,
+        `${root}/../generator/jest/page-router/**/!(*.js|*.jsx)`
       );
     });
 
     it('adds files for app-router', async function () {
-      mockContext.useAppRouter = true;
+      mockContext.nextServerType = 'appRouter';
       mockContext.testPlugins = ['@gasket/jest'];
       await create.handler({}, mockContext);
       expect(mockContext.files.add).toHaveBeenCalledWith(
