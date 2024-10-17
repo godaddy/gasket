@@ -64,8 +64,9 @@ const plugin = {
 
           pkg.add('devDependencies', {
             // All dependencies to correctly configure React Testing Library
-            'jsdom': devDependencies.jsdom,
+            '@babel/preset-react': devDependencies['@babel/preset-react'],
             '@testing-library/react': devDependencies['@testing-library/react'],
+            'jsdom': devDependencies.jsdom,
             'global-jsdom': devDependencies['global-jsdom'],
             [name]: `^${version}`
           });

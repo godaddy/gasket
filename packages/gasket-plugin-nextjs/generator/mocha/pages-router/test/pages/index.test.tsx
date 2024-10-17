@@ -19,7 +19,7 @@ describe('IndexPage', () => {
   it('renders page', () => {
     render(
 {{#if hasGasketIntl}}
-      <IntlProvider locale={'en-US'} messages={messages}>
+      <IntlProvider locale={ 'en-US' } messages={ messages }>
 {{/if}}
       <IndexPage />
 {{#if hasGasketIntl}}
