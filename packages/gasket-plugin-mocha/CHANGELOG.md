@@ -1,5 +1,9 @@
 # `@gasket/plugin-mocha`
 
+### 7.0.4
+
+- Add `@babel/preset-react` as a dev dep during create ([#947])
+
 ### 7.0.0
 
 - See [Version 7 Upgrade Guide] for overall changes
@@ -96,3 +100,4 @@
 [#463]: https://github.com/godaddy/gasket/pull/463
 [#553]: https://github.com/godaddy/gasket/pull/553
 [#807]: https://github.com/godaddy/gasket/pull/807
+[#947]: https://github.com/godaddy/gasket/pull/947
