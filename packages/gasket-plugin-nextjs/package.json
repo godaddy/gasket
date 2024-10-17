@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-nextjs",
-  "version": "7.0.1",
+  "version": "7.0.4",
   "description": "Adds Next support to your application",
   "types": "lib/index.d.ts",
   "files": [
@@ -43,7 +43,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-nextjs",
   "dependencies": {
-    "@gasket/plugin-webpack": "^7.0.1",
+    "@gasket/plugin-webpack": "^7.0.4",
     "fastify": "^4.28.1"
   },
   "devDependencies": {
