@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-docs",
-  "version": "7.0.1",
+  "version": "7.0.4",
   "description": "Centralize doc files from plugins and modules",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -45,7 +45,7 @@
   },
   "devDependencies": {
     "@gasket/core": "^7.0.1",
-    "@gasket/plugin-metadata": "^7.0.1",
+    "@gasket/plugin-metadata": "^7.0.4",
     "@godaddy/dmd": "^1.0.4",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
