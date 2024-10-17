@@ -1,5 +1,9 @@
 # `@gasket/preset-nextjs`
 
+### 7.0.4
+
+- Adjust link references ([#946])
+
 ### 7.0.0
 
 - See [Version 7 Upgrade Guide] for overall changes
@@ -29,3 +33,4 @@
 [#311]: https://github.com/godaddy/gasket/pull/311
 [#736]: https://github.com/godaddy/gasket/pull/736
 [#762]: https://github.com/godaddy/gasket/pull/762
+[#946]: https://github.com/godaddy/gasket/pull/946
