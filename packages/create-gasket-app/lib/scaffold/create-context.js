@@ -4,14 +4,10 @@ import path from 'path';
 import { readConfig } from '../scaffold/utils.js';
 
 /**
- * @typedef {import('create-gasket-app').CreateContext} CreateContextClass
- */
-
-/**
  * The CreateRuntime represents a shallow proxy to a CreateContext
  * that automatically adds transactional information for providing
  * CLI users with blame information in the event of conflicts.
- * @type {import('../index').makeCreateRuntime}
+ * @type {import('../internal').makeCreateRuntime}
  */
 function makeCreateRuntime(context, source) {
   //
@@ -67,7 +63,7 @@ export class CreateContext {
   }
 }
 
-/** @type {import('../index').makeCreateContext} */
+/** @type {import('../internal').makeCreateContext} */
 export function makeCreateContext(argv = [], options = {}) {
   const appName = argv[0] || 'templated-app';
   const {
@@ -93,8 +89,8 @@ export function makeCreateContext(argv = [], options = {}) {
 
   /**
    * Input context which will be appended by prompts and passed to create hooks
-   * @type {CreateContextClass}
-   */
+   * @type {import('../internal').PartialCreateContext}
+  */
   const context = new CreateContext({
     destOverride: true,
     cwd,

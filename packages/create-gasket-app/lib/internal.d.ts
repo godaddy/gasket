@@ -7,19 +7,25 @@ import type {
   CommandArgument,
   CommandOption
 } from './index';
-import type { GasketEngine } from '@gasket/core';
+import type { GasketEngine, Plugin } from '@gasket/core';
 import type ora from 'ora';
 import type { Command, Option } from 'commander';
+
+
+export type PartialCreateContext = Partial<CreateContext>;
 
 /** scaffold */
 
 export function readConfig(
-  context: CreateContext,
+  context: PartialCreateContext,
   configFlags: { config?: string; configFile?: string }
 ): void;
 
-export function dumpErrorContext(context: CreateContext, error: Error): Promise<void>;
+export function dumpErrorContext(context: PartialCreateContext, error: Error): Promise<void>;
 
+export function makeCreateContext(argv?: string[], options?: CreateCommandOptions): PartialCreateContext;
+
+export function makeCreateRuntime(context: PartialCreateContext, source: Plugin): Proxy<CreateContext>;
 
 export function spinnerAction({ gasket, context, spinner } : {
   gasket?: GasketEngine;

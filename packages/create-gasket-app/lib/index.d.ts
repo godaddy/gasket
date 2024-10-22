@@ -366,107 +366,103 @@ export interface CreateCommandOptions {
   configFile?: string;
 }
 
-export function makeCreateContext(argv?: string[], options?: CreateCommandOptions): CreateContext;
-
-export function makeCreateRuntime(context: CreateContext, source: Plugin): Proxy<CreateContext>;
-
 declare module 'create-gasket-app' {
   export class CreateContext {
     /** Short name of the app */
-    appName?: string;
+    appName: string;
 
     /** Current work directory */
-    cwd?: string;
+    cwd: string;
 
     /** Path to the target app (Default: cwd/appName) */
-    dest?: string;
+    dest: string;
 
     /** Relative path to the target app */
-    relDest?: string;
+    relDest: string;
 
     /** Whether or not target directory already exists */
-    extant?: boolean;
+    extant: boolean;
 
     /** paths to the local presets packages */
-    localPresets?: Array<string>;
+    localPresets: Array<string>;
 
     /** Raw preset desc from args. Can include version constraint. Added by
      * load-preset if using localPresets. */
-    rawPresets?: Array<string>;
+    rawPresets: Array<string>;
 
     /** Local packages that should be linked */
-    pkgLinks?: Array<string>;
+    pkgLinks: Array<string>;
 
     /** non-error/warning messages to report */
-    messages?: Array<string>;
+    messages: Array<string>;
 
     /** warnings messages to report */
-    warnings?: Array<string>;
+    warnings: Array<string>;
 
     /** error messages to report but do not exit process */
-    errors?: Array<string>;
+    errors: Array<string>;
 
     /** any next steps to report for user */
-    nextSteps?: Array<string>;
+    nextSteps: Array<string>;
 
     /** any generated files to show in report */
-    generatedFiles?: Set<string>;
+    generatedFiles: Set<string>;
 
     /** (INTERNAL) false to skip the prompts */
-    prompts?: boolean;
+    prompts: boolean;
 
     /** Default empty array, populated by load-preset with actual imports */
-    presets?: Array<Plugin>;
+    presets: Array<Plugin>;
 
     /** temporary directory */
-    tmpDir?: string;
+    tmpDir: string;
 
     /** Default to object w/empty plugins array to be populated by `presetConfig` hook */
-    presetConfig?: GasketConfigDefinition;
+    presetConfig: GasketConfigDefinition;
 
     // Added by `global-prompts`
 
     /** Description of app */
-    appDescription?: string;
+    appDescription: string;
 
     /** Should a git repo be initialized and first commit */
-    gitInit?: boolean;
+    gitInit: boolean;
 
     /** Names of the plugins that add unit and integration tests */
-    testPlugins?: Array<string>;
+    testPlugins: Array<string>;
 
     /** Which package manager to use (Default: 'npm') */
-    packageManager?: string;
+    packageManager: string;
 
     /** Derived install command (Default: 'npm install') */
-    installCmd?: string;
+    installCmd: string;
 
     /** Derived local run command (Default: 'npx gasket local') */
-    localCmd?: string;
+    localCmd: string;
 
     /** Whether or not the user wants to override an extant directory */
-    destOverride?: boolean;
+    destOverride: boolean;
 
     // Added by `setup-pkg`
 
     /** package.json builder */
-    pkg?: PackageJsonBuilder;
+    pkg: PackageJsonBuilder;
 
     /** manager to execute npm or yarn commands */
-    pkgManager?: PackageManager;
+    pkgManager: PackageManager;
 
     // Added by `setup-gasket-config`
 
     /** gasket.config builder */
-    gasketConfig?: ConfigBuilder<GasketConfigDefinition>;
+    gasketConfig: ConfigBuilder<GasketConfigDefinition>;
 
     // Added by `create-hooks`
 
     /** Use to add files and templates to generate */
-    files?: Files;
+    files: Files;
 
     /** Use to add content to the README.md */
-    readme?: Readme;
+    readme: Readme;
     
     constructor(initContext?: Partial<T>);
     runWith(plugin: Plugin): Proxy<CreateContext>;
