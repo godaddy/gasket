@@ -8,6 +8,16 @@ notably the [@gasket/plugin-docs] which uses it to collate docs for an app.
 
 This is a default plugin in the Gasket CLI and is always available for use.
 
+## Actions
+
+### getMetadata
+
+Get all the metadata for the configured plugins and modules.
+
+```js
+const metadata = await gasket.actions.getMetadata();
+```
+
 ## Lifecycles
 
 ### metadata

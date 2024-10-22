@@ -1,5 +1,14 @@
 # `@gasket/plugin-nextjs`
 
+### 7.0.5
+
+- Fix typo in dir names ([#948])
+
+### 7.0.4
+
+- Add app type readme links in create ([#946])
+- Make Custom Server default prompt choice
+
 ### 7.0.0
 
 - See [Version 7 Upgrade Guide] for overall changes
@@ -299,4 +308,6 @@
 [#799]: https://github.com/godaddy/gasket/pull/799
 [#806]: https://github.com/godaddy/gasket/pull/806
 [#814]: https://github.com/godaddy/gasket/pull/814
+[#946]: https://github.com/godaddy/gasket/pull/946
+[#948]: https://github.com/godaddy/gasket/pull/948
 

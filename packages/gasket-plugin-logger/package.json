@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-logger",
-  "version": "7.0.1",
+  "version": "7.0.4",
   "description": "Gasket plugin for logging",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -37,8 +37,8 @@
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-logger",
   "devDependencies": {
     "@gasket/core": "^7.0.1",
-    "@gasket/plugin-https": "^7.0.1",
-    "@gasket/plugin-metadata": "^7.0.1",
+    "@gasket/plugin-https": "^7.0.4",
+    "@gasket/plugin-metadata": "^7.0.4",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
     "eslint-config-godaddy": "^7.1.1",
