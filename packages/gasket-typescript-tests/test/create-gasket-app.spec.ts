@@ -38,7 +38,7 @@ describe('create-gasket-app', () => {
       gasketConfig.addExpression('const file = fs.readFileSync(\'./file.txt\')');
       gasketConfig.injectValue('foo.bar', 'baz');
 
-      await pkgManager?.exec('echo', ['hello', 'world']);
+      await pkgManager.exec('echo', ['hello', 'world']);
     };
   });
 
