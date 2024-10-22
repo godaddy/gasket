@@ -165,6 +165,12 @@ function addNpmScripts({ pkg, nextServerType, nextDevProxy, typescript, hasGaske
   pkg.add('scripts', scripts);
 }
 
+/**
+ * @param {Object} params
+ * @param {any} [params.gasketConfig]
+ * @param {any} [params.nextDevProxy]
+ * @param {any} [params.nextServerType]
+ */
 function addConfig({ gasketConfig, nextDevProxy, nextServerType }) {
   gasketConfig.addPlugin('pluginNextjs', name);
 

@@ -3,7 +3,6 @@ import action from '../action-wrapper.js';
 
 /**
  * What is your app description?
- *
  * @type {import('../../internal').chooseAppDescription}
  */
 async function chooseAppDescription(context, prompt) {
@@ -23,7 +22,6 @@ async function chooseAppDescription(context, prompt) {
 
 /**
  * What package manager do you want to use?
- *
  * @type {import('../../internal').choosePackageManager}
  */
 async function choosePackageManager(context, prompt) {
@@ -53,7 +51,6 @@ async function choosePackageManager(context, prompt) {
 
 /**
  * Choose your unit test suite and integration test suite
- *
  * @type {import('../../internal').chooseTestPlugins}
  */
 async function chooseTestPlugins(context, prompt) {
@@ -88,7 +85,7 @@ async function chooseTestPlugins(context, prompt) {
 }
 
 /**
- * 
+ *
  * @type {import('../../internal').promptForTestPlugin}
  */
 async function promptForTestPlugin(prompt, message, choices) {
@@ -107,7 +104,6 @@ async function promptForTestPlugin(prompt, message, choices) {
 /**
  * Given that gasket is creating in an already existing directory, it should
  * confirm with the user that it's intentionally overwriting that directory
- *
  * @type {import('../../internal').allowExtantOverwriting}
  */
 async function allowExtantOverwriting(context, prompt) {
@@ -135,7 +131,6 @@ export const questions = [
 
 /**
  * Fire off prompts for user input
- *
  * @type {import('../../internal').globalPrompts}
  */
 async function globalPrompts({ context }) {

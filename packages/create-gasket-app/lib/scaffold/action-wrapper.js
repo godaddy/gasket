@@ -4,13 +4,11 @@ import ora from 'ora';
  * Decorate a create action with spinner.
  * If an action throws, a fail spinner will render for the step, regardless of
  * if the spinner was started or not.
- *
  * @type {import('../internal').withSpinner}
  */
 export default function withSpinner(label, fn, { startSpinner = true } = {}) {
   /**
    * Decorated function
-   *
    * @type {import('../internal').withSpinnerWrapper}
    */
   async function wrapper({ gasket = {}, context }) {

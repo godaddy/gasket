@@ -2,7 +2,6 @@ import action from '../action-wrapper.js';
 
 /**
  * Links local packages using the selected package manager
- *
  * @type {import('../../internal').linkModules}
  */
 async function linkModules({ context, spinner }) {

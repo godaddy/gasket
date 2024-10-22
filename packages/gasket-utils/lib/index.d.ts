@@ -4,7 +4,7 @@ interface PackageManagerOptions {
   /** Name of manager, either `npm` (default) or `yarn` */
   packageManager?: string;
   /** Target directory where `node_module` should exist */
-  dest: string;
+  dest?: string;
 }
 
 /**

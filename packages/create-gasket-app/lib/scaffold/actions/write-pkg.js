@@ -4,7 +4,6 @@ import action from '../action-wrapper.js';
 
 /**
  * Writes the contents of `pkg` to the app's package.json.
- *
  * @type {import('../../internal').writePkg}
  */
 async function writePkg({ context }) {

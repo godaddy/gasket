@@ -1,6 +1,7 @@
 import type { GasketConfigDefinition, MaybeAsync, Plugin, GasketEngine } from '@gasket/core';
 import type { PackageManager } from '@gasket/utils';
 import type { PromptModule } from 'inquirer';
+import type ora from 'ora';
 
 export interface Dependencies {
   dependencies?: Record<string, string>;
@@ -26,7 +27,6 @@ export interface PackageJson extends Dependencies {
 }
 
 export function commasToArray(value: string): string[];
-
 
 interface CommandArgument {
   name: string;
@@ -76,10 +76,17 @@ export interface PresetInfo extends ModuleInfo { }
 export interface PluginInfo extends ModuleInfo { }
 
 export interface ConfigBuilder<Config> {
-  /**
-   * fields object
-   */
+  /** fields object */
   fields: { [key: string]: any };
+  original?: { [key: string]: any };
+  source?: Plugin;
+  orderBy?: string[];
+  orderedFields?: string[];
+  objectFields?: string[];
+  semverFields?: string[];
+  blame?: Map<string, string[]>;
+  force?: Set<any>;
+  warnings?: string[];
 
   /**
    * Adds all `[key, value]` pairs in the `fields` provided.
@@ -90,6 +97,7 @@ export interface ConfigBuilder<Config> {
     fields: Partial<Config> | ((current: Config) => Partial<Config>),
     source: Plugin
   ): void;
+  extend(fields: Partial<Config> | ((current: Config) => Partial<Config>)): void;
 
   /**
    * Performs an intelligent, domain-aware merge of the `value` for
@@ -110,6 +118,7 @@ export interface ConfigBuilder<Config> {
     source: Plugin,
     options?: { force?: boolean }
   ): void;
+  add(key: string, value: object, options?: object): void;
 
   /**
    * addPlugin - Add plugin import to the gasket file and use the value in the plugins array
@@ -212,6 +221,102 @@ interface Files {
    * @param {Object} params.source - Plugin to blame if conflicts arise from this operation.
    */
   add(params: { globs: string[], source: object }): void;
+  add(...globs: string[]): void;
+
+  /** Add a warning message if this.warnings exists else log it as a warming */
+  warn(message: string): void;
+
+  /**
+   * Checks if a dependency has been already added
+   * @param  {string} key Dependency bucket
+   * @param  {string} value Dependency to search
+   * @returns {boolean} True if the dependency exists on the bucket
+   */
+  has(key: string, value: string): boolean;
+
+  /**
+   * Returns the existing and target array merged without duplicates
+   * @param  {Array} existing Partial lattice to merge.
+   * @param  {Array} target   Partial lattice to merge.
+   * @returns {Array} existing ∪ (i.e. union) target
+   *
+   * Adapted from @vue/cli under MIT License:
+   * https://github.com/vuejs/vue-cli/blob/f09722c/packages/%40vue/cli/lib/GeneratorAPI.js#L15
+   */
+  mergeArrayDeduped(existing: any[], target: any[]): any[];
+
+  /**
+   * Attempts to merge all entries within the `value` provided by
+   * the plugin specified by `name` into the `existing` semver-aware
+   * Object `key` (e.g. dependencies, etc.) for this instance.
+   *
+   * Merge algorithm:
+   *
+   * - ∀   [dep, ver] := Object.entries(value)
+   *   and [prev]     := any existing version for dep
+   *
+   *   - If ver is not valid semver ––> ■
+   *   - If ¬∃ prev                 ––> set and blame [dep, ver]
+   *   - If ver > prev              ––> set and blame [dep, ver]
+   *   - If ¬(ver ∩ prev)           ––> Conflict. Print.
+   * @param {object} options
+   * @param  {string} options.key      {devD,peerD,optionalD,d}ependencies
+   * @param  {object} options.value    Updates for { name: version } pairs
+   * @param  {object} options.existing Existing { name: version } pairs
+   * @param  {string} options.name     Plugin name providing merge `value``
+   * @param {boolean} [options.force]  Should the semver version override other attempts
+   *
+   * Adapted from @vue/cli under MIT License:
+   * https://github.com/vuejs/vue-cli/blob/f09722c/packages/%40vue/cli/lib/util/mergeDeps.js
+   */
+  semanticMerge({ key, value, existing, name, force }: {
+    key: string;
+    value: any;
+    existing: any;
+    name: string;
+    force?: boolean;
+  }): void;
+
+    /**
+   * Normalizes a potential semver range into a semver string
+   * and returns the newest version
+   * @param  {string} r1 Semver string (potentially invalid).
+   * @param  {string} r2 Semver string (potentially invalid).
+   * @returns {string | undefined} Newest semver version.
+   *
+   * Adapted from @vue/cli under MIT License:
+   * https://github.com/vuejs/vue-cli/blob/f09722c/packages/%40vue/cli/lib/util/mergeDeps.js#L58-L64
+   */
+  tryGetNewerRange(r1: string, r2: string): string | undefined;
+
+    /**
+   * Performs a naive attempt to take a transform a semver range
+   * into a concrete version that may be used for "newness"
+   * comparison.
+   * @param  {string} range Valid "basic" semver:   ^X.Y.Z, ~A.B.C, >=2.3.x, 1.x.x
+   * @returns {string} Concrete as possible version: X.Y.Z,  A.B.C,   2.3.0, 1.0.0
+   */
+  rangeToVersion(range: string): string;
+
+  /**
+   * Orders top-level keys by `orderBy` options with any fields specified in
+   * the `orderFields` options having their keys sorted.
+   * @returns {object} Ready to be serialized JavaScript object.
+   */
+    toJSON(): object;
+
+    /**
+   * Orders the given object, `obj`, applying any (optional)
+   * key order specified via `orderBy`. If no `orderBy` is provided
+   * keys are ordered lexographically.
+   * @param  {object}   obj       Object to transform to ordered keys
+   * @param  {string[]} [orderBy] Explicit key order to use.
+   * @returns {object} Shallow clone of `obj` with ordered keys
+   *
+   * Adapted from @vue/cli under MIT License:
+   * https://github.com/vuejs/vue-cli/blob/f09722c/packages/%40vue/cli/lib/util/sortObject.js
+   */
+  toOrderedKeys(obj: object, orderBy?: string[]): object;
 }
 
 export class Readme {
@@ -371,7 +476,7 @@ declare module 'create-gasket-app' {
 export interface ActionWrapperParams {
   gasket: GasketEngine;
   context: CreateContext;
-  spinner?: any;
+  spinner?: ora.Ora;
 }
 
 declare module '@gasket/core' {

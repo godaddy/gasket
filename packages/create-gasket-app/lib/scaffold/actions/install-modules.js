@@ -2,7 +2,6 @@ import action from '../action-wrapper.js';
 
 /**
  * Installs node_modules using the selected package manager
- *
  * @type {import('../../internal').installModules}
  */
 async function installModules({ context }) {

@@ -13,17 +13,17 @@ describe('create-gasket-app', () => {
     const hook: Hook<'create'> = async (gasket: Gasket, context: CreateContext) => {
       const { pkg, files, readme, gasketConfig, pkgManager } = context;
 
-      pkg.add('devDependencies', { 'left-pad': '^1.0.0' });
-      pkg.add('devDependencies', { 'left-pad': '^1.0.0' }, { force: true });
+      pkg?.add('devDependencies', { 'left-pad': '^1.0.0' });
+      pkg?.add('devDependencies', { 'left-pad': '^1.0.0' }, { force: true });
 
-      files.add('generator/**/*');
-      files.add(
+      files?.add('generator/**/*');
+      files?.add(
         'generator/*',
         'generator/**/*'
       );
 
       readme
-        .heading('Hello, World')
+        ?.heading('Hello, World')
         .heading('Hello, World', 1)
         .subHeading('Subheading')
         .content('Hello, World')
@@ -31,14 +31,14 @@ describe('create-gasket-app', () => {
         .link('https://example.com', 'Example')
         .codeBlock('console.log("Hello, World")')
         .codeBlock('console.log("Hello, World")', 'javascript');
-      await readme.markdownFile('README.md');
+      await readme?.markdownFile('README.md');
 
-      gasketConfig.addPlugin('pluginAny', '@my/gasket-plugin');
-      gasketConfig.addImport('{ readFile }', 'fs/promises');
-      gasketConfig.addExpression('const file = fs.readFileSync(\'./file.txt\')');
-      gasketConfig.injectValue('foo.bar', 'baz');
+      gasketConfig?.addPlugin('pluginAny', '@my/gasket-plugin');
+      gasketConfig?.addImport('{ readFile }', 'fs/promises');
+      gasketConfig?.addExpression('const file = fs.readFileSync(\'./file.txt\')');
+      gasketConfig?.injectValue('foo.bar', 'baz');
 
-      await pkgManager.exec('echo', ['hello', 'world']);
+      await pkgManager?.exec('echo', ['hello', 'world']);
     };
   });
 

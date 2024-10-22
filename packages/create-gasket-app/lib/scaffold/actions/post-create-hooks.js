@@ -3,7 +3,6 @@ import { runShellCommand } from '@gasket/utils';
 
 /**
  * Executes the `postCreate` hook for all registered plugins.
- *
  * @type {import('../../internal').postCreateHooks}
  */
 async function postCreateHooks({ gasket, context }) {
@@ -11,7 +10,7 @@ async function postCreateHooks({ gasket, context }) {
 
   /**
    * Run an npm script in the context of the created application
-   * @param  {String} script name of script
+   * @param  {string} script name of script
    * @returns {Promise} A promise represents if npm succeeds or fails.
    */
   async function runScript(script) {

@@ -4,8 +4,7 @@ import { writeFile } from 'fs/promises';
 /**
  * If an error occurs during create, dump the context for debugging.
  * The error which cause the exit is also included in the log.
- *
- * @type {import('../internal').dumpErrorContext} 
+ * @type {import('../internal').dumpErrorContext}
  */
 export async function dumpErrorContext(context, error) {
   const { cwd } = context;

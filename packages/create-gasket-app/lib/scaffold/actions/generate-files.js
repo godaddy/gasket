@@ -20,7 +20,6 @@ const splitSep = pthStr => pthStr.split(reSep);
  * Find all duplicate target files and reduce to single descriptor.
  * Keeps track of overrides.
  * Last in wins.
- *
  * @type {import('../../internal').reduceDescriptors}
  */
 function reduceDescriptors(descriptors) {
@@ -42,7 +41,6 @@ function reduceDescriptors(descriptors) {
 
 /**
  * Assemble the description objects from glob results
- *
  * @type {import('../../internal').assembleDescriptors}
  */
 function assembleDescriptors(dest, from, pattern, srcPaths) {
@@ -66,7 +64,6 @@ function assembleDescriptors(dest, from, pattern, srcPaths) {
 
 /**
  * Build a list of descriptions of all files we want to generate
- *
  * @type {import('../../internal').getDescriptors}
  */
 async function getDescriptors(context) {
@@ -88,7 +85,6 @@ async function getDescriptors(context) {
 
 /**
  * Read file content, apply templating, then write out target file.
- *
  * @type {import('../../internal').performGenerate}
  */
 async function performGenerate(context, descriptors) {
@@ -155,7 +151,6 @@ async function performGenerate(context, descriptors) {
 
 /**
  * Generate the app files and templates using context
- *
  * @type {import('../../internal').generateFiles}
  */
 async function generateFiles({ context, spinner }) {

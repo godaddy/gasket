@@ -7,9 +7,8 @@ const debug = diagnostics('gasket:cli:package');
 /**
  * Simple object check without bringing in a large
  * utility library.
- *
  * @param {*} value - What to test if an object
- * @returns {Boolean} results
+ * @returns {boolean} results
  */
 function isObject(value) {
   return value && typeof value === 'object';
@@ -35,7 +34,6 @@ const versionTypes = {
 /**
  * Validates if the version `v` is valid for `package.json`
  * dependencies, devDependencies, etc.
- *
  * @param  {string}  v Version in package.json field.
  * @returns {boolean} Value indicating if npm accepts the value
  */
@@ -48,25 +46,19 @@ function isValidVersion(v) {
   return v === 'latest'
     || v.match(versionTypes.uri) != null    // eslint-disable-line eqeqeq
     || v.match(versionTypes.github) != null // eslint-disable-line eqeqeq
-    || semver.validRange(v);
+    || !!semver.validRange(v);
 }
 
 /**
  * ConfigBuilder is an extensible data structure for **specifically**
  * managing `package.json` data.
- *
- * @type {ConfigBuilder}
+ * @type {import('../index').ConfigBuilder}
  */
 export class ConfigBuilder {
   /**
    * ConfigBuilder
-   *
-   * @param {Object} [fields] - Initial fields
-   * @param {Object} [options] - Additional setup options
-   * @param {String[]} [options.orderBy] - Preferred order to sort top-level keys
-   * @param {String[]} [options.orderedFields] - Fields that should be sorted
-   * @param {String[]} [options.objectFields] - Fields that are required to be object type
-   * @param {String[]} [options.semverFields] - Fields that are aware of semantic versioning
+   * @param fields
+   * @param options
    */
   constructor(fields = {}, options = {}) {
     this.fields = Object.assign({}, fields);
@@ -80,6 +72,7 @@ export class ConfigBuilder {
     this.objectFields = options.objectFields;
     this.semverFields = options.semverFields;
     this.warnings = options.warnings;
+    this.source = options.source;
 
     // Any semverFields are also object fields and ordered fields.
     if (Array.isArray(this.semverFields)) {
@@ -90,9 +83,8 @@ export class ConfigBuilder {
 
   /**
    * Creator method to get a new instance
-   *
-   * @param {Object} [fields] - Initial fields
-   * @param {Object} [options] - Additional setup options
+   * @param {object} [fields] - Initial fields
+   * @param {object} [options] - Additional setup options
    * @returns {ConfigBuilder} instance
    */
   static create(fields = {}, options = {}) {
@@ -101,9 +93,8 @@ export class ConfigBuilder {
 
   /**
    * Create an instance configured with options for package.json files
-   *
-   * @param {Object} [fields] - Initial fields
-   * @param {Object} [options] - Additional setup options
+   * @param {object} [fields] - Initial fields
+   * @param {object} [options] - Additional setup options
    * @returns {ConfigBuilder} instance
    */
   static createPackageJson(fields = {}, options = {}) {
@@ -143,9 +134,9 @@ export class ConfigBuilder {
 
   /**
    * Adds all `[key, value]` pairs in the `fields` provided.
-   * @param {object|function(current)} fields - Object to merge.
+   * @param {object|function(current):object} fields - Object to merge.
    *    Can be a function that accepts the current fields and object to merge.
-   * @param {Object} source Plugin to blame if conflicts arise from this operation.
+   * @param {object} source Plugin to blame if conflicts arise from this operation.
    *
    * Adapted from @vue/cli under MIT License:
    * https://github.com/vuejs/vue-cli/blob/f09722c/packages/%40vue/cli/lib/GeneratorAPI.js#L117-L150
@@ -171,7 +162,7 @@ export class ConfigBuilder {
    * the given `key` into the package.json fields associated with this instance.
    * @param {string} key - Field in package.json to add or extend.
    * @param {*} value - Target value to set for key provided.
-   * @param {Object} source - Plugin to blame if conflicts arise from this operation.
+   * @param {object} source - Plugin to blame if conflicts arise from this operation.
    * @param {object} [options] - Optional arguments for add behavior
    * @param {boolean} [options.force] - Should the semver version override other attempts
    *
@@ -305,9 +296,9 @@ export class ConfigBuilder {
 
   /**
    * Checks if a dependency has been already added
-   * @param  {String} key Dependency bucket
-   * @param  {String} value Dependency to search
-   * @returns {Bool} True if the dependency exists on the bucket
+   * @param  {string} key Dependency bucket
+   * @param  {string} value Dependency to search
+   * @returns {boolean} True if the dependency exists on the bucket
    */
   has(key, value) {
     const existing = this.fields[key];
@@ -352,10 +343,10 @@ export class ConfigBuilder {
    *   - If ¬∃ prev                 ––> set and blame [dep, ver]
    *   - If ver > prev              ––> set and blame [dep, ver]
    *   - If ¬(ver ∩ prev)           ––> Conflict. Print.
-   *
+   * @param {object} options
    * @param  {string} options.key      {devD,peerD,optionalD,d}ependencies
-   * @param  {Object} options.value    Updates for { name: version } pairs
-   * @param  {Object} options.existing Existing { name: version } pairs
+   * @param  {object} options.value    Updates for { name: version } pairs
+   * @param  {object} options.existing Existing { name: version } pairs
    * @param  {string} options.name     Plugin name providing merge `value``
    * @param {boolean} [options.force]  Should the semver version override other attempts
    *
@@ -366,6 +357,7 @@ export class ConfigBuilder {
 
     const setBlame = blameId => {
       this.blame.set(blameId, [name]);
+      // debugger;
       if (force) this.force.add(blameId);
     };
 
@@ -425,9 +417,9 @@ export class ConfigBuilder {
   /**
    * Normalizes a potential semver range into a semver string
    * and returns the newest version
-   * @param  {String} r1 Semver string (potentially invalid).
-   * @param  {String} r2 Semver string (potentially invalid).
-   * @returns {String|undefined} Newest semver version.
+   * @param  {string} r1 Semver string (potentially invalid).
+   * @param  {string} r2 Semver string (potentially invalid).
+   * @returns {string | undefined} Newest semver version.
    *
    * Adapted from @vue/cli under MIT License:
    * https://github.com/vuejs/vue-cli/blob/f09722c/packages/%40vue/cli/lib/util/mergeDeps.js#L58-L64
@@ -448,7 +440,6 @@ export class ConfigBuilder {
    * Performs a naive attempt to take a transform a semver range
    * into a concrete version that may be used for "newness"
    * comparison.
-   *
    * @param  {string} range Valid "basic" semver:   ^X.Y.Z, ~A.B.C, >=2.3.x, 1.x.x
    * @returns {string} Concrete as possible version: X.Y.Z,  A.B.C,   2.3.0, 1.0.0
    */
@@ -462,7 +453,7 @@ export class ConfigBuilder {
   /**
    * Orders top-level keys by `orderBy` options with any fields specified in
    * the `orderFields` options having their keys sorted.
-   * @returns {Object} Ready to be serialized JavaScript object.
+   * @returns {object} Ready to be serialized JavaScript object.
    */
   toJSON() {
     if (Array.isArray(this.orderedFields)) {
@@ -480,9 +471,9 @@ export class ConfigBuilder {
    * Orders the given object, `obj`, applying any (optional)
    * key order specified via `orderBy`. If no `orderBy` is provided
    * keys are ordered lexographically.
-   * @param  {Object}   obj       Object to transform to ordered keys
+   * @param  {object}   obj       Object to transform to ordered keys
    * @param  {string[]} [orderBy] Explicit key order to use.
-   * @returns {Object} Shallow clone of `obj` with ordered keys
+   * @returns {object} Shallow clone of `obj` with ordered keys
    *
    * Adapted from @vue/cli under MIT License:
    * https://github.com/vuejs/vue-cli/blob/f09722c/packages/%40vue/cli/lib/util/sortObject.js
@@ -501,6 +492,11 @@ export class ConfigBuilder {
 
     /*
      * Sorts based on the `order` defined above.
+     */
+    /**
+     *
+     * @param a
+     * @param b
      */
     function sortByOrder(a, b) {
       const indexA = typeof order[a] === 'undefined'

@@ -14,7 +14,6 @@ const newline = () => {
 /**
  * Converts a camelCase string to Space Case
  * https://stackoverflow.com/questions/4149276/javascript-camelcase-to-regular-form?answertab=active#tab-top
- *
  * @param {string} str - camelCase string to fixup
  * @returns {string} result
  * @private
@@ -24,7 +23,6 @@ const toSpaceCase = str => str.replace(/([A-Z])/g, ' $1')
 
 /**
  * Builds the report object from context
- *
  * @type {import('../../internal').buildReport}
  * @private
  */
@@ -54,7 +52,6 @@ function buildReport(context) {
 
 /**
  * Outputs create command details to the console
-
  * @type {import('../../internal').printReport}
  */
 async function printReport({ context }) {

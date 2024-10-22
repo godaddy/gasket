@@ -4,7 +4,6 @@ import action from '../action-wrapper.js';
 /**
  * Initializes engine with provide preset and plugins
  * to execute their prompt lifecycle hooks.
- *
  * @type {import('../../internal').execPluginPrompts}
  */
 async function execPluginPrompts(gasket, context) {
@@ -22,7 +21,6 @@ async function execPluginPrompts(gasket, context) {
 /**
  * Executes the `prompt` hook for all registered plugins.
  * Adds `prompt` util function for prompting features.
- *
  * @type {import('../../internal').promptHooks}
  */
 async function promptHooks({ gasket, context }) {

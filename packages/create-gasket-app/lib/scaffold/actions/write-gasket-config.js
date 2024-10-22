@@ -77,7 +77,6 @@ function cleanupFields(config) {
 
 /**
  * Writes the contents of `pkg` to the app's package.json.
- *
  * @type {import('../../internal').writeGasketConfig}
  */
 async function writeGasketConfig({ context }) {

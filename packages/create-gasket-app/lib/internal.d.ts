@@ -8,7 +8,7 @@ import type {
   CommandOption
 } from './index';
 import type { GasketEngine } from '@gasket/core';
-import ora = require('ora');
+import type ora from 'ora';
 import type { Command, Option } from 'commander';
 
 /** scaffold */
