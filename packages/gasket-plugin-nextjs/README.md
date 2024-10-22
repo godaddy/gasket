@@ -115,6 +115,51 @@ Also note when using [@gasket/plugin-intl] to determine the locale, that the
 `NEXT_LOCALE` cookie will have no effect. You can, of course, hook the [intlLocale]
 lifecycle in an app to enable that behavior if desired.
 
+## Actions
+
+### getNextConfig
+
+This action returns the current `nextConfig` object
+which allows plugins to configure the Next.js application.
+
+Place this in a `next.config.js` file which Next.js will load.
+
+```js
+// next.config.js
+
+import gasket from './gasket.js';
+export default gasket.actions.getNextConfig();
+```
+
+### getNextRoute
+
+This action is intended for use in server contexts where you need to know how a
+request will route to a Next.js page.
+This async function returns null if the manifest could not be parsed or if the
+requested URL does not match a route.
+If a match _is_ found, an object with these properties is returned:
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `page`    | `String`  | The page name/path used to identify a page within next.js |
+| `regex`   | `RegExp`  | The regular expression that matches URLs to the page |
+| `routeKeys` | `Object`  | For dynamic routes the mapping of URL placeholders to parsed route parameters |
+| `namedRegex`  | `RegExp`  | Like `regex`, but [named capturing groups] are included to populate dynamic routing parameters |
+
+```javascript
+import gasket from '../gasket.js';
+
+async function someMiddleware(req, res, next) {
+  const route = await gasket.actions.getNextRoute();
+  if (route) {
+    const { groups } = req.url.match(route.namedRegex);
+    console.log(`Matched ${route.page} with parameters`, groups);
+  }
+
+  next();
+}
+```
+
 ## Lifecycles
 
 ### next
@@ -225,29 +270,6 @@ export default {
       }
   }
 };
-```
-
-## Utilities
-
-This plugin hooks the `actions` lifecycle creates a `getNextRoute` action. It is intended for use in server contexts where you need to know how a request will route to a next.js page. This async function returns null if the manifest could not be parsed or if the requested URL does not match a route. If a match _is_ found, an object with these properties is returned:
-
-| Property | Type | Description |
-|----------|------|-------------|
-| `page`    | `String`  | The page name/path used to identify a page within next.js |
-| `regex`   | `RegExp`  | The regular expression that matches URLs to the page |
-| `routeKeys` | `Object`  | For dynamic routes the mapping of URL placeholders to parsed route parameters |
-| `namedRegex`  | `RegExp`  | Like `regex`, but [named capturing groups] are included to populate dynamic routing parameters |
-
-```javascript
-async function someMiddleware(req, res, next) {
-  const route = await req.getNextRoute();
-  if (route) {
-    const { groups } = req.url.match(route.namedRegex);
-    console.log(`Matched ${route.page} with parameters`, groups);
-  }
-
-  next();
-}
 ```
 
 ## License

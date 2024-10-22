@@ -36,13 +36,14 @@ const plugin = {
           });
         }
 
+        const startCmd = pkg.has('scripts', 'start:local') ? 'start:local' : 'start';
+
         pkg.add('scripts', {
-          'start:local': 'next start',
           'cypress': 'cypress open',
           'cypress:headless': 'cypress run',
-          'e2e': `start-server-and-test start:local ${LOCAL_SERVER_URL} cypress`,
+          'e2e': `start-server-and-test ${startCmd} ${LOCAL_SERVER_URL} cypress`,
           'e2e:headless':
-            `start-server-and-test start:local ${LOCAL_SERVER_URL} cypress:headless`
+            `start-server-and-test ${startCmd} ${LOCAL_SERVER_URL} cypress:headless`
         });
       }
     },

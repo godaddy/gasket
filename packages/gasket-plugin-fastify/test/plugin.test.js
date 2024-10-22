@@ -70,7 +70,11 @@ describe('actions', () => {
   it('does not enable trust proxy by default', async () => {
     const pluginInstance = require('../lib/index');
     await pluginInstance.actions.getFastifyApp(gasket);
-    expect(mockFastify).toHaveBeenCalledWith({ logger: gasket.logger, trustProxy: false });
+    expect(mockFastify).toHaveBeenCalledWith({
+      logger: gasket.logger,
+      trustProxy: false,
+      disableRequestLogging: true
+    });
   });
 
   it('does enable trust proxy by if set to true', async () => {
@@ -78,7 +82,11 @@ describe('actions', () => {
     const pluginInstance = require('../lib/index');
     await pluginInstance.actions.getFastifyApp(gasket);
 
-    expect(mockFastify).toHaveBeenCalledWith({ logger: gasket.logger, trustProxy: true });
+    expect(mockFastify).toHaveBeenCalledWith({
+      logger: gasket.logger,
+      trustProxy: true,
+      disableRequestLogging: true
+    });
   });
 
   it('does enable trust proxy by if set to string', async () => {
@@ -88,7 +96,29 @@ describe('actions', () => {
 
     expect(mockFastify).toHaveBeenCalledWith({
       logger: gasket.logger,
-      trustProxy: '127.0.0.1'
+      trustProxy: '127.0.0.1',
+      disableRequestLogging: true
+    });
+  });
+
+  it('defaults to true for disableRequestLogging', async () => {
+    const pluginInstance = require('../lib/index');
+    await pluginInstance.actions.getFastifyApp(gasket);
+    expect(mockFastify).toHaveBeenCalledWith({
+      logger: gasket.logger,
+      trustProxy: false,
+      disableRequestLogging: true
+    });
+  });
+
+  it('allows request logging if disableRequestLogging is set to false', async () => {
+    gasket.config.fastify = { disableRequestLogging: false };
+    const pluginInstance = require('../lib/index');
+    await pluginInstance.actions.getFastifyApp(gasket);
+    expect(mockFastify).toHaveBeenCalledWith({
+      logger: gasket.logger,
+      trustProxy: false,
+      disableRequestLogging: false
     });
   });
 
@@ -96,7 +126,11 @@ describe('actions', () => {
     const pluginInstance = require('../lib/index');
     await pluginInstance.actions.getFastifyApp(gasket);
 
-    expect(mockFastify).toHaveBeenCalledWith({ logger: gasket.logger, trustProxy: false });
+    expect(mockFastify).toHaveBeenCalledWith({
+      logger: gasket.logger,
+      trustProxy: false,
+      disableRequestLogging: true
+    });
   });
 });
 

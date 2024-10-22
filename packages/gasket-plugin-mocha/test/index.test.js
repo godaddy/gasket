@@ -166,8 +166,9 @@ describe('Plugin', () => {
     });
 
     [
-      'global-jsdom',
+      '@babel/preset-react',
       '@testing-library/react',
+      'global-jsdom',
       'jsdom'
     ].forEach(name => {
       it(`adds "${name}" in the devDependencies`, async function () {

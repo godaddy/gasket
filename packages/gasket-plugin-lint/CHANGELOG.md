@@ -1,5 +1,9 @@
 # `@gasket/plugin-lint`
 
+### 7.0.3
+
+- Add create dev deps ([#937])
+
 ### 7.0.0
 
 - See [Version 7 Upgrade Guide] for overall changes
@@ -115,3 +119,4 @@
 [#460]: https://github.com/godaddy/gasket/pull/460
 [#482]: https://github.com/godaddy/gasket/pull/482
 [#670]: https://github.com/godaddy/gasket/pull/670
+[#937]: https://github.com/godaddy/gasket/pull/937

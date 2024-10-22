@@ -1,5 +1,9 @@
 # `@gasket/plugin-docusaurus`
 
+### 7.0.3
+
+- Add create hook check with dev deps ([#937])
+
 ### 7.0.0
 
 - See [Version 7 Upgrade Guide] for overall changes
@@ -62,3 +66,4 @@
 [#670]: https://github.com/godaddy/gasket/pull/670
 [#674]: https://github.com/godaddy/gasket/pull/674
 [#736]: https://github.com/godaddy/gasket/pull/736
+[#937]: https://github.com/godaddy/gasket/pull/937

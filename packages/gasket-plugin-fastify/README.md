@@ -31,6 +31,7 @@ All the configurations for the plugin are added under `fastify` in the config:
 - `compression`: true by default. Can be set to false if applying compression
   differently.
 - `trustProxy`: Enable trust proxy option, [see Fastify documentation for possible values](https://fastify.dev/docs/latest/Reference/Server/#trustproxy)
+- `disableRequestLogging`: Turn off request logging, true by default
 
 #### Example configuration
 
@@ -47,6 +48,18 @@ export default makeGasket({
   }
 });
 ```
+
+## Actions
+
+### getFastifyApp
+
+Get the Fastify app instance.
+
+```js
+const app = actions.gasket.getFastifyApp();
+```
+
+Each Gasket creates a single shared Fastify instance, ensuring consistent access to the same app instance wherever it's needed.
 
 ## Lifecycles
 

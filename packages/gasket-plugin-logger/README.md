@@ -11,6 +11,16 @@ custom logger: `@gasket/plugin-winston`.
 
 This plugin is only used by presets for `create-gasket-app` and is not installed for apps.
 
+## Actions
+
+### getLogger
+
+Get the logger instance using the Actions API.
+
+```js
+const logger = gasket.actions.getLogger();
+```
+
 ## Lifecycles
 
 ### createLogger

@@ -27,6 +27,13 @@ async function createAppFiles({
   await readme.markdownFile(`${generatorDir}/markdown/${appStructure}.md`);
   if (nextServerType === 'customServer') {
     await readme.markdownFile(`${generatorDir}/markdown/custom-server.md`);
+    readme.link('Custom Server', 'https://nextjs.org/docs/pages/building-your-application/configuring/custom-server');
+  }
+
+  if (appStructure === 'app-router') {
+    readme.link('App Router', 'https://nextjs.org/docs/app');
+  } else {
+    readme.link('Page Router', 'https://nextjs.org/docs/pages');
   }
 }
 
@@ -207,11 +214,10 @@ module.exports = {
       nextServerType,
       nextDevProxy,
       typescript,
-      useAppRouter,
       hasGasketIntl
     } = context;
     const generatorDir = `${__dirname}/../generator`;
-    const appStructure = useAppRouter ? 'app-router' : 'pages-router';
+    const appStructure = nextServerType === 'appRouter' ? 'app-router' : 'page-router';
 
     await createAppFiles({ files, generatorDir, nextServerType, appStructure, typescript, readme });
     createTestFiles({ files, generatorDir, testPlugins, appStructure, typescript });
