@@ -50,6 +50,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-core",
   "dependencies": {
+    "@gasket/utils": "^7.0.1",
     "debug": "^4.3.4"
   },
   "devDependencies": {
