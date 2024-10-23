@@ -26,8 +26,6 @@ export interface PackageJson extends Dependencies {
   homepage?: string;
 }
 
-export function commasToArray(value: string): string[];
-
 interface CommandArgument {
   name: string;
   description?: string;

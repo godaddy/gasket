@@ -25,7 +25,7 @@ import {
 
 /**
  * Parses comma separated option input to array
- * @type {import('../index').commasToArray}
+ * @type {import('../internal').commasToArray}
  */
 const commasToArray = input => input.split(',').map(name => name.trim());
 
