@@ -26,6 +26,7 @@ This guide will take you through updating `@gasket/*` packages to `7.x`.
 - [Update Custom Commands](#update-custom-commands)
 - [Update App Plugins](#update-app-plugins)
 - [Update App Lifecycles](#update-app-lifecycles)
+- [Update Mocha Tests](#update-mocha-tests)
 
 ## Update Dependency Versions
 
@@ -843,6 +844,57 @@ export default {
 };
 ```
 
+## Update Mocha Tests
+
+Previously, the `@gasket/plugin-mocha` utilized [babel-register] to compile files on the fly when testing JSX. However, as we move towards ES modules as the default for Gasket apps, we've had to find another solution for transpiling JSX in mohca tests as babel-register does not support compiling ES modules on the fly.
+
+From the Babel docs:
+> @babel/register does not support compiling native Node.js ES modules on the fly, since currently there is no stable API for intercepting ES modules loading.
+
+To work around this, we added a node-loader (`@gasket/plugin-mocha/node-loader-babel`) that uses babel to transpile JSX to JS. This node-loader also gives you the ability to add other babel presets or plugins to a generated `.babelrc` in the test folder in newly created apps using v7.
+
+To update your existing app to use the node-loader for transpiling JSX in mocha tests, you need to make the following changes after upgrading to the newest version of `@gasket/plugin-mocha`:
+
+1. Add `-r ./test/register-loader.js` to your `test:runner` script in your `package.json`:
+
+```diff
+- "test:runner": "mocha -r global-jsdom/register -r setup-env  --recursive \"test/**/*.{test,spec}.{js,jsx}\""
++ "test:runner": "mocha -r global-jsdom/register -r setup-env -r ./test/register-loader.js --recursive \"test/**/*.{test,spec}.{js,jsx}\""
+```
+
+2. Add a `.babelrc` file to your `test` folder with the following content:
+
+```json
+{
+  "presets": [
+    "@babel/preset-react"
+  ]
+}
+```
+
+3. Add a `test/register-loader.js` file to use the node-loader:
+
+```js
+import { register } from 'module';
+import { pathToFileURL } from 'url';
+
+// Register the Babel loader
+register('@gasket/plugin-mocha/node-loader-babel', pathToFileURL('./test'));
+```
+
+4. Optional: If you to have styles imported into your JSX, you can add our node-loader for handling styles to your `test/register-loader.js` file:
+
+```diff 
+import { register } from 'module';
+import { pathToFileURL } from 'url';
+
+// Register the Babel loader
+register('@gasket/plugin-mocha/node-loader-babel', pathToFileURL('./test'));
+
++ // Register the styles loader
++ register('@gasket/plugin-mocha/node-loader-styles', pathToFileURL('./test'));
+```
+
 
 <!-- Links -->
 [middleware paths]:https://github.com/godaddy/gasket/blob/main/packages/gasket-plugin-express/README.md#middleware-paths
@@ -869,6 +921,7 @@ export default {
 [@gasket/plugin-webpack]: ../packages/gasket-plugin-webpack/README.md
 [@gasket/plugin-elastic-apm]: ../packages/gasket-plugin-elastic-apm/README.md
 [@gasket/utils]: ../packages/gasket-utils/README.md
+[babel-register]: https://babeljs.io/docs/babel-register
 
 <!-- Anchors -->
 [Switch to GasketData]: #switch-to-gasketdata
