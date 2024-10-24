@@ -201,8 +201,10 @@ describe('makeCreateContext', () => {
   });
 
   it('sets relDest as relative to cwd', () => {
+    const dest = path.join(process.cwd(), 'my-app');
+    const expected = `.${path.sep}${path.relative(process.cwd(), dest)}`;
     results = makeCreateContext(argv, flags);
-    expect(results.relDest).toEqual('./my-app');
+    expect(results.relDest).toEqual(expected);
   });
 
   it('sets pkgLinks from flags', () => {
