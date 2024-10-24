@@ -205,6 +205,17 @@ describe('startServer action', () => {
       expect(logMessages[0]).toMatch(/http:\/\/local\.gasket\.godaddy\.com:8080\//);
     });
 
+    it('readable http log when port and hostname not configured', async () => {
+      gasketAPI.config = {
+        http: true
+      };
+
+      await plugin.actions.startServer(gasketAPI);
+
+      const logMessages = gasketAPI.logger.info.mock.calls.flat().map(message => message);
+      expect(logMessages[0]).toMatch(/http:\/\/localhost\//);
+    });
+
     it('contains the configured hostname', async () => {
       gasketAPI.config = {
         hostname: 'myapp.godaddy.com',
@@ -239,6 +250,17 @@ describe('startServer action', () => {
 
       const logMessages = gasketAPI.logger.info.mock.calls.flat().map(message => message);
       expect(logMessages[0]).toMatch(/https:\/\/local\.gasket\.godaddy\.com:3000\//);
+    });
+
+    it('readable https log when port and hostname not configured', async () => {
+      gasketAPI.config = {
+        https: { }
+      };
+
+      await plugin.actions.startServer(gasketAPI);
+
+      const logMessages = gasketAPI.logger.info.mock.calls.flat().map(message => message);
+      expect(logMessages[0]).toMatch(/https:\/\/localhost\//);
     });
 
     it('uses config from createServers lifecycle', async () => {

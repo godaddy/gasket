@@ -177,15 +177,20 @@ async function startServer(gasket) {
     } = serverOpts;
 
     if (_http) {
-      // @ts-ignore
-      const _port = _http.port || _http;
-      logger.info(`Server started at http://${_hostname}:${_port}/`);
+      // @ts-ignore - http may not be an object, but we account for that
+      let _port = (typeof _http === 'number' ? _http : _http.port) ?? '';
+      if (_port) _port = `:${_port}`;
+
+      logger.info(`Server started at http://${_hostname}${_port}/`);
     }
 
     if (_https || _http2) {
+      // @ts-ignore - http2 may be an array, but we account for that
+      let _port = (_https ?? _http2).port ?? '';
+      if (_port) _port = `:${_port}`;
+
       logger.info(
-        // @ts-ignore
-        `Server started at https://${_hostname}:${(_https || _http2).port}/`
+        `Server started at https://${_hostname}${_port}/`
       );
     }
   });
