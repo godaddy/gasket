@@ -13,8 +13,7 @@ const newline = () => {
 
 /**
  * Converts a camelCase string to Space Case
- * @see: https://stackoverflow.com/questions/4149276/javascript-camelcase-to-regular-form?answertab=active#tab-top
- *
+ * https://stackoverflow.com/questions/4149276/javascript-camelcase-to-regular-form?answertab=active#tab-top
  * @param {string} str - camelCase string to fixup
  * @returns {string} result
  * @private
@@ -24,17 +23,13 @@ const toSpaceCase = str => str.replace(/([A-Z])/g, ' $1')
 
 /**
  * Builds the report object from context
- *
- * @param {CreateContext} context - Create context
- * @returns {Object} report
+ * @type {import('../../internal').buildReport}
  * @private
  */
 function buildReport(context) {
   const {
     appName,
     dest,
-    fullPresets,
-    plugins,
     generatedFiles: generatedFilesSet,
     messages,
     warnings,
@@ -44,12 +39,9 @@ function buildReport(context) {
 
   const generatedFiles = Array.from(generatedFilesSet);
   generatedFiles.sort();
-
   return {
     appName,
     output: dest,
-    presets: fullPresets,
-    plugins,
     generatedFiles,
     messages,
     warnings,
@@ -60,8 +52,7 @@ function buildReport(context) {
 
 /**
  * Outputs create command details to the console
-
- * @param {CreateContext} context - Create context
+ * @type {import('../../internal').printReport}
  */
 async function printReport({ context }) {
   const report = buildReport(context);

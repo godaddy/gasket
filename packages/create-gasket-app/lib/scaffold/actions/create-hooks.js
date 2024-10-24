@@ -6,17 +6,13 @@ import Readme from '../readme.js';
 /**
  * Executes the `create` hook for all registered plugins.
  * Adds `files` to context for plugins to add their files and templates.
- *
- * @param {GasketEngine} gasket - Gasket API
- * @param {CreateContext} context - Create context
- * @returns {Promise} promise
+ * @type {import('../../internal').createHooks}
  */
 async function createHooks({ gasket, context }) {
-  const { plugins = [], warnings } = context;
-
+  const { warnings } = context;
   const files = new Files();
   const readme = new Readme();
-  const gasketConfig = ConfigBuilder.create({}, { orderBy: ['plugins'], warnings, plugins });
+  const gasketConfig = ConfigBuilder.create({}, { orderBy: ['plugins'], warnings });
   Object.assign(context, { files, readme, gasketConfig });
 
   await gasket.execApply('create', async function applyCreate(plugin, handler) {

@@ -7,9 +7,7 @@ const { dependencies } = require('../../../package.json');
 
 /**
  * Initializes the ConfigBuilder builder and adds to context.
- *
- * @param {CreateContext} context - Create context
- * @returns {Promise} promise
+ * @type {import('../../internal').setupPkg}
  */
 async function setupPkg({ context }) {
   const { appName, appDescription, warnings } = context;

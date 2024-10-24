@@ -25,9 +25,7 @@ import {
 
 /**
  * Parses comma separated option input to array
- *
- * @param {String} input - option argument
- * @returns {String[]} results
+ * @type {import('../internal').commasToArray}
  */
 const commasToArray = input => input.split(',').map(name => name.trim());
 
@@ -97,10 +95,7 @@ const createCommand = {
 
 /**
  * createCommand action
- * @param {string} appname Required cmd arg - name of the app to create
- * @param {object} options cmd options
- * @param {Command} command - the command instance
- * @returns {Promise<void>} void
+ * @type {import('../index').createCommandAction}
  */
 createCommand.action = async function run(appname, options, command) {
   process.env.GASKET_ENV = 'create';
