@@ -2,8 +2,7 @@ import { Option } from 'commander';
 
 /**
  * createOption - Create a commander option
- * @param {CLICommandOption} definition - The option configuration
- * @returns {CommnaderOption} option
+ * @type {import('../internal').createOption}
  */
 export function createOption(definition) {
   const option = new Option(...definition.options);

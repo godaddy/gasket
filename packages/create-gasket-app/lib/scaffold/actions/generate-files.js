@@ -20,9 +20,7 @@ const splitSep = pthStr => pthStr.split(reSep);
  * Find all duplicate target files and reduce to single descriptor.
  * Keeps track of overrides.
  * Last in wins.
- *
- * @param {object[]} descriptors - Details about files to generate
- * @returns {object[]} descriptors
+ * @type {import('../../internal').reduceDescriptors}
  */
 function reduceDescriptors(descriptors) {
   const reduced = descriptors.reduce((acc, desc) => {
@@ -43,12 +41,7 @@ function reduceDescriptors(descriptors) {
 
 /**
  * Assemble the description objects from glob results
- *
- * @param {string} dest - app destination
- * @param {string} from - Plugin source name
- * @param {string} pattern - pattern to glob
- * @param {string[]} srcPaths - resulting paths from glob
- * @returns {object[]} descriptors
+ * @type {import('../../internal').assembleDescriptors}
  */
 function assembleDescriptors(dest, from, pattern, srcPaths) {
   const output = joinSep(splitSep(dest));
@@ -71,9 +64,7 @@ function assembleDescriptors(dest, from, pattern, srcPaths) {
 
 /**
  * Build a list of descriptions of all files we want to generate
- *
- * @param {CreateContext} context - Create context
- * @returns {object[]} descriptors
+ * @type {import('../../internal').getDescriptors}
  */
 async function getDescriptors(context) {
   const { dest, files } = context;
@@ -94,10 +85,7 @@ async function getDescriptors(context) {
 
 /**
  * Read file content, apply templating, then write out target file.
- *
- * @param {CreateContext} context - Create context
- * @param {object[]} descriptors - Details about files to generate
- * @returns {boolean} hasWarnings
+ * @type {import('../../internal').performGenerate}
  */
 async function performGenerate(context, descriptors) {
   const { warnings, errors, generatedFiles } = context;
@@ -163,10 +151,7 @@ async function performGenerate(context, descriptors) {
 
 /**
  * Generate the app files and templates using context
- *
- * @param {CreateContext} context - Create context
- * @param {Spinner} spinner - Spinner
- * @returns {Promise} promise
+ * @type {import('../../internal').generateFiles}
  */
 async function generateFiles({ context, spinner }) {
   const { files } = context;

@@ -1,20 +1,18 @@
 /**
  * isValidOption - Validate the option
- * @param {CLICommandOption} option The option configuration
- * @returns {boolean} True if valid, false otherwise
+ * @type {import('../internal').isValidOption}
  */
 function isValidOption(option) {
   const keys = Object.keys(option);
-  return keys.length &&
-    keys.length <= 5 &&
-    option.name &&
-    option.description;
+  return !!keys.length &&
+    !!(keys.length <= 5) &&
+    !!option.name &&
+    !!option.description;
 }
 
 /**
  * processOptions - Process the options configuration
- * @param {CLICommandOption[]} options Array of option configurations
- * @returns {ProccesedCLICommandOption[]} Processed option definitions
+ * @type {import('../internal').processOptions}
  */
 export function processOptions(options) {
   if (!Array.isArray(options) || !options.every(isValidOption)) throw new Error('Invalid option(s) configuration');

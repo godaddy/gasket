@@ -1,20 +1,18 @@
 /**
  * isValidArg - Validates the argument configuration
- * @param {CLICommandArg} arg The argument configuration
- * @returns {boolean} True if valid, false otherwise
+ * @type {import('../internal').isValidArg}
  */
 function isValidArg(arg) {
   const keys = Object.keys(arg);
   if (arg.required && arg.default) return false;
-  return keys.length &&
-    keys.length <= 4 &&
-    arg.name && arg.description;
+  return !!keys.length &&
+    !!(keys.length <= 4) &&
+    !!arg.name && !!arg.description;
 }
 
 /**
  * processArgs - Process the arguments configuration
- * @param {CLICommandArg[]} args Array of argument configurations
- * @returns {ProccesedCLICommandArg[]} Array of argument definitions
+ * @type {import('../internal').processArgs}
  */
 export function processArgs(args) {
   if (!Array.isArray(args) || !args.every(isValidArg)) throw new Error('Invalid argument(s) configuration');

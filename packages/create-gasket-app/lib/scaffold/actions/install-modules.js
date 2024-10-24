@@ -2,9 +2,7 @@ import action from '../action-wrapper.js';
 
 /**
  * Installs node_modules using the selected package manager
- *
- * @param {CreateContext} context - Create context
- * @returns {Promise} promise
+ * @type {import('../../internal').installModules}
  */
 async function installModules({ context }) {
   const { pkgManager } = context;
