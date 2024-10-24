@@ -4,12 +4,7 @@ import action from '../action-wrapper.js';
 /**
  * Initializes engine with provide preset and plugins
  * to execute their prompt lifecycle hooks.
- *
- * @param {CreateContext} context - Create context
- * @param {String[]} plugins - plugins to load
- * @param {String} [presets] - presets to load
- * @returns {Promise} promise
- * @private
+ * @type {import('../../internal').execPluginPrompts}
  */
 async function execPluginPrompts(gasket, context) {
   //
@@ -26,18 +21,14 @@ async function execPluginPrompts(gasket, context) {
 /**
  * Executes the `prompt` hook for all registered plugins.
  * Adds `prompt` util function for prompting features.
- *
- * @param {GasketEngine} gasket - Gasket API
- * @param {CreateContext} context - Create context
- * @returns {Promise} promise
+ * @type {import('../../internal').promptHooks}
  */
 async function promptHooks({ gasket, context }) {
   //
   // Because `execPluginPrompts` is recursively, we need to start it
   // with the processPlugins and presets from our initial context
   //
-  const { plugins } = context;
-  await execPluginPrompts(gasket, context, plugins);
+  await execPluginPrompts(gasket, context);
 }
 
 export default action('Plugin prompts', promptHooks, { startSpinner: false });

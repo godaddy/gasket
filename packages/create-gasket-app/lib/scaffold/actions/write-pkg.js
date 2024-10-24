@@ -4,9 +4,7 @@ import action from '../action-wrapper.js';
 
 /**
  * Writes the contents of `pkg` to the app's package.json.
- *
- * @param {CreateContext} context - Create context
- * @returns {Promise} promise
+ * @type {import('../../internal').writePkg}
  */
 async function writePkg({ context }) {
   const { dest, pkg, generatedFiles } = context;

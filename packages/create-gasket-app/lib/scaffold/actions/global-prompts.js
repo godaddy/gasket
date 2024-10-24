@@ -3,10 +3,7 @@ import action from '../action-wrapper.js';
 
 /**
  * What is your app description?
- *
- * @param {CreateContext} context - Create context
- * @param {function} prompt - function to prompt user
- * @returns {Promise} promise
+ * @type {import('../../internal').chooseAppDescription}
  */
 async function chooseAppDescription(context, prompt) {
   if (!('appDescription' in context)) {
@@ -25,10 +22,7 @@ async function chooseAppDescription(context, prompt) {
 
 /**
  * What package manager do you want to use?
- *
- * @param {CreateContext} context - Create context
- * @param {function} prompt - function to prompt user
- * @returns {Promise} promise
+ * @type {import('../../internal').choosePackageManager}
  */
 async function choosePackageManager(context, prompt) {
   const packageManager =
@@ -61,10 +55,7 @@ async function choosePackageManager(context, prompt) {
 
 /**
  * Choose your unit test suite and integration test suite
- *
- * @param {CreateContext} context - Create context
- * @param {function} prompt - function to prompt user
- * @returns {Promise} promise
+ * @type {import('../../internal').chooseTestPlugins}
  */
 async function chooseTestPlugins(context, prompt) {
   const knownTestPlugins = {
@@ -102,6 +93,10 @@ async function chooseTestPlugins(context, prompt) {
   }
 }
 
+/**
+ *
+ * @type {import('../../internal').promptForTestPlugin}
+ */
 async function promptForTestPlugin(prompt, message, choices) {
   const { testPlugin } = await prompt([
     {
@@ -118,10 +113,7 @@ async function promptForTestPlugin(prompt, message, choices) {
 /**
  * Given that gasket is creating in an already existing directory, it should
  * confirm with the user that it's intentionally overwriting that directory
- *
- * @param  {CreateContext} context - Create context
- * @param {function} prompt - function to prompt user
- * @returns {Promise} promise
+ * @type {import('../../internal').allowExtantOverwriting}
  */
 async function allowExtantOverwriting(context, prompt) {
   const { dest, extant } = context;
@@ -148,12 +140,11 @@ export const questions = [
 
 /**
  * Fire off prompts for user input
- *
- * @param {CreateContext} context - Create context
- * @returns {Promise} promise
+ * @type {import('../../internal').globalPrompts}
  */
 async function globalPrompts({ context }) {
   const prompt = context.prompts ? inquirer.createPromptModule() : () => ({});
+
   for (var fn of questions) {
     await fn(context, prompt);
   }
