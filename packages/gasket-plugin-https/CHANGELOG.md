@@ -1,5 +1,9 @@
 # `@gasket/plugin-https`
 
+### 7.0.6
+
+- Pretty logs when custom port not configured ([#952])
+
 ### 7.0.0
 
 - See [Version 7 Upgrade Guide] for overall changes
@@ -108,6 +112,7 @@
 [#634]: https://github.com/godaddy/gasket/pull/634
 [#695]: https://github.com/godaddy/gasket/pull/695
 [#736]: https://github.com/godaddy/gasket/pull/736
+[#952]: https://github.com/godaddy/gasket/pull/952
 
 [terminus]: https://github.com/godaddy/terminus
 [create-servers]: https://github.com/http-party/create-servers

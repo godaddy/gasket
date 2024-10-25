@@ -1,5 +1,9 @@
 # `create-gasket-app`
 
+### 7.0.6
+
+- Add JSDoc Typechecking to create-gasket-app ([#943])
+
 ### 7.0.2
 
 - Add packageJson `type` type ([#936])
@@ -72,3 +76,4 @@
 [#752]: https://github.com/godaddy/gasket/pull/752
 [#806]: https://github.com/godaddy/gasket/pull/806
 [#936]: https://github.com/godaddy/gasket/pull/936
+[#943]: https://github.com/godaddy/gasket/pull/943
