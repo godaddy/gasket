@@ -3,7 +3,7 @@ import type WebpackApi from 'webpack';
 import type { Configuration } from 'webpack';
 
 export interface WebpackContext {
-  webpack: typeof WebpackApi;
+  webpack?: typeof WebpackApi;
   isServer?: boolean;
 }
 
