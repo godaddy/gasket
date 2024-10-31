@@ -4,7 +4,7 @@ Adds Webpack support to your application.
 
 ## Installation
 
-```
+```sh
 npm i @gasket/plugin-webpack
 ```
 
@@ -53,7 +53,7 @@ const initialConfig = { };
 // Any additional context such as isServer or not
 const context = { isServer: true };
 
-const webpackConfig = actions.gasket.getWebpackConfig(initialConfig, context);
+const webpackConfig = gasket.actions.getWebpackConfig(initialConfig, context);
 ```
 
 This action will execute the `webpackConfig` lifecycle and return the final
