@@ -20,9 +20,9 @@ describe('@gasket/plugin-webpack', () => {
         ...config,
         plugins: [
           ...(config.plugins ?? []),
-          new webpack.DefinePlugin({
-            MEANING_OF_LIFE: 42
-          })
+          ...(webpack
+            ? [new webpack.DefinePlugin({ MEANING_OF_LIFE: 42 })]
+            : [])
         ]
       };
   });
