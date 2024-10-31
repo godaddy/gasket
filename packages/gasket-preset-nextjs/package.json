@@ -1,6 +1,6 @@
 {
   "name": "@gasket/preset-nextjs",
-  "version": "7.0.6",
+  "version": "7.0.7",
   "description": "Basic NextJS Framework",
   "type": "module",
   "main": "lib/index.js",
@@ -38,9 +38,9 @@
     "@gasket/plugin-jest": "^7.0.1",
     "@gasket/plugin-lint": "^7.0.3",
     "@gasket/plugin-mocha": "^7.0.4",
-    "@gasket/plugin-nextjs": "^7.0.6",
+    "@gasket/plugin-nextjs": "^7.0.7",
     "@gasket/plugin-typescript": "^7.0.1",
-    "@gasket/plugin-webpack": "^7.0.6",
+    "@gasket/plugin-webpack": "^7.0.7",
     "@gasket/plugin-winston": "^7.0.6",
     "@gasket/utils": "^7.0.6"
   },
