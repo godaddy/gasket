@@ -43,6 +43,9 @@ By specifying the `swagger.jsdocs` options in the `gasket.js`, the
 Swagger definition file will be generated with `npm run build`. It can be output
 to either a JSON (default) or YAML file.
 
+To keep your Swagger definition file up-to-date, you can run `npm run build` whenever you make changes to the swagger property in your
+`gasket.js` file or modify JSDoc comments in your routes folder. This will rebuild the Swagger file to capture the latest updates accurately.
+
 ```js
 // gasket.js
 
