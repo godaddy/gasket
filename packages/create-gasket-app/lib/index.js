@@ -19,6 +19,10 @@ const gasketBin = program
 
 
 async function main() {
+  // Suppress deprecation warning for punycode that interfers with prompting in the cli
+  // Remove once punycode is removed in node
+  // @ts-ignore
+  process.noDeprecation = true;
   const { command, hidden, isDefault } = processCommand(createCommand);
   await warnIfOutdated(pkg.name, pkg.version);
   gasketBin.addCommand(command, { hidden, isDefault });
