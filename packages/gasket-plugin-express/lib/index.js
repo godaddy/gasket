@@ -4,7 +4,6 @@
 const { name, version, description } = require('../package.json');
 const create = require('./create');
 const createServers = require('./create-servers');
-const express = require('express');
 
 // Memoize the Express app instance
 let app;
@@ -16,6 +15,7 @@ const plugin = {
   description,
   actions: {
     getExpressApp(gasket) {
+      const express = require('express');
       const { http2 } = gasket.config;
       app ??= http2 ? require('http2-express-bridge')(express) : express();
 
