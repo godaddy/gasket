@@ -36,7 +36,7 @@ module.exports = async function createServers(gasket, serverOpts) {
     warn('DEPRECATED express config `excludedRoutesRegex` - use `middlewareInclusionRegex`');
   }
 
-  const app = http2 ? require('http2-express-bridge')(express) : express();
+  const app = http2 ? require('http2-express')(express) : express();
 
   if (trustProxy) {
     app.set('trust proxy', trustProxy);
