@@ -1,5 +1,9 @@
 # `@gasket/plugin-express`
 
+### 7.0.8
+
+- Relocated express require inside getExpressApp ([#958])
+
 ### 7.0.0
 
 - See [Version 7 Upgrade Guide] for overall changes
@@ -92,7 +96,6 @@
 - Separate express plugins from core
 - Initial release.
 
-
 [Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
 [#23]: https://github.com/godaddy/gasket/pull/23
 [#181]: https://github.com/godaddy/gasket/pull/181
@@ -112,3 +115,4 @@
 [#695]: https://github.com/godaddy/gasket/pull/695
 [#708]: https://github.com/godaddy/gasket/pull/708
 [#736]: https://github.com/godaddy/gasket/pull/736
+[#958]: https://github.com/godaddy/gasket/pull/958
