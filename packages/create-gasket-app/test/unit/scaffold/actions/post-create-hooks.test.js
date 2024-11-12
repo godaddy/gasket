@@ -1,7 +1,7 @@
 import { jest } from '@jest/globals';
 const mockExecStub = jest.fn();
 
-const postCreateHooks = (await import('../../../../lib/scaffold/actions/post-create-hooks')).default;
+const postCreateHooks = (await import('../../../../lib/scaffold/actions/post-create-hooks.js')).default;
 
 describe('postCreateHooks', () => {
   let mockContext, mockGasket;

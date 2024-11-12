@@ -1,6 +1,6 @@
 import action from '../action-wrapper.js';
 import { ConfigBuilder } from '../config-builder.js';
-import { default as gasketUtils } from '@gasket/utils';
+import { PackageManager } from '@gasket/utils';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 const { dependencies } = require('../../../package.json');
@@ -25,7 +25,7 @@ async function setupPkg({ context }) {
     '@gasket/utils': dependencies['@gasket/utils']
   });
 
-  const pkgManager = new gasketUtils.PackageManager(context);
+  const pkgManager = new PackageManager(context);
   Object.assign(context, { pkg, pkgManager });
 }
 
