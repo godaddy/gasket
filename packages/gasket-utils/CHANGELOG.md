@@ -1,5 +1,9 @@
 # `@gasket/utils`
 
+- Adjustments to support Gasket in edge runtime ([#961])
+  - Add config export for leaner applyConfigOverrides
+  - Use `deepmerge` instead of `lodash.defaultsdeep` due to incompatible _new Function_
+
 ### 7.0.0
 
 - See [Version 7 Upgrade Guide] for overall changes
@@ -91,3 +95,4 @@
 [#607]: https://github.com/godaddy/gasket/pull/607
 [#647]: https://github.com/godaddy/gasket/pull/647
 [#768]: https://github.com/godaddy/gasket/pull/768
+[#961]: https://github.com/godaddy/gasket/pull/961

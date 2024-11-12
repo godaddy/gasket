@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
     "target": "es2016",                                  /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
-    "module": "commonjs",                                /* Specify what module code is generated. */
+    "module": "preserve",
+    "moduleResolution": "bundler",                       /* Specify what module code is generated. */
     "allowJs": true,                                     /* Allow JavaScript files to be a part of your program. Use the `checkJS` option to get errors from these files. */
     "checkJs": true,                                     /* Enable error reporting in type-checked JavaScript files. */
     "noEmit": true,                                      /* Disable emitting files from a compilation. */
