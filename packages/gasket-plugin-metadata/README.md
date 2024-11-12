@@ -1,12 +1,12 @@
 # @gasket/plugin-metadata
 
-Metadata is the information about the register plugins and presets, available to
+Metadata is the information about the registered plugins and presets, available to
 plugin lifecycle hooks. This data can be used in various was for plugins, most
 notably the [@gasket/plugin-docs] which uses it to collate docs for an app.
 
 ## Installation
 
-This is a default plugin in the Gasket CLI and is always available for use.
+This is a default plugin in newly create Gasket apps.
 
 ## Actions
 
@@ -55,8 +55,12 @@ export default {
         // Metadata for these modules will be loaded
         // Declare as strings or objects with additional data
         modules: [
-          'left-pad',
-          { name: 'right-pad', extra: 'data', link: 'DOC.md' }
+          {
+            name: 'module-name',
+            version: '7.0.0',
+            description: 'module-name despcrition',
+            link: 'README.md'
+          }
         ]
       }
     },
@@ -111,13 +115,13 @@ be used with Gasket, but are not plugins.
 
 ## Access
 
-Plugins and apps can read from the [metadata object] by accessing
-`gasket.metadata` in most lifecycles.
+Plugins and apps can read from the [metadata object] by using
+the `getMetadata` Gasket action.
 
 #### Access example
 
 Back to our example plugin, let's see how we can access details about an
-installed module, and put is some conditional logic. 
+installed module, and put is some conditional logic.
 
 ```js
 // gasket-plugin-example.js
@@ -126,55 +130,14 @@ import semver from 'semver';
 export default {
   name: 'example',
   hooks: {
-    // Because metadata is collected during the init lifecycle, we must 
-    // adjust our init hook to occur after in order to read the metadata
-    init: {
-      timing: {
-        after: ['@gasket/metadata']
-      },
-      handler: function initHook(gasket) {
-        const { metadata } = gasket;
-
-        // Find the ModuleData for a package
-        const moduleData = metadata.modules.find(mod => mod.name === 'some-package');
-        
-        // If it is installed, and meets requires
-        if(moduleData && semver.satisfies(moduleData.version, '13.x')) {
-          // Do something special
-        } else {
-          // Skip and issue warning about upgrading
-        }
-
-        // Find the PluginData for a plugin
-        const pluginData = metadata.plugins.find(mod => mod.name === 'gasket-plugin-feature');
-        if(pluginData) {
-          // Fallback for when a certain plugin is not installed
-        }
-      }
+    // We need access to metadata during build
+    async build(gasket) {
+      const metadata = await gasket.actions.getMetadata()
+      // ... use metadata
     }
   }
 };
 ```
-
-## How it works
-
-Metadata begins with the info objects from the `Loader` of [@gasket/resolve] and
-builds data objects for [plugins][PluginData], and [presets][PresetData], and
-supporting [modules][ModuleData]. Any functions preset will be **redacted**, as
-metadata is not intended to be executed, but rather to is made available to read
-and inform plugins. This data can be added to, by hooking the [metadata]
-lifecycle in a plugin.
-
-Metadata provides insights to a plugin's shape and package information.
-Additional [detail info][DetailData] of plugins can added in the [metadata]
-lifecycle, such as what commands, lifecycles, or structures, a plugin provides.
-The [metadata object] be accessed in lifecycle hooks from `gasket.metadata`.
-
-Additionally, [ModuleData] for all the top-level app's dependencies are loaded
-by default, and is available from `gasket.metadata.app.modules`. Plugins can
-choose to bring in metadata for more modules, or augment what has already been
-loaded for the app. These, along with the app's modules, will be flattened and
-available from `gasket.metadata.modules`.
 
 ## License
 
