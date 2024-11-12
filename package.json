@@ -19,6 +19,7 @@
     "docs-view": "npm run generate-docs-index && cd site && docusaurus start",
     "generate-docs-index": "node scripts/generate-docs-index",
     "postinstall": "npm run build",
+    "publish": "lerna publish",
     "publish:canary": "lerna publish --preid canary --dist-tag canary",
     "test:package": "lerna run test --stream --scope $*",
     "typecheck:all": "lerna run typecheck --stream"
@@ -78,7 +79,8 @@
     }
   },
   "engines": {
-    "npm": ">=8.0.0"
+    "npm": ">=8.0.0",
+    "node": ">=20"
   },
   "workspaces": [
     "./packages/*",

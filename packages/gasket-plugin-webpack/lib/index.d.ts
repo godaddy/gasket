@@ -16,7 +16,10 @@ export interface WebpackMetrics {
 
 declare module '@gasket/core' {
   export interface GasketActions {
-    getWebpackConfig: (config: Configuration, context: WebpackContext) => Configuration
+    getWebpackConfig: (
+      config: Configuration,
+      context: Omit<WebpackContext, 'webpack'>
+    ) => Configuration;
   }
 
   export interface HookExecTypes {
