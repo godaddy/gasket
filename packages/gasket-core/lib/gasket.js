@@ -1,7 +1,7 @@
 /* eslint-disable no-console, no-process-env */
 
 import { GasketEngine, lifecycleMethods } from './engine.js';
-import { applyConfigOverrides } from '@gasket/utils/apply-config-overrides';
+import { applyConfigOverrides } from '@gasket/utils/config';
 import { makeTraceBranch } from './trace.js';
 
 /**

@@ -20,9 +20,9 @@
       "types": "./lib/index.d.ts",
       "default": "./lib/index.js"
     },
-    "./apply-config-overrides": {
-      "types": "./lib/apply-config-overrides.d.ts",
-      "default": "./lib/apply-config-overrides.js"
+    "./config": {
+      "types": "./lib/config.d.ts",
+      "default": "./lib/config.js"
     },
     "./package.json": "./package.json"
   },

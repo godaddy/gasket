@@ -1,4 +1,4 @@
-const { applyConfigOverrides } = require('@gasket/utils/apply-config-overrides');
+const { applyConfigOverrides } = require('@gasket/utils/config');
 const { baseDataMap } = require('./actions');
 
 /**

@@ -1,4 +1,4 @@
-const { applyConfigOverrides } = require('../lib/apply-config-overrides');
+const { applyConfigOverrides } = require('../lib/config');
 
 describe('applyConfigOverrides', () => {
   let results, mockContext, mockConfig;

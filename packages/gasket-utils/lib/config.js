@@ -6,9 +6,9 @@ const debug = require('diagnostics')('gasket:utils');
 /**
  * Normalize the config by applying any overrides for environments, commands,
  * or local-only config file.
- * @type {import('./apply-config-overrides').applyConfigOverrides}
+ * @type {import('./config').applyConfigOverrides}
  */
-function applyConfigOverrides(
+function config(
   config,
   { env = '', commandId }
 ) {
@@ -21,7 +21,7 @@ function applyConfigOverrides(
 
 /**
  * Generator function to yield potential configurations
- * @type {import('./apply-config-overrides').getPotentialConfigs}
+ * @type {import('./config').getPotentialConfigs}
  */
 function *getPotentialConfigs(config, { env, commandId }) {
   // Separate environment-specific config from another config
@@ -36,7 +36,7 @@ function *getPotentialConfigs(config, { env, commandId }) {
 
 /**
  * Generator function to yield command overrides
- * @type {import('./apply-config-overrides').getCommandOverrides}
+ * @type {import('./config').getCommandOverrides}
  */
 function *getCommandOverrides(commands, commandId) {
   const commandOverrides = commandId && commands[commandId];
@@ -48,7 +48,7 @@ function *getCommandOverrides(commands, commandId) {
 
 /**
  * Generator function to yield sub-environment overrides
- * @type {import('./apply-config-overrides').getSubEnvironmentOverrides}
+ * @type {import('./config').getSubEnvironmentOverrides}
  */
 function *getSubEnvironmentOverrides(env, environments) {
   const envParts = env.split('.');
@@ -67,7 +67,7 @@ function *getSubEnvironmentOverrides(env, environments) {
 
 /**
  * Generator function to yield development overrides
- * @type {import('./apply-config-overrides').getDevOverrides}
+ * @type {import('./config').getDevOverrides}
  */
 function *getDevOverrides(isLocalEnv, environments) {
   // Special case for the local environment, which inherits from the
@@ -82,5 +82,5 @@ function *getDevOverrides(isLocalEnv, environments) {
 }
 
 module.exports = {
-  applyConfigOverrides
+  applyConfigOverrides: config
 };

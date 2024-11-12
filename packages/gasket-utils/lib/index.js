@@ -1,4 +1,4 @@
-const { applyConfigOverrides } = require('./apply-config-overrides');
+const { applyConfigOverrides } = require('./config');
 const runShellCommand = require('./run-shell-command');
 const PackageManager = require('./package-manager');
 const warnIfOutdated = require('./warn-if-outdated');

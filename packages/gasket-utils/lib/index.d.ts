@@ -1,6 +1,6 @@
 import type { MaybeAsync } from '@gasket/core';
 
-export { applyConfigOverrides } from './apply-config-overrides';
+export { applyConfigOverrides } from './config';
 
 export interface PackageManagerOptions {
   /** Name of manager, either `npm` (default) or `yarn` */
