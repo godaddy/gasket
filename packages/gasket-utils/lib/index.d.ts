@@ -1,6 +1,8 @@
 import type { MaybeAsync } from '@gasket/core';
 
-interface PackageManagerOptions {
+export { applyConfigOverrides } from './apply-config-overrides';
+
+export interface PackageManagerOptions {
   /** Name of manager, either `npm` (default) or `yarn` */
   packageManager: string;
   /** Target directory where `node_module` should exist */
@@ -53,39 +55,10 @@ export class PackageManager {
   info(args?: Array<string>): Promise<{ data: any; stdout: string }>;
 }
 
-interface ConfigContext {
-  /** Name of environment */
-  env: string;
-  /** Name of command */
-  commandId?: string;
-  /** Project root; required if using localeFile */
-}
-
-interface ConfigDefinition extends Record<string, any> {
-  environments?: Record<string, Partial<ConfigDefinition>>
-  commands?: Record<string, Partial<ConfigDefinition>>
-  [key: string]: any
-}
-
-type ConfigOutput = Omit<ConfigDefinition, 'environments' | 'commands'>
-
-/**
- * Normalize the config by applying any overrides for environments, commands, or local-only config file.
- */
-export function applyConfigOverrides<Def extends ConfigDefinition, Out extends ConfigOutput>(
-  config: Def,
-  configContext: ConfigContext
-): Out;
-
 export interface Signal {
   aborted?: boolean;
   addEventListener(type: 'abort', listener: () => void): void;
 }
-
-export function getPotentialConfigs(
-  config: ConfigDefinition,
-  configContext: ConfigContext
-): Generator<any, any, any>;
 
 /**
  * Promise friendly wrapper to running a shell command (eg: git, npm, ls) which
