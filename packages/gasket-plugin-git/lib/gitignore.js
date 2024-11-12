@@ -18,6 +18,7 @@ module.exports = class Gitignore {
   }
 
   /**
+   * TODO: convert to jsdocs imports
    * Adds content to gitignore
    * @param {string | string[]} name - name of file or directory to add to
    * gitignore

@@ -13,7 +13,7 @@ jest.mock('@gasket/utils', () => ({
   PackageManager: MockPackageManager
 }));
 
-const setupPkg = (await import('../../../../lib/scaffold/actions/setup-pkg')).default;
+const setupPkg = (await import('../../../../lib/scaffold/actions/setup-pkg.js')).default;
 const { ConfigBuilder } = await import('../../../../lib/scaffold/config-builder');
 
 
