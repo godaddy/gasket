@@ -8,7 +8,7 @@ const debug = require('diagnostics')('gasket:utils');
  * or local-only config file.
  * @type {import('./config').applyConfigOverrides}
  */
-function config(
+function applyConfigOverrides(
   config,
   { env = '', commandId }
 ) {
@@ -82,5 +82,5 @@ function *getDevOverrides(isLocalEnv, environments) {
 }
 
 module.exports = {
-  applyConfigOverrides: config
+  applyConfigOverrides
 };
