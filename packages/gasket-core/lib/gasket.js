@@ -1,7 +1,7 @@
 /* eslint-disable no-console, no-process-env */
 
 import { GasketEngine, lifecycleMethods } from './engine.js';
-import { applyConfigOverrides } from '@gasket/utils';
+import { applyConfigOverrides } from '@gasket/utils/config';
 import { makeTraceBranch } from './trace.js';
 
 /**
@@ -23,6 +23,7 @@ function getEnvironment() {
 
 /**
  * The Gasket class is the main entry point for the Gasket API.
+ * @type {import('@gasket/core').Gasket}
  */
 export class Gasket {
 
@@ -31,6 +32,7 @@ export class Gasket {
    */
   constructor(configDef) {
     const env = getEnvironment();
+    /** @type {import('@gasket/core').GasketConfig} */
     const config = applyConfigOverrides(configDef, { env });
     config.env = env;
     config.root ??= process.cwd();
@@ -38,7 +40,8 @@ export class Gasket {
     // prune nullish and/or empty plugins
     config.plugins = config.plugins
       .filter(Boolean)
-      .map(plugin => plugin.default || plugin) // quality of life for cjs apps
+      // @ts-ignore - default not expected - quality of life for cjs apps
+      .map(plugin => plugin.default || plugin)
       .filter(plugin => Boolean(plugin.name) || Boolean(plugin.hooks));
 
     // start the engine
@@ -58,11 +61,11 @@ export class Gasket {
     // Can be used as a key to identify a gasket instance
     this.symbol = Symbol('gasket');
 
-    // @ts-ignore
+    // @ts-ignore - attached lifecycle trace methods
     this.execSync('init');
-    // @ts-ignore
+    // @ts-ignore - attached lifecycle trace methods
     this.config = this.execWaterfallSync('configure', config);
-    // @ts-ignore
+    // @ts-ignore - attached lifecycle trace methods
     this.exec('ready');
   }
 
