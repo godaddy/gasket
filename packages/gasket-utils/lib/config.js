@@ -1,4 +1,3 @@
-// var defaultsDeep = require('lodash.defaultsdeep');
 const deepmerge = require('deepmerge');
 // @ts-ignore - diagnostics lib does not have a types declaration file
 const debug = require('diagnostics')('gasket:utils');
