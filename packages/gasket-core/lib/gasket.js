@@ -1,7 +1,7 @@
 /* eslint-disable no-console, no-process-env */
 
 import { GasketEngine, lifecycleMethods } from './engine.js';
-import { applyConfigOverrides } from '@gasket/utils';
+import { applyConfigOverrides } from '@gasket/utils/apply-config-overrides';
 import { makeTraceBranch } from './trace.js';
 
 /**
@@ -58,11 +58,11 @@ export class Gasket {
     // Can be used as a key to identify a gasket instance
     this.symbol = Symbol('gasket');
 
-    // @ts-ignore
+    // @ts-ignore - attached lifecycle trace methods not recognized
     this.execSync('init');
-    // @ts-ignore
+    // @ts-ignore - attached lifecycle trace methods not recognized
     this.config = this.execWaterfallSync('configure', config);
-    // @ts-ignore
+    // @ts-ignore - attached lifecycle trace methods not recognized
     this.exec('ready');
   }
 
