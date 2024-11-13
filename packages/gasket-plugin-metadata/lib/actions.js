@@ -69,7 +69,7 @@ async function getMetadata(gasket) {
         } catch (requireError) {
           // try esm import
           try {
-            resolvedPath = await import(pluginData.name);
+            resolvedPath = (await import(pluginData.name)).default;
           } catch (importError) {
             gasket.logger.error(
               `Error resolving plugin ${pluginData.name}: require: ${requireError.message} import: ${importError.message}`
