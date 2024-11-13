@@ -66,16 +66,9 @@ async function getMetadata(gasket) {
         let resolvedPath;
         try {
           resolvedPath = require.resolve(pluginData.name, { paths: [gasket.config.root] });
-        } catch (requireError) {
-          // try esm import
-          try {
-            resolvedPath = (await import(pluginData.name)).default;
-          } catch (importError) {
-            gasket.logger.error(
-              `Error resolving plugin ${pluginData.name}: require: ${requireError.message} import: ${importError.message}`
-            );
-            return;
-          }
+        } catch (error) {
+          gasket.logger.error(`Error resolving plugin ${pluginData.name}: ${error.message}`);
+          return;
         }
         pluginData.metadata.path = path.dirname(path.join(resolvedPath, '..'));
         const { dependencies, devDependencies } = require(path.join(pluginData.metadata.path, 'package.json'));
