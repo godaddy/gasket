@@ -38,8 +38,8 @@ describe('warnIfOutdated', function () {
     jest.spyOn(global, 'Date').mockImplementation(() => ({
       getTime: () => currentTime
     }));
-    consoleWarnSpy = jest.spyOn(console, 'warn');
-    consoleErrorSpy = jest.spyOn(console, 'error');
+    consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+    consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
   });
 
   afterEach(function () {

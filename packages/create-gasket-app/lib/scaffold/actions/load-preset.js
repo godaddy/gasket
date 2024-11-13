@@ -1,7 +1,7 @@
 import path from 'path';
 import os from 'os';
 import action from '../action-wrapper.js';
-import { default as gasketUtils } from '@gasket/utils';
+import { PackageManager } from '@gasket/utils';
 import { mkdtemp } from 'fs/promises';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
@@ -16,7 +16,7 @@ async function loadPresets({ context }) {
   context.tmpDir = tmpDir;
 
   const modPath = path.join(tmpDir, 'node_modules');
-  const pkgManager = new gasketUtils.PackageManager({
+  const pkgManager = new PackageManager({
     packageManager: context.packageManager,
     dest: tmpDir
   });

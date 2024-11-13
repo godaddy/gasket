@@ -1,25 +1,26 @@
-const defaultsDeep = require('lodash.defaultsdeep');
+const deepmerge = require('deepmerge');
 // @ts-ignore - diagnostics lib does not have a types declaration file
 const debug = require('diagnostics')('gasket:utils');
 
 /**
  * Normalize the config by applying any overrides for environments, commands,
  * or local-only config file.
- * @type {import('./index').applyConfigOverrides}
+ * @type {import('./config').applyConfigOverrides}
  */
 function applyConfigOverrides(
   config,
   { env = '', commandId }
 ) {
-  return defaultsDeep(
-    {},
-    ...getPotentialConfigs(config, { env, commandId })
+  // @ts-ignore - merged config definitions
+  return deepmerge.all(
+  // @ts-ignore - partial config definitions
+    [...getPotentialConfigs(config, { env, commandId })].reverse()
   );
 }
 
 /**
  * Generator function to yield potential configurations
- * @type {import('./index').getPotentialConfigs}
+ * @type {import('./config').getPotentialConfigs}
  */
 function *getPotentialConfigs(config, { env, commandId }) {
   // Separate environment-specific config from another config
@@ -34,7 +35,7 @@ function *getPotentialConfigs(config, { env, commandId }) {
 
 /**
  * Generator function to yield command overrides
- * @type {import('./internal').getCommandOverrides}
+ * @type {import('./config').getCommandOverrides}
  */
 function *getCommandOverrides(commands, commandId) {
   const commandOverrides = commandId && commands[commandId];
@@ -46,7 +47,7 @@ function *getCommandOverrides(commands, commandId) {
 
 /**
  * Generator function to yield sub-environment overrides
- * @type {import('./internal').getSubEnvironmentOverrides}
+ * @type {import('./config').getSubEnvironmentOverrides}
  */
 function *getSubEnvironmentOverrides(env, environments) {
   const envParts = env.split('.');
@@ -65,7 +66,7 @@ function *getSubEnvironmentOverrides(env, environments) {
 
 /**
  * Generator function to yield development overrides
- * @type {import('./internal').getDevOverrides}
+ * @type {import('./config').getDevOverrides}
  */
 function *getDevOverrides(isLocalEnv, environments) {
   // Special case for the local environment, which inherits from the
@@ -79,4 +80,6 @@ function *getDevOverrides(isLocalEnv, environments) {
   }
 }
 
-module.exports = applyConfigOverrides;
+module.exports = {
+  applyConfigOverrides
+};

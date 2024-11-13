@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "moduleResolution": "NodeNext",
+    "module": "NodeNext",
     "downlevelIteration": true,
     "allowJs": true,
     "checkJs": true,

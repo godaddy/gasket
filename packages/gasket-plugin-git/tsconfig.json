@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "moduleResolution": "bundler",
+    "module": "preserve",
     "allowJs": true,
     "checkJs": true,
     "noEmit": true,
