@@ -66,13 +66,14 @@ async function getMetadata(gasket) {
         let resolvedPath;
         try {
           resolvedPath = require.resolve(pluginData.name, { paths: [gasket.config.root] });
-        } catch (err) {
+        } catch (requireError) {
           // try esm import
           try {
             resolvedPath = await import(pluginData.name);
-          // eslint-disable-next-line no-catch-shadow, no-shadow
-          } catch (err) {
-            gasket.logger.error(`Error resolving plugin ${pluginData.name}: ${err.message}`);
+          } catch (importError) {
+            gasket.logger.error(
+              `Error resolving plugin ${pluginData.name}: require: ${requireError.message} import: ${importError.message}`
+            );
             return;
           }
         }
