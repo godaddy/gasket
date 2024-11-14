@@ -26,6 +26,7 @@ module.exports = async function create(gasket, createContext) {
   };
 
   if (createContext.typescript) {
+    initialConfig.defaultLocale = 'en-US';
     initialConfig.managerFilename = gasket.config.intl.managerFilename;
   }
 
