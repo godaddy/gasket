@@ -53,7 +53,7 @@ module.exports = async function create(gasket, context) {
   });
 
   if (apiApp && addApiRoutes) {
-    const globIgnore = typescript ? '!(*.js)' : '!(*.ts|*.json)';
+    const globIgnore = typescript ? '!(*.js)' : '!(*.ts)';
     files.add(`${generatorDir}/app/**/${globIgnore}`);
 
     createTestFiles({ files, generatorDir, testPlugins, globIgnore });
