@@ -12,7 +12,8 @@
     ],
     "types": [
       "@types/jest",
-      "@types/node"
+      "@types/node",
+      "@gasket/plugin-logger"
     ]
   },
   "exclude": [

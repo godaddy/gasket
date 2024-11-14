@@ -49,6 +49,7 @@ async function getMetadata(gasket) {
     const presets = [];
     const modules = {};
 
+    // eslint-disable-next-line max-statements
     await gasket.execApply('metadata', async (plugin, handler) => {
       const isPreset = isGasketPreset.test(plugin.name);
       const isPlugin = isGasketPlugin.test(plugin.name);
@@ -62,7 +63,14 @@ async function getMetadata(gasket) {
         pluginData.metadata.path = path.join(app.metadata.path, 'plugins');
         plugins.push(pluginData);
       } else {
-        pluginData.metadata.path = path.dirname(path.join(require.resolve(pluginData.name), '..'));
+        let resolvedPath;
+        try {
+          resolvedPath = require.resolve(pluginData.name, { paths: [gasket.config.root] });
+        } catch (error) {
+          gasket.logger.error(`Error resolving plugin ${pluginData.name}: ${error.message}`);
+          return;
+        }
+        pluginData.metadata.path = path.dirname(path.join(resolvedPath, '..'));
         const { dependencies, devDependencies } = require(path.join(pluginData.metadata.path, 'package.json'));
 
         if (isPreset) {
@@ -73,6 +81,7 @@ async function getMetadata(gasket) {
 
         for (const name of Object.keys({ ...dependencies, ...devDependencies })) {
           const isModule = isGasketModule.test(name);
+          // eslint-disable-next-line no-continue
           if (!isModule) continue;
 
           //
