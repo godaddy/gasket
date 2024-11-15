@@ -212,7 +212,7 @@ describe('create', () => {
     })();
     mockContext.typescript = true;
     await expectCreatedWith(({ files }) => {
-      expect(files.add).toHaveBeenCalledWith(expect.stringContaining('../generator/app/**/*'));
+      expect(files.add).toHaveBeenCalledWith(expect.stringContaining('../generator/app/**/!(*.ts)'));
     })();
   });
 
@@ -234,7 +234,7 @@ describe('create', () => {
       await expectCreatedWith(({ files }) => {
         expect(files.add).toHaveBeenCalledWith(
           expect.stringContaining(`/generator/mocha/*`),
-          expect.stringContaining(`/generator/mocha/**/*`)
+          expect.stringContaining(`/generator/mocha/**/!(*.ts)`)
         );
       })();
     });
@@ -244,7 +244,7 @@ describe('create', () => {
       await expectCreatedWith(({ files }) => {
         expect(files.add).toHaveBeenCalledWith(
           expect.stringContaining(`/generator/jest/*`),
-          expect.stringContaining(`/generator/jest/**/*`)
+          expect.stringContaining(`/generator/jest/**/!(*.ts)`)
         );
       })();
     });
