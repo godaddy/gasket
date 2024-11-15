@@ -1,5 +1,9 @@
 # `@gasket/plugin-express`
 
+### 7.0.10
+
+- opt for type:module in TS API app test suite ([#966])
+
 ### 7.0.8
 
 - Relocated express require inside getExpressApp ([#958])
@@ -116,3 +120,4 @@
 [#708]: https://github.com/godaddy/gasket/pull/708
 [#736]: https://github.com/godaddy/gasket/pull/736
 [#958]: https://github.com/godaddy/gasket/pull/958
+[#966]: https://github.com/godaddy/gasket/pull/966
