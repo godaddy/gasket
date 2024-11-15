@@ -183,10 +183,20 @@ describe('Plugin', function () {
       expect(pkg.devDependencies['ts-jest']).toEqual(devDependencies['ts-jest']);
       expect(pkg.devDependencies['ts-node']).toEqual(devDependencies['ts-node']);
       expect(pkg.scripts).toEqual({
-        'test': 'TS_NODE_PROJECT=./tsconfig.test.json jest',
+        'test': "cross-env NODE_OPTIONS='--unhandled-rejections=strict --experimental-vm-modules' jest",
         'test:watch': 'npm run test -- --watchAll',
         'test:coverage': 'npm run test -- --coverage'
       });
+    });
+
+    it('adds devDeps for apiApp with typescript', async function () {
+      mockContext.typescript = true;
+      const { pkg } = await create(mockContext);
+
+      expect(pkg.devDependencies['cross-env']).toEqual(devDependencies['cross-env']);
+      expect(pkg.devDependencies['@types/jest']).toEqual(devDependencies['@types/jest']);
+      expect(pkg.devDependencies['ts-jest']).toEqual(devDependencies['ts-jest']);
+      expect(pkg.devDependencies['ts-node']).toEqual(devDependencies['ts-node']);
     });
   });
 });
