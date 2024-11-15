@@ -51,12 +51,13 @@ const plugin = {
           if (typescript) {
             pkg.add('devDependencies', {
               '@types/jest': devDependencies['@types/jest'],
+              'cross-env': devDependencies['cross-env'],
               'ts-jest': devDependencies['ts-jest'],
               'ts-node': devDependencies['ts-node']
             });
 
             pkg.add('scripts', {
-              'test': 'TS_NODE_PROJECT=./tsconfig.test.json jest',
+              'test': "cross-env NODE_OPTIONS='--unhandled-rejections=strict --experimental-vm-modules' jest",
               'test:watch': 'npm run test -- --watchAll',
               'test:coverage': 'npm run test -- --coverage'
             });
