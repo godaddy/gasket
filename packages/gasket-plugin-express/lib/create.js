@@ -7,9 +7,8 @@ const { name, version, devDependencies } = require('../package.json');
  * @property {Files} files - The Gasket Files API.
  * @property {generatorDir} - The directory of the generator.
  * @property {testPlugins} - Array of selected test plugins
- * @property {globIgnore} - Extension pattern to ignore
  */
-function createTestFiles({ files, generatorDir, testPlugins, globIgnore }) {
+function createTestFiles({ files, generatorDir, testPlugins }) {
   if (!testPlugins || testPlugins.length === 0) return;
   const unit = ['jest', 'mocha'];
   const integration = ['cypress'];
@@ -21,7 +20,7 @@ function createTestFiles({ files, generatorDir, testPlugins, globIgnore }) {
     if (match) {
       const matchedFramework = match[0];
       if (unit.includes(matchedFramework)) {
-        files.add(`${generatorDir}/${matchedFramework}/*/${globIgnore}`, `${generatorDir}/${matchedFramework}/**/${globIgnore}`);
+        files.add(`${generatorDir}/${matchedFramework}/*`, `${generatorDir}/${matchedFramework}/**/*`);
       } else {
         files.add(`${generatorDir}/${matchedFramework}/*`, `${generatorDir}/${matchedFramework}/**/*`);
       }
@@ -36,7 +35,6 @@ function createTestFiles({ files, generatorDir, testPlugins, globIgnore }) {
 module.exports = async function create(gasket, context) {
   const {
     files,
-    typescript,
     apiApp,
     addApiRoutes = true,
     testPlugins,
@@ -53,9 +51,8 @@ module.exports = async function create(gasket, context) {
   });
 
   if (apiApp && addApiRoutes) {
-    const globIgnore = typescript ? '!(*.js)' : '!(*.ts)';
-    files.add(`${generatorDir}/app/**/${globIgnore}`);
+    files.add(`${generatorDir}/app/**/*`);
 
-    createTestFiles({ files, generatorDir, testPlugins, globIgnore });
+    createTestFiles({ files, generatorDir, testPlugins });
   }
 };
