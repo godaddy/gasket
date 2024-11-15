@@ -1,5 +1,9 @@
 # `@gasket/plugin-jest`
 
+### 7.0.10
+
+- opt for type:module in TS API app test suite ([#966])
+
 ### 7.0.0
 
 - See [Version 7 Upgrade Guide] for overall changes
@@ -80,3 +84,4 @@
 [#463]: https://github.com/godaddy/gasket/pull/463
 [#g552]: https://github.com/godaddy/gasket/pull/463
 [#670]: https://github.com/godaddy/gasket/pull/670
+[#966]: https://github.com/godaddy/gasket/pull/966
