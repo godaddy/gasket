@@ -4,6 +4,7 @@ import pluginMetadata from '@gasket/plugin-metadata';
 import pluginCommand from '@gasket/plugin-command';
 import pluginDocs from '@gasket/plugin-docs';
 import pluginDocusaurus from '@gasket/plugin-docusaurus';
+import pluginDynamicPlugins from '@gasket/plugin-dynamic-plugins';
 
 export const defaultPlugins = [
   pluginLogger,
@@ -11,5 +12,6 @@ export const defaultPlugins = [
   pluginMetadata,
   pluginCommand,
   pluginDocs,
-  pluginDocusaurus
+  pluginDocusaurus,
+  pluginDynamicPlugins
 ];
