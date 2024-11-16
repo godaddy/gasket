@@ -2,11 +2,19 @@
   "name": "@gasket/plugin-dynamic-plugins",
   "version": "0.0.0",
   "description": "Gasket plugin for dynamically adding plugins to Gasket",
+  "type": "module",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
     "lib"
   ],
+  "exports": {
+    ".": {
+      "import": "./lib/index.js",
+      "require": "./cjs/index.js"
+    },
+    "./package.json": "./package.json"
+  },
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
@@ -15,7 +23,10 @@
     "test:coverage": "npm run test -- --coverage",
     "posttest": "npm run lint && npm run typecheck",
     "typecheck": "tsc",
-    "typecheck:watch": "tsc --watch"
+    "typecheck:watch": "tsc --watch",
+    "build": "swc lib -d cjs --delete-dir-on-start --strip-leading-paths",
+    "postbuild": "node -e \"require('fs').writeFileSync('cjs/package.json', '{}')\"",
+    "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -36,6 +47,8 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-dynamic-plugins",
   "devDependencies": {
+    "@swc/cli": "^0.3.12",
+    "@swc/core": "^1.5.3",
     "@gasket/core": "^7.0.9",
     "eslint": "^8.56.0",
     "eslint-config-godaddy": "^7.1.1",
@@ -57,7 +70,10 @@
     ],
     "rules": {
       "unicorn/filename-case": "error"
-    }
+    },
+    "ignorePatterns": [
+      "cjs"
+    ]
   },
   "jest": {
     "testEnvironment": "node"

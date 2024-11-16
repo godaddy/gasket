@@ -2,7 +2,7 @@ import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 const { name, version } = require('../package.json');
 
-/** @type {import('@gasket/core').Preset} */
+/** @type {import('@gasket/core').Plugin} */
 export default {
   name,
   version,
