@@ -1,6 +1,6 @@
 {
   "name": "@gasket/preset-nextjs",
-  "version": "7.0.11",
+  "version": "7.0.12",
   "description": "Basic NextJS Framework",
   "type": "module",
   "main": "lib/index.js",
@@ -32,7 +32,7 @@
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-preset-nextjs",
   "dependencies": {
     "@gasket/plugin-cypress": "^7.0.9",
-    "@gasket/plugin-express": "^7.0.11",
+    "@gasket/plugin-express": "^7.0.12",
     "@gasket/plugin-https": "^7.0.9",
     "@gasket/plugin-intl": "^7.0.9",
     "@gasket/plugin-jest": "^7.0.10",
