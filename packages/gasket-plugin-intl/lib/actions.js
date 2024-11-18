@@ -3,7 +3,6 @@ const getPreferredLocale = require('./utils/get-preferred-locale');
 
 /** @type {import('@gasket/core').ActionHandler<'getIntlLocale'>} */
 const getIntlLocale = withGasketRequestCache(
-  /** @type {import('@gasket/core').ActionHandler<'getIntlLocale'>} */
   async function getIntlLocale(gasket, req) {
     return gasket.execWaterfall(
       'intlLocale',

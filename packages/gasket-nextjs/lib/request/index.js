@@ -1,4 +1,4 @@
-import { gasketRequest } from '@gasket/request';
+import { makeGasketRequest } from '@gasket/request';
 import { cookies, headers } from 'next/headers';
 
 const reqCache = new WeakMap();
@@ -13,7 +13,7 @@ export async function request(params) {
       query
     ] = await Promise.all([cookies(), params]);
 
-    const req = await gasketRequest({
+    const req = await makeGasketRequest({
       headers: headerStore,
       cookies: cookieStore,
       query

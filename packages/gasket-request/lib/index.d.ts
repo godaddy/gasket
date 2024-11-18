@@ -35,8 +35,8 @@ export class GasketRequest {
  */
 export async function makeGasketRequest(req: RequestLike): Promise<GasketRequest>;
 
-export async function gasketRequestWrapper<TResults, TArgs>(gasket: Gasket, req: RequestLike, ...args?: TArgs): TResults;
+type RequestActionFn<TResults, TArgs = []> = (gasket: Gasket, req: GasketRequest, ...args?: TArgs) => TResults;
+type RequestActionWrapperFn<TResults, TArgs = []> = (gasket: Gasket, req: RequestLike, ...args?: TArgs) => TResults;
 
-export async function withGasketRequest<TResults, TArgs>(actionFn: (gasket: Gasket, req: GasketRequest, ...args?: TArgs) => TResults): gasketRequestWrapper<TResults, TArgs>;
-
-export async function withGasketRequestCache<TResults, TArgs>(actionFn: (gasket: Gasket, req: GasketRequest, ...args?: TArgs) => TResults): gasketRequestWrapper<TResults, TArgs>;
+export async function withGasketRequest<TResults, TArgs = []>(actionFn: RequestActionFn<TResults, TArgs>): RequestActionWrapperFn<TResults, TArgs>;
+export async function withGasketRequestCache<TResults, TArgs = []>(actionFn: RequestActionFn<TResults, TArgs>): RequestActionWrapperFn<TResults, TArgs>;
