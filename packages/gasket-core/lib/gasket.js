@@ -1,7 +1,7 @@
 /* eslint-disable no-console, no-process-env */
 
 import { GasketEngine, lifecycleMethods } from './engine.js';
-import { applyConfigOverrides } from '@gasket/utils';
+import { applyConfigOverrides } from '@gasket/utils/config';
 import { makeTraceBranch } from './trace.js';
 
 /**
@@ -63,12 +63,14 @@ export class Gasket {
     // @ts-ignore
     this.config = this.execWaterfallSync('configure', config);
 
-    this.isReady = new Promise(async (resolve) => {
-      // @ts-ignore
-      await this.exec('prepare');
-      // @ts-ignore
-      await this.exec('ready');
-      resolve();
+    this.isReady = new Promise((resolve) => {
+      (async () => {
+        // @ts-ignore
+        await this.exec('prepare');
+        // @ts-ignore
+        await this.exec('ready');
+        resolve();
+      })();
     });
   }
 
