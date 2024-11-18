@@ -1,7 +1,7 @@
 {
   "name": "@gasket/typescript-tests",
   "private": true,
-  "version": "7.0.12",
+  "version": "7.0.13",
   "description": "Not a published package; hosts unit tests to verify TypeScript support",
   "files": [
     "lib"
@@ -51,7 +51,7 @@
     "@gasket/plugin-docusaurus": "^7.0.9",
     "@gasket/plugin-elastic-apm": "^7.0.9",
     "@gasket/plugin-express": "^7.0.12",
-    "@gasket/plugin-fastify": "^7.0.12",
+    "@gasket/plugin-fastify": "^7.0.13",
     "@gasket/plugin-git": "^7.0.9",
     "@gasket/plugin-happyfeet": "^7.0.4",
     "@gasket/plugin-https": "^7.0.9",
@@ -70,7 +70,7 @@
     "@gasket/plugin-webpack": "^7.0.9",
     "@gasket/plugin-winston": "^7.0.9",
     "@gasket/plugin-workbox": "^7.0.9",
-    "@gasket/preset-api": "^7.0.12",
+    "@gasket/preset-api": "^7.0.13",
     "@gasket/preset-nextjs": "^7.0.12",
     "@gasket/react-intl": "^7.0.1",
     "@gasket/redux": "^7.0.1",
