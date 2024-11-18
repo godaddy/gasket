@@ -1,3 +1,5 @@
+import type { RequestLike } from './internal.d.ts';
+
 declare module '@gasket/core' {
   export type MaybeMultiple<T> = T | Array<T>;
   export type MaybeAsync<T> = T | Promise<T>;
@@ -138,6 +140,7 @@ declare module '@gasket/core' {
 
   /**
    * Expected request shape for GasketActions
+   * @deprecated - use class from @gasket/request
    */
   export interface GasketRequest {
     cookies: Record<string, string>;

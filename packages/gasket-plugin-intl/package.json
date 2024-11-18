@@ -37,6 +37,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-intl",
   "dependencies": {
+    "@gasket/request": "^7.0.0-canary.0",
     "@hapi/accept": "^6.0.3",
     "debug": "^4.3.4",
     "fs-extra": "^10.0.0",

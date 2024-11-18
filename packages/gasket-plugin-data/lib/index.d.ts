@@ -1,4 +1,4 @@
-import { MaybeAsync, Plugin } from '@gasket/core';
+import { Plugin } from '@gasket/core';
 
 export interface PublicGasketData extends Record<string, any> {
 }
@@ -13,13 +13,15 @@ export type GasketDataDefinition = GasketData & {
 }
 
 declare module '@gasket/core' {
+  import { RequestLike, GasketRequest } from '@gasket/request';
+
   export interface GasketConfig {
     data?: GasketDataDefinition
   }
 
   export interface GasketActions {
     getGasketData(): Promise<GasketData>
-    getPublicGasketData(req: GasketRequest | IncomingMessage): Promise<PublicGasketData>
+    getPublicGasketData(req: RequestLike): Promise<PublicGasketData>
   }
 
   export interface HookExecTypes {

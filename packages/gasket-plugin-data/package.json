@@ -38,6 +38,7 @@
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-data",
   "dependencies": {
     "@gasket/utils": "^7.0.6",
+    "@gasket/request": "^7.0.0-canary.0",
     "lodash.merge": "^4.6.2"
   },
   "devDependencies": {
