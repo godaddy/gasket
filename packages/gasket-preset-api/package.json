@@ -1,6 +1,6 @@
 {
   "name": "@gasket/preset-api",
-  "version": "7.0.12",
+  "version": "7.0.13",
   "description": "Create Express-based API with Gasket",
   "type": "module",
   "main": "lib/index.js",
@@ -33,7 +33,7 @@
   "dependencies": {
     "@gasket/plugin-cypress": "^7.0.9",
     "@gasket/plugin-express": "^7.0.12",
-    "@gasket/plugin-fastify": "^7.0.12",
+    "@gasket/plugin-fastify": "^7.0.13",
     "@gasket/plugin-https": "^7.0.9",
     "@gasket/plugin-jest": "^7.0.10",
     "@gasket/plugin-lint": "^7.0.3",
