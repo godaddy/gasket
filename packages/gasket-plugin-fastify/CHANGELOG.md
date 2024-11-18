@@ -1,5 +1,9 @@
 # `@gasket/plugin-fastify`
 
+### 7.0.13
+
+- add conditional file content based on TS ([#972])
+
 ### 7.0.12
 
 - remove tsconfig.test from fastify, tune glob ignores ([#969])
@@ -79,3 +83,4 @@ Enable middleware support ([#172])
 [#675]: https://github.com/godaddy/gasket/pull/675
 [#940]: https://github.com/godaddy/gasket/pull/940
 [#969]: https://github.com/godaddy/gasket/pull/969
+[#972]: https://github.com/godaddy/gasket/pull/972
