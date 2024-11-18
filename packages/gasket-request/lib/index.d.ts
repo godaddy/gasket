@@ -1,5 +1,5 @@
 import type { RequestLike } from '../internal.d.ts';
-import type { ActionHandler } from '@gasket/core';
+import type { Gasket, ActionHandler } from '@gasket/core';
 
 export type RequestLike = {
   headers: Headers | Record<string, string>
@@ -35,6 +35,8 @@ export class GasketRequest {
  */
 export async function makeGasketRequest(req: RequestLike): Promise<GasketRequest>;
 
-export async function withGasketRequest<T>(actionFn: ActionHandler<T>): ActionHandler<T>;
+export async function gasketRequestWrapper<TResults, TArgs>(gasket: Gasket, req: RequestLike, ...args?: TArgs): TResults;
 
-export async function withGasketRequestCache<T>(actionFn: ActionHandler<T>): ActionHandler<T>;
+export async function withGasketRequest<TResults, TArgs>(actionFn: (gasket: Gasket, req: GasketRequest, ...args?: TArgs) => TResults): gasketRequestWrapper<TResults, TArgs>;
+
+export async function withGasketRequestCache<TResults, TArgs>(actionFn: (gasket: Gasket, req: GasketRequest, ...args?: TArgs) => TResults): gasketRequestWrapper<TResults, TArgs>;

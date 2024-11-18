@@ -1,8 +1,9 @@
 import { GasketRequest } from './request.js';
 
 /** @type {import('./index.js').withGasketRequestCache} */
-export function withGasketRequestCache(fn) {
+export function withGasketRequestCache(actionFn) {
   const cache = new WeakMap();
+  /** @type {import('./index.js').gasketRequestWrapper} */
   return async (gasket, req, ...args) => {
     const normalizedReq = await GasketRequest.make(req);
 
@@ -10,16 +11,16 @@ export function withGasketRequestCache(fn) {
       return cache.get(normalizedReq);
     }
 
-    const result = await fn(gasket, normalizedReq, ...args);
+    const result = await actionFn(gasket, normalizedReq, ...args);
     cache.set(normalizedReq, result);
     return result;
   };
 }
 
 /** @type {import('./index.js').withGasketRequest} */
-export function withGasketRequest(fn) {
+export function withGasketRequest(actionFn) {
   return async (gasket, req, ...args) => {
     const normalizedReq = await GasketRequest.make(req);
-    return await fn(gasket, normalizedReq, ...args);
+    return await actionFn(gasket, normalizedReq, ...args);
   };
 }

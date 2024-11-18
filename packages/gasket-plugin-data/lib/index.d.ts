@@ -1,4 +1,5 @@
 import { Plugin } from '@gasket/core';
+import { withGasketRequestCache } from '@gasket/request';
 
 export interface PublicGasketData extends Record<string, any> {
 }
