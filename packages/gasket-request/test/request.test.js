@@ -1,4 +1,4 @@
-import { jest, expect } from '@jest/globals';
+import { expect } from '@jest/globals';
 import { makeGasketRequest, GasketRequest } from '../lib/request.js';
 
 describe('makeGasketRequest', () => {
@@ -34,8 +34,8 @@ describe('makeGasketRequest', () => {
 
   it('returns the same instance for the same headers', async () => {
     const headers = new Map([['header1', 'value1'], ['header2', 'value2']]);
-    const requestLike1 = { headers, cookies: {}, query: {} };
-    const requestLike2 = { headers, cookies: {}, query: {} };
+    const requestLike1 = { headers };
+    const requestLike2 = { headers };
 
     const result1 = await makeGasketRequest(requestLike1);
     const result2 = await makeGasketRequest(requestLike2);

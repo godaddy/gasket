@@ -25,9 +25,12 @@ export class GasketRequest {
     cookies: Record<string, string>,
     query: Record<string, string>
   });
+
   headers: Record<string, string>
   cookies: Record<string, string>
   query: Record<string, string>
+
+  static make(req: RequestLike): Promise<GasketRequest>;
 }
 
 /**
