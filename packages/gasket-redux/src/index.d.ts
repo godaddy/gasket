@@ -53,7 +53,7 @@ export function prepareReducer(
  * Set up redux store configuration and return a makeStore function
  */
 export function configureMakeStore(
-  options?: ConfigureMakeStoreOptions,
+  options?: ConfigureMakeStoreOptions | ((req: IncomingMessage) => ConfigureMakeStoreOptions),
   postCreate?: Function
 ): MakeStoreFn;
 

@@ -15,6 +15,7 @@ const mockEnhancer = jest.fn(createStore => (reducer, initialState, enhancer) =>
 const mockPostCreate = jest.fn();
 
 
+// eslint-disable-next-line max-statements
 describe('configureMakeStore', () => {
   const mockReducers = {
     reducer1: f => f || {}
@@ -47,6 +48,11 @@ describe('configureMakeStore', () => {
     expect(result).toBeInstanceOf(Function);
   });
 
+  it('accepts callback optionsFn', () => {
+    result = configureMakeStore(() => {});
+    expect(result).toBeInstanceOf(Function);
+  });
+
   it('allows custom initial state', () => {
     store = configureMakeStore({ initialState: mockInitialState })();
     const state = store.getState();
@@ -56,8 +62,22 @@ describe('configureMakeStore', () => {
     }
   });
 
+  it('allows custom initial state from callback optionsFn', () => {
+    store = configureMakeStore(() => ({ initialState: mockInitialState }))();
+    const state = store.getState();
+
+    for (const [key, value] of Object.entries(mockInitialState)) {
+      expect(state).toHaveProperty(key, value);
+    }
+  });
+
   it('allows custom middleware', () => {
     configureMakeStore({ middleware: [mockMiddleware] })();
+    expect(applyMiddlewareSpy.mock.calls[0][1]).toBe(mockMiddleware);
+  });
+
+  it('allows custom middleware from callback optionsFn', () => {
+    configureMakeStore(() => ({ middleware: [mockMiddleware] }))();
     expect(applyMiddlewareSpy.mock.calls[0][1]).toBe(mockMiddleware);
   });
 
