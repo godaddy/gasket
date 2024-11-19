@@ -29,7 +29,7 @@ describe('Prepare Hook', () => {
     });
     registerPluginsSpy = jest.spyOn(gasket.engine, 'registerPlugins');
     execApplySyncSpy = jest.spyOn(gasket, 'execApplySync');
-    process.env.GASKET_DYNAMIC = 1; // Ensure GASKET_DYNAMIC is set to 1
+    process.env.GASKET_DYNAMIC = 1;
   });
 
   afterEach(() => {
@@ -38,6 +38,14 @@ describe('Prepare Hook', () => {
 
   it('does not register dynamic plugins if GASKET_DYNAMIC is not set', async () => {
     delete process.env.GASKET_DYNAMIC;
+    await pluginDynamicPlugins.hooks.prepare(gasket);
+    expect(registerPluginsSpy).not.toHaveBeenCalled();
+    expect(execApplySyncSpy).not.toHaveBeenCalled();
+  });
+
+  it('does not add plugins if dynamicPlugins is not set', async () => {
+    jest.clearAllMocks();
+    delete gasket.config.dynamicPlugins;
     await pluginDynamicPlugins.hooks.prepare(gasket);
     expect(registerPluginsSpy).not.toHaveBeenCalled();
     expect(execApplySyncSpy).not.toHaveBeenCalled();

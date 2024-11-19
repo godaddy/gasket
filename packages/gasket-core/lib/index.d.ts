@@ -120,6 +120,7 @@ declare module '@gasket/core' {
       id: string;
     };
     config: GasketConfig;
+    engine: GasketEngine;
     symbol: Symbol;
     traceBranch(): GasketTrace
     traceRoot(): Gasket

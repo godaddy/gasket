@@ -8,7 +8,11 @@ export default {
   version,
   hooks: {
     async prepare(gasket) {
-      if (!process.env.GASKET_DYNAMIC) return;
+      if (
+        !process.env.GASKET_DYNAMIC
+        || !gasket.config.dynamicPlugins
+        || !gasket.config.dynamicPlugins.length
+      ) return;
 
       const load = await Promise.all(gasket.config.dynamicPlugins.map(name => import(name)));
       load.forEach(mod => {
