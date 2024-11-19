@@ -208,11 +208,11 @@ describe('create', () => {
   it('respects the typescript flag', async () => {
     mockContext.typescript = false;
     await expectCreatedWith(({ files }) => {
-      expect(files.add).toHaveBeenCalledWith(expect.stringContaining('../generator/app/**/!(*.ts)'));
+      expect(files.add).toHaveBeenCalledWith(expect.stringContaining('../generator/app/**/'));
     })();
     mockContext.typescript = true;
     await expectCreatedWith(({ files }) => {
-      expect(files.add).toHaveBeenCalledWith(expect.stringContaining('../generator/app/**/!(*.js)'));
+      expect(files.add).toHaveBeenCalledWith(expect.stringContaining('../generator/app/**/!(*.ts)'));
     })();
   });
 
@@ -233,7 +233,7 @@ describe('create', () => {
       mockContext.testPlugins = ['@gasket/mocha'];
       await expectCreatedWith(({ files }) => {
         expect(files.add).toHaveBeenCalledWith(
-          expect.stringContaining(`/generator/mocha/*/!(*.ts)`),
+          expect.stringContaining(`/generator/mocha/*`),
           expect.stringContaining(`/generator/mocha/**/!(*.ts)`)
         );
       })();
@@ -243,7 +243,7 @@ describe('create', () => {
       mockContext.testPlugins = ['@gasket/jest'];
       await expectCreatedWith(({ files }) => {
         expect(files.add).toHaveBeenCalledWith(
-          expect.stringContaining(`/generator/jest/*/!(*.ts)`),
+          expect.stringContaining(`/generator/jest/*`),
           expect.stringContaining(`/generator/jest/**/!(*.ts)`)
         );
       })();
@@ -255,17 +255,6 @@ describe('create', () => {
         expect(files.add).toHaveBeenCalledWith(
           expect.stringContaining(`/generator/cypress/*`),
           expect.stringContaining(`/generator/cypress/**/*`)
-        );
-      })();
-    });
-
-    it('adds ts extenstion files', async function () {
-      mockContext.typescript = true;
-      mockContext.testPlugins = ['@gasket/jest'];
-      await expectCreatedWith(({ files }) => {
-        expect(files.add).toHaveBeenCalledWith(
-          expect.stringContaining(`/generator/jest/*/!(*.js)`),
-          expect.stringContaining(`/generator/jest/**/!(*.js)`)
         );
       })();
     });

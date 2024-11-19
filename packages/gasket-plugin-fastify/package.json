@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-fastify",
-  "version": "7.0.9",
+  "version": "7.0.13",
   "description": "Adds fastify support to your application",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -36,6 +36,9 @@
     "url": "https://github.com/godaddy/gasket/issues"
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-fastify",
+  "dependencies": {
+    "fastify": "^4.28.1"
+  },
   "devDependencies": {
     "@gasket/core": "^7.0.9",
     "cross-env": "^7.0.3",

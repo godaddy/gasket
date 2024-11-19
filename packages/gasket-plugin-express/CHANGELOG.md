@@ -1,5 +1,13 @@
 # `@gasket/plugin-express`
 
+### 7.0.12
+
+- remove tsconfig.test from fastify, tune glob ignores ([#969])
+
+### 7.0.11
+
+- opt for js jest config ([#967])
+
 ### 7.0.10
 
 - opt for type:module in TS API app test suite ([#966])
@@ -121,3 +129,5 @@
 [#736]: https://github.com/godaddy/gasket/pull/736
 [#958]: https://github.com/godaddy/gasket/pull/958
 [#966]: https://github.com/godaddy/gasket/pull/966
+[#967]: https://github.com/godaddy/gasket/pull/967
+[#969]: https://github.com/godaddy/gasket/pull/969
