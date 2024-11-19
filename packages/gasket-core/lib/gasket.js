@@ -65,9 +65,9 @@ export class Gasket {
 
     this.isReady = new Promise((resolve) => {
       (async () => {
-        // @ts-ignore
+        // @ts-ignore - attached lifecycle trace methods
         await this.exec('prepare');
-        // @ts-ignore
+        // @ts-ignore - attached lifecycle trace methods
         await this.exec('ready');
         resolve();
       })();
