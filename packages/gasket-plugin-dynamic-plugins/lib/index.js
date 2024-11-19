@@ -15,14 +15,15 @@ export default {
         gasket.config.plugins.push(mod.default);
       });
       gasket.engine.registerPlugins(gasket.config.plugins);
-
-      gasket.execApplySync('init', function(plugin, handler) {
-        if(gasket.config.dynamicPlugins.includes(plugin.name)) {
+      // eslint-disable-next-line no-sync
+      gasket.execApplySync('init', function (plugin, handler) {
+        if (gasket.config.dynamicPlugins.includes(plugin.name)) {
           handler();
         }
       });
-      gasket.execApplySync('configure', async function(plugin, handler) {
-        if(gasket.config.dynamicPlugins.includes(plugin.name)) {
+      // eslint-disable-next-line no-sync
+      gasket.execApplySync('configure', async function (plugin, handler) {
+        if (gasket.config.dynamicPlugins.includes(plugin.name)) {
           gasket.config = handler(gasket.config);
         }
       });

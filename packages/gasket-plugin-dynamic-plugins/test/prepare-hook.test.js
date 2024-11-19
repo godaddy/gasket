@@ -1,18 +1,18 @@
 import { jest } from '@jest/globals';
 import { makeGasket } from '@gasket/core';
 
-const mockPluginOne = { default: { 
-  name: '@gasket/plugin-one', 
-  hooks:  {
+const mockPluginOne = { default: {
+  name: '@gasket/plugin-one',
+  hooks: {
     hook: () => {}
   }
-}};
-const mockPluginTwo = { default: { 
+} };
+const mockPluginTwo = { default: {
   name: '@gasket/plugin-two',
-  hooks:  {
+  hooks: {
     hook: () => {}
   }
-}};
+} };
 
 jest.unstable_mockModule('@gasket/plugin-one', () => mockPluginOne);
 jest.unstable_mockModule('@gasket/plugin-two', () => mockPluginTwo);
