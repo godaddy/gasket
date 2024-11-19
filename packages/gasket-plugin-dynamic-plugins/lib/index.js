@@ -14,15 +14,14 @@ export default {
       load.forEach(mod => {
         gasket.config.plugins.push(mod.default);
       });
-
       gasket.engine.registerPlugins(gasket.config.plugins);
 
-      await gasket.execApply('init', async function(plugin, handler) {
+      gasket.execApplySync('init', function(plugin, handler) {
         if(gasket.config.dynamicPlugins.includes(plugin.name)) {
           handler();
         }
       });
-      await gasket.execApply('configure', async function(plugin, handler) {
+      gasket.execApplySync('configure', async function(plugin, handler) {
         if(gasket.config.dynamicPlugins.includes(plugin.name)) {
           gasket.config = handler(gasket.config);
         }
