@@ -1,5 +1,9 @@
 # `@gasket/plugin-express`
 
+### 7.0.14
+
+- Switch to `http2-express` to address vulnerabilities ([#959])
+
 ### 7.0.12
 
 - remove tsconfig.test from fastify, tune glob ignores ([#969])
@@ -127,7 +131,9 @@
 [#695]: https://github.com/godaddy/gasket/pull/695
 [#708]: https://github.com/godaddy/gasket/pull/708
 [#736]: https://github.com/godaddy/gasket/pull/736
+[#892]: https://github.com/godaddy/gasket/pull/892
 [#958]: https://github.com/godaddy/gasket/pull/958
 [#966]: https://github.com/godaddy/gasket/pull/966
 [#967]: https://github.com/godaddy/gasket/pull/967
+[#959]: https://github.com/godaddy/gasket/pull/959
 [#969]: https://github.com/godaddy/gasket/pull/969

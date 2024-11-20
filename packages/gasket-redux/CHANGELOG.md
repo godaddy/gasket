@@ -1,5 +1,9 @@
 # `@gasket/redux`
 
+### 7.0.14
+
+- Add configureMakeStore options callback to allow for per-request configuration ([#974])
+
 ### 7.0.0
 
 - See [Version 7 Upgrade Guide] for overall changes
@@ -95,3 +99,4 @@
 [#457]: https://github.com/godaddy/gasket/pull/457
 [#670]: https://github.com/godaddy/gasket/pull/670
 [#693]: https://github.com/godaddy/gasket/pull/693
+[#974]: https://github.com/godaddy/gasket/pull/974

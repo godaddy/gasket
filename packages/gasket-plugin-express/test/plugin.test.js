@@ -11,7 +11,7 @@ const compressionMiddleware = jest.fn();
 const mockCompression = jest.fn().mockReturnValue(compressionMiddleware);
 
 jest.mock('express', () => mockExpress);
-jest.mock('http2-express-bridge', () => mockExpressBridge);
+jest.mock('http2-express', () => mockExpressBridge);
 jest.mock('cookie-parser', () => mockCookieParser);
 jest.mock('compression', () => mockCompression);
 
