@@ -15,10 +15,6 @@ async function objectFromCookieStore(cookieStore) {
  * @type {import('./index.js').GasketRequest}
  */
 export class GasketRequest {
-  static async make(requestLike) {
-    return await makeGasketRequest(requestLike);
-  }
-
   constructor(normalizedRequest) {
     this.headers = normalizedRequest.headers;
     this.cookies = normalizedRequest.cookies;
