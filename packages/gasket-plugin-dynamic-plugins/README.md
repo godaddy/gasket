@@ -41,25 +41,12 @@ gasket.isReady.then(() => {
 
 ## Configuration
 
-### Environment Variables
-
-#### `GASKET_DYNAMIC`
-
-The `GASKET_DYNAMIC` environment variable is used to control the loading of dynamic plugins in the Gasket framework. When this variable is set, the framework will attempt to load and register dynamic plugins specified in the configuration.
-
-To enable dynamic plugin loading, set the `GASKET_DYNAMIC` environment variable to `1`.
-
-```json
-"docs": "GASKET_DYNAMIC=1 node gasket.js docs"
-```
-
-If this variable is not set, the framework will not attempt to load dynamic plugins.
 
 ### Gasket Configuration
 
 #### `dynamicPlugins`
 
-To specify which plugin to load dynamically, add a `dynamicPlugins` key to your `gasket` file with a value of an array of strings containing the plugin names you want to add.
+To specify which plugins to load dynamically, add a `dynamicPlugins` key to your `gasket` file with a value of an array of strings containing the plugin names you want to add.
 
 ```diff
 // gasket.js
@@ -72,6 +59,36 @@ export default makeGasket({
 });
 ```
 
+### More control with sub-environments
+
+#### `GASKET_ENV`
+
+This plugin can utilize [sub-environments] to determine which plugins to load dynamically. To specify which sub-environment to use, set the `GASKET_ENV` environment variable to the desired sub-environment and then add the sub-environment configuration to the `gasket` file.
+
+For example if you wanted to load the `@gasket/plugin-docs` and `@gasket/plugin-docusaurus` plugins only when running the `docs` script, you could set the `GASKET_ENV` variable to `local.docs` in your `package.json` file.
+
+```json
+"docs": "GASKET_ENV=local.docs node gasket.js docs"
+```
+
+In your `gasket` file, you would then specify the plugins to load for the `local.docs` sub-environment.
+
+```js
+makeGasket({
+  environments: {
+    local: { ... },
+    'local.docs': {
+      dynamicPlugins: [
+        '@gasket/plugin-docs',
+        '@gasket/plugin-docusaurus'
+      ]
+    }
+  }
+})
+```
+
 ## License
 
 [MIT](./LICENSE.md)
+
+[sub-environments]: ../../docs/configuration.md#environments
