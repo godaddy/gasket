@@ -20,26 +20,34 @@ used by Gasket plugins and apps. It is a consistent shape that can be used
 across different request handling frameworks.
 
 A `GasketRequest` object has the following properties:
-- `headers` - (object) Request headers
-- [`cookies`] - (object) Request cookies
-- [`query`] - (object) Query parameters
-- [`path`] - (string) Request path
 
-A `GasketRequest` can be created from a Node `IncomingMessage` object, an Express
-`Request` object, or a Next.js `NextRequest` object, amongst others.
+| Property | Type   | Description       | Arguments     |
+|----------|--------|-------------------|---------------|
+| headers  | object | Request headers   | required      |
+| cookies  | object | Request cookies   | default: `{}` |
+| query    | object | Query parameters  | default: `{}` |
+| path     | string | Request path      | default: `''` |
+
+
+The only required property to create a `GasketRequest` is the `headers` which
+is used as a caching key to ensure the same `GasketRequest` instance is used
+throughout the request lifetime.
+
+### makeGasketRequest
+
+A `GasketRequest` can be created from a Node `IncomingMessage` object, an
+Express `Request` object, or a Next.js `NextRequest` object, amongst others.
 
 ```js
-import { GasketRequest } from '@gasket/request';
+import { makeGasketRequest } from '@gasket/request';
 
-export default async function handler(req, res) {
-  const gasketRequest = new GasketRequest.make(req);
+export default async function expressHandler(req, res) {
+  const gasketRequest = await makeGasketRequest(req);
   // use gasketRequest
 }
 ```
 
 You can also assemble a `GasketRequest` object from parts of a request object.
-The only required property is the `headers`, which is used as a caching key to
-ensure the same `GasketRequest` instance is used throughout the request lifetime.
 
 ```js
 import { GasketRequest } from '@gasket/request';
@@ -48,48 +56,42 @@ const headers = {
   'x-example': 'example'
 };
 
-const staticGasketRequest = new GasketRequest.make({ headers });
+const staticGasketRequest = await makeGasketRequest({ headers });
 ````
-
-### makeGasketRequest
-
-Another way to create a `GasketRequest` object is to use the `makeGasketRequest`.
-
-```js
-import { makeGasketRequest } from '@gasket/request';
-
-export default async function handler(req, res) {
-  const gasketRequest = makeGasketRequest(req);
-  // use gasketRequest
-}
-```
 
 ### withGasketRequest
 
-A higher-order function that wraps an action handler function and provides a
+A higher-order function that can wrap a GasketAction function and provides a
 `GasketRequest` object as the first argument.
+This provides an easy way to normalize the request object for any `GasketAction`
+and potential lifecycle hooks.
 
 ```js
 import { withGasketRequest } from '@gasket/request';
 
 export const myAction = withGasketRequest(
-  async function handler(gasketRequest, req) {
+  async function handler(gasket, gasketRequest) {
     // use gasketRequest
   }
 );
+
+// example usage
+await gasket.actions.myAction(req);
 ```
 
-If you action need additional arguments, you can pass them as the following the
-`req`.
+If you action need additional arguments, you can pass them following the `gasketReq`.
 
 ```js
 import { withGasketRequest } from '@gasket/request';
 
 export const myAction = withGasketRequest(
-  async function handler(gasketRequest, req, arg1, arg2) {
+  async function handler(gasket, gasketRequest, arg1, arg2) {
     // use gasketRequest
   }
 );
+
+// example usage
+await gasket.actions.myAction(req, true, false);
 ```
 
 ### withGasketRequestCache
@@ -107,6 +109,9 @@ export const myAction = withGasketRequestCache(
     // use gasketRequest
   }
 );
+
+// example usage
+await gasket.actions.myAction(req, true, false);
 ```
 
 ## Purpose
