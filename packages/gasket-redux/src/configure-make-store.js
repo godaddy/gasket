@@ -31,23 +31,23 @@ export function prepareReducer(allReducers, rootReducer) {
  * @type {import('./index').configureMakeStore}
  */
 export default function configureMakeStore(makeStoreOptions = {}, postCreate) {
-  const {
-    thunkMiddleware = thunk,
-    middleware = [],
-    logging = false,
-    enhancers = [(f) => f],
-    reducers = {},
-    rootReducer,
-    initialState = {}
-  } = makeStoreOptions;
-
   /**
    * Wrapper for store create to create instance with SSR and to hydrate in
    * browser.
    * @type {import('./index').MakeStoreFn}
    */
+  // eslint-disable-next-line max-statements
   function makeStore(state = {}, options = {}) {
     const { req, logger = console } = options;
+    const {
+      thunkMiddleware = thunk,
+      middleware = [],
+      logging = false,
+      enhancers = [(f) => f],
+      reducers = {},
+      rootReducer,
+      initialState = {}
+    } = typeof makeStoreOptions === 'function' ? makeStoreOptions(options) : makeStoreOptions;
 
     // Use existing redux store if it has been already been instantiated by
     // redux-plugin
