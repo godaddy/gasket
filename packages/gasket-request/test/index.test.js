@@ -8,7 +8,8 @@ describe('index', () => {
       'GasketRequest',
       'makeGasketRequest',
       'withGasketRequest',
-      'withGasketRequestCache'
+      'withGasketRequestCache',
+      'WeakPromiseKeeper'
     ];
 
     expected.forEach(property => {

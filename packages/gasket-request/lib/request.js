@@ -1,4 +1,6 @@
-const cache = new WeakMap();
+import { WeakPromiseKeeper } from './keeper.js';
+
+const keeper = new WeakPromiseKeeper();
 
 /**
  * @type {import('./index.js').objectFromCookieStore}
@@ -37,34 +39,29 @@ export async function makeGasketRequest(requestLike) {
     throw new Error('request argument must have headers');
   }
 
-  if (cache.has(headers)) {
-    return cache.get(headers);
+  if (!keeper.has(headers)) {
+    const normalize = async () => {
+      let query = requestLike.query;
+      let path = requestLike.path;
+
+      // handle NextRequest objects
+      if ('nextUrl' in requestLike) {
+        query ??= requestLike.nextUrl.searchParams;
+        path ??= requestLike.nextUrl.pathname;
+      }
+
+      query ??= {};
+      path ??= '';
+
+      return new GasketRequest(Object.seal({
+        headers: headers.constructor.prototype.entries ? Object.fromEntries(headers.entries()) : headers,
+        cookies: cookies.constructor.prototype.getAll ? await objectFromCookieStore(cookies) : cookies,
+        query: query instanceof URLSearchParams ? Object.fromEntries(query) : query,
+        path
+      }));
+    };
+
+    keeper.set(headers, normalize());
   }
-
-  const normalize = async () => {
-    let query = requestLike.query;
-    let path = requestLike.path;
-
-    // handle NextRequest objects
-    if ('nextUrl' in requestLike) {
-      query ??= requestLike.nextUrl.searchParams;
-      path ??= requestLike.nextUrl.pathname;
-    }
-
-    query ??= {};
-    path ??= '';
-
-    return new GasketRequest(Object.seal({
-      headers: headers.constructor.prototype.entries ? Object.fromEntries(headers.entries()) : headers,
-      cookies: cookies.constructor.prototype.getAll ? await objectFromCookieStore(cookies) : cookies,
-      query: query instanceof URLSearchParams ? Object.fromEntries(query) : query,
-      path
-    }));
-  };
-
-  if (!cache.has(headers)) {
-    const promise = normalize();
-    cache.set(headers, promise);
-    return await promise;
-  }
+  return keeper.get(headers);
 }

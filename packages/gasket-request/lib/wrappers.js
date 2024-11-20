@@ -1,19 +1,17 @@
 import { makeGasketRequest } from './request.js';
+import { WeakPromiseKeeper } from './keeper.js';
 
 /** @type {typeof import('./index.d.ts').withGasketRequestCache} */
 export function withGasketRequestCache(actionFn) {
-  const cache = new WeakMap();
+  const keeper = new WeakPromiseKeeper();
 
   return async (gasket, req, ...args) => {
     const gasketRequest = await makeGasketRequest(req);
 
-    if (cache.has(gasketRequest)) {
-      return cache.get(gasketRequest);
+    if (!keeper.has(gasketRequest)) {
+      keeper.set(gasketRequest, actionFn(gasket, gasketRequest, ...args));
     }
-
-    const promise = actionFn(gasket, gasketRequest, ...args);
-    cache.set(gasketRequest, promise);
-    return await promise;
+    return keeper.get(gasketRequest);
   };
 }
 

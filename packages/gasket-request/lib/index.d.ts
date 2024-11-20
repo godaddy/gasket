@@ -33,6 +33,8 @@ export class GasketRequest {
   path: string
 }
 
+export class WeakPromiseKeeper extends WeakMap {}
+
 /**
  * Get a normalized request object for GasketActions
  */
