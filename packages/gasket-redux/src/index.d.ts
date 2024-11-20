@@ -8,6 +8,11 @@ declare module 'http' {
   }
 }
 
+export type MakeStoreFnOptions = {
+  logger?: Log;
+  req?: IncomingMessage;
+}
+
 /**
  * Wrapper for store create to create instance with SSR and to hydrate in
  * browser.
@@ -16,10 +21,7 @@ export type MakeStoreFn = {
   (
     /** The initial redux state */
     state: any,
-    options: {
-      logger?: Log;
-      req?: IncomingMessage;
-    }
+    options: MakeStoreFnOptions
   ): Store;
 };
 
@@ -53,7 +55,7 @@ export function prepareReducer(
  * Set up redux store configuration and return a makeStore function
  */
 export function configureMakeStore(
-  options?: ConfigureMakeStoreOptions,
+  options?: ConfigureMakeStoreOptions | ((options: MakeStoreFnOptions) => ConfigureMakeStoreOptions),
   postCreate?: Function
 ): MakeStoreFn;
 
