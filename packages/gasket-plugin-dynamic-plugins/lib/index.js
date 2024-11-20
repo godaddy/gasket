@@ -1,3 +1,5 @@
+/// <reference types="@gasket/plugin-metadata" />
+
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 const { name, version } = require('../package.json');
@@ -27,6 +29,19 @@ export default {
           gasket.config = handler(gasket.config);
         }
       });
+    },
+    metadata(gasket, meta) {
+      return {
+        ...meta,
+        configurations: [
+          {
+            name: 'dynamicPlugins',
+            link: 'README.md#configuration',
+            description:'Specify which plugins to load dynamically into gasket',
+            type: 'array'
+          }
+        ]
+      };
     }
   }
 };
