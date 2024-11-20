@@ -41,6 +41,7 @@ describe('actions', () => {
 
   describe('getIntlManager', () => {
     it('should return the configured manager', async () => {
+      mockGasket.config.intl.experimentalImportAttributes = true;
       const result = await actions.getIntlManager(mockGasket);
       expect(result).toEqual({ default: {} });
     });
@@ -50,6 +51,13 @@ describe('actions', () => {
       await expect(() => actions.getIntlManager(mockGasket))
         .rejects
         .toThrow('IntlManager not configured (gasket.config.intl.managerFilename)');
+    });
+
+    it('should throw if experimental import attributes not configured', async () => {
+      delete mockGasket.config.intl.experimentalImportAttributes;
+      await expect(() => actions.getIntlManager(mockGasket))
+        .rejects
+        .toThrow('To use experimental import attributes you must configure `gasket.config.intl.experimentalImportAttributes`');
     });
   });
 });

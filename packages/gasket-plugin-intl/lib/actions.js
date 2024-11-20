@@ -25,6 +25,10 @@ async function getIntlManager(gasket) {
     throw new Error('IntlManager not configured (gasket.config.intl.managerFilename)');
   }
 
+  if (!gasket.config.intl.experimentalImportAttributes) {
+    throw new Error('To use experimental import attributes you must configure `gasket.config.intl.experimentalImportAttributes`');
+  }
+
   return (await import(path.join(gasket.config.root, gasket.config.intl.managerFilename))).default;
 }
 
