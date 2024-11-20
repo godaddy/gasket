@@ -16,7 +16,8 @@ describe('Plugin', () => {
 
   it('has expected hooks', () => {
     const expected = [
-      'prepare'
+      'prepare',
+      'metadata'
     ];
     expect(Object.keys(plugin.hooks)).toEqual(expected);
     expect(Object.keys(plugin.hooks)).toHaveLength(expected.length);
