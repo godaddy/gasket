@@ -50,7 +50,7 @@ export default function configureMakeStore(makeStoreOptions = {}, postCreate) {
       reducers = {},
       rootReducer,
       initialState = {}
-    } = typeof makeStoreOptions === 'function' ? makeStoreOptions(req) : makeStoreOptions;
+    } = typeof makeStoreOptions === 'function' ? makeStoreOptions(options) : makeStoreOptions;
 
     const baseMiddleware = [thunkMiddleware];
 

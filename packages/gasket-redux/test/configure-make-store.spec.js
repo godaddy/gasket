@@ -53,6 +53,13 @@ describe('configureMakeStore', () => {
     expect(result).toBeInstanceOf(Function);
   });
 
+  it('accepts callback optionsFn called with makeStoreOptions', () => {
+    const mockMakeOptions = { logger: {}, req: {} };
+    const mockOptionsFn = jest.fn().mockReturnValue({});
+    configureMakeStore(mockOptionsFn)({}, mockMakeOptions);
+    expect(mockOptionsFn).toHaveBeenCalledWith(mockMakeOptions);
+  });
+
   it('allows custom initial state', () => {
     store = configureMakeStore({ initialState: mockInitialState })();
     const state = store.getState();
