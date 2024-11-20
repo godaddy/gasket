@@ -7,20 +7,24 @@ const reqCache = new WeakMap();
 export async function request(params) {
   const headerStore = await headers();
 
-  if (!reqCache.has(headerStore)) {
+  if (reqCache.has(headerStore)) {
+    return reqCache.get(headerStore);
+  }
+
+  const make = async () => {
     const [
       cookieStore,
       query
     ] = await Promise.all([cookies(), params]);
 
-    const req = await makeGasketRequest({
+    return makeGasketRequest({
       headers: headerStore,
       cookies: cookieStore,
       query
     });
-
-    reqCache.set(headerStore, req);
   }
 
-  return reqCache.get(headerStore);
+  const promise = make();
+  reqCache.set(headerStore, promise);
+  return await promise;
 }

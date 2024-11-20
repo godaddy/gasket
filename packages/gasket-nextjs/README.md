@@ -17,12 +17,12 @@ npm i @gasket/nextjs
 
 ### request
 
-Get a request-like object unique to the current request in server components.
+Get a normalized [GasketRequest] unique to the current request in server components.
 This uses the Next.js `cookies()` and `headers()` [dynamic functions]. 
 
 **Signature**
 
-- `await request(params?: object): { headers: object, cookies: object, query: object }`
+- `await request(params?: object): GasketRequest`
 
 **Props**
 
@@ -48,7 +48,7 @@ export default async function MyPage(props) {
 }
 ```
 
-The `req` will contain an object with headers and cookies.
+The `req` will be a [GasketRequest] with headers and cookies.
 
 If a query object is passed in, it will be added to the request object as well.
 For server components, dynamic routes params are available via props, and can
@@ -210,7 +210,8 @@ The `useGasketData` will provided access to the gasket data within the context o
 <!-- LINKS -->
 
 [@gasket/data]: /packages/gasket-data/README.md
+[GasketRequest]: /packages/gasket-request/README.md#GasketRequest
 
 [custom Document]: https://nextjs.org/docs/advanced-features/custom-document
 [dynamic functions]: https://nextjs.org/docs/app/building-your-application/rendering/server-components#dynamic-functions
-
+```
