@@ -19,6 +19,7 @@
     "docs-view": "npm run generate-docs-index && cd site && docusaurus start",
     "generate-docs-index": "node scripts/generate-docs-index",
     "postinstall": "npm run build",
+    "publish": "npm run publish:lts",
     "publish:canary": "lerna publish --preid canary --dist-tag canary",
     "publish:lts": "lerna publish --preid lts --dist-tag lts",
     "test:package": "lerna run test --stream --scope $*",
