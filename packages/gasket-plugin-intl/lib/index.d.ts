@@ -56,8 +56,6 @@ declare module '@gasket/data' {
   export interface GasketData {
     intl?: {
       locale: string;
-      /* dynamic import attributes toggle */
-      experimentalImportAttributes?: boolean;
     };
   }
 }
