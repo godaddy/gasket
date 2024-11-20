@@ -17,7 +17,7 @@ const plugin = {
     getExpressApp(gasket) {
       const express = require('express');
       const { http2 } = gasket.config;
-      app ??= http2 ? require('http2-express-bridge')(express) : express();
+      app ??= http2 ? require('http2-express')(express) : express();
 
       return app;
     }
