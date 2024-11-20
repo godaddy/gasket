@@ -51,7 +51,6 @@ export async function makeGasketRequest(requestLike) {
 
   if (!normalizedReqMap.has(headers)) {
     const normalized = new GasketRequest(Object.seal({
-      // @ts-ignore - entries not available on Headers here..
       headers: headers.constructor.prototype.entries ? Object.fromEntries(headers.entries()) : headers,
       cookies: cookies.constructor.prototype.getAll ? await objectFromCookieStore(cookies) : cookies,
       query: query instanceof URLSearchParams ? Object.fromEntries(query) : query,

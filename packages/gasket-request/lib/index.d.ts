@@ -1,5 +1,5 @@
 import type { RequestLike } from '../internal.d.ts';
-import type { Gasket, ActionHandler } from '@gasket/core';
+import type { Gasket } from '@gasket/core';
 
 export type RequestLike = {
   headers: Headers | Record<string, string>
@@ -38,8 +38,8 @@ export class GasketRequest {
  */
 export async function makeGasketRequest(req: RequestLike): Promise<GasketRequest>;
 
-type RequestActionFn<TResults, TArgs = []> = (gasket: Gasket, req: GasketRequest, ...args?: TArgs) => TResults;
-type RequestActionWrapperFn<TResults, TArgs = []> = (gasket: Gasket, req: RequestLike, ...args?: TArgs) => TResults;
+type RequestActionFn<Result, Args extends Array<unknown>> = (gasket: Gasket, req: RequestLike, ...args?: Args) => Promise<Result>;
+type RequestActionWrapperFn<Result, Args extends Array<unknown>> = (gasket: Gasket, req: GasketRequest, ...args?: Args) => Promise<Result>;
 
-export async function withGasketRequest<TResults, TArgs = []>(actionFn: RequestActionFn<TResults, TArgs>): RequestActionWrapperFn<TResults, TArgs>;
-export async function withGasketRequestCache<TResults, TArgs = []>(actionFn: RequestActionFn<TResults, TArgs>): RequestActionWrapperFn<TResults, TArgs>;
+export async function withGasketRequest<Result, Args extends Array<unknown>>(actionFn: RequestActionFn<Result, Args>): RequestActionWrapperFn<Result, Args>;
+export async function withGasketRequestCache<Result, Args extends Array<unknown>>(actionFn: RequestActionFn<Result, Args>): RequestActionWrapperFn<Result, Args>;
