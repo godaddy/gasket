@@ -50,7 +50,7 @@ module.exports = async function buildManifest(gasket, options = {}) {
       const keyName = importName
         .replace(/\.json$/, '')
         .replace('./', '');
-      return { [keyName]: `%() => import('${importName}')%` };
+      return { [keyName]: `%() => import('${importName}', { with: { type: 'json' } })%` };
     })
   ).reduce((a, c) => ({ ...a, ...c }), {});
 
