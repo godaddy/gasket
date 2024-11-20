@@ -1,5 +1,9 @@
 # `@gasket/redux`
 
+### 6.48.0
+
+- Add configureMakeStore options callback to allow for per-request configuration ([#974])
+
 ### 6.45.2
 
 - Tune `devDeps`, update test script ([#670])
@@ -88,3 +92,4 @@
 [#436]: https://github.com/godaddy/gasket/pull/436
 [#457]: https://github.com/godaddy/gasket/pull/457
 [#670]: https://github.com/godaddy/gasket/pull/670
+[#974]: https://github.com/godaddy/gasket/pull/974
