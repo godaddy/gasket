@@ -1,31 +1,18 @@
+/// <reference types="create-gasket-app" />
+/// <reference types="@gasket/plugin-https" />
+/// <reference types="@gasket/plugin-metadata" />
+
 /* eslint-disable no-console, no-sync */
 const { name, version, description } = require('../package.json');
+const { createChildLogger, verifyLoggerLevels } = require('./utils');
 
-function createChildLogger(parent, metadata) {
-  return {
-    ...parent,
-    debug: (...args) => console.debug(...args, metadata),
-    error: (...args) => console.error(...args, metadata),
-    info: (...args) => console.info(...args, metadata),
-    warn: (...args) => console.warn(...args, metadata),
-    child: (meta) => createChildLogger(this, { ...metadata, ...meta })
-  };
-}
-
-function verifyLoggerLevels(logger) {
-  ['debug', 'error', 'info', 'warn', 'child'].forEach((level) => {
-    if (typeof logger[level] !== 'function') {
-      throw new Error(`Logger is missing required level: ${level}`);
-    }
-  });
-}
-
-module.exports = {
+/** @type {import('@gasket/core').Plugin} */
+const plugin = {
   name,
   version,
   description,
   actions: {
-    getLogger: gasket => gasket.logger
+    getLogger: (gasket) => gasket.logger
   },
   hooks: {
     create(gasket, { pkg, gasketConfig }) {
@@ -35,10 +22,12 @@ module.exports = {
       });
     },
     init(gasket) {
-      // eslint-disable-next-line no-sync
       const loggers = gasket.execSync('createLogger');
 
-      if (loggers && loggers.some((logger) => logger && logger instanceof Promise)) {
+      if (
+        loggers &&
+        loggers.some((logger) => logger && logger instanceof Promise)
+      ) {
         throw new Error('createLogger hooks must be synchronous');
       }
 
@@ -85,3 +74,5 @@ module.exports = {
     }
   }
 };
+
+module.exports = plugin;
