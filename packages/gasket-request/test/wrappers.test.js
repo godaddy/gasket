@@ -53,6 +53,23 @@ describe('withGasketRequestCache', () => {
     expect(actionFn).toHaveBeenCalledTimes(1);
   });
 
+  it('handles parallel executions', async () => {
+    const req = { headers: {} };
+
+    const wrappedFn = withGasketRequestCache(actionFn);
+    const promise1 = wrappedFn(gasket, req);
+    const promise2 = wrappedFn(gasket, req);
+
+    expect(promise1).toBeInstanceOf(Promise);
+    expect(promise2).toBeInstanceOf(Promise);
+
+    const result1 = await promise1;
+    const result2 = await promise2;
+
+    expect(result1).toBe(result2);
+    expect(actionFn).toHaveBeenCalledTimes(1);
+  });
+
   it('calls actionFn for different requests', async () => {
     const req1 = { headers: {} };
     const req2 = { headers: {} };

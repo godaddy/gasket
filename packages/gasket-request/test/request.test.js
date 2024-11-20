@@ -1,12 +1,15 @@
 import { expect } from '@jest/globals';
 import { makeGasketRequest, GasketRequest } from '../lib/request.js';
 
+const pause = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
 class MockCookieStore {
   constructor(cookies) {
     this.cookies = cookies;
   }
 
   async getAll() {
+    await pause(100);
     return this.cookies;
   }
 }
@@ -166,5 +169,26 @@ describe('makeGasketRequest', () => {
     expect(result.cookies).toEqual({ cookie1: 'value1', cookie2: 'value2' });
     expect(result.query).toEqual({ query1: 'value1', query2: 'value2' });
     expect(result.path).toEqual('/path/to/page');
+  });
+
+  it('handles parallel executions', async () => {
+    const headers = new Map([['header1', 'value1'], ['header2', 'value2']]);
+    const cookies = new MockCookieStore([
+      { name: 'cookie1', value: 'value1' },
+      { name: 'cookie2', value: 'value2' }
+    ]);
+    const nextUrl = new URL('https://example.com/path/to/page?query1=value1&query2=value2');
+    const requestLike = { headers, cookies, nextUrl };
+
+    const promise1 = makeGasketRequest(requestLike);
+    const promise2 = makeGasketRequest(requestLike);
+
+    expect(promise1).toBeInstanceOf(Promise);
+    expect(promise2).toBeInstanceOf(Promise);
+
+    const results1 = await promise1;
+    const results2 = await promise2;
+
+    expect(results1).toBe(results2);
   });
 });

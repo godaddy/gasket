@@ -11,9 +11,9 @@ export function withGasketRequestCache(actionFn) {
       return cache.get(gasketRequest);
     }
 
-    const result = await actionFn(gasket, gasketRequest, ...args);
-    cache.set(gasketRequest, result);
-    return result;
+    const promise = actionFn(gasket, gasketRequest, ...args);
+    cache.set(gasketRequest, promise);
+    return await promise;
   };
 }
 
