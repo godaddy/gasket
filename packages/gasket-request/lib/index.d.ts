@@ -23,14 +23,14 @@ export class GasketRequest {
   constructor(normalized: {
     headers: Record<string, string>,
     cookies: Record<string, string>,
-    query: Record<string, string>
+    query: Record<string, string>,
+    path: string
   });
 
   headers: Record<string, string>
   cookies: Record<string, string>
   query: Record<string, string>
-
-  static make(req: RequestLike): Promise<GasketRequest>;
+  path: string
 }
 
 /**

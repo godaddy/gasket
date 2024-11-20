@@ -1,9 +1,7 @@
 import { jest, expect } from '@jest/globals';
 
 import { withGasketRequestCache, withGasketRequest } from '../lib/wrappers.js';
-import { GasketRequest } from '../lib/request.js';
-
-jest.spyOn(GasketRequest, 'make');
+import { GasketRequest, makeGasketRequest } from '../lib/request.js';
 
 const valueA = Symbol('A');
 const valueB = Symbol('B');
@@ -22,7 +20,7 @@ describe('withGasketRequestCache', () => {
 
   it('calls actionFn with normalized request', async () => {
     const req = { headers: {} };
-    const normalizeReq = await GasketRequest.make(req);
+    const normalizeReq = await makeGasketRequest(req);
 
     const wrappedFn = withGasketRequestCache(actionFn);
     const result1 = await wrappedFn(gasket, req);
@@ -106,7 +104,7 @@ describe('withGasketRequest', () => {
 
   it('calls actionFn with normalized request', async () => {
     const req = { headers: {} };
-    const normalizeReq = await GasketRequest.make(req);
+    const normalizeReq = await makeGasketRequest(req);
 
     const wrappedFn = withGasketRequest(actionFn);
     const result = await wrappedFn(gasket, req);

@@ -4,7 +4,7 @@ const normalizedReqMap = new WeakMap();
  * @type {import('./index.js').objectFromCookieStore}
  */
 async function objectFromCookieStore(cookieStore) {
-  return await cookieStore.getAll()
+  return (await cookieStore.getAll())
     .reduce((acc, { name, value }) => {
       acc[name] = value;
       return acc;
@@ -19,7 +19,7 @@ export class GasketRequest {
     this.headers = normalizedRequest.headers;
     this.cookies = normalizedRequest.cookies;
     this.query = normalizedRequest.query;
-    this.url = normalizedRequest.url;
+    this.path = normalizedRequest.path;
   }
 }
 
@@ -38,20 +38,24 @@ export async function makeGasketRequest(requestLike) {
   }
 
   let query = requestLike.query;
+  let path = requestLike.path;
 
-  //
-  if (!query && 'nextUrl' in requestLike) {
-    query = requestLike.nextUrl.searchParams;
+  // handle NextRequest objects
+  if ('nextUrl' in requestLike) {
+    query ??= requestLike.nextUrl.searchParams;
+    path ??= requestLike.nextUrl.pathname;
   }
 
   query ??= {};
+  path ??= '';
 
   if (!normalizedReqMap.has(headers)) {
     const normalized = new GasketRequest(Object.seal({
       // @ts-ignore - entries not available on Headers here..
       headers: headers.constructor.prototype.entries ? Object.fromEntries(headers.entries()) : headers,
       cookies: cookies.constructor.prototype.getAll ? await objectFromCookieStore(cookies) : cookies,
-      query: query instanceof URLSearchParams ? Object.fromEntries(query) : query
+      query: query instanceof URLSearchParams ? Object.fromEntries(query) : query,
+      path
     }));
 
     normalizedReqMap.set(headers, normalized);
