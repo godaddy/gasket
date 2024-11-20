@@ -115,6 +115,18 @@ describe('buildManifest', function () {
     await buildManifest(mockGasket);
     const output = getOutput();
     expect(output).toContain(
+      `'locales/en-US': () => import('./locales/en-US.json')`
+    );
+    expect(output).toContain(
+      `'locales/fr-FR': () => import('./locales/fr-FR.json')`
+    );
+  });
+
+  it('allows for experimental import attributes if configured', async function () {
+    mockGasket.config.intl.experimentalImportAttributes = true;
+    await buildManifest(mockGasket);
+    const output = getOutput();
+    expect(output).toContain(
       `'locales/en-US': () => import('./locales/en-US.json', { with: { type: 'json' } })`
     );
     expect(output).toContain(
@@ -126,10 +138,10 @@ describe('buildManifest', function () {
     await buildManifest(mockGasket);
     const output = getOutput();
     expect(output).toContain(
-      `'locales/extra/en-US': () => import('./locales/extra/en-US.json', { with: { type: 'json' } })`
+      `'locales/extra/en-US': () => import('./locales/extra/en-US.json')`
     );
     expect(output).toContain(
-      `'locales/extra/fr-FR': () => import('./locales/extra/fr-FR.json', { with: { type: 'json' } })`
+      `'locales/extra/fr-FR': () => import('./locales/extra/fr-FR.json')`
     );
   });
 
@@ -137,10 +149,10 @@ describe('buildManifest', function () {
     await buildManifest(mockGasket);
     const output = getOutput();
     expect(output).toContain(
-      `'locales/en-US/grouped': () => import('./locales/en-US/grouped.json', { with: { type: 'json' } })`
+      `'locales/en-US/grouped': () => import('./locales/en-US/grouped.json')`
     );
     expect(output).toContain(
-      `'locales/fr-FR/grouped': () => import('./locales/fr-FR/grouped.json', { with: { type: 'json' } })`
+      `'locales/fr-FR/grouped': () => import('./locales/fr-FR/grouped.json')`
     );
   });
 
