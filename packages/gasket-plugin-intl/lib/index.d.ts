@@ -65,7 +65,6 @@ declare module '@gasket/data' {
 declare module 'create-gasket-app' {
   export interface CreateContext {
     hasGasketIntl?: boolean;
-    experimentalImportAttributes?: boolean;
   }
 }
 
