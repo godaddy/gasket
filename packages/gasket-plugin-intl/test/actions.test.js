@@ -1,8 +1,6 @@
 /* eslint-disable no-sync */
 const actions = require('../lib/actions');
 
-const mockIntlManager = {};
-
 describe('actions', () => {
   let req, mockGasket, mockLocale;
 
@@ -16,8 +14,9 @@ describe('actions', () => {
     mockGasket = {
       execWaterfall: jest.fn().mockImplementation((lifecycle, content) => content),
       config: {
+        root: `${__dirname}/fixtures/gasket-root`,
         intl: {
-          manager: mockIntlManager,
+          managerFilename: 'intl.js',
           defaultLocale: 'en'
         }
       }
@@ -41,15 +40,16 @@ describe('actions', () => {
   });
 
   describe('getIntlManager', () => {
-    it('should return the configured manager', () => {
-      const result = actions.getIntlManager(mockGasket);
-      expect(result).toBe(mockIntlManager);
+    it('should return the configured manager', async () => {
+      const result = await actions.getIntlManager(mockGasket);
+      expect(result).toEqual({ default: {} });
     });
 
-    it('should throw if manager not configured', () => {
-      delete mockGasket.config.intl.manager;
-      expect(() => actions.getIntlManager(mockGasket))
-        .toThrow('IntlManager not configured (gasket.config.intl.manager)');
+    it('should throw if manager not configured', async () => {
+      delete mockGasket.config.intl.managerFilename;
+      await expect(() => actions.getIntlManager(mockGasket))
+        .rejects
+        .toThrow('IntlManager not configured (gasket.config.intl.managerFilename)');
     });
   });
 });
