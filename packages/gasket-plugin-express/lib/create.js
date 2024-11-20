@@ -21,7 +21,7 @@ function createTestFiles({ files, generatorDir, testPlugins, globIgnore }) {
     if (match) {
       const matchedFramework = match[0];
       if (unit.includes(matchedFramework)) {
-        files.add(`${generatorDir}/${matchedFramework}/*/${globIgnore}`, `${generatorDir}/${matchedFramework}/**/${globIgnore}`);
+        files.add(`${generatorDir}/${matchedFramework}/*`, `${generatorDir}/${matchedFramework}/**/${globIgnore}`);
       } else {
         files.add(`${generatorDir}/${matchedFramework}/*`, `${generatorDir}/${matchedFramework}/**/*`);
       }
@@ -53,7 +53,7 @@ module.exports = async function create(gasket, context) {
   });
 
   if (apiApp && addApiRoutes) {
-    const globIgnore = typescript ? '!(*.js)' : '!(*.ts|*.json)';
+    const globIgnore = typescript ? '!(*.js)' : '!(*.ts)';
     files.add(`${generatorDir}/app/**/${globIgnore}`);
 
     createTestFiles({ files, generatorDir, testPlugins, globIgnore });

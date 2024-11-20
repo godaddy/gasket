@@ -93,7 +93,8 @@ describe('create', function () {
     await plugin.hooks.create(mockGasket, mockContext);
     expect(addStub).toHaveBeenCalledWith('intl', {
       locales: ['en-US', 'fr-FR'],
-      managerFilename: 'intl.ts'
+      managerFilename: 'intl.ts',
+      defaultLocale: 'en-US'
     });
   });
 

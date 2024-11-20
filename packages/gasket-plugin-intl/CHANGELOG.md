@@ -1,5 +1,9 @@
 # `@gasket/plugin-intl`
 
+### 7.0.7
+
+- add `defaultLocale` to created Gasket TS config ([#965])
+
 ### 7.0.0
 
 - See [Version 7 Upgrade Guide] for overall changes
@@ -15,8 +19,8 @@
 
 ### 6.46.0
 
-- Fix to nested module.localesDir lookup ([#676]) 
-- Add support for specific module packages and subdirectory configure ([#676]) 
+- Fix to nested module.localesDir lookup ([#676])
+- Add support for specific module packages and subdirectory configure ([#676])
 
 ### 6.45.2
 
@@ -242,3 +246,4 @@
 [#696]: https://github.com/godaddy/gasket/pull/696
 [#701]: https://github.com/godaddy/gasket/pull/701
 [#791]: https://github.com/godaddy/gasket/pull/791
+[#965]: https://github.com/godaddy/gasket/pull/965
