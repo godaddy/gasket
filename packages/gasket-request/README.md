@@ -28,11 +28,6 @@ A `GasketRequest` object has the following properties:
 | query    | object | Query parameters  | default: `{}` |
 | path     | string | Request path      | default: `''` |
 
-
-The only required property to create a `GasketRequest` is the `headers` which
-is used as a caching key to ensure the same `GasketRequest` instance is used
-throughout the request lifetime.
-
 ### makeGasketRequest
 
 A `GasketRequest` can be created from a Node `IncomingMessage` object, an
