@@ -17,6 +17,7 @@ Set up Redux store configuration and return a `makeStore` function
 **Signature**
 
 - `configureMakeStore(options, [postCreate]): makeStore`
+- `configureMakeStore(optionsFn, [postCreate]): makeStore`
 
 **Props**
 
@@ -30,8 +31,10 @@ Set up Redux store configuration and return a `makeStore` function
   - `enhancers` - (function[]) Any other redux store enhancers
   - `logging` - (boolean) set to true if you want to enable redux logger.
     (default: false)
+- `optionsFn` - (function) function that returns the options object.
 - `postCreate` - (function) Executed after the store is create the resulting
   store as the argument
+- 
 
 **Return Value**
 

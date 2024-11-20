@@ -44,7 +44,7 @@
     "cookie-parser": "^1.4.6",
     "diagnostics": "^2.0.2",
     "glob": "^8.1.0",
-    "http2-express-bridge": "^1.0.7"
+    "http2-express": "^1.0.0"
   },
   "devDependencies": {
     "@gasket/core": "^7.0.9",
