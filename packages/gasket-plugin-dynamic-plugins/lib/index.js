@@ -37,7 +37,7 @@ export default {
           {
             name: 'dynamicPlugins',
             link: 'README.md#configuration',
-            description:'Specify which plugins to load dynamically into gasket',
+            description: 'Specify which plugins to load dynamically into gasket',
             type: 'array'
           }
         ]
