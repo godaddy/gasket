@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-redux",
-  "version": "6.47.5",
+  "version": "6.48.0",
   "description": "Gasket Redux Setup",
   "main": "lib",
   "types": "lib/index.d.ts",
@@ -42,7 +42,7 @@
   "devDependencies": {
     "@gasket/engine": "^6.47.5",
     "@gasket/plugin-log": "^6.47.5",
-    "@gasket/redux": "^6.47.5",
+    "@gasket/redux": "^6.48.0",
     "acorn": "^8.11.3",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
