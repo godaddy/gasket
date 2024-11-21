@@ -122,6 +122,18 @@ describe('buildManifest', function () {
     );
   });
 
+  it('allows for experimental import attributes if configured', async function () {
+    mockGasket.config.intl.experimentalImportAttributes = true;
+    await buildManifest(mockGasket);
+    const output = getOutput();
+    expect(output).toContain(
+      `'locales/en-US': () => import('./locales/en-US.json', { with: { type: 'json' } })`
+    );
+    expect(output).toContain(
+      `'locales/fr-FR': () => import('./locales/fr-FR.json', { with: { type: 'json' } })`
+    );
+  });
+
   it('associates nested locale file keys to imports', async function () {
     await buildManifest(mockGasket);
     const output = getOutput();

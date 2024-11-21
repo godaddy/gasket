@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-express",
-  "version": "7.0.12",
+  "version": "7.0.14",
   "description": "Adds express support to your application",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -44,7 +44,7 @@
     "cookie-parser": "^1.4.6",
     "diagnostics": "^2.0.2",
     "glob": "^8.1.0",
-    "http2-express-bridge": "^1.0.7"
+    "http2-express": "^1.0.0"
   },
   "devDependencies": {
     "@gasket/core": "^7.0.9",

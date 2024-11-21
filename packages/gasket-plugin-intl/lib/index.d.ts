@@ -27,6 +27,7 @@ export interface IntlConfig extends LocaleManifestConfig {
     | string[];
   nextRouting?: boolean;
   manager?: IntlManager;
+  experimentalImportAttributes?: boolean;
 }
 
 declare module '@gasket/core' {
@@ -40,7 +41,7 @@ declare module '@gasket/core' {
      * Provides access to the Intl manager instance to plugins.
      * Especially useful for plugins that are still CJS.
      */
-    getIntlManager: () => IntlManager;
+    async getIntlManager: () => IntlManager;
   }
 
   export interface HookExecTypes {

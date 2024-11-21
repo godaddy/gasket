@@ -1,3 +1,4 @@
+const path = require('path');
 const getPreferredLocale = require('./utils/get-preferred-locale');
 
 const reqMap = new WeakMap();
@@ -19,11 +20,16 @@ async function getIntlLocale(gasket, req) {
 }
 
 /** @type {import('@gasket/core').ActionHandler<'getIntlManager'>} */
-function getIntlManager(gasket) {
-  if (!gasket.config.intl.manager) {
-    throw new Error('IntlManager not configured (gasket.config.intl.manager)');
+async function getIntlManager(gasket) {
+  if (!gasket.config.intl.managerFilename) {
+    throw new Error('IntlManager not configured (gasket.config.intl.managerFilename)');
   }
-  return gasket.config.intl.manager;
+
+  if (!gasket.config.intl.experimentalImportAttributes) {
+    throw new Error('To use experimental import attributes you must configure `gasket.config.intl.experimentalImportAttributes`');
+  }
+
+  return (await import(path.join(gasket.config.root, gasket.config.intl.managerFilename))).default;
 }
 
 module.exports = {
