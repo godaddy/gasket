@@ -1,5 +1,12 @@
 # `@gasket/plugin-intl`
 
+### 7.0.14
+
+- Tune getIntlManager to import intl.js ([#975])
+- Add json assertion to dynamic import
+- Add ESM flag to jest for dynamic import
+- Add config for experimental import attributes
+
 ### 7.0.7
 
 - add `defaultLocale` to created Gasket TS config ([#965])
@@ -247,3 +254,4 @@
 [#701]: https://github.com/godaddy/gasket/pull/701
 [#791]: https://github.com/godaddy/gasket/pull/791
 [#965]: https://github.com/godaddy/gasket/pull/965
+[#975]: https://github.com/godaddy/gasket/pull/975
