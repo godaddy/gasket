@@ -37,6 +37,7 @@
     "@gasket/core": "^7.0.9",
     "@testing-library/react": "^13.4.0",
     "@types/jest": "^29.5.12",
+    "cross-env": "^7.0.3",
     "cypress": "^13.6.6",
     "eslint": "^8.56.0",
     "eslint-config-godaddy": "^7.1.1",

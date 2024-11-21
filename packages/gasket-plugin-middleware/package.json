@@ -36,6 +36,7 @@
   "devDependencies": {
     "@types/compression": "^1.7.5",
     "@types/cookie-parser": "^1.4.7",
+    "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
     "eslint-config-godaddy": "^7.1.1",
     "eslint-plugin-jest": "^28.6.0",
