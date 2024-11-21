@@ -1,6 +1,11 @@
 import { makeGasketRequest, WeakPromiseKeeper } from '@gasket/request';
 import { cookies, headers } from 'next/headers';
 
+/** @typedef {import('@gasket/request').GasketRequest} GasketRequest */
+
+/**
+ * @type {import('@gasket/request').WeakPromiseKeeper<Headers, GasketRequest>}
+ */
 const keeper = new WeakPromiseKeeper();
 
 /** @type {import('.').request} */

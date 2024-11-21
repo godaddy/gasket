@@ -1,8 +1,13 @@
 import { makeGasketRequest } from './request.js';
 import { WeakPromiseKeeper } from './keeper.js';
 
+/** @typedef {import('./index.js').GasketRequest} GasketRequest */
+
 /** @type {typeof import('./index.d.ts').withGasketRequestCache} */
 export function withGasketRequestCache(actionFn) {
+  /**
+   * @type {import('./index.js').WeakPromiseKeeper<GasketRequest>}
+   */
   const keeper = new WeakPromiseKeeper();
 
   return async (gasket, req, ...args) => {

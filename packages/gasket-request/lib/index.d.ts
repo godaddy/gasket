@@ -10,9 +10,8 @@ export type RequestLike = {
 }
 
 /**
- *
+ * Capture the cookies as a key/value object
  * @see https://developer.mozilla.org/en-US/docs/Web/API/CookieStore/getAll
- * @param cookieStore
  */
 async function objectFromCookieStore(cookieStore: CookieStore): Promise<Record<string, string>>;
 
@@ -33,7 +32,12 @@ export class GasketRequest {
   path: string
 }
 
-export class WeakPromiseKeeper extends WeakMap {}
+export class WeakPromiseKeeper<Key extends WeakKey = WeakKey, Value = any> {
+  set(key: Key, value: Promise<Value>): this
+  get(key: Key): Promise<Value> | Value
+  has(key: Key): boolean
+  delete(key: Key): boolean
+}
 
 /**
  * Get a normalized request object for GasketActions
@@ -45,3 +49,6 @@ type RequestActionWrapperFn<Result, Args extends Array<unknown>> = (gasket: Gask
 
 export function withGasketRequest<Result, Args extends Array<unknown>>(actionFn: RequestActionFn<Result, Args>): RequestActionWrapperFn<Result, Args>;
 export function withGasketRequestCache<Result, Args extends Array<unknown>>(actionFn: RequestActionFn<Result, Args>): RequestActionWrapperFn<Result, Args>;
+
+
+const map = new WeakPromiseKeeper<GasketRequest, any>();

@@ -1,5 +1,20 @@
 import { WeakPromiseKeeper } from './keeper.js';
 
+/**
+ * @type {import('./index.js').GasketRequest}
+ */
+export class GasketRequest {
+  constructor(normalizedRequest) {
+    this.headers = normalizedRequest.headers;
+    this.cookies = normalizedRequest.cookies;
+    this.query = normalizedRequest.query;
+    this.path = normalizedRequest.path;
+  }
+}
+
+/**
+ * @type {import('./index.js').WeakPromiseKeeper<Headers|Record<string,string>, GasketRequest>}
+ */
 const keeper = new WeakPromiseKeeper();
 
 /**
@@ -11,18 +26,6 @@ async function objectFromCookieStore(cookieStore) {
       acc[name] = value;
       return acc;
     }, {});
-}
-
-/**
- * @type {import('./index.js').GasketRequest}
- */
-export class GasketRequest {
-  constructor(normalizedRequest) {
-    this.headers = normalizedRequest.headers;
-    this.cookies = normalizedRequest.cookies;
-    this.query = normalizedRequest.query;
-    this.path = normalizedRequest.path;
-  }
 }
 
 /**
