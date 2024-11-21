@@ -8,4 +8,4 @@ export default function create(gasket, { pkg, gasketConfig }) {
   pkg.add('dependencies', {
     [name]: `^${version}`
   });
-};
+}

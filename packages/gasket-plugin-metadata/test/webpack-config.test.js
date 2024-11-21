@@ -1,4 +1,6 @@
-const webpackConfigHook = require('../lib/webpack-config');
+import webpackConfigHook from '../lib/webpack-config';
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
 const { name } = require('../package');
 
 describe('webpackConfig', function () {

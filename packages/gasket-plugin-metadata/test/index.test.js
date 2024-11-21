@@ -1,5 +1,7 @@
 /* eslint-disable max-statements */
-const plugin = require('../');
+import plugin from '../lib/index.js';
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
 const { name, version, description } = require('../package');
 
 describe('Plugin', function () {
