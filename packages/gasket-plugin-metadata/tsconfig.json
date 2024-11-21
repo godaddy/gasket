@@ -12,7 +12,6 @@
       "dom"
     ],
     "types": [
-      "@types/jest",
       "@types/node",
       "@gasket/plugin-logger"
     ]
