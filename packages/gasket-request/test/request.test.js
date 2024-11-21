@@ -147,6 +147,54 @@ describe('makeGasketRequest', () => {
     expect(result.path).toEqual('/path/to/page');
   });
 
+  it('handles IncomingMessage object urls', async () => {
+    const headers = new Map([['header1', 'value1'], ['header2', 'value2']]);
+    const url = '/path/to/page';
+    const requestLike = { headers, url };
+
+    const result = await makeGasketRequest(requestLike);
+
+    expect(result.headers).toEqual({ header1: 'value1', header2: 'value2' });
+    expect(result.query).toEqual({});
+    expect(result.path).toEqual('/path/to/page');
+  });
+
+  it('handles IncomingMessage object empty urls', async () => {
+    const headers = new Map([['header1', 'value1'], ['header2', 'value2']]);
+    const url = '';
+    const requestLike = { headers, url };
+
+    const result = await makeGasketRequest(requestLike);
+
+    expect(result.headers).toEqual({ header1: 'value1', header2: 'value2' });
+    expect(result.query).toEqual({});
+    expect(result.path).toEqual('/');
+  });
+
+  it('handles IncomingMessage object urls with query', async () => {
+    const headers = new Map([['header1', 'value1'], ['header2', 'value2']]);
+    const url = '/path/to/page?query1=value1&query2=value2';
+    const requestLike = { headers, url };
+
+    const result = await makeGasketRequest(requestLike);
+
+    expect(result.headers).toEqual({ header1: 'value1', header2: 'value2' });
+    expect(result.query).toEqual({ query1: 'value1', query2: 'value2' });
+    expect(result.path).toEqual('/path/to/page');
+  });
+
+  it('handles IncomingMessage object url with query and hash', async () => {
+    const headers = new Map([['header1', 'value1'], ['header2', 'value2']]);
+    const url = '/path/to/page?query1=value1&query2=value2#hash';
+    const requestLike = { headers, url };
+
+    const result = await makeGasketRequest(requestLike);
+
+    expect(result.headers).toEqual({ header1: 'value1', header2: 'value2' });
+    expect(result.query).toEqual({ query1: 'value1', query2: 'value2' });
+    expect(result.path).toEqual('/path/to/page');
+  });
+
   it('handles Express request objects', async () => {
     const headers = {
       header1: 'value1',

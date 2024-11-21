@@ -41,6 +41,8 @@ export async function makeGasketRequest(requestLike) {
 
   if (!keeper.has(headers)) {
     const normalize = async () => {
+
+      // handle Express Request objects
       let query = requestLike.query;
       let path = requestLike.path;
 
@@ -48,6 +50,13 @@ export async function makeGasketRequest(requestLike) {
       if ('nextUrl' in requestLike) {
         query ??= requestLike.nextUrl.searchParams;
         path ??= requestLike.nextUrl.pathname;
+      }
+
+      // handle IncomingMessage objects
+      if ('url' in requestLike) {
+        const url = new URL(requestLike.url, 'http://localhost');
+        path ??= url.pathname;
+        query ??= url.searchParams;
       }
 
       query ??= {};
