@@ -41,11 +41,6 @@ gasket.isReady.then(() => {
 
 ## Configuration
 
-
-### Gasket Configuration
-
-#### `dynamicPlugins`
-
 To specify which plugins to load dynamically, add a `dynamicPlugins` key to your `gasket` file with a value of an array of strings containing the plugin names you want to add.
 
 ```diff
@@ -59,9 +54,7 @@ export default makeGasket({
 });
 ```
 
-### More control with sub-environments
-
-#### `GASKET_ENV`
+### Environments
 
 This plugin can utilize [sub-environments] to determine which plugins to load dynamically. To specify which sub-environment to use, set the `GASKET_ENV` environment variable to the desired sub-environment and then add the sub-environment configuration to the `gasket` file.
 
@@ -87,8 +80,15 @@ makeGasket({
 })
 ```
 
+## How it works
+
+This plugin hooks the [prepare] lifecycle to add dynamic plugins to the Gasket instance.
+
+In the `prepare` hook, plugins specified in the `dynamicPlugins` configuration are registered to the Gasket instance. The `init` and `configure` lifecycles are then  executed exclusively for the newly added dynamic plugins.
+
 ## License
 
 [MIT](./LICENSE.md)
 
 [sub-environments]: ../../docs/configuration.md#environments
+[prepare]: ../gasket-core/README.md#prepare
