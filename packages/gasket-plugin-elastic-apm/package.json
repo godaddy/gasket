@@ -38,6 +38,7 @@
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-elastic-apm",
   "devDependencies": {
     "@gasket/core": "^7.0.9",
+    "cross-env": "^7.0.3",
     "dotenv": "^16.4.5",
     "elastic-apm-node": "^4.4.1",
     "eslint": "^8.56.0",
