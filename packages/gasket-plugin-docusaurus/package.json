@@ -42,7 +42,7 @@
   },
   "devDependencies": {
     "@docusaurus/core": "^3.4.0",
-    "@docusaurus/preset-classic": "^3.6.2",
+    "@docusaurus/preset-classic": "^3.5.2",
     "@gasket/core": "^7.0.9",
     "ajv": "^8.17.1",
     "cross-env": "^7.0.3",
