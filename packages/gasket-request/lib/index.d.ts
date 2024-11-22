@@ -49,6 +49,3 @@ type RequestActionWrapperFn<Result, Args extends Array<unknown>> = (gasket: Gask
 
 export function withGasketRequest<Result, Args extends Array<unknown>>(actionFn: RequestActionFn<Result, Args>): RequestActionWrapperFn<Result, Args>;
 export function withGasketRequestCache<Result, Args extends Array<unknown>>(actionFn: RequestActionFn<Result, Args>): RequestActionWrapperFn<Result, Args>;
-
-
-const map = new WeakPromiseKeeper<GasketRequest, any>();
