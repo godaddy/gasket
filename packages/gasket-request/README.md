@@ -74,7 +74,7 @@ export const myAction = withGasketRequest(
 await gasket.actions.myAction(req);
 ```
 
-If you action need additional arguments, you can pass them following the `gasketReq`.
+If your action needs additional arguments, you can pass them following the `gasketReq`.
 
 ```js
 import { withGasketRequest } from '@gasket/request';
