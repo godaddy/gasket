@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "module": "nodenext",
+    "lib": [
+      "esnext",
+      "dom"
+    ],
+    "types": [
+      "@types/jest",
+      "@types/node"
+    ]
+  },
+  "include": [
+    "lib"
+  ]
+}
