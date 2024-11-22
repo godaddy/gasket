@@ -9,7 +9,6 @@ import type {
   FastifyTypeProviderDefault,
   RawServerDefault
 } from 'fastify';
-import { Http2SecureServer, Http2ServerRequest, Http2ServerResponse } from 'http2';
 import { IncomingMessage, ServerResponse } from 'http';
 
 export type AppRoutes = Array<MaybeAsync<(app: FastifyInstance) => void>>;
