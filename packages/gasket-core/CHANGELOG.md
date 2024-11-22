@@ -1,5 +1,6 @@
 # `@gasket/core`
 
+- Added `registerPlugins` method to the GasketEngine ([#970])
 - Edge runtime support using lean export from `@gasket/utils` ([#961])
 
 ### 7.0.6
@@ -15,3 +16,4 @@
 
 [#949]: https://github.com/godaddy/gasket/pull/949
 [#961]: https://github.com/godaddy/gasket/pull/961
+[#970]: https://github.com/godaddy/gasket/pull/970
