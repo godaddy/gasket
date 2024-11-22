@@ -19,6 +19,7 @@ declare module '@gasket/core' {
     init(): void
     configure(config: GasketConfig): GasketConfig
     ready(): MaybeAsync<void>
+    prepare(): MaybeAsync<void>
   }
 
   export type HookId = keyof HookExecTypes;
@@ -74,6 +75,7 @@ declare module '@gasket/core' {
 
     actions: GasketActions
 
+    registerPlugins(plugins: Array<Plugin>): void;
     exec<Id extends HookId>(
       hook: Id,
       ...args: Parameters<HookExecTypes[Id]>
@@ -118,6 +120,7 @@ declare module '@gasket/core' {
       id: string;
     };
     config: GasketConfig;
+    engine: GasketEngine;
     symbol: Symbol;
     traceBranch(): GasketTrace
     traceRoot(): Gasket

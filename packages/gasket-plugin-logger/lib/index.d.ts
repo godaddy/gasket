@@ -1,8 +1,19 @@
-import type { MaybeAsync, Plugin } from '@gasket/core';
+import type { MaybeAsync, Plugin, Hook, HookId } from '@gasket/core';
+import type { Logger } from '@gasket/plugin-logger';
 
 export type LogLevel = 'error' | 'warn' | 'info' | 'debug';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 type LogMethods = Record<LogLevel, (...args: any[]) => void>;
+
+export function createChildLogger(
+  parent: {
+    [K in HookId]?: Hook<K>;
+  },
+  metadata: Record<string, any>
+): Logger;
+
+export function verifyLoggerLevels(logger: Logger): void;
 
 declare module '@gasket/plugin-logger' {
   export interface Logger extends LogMethods {
@@ -19,7 +30,11 @@ declare module '@gasket/core' {
   }
 
   export interface HookExecTypes {
-    createLogger(): Logger
+    createLogger(): Logger;
+  }
+
+  export interface GasketActions {
+    getLogger(): Logger;
   }
 }
 

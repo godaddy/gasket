@@ -5,13 +5,11 @@
   "type": "module",
   "types": "lib/index.d.ts",
   "files": [
-    "lib",
-    "cjs"
+    "lib"
   ],
   "exports": {
     ".": {
-      "import": "./lib/index.js",
-      "require": "./cjs/index.js"
+      "import": "./lib/index.js"
     },
     "./package.json": "./package.json"
   },
@@ -22,8 +20,6 @@
     "test:watch": "npm run test -- --watch",
     "test:coverage": "npm run test -- --coverage",
     "posttest": "npm run lint",
-    "build": "swc lib -d cjs --delete-dir-on-start --strip-leading-paths",
-    "postbuild": "node -e \"require('fs').writeFileSync('cjs/package.json', '{}')\"",
     "prepublishOnly": "npm run build"
   },
   "repository": {
@@ -50,8 +46,6 @@
   },
   "devDependencies": {
     "@jest/globals": "^29.7.0",
-    "@swc/cli": "^0.3.12",
-    "@swc/core": "^1.5.3",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.12.5",
     "cross-env": "^7.0.3",
@@ -75,9 +69,6 @@
     ],
     "rules": {
       "unicorn/filename-case": "error"
-    },
-    "ignorePatterns": [
-      "cjs"
-    ]
+    }
   }
 }

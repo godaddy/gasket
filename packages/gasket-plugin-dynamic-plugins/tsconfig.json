@@ -12,13 +12,11 @@
       "dom"
     ],
     "types": [
-      "@types/node",
-      "@gasket/plugin-logger"
+      "@types/jest",
+      "@types/node"
     ]
   },
-  "exclude": [
-    "test",
-    "coverage",
-    "generator"
+  "include": [
+    "lib"
   ]
 }

@@ -1,19 +1,20 @@
 {
-  "name": "@gasket/plugin-docusaurus",
-  "version": "7.0.9",
-  "description": "Gasket plugin for docusaurus",
+  "name": "@gasket/plugin-dynamic-plugins",
+  "version": "0.0.0",
+  "description": "Gasket plugin for dynamically adding plugins to Gasket",
+  "type": "module",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
     "lib",
-    "generator"
+    "cjs"
   ],
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
-    "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage",
+    "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict --experimental-vm-modules' jest",
+    "test:watch": "npm run test -- --watch",
+    "test:coverage": "npm run test -- --coverage",
     "posttest": "npm run lint && npm run typecheck",
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"
@@ -26,8 +27,7 @@
     "access": "public"
   },
   "keywords": [
-    "docs",
-    "viewer",
+    "dynamic",
     "gasket",
     "plugin"
   ],
@@ -36,29 +36,16 @@
   "bugs": {
     "url": "https://github.com/godaddy/gasket/issues"
   },
-  "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-docusaurus",
-  "dependencies": {
-    "lodash.defaultsdeep": "^4.6.1"
-  },
+  "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-dynamic-plugins",
   "devDependencies": {
-    "@docusaurus/core": "^3.4.0",
-    "@docusaurus/preset-classic": "^3.5.2",
     "@gasket/core": "^7.0.9",
-    "ajv": "^8.17.1",
-    "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
     "eslint-config-godaddy": "^7.1.1",
     "eslint-plugin-jest": "^28.6.0",
     "eslint-plugin-json": "^3.1.0",
     "eslint-plugin-unicorn": "^55.0.0",
     "jest": "^29.7.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "search-insights": "^2.13.0",
     "typescript": "^5.4.5"
-  },
-  "peerDependencies": {
-    "@gasket/plugin-logger": "^7"
   },
   "eslintConfig": {
     "extends": [
@@ -73,5 +60,8 @@
     "rules": {
       "unicorn/filename-case": "error"
     }
+  },
+  "jest": {
+    "testEnvironment": "node"
   }
 }
