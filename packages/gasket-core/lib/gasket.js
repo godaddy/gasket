@@ -23,7 +23,6 @@ function getEnvironment() {
 
 /**
  * The Gasket class is the main entry point for the Gasket API.
- * @type {import('@gasket/core').Gasket}
  */
 export class Gasket {
 
@@ -32,7 +31,6 @@ export class Gasket {
    */
   constructor(configDef) {
     const env = getEnvironment();
-    /** @type {import('@gasket/core').GasketConfig} */
     const config = applyConfigOverrides(configDef, { env });
     config.env = env;
     config.root ??= process.cwd();
@@ -40,8 +38,7 @@ export class Gasket {
     // prune nullish and/or empty plugins
     config.plugins = config.plugins
       .filter(Boolean)
-      // @ts-ignore - default not expected - quality of life for cjs apps
-      .map(plugin => plugin.default || plugin)
+      .map(plugin => plugin.default || plugin) // quality of life for cjs apps
       .filter(plugin => Boolean(plugin.name) || Boolean(plugin.hooks));
 
     // start the engine
@@ -61,12 +58,20 @@ export class Gasket {
     // Can be used as a key to identify a gasket instance
     this.symbol = Symbol('gasket');
 
-    // @ts-ignore - attached lifecycle trace methods
+    // @ts-ignore
     this.execSync('init');
-    // @ts-ignore - attached lifecycle trace methods
+    // @ts-ignore
     this.config = this.execWaterfallSync('configure', config);
-    // @ts-ignore - attached lifecycle trace methods
-    this.exec('ready');
+
+    this.isReady = new Promise((resolve) => {
+      (async () => {
+        // @ts-ignore - attached lifecycle trace methods
+        await this.exec('prepare');
+        // @ts-ignore - attached lifecycle trace methods
+        await this.exec('ready');
+        resolve();
+      })();
+    });
   }
 
   traceBranch() {

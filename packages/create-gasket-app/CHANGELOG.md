@@ -1,5 +1,7 @@
 # `create-gasket-app`
 
+Added `@gasket/plugin-dynamic-plugin` to default plugins ([#970])
+
 ### 7.0.6
 
 - Add JSDoc Typechecking to create-gasket-app ([#943])
@@ -77,3 +79,4 @@
 [#806]: https://github.com/godaddy/gasket/pull/806
 [#936]: https://github.com/godaddy/gasket/pull/936
 [#943]: https://github.com/godaddy/gasket/pull/943
+[#970]: https://github.com/godaddy/gasket/pull/970
