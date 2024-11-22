@@ -5,13 +5,18 @@ import pluginCommand from '@gasket/plugin-command';
 import pluginDocs from '@gasket/plugin-docs';
 import pluginDocusaurus from '@gasket/plugin-docusaurus';
 import pluginDynamicPlugins from '@gasket/plugin-dynamic-plugins';
+import { defaultPlugins } from '../../../lib/config/default-plugins.js';
 
-export const defaultPlugins = [
-  pluginLogger,
-  pluginGit,
-  pluginMetadata,
-  pluginCommand,
-  pluginDocs,
-  pluginDocusaurus,
-  pluginDynamicPlugins
-];
+describe('defaultPlugins', () => {
+  it('should include the correct plugins', () => {
+    expect(defaultPlugins).toEqual([
+      pluginLogger,
+      pluginGit,
+      pluginMetadata,
+      pluginCommand,
+      pluginDocs,
+      pluginDocusaurus,
+      pluginDynamicPlugins
+    ]);
+  });
+});
