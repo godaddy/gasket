@@ -15,6 +15,13 @@ describe('constructor', () => {
     expect(() => new GasketEngine([])).toThrow(/plugins/);
   });
 
+  it('calls registerPlugins in the constructor', () => {
+    const spy = jest.spyOn(GasketEngine.prototype, 'registerPlugins');
+    // eslint-disable-next-line no-new
+    new GasketEngine([mockPlugin]);
+    expect(spy).toHaveBeenCalledWith([mockPlugin]);
+  });
+
   it('exposed expected lifecycle methods', () => {
     const engine = new GasketEngine([mockPlugin]);
     ['exec', 'execWaterfall', 'execMap', 'execApply',

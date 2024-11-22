@@ -40,11 +40,28 @@ array of the Gasket configuration.
 
 ## Lifecycles
 
-When a new Gasket is created, there are three lifecycles executed in the
-following order:
+When a new Gasket is created, there are two lifecycles synchronous executed followed by two asynchronous lifecycles.
+
+You can determine when the asynchronous lifecycles have completed by verifying that the `isReady` property on the Gasket instance has been resolved.
+
+```js
+import gasket from './gasket.js';
+gasket.isReady.then(() => {
+  gasket.actions.startServer();
+});
+```
+
+The lifecycles are executed in the following order:
+
+Synchronous lifecycles
+
 1. [init]
 2. [configure]
-2. [ready]
+
+Asynchronous lifecycles
+
+3. [prepare]
+4. [ready]
 
 ### init
 
@@ -102,10 +119,34 @@ In this example, we register an action `getDoodads` that will only execute if th
 It will then execute the `doodads` lifecycle, allowing any registered plugin to
 provide doodads.
 
+### prepare
+
+The `prepare` lifecycle is the first asynchronous lifecycle executed after the `configure` lifecycle. It is used to add any additional setup that requires asynchronous operations.
+
+```js
+// gasket-plugin-example.js
+
+const name = 'gasket-plugin-example';
+
+const hooks = {
+  async prepare(gasket) {
+    const asyncConfig = await getAsyncConfig();
+    gasket.config = {
+      ...gasket.config,
+      ...asyncConfig
+    };   
+  }
+};
+
+export default { name, hooks };
+```
+
 ### ready
 
-The `ready` lifecycle is the last lifecycle executed and is used to signal that
+The `ready` is the last lifecycle executed and is used to signal that
 the Gasket instance is fully initialized and ready to be used.
+
+After the `ready` lifecycle has been executed, the `isReady` property on the Gasket instance will be resolved signaling the last step of the Gasket instance initialization.
 
 ```js
 // gasket-plugin-example.js
@@ -252,7 +293,8 @@ export default { name, actions, hooks };
 
 
 [init]: #init 
-[configure]: #configure 
+[configure]: #configure
+[prepare]: #prepare
 [ready]: #ready 
 [actions]: #actions 
 [registered plugins]: #registered-plugins

@@ -1,22 +1,20 @@
 {
-  "name": "create-gasket-app",
-  "version": "7.0.15",
-  "description": "starter pack for creating a gasket app",
+  "name": "@gasket/plugin-dynamic-plugins",
+  "version": "0.0.0",
+  "description": "Gasket plugin for dynamically adding plugins to Gasket",
   "type": "module",
-  "bin": {
-    "create-gasket-app": "./lib/index.js"
-  },
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
-    "lib"
+    "lib",
+    "cjs"
   ],
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict --experimental-vm-modules' jest",
     "test:watch": "npm run test -- --watch",
-    "test:coverage": "jest --coverage",
+    "test:coverage": "npm run test -- --coverage",
     "posttest": "npm run lint && npm run typecheck",
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"
@@ -28,40 +26,19 @@
   "publishConfig": {
     "access": "public"
   },
+  "keywords": [
+    "dynamic",
+    "gasket",
+    "plugin"
+  ],
   "author": "GoDaddy Operating Company, LLC",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/godaddy/gasket/issues"
   },
-  "homepage": "https://github.com/godaddy/gasket/tree/main/packages/create-gasket-app",
-  "dependencies": {
-    "@gasket/core": "^7.0.15",
-    "@gasket/plugin-command": "^7.0.15",
-    "@gasket/plugin-docs": "^7.0.15",
-    "@gasket/plugin-docusaurus": "^7.0.15",
-    "@gasket/plugin-dynamic-plugins": "0.0.0",
-    "@gasket/plugin-git": "^7.0.15",
-    "@gasket/plugin-logger": "^7.0.15",
-    "@gasket/plugin-metadata": "^7.0.15",
-    "@gasket/utils": "^7.0.15",
-    "commander": "^12.0.0",
-    "deepmerge": "^4.3.1",
-    "glob": "^8.1.0",
-    "handlebars": "^4.7.8",
-    "inquirer": "6.5.2",
-    "json5": "^2.2.3",
-    "mkdirp": "^1.0.4",
-    "ora": "3.4.0",
-    "pump": "^3.0.0",
-    "semver": "^7.6.3",
-    "tar-fs": "^2.0.0",
-    "untildify": "^4.0.0"
-  },
+  "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-dynamic-plugins",
   "devDependencies": {
-    "@types/inquirer": "^9.0.7",
-    "cross-env": "^7.0.3",
-    "diagnostics": "^2.0.2",
-    "dotenv": "^16.4.5",
+    "@gasket/core": "^7.0.9",
     "eslint": "^8.56.0",
     "eslint-config-godaddy": "^7.1.1",
     "eslint-plugin-jest": "^28.6.0",
@@ -84,10 +61,7 @@
       "unicorn/filename-case": "error"
     }
   },
-  "eslintIgnore": [
-    "test/fixtures"
-  ],
   "jest": {
-    "transform": {}
+    "testEnvironment": "node"
   }
 }

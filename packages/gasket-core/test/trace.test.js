@@ -40,6 +40,12 @@ describe('GasketTrace', () => {
     };
 
     gasket = new Gasket({ plugins: [pluginA, pluginB] });
+    jest.spyOn(gasket, 'exec').mockImplementation(async (event, ...args) => {
+      if (event === 'ready') {
+        return 'mocked ready';
+      }
+      return gasket.prototype.exec.call(gasket, event, ...args);
+    });
     jest.clearAllMocks();
   });
 
