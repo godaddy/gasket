@@ -84,7 +84,7 @@ makeGasket({
 
 This plugin hooks the [prepare] lifecycle to add dynamic plugins to the Gasket instance.
 
-In the `prepare` hook, plugins specified in the `dynamicPlugins` configuration are registered to the Gasket instance. The `init` and `configure` lifecycles are then  executed exclusively for the newly added dynamic plugins.
+In the `prepare` hook, plugins specified in the `dynamicPlugins` configuration are registered to the Gasket instance. The `init` and `configure` lifecycles are then executed exclusively for the newly added dynamic plugins.
 
 ## License
 
