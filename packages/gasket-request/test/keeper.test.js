@@ -1,7 +1,6 @@
 import { expect } from '@jest/globals';
 import { WeakPromiseKeeper } from '../lib/keeper.js';
-
-const pause = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+import { setTimeout } from 'node:timers/promises';
 
 function resolvablePromise() {
   let resolve, reject;
@@ -60,7 +59,7 @@ describe('WeakPromiseKeeper', () => {
     expect(keeper.has(key)).toBe(true);
 
     reject(mockError);
-    await pause(10);
+    await setTimeout(10);
 
     expect(keeper.has(key)).toBe(false);
   });

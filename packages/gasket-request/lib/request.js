@@ -56,7 +56,7 @@ export async function makeGasketRequest(requestLike) {
       }
 
       // handle IncomingMessage objects
-      if ('url' in requestLike) {
+      if ((!path || !query) && 'url' in requestLike) {
         const url = new URL(requestLike.url, 'http://localhost');
         path ??= url.pathname;
         query ??= url.searchParams;

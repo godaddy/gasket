@@ -195,6 +195,30 @@ describe('makeGasketRequest', () => {
     expect(result.path).toEqual('/path/to/page');
   });
 
+  it('only processes url if query or path not set', async () => {
+    const query = {
+      query1: 'value1',
+      query2: 'value2'
+    };
+    const path = '/path/to/page';
+    const url = '/another/page?queryA=valueA&queryB=valueB';
+
+    // use url
+    const result = await makeGasketRequest({ headers: {}, url });
+    expect(result.path).toEqual('/another/page');
+    expect(result.query).toEqual({ queryA: 'valueA', queryB: 'valueB' });
+
+    // stick to path
+    const result2 = await makeGasketRequest({ headers: {}, path, url });
+    expect(result2.path).toEqual(path);
+    expect(result2.query).toEqual({ queryA: 'valueA', queryB: 'valueB' });
+
+    // stick to query
+    const result3 = await makeGasketRequest({ headers: {}, query, url });
+    expect(result.path).toEqual('/another/page');
+    expect(result3.query).toEqual(query);
+  });
+
   it('handles Express request objects', async () => {
     const headers = {
       header1: 'value1',
