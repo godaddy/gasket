@@ -1,5 +1,8 @@
-const plugin = require('../');
-const { name, version } = require('../package.json');
+import { vi } from 'vitest';
+import plugin from '../lib/index.js';
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+const { name, version } = require('../package');
 
 describe('create', () => {
   let mockContext;
@@ -7,10 +10,10 @@ describe('create', () => {
   beforeEach(() => {
     mockContext = {
       pkg: {
-        add: jest.fn()
+        add: vi.fn()
       },
       gasketConfig: {
-        addPlugin: jest.fn()
+        addPlugin: vi.fn()
       }
     };
   });

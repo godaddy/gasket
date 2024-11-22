@@ -7,10 +7,11 @@
   "files": [
     "lib"
   ],
+  "type": "module",
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
-    "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
+    "test": "vitest --watch=false --globals",
     "test:watch": "npm run test -- --watch",
     "test:coverage": "npm run test -- --coverage",
     "posttest": "npm run lint && npm run typecheck",
@@ -41,16 +42,14 @@
   },
   "devDependencies": {
     "@godaddy/dmd": "^1.0.4",
-    "@types/jest": "^29.5.12",
     "@types/node": "^20.12.5",
-    "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
     "eslint-config-godaddy": "^7.1.1",
     "eslint-plugin-jest": "^28.6.0",
     "eslint-plugin-json": "^3.1.0",
     "eslint-plugin-unicorn": "^55.0.0",
-    "jest": "^29.7.0",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.5",
+    "vitest": "^2.1.5"
   },
   "eslintConfig": {
     "extends": [
