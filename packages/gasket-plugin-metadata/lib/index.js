@@ -1,10 +1,12 @@
-const create = require('./create');
-const actions = require('./actions');
-const webpackConfig = require('./webpack-config');
+import create from './create.js';
+import actions from './actions.js';
+import webpackConfig from './webpack-config.js';
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
 const { name, version, description } = require('../package.json');
 
 /** @type {import('@gasket/core').Plugin} */
-module.exports = {
+export default ({
   name,
   version,
   description,
@@ -41,4 +43,4 @@ module.exports = {
       };
     }
   }
-};
+});
