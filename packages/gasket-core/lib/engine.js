@@ -9,6 +9,10 @@ export const lifecycleMethods = [
 
 export class GasketEngine {
   constructor(plugins) {
+    this.registerPlugins(plugins);
+  }
+
+  registerPlugins(plugins) {
     if (!plugins || !Array.isArray(plugins) || !plugins.length) {
       throw new Error('An array of plugins is required');
     }

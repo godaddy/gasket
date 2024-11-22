@@ -14,6 +14,12 @@ describe('recursion', () => {
   const setupGasket = (...plugins) => {
     gasket = new Gasket({ plugins });
     waterfallSpy = jest.spyOn(gasket.engine, 'execWaterfall');
+    jest.spyOn(gasket, 'exec').mockImplementation(async (event, ...args) => {
+      if (event === 'ready') {
+        return 'mocked ready';
+      }
+      return gasket.prototype.exec.call(gasket, event, ...args);
+    });
     return gasket;
   };
 
