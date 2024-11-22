@@ -1,5 +1,7 @@
 # `@gasket/plugin-metadata`
 
+- Convert plugin to ESM ([#978])
+
 ### 7.0.0
 
 - See [Version 7 Upgrade Guide] for overall changes
@@ -79,6 +81,7 @@
 [#597]: https://github.com/godaddy/gasket/pull/597
 [#613]: https://github.com/godaddy/gasket/pull/613
 [#695]: https://github.com/godaddy/gasket/pull/695
+[#978]: https://github.com/godaddy/gasket/pull/978
 
 [Loader]:/packages/gasket-resolve/docs/api.md#loader
 [PluginInfo]:/packages/gasket-resolve/docs/api.md#plugininfo
