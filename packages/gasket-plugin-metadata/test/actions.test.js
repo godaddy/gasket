@@ -1,3 +1,5 @@
+import { vi } from 'vitest';
+
 const mockPlugin = {
   name: 'mock',
   hooks: {
@@ -22,10 +24,9 @@ describe('actions', () => {
     actions;
 
   beforeEach(async function () {
-    delete require.cache[require.resolve('../lib/actions')];
-    actions = require('../lib/actions');
-    applyStub = jest.fn();
-    handlerStub = jest.fn();
+    actions = (await import('../lib/actions.js')).default;
+    applyStub = vi.fn();
+    handlerStub = vi.fn();
 
     gasket = {
       config: {
@@ -45,8 +46,8 @@ describe('actions', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
-    jest.resetModules();
+    vi.clearAllMocks();
+    vi.resetModules();
   });
 
   it('returns an actions object', () => {
@@ -58,13 +59,13 @@ describe('actions', () => {
   });
 
   it('calls execApply metadata lifecycle', async () => {
-    jest.spyOn(require, 'resolve').mockResolvedValueOnce();
+    vi.spyOn(require, 'resolve').mockResolvedValueOnce();
     await actions.getMetadata(gasket);
     expect(applyStub).toHaveBeenCalled();
   });
 
   it('memoizes metadata & calls lifecycle once', async () => {
-    jest.spyOn(require, 'resolve').mockResolvedValueOnce();
+    vi.spyOn(require, 'resolve').mockResolvedValueOnce();
     await actions.getMetadata(gasket);
     await actions.getMetadata(gasket);
     expect(applyStub).toHaveBeenCalledTimes(1);
