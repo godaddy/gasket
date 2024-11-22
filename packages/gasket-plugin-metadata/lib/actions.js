@@ -1,13 +1,16 @@
-const path = require('path');
+import path from 'path';
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+
 const isModulePath = /^[/.]|^[a-zA-Z]:\\|node_modules/;
 const isGasketModule = /(@gasket\/|gasket-)(?!plugin)(?!preset).+/;
 const isGasketPreset = /(gasket-preset)|(@gasket\/preset-)/;
 const isGasketPlugin = /(gasket-plugin)|(@gasket\/plugin-)/;
 let _metadata;
 
-function tryRequire(path) {
+function tryRequire(tryPath) {
   try {
-    return require(path);
+    return require(tryPath);
   } catch (err) {
     if (err.code === 'MODULE_NOT_FOUND') {
       return null;
@@ -109,6 +112,6 @@ async function getMetadata(gasket) {
   return _metadata;
 }
 
-module.exports = {
+export default {
   getMetadata
 };
