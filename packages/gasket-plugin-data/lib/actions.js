@@ -1,10 +1,10 @@
 /// <reference types="@gasket/core" />
 
+const { withGasketRequestCache } = require('@gasket/request');
 const deepClone = json => JSON.parse(JSON.stringify(json));
 
 const baseDataMap = new WeakMap();
 const adjustedDataMap = new WeakMap();
-const reqMap = new WeakMap();
 
 /** @type {import('@gasket/core').ActionHandler<'getGasketData'>} */
 async function getGasketData(gasket) {
@@ -27,8 +27,8 @@ async function getGasketData(gasket) {
 }
 
 /** @type {import('@gasket/core').ActionHandler<'getPublicGasketData'>} */
-async function getPublicGasketData(gasket, req) {
-  if (!reqMap.has(req)) {
+const getPublicGasketData = withGasketRequestCache(
+  async function getPublicGasketData(gasket, req) {
     const basePublicData = (await gasket.actions.getGasketData()).public ?? {};
 
     const userPublicData = await gasket.execWaterfall(
@@ -43,11 +43,9 @@ async function getPublicGasketData(gasket, req) {
       );
     }
 
-    reqMap.set(req, userPublicData);
+    return userPublicData;
   }
-
-  return reqMap.get(req);
-}
+);
 
 module.exports = {
   baseDataMap,

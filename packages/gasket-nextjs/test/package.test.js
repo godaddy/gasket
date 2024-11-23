@@ -7,6 +7,7 @@ describe('package.json', function () {
       '.',
       './document',
       './layout',
+      './request',
       './server',
       './package.json'
     ];
