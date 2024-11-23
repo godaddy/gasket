@@ -1,5 +1,6 @@
 import type { IncomingMessage, OutgoingMessage } from 'http';
-import type { Gasket, GasketConfigDefinition, Hook, GasketRequest } from '@gasket/core';
+import type { Gasket, GasketConfigDefinition, Hook } from '@gasket/core';
+import type { GasketRequest } from '@gasket/request';
 import '@gasket/plugin-intl';
 
 describe('@gasket/plugin-intl', () => {

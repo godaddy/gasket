@@ -1,0 +1,3 @@
+# `@gasket/request`
+
+- Initial release
