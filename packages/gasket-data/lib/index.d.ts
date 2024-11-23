@@ -1,5 +1,5 @@
-import type { Gasket, GasketRequest } from '@gasket/core';
-import type { IncomingMessage } from 'http';
+import type { Gasket } from '@gasket/core';
+import type { RequestLike } from '@gasket/request';
 
 declare module '@gasket/data' {
   export interface GasketData {
@@ -15,4 +15,4 @@ declare module '@gasket/data' {
  */
 export function gasketData(): GasketData;
 
-export function resolveGasketData(gasket: Gasket, req: GasketRequest | IncomingMessage ): Promise<GasketData>;
+export function resolveGasketData(gasket: Gasket, req: RequestLike): Promise<GasketData>;

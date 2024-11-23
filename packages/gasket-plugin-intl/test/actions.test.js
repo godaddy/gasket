@@ -30,7 +30,11 @@ describe('actions', () => {
   describe('getIntlLocale', () => {
     it('executes expected lifecycle', async function () {
       await actions.getIntlLocale(mockGasket, req);
-      expect(mockGasket.execWaterfall).toHaveBeenCalledWith('intlLocale', mockLocale, { req });
+      expect(mockGasket.execWaterfall).toHaveBeenCalledWith(
+        'intlLocale',
+        mockLocale,
+        { req: expect.objectContaining(req) }
+      );
     });
 
     it('should return the locale from the request map if it exists', async () => {
