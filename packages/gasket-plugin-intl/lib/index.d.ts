@@ -31,12 +31,14 @@ export interface IntlConfig extends LocaleManifestConfig {
 }
 
 declare module '@gasket/core' {
+  import { RequestLike, GasketRequest } from '@gasket/request';
+
   export interface GasketConfig {
     intl?: IntlConfig;
   }
 
   export interface GasketActions {
-    getIntlLocale: (req: GasketRequest) => MaybeAsync<string>;
+    getIntlLocale: (req: RequestLike) => MaybeAsync<string>;
     /**
      * Provides access to the Intl manager instance to plugins.
      * Especially useful for plugins that are still CJS.

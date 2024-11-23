@@ -141,6 +141,7 @@ declare module '@gasket/core' {
 
   /**
    * Expected request shape for GasketActions
+   * @deprecated - use class from @gasket/request
    */
   export interface GasketRequest {
     cookies: Record<string, string>;
