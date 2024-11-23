@@ -17,12 +17,12 @@ npm i @gasket/nextjs
 
 ### request
 
-Get a request-like object unique to the current request in server components.
+Get a normalized [GasketRequest] unique to the current request in server components.
 This uses the Next.js `cookies()` and `headers()` [dynamic functions]. 
 
 **Signature**
 
-- `request(query?: object): { headers: object, cookies: object, query?: object }`
+- `await request(params?: object): GasketRequest`
 
 **Props**
 
@@ -30,24 +30,25 @@ This uses the Next.js `cookies()` and `headers()` [dynamic functions].
 
 Many GasketActions are designed to be unique to requests.
 When using ServerComponents with Next.js, the incoming request object is not
-fully accessible. This function provides a way to get a request-like object
-that can be used in ServerComponents.
+fully accessible.
+This function provides a way to get a normalized request-like object
+that can be used with GasketActions from ServerComponents.
 
 #### Example
 
 ```js
-import { request } from '@gasket/nextjs/server';
+import { request } from '@gasket/nextjs/request';
 import gasket from '../gasket.mjs'
 
-export default async function MyPage() {
-  const req = request();
+export default async function MyPage(props) {
+  const req = await request();
   const something = await gasket.actions.getSomething(req);
   
   return <div>{ something.fancy }</div>;
 }
 ```
 
-The `req` will contain an object with headers and cookies.
+The `req` will be a [GasketRequest] with headers and cookies.
 
 If a query object is passed in, it will be added to the request object as well.
 For server components, dynamic routes params are available via props, and can
@@ -55,7 +56,7 @@ be passed to the `request` function to make those path params available as the
 query.
 
 ```js
-import { request } from '@gasket/nextjs/server';
+import { request } from '@gasket/nextjs/request';
 import gasket from '../gasket.mjs'
 
 export default async function MyDynamicRoutePage({ params }) {
@@ -209,7 +210,8 @@ The `useGasketData` will provided access to the gasket data within the context o
 <!-- LINKS -->
 
 [@gasket/data]: /packages/gasket-data/README.md
+[GasketRequest]: /packages/gasket-request/README.md#GasketRequest
 
 [custom Document]: https://nextjs.org/docs/advanced-features/custom-document
 [dynamic functions]: https://nextjs.org/docs/app/building-your-application/rendering/server-components#dynamic-functions
-
+```

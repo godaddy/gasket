@@ -36,6 +36,9 @@
     "url": "https://github.com/godaddy/gasket/issues"
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-elastic-apm",
+  "dependencies": {
+    "@gasket/request": "^7.0.0-canary.0"
+  },
   "devDependencies": {
     "@gasket/core": "^7.0.9",
     "cross-env": "^7.0.3",

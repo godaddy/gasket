@@ -19,6 +19,10 @@
       "types": "./lib/layout/index.d.ts",
       "default": "./lib/layout/index.js"
     },
+    "./request": {
+      "types": "./lib/request/index.d.ts",
+      "default": "./lib/request/index.js"
+    },
     "./server": {
       "types": "./lib/server/index.d.ts",
       "default": "./lib/server/index.js"
@@ -54,6 +58,7 @@
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-nextjs",
   "dependencies": {
     "@gasket/data": "^7.0.1",
+    "@gasket/request": "^7.0.0-canary.0",
     "htmlescape": "^1.1.1"
   },
   "devDependencies": {
