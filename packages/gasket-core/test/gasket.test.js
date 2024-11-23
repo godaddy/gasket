@@ -82,6 +82,34 @@ describe('makeGasket', () => {
     expect(gasket.symbol).toBe(gasket.traceBranch().traceBranch().symbol);
   });
 
+  it('symbol can be used as a WeakMap key from root', () => {
+    const data = { example: true };
+    const map = new WeakMap();
+
+    const gasket = makeGasket({ plugins: [mockPlugin] });
+    const t1 = gasket.traceBranch();
+    const t2 = t1.traceBranch();
+    map.set(gasket.symbol, data);
+
+    expect(map.has(gasket.symbol)).toBe(true);
+    expect(map.has(t1.symbol)).toBe(true);
+    expect(map.has(t2.symbol)).toBe(true);
+  });
+
+  it('symbol can be used as a WeakMap key from deep trace', () => {
+    const data = { example: true };
+    const map = new WeakMap();
+
+    const gasket = makeGasket({ plugins: [mockPlugin] });
+    const t1 = gasket.traceBranch();
+    const t2 = t1.traceBranch();
+    map.set(t2.symbol, data);
+
+    expect(map.has(t2.symbol)).toBe(true);
+    expect(map.has(t1.symbol)).toBe(true);
+    expect(map.has(gasket.symbol)).toBe(true);
+  });
+
   it('defaults env to local', () => {
     const gasket = makeGasket({ plugins: [mockPlugin] });
     expect(gasket.config.env).toEqual('local');
