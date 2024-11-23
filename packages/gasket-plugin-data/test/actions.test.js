@@ -1,4 +1,5 @@
 const { actions, baseDataMap } = require('../lib/actions');
+const { GasketRequest } = require('@gasket/request');
 
 describe('actions', () => {
   let gasket;
@@ -84,7 +85,7 @@ describe('actions', () => {
     beforeEach(() => {
       getGasketData = jest.spyOn(gasket.actions, 'getGasketData').mockResolvedValue({ some: 'data' });
       getPublicGasketData = gasket.actions.getPublicGasketData;
-      req = { mock: 'request' };
+      req = { mock: 'request', headers: { 'x-example': 'example-data' } };
     });
 
     it('returns public from gasketData', async () => {
@@ -116,7 +117,7 @@ describe('actions', () => {
 
       const results = await getPublicGasketData(gasket, req);
 
-      expect(gasket.execWaterfall).toHaveBeenCalledWith('publicGasketData', { some: 'data' }, { req });
+      expect(gasket.execWaterfall).toHaveBeenCalledWith('publicGasketData', { some: 'data' }, { req: expect.any(GasketRequest) });
       expect(results).toEqual({ some: 'adjusted' });
     });
 
@@ -141,7 +142,7 @@ describe('actions', () => {
 
       expect(results1).toBe(results2);
 
-      const newReq = {};
+      const newReq = { headers: { 'x-example': 'new-data' } };
       const results3 = await getPublicGasketData(gasket, newReq);
       expect(getGasketData).toHaveBeenCalledTimes(2);
       expect(gasket.execWaterfall).toHaveBeenCalledTimes(2);

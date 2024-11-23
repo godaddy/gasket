@@ -1,7 +1,5 @@
-import type { IncomingMessage } from 'http';
 import type { AgentConfigOptions, Transaction, Payload, Agent } from 'elastic-apm-node';
-import type { MaybeAsync, GasketConfig, Plugin } from '@gasket/core';
-import type { Request } from 'express';
+import type { GasketConfig, Plugin } from '@gasket/core';
 
 export function filterSensitiveCookies(config: GasketConfig): function(Payload): Payload;
 
@@ -10,6 +8,8 @@ export interface ExtendedAgentConfigOptions extends AgentConfigOptions {
 }
 
 declare module '@gasket/core' {
+  import { RequestLike, GasketRequest } from '@gasket/request';
+
   export interface GasketConfig {
     elasticAPM?: ExtendedAgentConfigOptions;
   }
@@ -19,8 +19,8 @@ declare module '@gasket/core' {
   }
 
   export interface GasketActions {
-    async getApmTransaction(
-      req: IncomingMessage | Request
+    getApmTransaction(
+      req: RequestLike
     ): Promise<Transaction | void>
   }
 
@@ -28,7 +28,7 @@ declare module '@gasket/core' {
     apmTransaction(
       transaction: Transaction,
       context: {
-        req: IncomingMessage | Request;
+        req: GasketRequest;
       }
     ): MaybeAsync<void>;
   }
