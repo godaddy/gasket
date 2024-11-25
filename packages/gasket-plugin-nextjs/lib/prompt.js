@@ -33,7 +33,7 @@ async function promptNextDevProxy(context, prompt) {
   const { nextDevProxy } = await prompt([
     {
       name: 'nextDevProxy',
-      message: 'Do you want to add a proxy for the Next.js dev server?',
+      message: 'Do you want an HTTPS proxy for the Next.js server?',
       type: 'confirm',
       default: false
     }

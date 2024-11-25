@@ -289,11 +289,12 @@ describe('create hook', () => {
       mockContext.nextDevProxy = true;
       await create.handler({}, mockContext);
       expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts', {
-        'local': 'next dev & nodemon server.js',
-        'start:local': 'next start & node server.js',
-        'preview': 'npm run build && npm run start & node server.js',
-        'build': 'next build',
-        'start': 'next start'
+        'start:https': 'node server.js',
+        'local:https': 'nodemon server.js',
+        'start': 'next start & npm run start:https',
+        'local': 'next dev & npm run local:https',
+        'preview': 'npm run build && npm run start',
+        'build': 'next build'
       });
     });
 
@@ -332,11 +333,13 @@ describe('create hook', () => {
       mockContext.hasGasketIntl = true;
       await create.handler({}, mockContext);
       expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts', {
-        'local': 'next dev & tsx watch server.ts',
-        'start:local': 'next start & tsx server.ts',
-        'preview': 'npm run build && npm run start & tsx server.ts',
-        'build': 'next build',
-        'start': 'next start',
+        'start:https': 'node dist/server.js',
+        'local:https': 'tsx watch server.ts',
+        'start': 'next start & npm run start:https',
+        'local': 'next dev & npm run local:https',
+        'build:tsc': 'tsc -p ./tsconfig.server.json',
+        'build': 'npm run build:tsc && next build',
+        'preview': 'npm run build && npm run start',
         'prebuild': 'tsx gasket.ts build'
       });
     });
@@ -349,10 +352,10 @@ describe('create hook', () => {
       expect(mockContext.gasketConfig.addPlugin).toHaveBeenCalledWith('pluginNextjs', name);
     });
 
-    it('adds devProxy config', async function () {
+    it('adds httpsProxy config', async function () {
       mockContext.nextDevProxy = true;
       await create.handler({}, mockContext);
-      expect(mockContext.gasketConfig.add).toHaveBeenCalledWith('devProxy', {
+      expect(mockContext.gasketConfig.add).toHaveBeenCalledWith('httpsProxy', {
         protocol: 'http',
         hostname: 'localhost',
         port: 80,

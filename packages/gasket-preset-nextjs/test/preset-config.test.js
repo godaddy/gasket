@@ -28,7 +28,6 @@ describe('presetConfig', () => {
     const config = await presetConfig({}, mockContext);
     const expected = [
       expect.objectContaining({ name: '@gasket/plugin-webpack' }),
-      expect.objectContaining({ name: '@gasket/plugin-https' }),
       expect.objectContaining({ name: '@gasket/plugin-nextjs' }),
       expect.objectContaining({ name: '@gasket/plugin-winston' }),
       expect.objectContaining({ name: '@gasket/plugin-lint' })
@@ -56,13 +55,43 @@ describe('presetConfig', () => {
     );
   });
 
-  describe('adds server framework plugin', () => {
+  describe('no http or https-proxy plugin', () => {
+    it('express', async () => {
+      mockContext.nextServerType = 'appRouter';
+      const config = await presetConfig({}, mockContext);
+      expect(config.plugins).not.toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({ name: '@gasket/plugin-https' })
+        ])
+      );
+      expect(config.plugins).not.toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({ name: '@gasket/plugin-https-proxy' })
+        ])
+      );
+    });
+  });
+
+  describe('adds http w/ server framework plugins', () => {
     it('express', async () => {
       mockContext.nextServerType = 'customServer';
       const config = await presetConfig({}, mockContext);
       expect(config.plugins).toEqual(
         expect.arrayContaining([
+          expect.objectContaining({ name: '@gasket/plugin-https' }),
           expect.objectContaining({ name: '@gasket/plugin-express' })
+        ])
+      );
+    });
+  });
+
+  describe('adds https-proxy plugin', () => {
+    it('express', async () => {
+      mockContext.nextDevProxy = true;
+      const config = await presetConfig({}, mockContext);
+      expect(config.plugins).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({ name: '@gasket/plugin-https-proxy' })
         ])
       );
     });

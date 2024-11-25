@@ -34,6 +34,7 @@
     "@gasket/plugin-cypress": "^7.0.9",
     "@gasket/plugin-express": "^7.0.14",
     "@gasket/plugin-https": "^7.0.9",
+    "@gasket/plugin-https-proxy": "7.0.0-canary.0",
     "@gasket/plugin-intl": "^7.0.14",
     "@gasket/plugin-jest": "^7.0.10",
     "@gasket/plugin-lint": "^7.0.3",
