@@ -19,8 +19,7 @@
     "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict --experimental-vm-modules' jest",
     "test:watch": "npm run test -- --watch",
     "test:coverage": "npm run test -- --coverage",
-    "posttest": "npm run lint",
-    "prepublishOnly": "npm run build"
+    "posttest": "npm run lint"
   },
   "repository": {
     "type": "git",
