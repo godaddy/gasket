@@ -1,6 +1,6 @@
 {
   "name": "@gasket/data",
-  "version": "7.0.1",
+  "version": "7.1.0-canary.2",
   "description": "Helper package for accessing embedded Gasket Data in the browser",
   "type": "module",
   "types": "lib/index.d.ts",
@@ -48,7 +48,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-data",
   "dependencies": {
-    "@gasket/request": "^7.0.0-canary.0"
+    "@gasket/request": "7.1.0-canary.2"
   },
   "devDependencies": {
     "@jest/globals": "^29.7.0",
