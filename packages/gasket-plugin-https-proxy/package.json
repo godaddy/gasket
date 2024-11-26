@@ -1,0 +1,67 @@
+{
+  "name": "@gasket/plugin-https-proxy",
+  "version": "7.0.0-canary.0",
+  "description": "Adds support for running an https proxy",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
+  "type": "module",
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "npm run lint -- --fix",
+    "test": "vitest --watch=false",
+    "test:watch": "vitest",
+    "test:coverage": "npm run test -- --coverage",
+    "posttest": "npm run lint && npm run typecheck",
+    "typecheck": "tsc",
+    "typecheck:watch": "tsc --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/godaddy/gasket.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "https",
+    "proxy",
+    "gasket",
+    "plugin"
+  ],
+  "author": "GoDaddy Operating Company, LLC",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/godaddy/gasket/issues"
+  },
+  "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-https-proxy",
+  "dependencies": {
+    "http-proxy": "^1.18.1"
+  },
+  "devDependencies": {
+    "@gasket/core": "^7.0.9",
+    "@gasket/plugin-logger": "^7.0.9",
+    "@types/node": "^20.12.5",
+    "eslint": "^8.56.0",
+    "eslint-config-godaddy": "^7.1.1",
+    "eslint-plugin-jest": "^28.6.0",
+    "eslint-plugin-json": "^3.1.0",
+    "eslint-plugin-unicorn": "^55.0.0",
+    "typescript": "^5.4.5",
+    "vitest": "^2.1.5"
+  },
+  "eslintConfig": {
+    "extends": [
+      "godaddy",
+      "plugin:jest/recommended"
+    ],
+    "plugins": [
+      "unicorn"
+    ],
+    "rules": {
+      "unicorn/filename-case": "error"
+    }
+  }
+}
