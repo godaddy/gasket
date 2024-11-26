@@ -1,6 +1,6 @@
 {
   "name": "@gasket/core",
-  "version": "7.0.9",
+  "version": "7.1.0-canary.0",
   "description": "Entry point to setting up Gasket instances",
   "type": "module",
   "types": "lib/index.d.ts",
@@ -51,7 +51,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-core",
   "dependencies": {
-    "@gasket/utils": "^7.0.9",
+    "@gasket/utils": "7.1.0-canary.0",
     "debug": "^4.3.4"
   },
   "devDependencies": {
