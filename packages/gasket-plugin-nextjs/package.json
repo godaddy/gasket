@@ -67,7 +67,7 @@
     "react-dom": "^18.2.0",
     "typescript": "^5.4.5"
   },
-  "peerDependencies": {
+  "disabled_peerDependencies": {
     "@gasket/plugin-webpack": "^7",
     "next": "^14",
     "react": "^18",

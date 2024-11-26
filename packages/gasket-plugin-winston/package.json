@@ -54,7 +54,7 @@
     "triple-beam": "^1.4.1",
     "typescript": "^5.4.5"
   },
-  "peerDependencies": {
+  "disabled_peerDependencies": {
     "@gasket/plugin-logger": "^7"
   },
   "eslintConfig": {
