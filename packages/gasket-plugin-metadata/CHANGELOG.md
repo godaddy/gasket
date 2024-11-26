@@ -1,5 +1,7 @@
 # `@gasket/plugin-metadata`
 
+### 7.1.0
+
 - Convert plugin to ESM ([#978])
 
 ### 7.0.0

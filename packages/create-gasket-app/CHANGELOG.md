@@ -1,5 +1,7 @@
 # `create-gasket-app`
 
+### 7.1.0
+
 Added `@gasket/plugin-dynamic-plugin` to default plugins ([#970])
 
 ### 7.0.6

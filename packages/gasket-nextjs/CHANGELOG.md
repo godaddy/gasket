@@ -1,5 +1,11 @@
 # `@gasket/nextjs`
 
+### 7.1.0
+
+- Normalize to GasketRequest with async `request` for Next.js 15 compatibility ([#973])
+  - Use `{ request } from '@gasket/nextjs/request'`
+  - Deprecated `{ request } from '@gasket/nextjs/server'`
+
 ### 7.0.0
 
 - See [Version 7 Upgrade Guide] for overall changes
@@ -73,3 +79,4 @@
 [#670]: https://github.com/godaddy/gasket/pull/670
 [#778]: https://github.com/godaddy/gasket/pull/778
 [#814]: https://github.com/godaddy/gasket/pull/814
+[#973]: https://github.com/godaddy/gasket/pull/973
