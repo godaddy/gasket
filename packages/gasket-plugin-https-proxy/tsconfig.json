@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "module": "nodenext",
+    "lib": [
+      "esnext",
+      "dom"
+    ],
+    "types": [
+      "@types/node",
+      "@gasket/plugin-logger"
+    ]
+  },
+  "exclude": [
+    "test",
+    "coverage",
+    "generator"
+  ]
+}
