@@ -1,6 +1,6 @@
 {
   "name": "@gasket/redux",
-  "version": "7.0.14",
+  "version": "7.1.0-canary.0",
   "description": "Gasket Redux Configuration",
   "main": "lib",
   "types": "src/index.d.ts",
@@ -63,7 +63,7 @@
     "redux": "^4.0.5",
     "typescript": "^5.4.5"
   },
-  "peerDependencies": {
+  "disabled_peerDependencies": {
     "redux": "^3.7.2 || ^4.0.1"
   },
   "eslintConfig": {
