@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-express",
-  "version": "7.0.14",
+  "version": "7.1.0-canary.0",
   "description": "Adds express support to your application",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -47,7 +47,7 @@
     "http2-express": "^1.0.0"
   },
   "devDependencies": {
-    "@gasket/core": "^7.0.9",
+    "@gasket/core": "7.1.0-canary.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
     "eslint-config-godaddy": "^7.1.1",
@@ -58,7 +58,7 @@
     "jest": "^29.7.0",
     "typescript": "^5.4.5"
   },
-  "peerDependencies": {
+  "disabled_peerDependencies": {
     "express": "^4.21.0"
   },
   "eslintConfig": {
