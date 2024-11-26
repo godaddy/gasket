@@ -3,14 +3,13 @@
   "version": "7.0.9",
   "description": "Plugin to enable other plugins to inject new gasket commands",
   "type": "module",
+  "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
     "lib"
   ],
   "exports": {
-    ".": {
-      "import": "./lib/index.js"
-    },
+    ".": "./lib/index.js",
     "./package.json": "./package.json"
   },
   "scripts": {
