@@ -1,6 +1,6 @@
 {
   "name": "@gasket/request",
-  "version": "7.0.0-canary.0",
+  "version": "7.1.0-canary.2",
   "description": "Utilities for working with request objects in Gasket",
   "type": "module",
   "types": "lib/index.d.ts",
