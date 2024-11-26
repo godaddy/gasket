@@ -21,6 +21,6 @@ export async function startProxyServer(gasket) {
   logger.info(`Proxy server started: ${protocol}://${hostname}:${port}`);
 }
 
-export default {
+export const actions = {
   startProxyServer
 };

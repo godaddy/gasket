@@ -2,7 +2,7 @@
 /// <reference types="@gasket/plugin-metadata" />
 
 import create from './create.js';
-import actions from './actions.js';
+import { actions } from './actions.js';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 const { name, version, description } = require('../package.json');
