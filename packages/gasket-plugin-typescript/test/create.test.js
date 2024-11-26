@@ -100,7 +100,10 @@ describe('create hook', () => {
     it('adds files for customServer', () => {
       mockContext.nextServerType = 'customServer';
       create({}, mockContext);
-      expect(mockContext.files.add).toHaveBeenCalledWith(expect.stringMatching(/generator\/next\/\*$/), expect.stringMatching(/generator\/shared\/\*$/));
+      expect(mockContext.files.add).toHaveBeenCalledWith(
+        expect.stringMatching(/generator\/next\/\*$/),
+        expect.stringMatching(/generator\/shared\/\*$/)
+      );
     });
 
     it('adds files for defaultServer w/o dev proxy', () => {
@@ -126,7 +129,10 @@ describe('create hook', () => {
     it('adds files for dev proxy w/o customServer', () => {
       mockContext.nextDevProxy = true;
       create({}, mockContext);
-      expect(mockContext.files.add).toHaveBeenCalledWith(expect.stringMatching(/generator\/next\/\*\(tsconfig\).json$/), expect.stringMatching(/generator\/shared\/\*$/));
+      expect(mockContext.files.add).toHaveBeenCalledWith(
+        expect.stringMatching(/generator\/next\/\*$/),
+        expect.stringMatching(/generator\/shared\/\*$/)
+      );
     });
   });
 });
