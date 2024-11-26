@@ -89,7 +89,7 @@ describe('makeGasketRequest', () => {
     expect(result.query).toEqual({});
   });
 
-  it('handles CookieStore for cookies', async () => {
+  it('handles Next15 style CookieStore for cookies', async () => {
     const headers = new Map([['header1', 'value1'], ['header2', 'value2']]);
     const cookieStore = new MockCookieStore([
       { name: 'cookie1', value: 'value1' },
@@ -102,7 +102,7 @@ describe('makeGasketRequest', () => {
     expect(result.cookies).toEqual({ cookie1: 'value1', cookie2: 'value2' });
   });
 
-  it('handles cookie store shapes getAll', async () => {
+  it('handles Next14 style CookieStore for cookies', async () => {
     const headers = new Map([['header1', 'value1'], ['header2', 'value2']]);
     const cookieStore = {
       getAll() {
