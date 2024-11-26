@@ -1,4 +1,5 @@
 import pluginHttps from '@gasket/plugin-https';
+import pluginHttpsProxy from '@gasket/plugin-https-proxy';
 import pluginNext from '@gasket/plugin-nextjs';
 import pluginIntl from '@gasket/plugin-intl';
 import pluginWebpack from '@gasket/plugin-webpack';
@@ -15,7 +16,6 @@ export default async function presetConfig(gasket, context) {
   let typescriptPlugin;
 
   const plugins = [
-    pluginHttps,
     pluginNext,
     pluginIntl,
     pluginWebpack,
@@ -23,11 +23,15 @@ export default async function presetConfig(gasket, context) {
     pluginLint
   ];
 
-
   if (context.nextServerType === 'customServer') {
     const frameworkPlugin = await import('@gasket/plugin-express');
 
+    plugins.push(pluginHttps);
     plugins.push(frameworkPlugin.default || frameworkPlugin);
+  }
+
+  if (context.nextDevProxy) {
+    plugins.push(pluginHttpsProxy);
   }
 
   if ('testPlugins' in context && context.testPlugins.length > 0) {
