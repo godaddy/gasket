@@ -34,7 +34,7 @@ describe('prompt hook', () => {
     expect(askNextServer.message).toEqual('Which server type would you like to use?');
     expect(askNextServer.type).toEqual('list');
     expect(askDevServer.name).toEqual('nextDevProxy');
-    expect(askDevServer.message).toEqual('Do you want to add a proxy for the Next.js dev server?');
+    expect(askDevServer.message).toEqual('Do you want an HTTPS proxy for the Next.js server?');
     expect(askDevServer.type).toEqual('confirm');
     expect(askSitemap.name).toEqual('addSitemap');
     expect(askSitemap.message).toEqual('Do you want to add a sitemap?');
@@ -102,7 +102,7 @@ describe('prompt hook', () => {
       expect(mockPrompt).toHaveBeenCalledWith([
         {
           name: 'nextDevProxy',
-          message: 'Do you want to add a proxy for the Next.js dev server?',
+          message: 'Do you want an HTTPS proxy for the Next.js server?',
           type: 'confirm',
           default: false
         }

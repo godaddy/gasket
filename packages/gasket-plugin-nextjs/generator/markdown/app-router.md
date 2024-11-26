@@ -3,9 +3,9 @@
 This Gasket app uses Next.js 14 with [App Router] which allows for intuitive, file-based routing within the app directory. The integration with Next.js 14 enhances development by leveraging features like automatic static optimization and server-side rendering, ensuring a scalable and efficient web application.
 
 {{#if nextDevProxy}}
-### Development Proxy
+### HTTPS Proxy
 
-The development proxy in this Gasket app forwards requests to the default Next.js server, enabling local development with HTTPS.
+The HTTPS proxy in this Gasket app forwards requests to the default Next.js server, enabling HTTPS for development and support on deployed servers.
 {{/if}}
 
 {{#if typescript}}
