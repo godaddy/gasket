@@ -65,6 +65,9 @@ typings/
 # generated docs files
 .docs
 
+# nx stuff
+.nx
+
 # package-specific generated files
 packages/gasket-redux/lib
 packages/gasket-assets/react
