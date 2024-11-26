@@ -102,6 +102,23 @@ describe('makeGasketRequest', () => {
     expect(result.cookies).toEqual({ cookie1: 'value1', cookie2: 'value2' });
   });
 
+  it('handles cookie store shapes getAll', async () => {
+    const headers = new Map([['header1', 'value1'], ['header2', 'value2']]);
+    const cookieStore = {
+      getAll() {
+        return [
+          { name: 'cookie1', value: 'value1' },
+          { name: 'cookie2', value: 'value2' }
+        ];
+      }
+    };
+    const requestLike = { headers, cookies: cookieStore };
+
+    const result = await makeGasketRequest(requestLike);
+
+    expect(result.cookies).toEqual({ cookie1: 'value1', cookie2: 'value2' });
+  });
+
   it('handles no cookies', async () => {
     const headers = new Map([['header1', 'value1'], ['header2', 'value2']]);
     const requestLike = { headers };
