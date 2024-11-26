@@ -5,7 +5,6 @@ import { WeakPromiseKeeper } from './keeper.js';
  */
 export class GasketRequest {
   constructor(normalizedRequest) {
-    console.log('normalizedRequest:', normalizedRequest);
     this.headers = normalizedRequest.headers;
     this.cookies = normalizedRequest.cookies;
     this.query = normalizedRequest.query;
