@@ -10,7 +10,7 @@ export async function startProxyServer(gasket) {
   const opts = await gasket.execWaterfall('httpsProxy', httpsProxy);
 
   const { protocol = 'http', hostname = 'localhost', port = 8080, ...proxyOpts } = opts;
-  proxy.createServer(
+  const server = proxy.createServer(
     proxyOpts
   ).on('error', (err) => {
     logger.error('Request failed to proxy:', err);
@@ -19,6 +19,7 @@ export async function startProxyServer(gasket) {
   );
 
   logger.info(`Proxy server started: ${protocol}://${hostname}:${port}`);
+  return server;
 }
 
 export const actions = {

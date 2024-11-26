@@ -1,5 +1,6 @@
 import { Plugin } from '@gasket/core';
-import type { ServerOptions as ProxyServerOptions } from 'http-proxy';
+import type { ServerOptions as ProxyServerOptions, Server as ProxyServer } from 'http-proxy';
+import http from 'http';
 
 interface BaseHttpsProxyConfig extends ProxyServerOptions {
   protocol?: string;
@@ -21,7 +22,7 @@ declare module '@gasket/core' {
   }
 
   export interface GasketActions {
-    startProxyServer: () => Promise<void>;
+    startProxyServer: () => Promise<ProxyServer>;
   }
 }
 
