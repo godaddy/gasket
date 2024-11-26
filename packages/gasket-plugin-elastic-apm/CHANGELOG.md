@@ -1,5 +1,9 @@
 # `@gasket/plugin-elastic-apm`
 
+### 7.1.0
+
+- Use normalized GasketRequest with actions ([#973])
+
 ### 7.0.0
 
 - See [Version 7 Upgrade Guide] for overall changes

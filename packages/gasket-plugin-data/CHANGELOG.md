@@ -1,5 +1,9 @@
 # `@gasket/plugin-data`
 
+### 7.1.0
+
+- Use normalized GasketRequest with actions ([#973])
+
 ### 7.0.0
 
 - See [Version 7 Upgrade Guide] for overall changes
@@ -74,3 +78,4 @@
 [#670]: https://github.com/godaddy/gasket/pull/670
 [#736]: https://github.com/godaddy/gasket/pull/736
 [#773]: https://github.com/godaddy/gasket/pull/773
+[#973]: https://github.com/godaddy/gasket/pull/973

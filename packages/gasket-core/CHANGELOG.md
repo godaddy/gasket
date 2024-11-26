@@ -1,6 +1,9 @@
 # `@gasket/core`
 
+### 7.1.0
+
 - Added `registerPlugins` method to the GasketEngine ([#970])
+- Added `prepare` lifecycle with `gasket.isReady` promise ([#970])
 - Edge runtime support using lean export from `@gasket/utils` ([#961])
 
 ### 7.0.6
