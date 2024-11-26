@@ -153,20 +153,24 @@ function addNpmScripts({ pkg, nextServerType, nextDevProxy, typescript, hasGaske
   };
 
   if (nextServerType === 'customServer') {
+    scripts.start = 'node server.js';
+    scripts.local = `GASKET_DEV=1 ${watcher} server.${fileExtension}`;
     if (typescript) {
-      scripts.start = 'node dist/server.js';
       scripts['build:tsc'] = 'tsc -p ./tsconfig.server.json';
       scripts.build = 'npm run build:tsc && next build';
+      scripts.start = 'node dist/server.js';
       scripts.local = `npm run build:tsc && GASKET_DEV=1 ${watcher} server.${fileExtension}`;
-    } else {
-      scripts.start = 'node server.js';
-      scripts.build = 'next build';
-      scripts.local = `GASKET_DEV=1 ${watcher} server.${fileExtension}`;
     }
   } else if (nextDevProxy) {
-    scripts.local = `${scripts.local} & ${watcher} server.${fileExtension}`;
-    scripts['start:local'] = `${scripts.start} & ${bin} server.${fileExtension}`;
-    scripts.preview = `${scripts.preview} & ${bin} server.${fileExtension}`;
+    scripts['start:https'] = `node server.js`;
+    scripts['local:https'] = `${watcher} server.${fileExtension}`;
+    scripts.start = `next start & npm run start:https`;
+    scripts.local = `next dev & npm run local:https`;
+    if (typescript) {
+      scripts['build:tsc'] = 'tsc -p ./tsconfig.server.json';
+      scripts.build = 'npm run build:tsc && next build';
+      scripts['start:https'] = `node dist/server.js`;
+    }
   }
 
   pkg.add('scripts', scripts);
@@ -176,7 +180,7 @@ function addConfig({ gasketConfig, nextDevProxy, nextServerType }) {
   gasketConfig.addPlugin('pluginNextjs', name);
 
   if (nextDevProxy && nextServerType !== 'customServer') {
-    gasketConfig.add('devProxy', {
+    gasketConfig.add('httpsProxy', {
       protocol: 'http',
       hostname: 'localhost',
       port: 80,

@@ -47,19 +47,19 @@ module.exports = async function create(gasket, context) {
     await readme.markdownFile(path.join(generatorDir, 'markdown/README.md'));
   }
 
-  // Files for customServer
+  // Files for Next.js customServer
   if (nextServerType === 'customServer') {
     files.add(`${generatorDir}/next/*`, `${generatorDir}/shared/*`);
     gitignore?.add('dist', 'TypeScript build output');
     pkg.add('eslintIgnore', ['dist']);
   }
 
-  // Files for dev proxy w/o customServer
+  // Files for Next.js default server w/ https proxy
   if (nextDevProxy) {
-    files.add(`${generatorDir}/next/*(tsconfig).json`, `${generatorDir}/shared/*`);
+    files.add(`${generatorDir}/next/*`, `${generatorDir}/shared/*`);
   }
 
-  // Files for defaultServer w/o dev proxy
+  // Files for Next.js default server w/o dev proxy
   if (nextDevProxy === false && nextServerType !== 'customServer') {
     files.add(`${generatorDir}/next/*(tsconfig).json`);
   }

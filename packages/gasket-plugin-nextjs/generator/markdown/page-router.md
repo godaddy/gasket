@@ -5,7 +5,7 @@ This Gasket app uses Next.js 14 with [Page Router] which relies on the tradition
 {{#if nextDevProxy}}
 ### Development Proxy
 
-The development proxy in this Gasket app forwards requests to the default Next.js server, enabling local development with HTTPS.
+The HTTPS proxy in this Gasket app forwards requests to the default Next.js server, enabling HTTPS for development and support on deployed servers.
 {{/if}}
 {{#if typescript}}
 {{#if (eq nextServerType 'pageRouter')}}
