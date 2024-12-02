@@ -1,6 +1,6 @@
 {
   "name": "@gasket/assets",
-  "version": "7.1.0-canary.3",
+  "version": "3.1.0-canary.1",
   "description": "Gasket assets",
   "main": "react/index.js",
   "files": [

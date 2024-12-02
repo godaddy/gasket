@@ -1,6 +1,6 @@
 {
   "name": "@gasket/redux",
-  "version": "7.1.0-canary.3",
+  "version": "3.1.0-canary.1",
   "description": "Gasket Redux Configuration",
   "main": "lib",
   "types": "src/index.d.ts",

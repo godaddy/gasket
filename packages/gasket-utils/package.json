@@ -1,6 +1,6 @@
 {
   "name": "@gasket/utils",
-  "version": "7.1.0-canary.3",
+  "version": "3.1.0-canary.1",
   "description": "Reusable utilities for Gasket internals",
   "files": [
     "lib"
@@ -51,7 +51,7 @@
     "semver": "^7.5.4"
   },
   "devDependencies": {
-    "@gasket/core": "7.1.0-canary.3",
+    "@gasket/core": "3.1.0-canary.1",
     "@types/concat-stream": "^2.0.3",
     "@types/cross-spawn": "^6.0.6",
     "abort-controller": "^3.0.0",
