@@ -1,6 +1,6 @@
 {
   "name": "@gasket/react-intl",
-  "version": "7.1.0-canary.3",
+  "version": "3.1.0-canary.1",
   "description": "React component library to enable localization for gasket apps.",
   "type": "module",
   "main": "lib/index.js",
@@ -36,9 +36,9 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-react-intl",
   "dependencies": {
-    "@gasket/data": "7.1.0-canary.3",
-    "@gasket/fetch": "7.1.0-canary.3",
-    "@gasket/intl": "7.1.0-canary.3",
+    "@gasket/data": "3.1.0-canary.1",
+    "@gasket/fetch": "3.1.0-canary.1",
+    "@gasket/intl": "3.1.0-canary.1",
     "hoist-non-react-statics": "^3.3.2",
     "htmlescape": "^1.1.1",
     "just-extend": "^6.2.0"

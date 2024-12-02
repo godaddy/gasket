@@ -1,6 +1,6 @@
 {
   "name": "@gasket/nextjs",
-  "version": "7.1.0-canary.3",
+  "version": "3.1.0-canary.1",
   "description": "Gasket integrations for Next.js apps",
   "type": "module",
   "files": [
@@ -57,8 +57,8 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-nextjs",
   "dependencies": {
-    "@gasket/data": "7.1.0-canary.3",
-    "@gasket/request": "7.1.0-canary.3",
+    "@gasket/data": "3.1.0-canary.1",
+    "@gasket/request": "3.1.0-canary.1",
     "htmlescape": "^1.1.1"
   },
   "devDependencies": {
