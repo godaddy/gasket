@@ -48,9 +48,9 @@ export default makeGasket({
 
 ### getHappyFeet
 
-This action is used to configure and get a [Happy Feet](https://github.com/asilvas/happy-feet#usage) instance. 
-You can specify the various [happy-feet](https://github.com/asilvas/happy-feet#usage) config options in the gasketConfig 
-or pass the config object directly to the action. 
+This action is used to configure and get a [Happy Feet](https://github.com/asilvas/happy-feet#usage) instance.
+You can specify the various [happy-feet](https://github.com/asilvas/happy-feet#usage) config options in the gasketConfig
+or pass the config object directly to the action.
 
 #### gasketConfig example
 

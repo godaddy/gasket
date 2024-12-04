@@ -109,4 +109,3 @@ See [plugin hook timings] for more information.
 
 [gasket create command]:/packages/gasket-cli/README.md#create-command
 [plugin hook timings]:/packages/gasket-engine/README.md
-[Gitignore]: ./lib/gitignore.js

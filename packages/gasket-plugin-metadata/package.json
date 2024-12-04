@@ -2,12 +2,12 @@
   "name": "@gasket/plugin-metadata",
   "version": "7.0.9",
   "description": "Adds metadata to gasket lifecycles",
+  "type": "module",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
     "lib"
   ],
-  "type": "module",
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
@@ -54,10 +54,12 @@
   "eslintConfig": {
     "extends": [
       "godaddy",
-      "plugin:jest/recommended"
+      "plugin:jest/recommended",
+      "plugin:jsdoc/recommended-typescript-flavor"
     ],
     "plugins": [
-      "unicorn"
+      "unicorn",
+      "jsdoc"
     ],
     "rules": {
       "unicorn/filename-case": "error"

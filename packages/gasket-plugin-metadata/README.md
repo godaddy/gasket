@@ -85,7 +85,6 @@ export default {
 Beside the lifecycles available to plugins, metadata can also be described for
 modules.
 
-
 ### Modules
 
 Lastly, modules can describe metadata by defining a `gasket.metadata` property
@@ -145,18 +144,8 @@ export default {
 
 <!-- LINKS -->
 
-[metadata]: #metadata
-
 [ModuleData]: docs/api.md#ModuleData
-
-[PluginData]: docs/api.md#PluginData
-
-[PresetData]: docs/api.md#PresetData
-
-[DetailData]: docs/api.md#DetailData
 
 [metadata object]: docs/api.md#DetailData
 
 [@gasket/plugin-docs]: /packages/gasket-plugin-docs/README.md
-
-[init lifecycle]: /packages/gasket-plugin-command/README.md#init

@@ -5,7 +5,7 @@ app's plugins, presets, and supporting modules.
 
 ## Installation
 
-```
+```bash
 npm i @gasket/plugin-docs
 ```
 

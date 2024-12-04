@@ -1,6 +1,8 @@
 ```mermaid
 graph LR;
 middleware -- exec --> apmTransaction;
+commands -- exec --> build;
+ready -- exec --> commands;
 express -- execWaterfall --> composeServiceWorker;
 init -- execSync --> createLogger;
 start -- execWaterfall --> createServers;

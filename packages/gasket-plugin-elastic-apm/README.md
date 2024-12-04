@@ -61,7 +61,6 @@ In particular, the APM server URL (`ELASTIC_APM_SERVER_URL`) and secret token
 (`ELASTIC_APM_SECRET_TOKEN`) are both required configuration. If either of these
 are not present, the APM agent will be disabled.
 
-
 ### Plugin Configurations
 
 The Gasket plugin provides some additional setup helpers. These can be
@@ -102,6 +101,7 @@ require('elastic-apm-node').start({
 ```
 
 The `sanitizeFieldNames` config option can be used for:
+
 - request and response HTTP headers
 - HTTP request cookies
 - any form field captured during an `application/x-www-form-urlencoded` data request
@@ -180,7 +180,6 @@ such as for sensitive cookies.
 
 <!-- LINKS -->
 
-[preboot]:/packages/gasket-plugin-start/README.md#preboot
 [init]:packages/gasket-plugin-command/README.md#init
 [middleware]:/packages/gasket-plugin-express/README.md#middleware
 [configuration options documentation]:https://www.elastic.co/guide/en/apm/agent/nodejs/current/configuration.html

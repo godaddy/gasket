@@ -8,9 +8,9 @@ Reusable utilities for Gasket internals
 npm i @gasket/utils
 ```
 
-## Usage
+<!-- ## Usage
 
-See the [API docs](docs/api.md) for details on what is available.
+See the [API docs](docs/api.md) for details on what is available. -->
 
 ## License
 

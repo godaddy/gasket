@@ -18,7 +18,7 @@ npm i @gasket/nextjs
 ### request
 
 Get a normalized [GasketRequest] unique to the current request in server components.
-This uses the Next.js `cookies()` and `headers()` [dynamic functions]. 
+This uses the Next.js `cookies()` and `headers()` [dynamic functions].
 
 **Signature**
 
@@ -81,7 +81,7 @@ the [@gasket/data] package.
 **Props**
 
 - `[options]` - (object) Optional configuration
-    - `index` - (number) Force the script to be inject at a certain child index of the body
+  - `index` - (number) Force the script to be inject at a certain child index of the body
 
 #### Example
 
@@ -141,7 +141,6 @@ In this example, the `gasketData` script will be injected after the custom
 This is especially useful if you are somehow nesting or extending the `<Main/>`
 and `<NextScript/>` components and the decorator cannot find the right place to inject the script.
 
-
 ---
 
 ### withGasketDataProvider
@@ -174,7 +173,6 @@ Use this hook to access the gasketData provided by the `withGasketDataProvider` 
 
 #### Example
 
-
 ```jsx
 // MyComponent.js
 import { useGasketData } from '@gasket/nextjs';
@@ -202,7 +200,6 @@ The `useGasketData` will provided access to the gasket data within the context o
 
 > Please see @gasket/data docs for examples on adding data during SSR lifecycle
 
-
 ## License
 
 [MIT](./LICENSE.md)
@@ -214,4 +211,5 @@ The `useGasketData` will provided access to the gasket data within the context o
 
 [custom Document]: https://nextjs.org/docs/advanced-features/custom-document
 [dynamic functions]: https://nextjs.org/docs/app/building-your-application/rendering/server-components#dynamic-functions
+
 ```

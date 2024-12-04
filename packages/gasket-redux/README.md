@@ -34,7 +34,6 @@ Set up Redux store configuration and return a `makeStore` function
 - `optionsFn` - (function) function that returns the options object.
 - `postCreate` - (function) Executed after the store is create the resulting
   store as the argument
-- 
 
 **Return Value**
 
@@ -102,7 +101,6 @@ const initialState = { custom: 'example' };
 
 export default configureMakeStore({ initialState, reducers });
 ```
-
 
 #### Example: adding middleware in a custom path (redux-saga)
 
