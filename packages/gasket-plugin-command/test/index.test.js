@@ -47,8 +47,12 @@ describe('@gasket/plugin-command', () => {
     expect(result).toEqual(
       expect.objectContaining({
         existing: 'value',
-        actions: expect.arrayContaining([
-          { name: 'build', description: 'Gasket build command' }
+        commands: expect.arrayContaining([
+          {
+            name: 'build',
+            description: 'Gasket build command',
+            link: 'README.md#build'
+          }
         ]),
         lifecycles: expect.arrayContaining([
           {
@@ -57,6 +61,13 @@ describe('@gasket/plugin-command', () => {
             description: 'Add custom commands to the CLI',
             link: 'README.md#commands',
             parent: 'ready'
+          },
+          {
+            name: 'build',
+            method: 'exec',
+            description: 'Gasket build lifecycle',
+            link: 'README.md#build',
+            parent: 'commands'
           }
         ])
       })
