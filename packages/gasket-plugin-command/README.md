@@ -29,15 +29,13 @@ export default makeGasket({
 
 ## Lifecycles
 
-### `commands`
+### commands
 
 The `commands` lifecycle is executed during the `configure` hook if the `gasket`
 CLI command is present in the `argv`. You can define commands that include
 arguments, options, and custom parsing logic.
 
-#### Examples
-
-##### **Basic Command**
+#### Examples Basic Command
 
 Define a command with a description and an action:
 
@@ -67,7 +65,7 @@ node ./gasket.js example-cmd
 
 ---
 
-##### **Command with Arguments**
+#### Example Command with Arguments
 
 Add arguments to your command using the `args` array:
 
@@ -102,9 +100,7 @@ node ./gasket.js example-cmd "Hello, World!"
 # Output: Message: Hello, World!
 ```
 
-##### **Command with Options**
-
-Add options to your command using the `options` array:
+#### Example Command with Options
 
 ```js
 export default {
@@ -139,7 +135,7 @@ node ./gasket.js example-cmd --message "Hello, World!"
 # Output: Message: Hello, World!
 ```
 
-##### **Command with Parsing**
+#### Example Command with Parsing
 
 Use a custom `parse` function to transform option values:
 
@@ -176,31 +172,21 @@ node ./gasket.js example-cmd --list "apple,banana,orange"
 # Output: Parsed List: [ 'apple', 'banana', 'orange' ]
 ```
 
-### `build`
+### build
 
-The `build` lifecycle is used to manage build-related tasks for your Gasket
-application. It provides a way to hook into the build process and define custom
-build logic. This lifecycle is triggered by the `build` command in the Gasket
-CLI.
+The `build` lifecycle allows plugins to hook into the application's build
+process. This lifecycle is triggered by the `build` command in the Gasket CLI.
 
 #### Example
 
-Define a plugin that uses the `build` lifecycle:
+Define a plugin that hooks into the `build` lifecycle:
 
 ```js
 export default {
   name: 'example-plugin',
   hooks: {
-    commands(gasket) {
-      return {
-        id: 'build',
-        description: 'Custom build logic for the example plugin',
-        action: async () => {
-          console.log('Executing custom build task...');
-          await gasket.exec('build');
-          console.log('Build complete!');
-        }
-      };
+    async build(gasket) {
+      console.log('Running custom build logic...');
     }
   }
 };
@@ -210,9 +196,8 @@ Run the `build` command:
 
 ```bash
 node ./gasket.js build
-# Output: 
-# Executing custom build task...
-# Build complete!
+# Output:
+# Running custom build logic...
 ```
 
 ## **TypeScript Support**
