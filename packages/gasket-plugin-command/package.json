@@ -50,6 +50,7 @@
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
     "eslint-config-godaddy": "^7.1.1",
+    "eslint-config-godaddy-typescript": "^4.0.3",
     "eslint-plugin-jest": "^28.6.0",
     "eslint-plugin-jsdoc": "^48.2.3",
     "eslint-plugin-unicorn": "^55.0.0",
@@ -71,6 +72,16 @@
     },
     "ignorePatterns": [
       "cjs/"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "*.ts"
+        ],
+        "extends": [
+          "godaddy-typescript"
+        ]
+      }
     ]
   }
 }

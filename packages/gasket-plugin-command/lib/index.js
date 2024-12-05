@@ -1,3 +1,5 @@
+/// <reference types="@gasket/plugin-metadata" />
+
 import create from './create.js';
 import ready from './ready.js';
 import commands from './commands.js';

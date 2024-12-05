@@ -1,6 +1,6 @@
-import type { MaybeAsync, GasketConfig, Hook } from '@gasket/core';
-import type { PluginData } from '@gasket/plugin-metadata';
+import type { Hook } from '@gasket/core';
 import type { Command, Option } from 'commander';
+import type { GasketCommandDefinition } from './index.d.ts';
 
 /* Processed Option */
 interface GasketCommandOption {
@@ -42,31 +42,7 @@ type GasketCommandArg = Parameters<Command['argument']>;
 
 export function processArgs(args: GasketArgDefinition[]): GasketCommandArg[];
 
-interface GasketCommandDefinition {
-  /* Command id/name */
-  id: string;
-
-  /* Command description */
-  description: string;
-
-  /* Command arguments */
-  args?: Array<GasketArgDefinition>;
-
-  /* Command options */
-  options?: Array<GasketOptionDefinition>;
-
-  /* Command action handler */
-  action: (...args: any[]) => MaybeAsync<void>;
-
-  /* Hide from help output */
-  hidden?: boolean;
-
-  /* Default command to run if no command is provided */
-  default?: boolean;
-}
-
 export function isValidCommand(command: GasketCommandDefinition): boolean;
-// ---
 
 interface GasketCommand {
   command: Command;
