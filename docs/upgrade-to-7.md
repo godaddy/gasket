@@ -192,6 +192,17 @@ latest version of Next.js.
 You can reference the [Next.js 14] and [Next.js 13] Upgrade Guides as needed for
 more details.
 
+In order for Next.js configurations from plugins or `nextConfig` in the 
+`gasket.js` file to be picked up, you will need to create a `next.config.js`
+file in the root of your project and export the results of the 
+`getNextConfig` GasketAction.
+
+```js
+// next.config.js
+import gasket from './gasket.js';
+export default gasket.actions.getNextConfig();
+````
+
 ## Switch to GasketActions
 
 Using the `req` and `res` objects for adding attachments and accessing data has
