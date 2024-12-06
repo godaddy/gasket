@@ -127,6 +127,7 @@ const scriptsOrder = [
   'typecheck:watch',
   'build',
   'build:watch',
+  'postbuild',
   'prepack',
   'postpack',
   'prepublish',

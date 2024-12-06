@@ -29,6 +29,19 @@ async function objectFromCookieStore(cookieStore) {
 }
 
 /**
+ * @type {import('./index.js').objectFromSearchParams}
+ */
+function objectFromSearchParams(searchParams) {
+  const entries = Object.fromEntries(searchParams);
+  const keys = Object.keys(entries);
+  return keys.reduce((acc, key) => {
+    const value = searchParams.getAll(key);
+    acc[key] = value.length === 1 ? value[0] : value;
+    return acc;
+  }, {});
+}
+
+/**
  * @type {import('./index.js').makeGasketRequest}
  */
 export async function makeGasketRequest(requestLike) {
@@ -66,9 +79,9 @@ export async function makeGasketRequest(requestLike) {
       path ??= '';
 
       return new GasketRequest(Object.seal({
-        headers: headers.constructor.prototype.entries ? Object.fromEntries(headers.entries()) : headers,
-        cookies: cookies.constructor.prototype.getAll ? await objectFromCookieStore(cookies) : cookies,
-        query: query instanceof URLSearchParams ? Object.fromEntries(query) : query,
+        headers: 'entries' in headers ? Object.fromEntries(headers.entries()) : headers,
+        cookies: 'getAll' in cookies ? await objectFromCookieStore(cookies) : cookies,
+        query: query instanceof URLSearchParams ? objectFromSearchParams(query) : query,
         path
       }));
     };

@@ -16,6 +16,13 @@ export type RequestLike = {
 async function objectFromCookieStore(cookieStore: CookieStore): Promise<Record<string, string>>;
 
 /**
+ * Capture the search params as a key/value object
+ * Necessary to capture array values
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams
+ */
+async function objectFromSearchParams(searchParams: URLSearchParams): Record<string, string>;
+
+/**
  * Expected request shape for GasketActions
  */
 export class GasketRequest {
@@ -44,8 +51,8 @@ export class WeakPromiseKeeper<Key extends WeakKey = WeakKey, Value = any> {
  */
 export async function makeGasketRequest(req: RequestLike): Promise<GasketRequest>;
 
-type RequestActionFn<Result, Args extends Array<unknown>> = (gasket: Gasket, req: RequestLike, ...args: Args) => Promise<Result>;
-type RequestActionWrapperFn<Result, Args extends Array<unknown>> = (gasket: Gasket, req: GasketRequest, ...args: Args) => Promise<Result>;
+type RequestActionFn<Result, Args extends Array<unknown>> = (gasket: Gasket, req: GasketRequest, ...args: Args) => Promise<Result>;
+type RequestActionWrapperFn<Result, Args extends Array<unknown>> = (gasket: Gasket, req: RequestLike, ...args: Args) => Promise<Result>;
 
 export function withGasketRequest<Result, Args extends Array<unknown>>(actionFn: RequestActionFn<Result, Args>): RequestActionWrapperFn<Result, Args>;
 export function withGasketRequestCache<Result, Args extends Array<unknown>>(actionFn: RequestActionFn<Result, Args>): RequestActionWrapperFn<Result, Args>;

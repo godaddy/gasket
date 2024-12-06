@@ -1,4 +1,4 @@
-import { request } from '../server';
+import { request } from '../request';
 import { injectGasketData } from '../inject-gasket-data.js'
 import NextScript from 'next/script';
 
@@ -29,7 +29,7 @@ function lookupIndex(bodyChildren, index = -1) {
 export function withGasketData(gasket, options = { index: -1 }) {
   const { index } = options;
   return layout => async props => {
-    const req = request();
+    const req = await request();
     const gasketData = req ? await gasket.actions.getPublicGasketData?.(req) ?? {} : {};
     const html = await layout({ ...props });
     return injectGasketData(html, gasketData, lookupIndex, index);
