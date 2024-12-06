@@ -11,4 +11,4 @@ const plugin: Plugin = {
   hooks: {}
 };
 
-export = plugin;
+export default plugin;

@@ -200,7 +200,7 @@ node ./gasket.js build
 # Running custom build logic...
 ```
 
-## **TypeScript Support**
+#### Example with JSDoc Types
 
 For type safety, use the `CommandsHook` type:
 
