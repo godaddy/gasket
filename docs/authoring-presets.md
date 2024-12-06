@@ -186,5 +186,5 @@ You can also add configuration to the `context` object through the command line 
 npx create-gasket-app <app-name> --presets <@your/gasket-preset-example> --config "{\"my\": \"value\"}"
 ```
 
-[recommended naming conventions]: /docs/plugins.md#recommended-naming-convention
-[plugin]: /docs/plugins.md
+[recommended naming conventions]: /docs/authoring-plugins.md#recommended-naming-convention
+[plugin]: /docs/authoring-plugins.md

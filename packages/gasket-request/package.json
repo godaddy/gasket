@@ -28,10 +28,10 @@
     "typecheck:watch": "tsc --watch",
     "build": "swc lib -d cjs --delete-dir-on-start --strip-leading-paths --out-file-extension cjs",
     "build:watch": "npm run build -- --watch",
-    "postbuild:replace": "replace '.js' '.cjs' cjs/*",
-    "postbuild:package": "node -e \"require('fs').writeFileSync('cjs/package.json', '{}')\"",
+    "prepublishOnly": "npm run build",
     "postbuild": "npm run postbuild:package && npm run postbuild:replace",
-    "prepublishOnly": "npm run build"
+    "postbuild:package": "node -e \"require('fs').writeFileSync('cjs/package.json', '{}')\"",
+    "postbuild:replace": "replace '.js' '.cjs' cjs/*"
   },
   "repository": {
     "type": "git",

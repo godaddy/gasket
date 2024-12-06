@@ -1,24 +1,22 @@
 /**
  * isValidArg - Validates the argument configuration
- * @param {import('../index.d.ts').GasketArgDefinition} arg The argument configuration
- * @returns {boolean} True if valid, false otherwise
+ * @type {import('../internal.d.ts').isValidArg}
  */
 function isValidArg(arg) {
   const keys = Object.keys(arg);
   if (arg.required && arg.default) return false;
-  const isValid = keys.length &&
-    keys.length <= 4 &&
-    arg.name && arg.description;
+  const isValid =
+    keys.length && keys.length <= 4 && arg.name && arg.description;
   return Boolean(isValid);
 }
 
 /**
- * processArgs - Process the arguments configuration
- * @param {import('../index.d.ts').GasketArgDefinition[]} args Array of argument configurations
- * @returns {import('../index.d.ts').GasketCommandArg[]} Array of argument definitions
+ * Process the arguments configuration
+ * @type {import('../internal.d.ts').processArgs}
  */
 export function processArgs(args) {
-  if (!Array.isArray(args) || !args.every(isValidArg)) throw new Error('Invalid argument(s) configuration');
+  if (!Array.isArray(args) || !args.every(isValidArg))
+    throw new Error('Invalid argument(s) configuration');
 
   return args.reduce((acc, arg) => {
     const def = [];

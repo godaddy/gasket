@@ -152,6 +152,11 @@ module.exports = {
       },
       mermaid: {
         theme: { light: 'neutral', dark: 'dark' },
+      },
+      algolia: {
+        appId: 'OB26TYFNYK',
+        apiKey: '6ac9413965486a885b0d332087335ead',
+        indexName: 'gasket'
       }
     }),
 };

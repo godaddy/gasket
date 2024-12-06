@@ -54,7 +54,7 @@ There are two ways to add data to the Gasket Data object:
 We have created the `public` property in the `app.config.js` file to allow the
 client to access app config properties.
 
-The [@gasket/plugin-config] plugin will return these `public` config properties
+The @gasket/plugin-config plugin will return these `public` config properties
 to the browser. The [@gasket/data] package will then access the properties and
 make them available on `.config`.
 
@@ -373,7 +373,7 @@ to avoid unnecessarily committing those files to the git repo.
 ### Lifecycle name
 
 If you have a custom lifecycle hook to determine the locale, either in a plugin
-or [lifecycle file], then you will need to update the name and the signature.
+or lifecycle file, then you will need to update the name and the signature.
 
 ```diff
 // gasket-plugin-example.js
@@ -660,17 +660,14 @@ _Impacted Plugins/Packages: `@gasket/resolve`, `@gasket/engine`_
 
 <!-- LINKS -->
 
-[intl]: #intl
-[app config]: #public-config-property
 [next.js routing documentation]: https://nextjs.org/docs/routing/introduction
 [webpack website]: https://webpack.js.org/configuration/node/
 [gasket data script tag]: /packages/gasket-data/README.md#usage
 [new utility HOC]: #inject-gasket-data
-[@gasket/plugin-config]: /packages/gasket-plugin-response-data/README.md
 [@gasket/data]: /packages/gasket-data/README.md
 [@gasket/plugin-workbox]: /packages/gasket-data/README.md
 [@gasket/plugin-service-worker]: /packages/gasket-data/README.md
-[naming convention]: /packages/gasket-resolve/README.md#plugins
+[naming convention]: /docs/authoring-plugins.md#recommended-naming-convention
 
 <!-- LINKS -->
 
@@ -684,7 +681,6 @@ _Impacted Plugins/Packages: `@gasket/resolve`, `@gasket/engine`_
 [select locale message example]: /packages/gasket-plugin-intl/README.md#selectlocalemessage
 [@gasket/react-intl]: /packages/gasket-react-intl/README.md
 [@gasket/plugin-nextjs]: /packages/gasket-plugin-nextjs/README.md
-[lifecycle file]: /packages/gasket-plugin-lifecycle/README.md#usage
 [@gasket/plugin-redux]: /packages/gasket-plugin-redux/README.md
 [Redux configuration]: /packages/gasket-plugin-redux/README.md#configuration
 [@gasket/plugin-webpack]: /packages/gasket-plugin-webpack/README.md
@@ -697,4 +693,3 @@ _Impacted Plugins/Packages: `@gasket/resolve`, `@gasket/engine`_
 [resolve.fallback]: https://webpack.js.org/configuration/resolve/#resolvefallback
 [Webpack 5 docs]: https://webpack.js.org/configuration/node/
 [@godaddy/eslint-plugin-react-intl]: https://github.com/godaddy/eslint-plugin-react-intl
-
