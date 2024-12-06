@@ -115,7 +115,5 @@ the app. These can be set up to edge cache by setting the `basePath` option.
 [composeServiceWorker]:/packages/gasket-plugin-service-worker/README.md#composeserviceworker
 [@gasket/plugin-service-worker]:/packages/gasket-plugin-service-worker/README.md
 [Workbox]:https://github.com/GoogleChrome/workbox
-[Workbox precaching]:https://developers.google.com/web/tools/workbox/modules/workbox-precaching
-[background sync]:https://developers.google.com/web/updates/2015/12/background-sync
 [workbox-build]:https://developers.google.com/web/tools/workbox/modules/workbox-build
 [generateSWString]:https://developers.google.com/web/tools/workbox/modules/workbox-build#generateswstring_mode

@@ -1,9 +1,8 @@
 import { Option } from 'commander';
 
 /**
- * createOption - Create a commander option
- * @param {import('../index.d.ts').GasketCommandOption} definition - The option configuration
- * @returns {import('commander').Option} option
+ * Create a commander option
+ * @type {import('../internal.d.ts').createOption}
  */
 export function createOption(definition) {
   const option = new Option(...definition.options);

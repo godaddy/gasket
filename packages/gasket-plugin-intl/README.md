@@ -234,6 +234,7 @@ entry.
 This action invokes the `intlLocale` lifecycle hook to determine the user's locale.
 
 parameters:
+
 - `req` - (object) Request object
 
 ```js
@@ -385,15 +386,8 @@ Once enabled, look for messages under the namespace `gasket:plugin:intl` and `ga
 [locales map]:#locales-map
 [locales manifest]:#locales-manifest
 [module locales]:#module-files
-[Gasket data]:#gasket-data
-[intlLocale lifecycle]:#intllocale
 [Next.js Routing]:#nextjs-routing
 
 [@gasket/intl]: /packages/gasket-intl/README.md
-[@gasket/react-intl]: /packages/gasket-react-intl/README.md
 [@gasket/plugin-nextjs]: /packages/gasket-plugin-nextjs/README.md
-[GasketData script tag]: /packages/gasket-data/README.md
 [Next.js Internationalized Routing]: https://nextjs.org/docs/advanced-features/i18n-routing
-
-[global window object]:https://developer.mozilla.org/en-US/docs/Glossary/Global_object
-

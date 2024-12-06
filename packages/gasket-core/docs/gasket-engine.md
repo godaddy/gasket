@@ -121,11 +121,7 @@ and register their hooks.
 
 The Gasket Engine uses the [`debug`](https://www.npmjs.com/package/debug) package to trace the plugin lifecycle. If you set the `DEBUG` environment variable to `gasket:engine` you'll see additional output in `stderr` indicating when things are invoked.
 
-## License
-
-[MIT](./LICENSE.md)
-
 <!-- LINKS -->
 
-[preset guide]: /docs/presets.md
-[plugin guide]: /docs/plugins.md
+[preset guide]: /docs/authoring-presets.md
+[plugin guide]: /docs/authoring-plugins.md

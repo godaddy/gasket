@@ -15,8 +15,7 @@
       "@types/node"
     ]
   },
-  "exclude": [
-    "test",
-    "coverage"
+  "include": [
+    "lib"
   ]
 }

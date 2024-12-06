@@ -1,4 +1,4 @@
-import { createOption } from '../../lib/utils/index.js';
+import { createOption } from '../../lib/utils/create-option.js';
 
 describe('createOption', () => {
 

@@ -4,6 +4,7 @@
     "checkJs": true,
     "noEmit": true,
     "skipLibCheck": true,
+    "noImplicitAny": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "module": "nodenext",
@@ -16,9 +17,7 @@
       "@types/node"
     ]
   },
-  "exclude": [
-    "test",
-    "coverage",
-    "cjs"
+  "include": [
+    "lib"
   ]
 }
