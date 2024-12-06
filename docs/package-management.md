@@ -69,4 +69,4 @@ dependency definitions.
 
 [npm install]: https://docs.npmjs.com/cli/install
 [yarn install]: https://yarnpkg.com/en/docs/cli/add#toc-yarn-add-dev-d
-[one-off plugin]: plugins.md#one-off-plugins
+[one-off plugin]: authoring-plugins.md#one-off-plugins

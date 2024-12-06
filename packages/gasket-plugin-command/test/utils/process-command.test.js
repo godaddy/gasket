@@ -1,24 +1,29 @@
 import { jest } from '@jest/globals';
 import { Command } from 'commander';
-import { processCommand } from '../../lib/utils/index.js';
+import { processCommand } from '../../lib/utils/process-command.js';
 
 describe('process-command', () => {
-
   describe('isValidCommand', () => {
     it('throws error for undefined command', () => {
       expect(() => processCommand({})).toThrow('Invalid command configuration');
     });
 
     it('throws error on missing id', () => {
-      expect(() => processCommand({ description: 'test', action: () => { } })).toThrow('Invalid command configuration');
+      expect(() =>
+        processCommand({ description: 'test', action: () => {} })
+      ).toThrow('Invalid command configuration');
     });
 
     it('throws error on missing description', () => {
-      expect(() => processCommand({ id: 'test', action: () => { } })).toThrow('Invalid command configuration');
+      expect(() => processCommand({ id: 'test', action: () => {} })).toThrow(
+        'Invalid command configuration'
+      );
     });
 
     it('throws error on missing action', () => {
-      expect(() => processCommand({ id: 'test', description: 'test' })).toThrow('Invalid command configuration');
+      expect(() => processCommand({ id: 'test', description: 'test' })).toThrow(
+        'Invalid command configuration'
+      );
     });
   });
 
@@ -26,7 +31,7 @@ describe('process-command', () => {
     const cmd = {
       id: 'test1',
       description: 'test command',
-      action: () => { },
+      action: () => {},
       args: [{ name: 'arg', description: 'arg description' }],
       options: [{ name: 'option', description: 'option description' }]
     };
@@ -43,7 +48,7 @@ describe('process-command', () => {
       id: 'test2',
       description: 'test command',
       options: [{ name: 'option', description: 'option description' }],
-      action: () => { }
+      action: () => {}
     };
     const { command } = processCommand(cmd);
     expect(command).toBeDefined();
@@ -58,7 +63,7 @@ describe('process-command', () => {
       id: 'test3',
       description: 'test command',
       args: [{ name: 'arg', description: 'arg description' }],
-      action: () => { }
+      action: () => {}
     };
     const { command } = processCommand(cmd);
     expect(command).toBeDefined();
@@ -72,7 +77,7 @@ describe('process-command', () => {
     const cmd = {
       id: 'test4',
       description: 'test command',
-      action: () => { }
+      action: () => {}
     };
     const { command } = processCommand(cmd);
     expect(command).toBeDefined();
@@ -89,29 +94,33 @@ describe('process-command', () => {
       program.name('process-command-test');
       program.exitOverride();
       program.configureOutput({
-        writeErr: () => { },
-        writeOut: (str) => { output = str; }
+        writeErr: () => {},
+        writeOut: (str) => {
+          output = str;
+        }
       });
       return program;
     })();
     const hiddenCmd = {
       id: 'hidden-cmd',
       description: 'test command',
-      action: () => { },
+      action: () => {},
       hidden: true
     };
 
     const visibleCmd = {
       id: 'visible-cmd',
       description: 'test command',
-      action: () => { }
+      action: () => {}
     };
 
     const hiddenProcessed = processCommand(hiddenCmd);
     const visibleProcessed = processCommand(visibleCmd);
 
     bin.addCommand(hiddenProcessed.command, { hidden: hiddenProcessed.hidden });
-    bin.addCommand(visibleProcessed.command, { hidden: visibleProcessed.hidden });
+    bin.addCommand(visibleProcessed.command, {
+      hidden: visibleProcessed.hidden
+    });
 
     try {
       await bin.parseAsync(['node', 'process-command-test', '--help']);
@@ -133,26 +142,34 @@ describe('process-command', () => {
       return program;
     })();
 
-    const spy = jest.spyOn(console, 'log').mockImplementation(() => { });
+    const spy = jest.spyOn(console, 'log').mockImplementation(() => {});
     const defaultCmd = {
       id: 'default-cmd',
       description: 'test command',
       // eslint-disable-next-line no-console
-      action: () => { console.log('default-cmd output greatness'); },
+      action: () => {
+        console.log('default-cmd output greatness');
+      },
       default: true
     };
 
     const nonDefaultCmd = {
       id: 'non-default-cmd',
       description: 'test command',
-      action: () => { }
+      action: () => {}
     };
 
     const defaultProcessed = processCommand(defaultCmd);
     const nonDefaultProcessed = processCommand(nonDefaultCmd);
 
-    bin.addCommand(defaultProcessed.command, { hidden: defaultProcessed.hidden, isDefault: defaultProcessed.isDefault });
-    bin.addCommand(nonDefaultProcessed.command, { hidden: nonDefaultProcessed.hidden, isDefault: nonDefaultProcessed.isDefault });
+    bin.addCommand(defaultProcessed.command, {
+      hidden: defaultProcessed.hidden,
+      isDefault: defaultProcessed.isDefault
+    });
+    bin.addCommand(nonDefaultProcessed.command, {
+      hidden: nonDefaultProcessed.hidden,
+      isDefault: nonDefaultProcessed.isDefault
+    });
 
     try {
       await bin.parseAsync(['node', 'process-command-test']);

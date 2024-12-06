@@ -27,4 +27,3 @@ manipulate, and traverse your React Components.
 ## License
 
 [MIT](./LICENSE.md)
-

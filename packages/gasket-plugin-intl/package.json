@@ -42,7 +42,7 @@
     "fs-extra": "^10.0.0",
     "glob": "^8.1.0",
     "intl": "^1.2.5",
-    "semver": "^7.5.4"
+    "semver": "^7.6.3"
   },
   "devDependencies": {
     "@gasket/core": "^7.0.9",
