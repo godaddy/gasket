@@ -22,32 +22,20 @@ export default makeGasket({
 });
 ```
 
-## Adding a Sitemap
-
-When creating a new application with this plugin, you will be prompted with a question in the CLI asking if you would like to add a [sitemap] to your application.
-
-Answering yes to this question will install `next-sitemap` as a dependency, generate a next-sitemap.config.js file, and add a `sitemap` npm script to your package.json. `next-sitemap` is an npm package that generates sitemaps and a robots.txt file for Next.js applications. Learn more by reading the [next-sitemap docs].
-
 ## Configuration
-
-- Instead of adding a dedicated `next.config.js`, the `nextConfig` property
-  within `gasket.js` is used. Everything you can configure in the
-  [next.config] can be added here.
 
 It is also possible for apps to config Next.js using the `gasket.js`
 file. To do so, specify a `nextConfig` object property in the same form as what
 you would set for [custom configurations][next.config] or using Next.js plugins.
 
-For general Webpack configurations, it is recommend to utilize features of the
-Gasket [webpack plugin].
-
-#### Example configuration
+#### Example Gasket configuration
 
 ```js
+// gasket.js
 export default makeGasket({
   plugins: [
     pluginNextjs
-  ]
+  ],
   nextConfig: {
     poweredByHeader: false,
     useFileSystemPublicRoutes: false
@@ -55,23 +43,18 @@ export default makeGasket({
 });
 ```
 
-#### Example with plugins
+In order for Next.js to pick up the configurations, you will need to create a
+`next.config.js` file in the root of your project and export the results of the
+[getNextConfig] action.
 
 ```js
-import withSass from '@zeit/next-sass';
-import withCss from '@zeit/next-css';
-
-export default makeGasket({
-  plugins: [
-    pluginNextjs
-  ]
-  nextConfig: withCss(
-    withSass({
-      /* config options here */
-    })
-  )
-});
+// next.config.js
+import gasket from './gasket.js';
+export default gasket.actions.getNextConfig();
 ```
+
+For general Webpack configurations, it is recommended to use features of the
+Gasket [Webpack plugin], which will be merged into the Next.js configuration.
 
 ### Internationalized Routing
 
@@ -114,6 +97,16 @@ export default makeGasket({
 Also note when using [@gasket/plugin-intl] to determine the locale, that the
 `NEXT_LOCALE` cookie will have no effect. You can, of course, hook the [intlLocale]
 lifecycle in an app to enable that behavior if desired.
+
+## Adding a Sitemap
+
+When creating a new application with this plugin, you will be prompted with a
+question in the CLI asking if you would like to add a [sitemap] to your application.
+
+Answering yes to this question will install `next-sitemap` as a dependency,
+generate a next-sitemap.config.js file, and add a `sitemap` npm script to your
+package.json. `next-sitemap` is an npm package that generates sitemaps and a
+robots.txt file for Next.js applications. Learn more by reading the [next-sitemap docs].
 
 ## Actions
 
@@ -281,6 +274,7 @@ export default {
 <!--[next.config]-->
 
 [nextconfig lifecycle]: #nextconfig
+[getNextConfig]: #getnextconfig
 [@gasket/plugin-intl]: /packages/gasket-plugin-intl/README.md
 [intllocale]: /packages/gasket-plugin-intl/README.md#intllocale
 [webpack plugin]: /packages/gasket-plugin-webpack/README.md
