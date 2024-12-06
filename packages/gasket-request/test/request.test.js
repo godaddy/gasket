@@ -80,6 +80,22 @@ describe('makeGasketRequest', () => {
     expect(result.query).toEqual({ query1: 'value1', query2: 'value2' });
   });
 
+  it('handles URLSearchParams array values', async () => {
+    const headers = new Map([['header1', 'value1'], ['header2', 'value2']]);
+    const query = new URLSearchParams({ query1: 'value1', query2: 'value2' });
+    query.append('query3', 'value3');
+    query.append('query3', 'value4');
+    const requestLike = { headers, cookies: {}, query };
+
+    const result = await makeGasketRequest(requestLike);
+
+    expect(result.query).toEqual({
+      query1: 'value1',
+      query2: 'value2',
+      query3: ['value3', 'value4']
+    });
+  });
+
   it('handles no query', async () => {
     const headers = new Map([['header1', 'value1'], ['header2', 'value2']]);
     const requestLike = { headers, cookies: {} };

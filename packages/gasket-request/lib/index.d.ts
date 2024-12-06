@@ -16,6 +16,13 @@ export type RequestLike = {
 async function objectFromCookieStore(cookieStore: CookieStore): Promise<Record<string, string>>;
 
 /**
+ * Capture the search params as a key/value object
+ * Necessary to capture array values
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams
+ */
+async function objectFromSearchParams(searchParams: URLSearchParams): Record<string, string>;
+
+/**
  * Expected request shape for GasketActions
  */
 export class GasketRequest {
