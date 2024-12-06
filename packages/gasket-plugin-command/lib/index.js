@@ -1,3 +1,5 @@
+/// <reference types="@gasket/plugin-metadata" />
+
 import create from './create.js';
 import ready from './ready.js';
 import commands from './commands.js';
@@ -17,13 +19,27 @@ export default {
     metadata(gasket, meta) {
       return {
         ...meta,
+        commands: [
+          {
+            name: 'build',
+            description: 'Gasket build command',
+            link: 'README.md#build'
+          }
+        ],
         lifecycles: [
           {
             name: 'commands',
-            method: 'execSync',
+            method: 'exec',
             description: 'Add custom commands to the CLI',
             link: 'README.md#commands',
             parent: 'ready'
+          },
+          {
+            name: 'build',
+            method: 'exec',
+            description: 'Gasket build lifecycle',
+            link: 'README.md#build',
+            parent: 'commands'
           }
         ]
       };

@@ -10,7 +10,6 @@ npm i @gasket/intl @gasket/plugin-intl
 
 See [@gasket/plugin-intl] for more information on how to configure the plugin.
 
-
 ## Usage
 
 With a `intl.js` built by [@gasket/plugin-intl], you can use the manager to
@@ -40,9 +39,7 @@ await localeHandler.load('locales/examples')
 localeHandler.getAllMessages();
 ```
 
-
 ### _TODO: more examples coming_
-
 
 ## License
 
@@ -50,6 +47,4 @@ localeHandler.getAllMessages();
 
 <!-- LINKS -->
 
-
 [@gasket/plugin-intl]: /packages/gasket-plugin-intl/README.md
-

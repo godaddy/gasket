@@ -1,5 +1,5 @@
 import { Command } from 'commander';
-import { logo } from './utils/index.js';
+import { logo } from './utils/logo.js';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 const { version } = require('../package.json');
@@ -12,4 +12,4 @@ export const gasketBin = program
   .version(version)
   .addHelpText('beforeAll', logo);
 
-export { processCommand } from './utils/index.js';
+export { processCommand } from './utils/process-command.js';

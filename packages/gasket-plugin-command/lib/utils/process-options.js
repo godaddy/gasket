@@ -1,24 +1,21 @@
 /**
- * isValidOption - Validate the option
- * @param {import('../index.d.ts').GasketOptionDefinition} option The option configuration
- * @returns {boolean} True if valid, false otherwise
+ * Validate the option
+ * @type {import('../internal.d.ts').isValidOption}
  */
 function isValidOption(option) {
   const keys = Object.keys(option);
-  const isValid = keys.length &&
-    keys.length <= 5 &&
-    option.name &&
-    option.description;
+  const isValid =
+    keys.length && keys.length <= 5 && option.name && option.description;
   return Boolean(isValid);
 }
 
 /**
- * processOptions - Process the options configuration
- * @param {import('../index.d.ts').GasketOptionDefinition[]} options Array of option configurations
- * @returns {import('../index.d.ts').GasketCommandOption[]} Processed option definitions
+ * Process the options configuration
+ * @type {import('../internal.d.ts').processOptions}
  */
 export function processOptions(options) {
-  if (!Array.isArray(options) || !options.every(isValidOption)) throw new Error('Invalid option(s) configuration');
+  if (!Array.isArray(options) || !options.every(isValidOption))
+    throw new Error('Invalid option(s) configuration');
 
   return options.reduce((acc, option) => {
     const def = [];
@@ -38,7 +35,14 @@ export function processOptions(options) {
     const flags = short ? `-${short}, --${name}` : `--${name}`;
 
     def.push(`${flags}${type !== 'boolean' ? ` ${format}` : ''}`, description);
-    acc.push({ options: def, conflicts, hidden, defaultValue, parse, required });
+    acc.push({
+      options: def,
+      conflicts,
+      hidden,
+      defaultValue,
+      parse,
+      required
+    });
 
     return acc;
   }, []);

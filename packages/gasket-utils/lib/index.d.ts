@@ -1,4 +1,5 @@
 import type { MaybeAsync } from '@gasket/core';
+import type { SpawnOpts } from 'node:child_process';
 
 export { applyConfigOverrides } from './config';
 
@@ -23,7 +24,6 @@ export class PackageManager {
   /**
    * Executes npm in the application directory `this.dest`. This installation
    * can be run multiple times.
-   *
    * @param cmd The command that needs to be executed.
    * @param args Additional CLI arguments to pass to `npm`.
    */
@@ -31,7 +31,6 @@ export class PackageManager {
 
   /**
    * Executes npm link in the application directory `this.dest`.
-   *
    * @param packages Explicit `npm` packages to link locally.
    */
   link(packages?: Array<string>): Promise<void>;
@@ -39,7 +38,6 @@ export class PackageManager {
   /**
    * Executes npm install in the application directory `this.dest`. This
    * installation can be run multiple times.
-   *
    * @param args Additional CLI arguments to pass to `npm`.
    * @public
    */
@@ -47,7 +45,6 @@ export class PackageManager {
 
   /**
    * Executes yarn or npm info, and returns parsed JSON data results.
-   *
    * @param args Additional CLI arguments to pass to `npm`.
    * @returns stdout and data
    * @public
@@ -74,7 +71,6 @@ export interface Signal {
  *  async function helloWorld() {
  *   await runShellCommand('echo', ['hello world']);
  * }
- *
  * @example
  * // With timeout using AbortController
  *
@@ -101,7 +97,7 @@ export function runShellCommand(
     /** Path to the target app (Default: cwd/appName) */
     cwd?: string;
   },
-  /** When present pipes std{out,err} to process.* */
+  /** When present pipes std{out,err} to process.*/
   debug?: boolean
 ): Promise<{ stdout: string }>;
 
@@ -177,8 +173,14 @@ declare module '@gasket/utils' {
     /** Additional CLI arguments to pass to `npm`. */
     args: string[]
   ): Promise<{ data: any; stdout: string }>;
+
+  export function warnIfOutdated(
+    pkgName: string,
+    currentVersion: string
+  ): MaybeAsync<void>;
 }
 
-export function warnIfOutdated(pkgName: string, currentVersion: string): MaybeAsync<void>;
-
-export function getPackageLatestVersion(pkgName: string, options?: object): Promise<string>;
+export function getPackageLatestVersion(
+  pkgName: string,
+  options?: object
+): Promise<string>;
