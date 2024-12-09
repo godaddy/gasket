@@ -1,7 +1,8 @@
 ```mermaid
 graph LR;
 middleware -- exec --> apmTransaction;
-ready -- execSync --> commands;
+commands -- exec --> build;
+ready -- exec --> commands;
 express -- execWaterfall --> composeServiceWorker;
 init -- execSync --> createLogger;
 start -- execWaterfall --> createServers;
@@ -14,6 +15,7 @@ createServers -- exec --> errorMiddleware;
 createServers -- exec --> express;
 createServers -- exec --> fastify;
 gasket/plugin-data -- execWaterfall --> gasketData;
+gasket/plugin-https-proxy -- execWaterfall --> httpsProxy;
 middleware -- execWaterfall --> initReduxState;
 middleware -- exec --> initReduxStore;
 build-cmd(build) --> initWebpack;

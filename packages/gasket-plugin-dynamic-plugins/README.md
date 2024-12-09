@@ -4,7 +4,7 @@ Gasket plugin for dynamically adding plugins to Gasket
 
 ## Installation
 
-```
+```bash
 npm i @gasket/plugin-dynamic-plugins
 ```
 
@@ -90,5 +90,5 @@ In the `prepare` hook, plugins specified in the `dynamicPlugins` configuration a
 
 [MIT](./LICENSE.md)
 
-[sub-environments]: ../../docs/configuration.md#environments
-[prepare]: ../gasket-core/README.md#prepare
+[sub-environments]: /docs/configuration.md#environments
+[prepare]: /packages/gasket-core/README.md#prepare

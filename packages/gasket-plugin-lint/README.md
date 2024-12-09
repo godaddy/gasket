@@ -19,6 +19,7 @@ the linting configuration.
 **Which code style do you want configured?**
 
 Choices are:
+
 - [GoDaddy]
 - [Standard]
 - [Airbnb]
@@ -117,7 +118,7 @@ export default async function presetPrompt(gasket, context, { prompt }) {
 };
 ```
 
-## Contribute!
+## Contribute
 
 If there is an important and widely used code style that you feel would be a
 good addition to the default choices of [Code Styles], reach out or submit a PR
@@ -133,7 +134,6 @@ with your suggestion.
 [GoDaddy]: #godaddy
 [Standard]: #standard
 [Airbnb]: #airbnb
-[Presets]: #presets
 
 [ESLint]: https://eslint.org/
 [stylelint]: https://stylelint.io/

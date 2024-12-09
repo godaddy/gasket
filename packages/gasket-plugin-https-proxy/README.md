@@ -2,7 +2,7 @@
 
 Create an HTTPS proxy server with Gasket to use as a sidecar for frameworks that
 do not handle HTTPS, such as Next.js. This can be useful for local development
-when you want to test HTTPS features and use secure cookies for 
+when you want to test HTTPS features and use secure cookies for
 authentication, etc.
 It can also be used in production if it is necessary for your application to
 handle HTTPS requests on the container.

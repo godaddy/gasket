@@ -81,7 +81,6 @@ Additional code style choices are prompted during the create command. Some
 predefined choices are provided from the [lint plugin], or you can specify your
 own config.
 
-
 ## Lifecycles
 
 Lifecycles for apps are enabled by plugins, however the CLI has some built-in
@@ -232,7 +231,6 @@ The hook is passed the following parameters:
 | `utils`           | Functions that aid in post create hooks                                                                |
 | `utils.runScript` | run an `npm` script at the root of the generated `npm` package                                         |
 
-
 ## License
 
 [MIT](./LICENSE.md)
@@ -245,7 +243,7 @@ The hook is passed the following parameters:
 [yarn env vars]:https://yarnpkg.com/en/docs/envvars#toc-npm-config
 [Jest plugin]:/packages/gasket-plugin-jest/README.md
 [Mocha plugin]:/packages/gasket-plugin-mocha/README.md
-[execWaterfall]:/packages/gasket-engine/README.md#execwaterfallevent-value-args
-[exec]:/packages/gasket-engine/README.md#execevent-args
+[execWaterfall]:/packages/gasket-core/docs/gasket-engine.md#execwaterfallevent-value-args
+[exec]:/packages/gasket-core/docs/gasket-engine.md#execevent-args
 [inquirer questions]:https://github.com/SBoudrias/Inquirer.js#question
 [lint plugin]:/packages/gasket-plugin-lint/README.md

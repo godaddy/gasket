@@ -1,22 +1,25 @@
 /* eslint-disable no-undefined */
 import { jest } from '@jest/globals';
 import { Command } from 'commander';
-import { processOptions, processCommand } from '../../lib/utils/index.js';
+import { processOptions } from '../../lib/utils/process-options.js';
+import { processCommand } from '../../lib/utils/process-command.js';
 
 describe('processOptions', () => {
-
   describe('isValidOption', () => {
-
     it('throws on invalid option', () => {
       const mockOptions = [
         { name: 'option1' },
         { description: 'description2' }
       ];
-      expect(() => processOptions(mockOptions)).toThrow('Invalid option(s) configuration');
+      expect(() => processOptions(mockOptions)).toThrow(
+        'Invalid option(s) configuration'
+      );
     });
 
     it('throws an error if options is not an array', () => {
-      expect(() => processOptions({})).toThrow('Invalid option(s) configuration');
+      expect(() => processOptions({})).toThrow(
+        'Invalid option(s) configuration'
+      );
     });
 
     it('throws an error if options is undefined', () => {
@@ -26,8 +29,18 @@ describe('processOptions', () => {
 
   it('returns an array of option definitions', () => {
     const mockOptions = [
-      { name: 'option1', description: 'description1', required: true, short: 'o' },
-      { name: 'option2', description: 'description2', required: false, short: 't' }
+      {
+        name: 'option1',
+        description: 'description1',
+        required: true,
+        short: 'o'
+      },
+      {
+        name: 'option2',
+        description: 'description2',
+        required: false,
+        short: 't'
+      }
     ];
     const result = processOptions(mockOptions);
     expect(result).toEqual([
@@ -52,8 +65,20 @@ describe('processOptions', () => {
 
   it('processes boolean options', () => {
     const mockOptions = [
-      { name: 'option1', description: 'description1', required: true, short: 'o', type: 'boolean' },
-      { name: 'option2', description: 'description2', required: false, short: 't', type: 'boolean' }
+      {
+        name: 'option1',
+        description: 'description1',
+        required: true,
+        short: 'o',
+        type: 'boolean'
+      },
+      {
+        name: 'option2',
+        description: 'description2',
+        required: false,
+        short: 't',
+        type: 'boolean'
+      }
     ];
     const result = processOptions(mockOptions);
     expect(result).toEqual([
@@ -78,8 +103,20 @@ describe('processOptions', () => {
 
   it('processes default values', () => {
     const mockOptions = [
-      { name: 'option1', description: 'description1', required: true, short: 'o', default: 'default1' },
-      { name: 'option2', description: 'description2', required: false, short: 't', default: 'default2' }
+      {
+        name: 'option1',
+        description: 'description1',
+        required: true,
+        short: 'o',
+        default: 'default1'
+      },
+      {
+        name: 'option2',
+        description: 'description2',
+        required: false,
+        short: 't',
+        default: 'default2'
+      }
     ];
     const result = processOptions(mockOptions);
     expect(result).toEqual([
@@ -104,8 +141,20 @@ describe('processOptions', () => {
 
   it('processes parse functions', () => {
     const mockOptions = [
-      { name: 'option1', description: 'description1', required: true, short: 'o', parse: () => { } },
-      { name: 'option2', description: 'description2', required: false, short: 't', parse: () => { } }
+      {
+        name: 'option1',
+        description: 'description1',
+        required: true,
+        short: 'o',
+        parse: () => {}
+      },
+      {
+        name: 'option2',
+        description: 'description2',
+        required: false,
+        short: 't',
+        parse: () => {}
+      }
     ];
     const result = processOptions(mockOptions);
     expect(result).toEqual([
@@ -130,8 +179,20 @@ describe('processOptions', () => {
 
   it('processes conflicts', () => {
     const mockOptions = [
-      { name: 'option1', description: 'description1', required: true, short: 'o', conflicts: ['option2'] },
-      { name: 'option2', description: 'description2', required: false, short: 't', conflicts: ['option1'] }
+      {
+        name: 'option1',
+        description: 'description1',
+        required: true,
+        short: 'o',
+        conflicts: ['option2']
+      },
+      {
+        name: 'option2',
+        description: 'description2',
+        required: false,
+        short: 't',
+        conflicts: ['option1']
+      }
     ];
     const result = processOptions(mockOptions);
     expect(result).toEqual([
@@ -156,8 +217,20 @@ describe('processOptions', () => {
 
   it('processes hidden options', () => {
     const mockOptions = [
-      { name: 'option1', description: 'description1', required: true, short: 'o', hidden: true },
-      { name: 'option2', description: 'description2', required: false, short: 't', hidden: true }
+      {
+        name: 'option1',
+        description: 'description1',
+        required: true,
+        short: 'o',
+        hidden: true
+      },
+      {
+        name: 'option2',
+        description: 'description2',
+        required: false,
+        short: 't',
+        hidden: true
+      }
     ];
     const result = processOptions(mockOptions);
     expect(result).toEqual([
@@ -193,13 +266,19 @@ describe('processOptions', () => {
       return program;
     })();
 
-    const writeSpy = jest.spyOn(process.stderr, 'write').mockImplementation((err) => err);
-    const exitSpy = jest.spyOn(process, 'exit').mockImplementation((err) => err);
+    const writeSpy = jest
+      .spyOn(process.stderr, 'write')
+      .mockImplementation((err) => err);
+    const exitSpy = jest
+      .spyOn(process, 'exit')
+      .mockImplementation((err) => err);
     const mockCmd = {
       id: 'test',
       description: 'test command',
-      options: [{ name: 'option1', description: 'description1', required: true }],
-      action: () => { }
+      options: [
+        { name: 'option1', description: 'description1', required: true }
+      ],
+      action: () => {}
     };
     const { command } = processCommand(mockCmd);
     bin.addCommand(command);
@@ -210,7 +289,9 @@ describe('processOptions', () => {
       // ignore
     }
 
-    expect(writeSpy).toHaveBeenCalledWith(expect.stringContaining('required option'));
+    expect(writeSpy).toHaveBeenCalledWith(
+      expect.stringContaining('required option')
+    );
     expect(exitSpy).toHaveBeenCalledWith(1);
   });
 });

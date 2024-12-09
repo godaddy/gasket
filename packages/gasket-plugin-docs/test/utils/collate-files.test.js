@@ -6,6 +6,7 @@ const mockWriteFileStub = jest.fn();
 const mockCopyFileStub = jest.fn();
 const mockMkdirpStub = jest.fn();
 const mockRimrafStub = jest.fn();
+const mockStatStub = jest.fn();
 
 const collateFiles = require('../../lib/utils/collate-files');
 
@@ -13,7 +14,8 @@ jest.mock('fs', () => ({
   promises: {
     readFile: mockReadFileStub,
     writeFile: mockWriteFileStub,
-    copyFile: mockCopyFileStub
+    copyFile: mockCopyFileStub,
+    stat: mockStatStub
   }
 }));
 jest.mock('mkdirp', () => mockMkdirpStub);
@@ -96,6 +98,16 @@ describe('Utils - collateFiles', () => {
 
   beforeEach(() => {
     mockDocConfig = mockDocsConfigSet.plugins[0];
+
+    mockStatStub.mockImplementation((filePath) => {
+      if (filePath.includes('directory')) {
+        return Promise.resolve({
+          isFile: () => false,
+          isDirectory: () => true
+        });
+      }
+      return Promise.resolve({ isFile: () => true, isDirectory: () => false });
+    });
   });
 
   it('makes output dir', async () => {
@@ -121,12 +133,23 @@ describe('Utils - collateFiles', () => {
   });
 
   describe('processModule', () => {
-
     it('makes target dirs', async () => {
       await processModule(mockDocConfig, mockDocsConfigSet);
       expect(mockMkdirpStub).toHaveBeenCalledWith(mockDocConfig.targetRoot);
       expect(mockMkdirpStub).toHaveBeenCalledWith(path.join(mockDocConfig.targetRoot, 'deep'));
       expect(mockMkdirpStub).toHaveBeenCalledWith(path.join(mockDocConfig.targetRoot, 'deep', 'er'));
+    });
+
+    it('skips directories in files', async () => {
+      await processModule(mockDocConfig, mockDocsConfigSet);
+      expect(mockCopyFileStub).not.toHaveBeenCalledWith(
+        expect.stringContaining('directory'),
+        expect.any(String)
+      );
+      expect(mockReadFileStub).not.toHaveBeenCalledWith(
+        expect.stringContaining('directory'),
+        'utf8'
+      );
     });
 
     it('copies files that do not need transformed', async () => {

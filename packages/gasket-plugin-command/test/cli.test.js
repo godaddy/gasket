@@ -1,10 +1,11 @@
-import { gasketBin, processCommand } from '../lib/cli.js';
 import { createRequire } from 'module';
+import { gasketBin } from '../lib/cli';
+import { processCommand } from '../lib/utils/process-command';
+
 const require = createRequire(import.meta.url);
 const { version } = require('../package.json');
 
 describe('cli', () => {
-
   it('should have a gasketBin property', () => {
     expect(gasketBin).toEqual(expect.any(Object));
   });
