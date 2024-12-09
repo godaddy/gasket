@@ -45,8 +45,7 @@ class WebpackMetricsPlugin {
       let name;
 
       try {
-        const packagePath = path.join(context, '/package.json');
-        const packageJSON = require(packagePath);
+        const packageJSON = require(`${context}/package.json`);
 
         name = packageJSON.name;
       } catch (e) {
