@@ -15,7 +15,7 @@ jest.unstable_mockModule('../lib/cli.js', () => {
   };
 });
 
-const ready = (await import('../lib/ready.js')).default;
+const ready = ((await import('../lib/ready.js')).default).handler;
 
 describe('ready', () => {
   let mockGasket;
