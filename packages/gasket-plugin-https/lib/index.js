@@ -72,6 +72,7 @@ function getRawServerConfig(gasket) {
  * @public
  */
 async function startServer(gasket) {
+  await gasket.isReady;
   const { terminus, env, devProxy } = gasket.config;
   const { logger } = gasket;
 

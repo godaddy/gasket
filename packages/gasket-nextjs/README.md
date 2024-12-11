@@ -81,7 +81,7 @@ the [@gasket/data] package.
 **Props**
 
 - `[options]` - (object) Optional configuration
-    - `index` - (number) Force the script to be inject at a certain child index of the body
+  - `index` - (number) Force the script to be inject at a certain child index of the body
 
 #### Example
 
@@ -141,7 +141,6 @@ In this example, the `gasketData` script will be injected after the custom
 This is especially useful if you are somehow nesting or extending the `<Main/>`
 and `<NextScript/>` components and the decorator cannot find the right place to inject the script.
 
-
 ---
 
 ### withGasketDataProvider
@@ -174,7 +173,6 @@ Use this hook to access the gasketData provided by the `withGasketDataProvider` 
 
 #### Example
 
-
 ```jsx
 // MyComponent.js
 import { useGasketData } from '@gasket/nextjs';
@@ -201,7 +199,6 @@ The `withGasketDataProvider` can be added to a Next.js custom _app or react comp
 The `useGasketData` will provided access to the gasket data within the context of the `withGasketDataProvider` so the data can be used within any react component.
 
 > Please see @gasket/data docs for examples on adding data during SSR lifecycle
-
 
 ## License
 

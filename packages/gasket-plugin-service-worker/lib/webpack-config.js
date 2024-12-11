@@ -7,14 +7,14 @@ const { getSWConfig } = require('./utils/utils');
  * @type {import('@gasket/core').HookHandler<'webpackConfig'>}
  */
 module.exports = function webpackConfigHook(gasket, webpackConfig, data) {
-  const { command } = gasket;
+  const { config: { command } } = gasket;
   const swConfig = getSWConfig(gasket);
 
   const { webpackRegister } = swConfig;
   const { isServer } = data;
 
   // Do not register the service worker for local development or if webpackRegister is false
-  if (webpackRegister !== false && !isServer && command.id !== 'local') {
+  if (webpackRegister !== false && !isServer && command !== 'local') {
     const WebpackInjectPlugin = require('webpack-inject-plugin').default;
     const { loadRegisterScript } = require('./utils/utils');
 
