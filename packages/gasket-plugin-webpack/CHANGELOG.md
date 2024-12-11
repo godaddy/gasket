@@ -1,5 +1,9 @@
 # `@gasket/plugin-webpack`
 
+### 7.0.15
+
+- Fix dynamic require warning ([#985])
+
 ### 7.0.7
 
 - Update to `getWebpackConfig` `WebpackContext` param ([#955])
@@ -80,3 +84,4 @@
 [#442]: https://github.com/godaddy/gasket/pull/442
 [#736]: https://github.com/godaddy/gasket/pull/736
 [#955]: https://github.com/godaddy/gasket/pull/955
+[#985]: https://github.com/godaddy/gasket/pull/985

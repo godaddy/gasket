@@ -1,5 +1,9 @@
 # `@gasket/plugin-command`
 
+### 7.0.15
+
+- Do not transpile to cjs ([#980])
+
 ### 7.0.0
 
 - See [Version 7 Upgrade Guide] for overall changes
@@ -96,3 +100,4 @@
 [#457]: https://github.com/godaddy/gasket/pull/457
 [#442]: https://github.com/godaddy/gasket/pull/442
 [#460]: https://github.com/godaddy/gasket/pull/460
+[#980]: https://github.com/godaddy/gasket/pull/980
