@@ -11,6 +11,7 @@ function applyConfigOverrides(
   config,
   { env = '', commandId }
 ) {
+  console.log('--------- applyConfigOverrides', { env, commandId });
   // @ts-ignore - merged config definitions
   return deepmerge.all(
   // @ts-ignore - partial config definitions
