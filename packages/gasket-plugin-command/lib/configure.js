@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars, no-sync */
 import { applyConfigOverrides } from '@gasket/utils';
 import { gasketBin, processCommand } from './cli.js';
-const isGasketCommand = /\/gasket\.(js|ts|cjs|mjs)$/;
+const isGasketCommand = /gasket[.-\w]*\.(js|ts|cjs|mjs)$/;
 
 export default {
   timing: {
