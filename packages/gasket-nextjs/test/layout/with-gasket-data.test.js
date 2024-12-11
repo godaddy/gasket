@@ -1,7 +1,7 @@
 import { jest, expect } from '@jest/globals';
 import { createElement, Children } from 'react';
 
-jest.unstable_mockModule('../../lib/server/request.js', () => ({
+jest.unstable_mockModule('../../lib/request/index.js', () => ({
   request: jest.fn().mockReturnValue({})
 }));
 

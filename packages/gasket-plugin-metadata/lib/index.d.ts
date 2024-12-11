@@ -128,9 +128,9 @@ declare module '@gasket/core' {
   }
 }
 
-const plugin: Plugin = {
+export default {
   name: '@gasket/plugin-metadata',
+  version: '',
+  description: '',
   hooks: {}
 };
-
-export = plugin;
