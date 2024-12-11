@@ -26,8 +26,7 @@ describe('@gasket/plugin-command', () => {
 
   it('should have a ready hook', () => {
     expect(plugin.hooks.ready).toBe(ready);
-    expect(plugin.hooks.ready.handler).toEqual(expect.any(Function));
-    expect(plugin.hooks.ready.timing.first).toEqual(true);
+    expect(plugin.hooks.ready).toEqual(expect.any(Function));
   });
 
   it('should have a commands hook', () => {
