@@ -1,3 +1,4 @@
+// @ts-nocheck
 /* eslint-disable no-unused-vars, no-sync */
 import { applyConfigOverrides } from '@gasket/utils';
 import { gasketBin, processCommand } from './cli.js';
@@ -23,14 +24,14 @@ export default {
         gasketBin.addCommand(command, { hidden, isDefault });
       });
 
-      const commandId = process.argv.filter(arg => commandIds[arg])[0];
-      applyConfigOverrides(config, { env: gasket.config.env, commandId });
+      const commandId = [...process.argv].filter(arg => commandIds[arg])[0];
+      console.log({ env: gasket.config.env, commandId })
 
       return {
-        ...config,
-        command: commandId
+        command: commandId,
+        ...applyConfigOverrides(config, { env: gasket.config.env, commandId, test: 'foo' })
       };
     }
   }
-}
+};
 

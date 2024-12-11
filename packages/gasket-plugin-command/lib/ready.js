@@ -1,8 +1,15 @@
 import { gasketBin } from './cli.js';
 
+/** @type {import('@gasket/core').HookHandler<'ready'>} */
 async function ready(gasket) {
-  await gasket.isReady;
-  gasketBin.parse();
+  gasket.isReady.then(() => {
+    gasketBin.parse();
+  });
 }
 
-export default ready;
+export default {
+  timing: {
+    first: true
+  },
+  handler: ready
+}
