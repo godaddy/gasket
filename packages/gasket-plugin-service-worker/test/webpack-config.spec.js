@@ -32,7 +32,7 @@ describe('webpackConfig', () => {
   });
 
   it('does not add WebpackInjectPlugin if local command', () => {
-    mockGasket.command.id = 'local';
+    mockGasket.config.command = 'local';
     results = webpack(mockGasket, mockWebpackConfig, mockNextData);
     expect(results).toBe(mockWebpackConfig);
   });
