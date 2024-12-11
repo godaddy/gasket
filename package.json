@@ -21,6 +21,7 @@
     "postinstall": "npm run build",
     "publish": "lerna publish",
     "publish:canary": "lerna publish --preid canary --dist-tag canary",
+    "publish:next": "lerna publish preminor --preid next --dist-tag next --force-publish --exact",
     "test:package": "lerna run test --stream --scope $*",
     "typecheck:all": "lerna run typecheck --stream"
   },
