@@ -32,6 +32,10 @@ export default async function presetConfig(gasket, context) {
     plugins.push(pluginHttpsProxy);
   }
 
+  if (context.nextDevProxy) {
+    plugins.push(pluginHttpsProxy);
+  }
+
   if ('testPlugins' in context && context.testPlugins.length > 0) {
     await Promise.all(context.testPlugins.map(async (testPlugin) => {
       const plugin = await import(testPlugin);

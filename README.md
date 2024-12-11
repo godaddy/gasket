@@ -84,6 +84,7 @@ Available actions
 | [getPublicGasketData] | Get the public Gasket data                 |
 | [getSWRegisterScript] | Get the service worker registration script |
 | [getWebpackConfig]    | Get the webpack config                     |
+| [startProxyServer]    | Start the proxy server                     |
 | [startServer]         | Start the server                           |
 
 ## Lifecycles
@@ -107,6 +108,7 @@ Available lifecycles
 | [express]               | Modify the Express instance to for adding endpoints           |
 | [fastify]               | Modify the Fastify instance to for adding endpoints           |
 | [gasketData]            | Adjust app level data after merged for the env                |
+| [httpsProxy]            | Setup the httpsProxy options                                  |
 | [initReduxState]        | Initializes state of the Redux store                          |
 | [initReduxStore]        | Plugin access to Redux store instance                         |
 | [initWebpack]           | Create a webpack config                                       |
@@ -224,6 +226,7 @@ Available configuration options in the `gasket.js`
 | [docusaurus.host]                                                                    | Hostname to serve the docs from                                                                       | string                                 | localhost                      |
 | [docusaurus.port]                                                                    | Port number to serve docs site                                                                        | number                                 | 3000                           |
 | [docusaurus.rootDir]                                                                 | Root Docusaurus directory                                                                             | string                                 | .docs                          |
+| [dynamicPlugins]                                                                     | Specify which plugins to load dynamically into gasket                                                 | array                                  |                                |
 | [elasticAPM]                                                                         | Configuration to provide additional setup helpers                                                     | object                                 |                                |
 | [elasticAPM.sensitiveCookies]                                                        | List of sensitive cookies to filter                                                                   | string[]                               | []                             |
 | [express][6]                                                                         | Express plugin configuration                                                                          | object                                 |                                |
@@ -236,6 +239,7 @@ Available configuration options in the `gasket.js`
 | [http]                                                                               | HTTP port or config object                                                                            | number | object                        |                                |
 | [http2]                                                                              | HTTP2 config object                                                                                   | object                                 |                                |
 | [https]                                                                              | HTTPS config object                                                                                   | object                                 |                                |
+| [httpsProxy][8]                                                                      | http-proxy config object                                                                              | object                                 |                                |
 | [intl]                                                                               | Intl config object                                                                                    | object                                 |                                |
 | [intl.defaultLocale]                                                                 | Locale to fallback to when loading files                                                              | string                                 | en                             |
 | [intl.defaultLocaleFilePath]                                                         | Lookup path to locale files                                                                           | string                                 | locales                        |
@@ -301,6 +305,7 @@ Available configuration options in the `gasket.js`
 [getPublicGasketData]:/packages/gasket-plugin-data/README.md#getPublicGasketData
 [getSWRegisterScript]:/packages/gasket-plugin-service-worker/README.md#getSWRegisterScript
 [getWebpackConfig]:/packages/gasket-plugin-webpack/README.md#getWebpackConfig
+[startProxyServer]:/packages/gasket-plugin-https-proxy/README.md#startProxyServer
 [startServer]:/packages/gasket-plugin-https/README.md#startServer
 [apmTransaction]:/packages/gasket-plugin-elastic-apm/README.md#apmtransaction
 [1]:/packages/gasket-plugin-command/README.md#build
@@ -317,6 +322,7 @@ Available configuration options in the `gasket.js`
 [express]:/packages/gasket-plugin-express/README.md#express
 [fastify]:/packages/gasket-plugin-fastify/README.md#express
 [gasketData]:/packages/gasket-plugin-data/README.md#gasketData
+[httpsProxy]:/packages/gasket-plugin-https-proxy/README.md#httpsProxy
 [initReduxState]:/packages/gasket-plugin-redux/README.md#initReduxState
 [initReduxStore]:/packages/gasket-plugin-redux/README.md#initReduxStore
 [initWebpack]:/packages/gasket-plugin-webpack/README.md#initwebpack
@@ -356,12 +362,14 @@ Available configuration options in the `gasket.js`
 [@gasket/plugin-docs]:/packages/gasket-plugin-docs/README.md
 [@gasket/plugin-docs-graphs]:/packages/gasket-plugin-docs-graphs/README.md
 [@gasket/plugin-docusaurus]:/packages/gasket-plugin-docusaurus/README.md
+[@gasket/plugin-dynamic-plugins]:/packages/gasket-plugin-dynamic-plugins/README.md
 [@gasket/plugin-elastic-apm]:/packages/gasket-plugin-elastic-apm/README.md
 [@gasket/plugin-express]:/packages/gasket-plugin-express/README.md
 [@gasket/plugin-fastify]:/packages/gasket-plugin-fastify/README.md
 [@gasket/plugin-git]:/packages/gasket-plugin-git/README.md
 [@gasket/plugin-happyfeet]:/packages/gasket-plugin-happyfeet/README.md
 [@gasket/plugin-https]:/packages/gasket-plugin-https/README.md
+[@gasket/plugin-https-proxy]:/packages/gasket-plugin-https-proxy/README.md
 [@gasket/plugin-intl]:/packages/gasket-plugin-intl/README.md
 [@gasket/plugin-jest]:/packages/gasket-plugin-jest/README.md
 [@gasket/plugin-lint]:/packages/gasket-plugin-lint/README.md
@@ -386,6 +394,7 @@ Available configuration options in the `gasket.js`
 [@gasket/nextjs]:/packages/gasket-nextjs/README.md
 [@gasket/react-intl]:/packages/gasket-react-intl/README.md
 [@gasket/redux]:/packages/gasket-redux/README.md
+[@gasket/request]:/packages/gasket-request/README.md
 [@gasket/utils]:/packages/gasket-utils/README.md
 [bundleAnalyzerConfig]:/packages/gasket-plugin-analyze/README.md#configuration
 [5]:/packages/gasket-plugin-docs/README.md#configuration
@@ -395,6 +404,7 @@ Available configuration options in the `gasket.js`
 [docusaurus.host]:/packages/gasket-plugin-docusaurus/README.md#configuration
 [docusaurus.port]:/packages/gasket-plugin-docusaurus/README.md#configuration
 [docusaurus.rootDir]:/packages/gasket-plugin-docusaurus/README.md#configuration
+[dynamicPlugins]:/packages/gasket-plugin-dynamic-plugins/README.md#configuration
 [elasticAPM]:/packages/gasket-plugin-elastic-apm/README.md#configuration
 [elasticAPM.sensitiveCookies]:/packages/gasket-plugin-elastic-apm/README.md#configuration
 [6]:/packages/gasket-plugin-express/README.md#configuration
@@ -407,6 +417,7 @@ Available configuration options in the `gasket.js`
 [http]:/packages/gasket-plugin-https/README.md#configuration
 [http2]:/packages/gasket-plugin-https/README.md#configuration
 [https]:/packages/gasket-plugin-https/README.md#configuration
+[8]:/packages/gasket-plugin-https-proxy/README.md#configuration
 [intl]:/packages/gasket-plugin-intl/README.md#configuration
 [intl.defaultLocale]:/packages/gasket-plugin-intl/README.md#configuration
 [intl.defaultLocaleFilePath]:/packages/gasket-plugin-intl/README.md#configuration

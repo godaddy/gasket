@@ -95,7 +95,7 @@ describe('@gasket/core', () => {
     gasket.hook({
       event: 'example',
       handler(_gasket) {
-        return _gasket.command.id === 'start';
+        return _gasket.config.command === 'start';
       }
     });
   });

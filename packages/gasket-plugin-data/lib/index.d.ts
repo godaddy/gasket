@@ -1,5 +1,6 @@
+/// <reference types="@gasket/plugin-command" />
+
 import { Plugin } from '@gasket/core';
-import { withGasketRequestCache } from '@gasket/request';
 
 export interface PublicGasketData extends Record<string, any> {
 }
@@ -17,7 +18,7 @@ declare module '@gasket/core' {
   import { RequestLike, GasketRequest } from '@gasket/request';
 
   export interface GasketConfig {
-    data?: GasketDataDefinition
+    data?: GasketDataDefinition;
   }
 
   export interface GasketActions {
