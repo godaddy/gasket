@@ -25,13 +25,13 @@ export default {
       });
 
       const commandId = [...process.argv].filter(arg => commandIds[arg])[0];
-      console.log({ env: gasket.config.env, commandId })
-
       return {
         command: commandId,
-        ...applyConfigOverrides(config, { env: gasket.config.env, commandId, test: 'foo' })
+        ...applyConfigOverrides(config, { env: gasket.config.env, commandId })
       };
     }
+
+    return config;
   }
 };
 
