@@ -28,9 +28,7 @@ export default async function presetConfig(gasket, context) {
 
     plugins.push(pluginHttps);
     plugins.push(frameworkPlugin.default || frameworkPlugin);
-  }
-
-  if (context.nextDevProxy) {
+  } else if (context.nextDevProxy) {
     plugins.push(pluginHttpsProxy);
   }
 
