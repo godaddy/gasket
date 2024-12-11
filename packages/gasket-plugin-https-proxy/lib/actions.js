@@ -4,7 +4,6 @@ import proxy from 'http-proxy';
 
 /** @type {import('@gasket/core').ActionHandler<'startProxyServer'>} */
 export async function startProxyServer(gasket) {
-  await gasket.isReady;
   const { httpsProxy } = gasket.config;
   const { logger } = gasket;
 

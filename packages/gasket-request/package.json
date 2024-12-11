@@ -1,6 +1,10 @@
 {
   "name": "@gasket/request",
+<<<<<<< HEAD
   "version": "7.0.0-canary.0",
+=======
+  "version": "7.1.0-next.0",
+>>>>>>> 110d5fdbf05ba9432f6ff4e4466f0e816b4430a1
   "description": "Utilities for working with request objects in Gasket",
   "type": "module",
   "types": "lib/index.d.ts",
@@ -28,8 +32,13 @@
     "typecheck:watch": "tsc --watch",
     "build": "swc lib -d cjs --delete-dir-on-start --strip-leading-paths --out-file-extension cjs",
     "build:watch": "npm run build -- --watch",
+<<<<<<< HEAD
     "prepublishOnly": "npm run build",
     "postbuild": "npm run postbuild:package && npm run postbuild:replace",
+=======
+    "postbuild": "npm run postbuild:package && npm run postbuild:replace",
+    "prepublishOnly": "npm run build",
+>>>>>>> 110d5fdbf05ba9432f6ff4e4466f0e816b4430a1
     "postbuild:package": "node -e \"require('fs').writeFileSync('cjs/package.json', '{}')\"",
     "postbuild:replace": "replace '.js' '.cjs' cjs/*"
   },

@@ -18,7 +18,7 @@ npm i @gasket/nextjs
 ### request
 
 Get a normalized [GasketRequest] unique to the current request in server components.
-This uses the Next.js `cookies()` and `headers()` [dynamic functions].
+This uses the Next.js `cookies()` and `headers()` [dynamic functions]. 
 
 **Signature**
 
@@ -211,5 +211,4 @@ The `useGasketData` will provided access to the gasket data within the context o
 
 [custom Document]: https://nextjs.org/docs/advanced-features/custom-document
 [dynamic functions]: https://nextjs.org/docs/app/building-your-application/rendering/server-components#dynamic-functions
-
 ```

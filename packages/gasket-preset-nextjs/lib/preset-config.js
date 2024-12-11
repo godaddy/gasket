@@ -28,6 +28,8 @@ export default async function presetConfig(gasket, context) {
 
     plugins.push(pluginHttps);
     plugins.push(frameworkPlugin.default || frameworkPlugin);
+  } else if (context.nextDevProxy) {
+    plugins.push(pluginHttpsProxy);
   }
 
   if (context.nextDevProxy) {

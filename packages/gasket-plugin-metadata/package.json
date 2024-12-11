@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-metadata",
-  "version": "7.0.9",
+  "version": "7.1.0-next.0",
   "description": "Adds metadata to gasket lifecycles",
   "type": "module",
   "main": "lib/index.js",
@@ -37,8 +37,8 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-metadata",
   "dependencies": {
-    "@gasket/core": "^7.0.9",
-    "@gasket/plugin-logger": "^7.0.9"
+    "@gasket/core": "7.1.0-next.0",
+    "@gasket/plugin-logger": "7.1.0-next.0"
   },
   "devDependencies": {
     "@godaddy/dmd": "^1.0.4",
