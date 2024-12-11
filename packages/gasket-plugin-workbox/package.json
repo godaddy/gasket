@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-workbox",
-  "version": "7.0.9",
+  "version": "7.0.15",
   "description": "Gasket Workbox Plugin",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -40,7 +40,7 @@
     "workbox-build": "^4.1.0"
   },
   "devDependencies": {
-    "@gasket/core": "^7.0.9",
+    "@gasket/core": "^7.0.15",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
     "eslint-config-godaddy": "^7.1.1",
