@@ -6,11 +6,10 @@ const { baseDataMap } = require('./actions');
  */
 function configure(gasket, baseConfig) {
   const { config: { env, command } } = gasket;
-  const commandId = command;
   if ('data' in baseConfig) {
     const data = applyConfigOverrides(
       baseConfig.data,
-      { env, commandId }
+      { env, commandId: command }
     );
 
     baseDataMap.set(gasket.symbol, data);
