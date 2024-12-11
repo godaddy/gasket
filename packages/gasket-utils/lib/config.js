@@ -11,7 +11,6 @@ function applyConfigOverrides(
   config,
   { env = '', commandId }
 ) {
-  console.log('--------- applyConfigOverrides', { env, commandId });
   // @ts-ignore - merged config definitions
   return deepmerge.all(
   // @ts-ignore - partial config definitions
@@ -28,7 +27,12 @@ function *getPotentialConfigs(config, { env, commandId }) {
   const { environments = {}, commands = {}, ...baseConfig } = config;
   const isLocalEnv = env === 'local';
 
-  yield* getCommandOverrides(commands, commandId);
+  // Keep commands unless a command id is passed
+  if (commandId) {
+    yield* getCommandOverrides(commands, commandId);
+  } else {
+    baseConfig.commands = commands;
+  }
   yield* getSubEnvironmentOverrides(env, environments);
   yield* getDevOverrides(isLocalEnv, environments);
   yield baseConfig;
