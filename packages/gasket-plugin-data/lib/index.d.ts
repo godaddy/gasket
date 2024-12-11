@@ -16,7 +16,8 @@ declare module '@gasket/core' {
   import { RequestLike, GasketRequest } from '@gasket/request';
 
   export interface GasketConfig {
-    data?: GasketDataDefinition
+    data?: GasketDataDefinition;
+    command?: string;
   }
 
   export interface GasketActions {
