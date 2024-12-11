@@ -11,12 +11,10 @@ describe('configure hook', () => {
   beforeEach(() => {
     gasket = {
       symbol: Symbol('gasket'),
-      command: {
-        id: 'commandId'
-      },
       config: {
         env: 'test',
-        root: 'root'
+        root: 'root',
+        command: 'commandId'
       }
     };
     config = {
