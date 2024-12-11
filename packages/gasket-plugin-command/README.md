@@ -229,5 +229,27 @@ export default {
 };
 ```
 
+### Command-based Configuration
+
+The commands property in the `gasket.js` file allows you to define configurations that are specific to individual commands. This means that when a particular command is executed, the corresponding configuration values will be applied, ensuring that each command can have its own tailored settings. This helps in managing command-specific behaviors and settings efficiently within your Gasket application.
+
+#### Example
+
+Define a command-based configuration in the `gasket.js` file:
+
+```js
+// gasket.js
+import { makeGasket } from '@gasket/core';
+
+export default makeGasket({
+  message: 'Default message',
+  commands: {
+    'example-cmd': {
+      message: 'Hello, World!' // when the `example-cmd` command is executed, this message will be displayed
+    }
+  }
+});
+```
+
 <!-- Links -->
 [Commander.js]: https://github.com/tj/commander.js?tab=readme-ov-file#commanderjs

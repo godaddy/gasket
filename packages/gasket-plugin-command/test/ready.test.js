@@ -1,4 +1,3 @@
-/* eslint-disable no-sync */
 import { jest } from '@jest/globals';
 
 const mockAddCommand = jest.fn();
@@ -24,7 +23,11 @@ describe('ready', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     mockGasket = {
-      exec: jest.fn().mockReturnValue([{ id: 'test', description: 'test', action: jest.fn() }])
+      isReady: Promise.resolve(),
+      execSync: jest.fn().mockReturnValue([{ id: 'test', description: 'test', action: jest.fn() }]),
+      config: {
+        env: 'development'
+      }
     };
   });
 
@@ -32,26 +35,13 @@ describe('ready', () => {
     expect(ready).toEqual(expect.any(Function));
   });
 
-  it('should not exec commands if not a gasket command', () => {
-    ready(mockGasket);
-    expect(mockGasket.exec).not.toHaveBeenCalled();
-  });
-
-  it('should execute on gasket command', () => {
-    process.argv = ['node', '/path/to/gasket.js'];
-    ready(mockGasket);
-    expect(mockGasket.exec).toHaveBeenCalled();
-  });
-
-  it('should add commands to gasketBin', async () => {
-    process.argv = ['node', '/path/to/gasket.js'];
-    await ready(mockGasket);
-    expect(mockAddCommand).toHaveBeenCalled();
-  });
-
-  it('should parse commands', async () => {
-    process.argv = ['node', '/path/to/gasket.js'];
+  it('should parse gasketBin', async () => {
     await ready(mockGasket);
     expect(mockParse).toHaveBeenCalled();
+  });
+
+  it('should wait for gasket to be ready', async () => {
+    await ready(mockGasket);
+    await expect(mockGasket.isReady).resolves.toBeUndefined();
   });
 });

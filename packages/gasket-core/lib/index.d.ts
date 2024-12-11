@@ -116,9 +116,8 @@ declare module '@gasket/core' {
     constructor(config: GasketConfigDefinition);
     new (config: GasketConfigDefinition): Gasket
 
-    command: {
-      id: string;
-    };
+    isReady: Promise<void>;
+    command: string;
     config: GasketConfig;
     engine: GasketEngine;
     symbol: Symbol;
