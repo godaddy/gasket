@@ -53,7 +53,6 @@ export class Gasket {
 
     this.hook = this.engine.hook.bind(this.engine);
     this.config = config;
-    this.command = null;
 
     // Can be used as a key to identify a gasket instance
     this.symbol = Symbol('gasket');
@@ -66,7 +65,7 @@ export class Gasket {
     this.isReady = new Promise((resolve) => {
       (async () => {
         // @ts-ignore - attached lifecycle trace methods
-        await this.exec('prepare');
+        this.config = await this.execWaterfall('prepare', this.config);
         // @ts-ignore - attached lifecycle trace methods
         await this.exec('ready');
         resolve();

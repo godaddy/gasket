@@ -5,12 +5,11 @@ const { baseDataMap } = require('./actions');
  * @type {import('@gasket/core').HookHandler<'configure'>}
  */
 function configure(gasket, baseConfig) {
-  const { command, config: { env } } = gasket;
-  const commandId = command && command.id;
+  const { config: { env, command } } = gasket;
   if ('data' in baseConfig) {
     const data = applyConfigOverrides(
       baseConfig.data,
-      { env, commandId }
+      { env, commandId: command }
     );
 
     baseDataMap.set(gasket.symbol, data);

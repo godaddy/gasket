@@ -227,5 +227,26 @@ describe('applyConfigOverrides', () => {
         }
       });
     });
+
+    it('persists commands config if commandId is undefined', () => {
+      mockConfig.commands = {
+        start: {
+          someService: {
+            url: 'https://some-dev-test.url/'
+          }
+        }
+      };
+
+      // eslint-disable-next-line no-undefined
+      mockContext.commandId = undefined;
+      results = applyConfigOverrides(mockConfig, mockContext);
+      expect(results).toHaveProperty('commands', {
+        start: {
+          someService: {
+            url: 'https://some-dev-test.url/'
+          }
+        }
+      });
+    })
   });
 });

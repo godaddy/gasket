@@ -1,18 +1,8 @@
-/* eslint-disable no-unused-vars, no-sync */
-import { gasketBin, processCommand } from './cli.js';
-const isGasketCommand = /\/gasket\.(js|ts|cjs|mjs)$/;
+import { gasketBin } from './cli.js';
 
 /** @type {import('@gasket/core').HookHandler<'ready'>} */
-export default async function readyHook(gasket) {
-  const hasGasket = process.argv.some(arg => isGasketCommand.test(arg));
-
-  if (hasGasket) {
-    const cmds = await gasket.exec('commands');
-    cmds.forEach(cmd => {
-      const { command, hidden, isDefault } = processCommand(cmd);
-      gasketBin.addCommand(command, { hidden, isDefault });
-    });
-
+export default async function ready(gasket) {
+  gasket.isReady.then(() => {
     gasketBin.parse();
-  }
+  });
 }

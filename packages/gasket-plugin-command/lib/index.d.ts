@@ -28,6 +28,11 @@ export interface GasketCommandDefinition {
 }
 
 declare module '@gasket/core' {
+  /* Custom command name/id */
+  export interface GasketConfig {
+    command?: string;
+  }
+
   interface HookExecTypes {
     commands(): GasketCommandDefinition;
     build(): void;

@@ -15,6 +15,7 @@ createServers -- exec --> errorMiddleware;
 createServers -- exec --> express;
 createServers -- exec --> fastify;
 gasket/plugin-data -- execWaterfall --> gasketData;
+gasket/plugin-https-proxy -- execWaterfall --> httpsProxy;
 middleware -- execWaterfall --> initReduxState;
 middleware -- exec --> initReduxStore;
 build-cmd(build) --> initWebpack;
