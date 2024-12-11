@@ -1,8 +1,9 @@
 /// <reference types="@gasket/plugin-metadata" />
 
 import create from './create.js';
-import ready from './ready.js';
+import configure from './configure.js';
 import commands from './commands.js';
+import ready from './ready.js';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 const { name, version, description } = require('../package.json');
@@ -14,8 +15,9 @@ export default {
   description,
   hooks: {
     create,
-    ready,
+    configure,
     commands,
+    ready,
     metadata(gasket, meta) {
       return {
         ...meta,
