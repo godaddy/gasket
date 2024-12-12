@@ -20,7 +20,7 @@ jest.unstable_mockModule('@gasket/plugin-two', () => mockPluginTwo);
 const pluginDynamicPlugins = (await import('../lib/index.js')).default;
 
 describe('Prepare Hook', () => {
-  let registerPluginsSpy, execApplySyncSpy, generateGasket;
+  let registerPluginsSpy, execApplySyncSpy, generateGasket, mockConfig;
 
   beforeEach(() => {
     generateGasket = function (gasketEnv) {
@@ -42,6 +42,7 @@ describe('Prepare Hook', () => {
           }
         }
       });
+      mockConfig = gasket.config;
       registerPluginsSpy = jest.spyOn(gasket.engine, 'registerPlugins');
       execApplySyncSpy = jest.spyOn(gasket, 'execApplySync');
       return gasket;
@@ -55,7 +56,7 @@ describe('Prepare Hook', () => {
 
   it('does not register dynamic plugins if GASKET_ENV is not set', async () => {
     const gasket = generateGasket();
-    await pluginDynamicPlugins.hooks.prepare(gasket);
+    await pluginDynamicPlugins.hooks.prepare(gasket, mockConfig);
     expect(registerPluginsSpy).not.toHaveBeenCalled();
     expect(execApplySyncSpy).not.toHaveBeenCalled();
   });
@@ -63,7 +64,7 @@ describe('Prepare Hook', () => {
   it('does not add plugins if dynamicPlugins is not set on a GASKET_ENV', async () => {
     jest.clearAllMocks();
     const gasket = generateGasket('local.nothing');
-    await pluginDynamicPlugins.hooks.prepare(gasket);
+    await pluginDynamicPlugins.hooks.prepare(gasket, mockConfig);
     expect(registerPluginsSpy).not.toHaveBeenCalled();
     expect(execApplySyncSpy).not.toHaveBeenCalled();
   });
@@ -71,7 +72,7 @@ describe('Prepare Hook', () => {
   it('registers dynamic plugins and calls hooks for a specific GASKET_ENV', async () => {
     jest.clearAllMocks();
     const gasket = generateGasket('local.both');
-    await pluginDynamicPlugins.hooks.prepare(gasket);
+    await pluginDynamicPlugins.hooks.prepare(gasket, mockConfig);
     expect(gasket.engine.registerPlugins).toHaveBeenCalledWith(expect.arrayContaining([mockPluginOne.default, mockPluginTwo.default]));
     expect(gasket.config.plugins).toContain(mockPluginOne.default);
     expect(gasket.config.plugins).toContain(mockPluginTwo.default);
@@ -82,7 +83,7 @@ describe('Prepare Hook', () => {
   it('registers dynamic plugins and calls hooks for another GASKET_ENV', async () => {
     jest.clearAllMocks();
     const gasket = generateGasket('local.two');
-    await pluginDynamicPlugins.hooks.prepare(gasket);
+    await pluginDynamicPlugins.hooks.prepare(gasket, mockConfig);
     expect(gasket.engine.registerPlugins).toHaveBeenCalledWith(expect.arrayContaining([mockPluginTwo.default]));
     expect(gasket.config.plugins).toContain(mockPluginTwo.default);
     expect(execApplySyncSpy).toHaveBeenNthCalledWith(1, 'init', expect.any(Function));
