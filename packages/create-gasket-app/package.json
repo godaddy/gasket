@@ -52,10 +52,7 @@
     "json5": "^2.2.3",
     "mkdirp": "^1.0.4",
     "ora": "3.4.0",
-    "pump": "^3.0.0",
-    "semver": "^7.6.3",
-    "tar-fs": "^2.0.0",
-    "untildify": "^4.0.0"
+    "semver": "^7.6.3"
   },
   "devDependencies": {
     "@gasket/request": "7.1.0-next.0",
