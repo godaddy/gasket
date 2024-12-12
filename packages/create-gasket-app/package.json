@@ -58,6 +58,7 @@
     "untildify": "^4.0.0"
   },
   "devDependencies": {
+    "@gasket/request": "7.1.0-next.0",
     "@types/inquirer": "^9.0.7",
     "cross-env": "^7.0.3",
     "diagnostics": "^2.0.2",
