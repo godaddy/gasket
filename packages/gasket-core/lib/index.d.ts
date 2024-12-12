@@ -19,7 +19,7 @@ declare module '@gasket/core' {
     init(): void
     configure(config: GasketConfig): GasketConfig
     ready(): MaybeAsync<void>
-    prepare(): MaybeAsync<void>
+    prepare(config: GasketConfig): MaybeAsync<GasketConfig>
   }
 
   export type HookId = keyof HookExecTypes;
