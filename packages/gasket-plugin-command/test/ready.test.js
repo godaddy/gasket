@@ -23,7 +23,6 @@ describe('ready', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     mockGasket = {
-      isReady: Promise.resolve(),
       execSync: jest.fn().mockReturnValue([{ id: 'test', description: 'test', action: jest.fn() }]),
       config: {
         env: 'development'
@@ -35,13 +34,14 @@ describe('ready', () => {
     expect(ready).toEqual(expect.any(Function));
   });
 
-  it('should parse gasketBin', async () => {
+  it('should parse gasketBin if gasket custom command is set', async () => {
+    mockGasket.config.command = 'docs';
     await ready(mockGasket);
     expect(mockParse).toHaveBeenCalled();
   });
 
-  it('should wait for gasket to be ready', async () => {
+  it('should not parse gasketBin if gasket custom command is not set', async () => {
     await ready(mockGasket);
-    await expect(mockGasket.isReady).resolves.toBeUndefined();
+    expect(mockParse).not.toHaveBeenCalled();
   });
 });
