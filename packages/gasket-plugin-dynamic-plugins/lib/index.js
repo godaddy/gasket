@@ -9,8 +9,8 @@ export default {
   name,
   version,
   hooks: {
-    async prepare(gasket) {
-      if (!gasket.config.dynamicPlugins?.length) return;
+    async prepare(gasket, config) {
+      if (!gasket.config.dynamicPlugins?.length) return config;
 
       const load = await Promise.all(gasket.config.dynamicPlugins.map(plugin => import(plugin)));
       load.forEach(mod => {
@@ -29,6 +29,8 @@ export default {
           gasket.config = handler(gasket.config);
         }
       });
+
+      return config;
     },
     metadata(gasket, meta) {
       return {
