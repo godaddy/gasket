@@ -3,7 +3,7 @@ import { ConfigBuilder } from '../config-builder.js';
 import { PackageManager } from '@gasket/utils';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
-const { dependencies } = require('../../../package.json');
+const { dependencies, devDependencies } = require('../../../package.json');
 
 /**
  * Initializes the ConfigBuilder builder and adds to context.
@@ -22,7 +22,8 @@ async function setupPkg({ context }) {
   // Add critical dependencies
   pkg.add('dependencies', {
     '@gasket/core': dependencies['@gasket/core'],
-    '@gasket/utils': dependencies['@gasket/utils']
+    '@gasket/utils': dependencies['@gasket/utils'],
+    '@gasket/request': devDependencies['@gasket/request']
   });
 
   const pkgManager = new PackageManager(context);
