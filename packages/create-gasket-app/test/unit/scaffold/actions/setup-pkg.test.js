@@ -1,4 +1,7 @@
 import { jest } from '@jest/globals';
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+const { dependencies, devDependencies } = require('../../../../package.json');
 
 const mockContstructorStub = jest.fn();
 class MockPackageManager {
@@ -50,8 +53,11 @@ describe('setupPkg', () => {
 
   it('adds core dependencies', async () => {
     await setupPkg.wrapped({ context: mockContext });
-    expect(mockContext.pkg.fields.dependencies).toHaveProperty('@gasket/core');
-    expect(mockContext.pkg.fields.dependencies).toHaveProperty('@gasket/utils');
+    expect(mockContext.pkg.fields.dependencies).toEqual({
+      '@gasket/core': dependencies['@gasket/core'],
+      '@gasket/utils': dependencies['@gasket/utils'],
+      '@gasket/request': devDependencies['@gasket/request']
+    });
   });
 
   it('instantiates PackageManager with context', async () => {
