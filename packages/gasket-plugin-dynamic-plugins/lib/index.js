@@ -10,23 +10,23 @@ export default {
   version,
   hooks: {
     async prepare(gasket, config) {
-      if (!gasket.config.dynamicPlugins?.length) return config;
+      if (!config.dynamicPlugins?.length) return config;
 
-      const load = await Promise.all(gasket.config.dynamicPlugins.map(plugin => import(plugin)));
+      const load = await Promise.all(config.dynamicPlugins.map(plugin => import(plugin)));
       load.forEach(mod => {
-        gasket.config.plugins.push(mod.default);
+        config.plugins.push(mod.default);
       });
-      gasket.engine.registerPlugins(gasket.config.plugins);
+      gasket.engine.registerPlugins(config.plugins);
       // eslint-disable-next-line no-sync
       gasket.execApplySync('init', function (plugin, handler) {
-        if (gasket.config.dynamicPlugins.includes(plugin.name)) {
+        if (config.dynamicPlugins.includes(plugin.name)) {
           handler();
         }
       });
       // eslint-disable-next-line no-sync
       gasket.execApplySync('configure', async function (plugin, handler) {
-        if (gasket.config.dynamicPlugins.includes(plugin.name)) {
-          gasket.config = handler(gasket.config);
+        if (config.dynamicPlugins.includes(plugin.name)) {
+          config = handler(config);
         }
       });
 

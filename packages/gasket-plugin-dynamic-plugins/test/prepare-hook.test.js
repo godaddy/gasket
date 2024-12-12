@@ -23,7 +23,6 @@ describe('Prepare Hook', () => {
   let registerPluginsSpy, execApplySyncSpy, generateGasket, mockConfig;
 
   beforeEach(() => {
-    mockConfig = {};
     generateGasket = function (gasketEnv) {
       process.env.GASKET_ENV = gasketEnv;
       const gasket = makeGasket({
@@ -43,6 +42,7 @@ describe('Prepare Hook', () => {
           }
         }
       });
+      mockConfig = gasket.config;
       registerPluginsSpy = jest.spyOn(gasket.engine, 'registerPlugins');
       execApplySyncSpy = jest.spyOn(gasket, 'execApplySync');
       return gasket;
