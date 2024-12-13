@@ -39,6 +39,9 @@ function webpackConfigHook(gasket, webpackConfig, { webpack, isServer }) {
   webpackConfig.resolve ??= {};
   webpackConfig.resolve.alias ??= {};
 
+  // This is only needed for configuring webpack and should not be bundled to avoid require function warnings
+  webpackConfig.resolve.alias[require.resolve('./utils/try-resolve.js')] = false;
+
   const exclude = (moduleName) => {
     const resolved = tryResolve(moduleName, [gasket.config.root]);
     if (resolved) {
