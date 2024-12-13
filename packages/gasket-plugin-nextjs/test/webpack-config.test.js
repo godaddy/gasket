@@ -39,6 +39,13 @@ describe('webpackConfigHook', () => {
       .toThrow('Expected webpackConfig.externals to be an array');
   });
 
+  it('adds empty alias for try-resolve to avoid bundling', () => {
+    tryResolve.mockReturnValue(mockFilename);
+    const target = require.resolve('../lib/utils/try-resolve.js');
+    const result = webpackConfig(mockGasket, mockWebpackConfig, mockContext);
+    expect(result.resolve.alias).toEqual(expect.objectContaining({ [target]: false }));
+  });
+
   it('adds empty alias for gasket file in client', () => {
     tryResolve.mockReturnValue(mockFilename);
     const result = webpackConfig(mockGasket, mockWebpackConfig, mockContext);
