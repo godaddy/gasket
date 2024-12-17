@@ -166,7 +166,7 @@ function addNpmScripts({ pkg, nextServerType, nextDevProxy, typescript, hasGaske
     scripts['start:https'] = `node server.js`;
     scripts['local:https'] = `${watcher} server.${fileExtension}`;
     scripts.start = `npm run start:https & next start`;
-    scripts.local = ` npm run local:https & next dev`;
+    scripts.local = `npm run local:https & next dev`;
     if (typescript) {
       scripts['build:tsc:watch'] = 'tsc -p ./tsconfig.server.json --watch';
       scripts['build:tsc'] = 'tsc -p ./tsconfig.server.json';
