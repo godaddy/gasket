@@ -157,19 +157,22 @@ function addNpmScripts({ pkg, nextServerType, nextDevProxy, typescript, hasGaske
     scripts.local = `GASKET_DEV=1 ${watcher} server.${fileExtension}`;
     if (typescript) {
       scripts['build:tsc'] = 'tsc -p ./tsconfig.server.json';
+      scripts['build:tsc:watch'] = 'tsc -p ./tsconfig.server.json --watch';
       scripts.build = 'npm run build:tsc && next build';
       scripts.start = 'node dist/server.js';
-      scripts.local = `npm run build:tsc && GASKET_DEV=1 ${watcher} server.${fileExtension}`;
+      scripts.local = `concurrently "npm run build:tsc:watch" "GASKET_DEV=1 ${watcher} server.${fileExtension}"`;
     }
   } else if (nextDevProxy) {
     scripts['start:https'] = `node server.js`;
     scripts['local:https'] = `${watcher} server.${fileExtension}`;
-    scripts.start = `next start & npm run start:https`;
-    scripts.local = `next dev & npm run local:https`;
+    scripts.start = `npm run start:https & next start`;
+    scripts.local = `npm run local:https & next dev`;
     if (typescript) {
+      scripts['build:tsc:watch'] = 'tsc -p ./tsconfig.server.json --watch';
       scripts['build:tsc'] = 'tsc -p ./tsconfig.server.json';
       scripts.build = 'npm run build:tsc && next build';
       scripts['start:https'] = `node dist/server.js`;
+      scripts.local = 'concurrently "npm run build:tsc:watch" "npm run local:https" "next dev"';
     }
   }
 

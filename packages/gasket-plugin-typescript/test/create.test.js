@@ -134,5 +134,13 @@ describe('create hook', () => {
         expect.stringMatching(/generator\/shared\/\*$/)
       );
     });
+
+    it('adds concurrently for non-API apps', () => {
+      mockContext.apiApp = false;
+      create({}, mockContext);
+      expect(mockContext.pkg.add).toHaveBeenCalledWith('devDependencies', {
+        concurrently: devDependencies.concurrently
+      });
+    });
   });
 });
