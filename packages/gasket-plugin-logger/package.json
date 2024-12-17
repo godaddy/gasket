@@ -40,13 +40,13 @@
     "@gasket/plugin-https": "^7.0.15",
     "@gasket/plugin-metadata": "^7.0.15",
     "cross-env": "^7.0.3",
-    "eslint": "^8.56.0",
+    "eslint": "^8.57.1",
     "eslint-config-godaddy": "^7.1.1",
     "eslint-config-godaddy-typescript": "^4.0.3",
-    "eslint-plugin-jest": "^28.6.0",
+    "eslint-plugin-jest": "^28.9.0",
     "eslint-plugin-unicorn": "^55.0.0",
     "jest": "^29.7.0",
-    "typescript": "^5.4.5"
+    "typescript": "^5.6.3"
   },
   "eslintConfig": {
     "extends": [
