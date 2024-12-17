@@ -291,7 +291,7 @@ describe('create hook', () => {
       expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts', {
         'build': 'next build',
         'start': 'npm run start:https & next start',
-        'local': ' npm run local:https & next dev',
+        'local': 'npm run local:https & next dev',
         'preview': 'npm run build && npm run start',
         'start:https': 'node server.js',
         'local:https': 'nodemon server.js'
