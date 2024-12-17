@@ -318,10 +318,11 @@ describe('create hook', () => {
       await create.handler({}, mockContext);
       expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts', {
         'build:tsc': 'tsc -p ./tsconfig.server.json',
+        'build:tsc:watch': 'tsc -p ./tsconfig.server.json --watch',
         'build': 'npm run build:tsc && next build',
         'start': 'node dist/server.js',
         'preview': 'npm run build && npm run start',
-        'local': 'npm run build:tsc && GASKET_DEV=1 tsx watch server.ts',
+        'local': 'concurrently "npm run build:tsc:watch" "GASKET_DEV=1 tsx watch server.ts"',
         'prebuild': 'tsx gasket.ts build'
       });
     });
