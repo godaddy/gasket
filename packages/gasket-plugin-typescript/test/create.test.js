@@ -135,8 +135,8 @@ describe('create hook', () => {
       );
     });
 
-    it('adds concurrently for dev proxy', () => {
-      mockContext.nextDevProxy = true;
+    it('adds concurrently for non-API apps', () => {
+      mockContext.apiApp = false;
       create({}, mockContext);
       expect(mockContext.pkg.add).toHaveBeenCalledWith('devDependencies', {
         concurrently: devDependencies.concurrently
