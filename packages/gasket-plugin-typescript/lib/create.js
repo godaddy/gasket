@@ -21,6 +21,13 @@ module.exports = async function create(gasket, context) {
     typescript: devDependencies.typescript
   });
 
+  // Add devDependencies for non-API apps
+  if (!apiApp) {
+    pkg.add('devDependencies', {
+      concurrently: devDependencies.concurrently
+    });
+  }
+
   // Shared add TS links
   readme
     .link('tsx', 'https://tsx.is/')
@@ -55,6 +62,7 @@ module.exports = async function create(gasket, context) {
   }
 
   // Files for Next.js default server w/ https proxy
+  // Also add concurrently for running multiple scripts
   if (nextDevProxy) {
     files.add(`${generatorDir}/next/*`, `${generatorDir}/shared/*`);
   }
