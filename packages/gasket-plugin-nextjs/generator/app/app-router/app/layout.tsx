@@ -1,5 +1,5 @@
 import React from 'react';
-import gasket from '../gasket';
+import gasket from '@/gasket'; // tsconfig alias
 import { withGasketData } from '@gasket/nextjs/layout';
 
 function RootLayout({ children }) {

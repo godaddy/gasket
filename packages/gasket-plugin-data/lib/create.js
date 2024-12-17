@@ -9,9 +9,7 @@ async function create(gasket, {
   pkg,
   files,
   gasketConfig,
-  typescript,
-  nextServerType,
-  apiApp
+  typescript
 }) {
   pkg.add('dependencies', {
     [name]: `^${version}`,
@@ -27,15 +25,8 @@ async function create(gasket, {
   gasketConfig
     .addPlugin('pluginData', name);
 
-  // Default server TS use .ts
-  // Else use .js
-  let importFile = './gasket-data.js';
-  if (typescript && nextServerType !== 'customServer' && !apiApp) {
-    importFile = './gasket-data.ts';
-  }
-
   gasketConfig
-    .addImport('gasketData', `${importFile}`)
+    .addImport('gasketData', `./gasket-data.js`)
     .injectValue('data', 'gasketData');
 }
 
