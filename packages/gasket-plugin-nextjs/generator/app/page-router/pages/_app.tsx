@@ -7,7 +7,6 @@ import intlManager from '../intl';
 {{/if}}
 
 {{#if hasGasketIntl}}
-// @ts-expect-error
 const IntlMessagesProvider = withMessagesProvider(intlManager)(IntlProvider);
 {{/if}}
 
