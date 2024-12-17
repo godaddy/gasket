@@ -2,9 +2,11 @@ import type { GasketData } from '@gasket/data';
 import type { Gasket } from '@gasket/core';
 import type { ComponentType, FunctionComponent, PropsWithChildren, ReactElement } from 'react';
 
-ComponentWithInitialProps<T> = ComponentType<T> & Partial<{
-  getInitialProps: (ctx: NextPageContext) => Promise<any>
-}>;
+ComponentWithInitialProps<T> =
+  ComponentType<T> &
+  Partial<{
+    getInitialProps: (ctx: NextPageContext) => Promise<any>;
+  }>;
 
 type SubstitutableHOC<T> = <C extends ComponentWithInitialProps<T>>(component: C) => C;
 
@@ -20,9 +22,7 @@ export function useGasketData(): GasketData;
 /**
  * Provider for the GasketData, adds context to child elements.
  */
-export const GasketDataProvider: FunctionComponent<
-  PropsWithChildren<{ gasketData: GasketData }>
->;
+export const GasketDataProvider: FunctionComponent<PropsWithChildren<{ gasketData: GasketData }>>;
 
 /**
  * Make an HOC that adds a provider for the GasketData.

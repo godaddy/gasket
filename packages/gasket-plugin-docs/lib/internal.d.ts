@@ -1,10 +1,6 @@
 import type { Plugin } from '@gasket/core';
 import type { PackageJson } from 'create-gasket-app';
-import type {
-  ModuleData,
-  PluginData,
-  PresetData
-} from '@gasket/plugin-metadata';
+import type { ModuleData, PluginData, PresetData } from '@gasket/plugin-metadata';
 
 /**
  * Configuration for setting up documentation modules.
@@ -163,9 +159,7 @@ export function findPluginData(
  * - metadata for modules not processed with plugins
  * - metadata for presets
  */
-export async function buildDocsConfigSet(
-  gasket: Gasket
-): Promise<DocsConfigSet>;
+export async function buildDocsConfigSet(gasket: Gasket): Promise<DocsConfigSet>;
 
 /**
  * Function to find all documentation files for a module.

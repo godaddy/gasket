@@ -81,6 +81,7 @@
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
     "eslint-config-godaddy-react-typescript": "^4.0.2",
+    "eslint-config-godaddy-typescript": "^4.0.3",
     "eslint-plugin-jest": "^28.6.0",
     "eslint-plugin-unicorn": "^55.0.0",
     "jest": "^29.7.0",
@@ -104,6 +105,16 @@
     },
     "globals": {
       "JSX": "readonly"
-    }
+    },
+    "overrides": [
+      {
+        "files": [
+          "*.ts"
+        ],
+        "extends": [
+          "godaddy-typescript"
+        ]
+      }
+    ]
   }
 }

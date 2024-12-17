@@ -30,7 +30,6 @@ import pluginWebpack from '@gasket/plugin-webpack';
 import pluginWinston from '@gasket/plugin-winston';
 import pluginWorkbox from '@gasket/plugin-workbox';
 
-
 const config: GasketConfigDefinition = {
   plugins: [
     pluginAnalyze,

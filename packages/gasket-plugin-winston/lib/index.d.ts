@@ -2,9 +2,9 @@ import type { LoggerOptions, LeveledLogMethod } from 'winston';
 
 declare module 'winston' {
   export interface Logger {
-    fatal: LeveledLogMethod,
-    warn: LeveledLogMethod,
-    trace: LeveledLogMethod
+    fatal: LeveledLogMethod;
+    warn: LeveledLogMethod;
+    trace: LeveledLogMethod;
   }
 }
 

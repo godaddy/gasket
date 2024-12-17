@@ -124,7 +124,7 @@ declare module '@gasket/core' {
   }
 
   export interface GasketActions {
-    async getMetadata(): Promise<Metadata>;
+    getMetadata(): Promise<Metadata>;
   }
 }
 

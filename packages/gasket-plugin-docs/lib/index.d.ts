@@ -1,11 +1,7 @@
 import type { MaybeAsync, Plugin, GasketConfig } from '@gasket/core';
 import type { GasketCommandDefinition } from '@gasket/plugin-command';
 
-import type {
-  DocsConfigSet,
-  DocsSetup,
-  DetailDocsConfig
-} from './internal';
+import type { DocsConfigSet, DocsSetup, DetailDocsConfig } from './internal';
 
 declare module 'create-gasket-app' {
   export interface CreateContext {
@@ -26,9 +22,7 @@ declare module '@gasket/core' {
 
     docsView(docs: DocsConfigSet): MaybeAsync<void>;
 
-    docsGenerate(
-      docs: DocsConfigSet
-    ): MaybeAsync<Omit<DetailDocsConfig, 'sourceRoot'>>;
+    docsGenerate(docs: DocsConfigSet): MaybeAsync<Omit<DetailDocsConfig, 'sourceRoot'>>;
   }
 }
 

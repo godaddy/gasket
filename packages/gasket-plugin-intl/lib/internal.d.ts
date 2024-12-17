@@ -10,10 +10,7 @@ function getLocaleFromHeaders(
 ): string;
 
 /** Get the preferred locale from the request headers. */
-function getPreferredLocale(
-  gasket: Gasket,
-  req: GasketRequest | IncomingMessage,
-): string;
+function getPreferredLocale(gasket: Gasket, req: GasketRequest | IncomingMessage): string;
 
 function formatLocale(
   /** Selected accept-language */

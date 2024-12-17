@@ -11,7 +11,7 @@ declare module 'http' {
 export type MakeStoreFnOptions = {
   logger?: Console | Logger;
   req?: IncomingMessage;
-}
+};
 
 /**
  * Wrapper for store create to create instance with SSR and to hydrate in

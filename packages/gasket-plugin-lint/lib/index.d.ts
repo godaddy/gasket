@@ -15,7 +15,6 @@ export interface StylelintConfig {
   extends?: string[];
 }
 
-
 export interface StandardConfig {
   env?: string[];
   ignore?: string[];

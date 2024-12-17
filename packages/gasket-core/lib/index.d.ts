@@ -12,13 +12,12 @@ declare module '@gasket/core' {
     ...args: Parameters<GasketActions[Id]>
   ) => ReturnType<GasketActions[Id]>;
 
-
   // To be extended by plugins
   export interface HookExecTypes {
     // add makeGasket lifecycles
-    init(): void
-    configure(config: GasketConfig): GasketConfig
-    ready(): MaybeAsync<void>
+    init(): void;
+    configure(config: GasketConfig): GasketConfig;
+    ready(): MaybeAsync<void>;
   }
 
   export type HookId = keyof HookExecTypes;
@@ -35,9 +34,7 @@ declare module '@gasket/core' {
     ...args: Parameters<HookExecTypes[Id]>
   ) => ReturnType<HookExecTypes[Id]>;
 
-  export type ApplyHookHandler<Id extends HookId> = (
-    ...args: Parameters<HookExecTypes[Id]>
-  ) => ReturnType<HookExecTypes[Id]>;
+  export type ApplyHookHandler<Id extends HookId> = (...args: Parameters<HookExecTypes[Id]>) => ReturnType<HookExecTypes[Id]>;
 
   type HookWithTimings<Id extends HookId> = {
     timing: HookTimings;
@@ -72,16 +69,13 @@ declare module '@gasket/core' {
   export class GasketEngine {
     constructor(plugins: Array<Plugin>);
 
-    actions: GasketActions
+    actions: GasketActions;
 
     exec<Id extends HookId>(
       hook: Id,
       ...args: Parameters<HookExecTypes[Id]>
     ): Promise<ResolvedType<ReturnType<HookExecTypes[Id]>>[]>;
-    execSync<Id extends HookId>(
-      hook: Id,
-      ...args: Parameters<HookExecTypes[Id]>
-    ): ResolvedType<ReturnType<HookExecTypes[Id]>>[];
+    execSync<Id extends HookId>(hook: Id, ...args: Parameters<HookExecTypes[Id]>): ResolvedType<ReturnType<HookExecTypes[Id]>>[];
     execWaterfall<Id extends HookId>(
       hook: Id,
       ...args: Parameters<HookExecTypes[Id]>
@@ -92,49 +86,39 @@ declare module '@gasket/core' {
     ): ResolvedType<ReturnType<HookExecTypes[Id]>>;
     execApply<Id extends HookId, Return = void>(
       hook: Id,
-      callback: (
-        plugin: Plugin,
-        handler: ApplyHookHandler<Id>
-      ) => Promise<Return>
+      callback: (plugin: Plugin, handler: ApplyHookHandler<Id>) => Promise<Return>
     ): Promise<Return[]>;
     execApplySync<Id extends HookId, Return = void>(
       hook: Id,
       callback: (plugin: Plugin, handler: ApplyHookHandler<Id>) => Return
     ): Return[];
 
-    hook<Id extends HookId>(opts: {
-      event: Id;
-      pluginName?: string;
-      timing?: HookTimings;
-      handler: HookHandler<Id>;
-    }): void;
+    hook<Id extends HookId>(opts: { event: Id; pluginName?: string; timing?: HookTimings; handler: HookHandler<Id> }): void;
   }
 
   export interface Gasket extends GasketEngine {
     constructor(config: GasketConfigDefinition);
-    new (config: GasketConfigDefinition): Gasket
+    new (config: GasketConfigDefinition): Gasket;
 
     command: {
       id: string;
     };
     config: GasketConfig;
     symbol: Symbol;
-    traceBranch(): GasketTrace
-    traceRoot(): Gasket
+    traceBranch(): GasketTrace;
+    traceRoot(): Gasket;
   }
 
   export type GasketTrace = Proxy<Gasket>;
 
-  type PartialRecursive<T> = T extends Object
-    ? { [K in keyof T]?: PartialRecursive<T[K]> } | undefined
-    : T | undefined;
+  type PartialRecursive<T> = T extends Object ? { [K in keyof T]?: PartialRecursive<T[K]> } | undefined : T | undefined;
 
   export type GasketConfigDefinition = Omit<GasketConfig, 'root' | 'env' | 'command'> & {
-    root?: string
-    env?: string
-    environments?: Record<string, Partial<GasketConfigDefinition>>
-    commands?: Record<string, Partial<GasketConfigDefinition>>
-  }
+    root?: string;
+    env?: string;
+    environments?: Record<string, Partial<GasketConfigDefinition>>;
+    commands?: Record<string, Partial<GasketConfigDefinition>>;
+  };
 
   /**
    * Expected request shape for GasketActions
@@ -145,5 +129,5 @@ declare module '@gasket/core' {
     query?: Record<string, string>;
   }
 
-  export function makeGasket(config: GasketConfigDefinition): Gasket
+  export function makeGasket(config: GasketConfigDefinition): Gasket;
 }

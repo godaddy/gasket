@@ -37,10 +37,10 @@ export type Lang = string;
  */
 export type Locale = Lang;
 
-export type LocaleMessages = Record<string, any>
-export type MessagesRegister = Record<LocaleFileKey, LocaleMessages>
-export type StatusRegister = Record<LocaleFileKey, LocaleFileStatus>
-export type PromiseRegister = Record<LocaleFileKey, Promise>
+export type LocaleMessages = Record<string, any>;
+export type MessagesRegister = Record<LocaleFileKey, LocaleMessages>;
+export type StatusRegister = Record<LocaleFileKey, LocaleFileStatus>;
+export type PromiseRegister = Record<LocaleFileKey, Promise>;
 
 /**
  * Locale settings
@@ -62,7 +62,7 @@ export interface LocaleManifestConfig {
  * Locale settings with the generated file import map
  */
 export interface LocaleManifest extends LocaleManifestConfig {
-  imports: Record<LocaleFileKey, () => Promise>
+  imports: Record<LocaleFileKey, () => Promise>;
 }
 
 /**
@@ -135,24 +135,24 @@ export type LocaleHandler_getStaticsRegister = () => MessagesRegister;
  * Only deals with resolved localeFileKeys
  */
 export class IntlManager {
-  private messagesRegister: MessagesRegister
-  private statusRegister: StatusRegister
-  private promisesRegister: PromiseRegister
+  private messagesRegister: MessagesRegister;
+  private statusRegister: StatusRegister;
+  private promisesRegister: PromiseRegister;
 
-  constructor(manifest: LocaleManifest)
+  constructor(manifest: LocaleManifest);
 
-  managedLocales: Locale[]
-  get locales(): Locales[]
-  get defaultLocaleFilePath(): LocaleFilePath
-  get staticLocaleFilePaths(): LocaleFilePath[]
+  managedLocales: Locale[];
+  get locales(): Locales[];
+  get defaultLocaleFilePath(): LocaleFilePath;
+  get staticLocaleFilePaths(): LocaleFilePath[];
 
-  private init: IntlManager_init
-  resolveLocale: IntlManager_resolveLocale
-  load: IntlManager_load
-  getMessages: IntlManager_getMessages
-  getStatus: IntlManager_getStatus
+  private init: IntlManager_init;
+  resolveLocale: IntlManager_resolveLocale;
+  load: IntlManager_load;
+  getMessages: IntlManager_getMessages;
+  getStatus: IntlManager_getStatus;
 
-  handleLocale: IntlManager_handleLocale
+  handleLocale: IntlManager_handleLocale;
 }
 
 /**
@@ -160,21 +160,21 @@ export class IntlManager {
  * Only deals with unresolved localeFilePaths
  */
 export class LocaleHandler {
-  private handledKeys: LocaleFileKey[]
-  private loadKeys: LocaleFileKey[]
-  private handledDirty: boolean
-  private loadDirty: boolean
-  private messages: Messages
-  private staticsRegister: MessagesRegister
+  private handledKeys: LocaleFileKey[];
+  private loadKeys: LocaleFileKey[];
+  private handledDirty: boolean;
+  private loadDirty: boolean;
+  private messages: Messages;
+  private staticsRegister: MessagesRegister;
 
-  constructor(manager: IntlManager, locale: Locale)
+  constructor(manager: IntlManager, locale: Locale);
 
-  private getLocaleFileKey: LocaleHandler_getLocaleFileKey
-  loadStatics: LocaleHandler_loadStatics
-  load: LocaleHandler_load
-  getStatus: LocaleHandler_getStatus
-  getAllMessages: LocaleHandler_getAllMessages
-  getStaticsRegister: LocaleHandler_getStaticsRegister
+  private getLocaleFileKey: LocaleHandler_getLocaleFileKey;
+  loadStatics: LocaleHandler_loadStatics;
+  load: LocaleHandler_load;
+  getStatus: LocaleHandler_getStatus;
+  getAllMessages: LocaleHandler_getAllMessages;
+  getStaticsRegister: LocaleHandler_getStaticsRegister;
 }
 
-export function makeIntlManager(manifest: LocaleManifest): IntlManager
+export function makeIntlManager(manifest: LocaleManifest): IntlManager;

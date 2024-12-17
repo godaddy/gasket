@@ -1,8 +1,5 @@
 // -- concrete exports --
-export {
-  LocaleFileStatus,
-  makeIntlManager
-} from './types';
+export { LocaleFileStatus, makeIntlManager } from './types';
 
 // -- types only --
 export {

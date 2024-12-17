@@ -43,7 +43,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-nextjs",
   "dependencies": {
-    "@gasket/plugin-webpack": "^7.0.15",
+    "@gasket/plugin-webpack": "^7",
     "fastify": "^4.28.1"
   },
   "devDependencies": {
@@ -56,6 +56,7 @@
     "eslint": "^8.56.0",
     "eslint-config-godaddy": "^7.1.1",
     "eslint-config-godaddy-react": "^9.1.0",
+    "eslint-config-godaddy-typescript": "^4.0.3",
     "eslint-plugin-jest": "^28.6.0",
     "eslint-plugin-json": "^3.1.0",
     "eslint-plugin-unicorn": "^55.0.0",
@@ -96,6 +97,14 @@
         ],
         "extends": [
           "godaddy-react"
+        ]
+      },
+      {
+        "files": [
+          "*.ts"
+        ],
+        "extends": [
+          "godaddy-typescript"
         ]
       }
     ]

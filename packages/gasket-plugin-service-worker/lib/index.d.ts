@@ -36,10 +36,7 @@ export interface ServiceWorkerConfig {
    * the webpack entry modules. This can be disabled by setting this to
    * false. If you wish to control which entry modules get injected, read
    * more in the registering section. */
-  webpackRegister?:
-    | boolean
-    | MaybeMultiple<string>
-    | ((key: string) => boolean);
+  webpackRegister?: boolean | MaybeMultiple<string> | ((key: string) => boolean);
 
   /** If true, a static sw.js will be output to the ./public dir. Otherwise,
    * this can be set to a string with a path to an alternate output
@@ -49,7 +46,6 @@ export interface ServiceWorkerConfig {
 }
 
 declare module '@gasket/core' {
-
   export interface GasketActions {
     getSWRegisterScript(): MaybeAsync<string>;
   }
@@ -59,14 +55,9 @@ declare module '@gasket/core' {
   }
 
   export interface HookExecTypes {
-    composeServiceWorker(
-      content: string,
-      context: { req: Request; res: Response }
-    ): MaybeAsync<string>;
+    composeServiceWorker(content: string, context: { req: Request; res: Response }): MaybeAsync<string>;
 
-    serviceWorkerCacheKey(): MaybeAsync<
-      (req: Request, res: Response) => MaybeAsync<string>
-    >;
+    serviceWorkerCacheKey(): MaybeAsync<(req: Request, res: Response) => MaybeAsync<string>>;
   }
 }
 
@@ -84,7 +75,9 @@ declare module 'express' {
   }
 }
 
-export async function configureEndpoint(gasket: Gasket): RouteHandlerMethod<Http2SecureServer, Http2ServerRequest, Http2ServerResponse> | Application<Record<string, any>>;
+export async function configureEndpoint(
+  gasket: Gasket
+): RouteHandlerMethod<Http2SecureServer, Http2ServerRequest, Http2ServerResponse> | Application<Record<string, any>>;
 
 export async function serviceWorkerMiddleware(
   req: Request & {
@@ -102,10 +95,7 @@ export async function getCacheKeys(
   gasket: Gasket
 ): Promise<Array<(req: Request | FastifyRequest, res: Response | FastifyReply) => string>>;
 
-export async function getComposedContent(
-  gasket: Gasket,
-  context: { req: Request; res: Response } | {}
-): string;
+export async function getComposedContent(gasket: Gasket, context: { req: Request; res: Response } | {}): string;
 
 export async function loadRegisterScript(config: ServiceWorkerConfig): string;
 

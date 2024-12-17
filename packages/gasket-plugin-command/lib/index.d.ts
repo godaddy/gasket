@@ -1,8 +1,5 @@
 import type { Plugin, MaybeAsync } from '@gasket/core';
-import type {
-  GasketArgDefinition,
-  GasketOptionDefinition
-} from './internal.js';
+import type { GasketArgDefinition, GasketOptionDefinition } from './internal.js';
 
 export interface GasketCommandDefinition {
   /* Command id/name */

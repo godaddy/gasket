@@ -14,9 +14,7 @@ export async function handleMetrics(
 export function apply(compiler: Compiler): void;
 
 /** Sets up a context object with special getters */
-export function setupContext(
-  context: any
-): any;
+export function setupContext(context: any): any;
 
 /** Sets up the initial webpack configuration */
 export function initWebpack(

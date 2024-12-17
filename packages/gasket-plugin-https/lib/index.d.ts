@@ -6,11 +6,9 @@ import type { SecureServerOptions, Http2Server } from 'http2';
 import type { ServerOptions as ProxyServerOptions } from 'http-proxy';
 import type { TerminusOptions, HealthCheckError } from '@godaddy/terminus';
 
-
-type RequireAtLeastOne<T, Keys extends keyof T = keyof T> =
-  Pick<T, Exclude<keyof T, Keys>>
-  & {
-    [K in Keys]-?: Required<Pick<T, K>> & Partial<Pick<T, Exclude<Keys, K>>>
+type RequireAtLeastOne<T, Keys extends keyof T = keyof T> = Pick<T, Exclude<keyof T, Keys>> &
+  {
+    [K in Keys]-?: Required<Pick<T, K>> & Partial<Pick<T, Exclude<Keys, K>>>;
   }[Keys];
 
 declare module '@gasket/core' {
@@ -32,19 +30,11 @@ declare module '@gasket/core' {
     honorCipherOrder?: boolean;
   };
 
-  type HttpsSettings =
-     CustomHttpsSettings &
-    Omit<
-      SecureContextOptions,
-      keyof CustomHttpsSettings | 'secureProtocol' | 'secureOptions'
-    >;
+  type HttpsSettings = CustomHttpsSettings &
+    Omit<SecureContextOptions, keyof CustomHttpsSettings | 'secureProtocol' | 'secureOptions'>;
 
-  type Http2Settings =
-     CustomHttpsSettings &
-    Omit<
-      SecureServerOptions,
-      keyof CustomHttpsSettings | 'secureProtocol' | 'secureOptions'
-    >;
+  type Http2Settings = CustomHttpsSettings &
+    Omit<SecureServerOptions, keyof CustomHttpsSettings | 'secureProtocol' | 'secureOptions'>;
 
   interface BaseDevProxyConfig extends ProxyServerOptions {
     protocol?: string;
@@ -77,7 +67,7 @@ declare module '@gasket/core' {
 
   export interface GasketConfig extends ServerOptions {
     terminus?: TerminusOptions & { healthcheck?: string[] };
-    devProxy?: DevProxyConfig
+    devProxy?: DevProxyConfig;
   }
 
   export interface GasketActions {
@@ -91,13 +81,11 @@ declare module '@gasket/core' {
   };
 
   export interface HookExecTypes {
-    devProxy(proxyConfig: DevProxyConfig): MaybeAsync<DevProxyConfig>,
+    devProxy(proxyConfig: DevProxyConfig): MaybeAsync<DevProxyConfig>;
     serverConfig(serverConfig: Omit<ServerOptions, 'handler'>): MaybeAsync<ServerOptions>;
     createServers(serverConfig: ServerOptions): MaybeAsync<ServerOptions>;
     servers(servers: CreatedServers): MaybeAsync<void>;
-    terminus(
-      opts: TerminusOptions
-    ): MaybeAsync<TerminusOptions & { healthcheck?: string[] }>;
+    terminus(opts: TerminusOptions): MaybeAsync<TerminusOptions & { healthcheck?: string[] }>;
     healthcheck(HealthcheckError: typeof HealthCheckError): MaybeAsync<void>;
 
     onSignal(): MaybeAsync<void>;

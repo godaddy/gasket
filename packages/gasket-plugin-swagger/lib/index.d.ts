@@ -1,5 +1,5 @@
 import type { Plugin } from '@gasket/core';
-import type { Options } from 'swagger-jsdoc'
+import type { Options } from 'swagger-jsdoc';
 import type { SwaggerUiOptions } from 'swagger-ui-express';
 import type { FastifySwaggerUiOptions } from '@fastify/swagger-ui';
 import type { CreatePrompt } from 'create-gasket-app';
@@ -7,37 +7,37 @@ import type { CreatePrompt } from 'create-gasket-app';
 type SwaggerOptions = {
   /** Target swagger spec file, either json or yaml. (Default:
    * 'swagger.json') */
-  definitionFile?: string,
+  definitionFile?: string;
 
   /** Route to Swagger UI (Default: '/api-docs') */
-  apiDocsRoute?: string,
+  apiDocsRoute?: string;
 
   /** If set, the definitionFile will be generated based on JSDocs in the
    * configured files. See the swagger-jsdocs options for what is
    * supported. */
-  jsdoc?: Options,
+  jsdoc?: Options;
 
   /** Optional custom UI options. See swagger-ui-express options for what is
    * supported. */
-  ui?: SwaggerUiOptions
+  ui?: SwaggerUiOptions;
 
   /** Optional custom UI options (Fastify Only). See @fastify/swagger-ui options for what is
-       * supported. */
-  uiOptions?: FastifySwaggerUiOptions
-}
+   * supported. */
+  uiOptions?: FastifySwaggerUiOptions;
+};
 
 declare module '@gasket/core' {
   export interface GasketConfig {
-    swagger?: SwaggerOptions
+    swagger?: SwaggerOptions;
   }
 }
 
 type BsdOptions = {
-  root?: string,
-  swagger?: SwaggerOptions
-}
+  root?: string;
+  swagger?: SwaggerOptions;
+};
 
-export function buildSwaggerDefinition(gasket: Gasket, options?: BsdOptions) : Promise<void>;
+export function buildSwaggerDefinition(gasket: Gasket, options?: BsdOptions): Promise<void>;
 
 declare module 'create-gasket-app' {
   export interface CreateContext {
@@ -54,7 +54,4 @@ const plugin: Plugin = {
 export = plugin;
 
 /* Externalize Swagger prompts for preset */
-export async function promptSwagger(
-  context: CreateContext,
-  prompt: CreatePrompt
-): Promise<undefined>
+export async function promptSwagger(context: CreateContext, prompt: CreatePrompt): Promise<undefined>;

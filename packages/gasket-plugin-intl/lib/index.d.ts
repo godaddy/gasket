@@ -41,14 +41,11 @@ declare module '@gasket/core' {
      * Provides access to the Intl manager instance to plugins.
      * Especially useful for plugins that are still CJS.
      */
-    async getIntlManager: () => IntlManager;
+    getIntlManager: () => IntlManager;
   }
 
   export interface HookExecTypes {
-    intlLocale(
-      locale: string,
-      context: { req: GasketRequest }
-    ): MaybeAsync<string>;
+    intlLocale(locale: string, context: { req: GasketRequest }): MaybeAsync<string>;
   }
 }
 

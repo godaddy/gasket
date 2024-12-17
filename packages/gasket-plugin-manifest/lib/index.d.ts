@@ -8,11 +8,7 @@ export type Manifest = {
   staticOutput?: string | boolean;
 };
 
-export async function manifestMiddleware(
-  req: IncomingMessage,
-  res: ServerResponse,
-  next: (err?: any) => void
-): Promise<void>;
+export async function manifestMiddleware(req: IncomingMessage, res: ServerResponse, next: (err?: any) => void): Promise<void>;
 
 declare module '@gasket/core' {
   export interface GasketConfig {
@@ -20,10 +16,7 @@ declare module '@gasket/core' {
   }
 
   export interface HookExecTypes {
-    manifest(
-      initManifest: Manifest,
-      context: { req?: IncomingMessage; res?: OutgoingMessage }
-    ): MaybeAsync<Manifest>;
+    manifest(initManifest: Manifest, context: { req?: IncomingMessage; res?: OutgoingMessage }): MaybeAsync<Manifest>;
   }
 }
 

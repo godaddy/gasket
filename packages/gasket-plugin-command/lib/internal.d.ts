@@ -85,6 +85,4 @@ export function processCommand(command: GasketCommandDefinition): GasketCommand;
 
 export function isValidOption(option: GasketOptionDefinition): boolean;
 
-export function processOptions(
-  options: GasketOptionDefinition[]
-): GasketCommandOption[];
+export function processOptions(options: GasketOptionDefinition[]): GasketCommandOption[];

@@ -16,11 +16,11 @@ export interface PackageJson extends Dependencies {
   license?: string;
   type?: 'commonjs' | 'module';
   repository?:
-  | string
-  | {
-    type: 'git';
-    url: string;
-  };
+    | string
+    | {
+        type: 'git';
+        url: string;
+      };
   scripts?: Record<string, string>;
   optionalDependencies?: Record<string, string>;
   homepage?: string;
@@ -45,11 +45,7 @@ interface CommandOption {
   default?: any;
 }
 
-export function createCommandAction(
-  appname: string,
-  options: CreateCommandOptions,
-  command: Command 
-): Promise<void>;
+export function createCommandAction(appname: string, options: CreateCommandOptions, command: Command): Promise<void>;
 
 export interface CreateCommand {
   id: string;
@@ -69,9 +65,9 @@ export interface ModuleInfo {
   version?: string;
 }
 
-export interface PresetInfo extends ModuleInfo { }
+export interface PresetInfo extends ModuleInfo {}
 
-export interface PluginInfo extends ModuleInfo { }
+export interface PluginInfo extends ModuleInfo {}
 
 export interface ConfigBuilder<Config> {
   /** fields object */
@@ -91,16 +87,12 @@ export interface ConfigBuilder<Config> {
    * @param fields - Object to merge. Can be a function that accepts the current fields and object to merge.
    * @param source - Plugin to blame if conflicts arise from this operation.
    */
-  extend(
-    fields: Partial<Config> | ((current: Config) => Partial<Config>),
-    source: Plugin
-  ): void;
+  extend(fields: Partial<Config> | ((current: Config) => Partial<Config>), source: Plugin): void;
   extend(fields: Partial<Config> | ((current: Config) => Partial<Config>)): void;
 
   /**
    * Performs an intelligent, domain-aware merge of the `value` for
    * the given `key` into the package.json fields associated with this instance.
-   *
    * @param key - Field in package.json to add or extend.
    * @param value - Target value to set for key provided.
    * @param source - Plugin to blame if conflicts arise from this operation.
@@ -110,12 +102,7 @@ export interface ConfigBuilder<Config> {
    * Adapted from @vue/cli under MIT License:
    * https://github.com/vuejs/vue-cli/blob/f09722c/packages/%40vue/cli/lib/GeneratorAPI.js#L117-L150
    */
-  add<Key extends keyof Config & string>(
-    key: Key,
-    value: Config[Key],
-    source: Plugin,
-    options?: { force?: boolean }
-  ): void;
+  add<Key extends keyof Config & string>(key: Key, value: Config[Key], source: Plugin, options?: { force?: boolean }): void;
   add(key: string, value: object, options?: object): void;
 
   /**
@@ -202,7 +189,7 @@ interface Files {
   /**
    * Array of glob sets, each containing an array of globs and a source object.
    */
-  globSets: Array<{ globs: string[], source: Plugin }>;
+  globSets: Array<{ globs: string[]; source: Plugin }>;
 
   /**
    * Return array of globs.
@@ -214,11 +201,11 @@ interface Files {
   /**
    * Adds the specified `globby` compatible patterns, `globs`,
    * into the set of all sources for this set of files.
-   * @param {Object} params - Object containing `globs` and `source`.
+   * @param {object} params - Object containing `globs` and `source`.
    * @param {string[]} params.globs - `globby` compatible patterns.
-   * @param {Object} params.source - Plugin to blame if conflicts arise from this operation.
+   * @param {object} params.source - Plugin to blame if conflicts arise from this operation.
    */
-  add(params: { globs: string[], source: object }): void;
+  add(params: { globs: string[]; source: object }): void;
   add(...globs: string[]): void;
 
   /** Add a warning message if this.warnings exists else log it as a warming */
@@ -267,7 +254,13 @@ interface Files {
    * Adapted from @vue/cli under MIT License:
    * https://github.com/vuejs/vue-cli/blob/f09722c/packages/%40vue/cli/lib/util/mergeDeps.js
    */
-  semanticMerge({ key, value, existing, name, force }: {
+  semanticMerge({
+    key,
+    value,
+    existing,
+    name,
+    force
+  }: {
     key: string;
     value: any;
     existing: any;
@@ -275,7 +268,7 @@ interface Files {
     force?: boolean;
   }): void;
 
-    /**
+  /**
    * Normalizes a potential semver range into a semver string
    * and returns the newest version
    * @param  {string} r1 Semver string (potentially invalid).
@@ -287,7 +280,7 @@ interface Files {
    */
   tryGetNewerRange(r1: string, r2: string): string | undefined;
 
-    /**
+  /**
    * Performs a naive attempt to take a transform a semver range
    * into a concrete version that may be used for "newness"
    * comparison.
@@ -301,9 +294,9 @@ interface Files {
    * the `orderFields` options having their keys sorted.
    * @returns {object} Ready to be serialized JavaScript object.
    */
-    toJSON(): object;
+  toJSON(): object;
 
-    /**
+  /**
    * Orders the given object, `obj`, applying any (optional)
    * key order specified via `orderBy`. If no `orderBy` is provided
    * keys are ordered lexographically.
@@ -384,8 +377,10 @@ declare module 'create-gasket-app' {
     /** paths to the local presets packages */
     localPresets: Array<string>;
 
-    /** Raw preset desc from args. Can include version constraint. Added by
-     * load-preset if using localPresets. */
+    /**
+     * Raw preset desc from args. Can include version constraint. Added by
+     * load-preset if using localPresets.
+     */
     rawPresets: Array<string>;
 
     /** Local packages that should be linked */
@@ -461,7 +456,7 @@ declare module 'create-gasket-app' {
 
     /** Use to add content to the README.md */
     readme: Readme;
-    
+
     constructor(initContext?: Partial<T>);
     runWith(plugin: Plugin): Proxy<CreateContext>;
   }
@@ -474,14 +469,13 @@ export interface ActionWrapperParams {
 }
 
 declare module '@gasket/core' {
-
   export interface HookExecTypes {
     presetPrompt(
       context: CreateContext,
       utils: {
         prompt: CreatePrompt;
       }
-    ): Promise<void>;
+    ): Promise<CreateContext>;
     presetConfig(context: CreateContext): Promise<CreateContext['presetConfig']>;
     prompt(
       context: CreateContext,

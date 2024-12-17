@@ -15,4 +15,4 @@ declare module '@gasket/data' {
  */
 export function gasketData(): GasketData;
 
-export function resolveGasketData(gasket: Gasket, req: GasketRequest | IncomingMessage ): Promise<GasketData>;
+export function resolveGasketData(gasket: Gasket, req: GasketRequest | IncomingMessage): Promise<GasketData>;

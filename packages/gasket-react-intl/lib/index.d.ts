@@ -1,16 +1,5 @@
-import {
-  ComponentType,
-  FunctionComponent,
-  PropsWithChildren,
-  ReactNode,
-  Ref
-} from 'react';
-import {
-  LocaleFilePath,
-  LocaleFileStatus,
-  IntlManager,
-  Messages
-} from '@gasket/intl';
+import { ComponentType, FunctionComponent, PropsWithChildren, ReactNode, Ref } from 'react';
+import { LocaleFilePath, LocaleFileStatus, IntlManager, Messages } from '@gasket/intl';
 
 export { LocaleFileStatus };
 
@@ -30,14 +19,12 @@ export interface LocaleFileRequiredProps {
 export type LocaleFileRequired = FunctionComponent<PropsWithChildren<LocaleFileRequiredProps>>;
 
 export interface LocaleFileRequiredHOCProps extends LocaleFileRequiredProps {
-  forwardedRef?: boolean
+  forwardedRef?: boolean;
 }
 
 export type LocaleFileRequiredHOC = FunctionComponent<LocaleFileRequiredHOCProps>;
 
-/**
- * Make an HOC that loads a locale file before rendering wrapped component
- */
+// Make an HOC that loads a locale file before rendering wrapped component
 export function withLocaleFileRequired(
   /** Path containing locale files */
   localeFilePath: LocaleFilePath | LocaleFilePath[],
@@ -46,13 +33,9 @@ export function withLocaleFileRequired(
     loading?: ReactNode;
     forwardRef?: boolean;
   }
-): (
-  Component: ComponentType<any>
-) => LocaleFileRequiredHOC;
+): (Component: ComponentType<any>) => LocaleFileRequiredHOC;
 
-/**
- * React that fetches a locale file and returns loading status
- */
+// React that fetches a locale file and returns loading status
 export function useLocaleFile(
   /** Path containing locale files */
   ...localeFilePath: LocaleFilePath[]
@@ -76,8 +59,6 @@ export function withMessagesProvider(
   intlManager: IntlManager,
   options?: {
     /** experimental: render additional static locale files */
-    staticLocaleFilePaths?: LocaleFilePath[]
+    staticLocaleFilePaths?: LocaleFilePath[];
   }
-): (
-  Component: ComponentType<Partial<MessagesProps>>
-) => IntlProviderHOC;
+): (Component: ComponentType<Partial<MessagesProps>>) => IntlProviderHOC;

@@ -174,13 +174,7 @@ declare module '@gasket/utils' {
     args: string[]
   ): Promise<{ data: any; stdout: string }>;
 
-  export function warnIfOutdated(
-    pkgName: string,
-    currentVersion: string
-  ): MaybeAsync<void>;
+  export function warnIfOutdated(pkgName: string, currentVersion: string): MaybeAsync<void>;
 }
 
-export function getPackageLatestVersion(
-  pkgName: string,
-  options?: object
-): Promise<string>;
+export function getPackageLatestVersion(pkgName: string, options?: object): Promise<string>;

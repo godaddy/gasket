@@ -11,9 +11,4 @@ export async function setupNextApp(gasket: Gasket): NextServer;
 /**
  * Sets up the next.js request handler to be called after all other middleware
  */
-export function setupNextServer(
-  nextServer: NextServer,
-  serverApp: Application | Fastify,
-  gasket: Gasket
-): void;
-
+export function setupNextServer(nextServer: NextServer, serverApp: Application | Fastify, gasket: Gasket): void;

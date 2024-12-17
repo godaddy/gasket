@@ -22,10 +22,7 @@ declare module '@gasket/core' {
   }
 
   export interface HookExecTypes {
-    workbox(
-      config: GenerateSWConfig,
-      context: { req?: Request; res?: Response }
-    ): MaybeAsync<PartialRecursive<GenerateSWConfig>>;
+    workbox(config: GenerateSWConfig, context: { req?: Request; res?: Response }): MaybeAsync<PartialRecursive<GenerateSWConfig>>;
   }
 }
 

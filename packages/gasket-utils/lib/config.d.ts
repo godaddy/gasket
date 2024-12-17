@@ -16,15 +16,9 @@ interface ConfigDefinition extends Record<string, any> {
 type ConfigOutput = Omit<ConfigDefinition, 'environments' | 'commands'>;
 type ConfigPartial = Partial<ConfigDefinition> | undefined | void | unknown;
 
-export function getPotentialConfigs(
-  config: ConfigDefinition,
-  configContext: ConfigContext
-): Array<ConfigPartial>;
+export function getPotentialConfigs(config: ConfigDefinition, configContext: ConfigContext): Array<ConfigPartial>;
 
-export function getCommandOverrides(
-  commands: Record<string, Partial<ConfigDefinition>>,
-  commandId: string
-): Array<ConfigPartial>;
+export function getCommandOverrides(commands: Record<string, Partial<ConfigDefinition>>, commandId: string): Array<ConfigPartial>;
 
 export function getSubEnvironmentOverrides(
   env: string,
@@ -51,7 +45,7 @@ export function getLocalOverrides(
 
 // Normalize the config by applying any overrides for environments, commands, or
 // local-only config file.
-export function applyConfigOverrides<
-  Def extends ConfigDefinition,
-  Out extends ConfigOutput
->(config: Def, configContext: ConfigContext): Out;
+export function applyConfigOverrides<Def extends ConfigDefinition, Out extends ConfigOutput>(
+  config: Def,
+  configContext: ConfigContext
+): Out;

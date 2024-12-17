@@ -8,15 +8,19 @@ import type { CreateContext, CreatePrompt } from 'create-gasket-app';
 
 export { NextConfig, NextServer };
 
-export type NextConfigFunction = (phase: string, context: {
-  defaultConfig: NextConfig,
-  isServer?: boolean
-}) => Promise<NextConfig>;
+export type NextConfigFunction = (
+  phase: string,
+  context: {
+    defaultConfig: NextConfig;
+    isServer?: boolean;
+  }
+) => Promise<NextConfig>;
 
 declare module '@gasket/core' {
-
   export interface GasketActions {
-    getNextConfig?: (config?: NextConfig | NextConfigFunction) => (phase: string, context?: { defaultConfig?: NextConfig }) => Promise<NextConfig>
+    getNextConfig?: (
+      config?: NextConfig | NextConfigFunction
+    ) => (phase: string, context?: { defaultConfig?: NextConfig }) => Promise<NextConfig>;
     getNextRoute?: (req: IncomingMessage) => Promise<null | {
       page: string;
       regex: RegExp;
@@ -42,19 +46,9 @@ declare module '@gasket/core' {
   export interface HookExecTypes {
     nextConfig(config: NextConfig): MaybeAsync<NextConfig>;
     next(nextServer: NextServer): MaybeAsync<void>;
-    nextExpress(params: {
-      next: NextServer;
-      express: Application;
-    }): MaybeAsync<void>;
-    nextPreHandling(context: {
-      nextServer: NextServer,
-      req: IncomingMessage,
-      res: ServerResponse
-    }): MaybeAsync<void>;
-    nextFastify(params: {
-      next: NextServer;
-      fastify: Fastify;
-    }): MaybeAsync<void>;
+    nextExpress(params: { next: NextServer; express: Application }): MaybeAsync<void>;
+    nextPreHandling(context: { nextServer: NextServer; req: IncomingMessage; res: ServerResponse }): MaybeAsync<void>;
+    nextFastify(params: { next: NextServer; fastify: Fastify }): MaybeAsync<void>;
   }
 }
 
@@ -98,23 +92,11 @@ declare module '@gasket/plugin-nextjs' {
   }
 
   /* Exported prompts */
-  export async function promptAppRouter(
-    context: CreateContext,
-    prompt: CreatePrompt
-  ): Promise<undefined>
+  export async function promptAppRouter(context: CreateContext, prompt: CreatePrompt): Promise<undefined>;
 
-  export async function promptNextServerType(
-    context: CreateContext,
-    prompt: CreatePrompt
-  ): Promise<undefined>
+  export async function promptNextServerType(context: CreateContext, prompt: CreatePrompt): Promise<undefined>;
 
-  export async function promptNextDevProxy(
-    context: CreateContext,
-    prompt: CreatePrompt
-  ): Promise<undefined>
+  export async function promptNextDevProxy(context: CreateContext, prompt: CreatePrompt): Promise<undefined>;
 
-  export async function promptSitemap(
-    context: CreateContext,
-    prompt: CreatePrompt
-  ): Promise<undefined>
+  export async function promptSitemap(context: CreateContext, prompt: CreatePrompt): Promise<undefined>;
 }
