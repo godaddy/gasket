@@ -226,17 +226,11 @@ describe('create hook', () => {
       });
     });
 
-    it('adds babel-register for TypeScript', async function () {
+    it('adds TypeScript-related packages', async function () {
       mockContext.typescript = true;
       await create.handler({}, mockContext);
       expect(mockContext.pkg.add).toHaveBeenCalledWith('dependencies', {
-        '@babel/register': devDependencies['@babel/register'],
-        '@gasket/assets': devDependencies['@gasket/assets'],
-        '@gasket/nextjs': devDependencies['@gasket/nextjs'],
-        [name]: `^${version}`,
-        'next': devDependencies.next,
-        'react': devDependencies.react,
-        'react-dom': devDependencies['react-dom']
+        '@types/react': devDependencies['@types/react']
       });
     });
 

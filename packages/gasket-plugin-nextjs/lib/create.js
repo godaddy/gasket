@@ -127,6 +127,10 @@ function addDependencies({ pkg, typescript }) {
     pkg.add('devDependencies', {
       nodemon: devDependencies.nodemon
     });
+  } else {
+    pkg.add('dependencies', {
+      '@types/react': devDependencies['@types/react']
+    });
   }
 }
 
