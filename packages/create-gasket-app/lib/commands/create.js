@@ -27,7 +27,7 @@ import {
  * Parses comma separated option input to array
  * @type {import('../internal').commasToArray}
  */
-const commasToArray = input => input.split(',').map(name => name.trim());
+const commasToArray = (input) => input.split(',').map((name) => name.trim());
 
 const createCommand = {
   id: 'create',
@@ -106,7 +106,6 @@ createCommand.action = async function run(appname, options, command) {
     await globalPrompts({ context });
 
     if (rawPresets.length || localPresets.length) {
-
       await loadPreset({ context });
 
       const presetGasket = makeGasket({
