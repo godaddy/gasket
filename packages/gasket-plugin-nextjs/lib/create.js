@@ -171,7 +171,7 @@ function addNpmScripts({ pkg, nextServerType, nextDevProxy, typescript, hasGaske
       scripts['build:tsc'] = 'tsc -p ./tsconfig.server.json';
       scripts.build = 'npm run build:tsc && next build';
       scripts['start:https'] = `node dist/server.js`;
-      scripts.local = 'concurrently \"npm run build:tsc:watch\" \"npm run local:https\" \"next dev\"';
+      scripts.local = 'concurrently "npm run build:tsc:watch" "npm run local:https" "next dev"';
     }
   }
 

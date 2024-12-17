@@ -289,12 +289,12 @@ describe('create hook', () => {
       mockContext.nextDevProxy = true;
       await create.handler({}, mockContext);
       expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts', {
-        'start:https': 'node server.js',
-        'local:https': 'nodemon server.js',
-        'start': 'next start & npm run start:https',
-        'local': 'next dev & npm run local:https',
+        'build': 'next build',
+        'start': 'npm run start:https & next start',
+        'local': ' npm run local:https & next dev',
         'preview': 'npm run build && npm run start',
-        'build': 'next build'
+        'start:https': 'node server.js',
+        'local:https': 'nodemon server.js'
       });
     });
 
@@ -326,7 +326,7 @@ describe('create hook', () => {
       });
     });
 
-    it('adjusts scripts for devProxy & typescript', async function () {
+    it('adjusts scripts for nextDevProxy & typescript', async function () {
       mockContext.nextServerType = 'appRouter';
       mockContext.nextDevProxy = true;
       mockContext.typescript = true;
@@ -335,9 +335,10 @@ describe('create hook', () => {
       expect(mockContext.pkg.add).toHaveBeenCalledWith('scripts', {
         'start:https': 'node dist/server.js',
         'local:https': 'tsx watch server.ts',
-        'start': 'next start & npm run start:https',
-        'local': 'next dev & npm run local:https',
+        'start': 'npm run start:https & next start',
+        'local': 'concurrently "npm run build:tsc:watch" "npm run local:https" "next dev"',
         'build:tsc': 'tsc -p ./tsconfig.server.json',
+        'build:tsc:watch': 'tsc -p ./tsconfig.server.json --watch',
         'build': 'npm run build:tsc && next build',
         'preview': 'npm run build && npm run start',
         'prebuild': 'tsx gasket.ts build'

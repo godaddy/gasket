@@ -9,9 +9,7 @@ async function create(gasket, {
   pkg,
   files,
   gasketConfig,
-  typescript,
-  nextServerType,
-  apiApp
+  typescript
 }) {
   pkg.add('dependencies', {
     [name]: `^${version}`,
