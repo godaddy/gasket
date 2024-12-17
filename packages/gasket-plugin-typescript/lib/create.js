@@ -59,7 +59,7 @@ module.exports = async function create(gasket, context) {
   if (nextDevProxy) {
     files.add(`${generatorDir}/next/*`, `${generatorDir}/shared/*`);
     pkg.add('devDependencies', {
-      concurrently: devDependencies.concurrently,
+      concurrently: devDependencies.concurrently
     });
   }
 
