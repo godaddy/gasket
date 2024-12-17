@@ -55,8 +55,12 @@ module.exports = async function create(gasket, context) {
   }
 
   // Files for Next.js default server w/ https proxy
+  // Also add concurrently for running multiple scripts
   if (nextDevProxy) {
     files.add(`${generatorDir}/next/*`, `${generatorDir}/shared/*`);
+    pkg.add('devDependencies', {
+      concurrently: devDependencies.concurrently,
+    });
   }
 
   // Files for Next.js default server w/o dev proxy

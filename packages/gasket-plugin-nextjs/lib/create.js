@@ -164,12 +164,14 @@ function addNpmScripts({ pkg, nextServerType, nextDevProxy, typescript, hasGaske
   } else if (nextDevProxy) {
     scripts['start:https'] = `node server.js`;
     scripts['local:https'] = `${watcher} server.${fileExtension}`;
-    scripts.start = `next start & npm run start:https`;
-    scripts.local = `next dev & npm run local:https`;
+    scripts.start = `npm run start:https & next start`;
+    scripts.local = ` npm run local:https & next dev`;
     if (typescript) {
+      scripts['build:tsc:watch'] = 'tsc -p ./tsconfig.server.json --watch';
       scripts['build:tsc'] = 'tsc -p ./tsconfig.server.json';
       scripts.build = 'npm run build:tsc && next build';
       scripts['start:https'] = `node dist/server.js`;
+      scripts.local = 'concurrently \"npm run build:tsc:watch\" \"npm run local:https\" \"next dev\"';
     }
   }
 
