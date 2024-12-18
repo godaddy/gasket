@@ -43,6 +43,7 @@
     "@gasket/plugin-git": "7.1.0-next.6",
     "@gasket/plugin-logger": "7.1.0-next.6",
     "@gasket/plugin-metadata": "7.1.0-next.6",
+    "@gasket/request": "7.1.0-next.6",
     "@gasket/utils": "7.1.0-next.6",
     "commander": "^12.0.0",
     "deepmerge": "^4.3.1",
@@ -56,7 +57,6 @@
     "semver": "^7.6.3"
   },
   "devDependencies": {
-    "@gasket/request": "7.1.0-next.6",
     "@types/inquirer": "^9.0.7",
     "cross-env": "^7.0.3",
     "dotenv": "^16.4.5",
