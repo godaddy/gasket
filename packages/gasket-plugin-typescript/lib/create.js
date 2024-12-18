@@ -65,6 +65,7 @@ module.exports = async function create(gasket, context) {
   // Also add concurrently for running multiple scripts
   if (nextDevProxy) {
     files.add(`${generatorDir}/next/*`, `${generatorDir}/shared/*`);
+    pkg.add('eslintIgnore', ['dist']);
   }
 
   // Files for Next.js default server w/o dev proxy

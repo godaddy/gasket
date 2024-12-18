@@ -142,5 +142,12 @@ describe('create hook', () => {
         concurrently: devDependencies.concurrently
       });
     });
+
+    it('adds to eslintIgnore for nextDevProxy', () => {
+      mockContext.nextServerType = 'appRouter';
+      mockContext.nextDevProxy = true;
+      create({}, mockContext);
+      expect(mockContext.pkg.add).toHaveBeenCalledWith('eslintIgnore', ['dist']);
+    });
   });
 });
