@@ -1,5 +1,12 @@
 # `@gasket/nextjs`
 
+### 7.1.0
+
+- Use normalized GasketRequest ([#973])
+  - Deprecating request from `@gasket/nextjs/server` for 
+    `@gasket/nextjs/request`
+  - Supports Next 15 async headers
+
 ### 7.0.0
 
 - See [Version 7 Upgrade Guide] for overall changes
@@ -73,3 +80,4 @@
 [#670]: https://github.com/godaddy/gasket/pull/670
 [#778]: https://github.com/godaddy/gasket/pull/778
 [#814]: https://github.com/godaddy/gasket/pull/814
+[#973]: https://github.com/godaddy/gasket/pull/973

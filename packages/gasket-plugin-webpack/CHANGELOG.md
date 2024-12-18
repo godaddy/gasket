@@ -1,5 +1,9 @@
 # `@gasket/plugin-webpack`
 
+### 7.1.0
+
+- Aligned version releases across all packages
+
 ### 7.0.15
 
 - Fix dynamic require warning ([#985])

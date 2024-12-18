@@ -1,5 +1,9 @@
 # `@gasket/plugin-fastify`
 
+### 7.1.0
+
+- Aligned version releases across all packages
+
 ### 7.0.13
 
 - add conditional file content based on TS ([#972])

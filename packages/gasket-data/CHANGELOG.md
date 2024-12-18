@@ -1,5 +1,9 @@
 # `@gasket/data`
 
+### 7.1.0
+
+- Use normalized GasketRequest ([#973])
+
 ### 7.0.0
 
 - See [Version 7 Upgrade Guide] for overall changes
@@ -34,3 +38,4 @@
 [#460]: https://github.com/godaddy/gasket/pull/460
 [#507]: https://github.com/godaddy/gasket/pull/507
 [#670]: https://github.com/godaddy/gasket/pull/670
+[#973]: https://github.com/godaddy/gasket/pull/973

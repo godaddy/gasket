@@ -1,5 +1,9 @@
 # `@gasket/plugin-https`
 
+### 7.1.0
+
+- Aligned version releases across all packages
+
 ### 7.0.6
 
 - Pretty logs when custom port not configured ([#952])

@@ -1,5 +1,9 @@
 # `@gasket/redux`
 
+### 7.1.0
+
+- Aligned version releases across all packages
+
 ### 7.0.14
 
 - Add configureMakeStore options callback to allow for per-request configuration ([#974])

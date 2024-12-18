@@ -1,5 +1,9 @@
 # `@gasket/plugin-lint`
 
+### 7.1.0
+
+- Aligned version releases across all packages
+
 ### 7.0.3
 
 - Add create dev deps ([#937])

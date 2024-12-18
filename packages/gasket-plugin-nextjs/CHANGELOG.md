@@ -1,5 +1,9 @@
 # `@gasket/plugin-nextjs`
 
+### 7.1.0
+
+- Add HTTPS proxy server to Next.js dev server ([#982])
+
 ### 7.0.5
 
 - Fix typo in dir names ([#948])
@@ -310,4 +314,5 @@
 [#814]: https://github.com/godaddy/gasket/pull/814
 [#946]: https://github.com/godaddy/gasket/pull/946
 [#948]: https://github.com/godaddy/gasket/pull/948
+[#982]: https://github.com/godaddy/gasket/pull/982
 

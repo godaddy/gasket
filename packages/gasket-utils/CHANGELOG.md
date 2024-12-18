@@ -1,5 +1,9 @@
 # `@gasket/utils`
 
+### 7.1.0
+
+- Aligned version releases across all packages
+
 - Adjustments to support Gasket in edge runtime ([#961])
   - Add config export for leaner applyConfigOverrides
   - Use `deepmerge` instead of `lodash.defaultsdeep` due to incompatible _new Function_
