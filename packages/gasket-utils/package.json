@@ -1,6 +1,6 @@
 {
   "name": "@gasket/utils",
-  "version": "7.0.15",
+  "version": "7.1.0",
   "description": "Reusable utilities for Gasket internals",
   "files": [
     "lib"
@@ -51,7 +51,7 @@
     "semver": "^7.6.3"
   },
   "devDependencies": {
-    "@gasket/core": "^7.0.15",
+    "@gasket/core": "^7.1.0",
     "@types/concat-stream": "^2.0.3",
     "@types/cross-spawn": "^6.0.6",
     "abort-controller": "^3.0.0",

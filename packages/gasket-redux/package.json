@@ -1,6 +1,6 @@
 {
   "name": "@gasket/redux",
-  "version": "7.0.15",
+  "version": "7.1.0",
   "description": "Gasket Redux Configuration",
   "main": "lib",
   "types": "src/index.d.ts",
