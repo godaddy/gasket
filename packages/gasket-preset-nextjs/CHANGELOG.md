@@ -1,5 +1,9 @@
 # `@gasket/preset-nextjs`
 
+### 7.1.0
+
+- Aligned version releases across all packages
+
 ### 7.0.4
 
 - Adjust link references ([#946])

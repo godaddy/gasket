@@ -1,5 +1,9 @@
 # `@gasket/plugin-command`
 
+### 7.1.0
+
+- Improvements to gasket command setup with async `prepare` lifecycle ([#989], [#991])
+
 ### 7.0.15
 
 - Do not transpile to cjs ([#980])
@@ -101,3 +105,5 @@
 [#442]: https://github.com/godaddy/gasket/pull/442
 [#460]: https://github.com/godaddy/gasket/pull/460
 [#980]: https://github.com/godaddy/gasket/pull/980
+[#989]: https://github.com/godaddy/gasket/pull/989
+[#991]: https://github.com/godaddy/gasket/pull/991

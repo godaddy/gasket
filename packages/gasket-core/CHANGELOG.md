@@ -1,7 +1,10 @@
 # `@gasket/core`
 
+### 7.1.0
+
 - Added `registerPlugins` method to the GasketEngine ([#970])
 - Edge runtime support using lean export from `@gasket/utils` ([#961])
+- Improvements to gasket command setup with async `prepare` lifecycle ([#989])
 
 ### 7.0.6
 
@@ -17,3 +20,4 @@
 [#949]: https://github.com/godaddy/gasket/pull/949
 [#961]: https://github.com/godaddy/gasket/pull/961
 [#970]: https://github.com/godaddy/gasket/pull/970
+[#989]: https://github.com/godaddy/gasket/pull/989

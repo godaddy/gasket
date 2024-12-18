@@ -1,5 +1,9 @@
 # `@gasket/plugin-service-worker`
 
+### 7.1.0
+
+- Improvements to gasket command setup ([#989])
+
 ### 7.0.0
 
 - See [Version 7 Upgrade Guide] for overall changes
@@ -78,3 +82,4 @@
 [#436]: https://github.com/godaddy/gasket/pull/436
 [#457]: https://github.com/godaddy/gasket/pull/457
 [#670]: https://github.com/godaddy/gasket/pull/670
+[#989]: https://github.com/godaddy/gasket/pull/989

@@ -1,5 +1,9 @@
 # `@gasket/plugin-jest`
 
+### 7.1.0
+
+- Aligned version releases across all packages
+
 ### 7.0.10
 
 - opt for type:module in TS API app test suite ([#966])

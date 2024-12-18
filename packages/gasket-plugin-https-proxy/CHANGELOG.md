@@ -1,5 +1,7 @@
 # `@gasket/plugin-https-proxy`
 
-### 7.0.0
+### 7.1.0
 
-- Initial implementation
+- Initial implementation ([#982])
+
+[#982]: https://github.com/godaddy/gasket/pull/982

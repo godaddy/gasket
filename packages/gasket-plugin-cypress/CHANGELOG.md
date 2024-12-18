@@ -1,5 +1,9 @@
 # @gasket/plugin-cypress
 
+### 7.1.0
+
+- Aligned version releases across all packages
+
 ### 7.0.3
 
 - Fix to use start:local only if set ([#941])
