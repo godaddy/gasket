@@ -1,5 +1,9 @@
 # `@gasket/plugin-express`
 
+### 7.1.0
+
+- Aligned version releases across all packages
+
 ### 7.0.14
 
 - Switch to `http2-express` to address vulnerabilities ([#959])

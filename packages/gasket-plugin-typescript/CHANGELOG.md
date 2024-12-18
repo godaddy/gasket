@@ -1,5 +1,9 @@
 # `@gasket/plugin-typescript`
 
+### 7.1.0
+
+- Add HTTPS proxy server to Next.js dev server ([#982])
+
 ### 7.0.0
 
 - See [Version 7 Upgrade Guide] for overall changes
@@ -7,3 +11,5 @@
 
 
 [Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
+
+[#982]: https://github.com/godaddy/gasket/pull/982

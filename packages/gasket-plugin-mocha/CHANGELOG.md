@@ -1,5 +1,9 @@
 # `@gasket/plugin-mocha`
 
+### 7.1.0
+
+- Aligned version releases across all packages
+
 ### 7.0.4
 
 - Add `@babel/preset-react` as a dev dep during create ([#947])

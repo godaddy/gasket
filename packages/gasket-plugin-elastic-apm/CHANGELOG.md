@@ -1,5 +1,9 @@
 # `@gasket/plugin-elastic-apm`
 
+### 7.1.0
+
+- Use normalized GasketRequest ([#973])
+
 ### 7.0.0
 
 - See [Version 7 Upgrade Guide] for overall changes
@@ -65,3 +69,4 @@
 [#692]: https://github.com/godaddy/gasket/pull/692
 [#697]: https://github.com/godaddy/gasket/pull/697
 [#708]: https://github.com/godaddy/gasket/pull/708
+[#973]: https://github.com/godaddy/gasket/pull/973

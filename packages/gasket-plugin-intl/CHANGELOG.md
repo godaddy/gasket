@@ -1,5 +1,9 @@
 # `@gasket/plugin-intl`
 
+### 7.1.0
+
+- Use normalized GasketRequest ([#973])
+
 ### 7.0.14
 
 - Tune getIntlManager to import intl.js ([#975])
@@ -255,3 +259,4 @@
 [#791]: https://github.com/godaddy/gasket/pull/791
 [#965]: https://github.com/godaddy/gasket/pull/965
 [#975]: https://github.com/godaddy/gasket/pull/975
+[#973]: https://github.com/godaddy/gasket/pull/973
