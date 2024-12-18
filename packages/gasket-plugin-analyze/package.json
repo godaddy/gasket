@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-analyze",
-  "version": "7.1.0-next.5",
+  "version": "7.1.0-next.6",
   "description": "Gasket Analyzer Plugin",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -41,7 +41,7 @@
     "webpack-bundle-analyzer": "^4.10.1"
   },
   "devDependencies": {
-    "@gasket/core": "7.1.0-next.5",
+    "@gasket/core": "7.1.0-next.6",
     "@types/jest": "^29.5.12",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",

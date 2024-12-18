@@ -1,6 +1,6 @@
 {
   "name": "create-gasket-app",
-  "version": "7.1.0-next.5",
+  "version": "7.1.0-next.6",
   "description": "starter pack for creating a gasket app",
   "type": "module",
   "bin": {
@@ -35,15 +35,15 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/create-gasket-app",
   "dependencies": {
-    "@gasket/core": "7.1.0-next.5",
-    "@gasket/plugin-command": "7.1.0-next.5",
-    "@gasket/plugin-docs": "7.1.0-next.5",
-    "@gasket/plugin-docusaurus": "7.1.0-next.5",
-    "@gasket/plugin-dynamic-plugins": "7.1.0-next.5",
-    "@gasket/plugin-git": "7.1.0-next.5",
-    "@gasket/plugin-logger": "7.1.0-next.5",
-    "@gasket/plugin-metadata": "7.1.0-next.5",
-    "@gasket/utils": "7.1.0-next.5",
+    "@gasket/core": "7.1.0-next.6",
+    "@gasket/plugin-command": "7.1.0-next.6",
+    "@gasket/plugin-docs": "7.1.0-next.6",
+    "@gasket/plugin-docusaurus": "7.1.0-next.6",
+    "@gasket/plugin-dynamic-plugins": "7.1.0-next.6",
+    "@gasket/plugin-git": "7.1.0-next.6",
+    "@gasket/plugin-logger": "7.1.0-next.6",
+    "@gasket/plugin-metadata": "7.1.0-next.6",
+    "@gasket/utils": "7.1.0-next.6",
     "commander": "^12.0.0",
     "deepmerge": "^4.3.1",
     "diagnostics": "^2.0.2",
@@ -56,7 +56,7 @@
     "semver": "^7.6.3"
   },
   "devDependencies": {
-    "@gasket/request": "7.1.0-next.5",
+    "@gasket/request": "7.1.0-next.6",
     "@types/inquirer": "^9.0.7",
     "cross-env": "^7.0.3",
     "dotenv": "^16.4.5",
