@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-cypress",
-  "version": "7.1.0-next.6",
+  "version": "7.1.0-next.7",
   "description": "Integrates Cypress based testing into your Gasket application",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -34,7 +34,7 @@
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-cypress",
   "devDependencies": {
     "@babel/core": "^7.23.7",
-    "@gasket/core": "7.1.0-next.6",
+    "@gasket/core": "7.1.0-next.7",
     "@testing-library/react": "^13.4.0",
     "@types/jest": "^29.5.12",
     "cross-env": "^7.0.3",
