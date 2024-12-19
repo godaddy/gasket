@@ -1,5 +1,9 @@
 # `@gasket/plugin-express`
 
+### 7.1.1
+
+- Ensure cookies are parsed ([#1001])
+
 ### 7.1.0
 
 - Aligned version releases across all packages
@@ -141,3 +145,4 @@
 [#967]: https://github.com/godaddy/gasket/pull/967
 [#959]: https://github.com/godaddy/gasket/pull/959
 [#969]: https://github.com/godaddy/gasket/pull/969
+[#1001]: https://github.com/godaddy/gasket/pull/1001
