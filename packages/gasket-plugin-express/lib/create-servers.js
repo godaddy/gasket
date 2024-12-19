@@ -8,6 +8,7 @@
  */
 module.exports = async function createServers(gasket, serverOpts) {
   const app = gasket.actions.getExpressApp();
+  app.use(require('cookie-parser')());
 
   await gasket.exec('express', app);
 

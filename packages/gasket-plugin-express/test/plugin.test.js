@@ -86,6 +86,11 @@ describe('createServers', () => {
     expect(result).toEqual({ handler: bridgedApp });
   });
 
+  it('attaches cookie parser middleware', async function () {
+    await plugin.hooks.createServers(gasket, {});
+    expect(app.use).toHaveBeenCalledWith(cookieParserMiddleware);
+  });
+
   it('executes the `express` lifecycle', async function () {
     await plugin.hooks.createServers(gasket, {});
     expect(gasket.exec).toHaveBeenCalledWith('express', app);
