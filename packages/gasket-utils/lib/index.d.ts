@@ -64,7 +64,12 @@ export interface Signal {
  * Options can be passed to the underlying spawn. An additional `signal` option
  * can be passed to use AbortController, allowing processes to be killed when no
  * longer needed.
- *
+ * @param cmd
+ * @param argv
+ * @param options
+ * @param options.signal
+ * @param options.cwd
+ * @param debug
  * @example
  * const { runShellCommand } = require('@gasket/utils');
  *
@@ -132,6 +137,8 @@ declare module '@gasket/utils' {
    * Executes the appropriate npm binary with the verbatim `argv` and
    * `spawnWith` options provided. Passes appropriate debug flag for
    * npm based on process.env.
+   * @param argv
+   * @param spawnWith
    */
   function PackageManager_spawnNpm(
     /** Precise CLI arguments to pass to `npm`. */
@@ -144,6 +151,8 @@ declare module '@gasket/utils' {
    * Executes the appropriate yarn binary with the verbatim `argv` and
    * `spawnWith` options provided. Passes appropriate debug flag for
    * npm based on process.env.
+   * @param argv
+   * @param spawnWith
    */
   function PackageManager_spawnYarn(
     /** Precise CLI arguments to pass to `npm`. */
@@ -174,13 +183,7 @@ declare module '@gasket/utils' {
     args: string[]
   ): Promise<{ data: any; stdout: string }>;
 
-  export function warnIfOutdated(
-    pkgName: string,
-    currentVersion: string
-  ): MaybeAsync<void>;
+  export function warnIfOutdated(pkgName: string, currentVersion: string): MaybeAsync<void>;
 }
 
-export function getPackageLatestVersion(
-  pkgName: string,
-  options?: object
-): Promise<string>;
+export function getPackageLatestVersion(pkgName: string, options?: object): Promise<string>;

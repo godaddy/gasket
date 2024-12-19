@@ -192,7 +192,6 @@ describe('applyConfigOverrides', () => {
   });
 
   describe('commands', function () {
-
     it('deep merges properties from matching command id', () => {
       mockConfig.commands = {
         start: {
@@ -247,6 +246,6 @@ describe('applyConfigOverrides', () => {
           }
         }
       });
-    })
+    });
   });
 });
