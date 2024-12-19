@@ -51,13 +51,13 @@ The [winston documentation] enumerates which properties can be configured. To su
 
 **Configurable in `gasket`**
 
-| Name         | Default                               | Description                                              |
-|:-------------|:--------------------------------------|:---------------------------------------------------------|
-| `level`      | `'info'` (`'debug'` in ENV=local)     | Log only if `info.level`less than or equal to this level |
-| `transports` | `[new Console()]` _(Console logging)_ | Set of logging targets for `info` messages               |
-| `silent`     | `false`                               | If true, all logs are suppressed                         |
-| `levels`     | `winston.config.syslog.levels`        | Levels (and colors) representing log priorities          |
-| `format`      | Gasket-defined format                | Formatting for messages (see: [Formats])                 |
+| Name         | Default                                                    | Description                                                 |
+|:-------------|:-----------------------------------------------------------|:------------------------------------------------------------|
+| `level`      | `'info'` (`'debug'` in ENV=local)                          | Log only if `info.level`less than or equal to this level    |
+| `transports` | `[new Console()]` _(Console logging)_                      | Set of logging targets for `info` messages                  |
+| `silent`     | `false`                                                    | If true, all logs are suppressed                            |
+| `levels`     | `winston.config.syslog.levels`                             | Levels (and colors) representing log priorities             |
+| `format`     | `combine(splat(),json())`<br/> or `simple()` for local env | Formatting for messages ([Winston Formats Docs][Formats])   |
 
 > **Note:** While `levels` are configurable, if you specify your own levels,
 > you should specify a superset of the default levels (available
