@@ -192,41 +192,38 @@ describe('applyConfigOverrides', () => {
     });
   });
 
-  it('uses isMergeableObject to determine mergeability', () => {
-    const mockDeepmerge = require('deepmerge');
-    const originalMergeFn = mockDeepmerge.all;
-
-    jest.spyOn(mockDeepmerge, 'all').mockImplementation((...args) => {
-      const options = args[1];
-      if (options && typeof options.isMergeableObject === 'function') {
-        expect(options.isMergeableObject({})).toBe(true);
-        expect(options.isMergeableObject([])).toBe(false);
-        // @ts-ignore
-        expect(options.isMergeableObject(null)).toBe(false);
-        expect(options.isMergeableObject(() => {})).toBe(false);
+  it('copies (not merge) non-plain object when merging env', () => {
+    class ComplexObject {
+      isComplex = true;
+      constructor(value) {
+        this.value = value;
       }
-      return originalMergeFn(...args);
-    });
+      complexMethod() {
+        return true;
+      }
+    }
 
+    mockConfig.plain = { value: 'init' };
+    mockConfig.complex = new ComplexObject('init');
     mockConfig.environments = {
       dev: {
-        someService: {
-          requestRate: 9000
-        }
+        plain: { value: 'override' },
+        complex: new ComplexObject('override')
       }
     };
 
     results = applyConfigOverrides(mockConfig, mockContext);
 
-    // @ts-ignore
-    mockDeepmerge.all.mockRestore();
+    // complex should copy
+    expect(results.complex).toBe(mockConfig.environments.dev.complex);
+    expect(results.complex).toHaveProperty('value', 'override');
+    expect(results.complex).toHaveProperty('complexMethod', expect.any(Function));
 
-    expect(results).toEqual({
-      someService: {
-        url: 'https://some-test.url/',
-        requestRate: 9000
-      }
-    });
+    // plain should merge (new object but equal)
+    expect(results.plain).not.toBe(mockConfig.environments.dev.plain);
+    expect(results.plain).toEqual(mockConfig.environments.dev.plain);
+    expect(results.plain).toHaveProperty('value', 'override');
+
   });
 
   describe('commands', function () {
