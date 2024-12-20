@@ -1,3 +1,4 @@
+/* eslint-disable jest/no-conditional-expect */
 const { applyConfigOverrides } = require('../lib/config');
 
 describe('applyConfigOverrides', () => {
@@ -200,6 +201,7 @@ describe('applyConfigOverrides', () => {
       if (options && typeof options.isMergeableObject === 'function') {
         expect(options.isMergeableObject({})).toBe(true);
         expect(options.isMergeableObject([])).toBe(false);
+        // @ts-ignore
         expect(options.isMergeableObject(null)).toBe(false);
         expect(options.isMergeableObject(() => {})).toBe(false);
       }
@@ -216,7 +218,7 @@ describe('applyConfigOverrides', () => {
 
     results = applyConfigOverrides(mockConfig, mockContext);
 
-    // Restore the original deepmerge.all implementation
+    // @ts-ignore
     mockDeepmerge.all.mockRestore();
 
     expect(results).toEqual({
