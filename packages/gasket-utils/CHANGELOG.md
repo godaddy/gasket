@@ -1,5 +1,9 @@
 # `@gasket/utils`
 
+### 7.1.2
+
+- Ensure non-plain objects are copied instead of merge ([#1002])
+
 ### 7.1.0
 
 - Aligned version releases across all packages
@@ -100,3 +104,4 @@
 [#647]: https://github.com/godaddy/gasket/pull/647
 [#768]: https://github.com/godaddy/gasket/pull/768
 [#961]: https://github.com/godaddy/gasket/pull/961
+[#1002]: https://github.com/godaddy/gasket/pull/1002
