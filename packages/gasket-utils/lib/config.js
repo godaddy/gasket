@@ -1,20 +1,20 @@
 const deepmerge = require('deepmerge');
 // @ts-ignore - diagnostics lib does not have a types declaration file
 const debug = require('diagnostics')('gasket:utils');
+// @ts-ignore - 'isPlainObject' is not imported by using a default import
+const { isPlainObject } = require('is-plain-object');
 
 /**
  * Normalize the config by applying any overrides for environments, commands,
  * or local-only config file.
  * @type {import('./config').applyConfigOverrides}
  */
-function applyConfigOverrides(
-  config,
-  { env = '', commandId }
-) {
+function applyConfigOverrides(config, { env = '', commandId }) {
   // @ts-ignore - merged config definitions
   return deepmerge.all(
-  // @ts-ignore - partial config definitions
-    [...getPotentialConfigs(config, { env, commandId })].reverse()
+    // @ts-ignore - partial config definitions
+    [...getPotentialConfigs(config, { env, commandId })].reverse(),
+    { isMergeableObject: isPlainObject }
   );
 }
 
@@ -78,9 +78,7 @@ function *getDevOverrides(isLocalEnv, environments) {
   // development environment
   const devEnv = isLocalEnv && (environments.development || environments.dev);
   if (devEnv) {
-    debug(
-      'Including dev/development override due to local environment inheritance'
-    );
+    debug('Including dev/development override due to local environment inheritance');
     yield devEnv;
   }
 }
