@@ -1,3 +1,4 @@
+/* eslint-disable jest/no-conditional-expect */
 const { applyConfigOverrides } = require('../lib/config');
 
 describe('applyConfigOverrides', () => {
@@ -191,8 +192,41 @@ describe('applyConfigOverrides', () => {
     });
   });
 
-  describe('commands', function () {
+  it('copies (not merge) non-plain object when merging env', () => {
+    class ComplexObject {
+      isComplex = true;
+      constructor(value) {
+        this.value = value;
+      }
+      complexMethod() {
+        return true;
+      }
+    }
 
+    mockConfig.plain = { value: 'init' };
+    mockConfig.complex = new ComplexObject('init');
+    mockConfig.environments = {
+      dev: {
+        plain: { value: 'override' },
+        complex: new ComplexObject('override')
+      }
+    };
+
+    results = applyConfigOverrides(mockConfig, mockContext);
+
+    // complex should copy
+    expect(results.complex).toBe(mockConfig.environments.dev.complex);
+    expect(results.complex).toHaveProperty('value', 'override');
+    expect(results.complex).toHaveProperty('complexMethod', expect.any(Function));
+
+    // plain should merge (new object but equal)
+    expect(results.plain).not.toBe(mockConfig.environments.dev.plain);
+    expect(results.plain).toEqual(mockConfig.environments.dev.plain);
+    expect(results.plain).toHaveProperty('value', 'override');
+
+  });
+
+  describe('commands', function () {
     it('deep merges properties from matching command id', () => {
       mockConfig.commands = {
         start: {
@@ -247,6 +281,6 @@ describe('applyConfigOverrides', () => {
           }
         }
       });
-    })
+    });
   });
 });
