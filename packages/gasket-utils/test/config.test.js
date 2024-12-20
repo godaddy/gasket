@@ -191,6 +191,42 @@ describe('applyConfigOverrides', () => {
     });
   });
 
+  it('uses isMergeableObject to determine mergeability', () => {
+    const mockDeepmerge = require('deepmerge');
+    const originalMergeFn = mockDeepmerge.all;
+
+    jest.spyOn(mockDeepmerge, 'all').mockImplementation((...args) => {
+      const options = args[1];
+      if (options && typeof options.isMergeableObject === 'function') {
+        expect(options.isMergeableObject({})).toBe(true);
+        expect(options.isMergeableObject([])).toBe(false);
+        expect(options.isMergeableObject(null)).toBe(false);
+        expect(options.isMergeableObject(() => {})).toBe(false);
+      }
+      return originalMergeFn(...args);
+    });
+
+    mockConfig.environments = {
+      dev: {
+        someService: {
+          requestRate: 9000
+        }
+      }
+    };
+
+    results = applyConfigOverrides(mockConfig, mockContext);
+
+    // Restore the original deepmerge.all implementation
+    mockDeepmerge.all.mockRestore();
+
+    expect(results).toEqual({
+      someService: {
+        url: 'https://some-test.url/',
+        requestRate: 9000
+      }
+    });
+  });
+
   describe('commands', function () {
     it('deep merges properties from matching command id', () => {
       mockConfig.commands = {
