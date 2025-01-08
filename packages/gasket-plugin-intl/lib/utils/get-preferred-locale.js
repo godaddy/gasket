@@ -1,6 +1,6 @@
 const debug = require('debug')('gasket:plugin:intl:utils');
-const accept = require('@hapi/accept');
 const { getIntlConfig } = require('../configure');
+const Negotiator = require('negotiator');
 
 /**
  * Capitalize the first letter of a string.
@@ -35,12 +35,12 @@ function getLocaleFromHeaders(gasket, req, locales, defaultLocale) {
   let preferredLocale = defaultLocale;
   /** @type {string} */
   const acceptLanguage = req.headers['accept-language'];
-
+  const negotiator = new Negotiator(req);
   if (acceptLanguage) {
     debug(`Received accept-language of ${acceptLanguage}`);
     try {
       // Get highest or highest from locales if configured
-      preferredLocale = formatLocale(accept.language(acceptLanguage, locales));
+      preferredLocale = formatLocale(negotiator.languages(locales)[0]);
       debug(`Using ${preferredLocale} as starting locale`);
     } catch (error) {
       gasket.logger.debug(

@@ -69,7 +69,7 @@ describe('getPreferredLocale', () => {
   describe('when accept-language header is malformed', function () {
 
     beforeEach(function () {
-      req.headers['accept-language'] = 'fr-CH;+malformed';
+      req.headers['accept-language'] = ';fr-CH';
     });
 
     it('logs a debug message', async function () {
