@@ -49,14 +49,25 @@ export async function makeGasketRequest(requestLike) {
     return requestLike;
   }
 
-  const { headers, cookies = {} } = requestLike;
+  const { headers: rawHeaders, cookies = {} } = requestLike;
 
-  if (!headers) {
+  if (!rawHeaders) {
     throw new Error('request argument must have headers');
   }
 
-  if (!keeper.has(headers)) {
+  if (!keeper.has(rawHeaders)) {
     const normalize = async () => {
+
+      // handle Headers objects
+      const headers = 'entries' in rawHeaders ? Object.fromEntries(rawHeaders.entries()) : rawHeaders;
+
+      // handle when header values are arrays
+      // https://nodejs.org/api/http.html#messageheadersdistinct
+      Object.entries(headers).forEach(([key, value]) => {
+        if (Array.isArray(value)) {
+          headers[key] = value.join(', ');
+        }
+      });
 
       // handle Express Request objects
       let query = requestLike.query;
@@ -79,14 +90,14 @@ export async function makeGasketRequest(requestLike) {
       path ??= '';
 
       return new GasketRequest(Object.seal({
-        headers: 'entries' in headers ? Object.fromEntries(headers.entries()) : headers,
+        headers,
         cookies: 'getAll' in cookies ? await objectFromCookieStore(cookies) : cookies,
         query: query instanceof URLSearchParams ? objectFromSearchParams(query) : query,
         path
       }));
     };
 
-    keeper.set(headers, normalize());
+    keeper.set(rawHeaders, normalize());
   }
-  return keeper.get(headers);
+  return keeper.get(rawHeaders);
 }
