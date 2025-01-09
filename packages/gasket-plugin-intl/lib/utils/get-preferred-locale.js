@@ -40,7 +40,7 @@ function getLocaleFromHeaders(gasket, req, locales, defaultLocale) {
     debug(`Received accept-language of ${acceptLanguage}`);
     try {
       // Get highest or highest from locales if configured
-      preferredLocale = formatLocale(negotiator.languages(locales)[0]);
+      preferredLocale = formatLocale(negotiator.language(locales));
       debug(`Using ${preferredLocale} as starting locale`);
     } catch (error) {
       gasket.logger.debug(
