@@ -46,9 +46,9 @@
   },
   "homepage": "https://github.com/godaddy/gasket#readme",
   "devDependencies": {
-    "@docusaurus/core": "^3.5.2",
-    "@docusaurus/preset-classic": "3.5.2",
-    "@docusaurus/theme-mermaid": "^3.5.2",
+    "@docusaurus/core": "^3.7.0",
+    "@docusaurus/preset-classic": "^3.7.0",
+    "@docusaurus/theme-mermaid": "^3.7.0",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "eslint": "^8.56.0",
     "eslint-config-godaddy": "^7.1.1",
