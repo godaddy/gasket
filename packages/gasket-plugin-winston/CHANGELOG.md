@@ -1,5 +1,7 @@
 # `@gasket/plugin-winston`
 
+### 7.1.3
+
 - Ensure gasket.winston options are not overridden ([#1008])
 
 ### 7.1.0

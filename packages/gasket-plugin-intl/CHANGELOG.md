@@ -1,5 +1,9 @@
 # `@gasket/plugin-intl`
 
+### 7.1.3
+
+- Replace `@hapi/accept` with `negotiator` ([#1006])
+ 
 ### 7.1.0
 
 - Use normalized GasketRequest ([#973])
@@ -260,3 +264,4 @@
 [#965]: https://github.com/godaddy/gasket/pull/965
 [#975]: https://github.com/godaddy/gasket/pull/975
 [#973]: https://github.com/godaddy/gasket/pull/973
+[#1006]: https://github.com/godaddy/gasket/pull/1006
