@@ -1,5 +1,6 @@
+/* globals Console, Logger */
 import type { Store, Reducer, Middleware } from 'redux';
-import type { IncomingMessage, OutgoingMessage } from 'http';
+import type { IncomingMessage } from 'http';
 import type { ThunkMiddleware } from 'redux-thunk';
 
 declare module 'http' {
