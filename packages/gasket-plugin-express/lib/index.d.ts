@@ -1,4 +1,3 @@
-import { gasket } from '@/gasket';
 import type { MaybeAsync, MaybeMultiple, Plugin } from '@gasket/core';
 import type { Application, ErrorRequestHandler, Handler } from 'express';
 
