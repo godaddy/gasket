@@ -1,7 +1,5 @@
 # `@gasket/react-intl`
 
-- Replace happ/accept with negotiator ([#1006])
-
 ### 7.1.0
 
 - Aligned version releases across all packages
@@ -213,4 +211,3 @@
 [#670]: https://github.com/godaddy/gasket/pull/670
 [#696]: https://github.com/godaddy/gasket/pull/696
 [#779]: https://github.com/godaddy/gasket/pull/779
-[#1006]: https://github.com/godaddy/gasket/pull/1006
