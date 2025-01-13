@@ -2,7 +2,7 @@ import type { RequestLike } from '../internal.d.ts';
 import type { Gasket } from '@gasket/core';
 
 export type RequestLike = {
-  headers: Headers | Record<string, string>
+  headers: Headers | Record<string, string | string[]>
   cookies?: CookieStore | Record<string, string>
   query?: URLSearchParams | Record<string, string>
   url?: string
