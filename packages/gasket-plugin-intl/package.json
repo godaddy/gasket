@@ -38,11 +38,11 @@
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-intl",
   "dependencies": {
     "@gasket/request": "^7.1.0",
-    "@hapi/accept": "^6.0.3",
     "debug": "^4.3.4",
     "fs-extra": "^10.0.0",
     "glob": "^8.1.0",
     "intl": "^1.2.5",
+    "negotiator": "^1.0.0",
     "semver": "^7.6.3"
   },
   "devDependencies": {
