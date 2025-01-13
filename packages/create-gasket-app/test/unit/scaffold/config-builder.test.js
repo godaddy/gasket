@@ -511,4 +511,32 @@ describe('ConfigBuilder', () => {
       expect(warnings).toHaveLength(1);
     });
   });
+
+
+  describe('.addEnvironment', () => {
+    let gasketConfig;
+    beforeEach(() => {
+      gasketConfig = new ConfigBuilder();
+    });
+
+    it('adds an environment to gasketConfig', () => {
+      gasketConfig.addEnvironment('test.env', { test: 'config ' });
+      expect(gasketConfig.fields.environments).toEqual({ 'test.env': { test: 'config ' } });
+    });
+
+    it('adds values to an environment in gasketConfig', () => {
+      gasketConfig.addEnvironment('test.env', { test: 'config ' });
+      gasketConfig.addEnvironment('test.env', { test2: 'config 2' });
+      expect(gasketConfig.fields.environments).toEqual({ 'test.env': { test: 'config ', test2: 'config 2' } });
+    });
+
+    it('adds multiple environments to gasketConfig', () => {
+      gasketConfig.addEnvironment('test.env', { test: 'config ' });
+      gasketConfig.addEnvironment('prod.env', { prod: 'config ' });
+      expect(gasketConfig.fields.environments).toEqual({
+        'test.env': { test: 'config ' },
+        'prod.env': { prod: 'config ' }
+      });
+    });
+  });
 });

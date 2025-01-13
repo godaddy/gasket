@@ -138,6 +138,25 @@ export interface ConfigBuilder<Config> {
   addPlugin(pluginImport: string, pluginName: string): void;
 
   /**
+   * addEnvironment - Add environments to the gasket file and use the value in the plugins array
+   * @param {string} key - name of the environment - `local.analyze`
+   * @param {object} value - configuration for the environment - `{
+   *   dynamicPlugins: [
+   *     '@gasket/plugin-analyze',
+   *   ]
+   * }`
+   * @example
+   *   environments: {
+   *    'local.analyze': {
+   *      dynamicPlugins: [
+   *        '@gasket/plugin-analyze',
+   *      ]
+   *     }
+   *   },
+   */
+  addEnvironment(key:string, value: object): void;
+
+  /**
    * addImport - Add a non-plugin import to the gasket file
    * @param {string} importName - name of the import used as a value - `import fs...`
    * @param {string} importPath - path of the import - `from 'fs'`
