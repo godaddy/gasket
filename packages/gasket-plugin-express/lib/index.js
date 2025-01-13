@@ -17,7 +17,16 @@ const plugin = {
     getExpressApp(gasket) {
       const express = require('express');
       const { http2 } = gasket.config;
-      app ??= http2 ? require('http2-express')(express) : express();
+
+      if (!app) {
+        if (http2) {
+          app = require('http2-express')(express);
+        } else {
+          app = express();
+        }
+
+        app.use(require('cookie-parser')());
+      }
 
       return app;
     }
