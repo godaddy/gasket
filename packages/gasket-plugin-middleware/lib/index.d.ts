@@ -1,5 +1,5 @@
 import type { Plugin, MaybeAsync, MaybeMultiple } from '@gasket/core';
-import type { FastifyReply } from 'fastify';
+import type { Handler } from 'express';
 
 declare module 'fastify' {
   interface FastifyReply {

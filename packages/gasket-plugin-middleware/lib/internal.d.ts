@@ -1,12 +1,11 @@
-import type { Application as ExpressApp, Request } from 'express';
+import type { Application as ExpressApp, Request as ExpressRequest } from 'express';
 import type { Logger } from '@gasket/plugin-logger';
-import type { Http2SecureServer, Http2ServerRequest, Http2ServerResponse } from 'http2';
 import type { IncomingMessage, ServerResponse } from 'http';
 import type { FastifyInstance, FastifyTypeProviderDefault, FastifyBaseLogger, RawServerDefault } from 'fastify';
 import type { Gasket } from '@gasket/engine';
 
 /** Type alias for Fastify application with HTTP/2 support */
-type FastifyApp<Server = Http2SecureServer, Request = Http2ServerRequest, Response = Http2ServerResponse> = FastifyInstance<
+type FastifyApp = FastifyInstance<
   RawServerDefault,
   IncomingMessage,
   ServerResponse<IncomingMessage>,
@@ -25,12 +24,12 @@ declare module 'express' {
 /**
  * Applies the cookie parser based on the middleware pattern.
  */
-function applyCookieParser(app: FastifyApp | ExpressApp, middlewarePattern: RegExp): void;
+export function applyCookieParser(app: FastifyApp | ExpressApp, middlewarePattern: RegExp): void;
 
 /**
  * Applies compression to the application if a compression config is present.
  */
-function applyCompression(
+export function applyCompression(
   app: ExpressApp | FastifyApp,
   /** Boolean indicating if compression should be applied. */
   compressionConfig: boolean
@@ -39,9 +38,9 @@ function applyCompression(
 /**
  * Executes the middleware lifecycle for the application.
  */
-function executeMiddlewareLifecycle(gasket: Gasket, app: ExpressApp | FastifyApp, middlewarePattern: RegExp): void;
+export function executeMiddlewareLifecycle(gasket: Gasket, app: ExpressApp | FastifyApp, middlewarePattern: RegExp): void;
 
 /**
  * Attaches a log enhancer to the Express Request object.
  */
-function attachLogEnhancer(req: Request): void;
+export function attachLogEnhancer(req: ExpressRequest): void;
