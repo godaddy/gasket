@@ -9,14 +9,14 @@ let _browserSingletonHandler;
  * @type {import('.').IntlManager}
  */
 export class IntlManager {
-  /** @type {import('./types').MessagesRegister } */
+  /** @type {import('@gasket/intl').MessagesRegister } */
   messagesRegister = {};
-  /** @type {import('./types').StatusRegister } */
+  /** @type {import('@gasket/intl').StatusRegister } */
   statusRegister = {};
-  /** @type {import('./types').PromiseRegister } */
+  /** @type {import('@gasket/intl').PromiseRegister } */
   promiseRegister = {};
 
-  /** @type {import('./types').IntlManager_constructor } */
+  /** @type {import('@gasket/intl').IntlManager_constructor } */
   constructor(manifest) {
     this.manifest = manifest;
     this.managedLocales = [...this.locales, ...Object.keys(this.manifest.localesMap ?? {})];
@@ -36,7 +36,7 @@ export class IntlManager {
     return this.manifest.staticLocaleFilePaths ?? [];
   }
 
-  /** @type {import('./types').IntlManager_resolveLocale } */
+  /** @type {import('@gasket/intl').IntlManager_resolveLocale } */
   resolveLocale(locale) {
     const { defaultLocale, locales, localesMap = {} } = this.manifest;
 
@@ -56,7 +56,7 @@ export class IntlManager {
     return defaultLocale;
   }
 
-  /** @type {import('./types').IntlManager_init } */
+  /** @type {import('@gasket/intl').IntlManager_init } */
   init() {
     if (isBrowser) {
       const content = (document.getElementById('GasketIntl') ?? {}).textContent;
@@ -66,17 +66,14 @@ export class IntlManager {
       });
       this.messagesRegister = data;
     } else {
-      Promise.all(
-        Object.keys(this.manifest.imports)
-          .map((localeFileKey) => this.load(localeFileKey))
-      ).then(() => {
+      Promise.all(Object.keys(this.manifest.imports).map((localeFileKey) => this.load(localeFileKey))).then(() => {
         // eslint-disable-next-line no-console
         console.log('Server preloading locales complete');
       });
     }
   }
 
-  /** @type {import('./types').IntlManager_load } */
+  /** @type {import('@gasket/intl').IntlManager_load } */
   load(localeFileKey) {
     // Debounce multiple requests for the same locale
     // `load` cannot be async/await as that makes a new promise
@@ -113,17 +110,17 @@ export class IntlManager {
     return promise;
   }
 
-  /** @type {import('./types').IntlManager_getMessages } */
+  /** @type {import('@gasket/intl').IntlManager_getMessages } */
   getMessages(localeFileKey) {
     return this.messagesRegister[localeFileKey];
   }
 
-  /** @type {import('./types').IntlManager_getStatus } */
+  /** @type {import('@gasket/intl').IntlManager_getStatus } */
   getStatus(localeFileKey) {
     return this.statusRegister[localeFileKey] ?? LocaleFileStatus.notLoaded;
   }
 
-  /** @type {import('./types').IntlManager_handleLocale } */
+  /** @type {import('@gasket/intl').IntlManager_handleLocale } */
   handleLocale(locale) {
     /** @type {import('.').IntlManager } */
     // @ts-ignore - tsc confused with imports
