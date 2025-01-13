@@ -4,7 +4,6 @@ import { makeCreateContext } from '../scaffold/create-context.js';
 import { dumpErrorContext } from '../scaffold/dump-error-context.js';
 import { rm } from 'fs/promises';
 import { makeGasket } from '@gasket/core';
-import { defaultPlugins } from '../config/default-plugins.js';
 import {
   createHooks,
   generateFiles,
@@ -27,7 +26,7 @@ import {
  * Parses comma separated option input to array
  * @type {import('../internal').commasToArray}
  */
-const commasToArray = input => input.split(',').map(name => name.trim());
+const commasToArray = (input) => input.split(',').map((name) => name.trim());
 
 const createCommand = {
   id: 'create',
@@ -106,7 +105,6 @@ createCommand.action = async function run(appname, options, command) {
     await globalPrompts({ context });
 
     if (rawPresets.length || localPresets.length) {
-
       await loadPreset({ context });
 
       const presetGasket = makeGasket({
@@ -119,7 +117,7 @@ createCommand.action = async function run(appname, options, command) {
 
     const pluginGasket = makeGasket({
       ...context.presetConfig,
-      plugins: context.presets.concat(context.presetConfig.plugins, defaultPlugins)
+      plugins: context.presets.concat(context.presetConfig.plugins)
     });
 
     await promptHooks({ gasket: pluginGasket, context });

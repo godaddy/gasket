@@ -47,7 +47,10 @@ describe('create hook', () => {
   it('adds links for all apps', () => {
     create({}, mockContext);
     expect(mockContext.readme.link).toHaveBeenCalledWith('tsx', 'https://tsx.is/');
-    expect(mockContext.readme.link).toHaveBeenCalledWith('@gasket/plugin-typescript', 'https://gasket.dev/docs/plugins/plugin-typescript/');
+    expect(mockContext.readme.link).toHaveBeenCalledWith(
+      '@gasket/plugin-typescript',
+      'https://gasket.dev/docs/plugins/plugin-typescript/'
+    );
     expect(mockContext.readme.link).toHaveBeenCalledWith('Gasket TypeScript', 'https://gasket.dev/docs/typescript/');
   });
 
@@ -74,7 +77,10 @@ describe('create hook', () => {
     it('adds files for API apps', () => {
       mockContext.apiApp = true;
       create({}, mockContext);
-      expect(mockContext.files.add).toHaveBeenCalledWith(expect.stringMatching(/generator\/api\/\*$/), expect.stringMatching(/generator\/shared\/\*$/));
+      expect(mockContext.files.add).toHaveBeenCalledWith(
+        expect.stringMatching(/generator\/api\/\*$/),
+        expect.stringMatching(/generator\/shared\/\*$/)
+      );
     });
 
     it('adds gitignore for API apps', () => {
@@ -100,7 +106,10 @@ describe('create hook', () => {
     it('adds files for customServer', () => {
       mockContext.nextServerType = 'customServer';
       create({}, mockContext);
-      expect(mockContext.files.add).toHaveBeenCalledWith(expect.stringMatching(/generator\/next\/\*$/), expect.stringMatching(/generator\/shared\/\*$/));
+      expect(mockContext.files.add).toHaveBeenCalledWith(
+        expect.stringMatching(/generator\/next\/\*$/),
+        expect.stringMatching(/generator\/shared\/\*$/)
+      );
     });
 
     it('adds files for defaultServer w/o dev proxy', () => {
@@ -126,7 +135,10 @@ describe('create hook', () => {
     it('adds files for dev proxy w/o customServer', () => {
       mockContext.nextDevProxy = true;
       create({}, mockContext);
-      expect(mockContext.files.add).toHaveBeenCalledWith(expect.stringMatching(/generator\/next\/\*\(tsconfig\).json$/), expect.stringMatching(/generator\/shared\/\*$/));
+      expect(mockContext.files.add).toHaveBeenCalledWith(
+        expect.stringMatching(/generator\/next\/\*\(tsconfig\).json$/),
+        expect.stringMatching(/generator\/shared\/\*$/)
+      );
     });
   });
 });

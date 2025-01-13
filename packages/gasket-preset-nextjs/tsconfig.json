@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "noImplicitAny": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "moduleResolution": "bundler",
+    "module": "ESNext",
+    "lib": [
+      "esnext",
+      "dom"
+    ],
+    "types": [
+      "@types/jest"
+    ]
+  },
+  "include": [
+    "lib"
+  ]
+}

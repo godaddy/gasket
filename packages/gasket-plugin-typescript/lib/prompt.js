@@ -1,7 +1,10 @@
-/** @type {import('./index.d.ts').promptTypescript} */
-async function promptTypescript(context, prompt) {
-  if ('typescript' in context) return;
-  const { typescript } = await prompt([
+/// <reference types="create-gasket-app" />
+
+/** @type {import('@gasket/core').HookHandler<'prompt'>} */
+module.exports = async function promptHook(gasket, context, { prompt }) {
+  if (context.typescript) return;
+
+  const response = await prompt([
     {
       name: 'typescript',
       message: 'Do you want to use TypeScript?',
@@ -10,9 +13,5 @@ async function promptTypescript(context, prompt) {
     }
   ]);
 
-  Object.assign(context, { typescript });
-}
-
-module.exports = {
-  promptTypescript
+  return { ...context, ...response };
 };

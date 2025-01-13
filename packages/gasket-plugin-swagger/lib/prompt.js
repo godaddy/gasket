@@ -1,21 +1,15 @@
-/** @type {import('./index.d.ts').promptSwagger} */
-async function promptSwagger(context, prompt) {
-  if (!('useSwagger' in context)) {
-    const { useSwagger } = await prompt([
-      {
-        name: 'useSwagger',
-        message: 'Do you want to use Swagger?',
-        type: 'confirm',
-        default: true
-      }
-    ]);
+/** @type {import('@gasket/core').HookHandler<'prompt'>} */
+module.exports = async function promptHook(gasket, context, { prompt }) {
+  if ('useSwagger' in context) return context;
 
-    context.useSwagger = useSwagger;
-  }
+  const { useSwagger } = await prompt([
+    {
+      name: 'useSwagger',
+      message: 'Do you want to use Swagger?',
+      type: 'confirm',
+      default: true
+    }
+  ]);
 
-  return context;
-}
-
-module.exports = {
-  promptSwagger
+  return Object.assign({}, context, { useSwagger });
 };

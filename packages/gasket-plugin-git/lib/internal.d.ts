@@ -1,4 +1,4 @@
-export declare type GitIgnoreContent = {
+export type GitIgnoreContent = {
   dependencies: Set<string>;
   testing: Set<string>;
   production: Set<string>;
@@ -8,7 +8,13 @@ export declare type GitIgnoreContent = {
 
 /** Class to add content to gitignore */
 export declare class Gitignore {
-  _content: GitignoreContent;
+  _content: {
+    dependencies: Set<string>;
+    testing: Set<string>;
+    production: Set<string>;
+    misc: Set<string>;
+    special: Set<string>;
+  };
 
   constructor();
 
