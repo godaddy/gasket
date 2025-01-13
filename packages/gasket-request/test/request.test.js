@@ -228,6 +228,16 @@ describe('makeGasketRequest', () => {
     expect(result.path).toEqual('/path/to/page');
   });
 
+  it('handles IncomingMessage with headersDistinct shape (IncomingHttpHeaders)', async () => {
+    /** @type {IncomingHttpHeaders} */
+    const headers = { header1: 'value1', header2: ['value2'], header3: ['value3-1', 'value3-2'] };
+    const requestLike = { headers };
+
+    const result = await makeGasketRequest(requestLike);
+
+    expect(result.headers).toEqual({ header1: 'value1', header2: 'value2', header3: 'value3-1, value3-2' });
+  });
+
   it('only processes url if query or path not set', async () => {
     const query = {
       query1: 'value1',

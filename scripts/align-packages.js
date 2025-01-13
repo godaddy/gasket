@@ -22,11 +22,17 @@ const depVersions = {
   '@babel/preset-env': '^7.23.8',
   '@babel/preset-react': '^7.23.3',
 
+  '@docusaurus/core': '^3.7.0',
+  '@docusaurus/preset-classic': '^3.7.0',
+  '@docusaurus/theme-mermaid': '^3.7.0',
+  '@docusaurus/module-type-aliases': '^3.7.0',
+  '@docusaurus/types': '^3.7.0',
+
   'jest': '^29.7.0',
 
   'react': '^18.2.0',
   'react-dom': '^18.2.0',
-  'react-intl': '^6.6.8',
+  'react-intl': '~6.6.8',
   'prop-types': '^15.8.1',
   'redux': '^4.0.5',
   'next': '^14.0.0',

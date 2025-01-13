@@ -45,13 +45,13 @@ const plugin = {
         format.combine(format.splat(), format.json());
 
       return createLogger({
+        format: defaultFormat,
+        levels: Object.assign({ fatal: 0, warn: 4, trace: 7 }, winstonConfig.syslog.levels),
+        exitOnError: true,
         ...config.winston,
         transports: configTransports.concat(
           pluginTransports.flat().filter(Boolean)
-        ),
-        format: config.winston?.format ?? defaultFormat,
-        levels: Object.assign({ fatal: 0, warn: 4, trace: 7 }, winstonConfig.syslog.levels),
-        exitOnError: true
+        )
       });
     },
     metadata(gasket, meta) {
