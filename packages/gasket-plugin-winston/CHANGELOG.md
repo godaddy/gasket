@@ -1,5 +1,7 @@
 # `@gasket/plugin-winston`
 
+- Ensure gasket.winston options are not overridden ([#1008])
+
 ### 7.1.0
 
 - Aligned version releases across all packages
@@ -11,3 +13,4 @@
 
 
 [Version 7 Upgrade Guide]: /docs/upgrade-to-7.md
+[#1008]: https://github.com/godaddy/gasket/pull/1008
