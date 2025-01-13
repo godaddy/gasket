@@ -87,7 +87,7 @@ describe('createServers', () => {
   });
 
   it('attaches cookie parser middleware', async function () {
-    await plugin.hooks.createServers(gasket, {});
+    plugin.actions.getExpressApp(gasket);
     expect(app.use).toHaveBeenCalledWith(cookieParserMiddleware);
   });
 
