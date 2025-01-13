@@ -1,6 +1,8 @@
 # `@gasket/plugin-express`
 
-- adjust cookie parser invocation to earlier in the lifecycle chain ([#1009])
+### 7.1.3
+
+- Adjust cookie parser invocation to earlier in the lifecycle chain ([#1009])
 
 ### 7.1.1
 
