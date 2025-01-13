@@ -7,7 +7,6 @@
 /// <reference types="@gasket/core" />
 /// <reference types="@gasket/plugin-command" />
 
-
 const path = require('path');
 const fs = require('fs');
 const { readFile, access } = require('fs').promises;
@@ -72,17 +71,9 @@ const plugin = {
         const { swagger, root } = gasket.config;
         const { ui = {}, apiDocsRoute, definitionFile } = swagger;
 
-        const swaggerSpec = await loadSwaggerSpec(
-          root,
-          definitionFile,
-          gasket.logger
-        );
+        const swaggerSpec = await loadSwaggerSpec(root, definitionFile, gasket.logger);
 
-        app.use(
-          apiDocsRoute,
-          swaggerUi.serve,
-          swaggerUi.setup(swaggerSpec, ui)
-        );
+        app.use(apiDocsRoute, swaggerUi.serve, swaggerUi.setup(swaggerSpec, ui));
       }
     },
     fastify: {
@@ -93,11 +84,7 @@ const plugin = {
         const { swagger, root } = gasket.config;
         const { uiOptions = {}, apiDocsRoute = '/api-docs', definitionFile } = swagger;
 
-        const swaggerSpec = await loadSwaggerSpec(
-          root,
-          definitionFile,
-          gasket.logger
-        );
+        const swaggerSpec = await loadSwaggerSpec(root, definitionFile, gasket.logger);
 
         await app.register(require('@fastify/swagger'), {
           swagger: swaggerSpec
@@ -138,7 +125,9 @@ const plugin = {
 
       context.readme
         .subHeading('Definitions')
-        .content('Use `@swagger` JSDocs to automatically generate the [swagger.json] spec file. Visit [swagger-jsdoc] for examples.')
+        .content(
+          'Use `@swagger` JSDocs to automatically generate the [swagger.json] spec file. Visit [swagger-jsdoc] for examples.'
+        )
         .link('swagger-jsdoc', 'https://github.com/Surnet/swagger-jsdoc/')
         .link('swagger.json', '/swagger.json');
     },
@@ -170,8 +159,7 @@ const plugin = {
           {
             name: 'swagger.jsdoc',
             link: 'README.md#configuration',
-            description:
-              'If set, the definitionFile will be generated based on JSDocs in the configured files',
+            description: 'If set, the definitionFile will be generated based on JSDocs in the configured files',
             type: 'object'
           },
           {

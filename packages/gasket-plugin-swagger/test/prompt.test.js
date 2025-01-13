@@ -1,28 +1,26 @@
-const {
-  promptSwagger
-} = require('../lib/prompt');
+const promptHook = require('../lib/prompt');
 
 describe('promptSwagger', () => {
-  let context, mockPrompt, mockAnswers;
+  let context, gasket, mockPrompt, mockAnswers;
 
   beforeEach(() => {
     context = {};
+    gasket = {};
     mockAnswers = { useSwagger: false };
-    mockPrompt = jest.fn().mockImplementation(() => mockAnswers);
+    mockPrompt = jest.fn().mockResolvedValue(mockAnswers);
   });
 
   afterEach(() => {
     jest.clearAllMocks();
   });
 
-
   it('sets useSwagger to false', async () => {
-    const result = await promptSwagger(context, mockPrompt);
+    const result = await promptHook(gasket, context, { prompt: mockPrompt });
     expect(result.useSwagger).toEqual(false);
   });
 
-  it('promptSwagger', async () => {
-    await promptSwagger(context, mockPrompt);
+  it('calls prompt with correct arguments', async () => {
+    await promptHook(gasket, context, { prompt: mockPrompt });
     expect(mockPrompt).toHaveBeenCalledWith([
       {
         name: 'useSwagger',
@@ -31,5 +29,14 @@ describe('promptSwagger', () => {
         default: true
       }
     ]);
+  });
+
+  it('does not prompt if useSwagger exists in context', async () => {
+    context.useSwagger = true;
+    const result = await promptHook(gasket, context, { prompt: mockPrompt });
+
+    // Ensure the existing value is returned without calling prompt
+    expect(result.useSwagger).toEqual(true);
+    expect(mockPrompt).not.toHaveBeenCalled();
   });
 });
