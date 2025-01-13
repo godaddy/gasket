@@ -1,7 +1,7 @@
 import type { MaybeAsync, Plugin } from '@gasket/core';
 import type { PackageJson } from 'create-gasket-app';
 
-export interface ModuleData<Module = any> {
+export interface ModuleData<> {
   /** Name of preset */
   name: string;
 

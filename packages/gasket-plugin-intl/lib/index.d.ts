@@ -1,14 +1,6 @@
 import type { MaybeAsync, GasketRequest, Plugin } from '@gasket/core';
-import type { IncomingMessage } from 'http';
 import { IntlManager } from '@gasket/intl';
 import { LocaleManifestConfig } from '@gasket/intl';
-
-interface CustomScanSettings {
-  /** Lookup dir for module files (default: `locales`) */
-  localesDir?: string;
-  /** List of modules to ignore */
-  excludes?: Array<string>;
-}
 
 interface CustomScanSettings {
   /** Lookup dir for module files (default: `locales`) */

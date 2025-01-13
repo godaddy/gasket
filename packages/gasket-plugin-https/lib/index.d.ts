@@ -1,7 +1,7 @@
 import type { MaybeMultiple, MaybeAsync, Plugin } from '@gasket/core';
 import type { SecureContextOptions } from 'tls';
-import type { Agent as HttpAgent, Server as HttpServer } from 'http';
-import type { Agent as HttpsAgent, Server as HttpsServer } from 'https';
+import type { Server as HttpServer } from 'http';
+import type { Server as HttpsServer } from 'https';
 import type { SecureServerOptions, Http2Server } from 'http2';
 import type { ServerOptions as ProxyServerOptions } from 'http-proxy';
 import type { TerminusOptions, HealthCheckError } from '@godaddy/terminus';

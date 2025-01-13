@@ -1,4 +1,3 @@
-import type { IncomingMessage } from 'http';
 import { MaybeAsync, Plugin, GasketRequest } from '@gasket/core';
 
 export interface PublicGasketData extends Record<string, any> {}
@@ -19,7 +18,7 @@ declare module '@gasket/core' {
 
   export interface GasketActions {
     getGasketData(): Promise<GasketData>;
-    getPublicGasketData(req: GasketRequest | IncomingMessage): Promise<PublicGasketData>;
+    getPublicGasketData(req: GasketRequest): Promise<PublicGasketData>;
   }
 
   export interface HookExecTypes {

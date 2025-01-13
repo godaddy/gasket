@@ -1,3 +1,4 @@
+/* globals Console */
 import type { IncomingMessage, OutgoingMessage } from 'http';
 import type { Store } from 'redux';
 import type { MaybeAsync, Plugin } from '@gasket/core';

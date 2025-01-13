@@ -11,7 +11,7 @@ import type {
 } from 'fastify';
 import { IncomingMessage, ServerResponse } from 'http';
 
-export type AppRoutes = Array<MaybeAsync<(app: FastifyInstance) => void>>;
+export type AppRoutes = Array<MaybeAsync<() => void>>;
 
 declare module '@gasket/core' {
   export interface GasketActions {

@@ -73,7 +73,10 @@
         ],
         "extends": [
           "godaddy-typescript"
-        ]
+        ],
+        "rules": {
+          "no-use-before-define": "warn"
+        }
       }
     ]
   }

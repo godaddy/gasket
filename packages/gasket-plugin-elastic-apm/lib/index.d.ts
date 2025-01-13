@@ -3,7 +3,7 @@ import type { AgentConfigOptions, Transaction, Payload, Agent } from 'elastic-ap
 import type { MaybeAsync, GasketConfig, Plugin } from '@gasket/core';
 import type { Request } from 'express';
 
-export function filterSensitiveCookies(config: GasketConfig): function(Payload): Payload;
+export function filterSensitiveCookies(config: GasketConfig): (Payload) => Payload;
 
 export interface ExtendedAgentConfigOptions extends AgentConfigOptions {
   sensitiveCookies?: Array<string>;
@@ -19,9 +19,7 @@ declare module '@gasket/core' {
   }
 
   export interface GasketActions {
-    async getApmTransaction(
-      req: IncomingMessage | Request
-    ): Promise<Transaction | void>
+    getApmTransaction(req: IncomingMessage | Request): Promise<Transaction | void>;
   }
 
   export interface HookExecTypes {
