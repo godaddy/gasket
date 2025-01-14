@@ -512,30 +512,44 @@ describe('ConfigBuilder', () => {
     });
   });
 
-
-  describe('.addEnvironment', () => {
+  describe('gasketConfig', () => {
     let gasketConfig;
     beforeEach(() => {
       gasketConfig = new ConfigBuilder();
     });
 
-    it('adds an environment to gasketConfig', () => {
-      gasketConfig.addEnvironment('test.env', { test: 'config ' });
-      expect(gasketConfig.fields.environments).toEqual({ 'test.env': { test: 'config ' } });
+    describe('.addDynamicPlugin', () => {
+      it('adds a dynamic plugin to gasketConfig', () => {
+        gasketConfig.addDynamicPlugin('pluginOne');
+        expect(gasketConfig.fields.dynamicPlugins).toEqual(['pluginOne']);
+      });
+
+      it('adds multiple dynamic plugins to gasketConfig', () => {
+        gasketConfig.addDynamicPlugin('pluginOne');
+        gasketConfig.addDynamicPlugin('pluginTwo');
+        expect(gasketConfig.fields.dynamicPlugins).toEqual(['pluginOne', 'pluginTwo']);
+      });
     });
 
-    it('adds values to an environment in gasketConfig', () => {
-      gasketConfig.addEnvironment('test.env', { test: 'config ' });
-      gasketConfig.addEnvironment('test.env', { test2: 'config 2' });
-      expect(gasketConfig.fields.environments).toEqual({ 'test.env': { test: 'config ', test2: 'config 2' } });
-    });
+    describe('.addEnvironment', () => {
+      it('adds an environment to gasketConfig', () => {
+        gasketConfig.addEnvironment('test.env', { test: 'config ' });
+        expect(gasketConfig.fields.environments).toEqual({ 'test.env': { test: 'config ' } });
+      });
 
-    it('adds multiple environments to gasketConfig', () => {
-      gasketConfig.addEnvironment('test.env', { test: 'config ' });
-      gasketConfig.addEnvironment('prod.env', { prod: 'config ' });
-      expect(gasketConfig.fields.environments).toEqual({
-        'test.env': { test: 'config ' },
-        'prod.env': { prod: 'config ' }
+      it('adds values to an environment in gasketConfig', () => {
+        gasketConfig.addEnvironment('test.env', { test: 'config ' });
+        gasketConfig.addEnvironment('test.env', { test2: 'config 2' });
+        expect(gasketConfig.fields.environments).toEqual({ 'test.env': { test: 'config ', test2: 'config 2' } });
+      });
+
+      it('adds multiple environments to gasketConfig', () => {
+        gasketConfig.addEnvironment('test.env', { test: 'config ' });
+        gasketConfig.addEnvironment('prod.env', { prod: 'config ' });
+        expect(gasketConfig.fields.environments).toEqual({
+          'test.env': { test: 'config ' },
+          'prod.env': { prod: 'config ' }
+        });
       });
     });
   });
