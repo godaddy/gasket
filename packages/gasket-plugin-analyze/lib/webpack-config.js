@@ -12,8 +12,8 @@ module.exports = function webpackConfigHook(gasket, webpackConfig, context) {
   if (process.env.ANALYZE === 'true') {
     console.warn("Deprecation Warning: Using 'true' for the ANALYZE environment variable is deprecated. Please use '1' instead.");
   }
-
-  // Only add the analyzer plugin if ANALYZE flag is true
+  // Run the analyzer plugin if the ANALYZE flag is true or 1
+  // @deprecated: 'true' will be removed in a future release
   if (process.env.ANALYZE === 'true' || process.env.ANALYZE === '1') {
     const merge = require('deepmerge');
     const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
