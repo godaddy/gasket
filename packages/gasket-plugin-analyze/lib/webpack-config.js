@@ -9,8 +9,12 @@ module.exports = function webpackConfigHook(gasket, webpackConfig, context) {
     config: { bundleAnalyzerConfig: userConfig = {} }
   } = gasket;
 
-  // Only add the analyzer plugin if ANALYZE flag is true
   if (process.env.ANALYZE === 'true') {
+    console.warn("Deprecation Warning: Using 'true' for the ANALYZE environment variable is deprecated. Please use '1' instead.");
+  }
+
+  // Only add the analyzer plugin if ANALYZE flag is true
+  if (process.env.ANALYZE === 'true' || process.env.ANALYZE === '1') {
     const merge = require('deepmerge');
     const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
     const defaultConfig = require('./default-config');
