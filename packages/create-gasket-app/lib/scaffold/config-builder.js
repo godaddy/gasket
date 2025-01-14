@@ -256,7 +256,7 @@ export class ConfigBuilder {
    *   },
    */
   addEnvironment(key, value) {
-    this.add(`environments`, {
+    this.add('environments', {
       [key]: value
     });
   }
