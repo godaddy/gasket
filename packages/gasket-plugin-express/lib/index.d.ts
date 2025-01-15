@@ -4,6 +4,7 @@ import type { Application, ErrorRequestHandler, Handler } from 'express';
 
 declare module '@gasket/core' {
   export interface GasketActions {
+    /** @deprecated */
     getExpressApp(): Application;
   }
   export interface GasketConfig {

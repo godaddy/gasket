@@ -7,7 +7,11 @@
  * @type {import('@gasket/core').HookHandler<'createServers'>}
  */
 module.exports = async function createServers(gasket, serverOpts) {
-  const app = gasket.actions.getExpressApp();
+  const express = require('express');
+  const { http2 } = gasket.config;
+  const app = http2 ? require('http2-express')(express) : express();
+
+  app.use(require('cookie-parser')());
 
   await gasket.exec('express', app);
 
