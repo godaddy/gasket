@@ -79,14 +79,19 @@ describe('createServers', () => {
     expect(result).toEqual({ handler: app });
   });
 
-  it('returns the handler as http2 bridge app', async function () {
+  it('attaches cookie parser middleware', async function () {
+    await plugin.hooks.createServers(gasket, {});
+    expect(app.use).toHaveBeenCalledWith(cookieParserMiddleware);
+  });
+
+  it('action: returns the handler as http2 bridge app(deprecated)', async function () {
     gasket.actions.getExpressApp.mockReturnValueOnce(bridgedApp);
     gasket.config.http2 = 8080;
     const result = await plugin.hooks.createServers(gasket);
     expect(result).toEqual({ handler: bridgedApp });
   });
 
-  it('attaches cookie parser middleware', async function () {
+  it('action: attaches cookie parser middleware(deprecated)', async function () {
     plugin.actions.getExpressApp(gasket);
     expect(app.use).toHaveBeenCalledWith(cookieParserMiddleware);
   });
