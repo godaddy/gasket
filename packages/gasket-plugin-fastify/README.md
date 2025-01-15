@@ -49,17 +49,23 @@ export default makeGasket({
 });
 ```
 
-## Actions
+### Route Definition
 
-### getFastifyApp
-
-Get the Fastify app instance.
+Routes can be defined in a in-app plugin in the `plugins` directory. The plugin will hook the `fastify` lifecycle to add the routes to the fastify app.
 
 ```js
-const app = actions.gasket.getFastifyApp();
+// plugins/routes-plugin.js
+export default {
+  name: 'routes-plugin',
+  hooks: {
+    fastify: async function (gasket, app) {
+      app.get('/hello', (req, res) => {
+        res.send('Hello World!');
+      });
+    }
+  }
+};
 ```
-
-Each Gasket creates a single shared Fastify instance, ensuring consistent access to the same app instance wherever it's needed.
 
 ## Lifecycles
 
