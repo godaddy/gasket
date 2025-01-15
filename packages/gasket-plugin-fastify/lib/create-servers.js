@@ -9,8 +9,17 @@
  */
 // eslint-disable-next-line max-statements
 module.exports = async function createServers(gasket, serverOpts) {
-  const app = gasket.actions.getFastifyApp();
+  const fastify = require('fastify');
+  const { alignLogger } = require('./utils');
+  const { fastify: fastifyConfig = {}, http2, https } = gasket.config;
+  const { trustProxy = false, disableRequestLogging = true } = fastifyConfig;
+  const fastifyLogger = alignLogger(gasket.logger);
+
+  // @ts-ignore
+  const app = fastify({ logger: fastifyLogger, trustProxy, https, http2, disableRequestLogging });
+
   // allow consuming apps to directly append options to their server
+  // @ts-ignore
   await gasket.exec('fastify', app);
 
   const postRenderingStacks = (await gasket.exec('errorMiddleware')).filter(Boolean);
