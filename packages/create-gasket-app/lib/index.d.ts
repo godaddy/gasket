@@ -2,6 +2,18 @@ import type { GasketConfigDefinition, MaybeAsync, Plugin, GasketEngine } from '@
 import type { PackageManager } from '@gasket/utils';
 import type { PromptModule } from 'inquirer';
 import type ora from 'ora';
+import type { Command } from 'commander';
+import type { CreateContext } from 'create-gasket-app';
+
+export interface CreateCommandOptions {
+  presets?: string[];
+  npmLink?: string[];
+  presetPath?: string[];
+  packageManager?: string;
+  prompts?: boolean;
+  config?: string;
+  configFile?: string;
+}
 
 export interface Dependencies {
   dependencies?: Record<string, string>;
@@ -51,7 +63,7 @@ export interface CreateCommand {
   id: string;
   description: string;
   args: CommandArgument[];
-  action?: createGasketAction;
+  action?: typeof createCommandAction;
   options: CommandOption[];
   hidden?: boolean;
   default?: boolean;
@@ -69,6 +81,9 @@ export interface PresetInfo extends ModuleInfo {}
 
 export interface PluginInfo extends ModuleInfo {}
 
+/**
+ * ConfigBuilder is an extensible data structure for **specifically** managing `package.json` data.
+ */
 export interface ConfigBuilder<Config> {
   /** fields object */
   fields: { [key: string]: any };
@@ -347,18 +362,8 @@ type NoopPromptObject = {
 type NoopPromptFunction = () => NoopPromptObject;
 export type CreatePrompt = PromptModule | NoopPromptFunction;
 
-export interface CreateCommandOptions {
-  presets?: string[];
-  npmLink?: string[];
-  presetPath?: string[];
-  packageManager?: string;
-  prompts?: boolean;
-  config?: string;
-  configFile?: string;
-}
-
 declare module 'create-gasket-app' {
-  export class CreateContext {
+  export interface CreateContext {
     /** Short name of the app */
     appName: string;
 
@@ -456,9 +461,8 @@ declare module 'create-gasket-app' {
 
     /** Use to add content to the README.md */
     readme: Readme;
-
-    constructor(initContext?: Partial<T>);
     runWith(plugin: Plugin): Proxy<CreateContext>;
+    typescript?: boolean;
   }
 }
 
@@ -471,12 +475,12 @@ export interface ActionWrapperParams {
 declare module '@gasket/core' {
   export interface HookExecTypes {
     presetPrompt(
-      context: CreateContext,
+      context: Partial<CreateContext>,
       utils: {
         prompt: CreatePrompt;
       }
     ): Promise<CreateContext>;
-    presetConfig(context: CreateContext): Promise<CreateContext['presetConfig']>;
+    presetConfig(context: Partial<CreateContext>): Promise<CreateContext['presetConfig']>;
     prompt(
       context: CreateContext,
       utils: {

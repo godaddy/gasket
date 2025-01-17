@@ -1,5 +1,12 @@
 import type { Plugin } from '@gasket/core';
 
+export interface DocusaurusConfig {
+  rootDir?: string;
+  docsDir?: string;
+  port?: string;
+  host?: string;
+}
+
 declare module 'create-gasket-app' {
   export interface CreateContext {
     useDocusaurus?: boolean;
@@ -16,13 +23,6 @@ export interface BaseConfig {
   /** Preset name */
   name: string;
   path: string;
-}
-
-export interface DocusaurusConfig {
-  rootDir?: string;
-  docsDir?: string;
-  port?: string;
-  host?: string;
 }
 
 const plugin: Plugin = {

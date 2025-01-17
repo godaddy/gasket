@@ -76,7 +76,14 @@
         ],
         "extends": [
           "godaddy-typescript"
-        ]
+        ],
+        "rules": {
+          "no-use-before-define": "off",
+          "jsdoc/require-returns": "off",
+          "jsdoc/require-param-description": "off",
+          "jsdoc/require-param-type": "off",
+          "jsdoc/require-param": "off"
+        }
       }
     ]
   },

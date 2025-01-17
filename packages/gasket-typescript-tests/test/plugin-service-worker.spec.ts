@@ -1,5 +1,6 @@
-import { GasketConfigDefinition, Plugin } from '@gasket/core';
-import { Request } from 'express';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import type { GasketConfigDefinition, Plugin } from '@gasket/core';
+import type { Request } from 'express';
 import '@gasket/plugin-service-worker';
 
 describe('@gasket/plugin-service-worker', () => {

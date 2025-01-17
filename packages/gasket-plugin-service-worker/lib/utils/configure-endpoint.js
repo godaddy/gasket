@@ -3,7 +3,7 @@ const { getCacheKeys, getComposedContent, getSWConfig } = require('./utils');
 
 /**
  * Configures the endpoint with the gasket config
- * @type {import('../index').configureEndpoint}
+ * @type {import('@gasket/plugin-service-worker').configureEndpoint}
  */
 module.exports = async function configureEndpoint(gasket) {
   const { logger } = gasket;

@@ -1,10 +1,10 @@
-import type { IncomingMessage, OutgoingMessage, ServerResponse } from 'http';
 import type { Application, Request, Response } from 'express';
-import type { FastifyRequest, FastifyReply, RouteHandlerMethod } from 'fastify';
+import type { RouteHandlerMethod } from 'fastify';
 import type { Options } from 'lru-cache';
 import type { MinifyOptions } from 'uglify-js';
-import type { MaybeAsync, MaybeMultiple, Plugin } from '@gasket/core';
-import type { Http2SecureServer, Http2ServerRequest, Http2ServerResponse } from 'http2';
+import type { MaybeAsync, MaybeMultiple, Plugin, Gasket } from '@gasket/core';
+import type { Http2SecureServer, Http2ServerRequest, Http2ServerResponse } from 'node:http2';
+import type { GasketConfig } from '@gasket/core';
 
 export interface ServiceWorkerConfig {
   /** Name the service worker file. Default is /sw.js */
@@ -13,37 +13,51 @@ export interface ServiceWorkerConfig {
   /** From where to intercept requests. Default is / */
   scope?: string;
 
-  /** The JavaScript content to be served. While this can be initialized in
+  /**
+   * The JavaScript content to be served. While this can be initialized in
    * the Gasket config, the expectation is it will be modified by plugins
-   * using composeServiceWorker lifecycle. */
+   * using composeServiceWorker lifecycle.
+   */
   content?: string;
 
-  /** Optional cache key functions that accept the request object as
-   * argument and return a string. */
-  cacheKeys?: Array<(request: IncomingMessage) => string>;
+  /**
+   * Optional cache key functions that accept the request object as
+   * argument and return a string.
+   */
+  cacheKeys?: Array<() => string>;
 
-  /** adjust the content cache settings using the lru-cache options. By
-   * default, content will remained cached for 5 days from last request. */
+  /**
+   * adjust the content cache settings using the lru-cache options. By
+   * default, content will remained cached for 5 days from last request.
+   */
   cache?: Options<string, string>;
 
-  /** Minification options to be used on the composed JavaScript.
+  /**
+   * Minification options to be used on the composed JavaScript.
    * Configuration for this field is passed directly to uglify-js. This is
    * turned on in production by default. Adding minify: { } will turn on the
-   * default behavior in other environments, if specified. */
+   * default behavior in other environments, if specified.
+   */
   minify?: MinifyOptions | boolean;
 
-  /** By default, a service worker registration script will be injected to
+  /**
+   * By default, a service worker registration script will be injected to
    * the webpack entry modules. This can be disabled by setting this to
    * false. If you wish to control which entry modules get injected, read
-   * more in the registering section. */
+   * more in the registering section.
+   */
   webpackRegister?: boolean | MaybeMultiple<string> | ((key: string) => boolean);
 
-  /** If true, a static sw.js will be output to the ./public dir. Otherwise,
+  /**
+   * If true, a static sw.js will be output to the ./public dir. Otherwise,
    * this can be set to a string with a path to an alternate output
    * location. This disables request-based service workers. Default is
-   * false. */
+   * false.
+   */
   staticOutput?: string | boolean;
 }
+
+type ServiceWorkerCacheKey = () => (req: Request, res: Response) => string;
 
 declare module '@gasket/core' {
   export interface GasketActions {
@@ -55,8 +69,9 @@ declare module '@gasket/core' {
   }
 
   export interface HookExecTypes {
-    composeServiceWorker(content: string, context: { req: Request; res: Response }): MaybeAsync<string>;
+    composeServiceWorker(content: string, context: { req?: Request; res?: Response }): MaybeAsync<string>;
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     serviceWorkerCacheKey(): MaybeAsync<(req: Request, res: Response) => MaybeAsync<string>>;
   }
 }
@@ -87,13 +102,21 @@ export async function serviceWorkerMiddleware(
   next: (err?: any) => void
 ): Promise<void>;
 
-/** Get the service worker configuration from the gasket config */
-export function getSWConfig(gasket: Gasket): ServiceWorkerConfig;
+type GasketPartial = {
+  config: GasketConfig;
+};
 
-/** Gathers thunks to key caches of composed sw scripts, based on req */
-export async function getCacheKeys(
-  gasket: Gasket
-): Promise<Array<(req: Request | FastifyRequest, res: Response | FastifyReply) => string>>;
+/**
+ * Get the service worker configuration from the gasket config
+ */
+export function getSWConfig(gasketPartial: GasketPartial): ServiceWorkerConfig;
+
+type CacheKeyGenerator = (req: Request, res: Response) => MaybeAsync<string>;
+
+/**
+ * Gathers thunks to key caches of composed sw scripts, based on req
+ */
+export async function getCacheKeys(gasket: Gasket): Promise<CacheKeyGenerator[]>;
 
 export async function getComposedContent(gasket: Gasket, context: { req: Request; res: Response } | {}): string;
 

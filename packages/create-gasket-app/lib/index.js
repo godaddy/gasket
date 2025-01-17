@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { Command } from 'commander';
-import { createRequire } from 'module';
+import { createRequire } from 'node:module';
 import { createCommand } from './commands/create.js';
 import { processCommand, logo } from './utils/index.js';
 import { warnIfOutdated } from '@gasket/utils';

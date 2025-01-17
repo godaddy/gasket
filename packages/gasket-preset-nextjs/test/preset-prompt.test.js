@@ -20,12 +20,11 @@ jest.mock('@gasket/plugin-nextjs/prompts', () => {
 
 jest.mock('@gasket/plugin-typescript/prompts', () => {
   const mod = jest.requireActual('@gasket/plugin-typescript/prompts');
-  return {
-    promptTypescript: async (context, prompt) => {
-      mod.promptTypescript(context, prompt);
-      mockTypescriptPrompt(context, prompt);
-    }
-  };
+  return jest.fn(async (gasket, context, { prompt }) => {
+    await mod(gasket, context, { prompt });
+    mockTypescriptPrompt(gasket, context, { prompt });
+    return { ...context, typescript: true };
+  });
 });
 
 const preset = await import('../lib/index.js');
@@ -36,7 +35,7 @@ describe('presetPrompt', () => {
   beforeEach(() => {
     mockContext = {};
     mockAnswers = { typescript: false };
-    mockPrompt = { prompt: jest.fn().mockImplementation(() => mockAnswers) };
+    mockPrompt = { prompt: jest.fn().mockResolvedValue(mockAnswers) };
     presetPrompt = preset.default ? preset.default.hooks.presetPrompt : preset.hooks.presetPrompt;
   });
 

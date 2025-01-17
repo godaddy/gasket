@@ -1,39 +1,40 @@
-import { MaybeAsync, Plugin, GasketRequest } from '@gasket/core';
+import type { MaybeAsync, Plugin, GasketRequest } from '@gasket/core';
 
 export interface PublicGasketData extends Record<string, any> {}
 
 export interface GasketData extends Record<string, any> {
-  public?: PublicGasketData;
+	public?: PublicGasketData;
 }
 
 export type GasketDataDefinition = GasketData & {
-  environments?: Record<string, Partial<GasketDataDefinition>>;
-  commands?: Record<string, Partial<GasketDataDefinition>>;
+	environments?: Record<string, Partial<GasketDataDefinition>>;
+	commands?: Record<string, Partial<GasketDataDefinition>>;
 };
 
 declare module '@gasket/core' {
-  export interface GasketConfig {
-    data?: GasketDataDefinition;
-  }
+	export interface GasketConfig {
+		data?: GasketDataDefinition;
+	}
 
-  export interface GasketActions {
-    getGasketData(): Promise<GasketData>;
-    getPublicGasketData(req: GasketRequest): Promise<PublicGasketData>;
-  }
+	export interface GasketActions {
+		getGasketData(): Promise<GasketData>;
+		getPublicGasketData(req: GasketRequest): Promise<PublicGasketData>;
+	}
 
-  export interface HookExecTypes {
-    gasketData(data: GasketData): MaybeAsync<GasketData>;
+	export interface HookExecTypes {
+		gasketData(data: GasketData): MaybeAsync<GasketData>;
 
-    publicGasketData(publicData: PublicGasketData, context: { req: GasketRequest }): MaybeAsync<PublicGasketData>;
-  }
+		publicGasketData(
+			publicData: PublicGasketData,
+			context: { req: GasketRequest },
+		): MaybeAsync<PublicGasketData>;
+	}
 }
 
 declare module 'create-gasket-app' {
-  export interface CreateContext {
-    typescript: boolean;
-    nextServerType: 'appRouter' | 'pageRouter' | 'customServer';
-    apiApp: boolean;
-  }
+	export interface CreateContext {
+		apiApp: boolean;
+	}
 }
 
 const plugin: Plugin = {

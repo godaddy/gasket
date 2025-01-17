@@ -26,21 +26,17 @@ async function chooseAppDescription(context, prompt) {
  */
 async function choosePackageManager(context, prompt) {
   const packageManager =
-    context.packageManager ||
-    (
-      await prompt([
-        {
-          name: 'packageManager',
-          message: 'Which packager would you like to use?',
-          type: 'list',
-          choices: [
-            { name: 'npm' },
-            { name: 'pnpm' },
-            { name: 'yarn' }
-          ]
-        }
-      ])
-    ).packageManager;
+		context.packageManager ||
+		(
+		  await prompt([
+		    {
+		      name: 'packageManager',
+		      message: 'Which packager would you like to use?',
+		      type: 'list',
+		      choices: [{ name: 'npm' }, { name: 'pnpm' }, { name: 'yarn' }]
+		    }
+		  ])
+		).packageManager;
 
   const installCmd = context.installCmd || `${packageManager} install`;
 
@@ -73,14 +69,17 @@ async function chooseTestPlugins(context, prompt) {
 
   if (!('testPlugins' in context)) {
     for (const type of testTypes) {
-      if (type + 'TestSuite' in context) {
-        const testSuite = knownTestPlugins[type][context[type + 'TestSuite']];
+      if (`${type}TestSuite` in context) {
+        const testSuite = knownTestPlugins[type][context[`${type}TestSuite`]];
         if (testSuite) testPlugins.push(testSuite);
       } else {
         const plugin = await promptForTestPlugin(
           prompt,
           `Choose your ${type} test suite`,
-          Object.entries(knownTestPlugins[type]).map(([name, value]) => ({ name, value }))
+          Object.entries(knownTestPlugins[type]).map(([name, value]) => ({
+            name,
+            value
+          }))
         );
 
         if (plugin) testPlugins.push(plugin);
@@ -94,7 +93,8 @@ async function chooseTestPlugins(context, prompt) {
 }
 
 /**
- *
+ * Prompts the user to choose a test plugin for a specific test suite (unit or integration).
+ * The user can select from available options or opt for 'none'.
  * @type {import('../../internal').promptForTestPlugin}
  */
 async function promptForTestPlugin(prompt, message, choices) {
@@ -111,8 +111,8 @@ async function promptForTestPlugin(prompt, message, choices) {
 }
 
 /**
- * Given that gasket is creating in an already existing directory, it should
- * confirm with the user that it's intentionally overwriting that directory
+ * Asks the user for confirmation before overwriting an existing directory.
+ * If the user confirms, the `destOverride` flag in the context is set to true.
  * @type {import('../../internal').allowExtantOverwriting}
  */
 async function allowExtantOverwriting(context, prompt) {
@@ -139,13 +139,15 @@ export const questions = [
 ];
 
 /**
- * Fire off prompts for user input
+ * Executes a series of prompts to collect user input, updating the context with the responses.
+ * This function orchestrates the flow of prompting for app description, package manager, test plugins, and
+ * overwrite confirmation.
  * @type {import('../../internal').globalPrompts}
  */
 async function globalPrompts({ context }) {
   const prompt = context.prompts ? inquirer.createPromptModule() : () => ({});
 
-  for (var fn of questions) {
+  for (const fn of questions) {
     await fn(context, prompt);
   }
 }

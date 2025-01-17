@@ -1,4 +1,4 @@
-import type { IncomingMessage, ServerResponse } from 'http';
+import type { IncomingMessage, ServerResponse } from 'node:http';
 import type { NextConfig } from 'next';
 import type { NextServer } from 'next/dist/server/next';
 import type { Application } from 'express';
@@ -6,7 +6,7 @@ import type { Fastify } from 'fastify';
 import type { Gasket } from '@gasket/core';
 import type { CreateContext, CreatePrompt } from 'create-gasket-app';
 
-export { NextConfig, NextServer };
+export type { NextConfig, NextServer };
 
 export type NextConfigFunction = (
   phase: string,
@@ -77,8 +77,6 @@ declare module 'create-gasket-app' {
 declare module '@gasket/plugin-nextjs' {
   export const name = '@gasket/plugin-nextjs';
   export const hooks = {};
-
-  /** Gets the NextJS route matching the request */
   export async function getNextRoute(
     gasket: Gasket,
     req: IncomingMessage

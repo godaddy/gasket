@@ -2,7 +2,7 @@
 import chalk from 'chalk';
 import { makeCreateContext } from '../scaffold/create-context.js';
 import { dumpErrorContext } from '../scaffold/dump-error-context.js';
-import { rm } from 'fs/promises';
+import { rm } from 'node:fs/promises';
 import { makeGasket } from '@gasket/core';
 import {
   createHooks,
@@ -21,6 +21,7 @@ import {
   writeGasketConfig,
   writePkg
 } from '../scaffold/actions/index.js';
+import { env } from 'node:process';
 
 /**
  * Parses comma separated option input to array
@@ -97,7 +98,7 @@ const createCommand = {
  * @type {import('../index').createCommandAction}
  */
 createCommand.action = async function run(appname, options, command) {
-  process.env.GASKET_ENV = 'create';
+  env.GASKET_ENV = 'create';
   const context = makeCreateContext([appname], options);
   const { rawPresets, localPresets } = context;
 
@@ -133,6 +134,7 @@ createCommand.action = async function run(appname, options, command) {
     if (context.tmpDir) await rm(context.tmpDir, { recursive: true });
     printReport({ context });
   } catch (err) {
+    // eslint-disable-next-line no-console
     console.error(chalk.red('Exiting with errors.'));
     dumpErrorContext(context, err);
     throw err;

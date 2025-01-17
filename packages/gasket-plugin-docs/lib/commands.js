@@ -1,4 +1,4 @@
-/// <reference types="@gasket/core" />
+/// <reference types="@gasket/plugin-command" />
 
 const buildDocsConfigSet = require('./utils/build-config-set');
 const collateFiles = require('./utils/collate-files');
@@ -19,7 +19,7 @@ module.exports = function commands(gasket) {
         type: 'boolean'
       }
     ],
-    action: async function ({ view }) {
+    action: async ({ view }) => {
       const docsConfigSet = await buildDocsConfigSet(gasket);
 
       await collateFiles(docsConfigSet);

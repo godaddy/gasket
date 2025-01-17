@@ -1,9 +1,9 @@
-import type { MaybeAsync, Plugin } from '@gasket/core';
+import type { MaybeAsync, Plugin, Gasket } from '@gasket/core';
 import type { PackageJson } from 'create-gasket-app';
 
 export interface ModuleData<> {
   /** Name of preset */
-  name: string;
+  name?: string;
 
   /** Package.json contents */
   package?: PackageJson;
@@ -124,7 +124,7 @@ declare module '@gasket/core' {
   }
 
   export interface GasketActions {
-    getMetadata(): Promise<Metadata>;
+    getMetadata(gasket: Gasket): Promise<Metadata>;
   }
 }
 

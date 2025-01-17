@@ -8,32 +8,33 @@ const swHeader = `'use strict';
 
 /**
  * Get the service worker configuration from the gasket config
- * @type {import('../index').getSWConfig}
+ * @type {import('@gasket/plugin-service-worker').getSWConfig}
  */
 function getSWConfig(gasketPartial) {
-  const { config = {} } = gasketPartial;
-  const { serviceWorker = {} } = config;
-  return serviceWorker;
+  const { config } = gasketPartial;
+  const { serviceWorker } = config || {};
+  return serviceWorker || {};
 }
 
 /**
  * Gathers thunks to key caches of composed sw scripts, based on req
- * @type {import('../index').getCacheKeys}
+ * @type {import('@gasket/plugin-service-worker').getCacheKeys}
  */
 async function getCacheKeys(gasket) {
-  const { exec } = gasket;
   const { cacheKeys: userCacheKeys = [] } = getSWConfig(gasket);
+  const pluginCacheKeys = await gasket.exec('serviceWorkerCacheKey');
 
-  const pluginCacheKeys = await exec('serviceWorkerCacheKey');
-
-  return [...userCacheKeys, ...pluginCacheKeys].filter(
-    (k) => typeof k === 'function'
+  // Combine and filter the cache keys to ensure they are valid functions
+  const validCacheKeys = [...userCacheKeys, ...pluginCacheKeys].filter(
+    (key) => typeof key === 'function'
   );
+
+  return validCacheKeys;
 }
 
 /**
  * Composes the service worker content from the configured content
- * @type {import('../index').getComposedContent}
+ * @type {import('@gasket/plugin-service-worker').getComposedContent}
  */
 async function getComposedContent(gasket, context) {
   const {
@@ -68,11 +69,11 @@ let __script;
 
 /**
  * Loads template file once with substitutions from config
- * @type {import('../index').loadRegisterScript}
+ * @type {import('@gasket/plugin-service-worker').loadRegisterScript}
  */
 async function loadRegisterScript(config) {
   if (!__script) {
-    const fs = require('fs').promises;
+    const fs = require('node:fs').promises;
     const { url, scope } = config;
     const template = require.resolve('./sw-register.template.js');
 

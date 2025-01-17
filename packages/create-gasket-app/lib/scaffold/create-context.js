@@ -89,8 +89,8 @@ export function makeCreateContext(argv = [], options = {}) {
 
   /**
    * Input context which will be appended by prompts and passed to create hooks
-   * @type {import('../internal').PartialCreateContext}
-  */
+   * @type {Partial<import('create-gasket-app').CreateContext>}
+   */
   const context = new CreateContext({
     destOverride: true,
     cwd,
