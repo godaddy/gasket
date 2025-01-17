@@ -33,6 +33,7 @@ declare module 'create-gasket-app' {
     apiApp?: boolean;
     addApiRoutes?: boolean;
     typescript?: boolean;
+    server?: string;
   }
 }
 

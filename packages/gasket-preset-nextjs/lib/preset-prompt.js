@@ -1,4 +1,4 @@
-// Default Plugins
+// Default Plugins Prompts - included by default for all presets
 import docsPrompts from '@gasket/plugin-docs/prompts';
 import docusaurusPrompts from '@gasket/plugin-docusaurus/prompts';
 import gitPrompts from '@gasket/plugin-git/prompts';

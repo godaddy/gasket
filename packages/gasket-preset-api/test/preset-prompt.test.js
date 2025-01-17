@@ -4,24 +4,22 @@ const mockTypescriptPrompt = jest.fn();
 
 jest.mock('@gasket/plugin-typescript/prompts', () => {
   const mod = jest.requireActual('@gasket/plugin-typescript/prompts');
-  return {
-    promptTypescript: async (context, prompt) => {
-      mod.promptTypescript(context, prompt);
-      mockTypescriptPrompt(context, prompt);
-    }
-  };
+  return jest.fn(async (gasket, context, { prompt }) => {
+    await mod(gasket, context, { prompt });
+    mockTypescriptPrompt(gasket, context, { prompt });
+    return { ...context, typescript: true };
+  });
 });
 
 const mockSwaggerPrompt = jest.fn();
 
 jest.mock('@gasket/plugin-swagger/prompts', () => {
   const mod = jest.requireActual('@gasket/plugin-swagger/prompts');
-  return {
-    promptSwagger: async (context, prompt) => {
-      mod.promptSwagger(context, prompt);
-      mockSwaggerPrompt(context, prompt);
-    }
-  };
+  return jest.fn(async (gasket, context, { prompt }) => {
+    await mod(gasket, context, { prompt });
+    mockSwaggerPrompt(gasket, context, { prompt });
+    return { ...context };
+  });
 });
 
 const preset = await import('../lib/index.js');
