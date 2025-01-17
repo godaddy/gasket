@@ -1,10 +1,20 @@
+// Default Plugins - included by default for all presets
+import pluginCommand from '@gasket/plugin-command';
+import pluginDocs from '@gasket/plugin-docs';
+import pluginDocusaurus from '@gasket/plugin-docusaurus';
+import pluginDynamicPlugins from '@gasket/plugin-dynamic-plugins';
+import pluginGit from '@gasket/plugin-git';
+import pluginLogger from '@gasket/plugin-logger';
+import pluginMetadata from '@gasket/plugin-metadata';
+
+// Preset-specific Plugins
 import pluginHttps from '@gasket/plugin-https';
 import pluginHttpsProxy from '@gasket/plugin-https-proxy';
-import pluginNext from '@gasket/plugin-nextjs';
 import pluginIntl from '@gasket/plugin-intl';
+import pluginLint from '@gasket/plugin-lint';
+import pluginNext from '@gasket/plugin-nextjs';
 import pluginWebpack from '@gasket/plugin-webpack';
 import pluginWinston from '@gasket/plugin-winston';
-import pluginLint from '@gasket/plugin-lint';
 
 /**
  * presetConfig hook
@@ -15,41 +25,48 @@ import pluginLint from '@gasket/plugin-lint';
 export default async function presetConfig(gasket, context) {
   let typescriptPlugin;
 
-  const plugins = [
+  const plugins = new Set([
+    pluginCommand,
+    pluginDocs,
+    pluginDocusaurus,
+    pluginDynamicPlugins,
+    pluginGit,
+    pluginLogger,
+    pluginMetadata,
     pluginNext,
     pluginIntl,
     pluginWebpack,
     pluginWinston,
     pluginLint
-  ];
+  ]);
 
   if (context.nextServerType === 'customServer') {
     const frameworkPlugin = await import('@gasket/plugin-express');
 
-    plugins.push(pluginHttps);
-    plugins.push(frameworkPlugin.default || frameworkPlugin);
+    plugins.add(pluginHttps);
+    plugins.add(frameworkPlugin.default || frameworkPlugin);
   } else if (context.nextDevProxy) {
-    plugins.push(pluginHttpsProxy);
+    plugins.add(pluginHttpsProxy);
   }
 
   if (context.nextDevProxy) {
-    plugins.push(pluginHttpsProxy);
+    plugins.add(pluginHttpsProxy);
   }
 
   if ('testPlugins' in context && context.testPlugins.length > 0) {
     await Promise.all(context.testPlugins.map(async (testPlugin) => {
       const plugin = await import(testPlugin);
-      plugins.push(plugin ? plugin.default || plugin : null);
+      plugins.add(plugin ? plugin.default || plugin : null);
     }));
   }
 
   if (context.typescript) {
     typescriptPlugin = await import('@gasket/plugin-typescript');
 
-    plugins.push(typescriptPlugin.default || typescriptPlugin);
+    plugins.add(typescriptPlugin.default || typescriptPlugin);
   }
 
   return {
-    plugins: plugins.filter(Boolean)
+    plugins: Array.from(plugins)
   };
 }
