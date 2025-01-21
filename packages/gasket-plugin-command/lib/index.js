@@ -36,7 +36,7 @@ export default {
             method: 'exec',
             description: 'Add custom commands to the CLI',
             link: 'README.md#commands',
-            parent: 'ready'
+            parent: 'prepare'
           },
           {
             name: 'build',

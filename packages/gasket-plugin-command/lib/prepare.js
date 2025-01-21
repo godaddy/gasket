@@ -4,6 +4,7 @@ import { processCommand } from './utils/process-command.js';
 
 /** @type {import('@gasket/core').HookHandler<'prepare'>} */
 export default function prepare(gasket, config) {
+  if (!config.command) return config;
 
   /** @type {import('./index.js').GasketCommandDefinition[]} */
   const cmdDefs = gasket.execSync('commands');
