@@ -1,4 +1,4 @@
-import { defaultHandler } from '../routes';
+import { defaultHandler } from '../plugins/routes-plugin.js';
 import { jest, expect, beforeEach } from '@jest/globals';
 
 describe('Routes', () => {
