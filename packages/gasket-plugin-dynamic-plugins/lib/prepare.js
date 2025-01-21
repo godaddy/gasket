@@ -36,6 +36,12 @@ export default {
       }
     });
 
+    await gasket.execApply('prepare', async function (plugin, handler) {
+      if (imported.includes(plugin)) {
+        config = await handler(config);
+      }
+    });
+
     return config;
   }
 };
