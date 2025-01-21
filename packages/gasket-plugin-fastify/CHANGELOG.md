@@ -1,5 +1,7 @@
 # `@gasket/plugin-fastify`
 
+### 7.1.4
+
 - Deprecate and remove the use of the `getFastifyApp` action ([#1011])
 
 ### 7.1.0
