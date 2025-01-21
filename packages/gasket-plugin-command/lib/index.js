@@ -2,6 +2,7 @@
 
 import create from './create.js';
 import configure from './configure.js';
+import prepare from './prepare.js';
 import commands from './commands.js';
 import ready from './ready.js';
 import { createRequire } from 'module';
@@ -16,6 +17,7 @@ export default {
   hooks: {
     create,
     configure,
+    prepare,
     commands,
     ready,
     metadata(gasket, meta) {
