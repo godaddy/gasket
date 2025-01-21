@@ -1,7 +1,7 @@
 {
   "name": "@gasket/typescript-tests",
   "private": true,
-  "version": "7.1.4",
+  "version": "7.1.5",
   "description": "Not a published package; hosts unit tests to verify TypeScript support",
   "files": [
     "lib"
@@ -77,7 +77,7 @@
     "@gasket/utils": "^7.1.4",
     "@types/express": "^4.17.21",
     "@types/jest": "^29.5.12",
-    "create-gasket-app": "^7.1.4",
+    "create-gasket-app": "^7.1.5",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
     "eslint-config-godaddy-react-typescript": "^4.0.2",
