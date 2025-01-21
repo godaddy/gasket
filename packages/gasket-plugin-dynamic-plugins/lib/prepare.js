@@ -1,5 +1,8 @@
 /* eslint-disable no-sync */
 import * as path from 'path';
+import colors from 'chalk';
+
+const dedupeMsg = colors.gray('      deduped');
 
 export default {
   timing: {
@@ -27,18 +30,24 @@ export default {
     gasket.execApplySync('init', function (plugin, handler) {
       if (imported.includes(plugin)) {
         handler();
+      } else {
+        gasket.trace(dedupeMsg);
       }
     });
 
     gasket.execApplySync('configure', function (plugin, handler) {
       if (imported.includes(plugin)) {
         config = handler(config);
+      } else {
+        gasket.trace(dedupeMsg);
       }
     });
 
     await gasket.execApply('prepare', async function (plugin, handler) {
       if (imported.includes(plugin)) {
         config = await handler(config);
+      } else {
+        gasket.trace(dedupeMsg);
       }
     });
 
