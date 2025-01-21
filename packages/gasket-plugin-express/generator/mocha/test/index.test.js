@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import sinon from 'sinon';
-import { defaultHandler } from '../routes/index.js';
+import { defaultHandler } from '../plugins/routes-plugin.js';
 
 describe('Routes', () => {
   let mockRequest, mockResponse, jsonSpy;
