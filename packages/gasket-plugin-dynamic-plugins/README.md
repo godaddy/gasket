@@ -49,31 +49,36 @@ To specify which plugins to load dynamically, add a `dynamicPlugins` key to your
 export default makeGasket({
 +  dynamicPlugins: [
 +    '@gasket/plugin-foo', 
-+    '@gasket/plugin-bar'
++    '@gasket/plugin-bar',
++    './custom-plugin.js'
 + ]
 });
 ```
 
-### Environments
+### Conditional configuration
 
-This plugin can utilize [sub-environments] to determine which plugins to load dynamically. To specify which sub-environment to use, set the `GASKET_ENV` environment variable to the desired sub-environment and then add the sub-environment configuration to the `gasket` file.
+You can use sub-configurations by [environments] or [commands] to determine
+which plugins to load dynamically.
 
-For example if you wanted to load the `@gasket/plugin-docs` and `@gasket/plugin-docusaurus` plugins only when running the `docs` script, you could set the `GASKET_ENV` variable to `local.docs` in your `package.json` file.
+For example, if you wanted to load docs-related plugins only when using the
+docs commands, with a package script like:
 
 ```json
-"docs": "GASKET_ENV=local.docs node gasket.js docs"
+  "docs": "node gasket.js docs"
 ```
 
-In your `gasket` file, you would then specify the plugins to load for the `local.docs` sub-environment.
+In your `gasket` file, you would then configure the plugins to load dynamically
+when the `docs` command is used.
 
 ```js
 makeGasket({
-  environments: {
-    local: { ... },
-    'local.docs': {
+  // ...
+  commands: {
+    'docs': {
       dynamicPlugins: [
         '@gasket/plugin-docs',
-        '@gasket/plugin-docusaurus'
+        '@gasket/plugin-docusaurus',
+        '@gasket/plugin-metadata'
       ]
     }
   }
@@ -84,11 +89,15 @@ makeGasket({
 
 This plugin hooks the [prepare] lifecycle to add dynamic plugins to the Gasket instance.
 
-In the `prepare` hook, plugins specified in the `dynamicPlugins` configuration are registered to the Gasket instance. The `init` and `configure` lifecycles are then executed exclusively for the newly added dynamic plugins.
+In the `prepare` hook, plugins specified in the `dynamicPlugins` configuration
+are registered to the Gasket instance.
+The `init`, `configure`, and `prepare` lifecycles are then executed exclusively
+for the newly added dynamic plugins.
 
 ## License
 
 [MIT](./LICENSE.md)
 
-[sub-environments]: ../../docs/configuration.md#environments
+[environments]: ../../docs/configuration.md#environments
+[commands]: ../../docs/configuration.md#commands
 [prepare]: ../gasket-core/README.md#prepare
