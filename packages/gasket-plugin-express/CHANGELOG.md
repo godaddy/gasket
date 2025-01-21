@@ -1,5 +1,7 @@
 # `@gasket/plugin-express`
 
+### 7.1.4
+
 - Deprecate and remove the use of the `getExpressApp` action ([#1011])
 
 ### 7.1.3

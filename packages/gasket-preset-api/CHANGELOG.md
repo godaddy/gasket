@@ -1,5 +1,9 @@
 # `@gasket/preset-api`
 
+### 7.1.4
+
+- Remove routes import from the `server.ts` ([#1011])
+
 ### 7.1.0
 
 - Aligned version releases across all packages
@@ -42,3 +46,4 @@
 [#648]: https://github.com/godaddy/gasket/pull/648
 [#662]: https://github.com/godaddy/gasket/pull/662
 [#736]: https://github.com/godaddy/gasket/pull/736
+[#1011]: https://github.com/godaddy/gasket/pull/1011
