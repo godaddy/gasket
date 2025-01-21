@@ -19,6 +19,7 @@ const plugin = {
   version,
   description,
   actions: {
+    /** @deprecated */
     getFastifyApp(gasket) {
       const { fastify: fastifyConfig = {}, http2, https } = gasket.config;
       const { trustProxy = false, disableRequestLogging = true } = fastifyConfig;
@@ -40,7 +41,8 @@ const plugin = {
           {
             name: 'getFastifyApp',
             description: 'Get the Fastify app instance',
-            link: 'README.md#getFastifyApp'
+            link: 'README.md#getFastifyApp',
+            deprecated: true
           }
         ],
         lifecycles: [

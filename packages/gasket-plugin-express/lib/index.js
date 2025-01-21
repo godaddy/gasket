@@ -14,6 +14,7 @@ const plugin = {
   version,
   description,
   actions: {
+    /** @deprecated */
     getExpressApp(gasket) {
       const express = require('express');
       const { http2 } = gasket.config;
@@ -41,7 +42,8 @@ const plugin = {
           {
             name: 'getExpressApp',
             description: 'Get the Express app instance',
-            link: 'README.md#getExpressApp'
+            link: 'README.md#getExpressApp',
+            deprecated: true
           }
         ],
         guides: [
