@@ -1,5 +1,7 @@
 # `@gasket/plugin-typescript`
 
+### 7.1.4
+
 - Remove routes import from the `server.ts` ([#1011])
 
 ### 7.1.0
