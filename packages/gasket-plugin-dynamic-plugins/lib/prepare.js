@@ -1,3 +1,6 @@
+/* eslint-disable no-sync */
+import * as path from 'path';
+
 export default {
   timing: {
     before: ['@gasket/plugin-command']
@@ -7,20 +10,28 @@ export default {
 
     if (!dynamicPlugins.length) return config;
 
-    const load = await Promise.all(dynamicPlugins.map(plugin => import(plugin)));
-    load.forEach(mod => {
-      config.plugins.push(mod.default);
+    const imported = await Promise.all(dynamicPlugins.map(pluginName => {
+      if (pluginName.startsWith('.')) {
+        const absolutePath = path.resolve(gasket.config.root, pluginName);
+        return import(absolutePath).then(mod => mod.default);
+      }
+      return import(pluginName).then(mod => mod.default);
+    }));
+
+    imported.forEach(mod => {
+      config.plugins.push(mod);
     });
+
     gasket.engine.registerPlugins(config.plugins);
-    // eslint-disable-next-line no-sync
+
     gasket.execApplySync('init', function (plugin, handler) {
-      if (dynamicPlugins.includes(plugin.name)) {
+      if (imported.includes(plugin)) {
         handler();
       }
     });
-    // eslint-disable-next-line no-sync
-    gasket.execApplySync('configure', async function (plugin, handler) {
-      if (dynamicPlugins.includes(plugin.name)) {
+
+    gasket.execApplySync('configure', function (plugin, handler) {
+      if (imported.includes(plugin)) {
         config = handler(config);
       }
     });
