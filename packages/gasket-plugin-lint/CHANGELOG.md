@@ -1,5 +1,7 @@
 # `@gasket/plugin-lint`
 
+### 7.1.7
+
 - Pin GoDaddy ESLint packages with ESLint 8 compatability ([#1019])
 
 ### 7.1.0
