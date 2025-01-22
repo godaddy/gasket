@@ -27,15 +27,25 @@ const godaddy = {
       configName = 'godaddy-flow';
     }
 
+    // limit the supported version ranges
+    const versionRanges = {
+      'godaddy': '^7.1.1',
+      'godaddy-react': '^9.1.0',
+      'godaddy-flow': '^6.0.2',
+      'godaddy-react-flow': '^6.0.2',
+      '@godaddy/eslint-plugin-react-intl': '^1.3.0',
+      'stylelint-config-godaddy': '^0.6.0'
+    };
+
     pkg.add(
       'devDependencies',
-      await gatherDevDeps(`eslint-config-${configName}`)
+      await gatherDevDeps(`eslint-config-${configName}@${versionRanges[configName]}`)
     );
     pkg.add('eslintConfig', { extends: [configName] });
 
     if (hasReactIntl) {
       const pluginName = '@godaddy/eslint-plugin-react-intl';
-      const deps = await gatherDevDeps(pluginName);
+      const deps = await gatherDevDeps(`${pluginName}@${versionRanges[pluginName]}`);
       // only add the plugin to avoid stomping config version
       pkg.add('devDependencies', {
         [pluginName]: deps[pluginName]
@@ -50,7 +60,7 @@ const godaddy = {
 
     if (addStylelint) {
       const stylelintName = 'stylelint-config-godaddy';
-      pkg.add('devDependencies', await gatherDevDeps(stylelintName));
+      pkg.add('devDependencies', await gatherDevDeps(`${stylelintName}@${versionRanges[stylelintName]}`));
       pkg.add('stylelint', { extends: [stylelintName] });
     }
 
