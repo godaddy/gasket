@@ -6,7 +6,7 @@ import { processCommand } from './utils/process-command.js';
 export default function prepare(gasket, config) {
   if (!config.command) return config;
 
-  /** @type {import('./index.js').GasketCommandDefinition[]} */
+  /** @type {import('@gasket/plugin-command').GasketCommandDefinition[]} */
   const cmdDefs = gasket.execSync('commands');
 
   cmdDefs.forEach((cmdDef) => {

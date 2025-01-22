@@ -8,6 +8,7 @@ export default {
   timing: {
     before: ['@gasket/plugin-command']
   },
+  /** @type {import('@gasket/core').HookHandler<'prepare'>} */
   handler: async function prepare(gasket, config) {
     const dynamicPlugins = (config.dynamicPlugins ?? []).filter(Boolean);
 
@@ -27,11 +28,14 @@ export default {
 
     gasket.engine.registerPlugins(config.plugins);
 
+    /** @type {import('@gasket/core').GasketTrace} */
+    const tracer = gasket;
+
     gasket.execApplySync('init', function (plugin, handler) {
       if (imported.includes(plugin)) {
         handler();
       } else {
-        gasket.trace(dedupeMsg);
+        tracer.trace(dedupeMsg);
       }
     });
 
@@ -39,7 +43,7 @@ export default {
       if (imported.includes(plugin)) {
         config = handler(config);
       } else {
-        gasket.trace(dedupeMsg);
+        tracer.trace(dedupeMsg);
       }
     });
 
@@ -47,7 +51,7 @@ export default {
       if (imported.includes(plugin)) {
         config = await handler(config);
       } else {
-        gasket.trace(dedupeMsg);
+        tracer.trace(dedupeMsg);
       }
     });
 

@@ -125,7 +125,9 @@ declare module '@gasket/core' {
     traceRoot(): Gasket
   }
 
-  export type GasketTrace = Proxy<Gasket>;
+  export type GasketTrace = Proxy<Gasket> & {
+    trace: (msg: string) => void
+  };
 
   type PartialRecursive<T> = T extends Object
     ? { [K in keyof T]?: PartialRecursive<T[K]> } | undefined
