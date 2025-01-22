@@ -1,5 +1,9 @@
 # `@gasket/plugin-nextjs`
 
+### 7.1.6
+
+- Auto exclude gasket.mjs files from webpack bundle ([#1017])
+
 ### 7.1.0
 
 - Add HTTPS proxy server to Next.js dev server ([#982])
@@ -315,4 +319,5 @@
 [#946]: https://github.com/godaddy/gasket/pull/946
 [#948]: https://github.com/godaddy/gasket/pull/948
 [#982]: https://github.com/godaddy/gasket/pull/982
+[#1017]: https://github.com/godaddy/gasket/pull/1017
 
