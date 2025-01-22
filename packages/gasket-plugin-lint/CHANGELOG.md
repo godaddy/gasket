@@ -1,5 +1,7 @@
 # `@gasket/plugin-lint`
 
+- Pin GoDaddy ESLint packages with ESLint 8 compatability ([#1019])
+
 ### 7.1.0
 
 - Aligned version releases across all packages
@@ -124,3 +126,4 @@
 [#482]: https://github.com/godaddy/gasket/pull/482
 [#670]: https://github.com/godaddy/gasket/pull/670
 [#937]: https://github.com/godaddy/gasket/pull/937
+[#1019]: https://github.com/godaddy/gasket/pull/1019
