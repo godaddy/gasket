@@ -91,8 +91,8 @@ of your configuration, enabling you to use any arbitrary environment derivation 
 
 ## Commands
 
-Similar to environments, you can add configuration `gasket.js` file to only be
-used when running specific commands.
+Similar to environments, you can add configuration in the `gasket.js` file to
+only be used when running specific commands.
 
 ```js
 export default makeGasket({
