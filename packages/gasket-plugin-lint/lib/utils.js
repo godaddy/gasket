@@ -32,6 +32,11 @@ function makeGatherDevDeps(context) {
     const full = `${parsedName}@${version.trim()}`;
     const peerDeps = (await pkgManager.info([full, 'peerDependencies'])).data;
 
+    // TODO: revisit how we dervive eslint version
+    if (peerDeps.eslint) {
+      peerDeps.eslint = '^8.0.0';
+    }
+
     return {
       [parsedName]: parsedVersion || `^${version}`,
       ...(peerDeps || {})
