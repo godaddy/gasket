@@ -1,5 +1,8 @@
 # `@gasket/plugin-command`
 
+- Invoke commands lifecycles during prepare ([#1016])
+- Always register the command called; not filtered by what's been registered
+
 ### 7.1.0
 
 - Improvements to gasket command setup with async `prepare` lifecycle ([#989], [#991])
@@ -107,3 +110,4 @@
 [#980]: https://github.com/godaddy/gasket/pull/980
 [#989]: https://github.com/godaddy/gasket/pull/989
 [#991]: https://github.com/godaddy/gasket/pull/991
+[#1016]: https://github.com/godaddy/gasket/pull/1016

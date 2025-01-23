@@ -11,5 +11,3 @@ export const gasketBin = program
   .description('CLI for custom Gasket commands')
   .version(version)
   .addHelpText('beforeAll', logo);
-
-export { processCommand } from './utils/process-command.js';
