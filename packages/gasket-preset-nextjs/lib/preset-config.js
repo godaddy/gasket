@@ -10,11 +10,11 @@ import pluginMetadata from '@gasket/plugin-metadata';
 // Preset-specific Plugins
 import pluginHttps from '@gasket/plugin-https';
 import pluginHttpsProxy from '@gasket/plugin-https-proxy';
-import pluginIntl from '@gasket/plugin-intl';
-import pluginLint from '@gasket/plugin-lint';
 import pluginNext from '@gasket/plugin-nextjs';
+import pluginIntl from '@gasket/plugin-intl';
 import pluginWebpack from '@gasket/plugin-webpack';
 import pluginWinston from '@gasket/plugin-winston';
+import pluginLint from '@gasket/plugin-lint';
 
 /**
  * presetConfig hook

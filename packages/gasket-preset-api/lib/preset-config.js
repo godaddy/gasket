@@ -9,8 +9,8 @@ import pluginMetadata from '@gasket/plugin-metadata';
 
 // Preset-specific Plugins
 import pluginHttps from '@gasket/plugin-https';
-import pluginLint from '@gasket/plugin-lint';
 import pluginWinston from '@gasket/plugin-winston';
+import pluginLint from '@gasket/plugin-lint';
 
 /**
  * presetConfig hook
