@@ -1,5 +1,9 @@
 # `@gasket/core`
 
+### 7.2.0
+
+- Adjust types GasketTrace
+
 ### 7.1.0
 
 - Added `registerPlugins` method to the GasketEngine ([#970])

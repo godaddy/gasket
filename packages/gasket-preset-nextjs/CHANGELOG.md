@@ -1,5 +1,9 @@
 # `@gasket/preset-nextjs`
 
+### 7.2.0
+
+- Move default plugins into presets ([#1014])
+
 ### 7.1.0
 
 - Aligned version releases across all packages
@@ -38,3 +42,4 @@
 [#736]: https://github.com/godaddy/gasket/pull/736
 [#762]: https://github.com/godaddy/gasket/pull/762
 [#946]: https://github.com/godaddy/gasket/pull/946
+[#1014]: https://github.com/godaddy/gasket/pull/1014
