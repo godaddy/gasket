@@ -1,5 +1,7 @@
 # `@gasket/plugin-command`
 
+### 7.2.0
+
 - Invoke commands lifecycles during prepare ([#1016])
 - Always register the command called; not filtered by what's been registered
 

@@ -1,5 +1,9 @@
 # `@gasket/preset-api`
 
+### 7.2.0
+
+- Move default plugins into presets ([#1014])
+
 ### 7.1.4
 
 - Remove routes import from the `server.ts` ([#1011])
@@ -47,3 +51,4 @@
 [#662]: https://github.com/godaddy/gasket/pull/662
 [#736]: https://github.com/godaddy/gasket/pull/736
 [#1011]: https://github.com/godaddy/gasket/pull/1011
+[#1014]: https://github.com/godaddy/gasket/pull/1014
