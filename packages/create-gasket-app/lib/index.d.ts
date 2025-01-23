@@ -464,6 +464,7 @@ declare module 'create-gasket-app' {
     
     constructor(initContext?: Partial<T>);
     runWith(plugin: Plugin): Proxy<CreateContext>;
+    typescript?: boolean;
   }
 }
 
