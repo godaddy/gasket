@@ -37,6 +37,9 @@
     "url": "https://github.com/godaddy/gasket/issues"
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-dynamic-plugins",
+  "dependencies": {
+    "chalk": "^5.4.1"
+  },
   "devDependencies": {
     "@gasket/core": "^7.1.4",
     "eslint": "^8.56.0",
