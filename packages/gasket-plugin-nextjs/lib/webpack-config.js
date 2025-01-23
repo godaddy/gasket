@@ -53,6 +53,8 @@ function webpackConfigHook(gasket, webpackConfig, { webpack, isServer }) {
     if (!isServer) {
       exclude('./gasket.js');
       exclude('./src/gasket.js');
+      exclude('./gasket.mjs');
+      exclude('./src/gasket.mjs');
       exclude('./gasket.ts');
       exclude('./src/gasket.ts');
       exclude('./dist/gasket.js');

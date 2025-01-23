@@ -15,8 +15,9 @@ describe('code styles', () => {
     };
     utils = {
       gatherDevDeps: jest.fn().mockImplementation(dep => {
+        const depName = /^@?[^@]+/.exec(dep)[0];
         return Promise.resolve({
-          [dep]: '*',
+          [depName]: '*',
           example: 'latest'
         });
       }),
