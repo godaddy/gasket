@@ -89,6 +89,23 @@ in when starting up. To do so, set the `GASKET_ENV` environment variable.
 Alternatively, you can programmatically set an `env` property at the top level
 of your configuration, enabling you to use any arbitrary environment derivation logic.
 
+## Commands
+
+Similar to environments, you can add configuration in the `gasket.js` file to
+only be used when running specific commands.
+
+```js
+export default makeGasket({
+  commands: {
+    'my-command': {
+      someService: {
+        enableSomeFeature: true
+      }
+    }
+  }
+});
+```
+
 ## Accessing Gasket configuration in your application
 
 You can access the Gasket configuration in your application by importing the `gasket` object or through plugin hooks.

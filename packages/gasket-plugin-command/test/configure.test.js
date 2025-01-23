@@ -29,27 +29,30 @@ describe('configure', () => {
         env: 'development'
       }
     };
-    mockConfig = {};
+    mockConfig = {
+      commands: {
+        test: {
+          extra: 'test-only'
+        }
+      }
+    };
   });
 
   it('should be a function', () => {
     expect(configure).toEqual(expect.any(Function));
   });
 
-  it('should not exec commands if not a gasket command', () => {
-    configure(mockGasket, mockConfig);
-    expect(mockGasket.execSync).not.toHaveBeenCalled();
+  it('adds command id to config if gasket command', () => {
+    process.argv = ['node', '/path/to/gasket.js', 'test'];
+    const result = configure(mockGasket, mockConfig);
+    expect(result).toEqual(expect.objectContaining({ command: 'test' }));
   });
 
-  it('should execute on gasket command', () => {
-    process.argv = ['node', '/path/to/gasket.js'];
-    configure(mockGasket, mockConfig);
-    expect(mockGasket.execSync).toHaveBeenCalled();
-  });
-
-  it('should add commands to gasketBin', () => {
-    process.argv = ['node', '/path/to/gasket.js'];
-    configure(mockGasket, mockConfig);
-    expect(mockAddCommand).toHaveBeenCalled();
+  it('applies command overrides', () => {
+    process.argv = ['node', '/path/to/gasket.js', 'test'];
+    expect(mockConfig).toHaveProperty('commands');
+    const result = configure(mockGasket, mockConfig);
+    expect(result).toEqual(expect.objectContaining({ extra: 'test-only' }));
+    expect(result).not.toHaveProperty('commands');
   });
 });
