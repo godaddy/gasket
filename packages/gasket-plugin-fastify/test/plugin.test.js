@@ -49,7 +49,7 @@ describe('Plugin', function () {
   });
 });
 
-describe('actions', () => {
+describe('actions(deprecated)', () => {
   let gasket;
 
   beforeEach(() => {
@@ -149,9 +149,6 @@ describe('createServers', () => {
     };
 
     gasket = {
-      actions: {
-        getFastifyApp: jest.fn().mockReturnValue(app)
-      },
       middleware: {},
       logger: {},
       config: {

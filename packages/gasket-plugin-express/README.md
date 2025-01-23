@@ -51,18 +51,23 @@ export default makeGasket({
   }
 });
 ```
+### Route Definition
 
-## Actions
-
-### getExpressApp
-
-Get the Express app instance.
+Routes can be defined in a in-app plugin in the `plugins` directory. The plugin will hook the `express` lifecycle to add the routes to the express app.
 
 ```js
-const app = actions.gasket.getExpressApp();
+// plugins/routes-plugin.js
+export default {
+  name: 'routes-plugin',
+  hooks: {
+    express: async function (gasket, app) {
+      app.get('/hello', (req, res) => {
+        res.send('Hello World!');
+      });
+    }
+  }
+};
 ```
-
-Each Gasket creates a single shared Express instance, ensuring consistent access to the same app instance wherever it's needed.
 
 ## Lifecycles
 

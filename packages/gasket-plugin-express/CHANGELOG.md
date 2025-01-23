@@ -1,5 +1,9 @@
 # `@gasket/plugin-express`
 
+### 7.1.4
+
+- Deprecate and remove the use of the `getExpressApp` action ([#1011])
+
 ### 7.1.3
 
 - Adjust cookie parser invocation to earlier in the lifecycle chain ([#1009])
@@ -151,3 +155,4 @@
 [#969]: https://github.com/godaddy/gasket/pull/969
 [#1001]: https://github.com/godaddy/gasket/pull/1001
 [#1009]: https://github.com/godaddy/gasket/pull/1009
+[#1011]: https://github.com/godaddy/gasket/pull/1011

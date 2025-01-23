@@ -55,6 +55,7 @@ module.exports = async function create(gasket, context) {
   if (apiApp && addApiRoutes) {
     const globIgnore = typescript ? '!(*.js)' : '!(*.ts)';
     files.add(`${generatorDir}/app/**/${globIgnore}`);
+    gasketConfig.addPlugin('pluginRoutes', './plugins/routes-plugin.js');
 
     createTestFiles({ files, generatorDir, testPlugins, globIgnore });
   }

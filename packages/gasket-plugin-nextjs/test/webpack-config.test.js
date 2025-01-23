@@ -10,6 +10,8 @@ describe('webpackConfigHook', () => {
   let mockGasket, mockWebpackConfig, mockContext;
 
   beforeEach(() => {
+    tryResolve.mockImplementation((moduleName) => moduleName);
+
     mockGasket = {
       config: {
         root: '/path/to/app'
@@ -46,10 +48,24 @@ describe('webpackConfigHook', () => {
     expect(result.resolve.alias).toEqual(expect.objectContaining({ [target]: false }));
   });
 
-  it('adds empty alias for gasket file in client', () => {
+  it('adds empty alias for gasket.js file in client', () => {
     tryResolve.mockReturnValue(mockFilename);
     const result = webpackConfig(mockGasket, mockWebpackConfig, mockContext);
     expect(result.resolve.alias).toEqual(expect.objectContaining({ [mockFilename]: false }));
+  });
+
+  it('adds empty alias for expected default filenames', () => {
+    const mjsFilename = '/path/to/app/gasket.mjs';
+    tryResolve.mockReturnValue(mjsFilename);
+    const result = webpackConfig(mockGasket, mockWebpackConfig, mockContext);
+    expect(result.resolve.alias).toEqual(expect.objectContaining({ [mjsFilename]: false }));
+  });
+
+  it('adds empty alias for gasket.ts file in client', () => {
+    const tsFilename = '/path/to/app/gasket.ts';
+    tryResolve.mockReturnValue(tsFilename);
+    const result = webpackConfig(mockGasket, mockWebpackConfig, mockContext);
+    expect(result.resolve.alias).toEqual(expect.objectContaining({ [tsFilename]: false }));
   });
 
   it('adds validateNoGasketCore to externals for client', () => {
