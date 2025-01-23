@@ -1,5 +1,7 @@
 # `@gasket/plugin-dynamic-plugins`
 
+### 7.2.0
+
 - Set timing before commands plugins to allow dynamic plugins to register commands ([#1016])
 - Add 'deduped' trace for improved lifecycle debugging
 - Invoke prepare lifecycle of dynamic plugins

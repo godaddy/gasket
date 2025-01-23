@@ -1,5 +1,9 @@
 # `create-gasket-app`
 
+### 7.2.0
+
+- Move default plugins into presets ([#1014])
+
 ### 7.1.0
 
 - Aligned version releases across all packages
@@ -84,3 +88,4 @@ Added `@gasket/plugin-dynamic-plugin` to default plugins ([#970])
 [#936]: https://github.com/godaddy/gasket/pull/936
 [#943]: https://github.com/godaddy/gasket/pull/943
 [#970]: https://github.com/godaddy/gasket/pull/970
+[#1014]: https://github.com/godaddy/gasket/pull/1014
