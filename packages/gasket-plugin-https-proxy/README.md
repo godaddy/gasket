@@ -56,6 +56,41 @@ The `protocol` and `hostname` are only used for logging about the proxy server
 and should not be confused with `target.protocol` and `target.host` which
 are used for the actual destination server.
 
+### Example SNI Config
+
+While not specifically called out in the [http-proxy] documentation, the
+`ssl` settings are what get passed to node's `createServer` method.
+As such, you can use `SNICallback` from the [createServer options].
+
+```diff
+// gasket.js
+export default makeGasket({
+ httpsProxy: {
+   protocol: 'https',
+   hostname: 'my-host.com',
+   port: 443,
+   xfwd: true,
+   ws: true,
+   target: {
+     host: 'localhost',
+     port: 80
+   },
++   ssl: {
++     SNICallback: (hostname, cb) => {
++       const ctx = tls.createSecureContext({
++         key: fs.readFileSync(`./certs/${hostname}.key`),
++         cert: fs.readFileSync(`./certs/${hostname}.crt`)
++       });
++       cb(null, ctx);
+     }
+   }
+ }
+});
+```
+
+> The above snippet is for demonstration purposes only.
+> You should not be reading your certs from the filesystem for each request.
+
 ## Actions
 
 ### startProxyServer
@@ -82,7 +117,7 @@ export default {
   hooks: {
     httpsProxy: async function (gasket, httpsProxyConfig) {
       return {
-        ...devProxyConfig,
+        ...httpsProxyConfig,
         hostname: 'local.example.com',
         port: 8443
       }
@@ -97,3 +132,4 @@ export default {
 
 [http-proxy]: https://www.npmjs.com/package/http-proxy
 [options]: https://www.npmjs.com/package/http-proxy#options
+[createServer options]: https://nodejs.org/docs/latest-v22.x/api/tls.html#tlscreateserveroptions-secureconnectionlistener
