@@ -97,6 +97,7 @@ Available lifecycles
 | [build][1]              | Gasket build lifecycle                                        |
 | [commands]              | Add custom commands to the CLI                                |
 | [composeServiceWorker]  | Update the service worker script                              |
+| [configure]             | Adjust the Gasket configuration                               |
 | [createLogger]          | Custom logger creation                                        |
 | [createServers]         | Setup the `create-servers` options                            |
 | [devProxy]              | Setup the devProxy options                                    |
@@ -109,6 +110,7 @@ Available lifecycles
 | [fastify]               | Modify the Fastify instance to for adding endpoints           |
 | [gasketData]            | Adjust app level data after merged for the env                |
 | [httpsProxy]            | Setup the httpsProxy options                                  |
+| [init]                  | Handle any Initialization before configuration                |
 | [initReduxState]        | Initializes state of the Redux store                          |
 | [initReduxStore]        | Plugin access to Redux store instance                         |
 | [initWebpack]           | Create a webpack config                                       |
@@ -123,7 +125,9 @@ Available lifecycles
 | [nextExpress]           | Access the prepared Next.js app and Express instance          |
 | [nextFastify]           | Access the prepared Next.js app and Fastify instance          |
 | [nextPreHandling]       | Perform tasks just before Next.js request handling            |
+| [prepare]               | Allows async configuration of Gasket                          |
 | [publicGasketData]      | Adjust response level data for each request                   |
+| [ready]                 | Configuration is complete and Gasket is ready to start        |
 | [serverConfig]          | Setup the server configuration                                |
 | [servers]               | Access to the server instances                                |
 | [serviceWorkerCacheKey] | Get cache keys for request based service workers              |
@@ -314,6 +318,7 @@ Available configuration options in the `gasket.js`
 [1]:/packages/gasket-plugin-command/README.md#build
 [commands]:/packages/gasket-plugin-command/README.md#commands
 [composeServiceWorker]:/packages/gasket-plugin-service-worker/README.md#composeServiceWorker
+[configure]:/packages/gasket-core/README.md#configure
 [createLogger]:/packages/gasket-plugin-logger/README.md#createLogger
 [createServers]:/packages/gasket-plugin-https/README.md#createServers
 [devProxy]:/packages/gasket-plugin-https/README.md#devProxy
@@ -326,6 +331,7 @@ Available configuration options in the `gasket.js`
 [fastify]:/packages/gasket-plugin-fastify/README.md#express
 [gasketData]:/packages/gasket-plugin-data/README.md#gasketData
 [httpsProxy]:/packages/gasket-plugin-https-proxy/README.md#httpsProxy
+[init]:/packages/gasket-core/README.md#init
 [initReduxState]:/packages/gasket-plugin-redux/README.md#initReduxState
 [initReduxStore]:/packages/gasket-plugin-redux/README.md#initReduxStore
 [initWebpack]:/packages/gasket-plugin-webpack/README.md#initwebpack
@@ -340,7 +346,9 @@ Available configuration options in the `gasket.js`
 [nextExpress]:/packages/gasket-plugin-nextjs/README.md#nextExpress
 [nextFastify]:/packages/gasket-plugin-nextjs/README.md#nextFastify
 [nextPreHandling]:/packages/gasket-plugin-nextjs/README.md#nextPreHandling
+[prepare]:/packages/gasket-core/README.md#prepare
 [publicGasketData]:/packages/gasket-plugin-data/README.md#publicGasketData
+[ready]:/packages/gasket-core/README.md#ready
 [serverConfig]:/packages/gasket-plugin-https/README.md#serverConfig
 [servers]:/packages/gasket-plugin-https/README.md#servers
 [serviceWorkerCacheKey]:/packages/gasket-plugin-service-worker/README.md#serviceWorkerCacheKey
