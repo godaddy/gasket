@@ -1,8 +1,7 @@
 import { jest } from '@jest/globals';
-import { createRequire } from 'module';
 import preset from '../lib/index.js';
-const require = createRequire(import.meta.url);
-const { devDependencies } = require('../package.json');
+import pkg from '../package.json' with { type: 'json' };
+const { devDependencies } = pkg;
 const mockPkgAdd = jest.fn();
 const mockFilesAdd = jest.fn();
 

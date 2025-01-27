@@ -1,8 +1,7 @@
 import { vi } from 'vitest';
 import plugin from '../lib/index.js';
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
-const { name, version } = require('../package');
+import pkg from '../package.json' with { type: 'json' };
+const { name, version } = pkg;
 
 describe('create', () => {
   let mockContext;

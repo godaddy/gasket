@@ -1,7 +1,6 @@
 import webpackConfigHook from '../lib/webpack-config';
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
-const { name } = require('../package');
+import pkg from '../package.json' with { type: 'json' };
+const { name } = pkg;
 
 describe('webpackConfig', function () {
   let mockGasket, mockWebpackConfig;

@@ -1,9 +1,7 @@
-import { createRequire } from 'module';
 import { gasketBin } from '../lib/cli';
 import { processCommand } from '../lib/utils/process-command';
-
-const require = createRequire(import.meta.url);
-const { version } = require('../package.json');
+import pkg from '../package.json' with { type: 'json' };
+const { version } = pkg;
 
 describe('cli', () => {
   it('should have a gasketBin property', () => {

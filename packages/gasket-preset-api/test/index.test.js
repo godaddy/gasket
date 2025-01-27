@@ -1,12 +1,11 @@
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
 import preset from '../lib/index.js';
+import pkg from '../package.json' with { type: 'json' };
 const {
   name,
   version,
   description,
   dependencies
-} = require('../package.json');
+} = pkg;
 
 describe('gasket-preset-api', () => {
 

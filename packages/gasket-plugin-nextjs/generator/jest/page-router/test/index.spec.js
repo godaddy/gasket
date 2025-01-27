@@ -4,8 +4,7 @@ import IndexPage from '../pages/index.js';
 import { expect } from '@jest/globals';
 {{#if hasGasketIntl}}
 import { IntlProvider } from 'react-intl';
-import { createRequire } from 'module';
-const messages = createRequire(import.meta.url)('../locales/en-US.json');
+import messages from '../locales/en-US.json' with { type: 'json' };
 {{/if}}
 
 describe('IndexPage', () => {
