@@ -103,25 +103,25 @@
       "lifecycles": [
         {
           "name": "init",
-          "description": "Do init things",
+          "description": "Handle any Initialization before configuration",
           "link": "README.md#init",
           "method": "execSync"
         },
         {
           "name": "configure",
-          "description": "Do configure things",
+          "description": "Adjust the Gasket configuration",
           "link": "README.md#configure",
           "method": "execWaterfallSync"
         },
         {
           "name": "prepare",
-          "description": "Do prepare things",
+          "description": "Allows async configuration of Gasket",
           "link": "README.md#prepare",
           "method": "execWaterfall"
         },
         {
           "name": "ready",
-          "description": "Do ready things",
+          "description": "Configuration is complete and Gasket is ready to start",
           "link": "README.md#ready",
           "method": "exec"
         }
