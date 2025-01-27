@@ -97,5 +97,35 @@
         }
       }
     ]
+  },
+  "gasket": {
+    "metadata": {
+      "lifecycles": [
+        {
+          "name": "init",
+          "description": "Handle any Initialization before configuration",
+          "link": "README.md#init",
+          "method": "execSync"
+        },
+        {
+          "name": "configure",
+          "description": "Adjust the Gasket configuration",
+          "link": "README.md#configure",
+          "method": "execWaterfallSync"
+        },
+        {
+          "name": "prepare",
+          "description": "Allows async configuration of Gasket",
+          "link": "README.md#prepare",
+          "method": "execWaterfall"
+        },
+        {
+          "name": "ready",
+          "description": "Configuration is complete and Gasket is ready to start",
+          "link": "README.md#ready",
+          "method": "exec"
+        }
+      ]
+    }
   }
 }

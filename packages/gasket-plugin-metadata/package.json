@@ -11,8 +11,8 @@
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
-    "test": "vitest --watch=false --globals",
-    "test:watch": "npm run test -- --watch",
+    "test": "vitest run --globals",
+    "test:watch": "vitest --watch --globals",
     "test:coverage": "npm run test -- --coverage",
     "posttest": "npm run lint && npm run typecheck",
     "typecheck": "tsc",
