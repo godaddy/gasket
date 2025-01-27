@@ -97,5 +97,35 @@
         }
       }
     ]
+  },
+  "gasket": {
+    "metadata": {
+      "lifecycles": [
+        {
+          "name": "init",
+          "description": "Do init things",
+          "link": "README.md#init",
+          "method": "execSync"
+        },
+        {
+          "name": "configure",
+          "description": "Do configure things",
+          "link": "README.md#configure",
+          "method": "execWaterfallSync"
+        },
+        {
+          "name": "prepare",
+          "description": "Do prepare things",
+          "link": "README.md#prepare",
+          "method": "execWaterfall"
+        },
+        {
+          "name": "ready",
+          "description": "Do ready things",
+          "link": "README.md#ready",
+          "method": "exec"
+        }
+      ]
+    }
   }
 }
