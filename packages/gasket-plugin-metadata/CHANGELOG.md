@@ -1,5 +1,7 @@
 # `@gasket/plugin-metadata`
 
+### 7.2.1
+
 - Fix to use gasket.metadata from package.json for modules ([#1022])
 
 ### 7.1.0
