@@ -132,7 +132,10 @@ const plugin = {
               version: '0.0.0'
             }
           },
-          apis: ['./routes/*']
+          apis: [
+            './routes/*',
+            './plugins/*'
+          ]
         }
       });
 
