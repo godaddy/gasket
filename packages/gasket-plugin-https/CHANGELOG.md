@@ -1,5 +1,7 @@
 # `@gasket/plugin-https`
 
+- Make root config required in types ([#1024])
+
 ### 7.1.0
 
 - Aligned version releases across all packages
@@ -117,6 +119,7 @@
 [#695]: https://github.com/godaddy/gasket/pull/695
 [#736]: https://github.com/godaddy/gasket/pull/736
 [#952]: https://github.com/godaddy/gasket/pull/952
+[#1024]: https://github.com/godaddy/gasket/pull/1024
 
 [terminus]: https://github.com/godaddy/terminus
 [create-servers]: https://github.com/http-party/create-servers
