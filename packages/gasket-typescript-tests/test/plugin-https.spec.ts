@@ -33,6 +33,7 @@ describe('@gasket/plugin-https', () => {
         local: {
           https: {
             port: 8443,
+            root: '/some/root/path',
             key: '/some/key/path.key',
             cert: [
               './some/cert/path.crt',
@@ -50,6 +51,7 @@ describe('@gasket/plugin-https', () => {
       environments: {
         local: {
           http2: {
+            root: '/some/root/path',
             port: 8443,
             key: '/some/key/path.key',
             cert: [
