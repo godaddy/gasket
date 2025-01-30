@@ -24,7 +24,7 @@ declare module '@gasket/core' {
   type CertInput = string | Buffer;
 
   type CustomHttpsSettings = {
-    root?: string;
+    root: string;
     key: MaybeMultiple<CertInput>;
     cert: MaybeMultiple<CertInput>;
     ca?: MaybeMultiple<CertInput>;
