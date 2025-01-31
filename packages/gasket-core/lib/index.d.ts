@@ -65,7 +65,7 @@ declare module '@gasket/core' {
 
   // This is the config
   export interface GasketConfig {
-    plugins: Array<Plugin>;
+    plugins: Array<Plugin | { default: Plugin }>;
     root: string;
     env: string;
   }
