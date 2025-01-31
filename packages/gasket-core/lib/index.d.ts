@@ -65,9 +65,13 @@ declare module '@gasket/core' {
 
   // This is the config
   export interface GasketConfig {
-    plugins: Array<Plugin | { default: Plugin }>;
+    plugins: Array<Plugin>;
     root: string;
     env: string;
+  }
+
+  export type PreNormalizedGasketConfig = Omit<GasketConfig, 'plugins'> & {
+    plugins: Array<Plugin | { default: Plugin }>;
   }
 
   export class GasketEngine {
@@ -135,15 +139,15 @@ declare module '@gasket/core' {
 
   // Allow nested merging of most config
   type ConfigKeysRequiringFullEnvConfig = 'plugins';
-  type EnvironmentOverrides =
+  type GasketConfigOverrides =
     & PartialRecursive<Omit<GasketConfigDefinition, ConfigKeysRequiringFullEnvConfig>>
     & Partial<Pick<GasketConfigDefinition, ConfigKeysRequiringFullEnvConfig>>;
 
-  export type GasketConfigDefinition = Omit<GasketConfig, 'root' | 'env' | 'command'> & {
+  export type GasketConfigDefinition = Omit<PreNormalizedGasketConfig, 'root' | 'env' | 'command'> & {
     root?: string
     env?: string
-    environments?: Record<string, EnvironmentOverrides>
-    commands?: Record<string, Partial<GasketConfigDefinition>>
+    environments?: Record<string, GasketConfigOverrides>
+    commands?: Record<string, GasketConfigOverrides>
   }
 
   /**
