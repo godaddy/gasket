@@ -7,7 +7,7 @@ declare module '@gasket/core' {
   }
 
   interface GasketConfig {
-    someConfigSection: {
+    someConfigSection?: {
       foo: string;
       bar: number;
     }

@@ -7,14 +7,18 @@ interface ConfigContext {
   commandId?: string;
 }
 
-interface ConfigDefinition extends Record<string, any> {
-  environments?: Record<string, Partial<ConfigDefinition>>;
-  commands?: Record<string, Partial<ConfigDefinition>>;
-  [key: string]: any;
+// TODO: switch @gasket/core to re-exporting this type once this change is
+// published and we can update its dependency to this version
+export type PartialRecursive<T> = T extends Object
+  ? { [K in keyof T]?: PartialRecursive<T[K]> } | undefined
+  : T | undefined;
+
+type ConfigDefinition<T> = T & {
+  environments?: Record<string, PartialRecursive<T>>;
+  commands?: Record<string, PartialRecursive<T>>;
 }
 
-type ConfigOutput = Omit<ConfigDefinition, 'environments' | 'commands'>;
-type ConfigPartial = Partial<ConfigDefinition> | undefined | void | unknown;
+type ConfigPartial<T extends ConfigDefinition> = PartialRecursive<T> | undefined | void | unknown;
 
 export function getPotentialConfigs(
   config: ConfigDefinition,
@@ -22,18 +26,18 @@ export function getPotentialConfigs(
 ): Array<ConfigPartial>;
 
 export function getCommandOverrides(
-  commands: Record<string, Partial<ConfigDefinition>>,
+  commands: Record<string, PartialRecursive<ConfigDefinition>>,
   commandId: string
 ): Array<ConfigPartial>;
 
 export function getSubEnvironmentOverrides(
   env: string,
-  environments: Record<string, Partial<ConfigDefinition>>
+  environments: Record<string, PartialRecursive<ConfigDefinition>>
 ): Array<ConfigPartial>;
 
 export function getDevOverrides(
   isLocalEnv: boolean,
-  environments: Record<string, Partial<ConfigDefinition>>
+  environments: Record<string, PartialRecursive<ConfigDefinition>>
 ): Array<ConfigPartial>;
 
 export async function getLatestVersion(
@@ -51,7 +55,7 @@ export function getLocalOverrides(
 
 // Normalize the config by applying any overrides for environments, commands, or
 // local-only config file.
-export function applyConfigOverrides<
-  Def extends ConfigDefinition,
-  Out extends ConfigOutput
->(config: Def, configContext: ConfigContext): Out;
+export function applyConfigOverrides<Config>(
+  config: ConfigDefinition<Config>,
+  configContext: ConfigContext
+): Config;
