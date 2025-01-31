@@ -133,10 +133,16 @@ declare module '@gasket/core' {
     ? { [K in keyof T]?: PartialRecursive<T[K]> } | undefined
     : T | undefined;
 
+  // Allow nested merging of most config
+  type ConfigKeysRequiringFullEnvConfig = 'plugins';
+  type EnvironmentOverrides =
+    & PartialRecursive<Omit<GasketConfigDefinition, ConfigKeysRequiringFullEnvConfig>>
+    & Partial<Pick<GasketConfigDefinition, ConfigKeysRequiringFullEnvConfig>>;
+
   export type GasketConfigDefinition = Omit<GasketConfig, 'root' | 'env' | 'command'> & {
     root?: string
     env?: string
-    environments?: Record<string, Partial<GasketConfigDefinition>>
+    environments?: Record<string, EnvironmentOverrides>
     commands?: Record<string, Partial<GasketConfigDefinition>>
   }
 
