@@ -74,5 +74,6 @@
   },
   "eslintIgnore": [
     "generator/redux/store.js"
-  ]
+  ],
+  "deprecated": "Package deprecated and will be removed in future major release."
 }
