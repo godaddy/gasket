@@ -15,8 +15,9 @@ module.exports = async function middlewareHook(gasket) {
     );
   }
 
+  const mod = await import(reduxConfig.makeStore);
   /** @type {import('@gasket/redux').MakeStoreFn} */
-  const makeStore = require(reduxConfig.makeStore);
+  const makeStore = mod.makeStore ?? mod.default;
 
   /**
    * Middleware to attach the redux store to the req object for use in other
