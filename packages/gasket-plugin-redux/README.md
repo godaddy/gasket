@@ -1,14 +1,15 @@
 # @gasket/plugin-redux
 
-Gasket plugin to setup redux store available to express middleware.
+Gasket plugin to setup Redux store availability to Express middleware.
 
-⚠️ _This plugin is only compatible with Gasket apps that use the [pages router]
-in Next.js with a [custom server] and is intended to be deprecated._
+⚠️ _DEPRECATED - This plugin will be removed in a future major version.
+Compatability is limited to Next.js apps using [pages router] with [custom server]
+and [@gasket/plugin-middleware]._
 
 ## Installation
 
 ```
-npm i @gasket/plugin-redux
+npm i @gasket/plugin-redux @gasket/plugin-middleware
 ```
 
 Update your `gasket` file plugin configuration:
@@ -17,10 +18,12 @@ Update your `gasket` file plugin configuration:
 // gasket.js
 
 + import pluginRedux from '@gasket/plugin-redux';
++ import pluginMiddleware from '@gasket/plugin-middleware';
 
 export default makeGasket({
   plugins: [
-+   pluginRedux
++   pluginRedux,
++   pluginMiddleware
   ]
 });
 ```
@@ -243,4 +246,5 @@ will be replaced by the [EnvironmentPlugin].
 [pages router]:https://nextjs.org/docs/pages
 [custom server]:https://nextjs.org/docs/pages/building-your-application/configuring/custom-server
 [@gasket/redux]:/packages/gasket-redux/README.md#gasketredux
+[@gasket/plugin-middleware]:/packages/gasket-plugin-middleware/README.md
 [EnvironmentPlugin]:https://webpack.js.org/plugins/environment-plugin/

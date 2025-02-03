@@ -8,6 +8,10 @@ const fs = require('fs');
 module.exports = function configure(gasket, baseConfig) {
   const { root, redux: reduxConfig = {} } = baseConfig;
 
+  gasket.logger.warn(
+    `DEPRECATED \`@gasket/plugin-redux\` will not be support in future major release.`
+  );
+
   let makeStorePath = reduxConfig.makeStore;
   if (makeStorePath) {
     makeStorePath = path.resolve(baseConfig.root, reduxConfig.makeStore);

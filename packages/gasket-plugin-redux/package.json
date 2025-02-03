@@ -1,7 +1,7 @@
 {
   "name": "@gasket/plugin-redux",
   "version": "7.2.1",
-  "description": "Gasket Redux Setup",
+  "description": "DEPRECATED Gasket Redux Setup",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
@@ -11,9 +11,9 @@
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
-    "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
-    "test:watch": "jest --watchAll",
-    "test:coverage": "jest --coverage",
+    "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict --experimental-vm-modules' jest",
+    "test:watch": "npm run test -- --watchAll",
+    "test:coverage": "npm run test -- --coverage",
     "posttest": "npm run lint && npm run typecheck",
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"
@@ -39,6 +39,7 @@
   "devDependencies": {
     "@gasket/core": "^7.2.1",
     "@gasket/redux": "^7.2.0",
+    "@gasket/plugin-middleware": "^7.2.0",
     "acorn": "^8.11.3",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",

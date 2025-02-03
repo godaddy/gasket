@@ -6,7 +6,7 @@
  * Configure middleware
  * @type {import('@gasket/core').HookHandler<'middleware'>}
  */
-module.exports = function middlewareHook(gasket) {
+module.exports = async function middlewareHook(gasket) {
   const { redux: reduxConfig = {} } = gasket.config;
 
   if (!reduxConfig.makeStore) {
@@ -24,12 +24,19 @@ module.exports = function middlewareHook(gasket) {
    * @type {import('./index').reduxMiddleware}
    */
   return async function middleware(req, res, next) {
-    const initState = await gasket.execWaterfall(
+    const context = { req, res };
+    let initState = reduxConfig.initState || {};
+
+    await gasket.execApply(
       'initReduxState',
-      reduxConfig.initState || {},
-      {
-        req,
-        res
+      async (plugin, handler) => {
+        const name = plugin ? plugin.name || 'unnamed plugin' : 'app lifecycles';
+        gasket.logger.warn(
+          `DEPRECATED \`initReduxState\` lifecycle in ${name} will not be support in future major release.`
+        );
+
+        // eslint-disable-next-line require-atomic-updates
+        initState = await handler(initState, context);
       }
     );
 
@@ -38,7 +45,17 @@ module.exports = function middlewareHook(gasket) {
       req
     });
 
-    await gasket.exec('initReduxStore', store, { req, res });
+    await gasket.execApply(
+      'initReduxStore',
+      async (plugin, handler) => {
+        const name = plugin ? plugin.name || 'unnamed plugin' : 'app lifecycles';
+        gasket.logger.warn(
+          `DEPRECATED \`initReduxStore\` lifecycle in ${name} will not be support in future major release.`
+        );
+
+        handler(store, context);
+      }
+    );
 
     // eslint-disable-next-line require-atomic-updates
     req.store = store;
