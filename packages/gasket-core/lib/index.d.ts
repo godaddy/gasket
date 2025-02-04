@@ -70,6 +70,10 @@ declare module '@gasket/core' {
     env: string;
   }
 
+  export type PreNormalizedGasketConfig = Omit<GasketConfig, 'plugins'> & {
+    plugins: Array<Plugin | { default: Plugin }>;
+  }
+
   export class GasketEngine {
     constructor(plugins: Array<Plugin>);
 
@@ -133,11 +137,17 @@ declare module '@gasket/core' {
     ? { [K in keyof T]?: PartialRecursive<T[K]> } | undefined
     : T | undefined;
 
-  export type GasketConfigDefinition = Omit<GasketConfig, 'root' | 'env' | 'command'> & {
+  // Allow nested merging of most config
+  type ConfigKeysRequiringFullEnvConfig = 'plugins';
+  type GasketConfigOverrides =
+    & PartialRecursive<Omit<GasketConfigDefinition, ConfigKeysRequiringFullEnvConfig>>
+    & Partial<Pick<GasketConfigDefinition, ConfigKeysRequiringFullEnvConfig>>;
+
+  export type GasketConfigDefinition = Omit<PreNormalizedGasketConfig, 'root' | 'env' | 'command'> & {
     root?: string
     env?: string
-    environments?: Record<string, Partial<GasketConfigDefinition>>
-    commands?: Record<string, Partial<GasketConfigDefinition>>
+    environments?: Record<string, GasketConfigOverrides>
+    commands?: Record<string, GasketConfigOverrides>
   }
 
   /**
