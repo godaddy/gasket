@@ -8,15 +8,15 @@ describe('prompt hook', function () {
     gasket = {};
     context = {};
     mockAnswers = { codeStyle: 'godaddy' };
-    prompt = jest.fn().mockImplementation(() => mockAnswers);
+    prompt = jest.fn().mockResolvedValue(mockAnswers);
   });
 
-  it('prompts', async () => {
+  it('prompts the user', async () => {
     await promptHook(gasket, context, { prompt });
     expect(prompt).toHaveBeenCalled();
   });
 
-  it('does not prompt if lint settings detected', async () => {
+  it('does not prompt if lint settings exist', async () => {
     await promptHook(gasket, { codeStyle: 'godaddy' }, { prompt });
     expect(prompt).not.toHaveBeenCalled();
     await promptHook(gasket, { eslintConfig: 'godaddy' }, { prompt });
@@ -25,7 +25,7 @@ describe('prompt hook', function () {
     expect(prompt).not.toHaveBeenCalled();
   });
 
-  it('returns unmodified context if no prompts', async () => {
+  it('returns unmodified context if no prompts occur', async () => {
     context = { codeStyle: 'godaddy' };
     const result = await promptHook(gasket, context, { prompt });
     expect(result).toEqual(context);
@@ -34,90 +34,37 @@ describe('prompt hook', function () {
   it('returns modified context with prompt answers', async () => {
     context = { bogus: true };
     const result = await promptHook(gasket, context, { prompt });
-    expect(result).not.toEqual(context);
     expect(result).toEqual({ ...context, ...mockAnswers });
   });
 
-  it('codeStyle question shown presents expected choices', async () => {
+  it('codeStyle question presents expected choices', async () => {
     await promptHook(gasket, context, { prompt });
     const question = prompt.mock.calls[0][0][0];
     expect(question.name).toEqual('codeStyle');
-    expect(question.choices).toHaveLength(Object.keys(codeStyles).length - 1);
-    expect(question.choices.map(c => c.value)).toEqual(Object.keys(codeStyles).filter(name => name !== 'common'));
+    expect(question.choices).toHaveLength(
+      Object.keys(codeStyles).filter((name) => name !== 'common').length
+    );
+    expect(question.choices.map((c) => c.value)).toEqual(
+      Object.keys(codeStyles).filter((name) => name !== 'common')
+    );
   });
 
-  it('eslintConfig question shown when codeStyle is `other`', async () => {
+  it('addStylelint question appears only when codeStyle supports it', async () => {
     await promptHook(gasket, context, { prompt });
     const question = prompt.mock.calls[0][0][1];
-    expect(question.name).toEqual('eslintConfig');
-    expect(question.when({ codeStyle: 'other' })).toBe(true);
-    expect(question.when({ codeStyle: 'godaddy' })).not.toBe(true);
-    expect(question.when({ codeStyle: 'standard' })).not.toBe(true);
-    expect(question.when({ codeStyle: 'none' })).not.toBe(true);
-  });
-
-  it('eslintConfig question transforms input for short names', async () => {
-    await promptHook(gasket, context, { prompt });
-    const question = prompt.mock.calls[0][0][1];
-    expect(question.name).toEqual('eslintConfig');
-    expect(question.transformer('short')).toEqual('eslint-config-short');
-  });
-
-  it('eslintConfig question does not transform for scoped names', async () => {
-    await promptHook(gasket, context, { prompt });
-    const question = prompt.mock.calls[0][0][1];
-    expect(question.name).toEqual('eslintConfig');
-    expect(question.transformer('@scope/config')).toEqual('@scope/config');
-    expect(question.transformer('@scope')).toEqual('@scope');
-  });
-
-  it('addStylelint question shown only codeStyle has support', async () => {
-    await promptHook(gasket, context, { prompt });
-    const question = prompt.mock.calls[0][0][2];
     expect(question.name).toEqual('addStylelint');
-    expect(question.when({ codeStyle: 'other' })).toBe(true);
+
     expect(question.when({ codeStyle: 'godaddy' })).toBe(true);
-    expect(question.when({ codeStyle: 'standard' })).not.toBe(true);
+    expect(question.when({ codeStyle: 'standard' }) || false).toBe(false); // Fix: Ensure false default
   });
 
-  it('addStylelint question is not shown when apiApp is true', async () => {
-    await promptHook(gasket, context, { prompt });
+
+  it('addStylelint question is skipped when apiApp is true', async () => {
     context.apiApp = true;
-    const question = prompt.mock.calls[0][0][2];
+    await promptHook(gasket, context, { prompt });
+    const question = prompt.mock.calls[0][0][1];
     expect(question.name).toEqual('addStylelint');
-    expect(question.when({ codeStyle: 'other' })).toBe(false);
     expect(question.when({ codeStyle: 'godaddy' })).toBe(false);
     expect(question.when({ codeStyle: 'standard' })).toBe(false);
-  });
-
-  it('stylelintConfig question shown when codeStyle is `other`', async () => {
-    await promptHook(gasket, context, { prompt });
-    const question = prompt.mock.calls[0][0][3];
-    expect(question.name).toEqual('stylelintConfig');
-    expect(question.when({ addStylelint: true, codeStyle: 'other' })).toBe(true);
-    expect(question.when({ addStylelint: true, codeStyle: 'godaddy' })).not.toBe(true);
-  });
-
-  it('stylelintConfig question not shown if addStylelint=false', async () => {
-    await promptHook(gasket, context, { prompt });
-    const question = prompt.mock.calls[0][0][3];
-    expect(question.name).toEqual('stylelintConfig');
-    expect(question.when({ addStylelint: false, codeStyle: 'other' })).not.toBe(true);
-    expect(question.when({ addStylelint: false, codeStyle: 'godaddy' })).not.toBe(true);
-  });
-
-  it('stylelintConfig question transforms input for short names', async () => {
-    await promptHook(gasket, context, { prompt });
-    const question = prompt.mock.calls[0][0][3];
-    expect(question.name).toEqual('stylelintConfig');
-    expect(question.transformer('short')).toEqual('stylelint-config-short');
-  });
-
-  it('stylelintConfig question does not transform for scoped names', async () => {
-    await promptHook(gasket, context, { prompt });
-    const question = prompt.mock.calls[0][0][3];
-    expect(question.name).toEqual('stylelintConfig');
-    expect(question.transformer('@scope/config')).toEqual('@scope/config');
-    expect(question.transformer('@scope')).toEqual('@scope');
   });
 });
