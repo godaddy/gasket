@@ -15,45 +15,39 @@ describe('utils', () => {
     let gatherDevDeps;
 
     beforeEach(() => {
-      context = {
-        pkgManager: {
-          info: jest.fn().mockImplementation(args => ({ data: args.includes('version') ? '1.2.3' : { bogus: '10.9.7' } }))
-        }
-      };
-
-      gatherDevDeps = makeGatherDevDeps(context);
+      gatherDevDeps = makeGatherDevDeps();
     });
 
-    it('returns an async function', () => {
+    it('returns a function', () => {
       expect(typeof gatherDevDeps).toBe('function');
     });
 
-    it('gatherDevDeps looks up module version if not set', async () => {
-      await gatherDevDeps('@some/module');
-      expect(context.pkgManager.info).toHaveBeenCalledWith([expect.any(String), 'version']);
-    });
-
-    it('gatherDevDeps uses parsed version', async () => {
-      await gatherDevDeps('@some/module@^2.3.4');
-      expect(context.pkgManager.info).not.toHaveBeenCalledWith([expect.any(String), 'version']);
-    });
-
-    it('looks up peerDependencies of package at specific version', async () => {
-      await gatherDevDeps('@some/module@^2.3.4');
-      expect(context.pkgManager.info).toHaveBeenCalledWith(['@some/module@2.3.4', 'peerDependencies']);
-    });
-
-    it('returns object with dependencies including main package', async () => {
-      const results = await gatherDevDeps('@some/module@^2.3.4');
+    it('gatherDevDeps returns hardcoded version', () => {
+      const results = gatherDevDeps('eslint-config-airbnb');
       expect(results).toEqual({
-        '@some/module': '^2.3.4',
-        'bogus': '10.9.7'
+        'eslint-config-airbnb': '^19.0.4',
+        'eslint': '^8.57.1',
+        'eslint-plugin-import': '^2.27.5',
+        'eslint-plugin-jsx-a11y': '^6.6.1',
+        'eslint-plugin-react': '^7.32.2',
+        'eslint-plugin-react-hooks': '^4.6.0'
       });
+    });
+
+    it('throws TypeError for an invalid package name', () => {
+      expect(() => gatherDevDeps('')).toThrow(TypeError);
+      expect(() => gatherDevDeps(123)).toThrow(TypeError);
+      expect(() => gatherDevDeps(null)).toThrow(TypeError);
+    });
+
+    it('throws ReferenceError for an unknown package', () => {
+      expect(() => gatherDevDeps('unknown-package')).toThrow(ReferenceError);
     });
   });
 
   describe('makeRunScriptStr', () => {
     let forNpm, forYarn;
+
     beforeEach(() => {
       forNpm = makeRunScriptStr({ packageManager: 'npm' });
       forYarn = makeRunScriptStr({ packageManager: 'yarn' });
@@ -64,29 +58,33 @@ describe('utils', () => {
       expect(typeof forYarn).toBe('function');
     });
 
-    it('[npm] returns run cmd', () => {
-      const results = forNpm('bogus');
-      expect(results).toEqual('npm run bogus');
+    it('[npm] returns run command', () => {
+      const results = forNpm('test-script');
+      expect(results).toEqual('npm run test-script');
     });
 
-    it('[npm] returns run cmd with flags', () => {
-      const results = forNpm('bogus -- --extra');
-      expect(results).toEqual('npm run bogus -- --extra');
+    it('[npm] returns run command with flags', () => {
+      const results = forNpm('test-script -- --extra');
+      expect(results).toEqual('npm run test-script -- --extra');
     });
 
-    it('[yarn] returns cmd', () => {
-      context = { packageManager: 'yarn' };
-      const results = forYarn('bogus');
-      expect(results).toEqual('yarn bogus');
+    it('[yarn] returns command', () => {
+      const results = forYarn('test-script');
+      expect(results).toEqual('yarn test-script');
     });
 
-    it('[yarn] returns cmd with flags', () => {
-      context = { packageManager: 'yarn' };
-      const results = forYarn('bogus -- --extra');
-      expect(results).toEqual('yarn bogus --extra');
+    it('[yarn] returns command with flags (removes "--")', () => {
+      const results = forYarn('test-script -- --extra');
+      expect(results).toEqual('yarn test-script --extra');
     });
 
+    it('throws TypeError for an invalid script name', () => {
+      expect(() => forNpm('')).toThrow(TypeError);
+      expect(() => forNpm(123)).toThrow(TypeError);
+      expect(() => forYarn(null)).toThrow(TypeError);
+    });
   });
+
   describe('makeSafeRunScript', () => {
     let safeRunScript, runScript;
 
@@ -102,36 +100,44 @@ describe('utils', () => {
       safeRunScript = makeSafeRunScript(context, runScript);
     });
 
-    it('returns an async function', () => {
+    it('returns a function', () => {
       expect(typeof safeRunScript).toBe('function');
     });
 
-    it('checks if script exists', async () => {
+    it('checks if script exists before running', async () => {
       await safeRunScript('existing');
       expect(context.pkg.has).toHaveBeenCalledWith('scripts', 'existing');
     });
 
-    it('runs script if it exists', async () => {
+    it('executes script if it exists', async () => {
       await safeRunScript('existing');
       expect(runScript).toHaveBeenCalledWith('existing');
     });
 
-    it('does not runs script if non existent', async () => {
+    it('does not execute script if it does not exist', async () => {
       await safeRunScript('missing');
       expect(runScript).not.toHaveBeenCalled();
     });
 
-    it('adds warning if run error occurs', async () => {
-      runScript.mockRejectedValue('problem');
+    it('adds warning if script execution fails', async () => {
+      runScript.mockRejectedValue(new Error('Script execution failed'));
       await safeRunScript('existing');
       expect(runScript).toHaveBeenCalled();
-      expect(context.warnings).toHaveLength(1);
+      expect(context.warnings).toContainEqual(
+        "Errors encountered running script: 'existing'"
+      );
     });
 
-    it('no warnings if no problems', async () => {
+    it('does not add warnings if script runs successfully', async () => {
       await safeRunScript('existing');
       expect(runScript).toHaveBeenCalled();
       expect(context.warnings).toHaveLength(0);
+    });
+
+    it('throws TypeError for an invalid script name', async () => {
+      await expect(safeRunScript('')).rejects.toThrow(TypeError);
+      await expect(safeRunScript(123)).rejects.toThrow(TypeError);
+      await expect(safeRunScript(null)).rejects.toThrow(TypeError);
     });
   });
 });

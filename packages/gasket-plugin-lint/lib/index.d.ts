@@ -1,5 +1,4 @@
 import type { Plugin } from '@gasket/core';
-import type { CreateContext } from 'create-gasket-app';
 
 export interface EslintConfig {
   extends?: string[];

@@ -1,10 +1,10 @@
 const mockMakeGatherDevDeps = jest.fn().mockImplementation(() => jest.fn());
 const mockMakeRunScriptStr = jest.fn().mockImplementation(() => jest.fn());
+
 const mockCodeStyles = {
   godaddy: { create: jest.fn() },
   standard: { create: jest.fn() },
   airbnb: { create: jest.fn() },
-  other: { create: jest.fn() },
   none: { create: jest.fn() },
   common: { create: jest.fn() }
 };
@@ -18,6 +18,7 @@ jest.mock('../lib/utils', () => {
     makeRunScriptStr: mockMakeRunScriptStr
   };
 });
+
 jest.mock('../lib/code-styles', () => mockCodeStyles);
 
 const createHook = require('../lib').hooks.create;
@@ -38,12 +39,12 @@ describe('create hook', function () {
 
   it('makes a gatherDevDeps function for utils', async () => {
     await createHookHandler(gasket, context);
-    expect(mockMakeGatherDevDeps).toHaveBeenCalledWith(context);
+    expect(mockMakeGatherDevDeps).toHaveBeenCalled();
   });
 
   it('makes a runScriptStr function for utils', async () => {
     await createHookHandler(gasket, context);
-    expect(mockMakeGatherDevDeps).toHaveBeenCalledWith(context);
+    expect(mockMakeRunScriptStr).toHaveBeenCalled();
   });
 
   it('executes create for selected code style', async () => {
@@ -54,11 +55,9 @@ describe('create hook', function () {
   it('always executes create for common code style', async () => {
     await createHookHandler(gasket, context);
     await createHookHandler(gasket, { codeStyle: 'standard' });
-    await createHookHandler(gasket, { codeStyle: 'other' });
     expect(mockCodeStyles.godaddy.create).toHaveBeenCalledTimes(1);
     expect(mockCodeStyles.standard.create).toHaveBeenCalledTimes(1);
-    expect(mockCodeStyles.other.create).toHaveBeenCalledTimes(1);
-    expect(mockCodeStyles.common.create).toHaveBeenCalledTimes(3);
+    expect(mockCodeStyles.common.create).toHaveBeenCalledTimes(2);
   });
 
   it('does nothing if selected code style is none', async () => {
@@ -71,15 +70,13 @@ describe('create hook', function () {
     expect(mockCodeStyles.common.create).not.toHaveBeenCalled();
   });
 
-  it('sets codeStyle to other if eslintConfig is set', async () => {
-    await createHookHandler(gasket, { eslintConfig: 'bogus' });
-    expect(mockCodeStyles.other.create).toHaveBeenCalled();
-    expect(mockCodeStyles.common.create).toHaveBeenCalled();
-  });
+  it('throws error if makeGatherDevDeps fails', async () => {
+    mockMakeGatherDevDeps.mockImplementation(() => {
+      throw new Error('Failed to create gatherDevDeps');
+    });
 
-  it('sets codeStyle to other if stylelintConfig is set', async () => {
-    await createHookHandler(gasket, { stylelintConfig: 'bogus' });
-    expect(mockCodeStyles.other.create).toHaveBeenCalled();
-    expect(mockCodeStyles.common.create).toHaveBeenCalled();
+    await expect(createHookHandler(gasket, context)).rejects.toThrow(
+      'Failed to create gatherDevDeps'
+    );
   });
 });
