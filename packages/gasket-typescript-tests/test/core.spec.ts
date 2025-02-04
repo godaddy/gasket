@@ -5,6 +5,13 @@ declare module '@gasket/core' {
   interface HookExecTypes {
     example(str: string, num: number, bool: boolean): MaybeAsync<boolean>
   }
+
+  interface GasketConfig {
+    someConfigSection?: {
+      foo: string;
+      bar: number;
+    }
+  }
 }
 
 const PluginExample = {
@@ -21,19 +28,35 @@ const PluginExample = {
 describe('@gasket/core', () => {
   it('exposes the constructor interface', () => {
     // eslint-disable-next-line no-new
-    makeGasket({ plugins: [PluginExample] });
+    makeGasket({
+      plugins: [PluginExample],
+      someConfigSection: {
+        foo: 'foo',
+        bar: 123
+      }
+    });
   });
 
   it('checks constructor arguments', () => {
     // eslint-disable-next-line no-new
     makeGasket({
-      plugins: [PluginExample]
+      plugins: [PluginExample],
+      someConfigSection: {
+        foo: 'foo',
+        bar: 123
+      }
     // @ts-expect-error
     }, 'extra');
   });
 
   it('should infer the types of lifecycle parameters', async function () {
-    const gasket = makeGasket({ plugins: [PluginExample] });
+    const gasket = makeGasket({
+      plugins: [PluginExample],
+      someConfigSection: {
+        foo: 'foo',
+        bar: 123
+      }
+    });
 
     await gasket.execApply('example', async function (plugin, handler) {
       handler('a string', 123, true);
@@ -60,7 +83,13 @@ describe('@gasket/core', () => {
   });
 
   it('type checks the hook method', () => {
-    const gasket = makeGasket({ plugins: [PluginExample] });
+    const gasket = makeGasket({
+      plugins: [PluginExample],
+      someConfigSection: {
+        foo: 'foo',
+        bar: 123
+      }
+    });
 
     // Valid
     gasket.hook({
@@ -89,7 +118,13 @@ describe('@gasket/core', () => {
   });
 
   it('exposes the running command on the Gasket interface', () => {
-    const gasket = makeGasket({ plugins: [PluginExample] });
+    const gasket = makeGasket({
+      plugins: [PluginExample],
+      someConfigSection: {
+        foo: 'foo',
+        bar: 123
+      }
+    });
 
     // Valid
     gasket.hook({
@@ -112,6 +147,23 @@ describe('@gasket/core', () => {
             // @ts-expect-error
             { name: 'missing-hooks' }
           ]
+        }
+      }
+    };
+  });
+
+  it('allows partial environment config overrides', () => {
+    const config: GasketConfigDefinition = {
+      plugins: [PluginExample],
+      someConfigSection: {
+        foo: 'foo',
+        bar: 123
+      },
+      environments: {
+        dev: {
+          someConfigSection: {
+            foo: 'dev-foo'
+          }
         }
       }
     };

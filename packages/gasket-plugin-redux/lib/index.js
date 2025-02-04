@@ -19,6 +19,7 @@ const plugin = {
   name,
   version,
   description,
+  dependencies: ['@gasket/plugin-middleware'],
   hooks: {
     configure,
     prompt,
@@ -33,6 +34,7 @@ const plugin = {
         lifecycles: [
           {
             name: 'initReduxState',
+            deprecated: true,
             method: 'execWaterfall',
             description: 'Initializes state of the Redux store',
             link: 'README.md#initReduxState',
@@ -40,6 +42,7 @@ const plugin = {
           },
           {
             name: 'initReduxStore',
+            deprecated: true,
             method: 'exec',
             description: 'Plugin access to Redux store instance',
             link: 'README.md#initReduxStore',
@@ -57,6 +60,7 @@ const plugin = {
         configurations: [
           {
             name: 'redux',
+            deprecated: true,
             link: 'README.md#configuration',
             description: 'Redux plugin config object',
             type: 'object'

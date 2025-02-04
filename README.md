@@ -91,46 +91,50 @@ Available actions
 
 Available lifecycles
 
-| Name                    | Description                                                   |
-| ----------------------- | ------------------------------------------------------------- |
-| [apmTransaction]        | Modify the APM transaction                                    |
-| [build][1]              | Gasket build lifecycle                                        |
-| [commands]              | Add custom commands to the CLI                                |
-| [composeServiceWorker]  | Update the service worker script                              |
-| [createLogger]          | Custom logger creation                                        |
-| [createServers]         | Setup the `create-servers` options                            |
-| [devProxy]              | Setup the devProxy options                                    |
-| [docsGenerate]          | Generate graphs for display in documation                     |
-| [docsSetup]             | Set up what docs are captured and how to transform them       |
-| [docsView]              | View the collated documentation                               |
-| [errorMiddleware]       | Add Express style middleware for handling errors with Fastify |
-| [errorMiddleware][2]    | Add Express style middleware for handling errors              |
-| [express]               | Modify the Express instance to for adding endpoints           |
-| [fastify]               | Modify the Fastify instance to for adding endpoints           |
-| [gasketData]            | Adjust app level data after merged for the env                |
-| [httpsProxy]            | Setup the httpsProxy options                                  |
-| [initReduxState]        | Initializes state of the Redux store                          |
-| [initReduxStore]        | Plugin access to Redux store instance                         |
-| [initWebpack]           | Create a webpack config                                       |
-| [intlLocale]            | Set the language for which locale files to load               |
-| [manifest]              | Modify the the web manifest for a request                     |
-| [metadata]              | Allows plugins to adjust their metadata                       |
-| [middleware]            | Add Express style middleware for Fastify                      |
-| [middleware][3]         | Add Express style middleware                                  |
-| [next]                  | Update the Next.js app instance before preparing for Express  |
-| [next][4]               | Update the Next.js app instance before preparing for Fastify  |
-| [nextConfig]            | Setup the Next.js config                                      |
-| [nextExpress]           | Access the prepared Next.js app and Express instance          |
-| [nextFastify]           | Access the prepared Next.js app and Fastify instance          |
-| [nextPreHandling]       | Perform tasks just before Next.js request handling            |
-| [publicGasketData]      | Adjust response level data for each request                   |
-| [serverConfig]          | Setup the server configuration                                |
-| [servers]               | Access to the server instances                                |
-| [serviceWorkerCacheKey] | Get cache keys for request based service workers              |
-| [terminus]              | Setup the `terminus` options                                  |
-| [webpackConfig]         | Transform the Webpack config                                  |
-| [winstonTransports]     | Setup Winston log transports                                  |
-| [workbox]               | Setup Workbox config and options                              |
+| Name                                                       | Description                                                   |
+| ---------------------------------------------------------- | ------------------------------------------------------------- |
+| [apmTransaction]                                           | Modify the APM transaction                                    |
+| [build][1]                                                 | Gasket build lifecycle                                        |
+| [commands]                                                 | Add custom commands to the CLI                                |
+| [composeServiceWorker]                                     | Update the service worker script                              |
+| [configure]                                                | Adjust the Gasket configuration                               |
+| [createLogger]                                             | Custom logger creation                                        |
+| [createServers]                                            | Setup the `create-servers` options                            |
+| [devProxy]                                                 | Setup the devProxy options                                    |
+| [docsGenerate]                                             | Generate graphs for display in documation                     |
+| [docsSetup]                                                | Set up what docs are captured and how to transform them       |
+| [docsView]                                                 | View the collated documentation                               |
+| [errorMiddleware]                                          | Add Express style middleware for handling errors with Fastify |
+| [errorMiddleware][2]                                       | Add Express style middleware for handling errors              |
+| [express]                                                  | Modify the Express instance to for adding endpoints           |
+| [fastify]                                                  | Modify the Fastify instance to for adding endpoints           |
+| [gasketData]                                               | Adjust app level data after merged for the env                |
+| [httpsProxy]                                               | Setup the httpsProxy options                                  |
+| [init]                                                     | Handle any Initialization before configuration                |
+| [initReduxState (deprecated)][initReduxState (deprecated)] | Initializes state of the Redux store                          |
+| [initReduxStore (deprecated)][initReduxStore (deprecated)] | Plugin access to Redux store instance                         |
+| [initWebpack]                                              | Create a webpack config                                       |
+| [intlLocale]                                               | Set the language for which locale files to load               |
+| [manifest]                                                 | Modify the the web manifest for a request                     |
+| [metadata]                                                 | Allows plugins to adjust their metadata                       |
+| [middleware]                                               | Add Express style middleware for Fastify                      |
+| [middleware][3]                                            | Add Express style middleware                                  |
+| [next]                                                     | Update the Next.js app instance before preparing for Express  |
+| [next][4]                                                  | Update the Next.js app instance before preparing for Fastify  |
+| [nextConfig]                                               | Setup the Next.js config                                      |
+| [nextExpress]                                              | Access the prepared Next.js app and Express instance          |
+| [nextFastify]                                              | Access the prepared Next.js app and Fastify instance          |
+| [nextPreHandling]                                          | Perform tasks just before Next.js request handling            |
+| [prepare]                                                  | Allows async configuration of Gasket                          |
+| [publicGasketData]                                         | Adjust response level data for each request                   |
+| [ready]                                                    | Configuration is complete and Gasket is ready to start        |
+| [serverConfig]                                             | Setup the server configuration                                |
+| [servers]                                                  | Access to the server instances                                |
+| [serviceWorkerCacheKey]                                    | Get cache keys for request based service workers              |
+| [terminus]                                                 | Setup the `terminus` options                                  |
+| [webpackConfig]                                            | Transform the Webpack config                                  |
+| [winstonTransports]                                        | Setup Winston log transports                                  |
+| [workbox]                                                  | Setup Workbox config and options                              |
 
 ## Structures
 
@@ -155,8 +159,8 @@ Available presets
 
 | Name                    | Version | Description                          |
 | ----------------------- | ------- | ------------------------------------ |
-| [@gasket/preset-api]    | 7.2.0   | Create Express-based API with Gasket |
-| [@gasket/preset-nextjs] | 7.2.0   | Basic NextJS Framework               |
+| [@gasket/preset-api]    | 7.2.1   | Create Express-based API with Gasket |
+| [@gasket/preset-nextjs] | 7.2.1   | Basic NextJS Framework               |
 
 ## Plugins
 
@@ -164,38 +168,38 @@ Available plugins
 
 | Name                             | Version | Description                                                               |
 | -------------------------------- | ------- | ------------------------------------------------------------------------- |
-| [@gasket/plugin-analyze]         | 7.2.0   | Gasket Analyzer Plugin                                                    |
-| [@gasket/plugin-command]         | 7.2.0   | Plugin to enable other plugins to inject new gasket commands              |
-| [@gasket/plugin-cypress]         | 7.2.0   | Integrates Cypress based testing into your Gasket application             |
-| [@gasket/plugin-data]            | 7.2.0   | Supports application-specific settings and configurations                 |
-| [@gasket/plugin-docs]            | 7.2.0   | Centralize doc files from plugins and modules                             |
+| [@gasket/plugin-analyze]         | 7.2.1   | Gasket Analyzer Plugin                                                    |
+| [@gasket/plugin-command]         | 7.2.1   | Plugin to enable other plugins to inject new gasket commands              |
+| [@gasket/plugin-cypress]         | 7.2.1   | Integrates Cypress based testing into your Gasket application             |
+| [@gasket/plugin-data]            | 7.2.1   | Supports application-specific settings and configurations                 |
+| [@gasket/plugin-docs]            | 7.2.1   | Centralize doc files from plugins and modules                             |
 | [@gasket/plugin-docs-graphs]     | 7.2.0   | Generate mermaid graphs of an applications gasket lifecycles              |
-| [@gasket/plugin-docusaurus]      | 7.2.0   | Gasket plugin for docusaurus                                              |
-| [@gasket/plugin-dynamic-plugins] | 7.2.0   |                                                                           |
-| [@gasket/plugin-elastic-apm]     | 7.2.0   | Adds Elastic APM instrumentation to your application                      |
-| [@gasket/plugin-express]         | 7.2.0   | Adds express support to your application                                  |
-| [@gasket/plugin-fastify]         | 7.2.0   | Adds fastify support to your application                                  |
-| [@gasket/plugin-git]             | 7.2.0   | Adds git support to your application                                      |
+| [@gasket/plugin-docusaurus]      | 7.2.1   | Gasket plugin for docusaurus                                              |
+| [@gasket/plugin-dynamic-plugins] | 7.2.1   |                                                                           |
+| [@gasket/plugin-elastic-apm]     | 7.2.1   | Adds Elastic APM instrumentation to your application                      |
+| [@gasket/plugin-express]         | 7.2.1   | Adds express support to your application                                  |
+| [@gasket/plugin-fastify]         | 7.2.1   | Adds fastify support to your application                                  |
+| [@gasket/plugin-git]             | 7.2.1   | Adds git support to your application                                      |
 | [@gasket/plugin-happyfeet]       | 7.2.0   | A gasket plugin to enable happyfeet healthchecks                          |
-| [@gasket/plugin-https]           | 7.2.0   | Create http/s servers with graceful termination                           |
-| [@gasket/plugin-https-proxy]     | 7.2.0   | Adds support for running an https proxy                                   |
-| [@gasket/plugin-intl]            | 7.2.0   | NodeJS script to build localization files.                                |
+| [@gasket/plugin-https]           | 7.2.1   | Create http/s servers with graceful termination                           |
+| [@gasket/plugin-https-proxy]     | 7.2.1   | Adds support for running an https proxy                                   |
+| [@gasket/plugin-intl]            | 7.2.1   | NodeJS script to build localization files.                                |
 | [@gasket/plugin-jest]            | 7.2.0   | Integrated jest into your application.                                    |
 | [@gasket/plugin-lint]            | 7.2.0   | Adds GoDaddy standard linting to your application                         |
-| [@gasket/plugin-logger]          | 7.2.0   | Gasket plugin for logging                                                 |
-| [@gasket/plugin-manifest]        | 7.2.0   | The web app manifest for progressive Gasket applications                  |
-| [@gasket/plugin-metadata]        | 7.2.0   | Adds metadata to gasket lifecycles                                        |
+| [@gasket/plugin-logger]          | 7.2.1   | Gasket plugin for logging                                                 |
+| [@gasket/plugin-manifest]        | 7.2.1   | The web app manifest for progressive Gasket applications                  |
+| [@gasket/plugin-metadata]        | 7.2.1   | Adds metadata to gasket lifecycles                                        |
 | [@gasket/plugin-middleware]      | 7.2.0   | Handles common server engine setups for routing and executing lifecycles. |
 | [@gasket/plugin-mocha]           | 7.2.0   | Integrates mocha based testing in to your Gasket application              |
-| [@gasket/plugin-morgan]          | 7.2.0   | Adds morgan request logger to your app                                    |
-| [@gasket/plugin-nextjs]          | 7.2.0   | Adds Next support to your application                                     |
-| [@gasket/plugin-redux]           | 7.2.0   | Gasket Redux Setup                                                        |
-| [@gasket/plugin-service-worker]  | 7.2.0   | Gasket Service Worker Plugin                                              |
-| [@gasket/plugin-swagger]         | 7.2.0   | Generate and serve swagger docs                                           |
+| [@gasket/plugin-morgan]          | 7.2.1   | Adds morgan request logger to your app                                    |
+| [@gasket/plugin-nextjs]          | 7.2.1   | Adds Next support to your application                                     |
+| [@gasket/plugin-redux]           | 7.2.1   | DEPRECATED Gasket Redux Setup                                             |
+| [@gasket/plugin-service-worker]  | 7.2.1   | Gasket Service Worker Plugin                                              |
+| [@gasket/plugin-swagger]         | 7.2.1   | Generate and serve swagger docs                                           |
 | [@gasket/plugin-typescript]      | 7.2.0   | Gasket plugin for TypeScript support                                      |
-| [@gasket/plugin-webpack]         | 7.2.0   | Adds webpack support to your application                                  |
-| [@gasket/plugin-winston]         | 7.2.0   | Gasket logger based on Winston                                            |
-| [@gasket/plugin-workbox]         | 7.2.0   | Gasket Workbox Plugin                                                     |
+| [@gasket/plugin-webpack]         | 7.2.1   | Adds webpack support to your application                                  |
+| [@gasket/plugin-winston]         | 7.2.1   | Gasket logger based on Winston                                            |
+| [@gasket/plugin-workbox]         | 7.2.1   | Gasket Workbox Plugin                                                     |
 
 
 
@@ -206,14 +210,14 @@ Supporting modules
 | Name                 | Version | Description                                                              |
 | -------------------- | ------- | ------------------------------------------------------------------------ |
 | [@gasket/assets]     | 7.2.0   | Gasket assets                                                            |
-| [@gasket/core]       | 7.2.0   | Entry point to setting up Gasket instances                               |
+| [@gasket/core]       | 7.2.1   | Entry point to setting up Gasket instances                               |
 | [@gasket/data]       | 7.2.0   | Helper package for accessing embedded Gasket Data in the browser         |
 | [@gasket/intl]       | 7.2.0   | Internationalization managers for translation files and locale handling. |
 | [@gasket/nextjs]     | 7.2.0   | Gasket integrations for Next.js apps                                     |
 | [@gasket/react-intl] | 7.2.0   | React component library to enable localization for gasket apps.          |
 | [@gasket/redux]      | 7.2.0   | Gasket Redux Configuration                                               |
 | [@gasket/request]    | 7.2.0   | Utilities for working with request objects in Gasket                     |
-| [@gasket/utils]      | 7.2.0   | Reusable utilities for Gasket internals                                  |
+| [@gasket/utils]      | 7.2.1   | Reusable utilities for Gasket internals                                  |
 
 ## Configurations
 
@@ -257,7 +261,7 @@ Available configuration options in the `gasket.js`
 | [morgan.format]                                                                      | Log format to print                                                                                   | string                                 | tiny                           |
 | [morgan.options]                                                                     | Morgan options                                                                                        | object                                 |                                |
 | [nextConfig][10]                                                                     | Everything that can be configured in `next.config.js` can be added here.                              | object                                 |                                |
-| [redux]                                                                              | Redux plugin config object                                                                            | object                                 |                                |
+| [redux (deprecated)][redux (deprecated)]                                             | Redux plugin config object                                                                            | object                                 |                                |
 | [redux.initState]                                                                    | Initial state to include in the store                                                                 | object                                 |                                |
 | [redux.makeStore]                                                                    | Relative path to a custom makeStore configuration                                                     | string                                 | store.js                       |
 | [serviceWorker]                                                                      | Service worker plugin config object                                                                   | object                                 |                                |
@@ -314,6 +318,7 @@ Available configuration options in the `gasket.js`
 [1]:/packages/gasket-plugin-command/README.md#build
 [commands]:/packages/gasket-plugin-command/README.md#commands
 [composeServiceWorker]:/packages/gasket-plugin-service-worker/README.md#composeServiceWorker
+[configure]:/packages/gasket-core/README.md#configure
 [createLogger]:/packages/gasket-plugin-logger/README.md#createLogger
 [createServers]:/packages/gasket-plugin-https/README.md#createServers
 [devProxy]:/packages/gasket-plugin-https/README.md#devProxy
@@ -326,8 +331,9 @@ Available configuration options in the `gasket.js`
 [fastify]:/packages/gasket-plugin-fastify/README.md#express
 [gasketData]:/packages/gasket-plugin-data/README.md#gasketData
 [httpsProxy]:/packages/gasket-plugin-https-proxy/README.md#httpsProxy
-[initReduxState]:/packages/gasket-plugin-redux/README.md#initReduxState
-[initReduxStore]:/packages/gasket-plugin-redux/README.md#initReduxStore
+[init]:/packages/gasket-core/README.md#init
+[initReduxState (deprecated)]:/packages/gasket-plugin-redux/README.md#initReduxState
+[initReduxStore (deprecated)]:/packages/gasket-plugin-redux/README.md#initReduxStore
 [initWebpack]:/packages/gasket-plugin-webpack/README.md#initwebpack
 [intlLocale]:/packages/gasket-plugin-intl/README.md#intlLocale
 [manifest]:/packages/gasket-plugin-manifest/README.md#manifest
@@ -340,7 +346,9 @@ Available configuration options in the `gasket.js`
 [nextExpress]:/packages/gasket-plugin-nextjs/README.md#nextExpress
 [nextFastify]:/packages/gasket-plugin-nextjs/README.md#nextFastify
 [nextPreHandling]:/packages/gasket-plugin-nextjs/README.md#nextPreHandling
+[prepare]:/packages/gasket-core/README.md#prepare
 [publicGasketData]:/packages/gasket-plugin-data/README.md#publicGasketData
+[ready]:/packages/gasket-core/README.md#ready
 [serverConfig]:/packages/gasket-plugin-https/README.md#serverConfig
 [servers]:/packages/gasket-plugin-https/README.md#servers
 [serviceWorkerCacheKey]:/packages/gasket-plugin-service-worker/README.md#serviceWorkerCacheKey
@@ -435,7 +443,7 @@ Available configuration options in the `gasket.js`
 [morgan.format]:/packages/gasket-plugin-morgan/README.md#configuration
 [morgan.options]:/packages/gasket-plugin-morgan/README.md#configuration
 [10]:/packages/gasket-plugin-nextjs/README.md#configuration
-[redux]:/packages/gasket-plugin-redux/README.md#configuration
+[redux (deprecated)]:/packages/gasket-plugin-redux/README.md#configuration
 [redux.initState]:/packages/gasket-plugin-redux/README.md#configuration
 [redux.makeStore]:/packages/gasket-plugin-redux/README.md#configuration
 [serviceWorker]:/packages/gasket-plugin-service-worker/README.md#configuration

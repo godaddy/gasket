@@ -1,5 +1,9 @@
 # `@gasket/plugin-metadata`
 
+### 7.2.1
+
+- Fix to use gasket.metadata from package.json for modules ([#1022])
+
 ### 7.1.0
 
 - Convert plugin to ESM ([#978])
@@ -84,6 +88,7 @@
 [#613]: https://github.com/godaddy/gasket/pull/613
 [#695]: https://github.com/godaddy/gasket/pull/695
 [#978]: https://github.com/godaddy/gasket/pull/978
+[#1022]: https://github.com/godaddy/gasket/pull/1022
 
 [Loader]:/packages/gasket-resolve/docs/api.md#loader
 [PluginInfo]:/packages/gasket-resolve/docs/api.md#plugininfo

@@ -1,15 +1,17 @@
 import { vi } from 'vitest';
 
+vi.mock('../lib/utils.js', { spy: true });
+
 const mockPlugin = {
-  name: 'mock',
+  name: '@gasket/mock',
   hooks: {
     metadata: (gasket, metadata) => {
       return {
         ...metadata,
         modified: true,
         modules: [
-          { name: 'fake-one', extra: true },
-          { name: 'fake-two', extra: true }
+          { name: 'fake-one' },
+          { name: 'fake-two' }
         ]
       };
     }
@@ -20,13 +22,14 @@ describe('actions', () => {
   let gasket,
     applyStub,
     handlerStub,
-    metadata,
+    tryRequire,
     actions;
 
   beforeEach(async function () {
     actions = (await import('../lib/actions.js')).default;
     applyStub = vi.fn();
     handlerStub = vi.fn();
+    tryRequire = (await import('../lib/utils.js')).tryRequire;
 
     gasket = {
       config: {
@@ -34,15 +37,12 @@ describe('actions', () => {
       },
       execApply: async (event, fn) => {
         await applyStub(event);
-        await fn({ name: 'mock' }, (meta) => {
+        await fn({ name: mockPlugin.name }, (meta) => {
           handlerStub(meta);
           return mockPlugin.hooks.metadata(gasket, meta);
         });
       }
     };
-
-    const { getMetadata } = actions;
-    metadata = await getMetadata(gasket);
   });
 
   afterEach(() => {
@@ -59,13 +59,11 @@ describe('actions', () => {
   });
 
   it('calls execApply metadata lifecycle', async () => {
-    vi.spyOn(require, 'resolve').mockResolvedValueOnce();
     await actions.getMetadata(gasket);
     expect(applyStub).toHaveBeenCalled();
   });
 
   it('memoizes metadata & calls lifecycle once', async () => {
-    vi.spyOn(require, 'resolve').mockResolvedValueOnce();
     await actions.getMetadata(gasket);
     await actions.getMetadata(gasket);
     expect(applyStub).toHaveBeenCalledTimes(1);
@@ -80,44 +78,76 @@ describe('actions', () => {
   });
 
   it('adds moduleInfo for app', async () => {
-    expect(metadata).toHaveProperty('app');
+    const result = await actions.getMetadata(gasket);
+    expect(result).toHaveProperty('app');
   });
 
   it('adds presetInfo from loaded config', async () => {
-    expect(metadata).toHaveProperty('presets');
+    const result = await actions.getMetadata(gasket);
+    expect(result).toHaveProperty('presets');
   });
 
   it('adds pluginInfo from loaded config', async () => {
-    expect(metadata).toHaveProperty('plugins');
+    const result = await actions.getMetadata(gasket);
+    expect(result).toHaveProperty('plugins');
   });
 
   it('ignores plugins and presets from app dependencies', async () => {
-    const names = metadata.modules.map(m => m.name);
+    const result = await actions.getMetadata(gasket);
+    const names = result.modules.map(m => m.name);
     expect(names).not.toContain('@gasket/plugin-mock');
     expect(names).not.toContain('@gasket/mock-preset');
   });
 
   it('executes the metadata lifecycle', async function () {
+    await actions.getMetadata(gasket);
     expect(applyStub).toHaveBeenCalledTimes(1);
   });
 
   it('metadata hook is passed only metadata for hooking plugin', async function () {
+    await actions.getMetadata(gasket);
     expect(handlerStub).toHaveBeenCalled();
-    expect(handlerStub.mock.calls[0][0]).toHaveProperty('name', 'mock');
+    expect(handlerStub.mock.calls[0][0]).toHaveProperty('name', '@gasket/mock');
   });
 
   it('augments the metadata with data from the lifecycle hooks', async function () {
-    expect(metadata.plugins[0].metadata).toHaveProperty('modified', true);
+    const result = await actions.getMetadata(gasket);
+    expect(result.plugins[0].metadata).toHaveProperty('modified', true);
   });
 
   it('loads moduleInfo for modules declared in plugin metadata', async () => {
-    const names = metadata.plugins[0].metadata.modules.map(m => m.name);
+    const result = await actions.getMetadata(gasket);
+    expect(result.modules).toEqual(result.plugins[0].metadata.modules);
+
+    const names = result.modules.map(m => m.name);
     expect(names).toContain('fake-one');
     expect(names).toContain('fake-two');
   });
 
   it('augments moduleInfo metadata for modules declared modules', async () => {
-    const result = metadata.plugins[0].metadata.modules.find(mod => mod.name === 'fake-one');
-    expect(result).toHaveProperty('extra', true);
+    tryRequire.mockImplementation((pkgName) => {
+      if (pkgName === 'fake-one/package.json') {
+        return {
+          name: 'fake-one',
+          gasket: {
+            metadata: {
+              lifecycle: [{
+                name: 'init'
+              }]
+            }
+          }
+        };
+      }
+    });
+
+    const result = await actions.getMetadata(gasket);
+
+    expect(result).toHaveProperty('modules');
+    expect(result.modules).toHaveLength(2);
+    expect(tryRequire).toHaveBeenCalledTimes(2);
+
+    expect(result.modules[0]).toHaveProperty('metadata');
+    expect(result.modules[0].metadata).toHaveProperty('lifecycle');
+    expect(result.modules[0].metadata.lifecycle).toEqual([{ name: 'init' }]);
   });
 });

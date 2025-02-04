@@ -118,7 +118,7 @@ createCommand.action = async function run(appname, options, command) {
 
     const pluginGasket = makeGasket({
       ...context.presetConfig,
-      plugins: context.presets.concat(context.presetConfig.plugins)
+      plugins: context.presetConfig.plugins.concat(context.presets)
     });
 
     await promptHooks({ gasket: pluginGasket, context });

@@ -1,5 +1,7 @@
 # `@gasket/core`
 
+- Fix configuration options so they allow partial environment overrides ([#1026])
+
 ### 7.2.0
 
 - Adjust types GasketTrace

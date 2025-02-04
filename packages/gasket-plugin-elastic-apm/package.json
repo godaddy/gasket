@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-elastic-apm",
-  "version": "7.2.0",
+  "version": "7.2.1",
   "description": "Adds Elastic APM instrumentation to your application",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -40,7 +40,7 @@
     "@gasket/request": "^7.2.0"
   },
   "devDependencies": {
-    "@gasket/core": "^7.2.0",
+    "@gasket/core": "^7.2.1",
     "cross-env": "^7.0.3",
     "dotenv": "^16.4.5",
     "elastic-apm-node": "^4.4.1",

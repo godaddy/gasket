@@ -1,6 +1,6 @@
 {
   "name": "@gasket/core",
-  "version": "7.2.0",
+  "version": "7.2.1",
   "description": "Entry point to setting up Gasket instances",
   "type": "module",
   "types": "lib/index.d.ts",
@@ -51,7 +51,7 @@
   },
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-core",
   "dependencies": {
-    "@gasket/utils": "^7.2.0",
+    "@gasket/utils": "^7.2.1",
     "debug": "^4.3.4"
   },
   "devDependencies": {
@@ -97,5 +97,35 @@
         }
       }
     ]
+  },
+  "gasket": {
+    "metadata": {
+      "lifecycles": [
+        {
+          "name": "init",
+          "description": "Handle any Initialization before configuration",
+          "link": "README.md#init",
+          "method": "execSync"
+        },
+        {
+          "name": "configure",
+          "description": "Adjust the Gasket configuration",
+          "link": "README.md#configure",
+          "method": "execWaterfallSync"
+        },
+        {
+          "name": "prepare",
+          "description": "Allows async configuration of Gasket",
+          "link": "README.md#prepare",
+          "method": "execWaterfall"
+        },
+        {
+          "name": "ready",
+          "description": "Configuration is complete and Gasket is ready to start",
+          "link": "README.md#ready",
+          "method": "exec"
+        }
+      ]
+    }
   }
 }

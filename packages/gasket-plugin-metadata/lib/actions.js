@@ -1,4 +1,5 @@
 import path from 'path';
+import { tryRequire } from './utils.js';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 
@@ -8,17 +9,11 @@ const isGasketPreset = /(gasket-preset)|(@gasket\/preset-)/;
 const isGasketPlugin = /(gasket-plugin)|(@gasket\/plugin-)/;
 let _metadata;
 
-function tryRequire(tryPath) {
-  try {
-    return require(tryPath);
-  } catch (err) {
-    if (err.code === 'MODULE_NOT_FOUND') {
-      return null;
-    }
-    throw err;
-  }
-}
 
+/**
+ *
+ * @param gasket
+ */
 function getAppInfo(gasket) {
   const { config: { root } } = gasket;
   const tryPath = isModulePath.test(root) ? path.join(root, 'package.json') : `${root}/package.json`;
@@ -50,7 +45,7 @@ async function getMetadata(gasket) {
     const app = getAppInfo(gasket);
     const plugins = [];
     const presets = [];
-    const modules = {};
+    const modulesMap = {};
 
     // eslint-disable-next-line max-statements
     await gasket.execApply('metadata', async (plugin, handler) => {
@@ -61,6 +56,11 @@ async function getMetadata(gasket) {
         ...plugin,
         metadata: (await handler({ name: plugin.name }))
       };
+
+      // normalize declared modules
+      pluginData.metadata.modules?.forEach((modInfo) => {
+        modulesMap[modInfo.name] = modInfo;
+      });
 
       if (!isGasketPackage) {
         pluginData.metadata.path = path.join(app.metadata.path, 'plugins');
@@ -90,12 +90,12 @@ async function getMetadata(gasket) {
           //
           // get gasket module details if installed
           //
-          const mod = tryRequire(path.join(name, 'package.json'));
-          if (mod) {
-            modules[name] = {
-              name: mod.name,
-              version: mod.version,
-              description: mod.description,
+          const modPkg = tryRequire(`${name}/package.json`);
+          if (modPkg) {
+            modulesMap[name] = {
+              name: modPkg.name,
+              version: modPkg.version,
+              description: modPkg.description,
               metadata: {
                 link: 'README.md',
                 path: path.dirname(path.join(require.resolve(name), '..'))
@@ -106,7 +106,19 @@ async function getMetadata(gasket) {
       }
     });
 
-    _metadata = { app, plugins, modules: Object.values(modules), presets };
+    //
+    // Update module metadata with gasket.metadata from the package.json if set.
+    //
+    const modules = Object.values(modulesMap).map((modInfo) => {
+      const modPkg = tryRequire(path.join(`${modInfo.name}/package.json`));
+      modInfo.metadata = {
+        ...modInfo.metadata,
+        ...modPkg?.gasket?.metadata
+      };
+      return modInfo;
+    });
+
+    _metadata = { app, plugins, modules, presets };
   }
 
   return _metadata;
