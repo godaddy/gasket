@@ -23,26 +23,10 @@ module.exports = async function promptHook(gasket, context, { prompt }) {
       choices
     },
     {
-      type: 'input',
-      name: 'eslintConfig',
-      message: 'What is the name of the eslint config?',
-      when: (answers) => answers.codeStyle === 'other',
-      transformer: (value) =>
-        value.startsWith('@') ? value : `eslint-config-${value}`
-    },
-    {
       name: 'addStylelint',
       message: 'Do you want stylelint configured?',
       type: 'confirm',
       when: (answers) => !context.apiApp && codeStyles[answers.codeStyle].allowStylelint
-    },
-    {
-      type: 'input',
-      name: 'stylelintConfig',
-      message: 'What is the name of the stylelint config?',
-      when: (answers) => answers.addStylelint && answers.codeStyle === 'other',
-      transformer: (value) =>
-        value.startsWith('@') ? value : `stylelint-config-${value}`
     }
   ]);
 

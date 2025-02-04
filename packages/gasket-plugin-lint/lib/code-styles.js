@@ -1,5 +1,67 @@
-/* eslint-disable complexity,max-statements */
 const { devDependencies } = require('../package.json');
+
+const packageUtils = {
+  hasDependency(pkg, type, name) {
+    return pkg.has(type, name);
+  },
+
+  async addDevDependencies(pkg, dependencies, gatherDevDeps) {
+    const deps = await Promise.all(dependencies.map(gatherDevDeps));
+    pkg.add('devDependencies', Object.assign({}, ...deps));
+  },
+
+  addEslintConfig(pkg, extendsArray, settings = {}) {
+    pkg.add('eslintConfig', { extends: extendsArray, ...settings });
+  },
+
+  addScript(pkg, name, command) {
+    pkg.add('scripts', { [name]: command });
+  },
+
+  async setupStylelint(pkg, gatherDevDeps, configName) {
+    await packageUtils.addDevDependencies(pkg, [configName], gatherDevDeps);
+    pkg.add('stylelint', { extends: [configName] });
+  },
+
+  async setupNext(pkg) {
+    pkg.add('devDependencies', {
+      'eslint-config-next': devDependencies['eslint-config-next'],
+      'typescript': devDependencies.typescript
+    });
+    packageUtils.addEslintConfig(pkg, ['next']);
+  },
+
+  async setupReactIntl(pkg, gatherDevDeps) {
+    const pluginName = '@godaddy/eslint-plugin-react-intl';
+    const deps = await gatherDevDeps(pluginName);
+    pkg.add('devDependencies', { [pluginName]: deps[pluginName] });
+    packageUtils.addEslintConfig(pkg, ['plugin:@godaddy/react-intl/recommended'], {
+      settings: { localeFiles: ['locales/en-US.json'] }
+    });
+  },
+
+  async setupStandardLinting(pkg, gatherDevDeps) {
+    await packageUtils.addDevDependencies(pkg, ['standard', 'snazzy'], gatherDevDeps);
+    packageUtils.addScript(pkg, 'lint', 'standard | snazzy');
+    packageUtils.addScript(pkg, 'lint:fix', 'standard --fix | snazzy');
+  },
+
+  setupTestEnv(pkg) {
+    let env = null;
+
+    if (packageUtils.hasDependency(pkg, 'devDependencies', 'jest')) {
+      env = 'jest';
+    } else if (packageUtils.hasDependency(pkg, 'devDependencies', 'mocha')) {
+      env = 'mocha';
+    }
+
+    if (env) {
+      pkg.add('standard', { env: [env] });
+    }
+
+    pkg.add('standard', { ignore: ['build/'] });
+  }
+};
 
 /**
  * GoDaddy JavaScript Style
@@ -9,68 +71,21 @@ const { devDependencies } = require('../package.json');
 const godaddy = {
   name: 'GoDaddy',
   allowStylelint: true,
-  create: async (context, utils) => {
+  async create(context, utils) {
     const { pkg, addStylelint } = context;
     const { gatherDevDeps } = utils;
-
-    const hasFlow = pkg.has('devDependencies', 'flow-bin');
-    const hasReact = pkg.has('dependencies', 'react');
-    const hasReactIntl = pkg.has('dependencies', 'react-intl');
-    const hasNext = pkg.has('dependencies', 'next');
+    const { hasDependency, addDevDependencies, addEslintConfig, setupStylelint, setupNext, setupReactIntl } = packageUtils;
 
     let configName = 'godaddy';
-    if (hasReact && hasFlow) {
-      configName = 'godaddy-react-flow';
-    } else if (hasReact) {
-      configName = 'godaddy-react';
-    } else if (hasFlow) {
-      configName = 'godaddy-flow';
-    }
+    if (hasDependency(pkg, 'dependencies', 'react')) configName += '-react';
+    if (hasDependency(pkg, 'devDependencies', 'flow-bin')) configName += '-flow';
 
-    // limit the supported version ranges
-    const versionRanges = {
-      'godaddy': '^7.1.1',
-      'godaddy-react': '^9.1.0',
-      'godaddy-flow': '^6.0.2',
-      'godaddy-react-flow': '^6.0.2',
-      '@godaddy/eslint-plugin-react-intl': '^1.3.0',
-      'stylelint-config-godaddy': '^0.6.0'
-    };
+    await addDevDependencies(pkg, [`eslint-config-${configName}`], gatherDevDeps);
+    addEslintConfig(pkg, [configName]);
 
-    pkg.add(
-      'devDependencies',
-      await gatherDevDeps(`eslint-config-${configName}@${versionRanges[configName]}`)
-    );
-    pkg.add('eslintConfig', { extends: [configName] });
-
-    if (hasReactIntl) {
-      const pluginName = '@godaddy/eslint-plugin-react-intl';
-      const deps = await gatherDevDeps(`${pluginName}@${versionRanges[pluginName]}`);
-      // only add the plugin to avoid stomping config version
-      pkg.add('devDependencies', {
-        [pluginName]: deps[pluginName]
-      });
-      pkg.add('eslintConfig', {
-        extends: ['plugin:@godaddy/react-intl/recommended'],
-        settings: {
-          localeFiles: ['locales/en-US.json']
-        }
-      });
-    }
-
-    if (addStylelint) {
-      const stylelintName = 'stylelint-config-godaddy';
-      pkg.add('devDependencies', await gatherDevDeps(`${stylelintName}@${versionRanges[stylelintName]}`));
-      pkg.add('stylelint', { extends: [stylelintName] });
-    }
-
-    if (hasNext) {
-      pkg.add('devDependencies', {
-        'eslint-config-next': devDependencies['eslint-config-next'],
-        'typescript': devDependencies.typescript
-      });
-      pkg.add('eslintConfig', { extends: ['next'] });
-    }
+    if (hasDependency(pkg, 'dependencies', 'react-intl')) await setupReactIntl(pkg, gatherDevDeps);
+    if (addStylelint) await setupStylelint(pkg, gatherDevDeps, 'stylelint-config-godaddy');
+    if (hasDependency(pkg, 'dependencies', 'next')) await setupNext(pkg);
   }
 };
 
@@ -81,39 +96,18 @@ const godaddy = {
  */
 const standard = {
   name: 'Standard',
-  create: async (context, utils) => {
+  allowStylelint: false,
+  async create(context, utils) {
     const { pkg } = context;
     const { gatherDevDeps } = utils;
-    const hasNext = pkg.has('dependencies', 'next');
+    const { hasDependency, setupStandardLinting, setupTestEnv, addEslintConfig } = packageUtils;
 
-    const devDeps = await Promise.all([
-      gatherDevDeps('standard'),
-      gatherDevDeps('snazzy')
-    ]);
+    await setupStandardLinting(pkg, gatherDevDeps);
+    setupTestEnv(pkg);
 
-    pkg.add(
-      'devDependencies',
-      devDeps.reduce((acc, cur) => ({ ...acc, ...cur }), {})
-    );
-
-    pkg.add('scripts', {
-      'lint': 'standard | snazzy',
-      'lint:fix': 'standard --fix | snazzy'
-    });
-
-    if (pkg.has('devDependencies', 'jest')) {
-      pkg.add('standard', { env: ['jest'] });
-    } else if (pkg.has('devDependencies', 'mocha')) {
-      pkg.add('standard', { env: ['mocha'] });
-    }
-
-    pkg.add('standard', { ignore: ['build/'] });
-
-    if (hasNext) {
-      pkg.add('devDependencies', {
-        'eslint-config-next': devDependencies['eslint-config-next']
-      });
-      pkg.add('eslintConfig', { extends: ['next'] });
+    if (hasDependency(pkg, 'dependencies', 'next')) {
+      pkg.add('devDependencies', { 'eslint-config-next': devDependencies['eslint-config-next'] });
+      addEslintConfig(pkg, ['next']);
     }
   }
 };
@@ -126,66 +120,17 @@ const standard = {
 const airbnb = {
   name: 'Airbnb',
   allowStylelint: true,
-  create: async (context, utils) => {
+  async create(context, utils) {
     const { pkg, addStylelint } = context;
     const { gatherDevDeps } = utils;
+    const { hasDependency, addDevDependencies, addEslintConfig, setupStylelint, setupNext } = packageUtils;
 
-    const hasReact = pkg.has('dependencies', 'react');
-    const hasNext = pkg.has('dependencies', 'next');
+    const configName = hasDependency(pkg, 'dependencies', 'react') ? 'airbnb' : 'airbnb-base';
+    await addDevDependencies(pkg, [`eslint-config-${configName}`], gatherDevDeps);
+    addEslintConfig(pkg, [configName]);
 
-    let configName = 'airbnb-base';
-    if (hasReact) configName = 'airbnb';
-
-    pkg.add(
-      'devDependencies',
-      await gatherDevDeps(`eslint-config-${configName}`)
-    );
-    pkg.add('eslintConfig', { extends: [configName] });
-
-    if (addStylelint) {
-      const stylelintName = 'stylelint-config-airbnb';
-      pkg.add('devDependencies', await gatherDevDeps(stylelintName));
-      pkg.add('stylelint', { extends: [stylelintName] });
-    }
-
-    if (hasNext) {
-      pkg.add('devDependencies', {
-        'eslint-config-next': devDependencies['eslint-config-next']
-      });
-      pkg.add('eslintConfig', { extends: ['next'] });
-    }
-  }
-};
-
-/**
- * Allows users to type in the name of an eslint config and stylelint config.
- * @type {import('./internal').CodeStyle}
- */
-const other = {
-  name: 'other (input eslint config)',
-  allowStylelint: true,
-  create: async (context, utils) => {
-    const { pkg, eslintConfig, stylelintConfig } = context;
-    const { gatherDevDeps } = utils;
-
-    if (eslintConfig) {
-      const hasNext = pkg.has('dependencies', 'next');
-
-      pkg.add('devDependencies', await gatherDevDeps(eslintConfig));
-      pkg.add('eslintConfig', { extends: [eslintConfig] });
-
-      if (hasNext) {
-        pkg.add('devDependencies', {
-          'eslint-config-next': devDependencies['eslint-config-next']
-        });
-        pkg.add('eslintConfig', { extends: ['next'] });
-      }
-    }
-
-    if (stylelintConfig) {
-      pkg.add('devDependencies', await gatherDevDeps(stylelintConfig));
-      pkg.add('stylelint', { extends: [stylelintConfig] });
-    }
+    if (addStylelint) await setupStylelint(pkg, gatherDevDeps, 'stylelint-config-airbnb');
+    if (hasDependency(pkg, 'dependencies', 'next')) await setupNext(pkg);
   }
 };
 
@@ -194,7 +139,8 @@ const other = {
  * @type {import('./internal').CodeStyle}
  */
 const none = {
-  name: 'none (not recommended)'
+  name: 'none (not recommended)',
+  allowStylelint: false
 };
 
 /**
@@ -203,8 +149,8 @@ const none = {
  * @type {import('./internal').CodeStyle}
  */
 const common = {
-  // no name = no choice
-  create: async (context, utils) => {
+  // No name = no choice
+  async create(context, utils) {
     const { pkg, typescript } = context;
     const { runScriptStr } = utils;
 
@@ -296,7 +242,6 @@ module.exports = {
   godaddy,
   standard,
   airbnb,
-  other,
   none,
   common
 };
