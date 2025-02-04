@@ -1,97 +1,132 @@
 /// <reference types="create-gasket-app" />
 
-const semver = require('semver');
-const reName = /^(@?[\w/-]+)@?(.*)/;
-
 /**
- * Makes a function to look up package dependencies the current create context
- * @param {import('create-gasket-app').CreateContext} context - Create context
- * @returns {function(string): Promise<Record<string, string>>} gatherDevDeps
+ * Creates a function that retrieves the development dependencies for a specified package.
+ *
+ * This function ensures that only valid package names are processed and throws an error
+ * if the package name is invalid or missing from the predefined dependencies list.
+ * @type {import('./internal').makeGatherDevDeps}
  */
-function makeGatherDevDeps(context) {
-  const { pkgManager } = context;
+function makeGatherDevDeps() {
+  var eslintVersion = '^8.57.1';
+  var babelCore = { '@babel/core': '>=7' };
+  var eslintBaseDeps = { eslint: eslintVersion };
+  var eslintImport = { 'eslint-plugin-import': '^2.27.5' };
+
+  var dependencies = {
+    'eslint-config-godaddy': { ...eslintBaseDeps, 'eslint-config-godaddy': '^7.1.1' },
+    'eslint-config-godaddy-react': { ...eslintBaseDeps, 'eslint-config-godaddy-react': '^9.1.0', ...babelCore },
+    'eslint-config-godaddy-flow': { ...eslintBaseDeps, 'eslint-config-godaddy-flow': '^6.0.2', ...babelCore },
+    'eslint-config-godaddy-react-flow': { ...eslintBaseDeps, 'eslint-config-godaddy-react-flow': '^6.0.2', ...babelCore },
+    '@godaddy/eslint-plugin-react-intl': { ...eslintBaseDeps, '@godaddy/eslint-plugin-react-intl': '^1.3.0' },
+    'stylelint-config-godaddy': { 'stylelint-config-godaddy': '^0.6.0', 'stylelint': '^15' },
+    'standard': {
+      standard: '^17.1.2'
+    },
+    'snazzy': {
+      snazzy: '9.0.0'
+    },
+    'eslint-config-airbnb': {
+      ...eslintBaseDeps,
+      'eslint-config-airbnb': '^19.0.4',
+      ...eslintImport,
+      'eslint-plugin-jsx-a11y': '^6.6.1',
+      'eslint-plugin-react': '^7.32.2',
+      'eslint-plugin-react-hooks': '^4.6.0'
+    },
+    'eslint-config-airbnb-base': { ...eslintBaseDeps, 'eslint-config-airbnb-base': '^15.0.0', ...eslintImport },
+    'eslint-config-next': { ...eslintBaseDeps, 'eslint-config-next': '^13.2.1', 'typescript': '^5.2.2' },
+    'stylelint-config-airbnb': {
+      'stylelint-config-airbnb': '^0.0.0',
+      'stylelint': '^8.0.0',
+      'stylelint-order': '^0.7.0',
+      'stylelint-scss': '^1.2.1'
+    }
+  };
 
   /**
-   * Looks up the latest version of specific package if not set, and gets info
-   * on its peerDependencies. These, along with the original package w/ version
-   * will be returned, which can then be used to add to the apps
-   * devDependencies.
-   * @param {string} rawName - Name of package with option version
-   * @returns {Promise<Record<string, string>>} dependencies
+   * Retrieves the dependencies for a given package name.
+   * @type {import('./internal').gatherDevDeps}
    */
-  return async function gatherDevDeps(rawName) {
-    const [, parsedName, parsedVersion] = reName.exec(rawName);
-
-    let version = parsedVersion
-      ? semver.minVersion(parsedVersion).version
-      : null;
-    if (!version) {
-      version = (await pkgManager.info([parsedName, 'version'])).data;
+  function gatherDevDeps(name) {
+    if (typeof name !== 'string' || !name.trim()) {
+      console.error(`Invalid package name: ${JSON.stringify(name)}`);
+      throw new TypeError('Package name must be a non-empty string.');
     }
 
-    const full = `${parsedName}@${version.trim()}`;
-    const peerDeps = (await pkgManager.info([full, 'peerDependencies'])).data;
+    // TODO: standard is broken
+    if (!(name in dependencies)) {
+      console.error(`Package not found: ${name}`);
+      throw new ReferenceError(`No dependency information found for package: ${name}`);
+    }
 
-    return {
-      [parsedName]: parsedVersion || `^${version}`,
-      ...(peerDeps || {})
-    };
-  };
+    return dependencies[name];
+  }
+
+  return gatherDevDeps;
 }
 
 /**
- * Makes a function to generate a package script string under the current create
- * context
- * @param {import("create-gasket-app").CreateContext} context - Create context
- * @returns {function(string): string} runScriptStr
+ * Creates a function to generate the correct package script execution command.
+ *
+ * This function returns a script command formatted for either npm or yarn, depending
+ * on the package manager used in the given context.
+ * @type {import('./internal').makeRunScriptStr}
  */
 function makeRunScriptStr(context) {
-  const { packageManager } = context;
-  const runCmd = packageManager === 'npm' ? 'npm run' : packageManager;
+  var runCmd = context.packageManager === 'npm' ? 'npm run' : context.packageManager;
 
   /**
-   * Accepts a script name and adds `npm run` or `yarn`. If extra flags are
-   * needed, use the extra `--` option following npm format, which will be
-   * removed when the packageManager is yarn.
-   * @see https://docs.npmjs.com/cli/run-script
-   * @param {string} script - Name of script to run
-   * @returns {string} modifed script
+   * Formats the script command for execution.
+   * @type {import('./internal').runScriptStr}
    */
-  return function runScriptStr(script) {
-    let str = [runCmd, script].join(' ');
-    if (runCmd === 'yarn') {
-      str = str.replace(' -- ', ' ');
+  function runScriptStr(script) {
+    if (typeof script !== 'string' || !script.trim()) {
+      console.error(`Invalid script name: ${JSON.stringify(script)}`);
+      throw new TypeError('Script name must be a non-empty string.');
     }
-    return str;
-  };
+
+    return runCmd === 'yarn' ? (runCmd + ' ' + script).replace(' -- ', ' ') : runCmd + ' ' + script;
+  }
+
+  return runScriptStr;
 }
 
 /**
- * Makes a function to run scripts safely under the current create context
- * @param {import("create-gasket-app").CreateContext} context - Create context
- * @param {Function} runScript - Script runner util
- * @returns {Function} safeRunScript
+ * Creates a function to safely execute package scripts, ensuring errors do not
+ * cause a complete failure during project setup.
+ *
+ * This function checks whether a script exists in the `package.json` scripts section
+ * before attempting to run it. Errors are logged and stored in the warnings array
+ * instead of halting execution.
+ * @type {import('./internal').makeSafeRunScript}
  */
 function makeSafeRunScript(context, runScript) {
-  const { pkg, warnings } = context;
-
   /**
-   * Runs lint scripts safely by catching errors showing warnings in the create
-   * report. We do not want to fail a create for these, because lint
-   * configurations are fragile in nature due to combination of style choices
-   * and generated content.
-   * @param {string} name - package.json script to run
-   * @returns {Promise<void>} promise
+   * Runs a script safely without stopping execution on errors.
+   * @type {import('./internal').safeRunScript}
    */
-  return async function safeRunScript(name) {
-    if (pkg.has('scripts', name)) {
-      try {
-        await runScript(name);
-      } catch (e) {
-        warnings.push(`Errors encountered running script: '${name}'`);
-      }
+  async function safeRunScript(name) {
+    if (typeof name !== 'string' || !name.trim()) {
+      console.error(`Invalid script name: ${JSON.stringify(name)}`);
+      throw new TypeError('Script name must be a non-empty string.');
     }
-  };
+
+    if (!context.pkg.has('scripts', name)) {
+      console.warn(`Script '${name}' not found in package.json.`);
+
+      return;
+    }
+
+    try {
+      await runScript(name);
+    } catch (error) {
+      console.error(`Error running script '${name}':`, error);
+      context.warnings.push(`Errors encountered running script: '${name}'`);
+    }
+  }
+
+  return safeRunScript;
 }
 
 module.exports = {

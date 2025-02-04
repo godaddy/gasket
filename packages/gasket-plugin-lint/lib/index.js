@@ -1,5 +1,3 @@
-/// <reference types="create-gasket-app" />
-
 const { makeSafeRunScript } = require('./utils');
 const prompt = require('./prompt');
 const create = require('./create');
@@ -16,6 +14,7 @@ const plugin = {
     create,
     async postCreate(gasket, context, { runScript }) {
       const safeRunScript = makeSafeRunScript(context, runScript);
+
       await safeRunScript('lint:fix');
       await safeRunScript('stylelint:fix');
     }
