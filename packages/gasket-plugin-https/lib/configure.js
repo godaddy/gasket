@@ -8,7 +8,7 @@ module.exports = function configure(gasket, config) {
 
     if (Array.isArray(serverConfig)) {
       serverConfig.forEach(item => {
-        item.root = root;
+        item.root ??= root;
       });
     } else {
       serverConfig.root = root;
