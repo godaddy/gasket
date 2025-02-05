@@ -10,7 +10,7 @@ jobs:
       pull-requests: write
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: NPM Lockfile Changes
         uses: codepunkt/npm-lockfile-changes@v1.0.0
