@@ -1,5 +1,7 @@
 # `@gasket/core`
 
+### 7.2.2
+
 - Fix configuration options so they allow partial environment overrides ([#1026])
 
 ### 7.2.0

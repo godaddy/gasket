@@ -1,5 +1,7 @@
 # `@gasket/utils`
 
+### 7.2.2
+
 - Fix type of environment overrides ([#1026])
 
 ### 7.1.2

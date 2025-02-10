@@ -1,5 +1,9 @@
 # `@gasket/plugin-redux`
 
+### 7.2.2
+
+- Add deprecation notices for redux plugin ([#1027])
+
 ### 7.1.0
 
 - Aligned version releases across all packages
@@ -95,3 +99,4 @@
 [#457]: https://github.com/godaddy/gasket/pull/457
 [#670]: https://github.com/godaddy/gasket/pull/670
 [#762]: https://github.com/godaddy/gasket/pull/762
+[#1027]: https://github.com/godaddy/gasket/pull/1027
