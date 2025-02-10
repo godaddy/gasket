@@ -1,5 +1,9 @@
 # `@gasket/redux`
 
+### 7.2.2
+
+- Update redux peer dependencies ([#1027])
+
 ### 7.1.0
 
 - Aligned version releases across all packages
@@ -104,3 +108,4 @@
 [#670]: https://github.com/godaddy/gasket/pull/670
 [#693]: https://github.com/godaddy/gasket/pull/693
 [#974]: https://github.com/godaddy/gasket/pull/974
+[#1027]: https://github.com/godaddy/gasket/pull/1027
