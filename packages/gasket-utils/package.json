@@ -92,7 +92,7 @@
       },
       {
         "files": [
-          "*.ts"
+          "lib/*.ts"
         ],
         "extends": [
           "godaddy-typescript"
