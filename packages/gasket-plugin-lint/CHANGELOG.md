@@ -1,5 +1,9 @@
 # `@gasket/plugin-lint`
 
+### 7.2.2
+
+- Predefine lint plugin dep versions ([#1029])
+
 ### 7.1.7
 
 - Pin GoDaddy ESLint packages with ESLint 8 compatability ([#1019])
@@ -129,3 +133,4 @@
 [#670]: https://github.com/godaddy/gasket/pull/670
 [#937]: https://github.com/godaddy/gasket/pull/937
 [#1019]: https://github.com/godaddy/gasket/pull/1019
+[#1029]: https://github.com/godaddy/gasket/pull/1029

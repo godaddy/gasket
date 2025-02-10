@@ -1,5 +1,9 @@
 # `@gasket/plugin-swagger`
 
+### 7.2.2
+
+- Update swagger config to include routes plugin ([#1023])
+
 ### 7.1.0
 
 - Aligned version releases across all packages
@@ -70,3 +74,4 @@
 [#460]: https://github.com/godaddy/gasket/pull/460
 [#736]: https://github.com/godaddy/gasket/pull/736
 [#850]: https://github.com/godaddy/gasket/pull/850
+[#1023]: https://github.com/godaddy/gasket/pull/1023
