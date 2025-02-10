@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-fastify",
-  "version": "7.2.1",
+  "version": "7.2.2",
   "description": "Adds fastify support to your application",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -40,7 +40,7 @@
     "fastify": "^4.28.1"
   },
   "devDependencies": {
-    "@gasket/core": "^7.2.1",
+    "@gasket/core": "^7.2.2",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
     "eslint-config-godaddy": "^7.1.1",

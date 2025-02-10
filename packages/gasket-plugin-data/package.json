@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-data",
-  "version": "7.2.1",
+  "version": "7.2.2",
   "description": "Supports application-specific settings and configurations",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -38,11 +38,11 @@
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-data",
   "dependencies": {
     "@gasket/request": "^7.2.0",
-    "@gasket/utils": "^7.2.1",
+    "@gasket/utils": "^7.2.2",
     "lodash.merge": "^4.6.2"
   },
   "devDependencies": {
-    "@gasket/core": "^7.2.1",
+    "@gasket/core": "^7.2.2",
     "@gasket/data": "^7.2.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
