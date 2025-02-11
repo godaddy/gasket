@@ -103,10 +103,12 @@ createCommand.action = async function run(appname, options, command) {
   const { rawPresets, localPresets } = context;
 
   try {
+    // @ts-ignore - NEEDS REVIEW
     await globalPrompts({ context });
 
     if (rawPresets.length || localPresets.length) {
 
+      // @ts-ignore - NEEDS REVIEW
       await loadPreset({ context });
 
       const presetGasket = makeGasket({
@@ -123,16 +125,24 @@ createCommand.action = async function run(appname, options, command) {
     });
 
     await promptHooks({ gasket: pluginGasket, context });
+    // @ts-ignore - NEEDS REVIEW
     await mkDir({ context });
+    // @ts-ignore - NEEDS REVIEW
     await setupPkg({ context });
     await createHooks({ gasket: pluginGasket, context });
+    // @ts-ignore - NEEDS REVIEW
     await writePkg({ context });
+    // @ts-ignore - NEEDS REVIEW
     await generateFiles({ context });
+    // @ts-ignore - NEEDS REVIEW
     await writeGasketConfig({ context });
+    // @ts-ignore - NEEDS REVIEW
     await installModules({ context });
+    // @ts-ignore - NEEDS REVIEW
     await linkModules({ context });
     await postCreateHooks({ gasket: pluginGasket, context });
     if (context.tmpDir) await rm(context.tmpDir, { recursive: true });
+    // @ts-ignore - NEEDS REVIEW
     printReport({ context });
   } catch (err) {
     console.error(chalk.red('Exiting with errors.'));
