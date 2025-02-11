@@ -1,13 +1,13 @@
 /**
  * Utility for plugins to add files and templates for generating
- * @type {import('../index').Files}
+ * @type {import('create-gasket-app').Files}
  */
 export class Files {
   constructor() {
-  /**
-   * Array of glob sets, each containing an array of globs and a source object.
-   * @type {Array<{globs: string[], source: object}>}
-   */
+    /**
+     * Array of glob sets, each containing an array of globs and a source object.
+     * @type {Array<{globs: string[], source: object}>}
+     */
     this.globSets = [];
   }
 

@@ -1,9 +1,9 @@
 /**
  * Class to add content to gitignore
+ * @type {import('./internal').Gitignore}
  */
 module.exports = class Gitignore {
   constructor() {
-    /** @type {import('./internal').GitIgnoreContent} */
     this._content = {
       dependencies: new Set(['node_modules']),
       testing: new Set(['coverage', 'reports']),
@@ -17,13 +17,6 @@ module.exports = class Gitignore {
     };
   }
 
-  /**
-   * TODO: convert to jsdocs imports
-   * Adds content to gitignore
-   * @param {string | string[]} name - name of file or directory to add to
-   * gitignore
-   * @param {string} category - category of gitignore content
-   */
   add(name, category = '') {
     if (Array.isArray(name)) {
       name.forEach((n) => this.add(n, category));

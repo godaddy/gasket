@@ -11,7 +11,7 @@ export default function withSpinner(label, fn, { startSpinner = true } = {}) {
    * Decorated function
    * @type {import('../internal').withSpinnerWrapper}
    */
-  async function wrapper({ gasket = {}, context }) {
+  async function wrapper({ gasket, context }) {
     const spinner = ora(label);
     if (startSpinner) spinner.start();
     try {

@@ -94,9 +94,10 @@ const createCommand = {
 
 /**
  * createCommand action
- * @type {import('../index').createCommandAction}
+ * @type {import('create-gasket-app').createCommandAction}
  */
 createCommand.action = async function run(appname, options, command) {
+  // eslint-disable-next-line no-process-env
   process.env.GASKET_ENV = 'create';
   const context = makeCreateContext([appname], options);
   const { rawPresets, localPresets } = context;

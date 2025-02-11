@@ -72,7 +72,7 @@ class WebpackMetricsPlugin {
         map[dirname][extension] += fileSize;
       }
 
-      /** @type {import('./index').WebpackMetrics} */
+      /** @type {import('@gasket/plugin-webpack').WebpackMetrics} */
       const metrics = {
         name,
         event: 'webpack',
@@ -81,7 +81,7 @@ class WebpackMetricsPlugin {
       };
 
       // logging these errors more obvious to future plugin authors.
-      this.handleMetrics(metrics).catch(() => {});
+      this.handleMetrics(metrics).catch(() => { });
     });
   }
 }

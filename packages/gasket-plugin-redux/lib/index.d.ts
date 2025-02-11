@@ -1,8 +1,8 @@
 import type { IncomingMessage, OutgoingMessage } from 'http';
 import type { Store } from 'redux';
 import type { MaybeAsync, Plugin } from '@gasket/core';
-import type { MakeStoreFn } from '@gasket/redux';
-import { Logger } from '@gasket/plugin-logger';
+import type { Logger } from '@gasket/plugin-logger';
+import type { Console } from 'inspector/promises';
 
 /**
  * Class to add statements to redux store.

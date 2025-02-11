@@ -1,6 +1,6 @@
 /**
  * Wrapper to access window.fetch in case of polyfill or monkey patch
- * @type {import('./index').fetch}
+ * @type {import('@gasket/fetch').fetch}
  */
 function fetchWrapper(input, init) {
   return window.fetch(input, init);

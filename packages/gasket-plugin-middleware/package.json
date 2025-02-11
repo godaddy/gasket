@@ -41,7 +41,6 @@
     "eslint-config-godaddy": "^7.1.1",
     "eslint-config-godaddy-typescript": "^4.0.3",
     "eslint-plugin-jest": "^28.6.0",
-    "eslint-plugin-json": "^3.1.0",
     "eslint-plugin-unicorn": "^55.0.0",
     "jest": "^29.7.0",
     "typescript": "^5.4.5"
@@ -76,7 +75,14 @@
         ],
         "extends": [
           "godaddy-typescript"
-        ]
+        ],
+        "rules": {
+          "jsdoc/require-jsdoc": "off",
+          "jsdoc/require-param-description": "off",
+          "jsdoc/require-param-type": "off",
+          "jsdoc/require-param": "off",
+          "jsdoc/require-returns": "off"
+        }
       }
     ]
   }

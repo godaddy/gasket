@@ -42,7 +42,6 @@ const depVersions = {
   'eslint': '^8.56.0',
   'eslint-config-godaddy': '^7.1.1',
   'eslint-config-godaddy-react': '^9.1.0',
-  'eslint-plugin-json': '^3.1.0',
   'eslint-plugin-jest': '^28.6.0',
   'eslint-plugin-mocha': '^10.5.0',
   'eslint-plugin-react': '^7.35.0',
@@ -286,8 +285,7 @@ function checkHomepage(pkgJson) {
 function checkTypecheckScripts(pkgJson) {
   const { scripts } = pkgJson;
   if (scripts.posttest && !scripts.typecheck) {
-    // TODO: Remove 'skip' once types have been completed in each package
-    pkgJson.scripts['typecheck:skip'] = 'tsc';
+    pkgJson.scripts.typecheck = 'tsc';
     pkgJson.scripts['typecheck:watch'] = 'tsc --watch';
   }
 }
@@ -298,17 +296,43 @@ function checkTypecheckScripts(pkgJson) {
  */
 function checkEslintConfig(pkgJson) {
   const { eslintConfig } = pkgJson;
-  if (
-    eslintConfig &&
-    !eslintConfig.extends.includes('plugin:jsdoc/recommended-typescript-flavor')
-  ) {
-    pkgJson.eslintConfig.extends.push(
-      'plugin:jsdoc/recommended-typescript-flavor'
-    );
+
+  if (!eslintConfig) return;
+
+  if (!eslintConfig.extends.includes('plugin:jsdoc/recommended-typescript-flavor')) {
+    eslintConfig.extends.push('plugin:jsdoc/recommended-typescript-flavor');
   }
 
-  if (eslintConfig && !eslintConfig.plugins.includes('jsdoc')) {
-    pkgJson.eslintConfig.plugins.push('jsdoc');
+  if (!eslintConfig.plugins.includes('jsdoc')) {
+    eslintConfig.plugins.push('jsdoc');
+  }
+
+  if (!eslintConfig.overrides) {
+    eslintConfig.overrides = [];
+  }
+
+  const tsOverride = {
+    files: ['lib/*.ts'],
+    extends: ['godaddy-typescript'],
+    rules: {
+      'jsdoc/require-jsdoc': 'off',
+      'jsdoc/require-param-description': 'off',
+      'jsdoc/require-param-type': 'off',
+      'jsdoc/require-param': 'off',
+      'jsdoc/require-returns': 'off'
+    }
+  };
+
+  const hasTsOverride = eslintConfig.overrides.some(
+    (override) =>
+      Array.isArray(override.files) &&
+      override.files.includes('lib/*.ts') &&
+      Array.isArray(override.extends) &&
+      override.extends.includes('godaddy-typescript')
+  );
+
+  if (!hasTsOverride) {
+    eslintConfig.overrides.push(tsOverride);
   }
 }
 
@@ -347,6 +371,24 @@ function setupTypes(pkgJson) {
 }
 
 /**
+ *
+ * @param pkgJson
+ */
+function checkDefaultDeps(pkgJson) {
+  if (!pkgJson.devDependencies) {
+    pkgJson.devDependencies = {};
+  }
+
+  if (!pkgJson.devDependencies['eslint-config-godaddy-typescript']) {
+    pkgJson.devDependencies['eslint-config-godaddy-typescript'] = '^4.0.3';
+  }
+
+  if (!pkgJson.devDependencies.typescript) {
+    pkgJson.devDependencies.typescript = '^5.7.3';
+  }
+}
+
+/**
  * Read, fix up, and write out updated package.json file
  * @param {string} pkgPath path to a package.json file
  * @returns {Promise} promise
@@ -365,6 +407,7 @@ async function fixupPackage(pkgPath) {
   checkScripts(pkgJson);
   checkMaintainers(pkgJson);
   checkHomepage(pkgJson);
+  checkDefaultDeps(pkgJson);
 
   if (pkgJson.module) {
     throw new Error('module field is deprecated. Use exports instead.');

@@ -17,7 +17,9 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "@/gasket": ["./dist/gasket.js"]
+      "@/gasket": [
+        "./dist/gasket.js"
+      ]
     },
     "allowJs": true,
     "strict": false,
@@ -37,7 +39,7 @@
   "include": [
     "./routes",
     "./plugins",
-    "*.ts",
+    "lib/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts"
   ]

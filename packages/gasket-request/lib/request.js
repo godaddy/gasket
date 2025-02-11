@@ -1,48 +1,50 @@
 import { WeakPromiseKeeper } from './keeper.js';
 
 /**
- * @type {import('./index.js').GasketRequest}
+ * Represents a normalized Gasket request.
+ * @type {import('@gasket/request').GasketRequest}
  */
 export class GasketRequest {
-  constructor(normalizedRequest) {
-    this.headers = normalizedRequest.headers;
-    this.cookies = normalizedRequest.cookies;
-    this.query = normalizedRequest.query;
-    this.path = normalizedRequest.path;
+  constructor({ headers, cookies, query, path }) {
+    this.headers = headers;
+    this.cookies = cookies;
+    this.query = query;
+    this.path = path;
   }
 }
 
 /**
- * @type {import('./index.js').WeakPromiseKeeper<Headers|Record<string,string>, GasketRequest>}
+ * Weak reference cache for request headers
+ * @type {import('@gasket/request').WeakPromiseKeeper<Headers|Record<string,string>, GasketRequest>}
  */
 const keeper = new WeakPromiseKeeper();
 
 /**
- * @type {import('./index.js').objectFromCookieStore}
+ * Converts a cookie store into an object.
+ * @type {import('@gasket/request').objectFromCookieStore}
  */
 async function objectFromCookieStore(cookieStore) {
-  return (await cookieStore.getAll())
-    .reduce((acc, { name, value }) => {
-      acc[name] = value;
-      return acc;
-    }, {});
-}
-
-/**
- * @type {import('./index.js').objectFromSearchParams}
- */
-function objectFromSearchParams(searchParams) {
-  const entries = Object.fromEntries(searchParams);
-  const keys = Object.keys(entries);
-  return keys.reduce((acc, key) => {
-    const value = searchParams.getAll(key);
-    acc[key] = value.length === 1 ? value[0] : value;
-    return acc;
+  const cookies = await cookieStore.getAll();
+  return cookies.reduce((cookieMap, { name, value }) => {
+    cookieMap[name] = value;
+    return cookieMap;
   }, {});
 }
 
 /**
- * @type {import('./index.js').makeGasketRequest}
+ * Converts search parameters to an object, preserving multiple values as arrays.
+ * @type {import('@gasket/request').objectFromSearchParams}
+ */
+function objectFromSearchParams(searchParams) {
+  return Array.from(searchParams.keys()).reduce((params, key) => {
+    const values = searchParams.getAll(key);
+    params[key] = values.length === 1 ? values[0] : values;
+    return params;
+  }, {});
+}
+
+/**
+ * @type {import('@gasket/request').makeGasketRequest}
  */
 export async function makeGasketRequest(requestLike) {
   if (requestLike instanceof GasketRequest) {

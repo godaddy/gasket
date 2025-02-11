@@ -1,7 +1,9 @@
-import type { GasketConfigDefinition, MaybeAsync, Plugin, GasketEngine } from '@gasket/core';
+/* eslint-disable no-use-before-define */
+import type { GasketConfigDefinition, MaybeAsync, Plugin, GasketEngine, CreateContext } from '@gasket/core';
 import type { PackageManager } from '@gasket/utils';
 import type { PromptModule } from 'inquirer';
 import type ora from 'ora';
+import type { Command } from 'commander';
 
 export interface Dependencies {
   dependencies?: Record<string, string>;
@@ -48,14 +50,14 @@ interface CommandOption {
 export function createCommandAction(
   appname: string,
   options: CreateCommandOptions,
-  command: Command 
+  command: Command
 ): Promise<void>;
 
 export interface CreateCommand {
   id: string;
   description: string;
   args: CommandArgument[];
-  action?: createGasketAction;
+  action?: typeof createCommandAction;
   options: CommandOption[];
   hidden?: boolean;
   default?: boolean;
@@ -100,7 +102,6 @@ export interface ConfigBuilder<Config> {
   /**
    * Performs an intelligent, domain-aware merge of the `value` for
    * the given `key` into the package.json fields associated with this instance.
-   *
    * @param key - Field in package.json to add or extend.
    * @param value - Target value to set for key provided.
    * @param source - Plugin to blame if conflicts arise from this operation.
@@ -214,9 +215,9 @@ interface Files {
   /**
    * Adds the specified `globby` compatible patterns, `globs`,
    * into the set of all sources for this set of files.
-   * @param {Object} params - Object containing `globs` and `source`.
+   * @param {object} params - Object containing `globs` and `source`.
    * @param {string[]} params.globs - `globby` compatible patterns.
-   * @param {Object} params.source - Plugin to blame if conflicts arise from this operation.
+   * @param {object} params.source - Plugin to blame if conflicts arise from this operation.
    */
   add(params: { globs: string[], source: object }): void;
   add(...globs: string[]): void;
@@ -275,7 +276,7 @@ interface Files {
     force?: boolean;
   }): void;
 
-    /**
+  /**
    * Normalizes a potential semver range into a semver string
    * and returns the newest version
    * @param  {string} r1 Semver string (potentially invalid).
@@ -287,7 +288,7 @@ interface Files {
    */
   tryGetNewerRange(r1: string, r2: string): string | undefined;
 
-    /**
+  /**
    * Performs a naive attempt to take a transform a semver range
    * into a concrete version that may be used for "newness"
    * comparison.
@@ -301,9 +302,9 @@ interface Files {
    * the `orderFields` options having their keys sorted.
    * @returns {object} Ready to be serialized JavaScript object.
    */
-    toJSON(): object;
+  toJSON(): object;
 
-    /**
+  /**
    * Orders the given object, `obj`, applying any (optional)
    * key order specified via `orderBy`. If no `orderBy` is provided
    * keys are ordered lexographically.
@@ -384,8 +385,10 @@ declare module 'create-gasket-app' {
     /** paths to the local presets packages */
     localPresets: Array<string>;
 
-    /** Raw preset desc from args. Can include version constraint. Added by
-     * load-preset if using localPresets. */
+    /**
+     * Raw preset desc from args. Can include version constraint. Added by
+     * load-preset if using localPresets.
+     */
     rawPresets: Array<string>;
 
     /** Local packages that should be linked */
@@ -461,8 +464,8 @@ declare module 'create-gasket-app' {
 
     /** Use to add content to the README.md */
     readme: Readme;
-    
-    constructor(initContext?: Partial<T>);
+
+    constructor(initContext?: Partial<CreateContext>);
     runWith(plugin: Plugin): Proxy<CreateContext>;
     typescript?: boolean;
   }

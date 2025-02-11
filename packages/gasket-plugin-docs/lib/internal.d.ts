@@ -1,17 +1,13 @@
-import type { Plugin } from '@gasket/core';
-import type { PackageJson } from 'create-gasket-app';
+/* eslint-disable no-use-before-define */
+import type { Plugin, Gasket } from '@gasket/core';
+import type { Logger } from '@gasket/plugin-logger';
 import type {
   ModuleData,
   PluginData,
   PresetData
 } from '@gasket/plugin-metadata';
 
-/**
- * Configuration for setting up documentation modules.
- */
-export interface DocsSetupModulesConfig {
-  [key: string]: DocsSetup;
-}
+
 
 /**
  * Data structure for handling transformations on documentation files.
@@ -45,6 +41,13 @@ export interface DocsTransform {
   test: RegExp;
   /** Transformation function */
   handler: DocsTransformHandler;
+}
+
+/**
+ * Configuration for setting up documentation modules.
+ */
+export interface DocsSetupModulesConfig {
+  [key: string]: DocsSetup;
 }
 
 /**
@@ -123,8 +126,6 @@ export interface LifecycleDocsConfig extends DetailDocsConfig {
 export interface DocsConfigSet extends PluginData {
   /** Name of the documentation */
   name?: string;
-  /** Module of the documentation */
-  module?: Module;
   /** Configuration for the app */
   app: ModuleDocsConfig;
   /** Root directory of the documentation */
@@ -151,7 +152,7 @@ export function findPluginData(
   plugin: Plugin,
   /** Metadata for plugins */
   pluginsDatas: PluginData[],
-  logger: Log
+  logger: Logger
 ): PluginData | undefined;
 
 /**
@@ -170,7 +171,7 @@ export async function buildDocsConfigSet(
 /**
  * Function to find all documentation files for a module.
  */
-async function _findAllFiles(
+export async function _findAllFiles(
   /** Metadata for the module. */
   moduleData: ModuleData,
   /** Documentation setup. */
@@ -198,12 +199,14 @@ export async function _buildDocsConfig(
   /** Files to include and transforms */
   docsSetup?: DocsSetup,
   /** Pre-configured properties */
-  overrides?: Overrides
+  overrides?: Partial<DocsConfig>
 ): Promise<ModuleDocsConfig>;
 
-/** Flattens all detail types from plugins' metadata. Add a from property with
- * name of parent plugin. */
-function _flattenDetails(
+/**
+ * Flattens all detail types from plugins' metadata. Add a from property with
+ * name of parent plugin.
+ */
+export function _flattenDetails(
   /** Detail type in metadata */
   type: string
 ): DetailDocsConfig[];
