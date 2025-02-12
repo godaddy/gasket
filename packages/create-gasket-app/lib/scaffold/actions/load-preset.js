@@ -1,6 +1,6 @@
 import path from 'path';
 import os from 'os';
-import action from '../action-wrapper.js';
+import { withSpinner } from '../with-spinner.js';
 import { PackageManager } from '@gasket/utils';
 import { mkdtemp } from 'fs/promises';
 import { createRequire } from 'module';
@@ -57,4 +57,4 @@ async function loadPresets({ context }) {
   context.presets = await Promise.all([...remotePresets, ...localPresets]);
 }
 
-export default action('Load presets', loadPresets);
+export default withSpinner('Load presets', loadPresets);

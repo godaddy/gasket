@@ -7,8 +7,8 @@ import type {
   CommandOption,
   CreateCommandOptions
 } from 'create-gasket-app';
-import type { GasketEngine, Plugin } from '@gasket/core';
-import type ora from 'ora';
+import type { GasketEngine, Plugin, Gasket } from '@gasket/core';
+import type { Ora } from 'ora';
 import type { Command, Option } from 'commander';
 
 
@@ -29,21 +29,69 @@ export function makeCreateContext(argv?: string[], options?: CreateCommandOption
 
 export function makeCreateRuntime(context: PartialCreateContext, source: Plugin): Proxy<CreateContext>;
 
+/**
+ * Represents the execution context for a task.
+ */
+export interface SpinnerContext {
+  gasket?: Gasket;
+  context: PartialCreateContext;
+  spinner: Ora;
+}
+
+/**
+ * Task function type that runs within a spinner wrapper.
+ */
+export type SpinnerTask = (params: SpinnerContext) => Promise<void>;
+
+/**
+ * Options for the spinner wrapper.
+ */
+export interface SpinnerOptions {
+  startSpinner?: boolean;
+}
+
+/**
+ * Wraps a task with a spinner, handling success and failure states.
+ */
+export function wrapWithSpinner(
+  label: string,
+  task: SpinnerTask,
+  options?: SpinnerOptions
+): (context: { context: SpinnerContext['context'] } & {
+  errors?: Error[]
+}) => Promise<void>;
+
+/**
+ * Wraps a task with a spinner, using both gasket and context.
+ */
+export function withGasketSpinner(
+  label: string,
+  task: SpinnerTask,
+  options?: SpinnerOptions
+): (context: { gasket: any; context: SpinnerContext['context'] }) => Promise<void>;
+
+/**
+ * Wraps a task with a spinner, using only context.
+ */
+export function withSpinner(
+  label: string,
+  task: SpinnerTask,
+  options?: SpinnerOptions
+): (context: { context: SpinnerContext['context'] }) => Promise<void>;
+
 export function spinnerAction(params: {
   gasket?: GasketEngine;
   context: PartialCreateContext;
-  spinner?: ora.Ora
+  spinner?: Ora
 }): Promise<void>;
-export function withSpinnerWrapper(params: { gasket: GasketEngine, context: PartialCreateContext }): Promise<void>;
-export function withSpinner(
-  label: string,
-  fn: typeof spinnerAction,
-  options?: { startSpinner?: boolean }
-): typeof withSpinnerWrapper
+
+export function execute(params: { gasket: Gasket, context: PartialCreateContext } & {
+  errors?: Error[]
+}): Promise<void>;
 
 /** sacaffold/actions */
 
-export function createHooks(params: { gasket: GasketEngine; context: CreateContext }): Promise<void>;
+export function createHooks(params: { gasket?: Gasket; context: PartialCreateContext }): Promise<void>;
 
 export function chooseAppDescription(context: PartialCreateContext, prompt: CreatePrompt): Promise<void>;
 export function choosePackageManager(context: PartialCreateContext, prompt: CreatePrompt): Promise<void>;
@@ -55,17 +103,17 @@ export function promptForTestPlugin(
 ): Promise<string | null>;
 export function allowExtantOverwriting(context: PartialCreateContext, prompt: CreatePrompt): Promise<void>;
 export function globalPrompts(params: { context: PartialCreateContext }): Promise<void>;
-export function loadPresets(params: { context: CreateContext }): Promise<void>;
-export function presetPromptHooks(params: { gasket: GasketEngine; context: CreateContext }): Promise<void>;
-export function presetConfigHooks(params: { gasket: GasketEngine; context: CreateContext }): Promise<void>;
-export function promptHooks(params: { gasket: GasketEngine; context: CreateContext }): Promise<void>;
-export function execPluginPrompts(gasket: GasketEngine, context: CreateContext): Promise<void>;
+export function loadPresets(params: { context: PartialCreateContext }): Promise<void>;
+export function presetPromptHooks(params: { gasket?: Gasket; context: PartialCreateContext }): Promise<void>;
+export function presetConfigHooks(params: { gasket?: Gasket; context: PartialCreateContext }): Promise<void>;
+export function promptHooks(params: { gasket?: Gasket; context: PartialCreateContext }): Promise<void>;
+export function execPluginPrompts(gasket: Gasket, context: PartialCreateContext): Promise<void>;
 
-export function mkDir({ context, spinner }: { context: CreateContext, spinner: ora.Ora }): Promise<void>;
+export function mkDir({ context, spinner }: { context: CreateContext, spinner: Ora }): Promise<void>;
 
-export function setupPkg(params: { context: CreateContext }): Promise<void>;
+export function setupPkg(params: { context: PartialCreateContext }): Promise<void>;
 
-export function writePkg(params: { context: CreateContext }): Promise<void>;
+export function writePkg(params: { context: PartialCreateContext }): Promise<void>;
 
 export type Descriptior = {
   pattern: string;
@@ -76,13 +124,13 @@ export type Descriptior = {
   from: string;
   overrides?: string;
 }
-export function generateFiles({ context, spinner }: { context: CreateContext, spinner: ora.Ora }): Promise<void>;
+export function generateFiles({ context, spinner }: { context: CreateContext, spinner: Ora }): Promise<void>;
 export function performGenerate(context: CreateContext, descriptors: Descriptior[]): boolean[];
 export function getDescriptors(context: CreateContext): Promise<Descriptior[]>;
 export function assembleDescriptors(dest: string, from: string, pattern: string, srcPaths: string[]): Descriptior[];
 export function reduceDescriptors(descriptors: Descriptior[]): Descriptior[];
 
-export function writeGasketConfig(params: { context: CreateContext }): Promise<void>;
+export function writeGasketConfig(params: { context: PartialCreateContext }): Promise<void>;
 export function writeImports(imports: object | null): string;
 export function writeExpressions(expressions: string[] | null): string;
 export function createInjectionAssignments(config: object, assignments: (object | null)): string;
@@ -90,16 +138,16 @@ export function cleanupFields(config: ConfigBuilder): void;
 export function writePluginImports(plugins: string[]): string;
 export function replaceInjectionAssignments(content: string, assignments: (object | null)): string;
 
-export function installModules(params: { context: CreateContext }): Promise<void>;
+export function installModules(params: { context: PartialCreateContext }): Promise<void>;
 
-export function linkModules(params: { context: CreateContext, spinner: ora.Ora }): Promise<void>;
+export function linkModules(params: { context: CreateContext, spinner: Ora }): Promise<void>;
 
-export function postCreateHooks(params: { gasket: GasketEngine, context: CreateContext }): Promise<void>;
+export function postCreateHooks(params: { gasket?: Gasket, context: PartialCreateContext }): Promise<void>;
 
 export function printReport(params: {
-  context: CreateContext
+  context: PartialCreateContext
 }): Promise<void>;
-export function buildReport(context: CreateContext): {
+export function buildReport(context: PartialCreateContext): {
   appName?: string;
   output?: string;
   generatedFiles?: string[];

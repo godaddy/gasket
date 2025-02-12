@@ -1,6 +1,6 @@
 import path from 'path';
 import { writeFile } from 'fs/promises';
-import action from '../action-wrapper.js';
+import { withSpinner } from '../with-spinner.js';
 
 /**
  * Writes the contents of `pkg` to the app's package.json.
@@ -14,4 +14,4 @@ async function writePkg({ context }) {
   generatedFiles.add(fileName);
 }
 
-export default action('Write package.json', writePkg);
+export default withSpinner('Write package.json', writePkg);

@@ -93,6 +93,7 @@ declare module '@gasket/core' {
     plugins: Plugin[];
     root: string;
     env: string;
+    command?: string;
   }
 
   /**

@@ -4,23 +4,21 @@ import { makeCreateContext } from '../scaffold/create-context.js';
 import { dumpErrorContext } from '../scaffold/dump-error-context.js';
 import { rm } from 'fs/promises';
 import { makeGasket } from '@gasket/core';
-import {
-  createHooks,
-  generateFiles,
-  globalPrompts,
-  installModules,
-  linkModules,
-  loadPreset,
-  mkDir,
-  postCreateHooks,
-  printReport,
-  presetPromptHooks,
-  presetConfigHooks,
-  promptHooks,
-  setupPkg,
-  writeGasketConfig,
-  writePkg
-} from '../scaffold/actions/index.js';
+import globalPrompts from '../scaffold/actions/global-prompts.js';
+import loadPreset from '../scaffold/actions/load-preset.js';
+import presetPromptHooks from '../scaffold/actions/preset-prompt-hooks.js';
+import presetConfigHooks from '../scaffold/actions/preset-config-hooks.js';
+import promptHooks from '../scaffold/actions/prompt-hooks.js';
+import mkDir from '../scaffold/actions/mkdir.js';
+import setupPkg from '../scaffold/actions/setup-pkg.js';
+import createHooks from '../scaffold/actions/create-hooks.js';
+import writePkg from '../scaffold/actions/write-pkg.js';
+import generateFiles from '../scaffold/actions/generate-files.js';
+import writeGasketConfig from '../scaffold/actions/write-gasket-config.js';
+import installModules from '../scaffold/actions/install-modules.js';
+import linkModules from '../scaffold/actions/link-modules.js';
+import postCreateHooks from '../scaffold/actions/post-create-hooks.js';
+import printReport from '../scaffold/actions/print-report.js';
 
 /**
  * Parses comma separated option input to array
@@ -103,12 +101,9 @@ createCommand.action = async function run(appname, options, command) {
   const { rawPresets, localPresets } = context;
 
   try {
-    // @ts-ignore - NEEDS REVIEW
     await globalPrompts({ context });
 
     if (rawPresets.length || localPresets.length) {
-
-      // @ts-ignore - NEEDS REVIEW
       await loadPreset({ context });
 
       const presetGasket = makeGasket({
@@ -125,26 +120,19 @@ createCommand.action = async function run(appname, options, command) {
     });
 
     await promptHooks({ gasket: pluginGasket, context });
-    // @ts-ignore - NEEDS REVIEW
     await mkDir({ context });
-    // @ts-ignore - NEEDS REVIEW
     await setupPkg({ context });
     await createHooks({ gasket: pluginGasket, context });
-    // @ts-ignore - NEEDS REVIEW
     await writePkg({ context });
-    // @ts-ignore - NEEDS REVIEW
     await generateFiles({ context });
-    // @ts-ignore - NEEDS REVIEW
     await writeGasketConfig({ context });
-    // @ts-ignore - NEEDS REVIEW
     await installModules({ context });
-    // @ts-ignore - NEEDS REVIEW
     await linkModules({ context });
     await postCreateHooks({ gasket: pluginGasket, context });
     if (context.tmpDir) await rm(context.tmpDir, { recursive: true });
-    // @ts-ignore - NEEDS REVIEW
     printReport({ context });
   } catch (err) {
+    // eslint-disable-next-line no-console
     console.error(chalk.red('Exiting with errors.'));
     dumpErrorContext(context, err);
     throw err;
