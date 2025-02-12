@@ -315,11 +315,7 @@ function checkEslintConfig(pkgJson) {
     files: ['lib/*.ts'],
     extends: ['godaddy-typescript'],
     rules: {
-      'jsdoc/require-jsdoc': 'off',
-      'jsdoc/require-param-description': 'off',
-      'jsdoc/require-param-type': 'off',
-      'jsdoc/require-param': 'off',
-      'jsdoc/require-returns': 'off'
+      'jsdoc/*': 'off'
     }
   };
 
