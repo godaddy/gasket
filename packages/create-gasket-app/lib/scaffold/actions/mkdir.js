@@ -1,5 +1,5 @@
 import { mkdir } from 'fs/promises';
-import action from '../action-wrapper.js';
+import { withSpinner } from '../with-spinner.js';
 
 /**
  * Validates this instance can execute without common blockers:
@@ -24,4 +24,4 @@ async function mkDir({ context, spinner }) {
   }
 }
 
-export default action('Set up directory', mkDir);
+export default withSpinner('Set up directory', mkDir);

@@ -1,9 +1,24 @@
+/* eslint-disable no-use-before-define */
 declare module '@gasket/core' {
+  /**
+   * Allows a type to be a single value or an array of that type.
+   * Useful for handling cases where a function accepts multiple values.
+   */
   export type MaybeMultiple<T> = T | Array<T>;
+
+  /**
+   * Allows a type to be synchronous or asynchronous.
+   * Used for functions that may return a Promise or a direct value.
+   */
   export type MaybeAsync<T> = T | Promise<T>;
+
+  /**
+   * Extracts the resolved value from a Promise type.
+   * If the type is not a Promise, it remains unchanged.
+   */
   export type ResolvedType<T> = T extends Promise<infer Value> ? Value : T;
 
-  export interface GasketActions {}
+  export interface GasketActions { }
 
   export type ActionId = keyof GasketActions;
 
@@ -12,16 +27,24 @@ declare module '@gasket/core' {
     ...args: Parameters<GasketActions[Id]>
   ) => ReturnType<GasketActions[Id]>;
 
-
-  // To be extended by plugins
+  /**
+   * Defines the lifecycle hooks that Gasket supports.
+   * Plugins can extend this interface to add additional lifecycle hooks.
+   */
   export interface HookExecTypes {
-    // add makeGasket lifecycles
-    init(): void
-    configure(config: GasketConfig): GasketConfig
-    ready(): MaybeAsync<void>
-    prepare(config: GasketConfig): MaybeAsync<GasketConfig>
+    /** Runs during initialization */
+    init(): void;
+    /** Runs during configuration and can modify the configuration */
+    configure(config: GasketConfig): GasketConfig;
+    /** Runs when the application is ready */
+    ready(): MaybeAsync<void>;
+    /** Runs when preparing the application */
+    prepare(config: GasketConfig): MaybeAsync<GasketConfig>;
   }
 
+  /**
+   * Extracts the available hook names from `HookExecTypes`.
+   */
   export type HookId = keyof HookExecTypes;
 
   export type HookTimings = {
@@ -63,23 +86,33 @@ declare module '@gasket/core' {
 
   export type Preset = Omit<Plugin, 'actions'>;
 
-  // This is the config
+  /**
+   * Defines the base configuration for a Gasket application.
+   */
   export interface GasketConfig {
-    plugins: Array<Plugin>;
+    plugins: Plugin[];
     root: string;
     env: string;
+    command?: string;
   }
 
+  /**
+   * Represents a Gasket configuration before it has been fully normalized.
+   * Supports both direct Plugin objects and ES module Plugin imports.
+   */
   export type PreNormalizedGasketConfig = Omit<GasketConfig, 'plugins'> & {
-    plugins: Array<Plugin | { default: Plugin }>;
-  }
+    plugins: (Plugin | { default: Plugin })[];
+  };
 
+  /**
+   * The core Gasket engine that manages plugins and lifecycle hooks.
+   */
   export class GasketEngine {
-    constructor(plugins: Array<Plugin>);
+    constructor(plugins: Plugin[]);
 
-    actions: GasketActions
+    actions: GasketActions;
 
-    registerPlugins(plugins: Array<Plugin>): void;
+    registerPlugins(plugins: Plugin[]): void;
     exec<Id extends HookId>(
       hook: Id,
       ...args: Parameters<HookExecTypes[Id]>
@@ -96,6 +129,14 @@ declare module '@gasket/core' {
       hook: Id,
       ...args: Parameters<HookExecTypes[Id]>
     ): ResolvedType<ReturnType<HookExecTypes[Id]>>;
+    execMap<Id extends HookId>(
+      hook: Id,
+      ...args: Parameters<HookExecTypes[Id]>
+    ): Promise<Record<string, ResolvedType<ReturnType<HookExecTypes[Id]>>>>;
+    execMapSync<Id extends HookId>(
+      hook: Id,
+      ...args: Parameters<HookExecTypes[Id]>
+    ): Record<string, ResolvedType<ReturnType<HookExecTypes[Id]>>>;
     execApply<Id extends HookId, Return = void>(
       hook: Id,
       callback: (
@@ -116,19 +157,25 @@ declare module '@gasket/core' {
     }): void;
   }
 
+  /**
+   * Represents a Gasket instance.
+   */
   export interface Gasket extends GasketEngine {
     constructor(config: GasketConfigDefinition);
-    new (config: GasketConfigDefinition): Gasket
+    new(config: GasketConfigDefinition): Gasket;
 
     isReady: Promise<void>;
     command: string;
     config: GasketConfig;
     engine: GasketEngine;
     symbol: Symbol;
-    traceBranch(): GasketTrace
-    traceRoot(): Gasket
+    traceBranch(): GasketTrace;
+    traceRoot(): Gasket;
   }
 
+  /**
+   * A proxy type for tracing Gasket operations.
+   */
   export type GasketTrace = Proxy<Gasket> & {
     trace: (msg: string) => void
   };
@@ -151,8 +198,8 @@ declare module '@gasket/core' {
   }
 
   /**
-   * Expected request shape for GasketActions
-   * @deprecated - use class from @gasket/request
+   * Represents a simplified request shape for actions.
+   * @deprecated - Use class from `@gasket/request` instead.
    */
   export interface GasketRequest {
     cookies: Record<string, string>;
@@ -160,5 +207,8 @@ declare module '@gasket/core' {
     query?: Record<string, string>;
   }
 
-  export function makeGasket(config: GasketConfigDefinition): Gasket
+  /**
+   * Creates a new Gasket application with the given configuration.
+   */
+  export function makeGasket(config: GasketConfigDefinition): Gasket;
 }

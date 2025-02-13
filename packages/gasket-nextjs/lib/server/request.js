@@ -24,7 +24,7 @@ export function request(query) {
     if (query) {
       req.query = query instanceof URLSearchParams
         ? Object.fromEntries(query)
-        : query
+        : query;
     }
 
     reqCache.set(headerStore, req);

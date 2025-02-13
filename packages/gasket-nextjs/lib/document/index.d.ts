@@ -3,15 +3,15 @@ import type { Gasket } from '@gasket/core';
 import type Document from 'next/document';
 import type { DocumentContext, DocumentInitialProps } from 'next/document';
 import type { IncomingMessage, ServerResponse } from 'http';
-import { FunctionComponent } from 'react';
+import type { FunctionComponent } from 'react';
 
 
 export function GasketDocumentGetInitialProps(
   ctx: GasketDocumentContext
 ): Promise<
   DocumentInitialProps & {
-  gasketData: GasketData;
-}
+    gasketData: GasketData;
+  }
 >;
 
 type DocumentClass = typeof Document & {
@@ -33,7 +33,7 @@ export function withGasketData(
     index?: number;
   }
 ): (DocumentComponent: typeof Document | typeof FunctionComponent) =>
-  typeof DocumentClass | typeof DocumentFunction;
+    typeof DocumentClass | typeof DocumentFunction;
 
 export declare type GasketDocumentContext = DocumentContext & {
   res: ServerResponse<IncomingMessage> & {

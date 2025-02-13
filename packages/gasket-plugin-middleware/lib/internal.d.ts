@@ -1,4 +1,5 @@
-import type { Application as ExpressApp, Request } from 'express';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import type { Application as ExpressApp, Request as ExpressRequest } from 'express';
 import type { Logger } from '@gasket/plugin-logger';
 import type {
   Http2SecureServer,
@@ -11,20 +12,28 @@ import type {
   FastifyTypeProviderDefault,
   FastifyBaseLogger,
   RawServerDefault
- } from 'fastify';
-import type { Gasket } from '@gasket/engine';
+} from 'fastify';
+import type { Gasket } from '@gasket/core';
 
 /** Type alias for Fastify application with HTTP/2 support */
 type FastifyApp<
   Server = Http2SecureServer,
   Request = Http2ServerRequest,
   Response = Http2ServerResponse
-> = FastifyInstance<RawServerDefault, IncomingMessage, ServerResponse<IncomingMessage>, FastifyBaseLogger, FastifyTypeProviderDefault>;;
+> = FastifyInstance<
+  RawServerDefault,
+  IncomingMessage,
+  ServerResponse<IncomingMessage>,
+  FastifyBaseLogger,
+  FastifyTypeProviderDefault
+>;
+
+
 
 declare module 'express' {
   interface Request {
     logger: Logger & {
-      metadata?: (metadata: Record<string, any>) => void;
+      metadata?: (metadata: Record<string, unknown>) => void;
     };
   }
 }
@@ -32,7 +41,7 @@ declare module 'express' {
 /**
  * Applies the cookie parser based on the middleware pattern.
  */
-function applyCookieParser(
+export function applyCookieParser(
   app: FastifyApp | ExpressApp,
   middlewarePattern: RegExp
 ): void;
@@ -40,7 +49,7 @@ function applyCookieParser(
 /**
  * Applies compression to the application if a compression config is present.
  */
-function applyCompression(
+export function applyCompression(
   app: ExpressApp | FastifyApp,
   /** Boolean indicating if compression should be applied. */
   compressionConfig: boolean
@@ -49,7 +58,7 @@ function applyCompression(
 /**
  * Executes the middleware lifecycle for the application.
  */
-function executeMiddlewareLifecycle(
+export function executeMiddlewareLifecycle(
   gasket: Gasket,
   app: ExpressApp | FastifyApp,
   middlewarePattern: RegExp
@@ -58,4 +67,4 @@ function executeMiddlewareLifecycle(
 /**
  * Attaches a log enhancer to the Express Request object.
  */
-function attachLogEnhancer(req: Request): void;
+export function attachLogEnhancer(req: ExpressRequest): void;

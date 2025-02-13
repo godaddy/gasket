@@ -3,6 +3,7 @@
   "version": "7.2.0",
   "description": "Gasket integrations for Next.js apps",
   "type": "module",
+  "types": "lib/index.d.ts",
   "files": [
     "lib"
   ],
@@ -67,8 +68,8 @@
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
     "eslint-config-godaddy-react": "^9.1.0",
+    "eslint-config-godaddy-typescript": "^4.0.3",
     "eslint-plugin-jest": "^28.6.0",
-    "eslint-plugin-json": "^3.1.0",
     "eslint-plugin-jsx-a11y": "^6.8.0",
     "eslint-plugin-react": "^7.35.0",
     "eslint-plugin-unicorn": "^55.0.0",
@@ -95,7 +96,20 @@
     ],
     "rules": {
       "unicorn/filename-case": "error"
-    }
+    },
+    "overrides": [
+      {
+        "files": [
+          "lib/*.ts"
+        ],
+        "extends": [
+          "godaddy-typescript"
+        ],
+        "rules": {
+          "jsdoc/*": "off"
+        }
+      }
+    ]
   },
   "eslintIgnore": [
     "lib"

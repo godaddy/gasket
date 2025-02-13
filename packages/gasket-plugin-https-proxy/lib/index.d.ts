@@ -1,6 +1,6 @@
-import { Plugin } from '@gasket/core';
+import type { Plugin, MaybeAsync } from '@gasket/core';
 import type { ServerOptions as ProxyServerOptions, Server as ProxyServer } from 'http-proxy';
-import http from 'http';
+import type { RequireAtLeastOne } from '@gasket/plugin-https';
 
 interface BaseHttpsProxyConfig extends ProxyServerOptions {
   protocol?: string;

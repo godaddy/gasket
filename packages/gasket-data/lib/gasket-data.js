@@ -1,6 +1,6 @@
 let _gasketData;
 
-/** @type {import('.').gasketData} */
+/** @type {import('@gasket/data').gasketData} */
 export function gasketData() {
   if (typeof document === 'undefined') {
     // eslint-disable-next-line no-console

@@ -1,4 +1,4 @@
-import action from '../action-wrapper.js';
+import { withSpinner } from '../with-spinner.js';
 
 /**
  * Links local packages using the selected package manager
@@ -13,4 +13,4 @@ async function linkModules({ context, spinner }) {
   }
 }
 
-export default action('Link node modules', linkModules, { startSpinner: false });
+export default withSpinner('Link node modules', linkModules, { startSpinner: false });

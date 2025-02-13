@@ -19,7 +19,7 @@ function handler(gasket) {
 
     if (swUrl) endpoints.push(new RegExp(escapeRegex(swUrl)));
 
-    /** @type {import('./index').manifestMiddleware} */
+    /** @type {import('@gasket/plugin-manifest').manifestMiddleware} */
     return async function manifestMiddleware(req, res, next) {
       if (endpoints.some((p) => req.path.match(p))) {
         req.manifest = await gatherManifestData(gasket, { req, res });

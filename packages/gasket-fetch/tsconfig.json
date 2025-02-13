@@ -7,8 +7,8 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "lib": [
-      "esnext",
-      "dom"
+      "ESNext",
+      "DOM"
     ],
     "types": [
       "@types/jest"

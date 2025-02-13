@@ -3,36 +3,75 @@ import { jest } from '@jest/globals';
 
 const mockDumpErrorContext = jest.fn();
 const consoleErrorStub = jest.spyOn(console, 'error').mockImplementation(() => { });
-const mockActionStubs = {
-  mkDir: jest.fn(),
-  loadPreset: jest.fn(),
-  cliVersion: jest.fn(),
-  globalPrompts: jest.fn(),
-  setupPkg: jest.fn(),
-  writePkg: jest.fn(),
-  installModules: jest.fn(),
-  linkModules: jest.fn(),
-  writeGasketConfig: jest.fn(),
-  loadPkgForDebug: jest.fn(),
-  presetPromptHooks: jest.fn(),
-  presetConfigHooks: jest.fn(),
-  promptHooks: jest.fn(),
-  createHooks: jest.fn(),
-  generateFiles: jest.fn(),
-  postCreateHooks: jest.fn(),
-  applyPresetConfig: jest.fn(),
-  printReport: jest.fn(),
-  readConfig: jest.fn()
-};
-mockActionStubs.writePkg.update = jest.fn();
-mockActionStubs.installModules.update = jest.fn();
-mockActionStubs.linkModules.update = jest.fn();
+const mkDirStub = jest.fn();
+const loadPresetStub = jest.fn();
+const globalPromptsStub = jest.fn();
+const setupPkgStub = jest.fn();
+const writePkgStub = jest.fn();
+const installModulesStub = jest.fn();
+const linkModulesStub = jest.fn();
+const writeGasketConfigStub = jest.fn();
+const presetPromptHooksStub = jest.fn();
+const presetConfigHooksStub = jest.fn();
+const promptHooksStub = jest.fn();
+const createHooksStub = jest.fn();
+const generateFilesStub = jest.fn();
+const postCreateHooksStub = jest.fn();
+const printReportStub = jest.fn();
+
+writePkgStub.update = jest.fn();
+installModulesStub.update = jest.fn();
+linkModulesStub.update = jest.fn();
 
 jest.mock('ora', () => () => ({ warn: jest.fn() }));
 jest.unstable_mockModule('../../../lib/scaffold/dump-error-context.js', () => ({
   dumpErrorContext: mockDumpErrorContext
 }));
-jest.unstable_mockModule('../../../lib/scaffold/actions/index.js', () => mockActionStubs);
+jest.unstable_mockModule('../../../lib/scaffold/actions/mkdir.js', () => ({
+  default: mkDirStub
+}));
+jest.unstable_mockModule('../../../lib/scaffold/actions/load-preset.js', () => ({
+  default: loadPresetStub
+}));
+jest.unstable_mockModule('../../../lib/scaffold/actions/global-prompts.js', () => ({
+  default: globalPromptsStub
+}));
+jest.unstable_mockModule('../../../lib/scaffold/actions/setup-pkg.js', () => ({
+  default: setupPkgStub
+}));
+jest.unstable_mockModule('../../../lib/scaffold/actions/write-pkg.js', () => ({
+  default: writePkgStub
+}));
+jest.unstable_mockModule('../../../lib/scaffold/actions/install-modules.js', () => ({
+  default: installModulesStub
+}));
+jest.unstable_mockModule('../../../lib/scaffold/actions/link-modules.js', () => ({
+  default: linkModulesStub
+}));
+jest.unstable_mockModule('../../../lib/scaffold/actions/write-gasket-config.js', () => ({
+  default: writeGasketConfigStub
+}));
+jest.unstable_mockModule('../../../lib/scaffold/actions/preset-prompt-hooks.js', () => ({
+  default: presetPromptHooksStub
+}));
+jest.unstable_mockModule('../../../lib/scaffold/actions/preset-config-hooks.js', () => ({
+  default: presetConfigHooksStub
+}));
+jest.unstable_mockModule('../../../lib/scaffold/actions/prompt-hooks.js', () => ({
+  default: promptHooksStub
+}));
+jest.unstable_mockModule('../../../lib/scaffold/actions/create-hooks.js', () => ({
+  default: createHooksStub
+}));
+jest.unstable_mockModule('../../../lib/scaffold/actions/generate-files.js', () => ({
+  default: generateFilesStub
+}));
+jest.unstable_mockModule('../../../lib/scaffold/actions/post-create-hooks.js', () => ({
+  default: postCreateHooksStub
+}));
+jest.unstable_mockModule('../../../lib/scaffold/actions/print-report.js', () => ({
+  default: printReportStub
+}));
 jest.unstable_mockModule('@gasket/core', () => ({
   makeGasket: jest.fn()
 }));
@@ -105,25 +144,25 @@ describe('create', function () {
 
   it('executes expected actions', async () => {
     await cmd.parseAsync(['node', 'gasket', 'create', 'myapp']);
-    expect(mockActionStubs.loadPreset).toHaveBeenCalled();
-    expect(mockActionStubs.globalPrompts).toHaveBeenCalled();
-    expect(mockActionStubs.mkDir).toHaveBeenCalled();
-    expect(mockActionStubs.setupPkg).toHaveBeenCalled();
-    expect(mockActionStubs.writePkg).toHaveBeenCalled();
-    expect(mockActionStubs.installModules).toHaveBeenCalled();
-    expect(mockActionStubs.linkModules).toHaveBeenCalled();
-    expect(mockActionStubs.presetPromptHooks).toHaveBeenCalled();
-    expect(mockActionStubs.presetConfigHooks).toHaveBeenCalled();
-    expect(mockActionStubs.promptHooks).toHaveBeenCalled();
-    expect(mockActionStubs.createHooks).toHaveBeenCalled();
-    expect(mockActionStubs.generateFiles).toHaveBeenCalled();
-    expect(mockActionStubs.writeGasketConfig).toHaveBeenCalled();
-    expect(mockActionStubs.postCreateHooks).toHaveBeenCalled();
-    expect(mockActionStubs.printReport).toHaveBeenCalled();
+    expect(loadPresetStub).toHaveBeenCalled();
+    expect(globalPromptsStub).toHaveBeenCalled();
+    expect(mkDirStub).toHaveBeenCalled();
+    expect(setupPkgStub).toHaveBeenCalled();
+    expect(writePkgStub).toHaveBeenCalled();
+    expect(installModulesStub).toHaveBeenCalled();
+    expect(linkModulesStub).toHaveBeenCalled();
+    expect(presetPromptHooksStub).toHaveBeenCalled();
+    expect(presetConfigHooksStub).toHaveBeenCalled();
+    expect(promptHooksStub).toHaveBeenCalled();
+    expect(createHooksStub).toHaveBeenCalled();
+    expect(generateFilesStub).toHaveBeenCalled();
+    expect(writeGasketConfigStub).toHaveBeenCalled();
+    expect(postCreateHooksStub).toHaveBeenCalled();
+    expect(printReportStub).toHaveBeenCalled();
   });
 
   it('exits on action errors', async () => {
-    mockActionStubs.mkDir.mockRejectedValueOnce(new Error('YOUR DRIVE EXPLODED!'));
+    mkDirStub.mockRejectedValueOnce(new Error('YOUR DRIVE EXPLODED!'));
     try {
       await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--presets=nextjs']);
     } catch (err) {
@@ -132,7 +171,7 @@ describe('create', function () {
   });
 
   it('dumps log on errors', async () => {
-    mockActionStubs.mkDir.mockRejectedValueOnce(new Error('YOUR DRIVE EXPLODED!'));
+    mkDirStub.mockRejectedValueOnce(new Error('YOUR DRIVE EXPLODED!'));
     try {
       await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--presets=nextjs']);
     } catch (err) {
@@ -142,7 +181,7 @@ describe('create', function () {
   });
 
   it('prints exit message', async () => {
-    mockActionStubs.mkDir.mockRejectedValueOnce(new Error('YOUR DRIVE EXPLODED!'));
+    mkDirStub.mockRejectedValueOnce(new Error('YOUR DRIVE EXPLODED!'));
     try {
       await cmd.parseAsync(['node', 'gasket', 'create', 'myapp', '--presets=nextjs']);
     } catch (err) {
@@ -152,7 +191,7 @@ describe('create', function () {
   });
 
   it('prints exit message when no preset found', async () => {
-    mockActionStubs.loadPreset.mockRejectedValueOnce(new Error('No preset found'));
+    loadPresetStub.mockRejectedValueOnce(new Error('No preset found'));
     try {
       await cmd.parseAsync(['node', 'gasket', 'create', 'myapp']);
     } catch (err) {

@@ -1,4 +1,4 @@
-import action from '../action-wrapper.js';
+import { withGasketSpinner } from '../with-spinner.js';
 import { ConfigBuilder } from '../config-builder.js';
 import { Files } from '../files.js';
 import Readme from '../readme.js';
@@ -20,4 +20,4 @@ async function createHooks({ gasket, context }) {
   });
 }
 
-export default action('Execute create hooks', createHooks);
+export default withGasketSpinner('Execute create hooks', createHooks);

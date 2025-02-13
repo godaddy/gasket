@@ -42,7 +42,7 @@ module.exports = async function docsView(gasket) {
   const userConfig = gasket.config.docusaurus;
   const configFilePath = path.join(config.root, pluginConfigFile);
 
-  /** @type {import('./index').DocusaurusConfig} */
+  /** @type {import('@gasket/plugin-docusaurus').DocusaurusConfig} */
   const docusaurusConfig = defaultsDeep(
     { config: configFilePath },
     userConfig,

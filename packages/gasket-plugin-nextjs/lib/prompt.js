@@ -1,6 +1,6 @@
 /// <reference types="@gasket/core" />
 
-/** @type {import('./index').promptNextServerType} */
+/** @type {import('@gasket/plugin-nextjs').promptNextServerType} */
 async function promptNextServerType(context, prompt) {
   if (!('nextServerType' in context)) {
     const { nextServerType } = await prompt([
@@ -25,7 +25,7 @@ async function promptNextServerType(context, prompt) {
   }
 }
 
-/** @type {import('./index').promptNextDevProxy} */
+/** @type {import('@gasket/plugin-nextjs').promptNextDevProxy} */
 async function promptNextDevProxy(context, prompt) {
   if ('nextDevProxy' in context) return;
   const { nextServerType } = context;
@@ -42,7 +42,7 @@ async function promptNextDevProxy(context, prompt) {
   Object.assign(context, { nextDevProxy });
 }
 
-/** @type {import('./index').promptSitemap} */
+/** @type {import('@gasket/plugin-nextjs').promptSitemap} */
 async function promptSitemap(context, prompt) {
   if ('addSitemap' in context) return;
   const { addSitemap } = await prompt([
