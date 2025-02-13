@@ -1,5 +1,4 @@
-import type { Plugin, MaybeAsync, MaybeMultiple } from '@gasket/core';
-import type { FastifyReply } from 'fastify';
+import type { Plugin, MaybeAsync, MaybeMultiple, Handler } from '@gasket/core';
 
 declare module 'fastify' {
   interface FastifyReply {
@@ -22,7 +21,9 @@ declare module 'express-serve-static-core' {
 
 declare module '@gasket/core' {
   export interface HookExecTypes {
-    middleware(): MaybeAsync<MaybeMultiple<Handler>>;
+    middleware(): MaybeAsync<MaybeMultiple<Handler> & {
+      paths?: (string | RegExp)[]
+    }>;
   }
 }
 

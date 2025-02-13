@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 /**
  * Partial URL representing a directory containing locale .json files
  * or a URL template with a `:locale` path param to a file.
@@ -37,10 +38,10 @@ export type Lang = string;
  */
 export type Locale = Lang;
 
-export type LocaleMessages = Record<string, any>
-export type MessagesRegister = Record<LocaleFileKey, LocaleMessages>
-export type StatusRegister = Record<LocaleFileKey, LocaleFileStatus>
-export type PromiseRegister = Record<LocaleFileKey, Promise>
+export type LocaleMessages = Record<string, any>;
+export type MessagesRegister = Record<LocaleFileKey, LocaleMessages>;
+export type StatusRegister = Record<LocaleFileKey, LocaleFileStatusType>;
+export type PromiseRegister = Record<LocaleFileKey, Promise<any>>;
 
 /**
  * Locale settings
@@ -54,7 +55,7 @@ export interface LocaleManifestConfig {
   localesMap?: Record<Locale, Locale>;
   /** Default lookup path to locale files */
   defaultLocaleFilePath?: LocaleFilePath;
-  /** Array of paths to locale files for static/ssr rendering */
+  /** Array of paths to locale files for static/SSR rendering */
   staticLocaleFilePaths?: LocaleFilePath[];
 }
 
@@ -62,23 +63,23 @@ export interface LocaleManifestConfig {
  * Locale settings with the generated file import map
  */
 export interface LocaleManifest extends LocaleManifestConfig {
-  imports: Record<LocaleFileKey, () => Promise>
+  imports: Record<LocaleFileKey, () => Promise<any>>;
 }
 
 /**
  * Enum for local status values
  */
-const LocaleFileStatus = {
-  notHandled = 'notHandled',
-  notLoaded = 'notLoaded',
-  loading = 'loading',
-  loaded = 'loaded',
-  error = 'error'
-} as const;
+export const LocaleFileStatus: {
+  readonly notHandled: 'notHandled',
+  readonly notLoaded: 'notLoaded',
+  readonly loading: 'loading',
+  readonly loaded: 'loaded',
+  readonly error: 'error'
+};
 
-// export type LocaleFileStatus = typeof localeFileStatus[keyof typeof localeFileStatus];
+export type LocaleFileStatusType = typeof LocaleFileStatus[keyof typeof LocaleFileStatus];
 
-export function lowestStatus(statuses: LocaleFileStatus[]): LocaleFileStatus;
+export function lowestStatus(statuses: LocaleFileStatusType[]): LocaleFileStatusType;
 
 export function safePaths(paths: LocaleFilePath[], defaultPath: LocaleFilePath): LocaleFilePath[];
 
@@ -113,7 +114,7 @@ export type IntlManager_init = () => void;
 export type IntlManager_resolveLocale = (locale: Locale) => Locale;
 export type IntlManager_load = (localeFileKey: LocaleFileKey) => Promise<void>;
 export type IntlManager_getMessages = (localeFileKey: LocaleFileKey) => LocaleMessages;
-export type IntlManager_getStatus = (localeFileKey: LocaleFileKey) => LocaleFileStatus;
+export type IntlManager_getStatus = (localeFileKey: LocaleFileKey) => LocaleFileStatusType;
 export type IntlManager_handleLocale = (locale: Locale) => LocaleHandler;
 
 export type LocaleHandler_constructor = (manager: IntlManager, locale: Locale) => void;
@@ -122,7 +123,7 @@ export type LocaleHandler_init = () => void;
 export type LocaleHandler_getLocaleFileKey = (localeFilePath: LocaleFilePath) => LocaleFileKey;
 export type LocaleHandler_loadStatics = (...localeFilePaths: LocaleFilePath[]) => Promise;
 export type LocaleHandler_load = (...localeFilePaths: LocaleFilePath[]) => Promise;
-export type LocaleHandler_getStatus = (...localeFilePath: LocaleFilePath[]) => LocaStatus;
+export type LocaleHandler_getStatus = (...localeFilePath: LocaleFilePath[]) => LocaleFileStatusType;
 export type LocaleHandler_getAllMessages = () => LocaleMessages;
 export type LocaleHandler_getStaticsRegister = () => MessagesRegister;
 
@@ -131,50 +132,50 @@ export type LocaleHandler_getStaticsRegister = () => MessagesRegister;
 //
 
 /**
- * Manages loading and caching of locale files
- * Only deals with resolved localeFileKeys
+ * Manages loading and caching of locale files.
+ * Only deals with resolved localeFileKeys.
  */
 export class IntlManager {
-  private messagesRegister: MessagesRegister
-  private statusRegister: StatusRegister
-  private promisesRegister: PromiseRegister
+  private messagesRegister: MessagesRegister;
+  private statusRegister: StatusRegister;
+  private promisesRegister: PromiseRegister;
 
-  constructor(manifest: LocaleManifest)
+  constructor(manifest: LocaleManifest);
 
-  managedLocales: Locale[]
-  get locales(): Locales[]
-  get defaultLocaleFilePath(): LocaleFilePath
-  get staticLocaleFilePaths(): LocaleFilePath[]
+  managedLocales: Locale[];
+  get locales(): Locale[];
+  get defaultLocaleFilePath(): LocaleFilePath;
+  get staticLocaleFilePaths(): LocaleFilePath[];
 
-  private init: IntlManager_init
-  resolveLocale: IntlManager_resolveLocale
-  load: IntlManager_load
-  getMessages: IntlManager_getMessages
-  getStatus: IntlManager_getStatus
+  private init: IntlManager_init;
+  resolveLocale: IntlManager_resolveLocale;
+  load: IntlManager_load;
+  getMessages: IntlManager_getMessages;
+  getStatus: IntlManager_getStatus;
 
-  handleLocale: IntlManager_handleLocale
+  handleLocale: IntlManager_handleLocale;
 }
 
 /**
- * Manages resolving and loading of locale files for a locale
- * Only deals with unresolved localeFilePaths
+ * Manages resolving and loading of locale files for a locale.
+ * Only deals with unresolved localeFilePaths.
  */
 export class LocaleHandler {
-  private handledKeys: LocaleFileKey[]
-  private loadKeys: LocaleFileKey[]
-  private handledDirty: boolean
-  private loadDirty: boolean
-  private messages: Messages
-  private staticsRegister: MessagesRegister
+  private handledKeys: LocaleFileKey[];
+  private loadKeys: LocaleFileKey[];
+  private handledDirty: boolean;
+  private loadDirty: boolean;
+  private messages: LocaleMessages;
+  private staticsRegister: MessagesRegister;
 
-  constructor(manager: IntlManager, locale: Locale)
+  constructor(manager: IntlManager, locale: Locale);
 
-  private getLocaleFileKey: LocaleHandler_getLocaleFileKey
-  loadStatics: LocaleHandler_loadStatics
-  load: LocaleHandler_load
-  getStatus: LocaleHandler_getStatus
-  getAllMessages: LocaleHandler_getAllMessages
-  getStaticsRegister: LocaleHandler_getStaticsRegister
+  private getLocaleFileKey: LocaleHandler_getLocaleFileKey;
+  loadStatics: LocaleHandler_loadStatics;
+  load: LocaleHandler_load;
+  getStatus: LocaleHandler_getStatus;
+  getAllMessages: LocaleHandler_getAllMessages;
+  getStaticsRegister: LocaleHandler_getStaticsRegister;
 }
 
-export function makeIntlManager(manifest: LocaleManifest): IntlManager
+export function makeIntlManager(manifest: LocaleManifest): IntlManager;

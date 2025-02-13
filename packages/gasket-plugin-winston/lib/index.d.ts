@@ -1,3 +1,4 @@
+import type { MaybeAsync } from '@gasket/core';
 import type { LoggerOptions, LeveledLogMethod } from 'winston';
 
 declare module 'winston' {

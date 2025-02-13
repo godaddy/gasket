@@ -90,7 +90,7 @@ export function makeCreateContext(argv = [], options = {}) {
   /**
    * Input context which will be appended by prompts and passed to create hooks
    * @type {import('../internal').PartialCreateContext}
-  */
+   */
   const context = new CreateContext({
     destOverride: true,
     cwd,

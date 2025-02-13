@@ -54,7 +54,6 @@ function makeGatherDevDeps() {
       throw new TypeError('Package name must be a non-empty string.');
     }
 
-    // TODO: standard is broken
     if (!(name in dependencies)) {
       console.error(`Package not found: ${name}`);
       throw new ReferenceError(`No dependency information found for package: ${name}`);

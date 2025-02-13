@@ -7,7 +7,7 @@ const mockOraStub = jest.fn();
 
 jest.mock('ora', () => mockOraStub);
 
-const actionWrapper = (await import('../../../lib/scaffold/action-wrapper.js')).default;
+const actionWrapper = (await import('../../../lib/scaffold/with-spinner.js')).default;
 
 describe('actionWrapper', () => {
   let mockContext, mockFn, mockLabel, mockSpinner;

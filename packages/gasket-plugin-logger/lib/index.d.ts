@@ -23,8 +23,6 @@ declare module '@gasket/plugin-logger' {
 }
 
 declare module '@gasket/core' {
-  import { Logger } from '@gasket/plugin-logger';
-
   interface Gasket {
     logger: Logger;
   }

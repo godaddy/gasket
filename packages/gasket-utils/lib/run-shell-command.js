@@ -2,7 +2,7 @@
 const { spawn } = require('child_process');
 const concat = require('concat-stream');
 
-/** @type {import('./index').runShellCommand} */
+/** @type {import('@gasket/utils').runShellCommand} */
 function runShellCommand(cmd, argv, options = {}, debug = false) {
   const { signal, ...opts } = options;
   /** @type {string} */

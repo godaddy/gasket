@@ -46,7 +46,7 @@ describe('the create hook', () => {
   it('should add a gitignore entry for the .docs directory', () => {
     create({}, mockContext);
 
-    expect(mockContext.gitignore.add).toHaveBeenCalledWith('.docs', 'Documentation');
+    expect(mockContext.gitignore.add).toHaveBeenCalledWith('.docs', 'documentation');
   });
 
   it('should handle when no `gitignore` is present in the create context', () => {

@@ -1,4 +1,4 @@
-/** @type {import('./index.d.ts').promptTypescript} */
+/** @type {import('@gasket/plugin-typescript').promptTypescript} */
 async function promptTypescript(context, prompt) {
   if ('typescript' in context) return;
   const { typescript } = await prompt([
