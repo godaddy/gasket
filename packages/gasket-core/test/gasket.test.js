@@ -9,7 +9,7 @@ const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {
 const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {
 });
 
-/** @type {import('../lib/index').Plugin} */
+/** @type {import('@gasket/core').Plugin} */
 const mockPlugin = {
   name: 'mockPlugin',
   actions: {
@@ -26,7 +26,7 @@ const mockPlugin = {
   }
 };
 
-/** @type {import('../lib/index').Plugin} */
+/** @type {import('@gasket/core').Plugin} */
 const mockProdPlugin = {
   name: 'mockProdPlugin',
   hooks: {

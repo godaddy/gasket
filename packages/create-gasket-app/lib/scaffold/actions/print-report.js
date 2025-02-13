@@ -1,6 +1,6 @@
 import pkg from 'chalk';
 const { bold } = pkg;
-import action from '../action-wrapper.js';
+import { withSpinner } from '../with-spinner.js';
 import { logo } from '../../utils/index.js';
 
 /**
@@ -8,6 +8,7 @@ import { logo } from '../../utils/index.js';
  * @private
  */
 const newline = () => {
+  // eslint-disable-next-line no-console
   console.log('');
 };
 
@@ -58,6 +59,7 @@ async function printReport({ context }) {
   const report = buildReport(context);
   const { warnings, errors } = context;
 
+  // eslint-disable-next-line no-console
   console.log(`✨Success!
 
 Finished with ${warnings.length} warnings and ${errors.length} errors using
@@ -66,10 +68,13 @@ Finished with ${warnings.length} warnings and ${errors.length} errors using
   Object.entries(report).forEach(([k, v]) => {
     if (!v || !v.length) return;
     newline();
+    // eslint-disable-next-line no-console
     console.log(`${bold(toSpaceCase(k))}`);
     if (Array.isArray(v)) {
+      // eslint-disable-next-line no-console
       v.map(o => console.log(`  ${o}`));
     } else {
+      // eslint-disable-next-line no-console
       console.log(`  ${v}`);
     }
   });
@@ -77,4 +82,4 @@ Finished with ${warnings.length} warnings and ${errors.length} errors using
   newline();
 }
 
-export default action('Print report', printReport, { startSpinner: false });
+export default withSpinner('Print report', printReport, { startSpinner: false });

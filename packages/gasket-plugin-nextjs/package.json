@@ -57,8 +57,8 @@
     "eslint": "^8.56.0",
     "eslint-config-godaddy": "^7.1.1",
     "eslint-config-godaddy-react": "^9.1.0",
+    "eslint-config-godaddy-typescript": "^4.0.3",
     "eslint-plugin-jest": "^28.6.0",
-    "eslint-plugin-json": "^3.1.0",
     "eslint-plugin-unicorn": "^55.0.0",
     "jest": "^29.7.0",
     "lodash.merge": "^4.6.2",
@@ -98,6 +98,17 @@
         "extends": [
           "godaddy-react"
         ]
+      },
+      {
+        "files": [
+          "lib/*.ts"
+        ],
+        "extends": [
+          "godaddy-typescript"
+        ],
+        "rules": {
+          "jsdoc/*": "off"
+        }
       }
     ]
   },

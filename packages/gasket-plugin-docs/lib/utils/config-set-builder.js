@@ -163,9 +163,9 @@ class DocsConfigSetBuilder {
       version,
       // fallback to docsSetup or package.json content
       link = docsSetup.link ||
-        (moduleData.package && moduleData.package.homepage),
+      (moduleData.package && moduleData.package.homepage),
       description = docsSetup.description ||
-        (moduleData.package && moduleData.package.description)
+      (moduleData.package && moduleData.package.description)
     } = moduleData;
 
     const { sourceRoot = moduleData.metadata.path } = overrides;
@@ -191,7 +191,7 @@ class DocsConfigSetBuilder {
       ...overrides,
       transforms,
       files,
-      metadata: moduleData.metadata || {}
+      metadata: moduleData.metadata
     };
   }
 

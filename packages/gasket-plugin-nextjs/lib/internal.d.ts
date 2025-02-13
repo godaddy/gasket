@@ -1,4 +1,4 @@
-import { Gasket } from '@gasket/core';
+import type { Gasket } from '@gasket/core';
 import type NextServer from 'next/dist/next-server/server/next-server';
 import type { Application } from 'express';
 import type { Fastify } from 'fastify';

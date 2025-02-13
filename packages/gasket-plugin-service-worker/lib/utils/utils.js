@@ -11,8 +11,7 @@ const swHeader = `'use strict';
  * @type {import('../index').getSWConfig}
  */
 function getSWConfig(gasketPartial) {
-  const { config = {} } = gasketPartial;
-  const { serviceWorker = {} } = config;
+  const { serviceWorker = {} } = gasketPartial?.config || {};
   return serviceWorker;
 }
 
@@ -23,11 +22,10 @@ function getSWConfig(gasketPartial) {
 async function getCacheKeys(gasket) {
   const { exec } = gasket;
   const { cacheKeys: userCacheKeys = [] } = getSWConfig(gasket);
-
   const pluginCacheKeys = await exec('serviceWorkerCacheKey');
 
   return [...userCacheKeys, ...pluginCacheKeys].filter(
-    (k) => typeof k === 'function'
+    (key) => typeof key === 'function'
   );
 }
 

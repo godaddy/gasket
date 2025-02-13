@@ -15,7 +15,8 @@ module.exports = function create(gasket, {
   readme
 }) {
   if (!useDocs) return;
-  gitignore?.add(DEFAULT_CONFIG.outputDir, 'Documentation');
+
+  gitignore?.add(DEFAULT_CONFIG.outputDir, 'documentation');
   gasketConfig.addPlugin('pluginDocs', name);
   pkg.add('dependencies', {
     [name]: `^${version}`

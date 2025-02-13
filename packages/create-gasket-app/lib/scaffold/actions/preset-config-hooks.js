@@ -1,4 +1,4 @@
-import action from '../action-wrapper.js';
+import { withGasketSpinner } from '../with-spinner.js';
 
 /**
  * presetConfigHooks - exec `presetConfig` hook
@@ -9,4 +9,4 @@ async function presetConfigHooks({ gasket, context }) {
   Object.assign(context.presetConfig, config);
 }
 
-export default action('Preset Config', presetConfigHooks, { startSpinner: false });
+export default withGasketSpinner('Preset Config', presetConfigHooks, { startSpinner: false });

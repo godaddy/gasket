@@ -1,4 +1,4 @@
-import { LocaleFilePath, LocaleFileStatus, LocaleHandler, Messages } from '@gasket/intl';
+import type { LocaleFilePath, LocaleFileStatus, LocaleHandler, Messages } from '@gasket/intl';
 
 export function ensureArray(maybeArray: any): any[];
 

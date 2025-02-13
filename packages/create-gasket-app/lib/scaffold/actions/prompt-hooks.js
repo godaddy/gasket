@@ -1,5 +1,5 @@
 import inquirer from 'inquirer';
-import action from '../action-wrapper.js';
+import { withGasketSpinner } from '../with-spinner.js';
 
 /**
  * Initializes engine with provide preset and plugins
@@ -31,4 +31,4 @@ async function promptHooks({ gasket, context }) {
   await execPluginPrompts(gasket, context);
 }
 
-export default action('Plugin prompts', promptHooks, { startSpinner: false });
+export default withGasketSpinner('Plugin prompts', promptHooks, { startSpinner: false });

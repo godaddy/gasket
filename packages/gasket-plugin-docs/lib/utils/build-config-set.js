@@ -17,7 +17,6 @@ function findPluginData(plugin, pluginsDatas, logger) {
   if (!name) {
     const expectedHooks = Object.keys(plugin.hooks);
     const results = pluginsDatas.filter((pluginData) => {
-      // @ts-expect-error - TODO: fix this
       const actual = Object.keys(pluginData.hooks);
 
       return (
@@ -69,7 +68,7 @@ function findPluginData(plugin, pluginsDatas, logger) {
  */
 async function buildDocsConfigSet(gasket) {
   const { logger } = gasket;
-  const metadata = await gasket.actions.getMetadata(gasket);
+  const metadata = await gasket.actions.getMetadata();
   const { app: appData } = metadata;
   const builder = new DocsConfigSetBuilder(gasket);
 

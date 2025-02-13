@@ -46,8 +46,8 @@
     "@types/node": "^20.12.5",
     "eslint": "^8.56.0",
     "eslint-config-godaddy": "^7.1.1",
+    "eslint-config-godaddy-typescript": "^4.0.3",
     "eslint-plugin-jest": "^28.6.0",
-    "eslint-plugin-json": "^3.1.0",
     "eslint-plugin-unicorn": "^55.0.0",
     "typescript": "^5.4.5",
     "vitest": "^2.1.5"
@@ -64,6 +64,19 @@
     ],
     "rules": {
       "unicorn/filename-case": "error"
-    }
+    },
+    "overrides": [
+      {
+        "files": [
+          "lib/*.ts"
+        ],
+        "extends": [
+          "godaddy-typescript"
+        ],
+        "rules": {
+          "jsdoc/*": "off"
+        }
+      }
+    ]
   }
 }

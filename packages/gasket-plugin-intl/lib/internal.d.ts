@@ -1,8 +1,8 @@
-import { Gasket, GasketRequest } from '@gasket/core';
-import { IncomingMessage } from 'http';
+import type { Gasket, GasketRequest } from '@gasket/core';
+import type { IncomingMessage } from 'http';
 
 /** Get the preferred locale from the request headers. */
-function getLocaleFromHeaders(
+export function getLocaleFromHeaders(
   gasket: Gasket,
   req: GasketRequest | IncomingMessage,
   locales: string[],
@@ -10,12 +10,12 @@ function getLocaleFromHeaders(
 ): string;
 
 /** Get the preferred locale from the request headers. */
-function getPreferredLocale(
+export function getPreferredLocale(
   gasket: Gasket,
   req: GasketRequest | IncomingMessage,
 ): string;
 
-function formatLocale(
+export function formatLocale(
   /** Selected accept-language */
   language: string
 ): string;
@@ -23,14 +23,9 @@ function formatLocale(
 /** Tuple of package name and path */
 type SrcPkgDir = [string, string];
 
-async function getPackageDirs(
+export async function getPackageDirs(
   /** Path to parent directory */
   parentDir: string,
   /** List of full paths */
   dirList?: SrcPkgDir[]
 ): AsyncGenerator<SrcPkgDir>;
-
-function withLocaleRequired(
-  /** Path(s) containing locale files */
-  localePathPart: LocalePathPart | LocalePathPart[]
-): LocalesProps;
