@@ -11,7 +11,7 @@ describe('create', () => {
       [name]: `^${version}`
     }]);
     expect(add.mock.calls[1]).toEqual(['scripts', {
-      analyze: 'GASKET_ENV=local.analyze ANALYZE=1 next build'
+      analyze: 'GASKET_ENV=local.analyze next build'
     }]);
     expect(addEnvironment).toHaveBeenCalledWith('local.analyze', {
       dynamicPlugins: [

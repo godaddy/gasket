@@ -5,16 +5,19 @@
  * @type {import('@gasket/core').HookHandler<'webpackConfig'>}
  */
 module.exports = function webpackConfigHook(gasket, webpackConfig, context) {
+  // eslint-disable-next-line no-process-env
+  const { ANALYZE } = process.env;
   const {
-    config: { bundleAnalyzerConfig: userConfig = {} }
+    config: {
+      env,
+      bundleAnalyzerConfig: userConfig = {}
+    }
   } = gasket;
 
-  if (process.env.ANALYZE === 'true') {
-    console.warn("Deprecation Warning: Using 'true' for the ANALYZE environment variable is deprecated. Please use '1' instead.");
-  }
-  // Run the analyzer plugin if the ANALYZE flag is true or 1
-  // @deprecated: 'true' will be removed in a future release
-  if (process.env.ANALYZE === 'true' || process.env.ANALYZE === '1') {
+  const enabled = env.endsWith('analyze') || (ANALYZE && !['false', '0'].some(v => v === ANALYZE));
+
+  // Only add the analyzer plugin if enabled
+  if (enabled) {
     const merge = require('deepmerge');
     const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
     const defaultConfig = require('./default-config');
