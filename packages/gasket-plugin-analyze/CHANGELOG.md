@@ -1,5 +1,8 @@
 # `@gasket/plugin-analyze`
 
+- Update create to use environment config ([#1010])
+  - Fix for ANALYZE env var check with support for analyze in Gasket env check
+
 ### 7.1.0
 
 - Aligned version releases across all packages
@@ -84,3 +87,4 @@
 [#670]: https://github.com/godaddy/gasket/pull/670
 [#695]: https://github.com/godaddy/gasket/pull/695
 [#810]: https://github.com/godaddy/gasket/pull/810
+[#1010]: https://github.com/godaddy/gasket/pull/1010

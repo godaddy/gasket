@@ -5,12 +5,19 @@
  * @type {import('@gasket/core').HookHandler<'webpackConfig'>}
  */
 module.exports = function webpackConfigHook(gasket, webpackConfig, context) {
+  // eslint-disable-next-line no-process-env
+  const { ANALYZE } = process.env;
   const {
-    config: { bundleAnalyzerConfig: userConfig = {} }
+    config: {
+      env,
+      bundleAnalyzerConfig: userConfig = {}
+    }
   } = gasket;
 
-  // Only add the analyzer plugin if ANALYZE flag is true
-  if (process.env.ANALYZE === 'true') {
+  const enabled = env.endsWith('analyze') || (ANALYZE && !['false', '0'].some(v => v === ANALYZE));
+
+  // Only add the analyzer plugin if enabled
+  if (enabled) {
     const merge = require('deepmerge');
     const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
     const defaultConfig = require('./default-config');
