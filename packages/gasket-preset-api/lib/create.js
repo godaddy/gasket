@@ -1,8 +1,7 @@
 import path from 'path';
-import { createRequire } from 'module';
 import { fileURLToPath } from 'url';
-const require = createRequire(import.meta.url);
-const { devDependencies } = require('../package.json');
+import pkg from '../package.json' with { type: 'json' };
+const { devDependencies } = pkg;
 
 /** @type {import('@gasket/core').HookHandler<'create'>} */
 export default function create(gasket, context) {

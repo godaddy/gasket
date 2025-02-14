@@ -1,8 +1,7 @@
 /* eslint-disable max-statements */
 import plugin from '../lib/index.js';
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
-const { name, version, description } = require('../package');
+import pkg from '../package.json' with { type: 'json' };
+const { name, version, description } = pkg;
 
 describe('Plugin', function () {
   let gasket;
