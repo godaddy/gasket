@@ -262,14 +262,6 @@ export class ConfigBuilder {
   }
 
   /**
-   * addDynamicPlugin - Add plugin to the the dynamicPlugins array
-   * @param {string} pluginName - Name of the plugin to add to the dynamicPlugins array - `@gasket/plugin-example`
-   */
-  addDynamicPlugin(pluginName) {
-    this.add('dynamicPlugins', [`${pluginName}`]);
-  }
-
-  /**
    * addImport - Add a non-plugin import to the gasket file
    * @param {string} importName - name of the import used as a value - `import fs...`
    * @param {string} importPath - path of the import - `from 'fs'`

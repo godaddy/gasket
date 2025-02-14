@@ -518,19 +518,6 @@ describe('ConfigBuilder', () => {
       gasketConfig = new ConfigBuilder();
     });
 
-    describe('.addDynamicPlugin', () => {
-      it('adds a dynamic plugin to gasketConfig', () => {
-        gasketConfig.addDynamicPlugin('pluginOne');
-        expect(gasketConfig.fields.dynamicPlugins).toEqual(['pluginOne']);
-      });
-
-      it('adds multiple dynamic plugins to gasketConfig', () => {
-        gasketConfig.addDynamicPlugin('pluginOne');
-        gasketConfig.addDynamicPlugin('pluginTwo');
-        expect(gasketConfig.fields.dynamicPlugins).toEqual(['pluginOne', 'pluginTwo']);
-      });
-    });
-
     describe('.addEnvironment', () => {
       it('adds an environment to gasketConfig', () => {
         gasketConfig.addEnvironment('test.env', { test: 'config ' });
@@ -538,9 +525,15 @@ describe('ConfigBuilder', () => {
       });
 
       it('adds values to an environment in gasketConfig', () => {
-        gasketConfig.addEnvironment('test.env', { test: 'config ' });
+        gasketConfig.addEnvironment('test.env', { test: 'config' });
         gasketConfig.addEnvironment('test.env', { test2: 'config 2' });
-        expect(gasketConfig.fields.environments).toEqual({ 'test.env': { test: 'config ', test2: 'config 2' } });
+        expect(gasketConfig.fields.environments).toEqual({ 'test.env': { test: 'config', test2: 'config 2' } });
+      });
+
+      it('adds array values to an environment in gasketConfig', () => {
+        gasketConfig.addEnvironment('test.env', { dynamicPlugins: ['pluginOne'] });
+        gasketConfig.addEnvironment('test.env', { dynamicPlugins: ['pluginTwo'] });
+        expect(gasketConfig.fields.environments).toEqual({ 'test.env': { dynamicPlugins: ['pluginOne', 'pluginTwo'] } });
       });
 
       it('adds multiple environments to gasketConfig', () => {
