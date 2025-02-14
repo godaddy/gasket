@@ -1,5 +1,7 @@
 # `create-gasket-app`
 
+- Add `addEnvironment` method for create context ([#1010])
+
 ### 7.2.0
 
 - Move default plugins into presets ([#1014])
@@ -88,4 +90,5 @@ Added `@gasket/plugin-dynamic-plugin` to default plugins ([#970])
 [#936]: https://github.com/godaddy/gasket/pull/936
 [#943]: https://github.com/godaddy/gasket/pull/943
 [#970]: https://github.com/godaddy/gasket/pull/970
+[#1010]: https://github.com/godaddy/gasket/pull/1010
 [#1014]: https://github.com/godaddy/gasket/pull/1014
