@@ -27,7 +27,7 @@ describe('create', () => {
   it('add plugin to package.json dependencies', () => {
     plugin.hooks.create({}, mockContext);
 
-    expect(mockContext.pkg.add).toHaveBeenCalledWith('dependencies', {
+    expect(mockContext.pkg.add).toHaveBeenCalledWith('devDependencies', {
       [name]: `^${version}`
     });
   });
