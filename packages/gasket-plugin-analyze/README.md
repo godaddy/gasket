@@ -71,15 +71,15 @@ for each type of bundle (browser and server).
 
 ## NPM script
 
-### analyze
+### Environment Variable
 
 The npm script `analyze` will execute the following:
 
 ```bash
-ANALYZE=true next build
+ANALYZE=1 next build
 ```
 
-When this script is run, the `@gasket/plugin-analyse` will add the
+When this script is run, the `@gasket/plugin-analyze` will add the
 [webpack-bundle-analyzer] to the webpack config.
 
 Reports for both browser and server-side rendering will be generated, with the
@@ -88,7 +88,7 @@ following output:
 - `reports/browser-bundles.html`
 - `reports/server-bundles.html`
 
-Only when `ANALYZE=true` is set in the environment, will the analyzer plugin be
+Only when `process.env.ANALYZE` is set will the analyzer plugin be
 added to Webpack, ensuring that the bundle analyzer is used specifically for
 this analysis task.
 
@@ -103,6 +103,45 @@ npm run analyze
 The **browser** report will be most critical for analyzing bundle size
 optimizations, ensuring that the app is optimized for download efficiency from
 the user's perspective.
+
+### Gasket Environment
+
+An alternative way to configure and enable the bundle analyzer is to loading the
+plugin dynamically, and use a sub environment.
+
+```diff
+// gasket.js
+
++ import pluginDynamicPlugins from '@gasket/plugin-dynamic-plugins';
+
+export default makeGasket({
+  plugins: [
++   pluginDynamicPlugins
+  ],
+  dynamicPlugins: {
+    'local.analyze': {
+      plugins: [
+        '@gasket/plugin-analyze'
+      ]
+    }
+  }
+});
+```
+
+In your package.json, update the analyze npm script
+
+```diff
+{
+  "scripts": {
+-    "analyze": "ANALYZE=1 next build"
++    "analyze": "GASKET_ENV=local.analyze next build"
+  }
+}
+```
+
+This can server as an optimization so that the plugin will only be loaded for
+the `local.analyze` environment, and will allow you to change `@gasket/plugin-analyze`
+to be a dev dependency.
 
 ## License
 
