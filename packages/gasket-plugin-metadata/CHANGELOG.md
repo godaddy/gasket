@@ -1,5 +1,7 @@
 # `@gasket/plugin-metadata`
 
+- Add plugin as a dev dependency in create ([#1034])
+
 ### 7.2.1
 
 - Fix to use gasket.metadata from package.json for modules ([#1022])
@@ -89,6 +91,7 @@
 [#695]: https://github.com/godaddy/gasket/pull/695
 [#978]: https://github.com/godaddy/gasket/pull/978
 [#1022]: https://github.com/godaddy/gasket/pull/1022
+[#1034]: https://github.com/godaddy/gasket/pull/1034
 
 [Loader]:/packages/gasket-resolve/docs/api.md#loader
 [PluginInfo]:/packages/gasket-resolve/docs/api.md#plugininfo
