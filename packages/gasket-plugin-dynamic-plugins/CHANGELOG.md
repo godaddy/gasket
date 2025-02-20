@@ -1,5 +1,7 @@
 # `@gasket/plugin-dynamic-plugins`
 
+- Add to config during create ([#1010])
+
 ### 7.2.0
 
 - Set timing before commands plugins to allow dynamic plugins to register commands ([#1016])
@@ -16,5 +18,6 @@
 
 [#970]: https://github.com/godaddy/gasket/pull/970
 [#991]: https://github.com/godaddy/gasket/pull/991
+[#1010]: https://github.com/godaddy/gasket/pull/1010
 [#1015]: https://github.com/godaddy/gasket/pull/1015
 [#1016]: https://github.com/godaddy/gasket/pull/1016
