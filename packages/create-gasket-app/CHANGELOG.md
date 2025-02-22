@@ -12,7 +12,7 @@
 
 - Aligned version releases across all packages
 
-Added `@gasket/plugin-dynamic-plugin` to default plugins ([#970])
+- Added `@gasket/plugin-dynamic-plugin` to default plugins ([#970])
 
 ### 7.0.6
 
