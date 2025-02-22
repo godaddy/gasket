@@ -119,6 +119,11 @@ export interface ConfigBuilder<Config> {
   ): void;
   add(key: string, value: object, options?: object): void;
 
+  /** Remove a key from fields
+   * @param {string[]} path - Array of strings representing the path to the field to remove
+  */
+  remove(path: string[]): void;
+
   /**
    * addPlugin - Add plugin import to the gasket file and use the value in the plugins array
    * @param {string} pluginImport - name of the import used as a value - `import pluginImport...`
