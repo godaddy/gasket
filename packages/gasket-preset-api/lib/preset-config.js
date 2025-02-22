@@ -5,7 +5,6 @@ import pluginDocusaurus from '@gasket/plugin-docusaurus';
 import pluginDynamicPlugins from '@gasket/plugin-dynamic-plugins';
 import pluginGit from '@gasket/plugin-git';
 import pluginLogger from '@gasket/plugin-logger';
-import pluginMetadata from '@gasket/plugin-metadata';
 
 // Preset-specific Plugins
 import pluginHttps from '@gasket/plugin-https';
@@ -28,7 +27,6 @@ export default async function presetConfig(gasket, context) {
     pluginHttps,
     pluginLint,
     pluginLogger,
-    pluginMetadata,
     pluginWinston
   ]);
 

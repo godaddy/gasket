@@ -1,5 +1,7 @@
 # `@gasket/preset-nextjs`
 
+- Remove metadata plugin ([#1034])
+
 ### 7.2.0
 
 - Move default plugins into presets ([#1014])
@@ -43,3 +45,4 @@
 [#762]: https://github.com/godaddy/gasket/pull/762
 [#946]: https://github.com/godaddy/gasket/pull/946
 [#1014]: https://github.com/godaddy/gasket/pull/1014
+[#1034]: https://github.com/godaddy/gasket/pull/1034

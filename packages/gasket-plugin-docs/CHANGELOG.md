@@ -1,5 +1,7 @@
 # `@gasket/plugin-docs`
 
+- Make plugin dynamic ([#1034])
+
 ### 7.1.0
 
 - Aligned version releases across all packages
@@ -108,3 +110,4 @@
 [#504]: https://github.com/godaddy/gasket/pull/504
 [#644]: https://github.com/godaddy/gasket/pull/644
 [#736]: https://github.com/godaddy/gasket/pull/736
+[#1034]: https://github.com/godaddy/gasket/pull/1034

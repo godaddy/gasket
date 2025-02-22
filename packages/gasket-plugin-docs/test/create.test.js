@@ -1,5 +1,5 @@
 const { hooks: { create } } = require('../lib/index');
-const { name, version } = require('../package.json');
+const { name, version, devDependencies } = require('../package.json');
 
 describe('the create hook', () => {
   let mockContext;
@@ -16,7 +16,7 @@ describe('the create hook', () => {
         codeBlock: jest.fn().mockReturnThis()
       },
       gasketConfig: {
-        addPlugin: jest.fn()
+        addCommand: jest.fn()
       },
       gitignore: {
         add: jest.fn()
@@ -27,20 +27,26 @@ describe('the create hook', () => {
   it('does nothing if useDocs is false', () => {
     create({}, { ...mockContext, useDocs: false });
     expect(mockContext.pkg.add).not.toHaveBeenCalled();
-    expect(mockContext.gasketConfig.addPlugin).not.toHaveBeenCalled();
+    expect(mockContext.gasketConfig.addCommand).not.toHaveBeenCalled();
     expect(mockContext.gitignore.add).not.toHaveBeenCalled();
   });
 
-  it('adds itself to the dependencies', () => {
+  it('adds devDependencies', () => {
     create({}, mockContext);
-    expect(mockContext.pkg.add).toHaveBeenCalledWith('dependencies', {
-      [name]: `^${version}`
+    expect(mockContext.pkg.add).toHaveBeenCalledWith('devDependencies', {
+      [name]: `^${version}`,
+      '@gasket/plugin-metadata': devDependencies['@gasket/plugin-metadata']
     });
   });
 
-  it('add plugin import to the gasket file', () => {
+  it('adds docs to the gasket file', () => {
     create({}, mockContext);
-    expect(mockContext.gasketConfig.addPlugin).toHaveBeenCalledWith('pluginDocs', name);
+    expect(mockContext.gasketConfig.addCommand).toHaveBeenCalledWith('docs', {
+      dynamicPlugins: [
+        `${name}`,
+        '@gasket/plugin-metadata'
+      ]
+    });
   });
 
   it('should add a gitignore entry for the .docs directory', () => {

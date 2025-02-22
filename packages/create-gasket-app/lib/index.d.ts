@@ -138,7 +138,7 @@ export interface ConfigBuilder<Config> {
   addPlugin(pluginImport: string, pluginName: string): void;
 
   /**
-   * addEnvironment - Add environments to the gasket file and use the value in the plugins array
+   * addEnvironment - Add environments to the gasket file
    * @param {string} key - name of the environment - `local.analyze`
    * @param {object} value - configuration for the environment - `{
    *   dynamicPlugins: [
@@ -155,6 +155,25 @@ export interface ConfigBuilder<Config> {
    *   },
    */
   addEnvironment(key:string, value: object): void;
+
+  /**
+   * addCommand - Add commands to the gasket file
+   * @param {string} key - name of the command - `docs`
+   * @param {object} value - configuration for the command - `{
+   *   dynamicPlugins: [
+   *     '@gasket/plugin-docs',
+   *   ]
+   * }`
+   * @example
+   *   commands: {
+   *    'docs': {
+   *      dynamicPlugins: [
+   *        '@gasket/plugin-docs',
+   *      ]
+   *     }
+   *   },
+   */
+  addCommand(key:string, value: object): void;
 
   /**
    * addImport - Add a non-plugin import to the gasket file
