@@ -6,7 +6,7 @@ describe('createHook', () => {
 
   beforeEach(() => {
     mockContext = {
-      useDocs: true,
+      useDocusaurus: true,
       pkg: {
         add: jest.fn()
       },
@@ -16,7 +16,7 @@ describe('createHook', () => {
         link: jest.fn().mockReturnThis()
       },
       gasketConfig: {
-        addPlugin: jest.fn()
+        addCommand: jest.fn()
       }
     };
   });
@@ -25,15 +25,8 @@ describe('createHook', () => {
     expect(create).toEqual(expect.any(Function));
   });
 
-  it('adds itself to the dependencies', async () => {
-    await create({}, mockContext);
-    expect(mockContext.pkg.add).toHaveBeenCalledWith('dependencies', {
-      [name]: `^${version}`
-    });
-  });
-
   it('does not add itself to the dependencies if useDocs is false', async () => {
-    mockContext.useDocs = false;
+    mockContext.useDocusaurus = false;
     await create({}, mockContext);
     expect(mockContext.pkg.add).not.toHaveBeenCalled();
   });
@@ -41,6 +34,7 @@ describe('createHook', () => {
   it('adds devDependencies', async () => {
     await create({}, mockContext);
     expect(mockContext.pkg.add).toHaveBeenCalledWith('devDependencies', {
+      [name]: `^${version}`,
       '@docusaurus/core': devDependencies['@docusaurus/core'],
       '@docusaurus/preset-classic': devDependencies['@docusaurus/preset-classic'],
       'react': devDependencies.react,
@@ -51,9 +45,13 @@ describe('createHook', () => {
     });
   });
 
-  it('add plugin import to the gasket file', async () => {
+  it('add as dynamicPlugin import to the docs command', async () => {
     await create({}, mockContext);
-    expect(mockContext.gasketConfig.addPlugin).toHaveBeenCalledWith('pluginDocusaurus', name);
+    expect(mockContext.gasketConfig.addCommand).toHaveBeenCalledWith('docs', {
+      dynamicPlugins: [
+        `${name}`
+      ]
+    });
   });
 
   it('adds a link to the readme', async () => {

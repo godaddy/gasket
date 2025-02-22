@@ -43,7 +43,6 @@
     "@gasket/plugin-jest": "^7.2.0",
     "@gasket/plugin-lint": "^7.2.2",
     "@gasket/plugin-logger": "^7.2.2",
-    "@gasket/plugin-metadata": "^7.2.2",
     "@gasket/plugin-mocha": "^7.2.0",
     "@gasket/plugin-swagger": "^7.2.2",
     "@gasket/plugin-typescript": "^7.2.0",

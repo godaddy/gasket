@@ -1,5 +1,7 @@
 # `@gasket/plugin-docusaurus`
 
+- Make plugin dynamic ([#1034])
+
 ### 7.1.0
 
 - Aligned version releases across all packages
@@ -71,3 +73,4 @@
 [#674]: https://github.com/godaddy/gasket/pull/674
 [#736]: https://github.com/godaddy/gasket/pull/736
 [#937]: https://github.com/godaddy/gasket/pull/937
+[#1034]: https://github.com/godaddy/gasket/pull/1034

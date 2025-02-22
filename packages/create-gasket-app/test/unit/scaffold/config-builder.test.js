@@ -545,4 +545,37 @@ describe('ConfigBuilder', () => {
       });
     });
   });
+
+  describe('.addCommand', () => {
+    let gasketConfig;
+    beforeEach(() => {
+      gasketConfig = new ConfigBuilder();
+    });
+
+    it('adds a command to gasketConfig', () => {
+      gasketConfig.addCommand('myCommand', { test: 'config ' });
+      expect(gasketConfig.fields.commands).toEqual({ myCommand: { test: 'config ' } });
+    });
+
+    it('adds values to a command in gasketConfig', () => {
+      gasketConfig.addCommand('myCommand', { test: 'config ' });
+      gasketConfig.addCommand('myCommand', { test2: 'config 2' });
+      expect(gasketConfig.fields.commands).toEqual({ myCommand: { test: 'config ', test2: 'config 2' } });
+    });
+
+    it('adds array values to a command in gasketConfig', () => {
+      gasketConfig.addCommand('myCommand', { dynamicPlugins: ['pluginOne'] });
+      gasketConfig.addCommand('myCommand', { dynamicPlugins: ['pluginTwo'] });
+      expect(gasketConfig.fields.commands).toEqual({ myCommand: { dynamicPlugins: ['pluginOne', 'pluginTwo'] } });
+    });
+
+    it('adds multiple commands to gasketConfig', () => {
+      gasketConfig.addCommand('myCommand', { test: 'config ' });
+      gasketConfig.addCommand('anotherCommand', { prod: 'config ' });
+      expect(gasketConfig.fields.commands).toEqual({
+        myCommand: { test: 'config ' },
+        anotherCommand: { prod: 'config ' }
+      });
+    });
+  });
 });
