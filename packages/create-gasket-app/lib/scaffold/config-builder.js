@@ -217,6 +217,29 @@ export class ConfigBuilder {
     }
   }
 
+  /** Remove a key from fields
+   * @param {string[]} path - Array of strings representing the path to the field to remove
+  */
+  remove(path) {
+    if (!Array.isArray(path) || path.length === 0) {
+      throw new Error('Path must be a non-empty array of strings');
+    }
+
+    let current = this.fields;
+    for (let i = 0; i < path.length - 1; i++) {
+      if (Object.prototype.hasOwnProperty.call(current, path[i])) {
+        current = current[path[i]];
+      } else {
+        return; // Path does not exist
+      }
+    }
+
+    const key = path[path.length - 1];
+    if (Object.prototype.hasOwnProperty.call(current, key)) {
+      delete current[key];
+    }
+  }
+
   /**
    * addPlugin - Add plugin import to the gasket file and use the value in the plugins array
    * @param {string} pluginImport - name of the import used as a value - `import pluginImport...`
