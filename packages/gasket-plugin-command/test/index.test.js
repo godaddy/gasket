@@ -1,8 +1,6 @@
 import plugin from '../lib/index.js';
-import { createRequire } from 'module';
-
-const require = createRequire(import.meta.url);
-const { name, version, description } = require('../package.json');
+import pkg from '../package.json' with { type: 'json' };
+const { name, version, description } = pkg;
 
 describe('@gasket/plugin-command', () => {
   it('should export an object', () => {
