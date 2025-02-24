@@ -9,11 +9,11 @@
   },
   "scripts": {
     "lint": "eslint .",
-    "lint:fix": "npm run lint -- --fix",
+    "lint:fix": "pnpm run lint --fix",
     "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "posttest": "npm run lint && npm run typecheck",
+    "posttest": "pnpm run lint && pnpm run typecheck",
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"
   },
@@ -35,6 +35,8 @@
     "happy-feet": "^2.2.0"
   },
   "devDependencies": {
+    "@gasket/core": "^7.2.2",
+    "@gasket/plugin-metadata": "^7.2.1",
     "@godaddy/terminus": "^4.12.1",
     "@types/jest": "^29.5.12",
     "cross-env": "^7.0.3",

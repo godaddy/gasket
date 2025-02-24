@@ -9,10 +9,10 @@ ComponentWithInitialProps<T> = ComponentType<T> & Partial<{
 type SubstitutableHOC<T> = <C extends ComponentWithInitialProps<T>>(component: C) => C;
 
 /** Renders a script tag with JSON gasketData */
-export const GasketDataScript: FunctionComponent<{
+export function GasketDataScript({
   /** Gasket data from response */
-  data: GasketData;
-}>;
+  data: GasketData
+});
 
 /** React hook that fetches GasketData in elements context and returns it */
 export function useGasketData(): GasketData;

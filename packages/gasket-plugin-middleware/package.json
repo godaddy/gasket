@@ -6,11 +6,11 @@
   "types": "lib/index.d.ts",
   "scripts": {
     "lint": "eslint .",
-    "lint:fix": "npm run lint -- --fix",
+    "lint:fix": "pnpm run lint --fix",
     "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "posttest": "npm run lint && npm run typecheck",
+    "posttest": "pnpm run lint && pnpm run typecheck",
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"
   },

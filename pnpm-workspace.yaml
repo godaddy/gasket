@@ -1,0 +1,14 @@
+packages:
+  - packages/*
+  - scripts/generate-docs-index
+
+# Define a catalog of version ranges.
+catalog:
+  react: ^18.2.0
+  semver: ^7.7.1
+  eslint: ^8.57.1
+  eslint-config-godaddy-typescript: ^4.0.3
+  eslint-plugin-jest: ^28.11.0
+  jest: ^29.7.0
+  typescript: ^5.7.3
+  "@jest/globals": ^29.7.0

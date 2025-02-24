@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "lint": "eslint .",
-    "lint:fix": "npm run lint -- --fix"
+    "lint:fix": "pnpm run lint --fix"
   },
   "dependencies": {
     "@gasket/core": "^7.2.1"

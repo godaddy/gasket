@@ -11,10 +11,10 @@
   },
   "scripts": {
     "lint": "eslint .",
-    "lint:fix": "npm run lint -- --fix",
-    "pretest": "npm run typecheck",
+    "lint:fix": "pnpm run lint --fix",
+    "pretest": "pnpm run typecheck",
     "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
-    "posttest": "npm run lint",
+    "posttest": "pnpm run lint",
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"
   },

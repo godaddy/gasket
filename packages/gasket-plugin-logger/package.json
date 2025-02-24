@@ -9,11 +9,11 @@
   ],
   "scripts": {
     "lint": "eslint .",
-    "lint:fix": "npm run lint -- --fix",
+    "lint:fix": "pnpm run lint --fix",
     "test": "cross-env NODE_OPTIONS='--unhandled-rejections=strict' jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "posttest": "npm run lint",
+    "posttest": "pnpm run lint",
     "typecheck:watch": "tsc --watch",
     "typecheck:skip": "tsc"
   },

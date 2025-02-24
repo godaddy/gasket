@@ -10,11 +10,11 @@
   ],
   "scripts": {
     "lint": "eslint .",
-    "lint:fix": "npm run lint -- --fix",
+    "lint:fix": "pnpm run lint --fix",
     "test": "vitest --watch=false",
     "test:watch": "vitest",
-    "test:coverage": "npm run test -- --coverage",
-    "posttest": "npm run lint && npm run typecheck",
+    "test:coverage": "pnpm run test --coverage",
+    "posttest": "pnpm run lint && pnpm run typecheck",
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"
   },
@@ -43,7 +43,9 @@
   "devDependencies": {
     "@gasket/core": "^7.2.1",
     "@gasket/plugin-logger": "^7.2.1",
+    "@gasket/plugin-metadata": "^7.2.1",
     "@types/node": "^20.12.5",
+    "create-gasket-app": "^7.2.1",
     "eslint": "^8.56.0",
     "eslint-config-godaddy": "^7.1.1",
     "eslint-plugin-jest": "^28.6.0",
