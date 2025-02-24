@@ -442,6 +442,22 @@ describe('ConfigBuilder', () => {
     });
   });
 
+  describe('.remove(path)', () => {
+    it('removes a field', () => {
+      pkg.add('name', 'my-app');
+      expect(pkg.fields).toHaveProperty('name', 'my-app');
+      pkg.remove(['name']);
+      expect(pkg.fields).not.toHaveProperty('name');
+    });
+
+    it('removes a nested field', () => {
+      pkg.add('dependencies', { 'some-pkg': 'latest' });
+      expect(pkg.fields.dependencies).toHaveProperty('some-pkg');
+      pkg.remove(['dependencies', 'some-pkg']);
+      expect(pkg.fields.dependencies).not.toHaveProperty('some-pkg');
+    });
+  });
+
   describe('.toOrderedKeys(obj, [orderBy])', () => {
     it('should order lexographically by default', () => {
       const ordered = pkg.toOrderedKeys({
