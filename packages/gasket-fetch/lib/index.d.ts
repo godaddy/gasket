@@ -1,3 +1,8 @@
+/* global RequestInit, RequestInfo */
+
+/**
+ * Definition for browser fetch
+ */
 export function fetch(
   input: RequestInfo,
   init?: RequestInit

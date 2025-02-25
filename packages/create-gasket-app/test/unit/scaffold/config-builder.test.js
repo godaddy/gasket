@@ -442,6 +442,22 @@ describe('ConfigBuilder', () => {
     });
   });
 
+  describe('.remove(path)', () => {
+    it('removes a field', () => {
+      pkg.add('name', 'my-app');
+      expect(pkg.fields).toHaveProperty('name', 'my-app');
+      pkg.remove(['name']);
+      expect(pkg.fields).not.toHaveProperty('name');
+    });
+
+    it('removes a nested field', () => {
+      pkg.add('dependencies', { 'some-pkg': 'latest' });
+      expect(pkg.fields.dependencies).toHaveProperty('some-pkg');
+      pkg.remove(['dependencies', 'some-pkg']);
+      expect(pkg.fields.dependencies).not.toHaveProperty('some-pkg');
+    });
+  });
+
   describe('.toOrderedKeys(obj, [orderBy])', () => {
     it('should order lexographically by default', () => {
       const ordered = pkg.toOrderedKeys({
@@ -509,6 +525,73 @@ describe('ConfigBuilder', () => {
       expect(warnSpy).toHaveBeenCalled();
       expect(consoleWarnStub).not.toHaveBeenCalled();
       expect(warnings).toHaveLength(1);
+    });
+  });
+
+
+  describe('.addEnvironment', () => {
+    let gasketConfig;
+    beforeEach(() => {
+      gasketConfig = new ConfigBuilder();
+    });
+
+    it('adds an environment to gasketConfig', () => {
+      gasketConfig.addEnvironment('test.env', { test: 'config ' });
+      expect(gasketConfig.fields.environments).toEqual({ 'test.env': { test: 'config ' } });
+    });
+
+    it('adds values to an environment in gasketConfig', () => {
+      gasketConfig.addEnvironment('test.env', { test: 'config ' });
+      gasketConfig.addEnvironment('test.env', { test2: 'config 2' });
+      expect(gasketConfig.fields.environments).toEqual({ 'test.env': { test: 'config ', test2: 'config 2' } });
+    });
+
+    it('adds array values to an environment in gasketConfig', () => {
+      gasketConfig.addEnvironment('test.env', { dynamicPlugins: ['pluginOne'] });
+      gasketConfig.addEnvironment('test.env', { dynamicPlugins: ['pluginTwo'] });
+      expect(gasketConfig.fields.environments).toEqual({ 'test.env': { dynamicPlugins: ['pluginOne', 'pluginTwo'] } });
+    });
+
+    it('adds multiple environments to gasketConfig', () => {
+      gasketConfig.addEnvironment('test.env', { test: 'config ' });
+      gasketConfig.addEnvironment('prod.env', { prod: 'config ' });
+      expect(gasketConfig.fields.environments).toEqual({
+        'test.env': { test: 'config ' },
+        'prod.env': { prod: 'config ' }
+      });
+    });
+  });
+
+  describe('.addCommand', () => {
+    let gasketConfig;
+    beforeEach(() => {
+      gasketConfig = new ConfigBuilder();
+    });
+
+    it('adds a command to gasketConfig', () => {
+      gasketConfig.addCommand('myCommand', { test: 'config ' });
+      expect(gasketConfig.fields.commands).toEqual({ myCommand: { test: 'config ' } });
+    });
+
+    it('adds values to a command in gasketConfig', () => {
+      gasketConfig.addCommand('myCommand', { test: 'config ' });
+      gasketConfig.addCommand('myCommand', { test2: 'config 2' });
+      expect(gasketConfig.fields.commands).toEqual({ myCommand: { test: 'config ', test2: 'config 2' } });
+    });
+
+    it('adds array values to a command in gasketConfig', () => {
+      gasketConfig.addCommand('myCommand', { dynamicPlugins: ['pluginOne'] });
+      gasketConfig.addCommand('myCommand', { dynamicPlugins: ['pluginTwo'] });
+      expect(gasketConfig.fields.commands).toEqual({ myCommand: { dynamicPlugins: ['pluginOne', 'pluginTwo'] } });
+    });
+
+    it('adds multiple commands to gasketConfig', () => {
+      gasketConfig.addCommand('myCommand', { test: 'config ' });
+      gasketConfig.addCommand('anotherCommand', { prod: 'config ' });
+      expect(gasketConfig.fields.commands).toEqual({
+        myCommand: { test: 'config ' },
+        anotherCommand: { prod: 'config ' }
+      });
     });
   });
 });

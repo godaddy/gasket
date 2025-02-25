@@ -1,5 +1,9 @@
 # `@gasket/utils`
 
+### 7.2.2
+
+- Fix type of environment overrides ([#1026])
+
 ### 7.1.2
 
 - Ensure non-plain objects are copied instead of merge ([#1002])

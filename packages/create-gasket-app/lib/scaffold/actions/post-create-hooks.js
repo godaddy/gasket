@@ -1,4 +1,4 @@
-import action from '../action-wrapper.js';
+import { withGasketSpinner } from '../with-spinner.js';
 import { runShellCommand } from '@gasket/utils';
 
 /**
@@ -25,4 +25,4 @@ async function postCreateHooks({ gasket, context }) {
   await gasket.exec('postCreate', context, utils);
 }
 
-export default action('Execute postCreate hooks', postCreateHooks);
+export default withGasketSpinner('Execute postCreate hooks', postCreateHooks);

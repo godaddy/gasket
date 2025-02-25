@@ -66,7 +66,7 @@ export interface CreateCommand {
   id: string;
   description: string;
   args: CommandArgument[];
-  action?: createGasketAction;
+  action?: typeof createCommandAction;
   options: CommandOption[];
   hidden?: boolean;
   default?: boolean;
@@ -128,6 +128,11 @@ export interface ConfigBuilder<Config> {
   ): void;
   add(key: string, value: object, options?: object): void;
 
+  /** Remove a key from fields
+   * @param {string[]} path - Array of strings representing the path to the field to remove
+  */
+  remove(path: string[]): void;
+
   /**
    * addPlugin - Add plugin import to the gasket file and use the value in the plugins array
    * @param {string} pluginImport - name of the import used as a value - `import pluginImport...`
@@ -145,6 +150,44 @@ export interface ConfigBuilder<Config> {
    * });
    */
   addPlugin(pluginImport: string, pluginName: string): void;
+
+  /**
+   * addEnvironment - Add environments to the gasket file
+   * @param {string} key - name of the environment - `local.analyze`
+   * @param {object} value - configuration for the environment - `{
+   *   dynamicPlugins: [
+   *     '@gasket/plugin-analyze',
+   *   ]
+   * }`
+   * @example
+   *   environments: {
+   *    'local.analyze': {
+   *      dynamicPlugins: [
+   *        '@gasket/plugin-analyze',
+   *      ]
+   *     }
+   *   },
+   */
+  addEnvironment(key: string, value: object): void;
+
+  /**
+   * addCommand - Add commands to the gasket file
+   * @param {string} key - name of the command - `docs`
+   * @param {object} value - configuration for the command - `{
+   *   dynamicPlugins: [
+   *     '@gasket/plugin-docs',
+   *   ]
+   * }`
+   * @example
+   *   commands: {
+   *    'docs': {
+   *      dynamicPlugins: [
+   *        '@gasket/plugin-docs',
+   *      ]
+   *     }
+   *   },
+   */
+  addCommand(key: string, value: object): void;
 
   /**
    * addImport - Add a non-plugin import to the gasket file

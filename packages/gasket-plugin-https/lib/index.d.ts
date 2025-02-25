@@ -1,7 +1,7 @@
 import type { MaybeMultiple, MaybeAsync, Plugin } from '@gasket/core';
 import type { SecureContextOptions } from 'tls';
-import type { Agent as HttpAgent, Server as HttpServer } from 'http';
-import type { Agent as HttpsAgent, Server as HttpsServer } from 'https';
+import type { Server as HttpServer } from 'http';
+import type { Server as HttpsServer } from 'https';
 import type { SecureServerOptions, Http2Server } from 'http2';
 import type { ServerOptions as ProxyServerOptions } from 'http-proxy';
 import type { TerminusOptions, HealthCheckError } from '@godaddy/terminus';
@@ -33,14 +33,14 @@ declare module '@gasket/core' {
   };
 
   type HttpsSettings =
-     CustomHttpsSettings &
+    CustomHttpsSettings &
     Omit<
       SecureContextOptions,
       keyof CustomHttpsSettings | 'secureProtocol' | 'secureOptions'
     >;
 
   type Http2Settings =
-     CustomHttpsSettings &
+    CustomHttpsSettings &
     Omit<
       SecureServerOptions,
       keyof CustomHttpsSettings | 'secureProtocol' | 'secureOptions'
@@ -62,15 +62,15 @@ declare module '@gasket/core' {
     http?: number | false | null | MaybeMultiple<BaseListenerConfig>;
     https?: MaybeMultiple<
       BaseListenerConfig &
-        HttpsSettings & {
-          sni?: Record<string, HttpsSettings>;
-        }
+      HttpsSettings & {
+        sni?: Record<string, HttpsSettings>;
+      }
     >;
     http2?: MaybeMultiple<
       BaseListenerConfig &
-        Http2Settings & {
-          sni?: Record<string, HttpsSettings>;
-        }
+      Http2Settings & {
+        sni?: Record<string, HttpsSettings>;
+      }
     >;
     handler?: Function;
   }

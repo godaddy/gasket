@@ -1,4 +1,4 @@
-import action from '../action-wrapper.js';
+import { withSpinner } from '../with-spinner.js';
 import { ConfigBuilder } from '../config-builder.js';
 import { PackageManager } from '@gasket/utils';
 import { createRequire } from 'module';
@@ -30,4 +30,4 @@ async function setupPkg({ context }) {
   Object.assign(context, { pkg, pkgManager });
 }
 
-export default action('Set up package.json', setupPkg, { startSpinner: false });
+export default withSpinner('Set up package.json', setupPkg, { startSpinner: false });

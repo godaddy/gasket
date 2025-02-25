@@ -1,5 +1,5 @@
 import type { Compiler, Configuration } from 'webpack';
-import { Gasket } from '@gasket/core';
+import type { Gasket } from '@gasket/core';
 import type { WebpackMetrics } from '@gasket/plugin-webpack';
 
 export async function handleMetrics(

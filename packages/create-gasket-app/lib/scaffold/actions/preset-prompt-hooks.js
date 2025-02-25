@@ -1,5 +1,5 @@
 import inquirer from 'inquirer';
-import action from '../action-wrapper.js';
+import { withGasketSpinner } from '../with-spinner.js';
 
 /**
  * presetPromptHooks - exec `presetPrompt` hook
@@ -13,4 +13,4 @@ async function presetPromptHooks({ gasket, context }) {
   Object.assign(context, nextContext);
 }
 
-export default action('Preset prompts', presetPromptHooks, { startSpinner: false });
+export default withGasketSpinner('Preset prompts', presetPromptHooks, { startSpinner: false });

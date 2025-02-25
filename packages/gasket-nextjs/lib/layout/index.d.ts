@@ -1,4 +1,4 @@
-import { PropsWithChildren, ReactElement } from 'react';
+import type { PropsWithChildren, ReactElement } from 'react';
 import type { Gasket, MaybeAsync } from '@gasket/core';
 
 type LayoutOptions = {

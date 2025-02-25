@@ -1,7 +1,7 @@
 {
   "name": "generate-docs-index",
   "private": true,
-  "version": "7.2.1",
+  "version": "7.2.2",
   "description": "Generate the overview index",
   "type": "module",
   "scripts": {
@@ -9,7 +9,7 @@
     "lint:fix": "pnpm run lint --fix"
   },
   "dependencies": {
-    "@gasket/core": "^7.2.1"
+    "@gasket/core": "^7.2.2"
   },
   "devDependencies": {
     "eslint": "^8.56.0",

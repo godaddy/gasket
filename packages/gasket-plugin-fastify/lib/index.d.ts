@@ -1,5 +1,5 @@
 import type { MaybeAsync, MaybeMultiple, Plugin } from '@gasket/core';
-import { Logger } from '@gasket/plugin-logger';
+import type { Logger } from '@gasket/plugin-logger';
 import type {
   FastifyInstance,
   FastifyRequest,
@@ -9,9 +9,7 @@ import type {
   FastifyTypeProviderDefault,
   RawServerDefault
 } from 'fastify';
-import { IncomingMessage, ServerResponse } from 'http';
-
-export type AppRoutes = Array<MaybeAsync<(app: FastifyInstance) => void>>;
+import type { IncomingMessage, ServerResponse } from 'http';
 
 declare module '@gasket/core' {
   export interface GasketActions {

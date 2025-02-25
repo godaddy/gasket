@@ -1,6 +1,4 @@
-/// <reference types="@gasket/plugin-command" />
-
-import { Plugin } from '@gasket/core';
+import type { MaybeAsync, Plugin } from '@gasket/core';
 
 export interface PublicGasketData extends Record<string, any> {
 }
@@ -15,7 +13,7 @@ export type GasketDataDefinition = GasketData & {
 }
 
 declare module '@gasket/core' {
-  import { RequestLike, GasketRequest } from '@gasket/request';
+  import type { RequestLike, GasketRequest } from '@gasket/request';
 
   export interface GasketConfig {
     data?: GasketDataDefinition;

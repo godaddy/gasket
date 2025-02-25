@@ -7,7 +7,7 @@ import path from 'path';
 import mkdirp from 'mkdirp';
 import chalk from 'chalk';
 const { dim } = chalk;
-import action from '../action-wrapper.js';
+import { withSpinner } from '../with-spinner.js';
 import * as syncGlob from 'glob';
 const glob = promisify(syncGlob.default);
 
@@ -168,7 +168,7 @@ async function generateFiles({ context, spinner }) {
   if (hasError) spinner.fail();
 }
 
-export default action('Generate app contents', generateFiles);
+export default withSpinner('Generate app contents', generateFiles);
 // exported for unit testing
 export const _getDescriptors = getDescriptors;
 export const _assembleDescriptors = assembleDescriptors;

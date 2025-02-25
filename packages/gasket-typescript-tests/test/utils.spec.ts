@@ -1,11 +1,11 @@
 import { applyConfigOverrides, runShellCommand } from '@gasket/utils';
-import { GasketConfig, GasketConfigDefinition } from '@gasket/core';
+import { GasketConfig } from '@gasket/core';
 
 describe('@gasket/utils', function () {
   const perform = false;
 
   describe('applyConfigOverrides', function () {
-    const config: GasketConfigDefinition = {
+    const config: GasketConfig = {
       plugins: [{ name: 'example', version: '', description: '', hooks: {} }],
       root: '/',
       env: 'debug'

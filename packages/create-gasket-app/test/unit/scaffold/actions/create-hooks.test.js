@@ -31,10 +31,6 @@ describe('createHooks', () => {
     jest.clearAllMocks();
   });
 
-  it('is decorated action', async () => {
-    expect(createHooks).toHaveProperty('wrapped');
-  });
-
   it('adds files to context', async () => {
     await createHooks({ gasket: mockGasket, context: mockContext });
     expect(mockContext.files).toBeInstanceOf(Files);

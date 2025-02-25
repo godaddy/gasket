@@ -1,5 +1,7 @@
 # `@gasket/preset-api`
 
+- Remove metadata plugin ([#1034])
+
 ### 7.2.0
 
 - Move default plugins into presets ([#1014])
@@ -52,3 +54,4 @@
 [#736]: https://github.com/godaddy/gasket/pull/736
 [#1011]: https://github.com/godaddy/gasket/pull/1011
 [#1014]: https://github.com/godaddy/gasket/pull/1014
+[#1034]: https://github.com/godaddy/gasket/pull/1034

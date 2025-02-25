@@ -1,6 +1,6 @@
 {
   "name": "@gasket/plugin-https",
-  "version": "7.2.1",
+  "version": "7.2.2",
   "description": "Create http/s servers with graceful termination",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -53,8 +53,8 @@
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
     "eslint-config-godaddy": "^7.1.1",
+    "eslint-config-godaddy-typescript": "^4.0.3",
     "eslint-plugin-jest": "^28.6.0",
-    "eslint-plugin-json": "^3.1.0",
     "eslint-plugin-unicorn": "^55.0.0",
     "jest": "^29.7.0",
     "typescript": "^5.4.5"
@@ -71,6 +71,19 @@
     ],
     "rules": {
       "unicorn/filename-case": "error"
-    }
+    },
+    "overrides": [
+      {
+        "files": [
+          "lib/*.ts"
+        ],
+        "extends": [
+          "godaddy-typescript"
+        ],
+        "rules": {
+          "jsdoc/*": "off"
+        }
+      }
+    ]
   }
 }

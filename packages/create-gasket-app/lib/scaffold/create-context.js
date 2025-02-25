@@ -31,6 +31,9 @@ function makeCreateRuntime(context, source) {
 
       has(key, value) {
         return context.pkg.has(key, value);
+      },
+      remove(path) {
+        context.pkg.remove(path);
       }
     }
   };

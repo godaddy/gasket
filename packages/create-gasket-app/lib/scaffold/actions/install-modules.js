@@ -1,4 +1,4 @@
-import action from '../action-wrapper.js';
+import { withSpinner } from '../with-spinner.js';
 
 /**
  * Installs node_modules using the selected package manager
@@ -10,4 +10,4 @@ async function installModules({ context }) {
   await pkgManager.install();
 }
 
-export default action('Install node modules', installModules);
+export default withSpinner('Install node modules', installModules);
