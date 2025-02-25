@@ -48,6 +48,7 @@
     "@gasket/plugin-metadata": "workspace:^",
     "@gasket/plugin-webpack": "workspace:^",
     "@types/jest": "^29.5.14",
+    "@types/node": "^20.17.19",
     "ajv": "^8.17.1",
     "create-gasket-app": "workspace:^",
     "cross-env": "^7.0.3",

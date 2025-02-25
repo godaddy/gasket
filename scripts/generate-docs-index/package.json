@@ -13,6 +13,7 @@
   },
   "devDependencies": {
     "@types/jest": "^29.5.14",
+    "@types/node": "^20.17.19",
     "eslint": "^8.57.1",
     "eslint-plugin-unicorn": "^44.0.2"
   },

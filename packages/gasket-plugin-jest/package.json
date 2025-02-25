@@ -43,6 +43,7 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@types/jest": "^29.5.14",
+    "@types/node": "^20.17.19",
     "babel-eslint": "^10.1.0",
     "create-gasket-app": "workspace:^",
     "cross-env": "^7.0.3",

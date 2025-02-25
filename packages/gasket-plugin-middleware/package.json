@@ -39,6 +39,7 @@
     "@types/compression": "^1.7.5",
     "@types/cookie-parser": "^1.4.8",
     "@types/jest": "^29.5.14",
+    "@types/node": "^20.17.19",
     "create-gasket-app": "workspace:^",
     "cross-env": "^7.0.3",
     "eslint": "^8.57.1",
