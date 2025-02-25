@@ -1,17 +1,19 @@
-import type { MaybeMultiple, MaybeAsync, Plugin } from '@gasket/core';
+import type { MaybeMultiple, MaybeAsync, Plugin, DevProxyConfig } from '@gasket/core';
 import type { SecureContextOptions } from 'tls';
 import type { Server as HttpServer } from 'http';
 import type { Server as HttpsServer } from 'https';
 import type { SecureServerOptions, Http2Server } from 'http2';
 import type { ServerOptions as ProxyServerOptions } from 'http-proxy';
 import type { TerminusOptions, HealthCheckError } from '@godaddy/terminus';
-
+import type { Logger } from '@gasket/plugin-logger';
 
 type RequireAtLeastOne<T, Keys extends keyof T = keyof T> =
   Pick<T, Exclude<keyof T, Keys>>
   & {
     [K in Keys]-?: Required<Pick<T, K>> & Partial<Pick<T, Exclude<Keys, K>>>
   }[Keys];
+
+export function startProxy(opts: DevProxyConfig, logger: Logger): void;
 
 declare module '@gasket/core' {
   type BaseListenerConfig = {
