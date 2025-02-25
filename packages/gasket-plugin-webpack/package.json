@@ -38,6 +38,7 @@
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-webpack",
   "devDependencies": {
     "@gasket/core": "workspace:^",
+    "@gasket/plugin-logger": "workspace:^",
     "@gasket/plugin-metadata": "workspace:^",
     "@types/jest": "^29.5.14",
     "@types/node": "^20.17.19",
