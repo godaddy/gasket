@@ -36,6 +36,7 @@
   },
   "devDependencies": {
     "@gasket/core": "workspace:^",
+    "@gasket/plugin-https": "workspace:^",
     "@gasket/plugin-metadata": "workspace:^",
     "@godaddy/terminus": "^4.12.1",
     "@types/jest": "^29.5.14",

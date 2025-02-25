@@ -47,6 +47,9 @@
   "devDependencies": {
     "@gasket/core": "workspace:^",
     "@gasket/plugin-command": "workspace:^",
+    "@gasket/plugin-express": "workspace:^",
+    "@gasket/plugin-fastify": "workspace:^",
+    "@gasket/plugin-logger": "workspace:^",
     "@gasket/plugin-metadata": "workspace:^",
     "@gasket/plugin-webpack": "workspace:^",
     "@types/jest": "^29.5.14",

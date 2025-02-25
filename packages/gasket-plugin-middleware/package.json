@@ -35,6 +35,10 @@
   },
   "devDependencies": {
     "@gasket/core": "workspace:^",
+    "@gasket/plugin-express": "workspace:^",
+    "@gasket/plugin-fastify": "workspace:^",
+    "@gasket/plugin-https": "workspace:^",
+    "@gasket/plugin-logger": "workspace:^",
     "@gasket/plugin-metadata": "workspace:^",
     "@types/compression": "^1.7.5",
     "@types/cookie-parser": "^1.4.8",

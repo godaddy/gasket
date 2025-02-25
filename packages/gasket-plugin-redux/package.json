@@ -38,6 +38,8 @@
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-redux",
   "devDependencies": {
     "@gasket/core": "workspace:^",
+    "@gasket/plugin-express": "workspace:^",
+    "@gasket/plugin-logger": "workspace:^",
     "@gasket/plugin-metadata": "workspace:^",
     "@gasket/plugin-middleware": "workspace:^",
     "@gasket/plugin-webpack": "workspace:^",

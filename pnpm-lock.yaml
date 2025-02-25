@@ -1061,7 +1061,7 @@ importers:
         version: 4.0.3(eslint@8.57.1)(typescript@5.7.3)
       eslint-plugin-jest:
         specifier: ^28.11.0
-        version: 28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@20.17.19)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@20.17.19)(typescript@5.7.3)))(typescript@5.7.3)
+        version: 28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@20.17.19)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@20.17.19)(typescript@5.7.3)))(typescript@5.7.3)
       eslint-plugin-unicorn:
         specifier: ^55.0.0
         version: 55.0.0(eslint@8.57.1)
@@ -1084,6 +1084,12 @@ importers:
       '@gasket/core':
         specifier: workspace:^
         version: link:../gasket-core
+      '@gasket/plugin-https':
+        specifier: workspace:^
+        version: link:../gasket-plugin-https
+      '@gasket/plugin-logger':
+        specifier: workspace:^
+        version: link:../gasket-plugin-logger
       '@gasket/plugin-metadata':
         specifier: workspace:^
         version: link:../gasket-plugin-metadata
@@ -1117,6 +1123,9 @@ importers:
       jest:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@20.17.19)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@20.17.19)(typescript@5.7.3))
+      plugin-https,:
+        specifier: link:@gasket/plugin-https,
+        version: link:@gasket/plugin-https,
       typescript:
         specifier: ^5.7.3
         version: 5.7.3
@@ -1176,6 +1185,9 @@ importers:
       '@gasket/core':
         specifier: workspace:^
         version: link:../gasket-core
+      '@gasket/plugin-https':
+        specifier: workspace:^
+        version: link:../gasket-plugin-https
       '@gasket/plugin-metadata':
         specifier: workspace:^
         version: link:../gasket-plugin-metadata
@@ -1510,6 +1522,9 @@ importers:
       '@gasket/core':
         specifier: workspace:^
         version: link:../gasket-core
+      '@gasket/plugin-express':
+        specifier: workspace:^
+        version: link:../gasket-plugin-express
       '@gasket/plugin-metadata':
         specifier: workspace:^
         version: link:../gasket-plugin-metadata
@@ -1616,6 +1631,15 @@ importers:
       '@gasket/plugin-command':
         specifier: workspace:^
         version: link:../gasket-plugin-command
+      '@gasket/plugin-express':
+        specifier: workspace:^
+        version: link:../gasket-plugin-express
+      '@gasket/plugin-fastify':
+        specifier: workspace:^
+        version: link:../gasket-plugin-fastify
+      '@gasket/plugin-logger':
+        specifier: workspace:^
+        version: link:../gasket-plugin-logger
       '@gasket/plugin-metadata':
         specifier: workspace:^
         version: link:../gasket-plugin-metadata
@@ -1723,6 +1747,18 @@ importers:
       '@gasket/core':
         specifier: workspace:^
         version: link:../gasket-core
+      '@gasket/plugin-express':
+        specifier: workspace:^
+        version: link:../gasket-plugin-express
+      '@gasket/plugin-fastify':
+        specifier: workspace:^
+        version: link:../gasket-plugin-fastify
+      '@gasket/plugin-https':
+        specifier: workspace:^
+        version: link:../gasket-plugin-https
+      '@gasket/plugin-logger':
+        specifier: workspace:^
+        version: link:../gasket-plugin-logger
       '@gasket/plugin-metadata':
         specifier: workspace:^
         version: link:../gasket-plugin-metadata
@@ -1871,6 +1907,9 @@ importers:
       '@gasket/core':
         specifier: workspace:^
         version: link:../gasket-core
+      '@gasket/plugin-express':
+        specifier: workspace:^
+        version: link:../gasket-plugin-express
       '@gasket/plugin-metadata':
         specifier: workspace:^
         version: link:../gasket-plugin-metadata
@@ -1938,9 +1977,21 @@ importers:
       '@gasket/plugin-elastic-apm':
         specifier: workspace:^
         version: link:../gasket-plugin-elastic-apm
+      '@gasket/plugin-express':
+        specifier: workspace:^
+        version: link:../gasket-plugin-express
+      '@gasket/plugin-fastify':
+        specifier: workspace:^
+        version: link:../gasket-plugin-fastify
+      '@gasket/plugin-https':
+        specifier: workspace:^
+        version: link:../gasket-plugin-https
       '@gasket/plugin-intl':
         specifier: workspace:^
         version: link:../gasket-plugin-intl
+      '@gasket/plugin-logger':
+        specifier: workspace:^
+        version: link:../gasket-plugin-logger
       '@gasket/plugin-metadata':
         specifier: workspace:^
         version: link:../gasket-plugin-metadata
@@ -2016,6 +2067,12 @@ importers:
       '@gasket/core':
         specifier: workspace:^
         version: link:../gasket-core
+      '@gasket/plugin-express':
+        specifier: workspace:^
+        version: link:../gasket-plugin-express
+      '@gasket/plugin-logger':
+        specifier: workspace:^
+        version: link:../gasket-plugin-logger
       '@gasket/plugin-metadata':
         specifier: workspace:^
         version: link:../gasket-plugin-metadata
@@ -2110,6 +2167,15 @@ importers:
       '@gasket/plugin-command':
         specifier: workspace:^
         version: link:../gasket-plugin-command
+      '@gasket/plugin-express':
+        specifier: workspace:^
+        version: link:../gasket-plugin-express
+      '@gasket/plugin-fastify':
+        specifier: workspace:^
+        version: link:../gasket-plugin-fastify
+      '@gasket/plugin-logger':
+        specifier: workspace:^
+        version: link:../gasket-plugin-logger
       '@gasket/plugin-metadata':
         specifier: workspace:^
         version: link:../gasket-plugin-metadata
@@ -2177,6 +2243,15 @@ importers:
       '@gasket/plugin-command':
         specifier: workspace:^
         version: link:../gasket-plugin-command
+      '@gasket/plugin-express':
+        specifier: workspace:^
+        version: link:../gasket-plugin-express
+      '@gasket/plugin-fastify':
+        specifier: workspace:^
+        version: link:../gasket-plugin-fastify
+      '@gasket/plugin-logger':
+        specifier: workspace:^
+        version: link:../gasket-plugin-logger
       '@gasket/plugin-metadata':
         specifier: workspace:^
         version: link:../gasket-plugin-metadata
@@ -2203,7 +2278,7 @@ importers:
         version: 4.0.3(eslint@8.57.1)(typescript@5.7.3)
       eslint-plugin-jest:
         specifier: ^28.11.0
-        version: 28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@20.17.19)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@20.17.19)(typescript@5.7.3)))(typescript@5.7.3)
+        version: 28.11.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(jest@29.7.0(@types/node@20.17.19)(ts-node@10.9.2(@swc/core@1.10.18(@swc/helpers@0.5.5))(@types/node@20.17.19)(typescript@5.7.3)))(typescript@5.7.3)
       eslint-plugin-unicorn:
         specifier: ^55.0.0
         version: 55.0.0(eslint@8.57.1)
