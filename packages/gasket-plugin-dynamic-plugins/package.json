@@ -41,8 +41,9 @@
     "chalk": "^5.4.1"
   },
   "devDependencies": {
-    "@gasket/core": "^7.2.1",
-    "@gasket/plugin-metadata": "^7.2.1",
+    "@gasket/core": "^7.2.2",
+    "@gasket/plugin-metadata": "^7.2.2",
+    "create-gasket-app": "^7.2.2",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
     "eslint-config-godaddy": "^7.1.1",

@@ -50,7 +50,7 @@ const createCommand = {
     {
       name: 'package-manager',
       description: `Selects which package manager you would like to use during
-      installation. (e.g. --package-manager yarn)`
+      installation. (e.g. --package-manager pnpm)`
     },
     {
       name: 'require',

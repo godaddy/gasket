@@ -1,6 +1,7 @@
 /// <reference types="@gasket/core" />
 /// <reference types="@gasket/plugin-metadata" />
 /// <reference types="@gasket/plugin-logger" />
+/// <reference types="create-gasket-app" />
 
 const { createTerminus, HealthCheckError } = require('@godaddy/terminus');
 const debug = require('diagnostics')('gasket:https');

@@ -19,7 +19,7 @@ IDE's built-in type checker.
 1. Install `typescript` as a dev dependency:
 
 ```sh
-npm i -D typescript
+pnpm add -D typescript
 ```
 
 2. Update ESLint config in your `package.json`:

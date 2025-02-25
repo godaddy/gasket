@@ -38,9 +38,7 @@ declare module '@gasket/core' {
 
 declare module 'create-gasket-app' {
   export interface CreateContext {
-    typescript: boolean;
     nextServerType: 'appRouter' | 'pageRouter' | 'customServer';
-    apiApp: boolean;
   }
 }
 

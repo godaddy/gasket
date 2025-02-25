@@ -5,11 +5,4 @@ const plugin: Plugin = {
   hooks: {}
 };
 
-declare module 'create-gasket-app' {
-  export interface CreateContext {
-    /** Flag indicating if typescript is enabled */
-    typescript?: boolean;
-  }
-}
-
 export = plugin;

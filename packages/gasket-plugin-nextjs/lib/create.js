@@ -1,3 +1,6 @@
+/// <reference types="@gasket/plugin-intl" />
+/// <reference types="create-gasket-app" />
+
 const { name, version, devDependencies } = require('../package.json');
 
 /**

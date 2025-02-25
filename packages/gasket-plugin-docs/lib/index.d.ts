@@ -10,7 +10,6 @@ import type {
 declare module 'create-gasket-app' {
   export interface CreateContext {
     useDocs?: boolean;
-    typescript?: boolean;
   }
 }
 

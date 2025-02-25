@@ -27,14 +27,14 @@ cd ./your-app-name
 From here, you can start your app in local development mode:
 
 ```bash
-npm run local
+pnpm run local
 ```
 
 Otherwise you can build and start your app directly:
 
 ```bash
-npm run build
-npm run start
+pnpm run build
+pnpm run start
 ```
 
 ## Config
@@ -43,7 +43,7 @@ If you have an existing app, some plugins can be added after create.
 First, install the necessary node modules:
 
 ```bash
-npm i @gasket/plugin-docs @gasket/plugin-docusaurus
+pnpm add @gasket/plugin-docs @gasket/plugin-docusaurus
 ```
 
 Then, in the app's `gasket.js`, add the plugins:
@@ -78,6 +78,5 @@ import { myFunction } from './myModule.js';
 ```
 
 <!-- LINKS -->
-
 
 [@gasket/plugin-command]: ./packages/gasket-plugin-command/README.md

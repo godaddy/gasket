@@ -15,7 +15,7 @@ have no scope at all. Regular modules like `react` or `webpack` are good
 examples of this.
 
 ```bash
-npm install @gasket/<plugin-name>[@version]
+pnpm add @gasket/<plugin-name>[@version]
 ```
 
 OR
@@ -26,13 +26,13 @@ yarn add @gasket/<plugin-name>[@version]
 
 If your package/module will only be used during `development`. For example if
 you need `stylus` CSS support and want to include `@zeit/next-stylus` you should
-add it as a devDependency. Adding `-D` will make `yarn` or `npm` add the
+add it as a devDependency. Adding `-D` will make `yarn` or `pnpm` add the
 dependency to `devDependencies`. Alternatively, `-P` and `-O` are available for
-`peer` or `optional` dependencies. See the [npm][npm install] or
+`peer` or `optional` dependencies. See the [pnpm][pnpm install] or
 [yarn][yarn install] install documentation for more details.
 
 ```bash
-npm install -D <package>
+pnpm add -D <package>
 ```
 
 OR
@@ -48,7 +48,7 @@ symlink it into your application's `node_modules` directory during development.
 Run one of the following commands from the plugin/package directory.
 
 ```bash
-npm link
+pnpm link
 yarn link
 ```
 
@@ -58,7 +58,7 @@ commands. This will symlink the module from above. Make sure to change
 `package.json`.
 
 ```bash
-npm link <@your-scope/plugin-name>
+pnpm link <@your-scope/plugin-name>
 yarn link <@your-scope/plugin-name>
 ```
 
@@ -67,6 +67,6 @@ better of creating a [one-off plugin] in the `plugins/` folder. Also note that
 creating a symlink will not automatically add it to the `package.json`
 dependency definitions.
 
-[npm install]: https://docs.npmjs.com/cli/install
+[pnpm install]: https://pnpm.io/cli/install
 [yarn install]: https://yarnpkg.com/en/docs/cli/add#toc-yarn-add-dev-d
 [one-off plugin]: authoring-plugins.md#one-off-plugins

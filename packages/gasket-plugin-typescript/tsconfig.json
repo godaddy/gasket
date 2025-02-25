@@ -5,6 +5,7 @@
     "noEmit": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
+    "module": "NodeNext",
     "esModuleInterop": true,
     "lib": [
       "esnext",

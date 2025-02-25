@@ -75,7 +75,6 @@ declare module 'create-gasket-app' {
     addSitemap?: boolean;
     nextServerType: 'appRouter' | 'pageRouter' | 'customServer';
     nextDevProxy: boolean;
-    typescript: boolean;
     useAppRouter: boolean;
   }
 }

@@ -1,11 +1,11 @@
-import { Gasket } from '@gasket/core';
 import type {
   CreateContext,
   CreatePrompt,
   ConfigBuilder,
   CreateCommand,
   CommandArgument,
-  CommandOption
+  CommandOption,
+  CreateCommandOptions
 } from './index';
 import type { GasketEngine, Plugin } from '@gasket/core';
 import type ora from 'ora';
@@ -29,34 +29,34 @@ export function makeCreateContext(argv?: string[], options?: CreateCommandOption
 
 export function makeCreateRuntime(context: PartialCreateContext, source: Plugin): Proxy<CreateContext>;
 
-export function spinnerAction({ gasket, context, spinner } : {
+export function spinnerAction({ gasket, context, spinner }: {
   gasket?: GasketEngine;
   context?: CreateContext;
   spinner?: ora.Ora
 }): Promise<void>;
-export function withSpinnerWrapper({ gasket, context } : { gasket: GasketEngine, context: CreateContext }): Promise<void>; 
+export function withSpinnerWrapper({ gasket, context }: { gasket: GasketEngine, context: CreateContext }): Promise<void>;
 export function withSpinner(
   label: string,
-  fn: spinnerAction,
+  fn: typeof spinnerAction,
   options?: { startSpinner?: boolean }
-): withSpinnerWrapper
+): typeof withSpinnerWrapper
 
 /** sacaffold/actions */
 
-export function createHooks({ gasket, context } : { gasket: GasketEngine; context: CreateContext }): Promise<void>;
+export function createHooks({ gasket, context }: { gasket: GasketEngine; context: CreateContext }): Promise<void>;
 
 export function chooseAppDescription(context: CreateContext, prompt: CreatePrompt): Promise<void>;
 export function choosePackageManager(context: CreateContext, prompt: CreatePrompt): Promise<void>;
 export function chooseTestPlugins(context: CreateContext, prompt: CreatePrompt): Promise<void>;
 export function promptForTestPlugin(
-  prompt: CreatePrompt, 
-  message: string, 
+  prompt: CreatePrompt,
+  message: string,
   choices: { name: string; value: string; }[]
 ): Promise<string | null>;
 export function allowExtantOverwriting(context: CreateContext, prompt: CreatePrompt): Promise<void>;
-export function globalPrompts({ context } : { context: CreateContext }): Promise<void>;
+export function globalPrompts({ context }: { context: CreateContext }): Promise<void>;
 
-export function loadPresets({ context } : { context: CreateContext }): Promise<void>;
+export function loadPresets({ context }: { context: CreateContext }): Promise<void>;
 
 export function presetPromptHooks({ gasket, context }: { gasket: GasketEngine; context: CreateContext }): Promise<void>;
 
@@ -83,7 +83,7 @@ export type Descriptior = {
 export function generateFiles({ context, spinner }: { context: CreateContext, spinner: ora.Ora }): Promise<void>;
 export function performGenerate(context: CreateContext, descriptors: Descriptior[]): boolean[];
 export function getDescriptors(context: CreateContext): Promise<Descriptior[]>;
-export function assembleDescriptors(dest: string, from: string, pattern: string, srcPaths: sring[]): Descriptior[];
+export function assembleDescriptors(dest: string, from: string, pattern: string, srcPaths: string[]): Descriptior[];
 export function reduceDescriptors(descriptors: Descriptior[]): Descriptior[];
 
 export function writeGasketConfig({ context }: { context: CreateContext }): Promise<void>;
@@ -96,7 +96,7 @@ export function replaceInjectionAssignments(content: string, assignments: (objec
 
 export function installModules({ context }: { context: CreateContext }): Promise<void>;
 
-export function linkModules({context, spinner}: { context: CreateContext, spinner: ora.Ora }): Promise<void>;
+export function linkModules({ context, spinner }: { context: CreateContext, spinner: ora.Ora }): Promise<void>;
 
 export function postCreateHooks({ gasket, context }: { gasket: GasketEngine, context: CreateContext }): Promise<void>;
 
@@ -119,14 +119,14 @@ export function isValidCommand(command: CreateCommand): boolean;
 export function processArgs(args: CommandArgument[]): [string, string?, any?][];
 export function isValidArg(arg: CommandArgument): boolean;
 
-interface OptionDefinition { 
+interface OptionDefinition {
   options: [string, string];
   conflicts: CommandOption['conflicts'];
   hidden: CommandOption['hidden'];
   required: CommandOption['required'];
   defaultValue: CommandOption['default'];
   parse: CommandOption['parse']
-};
+}
 export function isValidOption(option: CommandOption): boolean;
 export function processOptions(options: CommandOption[]): OptionDefinition[]
 

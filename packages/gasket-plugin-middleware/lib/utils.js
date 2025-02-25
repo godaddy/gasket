@@ -27,46 +27,65 @@ function applyCompression(app, compressionConfig) {
 }
 
 /**
+ * Checks if the middleware is valid and should be added.
+ * @type {import('./internal').isValidMiddleware}
+ */
+function isValidMiddleware(middleware) {
+  return Boolean(middleware && (!Array.isArray(middleware) || middleware.length > 0));
+}
+
+/**
+ * Applies configuration settings to the middleware based on the plugin.
+ * @type {import('./internal').applyMiddlewareConfig}
+ */
+function applyMiddlewareConfig(middleware, plugin, middlewareConfig, middlewarePattern) {
+  const pluginName = plugin?.name || '';
+  const configEntry = middlewareConfig.find(mw => mw.plugin === pluginName);
+
+  if (configEntry) {
+    middleware.paths = configEntry.paths;
+    if (middlewarePattern) {
+      middleware.paths.push(middlewarePattern);
+    }
+  }
+}
+
+/**
+ * Attaches the middleware layers to the app.
+ *  @type {import('./internal').applyMiddlewaresToApp}
+ */
+function applyMiddlewaresToApp(app, middlewares, middlewarePattern) {
+  middlewares.forEach(async (layer) => {
+    const { paths } = layer;
+    if (paths) {
+      app.use(paths, layer);
+    } else {
+      app.use(middlewarePattern || layer);
+    }
+  });
+}
+
+/**
  * Executes the middleware lifecycle for the application
  * @type {import('./internal').executeMiddlewareLifecycle}
  */
 async function executeMiddlewareLifecycle(gasket, app, middlewarePattern) {
   const { config } = gasket;
-  const {
-    middleware: middlewareConfig
-  } = config;
-
+  const middlewareConfig = config.middleware || [];
   const middlewares = [];
+
   await gasket.execApply('middleware', async (plugin, handler) => {
     // @ts-ignore - TS is unable to infer that app can be either an Express application or a Fastify instance
     const middleware = await handler(app);
 
-    if (middleware && (!Array.isArray(middleware) || middleware.length)) {
-      if (middlewareConfig) {
-        const pluginName = plugin && plugin.name ? plugin.name : '';
-        const mwConfig = middlewareConfig.find(mw => mw.plugin === pluginName);
-        if (mwConfig) {
-          middleware.paths = mwConfig.paths;
-          if (middlewarePattern) {
-            middleware.paths.push(middlewarePattern);
-          }
-        }
-      }
+    if (isValidMiddleware(middleware)) {
+      applyMiddlewareConfig(middleware, plugin, middlewareConfig, middlewarePattern);
       middlewares.push(middleware);
     }
   });
 
   debug('applied %s middleware layers', middlewares.length);
-  middlewares.forEach(async (layer) => {
-    const { paths } = layer;
-    if (paths) {
-      app.use(paths, layer);
-    } else if (middlewarePattern) {
-      app.use(middlewarePattern, layer);
-    } else {
-      app.use(layer);
-    }
-  });
+  applyMiddlewaresToApp(app, middlewares, middlewarePattern);
 }
 
 module.exports = {

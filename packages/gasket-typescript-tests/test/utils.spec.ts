@@ -13,7 +13,7 @@ describe('@gasket/utils', function () {
 
     it('has expected API', function () {
       if (perform) {
-        let result:GasketConfig;
+        let result: GasketConfig;
         result = applyConfigOverrides(config, { env: 'test' });
         result = applyConfigOverrides(config, { env: 'test', commandId: 'test' });
 

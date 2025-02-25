@@ -37,12 +37,11 @@ type BsdOptions = {
   swagger?: SwaggerOptions
 }
 
-export function buildSwaggerDefinition(gasket: Gasket, options?: BsdOptions) : Promise<void>;
+export function buildSwaggerDefinition(gasket: Gasket, options?: BsdOptions): Promise<void>;
 
 declare module 'create-gasket-app' {
   export interface CreateContext {
     useSwagger?: boolean;
-    typescript?: boolean;
   }
 }
 
