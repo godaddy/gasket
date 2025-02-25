@@ -42,6 +42,7 @@
   "homepage": "https://github.com/godaddy/gasket/tree/main/packages/gasket-plugin-command",
   "dependencies": {
     "@gasket/core": "workspace:^",
+    "@gasket/utils": "workspace:^",
     "commander": "^12.1.0"
   },
   "devDependencies": {
