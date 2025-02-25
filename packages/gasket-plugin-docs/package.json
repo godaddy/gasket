@@ -46,6 +46,7 @@
   "devDependencies": {
     "@gasket/core": "workspace:^",
     "@gasket/plugin-git": "workspace:^",
+    "@gasket/plugin-logger": "workspace:^",
     "@gasket/plugin-metadata": "workspace:^",
     "@gasket/plugin-webpack": "workspace:^",
     "@godaddy/dmd": "^1.0.4",
